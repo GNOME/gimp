@@ -1,3 +1,7 @@
+2003-01-28  Pablo Saratxaga  <pablo@mandrakesoft.com>
+
+	* vi.po: Updated Vietnamese file
+
 2003-01-26  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added app/config/gimprc-blurbs.h. This file

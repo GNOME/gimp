@@ -1,12 +1,12 @@
 # GIMP in Vietnamese.
 # Copyright (C) 2002 Free Software Foundation, Inc.
-# T.M.Thanh <tmthanh@yahoo.com>, 2002.
+# T.M.Thanh <tmthanh@yahoo.com>, 2002-2003.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP for Gnome v.2.1.x\n"
-"POT-Creation-Date: 2003-01-16 16:54+0100\n"
-"PO-Revision-Date: 2003-01-02 22:12+0700\n"
+"POT-Creation-Date: 2003-01-27 03:54+0100\n"
+"PO-Revision-Date: 2003-01-27 22:22+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@yahoo.com>\n"
 "Language-Team: Gnome-Vi <Gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -19,12 +19,17 @@ msgid ""
 "User installation was skipped because the '--no-interface' flag was used.\n"
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
+"GIMP không được cài đặt đúng cho người dùng này.\n"
+"Cài đặt người dùng bị bỏ qua vì đã dùng '--no-interface' flag.\n"
+"Để thực hiện cài đặt người dùng, hãy chạy GIMP không có '--no-interface' flag."
 
 #: app/main.c:170
 msgid ""
-"GIMP could not initialize the GUI.\n"
+"GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
+"GIMP không thể khởi tạo giao diện người dùng đồ họa.\n"
+"Hãy đảm bảo thiết lập đúng cho môi trường hiển thị đang có."
 
 #.
 #. *  anything else starting with a '-' is an error.
@@ -91,8 +96,7 @@ msgstr "  -h, --help               Xuất ra trợ giúp này.\n"
 
 #: app/main.c:465
 msgid "  -r, --restore-session    Try to restore saved session.\n"
-msgstr ""
-"  -r, --restore-session    Cố gắng khôi phục phiên làm việc được lưu.\n"
+msgstr "  -r, --restore-session    Cố gắng khôi phục phiên làm việc được lưu.\n"
 
 #: app/main.c:466
 msgid "  -s, --no-splash          Do not show the startup window.\n"
@@ -114,16 +118,14 @@ msgstr "  --verbose                Hiển thị thông điệp khởi chạy.\n"
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
-msgstr ""
-"  --no-shm                 Không dùng bộ nhớ chia sẻ giữa GIMP và plugins.\n"
+msgstr "  --no-shm                 Không dùng bộ nhớ chia sẻ giữa GIMP và plugins.\n"
 
 #: app/main.c:471
 msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-mmx                 Không dùng MMX routines.\n"
 
 #: app/main.c:472
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Chạy trình xử lý tín hiệu gỡ rối không quan "
 "trọng.\n"
@@ -137,13 +139,13 @@ msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Dùng tập tin gimprc hệ thống thay thế.\n"
 
 #: app/main.c:475
-#, fuzzy
 msgid ""
 "  --enable-stack-trace <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
 "\n"
 msgstr ""
-"                           Chế độ gỡ rối cho các tín hiệu quan trọng.\n"
+"  --enable-stack-trace <never | query | always>\n"
+"                           Phương thức gỡ rối cho các tín hiệu trầm trọng.\n"
 "\n"
 
 #: app/main.c:494
@@ -228,9 +230,8 @@ msgid "Cut"
 msgstr "Cắt"
 
 #: app/undo.c:3623
-#, fuzzy
 msgid "Copy"
-msgstr "sao chép"
+msgstr "Sao chép"
 
 #: app/undo.c:3624 app/tools/gimptexttool.c:150
 msgid "Text"
@@ -380,6 +381,7 @@ msgid "None (Fastest)"
 msgstr "Không (Nhanh nhất)"
 
 #: app/base/base-enums.c:14 app/core/core-enums.c:120
+#: app/widgets/widgets-enums.c:51
 msgid "Linear"
 msgstr "Tuyến"
 
@@ -462,32 +464,32 @@ msgstr "Nổi bật"
 #: app/config/gimpconfig-deserialize.c:192 app/config/gimpconfig.c:349
 #: app/config/gimpconfig.c:362 app/config/gimpscanner.c:307
 #: app/config/gimpscanner.c:370 app/core/gimpunits.c:158 app/gui/session.c:169
-#: app/plug-in/plug-in-rc.c:131
+#: app/plug-in/plug-in-rc.c:130
 msgid "fatal parse error"
 msgstr "lỗi phân tích cú pháp trầm trọng"
 
 #. please don't translate 'yes' and 'no'
-#: app/config/gimpconfig-deserialize.c:400
+#: app/config/gimpconfig-deserialize.c:401
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "Mong đợi 'có' hay 'không' cho for dấu hiệu boolean %s, nhận '%s'"
 
-#: app/config/gimpconfig-deserialize.c:457
+#: app/config/gimpconfig-deserialize.c:458
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "giá trị không hợp lệ '%s' cho dấu hiệu %s"
 
-#: app/config/gimpconfig-deserialize.c:471
+#: app/config/gimpconfig-deserialize.c:472
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "giá trị không hợp lệ '%ld' cho dấu hiệu %s"
 
-#: app/config/gimpconfig-deserialize.c:537
+#: app/config/gimpconfig-deserialize.c:538
 #, c-format
 msgid "while parsing token %s: %s"
 msgstr "Lỗi khi phân tích cú pháp token %s: %s"
 
-#: app/config/gimpconfig-deserialize.c:645
+#: app/config/gimpconfig-deserialize.c:646
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "giá trị cho dấu hiệu %s không phải là chuỗi UTF-8 hợp lệ"
@@ -495,7 +497,7 @@ msgstr "giá trị cho dấu hiệu %s không phải là chuỗi UTF-8 hợp l�
 #: app/config/gimpconfig-path.c:126
 #, c-format
 msgid "can not expand ${%s}"
-msgstr ""
+msgstr "không thể mở rộng ${%s}"
 
 #: app/config/gimpconfig.c:221
 #, c-format
@@ -536,9 +538,243 @@ msgstr "Phân tích '%s'\n"
 msgid "Saving '%s'\n"
 msgstr "Đang lưu '%s'\n"
 
+#. Not all strings defined here are used in the user interface
+#. *  (the preferences dialog mainly) and only those that are should
+#. *  be marked for translation.
+#.
+#: app/config/gimprc-blurbs.h:16
+msgid "Specifies how the area around the image should be drawn."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:19
+msgid ""
+"Sets the canvas padding color used if the padding mode is set to custom "
+"color."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:23
+msgid ""
+"Specify that marching ants for selected regions will be drawn with colormap "
+"cycling as opposed to be drawn as animated lines.  This color cycling option "
+"works only with 8-bit displays."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:28
+msgid "Ask for confirmation before closing an image without saving."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:31
+msgid "Sets the mode of cursor the GIMP will use."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:34
+msgid ""
+"Context-dependent cursors are cool.  They are enabled by default. However, "
+"they require overhead that you may want to do without."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:45
+msgid ""
+"When set to yes, this will ensure that each pixel of an image gets mapped to "
+"a pixel on the screen."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:74
+msgid ""
+"Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
+"algorithm.  The seed fill starts at the intially selected pixel and "
+"progresses in all directions until the difference of pixel intensity from "
+"the original is greater than a specified threshold. This value represents "
+"the default threshold."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:124
+msgid "Sets the browser used by the help system."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:127
+msgid "Sets the text to appear in image window status bars."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:130
+msgid "Sets the text to appear in image window titles."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:133
+msgid "When set to yes, the GIMP will use a different info window per image view."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:137
+msgid "Install a private colormap; might be useful on pseudocolor visuals."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:140
+msgid "Sets the level of interpolation used for scaling and other transformations."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:144
+msgid "How many recently opened image filenames to keep on the File menu."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:147
+msgid ""
+"Speed of marching ants in the selection outline.  This value is in "
+"milliseconds (less time indicates faster marching)."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:151
+msgid ""
+"GIMP will warn the user if an attempt is made to create an image that would "
+"take more memory than the size specified here."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:155
+msgid ""
+"Generally only a concern for 8-bit displays, this sets the minimum number of "
+"system colors allocated for the GIMP."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:179
+msgid ""
+"Sets the size of the navigation preview available in the lower right corner "
+"of the image window."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:183
+msgid ""
+"On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
+"sets how many processors GIMP should use simultaneously."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"When set to yes, the X server is queried for the mouse's current position on "
+"each motion event, rather than relying on the position hint.  This means "
+"painting with large brushes should be more accurate, but it may be slower.  "
+"Perversely, on some X servers turning on this option results in faster "
+"painting."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:206
+msgid "Sets the default preview size."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:209
+msgid ""
+"When the physical image size changes, setting this option to yes enables the "
+"automatic resizing of windows."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:213
+msgid ""
+"When zooming into and out of images, setting this option to yes enables the "
+"automatic resizing of windows."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:217
+msgid "Let GIMP try to restore your last saved session on each startup."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:220
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:224
+msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:230
+msgid ""
+"Sets the default menubar visibility. This can also be toggled with the View-"
+">Toggle Menubar command."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:234
+msgid ""
+"Sets the default ruler visibility. This can also be toggled with the View-"
+">Toggle Rulers command."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:238
+msgid ""
+"Set to yes to make the statusbar visible by default. This can also be "
+"toggled with the View->Toggle Statusbar command."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:242
+msgid "To display a handy GIMP tip on startup, set to yes."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:245
+msgid "To display tooltips, set to yes."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:248
+msgid ""
+"There is always a tradeoff between memory usage and speed.  In most cases, "
+"the GIMP opts for speed over memory.  However, if memory is a big issue, try "
+"to enable this setting."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:253
+msgid ""
+"Sets the swap file location. The gimp uses a tile based memory allocation "
+"scheme. The swap file is used to quickly and easily swap tiles out to disk "
+"and back in. Be aware that the swap file can easily get very large if the "
+"GIMP is used with large images. Also, things can get horribly slow if the "
+"swap file is created on a directory that is mounted over NFS.  For these "
+"reasons, it may be desirable to put your swap file in \"/tmp\"."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:262
+msgid "When set to yes, enables tear off menus."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:265
+msgid ""
+"Sets the temporary storage directory. Files will appear here during the "
+"course of running the GIMP.  Most files will disappear when the GIMP exits, "
+"but some files are likely to remain, so it is best if this directory not be "
+"one that is shared by other users."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:277
+msgid "Sets the size of the thumbnail saved with each image."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:280
+msgid ""
+"The tile cache is used to make sure the GIMP doesn't thrash tiles between "
+"memory and disk. Setting this value higher will cause the GIMP to use less "
+"swap space, but will also cause the GIMP to use more memory. Conversely, a "
+"smaller cache size causes the GIMP to use more swap space and less memory."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:290
+msgid "Sets the manner in which transparency is displayed in images."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:293
+msgid "Sets the size of the checkerboard used to display transparency."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:296
+msgid ""
+"When set to yes, the GIMP will not save if the image is unchanged since "
+"opening it."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:300
+msgid "Sets the number of operations kept on the undo stack."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:303
+msgid "When set to no the F1 help binding will be disabled."
+msgstr ""
+
 #: app/config/gimpscanner.c:74 app/gui/paths-dialog.c:1963
 #: app/gui/paths-dialog.c:2088 app/tools/gimpcurvestool.c:1414
-#: app/tools/gimplevelstool.c:1380
+#: app/tools/gimplevelstool.c:1384
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Không mở được tập tin: '%s': %s"
@@ -800,7 +1036,7 @@ msgid "FG to BG (HSV clockwise hue)"
 msgstr ""
 
 #: app/core/gimpbrush.c:375 app/core/gimpbrushgenerated.c:390
-#: app/core/gimpbrushpipe.c:318 app/core/gimpgradient.c:338
+#: app/core/gimpbrushpipe.c:319 app/core/gimpgradient.c:338
 #: app/core/gimppalette.c:299 app/core/gimppattern.c:302
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -829,12 +1065,12 @@ msgstr ""
 "Lỗi phân tích trầm trọng:\n"
 "Tập tin vẽ '%s' bị cụt."
 
-#: app/core/gimpbrush.c:565 app/core/gimpbrushpipe.c:340
+#: app/core/gimpbrush.c:565 app/core/gimpbrushpipe.c:341
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Chuỗi UTF-8 không hợp lệ trong tập tin vẽ '%s'"
 
-#: app/core/gimpbrush.c:573 app/core/gimpbrushpipe.c:342
+#: app/core/gimpbrush.c:573 app/core/gimpbrushpipe.c:343
 #: app/core/gimpcontext.c:1229 app/core/gimpdrawable.c:251
 #: app/core/gimpgradient.c:369 app/core/gimppalette.c:355
 #: app/core/gimppattern.c:368 app/tools/gimpvectortool.c:308
@@ -868,8 +1104,8 @@ msgstr ""
 msgid "Fatal Parse Error: '%s': unknown GIMP Brush version"
 msgstr ""
 
-#: app/core/gimpbrushpipe.c:350 app/core/gimpbrushpipe.c:370
-#: app/core/gimpbrushpipe.c:460
+#: app/core/gimpbrushpipe.c:351 app/core/gimpbrushpipe.c:371
+#: app/core/gimpbrushpipe.c:461
 #, c-format
 msgid ""
 "Fatal parsing error:\n"
@@ -1109,60 +1345,60 @@ msgstr "Đường dẫn không thể nâng cao hơn."
 msgid "Path cannot be lowered more."
 msgstr "Đường dẫn không thể hạ thấp hơn."
 
-#: app/core/gimpimagefile.c:454 app/core/gimpimagefile.c:964
+#: app/core/gimpimagefile.c:458 app/core/gimpimagefile.c:967
 #, c-format
 msgid "Failed to write thumbnail for '%s' as '%s': %s"
 msgstr "Không ghi được thumbnail cho '%s' là '%s': %s"
 
-#: app/core/gimpimagefile.c:460 app/core/gimpimagefile.c:970
+#: app/core/gimpimagefile.c:464 app/core/gimpimagefile.c:973
 #, c-format
 msgid "Failed to set permissions of thumbnail '%s': %s"
 msgstr "Không lập được các quyền của thumbnail '%s': %s"
 
-#: app/core/gimpimagefile.c:658
+#: app/core/gimpimagefile.c:661
 msgid "Remote image"
 msgstr "Ảnh ở xa"
 
-#: app/core/gimpimagefile.c:663
+#: app/core/gimpimagefile.c:666
 msgid "Failed to open"
 msgstr "Không mở được"
 
-#: app/core/gimpimagefile.c:688
+#: app/core/gimpimagefile.c:691
 msgid "No preview available"
 msgstr "Không xem trước được"
 
-#: app/core/gimpimagefile.c:692
+#: app/core/gimpimagefile.c:695
 msgid "Loading preview ..."
 msgstr "Đang nạp xem trước ...."
 
-#: app/core/gimpimagefile.c:696
+#: app/core/gimpimagefile.c:699
 msgid "Preview is out of date"
 msgstr "Xem trước quá hạn"
 
-#: app/core/gimpimagefile.c:700
+#: app/core/gimpimagefile.c:703
 msgid "Cannot create preview"
 msgstr "Không tạo được xem trước"
 
-#: app/core/gimpimagefile.c:710 app/gui/info-window.c:636
+#: app/core/gimpimagefile.c:713 app/gui/info-window.c:636
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d pixel"
 
-#: app/core/gimpimagefile.c:728
+#: app/core/gimpimagefile.c:731
 msgid "1 Layer"
 msgstr "1 Lớp"
 
-#: app/core/gimpimagefile.c:730
+#: app/core/gimpimagefile.c:733
 #, c-format
 msgid "%d Layers"
 msgstr "%d Lớp"
 
-#: app/core/gimpimagefile.c:809
+#: app/core/gimpimagefile.c:812
 #, c-format
 msgid "Failed to open thumbnail file '%s': %s"
 msgstr "Không mở được tập tin thumbnail '%s': %s"
 
-#: app/core/gimpimagefile.c:1058
+#: app/core/gimpimagefile.c:1061
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Không tạo được thư mục thumbnail '%s'."
@@ -1625,30 +1861,30 @@ msgstr ""
 msgid "Invalid character sequence in URI"
 msgstr "Dãy ký tự không hợp lệ trong URI"
 
-#: app/gui/about-dialog.c:135
+#: app/gui/about-dialog.c:133
 msgid "About The GIMP"
 msgstr "Nói về GIMP"
 
-#: app/gui/about-dialog.c:198
+#: app/gui/about-dialog.c:196
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Phiên bản %s được phân phối bởi"
 
-#: app/gui/about-dialog.c:250
+#: app/gui/about-dialog.c:249
 msgid "Visit http://www.gimp.org/ for more information"
 msgstr "Hãy tới http://www.gimp.org/ để biết thêm thông tin"
 
-#: app/gui/brush-select.c:185 app/tools/paint_options.c:124
+#: app/gui/brush-select.c:179 app/tools/paint_options.c:124
 #: app/widgets/gimplayerlistview.c:179
 msgid "Opacity:"
 msgstr "Độ đục:"
 
-#: app/gui/brush-select.c:202 app/tools/paint_options.c:145
+#: app/gui/brush-select.c:196 app/tools/paint_options.c:145
 #: app/tools/selection_options.c:140 app/widgets/gimplayerlistview.c:172
 msgid "Mode:"
 msgstr "Chế độ:"
 
-#: app/gui/brush-select.c:323
+#: app/gui/brush-select.c:318
 msgid ""
 "Unable to run brush callback.\n"
 "The corresponding plug-in may have crashed."
@@ -2406,7 +2642,7 @@ msgstr "X_em trước"
 msgid "No Selection"
 msgstr "Không có chọn lựa"
 
-#: app/gui/file-open-dialog.c:499 app/gui/file-open-dialog.c:529
+#: app/gui/file-open-dialog.c:500 app/gui/file-open-dialog.c:531
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Thumbnail %d của %d"
@@ -2477,18 +2713,16 @@ msgid "Replicate"
 msgstr "Sao"
 
 #: app/gui/gradient-editor-commands.c:552
-#, fuzzy
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
-msgstr "để sao phần được chọn"
+msgstr ""
 
 #: app/gui/gradient-editor-commands.c:555
-#, fuzzy
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
-msgstr "Chọn khoảng thời gian"
+msgstr ""
 
 #: app/gui/gradient-editor-commands.c:627
 msgid "Split Segment Uniformly"
@@ -2511,11 +2745,10 @@ msgid "Split"
 msgstr "Chia tách"
 
 #: app/gui/gradient-editor-commands.c:662
-#, fuzzy
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
-msgstr "trong đó để chia phần được chọn"
+msgstr ""
 
 #: app/gui/gradient-editor-commands.c:665
 msgid ""
@@ -2691,7 +2924,7 @@ msgstr ""
 msgid "Re-distribute Handles in Selection"
 msgstr ""
 
-#: app/gui/gradient-select.c:265
+#: app/gui/gradient-select.c:264
 msgid ""
 "Unable to run gradient callback.\n"
 "The corresponding plug-in may have crashed."
@@ -3169,30 +3402,28 @@ msgstr "/Lớp/Màu/Tự động/Làm ngang bằng"
 #. <Image>/Layer/Mask
 #: app/gui/image-menu.c:600
 msgid "/Layer/Mask/Add Layer Mask..."
-msgstr ""
+msgstr "/Lớp/Mask/Thêm Layer Mask..."
 
 #: app/gui/image-menu.c:604
 msgid "/Layer/Mask/Apply Layer Mask"
-msgstr ""
+msgstr "/Lớp/Mask/Áp dụng Layer Mask"
 
 #: app/gui/image-menu.c:608
 msgid "/Layer/Mask/Delete Layer Mask"
-msgstr ""
+msgstr "/Lớp/Mask/Xóa Layer Mask"
 
 #: app/gui/image-menu.c:613
 msgid "/Layer/Mask/Mask to Selection"
-msgstr ""
+msgstr "/Lớp/Mask/Mask cho vào phần chọn"
 
 #. <Image>/Layer/Transparency
 #: app/gui/image-menu.c:621
-#, fuzzy
 msgid "/Layer/Transparency/Add Alpha Channel"
-msgstr "/Lớp/Alpha/Thêm Kênh Alpha"
+msgstr "/Lớp/Độ trong suốt/Thêm Kênh Alpha"
 
 #: app/gui/image-menu.c:625
-#, fuzzy
 msgid "/Layer/Transparency/Alpha to Selection"
-msgstr "/Lớp/Alpha/Alpha cho Phần chọn"
+msgstr "/Lớp/Độ trong suốt/Alpha cho Phần chọn"
 
 #. <Image>/Tools
 #: app/gui/image-menu.c:637
@@ -3408,7 +3639,7 @@ msgid "/Delete Image"
 msgstr "/Xoá Ảnh"
 
 #. General
-#: app/gui/info-dialog.c:349 app/gui/preferences-dialog.c:1121
+#: app/gui/info-dialog.c:350 app/gui/preferences-dialog.c:1121
 #: app/gui/preferences-dialog.c:1188
 msgid "General"
 msgstr "Chung"
@@ -3881,7 +4112,7 @@ msgstr "Khoảng:"
 msgid "Preview"
 msgstr "Xem trước"
 
-#: app/gui/palette-select.c:241
+#: app/gui/palette-select.c:242
 msgid ""
 "Unable to run palette callback.\n"
 "The corresponding plug-in may have crashed."
@@ -4053,7 +4284,7 @@ msgstr "Nạp Đường Dẫn"
 msgid "Save Path"
 msgstr "Lưu Đường Dẫn"
 
-#: app/gui/pattern-select.c:249
+#: app/gui/pattern-select.c:244
 msgid ""
 "Unable to run pattern callback.\n"
 "The corresponding plug-in may have crashed."
@@ -4079,21 +4310,21 @@ msgstr "/Xoá Mẫu..."
 msgid "/Refresh Patterns"
 msgstr "/Làm tươi Mẫu"
 
-#: app/gui/plug-in-menus.c:335
+#: app/gui/plug-in-menus.c:343
 #, c-format
 msgid "Repeat \"%s\""
 msgstr "Nhắc lại \"%s\""
 
-#: app/gui/plug-in-menus.c:336
+#: app/gui/plug-in-menus.c:344
 #, c-format
 msgid "Re-show \"%s\""
 msgstr "Hiển thị lại \"%s\""
 
-#: app/gui/plug-in-menus.c:362
+#: app/gui/plug-in-menus.c:370
 msgid "Repeat Last"
 msgstr "Nhắc lại Lần cuối"
 
-#: app/gui/plug-in-menus.c:365
+#: app/gui/plug-in-menus.c:373
 msgid "Re-Show Last"
 msgstr "Hiển thị lại Lần cuối"
 
@@ -5351,9 +5582,8 @@ msgid "There is no active Layer or Channel to stroke to"
 msgstr ""
 
 #: app/gui/vectors-commands.c:448
-#, fuzzy
 msgid "Empty Vectors Copy"
-msgstr "Bản sao lớp rỗng"
+msgstr "Bản sao các vector rỗng"
 
 #: app/gui/vectors-commands.c:461
 msgid "New Path Options"
@@ -5599,12 +5829,7 @@ msgstr "Mở rộng GIMP"
 msgid "Temporary Procedure"
 msgstr "Thủ tục tạm thời"
 
-#: app/plug-in/plug-in.c:407
-#, c-format
-msgid "Unable to locate Plug-In: \"%s\""
-msgstr "Không thể định vị Plug-In: \"%s\""
-
-#: app/plug-in/plug-in.c:952
+#: app/plug-in/plug-in.c:912
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -5615,43 +5840,43 @@ msgid ""
 "to be on the safe side."
 msgstr ""
 
-#: app/plug-in/plug-ins.c:143
+#: app/plug-in/plug-ins.c:140
 msgid "Resource configuration"
 msgstr "Cấu hình Tài nguyên"
 
 #. query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file.
 #.
-#: app/plug-in/plug-ins.c:149
+#: app/plug-in/plug-ins.c:146
 msgid "Querying new Plug-ins"
 msgstr "Tra vấn plug-in mới"
 
-#: app/plug-in/plug-ins.c:161
+#: app/plug-in/plug-ins.c:158
 #, c-format
 msgid "querying plug-in: \"%s\"\n"
 msgstr "tra vấn plug-in: \"%s\"\n"
 
-#: app/plug-in/plug-ins.c:196
+#: app/plug-in/plug-ins.c:213
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "đang ghi \"%s\"\n"
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:242
+#: app/plug-in/plug-ins.c:263
 msgid "Initializing Plug-ins"
 msgstr "Sơ khởi plug-in"
 
-#: app/plug-in/plug-ins.c:251
+#: app/plug-in/plug-ins.c:272
 #, c-format
 msgid "Initializing plug-in: \"%s\"\n"
 msgstr "Đang sơ khởi plug-in: \"%s\"\n"
 
 #. run the available extensions
-#: app/plug-in/plug-ins.c:262
+#: app/plug-in/plug-ins.c:283
 msgid "Starting Extensions"
 msgstr "Bắt đầu phần mở rộng"
 
-#: app/plug-in/plug-ins.c:274
+#: app/plug-in/plug-ins.c:295
 #, c-format
 msgid "Starting extension: \"%s\""
 msgstr "Bắt đầu phần mở rộng: \"%s\""
@@ -6068,7 +6293,7 @@ msgstr "Hiệu chỉnh đường cong màu"
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr ""
 
-#: app/tools/gimpcurvestool.c:619 app/tools/gimplevelstool.c:399
+#: app/tools/gimpcurvestool.c:619 app/tools/gimplevelstool.c:403
 msgid "R_eset Channel"
 msgstr "Đặt lại Kênh"
 
@@ -6089,7 +6314,7 @@ msgid "Curve Type:"
 msgstr "Kiểu đường cong:"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:704 app/tools/gimplevelstool.c:654
+#: app/tools/gimpcurvestool.c:704 app/tools/gimplevelstool.c:658
 msgid "All Channels"
 msgstr "Toàn bộ các Kênh"
 
@@ -6215,57 +6440,61 @@ msgstr "Chọn các vùng tiếp giáp"
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Công cụ/Công cụ chọn/Chọn tù mù"
 
-#: app/tools/gimphistogramtool.c:123
+#: app/tools/gimphistogramtool.c:120
 msgid "Histogram"
 msgstr "Bảng thống kê"
 
-#: app/tools/gimphistogramtool.c:124
+#: app/tools/gimphistogramtool.c:121
 msgid "View image histogram"
 msgstr "Xem bảng thống kê ảnh"
 
-#: app/tools/gimphistogramtool.c:125
+#: app/tools/gimphistogramtool.c:122
 msgid "/Layer/Colors/Histogram..."
 msgstr "/Lớp/Màu/Bảng thống kê..."
 
-#: app/tools/gimphistogramtool.c:186
+#: app/tools/gimphistogramtool.c:183
 msgid "Histogram does not operate on indexed drawables."
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:331
+#: app/tools/gimphistogramtool.c:329
 msgid "Mean:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:332
+#: app/tools/gimphistogramtool.c:330
 msgid "Std Dev:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:333
+#: app/tools/gimphistogramtool.c:331
 msgid "Median:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:334
+#: app/tools/gimphistogramtool.c:332
 msgid "Pixels:"
 msgstr "Pixels:"
 
-#: app/tools/gimphistogramtool.c:335
+#: app/tools/gimphistogramtool.c:333
 msgid "Count:"
 msgstr "Tổng số:"
 
-#: app/tools/gimphistogramtool.c:336
+#: app/tools/gimphistogramtool.c:334
 msgid "Percentile:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:349
+#: app/tools/gimphistogramtool.c:346
 msgid "View Image Histogram"
 msgstr "Xem bảng thống kê ảnh"
 
-#: app/tools/gimphistogramtool.c:367
+#: app/tools/gimphistogramtool.c:361
+msgid "Intensity Range:"
+msgstr "Dải Cường độ:"
+
+#: app/tools/gimphistogramtool.c:368
 msgid "Information on Channel:"
 msgstr "Thông tin trên Kênh:"
 
-#: app/tools/gimphistogramtool.c:380
-msgid "Intensity Range:"
-msgstr "Dải Cường độ:"
+#: app/tools/gimphistogramtool.c:392
+msgid "Histogram Scale:"
+msgstr "Cân chỉnh bảng thống kê:"
 
 #: app/tools/gimphuesaturationtool.c:108
 msgid "Hue-Saturation"
@@ -6416,65 +6645,65 @@ msgstr "Điều chỉnh mức độ màu"
 msgid "/Layer/Colors/Levels..."
 msgstr "/Lớp/Màu/Mức độ..."
 
-#: app/tools/gimplevelstool.c:230
+#: app/tools/gimplevelstool.c:229
 msgid "Adjust Color Levels"
 msgstr "Chỉnh mức độ màu"
 
-#: app/tools/gimplevelstool.c:282
+#: app/tools/gimplevelstool.c:279
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr ""
 
-#: app/tools/gimplevelstool.c:387
+#: app/tools/gimplevelstool.c:391
 msgid "Modify Levels for Channel:"
 msgstr "Thay đổi Mức Độ cho Kênh:"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:409
+#: app/tools/gimplevelstool.c:413
 msgid "Input Levels"
 msgstr "Mức Nhập Vào"
 
-#: app/tools/gimplevelstool.c:486
+#: app/tools/gimplevelstool.c:490
 msgid "Pick Black Point"
 msgstr "Nhặt điểm đen"
 
-#: app/tools/gimplevelstool.c:518
+#: app/tools/gimplevelstool.c:522
 msgid "Pick Gray Point"
 msgstr "Nhặt điểm xám"
 
-#: app/tools/gimplevelstool.c:534
+#: app/tools/gimplevelstool.c:538
 msgid "Gamma"
 msgstr "Gamma"
 
-#: app/tools/gimplevelstool.c:551
+#: app/tools/gimplevelstool.c:555
 msgid "Pick White Point"
 msgstr "Nhặt điểm trắng"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:575
+#: app/tools/gimplevelstool.c:579
 msgid "Output Levels"
 msgstr "Mức xuất ra"
 
-#: app/tools/gimplevelstool.c:665
+#: app/tools/gimplevelstool.c:669
 msgid "_Auto"
 msgstr "Tự động"
 
-#: app/tools/gimplevelstool.c:668
+#: app/tools/gimplevelstool.c:672
 msgid "Adjust levels automatically"
 msgstr "Tự động hiệu chỉnh mức độ"
 
-#: app/tools/gimplevelstool.c:678
+#: app/tools/gimplevelstool.c:682
 msgid "Read levels settings from file"
 msgstr "Đọc thiết lập mức độ từ tập tin"
 
-#: app/tools/gimplevelstool.c:688
+#: app/tools/gimplevelstool.c:692
 msgid "Save levels settings to file"
 msgstr "Lưu thiết lập về mức vào tập tin"
 
-#: app/tools/gimplevelstool.c:1311
+#: app/tools/gimplevelstool.c:1315
 msgid "Load Levels"
 msgstr "Nạp Mức Độ"
 
-#: app/tools/gimplevelstool.c:1326
+#: app/tools/gimplevelstool.c:1330
 msgid "Save Levels"
 msgstr "Lưu Mức Độ"
 
@@ -6823,15 +7052,15 @@ msgstr "Giảm thiểu ảnh thành 2 màu dùng ngưỡng"
 msgid "/Layer/Colors/Threshold..."
 msgstr "/Lớp/Màu/Ngưỡng..."
 
-#: app/tools/gimpthresholdtool.c:158
+#: app/tools/gimpthresholdtool.c:157
 msgid "Apply Threshold"
 msgstr "Áp dụng Ngưỡng"
 
-#: app/tools/gimpthresholdtool.c:202
+#: app/tools/gimpthresholdtool.c:199
 msgid "Threshold does not operate on indexed drawables."
 msgstr ""
 
-#: app/tools/gimpthresholdtool.c:256
+#: app/tools/gimpthresholdtool.c:260
 msgid "Threshold Range:"
 msgstr "Loại Ngưỡng:"
 
@@ -7027,6 +7256,10 @@ msgstr "Bên trong"
 #: app/widgets/widgets-enums.c:14
 msgid "Netscape"
 msgstr "Netscape"
+
+#: app/widgets/widgets-enums.c:52
+msgid "Logarithmic"
+msgstr ""
 
 #: app/widgets/gimpbrusheditor.c:163
 msgid "Hardness:"
@@ -7344,7 +7577,7 @@ msgstr "Không xác định"
 msgid "Columns:"
 msgstr "Cột:"
 
-#: app/widgets/gimppropwidgets.c:825
+#: app/widgets/gimppropwidgets.c:828
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Trường nhập văn bản này được giới hạn trong %d ký tự."
@@ -7599,14 +7832,15 @@ msgid "Resize"
 msgstr "Đổi kích thước"
 
 #: libgimptool/gimptoolenums.c:117
-#, fuzzy
 msgid "Fixed Size"
-msgstr "Cỡ Ảnh"
+msgstr "Cỡ cố định"
 
 #: libgimptool/gimptoolenums.c:118
-#, fuzzy
 msgid "Fixed Aspect Ratio"
-msgstr "Tỷ lệ Kích cỡ/Hình thể cố định"
+msgstr "Tỷ lệ hình thể cố định"
+
+#~ msgid "Unable to locate Plug-In: \"%s\""
+#~ msgstr "Không thể định vị Plug-In: \"%s\""
 
 #~ msgid "The GIMP is not properly installed for the current user\n"
 #~ msgstr "GIMP không được cài đặt đúng cho người dùng hiện thời\n"
@@ -7898,3 +8132,4 @@ msgstr "Tỷ lệ Kích cỡ/Hình thể cố định"
 
 #~ msgid "Color Selection"
 #~ msgstr "Chọn Màu"
+
