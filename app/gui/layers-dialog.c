@@ -2383,6 +2383,7 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
        */
       gdk_flush ();
     }
+  lc_dialog_menu_preview_dirty(GTK_OBJECT(gimp_drawable_gimage(GIMP_DRAWABLE(layer_widget->layer))),NULL);
 }
 
 static void

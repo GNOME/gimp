@@ -51,6 +51,8 @@ void         paths_dialog_flush      (void);
 void         layers_dialog_clear     (void);
 void         channels_dialog_clear   (void);
 
+void         lc_dialog_menu_preview_dirty (GtkObject *,gpointer);
+
 /*  Main dialog structure  */
 extern LCDialog *lc_dialog;
 

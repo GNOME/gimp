@@ -1,3 +1,12 @@
+Thu Jun 24 22:49:41 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* layers_dialog.c
+	* lc_dialog.c
+	* lc_dialogP.h
+
+	L&C&P previews are now updated on undo and layer movement
+	operations.
+
 Thu Jun 24 22:34:54 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap: some changes on request by the author Wolfgang Hofer

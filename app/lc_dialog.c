@@ -288,9 +288,9 @@ image_menu_preview_update_do(GimpImage *gimage)
   return FALSE;
 }
 
-static void
-menu_preview_dirty (GtkObject *obj,
-		    gpointer   client_data)
+void
+lc_dialog_menu_preview_dirty (GtkObject *obj,
+			      gpointer   client_data)
 {
   /* Update preview at a less busy time */
   /*   printf("menu_preview_dirty:: adding %p to obj %p\n",client_data,obj); */
@@ -310,11 +310,16 @@ lc_dialog_image_menu_preview_update_cb (GtkWidget *widget,
 {
   GtkWidget *menu_preview;
   GimpImage *gimage;
-  GimpImage *gimage_to_update = GIMP_IMAGE((GimpImage *)client_data);
+  GimpImage *gimage_to_update = (GimpImage *)client_data; 
+
+  /* This is called via an idle  function, so it is possible
+   * that the client_data no longer points to a GimpImage.. So don't
+   * pass it to the GIMP_IMAGE() cast function. We never deference
+   * it here anyways.
+   */
 
   menu_preview = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(widget),"menu_preview");
   gimage = GIMP_IMAGE((GimpImage *)gtk_object_get_data(GTK_OBJECT(widget),"menu_preview_gimage"));
-/*    printf("image_menu_preview_update::menu_preview = %p gimage %p gimage_to_update %d\n",menu_preview,gimage,gimage_to_update);  */
 
   if(menu_preview && gimage && gimage_to_update == gimage)
     {
@@ -591,7 +596,7 @@ lc_dialog_create_image_menu_cb (gpointer im,
       /* Only add this signal once */
       gtk_object_set_data(GTK_OBJECT (gimage),"menu_preview_dirty",(gpointer)1);
       gtk_signal_connect_after (GTK_OBJECT (gimage), "dirty",
- 				GTK_SIGNAL_FUNC(menu_preview_dirty),NULL);
+ 				GTK_SIGNAL_FUNC(lc_dialog_menu_preview_dirty),NULL);
     }
   gtk_object_set_data(GTK_OBJECT(menu_item),"menu_preview",wcolor_box);
   gtk_object_set_data(GTK_OBJECT(menu_item),"menu_preview_gimage",gimage);
