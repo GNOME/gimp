@@ -29,10 +29,9 @@
 
 #include "core-types.h"
 
+#include "config/gimpconfig.h"
 #include "config/gimpscanner.h"
 
-#include "gimp.h"
-#include "gimpcoreconfig.h"
 #include "gimpdocuments.h"
 #include "gimpimagefile.h"
 #include "gimplist.h"
@@ -40,44 +39,105 @@
 #include "libgimp/gimpintl.h"
 
 
-void
-gimp_documents_init (Gimp *gimp)
+static void     gimp_documents_config_iface_init (gpointer  iface,
+                                                  gpointer  iface_data);
+static void     gimp_documents_serialize         (GObject  *object,
+                                                  gint      fd);
+static gboolean gimp_documents_deserialize       (GObject  *object,
+                                                  GScanner *scanner);
+
+
+GType 
+gimp_documents_get_type (void)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (gimp->documents == NULL);
+  static GType documents_type = 0;
 
-  gimp->documents = gimp_list_new (GIMP_TYPE_IMAGEFILE,
-				   GIMP_CONTAINER_POLICY_STRONG);
-  gimp_object_set_name (GIMP_OBJECT (gimp->documents), "documents");
-}
-
-void 
-gimp_documents_exit (Gimp *gimp)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  if (gimp->documents)
+  if (! documents_type)
     {
-      g_object_unref (G_OBJECT (gimp->documents));
-      gimp->documents = NULL;
+      static const GTypeInfo documents_info =
+      {
+        sizeof (GimpDocumentsClass),
+	NULL,           /* base_init      */
+        NULL,           /* base_finalize  */
+	NULL,           /* class_init     */
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpDocuments),
+	0,              /* n_preallocs    */
+	NULL            /* instance_init  */
+      };
+      static const GInterfaceInfo documents_iface_info = 
+      { 
+        gimp_documents_config_iface_init,
+        NULL,           /* iface_finalize */ 
+        NULL            /* iface_data     */
+      };
+
+      documents_type = g_type_register_static (GIMP_TYPE_LIST, 
+                                               "GimpDocuments",
+                                               &documents_info, 0);
+
+      g_type_add_interface_static (documents_type,
+                                   GIMP_TYPE_CONFIG_INTERFACE,
+                                   &documents_iface_info);
     }
+
+  return documents_type;
 }
 
-void
-gimp_documents_load (Gimp *gimp)
+static void
+gimp_documents_config_iface_init (gpointer  iface,
+                                  gpointer  iface_data)
 {
-  gchar      *filename;
-  GScanner   *scanner;
+  GimpConfigInterface *config_iface = (GimpConfigInterface *) iface;
+
+  config_iface->serialize   = gimp_documents_serialize;
+  config_iface->deserialize = gimp_documents_deserialize;
+}
+
+static void
+gimp_documents_serialize (GObject *documents,
+                          gint     fd)
+{
+  GList   *list;
+  GString *str;
+
+  const gchar *header =
+    "# GIMP documents\n"
+    "#\n"
+    "# This file will be entirely rewritten every time you\n"
+    "# quit the gimp.\n\n";
+
+  write (fd, header, strlen (header));
+
+  str = g_string_new (NULL);
+
+  for (list = GIMP_LIST (documents)->list; list; list = list->next)
+    {
+      gchar *escaped;
+
+      escaped = g_strescape (GIMP_OBJECT (list->data)->name, NULL);
+
+      g_string_assign (str, "(document \"");
+      g_string_append (str, escaped);
+      g_string_append (str, "\")\n");
+
+      g_free (escaped);
+
+      write (fd, str->str, str->len);
+    }
+
+  g_string_free (str, TRUE);
+}
+
+static gboolean
+gimp_documents_deserialize (GObject  *documents,
+                            GScanner *scanner)
+{
   GTokenType  token;
+  gint        size;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  filename = gimp_personal_rc_file ("documents");
-  scanner = gimp_scanner_new (filename);
-  g_free (filename);
-
-  if (! scanner)
-    return;
+  size = GPOINTER_TO_INT (g_object_get_data (documents, "thumbnail_size"));
 
   g_scanner_scope_add_symbol (scanner, 0,
                               "document", GINT_TO_POINTER (1));
@@ -111,14 +171,12 @@ gimp_documents_load (Gimp *gimp)
                 }
 
               imagefile = gimp_imagefile_new (uri);
-              gimp_imagefile_update (imagefile, gimp->config->thumbnail_size);
+              gimp_imagefile_update (imagefile, size);
 
               g_free (uri);
 
-              GIMP_LIST (gimp->documents)->list =
-                g_list_append (GIMP_LIST (gimp->documents)->list, imagefile);
-
-              gimp->documents->num_children++;
+              gimp_container_add (GIMP_CONTAINER (documents),
+                                  GIMP_OBJECT (imagefile));
             }
           break;
 
@@ -132,96 +190,98 @@ gimp_documents_load (Gimp *gimp)
     }
   while (token != G_TOKEN_EOF);
 
+  GIMP_LIST (documents)->list = g_list_reverse (GIMP_LIST (documents)->list);
+
   if (token != G_TOKEN_LEFT_PAREN)
     {
       g_scanner_get_next_token (scanner);
       g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
                              _("fatal parse error"), TRUE);
+      return FALSE;
     }
-
-  gimp_scanner_destroy (scanner);
+  
+  return TRUE;
 }
 
-static void
-gimp_documents_save_func (GimpImagefile *imagefile,
-			  FILE          *fp)
+GimpContainer *
+gimp_documents_new (void)
 {
-  gchar *escaped = g_strescape (GIMP_OBJECT (imagefile)->name, NULL);
+  GObject *documents;
 
-  fprintf (fp, "(document \"%s\")\n", escaped);
-  g_free (escaped);
+  documents = g_object_new (GIMP_TYPE_DOCUMENTS,
+                            "name",          "documents",
+                            "children_type", GIMP_TYPE_IMAGEFILE,
+                            "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                            NULL);
+  
+  return GIMP_CONTAINER (documents);
 }
 
 void
-gimp_documents_save (Gimp *gimp)
+gimp_documents_load (GimpDocuments *documents,
+                     gint           thumbnail_size)
 {
-  gchar *tmp_filename = NULL;
-  gchar *bak_filename = NULL;
-  gchar *rc_filename  = NULL;
-  FILE  *fp;
+  gchar  *filename;
+  GError *error = NULL;
 
-  tmp_filename = gimp_personal_rc_file ("#documents.tmp~");
-  bak_filename = gimp_personal_rc_file ("documents.bak");
-  rc_filename  = gimp_personal_rc_file ("documents");
+  g_return_if_fail (GIMP_IS_DOCUMENTS (documents));
 
-  fp = fopen (tmp_filename, "w");
+  g_object_set_data (G_OBJECT (documents), "thumbnail_size",
+                     GINT_TO_POINTER (thumbnail_size));
 
-  if (! fp)
-    goto cleanup;
+  filename = gimp_personal_rc_file ("documents");
 
-  fprintf (fp,
-	   "# GIMP documents\n"
-	   "#\n"
-	   "# This file will be entirely rewritten every time you\n"
-	   "# quit the gimp.\n\n");
-
-  gimp_container_foreach (gimp->documents,
-			  (GFunc) gimp_documents_save_func,
-			  fp);
-
-  fclose (fp);
-
-#if defined(G_OS_WIN32) || defined(__EMX__)
-  /* First rename the old documents out of the way */
-  unlink (bak_filename);
-  rename (rc_filename, bak_filename);
-#endif
-
-  if (rename (tmp_filename, rc_filename) != 0)
+  if (! gimp_config_deserialize (G_OBJECT (documents), filename, &error))
     {
-#if defined(G_OS_WIN32) || defined(__EMX__)
-      /* Rename the old documentrc back */
-      rename (bak_filename, rc_filename);
-#endif
-      unlink (tmp_filename);
+      g_message (error->message);
+      g_error_free (error);
     }
 
- cleanup:
-  g_free (tmp_filename);
-  g_free (bak_filename);
-  g_free (rc_filename);
+  g_free (filename);
+}
+
+void
+gimp_documents_save (GimpDocuments *documents)
+{
+  gchar  *filename;
+  GError *error = NULL;
+
+  g_return_if_fail (GIMP_IS_DOCUMENTS (documents));
+
+  filename = gimp_personal_rc_file ("documents");
+
+  if (! gimp_config_serialize (G_OBJECT (documents), filename, &error))
+    {
+      g_message (error->message);
+      g_error_free (error);
+    }
+
+  g_free (filename);
 }
 
 GimpImagefile *
-gimp_documents_add (Gimp        *gimp,
-		    const gchar *uri)
+gimp_documents_add (GimpDocuments *documents,
+                    const gchar   *uri)
 {
   GimpImagefile *imagefile;
+  GimpContainer *container;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_DOCUMENTS (documents), NULL);
   g_return_val_if_fail (uri != NULL, NULL);
 
-  imagefile = (GimpImagefile *)
-    gimp_container_get_child_by_name (gimp->documents, uri);
+  container = GIMP_CONTAINER (documents);
+
+  imagefile = (GimpImagefile *) gimp_container_get_child_by_name (container,
+                                                                  uri);
 
   if (imagefile)
     {
-      gimp_container_reorder (gimp->documents, GIMP_OBJECT (imagefile), 0);
+      gimp_container_reorder (container, GIMP_OBJECT (imagefile), 0);
     }
   else
     {
       imagefile = gimp_imagefile_new (uri);
-      gimp_container_add (gimp->documents, GIMP_OBJECT (imagefile));
+      gimp_container_add (container, GIMP_OBJECT (imagefile));
       g_object_unref (G_OBJECT (imagefile));
     }
 

@@ -185,7 +185,7 @@ gimp_init (Gimp *gimp)
 
   gimp->standard_tool_info  = NULL;
 
-  gimp_documents_init (gimp);
+  gimp->documents           = gimp_documents_new ();
 
   gimp->have_current_cut_buffer = FALSE;
 
@@ -241,7 +241,10 @@ gimp_finalize (GObject *object)
     }
 
   if (gimp->documents)
-    gimp_documents_exit (gimp);
+    {
+      g_object_unref (G_OBJECT (gimp->documents));
+      gimp->documents = NULL;
+    }
 
   gimp_tool_info_set_standard (gimp, NULL);
 
@@ -543,7 +546,8 @@ gimp_restore (Gimp               *gimp,
 
   /*  initialize the document history  */
   (* status_callback) (NULL, _("Documents"), 0.90);
-  gimp_documents_load (gimp);
+  gimp_documents_load (GIMP_DOCUMENTS (gimp->documents),
+                       gimp->config->thumbnail_size);
 
   (* status_callback) (NULL, NULL, 1.00);
 
@@ -560,7 +564,7 @@ gimp_shutdown (Gimp *gimp)
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
-  gimp_documents_save (gimp);
+  gimp_documents_save (GIMP_DOCUMENTS (gimp->documents));
   gimp_parasiterc_save (gimp);
   gimp_unitrc_save (gimp);
 }

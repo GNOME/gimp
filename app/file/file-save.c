@@ -167,7 +167,8 @@ file_save (GimpImage     *gimage,
       /*  set this image to clean  */
       gimp_image_clean_all (gimage);
 
-      imagefile = gimp_documents_add (gimage->gimp, uri);
+      imagefile = gimp_documents_add (GIMP_DOCUMENTS (gimage->gimp->documents),
+                                      uri);
 
       if (set_uri)
 	{

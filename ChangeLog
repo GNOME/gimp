@@ -1,3 +1,14 @@
+2002-05-14  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-types.h
+	* app/core/gimpdocuments.[ch]: made the list of recently used
+	images an object derived from GimpList that implements the
+	GimpConfigInterface.
+
+	* app/core/gimp.c
+	* app/file/file-open.c
+	* app/file/file-save.c: changed accordingly.
+
 2002-05-14  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/plasma.c: Added fixes for bugs #81730 and 

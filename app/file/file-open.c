@@ -208,7 +208,7 @@ file_open_with_proc_and_display (Gimp               *gimp,
 
       g_object_unref (G_OBJECT (gimage));
 
-      imagefile = gimp_documents_add (gimp, uri);
+      imagefile = gimp_documents_add (GIMP_DOCUMENTS (gimp->documents), uri);
 
       /* save a thumbnail of every opened image */
       gimp_imagefile_save_thumbnail (imagefile, gimage);
