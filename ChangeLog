@@ -1,3 +1,12 @@
+Wed Sep  1 20:45:56 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* tools/pdbgen/pdb/fileops.pdb
+	* app/fileops_cmds.c: applied the patch from Wolfgang Hofer that
+	should fix the problems saving jpeg with GAP.
+
+	* app/paint_core.[ch]: preview length of brush-stroke in statusbar
+	when drawing a line using <Shift>. Do we need the angle here too??
+
 Wed Sep  1 14:12:17 CEST 1999  Pablo Saratxaga <pablo@mandrakesoft.com>
         * po/da.po, configure.in: added danish file from
         Henrik Hansen <hh@mailserver.dk>

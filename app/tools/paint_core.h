@@ -42,41 +42,43 @@ typedef enum
 typedef void * (* PaintFunc)   (PaintCore *, GimpDrawable *, int);
 struct _paint_core
 {
-  DrawCore *      core;         /*  Core select object          */
+  DrawCore *      core;          /*  Core select object         */
 
-  double          startx;       /*  starting x coord            */
-  double          starty;       /*  starting y coord            */
-  double          startpressure;  /* starting pressure          */
+  double          startx;        /*  starting x coord           */
+  double          starty;        /*  starting y coord           */
+  double          startpressure; /* starting pressure           */
   double          startxtilt;    /* starting xtilt              */
-  double          startytilt;  /* starting ytilt                */
+  double          startytilt;    /* starting ytilt              */
 
-  double          curx;         /*  current x coord             */
-  double          cury;         /*  current y coord             */
-  double          curpressure;   /*  current pressure            */
-  double          curxtilt;     /*  current xtilt               */
-  double          curytilt;     /*  current ytilt               */
+  double          curx;          /*  current x coord            */
+  double          cury;          /*  current y coord            */
+  double          curpressure;   /*  current pressure           */
+  double          curxtilt;      /*  current xtilt              */
+  double          curytilt;      /*  current ytilt              */
 
-  double          lastx;        /*  last x coord                */
-  double          lasty;        /*  last y coord                */
-  double          lastpressure; /* last pressure               */
-  double          lastxtilt;    /* last xtilt                  */
-  double          lastytilt;    /* last ytilt                  */
+  double          lastx;         /*  last x coord               */
+  double          lasty;         /*  last y coord               */
+  double          lastpressure;  /*  last pressure              */
+  double          lastxtilt;     /*  last xtilt                 */
+  double          lastytilt;     /*  last ytilt                 */ 
 
-  int             state;        /*  state of buttons and keys   */
+  int             state;         /*  state of buttons and keys  */
 
-  double          distance;     /*  distance traveled by brush  */
-  double          spacing;      /*  distance traveled by brush  */
+  double          distance;      /*  distance traveled by brush */
+  double          spacing;       /*  distance traveled by brush */
 
-  int             x1, y1;       /*  image space coordinate      */
-  int             x2, y2;       /*  image space coords          */
+  int             x1, y1;        /*  image space coordinate     */
+  int             x2, y2;        /*  image space coords         */
 
-  GimpBrush *     brush;        /*  current brush	        */
+  GimpBrush *     brush;         /*  current brush	        */
 
-  PaintFunc       paint_func;   /*  painting function           */
+  PaintFunc       paint_func;    /*  painting function          */
 
-  int             pick_colors;  /*  pick color if ctl or alt is pressed  */
-  int             pick_state;   /*  was ctl or alt pressed when clicked?  */
-  int		  flags;	/*  tool flags, see ToolFlags above */
+  int             pick_colors;   /*  pick color if ctrl or alt is pressed  */
+  int             pick_state;    /*  was ctrl or alt pressed when clicked? */
+  int		  flags;	 /*  tool flags, see ToolFlags above       */
+
+  guint           context_id;    /*  for the statusbar          */
 };
 
 extern PaintCore  non_gui_paint_core;

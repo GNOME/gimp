@@ -125,7 +125,7 @@ HELP
 	headers => [ qw(<string.h>) ],
 	proc => [ 'proc->name', 'new_args' ],
 	args => [ 'new_args', 'return_vals' ],
-	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc' ],
+	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc', 'gint i' ],
 	code => <<'CODE'
 {
   file_proc = file_proc_find (save_procs, %%raw_filename%%);
@@ -137,6 +137,13 @@ HELP
   new_args = g_new (%%argtype%%, proc->num_args);
   memset (new_args, 0, sizeof (%%argtype%%) * proc->num_args);
   memcpy (new_args, args, sizeof (%%argtype%%) * 5);
+
+  for (i=5; i<proc->num_args; i++)
+  {
+    new_args[i].arg_type = proc->args[i].arg_type;
+    if (proc->args[i].arg_type == PDB_STRING)
+      new_args[i].value.pdb_pointer = g_strdup("\0");
+  }
 
   return_vals = %%exec%%;
   g_free (new_args);

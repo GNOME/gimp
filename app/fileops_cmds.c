@@ -118,6 +118,7 @@ file_save_invoker (Argument *args)
   Argument *return_vals;
   PlugInProcDef *file_proc;
   ProcRecord *proc;
+  gint i;
 
   file_proc = file_proc_find (save_procs, (gchar *) args[4].value.pdb_pointer);
   if (!file_proc) 
@@ -128,6 +129,13 @@ file_save_invoker (Argument *args)
   new_args = g_new (Argument, proc->num_args);
   memset (new_args, 0, sizeof (Argument) * proc->num_args);
   memcpy (new_args, args, sizeof (Argument) * 5);
+
+  for (i=5; i<proc->num_args; i++)
+  {
+    new_args[i].arg_type = proc->args[i].arg_type;
+    if (proc->args[i].arg_type == PDB_STRING)
+      new_args[i].value.pdb_pointer = g_strdup("\0");
+  }
 
   return_vals = procedural_db_execute (proc->name, new_args);
   g_free (new_args);

@@ -43,7 +43,9 @@
 #define  TARGET_HEIGHT  15
 #define  TARGET_WIDTH   15
 
-#define    EPSILON  0.00001
+#define  EPSILON  0.00001
+
+#define  STATUSBAR_SIZE 128
 
 /*  global variables--for use in the various paint tools  */
 PaintCore  non_gui_paint_core;
@@ -65,7 +67,7 @@ static void      canvas_tiles_to_canvas_buf (PaintCore *);
 static void      brush_to_canvas_buf        (PaintCore *, MaskBuf *, int);
 static void      set_undo_tiles             (GimpDrawable *, int, int, int, int);
 static void      set_canvas_tiles           (int, int, int, int);
-static int     paint_core_invalidate_cache  (GimpBrush *brush, gpointer *blah);
+static int       paint_core_invalidate_cache  (GimpBrush *brush, gpointer *blah);
 
 /***********************************************************************/
 
@@ -183,8 +185,14 @@ paint_core_button_press (Tool           *tool,
   paint_core->curxtilt = bevent->xtilt;
   paint_core->curytilt = bevent->ytilt;
   paint_core->state = bevent->state;
-
-  /*  if this is a new image, reinit the core vals  */
+  
+  if (gdisp_ptr != tool->gdisp_ptr)
+    {
+      /* initialize the statusbar display */
+      paint_core->context_id = 
+	gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "paint");
+    }
+ /*  if this is a new image, reinit the core vals  */
   if ((gdisp_ptr != tool->gdisp_ptr) || ! (bevent->state & GDK_SHIFT_MASK))
     {
       /*  initialize some values  */
@@ -373,21 +381,24 @@ paint_core_cursor_update (Tool           *tool,
   PaintCore * paint_core;
   GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
   int x, y;
+  gchar status_str[STATUSBAR_SIZE];
 
   gdisp = (GDisplay *) gdisp_ptr;
   paint_core = (PaintCore *) tool->private;
 
   /*  undraw the current tool  */
   draw_core_pause (paint_core->core, tool);
+  if (paint_core->context_id)
+    gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), paint_core->context_id);
 
   if ((layer = gimage_get_active_layer (gdisp->gimage)))
     {
       /* If shift is down and this is not the first paint stroke, draw a line */
       if (gdisp_ptr == tool->gdisp_ptr && (mevent->state & GDK_SHIFT_MASK))
-	{
-	  ctype = GDK_PENCIL;
+	{ 
+	  gdouble dx, dy, d;
 
-	  
+	  ctype = GDK_PENCIL;	  
 	  /*  Get the current coordinates */ 
 	  gdisplay_untransform_coords_f (gdisp, 
 					 (double) mevent->x, 
@@ -395,16 +406,17 @@ paint_core_cursor_update (Tool           *tool,
 					 &paint_core->curx, 
 					 &paint_core->cury, TRUE);
 
+	  dx = paint_core->curx - paint_core->lastx;
+	  dy = paint_core->cury - paint_core->lasty;
+		  
 	  /* restrict to horizontal/vertical lines, if modifiers are pressed */
 	  if (mevent->state & GDK_MOD1_MASK)
 	    {
 	      if (mevent->state & GDK_CONTROL_MASK)
 		{
-		  double dx, dy, d;
-
 		  dx = paint_core->curx - paint_core->lastx;
 		  dy = paint_core->cury - paint_core->lasty;
-		  d  = (fabs(dx) + fabs(dy)) / 2;  
+		  d = (fabs(dx) + fabs(dy)) / 2;
 
 		  paint_core->curx = paint_core->lastx + ((dx < 0) ? -d : d);
 		  paint_core->cury = paint_core->lasty + ((dy < 0) ? -d : d);
@@ -414,6 +426,29 @@ paint_core_cursor_update (Tool           *tool,
 	    }
 	  else if (mevent->state & GDK_CONTROL_MASK)
 	    paint_core->cury = paint_core->lasty;
+
+	  /*  show distance in statusbar  */
+	  dx = paint_core->curx - paint_core->lastx;
+	  dy = paint_core->cury - paint_core->lasty;
+
+	  if (gdisp->dot_for_dot)
+	    {
+	      d = sqrt (SQR (dx) + SQR (dy));
+	      g_snprintf (status_str, STATUSBAR_SIZE, "%.1f %s", d, _("pixels"));
+	    }
+	  else
+	    {
+	      gchar *format_str = g_strdup_printf ("%%.%df %s",
+						   gimp_unit_get_digits (gdisp->gimage->unit),
+						   gimp_unit_get_symbol (gdisp->gimage->unit));
+	      d = gimp_unit_get_factor (gdisp->gimage->unit) * 
+		sqrt (SQR (dx / gdisp->gimage->xresolution) + SQR (dy / gdisp->gimage->yresolution));
+	      
+	      g_snprintf (status_str, STATUSBAR_SIZE, format_str, d);
+	      g_free (format_str);
+	    }
+	  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), paint_core->context_id,
+			      status_str);
 
 	  if (paint_core->core->gc == NULL)
 	    draw_core_start (paint_core->core, gdisp->canvas->window, tool);
@@ -545,7 +580,8 @@ paint_core_new (ToolType type)
 
   private->pick_colors = FALSE;
   private->flags = 0;
-  
+  private->context_id = 0;
+
   tool->private = (void *) private;
 
   tool->button_press_func   = paint_core_button_press;
