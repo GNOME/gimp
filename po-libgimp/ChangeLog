@@ -1,3 +1,8 @@
+2002-10-30  Wang Jian <lark@linux.net.cn>
+
+	* zh_CN.po: Updated Simplified Chinese translation by
+	Xie Yuheng <phycommusyee@263.net>.
+
 2002-10-29  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added libgimpwidgets/gimpcolorscales.c.

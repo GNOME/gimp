@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp_tips\n"
 "POT-Creation-Date: 2002-10-10 21:39+0200\n"
-"PO-Revision-Date: 2002-03-16 17:44+0800\n"
+"PO-Revision-Date: 2002-10-17 22:00+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 
 #: tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to The GIMP !</big>"
-msgstr "<big>欢迎使用 the GIMP！</big>"
+msgstr "<big>欢迎使用 The GIMP！</big>"
 
 #: tips/gimp-tips.xml.in.h:2
 msgid ""
@@ -34,7 +34,7 @@ msgid ""
 "<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
 "the rotation to 15 degree angles."
 msgstr ""
-"使用变换工具的旋转模式时，<tt>Ctrl</tt>+拖动可以控制旋转角度限制在15 度的整倍"
+"使用变换工具的旋转模式时，<tt>Ctrl</tt>+拖动可以控制旋转角度限制在 15 度的整倍"
 "数。"
 
 #: tips/gimp-tips.xml.in.h:5
@@ -67,7 +67,7 @@ msgid ""
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
-"点击并拖动标尺来可以在图像中放置参考线。所有拖动的选区都会被吸附到参考线上。"
+"点击并拖动标尺可以在图像中放置参考线。所有拖动的选区都会被吸附到参考线上。"
 "你可以用移动工具把参考线拖出图像外来删除它们。"
 
 #: tips/gimp-tips.xml.in.h:9
@@ -97,7 +97,7 @@ msgid ""
 "install them. Some font servers allow you to use TrueType (<tt>.ttf</tt>) "
 "fonts, which are also scalable."
 msgstr ""
-"如果你的字体呈现块状，那是因为它们不是可缩放字体。大多数的X 服务都支持可缩放"
+"如果你的字体呈现块状，那是因为它们不是可缩放字体。大多数的 X 服务都支持可缩放"
 "的 Type 1 Postscript 字体。你可以下载并安装它们。有的字体服务器允许你使用 "
 "TrueType (<tt>.ttf</tt>) 字体，这种字体也是可缩放的。"
 
@@ -123,6 +123,8 @@ msgid ""
 "Nearly all image operations are performed by right-clicking on the image. "
 "And don't worry, you can undo most mistakes..."
 msgstr ""
+"几乎所有的图像操作都是通过右点图像进行的。而且不必担心，你可以撤销大多数的"
+"错误操作……"
 
 #: tips/gimp-tips.xml.in.h:15
 msgid ""
@@ -170,7 +172,7 @@ msgid ""
 "It's completed."
 msgstr ""
 "文件选择对话框具有<tt>Tab</tt>命令行补全功能，就跟 shell 一样。输入文件名的一"
-"部分，按<tt>Tab</tt>键，哇！它就完整了。"
+"部分，按<tt>Tab</tt>键，哇！它就补全了。"
 
 #: tips/gimp-tips.xml.in.h:20
 msgid ""
@@ -250,6 +252,8 @@ msgid ""
 "You can drag a layer from the \"Layers, Channels and Paths\" dialog and drop "
 "it onto the toolbox. This will create a new image containing only that layer."
 msgstr ""
+"你可以从“图层、通道和路径”对话框中拖动一个图层到工具箱中释放。这样会创建"
+"一幅只含有那个图层的新图像。"
 
 #: tips/gimp-tips.xml.in.h:29
 msgid ""

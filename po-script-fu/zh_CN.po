@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "POT-Creation-Date: 2002-10-10 23:19+0200\n"
-"PO-Revision-Date: 2002-02-12 13:10+0800\n"
+"PO-Revision-Date: 2002-10-17 22:00+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -81,9 +81,8 @@ msgid "Script-Fu File Selection"
 msgstr "Script-Fu 文件选择"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1404
-#, fuzzy
 msgid "Script-Fu Folder Selection"
-msgstr "Script-Fu 文件选择"
+msgstr "Script-Fu 文件夹选择"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1439
 msgid "Script-fu Pattern Selection"
@@ -174,20 +173,17 @@ msgstr "DB 浏览器"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:130
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
-#, fuzzy
 msgid "Search by _Name"
-msgstr "按名字搜索"
+msgstr "按名字搜索(_N)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
-#, fuzzy
 msgid "Search by _Blurb"
-msgstr "按描述搜索"
+msgstr "按描述搜索(_B)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:208
-#, fuzzy
 msgid "_Search:"
-msgstr "搜索："
+msgstr "搜索(_S)："
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:343
 msgid "Name:"
@@ -210,22 +206,20 @@ msgid "Help:"
 msgstr "帮助："
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:602
-#, fuzzy
 msgid "Searching by name - please wait"
-msgstr "DB 浏览器 (按名字 - 请等待)"
+msgstr "正在按名字搜索 - 请等待"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:625
-#, fuzzy
 msgid "Searching by blurb - please wait"
-msgstr "DB 浏览器 (按描述 - 请等待)"
+msgstr "正在按描述搜索 - 请等待"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:635
 msgid "Searching - please wait"
-msgstr ""
+msgstr "正在搜索 - 请等待"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:674
 msgid "No matches"
-msgstr ""
+msgstr "没有匹配"
 
 #: plug-ins/gap/sel-to-anim-img.scm.h:1
 #, fuzzy
@@ -237,9 +231,8 @@ msgid "Anim-Filter for all Copies"
 msgstr ""
 
 #: plug-ins/gap/sel-to-anim-img.scm.h:3
-#, fuzzy
 msgid "Fill with BG Color"
-msgstr "以背景填充"
+msgstr "以背景色填充"
 
 #: plug-ins/gap/sel-to-anim-img.scm.h:4
 #, fuzzy
@@ -490,7 +483,7 @@ msgstr "厚度"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Add Bevel..."
-msgstr ""
+msgstr "<Image>/Script-Fu/装饰/添加斜面..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
@@ -615,7 +608,7 @@ msgstr "生长半径"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:6
 msgid "Padding"
-msgstr ""
+msgstr "衬距"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
 #: plug-ins/script-fu/scripts/asc2img.scm.h:9
@@ -655,19 +648,19 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Fade Away"
-msgstr ""
+msgstr "淡出"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
 msgid "Number of Bands"
-msgstr ""
+msgstr "镶边数量"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
 msgid "Width of Bands"
-msgstr ""
+msgstr "镶边宽度"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
 msgid "Width of Gaps"
-msgstr ""
+msgstr "间隙宽度"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
 msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
@@ -680,7 +673,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/工具/ASCII 到图像..."
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
 msgid "Buffer Amount (% Height of Text)"
-msgstr ""
+msgstr "边空大小(文字高度的百分比)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select_to_brush.scm.h:3
@@ -712,7 +705,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/徽标/基础 II..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr "<Toolbox>/Xtns/Script-Fu/按钮/简单立体按钮..."
+msgstr "<Toolbox>/Xtns/Script-Fu/按钮/简单斜面按钮..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
@@ -855,15 +848,14 @@ msgid "After Glow"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
-#, fuzzy
 msgid ""
 "Burn-In: Need two layers in total!\n"
 "        A foreground text layer with transparency\n"
 "        and a background layer."
 msgstr ""
 "Burn-In: 总共需要两个图层！\n"
-"        一个带透明的文本前景图层\n"
-"        和一个背景图层。\n"
+"        一个带透明的文字前景图层\n"
+"        和一个背景图层。"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -871,15 +863,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
-msgstr ""
+msgstr "淡出"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Fadeout Width"
-msgstr ""
+msgstr "淡出宽度"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
-msgstr ""
+msgstr "为 GIF 作准备"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid "Speed (pixels/frame)"
@@ -1256,7 +1248,7 @@ msgstr "行/列"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
-msgstr "<Image>/Script-Fu/选区/轮廓淡化..."
+msgstr "<Image>/Script-Fu/选区/轮廓淡出..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
 msgid "Apply Generated Layermask"
@@ -1274,12 +1266,12 @@ msgstr ""
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
 #, no-c-format
 msgid "Fade From %"
-msgstr "淡化从 %"
+msgstr "淡出从 %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
 #, no-c-format
 msgid "Fade To   %"
-msgstr "淡化到 %"
+msgstr "淡出到 %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:9
 msgid "Use Growing Selection"
@@ -1355,28 +1347,28 @@ msgstr "边缘模糊"
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
 #, no-c-format
 msgid "Shadow Weight (%)"
-msgstr ""
+msgstr "阴影深度(%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/网页主题/Gimp.Org/大标题..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/网页主题/Gimp.Org/小标题..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
-msgstr ""
+msgstr "自动剪割"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 msgid "Dark Color"
-msgstr ""
+msgstr "深颜色"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:7
 msgid "Highlight Color"
-msgstr ""
+msgstr "高亮颜色"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
@@ -1576,7 +1568,7 @@ msgstr "创建新图像"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:5
 msgid "Insert Layer Names"
-msgstr ""
+msgstr "插入图层名字"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:6
 msgid "Make New Background"
@@ -1707,7 +1699,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/徽标/新闻印刷..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Cell Size (pixels)"
-msgstr ""
+msgstr "格点大小(像素)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:6
 #: plug-ins/script-fu/scripts/speed-text.scm.h:4
@@ -1765,7 +1757,7 @@ msgstr "像素量"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:5
 msgid "Pixelize"
-msgstr ""
+msgstr "像素化"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
@@ -2002,7 +1994,7 @@ msgstr "击中率"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Toolbox>/Xtns/Script-Fu/徽标/文本环..."
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/文字环..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Antialias"
@@ -2090,7 +2082,7 @@ msgstr "基圆半径(像素)"
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:3
 msgid "Erase before Draw"
-msgstr ""
+msgstr "绘制前先擦除"
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:4
 msgid "Hue Rate"

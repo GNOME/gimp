@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "POT-Creation-Date: 2002-10-10 23:16+0200\n"
-"PO-Revision-Date: 2002-03-27 23:12+0800\n"
+"PO-Revision-Date: 2002-10-17 22:00+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -146,16 +146,16 @@ msgstr "导出转换不会改变你原来的图像。"
 
 #: libgimp/gimpexport.c:595
 msgid "a layer mask"
-msgstr ""
+msgstr "图层蒙板"
 
 #: libgimp/gimpexport.c:597
 msgid "a channel (saved selection)"
-msgstr "通道(已保存的选择)"
+msgstr "通道(已保存的选区)"
 
 #: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
 #: libgimp/gimpmenu.c:580
 msgid "None"
-msgstr ""
+msgstr "无"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -199,15 +199,15 @@ msgstr "编辑"
 
 #: libgimpwidgets/gimpstock.c:91
 msgid "Linked"
-msgstr ""
+msgstr "已链接"
 
 #: libgimpwidgets/gimpstock.c:92
 msgid "Paste as New"
-msgstr ""
+msgstr "粘贴为新图像"
 
 #: libgimpwidgets/gimpstock.c:93
 msgid "Paste Into"
-msgstr ""
+msgstr "粘贴进入"
 
 #: libgimpwidgets/gimpstock.c:94
 msgid "_Reset"
@@ -218,41 +218,36 @@ msgid "Visible"
 msgstr "可见"
 
 #: libgimpwidgets/gimpstock.c:127
-#, fuzzy
 msgid "_Resize"
-msgstr "重置(_R)"
+msgstr "重置大小(_R)"
 
 #: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:175
-#, fuzzy
 msgid "_Scale"
-msgstr "缩放"
+msgstr "缩放(_S)"
 
 #: libgimpwidgets/gimpstock.c:131
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "字母间距(_L)"
 
 #: libgimpwidgets/gimpstock.c:132
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "行距(_L)"
 
 #: libgimpwidgets/gimpstock.c:153
 msgid "Crop"
-msgstr ""
+msgstr "剪割"
 
 #: libgimpwidgets/gimpstock.c:171
-#, fuzzy
 msgid "_Transform"
-msgstr "变换"
+msgstr "变换(_T)"
 
 #: libgimpwidgets/gimpstock.c:174
-#, fuzzy
 msgid "_Rotate"
-msgstr "旋转"
+msgstr "旋转(_R)"
 
 #: libgimpwidgets/gimpstock.c:176
-#, fuzzy
 msgid "_Shear"
-msgstr "剪取"
+msgstr "切变(_S)"
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -279,9 +274,8 @@ msgstr ""
 "定的“随机”操作"
 
 #: libgimpwidgets/gimpwidgets.c:884
-#, fuzzy
 msgid "_Time"
-msgstr "时间"
+msgstr "时间(_T)"
 
 #: libgimpwidgets/gimpwidgets.c:893
 msgid ""
@@ -302,9 +296,8 @@ msgid "MegaBytes"
 msgstr "M 字节"
 
 #: libgimpwidgets/gimpwidgets.c:1222
-#, fuzzy
 msgid "GigaBytes"
-msgstr "M 字节"
+msgstr "G 字节"
 
 #~ msgid "pixel"
 #~ msgstr "像素"
