@@ -118,7 +118,10 @@ file_new_ok_callback (GtkWidget *widget,
 
   gimage = gimage_new (vals->width, vals->height, vals->type);
 
-  gimp_image_set_resolution(gimage, vals->resolution);
+  /* XXX for the moment, we set both x and y resolution to the same,
+   * since we don't have the UI to get both values from the user, and
+   * besides, that's what PhotoShop seems to do. */
+  gimp_image_set_resolution(gimage, vals->resolution, vals->resolution);
 
   /*  Make the background (or first) layer  */
   layer = layer_new (gimage, gimage->width, gimage->height,
@@ -448,7 +451,7 @@ file_new_cmd_callback (GtkWidget           *widget,
       vals->width = gdisp->gimage->width;
       vals->height = gdisp->gimage->height;
       vals->type = gimage_base_type (gdisp->gimage);
-      vals->resolution = gdisp->gimage->resolution;
+      vals->resolution = gdisp->gimage->xresolution;
       vals->unit = last_unit;
       vals->res_unit = 1.0;
     }

@@ -155,7 +155,8 @@ static void gimp_image_init (GimpImage *gimage)
   gimage->comp_preview = NULL;
   gimage->parasites = parasite_list_new();
   gimp_matrix_identity(gimage->transform);
-  gimage->resolution = 72.0;  /* maybe should be rc-supplied default? */
+  gimage->xresolution = 72.0;  /* maybe should be rc-supplied default? */
+  gimage->yresolution = 72.0;
   gimage->save_proc= NULL;
 }
 
@@ -301,15 +302,22 @@ gimp_image_set_filename (GimpImage *gimage, char *filename)
 
 
 void
-gimp_image_set_resolution (GimpImage *gimage, float resolution)
+gimp_image_set_resolution (GimpImage *gimage,
+			   float xresolution,
+			   float yresolution)
 {
-  gimage->resolution = resolution;
+  gimage->xresolution = xresolution;
+  gimage->yresolution = yresolution;
 }
 
-float
-gimp_image_get_resolution (GimpImage *gimage)
+void
+gimp_image_get_resolution (GimpImage *gimage,
+			   float *xresolution,
+			   float *yresolution)
 {
-  return gimage->resolution;
+  g_return_if_fail(xresolution && yresolution);
+  *xresolution = gimage->xresolution;
+  *yresolution = gimage->yresolution;
 }
 
 void

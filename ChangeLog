@@ -1,3 +1,19 @@
+Sat Nov 14 23:16:55 GMT 1998  Austin Donnelly  <austin@greenend.org.uk>
+
+	* app/gimpimage.h
+	* app/gimpimageP.h
+	* app/gimpimage.c
+	* app/gimage_cmds.c
+	* app/file_new_dialog.c
+	* app/info_window.c
+	* libgimp/gimp.h
+	* libgimp/gimpimage.c
+	* plug-ins/newsprint/newsprint.c
+	* plug-ins/tiff/tiff.c: gimp_image_{get,set}_resolution() calls
+	now get and set both X and Y resolutions.  Gimp image struct now
+	has two resolution fields, one for each direction.  I've updated
+	the two plugins which used the info (TIFF and newsprint).
+
 Sat Nov 14 20:15:46 CET 1998 Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/script-fu/scripts/*: removed the image

@@ -199,7 +199,9 @@ info_window_update (InfoDialog *info_win,
 	   (int) gdisp->gimage->width, (int) gdisp->gimage->height);
 
   /*  image resolution  */
-  sprintf (iwd->resolution_str, "%g dpi", gdisp->gimage->resolution);
+  sprintf (iwd->resolution_str, "%g x %g dpi",
+	   gdisp->gimage->xresolution,
+	   gdisp->gimage->yresolution);
 
   /*  zoom ratio  */
   sprintf (iwd->scale_str, "%d:%d",

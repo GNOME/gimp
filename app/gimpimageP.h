@@ -22,7 +22,8 @@ struct _GimpImage
   PlugInProcDef *save_proc;           /*  last PDB save proc used      */
 
   int width, height;		      /*  width and height attributes  */
-  float resolution;                   /*  image res, in dpi            */
+  float xresolution;                  /*  image x-res, in dpi          */
+  float yresolution;                  /*  image y-res, in dpi          */
   int base_type;                      /*  base gimp_image type         */
 
   unsigned char * cmap;               /*  colormap--for indexed        */

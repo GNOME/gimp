@@ -982,30 +982,43 @@ gimp_image_detach_parasite (gint32 image_ID, const char *name)
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
-float
-gimp_image_get_resolution (gint32  image_ID)
+void
+gimp_image_get_resolution (gint32  image_ID,
+			   float   *xresolution,
+			   float   *yresolution)
 {
   GParam *return_vals;
   int nreturn_vals;
-  float result;
+  float xres;
+  float yres;
+
+  g_return_if_fail(xresolution && yresolution);
 
   return_vals = gimp_run_procedure ("gimp_image_get_resolution",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
 				    PARAM_END);
 
-  result = 0.0; /* error return value */
+  /* error return values */
+  xres = 0.0;
+  yres = 0.0;
+
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    result = return_vals[1].data.d_float;
+  {
+    xres = return_vals[1].data.d_float;
+    yres = return_vals[2].data.d_float;
+  }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return result;
+  *xresolution = xres;
+  *yresolution = yres;
 }
 
 void
 gimp_image_set_resolution (gint32  image_ID,
-			   float   resolution)
+			   float   xresolution,
+			   float   yresolution)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -1013,7 +1026,8 @@ gimp_image_set_resolution (gint32  image_ID,
   return_vals = gimp_run_procedure ("gimp_image_set_resolution",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
-				    PARAM_FLOAT, resolution,
+				    PARAM_FLOAT, xresolution,
+				    PARAM_FLOAT, yresolution,
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);

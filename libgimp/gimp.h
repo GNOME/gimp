@@ -445,8 +445,11 @@ void       gimp_image_attach_new_parasite   (gint32      image_ID,
 void       gimp_image_detach_parasite       (gint32      image_ID,
 					     const char *name);
 void       gimp_image_set_resolution        (gint32     image_ID,
-					     float      resolution);
-float      gimp_image_get_resolution        (gint32     image_ID);
+					     float      xresolution,
+					     float      yresolution);
+void       gimp_image_get_resolution        (gint32     image_ID,
+					     float      *xresolution,
+					     float      *yresolution);
 gint32     gimp_image_get_layer_by_tattoo   (gint32  image_ID,
 					     gint32 tattoo);
 gint32     gimp_image_get_channel_by_tattoo (gint32  image_ID,

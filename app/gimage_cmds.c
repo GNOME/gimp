@@ -2783,25 +2783,32 @@ static Argument *
 gimage_get_resolution_invoker (Argument *args)
 {
   GImage *gimage;
-  float resolution;
+  float xresolution;
+  float yresolution;
   Argument *return_args;
 
-  resolution = 0;
+  xresolution = 0.0;
+  yresolution = 0.0;
 
   success = TRUE;
   if (success)
     {
       int_value = args[0].value.pdb_int;
-      if ((gimage = gimage_get_ID (int_value)))
-	resolution = gimage->resolution;
-      else
+      if ((gimage = gimage_get_ID (int_value))) {
+	xresolution = gimage->xresolution;
+	yresolution = gimage->yresolution;
+      } else {
 	success = FALSE;
+      }
     }
 
   return_args= procedural_db_return_args(&gimage_get_resolution_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = resolution;
+  {
+    return_args[1].value.pdb_float = xresolution;
+    return_args[2].value.pdb_float = yresolution;
+  }
 
   return return_args;
 }
@@ -2818,8 +2825,12 @@ ProcArg gimage_get_resolution_args[] =
 ProcArg gimage_get_resolution_out_args[] =
 {
   { PDB_FLOAT,
-    "resolution",
-    "the image's resolution, in dots per inch"
+    "xresolution",
+    "the image's resolution in the x-axis, in dots per inch"
+  },
+  { PDB_FLOAT,
+    "yresolution",
+    "the image's resolution in the y-axis, in dots per inch"
   }
 };
 
@@ -2838,7 +2849,7 @@ ProcRecord gimage_get_resolution_proc =
   gimage_get_resolution_args,
 
   /*  Output arguments  */
-  1,
+  2,
   gimage_get_resolution_out_args,
 
   /*  Exec method  */
@@ -2866,7 +2877,9 @@ gimage_set_resolution_invoker (Argument *args)
   if (success)
     {
       float_value = args[1].value.pdb_float;
-      gimage->resolution = float_value;
+      gimage->xresolution = float_value;
+      float_value = args[2].value.pdb_float;
+      gimage->yresolution = float_value;
     }
 
   return_args= procedural_db_return_args(&gimage_set_resolution_proc, success);
@@ -2882,8 +2895,12 @@ ProcArg gimage_set_resolution_args[] =
     "the image"
   },
   { PDB_FLOAT,
-    "resolution",
-    "resolution in dots per inch"
+    "xresolution",
+    "resolution in x-axis, in dots per inch"
+  },
+  { PDB_FLOAT,
+    "yresolution",
+    "resolution in y-axis, in dots per inch"
   }
 };
 
@@ -2898,7 +2915,7 @@ ProcRecord gimage_set_resolution_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  2,
+  3,
   gimage_set_resolution_args,
 
   /*  Output arguments  */
