@@ -21,27 +21,32 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-(define (script-fu-3d-outline-logo text-pattern text size font outline-blur-radius shadow-blur-radius bump-map-blur-radius noninteractive s-offset-x s-offset-y)
-  (let* ((img (car (gimp-image-new 256 256 RGB)))
-         (text-layer (car (gimp-text-fontname img -1 0 0 text 30 TRUE size PIXELS font)))
-         (width (car (gimp-drawable-width text-layer)))
-         (height (car (gimp-drawable-height text-layer)))
+(define (apply-3d-outline-logo-effect img
+				      logo-layer
+				      text-pattern
+				      outline-blur-radius
+				      shadow-blur-radius
+				      bump-map-blur-radius
+				      noninteractive
+				      s-offset-x
+				      s-offset-y)
+  (let* ((width (car (gimp-drawable-width logo-layer)))
+         (height (car (gimp-drawable-height logo-layer)))
          (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
          (pattern (car (gimp-layer-new img width height RGBA_IMAGE "Pattern" 100 NORMAL)))
          (old-fg (car (gimp-palette-get-foreground)))
          (old-bg (car (gimp-palette-get-background))))
-    (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img pattern 1)
     (gimp-image-add-layer img bg-layer 2)
     (gimp-palette-set-background '(255 255 255))
     (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     (gimp-edit-clear pattern)
-    (gimp-layer-set-preserve-trans text-layer TRUE)
+    (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-palette-set-foreground '(0 0 0))
-    (gimp-edit-fill text-layer FG-IMAGE-FILL)
-    (gimp-layer-set-preserve-trans text-layer FALSE)
-    (plug-in-gauss-iir 1 img text-layer outline-blur-radius TRUE TRUE)
+    (gimp-edit-fill logo-layer FG-IMAGE-FILL)
+    (gimp-layer-set-preserve-trans logo-layer FALSE)
+    (plug-in-gauss-iir 1 img logo-layer outline-blur-radius TRUE TRUE)
 
     (gimp-layer-set-visible pattern FALSE)
     (set! layer2 (car (gimp-image-merge-visible-layers img 1)))
@@ -74,7 +79,60 @@
     ;;(set! final (car (gimp-image-flatten img)))
     
     (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)
+    (gimp-palette-set-foreground old-fg)))
+
+(define (script-fu-3d-outline-logo-alpha img
+					 logo-layer
+					 text-pattern
+					 outline-blur-radius
+					 shadow-blur-radius
+					 bump-map-blur-radius
+					 noninteractive
+					 s-offset-x
+					 s-offset-y)
+  (begin
+    (gimp-undo-push-group-start img)
+    (apply-3d-outline-logo-effect img logo-layer text-pattern
+				  outline-blur-radius shadow-blur-radius
+				  bump-map-blur-radius noninteractive
+				  s-offset-x s-offset-y)
+    (gimp-undo-push-group-end img)
+    (gimp-displays-flush)))
+
+(script-fu-register "script-fu-3d-outline-logo-alpha"
+                    _"<Image>/Script-Fu/Alpha to Logo/3D Outline..."
+                    "Creates outlined texts with drop shadow"
+                    "Hrvoje Horvat (hhorvat@open.hr)"
+                    "Hrvoje Horvat"
+                    "07 April, 1998"
+                    "RGBA"
+                    SF-IMAGE    "Image" 0
+                    SF-DRAWABLE "Drawable" 0
+		    SF-PATTERN _"Pattern" "Parque #1"
+                    SF-ADJUSTMENT   _"Outline Blur Radius" '(5 1 200 1 10 0 1)
+                    SF-ADJUSTMENT   _"Shadow Blur Radius" '(10 1 200 1 10 0 1)
+                    SF-ADJUSTMENT   _"Bumpmap (Alpha Layer) Blur Radius" '(5 1 200 1 10 0 1)
+		    SF-TOGGLE  _"Default Bumpmap Settings" TRUE
+		    SF-ADJUSTMENT   _"Shadow X Offset" '(0 0 200 1 5 0 1)
+                    SF-ADJUSTMENT   _"Shadow Y Offset" '(0 0 200 1 5 0 1))
+
+(define (script-fu-3d-outline-logo text-pattern
+				   text
+				   size
+				   font
+				   outline-blur-radius
+				   shadow-blur-radius
+				   bump-map-blur-radius
+				   noninteractive
+				   s-offset-x
+				   s-offset-y)
+  (let* ((img (car (gimp-image-new 256 256 RGB)))
+         (text-layer (car (gimp-text-fontname img -1 0 0 text 30 TRUE size PIXELS font))))
+    (gimp-image-undo-disable img)
+    (apply-3d-outline-logo-effect img text-layer text-pattern
+				  outline-blur-radius shadow-blur-radius
+				  bump-map-blur-radius noninteractive
+				  s-offset-x s-offset-y)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 

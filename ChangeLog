@@ -1,5 +1,31 @@
 2000-06-05  Sven Neumann  <sven@gimp.org>
 	
+	* plug-ins/script-fu/scripts/3d-outline.scm
+	* plug-ins/script-fu/scripts/alien-glow-logo.scm
+	* plug-ins/script-fu/scripts/alien-neon-logo.scm
+	* plug-ins/script-fu/scripts/basic1-logo.scm
+	* plug-ins/script-fu/scripts/basic2-logo.scm
+	* plug-ins/script-fu/scripts/blended-logo.scm
+	* plug-ins/script-fu/scripts/bovinated-logo.scm
+	* plug-ins/script-fu/scripts/chalk.scm
+	* plug-ins/script-fu/scripts/chip-away.scm
+	* plug-ins/script-fu/scripts/chrome-logo.scm
+	* plug-ins/script-fu/scripts/comic-logo.scm
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm
+	* plug-ins/script-fu/scripts/frosty-logo.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/glowing-logo.scm
+	* plug-ins/script-fu/scripts/gradient-bevel-logo.scm
+	* plug-ins/script-fu/scripts/neon-logo.scm
+	* plug-ins/script-fu/scripts/starburst-logo.scm
+	* plug-ins/script-fu/scripts/starscape-logo.scm
+	* plug-ins/script-fu/scripts/t-o-p-logo.scm
+	* plug-ins/script-fu/scripts/textured-logo.scm: applied
+	gimp-quinet-000531-1.patch to add support for "Alpha to Logo"
+	and correct undo handling in these logo scripts.
+
+2000-06-05  Sven Neumann  <sven@gimp.org>
+	
 	* plug-ins/script-fu/scripts/clothify.scm: applied
 	gimp-quinet-000531-0.patch to change the help blurb.
 

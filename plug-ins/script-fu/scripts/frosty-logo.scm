@@ -4,13 +4,14 @@
 
 (define (min a b) (if (< a b) a b))
 
-(define (script-fu-frosty-logo text size font bg-color)
-  (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (border (/ size 5))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text (* border 2) TRUE size PIXELS font)))
-	 (width (car (gimp-drawable-width text-layer)))
-	 (height (car (gimp-drawable-height text-layer)))
-	 (text-layer-mask (car (gimp-layer-create-mask text-layer BLACK-MASK)))
+(define (apply-frosty-logo-effect img
+				  logo-layer
+				  size
+				  bg-color)
+  (let* ((border (/ size 5))
+	 (width (car (gimp-drawable-width logo-layer)))
+	 (height (car (gimp-drawable-height logo-layer)))
+	 (logo-layer-mask (car (gimp-layer-create-mask logo-layer BLACK-MASK)))
 	 (sparkle-layer (car (gimp-layer-new img width height RGBA_IMAGE "Sparkle" 100 NORMAL)))
 	 (matte-layer (car (gimp-layer-new img width height RGBA_IMAGE "Matte" 100 NORMAL)))
 	 (shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Shadow" 90 MULTIPLY)))
@@ -20,7 +21,6 @@
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-brush (car (gimp-brushes-get-brush)))
 	 (old-paint-mode (car (gimp-brushes-get-paint-mode))))
-    (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img sparkle-layer 2)
     (gimp-image-add-layer img matte-layer 3)
@@ -30,7 +30,7 @@
     (gimp-edit-clear sparkle-layer)
     (gimp-edit-clear matte-layer)
     (gimp-edit-clear shadow-layer)
-    (gimp-selection-layer-alpha text-layer)
+    (gimp-selection-layer-alpha logo-layer)
     (set! selection (car (gimp-selection-save img)))
     (gimp-selection-feather img border)
     (gimp-palette-set-background '(0 0 0))
@@ -51,27 +51,62 @@
     (gimp-palette-set-background bg-color)
     (gimp-edit-fill bg-layer BG-IMAGE-FILL)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill text-layer BG-IMAGE-FILL)
-    (gimp-image-add-layer-mask img text-layer text-layer-mask)
+    (gimp-edit-fill logo-layer BG-IMAGE-FILL)
+    (gimp-image-add-layer-mask img logo-layer logo-layer-mask)
     (gimp-selection-load selection)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill text-layer-mask BG-IMAGE-FILL)
+    (gimp-edit-fill logo-layer-mask BG-IMAGE-FILL)
     (gimp-selection-feather img border)
     (gimp-selection-translate img (/ border 2) (/ border 2))
-    (gimp-edit-fill text-layer BG-IMAGE-FILL)
-    (gimp-image-remove-layer-mask img text-layer 0)
+    (gimp-edit-fill logo-layer BG-IMAGE-FILL)
+    (gimp-image-remove-layer-mask img logo-layer 0)
     (gimp-selection-load selection)
     (gimp-brushes-set-brush "Circle Fuzzy (07)")
     (gimp-brushes-set-paint-mode BEHIND)
     (gimp-palette-set-foreground '(186 241 255))
-    (gimp-edit-stroke text-layer)
+    (gimp-edit-stroke logo-layer)
     (gimp-selection-none img)
     (gimp-image-remove-channel img selection)
+    (gimp-layer-translate shadow-layer border border)
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)
     (gimp-brushes-set-brush old-brush)
-    (gimp-brushes-set-paint-mode old-paint-mode)
-    (gimp-layer-translate shadow-layer border border)
+    (gimp-brushes-set-paint-mode old-paint-mode)))
+
+(define (script-fu-frosty-logo-alpha img
+				     logo-layer
+				     size
+				     bg-color)
+  (begin
+    (gimp-undo-push-group-start img)
+    (apply-frosty-logo-effect img logo-layer size bg-color)
+    (gimp-undo-push-group-end img)
+    (gimp-displays-flush)))
+
+
+(script-fu-register "script-fu-frosty-logo-alpha"
+		    _"<Image>/Script-Fu/Alpha to Logo/Frosty..."
+		    "Frozen logos with drop shadows"
+		    "Spencer Kimball & Ed Mackey"
+		    "Spencer Kimball & Ed Mackey"
+		    "1997"
+		    "RGBA"
+                    SF-IMAGE      "Image" 0
+                    SF-DRAWABLE   "Drawable" 0
+		    SF-ADJUSTMENT _"Effect Size (pixels)" '(100 2 1000 1 10 0 1)
+		    SF-COLOR  _"Background Color" '(255 255 255)
+		    )
+
+(define (script-fu-frosty-logo text
+			       size
+			       font
+			       bg-color)
+  (let* ((img (car (gimp-image-new 256 256 RGB)))
+	 (border (/ size 5))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text (* border 2) TRUE size PIXELS font))))
+    (gimp-image-undo-disable img)
+    (gimp-layer-set-name text-layer text)
+    (apply-frosty-logo-effect img text-layer size bg-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
@@ -85,4 +120,5 @@
 		    SF-STRING _"Text" "The GIMP"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
 		    SF-FONT   _"Font" "-*-Becker-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-COLOR  _"Background Color" '(255 255 255))
+		    SF-COLOR  _"Background Color" '(255 255 255)
+		    )

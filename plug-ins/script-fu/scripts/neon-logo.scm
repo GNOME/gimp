@@ -54,10 +54,13 @@
 	  (if (> hue 180) (set! hue (- hue 360)))
 	  hue))))
 
-(define (script-fu-neon-logo text size font bg-color glow-color shadow)
-  (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (tube-hue (find-hue-offset glow-color))
-	 (border (/ size 4))
+(define (apply-neon-logo-effect img
+				tube-layer
+				size
+				bg-color
+				glow-color
+				shadow)
+  (let* ((tube-hue (find-hue-offset glow-color))
 	 (shrink (/ size 14))
 	 (grow (/ size 40))
 	 (feather (/ size 5))
@@ -68,7 +71,6 @@
 	 (shadow-feather (/ size 20))
 	 (shadow-offx (/ size 10))
 	 (shadow-offy (/ size 10))
-	 (tube-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width tube-layer)))
 	 (height (car (gimp-drawable-height tube-layer)))
 	 (glow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Neon Glow" 100 NORMAL)))
@@ -79,7 +81,6 @@
 	 (selection 0)
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
-    (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img bg-layer 1)
     (if (not (= shadow 0))
@@ -159,10 +160,49 @@
     (gimp-layer-set-name tube-layer "Neon Tubes")
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)
-    (gimp-image-remove-channel img selection)
+    (gimp-image-remove-channel img selection)))
+
+(define (script-fu-neon-logo-alpha img
+				   tube-layer
+				   size
+				   bg-color
+				   glow-color
+				   shadow)
+  (begin
+    (gimp-undo-push-group-start img)
+    (apply-neon-logo-effect img tube-layer size bg-color glow-color shadow)
+    (gimp-undo-push-group-end img)
+    (gimp-displays-flush)))
+
+(script-fu-register "script-fu-neon-logo-alpha"
+		    _"<Image>/Script-Fu/Alpha to Logo/Neon..."
+		    "Neon logos"
+		    "Spencer Kimball"
+		    "Spencer Kimball"
+		    "1997"
+		    "RGBA"
+                    SF-IMAGE      "Image" 0
+                    SF-DRAWABLE   "Drawable" 0
+		    SF-ADJUSTMENT _"Effect Size (pixels * 5)" '(150 2 1000 1 10 0 1)
+		    SF-COLOR      _"Background Color" '(0 0 0)
+		    SF-COLOR      _"Glow Color" '(38 211 255)
+		    SF-TOGGLE     _"Create Shadow" FALSE
+		    )
+
+(define (script-fu-neon-logo text
+			     size
+			     font
+			     bg-color
+			     glow-color
+			     shadow)
+  (let* ((img (car (gimp-image-new 256 256 RGB)))
+	 (border (/ size 4))
+	 (tube-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font))))
+    (gimp-image-undo-disable img)
+    (gimp-layer-set-name tube-layer text)
+    (apply-neon-logo-effect img tube-layer size bg-color glow-color shadow)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
-
 
 (script-fu-register "script-fu-neon-logo"
 		    _"<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
@@ -176,4 +216,5 @@
 		    SF-FONT       _"Font" "-*-Blippo-*-*-*-*-24-*-*-*-*-*-*-*"
 		    SF-COLOR      _"Background Color" '(0 0 0)
 		    SF-COLOR      _"Glow Color" '(38 211 255)
-		    SF-TOGGLE     _"Create Shadow" FALSE)
+		    SF-TOGGLE     _"Create Shadow" FALSE
+		    )

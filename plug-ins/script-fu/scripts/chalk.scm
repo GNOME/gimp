@@ -21,48 +21,77 @@
 ;  
 ; Makes a logo with a chalk-like text effect.
 
-(define (script-fu-chalk-logo text size font bg-color chalk-color)
-  (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (border (/ size 4))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
-	 (width (car (gimp-drawable-width text-layer)))
-	 (height (car (gimp-drawable-height text-layer)))
+(define (apply-chalk-logo-effect img
+				 logo-layer
+				 bg-color)
+  (let* ((width (car (gimp-drawable-width logo-layer)))
+	 (height (car (gimp-drawable-height logo-layer)))
 	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
 
-    (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
-
     (gimp-image-add-layer img bg-layer 1)
     (gimp-palette-set-background bg-color)
     (gimp-edit-fill bg-layer BG-IMAGE-FILL)
-    (gimp-edit-clear text-layer)
-
-    ; is there any other way to do this?
-    ; the sobel edge detect won't work with the methods in other scripts
-    (gimp-palette-set-foreground chalk-color)
-    (set! float-layer (car (gimp-text-fontname img text-layer 0 0 text border TRUE size PIXELS font)))
-    (gimp-floating-sel-anchor float-layer)
 
     ; the actual effect
-    (plug-in-gauss-rle 1 img text-layer 2.0 1 1)
-    (plug-in-spread 1 img text-layer 5.0 5.0)
-    (plug-in-ripple 1 img text-layer 27 2 0 0 0 TRUE TRUE)
-    (plug-in-ripple 1 img text-layer 27 2 1 0 0 TRUE TRUE)
-    (plug-in-sobel 1 img text-layer TRUE TRUE TRUE)
-    (gimp-levels text-layer 0 0 120 3.5 0 255)
+    (gimp-layer-set-preserve-trans logo-layer FALSE)
+    (plug-in-gauss-rle 1 img logo-layer 2.0 1 1)
+    (plug-in-spread 1 img logo-layer 5.0 5.0)
+    (plug-in-ripple 1 img logo-layer 27 2 0 0 0 TRUE TRUE)
+    (plug-in-ripple 1 img logo-layer 27 2 1 0 0 TRUE TRUE)
+    (plug-in-sobel 1 img logo-layer TRUE TRUE TRUE)
+    (gimp-levels logo-layer 0 0 120 3.5 0 255)
 
     ; work-around for sobel edge detect screw-up (why does this happen?)
     ; the top line of the image has some garbage instead of the bgcolor
     (gimp-rect-select img 0 0 width 1 ADD FALSE 0)
-    (gimp-edit-clear text-layer)
+    (gimp-edit-clear logo-layer)
     (gimp-selection-none img)
 
-    (gimp-layer-set-preserve-trans text-layer TRUE)
-    (gimp-layer-set-name text-layer text)
     (gimp-palette-set-background old-bg)
+    (gimp-palette-set-foreground old-fg)))
+
+
+(define (script-fu-chalk-logo-alpha img
+			      logo-layer
+			      bg-color)
+  (begin
+    (gimp-undo-push-group-start img)
+    (apply-chalk-logo-effect img logo-layer bg-color)
+    (gimp-undo-push-group-end img)
+    (gimp-displays-flush)))
+
+(script-fu-register "script-fu-chalk-logo-alpha"
+                    _"<Image>/Script-Fu/Alpha to Logo/Chalk..."
+                    "Chalk scribbled logos"
+                    "Manish Singh <msingh@uclink4.berkeley.edu>"
+                    "Manish Singh"
+                    "October 1997"
+                    "RGBA"
+                    SF-IMAGE      "Image" 0
+                    SF-DRAWABLE   "Drawable" 0
+                    SF-COLOR      _"Background Color" '(0 0 0)
+		    )
+
+
+(define (script-fu-chalk-logo text
+			      size
+			      font
+			      bg-color
+			      chalk-color)
+  (let* ((img (car (gimp-image-new 256 256 RGB)))
+	 (border (/ size 4))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
+	 (old-fg (car (gimp-palette-get-foreground))))
+    (gimp-image-undo-disable img)
+    (gimp-layer-set-name text-layer text)
+    (gimp-palette-set-foreground chalk-color)
+    (gimp-layer-set-preserve-trans text-layer TRUE)
+    (gimp-edit-fill text-layer FG-IMAGE-FILL)
     (gimp-palette-set-foreground old-fg)
+    (apply-chalk-logo-effect img text-layer bg-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
@@ -77,4 +106,5 @@
                     SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
                     SF-FONT       _"Font" "-*-Cooper-*-r-*-*-24-*-*-*-p-*-*-*"
                     SF-COLOR      _"Background Color" '(0 0 0)
-                    SF-COLOR      _"Chalk Color" '(255 255 255))
+                    SF-COLOR      _"Chalk Color" '(255 255 255)
+		    )
