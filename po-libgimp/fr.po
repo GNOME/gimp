@@ -8,13 +8,13 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 1.1.26\n"
-"POT-Creation-Date: 2000-10-15 12:23-0700\n"
-"PO-Revision-Date: 2000-10-02 11:17+0200\n"
+"Project-Id-Version: gimp-libgimp 1.1.28\n"
+"POT-Creation-Date: 2000-10-17 12:43+0200\n"
+"PO-Revision-Date: 2000-10-17 12:46+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpcolorbutton.c:118

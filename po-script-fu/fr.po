@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.1.27\n"
-"POT-Creation-Date: 2000-08-30 00:31-0700\n"
-"PO-Revision-Date: 2000-10-09 11:29+0200\n"
+"Project-Id-Version: gimp-script-fu 1.1.28\n"
+"POT-Creation-Date: 2000-10-17 12:45+0200\n"
+"PO-Revision-Date: 2000-10-17 12:54+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: Gnome French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgstr "Parcourir..."
 
 #: plug-ins/script-fu/script-fu-console.c:579
 msgid "Unable to open SIOD output pipe"
-msgstr "Impossible d'ouvrir le tampon de sortie SIOD"
+msgstr "Incapable d'ouvrir le tampon de sortie SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open a stream on the SIOD output pipe"
@@ -160,11 +160,11 @@ msgstr "Sélection de la police du Script-Fu"
 
 #: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"
-msgstr "Options du Serveur du Script-Fu"
+msgstr "Options du serveur du Script-Fu"
 
 #: plug-ins/script-fu/script-fu-server.c:566
 msgid "Server Port:"
-msgstr "Port du Serveur :"
+msgstr "Port du serveur :"
 
 #: plug-ins/script-fu/script-fu-server.c:572
 msgid "Server Logfile:"

@@ -11,13 +11,13 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.27\n"
-"POT-Creation-Date: 2000-10-16 11:48-0700\n"
-"PO-Revision-Date: 2000-10-02 11:14+0200\n"
+"Project-Id-Version: gimp 1.1.28\n"
+"POT-Creation-Date: 2000-10-17 12:43+0200\n"
+"PO-Revision-Date: 2000-10-17 12:46+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: app/about_dialog.c:135
@@ -532,19 +532,19 @@ msgstr "Décalage par (x/2),(y/2)"
 
 #: app/channels_dialog.c:225 app/channels_dialog.c:2538
 msgid "New Channel"
-msgstr "Nouveau Canal"
+msgstr "Nouveau canal"
 
 #: app/channels_dialog.c:229
 msgid "Raise Channel"
-msgstr "Remonter Canal"
+msgstr "Remonte le canal"
 
 #: app/channels_dialog.c:233
 msgid "Lower Channel"
-msgstr "Descendre Canal"
+msgstr "Descends le canal"
 
 #: app/channels_dialog.c:237
 msgid "Duplicate Channel"
-msgstr "Dupliquer Canal"
+msgstr "Duplique le canal"
 
 #: app/channels_dialog.c:242
 msgid ""
@@ -556,7 +556,7 @@ msgstr ""
 
 #: app/channels_dialog.c:249
 msgid "Delete Channel"
-msgstr "Effacer Canal"
+msgstr "Supprime le canal"
 
 #: app/channels_dialog.c:1204
 msgid "Empty Channel Copy"
@@ -621,7 +621,7 @@ msgstr "Alignement"
 
 #: app/clone.c:151
 msgid "Non Aligned"
-msgstr "Non Aligné"
+msgstr "Non aligné"
 
 #: app/clone.c:153
 msgid "Aligned"
@@ -650,7 +650,7 @@ msgstr "Ombres"
 
 #: app/color_balance.c:261 app/dodgeburn.c:181
 msgid "Midtones"
-msgstr "Demi-Teintes"
+msgstr "Demi-teintes"
 
 #: app/color_balance.c:262 app/dodgeburn.c:179
 msgid "Highlights"
@@ -2420,7 +2420,7 @@ msgstr "Facteur d'échelle :"
 
 #: app/info_window.c:282
 msgid "Display Type:"
-msgstr "Type d'Affichage :"
+msgstr "Type d'affichage :"
 
 #: app/info_window.c:284
 msgid "Visual Class:"
@@ -2639,18 +2639,18 @@ msgstr "masque %s"
 
 #: app/layer_select.c:101
 msgid "Layer Select"
-msgstr "Sélection de Calque"
+msgstr "Sélection de calque"
 
 #: app/layers_dialog.c:264 app/layers_dialog.c:3515
 msgid "New Layer"
-msgstr "Nouveau Calque"
+msgstr "Nouveau calque"
 
 #: app/layers_dialog.c:268
 msgid ""
 "Raise Layer    \n"
 "<Shift> To Top"
 msgstr ""
-"Remonter Calque\n"
+"Remonte le calque\n"
 "<Shift> vers le dessus"
 
 #: app/layers_dialog.c:273
@@ -2658,20 +2658,20 @@ msgid ""
 "Lower Layer       \n"
 "<Shift> To Bottom"
 msgstr ""
-"Descendre calque\n"
+"Descends le calque\n"
 "<Shift> vers le bas"
 
 #: app/layers_dialog.c:278
 msgid "Duplicate Layer"
-msgstr "Dupliquer Calque"
+msgstr "Duplique le calque"
 
 #: app/layers_dialog.c:282
 msgid "Anchor Layer"
-msgstr "Ancrer calque"
+msgstr "Ancre le calque"
 
 #: app/layers_dialog.c:286
 msgid "Delete Layer"
-msgstr "Effacer Calque"
+msgstr "Supprime le calque"
 
 #: app/layers_dialog.c:372 app/paint_funcs.c:84 app/tool_options.c:917
 msgid "Normal"
@@ -2727,11 +2727,11 @@ msgstr "Copie de calque vide"
 
 #: app/layers_dialog.c:2169 app/layers_dialog.c:3326 app/layers_dialog.c:3693
 msgid "Floating Selection"
-msgstr "Sélection Flottante"
+msgstr "Sélection flottante"
 
 #: app/layers_dialog.c:3476
 msgid "New Layer Options"
-msgstr "Options de Nouveau Calque"
+msgstr "Options du nouveau calque"
 
 #. The name label and entry
 #: app/layers_dialog.c:3505
@@ -2741,15 +2741,15 @@ msgstr "Nom du calque :"
 #. The size labels
 #: app/layers_dialog.c:3519
 msgid "Layer Width:"
-msgstr "Largeur du Calque :"
+msgstr "Largeur du calque :"
 
 #: app/layers_dialog.c:3579
 msgid "Layer Fill Type"
-msgstr "Type de Remplissage de Calque"
+msgstr "Type de remplissage de calque"
 
 #: app/layers_dialog.c:3658
 msgid "Edit Layer Attributes"
-msgstr "Éditer les Attributs du Calque"
+msgstr "Éditer les attributs du calque"
 
 #: app/layers_dialog.c:3685
 msgid "Layer name:"
@@ -2757,7 +2757,7 @@ msgstr "Nom du calque :"
 
 #: app/layers_dialog.c:3753
 msgid "Add Mask Options"
-msgstr "Options d'Ajout de masque"
+msgstr "Options d'ajout de masque"
 
 #. The radio frame and box
 #: app/layers_dialog.c:3771
@@ -2766,15 +2766,15 @@ msgstr "Initialiser le masque de calque à :"
 
 #: app/layers_dialog.c:3776
 msgid "White (Full Opacity)"
-msgstr "Blanc (Opacité Complète)"
+msgstr "Blanc (opacité complète)"
 
 #: app/layers_dialog.c:3778
 msgid "Black (Full Transparency)"
-msgstr "Noir (Transparence Totale)"
+msgstr "Noir (transparence totale)"
 
 #: app/layers_dialog.c:3780
 msgid "Layer's Alpha Channel"
-msgstr "Canal Alpha du Calque"
+msgstr "Canal alpha du calque"
 
 #: app/layers_dialog.c:3841 app/layers_dialog.c:3927
 msgid ""
@@ -2786,7 +2786,7 @@ msgstr ""
 
 #: app/layers_dialog.c:4013
 msgid "Layer Merge Options"
-msgstr "Options de Fusion de Calques"
+msgstr "Options de fusion du calque"
 
 #: app/layers_dialog.c:4038
 msgid "Final, Merged Layer should be:"
@@ -2832,7 +2832,7 @@ msgstr "Niveaux"
 
 #: app/levels.c:240
 msgid "Levels for indexed drawables cannot be adjusted."
-msgstr "les niveaux d'un dessin indexé ne peuvent être ajustés."
+msgstr "Les niveaux d'un dessin indexé ne peuvent être ajustés."
 
 #: app/levels.c:366
 msgid "Modify Levels for Channel:"
@@ -2998,7 +2998,7 @@ msgstr "(Cette fenêtre de console se fermera dans dix secondes.)\n"
 
 #: app/measure.c:121 app/measure.c:314
 msgid "Measure Tool"
-msgstr "Outil de mesure"
+msgstr "Outil Mesure"
 
 #: app/measure.c:130
 msgid "Use Info Window"
@@ -3061,7 +3061,7 @@ msgstr "/Fichier/Dialogues/Palette..."
 
 #: app/menus.c:132
 msgid "/File/Dialogs/Indexed Palette..."
-msgstr "/Fichier/Dialogues/Palette Indexée..."
+msgstr "/Fichier/Dialogues/Palette indexée..."
 
 #: app/menus.c:137
 msgid "/File/Dialogs/Input Devices..."
@@ -3069,15 +3069,15 @@ msgstr "/Fichier/Dialogues/Périphériques d'entrée..."
 
 #: app/menus.c:139
 msgid "/File/Dialogs/Device Status..."
-msgstr "/Fichier/Dialogues/État des Périphériques..."
+msgstr "/Fichier/Dialogues/État des périphériques..."
 
 #: app/menus.c:144
 msgid "/File/Dialogs/Document Index..."
-msgstr "/Fichier/Dialogues/Index des Documents..."
+msgstr "/Fichier/Dialogues/Index des documents..."
 
 #: app/menus.c:146
 msgid "/File/Dialogs/Error Console..."
-msgstr "/Fichier/Dialogues/Console d'Erreur..."
+msgstr "/Fichier/Dialogues/Console d'erreur..."
 
 #: app/menus.c:148
 msgid "/File/Dialogs/Display Filters..."
@@ -3171,15 +3171,15 @@ msgstr "/Édition/Coller en tant que nouveau"
 #. <Image>/Edit/Buffer
 #: app/menus.c:245
 msgid "/Edit/Buffer/Cut Named..."
-msgstr "/Édition/Tampon/Couper Nommé"
+msgstr "/Édition/Tampon/Couper nommé"
 
 #: app/menus.c:247
 msgid "/Edit/Buffer/Copy Named..."
-msgstr "/Édition/Tampon/Copier Nommé"
+msgstr "/Édition/Tampon/Copier nommé"
 
 #: app/menus.c:249
 msgid "/Edit/Buffer/Paste Named..."
-msgstr "/Édition/Tampon/Coller Nommé"
+msgstr "/Édition/Tampon/Coller nommé"
 
 #: app/menus.c:254
 msgid "/Edit/Clear"
@@ -3187,15 +3187,15 @@ msgstr "/Édition/Effacer"
 
 #: app/menus.c:256
 msgid "/Edit/Fill with FG Color"
-msgstr "/Édition/Remplir avec la Couleur d'Av. Pl."
+msgstr "/Édition/Remplir avec la couleur d'Av. Pl."
 
 #: app/menus.c:258
 msgid "/Edit/Fill with BG Color"
-msgstr "/Édition/Remplir avec la Couleur d'Ar. Pl."
+msgstr "/Édition/Remplir avec la couleur d'Ar. Pl."
 
 #: app/menus.c:260
 msgid "/Edit/Stroke"
-msgstr "/Édition/Coup de Pinceau"
+msgstr "/Édition/Coup de pinceau"
 
 #. <Image>/Select
 #: app/menus.c:268
@@ -3241,11 +3241,11 @@ msgstr "/Sélection/Enregistrer dans un canal"
 #. <Image>/View
 #: app/menus.c:297
 msgid "/View/Zoom In"
-msgstr "/Vue/Zoom +"
+msgstr "/Vue/Zoom avant"
 
 #: app/menus.c:299
 msgid "/View/Zoom Out"
-msgstr "/Vue/Zoom -"
+msgstr "/Vue/Zoom arrière"
 
 #. <Image>/View/Zoom
 #: app/menus.c:304
@@ -3298,23 +3298,23 @@ msgstr "/Vue/Nav. entre fenêtres..."
 
 #: app/menus.c:335
 msgid "/View/Toggle Selection"
-msgstr "/Vue/(Dés)activer Sélection"
+msgstr "/Vue/(Dés)activer la sélection"
 
 #: app/menus.c:337
 msgid "/View/Toggle Rulers"
-msgstr "/Vue/(Dés)activer les Règles"
+msgstr "/Vue/(Dés)activer les règles"
 
 #: app/menus.c:339
 msgid "/View/Toggle Statusbar"
-msgstr "/Vue/(Dés)activer la Barre d'État"
+msgstr "/Vue/(Dés)activer la barre d'État"
 
 #: app/menus.c:341
 msgid "/View/Toggle Guides"
-msgstr "/Vue/(Dés)activer les Guides"
+msgstr "/Vue/(Dés)activer les guides"
 
 #: app/menus.c:343
 msgid "/View/Snap to Guides"
-msgstr "/Vue/Aligner sur les Guides"
+msgstr "/Vue/Aligner sur les guides"
 
 #: app/menus.c:348
 msgid "/View/New View"
@@ -3331,7 +3331,7 @@ msgstr "/Image/Mode/RVB"
 
 #: app/menus.c:357
 msgid "/Image/Mode/Grayscale"
-msgstr "/Image/Mode/Niveaux de Gris"
+msgstr "/Image/Mode/Niveaux de gris"
 
 #: app/menus.c:359
 msgid "/Image/Mode/Indexed..."
@@ -3354,7 +3354,7 @@ msgstr "/Image/Couleurs/Auto/Égaliser"
 #. <Image>/Image/Alpha
 #: app/menus.c:385
 msgid "/Image/Alpha/Add Alpha Channel"
-msgstr "/Image/Alpha/Ajouter Canal Alpha"
+msgstr "/Image/Alpha/Ajouter un canal alpha"
 
 #. <Image>/Image/Transforms
 #: app/menus.c:390
@@ -3706,7 +3706,7 @@ msgstr "/Intersection avec la sélection"
 
 #: app/menus.c:696
 msgid "/Delete Channel"
-msgstr "/Effacer Canal"
+msgstr "/Effacer le canal"
 
 #: app/menus.c:701
 msgid "/Edit Channel Attributes..."
@@ -3714,15 +3714,15 @@ msgstr "/Éditer les attributs du canal..."
 
 #: app/menus.c:712
 msgid "/New Path"
-msgstr "/Nouveau Chemin"
+msgstr "/Nouveau chemin"
 
 #: app/menus.c:714
 msgid "/Duplicate Path"
-msgstr "/Dupliquer Chemin"
+msgstr "/Dupliquer le chemin"
 
 #: app/menus.c:716
 msgid "/Path to Selection"
-msgstr "/Chemin vers Sélection"
+msgstr "/Chemin vers sélection"
 
 #: app/menus.c:718
 msgid "/Selection to Path"
@@ -3734,19 +3734,19 @@ msgstr "/Chemin du coup de pinceau"
 
 #: app/menus.c:722
 msgid "/Delete Path"
-msgstr "/Effacer Chemin"
+msgstr "/Effacer le chemin"
 
 #: app/menus.c:727
 msgid "/Copy Path"
-msgstr "/Copier Chemin"
+msgstr "/Copier le chemin"
 
 #: app/menus.c:729
 msgid "/Paste Path"
-msgstr "/Coller Chemin"
+msgstr "/Coller le chemin"
 
 #: app/menus.c:731
 msgid "/Import Path..."
-msgstr "/Importer Chemin..."
+msgstr "/Importer un chemin..."
 
 #: app/menus.c:733
 msgid "/Export Path..."
@@ -3989,7 +3989,7 @@ msgstr "Non définie"
 
 #: app/palette.c:1756
 msgid "New Palette"
-msgstr "Nouvelle Palette"
+msgstr "Nouvelle palette"
 
 #: app/palette.c:1759
 msgid "Enter a name for new palette"
@@ -3997,11 +3997,11 @@ msgstr "Entrez un nom pour cette nouvelle palette"
 
 #: app/palette.c:1813
 msgid "Delete Palette"
-msgstr "Effacer Palette"
+msgstr "Effacer la palette"
 
 #: app/palette.c:1892
 msgid "Merge Palette"
-msgstr "Fusionner Palette"
+msgstr "Fusionner la palette"
 
 #: app/palette.c:1895
 msgid "Enter a name for merged palette"
@@ -4025,7 +4025,7 @@ msgstr "NbCouls"
 
 #: app/palette.c:2210
 msgid "Palette Ops"
-msgstr "Opérations de Palette"
+msgstr "Opérations de palette"
 
 #. The "Import" frame
 #: app/palette.c:2241 app/palette.c:3096 app/palette.c:3110
@@ -4075,15 +4075,15 @@ msgstr "Sélection de Palette"
 
 #: app/paths_dialog.c:163
 msgid "New Path"
-msgstr "Nouveau Chemin"
+msgstr "Nouveau chemin"
 
 #: app/paths_dialog.c:167
 msgid "Duplicate Path"
-msgstr "Dupliquer Chemin"
+msgstr "Duplique le chemin"
 
 #: app/paths_dialog.c:171
 msgid "Path to Selection"
-msgstr "Chemin vers Sélection"
+msgstr "Chemin vers sélection"
 
 #: app/paths_dialog.c:175
 msgid "Selection to Path"
@@ -4095,7 +4095,7 @@ msgstr "Chemin du coup de pinceau"
 
 #: app/paths_dialog.c:183
 msgid "Delete Path"
-msgstr "Effacer Chemin"
+msgstr "Supprime le chemin"
 
 #: app/paths_dialog.c:192
 msgid "New Point"
@@ -4103,15 +4103,15 @@ msgstr "Nouveau point"
 
 #: app/paths_dialog.c:196
 msgid "Add Point"
-msgstr "Ajouter point"
+msgstr "Ajoute un point"
 
 #: app/paths_dialog.c:200
 msgid "Delete Point"
-msgstr "Effacer point"
+msgstr "Supprime un point"
 
 #: app/paths_dialog.c:204
 msgid "Edit Point"
-msgstr "Éditer point"
+msgstr "Édite un point"
 
 #: app/paths_dialog.c:432
 #, c-format
@@ -4206,7 +4206,7 @@ msgstr "Perspective..."
 
 #: app/plug_in.c:330
 msgid "Resource configuration"
-msgstr "Configuration des Ressources"
+msgstr "Configuration des ressources"
 
 #: app/plug_in.c:337
 msgid "Plug-ins"
@@ -4262,7 +4262,7 @@ msgstr "Postériser"
 
 #: app/posterize.c:220
 msgid "Posterize Levels:"
-msgstr "Niveaux de Postérisation :"
+msgstr "Niveaux de postérisation :"
 
 #: app/preferences_dialog.c:247
 msgid "Error: Levels of undo must be zero or greater."
@@ -4347,7 +4347,7 @@ msgstr "Catégories"
 
 #: app/preferences_dialog.c:1502 app/preferences_dialog.c:1504
 msgid "New File"
-msgstr "Nouveau Fichier"
+msgstr "Nouveau fichier"
 
 #: app/preferences_dialog.c:1515
 msgid "Default Image Size and Unit"
@@ -4379,7 +4379,7 @@ msgstr "Taille maximal de l'image :"
 
 #: app/preferences_dialog.c:1652 app/preferences_dialog.c:1654
 msgid "Default Comment"
-msgstr "Commentaire par Défaut"
+msgstr "Commentaire par défaut"
 
 #: app/preferences_dialog.c:1662
 msgid "Comment Used for New Images"
@@ -4458,7 +4458,7 @@ msgstr "Cyclage de la palette de couleurs (8-bits uniquement)"
 
 #: app/preferences_dialog.c:1818
 msgid "Tiny"
-msgstr "Petit"
+msgstr "Minuscule"
 
 #: app/preferences_dialog.c:1822
 msgid "Huge"
@@ -4496,7 +4496,7 @@ msgstr "Fenêtre de navigation par Affichage"
 
 #: app/preferences_dialog.c:1876
 msgid "Info Window Follows Mouse"
-msgstr "la fenêtre d'information suit la souris"
+msgstr "La fenêtre d'information suit la souris"
 
 #: app/preferences_dialog.c:1887 app/preferences_dialog.c:1889
 msgid "Help System"
@@ -4648,7 +4648,7 @@ msgstr "Niveaux d'annulation :"
 
 #: app/preferences_dialog.c:2195 app/user_install.c:1108
 msgid "Tile Cache Size:"
-msgstr "Taille du Cache Image :"
+msgstr "Taille du cache d'image :"
 
 #: app/preferences_dialog.c:2206
 msgid "Number of Processors to Use:"
@@ -4672,7 +4672,7 @@ msgstr "Type d'interpolation :"
 
 #: app/preferences_dialog.c:2240
 msgid "File Saving"
-msgstr "Enregistrer de fichier"
+msgstr "Enregistrement de fichier"
 
 #: app/preferences_dialog.c:2257 app/preferences_dialog.c:2270
 msgid "Always"
@@ -4684,7 +4684,7 @@ msgstr "Jamais"
 
 #: app/preferences_dialog.c:2262
 msgid "Try to Write a Thumbnail File:"
-msgstr "Tentative d'écriture d'un fichier icône :"
+msgstr "Tenter d'écrire une vignette :"
 
 #: app/preferences_dialog.c:2269
 msgid "Only when Modified"
@@ -4692,7 +4692,7 @@ msgstr "Seulement quand modifié"
 
 #: app/preferences_dialog.c:2274
 msgid "\"File > Save\" Saves the Image:"
-msgstr "'Fichier > Enregistrer' sauvegarde l'image :"
+msgstr "\"Fichier > Enregistrer\" enregistre l'image :"
 
 #: app/preferences_dialog.c:2280
 msgid "Session Management"
@@ -4704,15 +4704,15 @@ msgstr "Session"
 
 #: app/preferences_dialog.c:2290
 msgid "Window Positions"
-msgstr "Effacer les positions de fenêtres sauvées"
+msgstr "Emplacements des fenêtres"
 
 #: app/preferences_dialog.c:2292
 msgid "Save Window Positions on Exit"
-msgstr "Enregistrer la position des fenêtres en quittant"
+msgstr "Sauvegarder l'emplacement des fenêtres en quittant"
 
 #: app/preferences_dialog.c:2306
 msgid "Clear Saved Window Positions Now"
-msgstr "Effacer maintenant les positions de fenêtres sauvées"
+msgstr "Effacer maintenant l'emplacement des fenêtres sauvegardées"
 
 #: app/preferences_dialog.c:2314
 msgid "Always Try to Restore Session"
@@ -4724,7 +4724,7 @@ msgstr "Périphériques"
 
 #: app/preferences_dialog.c:2325
 msgid "Save Device Status on Exit"
-msgstr "Enregistrer l'état des périphériques en quittant"
+msgstr "Sauvegarder l'état des périphériques en quittant"
 
 #: app/preferences_dialog.c:2336 app/preferences_dialog.c:2338
 msgid "Monitor"
@@ -4773,11 +4773,11 @@ msgstr "Sélectionnez un répertoire d'échange"
 
 #: app/preferences_dialog.c:2512
 msgid "Brushes Directories"
-msgstr "Répertoires des pinceaux"
+msgstr "Répertoires de brosses"
 
 #: app/preferences_dialog.c:2514
 msgid "Select Brushes Dir"
-msgstr "Sélectionner un répertoire de brosses"
+msgstr "Sélectionnez un répertoire de brosses"
 
 #: app/preferences_dialog.c:2516
 msgid "Generated Brushes"
@@ -4785,11 +4785,11 @@ msgstr "Pinceaux générés"
 
 #: app/preferences_dialog.c:2516
 msgid "Generated Brushes Directories"
-msgstr "Répertoires des pinceaux générés"
+msgstr "Répertoires de pinceaux générés"
 
 #: app/preferences_dialog.c:2518
 msgid "Select Generated Brushes Dir"
-msgstr "Sélectionner un répertoire de pinceaux"
+msgstr "Sélectionnez un répertoire de pinceaux générés"
 
 #: app/preferences_dialog.c:2520
 msgid "Patterns Directories"
@@ -4821,11 +4821,11 @@ msgstr "Greffons"
 
 #: app/preferences_dialog.c:2532
 msgid "Plug-Ins Directories"
-msgstr "Répertoires des greffons"
+msgstr "Répertoires de greffons"
 
 #: app/preferences_dialog.c:2534
 msgid "Select Plug-Ins Dir"
-msgstr "Sélectionner répertoire des greffons"
+msgstr "Sélectionnez un répertoire de greffons"
 
 #: app/preferences_dialog.c:2536
 msgid "Modules"
@@ -4837,7 +4837,7 @@ msgstr "Répertoires de modules"
 
 #: app/preferences_dialog.c:2538
 msgid "Select Modules Dir"
-msgstr "Choisir répertoire de modules"
+msgstr "Sélectionnez un répertoire de modules"
 
 #: app/procedural_db.c:43
 msgid "Procedural Database"
@@ -5142,11 +5142,11 @@ msgstr "Sélection par courbes de Bézier"
 
 #: app/tool_options.c:155 app/tools.c:288
 msgid "Intelligent Scissors"
-msgstr "Ciseaux Intelligents"
+msgstr "Ciseaux intelligents"
 
 #: app/tool_options.c:157
 msgid "By-Color Selection"
-msgstr "Sélection par Couleur"
+msgstr "Sélection par couleur"
 
 #: app/tool_options.c:190
 msgid "Feather"
@@ -5154,7 +5154,7 @@ msgstr "Adoucir"
 
 #: app/tool_options.c:311
 msgid "Fixed Size / Aspect Ratio"
-msgstr "Taille fixed / Ratio aspect"
+msgstr "Taille fixe / Ratio aspect"
 
 #: app/tool_options.c:377
 msgid "Unit:"
@@ -5302,7 +5302,7 @@ msgstr "/Outils/Transformer/Déplacer"
 
 #: app/tools.c:322
 msgid "Move layers & selections"
-msgstr "Déplacer calques & sélections"
+msgstr "Déplace les calques & sélections"
 
 #: app/tools.c:344
 msgid "Magnify"
@@ -5348,7 +5348,7 @@ msgstr "/Outils/Transformer/Retourner"
 
 #: app/tools.c:518
 msgid "Flip the layer or selection"
-msgstr "Retourner le calque ou la sélection"
+msgstr "Retourne le calque ou la sélection"
 
 #: app/tools.c:540
 msgid "Text"
@@ -5388,7 +5388,7 @@ msgstr "/Outils/Dessin/Dégradé"
 
 #: app/tools.c:630
 msgid "Fill with a color gradient"
-msgstr "Remplir avec un dégradé de couleur"
+msgstr "Remplit avec un dégradé de couleur"
 
 #: app/tools.c:653
 msgid "/Tools/Paint Tools/Pencil"
@@ -5480,7 +5480,7 @@ msgstr "/Outils/Mesure"
 
 #: app/tools.c:940
 msgid "Measure distances and angles"
-msgstr "Mesurer les distances et les angles"
+msgstr "Mesure les distances et les angles"
 
 #: app/tools.c:993
 msgid "By Color Select"
@@ -5500,7 +5500,7 @@ msgstr "/Image/Couleurs/Balance des couleurs..."
 
 #: app/tools.c:1027
 msgid "Adjust color balance"
-msgstr "Ajuster la balance de couleurs"
+msgstr "Ajuste la balance de couleurs"
 
 #: app/tools.c:1050
 msgid "/Image/Colors/Brightness-Contrast..."
@@ -5508,7 +5508,7 @@ msgstr "/Image/Couleurs/Luminosité-Contraste..."
 
 #: app/tools.c:1055
 msgid "Adjust brightness and contrast"
-msgstr "Ajuster luminosité-contraste"
+msgstr "Ajuste la luminosité-contraste"
 
 #: app/tools.c:1078
 msgid "/Image/Colors/Hue-Saturation..."
@@ -5516,7 +5516,7 @@ msgstr "/Image/Couleurs/Teinte-Saturation..."
 
 #: app/tools.c:1083
 msgid "Adjust hue and saturation"
-msgstr "Ajuster teinte et saturation"
+msgstr "Ajuste la teinte-saturation"
 
 #: app/tools.c:1106
 msgid "/Image/Colors/Posterize..."
@@ -5524,7 +5524,7 @@ msgstr "/Image/Couleurs/Postériser..."
 
 #: app/tools.c:1111
 msgid "Reduce image to a fixed numer of colors"
-msgstr "Réduire l'image à un nombre fixé de couleurs"
+msgstr "Réduit l'image à un nombre fixé de couleurs"
 
 #: app/tools.c:1134
 msgid "/Image/Colors/Threshold..."
@@ -5532,7 +5532,7 @@ msgstr "/Image/Couleurs/Seuil..."
 
 #: app/tools.c:1139
 msgid "Reduce image to two colors using a threshold"
-msgstr "Réduire l'image à 2 couleurs en utilisant un seuil"
+msgstr "Réduit l'image à 2 couleurs en utilisant un seuil"
 
 #: app/tools.c:1162
 msgid "/Image/Colors/Curves..."
@@ -5540,7 +5540,7 @@ msgstr "/Image/Couleurs/Courbes..."
 
 #: app/tools.c:1167
 msgid "Adjust color curves"
-msgstr "Ajuster les courbes de couleur"
+msgstr "Ajuste les courbes de couleur"
 
 #: app/tools.c:1190
 msgid "/Image/Colors/Levels..."
@@ -5548,7 +5548,7 @@ msgstr "/Image/Couleurs/Niveaux..."
 
 #: app/tools.c:1195
 msgid "Adjust color levels"
-msgstr "Ajuster les niveaux de couleur"
+msgstr "Ajuste les niveaux de couleur"
 
 #: app/tools.c:1218
 msgid "/Image/Histogram..."
@@ -5556,7 +5556,7 @@ msgstr "/Image/Histogramme..."
 
 #: app/tools.c:1223
 msgid "View image histogram"
-msgstr "Voir l'histogramme de l'image"
+msgstr "Affiche l'histogramme de l'image"
 
 #: app/transform_core.c:249
 msgid "Rotate"
@@ -5677,7 +5677,7 @@ msgstr "nouveau calque"
 
 #: app/undo.c:2910
 msgid "delete layer"
-msgstr "effacer calque"
+msgstr "effacer le calque"
 
 #: app/undo.c:2911
 msgid "layer mod"
@@ -5708,7 +5708,7 @@ msgstr "nouveau canal"
 
 #: app/undo.c:2917
 msgid "delete channel"
-msgstr "effacer canal"
+msgstr "effacer le canal"
 
 #: app/undo.c:2918
 msgid "channel mod"
@@ -6268,7 +6268,7 @@ msgstr "Historique de l'Installation"
 
 #: app/user_install.c:852
 msgid "GIMP Performance Tuning"
-msgstr "Affinage des Performances de GIMP"
+msgstr "Affinage des performances de GIMP"
 
 #: app/user_install.c:853
 msgid "Click \"Continue\" to accept the settings above."
@@ -6288,7 +6288,7 @@ msgstr "Résolution du Moniteur"
 
 #: app/user_install.c:866
 msgid "Click \"Continue\" to start The GIMP."
-msgstr "Cliquez \"Continuer pour démarrer GIMP."
+msgstr "Cliquez sur \"Continuer\" pour démarrer GIMP."
 
 #: app/user_install.c:869
 msgid ""
@@ -6340,14 +6340,13 @@ msgid "Installation failed.  Contact system administrator."
 msgstr "Échec de l'installation. Contactez votre administrateur système."
 
 #: app/user_install.c:1094
-#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP utilises une quantité de mémoire limitée pour stocker les données\n"
-"d'une image; cette zone est nommée \"Cache de Carreaux\". Vous devrez\n"
+"GIMP utilise une quantité de mémoire limitée pour stocker les données\n"
+"d'une image; cette zone est nommée \"Cache d'images\". Vous devrez\n"
 "ajuster cette taille pour correspondre avec votre quantité de mémoire.\n"
 "Considérez la quantité de mémoire utilisée par les autres processus\n"
 "en cours."

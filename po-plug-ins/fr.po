@@ -8,9 +8,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.27\n"
-"POT-Creation-Date: 2000-10-16 11:59-0700\n"
-"PO-Revision-Date: 2000-10-09 11:22+0200\n"
+"Project-Id-Version: gimp-std-plugins 1.1.28\n"
+"POT-Creation-Date: 2000-10-17 12:45+0200\n"
+"PO-Revision-Date: 2000-10-17 13:06+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -2596,15 +2596,15 @@ msgstr "Psychobilly"
 
 #: plug-ins/common/checkerboard.c:384
 msgid "Check Size:"
-msgstr "Vérifiier la Taille :"
+msgstr "Vérifiier la taille :"
 
 #: plug-ins/common/color_enhance.c:91
 msgid "<Image>/Image/Colors/Auto/Color Enhance"
-msgstr "<Image>/Image/Couleurs/Auto/Extension de Couleurs"
+msgstr "<Image>/Image/Couleurs/Auto/Extension de couleurs"
 
 #: plug-ins/common/color_enhance.c:124
 msgid "Color Enhance..."
-msgstr "Extension de Couleurs..."
+msgstr "Extension de couleurs..."
 
 #: plug-ins/common/colorify.c:154
 msgid "<Image>/Filters/Colors/Colorify..."
@@ -5190,9 +5190,8 @@ msgid "PNM: Premature end of file."
 msgstr "PNM : Fin de fichier prématurée."
 
 #: plug-ins/common/pnm.c:452
-#, fuzzy
 msgid "PNM: Invalid file."
-msgstr "PNM : valeur d'intensité maximale invalide."
+msgstr "PNM : Fichier invalide."
 
 #: plug-ins/common/pnm.c:465
 msgid "PNM: File not in a supported format."
@@ -5697,7 +5696,7 @@ msgstr "après"
 
 #: plug-ins/common/screenshot.c:458 plug-ins/winsnap/winsnap.c:1020
 msgid "Seconds Delay"
-msgstr "secondes de délai"
+msgstr "sec. de délai"
 
 #: plug-ins/common/sel_gauss.c:125
 msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
@@ -9037,7 +9036,7 @@ msgstr "Montrer le dernier point de contrôle"
 
 #: plug-ins/gap/gap_mov_dialog.c:2400
 msgid "Clear Point"
-msgstr "Effacer le Point"
+msgstr "Effacer le point"
 
 #: plug-ins/gap/gap_mov_dialog.c:2408
 msgid "Reset the current Controlpoint to default Values"
@@ -9707,15 +9706,15 @@ msgstr "Activer le lissage de la transparence"
 
 #: plug-ins/gap/gap_range_ops.c:364
 msgid "Convert Frames to Indexed"
-msgstr "Convertir les Trames en Indexées"
+msgstr "Convertir les trames en indexées"
 
 #: plug-ins/gap/gap_range_ops.c:365
 msgid "Palette and Dither Settings"
-msgstr "Paramètres de Palette et de Lissage"
+msgstr "Paramètres de palette et de lissage"
 
 #: plug-ins/gap/gap_range_ops.c:430
 msgid "Keep Type"
-msgstr "Garder le Type"
+msgstr "Garder le type"
 
 #: plug-ins/gap/gap_range_ops.c:431
 msgid "Convert to RGB"
@@ -9723,11 +9722,11 @@ msgstr "Convertir en RVB"
 
 #: plug-ins/gap/gap_range_ops.c:432
 msgid "Convert to Gray"
-msgstr "Convertir en Niveaux de Gris"
+msgstr "Convertir en niveaux de gris"
 
 #: plug-ins/gap/gap_range_ops.c:433
 msgid "Convert to Indexed"
-msgstr "Convertir en Indexées"
+msgstr "Convertir en indexées"
 
 #: plug-ins/gap/gap_range_ops.c:457
 msgid ""
@@ -9741,7 +9740,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:460
 msgid "Basename:"
-msgstr "Nom de Base :"
+msgstr "Nom de base :"
 
 #: plug-ins/gap/gap_range_ops.c:461
 msgid ""
@@ -9967,15 +9966,15 @@ msgstr "Suppression du Calque (pos :%ld) des Trames en cours..."
 
 #: plug-ins/gap/gap_range_ops.c:1640
 msgid "Delete Layers in Frames"
-msgstr "Effacer les Calques dans les Images"
+msgstr "Effacer les calques dans les trames"
 
 #: plug-ins/gap/gap_range_ops.c:1641
 msgid "Select Frame Range & Position"
-msgstr "Sélectionner l'Intervalle et la Position de la Trame"
+msgstr "Sélectionner l'intervalle et la position de la Trame"
 
 #: plug-ins/gap/gap_split.c:100
 msgid "Splitting into Frames..."
-msgstr "Séparation en Trames en cours..."
+msgstr "Séparation en trames en cours..."
 
 #: plug-ins/gap/gap_split.c:175
 msgid ""
@@ -9983,7 +9982,7 @@ msgid ""
 "desired save plugin can't handle type\n"
 "or desired save plugin not available."
 msgstr ""
-"Séparation des Trames: L'opération de SAUVEGARDE\n"
+"Séparation des trames: L'opération de SAUVEGARDE\n"
 "à échoué.\n"
 "le module de sauvegarde désiré ne supporte pas le type\n"
 "ou le module de sauvegarde désiré n'est pas disponible."
@@ -10001,7 +10000,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_split.c:226
 msgid "Make a frame (diskfile) from each Layer"
-msgstr "Faire une trame (fichier disque) à partir de chaque Calque"
+msgstr "Faire une trame (fichier disque) à partir de chaque calque"
 
 #: plug-ins/gap/gap_split.c:227
 msgid "frames are named: base_nr.extension"
@@ -11014,7 +11013,7 @@ msgstr "Le nom `%s' est déjà utilisé !"
 
 #: plug-ins/gflare/gflare.c:3354
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Impossible d'effacer!! Il doit y avoir au moins un éblouissementGimp."
+msgstr "Impossible d'effacer !! Il doit y avoir au moins un éblouissementGimp."
 
 #: plug-ins/gflare/gflare.c:3364
 msgid "Delete GFlare"
