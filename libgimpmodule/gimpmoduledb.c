@@ -38,8 +38,6 @@
 #include "gimpmodule.h"
 #include "gimpmoduledb.h"
 
-#include "libgimp/gimpintl.h"
-
 
 enum
 {

@@ -1,3 +1,14 @@
+2002-10-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimpmodule/gimpmodule.c
+	* libgimpwidgets/gimpcolorscales.c
+	* libgimpwidgets/gimpcolorselect.c: include libgimp-intl.h, not
+	gimpintl.h since this is in the gimp14-libgimp translation domain.
+
+	* libgimpmodule/gimpmoduledb.c
+	* libgimptool/gimptool.c: no need to include intl.h from here, there
+	are no translatable message.
+
 2002-10-29  Manish Singh  <yosh@gimp.org>
 
 	* gimptool-1.3.in: strip paths from the plug-in filename for

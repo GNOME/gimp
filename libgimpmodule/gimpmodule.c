@@ -27,7 +27,7 @@
 
 #include "gimpmodule.h"
 
-#include "libgimp/gimpintl.h"
+#include "libgimp/libgimp-intl.h"
 
 
 enum

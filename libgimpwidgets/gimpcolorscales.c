@@ -37,7 +37,7 @@
 #include "gimpcolorscales.h"
 #include "gimpwidgets.h"
 
-#include "libgimp/gimpintl.h"
+#include "libgimp/libgimp-intl.h"
 
 
 #define GIMP_COLOR_SCALES_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_SCALES, GimpColorScalesClass))
@@ -173,9 +173,9 @@ gimp_color_scales_init (GimpColorScales *scales)
     N_("Blue"),
     N_("Alpha")
   };
-  static gdouble  slider_initial_vals[] = {   0,   0,   0,   0,   0,   0,   0 };
-  static gdouble  slider_max_vals[]     = { 360, 100, 100, 255, 255, 255, 100 };
-  static gdouble  slider_incs[]         = {  30,  10,  10,  16,  16,  16,  10 };
+  static gdouble slider_initial_vals[] = {   0,   0,   0,   0,   0,   0,   0 };
+  static gdouble slider_max_vals[]     = { 360, 100, 100, 255, 255, 255, 100 };
+  static gdouble slider_incs[]         = {  30,  10,  10,  16,  16,  16,  10 };
 
   table = gtk_table_new (7, 4, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
@@ -229,7 +229,7 @@ gimp_color_scales_init (GimpColorScales *scales)
   gtk_widget_show (hbox);
 
   scales->hex_entry = gtk_entry_new ();
-  gtk_entry_set_width_chars (GTK_ENTRY (scales->hex_entry), 7);
+  gtk_entry_set_width_chars (GTK_ENTRY (scales->hex_entry), 8);
   gtk_entry_set_max_length (GTK_ENTRY (scales->hex_entry), 7);
   gtk_box_pack_end (GTK_BOX (hbox), scales->hex_entry, FALSE, FALSE, 0);
   gtk_widget_show (scales->hex_entry);

@@ -37,8 +37,6 @@
 #include "gimptool.h"
 #include "gimptoolcontrol.h"
 
-#include "libgimp/gimpintl.h"
-
 
 static void   gimp_tool_class_init          (GimpToolClass   *klass);
 static void   gimp_tool_init                (GimpTool        *tool);

@@ -40,7 +40,7 @@
 #include "gimpcolorselector.h"
 #include "gimpcolorselect.h"
 
-#include "libgimp/gimpintl.h"
+#include "libgimp/libgimp-intl.h"
 
 
 #define XY_DEF_WIDTH     GIMP_COLOR_SELECTOR_SIZE
@@ -282,7 +282,8 @@ gimp_color_select_init (GimpColorSelect *select)
 
   select->xy_color = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_set_dither (GTK_PREVIEW (select->xy_color), GDK_RGB_DITHER_MAX);
-  gtk_preview_size (GTK_PREVIEW (select->xy_color), XY_DEF_WIDTH, XY_DEF_HEIGHT);
+  gtk_preview_size (GTK_PREVIEW (select->xy_color),
+                    XY_DEF_WIDTH, XY_DEF_HEIGHT);
   gtk_widget_set_events (select->xy_color, COLOR_AREA_MASK);
   gtk_container_add (GTK_CONTAINER (xy_frame), select->xy_color);
   gtk_widget_show (select->xy_color);
