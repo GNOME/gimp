@@ -120,7 +120,7 @@ void   DepthMerge_executeRegion          (DepthMerge *dm,
                                           guchar *depthMap2Row,
                                           guchar *resultRow,
 					  gint    length);
-gint32 DepthMerge_dialog                 (DepthMerge *dm);
+static  gboolean  DepthMerge_dialog      (DepthMerge *dm);
 void   DepthMerge_buildPreviewSourceImage(DepthMerge *dm);
 void   DepthMerge_updatePreview          (DepthMerge *dm);
 
@@ -272,8 +272,8 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gimp_tile_cache_ntiles ((dm.resultDrawable->width + gimp_tile_width() - 1) /
-			      gimp_tile_width());
+      gimp_tile_cache_ntiles ((dm.resultDrawable->width +
+                               gimp_tile_width () - 1) / gimp_tile_width ());
 
       if (!DepthMerge_execute (&dm))
 	status = GIMP_PDB_EXECUTION_ERROR;
@@ -621,15 +621,15 @@ DepthMerge_executeRegion (DepthMerge *dm,
     }
 }
 
-gint32
+static gboolean
 DepthMerge_dialog (DepthMerge *dm)
 {
-  GtkWidget *topTable;
-  GtkWidget *previewFrame;
-  GtkWidget *sourceTable;
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *combo;
-  GtkWidget *numericParameterTable;
   GtkObject *adj;
   gboolean   run;
 
@@ -647,19 +647,21 @@ DepthMerge_dialog (DepthMerge *dm)
 
 		     NULL);
 
-  /* topTable */
-  topTable = gtk_table_new (3, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER(topTable), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (topTable), 4);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dm->interface->dialog)->vbox),
-		      topTable, FALSE, FALSE, 0);
-  gtk_widget_show(topTable);
+		      vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   /* Preview */
-  previewFrame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (previewFrame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (topTable), previewFrame, 1, 2, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show (previewFrame);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   dm->interface->previewWidth  = MIN (dm->selectionWidth,  PREVIEW_SIZE);
   dm->interface->previewHeight = MIN (dm->selectionHeight, PREVIEW_SIZE);
@@ -667,23 +669,23 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_preview_size (GTK_PREVIEW (dm->interface->preview),
 		    dm->interface->previewWidth,
 		    dm->interface->previewHeight);
-  gtk_container_add (GTK_CONTAINER (previewFrame), dm->interface->preview);
+  gtk_container_add (GTK_CONTAINER (frame), dm->interface->preview);
   gtk_widget_show (dm->interface->preview);
 
   DepthMerge_buildPreviewSourceImage (dm);
 
   /* Source and Depth Map selection */
-  sourceTable = gtk_table_new (2, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (sourceTable), 4);
-  gtk_table_set_col_spacing (GTK_TABLE (sourceTable), 1, 6);
-  gtk_table_set_row_spacings (GTK_TABLE (sourceTable), 2);
-  gtk_table_attach (GTK_TABLE (topTable), sourceTable, 0, 3, 1, 2,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
-  gtk_widget_show (sourceTable);
+  table = gtk_table_new (8, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 12);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 3, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   label = gtk_label_new (_("Source 1:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (sourceTable), label, 0, 1, 0, 1,
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -692,13 +694,13 @@ DepthMerge_dialog (DepthMerge *dm)
                               G_CALLBACK (dialogSource1ChangedCallback),
                               dm);
 
-  gtk_table_attach (GTK_TABLE (sourceTable), combo, 1, 2, 0, 1,
+  gtk_table_attach (GTK_TABLE (table), combo, 1, 3, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
   label = gtk_label_new(_("Depth Map:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (sourceTable), label, 2, 3, 0, 1,
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -707,13 +709,13 @@ DepthMerge_dialog (DepthMerge *dm)
                               G_CALLBACK (dialogDepthMap1ChangedCallback),
                               dm);
 
-  gtk_table_attach (GTK_TABLE (sourceTable), combo, 3, 4, 0, 1,
+  gtk_table_attach (GTK_TABLE (table), combo, 1, 3, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
   label = gtk_label_new (_("Source 2:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (sourceTable), label, 0, 1, 1, 2,
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -722,13 +724,13 @@ DepthMerge_dialog (DepthMerge *dm)
                               G_CALLBACK (dialogSource2ChangedCallback),
                               dm);
 
-  gtk_table_attach (GTK_TABLE (sourceTable), combo, 1, 2, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), combo, 1, 3, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
   label = gtk_label_new (_("Depth Map:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (sourceTable), label, 2, 3, 1, 2,
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -737,19 +739,12 @@ DepthMerge_dialog (DepthMerge *dm)
                               G_CALLBACK (dialogDepthMap2ChangedCallback),
                               dm);
 
-  gtk_table_attach (GTK_TABLE (sourceTable), combo, 3, 4, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), combo, 1, 3, 3, 4,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
   /* Numeric parameters */
-  numericParameterTable = gtk_table_new(4, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (numericParameterTable), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (numericParameterTable), 2);
-  gtk_table_attach (GTK_TABLE (topTable), numericParameterTable, 0, 3, 2, 3,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
-  gtk_widget_show (numericParameterTable);
-
-  adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 0,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
 			      _("Overlap:"), 0, 6,
 			      dm->params.overlap, 0, 2, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
@@ -759,7 +754,7 @@ DepthMerge_dialog (DepthMerge *dm)
                     &(dm->params.overlap));
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 1,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
 			      _("Offset:"), 0, 6,
 			      dm->params.offset, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
@@ -769,7 +764,7 @@ DepthMerge_dialog (DepthMerge *dm)
                     &(dm->params.offset));
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 2,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
 			      _("Scale 1:"), 0, 6,
 			      dm->params.scale1, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
@@ -779,7 +774,7 @@ DepthMerge_dialog (DepthMerge *dm)
                     &(dm->params.scale1));
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 3,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
 			      _("Scale 2:"), 0, 6,
 			      dm->params.scale2, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,

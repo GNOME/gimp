@@ -310,8 +310,7 @@ static gboolean
 colortoalpha_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
-  GtkWidget *table;
+  GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *label;
   gboolean   run;
@@ -327,29 +326,19 @@ colortoalpha_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  frame = gtk_frame_new (_("Color"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
-                      frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_widget_show (hbox);
 
   label = gtk_label_new (_("From:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach_defaults (GTK_TABLE(table), label, 0, 1, 0, 1);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   button = gimp_color_button_new (_("Color to Alpha Color Picker"),
 				  PRV_WIDTH, PRV_HEIGHT,
 				  &pvals.color,
 				  GIMP_COLOR_AREA_FLAT);
-  gtk_table_attach (GTK_TABLE (table), button, 1, 2, 0, 1,
-		    GTK_FILL, GTK_SHRINK, 0, 0) ;
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "color_changed",
@@ -357,8 +346,7 @@ colortoalpha_dialog (GimpDrawable *drawable)
                     &pvals.color);
 
   label = gtk_label_new (_("to Alpha"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 0, 1);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   gtk_widget_show (dlg);

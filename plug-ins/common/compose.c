@@ -1098,17 +1098,16 @@ compose_dialog (const gchar *compose_type,
 			 NULL);
 
   /*  parameter settings  */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
   /* The left frame keeps the compose type toggles */
-  left_frame = gtk_frame_new (_("Compose Channels"));
+  left_frame = gimp_frame_new (_("Compose Channels"));
   gtk_box_pack_start (GTK_BOX (hbox), left_frame, FALSE, FALSE, 0);
 
-  left_vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (left_vbox), 2);
+  left_vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (left_frame), left_vbox);
 
   /* The right frame keeps the selection menues for images. */
@@ -1116,16 +1115,15 @@ compose_dialog (const gchar *compose_type,
   /* in the left frame is changed, fill in the right part first. */
   /* Otherwise it can occur, that a non-existing label might be changed. */
 
-  right_frame = gtk_frame_new (_("Channel Representations"));
+  right_frame = gimp_frame_new (_("Channel Representations"));
   gtk_box_pack_start (GTK_BOX (hbox), right_frame, TRUE, TRUE, 0);
 
-  right_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (right_vbox), 4);
+  right_vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (right_frame), right_vbox);
 
   table = gtk_table_new (MAX_COMPOSE_IMAGES, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (right_vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
@@ -1145,7 +1143,7 @@ compose_dialog (const gchar *compose_type,
               gettext (compose_dsc[compose_idx].channel_name[j]) : NULL);
       composeint.channel_label[j] = label = gtk_label_new (text);
 
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 1, 2, j, j+1,
 			GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);

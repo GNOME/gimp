@@ -72,20 +72,20 @@
  * Local functions...
  */
 
-static void     query (void);
-static void     run   (const gchar      *name,
-		       gint              nparams,
-		       const GimpParam  *param,
-		       gint             *nreturn_vals,
-		       GimpParam       **return_vals);
+static void      query (void);
+static void      run   (const gchar      *name,
+                        gint              nparams,
+                        const GimpParam  *param,
+                        gint             *nreturn_vals,
+                        GimpParam       **return_vals);
 
-static void     destripe                (void);
+static void      destripe                (void);
 
-static gint     destripe_dialog         (void);
+static gboolean  destripe_dialog         (void);
 
-static void     preview_init            (void);
-static void     preview_update          (void);
-static void     preview_scroll_callback (void);
+static void      preview_init            (void);
+static void      preview_update          (void);
+static void      preview_scroll_callback (void);
 
 
 /*
@@ -545,13 +545,13 @@ destripe (void)
   destripe_rect (sel_x1, sel_y1, sel_x2, sel_y2, FALSE);
 }
 
-static gint
+static gboolean
 destripe_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *abox;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *table;
-  GtkWidget *ptable;
   GtkWidget *frame;
   GtkWidget *scrollbar;
   GtkWidget *button;
@@ -569,27 +569,23 @@ destripe_dialog (void)
 
                             NULL);
 
-  /*
-   * Preview window...
-   */
-
-  frame = gtk_frame_new (_("Preview"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
                       TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
-  gtk_widget_show (abox);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  ptable = gtk_table_new (2, 2, FALSE);
-  gtk_container_add (GTK_CONTAINER (abox), ptable);
-  gtk_widget_show (ptable);
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach(GTK_TABLE(ptable), frame, 0, 1, 0, 1,
+  gtk_table_attach(GTK_TABLE(table), frame, 0, 1, 0, 1,
                    0, 0, 0, 0);
   gtk_widget_show (frame);
 
@@ -611,7 +607,7 @@ destripe_dialog (void)
 
   scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (hscroll_data));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (ptable), scrollbar, 0, 1, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), scrollbar, 0, 1, 1, 2,
                     GTK_FILL, 0, 0, 0);
   gtk_widget_show (scrollbar);
 
@@ -625,43 +621,16 @@ destripe_dialog (void)
 
   scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (vscroll_data));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (ptable), scrollbar, 1, 2, 0, 1, 0,
+  gtk_table_attach (GTK_TABLE (table), scrollbar, 1, 2, 0, 1, 0,
                     GTK_FILL, 0, 0);
   gtk_widget_show (scrollbar);
 
   preview_init ();
 
-  /*
-   * Filter type controls...
-   */
-
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
-
-  button = gtk_check_button_new_with_mnemonic (_("Create _Histogram"));
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, 0, 1);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), vals.histogram);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &vals.histogram);
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (preview_update),
-                    NULL);
-
-  /*
-   * Box size (radius) control...
-   */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("_Width:"), SCALE_WIDTH, 0,
@@ -672,6 +641,18 @@ destripe_dialog (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &vals.avg_width);
   g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (preview_update),
+                    NULL);
+
+  button = gtk_check_button_new_with_mnemonic (_("Create _Histogram"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), vals.histogram);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &vals.histogram);
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (preview_update),
                     NULL);
 

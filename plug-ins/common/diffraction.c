@@ -104,10 +104,10 @@ static double diff_intensity (gdouble  x,
 			      gdouble  y,
 			      gdouble  lam);
 
-static gint diffraction_dialog     (void);
-static void dialog_update_preview  (void);
-static void dialog_update_callback (GtkWidget *widget,
-				    gpointer   data);
+static gboolean  diffraction_dialog     (void);
+static void      dialog_update_preview  (void);
+static void      dialog_update_callback (GtkWidget *widget,
+                                         gpointer   data);
 
 /***** Variables *****/
 
@@ -424,11 +424,11 @@ diff_intensity (double x,
 			     (cospolpi2 - sinpolpi2) * sxy * sxy);
 }
 
-static gint
+static gboolean
 diffraction_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *top_table;
+  GtkWidget *hbox;
   GtkWidget *notebook;
   GtkWidget *frame;
   GtkWidget *vbox;
@@ -449,19 +449,16 @@ diffraction_dialog (void)
 
 			    NULL);
 
-  top_table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width(GTK_CONTAINER (top_table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (top_table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (top_table), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), top_table,
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox,
 		      FALSE, FALSE, 0);
-  gtk_widget_show (top_table);
+  gtk_widget_show (hbox);
 
   /* Preview */
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_table_attach (GTK_TABLE (top_table), vbox, 0, 1, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   frame = gtk_frame_new (NULL);
@@ -476,12 +473,11 @@ diffraction_dialog (void)
 
   dint.progress = gtk_progress_bar_new ();
   gtk_widget_set_size_request (dint.progress, PROGRESS_WIDTH, PROGRESS_HEIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox), dint.progress, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), dint.progress, FALSE, FALSE, 0);
   gtk_widget_show (dint.progress);
 
   button = gtk_button_new_with_mnemonic (_("_Preview!"));
-  gtk_table_attach (GTK_TABLE (top_table), button, 0, 1, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
@@ -492,16 +488,15 @@ diffraction_dialog (void)
 
   notebook = gtk_notebook_new ();
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
-  gtk_table_attach (GTK_TABLE (top_table), notebook, 1, 2, 0, 2,
-		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook);
 
   /* Frequencies tab */
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -537,9 +532,9 @@ diffraction_dialog (void)
   /* Contours tab */
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -575,9 +570,9 @@ diffraction_dialog (void)
   /* Sharp edges tab */
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -613,9 +608,9 @@ diffraction_dialog (void)
   /* Other options tab */
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -700,8 +695,10 @@ dialog_update_preview (void)
 			    dint.preview_row, 0, y, PREVIEW_WIDTH);
 
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (dint.progress),
-                                     (double) y / (double) (PREVIEW_HEIGHT - 1));
-      gtk_widget_queue_draw (dint.progress);
+                                     (gdouble) y /
+                                     (gdouble) (PREVIEW_HEIGHT - 1));
+      while (gtk_events_pending ())
+        gtk_main_iteration ();
 
       py += dy;
     }

@@ -53,7 +53,8 @@ static void      run    (const gchar      *name,
 
 static void      deinterlace        (GimpDrawable  *drawable);
 
-static gint      deinterlace_dialog (void);
+static gboolean  deinterlace_dialog (void);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -72,10 +73,10 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "evenodd", "0 = keep odd, 1 = keep even" }
+    { GIMP_PDB_INT32,     "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,     "image",    "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE,  "drawable", "Input drawable"               },
+    { GIMP_PDB_INT32,     "evenodd",  "0 = keep odd, 1 = keep even"  }
   };
 
   gimp_install_procedure ("plug_in_deinterlace",
@@ -274,11 +275,10 @@ deinterlace (GimpDrawable *drawable)
   g_free (dest);
 }
 
-static gint
+static gboolean
 deinterlace_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *vbox;
   GtkWidget *frame;
   gboolean   run;
 
@@ -293,12 +293,7 @@ deinterlace_dialog (void)
 
 			 NULL);
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  frame = gimp_int_radio_group_new (TRUE, _("Mode"),
+  frame = gimp_int_radio_group_new (FALSE, NULL,
                                     G_CALLBACK (gimp_radio_button_update),
                                     &DeinterlaceValue, DeinterlaceValue,
 
@@ -307,7 +302,8 @@ deinterlace_dialog (void)
 
                                     NULL);
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   gtk_widget_show (dlg);

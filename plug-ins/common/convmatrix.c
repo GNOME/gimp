@@ -106,10 +106,11 @@ static void run   (const gchar      *name,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
-static gint dialog       (void);
+static gboolean  dialog       (void);
 
-static void doit         (void);
-static void check_config (void);
+static void      doit         (void);
+static void      check_config (void);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -309,7 +310,8 @@ run (const gchar      *name,
 	    gimp_displays_flush ();
 
 	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data ("plug_in_convmatrix", &my_config, sizeof (my_config));
+	    gimp_set_data ("plug_in_convmatrix",
+                           &my_config, sizeof (my_config));
 	}
       else
 	{
@@ -623,13 +625,15 @@ doit (void)
 
 static void
 fprint (gfloat  f,
-	gchar  *buffer)
+	gchar  *buffer,
+        gsize   len)
 {
   gint i, t;
 
-  sprintf (buffer, "%.7f", f);
+  snprintf (buffer, len, "%.7f", f);
+  buffer[len - 1] = '\0';
 
-  for (t = 0; buffer[t] != '.'; t++);
+  for (t = 0; t < len - 1 && buffer[t] != '.'; t++);
 
   i = t + 1;
 
@@ -647,14 +651,13 @@ fprint (gfloat  f,
 static void
 redraw_matrix (void)
 {
-  gint x,y;
+  gint  x, y;
   gchar buffer[12];
 
   for (y = 0; y < 5; y++)
     for (x = 0; x < 5; x++)
       {
-	fprint (my_config.matrix[x][y], buffer);
-
+        fprint (my_config.matrix[x][y], buffer, sizeof (buffer));
 	gtk_entry_set_text (GTK_ENTRY (my_widgets.matrix[x][y]), buffer);
       }
 }
@@ -688,9 +691,10 @@ redraw_off_and_div (void)
 {
   gchar buffer[12];
 
-  fprint (my_config.divisor, buffer);
+  fprint (my_config.divisor, buffer, sizeof (buffer));
   gtk_entry_set_text (GTK_ENTRY (my_widgets.divisor), buffer);
-  fprint (my_config.offset, buffer);
+
+  fprint (my_config.offset, buffer, sizeof (buffer));
   gtk_entry_set_text (GTK_ENTRY (my_widgets.offset), buffer);
 }
 
@@ -852,7 +856,7 @@ my_bmode_callback (GtkWidget *widget,
   my_config.bmode = GPOINTER_TO_INT (data) - 1;
 }
 
-static gint
+static gboolean
 dialog (void)
 {
   GtkWidget *dlg;
@@ -863,9 +867,8 @@ dialog (void)
   GtkWidget *button;
   GtkWidget *box;
   GtkWidget *inbox;
-  GtkWidget *yetanotherbox;
+  GtkWidget *vbox;
   GtkWidget *frame;
-  gchar      buffer[32];
   gint       x, y, i;
   GSList    *group;
 
@@ -888,25 +891,24 @@ dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  main_hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
+  main_hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_hbox,
 		      TRUE, TRUE, 0);
 
-  yetanotherbox = gtk_vbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (main_hbox), yetanotherbox, FALSE, FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
 
-  frame = gtk_frame_new (_("Matrix"));
-  gtk_box_pack_start (GTK_BOX (yetanotherbox), frame, FALSE, FALSE, 0);
+  frame = gimp_frame_new (_("Matrix"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-  inbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (inbox), 4);
+  inbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), inbox);
 
   table = gtk_table_new (5, 5, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (inbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (inbox), table, TRUE, TRUE, 0);
 
   for (y = 0; y < 5; y++)
     for (x = 0; x < 5; x++)
@@ -915,7 +917,6 @@ dialog (void)
 	gtk_widget_set_size_request (entry, 40, -1);
 	gtk_table_attach (GTK_TABLE (table), entry, x, x+1, y, y+1,
 			  GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-	gtk_entry_set_text (GTK_ENTRY (entry), buffer);
 	gtk_widget_show (entry);
 
 	g_signal_connect (entry, "changed",
@@ -929,11 +930,11 @@ dialog (void)
   gtk_box_pack_start (GTK_BOX (inbox), box, FALSE, FALSE, 0);
 
   table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (box), table, TRUE, FALSE, 0);
 
   label = gtk_label_new_with_mnemonic (_("D_ivisor:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
   gtk_widget_show (label);
 
@@ -950,11 +951,11 @@ dialog (void)
   gtk_widget_show (table);
 
   table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (box), table, TRUE, FALSE, 0);
 
   label = gtk_label_new_with_mnemonic (_("O_ffset:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
   gtk_widget_show (label);
 
@@ -975,8 +976,8 @@ dialog (void)
   gtk_widget_show (inbox);
   gtk_widget_show (frame);
 
-  box = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (yetanotherbox), box, FALSE, FALSE, 0);
+  box = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
 
   my_widgets.autoset = button =
     gtk_check_button_new_with_mnemonic (_("A_utomatic"));
@@ -999,16 +1000,15 @@ dialog (void)
                     &my_config.alpha_alg);
 
   gtk_widget_show (box);
-  gtk_widget_show (yetanotherbox);
+  gtk_widget_show (vbox);
 
-  inbox = gtk_vbox_new (FALSE, 4);
+  inbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), inbox, FALSE, FALSE, 0);
 
-  frame = gtk_frame_new (_("Border"));
+  frame = gimp_frame_new (_("Border"));
   gtk_box_pack_start (GTK_BOX (inbox), frame, FALSE, FALSE, 0);
 
-  box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (box), 2);
+  box = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (frame), box);
 
   group = NULL;
@@ -1029,11 +1029,10 @@ dialog (void)
   gtk_widget_show (box);
   gtk_widget_show (frame);
 
-  frame=gtk_frame_new (_("Channels"));
+  frame = gimp_frame_new (_("Channels"));
   gtk_box_pack_start (GTK_BOX (inbox), frame, FALSE, FALSE, 0);
 
-  box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (box), 2);
+  box = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (frame), box);
 
   for (i = 0; i < 5; i++)
@@ -1052,7 +1051,7 @@ dialog (void)
                         &my_config.channels[i]);
     }
 
-  gtk_widget_show(box);
+  gtk_widget_show (box);
   gtk_widget_show (frame);
 
   gtk_widget_show (inbox);

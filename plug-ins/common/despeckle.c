@@ -84,25 +84,25 @@
  * Local functions...
  */
 
-static void	query (void);
-static void	run   (const gchar      *name,
-		       gint              nparams,
-		       const GimpParam  *param,
-		       gint             *nreturn_vals,
-		       GimpParam       **return_vals);
+static void      query (void);
+static void      run   (const gchar      *name,
+                        gint              nparams,
+                        const GimpParam  *param,
+                        gint             *nreturn_vals,
+                        GimpParam       **return_vals);
 
-static void	despeckle (void);
+static void      despeckle (void);
 
-static gint	despeckle_dialog          (void);
+static gboolean  despeckle_dialog          (void);
 
-static void	dialog_iscale_update      (GtkAdjustment *, gint *);
-static void	dialog_adaptive_callback  (GtkWidget *, gpointer);
-static void	dialog_recursive_callback (GtkWidget *, gpointer);
+static void      dialog_iscale_update      (GtkAdjustment *, gint *);
+static void      dialog_adaptive_callback  (GtkWidget *, gpointer);
+static void      dialog_recursive_callback (GtkWidget *, gpointer);
 
-static void	preview_init              (void);
-static void	preview_exit              (void);
-static void	preview_update            (void);
-static void	preview_scroll_callback   (void);
+static void      preview_init              (void);
+static void      preview_exit              (void);
+static void      preview_update            (void);
+static void      preview_scroll_callback   (void);
 
 
 /*
@@ -117,8 +117,8 @@ GimpPlugInInfo PLUG_IN_INFO =
   run    /* run   */
 };
 
-GtkWidget      *preview;		/* Preview widget */
-gint		preview_width,		/* Width of preview widget */
+GtkWidget      *preview;                /* Preview widget */
+gint        	preview_width,		/* Width of preview widget */
 		preview_height,		/* Height of preview widget */
 		preview_x1,		/* Upper-left X of preview */
 		preview_y1,		/* Upper-left Y of preview */
@@ -253,7 +253,7 @@ run (const gchar      *name,
        * Get information from the dialog...
        */
 
-      if (!despeckle_dialog())
+      if (!despeckle_dialog ())
 	return;
       break;
 
@@ -625,13 +625,13 @@ despeckle_dialog (void)
 
 			    NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -664,9 +664,10 @@ despeckle_dialog (void)
                     G_CALLBACK (preview_scroll_callback),
                     NULL);
 
-  scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT(hscroll_data));
+  scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (hscroll_data));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE(ptable), scrollbar, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (ptable), scrollbar,
+                    0, 1, 1, 2, GTK_FILL, 0, 0, 0);
   gtk_widget_show (scrollbar);
 
   vscroll_data = gtk_adjustment_new (0, 0, sel_height - 1, 1.0,
@@ -694,12 +695,11 @@ despeckle_dialog (void)
    * Filter type controls...
    */
 
-  frame = gtk_frame_new (_("Type"));
+  frame = gimp_frame_new (_("Type"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -723,15 +723,10 @@ despeckle_dialog (void)
                     G_CALLBACK (dialog_recursive_callback),
                     NULL);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*

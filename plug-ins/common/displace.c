@@ -84,7 +84,7 @@ static void      run    (const gchar      *name,
 			 GimpParam       **return_vals);
 
 static void      displace        (GimpDrawable *drawable);
-static gint      displace_dialog (GimpDrawable *drawable);
+static gboolean  displace_dialog (GimpDrawable *drawable);
 
 static gboolean  displace_map_constrain    (gint32     image_id,
 					    gint32     drawable_id,
@@ -244,19 +244,17 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static int
+static gboolean
 displace_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *label;
   GtkWidget *toggle;
   GtkWidget *toggle_hbox;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *combo;
-  GtkWidget *sep;
   GSList    *group = NULL;
   gboolean   run;
 
@@ -272,15 +270,12 @@ displace_dialog (GimpDrawable *drawable)
 			 NULL);
 
   /*  The main table  */
-  frame = gtk_frame_new (_("Displace Options"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 12);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
 
   /*  X options  */
   toggle = gtk_check_button_new_with_mnemonic (_("_X Displacement:"));
@@ -359,12 +354,8 @@ displace_dialog (GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", combo);
 
   /*  Displacement Type  */
-  sep = gtk_hseparator_new ();
-  gtk_table_attach_defaults (GTK_TABLE (table), sep, 0, 3, 2, 3);
-  gtk_widget_show (sep);
-
   toggle_hbox = gtk_hbox_new (FALSE, 6);
-  gtk_table_attach (GTK_TABLE (table), toggle_hbox, 0, 3, 3, 4,
+  gtk_table_attach (GTK_TABLE (table), toggle_hbox, 0, 3, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
 
   label = gtk_label_new ( _("On Edges:"));
@@ -415,7 +406,6 @@ displace_dialog (GimpDrawable *drawable)
 
   gtk_widget_show (toggle_hbox);
   gtk_widget_show (table);
-  gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);

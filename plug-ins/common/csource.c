@@ -643,14 +643,14 @@ run_save_dialog	(Config *config)
 
 			    NULL);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_widget_show (vbox);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -658,7 +658,7 @@ run_save_dialog	(Config *config)
    */
   prefixed_name = gtk_entry_new ();
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Prefixed Name:"), 1.0, 0.5,
+			     _("_Prefixed Name:"), 0.0, 0.5,
 			     prefixed_name, 1, FALSE);
   gtk_entry_set_text (GTK_ENTRY (prefixed_name),
 		      config->prefixed_name ? config->prefixed_name : "");
@@ -667,7 +667,7 @@ run_save_dialog	(Config *config)
    */
   centry = gtk_entry_new ();
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Co_mment:"), 1.0, 0.5,
+			     _("Co_mment:"), 0.0, 0.5,
 			     centry, 1, FALSE);
   gtk_entry_set_text (GTK_ENTRY (centry),
 		      config->comment ? config->comment : "");

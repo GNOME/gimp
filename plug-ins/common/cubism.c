@@ -19,6 +19,7 @@
  * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
  * Speedups by Elliot Lee
  */
+
 #include "config.h"
 
 #include <stdlib.h>
@@ -95,7 +96,7 @@ static gint      polygon_extents      (Polygon   *poly,
 				       gdouble   *max_y);
 static void      polygon_reset        (Polygon   *poly);
 
-static gint      cubism_dialog        (void);
+static gboolean  cubism_dialog        (void);
 
 /*
  *  Local variables
@@ -241,12 +242,12 @@ run (const gchar      *name,
   gimp_drawable_detach (active_drawable);
 }
 
-static gint
+static gboolean
 cubism_dialog (void)
 {
   GtkWidget *dlg;
+  GtkWidget *vbox;
   GtkWidget *toggle;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkObject *scale_data;
   gboolean   run;
@@ -262,33 +263,19 @@ cubism_dialog (void)
 
 			 NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Use Background Color"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &cvals.bg_color);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				(cvals.bg_color == BG));
-
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				     _("_Tile Size:"), SCALE_WIDTH, 5,
 				     cvals.tile_size, 0.0, 100.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
@@ -298,7 +285,7 @@ cubism_dialog (void)
                     &cvals.tile_size);
 
   scale_data =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			  _("T_ile Saturation:"), SCALE_WIDTH, 5,
 			  cvals.tile_saturation, 0.0, 10.0, 0.1, 1, 1,
 			  TRUE, 0, 0,
@@ -306,6 +293,17 @@ cubism_dialog (void)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &cvals.tile_saturation);
+
+  toggle = gtk_check_button_new_with_mnemonic (_("_Use Background Color"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &cvals.bg_color);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				(cvals.bg_color == BG));
 
   gtk_widget_show (dlg);
 
