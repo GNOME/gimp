@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-24 22:31+0200\n"
-"PO-Revision-Date: 2004-08-24 22:31+0200\n"
-"Last-Translator: Roman Joost <roman@bromeco.de>\n"
+"POT-Creation-Date: 2004-08-26 10:12+0200\n"
+"PO-Revision-Date: 2004-08-26 10:15+0200\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -198,17 +198,17 @@ msgstr "  -b, --batch <Befehle>    Befehle im Stapelmodus ausführen.\n"
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:91 app/core/gimp.c:856
-#: app/gui/dialogs-constructors.c:277 app/gui/dialogs-constructors.c:479
+#: app/gui/dialogs-constructors.c:285 app/gui/dialogs-constructors.c:487
 #: app/gui/preferences-dialog.c:2379 app/pdb/internal_procs.c:84
 msgid "Brushes"
 msgstr "Pinsel"
 
-#: app/actions/actions.c:94 app/gui/dialogs-constructors.c:398
-#: app/gui/dialogs-constructors.c:600
+#: app/actions/actions.c:94 app/gui/dialogs-constructors.c:406
+#: app/gui/dialogs-constructors.c:608
 msgid "Buffers"
 msgstr "Ablagen"
 
-#: app/actions/actions.c:97 app/gui/dialogs-constructors.c:682
+#: app/actions/actions.c:97 app/gui/dialogs-constructors.c:690
 msgid "Channels"
 msgstr "Kanäle"
 
@@ -232,8 +232,8 @@ msgstr "Dialoge"
 msgid "Dockable"
 msgstr "Andockbar"
 
-#: app/actions/actions.c:115 app/gui/dialogs-constructors.c:417
-#: app/gui/dialogs-constructors.c:619
+#: app/actions/actions.c:115 app/gui/dialogs-constructors.c:425
+#: app/gui/dialogs-constructors.c:627
 msgid "Document History"
 msgstr "Dokumentenindex"
 
@@ -246,7 +246,7 @@ msgstr "Bild"
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: app/actions/actions.c:124 app/gui/dialogs-constructors.c:234
+#: app/actions/actions.c:124 app/gui/dialogs-constructors.c:242
 msgid "Error Console"
 msgstr "Fehlerkonsole"
 
@@ -256,18 +256,18 @@ msgstr "_Datei"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:130 app/core/gimp.c:872
-#: app/gui/dialogs-constructors.c:360 app/gui/dialogs-constructors.c:562
+#: app/gui/dialogs-constructors.c:368 app/gui/dialogs-constructors.c:570
 #: app/gui/preferences-dialog.c:2395 app/pdb/internal_procs.c:114
 msgid "Fonts"
 msgstr "Schriften"
 
-#: app/actions/actions.c:133 app/gui/dialogs-constructors.c:905
+#: app/actions/actions.c:133 app/gui/dialogs-constructors.c:913
 msgid "Gradient Editor"
 msgstr "Farbverlaufseditor"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:136 app/core/gimp.c:868
-#: app/gui/dialogs-constructors.c:319 app/gui/dialogs-constructors.c:521
+#: app/gui/dialogs-constructors.c:327 app/gui/dialogs-constructors.c:529
 #: app/gui/preferences-dialog.c:2391 app/pdb/internal_procs.c:126
 msgid "Gradients"
 msgstr "Farbverläufe"
@@ -281,29 +281,29 @@ msgstr "Hilfe"
 msgid "Image"
 msgstr "Bild"
 
-#: app/actions/actions.c:145 app/gui/dialogs-constructors.c:256
-#: app/gui/dialogs-constructors.c:458
+#: app/actions/actions.c:145 app/gui/dialogs-constructors.c:264
+#: app/gui/dialogs-constructors.c:466
 msgid "Images"
 msgstr "Bilder"
 
-#: app/actions/actions.c:148 app/gui/dialogs-constructors.c:650
+#: app/actions/actions.c:148 app/gui/dialogs-constructors.c:658
 msgid "Layers"
 msgstr "Ebenen"
 
-#: app/actions/actions.c:151 app/gui/dialogs-constructors.c:936
+#: app/actions/actions.c:151 app/gui/dialogs-constructors.c:944
 msgid "Palette Editor"
 msgstr "Farbpaletteneditor"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:154 app/core/gimp.c:864
-#: app/gui/dialogs-constructors.c:341 app/gui/dialogs-constructors.c:543
+#: app/gui/dialogs-constructors.c:349 app/gui/dialogs-constructors.c:551
 #: app/gui/preferences-dialog.c:2387 app/pdb/internal_procs.c:156
 msgid "Palettes"
 msgstr "Farbpaletten"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:157 app/core/gimp.c:860
-#: app/gui/dialogs-constructors.c:297 app/gui/dialogs-constructors.c:499
+#: app/gui/dialogs-constructors.c:305 app/gui/dialogs-constructors.c:507
 #: app/gui/preferences-dialog.c:2383 app/pdb/internal_procs.c:168
 msgid "Patterns"
 msgstr "Muster"
@@ -322,22 +322,22 @@ msgstr "Auswählen"
 
 #. initialize the template list
 #: app/actions/actions.c:169 app/core/gimp.c:880
-#: app/gui/dialogs-constructors.c:436
+#: app/gui/dialogs-constructors.c:444
 msgid "Templates"
 msgstr "Vorlagen"
 
-#: app/actions/actions.c:172 app/gui/dialogs-constructors.c:194
-#: app/gui/gui.c:389 app/gui/preferences-dialog.c:1542
+#: app/actions/actions.c:172 app/gui/dialogs-constructors.c:202
+#: app/gui/gui.c:409 app/gui/preferences-dialog.c:1542
 #: app/gui/preferences-dialog.c:1545
 msgid "Tool Options"
 msgstr "Werkzeugeinstellungen"
 
-#: app/actions/actions.c:175 app/gui/dialogs-constructors.c:379
-#: app/gui/dialogs-constructors.c:581
+#: app/actions/actions.c:175 app/gui/dialogs-constructors.c:387
+#: app/gui/dialogs-constructors.c:589
 msgid "Tools"
 msgstr "Werkzeuge"
 
-#: app/actions/actions.c:178 app/gui/dialogs-constructors.c:714
+#: app/actions/actions.c:178 app/gui/dialogs-constructors.c:722
 #: app/pdb/internal_procs.c:162 app/tools/gimpvectortool.c:160
 msgid "Paths"
 msgstr "Pfade"
@@ -983,7 +983,7 @@ msgstr "Ablagen"
 msgid "_Undo"
 msgstr "_Rückgängig"
 
-#: app/actions/edit-actions.c:66 app/gui/dialogs-constructors.c:806
+#: app/actions/edit-actions.c:66 app/gui/dialogs-constructors.c:814
 #: app/pdb/internal_procs.c:189
 msgid "Undo"
 msgstr "Rückgängig"
@@ -2712,7 +2712,7 @@ msgstr "_Schließen"
 msgid "_Fit Image in Window"
 msgstr "_Fenster an Bild anpassen"
 
-#: app/actions/view-actions.c:92 app/display/gimpnavigationview.c:483
+#: app/actions/view-actions.c:92 app/display/gimpnavigationeditor.c:483
 msgid "Fit Image to Window"
 msgstr "_Bild dem Fenster anpassen"
 
@@ -2918,7 +2918,7 @@ msgstr "Blau"
 msgid "Alpha"
 msgstr "Alpha"
 
-#: app/base/base-enums.c:79 app/display/gimpdisplayshell-title.c:236
+#: app/base/base-enums.c:79 app/display/gimpdisplayshell-title.c:235
 #: app/widgets/widgets-enums.c:53
 msgid "RGB"
 msgstr "RGB"
@@ -4133,8 +4133,7 @@ msgstr "VG nach HG (HSV-Farbton im Uhrzeigersinn)"
 msgid "FG to Transparent"
 msgstr "VG nach Transparent"
 
-#: app/core/gimp-gui.c:165 app/widgets/gimperrorconsole.c:260
-#: app/widgets/gimpwidgets-utils.c:88
+#: app/core/gimp-gui.c:148
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -5179,21 +5178,21 @@ msgstr ""
 msgid "Toggle QuickMask"
 msgstr "QuickMask aktivieren/deaktivieren"
 
-#: app/display/gimpdisplayshell-close.c:111
+#: app/display/gimpdisplayshell-close.c:108
 #, c-format
 msgid "Close %s?"
 msgstr "%s schließen?"
 
-#: app/display/gimpdisplayshell-close.c:121
+#: app/display/gimpdisplayshell-close.c:118
 msgid "_Discard changes"
 msgstr "Änderungen _verwerfen"
 
-#: app/display/gimpdisplayshell-close.c:149
+#: app/display/gimpdisplayshell-close.c:138
 #, c-format
 msgid "Changes were made to '%s'."
 msgstr "An '%s' wurden Veränderungen vorgenommen."
 
-#: app/display/gimpdisplayshell-close.c:164
+#: app/display/gimpdisplayshell-close.c:143
 msgid "Unsaved changes will be lost."
 msgstr "Änderungen seit der letzten Sicherung gehen verloren."
 
@@ -5213,7 +5212,7 @@ msgstr "Ansichtsfarbfilter"
 msgid "Configure Color Display Filters"
 msgstr "Ansichtsfarbfilter konfigurieren"
 
-#: app/display/gimpdisplayshell-layer-select.c:123
+#: app/display/gimpdisplayshell-layer-select.c:122
 msgid "Layer Select"
 msgstr "Ebenenauswahl"
 
@@ -5233,67 +5232,67 @@ msgstr "Skalierung:"
 msgid "Zoom:"
 msgstr "Maßstab:"
 
-#: app/display/gimpdisplayshell-title.c:236
+#: app/display/gimpdisplayshell-title.c:235
 msgid "RGB-empty"
 msgstr "RGB leer"
 
-#: app/display/gimpdisplayshell-title.c:239
+#: app/display/gimpdisplayshell-title.c:238
 msgid "grayscale-empty"
 msgstr "Graustufen leer"
 
-#: app/display/gimpdisplayshell-title.c:239
+#: app/display/gimpdisplayshell-title.c:238
 msgid "grayscale"
 msgstr "Graustufen"
 
-#: app/display/gimpdisplayshell-title.c:242
+#: app/display/gimpdisplayshell-title.c:241
 msgid "indexed-empty"
 msgstr "indiziert leer"
 
-#: app/display/gimpdisplayshell-title.c:242
+#: app/display/gimpdisplayshell-title.c:241
 msgid "indexed"
 msgstr "indiziert"
 
-#: app/display/gimpdisplayshell-title.c:294
+#: app/display/gimpdisplayshell-title.c:293
 msgid "(modified)"
 msgstr "(verändert)"
 
-#: app/display/gimpdisplayshell-title.c:300
+#: app/display/gimpdisplayshell-title.c:299
 msgid "(clean)"
 msgstr "(bereinigt)"
 
-#: app/display/gimpdisplayshell-title.c:327
+#: app/display/gimpdisplayshell-title.c:326
 msgid "1 layer"
 msgstr "1 Ebene"
 
-#: app/display/gimpdisplayshell-title.c:327
+#: app/display/gimpdisplayshell-title.c:326
 #, c-format
 msgid "%d layers"
 msgstr "%d Ebenen"
 
-#: app/display/gimpdisplayshell-title.c:339
-#: app/display/gimpdisplayshell-title.c:351
+#: app/display/gimpdisplayshell-title.c:338
+#: app/display/gimpdisplayshell-title.c:350
 msgid "(none)"
 msgstr "(Kein)"
 
-#: app/display/gimpnavigationview.c:451 app/widgets/gimppaletteeditor.c:326
+#: app/display/gimpnavigationeditor.c:451 app/widgets/gimppaletteeditor.c:326
 #: app/widgets/widgets-enums.c:206
 msgid "Zoom out"
 msgstr "Herauszoomen"
 
-#: app/display/gimpnavigationview.c:459 app/widgets/gimppaletteeditor.c:334
+#: app/display/gimpnavigationeditor.c:459 app/widgets/gimppaletteeditor.c:334
 #: app/widgets/widgets-enums.c:205
 msgid "Zoom in"
 msgstr "Hineinzoomen"
 
-#: app/display/gimpnavigationview.c:467
+#: app/display/gimpnavigationeditor.c:467
 msgid "Zoom 1:1"
 msgstr "Maßstab 1:1"
 
-#: app/display/gimpnavigationview.c:475
+#: app/display/gimpnavigationeditor.c:475
 msgid "Fit Image in Window"
 msgstr "Bildgröße an Fenster anpassen."
 
-#: app/display/gimpnavigationview.c:491
+#: app/display/gimpnavigationeditor.c:491
 msgid "Shrink Wrap"
 msgstr "Fenster anpassen"
 
@@ -5443,67 +5442,71 @@ msgstr "Wählen sie eine Palette"
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Kann nicht in eine Palette mit mehr als 256 Farben konvertieren."
 
-#: app/gui/dialogs-constructors.c:214
+#: app/gui/dialogs-constructors.c:153 app/gui/gui.c:158
+msgid "GIMP Message"
+msgstr "GIMP Meldung"
+
+#: app/gui/dialogs-constructors.c:222
 msgid "Devices"
 msgstr "Eingabegeräte"
 
-#: app/gui/dialogs-constructors.c:214
+#: app/gui/dialogs-constructors.c:222
 msgid "Device Status"
 msgstr "Gerätestatus"
 
-#: app/gui/dialogs-constructors.c:234
+#: app/gui/dialogs-constructors.c:242
 msgid "Errors"
 msgstr "Fehler"
 
-#: app/gui/dialogs-constructors.c:417 app/gui/dialogs-constructors.c:619
+#: app/gui/dialogs-constructors.c:425 app/gui/dialogs-constructors.c:627
 msgid "History"
 msgstr "Journal"
 
-#: app/gui/dialogs-constructors.c:436
+#: app/gui/dialogs-constructors.c:444
 msgid "Image Templates"
 msgstr "Bild-Vorlagen"
 
-#: app/gui/dialogs-constructors.c:735
+#: app/gui/dialogs-constructors.c:743
 msgid "Colormap"
 msgstr "Farbtabelle"
 
-#: app/gui/dialogs-constructors.c:735
+#: app/gui/dialogs-constructors.c:743
 msgid "Indexed Palette"
 msgstr "Indizierte Farbpalette"
 
-#: app/gui/dialogs-constructors.c:759
+#: app/gui/dialogs-constructors.c:767
 msgid "Histogram"
 msgstr "Histogramm"
 
-#: app/gui/dialogs-constructors.c:780
+#: app/gui/dialogs-constructors.c:788
 msgid "Selection"
 msgstr "Auswahl"
 
-#: app/gui/dialogs-constructors.c:780
+#: app/gui/dialogs-constructors.c:788
 msgid "Selection Editor"
 msgstr "Auswahleditor"
 
-#: app/gui/dialogs-constructors.c:806
+#: app/gui/dialogs-constructors.c:814
 msgid "Undo History"
 msgstr "Journal"
 
-#: app/gui/dialogs-constructors.c:836
+#: app/gui/dialogs-constructors.c:844
 msgid "Navigation"
 msgstr "Navigation"
 
-#: app/gui/dialogs-constructors.c:836
+#: app/gui/dialogs-constructors.c:844
 msgid "Display Navigation"
 msgstr "Ansichtsnavigation"
 
-#: app/gui/dialogs-constructors.c:854
+#: app/gui/dialogs-constructors.c:862
 msgid "FG/BG"
 msgstr "VG/HG"
 
-#: app/gui/dialogs-constructors.c:854
+#: app/gui/dialogs-constructors.c:862
 msgid "FG/BG Color"
 msgstr "VG/HG Farbe"
 
-#: app/gui/dialogs-constructors.c:874
+#: app/gui/dialogs-constructors.c:882
 msgid "Brush Editor"
 msgstr "Pinseleditor"
 
@@ -6521,19 +6524,19 @@ msgstr "Themenordner"
 msgid "Select Theme Folders"
 msgstr "Wählen Sie die Themenordner"
 
-#: app/gui/quit-dialog.c:80
+#: app/gui/quit-dialog.c:79
 msgid "Quit The GIMP?"
 msgstr "GIMP beenden?"
 
-#: app/gui/quit-dialog.c:135
+#: app/gui/quit-dialog.c:114
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Wenn Sie GIMP jetzt beenden, gehen folgende Änderungenverlorgen:"
 
-#: app/gui/quit-dialog.c:175
+#: app/gui/quit-dialog.c:153
 msgid "There is one image with unsaved changes:"
 msgstr "Kein Bild mit ungesicherten Änderungen vorhanden:"
 
-#: app/gui/quit-dialog.c:179
+#: app/gui/quit-dialog.c:156
 #, c-format
 msgid "There are %d images with unsaved changes:"
 msgstr "Es sind %d Bilder mit ungespeicherten Änderungen geöffnet:"
@@ -9116,7 +9119,7 @@ msgstr "Prozentsatz der Pinselbreite"
 
 #: app/widgets/gimpbufferview.c:168 app/widgets/gimpbufferview.c:249
 #: app/widgets/gimpcontainergridview.c:206
-#: app/widgets/gimpcontainergridview.c:656
+#: app/widgets/gimpcontainergridview.c:657
 #: app/widgets/gimphistogrameditor.c:146 app/widgets/gimphistogrameditor.c:364
 msgid "(None)"
 msgstr "(Keine)"
@@ -9639,20 +9642,20 @@ msgstr ""
 "Alle Fehler speichern\n"
 "%s  Auswahl speichern"
 
-#: app/widgets/gimperrorconsole.c:271 app/widgets/gimpwidgets-utils.c:160
+#: app/widgets/gimperrorconsole.c:269 app/widgets/gimperrordialog.c:242
 #, c-format
 msgid "%s Message"
 msgstr "%s Meldung"
 
-#: app/widgets/gimperrorconsole.c:341
+#: app/widgets/gimperrorconsole.c:339
 msgid "Cannot save. Nothing is selected."
 msgstr "Es konnte nicht gespeichert werden, da nichts ausgewählt wurde."
 
-#: app/widgets/gimperrorconsole.c:352
+#: app/widgets/gimperrorconsole.c:350
 msgid "Save Error Log to File"
 msgstr "Fehlerprotokoll in Datei speichern"
 
-#: app/widgets/gimperrorconsole.c:399
+#: app/widgets/gimperrorconsole.c:397
 #, c-format
 msgid ""
 "Error writing file '%s':\n"
@@ -9660,6 +9663,14 @@ msgid ""
 msgstr ""
 "Fehler beim Schreiben der Datei »%s«:\n"
 "%s"
+
+#: app/widgets/gimperrordialog.c:221
+msgid "Too many error messages!"
+msgstr "Zu viele Fehlermeldungen!"
+
+#: app/widgets/gimperrordialog.c:222
+msgid "Messages are redirected to stderr."
+msgstr "Ausgabe erfolgt jetzt auf der Standard-Fehlerausgabe."
 
 #: app/widgets/gimpfiledialog.c:301
 msgid "Automatically Detected"
@@ -9924,6 +9935,15 @@ msgstr "Ebenenreihenfolge ändern"
 #: app/widgets/gimplayertreeview.c:313
 msgid "Keep transparency"
 msgstr "Transparenz erhalten"
+
+#: app/widgets/gimpmessagebox.c:457
+#, c-format
+msgid "Message repeated %d times."
+msgstr "Meldung %d mal wiederholt."
+
+#: app/widgets/gimpmessagebox.c:459
+msgid "Message repeated once."
+msgstr "Meldung einmal wiederholt."
 
 #: app/widgets/gimppaletteeditor.c:276 app/widgets/gimppaletteeditor.c:975
 msgid "Undefined"
@@ -10317,33 +10337,10 @@ msgstr "Farbton"
 msgid "Saturation"
 msgstr "Sättigung"
 
-#: app/widgets/gimpwidgets-utils.c:107
-#, c-format
-msgid "Message repeated %d times."
-msgstr "Meldung %d mal wiederholt."
-
-#: app/widgets/gimpwidgets-utils.c:116
-msgid "Message repeated once."
-msgstr "Meldung einmal wiederholt."
-
-#: app/widgets/gimpwidgets-utils.c:135
-msgid ""
-"WARNING:\n"
-"Too many open message dialogs.\n"
-"Messages are redirected to stderr."
-msgstr ""
-"WARNUNG:\n"
-"Es sind zu viele Dialoge mit Fehlermeldungen geöffnet.\n"
-"Ausgabe erfolgt jetzt auf der Standard-Fehlerausgabe."
-
-#: app/widgets/gimpwidgets-utils.c:142
-msgid "GIMP Message"
-msgstr "GIMP Meldung"
-
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
 #.
-#: app/widgets/gimpwidgets-utils.c:509
+#: app/widgets/gimpwidgets-utils.c:312
 #, c-format
 msgid "<%s>"
 msgstr "<%s>"
@@ -10486,6 +10483,15 @@ msgstr "Bilder und Photos erstellen und bearbeiten"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Bildeditor"
+
+#~ msgid ""
+#~ "WARNING:\n"
+#~ "Too many open message dialogs.\n"
+#~ "Messages are redirected to stderr."
+#~ msgstr ""
+#~ "WARNUNG:\n"
+#~ "Es sind zu viele Dialoge mit Fehlermeldungen geöffnet.\n"
+#~ "Ausgabe erfolgt jetzt auf der Standard-Fehlerausgabe."
 
 #~ msgid "RGB color"
 #~ msgstr "RGB Farbe"
