@@ -14,7 +14,8 @@ use IO::Socket;
 
 use strict;
 use vars qw($use_unix $use_tcp $trace_res $server_quit $max_pkt $unix $tcp $ps_flags
-            %object_dynamic $object_uid %objects $auth @authorized);
+            %object_dynamic $object_uid %objects $auth @authorized $exclusive
+            $rm $saved_rm);
 use Gimp '';
 use Gimp::Net qw(:server);
 
@@ -35,6 +36,8 @@ Gimp::ignore_functions(qw(gimp_progress_init gimp_progress_update));
 # TRCE trace in-args	trace status out-args	run simple command (with tracing)
 # TEST procname		bool			check for procedure existance
 # DTRY in-args					destroy all argument objects
+# LOCK lock? shared?				lock or unlock
+# RSET						reset server (NYI)
 #
 # args is "number of arguments" arguments preceded by length
 # type is first character
@@ -45,7 +48,8 @@ Gimp::ignore_functions(qw(gimp_progress_init gimp_progress_update));
 
 $server_quit = 0;
 
-$max_pkt = 1024*1024;
+my $max_pkt = 1024*1024*8;
+my $exclusive = 0;
 
 sub slog {
   return if $ps_flags & &Gimp::_PS_FLAG_QUIET;
@@ -133,6 +137,23 @@ sub handle_request($) {
       } elsif($req eq "AUTH") {
          $data=Gimp::Net::args2net(1,"authorization unnecessary");
          print $fh pack("N",length($data)).$data;
+      } elsif($req eq "LOCK") {
+         my($lock,$shared)=unpack("N*",$data);
+         slog "WARNING: shared locking requested but not implemented" if $shared;
+         if($lock) {
+            unless($exclusive) {
+               $saved_rm=$rm;
+               undef $rm; vec($rm,fileno($fh),1)=1;
+            }
+            $exclusive++;
+         } else {
+            if ($exclusive) {
+               $exclusive--;
+               $rm = $saved_rm unless $exclusive;
+            } else {
+               slog "WARNING: client tried to unlock without holding a lock";
+            }
+         }
       } else {
          print $fh pack("N",0);
          slog "illegal command received, aborting connection";
@@ -194,7 +215,7 @@ sub extension_perl_server {
   
   $SIG{PIPE}='IGNORE'; # may not work, since libgimp (eech) overwrites it.        
   my($unix_path)=$Gimp::Net::default_unix_dir.$Gimp::Net::default_unix_sock;
-  my($rm,%handles,$r,$fh,$f);
+  my(%handles,$r,$fh,$f);
   
   if ($use_unix) {
     unlink $unix_path;
@@ -237,10 +258,16 @@ sub extension_perl_server {
           $fh=$handles{$f};
           unless(handle_request($fh)) {
             slog "closing connection ",$f;
+            if ($exclusive) {
+               $rm = $saved_rm;
+               $exclusive = 0;
+               slog "WARNING: client disconnected while holding an active lock\n";
+            }
             vec($rm,$f,1)=0;
             delete $handles{$f};
             undef $fh;
           }
+          last; # this is because the client might have called lock()
         }
       }
     }

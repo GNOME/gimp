@@ -1,0 +1,333 @@
+#!/usr/bin/perl
+
+#BEGIN {$^W=1};
+
+require 5.005;
+
+use Gimp;
+use Gimp::Fu;
+use Gtk;
+use Gtk::Gdk;
+
+#Gimp::set_trace(TRACE_ALL);
+
+my $window;	# the main window
+my $clist;	# the list of completions
+my $rlist;	# the results list
+my $inputline;	# the input entry
+my $result;	# the result entry
+my $synopsis;	# the synopsis label
+
+my $idle;	# the idle function id
+
+my @args;	# the arguments of the current function
+
+my @function;	# the names of all functions
+my %function;	# the same as hash
+my %completion;	# a hash that maps completion names to values
+
+sub refresh {
+   undef %function;
+   @function = gimp_procedural_db_query("","","","","","","");
+   @function{@function}=(1) x @function;
+}
+
+sub get_words {
+   my $text = $inputline->get_text;
+   my $i = 0;
+   my($p,$idx,$pos);
+   my $word;
+   my @words;
+   substr($text,$inputline->get('text_position'),0,"\0");
+   while ($text =~ /("(?:[^"\\]*(?:\\.[^"\\]*)*)")[ ,]*|([^ ,]+)[ ,]*|[ ,]+/g) {
+      $word = defined $1 ? $1 : $2;
+      if (($p = index($word, "\0")) >= 0) {
+         $idx=$i; $pos=$p;
+         substr ($word, $p, 1, "");
+      }
+      $i++;
+      push(@words,$word);
+   }
+   ($idx,$pos,@words);
+}
+
+sub set_words {
+   my $text=shift;
+   $text.=" ".join(",",@_) if scalar@_;
+   my $pos=index($text,"\0");
+   if ($pos) {
+      substr($text,$pos,1,"");
+      $inputline->set_text($text);
+      $inputline->set_position($pos);
+   } else {
+      $inputline->set_text($text);
+   }
+}
+
+my $last_func;
+
+sub set_current_function {
+   my $fun = shift;
+   return if $last_func eq $fun;
+   $last_func = $fun;
+   @args=();
+   eval {
+      $function{$fun} or die;
+      my($blurb,$help,$author,$copyright,$date,$type,$args,$results)=
+         gimp_procedural_db_proc_info($fun);
+      for(0..$args-1) {
+         push(@args,[gimp_procedural_db_proc_arg($fun,$_)]);
+      }
+   };
+}
+
+my $block_sel_changed;	# gtk is braindamaged
+my $block_changed;	# gtk is broken
+
+sub set_clist {
+   $block_sel_changed++;
+#   $clist->signal_handler_block($sel_changed); # yes virginia, this is broken
+   $clist->clear_items(0,99999);
+   %completion=@_;
+   while(@_) {
+      $clist->add(new Gtk::ListItem(shift));
+      shift;
+   }
+   $clist->unselect_item(0);
+   $clist->show_all;
+#   $clist->signal_handler_unblock($sel_changed);
+   $block_sel_changed--;
+}
+
+sub complete_function {
+   my $name = shift;
+   $name=~s/[-_]/[-_]/g;
+   my @matches = sort grep /$name/i,@function;
+   if(@matches>70) {
+      set_clist map(($_,$_),@matches[0..69]);
+      $synopsis->set("showing only the first 70 matches (of ".scalar@matches.")");
+   } elsif(@matches>1) {
+      set_clist map(($_,$_),@matches);
+      $synopsis->set(scalar@matches." matching functions");
+   } else {
+      set_clist @matches,@matches;
+      $synopsis->set($matches[0]);
+   }
+}
+
+sub complete_type {
+   my($type,$name,$desc)=@_;
+   
+   if($type==PARAM_IMAGE) {
+      set_clist(map(("$$_: ".$_->get_filename,$$_),Gimp->list_images));
+   } elsif($type==PARAM_LAYER) {
+      set_clist(map { my $i = $_; map(("$$i: ".$i->get_filename."/".$_->get_name,$$_),$i->get_layers)} Gimp->list_images);
+   } elsif($type==PARAM_CHANNEL) {
+      set_clist(map { my $i = $_; map(("$$i: ".$i->get_filename."/".$_->get_name,$$_),$i->get_channels)} Gimp->list_images);
+   } elsif($type==PARAM_DRAWABLE) {
+      set_clist(map { my $i = $_; map(("$$i: ".$i->get_filename."/".$_->get_name,$$_),($i->get_layers,$i->get_channels))} Gimp->list_images);
+   } elsif ($type==PARAM_INT32) {
+      if ($name eq "run_mode") {
+         set_clist("RUN_NONINTERACTIVE","RUN_NONINTERACTIVE",
+                   "RUN_INTERACTIVE","RUN_INTERACTIVE",
+                   "RUN_WITH_LAST_VALS","RUN_WITH_LAST_VALS");
+      } elsif ($desc=~s/(?::\s*)?{(.*)}.*?$//) {
+         $_=$1;
+         my @args;
+         while(s/^.*?([A-Za-z_-]+)\s*\(\s*(\d+)\s*\)//) {
+            push(@args,"$2: $1",$2);
+         }
+         set_clist(@args);
+      } else {
+         set_clist;
+      }
+   } else {
+      set_clist;
+   }
+   $synopsis->set($desc);
+}
+
+my $last_arg;
+
+sub update_completion {
+   my($idx,$pos,@words)=get_words;
+   
+   return unless $idx ne $last_arg;
+   $last_arg=$idx;
+   
+   set_current_function $words[0];
+   
+   if ($idx == 0) {
+      complete_function($words[0]);
+   } elsif ($idx>@args) {
+      $synopsis->set('too many arguments');
+      set_clist;
+   } else {
+      complete_type(@{$args[$idx-1]});
+   }
+}
+
+sub do_completion {
+   update_completion;
+   
+   my($idx,$pos,@words)=get_words;
+   my($word)=$words[$idx];
+   
+   $word=~s/[-_]/[-_]/g;
+   my(@matches)=grep /$word/i,keys %completion;
+   if(@matches==1) {
+      $words[$idx]=$completion{$matches[0]};
+      set_current_function $words[0] if $idx==0;
+      if($idx<@args) {
+         $words[$idx+1]="\0".$words[$idx+1];
+      } else {
+         $words[$idx].="\0";
+      }
+      set_words @words;
+   } else {
+      Gtk::Gdk->beep;
+   }
+   undef $last_arg;
+}
+
+sub idle {
+   Gtk->idle_remove($idle) if $idle;
+   undef $idle;
+   update_completion;
+}
+
+sub do_idle {
+   $idle=Gtk->idle_add(\&idle) unless $idle;
+}
+
+sub inputline {
+   my $e = new Gtk::Entry;
+   $e->signal_connect("changed",sub {
+      return if $block_changed;
+      undef $last_arg;
+      do_idle;
+   });
+   $e->signal_connect("focus_in_event",\&do_idle);
+   $e->signal_connect("button_press_event",\&do_idle);
+   $e->signal_connect("key_press_event",sub {
+      undef $last_arg;
+      do_idle;
+      if ($_[1]->{keyval} == 0xFF09) {
+#         do_completion;
+         ();
+      } elsif ($_[1]->{keyval} == 0xFFBE) {
+         do_completion;
+         ();
+      } else {
+         ();
+      }
+   });
+   $e->set_usize(300,0);
+   $inputline=$e;
+   
+   my $c = new Gtk::List;
+   $clist = $c;
+   $c->set_selection_mode(-single);
+   $c->set_selection_mode(-browse);
+   $c->signal_connect("selection_changed", sub {
+      return if $block_sel_changed;
+      eval {
+         my($idx,$pos,@words)=get_words;
+         $words[$idx]=$completion{$c->selection->children->get}."\0";
+         $block_changed++;
+         set_words (@words);
+         $block_changed--;
+      };
+      do_idle;
+   });
+   
+   my $r = new Gtk::List;
+   $rlist = $r;
+   $r->set_selection_mode(-single);
+   $r->set_selection_mode(-browse);
+}
+
+sub create_main {
+   my $b;
+   my $t;
+   
+   parse Gtk::Rc Gimp->gtkrc;
+   
+   $t = new Gtk::Tooltips;
+   my $w = new Gtk::Dialog;
+   $window = $w;
+   
+   $w->set_title('PDB Browser - the early alpha version');
+   
+   $b = new Gtk::Button "Close";
+   $w->action_area->add($b);
+   $b->signal_connect("clicked",sub {main_quit Gtk});
+   
+   my $h = new Gtk::HBox (0,5);
+   $w->vbox->add ($h);
+   
+   inputline;
+   
+   $synopsis = new Gtk::Label "";
+   $synopsis->set_justify(-left);
+   
+   my $table = new Gtk::Table 3,3,0;
+   $w->vbox->add($table);
+   
+   my $cs = new Gtk::ScrolledWindow undef,undef;
+   $cs->set_policy(-automatic,-automatic);
+   $cs->add($clist);
+   
+   my $rs = new Gtk::ScrolledWindow undef,undef;
+   $rs->set_policy(-automatic,-automatic);
+   $rs->add($rlist);
+   $rs->set_usize(0,200);
+   
+   $result = new Gtk::Entry;
+   $result->set_editable(0);
+   $result->set_usize(200,0);
+   
+   $table->attach(new Gtk::Label("Synopsis") ,0,1,0,1,{},{},0,0);
+      $table->attach($synopsis ,1,3,0,1,{},{},0,0);
+   $table->attach(new Gtk::Label("Command")  ,0,1,1,2,{},{},0,0);
+      $table->attach($inputline,1,2,1,2,['expand','fill'],{},0,0);
+         $table->attach($result,2,3,1,2,['expand','fill'],{},0,0);
+   $table->attach(new Gtk::Label("Shortcuts"),0,1,2,3,{},{},0,0);
+      $table->attach($cs       ,1,2,2,3,['expand','fill'],['expand','fill'],0,0);
+         $table->attach($rs,2,3,2,3,['expand','fill'],['expand','fill'],0,0);
+   
+   idle;
+   
+   show_all $w;
+}
+
+register "extension_pdb_browser",
+         "Procedural Database Browser",
+         "This is a more interactive version of the DB Browser",
+         "Marc Lehmann",
+         "Marc Lehmann",
+         "0.0",
+         "<Toolbox>/Xtns/PDB Browser",
+         "",
+         [],
+         sub {
+   
+   refresh;
+   create_main;
+   main Gtk;
+   
+   ();
+};
+
+init Gtk;
+exit main;
+
+
+
+
+
+
+
+
+
+

@@ -472,7 +472,7 @@ sub net {
            my $arg=shift @ARGV;
 	   my $idx=$map{$1};
 	   die "$_: illegal switch, try $0 --help\n" unless defined($idx);
-	   $args[$idx]=string2pf($arg,$params->[@args]);
+	   $args[$idx]=string2pf($arg,$params->[$idx]);
 	   $interact--;
 	 }
       } else {

@@ -70,6 +70,13 @@ INSTALLATION
        (http://www.linux.org)
 
 SUPPORT/MAILING LISTS/MORE INFO
+       There is a mailinglist for general discussion about Gimp-Perl.
+       To subscribe, send a mail with the single line
+       
+       subscribe
+       
+       to gimp-perl-request@lists.netcentral.net.
+
        If you want to get notified of new versions automatically, send
        a mail with the single line:
        

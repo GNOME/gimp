@@ -22,6 +22,14 @@ sub gimp_end {
    die "gimp_end not implemented for in the Lib interface";
 }
 
+sub lock {
+   # unimplemented, ignored
+}
+
+sub unlock {
+   # unimplemented, ignored
+}
+
 sub import {}
 
 bootstrap Gimp::Lib $VERSION;

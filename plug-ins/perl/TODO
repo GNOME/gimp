@@ -20,14 +20,16 @@ bugs
 important issues
 
   * gradient button
-  * do not special-case INT32 in convert_sv2gimp
+  * implement Perl-Server RSET and shared lock(!)
+  * Gimp::lock && unlock
+[DONE]  * do not special-case INT32 in convert_sv2gimp
   * substr 4th argument form for Net:: -> require 5.005!!!! DO IT!
   * use Gimp qw(GIMP_HOST=jfjf)???
   * brushes look inverted
   * zero-copy PDL support
 [DONE]  * gimp_init, gimp_deinit
 [DONE]  * duplicate HAVE_VPRINTF in gimp
-  * get rid of superfluous image arguments
+[DONE]  * get rid of superfluous image arguments
   * weighted movement in drawing tools
   * -DMIN_PERL_DEFINE
   * --function localfunc to select one of the registered scripts

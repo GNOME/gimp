@@ -274,20 +274,20 @@ dump_params (int nparams, GParam *args, GParamDef *params)
       
       switch (args[i].type)
         {
-          case PARAM_INT32:	trace_printf ("%d", args[i].data.d_int32); break;
-          case PARAM_INT16:	trace_printf ("%d", args[i].data.d_int16); break;
-          case PARAM_INT8:	trace_printf ("%d", (guint8) args[i].data.d_int8); break;
-          case PARAM_FLOAT:	trace_printf ("%f", args[i].data.d_float); break;
-          case PARAM_STRING:	trace_printf ("\"%s\"", args[i].data.d_string); break;
-          case PARAM_DISPLAY:	trace_printf ("%d", args[i].data.d_display); break;
-          case PARAM_IMAGE:	trace_printf ("%d", args[i].data.d_image); break;
-          case PARAM_LAYER:	trace_printf ("%d", args[i].data.d_layer); break;
-          case PARAM_CHANNEL:	trace_printf ("%d", args[i].data.d_channel); break;
-          case PARAM_DRAWABLE:	trace_printf ("%d", args[i].data.d_drawable); break;
-          case PARAM_SELECTION:	trace_printf ("%d", args[i].data.d_selection); break;
-          case PARAM_BOUNDARY:	trace_printf ("%d", args[i].data.d_boundary); break;
-          case PARAM_PATH:	trace_printf ("%d", args[i].data.d_path); break;
-          case PARAM_STATUS:	trace_printf ("%d", args[i].data.d_status); break;
+          case PARAM_INT32:		trace_printf ("%d", args[i].data.d_int32); break;
+          case PARAM_INT16:		trace_printf ("%d", args[i].data.d_int16); break;
+          case PARAM_INT8:		trace_printf ("%d", (guint8) args[i].data.d_int8); break;
+          case PARAM_FLOAT:		trace_printf ("%f", args[i].data.d_float); break;
+          case PARAM_STRING:		trace_printf ("\"%s\"", args[i].data.d_string); break;
+          case PARAM_DISPLAY:		trace_printf ("%d", args[i].data.d_display); break;
+          case PARAM_IMAGE:		trace_printf ("%d", args[i].data.d_image); break;
+          case PARAM_LAYER:		trace_printf ("%d", args[i].data.d_layer); break;
+          case PARAM_CHANNEL:		trace_printf ("%d", args[i].data.d_channel); break;
+          case PARAM_DRAWABLE:		trace_printf ("%d", args[i].data.d_drawable); break;
+          case PARAM_SELECTION:		trace_printf ("%d", args[i].data.d_selection); break;
+          case PARAM_BOUNDARY:		trace_printf ("%d", args[i].data.d_boundary); break;
+          case PARAM_PATH:		trace_printf ("%d", args[i].data.d_path); break;
+          case PARAM_STATUS:		trace_printf ("%d", args[i].data.d_status); break;
           case PARAM_INT32ARRAY:	dump_printarray (args, i, gint32, d_int32array, "%d"); break;
           case PARAM_INT16ARRAY:	dump_printarray (args, i, gint16, d_int16array, "%d"); break;
           case PARAM_INT8ARRAY:		dump_printarray (args, i, guint8, d_int8array , "%d"); break;

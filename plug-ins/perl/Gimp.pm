@@ -12,7 +12,7 @@ use base qw(DynaLoader);
 
 require DynaLoader;
 
-$VERSION = 1.045;
+$VERSION = 1.046;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -218,9 +218,12 @@ for(qw(_gimp_procedure_available gimp_call_procedure set_trace)) {
    *$_ = \&{"${interface_pkg}::$_"};
 }
 
-*main = *gimp_main = \&{"${interface_pkg}::gimp_main"};
-*init = *gimp_init = \&{"${interface_pkg}::gimp_init"};
-*end  = *gimp_end  = \&{"${interface_pkg}::gimp_end" };
+*main  = *gimp_main = \&{"${interface_pkg}::gimp_main"};
+*init  = *gimp_init = \&{"${interface_pkg}::gimp_init"};
+*end   = *gimp_end  = \&{"${interface_pkg}::gimp_end" };
+
+*lock  = \&{"${interface_pkg}::lock" };
+*unlock= \&{"${interface_pkg}::unlock" };
 
 @PREFIXES=("gimp_", "");
 
@@ -591,6 +594,16 @@ interface (L<Gimp::Net>), and not as a native plug-in. Here's an example:
  Gimp::init;
  <do something with the gimp>
  Gimp::end;
+
+=item Gimp::lock(), Gimp::unlock()
+
+These functions can be used to gain exclusive access to the Gimp. After
+calling lock, all accesses by other clients will be blocked and executed
+after the call to unlock. Calls to lock and unlock can be nested.
+
+Currently, these functions only lock the current Perl-Server instance
+against exclusive access, they are nops when used via the Gimp::Lib
+interface.
 
 =item gimp_install_procedure(name, blurb, help, author, copyright, date, menu_path, image_types, type, [params], [return_vals])
 

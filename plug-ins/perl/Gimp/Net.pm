@@ -106,9 +106,16 @@ sub gimp_call_procedure {
 }
 
 sub server_quit {
-   print "sending quit\n";
    print $server_fh pack("N",4)."QUIT";
-   exit(0);
+   undef $server_fh;
+}
+
+sub lock {
+   print $server_fh pack("N",12)."LOCK".pack("N*",1,0);
+}
+
+sub unlock {
+   print $server_fh pack("N",12)."LOCK".pack("N*",0,0);
 }
 
 sub set_trace {
@@ -202,6 +209,7 @@ sub gimp_init {
 }
 
 sub gimp_end {
+   undef $server_fh;
    kill 'KILL',$gimp_pid if $gimp_pid;
    undef $gimp_pid;
 }

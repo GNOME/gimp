@@ -1,11 +1,19 @@
 Revision history for Gimp-Perl extension.
 
+	- passing arguments on the commandline works again
+	  (formerly all arguments were treated as integers)
+	- added the PDB extension to the distribution (alpha!)
+
+1.046 Thu Nov  5 01:53:34 CET 1998
 	- the syntax really gets tricky - references to INT32 and similar
 	  types are no longer accepted (was buggy anyway).
-	- added plug_in_ prefix to layer, darwable, image and channel. We
+	- added plug_in_ prefix to layer, drawable, image and channel. We
 	  can now write $layer->sharpen(50), and gimp infers function name,
 	  run_mode and image
 	- enhanced the testuite, it now checks much more features
+	- gimp_end() now correctly closes the connection
+	- implemented Gimp::lock and unlock functions, giving exclusive
+	  access to the Perl-Server
 
 1.045 Sun Nov  1 23:40:20 CET 1998
 	- more configuration cleanups
