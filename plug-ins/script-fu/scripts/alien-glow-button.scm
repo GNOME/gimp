@@ -52,13 +52,8 @@
 	      y2))
 
 (define (script-fu-alien-glow-button text
+			    font
 			    size
-			    foundry
-			    family
-			    weight
-			    slant
-			    set-width
-			    spacing
 			    text-color
 			    glow-color
 			    bg-color
@@ -67,29 +62,19 @@
 			    flatten)
   (let* ((old-fg-color (car (gimp-palette-get-foreground)))
 	 (old-bg-color (car (gimp-palette-get-background)))
-	 (text-extents (gimp-text-get-extents text
-					      size
-					      PIXELS
-					      foundry
-					      family
-					      weight
-					      slant
-					      set-width
-					      spacing))
+	 (text-extents (gimp-text-get-extents-fontname text
+						       size
+						       PIXELS
+						       font))
 	 (ascent (text-ascent text-extents))
 	 (descent (text-descent text-extents))
 	 
 	 (img-width (+ (* 2  padding)
 		       (- (text-width text-extents)
-			  (text-width (gimp-text-get-extents " "
-							     size
-							     PIXELS
-							     foundry
-							     family
-							     weight
-							     slant
-							     set-width
-							     spacing)))))
+			  (text-width (gimp-text-get-extents-fontname " "
+								      size
+								      PIXELS
+								      font)))))
 	 (img-height (+ (* 2 padding)
 			(+ ascent descent)))
 	 (layer-height img-height)
@@ -127,8 +112,8 @@
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img glow-layer glow-radius TRUE TRUE)
     (gimp-palette-set-foreground text-color)
-    (let ((textl (car (gimp-text
-		       img -1 0 0 text 0 TRUE size PIXELS foundry family weight slant set-width spacing))))
+    (let ((textl (car (gimp-text-fontname
+		       img -1 0 0 text 0 TRUE size PIXELS font))))
       (gimp-layer-set-offsets textl
 			      (+  padding (/ glow-radius 2))
 			      (+ (+ padding descent) (/ glow-radius 2))))
@@ -151,23 +136,11 @@
 		    "July 1997"
 		    ""
 		    SF-STRING "Text" "Hello world!"
-		    SF-VALUE "Size" "22"
-		    SF-STRING "Foundry" "*"
-		    SF-STRING "Family" "futura_poster"
-		    SF-STRING "Weight" "*"
-		    SF-STRING "Slant" "*"
-		    SF-STRING "Set width" "*"
-		    SF-STRING "Spacing" "*"
+		    SF-FONT "Font" "-*-futura_poster-*-*-*-*-22-*-*-*-*-*-*-*"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(22 2 100 1 1 0 1)
 		    SF-COLOR "Text color" '(0 0 0)
 		    SF-COLOR "Glow Color" '(63 252 0)
 		    SF-COLOR "Background Color" '(0 0 0)
 		    SF-VALUE "Padding" "6"
 		    SF-VALUE "Glow Radius" "10"
 		    SF-TOGGLE "Flatten Image?" TRUE)
-
-
-
-
-
-
-

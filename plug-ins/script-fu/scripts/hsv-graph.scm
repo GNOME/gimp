@@ -2,6 +2,12 @@
 ;;; Author: Shuji Narazaki <narazaki@InetQ.or.jp>
 ;;; Time-stamp: <1998/01/18 05:25:03 narazaki@InetQ.or.jp>
 ;;; Version: 1.2
+; ************************************************************************
+; Changed on Feb 4, 1999 by Piet van Oostrum <piet@cs.uu.nl>
+; For use with GIMP 1.1.
+; All calls to gimp-text-* have been converted to use the *-fontname form.
+; The corresponding parameters have been replaced by an SF-FONT parameter.
+; ************************************************************************
 ;;; Code:
 
 (if (not (symbol-bound? 'script-fu-hsv-graph-scale (the-environment)))
@@ -302,10 +308,10 @@
      (list red-segment green-segment blue-segment)
      (list red-color green-color blue-color))
     (gimp-palette-set-foreground '(255 255 255))
-    (let ((text-layer (car (gimp-text gimg -1 0 0
+    (let ((text-layer (car (gimp-text-fontname gimg -1 0 0
 				      "Red: Hue, Green: Sat, Blue: Val"
-				      1 1 12 PIXELS "*"
-				      "helvetica" "*" "*" "*" "*")))
+				      1 1 12 PIXELS
+				      "-*-helvetica-*-r-*-*-12-*-*-*-p-*-*-*")))
 	  (offset-y (- y-base (car (gimp-drawable-height clayer)))))
       (gimp-layer-set-mode text-layer DIFFERENCE)
       (gimp-layer-translate clayer 0 offset-y)

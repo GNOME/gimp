@@ -2,6 +2,12 @@
 ;;; Time-stamp: <1998/03/28 02:46:26 narazaki@InetQ.or.jp>
 ;;; Author: Shuji Narazaki <narazaki@InetQ.or.jp>
 ;;; Version 0.7
+; ************************************************************************
+; Changed on Feb 4, 1999 by Piet van Oostrum <piet@cs.uu.nl>
+; For use with GIMP 1.1.
+; All calls to gimp-text-* have been converted to use the *-fontname form.
+; The corresponding parameters have been replaced by an SF-FONT parameter.
+; ************************************************************************
 ;;; Code:
 
 (if (not (symbol-bound? 'script-fu-show-image-structure-new-image?
@@ -104,11 +110,10 @@
 	  (set! index 0)
 	  (set! layer-names (nreverse layer-names))
 	  (while (< index num-of-layers)
-	    (set! text-layer (car (gimp-text img -1 (/ border 2)
+	    (set! text-layer (car (gimp-text-fontname img -1 (/ border 2)
 					     (+ (* space index) old-height)
 					     (car layer-names)
-					     0 TRUE 14 PIXELS "*" "helvetica"
-					     "*" "*" "*" "*")))
+					     0 TRUE 14 PIXELS "-*-helvetica-*-r-*-*-14-*-*-*-p-*-*-*")))
 	    (gimp-layer-set-mode text-layer NORMAL)
 	    (set! index (+ index 1))
 	    (set! layer-names (cdr layer-names)))))

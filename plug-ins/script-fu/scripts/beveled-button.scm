@@ -18,6 +18,12 @@
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+; ************************************************************************
+; Changed on Feb 4, 1999 by Piet van Oostrum <piet@cs.uu.nl>
+; For use with GIMP 1.1.
+; All calls to gimp-text-* have been converted to use the *-fontname form.
+; The corresponding parameters have been replaced by an SF-FONT parameter.
+; ************************************************************************
 
 
 (define (text-width extents)
@@ -50,12 +56,7 @@
 
 (define (script-fu-button00 text
 			    size
-			    foundry
-			    family
-			    weight
-			    slant
-			    set-width
-			    spacing
+			    font
 			    ul-color
 			    lr-color
 			    text-color
@@ -65,29 +66,19 @@
   (let* ((old-fg-color (car (gimp-palette-get-foreground)))
 	 (old-bg-color (car (gimp-palette-get-background)))
 	 
-	 (text-extents (gimp-text-get-extents text
+	 (text-extents (gimp-text-get-extents-fontname text
 					      size
 					      PIXELS
-					      foundry
-					      family
-					      weight
-					      slant
-					      set-width
-					      spacing))
+					      font))
 	 (ascent (text-ascent text-extents))
 	 (descent (text-descent text-extents))
 	 
 	 (img-width (+ (* 2 (+ padding bevel-width))
 		       (- (text-width text-extents)
-			  (text-width (gimp-text-get-extents " "
+			  (text-width (gimp-text-get-extents-fontname " "
 							     size
 							     PIXELS
-							     foundry
-							     family
-							     weight
-							     slant
-							     set-width
-							     spacing)))))
+							     font)))))
 	 (img-height (+ (* 2 (+ padding bevel-width))
 			(+ ascent descent)))
 
@@ -144,8 +135,8 @@
     ; Create text layer
 
     (gimp-palette-set-foreground text-color)
-    (let ((textl (car (gimp-text
-		       img -1 0 0 text 0 TRUE size PIXELS foundry family weight slant set-width spacing))))
+    (let ((textl (car (gimp-text-fontname
+		       img -1 0 0 text 0 TRUE size PIXELS font))))
       (gimp-layer-set-offsets textl
 			      (+ bevel-width padding)
 			      (+ bevel-width padding descent)))
@@ -168,13 +159,8 @@
 		    "June 1997"
 		    ""
 		    SF-STRING "Text" "Hello world!"
-		    SF-VALUE "Size" "16"
-		    SF-STRING "Foundry" "adobe"
-		    SF-STRING "Family" "helvetica"
-		    SF-STRING "Weight" "bold"
-		    SF-STRING "Slant" "r"
-		    SF-STRING "Set width" "normal"
-		    SF-STRING "Spacing" "p"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(16 2 100 1 1 0 1)
+		    SF-FONT "Font" "-*-helvetica-*-r-*-*-16-*-*-*-p-*-*-*"
 		    SF-COLOR "Upper-left color" '(0 255 127)
 		    SF-COLOR "Lower-right color" '(0 127 255)
 		    SF-COLOR "Text color" '(0 0 0)

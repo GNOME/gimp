@@ -18,16 +18,22 @@
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+; ************************************************************************
+; Changed on Feb 4, 1999 by Piet van Oostrum <piet@cs.uu.nl>
+; For use with GIMP 1.1.
+; All calls to gimp-text-* have been converted to use the *-fontname form.
+; The corresponding parameters have been replaced by an SF-FONT parameter.
+; ************************************************************************
 
 
 (define (script-fu-beveled-pattern-heading
-	 text text-size foundry family weight slant set-width spacing pattern transparent)
+	 text text-size font pattern transparent)
   (let* ((old-bg-color (car (gimp-palette-get-background)))
 
 	 (img (car (gimp-image-new 10 10 RGB)))
 	 (textl
 	  (car
-	   (gimp-text img -1 0 0 text 0 TRUE text-size PIXELS foundry family weight slant set-width spacing)))
+	   (gimp-text-fontname img -1 0 0 text 0 TRUE text-size PIXELS font)))
 
 	 (width (car (gimp-drawable-width textl)))
 	 (height (car (gimp-drawable-height textl)))
@@ -95,12 +101,7 @@
 		    "July 1997"
 		    ""
 		    SF-STRING  "Text"                   "Hello world!"
-		    SF-VALUE  "Text size"              "72"
-		    SF-STRING  "Foundry"                "adobe"
-		    SF-STRING  "Family"                 "utopia"
-		    SF-STRING  "Weight"                 "bold"
-		    SF-STRING  "Slant"                  "r"
-		    SF-STRING  "Set width"              "normal"
-		    SF-STRING  "Spacing"                "p"
+		    SF-ADJUSTMENT "Text Size (pixels)" '(72 2 200 1 1 0 1)
+		    SF-FONT   "Font" "-*-helvetica-*-r-*-*-72-*-*-*-p-*-*-*"
 		    SF-PATTERN "Pattern"                "Wood"
 		    SF-TOGGLE "Transparent background" FALSE)

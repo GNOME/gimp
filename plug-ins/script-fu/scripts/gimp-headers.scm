@@ -29,12 +29,18 @@
 ;  with higher quality vector fonts. This is how the actual www.gimp.org
 ;  logos were created.
 ;
+; ************************************************************************
+; Changed on Feb 4, 1999 by Piet van Oostrum <piet@cs.uu.nl>
+; For use with GIMP 1.1.
+; All calls to gimp-text-* have been converted to use the *-fontname form.
+; The corresponding parameters have been replaced by an SF-FONT parameter.
+; ************************************************************************
 
-(define (script-fu-headers-gimp-org text font weight slant width font-size text-color high-color side-color shadow-color crop rm-bg index num-colors)
+(define (script-fu-headers-gimp-org text font font-size text-color high-color side-color shadow-color crop rm-bg index num-colors)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (text-layer (car (gimp-text img -1 0 0
+	 (text-layer (car (gimp-text-fontname img -1 0 0
 				     text 30 TRUE font-size PIXELS
-				     "*" font weight slant width "*")))
+				     font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
@@ -113,7 +119,7 @@
 					high-color side-color shadow-color
 					crop rm-bg index num-colors)
   (script-fu-headers-gimp-org (string-append " " text)
-			      font "bold" "i" "normal" font-size
+			      font font-size
 			      text-color high-color side-color shadow-color
 			      crop rm-bg index num-colors))
 
@@ -121,7 +127,7 @@
 (define (script-fu-small-header-gimp-org text font font-size text-color
 					high-color side-color shadow-color
 					crop rm-bg index num-colors)
-  (script-fu-headers-gimp-org text font "medium" "r" "normal"
+  (script-fu-headers-gimp-org text font
 			      font-size text-color high-color
 			      side-color shadow-color
 			      crop rm-bg index num-colors))

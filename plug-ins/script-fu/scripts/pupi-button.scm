@@ -4,6 +4,12 @@
 ; Round Button --- create a round beveled Web button.
 ; Copyright (C) 1998 Federico Mena Quintero & Arturo Espinosa Aldama
 ; federico@nuclecu.unam.mx arturo@nuclecu.unam.mx
+; ************************************************************************
+; Changed on Feb 4, 1999 by Piet van Oostrum <piet@cs.uu.nl>
+; For use with GIMP 1.1.
+; All calls to gimp-text-* have been converted to use the *-fontname form.
+; The corresponding parameters have been replaced by an SF-FONT parameter.
+; ************************************************************************
 ; 
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -41,12 +47,7 @@
   
 (define (script-fu-round-button text
 			    size
-			    foundry
-			    family
-			    weight
-			    slant
-			    set-width
-			    spacing
+			    font
 			    ul-color
 			    lr-color
 			    text-color
@@ -62,26 +63,18 @@
 			    pressed)
 
   (cond ((eqv? notpressed TRUE)
-	 (do-pupibutton text size foundry family weight slant
-			set-width spacing ul-color lr-color
+	 (do-pupibutton text size font ul-color lr-color
 			text-color xpadding ypadding bevel ratio 0)))
   (cond ((eqv? notpressed-active TRUE)
-	 (do-pupibutton text size foundry family weight slant
-			set-width spacing ul-color-high lr-color-high
+	 (do-pupibutton text size font ul-color-high lr-color-high
 			hlight-color xpadding ypadding bevel ratio 0)))
   (cond ((eqv? pressed TRUE)
-	 (do-pupibutton text size foundry family weight slant
-			set-width spacing ul-color-high lr-color-high
+	 (do-pupibutton text size font ul-color-high lr-color-high
 			hlight-color xpadding ypadding bevel ratio 1))))
   
 (define (do-pupibutton text
 			    size
-			    foundry
-			    family
-			    weight
-			    slant
-			    set-width
-			    spacing
+			    font
 			    ul-color
 			    lr-color
 			    text-color
@@ -94,15 +87,10 @@
   (let* ((old-fg-color (car (gimp-palette-get-foreground)))
 	 (old-bg-color (car (gimp-palette-get-background)))
 	 
-	 (text-extents (gimp-text-get-extents text
+	 (text-extents (gimp-text-get-extents-fontname text
 					      size
 					      PIXELS
-					      foundry
-					      family
-					      weight
-					      slant
-					      set-width
-					      spacing))
+					      font))
 	 (ascent (text-ascent text-extents))
 	 (descent (text-descent text-extents))
 	 
@@ -113,15 +101,10 @@
 
 	 (width (+ (* 2 (+ radius xpadding)) bevel
 		       (- (text-width text-extents)
-			  (text-width (gimp-text-get-extents " "
+			  (text-width (gimp-text-get-extents-fontname " "
 							     size
 							     PIXELS
-							     foundry
-							     family
-							     weight
-							     slant
-							     set-width
-							     spacing)))))
+							     font)))))
 							     
 	 (img (car (gimp-image-new width height RGB)))
 
@@ -179,9 +162,9 @@
     (cond ((eqv? pressed 1) (set! bevel (+ bevel 1))))
 
     (gimp-palette-set-foreground text-color)
-    (let ((textl (car (gimp-text
+    (let ((textl (car (gimp-text-fontname
 		       img -1 0 0 text 0 TRUE size PIXELS
-		       foundry family weight slant set-width spacing))))
+		       font))))
       (gimp-layer-set-offsets textl
 			      (+ xpadding radius bevel)
 			      (+ ypadding descent bevel)))
@@ -214,13 +197,8 @@
 		    "June 1998"
 		    ""
 		    SF-STRING "Text" ""
-		    SF-VALUE "Size" "16"
-		    SF-STRING "Foundry" "adobe"
-		    SF-STRING "Family" "helvetica"
-		    SF-STRING "Weight" "bold"
-		    SF-STRING "Slant" "r"
-		    SF-STRING "Set width" "normal"
-		    SF-STRING "Spacing" "p"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(16 2 100 1 1 0 1)
+		    SF-FONT  "Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Upper color" '(192 192 0)
 		    SF-COLOR "Lower color" '(128 108 0)
 		    SF-COLOR "Text color" '(0 0 0)

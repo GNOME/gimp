@@ -29,13 +29,19 @@
 ;  with higher quality vector fonts. This is how the actual www.gimp.org
 ;  logos were created.
 ;
+; ************************************************************************
+; Changed on Feb 4, 1999 by Piet van Oostrum <piet@cs.uu.nl>
+; For use with GIMP 1.1.
+; All calls to gimp-text-* have been converted to use the *-fontname form.
+; The corresponding parameters have been replaced by an SF-FONT parameter.
+; ************************************************************************
 
 
-(define (script-fu-labels-gimp-org text font font-size weight slant width text-color shadow-color bg-color rm-bg index num-colors color-thresh yoff xoff height)
+(define (script-fu-labels-gimp-org text font font-size text-color shadow-color bg-color rm-bg index num-colors color-thresh yoff xoff height)
   (let* ((img (car (gimp-image-new 125 height RGB)))
-	 (text-layer (car (gimp-text img -1 xoff yoff text 0
+	 (text-layer (car (gimp-text-fontname img -1 xoff yoff text 0
 				     TRUE font-size PIXELS
-				     "*" font weight slant width "*")))
+				     font)))
 	 (bg-layer (car (gimp-layer-new  img 125 height
 					 RGB_IMAGE "Background" 100 NORMAL)))
 	 (shadow-layer (car (gimp-layer-copy text-layer TRUE)))
@@ -89,13 +95,13 @@
 ;;;
 
 (define (script-fu-tube-button-label-gimp-org text rm-bg index)
-  (script-fu-labels-gimp-org text "helvetica" 14 "medium" "r" "normal" '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 8 0 30))
+  (script-fu-labels-gimp-org text "helvetica" 14 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 8 0 30))
 
 (define (script-fu-tube-subbutton-label-gimp-org text rm-bg index)
-  (script-fu-labels-gimp-org text "helvetica" 12 "medium" "r" "normal" '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 7 10 24))
+  (script-fu-labels-gimp-org text "helvetica" 12 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 7 10 24))
   
 (define (script-fu-tube-subsubbutton-label-gimp-org text rm-bg index)
-  (script-fu-labels-gimp-org text "helvetica" 10 "medium" "r" "normal" '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 6 20 18))
+  (script-fu-labels-gimp-org text "helvetica" 10 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 6 20 18))
 
 
 (script-fu-register "script-fu-tube-button-label-gimp-org"
@@ -142,9 +148,6 @@
 		    SF-STRING "Text String" "Gimp.Org"
 		    SF-FONT "Font" "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-ADJUSTMENT "Font Size (pixels)" '(18 2 1000 1 10 0 1)
-		    SF-STRING "Weight" "medium"
-		    SF-STRING "Slant" "r"
-		    SF-STRING "Width" "normal"
  		    SF-COLOR "Text Color" '(130 165 235)
 	 	    SF-COLOR "Shadow Color" '(0 0 0)
 		    SF-COLOR "Background Color" '(255 255 255)

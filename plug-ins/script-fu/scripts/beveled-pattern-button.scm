@@ -18,7 +18,12 @@
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
+; ************************************************************************
+; Changed on Feb 4, 1999 by Piet van Oostrum <piet@cs.uu.nl>
+; For use with GIMP 1.1.
+; All calls to gimp-text-* have been converted to use the *-fontname form.
+; The corresponding parameters have been replaced by an SF-FONT parameter.
+; ************************************************************************
 
 (define (text-width extents)
   (car extents))
@@ -33,11 +38,11 @@
   (cadr (cddr extents)))
 
 (define (script-fu-beveled-pattern-button
-	 text text-size foundry family weight slant set-width spacing text-color pattern pressed)
+	 text text-size font text-color pattern pressed)
   (let* ((old-bg-color (car (gimp-palette-get-background)))
 
-	 (text-extents (gimp-text-get-extents
-			text text-size PIXELS foundry family weight slant set-width spacing))
+	 (text-extents (gimp-text-get-extents-fontname
+			text text-size PIXELS font))
 	 (ascent (text-ascent text-extents))
 	 (descent (text-descent text-extents))
 
@@ -47,8 +52,8 @@
 	 (width (+ (* 2 xpadding)
 		   (- (text-width text-extents)
 		      (text-width
-		       (gimp-text-get-extents
-			" " text-size PIXELS foundry family weight slant set-width spacing)))))
+		       (gimp-text-get-extents-fontname
+			" " text-size PIXELS font)))))
 	 (height (+ (* 2 ypadding)
 		    (+ ascent descent)))
 	 
@@ -56,8 +61,8 @@
 	 (background (car (gimp-layer-new img width height RGBA_IMAGE "Background" 100 NORMAL)))
 	 (bumpmap (car (gimp-layer-new img width height RGBA_IMAGE "Bumpmap" 100 NORMAL)))
 	 (textl (car
-		 (gimp-text
-		  img -1 0 0 text 0 TRUE text-size PIXELS foundry family weight slant set-width spacing))))
+		 (gimp-text-fontname
+		  img -1 0 0 text 0 TRUE text-size PIXELS font))))
 
     (gimp-image-disable-undo img)
     (gimp-image-add-layer img background 1)
@@ -118,12 +123,7 @@
 		    ""
 		    SF-STRING  "Text"       "Hello world!"
 		    SF-VALUE  "Text size"  "32"
-		    SF-STRING  "Foundry"    "adobe"
-		    SF-STRING  "Family"     "utopia"
-		    SF-STRING  "Weight"     "bold"
-		    SF-STRING  "Slant"      "r"
-		    SF-STRING  "Set width"  "normal"
-		    SF-STRING  "Spacing"    "p"
+		    SF-FONT   "Font" "-*-helvetica-*-r-*-*-32-*-*-*-p-*-*-*"
 		    SF-COLOR   "Text color" '(0 0 0)
 		    SF-PATTERN "Pattern"    "Wood"
 		    SF-TOGGLE "Pressed?"   FALSE)

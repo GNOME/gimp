@@ -1,6 +1,12 @@
 ;;; i26-gunya2.scm -*-scheme-*-
 ;;; Time-stamp: <1997/05/11 18:46:26 narazaki@InetQ.or.jp>
 ;;; Author: Shuji Narazaki (narazaki@InetQ.or.jp)
+; ************************************************************************
+; Changed on Feb 4, 1999 by Piet van Oostrum <piet@cs.uu.nl>
+; For use with GIMP 1.1.
+; All calls to gimp-text-* have been converted to use the *-fontname form.
+; The corresponding parameters have been replaced by an SF-FONT parameter.
+; ************************************************************************
 
 ;;; Comment:
 ;;;  This is the first font decoration of Imigre-26 (i26)
@@ -9,8 +15,8 @@
 (define (script-fu-i26-gunya2 text text-color frame-color font font-size frame-size)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (border (/ font-size 10))
-	 (text-layer (car (gimp-text img -1 0 0 text (* border 2) TRUE font-size
-				     PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text (* border 2)
+					      TRUE font-size PIXELS font))) 
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (dist-text-layer (car (gimp-layer-new img width height RGBA_IMAGE
@@ -94,6 +100,3 @@
 		    SF-VALUE "Frame Size" "2")
 
 ;;; i26-gunya2.scm ends here
-
-
-

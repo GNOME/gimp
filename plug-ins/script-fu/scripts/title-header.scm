@@ -4,6 +4,14 @@
 ; Bump-mapped title script --- create a bump-mapped title image for web pages
 ; Copyright (C) 1997 Federico Mena Quintero
 ; federico@nuclecu.unam.mx
+; ************************************************************************
+; Changed on Feb 4, 1999 by Piet van Oostrum <piet@cs.uu.nl>
+; For use with GIMP 1.1.
+verted to use the *-fontname form.
+; The corresponding parameters have been replaced by an SF-FONT parameter.
+; The call to gimp-palette-set-background has been given a real layer
+; (although it is not used) otherwise gimp 1.1 crashed.
+; ************************************************************************
 ; 
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -126,7 +134,7 @@
     (gimp-edit-fill bg-layer)
     
     (gimp-ellipse-select img 0 0 text-height text-height REPLACE TRUE FALSE 0)
-    (gimp-palette-set-background (car (gimp-color-picker -1 text-layers-offset 0 TRUE FALSE)))
+    (gimp-palette-set-background (car (gimp-color-picker text-layer text-layers-offset 0 TRUE FALSE)))
     (gimp-edit-fill bg-layer)
 
     ; Fade-out gradient at the right
