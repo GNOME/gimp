@@ -450,6 +450,7 @@ gimp_message_box (gchar       *message,
 					     msg_box->repeat_count);
 	      gtk_label_set_text (GTK_LABEL (msg_box->repeat_label), text);
 	      g_free (text);
+	      gdk_window_raise (msg_box->mbox->window);
 	    }
 	  else
 	    {
@@ -463,6 +464,7 @@ gimp_message_box (gchar       *message,
 
 	      gtk_widget_show (msg_box->repeat_label);
 	      gtk_widget_show (hbox);
+	      gdk_window_raise (msg_box->mbox->window);
 	    }
 	  return;
 	}
