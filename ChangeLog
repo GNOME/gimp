@@ -5,8 +5,8 @@
 	allows to use calloc() to allocate and initialize the rowhint
 	array.
 
-	* app/base/tile.c (tile_sanitize_rowhints): reimplemented with by
-	a call to g_new0().
+	* app/base/tile.c (tile_sanitize_rowhints): reimplemented by a
+	call to g_new0().
 
 	* app/base/tile-manager.c (tile_manager_get): use g_memdup() to
 	duplicate the rowhints when creating a tile copy.
