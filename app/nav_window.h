@@ -24,5 +24,6 @@
 InfoDialog *nav_window_create (void *);
 void        nav_window_free   (InfoDialog *);
 void        nav_window_update_window_marker(InfoDialog *);
+void        nav_dialog_popup (InfoDialog *idialog);
 
 #endif /*  __NAV_WINDOW_H__  */

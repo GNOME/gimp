@@ -1,3 +1,20 @@
+Fri Aug 27 18:57:50 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/nav_window.c
+	* app/nav_window.h
+	* app/gimppreviewcache.h
+	* app/layer.c
+	* app/channel.c 
+	* app/commands.c
+
+	Added some controls to the nav window. Yep. I know that the
+	buttons are toooo biGGG.
+
+	Preview cache changes. Now prime preview cache with a image
+	so that later we have a better chance of a hit. Still
+	needs to be more intelligent at doing this (needs to pick largest
+	out of the cache & use its size as the size to prime with).
+	
 Fri Aug 27 02:16:02 EDT 1999 Adrian Likins <alikins@redhat.com>
 
 	* app/gimpbrushpipe.c: paint_line_pixmap_mask, finally

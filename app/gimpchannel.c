@@ -477,10 +477,10 @@ channel_toggle_visibility (Channel *channel)
   return GIMP_DRAWABLE (channel)->visible;
 }
 
-TempBuf *
-channel_preview (Channel *channel,
-		 gint     width,
-		 gint     height)
+static TempBuf *
+channel_preview_private (Channel *channel,
+			 gint     width,
+			 gint     height)
 {
   MaskBuf * preview_buf;
   PixelRegion srcPR, destPR;
@@ -529,6 +529,31 @@ channel_preview (Channel *channel,
       return preview_buf;
     }
 }
+
+TempBuf *
+channel_preview (Channel *channel,
+		 gint     width,
+		 gint     height)
+{
+  /* Ok prime the cache with a large preview if the cache is invalid */
+  if(!GIMP_DRAWABLE(channel)->preview_valid && 
+     width <= PREVIEW_CACHE_PRIME_WIDTH &&
+     height <= PREVIEW_CACHE_PRIME_HEIGHT)
+    {
+      TempBuf * tb = channel_preview_private(channel,
+					     PREVIEW_CACHE_PRIME_WIDTH,
+					     PREVIEW_CACHE_PRIME_HEIGHT);
+      
+      /* Save the 2nd call */
+      if(width == PREVIEW_CACHE_PRIME_WIDTH &&
+	 height == PREVIEW_CACHE_PRIME_HEIGHT)
+	return tb;
+    }
+
+  /* Second call - should NOT visit the tile cache...*/
+  return channel_preview_private(channel,width,height);
+}
+
 
 void
 channel_invalidate_previews (GimpImage* gimage)

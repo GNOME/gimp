@@ -34,6 +34,9 @@
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpunit.h"
 
+#include "pixmaps/zoom_in.xpm"
+#include "pixmaps/zoom_out.xpm"
+
 
 #define MAX_BUF 256
 
@@ -47,6 +50,12 @@
 #define NAV_PREVIEW_HEIGHT 112
 #define BORDER_PEN_WIDTH   3
 
+#define MAX_SCALE_BUF 20
+
+
+/* Timeout before preview is updated */
+#define PREVIEW_UPDATE_TIMEOUT  1100
+
 typedef struct _NavWinData NavWinData;
 struct _NavWinData
 {
@@ -57,6 +66,9 @@ struct _NavWinData
   void      *gdisp_ptr; /* I'm not happy 'bout this one */
   GtkWidget *previewBox;
   GtkWidget *previewAlign;
+  GtkWidget *zoom_label;
+  GtkWidget *zoom_scale;
+  GtkObject *zoom_adjustment;
   gdouble    ratio;
   GdkGC     *gc;
   gint       dispx;        /* x pos of top left corner of display area */
@@ -74,6 +86,7 @@ struct _NavWinData
   gboolean   block_window_marker; /* Block redraws of window marker */
   gint       nav_preview_width;
   gint       nav_preview_height;
+  gboolean   block_adj_sig; 
 };
 
 
@@ -95,7 +108,10 @@ nav_window_preview_resized (GtkWidget      *,
 #endif /* 0 */
 
 static void
-nav_window_update_preview (NavWinData *,gboolean);
+nav_window_update_preview (NavWinData *);
+
+static void 
+nav_window_update_preview_blank(NavWinData *iwd);
 
 static void 
 destroy_preview_widget     (NavWinData *);
@@ -117,6 +133,10 @@ nav_window_draw_sqr(NavWinData *,
 static void
 set_size_data(NavWinData *);
 
+static gint 
+nav_preview_update_do_timer(NavWinData *);
+
+
 static void
 nav_window_destroy_callback (GtkWidget *widget,
 			     gpointer   client_data)
@@ -137,7 +157,7 @@ nav_window_close_callback (GtkWidget *widget,
   info_win = (InfoDialog *)client_data;
   iwd = (NavWinData *)info_win->user_data;
 
-  /*   iwd->showingPreview = FALSE;  ALT. Needs to be sorted out */
+  iwd->showingPreview = FALSE;
   info_dialog_popdown ((InfoDialog *) client_data);
 }
 
@@ -177,13 +197,17 @@ nav_window_disp_area(NavWinData *iwd,GDisplay *gdisp)
   iwd->imageheight = newheight;
 
   /* Normalise */
+  iwd->dispwidth = MAX(iwd->dispwidth, 2);
+  iwd->dispheight = MAX(iwd->dispheight, 2);
+
   iwd->dispwidth = MIN(iwd->dispwidth, iwd->pwidth/*-BORDER_PEN_WIDTH*/);
   iwd->dispheight = MIN(iwd->dispheight, iwd->pheight/*-BORDER_PEN_WIDTH*/);
 
   if(need_update == TRUE)
     {
       gtk_widget_hide(iwd->previewAlign);
-      nav_window_update_preview(iwd,FALSE);
+      /* ALT nav_window_update_preview(iwd);*/
+      nav_window_update_preview_blank(iwd); 
       gtk_widget_show(iwd->preview);
       gtk_widget_draw(iwd->preview, NULL); 
       gtk_widget_show(iwd->previewAlign);
@@ -191,6 +215,7 @@ nav_window_disp_area(NavWinData *iwd,GDisplay *gdisp)
 			   iwd->dispx,iwd->dispy,
 			   iwd->dispwidth,iwd->dispheight);
       gtk_window_set_focus(GTK_WINDOW (iwd->info_win->shell),iwd->preview);  
+      gtk_timeout_add(PREVIEW_UPDATE_TIMEOUT,(GtkFunction)nav_preview_update_do_timer,(gpointer)iwd); 
     }
 }
 
@@ -328,30 +353,6 @@ create_preview_widget(NavWinData *iwd)
   GTK_WIDGET_SET_FLAGS (image, GTK_CAN_FOCUS);
 }
 
-#if 0
-static void
-info_window_page_switch (GtkWidget *widget, 
-			 GtkNotebookPage *page, 
-			 gint page_num)
-{
-  InfoDialog *info_win;
-  InfoWinData *iwd;
-  
-  info_win = (InfoDialog *)gtk_object_get_user_data(GTK_OBJECT (widget));
-  iwd = (InfoWinData *)info_win->user_data;
-
-  /* Only deal with the second page */
-  if(page_num != 1)
-    {
-      iwd->showingPreview = FALSE;
-      return;
-    }
-
-  iwd->showingPreview = TRUE;
-
-}
-#endif /* 0 */
-
 static void
 update_real_view(NavWinData *iwd,gint tx,gint ty)
 {
@@ -387,10 +388,7 @@ update_real_view(NavWinData *iwd,gint tx,gint ty)
   iwd->block_window_marker = FALSE;
 }
 
-static void
-nav_window_update_preview
-(NavWinData *iwd,
-			  gboolean    invalidated)
+static void nav_window_update_preview(NavWinData *iwd)
 {
   GDisplay *gdisp;
   TempBuf * preview_buf;
@@ -399,6 +397,8 @@ nav_window_update_preview
   gint pwidth, pheight;
   GimpImage *gimage;
   gdouble r,g,b,a,chk;
+  gint xoff = 0;
+  gint yoff = 0;
 
   gimp_add_busy_cursors();
 
@@ -406,82 +406,101 @@ nav_window_update_preview
 
   /* Calculate preview size */
   gimage = ((GDisplay *)(iwd->gdisp_ptr))->gimage;
-  
+
   /* Min size is 2 */
   pwidth = iwd->pwidth;
   pheight = iwd->pheight;
 
+
   preview_buf = gimp_image_construct_composite_preview (gimage,
 							MAX (pwidth, 2),
 							MAX (pheight, 2));
+  
 
   buf = g_new (gchar,  iwd->nav_preview_width * 3);
   src = (gchar *) temp_buf_data (preview_buf);
   has_alpha = (preview_buf->bytes == 2 || preview_buf->bytes == 4);
 
-  for (y = 0; y <preview_buf->height ; y++)
+  for (y = 0; y <pheight ; y++)
     {
       dest = buf;
       switch (preview_buf->bytes)
 	{
 	case 4:
-	  for (x = 0; x < preview_buf->width; x++)
-	    {
-              r = ((gdouble)(*(src++)))/255.0;
-              g = ((gdouble)(*(src++)))/255.0;
-              b = ((gdouble)(*(src++)))/255.0;
-              a = ((gdouble)(*(src++)))/255.0;
-	      chk = ((gdouble)((( (x^y) & 4 ) << 4) | 128))/255.0;
-	      if(!invalidated)
+	      for (x = 0; x < pwidth; x++)
 		{
+		  r = ((gdouble)(*(src++)))/255.0;
+		  g = ((gdouble)(*(src++)))/255.0;
+		  b = ((gdouble)(*(src++)))/255.0;
+		  a = ((gdouble)(*(src++)))/255.0;
+		  chk = ((gdouble)((( (x^y) & 4 ) << 4) | 128))/255.0;
 		  *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
 		  *(dest++) = (guchar)((chk + (g - chk)*a)*255.0);
 		  *(dest++) = (guchar)((chk + (b - chk)*a)*255.0);
 		}
-	      else
-		{
-		  chk *= 128.0;
-		  *(dest++) = (guchar)chk;
-		  *(dest++) = (guchar)chk;
-		  *(dest++) = (guchar)chk;
-		}
-	    }
-	  break;
+	      break;
 	case 2:
-	  for (x = 0; x < preview_buf->width; x++)
+	  for (x = 0; x < pwidth; x++)
 	    {
-              r = ((gdouble)(*(src++)))/255.0;
-              a = ((gdouble)(*(src++)))/255.0;
+	      r = ((gdouble)(*(src++)))/255.0;
+	      a = ((gdouble)(*(src++)))/255.0;
 	      chk = ((gdouble)((( (x^y) & 4 ) << 4) | 128))/255.0;
-	      if(!invalidated)
-		{
-		  *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
-		  *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
-		  *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
-		}
-	      else
-		{
-		  chk *= 255.0;
-		  *(dest++) = (guchar)chk;
-		  *(dest++) = (guchar)chk;
-		  *(dest++) = (guchar)chk;
-		}
+	      *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
+	      *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
+	      *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
 	    }
 	  break;
 	default:
 	  g_warning("UNKNOWN TempBuf bpp in nav_window_update_preview()");
 	}
-
+      
       gtk_preview_draw_row (GTK_PREVIEW (iwd->preview),
-			    (guchar *)buf, 0, y, preview_buf->width);
+			    (guchar *)buf, xoff, yoff+y, preview_buf->width);
     }
 
   g_free (buf);
   temp_buf_free (preview_buf);
 
-  nav_window_disp_area(iwd,gdisp);
+/*   nav_window_disp_area(iwd,gdisp); */
 
   gimp_remove_busy_cursors (NULL);
+}
+
+static void nav_window_update_preview_blank(NavWinData *iwd)
+{
+  GDisplay     *gdisp;
+  guchar       *buf, *dest;
+  gint          x,y;
+  GimpImage    *gimage;
+  gdouble       chk;
+
+  gdisp = (GDisplay *) iwd->gdisp_ptr;
+
+  /* Calculate preview size */
+  gimage = ((GDisplay *)(iwd->gdisp_ptr))->gimage;
+  
+  buf = g_new (gchar,  iwd->pwidth * 3);
+
+  for (y = 0; y < iwd->pheight ; y++)
+    {
+      dest = buf;
+      for (x = 0; x < iwd->pwidth; x++)
+	{
+	  chk = ((gdouble)((( (x^y) & 4 ) << 4) | 128))/255.0;
+	  chk *= 128.0;
+	  *(dest++) = (guchar)chk;
+	  *(dest++) = (guchar)chk;
+	  *(dest++) = (guchar)chk;
+	}
+      
+      gtk_preview_draw_row (GTK_PREVIEW (iwd->preview),
+			    (guchar *)buf, 0, y, iwd->pwidth);
+    }
+
+  g_free (buf);
+
+  gdk_flush();
+  /*  nav_window_disp_area(iwd,gdisp);*/
 }
 
 static gint
@@ -496,55 +515,42 @@ inside_preview_square(NavWinData *iwd, gint x, gint y)
   return FALSE;
 }
 
-#if 0
-static gint
-nav_window_preview_resized (GtkWidget      *widget,
-			    GtkAllocation  *alloc,
-			    gpointer       *data)
+static void
+update_zoom_label(NavWinData *iwd)
 {
-  NavWinData *iwd;
+  gchar      scale_str[MAX_SCALE_BUF];
 
-  iwd = (NavWinData *)data;
-
-  if(!iwd || !iwd->preview)
-    return FALSE;
-
-  printf("Now at [x,y] = [%d,%d] [w,h] = [%d,%d]\n",
-	 alloc->x,alloc->y,
-	 alloc->width,alloc->height);
-
-  if(iwd->nav_preview_width == alloc->width &&
-     iwd->nav_preview_height == alloc->height)
-    return FALSE;
-
-  iwd->nav_preview_width = alloc->width;
-  iwd->nav_preview_height = alloc->height;
-  set_size_data(iwd);
-  gtk_preview_size(GTK_PREVIEW(iwd->preview),alloc->width,alloc->height);
-  nav_window_update_preview(iwd,FALSE);
-  nav_window_draw_sqr(iwd,FALSE,
-		      iwd->dispx,iwd->dispy,
-		      iwd->dispwidth,iwd->dispheight);
-
-#if 0 
-  destroy_preview_widget(iwd);
-  create_preview_widget(iwd);
-  nav_window_update_preview(iwd,FALSE);
-
-
-  nav_window_update_preview(iwd,FALSE);
-  gtk_widget_show(iwd->preview);
-  gtk_widget_draw(iwd->preview, NULL); 
-  gtk_widget_show(iwd->previewAlign);
-  nav_window_draw_sqr(iwd,FALSE,
-		      iwd->dispx,iwd->dispy,
-		      iwd->dispwidth,iwd->dispheight);
-
-#endif /* 0 */
-  return FALSE;
+  /* Update the zoom scale string */
+  g_snprintf (scale_str, MAX_SCALE_BUF, "%d:%d",
+	      SCALEDEST (((GDisplay *)iwd->gdisp_ptr)), 
+	      SCALESRC (((GDisplay *)iwd->gdisp_ptr)));
+  
+  gtk_label_set_text(GTK_LABEL(iwd->zoom_label),scale_str);
 }
 
-#endif /* 0 */
+static void 
+update_zoom_adjustment(NavWinData *iwd)
+{
+  GtkAdjustment *adj = GTK_ADJUSTMENT(iwd->zoom_adjustment);
+  gdouble f = ((gdouble)SCALEDEST (((GDisplay *)iwd->gdisp_ptr)))/((gdouble)SCALESRC (((GDisplay *)iwd->gdisp_ptr)));
+  gdouble val;
+  
+  if(f < 1.0)
+    {
+      val = -1/f;
+    }
+  else
+    {
+      val = f;
+    }
+
+  if(abs((gint)adj->value) != (gint)(val - 1) && iwd->block_adj_sig != TRUE)
+    {
+      adj->value = val;
+      gtk_signal_emit_by_name (GTK_OBJECT (iwd->zoom_adjustment), "changed");
+    }
+}
+
 static void
 move_to_point(NavWinData *iwd,
 	      gint tx,
@@ -616,9 +622,9 @@ nav_window_preview_events (GtkWidget *widget,
     {
     case GDK_EXPOSE:
       break;
-
     case GDK_MAP:
-      nav_window_update_preview(iwd,FALSE); 
+      nav_window_update_preview_blank(iwd); 
+      gtk_timeout_add(PREVIEW_UPDATE_TIMEOUT,(GtkFunction)nav_preview_update_do_timer,(gpointer)iwd); 
       break;
 
     case GDK_BUTTON_PRESS:
@@ -798,7 +804,8 @@ nav_window_expose_events (GtkWidget *widget,
 static gint 
 nav_preview_update_do(NavWinData *iwd)
 {
-  nav_window_update_preview(iwd,FALSE);
+  nav_window_update_preview(iwd);
+  nav_window_disp_area(iwd,iwd->gdisp_ptr);
   gtk_widget_draw(iwd->preview, NULL); 
   iwd->installedDirtyTimer = FALSE;
   return FALSE;
@@ -826,16 +833,165 @@ nav_image_need_update (GtkObject *obj,
   iwd->installedDirtyTimer = TRUE;
 
   /* Update preview at a less busy time */
-  nav_window_update_preview(iwd,TRUE);
+  nav_window_update_preview_blank(iwd); 
   gtk_widget_draw(iwd->preview, NULL); 
-  gtk_timeout_add(2000,(GtkFunction)nav_preview_update_do_timer,(gpointer)iwd); 
+  gtk_timeout_add(PREVIEW_UPDATE_TIMEOUT,(GtkFunction)nav_preview_update_do_timer,(gpointer)iwd); 
+}
+
+static void
+navwindow_zoomin (GtkWidget *widget,
+		  gpointer   data)
+{
+  NavWinData *iwd;
+  GDisplay *gdisp;
+
+  iwd = (NavWinData *)data;
+
+  if(!iwd)
+    return;
+
+  gdisp = (GDisplay *) iwd->gdisp_ptr;
+
+  change_scale(gdisp,ZOOMIN);
+}
+
+static void
+navwindow_zoomout (GtkWidget *widget,
+		   gpointer   data)
+{
+  NavWinData *iwd;
+  GDisplay *gdisp;
+
+  iwd = (NavWinData *)data;
+
+  if(!iwd)
+    return;
+
+  gdisp = (GDisplay *) iwd->gdisp_ptr;
+
+  change_scale(gdisp,ZOOMOUT);
+}
+
+static void
+zoom_adj_changed (GtkAdjustment *adj, 
+		  gpointer   data)
+{
+  NavWinData *iwd;
+  GDisplay *gdisp;
+  gint scalesrc, scaledest;
+
+  iwd = (NavWinData *)data;
+
+  if(!iwd)
+    return;
+  
+  gdisp = (GDisplay *) iwd->gdisp_ptr;
+
+  if(adj->value < 0.0)
+    {
+      scalesrc = abs((gint)adj->value-1);
+      scaledest = 1;
+    }
+  else
+    {
+      scaledest = abs((gint)adj->value+1);
+      scalesrc = 1;
+    }
+
+  iwd->block_adj_sig = TRUE;
+  change_scale(gdisp,(scaledest*100)+scalesrc);
+  iwd->block_adj_sig = FALSE;
+}
+
+static GtkWidget *
+nav_create_button_area(InfoDialog *info_win)
+{
+  GtkWidget *hbox1;  
+  GtkWidget *vbox1;
+  GtkWidget *button;
+  GtkWidget *hscale1;
+  GtkWidget *label1;
+  GtkObject *adjustment;
+  GdkPixmap *pixmap;
+  GtkWidget *pixmapwid;
+  GdkBitmap *mask;
+  GtkStyle  *style;
+  NavWinData *iwd;
+  gchar      scale_str[MAX_SCALE_BUF];
+
+  iwd = (NavWinData *)info_win->user_data;
+
+  hbox1 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_show (hbox1);
+
+  style = gtk_widget_get_style (info_win->shell);
+
+  button = gtk_button_new ();
+  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked", 
+		      GTK_SIGNAL_FUNC (navwindow_zoomout), (gpointer) info_win->user_data);
+  gtk_box_pack_start (GTK_BOX (hbox1), button, FALSE, FALSE, 0);
+
+  pixmap = gdk_pixmap_create_from_xpm_d (info_win->shell->window, &mask,
+					 &style->bg[GTK_STATE_NORMAL], 
+					 zoom_out_xpm);
+  pixmapwid = gtk_pixmap_new (pixmap, mask);
+  gtk_container_add (GTK_CONTAINER (button), pixmapwid);
+  gtk_widget_show (pixmapwid);
+  gtk_widget_show (button);
+
+  vbox1 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_show (vbox1);
+  gtk_box_pack_start (GTK_BOX (vbox1), hbox1, TRUE, TRUE, 0);
+
+  /*  user zoom ratio  */
+  g_snprintf (scale_str, MAX_SCALE_BUF, "%d:%d",
+	      SCALEDEST (((GDisplay *)iwd->gdisp_ptr)), 
+	      SCALESRC (((GDisplay *)iwd->gdisp_ptr)));
+  
+  label1 = gtk_label_new (scale_str);
+  gtk_widget_show (label1);
+  iwd->zoom_label = label1;
+  gtk_box_pack_start (GTK_BOX (hbox1), label1, TRUE, TRUE, 0);
+
+  adjustment = gtk_adjustment_new (0.0, -15.0, 16.0, 1.0, 1.0, 1.0);
+  hscale1 = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+  gtk_scale_set_digits (GTK_SCALE (hscale1), 0);
+  iwd->zoom_adjustment = adjustment;
+  iwd->zoom_scale = hscale1;
+  gtk_widget_show (hscale1);
+
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (zoom_adj_changed),
+		      iwd);
+
+  gtk_box_pack_start (GTK_BOX (vbox1), hscale1, TRUE, TRUE, 0);
+  gtk_scale_set_draw_value (GTK_SCALE (hscale1), FALSE);
+
+  button = gtk_button_new ();
+  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked", 
+		      GTK_SIGNAL_FUNC (navwindow_zoomin), (gpointer) info_win->user_data); 
+  gtk_box_pack_start (GTK_BOX (hbox1), button, FALSE, FALSE, 0);
+
+  pixmap = gdk_pixmap_create_from_xpm_d (info_win->shell->window, &mask,
+					 &style->bg[GTK_STATE_NORMAL], 
+					 zoom_in_xpm);
+  pixmapwid = gtk_pixmap_new (pixmap, mask);
+  gtk_container_add (GTK_CONTAINER (button), pixmapwid);
+  gtk_widget_show (pixmapwid);
+  gtk_widget_show (button);
+
+  return vbox1;
 }
 
 static GtkWidget *
 info_window_image_preview_new(InfoDialog *info_win)
 {
   GtkWidget *hbox1;
+  GtkWidget *vbox1;
   GtkWidget *alignment;
+  GtkWidget *button_area;
 
   NavWinData *iwd;
 
@@ -843,6 +999,9 @@ info_window_image_preview_new(InfoDialog *info_win)
 
   hbox1 = gtk_hbox_new (FALSE, 0);
   gtk_widget_show (hbox1);
+
+  vbox1 = gtk_vbox_new (FALSE, 0);
+  gtk_widget_show (vbox1);
 
   gtk_widget_realize(info_win->shell);
 
@@ -861,8 +1020,12 @@ info_window_image_preview_new(InfoDialog *info_win)
   create_preview_widget(iwd);
 
   gtk_box_pack_start (GTK_BOX (hbox1), alignment, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox1), hbox1, TRUE, TRUE, 0);
 
-  return hbox1;
+  button_area = nav_create_button_area(info_win);
+  gtk_box_pack_start (GTK_BOX (vbox1), button_area, TRUE, TRUE, 0);
+
+  return vbox1;
 }
 
 static ActionAreaItem action_items[] =
@@ -915,6 +1078,8 @@ nav_window_create (void *gdisp_ptr)
   iwd->block_window_marker = FALSE;
   iwd->nav_preview_width = NAV_PREVIEW_WIDTH;
   iwd->nav_preview_height = NAV_PREVIEW_HEIGHT;
+  iwd->block_adj_sig = FALSE;
+
 
   /* Add preview */
   container = info_window_image_preview_new(info_win);
@@ -968,6 +1133,30 @@ nav_window_update_window_marker(InfoDialog *info_win)
 		       iwd->dispx,
 		       iwd->dispy,
 		       iwd->dispwidth,iwd->dispheight);
+  
+  update_zoom_label(iwd);
+
+  update_zoom_adjustment(iwd);
+}
+
+void
+nav_dialog_popup (InfoDialog *idialog)
+{
+  NavWinData *iwd;
+
+  if (!idialog)
+    return;
+
+  iwd = (NavWinData *)idialog->user_data;
+  iwd->showingPreview = TRUE;
+
+  if (! GTK_WIDGET_VISIBLE (idialog->shell))
+    {
+      gtk_widget_show (idialog->shell);
+      nav_window_update_preview_blank(iwd); 
+      nav_window_update_window_marker(idialog);
+      gtk_timeout_add(PREVIEW_UPDATE_TIMEOUT,(GtkFunction)nav_preview_update_do_timer,(gpointer)iwd); 
+    }
 }
 
 void

@@ -1089,10 +1089,10 @@ layer_linked (Layer *layer)
   return layer->linked;
 }
 
-TempBuf *
-layer_preview (Layer *layer,
-	       gint   w,
-	       gint   h)
+static TempBuf *
+layer_preview_private (Layer *layer,
+		       gint   w,
+		       gint   h)
 {
   GImage *gimage;
   TempBuf *preview_buf;
@@ -1161,9 +1161,33 @@ layer_preview (Layer *layer,
 }
 
 TempBuf *
-layer_mask_preview (Layer *layer,
-		    gint   w,
-		    gint   h)
+layer_preview (Layer *layer,
+	       gint   w,
+	       gint   h)
+{
+  /* Ok prime the cache with a large preview if the cache is invalid */
+  if(!GIMP_DRAWABLE(layer)->preview_valid && 
+     w <= PREVIEW_CACHE_PRIME_WIDTH &&
+     h <= PREVIEW_CACHE_PRIME_HEIGHT)
+    {
+      TempBuf * tb = layer_preview_private(layer,
+					   PREVIEW_CACHE_PRIME_WIDTH,
+					   PREVIEW_CACHE_PRIME_HEIGHT);
+
+      /* Save the 2nd call */
+      if(w == PREVIEW_CACHE_PRIME_WIDTH &&
+	 h == PREVIEW_CACHE_PRIME_HEIGHT)
+	return tb;
+    }
+
+  /* Second call - should NOT visit the tile cache...*/
+  return layer_preview_private(layer,w,h);
+}
+
+static TempBuf *
+layer_mask_preview_private (Layer *layer,
+			    gint   w,
+			    gint   h)
 {
   TempBuf *preview_buf;
   LayerMask *mask;
@@ -1212,6 +1236,31 @@ layer_mask_preview (Layer *layer,
       return preview_buf;
     }
 }
+
+TempBuf *
+layer_mask_preview (Layer *layer,
+		    gint   w,
+		    gint   h)
+{
+  /* Ok prime the cache with a large preview if the cache is invalid */
+  if(!GIMP_DRAWABLE(layer->mask)->preview_valid && 
+     w <= PREVIEW_CACHE_PRIME_WIDTH &&
+     h <= PREVIEW_CACHE_PRIME_HEIGHT)
+    {
+      TempBuf * tb = layer_mask_preview_private(layer,
+						PREVIEW_CACHE_PRIME_WIDTH,
+						PREVIEW_CACHE_PRIME_HEIGHT);
+      
+      /* Save the 2nd call */
+      if(w == PREVIEW_CACHE_PRIME_WIDTH &&
+	 h == PREVIEW_CACHE_PRIME_HEIGHT)
+	return tb;
+    }
+  
+  /* Second call - should NOT visit the tile cache...*/
+  return layer_mask_preview_private(layer,w,h);
+}
+
 
 Tattoo
 layer_get_tattoo (const Layer *layer)

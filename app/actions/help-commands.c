@@ -546,7 +546,7 @@ view_window_nav_cmd_callback (GtkWidget *widget,
   if (! gdisp->window_nav_dialog)
     gdisp->window_nav_dialog = nav_window_create ((void *) gdisp);
 
-  info_dialog_popup (gdisp->window_nav_dialog);
+  nav_dialog_popup (gdisp->window_nav_dialog);
 }
 
 void
