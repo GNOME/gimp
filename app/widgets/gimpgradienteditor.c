@@ -294,8 +294,6 @@ static gint      ed_delete_save_pov_callback      (GtkWidget       *widget,
 						   GdkEvent        *event,
 						   gpointer         data);
 
-static void      ed_refresh_grads_callback        (GtkWidget       *widget,
-						   gpointer         data);
 static void      ed_close_callback                (GtkWidget       *widget,
 						   gpointer         data);
 
@@ -583,12 +581,14 @@ gradient_editor_create (void)
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
-		     _("Refresh"), ed_refresh_grads_callback,
-		     NULL, NULL, NULL, FALSE, FALSE,
-		     _("Close"), ed_close_callback,
-		     NULL, NULL, NULL, TRUE, TRUE,
+		     "_delete_event_", ed_close_callback,
+		     NULL, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
+
+  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (g_editor->shell)->vbox)), 0)));
+
+  gtk_widget_hide (GTK_DIALOG (g_editor->shell)->action_area);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -866,7 +866,7 @@ gradient_editor_create (void)
     {
       GimpGradient *gradient;
 
-      gradient = gimp_gradient_new (_("Default"));
+      gradient = GIMP_GRADIENT (gimp_gradient_new (_("Default")));
 
       gimp_container_add (global_gradient_factory->container,
 			  GIMP_OBJECT (gradient));
@@ -1045,7 +1045,7 @@ ed_do_new_gradient_callback (GtkWidget *widget,
 {
   GimpGradient *grad;
 
-  grad = gimp_gradient_new (gradient_name);
+  grad = GIMP_GRADIENT (gimp_gradient_new (gradient_name));
 
   g_free (gradient_name);
 
@@ -1368,27 +1368,6 @@ ed_delete_save_pov_callback (GtkWidget *widget,
 }
 
 /***** The main dialog action area button callbacks *****/
-
-static void
-ed_refresh_grads_callback (GtkWidget *widget,
-			   gpointer   data)
-{
-  gimp_data_factory_data_init (global_gradient_factory, FALSE);
-
-  if (! gimp_container_num_children (global_gradient_factory->container))
-    {
-      GimpGradient *gradient;
-
-      gradient = gimp_gradient_new (_("Default"));
-
-      gimp_data_dirty (GIMP_DATA (gradient));
-
-      gimp_container_add (global_gradient_factory->container,
-			  GIMP_OBJECT (gradient));
-    }
-
-  ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL); 
-}
 
 static void
 ed_close_callback (GtkWidget *widget,

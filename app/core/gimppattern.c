@@ -167,7 +167,7 @@ gimp_pattern_get_extension (GimpData *data)
   return GIMP_PATTERN_FILE_EXTENSION;
 }
 
-GimpPattern *
+GimpData *
 gimp_pattern_new (const gchar *name)
 {
   GimpPattern *pattern;
@@ -191,10 +191,10 @@ gimp_pattern_new (const gchar *name)
 	data += 3;
       }
 
-  return pattern;
+  return GIMP_DATA (pattern);
 }
 
-GimpPattern *
+GimpData *
 gimp_pattern_get_standard (void)
 {
   static GimpPattern *standard_pattern = NULL;
@@ -225,10 +225,10 @@ gimp_pattern_get_standard (void)
       gtk_object_sink (GTK_OBJECT (standard_pattern));
     }
 
-  return standard_pattern;
+  return GIMP_DATA (standard_pattern);
 }
 
-GimpPattern *
+GimpData *
 gimp_pattern_load (const gchar *filename)
 {
   GimpPattern   *pattern = NULL;
@@ -314,7 +314,7 @@ gimp_pattern_load (const gchar *filename)
   if (stingy_memory_use)
     temp_buf_swap (pattern->mask);
 
-  return pattern;
+  return GIMP_DATA (pattern);
 
  error:
   if (pattern)

@@ -19,8 +19,8 @@
 #ifndef __TOOL_H__
 #define __TOOL_H__
 
-#include "gimpdrawable.h"
-#include "cursorutil.h"
+
+#include "gimpobject.h"
 
 
 #define GIMP_TYPE_TOOL            (gimp_tool_get_type ())
@@ -35,7 +35,6 @@
 #define  SELECTION         (1 << 1)
 #define  NON_ACTIVE_LAYER  (1 << 2)
 
-typedef struct _GimpTool GimpTool;
 
 /*  Tool action function declarations  */
 typedef void   (* ButtonPressFunc)    (GimpTool       *tool,

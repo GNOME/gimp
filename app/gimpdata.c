@@ -41,6 +41,7 @@ enum
   DIRTY,
   SAVE,
   GET_EXTENSION,
+  DUPLICATE,
   LAST_SIGNAL
 };
 
@@ -120,6 +121,15 @@ gimp_data_class_init (GimpDataClass *klass)
                     gimp_marshal_POINTER__NONE,
                     GTK_TYPE_POINTER, 0);
 
+  data_signals[DUPLICATE] = 
+    gtk_signal_new ("duplicate",
+                    GTK_RUN_LAST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpDataClass,
+                                       duplicate),
+                    gimp_marshal_POINTER__NONE,
+                    GTK_TYPE_POINTER, 0);
+
   object_class->destroy = gimp_data_destroy;
 
   gimp_object_class->name_changed = gimp_data_name_changed;
@@ -127,6 +137,7 @@ gimp_data_class_init (GimpDataClass *klass)
   klass->dirty         = gimp_data_real_dirty;
   klass->save          = NULL;
   klass->get_extension = NULL;
+  klass->duplicate     = NULL;
 }
 
 static void
@@ -295,4 +306,15 @@ gimp_data_create_filename (GimpData    *data,
   gimp_data_set_filename (data, filename);
 
   g_free (filename);
+}
+
+GimpData *
+gimp_data_duplicate (GimpData *data)
+{
+  GimpData *new_data = NULL;
+
+  gtk_signal_emit (GTK_OBJECT (data), data_signals[DUPLICATE],
+		   &new_data);
+
+  return new_data;
 }

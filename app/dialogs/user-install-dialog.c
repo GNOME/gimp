@@ -87,9 +87,9 @@ static void     user_install_resolution_done   (void);
 void
 user_install_verify (UserInstallCallback user_install_callback)
 {
-  gboolean properly_installed = TRUE;
-  gchar *filename;
-  struct stat stat_buf;
+  gboolean     properly_installed = TRUE;
+  const gchar *filename;
+  struct stat  stat_buf;
 
   /* gimp_directory now always returns something */
   filename = gimp_directory ();
@@ -782,7 +782,7 @@ user_install_dialog_create (UserInstallCallback callback)
     gtk_widget_show (page2);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook2), page2, NULL);
 
-    node[0] = gimp_directory ();
+    node[0] = (gchar *) gimp_directory ();
 
     main_node = gtk_ctree_insert_node (GTK_CTREE (ctree), NULL, NULL,
 				       node, 4,

@@ -202,9 +202,9 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
   gtk_container_add (GTK_CONTAINER (view->refresh_button), pixmap);
   gtk_widget_show (pixmap);
 
-  gtk_widget_set_sensitive (view->edit_button, FALSE);
   gtk_widget_set_sensitive (view->duplicate_button, FALSE);
-  gtk_widget_set_sensitive (view->new_button, FALSE);
+  gtk_widget_set_sensitive (view->edit_button, FALSE);
+  gtk_widget_set_sensitive (view->delete_button, FALSE);
 }
 
 static void
@@ -277,6 +277,13 @@ gimp_data_factory_view_new (GimpViewType      view_type,
      factory_view,
      GTK_OBJECT (factory_view));
 
+  /* set button sensitivity */
+  gimp_data_factory_view_data_changed
+    (context,
+     (GimpData *)
+     gimp_context_get_by_type (context, factory->container->children_type),
+     factory_view);
+
   return GTK_WIDGET (factory_view);
 }
 
@@ -305,7 +312,36 @@ static void
 gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
 					  GimpDataFactoryView *view)
 {
-  g_print ("duplicate %s\n", gimp_object_get_name (gimp_context_get_by_type (view->view->context, view->factory->container->children_type)));
+  GimpData *data;
+
+  data = (GimpData *)
+    gimp_context_get_by_type (view->view->context,
+			      view->factory->container->children_type);
+
+  if (data && gimp_container_have (view->factory->container,
+				   GIMP_OBJECT (data)))
+    {
+      GimpData *new_data;
+
+      new_data = gimp_data_duplicate (data);
+
+      if (new_data)
+	{
+	  gchar *name;
+
+	  name = g_strdup_printf (_("%s copy"), GIMP_OBJECT (data)->name);
+
+	  gimp_object_set_name (GIMP_OBJECT (new_data), name);
+
+	  g_free (name);
+
+	  gimp_container_add (view->factory->container, GIMP_OBJECT (new_data));
+
+	  gimp_context_set_by_type (view->view->context,
+				    view->factory->container->children_type,
+				    GIMP_OBJECT (new_data));
+	}
+    }
 }
 
 static void
@@ -366,7 +402,9 @@ gimp_data_factory_view_data_changed (GimpContext         *context,
   if (data && gimp_container_have (view->factory->container,
 				   GIMP_OBJECT (data)))
     {
-      duplicate_sensitive = FALSE; /* TODO: GimpData's "duplicate" method */
+      duplicate_sensitive =
+	(GIMP_DATA_CLASS (GTK_OBJECT (data)->klass)->duplicate != NULL);
+
       edit_sensitive      = (view->data_edit_func != NULL);
       delete_sensitive    = TRUE;  /* TODO: check permissions */
     }

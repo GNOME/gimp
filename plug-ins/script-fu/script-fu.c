@@ -386,7 +386,7 @@ init_constants (void)
   gchar *gimp_plugin_dir;
 
   setvar (cintern ("gimp-data-dir"), 
-	  strcons (-1, gimp_data_directory ()), NIL);
+	  strcons (-1, (gchar *) gimp_data_directory ()), NIL);
 
   gimp_plugin_dir = gimp_gimprc_query ("gimp_plugin_dir");
   if (gimp_plugin_dir)

@@ -39,7 +39,7 @@
 static void brush_edit_close_callback (GtkWidget                *widget,
 				       gpointer                  data);
 static gint brush_edit_preview_resize (GtkWidget                *widget,
-				       GdkEvent                 *event, 
+				       GtkAllocation            *allocation,
 				       BrushEditGeneratedWindow *begw);
 
 
@@ -343,7 +343,7 @@ brush_edit_generated_new (void)
 
 static gint 
 brush_edit_preview_resize (GtkWidget                *widget,
-			   GdkEvent                 *event,
+			   GtkAllocation            *allocation,
 			   BrushEditGeneratedWindow *begw)
 {
   gtk_preview_size (GTK_PREVIEW (begw->preview),
@@ -356,7 +356,7 @@ brush_edit_preview_resize (GtkWidget                *widget,
 
   return FALSE;
 }
- 
+
 static void
 brush_edit_close_callback (GtkWidget *widget,
 			   gpointer   data)

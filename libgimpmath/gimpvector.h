@@ -1,6 +1,8 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
+ * gimpvector.h
+ *
  * The gimp_vector* functions were taken from:
  * GCK - The General Convenience Kit
  * Copyright (C) 1996 Tom Bech

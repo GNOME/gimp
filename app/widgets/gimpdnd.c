@@ -41,6 +41,7 @@
 #include "gimppreview.h"
 #include "gimprc.h"
 #include "temp_buf.h"
+
 #include "tools/tool.h"
 
 #include "libgimp/gimplimits.h"
@@ -825,7 +826,7 @@ gimp_dnd_set_brush_data (GtkWidget     *widget,
   name = (gchar *) vals;
 
   if (strcmp (name, "Standard") == 0)
-    brush = gimp_brush_get_standard ();
+    brush = GIMP_BRUSH (gimp_brush_get_standard ());
   else
     brush = (GimpBrush *)
       gimp_container_get_child_by_name (global_brush_factory->container,
@@ -929,7 +930,7 @@ gimp_dnd_set_pattern_data (GtkWidget     *widget,
   name = (gchar *) vals;
 
   if (strcmp (name, "Standard") == 0)
-    pattern = gimp_pattern_get_standard ();
+    pattern = GIMP_PATTERN (gimp_pattern_get_standard ());
   else
     pattern = (GimpPattern *)
       gimp_container_get_child_by_name (global_pattern_factory->container,
@@ -1038,7 +1039,7 @@ gimp_dnd_set_gradient_data (GtkWidget     *widget,
   name = (gchar *) vals;
 
   if (strcmp (name, "Standard") == 0)
-    gradient = gimp_gradient_get_standard ();
+    gradient = GIMP_GRADIENT (gimp_gradient_get_standard ());
   else
     gradient = (GimpGradient *)
       gimp_container_get_child_by_name (global_gradient_factory->container,
@@ -1143,7 +1144,7 @@ gimp_dnd_set_palette_data (GtkWidget     *widget,
   name = (gchar *) vals;
 
   if (strcmp (name, "Standard") == 0)
-    palette = gimp_palette_get_standard ();
+    palette = GIMP_PALETTE (gimp_palette_get_standard ());
   else
     palette = (GimpPalette *)
       gimp_container_get_child_by_name (global_palette_factory->container,

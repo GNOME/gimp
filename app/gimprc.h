@@ -76,6 +76,7 @@ extern gboolean           using_xserver_resolution;
 extern gint               num_processors;
 extern gchar             *image_title_format;
 extern gboolean           global_paint_options;
+extern gchar             *module_db_load_inhibit;
 extern gboolean           show_indicators;
 extern guint              max_new_image_size;
 extern gint               thumbnail_mode;

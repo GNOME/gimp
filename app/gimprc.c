@@ -67,6 +67,11 @@
 #define LOCALE_DEF 3
 #define HELP_DEF   4
 
+
+#define DEFAULT_IMAGE_TITLE_FORMAT "%f-%p.%i (%t)"
+#define DEFAULT_COMMENT            "Created with The GIMP"
+
+
 typedef enum
 {
   TT_STRING,
@@ -95,6 +100,7 @@ typedef enum
   TT_XCOMMENT
 } TokenType;
 
+
 typedef struct _ParseFunc ParseFunc;
 
 struct _ParseFunc
@@ -114,113 +120,43 @@ struct _UnknownToken
 };
 
 
-/*  global gimprc variables  */
-gchar             *plug_in_path = NULL;
-gchar             *temp_path = NULL;
-gchar             *swap_path = NULL;
-gchar             *brush_path = NULL;
-gchar             *default_brush = NULL;
-gchar             *pattern_path = NULL;
-gchar             *default_pattern = NULL;
-gchar             *palette_path = NULL;
-gchar             *default_palette = NULL;
-gchar             *gradient_path = NULL;
-gchar             *default_gradient = NULL;
-gchar             *pluginrc_path = NULL;
-gchar             *module_path = NULL;
-guint              tile_cache_size = 33554432;  /* 32 MB */
-gint               marching_speed = 300;   /* 300 ms */
-gdouble            gamma_val = 1.0;
-gint               transparency_type = 1;  /* Mid-Tone Checks */
-gboolean           perfectmouse = FALSE;   /* off (fast and sloppy) */
-gint               transparency_size = 1;  /* Medium sized */
-gint               levels_of_undo = 2;     /* 2 levels of undo default */
-gint               last_opened_size = 4;   /* 4 documents in the MRU list */
-gint               min_colors = 144;       /* 6*6*4 */
-gboolean           install_cmap = FALSE;
-gint               cycled_marching_ants = 0;
-gint               default_threshold = 15;
-gboolean           stingy_memory_use = FALSE;
-gboolean           allow_resize_windows = FALSE;
-gboolean           no_cursor_updating = FALSE;
-gint               preview_size = 32;
-gint               nav_preview_size = 112;
-gboolean           show_rulers = TRUE;
-gboolean           show_statusbar = TRUE;
-GimpUnit           default_units = GIMP_UNIT_INCH;
-gboolean           auto_save = TRUE;
-InterpolationType  interpolation_type = LINEAR_INTERPOLATION;
-gboolean           confirm_on_close = TRUE;
-gboolean           save_session_info = TRUE;
-gboolean           save_device_status = FALSE;
-gboolean           always_restore_session = TRUE;
-gint               default_width = 256;
-gint               default_height = 256;
-gint               default_type = RGB;
-gdouble            default_xresolution = 72.0;
-gdouble            default_yresolution = 72.0;
-GimpUnit           default_resolution_units = GIMP_UNIT_INCH;
-gchar             *default_comment = NULL;
-gboolean           default_dot_for_dot = TRUE;
-gboolean           show_tips = TRUE;
-gint               last_tip = -1;
-gboolean           show_tool_tips = TRUE;
-gdouble            monitor_xres = 72.0;
-gdouble            monitor_yres = 72.0;
-gboolean           using_xserver_resolution = FALSE;
-gint               num_processors = 1;
-gchar             *image_title_format = NULL;
-gboolean           global_paint_options = FALSE;
-gboolean           show_indicators = TRUE;
-guint              max_new_image_size = 33554432;  /* 32 MB */
-gint               thumbnail_mode = 1;
-gboolean           trust_dirty_flag = FALSE;
-gboolean           use_help = TRUE;
-gboolean           nav_window_per_display = FALSE;
-gboolean           info_window_follows_mouse = TRUE;
-gint               help_browser = HELP_BROWSER_GIMP;
-gint               cursor_mode = CURSOR_MODE_TOOL_ICON;
-gboolean           disable_tearoff_menus = FALSE;
+static gint           get_next_token            (void);
+static gint           peek_next_token           (void);
+static gint           parse_statement           (void);
 
-extern char * module_db_load_inhibit;
+static gint           parse_string              (gpointer val1p, gpointer val2p);
+static gint           parse_path                (gpointer val1p, gpointer val2p);
+static gint           parse_double              (gpointer val1p, gpointer val2p);
+static gint           parse_float               (gpointer val1p, gpointer val2p);
+static gint           parse_int                 (gpointer val1p, gpointer val2p);
+static gint           parse_boolean             (gpointer val1p, gpointer val2p);
+static gint           parse_position            (gpointer val1p, gpointer val2p);
+static gint           parse_mem_size            (gpointer val1p, gpointer val2p);
+static gint           parse_image_type          (gpointer val1p, gpointer val2p);
+static gint           parse_interpolation_type  (gpointer val1p, gpointer val2p);
+static gint           parse_preview_size        (gpointer val1p, gpointer val2p);
+static gint           parse_nav_preview_size    (gpointer val1p, gpointer val2p);
+static gint           parse_units               (gpointer val1p, gpointer val2p);
+static gint           parse_plug_in             (gpointer val1p, gpointer val2p);
+static gint           parse_plug_in_def         (gpointer val1p, gpointer val2p);
+static gint           parse_device              (gpointer val1p, gpointer val2p);
+static gint           parse_menu_path           (gpointer val1p, gpointer val2p);
+static gint           parse_session_info        (gpointer val1p, gpointer val2p);
+static gint           parse_unit_info           (gpointer val1p, gpointer val2p);
+static gint           parse_parasite            (gpointer val1p, gpointer val2p);
+static gint           parse_help_browser        (gpointer val1p, gpointer val2p);
+static gint           parse_cursor_mode         (gpointer val1p, gpointer val2p);
+static gint           parse_color_history       (gpointer val1p, gpointer val2p);
 
-static gint get_next_token  (void);
-static gint peek_next_token (void);
-static gint parse_statement (void);
+static gint           parse_locale_def          (PlugInDef      *plug_in_def);
+static gint           parse_help_def            (PlugInDef      *plug_in_def);
+static gint           parse_proc_def            (PlugInProcDef **proc_def);
+static gint           parse_proc_arg            (ProcArg        *arg);
+static gint           parse_color               (GimpRGB        *color);
+static gint           parse_unknown             (gchar          *token_sym);
 
-static gint parse_string             (gpointer val1p, gpointer val2p);
-static gint parse_path               (gpointer val1p, gpointer val2p);
-static gint parse_double             (gpointer val1p, gpointer val2p);
-static gint parse_float              (gpointer val1p, gpointer val2p);
-static gint parse_int                (gpointer val1p, gpointer val2p);
-static gint parse_boolean            (gpointer val1p, gpointer val2p);
-static gint parse_position           (gpointer val1p, gpointer val2p);
-static gint parse_mem_size           (gpointer val1p, gpointer val2p);
-static gint parse_image_type         (gpointer val1p, gpointer val2p);
-static gint parse_interpolation_type (gpointer val1p, gpointer val2p);
-static gint parse_preview_size       (gpointer val1p, gpointer val2p);
-static gint parse_nav_preview_size   (gpointer val1p, gpointer val2p);
-static gint parse_units              (gpointer val1p, gpointer val2p);
-static gint parse_plug_in            (gpointer val1p, gpointer val2p);
-static gint parse_plug_in_def        (gpointer val1p, gpointer val2p);
-static gint parse_device             (gpointer val1p, gpointer val2p);
-static gint parse_menu_path          (gpointer val1p, gpointer val2p);
-static gint parse_session_info       (gpointer val1p, gpointer val2p);
-static gint parse_unit_info          (gpointer val1p, gpointer val2p);
-static gint parse_parasite           (gpointer val1p, gpointer val2p);
-static gint parse_help_browser       (gpointer val1p, gpointer val2p);
-static gint parse_cursor_mode        (gpointer val1p, gpointer val2p);
-static gint parse_color_history      (gpointer val1p, gpointer val2p);
-
-static gint parse_locale_def (PlugInDef      *plug_in_def);
-static gint parse_help_def   (PlugInDef      *plug_in_def);
-static gint parse_proc_def   (PlugInProcDef **proc_def);
-static gint parse_proc_arg   (ProcArg        *arg);
-static gint parse_color      (GimpRGB        *color);
-static gint parse_unknown    (gchar          *token_sym);
-
-       gchar *gimprc_value_to_str (gchar *name);
-static gchar *value_to_str        (gchar *name);
+       gchar        * gimprc_value_to_str       (gchar          *name);
+static gchar        * value_to_str              (gchar          *name);
 
 static inline gchar * string_to_str             (gpointer val1p, gpointer val2p);
 static inline gchar * path_to_str               (gpointer val1p, gpointer val2p);
@@ -239,122 +175,186 @@ static inline gchar * help_browser_to_str       (gpointer val1p, gpointer val2p)
 static inline gchar * cursor_mode_to_str        (gpointer val1p, gpointer val2p);
 static inline gchar * comment_to_str            (gpointer val1p, gpointer val2p);
 
-static gchar *transform_path           (gchar    *path, 
-					gboolean  destroy);
-static void   gimprc_set_token         (gchar    *token,
-					gchar    *value);
-static void   add_gimp_directory_token (gchar    *gimp_dir);
+static gchar        * transform_path            (gchar        *path, 
+						 gboolean      destroy);
+static void           gimprc_set_token          (gchar        *token,
+						 gchar        *value);
+static void           add_gimp_directory_token  (const gchar  *gimp_dir);
 #ifdef __EMX__
-static void   add_x11root_token        (gchar    *x11root);
+static void           add_x11root_token         (gchar        *x11root);
 #endif
-static gchar *open_backup_file         (gchar    *filename,
-					gchar    *secondary_filename,
-					gchar   **name_used,
-					FILE    **fp_new,
-					FILE    **fp_old);
+static gchar        * open_backup_file          (gchar        *filename,
+						 gchar        *secondary_filename,
+						 gchar       **name_used,
+						 FILE        **fp_new,
+						 FILE        **fp_old);
 
 
-static ParseInfo  parse_info = { NULL };
+/*  global gimprc variables  */
+gchar             *plug_in_path              = NULL;
+gchar             *temp_path                 = NULL;
+gchar             *swap_path                 = NULL;
+gchar             *brush_path                = NULL;
+gchar             *default_brush             = NULL;
+gchar             *pattern_path              = NULL;
+gchar             *default_pattern           = NULL;
+gchar             *palette_path              = NULL;
+gchar             *default_palette           = NULL;
+gchar             *gradient_path             = NULL;
+gchar             *default_gradient          = NULL;
+gchar             *pluginrc_path             = NULL;
+gchar             *module_path               = NULL;
+guint              tile_cache_size           = 33554432;  /* 32 MB */
+gint               marching_speed            = 300;       /* 300 ms */
+gdouble            gamma_val                 = 1.0;
+gint               transparency_type         = 1;     /* Mid-Tone Checks */
+gboolean           perfectmouse              = FALSE; /* off (fast and sloppy) */
+gint               transparency_size         = 1;     /* Medium sized */
+gint               levels_of_undo            = 5;
+gint               last_opened_size          = 4;
+gint               min_colors                = 144;   /* 6*6*4 */
+gboolean           install_cmap              = FALSE;
+gint               cycled_marching_ants      = 0;
+gint               default_threshold         = 15;
+gboolean           stingy_memory_use         = FALSE;
+gboolean           allow_resize_windows      = FALSE;
+gboolean           no_cursor_updating        = FALSE;
+gint               preview_size              = 32;
+gint               nav_preview_size          = 112;
+gboolean           show_rulers               = TRUE;
+gboolean           show_statusbar            = TRUE;
+GimpUnit           default_units             = GIMP_UNIT_INCH;
+gboolean           auto_save                 = TRUE;
+InterpolationType  interpolation_type        = LINEAR_INTERPOLATION;
+gboolean           confirm_on_close          = TRUE;
+gboolean           save_session_info         = TRUE;
+gboolean           save_device_status        = FALSE;
+gboolean           always_restore_session    = TRUE;
+gint               default_width             = 256;
+gint               default_height            = 256;
+gint               default_type              = RGB;
+gdouble            default_xresolution       = 72.0;
+gdouble            default_yresolution       = 72.0;
+GimpUnit           default_resolution_units  = GIMP_UNIT_INCH;
+gchar             *default_comment           = NULL;
+gboolean           default_dot_for_dot       = TRUE;
+gboolean           show_tips                 = TRUE;
+gint               last_tip                  = -1;
+gboolean           show_tool_tips            = TRUE;
+gdouble            monitor_xres              = 72.0;
+gdouble            monitor_yres              = 72.0;
+gboolean           using_xserver_resolution  = FALSE;
+gint               num_processors            = 1;
+gchar             *image_title_format        = NULL;
+gboolean           global_paint_options      = FALSE;
+gchar             *module_db_load_inhibit    = NULL;
+gboolean           show_indicators           = TRUE;
+guint              max_new_image_size        = 33554432;  /* 32 MB */
+gint               thumbnail_mode            = 1;
+gboolean           trust_dirty_flag          = FALSE;
+gboolean           use_help                  = TRUE;
+gboolean           nav_window_per_display    = FALSE;
+gboolean           info_window_follows_mouse = TRUE;
+gint               help_browser              = HELP_BROWSER_GIMP;
+gint               cursor_mode               = CURSOR_MODE_TOOL_ICON;
+gboolean           disable_tearoff_menus     = FALSE;
 
-static GList     *unknown_tokens = NULL;
-
-static gint       cur_token;
-static gint       next_token;
-static gboolean   done;
 
 static ParseFunc funcs[] =
 {
-  { "temp-path",                 TT_PATH,       &temp_path, NULL },
-  { "swap-path",                 TT_PATH,       &swap_path, NULL },
-  { "brush-path",                TT_PATH,       &brush_path, NULL },
-  { "pattern-path",              TT_PATH,       &pattern_path, NULL },
-  { "plug-in-path",              TT_PATH,       &plug_in_path, NULL },
-  { "palette-path",              TT_PATH,       &palette_path, NULL },
-  { "gradient-path",             TT_PATH,       &gradient_path, NULL },
-  { "pluginrc-path",             TT_PATH,       &pluginrc_path, NULL },
-  { "module-path",               TT_PATH,       &module_path, NULL },
-  { "default-brush",             TT_STRING,     &default_brush, NULL },
-  { "default-pattern",           TT_STRING,     &default_pattern, NULL },
-  { "default-palette",           TT_STRING,     &default_palette, NULL },
-  { "default-gradient",          TT_STRING,     &default_gradient, NULL },
-  { "gamma-correction",          TT_DOUBLE,     &gamma_val, NULL },
-  { "tile-cache-size",           TT_MEMSIZE,    &tile_cache_size, NULL },
-  { "marching-ants-speed",       TT_INT,        &marching_speed, NULL },
-  { "last-opened-size",          TT_INT,        &last_opened_size, NULL },
-  { "undo-levels",               TT_INT,        &levels_of_undo, NULL },
-  { "transparency-type",         TT_INT,        &transparency_type, NULL },
-  { "perfect-mouse",             TT_BOOLEAN,    &perfectmouse, NULL },
-  { "transparency-size",         TT_INT,        &transparency_size, NULL },
-  { "min-colors",                TT_INT,        &min_colors, NULL },
-  { "install-colormap",          TT_BOOLEAN,    &install_cmap, NULL },
-  { "colormap-cycling",          TT_BOOLEAN,    &cycled_marching_ants, NULL },
-  { "default-threshold",         TT_INT,        &default_threshold, NULL },
-  { "stingy-memory-use",         TT_BOOLEAN,    &stingy_memory_use, NULL },
-  { "allow-resize-windows",      TT_BOOLEAN,    &allow_resize_windows, NULL },
-  { "dont-allow-resize-windows", TT_BOOLEAN,    NULL, &allow_resize_windows },
-  { "cursor-updating",           TT_BOOLEAN,    NULL, &no_cursor_updating },
-  { "no-cursor-updating",        TT_BOOLEAN,    &no_cursor_updating, NULL },
-  { "preview-size",              TT_XPREVSIZE,  NULL, NULL },
+  { "temp-path",                 TT_PATH,          &temp_path, NULL },
+  { "swap-path",                 TT_PATH,          &swap_path, NULL },
+  { "brush-path",                TT_PATH,          &brush_path, NULL },
+  { "pattern-path",              TT_PATH,          &pattern_path, NULL },
+  { "plug-in-path",              TT_PATH,          &plug_in_path, NULL },
+  { "palette-path",              TT_PATH,          &palette_path, NULL },
+  { "gradient-path",             TT_PATH,          &gradient_path, NULL },
+  { "pluginrc-path",             TT_PATH,          &pluginrc_path, NULL },
+  { "module-path",               TT_PATH,          &module_path, NULL },
+  { "default-brush",             TT_STRING,        &default_brush, NULL },
+  { "default-pattern",           TT_STRING,        &default_pattern, NULL },
+  { "default-palette",           TT_STRING,        &default_palette, NULL },
+  { "default-gradient",          TT_STRING,        &default_gradient, NULL },
+  { "gamma-correction",          TT_DOUBLE,        &gamma_val, NULL },
+  { "tile-cache-size",           TT_MEMSIZE,       &tile_cache_size, NULL },
+  { "marching-ants-speed",       TT_INT,           &marching_speed, NULL },
+  { "last-opened-size",          TT_INT,           &last_opened_size, NULL },
+  { "undo-levels",               TT_INT,           &levels_of_undo, NULL },
+  { "transparency-type",         TT_INT,           &transparency_type, NULL },
+  { "perfect-mouse",             TT_BOOLEAN,       &perfectmouse, NULL },
+  { "transparency-size",         TT_INT,           &transparency_size, NULL },
+  { "min-colors",                TT_INT,           &min_colors, NULL },
+  { "install-colormap",          TT_BOOLEAN,       &install_cmap, NULL },
+  { "colormap-cycling",          TT_BOOLEAN,       &cycled_marching_ants, NULL },
+  { "default-threshold",         TT_INT,           &default_threshold, NULL },
+  { "stingy-memory-use",         TT_BOOLEAN,       &stingy_memory_use, NULL },
+  { "allow-resize-windows",      TT_BOOLEAN,       &allow_resize_windows, NULL },
+  { "dont-allow-resize-windows", TT_BOOLEAN,       NULL, &allow_resize_windows },
+  { "cursor-updating",           TT_BOOLEAN,       NULL, &no_cursor_updating },
+  { "no-cursor-updating",        TT_BOOLEAN,       &no_cursor_updating, NULL },
+  { "preview-size",              TT_XPREVSIZE,     NULL, NULL },
   { "nav-preview-size",          TT_XNAVPREVSIZE,  NULL, NULL },
-  { "show-rulers",               TT_BOOLEAN,    &show_rulers, NULL },
-  { "dont-show-rulers",          TT_BOOLEAN,    NULL, &show_rulers },
-  { "show-statusbar",            TT_BOOLEAN,    &show_statusbar, NULL },
-  { "dont-show-statusbar",       TT_BOOLEAN,    NULL, &show_statusbar },
-  { "default-units",             TT_XUNIT,      &default_units, NULL },
-  { "auto-save",                 TT_BOOLEAN,    &auto_save, NULL },
-  { "dont-auto-save",            TT_BOOLEAN,    NULL, &auto_save },
-  { "interpolation-type",        TT_INTERP,     &interpolation_type, NULL },
-  { "confirm-on-close",          TT_BOOLEAN,    &confirm_on_close, NULL },
-  { "dont-confirm-on-close",     TT_BOOLEAN,    NULL, &confirm_on_close },
-  { "save-session-info",         TT_BOOLEAN,    &save_session_info, NULL },
-  { "dont-save-session-info",    TT_BOOLEAN,    NULL, &save_session_info},
-  { "save-device-status",        TT_BOOLEAN,    &save_device_status, NULL },
-  { "dont-save-device-status",   TT_BOOLEAN,    NULL, &save_device_status},
-  { "always-restore-session",    TT_BOOLEAN,    &always_restore_session, NULL },
-  { "show-tips",                 TT_BOOLEAN,    &show_tips, NULL },
-  { "dont-show-tips",            TT_BOOLEAN,    NULL, &show_tips },
-  { "last-tip-shown",            TT_INT,        &last_tip, NULL },
-  { "show-tool-tips",            TT_BOOLEAN,    &show_tool_tips, NULL },
-  { "dont-show-tool-tips",       TT_BOOLEAN,    NULL, &show_tool_tips },
-  { "default-image-size",        TT_POSITION,   &default_width, &default_height },
-  { "default-image-type",        TT_IMAGETYPE,  &default_type, NULL },
-  { "default-xresolution",       TT_DOUBLE,     &default_xresolution, NULL },
-  { "default-yresolution",       TT_DOUBLE,     &default_yresolution, NULL },
-  { "default-resolution-units",  TT_XUNIT,      &default_resolution_units, NULL },
-  { "default-comment",           TT_XCOMMENT,	&default_comment, NULL },
-  { "default-dot-for-dot",       TT_BOOLEAN,	&default_dot_for_dot, NULL },
-  { "plug-in",                   TT_XPLUGIN,    NULL, NULL },
-  { "plug-in-def",               TT_XPLUGINDEF, NULL, NULL },
-  { "menu-path",                 TT_XMENUPATH,  NULL, NULL },
-  { "device",                    TT_XDEVICE,    NULL, NULL },
-  { "session-info",              TT_XSESSIONINFO, NULL, NULL },
+  { "show-rulers",               TT_BOOLEAN,       &show_rulers, NULL },
+  { "dont-show-rulers",          TT_BOOLEAN,       NULL, &show_rulers },
+  { "show-statusbar",            TT_BOOLEAN,       &show_statusbar, NULL },
+  { "dont-show-statusbar",       TT_BOOLEAN,       NULL, &show_statusbar },
+  { "default-units",             TT_XUNIT,         &default_units, NULL },
+  { "auto-save",                 TT_BOOLEAN,       &auto_save, NULL },
+  { "dont-auto-save",            TT_BOOLEAN,       NULL, &auto_save },
+  { "interpolation-type",        TT_INTERP,        &interpolation_type, NULL },
+  { "confirm-on-close",          TT_BOOLEAN,       &confirm_on_close, NULL },
+  { "dont-confirm-on-close",     TT_BOOLEAN,       NULL, &confirm_on_close },
+  { "save-session-info",         TT_BOOLEAN,       &save_session_info, NULL },
+  { "dont-save-session-info",    TT_BOOLEAN,       NULL, &save_session_info},
+  { "save-device-status",        TT_BOOLEAN,       &save_device_status, NULL },
+  { "dont-save-device-status",   TT_BOOLEAN,       NULL, &save_device_status},
+  { "always-restore-session",    TT_BOOLEAN,       &always_restore_session, NULL },
+  { "show-tips",                 TT_BOOLEAN,       &show_tips, NULL },
+  { "dont-show-tips",            TT_BOOLEAN,       NULL, &show_tips },
+  { "last-tip-shown",            TT_INT,           &last_tip, NULL },
+  { "show-tool-tips",            TT_BOOLEAN,       &show_tool_tips, NULL },
+  { "dont-show-tool-tips",       TT_BOOLEAN,       NULL, &show_tool_tips },
+  { "default-image-size",        TT_POSITION,      &default_width, &default_height },
+  { "default-image-type",        TT_IMAGETYPE,     &default_type, NULL },
+  { "default-xresolution",       TT_DOUBLE,        &default_xresolution, NULL },
+  { "default-yresolution",       TT_DOUBLE,        &default_yresolution, NULL },
+  { "default-resolution-units",  TT_XUNIT,         &default_resolution_units, NULL },
+  { "default-comment",           TT_XCOMMENT,	   &default_comment, NULL },
+  { "default-dot-for-dot",       TT_BOOLEAN,	   &default_dot_for_dot, NULL },
+  { "plug-in",                   TT_XPLUGIN,       NULL, NULL },
+  { "plug-in-def",               TT_XPLUGINDEF,    NULL, NULL },
+  { "menu-path",                 TT_XMENUPATH,     NULL, NULL },
+  { "device",                    TT_XDEVICE,       NULL, NULL },
+  { "session-info",              TT_XSESSIONINFO,  NULL, NULL },
   { "color-history",             TT_XCOLORHISTORY, NULL, NULL },
-  { "unit-info",                 TT_XUNITINFO,  NULL, NULL },
-  { "monitor-xresolution",       TT_DOUBLE,     &monitor_xres, NULL },
-  { "monitor-yresolution",       TT_DOUBLE,     &monitor_yres, NULL },
-  { "num-processors",            TT_INT,        &num_processors, NULL },
-  { "image-title-format",        TT_STRING,     &image_title_format, NULL },
-  { "parasite",                  TT_XPARASITE,  NULL, NULL },
-  { "global-paint-options",      TT_BOOLEAN,    &global_paint_options, NULL },
-  { "show-indicators",           TT_BOOLEAN,    &show_indicators, NULL },
-  { "dont-show-indicators",      TT_BOOLEAN,    NULL, &show_indicators },
-  { "no-global-paint-options",   TT_BOOLEAN,    NULL, &global_paint_options },
-  { "module-load-inhibit",       TT_PATH,       &module_db_load_inhibit, NULL },
-  { "max-new-image-size",        TT_MEMSIZE,    &max_new_image_size, NULL },
-  { "thumbnail-mode",            TT_INT,        &thumbnail_mode, NULL },
-  { "trust-dirty-flag",		 TT_BOOLEAN,	&trust_dirty_flag, NULL },
-  { "dont-trust-dirty-flag",     TT_BOOLEAN,	NULL, &trust_dirty_flag },
-  { "use-help",                  TT_BOOLEAN,    &use_help, NULL },
-  { "dont-use-help",             TT_BOOLEAN,    NULL, &use_help },
-  { "nav-window-per-display",    TT_BOOLEAN,    &nav_window_per_display, NULL },
-  { "nav-window-follows-auto",   TT_BOOLEAN,    NULL, &nav_window_per_display },
-  { "info-window-follows-mouse", TT_BOOLEAN,    &info_window_follows_mouse, NULL },
-  { "info-window-per-display",   TT_BOOLEAN,    NULL, &info_window_follows_mouse },
-  { "help-browser",              TT_XHELPBROWSER, &help_browser, NULL },
-  { "cursor-mode",               TT_XCURSORMODE, &cursor_mode, NULL },
-  { "disable-tearoff-menus",     TT_BOOLEAN,     &disable_tearoff_menus, NULL }
+  { "unit-info",                 TT_XUNITINFO,     NULL, NULL },
+  { "monitor-xresolution",       TT_DOUBLE,        &monitor_xres, NULL },
+  { "monitor-yresolution",       TT_DOUBLE,        &monitor_yres, NULL },
+  { "num-processors",            TT_INT,           &num_processors, NULL },
+  { "image-title-format",        TT_STRING,        &image_title_format, NULL },
+  { "parasite",                  TT_XPARASITE,     NULL, NULL },
+  { "global-paint-options",      TT_BOOLEAN,       &global_paint_options, NULL },
+  { "show-indicators",           TT_BOOLEAN,       &show_indicators, NULL },
+  { "dont-show-indicators",      TT_BOOLEAN,       NULL, &show_indicators },
+  { "no-global-paint-options",   TT_BOOLEAN,       NULL, &global_paint_options },
+  { "module-load-inhibit",       TT_PATH,          &module_db_load_inhibit, NULL },
+  { "max-new-image-size",        TT_MEMSIZE,       &max_new_image_size, NULL },
+  { "thumbnail-mode",            TT_INT,           &thumbnail_mode, NULL },
+  { "trust-dirty-flag",		 TT_BOOLEAN,	   &trust_dirty_flag, NULL },
+  { "dont-trust-dirty-flag",     TT_BOOLEAN,	   NULL, &trust_dirty_flag },
+  { "use-help",                  TT_BOOLEAN,       &use_help, NULL },
+  { "dont-use-help",             TT_BOOLEAN,       NULL, &use_help },
+  { "nav-window-per-display",    TT_BOOLEAN,       &nav_window_per_display, NULL },
+  { "nav-window-follows-auto",   TT_BOOLEAN,       NULL, &nav_window_per_display },
+  { "info-window-follows-mouse", TT_BOOLEAN,       &info_window_follows_mouse, NULL },
+  { "info-window-per-display",   TT_BOOLEAN,       NULL, &info_window_follows_mouse },
+  { "help-browser",              TT_XHELPBROWSER,  &help_browser, NULL },
+  { "cursor-mode",               TT_XCURSORMODE,   &cursor_mode, NULL },
+  { "disable-tearoff-menus",     TT_BOOLEAN,       &disable_tearoff_menus, NULL }
 };
-static gint nfuncs = sizeof (funcs) / sizeof (funcs[0]);
+static gint n_funcs = (sizeof (funcs) /
+		       sizeof (funcs[0]));
+
 
 static SessionInfo *session_infos[] =
 {
@@ -370,24 +370,34 @@ static SessionInfo *session_infos[] =
   &error_console_session_info,
   &document_index_session_info
 };
-static gint nsession_infos = sizeof (session_infos) / sizeof (session_infos[0]);
+static gint n_session_infos = (sizeof (session_infos) /
+			       sizeof (session_infos[0]));
 
+
+static ParseInfo   parse_info = { NULL };
+
+static GList      *unknown_tokens = NULL;
+
+static gint        cur_token;
+static gint        next_token;
+
+
+/*  extern variables  */
 extern gchar *alternate_gimprc;
 extern gchar *alternate_system_gimprc;
 
-#define DEFAULT_IMAGE_TITLE_FORMAT "%f-%p.%i (%t)"
-#define DEFAULT_COMMENT            "Created with The GIMP"
 
 static gchar *
 gimp_system_rc_file (void)
 {
   static gchar *value = NULL;
 
-  if (value != NULL)
-    return value;
+  if (! value)
+    {
+      value = g_strconcat (gimp_sysconf_directory (), G_DIR_SEPARATOR_S,
+			   "gimprc", NULL);
+    }
 
-  value = g_strconcat (gimp_sysconf_directory (), G_DIR_SEPARATOR_S,
-		       "gimprc", NULL);
   return value;
 }
 
@@ -396,29 +406,31 @@ parse_buffers_init (void)
 {
   if (!parse_info.buffer)
     {
-      parse_info.buffer = g_new (gchar, 4096);
+      parse_info.buffer        = g_new (gchar, 4096);
       parse_info.tokenbuf      = parse_info.buffer + 2048;
       parse_info.buffer_size   = 2048;
       parse_info.tokenbuf_size = 2048;
 
       return TRUE;
     }
-  
+
   return FALSE;
 }
 
 static GList *
 parse_add_directory_tokens (void)
 {
-  gchar *gimp_dir;
+  const gchar *gimp_dir;
 
   gimp_dir = gimp_directory ();
+
   add_gimp_directory_token (gimp_dir);
 #ifdef __EMX__
-  add_x11root_token(getenv("X11ROOT"));
+  add_x11root_token (getenv ("X11ROOT"));
 #endif
+
   /* the real output is unknown_tokens list !  */
-  return (unknown_tokens); 
+  return unknown_tokens;
 }
 
 void
@@ -466,18 +478,16 @@ parse_absolute_gimprc_file (char *filename)
   if (be_verbose)
     g_print (_("parsing \"%s\"\n"), filename);
 
-  cur_token = -1;
+  cur_token  = -1;
   next_token = -1;
 
-  parse_info.position = -1;
-  parse_info.linenum = 1;
-  parse_info.charnum = 1;
+  parse_info.position    = -1;
+  parse_info.linenum     = 1;
+  parse_info.charnum     = 1;
   parse_info.inc_linenum = FALSE;
   parse_info.inc_charnum = FALSE;
 
-  done = FALSE;
-  while ((status = parse_statement ()) == OK)
-    ;
+  while ((status = parse_statement ()) == OK);
 
   fclose (parse_info.fp);
 
@@ -856,7 +866,7 @@ parse_statement (void)
     return ERROR;
   token = get_next_token ();
 
-  for (i = 0; i < nfuncs; i++)
+  for (i = 0; i < n_funcs; i++)
     if (strcmp (funcs[i].name, token_sym) == 0)
       switch (funcs[i].type)
 	{
@@ -2345,7 +2355,7 @@ parse_session_info (gpointer val1p,
     return ERROR;
   token = get_next_token ();
 
-  for (i = 0; i < nsession_infos; i++)
+  for (i = 0; i < n_session_infos; i++)
     { 
       if (strcmp (session_infos[i]->name, token_str) == 0)
 	info = session_infos[i];
@@ -2713,7 +2723,7 @@ value_to_str (gchar *name)
 {
   gint i;
 
-  for (i = 0; i < nfuncs; i++)
+  for (i = 0; i < n_funcs; i++)
     if (! strcmp (funcs[i].name, name))
       switch (funcs[i].type)
 	{
@@ -2941,8 +2951,8 @@ comment_to_str (gpointer val1p,
 		gpointer val2p)
 {
   gchar **str_array;
-  gchar *retval;
-  gchar *str = gimp_strescape (*((char **)val1p), NULL);
+  gchar  *retval;
+  gchar  *str = gimp_strescape (*((gchar **) val1p), NULL);
 
   str_array = g_strsplit (str, "\n", 0);
   g_free (str);
@@ -2955,7 +2965,7 @@ comment_to_str (gpointer val1p,
 }
 
 static void
-add_gimp_directory_token (gchar *gimp_dir)
+add_gimp_directory_token (const gchar *gimp_dir)
 {
   UnknownToken *ut;
 
@@ -2977,7 +2987,7 @@ add_gimp_directory_token (gchar *gimp_dir)
   /* While we're at it, also add the token gimp_install_dir */
   ut = g_new (UnknownToken, 1);
   ut->token = g_strdup ("gimp_install_dir");
-  ut->value = gimp_data_directory ();
+  ut->value = (gchar *) gimp_data_directory ();
 
   unknown_tokens = g_list_append (unknown_tokens, ut);
 }

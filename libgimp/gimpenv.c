@@ -60,26 +60,26 @@ extern const char *__XOS2RedirRoot(const char *);
 /**
  * gimp_directory:
  *
- * Returns the user-specific GIMP settings directory. If the environment 
- * variable GIMP_DIRECTORY exists, it is used. If it is an absolute path, 
- * it is used as is.  If it is a relative path, it is taken to be a 
- * subdirectory of the home directory. If it is relative path, and no home 
- * directory can be determined, it is taken to be a subdirectory of
- * gimp_data_directory().
+ * Returns the user-specific GIMP settings directory. If the
+ * environment variable GIMP_DIRECTORY exists, it is used. If it is an
+ * absolute path, it is used as is.  If it is a relative path, it is
+ * taken to be a subdirectory of the home directory. If it is a
+ * relative path, and no home directory can be determined, it is taken
+ * to be a subdirectory of gimp_data_directory().
  *
- * The usual case is that no GIMP_DIRECTORY environment variable exists, 
- * and then we use the GIMPDIR subdirectory of the home directory. If no 
- * home directory exists, we use a per-user subdirectory of
- * gimp_data_directory().
- * In any case, we always return some non-empty string, whether it
- * corresponds to an existing directory or not.
+ * The usual case is that no GIMP_DIRECTORY environment variable
+ * exists, and then we use the GIMPDIR subdirectory of the home
+ * directory. If no home directory exists, we use a per-user
+ * subdirectory of gimp_data_directory().  In any case, we always
+ * return some non-empty string, whether it corresponds to an existing
+ * directory or not.
  *
  * The returned string is allocated just once, and should *NOT* be
  * freed with g_free().
  *
  * Returns: The user-specific GIMP settings directory.
  **/
-gchar*
+const gchar *
 gimp_directory (void)
 {
   static gchar *gimp_dir = NULL;
@@ -161,8 +161,8 @@ gimp_directory (void)
  *
  * Returns: The name of a file in the user-specific GIMP settings directory.
  **/
-gchar*
-gimp_personal_rc_file (gchar *basename)
+gchar *
+gimp_personal_rc_file (const gchar *basename)
 {
   return g_strconcat (gimp_directory (),
 		      G_DIR_SEPARATOR_S,
@@ -184,7 +184,7 @@ gimp_personal_rc_file (gchar *basename)
  *
  * Returns: The top directory for GIMP data.
  **/
-gchar*
+const gchar *
 gimp_data_directory (void)
 {
   static gchar *gimp_data_dir = NULL;
@@ -260,7 +260,7 @@ gimp_data_directory (void)
  *
  * Returns: The top directory for GIMP config files.
  **/
-gchar*
+const gchar *
 gimp_sysconf_directory (void)
 {
   static gchar *gimp_sysconf_dir = NULL;
@@ -277,9 +277,9 @@ gimp_sysconf_directory (void)
 	g_error ("GIMP_SYSCONFDIR environment variable should be an absolute path.");
 #ifndef __EMX__
       gimp_sysconf_dir = g_strdup (env_gimp_sysconf_dir);
-#else      
+#else
       gimp_sysconf_dir = g_strdup (__XOS2RedirRoot(env_gimp_sysconf_dir));
-#endif      
+#endif
     }
   else
     {
@@ -296,9 +296,9 @@ gimp_sysconf_directory (void)
 
       if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
 	g_error ("GetModuleFilename failed\n");
-      
+
       /* If the executable file name is of the format
-       * <foobar>\bin\gimp.exe of <foobar>\plug-ins\filter.exe, * use
+       * <foobar>\bin\gimp.exe or <foobar>\plug-ins\filter.exe, use
        * <foobar>. Otherwise, use the directory where the executable
        * is.
        */
@@ -332,7 +332,7 @@ gimp_sysconf_directory (void)
  *
  * Returns: The name of the GIMP's application-specific gtkrc file.
  **/ 
-gchar*
+const gchar *
 gimp_gtkrc (void)
 {
   static gchar *gimp_gtkrc_filename = NULL;
@@ -340,7 +340,6 @@ gimp_gtkrc (void)
   if (gimp_gtkrc_filename != NULL)
     return gimp_gtkrc_filename;
   
-
   gimp_gtkrc_filename = g_strconcat (gimp_sysconf_directory (),
 				     G_DIR_SEPARATOR_S,
 				     "gtkrc",
@@ -361,10 +360,10 @@ gimp_gtkrc (void)
  *	    is guaranteed to end with a #G_PATH_SEPARATOR.
  **/
 GList *
-gimp_path_parse (gchar     *path,
-		 gint       max_paths,
-		 gboolean   check,
-		 GList    **check_failed)
+gimp_path_parse (const gchar  *path,
+		 gint          max_paths,
+		 gboolean      check,
+		 GList       **check_failed)
 {
   gchar  *home;
   gchar **patharray;

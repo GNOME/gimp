@@ -261,7 +261,7 @@ gimp_brush_get_extension (GimpData *data)
   return GIMP_BRUSH_FILE_EXTENSION;
 }
 
-GimpBrush *
+GimpData *
 gimp_brush_new (const gchar *name)
 {
   GimpBrush *brush;
@@ -272,10 +272,10 @@ gimp_brush_new (const gchar *name)
 
   gimp_object_set_name (GIMP_OBJECT (brush), name);
 
-  return brush;
+  return GIMP_DATA (brush);
 }
 
-GimpBrush *
+GimpData *
 gimp_brush_get_standard (void)
 {
   static GimpBrush *standard_brush = NULL;
@@ -293,10 +293,10 @@ gimp_brush_get_standard (void)
       gtk_object_sink (GTK_OBJECT (standard_brush));
     }
 
-  return standard_brush;
+  return GIMP_DATA (standard_brush);
 }
 
-GimpBrush *
+GimpData *
 gimp_brush_load (const gchar *filename)
 {
   GimpBrush *brush;
@@ -326,7 +326,7 @@ gimp_brush_load (const gchar *filename)
 	temp_buf_swap (brush->pixmap);
     }
 
-  return brush;
+  return GIMP_DATA (brush);
 }
 
 static GimpBrush *

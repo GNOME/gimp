@@ -489,16 +489,17 @@ app_init_update_status (gchar *label1val,
 void
 app_init (void)
 {
-  gchar *filename;
-  gchar *path;
+  const gchar *gtkrc;
+  gchar       *filename;
+  gchar       *path;
 
   /*  parse the systemwide gtkrc  */
-  filename = gimp_gtkrc ();
+  gtkrc = gimp_gtkrc ();
 
   if (be_verbose)
-    g_print (_("parsing \"%s\"\n"), filename);
+    g_print (_("parsing \"%s\"\n"), gtkrc);
 
-  gtk_rc_parse (filename);
+  gtk_rc_parse (gtkrc);
 
   /*  parse the user gtkrc  */
   filename = gimp_personal_rc_file ("gtkrc");

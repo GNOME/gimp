@@ -313,11 +313,9 @@ gimp_brush_generated_dirty (GimpData *data)
 
   if (GIMP_DATA_CLASS (parent_class)->dirty)
     GIMP_DATA_CLASS (parent_class)->dirty (data);
-
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (brush));
 }
 
-GimpBrush *
+GimpData *
 gimp_brush_generated_new (gfloat radius,
 			  gfloat hardness,
 			  gfloat angle,
@@ -341,17 +339,17 @@ gimp_brush_generated_new (gfloat radius,
   /* render brush mask */
   gimp_data_dirty (GIMP_DATA (brush));
 
-  return GIMP_BRUSH (brush);
+  return GIMP_DATA (brush);
 }
 
-GimpBrush *
+GimpData *
 gimp_brush_generated_load (const gchar *filename)
 {
   GimpBrushGenerated *brush;
-  FILE   *fp;
-  gchar   string[256];
-  gfloat  fl;
-  gfloat  version;
+  FILE               *fp;
+  gchar               string[256];
+  gfloat              fl;
+  gfloat              version;
 
   if ((fp = fopen (filename, "rb")) == NULL)
     return NULL;
@@ -361,7 +359,7 @@ gimp_brush_generated_load (const gchar *filename)
   
   if (strncmp (string, "GIMP-VBR", 8) != 0)
     return NULL;
-  
+
   /* make sure we are reading a compatible version */
   fgets (string, 255, fp);
   sscanf (string, "%f", &version);
@@ -409,7 +407,7 @@ gimp_brush_generated_load (const gchar *filename)
   if (stingy_memory_use)
     temp_buf_swap (GIMP_BRUSH (brush)->mask);
 
-  return GIMP_BRUSH (brush);
+  return GIMP_DATA (brush);
 }
 
 void

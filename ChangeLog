@@ -1,15 +1,74 @@
+2001-02-14  Michael Natterer  <mitch@gimp.org>
+
+	* HACKING: added a note about apptype.h and about not including
+	headers in headers.
+
+	* app/apptypes.h: added GimpTool and BitmapCursor.
+
+	* app/cursorutil.h
+	* app/devices.h
+	* app/draw_core.h
+	* app/tools/color_picker.h
+	* app/tools/tool.h
+	* app/tools/tool_options.h
+	* app/gimpcontext.h: removed includes of "tools/tool.h"
+
+	* app/gimprc.[ch]: indentadion cleanup, added
+	"module_db_load_inhibit".
+
+	* app/module_db.c: removed the above variable here.
+
+	* app/gimpdata.[ch]: added a vitrual "duplicate" method.
+
+	* app/gimpbrush.[ch]
+	* app/gimpbrushgenerated.[ch]
+	* app/gimpbrushpipe.[ch]
+	* app/gimpgradient.[ch]
+	* app/gimppalette.[ch]
+	* app/gimppattern.[ch]: all "load", "new" and "get_standard"
+	functions return a GimpData pointer now.
+
+	* app/gimpdatafactory.[ch]: made some stuff const.
+
+	* app/gimpdatafactoryview.c: activate the "duplicate" button and
+	set the initial button sensitivity correctly.
+
+	* app/brush_select.c
+	* app/gradient_select.c
+	* app/pattern_select.c: use the new GimpDataFactoryView.
+
+	* libgimp/Makefile.am: grouped the file to sort out what _may_
+	go to subdirs or separate libs.
+
+	* libgimp/gimpenv.[ch]: added many "const".
+
+	* app/app_procs.c
+	* app/brush_edit.c
+	* app/gimpcontext.c
+	* app/gimpdnd.c
+	* app/gradient_editor.c
+	* app/palette.c
+	* app/palette_import.c
+	* app/user_install.c: many related changes.
+
+	* libgimpmath/gimpmathtypes.h
+	* libgimpmath/gimpvector.[ch]: minor cleanups.
+
+	* plug-ins/script-fu/script-fu.c: gimp_data_directory() is const now.
+
 2001-02-13 Nathan Summers <rock@gimp.org>
 
 	* configure.in
-	* plug-ins/plugin-helper/*: prototype for an extension that allows 
-	gmodules as plugins.  Known bug: crashes on gmodules with a static "query" function
+	* plug-ins/plugin-helper/*: prototype for an extension that allows
+	gmodules as plugins.  Known bug: crashes on gmodules with a static
+	"query" function
         
 	* app/tools/tool.c 
-	* app/tools/tool.h: created new GimpTool object.  Did away with ToolInfo.
-	Most tools still need to be ported over to the new api.
+	* app/tools/tool.h: created new GimpTool object.  Did away with
+	ToolInfo.  Most tools still need to be ported over to the new api.
 
-        * app/tools/tools.c: now contains the initialization function to register 
-	the tools with the Gimp
+        * app/tools/tools.c: now contains the initialization function to
+	register the tools with the Gimp
 
         * app/tools/tools.h: renamed to tool.h
 
@@ -50,7 +109,8 @@
 	* libgimp/gimp.c 
 	* plug-ins/Makefile.am: changed acordingly
 
-        * plug-ins/script-fu/script-fu-scripts.c: fixed typo in comment.  Pathetic, huh?
+        * plug-ins/script-fu/script-fu-scripts.c: fixed typo in comment.
+	Pathetic, huh?
 
 2001-02-14  Michael Natterer  <mitch@gimp.org>
 

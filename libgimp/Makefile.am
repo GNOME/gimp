@@ -99,18 +99,19 @@ PDB_WRAPPERS_H = \
 libgimpi_a_SOURCES = \
 	gimpenv.c		\
 	gimpenv.h		\
-	gimpprotocol.c		\
-	gimpprotocol.h		\
 	gimpsignal.c            \
 	gimpsignal.h            \
 	gimputils.c		\
 	gimputils.h		\
-	gimpwire.c		\
-	gimpwire.h		\
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimpparasiteio.c	\
-	gimpparasiteio.h
+	gimpparasiteio.h	\
+	\
+	gimpprotocol.c		\
+	gimpprotocol.h		\
+	gimpwire.c		\
+	gimpwire.h
 
 if STATICLIBS
 ## Evil hack to insure all deps are satisfied on first-run make
@@ -126,18 +127,13 @@ libgimp_la_SOURCES = \
 	gimp.c				\
 	gimp.h				\
 	gimptypes.h			\
+	gimplimits.h			\
 	${PDB_WRAPPERS_C}		\
 	${PDB_WRAPPERS_H}		\
-	gimpadaptivesupersample.c	\
-	gimpadaptivesupersample.h	\
-	gimpbilinear.c			\
-	gimpbilinear.h			\
 	gimpchannel.c			\
 	gimpchannel.h			\
 	gimpdrawable.c			\
 	gimpdrawable.h			\
-	gimpenv.c			\
-	gimpenv.h			\
 	gimpgradientselect.c		\
 	gimpgradientselect.h		\
 	gimphelp.c			\
@@ -145,7 +141,6 @@ libgimp_la_SOURCES = \
 	gimpimage.h			\
 	gimplayer.c			\
 	gimplayer.h			\
-	gimplimits.h			\
 	gimpparasite.c			\
 	gimpparasite.h			\
 	gimpparasiteio.c		\
@@ -154,18 +149,26 @@ libgimp_la_SOURCES = \
 	gimppixelrgn.h			\
 	gimpproceduraldb.c		\
 	gimpproceduraldb.h		\
-	gimpprotocol.c			\
-	gimpprotocol.h			\
 	gimpselection.c			\
 	gimpselection.h			\
-	gimpsignal.c			\
-	gimpsignal.h			\
 	gimptile.c			\
 	gimptile.h			\
 	gimpunit.c			\
 	gimpunit.h			\
+	\
+	gimpenv.c			\
+	gimpenv.h			\
+	gimpadaptivesupersample.c	\
+	gimpadaptivesupersample.h	\
+	gimpbilinear.c			\
+	gimpbilinear.h			\
+	gimpsignal.c			\
+	gimpsignal.h			\
 	gimputils.c			\
 	gimputils.h			\
+	\
+	gimpprotocol.c			\
+	gimpprotocol.h			\
 	gimpwire.c			\
 	gimpwire.h			\
 	\

@@ -235,7 +235,7 @@ gimp_brush_pipe_get_type (void)
   return type;
 }
 
-GimpBrush *
+GimpData *
 gimp_brush_pipe_load (const gchar *filename)
 {
   GimpBrushPipe     *pipe = NULL;
@@ -406,5 +406,5 @@ gimp_brush_pipe_load (const gchar *filename)
 
   close (fd);
 
-  return GIMP_BRUSH (pipe);
+  return GIMP_DATA (pipe);
 }

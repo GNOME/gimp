@@ -19,10 +19,11 @@
 #ifndef __DRAW_CORE_H__
 #define __DRAW_CORE_H__
 
-#include "tools/tool.h"
+
 /*  drawing states  */
 #define INVISIBLE   0
 #define VISIBLE     1
+
 
 /*  Structure definitions  */
 

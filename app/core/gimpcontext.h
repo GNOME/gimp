@@ -22,7 +22,6 @@
 #define __GIMP_CONTEXT_H__
 
 
-#include "tools/tool.h"
 #include "gimpobject.h"
 
 

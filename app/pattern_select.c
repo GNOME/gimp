@@ -30,7 +30,7 @@
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gimpcontainer.h"
-#include "gimpcontainergridview.h"
+#include "gimpdatafactoryview.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
 #include "gimpdnd.h"
@@ -66,8 +66,6 @@ static void     pattern_select_pattern_dirty_callback (GimpPattern   *brush,
 static void     pattern_select_update_active_pattern_field (PatternSelect *psp);
 
 static void     pattern_select_close_callback         (GtkWidget     *widget,
-						       gpointer       data);
-static void     pattern_select_refresh_callback       (GtkWidget     *widget,
 						       gpointer       data);
 
 
@@ -133,12 +131,14 @@ pattern_select_new (gchar *title,
 				 title ? GTK_WIN_POS_MOUSE : GTK_WIN_POS_NONE,
 				 FALSE, TRUE, FALSE,
 
-				 _("Refresh"), pattern_select_refresh_callback,
-				 psp, NULL, NULL, FALSE, FALSE,
-				 _("Close"), pattern_select_close_callback,
+				 "_delete_event_", pattern_select_close_callback,
 				 psp, NULL, NULL, TRUE, TRUE,
 
 				 NULL);
+
+  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox)), 0)));
+
+  gtk_widget_hide (GTK_DIALOG (psp->shell)->action_area);
 
   if (title)
     {
@@ -199,11 +199,13 @@ pattern_select_new (gchar *title,
   gtk_widget_show (psp->pattern_size);
 
   /*  The Brush Grid  */
-  psp->view = gimp_container_grid_view_new (global_pattern_factory->container,
-					    psp->context,
-					    MIN_CELL_SIZE,
-					    STD_PATTERN_COLUMNS,
-					    STD_PATTERN_ROWS);
+  psp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
+					  global_pattern_factory,
+					  NULL,
+					  psp->context,
+					  MIN_CELL_SIZE,
+					  STD_PATTERN_COLUMNS,
+					  STD_PATTERN_ROWS);
   gtk_box_pack_start (GTK_BOX (vbox), psp->view, TRUE, TRUE, 0);
   gtk_widget_show (psp->view);
 
@@ -425,11 +427,4 @@ pattern_select_close_callback (GtkWidget *widget,
       gtk_widget_destroy (psp->shell); 
       pattern_select_free (psp); 
     }
-}
-
-static void
-pattern_select_refresh_callback (GtkWidget *widget,
-				 gpointer   data)
-{
-  gimp_data_factory_data_init (global_pattern_factory, FALSE);
 }

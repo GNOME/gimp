@@ -108,12 +108,12 @@ gimp_data_factory_destroy (GtkObject *object)
 }
 
 GimpDataFactory *
-gimp_data_factory_new (GtkType                      data_type,
-		       const gchar                **data_path,
-		       GimpDataFactoryLoaderEntry  *loader_entries,
-		       gint                         n_loader_entries,
-		       GimpDataNewFunc              new_func,
-		       GimpDataGetStandardFunc      standard_func)
+gimp_data_factory_new (GtkType                            data_type,
+		       const gchar                      **data_path,
+		       const GimpDataFactoryLoaderEntry  *loader_entries,
+		       gint                               n_loader_entries,
+		       GimpDataNewFunc                    new_func,
+		       GimpDataGetStandardFunc            standard_func)
 {
   GimpDataFactory *factory;
 

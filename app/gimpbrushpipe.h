@@ -72,9 +72,9 @@ struct _GimpBrushPipeClass
 };
 
 
-GtkType     gimp_brush_pipe_get_type   (void);
+GtkType    gimp_brush_pipe_get_type   (void);
 
-GimpBrush * gimp_brush_pipe_load       (const gchar *filename);
+GimpData * gimp_brush_pipe_load       (const gchar *filename);
 
 
 #endif  /* __GIMP_BRUSH_PIPE_H__ */

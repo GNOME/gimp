@@ -20,7 +20,7 @@
 #define __CURSORUTIL_H__
 
 
-typedef struct
+struct _BitmapCursor
 {
   guchar    *bits;
   guchar    *mask_bits;
@@ -29,7 +29,7 @@ typedef struct
   GdkBitmap *bitmap;
   GdkBitmap *mask;
   GdkCursor *cursor;
-} BitmapCursor;
+};
 
 typedef enum
 {

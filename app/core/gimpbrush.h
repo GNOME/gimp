@@ -59,11 +59,10 @@ struct _GimpBrushClass
 
 
 GtkType     gimp_brush_get_type     (void);
-GimpBrush * gimp_brush_new          (const gchar     *name);
 
-GimpBrush * gimp_brush_get_standard (void);
-
-GimpBrush * gimp_brush_load         (const gchar     *filename);
+GimpData  * gimp_brush_new          (const gchar     *name);
+GimpData  * gimp_brush_get_standard (void);
+GimpData  * gimp_brush_load         (const gchar     *filename);
 
 GimpBrush * gimp_brush_load_brush   (gint             fd,
 				     const gchar     *filename);

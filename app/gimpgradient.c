@@ -52,6 +52,7 @@ static TempBuf  * gimp_gradient_get_new_preview (GimpViewable      *viewable,
 static void       gimp_gradient_dirty           (GimpData          *data);
 static gboolean   gimp_gradient_save            (GimpData          *data);
 static gchar    * gimp_gradient_get_extension   (GimpData          *data);
+static GimpData * gimp_gradient_duplicate       (GimpData          *data);
 
 static gdouble    gimp_gradient_calc_linear_factor            (gdouble  middle,
 							       gdouble  pos);
@@ -113,6 +114,7 @@ gimp_gradient_class_init (GimpGradientClass *klass)
   data_class->dirty         = gimp_gradient_dirty;
   data_class->save          = gimp_gradient_save;
   data_class->get_extension = gimp_gradient_get_extension;
+  data_class->duplicate     = gimp_gradient_duplicate;
 }
 
 static void
@@ -211,7 +213,44 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
   return temp_buf;
 }
 
-GimpGradient *
+static GimpData *
+gimp_gradient_duplicate (GimpData *data)
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *head, *prev, *cur, *orig;
+
+  gradient = GIMP_GRADIENT (gtk_type_new (GIMP_TYPE_GRADIENT));
+
+  gimp_data_dirty (GIMP_DATA (gradient));
+
+  prev = NULL;
+  orig = GIMP_GRADIENT (data)->segments;
+  head = NULL;
+
+  while (orig)
+    {
+      cur = gimp_gradient_segment_new ();
+
+      *cur = *orig;  /* Copy everything */
+
+      cur->prev = prev;
+      cur->next = NULL;
+
+      if (prev)
+	prev->next = cur;
+      else
+	head = cur;  /* Remember head */
+
+      prev = cur;
+      orig = orig->next;
+    }
+
+  gradient->segments = head;
+
+  return GIMP_DATA (gradient);
+}
+
+GimpData *
 gimp_gradient_new (const gchar *name)
 {
   GimpGradient *gradient;
@@ -224,26 +263,26 @@ gimp_gradient_new (const gchar *name)
 
   gradient->segments = gimp_gradient_segment_new ();
 
-  return gradient;
+  return GIMP_DATA (gradient);
 }
 
-GimpGradient *
+GimpData *
 gimp_gradient_get_standard (void)
 {
   static GimpGradient *standard_gradient = NULL;
 
   if (! standard_gradient)
     {
-      standard_gradient = gimp_gradient_new ("Standard");
+      standard_gradient = GIMP_GRADIENT (gimp_gradient_new ("Standard"));
 
       gtk_object_ref (GTK_OBJECT (standard_gradient));
       gtk_object_sink (GTK_OBJECT (standard_gradient));
     }
 
-  return standard_gradient;
+  return GIMP_DATA (standard_gradient);
 }
 
-GimpGradient *
+GimpData *
 gimp_gradient_load (const gchar *filename)
 {
   GimpGradient        *gradient;
@@ -340,7 +379,7 @@ gimp_gradient_load (const gchar *filename)
 
   GIMP_DATA (gradient)->dirty = FALSE;
 
-  return gradient;
+  return GIMP_DATA (gradient);
 }
 
 static void

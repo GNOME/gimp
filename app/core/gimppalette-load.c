@@ -215,7 +215,7 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
   return temp_buf;
 }
 
-GimpPalette *
+GimpData *
 gimp_palette_new (const gchar *name)
 {
   GimpPalette *palette = NULL;
@@ -229,10 +229,10 @@ gimp_palette_new (const gchar *name)
 
   gimp_data_dirty (GIMP_DATA (palette));
 
-  return palette;
+  return GIMP_DATA (palette);
 }
 
-GimpPalette *
+GimpData *
 gimp_palette_get_standard (void)
 {
   static GimpPalette *standard_palette = NULL;
@@ -244,10 +244,10 @@ gimp_palette_get_standard (void)
       gimp_object_set_name (GIMP_OBJECT (standard_palette), "Standard");
     }
 
-  return standard_palette;
+  return GIMP_DATA (standard_palette);
 }
 
-GimpPalette *
+GimpData *
 gimp_palette_load (const gchar *filename)
 {
   GimpPalette *palette;
@@ -426,7 +426,7 @@ gimp_palette_load (const gchar *filename)
 
   GIMP_DATA (palette)->dirty = FALSE;
 
-  return palette;
+  return GIMP_DATA (palette);
 }
 
 static void

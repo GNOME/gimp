@@ -556,7 +556,7 @@ palette_import_create_from_grad (gchar *name)
       gint    sample_sz;
       gint    loop;
 
-      palette = gimp_palette_new (name);
+      palette = GIMP_PALETTE (gimp_palette_new (name));
 
       sample_sz = (gint) import_dialog->sample->value;  
 
@@ -742,7 +742,7 @@ palette_import_image_make_palette (GHashTable *h_array,
 			&sorted_list);
   sorted_list = g_slist_sort (sorted_list, palette_import_sort_colors);
 
-  palette = gimp_palette_new (name);
+  palette = GIMP_PALETTE (gimp_palette_new (name));
 
   g_slist_foreach (sorted_list, palette_import_create_image_palette, palette);
 
@@ -860,7 +860,7 @@ palette_import_create_from_indexed (GImage *gimage,
   if (gimp_image_base_type (gimage) != INDEXED)
     return;
 
-  palette = gimp_palette_new (pname);
+  palette = GIMP_PALETTE (gimp_palette_new (pname));
 
   for (count= 0; count < samples && count < gimage->num_cols; ++count)
     {

@@ -48,17 +48,17 @@ typedef struct _GimpDataFactoryClass  GimpDataFactoryClass;
 
 struct _GimpDataFactory
 {
-  GimpObject                   parent_instance;
+  GimpObject                         parent_instance;
 
-  GimpContainer               *container;
+  GimpContainer                     *container;
 
-  const gchar                **data_path;
+  const gchar                      **data_path;
 
-  GimpDataFactoryLoaderEntry  *loader_entries;
-  gint                         n_loader_entries;
+  const GimpDataFactoryLoaderEntry  *loader_entries;
+  gint                               n_loader_entries;
 
-  GimpDataNewFunc              data_new_func;
-  GimpDataGetStandardFunc      data_get_standard_func;
+  GimpDataNewFunc                    data_new_func;
+  GimpDataGetStandardFunc            data_get_standard_func;
 };
 
 struct _GimpDataFactoryClass
@@ -68,12 +68,12 @@ struct _GimpDataFactoryClass
 
 
 GtkType           gimp_data_factory_get_type (void);
-GimpDataFactory * gimp_data_factory_new      (GtkType                      data_type,
-					      const gchar                **data_path,
-					      GimpDataFactoryLoaderEntry  *loader_entries,
-					      gint                         n_loader_entries,
-					      GimpDataNewFunc              new_func,
-					      GimpDataGetStandardFunc      standard_func);
+GimpDataFactory * gimp_data_factory_new      (GtkType                            data_type,
+					      const gchar                      **data_path,
+					      const GimpDataFactoryLoaderEntry  *loader_entries,
+					      gint                               n_loader_entries,
+					      GimpDataNewFunc                    new_func,
+					      GimpDataGetStandardFunc            standard_func);
 
 void       gimp_data_factory_data_init         (GimpDataFactory *factory,
 						gboolean         no_data);

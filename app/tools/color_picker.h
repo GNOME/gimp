@@ -19,7 +19,9 @@
 #ifndef  __COLOR_PICKER_H__
 #define  __COLOR_PICKER_H__
 
+
 #include "tool.h"
+
 
 #define GIMP_TYPE_COLOR_PICKER            (gimp_color_picker_get_type ())
 #define GIMP_COLOR_PICKER(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_COLOR_PICKER, GimpColorPicker))
@@ -27,39 +29,41 @@
 #define GIMP_COLOR_PICKER_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PICKER, GimpColorPickerClass))
 #define GIMP_IS_COLOR_PICKER_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PICKER))
 
-GtkType gimp_color_picker_get_type (void);
+
+typedef struct _GimpColorPicker      GimpColorPicker;
+typedef struct _GimpColorPickerClass GimpColorPickerClass;
 
 struct _GimpColorPicker
 {
-	GimpTool parent_instance;
+  GimpTool  parent_instance;
 
-	DrawCore *core;       /*  Core select object  */
+  DrawCore *core;       /*  Core select object  */
 
-	gint      centerx;    /*  starting x coord    */
-	gint      centery;    /*  starting y coord    */
+  gint      centerx;    /*  starting x coord    */
+  gint      centery;    /*  starting y coord    */
 	    
 };
 
 struct _GimpColorPickerClass
 {
-	GimpToolClass parent_class;
+  GimpToolClass parent_class;
 };
 
-typedef struct _GimpColorPicker GimpColorPicker; /* This is one of the stupidest parts of the gnu coding standards */
-typedef struct _GimpColorPickerClass GimpColorPickerClass; /* making the typedef and the struct one line like everyone else does confuses nobody */
 
 extern gint col_value[5];
 
 
-gboolean   pick_color              (GimpImage    *gimage,
-				    GimpDrawable *drawable,
-				    gint          x,
-				    gint          y,
-				    gboolean      sample_merged,
-				    gboolean      sample_average,
-				    double        average_radius,
-				    gint          final);
+GtkType    gimp_color_picker_get_type (void);
+GimpTool * gimp_color_picker_new      (void);
 
-GimpTool     * gimp_color_picker_new  (void);
+gboolean   pick_color                 (GimpImage    *gimage,
+				       GimpDrawable *drawable,
+				       gint          x,
+				       gint          y,
+				       gboolean      sample_merged,
+				       gboolean      sample_average,
+				       double        average_radius,
+				       gint          final);
+
 
 #endif  /*  __COLOR_PICKER_H__  */

@@ -31,7 +31,7 @@
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gimpcontainer.h"
-#include "gimpcontainerlistview.h"
+#include "gimpdatafactoryview.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
 #include "gimpdnd.h"
@@ -54,8 +54,6 @@ static void gradient_select_gradient_changed     (GimpContext    *context,
 						  GimpGradient   *gradient,
 						  GradientSelect *gsp);
 static void gradient_select_close_callback       (GtkWidget      *widget,
-						  gpointer        data);
-static void gradient_select_edit_callback        (GtkWidget      *widget,
 						  gpointer        data);
 
 
@@ -119,12 +117,14 @@ gradient_select_new (gchar *title,
 				title ? GTK_WIN_POS_MOUSE : GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
-				_("Edit"), gradient_select_edit_callback,
-				gsp, NULL, NULL, FALSE, FALSE,
-				_("Close"), gradient_select_close_callback,
-				gsp, NULL, NULL, TRUE, TRUE,
+				"_delete_event_", gradient_select_close_callback,
+				gsp, NULL, NULL, FALSE, TRUE,
 
 				NULL);
+
+  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (gsp->shell)->vbox)), 0)));
+
+  gtk_widget_hide (GTK_DIALOG (gsp->shell)->action_area);
 
   if (title)
     {
@@ -166,10 +166,12 @@ gradient_select_new (gchar *title,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (gsp->shell)->vbox), vbox);
 
   /*  The Gradient List  */
-  gsp->view = gimp_container_list_view_new (global_gradient_factory->container,
-					    gsp->context,
-					    16,
-					    10, 10);
+  gsp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
+					  global_gradient_factory,
+					  gradient_editor_set_gradient,
+					  gsp->context,
+					  16,
+					  10, 10);
   gtk_box_pack_start (GTK_BOX (vbox), gsp->view, TRUE, TRUE, 0);
   gtk_widget_show (gsp->view);
 
@@ -338,17 +340,6 @@ gradient_select_gradient_changed (GimpContext    *context,
       if (gsp->callback_name)
 	gradient_select_change_callbacks (gsp, FALSE);
     }
-}
-
-static void
-gradient_select_edit_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  GradientSelect *gsp;
-
-  gsp = (GradientSelect *) data;
-
-  gradient_editor_set_gradient (gimp_context_get_gradient (gsp->context));
 }
 
 static void

@@ -49,9 +49,6 @@
 #include "libgimp/gimpintl.h"
 
 
-/* export this to gimprc.c */
-gchar *module_db_load_inhibit = NULL;
-
 typedef enum
 {
   ST_MODULE_ERROR,         /* missing module_load function or other error    */

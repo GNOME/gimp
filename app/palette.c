@@ -1259,7 +1259,7 @@ palette_dialog_add_entries_callback (GtkWidget *widget,
 {
   GimpPalette *palette;
 
-  palette = gimp_palette_new (palette_name);
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
   gimp_container_add (global_palette_factory->container, GIMP_OBJECT (palette));
 
@@ -1364,7 +1364,7 @@ palette_dialog_merge_entries_callback (GtkWidget *widget,
   GimpPaletteEntry *entry;
   GList            *sel_list;
 
-  new_palette = gimp_palette_new (palette_name);
+  new_palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
   palette_dialog = (PaletteDialog *) data;
 

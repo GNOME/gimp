@@ -19,7 +19,9 @@
 #ifndef __TOOL_OPTIONS_H__
 #define __TOOL_OPTIONS_H__
 
+
 #include "gimpobject.h"
+
 
 #define GIMP_TYPE_TOOL_OPTIONS            (gimp_tool_options_get_type ())
 #define GIMP_TOOL_OPTIONS(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_TOOL_OPTIONS, GimpToolOptions))

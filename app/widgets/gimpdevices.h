@@ -19,7 +19,6 @@
 #ifndef __DEVICES_H__
 #define __DEVICES_H__
 
-#include "tools/tool.h"
 
 typedef enum
 {

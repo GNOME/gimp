@@ -73,6 +73,11 @@ typedef struct _GimpPattern         GimpPattern;
 typedef struct _GimpPalette         GimpPalette;
 
 
+/*  tools  */
+
+typedef struct _GimpTool            GimpTool;
+
+
 /*  widgets  */
 
 typedef struct _GimpPreview           GimpPreview;
@@ -96,6 +101,8 @@ typedef struct _Argument            Argument;
 
 typedef struct _BezierPoint         BezierPoint;
 typedef struct _BezierSelect        BezierSelect;
+
+typedef struct _BitmapCursor        BitmapCursor;
 
 typedef struct _BoundSeg            BoundSeg;
 

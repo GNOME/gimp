@@ -33,7 +33,7 @@
 #include "dialog_handler.h"
 #include "gimpbrushgenerated.h"
 #include "gimpcontainer.h"
-#include "gimpcontainergridview.h"
+#include "gimpdatafactoryview.h"
 #include "gimpcontext.h"
 #include "gimpdata.h"
 #include "gimpdatafactory.h"
@@ -70,9 +70,6 @@ static void     brush_select_opacity_changed        (GimpContext      *context,
 static void     brush_select_paint_mode_changed     (GimpContext      *context,
 						     LayerModeEffects  paint_mode,
 						     BrushSelect      *bsp);
-static void     brush_select_select                 (BrushSelect      *bsp,
-						     GimpBrush        *brush);
-
 static void     brush_select_brush_renamed_callback (GimpBrush        *brush,
 						     BrushSelect      *bsp);
 
@@ -87,14 +84,7 @@ static void     spacing_scale_update                (GtkAdjustment    *adj,
 
 static void     brush_select_close_callback         (GtkWidget       *widget,
 						     gpointer         data);
-static void     brush_select_refresh_callback       (GtkWidget       *widget,
-						     gpointer         data);
-static void     brush_select_new_brush_callback     (GtkWidget       *widget,
-						     gpointer         data);
-static void     brush_select_edit_brush_callback    (GtkWidget       *widget,
-						     gpointer         data);
-static void     brush_select_delete_brush_callback  (GtkWidget       *widget,
-						     gpointer         data);
+static void     brush_select_edit_brush             (GimpData        *data);
 
 
 /*  The main brush selection dialog  */
@@ -161,7 +151,6 @@ brush_select_new (gchar   *title,
   GtkWidget   *table;
   GtkWidget   *util_box;
   GtkWidget   *slider;
-  GtkWidget   *button;
 
   GimpBrush *active = NULL;
 
@@ -177,12 +166,14 @@ brush_select_new (gchar   *title,
 				title ? GTK_WIN_POS_MOUSE : GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
-				_("Refresh"), brush_select_refresh_callback,
-				bsp, NULL, NULL, FALSE, FALSE,
-				_("Close"), brush_select_close_callback,
+				"_delete_event_", brush_select_close_callback,
 				bsp, NULL, NULL, TRUE, TRUE,
 
 				NULL);
+
+  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox)), 0)));
+
+  gtk_widget_hide (GTK_DIALOG (bsp->shell)->action_area);
 
   if (title)
     {
@@ -242,11 +233,13 @@ brush_select_new (gchar   *title,
   gtk_container_add (GTK_CONTAINER (bsp->left_box), bsp->brush_selection_box);
 
   /*  The Brush Grid  */
-  bsp->view = gimp_container_grid_view_new (global_brush_factory->container,
-                                            bsp->context,
-                                            MIN_CELL_SIZE,
-                                            STD_BRUSH_COLUMNS,
-                                            STD_BRUSH_ROWS);
+  bsp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
+					  global_brush_factory,
+					  brush_select_edit_brush,
+					  bsp->context,
+					  MIN_CELL_SIZE,
+					  STD_BRUSH_COLUMNS,
+					  STD_BRUSH_ROWS);
   gtk_box_pack_start (GTK_BOX (bsp->brush_selection_box), bsp->view,
 		      TRUE, TRUE, 0);
   gtk_widget_show (bsp->view);
@@ -327,33 +320,6 @@ brush_select_new (gchar   *title,
   gtk_widget_show (bsp->paint_options_box);
   gtk_widget_show (bsp->right_box);
 
-  /*  Create the edit/new buttons  */
-  util_box = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_end (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 4);
-
-  button =  gtk_button_new_with_label (_("New"));
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (brush_select_new_brush_callback),
-		      bsp);
-  gtk_box_pack_start (GTK_BOX (util_box), button, TRUE, TRUE, 6);
-
-  bsp->edit_button =  gtk_button_new_with_label (_("Edit"));
-  gtk_signal_connect (GTK_OBJECT (bsp->edit_button), "clicked",
-		      GTK_SIGNAL_FUNC (brush_select_edit_brush_callback),
-		      bsp);
-  gtk_box_pack_start (GTK_BOX (util_box), bsp->edit_button, TRUE, TRUE, 5);
-
-  bsp->delete_button =  gtk_button_new_with_label (_("Delete"));
-  gtk_signal_connect (GTK_OBJECT (bsp->delete_button), "clicked",
-		      GTK_SIGNAL_FUNC (brush_select_delete_brush_callback),
-		      bsp);
-  gtk_box_pack_start (GTK_BOX (util_box), bsp->delete_button, TRUE, TRUE, 5);
-
-  gtk_widget_show (bsp->edit_button);    
-  gtk_widget_show (button);
-  gtk_widget_show (bsp->delete_button);    
-  gtk_widget_show (util_box);
-
   /*  Create the spacing scale widget  */
   table = gtk_table_new (1, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
@@ -410,7 +376,7 @@ brush_select_new (gchar   *title,
 		      bsp);
 
   if (active)
-    brush_select_select (bsp, active);
+    brush_select_update_active_brush_field (bsp);
 
   /*  Add to active brush dialogs list  */
   brush_active_dialogs = g_slist_append (brush_active_dialogs, bsp);
@@ -586,7 +552,7 @@ brush_select_brush_changed (GimpContext *context,
 {
   if (brush)
     {
-      brush_select_select (bsp, brush);
+      brush_select_update_active_brush_field (bsp);
 
       if (bsp->callback_name)
 	brush_select_change_callbacks (bsp, FALSE);
@@ -617,27 +583,6 @@ brush_select_paint_mode_changed (GimpContext      *context,
 
   if (bsp->callback_name)
     brush_select_change_callbacks (bsp, FALSE);
-}
-
-static void
-brush_select_select (BrushSelect *bsp,
-		     GimpBrush   *brush)
-{
-  if (! gimp_container_have (global_brush_factory->container,
-			     GIMP_OBJECT (brush)));
-
-  if (GIMP_IS_BRUSH_GENERATED (brush))
-    {
-      gtk_widget_set_sensitive (bsp->edit_button, TRUE);
-      gtk_widget_set_sensitive (bsp->delete_button, TRUE);
-    }
-  else
-    {
-      gtk_widget_set_sensitive (bsp->edit_button, FALSE);
-      gtk_widget_set_sensitive (bsp->delete_button, FALSE);
-    }
-
-  brush_select_update_active_brush_field (bsp);
 }
 
 static void
@@ -741,43 +686,11 @@ brush_select_close_callback (GtkWidget *widget,
 }
 
 static void
-brush_select_refresh_callback (GtkWidget *widget,
-			       gpointer   data)
+brush_select_edit_brush (GimpData *data)
 {
-  gimp_data_factory_data_init (global_brush_factory, FALSE);
-}
+  GimpBrush *brush;
 
-static void
-brush_select_new_brush_callback (GtkWidget *widget,
-				 gpointer   data)
-{
-  BrushSelect *bsp;
-  GimpBrush   *brush;
-
-  bsp = (BrushSelect *) data;
-
-  brush = gimp_brush_generated_new (10, .5, 0.0, 1.0);
-
-  gimp_container_add (global_brush_factory->container,
-		      GIMP_OBJECT (brush));
-
-  gimp_context_set_brush (bsp->context, brush);
-
-  if (brush_edit_generated_dialog)
-    brush_edit_generated_set_brush (brush_edit_generated_dialog, brush);
-
-  brush_select_edit_brush_callback (widget, data);
-}
-
-static void
-brush_select_edit_brush_callback (GtkWidget *widget,
-				  gpointer   data)
-{
-  BrushSelect *bsp;
-  GimpBrush   *brush;
-
-  bsp = (BrushSelect *) data;
-  brush = gimp_context_get_brush (bsp->context);
+  brush = GIMP_BRUSH (data);
 
   if (GIMP_IS_BRUSH_GENERATED (brush))
     {
@@ -797,32 +710,6 @@ brush_select_edit_brush_callback (GtkWidget *widget,
     }
   else
     {
-      /* this should never happen */
       g_message (_("Sorry, this brush can't be edited."));
-    }
-}
-
-static void
-brush_select_delete_brush_callback (GtkWidget *widget,
-				    gpointer   data)
-{
-  BrushSelect *bsp;
-  GimpBrush *brush;
-
-  bsp = (BrushSelect *) data;
-  brush = gimp_context_get_brush (bsp->context);
-
-  if (GIMP_IS_BRUSH_GENERATED (brush))
-    {
-      if (GIMP_DATA (brush)->filename)
-	gimp_data_delete_from_disk (GIMP_DATA (brush));
-
-      gimp_container_remove (global_brush_factory->container,
-			     GIMP_OBJECT (brush));
-    }
-  else
-    {
-      /* this should never happen */
-      g_message (_("Sorry, this brush can't be deleted."));
     }
 }
