@@ -88,7 +88,7 @@
     (gimp-palette-set-foreground '(255 255 255))
     (gimp-blend text-layer FG-BG-RGB NORMAL BILINEAR 100 0 REPEAT-NONE FALSE 0 0 cx cy bx by)
 
-    (plug-in-nova 1 img glow-layer novax novay glow-color novaradius 100)
+    (plug-in-nova 1 img glow-layer novax novay glow-color novaradius 100 0)
 
     (gimp-selection-all img)
     (gimp-patterns-set-pattern "Stone")

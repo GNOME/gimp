@@ -32,6 +32,7 @@ libexec_PROGRAMS = \
 	bz2 \
 	c_astretch \
 	checkerboard \
+	color_enhance \
 	colorify \
 	compose \
 	convmatrix \
@@ -128,6 +129,7 @@ libexec_PROGRAMS = \
 	video \
 	vinvert \
 	vpropagate \
+	warp \
 	waves \
 	whirlpinch \
 	wind \
@@ -273,6 +275,15 @@ checkerboard_SOURCES = \
 	checkerboard.c
 
 checkerboard_LDADD = \
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+color_enhance_SOURCES = \
+	color_enhance.c
+
+color_enhance_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1057,6 +1068,15 @@ vpropagate_SOURCES = \
 	vpropagate.c
 
 vpropagate_LDADD = \
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+warp_SOURCES = \
+	warp.c
+
+warp_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

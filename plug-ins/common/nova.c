@@ -3,7 +3,7 @@
  *
  * SuperNova plug-in
  * Copyright (C) 1997 Eiichi Takamori <taka@ma1.seikyou.ne.jp>,
- *		      Spencer Kimball, Federico Mena Quintero
+ *                    Spencer Kimball, Federico Mena Quintero
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -21,14 +21,19 @@
  */
 
 /*
- * version 1.1115
+ * version 1.122
  * This plug-in requires GIMP v0.99.10 or above.
  *
  * This plug-in produces an effect like a supernova burst.
  *
- *	Eiichi Takamori <taka@ma1.seikyou.ne.jp>
- *	http://ha1.seikyou.ne.jp/home/taka/gimp/
+ *      Eiichi Takamori <taka@ma1.seikyou.ne.jp>
+ *      http://ha1.seikyou.ne.jp/home/taka/gimp/
  *
+ *
+ * Changes from version 1.1115 to version 1.122 by Martin Weber:
+ * - Little bug fixes
+ * - Added random hue
+ * - Freeing memory
  *
  * Changes from version 1.1114 to version 1.1115:
  * - Added gtk_rc_parse
@@ -49,12 +54,11 @@
  * - fix preview
  * - add notebook interface and so on
  */
-#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <time.h>
-
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
@@ -65,6 +69,10 @@ static char rcsid[] = "$Id$";
 
 
 /* Some useful macros */
+
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
 
 #ifndef RAND_MAX
 #define RAND_MAX 2147483647
@@ -82,19 +90,20 @@ static void dummy_printf( char *fmt, ... ) {}
 #define PREVIEW_SIZE 100
 #define TILE_CACHE_SIZE 16
 
-#define PREVIEW	  0x1
-#define CURSOR	  0x2
-#define ALL	  0xf
+#define PREVIEW   0x1
+#define CURSOR    0x2
+#define ALL       0xf
 
 #define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
-		       GDK_BUTTON_PRESS_MASK | \
-		       GDK_BUTTON1_MOTION_MASK
+                       GDK_BUTTON_PRESS_MASK | \
+                       GDK_BUTTON1_MOTION_MASK
 
 typedef struct {
-  gint	  xcenter, ycenter;
-  gint	  color[3];
-  gint	  radius;
-  gint	  nspoke;
+  gint    xcenter, ycenter;
+  gint    color[3];
+  gint    radius;
+  gint    nspoke;
+  gint    randomhue;
 } NovaValues;
 
 typedef struct {
@@ -102,89 +111,103 @@ typedef struct {
 } NovaInterface;
 
 typedef struct {
-  GtkObject	*adjustment;
-  GtkWidget	*entry;
-  gint		constraint;
+  GtkObject     *adjustment;
+  GtkWidget     *entry;
+  gint          constraint;
 } NovaEntryScaleData;
 
 typedef struct
 {
-  GDrawable	*drawable;
-  gint		dwidth, dheight;
-  gint		bpp;
-  GtkWidget	*xentry, *yentry;
-  GtkWidget	*preview;
-  gint		pwidth, pheight;
-  gint		cursor;
-  gint		curx, cury;		 /* x,y of cursor in preview */
-  gint		oldx, oldy;
-  gint		in_call;
+  GDrawable     *drawable;
+  gint          dwidth, dheight;
+  gint          bpp;
+  GtkWidget     *xentry, *yentry;
+  GtkWidget     *preview;
+  gint          pwidth, pheight;
+  gint          cursor;
+  gint          curx, cury;              /* x,y of cursor in preview */
+  gint          oldx, oldy;
+  gint          in_call;
 } NovaCenter;
 
 
 /* Declare a local function.
  */
-static void	query	(void);
-static void	run	(gchar	 *name,
-			 gint	 nparams,
-			 GParam	 *param,
-			 gint	 *nreturn_vals,
-			 GParam	 **return_vals);
+static void     query   (void);
+static void     run     (gchar   *name,
+                         gint    nparams,
+                         GParam  *param,
+                         gint    *nreturn_vals,
+                         GParam  **return_vals);
 
-static gint	nova_dialog ( GDrawable *drawable );
+static gint     nova_dialog ( GDrawable *drawable );
 
 static GtkWidget * nova_center_create ( GDrawable *drawable );
-static void	   nova_center_destroy ( GtkWidget *widget,
-					 gpointer data );
-static void	   nova_center_preview_init ( NovaCenter *center );
-static void	   nova_center_draw ( NovaCenter *center, gint update );
-static void	   nova_center_entry_update ( GtkWidget *widget,
-					      gpointer data );
-static void	   nova_center_cursor_update ( NovaCenter *center );
-static gint	   nova_center_preview_expose ( GtkWidget *widget,
-						GdkEvent *event );
-static gint	   nova_center_preview_events ( GtkWidget *widget,
-						GdkEvent *event );
+static void        nova_center_destroy ( GtkWidget *widget,
+                                         gpointer data );
+static void        nova_center_preview_init ( NovaCenter *center );
+static void        nova_center_draw ( NovaCenter *center, gint update );
+static void        nova_center_entry_update ( GtkWidget *widget,
+                                              gpointer data );
+static void        nova_center_cursor_update ( NovaCenter *center );
+static gint        nova_center_preview_expose ( GtkWidget *widget,
+                                                GdkEvent *event );
+static gint        nova_center_preview_events ( GtkWidget *widget,
+                                                GdkEvent *event );
 
-static void	nova_int_entryscale_new ( GtkTable *table, gint x, gint y,
-					 gchar *caption, gint *intvar,
-					 gint min, gint max, gint constraint);
+static void     nova_int_entryscale_new ( GtkTable *table, gint x, gint y,
+                                         gchar *caption, gint *intvar,
+                                         gint min, gint max, gint constraint);
 
-static void	nova_close_callback	    (GtkWidget *widget,
-					     gpointer	data);
-static void	nova_ok_callback	    (GtkWidget *widget,
-					     gpointer	data);
+static void     nova_close_callback         (GtkWidget *widget,
+                                             gpointer   data);
+static void     nova_ok_callback            (GtkWidget *widget,
+                                             gpointer   data);
 
-static void	nova_paired_entry_destroy_callback (GtkWidget *widget,
-						    gpointer data);
+static void     nova_paired_entry_destroy_callback (GtkWidget *widget,
+                                                    gpointer data);
 
-static void	nova_paired_int_scale_update (GtkAdjustment *adjustment,
-					      gpointer	 data);
-static void	nova_paired_int_entry_update (GtkWidget *widget,
-					     gpointer data );
+static void     nova_paired_int_scale_update (GtkAdjustment *adjustment,
+                                              gpointer   data);
+static void     nova_paired_int_entry_update (GtkWidget *widget,
+                                             gpointer data );
 
-static void	nova	(GDrawable *drawable);
+static void     nova    (GDrawable *drawable);
+
+static void     rgb_to_hsl                   (gdouble    r,
+					      gdouble    g,
+					      gdouble    b,
+					      gdouble *  h,
+					      gdouble *  s,
+					      gdouble *  l);
+static void     hsl_to_rgb                   (gdouble    h,
+					      gdouble    sl,
+					      gdouble    l,
+					      gdouble *  r,
+					      gdouble *  g,
+					      gdouble *  b);
 
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	   /* init_proc */
-  NULL,	   /* quit_proc */
+  NULL,    /* init_proc */
+  NULL,    /* quit_proc */
   query,   /* query_proc */
-  run,	   /* run_proc */
+  run,     /* run_proc */
 };
 
 static NovaValues pvals =
 {
-  128, 128,		/* xcenter, ycenter */
-  { 90, 100, 256 },	/* color */
-  20,			/* radius */
-  100			/* nspoke */
+  128, 128,             /* xcenter, ycenter */
+  { 90, 100, 256 },     /* color */
+  20,                   /* radius */
+  100,                  /* nspoke */
+  0                     /* random hue */
 };
 
 static NovaInterface pint =
 {
-  FALSE	    /* run */
+  FALSE     /* run */
 };
 
 
@@ -200,9 +223,10 @@ query()
       { PARAM_DRAWABLE, "drawable", "Input drawable" },
       { PARAM_INT32, "xcenter", "X coordinates of the center of supernova" },
       { PARAM_INT32, "ycenter", "Y coordinates of the center of supernova" },
-      { PARAM_COLOR, "color",	"Color of supernova" },
-      { PARAM_INT32, "radius",	"Radius of supernova" },
-      { PARAM_INT32, "nspoke",	"Number of spokes" }
+      { PARAM_COLOR, "color",   "Color of supernova" },
+      { PARAM_INT32, "radius",  "Radius of supernova" },
+      { PARAM_INT32, "nspoke",  "Number of spokes" },
+      { PARAM_INT32, "randomhue", "Random hue" }
    };
   static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
@@ -214,16 +238,16 @@ query()
     " RGB*, GRAY* image.";
 
   gimp_install_procedure ("plug_in_nova",
-			  "Produce Supernova effect to the specified drawable",
-			  help_string,
-			  "Eiichi Takamori",
-			  "Eiichi Takamori",
-			  "1997",
-			  "<Image>/Filters/Light Effects/SuperNova",
-			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+                          "Produce Supernova effect to the specified drawable",
+                          help_string,
+                          "Eiichi Takamori",
+                          "Eiichi Takamori",
+                          "1997",
+                          "<Image>/Filters/Light Effects/SuperNova",
+                          "RGB*, GRAY*",
+                          PROC_PLUG_IN,
+                          nargs, nreturn_vals,
+                          args, return_vals);
 }
 
 static void
@@ -257,29 +281,30 @@ run (gchar   *name,
 
       /*  First acquire information with a dialog  */
       if (! nova_dialog ( drawable ))
-	{
-	  gimp_drawable_detach (drawable);
-	  return;
-	}
+        {
+          gimp_drawable_detach (drawable);
+          return;
+        }
       break;
 
     case RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
-      if (nparams != 8)
-	status = STATUS_CALLING_ERROR;
+      if (nparams != 9)
+        status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
-	{
-	  pvals.xcenter = param[3].data.d_int32;
-	  pvals.ycenter = param[4].data.d_int32;
-	  pvals.color[0] = param[5].data.d_color.red;
-	  pvals.color[1] = param[5].data.d_color.green;
-	  pvals.color[2] = param[5].data.d_color.blue;
-	  pvals.radius = param[6].data.d_int32;
-	  pvals.nspoke = param[7].data.d_int32;
-	}
+        {
+          pvals.xcenter = param[3].data.d_int32;
+          pvals.ycenter = param[4].data.d_int32;
+          pvals.color[0] = param[5].data.d_color.red;
+          pvals.color[1] = param[5].data.d_color.green;
+          pvals.color[2] = param[5].data.d_color.blue;
+          pvals.radius = param[6].data.d_int32;
+          pvals.nspoke = param[7].data.d_int32;
+	  pvals.randomhue = param[8].data.d_int32;
+        }
       if ((status == STATUS_SUCCESS) &&
-	   pvals.radius <= 0 )
-	status = STATUS_CALLING_ERROR;
+           pvals.radius <= 0 )
+        status = STATUS_CALLING_ERROR;
       break;
 
     case RUN_WITH_LAST_VALS:
@@ -295,24 +320,24 @@ run (gchar   *name,
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
-	{
-	  gimp_progress_init ("Rendering...");
-	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
+        {
+          gimp_progress_init ("Rendering...");
+          gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-	  nova (drawable);
+          nova (drawable);
 
-	  if (run_mode != RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
+          if (run_mode != RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
 
-	  /*  Store data  */
-	  if (run_mode == RUN_INTERACTIVE)
-	    gimp_set_data ("plug_in_nova", &pvals, sizeof (NovaValues));
-	}
+          /*  Store data  */
+          if (run_mode == RUN_INTERACTIVE)
+            gimp_set_data ("plug_in_nova", &pvals, sizeof (NovaValues));
+        }
       else
-	{
-	  /* gimp_message ("nova: cannot operate on indexed color images"); */
-	  status = STATUS_EXECUTION_ERROR;
-	}
+        {
+          /* gimp_message ("nova: cannot operate on indexed color images"); */
+          status = STATUS_EXECUTION_ERROR;
+        }
     }
 
   values[0].data.d_status = status;
@@ -322,9 +347,9 @@ run (gchar   *name,
 
 
 /*******************/
-/*		   */
+/*                 */
 /*   Main Dialog   */
-/*		   */
+/*                 */
 /*******************/
 
 static gint
@@ -337,7 +362,7 @@ nova_dialog ( GDrawable *drawable )
   GtkWidget *center_frame;
   guchar *color_cube;
   gchar **argv;
-  gint	argc;
+  gint  argc;
 
   argc = 1;
   argv = g_new (gchar *, 1);
@@ -351,7 +376,7 @@ nova_dialog ( GDrawable *drawable )
   gtk_preview_set_install_cmap (gimp_install_cmap ());
   color_cube = gimp_color_cube ();
   gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
+                              color_cube[2], color_cube[3]);
 
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
@@ -365,15 +390,15 @@ nova_dialog ( GDrawable *drawable )
   gtk_window_set_title (GTK_WINDOW (dlg), "SuperNova");
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) nova_close_callback,
-		      NULL);
+                      (GtkSignalFunc) nova_close_callback,
+                      NULL);
 
   /*  Action area  */
   button = gtk_button_new_with_label ("OK");
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) nova_ok_callback,
-		      dlg);
+                      (GtkSignalFunc) nova_ok_callback,
+                      dlg);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
@@ -381,8 +406,8 @@ nova_dialog ( GDrawable *drawable )
   button = gtk_button_new_with_label ("Cancel");
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
+                             (GtkSignalFunc) gtk_widget_destroy,
+                             GTK_OBJECT (dlg));
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -392,7 +417,7 @@ nova_dialog ( GDrawable *drawable )
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (6, 2, FALSE);
+  table = gtk_table_new (7, 2, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_table_set_row_spacings (GTK_TABLE (table), 3);
@@ -400,22 +425,25 @@ nova_dialog ( GDrawable *drawable )
 
   center_frame = nova_center_create ( drawable );
   gtk_table_attach( GTK_TABLE(table), center_frame, 0, 2, 0, 1,
-		    0, 0, 0, 0 );
+                    0, 0, 0, 0 );
   nova_int_entryscale_new( GTK_TABLE (table), 0, 1,
-			  "R value:", &pvals.color[0],
-			  0, 255, TRUE );
+                          "R value:", &pvals.color[0],
+                          0, 255, TRUE );
   nova_int_entryscale_new( GTK_TABLE (table), 0, 2,
-			  "G value:", &pvals.color[1],
-			  0, 255, TRUE );
+                          "G value:", &pvals.color[1],
+                          0, 255, TRUE );
   nova_int_entryscale_new( GTK_TABLE (table), 0, 3,
-			  "B value:", &pvals.color[2],
-			  0, 255, TRUE );
+                          "B value:", &pvals.color[2],
+                          0, 255, TRUE );
   nova_int_entryscale_new( GTK_TABLE (table), 0, 4,
-			  "Radius:", &pvals.radius,
-			  1, 100, FALSE );
+                          "Radius:", &pvals.radius,
+                          1, 100, FALSE );
   nova_int_entryscale_new( GTK_TABLE (table), 0, 5,
-			  "Spokes:", &pvals.nspoke,
-			  1, 1024, TRUE );
+                          "Spokes:", &pvals.nspoke,
+                          1, 1024, TRUE );
+  nova_int_entryscale_new( GTK_TABLE (table), 0, 6,
+			  "Random hue:", &pvals.randomhue,
+			  0, 360, TRUE );
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -431,14 +459,14 @@ nova_dialog ( GDrawable *drawable )
 
 static void
 nova_close_callback (GtkWidget *widget,
-			 gpointer   data)
+                         gpointer   data)
 {
   gtk_main_quit ();
 }
 
 static void
 nova_ok_callback (GtkWidget *widget,
-		      gpointer	 data)
+                      gpointer   data)
 {
   pint.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
@@ -462,20 +490,20 @@ nova_ok_callback (GtkWidget *widget,
 static GtkWidget *
 nova_center_create ( GDrawable *drawable )
 {
-  NovaCenter	 *center;
-  GtkWidget	 *frame;
-  GtkWidget	 *table;
-  GtkWidget	 *label;
-  GtkWidget	 *entry;
-  GtkWidget	 *pframe;
-  GtkWidget	 *preview;
-  gchar		 buf[256];
+  NovaCenter     *center;
+  GtkWidget      *frame;
+  GtkWidget      *table;
+  GtkWidget      *label;
+  GtkWidget      *entry;
+  GtkWidget      *pframe;
+  GtkWidget      *preview;
+  gchar          buf[256];
 
   center = g_new( NovaCenter, 1 );
   center->drawable = drawable;
   center->dwidth   = gimp_drawable_width(drawable->id );
   center->dheight  = gimp_drawable_height(drawable->id );
-  center->bpp	   = gimp_drawable_bpp(drawable->id);
+  center->bpp      = gimp_drawable_bpp(drawable->id);
   if ( gimp_drawable_has_alpha(drawable->id) )
     center->bpp--;
   center->cursor = FALSE;
@@ -487,8 +515,8 @@ nova_center_create ( GDrawable *drawable )
 
   frame = gtk_frame_new ( "Center of SuperNova" );
   gtk_signal_connect( GTK_OBJECT( frame ), "destroy",
-		      (GtkSignalFunc) nova_center_destroy,
-		      center );
+                      (GtkSignalFunc) nova_center_destroy,
+                      center );
   gtk_frame_set_shadow_type( GTK_FRAME( frame ) ,GTK_SHADOW_ETCHED_IN );
   gtk_container_border_width( GTK_CONTAINER( frame ), 10 );
 
@@ -500,14 +528,14 @@ nova_center_create ( GDrawable *drawable )
 
   label = gtk_label_new ( "X: " );
   gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5 );
-  gtk_table_attach( GTK_TABLE(table), label, 0, 1, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
+  gtk_table_attach( GTK_TABLE(table), label, 0, 1, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
   center->xentry = entry = gtk_entry_new ();
   gtk_object_set_user_data( GTK_OBJECT(entry), center );
   gtk_signal_connect( GTK_OBJECT(entry), "changed",
-		      (GtkSignalFunc) nova_center_entry_update,
-		      &pvals.xcenter );
+                      (GtkSignalFunc) nova_center_entry_update,
+                      &pvals.xcenter );
   gtk_widget_set_usize( GTK_WIDGET(entry), ENTRY_WIDTH,0 );
   gtk_table_attach( GTK_TABLE(table), entry, 1, 2, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
   gtk_widget_show(entry);
@@ -520,10 +548,10 @@ nova_center_create ( GDrawable *drawable )
   center->yentry = entry = gtk_entry_new ();
   gtk_object_set_user_data( GTK_OBJECT(entry), center );
   gtk_signal_connect( GTK_OBJECT(entry), "changed",
-		      (GtkSignalFunc) nova_center_entry_update,
-		      &pvals.ycenter );
+                      (GtkSignalFunc) nova_center_entry_update,
+                      &pvals.ycenter );
   gtk_widget_set_usize( GTK_WIDGET(entry), ENTRY_WIDTH, 0 );
-  gtk_table_attach( GTK_TABLE(table), entry, 3, 4, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
+  gtk_table_attach( GTK_TABLE(table), entry, 3, 4, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(entry);
 
   /* frame (shadow_in) that contains preview */
@@ -536,11 +564,11 @@ nova_center_create ( GDrawable *drawable )
   gtk_object_set_user_data( GTK_OBJECT(preview), center );
   gtk_widget_set_events( GTK_WIDGET(preview), PREVIEW_MASK );
   gtk_signal_connect_after( GTK_OBJECT(preview), "expose_event",
-		      (GtkSignalFunc) nova_center_preview_expose,
-		      center );
+                      (GtkSignalFunc) nova_center_preview_expose,
+                      center );
   gtk_signal_connect( GTK_OBJECT(preview), "event",
-		      (GtkSignalFunc) nova_center_preview_events,
-		      center );
+                      (GtkSignalFunc) nova_center_preview_events,
+                      center );
   gtk_container_add( GTK_CONTAINER( pframe ), center->preview );
 
   /*
@@ -579,7 +607,7 @@ nova_center_create ( GDrawable *drawable )
 
 static void
 nova_center_destroy ( GtkWidget *widget,
-		      gpointer data )
+                      gpointer data )
 {
   NovaCenter *center = data;
   g_free( center );
@@ -594,9 +622,9 @@ static void render_preview ( GtkWidget *preview, GPixelRgn *srcrgn );
 static void
 nova_center_preview_init ( NovaCenter *center )
 {
-  GtkWidget	 *preview;
-  GPixelRgn	 src_rgn;
-  gint		 dwidth, dheight, pwidth, pheight, bpp;
+  GtkWidget      *preview;
+  GPixelRgn      src_rgn;
+  gint           dwidth, dheight, pwidth, pheight, bpp;
 
   preview = center->preview;
   dwidth = center->dwidth;
@@ -606,31 +634,31 @@ nova_center_preview_init ( NovaCenter *center )
   bpp = center->bpp;
 
   gimp_pixel_rgn_init ( &src_rgn, center->drawable, 0, 0,
-			center->dwidth, center->dheight, FALSE, FALSE );
+                        center->dwidth, center->dheight, FALSE, FALSE );
   render_preview( center->preview, &src_rgn );
 }
 
 
 /*======================================================================
-		Preview Rendering Util routine
+                Preview Rendering Util routine
 =======================================================================*/
 
 #define CHECKWIDTH 4
 #define LIGHTCHECK 192
 #define DARKCHECK  128
 #ifndef OPAQUE
-#define OPAQUE	   255
+#define OPAQUE     255
 #endif
 
 static void
 render_preview ( GtkWidget *preview, GPixelRgn *srcrgn )
 {
-  guchar	 *src_row, *dest_row, *src, *dest;
-  gint		 row, col;
-  gint		 dwidth, dheight, pwidth, pheight;
-  gint		 *src_col;
-  gint		 bpp, alpha, has_alpha, b;
-  guchar	 check;
+  guchar         *src_row, *dest_row, *src, *dest;
+  gint           row, col;
+  gint           dwidth, dheight, pwidth, pheight;
+  gint           *src_col;
+  gint           bpp, alpha, has_alpha, b;
+  guchar         check;
 
   dwidth  = srcrgn->w;
   dheight = srcrgn->h;
@@ -662,43 +690,43 @@ render_preview ( GtkWidget *preview, GPixelRgn *srcrgn )
   for ( row = 0; row < pheight; row++ )
     {
       gimp_pixel_rgn_get_row ( srcrgn, src_row,
-			       0, row * dheight / pheight, dwidth );
+                               0, row * dheight / pheight, dwidth );
       dest = dest_row;
       for ( col = 0; col < pwidth; col++ )
-	{
-	  src = &src_row[ src_col[col] ];
-	  if( !has_alpha || src[alpha] == OPAQUE )
-	    {
-	      /* no alpha channel or opaque -- simple way */
-	      for ( b = 0; b < alpha; b++ )
-		dest[b] = src[b];
-	    }
-	  else
-	    {
-	      /* more or less transparent */
-	      if( ( col % (CHECKWIDTH*2) < CHECKWIDTH ) ^
-		  ( row % (CHECKWIDTH*2) < CHECKWIDTH ) )
-		check = LIGHTCHECK;
-	      else
-		check = DARKCHECK;
+        {
+          src = &src_row[ src_col[col] ];
+          if( !has_alpha || src[alpha] == OPAQUE )
+            {
+              /* no alpha channel or opaque -- simple way */
+              for ( b = 0; b < alpha; b++ )
+                dest[b] = src[b];
+            }
+          else
+            {
+              /* more or less transparent */
+              if( ( col % (CHECKWIDTH*2) < CHECKWIDTH ) ^
+                  ( row % (CHECKWIDTH*2) < CHECKWIDTH ) )
+                check = LIGHTCHECK;
+              else
+                check = DARKCHECK;
 
-	      if ( src[alpha] == 0 )
-		{
-		  /* full transparent -- check */
-		  for ( b = 0; b < alpha; b++ )
-		    dest[b] = check;
-		}
-	      else
-		{
-		  /* middlemost transparent -- mix check and src */
-		  for ( b = 0; b < alpha; b++ )
-		    dest[b] = ( src[b]*src[alpha] + check*(OPAQUE-src[alpha]) ) / OPAQUE;
-		}
-	    }
-	  dest += alpha;
-	}
+              if ( src[alpha] == 0 )
+                {
+                  /* full transparent -- check */
+                  for ( b = 0; b < alpha; b++ )
+                    dest[b] = check;
+                }
+              else
+                {
+                  /* middlemost transparent -- mix check and src */
+                  for ( b = 0; b < alpha; b++ )
+                    dest[b] = ( src[b]*src[alpha] + check*(OPAQUE-src[alpha]) ) / OPAQUE;
+                }
+            }
+          dest += alpha;
+        }
       gtk_preview_draw_row( GTK_PREVIEW( preview ), dest_row,
-			    0, row, pwidth );
+                            0, row, pwidth );
     }
 
   g_free ( src_col );
@@ -707,7 +735,7 @@ render_preview ( GtkWidget *preview, GPixelRgn *srcrgn )
 }
 
 /*======================================================================
-		Preview Rendering Util routine End
+                Preview Rendering Util routine End
 =======================================================================*/
 
 /*
@@ -728,23 +756,23 @@ nova_center_draw ( NovaCenter *center, gint update )
   if( update & CURSOR )
     {
       DEBUG1("draw-cursor %d old=%d,%d cur=%d,%d\n",
-	     center->cursor, center->oldx, center->oldy, center->curx, center->cury);
+             center->cursor, center->oldx, center->oldy, center->curx, center->cury);
       gdk_gc_set_function ( center->preview->style->black_gc, GDK_INVERT);
       if( center->cursor )
-	{
-	  gdk_draw_line ( center->preview->window,
-			  center->preview->style->black_gc,
-			  center->oldx, 1, center->oldx, center->pheight-1 );
-	  gdk_draw_line ( center->preview->window,
-			  center->preview->style->black_gc,
-			  1, center->oldy, center->pwidth-1, center->oldy );
-	}
+        {
+          gdk_draw_line ( center->preview->window,
+                          center->preview->style->black_gc,
+                          center->oldx, 1, center->oldx, center->pheight-1 );
+          gdk_draw_line ( center->preview->window,
+                          center->preview->style->black_gc,
+                          1, center->oldy, center->pwidth-1, center->oldy );
+        }
       gdk_draw_line ( center->preview->window,
-		      center->preview->style->black_gc,
-		      center->curx, 1, center->curx, center->pheight-1 );
+                      center->preview->style->black_gc,
+                      center->curx, 1, center->curx, center->pheight-1 );
       gdk_draw_line ( center->preview->window,
-		      center->preview->style->black_gc,
-		      1, center->cury, center->pwidth-1, center->cury );
+                      center->preview->style->black_gc,
+                      1, center->cury, center->pwidth-1, center->cury );
       /* current position of cursor is updated */
       center->oldx = center->curx;
       center->oldy = center->cury;
@@ -760,7 +788,7 @@ nova_center_draw ( NovaCenter *center, gint update )
 
 static void
 nova_center_entry_update ( GtkWidget *widget,
-			     gpointer data )
+                             gpointer data )
 {
   NovaCenter *center;
   gint *val, new_val;
@@ -775,10 +803,10 @@ nova_center_entry_update ( GtkWidget *widget,
       center = gtk_object_get_user_data( GTK_OBJECT(widget) );
       DEBUG1("entry:newval in_call=%d\n", center->in_call );
       if( !center->in_call )
-	{
-	  nova_center_cursor_update( center );
-	  nova_center_draw ( center, CURSOR );
-	}
+        {
+          nova_center_cursor_update( center );
+          nova_center_draw ( center, CURSOR );
+        }
     }
 }
 
@@ -793,9 +821,9 @@ nova_center_cursor_update ( NovaCenter *center )
   center->curx = pvals.xcenter * center->pwidth / center->dwidth;
   center->cury = pvals.ycenter * center->pheight / center->dheight;
 
-  if( center->curx < 0 )		     center->curx = 0;
+  if( center->curx < 0 )                     center->curx = 0;
   else if( center->curx >= center->pwidth )  center->curx = center->pwidth-1;
-  if( center->cury < 0 )		     center->cury = 0;
+  if( center->cury < 0 )                     center->cury = 0;
   else if( center->cury >= center->pheight)  center->cury = center->pheight-1;
 
 }
@@ -805,7 +833,7 @@ nova_center_cursor_update ( NovaCenter *center )
  */
 static gint
 nova_center_preview_expose( GtkWidget *widget,
-			    GdkEvent *event )
+                            GdkEvent *event )
 {
   NovaCenter *center;
 
@@ -821,7 +849,7 @@ nova_center_preview_expose( GtkWidget *widget,
 
 static gint
 nova_center_preview_events ( GtkWidget *widget,
-			     GdkEvent *event )
+                             GdkEvent *event )
 {
   NovaCenter *center;
   GdkEventButton *bevent;
@@ -865,31 +893,31 @@ nova_center_preview_events ( GtkWidget *widget,
 
 /*===================================================================
 
-	 Entry - Scale Pair
+         Entry - Scale Pair
 
 ====================================================================*/
 
 
 /***********************************************************************/
-/*								       */
-/*    Create new entry-scale pair with label. (int)		       */
-/*    1 row and 2 cols of table are needed.			       */
-/*								       */
-/*    `x' and `y' means starting row and col in `table'.	       */
-/*								       */
-/*    `caption' is label string.				       */
-/*								       */
-/*    `min', `max' are boundary of scale.			       */
-/*								       */
+/*                                                                     */
+/*    Create new entry-scale pair with label. (int)                    */
+/*    1 row and 2 cols of table are needed.                            */
+/*                                                                     */
+/*    `x' and `y' means starting row and col in `table'.               */
+/*                                                                     */
+/*    `caption' is label string.                                       */
+/*                                                                     */
+/*    `min', `max' are boundary of scale.                              */
+/*                                                                     */
 /*    `constraint' means whether value of *intvar should be constraint */
-/*    by scale adjustment, e.g. between `min' and `max'.	       */
-/*								       */
+/*    by scale adjustment, e.g. between `min' and `max'.               */
+/*                                                                     */
 /***********************************************************************/
 
 static void
 nova_int_entryscale_new ( GtkTable *table, gint x, gint y,
-			 gchar *caption, gint *intvar,
-			 gint min, gint max, gint constraint)
+                         gchar *caption, gint *intvar,
+                         gint min, gint max, gint constraint)
 {
   GtkWidget *hbox;
   GtkWidget *label;
@@ -897,7 +925,7 @@ nova_int_entryscale_new ( GtkTable *table, gint x, gint y,
   GtkWidget *scale;
   GtkObject *adjustment;
   NovaEntryScaleData *userdata;
-  gchar	   buffer[256];
+  gchar    buffer[256];
 
 
   label = gtk_label_new (caption);
@@ -922,14 +950,14 @@ nova_int_entryscale_new ( GtkTable *table, gint x, gint y,
   gtk_object_set_user_data (GTK_OBJECT(adjustment), userdata);
 
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) nova_paired_int_entry_update,
-		      intvar);
+                      (GtkSignalFunc) nova_paired_int_entry_update,
+                      intvar);
   gtk_signal_connect ( adjustment, "value_changed",
-		      (GtkSignalFunc) nova_paired_int_scale_update,
-		      intvar);
+                      (GtkSignalFunc) nova_paired_int_scale_update,
+                      intvar);
   gtk_signal_connect ( GTK_OBJECT( entry ), "destroy",
-		      (GtkSignalFunc) nova_paired_entry_destroy_callback,
-		      userdata );
+                      (GtkSignalFunc) nova_paired_entry_destroy_callback,
+                      userdata );
 
 
   hbox = gtk_hbox_new ( FALSE, 5 );
@@ -937,9 +965,9 @@ nova_int_entryscale_new ( GtkTable *table, gint x, gint y,
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, TRUE, 0);
 
   gtk_table_attach (GTK_TABLE (table), label, x, x+1, y, y+1,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_table_attach (GTK_TABLE (table), hbox, x+1, x+2, y, y+1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_widget_show (label);
   gtk_widget_show (entry);
@@ -953,7 +981,7 @@ nova_int_entryscale_new ( GtkTable *table, gint x, gint y,
 */
 static void
 nova_paired_entry_destroy_callback (GtkWidget *widget,
-				    gpointer data)
+                                    gpointer data)
 {
   NovaEntryScaleData *userdata;
   userdata = data;
@@ -965,7 +993,7 @@ nova_paired_entry_destroy_callback (GtkWidget *widget,
 
 static void
 nova_paired_int_scale_update (GtkAdjustment *adjustment,
-			      gpointer	    data)
+                              gpointer      data)
 {
   NovaEntryScaleData *userdata;
   GtkEntry *entry;
@@ -993,186 +1021,302 @@ nova_paired_int_scale_update (GtkAdjustment *adjustment,
 
 static void
 nova_paired_int_entry_update (GtkWidget *widget,
-			      gpointer	 data)
-{
-  NovaEntryScaleData *userdata;
-  GtkAdjustment *adjustment;
-  int new_val, constraint_val;
-  int *val;
+                              gpointer   data)
+ {
+   NovaEntryScaleData *userdata;
+   GtkAdjustment *adjustment;
+   int new_val, constraint_val;
+   int *val;
+ 
+   val = data;
+   new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
+   *val = new_val;
+ 
+   userdata = gtk_object_get_user_data (GTK_OBJECT (widget));
+   adjustment = GTK_ADJUSTMENT( userdata->adjustment );
+ 
+   constraint_val = new_val;
+   if ( constraint_val < adjustment->lower )
+     constraint_val = adjustment->lower;
+   if ( constraint_val > adjustment->upper )
+     constraint_val = adjustment->upper;
+ 
+   if ( userdata->constraint )
+     *val = constraint_val;
+   else
+     *val = new_val;
+ 
+   adjustment->value = constraint_val;
+   gtk_signal_handler_block_by_data ( GTK_OBJECT(adjustment), data );
+   gtk_signal_emit_by_name ( GTK_OBJECT(adjustment), "value_changed");
+   gtk_signal_handler_unblock_by_data ( GTK_OBJECT(adjustment), data );
+ 
+ }
+ 
+ /*
+ ################################################################
+ ##                                                            ##
+ ##                   Main Calculation                         ##
+ ##                                                            ##
+ ################################################################
+ */
+ 
+ 
+ static double gauss()
+ {
+   double sum=0;
+   int i;
+   for(i=0; i<6; i++)
+     sum+=(double)rand()/RAND_MAX;
+   return sum/6;
+ }
+ 
+ static void
+ nova (GDrawable *drawable)
+ {
+   GPixelRgn src_rgn, dest_rgn;
+   gpointer pr;
+   guchar *src_row, *dest_row;
+   guchar *src, *dest;
+   gint x1, y1, x2, y2;
+   gint row, col;
+   gint x, y;
+   gint alpha, has_alpha, bpp;
+   gint progress, max_progress;
+   /****************/
+   gint xc, yc; /* center of image */
+   gdouble u, v;
+   gdouble l, l0;
+   gdouble w, w1, c;
+   gdouble *spoke;
+   gdouble nova_alpha;
+   gdouble src_alpha;
+   gdouble new_alpha;
+   gdouble compl_ratio;
+   gdouble ratio;
+   gdouble r, g, b, h, s, lu;
+   gdouble spokecol;
+   gint    i, j;
+   gint    color[4];
+   gint    *spokecolor;
+ 
+   /* initialize */
+ 
+   new_alpha = 0.0;
+ 
+   srand(time(NULL));
+   spoke = g_new( gdouble, pvals.nspoke );
+   spokecolor = g_new (gint, 3 * pvals.nspoke);
 
-  val = data;
-  new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-  *val = new_val;
+   rgb_to_hsl (pvals.color[0]/255.0, pvals.color[1]/255.0, pvals.color[2]/255.0, &h, &s, &lu);
 
-  userdata = gtk_object_get_user_data (GTK_OBJECT (widget));
-  adjustment = GTK_ADJUSTMENT( userdata->adjustment );
-
-  constraint_val = new_val;
-  if ( constraint_val < adjustment->lower )
-    constraint_val = adjustment->lower;
-  if ( constraint_val > adjustment->upper )
-    constraint_val = adjustment->upper;
-
-  if ( userdata->constraint )
-    *val = constraint_val;
-  else
-    *val = new_val;
-
-  adjustment->value = constraint_val;
-  gtk_signal_handler_block_by_data ( GTK_OBJECT(adjustment), data );
-  gtk_signal_emit_by_name ( GTK_OBJECT(adjustment), "value_changed");
-  gtk_signal_handler_unblock_by_data ( GTK_OBJECT(adjustment), data );
-
-}
-
-/*
-################################################################
-##							      ##
-##		     Main Calculation			      ##
-##							      ##
-################################################################
-*/
-
-
-static double gauss()
-{
-  double sum=0;
-  int i;
-  for(i=0; i<6; i++)
-    sum+=(double)rand()/RAND_MAX;
-  return sum/6;
-}
-
-static void
-nova (GDrawable *drawable)
-{
-  GPixelRgn src_rgn, dest_rgn;
-  gpointer pr;
-  guchar *src_row, *dest_row;
-  guchar *src, *dest;
-  gint x1, y1, x2, y2;
-  gint row, col;
-  gint x, y;
-  gint alpha, has_alpha, bpp;
-  gint progress, max_progress;
-  /****************/
-  gint xc, yc; /* center of image */
-  gdouble u, v;
-  gdouble l, l0;
-  gdouble w, w1, c;
-  gdouble *spoke;
-  gdouble nova_alpha;
-  gdouble src_alpha;
-  gdouble new_alpha;
-  gdouble compl_ratio;
-  gdouble ratio;
-  gint	  i;
-  gint	  color[4];
-
-  /* initialize */
-
-  new_alpha = 0.0;
-
-  srand(time(NULL));
-  spoke = g_new( gdouble, pvals.nspoke );
-  for( i=0; i<pvals.nspoke; i++ )
-    spoke[i] = gauss();
-
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-
-  /*
-  xc = (x1+x2)/2;
-  yc = (y1+y2)/2; */
-  xc = pvals.xcenter;
-  yc = pvals.ycenter;
-  l0 = (x2-xc)/4+1;   /* standard length */
-
-  bpp = gimp_drawable_bpp (drawable->id);
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
-  alpha = (has_alpha) ? bpp - 1 : bpp;
-
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, x2-x1, y2-y1, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, x2-x1, y2-y1, TRUE, TRUE);
-
-  /* Initialize progress */
-  progress = 0;
-  max_progress = (x2 - x1) * (y2 - y1);
-
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL; pr = gimp_pixel_rgns_process (pr))
+   for( i=0; i<pvals.nspoke; i++ )
     {
-      src_row = src_rgn.data;
-      dest_row = dest_rgn.data;
+      spoke[i] = gauss();
+      h += (gdouble)pvals.randomhue / 360.0 * ((gdouble) rand() / (gdouble) RAND_MAX - 0.5) ;
+      if (h < 0) h += 1.0;
+      else if (h >= 1.0) h -= 1.0;
+      hsl_to_rgb (h, s, lu, &r, &g, &b);	
+      spokecolor[3*i+0] = 255.0 * r;
+      spokecolor[3*i+1] = 255.0 * g;
+      spokecolor[3*i+2] = 255.0 * b;
+   }
+ 
+   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+ 
+   /*
+   xc = (x1+x2)/2;
+   yc = (y1+y2)/2; */
+   xc = pvals.xcenter;
+   yc = pvals.ycenter;
+   l0 = (x2-xc)/4+1;   /* standard length */
+ 
+   bpp = gimp_drawable_bpp (drawable->id);
+   has_alpha = gimp_drawable_has_alpha (drawable->id);
+   alpha = (has_alpha) ? bpp - 1 : bpp;
+ 
+   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, x2-x1, y2-y1, FALSE, FALSE);
+   gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, x2-x1, y2-y1, TRUE, TRUE);
+ 
+   /* Initialize progress */
+   progress = 0;
+   max_progress = (x2 - x1) * (y2 - y1);
+ 
+   for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+        pr != NULL; pr = gimp_pixel_rgns_process (pr))
+     {
+       src_row = src_rgn.data;
+       dest_row = dest_rgn.data;
+ 
+       for ( row = 0, y = src_rgn.y; row < src_rgn.h; row++, y++)
+         {
+           src = src_row;
+           dest = dest_row;
+ 
+           for ( col = 0, x = src_rgn.x; col < src_rgn.w; col++, x++)
+             {
+               u = (gdouble) (x-xc) / pvals.radius;
+               v = (gdouble) (y-yc) / pvals.radius;
+               l = sqrt( u*u + v*v );
+ 
+               /* This algorithm is still under construction. */
+               c = (atan2 (u, v) / (2 * M_PI) + .51) * pvals.nspoke;
+               i = (int) floor (c);
+               c -= i;
+               i %= pvals.nspoke;
+               w1 = spoke[i] * (1 - c) + spoke[(i + 1) % pvals.nspoke] * c;
+               w1 = w1 * w1;
+ 
+               w = 1/(l+0.001)*0.9;
+ 
+               nova_alpha = CLAMP (w, 0.0, 1.0);
+ 
+               if (has_alpha)
+                 {
+                   src_alpha = (gdouble) src[alpha] / 255.0;
+                   new_alpha = src_alpha + (1.0 - src_alpha) * nova_alpha;
+ 
+                   if (new_alpha != 0.0)
+                     ratio = nova_alpha / new_alpha;
+                   else
+                     ratio = 0.0;
+                 }
+               else
+                 ratio = nova_alpha;
+ 
+               compl_ratio = 1.0 - ratio;
+ 
+               for (j = 0; j < alpha; j++)
+                 {
+		   spokecol = (gdouble)spokecolor[3*i+j]*(1.0-c) + (gdouble)spokecolor[3*((i + 1) % pvals.nspoke)+j]*c;
+                   if (w > 1.0)
+                     color[j] = CLAMP (spokecol * w, 0, 255);
+                   else
+                     color[j] = src[j] * compl_ratio + spokecol * ratio;
+ 
+                   c = CLAMP (w1 * w, 0, 1);
+                   color[j] = color[j] + 255 * c;
+ 
+                   dest[j]= CLAMP (color[j], 0, 255);
+                 }
+ 
+               if (has_alpha)
+                 dest[alpha] = new_alpha * 255.0;
+ 
+               src += src_rgn.bpp;
+               dest += dest_rgn.bpp;
+             }
+           src_row += src_rgn.rowstride;
+           dest_row += dest_rgn.rowstride;
+         }
+       /* Update progress */
+       progress += src_rgn.w * src_rgn.h;
+       gimp_progress_update ((double) progress / (double) max_progress);
+     }
+ 
+   gimp_drawable_flush (drawable);
+   gimp_drawable_merge_shadow (drawable->id, TRUE);
+   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+ 
+   g_free( spoke );
+   g_free( spokecolor );
+ }
+ 
+ /*
+  * RGB-HSL transforms.
+  * Ken Fishkin, Pixar Inc., January 1989.
+  */
 
-      for ( row = 0, y = src_rgn.y; row < src_rgn.h; row++, y++)
-	{
-	  src = src_row;
-	  dest = dest_row;
+ /*
+  * given r,g,b on [0 ... 1],
+  * return (h,s,l) on [0 ... 1]
+  */
 
-	  for ( col = 0, x = src_rgn.x; col < src_rgn.w; col++, x++)
-	    {
-	      u = (gdouble) (x-xc) / pvals.radius;
-	      v = (gdouble) (y-yc) / pvals.radius;
-	      l = sqrt( u*u + v*v );
+ static void
+ rgb_to_hsl (gdouble  r,
+	     gdouble  g,
+ 	     gdouble  b,
+	     gdouble *h,
+	     gdouble *s,
+	     gdouble *l)
+ {
+   gdouble v;
+   gdouble m;
+   gdouble vm;
+   gdouble r2, g2, b2;
 
-	      /* This algorithm is still under construction. */
-	      c = (atan2 (u, v) / (2 * G_PI) + .51) * pvals.nspoke;
-	      i = (int) floor (c);
-	      c -= i;
-	      i %= pvals.nspoke;
-	      w1 = spoke[i] * (1 - c) + spoke[(i + 1) % pvals.nspoke] * c;
-	      w1 = w1 * w1;
+   v = MAX(r,g);
+   v = MAX(v,b);
+   m = MIN(r,g);
+   m = MIN(m,b);
 
-	      w = 1/(l+0.001)*0.9;
+   if ((*l = (m + v) / 2.0) <= 0.0)
+     return;
+   if ((*s = vm = v - m) > 0.0)
+     {
+       *s /= (*l <= 0.5) ? (v + m ) : (2.0 - v - m) ;
+     }
+   else
+     return;
 
-	      nova_alpha = CLAMP (w, 0.0, 1.0);
+   r2 = (v - r) / vm;
+   g2 = (v - g) / vm;
+   b2 = (v - b) / vm;
 
-	      if (has_alpha)
-		{
-		  src_alpha = (gdouble) src[alpha] / 255.0;
-		  new_alpha = src_alpha + (1.0 - src_alpha) * nova_alpha;
+   if (r == v)
+     *h = (g == m ? 5.0 + b2 : 1.0 - g2);
+   else if (g == v)
+     *h = (b == m ? 1.0 + r2 : 3.0 - b2);
+   else
+     *h = (r == m ? 3.0 + g2 : 5.0 - r2);
 
-		  if (new_alpha != 0.0)
-		    ratio = nova_alpha / new_alpha;
-		  else
-		    ratio = 0.0;
-		}
-	      else
-		ratio = nova_alpha;
+   *h /= 6;
+ }
 
-	      compl_ratio = 1.0 - ratio;
+ /*
+  * given h,s,l on [0..1],
+  * return r,g,b on [0..1]
+  */
 
-	      for (i = 0; i < alpha; i++)
-		{
-		  if (w > 1.0)
-		    color[i] = CLAMP (pvals.color[i] * w, 0, 255);
-		  else
-		    color[i] = src[i] * compl_ratio + pvals.color[i] * ratio;
+ static void
+ hsl_to_rgb (gdouble  h,
+	     gdouble  sl,
+	     gdouble  l,
+	     gdouble *r,
+	     gdouble *g,
+	     gdouble *b)
+ {
+   gdouble v;
 
-		  c = CLAMP (w1 * w, 0, 1);
-		  color[i] = color[i] + 255 * c;
+   v = (l <= 0.5) ? (l * (1.0 + sl)) : (l + sl - l * sl);
+   if (v <= 0)
+     {
+       *r = *g = *b = 0.0;
+     }
+   else
+     {
+       gdouble m;
+       gdouble sv;
+       gint sextant;
+       gdouble fract, vsf, mid1, mid2;
 
-		  dest[i]= CLAMP (color[i], 0, 255);
-		}
-
-	      if (has_alpha)
-		dest[alpha] = new_alpha * 255.0;
-
-	      src += src_rgn.bpp;
-	      dest += dest_rgn.bpp;
-	    }
-	  src_row += src_rgn.rowstride;
-	  dest_row += dest_rgn.rowstride;
-	}
-      /* Update progress */
-      progress += src_rgn.w * src_rgn.h;
-      gimp_progress_update ((double) progress / (double) max_progress);
-    }
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
-
-  g_free( spoke );
-}
-
+       m = l + l - v;
+       sv = (v - m ) / v;
+       h *= 6.0;
+       sextant = h;
+       fract = h - sextant;
+       vsf = v * sv * fract;
+       mid1 = m + vsf;
+       mid2 = v - vsf;
+       switch (sextant)
+	 {
+	   case 0: *r = v; *g = mid1; *b = m; break;
+	   case 1: *r = mid2; *g = v; *b = m; break;
+	   case 2: *r = m; *g = v; *b = mid1; break;
+	   case 3: *r = m; *g = mid2; *b = v; break;
+	   case 4: *r = mid1; *g = m; *b = v; break;
+	   case 5: *r = v; *g = m; *b = mid2; break;
+	 }
+     }
+ }
+ 

@@ -29,6 +29,7 @@ SUBDIRS = 			\
 	script-fu		\
 	$(GIMP_PERL)		\
 	AlienMap		\
+	AlienMap2		\
 	FractalExplorer		\
 	Lighting		\
 	MapObject		\

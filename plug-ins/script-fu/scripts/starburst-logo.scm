@@ -45,7 +45,7 @@
     (gimp-edit-fill layer-mask)
     (gimp-selection-none img)
     (plug-in-nova 1 img burst-layer (car burst-coords) (cdr burst-coords)
-		  burst-color burstradius 100)
+		  burst-color burstradius 100 0)
 
     (gimp-selection-layer-alpha text-layer)
     (gimp-palette-set-background '(0 0 0))
