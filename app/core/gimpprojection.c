@@ -1457,7 +1457,7 @@ gdisplay_set_dot_for_dot (GDisplay *gdisp,
 void
 gdisplay_resize_cursor_label (GDisplay *gdisp)
 {
-  PangoLayout *layout;
+  static PangoLayout *layout = NULL;
   gchar buffer[CURSOR_STR_LENGTH];
   gint  cursor_label_width;
   gint  label_frame_size_difference;
@@ -1488,26 +1488,27 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
 		  gdisp->gimage->yresolution);
     }
 
-  layout = GTK_LABEL (gdisp->cursor_label)->layout;
-  if (layout)
-    {
-      pango_layout_set_text (layout, buffer, -1);
-      pango_layout_get_pixel_size (layout, &cursor_label_width, NULL);
+  /* one static layout for all displays should be fine */
+  if (!layout)
+    layout = gtk_widget_create_pango_layout (gdisp->cursor_label, buffer);
+  else
+    pango_layout_set_text (layout, buffer, -1);
+
+  pango_layout_get_pixel_size (layout, &cursor_label_width, NULL);
   
-      /*  find out how many pixels the label's parent frame is bigger than
-       *  the label itself
-       */
-      label_frame_size_difference =
-        gdisp->cursor_label->parent->allocation.width -
-        gdisp->cursor_label->allocation.width;
+  /*  find out how many pixels the label's parent frame is bigger than
+   *  the label itself
+   */
+  label_frame_size_difference =
+    gdisp->cursor_label->parent->allocation.width -
+    gdisp->cursor_label->allocation.width;
       
-      gtk_widget_set_usize (gdisp->cursor_label, cursor_label_width, -1);
+  gtk_widget_set_usize (gdisp->cursor_label, cursor_label_width, -1);
       
-      /* don't resize if this is a new display */
-      if (label_frame_size_difference)
-        gtk_widget_set_usize (gdisp->cursor_label->parent,
-                              cursor_label_width + label_frame_size_difference, -1);
-    }
+  /* don't resize if this is a new display */
+  if (label_frame_size_difference)
+    gtk_widget_set_usize (gdisp->cursor_label->parent,
+                          cursor_label_width + label_frame_size_difference, -1);
 
   gdisplay_update_cursor (gdisp, gdisp->cursor_x, gdisp->cursor_y);
 }

@@ -1,3 +1,12 @@
+2001-09-20  Sven Neumann  <sven@gimp.org>
+
+	* app/gdisplay.c: fixed resize of cursor position label that I broke
+	with my latest change.
+	
+	* app/widgets/gimpfontselection-dialog.c: avoid the crash by using the
+	correct PangoContext, but there's still a bug somewhere in this code
+	(or in PangoFT2).
+
 2001-09-19  Michael Natterer  <mitch@gimp.org>
 
 	* TODO.xml: added an entry about "Stroke".
