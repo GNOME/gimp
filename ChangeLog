@@ -1,3 +1,8 @@
+2004-09-29  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/snoise.c: Use a GimpAspectPreview here, so the
+	preview is resizable.
+
 2004-09-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpui.def

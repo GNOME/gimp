@@ -85,19 +85,18 @@
 #define MIN_SIZE      0.1
 #define MAX_SIZE      16.0
 
-#define PREVIEW_SIZE  128
-
 /*---- Typedefs ----*/
 
 typedef struct
 {
-  gint     tilable;
-  gint     turbulent;
+  gboolean tilable;
+  gboolean turbulent;
   guint    seed;
   gint     detail;
   gdouble  xsize;
   gdouble  ysize;
   gboolean random_seed;
+  gboolean preview;
 } SolidNoiseValues;
 
 
@@ -110,23 +109,23 @@ static void        run   (const gchar      *name,
                           gint             *nreturn_vals,
                           GimpParam       **return_vals);
 
-static void        solid_noise               (GimpDrawable *drawable);
+static void        solid_noise               (GimpDrawable      *drawable,
+                                              GimpAspectPreview *preview);
 static void        solid_noise_init          (void);
-static gdouble     plain_noise               (gdouble       x,
-                                              gdouble       y,
-                                              guint         s);
-static gdouble     noise                     (gdouble       x,
-                                              gdouble       y);
+static gdouble     plain_noise               (gdouble            x,
+                                              gdouble            y,
+                                              guint              s);
+static gdouble     noise                     (gdouble            x,
+                                              gdouble            y);
 
-static gboolean    solid_noise_dialog        (void);
-static GtkWidget * snoise_preview_new        (void);
-static void        solid_noise_draw_one_tile (GimpPixelRgn *rgn,
-                                              gdouble       width,
-                                              gdouble       height,
-                                              gint          xoffset,
-                                              gint          yoffset,
-                                              gint          chns,
-                                              gboolean      has_alpha);
+static gboolean    solid_noise_dialog        (GimpDrawable      *drawable);
+static void        solid_noise_draw_one_tile (GimpPixelRgn      *rgn,
+                                              gdouble            width,
+                                              gdouble            height,
+                                              gint               xoffset,
+                                              gint               yoffset,
+                                              gint               chns,
+                                              gboolean           has_alpha);
 
 
 /*---- Variables ----*/
@@ -141,13 +140,14 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static SolidNoiseValues snvals =
 {
-  0,   /* tilable       */
-  0,   /* turbulent     */
-  0,   /* seed          */
-  1,   /* detail        */
-  4.0, /* xsize         */
-  4.0, /* ysize         */
-  FALSE,
+  FALSE, /* tilable       */
+  FALSE, /* turbulent     */
+  0,     /* seed          */
+  1,     /* detail        */
+  4.0,   /* xsize         */
+  4.0,   /* ysize         */
+  FALSE, /* random seed   */
+  TRUE   /* preview       */
 };
 
 static gint         xclip, yclip;
@@ -155,9 +155,6 @@ static gdouble      offset, factor;
 static gdouble      xsize, ysize;
 static gint         perm_tab[TABLE_SIZE];
 static GimpVector2  grad_tab[TABLE_SIZE];
-
-static GtkWidget   *preview_image = NULL;
-static GdkPixbuf   *preview       = NULL;
 
 /*---- Functions ----*/
 
@@ -232,7 +229,7 @@ run (const gchar      *name,
       gimp_get_data("plug_in_solid_noise", &snvals);
 
       /*  Get information from the dialog  */
-      if (!solid_noise_dialog ())
+      if (!solid_noise_dialog (drawable))
         return;
       break;
 
@@ -278,7 +275,7 @@ run (const gchar      *name,
                               gimp_tile_width ());
 
       /*  Run!  */
-      solid_noise (drawable);
+      solid_noise (drawable, NULL);
 
       /*  If run mode is interactive, flush displays  */
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -305,70 +302,70 @@ run (const gchar      *name,
 
 
 static void
-solid_noise (GimpDrawable *drawable)
+solid_noise (GimpDrawable      *drawable,
+             GimpAspectPreview *preview)
 {
   GimpPixelRgn  dest_rgn;
-  gint          chns;
-  gint          sel_x1, sel_y1, sel_x2, sel_y2;
-  gint          sel_width, sel_height;
+  gint          bytes;
+  gint          x1, y1, x2, y2;
+  gint          width, height;
   gint          progress, max_progress;
   gpointer      pr;
-  gboolean      preview_mode;
   gboolean      has_alpha;
-
-  preview_mode = !drawable;
+  gint          rowstride;
 
   /*  Get selection area  */
-  if (preview_mode)
+  if (preview)
     {
-      sel_x1 = sel_y1 = 0;
-      sel_x2 = sel_y2 = sel_width = sel_height = PREVIEW_SIZE;
+      x1 = y1 = 0;
+      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      x2 = width;
+      y2 = height;
     }
   else
     {
       gimp_drawable_mask_bounds (drawable->drawable_id,
-                                 &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-      sel_width = sel_x2 - sel_x1;
-      sel_height = sel_y2 - sel_y1;
+                                 &x1, &y1, &x2, &y2);
+      width  = x2 - x1;
+      height = y2 - y1;
     }
 
   /*  Initialization  */
   solid_noise_init ();
-  if (!preview_mode)
+  if (!preview)
     gimp_progress_init (_("Solid Noise..."));
 
   progress = 0;
-  max_progress = sel_width * sel_height;
-  has_alpha = FALSE;
+  max_progress = width * height;
 
-  if (preview_mode)
+  bytes     = gimp_drawable_bpp (drawable->drawable_id);
+  rowstride = width * bytes;
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+
+  if (preview)
     {
       dest_rgn.x = dest_rgn.y = 0;
-      dest_rgn.w = dest_rgn.h = PREVIEW_SIZE;
+      dest_rgn.w = width;
+      dest_rgn.h = height;
 
-      dest_rgn.bpp = chns  = gdk_pixbuf_get_n_channels (preview);
-      dest_rgn.rowstride   = gdk_pixbuf_get_rowstride (preview);
-      dest_rgn.data        = gdk_pixbuf_get_pixels (preview);
+      dest_rgn.bpp       = bytes;
+      dest_rgn.rowstride = rowstride;
+      dest_rgn.data      = g_new (guchar, rowstride * height);
     }
   else
     {
-      chns = gimp_drawable_bpp (drawable->drawable_id);
-
-      if (gimp_drawable_has_alpha (drawable->drawable_id))
-        {
-          chns--;
-          has_alpha = TRUE;
-        }
-
-      gimp_pixel_rgn_init (&dest_rgn, drawable, sel_x1, sel_y1, sel_width,
-                           sel_height, TRUE, TRUE);
+      gimp_pixel_rgn_init (&dest_rgn, drawable,
+                           x1, y1, width, height, TRUE, TRUE);
     }
 
+  if (has_alpha)
+    bytes--;
+
   /*  One, two, three, go!  */
-  if (preview_mode)
+  if (preview)
     {
-      solid_noise_draw_one_tile (&dest_rgn, sel_width, sel_height,
-                                 sel_x1, sel_y1, chns, has_alpha);
+      solid_noise_draw_one_tile (&dest_rgn, width, height,
+                                 x1, y1, bytes, has_alpha);
     }
   else
     {
@@ -376,8 +373,8 @@ solid_noise (GimpDrawable *drawable)
           pr != NULL;
           pr = gimp_pixel_rgns_process (pr))
         {
-          solid_noise_draw_one_tile (&dest_rgn, sel_width, sel_height,
-                                     sel_x1, sel_y1, chns, has_alpha);
+          solid_noise_draw_one_tile (&dest_rgn, width, height,
+                                     x1, y1, bytes, has_alpha);
 
           /*  Update progress  */
           progress += dest_rgn.w * dest_rgn.h;
@@ -386,16 +383,17 @@ solid_noise (GimpDrawable *drawable)
     }
 
   /*  Update the drawable  */
-  if (preview_mode)
+  if (preview)
     {
-      gtk_widget_queue_draw (preview_image);
+      gimp_aspect_preview_draw_buffer (preview, dest_rgn.data, rowstride);
+      g_free (dest_rgn.data);
     }
   else
     {
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id,
-                            sel_x1, sel_y1, sel_width, sel_height);
+                            x1, y1, width, height);
     }
 }
 
@@ -565,34 +563,12 @@ noise (gdouble x,
   return (sum+offset)*factor;
 }
 
-static GtkWidget*
-snoise_preview_new (void)
-{
-  GtkWidget *frame = gtk_frame_new (NULL);
-
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-
-  preview = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
-                            PREVIEW_SIZE, PREVIEW_SIZE);
-  gdk_pixbuf_fill (preview, 0);
-
-  preview_image = gtk_image_new_from_pixbuf (preview);
-  g_object_unref (preview);
-
-  gtk_container_add (GTK_CONTAINER (frame), preview_image);
-  gtk_widget_show (preview_image);
-
-  return frame;
-}
-
-
 static gboolean
-solid_noise_dialog (void)
+solid_noise_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *frame;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *toggle;
   GtkWidget *table;
   GtkWidget *label;
@@ -604,33 +580,32 @@ solid_noise_dialog (void)
   gimp_ui_init ("snoise", FALSE);
 
   /*  Dialog initialization  */
-  dlg = gimp_dialog_new (_("Solid Noise"), "snoise",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-solid-noise",
+  dialog = gimp_dialog_new (_("Solid Noise"), "snoise",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-solid-noise",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  frame = snoise_preview_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  preview = gimp_aspect_preview_new (drawable, &snvals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (solid_noise),
+                            drawable);
 
   /*  Table  */
   table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*  Random Seed  */
@@ -642,8 +617,8 @@ solid_noise_dialog (void)
                                  GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));
   g_signal_connect_swapped (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed_hbox),
                            "value_changed",
-                            G_CALLBACK (solid_noise),
-                            NULL);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Detail  */
   spinbutton = gimp_spin_button_new (&adj, snvals.detail,
@@ -655,8 +630,8 @@ solid_noise_dialog (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &snvals.detail);
   g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (solid_noise),
-                            NULL);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Turbulent  */
   toggle = gtk_check_button_new_with_mnemonic ( _("T_urbulent"));
@@ -669,8 +644,8 @@ solid_noise_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &snvals.turbulent);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (solid_noise),
-                            NULL);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Tilable  */
   toggle = gtk_check_button_new_with_mnemonic ( _("T_ilable"));
@@ -683,8 +658,8 @@ solid_noise_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &snvals.tilable);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (solid_noise),
-                            NULL);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  X Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
@@ -696,8 +671,8 @@ solid_noise_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &snvals.xsize);
   g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (solid_noise),
-                            NULL);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Y Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
@@ -709,15 +684,14 @@ solid_noise_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &snvals.ysize);
   g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (solid_noise),
-                            NULL);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
-  solid_noise (NULL);
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
