@@ -82,19 +82,19 @@ void        gimp_context_preview_update   (GimpContextPreview *gcp,
  *        app and plugins.
  */
 
-void        draw_brush    (GtkPreview  *preview,
-			   GimpBrush   *brush,
-			   gint         width,
-			   gint         height,
-			   gboolean     is_popup);
-void        draw_pattern  (GtkPreview  *preview,
-			   GimpPattern *pattern,
-			   gint         width,
-			   gint         height);
-void        draw_gradient (GtkPreview  *preview,
-			   gradient_t  *gradient,
-			   gint         width,
-			   gint         height);
+void        draw_brush    (GtkPreview   *preview,
+			   GimpBrush    *brush,
+			   gint          width,
+			   gint          height,
+			   gboolean      is_popup);
+void        draw_pattern  (GtkPreview   *preview,
+			   GimpPattern  *pattern,
+			   gint          width,
+			   gint          height);
+void        draw_gradient (GtkPreview   *preview,
+			   GimpGradient *gradient,
+			   gint          width,
+			   gint          height);
 
 #ifdef __cplusplus
 }

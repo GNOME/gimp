@@ -165,11 +165,11 @@ void  gimp_dnd_pattern_dest_unset  (GtkWidget              *widget);
 
 /*  gradient dnd functions  */
 
-typedef void         (* GimpDndDropGradientFunc) (GtkWidget  *widget,
-						  gradient_t *gradient,
-						  gpointer    data);
-typedef gradient_t * (* GimpDndDragGradientFunc) (GtkWidget  *widget,
-						  gpointer    data);
+typedef void           (* GimpDndDropGradientFunc) (GtkWidget    *widget,
+						    GimpGradient *gradient,
+						    gpointer      data);
+typedef GimpGradient * (* GimpDndDragGradientFunc) (GtkWidget    *widget,
+						    gpointer      data);
 
 void  gimp_dnd_gradient_source_set (GtkWidget               *widget,
 				    GimpDndDragGradientFunc  get_gradient_func,

@@ -62,6 +62,8 @@ typedef struct _GimpBrush	    GimpBrush;
 typedef struct _GimpBrushGenerated  GimpBrushGenerated;
 typedef struct _GimpBrushPipe       GimpBrushPipe;
 
+typedef struct _GimpGradient        GimpGradient;
+
 typedef struct _GimpPattern         GimpPattern;
 
 typedef struct _GimpPalette         GimpPalette;
@@ -108,8 +110,6 @@ typedef struct _GimpLut             GimpLut;
 typedef struct _GimpParasite        GimpParasite;
 
 typedef struct _GimpProgress        GimpProgress;
-
-typedef struct _gradient_t          gradient_t;
 
 typedef struct _Guide               Guide;
 

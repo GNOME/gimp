@@ -28,8 +28,8 @@
 #include "gdisplay.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
+#include "gimpgradient.h"
 #include "gimpimage.h"
-#include "gradient.h"
 #include "paint_funcs.h"
 #include "selection.h"
 #include "temp_buf.h"
@@ -175,9 +175,9 @@ pencil_motion (PaintCore            *paint_core,
   if (pressure_options->color)
     {
       GimpRGB color;
-      
-      gradient_get_color_at (gimp_context_get_gradient (NULL),
-			     paint_core->curpressure, &color);
+
+      gimp_gradient_get_color_at (gimp_context_get_gradient (NULL),
+				  paint_core->curpressure, &color);
 
       gimp_rgba_get_uchar (&color,
 			   &col[RED_PIX],

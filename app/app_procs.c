@@ -63,7 +63,7 @@
 #include "gimpparasite.h"
 #include "global_edit.h"
 #include "gradient_select.h"
-#include "gradient.h"
+#include "gradients.h"
 #include "gximage.h"
 #include "image_render.h"
 #include "lc_dialog.h"

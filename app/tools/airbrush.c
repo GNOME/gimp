@@ -28,10 +28,10 @@
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gradient.h"
-#include "gimpimage.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
+#include "gimpgradient.h"
+#include "gimpimage.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "selection.h"
@@ -335,8 +335,8 @@ airbrush_motion (PaintCore	      *paint_core,
     {
       GimpRGB color;
       
-      gradient_get_color_at (gimp_context_get_gradient (NULL),
-			     paint_core->curpressure, &color);
+      gimp_gradient_get_color_at (gimp_context_get_gradient (NULL),
+				  paint_core->curpressure, &color);
 
       gimp_rgba_get_uchar (&color,
 			   &col[RED_PIX],

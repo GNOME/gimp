@@ -31,7 +31,6 @@
 
 #include "gimpbrush.h"
 #include "gimpbrushpreview.h"
-#include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawablepreview.h"
 #include "gimpimage.h"
@@ -190,9 +189,6 @@ static void
 gimp_preview_init (GimpPreview *preview)
 {
   preview->viewable     = NULL;
-  preview->context      = NULL;
-
-  preview->is_popup     = FALSE;
 
   preview->width        = 8;
   preview->height       = 8;
@@ -202,6 +198,7 @@ gimp_preview_init (GimpPreview *preview)
   preview->border_color[1] = 0;
   preview->border_color[2] = 0;
 
+  preview->is_popup     = FALSE;
   preview->clickable    = FALSE;
   preview->show_popup   = FALSE;
 
@@ -378,15 +375,6 @@ gimp_preview_set_viewable (GimpPreview  *preview,
 
       gimp_preview_render (preview);
     }
-}
-
-void
-gimp_preview_set_context (GimpPreview *preview,
-			  GimpContext *context)
-{
-  g_return_if_fail (preview != NULL);
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
-  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 }
 
 static gint

@@ -36,11 +36,11 @@
 #include "gimpcontext.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
+#include "gimpgradient.h"
 #include "gimppattern.h"
 #include "gimplist.h"
 #include "gimprc.h"
-#include "gradient.h"
-#include "gradient_header.h"
+#include "gradients.h"
 #include "patterns.h"
 #include "session.h"
 
@@ -105,46 +105,46 @@ struct _DeviceInfoDialog
 
 
 /*  local functions */
-static void     input_dialog_able_callback     (GtkWidget   *widget,
-						guint32      deviceid, 
-						gpointer     data);
+static void     input_dialog_able_callback       (GtkWidget    *widget,
+						  guint32       deviceid, 
+						  gpointer      data);
 
-static void     devices_write_rc_device        (DeviceInfo  *device_info,
-						FILE        *fp);
-static void     devices_write_rc               (void);
+static void     devices_write_rc_device          (DeviceInfo   *device_info,
+						  FILE         *fp);
+static void     devices_write_rc                 (void);
 
-static void     device_status_destroy_callback (void);
-static void     devices_close_callback         (GtkWidget   *widget,
-						gpointer     data);
+static void     device_status_destroy_callback   (void);
+static void     devices_close_callback           (GtkWidget    *widget,
+						  gpointer      data);
 
-static void     device_status_update           (guint32      deviceid);
-static void     device_status_update_current   (void);
+static void     device_status_update             (guint32       deviceid);
+static void     device_status_update_current     (void);
 
-static ToolType device_status_drag_tool        (GtkWidget   *widget,
-						gpointer     data);
-static void     device_status_drop_tool        (GtkWidget   *widget,
-						ToolType     tool,
-						gpointer     data);
-static void     device_status_foreground_changed (GtkWidget   *widget,
-						  gpointer     data);
-static void     device_status_background_changed (GtkWidget   *widget,
-						  gpointer     data);
-static void     device_status_drop_brush       (GtkWidget   *widget,
-						GimpBrush   *brush,
-						gpointer     data);
-static void     device_status_drop_pattern     (GtkWidget   *widget,
-						GimpPattern *pattern,
-						gpointer     data);
-static void     device_status_drop_gradient    (GtkWidget   *widget,
-						gradient_t  *gradient,
-						gpointer     data);
+static ToolType device_status_drag_tool          (GtkWidget    *widget,
+						  gpointer      data);
+static void     device_status_drop_tool          (GtkWidget    *widget,
+						  ToolType      tool,
+						  gpointer      data);
+static void     device_status_foreground_changed (GtkWidget    *widget,
+						  gpointer      data);
+static void     device_status_background_changed (GtkWidget    *widget,
+						  gpointer      data);
+static void     device_status_drop_brush         (GtkWidget    *widget,
+						  GimpBrush    *brush,
+						  gpointer      data);
+static void     device_status_drop_pattern       (GtkWidget    *widget,
+						  GimpPattern  *pattern,
+						  gpointer      data);
+static void     device_status_drop_gradient      (GtkWidget    *widget,
+						  GimpGradient *gradient,
+						  gpointer      data);
 
-static void     device_status_data_changed     (GimpContext *context,
-						gpointer     dummy,
-						gpointer     data);
+static void     device_status_data_changed       (GimpContext  *context,
+						  gpointer      dummy,
+						  gpointer      data);
 
-static void     device_status_context_connect  (GimpContext *context,
-						guint32      deviceid);
+static void     device_status_context_connect    (GimpContext  *context,
+						  guint32       deviceid);
 
 
 /*  global data  */
@@ -504,9 +504,11 @@ devices_rc_update (gchar        *name,
 
   if (values & DEVICE_GRADIENT)
     {
-      gradient_t *gradient;
+      GimpGradient *gradient;
 
-      gradient = gradient_list_get_gradient (gradients_list, gradient_name);
+      gradient = (GimpGradient *)
+	gimp_container_get_child_by_name (global_gradient_list,
+					  gradient_name);
 
       if (gradient)
 	{
@@ -714,7 +716,7 @@ devices_write_rc_device (DeviceInfo *device_info,
   if (gimp_context_get_gradient (device_info->context))
     {
       fprintf (fp, "\n    (gradient \"%s\")",
-	       gimp_context_get_gradient (device_info->context)->name);
+	       GIMP_OBJECT (gimp_context_get_gradient (device_info->context))->name);
     }
 
   fprintf(fp,")\n");
@@ -1205,9 +1207,9 @@ device_status_drop_pattern (GtkWidget   *widget,
 }
 
 static void
-device_status_drop_gradient (GtkWidget  *widget,
-			     gradient_t *gradient,
-			     gpointer    data)
+device_status_drop_gradient (GtkWidget    *widget,
+			     GimpGradient *gradient,
+			     gpointer      data)
 {
   DeviceInfo *device_info;
   

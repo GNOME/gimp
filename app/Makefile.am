@@ -124,6 +124,8 @@ gimp_SOURCES = \
 	gimpdrawable.h		\
 	gimpdrawable-preview.c	\
 	gimpdrawable-preview.h	\
+	gimpgradient.c		\
+	gimpgradient.h		\
 	gimphelp.c		\
 	gimphelp.h		\
 	gimphistogram.c		\
@@ -162,11 +164,11 @@ gimp_SOURCES = \
 	global_edit.c		\
 	global_edit.h		\
 	gradient.c		\
-	gradientP.h		\
-	gradient_header.h	\
+	gradient.h		\
+	gradients.c		\
+	gradients.h		\
 	gradient_select.h	\
 	gradient_select.c	\
-	gradient.h		\
 	gximage.c		\
 	gximage.h		\
 	image_map.c		\

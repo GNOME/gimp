@@ -37,23 +37,29 @@ HELP
 	{ name => 'gradient_names', type => 'stringarray',
 	  desc => 'The list of gradient names', alias => 'gradients',
 	  array => { name => 'num_gradients',
-		     desc => 'The number of loaded gradients',
-		     no_declare => 1 } }
+		     desc => 'The number of loaded gradients' } }
     );
 
     %invoke = (
-	vars => [ 'gradient_t *grad', 'GSList *list', 'int i = 0' ],
+	vars => [ 'GimpGradient *grad', 'GList *list = NULL', 'int i = 0' ],
 	success => 'NONE',
 	code => <<'CODE'
 {
+  num_gradients = gimp_container_num_children (global_gradient_list);
+
   gradients = g_new (gchar *, num_gradients);
 
-  success = (list = gradients_list) != NULL;
+  if (num_gradients)
+    {
+      list = GIMP_LIST (global_gradient_list)->list;
+    }
+
+  success = (list != NULL);
 
   while (list)
     {
       grad           = list->data;
-      gradients[i++] = g_strdup (grad->name);
+      gradients[i++] = g_strdup (GIMP_OBJECT (grad)->name);
       list           = list->next;
     }
 }
@@ -73,7 +79,7 @@ HELP
     @outargs = (
 	{ name  => 'name', type  => 'string',
 	  desc  => 'The name of the active gradient',
-	  alias => 'g_strdup (gimp_context_get_gradient (NULL)->name)',
+	  alias => 'g_strdup (GIMP_OBJECT (gimp_context_get_gradient (NULL))->name)',
 	  no_declare => 1 }
     );
 
@@ -99,10 +105,11 @@ HELP
     );
 
     %invoke = (
-        vars => [ 'gradient_t *gradient' ],
+        vars => [ 'GimpGradient *gradient' ],
         code => <<'CODE'
 {
-  gradient = gradient_list_get_gradient (gradients_list, name);
+  gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (global_gradient_list, name);
 
   success = FALSE;
 
@@ -149,7 +156,7 @@ HELP
     &sample_outargs;
 
     %invoke = (
-	vars => [ 'gradient_t *gradient', 'gdouble pos, delta', 'GimpRGB color', 'gdouble *pv' ],
+	vars => [ 'GimpGradient *gradient', 'gdouble pos, delta', 'GimpRGB color', 'gdouble *pv' ],
 	code => <<'CODE'
 {
   pos = 0.0;
@@ -163,7 +170,7 @@ HELP
 
   while (i--)
     {
-      gradient_get_color_at (gradient, pos, &color);
+      gimp_gradient_get_color_at (gradient, pos, &color);
 
       *pv++ = color.r;
       *pv++ = color.g;
@@ -204,7 +211,7 @@ HELP
     &sample_outargs;
 
     %invoke = (
-	vars => [ 'gradient_t *gradient', 'GimpRGB color', 'gdouble *pv' ],
+	vars => [ 'GimpGradient *gradient', 'GimpRGB color', 'gdouble *pv' ],
 	code => <<'CODE'
 {
   array_length = i * 4;
@@ -215,7 +222,7 @@ HELP
 
   while (i--)
     {
-      gradient_get_color_at (gradient, *pos, &color);
+      gimp_gradient_get_color_at (gradient, *pos, &color);
 
       *pv++ = color.r;
       *pv++ = color.g;
@@ -229,7 +236,8 @@ CODE
     );
 }
 
-@headers = qw("gimpcontext.h" "gradient.h" "gradient_header.h");
+@headers = qw("gimpcontext.h" "gimpcontainer.h" "gimplist.h" "gradients.h"
+              "gimpgradient.h");
 
 @procs = qw(gradients_get_list gradients_get_active gradients_set_active
 	    gradients_sample_uniform gradients_sample_custom);

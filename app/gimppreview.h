@@ -45,9 +45,6 @@ struct _GimpPreview
   GtkPreview    parent_instance;
 
   GimpViewable *viewable;
-  GimpContext  *context;
-
-  gboolean      is_popup;
 
   gint          width;
   gint          height;
@@ -56,6 +53,7 @@ struct _GimpPreview
   /* TEMP HACK: */
   guchar        border_color[3];
 
+  gboolean      is_popup;
   gboolean      clickable;
   gboolean      show_popup;
 
@@ -99,8 +97,6 @@ void         gimp_preview_set_size_full    (GimpPreview   *preview,
 
 void         gimp_preview_set_viewable     (GimpPreview   *preview,
 					    GimpViewable  *viewable);
-void         gimp_preview_set_context      (GimpPreview   *preview,
-					    GimpContext   *context);
 
 
 /*  private  */

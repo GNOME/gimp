@@ -32,12 +32,12 @@
 #include "gimpbrush.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimpmarshal.h"
 #include "gimppattern.h"
 #include "gimprc.h"
-#include "gradient_header.h"
-#include "gradient.h"
+#include "gradients.h"
 #include "patterns.h"
 #include "temp_buf.h"
 
@@ -140,7 +140,7 @@ static void gimp_context_copy_pattern        (GimpContext      *src,
 
 /*  gradient  */
 static void gimp_context_real_set_gradient   (GimpContext      *context,
-					      gradient_t       *gradient);
+					      GimpGradient     *gradient);
 static void gimp_context_copy_gradient       (GimpContext      *src,
 					      GimpContext      *dest);
 
@@ -216,7 +216,7 @@ static GtkType gimp_context_arg_types[] =
   GTK_TYPE_NONE,
   0,
   0,
-  GTK_TYPE_NONE
+  0
 };
 
 static gchar *gimp_context_signal_names[] =
@@ -280,9 +280,10 @@ gimp_context_class_init (GimpContextClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
 
-  gimp_context_arg_types[GIMP_CONTEXT_ARG_IMAGE]   = GIMP_TYPE_IMAGE;
-  gimp_context_arg_types[GIMP_CONTEXT_ARG_BRUSH]   = GIMP_TYPE_BRUSH;
-  gimp_context_arg_types[GIMP_CONTEXT_ARG_PATTERN] = GIMP_TYPE_PATTERN;
+  gimp_context_arg_types[GIMP_CONTEXT_ARG_IMAGE]    = GIMP_TYPE_IMAGE;
+  gimp_context_arg_types[GIMP_CONTEXT_ARG_BRUSH]    = GIMP_TYPE_BRUSH;
+  gimp_context_arg_types[GIMP_CONTEXT_ARG_PATTERN]  = GIMP_TYPE_PATTERN;
+  gimp_context_arg_types[GIMP_CONTEXT_ARG_GRADIENT] = GIMP_TYPE_GRADIENT;
 
   gtk_object_add_arg_type (gimp_context_arg_names[IMAGE_CHANGED],
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE,
@@ -1830,9 +1831,9 @@ gimp_context_refresh_patterns (void)
 /*****************************************************************************/
 /*  gradient  ****************************************************************/
 
-static gradient_t *standard_gradient = NULL;
+static GimpGradient *standard_gradient = NULL;
 
-gradient_t *
+GimpGradient *
 gimp_context_get_gradient (GimpContext *context)
 {
   context_check_current (context);
@@ -1842,8 +1843,8 @@ gimp_context_get_gradient (GimpContext *context)
 }
 
 void
-gimp_context_set_gradient (GimpContext *context,
-			   gradient_t  *gradient)
+gimp_context_set_gradient (GimpContext  *context,
+			   GimpGradient *gradient)
 {
   context_check_current (context);
   context_return_if_fail (context);
@@ -1864,8 +1865,8 @@ gimp_context_gradient_changed (GimpContext *context)
 }
 
 static void
-gimp_context_real_set_gradient (GimpContext *context,
-				gradient_t  *gradient)
+gimp_context_real_set_gradient (GimpContext  *context,
+				GimpGradient *gradient)
 {
   if (! standard_gradient)
     standard_gradient = gradients_get_standard_gradient ();
@@ -1882,7 +1883,7 @@ gimp_context_real_set_gradient (GimpContext *context,
   context->gradient = gradient;
 
   if (gradient && gradient != standard_gradient)
-    context->gradient_name = g_strdup (gradient->name);
+    context->gradient_name = g_strdup (GIMP_OBJECT (gradient)->name);
 
   gimp_context_gradient_changed (context);
 }
@@ -1905,21 +1906,26 @@ static void
 gimp_context_refresh_gradient (GimpContext *context,
 			       gpointer     data)
 {
-  gradient_t *gradient;
+  GimpGradient *gradient;
 
   if (! context->gradient_name)
     context->gradient_name = g_strdup (default_gradient);
 
-  if ((gradient = gradient_list_get_gradient (gradients_list,
-					      context->gradient_name)))
+  gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (global_gradient_list,
+				      context->gradient_name);
+
+  if (gradient)
     {
       gimp_context_real_set_gradient (context, gradient);
       return;
     }
 
-  if (gradients_list)
-    gimp_context_real_set_gradient (context,
-				    (gradient_t *) gradients_list->data);
+  if (gimp_container_num_children (global_gradient_list))
+    gimp_context_real_set_gradient
+      (context,
+       (GimpGradient *)
+       gimp_container_get_child_by_index (global_gradient_list, 0));
   else
     gimp_context_real_set_gradient (context, gradients_get_standard_gradient ());
 }
@@ -1931,15 +1937,15 @@ gimp_context_refresh_gradients (void)
 }
 
 static void
-gimp_context_update_gradient (GimpContext *context,
-			      gradient_t  *gradient)
+gimp_context_update_gradient (GimpContext  *context,
+			      GimpGradient *gradient)
 {
   if (context->gradient == gradient)
     {
       if (context->gradient_name)
 	g_free (context->gradient_name);
 
-      context->gradient_name = g_strdup (gradient->name);
+      context->gradient_name = g_strdup (GIMP_OBJECT (gradient)->name);
 
       gimp_context_gradient_changed (context);
     }
@@ -1948,7 +1954,7 @@ gimp_context_update_gradient (GimpContext *context,
 
 /*  Temporary functions  */
 void
-gimp_context_update_gradients (gradient_t *gradient)
+gimp_context_update_gradients (GimpGradient *gradient)
 {
   g_slist_foreach (context_list, (GFunc) gimp_context_update_gradient, gradient);
 }

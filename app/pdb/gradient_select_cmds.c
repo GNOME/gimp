@@ -27,10 +27,11 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
-#include "gradient.h"
-#include "gradient_header.h"
+#include "gimpgradient.h"
 #include "gradient_select.h"
+#include "gradients.h"
 
 static ProcRecord gradients_popup_proc;
 static ProcRecord gradients_close_popup_proc;
@@ -229,20 +230,16 @@ gradients_set_popup_invoker (Argument *args)
       if ((prec = procedural_db_lookup (pdbname)) &&
 	  (gsp = gradients_get_gradientselect (pdbname)))
 	{
-	  GSList *list;
-	  gradient_t *active = NULL;
+	  GimpGradient *active = NULL;
     
-	  for (list = gradients_list; list; list = g_slist_next (list))
-	     {
-	      active = (gradient_t *) list->data;
-    
-	      if (!strcmp (gradient_name, active->name))
-		break; /* We found the one we want */
-	    }
+	  active = (GimpGradient *)
+	    gimp_container_get_child_by_name (global_gradient_list,
+					      gradient_name);
     
 	  if (active)
 	    {
 	      gimp_context_set_gradient (gsp->context, active);
+	      success = TRUE;
 	    }
 	  else
 	    success = FALSE;
@@ -292,7 +289,7 @@ gradients_get_gradient_data_invoker (Argument *args)
   gchar *name;
   gint32 sample_size;
   gdouble *values = NULL;
-  gradient_t *gradient = NULL;
+  GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -306,20 +303,13 @@ gradients_get_gradient_data_invoker (Argument *args)
     {
       if (strlen (name))
 	{
-	  GSList *list;
-    
 	  success = FALSE;
     
-	  for (list = gradients_list; list; list = g_slist_next (list))
-	    {
-	      gradient = (gradient_t *) list->data;
+	  gradient = (GimpGradient *)
+	    gimp_container_get_child_by_name (global_gradient_list, name);
     
-	      if (!strcmp (gradient->name, name))
-		{
-		  success = TRUE;
-		  break;      /* We found it! */
-		}
-	    }
+	  if (gradient)
+	    success = TRUE;
 	}
       else
 	success = (gradient = gimp_context_get_gradient (NULL)) != NULL;
@@ -339,7 +329,7 @@ gradients_get_gradient_data_invoker (Argument *args)
     
 	  while (i--)
 	    {
-	      gradient_get_color_at (gradient, pos, &color);
+	      gimp_gradient_get_color_at (gradient, pos, &color);
     
 	      *pv++ = color.r;
 	      *pv++ = color.g;
@@ -355,7 +345,7 @@ gradients_get_gradient_data_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (gradient->name);
+      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gradient)->name);
       return_args[2].value.pdb_int = sample_size * 4;
       return_args[3].value.pdb_pointer = values;
     }

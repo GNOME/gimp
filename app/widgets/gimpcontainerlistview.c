@@ -120,7 +120,7 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
      list_view->gtk_list);
 
   gtk_list_set_selection_mode (GTK_LIST (list_view->gtk_list),
-                               GTK_SELECTION_BROWSE);
+                               GTK_SELECTION_SINGLE);
 
   gtk_container_set_focus_vadjustment
     (GTK_CONTAINER (list_view->gtk_list),

@@ -41,8 +41,8 @@
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
+#include "gimpgradient.h"
 #include "gimpprogress.h"
-#include "gradient.h"
 #include "paint_funcs.h"
 #include "paint_options.h"
 #include "pixel_region.h"
@@ -182,7 +182,7 @@ static void    blend_control                     (Tool           *tool,
 						  GDisplay       *gdisp);
 
 static void    blend_options_drop_gradient       (GtkWidget      *widget,
-						  gradient_t     *gradient,
+						  GimpGradient   *gradient,
 						  gpointer        data);
 static void    blend_options_drop_tool           (GtkWidget      *widget,
 						  ToolType        gradient,
@@ -782,9 +782,9 @@ blend_control (Tool       *tool,
 
 
 static void
-blend_options_drop_gradient (GtkWidget  *widget,
-			     gradient_t *gradient,
-			     gpointer    data)
+blend_options_drop_gradient (GtkWidget    *widget,
+			     GimpGradient *gradient,
+			     gpointer      data)
 {
   gimp_context_set_gradient (gimp_context_get_user (), gradient);
   gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->blend_mode_w), 
@@ -1384,7 +1384,8 @@ gradient_render_pixel (double    x,
 
   if (rbd->blend_mode == CUSTOM_MODE)
     {
-      gradient_get_color_at (gimp_context_get_gradient (NULL), factor, color);
+      gimp_gradient_get_color_at (gimp_context_get_gradient (NULL),
+				  factor, color);
     }
   else
     {

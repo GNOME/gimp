@@ -16,24 +16,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GRADIENT_P_H__
-#define __GRADIENT_P_H__
+#ifndef __GRADIENTS_H__
+#define __GRADIENTS_H__
 
 
-void      gradient_editor_create       (void);
-void      gradient_editor_free         (void);
+extern GimpContainer *global_gradient_list;
 
-gboolean  gradient_editor_set_gradient (gradient_t *gradient);
 
-gint      gradient_clist_init          (GtkWidget  *shell,
-					GdkGC      *gc,
-					GtkWidget  *clist,
-					gradient_t *active);
-void      gradient_clist_insert        (GtkWidget  *shell,
-					GdkGC      *gc,
-					GtkWidget  *clist,
-					gradient_t *gradient,
-					gint        pos,
-					gboolean    select);
+void           gradients_init                   (gboolean  no_data);
+void           gradients_free                   (void);
 
-#endif  /* __GRADIENT_P_H__ */
+GimpGradient * gradients_get_standard_gradient  (void);
+
+
+#endif  /* __GRADIENTS_H__ */

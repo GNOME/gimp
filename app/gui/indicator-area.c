@@ -100,9 +100,9 @@ pattern_preview_drop_pattern (GtkWidget   *widget,
 }
 
 static void
-gradient_area_update (GimpContext *context,
-		      gradient_t  *gradient,
-		      gpointer     data)
+gradient_area_update (GimpContext  *context,
+		      GimpGradient *gradient,
+		      gpointer      data)
 {
   if (gradient)
     gimp_context_preview_update (GIMP_CONTEXT_PREVIEW (gradient_preview),
@@ -117,9 +117,9 @@ gradient_preview_clicked (GtkWidget *widget,
 }
 
 static void
-gradient_preview_drop_gradient (GtkWidget  *widget,
-				gradient_t *gradient,
-				gpointer   data)
+gradient_preview_drop_gradient (GtkWidget    *widget,
+				GimpGradient *gradient,
+				gpointer      data)
 {
   if (gradient)
     gimp_context_set_gradient (gimp_context_get_user (), gradient);

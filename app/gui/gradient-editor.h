@@ -23,23 +23,21 @@
 #define __GRADIENT_H__
 
 
-/*  global variables  */
-extern GSList * gradients_list;
-extern gint     num_gradients;
+void      gradient_editor_create       (void);
+void      gradient_editor_free         (void);
 
-void         gradients_init                   (gint        no_data);
-void         gradients_free                   (void);
+gboolean  gradient_editor_set_gradient (GimpGradient *gradient);
 
-gradient_t * gradients_get_standard_gradient  (void);
-
-gradient_t * gradient_list_get_gradient       (GSList     *list,
-					       gchar      *name);
-gint         gradient_list_get_gradient_index (GSList     *list,
-					       gradient_t *gradient);
-
-void         gradient_get_color_at            (gradient_t *gradient,
-					       gdouble     pos,
-					       GimpRGB    *color);
+gint      gradient_clist_init          (GtkWidget    *shell,
+					GdkGC        *gc,
+					GtkWidget    *clist,
+					GimpGradient *active);
+void      gradient_clist_insert        (GtkWidget    *shell,
+					GdkGC        *gc,
+					GtkWidget    *clist,
+					GimpGradient *gradient,
+					gint          pos,
+					gboolean      select);
 
 
 #endif  /* __GRADIENT_H__ */

@@ -35,11 +35,11 @@
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
 #include "gimpdrawable.h"
+#include "gimpgradient.h"
 #include "gimppattern.h"
 #include "gimppreview.h"
 #include "gimprc.h"
-#include "gradient.h"
-#include "gradient_header.h"
+#include "gradients.h"
 #include "patterns.h"
 #include "temp_buf.h"
 
@@ -641,6 +641,13 @@ gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
   static const guint pattern_n_targets = (sizeof (pattern_target_table) /
 					  sizeof (pattern_target_table[0]));
 
+  static const GtkTargetEntry gradient_target_table[] =
+  {
+    GIMP_TARGET_GRADIENT
+  };
+  static const guint gradient_n_targets = (sizeof (gradient_target_table) /
+					   sizeof (gradient_target_table[0]));
+
   if (type == GIMP_TYPE_BRUSH)
     {
       target_table = brush_target_table;
@@ -650,6 +657,11 @@ gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
     {
       target_table = pattern_target_table;
       n_targets    = pattern_n_targets;
+    }
+  else if (type == GIMP_TYPE_GRADIENT)
+    {
+      target_table = gradient_target_table;
+      n_targets    = gradient_n_targets;
     }
   else
     {
@@ -683,6 +695,12 @@ gimp_dnd_viewable_dest_set (GtkWidget               *widget,
 				 (GimpDndDropPatternFunc) set_viewable_func,
 				 data);
     }
+  else if (type == GIMP_TYPE_GRADIENT)
+    {
+      gimp_dnd_gradient_dest_set (widget,
+				  (GimpDndDropGradientFunc) set_viewable_func,
+				  data);
+    }
   else
     {
       g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
@@ -700,6 +718,10 @@ gimp_dnd_viewable_dest_unset (GtkWidget *widget,
   else if (type == GIMP_TYPE_PATTERN)
     {
       gimp_dnd_pattern_dest_unset (widget);
+    }
+  else if (type == GIMP_TYPE_GRADIENT)
+    {
+      gimp_dnd_gradient_dest_unset (widget);
     }
   else
     {
@@ -922,8 +944,8 @@ gimp_dnd_get_gradient_icon (GtkWidget     *widget,
 			    GtkSignalFunc  get_gradient_func,
 			    gpointer       get_gradient_data)
 {
-  GtkWidget  *preview;
-  gradient_t *gradient;
+  GtkWidget    *preview;
+  GimpGradient *gradient;
 
   gradient =
     (* (GimpDndDragGradientFunc) get_gradient_func) (widget, get_gradient_data);
@@ -948,8 +970,8 @@ gimp_dnd_get_gradient_data (GtkWidget     *widget,
 			    gint          *format,
 			    gint          *length)
 {
-  gradient_t *gradient;
-  gchar      *name;
+  GimpGradient *gradient;
+  gchar        *name;
 
   gradient =
     (* (GimpDndDragGradientFunc) get_gradient_func) (widget, get_gradient_data);
@@ -957,7 +979,7 @@ gimp_dnd_get_gradient_data (GtkWidget     *widget,
   if (! gradient)
     return NULL;
 
-  name = g_strdup (gradient->name);
+  name = g_strdup (GIMP_OBJECT (gradient)->name);
 
   *format = 8;
   *length = strlen (name) + 1;
@@ -973,8 +995,8 @@ gimp_dnd_set_gradient_data (GtkWidget     *widget,
 			    gint           format,
 			    gint           length)
 {
-  gradient_t *gradient;
-  gchar      *name;
+  GimpGradient *gradient;
+  gchar        *name;
 
   if ((format != 8) || (length < 1))
     {
@@ -987,7 +1009,8 @@ gimp_dnd_set_gradient_data (GtkWidget     *widget,
   if (strcmp (name, "Standard") == 0)
     gradient = gradients_get_standard_gradient ();
   else
-    gradient = gradient_list_get_gradient (gradients_list, name);
+    gradient = (GimpGradient *)
+      gimp_container_get_child_by_name (global_gradient_list, name);
 
   if (gradient)
     (* (GimpDndDropGradientFunc) set_gradient_func) (widget, gradient,

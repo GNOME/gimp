@@ -37,9 +37,9 @@
 #include "gimage_mask.h"
 #include "gimpbrushpipe.h"
 #include "gimpcontext.h"
+#include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimprc.h"
-#include "gradient.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "pixel_region.h"
@@ -1038,7 +1038,7 @@ paint_core_get_color_from_gradient (PaintCore         *paint_core,
   else
     y = y - (int)y;
 
-  gradient_get_color_at (gimp_context_get_gradient (NULL), y, color);
+  gimp_gradient_get_color_at (gimp_context_get_gradient (NULL), y, color);
 }
 
 

@@ -31,10 +31,9 @@
 #include "gimage.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimppalette.h"
-#include "gradient.h"
-#include "gradient_header.h"
 #include "gradient_select.h"
 #include "palette.h"
 #include "palette_import.h"
@@ -101,7 +100,7 @@ palette_import_select_grad_callback (GtkWidget *widget,
 
 static void
 palette_import_fill_grad_preview (GtkWidget  *preview,
-				  gradient_t *gradient)
+				  GimpGradient *gradient)
 {
   guchar   buffer[3*IMPORT_PREVIEW_WIDTH];
   gint     loop;
@@ -114,7 +113,7 @@ palette_import_fill_grad_preview (GtkWidget  *preview,
 
   for (loop = 0 ; loop < IMPORT_PREVIEW_WIDTH; loop++)
     {
-      gradient_get_color_at (gradient, cur_x, &color);
+      gimp_gradient_get_color_at (gradient, cur_x, &color);
 
       *p++ = (guchar) (color.r * 255.999);
       *p++ = (guchar) (color.g * 255.999);
@@ -134,14 +133,15 @@ palette_import_fill_grad_preview (GtkWidget  *preview,
 
 static void
 palette_import_gradient_update (GimpContext *context,
-				gradient_t  *gradient,
+				GimpGradient  *gradient,
 				gpointer     data)
 {
   if (import_dialog && import_dialog->import_type == GRAD_IMPORT)
     {
       /* redraw gradient */
       palette_import_fill_grad_preview (import_dialog->preview, gradient);
-      gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), gradient->name);
+      gtk_entry_set_text (GTK_ENTRY (import_dialog->entry),
+			  GIMP_OBJECT (gradient)->name);
     }
 }
 
@@ -400,7 +400,7 @@ palette_import_grad_callback (GtkWidget *widget,
 {
   if (import_dialog)
     {
-      gradient_t *gradient;
+      GimpGradient *gradient;
 
       gradient = gimp_context_get_gradient (gimp_context_get_user ());
 
@@ -414,7 +414,8 @@ palette_import_grad_callback (GtkWidget *widget,
       gtk_widget_show (import_dialog->select);
       palette_import_fill_grad_preview (import_dialog->preview, gradient);
 
-      gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), gradient->name);
+      gtk_entry_set_text (GTK_ENTRY (import_dialog->entry),
+			  GIMP_OBJECT (gradient)->name);
       gtk_widget_set_sensitive (import_dialog->threshold_scale, FALSE);
       gtk_widget_set_sensitive (import_dialog->threshold_text, FALSE);
     }
@@ -541,7 +542,7 @@ static void
 palette_import_create_from_grad (gchar *name)
 {
   GimpPalette *palette;
-  gradient_t  *gradient;
+  GimpGradient  *gradient;
 
   gradient = gimp_context_get_gradient (gimp_context_get_user ());
 
@@ -562,7 +563,7 @@ palette_import_create_from_grad (gchar *name)
       
       for (loop = 0; loop < sample_sz; loop++)
 	{
-	  gradient_get_color_at (gradient, cur_x, &color);
+	  gimp_gradient_get_color_at (gradient, cur_x, &color);
 
 	  cur_x += dx;
 	  gimp_palette_add_entry (palette, NULL, &color);
@@ -982,11 +983,11 @@ palette_import_dialog_new (void)
   entry = import_dialog->entry = gtk_entry_new ();
   gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 0, 1);
   {
-    gradient_t* gradient;
+    GimpGradient* gradient;
 
     gradient = gimp_context_get_gradient (gimp_context_get_current ());
     gtk_entry_set_text (GTK_ENTRY (entry),
-			gradient ? gradient->name : _("new_import"));
+			gradient ? GIMP_OBJECT (gradient)->name : _("new_import"));
   }
   gtk_widget_show (entry);
 

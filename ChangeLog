@@ -1,3 +1,45 @@
+2001-02-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/gradientP.h
+	* app/gradient_header.h: removed.
+
+	* app/gimpgradient.[ch]: new object -- bye bye "gradient_t"
+
+	* app/gradients.[ch]: new files for managing the gradient list.
+
+	* app/gradient.[ch]: containes only the gradient editor now (which
+	still badly poked aroung in the GimpGradient structure).
+
+	* app/app_procs.c
+	* app/apptypes.h
+	* app/devices.c
+	* app/gimpcontainerlistview.c
+	* app/gimpcontext.[ch]
+	* app/gimpcontextpreview.[ch]
+	* app/gimpdnd.[ch]
+	* app/gradient_select.[ch]
+	* app/indicator_area.c
+	* app/palette_import.c
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/tools/airbrush.c
+	* app/tools/blend.c
+	* app/tools/paint_core.c
+	* app/tools/paintbrush.c
+	* app/tools/pencil.c
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/gradients.pdb: changed accordingly, some
+	changes to the preview and view stuff.
+
+	* app/gimppreview.[ch]: removed the "context" attribute again
+	because it was overkill (a simple gtk_signal-connect_object does
+	the same as doing the autoconnection magic inside the GimpPreview
+	object).
+
+	* app/commands.[ch]
+	* app/menus.c: example views on the gradient container.
+
 2001-02-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpcontainergridview.[ch]

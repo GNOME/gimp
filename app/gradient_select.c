@@ -44,11 +44,12 @@
 
 #include "appenv.h"
 #include "dialog_handler.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
+#include "gimpgradient.h"
 #include "gradient.h"
-#include "gradient_header.h"
-#include "gradientP.h"
+#include "gradients.h"
 #include "gradient_select.h"
 #include "session.h"
 
@@ -59,16 +60,16 @@
 
 static void gradient_change_callbacks            (GradientSelect *gsp,
 						  gboolean        closing);
-static gradient_t* gradient_select_drag_gradient (GtkWidget      *widget,
+static GimpGradient* gradient_select_drag_gradient (GtkWidget      *widget,
 					          gpointer        data);
 static void gradient_select_drop_gradient        (GtkWidget      *widget,
-						  gradient_t     *gradient,
+						  GimpGradient   *gradient,
 						  gpointer        data);
 static void gradient_select_gradient_changed     (GimpContext    *context,
-						  gradient_t     *gradient,
+						  GimpGradient   *gradient,
 						  GradientSelect *gsp);
 static void gradient_select_select               (GradientSelect *gsp,
-						  gradient_t     *gradient);
+						  GimpGradient   *gradient);
 
 static gint gradient_select_button_press         (GtkWidget      *widget,
 						  GdkEventButton *bevent,
@@ -144,7 +145,7 @@ gradient_select_new (gchar *title,
   gint             column_width;
   gint             select_pos;
 
-  gradient_t      *active = NULL;
+  GimpGradient    *active = NULL;
 
   static gboolean  first_call = TRUE;
 
@@ -187,7 +188,9 @@ gradient_select_new (gchar *title,
 
   if (title && initial_gradient && strlen (initial_gradient))
     {
-      active = gradient_list_get_gradient (gradients_list, initial_gradient);
+      active = (GimpGradient *)
+	gimp_container_get_child_by_name (global_gradient_list,
+					  initial_gradient);
     }
   else
     {
@@ -301,6 +304,16 @@ gradient_select_free (GradientSelect *gsp)
    g_free (gsp);
 }
 
+void
+gradient_select_freeze_all (void)
+{
+}
+
+void
+gradient_select_thaw_all (void)
+{
+}
+
 /*  Call this dialog's PDB callback  */
 
 static void
@@ -309,7 +322,7 @@ gradient_change_callbacks (GradientSelect *gsp,
 {
   gchar           *name;
   ProcRecord      *prec = NULL;
-  gradient_t      *gradient;
+  GimpGradient    *gradient;
   gint             nreturn_vals;
   static gboolean  busy = FALSE;
 
@@ -342,7 +355,7 @@ gradient_change_callbacks (GradientSelect *gsp,
 
       while (i--)
 	{
-	  gradient_get_color_at (gradient, pos, &color);
+	  gimp_gradient_get_color_at (gradient, pos, &color);
 
 	  *pv++ = color.r;
 	  *pv++ = color.g;
@@ -352,13 +365,14 @@ gradient_change_callbacks (GradientSelect *gsp,
 	  pos += delta;
 	}
 
-      return_vals = procedural_db_run_proc (name,
-					    &nreturn_vals,
-					    PDB_STRING,     gradient->name,
-					    PDB_INT32,      gsp->sample_size * 4,
-					    PDB_FLOATARRAY, values,
-					    PDB_INT32,      (gint) closing,
-					    PDB_END);
+      return_vals =
+	procedural_db_run_proc (name,
+				&nreturn_vals,
+				PDB_STRING,     GIMP_OBJECT (gradient)->name,
+				PDB_INT32,      gsp->sample_size * 4,
+				PDB_FLOATARRAY, values,
+				PDB_INT32,      (gint) closing,
+				PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
 	g_message ("failed to run gradient callback function");
@@ -401,7 +415,7 @@ gradients_check_dialogs (void)
 }
 
 void
-gradient_select_rename_all (gradient_t *gradient)
+gradient_select_rename_all (GimpGradient *gradient)
 {
   GradientSelect *gsp; 
   GSList         *list;
@@ -413,13 +427,14 @@ gradient_select_rename_all (gradient_t *gradient)
 
       row = gtk_clist_find_row_from_data (GTK_CLIST (gsp->clist), gradient);
       if (row > -1)
-	gtk_clist_set_text (GTK_CLIST (gsp->clist), row, 1, gradient->name);  
+	gtk_clist_set_text (GTK_CLIST (gsp->clist), row, 1,
+			    GIMP_OBJECT (gradient)->name);  
     }
 }
 
 void
-gradient_select_insert_all (gint        pos,
-			    gradient_t *gradient)
+gradient_select_insert_all (gint          pos,
+			    GimpGradient *gradient)
 {
   GradientSelect *gsp; 
   GSList         *list;
@@ -436,7 +451,7 @@ gradient_select_insert_all (gint        pos,
 }
 
 void
-gradient_select_delete_all (gradient_t *gradient)
+gradient_select_delete_all (GimpGradient *gradient)
 {
   GradientSelect *gsp; 
   GSList         *list;
@@ -486,7 +501,7 @@ gradient_select_refill_all (void)
 }
 
 void
-gradient_select_update_all (gradient_t *gradient)
+gradient_select_update_all (GimpGradient *gradient)
 {
   GSList         *list;
   GradientSelect *gsp; 
@@ -498,7 +513,8 @@ gradient_select_update_all (gradient_t *gradient)
 
       row = gtk_clist_find_row_from_data (GTK_CLIST (gsp->clist), gradient);
       if (row > -1)
-	gtk_clist_set_text (GTK_CLIST (gsp->clist), row, 1, gradient->name);  
+	gtk_clist_set_text (GTK_CLIST (gsp->clist), row, 1,
+			    GIMP_OBJECT (gradient)->name);  
     }
 }
 
@@ -506,7 +522,7 @@ gradient_select_update_all (gradient_t *gradient)
  *  Local functions
  */
 
-static gradient_t *
+static GimpGradient *
 gradient_select_drag_gradient (GtkWidget  *widget,
 			       gpointer    data)
 {
@@ -518,9 +534,9 @@ gradient_select_drag_gradient (GtkWidget  *widget,
 }
 
 static void
-gradient_select_drop_gradient (GtkWidget  *widget,
-			       gradient_t *gradient,
-			       gpointer    data)
+gradient_select_drop_gradient (GtkWidget    *widget,
+			       GimpGradient *gradient,
+			       gpointer      data)
 {
   GradientSelect *gsp;
 
@@ -531,7 +547,7 @@ gradient_select_drop_gradient (GtkWidget  *widget,
 
 static void
 gradient_select_gradient_changed (GimpContext    *context,
-				  gradient_t     *gradient,
+				  GimpGradient   *gradient,
 				  GradientSelect *gsp)
 {
   if (gradient)
@@ -547,11 +563,12 @@ gradient_select_gradient_changed (GimpContext    *context,
 
 static void
 gradient_select_select (GradientSelect *gsp,
-			gradient_t     *gradient)
+			GimpGradient   *gradient)
 {
   gint index;
 
-  index = gradient_list_get_gradient_index (gradients_list, gradient);
+  index = gimp_container_get_child_index (global_gradient_list,
+					  GIMP_OBJECT (gradient));
 
   if (index != -1)
     {
@@ -582,7 +599,6 @@ gradient_select_button_press (GtkWidget      *widget,
 
   if (bevent->button == 2)
     {
-      GSList *list = NULL;
       gint row;
       gint column;
 
@@ -590,13 +606,8 @@ gradient_select_button_press (GtkWidget      *widget,
 				    bevent->x, bevent->y,
 				    &row, &column);
 
-      if (gradients_list)
-	list = g_slist_nth (gradients_list, row);
-
-      if (list)
-	gsp->dnd_gradient = (gradient_t *) list->data;
-      else
-	gsp->dnd_gradient = NULL;
+      gsp->dnd_gradient = (GimpGradient *)
+	gimp_container_get_child_by_index (global_gradient_list, row);
 
       return TRUE;
     }
@@ -612,18 +623,17 @@ gradient_select_list_item_update (GtkWidget      *widget,
 				  gpointer        data)
 {
   GradientSelect *gsp;
-  GSList *list;
 
   gsp  = (GradientSelect *) data;
-  list = g_slist_nth (gradients_list, row);
+
+  gsp->dnd_gradient = (GimpGradient *)
+    gimp_container_get_child_by_index (global_gradient_list, row);
 
   gtk_signal_handler_block_by_data (GTK_OBJECT (gsp->context), gsp);
 
-  gimp_context_set_gradient (gsp->context, (gradient_t *) list->data);
+  gimp_context_set_gradient (gsp->context, gsp->dnd_gradient);
 
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (gsp->context), gsp);
-
-  gsp->dnd_gradient = (gradient_t *) list->data;
 
   if (gsp->callback_name)
     gradient_change_callbacks (gsp, FALSE);

@@ -34,9 +34,8 @@
 #include "gimpbrushpipe.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
+#include "gimpgradient.h"
 #include "gimppattern.h"
-#include "gradient.h"
-#include "gradient_header.h"
 #include "patterns.h"
 #include "temp_buf.h"
 
@@ -379,8 +378,8 @@ gimp_context_preview_update (GimpContextPreview *gcp,
 	  break;
 	case GCP_GRADIENT:
 	  {
-	    gradient_t *gradient = (gradient_t *) (gcp->data);
-	    name = gradient->name;
+	    GimpGradient *gradient = (GimpGradient *) (gcp->data);
+	    name = GIMP_OBJECT (gradient)->name;
 	  }
 	  break;
 	default:
@@ -630,13 +629,16 @@ gimp_context_preview_data_matches_type (GimpContextPreview *gcp,
       match = GIMP_IS_BRUSH (data);
       break;
     case GCP_PATTERN:
+      match = GIMP_IS_PATTERN (data);
+      break;
     case GCP_GRADIENT:
-      match = data != NULL;  /*  would be nicer if these were real gtk_objects  */
+      match = GIMP_IS_GRADIENT (data);
       break;
     default:
       break;
     }
-  return (match);
+
+  return match;
 }
 
 /*  brush draw functions */
@@ -903,10 +905,10 @@ gimp_context_preview_draw_pattern (GimpContextPreview *gcp)
 /*  gradient draw functions  */
 
 void
-draw_gradient (GtkPreview *preview, 
-	       gradient_t *gradient,
-	       gint        width,
-	       gint        height)
+draw_gradient (GtkPreview   *preview, 
+	       GimpGradient *gradient,
+	       gint          width,
+	       gint          height)
 {
   guchar  *p0, *p1, *even, *odd;
   gint     x, y;
@@ -921,7 +923,7 @@ draw_gradient (GtkPreview *preview,
 
   for (x = 0; x < width; x++) 
     {
-      gradient_get_color_at (gradient, cur_x, &color);
+      gimp_gradient_get_color_at (gradient, cur_x, &color);
     
       if ((x / GIMP_CHECK_SIZE_SM) & 1) 
 	{
@@ -960,11 +962,11 @@ draw_gradient (GtkPreview *preview,
 static void
 gimp_context_preview_draw_gradient_popup (GimpContextPreview *gcp)
 {
-  gradient_t *gradient;
+  GimpGradient *gradient;
 
   g_return_if_fail (gcp != NULL && gcp->data != NULL);
   
-  gradient = (gradient_t*)(gcp->data);
+  gradient = (GimpGradient*)(gcp->data);
   draw_gradient (GTK_PREVIEW (gcp_popup_preview), gradient, 
 		 gcp->popup_width, gcp->popup_height);
 }
@@ -972,10 +974,10 @@ gimp_context_preview_draw_gradient_popup (GimpContextPreview *gcp)
 static void
 gimp_context_preview_draw_gradient (GimpContextPreview *gcp)
 {
-  gradient_t *gradient;
+  GimpGradient *gradient;
 
   g_return_if_fail (gcp != NULL && gcp->data != NULL);
 
-  gradient = (gradient_t*)(gcp->data);
+  gradient = (GimpGradient*)(gcp->data);
   draw_gradient (GTK_PREVIEW (gcp), gradient, gcp->width, gcp->height);
 }

@@ -67,12 +67,14 @@
 #include "cursorutil.h"
 #include "datafiles.h"
 #include "errors.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
+#include "gimpgradient.h"
+#include "gimplist.h"
 #include "gimprc.h"
 #include "gradient.h"
-#include "gradientP.h"
-#include "gradient_header.h"
+#include "gradients.h"
 #include "gradient_select.h"
 
 #include "libgimp/gimpenv.h"
@@ -162,9 +164,9 @@ typedef struct
 
   /*  Gradient control  */
   GdkPixmap           *control_pixmap;
-  grad_segment_t      *control_drag_segment; /* Segment which is being dragged */
-  grad_segment_t      *control_sel_l;        /* Left segment of selection */
-  grad_segment_t      *control_sel_r;        /* Right segment of selection */
+  GimpGradientSegment      *control_drag_segment; /* Segment which is being dragged */
+  GimpGradientSegment      *control_sel_l;        /* Left segment of selection */
+  GimpGradientSegment      *control_sel_r;        /* Right segment of selection */
   control_drag_mode_t  control_drag_mode;    /* What is being dragged? */
   guint32              control_click_time;   /* Time when mouse was pressed */
   gboolean             control_compress;     /* Compressing/expanding handles */
@@ -222,11 +224,11 @@ typedef struct
 
   /*  Color dialogs  */
   GtkWidget      *left_color_preview;
-  grad_segment_t *left_saved_segments;
+  GimpGradientSegment *left_saved_segments;
   gboolean        left_saved_dirty;
 
   GtkWidget      *right_color_preview;
-  grad_segment_t *right_saved_segments;
+  GimpGradientSegment *right_saved_segments;
   gboolean        right_saved_dirty;
 } GradientEditor;
 
@@ -236,11 +238,11 @@ static gint    gradient_editor_clist_button_press (GtkWidget       *widget,
 						   GdkEventButton  *bevent,
 						   gpointer         data);
 
-static gradient_t * gradient_editor_drag_gradient (GtkWidget       *widget,
+static GimpGradient * gradient_editor_drag_gradient (GtkWidget       *widget,
 						   gpointer         data);
 
 static void       gradient_editor_drop_gradient   (GtkWidget       *widget,
-						   gradient_t      *gradient,
+						   GimpGradient      *gradient,
 						   gpointer         data);
 
 /* Gradient editor functions */
@@ -347,24 +349,24 @@ static void      control_button_press             (gint             x,
 						   guint            state);
 static gboolean  control_point_in_handle          (gint             x,
 						   gint             y,
-						   grad_segment_t  *seg,
+						   GimpGradientSegment  *seg,
 						   control_drag_mode_t handle);
-static void      control_select_single_segment    (grad_segment_t  *seg);
-static void      control_extend_selection         (grad_segment_t  *seg,
+static void      control_select_single_segment    (GimpGradientSegment  *seg);
+static void      control_extend_selection         (GimpGradientSegment  *seg,
 						   gdouble          pos);
 static void      control_motion                   (gint             x);
 
-static void      control_compress_left            (grad_segment_t  *range_l,
-						   grad_segment_t  *range_r,
-						   grad_segment_t  *drag_seg,
+static void      control_compress_left            (GimpGradientSegment  *range_l,
+						   GimpGradientSegment  *range_r,
+						   GimpGradientSegment  *drag_seg,
 						   gdouble          pos);
-static void      control_compress_range           (grad_segment_t  *range_l,
-						   grad_segment_t  *range_r,
+static void      control_compress_range           (GimpGradientSegment  *range_l,
+						   GimpGradientSegment  *range_r,
 						   gdouble          new_l,
 						   gdouble          new_r);
 
-static double    control_move                     (grad_segment_t  *range_l,
-						   grad_segment_t  *range_r,
+static double    control_move                     (GimpGradientSegment  *range_l,
+						   GimpGradientSegment  *range_r,
 						   gdouble          delta);
 
 /* Control update/redraw functions */
@@ -436,9 +438,8 @@ static void      cpopup_load_right_callback       (GtkWidget       *widget,
 static void      cpopup_save_right_callback       (GtkWidget       *widget,
 						   gpointer         data);
 
-static grad_segment_t * cpopup_save_selection     (void);
-static void             cpopup_free_selection     (grad_segment_t  *seg);
-static void             cpopup_replace_selection  (grad_segment_t  *replace_seg);
+static GimpGradientSegment * cpopup_save_selection     (void);
+static void             cpopup_replace_selection  (GimpGradientSegment  *replace_seg);
 
 /* ----- */
 
@@ -469,9 +470,9 @@ static void        cpopup_coloring_callback       (GtkWidget       *widget,
 
 static void  cpopup_split_midpoint_callback       (GtkWidget       *widget,
 						   gpointer         data);
-static void  cpopup_split_midpoint                (grad_segment_t  *lseg,
-						   grad_segment_t **newl,
-						   grad_segment_t **newr);
+static void  cpopup_split_midpoint                (GimpGradientSegment  *lseg,
+						   GimpGradientSegment **newl,
+						   GimpGradientSegment **newr);
 
 static void  cpopup_split_uniform_callback        (GtkWidget       *widget,
 						   gpointer         data);
@@ -481,10 +482,10 @@ static void  cpopup_split_uniform_split_callback  (GtkWidget       *widget,
 						   gpointer         data);
 static void  cpopup_split_uniform_cancel_callback (GtkWidget       *widget,
 						   gpointer         data);
-static void  cpopup_split_uniform                 (grad_segment_t  *lseg,
+static void  cpopup_split_uniform                 (GimpGradientSegment  *lseg,
 						   gint             parts,
-						   grad_segment_t **newl,
-						   grad_segment_t **newr);
+						   GimpGradientSegment **newl,
+						   GimpGradientSegment **newr);
 
 static void  cpopup_delete_callback               (GtkWidget       *widget,
 						   gpointer         data);
@@ -521,51 +522,12 @@ static void      cpopup_blend_endpoints           (GimpRGB         *left,
 						   gint             blend_colors,
 						   gint             blend_opacity);
 
-/* Gradient functions */
-
-static gradient_t     * grad_new_gradient             (void);
-static void             grad_free_gradient            (gradient_t  *grad);
-static void             grad_free_gradients           (void);
-static void             grad_load_gradient            (const gchar *filename);
-static void             grad_save_gradient            (gradient_t  *grad,
-						       const gchar *filename);
-static void             grad_save_all                 (gboolean     need_free);
-
-static gradient_t     * grad_create_default_gradient  (void);
-
-static gint             grad_insert_in_gradients_list (gradient_t  *grad);
-
-static void             grad_dump_gradient            (gradient_t  *grad,
-						       FILE        *file);
-static void     gradients_list_uniquefy_gradient_name (gradient_t  *gradient);
-
-
 /* Segment functions */
 
-static grad_segment_t * seg_new_segment        (void);
-static void             seg_free_segment       (grad_segment_t       *seg);
-static void             seg_free_segments      (grad_segment_t       *seg);
-
-static grad_segment_t * seg_get_segment_at     (gradient_t           *grad,
-						gdouble               pos);
-static grad_segment_t * seg_get_last_segment   (grad_segment_t       *seg);
-static void             seg_get_closest_handle (gradient_t           *grad,
+static void             seg_get_closest_handle (GimpGradient           *grad,
 						gdouble               pos,
-						grad_segment_t      **seg,
+						GimpGradientSegment      **seg,
 						control_drag_mode_t  *handle);
-
-/* Calculation functions */
-
-static gdouble   calc_linear_factor            (gdouble  middle,
-						gdouble  pos);
-static gdouble   calc_curved_factor            (gdouble  middle,
-						gdouble  pos);
-static gdouble   calc_sine_factor              (gdouble  middle,
-						gdouble  pos);
-static gdouble   calc_sphere_increasing_factor (gdouble  middle,
-						gdouble  pos);
-static gdouble   calc_sphere_decreasing_factor (gdouble  middle,
-						gdouble  pos);
 
 /* Files and paths functions */
 
@@ -573,19 +535,13 @@ static gchar   * build_user_filename           (gchar   *name,
 						gchar   *path_str);
 
 
-/***** Global variables *****/
-
-GSList * gradients_list = NULL; /* The list of gradients */
-gint     num_gradients  = 0;
-
 /***** Local variables *****/
 
-static GdkColor         black;
-static gradient_t     * curr_gradient     = NULL;
-static gradient_t     * dnd_gradient      = NULL;
-static GradientEditor * g_editor          = NULL;
+static GdkColor        black;
+static GimpGradient   *curr_gradient = NULL;
+static GimpGradient   *dnd_gradient  = NULL;
+static GradientEditor *g_editor      = NULL;
 
-static gradient_t     * standard_gradient = NULL;
 
 static const gchar *blending_types[] =
 {
@@ -611,217 +567,6 @@ static GtkTargetEntry gradient_target_table[] =
 static guint n_gradient_targets = (sizeof (gradient_target_table) /
 				   sizeof (gradient_target_table[0]));
 
-/***** Public functions *****/
-
-void
-gradients_init (gint no_data)
-{
-  if (gradients_list)
-    gradients_free ();
-
-  if (gradient_path != NULL && !no_data)
-    datafiles_read_directories (gradient_path, grad_load_gradient, 0);
-
-  gimp_context_refresh_gradients ();
-}
-
-void
-gradients_free (void)
-{
-  grad_free_gradients ();
-}
-
-gradient_t *
-gradients_get_standard_gradient (void)
-{
-  if (! standard_gradient)
-    {
-      standard_gradient = grad_create_default_gradient ();
-      standard_gradient->name     = g_strdup ("Standard");
-      standard_gradient->filename = NULL;
-      standard_gradient->dirty    = FALSE;
-    }
-
-  return standard_gradient;
-}
-
-gradient_t *
-gradient_list_get_gradient (GSList *list,
-			    gchar  *name)
-{
-  gradient_t *gradient;
-
-  if (name == NULL)
-    return NULL;
-
-  for (; list; list = g_slist_next (list))
-    {
-      gradient = (gradient_t *) list->data;
-
-      if (strcmp (gradient->name, name) == 0)
-	return gradient;
-    }
-
-  return NULL;
-}
-
-gint
-gradient_list_get_gradient_index (GSList     *list,
-				  gradient_t *gradient)
-{
-  gradient_t *cmp_gradient;
-  gint        index;
-
-  for (index = 0; list; list = g_slist_next (list), index++)
-    {
-      cmp_gradient = (gradient_t *) list->data;
-
-      if (cmp_gradient == gradient)
-	return index;
-    }
-
-  return -1;
-}
-
-/*****/
-
-void
-gradient_get_color_at (gradient_t *gradient,
-		       gdouble     pos,
-		       GimpRGB    *color)
-{
-  gdouble         factor = 0.0;
-  grad_segment_t *seg;
-  gdouble         seg_len;
-  gdouble         middle;
-  GimpRGB         rgb;
-
-  g_return_if_fail (color != NULL);
-
-  /* if there is no gradient return a totally transparent black */
-  if (gradient == NULL) 
-    {
-      gimp_rgba_set (color, 0.0, 0.0, 0.0, 0.0);
-      return;
-    }
-
-  if (pos < 0.0)
-    pos = 0.0;
-  else if (pos > 1.0)
-    pos = 1.0;
-
-  seg = seg_get_segment_at (gradient, pos);
-
-  seg_len = seg->right - seg->left;
-
-  if (seg_len < EPSILON)
-    {
-      middle = 0.5;
-      pos    = 0.5;
-    }
-  else
-    {
-      middle = (seg->middle - seg->left) / seg_len;
-      pos    = (pos - seg->left) / seg_len;
-    }
-
-  switch (seg->type)
-    {
-    case GRAD_LINEAR:
-      factor = calc_linear_factor (middle, pos);
-      break;
-
-    case GRAD_CURVED:
-      factor = calc_curved_factor (middle, pos);
-      break;
-
-    case GRAD_SINE:
-      factor = calc_sine_factor (middle, pos);
-      break;
-
-    case GRAD_SPHERE_INCREASING:
-      factor = calc_sphere_increasing_factor (middle, pos);
-      break;
-
-    case GRAD_SPHERE_DECREASING:
-      factor = calc_sphere_decreasing_factor (middle, pos);
-      break;
-
-    default:
-      grad_dump_gradient (gradient, stderr);
-      gimp_fatal_error ("gradient_get_color_at(): Unknown gradient type %d",
-			(int) seg->type);
-      break;
-    }
-
-  /* Calculate color components */
-
-  rgb.a = seg->left_color.a + (seg->right_color.a - seg->left_color.a) * factor;
-
-  if (seg->color == GRAD_RGB)
-    {
-      rgb.r 
-	= seg->left_color.r + (seg->right_color.r - seg->left_color.r) * factor;
-
-      rgb.g =
-	seg->left_color.g + (seg->right_color.g - seg->left_color.g) * factor;
-
-      rgb.b =
-	seg->left_color.b + (seg->right_color.b - seg->left_color.b) * factor;
-    }
-  else
-    {
-      GimpHSV left_hsv;
-      GimpHSV right_hsv;
-
-      gimp_rgb_to_hsv (&seg->left_color,  &left_hsv);
-      gimp_rgb_to_hsv (&seg->right_color, &right_hsv);
-
-      left_hsv.s = left_hsv.s + (right_hsv.s - left_hsv.s) * factor;
-      left_hsv.v = left_hsv.v + (right_hsv.v - left_hsv.v) * factor;
-
-      switch (seg->color)
-	{
-	case GRAD_HSV_CCW:
-	  if (left_hsv.h < right_hsv.h)
-	    {
-	      left_hsv.h += (right_hsv.h - left_hsv.h) * factor;
-	    }
-	  else
-	    {
-	      left_hsv.h += (1.0 - (left_hsv.h - right_hsv.h)) * factor;
-
-	      if (left_hsv.h > 1.0)
-		left_hsv.h -= 1.0;
-	    }
-	  break;
-
-	case GRAD_HSV_CW:
-	  if (right_hsv.h < left_hsv.h)
-	    {
-	      left_hsv.h -= (left_hsv.h - right_hsv.h) * factor;
-	    }
-	  else
-	    {
-	      left_hsv.h -= (1.0 - (right_hsv.h - left_hsv.h)) * factor;
-
-	      if (left_hsv.h < 0.0)
-		left_hsv.h += 1.0;
-	    }
-	  break;
-
-	default:
-	  grad_dump_gradient (gradient, stderr);
-	  gimp_fatal_error ("gradient_get_color_at(): Unknown coloring mode %d",
-			    (int) seg->color);
-	  break;
-	}
-
-      gimp_hsv_to_rgb (&left_hsv, &rgb);
-    }
-
-  *color = rgb;
-}
 
 /***** The main gradient editor dialog *****/
 
@@ -1167,21 +912,25 @@ gradient_editor_create (void)
   ed_initialize_saved_colors ();
   cpopup_create_main_menu ();
 
-  if (gradients_list)
+  if (gimp_container_num_children (global_gradient_list))
     {
-      curr_gradient = dnd_gradient = (gradient_t *) gradients_list->data;
+      curr_gradient = dnd_gradient = (GimpGradient *)
+	gimp_container_get_child_by_index (global_gradient_list, 0);
     }
   else
     {
       gint pos;
 
-      curr_gradient = dnd_gradient = grad_create_default_gradient ();
-      curr_gradient->name     = g_strdup (_("Default"));
-      curr_gradient->filename =
-	build_user_filename (curr_gradient->name, gradient_path);
-      curr_gradient->dirty    = FALSE;
+      curr_gradient = dnd_gradient = gimp_gradient_new (_("Default"));
 
-      pos = grad_insert_in_gradients_list (curr_gradient);
+      curr_gradient->filename =
+	build_user_filename (GIMP_OBJECT (curr_gradient)->name, gradient_path);
+
+      gimp_container_add (global_gradient_list, GIMP_OBJECT (curr_gradient));
+
+      pos = gimp_container_get_child_index (global_gradient_list,
+					    GIMP_OBJECT (curr_gradient));
+
       gradient_select_insert_all (pos, curr_gradient);
       gimp_context_refresh_gradients ();
     }
@@ -1204,11 +953,12 @@ gradient_editor_free (void)
 }
 
 gboolean
-gradient_editor_set_gradient (gradient_t *gradient)
+gradient_editor_set_gradient (GimpGradient *gradient)
 {
   gint n;
 
-  n = gradient_list_get_gradient_index (gradients_list, gradient);
+  n = gimp_container_get_child_index (global_gradient_list,
+				      GIMP_OBJECT (gradient));
 
   if (n < 0)
     return FALSE;
@@ -1235,7 +985,6 @@ gradient_editor_clist_button_press (GtkWidget      *widget,
 {
   if (bevent->button == 2)
     {
-      GSList *list = NULL;
       gint row;
       gint column;
 
@@ -1243,13 +992,8 @@ gradient_editor_clist_button_press (GtkWidget      *widget,
                                     bevent->x, bevent->y,
                                     &row, &column);
 
-      if (gradients_list)
-	list = g_slist_nth (gradients_list, row);
-
-      if (list)
-	dnd_gradient = (gradient_t *) list->data;
-      else
-	dnd_gradient = NULL;
+      dnd_gradient = (GimpGradient *)
+	gimp_container_get_child_by_index (global_gradient_list, row);
 
       return TRUE;
     }
@@ -1257,7 +1001,7 @@ gradient_editor_clist_button_press (GtkWidget      *widget,
   return FALSE;
 }
 
-static gradient_t *
+static GimpGradient *
 gradient_editor_drag_gradient (GtkWidget  *widget,
 			       gpointer    data)
 {
@@ -1266,7 +1010,7 @@ gradient_editor_drag_gradient (GtkWidget  *widget,
 
 static void
 gradient_editor_drop_gradient (GtkWidget  *widget,
-			       gradient_t *gradient,
+			       GimpGradient *gradient,
 			       gpointer    data)
 {
   gradient_editor_set_gradient (gradient);
@@ -1329,7 +1073,7 @@ ed_set_hint (gchar *str)
 /*****/
 
 static void
-gradient_clist_fill_preview (gradient_t *gradient,
+gradient_clist_fill_preview (GimpGradient *gradient,
 			     guchar     *buf,
 			     gint        width,
 			     gint        height,
@@ -1352,7 +1096,7 @@ gradient_clist_fill_preview (gradient_t *gradient,
 
   for (x = 0; x < width; x++)
     {
-      gradient_get_color_at (gradient, cur_x, &color);
+      gimp_gradient_get_color_at (gradient, cur_x, &color);
 
       if ((x / GIMP_CHECK_SIZE_SM) & 1)
 	{
@@ -1395,7 +1139,7 @@ gradient_clist_fill_preview (gradient_t *gradient,
 static void
 gradient_clist_draw_small_preview (GdkGC      *gc,
 				   GtkWidget  *clist,
-				   gradient_t *gradient,
+				   GimpGradient *gradient,
 				   gint        pos)
 {
   guchar rgb_buf[48 * 16 * 3];
@@ -1411,19 +1155,19 @@ gradient_clist_draw_small_preview (GdkGC      *gc,
 
   gdk_gc_set_foreground (gc, &black);
   gdk_draw_rectangle (gradient->pixmap, gc, FALSE, 0, 0, 47, 15);
-  gtk_clist_set_text (GTK_CLIST (clist), pos, 1, gradient->name);  
+  gtk_clist_set_text (GTK_CLIST (clist), pos, 1, GIMP_OBJECT (gradient)->name);  
 }
 
 gint
-gradient_clist_init (GtkWidget  *shell,
-		     GdkGC      *gc,
-		     GtkWidget  *clist,
-		     gradient_t *sel_gradient)
+gradient_clist_init (GtkWidget    *shell,
+		     GdkGC        *gc,
+		     GtkWidget    *clist,
+		     GimpGradient *sel_gradient)
 {
-  GSList     *list;
-  gradient_t *gradient;
-  gint n;
-  gint select_pos = -1;
+  GList        *list;
+  GimpGradient *gradient;
+  gint          n;
+  gint          select_pos = -1;
 
   if (sel_gradient == NULL)
     sel_gradient = curr_gradient;
@@ -1433,9 +1177,11 @@ gradient_clist_init (GtkWidget  *shell,
 
   gtk_clist_freeze (GTK_CLIST (clist));
 
-  for (list = gradients_list, n = 0; list; list = g_slist_next (list), n++)
+  for (list = GIMP_LIST (global_gradient_list)->list, n = 0;
+       list;
+       list = g_list_next (list), n++)
     {
-      gradient = (gradient_t *) list->data;
+      gradient = (GimpGradient *) list->data;
 
       if (gradient == sel_gradient)
 	{
@@ -1454,19 +1200,19 @@ gradient_clist_init (GtkWidget  *shell,
 }
 
 void
-gradient_clist_insert (GtkWidget  *shell,
-		       GdkGC      *gc,
-		       GtkWidget  *clist,
-		       gradient_t *gradient,
-		       gint        pos,
-		       gboolean    select)
+gradient_clist_insert (GtkWidget    *shell,
+		       GdkGC        *gc,
+		       GtkWidget    *clist,
+		       GimpGradient *gradient,
+		       gint          pos,
+		       gboolean      select)
 {
   gchar *string[2];
 
   g_return_if_fail (gradient != NULL);
 
   string[0] = NULL;
-  string[1] = gradient->name;
+  string[1] = GIMP_OBJECT (gradient)->name;
 
   pos = gtk_clist_insert (GTK_CLIST (clist), pos, string);
   gtk_clist_set_row_data (GTK_CLIST (clist), pos, gradient);
@@ -1500,7 +1246,7 @@ ed_list_item_update (GtkWidget      *widget,
 {
   /* Update current gradient */
   curr_gradient = dnd_gradient = 
-    (gradient_t *) gtk_clist_get_row_data (GTK_CLIST (widget), row); 
+    (GimpGradient *) gtk_clist_get_row_data (GTK_CLIST (widget), row); 
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
 }
@@ -1606,7 +1352,7 @@ ed_do_new_gradient_callback (GtkWidget *widget,
 			     gchar     *gradient_name,
 			     gpointer   data)
 {
-  gradient_t *grad;
+  GimpGradient *grad;
   gint        pos;
 
   if (!gradient_name)
@@ -1615,16 +1361,20 @@ ed_do_new_gradient_callback (GtkWidget *widget,
       return;
     }
 
-  grad = grad_create_default_gradient ();
+  grad = gimp_gradient_new (gradient_name);
 
-  grad->name     = gradient_name; /* We don't need to copy since 
-				     this memory is ours */
+  g_free (gradient_name);
+
   grad->dirty    = TRUE;
-  grad->filename = build_user_filename (grad->name, gradient_path);
+  grad->filename = build_user_filename (GIMP_OBJECT (grad)->name,
+					gradient_path);
 
   /* Put new gradient in list */
+  gimp_container_add (global_gradient_list, GIMP_OBJECT (grad));
 
-  pos = grad_insert_in_gradients_list (grad);
+  pos = gimp_container_get_child_index (global_gradient_list,
+					GIMP_OBJECT (grad));
+
   gtk_clist_freeze (GTK_CLIST (g_editor->clist));
   gradient_clist_insert (g_editor->shell, g_editor->gc, g_editor->clist,
 			 grad, pos, TRUE);
@@ -1650,7 +1400,7 @@ ed_copy_gradient_callback (GtkWidget *widget,
   if (curr_gradient == NULL) 
     return;
 
-  name = g_strdup_printf (_("%s copy"), curr_gradient->name);
+  name = g_strdup_printf (_("%s copy"), GIMP_OBJECT (curr_gradient)->name);
 
   qbox = gimp_query_string_box (_("Copy gradient"),
 				gimp_standard_help_func,
@@ -1669,9 +1419,9 @@ ed_do_copy_gradient_callback (GtkWidget *widget,
 			      gchar     *gradient_name,
 			      gpointer   data)
 {
-  gradient_t     *grad;
+  GimpGradient     *grad;
   gint            pos;
-  grad_segment_t *head, *prev, *cur, *orig;
+  GimpGradientSegment *head, *prev, *cur, *orig;
 
   if (!gradient_name)
     {
@@ -1679,15 +1429,12 @@ ed_do_copy_gradient_callback (GtkWidget *widget,
       return;
     }
 
-  /* Copy current gradient */
-  grad = grad_new_gradient ();
-  if (grad == NULL)
-    return;
+  grad = GIMP_GRADIENT (gtk_type_new (GIMP_TYPE_GRADIENT));
 
-  grad->name     = gradient_name; /* We don't need to copy since 
-				     this memory is ours */
+  GIMP_OBJECT (grad)->name     = gradient_name; /* We don't need to copy since 
+						     this memory is ours */
   grad->dirty    = TRUE;
-  grad->filename = build_user_filename (grad->name, gradient_path);
+  grad->filename = build_user_filename (GIMP_OBJECT (grad)->name, gradient_path);
 
   prev = NULL;
   orig = curr_gradient->segments;
@@ -1695,7 +1442,7 @@ ed_do_copy_gradient_callback (GtkWidget *widget,
 
   while (orig)
     {
-      cur = seg_new_segment ();
+      cur = gimp_gradient_segment_new ();
 
       *cur = *orig;  /* Copy everything */
 
@@ -1714,7 +1461,11 @@ ed_do_copy_gradient_callback (GtkWidget *widget,
   grad->segments = head;
 
   /* Put new gradient in list */
-  pos = grad_insert_in_gradients_list (grad);
+  gimp_container_add (global_gradient_list, GIMP_OBJECT (grad));
+
+  pos = gimp_container_get_child_index (global_gradient_list,
+					GIMP_OBJECT (grad));
+
   gtk_clist_freeze (GTK_CLIST (g_editor->clist));
   gradient_clist_insert (g_editor->shell, g_editor->gc, g_editor->clist,
 			 grad, pos, TRUE);
@@ -1742,7 +1493,7 @@ ed_rename_gradient_callback (GtkWidget *widget,
 				gimp_standard_help_func,
 				"dialogs/gradient_editor/rename_gradient.html",
 				_("Enter a new name for the gradient"),
-				curr_gradient->name,
+				GIMP_OBJECT (curr_gradient)->name,
 				NULL, NULL,
 				ed_do_rename_gradient_callback,
 				curr_gradient);
@@ -1754,7 +1505,7 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
 				gchar     *gradient_name,
 				gpointer   data)
 {
-  gradient_t *grad = (gradient_t *) data;
+  GimpGradient *grad = (GimpGradient *) data;
   gint        row;
 
   g_return_if_fail (grad != NULL);
@@ -1765,20 +1516,22 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
       return;
     }
 
-  g_free (grad->name);
-  grad->name  = gradient_name; /* We don't need to copy since 
-				  this memory is ours */
+  g_free (GIMP_OBJECT (grad)->name);
+  GIMP_OBJECT (grad)->name  = gradient_name; /* We don't need to copy since 
+						this memory is ours */
   grad->dirty = TRUE;
 
   /* Delete file and free gradient */
   unlink (grad->filename);
 
   g_free (grad->filename);
-  grad->filename = build_user_filename (grad->name, gradient_path);
+  grad->filename = build_user_filename (GIMP_OBJECT (grad)->name,
+					gradient_path);
 
   row = gtk_clist_find_row_from_data (GTK_CLIST (g_editor->clist), grad);
   if (row > -1)
-    gtk_clist_set_text (GTK_CLIST (g_editor->clist), row, 1, grad->name);
+    gtk_clist_set_text (GTK_CLIST (g_editor->clist), row, 1,
+			GIMP_OBJECT (grad)->name);
 
   gradient_select_rename_all (grad);
 
@@ -1796,14 +1549,15 @@ ed_delete_gradient_callback (GtkWidget *widget,
   GtkWidget *dialog;
   gchar     *str;
 
-  if (num_gradients <= 1 || curr_gradient == NULL)
+  if (! gimp_container_num_children (global_gradient_list) ||
+      curr_gradient == NULL)
     return;
 
   gtk_widget_set_sensitive (g_editor->shell, FALSE);
 
   str = g_strdup_printf (_("Are you sure you want to delete\n"
 			   "\"%s\" from the list and from disk?"),
-			 curr_gradient->name);
+			 GIMP_OBJECT (curr_gradient)->name);
 
   dialog =
     gimp_query_boolean_box (_("Delete Gradient"),
@@ -1826,7 +1580,7 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
 				gboolean   delete,
 				gpointer   data)
 {
-  gradient_t *delete_gradient;
+  GimpGradient *delete_gradient;
   gint        row;
 
   gtk_widget_set_sensitive (g_editor->shell, TRUE);
@@ -1846,12 +1600,9 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
     gtk_clist_remove (GTK_CLIST (g_editor->clist), row);
 
   /* Delete gradient from gradients list */
-  gradients_list = g_slist_remove (gradients_list, delete_gradient);
-  num_gradients--;
-
-  /* Delete file and free gradient*/
   unlink (delete_gradient->filename);
-  grad_free_gradient (delete_gradient);
+
+  gimp_container_remove (global_gradient_list, GIMP_OBJECT (delete_gradient));
 
   gimp_context_refresh_gradients ();
 }
@@ -1902,7 +1653,7 @@ ed_do_save_pov_callback (GtkWidget *widget,
 {
   gchar          *filename;
   FILE           *file;
-  grad_segment_t *seg;
+  GimpGradientSegment *seg;
 
   if (curr_gradient == NULL)
     return;
@@ -1991,19 +1742,21 @@ ed_refresh_grads_callback (GtkWidget *widget,
 
   gradients_init (FALSE);
 
-  if (gradients_list)
+  if (gimp_container_num_children (global_gradient_list))
     {
-      curr_gradient = dnd_gradient = (gradient_t *) gradients_list->data;
+      curr_gradient = dnd_gradient = (GimpGradient *)
+	gimp_container_get_child_by_index (global_gradient_list, 0);
     }
   else
     {
-      curr_gradient = dnd_gradient = grad_create_default_gradient ();
-      curr_gradient->name     = g_strdup (_("Default"));
-      curr_gradient->filename =
-        build_user_filename (curr_gradient->name, gradient_path);
-      curr_gradient->dirty    = FALSE;
+      curr_gradient = dnd_gradient = gimp_gradient_new (_("Default"));
 
-      grad_insert_in_gradients_list (curr_gradient);
+      curr_gradient->filename =
+        build_user_filename (GIMP_OBJECT (curr_gradient)->name,
+			     gradient_path);
+
+      gimp_container_add (global_gradient_list, GIMP_OBJECT (curr_gradient));
+
       gimp_context_refresh_gradients ();
     }
 
@@ -2283,7 +2036,7 @@ preview_set_hint (gint x)
 
   xpos = control_calc_g_pos (x);
 
-  gradient_get_color_at (curr_gradient, xpos, &rgb);
+  gimp_gradient_get_color_at (curr_gradient, xpos, &rgb);
 
   gimp_rgb_to_hsv (&rgb, &hsv);
 
@@ -2314,7 +2067,7 @@ preview_set_foreground (gint x)
   gchar   *str;
 
   xpos = control_calc_g_pos (x);
-  gradient_get_color_at (curr_gradient, xpos, &color);
+  gimp_gradient_get_color_at (curr_gradient, xpos, &color);
 
   gimp_context_set_foreground (gimp_context_get_user (), &color);
 
@@ -2337,7 +2090,7 @@ preview_set_background (gint x)
   gchar   *str;
 
   xpos = control_calc_g_pos (x);
-  gradient_get_color_at (curr_gradient, xpos, &color);
+  gimp_gradient_get_color_at (curr_gradient, xpos, &color);
 
   gimp_context_set_background (gimp_context_get_user (), &color);
 
@@ -2455,7 +2208,7 @@ preview_fill_image (gint    width,
   /* Create lines to fill the image */
   for (x = 0; x < width; x++)
     {
-      gradient_get_color_at (curr_gradient, cur_x, &color);
+      gimp_gradient_get_color_at (curr_gradient, cur_x, &color);
 
       if ((x / GIMP_CHECK_SIZE) & 1)
 	{
@@ -2507,7 +2260,7 @@ control_events (GtkWidget *widget,
 		gpointer   data)
 {
   GdkEventButton *bevent;
-  grad_segment_t *seg;
+  GimpGradientSegment *seg;
   gint            x, y;
   guint32         time;
 
@@ -2610,7 +2363,7 @@ static void
 control_do_hint (gint x,
 		 gint y)
 {
-  grad_segment_t      *seg;
+  GimpGradientSegment      *seg;
   control_drag_mode_t  handle;
   gboolean             in_handle;
   double               pos;
@@ -2668,7 +2421,7 @@ control_button_press (gint  x,
 		      guint button,
 		      guint state)
 {
-  grad_segment_t      *seg;
+  GimpGradientSegment      *seg;
   control_drag_mode_t  handle;
   double               xpos;
   gboolean             in_handle;
@@ -2760,7 +2513,7 @@ control_button_press (gint  x,
 	  else  /* seg == NULL */
 	    {
 	      /* Right handle of last segment */
-	      seg = seg_get_last_segment (curr_gradient->segments);
+	      seg = gimp_gradient_segment_get_last (curr_gradient->segments);
 
 	      if (state & GDK_SHIFT_MASK)
 		{
@@ -2800,7 +2553,7 @@ control_button_press (gint  x,
     }
   else  /* !in_handle */
     {
-      seg = seg_get_segment_at (curr_gradient, xpos);
+      seg = gimp_gradient_get_segment_at (curr_gradient, xpos);
 
       g_editor->control_drag_mode    = GRAD_DRAG_ALL;
       g_editor->control_drag_segment = seg;
@@ -2819,7 +2572,7 @@ control_button_press (gint  x,
 static gboolean
 control_point_in_handle (gint                 x,
 			 gint                 y,
-			 grad_segment_t      *seg,
+			 GimpGradientSegment      *seg,
 			 control_drag_mode_t  handle)
 {
   gint handle_pos;
@@ -2833,7 +2586,7 @@ control_point_in_handle (gint                 x,
 	}
       else
 	{
-	  seg = seg_get_last_segment (curr_gradient->segments);
+	  seg = gimp_gradient_segment_get_last (curr_gradient->segments);
 
 	  handle_pos = control_calc_p_pos (seg->right);
 	}
@@ -2860,7 +2613,7 @@ control_point_in_handle (gint                 x,
 /*****/
 
 static void
-control_select_single_segment (grad_segment_t *seg)
+control_select_single_segment (GimpGradientSegment *seg)
 {
   g_editor->control_sel_l = seg;
   g_editor->control_sel_r = seg;
@@ -2869,7 +2622,7 @@ control_select_single_segment (grad_segment_t *seg)
 /*****/
 
 static void
-control_extend_selection (grad_segment_t *seg,
+control_extend_selection (GimpGradientSegment *seg,
 			  double          pos)
 {
   if (fabs (pos - g_editor->control_sel_l->left) <
@@ -2884,7 +2637,7 @@ control_extend_selection (grad_segment_t *seg,
 static void
 control_motion (gint x)
 {
-  grad_segment_t *seg;
+  GimpGradientSegment *seg;
   gdouble         pos;
   gdouble         delta;
   gchar          *str = NULL;
@@ -2958,12 +2711,12 @@ control_motion (gint x)
 /*****/
 
 static void
-control_compress_left (grad_segment_t *range_l,
-		       grad_segment_t *range_r,
-		       grad_segment_t *drag_seg,
+control_compress_left (GimpGradientSegment *range_l,
+		       GimpGradientSegment *range_r,
+		       GimpGradientSegment *drag_seg,
 		       double          pos)
 {
-  grad_segment_t *seg;
+  GimpGradientSegment *seg;
   double          lbound, rbound;
   int             k;
 
@@ -3044,14 +2797,14 @@ control_compress_left (grad_segment_t *range_l,
 /*****/
 
 static void
-control_compress_range (grad_segment_t *range_l,
-			grad_segment_t *range_r,
+control_compress_range (GimpGradientSegment *range_l,
+			GimpGradientSegment *range_r,
 			gdouble         new_l,
 			gdouble         new_r)
 {
   gdouble         orig_l, orig_r;
   gdouble         scale;
-  grad_segment_t *seg, *aseg;
+  GimpGradientSegment *seg, *aseg;
 
   orig_l = range_l->left;
   orig_r = range_r->right;
@@ -3077,13 +2830,13 @@ control_compress_range (grad_segment_t *range_l,
 /*****/
 
 static gdouble
-control_move (grad_segment_t *range_l,
-	      grad_segment_t *range_r,
+control_move (GimpGradientSegment *range_l,
+	      GimpGradientSegment *range_r,
 	      gdouble         delta)
 {
   gdouble         lbound, rbound;
   gint            is_first, is_last;
-  grad_segment_t *seg, *aseg;
+  GimpGradientSegment *seg, *aseg;
 
   /* First or last segments in gradient? */
 
@@ -3255,7 +3008,7 @@ control_draw (GdkPixmap *pixmap,
 {
   gint 	               sel_l, sel_r;
   gdouble              g_pos;
-  grad_segment_t      *seg;
+  GimpGradientSegment      *seg;
   control_drag_mode_t  handle;
 
   /* Clear the pixmap */
@@ -3306,7 +3059,7 @@ control_draw (GdkPixmap *pixmap,
 	}
       else
 	{
-	  seg = seg_get_last_segment (curr_gradient->segments);
+	  seg = gimp_gradient_segment_get_last (curr_gradient->segments);
 
 	  control_draw_normal_handle (pixmap, seg->right, height);
 	}
@@ -3681,7 +3434,7 @@ cpopup_create_menu_item_with_label (gchar      *str,
 static void
 cpopup_adjust_menus (void)
 {
-  grad_segment_t *seg;
+  GimpGradientSegment *seg;
   gint            i;
   GimpRGB         fg;
 
@@ -3697,7 +3450,7 @@ cpopup_adjust_menus (void)
   if (g_editor->control_sel_l->prev != NULL)
     seg = g_editor->control_sel_l->prev;
   else
-    seg = seg_get_last_segment (g_editor->control_sel_l);
+    seg = gimp_gradient_segment_get_last (g_editor->control_sel_l);
 
   cpopup_render_color_box (GTK_PREVIEW (g_editor->left_load_color_boxes[0]),
 			   &seg->right_color);
@@ -3875,10 +3628,10 @@ static void
 cpopup_check_selection_params (gint *equal_blending,
 			       gint *equal_coloring)
 {
-  grad_type_t     type;
-  grad_color_t    color;
+  GimpGradientSegmentType     type;
+  GimpGradientSegmentColor    color;
   int             etype, ecolor;
-  grad_segment_t *seg, *aseg;
+  GimpGradientSegment *seg, *aseg;
 
   type  = g_editor->control_sel_l->type;
   color = g_editor->control_sel_l->color;
@@ -4121,7 +3874,7 @@ static void
 cpopup_load_left_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  grad_segment_t *seg;
+  GimpGradientSegment *seg;
   GimpRGB         fg;
 
   switch ((long) data)
@@ -4130,7 +3883,7 @@ cpopup_load_left_callback (GtkWidget *widget,
       if (g_editor->control_sel_l->prev != NULL)
 	seg = g_editor->control_sel_l->prev;
       else
-	seg = seg_get_last_segment (g_editor->control_sel_l);
+	seg = gimp_gradient_segment_get_last (g_editor->control_sel_l);
 
       cpopup_blend_endpoints (&seg->right_color,
 			      &g_editor->control_sel_r->right_color,
@@ -4172,7 +3925,7 @@ static void
 cpopup_load_right_callback (GtkWidget *widget,
 			    gpointer   data)
 {
-  grad_segment_t *seg;
+  GimpGradientSegment *seg;
   GimpRGB         fg;
 
   switch ((long) data)
@@ -4221,11 +3974,11 @@ cpopup_save_right_callback (GtkWidget *widget,
 
 /*****/
 
-static grad_segment_t *
+static GimpGradientSegment *
 cpopup_save_selection (void)
 {
-  grad_segment_t *seg, *prev, *tmp;
-  grad_segment_t *oseg, *oaseg;
+  GimpGradientSegment *seg, *prev, *tmp;
+  GimpGradientSegment *oseg, *oaseg;
 
   prev = NULL;
   oseg = g_editor->control_sel_l;
@@ -4233,7 +3986,7 @@ cpopup_save_selection (void)
 
   do
     {
-      seg = seg_new_segment ();
+      seg = gimp_gradient_segment_new ();
 
       *seg = *oseg; /* Copy everything */
 
@@ -4257,31 +4010,23 @@ cpopup_save_selection (void)
 /*****/
 
 static void
-cpopup_free_selection (grad_segment_t *seg)
+cpopup_replace_selection (GimpGradientSegment *replace_seg)
 {
-  seg_free_segments (seg);
-}
-
-/*****/
-
-static void
-cpopup_replace_selection (grad_segment_t *replace_seg)
-{
-  grad_segment_t *lseg, *rseg;
-  grad_segment_t *replace_last;
+  GimpGradientSegment *lseg, *rseg;
+  GimpGradientSegment *replace_last;
 
   /* Remember left and right segments */
 
   lseg = g_editor->control_sel_l->prev;
   rseg = g_editor->control_sel_r->next;
 
-  replace_last = seg_get_last_segment (replace_seg);
+  replace_last = gimp_gradient_segment_get_last (replace_seg);
 
   /* Free old selection */
 
   g_editor->control_sel_r->next = NULL;
 
-  seg_free_segments (g_editor->control_sel_l);
+  gimp_gradient_segments_free (g_editor->control_sel_l);
 
   /* Link in new segments */
 
@@ -4351,7 +4096,7 @@ cpopup_left_color_changed (ColorNotebook      *cnb,
       cpopup_blend_endpoints ((GimpRGB *) color,
 			      &g_editor->control_sel_r->right_color,
 			      TRUE, TRUE);
-      cpopup_free_selection (g_editor->left_saved_segments);
+      gimp_gradient_segments_free (g_editor->left_saved_segments);
       curr_gradient->dirty = TRUE;
       color_notebook_free (cnb);
       gtk_widget_set_sensitive (g_editor->shell, TRUE);
@@ -4395,7 +4140,7 @@ cpopup_right_color_changed (ColorNotebook      *cnb,
       cpopup_blend_endpoints (&g_editor->control_sel_r->left_color,
 			      (GimpRGB *) color,
 			      TRUE, TRUE);
-      cpopup_free_selection (g_editor->right_saved_segments);
+      gimp_gradient_segments_free (g_editor->right_saved_segments);
       curr_gradient->dirty = TRUE;
       color_notebook_free (cnb);
       gtk_widget_set_sensitive (g_editor->shell, TRUE);
@@ -4460,13 +4205,13 @@ static void
 cpopup_blending_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  grad_type_t     type;
-  grad_segment_t *seg, *aseg;
+  GimpGradientSegmentType     type;
+  GimpGradientSegment *seg, *aseg;
 
   if (!GTK_CHECK_MENU_ITEM (widget)->active)
     return; /* Do nothing if the menu item is being deactivated */
 
-  type = (grad_type_t) data;
+  type = (GimpGradientSegmentType) data;
   seg  = g_editor->control_sel_l;
 
   do
@@ -4528,13 +4273,13 @@ static void
 cpopup_coloring_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  grad_color_t    color;
-  grad_segment_t *seg, *aseg;
+  GimpGradientSegmentColor    color;
+  GimpGradientSegment *seg, *aseg;
 
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     return; /* Do nothing if the menu item is being deactivated */
 
-  color = (grad_color_t) data;
+  color = (GimpGradientSegmentColor) data;
   seg   = g_editor->control_sel_l;
 
   do
@@ -4556,7 +4301,7 @@ static void
 cpopup_split_midpoint_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  grad_segment_t *seg, *lseg, *rseg;
+  GimpGradientSegment *seg, *lseg, *rseg;
 
   seg = g_editor->control_sel_l;
 
@@ -4575,19 +4320,19 @@ cpopup_split_midpoint_callback (GtkWidget *widget,
 }
 
 static void
-cpopup_split_midpoint (grad_segment_t  *lseg,
-		       grad_segment_t **newl,
-		       grad_segment_t **newr)
+cpopup_split_midpoint (GimpGradientSegment  *lseg,
+		       GimpGradientSegment **newl,
+		       GimpGradientSegment **newr)
 {
   GimpRGB         color;
-  grad_segment_t *newseg;
+  GimpGradientSegment *newseg;
 
   /* Get color at original segment's midpoint */
-  gradient_get_color_at (curr_gradient, lseg->middle, &color);
+  gimp_gradient_get_color_at (curr_gradient, lseg->middle, &color);
 
   /* Create a new segment and insert it in the list */
 
-  newseg = seg_new_segment();
+  newseg = gimp_gradient_segment_new ();
 
   newseg->prev = lseg;
   newseg->next = lseg->next;
@@ -4706,7 +4451,7 @@ static void
 cpopup_split_uniform_split_callback (GtkWidget *widget,
 				     gpointer   data)
 {
-  grad_segment_t *seg, *aseg, *lseg, *rseg, *lsel;
+  GimpGradientSegment *seg, *aseg, *lseg, *rseg, *lsel;
 
   gtk_widget_destroy (GTK_WIDGET (data));
   gtk_widget_set_sensitive (g_editor->shell, TRUE);
@@ -4744,12 +4489,12 @@ cpopup_split_uniform_cancel_callback (GtkWidget *widget,
 }
 
 static void
-cpopup_split_uniform (grad_segment_t  *lseg,
+cpopup_split_uniform (GimpGradientSegment  *lseg,
 		      int              parts,
-		      grad_segment_t **newl,
-		      grad_segment_t **newr)
+		      GimpGradientSegment **newl,
+		      GimpGradientSegment **newr)
 {
-  grad_segment_t *seg, *prev, *tmp;
+  GimpGradientSegment *seg, *prev, *tmp;
   gdouble          seg_len;
   gint             i;
 
@@ -4761,7 +4506,7 @@ cpopup_split_uniform (grad_segment_t  *lseg,
 
   for (i = 0; i < parts; i++)
     {
-      seg = seg_new_segment();
+      seg = gimp_gradient_segment_new ();
 
       if (i == 0)
 	tmp = seg; /* Remember first segment */
@@ -4770,8 +4515,8 @@ cpopup_split_uniform (grad_segment_t  *lseg,
       seg->right  = lseg->left + (i + 1) * seg_len;
       seg->middle = (seg->left + seg->right) / 2.0;
 
-      gradient_get_color_at (curr_gradient, seg->left,  &seg->left_color);
-      gradient_get_color_at (curr_gradient, seg->right, &seg->right_color);
+      gimp_gradient_get_color_at (curr_gradient, seg->left,  &seg->left_color);
+      gimp_gradient_get_color_at (curr_gradient, seg->right, &seg->right_color);
 
       seg->type  = lseg->type;
       seg->color = lseg->color;
@@ -4816,7 +4561,7 @@ cpopup_split_uniform (grad_segment_t  *lseg,
 
   /* Delete old segment */
 
-  seg_free_segment (lseg);
+  gimp_gradient_segment_free (lseg);
 }
 
 /*****/
@@ -4825,7 +4570,7 @@ static void
 cpopup_delete_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  grad_segment_t *lseg, *rseg, *seg, *aseg, *next;
+  GimpGradientSegment *lseg, *rseg, *seg, *aseg, *next;
   double          join;
 
   /* Remember segments to the left and to the right of the selection */
@@ -4872,7 +4617,7 @@ cpopup_delete_callback (GtkWidget *widget,
       next = seg->next;
       aseg = seg;
 
-      seg_free_segment (seg);
+      gimp_gradient_segment_free (seg);
 
       seg = next;
     }
@@ -4908,7 +4653,7 @@ static void
 cpopup_recenter_callback (GtkWidget *wiodget,
 			  gpointer   data)
 {
-  grad_segment_t *seg, *aseg;
+  GimpGradientSegment *seg, *aseg;
 
   seg = g_editor->control_sel_l;
 
@@ -4931,7 +4676,7 @@ static void
 cpopup_redistribute_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  grad_segment_t *seg, *aseg;
+  GimpGradientSegment *seg, *aseg;
   double          left, right, seg_len;
   int             num_segs;
   int             i;
@@ -5057,9 +4802,9 @@ static void
 cpopup_flip_callback (GtkWidget *widget,
 		      gpointer   data)
 {
-  grad_segment_t *oseg, *oaseg;
-  grad_segment_t *seg, *prev, *tmp;
-  grad_segment_t *lseg, *rseg;
+  GimpGradientSegment *oseg, *oaseg;
+  GimpGradientSegment *seg, *prev, *tmp;
+  GimpGradientSegment *lseg, *rseg;
   double          left, right;
 
   left  = g_editor->control_sel_l->left;
@@ -5073,7 +4818,7 @@ cpopup_flip_callback (GtkWidget *widget,
 
   do
     {
-      seg = seg_new_segment ();
+      seg = gimp_gradient_segment_new ();
 
       if (prev == NULL)
 	{
@@ -5143,7 +4888,7 @@ cpopup_flip_callback (GtkWidget *widget,
   do
     {
       oaseg = oseg->next;
-      seg_free_segment (oseg);
+      gimp_gradient_segment_free (oseg);
       oseg = oaseg;
     }
   while (oaseg != rseg);
@@ -5254,9 +4999,9 @@ cpopup_do_replicate_callback (GtkWidget *widget,
   gdouble          sel_left, sel_right, sel_len;
   gdouble          new_left;
   gdouble          factor;
-  grad_segment_t  *prev, *seg, *tmp;
-  grad_segment_t  *oseg, *oaseg;
-  grad_segment_t  *lseg, *rseg;
+  GimpGradientSegment  *prev, *seg, *tmp;
+  GimpGradientSegment  *oseg, *oaseg;
+  GimpGradientSegment  *lseg, *rseg;
   gint             i;
 
   gtk_widget_destroy (GTK_WIDGET (data));
@@ -5285,7 +5030,7 @@ cpopup_do_replicate_callback (GtkWidget *widget,
 
       do
 	{
-	  seg = seg_new_segment();
+	  seg = gimp_gradient_segment_new ();
 
 	  if (prev == NULL)
 	    {
@@ -5331,7 +5076,7 @@ cpopup_do_replicate_callback (GtkWidget *widget,
   do
     {
       oaseg = oseg->next;
-      seg_free_segment(oseg);
+      gimp_gradient_segment_free (oseg);
       oseg = oaseg;
     }
   while (oaseg != rseg);
@@ -5407,8 +5152,8 @@ cpopup_blend_endpoints (GimpRGB  *rgb1,
 {
   GimpRGB         d;
   gdouble         left, len;
-  grad_segment_t *seg;
-  grad_segment_t *aseg;
+  GimpGradientSegment *seg;
+  GimpGradientSegment *aseg;
 
   d.r = rgb2->r - rgb1->r;
   d.g = rgb2->g - rgb1->g;
@@ -5445,510 +5190,17 @@ cpopup_blend_endpoints (GimpRGB  *rgb1,
   while (aseg != g_editor->control_sel_r);
 }
 
-/***** Gradient functions *****/
-
-static gradient_t *
-grad_new_gradient (void)
-{
-  gradient_t *grad;
-
-  grad = g_new (gradient_t, 1);
-
-  grad->name   	     = NULL;
-  grad->filename     = NULL;
-  grad->segments     = NULL;
-  grad->last_visited = NULL;
-  grad->dirty        = FALSE;
-  grad->pixmap       = NULL;
-
-  return grad;
-}
-
-/*****/
-
-static void
-grad_free_gradient (gradient_t *grad)
-{
-  g_assert (grad != NULL);
-
-  if (grad->name)
-    g_free (grad->name);
-
-  if (grad->segments)
-    seg_free_segments (grad->segments);
-
-  if (grad->filename)
-    g_free (grad->filename);
-
-  if (grad->pixmap)
-    gdk_pixmap_unref (grad->pixmap);
-
-  g_free (grad);
-}
-
-/*****/
-
-static void
-grad_save_all (gboolean need_free)
-{
-  GSList     *node;
-  gradient_t *grad;
-
-  for (node = gradients_list; node; node = g_slist_next (node))
-    {
-      grad = node->data;
-
-      /* If gradient has dirty flag set, save it */
-      if (grad->dirty)
-	grad_save_gradient (grad, grad->filename);
-
-      if (need_free)
-	grad_free_gradient (grad);
-    }
-}
-
-/*****/
-
-static void
-grad_free_gradients (void)
-{
-  grad_save_all (TRUE);  
-
-  g_slist_free (gradients_list);
-
-  num_gradients  = 0;
-  gradients_list = NULL;
-  curr_gradient  = NULL;
-  dnd_gradient   = NULL;
-}
-
-/*****/
-
-static void
-grad_load_gradient (const gchar *filename)
-{
-  FILE           *file;
-  gradient_t     *grad;
-  grad_segment_t *seg;
-  grad_segment_t *prev;
-  gint            num_segments;
-  gint            i;
-  gint            type, color;
-  gchar           line[1024];
-
-  g_assert (filename != NULL);
-
-  file = fopen (filename, "rb");
-  if (!file)
-    return;
-
-  fgets (line, 1024, file);
-  if (strcmp (line, "GIMP Gradient\n") != 0)
-    return;
-
-  grad = grad_new_gradient ();
-
-  grad->filename = g_strdup (filename);
-  grad->name     = g_strdup (g_basename (filename));
-
-  fgets (line, 1024, file);
-  num_segments = atoi (line);
-
-  if (num_segments < 1)
-    {
-      g_message ("grad_load_gradient(): "
-                 "invalid number of segments in \"%s\"", filename);
-      g_free (grad);
-      return;
-    }
-
-  prev = NULL;
-
-  for (i = 0; i < num_segments; i++)
-    {
-      seg = seg_new_segment ();
-      seg->prev = prev;
-
-      if (prev)
-	prev->next = seg;
-      else
-	grad->segments = seg;
-
-      fgets (line, 1024, file);
-
-      if (sscanf (line, "%lf%lf%lf%lf%lf%lf%lf%lf%lf%lf%lf%d%d",
-		  &(seg->left), &(seg->middle), &(seg->right),
-		  &(seg->left_color.r),
-		  &(seg->left_color.g),
-		  &(seg->left_color.b),
-		  &(seg->left_color.a),
-		  &(seg->right_color.r),
-		  &(seg->right_color.g),
-		  &(seg->right_color.b),
-		  &(seg->right_color.a),
-		  &type, &color) != 13)
-	{
-	  g_message ("grad_load_gradient(): badly formatted "
-                     "gradient segment %d in \"%s\" --- bad things may "
-                     "happen soon", i, filename);
-	}
-      else
-	{
-	  seg->type  = (grad_type_t) type;
-	  seg->color = (grad_color_t) color;
-	}
-
-      prev = seg;
-    }
-
-  fclose (file);
-
-  grad_insert_in_gradients_list (grad);
-}
-
-/*****/
-
-static void
-grad_save_gradient (gradient_t  *grad,
-		    const gchar *filename)
-{
-  FILE           *file;
-  gint            num_segments;
-  grad_segment_t *seg;
-
-  g_assert (grad != NULL);
-
-  if (!filename)
-    {
-      g_message ("grad_save_gradient(): "
-                 "can not save gradient with NULL filename");
-      return;
-    }
-
-  file = fopen (filename, "wb");
-  if (!file)
-    {
-      g_message ("grad_save_gradient(): can't open \"%s\"", filename);
-      return;
-    }
-
-  /* File format is:
-   *
-   *   GIMP Gradient
-   *   number_of_segments
-   *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring
-   *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring
-   *   ...
-   */
-
-  fprintf (file, "GIMP Gradient\n");
-
-  /* Count number of segments */
-  num_segments = 0;
-  seg          = grad->segments;
-
-  while (seg)
-    {
-      num_segments++;
-      seg = seg->next;
-    }
-
-  /* Write rest of file */
-  fprintf (file, "%d\n", num_segments);
-
-  for (seg = grad->segments; seg; seg = seg->next)
-    fprintf (file, "%f %f %f %f %f %f %f %f %f %f %f %d %d\n",
-	     seg->left, seg->middle, seg->right,
-	     seg->left_color.r,
-	     seg->left_color.g,
-	     seg->left_color.b,
-	     seg->left_color.a,
-	     seg->right_color.r,
-	     seg->right_color.g,
-	     seg->right_color.b,
-	     seg->right_color.a,
-	     (int) seg->type, (int) seg->color);
-
-  fclose(file);
-
-  grad->dirty = FALSE;
-}
-
-/*****/
-
-static gradient_t *
-grad_create_default_gradient (void)
-{
-  gradient_t *grad;
-
-  grad = grad_new_gradient ();
-  grad->segments = seg_new_segment ();
-
-  return grad;
-}
-
-/*****/
-
-static gint
-grad_insert_in_gradients_list (gradient_t *grad)
-{
-  GSList     *tmp;
-  gradient_t *g;
-  gint        n;
-
-  g_return_val_if_fail (grad != NULL, 0);
-
-  /* We insert gradients in alphabetical order.  Find the index
-   * of the gradient after which we will insert the current one.
-   */
-
-  g = NULL;
-
-  for (tmp = gradients_list, n = 0; tmp; tmp = g_slist_next (tmp), n++)
-    {
-      g = tmp->data;
-
-      if (strcmp (grad->name, g->name) <= 0)
-	break; /* We found the one we want */
-    }
-
-  /* is there a gradient with this name already? */
-  if (g && strcmp (grad->name, g->name) == 0)
-    gradients_list_uniquefy_gradient_name (grad);
-
-  num_gradients++;
-  gradients_list = g_slist_insert (gradients_list, grad, n);
-
-  return n;
-}
-
-static void
-gradients_list_uniquefy_gradient_name (gradient_t *gradient)
-{
-  GSList     *list;
-  GSList     *listg;
-  gradient_t *gradg;
-  gint        number = 1;
-  gchar      *newname;
-  gchar      *oldname;
-  gchar      *ext;
-  
-  g_return_if_fail (gradient != NULL);
-  
-  for (list = gradients_list; list; list = g_slist_next (list))
-    {
-      gradg = (gradient_t *) list->data;
-      
-      if (! gradg->name)
-	continue;
-
-      if (gradient != gradg &&
-	  strcmp (gradient->name, gradg->name) == 0)
-	{
-	  /* names conflict */
-	  oldname = gradient->name;
-	  newname = g_malloc (strlen (oldname) + 10); /* if this aint enough 
-							 yer screwed */
-	  strcpy (newname, oldname);
-	  if ((ext = strrchr (newname, '#')))
-	    {
-	      number = atoi (ext + 1);
-	      
-	      if (&ext[(gint)(log10 (number) + 1)] !=
-		  &newname[strlen (newname) - 1])
-		{
-		  number = 1;
-		  ext = &newname[strlen (newname)];
-		}
-	    }
-	  else
-	    {
-	      number = 1;
-	      ext = &newname[strlen (newname)];
-	    }
-	  sprintf (ext, "#%d", number + 1);
-	  
-	  for (listg = gradients_list; listg; listg = g_slist_next (listg))
-	    {
-	      gradg = (gradient_t *) listg->data;
-
-	      if (! gradg->name)
-		continue;
-
-	      if (gradient != gradg &&
-		  strcmp (newname,  gradg->name) == 0)
-		{
-		  number++;
-		  sprintf (ext, "#%d", number+1);
-		  listg = gradients_list;
-		}
-	    }
-	  
-	  g_free (gradient->name);
-	  gradient->name = newname;
-
-	  /*  should resort the list here  */
-
-	  return;
-	}
-    }
-}
-
-/*****/
-
-static void
-grad_dump_gradient (gradient_t *grad,
-		    FILE       *file)
-{
-  grad_segment_t *seg;
-
-  g_return_if_fail (grad != NULL);
-  g_return_if_fail (file != NULL);  
-
-  fprintf (file, "Name: \"%s\"\n", grad->name);
-  fprintf (file, "Dirty: %d\n", grad->dirty);
-  fprintf (file, "Filename: \"%s\"\n", grad->filename);
-
-  for (seg = grad->segments; seg; seg = seg->next)
-    {
-      fprintf (file, "%c%p | %f %f %f | %f %f %f %f | %f %f %f %f | %d %d | %p %p\n",
-	       (seg == grad->last_visited) ? '>' : ' ',
-	       seg,
-	       seg->left, seg->middle, seg->right,
-	       seg->left_color.r,
-	       seg->left_color.g,
-	       seg->left_color.b,
-	       seg->left_color.a,
-	       seg->right_color.r,
-	       seg->right_color.g,
-	       seg->right_color.b,
-	       seg->right_color.a,
-	       (int) seg->type,
-	       (int) seg->color,
-	       seg->prev, seg->next);
-    }
-}
-
 /***** Segment functions *****/
 
-static grad_segment_t *
-seg_new_segment (void)
-{
-  grad_segment_t *seg;
-
-  seg = g_new (grad_segment_t, 1);
-
-  seg->left   = 0.0;
-  seg->middle = 0.5;
-  seg->right  = 1.0;
-
-  gimp_rgba_set (&seg->left_color,  0.0, 0.0, 0.0, 1.0);
-  gimp_rgba_set (&seg->right_color, 1.0, 1.0, 1.0, 1.0);
-
-  seg->type  = GRAD_LINEAR;
-  seg->color = GRAD_RGB;
-
-  seg->prev = seg->next = NULL;
-
-  return seg;
-}
-
-/*****/
-
 static void
-seg_free_segment (grad_segment_t *seg)
-{
-  g_assert (seg != NULL);
-
-  g_free (seg);
-}
-
-static void
-seg_free_segments (grad_segment_t *seg)
-{
-  grad_segment_t *tmp;
-
-  g_assert (seg != NULL);
-
-  while (seg)
-    {
-      tmp = seg->next;
-      seg_free_segment (seg);
-      seg = tmp;
-    }
-}
-
-/*****/
-
-static grad_segment_t *
-seg_get_segment_at (gradient_t *grad,
-		    double      pos)
-{
-  grad_segment_t *seg;
-
-  g_assert (grad != NULL);
-
-  /* handle FP imprecision at the edges of the gradient */
-  pos = CLAMP (pos, 0.0, 1.0);
-
-  if (grad->last_visited)
-    seg = grad->last_visited;
-  else
-    seg = grad->segments;
-
-  while (seg)
-    {
-      if (pos >= seg->left)
-	{
-	  if (pos <= seg->right)
-	    {
-	      grad->last_visited = seg; /* for speed */
-	      return seg;
-	    }
-	  else
-	    {
-	      seg = seg->next;
-	    }
-	}
-      else
-	{
-	  seg = seg->prev;
-	}
-    }
-
-  /* Oops: we should have found a segment, but we didn't */
-  grad_dump_gradient (grad, stderr);
-  gimp_fatal_error ("seg_get_segment_at(): "
-                    "No matching segment for position %0.15f", pos);
-
-  return NULL; /* To shut up -Wall */
-}
-
-/*****/
-
-static grad_segment_t *
-seg_get_last_segment (grad_segment_t *seg)
-{
-  if (!seg)
-    return NULL;
-
-  while (seg->next)
-    seg = seg->next;
-
-  return seg;
-}
-
-/*****/
-
-static void
-seg_get_closest_handle (gradient_t           *grad,
+seg_get_closest_handle (GimpGradient           *grad,
 			double                pos,
-			grad_segment_t      **seg,
+			GimpGradientSegment      **seg,
 			control_drag_mode_t  *handle)
 {
   double l_delta, m_delta, r_delta;
 
-  *seg = seg_get_segment_at (grad, pos);
+  *seg = gimp_gradient_get_segment_at (grad, pos);
 
   m_delta = fabs (pos - (*seg)->middle);
 
@@ -5976,69 +5228,6 @@ seg_get_closest_handle (gradient_t           *grad,
 	}
     }
 }
-
-/***** Calculation functions *****/
-
-static double
-calc_linear_factor (double middle,
-		    double pos)
-{
-  if (pos <= middle)
-    {
-      if (middle < EPSILON)
-	return 0.0;
-      else
-	return 0.5 * pos / middle;
-    }
-  else
-    {
-      pos -= middle;
-      middle = 1.0 - middle;
-
-      if (middle < EPSILON)
-	return 1.0;
-      else
-	return 0.5 + 0.5 * pos / middle;
-    }
-}
-
-static double
-calc_curved_factor (double middle,
-		    double pos)
-{
-  if (middle < EPSILON)
-    middle = EPSILON;
-
-  return pow(pos, log (0.5) / log (middle));
-}
-
-static double
-calc_sine_factor (double middle,
-		  double pos)
-{
-  pos = calc_linear_factor (middle, pos);
-
-  return (sin ((-G_PI / 2.0) + G_PI * pos) + 1.0) / 2.0;
-}
-
-static double
-calc_sphere_increasing_factor (double middle,
-			       double pos)
-{
-  pos = calc_linear_factor (middle, pos) - 1.0;
-
-  return sqrt (1.0 - pos * pos); /* Works for convex increasing and concave decreasing */
-}
-
-static double
-calc_sphere_decreasing_factor (double middle,
-			       double pos)
-{
-  pos = calc_linear_factor (middle, pos);
-
-  return 1.0 - sqrt(1.0 - pos * pos); /* Works for convex decreasing and concave increasing */
-}
-
 
 /***** Files and paths functions *****/
 
