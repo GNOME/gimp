@@ -1,3 +1,7 @@
+2003-06-08  Abel Cheung  <maddog@linux.org.hk>
+
+	* uk.po: Removed, it contains only one completely broken string.
+
 2003-05-20  Sven Neumann  <sven@gimp.org>
 
 	* gimp-tips.xml.in: a first attempt at updating the tips.
