@@ -24,6 +24,7 @@ OBJECTS = \
 	gimpconfig-serialize.obj \
 	gimpconfig-types.obj \
 	gimpconfig-utils.obj \
+	gimpconfigwriter.obj \
 	gimpcoreconfig.obj \
 	gimpdisplayconfig.obj \
 	gimpguiconfig.obj \

@@ -11,6 +11,7 @@ EXPORTS
 	gimp_color_area_has_alpha
 	gimp_color_area_new
 	gimp_color_area_set_color
+	gimp_color_area_set_draw_border
 	gimp_color_area_set_type
 	gimp_color_button_get_color
 	gimp_color_button_get_type
@@ -76,8 +77,8 @@ EXPORTS
 	gimp_option_menu_new2
 	gimp_option_menu_set_history
 	gimp_option_menu_set_sensitive
-	gimp_palette_get_background
-	gimp_palette_get_foreground
+;	gimp_palette_get_background
+;	gimp_palette_get_foreground
 	gimp_path_editor_get_path
 	gimp_path_editor_get_type
 	gimp_path_editor_new
@@ -117,20 +118,12 @@ EXPORTS
 	gimp_size_entry_set_value
 	gimp_size_entry_set_value_boundaries
 	gimp_spin_button_new
-	gimp_standard_help_func
+;	gimp_standard_help_func
 	gimp_stock_init
 	gimp_table_attach_aligned
 	gimp_toggle_button_sensitive_update
 	gimp_toggle_button_update
 	gimp_uint_adjustment_update
-	gimp_unit_get_abbreviation
-	gimp_unit_get_digits
-	gimp_unit_get_factor
-	gimp_unit_get_number_of_built_in_units
-	gimp_unit_get_number_of_units
-	gimp_unit_get_plural
-	gimp_unit_get_singular
-	gimp_unit_get_symbol
 	gimp_unit_menu_get_type
 	gimp_unit_menu_get_unit
 	gimp_unit_menu_new

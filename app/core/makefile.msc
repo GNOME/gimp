@@ -62,24 +62,30 @@ OBJECTS = \
 	gimpimage.obj \
 	gimpimagemap.obj \
 	gimpimage-colorhash.obj \
+	gimpimage-colormap.obj \
 	gimpimage-contiguous-region.obj \
 	gimpimage-convert.obj \
 	gimpimage-crop.obj \
 	gimpimage-duplicate.obj \
+	gimpimage-flip.obj \
 	gimpimage-guides.obj \
 	gimpimage-mask.obj \
 	gimpimage-mask-select.obj \
 	gimpimage-merge.obj \
 	gimpimage-new.obj \
 	gimpimage-pick-color.obj \
+	gimpimage-preview.obj \
 	gimpimage-projection.obj \
 	gimpimage-qmask.obj \
 	gimpimage-resize.obj \
+	gimpimage-rotate.obj \
 	gimpimage-scale.obj \
 	gimpimage-undo.obj \
 	gimpimage-undo-push.obj \
 	gimpimagefile.obj \
 	gimpitem.obj \
+	gimpitem-linked.obj \
+	gimpitemundo.obj \
 	gimplayer.obj \
 	gimplayer-floating-sel.obj \
 	gimplayermask.obj \
@@ -95,12 +101,15 @@ OBJECTS = \
 	gimppattern.obj \
 	gimppreviewcache.obj \
 	gimpscanconvert.obj \
+	gimptemplate.obj \
+	gimp-templates.obj \
 	gimptoolinfo.obj \
 	gimpundo.obj \
 	gimpundostack.obj \
 	gimpunit.obj \
 	gimpunits.obj \
 	gimpviewable.obj \
+	gimp-utils.obj \
 
 OTHER_FILES = \
 	\

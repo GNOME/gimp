@@ -97,6 +97,9 @@ EXPORTS
 	gimp_floating_sel_remove
 	gimp_floating_sel_rigor
 	gimp_floating_sel_to_layer
+	gimp_fonts_close_popup
+	gimp_fonts_popup
+	gimp_fonts_set_popup
 	gimp_free_select
 	gimp_fuzzy_select
 	gimp_gamma
@@ -350,7 +353,6 @@ EXPORTS
 	gimp_unit_new
 	gimp_unit_set_deletion_flag
 	gimp_version
-	set_gimp_PLUG_IN_INFO_PTR
 
 
 

@@ -50,6 +50,7 @@ PDB_WRAPPERS_O = \
 	gimpedit_pdb.obj \
 	gimpfileops_pdb.obj \
 	gimpfloatingsel_pdb.obj \
+	gimpfontselect_pdb.obj \
 	gimpgimprc_pdb.obj \
 	gimpgradients_pdb.obj \
 	gimpgradientselect_pdb.obj \
@@ -120,6 +121,7 @@ gimp.obj : gimp.c
 gimpui_OBJECTS = \
 	gimpui.obj \
 	gimpbrushmenu.obj \
+	gimpfontmenu.obj \
 	gimpgradientmenu.obj \
 	gimpmenu.obj \
 	gimppatternmenu.obj \

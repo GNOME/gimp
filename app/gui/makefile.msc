@@ -56,6 +56,7 @@ OBJECTS = \
 	file-open-menu.obj \
 	file-save-dialog.obj \
 	file-save-menu.obj \
+	font-select.obj \
 	gradient-editor-commands.obj \
 	gradient-editor-menu.obj \
 	gradients-commands.obj \
@@ -80,7 +81,6 @@ OBJECTS = \
 	palettes-commands.obj \
 	palettes-menu.obj \
 	palette-select.obj \
-	paths-dialog.obj \
 	patterns-menu.obj \
 	pattern-select.obj \
 	plug-in-commands.obj \
@@ -93,7 +93,8 @@ OBJECTS = \
 	select-commands.obj \
 	session.obj \
 	splash.obj \
-	test-commands.obj \
+	templates-commands.obj \
+	templates-menu.obj \
 	tips-dialog.obj \
 	tips-parser.obj \
 	tool-options-dialog.obj \

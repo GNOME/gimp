@@ -43,8 +43,6 @@ PKG_LINK = \
 	plug-in/appplug-in.lib \
 	$(PRJ_TOP)/regexrepl/regexrepl.lib \
 	\
-	$(top_builddir)/libgimptool/gimptool.lib \
-	\
 	$(top_builddir)/libgimpcolor/gimpcolor-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpmath/gimpmath-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
@@ -56,13 +54,13 @@ PKG_LINK = \
 	$(GIMP_MP_LIBS) \
 	$(INTL_LIBS) \
 	$(PANGO)\pango\pangoft2-$(PANGO_VER).lib \
-	$(LIBART_LIBS)
-
+	$(LIBART_LIBS) \
+	\
+	$(PANGO)\fontconfig\fcwin32.lib
 gimp_LDFLAGS = \
 	-export-dynamic -export-symbols $(srcdir)/gimp.sym
 
 INCLUDES = \
-	-DGIMP_APP_GLUE_COMPILATION \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/intl \
 	$(GTK2_CFLAGS) \
@@ -75,8 +73,6 @@ mmx_sources = \
 	
 
 OBJECTS = \
-	ops_buttons.obj \
-	path.obj \
 	app_procs.obj \
 	main.obj \
 	batch.obj \

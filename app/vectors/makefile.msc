@@ -26,6 +26,7 @@ OBJECTS = \
 	gimpbezierstroke.obj \
 	gimpstroke.obj \
 	gimpvectors.obj \
+	gimpvectors-compat.obj \
 	gimpvectors-preview.obj \
 
 all : \

@@ -629,10 +629,10 @@ WinMain(HINSTANCE hInstance,
   hInst = hInstance;
 
   /*
-   * Now, call win32_gimp_main... This is what the normal WinMain()
+   * Now, call gimp_main... This is what the normal WinMain()
    * would do.
    */
-  return win32_gimp_main(__argc, __argv);
+  return gimp_main(&PLUG_IN_INFO, __argc, __argv);
 }
 	
 /*

@@ -12,7 +12,7 @@ SUBDIRS = \
 	libgimpmath \
 	libgimpwidgets \
 	libgimp \
-	libgimptool \
+#	libgimptool \
 	libgimpmodule \
 	regexrepl \
 	app \

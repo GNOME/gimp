@@ -26,19 +26,20 @@ OBJECTS = \
 	gimpbrusheditor.obj \
 	gimpbrushfactoryview.obj \
 	gimpbufferview.obj \
+	gimpcellrenderertoggle.obj \
 	gimpcellrendererviewable.obj \
-	gimpchannellistitem.obj \
-	gimpchannellistview.obj \
+	gimpchanneltreeview.obj \
 	gimpcoloreditor.obj \
 	gimpcolormapeditor.obj \
 	gimpcolorpanel.obj \
-	gimpcomponentlistitem.obj \
+	gimpcomponenteditor.obj \
 	gimpcontainereditor.obj \
 	gimpcontainergridview.obj \
-	gimpcontainerlistview.obj \
 	gimpcontainermenu.obj \
 	gimpcontainermenuimpl.obj \
+	gimpcontainerpopup.obj \
 	gimpcontainertreeview.obj \
+	gimpcontainertreeview-dnd.obj \
 	gimpcontainerview.obj \
 	gimpcontainerview-utils.obj \
 	gimpcursor.obj \
@@ -52,8 +53,7 @@ OBJECTS = \
 	gimpdockable.obj \
 	gimpdockbook.obj \
 	gimpdocumentview.obj \
-	gimpdrawablelistitem.obj \
-	gimpdrawablelistview.obj \
+	gimpdrawabletreeview.obj \
 	gimpeditor.obj \
 	gimpenummenu.obj \
 	gimpfontselection.obj \
@@ -66,11 +66,8 @@ OBJECTS = \
 	gimpimageeditor.obj \
 	gimpimageview.obj \
 	gimpitemfactory.obj \
-	gimpitemlistitem.obj \
-	gimpitemlistview.obj \
-	gimplayerlistitem.obj \
-	gimplayerlistview.obj \
-	gimplistitem.obj \
+	gimpitemtreeview.obj \
+	gimplayertreeview.obj \
 	gimpmenufactory.obj \
 	gimpmenuitem.obj \
 	gimpnavigationpreview.obj \
@@ -80,16 +77,21 @@ OBJECTS = \
 	gimppreviewrenderer.obj \
 	gimppreviewrendererbrush.obj \
 	gimppreviewrendererdrawable.obj \
+	gimppreviewrenderergradient.obj \
 	gimppreviewrendererimage.obj \
+	gimppreviewrenderertextlayer.obj \
 	gimppreviewrenderer-utils.obj \
 	gimppropwidgets.obj \
 	gimpselectioneditor.obj \
+	gimptemplateeditor.obj \
+	gimptemplateview.obj \
 	gimptexteditor.obj \
 	gimptoolbox.obj \
 	gimptoolbox-color-area.obj \
 	gimptoolbox-indicator-area.obj \
 	gimpundoeditor.obj \
-	gimpvectorslistview.obj \
+	gimpvectorstreeview.obj \
+	gimpviewablebutton.obj \
 	gimpviewabledialog.obj \
 	gimpwidgets-constructors.obj \
 	gimpwidgets-utils.obj \

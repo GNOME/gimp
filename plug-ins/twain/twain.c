@@ -247,8 +247,7 @@ WinMain(HINSTANCE hInstance,
    * Now, call gimp_main... This is what the MAIN() macro
    * would usually do.
    */
-  set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);
-  return gimp_main(__argc, __argv);
+  return gimp_main(&PLUG_IN_INFO, __argc, __argv);
 }
 
 /*
@@ -269,8 +268,7 @@ int main (int argc, char *argv[])
    * Now, call gimp_main... This is what the MAIN() macro
    * would usually do.
    */
-  set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);
-  return gimp_main(__argc, __argv);
+  return gimp_main(&PLUG_IN_INFO, __argc, __argv);
 }
 	
 /*

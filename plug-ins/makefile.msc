@@ -123,6 +123,8 @@ sub-separate-plugins :
 	@cd script-fu
 	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=script-fu EXTRA_script_fu=1 $(TARGET)
 	@cd ..
+
+not-any-more :
 # Also GAP is special
 	@cd gap
 	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=gap_filter EXTRA_gap_filter=1 $(TARGET)
@@ -580,7 +582,9 @@ OBJECTS = \
 OBJECTS = \
 	tw_func.obj \
 	tw_util.obj \
+!IFDEF DEBUG
 	tw_dump.obj \
+!ENDIF
 	twain.obj
 EXTRALIBS = user32.lib
 !ENDIF

@@ -60,8 +60,8 @@ OBJECTS = \
 	gimpstock.obj \
 	gimpunitmenu.obj \
 	gimpwidgets.obj \
+	gimpwidgets-private.obj \
 	gimpwidgetsmarshal.obj \
-	libgimp-glue.obj
 
 
 gimpwidgetsmarshal.h : gimpwidgetsmarshal.list

@@ -1,3 +1,10 @@
+2003-05-24  Hans Breuer  <hans@breuer.org>
+
+	* **/makefile.msc **/*.def : updated win32 (msvc) build
+
+	* plug-ins/twain/twain.c plug-ins/winsnap/winsnap.c :
+	add the extra parameter to gimp_main() calls
+
 2003-05-23  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/gimp.[ch]: gimp_main now takes a GimpPlugInInfo *,

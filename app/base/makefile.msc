@@ -19,6 +19,7 @@ OBJECTS = \
 	boundary.obj \
 	brush-scale.obj \
 	color-balance.obj \
+	colorize.obj \
 	curves.obj \
 	gimphistogram.obj \
 	gimplut.obj \

@@ -26,6 +26,7 @@ OBJECTS = \
 	gimpdisplay-foreach.obj \
 	gimpdisplay-handlers.obj \
 	gimpdisplayshell.obj \
+	gimpdisplayshell-appearance.obj \
 	gimpdisplayshell-callbacks.obj \
 	gimpdisplayshell-cursor.obj \
 	gimpdisplayshell-dnd.obj \

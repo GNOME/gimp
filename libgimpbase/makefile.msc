@@ -25,7 +25,7 @@ INCLUDES = \
 	-I$(includedir) \
 
 PKG_LINK = \
-	$(GLIB_LIBS)
+	$(GLIB_LIBS) $(INTL_LIBS)
 
 OBJECTS = \
 	gimpenv.obj \

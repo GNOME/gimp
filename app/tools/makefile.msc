@@ -26,7 +26,7 @@ OBJECTS = \
 #	tools-enums.obj \
 	tools.obj \
 	gimpairbrushtool.obj \
-	gimpbezierselecttool.obj \
+#	gimpbezierselecttool.obj \
 	gimpblendoptions.obj \
 	gimpblendtool.obj \
 	gimpbrightnesscontrasttool.obj \
@@ -35,6 +35,7 @@ OBJECTS = \
 	gimpbycolorselecttool.obj \
 	gimpclonetool.obj \
 	gimpcolorbalancetool.obj \
+	gimpcolorizetool.obj \
 	gimpcolorpickeroptions.obj \
 	gimpcolorpickertool.obj \
 	gimpconvolvetool.obj \
@@ -81,7 +82,6 @@ OBJECTS = \
 	gimpthresholdtool.obj \
 	gimptool.obj \
 	gimptoolcontrol.obj \
-	gimptoolmodule.obj \
 	gimptransformoptions.obj \
 	gimptransformtool.obj \
 	gimptransformtool-undo.obj \
@@ -90,6 +90,7 @@ OBJECTS = \
 	paint_options.obj \
 	tool_options.obj \
 	tool_manager.obj \
+	tools-enums.obj \
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
