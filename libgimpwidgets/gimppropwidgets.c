@@ -93,6 +93,9 @@ gimp_prop_check_button_new (GObject     *config,
   GtkWidget   *button;
   gboolean     value;
 
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
@@ -195,6 +198,9 @@ gimp_prop_enum_check_button_new (GObject     *config,
   GParamSpec  *param_spec;
   GtkWidget   *button;
   gint        value;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
 
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_ENUM, G_STRFUNC);
@@ -334,6 +340,9 @@ gimp_prop_int_combo_box_new (GObject      *config,
   GtkWidget  *widget;
   gint        value;
 
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_INT, G_STRFUNC);
   if (! param_spec)
@@ -401,6 +410,9 @@ gimp_prop_enum_combo_box_new (GObject     *config,
   GtkWidget  *combo_box;
   GtkWidget  *widget;
   gint        value;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
 
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_ENUM, G_STRFUNC);
@@ -536,6 +548,9 @@ gimp_prop_boolean_combo_box_new (GObject     *config,
   GtkWidget  *widget;
   gboolean    value;
 
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
@@ -658,6 +673,9 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
   GtkWidget  *button;
   gint        value;
 
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
@@ -727,6 +745,9 @@ gimp_prop_enum_radio_box_new (GObject     *config,
   GtkWidget  *button;
   gint        value;
 
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
@@ -792,6 +813,9 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
   GtkWidget  *button;
   gboolean    value;
 
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
@@ -851,6 +875,9 @@ gimp_prop_enum_stock_box_new (GObject     *config,
   GtkWidget  *box;
   GtkWidget  *button;
   gint        value;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
 
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_ENUM, G_STRFUNC);
@@ -1120,6 +1147,9 @@ gimp_prop_opacity_entry_new (GObject     *config,
   gdouble      lower;
   gdouble      upper;
 
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_DOUBLE, G_STRFUNC);
   if (! param_spec)
@@ -1338,6 +1368,9 @@ gimp_prop_memsize_entry_new (GObject     *config,
   GtkWidget        *entry;
   guint64           value;
 
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
   param_spec = check_param_spec (config, property_name,
                                  GIMP_TYPE_PARAM_MEMSIZE, G_STRFUNC);
   if (! param_spec)
@@ -1446,6 +1479,9 @@ gimp_prop_label_new (GObject     *config,
   GtkWidget  *label;
   gchar      *value;
 
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_STRING, G_STRFUNC);
   if (! param_spec)
@@ -1514,6 +1550,9 @@ gimp_prop_entry_new (GObject     *config,
   GParamSpec *param_spec;
   GtkWidget  *entry;
   gchar      *value;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
 
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_STRING, G_STRFUNC);
@@ -1629,6 +1668,9 @@ gimp_prop_text_buffer_new (GObject     *config,
   GParamSpec    *param_spec;
   GtkTextBuffer *text_buffer;
   gchar         *value;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
 
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_STRING, G_STRFUNC);
@@ -1753,7 +1795,8 @@ static void   gimp_prop_file_entry_notify   (GObject       *config,
  * @property_name:     Name of Path property.
  * @filesel_title:     Label for the file selector.
  * @dir_only:          #TRUE if the file entry should accept directories only.
- * @check_valid:       #TRUE if the widget should check if the entered file really exists.
+ * @check_valid:       #TRUE if the widget should check if the entered file
+ *                     really exists.
  *
  * Creates a #GimpFileEntry to set and display the specified Path property.
  *
@@ -1772,6 +1815,9 @@ gimp_prop_file_entry_new (GObject     *config,
   GtkWidget  *entry;
   gchar      *filename;
   gchar      *value;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
 
   param_spec = check_param_spec (config, property_name,
                                  GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
@@ -1864,6 +1910,138 @@ gimp_prop_file_entry_notify (GObject       *config,
 
 
 /*****************/
+/*  file button  */
+/*****************/
+
+
+static void  gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
+                                                     GObject        *config);
+static void  gimp_prop_file_chooser_button_notify   (GObject        *config,
+                                                     GParamSpec     *param_spec,
+                                                     GtkFileChooser *button);
+
+/**
+ * gimp_prop_file_chooser_button_new:
+ * @config:        object to which property is attached.
+ * @property_name: name of Path property.
+ * @title:         the title of the browse dialog.
+ * @action:        the open mode for the widget.
+ *
+ * Creates a #GtkFileChooserButton to set and display the specified
+ * Path property.
+ *
+ * Return value:  A new #GimpFileButton widget.
+ *
+ * Since GIMP 2.4
+ */
+GtkWidget *
+gimp_prop_file_chooser_button_new (GObject              *config,
+                                   const gchar          *property_name,
+                                   const gchar          *title,
+                                   GtkFileChooserAction  action)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *button;
+  gchar      *filename;
+  gchar      *value;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  param_spec = check_param_spec (config, property_name,
+                                 GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+  g_free (value);
+
+  button = gtk_file_chooser_button_new (title, action);
+
+  if (filename)
+    {
+      gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (button), filename);
+      g_free (filename);
+    }
+
+  set_param_spec (G_OBJECT (button), button, param_spec);
+
+  g_signal_connect (button, "file-activated",
+		    G_CALLBACK (gimp_prop_file_chooser_button_callback),
+		    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_file_chooser_button_notify),
+                  button);
+
+  return button;
+}
+
+static void
+gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
+                                        GObject        *config)
+{
+  GParamSpec *param_spec;
+  gchar      *value;
+  gchar      *utf8;
+
+  param_spec = get_param_spec (G_OBJECT (button));
+  if (! param_spec)
+    return;
+
+  value = gtk_file_chooser_get_filename (button);
+  utf8 = g_filename_to_utf8 (value, -1, NULL, NULL, NULL);
+  g_free (value);
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_file_chooser_button_notify,
+                                   button);
+
+  g_object_set (config,
+                param_spec->name, utf8,
+                NULL);
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_file_chooser_button_notify,
+                                   button);
+
+  g_free (utf8);
+}
+
+static void
+gimp_prop_file_chooser_button_notify (GObject        *config,
+                                      GParamSpec     *param_spec,
+                                      GtkFileChooser *button)
+{
+  gchar *value;
+  gchar *filename;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+  g_free (value);
+
+  g_signal_handlers_block_by_func (button,
+                                   gimp_prop_file_chooser_button_callback,
+                                   config);
+
+  gtk_file_chooser_set_filename (button, filename);
+
+  g_signal_handlers_unblock_by_func (button,
+                                     gimp_prop_file_chooser_button_callback,
+                                     config);
+
+  g_free (filename);
+}
+
+
+/*****************/
 /*  path editor  */
 /*****************/
 
@@ -1889,6 +2067,9 @@ gimp_prop_path_editor_new (GObject     *config,
   GtkWidget  *editor;
   gchar      *value;
   gchar      *filename;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (path_property_name != NULL, NULL);
 
   path_param_spec = check_param_spec (config, path_property_name,
                                       GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);

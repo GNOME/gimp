@@ -1,3 +1,14 @@
+2005-03-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppropwidgets.[ch]: added
+	gimp_prop_file_chooser_button_new(), a convenience constructor for
+	GtkFileChooserButton.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+	* app/dialogs/preferences-dialog.c: use the new prop widget on the
+	color management page.
+
 2005-03-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* configure.in

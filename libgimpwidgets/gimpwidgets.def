@@ -97,12 +97,6 @@ EXPORTS
 	gimp_enum_combo_box_get_type
 	gimp_enum_combo_box_new
 	gimp_enum_combo_box_set_stock_prefix
-	gimp_enum_store_get_type
-	gimp_enum_store_new_with_range
-	gimp_enum_store_new
-	gimp_enum_store_new_with_values_valist
-	gimp_enum_store_new_with_values
-	gimp_enum_store_set_stock_prefix
 	gimp_enum_radio_box_new 
 	gimp_enum_radio_box_new_with_range
 	gimp_enum_radio_frame_new
@@ -110,6 +104,12 @@ EXPORTS
 	gimp_enum_stock_box_new
 	gimp_enum_stock_box_new_with_range
 	gimp_enum_stock_box_set_child_padding
+	gimp_enum_store_get_type
+	gimp_enum_store_new
+	gimp_enum_store_new_with_range
+	gimp_enum_store_new_with_values
+	gimp_enum_store_new_with_values_valist
+	gimp_enum_store_set_stock_prefix
 	gimp_file_entry_get_filename
 	gimp_file_entry_get_type
 	gimp_file_entry_new
@@ -190,31 +190,32 @@ EXPORTS
 	gimp_preview_set_bounds
 	gimp_preview_set_default_cursor
 	gimp_preview_set_update
-	gimp_prop_check_button_new
 	gimp_prop_boolean_combo_box_new
 	gimp_prop_boolean_radio_frame_new
-	gimp_prop_expander_new
-	gimp_prop_int_combo_box_new
-	gimp_prop_enum_combo_box_new
-	gimp_prop_enum_check_button_new
-	gimp_prop_enum_radio_frame_new
-	gimp_prop_enum_radio_box_new
-	gimp_prop_enum_stock_box_new
-	gimp_prop_spin_button_new
-	gimp_prop_scale_entry_new
-	gimp_prop_opacity_entry_new
-	gimp_prop_memsize_entry_new
-	gimp_prop_label_new
-	gimp_prop_entry_new
-	gimp_prop_text_buffer_new
-	gimp_prop_file_entry_new
-	gimp_prop_path_editor_new
-	gimp_prop_size_entry_new
-	gimp_prop_coordinates_new
-	gimp_prop_coordinates_connect
+	gimp_prop_check_button_new
 	gimp_prop_color_area_new
-	gimp_prop_unit_menu_new
+	gimp_prop_coordinates_connect
+	gimp_prop_coordinates_new
+	gimp_prop_entry_new
+	gimp_prop_enum_check_button_new
+	gimp_prop_enum_combo_box_new
+	gimp_prop_enum_radio_box_new
+	gimp_prop_enum_radio_frame_new
+	gimp_prop_enum_stock_box_new
+	gimp_prop_expander_new
+	gimp_prop_file_chooser_button_new
+	gimp_prop_file_entry_new
+	gimp_prop_int_combo_box_new
+	gimp_prop_label_new
+	gimp_prop_memsize_entry_new
+	gimp_prop_opacity_entry_new
+	gimp_prop_path_editor_new
+	gimp_prop_scale_entry_new
+	gimp_prop_size_entry_new
+	gimp_prop_spin_button_new
 	gimp_prop_stock_image_new
+	gimp_prop_text_buffer_new
+	gimp_prop_unit_menu_new
 	gimp_query_boolean_box
 	gimp_query_double_box
 	gimp_query_int_box
@@ -240,7 +241,6 @@ EXPORTS
 	gimp_size_entry_get_value
 	gimp_size_entry_grab_focus
 	gimp_size_entry_new
-	gimp_size_entry_show_unit_menu
 	gimp_size_entry_set_activates_default
 	gimp_size_entry_set_pixel_digits
 	gimp_size_entry_set_refval
@@ -251,6 +251,7 @@ EXPORTS
 	gimp_size_entry_set_unit
 	gimp_size_entry_set_value
 	gimp_size_entry_set_value_boundaries
+	gimp_size_entry_show_unit_menu
 	gimp_spin_button_new
 	gimp_standard_help_func
 	gimp_stock_init

@@ -1164,7 +1164,6 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *hbox;
   GtkWidget         *button;
   GtkWidget         *button2;
-  GtkWidget         *fileselection;
   GtkWidget         *patheditor;
   GtkWidget         *table;
   GtkWidget         *label;
@@ -1575,11 +1574,11 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Web Browser"), GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
-  fileselection = gimp_prop_file_entry_new (object, "web-browser",
-                                            _("Select web browser"),
-                                            FALSE, FALSE);
+  button = gimp_prop_file_chooser_button_new (object, "web-browser",
+                                              _("Select web browser"),
+                                              GTK_FILE_CHOOSER_ACTION_OPEN);
 
-  prefs_widget_add_aligned (fileselection, _("_Web browser to use:"),
+  prefs_widget_add_aligned (button, _("_Web browser to use:"),
                             GTK_TABLE (table), 0, FALSE, size_group);
 #endif
 
@@ -2144,14 +2143,14 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < G_N_ELEMENTS (profiles); i++)
       {
-	fileselection =
-          gimp_prop_file_entry_new (color_config,
-                                    profiles[i].property_name,
-                                    gettext (profiles[i].fs_label),
-                                    FALSE, TRUE);
+	button =
+          gimp_prop_file_chooser_button_new (color_config,
+                                             profiles[i].property_name,
+                                             gettext (profiles[i].fs_label),
+                                             GTK_FILE_CHOOSER_ACTION_OPEN);
 	gimp_table_attach_aligned (GTK_TABLE (table), 0, 3 + i,
 				   gettext (profiles[i].label), 0.0, 0.5,
-				   fileselection, 1, FALSE);
+				   button, 1, FALSE);
       }
 
     g_object_unref (color_config);
@@ -2338,12 +2337,14 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < G_N_ELEMENTS (dirs); i++)
       {
-	fileselection = gimp_prop_file_entry_new (object, dirs[i].property_name,
-                                                  gettext (dirs[i].fs_label),
-                                                  TRUE, TRUE);
-	gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
-				   gettext (dirs[i].label), 0.0, 0.5,
-				   fileselection, 1, FALSE);
+        GtkWidget *entry;
+
+        entry = gimp_prop_file_entry_new (object, dirs[i].property_name,
+                                          gettext (dirs[i].fs_label),
+                                          TRUE, TRUE);
+        gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
+                                   gettext (dirs[i].label), 0.0, 0.5,
+                                   entry, 1, FALSE);
       }
   }
 
