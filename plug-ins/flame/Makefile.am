@@ -13,8 +13,6 @@ flame_SOURCES = \
 	flame.h		\
 	libifs.c	\
 	libifs.h	\
-	megawidget.c	\
-	megawidget.h	\
 	rect.c		\
 	rect.h
 

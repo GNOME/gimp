@@ -1,3 +1,11 @@
+2000-04-01  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/flame/Makefile.am
+	* plug-ins/flame/megawidget.[ch]: removed
+
+	* plug-ins/flame/flame.c: general ui cleanup, added some sanity
+	checks when opening a flame file, indentation.
+
 2000-04-01  Jay Cox  <jaycox@earthlink.net>
 
 	* app/paint_funcs.c: Fixed the off by one error that was the cause
