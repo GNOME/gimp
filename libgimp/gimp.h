@@ -44,6 +44,7 @@
 #include <libgimp/gimppixelrgn.h>
 #include <libgimp/gimpplugin.h>
 #include <libgimp/gimpproceduraldb.h>
+#include <libgimp/gimpprogress.h>
 #include <libgimp/gimpregioniterator.h>
 #include <libgimp/gimpselection.h>
 #include <libgimp/gimptile.h>

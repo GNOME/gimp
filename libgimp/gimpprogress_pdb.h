@@ -29,8 +29,11 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_progress_init   (const gchar *message);
-gboolean gimp_progress_update (gdouble      percentage);
+gboolean gimp_progress_init       (const gchar *message);
+gboolean gimp_progress_update     (gdouble      percentage);
+gboolean _gimp_progress_install   (const gchar *progress_callback);
+gboolean _gimp_progress_uninstall (const gchar *progress_callback);
+gboolean gimp_progress_cancel     (const gchar *progress_callback);
 
 
 G_END_DECLS

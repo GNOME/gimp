@@ -32,12 +32,18 @@
 
 static ProcRecord progress_init_proc;
 static ProcRecord progress_update_proc;
+static ProcRecord progress_install_proc;
+static ProcRecord progress_uninstall_proc;
+static ProcRecord progress_cancel_proc;
 
 void
 register_progress_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &progress_init_proc);
   procedural_db_register (gimp, &progress_update_proc);
+  procedural_db_register (gimp, &progress_install_proc);
+  procedural_db_register (gimp, &progress_uninstall_proc);
+  procedural_db_register (gimp, &progress_cancel_proc);
 }
 
 static Argument *
@@ -145,4 +151,151 @@ static ProcRecord progress_update_proc =
   0,
   NULL,
   { { progress_update_invoker } }
+};
+
+static Argument *
+progress_install_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
+{
+  gboolean success = TRUE;
+  gchar *progress_callback;
+
+  progress_callback = (gchar *) args[0].value.pdb_pointer;
+  if (progress_callback == NULL || !g_utf8_validate (progress_callback, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      if (gimp->current_plug_in && gimp->current_plug_in->open)
+        plug_in_progress_install (gimp->current_plug_in, progress_callback);
+      else
+        success = FALSE;
+    }
+
+  return procedural_db_return_args (&progress_install_proc, success);
+}
+
+static ProcArg progress_install_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "progress_callback",
+    "The callback PDB proc to call"
+  }
+};
+
+static ProcRecord progress_install_proc =
+{
+  "gimp_progress_install",
+  "Installs a progress callback for the current plug-in.",
+  "This function installs a temporary PDB procedure which will handle all progress calls made by this plug-in and any procedure it calls. Calling this function multiple times simply replaces the old progress callbacks.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  GIMP_INTERNAL,
+  1,
+  progress_install_inargs,
+  0,
+  NULL,
+  { { progress_install_invoker } }
+};
+
+static Argument *
+progress_uninstall_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
+{
+  gboolean success = TRUE;
+  gchar *progress_callback;
+
+  progress_callback = (gchar *) args[0].value.pdb_pointer;
+  if (progress_callback == NULL || !g_utf8_validate (progress_callback, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      if (gimp->current_plug_in && gimp->current_plug_in->open)
+        plug_in_progress_uninstall (gimp->current_plug_in, progress_callback);
+      else
+        success = FALSE;
+    }
+
+  return procedural_db_return_args (&progress_uninstall_proc, success);
+}
+
+static ProcArg progress_uninstall_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "progress_callback",
+    "The name of the callback registered for this progress"
+  }
+};
+
+static ProcRecord progress_uninstall_proc =
+{
+  "gimp_progress_uninstall",
+  "Uninstalls the progress callback for the current plug-in.",
+  "This function uninstalls any progress callback installed with gimp_progress_install() before.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  GIMP_INTERNAL,
+  1,
+  progress_uninstall_inargs,
+  0,
+  NULL,
+  { { progress_uninstall_invoker } }
+};
+
+static Argument *
+progress_cancel_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
+{
+  gboolean success = TRUE;
+  gchar *progress_callback;
+
+  progress_callback = (gchar *) args[0].value.pdb_pointer;
+  if (progress_callback == NULL || !g_utf8_validate (progress_callback, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      if (gimp->current_plug_in && gimp->current_plug_in->open)
+        plug_in_progress_cancel (gimp->current_plug_in, progress_callback);
+      else
+        success = FALSE;
+    }
+
+  return procedural_db_return_args (&progress_cancel_proc, success);
+}
+
+static ProcArg progress_cancel_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "progress_callback",
+    "The name of the callback registered for this progress"
+  }
+};
+
+static ProcRecord progress_cancel_proc =
+{
+  "gimp_progress_cancel",
+  "Cancels a running progress.",
+  "This function cancels the currently running progress.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  GIMP_INTERNAL,
+  1,
+  progress_cancel_inargs,
+  0,
+  NULL,
+  { { progress_cancel_invoker } }
 };

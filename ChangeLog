@@ -1,3 +1,35 @@
+2004-08-29  Michael Natterer  <mitch@gimp.org>
+
+	Added an API to allow plug-ins to embed the progress for the
+	actions they trigger into their own GUI (attention: half-done and
+	broken code ahead...)
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimppdbprogress.[ch]: new object implementing dispatching
+	progress calls to a temporary PDB procedure in a plug-in.
+
+	* app/Makefile.am: force to link gimppdbprogress.o, bah!
+
+	* app/plug-in/plug-in-progress.[ch]: added API to install,
+	uninstall and cancel a PDB progress for this plug-in, but disabled
+	the implementation because it doesn't work yet.
+
+	* tools/pdbgen/pdb/progress.pdb: added pdb wrappers for the new
+	install, uninstall and cancel functions.
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.h
+	* libgimp/gimpprogress.[ch]: added an API around the PDB progress
+	stuff.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/progress_cmds.c
+	* libgimp/gimpprogress_pdb.[ch]: regenerated.
+
+	* plug-ins/script-fu/script-fu-scripts.c: use the new API to show
+	the progress in the script-fu dialog.
+
 2004-08-29  Michael Schumacher <schumaml@cvs.gnome.org>
 
 	* libgimpwidgets/gimpwidgets.def: added 

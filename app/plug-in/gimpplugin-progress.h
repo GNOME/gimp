@@ -20,12 +20,19 @@
 #define __PLUG_IN_PROGRESS_H__
 
 
-void   plug_in_progress_start  (PlugIn      *plug_in,
-                                const gchar *message,
-                                gint         display_ID);
-void   plug_in_progress_update (PlugIn      *plug_in,
-                                gdouble      percentage);
-void   plug_in_progress_end    (PlugIn      *plug_in);
+void   plug_in_progress_start     (PlugIn      *plug_in,
+                                   const gchar *message,
+                                   gint         display_ID);
+void   plug_in_progress_update    (PlugIn      *plug_in,
+                                   gdouble      percentage);
+void   plug_in_progress_end       (PlugIn      *plug_in);
+
+void   plug_in_progress_install   (PlugIn      *plug_in,
+                                   const gchar *progress_callback);
+void   plug_in_progress_uninstall (PlugIn      *plug_in,
+                                   const gchar *progress_callback);
+void   plug_in_progress_cancel    (PlugIn      *plug_in,
+                                   const gchar *progress_callback);
 
 
 #endif /* __PLUG_IN_PROGRESS_H__ */

@@ -184,6 +184,8 @@ libappcore_a_sources = \
 	gimppalette-import.h		\
 	gimpparasitelist.c		\
 	gimpparasitelist.h		\
+	gimppdbprogress.c		\
+	gimppdbprogress.h		\
 	gimppickable.c			\
 	gimppickable.h			\
 	gimppreviewcache.c		\

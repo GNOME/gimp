@@ -17,7 +17,12 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# The defs
+sub pdb_misc {
+    $author = 'Michael Natterer  <mitch@gimp.org>';
+    $copyright = 'Michael Natterer';
+    $date = '2004';
+    $since = '2.2';
+}
 
 sub progress_init {
     $blurb = 'Initializes the progress bar for the current plug-in.';
@@ -83,9 +88,93 @@ CODE
     );
 }
 
+sub progress_install {
+    $blurb = 'Installs a progress callback for the current plug-in.';
+
+    $help = <<'HELP';
+This function installs a temporary PDB procedure which will handle all
+progress calls made by this plug-in and any procedure it calls. Calling
+this function multiple times simply replaces the old progress callbacks.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'progress_callback', type => 'string',
+	  desc => 'The callback PDB proc to call',
+          wrap => 1 }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
+    plug_in_progress_install (gimp->current_plug_in, progress_callback);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub progress_uninstall {
+    $blurb = 'Uninstalls the progress callback for the current plug-in.';
+
+    $help = <<'HELP';
+This function uninstalls any progress callback installed with
+gimp_progress_install() before.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'progress_callback', type => 'string',
+	  desc => 'The name of the callback registered for this progress',
+          wrap => 1 }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
+    plug_in_progress_uninstall (gimp->current_plug_in, progress_callback);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub progress_cancel {
+    $blurb = 'Cancels a running progress.';
+
+    $help = <<'HELP';
+This function cancels the currently running progress.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'progress_callback', type => 'string',
+	  desc => 'The name of the callback registered for this progress' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
+    plug_in_progress_cancel (gimp->current_plug_in, progress_callback);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 @headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-progress.h");
 
-@procs = qw(progress_init progress_update);
+@procs = qw(progress_init progress_update
+            progress_install progress_uninstall progress_cancel);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Progress';

@@ -23,6 +23,7 @@
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
+#include "core/gimppdbprogress.h"
 #include "core/gimpprogress.h"
 
 #include "pdb/procedural_db.h"
@@ -33,8 +34,8 @@
 
 /*  local function prototypes  */
 
-static void   plug_in_progress_cancel (GimpProgress *progress,
-                                       PlugIn       *plug_in);
+static void   plug_in_progress_cancel_callback (GimpProgress *progress,
+                                                PlugIn       *plug_in);
 
 
 /*  public functions  */
@@ -68,7 +69,7 @@ plug_in_progress_start (PlugIn      *plug_in,
       if (! plug_in->progress_cancel_id)
         plug_in->progress_cancel_id =
           g_signal_connect (plug_in->progress, "cancel",
-                            G_CALLBACK (plug_in_progress_cancel),
+                            G_CALLBACK (plug_in_progress_cancel_callback),
                             plug_in);
 
       if (gimp_progress_is_active (plug_in->progress))
@@ -125,12 +126,65 @@ plug_in_progress_end (PlugIn *plug_in)
     }
 }
 
+void
+plug_in_progress_install (PlugIn      *plug_in,
+                          const gchar *progress_callback)
+{
+  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (progress_callback != NULL);
+
+#if 0
+  if (plug_in->progress)
+    {
+      plug_in_progress_end (plug_in);
+
+      if (GIMP_IS_PDB_PROGRESS (plug_in->progress))
+        g_object_unref (plug_in->progress);
+      else
+        g_object_remove_weak_pointer (G_OBJECT (plug_in->progress),
+                                      (gpointer *) &plug_in->progress);
+
+      plug_in->progress = NULL;
+    }
+
+  plug_in->progress = g_object_new (GIMP_TYPE_PDB_PROGRESS,
+                                    "context",       plug_in->context,
+                                    "callback-name", progress_callback,
+                                    NULL);
+#endif
+}
+
+void
+plug_in_progress_uninstall (PlugIn      *plug_in,
+                            const gchar *progress_callback)
+{
+  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (progress_callback != NULL);
+
+#if 0
+  if (GIMP_IS_PDB_PROGRESS (plug_in->progress))
+    {
+      plug_in_progress_end (plug_in);
+      g_object_unref (plug_in->progress);
+      plug_in->progress = NULL;
+    }
+#endif
+}
+
+void
+plug_in_progress_cancel (PlugIn      *plug_in,
+                         const gchar *progress_callback)
+{
+  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (progress_callback != NULL);
+}
+
 
 /*  private functions  */
 
 static void
-plug_in_progress_cancel (GimpProgress *progress,
-			 PlugIn       *plug_in)
+plug_in_progress_cancel_callback (GimpProgress *progress,
+                                  PlugIn       *plug_in)
 {
   if (plug_in->recurse_main_loop || plug_in->temp_main_loops)
     {

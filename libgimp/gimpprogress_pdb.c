@@ -86,3 +86,100 @@ gimp_progress_update (gdouble percentage)
 
   return success;
 }
+
+/**
+ * _gimp_progress_install:
+ * @progress_callback: The callback PDB proc to call.
+ *
+ * Installs a progress callback for the current plug-in.
+ *
+ * This function installs a temporary PDB procedure which will handle
+ * all progress calls made by this plug-in and any procedure it calls.
+ * Calling this function multiple times simply replaces the old
+ * progress callbacks.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+_gimp_progress_install (const gchar *progress_callback)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_progress_install",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, progress_callback,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_progress_uninstall:
+ * @progress_callback: The name of the callback registered for this progress.
+ *
+ * Uninstalls the progress callback for the current plug-in.
+ *
+ * This function uninstalls any progress callback installed with
+ * gimp_progress_install() before.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+_gimp_progress_uninstall (const gchar *progress_callback)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_progress_uninstall",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, progress_callback,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_progress_cancel:
+ * @progress_callback: The name of the callback registered for this progress.
+ *
+ * Cancels a running progress.
+ *
+ * This function cancels the currently running progress.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_progress_cancel (const gchar *progress_callback)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_progress_cancel",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, progress_callback,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

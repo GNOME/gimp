@@ -131,6 +131,8 @@ typedef struct
   GtkWidget    **args_widgets;
   GtkWidget     *status;
   GtkWidget     *about_dialog;
+  GtkWidget     *progress;
+  const gchar   *progress_callback;
   gchar         *title;
   gchar         *last_command;
   gint           command_count;
@@ -1094,6 +1096,50 @@ script_fu_free_script (SFScript *script)
 }
 
 static void
+script_fu_progress_start (const gchar *message,
+                          gboolean     cancelable,
+                          gpointer     user_data)
+{
+  SFInterface *sf_interface = user_data;
+
+  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (sf_interface->progress),
+                             message ? message : " ");
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (sf_interface->progress), 0.0);
+}
+
+static void
+script_fu_progress_end (gpointer user_data)
+{
+  SFInterface *sf_interface = user_data;
+
+  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (sf_interface->progress), " ");
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (sf_interface->progress), 0.0);
+}
+
+static void
+script_fu_progress_text (const gchar *message,
+                         gpointer     user_data)
+{
+  SFInterface *sf_interface = user_data;
+
+  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (sf_interface->progress),
+                             message ? message : " ");
+}
+
+static void
+script_fu_progress_value (gdouble  percentage,
+                          gpointer user_data)
+{
+  SFInterface *sf_interface = user_data;
+
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (sf_interface->progress),
+                                 percentage);
+
+  if (GTK_WIDGET_DRAWABLE (sf_interface->progress))
+    gdk_window_process_updates (sf_interface->progress->window, TRUE);
+}
+
+static void
 script_fu_interface (SFScript *script)
 {
   GtkWidget *dlg;
@@ -1424,6 +1470,18 @@ script_fu_interface (SFScript *script)
       sf_interface->args_widgets[i] = widget;
     }
 
+  sf_interface->progress = gtk_progress_bar_new ();
+  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (sf_interface->progress), " ");
+  gtk_box_pack_start (GTK_BOX (vbox), sf_interface->progress, FALSE, FALSE, 0);
+  gtk_widget_show (sf_interface->progress);
+
+  sf_interface->progress_callback =
+    gimp_progress_install (script_fu_progress_start,
+                           script_fu_progress_end,
+                           script_fu_progress_text,
+                           script_fu_progress_value,
+                           sf_interface);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -1571,6 +1629,7 @@ script_fu_response (GtkWidget *widget,
       /* fallthru */
 
     default:
+      gimp_progress_uninstall (sf_interface->progress_callback);
       gtk_widget_destroy (sf_interface->dialog);
       break;
     }
