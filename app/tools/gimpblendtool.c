@@ -41,7 +41,10 @@
 #include "display/gimpprogress.h"
 
 #include "widgets/gimpdnd.h"
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimppreview.h"
 
 #include "gimpblendtool.h"
 #include "paint_options.h"
@@ -61,10 +64,6 @@ struct _BlendOptions
   gdouble           offset;
   gdouble           offset_d;
   GtkObject        *offset_w;
-
-  GimpBlendMode     blend_mode;
-  GimpBlendMode     blend_mode_d;
-  GtkWidget        *blend_mode_w;
 
   GimpGradientType  gradient_type;
   GimpGradientType  gradient_type_d;
@@ -118,6 +117,9 @@ static void    gimp_blend_tool_draw              (GimpDrawTool    *draw_tool);
 static GimpToolOptions * blend_options_new       (GimpToolInfo    *tool_info);
 static void              blend_options_reset     (GimpToolOptions *tool_options);
 
+
+static void    blend_options_gradient_clicked    (GtkWidget       *widget, 
+                                                  gpointer         data);
 static void    gradient_type_callback            (GtkWidget       *widget,
                                                   gpointer         data);
 static void    blend_options_drop_gradient       (GtkWidget       *widget,
@@ -294,7 +296,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
                                       NULL, NULL);
 
       gimp_drawable_blend (gimp_image_active_drawable (gimage),
-                           options->blend_mode,
+                           GIMP_CUSTOM_MODE,
                            gimp_context_get_paint_mode (gimp_get_current_context (gimage->gimp)),
                            options->gradient_type,
                            gimp_context_get_opacity (gimp_get_current_context (gimage->gimp)),
@@ -441,10 +443,12 @@ static GimpToolOptions *
 blend_options_new (GimpToolInfo *tool_info)
 {
   BlendOptions *options;
-
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *frame;
+  GimpContext  *user_context;
+  GimpGradient *gradient;
+  GtkWidget    *vbox;
+  GtkWidget    *table;
+  GtkWidget    *frame;
+  GtkWidget    *preview;
 
   /*  the new blend tool options structure  */
   options = g_new0 (BlendOptions, 1);
@@ -456,7 +460,6 @@ blend_options_new (GimpToolInfo *tool_info)
   ((GimpToolOptions *) options)->reset_func = blend_options_reset;
 
   options->offset  	 = options->offset_d  	    = 0.0;
-  options->blend_mode 	 = options->blend_mode_d    = GIMP_FG_BG_RGB_MODE;
   options->gradient_type = options->gradient_type_d = GIMP_LINEAR;
   options->repeat        = options->repeat_d        = GIMP_REPEAT_NONE;
   options->supersample   = options->supersample_d   = FALSE;
@@ -487,6 +490,7 @@ blend_options_new (GimpToolInfo *tool_info)
   table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -501,16 +505,24 @@ blend_options_new (GimpToolInfo *tool_info)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->offset);
 
-  /*  the blend mode menu  */
-  options->blend_mode_w =
-    gimp_enum_option_menu_new (GIMP_TYPE_BLEND_MODE,
-                               G_CALLBACK (gimp_menu_item_update),
-                               &options->blend_mode);
-  gimp_option_menu_set_history (GTK_OPTION_MENU (options->blend_mode_w),
-                                GINT_TO_POINTER (options->blend_mode));
+  /*  the gradient preview  */
+  user_context = gimp_get_user_context (tool_info->gimp);
+  gradient     = gimp_context_get_gradient (user_context);
+
+  preview = gimp_preview_new_full (GIMP_VIEWABLE (gradient),
+                                   48, 16, 0,
+                                   FALSE, TRUE, TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Blend:"), 1.0, 0.5,
-			     options->blend_mode_w, 2, TRUE);
+			     _("Gradient:"), 1.0, 0.5,
+			     preview, 2, TRUE);
+
+  g_signal_connect_object (G_OBJECT (user_context), "gradient_changed",
+                           G_CALLBACK (gimp_preview_set_viewable),
+                           G_OBJECT (preview),
+                           G_CONNECT_SWAPPED);
+  g_signal_connect (G_OBJECT (preview), "clicked",
+                    G_CALLBACK (blend_options_gradient_clicked),
+                    NULL);
 
   /*  the gradient type menu  */
   options->gradient_type_w =
@@ -520,7 +532,7 @@ blend_options_new (GimpToolInfo *tool_info)
   gimp_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w),
                                 GINT_TO_POINTER (options->gradient_type));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Gradient:"), 1.0, 0.5,
+			     _("Shape:"), 1.0, 0.5,
 			     options->gradient_type_w, 2, TRUE);
 
   /*  the repeat option  */
@@ -611,12 +623,9 @@ blend_options_reset (GimpToolOptions *tool_options)
 
   paint_options_reset (tool_options);
 
-  options->blend_mode    = options->blend_mode_d;
   options->gradient_type = options->gradient_type_d;
   options->repeat        = options->repeat_d;
 
-  gtk_option_menu_set_history (GTK_OPTION_MENU (options->blend_mode_w),
-			       options->blend_mode_d);
   gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w),
 			       options->gradient_type_d);
   gtk_option_menu_set_history (GTK_OPTION_MENU (options->repeat_w),
@@ -630,6 +639,19 @@ blend_options_reset (GimpToolOptions *tool_options)
 			    options->max_depth_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
 			    options->threshold_d);
+}
+
+static void
+blend_options_gradient_clicked (GtkWidget *widget, 
+                                gpointer   data)
+{
+  GtkWidget *toplevel;
+
+  toplevel = gtk_widget_get_toplevel (widget);
+
+  if (GIMP_IS_DOCK (toplevel))
+    gimp_dialog_factory_dialog_raise (GIMP_DOCK (toplevel)->dialog_factory,
+                                      "gimp-gradient-list", -1); 
 }
 
 static void
@@ -651,20 +673,14 @@ blend_options_drop_gradient (GtkWidget    *widget,
 			     GimpViewable *viewable,
 			     gpointer      data)
 {
-  BlendOptions    *options;
   GimpToolOptions *tool_options;
   GimpContext     *context;
 
-  options      = (BlendOptions *) data;
   tool_options = (GimpToolOptions *) data;
 
   context = gimp_get_user_context (tool_options->tool_info->gimp);
 
   gimp_context_set_gradient (context, GIMP_GRADIENT (viewable));
-
-  gtk_option_menu_set_history (GTK_OPTION_MENU (options->blend_mode_w), 
-			       GIMP_CUSTOM_MODE);
-  options->blend_mode = GIMP_CUSTOM_MODE;
 }
 
 static void

@@ -332,16 +332,16 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_widget_show (editor->preview);
 
   /* Gradient control */
-  editor->control_pixmap                  = NULL;
-  editor->control_drag_segment            = NULL;
-  editor->control_sel_l                   = NULL;
-  editor->control_sel_r                   = NULL;
-  editor->control_drag_mode               = GRAD_DRAG_NONE;
-  editor->control_click_time              = 0;
-  editor->control_compress                = FALSE;
-  editor->control_last_x                  = 0;
-  editor->control_last_gx                 = 0.0;
-  editor->control_orig_pos                = 0.0;
+  editor->control_pixmap       = NULL;
+  editor->control_drag_segment = NULL;
+  editor->control_sel_l        = NULL;
+  editor->control_sel_r        = NULL;
+  editor->control_drag_mode    = GRAD_DRAG_NONE;
+  editor->control_click_time   = 0;
+  editor->control_compress     = FALSE;
+  editor->control_last_x       = 0;
+  editor->control_last_gx      = 0.0;
+  editor->control_orig_pos     = 0.0;
 
   editor->control = gtk_drawing_area_new ();
   gtk_widget_set_size_request (editor->control,
@@ -497,6 +497,11 @@ gimp_gradient_editor_set_data (GimpDataEditor *editor,
   gradient_editor = GIMP_GRADIENT_EDITOR (editor);
 
   GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
+
+  if (data && ! data->internal)
+    gtk_widget_set_sensitive (gradient_editor->control, TRUE);
+  else
+    gtk_widget_set_sensitive (gradient_editor->control, FALSE);
 
   gimp_gradient_editor_update (gradient_editor,
                                GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
@@ -752,13 +757,14 @@ preview_events (GtkWidget          *widget,
 	  break;
 
 	case 3:
-          {
-            GimpItemFactory *factory;
+          if (! GIMP_DATA_EDITOR (editor)->data->internal)
+            {
+              GimpItemFactory *factory;
 
-            factory = gimp_item_factory_from_path ("<GradientEditor>");
+              factory = gimp_item_factory_from_path ("<GradientEditor>");
 
-            gimp_item_factory_popup_with_data (factory, editor, NULL);
-          }
+              gimp_item_factory_popup_with_data (factory, editor, NULL);
+            }
 	  break;
 
 	default:

@@ -338,8 +338,7 @@ gimp_data_factory_view_edit_clicked (GtkWidget           *widget,
     gimp_context_get_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
 			      view->factory->container->children_type);
 
-  if (view->data_edit_func                           &&
-      data                                           &&
+  if (view->data_edit_func && data &&
       gimp_container_have (view->factory->container,
 			   GIMP_OBJECT (data)))
     {
@@ -388,8 +387,8 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
     gimp_context_get_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
 			      view->factory->container->children_type);
 
-  if (data && gimp_container_have (view->factory->container,
-				   GIMP_OBJECT (data)))
+  if (data && ! data->internal && gimp_container_have (view->factory->container,
+                                                       GIMP_OBJECT (data)))
     {
       GimpDataDeleteData *delete_data;
       GtkWidget          *dialog;
@@ -448,10 +447,14 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
   if (viewable && gimp_container_have (view->factory->container,
 				       GIMP_OBJECT (viewable)))
     {
+      GimpData *data;
+
+      data = GIMP_DATA (viewable);
+
       duplicate_sensitive = (GIMP_DATA_GET_CLASS (viewable)->duplicate != NULL);
 
       edit_sensitive   = (view->data_edit_func != NULL);
-      delete_sensitive = TRUE;  /* TODO: check permissions */
+      delete_sensitive = ! data->internal;  /* TODO: check permissions */
     }
 
   gtk_widget_set_sensitive (view->duplicate_button, duplicate_sensitive);
@@ -473,7 +476,7 @@ gimp_data_factory_view_activate_item (GimpContainerEditor *editor,
   data = GIMP_DATA (viewable);
 
   if (data && gimp_container_have (view->factory->container,
-				   GIMP_OBJECT (data)))
+                                   GIMP_OBJECT (data)))
     {
       gimp_data_factory_view_edit_clicked (NULL, view);
     }

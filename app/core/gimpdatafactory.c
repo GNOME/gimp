@@ -170,8 +170,7 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
 
   gimp_container_freeze (factory->container);
 
-  if (gimp_container_num_children (factory->container) > 0)
-    gimp_data_factory_data_free (factory);
+  gimp_data_factory_data_free (factory);
 
   if (factory->data_path && *factory->data_path)
     {
@@ -233,10 +232,38 @@ gimp_data_factory_data_free (GimpDataFactory *factory)
 
   gimp_container_freeze (factory->container);
 
-  while (list->list)
+  if (list->list)
     {
-      gimp_container_remove (factory->container,
-			     GIMP_OBJECT (list->list->data));
+      if (GIMP_DATA (list->list->data)->internal)
+        {
+          /*  if there are internal objects in the list, skip them  */
+
+          GList *glist;
+
+          for (glist = list->list; glist; glist = g_list_next (glist))
+            {
+              if (glist->next && ! GIMP_DATA (glist->next->data)->internal)
+                {
+                  while (glist->next)
+                    {
+                      gimp_container_remove (factory->container,
+                                             GIMP_OBJECT (glist->next->data));
+                   }
+
+                  break;
+                }
+            }
+        }
+      else
+        {
+          /*  otherwise delete everything  */
+
+          while (list->list)
+            {
+              gimp_container_remove (factory->container,
+                                     GIMP_OBJECT (list->list->data));
+            }
+        }
     }
 
   gimp_container_thaw (factory->container);

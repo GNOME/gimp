@@ -155,6 +155,7 @@ gimp_data_init (GimpData *data)
 {
   data->filename = NULL;
   data->dirty    = FALSE;
+  data->internal = FALSE;
 }
 
 static void
@@ -203,6 +204,12 @@ gimp_data_save (GimpData *data)
 
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
 
+  if (data->internal)
+    {
+      data->dirty = FALSE;
+      return TRUE;
+    }
+
   if (! data->filename)
     {
       g_warning ("%s(): can't save data with NULL filename",
@@ -241,6 +248,9 @@ gimp_data_delete_from_disk (GimpData *data)
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
   g_return_val_if_fail (data->filename != NULL, FALSE);
 
+  if (data->internal)
+    return TRUE;
+
   if (unlink (data->filename) == -1)
     {
       g_message ("%s(): could not unlink() %s: %s",
@@ -269,6 +279,9 @@ gimp_data_set_filename (GimpData    *data,
 			const gchar *filename)
 {
   g_return_if_fail (GIMP_IS_DATA (data));
+
+  if (data->internal)
+    return;
 
   g_free (data->filename);
 

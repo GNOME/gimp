@@ -42,6 +42,7 @@ struct _GimpData
 
   gchar        *filename;
   gboolean      dirty;
+  gboolean      internal;
 };
 
 struct _GimpDataClass

@@ -68,10 +68,14 @@ gradients_menu_update (GtkItemFactory *factory,
 {
   GimpContainerEditor *editor;
   GimpGradient        *gradient;
+  gboolean             internal = FALSE;
 
   editor = GIMP_CONTAINER_EDITOR (data);
 
   gradient = gimp_context_get_gradient (editor->view->context);
+
+  if (gradient)
+    internal = GIMP_DATA (gradient)->internal;
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
@@ -81,7 +85,7 @@ gradients_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Edit Gradient...",
 		 gradient && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
   SET_SENSITIVE ("/Delete Gradient...",
-		 gradient);
+		 gradient && ! internal);
   SET_SENSITIVE ("/Save as POV-Ray...",
 		 gradient);
 

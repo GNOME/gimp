@@ -25,8 +25,8 @@
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpcontext.h"
 
-#include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
+#include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "brushes-commands.h"
@@ -42,10 +42,14 @@ brushes_menu_update (GtkItemFactory *factory,
 {
   GimpContainerEditor *editor;
   GimpBrush           *brush;
+  gboolean             internal = FALSE;
 
   editor = GIMP_CONTAINER_EDITOR (data);
 
   brush = gimp_context_get_brush (editor->view->context);
+
+  if (brush)
+    internal = GIMP_DATA (brush)->internal;
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
@@ -53,9 +57,9 @@ brushes_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Duplicate Brush",
 		 brush && GIMP_DATA_GET_CLASS (brush)->duplicate);
   SET_SENSITIVE ("/Edit Brush...",
-		 brush && GIMP_IS_BRUSH_GENERATED (brush));
+		 brush && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
   SET_SENSITIVE ("/Delete Brush...",
-		 brush);
+		 brush && ! internal);
 
 #undef SET_SENSITIVE
 }

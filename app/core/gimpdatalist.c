@@ -282,6 +282,13 @@ static gint
 gimp_data_list_data_compare_func (gconstpointer first,
 				  gconstpointer second)
 {
+  GimpData *first_data  = (GimpData *) first;
+  GimpData *second_data = (GimpData *) second;
+
+  /*  move the internal objects (like the FG -> BG) gradient) to the top  */
+  if (first_data->internal != second_data->internal)
+    return first_data->internal ? -1 : 1;
+
   return strcmp (((const GimpObject *) first)->name, 
 		 ((const GimpObject *) second)->name);
 }

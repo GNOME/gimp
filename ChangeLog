@@ -1,3 +1,47 @@
+2002-06-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdata.[ch]: added a boolean "internal" which
+	indicates that the data object is an automatically created
+	internal object. Changed the code to refuse saving to deleting
+	internal objects.
+
+	* app/core/Makefile.am
+	* app/core/gimp-gradients.[ch]: new files implementing internal
+	gradients (FG -> BG in RGB and HSV and FG -> transparent).
+
+	* app/core/gimp.c: call gimp_gradients_init().
+
+	* app/core/gimpdatafactory.c (gimp_data_factory_data_free): don't
+	free internal objects so they stay there on "Refresh".
+
+	* app/core/gimpdatalist.c: sort internal objects to the beginning
+	of the list.
+
+	* app/widgets/gimpdataeditor.c: refuse to change the name of
+	internal objects.
+
+	* app/widgets/gimpdatafactoryview.c: set the "Delete" button
+	insensitive for internal objects.
+
+	* app/widgets/gimpgradienteditor.c: refuse to edit internal
+	gradients, just display them so color picking works.
+
+	* app/gui/brushes-commands.c
+	* app/gui/gradients-commands.c
+	* app/gui/palettes-commands.c
+	* app/gui/patterns-commands.c: set the "Delete" menu item
+	insensitive for internal objects.
+
+	* app/gui/gui.c: need to call render_setup() earlier because of
+	you-dont-want-to-know-why. Will change it back once the previews
+	have their own render buffers.
+
+	* app/tools/gimpblendtool.c: Replaced the "Type" menu by a preview
+	showing the active gradient. Clicking the preview pops up the
+	gradient selection. Renamed the "Gradient" menu to "Shape". Removed
+	"blend_mode" from the BlendOptions struct because we always use
+	"custom" mode now.
+
 2002-06-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/helpbrowser.c: implemented anchor handling.
@@ -14,7 +58,7 @@
 
 2002-06-10  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/helpbrowser/Makefile.am	
+	* plug-ins/helpbrowser/Makefile.am
 	* plug-ins/helpbrowser/uri.[ch]: added new files that implement
 	conversion of a relative URI and an absolute base URI to a new
 	absolute URI according to RFC 2396. This code has been kindly

@@ -24,6 +24,8 @@ libappcore_a_sources = \
 	gimp.h				\
 	gimp-documents.c		\
 	gimp-documents.h		\
+	gimp-gradients.c		\
+	gimp-gradients.h		\
 	gimp-parasites.c		\
 	gimp-parasites.h		\
 	gimpbrush.c			\

@@ -43,10 +43,14 @@ patterns_menu_update (GtkItemFactory *factory,
 {
   GimpContainerEditor *editor;
   GimpPattern         *pattern;
+  gboolean             internal = FALSE;
 
   editor = GIMP_CONTAINER_EDITOR (data);
 
   pattern = gimp_context_get_pattern (editor->view->context);
+
+  if (pattern)
+    internal = GIMP_DATA (pattern)->internal;
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
@@ -56,7 +60,7 @@ patterns_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Edit Pattern...",
 		 pattern && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
   SET_SENSITIVE ("/Delete Pattern...",
-		 pattern);
+		 pattern && ! internal);
 
 #undef SET_SENSITIVE
 }

@@ -91,10 +91,14 @@ palettes_menu_update (GtkItemFactory *factory,
 {
   GimpContainerEditor *editor;
   GimpPalette         *palette;
+  gboolean             internal = FALSE;
 
   editor = GIMP_CONTAINER_EDITOR (data);
 
   palette = gimp_context_get_palette (editor->view->context);
+
+  if (palette)
+    internal = GIMP_DATA (palette)->internal;
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
@@ -104,7 +108,7 @@ palettes_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Edit Palette...",
 		 palette && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
   SET_SENSITIVE ("/Delete Palette...",
-		 palette);
+		 palette && ! internal);
   SET_SENSITIVE ("/Merge Palettes...",
 		 FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
 

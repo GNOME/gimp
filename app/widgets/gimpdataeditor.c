@@ -177,14 +177,16 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
 
       gtk_entry_set_text (GTK_ENTRY (editor->name_entry),
                           gimp_object_get_name (GIMP_OBJECT (editor->data)));
-      gtk_widget_set_sensitive (editor->name_entry, TRUE);
     }
   else
     {
       gtk_entry_set_text (GTK_ENTRY (editor->name_entry), "");
-      gtk_widget_set_sensitive (editor->name_entry, FALSE);
     }
 
+  if (editor->data && ! editor->data->internal)
+    gtk_widget_set_sensitive (editor->name_entry, TRUE);
+  else
+    gtk_widget_set_sensitive (editor->name_entry, FALSE);
 }
 
 gboolean

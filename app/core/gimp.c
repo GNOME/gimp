@@ -35,6 +35,7 @@
 
 #include "gimp.h"
 #include "gimp-documents.h"
+#include "gimp-gradients.h"
 #include "gimp-parasites.h"
 #include "gimpbrush.h"
 #include "gimpbrushgenerated.h"
@@ -227,14 +228,9 @@ gimp_finalize (GObject *object)
 
   gimp = GIMP (object);
 
-  if (gimp->current_context)
-    gimp_set_current_context (gimp, NULL);
-
-  if (gimp->user_context)
-    gimp_set_user_context (gimp, NULL);
-
-  if (gimp->default_context)
-    gimp_set_default_context (gimp, NULL);
+  gimp_set_current_context (gimp, NULL);
+  gimp_set_user_context (gimp, NULL);
+  gimp_set_default_context (gimp, NULL);
 
   if (gimp->standard_context)
     {
@@ -515,6 +511,9 @@ gimp_initialize (Gimp               *gimp,
   g_object_unref (G_OBJECT (context));
 
   gimp_set_current_context (gimp, context);
+
+  /*  add the builtin FG -> BG etc. gradients  */
+  gimp_gradients_init (gimp);
 
   /*  register all internal procedures  */
   (* status_callback) (_("Procedural Database"), NULL, -1);
