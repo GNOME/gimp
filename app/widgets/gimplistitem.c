@@ -25,15 +25,18 @@
 
 #include "apptypes.h"
 
-#include "gimpcontainer.h"
 #include "gimpdnd.h"
-#include "gimpdrawable.h"
+#include "gimpchannellistitem.h"
 #include "gimpdrawablelistitem.h"
-#include "gimplayer.h"
 #include "gimplayerlistitem.h"
 #include "gimplistitem.h"
-#include "gimpmarshal.h"
 #include "gimppreview.h"
+
+#include "gimpchannel.h"
+#include "gimpcontainer.h"
+#include "gimpdrawable.h"
+#include "gimplayer.h"
+#include "gimpmarshal.h"
 #include "gimpviewable.h"
 
 
@@ -284,6 +287,10 @@ gimp_list_item_new (GimpViewable  *viewable,
     {
       list_item = gtk_type_new (GIMP_TYPE_LAYER_LIST_ITEM);
     }
+  else if (GIMP_IS_CHANNEL (viewable))
+    {
+      list_item = gtk_type_new (GIMP_TYPE_CHANNEL_LIST_ITEM);
+    }
   else if (GIMP_IS_DRAWABLE (viewable))
     {
       list_item = gtk_type_new (GIMP_TYPE_DRAWABLE_LIST_ITEM);
@@ -524,6 +531,30 @@ gimp_list_item_button_state_changed (GtkWidget    *widget,
         default:
           break;
         }
+    }
+  else if (list_item->state == GTK_STATE_INSENSITIVE)
+    {
+      /*  Don't look here, no, please...
+       * 
+       *  I said NO ...
+       */
+      if (GTK_WIDGET_DRAWABLE (list_item))
+	{
+	  GdkEventExpose event;
+
+	  event.type        = GDK_EXPOSE;
+	  event.send_event  = TRUE;
+	  event.window      = list_item->window;
+	  event.area.x      = widget->allocation.x;
+	  event.area.y      = widget->allocation.y;
+	  event.area.width  = widget->allocation.width;
+	  event.area.height = widget->allocation.height;
+	  event.count       = 0;
+
+	  gdk_window_ref (event.window);
+	  gtk_widget_event (list_item, (GdkEvent*) &event);
+	  gdk_window_unref (event.window);
+	}
     }
 }
 

@@ -50,6 +50,7 @@ typedef struct _GimpLayerListView     GimpLayerListView;
 typedef struct _GimpChannelListView   GimpChannelListView;
 
 typedef struct _GimpListItem          GimpListItem;
+typedef struct _GimpChannelListItem   GimpChannelListItem;
 typedef struct _GimpDrawableListItem  GimpDrawableListItem;
 typedef struct _GimpLayerListItem     GimpLayerListItem;
 typedef struct _GimpComponentListItem GimpComponentListItem;

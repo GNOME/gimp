@@ -266,15 +266,26 @@ gimp_channel_list_view_select_item (GimpContainerView *view,
 				    GimpViewable      *item,
 				    gpointer           insert_data)
 {
-  GimpChannelListView *list_view;
-  gboolean             toselection_sensitive  = FALSE;
+  GimpDrawableListView *drawable_view;
+  GimpChannelListView  *list_view;
+  gboolean              toselection_sensitive = FALSE;
 
-  list_view = GIMP_CHANNEL_LIST_VIEW (view);
+  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
+  list_view     = GIMP_CHANNEL_LIST_VIEW (view);
 
   if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view,
 							   item,
 							   insert_data);
+
+  if (drawable_view->gimage)
+    {
+      gtk_widget_set_sensitive
+	(drawable_view->button_box,
+	 gimp_image_floating_sel (drawable_view->gimage) == NULL);
+
+      return;
+    }
 
   if (item)
     {

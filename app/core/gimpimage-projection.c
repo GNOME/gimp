@@ -158,6 +158,7 @@ enum
   MODE_CHANGED,
   ALPHA_CHANGED,
   SIZE_CHANGED,
+  FLOATING_SELECTION_CHANGED,
   ACTIVE_LAYER_CHANGED,
   ACTIVE_CHANNEL_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
@@ -241,6 +242,15 @@ gimp_image_class_init (GimpImageClass *klass)
                     object_class->type,
                     GTK_SIGNAL_OFFSET (GimpImageClass,
 				       size_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  gimp_image_signals[FLOATING_SELECTION_CHANGED] =
+    gtk_signal_new ("floating_selection_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       floating_selection_changed),
                     gtk_signal_default_marshaller,
                     GTK_TYPE_NONE, 0);
 
@@ -346,6 +356,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->mode_changed                 = NULL;
   klass->alpha_changed                = NULL;
   klass->size_changed                 = NULL;
+  klass->floating_selection_changed   = NULL;
   klass->active_layer_changed         = NULL;
   klass->active_channel_changed       = NULL;
   klass->component_visibility_changed = NULL;
@@ -1652,6 +1663,15 @@ gimp_image_size_changed (GimpImage *gimage)
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[SIZE_CHANGED]);
+}
+
+void
+gimp_image_floating_selection_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gtk_signal_emit (GTK_OBJECT (gimage),
+		   gimp_image_signals[FLOATING_SELECTION_CHANGED]);
 }
 
 /************************************************************/

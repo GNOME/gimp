@@ -1225,8 +1225,8 @@ static void
 layers_menu_set_sensitivity (GimpImage *gimage)
 {
   GimpLayer *layer;
-  gboolean   fs         = FALSE;    /*  no floating sel        */
-  gboolean   ac         = FALSE;    /*  no active channel      */
+  gboolean   fs         = FALSE;    /*  floating sel           */
+  gboolean   ac         = FALSE;    /*  active channel         */
   gboolean   lm         = FALSE;    /*  layer mask             */
   gboolean   lp         = FALSE;    /*  layers present         */
   gboolean   alpha      = FALSE;    /*  alpha channel present  */
@@ -1244,8 +1244,8 @@ layers_menu_set_sensitivity (GimpImage *gimage)
   if (layer)
     lm = (gimp_layer_get_mask (layer)) ? TRUE : FALSE;
 
-  fs = (gimp_image_floating_sel (gimage) == NULL);
-  ac = (gimp_image_get_active_channel (gimage) == NULL);
+  fs = (gimp_image_floating_sel (gimage) != NULL);
+  ac = (gimp_image_get_active_channel (gimage) != NULL);
 
   alpha = layer && gimp_layer_has_alpha (layer);
 
@@ -1275,38 +1275,38 @@ layers_menu_set_sensitivity (GimpImage *gimage)
   SET_SENSITIVE ("New Layer...", gimage);
 
   SET_SENSITIVE ("Stack/Raise Layer",
-		 fs && ac && gimage && lp && alpha && prev);
+		 !fs && !ac && gimage && lp && alpha && prev);
 
   SET_SENSITIVE ("Stack/Lower Layer",
-		 fs && ac && gimage && lp && next && next_alpha);
+		 !fs && !ac && gimage && lp && next && next_alpha);
 
   SET_SENSITIVE ("Stack/Layer to Top",
-		 fs && ac && gimage && lp && alpha && prev);
+		 !fs && !ac && gimage && lp && alpha && prev);
   SET_SENSITIVE ("Stack/Layer to Bottom",
-		 fs && ac && gimage && lp && next && next_alpha);
+		 !fs && !ac && gimage && lp && next && next_alpha);
 
-  SET_SENSITIVE ("Duplicate Layer", fs && ac && gimage && lp);
-  SET_SENSITIVE ("Anchor Layer", !fs && ac && gimage && lp);
-  SET_SENSITIVE ("Delete Layer", ac && gimage && lp);
+  SET_SENSITIVE ("Duplicate Layer", !fs && !ac && gimage && lp);
+  SET_SENSITIVE ("Anchor Layer", !fs && !ac && gimage && lp);
+  SET_SENSITIVE ("Delete Layer", !ac && gimage && lp);
 
-  SET_SENSITIVE ("Layer Boundary Size...", ac && gimage && lp);
-  SET_SENSITIVE ("Layer to Imagesize", ac && gimage && lp);
-  SET_SENSITIVE ("Scale Layer...", ac && gimage && lp);
+  SET_SENSITIVE ("Layer Boundary Size...", !ac && gimage && lp);
+  SET_SENSITIVE ("Layer to Imagesize", !ac && gimage && lp);
+  SET_SENSITIVE ("Scale Layer...", !ac && gimage && lp);
 
-  SET_SENSITIVE ("Merge Visible Layers...", fs && ac && gimage && lp);
-  SET_SENSITIVE ("Merge Down", fs && ac && gimage && lp && next);
-  SET_SENSITIVE ("Flatten Image", fs && ac && gimage && lp);
+  SET_SENSITIVE ("Merge Visible Layers...", !fs && !ac && gimage && lp);
+  SET_SENSITIVE ("Merge Down", !fs && !ac && gimage && lp && next);
+  SET_SENSITIVE ("Flatten Image", !fs && !ac && gimage && lp);
 
   SET_SENSITIVE ("Add Layer Mask...", 
-		 fs && ac && gimage && !lm && lp && alpha && !indexed);
-  SET_SENSITIVE ("Apply Layer Mask", fs && ac && gimage && lm && lp);
-  SET_SENSITIVE ("Delete Layer Mask", fs && ac && gimage && lm && lp);
-  SET_SENSITIVE ("Mask to Selection", fs && ac && gimage && lm && lp);
+		 !fs && !ac && gimage && !lm && lp && alpha && !indexed);
+  SET_SENSITIVE ("Apply Layer Mask", !fs && !ac && gimage && lm && lp);
+  SET_SENSITIVE ("Delete Layer Mask", !fs && !ac && gimage && lm && lp);
+  SET_SENSITIVE ("Mask to Selection", !fs && !ac && gimage && lm && lp);
 
-  SET_SENSITIVE ("Add Alpha Channel", !alpha);
-  SET_SENSITIVE ("Alpha to Selection", fs && ac && gimage && lp && alpha);
+  SET_SENSITIVE ("Add Alpha Channel", !fs && !alpha);
+  SET_SENSITIVE ("Alpha to Selection", !fs && !ac && gimage && lp && alpha);
 
-  SET_SENSITIVE ("Edit Layer Attributes...", ac && gimage && lp);
+  SET_SENSITIVE ("Edit Layer Attributes...", !fs && !ac && gimage && lp);
 
 #undef SET_SENSITIVE
 }

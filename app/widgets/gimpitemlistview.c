@@ -43,6 +43,7 @@
 #include "gimpdrawablelistview.h"
 #include "gimplayerlistview.h"
 #include "gimplistitem.h"
+#include "gimppreview.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -129,6 +130,9 @@ static void   gimp_drawable_list_view_delete_dropped    (GtkWidget            *w
 static void   gimp_drawable_list_view_drawable_changed  (GimpImage            *gimage,
 							 GimpDrawableListView *view);
 static void   gimp_drawable_list_view_size_changed      (GimpImage            *gimage,
+							 GimpDrawableListView *view);
+static void   gimp_drawable_list_view_floating_selection_changed
+                                                        (GimpImage            *gimage,
 							 GimpDrawableListView *view);
 
 
@@ -445,8 +449,7 @@ gimp_drawable_list_view_new (GimpImage               *gimage,
 			      gimp_drawable_list_view_delete_dropped,
 			      list_view);
 
-  if (gimage)
-    gimp_drawable_list_view_set_image (list_view, gimage);
+  gimp_drawable_list_view_set_image (list_view, gimage);
 
   return GTK_WIDGET (list_view);
 }
@@ -481,6 +484,9 @@ gimp_drawable_list_view_real_set_image (GimpDrawableListView *view,
       gtk_signal_disconnect_by_func (GTK_OBJECT (view->gimage),
 				     gimp_drawable_list_view_size_changed,
 				     view);
+      gtk_signal_disconnect_by_func (GTK_OBJECT (view->gimage),
+				     gimp_drawable_list_view_floating_selection_changed,
+				     view);
 
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), NULL);
     }
@@ -501,8 +507,14 @@ gimp_drawable_list_view_real_set_image (GimpDrawableListView *view,
       gtk_signal_connect (GTK_OBJECT (view->gimage), "size_changed",
 			  GTK_SIGNAL_FUNC (gimp_drawable_list_view_size_changed),
 			  view);
+      gtk_signal_connect (GTK_OBJECT (view->gimage), "floating_selection_changed",
+			  GTK_SIGNAL_FUNC (gimp_drawable_list_view_floating_selection_changed),
+			  view);
 
       gimp_drawable_list_view_drawable_changed (view->gimage, view);
+
+      if (gimp_image_floating_sel (view->gimage))
+	gimp_drawable_list_view_floating_selection_changed (view->gimage, view);
     }
 
   gtk_widget_set_sensitive (view->new_button, (view->gimage != NULL));
@@ -890,4 +902,29 @@ gimp_drawable_list_view_size_changed (GimpImage            *gimage,
 
   gimp_container_view_set_preview_size (GIMP_CONTAINER_VIEW (view),
 					preview_size);
+}
+
+static void
+gimp_drawable_list_view_floating_selection_changed (GimpImage            *gimage,
+						    GimpDrawableListView *view)
+{
+  GimpViewable *floating_sel;
+  GList        *list;
+
+  floating_sel = (GimpViewable *) gimp_image_floating_sel (gimage);
+
+  for (list = GTK_LIST (GIMP_CONTAINER_LIST_VIEW (view)->gtk_list)->children;
+       list;
+       list = g_list_next (list))
+    {
+      if (! (GIMP_PREVIEW (GIMP_LIST_ITEM (list->data)->preview)->viewable ==
+	     floating_sel))
+	{
+	  gtk_widget_set_sensitive (GTK_WIDGET (list->data),
+				    floating_sel == NULL);
+	}
+    }
+
+  /*  update button states  */
+  gimp_drawable_list_view_drawable_changed (gimage, view);
 }

@@ -82,6 +82,8 @@ floating_sel_attach (GimpLayer    *layer,
 
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_rigor (layer, TRUE);
+
+  gimp_image_floating_selection_changed (gimage);
 }
 
 void
@@ -103,6 +105,8 @@ floating_sel_remove (GimpLayer *layer)
 
   /*  remove the layer from the gimage  */
   gimp_image_remove_layer (gimage, layer);
+
+  gimp_image_floating_selection_changed (gimage);
 }
 
 void
@@ -144,6 +148,8 @@ floating_sel_anchor (GimpLayer *layer)
 
   /*  invalidate the boundaries  */
   gimage_mask_invalidate (gimage);
+
+  gimp_image_floating_selection_changed (gimage);
 }
 
 void
@@ -238,6 +244,8 @@ floating_sel_to_layer (GimpLayer *layer)
   
   /* This may be undesirable when invoked non-interactively... we'll see. */
   /*reinit_layer_idlerender (gimage, layer);*/
+
+  gimp_image_floating_selection_changed (gimage);
 }
 
 void

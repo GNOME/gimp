@@ -1,3 +1,39 @@
+2001-05-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpimage.[hc]: new signal "floating_selection_changed",
+	removed ancient declaration of _GimpImageRepaintArg.
+
+	* app/floating_sel.c
+	* app/undo.c: emit "floating_selection_changed" where approptiate.
+
+	* app/gimage_mask.c: s/"Floated Layer"/"Floating Selection"/
+	because we view this layer directly now (not some thing with an
+	"L" icon).
+
+	* app/gui/layers-commands.c: don't use confusing boolean variables
+	which indicate that something is not true (reversed their logic).
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpchannellistitem.[ch]: new widget. Does nothing yet.
+
+	* app/widgets/gimpchannellistview.c: set the button box
+	insensitive when there is a floating selection.
+
+	* app/widgets/gimpdrawablelistitem.c: made channel DND work again.
+	Very ugly btw.
+
+	* app/widgets/gimpdrawablelistview.c: connect to
+	"floating_selection_changed". Fake a change of the active drawable
+	so the button boxes get updated correctly.
+
+	* app/widgets/gimplayerlistview.c: set the sensitivity of the
+	buttons correctly.
+
+	* app/widgets/gimplistitem.c: create GimpChannelListItems for
+	channels.  Some very ugly code to work around broken
+	GTK_STATE_INSENSITIVE propagation in list items.
+
 2001-05-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpchannellistview.c: enabled setting component

@@ -240,11 +240,16 @@ gimp_drawable_list_item_drag_drop (GtkWidget      *widget,
 
   if (return_val)
     {
-      if (widget->parent && GIMP_IS_DRAWABLE_LIST_VIEW (widget->parent))
+      if (widget->parent && /* EEK */
+          widget->parent->parent && /* EEEEK */
+          widget->parent->parent->parent && /* EEEEEEK */
+          widget->parent->parent->parent->parent && /* EEEEEEEEK */
+	  GIMP_IS_DRAWABLE_LIST_VIEW (widget->parent->parent->parent->parent))
         {
           GimpDrawableListView *list_view;
 
-          list_view = GIMP_DRAWABLE_LIST_VIEW (widget->parent);
+          list_view =
+	    GIMP_DRAWABLE_LIST_VIEW (widget->parent->parent->parent->parent);
 
           list_view->reorder_drawable_func (list_view->gimage,
                                             GIMP_DRAWABLE (src_viewable),

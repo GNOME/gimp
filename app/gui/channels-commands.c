@@ -633,15 +633,15 @@ channels_menu_set_sensitivity (GimpImage *gimage)
         menus_set_sensitive ("<Channels>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("New Channel...",             !fs);
-  SET_SENSITIVE ("Raise Channel",              channel && !fs && prev);
-  SET_SENSITIVE ("Lower Channel",              channel && !fs && next);
-  SET_SENSITIVE ("Duplicate Channel",          channel && !fs);
-  SET_SENSITIVE ("Channel to Selection",       channel);
-  SET_SENSITIVE ("Add to Selection",           channel);
-  SET_SENSITIVE ("Subtract from Selection",    channel);
-  SET_SENSITIVE ("Intersect with Selection",   channel);
-  SET_SENSITIVE ("Delete Channel",             channel && !fs);
-  SET_SENSITIVE ("Edit Channel Attributes...", channel && !fs);
+  SET_SENSITIVE ("Raise Channel",              !fs && channel && prev);
+  SET_SENSITIVE ("Lower Channel",              !fs && channel && next);
+  SET_SENSITIVE ("Duplicate Channel",          !fs && channel);
+  SET_SENSITIVE ("Channel to Selection",       !fs && channel);
+  SET_SENSITIVE ("Add to Selection",           !fs && channel);
+  SET_SENSITIVE ("Subtract from Selection",    !fs && channel);
+  SET_SENSITIVE ("Intersect with Selection",   !fs && channel);
+  SET_SENSITIVE ("Delete Channel",             !fs && channel);
+  SET_SENSITIVE ("Edit Channel Attributes...", !fs && channel);
 
 #undef SET_OPS_SENSITIVE
 }

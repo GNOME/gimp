@@ -1484,6 +1484,8 @@ undo_pop_layer (GimpImage *gimage,
 	  gimage->floating_sel = NULL;
 	  /*  reset the old drawable  */
 	  floating_sel_reset (lu->layer);
+
+	  gimp_image_floating_selection_changed (gimage);
 	}
 
       drawable_update (GIMP_DRAWABLE (lu->layer), 0, 0,
@@ -1508,6 +1510,9 @@ undo_pop_layer (GimpImage *gimage,
       gimp_container_insert (gimage->layers, 
 			     GIMP_OBJECT (lu->layer), lu->prev_position);
       gimp_image_set_active_layer (gimage, lu->layer);
+
+      if (gimp_layer_is_floating_sel (lu->layer))
+	gimp_image_floating_selection_changed (gimage);
 
       drawable_update (GIMP_DRAWABLE (lu->layer), 0, 0,
 		       GIMP_DRAWABLE (lu->layer)->width,
@@ -2028,6 +2033,8 @@ undo_pop_fs_to_layer (GimpImage *gimage,
       break;
     }
 
+  gimp_image_floating_selection_changed (gimage);
+
   return TRUE;
 }
 
@@ -2113,6 +2120,8 @@ undo_pop_fs_rigor (GimpImage *gimage,
       break;
     }
 
+  gimp_image_floating_selection_changed (gimage);
+
   return TRUE;
 }
 
@@ -2191,6 +2200,8 @@ undo_pop_fs_relax (GimpImage *gimage,
       floating_layer->fs.initial = TRUE;
       break;
     }
+
+  gimp_image_floating_selection_changed (gimage);
 
   return TRUE;
 }
