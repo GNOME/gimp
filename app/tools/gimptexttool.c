@@ -44,10 +44,7 @@
 #include "text/gimptextlayer.h"
 
 #include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpfontselection.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 

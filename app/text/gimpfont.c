@@ -261,17 +261,17 @@ gimp_font_get_new_preview (GimpViewable *viewable,
                            gint          width,
                            gint          height)
 {
-  GimpFont             *font;
-  PangoLayout          *layout;
-  PangoRectangle        logical;
-  TempBuf              *temp_buf;
-  FT_Bitmap             bitmap;
-  guchar               *p;
-  guchar                black = 0;
+  GimpFont       *font;
+  PangoLayout    *layout;
+  PangoRectangle  logical;
+  TempBuf        *temp_buf;
+  FT_Bitmap       bitmap;
+  guchar         *p;
+  guchar          black = 0;
 
   font = GIMP_FONT (viewable);
 
-  if (!font->pango_context)
+  if (! font->pango_context)
     return NULL;
 
   if (! font->popup_layout        ||

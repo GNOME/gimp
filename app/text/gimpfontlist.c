@@ -282,8 +282,6 @@ gimp_font_list_load_names (GimpFontList *list,
   FcFontSet   *fontset;
   gint         i;
 
-  gimp_font_list_load_aliases (list, context);
-
   os = FcObjectSetBuild (FC_FAMILY, FC_STYLE, FC_SLANT, FC_WEIGHT, NULL);
   pat = FcPatternCreate ();
 
@@ -301,9 +299,15 @@ gimp_font_list_load_names (GimpFontList *list,
       pango_font_description_free (desc);
     }
 
+  /*  only create aliases if there is at least one font available  */
+  if (fontset->nfont > 0)
+    gimp_font_list_load_aliases (list, context);
+
   FcFontSetDestroy (fontset);
 }
-#else
+
+#else  /* ! USE_FONTCONFIG_DIRECTLY  */
+
 static void
 gimp_font_list_load_names (GimpFontList *list,
                            PangoFontMap *fontmap,

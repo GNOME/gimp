@@ -38,7 +38,6 @@
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpfontselection.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimpviewablebutton.h"
@@ -239,7 +238,7 @@ gimp_text_options_notify_font (GimpContext *context,
                                    context);
 
   g_object_set (text,
-                "font", gimp_object_get_name (GIMP_OBJECT (font)),
+                "font", font ? gimp_object_get_name (GIMP_OBJECT (font)) : NULL,
                 NULL);
 
   g_signal_handlers_unblock_by_func (text,
@@ -287,10 +286,10 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GimpDialogFactory *dialog_factory;
   GtkWidget         *auto_button;
   GtkWidget         *menu;
-  GtkWidget         *font_selection;
   GtkWidget         *box;
   GtkWidget         *spinbutton;
   gint               digits;
+  gint               row = 0;
 
   options = GIMP_TEXT_OPTIONS (tool_options);
   config = G_OBJECT (options->text);
@@ -299,7 +298,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   dialog_factory = gimp_dialog_factory_from_name ("dock");
 
-  table = gtk_table_new (10, 3, FALSE);
+  table = gtk_table_new (9, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -313,70 +312,69 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                                      GIMP_STOCK_TOOL_TEXT,
                                      _("Open the font selection dialog"));
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Font:"), 1.0, 0.5,
                              button, 2, TRUE);
-
-  font_selection = gimp_prop_font_selection_new (config, "font");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Font:"), 1.0, 0.5,
-                             font_selection, 2, FALSE);
 
   digits = gimp_unit_get_digits (options->text->unit);
   spinbutton = gimp_prop_spin_button_new (config, "font-size",
 					  1.0, 10.0, digits);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Size:"), 1.0, 0.5,
                              spinbutton, 1, FALSE);
 
   menu = gimp_prop_unit_menu_new (config, "font-size-unit", "%a");
   g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
-  gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 2, 3,
+  gtk_table_attach (GTK_TABLE (table), menu, 2, 3, row, row + 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (menu);
+  row++;
 
   button = gimp_prop_check_button_new (config, "hinting", _("_Hinting"));
-  gtk_table_attach (GTK_TABLE (table), button, 1, 3, 3, 4,
+  gtk_table_attach (GTK_TABLE (table), button, 1, 3, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
+  row++;
 
   auto_button = gimp_prop_check_button_new (config, "autohint",
 					    _("Force Auto-Hinter"));
-  gtk_table_attach (GTK_TABLE (table), auto_button, 1, 3, 4, 5,
+  gtk_table_attach (GTK_TABLE (table), auto_button, 1, 3, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (auto_button);
+  row++;
 
   gtk_widget_set_sensitive (auto_button, options->text->hinting);
   g_object_set_data (G_OBJECT (button), "set_sensitive", auto_button);
 
   button = gimp_prop_check_button_new (config, "antialias", _("Antialiasing"));
-  gtk_table_attach (GTK_TABLE (table), button, 1, 3, 5, 6,
+  gtk_table_attach (GTK_TABLE (table), button, 1, 3, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
+  row++;
 
   button = gimp_prop_color_button_new (config, "color",
 				       _("Text Color"),
 				       -1, 24, GIMP_COLOR_AREA_FLAT);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (options));
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Color:"), 1.0, 0.5,
 			     button, 1, FALSE);
 
   box = gimp_prop_enum_stock_box_new (config, "justify", "gtk-justify", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 7,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Justify:"), 1.0, 0.5,
 			     box, 2, TRUE);
 
   spinbutton = gimp_prop_spin_button_new (config, "indent", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 8,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Indent:"), 1.0, 0.5,
                              spinbutton, 1, FALSE);
 
   spinbutton = gimp_prop_spin_button_new (config, "line-spacing", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_stock (GTK_TABLE (table), 9,
+  gimp_table_attach_stock (GTK_TABLE (table), row++,
                            _("Line\nSpacing:"), 0.0,
 			   spinbutton, 1, GIMP_STOCK_LINE_SPACING);
 

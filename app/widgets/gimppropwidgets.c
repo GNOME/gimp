@@ -39,7 +39,6 @@
 #include "gimpcolorpanel.h"
 #include "gimpdnd.h"
 #include "gimpenummenu.h"
-#include "gimpfontselection.h"
 #include "gimppreview.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets-constructors.h"
@@ -1246,107 +1245,6 @@ gimp_prop_text_buffer_notify (GObject       *config,
 
   g_signal_handlers_unblock_by_func (text_buffer,
                                      gimp_prop_text_buffer_callback,
-                                     config);
-
-  g_free (value);
-}
-
-
-/********************/
-/*  font selection  */
-/********************/
-
-static void  gimp_prop_fontsel_callback (GtkWidget  *fontsel,
-                                         GObject    *config);
-static void  gimp_prop_fontsel_notify   (GObject    *config,
-                                         GParamSpec *param_spec,
-                                         GtkWidget  *fontsel);
-
-
-GtkWidget *
-gimp_prop_font_selection_new (GObject     *config,
-                              const gchar *property_name)
-{
-  GParamSpec *param_spec;
-  GtkWidget  *fontsel;
-  gchar      *value;
-
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_STRING, G_STRLOC);
-  if (! param_spec)
-    return NULL;
-
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
-  fontsel = gimp_font_selection_new (NULL);
-
-  if (value)
-    {
-      gimp_font_selection_set_fontname (GIMP_FONT_SELECTION (fontsel), value);
-      g_free (value);
-    }
-
-  set_param_spec (G_OBJECT (fontsel),
-                  GIMP_FONT_SELECTION (fontsel)->entry, param_spec);
-
-  g_signal_connect (fontsel, "font_changed",
-		    G_CALLBACK (gimp_prop_fontsel_callback),
-		    config);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_fontsel_notify),
-                  fontsel);
-
-  return fontsel;
-}
-
-static void
-gimp_prop_fontsel_callback (GtkWidget *fontsel,
-                            GObject   *config)
-{
-  GParamSpec  *param_spec;
-  const gchar *name;
-
-  param_spec = get_param_spec (G_OBJECT (fontsel));
-  if (! param_spec)
-    return;
-
-  name = gimp_font_selection_get_fontname (GIMP_FONT_SELECTION (fontsel));
-
-  g_signal_handlers_block_by_func (config,
-                                   gimp_prop_fontsel_notify,
-                                   fontsel);
-
-  g_object_set (config,
-                param_spec->name, name,
-                NULL);
-
-  g_signal_handlers_unblock_by_func (config,
-                                     gimp_prop_fontsel_notify,
-                                     fontsel);
-}
-
-static void
-gimp_prop_fontsel_notify (GObject    *config,
-                          GParamSpec *param_spec,
-                          GtkWidget  *fontsel)
-{
-  gchar *value;
-
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
-
-  g_signal_handlers_block_by_func (fontsel,
-                                   gimp_prop_fontsel_callback,
-                                   config);
-
-  gimp_font_selection_set_fontname (GIMP_FONT_SELECTION (fontsel), value);
-
-  g_signal_handlers_unblock_by_func (fontsel,
-                                     gimp_prop_fontsel_callback,
                                      config);
 
   g_free (value);

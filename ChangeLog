@@ -1,3 +1,32 @@
+2003-11-05  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c: register a log handler for the Gimp-Text domain.
+
+	* app/text/gimpfont.c: code cosmetics.
+
+	* app/text/gimptext-compat.c: removed debugging output.
+
+	Let GIMP work w/o any fonts. Of course you won't get any text
+	functionality then:
+
+	* app/text/gimpfontlist.c: don't install any font aliases if no
+	fonts were found.
+
+	* app/text/gimptextlayer.c: refuse to render any text layers when
+	the GIMP fonts list is empty.
+
+	* app/tools/gimptexttool.c: removed redundant includes.
+
+	* app/tools/gimptextoptions.c: removed the font selection widget.
+	This is a temporary regression that will be cured by improving the
+	GimpFontView widget.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpfontselection-dialog.[ch]
+	* app/widgets/gimpfontselection.[ch]
+	* app/widgets/gimppropwidgets.[ch]: removed the font selection and
+	all references to it. Fixes bug #119267.
+
 2003-11-04  Sven Neumann  <sven@gimp.org>
 
 	* etc/Makefile.am

@@ -157,6 +157,10 @@ app_init (const gchar         *full_prog_name,
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,
 		     &the_gimp);
+  g_log_set_handler ("Gimp-Text",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
   g_log_set_handler ("Gimp-GUI",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,

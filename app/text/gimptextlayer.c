@@ -38,6 +38,7 @@
 #include "config/gimpconfig-utils.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpparasitelist.h"
 
@@ -367,6 +368,13 @@ gimp_text_layer_render_now (GimpTextLayer *layer)
   drawable = GIMP_DRAWABLE (layer);
   item     = GIMP_ITEM (layer);
   image    = gimp_item_get_image (item);
+
+  if (gimp_container_num_children (image->gimp->fonts) == 0)
+    {
+      g_message (_("Due to lack of any fonts,\n"
+                   "text functionality is not available."));
+      return FALSE;
+    }
 
   layout = gimp_text_layout_new (layer->text, image);
 

@@ -70,9 +70,6 @@ text_render (GimpImage    *gimage,
   if (border < 0)
     border = 0;
 
-  g_print ("text_render: x = %d, y = %d, fontname = '%s', border = %d\n",
-           text_x, text_y, fontname, border);
-
   desc = pango_font_description_from_string (fontname);
   size = PANGO_PIXELS (pango_font_description_get_size (desc));
 
