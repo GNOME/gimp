@@ -1,9 +1,11 @@
 #include <stdio.h>
 
 #include "tile.h"
+#include "tile_pvt.h"
 #include "tile_cache.h"
 #include "tile_manager.h"
 #include "tile_swap.h"
+
 
 /* EXPERIMENTAL Copy-On-Write goodies
  *  by Adam D. Moss

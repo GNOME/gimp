@@ -38,6 +38,7 @@
 #include "layer_pvt.h"
 #include "drawable_pvt.h"
 #include "tile_manager_pvt.h"
+#include "tile_pvt.h"			/* ick. */
 
 #define    SQR(x) ((x) * (x))
 

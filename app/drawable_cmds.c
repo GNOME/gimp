@@ -23,6 +23,8 @@
 #include "drawable.h"
 #include "drawable_cmds.h"
 
+#include "tile_pvt.h"			/* ick. */
+
 static int int_value;
 static int success;
 

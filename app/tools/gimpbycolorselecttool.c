@@ -30,6 +30,8 @@
 #include "gdisplay.h"
 #include "rect_select.h"
 
+#include "tile_pvt.h"			/* ick. */
+
 #define DEFAULT_FUZZINESS 15
 #define PREVIEW_WIDTH   256
 #define PREVIEW_HEIGHT  256

@@ -27,6 +27,7 @@
 #include "gimpsignal.h"
 
 #include "tile_manager_pvt.h"		/* ick. */
+#include "tile_pvt.h"
 #include "layer_pvt.h"
 #include "drawable_pvt.h"		/* ick ick. */
 

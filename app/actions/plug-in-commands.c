@@ -47,6 +47,7 @@
 #include "menus.h"
 #include "plug_in.h"
 
+#include "tile_pvt.h"			/* ick. */
 
 #define SEPARATE_PROGRESS_BAR
 

@@ -26,6 +26,7 @@
 #include "layer_pvt.h"
 #include "channel_pvt.h"
 #include "tile_manager_pvt.h"
+#include "tile_pvt.h"			/* ick. */
 
 /* #define SWAP_FROM_FILE */
 

@@ -26,6 +26,7 @@
 #include "palette.h"
 #include "tools.h"
 
+#include "tile_pvt.h"			/* ick. */
 
 /* maximum information buffer size */
 

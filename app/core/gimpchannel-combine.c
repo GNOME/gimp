@@ -31,6 +31,7 @@
 #include "undo.h"
 
 #include "channel_pvt.h"
+#include "tile_pvt.h"			/* ick. */
 
 /*
 enum {

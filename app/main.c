@@ -33,7 +33,6 @@
 #include "app_procs.h"
 #include "errors.h"
 #include "install.h"
-#include "tile.h"
 
 static RETSIGTYPE on_signal (int);
 static RETSIGTYPE on_sig_child (int);

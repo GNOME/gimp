@@ -32,6 +32,8 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "tile_pvt.h"			/* ick. */
+
 #define    SQR(x) ((x) * (x))
 #define    EPSILON  0.00001
 

@@ -37,6 +37,8 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "tile_pvt.h"			/* ick. */
+
 /*  target size  */
 #define  TARGET_HEIGHT     15
 #define  TARGET_WIDTH      15

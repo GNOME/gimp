@@ -23,7 +23,9 @@
 #include "paint_funcs.h"
 #include "boundary.h"
 #include "tile_manager.h"
+
 #include "tile_manager_pvt.h"  /* For copy-on-write */
+#include "tile_pvt.h"			/* ick. */
 
 #define STD_BUF_SIZE       1021
 #define MAXDIFF            195076

@@ -1,3 +1,13 @@
+Wed Jul  8 01:38:15 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* Makefile.am blend.c boundary.c by_color_select.c channel.c
+ 	* color_picker.c drawable_cmds.c fuzzy_select.c gimpimage.c
+ 	* image_render.c ink.c layer.c main.c paint_core.c paint_funcs.c
+ 	* pixel_region.c plug_in.c tile.c tile.h tile_cache.c tile_manager.c
+ 	* tile_swap.c transform_core.c undo.c xcf.c: split off tile_pvt.h
+	from tile.h so changes in the tile implementation don't force a
+	complete recompile.
+
 Wed Jul  8 01:35:22 EEST 1998  Lauri Alanko <nether@gimp.org>
 
 	* app/app_procs.c (app_exit_finish): Unregister pdb procs _before_ 

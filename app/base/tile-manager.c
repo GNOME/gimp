@@ -21,6 +21,7 @@
 #include "tile_swap.h"
 
 #include "tile_manager_pvt.h"
+#include "tile_pvt.h"			/* ick. */
 
 static void tile_manager_destroy_level (TileLevel *level);
 

@@ -220,6 +220,7 @@ gimp_SOURCES = \
 	pixel_region.c		\
 	pixel_region.h		\
 	pixmaps.h		\
+	pixmaps2.h		\
 	plug_in.c		\
 	plug_in.h		\
 	posterize.c		\
@@ -257,6 +258,7 @@ gimp_SOURCES = \
 	threshold.h		\
 	tile.c			\
 	tile.h			\
+	tile_pvt.h		\
 	tile_cache.c		\
 	tile_cache.h		\
 	tile_manager.c		\

@@ -13,6 +13,7 @@
 
 #include "tile_swap.h"
 
+#include "tile_pvt.h"			/* ick. */
 
 typedef struct _SwapFile     SwapFile;
 typedef struct _DefSwapFile  DefSwapFile;

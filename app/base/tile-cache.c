@@ -8,6 +8,8 @@
 #include <pthread.h>
 #endif
 
+#include "tile_pvt.h"			/* ick. */
+
 #include "stdio.h"
 
 /*  This is the percentage of the maximum cache size that should be cleared

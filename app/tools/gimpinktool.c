@@ -25,6 +25,8 @@
 #include "undo.h"
 #include "blob.h"
 
+#include "tile_pvt.h"			/* ick. */
+
 #include <math.h>
 #include <stdlib.h>
 

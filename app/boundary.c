@@ -21,6 +21,8 @@
 #include "errors.h"
 #include "boundary.h"
 
+#include "tile_pvt.h"			/* ick. */
+
 /* half intensity for mask */
 #define HALF_WAY 127
 

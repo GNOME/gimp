@@ -26,6 +26,7 @@
 #include "pixel_region.h"
 #include "scale.h"
 
+#include "tile_pvt.h"			/* ick. */
 
 typedef struct _RenderInfo  RenderInfo;
 typedef void (*RenderFunc) (RenderInfo *info);

@@ -23,6 +23,7 @@
 #include "pixel_region.h"
 
 #include "tile_manager_pvt.h"
+#include "tile_pvt.h"			/* ick. */
 
 typedef struct _PixelRegionHolder PixelRegionHolder;
 

@@ -28,6 +28,8 @@
 #include "gdisplay.h"
 #include "rect_select.h"
 
+#include "tile_pvt.h"			/* ick. */
+
 #define NO  0
 #define YES 1
 

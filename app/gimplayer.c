@@ -31,6 +31,7 @@
 
 #include "layer_pvt.h"
 #include "tile_manager_pvt.h"
+#include "tile_pvt.h"			/* ick. */
 
 enum {
   LAST_SIGNAL
