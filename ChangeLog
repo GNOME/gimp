@@ -1,3 +1,11 @@
+Sun Feb  6 20:46:36 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/rcm/rcm_misc.c: Corrected a stupid mistake I made when
+	I changed rcm to use the gimp_color_space functions (fixes #5967).
+
+	* plug-ins/common/decompose.c: Fixed a minor problem Mitch 
+	introduced lately and removed another occurence of sprintf/gettext.
+
 2000-02-05  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpcolorspace.[ch]: use g* types and name the

@@ -459,7 +459,6 @@ rcm_render_circle (GtkWidget *preview,
 { 
   gint i, j;
   gdouble h, s, v;
-  guchar rgb[3];
   guchar *a;
 
   a = g_new (guchar, 3*sum);
@@ -480,12 +479,8 @@ rcm_render_circle (GtkWidget *preview,
       else
       {
 	h = arctg (sum / 2.0 - j, i - sum / 2.0) / (2 * G_PI);
-	v = 1 - sqrt (s) / 2;
-	gimp_hsv_to_rgb4 (rgb, h, s, v);
-
-	a[i*3+0] = rgb[0] * 255;
-	a[i*3+1] = rgb[1] * 255;
-	a[i*3+2] = rgb[2] * 255;
+	v = 1 - sqrt (s) / 4;
+	gimp_hsv_to_rgb4 (&a[i*3], h, s, v);
       }	
     }   
     gtk_preview_draw_row(GTK_PREVIEW(preview), a, 0, j, sum);

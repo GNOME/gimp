@@ -115,7 +115,7 @@ static EXTRACT extract[] =
   { N_("Red"),        FALSE, 1, { N_("red") }, extract_red },
   { N_("Green"),      FALSE, 1, { N_("green") }, extract_green },
   { N_("Blue"),       FALSE, 1, { N_("blue") }, extract_blue },
-  { N_("HSV"),        FALSE, 3, { N_("hue"),
+  { N_("HSV"),        TRUE,  3, { N_("hue"),
 				  N_("saturation"),
 				  N_("value") }, extract_hsv },
   { N_("Hue"),        FALSE, 1, { N_("hue") }, extract_hue },
@@ -327,7 +327,7 @@ decompose (gint32  image_ID,
   gint i, j, extract_idx, scan_lines;
   gint height, width, tile_height, num_images;
   guchar *src = (guchar *)ident;  /* Just to satisfy gcc/lint */
-  char filename[1024];
+  gchar *filename;
   guchar *dst[MAX_EXTRACT_IMAGES];
   gint32 layer_ID_dst[MAX_EXTRACT_IMAGES];
   GDrawable *drawable_src, *drawable_dst[MAX_EXTRACT_IMAGES];
@@ -375,12 +375,13 @@ decompose (gint32  image_ID,
   
   for (j = 0; j < num_images; j++)
     {
-      sprintf (filename, "%s-%s", gimp_image_get_filename (image_ID),
-	       gettext (extract[extract_idx].channel_name[j]));
+      filename = g_strdup_printf ("%s-%s", gimp_image_get_filename (image_ID),
+				  gettext (extract[extract_idx].channel_name[j]));
       
       image_ID_dst[j] = create_new_image (filename, width, height, GRAY,
 					  layer_ID_dst+j, drawable_dst+j,
 					  pixel_rgn_dst+j);
+      g_free (filename);
       dst[j] = g_new (guchar, tile_height * width);
     }
   
@@ -882,8 +883,9 @@ decompose_dialog (void)
   group = NULL;
   for (j = 0; j < NUM_EXTRACT_TYPES; j++)
     {
-      if (!extract[j].dialog) continue;
-      toggle = gtk_radio_button_new_with_label (group, extract[j].type);
+      if (!extract[j].dialog) 
+	continue;
+      toggle = gtk_radio_button_new_with_label (group, gettext (extract[j].type));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
       decoint.extract_flag[j] =
