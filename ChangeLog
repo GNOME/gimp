@@ -1,3 +1,8 @@
+2000-05-12  Jay Cox  <jaycox@earthlink.net>
+
+	* app/gimpimage.c: Copy the name, tatto and parasites of the 
+	bottom layer to the new merged layer in gimp_image_merge_layers.
+
 2000-05-11  Tor Lillqvist  <tml@iki.fi>
 
 	* PLUGIN_MAINTAINERS

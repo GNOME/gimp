@@ -578,6 +578,11 @@ gimp_image_scale (GimpImage *gimage,
     }
 
   /*  Don't forget the selection mask!  */
+  /*  if (channel_is_empty(gimage->selection_mask))
+        channel_resize(gimage->selection_mask, new_width, new_height, 0, 0)
+      else
+  */
+        
   channel_scale (gimage->selection_mask, new_width, new_height);
   gimage_mask_invalidate (gimage);
 
@@ -2629,6 +2634,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   gint position;
   gint active[MAX_CHANNELS] = {1, 1, 1, 1};
   gint off_x, off_y;
+  char *name;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2706,6 +2712,8 @@ gimp_image_merge_layers (GimpImage *gimage,
   /*  Start a merge undo group  */
   undo_push_group_start (gimage, LAYER_MERGE_UNDO);
 
+  name = g_strdup(drawable_get_name (GIMP_DRAWABLE(layer)));
+
   if (merge_type == FLATTEN_IMAGE ||
       drawable_type (GIMP_DRAWABLE (layer)) == INDEXED_GIMAGE)
     {
@@ -2745,10 +2753,12 @@ gimp_image_merge_layers (GimpImage *gimage,
        *  whether or not the original did
        *  Opacity is set to 100% and the MODE is set to normal
        */
+
       merge_layer = layer_new (gimage, (x2 - x1), (y2 - y1),
 			       drawable_type_with_alpha (GIMP_DRAWABLE(layer)),
-			       drawable_get_name (GIMP_DRAWABLE(layer)),
+			       "merged layer",
 			       OPAQUE_OPACITY, NORMAL_MODE);
+
       if (!merge_layer)
 	{
 	  g_message ("gimp_image_merge_layers: could not allocate merge layer");
@@ -2779,6 +2789,12 @@ gimp_image_merge_layers (GimpImage *gimage,
       bottom_mode = bottom->mode;
       bottom->mode = NORMAL_MODE;
     }
+
+  /* Copy the tattoo and parasites of the bottom layer to the new layer */
+  layer_set_tattoo(merge_layer, layer_get_tattoo(layer));
+  GIMP_DRAWABLE(merge_layer)->parasites 
+    = parasite_list_copy(GIMP_DRAWABLE(layer)->parasites);
+
 
   while (reverse_list)
     {
@@ -2846,6 +2862,11 @@ gimp_image_merge_layers (GimpImage *gimage,
       gimp_image_add_layer (gimage, merge_layer,
 			    (g_slist_length (gimage->layers) - position + 1));
     }
+
+  /* set the name after the original layers have been removed so we don't
+     end up with #2 appended to the name */
+  drawable_set_name (GIMP_DRAWABLE(merge_layer), name);
+  g_free(name);
 
   /*  End the merge undo group  */
   undo_push_group_end (gimage);
