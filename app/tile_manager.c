@@ -152,6 +152,11 @@ tile_manager_get (TileManager *tm,
 
   tile_ptr = &tm->tiles[tile_num];
 
+  if (wantwrite && !wantread)
+    {
+      g_warning("WRITE-ONLY TILE... OUCHIE");
+    }
+
   if (wantread) 
     {
       TILE_MUTEX_LOCK (*tile_ptr);
@@ -169,6 +174,13 @@ tile_manager_get (TileManager *tm,
 		{
 		  newtile->data    = g_new (guchar, tile_size (newtile));
 		  memcpy (newtile->data, (*tile_ptr)->data, tile_size (newtile));
+		}
+	      else
+		{
+		  tile_lock (*tile_ptr);
+		  newtile->data    = g_new (guchar, tile_size (newtile));
+		  memcpy (newtile->data, (*tile_ptr)->data, tile_size (newtile));
+		  tile_release (*tile_ptr, FALSE);
 		}
 	      tile_detach (*tile_ptr, tm, tile_num);
 	      TILE_MUTEX_LOCK (newtile);
@@ -387,6 +399,7 @@ tile_manager_map (TileManager *tm,
   }
   tile_detach (*tile_ptr, tm, tile_num);
 
+
   /*  printf(">");fflush(stdout);*/
 
   TILE_MUTEX_LOCK (srctile);
@@ -395,6 +408,7 @@ tile_manager_map (TileManager *tm,
 
   tile_attach (srctile, tm, tile_num);
   *tile_ptr = srctile;
+
   TILE_MUTEX_UNLOCK (srctile);
 
   /*  printf("}");fflush(stdout);*/

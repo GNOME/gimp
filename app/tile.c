@@ -8,31 +8,6 @@
 
 #include "libgimp/gimpintl.h"
 
-/* EXPERIMENTAL Copy-On-Write goodies
- *  by Adam D. Moss
- *   adam@gimp.org
- *   adam@foxbox.org
- *
- *
- * C.O.W. Revisions:
- *
- *   97.10.05 - Initial release
- *   97.10.06 - Much faster tile invalidation +
- *              Better swap interaction (should no longer
- *                crash GIMP when GIMP swapfile is full).
- *   97.10.18 - Very stable now, and even more efficient.
- *   98.06.16 - Revised from GIMP 0.99.14 for 1.[01].0 - no
- *                longer so sure about stability until
- *                more comprehensive testing is done.
- *
- *
- * MISC TODO:
- *
- *  tile_invalidate: (tile_manager) - don't let a tile become
- *   invalidated if its ref-count >1, but move it to a delete-on-last-unref
- *   list instead...
- */
-
 
 static void tile_destroy (Tile *tile);
 
@@ -273,12 +248,15 @@ tile_detach (Tile *tile, void *tm, int tile_num)
   TileLink *tmp;
 
 #ifdef TILE_DEBUG
-  g_print("tile_detach: %p ~> (%p,%d) *%d\n", tile, tm, tile_num, tile->share_count);
+  g_print("tile_detach: %p ~> (%p,%d) r%d *%d\n", tile, tm, tile_num,
+	  tile->ref_count, tile->share_count);
 #endif
 
   for (link = &tile->tlink; *link; link = &(*link)->next)
-    if ((*link)->tm == tm && (*link)->tile_num == tile_num)
-      break;
+    {
+      if ((*link)->tm == tm && (*link)->tile_num == tile_num)
+	break;
+    }
 
   if (*link == NULL) 
     {

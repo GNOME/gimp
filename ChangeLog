@@ -1,3 +1,15 @@
+Sun Jan 31 19:42:26 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/tile.c app/tile_manager.c:
+
+	Fixed the tile-corruption bug which has been around
+	since early GIMP-1.1.  When dirtying a copy-on-write
+	tile, a pointer to nonsense data was being returned
+	when the c-o-w'd tile source was swapped out to disk.
+	Now the c-o-w'ing routine ensures that the tile data
+	is correctly locked into memory before duplicating it
+	for dirtying.
+
 Sun Jan 31 17:13:46 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
 
 	Changed:-
