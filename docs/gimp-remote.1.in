@@ -1,16 +1,16 @@
-.TH GIMP-REMOTE 1 "31 October 2003" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP-REMOTE 1 "20 January 2004" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
 gimp-remote - tells a running GIMP to open a (local or remote) image file.
 .SH SYNOPSIS
 .B gimp-remote
 [\-h] [\-\-help] [-v] [\-\-version] [\-\-display \fIdisplay\fP]
-[\-n] [\-\-new] \fIfilename\fP...
+\fIfilename\fP ...
 
 .SH DESCRIPTION
 .PP
 \fIgimp-remote\fP is a small utility that tells a running GIMP to open
-a (local or remote) image file.  It does so by searching for a GIMP
-toolbox on the active display.  If it can find a GIMP toolbox, a
+one or more (local or remote) image files.  It does so by searching for
+a GIMP toolbox on the active display.  If it can find a GIMP toolbox, a
 synthetic drop event is created which makes GIMP think the files would
 have been dropped onto the toolbox. More than one filename or URL can
 be specified on the commandline.
@@ -27,19 +27,16 @@ Output the version info.
 .TP 8
 .B \-\-display  \fIdisplay\fP
 Use the designated X display.
-.TP 8
-.B \-n, \-\-new
-If no running GIMP is found, a new instance of GIMP is started.
-The files to open are passed to the new GIMP.
 
 .SH EXAMPLES
 .TP
-.BI gimp-remote \ http://www.gimp.org/icons/frontpage-small.gif
-Loads the image from the GIMP website into a running GIMP. 
+.BI gimp-remote\ http://www.gimp.org/icons/frontpage-small.gif
+Loads the image from the GIMP website into a running GIMP or starts
+a new one.
 .TP
-.BI gimp-remote\ \-n \ wilber.xcf\ \ wilma.xcf
-Loads the local files wilber.xcf and wilma.xcf into a running GIMP. 
-If no GIMP is running, a new one is started.
+.BI gimp-remote\ wilber.xcf\ wilma.xcf
+Loads the local files wilber.xcf and wilma.xcf into a running GIMP
+or starts a new one. 
 
 .SH ENVIRONMENT
 .PP

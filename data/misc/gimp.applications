@@ -1,5 +1,5 @@
 gimp-1.3
-	command=gimp-remote-1.3 --new
+	command=gimp-remote-1.3
 	name=The GIMP (unstable)
 	can_open_multiple_files=true
 	expects_uris=non-file

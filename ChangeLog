@@ -1,3 +1,14 @@
+2004-01-20  Sven Neumann  <sven@gimp.org>
+
+	* tools/gimp-remote.c: made --new the default behaviour and allow
+	gimp-remote to be called without any image filenames.
+
+	* docs/gimp-remote-1.3.1.in: changed accordingly.
+
+	* data/misc/gimp.applications 
+	* data/misc/gimp.desktop.in.in: removed --new option from
+	gimp-remote calls.
+
 2004-01-20  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/mail.c
