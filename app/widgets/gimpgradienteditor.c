@@ -860,9 +860,10 @@ gradient_editor_create (void)
   GdkPixmap *pixmap;
   GdkBitmap *mask;
   GtkStyle  *style;
-  gchar *titles[2];
-  gint   select_pos;
-  gint   i;
+  gchar     *titles[2];
+  gint       column_width;
+  gint       select_pos;
+  gint       i;
 
   /* If the editor already exists, just show it */
   if (g_editor)
@@ -922,6 +923,11 @@ gradient_editor_create (void)
   gtk_clist_set_use_drag_icons (GTK_CLIST (g_editor->clist), FALSE);
   gtk_clist_column_titles_passive (GTK_CLIST (g_editor->clist));
   gtk_container_add (GTK_CONTAINER (scrolled_win), g_editor->clist);
+
+  column_width =
+    MAX (50, gtk_clist_optimal_column_width (GTK_CLIST (g_editor->clist), 0));
+  gtk_clist_set_column_min_width (GTK_CLIST (g_editor->clist), 0, 50);
+  gtk_clist_set_column_width (GTK_CLIST (g_editor->clist), 0, column_width);
 
   gtk_widget_show (g_editor->clist);
 

@@ -128,6 +128,7 @@ gradient_select_new (gchar *title,
   GtkWidget   *scrolled_win;
   GdkColormap *colormap;
   gchar       *titles[2];
+  gint         column_width;
   gint         select_pos;
 
   gradient_t *active = NULL;
@@ -212,6 +213,11 @@ gradient_select_new (gchar *title,
   gtk_clist_column_titles_passive (GTK_CLIST (gsp->clist));
   gtk_widget_set_usize (gsp->clist, 200, 250);
   gtk_container_add (GTK_CONTAINER (scrolled_win), gsp->clist);
+
+  column_width =
+    MAX (50, gtk_clist_optimal_column_width (GTK_CLIST (gsp->clist), 0));
+  gtk_clist_set_column_min_width (GTK_CLIST (gsp->clist), 0, 50);
+  gtk_clist_set_column_width (GTK_CLIST (gsp->clist), 0, column_width);
 
   gtk_widget_show (gsp->clist);
 

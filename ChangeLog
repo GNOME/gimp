@@ -1,5 +1,17 @@
 1999-12-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/palette.c: Enable the popup menu containing only "New" in
+	the whole area inside the palette's scrolled window.
+	This way you don't have to correctly hit the small line a newly
+	created palette consists of.
+
+	* app/gradient.c
+	* app/gradient_select.c: Set the "Gradient" clist column to it's
+	optimal size but ensure a minimal size, so the column title is
+	fully visible with all languages and font sizes.
+
+1999-12-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/app_procs.c: Default to "Cancel" in the "Really Quit?" dialog.
 
 	* app/app_procs.c
