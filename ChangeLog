@@ -1,3 +1,12 @@
+Sat Apr 21 17:04:34 PDT 2001 Manish Singh <yosh@gimp.org>
+
+	* acinclude.m4: updated libtool stuff
+
+	* configure.in: more #undefs so jpeglib.h test works
+
+	* plug-ins/common/bumpmap.c: speedup patch from Ernst Lippe
+	<ernstl@planet.nl> (tile cache size optimization)
+
 2001-04-11  Stanislav Brabec  <utx@penguin.cz>
 
 	On request of Martin Weber <martweb@gmx.net>:
