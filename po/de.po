@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.14\n"
-"POT-Creation-Date: 2003-04-11 16:11+0200\n"
-"PO-Revision-Date: 2003-04-11 16:10+0200\n"
+"POT-Creation-Date: 2003-04-14 13:19+0200\n"
+"PO-Revision-Date: 2003-04-14 13:33+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -744,7 +744,7 @@ msgstr "Geordnete Farbrasterung"
 msgid "Foreground"
 msgstr "Vordergrund"
 
-#: app/core/core-enums.c:169 app/core/gimptemplate.c:460
+#: app/core/core-enums.c:169 app/core/gimptemplate.c:465
 msgid "Background"
 msgstr "Hintergrund"
 
@@ -949,7 +949,8 @@ msgstr "Ebenengrösse ändern"
 
 #: app/core/core-enums.c:443 app/core/core-enums.c:475
 #: app/core/gimplayer.c:884 app/pdb/layer_cmds.c:640 app/pdb/layer_cmds.c:772
-#: app/tools/gimpeditselectiontool.c:271 app/tools/gimpeditselectiontool.c:985
+#: app/tools/gimpeditselectiontool.c:271
+#: app/tools/gimpeditselectiontool.c:1000
 msgid "Move Layer"
 msgstr "Ebene bewegen"
 
@@ -1020,12 +1021,12 @@ msgstr "Bild"
 msgid "Image Mod"
 msgstr "Bildänderung"
 
-#: app/core/core-enums.c:460 app/widgets/gimptemplateeditor.c:325
+#: app/core/core-enums.c:460 app/widgets/gimptemplateeditor.c:331
 msgid "Image Type"
 msgstr "Bildart"
 
 #. Image size frame
-#: app/core/core-enums.c:461 app/widgets/gimptemplateeditor.c:122
+#: app/core/core-enums.c:461 app/widgets/gimptemplateeditor.c:128
 msgid "Image Size"
 msgstr "Bildgröße"
 
@@ -1165,36 +1166,36 @@ msgid "Parasites"
 msgstr "Parasiten"
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:761 app/gui/dialogs-constructors.c:332
-#: app/gui/dialogs-constructors.c:496 app/gui/preferences-dialog.c:1830
+#: app/core/gimp.c:761 app/gui/dialogs-constructors.c:333
+#: app/gui/dialogs-constructors.c:497 app/gui/preferences-dialog.c:1830
 #: app/pdb/internal_procs.c:83
 msgid "Brushes"
 msgstr "Pinsel"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:765 app/gui/dialogs-constructors.c:353
-#: app/gui/dialogs-constructors.c:517 app/gui/preferences-dialog.c:1834
+#: app/core/gimp.c:765 app/gui/dialogs-constructors.c:354
+#: app/gui/dialogs-constructors.c:518 app/gui/preferences-dialog.c:1834
 #: app/pdb/internal_procs.c:164
 msgid "Patterns"
 msgstr "Muster"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:769 app/gui/dialogs-constructors.c:395
-#: app/gui/dialogs-constructors.c:559 app/gui/preferences-dialog.c:1838
+#: app/core/gimp.c:769 app/gui/dialogs-constructors.c:396
+#: app/gui/dialogs-constructors.c:560 app/gui/preferences-dialog.c:1838
 #: app/pdb/internal_procs.c:152
 msgid "Palettes"
 msgstr "Farbpaletten"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:773 app/gui/dialogs-constructors.c:374
-#: app/gui/dialogs-constructors.c:538 app/gui/preferences-dialog.c:1842
+#: app/core/gimp.c:773 app/gui/dialogs-constructors.c:375
+#: app/gui/dialogs-constructors.c:539 app/gui/preferences-dialog.c:1842
 #: app/pdb/internal_procs.c:119
 msgid "Gradients"
 msgstr "Farbverläufe"
 
 #. initialize the list of gimp fonts
-#: app/core/gimp.c:777 app/gui/dialogs-constructors.c:414
-#: app/gui/dialogs-constructors.c:578
+#: app/core/gimp.c:777 app/gui/dialogs-constructors.c:415
+#: app/gui/dialogs-constructors.c:579
 msgid "Fonts"
 msgstr "Schriftarten"
 
@@ -1204,7 +1205,7 @@ msgid "Documents"
 msgstr "Dokumente"
 
 #. initialize the template list
-#: app/core/gimp.c:787 app/gui/dialogs-constructors.c:908
+#: app/core/gimp.c:787 app/gui/dialogs-constructors.c:916
 msgid "Templates"
 msgstr "Vorlagen"
 
@@ -1244,9 +1245,10 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ungültiger UTF-8 Text in Pinseldatei »%s«."
 
 #: app/core/gimpbrush.c:606 app/core/gimpbrushpipe.c:374
-#: app/core/gimpcontext.c:1298 app/core/gimpgradient.c:385
+#: app/core/gimpcontext.c:1302 app/core/gimpgradient.c:385
 #: app/core/gimpitem.c:293 app/core/gimppalette.c:438
-#: app/core/gimppattern.c:410 app/tools/gimpvectortool.c:314
+#: app/core/gimppattern.c:410 app/gui/templates-commands.c:124
+#: app/tools/gimpvectortool.c:305
 msgid "Unnamed"
 msgstr "Namenlos"
 
@@ -2613,187 +2615,187 @@ msgstr "Vordergrund: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Hintergrund: %d, %d, %d"
 
-#: app/gui/dialogs-constructors.c:268 app/gui/preferences-dialog.c:1242
+#: app/gui/dialogs-constructors.c:269 app/gui/preferences-dialog.c:1242
 #: app/gui/preferences-dialog.c:1245
 msgid "Tool Options"
 msgstr "Werkzeugeinstellungen"
 
-#: app/gui/dialogs-constructors.c:288
+#: app/gui/dialogs-constructors.c:289
 msgid "Error Console"
 msgstr "Fehlerkonsole"
 
-#: app/gui/dialogs-constructors.c:288
+#: app/gui/dialogs-constructors.c:289
 msgid "Errors"
 msgstr "Fehler"
 
-#: app/gui/dialogs-constructors.c:311
+#: app/gui/dialogs-constructors.c:312
 msgid "Image List"
 msgstr "Bildliste"
 
-#: app/gui/dialogs-constructors.c:311 app/gui/dialogs-constructors.c:475
+#: app/gui/dialogs-constructors.c:312 app/gui/dialogs-constructors.c:476
 msgid "Images"
 msgstr "Bilder"
 
-#: app/gui/dialogs-constructors.c:332
+#: app/gui/dialogs-constructors.c:333
 msgid "Brush List"
 msgstr "Pinselliste"
 
-#: app/gui/dialogs-constructors.c:353
+#: app/gui/dialogs-constructors.c:354
 msgid "Pattern List"
 msgstr "Musterliste"
 
-#: app/gui/dialogs-constructors.c:374
+#: app/gui/dialogs-constructors.c:375
 msgid "Gradient List"
 msgstr "Farbverlaufliste"
 
-#: app/gui/dialogs-constructors.c:395
+#: app/gui/dialogs-constructors.c:396
 msgid "Palette List"
 msgstr "Farbpalettenliste"
 
-#: app/gui/dialogs-constructors.c:414
+#: app/gui/dialogs-constructors.c:415
 msgid "Font List"
 msgstr "Schriftartenliste"
 
-#: app/gui/dialogs-constructors.c:433
+#: app/gui/dialogs-constructors.c:434
 msgid "Tool List"
 msgstr "Werkzeugliste"
 
-#: app/gui/dialogs-constructors.c:433 app/gui/dialogs-constructors.c:597
+#: app/gui/dialogs-constructors.c:434 app/gui/dialogs-constructors.c:598
 msgid "Tools"
 msgstr "Werkzeuge"
 
-#: app/gui/dialogs-constructors.c:452
+#: app/gui/dialogs-constructors.c:453
 msgid "Buffer List"
 msgstr "Ablageliste"
 
-#: app/gui/dialogs-constructors.c:452 app/gui/dialogs-constructors.c:616
+#: app/gui/dialogs-constructors.c:453 app/gui/dialogs-constructors.c:617
 msgid "Buffers"
 msgstr "Ablagen"
 
-#: app/gui/dialogs-constructors.c:475
+#: app/gui/dialogs-constructors.c:476
 msgid "Image Grid"
 msgstr "Bildraster"
 
-#: app/gui/dialogs-constructors.c:496
+#: app/gui/dialogs-constructors.c:497
 msgid "Brush Grid"
 msgstr "Pinselraster"
 
-#: app/gui/dialogs-constructors.c:517
+#: app/gui/dialogs-constructors.c:518
 msgid "Pattern Grid"
 msgstr "Musterraster"
 
-#: app/gui/dialogs-constructors.c:538
+#: app/gui/dialogs-constructors.c:539
 msgid "Gradient Grid"
 msgstr "Farbverlaufsraster"
 
-#: app/gui/dialogs-constructors.c:559
+#: app/gui/dialogs-constructors.c:560
 msgid "Palette Grid"
 msgstr "Palettenraster"
 
-#: app/gui/dialogs-constructors.c:578
+#: app/gui/dialogs-constructors.c:579
 msgid "Font Grid"
 msgstr "Schriftenartenraster"
 
-#: app/gui/dialogs-constructors.c:597
+#: app/gui/dialogs-constructors.c:598
 msgid "Tool Grid"
 msgstr "Werkzeugraster"
 
-#: app/gui/dialogs-constructors.c:616
+#: app/gui/dialogs-constructors.c:617
 msgid "Buffer Grid"
 msgstr "Ablageraster"
 
-#: app/gui/dialogs-constructors.c:650
+#: app/gui/dialogs-constructors.c:651
 msgid "Layer List"
 msgstr "Ebenenliste"
 
-#: app/gui/dialogs-constructors.c:650
+#: app/gui/dialogs-constructors.c:651
 msgid "Layers"
 msgstr "Ebenen"
 
-#: app/gui/dialogs-constructors.c:684
+#: app/gui/dialogs-constructors.c:685
 msgid "Channel List"
 msgstr "Kanalliste"
 
-#: app/gui/dialogs-constructors.c:684
+#: app/gui/dialogs-constructors.c:685
 msgid "Channels"
 msgstr "Kanäle"
 
-#: app/gui/dialogs-constructors.c:723
+#: app/gui/dialogs-constructors.c:724
 msgid "Paths List"
 msgstr "Pfadliste"
 
-#: app/gui/dialogs-constructors.c:723 app/pdb/internal_procs.c:158
+#: app/gui/dialogs-constructors.c:724 app/pdb/internal_procs.c:158
 msgid "Paths"
 msgstr "Pfade"
 
-#: app/gui/dialogs-constructors.c:772
+#: app/gui/dialogs-constructors.c:773
 msgid "Indexed Palette"
 msgstr "Indizierte Farbpalette"
 
-#: app/gui/dialogs-constructors.c:772
+#: app/gui/dialogs-constructors.c:773
 msgid "Colormap"
 msgstr "Farbtabelle"
 
-#: app/gui/dialogs-constructors.c:799
+#: app/gui/dialogs-constructors.c:800
 msgid "Selection Editor"
 msgstr "Auswahleditor"
 
-#: app/gui/dialogs-constructors.c:799
+#: app/gui/dialogs-constructors.c:800
 msgid "Selection"
 msgstr "Auswahl"
 
-#: app/gui/dialogs-constructors.c:823
+#: app/gui/dialogs-constructors.c:824
 msgid "Undo History"
 msgstr "Journal"
 
-#: app/gui/dialogs-constructors.c:823 app/gui/image-menu.c:1240
+#: app/gui/dialogs-constructors.c:824 app/gui/image-menu.c:1240
 #: app/pdb/internal_procs.c:185 app/widgets/gimpundoeditor.c:122
 msgid "Undo"
 msgstr "Rückgängig machen"
 
-#: app/gui/dialogs-constructors.c:846
+#: app/gui/dialogs-constructors.c:847
 msgid "Color Editor"
 msgstr "Farbeditor"
 
-#: app/gui/dialogs-constructors.c:846 app/pdb/internal_procs.c:89
-#: app/tools/paint_options.c:310 app/widgets/gimpwidgets-constructors.c:70
+#: app/gui/dialogs-constructors.c:847 app/pdb/internal_procs.c:89
+#: app/tools/paint_options.c:313 app/widgets/gimpwidgets-constructors.c:70
 #: app/widgets/gimpwidgets-constructors.c:103
 msgid "Color"
 msgstr "Farbe"
 
-#: app/gui/dialogs-constructors.c:867
+#: app/gui/dialogs-constructors.c:868
 msgid "Document History List"
 msgstr "Dokumentenindex (Liste)"
 
-#: app/gui/dialogs-constructors.c:867 app/gui/dialogs-constructors.c:888
+#: app/gui/dialogs-constructors.c:868 app/gui/dialogs-constructors.c:889
 msgid "History"
 msgstr "Journal"
 
-#: app/gui/dialogs-constructors.c:888
+#: app/gui/dialogs-constructors.c:889
 msgid "Document History Grid"
 msgstr "Dokumentenindex (Raster)"
 
-#: app/gui/dialogs-constructors.c:908
+#: app/gui/dialogs-constructors.c:916
 msgid "List of Templates"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:929
+#: app/gui/dialogs-constructors.c:937
 msgid "Brush Editor"
 msgstr "Pinseleditor"
 
-#: app/gui/dialogs-constructors.c:958
+#: app/gui/dialogs-constructors.c:966
 msgid "Gradient Editor"
 msgstr "Farbverlaufeditor"
 
-#: app/gui/dialogs-constructors.c:987
+#: app/gui/dialogs-constructors.c:995
 msgid "Palette Editor"
 msgstr "Farbpaletteneditor"
 
-#: app/gui/dialogs-constructors.c:1023
+#: app/gui/dialogs-constructors.c:1031
 msgid "Display Navigation"
 msgstr "Ansichtsnavigation"
 
-#: app/gui/dialogs-constructors.c:1023
+#: app/gui/dialogs-constructors.c:1031
 msgid "Navigation"
 msgstr "Navigation"
 
@@ -3088,20 +3090,20 @@ msgstr ""
 msgid "Determine File Type:"
 msgstr "Dateityp bestimmen:"
 
-#: app/gui/file-new-dialog.c:105 app/gui/preferences-dialog.c:952
+#: app/gui/file-new-dialog.c:100 app/gui/preferences-dialog.c:952
 #: app/gui/preferences-dialog.c:955
 msgid "New Image"
 msgstr "Neues Bild"
 
-#: app/gui/file-new-dialog.c:107
+#: app/gui/file-new-dialog.c:102
 msgid "Create a New Image"
 msgstr "Ein neues Bild erstellen"
 
-#: app/gui/file-new-dialog.c:139
+#: app/gui/file-new-dialog.c:134
 msgid "From _Template:"
 msgstr "Von _Vorlage:"
 
-#: app/gui/file-new-dialog.c:259
+#: app/gui/file-new-dialog.c:263
 #, c-format
 msgid ""
 "You are trying to create an image with\n"
@@ -3127,7 +3129,7 @@ msgstr ""
 "angezeigt wird, erhöhen Sie den Wert »Maximale Bildgröße«\n"
 "(zur Zeit %s) in den Einstellungen."
 
-#: app/gui/file-new-dialog.c:274
+#: app/gui/file-new-dialog.c:278
 msgid "Confirm Image Size"
 msgstr "Bildgröße bestätigen"
 
@@ -4265,7 +4267,7 @@ msgstr "X:"
 #: app/gui/resize-dialog.c:476 app/gui/resize-dialog.c:625
 #: app/tools/gimpcroptool.c:969 app/tools/gimprotatetool.c:198
 #: app/tools/gimpscaletool.c:200 app/tools/gimpsheartool.c:176
-#: app/widgets/gimptemplateeditor.c:272
+#: app/widgets/gimptemplateeditor.c:278
 msgid "Y:"
 msgstr "Y:"
 
@@ -4396,7 +4398,7 @@ msgstr "Ebenenbreite:"
 #: app/gui/resize-dialog.c:310 app/gui/resize-dialog.c:559
 #: app/tools/gimpcroptool.c:986 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:576
-#: app/widgets/gimptemplateeditor.c:147 app/widgets/gimptemplateeditor.c:165
+#: app/widgets/gimptemplateeditor.c:153 app/widgets/gimptemplateeditor.c:171
 msgid "Height:"
 msgstr "Höhe:"
 
@@ -4626,7 +4628,7 @@ msgstr "Versatz um (x/_2),(y/2)"
 msgid "_Wrap"
 msgstr "_Falten"
 
-#: app/gui/offset-dialog.c:198 app/widgets/gimptemplateeditor.c:333
+#: app/gui/offset-dialog.c:198 app/widgets/gimptemplateeditor.c:339
 msgid "Fill Type"
 msgstr "Füllart"
 
@@ -4957,7 +4959,7 @@ msgid "Height"
 msgstr "Höhe"
 
 #: app/gui/preferences-dialog.c:989 app/gui/preferences-dialog.c:1002
-#: app/gui/user-install-dialog.c:1278 app/widgets/gimptemplateeditor.c:204
+#: app/gui/user-install-dialog.c:1278 app/widgets/gimptemplateeditor.c:210
 msgid "Pixels"
 msgstr "Pixel"
 
@@ -5522,7 +5524,7 @@ msgid "Scale Layer Options"
 msgstr "Optionen zu Ebene skalieren"
 
 #: app/gui/resize-dialog.c:196 app/gui/resize-dialog.c:228
-#: app/tools/paint_options.c:299
+#: app/tools/paint_options.c:302
 msgid "Size"
 msgstr "Größe"
 
@@ -5578,11 +5580,11 @@ msgid "Print Size & Display Unit"
 msgstr "Druckgröße und Anzeigeeinheit"
 
 #. the resolution labels
-#: app/gui/resize-dialog.c:619 app/widgets/gimptemplateeditor.c:266
+#: app/gui/resize-dialog.c:619 app/widgets/gimptemplateeditor.c:272
 msgid "Resolution X:"
 msgstr "Auflösung X:"
 
-#: app/gui/resize-dialog.c:639 app/widgets/gimptemplateeditor.c:289
+#: app/gui/resize-dialog.c:639 app/widgets/gimptemplateeditor.c:295
 msgid "pixels/%a"
 msgstr "Pixel/%a"
 
@@ -5634,21 +5636,37 @@ msgstr "GIMP Start"
 msgid "The GIMP"
 msgstr "GIMP"
 
+#: app/gui/templates-commands.c:130
+msgid "New Template"
+msgstr "Neue Vorlage"
+
+#: app/gui/templates-commands.c:132
+msgid "Create a New Template"
+msgstr "Ein neue Vorlage erstellen"
+
+#: app/gui/templates-commands.c:199 app/gui/templates-commands.c:201
+msgid "Edit Template"
+msgstr "Vorlage bearbeiten"
+
 #: app/gui/templates-menu.c:42
-msgid "/New Template"
-msgstr "/Neue Vorlage"
+msgid "/New Template..."
+msgstr "/Neue Vorlage..."
 
 #: app/gui/templates-menu.c:46
-msgid "/Duplicate Template"
-msgstr "/Vorlage duplizieren"
+msgid "/Duplicate Template..."
+msgstr "/Vorlage duplizieren..."
 
 #: app/gui/templates-menu.c:50
-msgid "/Create Image from Template"
-msgstr "/Bild von Vorlage erstellen"
+msgid "/Edit Template..."
+msgstr "/Vorlage bearbeiten..."
 
 #: app/gui/templates-menu.c:54
+msgid "/Create Image from Template..."
+msgstr "/Bild von Vorlage erstellen..."
+
+#: app/gui/templates-menu.c:58
 msgid "/Delete Template..."
-msgstr "/Vorlage löschen"
+msgstr "/Vorlage löschen..."
 
 #: app/gui/tips-dialog.c:90
 msgid "<b>The GIMP tips file could not be parsed correctly!</b>"
@@ -6456,7 +6474,7 @@ msgstr "Schärfen"
 msgid "Constant"
 msgstr "Konstant"
 
-#: app/paint/paint-enums.c:132 app/tools/paint_options.c:181
+#: app/paint/paint-enums.c:132 app/tools/paint_options.c:184
 msgid "Incremental"
 msgstr "Steigernd"
 
@@ -7130,7 +7148,7 @@ msgstr "Ursprung X:"
 
 #. the pixel size labels
 #: app/tools/gimpcroptool.c:983 app/tools/gimpselectionoptions.c:568
-#: app/widgets/gimptemplateeditor.c:141 app/widgets/gimptemplateeditor.c:159
+#: app/widgets/gimptemplateeditor.c:147 app/widgets/gimptemplateeditor.c:165
 msgid "Width:"
 msgstr "Breite:"
 
@@ -7214,20 +7232,20 @@ msgstr "Modus"
 msgid "Exposure:"
 msgstr "Belichtung:"
 
-#: app/tools/gimpeditselectiontool.c:269 app/tools/gimpeditselectiontool.c:981
+#: app/tools/gimpeditselectiontool.c:269 app/tools/gimpeditselectiontool.c:996
 msgid "Move Selection"
 msgstr "Auswahl verschieben"
 
-#: app/tools/gimpeditselectiontool.c:273 app/tools/gimpeditselectiontool.c:983
+#: app/tools/gimpeditselectiontool.c:273 app/tools/gimpeditselectiontool.c:998
 msgid "Move Floating Layer"
 msgstr "Schwebende Auswahl verschieben"
 
 #. initialize the statusbar display
-#: app/tools/gimpeditselectiontool.c:320
+#: app/tools/gimpeditselectiontool.c:327
 msgid "Move: 0, 0"
 msgstr "Verschieben: 0, 0"
 
-#: app/tools/gimpeditselectiontool.c:559
+#: app/tools/gimpeditselectiontool.c:574
 msgid "Move: "
 msgstr "Verschieben: "
 
@@ -7775,7 +7793,7 @@ msgstr "Auswahl auf alle sichtbaren Bereiche stützen"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Beim Verkleinern der Auswahl alle sichtbaren Ebenen verwenden"
 
-#: app/tools/gimpselectionoptions.c:406 app/tools/gimptextoptions.c:282
+#: app/tools/gimpselectionoptions.c:406 app/tools/gimptextoptions.c:305
 msgid "Antialiasing"
 msgstr "Kantenglättung"
 
@@ -7827,47 +7845,47 @@ msgstr "Bild verschmieren"
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Werkzeuge/Malwerkzeuge/Verschmieren"
 
-#: app/tools/gimptextoptions.c:244
+#: app/tools/gimptextoptions.c:267
 msgid "Open the font selection dialog"
 msgstr "Den Dialog zur Schriftauswahl öffnen"
 
-#: app/tools/gimptextoptions.c:247
+#: app/tools/gimptextoptions.c:270
 msgid "Font:"
 msgstr "Schrift:"
 
-#: app/tools/gimptextoptions.c:252
+#: app/tools/gimptextoptions.c:275
 msgid "_Font:"
 msgstr "_Schrift:"
 
-#: app/tools/gimptextoptions.c:259
+#: app/tools/gimptextoptions.c:282
 msgid "_Size:"
 msgstr "_Größe:"
 
-#: app/tools/gimptextoptions.c:268
+#: app/tools/gimptextoptions.c:291
 msgid "_Hinting"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:274
+#: app/tools/gimptextoptions.c:297
 msgid "Force Auto-Hinter"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:288
+#: app/tools/gimptextoptions.c:311
 msgid "Text Color"
 msgstr "Text-Farbe"
 
-#: app/tools/gimptextoptions.c:293
+#: app/tools/gimptextoptions.c:316
 msgid "Color:"
 msgstr "Farbe:"
 
-#: app/tools/gimptextoptions.c:298
+#: app/tools/gimptextoptions.c:321
 msgid "Justify:"
 msgstr "Ausrichtung:"
 
-#: app/tools/gimptextoptions.c:304
+#: app/tools/gimptextoptions.c:327
 msgid "Indent:"
 msgstr "Einzug:"
 
-#: app/tools/gimptextoptions.c:310
+#: app/tools/gimptextoptions.c:333
 msgid ""
 "Line\n"
 "Spacing:"
@@ -7967,71 +7985,71 @@ msgstr ""
 "Transformationen funktionieren nicht\n"
 "auf Ebenen, die Masken enthalten."
 
-#: app/tools/gimpvectortool.c:102
+#: app/tools/gimpvectortool.c:104
 msgid "Vectors"
 msgstr "Vektoren"
 
-#: app/tools/gimpvectortool.c:103
+#: app/tools/gimpvectortool.c:105
 msgid "the most promising path tool prototype... :-)"
 msgstr "Der vielversprechendste Pfadwerkzeug-Prototyp... :-)"
 
-#: app/tools/gimpvectortool.c:104
+#: app/tools/gimpvectortool.c:106
 msgid "/Tools/Vectors"
 msgstr "/Werkzeuge/Vektoren"
 
-#: app/tools/paint_options.c:134
+#: app/tools/paint_options.c:135
 msgid "Open the brush selection dialog"
 msgstr "Den Dialog zur Pinselauswahl öffnen"
 
-#: app/tools/paint_options.c:137
+#: app/tools/paint_options.c:138
 msgid "Brush:"
 msgstr "Pinsel:"
 
-#: app/tools/paint_options.c:150
+#: app/tools/paint_options.c:152
 msgid "Open the pattern selection dialog"
 msgstr "Den Dialog zur Musterauswahl öffnen"
 
-#: app/tools/paint_options.c:153
+#: app/tools/paint_options.c:155
 msgid "Pattern:"
 msgstr "Muster:"
 
-#: app/tools/paint_options.c:165
+#: app/tools/paint_options.c:168
 msgid "Open the gradient selection dialog"
 msgstr "Den Dialog zur Gradientenauswahl öffnen"
 
-#: app/tools/paint_options.c:168
+#: app/tools/paint_options.c:171
 msgid "Gradient:"
 msgstr "Farbverlauf:"
 
-#: app/tools/paint_options.c:243
+#: app/tools/paint_options.c:246
 msgid "Pressure Sensitivity"
 msgstr "Druckempfindlichkeit"
 
-#: app/tools/paint_options.c:259
+#: app/tools/paint_options.c:262
 msgid "Opacity"
 msgstr "Deckkraft"
 
-#: app/tools/paint_options.c:273
+#: app/tools/paint_options.c:276
 msgid "Hardness"
 msgstr "Härte"
 
-#: app/tools/paint_options.c:284
+#: app/tools/paint_options.c:287
 msgid "Rate"
 msgstr "Rate"
 
-#: app/tools/paint_options.c:343
+#: app/tools/paint_options.c:346
 msgid "Fade Out"
 msgstr "Verblassen"
 
-#: app/tools/paint_options.c:356 app/tools/paint_options.c:414
+#: app/tools/paint_options.c:359 app/tools/paint_options.c:417
 msgid "Length:"
 msgstr "Länge:"
 
-#: app/tools/paint_options.c:399
+#: app/tools/paint_options.c:402
 msgid "Use Color from Gradient"
 msgstr "Farbe aus Farbverlauf"
 
-#: app/tools/paint_options.c:429
+#: app/tools/paint_options.c:432
 msgid "Type:"
 msgstr "Typ:"
 
@@ -8041,11 +8059,11 @@ msgstr ""
 "Dieses Werkzeug hat\n"
 "keine Einstellungen"
 
-#: app/vectors/gimpvectors.c:105
+#: app/vectors/gimpvectors.c:106
 msgid "Path"
 msgstr "Pfad"
 
-#: app/vectors/gimpvectors.c:106
+#: app/vectors/gimpvectors.c:107
 msgid "Rename Path"
 msgstr "Pfad umbenennen"
 
@@ -8150,16 +8168,16 @@ msgstr "Hintergrundfarbe ändern"
 msgid "Color Index:"
 msgstr "Farbindex:"
 
-#: app/widgets/gimpcontainergridview.c:198
-#: app/widgets/gimpcontainergridview.c:567
+#: app/widgets/gimpcontainergridview.c:200
+#: app/widgets/gimpcontainergridview.c:572
 msgid "(None)"
 msgstr "(Keine)"
 
-#: app/widgets/gimpcontainerpopup.c:474
+#: app/widgets/gimpcontainerpopup.c:492
 msgid "Smaller Previews"
 msgstr "Kleinere Vorschaubilder"
 
-#: app/widgets/gimpcontainerpopup.c:479
+#: app/widgets/gimpcontainerpopup.c:497
 msgid "Larger Previews"
 msgstr "Grössere Vorschaubilder"
 
@@ -8448,27 +8466,39 @@ msgstr "Dieses Eingabefeld ist auf %d Zeichen beschränkt."
 msgid "Save Selection to Channel"
 msgstr "Auswahl in Kanal speichern"
 
-#: app/widgets/gimptemplateeditor.c:472
-msgid "Too large!"
-msgstr ""
+#: app/widgets/gimptemplateeditor.c:425
+msgid "_Name:"
+msgstr "_Name:"
 
-#: app/widgets/gimptemplateview.c:148
+#: app/widgets/gimptemplateeditor.c:436
+msgid "_Icon:"
+msgstr "_Symbol:"
+
+#: app/widgets/gimptemplateeditor.c:554
+msgid "Too large!"
+msgstr "Zu gross!"
+
+#: app/widgets/gimptemplateview.c:172
 msgid "Create a new template"
 msgstr "Eine neue Vorlage erstellen"
 
-#: app/widgets/gimptemplateview.c:156
+#: app/widgets/gimptemplateview.c:180
 msgid "Duplicate the selected template"
 msgstr "Die gewählten Vorlage duplizieren"
 
-#: app/widgets/gimptemplateview.c:164
+#: app/widgets/gimptemplateview.c:188
+msgid "Edit the selected template"
+msgstr "Die ausgewählte Vorlage bearbeiten"
+
+#: app/widgets/gimptemplateview.c:196
 msgid "Create a new image from the selected template"
 msgstr "Ein neues Bild von dieser Vorlage erzeugen"
 
-#: app/widgets/gimptemplateview.c:173
+#: app/widgets/gimptemplateview.c:205
 msgid "Delete the selected template"
 msgstr "Die gewählten Vorlage löschen"
 
-#: app/widgets/gimptemplateview.c:312
+#: app/widgets/gimptemplateview.c:373
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -8477,7 +8507,7 @@ msgstr ""
 "Vorlage »%s«\n"
 "wirklich aus der Liste löschen?"
 
-#: app/widgets/gimptemplateview.c:316
+#: app/widgets/gimptemplateview.c:377
 msgid "Delete Template"
 msgstr "Vorlage löschen"
 
@@ -8692,7 +8722,7 @@ msgstr "GIMP Meldung"
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
 #.
-#: app/widgets/gimpwidgets-utils.c:351
+#: app/widgets/gimpwidgets-utils.c:354
 #, c-format
 msgid "<%s>"
 msgstr "<%s>"
