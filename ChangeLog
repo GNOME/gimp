@@ -1,3 +1,8 @@
+2003-01-26  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimptool/gimptool.def
+	* libgimpwidgets/gimpwidgets.def: Add some missing entry points.
+
 2003-01-26  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrushpipe.c

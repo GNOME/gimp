@@ -63,7 +63,10 @@ EXPORTS
 	gimp_help_enable_tooltips
 	gimp_help_set_help_data
 	gimp_int_adjustment_update
+	gimp_memsize_entry_get_type
+	gimp_memsize_entry_get_value
 	gimp_memsize_entry_new
+	gimp_memsize_entry_set_value
 	gimp_menu_item_update
 	gimp_offset_area_get_type
 	gimp_offset_area_new
