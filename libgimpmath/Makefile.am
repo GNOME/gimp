@@ -103,6 +103,10 @@ test_md5_LDADD = \
 	$(GLIB_LIBS) 		\
 	$(test_md5_DEPENDENCIES)
 
+
+CLEANFILES = $(EXTRA_PROGRAMS)
+
+
 install-data-local: install-ms-lib install-libtool-import-lib
 
 uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib

@@ -1,3 +1,7 @@
+2004-04-12  Sven Neumann  <sven@gimp.org>
+
+	* libgimpmath/Makefile.am: remove test-md5 on make clean.
+
 2004-04-11  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/py-slice.py: When using a separate dir for
