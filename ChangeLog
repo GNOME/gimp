@@ -1,5 +1,10 @@
 2004-04-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/iwarp.c (iwarp_get_pixel): check tile != NULL
+	before unrefing it. Fixes bug #140554; merged from stable branch.
+
+2004-04-20  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpenumcombobox.c: added more sanity checks.
 
 	* libgimpwidgets/gimpintcombobox.[ch]: added another GimpIntComboBox
