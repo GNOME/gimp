@@ -1207,22 +1207,11 @@ void calclight(vector *col, vector *point, common *obj)
     vmix(&r.v1, &r.v1, &r.v2, 0.9999);
     d = vdist(&r.v1, &r.v2);
 
-    if(world.quality >= 3) {
-      o = 0;
-      if(!(world.light[i].com.flags & NOSHADOW))
-	o = traceray(&r, NULL, -1, 1.0);
-      if(o) {
-	continue;
-      }
-    }
-
-    /* OK, light is visible */
-
     vsub(&r.v1, &r.v2);
     vnorm(&r.v1, 1.0);
     b = vdot(&r.v1, &norm);
 
-    b = fabs(b);
+    if(b < 0.0) continue;
 
     for(j = 0; j < obj->numtexture; j++) {
       if(obj->texture[j].type == PHONG) continue;

@@ -1,3 +1,7 @@
+2000-12-13  Vidar Madsen  <vidar@gimp.org>
+
+	* plug-ins/common/spheredesigner.c: Small algo improvements.
+
 2000-12-12  Vidar Madsen  <vidar@gimp.org>
 
 	* plug-ins/common/spheredesigner.c: Nicer bumpmapping.
