@@ -1,3 +1,8 @@
+Tue Feb 23 02:57:16 CET 1999 Marc Lehmann <pcg@goof.com>
+
+        * app/drawable_cmds.c: fix documentation for
+        drawable_type_with_alpha.
+
 Tue Feb 23 00:05:39 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/plug_in.c
@@ -14,6 +19,16 @@ Tue Feb 23 00:05:39 GMT 1999 Adam D. Moss <adam@gimp.org>
 	some buglets, file_open_image() is RunMode aware, added some
 	tweaks, rhubarb rhubarb, merged in some 'cosmetic' tweaks
 	from Marco.
+
+Mon Feb 22 14:08:59 CET 1999 Marc Lehmann <pcg@goof.com>
+
+        * app/procedural_db.h, app/internal_procs.c, app/procedural_db.c
+        libgimp/gimpfeatures.h.in: "gimp_procedural_db_get_data_size"
+        exists, but has never been registered (of course it was buggy as
+        well). This is especially funny since the function in _gimp-perl_
+        that should be using it since half a year tested the wrong symbol
+        for its presence, so this went undetected. One could argue that
+        this is the least used gimp function ever ;->
 
 1999-02-22 adam, blah blah
 
@@ -225,7 +240,7 @@ Mon Feb 15  21:14:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 	* plug-ins/perl/examples/windy.pl
 	* plug-ins/perl/examples/feedback.pl 
 	* plug-ins/perl/examples/xachlego.pl 
-	* plug-ins/perl/examples/xachshadows.pl: added email addresses and 
+	* plug-ins/perl/examples/xachshadow.pl: added email addresses and 
        put things in a more sane spot in the menus
 
 Mon Feb 15 05:23:18 1999  Tor Lillqvist  <tml@iki.fi>

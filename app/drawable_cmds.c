@@ -552,7 +552,7 @@ ProcArg drawable_type_with_alpha_out_args[] =
 {
   { PDB_INT32,
     "type_with_alpha",
-    "the drawable's type with alpha: { RGBA (0), GRAYA (1), INDEXEDA (2) }"
+    "the drawable's type with alpha: { RGBA (1), GRAYA (3), INDEXEDA (5) }"
   }
 };
 
