@@ -445,38 +445,47 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
     }
 
   /*  First the updates...  */
-  if (now)
+  if (gdisp->update_areas)
     {
-      /* Synchronous */
+      if (now)
+        {
+          /* Synchronous */
 
-      GSList   *list;
-      GimpArea *area;
+          GSList   *list;
+          GimpArea *area;
 
-      for (list = gdisp->update_areas; list; list = g_slist_next (list))
-	{
-	  /*  Paint the area specified by the GimpArea  */
-	  area = (GimpArea *) list->data;
+          for (list = gdisp->update_areas; list; list = g_slist_next (list))
+            {
+              /*  Paint the area specified by the GimpArea  */
+              area = (GimpArea *) list->data;
 
-	  if ((area->x1 != area->x2) && (area->y1 != area->y2))
-	    {
-	      gimp_display_paint_area (gdisp,
-                                       area->x1,
-                                       area->y1,
-                                       (area->x2 - area->x1),
-                                       (area->y2 - area->y1));
-	    }
-	}
+              if ((area->x1 != area->x2) && (area->y1 != area->y2))
+                {
+                  gimp_display_paint_area (gdisp,
+                                           area->x1,
+                                           area->y1,
+                                           (area->x2 - area->x1),
+                                           (area->y2 - area->y1));
+                }
+            }
+        }
+      else
+        {
+          /* Asynchronous */
+
+          gimp_display_idlerender_init (gdisp);
+        }
+
+      /*  Free the update lists  */
+      gdisp->update_areas = gimp_display_area_list_free (gdisp->update_areas);
     }
   else
     {
-      /* Asynchronous */
-
-      if (gdisp->update_areas)
-	gimp_display_idlerender_init (gdisp);
+      /*  if there was nothing to update, we still need to start the
+       *  selection  --mitch
+       */
+      gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_ON);
     }
-
-  /*  Free the update lists  */
-  gdisp->update_areas = gimp_display_area_list_free (gdisp->update_areas);
 
   /*  Next the displays...  */
   gimp_display_shell_flush (shell);

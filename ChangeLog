@@ -1,5 +1,23 @@
 2003-07-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c (gimp_image_set_active_layer): moved the
+	code which manipulates gimage->layer_stack and the call to
+	gimp_layer_invalidate_boundary() inside the if(layer != active_layer)
+	branch so it is called less often. Fixes the slowness of bug #104440
+	for most cases since we don't need to recalculate the selection
+	boundary in the next step.
+
+	(gimp_image_set_active_channel): call
+	gimp_layer_invalidate_boundary() before setting the active_layer
+	to NULL. Fixes stale layer boundary when switching to a channel.
+
+	* app/display/gimpdisplay.c (gimp_display_flush_whenever): when
+	there are no updates, we still need to restart the selection.
+	Fixes missing layer boundary when switching from a channel to
+	a layer.
+
+2003-07-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-handlers.c
 	(gimp_display_shell_ants_speed_notify_handler): use the
 	gimp_display_shell_selection_control() wrapper instead of

@@ -2180,18 +2180,18 @@ gimp_image_set_active_layer (GimpImage *gimage,
   if (! gimp_container_have (gimage->layers, GIMP_OBJECT (layer)))
     layer = (GimpLayer *) gimp_container_get_child_by_index (gimage->layers, 0);
 
-  if (layer)
-    {
-      /*  Configure the layer stack to reflect this change  */
-      gimage->layer_stack = g_slist_remove (gimage->layer_stack, layer);
-      gimage->layer_stack = g_slist_prepend (gimage->layer_stack, layer);
-
-      /*  invalidate the selection boundary because of a layer modification  */
-      gimp_layer_invalidate_boundary (layer);
-    }
-
   if (layer != gimage->active_layer)
     {
+      if (layer)
+        {
+          /*  Configure the layer stack to reflect this change  */
+          gimage->layer_stack = g_slist_remove (gimage->layer_stack, layer);
+          gimage->layer_stack = g_slist_prepend (gimage->layer_stack, layer);
+
+          /*  Don't cache selection info for the previous active layer  */
+          gimp_layer_invalidate_boundary (layer);
+        }
+
       gimage->active_layer = layer;
 
       g_signal_emit (gimage, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
@@ -2233,6 +2233,9 @@ gimp_image_set_active_channel (GimpImage   *gimage,
 
       if (gimage->active_layer)
 	{
+          /*  Don't cache selection info for the previous active layer  */
+          gimp_layer_invalidate_boundary (gimage->active_layer);
+
 	  gimage->active_layer = NULL;
 
 	  g_signal_emit (gimage, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
