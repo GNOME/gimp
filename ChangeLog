@@ -1,3 +1,8 @@
+2003-06-25  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: removed "id" from ALL_LINGUAS until all required
+	po files have been added.
+
 2003-06-25  Mohammad DAMT  <mdamt@bisnisweb.com>
 
 	* po/id.po: Added Indonesian translation
