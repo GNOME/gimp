@@ -236,13 +236,15 @@ gimp_dialog_new (const gchar    *title,
  *                gtk_window_set_title().
  * @role:         The dialog's @role which will be set with
  *                gtk_window_set_role().
- * @parent:       The @parent widget of this dialog.
+ * @parent:       The @parent widget of this dialog or %NULL.
  * @flags:        The @flags (see the #GtkDialog documentation).
  * @help_func:    The function which will be called if the user presses "F1".
  * @help_id:      The help_id which will be passed to @help_func.
  * @args:         A @va_list destribing the action_area buttons.
  *
- * Creates a new @GimpDialog widget.
+ * Creates a new @GimpDialog widget. If a @parent widget is specified,
+ * the dialog will be made transient for the window this widget lives in
+ * (or or to the @parent widget itself if it is already a #GtkWindow).
  *
  * For a description of the format of the @va_list describing the
  * action_area buttons see gtk_dialog_new_with_buttons().
@@ -260,9 +262,9 @@ gimp_dialog_new_valist (const gchar    *title,
 {
   GtkWidget *dialog;
 
-  g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
+  g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
   dialog = g_object_new (GIMP_TYPE_DIALOG,
                          "title", title,
@@ -271,6 +273,9 @@ gimp_dialog_new_valist (const gchar    *title,
 
   if (parent)
     {
+      if (! GTK_IS_WINDOW (parent))
+        parent = gtk_widget_get_toplevel (parent);
+
       if (GTK_IS_WINDOW (parent))
         {
           gtk_window_set_transient_for (GTK_WINDOW (dialog),
@@ -280,7 +285,6 @@ gimp_dialog_new_valist (const gchar    *title,
         {
           gtk_window_set_screen (GTK_WINDOW (dialog),
                                  gtk_widget_get_screen (parent));
-          /* TODO */
         }
     }
 

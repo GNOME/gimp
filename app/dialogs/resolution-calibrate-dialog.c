@@ -53,9 +53,9 @@ static gint       ruler_height    = 1;
  *
  * Displays a dialog that allows the user to interactively determine
  * her monitor resolution. This dialog runs it's own GTK main loop and
- * is connected to a #GimpSizeEntry handling the resolution to be
- * set. The style and callback parameters are supposed to be only used
- * by the user_installation_dialog.
+ * is connected to a #GimpSizeEntry handling the resolution to be set.
+ * The style and callback parameters must only be used by the
+ * user_installation_dialog.
  **/
 void
 resolution_calibrate_dialog (GtkWidget  *resolution_entry,
@@ -85,7 +85,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   dialog = gimp_dialog_new (_("Calibrate Monitor Resolution"),
 			    "calibrate_resolution",
                             resolution_entry,
-                            GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+                            GTK_DIALOG_DESTROY_WITH_PARENT,
 			    NULL, NULL,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
