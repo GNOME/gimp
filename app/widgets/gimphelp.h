@@ -21,6 +21,12 @@
 #ifndef __GIMP_HELP_H__
 #define __GIMP_HELP_H__
 
+enum
+{
+  HELP_BROWSER_GIMP,
+  HELP_BROWSER_NETSCAPE
+};
+
 typedef void (* GimpHelpFunc) (gchar *);
 
 
