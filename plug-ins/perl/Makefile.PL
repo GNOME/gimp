@@ -164,7 +164,7 @@ install :: install-po
 	      echo "       is not writable, not installing gimp-perl" ; \
 	      echo ; \
 	      exit ; \
-	   fi \
+	   fi ; \
 	done ; \
 	$(MAKE) really-install install-plugins'."
 	$main::dont_embed || (cd embed && \$(MAKE) install)
