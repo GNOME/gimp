@@ -20,6 +20,7 @@
 
 #include <stdio.h>
 #include <errno.h>
+#include <string.h>
 
 #include <glib-object.h>
 
@@ -115,12 +116,19 @@ static void
 gimp_vectors_export_path (const GimpVectors *vectors,
                           FILE              *file)
 {
-  gchar *data = gimp_vectors_path_data (vectors);
+  const gchar *name = gimp_object_get_name (GIMP_OBJECT (vectors));
+  gchar       *data = gimp_vectors_path_data (vectors);
+  gchar       *esc_name;
+  
+  esc_name = g_markup_escape_text (name, strlen (name));
 
   fprintf (file,
-           "  <path fill=\"none\" stroke=\"black\" stroke-width=\"1\"\n"
+           "  <path id=\"%s\"\n"
+           "        fill=\"none\" stroke=\"black\" stroke-width=\"1\"\n"
            "        d=\"%s\"/>\n",
-           data);
+           esc_name, data);
+
+  g_free (esc_name);
   g_free (data);
 }
 
@@ -129,9 +137,9 @@ gimp_vectors_path_data (const GimpVectors *vectors)
 {
   GString  *str;
   GList    *strokes;
-  gboolean  first_stroke = TRUE;
   gchar     x_string[G_ASCII_DTOSTR_BUF_SIZE];
   gchar     y_string[G_ASCII_DTOSTR_BUF_SIZE];
+  gboolean  closed = FALSE;
 
   str = g_string_new (NULL);
 
@@ -140,15 +148,12 @@ gimp_vectors_path_data (const GimpVectors *vectors)
       GimpStroke *stroke = strokes->data;
       GArray     *control_points;
       GimpAnchor *anchor;
-      gboolean    closed;
       gint        i;
 
-      control_points = gimp_stroke_control_points_get (stroke, &closed);
-
-      if (! first_stroke)
+      if (closed)
         g_string_append_printf (str, "\n           ");
 
-      first_stroke = FALSE;
+      control_points = gimp_stroke_control_points_get (stroke, &closed);
 
       if (GIMP_IS_BEZIER_STROKE (stroke))
         {
@@ -178,11 +183,11 @@ gimp_vectors_path_data (const GimpVectors *vectors)
               g_string_append_printf (str, " %s,%s", x_string, y_string);
 
               if (i % 3 == 1)
-                  g_string_append_printf (str, "\n          ");
+                  g_string_append_printf (str, "\n           ");
             }
 
           if (closed && control_points->len > 3)
-              g_string_append_printf (str, " Z");
+              g_string_append_printf (str, "Z");
         }
       else
         {
