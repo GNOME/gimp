@@ -32,6 +32,7 @@
  */
 
 /* revision history
+ * 1.1.24a  2000/07/01   hof: bugfix: flatten of singlelayer images has to remove alpha channel
  * 1.1.17b  2000/02/26   hof: bugfixes
  * 1.1.14a  2000/01/06   hof: gap_range_to_multilayer: use framerate (from video info file) in framenames
  *                            bugfix: gap_range_to_multilayer: first save current frame
@@ -1092,6 +1093,7 @@ p_frames_convert(t_anim_info *ainfo_ptr,
   long    l_cur_frame_nr;
   long    l_step, l_begin, l_end;
   gint    l_nlayers;
+  gint    l_img_already_flat;
   gint32 *l_layers_list;
   gdouble l_percentage, l_percentage_step;
   char   *l_sav_name;
@@ -1156,16 +1158,53 @@ p_frames_convert(t_anim_info *ainfo_ptr,
     if(l_tmp_image_id < 0)
        return -1;
 
-
+    l_img_already_flat = FALSE; /* an image without any layer is considered as not flattend */
     l_layers_list = gimp_image_get_layers(l_tmp_image_id, &l_nlayers);
     if(l_layers_list != NULL)
     {
+      if( (l_nlayers == 1)
+      &&  (! gimp_drawable_has_alpha(l_layers_list[0]))
+      &&  (! gimp_layer_get_visible(l_layers_list[0])))
+      {
+        l_img_already_flat = TRUE;
+      }
       g_free (l_layers_list);
     }
 
-    if((l_nlayers > 1 ) &&  (flatten != 0))
+    if((l_img_already_flat == FALSE) &&  (flatten != 0))
     {
+       gint32 l_dummy_layer_id;
        if(gap_debug) fprintf(stderr, "DEBUG: p_frames_convert flatten tmp image'\n");
+
+        /* hof:
+	 * we add dummy layers to make sure that flatten works on any kind of image.
+	 * even if the image had no layer at all, or all its layers were invisible.
+	 *   (flatten need at least 2 layers and at least one visible layer to work.
+	 *    if just invisible layers are flattened 
+	 *    we do not get a resulting layer (returned l_layer_id == -1)
+	 */
+        l_dummy_layer_id = gimp_layer_new(l_tmp_image_id, "dummy",
+                                 1, 
+				 1,
+				 ((gint)(gimp_image_base_type(l_tmp_image_id)) * 2),
+                                 100.0,     /* Opacity full opaque */     
+                                 0);        /* NORMAL */
+         gimp_image_add_layer(l_tmp_image_id, l_dummy_layer_id, 0);
+	 gimp_layer_set_offsets(l_dummy_layer_id, -1, -1);
+	 
+	 if(l_nlayers == 0)
+	 {
+	   /* on empty images we need 2 dummies to make flatten happy */
+           l_dummy_layer_id = gimp_layer_new(l_tmp_image_id, "dummy2",
+                                   1, 
+				   1,
+				   ((gint)(gimp_image_base_type(l_tmp_image_id)) * 2),
+                                   100.0,     /* Opacity full opaque */     
+                                   0);        /* NORMAL */
+           gimp_image_add_layer(l_tmp_image_id, l_dummy_layer_id, 0);
+	   gimp_layer_set_offsets(l_dummy_layer_id, -1, -1);
+	 }
+
        
        /* flatten current frame image (reduce to single layer) */
        gimp_image_flatten (l_tmp_image_id);

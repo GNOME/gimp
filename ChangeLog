@@ -1,4 +1,11 @@
+2000-07-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gap/gap_range_ops.c: applied a patch provided by
+	Wolfgang Hofer <hof@hotbot.com> that fixes a problem when
+	flattening a singlelayer image.
+
 2000-07-04  Seth Burgess  <sjburges@gimp.org>
+	
 	* app/levels.c: changed reset behavior to reset all channels, not just
 	currently active one.  This fixes #15042, except the problems with 
 	the kissing gourami and litigating tetras.

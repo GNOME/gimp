@@ -1879,7 +1879,8 @@ tearoff_delete_cb (GtkWidget *widget,
 		   gpointer   data)
 {
   /* Unregister if dialog is deleted as well */
-  dialog_unregister ((GtkWidget *) data);
+  dialog_unregister (widget);
+
   return TRUE; 
 }
 
@@ -1904,10 +1905,9 @@ tearoff_cmd_callback (GtkWidget *widget,
 	  else
 	    {
 	      dialog_register (top);
-	      gtk_signal_connect_object (GTK_OBJECT (top),  
-					 "delete_event",
-					 GTK_SIGNAL_FUNC (tearoff_delete_cb),
-					 GTK_OBJECT (top));
+	      gtk_signal_connect (GTK_OBJECT (top), "delete_event",
+				  GTK_SIGNAL_FUNC (tearoff_delete_cb),
+				  NULL);
 
 	      gtk_object_set_data (GTK_OBJECT (widget), "tearoff_menu_top",
 				   top);
