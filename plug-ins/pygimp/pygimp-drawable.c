@@ -547,6 +547,16 @@ lay_add_alpha(PyGimpLayer *self)
 
 
 static PyObject *
+lay_add_mask(PyGimpLayer *self, PyObject *args)
+{
+    PyGimpChannel *mask;
+
+    if (!PyArg_ParseTuple(args, "O!:add_mask", &PyGimpChannel_Type, &mask))
+	return NULL;
+    return PyInt_FromLong(gimp_layer_add_mask(self->ID, mask->ID));
+}
+
+static PyObject *
 lay_create_mask(PyGimpLayer *self, PyObject *args)
 {
     int type;
@@ -554,6 +564,16 @@ lay_create_mask(PyGimpLayer *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "i:create_mask", &type))
 	return NULL;
     return pygimp_channel_new(gimp_layer_create_mask(self->ID,type));
+}
+
+static PyObject *
+lay_remove_mask(PyGimpLayer *self, PyObject *args)
+{
+    int mode;
+
+    if (!PyArg_ParseTuple(args, "i:remove_mask", &mode))
+	return NULL;
+    return PyInt_FromLong(gimp_layer_remove_mask(self->ID, mode));
 }
 
 
@@ -611,7 +631,9 @@ lay_set_offsets(PyGimpLayer *self, PyObject *args)
 static PyMethodDef lay_methods[] = {
     {"copy",	(PyCFunction)lay_copy,	METH_VARARGS},
     {"add_alpha",	(PyCFunction)lay_add_alpha,	METH_NOARGS},
+    {"add_mask",        (PyCFunction)lay_add_mask,      METH_VARARGS},
     {"create_mask",	(PyCFunction)lay_create_mask,	METH_VARARGS},
+    {"remove_mask",     (PyCFunction)lay_remove_mask,   METH_VARARGS},
     {"resize",	(PyCFunction)lay_resize,	METH_VARARGS},
     {"scale",	(PyCFunction)lay_scale,	METH_VARARGS},
     {"translate",	(PyCFunction)lay_translate,	METH_VARARGS},

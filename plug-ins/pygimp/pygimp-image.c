@@ -48,18 +48,6 @@ img_add_layer(PyGimpImage *self, PyObject *args)
 
 
 static PyObject *
-img_add_layer_mask(PyGimpImage *self, PyObject *args)
-{
-    PyGimpLayer *lay;
-    PyGimpChannel *mask;
-    if (!PyArg_ParseTuple(args, "O!O!:add_layer_mask", &PyGimpLayer_Type, &lay,
-			  &PyGimpChannel_Type, &mask))
-	return NULL;
-    return PyInt_FromLong(gimp_layer_add_mask(lay->ID, mask->ID));
-}
-
-
-static PyObject *
 img_clean_all(PyGimpImage *self)
 {
     return PyInt_FromLong(gimp_image_clean_all(self->ID));
@@ -213,18 +201,6 @@ img_remove_layer(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!:remove_layer", &PyGimpLayer_Type, &lay))
 	return NULL;
     return PyInt_FromLong(gimp_image_remove_layer(self->ID, lay->ID));
-}
-
-
-static PyObject *
-img_remove_layer_mask(PyGimpImage *self, PyObject *args)
-{
-    PyGimpLayer *lay;
-    int mode;
-    if (!PyArg_ParseTuple(args, "O!i:remove_layer_mask", &PyGimpLayer_Type, &lay,
-			  &mode))
-	return NULL;
-    return PyInt_FromLong(gimp_layer_remove_mask(lay->ID, mode));
 }
 
 
@@ -479,7 +455,6 @@ img_duplicate(PyGimpImage *self)
 static PyMethodDef img_methods[] = {
     {"add_channel",	(PyCFunction)img_add_channel,	METH_VARARGS},
     {"add_layer",	(PyCFunction)img_add_layer,	METH_VARARGS},
-    {"add_layer_mask",	(PyCFunction)img_add_layer_mask,	METH_VARARGS},
     {"clean_all",	(PyCFunction)img_clean_all,	METH_NOARGS},
     {"disable_undo",	(PyCFunction)img_disable_undo,	METH_NOARGS},
     {"enable_undo",	(PyCFunction)img_enable_undo,	METH_NOARGS},
@@ -495,7 +470,6 @@ static PyMethodDef img_methods[] = {
     {"raise_layer_to_top",	(PyCFunction)img_raise_layer_to_top,	METH_VARARGS},
     {"remove_channel",	(PyCFunction)img_remove_channel,	METH_VARARGS},
     {"remove_layer",	(PyCFunction)img_remove_layer,	METH_VARARGS},
-    {"remove_layer_mask",	(PyCFunction)img_remove_layer_mask,	METH_VARARGS},
     {"resize",	(PyCFunction)img_resize,	METH_VARARGS},
     {"get_component_active",	(PyCFunction)img_get_component_active,	METH_VARARGS},
     {"get_component_visible",	(PyCFunction)img_get_component_visible,	METH_VARARGS},

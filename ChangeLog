@@ -1,3 +1,13 @@
+2003-12-23  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-image.c: remove add/remove_layer_mask
+	methods...
+
+	* plug-ins/pygimp/pygimp-drawable.c: ... and put them here, as methods
+	of the layer object.
+
+	* plug-ins/pygimp/plug-ins/foggify.py: update for the above new API.
+
 2003-12-22  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/AlienMap.c:

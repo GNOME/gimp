@@ -17,13 +17,13 @@ def python_foggify(img, layer, name, colour, turbulence, opacity):
 
     # create a layer mask for the new layer
     mask = fog.create_mask(0)
-    img.add_layer_mask(fog, mask)
+    fog.add_mask(mask)
 	
     # add some clouds to the layer
     pdb.plug_in_plasma(img, mask, int(time.time()), turbulence)
 	
     # apply the clouds to the layer
-    img.remove_layer_mask(fog, MASK_APPLY)
+    fog.remove_mask(MASK_APPLY)
 
     pdb.gimp_undo_push_group_end(img)
 
