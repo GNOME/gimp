@@ -1,5 +1,11 @@
 2001-12-10  Sven Neumann  <sven@gimp.org>
 
+	* app/base/Makefile.am
+	* app/core/Makefile.am: use GLIB_GENMARSHAL and GLIB_MKENUMS variables
+	declared by AM_PATH_GLIB_2_0 instead of calling the binaries directly.
+
+2001-12-10  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-deserialize.c
 	* app/config/gimpconfig.c: stricter parsing.
 	

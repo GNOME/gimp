@@ -68,7 +68,7 @@ gen_sources = xgen-bec
 CLEANFILES = $(gen_sources)
 
 $(srcdir)/base-enums.c: $(srcdir)/base-enums.h
-	glib-mkenums \
+	$(GLIB_MKENUMS) \
 		--fhead "#include <glib-object.h>\n#include \"base-enums.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{\n" \

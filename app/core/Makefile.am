@@ -171,19 +171,19 @@ gen_sources = xgen-gmh xgen-gmc xgen-cec
 CLEANFILES = $(gen_sources)
 
 $(srcdir)/gimpmarshal.h: $(srcdir)/gimpmarshal.list
-	glib-genmarshal --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --header >> xgen-gmh \
+	$(GLIB_GENMARSHAL) --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --header >> xgen-gmh \
 	&& (cmp -s xgen-gmh $(srcdir)/gimpmarshal.h || cp xgen-gmh $(srcdir)/gimpmarshal.h) \
 	&& rm -f xgen-gmh xgen-gmh~
 $(srcdir)/gimpmarshal.c: $(srcdir)/gimpmarshal.h
 	echo "#include <glib.h>" > xgen-gmc \
 	&& echo "#include <glib-object.h>" >> xgen-gmc \
 	&& echo "#include \"gimpmarshal.h\"" >> xgen-gmc \
-	&& glib-genmarshal --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --body >> xgen-gmc \
+	&& $(GLIB_GENMARSHAL) --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --body >> xgen-gmc \
 	&& cp xgen-gmc $(srcdir)/gimpmarshal.c \
 	&& rm -f xgen-gmc xgen-gmc~
 
 $(srcdir)/core-enums.c: $(srcdir)/core-enums.h
-	glib-mkenums \
+	$(GLIB_MKENUMS) \
 		--fhead "#include <glib-object.h>\n#include \"core-enums.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{\n" \
