@@ -291,7 +291,7 @@ msgstr "OK"
 #: app/threshold.c:273 app/tools.c:1045 app/transform_core.c:413
 #: modules/colorsel_water.c:634
 msgid "Reset"
-msgstr "Zurücksetzen"
+msgstr "Standard"
 
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:234
@@ -2070,7 +2070,7 @@ msgstr "Übergang zwischen den Endpunktfarben"
 
 #: app/gradient.c:5250
 msgid "Blend endpoints' opacity"
-msgstr "Übergang zwischen der Endpunktdeckung"
+msgstr "Übergang zwischen der Endpunktdeckkraft"
 
 #: app/gradient.c:5418
 msgid "Replicate"

@@ -1,5 +1,10 @@
 2000-02-14  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpvector.[ch]: name parameters "vector1", "vector2"
+	etc. instead of just "a", "b" etc.
+
+2000-02-14  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/libgck/gck/Makefile.am
 	* plug-ins/libgck/gck/gckcommon.h
 	* plug-ins/libgck/gck/gcklistbox.[ch]

@@ -52,50 +52,50 @@ struct _GimpVector4
 /* Two dimensional vector functions */
 /* ================================ */
 
-gdouble     gimp_vector2_inner_product (GimpVector2 *a,
-					GimpVector2 *b);
-GimpVector2 gimp_vector2_cross_product (GimpVector2 *a,
-					GimpVector2 *b);
-double      gimp_vector2_length        (GimpVector2 *a);
-void        gimp_vector2_normalize     (GimpVector2 *a);
-void        gimp_vector2_mul           (GimpVector2 *a,
-					gdouble      b);
-void        gimp_vector2_sub           (GimpVector2 *c,
-					GimpVector2 *a,
-					GimpVector2 *b);
-void        gimp_vector2_set           (GimpVector2 *a,
+gdouble     gimp_vector2_inner_product (GimpVector2 *vector1,
+					GimpVector2 *vector2);
+GimpVector2 gimp_vector2_cross_product (GimpVector2 *vector1,
+					GimpVector2 *vector2);
+gdouble     gimp_vector2_length        (GimpVector2 *vector);
+void        gimp_vector2_normalize     (GimpVector2 *vector);
+void        gimp_vector2_mul           (GimpVector2 *vector,
+					gdouble      factor);
+void        gimp_vector2_sub           (GimpVector2 *result,
+					GimpVector2 *vector1,
+					GimpVector2 *vector2);
+void        gimp_vector2_set           (GimpVector2 *vector,
 					gdouble      x,
 					gdouble      y);
-void        gimp_vector2_add           (GimpVector2 *c,
-					GimpVector2 *a,
-					GimpVector2 *b);
-void        gimp_vector2_neg           (GimpVector2 *a);
-void        gimp_vector2_rotate        (GimpVector2 *v,
+void        gimp_vector2_add           (GimpVector2 *result,
+					GimpVector2 *vector1,
+					GimpVector2 *vector2);
+void        gimp_vector2_neg           (GimpVector2 *vector);
+void        gimp_vector2_rotate        (GimpVector2 *vector,
 					gdouble      alpha);
 
 /* Three dimensional vector functions */
 /* ================================== */
 
-gdouble     gimp_vector3_inner_product (GimpVector3 *a,
-					GimpVector3 *b);
-GimpVector3 gimp_vector3_cross_product (GimpVector3 *a,
-					GimpVector3 *b);
-double      gimp_vector3_length        (GimpVector3 *a);
-void        gimp_vector3_normalize     (GimpVector3 *a);
-void        gimp_vector3_mul           (GimpVector3 *a,
-					gdouble      b);
-void        gimp_vector3_sub           (GimpVector3 *c,
-					GimpVector3 *a,
-					GimpVector3 *b);
-void        gimp_vector3_set           (GimpVector3 *a,
+gdouble     gimp_vector3_inner_product (GimpVector3 *vector1,
+					GimpVector3 *vector2);
+GimpVector3 gimp_vector3_cross_product (GimpVector3 *vector1,
+					GimpVector3 *vector2);
+gdouble     gimp_vector3_length        (GimpVector3 *vector);
+void        gimp_vector3_normalize     (GimpVector3 *vector);
+void        gimp_vector3_mul           (GimpVector3 *vector,
+					gdouble      factor);
+void        gimp_vector3_sub           (GimpVector3 *result,
+					GimpVector3 *vector1,
+					GimpVector3 *vector2);
+void        gimp_vector3_set           (GimpVector3 *vector,
 					gdouble      x,
 					gdouble      y,
 					gdouble      z);
-void        gimp_vector3_add           (GimpVector3 *c,
-					GimpVector3 *a,
-					GimpVector3 *b);
-void        gimp_vector3_neg           (GimpVector3 *a);
-void        gimp_vector3_rotate        (GimpVector3 *v,
+void        gimp_vector3_add           (GimpVector3 *result,
+					GimpVector3 *vector1,
+					GimpVector3 *vector2);
+void        gimp_vector3_neg           (GimpVector3 *vector);
+void        gimp_vector3_rotate        (GimpVector3 *vector,
 					gdouble      alpha,
 					gdouble      beta,
 					gdouble      gamma);
