@@ -2518,7 +2518,7 @@ p_create_and_attach_parasite (gint32            gimp_obj_id,
   /* create filename dirname/p1.pte  1 == parasite_id */
   l_parasite_file = g_strdup_printf("%s%cp%d.pte", dirname, G_DIR_SEPARATOR, (int)parasite_props->parasite_id);
 
-  if (0 != stat(l_parasite_file, &l_stat_buf))
+  if (0 != g_stat(l_parasite_file, &l_stat_buf))
   {
      /* stat error (file does not exist) */
      g_message (_("Could not open '%s' for reading: %s"),
@@ -3111,7 +3111,7 @@ p_load_linefile(const gchar *filename, gint32 *len)
 
   *len = 0;
   /* get file length */
-  if (0 != stat(filename, &stat_buf))
+  if (0 != g_stat(filename, &stat_buf))
   {
     return(NULL);
   }

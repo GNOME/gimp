@@ -32,7 +32,6 @@
 #include <gtk/gtk.h>
 
 #ifdef G_OS_WIN32
-#include <direct.h> /* _mkdir() */
 #include <libgimpbase/gimpwin32-io.h>
 #endif
 
@@ -52,11 +51,6 @@
 #include "user-install-dialog.h"
 
 #include "gimp-intl.h"
-
-#ifdef G_OS_WIN32
-#  include <io.h>
-#  define mkdir(path, mode) _mkdir(path)
-#endif
 
 
 #define PAGE_STYLE(widget)  gtk_widget_modify_style (widget, page_style)

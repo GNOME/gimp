@@ -25,8 +25,9 @@
 
 #include <stdarg.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
+
+#include <glib/gstdio.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h> /* for keyboard values */
@@ -948,7 +949,7 @@ dump_output(gpointer param, OutputFunc_t output)
 void
 save_as(const gchar *filename)
 {
-   FILE *out = fopen(filename, "w");
+   FILE *out = g_fopen(filename, "w");
    if (out) {
       dump_output(out, save_to_file);
       fclose(out);

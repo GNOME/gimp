@@ -28,6 +28,8 @@
 #include <unistd.h>
 #endif
 
+#include <glib/gstdio.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -233,7 +235,7 @@ load_image (const gchar *uri,
       g_clear_error (&error);
     }
 
-  unlink (tmpname);
+  g_unlink (tmpname);
   g_free (tmpname);
 
   return image_ID;
@@ -256,7 +258,7 @@ save_image (const gchar *uri,
                          tmpname,
                          tmpname) && valid_file (tmpname)))
     {
-      unlink (tmpname);
+      g_unlink (tmpname);
       g_free (tmpname);
 
       return GIMP_PDB_EXECUTION_ERROR;
@@ -267,13 +269,13 @@ save_image (const gchar *uri,
       g_message ("%s", error->message);
       g_clear_error (&error);
 
-      unlink (tmpname);
+      g_unlink (tmpname);
       g_free (tmpname);
 
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  unlink (tmpname);
+  g_unlink (tmpname);
   g_free (tmpname);
 
   return GIMP_PDB_SUCCESS;
@@ -317,5 +319,5 @@ valid_file (const gchar *filename)
 {
   struct stat buf;
 
-  return stat (filename, &buf) == 0 && buf.st_size > 0;
+  return g_stat (filename, &buf) == 0 && buf.st_size > 0;
 }

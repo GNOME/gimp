@@ -30,7 +30,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#include <glib/gstdio.h>
+
 #include <gtk/gtk.h>
+
 #include <libgtkhtml/gtkhtml.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -557,7 +560,7 @@ request_url (HtmlDocument *doc,
     {
       gint fd;
 
-      fd = open (filename, O_RDONLY);
+      fd = g_open (filename, O_RDONLY, 0);
 
       if (fd != -1)
         {

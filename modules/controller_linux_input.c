@@ -30,6 +30,8 @@
 
 #include <linux/input.h>
 
+#include <glib/gstdio.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"
@@ -353,7 +355,7 @@ linux_input_set_device (ControllerLinuxInput *controller,
       gchar *state;
       gint   fd;
 
-      fd = open (controller->device, O_RDONLY);
+      fd = g_open (controller->device, O_RDONLY, 0);
 
       if (fd >= 0)
         {

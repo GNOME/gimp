@@ -316,7 +316,7 @@ get_file_info (gchar *filename)
 {
   struct stat status;
 
-  stat (filename, &status);
+  g_stat (filename, &status);
 
   return status.st_size;
 }

@@ -1,3 +1,25 @@
+2005-03-04  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/user-install-dialog.c
+	* app/file/gimprecentlist.c
+	* app/widgets/gimpwidgets-utils.c
+	* modules/controller_linux_input.c
+	* modules/controller_midi.c
+	* plug-ins/common/compressor.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/raw.c
+	* plug-ins/helpbrowser/dialog.c
+	* plug-ins/imagemap/imap_cern.y
+	* plug-ins/imagemap/imap_cern_parse.[ch]
+	* plug-ins/imagemap/imap_csim.y
+	* plug-ins/imagemap/imap_csim_parse.[ch]
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_ncsa.y
+	* plug-ins/imagemap/imap_ncsa_parse.[ch]
+	* plug-ins/uri/uri.c
+	* plug-ins/xjt/xjt.c: ported the remaining functions to gstdio.
+
 2005-03-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptoolcontrol.[ch]: in the spirit of the fix for bug

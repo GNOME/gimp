@@ -636,7 +636,7 @@ valid_file (const gchar *filename)
   int stat_res;
   struct stat buf;
 
-  stat_res = stat (filename, &buf);
+  stat_res = g_stat (filename, &buf);
 
   if ((0 == stat_res) && (buf.st_size > 0))
     return TRUE;

@@ -30,8 +30,9 @@
 #include <unistd.h>
 #endif
 
-#include <glib.h>
 #include <glib/gstdio.h>
+
+#include <glib.h>
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
@@ -813,7 +814,8 @@ gimp_text_buffer_save (GtkTextBuffer  *buffer,
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  fd = open (filename, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+  fd = g_open (filename,
+               O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR, 0600);
 
   if (fd == -1)
     {

@@ -25,6 +25,8 @@
 
 #include <math.h>
 
+#include <glib/gstdio.h>
+
 #include <gtk/gtk.h>
 
 #include "imap_circle.h"
@@ -166,7 +168,7 @@ load_cern(const char* filename)
 {
    gboolean status;
    extern FILE *cern_in;
-   cern_in = fopen(filename, "r");
+   cern_in = g_fopen(filename, "r");
    if (cern_in) {
       status = !cern_parse();
       fclose(cern_in);

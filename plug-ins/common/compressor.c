@@ -652,7 +652,7 @@ valid_file (const gchar *filename)
 {
   struct stat buf;
 
-  return stat (filename, &buf) == 0 && buf.st_size > 0;
+  return g_stat (filename, &buf) == 0 && buf.st_size > 0;
 }
 
 static const gchar *

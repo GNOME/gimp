@@ -1445,7 +1445,7 @@ load_image (const gchar *filename)
 
   gint32 image_ID = -1;
 
-  if (stat (filename, &st) == -1)
+  if (g_stat (filename, &st) == -1)
     return -1;
 
   f = g_fopen (filename, "rb");

@@ -29,6 +29,8 @@
 #include <sys/types.h>
 #include <time.h>
 
+#include <glib/gstdio.h>
+
 #ifdef HAVE_ALSA
 #include <alsa/asoundlib.h>
 #endif
@@ -491,9 +493,9 @@ midi_set_device (ControllerMidi *midi,
 #endif /* HAVE_ALSA */
 
 #ifdef G_OS_WIN32
-      fd = open (midi->device, O_RDONLY);
+      fd = g_open (midi->device, O_RDONLY, 0);
 #else
-      fd = open (midi->device, O_RDONLY | O_NONBLOCK);
+      fd = g_open (midi->device, O_RDONLY | O_NONBLOCK, 0);
 #endif
 
       if (fd >= 0)

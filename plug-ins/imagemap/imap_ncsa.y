@@ -24,6 +24,8 @@
 
 #include <math.h>
 
+#include <glib/gstdio.h>
+
 #include <gtk/gtk.h>
 
 #include "imap_circle.h"
@@ -175,7 +177,7 @@ load_ncsa(const char* filename)
 {
    gboolean status;
    extern FILE *ncsa_in;
-   ncsa_in = fopen(filename, "r");
+   ncsa_in = g_fopen(filename, "r");
    if (ncsa_in) {
       status = !ncsa_parse();
       fclose(ncsa_in);
