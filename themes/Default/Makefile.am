@@ -19,8 +19,6 @@ STOCK_VARIABLES = @STRIP_BEGIN@ \
 	$(srcdir)/images/stock-button-eye.png			\
 	stock_button_linked					\
 	$(srcdir)/images/stock-button-linked.png		\
-	stock_button_paste					\
-	$(srcdir)/images/stock-button-paste.png			\
 	stock_button_paste_as_new				\
 	$(srcdir)/images/stock-button-paste-as-new.png		\
 	stock_button_paste_into					\

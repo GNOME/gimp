@@ -3,22 +3,25 @@
 themedatadir = $(gimpdatadir)/themes/Default/images/preferences
 
 PREFS_IMAGES = @STRIP_BEGIN@ \
-	default-comment.png	\
-	display.png		\
-	environment.png		\
-	folders.png		\
-	folders-brushes.png	\
-	folders-gradients.png	\
-	folders-palettes.png	\
-	folders-patterns.png	\
-	folders-plug-ins.png	\
-	help-system.png		\
-	image-windows.png	\
-	input-devices.png	\
-	interface.png		\
-	monitor.png		\
-	new-image.png		\
-	tool-options.png	\
+	default-comment.png		\
+	display.png			\
+	environment.png			\
+	folders.png			\
+	folders-brushes.png		\
+	folders-gradients.png		\
+	folders-modules.png		\
+	folders-palettes.png		\
+	folders-patterns.png		\
+	folders-plug-ins.png		\
+	folders-themes.png		\
+	folders-tool-plug-ins.png	\
+	help-system.png			\
+	image-windows.png		\
+	input-devices.png		\
+	interface.png			\
+	monitor.png			\
+	new-image.png			\
+	tool-options.png		\
 @STRIP_END@
 
 themedata_DATA = $(PREFS_IMAGES)

@@ -39,6 +39,11 @@ style "gimp-gtk-icons"
       { "images/stock-button-new.png", *, *, "gtk-button" },
       { "images/stock-button-new.png", *, *, *            }
     }
+  stock["gtk-paste"] =
+    {
+      { "images/stock-button-paste.png", *, *, "gtk-button" },
+      { "images/stock-button-paste.png", *, *, *            }
+    }
   stock["gtk-refresh"] =
     {
       { "images/stock-button-refresh.png", *, *, "gtk-button" },

@@ -145,7 +145,7 @@ gimp_buffer_view_new (GimpViewType     view_type,
 
   buffer_view->paste_button =
     gimp_container_view_add_button (editor->view,
-				    GIMP_STOCK_PASTE,
+				    GTK_STOCK_PASTE,
 				    _("Paste"), NULL,
 				    G_CALLBACK (gimp_buffer_view_paste_clicked),
 				    NULL,

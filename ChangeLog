@@ -1,3 +1,28 @@
+2002-03-06  Michael Natterer  <mitch@gimp.org>
+
+	* themes/Default/images/preferences/folders-modules.png
+	* themes/Default/images/preferences/folders-themes.png
+	* themes/Default/images/preferences/folders-tool-plug-ins.png:
+	Some more folder icons for the prefs. dialog.
+
+	* themes/Default/images/preferences/Makefile.am
+	* themes/Default/images/preferences/folders.xcf.gz: changed accordingly.
+
+	* app/gui/preferences-dialog.c: use them.
+
+	* themes/Default/Makefile.am
+	* themes/Default/imagerc
+	* libgimpwidgets/gimpstock.[ch]: removed GIMP_STOCK_PASTE.
+
+	* themes/Default/gtkrc: override GTK_STOCK_PASTE with our icon
+	instead.
+
+	* app/gui/menus.c
+	* app/widgets/gimpbufferview.c: s/GIMP_STOCK_PASTE/GTK_STOCK_PASTE/
+
+	* themes/Default/images/Makefile.am: install all icons of the
+	default theme so the installed directory can be used as template.
+
 2002-03-05  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: mention gimp-remote in the error message if

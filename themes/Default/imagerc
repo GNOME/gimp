@@ -47,11 +47,6 @@ style "gimp-icons"
       { "images/stock-button-linked.png", *, *, "gtk-button" },
       { "images/stock-button-linked.png", *, *, *            }
     }
-  stock["gimp-paste"] =
-    {
-      { "images/stock-button-paste.png", *, *, "gtk-button" },
-      { "images/stock-button-paste.png", *, *, *            }
-    }
   stock["gimp-paste-as-new"] =
     {
       { "images/stock-button-paste-as-new.png", *, *, "gtk-button" },

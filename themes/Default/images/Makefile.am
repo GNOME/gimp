@@ -15,6 +15,7 @@ GTK_STOCK_IMAGES = @STRIP_BEGIN@ \
 	stock-button-delete.png			\
 	stock-button-lower.png			\
 	stock-button-new.png			\
+	stock-button-paste.png			\
 	stock-button-raise.png			\
 	stock-button-refresh.png		\
 @STRIP_END@
@@ -25,7 +26,6 @@ STOCK_IMAGES = @STRIP_BEGIN@ \
 	stock-button-edit.png			\
 	stock-button-eye.png			\
 	stock-button-linked.png			\
-	stock-button-paste.png			\
 	stock-button-paste-as-new.png		\
 	stock-button-paste-into.png		\
 	stock-button-selection-replace.png	\
@@ -52,10 +52,9 @@ WILBER_IMAGES = @STRIP_BEGIN@ \
 	stock-wilber-64x64.png			\
 @STRIP_END@
 
-themedata_DATA = $(DIALOG_IMAGES) $(GTK_STOCK_IMAGES)
+themedata_DATA = $(DIALOG_IMAGES) $(GTK_STOCK_IMAGES) $(STOCK_IMAGES)
 
 EXTRA_DIST = \
 	$(themedata_DATA)	\
-	$(STOCK_IMAGES)		\
 	$(WILBER_IMAGES)	\
 	gimp-dialog-icons.xcf.gz

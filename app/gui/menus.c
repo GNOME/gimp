@@ -1796,7 +1796,7 @@ static GimpItemFactoryEntry buffers_entries[] =
 {
   { { N_("/Paste Buffer"), NULL,
       buffers_paste_buffer_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_PASTE },
+      "<StockItem>", GTK_STOCK_PASTE },
     NULL,
     NULL, NULL },
   { { N_("/Paste Buffer Into"), NULL,
