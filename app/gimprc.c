@@ -46,7 +46,6 @@
 #include "cursorutil.h"
 #include "devices.h"
 #include "errors.h"
-#include "fileops.h"
 #include "general.h"
 #include "gimphelp.h"
 #include "gimpparasite.h"

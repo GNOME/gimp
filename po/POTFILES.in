@@ -20,7 +20,8 @@ app/docindex.c
 app/equalize.c
 app/errorconsole.c
 app/file_new_dialog.c
-app/fileops.c
+app/file-open.c
+app/file-save.c
 app/floating_sel.c
 app/gdisplay.c
 app/gdisplay_ops.c

@@ -86,9 +86,15 @@ gimp_SOURCES = \
 	errors.h		\
 	equalize.c		\
 	equalize.h		\
-	fileops.c		\
-	fileops.h		\
-	fileopsP.h		\
+##	fileops.c		\
+##	fileops.h		\
+##	fileopsP.h		\
+	file-open.c		\
+	file-open.h		\
+	file-save.c		\
+	file-save.h		\
+	file-utils.h		\
+	file-utils.c		\
 	floating_sel.c		\
 	floating_sel.h		\
 	file_new_dialog.c	\

@@ -53,7 +53,8 @@
 #include "context_manager.h"
 #include "devices.h"
 #include "errorconsole.h"
-#include "fileops.h"
+#include "file-open.h"
+#include "file-save.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimpcontext.h"
@@ -562,7 +563,9 @@ app_init (void)
     }
 
   RESET_BAR();
-  file_ops_pre_init ();    /*  pre-initialize the file types  */
+  file_open_pre_init ();   /*  pre-initialize the file types     */
+  file_save_pre_init ();
+
   RESET_BAR();
   xcf_init ();             /*  initialize the xcf file format routines */
 
@@ -590,8 +593,10 @@ app_init (void)
 
   plug_in_init ();           /*  initialize the plug in structures  */
   module_db_init ();         /*  load any modules we need           */
+
   RESET_BAR();
-  file_ops_post_init ();     /*  post-initialize the file types     */
+  file_open_post_init ();    /*  post-initialize the file types     */
+  file_save_post_init ();
 
   menus_reorder_plugins ();  /*  beautify some menus                */
 

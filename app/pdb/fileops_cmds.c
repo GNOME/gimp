@@ -39,8 +39,9 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
-#include "fileops.h"
-#include "fileopsP.h"
+#include "file-open.h"
+#include "file-save.h"
+#include "file-utils.h"
 #include "gimprc.h"
 #include "plug_in.h"
 

@@ -28,7 +28,7 @@
 
 #include "dialog_handler.h"
 #include "docindex.h"
-#include "fileops.h"
+#include "file-open.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimpdnd.h"

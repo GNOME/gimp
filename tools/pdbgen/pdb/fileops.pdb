@@ -187,7 +187,6 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("fileopsP.h") ],
 	vars => [ 'gchar *pname', 'gchar *fname', 'gchar *tname',
 		  'guchar *raw_thumb', 'gchar *imginfo = NULL', 'gint i' ],
 	code => <<'CODE'
@@ -242,7 +241,6 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("fileopsP.h") ],
 	vars => [ 'TempBuf *thumb' ],
 	code => <<'CODE'
 {
@@ -412,7 +410,8 @@ CODE
     );
 }
 
-@headers = qw("fileops.h" "plug_in.h" <sys/types.h> <unistd.h>);
+@headers = qw("file-open.h" "file-save.h" "file-utils.h" "plug_in.h"
+              <sys/types.h> <unistd.h>);
 
 @procs = qw(file_load file_save file_load_thumbnail file_save_thumbnail
 	    temp_name register_magic_load_handler register_load_handler

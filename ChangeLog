@@ -1,5 +1,27 @@
 2001-03-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/fileops.[ch]
+	* app/fileopsP.h: removed...
+
+	* app/file-open.[ch]
+	* app/file-save.[ch]
+	* app/file-utils.[ch]: ...and split up into more hackable chunks.
+	(didn't change any logic, just moved the functions around)
+
+	* app/Makefile.am
+	* app/app_procs.c
+	* app/commands.c
+	* app/docindex.c
+	* app/gimpdnd.c
+	* app/gimprc.c
+	* app/menus.c
+	* app/pdb/fileops_cmds.c
+	* po/POTFILES.in
+	* tools/pdbgen/pdb/fileops.pdb: changed accordingly (mostly changing
+	#include's).
+
+2001-03-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/app_procs.[ch]: some random cleanups in pre-historic code.
 
 	* app/fileops.c: useless cleanup (will be split into file-open.[ch]

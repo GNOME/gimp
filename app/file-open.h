@@ -16,19 +16,27 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __FILE_OPS_P_H__
-#define __FILE_OPS_P_H__
+#ifndef __FILE_OPEN_H__
+#define __FILE_OPEN_H__
 
 
-/* functions that need only be accessed from file_ops_cmds.c */
+extern GSList *load_procs;
 
-TempBuf* make_thumb_tempbuf (GimpImage    *gimage);
-guchar*  readXVThumb        (const gchar  *fnam,
-			     gint         *w,
-			     gint         *h,
-			     gchar       **imginfo /* caller frees if != NULL */);
-gboolean file_save_thumbnail (GimpImage   *gimage,
-			      const char  *full_source_filename,
-			      TempBuf     *tempbuf);
 
-#endif /* FILE_OPS_P_H */
+void   file_open_pre_init              (void);
+void   file_open_post_init             (void);
+
+void   file_open_callback              (GtkWidget   *widget,
+                                        gpointer     data);
+
+void   file_revert_callback            (GtkWidget   *widget,
+                                        gpointer     data);
+
+void   file_open_by_extension_callback (GtkWidget   *widget,
+                                        gpointer     data);
+
+gint   file_open                       (gchar       *filename,
+                                        gchar       *raw_filename);
+
+
+#endif /* __FILE_OPEN_H__ */

@@ -33,7 +33,7 @@
 #include "tools/tool_manager.h"
 
 #include "context_manager.h"
-#include "fileops.h"
+#include "file-open.h"
 #include "gimpimage.h"
 #include "gimpbrush.h"
 #include "gimpchannel.h"
