@@ -1,3 +1,9 @@
+Thu Mar  9 22:29:14 GMT 2000
+	
+	* app/gimpimage.c
+
+	A tattoos state can equal the highest tattoo in the image.
+
 Thu Mar  9 20:45:13 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/commands.[ch]

@@ -1298,7 +1298,7 @@ gimp_image_set_tattoo_state (GimpImage *gimage,
 	}
     }
 
-  if (val <= maxval)
+  if (val < maxval)
     retval = FALSE;
 
   /* Must check the state is valid */
