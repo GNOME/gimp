@@ -18,6 +18,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include <string.h>
+
 #include "gimpui.h"
 
 #include "libgimp/gimpsizeentry.h"
@@ -784,6 +787,12 @@ struct _MessageBox
 
 static void  gimp_message_box_close_callback  (GtkWidget *, gpointer);
 
+#define MESSAGE_STRING_BUFFER	80	/* some buffer size, not critical */
+#define MESSAGE_BOX_MAXIMUM	 7	/* the maximum number of concucrrent dialog boxes */
+
+static int message_pool = MESSAGE_BOX_MAXIMUM;
+static gchar message_box_last[MESSAGE_STRING_BUFFER];
+
 GtkWidget *
 gimp_message_box (gchar       *message,
 		  GtkCallback  callback,
@@ -794,8 +803,29 @@ gimp_message_box (gchar       *message,
   GtkWidget  *vbox;
   GtkWidget  *label;
 
-  if (! message)
+  static int repeat_count;
+
+  /* arguably, if message_pool <= 0 we could print to stdout */
+  if (!message || message_pool <= 0)
     return NULL;
+
+  if (!strcmp (message_box_last, message))
+    {
+      repeat_count++;
+      if (repeat_count == 3)
+        message = "WARNING: message repeated too often, ignoring";
+      else if (repeat_count > 3)
+        return 0;
+    }
+  else
+    {
+      repeat_count = 0;
+      if (strlen (message) < MESSAGE_STRING_BUFFER)
+        strcpy (message_box_last, message);
+    }
+
+  if (message_pool == 1)
+    message = "WARNING: too many messages, close some dialog boxes first";
 
   msg_box = g_new (MessageBox, 1);
 
@@ -825,6 +855,9 @@ gimp_message_box (gchar       *message,
 
   gtk_widget_show (mbox);
 
+  /* allocate message box */
+  message_pool--;
+
   return mbox;
 }
 
@@ -842,6 +875,9 @@ gimp_message_box_close_callback (GtkWidget *widget,
 
   /*  Destroy the box  */
   gtk_widget_destroy (msg_box->mbox);
+  
+  /* make this box available again */
+  message_pool++;
 
   g_free (msg_box);
 }

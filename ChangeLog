@@ -153,7 +153,6 @@ Fri Nov 19 18:47:30 PST 1999 Manish Singh <yosh@gimp.org>
 	* libgimp/color_display.h 
 	* modules/cdisplay_gamma.c: configure cancel callback
 
->>>>>>> 1.1839
 Sat Nov 20 03:15:42 CET 1999  Marc Lehmann <pcg@goof.com>
 
         * plug-ins/common/gif.c: Removed rather superflous "comment block
