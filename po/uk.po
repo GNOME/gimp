@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
-"POT-Creation-Date: 2000-12-19 14:22-0800\n"
+"POT-Creation-Date: 2000-12-22 10:36+0200\n"
 "PO-Revision-Date: 2000-01-11 12:44+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -1280,11 +1280,15 @@ msgid ""
 "(You will loose all your changes\n"
 "including all undo information)"
 msgstr ""
+"В╕дновлення %s до\n"
+"%s\n"
+"\n"
+"(Ви втратите вс╕ зм╕ни включаючи\n"
+"всю ╕нформац╕ю про в╕дм╕ни операц╕й)"
 
 #: app/fileops.c:628
-#, fuzzy
 msgid "Revert Image?"
-msgstr "Зберегти зображення"
+msgstr "В╕дновити зображення?"
 
 #: app/fileops.c:633 app/fileops.c:1902
 msgid "Yes"
@@ -1541,28 +1545,28 @@ msgid "No selection to stroke!"
 msgstr "Нема╓ вид╕лення для обведення!"
 
 #: app/gimpbrush.c:294
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr "Нев╕дома верс╕я формату пензл╕в #%d в \"%s\"\n"
+msgstr "Нев╕дома верс╕я формату пензля #%d в \"%s\"."
 
 #: app/gimpbrush.c:314
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Помилка у файл╕ в╕зерунку GIMP \"%s\""
+msgstr "Помилка у файл╕ пензля GIMP \"%s\"."
 
 #: app/gimpbrush.c:321 app/patterns.c:232
 msgid "Unnamed"
 msgstr "Неназваний"
 
 #: app/gimpbrush.c:334 app/gimpbrush.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr "Файл пензля GIMP напевно об╕рваний."
+msgstr "Схоже файл пензля GIMP об╕рваний: \"%s\"."
 
 #: app/gimpbrush.c:359
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr "Файл пензля GIMP напевно об╕рваний."
+msgstr "Схоже файл пензля GIMP з╕псований: \"%s\"."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1574,27 +1578,31 @@ msgstr ""
 "\"%s\""
 
 #: app/gimpbrushlist.c:218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush pipe\n"
 "\"%s\""
 msgstr ""
-"Увага: Не вдалося завантажити пензель\n"
+"Увага: Не вдалося завантажити канал пензл╕в\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:292
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
-msgstr "Пензуль-перех╕д мусить мати хоча б один пензель."
+msgstr ""
+"Канал пензл╕в ма╓ мати хоча б один пензель:\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:383
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
 "\"%s\""
-msgstr "Не вдалось завантижата однин з пензл╕в у пензл╕-переход╕."
+msgstr ""
+"Не вдалось завантижати однин з пензл╕в у канал╕ пензл╕в."
+"\"%s\""
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
@@ -3134,9 +3142,8 @@ msgid "/File/Save As..."
 msgstr "/Файл/Зберегти як..."
 
 #: app/menus.c:217
-#, fuzzy
 msgid "/File/Revert..."
-msgstr "/Файл/В╕дновити"
+msgstr "/Файл/В╕дновити..."
 
 #: app/menus.c:222
 msgid "/File/Close"
@@ -4177,19 +4184,19 @@ msgid "No Patterns available"
 msgstr "Нема╓ доступних в╕зерунк╕в"
 
 #: app/patterns.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr "Нев╕дома верс╕я формату пензл╕в #%d в \"%s\"\n"
+msgstr "Нев╕дома верс╕я формату в╕зерунк╕в #%d в \"%s\"."
 
 #: app/patterns.c:225
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\"."
-msgstr "Помилка у файл╕ в╕зерунку GIMP \"%s\""
+msgstr "Помилка у файл╕ в╕зерунку GIMP \"%s\"."
 
 #: app/patterns.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
-msgstr "Файл в╕зеринку GIMP \"%s\" напевно об╕рваний."
+msgstr "Схоже файл в╕зерунку GIMP об╕рваний: \"%s\"."
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
@@ -6425,29 +6432,3 @@ msgstr "Акварель"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "╤стор╕я кольор╕в"
-
-#~ msgid "Error in GIMP brush file...aborting."
-#~ msgstr "Помилка у файл╕ пензля GIMP...переривання."
-
-#~ msgid ""
-#~ "Warning: Failed to load pixmap brush\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Увага: Не вдалось завантижити пензель-малюнок\n"
-#~ "\"%s\""
-
-#~ msgid ""
-#~ "Warning: Failed to load pixmap pipe\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Увага: Не вдалось завантижити малюнок переходу\n"
-#~ "\"%s\""
-
-#~ msgid "Failed to load pixmap brush."
-#~ msgstr "Не вдалося завантажити пензель-малюнок."
-
-#~ msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-#~ msgstr "Нев╕дома верс╕я в╕зерунки GIMP #%d, в \"%s\"\n"
-
-#~ msgid "Error loading pattern \"%s\""
-#~ msgstr "Помилка завантаження в╕зерунку \"%s\""

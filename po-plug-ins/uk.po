@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-12-19 11:26-0800\n"
+"POT-Creation-Date: 2000-12-22 11:02+0200\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -70,28 +70,28 @@ msgstr "Про"
 #: plug-ins/common/sharpen.c:523 plug-ins/common/shift.c:376
 #: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:403
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
-#: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2208
-#: plug-ins/common/spread.c:382 plug-ins/common/struc.c:1281
-#: plug-ins/common/sunras.c:1589 plug-ins/common/tga.c:1183
-#: plug-ins/common/threshold_alpha.c:271 plug-ins/common/tiff.c:1585
-#: plug-ins/common/tile.c:405 plug-ins/common/tileit.c:386
-#: plug-ins/common/uniteditor.c:173 plug-ins/common/unsharp.c:787
-#: plug-ins/common/video.c:2155 plug-ins/common/vpropagate.c:935
-#: plug-ins/common/warp.c:437 plug-ins/common/waves.c:349
-#: plug-ins/common/whirlpinch.c:808 plug-ins/common/wind.c:1012
-#: plug-ins/common/wmf.c:931 plug-ins/common/xbm.c:1150
-#: plug-ins/common/xpm.c:800 plug-ins/fits/fits.c:987
-#: plug-ins/flame/flame.c:631 plug-ins/flame/flame.c:920
-#: plug-ins/fp/fp_gtk.c:904 plug-ins/gap/gap_arr_dialog.c:768
-#: plug-ins/gap/gap_arr_dialog.c:1010 plug-ins/gap/gap_decode_xanim.c:178
-#: plug-ins/gap/gap_lib.c:230 plug-ins/gap/gap_mod_layer.c:147
-#: plug-ins/gap/gap_mov_dialog.c:498 plug-ins/gap/gap_mpege.c:191
-#: plug-ins/gap/gap_resi_dialog.c:149 plug-ins/gdyntext/gdyntext_ui.c:199
-#: plug-ins/gdyntext/gdyntext_ui.c:573 plug-ins/gfig/gfig.c:4080
-#: plug-ins/gfig/gfig.c:4425 plug-ins/gfig/gfig.c:4508
-#: plug-ins/gfig/gfig.c:4813 plug-ins/gflare/gflare.c:2463
-#: plug-ins/gflare/gflare.c:3477 plug-ins/gfli/gfli.c:821
-#: plug-ins/gfli/gfli.c:890 plug-ins/gimpressionist/gimpressionist.c:356
+#: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
+#: plug-ins/common/struc.c:1281 plug-ins/common/sunras.c:1589
+#: plug-ins/common/tga.c:1183 plug-ins/common/threshold_alpha.c:271
+#: plug-ins/common/tiff.c:1585 plug-ins/common/tile.c:405
+#: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
+#: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
+#: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:437
+#: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
+#: plug-ins/common/wind.c:1012 plug-ins/common/wmf.c:931
+#: plug-ins/common/xbm.c:1150 plug-ins/common/xpm.c:800
+#: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:631
+#: plug-ins/flame/flame.c:920 plug-ins/fp/fp_gtk.c:904
+#: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
+#: plug-ins/gap/gap_decode_xanim.c:178 plug-ins/gap/gap_lib.c:230
+#: plug-ins/gap/gap_mod_layer.c:147 plug-ins/gap/gap_mov_dialog.c:498
+#: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
+#: plug-ins/gdyntext/gdyntext_ui.c:199 plug-ins/gdyntext/gdyntext_ui.c:573
+#: plug-ins/gfig/gfig.c:4080 plug-ins/gfig/gfig.c:4425
+#: plug-ins/gfig/gfig.c:4508 plug-ins/gfig/gfig.c:4813
+#: plug-ins/gflare/gflare.c:2463 plug-ins/gflare/gflare.c:3477
+#: plug-ins/gfli/gfli.c:821 plug-ins/gfli/gfli.c:890
+#: plug-ins/gimpressionist/gimpressionist.c:356
 #: plug-ins/gimpressionist/gimpressionist.c:477
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
@@ -152,19 +152,19 @@ msgstr "Гаразд"
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
-#: plug-ins/common/spheredesigner.c:2212 plug-ins/common/spread.c:384
-#: plug-ins/common/struc.c:1283 plug-ins/common/sunras.c:1591
-#: plug-ins/common/tga.c:1185 plug-ins/common/threshold_alpha.c:273
-#: plug-ins/common/tiff.c:1587 plug-ins/common/tile.c:407
-#: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:175
-#: plug-ins/common/unsharp.c:789 plug-ins/common/video.c:2157
-#: plug-ins/common/vpropagate.c:937 plug-ins/common/warp.c:439
-#: plug-ins/common/waves.c:351 plug-ins/common/whirlpinch.c:810
-#: plug-ins/common/wind.c:1014 plug-ins/common/wmf.c:933
-#: plug-ins/common/xbm.c:1152 plug-ins/common/xpm.c:802
-#: plug-ins/fits/fits.c:989 plug-ins/flame/flame.c:633
-#: plug-ins/flame/flame.c:922 plug-ins/fp/fp_gtk.c:908
-#: plug-ins/gap/gap_arr_dialog.c:1012 plug-ins/gap/gap_dbbrowser_utils.c:210
+#: plug-ins/common/spread.c:384 plug-ins/common/struc.c:1283
+#: plug-ins/common/sunras.c:1591 plug-ins/common/tga.c:1185
+#: plug-ins/common/threshold_alpha.c:273 plug-ins/common/tiff.c:1587
+#: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:388
+#: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
+#: plug-ins/common/video.c:2157 plug-ins/common/vpropagate.c:937
+#: plug-ins/common/warp.c:439 plug-ins/common/waves.c:351
+#: plug-ins/common/whirlpinch.c:810 plug-ins/common/wind.c:1014
+#: plug-ins/common/wmf.c:933 plug-ins/common/xbm.c:1152
+#: plug-ins/common/xpm.c:802 plug-ins/fits/fits.c:989
+#: plug-ins/flame/flame.c:633 plug-ins/flame/flame.c:922
+#: plug-ins/fp/fp_gtk.c:908 plug-ins/gap/gap_arr_dialog.c:1012
+#: plug-ins/gap/gap_dbbrowser_utils.c:210
 #: plug-ins/gap/gap_decode_mpeg_main.c:337 plug-ins/gap/gap_decode_xanim.c:176
 #: plug-ins/gap/gap_decode_xanim.c:341 plug-ins/gap/gap_filter_foreach.c:134
 #: plug-ins/gap/gap_lib.c:1027 plug-ins/gap/gap_mod_layer.c:149
@@ -201,12 +201,11 @@ msgstr "В╕дм╕нити"
 #: plug-ins/common/nlfilt.c:587 plug-ins/common/noisify.c:506
 #: plug-ins/common/plasma.c:326 plug-ins/common/polar.c:935
 #: plug-ins/common/ps.c:2936 plug-ins/common/sharpen.c:550
-#: plug-ins/common/sinus.c:2123 plug-ins/common/spheredesigner.c:2230
-#: plug-ins/common/tileit.c:407 plug-ins/common/waves.c:576
-#: plug-ins/common/whirlpinch.c:826 plug-ins/common/wind.c:1031
-#: plug-ins/flame/flame.c:940 plug-ins/gfig/gfig.c:3956
-#: plug-ins/gflare/gflare.c:2490 plug-ins/gflare/gflare.c:3502
-#: plug-ins/gimpressionist/orientmap.c:502
+#: plug-ins/common/sinus.c:2123 plug-ins/common/tileit.c:407
+#: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
+#: plug-ins/common/wind.c:1031 plug-ins/flame/flame.c:940
+#: plug-ins/gfig/gfig.c:3956 plug-ins/gflare/gflare.c:2490
+#: plug-ins/gflare/gflare.c:3502 plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:918
 #: plug-ins/imagemap/imap_edit_area_info.c:287
@@ -342,8 +341,7 @@ msgstr ""
 "Мандельюрота та Серпинського"
 
 #: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1229
-#: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2305
-#: plug-ins/gfig/gfig.c:3548
+#: plug-ins/common/gqbist.c:686 plug-ins/gfig/gfig.c:3548
 msgid "Load"
 msgstr "Завантажити"
 
@@ -353,8 +351,7 @@ msgstr "Завантажити фрактал з файлу"
 
 #: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/convmatrix.c:858
 #: plug-ins/common/curve_bend.c:1361 plug-ins/common/iwarp.c:1144
-#: plug-ins/common/sample_colorize.c:1372
-#: plug-ins/common/spheredesigner.c:2210 plug-ins/common/tileit.c:467
+#: plug-ins/common/sample_colorize.c:1372 plug-ins/common/tileit.c:467
 #: plug-ins/fp/fp_gtk.c:906 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:809 plug-ins/sel2path/sel2path.c:339
 msgid "Reset"
@@ -365,9 +362,9 @@ msgid "Reset parameters to default values"
 msgstr "Встановити параметри у типов╕ значення"
 
 #: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1222
-#: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2312
-#: plug-ins/gfig/gfig.c:3927 plug-ins/gfig/gfig.c:5256
-#: plug-ins/imagemap/imap_menu.c:218 plug-ins/imagemap/imap_toolbar.c:112
+#: plug-ins/common/gqbist.c:694 plug-ins/gfig/gfig.c:3927
+#: plug-ins/gfig/gfig.c:5256 plug-ins/imagemap/imap_menu.c:218
+#: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
 msgstr "Зберегти"
 
@@ -1099,7 +1096,6 @@ msgid "Options"
 msgstr "Параметри"
 
 #: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1318
-#: plug-ins/common/spheredesigner.c:1551 plug-ins/common/spheredesigner.c:2590
 msgid "Light"
 msgstr "Св╕тло"
 
@@ -1271,7 +1267,6 @@ msgid "Map Images to Box Faces"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1178
-#: plug-ins/common/spheredesigner.c:2418
 msgid "Scale X:"
 msgstr "Масштаб X:"
 
@@ -3342,8 +3337,7 @@ msgstr "Виявлення граней..."
 msgid "Edge Detection"
 msgstr "Виявлення граней"
 
-#: plug-ins/common/edge.c:675 plug-ins/common/spheredesigner.c:2609
-#: plug-ins/common/unsharp.c:821
+#: plug-ins/common/edge.c:675 plug-ins/common/unsharp.c:821
 msgid "Amount:"
 msgstr "Величина:"
 
@@ -3360,7 +3354,7 @@ msgstr "Барель╓ф"
 msgid "Function"
 msgstr "Функц╕я"
 
-#: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1550
+#: plug-ins/common/emboss.c:551
 msgid "Bumpmap"
 msgstr "Рель╓ф"
 
@@ -3675,17 +3669,16 @@ msgstr "Гаусеве розмивання (RLE)"
 #: plug-ins/common/gbr.c:347
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr ""
+msgstr "Помилка у файл╕ пензля GIMP \"%s\"."
 
 #: plug-ins/common/gbr.c:355 plug-ins/common/gih.c:488
 #: plug-ins/common/gih.c:1122
-#, fuzzy
 msgid "Unnamed"
-msgstr "Ненайменований канал"
+msgstr "Неназвано"
 
 #: plug-ins/common/gbr.c:485
 msgid "GIMP brushes are either GRAYSCALE or RGBA\n"
-msgstr ""
+msgstr "Пензл╕ GIMP або у в╕дт╕нках с╕рого або RGBA\n"
 
 #: plug-ins/common/gbr.c:502 plug-ins/common/gih.c:1226
 #, c-format
@@ -3707,13 +3700,12 @@ msgid "Description:"
 msgstr "Опис:"
 
 #: plug-ins/common/gee.c:112
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-Slime"
 msgstr "<Image>/Ф╕льтри/╤грашки/Писанка..."
 
 #: plug-ins/common/gee.c:186
 msgid "GEE-SLIME"
-msgstr ""
+msgstr "ПИСАНКА"
 
 #. Action area - 'close' button only.
 #: plug-ins/common/gee.c:197 plug-ins/common/gee_zoom.c:214
@@ -3725,21 +3717,24 @@ msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
+"Менш застар╕ле твор╕ння Адама Мосса / adam@gimp.org / adam@foxbox.org / "
+"1998-2000"
 
 #: plug-ins/common/gee_zoom.c:139
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-Zoom"
-msgstr "<Image>/Ф╕льтри/╤грашки/Писанка..."
+msgstr "<Image>/Ф╕льтри/╤грашки/Писанка-масштаб..."
 
 #: plug-ins/common/gee_zoom.c:203
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
-msgstr ""
+msgstr "Писанка-масштаб: Додаток, ран╕ше в╕домий як \"╢! ╫╕мпова писанка!\""
 
 #: plug-ins/common/gee_zoom.c:226
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
+"Застар╕ле твор╕ння Адама Мосса / adam@gimp.org / adam@foxbox.org / "
+"1998-2000"
 
 #: plug-ins/common/gicon.c:436
 msgid "Save as GIcon"
@@ -3846,20 +3841,19 @@ msgstr "Шар %s не ма╓ альфа-каналу, пропущено"
 
 #: plug-ins/common/gih.c:481
 msgid "Error in GIMP brush pipe file."
-msgstr ""
+msgstr "Помика у файл╕ каналу пензл╕в."
 
 #: plug-ins/common/gih.c:547
 msgid "GIMP brush file appears to be corrupted."
-msgstr ""
+msgstr "Схоже файл пензля з╕псовано."
 
 #: plug-ins/common/gih.c:689
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr ""
+msgstr "Неможливо завантажити один пензель в канал."
 
 #: plug-ins/common/gih.c:849
-#, fuzzy
 msgid "Save as Brush Pipe"
-msgstr "Зберегти як пензель"
+msgstr "Зберегти як канал пензл╕в"
 
 #: plug-ins/common/gih.c:879
 msgid "Spacing (Percent):"
@@ -4428,7 +4422,6 @@ msgid "Subsampling:"
 msgstr "П╕двиб╕рка:"
 
 #: plug-ins/common/jpeg.c:1801
-#, fuzzy
 msgid "Fast Integer"
 msgstr "Швидке ц╕ле"
 
@@ -4437,7 +4430,6 @@ msgid "Integer"
 msgstr "Ц╕ле"
 
 #: plug-ins/common/jpeg.c:1803
-#, fuzzy
 msgid "Floating-Point"
 msgstr "З плаваючою крапкою"
 
@@ -4987,7 +4979,7 @@ msgstr "Плазма..."
 msgid "Plasma"
 msgstr "Плазма"
 
-#: plug-ins/common/plasma.c:371 plug-ins/common/spheredesigner.c:2401
+#: plug-ins/common/plasma.c:371
 msgid "Turbulence:"
 msgstr "Бурхлив╕ть:"
 
@@ -5051,8 +5043,7 @@ msgid "Help:"
 msgstr "Дов╕дка:"
 
 #. show the type
-#: plug-ins/common/plugindetails.c:443 plug-ins/common/spheredesigner.c:2333
-#: plug-ins/gimpressionist/orientmap.c:580
+#: plug-ins/common/plugindetails.c:443 plug-ins/gimpressionist/orientmap.c:580
 msgid "Type:"
 msgstr "Тип:"
 
@@ -6042,165 +6033,6 @@ msgstr "Використовувати кол╕р переднього плану"
 msgid "Use the Background Color"
 msgstr "Використовувати кол╕р тла"
 
-#: plug-ins/common/spheredesigner.c:247 plug-ins/gimpressionist/general.c:217
-msgid "Solid"
-msgstr "Суц╕льне"
-
-#: plug-ins/common/spheredesigner.c:248
-msgid "Checker"
-msgstr "Шах╕вниця"
-
-#: plug-ins/common/spheredesigner.c:249
-msgid "Marble"
-msgstr "Мармур"
-
-#: plug-ins/common/spheredesigner.c:250
-msgid "Lizard"
-msgstr "Ящ╕рка"
-
-#: plug-ins/common/spheredesigner.c:251
-msgid "Phong"
-msgstr "Фон╜"
-
-#: plug-ins/common/spheredesigner.c:252
-msgid "Noise"
-msgstr "Шум"
-
-#: plug-ins/common/spheredesigner.c:253
-msgid "Wood"
-msgstr "Дерево"
-
-#: plug-ins/common/spheredesigner.c:254
-msgid "Spiral"
-msgstr "Сп╕раль"
-
-#: plug-ins/common/spheredesigner.c:255
-msgid "Spots"
-msgstr "Плями"
-
-#: plug-ins/common/spheredesigner.c:1549 plug-ins/common/spheredesigner.c:2578
-msgid "Texture"
-msgstr "Текстура"
-
-#: plug-ins/common/spheredesigner.c:1552
-msgid "(unknown!?)"
-msgstr "(нев╕доме!?)"
-
-#: plug-ins/common/spheredesigner.c:1826
-msgid "Open file"
-msgstr "В╕дкрити файл"
-
-#: plug-ins/common/spheredesigner.c:1826
-msgid "Save file"
-msgstr "Зберегти файл"
-
-#: plug-ins/common/spheredesigner.c:2087 plug-ins/common/spheredesigner.c:2125
-#: plug-ins/gimpressionist/general.c:99
-msgid "Color Selection Dialog"
-msgstr "Д╕алог вибору кольору"
-
-#: plug-ins/common/spheredesigner.c:2203
-msgid "Sphere Designer"
-msgstr "Конструктор сфери"
-
-#: plug-ins/common/spheredesigner.c:2244 plug-ins/gimpressionist/preview.c:117
-#: plug-ins/gimpressionist/repaint.c:877 plug-ins/gimpressionist/repaint.c:879
-#: plug-ins/imagemap/imap_polygon.c:446
-msgid "Update"
-msgstr "Оновити"
-
-#: plug-ins/common/spheredesigner.c:2253
-msgid "Textures"
-msgstr "Текстури"
-
-#: plug-ins/common/spheredesigner.c:2278 plug-ins/gfig/gfig.c:3137
-#: plug-ins/gimpressionist/orientmap.c:531
-#: plug-ins/gimpressionist/sizemap.c:431
-msgid "Add"
-msgstr "Додати"
-
-#: plug-ins/common/spheredesigner.c:2285
-msgid "Dup"
-msgstr "Дублювати"
-
-#: plug-ins/common/spheredesigner.c:2292
-msgid "Del"
-msgstr "Стерти"
-
-#: plug-ins/common/spheredesigner.c:2319
-msgid "Texture Properties"
-msgstr "Властивост╕ текстури"
-
-#: plug-ins/common/spheredesigner.c:2340
-msgid "Texture:"
-msgstr "Текстура:"
-
-#: plug-ins/common/spheredesigner.c:2347
-msgid "Colors:"
-msgstr "Кольори:"
-
-#. Scale
-#: plug-ins/common/spheredesigner.c:2384 plug-ins/gimpressionist/paper.c:169
-#: plug-ins/ifscompose/ifscompose.c:563
-msgid "Scale:"
-msgstr "Масштаб:"
-
-#: plug-ins/common/spheredesigner.c:2435
-msgid "Scale Y:"
-msgstr "Масштаб по Y:"
-
-#: plug-ins/common/spheredesigner.c:2452
-msgid "Scale Z:"
-msgstr "Масштаб по Z:"
-
-#: plug-ins/common/spheredesigner.c:2470
-msgid "Rotate X:"
-msgstr "Поворот по X:"
-
-#: plug-ins/common/spheredesigner.c:2487
-msgid "Rotate Y:"
-msgstr "Поворот по Y:"
-
-#: plug-ins/common/spheredesigner.c:2504
-msgid "Rotate Z:"
-msgstr "Поворот по Z:"
-
-#: plug-ins/common/spheredesigner.c:2521
-msgid "Pos X:"
-msgstr "Позиц╕я по X:"
-
-#: plug-ins/common/spheredesigner.c:2538
-msgid "Pos Y:"
-msgstr "Позиц╕я по Y:"
-
-#: plug-ins/common/spheredesigner.c:2555
-msgid "Pos Z:"
-msgstr "Позиц╕я по Z:"
-
-#: plug-ins/common/spheredesigner.c:2584
-msgid "Bump"
-msgstr "Шорстк╕сть"
-
-#: plug-ins/common/spheredesigner.c:2626
-msgid "Exp:"
-msgstr "Експорт:"
-
-#: plug-ins/common/spheredesigner.c:2643
-msgid ""
-"by Vidar Madsen\n"
-"September 1999"
-msgstr ""
-"Vidar Madsen\n"
-"Вересень 1999"
-
-#: plug-ins/common/spheredesigner.c:2763
-msgid "Rendering..."
-msgstr "В╕зуал╕зац╕я..."
-
-#: plug-ins/common/spheredesigner.c:2813
-msgid "<Image>/Filters/Render/Sphere Designer..."
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Створювач сфер..."
-
 #: plug-ins/common/spread.c:133
 msgid "<Image>/Filters/Noise/Spread..."
 msgstr "<Image>/Ф╕льтр/Шум/Розс╕ювання..."
@@ -6308,22 +6140,22 @@ msgstr "Зберегти як SUNRAS"
 
 #: plug-ins/common/sunras.c:1605
 msgid "RunLength Encoded"
-msgstr ""
+msgstr "Закодовано RunLength"
 
 #: plug-ins/common/tga.c:425
-#, fuzzy, c-format
+#, c-format
 msgid "TGA: can't open \"%s\"\n"
-msgstr "неможливо в╕дкрити \"%s\"\n"
+msgstr "TGA: неможливо в╕дкрити \"%s\"\n"
 
 #: plug-ins/common/tga.c:435
-#, fuzzy, c-format
+#, c-format
 msgid "TGA: Cannot read footer from \"%s\"\n"
-msgstr "XBM: неможливо створити \"%s\"\n"
+msgstr "TGA: неможливо зчитати нижн╕й колонтитул з \"%s\"\n"
 
 #: plug-ins/common/tga.c:446
-#, fuzzy, c-format
+#, c-format
 msgid "TGA: Cannot read extension from \"%s\"\n"
-msgstr "XBM: неможливо створити \"%s\"\n"
+msgstr "TGA: неможливо зчитати розширення з \"%s\"\n"
 
 #: plug-ins/common/tga.c:1178
 msgid "Save as TGA"
@@ -8502,56 +8334,51 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:294
 msgid "Loop"
-msgstr ""
+msgstr "Цикл"
 
 #: plug-ins/gap/gap_mov_dialog.c:295
 msgid "Loop Reverse"
-msgstr ""
+msgstr "Зворотний цикл"
 
 #: plug-ins/gap/gap_mov_dialog.c:296
 msgid "Once"
-msgstr ""
+msgstr "Одиноразово"
 
 #: plug-ins/gap/gap_mov_dialog.c:297
 msgid "OnceReverse"
-msgstr ""
+msgstr "Одиноразово назад"
 
 #: plug-ins/gap/gap_mov_dialog.c:298
 msgid "PingPong"
-msgstr ""
+msgstr "П╕н╜-пон╜"
 
 #: plug-ins/gap/gap_mov_dialog.c:300
-#, fuzzy
 msgid "Frame Loop"
-msgstr "Кадр %d"
+msgstr "Цикл кадру"
 
 #: plug-ins/gap/gap_mov_dialog.c:301
-#, fuzzy
 msgid "Frame Loop Reverse"
-msgstr "В╕чний цикл"
+msgstr "Зворотний цикл кадру"
 
 #: plug-ins/gap/gap_mov_dialog.c:302
-#, fuzzy
 msgid "Frame Once"
-msgstr "Кадр %d"
+msgstr "╢диний кадр"
 
 #: plug-ins/gap/gap_mov_dialog.c:303
 msgid "Frame OnceReverse"
-msgstr ""
+msgstr "╢диний кадр назад"
 
 #: plug-ins/gap/gap_mov_dialog.c:304
-#, fuzzy
 msgid "Frame PingPong"
-msgstr "П╕н╜-пон╜"
+msgstr "П╕н╜-пон╜ кадр╕в"
 
 #: plug-ins/gap/gap_mov_dialog.c:305
-#, fuzzy
 msgid "Frame None"
-msgstr "Кадр %d"
+msgstr "Нема╓ кадру"
 
 #: plug-ins/gap/gap_mov_dialog.c:480
 msgid "Move Path"
-msgstr ""
+msgstr "Перем╕стити шлях"
 
 #: plug-ins/gap/gap_mov_dialog.c:514
 msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
@@ -9167,7 +8994,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:296
 msgid "Outputfile:"
-msgstr ""
+msgstr "Вих╕дний файл:"
 
 #. pixel
 #: plug-ins/gap/gap_mpege.c:298
@@ -9176,7 +9003,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:304
 msgid "Paramfile:"
-msgstr ""
+msgstr "Файл параметр╕в:"
 
 #. pixel
 #: plug-ins/gap/gap_mpege.c:306
@@ -10349,6 +10176,11 @@ msgstr "Натиск:"
 msgid "No Options..."
 msgstr "Нема╓ параметр╕в..."
 
+#: plug-ins/gfig/gfig.c:3137 plug-ins/gimpressionist/orientmap.c:531
+#: plug-ins/gimpressionist/sizemap.c:431
+msgid "Add"
+msgstr "Додати"
+
 #: plug-ins/gfig/gfig.c:3139
 msgid "Replace"
 msgstr "Зам╕щення"
@@ -10971,6 +10803,10 @@ msgstr ""
 msgid "Adds random noise to the color"
 msgstr ""
 
+#: plug-ins/gimpressionist/general.c:99
+msgid "Color Selection Dialog"
+msgstr "Д╕алог вибору кольору"
+
 #: plug-ins/gimpressionist/general.c:156
 msgid "Edge darken:"
 msgstr ""
@@ -10998,6 +10834,10 @@ msgstr ""
 #: plug-ins/gimpressionist/general.c:204
 msgid "Copy the texture of the selected paper as a background"
 msgstr ""
+
+#: plug-ins/gimpressionist/general.c:217
+msgid "Solid"
+msgstr "Суц╕льне"
 
 #: plug-ins/gimpressionist/general.c:223
 msgid "Solid colored background"
@@ -11307,6 +11147,11 @@ msgstr "╤нвертувати текстуру паперу"
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Використовувати пап╕р як ╓ (без надання йому рель╓фу)"
 
+#. Scale
+#: plug-ins/gimpressionist/paper.c:169 plug-ins/ifscompose/ifscompose.c:563
+msgid "Scale:"
+msgstr "Масштаб:"
+
 #: plug-ins/gimpressionist/paper.c:188
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Вказати масштаб текстури (у в╕дсотках в╕д початкового файлу)"
@@ -11393,6 +11238,11 @@ msgid ""
 "feel free to send them to me <vidar@prosalg.no>\n"
 "for inclusion into the next release!\n"
 msgstr ""
+
+#: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:877
+#: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:446
+msgid "Update"
+msgstr "Оновити"
 
 #: plug-ins/gimpressionist/preview.c:122
 msgid "Refresh the Preview window"
@@ -11564,16 +11414,16 @@ msgid "Forward"
 msgstr "Вперед"
 
 #: plug-ins/helpbrowser/helpbrowser.c:1212
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
 "\n"
 "Couldn't find GIMP_HELP_ROOT html directory.\n"
 "(%s)"
 msgstr ""
-"Помилка дов╕дково╖ системи GIMP.\n"
+"Помилка дов╕дника GIMP.\n"
 "\n"
-"Не вдалось знайти кореневий каталог html.\n"
+"Не вдалось знайти каталог HTML GIMP_HELP_ROOT.\n"
 "(%s)"
 
 #: plug-ins/ifscompose/ifscompose.c:365
@@ -11740,12 +11590,12 @@ msgstr "Виправлення об'╓кта"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:71
 msgid "Create Guides"
-msgstr "Створити направляюч╕"
+msgstr "Створити напрямн╕"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:111
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
-msgstr ""
+msgstr "Результування границь напрямних: %d,%d до %d,%d (%d д╕лянок)"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:136
 msgid ""
@@ -11754,6 +11604,10 @@ msgid ""
 "allows you to rapidly create the most common image map type -\n"
 "image collection of \"thumbnails\", suitable for navigation bars."
 msgstr ""
+"Напрямн╕ - це наперед визначен╕ прямокутника, що покривають\n"
+"зображення. Ви визнача╓те ╖х ширину, висоту ╕ в╕дступи м╕ж ними.\n"
+"Це дозволя╓ вам швидко створювати б╕льш╕сть мап зображення\n"
+"звичайного типу - набор╕в \"м╕н╕атюр\", приданих для нав╕╜ац╕╖."
 
 #: plug-ins/imagemap/imap_cmd_guides.c:164 plug-ins/imagemap/imap_grid.c:198
 msgid "Width"
@@ -11761,7 +11615,7 @@ msgstr "Ширина"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:169
 msgid "Left Start at"
-msgstr ""
+msgstr "Л╕ва почина╓ться на"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:174 plug-ins/imagemap/imap_grid.c:204
 msgid "Height"
@@ -11769,7 +11623,7 @@ msgstr "Висота"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:179
 msgid "Top Start at"
-msgstr ""
+msgstr "Верхня почина╓ться на"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:184
 msgid "Horz. Spacing"
@@ -11777,7 +11631,7 @@ msgstr "Горизонтальний ╕нтервал"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:189
 msgid "No. Across"
-msgstr ""
+msgstr "К╕льк╕сть перетин╕в"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:194
 msgid "Vert. Spacing"
@@ -11794,11 +11648,11 @@ msgstr "Розм╕ри зображення: %d x %d"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:229
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
-msgstr ""
+msgstr "Результування границь напрямних: 0,0 до 0,0 (0 д╕лянок)"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:264
 msgid "Guides"
-msgstr "Направляюч╕"
+msgstr "Напрямн╕"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:52
 #: plug-ins/imagemap/imap_cmd_object_down.c:51
@@ -12130,7 +11984,7 @@ msgstr "Установки с╕тки..."
 
 #: plug-ins/imagemap/imap_menu.c:403
 msgid "Create Guides..."
-msgstr "Створити направляюч╕..."
+msgstr "Створити напрямн╕..."
 
 #: plug-ins/imagemap/imap_menu.c:410 plug-ins/maze/maze_face.c:193
 msgid "Help"
@@ -12170,7 +12024,7 @@ msgstr "Вих╕д"
 
 #: plug-ins/imagemap/imap_popup.c:151
 msgid "Guides..."
-msgstr "Направляюч╕..."
+msgstr "Напрямн╕..."
 
 #: plug-ins/imagemap/imap_preferences.c:204
 msgid "Couldn't save resource file:"
@@ -13004,9 +12858,3 @@ msgstr "Помилка: неможливо зчитати файл властивостей XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Помилка: файл властивостей XJT %s порожн╕й"
-
-#~ msgid "GEE!  The GIMP E'er Egg!"
-#~ msgstr "╢!  ╫╕мпова писанка!"
-
-#~ msgid "Save as Pixmap Brush"
-#~ msgstr "Зберегти як пензель-малюнок"
