@@ -138,18 +138,19 @@ int       always_restore_session = FALSE;
 int       default_width = 256;
 int       default_height = 256;
 int       default_type = RGB;
-float     default_xresolution = 72.0;
-float     default_yresolution = 72.0;
+double    default_xresolution = 72.0;
+double    default_yresolution = 72.0;
 GUnit     default_resolution_units = UNIT_INCH;
 int       show_tips = TRUE;
 int       last_tip = -1;
 int       show_tool_tips = TRUE;
-float     monitor_xres = 72.0;
-float     monitor_yres = 72.0;
+double    monitor_xres = 72.0;
+double    monitor_yres = 72.0;
 int       using_xserver_resolution = FALSE;
 int       num_processors = 1;
 char *    image_title_format = NULL;
 int       global_paint_options = TRUE;
+int       max_new_image_size = 33554432;  /* 32 MB */
 
 extern char * module_db_load_inhibit;
 
@@ -272,8 +273,8 @@ static ParseFunc funcs[] =
   { "dont-show-tool-tips",   TT_BOOLEAN,    NULL, &show_tool_tips },
   { "default-image-size",    TT_POSITION,   &default_width, &default_height },
   { "default-image-type",    TT_IMAGETYPE,  &default_type, NULL },
-  { "default-xresolution",   TT_FLOAT,      &default_xresolution, NULL },
-  { "default-yresolution",   TT_FLOAT,      &default_yresolution, NULL },
+  { "default-xresolution",   TT_DOUBLE,     &default_xresolution, NULL },
+  { "default-yresolution",   TT_DOUBLE,     &default_yresolution, NULL },
   { "default-resolution-units", TT_XUNIT,   &default_resolution_units, NULL },
   { "plug-in",               TT_XPLUGIN,    NULL, NULL },
   { "plug-in-def",           TT_XPLUGINDEF, NULL, NULL },
@@ -281,14 +282,15 @@ static ParseFunc funcs[] =
   { "device",                TT_XDEVICE,    NULL, NULL },
   { "session-info",          TT_XSESSIONINFO, NULL, NULL },
   { "unit-info",             TT_XUNITINFO,  NULL, NULL },
-  { "monitor-xresolution",   TT_FLOAT,      &monitor_xres, NULL },
-  { "monitor-yresolution",   TT_FLOAT,      &monitor_yres, NULL },
+  { "monitor-xresolution",   TT_DOUBLE,     &monitor_xres, NULL },
+  { "monitor-yresolution",   TT_DOUBLE,     &monitor_yres, NULL },
   { "num-processors",        TT_INT,        &num_processors, NULL },
   { "image-title-format",    TT_STRING,     &image_title_format, NULL },
   { "parasite",              TT_XPARASITE,  NULL, NULL },
   { "global-paint-options",   TT_BOOLEAN,    &global_paint_options, NULL },
   { "no-global-paint-options",TT_BOOLEAN,    NULL, &global_paint_options },
-  { "module-load-inhibit",   TT_PATH,       &module_db_load_inhibit, NULL }
+  { "module-load-inhibit",   TT_PATH,       &module_db_load_inhibit, NULL },
+  { "max-new-image-size",    TT_MEMSIZE,    &max_new_image_size, NULL }
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
@@ -2051,13 +2053,13 @@ parse_unit_info (gpointer val1p,
 
   GUnit  unit;
 
-  gchar *identifier   = NULL;
-  float  factor       = 1.0;
-  int    digits       = 2.0;
-  gchar *symbol       = NULL;
-  gchar *abbreviation = NULL;
-  gchar *singular     = NULL;
-  gchar *plural       = NULL;
+  gchar  *identifier   = NULL;
+  double  factor       = 1.0;
+  int     digits       = 2.0;
+  gchar  *symbol       = NULL;
+  gchar  *abbreviation = NULL;
+  gchar  *singular     = NULL;
+  gchar  *plural       = NULL;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))

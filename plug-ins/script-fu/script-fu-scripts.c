@@ -26,6 +26,7 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/gimpfileselection.h"
 #include "siod.h"
 #include "script-fu-scripts.h"
 
@@ -71,8 +72,7 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget *preview;
-  GtkWidget *dialog;
+  GtkWidget *fileselection;
   gchar     *filename;
 } SFFilename;
 
@@ -149,8 +149,6 @@ static void       script_fu_disable_cc       (gint    err_msg);
 static void       script_fu_interface        (SFScript *script);
 static void       script_fu_color_preview    (GtkWidget *preview,
 					      gdouble   *color);
-static void       script_fu_file_preview     (GtkWidget *preview,
-					      gchar    *fontname);
 static void       script_fu_font_preview     (GtkWidget *preview,
 					      gchar    *fontname);
 static void       script_fu_cleanup_widgets  (SFScript *script);
@@ -175,14 +173,7 @@ static void       script_fu_color_preview_cancel   (GtkWidget *widget,
 static gint       script_fu_color_preview_delete   (GtkWidget *widget,
 						    GdkEvent  *event,
 						    gpointer   data);
-static void       script_fu_file_preview_callback  (GtkWidget *widget,
-						    gpointer   data);
-static void       script_fu_file_dialog_ok         (GtkWidget *widget,
-						    gpointer   data);
-static void       script_fu_file_dialog_cancel     (GtkWidget *widget,
-						    gpointer   data);
-static gint       script_fu_file_dialog_delete     (GtkWidget *widget,
-						    GdkEvent  *event,
+static void       script_fu_file_selection_callback(GtkWidget *widget,
 						    gpointer   data);
 static void       script_fu_font_preview_callback  (GtkWidget *widget,
 						    gpointer   data);
@@ -601,13 +592,12 @@ script_fu_add_script (LISP a)
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: filename defaults must be string values", NIL);
 		  script->arg_defaults[i].sfa_file.filename = g_strdup (get_c_string (car (a)));
-		 script->arg_values[i].sfa_file.filename =  g_strdup (script->arg_defaults[i].sfa_file.filename);
-		 script->arg_values[i].sfa_file.preview = NULL;
-		 script->arg_values[i].sfa_file.dialog = NULL;
+		  script->arg_values[i].sfa_file.filename =  g_strdup (script->arg_defaults[i].sfa_file.filename);
+		  script->arg_values[i].sfa_file.fileselection = NULL;
 
-		 args[i + 1].type = PARAM_STRING;
-		 args[i + 1].name = "filename";
-		 args[i + 1].description = script->arg_labels[i];
+		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].name = "filename";
+		  args[i + 1].description = script->arg_labels[i];
 		 break;
 
 		case SF_FONT:
@@ -1239,18 +1229,15 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_FILENAME:
-	  script->args_widgets[i] = gtk_button_new();
-	  script->arg_values[i].sfa_file.preview = gtk_label_new ("");
-	  gtk_widget_set_usize (script->args_widgets[i], TEXT_WIDTH, 0);
-	  gtk_container_add (GTK_CONTAINER (script->args_widgets[i]),
-			     script->arg_values[i].sfa_file.preview);
-	  gtk_widget_show (script->arg_values[i].sfa_file.preview);
- 
-	  script_fu_file_preview (script->arg_values[i].sfa_file.preview,
-				  script->arg_values[i].sfa_file.filename);
+	  script->args_widgets[i] =
+	    gimp_file_selection_new ("Script-Fu File Selection",
+				     script->arg_values[i].sfa_file.filename,
+				     FALSE, TRUE);
+	  script->arg_values[i].sfa_file.fileselection = script->args_widgets[i];
 
-	  gtk_signal_connect (GTK_OBJECT (script->args_widgets[i]), "clicked",
-			      (GtkSignalFunc) script_fu_file_preview_callback,
+	  gtk_signal_connect (GTK_OBJECT (script->args_widgets[i]),
+			      "filename_changed",
+			      (GtkSignalFunc) script_fu_file_selection_callback,
 			      &script->arg_values[i].sfa_file);
 	  break;
 
@@ -1444,20 +1431,6 @@ script_fu_brush_preview(char * name, /* Name */
   brush->paint_mode = paint_mode;
 }
 
-
-
-static void
-script_fu_file_preview (GtkWidget *preview,
-			gchar     *data)
-{
-  if (data == NULL) 
-    return;
-
-  gtk_label_set_text (GTK_LABEL (preview), g_basename((gchar *) data));
-}
-
-
-
 static void
 script_fu_font_preview (GtkWidget *preview,
 			gchar     *data)
@@ -1518,11 +1491,6 @@ script_fu_cleanup_widgets (SFScript *script)
 	  }
 	break;
       case SF_FILENAME:
-	if (script->arg_values[i].sfa_file.dialog != NULL)
-	  {
-	    gtk_widget_destroy (script->arg_values[i].sfa_file.dialog);
-	    script->arg_values[i].sfa_file.dialog = NULL;
-	  }
 	break;
       case SF_FONT:
 	if (script->arg_values[i].sfa_font.dialog != NULL)
@@ -1926,12 +1894,7 @@ script_fu_reset_callback (GtkWidget *widget,
       case SF_FILENAME:
 	g_free (script->arg_values[i].sfa_file.filename);
 	script->arg_values[i].sfa_file.filename = g_strdup (script->arg_defaults[i].sfa_file.filename);
-	if (script->arg_values[i].sfa_file.dialog)
-	  {
-	    gtk_file_selection_set_filename (GTK_FILE_SELECTION (script->arg_values[i].sfa_file.dialog), script->arg_values[i].sfa_file.filename);
-	  }	
-	script_fu_file_preview (script->arg_values[i].sfa_file.preview,
-				script->arg_values[i].sfa_file.filename);
+	gimp_file_selection_set_filename (GIMP_FILE_SELECTION (script->arg_values[i].sfa_file.fileselection), script->arg_values[i].sfa_file.filename);
 	break;
       case SF_FONT:
 	g_free (script->arg_values[i].sfa_font.fontname);
@@ -2068,75 +2031,18 @@ script_fu_color_preview_delete (GtkWidget *widget,
 }
 
 static void
-script_fu_file_preview_callback (GtkWidget *widget,
-				 gpointer   data)
+script_fu_file_selection_callback (GtkWidget *widget,
+				   gpointer   data)
 {
-  GtkFileSelection *fs;
   SFFilename *file;
 
   file = (SFFilename *) data;
 
-  if (!file->dialog)
-    {
-      file->dialog = gtk_file_selection_new ("Script-Fu File Selection");
-      fs = GTK_FILE_SELECTION (file->dialog);
+  if (file->filename)
+    g_free (file->filename);
 
-      gtk_signal_connect (GTK_OBJECT (fs->ok_button), "clicked",
-			  (GtkSignalFunc) script_fu_file_dialog_ok,
-			  file);
-      gtk_signal_connect (GTK_OBJECT (fs), "delete_event",
-			  (GtkSignalFunc) script_fu_file_dialog_delete,
-			  file);
-      gtk_signal_connect (GTK_OBJECT (fs->cancel_button), "clicked",
-			  (GtkSignalFunc) script_fu_file_dialog_cancel,
-			  file);
-    }
-  else
-    fs = GTK_FILE_SELECTION (file->dialog);
-
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (fs), file->filename);
-  gtk_window_position (GTK_WINDOW (file->dialog), GTK_WIN_POS_MOUSE);
-  gtk_widget_show (file->dialog);
+  file->filename = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (file->fileselection));
 }
-
-static void
-script_fu_file_dialog_ok (GtkWidget *widget,
-			  gpointer data)
-{
-  SFFilename *file;
-  gchar  *filename;
-
-  file = (SFFilename *) data;
-
-  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file->dialog));
-  if (filename != NULL)
-    {
-      g_free (file->filename);
-      file->filename = g_strdup(filename);
-    }
-  gtk_widget_hide (file->dialog);
-
-  script_fu_file_preview (file->preview, file->filename);
-}
-
-static void
-script_fu_file_dialog_cancel (GtkWidget *widget,
-			      gpointer data)
-{
-  SFFilename *file;
-  file = (SFFilename *) data;
-
-  gtk_widget_hide (file->dialog);
-}
-
-static gint
-script_fu_file_dialog_delete (GtkWidget *widget,
-			      GdkEvent *event,
-			      gpointer data)
-{
-   script_fu_file_dialog_cancel (widget, data);
-   return TRUE;
- }
 
 static void
 script_fu_font_preview_callback (GtkWidget *widget,
@@ -2229,9 +2135,3 @@ script_fu_about_dialog_delete (GtkWidget *widget,
   script_fu_about_dialog_close (widget, data);
   return TRUE;
 }
-
-
-
-
-
-

@@ -60,20 +60,21 @@ extern int       confirm_on_close;
 extern int       default_width, default_height;
 extern int       default_type;
 extern GUnit     default_resolution_units;
-extern float     default_xresolution;
-extern float     default_yresolution;
+extern double    default_xresolution;
+extern double    default_yresolution;
 extern int       save_session_info;
 extern int       save_device_status;
 extern int       always_restore_session;
 extern int       show_tips;
 extern int       last_tip;
 extern int       show_tool_tips;
-extern float     monitor_xres;
-extern float     monitor_yres;
+extern double    monitor_xres;
+extern double    monitor_yres;
 extern int       using_xserver_resolution;
 extern int       num_processors;
 extern char *    image_title_format;
 extern int       global_paint_options;
+extern int       max_new_image_size;
 
 
 /*  function prototypes  */

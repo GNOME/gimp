@@ -93,7 +93,12 @@ libgimpui_la_SOURCES = \
 	gimpmenu.c		\
 	gimpbrushmenu.c		\
 	gimpgradientmenu.c 	\
-	gimppatternmenu.c
+	gimppatternmenu.c	\
+	gimpchainbutton.c	\
+	gimpfileselection.c	\
+	gimppatheditor.c	\
+	gimpsizeentry.c		\
+	gimpunitmenu.c
 
 gimpinclude_HEADERS = \
 	color_selector.h	\

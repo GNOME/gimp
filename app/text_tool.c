@@ -204,7 +204,7 @@ text_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 0);
   gtk_widget_show (sep);
 
-  /*  antialias toggle  */
+  /*  the dynamic text toggle  */
   options->use_dyntext_w =
     gtk_check_button_new_with_label (_("Use Dynamic Text"));
   gtk_signal_connect (GTK_OBJECT (options->use_dyntext_w), "toggled",
@@ -267,6 +267,7 @@ void
 tools_free_text (Tool *tool)
 {
   g_free (tool->private);
+  the_text_tool = NULL;
 
   if (text_tool_shell && GTK_WIDGET_VISIBLE (text_tool_shell))
     gtk_widget_hide (text_tool_shell);
@@ -396,7 +397,6 @@ text_control (Tool     *tool,
     case HALT :
       if (text_tool_shell && GTK_WIDGET_VISIBLE (text_tool_shell))
 	gtk_widget_hide (text_tool_shell);
-      the_text_tool = NULL;
       break;
     }
 }
@@ -880,8 +880,8 @@ text_field_edges(char  *fontname,
  * *fontname is replaced by a fresh allocation of the correct size.
  */
 static void
-text_size_multiply(char **fontname,
-		   int    mul)
+text_size_multiply (char **fontname,
+		    int    mul)
 {
   char *pixel_str;
   char *point_str;

@@ -102,6 +102,7 @@ resize_widget_new (ResizeType    type,
   GtkWidget *table;
   GtkWidget *table2;
   GtkWidget *hbox;
+  GtkWidget *hbox2;
   GtkWidget *label;
   GtkWidget *frame;
   GtkWidget *spinbutton;
@@ -459,9 +460,12 @@ resize_widget_new (ResizeType    type,
       gtk_widget_show (table);
 
       /*  frame to hold drawing area  */
+      hbox2 = gtk_hbox_new (0, FALSE);
+      gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
+
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-      gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox2), frame, TRUE, FALSE, 0);
       private->drawing_area = gtk_drawing_area_new ();
       gtk_drawing_area_size (GTK_DRAWING_AREA (private->drawing_area),
 			     private->area_width, private->area_height);
@@ -474,6 +478,7 @@ resize_widget_new (ResizeType    type,
       gtk_widget_show (private->drawing_area);
       gtk_widget_show (frame);
 
+      gtk_widget_show (hbox2);
       gtk_widget_show (vbox2);
       gtk_widget_show (hbox);
     }

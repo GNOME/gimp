@@ -183,7 +183,7 @@ gimp_size_entry_new (gint             number_of_fields,
   GimpSizeEntry *gse;
   gint           i;
 
-  g_return_val_if_fail ((number_of_fields > 0) && (number_of_fields <= 16),
+  g_return_val_if_fail ((number_of_fields >= 0) && (number_of_fields <= 16),
 			NULL);
 
   gse = gtk_type_new (gimp_size_entry_get_type ());

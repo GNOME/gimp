@@ -83,6 +83,9 @@ gimp_file_selection_class_destroy (GtkObject *object)
   if (gfs->file_selection)
     gtk_widget_destroy (gfs->file_selection);
 
+  if (gfs->title)
+    g_free (gfs->title);
+
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
@@ -118,14 +121,17 @@ gimp_file_selection_init (GimpFileSelection *gfs)
   gfs->file_exists = FALSE;
   gfs->check_valid = FALSE;
 
+  gtk_box_set_spacing (GTK_BOX (gfs), 2);
+  gtk_box_set_homogeneous (GTK_BOX (gfs), FALSE);
+
   gfs->browse_button = gtk_button_new_with_label (" ... ");
-  gtk_box_pack_end (GTK_BOX (gfs), gfs->browse_button, FALSE, TRUE, 0);
+  gtk_box_pack_end (GTK_BOX (gfs), gfs->browse_button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT(gfs->browse_button), "clicked",
 		      GTK_SIGNAL_FUNC(gimp_file_selection_browse_callback), gfs);
   gtk_widget_show (gfs->browse_button);
 
   gfs->entry = gtk_entry_new ();
-  gtk_box_pack_end (GTK_BOX (gfs), gfs->entry, TRUE, TRUE, 2);
+  gtk_box_pack_end (GTK_BOX (gfs), gfs->entry, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT(gfs->entry), "activate",
 		      (GtkSignalFunc) gimp_file_selection_entry_callback, gfs);
   gtk_signal_connect (GTK_OBJECT(gfs->entry), "focus_out_event",
@@ -177,7 +183,7 @@ gimp_file_selection_new (gchar    *title,
   gfs->title = g_strdup (title);
   gfs->dir_only = dir_only;
   gfs->check_valid = check_valid;
-  gtk_entry_set_text (GTK_ENTRY (gfs->entry), filename);
+  gimp_file_selection_set_filename (gfs, filename);
 
   return GTK_WIDGET (gfs);
 }
@@ -273,6 +279,8 @@ gimp_file_selection_entry_callback (GtkWidget *widget,
   g_free (filename);
 
   gimp_file_selection_check_filename (gfs);
+
+  gtk_entry_set_position (GTK_ENTRY (gfs->entry), -1);
 
   gtk_signal_emit (GTK_OBJECT (gfs),
 		   gimp_file_selection_signals[GFS_FILENAME_CHANGED_SIGNAL]);

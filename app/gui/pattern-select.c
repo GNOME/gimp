@@ -196,7 +196,10 @@ pattern_select_new (gchar *title,
   /*  The action area  */
   action_items[0].user_data = psp;
   action_items[1].user_data = psp;
-  build_action_area (GTK_DIALOG (psp->shell), action_items, 2, 1);
+  if (title)
+    build_action_area (GTK_DIALOG (psp->shell), &action_items[1], 1, 0);
+  else
+    build_action_area (GTK_DIALOG (psp->shell), action_items, 2, 1);
 
   gtk_widget_show (psp->options_box);
   gtk_widget_show (vbox);

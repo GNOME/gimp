@@ -1,3 +1,45 @@
+1999-05-18  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/app_procs.c (and many of the files below): store resolution
+	values as doubles, not floats.
+
+	* app/brush_select.c
+	* app/pattern_select.c: hide the "refresh" button in client
+	dialogs. Don't know if this is desired but it fixes a SEGV.
+
+	* app/file_new_dialog.c: New ui using code/ideas from Austin,
+	Marco and Nick. The "size" frame is still a bit bloated but I
+	didn't want to reduce it's functionality right now. It's closer to
+	the result of the last discussion but not perfect yet...
+	Added a dialog to confirm image sizes larger than the new
+	max_new_image_size value.
+	The new "reset" button uses the values from gimprc.
+	Removed some #include's, added the copyright header.
+
+	* app/gimprc.[ch]: new rc variable max_new_image_size.
+
+	* app/preferences_dialog.c: added the "max image size"
+	option. Generalized the mem size unit code.
+
+	* app/resize.c: an additional box lets the offset widget always
+	shrink correctly.
+
+	* app/text_tool.c: fixed a minor memory leak.
+
+	* libgimp/Makefile.am: add all widgets to libgimpui.*
+
+	* libgimp/gimpfileselection.c: cosmetic changes.
+
+	* libgimp/gimplimits.h: a maximum image size which should satisfy
+	everybody ;)
+
+	* libgimp/gimpsizeentry.c: allow the creation of sizeentries
+	without fields. This (finally) enables arbitrary layout of the
+	spinbuttons.
+
+	* plug-ins/script-fu/script-fu-scripts.c: use the fileselection
+	widget for script parameter SF_FILENAME.
+
 Tue May 18 01:14:55 BST 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/app_procs.c: run cleanup code on shutdown in many more
@@ -19,7 +61,7 @@ Tue May 18 01:14:55 BST 1999  Austin Donnelly  <austin@gimp.org>
 Mon May 17 14:25:11 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/mail/mail.c (save_image): Add OS/2 patches. popen(),spawnl,,
-	
+
 1999-05-17  Jay Cox  <jaycox@earthlink.net>
 
 	* app/xcf.c: fixed bogus computation of the maximum size
@@ -59,7 +101,7 @@ Sun May 16 17:16:59 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/about_dialog.c: Removed unnecessarly #include of
 	interface.h.
-	
+
 	* app/crop.c (crop_image): Fixed a potential linked list race
 	condition (i.e. accessing freed memory) when cropping deletes a
 	layer.  May fix a bug reported by Sven.
@@ -70,7 +112,7 @@ Sat May 15 14:11:46 MEST 1999 Sven Neumann <sven@gimp.org>
 	* app/paint_core.c: handle the clone tool differently (works as
 	usual without the line preview) until I figure out something 
 	nicer.
-	
+
 Sat May 15 03:15:49 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/paint_core.c: Works even better if the cursor position is

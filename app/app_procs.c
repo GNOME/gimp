@@ -499,7 +499,11 @@ app_init (void)
   /* make sure the monitor resolution is valid */
   if (monitor_xres < 1e-5 || monitor_yres < 1e-5)
     {
-      gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
+      gfloat xres, yres;
+
+      gdisplay_xserver_resolution (&xres, &yres);
+      monitor_xres = xres;
+      monitor_yres = yres;
       using_xserver_resolution = TRUE;
     }
 
