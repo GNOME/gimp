@@ -48,7 +48,7 @@
     (gimp-selection-feather img border)
     (gimp-edit-fill img shadow-layer)
     (gimp-selection-none img)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-palette-set-background bg-color)
     (gimp-edit-fill img bg-layer)
     (gimp-palette-set-background '(0 0 0))
     (gimp-edit-fill img text-layer)
