@@ -38,6 +38,13 @@
 
 #include "base-types.h"
 
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+#ifndef _O_TEMPORARY
+#define _O_TEMPORARY 0
+#endif
+
 #include "tile.h"
 #include "tile-private.h"
 #include "tile-swap.h"
