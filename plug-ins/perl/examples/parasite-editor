@@ -240,7 +240,7 @@ sub create_main {
          $attach_func = sub { shift->parasite_attach (shift) };
          $detach_func = sub { shift->parasite_detach (shift) };
          &$set_submenu(map [$_,$_->image->get_filename." / "
-                               .($_->layer ? $_->layer_get_name : $_->channel_get_name)],
+                               .($_->is_layer ? $_->layer_get_name : $_->channel_get_name)],
                            map (($_->get_layers,$_->get_channels),Gimp->image_list));
       });
       $menu->append($item);

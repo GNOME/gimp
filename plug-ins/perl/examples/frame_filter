@@ -13,7 +13,7 @@ register	"layer_apply",
 		"*",
 		[
                  [PF_TEXT,	"expr",	"the perl expression to run for each layer",
-                                '$d->gauss_rle($P*100,1,1)'],
+                                '$d->gauss_rle($P*100+1,1,1)'],
                  [PF_DRAWABLE,	"drawable2", "an optional extra drawable for use by the code"],
 		],
                 [],

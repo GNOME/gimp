@@ -76,7 +76,9 @@ register "guide_grid",
     ##
     #$img->selection_all();
     #$img->selection_none();
-    
+
+    $layer->update(0, 0, $img->height, $img->width);
+
     return();
   };
 exit main;

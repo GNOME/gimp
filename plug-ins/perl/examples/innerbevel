@@ -7,7 +7,7 @@
 # working btw).  You can follow step by step with the website at 
 # http://tigert.gimp.org/gimp/tutorials/beveled_text/
 
-use Gimp;
+use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 use Gimp::Util;
 

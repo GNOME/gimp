@@ -53,7 +53,7 @@ EOF
       my($image,$drawable)=(shift,shift);
       $drawable->has_alpha or die "It makes no sense to call $menupath with a drawable lacking alpha!\n";
       $i=0;
-      while($i<@_) {
+      while($i<=@_) {
          if($i==$ti) {
             splice @_,$i,0,"-- Text --";
          } elsif ($i==$fsi) {

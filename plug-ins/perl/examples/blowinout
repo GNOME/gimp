@@ -3,7 +3,7 @@
 # Blow In/Out
 # John Pitney
 
-use Gimp 1.06;
+use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 
 # print "hello there\n";
@@ -44,11 +44,11 @@ sub blowinout {
         $i * $distance / $nsteps * sin($angle * 3.14159 / 180) :
         $distance ** ($i/$nsteps) * sin($angle * 3.14159 / 180);
     gimp_edit_clear($dmlayer);
-    plug_in_noisify(1, $dm, $dmlayer, 0, 255, 255, 255, 0);
+    plug_in_noisify($dm, $dmlayer, 0, 255, 255, 255, 0);
     gimp_levels($dmlayer, 0, 0, 255, 1.0, 128, 255);
     $drawable = gimp_layer_copy($drawable, 0);
     gimp_image_add_layer($img, $drawable, -1);
-    plug_in_displace(1, $img, $drawable, $xdist, $ydist, 1, 1, $dmlayer,
+    plug_in_displace($img, $drawable, $xdist, $ydist, 1, 1, $dmlayer,
         $dmlayer, 1);
     if ( $inmode == 1 )
     {
@@ -62,11 +62,11 @@ sub blowinout {
             $i * $distance / $nsteps * sin($angle * 3.14159 / 180) :
             $distance ** ($i/$nsteps) * sin($angle * 3.14159 / 180);
         gimp_edit_clear($dmlayer);
-        plug_in_noisify(1, $dm, $dmlayer, 0, 255, 255, 255, 0);
+        plug_in_noisify($dm, $dmlayer, 0, 255, 255, 255, 0);
         gimp_levels($dmlayer, 0, 0, 255, 1.0, 128, 255);
         $drawable = gimp_layer_copy($drawable, 0);
         gimp_image_add_layer($img, $drawable, -1);
-        plug_in_displace(1, $img, $drawable, $xdist, $ydist, 1, 1, $dmlayer,
+        plug_in_displace($img, $drawable, $xdist, $ydist, 1, 1, $dmlayer,
             $dmlayer, 1);
         if ( $inmode == 1 )
         {

@@ -995,9 +995,13 @@ convert_sv2gimp (char *croak_str, GParam *arg, SV *sv)
 	        AV *av = (AV *)SvRV(sv);
 	        if (av_len(av) == 2)
 	          {
+                    STRLEN size;
+
 	            arg->data.d_parasite.name  = SvPv(*av_fetch(av, 0, 0));
 	            arg->data.d_parasite.flags = SvIV(*av_fetch(av, 1, 0));
-	            arg->data.d_parasite.data  = SvPV(*av_fetch(av, 2, 0), arg->data.d_parasite.size);
+	            arg->data.d_parasite.data  = SvPV(*av_fetch(av, 2, 0), size);
+
+                    arg->data.d_parasite.size = size;
 	          }
 	        else
 	          sprintf (croak_str, __("illegal parasite specification, expected three array members"));
@@ -1962,7 +1966,7 @@ gimp_pixel_rgn_get_row2(pr, x, y, width)
 	int	width
 	CODE:
         RETVAL = newSVn (width * pr->bpp);
-	gimp_pixel_rgn_get_row (pr, SvPV_nolen(RETVAL), x, y, width);
+	gimp_pixel_rgn_get_row (pr, (guchar *)SvPV_nolen(RETVAL), x, y, width);
 	OUTPUT:
 	RETVAL
 
@@ -1975,7 +1979,7 @@ gimp_pixel_rgn_get_rect2(pr, x, y, width, height)
 	int	height
 	CODE:
         RETVAL = newSVn (width * height * pr->bpp);
-	gimp_pixel_rgn_get_rect (pr, SvPV_nolen(RETVAL), x, y, width, height);
+	gimp_pixel_rgn_get_rect (pr, (guchar *)SvPV_nolen(RETVAL), x, y, width, height);
 	OUTPUT:
 	RETVAL
 
@@ -1988,7 +1992,7 @@ gimp_pixel_rgn_set_rect2(pr, data, x, y, w=pr->w)
         int	w
 	CODE:
 {
-        STRLEN dlen; char *dta = SvPV (data, dlen);
+        STRLEN dlen; guchar *dta = (guchar *)SvPV (data, dlen);
 	gimp_pixel_rgn_set_rect (pr, dta, x, y, w, dlen / (w*pr->bpp));
 }
 
@@ -2113,8 +2117,8 @@ gimp_pixel_rgn_data(pr,newdata=0)
 	CODE:
         if (newdata)
 	  {
-            char *src;
-            char *dst;
+            guchar *src;
+            guchar *dst;
             int y, stride;
 
             old_pdl (&newdata, 2, pr->bpp);
@@ -2223,11 +2227,11 @@ gimp_patterns_get_pattern_data(name)
 		  {
 		    EXTEND (SP, 5);
 		    
-		    PUSHs (sv_2mortal (newSVpv (return_vals[1].data.d_string, 0)));
-		    PUSHs (sv_2mortal (newSViv (return_vals[2].data.d_int32)));
-		    PUSHs (sv_2mortal (newSViv (return_vals[3].data.d_int32)));
-		    PUSHs (sv_2mortal (newSViv (return_vals[4].data.d_int32)));
-		    PUSHs (sv_2mortal (newSVpvn(return_vals[6].data.d_int8array, return_vals[5].data.d_int32)));
+		    PUSHs (sv_2mortal (newSVpv (        return_vals[1].data.d_string, 0)));
+		    PUSHs (sv_2mortal (newSViv (        return_vals[2].data.d_int32)));
+		    PUSHs (sv_2mortal (newSViv (        return_vals[3].data.d_int32)));
+		    PUSHs (sv_2mortal (newSViv (        return_vals[4].data.d_int32)));
+		    PUSHs (sv_2mortal (newSVpvn((char *)return_vals[6].data.d_int8array, return_vals[5].data.d_int32)));
 		  }
 		
 		gimp_destroy_params (return_vals, nreturn_vals);

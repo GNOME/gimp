@@ -3,7 +3,7 @@
 # sent to me by Seth Burgess <sjburges@gimp.org>
 # small changes my Marc Lehmann <pcg@goof.com>
 
-use Gimp;
+use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 
 #Gimp::set_trace(TRACE_CALL);
@@ -21,11 +21,11 @@ sub windify {
 	gimp_image_add_layer($out,$windlayer,0);
 	my $windlayercopy = gimp_layer_copy($windlayer, 1);
 	gimp_image_add_layer($out,$windlayercopy,0);
-	plug_in_noisify(1,$out,$windlayercopy,0,$density/255,
+	plug_in_noisify($out,$windlayercopy,0,$density/255,
                                                 $density/255,
                                                 $density/255,1);
 
-	plug_in_mblur(1,$out,$windlayercopy,0,15,$angle);
+	plug_in_mblur($out,$windlayercopy,0,15,$angle);
 	gimp_layer_set_mode($windlayercopy, 10); # Lighten Only
 	gimp_image_merge_visible_layers($out,0);
 
@@ -33,7 +33,7 @@ sub windify {
 # gimp_image_merge_visible_layers bug
 
 	my $newlay = gimp_image_get_active_layer ($out);
-	plug_in_displace(1,$img,$drawable,-$distance*cos($angle*180/3.14159),
+	plug_in_displace($img,$drawable,-$distance*cos($angle*180/3.14159),
                                           $distance*sin($angle*180/3.14159),
 					  1,1, $newlay,$newlay, $wrap);
 	gimp_image_remove_layer($out,$newlay);

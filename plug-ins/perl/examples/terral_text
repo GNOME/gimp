@@ -26,7 +26,7 @@
 #[terral] input levels of 0, .24, 113                                    [22:11]
 #[terral] --end of script                                                [22:12]
 
-use Gimp 1.06;
+use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 use Gimp::Util;
 

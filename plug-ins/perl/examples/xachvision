@@ -41,7 +41,8 @@ register "xachvision",
 	$midlayer->plug_in_noisify(1,$amt, $amt, $amt, $amt);
 	$midmask = $midlayer->create_mask(0);
 	$img->add_layer_mask($midlayer,	$midmask);
-	$midmask->plug_in_grid($img->height * 3, 3, 0, 0);
+	$midmask->plug_in_grid(1,$img->height * 3,0,[0,0,0],255, 1,3,0,[0,0,0],255,
+	                       0,0,0,[0,0,0],255 );
 	$midmask->plug_in_gauss_iir(1.01, 1, 1);
 
 	gimp_palette_set_background($oldbackground);

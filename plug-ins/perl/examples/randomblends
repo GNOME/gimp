@@ -3,7 +3,7 @@
 # This is adrian's idea - take random blends and difference them.  You're
 # bound to come up w/ something cool eventually.
 
-use Gimp;
+use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 use Gimp::Util;
 
