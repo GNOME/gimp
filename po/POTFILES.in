@@ -105,6 +105,7 @@ app/gui/file-open-menu.c
 app/gui/file-save-dialog.c
 app/gui/file-save-menu.c
 app/gui/font-select.c
+app/gui/fonts-menu.c
 app/gui/gradient-editor-commands.c
 app/gui/gradient-editor-menu.c
 app/gui/gradient-select.c
@@ -253,25 +254,27 @@ app/vectors/gimpvectors.c
 app/vectors/gimpvectors-export.c
 app/vectors/gimpvectors-import.c
 
-app/widgets/widgets-enums.c
 app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
 app/widgets/gimpbufferview.c
 app/widgets/gimpchanneltreeview.c
 app/widgets/gimpcoloreditor.c
+app/widgets/gimpcolorframe.c
 app/widgets/gimpcolormapeditor.c
 app/widgets/gimpcontainergridview.c
 app/widgets/gimpcontainerpopup.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdatafactoryview.c
 app/widgets/gimpdevicestatus.c
-app/widgets/gimpdock.c
-app/widgets/gimpdocumentview.c
 app/widgets/gimpdnd.c
+app/widgets/gimpdock.c
+app/widgets/gimpdockable.c
+app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawabletreeview.c
 app/widgets/gimperrorconsole.c
-app/widgets/gimpfontselection.c
 app/widgets/gimpfontselection-dialog.c
+app/widgets/gimpfontselection.c
+app/widgets/gimpfontview.c
 app/widgets/gimpgradienteditor.c
 app/widgets/gimpgrideditor.c
 app/widgets/gimphelp.c
@@ -295,6 +298,7 @@ app/widgets/gimpundoeditor.c
 app/widgets/gimpvectorstreeview.c
 app/widgets/gimpwidgets-constructors.c
 app/widgets/gimpwidgets-utils.c
+app/widgets/widgets-enums.c
 
 app/xcf/xcf-load.c
 app/xcf/xcf-read.c

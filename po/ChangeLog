@@ -1,10 +1,14 @@
+2003-10-19  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added new files.
+
 2003-10-18  Danilo Šegan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
 
 2003-10-17  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-10-17  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
 

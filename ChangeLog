@@ -1,3 +1,16 @@
+2003-10-18  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdockbook.c: removed the "Select Tab" menu and
+	all the evil hacks that were needed to make it work. Now that we
+	have an extra dockable menu, the standard menu from GTK+ is good
+	enough.
+
+	* app/widgets/gimpdockable.c: added a tooltip to the close button
+	and removed code that used to hide the "Select Tab" menu.
+
+	* app/gui/dialogs-menu.c (dialogs_menu_entries): removed now unused
+	"Select Tab" entry.
+
 2003-10-18  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/despeckle.c

@@ -78,14 +78,6 @@ static void      gimp_dockbook_dockable_removed (GimpDockbook   *dockbook,
 static void      gimp_dockbook_update_tabs      (GimpDockbook   *dockbook,
                                                  gboolean        added);
 
-static void      gimp_dockbook_menu_switch_page (GtkWidget      *widget,
-                                                 GimpDockable   *dockable);
-static void      gimp_dockbook_menu_end         (GimpDockbook   *dockbook);
-static void      gimp_dockbook_menu_detacher    (GtkWidget      *widget,
-                                                 GtkMenu        *menu);
-static gboolean  gimp_dockbook_tab_button_press (GtkWidget      *widget,
-                                                 GdkEventButton *bevent,
-                                                 gpointer        data);
 static void      gimp_dockbook_tab_drag_begin   (GtkWidget      *widget,
                                                  GdkDragContext *context,
                                                  gpointer        data);
@@ -375,54 +367,6 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 				     position);
     }
 
-  /*  Now this is evil: GtkNotebook's menu_item "activate" callback
-   *  gets it's notebook context from gtk_menu_get_attach_widget()
-   *  which badly fails because we hijacked the menu and attached it
-   *  to our own item_factory menu. As a workaround, we disconnect
-   *  gtk's handler and install our own. --Mitch
-   */
-  {
-    GtkWidget *menu_item;
-    GList     *widget_list, *free_list;
-    GList     *page_list;
-
-    menu_item = menu_widget->parent;
-
-    free_list = gtk_container_get_children (GTK_CONTAINER (dockbook));
-
-    /*  EEK: we rely a 1:1 and left-to-right mapping of
-     *  gtk_container_get_children() and notebook->children
-     */
-    for (widget_list = free_list,
-	   page_list = GTK_NOTEBOOK (dockbook)->children;
-	 widget_list && page_list;
-	 widget_list = g_list_next (widget_list),
-	   page_list = g_list_next (page_list))
-      {
-	GtkNotebookPage *page;
-
-	page = (GtkNotebookPage *) page_list->data;
-
-	if ((GtkWidget *) widget_list->data == (GtkWidget *) dockable)
-	  {
-	    /*  disconnect GtkNotebook's handler  */
-	    g_signal_handlers_disconnect_matched (menu_item,
-						  G_SIGNAL_MATCH_DATA,
-						  0, 0,
-						  NULL, NULL, page);
-
-	    /*  and install our own  */
-	    g_signal_connect (menu_item, "activate",
-			      G_CALLBACK (gimp_dockbook_menu_switch_page),
-			      dockable);
-
-	    break;
-	  }
-      }
-
-    g_list_free (free_list);
-  }
-
   gtk_widget_show (GTK_WIDGET (dockable));
 
   dockable->dockbook = dockbook;
@@ -526,10 +470,6 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
 		    G_CALLBACK (gimp_dockbook_tab_drag_drop),
 		    dockbook);
 
-  g_signal_connect (tab_widget, "button_press_event",
-		    G_CALLBACK (gimp_dockbook_tab_button_press),
-		    dockable);
-
   return tab_widget;
 }
 
@@ -569,116 +509,6 @@ gimp_dockbook_drop_dockable (GimpDockbook *dockbook,
     }
 
   return FALSE;
-}
-
-static void
-gimp_dockbook_menu_switch_page (GtkWidget    *widget,
-				GimpDockable *dockable)
-{
-  gint page_num = gtk_notebook_page_num (GTK_NOTEBOOK (dockable->dockbook),
-                                         GTK_WIDGET (dockable));
-
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (dockable->dockbook), page_num);
-}
-
-static void
-gimp_dockbook_menu_end (GimpDockbook *dockbook)
-{
-  GtkWidget *notebook_menu;
-
-  notebook_menu = GTK_NOTEBOOK (dockbook)->menu;
-
-  g_object_ref (notebook_menu);
-
-  gtk_menu_detach (GTK_MENU (notebook_menu));
-
-  gtk_menu_attach_to_widget (GTK_MENU (notebook_menu),
-			     GTK_WIDGET (dockbook),
-			     gimp_dockbook_menu_detacher);
-
-  g_object_unref (notebook_menu);
-
-  /*  release gimp_dockbook_tab_button_press()'s reference  */
-  g_object_unref (dockbook);
-}
-
-static void
-gimp_dockbook_menu_detacher (GtkWidget *widget,
-			     GtkMenu   *menu)
-{
-  GtkNotebook *notebook;
-
-  g_return_if_fail (GTK_IS_NOTEBOOK (widget));
-
-  notebook = GTK_NOTEBOOK (widget);
-
-  g_return_if_fail (notebook->menu == (GtkWidget*) menu);
-
-  notebook->menu = NULL;
-}
-
-static gboolean
-gimp_dockbook_tab_button_press (GtkWidget      *widget,
-				GdkEventButton *bevent,
-				gpointer        data)
-{
-  GimpDockable *dockable;
-  GimpDockbook *dockbook;
-  gint          page_num;
-
-  dockable = GIMP_DOCKABLE (data);
-  dockbook = dockable->dockbook;
-
-  page_num = gtk_notebook_page_num (GTK_NOTEBOOK (dockbook),
-				    GTK_WIDGET (dockable));
-
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook), page_num);
-
-  if (! GTK_WIDGET_HAS_FOCUS (dockbook))
-    gtk_widget_grab_focus (GTK_WIDGET (dockbook));
-
-  if (bevent->button == 3)
-    {
-      GtkWidget *add_widget;
-
-      gimp_item_factory_set_visible (GTK_ITEM_FACTORY (dockbook->item_factory),
-                                     "/dialog-menu", FALSE);
-      gimp_item_factory_set_visible (GTK_ITEM_FACTORY (dockbook->item_factory),
-                                     "/Select Tab", TRUE);
-
-      add_widget =
-        gtk_item_factory_get_widget (GTK_ITEM_FACTORY (dockbook->item_factory),
-                                     "/Select Tab");
-
-      /*  do evil things  */
-      {
-        GtkWidget *notebook_menu;
-
-        notebook_menu = GTK_NOTEBOOK (dockbook)->menu;
-
-        g_object_ref (notebook_menu);
-
-        gtk_menu_detach (GTK_MENU (notebook_menu));
-
-        GTK_NOTEBOOK (dockbook)->menu = notebook_menu;
-
-        gtk_menu_item_set_submenu (GTK_MENU_ITEM (add_widget), notebook_menu);
-
-        g_object_unref (notebook_menu);
-      }
-
-      /*  an item factory callback may destroy the dockbook, so reference
-       *  if for gimp_dockbook_menu_end()
-       */
-      g_object_ref (dockbook);
-
-      gimp_item_factory_popup_with_data (dockbook->item_factory,
-                                         dockbook,
-                                         NULL, NULL,
-                                         (GtkDestroyNotify) gimp_dockbook_menu_end);
-    }
-
-  return TRUE;
 }
 
 static void

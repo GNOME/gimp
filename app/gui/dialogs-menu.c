@@ -63,9 +63,6 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
       "<StockItem>", GTK_STOCK_MISSING_IMAGE },
     NULL, NULL, NULL },
 
-  { { N_("/_Select Tab"), NULL, NULL, 0 },
-    NULL, NULL, NULL },
-
   MENU_BRANCH (N_("/_Add Tab")),
 
   ADD_TAB (N_("/Add Tab/Tool _Options"),     "gimp-tool-options",

@@ -38,6 +38,8 @@
 #include "gimpitemfactory.h"
 #include "gimpwidgets-utils.h"
 
+#include "gimp-intl.h"
+
 
 static void       gimp_dockable_class_init        (GimpDockableClass *klass);
 static void       gimp_dockable_init              (GimpDockable      *dockable);
@@ -195,6 +197,8 @@ gimp_dockable_init (GimpDockable *dockable)
   gtk_widget_set_parent (dockable->close_button, GTK_WIDGET (dockable));
   gtk_button_set_relief (GTK_BUTTON (dockable->close_button), GTK_RELIEF_NONE);
   gtk_widget_show (dockable->close_button);
+
+  gimp_help_set_help_data (dockable->close_button, _("Close this Tab"), NULL);
 
   image = gtk_image_new_from_stock (GIMP_STOCK_CLOSE, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (dockable->close_button), image);
@@ -887,9 +891,6 @@ gimp_dockable_show_menu (GimpDockable *dockable)
       gimp_item_factory_set_visible (GTK_ITEM_FACTORY (dockbook_item_factory),
                                      "/dialog-menu", FALSE);
     }
-
-  gimp_item_factory_set_visible (GTK_ITEM_FACTORY (dockbook_item_factory),
-                                 "/Select Tab", FALSE);
 
   /*  an item factory callback may destroy both dockable and dockbook,
    *  so reference them for gimp_dockable_menu_end()
