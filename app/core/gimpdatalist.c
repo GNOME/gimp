@@ -21,32 +21,26 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <glib-object.h>
-
-#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
 #include "gimpdata.h"
 #include "gimpdatalist.h"
 
-#include "gimp-intl.h"
 
+static void   gimp_data_list_class_init        (GimpDataListClass *klass);
+static void   gimp_data_list_init              (GimpDataList      *list);
 
-static void   gimp_data_list_class_init         (GimpDataListClass *klass);
-static void   gimp_data_list_init               (GimpDataList      *list);
-static void   gimp_data_list_add                (GimpContainer     *container,
-						 GimpObject        *object);
-static void   gimp_data_list_remove             (GimpContainer     *container,
-						 GimpObject        *object);
+static void   gimp_data_list_add               (GimpContainer     *container,
+                                                GimpObject        *object);
+static void   gimp_data_list_remove            (GimpContainer     *container,
+                                                GimpObject        *object);
 
-static void   gimp_data_list_object_renamed_callback (GimpObject   *object,
-						      GimpDataList *data_list);
-static gint   gimp_data_list_data_compare_func  (gconstpointer      first,
-						 gconstpointer      second);
+static void   gimp_data_list_object_renamed    (GimpObject        *object,
+                                                GimpDataList      *data_list);
+static gint   gimp_data_list_data_compare_func (gconstpointer      first,
+                                                gconstpointer      second);
 
 
 static GimpListClass *parent_class = NULL;
@@ -62,19 +56,19 @@ gimp_data_list_get_type (void)
       static const GTypeInfo list_info =
       {
         sizeof (GimpDataListClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_data_list_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpDataList),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_data_list_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_data_list_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpDataList),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_data_list_init,
       };
 
       list_type = g_type_register_static (GIMP_TYPE_LIST,
-					  "GimpDataList", 
-					  &list_info, 0);
+                                          "GimpDataList",
+                                          &list_info, 0);
     }
 
   return list_type;
@@ -83,9 +77,7 @@ gimp_data_list_get_type (void)
 static void
 gimp_data_list_class_init (GimpDataListClass *klass)
 {
-  GimpContainerClass *container_class;
-
-  container_class = GIMP_CONTAINER_CLASS (klass);
+  GimpContainerClass *container_class = GIMP_CONTAINER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -102,30 +94,26 @@ static void
 gimp_data_list_add (GimpContainer *container,
 		    GimpObject    *object)
 {
-  GimpList *list;
-
-  list = GIMP_LIST (container);
+  GimpList *list = GIMP_LIST (container);
 
   gimp_list_uniquefy_name (GIMP_LIST (container), object, TRUE);
 
+  g_signal_connect (object, "name_changed",
+		    G_CALLBACK (gimp_data_list_object_renamed),
+		    container);
+
   list->list = g_list_insert_sorted (list->list, object,
 				     gimp_data_list_data_compare_func);
-
-  g_signal_connect (object, "name_changed",
-		    G_CALLBACK (gimp_data_list_object_renamed_callback),
-		    container);
 }
 
 static void
 gimp_data_list_remove (GimpContainer *container,
 		       GimpObject    *object)
 {
-  GimpList *list;
-
-  list = GIMP_LIST (container);
+  GimpList *list = GIMP_LIST (container);
 
   g_signal_handlers_disconnect_by_func (object,
-					gimp_data_list_object_renamed_callback,
+					gimp_data_list_object_renamed,
 					container);
 
   list->list = g_list_remove (list->list, object);
@@ -147,24 +135,22 @@ gimp_data_list_new (GType children_type)
 }
 
 static void
-gimp_data_list_object_renamed_callback (GimpObject   *object,
-					GimpDataList *data_list)
+gimp_data_list_object_renamed (GimpObject   *object,
+                               GimpDataList *data_list)
 {
-  GimpList *gimp_list;
+  GimpList *gimp_list = GIMP_LIST (data_list);
   GList    *list;
   gint      old_index;
   gint      new_index = 0;
 
-  gimp_list = GIMP_LIST (data_list);
-
   g_signal_handlers_block_by_func (object,
-                                   gimp_data_list_object_renamed_callback,
+                                   gimp_data_list_object_renamed,
                                    data_list);
 
   gimp_list_uniquefy_name (gimp_list, object, TRUE);
 
   g_signal_handlers_unblock_by_func (object,
-                                     gimp_data_list_object_renamed_callback,
+                                     gimp_data_list_object_renamed,
                                      data_list);
 
   old_index = g_list_index (gimp_list->list, object);
