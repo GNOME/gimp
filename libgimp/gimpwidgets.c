@@ -543,6 +543,10 @@ gimp_scale_entry_new (GtkTable *table,
       gimp_help_set_help_data (spinbutton, tooltip, private_tip);
     }
 
+  gtk_object_set_data (GTK_OBJECT (return_adj), "label", label);
+  gtk_object_set_data (GTK_OBJECT (return_adj), "scale", scale);
+  gtk_object_set_data (GTK_OBJECT (return_adj), "spinbutton", spinbutton);
+
   return return_adj;
 }
 

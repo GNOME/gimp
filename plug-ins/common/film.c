@@ -179,7 +179,7 @@ static gdouble advanced_defaults[] =
   0.052,           /* Hole width */
   0.081,           /* Hole height */
   0.081,           /* Hole distance */
-  0.052           /* Image number height */
+  0.052            /* Image number height */
 };
 
 static FilmVals filmvals =
@@ -453,8 +453,9 @@ film (void)
   printf ("Number of pictures = %d\n", num_pictures);
 #endif
 
-  image_ID_dst = create_new_image (_("Untitled"), (guint)film_width,
-				   (guint)film_height, RGB_IMAGE, &layer_ID_dst,
+  image_ID_dst = create_new_image (_("Untitled"),
+				   (guint) film_width, (guint) film_height,
+				   RGB_IMAGE, &layer_ID_dst,
 				   &drawable_dst, &pixel_rgn_dst);
 
   dst = g_new (guchar, film_width * tile_height * 3);
@@ -511,7 +512,7 @@ film (void)
     {
       width = gimp_image_width (image_ID_src[j]);
       height = gimp_image_height (image_ID_src[j]);
-      f = ((double)picture_height) / (double)height;
+      f = ((gdouble) picture_height) / (gdouble) height;
       picture_width = width * f;
 
       layers = gimp_image_get_layers (image_ID_src[j], &num_layers);
@@ -1382,6 +1383,12 @@ film_dialog (gint32 image_ID)
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.picture_height);
 
+  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
+  gtk_spin_button_configure
+    (GTK_SPIN_BUTTON (spinbutton),
+     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
+     0.01, 3);
+
   filmint.advanced_adj[1] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			  _("Image Spacing:"), 1.0, 0.5,
@@ -1392,6 +1399,12 @@ film_dialog (gint32 image_ID)
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.picture_space);
+
+  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
+  gtk_spin_button_configure
+    (GTK_SPIN_BUTTON (spinbutton),
+     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
+     0.01, 3);
 
   sep = gtk_hseparator_new ();
   gtk_table_attach (GTK_TABLE (table), sep, 0, 3, row, row + 1,
@@ -1411,6 +1424,12 @@ film_dialog (gint32 image_ID)
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.hole_offset);
 
+  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
+  gtk_spin_button_configure
+    (GTK_SPIN_BUTTON (spinbutton),
+     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
+     0.01, 3);
+
   filmint.advanced_adj[3] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			  _("Hole Width:"), 1.0, 0.5,
@@ -1421,6 +1440,12 @@ film_dialog (gint32 image_ID)
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.hole_width);
+
+  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
+  gtk_spin_button_configure
+    (GTK_SPIN_BUTTON (spinbutton),
+     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
+     0.01, 3);
 
   filmint.advanced_adj[4] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -1433,6 +1458,12 @@ film_dialog (gint32 image_ID)
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.hole_height);
 
+  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
+  gtk_spin_button_configure
+    (GTK_SPIN_BUTTON (spinbutton),
+     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
+     0.01, 3);
+
   filmint.advanced_adj[5] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			  _("Hole Spacing:"), 1.0, 0.5,
@@ -1443,6 +1474,12 @@ film_dialog (gint32 image_ID)
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.hole_space);
+
+  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
+  gtk_spin_button_configure
+    (GTK_SPIN_BUTTON (spinbutton),
+     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
+     0.01, 3);
 
   sep = gtk_hseparator_new ();
   gtk_table_attach (GTK_TABLE (table), sep, 0, 3, row, row + 1,
@@ -1461,6 +1498,12 @@ film_dialog (gint32 image_ID)
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &filmvals.number_height);
+
+  spinbutton = gtk_object_get_data (GTK_OBJECT (adj), "spinbutton");
+  gtk_spin_button_configure
+    (GTK_SPIN_BUTTON (spinbutton),
+     gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton)),
+     0.01, 3);
 
   sep = gtk_hseparator_new ();
   gtk_table_attach (GTK_TABLE (table), sep, 0, 3, row, row + 1,

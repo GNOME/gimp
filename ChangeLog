@@ -1,3 +1,15 @@
+2000-02-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/preferences_dialog.c: purely cosmetic.
+
+	* libgimp/gimpdialog.c: purely fanatic.
+
+	* libgimp/gimpwidgets.c: attach label, scale and spinbutton to the
+	adjustment returned by gimp_scale_entry_new().
+
+	* plug-ins/common/film.c: set reasonable climb_rate's for the
+	advanced options's spinbuttons.
+
 Mon Feb 14 12:22:06 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/channel_ops.c: nothing yet

@@ -202,7 +202,7 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
   g_return_if_fail (GTK_IS_DIALOG (dialog));
 
   /*  prepare the action_area  */
-  label = va_arg (args, gchar*);
+  label = va_arg (args, gchar *);
 
   if (label)
     {
@@ -230,7 +230,7 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
       gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
 
       if (slot_object == (GtkObject *) 1)
-	slot_object = (GtkObject *) dialog;
+	slot_object = GTK_OBJECT (dialog);
 
       if (data == NULL)
 	data = dialog;
@@ -261,7 +261,7 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
 
 	  /*  catch the WM delete event  */
 	  gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
-			      (GdkEventFunc) gimp_dialog_delete_callback,
+			      GTK_SIGNAL_FUNC (gimp_dialog_delete_callback),
 			      data);
 
 	  delete_connected = TRUE;
@@ -271,6 +271,6 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
 	gtk_widget_grab_default (button);
       gtk_widget_show (button);
 
-      label = va_arg (args, gchar*);
+      label = va_arg (args, gchar *);
     }
 }
