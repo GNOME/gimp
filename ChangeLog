@@ -1,3 +1,7 @@
+1999-09-09  Tomas Ogren  <stric@ing.umu.se>
+
+	* app/Makefile.am: Add the path_tool* here, makes gimp compile
+
 Thu Sep  9 21:02:46 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/airbrush.c

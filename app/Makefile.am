@@ -321,6 +321,9 @@ gimp_SOURCES = \
 	parasitelist.h		\
 	parasitelistF.h		\
 	parasitelistP.h		\
+	path_tool.c		\
+	path_tool.h		\
+	path_toolP.h		\
 	paths_cmds.c		\
 	paths_dialog.c		\
 	paths_dialog.h		\
