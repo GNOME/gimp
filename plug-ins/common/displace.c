@@ -260,7 +260,7 @@ run (gchar  *name,
       /*  set the tile cache size  */
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-      /*  run the pinch effect  */
+      /*  run the displace effect  */
       displace (drawable);
 
       if (run_mode != RUN_NONINTERACTIVE)
@@ -374,6 +374,8 @@ displace_dialog (GDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) displace_entry_callback,
 		      &dvals.amount_x);
+  
+  gtk_widget_set_sensitive (dint.amount_x, dvals.do_x);
   gtk_widget_show (entry);
 
   dint.amount_y = entry = gtk_entry_new ();
@@ -384,6 +386,7 @@ displace_dialog (GDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) displace_entry_callback,
 		      &dvals.amount_y);
+  gtk_widget_set_sensitive (dint.amount_y, dvals.do_y);
   gtk_widget_show (entry);
 
   /*  menu_x, menu_y  */
@@ -393,6 +396,7 @@ displace_dialog (GDrawable *drawable)
   menu = gimp_drawable_menu_new (displace_map_constrain, displace_map_x_callback,
 				 drawable, dvals.displace_map_x);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+  gtk_widget_set_sensitive (dint.menu_x, dvals.do_x);
   gtk_widget_show (option_menu);
 
   dint.menu_y = option_menu = gtk_option_menu_new ();
@@ -401,6 +405,7 @@ displace_dialog (GDrawable *drawable)
   menu = gimp_drawable_menu_new (displace_map_constrain, displace_map_y_callback,
 				 drawable, dvals.displace_map_y);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+  gtk_widget_set_sensitive (dint.menu_y, dvals.do_y);
   gtk_widget_show (option_menu);
 
   /*  Displacement Type  */
