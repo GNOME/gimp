@@ -45,6 +45,21 @@ GimpPreviewArea
 @image_type: 
 
 
+<!-- ##### FUNCTION gimp_preview_area_fill ##### -->
+<para>
+
+</para>
+
+@area: 
+@x: 
+@y: 
+@width: 
+@height: 
+@red: 
+@green: 
+@blue: 
+
+
 <!-- ##### FUNCTION gimp_preview_area_set_cmap ##### -->
 <para>
 

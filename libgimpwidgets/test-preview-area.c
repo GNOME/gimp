@@ -118,6 +118,30 @@ test_run (GtkWidget *area,
 	       num_iters * (WIDTH * HEIGHT * 1e-6) / total_time);
     }
 
+  start_time = g_timer_elapsed (timer, NULL);
+
+  for (i = 0; i < num_iters; i++)
+    {
+      guchar  r = rand () % 0xFF;
+      guchar  g = rand () % 0xFF;
+      guchar  b = rand () % 0xFF;
+
+      gimp_preview_area_fill (GIMP_PREVIEW_AREA (area),
+                              0, 0, WIDTH, HEIGHT,
+                              r, g, b);
+
+      gdk_window_process_updates (area->window, FALSE);
+    }
+
+  gdk_flush ();
+  total_time = g_timer_elapsed (timer, NULL) - start_time;
+  g_print ("%-16s "
+           "time elapsed: %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
+           "Color fill",
+           total_time,
+           num_iters / total_time,
+           num_iters * (WIDTH * HEIGHT * 1e-6) / total_time);
+
   g_free (buf);
 }
 

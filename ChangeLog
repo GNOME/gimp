@@ -1,3 +1,12 @@
+2004-07-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreviewarea.[ch]: added new function
+	gimp_preview_area_fill().
+
+	* libgimpwidgets/test-preview-area.c: added a test for new function.
+
+	* libgimp/gimpbrushmenu.c: ported to GimpPreviewArea.
+
 2004-07-31  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/depthmerge.c: use a GimpPreviewArea instead of a

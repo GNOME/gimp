@@ -65,6 +65,15 @@ void        gimp_preview_area_draw     (GimpPreviewArea *area,
                                         const guchar    *buf,
                                         gint             rowstride);
 
+void        gimp_preview_area_fill     (GimpPreviewArea *area,
+                                        gint             x,
+                                        gint             y,
+                                        gint             width,
+                                        gint             height,
+                                        guchar           red,
+                                        guchar           green,
+                                        guchar           blue);
+
 void        gimp_preview_area_set_cmap (GimpPreviewArea *area,
                                         const guchar    *cmap,
                                         gint             num_colors);

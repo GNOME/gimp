@@ -775,6 +775,7 @@ GIMP_PICK_BUTTON_GET_CLASS
 GimpPreviewArea
 gimp_preview_area_new
 gimp_preview_area_draw
+gimp_preview_area_fill
 gimp_preview_area_set_cmap
 <SUBSECTION Standard>
 GimpPreviewAreaClass

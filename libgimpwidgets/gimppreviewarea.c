@@ -159,7 +159,7 @@ gimp_preview_area_expose (GtkWidget      *widget,
 
   area = GIMP_PREVIEW_AREA (widget);
 
-  if (! area->buf || ! GTK_WIDGET_DRAWABLE (widget))
+  if (! area->buf)
     return FALSE;
 
   buf = area->buf + event->area.x * 3 + event->area.y * area->rowstride;
@@ -200,9 +200,9 @@ gimp_preview_area_new (void)
  * @y:         y offset in preview
  * @width:     buffer width
  * @height:    buffer height
- * @type:      the #GimpImageType of the pixels to draw
+ * @type:      the #GimpImageType of @buf
  * @buf:       a #guchar buffer that contains the preview pixel data.
- * @rowstride: rowstride of buffer
+ * @rowstride: rowstride of @buf
  *
  * Draws @buf on @area and queues a redraw on the rectangle that
  * changed.
@@ -265,12 +265,6 @@ gimp_preview_area_draw (GimpPreviewArea *area,
       x = 0;
     }
 
-  if (! area->buf)
-    {
-      area->rowstride = ((area->width * 3) + 3) & ~3;
-      area->buf = g_new (guchar, area->rowstride * area->height);
-    }
-
   if (x + width > area->width)
     width = area->width - x;
 
@@ -283,6 +277,12 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
   if (y + height > area->height)
     height = area->height - y;
+
+  if (! area->buf)
+    {
+      area->rowstride = ((area->width * 3) + 3) & ~3;
+      area->buf = g_new (guchar, area->rowstride * area->height);
+    }
 
   src  = buf;
   dest = area->buf + x * 3 + y * area->rowstride;
@@ -453,6 +453,88 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
   gtk_widget_queue_draw_area (GTK_WIDGET (area), x, y, width, height);
 }
+
+/**
+ * gimp_preview_area_fill:
+ * @area:   a #GimpPreviewArea widget.
+ * @x:      x offset in preview
+ * @y:      y offset in preview
+ * @width:  buffer width
+ * @height: buffer height
+ * @red:
+ * @green:
+ * @blue:
+ *
+ * Fills the @area in the given color.
+ *
+ * Since GIMP 2.2
+ **/
+void
+gimp_preview_area_fill (GimpPreviewArea *area,
+                        gint             x,
+                        gint             y,
+                        gint             width,
+                        gint             height,
+                        guchar           red,
+                        guchar           green,
+                        guchar           blue)
+{
+  guchar *dest;
+  gint    row;
+  gint    col;
+
+  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  g_return_if_fail (width > 0 && height > 0);
+
+  if (x + width < 0 || x >= area->width)
+    return;
+
+  if (y + height < 0 || y >= area->height)
+    return;
+
+  if (x < 0)
+    {
+      width -= x;
+      x = 0;
+    }
+
+  if (x + width > area->width)
+    width = area->width - x;
+
+  if (y < 0)
+    {
+      height -= y;
+      y = 0;
+    }
+
+  if (y + height > area->height)
+    height = area->height - y;
+
+  if (! area->buf)
+    {
+      area->rowstride = ((area->width * 3) + 3) & ~3;
+      area->buf = g_new (guchar, area->rowstride * area->height);
+    }
+
+  dest = area->buf + x * 3 + y * area->rowstride;
+
+  for (row = 0; row < height; row++)
+    {
+      guchar *d = dest;
+
+      for (col = 0; col < width; col++, d+= 3)
+        {
+          d[0] = red;
+          d[1] = green;
+          d[2] = blue;
+        }
+
+      dest += area->rowstride;
+    }
+
+  gtk_widget_queue_draw_area (GTK_WIDGET (area), x, y, width, height);
+}
+
 
 /**
  * gimp_preview_area_set_cmap:

@@ -24,11 +24,6 @@
 
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include "gimp.h"
 #include "gimpui.h"
 
@@ -86,6 +81,7 @@ static void     gimp_brush_select_preview_update  (GtkWidget    *preview,
                                                    gint          brush_width,
                                                    gint          brush_height,
                                                    const guchar *mask_data);
+static void     gimp_brush_select_preview_resize  (BrushSelect  *brush_sel);
 static void     gimp_brush_select_popup_open      (BrushSelect  *brush_sel,
                                                    gint          x,
                                                    gint          y);
@@ -144,16 +140,19 @@ gimp_brush_select_widget_new (const gchar          *title,
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  brush_sel->preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+  brush_sel->preview = gimp_preview_area_new ();
   gtk_widget_set_events (brush_sel->preview,
                          GDK_EXPOSURE_MASK       |
                          GDK_BUTTON_PRESS_MASK   |
                          GDK_BUTTON_RELEASE_MASK |
                          GDK_BUTTON1_MOTION_MASK);
-  gtk_preview_size (GTK_PREVIEW (brush_sel->preview), CELL_SIZE, CELL_SIZE);
+  gtk_widget_set_size_request (brush_sel->preview, CELL_SIZE, CELL_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), brush_sel->preview);
   gtk_widget_show (brush_sel->preview);
 
+  g_signal_connect_swapped (brush_sel->preview, "size_allocate",
+                            G_CALLBACK (gimp_brush_select_preview_resize),
+                            brush_sel);
   g_signal_connect (brush_sel->preview, "event",
                     G_CALLBACK (gimp_brush_select_preview_events),
                     brush_sel);
@@ -184,11 +183,6 @@ gimp_brush_select_widget_new (const gchar          *title,
       brush_sel->opacity    = (opacity == -1.0)  ? init_opacity    : opacity;
       brush_sel->spacing    = (spacing == -1)    ? init_spacing    : spacing;
       brush_sel->paint_mode = (paint_mode == -1) ? init_paint_mode : paint_mode;
-
-      gimp_brush_select_preview_update (brush_sel->preview,
-                                        brush_sel->width,
-                                        brush_sel->height,
-                                        brush_sel->mask_data);
     }
 
   g_object_set_data (G_OBJECT (hbox), BRUSH_SELECT_DATA_KEY, brush_sel);
@@ -365,6 +359,18 @@ gimp_brush_select_widget_destroy (GtkWidget   *widget,
 }
 
 
+static void
+gimp_brush_select_preview_resize (BrushSelect *brush_sel)
+{
+  if (brush_sel->width > 0 && brush_sel->height > 0)
+    gimp_brush_select_preview_update (brush_sel->preview,
+                                      brush_sel->width,
+                                      brush_sel->height,
+                                      brush_sel->mask_data);
+
+}
+
+
 static gboolean
 gimp_brush_select_preview_events (GtkWidget   *widget,
                                   GdkEvent    *event,
@@ -405,58 +411,64 @@ gimp_brush_select_preview_events (GtkWidget   *widget,
 }
 
 static void
+gimp_brush_select_preview_draw (GimpPreviewArea *area,
+                                gint             x,
+                                gint             y,
+                                gint             width,
+                                gint             height,
+                                const guchar    *mask_data)
+{
+  const guchar *src;
+  guchar       *dest;
+  guchar       *buf;
+  guint         pixels = width * height;
+
+  buf = g_new (guchar, pixels);
+
+  src  = mask_data;
+  dest = buf;
+
+  while (pixels--)
+    {
+      *dest = 255 - *src;
+
+      src++;
+      dest++;
+    }
+
+  gimp_preview_area_draw (area,
+                          x, y, width, height,
+                          GIMP_GRAY_IMAGE,
+                          buf,
+                          width);
+
+  g_free (buf);
+}
+
+static void
 gimp_brush_select_preview_update (GtkWidget    *preview,
                                   gint          brush_width,
                                   gint          brush_height,
                                   const guchar *mask_data)
 {
-  guchar       *buf;
-  guchar       *b;
-  const guchar *src;
-  const guchar *s;
-  gint          i, y;
-  gint          offset_x, offset_y;
-  gint          ystart, yend;
-  gint          width, height;
+  GimpPreviewArea *area = GIMP_PREVIEW_AREA (preview);
+  gint             x, y;
+  gint             width, height;
 
-  /*  Draw the brush  */
-  buf = g_new (guchar, CELL_SIZE);
+  width  = MIN (brush_width,  preview->allocation.width);
+  height = MIN (brush_height, preview->allocation.height);
 
-  /* Set buffer to white */
-  memset (buf, 255, CELL_SIZE);
-  for (i = 0; i < CELL_SIZE; i++)
-    gtk_preview_draw_row (GTK_PREVIEW (preview),
-			  buf, 0, i, CELL_SIZE);
+  x = ((preview->allocation.width  - width)  / 2);
+  y = ((preview->allocation.height - height) / 2);
 
- /* Limit to cell size */
-  width  = (brush_width  > CELL_SIZE) ? CELL_SIZE: brush_width;
-  height = (brush_height > CELL_SIZE) ? CELL_SIZE: brush_height;
+  if (x || y)
+    gimp_preview_area_fill (area,
+                            0, 0,
+                            preview->allocation.width,
+                            preview->allocation.height,
+                            0xFF, 0xFF, 0xFF);
 
-  offset_x = ((CELL_SIZE - width)  / 2);
-  offset_y = ((CELL_SIZE - height) / 2);
-
-  ystart = CLAMP (offset_y, 0, CELL_SIZE);
-  yend   = CLAMP (offset_y + height, 0, CELL_SIZE);
-
-  src = mask_data;
-
-  for (y = ystart; y < yend; y++)
-    {
-      gint j;
-
-      s = src;
-      b = buf;
-      for (j = 0; j < width ; j++)
-	*b++ = 255 - *s++;
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview),
-			    buf, offset_x, y, width);
-      src += brush_width;
-    }
-
-  g_free (buf);
-
-  gtk_widget_queue_draw (preview);
+  gimp_brush_select_preview_draw (area, x, y, width, height, mask_data);
 }
 
 static void
@@ -466,13 +478,9 @@ gimp_brush_select_popup_open (BrushSelect  *brush_sel,
 {
   GtkWidget    *frame;
   GtkWidget    *preview;
-  const guchar *src;
-  const guchar *s;
-  guchar       *buf;
-  guchar       *b;
+  GdkScreen    *screen;
   gint          x_org;
   gint          y_org;
-  GdkScreen    *screen;
   gint          scr_w;
   gint          scr_h;
 
@@ -489,9 +497,8 @@ gimp_brush_select_popup_open (BrushSelect  *brush_sel,
   gtk_container_add (GTK_CONTAINER (brush_sel->popup), frame);
   gtk_widget_show (frame);
 
-  preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-  gtk_preview_size (GTK_PREVIEW (preview),
-                    brush_sel->width, brush_sel->height);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, brush_sel->width, brush_sel->height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
@@ -499,6 +506,7 @@ gimp_brush_select_popup_open (BrushSelect  *brush_sel,
   gdk_window_get_origin (brush_sel->preview->window, &x_org, &y_org);
 
   screen = gtk_widget_get_screen (brush_sel->popup);
+
   scr_w = gdk_screen_get_width (screen);
   scr_h = gdk_screen_get_height (screen);
 
@@ -511,30 +519,12 @@ gimp_brush_select_popup_open (BrushSelect  *brush_sel,
 
   gtk_window_move (GTK_WINDOW (brush_sel->popup), x, y);
 
-  /*  Draw the brush  */
-  buf = g_new (guchar, brush_sel->width);
-  memset (buf, 255, brush_sel->width);
-
-  src = brush_sel->mask_data;
-
-  for (y = 0; y < brush_sel->height; y++)
-    {
-      int j;
-
-      s = src;
-      b = buf;
-
-      for (j = 0; j < brush_sel->width ; j++)
-	*b++ = 255 - *s++;
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
-			    0, y, brush_sel->width);
-      src += brush_sel->width;
-    }
-
-  g_free (buf);
-
   gtk_widget_show (brush_sel->popup);
+
+  /*  Draw the brush  */
+  gimp_brush_select_preview_draw (GIMP_PREVIEW_AREA (preview),
+                                  0, 0, brush_sel->width, brush_sel->height,
+                                  brush_sel->mask_data);
 }
 
 static void
