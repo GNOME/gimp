@@ -46,6 +46,10 @@ tile_manager_new (gint toplevel_width,
   gint         width;
   gint         height;
 
+  g_return_val_if_fail (toplevel_width > 0, NULL);
+  g_return_val_if_fail (toplevel_height > 0, NULL);
+  g_return_val_if_fail (bpp  > 0, NULL);
+
   tm = g_new0 (TileManager, 1);
 
   width  = toplevel_width;
