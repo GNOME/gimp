@@ -33,8 +33,7 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -1084,8 +1083,9 @@ enum
 
 typedef struct
 {
-  gint direction;
-  gint depth;
+  gint     direction;
+  gint     depth;
+  gboolean update_preview;
 } StrucValues;
 
 
@@ -1097,8 +1097,9 @@ static void      run   (const gchar      *name,
                         gint             *nreturn_vals,
                         GimpParam       **return_vals);
 
-static gboolean  struc_dialog (void);
-static void      strucpi      (GimpDrawable *drawable);
+static gboolean  struc_dialog (GimpDrawable        *drawable);
+static void      strucpi      (GimpDrawable        *drawable,
+                               GimpDrawablePreview *preview);
 
 
 /* --- Variables --- */
@@ -1114,7 +1115,8 @@ GimpPlugInInfo PLUG_IN_INFO =
 static StrucValues svals =
 {
   0,     /* direction */
-  4      /* depth     */
+  4,     /* depth     */
+  TRUE
 };
 
 
@@ -1135,16 +1137,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_apply_canvas",
-			  "Adds a canvas texture map to the picture",
-			  "This function applies a canvas texture map to the drawable.",
-			  "Karl-Johan Andersson", /* Author */
-			  "Karl-Johan Andersson", /* Copyright */
-			  "1997",
-			  N_("_Apply Canvas..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Adds a canvas texture map to the picture",
+                          "This function applies a canvas texture map to the drawable.",
+                          "Karl-Johan Andersson", /* Author */
+                          "Karl-Johan Andersson", /* Copyright */
+                          "1997",
+                          N_("_Apply Canvas..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_apply_canvas",
                              N_("<Image>/Filters/Artistic"));
@@ -1182,29 +1184,29 @@ run (const gchar      *name,
       gimp_get_data ("plug_in_struc", &svals);
 
       /*  First acquire information with a dialog  */
-      if (! struc_dialog ())
-	{
-	  gimp_drawable_detach (drawable);
-	  return;
-	}
+      if (! struc_dialog (drawable))
+        {
+          gimp_drawable_detach (drawable);
+          return;
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  svals.direction = (gint) param[3].data.d_int32;
-	  svals.depth     = (gint) param[4].data.d_int32;
+        {
+          svals.direction = (gint) param[3].data.d_int32;
+          svals.depth     = (gint) param[4].data.d_int32;
 
-	  if (svals.direction < 0 || svals.direction > 4)
-	    status = GIMP_PDB_CALLING_ERROR;
-	  if (svals.depth < 1 || svals.depth > 50)
-	    status = GIMP_PDB_CALLING_ERROR;
-	}
+          if (svals.direction < 0 || svals.direction > 4)
+            status = GIMP_PDB_CALLING_ERROR;
+          if (svals.depth < 1 || svals.depth > 50)
+            status = GIMP_PDB_CALLING_ERROR;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -1220,24 +1222,24 @@ run (const gchar      *name,
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-	  gimp_drawable_is_gray (drawable->drawable_id))
-	{
-	  gimp_progress_init (_("Applying Canvas..."));
-	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+          gimp_drawable_is_gray (drawable->drawable_id))
+        {
+          gimp_progress_init (_("Applying Canvas..."));
+          gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
-	  strucpi (drawable);
+          strucpi (drawable, NULL);
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
-	  /*  Store data  */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data ("plug_in_struc", &svals, sizeof (StrucValues));
-	}
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
+          /*  Store data  */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data ("plug_in_struc", &svals, sizeof (StrucValues));
+        }
       else
-	{
-	  /* gimp_message ("struc: cannot operate on indexed color images"); */
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          /* gimp_message ("struc: cannot operate on indexed color images"); */
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   values[0].data.d_status = status;
@@ -1246,12 +1248,15 @@ run (const gchar      *name,
 }
 
 static gboolean
-struc_dialog (void)
+struc_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *preview;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkWidget *radio1, *radio2, *radio3, *radio4;
   GtkObject *adj;
   gboolean   run;
 
@@ -1259,7 +1264,7 @@ struc_dialog (void)
 
   dlg = gimp_dialog_new (_("Apply Canvas"), "struc",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-apply-canvas",
+                         gimp_standard_help_func, "plug-in-apply-canvas",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1271,16 +1276,34 @@ struc_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  preview = gimp_drawable_preview_new (drawable, &svals.update_preview);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (strucpi), drawable);
+
   frame = gimp_int_radio_group_new (TRUE, _("Direction"),
                                     G_CALLBACK (gimp_radio_button_update),
                                     &svals.direction, svals.direction,
 
-                                    _("_Top-right"),    TOP_RIGHT,    NULL,
-                                    _("Top-_left"),     TOP_LEFT,     NULL,
-                                    _("_Bottom-left"),  BOTTOM_LEFT,  NULL,
-                                    _("Bottom-_right"), BOTTOM_RIGHT, NULL,
+                                    _("_Top-right"),    TOP_RIGHT,    &radio1,
+                                    _("Top-_left"),     TOP_LEFT,     &radio2,
+                                    _("_Bottom-left"),  BOTTOM_LEFT,  &radio3,
+                                    _("Bottom-_right"), BOTTOM_RIGHT, &radio4,
 
                                     NULL);
+  g_signal_connect_swapped (radio1, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate), preview);
+  g_signal_connect_swapped (radio2, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate), preview);
+  g_signal_connect_swapped (radio3, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate), preview);
+  g_signal_connect_swapped (radio4, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate), preview);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -1291,13 +1314,15 @@ struc_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Depth:"), 100, 0,
-			      svals.depth, 1, 50, 1, 5, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Depth:"), 100, 0,
+                              svals.depth, 1, 50, 1, 5, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &svals.depth);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate), preview);
 
   gtk_widget_show (dlg);
 
@@ -1310,64 +1335,90 @@ struc_dialog (void)
 
 /* Filter function */
 static void
-strucpi (GimpDrawable *drawable)
+strucpi (GimpDrawable        *drawable,
+         GimpDrawablePreview *preview)
 {
-  GimpPixelRgn srcPR, destPR;
-  gint width, height;
-  gint bytes;
-  guchar *dest, *d;
-  guchar *cur_row;
-  gint row, col, rrow, rcol;
-  gint x1, y1, x2, y2, varde;
-  gint xm, ym, offs;
-  gfloat mult;
+  GimpPixelRgn  srcPR, destPR;
+  gint          width, height;
+  gint          bytes;
+  guchar       *dest, *d;
+  guchar       *cur_row;
+  gint          row, col, rrow, rcol;
+  gint          x1, y1, x2, y2, varde;
+  gint          xm, ym, offs;
+  gfloat        mult;
+  guchar       *preview_buffer = NULL;
 
-  /* Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
-   */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (preview)
+    {
+      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
 
-  /* Get the size of the input image. (This will/must be the same
-   *  as the size of the output image.
-   */
-  width = drawable->width;
-  height = drawable->height;
+      x2 = x1 + width;
+      y2 = y1 + height;
+    }
+  else
+    {
+      /* Get the input area. This is the bounding box of the selection in
+       *  the image (or the entire image if there is no selection). Only
+       *  operating on the input area is simply an optimization. It doesn't
+       *  need to be done for correct operation. (It simply makes it go
+       *  faster, since fewer pixels need to be operated on).
+       */
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+
+      /* Get the size of the input image. (This will/must be the same
+       *  as the size of the output image.
+       */
+      width = x2 - x1;
+      height = y2 - y1;
+    }
   bytes = drawable->bpp;
 
   /*  allocate row buffers  */
-  cur_row  = g_new (guchar, (x2 - x1) * bytes);
-  dest     = g_new (guchar, (x2 - x1) * bytes);
+  cur_row  = g_new (guchar, width * bytes);
+  dest     = g_new (guchar, width * bytes);
 
   /*  initialize the pixel regions  */
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
+
+  if (preview)
+    {
+      preview_buffer = g_new (guchar, width * height * bytes);
+    }
+  else
+    {
+      gimp_pixel_rgn_init (&destPR, drawable, x1, y1, width, height, TRUE, TRUE);
+    }
 
   mult = (gfloat) svals.depth * 0.25;
-  switch(svals.direction)
+
+  switch (svals.direction)
     {
     case 0:
       xm = 1;
       ym = 128;
       offs = 0;
       break;
+
     case 1:
       xm = -1;
       ym = 128;
       offs = 127;
       break;
+
     case 2:
       xm = 128;
       ym = 1;
       offs = 0;
       break;
+
     case 3:
       xm = 128;
       ym = -1;
       offs = 128;
       break;
+
     default:
       xm = 1;
       ym = 128;
@@ -1379,54 +1430,78 @@ strucpi (GimpDrawable *drawable)
   rrow = 0; rcol = 0;
   for (row = y1; row < y2; row++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, row, (x2-x1));
+      gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, row, width);
       d = dest;
       rcol = 0;
+
       switch (bytes)
-	{
-	case 1:  /* Grayscale */
-	case 2:  /* Grayscale alpha */
-	  for (col = 0; col < (x2 - x1) * bytes; col+=bytes)
-	    {
-	      varde = cur_row[col] + mult*sdata[rcol*xm+rrow*ym+offs];
-	      *d++ = (guchar) CLAMP0255 (varde);
-	      if (bytes == 2)
-		*d++ = cur_row[col+1];
-	      rcol++;
-	      if (rcol == 128) rcol = 0;
-	    }
-	  break;
-	case 3:  /* RGB */
-	case 4:  /* RGB alpha */
-	  for (col = 0; col < (x2 - x1) * bytes; col+=bytes)
-	    {
-	      varde = cur_row[col] + mult * sdata[rcol*xm+rrow*ym+offs];
-	      *d++ = (guchar) CLAMP0255 (varde);
-	      varde = cur_row[col+1] + mult * sdata[rcol*xm+rrow*ym+offs];
-	      *d++ = (guchar) CLAMP0255 (varde);
-	      varde = cur_row[col+2] + mult * sdata[rcol*xm+rrow*ym+offs];
-	      *d++ = (guchar) CLAMP0255 (varde);
-	      if (bytes == 4)
-		*d++ = cur_row[col+3];
-	      rcol++;
-	      if (rcol == 128) rcol = 0;
-	    }
-	  break;
-	}
+        {
+        case 1:  /* Grayscale */
+        case 2:  /* Grayscale alpha */
+          for (col = 0; col < width * bytes; col+=bytes)
+            {
+              varde = cur_row[col] + mult * sdata[rcol * xm + rrow * ym + offs];
+
+              *d++ = (guchar) CLAMP0255 (varde);
+              if (bytes == 2)
+                *d++ = cur_row[col + 1];
+              rcol++;
+              if (rcol == 128) rcol = 0;
+            }
+          break;
+        case 3:  /* RGB */
+        case 4:  /* RGB alpha */
+          for (col = 0; col < width * bytes; col+=bytes)
+            {
+              varde = cur_row[col + 0] +
+                        mult * sdata[rcol * xm + rrow * ym + offs];
+              *d++ = (guchar) CLAMP0255 (varde);
+              varde = cur_row[col + 1] +
+                        mult * sdata[rcol * xm + rrow * ym + offs];
+              *d++ = (guchar) CLAMP0255 (varde);
+              varde = cur_row[col + 2] +
+                        mult * sdata[rcol * xm + rrow * ym + offs];
+              *d++ = (guchar) CLAMP0255 (varde);
+              if (bytes == 4)
+                *d++ = cur_row[col + 3];
+              rcol++;
+              if (rcol == 128)
+                rcol = 0;
+            }
+          break;
+        }
+
       /*  store the dest  */
-      gimp_pixel_rgn_set_row (&destPR, dest, x1, row, (x2 - x1));
+      if (preview)
+        {
+          memcpy (preview_buffer + (row - y1) * width * bytes,
+                  dest,
+                  width * bytes);
+        }
+      else
+        {
+          gimp_pixel_rgn_set_row (&destPR, dest, x1, row, width);
+          if ((row % 5) == 0)
+            gimp_progress_update ((gdouble) row / (gdouble) height);
+        }
 
       rrow++;
-      if (rrow == 128) rrow = 0;
-
-      if ((row % 5) == 0)
-	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
+      if (rrow == 128)
+        rrow = 0;
     }
 
-  /*  update the textured region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  if (preview)
+    {
+       gimp_drawable_preview_draw (preview, preview_buffer);
+       g_free (preview_buffer);
+    }
+  else
+    {
+      /*  update the textured region  */
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+    }
 
   g_free (cur_row);
   g_free (dest);
