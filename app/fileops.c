@@ -71,6 +71,8 @@ static gint file_overwrite_delete_callback  (GtkWidget *w,
 static GimpImage* file_open_image   (char *filename,
 				     char *raw_filename);
 
+static void file_open_clistrow_callback (GtkWidget *w,
+				         int        client_data);
 static void file_open_ok_callback   (GtkWidget *w,
 				     gpointer   client_data);
 static void file_save_ok_callback   (GtkWidget *w,
@@ -112,6 +114,10 @@ static GtkWidget *fileload = NULL;
 static GtkWidget *filesave = NULL;
 static GtkWidget *open_options = NULL;
 static GtkWidget *save_options = NULL;
+/* widgets for the open_options menu */
+static GtkPreview *open_options_preview = NULL;
+static GtkWidget  *open_options_fixed = NULL;
+static GtkWidget  *open_options_label = NULL;
 
 /* Load by extension.
  */
@@ -484,6 +490,7 @@ file_open_callback (GtkWidget *w,
 		    gpointer   client_data)
 {
   GtkWidget *hbox;
+  GtkWidget *vbox;
   GtkWidget *label;
   GtkWidget *option_menu;
   GtkWidget *load_menu;
@@ -508,6 +515,9 @@ file_open_callback (GtkWidget *w,
       gtk_clist_set_selection_mode (GTK_CLIST
 				    (GTK_FILE_SELECTION (fileload)->file_list),
 				    GTK_SELECTION_EXTENDED);
+
+      /* Catch file-clist clicks so we can update the preview thumbnail */
+      gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->file_list), "select_row", (GtkSignalFunc) file_open_clistrow_callback, fileload);
     }
   else
     {
@@ -523,28 +533,101 @@ file_open_callback (GtkWidget *w,
 
   if (!open_options)
     {
-      open_options = gtk_frame_new (_("Open Options"));
-      gtk_frame_set_shadow_type (GTK_FRAME (open_options), GTK_SHADOW_ETCHED_IN);
+      GtkWidget* frame;
 
-      hbox = gtk_hbox_new (FALSE, 1);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
-      gtk_container_add (GTK_CONTAINER (open_options), hbox);
-      gtk_widget_show (hbox);
+      open_options = gtk_hbox_new (FALSE, 1);
 
-      label = gtk_label_new (_("Determine file type:"));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
-      gtk_widget_show (label);
+      /* format-chooser frame */
+      frame = gtk_frame_new (_("Open Options"));
+      {
+	gtk_frame_set_shadow_type (GTK_FRAME (frame),
+				   GTK_SHADOW_ETCHED_IN);
+	
+	vbox = gtk_vbox_new (FALSE, 0);
+	{
+	  gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
+	  gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-      option_menu = gtk_option_menu_new ();
-      gtk_box_pack_start (GTK_BOX (hbox), option_menu, TRUE, TRUE, 0);
-      gtk_widget_show (option_menu);
+	  hbox = gtk_hbox_new (TRUE, 1);
+	  {
+	    gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
+	    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+	    
+	    label = gtk_label_new (_("Determine file type:"));
+	    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
+	    gtk_widget_show (label);
+	    
+	    option_menu = gtk_option_menu_new ();
+	    gtk_box_pack_start (GTK_BOX (hbox), option_menu, TRUE, TRUE, 0);
+	    gtk_widget_show (option_menu);
+	    
+	    menus_get_load_menu (&load_menu, NULL);
+	    gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), load_menu);
+	    gtk_box_pack_start (GTK_BOX (open_options), frame, FALSE, TRUE, 5);
+	  }
+	  gtk_widget_show (hbox);
+	}
+	gtk_widget_show (vbox);
+      }
+      gtk_widget_show (frame);
 
-      menus_get_load_menu (&load_menu, NULL);
-      gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), load_menu);
+      /* Preview frame */
+      frame = gtk_frame_new (_("Preview"));
+      {
+	gtk_frame_set_shadow_type (GTK_FRAME (frame),
+				   GTK_SHADOW_ETCHED_IN);
+	gtk_widget_set_usize (frame, 130,100);
+	gtk_box_pack_end (GTK_BOX (open_options), frame, FALSE, TRUE, 5);
+	
+	vbox = gtk_vbox_new (FALSE, 1);
+	{
+	  gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
+	  gtk_container_add (GTK_CONTAINER (frame), vbox);
+
+	  hbox = gtk_hbox_new (TRUE, 1);
+	  {
+	    gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
+	    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
+	    open_options_fixed = gtk_fixed_new ();
+	    {
+	      gtk_widget_set_usize (open_options_fixed, 1, 1);
+	      gtk_box_pack_start (GTK_BOX (hbox), open_options_fixed,
+				  FALSE, FALSE, 0);
+	      
+	      open_options_preview = GTK_PREVIEW (gtk_preview_new
+						  (GTK_PREVIEW_COLOR));
+	      {
+		gtk_container_add (GTK_CONTAINER (open_options_fixed),
+				   GTK_WIDGET (open_options_preview));
+	      }
+	      gtk_widget_show(GTK_WIDGET (open_options_preview));
+	    }
+	    gtk_widget_show (open_options_fixed);
+	  }
+	  gtk_widget_show (hbox);
+
+	  open_options_label = gtk_label_new ("hmm.");
+	  {
+	    gtk_label_set_justify (GTK_LABEL (open_options_label),
+				   GTK_JUSTIFY_FILL);
+	    gtk_label_set_line_wrap (GTK_LABEL (open_options_label), TRUE);
+	    gtk_box_pack_end (GTK_BOX (vbox), open_options_label,
+			      FALSE, TRUE, 0);
+	  }
+	  gtk_widget_show (open_options_label);
+	}
+	gtk_widget_show (vbox);
+      }
+      gtk_widget_show (frame);
+
+      /* pack the containing open_options hbox into the load-dialog */
       gtk_box_pack_end (GTK_BOX (GTK_FILE_SELECTION (fileload)->main_vbox),
 			open_options, FALSE, FALSE, 5);
     }
 
+  gtk_label_set_text (GTK_LABEL(open_options_label), "No selection.");
+  gtk_widget_hide (open_options_fixed);
   gtk_widget_show (open_options);
 
   file_dialog_show (fileload);
@@ -870,8 +953,9 @@ file_save (GimpImage* gimage,
 
 #ifdef __GNUC__
 #warning CRUFTY THUMBNAIL SAVING
+      /* If you have problems, blame Adam... not quite finished.
+	 Will be moved somewhere more appropriate. */
 #endif
-      /* If you have problems, blame Adam... not quite finished. */
       {
 	TempBuf* tempbuf;
 	gint i,j;
@@ -880,6 +964,7 @@ file_save (GimpImage* gimage,
 	gchar* xpname;
 	gchar* fname;
 	gint w,h;
+	GimpImageBaseType basetype;
 	FILE* fp;
 
 	if (gimp_image_preview_valid (gimage, Gray))
@@ -906,7 +991,7 @@ file_save (GimpImage* gimage,
 	  }
 	else
 	  {
-	    /* Ratio molesting to fit within .xvpic thumbnail size limits  */
+	    /* Ratio molesting to fit within .xvpic thumbnail size limits */
 	    if (60*gimage->width < 80*gimage->height)
 	      {
 		h = 60;
@@ -923,10 +1008,14 @@ file_save (GimpImage* gimage,
 	      }
 	  }
 
-	printf("tn: %d x %d\n", w, h);fflush(stdout);
+	printf("tn: %d x %d -> ", w, h);fflush(stdout);
 
 	tempbuf = gimp_image_composite_preview (gimage, Gray, w, h);
 	tbd = temp_buf_data(tempbuf);
+
+	w = tempbuf->width;
+	h = tempbuf->height;
+	printf("tn: %d x %d\n", w, h);fflush(stdout);
 
 	mkdir (xpname, 0755);
 
@@ -937,13 +1026,19 @@ file_save (GimpImage* gimage,
 
 	if (fp)
 	  {
+	    basetype = gimp_image_base_type(gimage);
+
 	    fprintf(fp,
-		    "P7 332\n#IMGINFO:%dx%d\n"
+		    "P7 332\n#IMGINFO:%dx%d %s\n"
 		    "#END_OF_COMMENTS\n%d %d 255\n",
 		    gimage->width, gimage->height,
+		    (basetype == RGB) ? "RGB" :
+		    (basetype == GRAY) ? "Greyscale" :
+		    (basetype == INDEXED) ? "Indexed" :
+		    "(UNKNOWN COLOUR TYPE)",
 		    w, h);
 
-	    switch (gimage_base_type(gimage))
+	    switch (basetype)
 	      {
 	      case INDEXED:
 	      case RGB:
@@ -978,6 +1073,7 @@ file_save (GimpImage* gimage,
 	    fclose(fp);
 	  }
       }
+      /* END OF THUMBNAIL SAVING */
     }
 
   g_free (return_vals);
@@ -985,6 +1081,133 @@ file_save (GimpImage* gimage,
 
 
   return return_val;
+}
+
+
+static guchar* readXVThumb(gchar *fnam, gint* w, gint* h)
+{
+  FILE *fp;
+  const gchar *P7_332 = "P7 332";
+  gchar P7_buf[7];
+  gchar linebuf[200];
+  guchar *buf;
+  gint twofivefive;
+  void *ptr;
+
+  fp = fopen (fnam, "rb");
+  if (!fp)
+    return (NULL);
+
+  fread (P7_buf, 6, 1, fp);
+
+  if (strncmp(P7_buf, P7_332, 6)!=0)
+    {
+      g_warning("Thumbnail doesn't have the 'P7 332' header.");
+      fclose(fp);
+      return(NULL);
+    }
+
+  /*newline*/
+  fread (P7_buf, 1, 1, fp);
+
+  do
+    {
+      ptr = fgets(linebuf, 199, fp);
+    }
+  while (ptr && linebuf[0]=='#'); /* keep throwing away comment lines */
+
+  sscanf(linebuf, "%d %d %d\n", w, h, &twofivefive);
+
+  if (twofivefive!=255)
+    {
+      g_warning("Thumbnail is of funky depth.");
+      fclose(fp);
+      return(NULL);
+    }
+
+  if ((*w)<1 || (*h)<1 || (*w)>80 || (*h)>60)
+    {
+      g_warning ("Thumbnail size bad.  Corrupted?");
+      fclose(fp);
+      return (NULL);
+    }
+
+  buf = g_malloc((*w)*(*h));
+
+  fread(buf, (*w)*(*h), 1, fp);
+  
+  fclose(fp);
+  
+  return(buf);
+}
+
+
+static void
+file_open_clistrow_callback (GtkWidget *w,
+			     int client_data)
+{
+  gchar *rawfname = NULL;
+  guchar *thumb_rgb;
+  guchar *raw_thumb;
+  gint tnw,tnh;
+  gchar *pname;
+  gchar *fname;
+  gchar *tname;
+  
+  rawfname = gtk_file_selection_get_filename(GTK_FILE_SELECTION(fileload));
+
+  pname = g_dirname (rawfname);
+  fname = g_basename (rawfname); /* Don't free this! */
+  tname = g_strconcat (pname, G_DIR_SEPARATOR_S, ".xvpics", G_DIR_SEPARATOR_S,
+		       fname,
+		       NULL);
+
+  g_free (pname);
+
+  /*g_warning ("clique! %s", fname);*/
+  /*gtk_clist_get_text(GTK_CLIST(w), client_data, 0, &txt);
+    g_warning ("clique! %p %d %s [%s]", w, client_data, txt, fname);*/
+
+  raw_thumb = readXVThumb(tname, &tnw, &tnh);
+
+  g_free (tname);
+
+  if (raw_thumb)
+    {
+      int i;
+      thumb_rgb = g_malloc (3 * tnw * tnh);
+
+      for (i=0; i<tnw*tnh; i++)
+	{
+	  thumb_rgb[i*3  ] = ((raw_thumb[i]>>5)*255)/7;
+	  thumb_rgb[i*3+1] = (((raw_thumb[i]>>2)&7)*255)/7;
+	  thumb_rgb[i*3+2] = (((raw_thumb[i])&3)*255)/3;
+	}
+      
+      gtk_preview_size (open_options_preview, tnw, tnh);
+      gtk_widget_set_usize (open_options_fixed, tnw, tnh);
+      gtk_widget_show (open_options_fixed);
+
+      for (i=0; i<tnh; i++)
+	{
+	  gtk_preview_draw_row(open_options_preview, &thumb_rgb[3*i*tnw],
+			       0, i,
+			       tnw);
+	  gtk_label_set_text (GTK_LABEL(open_options_label),
+			      fname);
+	  gtk_widget_show (open_options_fixed);
+	  gtk_widget_queue_draw (GTK_WIDGET(open_options_preview));
+	}
+      
+      g_free (thumb_rgb);
+      g_free (raw_thumb);
+    }
+  else
+    {
+      gtk_widget_hide (open_options_fixed);
+      gtk_label_set_text (GTK_LABEL(open_options_label),
+			  "no preview available");
+    }
 }
 
 

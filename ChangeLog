@@ -1,3 +1,9 @@
+Wed Feb  3 23:46:12 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/fileops.c: More work on thumbnailing - the
+	Load Dialog now knows about thumbnails and shows them.
+	Still some UI and code tidy-up remaining.
+
 Tue Feb  2 23:34:37 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* libgimp/gimp.c
