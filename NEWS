@@ -11,14 +11,18 @@ dubbed GIMP 1.4.
 Overview of Changes in GIMP 1.3.13
 ==================================
 
+- Allow to create channels from an image's color component [Sven, Mitch] 
+- Added a full-screen mode for the image window [Sven, Mitch]
+- Added a simple config file writer to GimpConfig [Sven]
 - Moved gimp-perl into it's own CVS module [Yosh]
-- Started to migrate core dialogs to GtkTreeView [Mitch]
+- Started to migrate core dialogs from GtkList to GtkTreeView [Mitch]
 - Refactored the GimpDisplayShell update/draw code [Mitch, Sven]
 - Rewrote the Undo History as a GimpDockable [Mitch]
 - Lots of bug fixes
 
 Other contributors:
-  Sunil Mohan Adapa, Tor Lillqvist, Jay Cox, Dave Neary
+  Sunil Mohan Adapa, Tor Lillqvist, Jay Cox, Dave Neary, Michael J. Hammel,
+  Toralf Lund, Raphael Quinet, Hans Breuer, Tuomas Kuosmanen
 
 
 Overview of Changes in GIMP 1.3.12

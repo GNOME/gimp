@@ -121,6 +121,9 @@ static GtkStockItem gimp_stock_items[] =
 
   { GIMP_STOCK_PATH_STROKE,              NULL,        0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_CURVE_FREE,               NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CURVE_SMOOTH,             NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_COLOR_PICKER_BLACK,       NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_PICKER_GRAY,        NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_PICKER_WHITE,       NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -245,6 +248,9 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_SELECTION_TO_PATH,        stock_selection_to_path_16        },
 
   { GIMP_STOCK_PATH_STROKE,              stock_path_stroke_16              },
+
+  { GIMP_STOCK_CURVE_FREE,               stock_curve_free_16               },
+  { GIMP_STOCK_CURVE_SMOOTH,             stock_curve_smooth_16             },
 
   { GIMP_STOCK_COLOR_PICKER_BLACK,       stock_color_picker_black_18       },
   { GIMP_STOCK_COLOR_PICKER_GRAY,        stock_color_picker_gray_18        },

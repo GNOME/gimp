@@ -54,7 +54,7 @@ struct _GimpCurvesTool
   GtkWidget            *xrange;
   GtkWidget            *yrange;
   GtkWidget            *graph;
-  GtkWidget            *curve_type_menu;
+  GtkWidget            *curve_type;
   
   gint                  cursor_x;
   gint                  cursor_y;  

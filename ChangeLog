@@ -1,5 +1,17 @@
 2003-03-14  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-curve-free-16.png
+	* themes/Default/images/stock-curve-smooth-16.png: added new icons
+	provided by Tuomas Kuosmanen <tigert@gimp.org>.
+
+	* libgimpwidgets/gimpstock.[ch]: register the new icons.
+
+	* app/tools/gimpcurvestool.[ch]: use radio buttons with the new
+	curve type icons.
+
+2003-03-14  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base-enums.[ch]	
 	* app/base/curves.[ch]: changed CurvesType enum to GimpCurveType
 	and register it with the type system.

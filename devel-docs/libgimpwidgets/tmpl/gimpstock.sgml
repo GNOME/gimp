@@ -374,6 +374,20 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_CURVE_FREE ##### -->
+<para>
+<inlinegraphic fileref="stock-curve-free-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CURVE_SMOOTH ##### -->
+<para>
+<inlinegraphic fileref="stock-curve-smooth-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_BLACK ##### -->
 <para>
 <inlinegraphic fileref="stock-color-picker-black-18.png" format="png"></inlinegraphic>

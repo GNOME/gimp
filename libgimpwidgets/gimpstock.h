@@ -63,6 +63,9 @@ G_BEGIN_DECLS
 
 #define GIMP_STOCK_PATH_STROKE          "gimp-path-stroke"
 
+#define GIMP_STOCK_CURVE_FREE           "gimp-curve-free"
+#define GIMP_STOCK_CURVE_SMOOTH         "gimp-curve-smooth"
+
 #define GIMP_STOCK_COLOR_PICKER_BLACK   "gimp-color-picker-black"
 #define GIMP_STOCK_COLOR_PICKER_GRAY    "gimp-color-picker-gray"
 #define GIMP_STOCK_COLOR_PICKER_WHITE   "gimp-color-picker-white"

@@ -131,7 +131,7 @@ static void   curves_channel_reset_callback   (GtkWidget        *widget,
 
 static gboolean curves_set_sensitive_callback (gpointer          item_data,
                                                GimpCurvesTool   *c_tool);
-static void   curves_type_callback            (GtkWidget        *widget,
+static void   curves_curve_type_callback      (GtkWidget        *widget,
                                                GimpCurvesTool   *c_tool);
 static void   curves_load_callback            (GtkWidget        *widget,
                                                GimpCurvesTool   *c_tool);
@@ -598,11 +598,9 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  The option menu for selecting channels  */
   hbox = gtk_hbox_new (FALSE, 4);
-
-  c_tool->channel_menu =
-    gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
-                               G_CALLBACK (curves_channel_callback),
-                               c_tool);
+  c_tool->channel_menu = gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
+						    G_CALLBACK (curves_channel_callback),
+						    c_tool);
   gtk_box_pack_start (GTK_BOX (hbox), c_tool->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (c_tool->channel_menu);
 
@@ -617,16 +615,6 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Modify Curves for Channel:"), 1.0, 0.5,
                              hbox, 1, FALSE);
-
-  /*  The option menu for selecting the curve type  */
-  c_tool->curve_type_menu =
-    gimp_enum_option_menu_new (GIMP_TYPE_CURVE_TYPE,
-                               G_CALLBACK (curves_type_callback),
-                               c_tool);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Curve Type:"), 1.0, 0.5,
-                             c_tool->curve_type_menu, 1, TRUE);
 
   /*  The table for the yrange and the graph  */
   hbox = gtk_hbox_new (FALSE, 0);
@@ -684,9 +672,13 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 
   gtk_widget_show (table);
 
-  /*  Horizontal button box for load / save  */
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+  
+  /*  Horizontal button box for load / save */
   frame = gtk_frame_new (_("All Channels"));
-  gtk_box_pack_end (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   hbbox = gtk_hbutton_box_new ();
@@ -715,6 +707,23 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect (button, "clicked",
 		    G_CALLBACK (curves_save_callback),
 		    c_tool);
+
+  /*  The radio box for selecting the curve type  */
+  frame = gtk_frame_new (_("Curve Type"));
+  gtk_box_pack_end (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  hbox = gimp_enum_stock_box_new (GIMP_TYPE_CURVE_TYPE,
+				  "gimp-curve",
+				  G_CALLBACK (curves_curve_type_callback),
+				  c_tool,
+				  &c_tool->curve_type);
+
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_box_set_spacing (GTK_BOX (hbox), 4);
+
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
 }
 
 static void
@@ -879,8 +888,8 @@ curves_channel_callback (GtkWidget      *widget,
         c_tool->channel = 1;
     }
 
-  gimp_option_menu_set_history (GTK_OPTION_MENU (c_tool->curve_type_menu),
-                                GINT_TO_POINTER (c_tool->curves->curve_type[c_tool->channel]));
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (c_tool->curve_type),
+			       GINT_TO_POINTER (c_tool->curves->curve_type[c_tool->channel]));
 
   curves_update (c_tool, XRANGE_TOP | YRANGE);
   gtk_widget_queue_draw (c_tool->graph);
@@ -922,12 +931,12 @@ curves_set_sensitive_callback (gpointer        item_data,
 }
 
 static void
-curves_type_callback (GtkWidget      *widget,
-                      GimpCurvesTool *c_tool)
+curves_curve_type_callback (GtkWidget      *widget,
+			    GimpCurvesTool *c_tool)
 {
   GimpCurveType curve_type;
 
-  gimp_menu_item_update (widget, &curve_type);
+  gimp_radio_button_update (widget, &curve_type);
 
   if (c_tool->curves->curve_type[c_tool->channel] != curve_type)
     {
@@ -1459,8 +1468,8 @@ curves_read_from_file (GimpCurvesTool *c_tool,
   curves_update (c_tool, ALL);
   gtk_widget_queue_draw (c_tool->graph);
 
-  gimp_option_menu_set_history (GTK_OPTION_MENU (c_tool->curve_type_menu),
-                                GINT_TO_POINTER (GIMP_CURVE_SMOOTH));
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (c_tool->curve_type),
+			       GINT_TO_POINTER (GIMP_CURVE_SMOOTH));
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (c_tool));
 
