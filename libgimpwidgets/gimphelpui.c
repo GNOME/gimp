@@ -243,6 +243,8 @@ gimp_context_help (GtkWidget *widget)
  * attachind help IDs to widgets and objects.
  *
  * Return value: The #GQuark.
+ *
+ * Since: GIMP 2.2
  **/
 GQuark
 gimp_help_id_quark (void)

@@ -313,6 +313,7 @@ GimpOffsetArea
 gimp_offset_area_new
 gimp_offset_area_set_size
 gimp_offset_area_set_offsets
+gimp_offset_area_set_pixbuf
 <SUBSECTION Standard>
 GIMP_OFFSET_AREA
 GIMP_IS_OFFSET_AREA
@@ -347,12 +348,15 @@ GIMP_DIALOG_GET_CLASS
 <FILE>gimphelpui</FILE>
 <TITLE>GimpHelpUI</TITLE>
 GimpHelpFunc
+GIMP_HELP_ID
 gimp_help_enable_tooltips
 gimp_help_disable_tooltips
 gimp_standard_help_func
 gimp_help_connect
 gimp_help_set_help_data
 gimp_context_help
+<SUBSECTION Standard>
+gimp_help_id_quark
 </SECTION>
 
 <SECTION>

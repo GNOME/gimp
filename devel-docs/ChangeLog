@@ -1,3 +1,11 @@
+2004-05-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt: updated.
+
+	* devel-docs/libgimpwidgets/tmpl/gimpframe.sgml
+	* devel-docs/libgimpwidgets/tmpl/gimphelpui.sgml
+	* devel-docs/libgimpwidgets/tmpl/gimpoffsetarea.sgml: regenerated.
+
 2004-05-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-docs.sgml

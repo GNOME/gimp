@@ -1,3 +1,7 @@
+2004-05-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimphelpui.c: documentation.
+
 2004-05-05  Michael Natterer  <mitch@gimp.org>
 
 	Finally enable global accelerators in all docks:
