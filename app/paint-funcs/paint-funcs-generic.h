@@ -1008,8 +1008,8 @@ dissolve_pixels (const guchar *src,
       for (b = 0; b < alpha; b++)
 	dest[b] = src[b];
 
-      /*  dissolve if random value is > opacity  */
-      rand_val = g_rand_int_range (gr, 0, 256);
+      /*  dissolve if random value is >= opacity  */
+      rand_val = g_rand_int_range (gr, 0, 255);
 
       if (mask)
         {
@@ -1028,7 +1028,7 @@ dissolve_pixels (const guchar *src,
             combined_opacity = opacity;
         }
 
-      dest[alpha] = (rand_val > combined_opacity) ? 0 : OPAQUE_OPACITY;
+      dest[alpha] = (rand_val >= combined_opacity) ? 0 : OPAQUE_OPACITY;
 
       src  += sb;
       dest += db;
