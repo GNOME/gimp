@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-12-30 20:24+0000\n"
-"PO-Revision-Date: 2004-02-02 18:59+0100\n"
+"PO-Revision-Date: 2004-02-03 18:59+0100\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Irish  <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -2789,96 +2789,81 @@ msgid "/Add Tab/_Paths"
 msgstr ""
 
 #: app/gui/dialogs-menu.c:81
-#, fuzzy
 msgid "/Add Tab/Inde_xed Palette"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:83
-#, fuzzy
 msgid "/Add Tab/Histogra_m"
-msgstr "/Comhad/Deireanach Oscailte/Stair an Doicim©ad"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:85
-#, fuzzy
 msgid "/Add Tab/_Selection Editor"
-msgstr "/Eagar/Gearr"
+msgstr "/Suimigh Cluaisín/Eagarthóir i_Roghnaigh"
 
 #: app/gui/dialogs-menu.c:87
-#, fuzzy
 msgid "/Add Tab/Na_vigation"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:89
-#, fuzzy
 msgid "/Add Tab/_Undo History"
-msgstr "/Comhad/Deireanach Oscailte/Stair an Doicim©ad"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:94
-#, fuzzy
 msgid "/Add Tab/Colo_rs"
-msgstr "/Dáth Nua"
+msgstr "/Suimigh Cluaisín/_Dathanna"
 
 #: app/gui/dialogs-menu.c:96
-#, fuzzy
 msgid "/Add Tab/Brus_hes"
-msgstr "/Dealaigh an Scuab"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:98
-#, fuzzy
 msgid "/Add Tab/P_atterns"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:100
-#, fuzzy
 msgid "/Add Tab/_Gradients"
-msgstr "/Dealaigh an Gárdán..."
+msgstr ""
 
 #: app/gui/dialogs-menu.c:102
-#, fuzzy
 msgid "/Add Tab/Pal_ettes"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:104
-#, fuzzy
 msgid "/Add Tab/_Fonts"
-msgstr "/Dealaigh an Gárdán..."
+msgstr "/Suimigh Cluaisín/_Clófhoireanna"
 
 #: app/gui/dialogs-menu.c:106
-#, fuzzy
 msgid "/Add Tab/_Buffers"
-msgstr "//"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:111
 msgid "/Add Tab/_Images"
 msgstr "/Suimigh Cluaisín/_Íomhanna"
 
 #: app/gui/dialogs-menu.c:113
-#, fuzzy
 msgid "/Add Tab/Document Histor_y"
-msgstr "/Comhad/Deireanach Oscailte/Stair an Doicim©ad"
+msgstr "/Suimigh Cluaisín/_Stair an Doicim©ad"
+
 
 #: app/gui/dialogs-menu.c:115
-#, fuzzy
 msgid "/Add Tab/_Templates"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:117
 msgid "/Add Tab/T_ools"
 msgstr "Suimigh Cluaisíní/_Uirlisí"
 
 #: app/gui/dialogs-menu.c:119
-#, fuzzy
 msgid "/Add Tab/Error Co_nsole"
-msgstr "/Dáth Nua"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:122
 msgid "/_Close Tab"
 msgstr "/_Dún Cluaisín"
 
 #: app/gui/dialogs-menu.c:127
-#, fuzzy
 msgid "/_Detach Tab"
-msgstr "/_Roghnaigh"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:135
 msgid "/Preview Si_ze"
@@ -3617,14 +3602,12 @@ msgid "/File/Save a Cop_y..."
 msgstr "/Comhad/Sábháil có_ip de ..."
 
 #: app/gui/image-menu.c:130
-#, fuzzy
 msgid "/File/Save as _Template..."
-msgstr "/Comhad/Sábháil mar..."
+msgstr ""
 
 #: app/gui/image-menu.c:134
-#, fuzzy
 msgid "/File/Re_vert"
-msgstr "/Comhad/Nua..."
+msgstr "/Comhad/Iom_paigh..."
 
 #: app/gui/image-menu.c:142
 msgid "/File/_Close"
@@ -3640,19 +3623,16 @@ msgid "/_Edit"
 msgstr "/_Eagar"
 
 #: app/gui/image-menu.c:159
-#, fuzzy
 msgid "/Edit/_Undo"
-msgstr "/Eagar/Cóipail"
+msgstr "/Eagar/_Leasú"
 
 #: app/gui/image-menu.c:164
-#, fuzzy
 msgid "/Edit/_Redo"
-msgstr "/Eagar/Cóipail"
+msgstr "/Eagar/_Athdeán"
 
 #: app/gui/image-menu.c:169
-#, fuzzy
 msgid "/Edit/Undo _History"
-msgstr "/Eagar an Dáth..."
+msgstr ""
 
 #: app/gui/image-menu.c:177
 msgid "/Edit/Cu_t"
@@ -3663,9 +3643,8 @@ msgid "/Edit/_Copy"
 msgstr "/Eagar/_Cóipail"
 
 #: app/gui/image-menu.c:187
-#, fuzzy
 msgid "/Edit/_Paste"
-msgstr "/Eagar/Gearr"
+msgstr "/Eagar/_Greamaigh"
 
 #: app/gui/image-menu.c:192
 msgid "/Edit/Paste _Into"
@@ -3677,19 +3656,16 @@ msgstr ""
 
 #. <Image>/Edit/Buffer
 #: app/gui/image-menu.c:205
-#, fuzzy
 msgid "/Edit/_Buffer"
-msgstr "/Eagar/"
+msgstr ""
 
 #: app/gui/image-menu.c:207
-#, fuzzy
 msgid "/Edit/Buffer/Cu_t Named..."
-msgstr "/Eagar/"
+msgstr ""
 
 #: app/gui/image-menu.c:212
-#, fuzzy
 msgid "/Edit/Buffer/_Copy Named..."
-msgstr "/Eagar/"
+msgstr ""
 
 #: app/gui/image-menu.c:217
 msgid "/Edit/Buffer/_Paste Named..."
@@ -3708,19 +3684,16 @@ msgid "/Edit/Fill with B_G Color"
 msgstr ""
 
 #: app/gui/image-menu.c:240
-#, fuzzy
 msgid "/Edit/Fill with P_attern"
-msgstr "Líon le Bán"
+msgstr ""
 
 #: app/gui/image-menu.c:245
-#, fuzzy
 msgid "/Edit/_Stroke Selection..."
-msgstr "/Eagar/Gearr"
+msgstr ""
 
 #: app/gui/image-menu.c:250
-#, fuzzy
 msgid "/Edit/St_roke Path..."
-msgstr "/Eagar/Gearr"
+msgstr ""
 
 #. <Image>/Select
 #: app/gui/image-menu.c:260
@@ -3728,68 +3701,56 @@ msgid "/_Select"
 msgstr "/_Roghnaigh"
 
 #: app/gui/image-menu.c:262
-#, fuzzy
 msgid "/Select/_All"
-msgstr "/Roghnaigh/Gach Rud"
+msgstr "/Roghnaigh/_Gach Rud"
 
 #: app/gui/image-menu.c:267
-#, fuzzy
 msgid "/Select/_None"
-msgstr "/Roghnaigh/Tada"
+msgstr "/Roghnaigh/_Ar Bith"
 
 #: app/gui/image-menu.c:272
-#, fuzzy
 msgid "/Select/_Invert"
-msgstr "/Roghnaigh/Aisiompaigh"
+msgstr "/Roghnaigh/_Aisiompaigh"
 
 #: app/gui/image-menu.c:277
-#, fuzzy
 msgid "/Select/_Float"
-msgstr "/Roghnaigh/Gach Rud"
+msgstr "/Roghnaigh/"
 
 #: app/gui/image-menu.c:281
-#, fuzzy
 msgid "/Select/_By Color"
-msgstr "Dealaigh an Sraith"
+msgstr ""
 
 #: app/gui/image-menu.c:289
-#, fuzzy
 msgid "/Select/Fea_ther..."
-msgstr "/Roghnaigh/Cleite..."
+msgstr ""
 
 #: app/gui/image-menu.c:293
-#, fuzzy
 msgid "/Select/_Sharpen"
-msgstr "/Roghnaigh/Faobhraigh"
+msgstr ""
 
 #: app/gui/image-menu.c:297
-#, fuzzy
 msgid "/Select/S_hrink..."
-msgstr "/Roghnaigh/Crap..."
+msgstr ""
 
 #: app/gui/image-menu.c:302
-#, fuzzy
 msgid "/Select/_Grow..."
-msgstr "/Roghnaigh/Fás"
+msgstr "/Roghnaigh/_Fás..."
 
 #: app/gui/image-menu.c:307
-#, fuzzy
 msgid "/Select/Bo_rder..."
-msgstr "/Roghnaigh/Teorainn..."
+msgstr "/Roghnaigh/_Teorainn..."
 
 #: app/gui/image-menu.c:314
 msgid "/Select/Toggle _QuickMask"
 msgstr ""
 
 #: app/gui/image-menu.c:319
-#, fuzzy
 msgid "/Select/Save to _Channel"
-msgstr "/Roghnaigh/Faobhraigh"
+msgstr ""
 
 #: app/gui/image-menu.c:324
-#, fuzzy
 msgid "/Select/To _Path"
-msgstr "/Roghnaigh/Gach Rud"
+msgstr ""
 
 #. <Image>/View
 #: app/gui/image-menu.c:332
@@ -3807,15 +3768,15 @@ msgstr ""
 #. <Image>/View/Zoom
 #: app/gui/image-menu.c:346
 msgid "/View/_Zoom"
-msgstr ""
+msgstr "/Amharc/_Súmáil"
 
 #: app/gui/image-menu.c:348
 msgid "/View/Zoom/Zoom _Out"
-msgstr "/Radharc/Formhéadach/Formhéadaigh _Amach"
+msgstr "/Amharc/Súmáil/Súmáil _Amach"
 
 #: app/gui/image-menu.c:353
 msgid "/View/Zoom/Zoom _In"
-msgstr "/Radharc/Formhéadaigh _Isteach"
+msgstr "/Amharc/Súmáil/Súmáil _Isteach"
 
 #: app/gui/image-menu.c:358
 msgid "/View/Zoom/Zoom to _Fit Window"
@@ -3823,107 +3784,95 @@ msgstr ""
 
 #: app/gui/image-menu.c:366
 msgid "/View/Zoom/16:1"
-msgstr "/Radharc/Formhéadach/16:1"
+msgstr "/Amharc/Súmáil/16:1"
 
 #: app/gui/image-menu.c:370
 msgid "/View/Zoom/8:1"
-msgstr "/Radharc/Formhéadach/8:1"
+msgstr "/Amharc/Súmáil/8:1"
 
 #: app/gui/image-menu.c:374
 msgid "/View/Zoom/4:1"
-msgstr "/Radharc/Formhéadach/4:1"
+msgstr "/Amharc/Súmáil/4:1"
 
 #: app/gui/image-menu.c:378
 msgid "/View/Zoom/2:1"
-msgstr "/Radharc/Formhéadach/2:1"
+msgstr "/Amharc/Súmáil/2:1"
 
 #: app/gui/image-menu.c:382
 msgid "/View/Zoom/1:1"
-msgstr "/Radharc/Formhéadach/1:1"
+msgstr "/Amharc/Súmáil/1:1"
 
 #: app/gui/image-menu.c:386
 msgid "/View/Zoom/1:2"
-msgstr "/Radharc/Formhéadach/1:2"
+msgstr "/Amharc/Súmáil/1:2"
 
 #: app/gui/image-menu.c:390
 msgid "/View/Zoom/1:4"
-msgstr ""
+msgstr "/Amharc/Súmáil/1:4"
 
 #: app/gui/image-menu.c:394
 msgid "/View/Zoom/1:8"
-msgstr ""
+msgstr "/Amharc/Súmáil/1:8"
 
 #: app/gui/image-menu.c:398
 msgid "/View/Zoom/1:16"
-msgstr ""
+msgstr "/Amharc/Súmáil/1:16"
 
 #: app/gui/image-menu.c:412
 msgid "/View/_Info Window"
-msgstr "/Radharc/Fuinneog _Eolas"
+msgstr "/Amharc/Fuinneog _Eolas"
 
 #: app/gui/image-menu.c:417
-#, fuzzy
 msgid "/View/Na_vigation Window"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/image-menu.c:422
 msgid "/View/Display _Filters..."
 msgstr ""
 
 #: app/gui/image-menu.c:429
-#, fuzzy
 msgid "/View/Show _Selection"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/image-menu.c:433
-#, fuzzy
 msgid "/View/Show _Layer Boundary"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/image-menu.c:437
-#, fuzzy
 msgid "/View/Show _Guides"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/image-menu.c:441
-#, fuzzy
 msgid "/View/Sn_ap to Guides"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/image-menu.c:445
-#, fuzzy
 msgid "/View/S_how Grid"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/image-menu.c:449
-#, fuzzy
 msgid "/View/Sna_p to Grid"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/image-menu.c:456
-#, fuzzy
 msgid "/View/Show _Menubar"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/image-menu.c:460
-#, fuzzy
 msgid "/View/Show R_ulers"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/image-menu.c:464
-#, fuzzy
 msgid "/View/Show Scroll_bars"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/image-menu.c:468
-#, fuzzy
 msgid "/View/Show S_tatusbar"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/image-menu.c:475
-#, fuzzy
 msgid "/View/Shrink _Wrap"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/image-menu.c:480
 msgid "/View/Fullscr_een"
@@ -4006,9 +3955,8 @@ msgid "/Image/_Flatten Image"
 msgstr ""
 
 #: app/gui/image-menu.c:587
-#, fuzzy
 msgid "/Image/Configure G_rid..."
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #. <Image>/Layer
 #: app/gui/image-menu.c:595
@@ -4032,9 +3980,8 @@ msgid "/Layer/Me_rge Down"
 msgstr ""
 
 #: app/gui/image-menu.c:617
-#, fuzzy
 msgid "/Layer/_Delete Layer"
-msgstr "Dealaigh an Sraith"
+msgstr "/Sraith/_Dealaigh Sraith"
 
 #. <Image>/Layer/Stack
 #: app/gui/image-menu.c:627
@@ -4076,7 +4023,7 @@ msgstr ""
 #. <Image>/Layer/Colors
 #: app/gui/image-menu.c:671
 msgid "/Layer/_Colors"
-msgstr ""
+msgstr "/Sraith/_Dathanna"
 
 #: app/gui/image-menu.c:673
 msgid "/Layer/Colors/Color _Balance..."
@@ -4128,9 +4075,8 @@ msgid "/Layer/Colors/Auto/_Equalize"
 msgstr ""
 
 #: app/gui/image-menu.c:738
-#, fuzzy
 msgid "/Layer/Colors/_Histogram"
-msgstr "/Uirlisí/Bosca-Uirlis"
+msgstr ""
 
 #. <Image>/Layer/Mask
 #: app/gui/image-menu.c:746
@@ -4245,37 +4191,32 @@ msgid "/_Tools"
 msgstr "/_Uirlisí"
 
 #: app/gui/image-menu.c:894
-#, fuzzy
 msgid "/Tools/Tool_box"
-msgstr "/Uirlisí/Bosca-Uirlis"
+msgstr "/Uirlisí/Bosca-_Uirlis"
 
 #: app/gui/image-menu.c:898
-#, fuzzy
 msgid "/Tools/_Default Colors"
-msgstr "/Uirlisí/Bosca-Uirlis"
+msgstr "/Uirlisí/Dath de _gnâth"
 
 #: app/gui/image-menu.c:903
-#, fuzzy
 msgid "/Tools/S_wap Colors"
-msgstr "/Uirlisí/Bosca-Uirlis"
+msgstr ""
 
 #: app/gui/image-menu.c:911
 msgid "/Tools/_Selection Tools"
 msgstr ""
 
 #: app/gui/image-menu.c:912
-#, fuzzy
 msgid "/Tools/_Paint Tools"
-msgstr "/Uirlisí/Bosca-Uirlis"
+msgstr ""
 
 #: app/gui/image-menu.c:913
 msgid "/Tools/_Transform Tools"
 msgstr ""
 
 #: app/gui/image-menu.c:914
-#, fuzzy
 msgid "/Tools/_Color Tools"
-msgstr "/Uirlisí/Bosca-Uirlis"
+msgstr ""
 
 #. <Image>/Dialogs
 #: app/gui/image-menu.c:918
@@ -4299,78 +4240,64 @@ msgid "/Dialogs/Create New Dock/_Misc. Stuff"
 msgstr ""
 
 #: app/gui/image-menu.c:935
-#, fuzzy
 msgid "/Dialogs/Tool _Options"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:940
-#, fuzzy
 msgid "/Dialogs/_Device Status"
-msgstr "/Comhad/Sábháil mar..."
+msgstr ""
 
 #: app/gui/image-menu.c:948
-#, fuzzy
 msgid "/Dialogs/_Layers"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:953
-#, fuzzy
 msgid "/Dialogs/_Channels"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:958
-#, fuzzy
 msgid "/Dialogs/_Paths"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:963
-#, fuzzy
 msgid "/Dialogs/Inde_xed Palette"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:968
-#, fuzzy
 msgid "/Dialogs/Histogra_m"
-msgstr "/Comhad/Deireanach Oscailte/Stair an Doicim©ad"
+msgstr ""
 
 #: app/gui/image-menu.c:973
 msgid "/Dialogs/_Selection Editor"
 msgstr ""
 
 #: app/gui/image-menu.c:978
-#, fuzzy
 msgid "/Dialogs/Na_vigation"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:983
-#, fuzzy
 msgid "/Dialogs/_Undo History"
-msgstr "/Comhad/Deireanach Oscailte/Stair an Doicim©ad"
+msgstr ""
 
 #: app/gui/image-menu.c:991
-#, fuzzy
 msgid "/Dialogs/Colo_rs"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:996
-#, fuzzy
 msgid "/Dialogs/Brus_hes"
-msgstr "/Dealaigh an Scuab"
+msgstr ""
 
 #: app/gui/image-menu.c:1001
-#, fuzzy
 msgid "/Dialogs/P_atterns"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:1006
-#, fuzzy
 msgid "/Dialogs/_Gradients"
-msgstr "/Dealaigh an Gárdán..."
+msgstr ""
 
 #: app/gui/image-menu.c:1011
-#, fuzzy
 msgid "/Dialogs/Pal_ettes"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:1016
 msgid "/Dialogs/_Fonts"
@@ -4378,32 +4305,27 @@ msgstr ""
 
 #: app/gui/image-menu.c:1021
 msgid "/Dialogs/_Buffers"
-msgstr "/Eagar/"
+msgstr ""
 
 #: app/gui/image-menu.c:1029
-#, fuzzy
 msgid "/Dialogs/_Images"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:1034
-#, fuzzy
 msgid "/Dialogs/Document Histor_y"
-msgstr "/Comhad/Deireanach Oscailte/Stair an Doicim©ad"
+msgstr ""
 
 #: app/gui/image-menu.c:1039
-#, fuzzy
 msgid "/Dialogs/_Templates"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:1044
-#, fuzzy
 msgid "/Dialogs/T_ools"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:1049
-#, fuzzy
 msgid "/Dialogs/Error Co_nsole"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:1059
 msgid "/Filte_rs"
@@ -4422,24 +4344,20 @@ msgid "/Filters/_Blur"
 msgstr ""
 
 #: app/gui/image-menu.c:1075
-#, fuzzy
 msgid "/Filters/_Colors"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:1076
-#, fuzzy
 msgid "/Filters/Colors/Ma_p"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:1077
-#, fuzzy
 msgid "/Filters/_Noise"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:1078
-#, fuzzy
 msgid "/Filters/Edge-De_tect"
-msgstr "/Comhad/Sábháil"
+msgstr ""
 
 #: app/gui/image-menu.c:1079
 msgid "/Filters/En_hance"
@@ -4466,47 +4384,40 @@ msgid "/Filters/_Artistic"
 msgstr ""
 
 #: app/gui/image-menu.c:1088
-#, fuzzy
 msgid "/Filters/_Map"
-msgstr "/Comhad/Sábháil"
+msgstr ""
 
 #: app/gui/image-menu.c:1089
 msgid "/Filters/_Render"
 msgstr ""
 
 #: app/gui/image-menu.c:1090
-#, fuzzy
 msgid "/Filters/Render/_Clouds"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:1091
-#, fuzzy
 msgid "/Filters/Render/_Nature"
-msgstr "/Comhad/Sábháil"
+msgstr ""
 
 #: app/gui/image-menu.c:1092
-#, fuzzy
 msgid "/Filters/Render/_Pattern"
-msgstr "/Comhad/Sábháil"
+msgstr ""
 
 #: app/gui/image-menu.c:1093
-#, fuzzy
 msgid "/Filters/_Web"
-msgstr "/Comhad/Sábháil"
+msgstr ""
 
 #: app/gui/image-menu.c:1097
 msgid "/Filters/An_imation"
 msgstr ""
 
 #: app/gui/image-menu.c:1098
-#, fuzzy
 msgid "/Filters/C_ombine"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:1102
-#, fuzzy
 msgid "/Filters/To_ys"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/image-menu.c:1418
 #, c-format
@@ -4541,20 +4452,18 @@ msgid "/_Raise Views"
 msgstr ""
 
 #: app/gui/images-menu.c:46
-#, fuzzy
 msgid "/_New View"
-msgstr "/Radharc/Radharc Nua"
+msgstr "/Amharc _Nua"
 
 #: app/gui/images-menu.c:50
-#, fuzzy
 msgid "/_Delete Image"
-msgstr "Dealaigh an Sraith"
+msgstr "/_Dealaigh Íomha"
 
 #. General
 #: app/gui/info-dialog.c:355 app/gui/preferences-dialog.c:1307
 #: app/gui/preferences-dialog.c:1419
 msgid "General"
-msgstr ""
+msgstr "Gineréal"
 
 #: app/gui/info-window.c:86
 msgid "Static Gray"
@@ -4636,9 +4545,8 @@ msgid "Scale Ratio:"
 msgstr ""
 
 #: app/gui/info-window.c:261
-#, fuzzy
 msgid "Number of Layers:"
-msgstr "Sraith Nua"
+msgstr ""
 
 #: app/gui/info-window.c:263
 msgid "Size in Memory:"
@@ -4974,23 +4882,23 @@ msgstr ""
 
 #: app/gui/module-browser.c:500
 msgid "Author:"
-msgstr ""
+msgstr "Údar:"
 
 #: app/gui/module-browser.c:501
 msgid "Version:"
-msgstr ""
+msgstr "Leagan:"
 
 #: app/gui/module-browser.c:502
 msgid "Copyright:"
-msgstr ""
+msgstr "Cóipcheart:"
 
 #: app/gui/module-browser.c:503
 msgid "Date:"
-msgstr ""
+msgstr "Dáta:"
 
 #: app/gui/module-browser.c:504
 msgid "Location:"
-msgstr ""
+msgstr "Áit:"
 
 #: app/gui/module-browser.c:505
 msgid "State:"
@@ -5027,7 +4935,7 @@ msgstr ""
 
 #: app/gui/offset-dialog.c:154 app/gui/resize-dialog.c:490
 msgid "_Y:"
-msgstr ""
+msgstr "_Y:"
 
 #. The by half height and half width option
 #: app/gui/offset-dialog.c:182
@@ -5094,11 +5002,11 @@ msgstr ""
 
 #: app/gui/palette-import-dialog.c:215
 msgid "_Gradient"
-msgstr ""
+msgstr "_Gradán"
 
 #: app/gui/palette-import-dialog.c:227
 msgid "I_mage"
-msgstr ""
+msgstr "_Íomha"
 
 #. The "Import" frame
 #: app/gui/palette-import-dialog.c:285
@@ -5227,33 +5135,28 @@ msgid "Show _Rulers"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:864
-#, fuzzy
 msgid "Show Scroll_bars"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/preferences-dialog.c:867
 msgid "Show S_tatusbar"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:875
-#, fuzzy
 msgid "Show S_election"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/preferences-dialog.c:878
-#, fuzzy
 msgid "Show _Layer Boundary"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/preferences-dialog.c:881
-#, fuzzy
 msgid "Show _Guides"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/preferences-dialog.c:884
-#, fuzzy
 msgid "Show Gri_d"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/preferences-dialog.c:890
 msgid "Canvas Padding Mode:"
@@ -5269,16 +5172,15 @@ msgstr ""
 
 #: app/gui/preferences-dialog.c:964
 msgid "Preferences"
-msgstr ""
+msgstr "Roghnachais"
 
 #: app/gui/preferences-dialog.c:1124
 msgid "Maximum New Image Size:"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:1133
-#, fuzzy
 msgid "Default Image Grid"
-msgstr "Dealaigh an Sraith"
+msgstr ""
 
 #: app/gui/preferences-dialog.c:1136
 msgid "Default Grid"
@@ -5321,7 +5223,7 @@ msgstr ""
 #. Menus
 #: app/gui/preferences-dialog.c:1189
 msgid "Menus"
-msgstr ""
+msgstr "Chláranna"
 
 #: app/gui/preferences-dialog.c:1192
 msgid "Enable _Tearoff Menus"
@@ -5342,9 +5244,8 @@ msgstr ""
 
 #. Themes
 #: app/gui/preferences-dialog.c:1209
-#, fuzzy
 msgid "Select Theme"
-msgstr "Roghnaigh Tada"
+msgstr ""
 
 #: app/gui/preferences-dialog.c:1239
 msgid "Theme"
@@ -5352,7 +5253,7 @@ msgstr ""
 
 #: app/gui/preferences-dialog.c:1244
 msgid "Folder"
-msgstr ""
+msgstr "Fillteán"
 
 #: app/gui/preferences-dialog.c:1282
 msgid "Reload C_urrent Theme"
@@ -5389,9 +5290,8 @@ msgid "Web Browser"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:1332
-#, fuzzy
 msgid "Select Web Browser"
-msgstr "Roghnaigh Tada"
+msgstr ""
 
 #: app/gui/preferences-dialog.c:1336
 msgid "Web Browser to Use:"
@@ -5572,7 +5472,7 @@ msgstr ""
 
 #: app/gui/preferences-dialog.c:1672
 msgid "Monitor"
-msgstr ""
+msgstr "Monatóir"
 
 #: app/gui/preferences-dialog.c:1678
 msgid "Get Monitor Resolution"
@@ -5784,12 +5684,11 @@ msgstr ""
 
 #: app/gui/preferences-dialog.c:2063
 msgid "Font Folders"
-msgstr ""
+msgstr "Fillteáin Clófhoireanna"
 
 #: app/gui/preferences-dialog.c:2065
-#, fuzzy
 msgid "Select Font Folders"
-msgstr "Roghnaigh Tada"
+msgstr "Roghnaigh Fillteain na Clófhoireanna"
 
 #: app/gui/preferences-dialog.c:2067
 msgid "Plug-Ins"
@@ -5964,16 +5863,15 @@ msgstr ""
 
 #: app/gui/resolution-calibrate-dialog.c:217
 msgid "_Horizontal:"
-msgstr ""
+msgstr "_Cothromach:"
 
 #: app/gui/resolution-calibrate-dialog.c:222
 msgid "_Vertical:"
-msgstr ""
+msgstr "_Ingearach:"
 
 #: app/gui/select-commands.c:155
-#, fuzzy
 msgid "Feather selection by"
-msgstr "/Eagar/Gearr"
+msgstr ""
 
 #: app/gui/select-commands.c:191
 #, fuzzy
