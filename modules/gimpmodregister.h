@@ -21,6 +21,7 @@
 
 #ifdef __EMX__
 
+#include <libgimp/gimptypes.h>
 #include <libgimp/gimpcolordisplay.h>
 #include <libgimp/gimpcolorselector.h>
 

@@ -1,3 +1,8 @@
+2001-01-04  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* modules/gimpmodregister.h: add #include <libgimp/gimptypes.h>
+	* plug-ins/common/bz2.c (load_image): fix bug loading bz2 files (OS/2)
+
 2001-01-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/title-header.scm: merged fix from 1.2
