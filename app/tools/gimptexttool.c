@@ -600,7 +600,7 @@ text_render (GimpImage    *gimage,
   font = gdk_font_load (fontname);
   if (!font)
     {
-      g_message (_("Font '%s' not found."));
+      g_message (_("Font '%s' not found."), fontname);
       return NULL;
     }
   xfs = GDK_FONT_XFONT(font);
