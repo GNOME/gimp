@@ -1,3 +1,11 @@
+2003-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* themes/Default/images/tools/stock-tool-*-16.png: new small tool
+	icons from Jimmac.
+
+	* themes/Default/images/Makefile.am
+	* libgimpwidgets/gimpstock.c: added them to the stock system.
+
 2003-03-26  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimpfont.c (gimp_font_get_popup_size): added an upper
@@ -29,7 +37,7 @@
 	* app/widgets/gimpcontainereditor.c
 	* app/widgets/gimpcontainergridview.c
 	* app/widgets/gimpcontainertreeview.c
-	* app/widgets/gimpitemtreeview.c: call when creating a view.
+	* app/widgets/gimpitemtreeview.c: call it when creating a view.
 
 	* app/widgets/gimpchanneltreeview.c: check view->component_editor
 	for being non-NULL before accessing it.

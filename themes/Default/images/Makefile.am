@@ -127,44 +127,82 @@ STOCK_DIALOG_IMAGES = \
 	stock-wilber-eek-64.png
 
 STOCK_TOOL_IMAGES = \
+	tools/stock-tool-airbrush-16.png		\
 	tools/stock-tool-airbrush-22.png		\
+	tools/stock-tool-bezier-select-16.png		\
 	tools/stock-tool-bezier-select-22.png		\
+	tools/stock-tool-blend-16.png			\
 	tools/stock-tool-blend-22.png			\
+	tools/stock-tool-blur-16.png			\
 	tools/stock-tool-blur-22.png			\
+	tools/stock-tool-brightness-contrast-16.png	\
 	tools/stock-tool-brightness-contrast-22.png	\
+	tools/stock-tool-bucket-fill-16.png		\
 	tools/stock-tool-bucket-fill-22.png		\
+	tools/stock-tool-by-color-select-16.png		\
 	tools/stock-tool-by-color-select-22.png		\
+	tools/stock-tool-clone-16.png			\
 	tools/stock-tool-clone-22.png			\
+	tools/stock-tool-color-balance-16.png		\
 	tools/stock-tool-color-balance-22.png		\
+	tools/stock-tool-color-picker-16.png		\
 	tools/stock-tool-color-picker-22.png		\
+	tools/stock-tool-crop-16.png			\
 	tools/stock-tool-crop-22.png			\
+	tools/stock-tool-curves-16.png			\
 	tools/stock-tool-curves-22.png			\
+	tools/stock-tool-dodge-16.png			\
 	tools/stock-tool-dodge-22.png			\
+	tools/stock-tool-ellipse-select-16.png		\
 	tools/stock-tool-ellipse-select-22.png		\
+	tools/stock-tool-eraser-16.png			\
 	tools/stock-tool-eraser-22.png			\
+	tools/stock-tool-flip-16.png			\
 	tools/stock-tool-flip-22.png			\
+	tools/stock-tool-free-select-16.png		\
 	tools/stock-tool-free-select-22.png		\
+	tools/stock-tool-fuzzy-select-16.png		\
 	tools/stock-tool-fuzzy-select-22.png		\
+	tools/stock-tool-histogram-16.png		\
 	tools/stock-tool-histogram-22.png		\
+	tools/stock-tool-hue-saturation-16.png		\
 	tools/stock-tool-hue-saturation-22.png		\
+	tools/stock-tool-ink-16.png			\
 	tools/stock-tool-ink-22.png			\
+	tools/stock-tool-iscissors-16.png		\
 	tools/stock-tool-iscissors-22.png		\
+	tools/stock-tool-levels-16.png			\
 	tools/stock-tool-levels-22.png			\
+	tools/stock-tool-measure-16.png			\
 	tools/stock-tool-measure-22.png			\
+	tools/stock-tool-move-16.png			\
 	tools/stock-tool-move-22.png			\
+	tools/stock-tool-paintbrush-16.png		\
 	tools/stock-tool-paintbrush-22.png		\
-	tools/stock-tool-path-22.png			\
+	tools/stock-tool-pencil-16.png			\
 	tools/stock-tool-pencil-22.png			\
+	tools/stock-tool-perspective-16.png		\
 	tools/stock-tool-perspective-22.png		\
+	tools/stock-tool-posterize-16.png		\
 	tools/stock-tool-posterize-22.png		\
+	tools/stock-tool-rect-select-16.png		\
 	tools/stock-tool-rect-select-22.png		\
+	tools/stock-tool-rotate-16.png			\
 	tools/stock-tool-rotate-22.png			\
+	tools/stock-tool-scale-16.png			\
 	tools/stock-tool-scale-22.png			\
+	tools/stock-tool-shear-16.png			\
 	tools/stock-tool-shear-22.png			\
+	tools/stock-tool-smudge-16.png			\
 	tools/stock-tool-smudge-22.png			\
+	tools/stock-tool-text-16.png			\
 	tools/stock-tool-text-22.png			\
+	tools/stock-tool-threshold-16.png		\
 	tools/stock-tool-threshold-22.png		\
-	tools/stock-tool-zoom-22.png
+	tools/stock-tool-zoom-16.png			\
+	tools/stock-tool-zoom-22.png			\
+	\
+	tools/stock-tool-path-22.png
 
 STOCK_IMAGES = \
 	$(STOCK_MENU_IMAGES) 	\
