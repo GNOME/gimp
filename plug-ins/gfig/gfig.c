@@ -1557,7 +1557,7 @@ create_file_selection (GFigObj *obj,
 
   if (!window)
     {
-      window = gtk_file_selection_new ("Save gfig drawing");
+      window = gtk_file_selection_new (_("Save Gfig drawing"));
       gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
       gtk_signal_connect (GTK_OBJECT (window), "destroy",
