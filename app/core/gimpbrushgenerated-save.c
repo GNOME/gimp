@@ -101,7 +101,7 @@ GimpBrushGenerated *gimp_brush_generated_new(float radius, float hardness,
 }
 
 GimpBrushGenerated *
-gimp_brush_generated_load (char *file_name)
+gimp_brush_generated_load (const char *file_name)
 {
   GimpBrushGenerated *brush;
   FILE *fp;
@@ -154,7 +154,7 @@ gimp_brush_generated_load (char *file_name)
 
 void
 gimp_brush_generated_save (GimpBrushGenerated *brush, 
-			  char *file_name)
+			  const char *file_name)
 {
 /* WARNING: untested function */
   FILE *fp;
@@ -397,28 +397,28 @@ gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated* brush, float ratio)
 }
 
 float 
-gimp_brush_generated_get_radius (GimpBrushGenerated* brush)
+gimp_brush_generated_get_radius (const GimpBrushGenerated* brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED(brush), -1.0);
   return brush->radius;
 }
 
 float
-gimp_brush_generated_get_hardness (GimpBrushGenerated* brush)
+gimp_brush_generated_get_hardness (const GimpBrushGenerated* brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED(brush), -1.0);
   return brush->hardness;
 }
 
 float
-gimp_brush_generated_get_angle (GimpBrushGenerated* brush)
+gimp_brush_generated_get_angle (const GimpBrushGenerated* brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED(brush), -1.0);
   return brush->angle;
 }
 
 float
-gimp_brush_generated_get_aspect_ratio (GimpBrushGenerated* brush)
+gimp_brush_generated_get_aspect_ratio (const GimpBrushGenerated* brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED(brush), -1.0);
   return brush->aspect_ratio;

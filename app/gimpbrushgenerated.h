@@ -54,10 +54,10 @@ guint gimp_brush_generated_get_type (void);
 GimpBrushGenerated *gimp_brush_generated_new(float radius, float hardness,
 					     float angle, float aspect_ratio);
 
-GimpBrushGenerated *gimp_brush_generated_load (char *file_name);
+GimpBrushGenerated *gimp_brush_generated_load (const char *file_name);
 
 void gimp_brush_generated_save            (GimpBrushGenerated *brush,
-					   char *file_name);
+					   const char *file_name);
 void gimp_brush_generated_freeze          (GimpBrushGenerated *brush);
 void gimp_brush_generated_thaw            (GimpBrushGenerated *brush);
 
@@ -70,9 +70,9 @@ float gimp_brush_generated_set_angle       (GimpBrushGenerated* brush,
 float gimp_brush_generated_set_aspect_ratio(GimpBrushGenerated* brush,
 					    float ratio);
 
-float gimp_brush_generated_get_radius       (GimpBrushGenerated* brush);
-float gimp_brush_generated_get_hardness      (GimpBrushGenerated* brush);
-float gimp_brush_generated_get_angle        (GimpBrushGenerated* brush);
-float gimp_brush_generated_get_aspect_ratio (GimpBrushGenerated* brush);
+float gimp_brush_generated_get_radius       (const GimpBrushGenerated* brush);
+float gimp_brush_generated_get_hardness      (const GimpBrushGenerated* brush);
+float gimp_brush_generated_get_angle        (const GimpBrushGenerated* brush);
+float gimp_brush_generated_get_aspect_ratio (const GimpBrushGenerated* brush);
 
 #endif  /*  __GIMP_BRUSH_GENERATED_H__  */

@@ -365,7 +365,7 @@ paint_funcs_free ()
 
 void
 color_pixels (unsigned char *dest,
-	      unsigned char *color,
+	      const unsigned char *color,
 	      int            w,
 	      int            bytes)
 {
@@ -428,8 +428,8 @@ color_pixels (unsigned char *dest,
 
 
 void
-blend_pixels (unsigned char *src1,
-	      unsigned char *src2,
+blend_pixels (const unsigned char *src1,
+	      const unsigned char *src2,
 	      unsigned char *dest,
 	      int            blend,
 	      int            w,
@@ -456,9 +456,9 @@ blend_pixels (unsigned char *src1,
 
 
 void
-shade_pixels (unsigned char *src,
+shade_pixels (const unsigned char *src,
 	      unsigned char *dest,
-	      unsigned char *col,
+	      const unsigned char *col,
 	      int            blend,
 	      int            w,
 	      int            bytes,
@@ -483,14 +483,14 @@ shade_pixels (unsigned char *src,
 
 
 void
-extract_alpha_pixels (unsigned char *src,
-		      unsigned char *mask,
+extract_alpha_pixels (const unsigned char *src,
+		      const unsigned char *mask,
 		      unsigned char *dest,
 		      int            w,
 		      int            bytes)
 {
   int alpha;
-  unsigned char * m;
+  const unsigned char * m;
 
   /*  printf("[eap:%d]", w);*/
 
@@ -512,19 +512,19 @@ extract_alpha_pixels (unsigned char *src,
 
 
 void
-darken_pixels (unsigned char *src1,
-	       unsigned char *src2,
+darken_pixels (const unsigned char *src1,
+	       const unsigned char *src2,
 	       unsigned char *dest,
 	       int            length,
-	       int            b1,
-	       int            b2,
-	       int            ha1,
-	       int            ha2)
+	       int            bytes1,
+	       int            bytes2,
+	       int            has_alpha1,
+	       int            has_alpha2)
 {
   int b, alpha;
   unsigned char s1, s2;
 
-  alpha = (ha1 || ha2) ? MAXIMUM (b1, b2) - 1 : b1;
+  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
   while (length--)
     {
@@ -535,32 +535,32 @@ darken_pixels (unsigned char *src1,
 	  dest[b] = (s1 < s2) ? s1 : s2;
 	}
 
-      if (ha1 && ha2)
+      if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
+      else if (has_alpha2)
 	dest[alpha] = src2[alpha];
 
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
     }
 }
 
 
 void
-lighten_pixels (unsigned char *src1,
-		unsigned char *src2,
+lighten_pixels (const unsigned char *src1,
+		const unsigned char *src2,
 		unsigned char *dest,
 		int            length,
-		int            b1,
-		int            b2,
-		int            ha1,
-		int            ha2)
+		int            bytes1,
+		int            bytes2,
+		int            has_alpha1,
+		int            has_alpha2)
 {
   int b, alpha;
   unsigned char s1, s2;
 
-  alpha = (ha1 || ha2) ? MAXIMUM (b1, b2) - 1 : b1;
+  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
   while (length--)
     {
@@ -571,28 +571,28 @@ lighten_pixels (unsigned char *src1,
 	  dest[b] = (s1 < s2) ? s2 : s1;
 	}
 
-      if (ha1 && ha2)
+      if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
+      else if (has_alpha2)
 	dest[alpha] = src2[alpha];
 
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
     }
 }
 
 
 void
-hsv_only_pixels (unsigned char *src1,
-		 unsigned char *src2,
+hsv_only_pixels (const unsigned char *src1,
+		 const unsigned char *src2,
 		 unsigned char *dest,
 		 int            mode,
 		 int            length,
 		 int            bytes1,
 		 int            bytes2,
-		 int            ha1,
-		 int            ha2)
+		 int            has_alpha1,
+		 int            has_alpha2)
 {
   int r1, g1, b1;
   int r2, g2, b2;
@@ -623,9 +623,9 @@ hsv_only_pixels (unsigned char *src1,
 
       dest[0] = r1; dest[1] = g1; dest[2] = b1;
 
-      if (ha1 && ha2)
+      if (has_alpha1 && has_alpha2)
 	dest[3] = MIN (src1[3], src2[3]);
-      else if (ha2)
+      else if (has_alpha2)
 	dest[3] = src2[3];
 
       src1 += bytes1;
@@ -636,15 +636,15 @@ hsv_only_pixels (unsigned char *src1,
 
 
 void
-color_only_pixels (unsigned char *src1,
-		   unsigned char *src2,
+color_only_pixels (const unsigned char *src1,
+		   const unsigned char *src2,
 		   unsigned char *dest,
 		   int            mode,
 		   int            length,
 		   int            bytes1,
 		   int            bytes2,
-		   int            ha1,
-		   int            ha2)
+		   int            has_alpha1,
+		   int            has_alpha2)
 {
   int r1, g1, b1;
   int r2, g2, b2;
@@ -662,13 +662,13 @@ color_only_pixels (unsigned char *src1,
       b1 = b2;
 
       /*  set the destination  */
-      hls_to_rgb (&r1, &g1, &b1);
+      hls_to_rgb (&r1, &g1, &bytes1);
 
       dest[0] = r1; dest[1] = g1; dest[2] = b1;
 
-      if (ha1 && ha2)
+      if (has_alpha1 && has_alpha2)
 	dest[3] = MIN (src1[3], src2[3]);
-      else if (ha2)
+      else if (has_alpha2)
 	dest[3] = src2[3];
 
       src1 += bytes1;
@@ -679,49 +679,49 @@ color_only_pixels (unsigned char *src1,
 
 
 void
-multiply_pixels (unsigned char *src1,
-		 unsigned char *src2,
+multiply_pixels (const unsigned char *src1,
+		 const unsigned char *src2,
 		 unsigned char *dest,
 		 int            length,
-		 int            b1,
-		 int            b2,
-		 int            ha1,
-		 int            ha2)
+		 int            bytes1,
+		 int            bytes2,
+		 int            has_alpha1,
+		 int            has_alpha2)
 {
   int alpha, b;
 
-  alpha = (ha1 || ha2) ? MAXIMUM (b1, b2) - 1 : b1;
+  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
       for (b = 0; b < alpha; b++)
 	dest[b] = (src1[b] * src2[b]) / 255;
 
-      if (ha1 && ha2)
+      if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
+      else if (has_alpha2)
 	dest[alpha] = src2[alpha];
 
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
     }
 }
 
 
 void
-divide_pixels (unsigned char *src1,
-		 unsigned char *src2,
+divide_pixels (const unsigned char *src1,
+		 const unsigned char *src2,
 		 unsigned char *dest,
 		 int            length,
-		 int            b1,
-		 int            b2,
-		 int            ha1,
-		 int            ha2)
+		 int            bytes1,
+		 int            bytes2,
+		 int            has_alpha1,
+		 int            has_alpha2)
 {
   int alpha, b, result;
 
-  alpha = (ha1 || ha2) ? MAXIMUM (b1, b2) - 1 : b1;
+  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
@@ -730,63 +730,63 @@ divide_pixels (unsigned char *src1,
         dest[b] = MINIMUM(result, 255);
       }
 
-      if (ha1 && ha2)
+      if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
+      else if (has_alpha2)
 	dest[alpha] = src2[alpha];
 
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
     }
 }
 
 
 void
-screen_pixels (unsigned char *src1,
-	       unsigned char *src2,
+screen_pixels (const unsigned char *src1,
+	       const unsigned char *src2,
 	       unsigned char *dest,
 	       int            length,
-	       int            b1,
-	       int            b2,
-	       int            ha1,
-	       int            ha2)
+	       int            bytes1,
+	       int            bytes2,
+	       int            has_alpha1,
+	       int            has_alpha2)
 {
   int alpha, b;
 
-  alpha = (ha1 || ha2) ? MAXIMUM (b1, b2) - 1 : b1;
+  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
       for (b = 0; b < alpha; b++)
 	dest[b] = 255 - ((255 - src1[b]) * (255 - src2[b])) / 255;
 
-      if (ha1 && ha2)
+      if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
+      else if (has_alpha2)
 	dest[alpha] = src2[alpha];
 
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
     }
 }
 
 
 void
-overlay_pixels (unsigned char *src1,
-		unsigned char *src2,
+overlay_pixels (const unsigned char *src1,
+		const unsigned char *src2,
 		unsigned char *dest,
 		int            length,
-		int            b1,
-		int            b2,
-		int            ha1,
-		int            ha2)
+		int            bytes1,
+		int            bytes2,
+		int            has_alpha1,
+		int            has_alpha2)
 {
   int alpha, b;
   int screen, mult;
 
-  alpha = (ha1 || ha2) ? MAXIMUM (b1, b2) - 1 : b1;
+  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
@@ -797,32 +797,32 @@ overlay_pixels (unsigned char *src1,
 	  dest[b] = (screen * src1[b] + mult * (255 - src1[b])) / 255;
 	}
 
-      if (ha1 && ha2)
+      if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
+      else if (has_alpha2)
 	dest[alpha] = src2[alpha];
 
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
     }
 }
 
 
 void
-add_pixels (unsigned char *src1,
-	    unsigned char *src2,
+add_pixels (const unsigned char *src1,
+	    const unsigned char *src2,
 	    unsigned char *dest,
 	    int            length,
-	    int            b1,
-	    int            b2,
-	    int            ha1,
-	    int            ha2)
+	    int            bytes1,
+	    int            bytes2,
+	    int            has_alpha1,
+	    int            has_alpha2)
 {
   int alpha, b;
   int sum;
 
-  alpha = (ha1 || ha2) ? MAXIMUM (b1, b2) - 1 : b1;
+  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
@@ -834,32 +834,32 @@ add_pixels (unsigned char *src1,
 	  /* dest[b] = (sum > 255) ? 255 : sum; */ /* older, little slower */
 	}
 
-      if (ha1 && ha2)
+      if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
+      else if (has_alpha2)
 	dest[alpha] = src2[alpha];
 
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
     }
 }
 
 
 void
-subtract_pixels (unsigned char *src1,
-		 unsigned char *src2,
+subtract_pixels (const unsigned char *src1,
+		 const unsigned char *src2,
 		 unsigned char *dest,
 		 int            length,
-		 int            b1,
-		 int            b2,
-		 int            ha1,
-		 int            ha2)
+		 int            bytes1,
+		 int            bytes2,
+		 int            has_alpha1,
+		 int            has_alpha2)
 {
   int alpha, b;
   int diff;
 
-  alpha = (ha1 || ha2) ? MAXIMUM (b1, b2) - 1 : b1;
+  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
@@ -869,32 +869,32 @@ subtract_pixels (unsigned char *src1,
 	  dest[b] = (diff < 0) ? 0 : diff;
 	}
 
-      if (ha1 && ha2)
+      if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
+      else if (has_alpha2)
 	dest[alpha] = src2[alpha];
 
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
     }
 }
 
 
 void
-difference_pixels (unsigned char *src1,
-		   unsigned char *src2,
+difference_pixels (const unsigned char *src1,
+		   const unsigned char *src2,
 		   unsigned char *dest,
 		   int            length,
-		   int            b1,
-		   int            b2,
-		   int            ha1,
-		   int            ha2)
+		   int            bytes1,
+		   int            bytes2,
+		   int            has_alpha1,
+		   int            has_alpha2)
 {
   int alpha, b;
   int diff;
 
-  alpha = (ha1 || ha2) ? MAXIMUM (b1, b2) - 1 : b1;
+  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
@@ -904,20 +904,20 @@ difference_pixels (unsigned char *src1,
 	  dest[b] = (diff < 0) ? -diff : diff;
 	}
 
-      if (ha1 && ha2)
+      if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
+      else if (has_alpha2)
 	dest[alpha] = src2[alpha];
 
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
     }
 }
 
 
 void
-dissolve_pixels (unsigned char *src,
+dissolve_pixels (const unsigned char *src,
 		 unsigned char *dest,
 		 int            x,
 		 int            y,
@@ -964,8 +964,8 @@ replace_pixels (unsigned char *src1,
 		int            length,
 		int            opacity,
 		int           *affect,
-		int            b1,
-		int            b2)
+		int            bytes1,
+		int            bytes2)
 {
   int alpha;
   int b;
@@ -974,13 +974,13 @@ replace_pixels (unsigned char *src1,
   int s1_a, s2_a;
   int new_val;
 
-  if (b1 != b2)
+  if (bytes1 != bytes2)
     {
       g_message ("replace_pixels only works on commensurate pixel regions");
       return;
     }
 
-  alpha = b1 - 1;
+  alpha = bytes1 - 1;
   norm_opacity = opacity * (1.0 / 65025.0);
 
   while (length --)
@@ -1002,9 +1002,9 @@ replace_pixels (unsigned char *src1,
 	  dest[b] = affect[b] ? MIN (new_val, 255) : src1[b];
 	}
       dest[alpha] = affect[alpha] ? a_val + 0.5: s1_a;
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
       mask++;
     }
 }
@@ -1027,7 +1027,7 @@ swap_pixels (unsigned char *src,
 
 
 void
-scale_pixels (unsigned char *src,
+scale_pixels (const unsigned char *src,
 	      unsigned char *dest,
 	      int            length,
 	      int            scale)
@@ -1038,7 +1038,7 @@ scale_pixels (unsigned char *src,
 
 
 void
-add_alpha_pixels (unsigned char *src,
+add_alpha_pixels (const unsigned char *src,
 		  unsigned char *dest,
 		  int            length,
 		  int            bytes)
@@ -1060,9 +1060,9 @@ add_alpha_pixels (unsigned char *src,
 
 
 void
-flatten_pixels (unsigned char *src,
+flatten_pixels (const unsigned char *src,
 		unsigned char *dest,
-		unsigned char *bg,
+		const unsigned char *bg,
 		int            length,
 		int            bytes)
 {
@@ -1082,7 +1082,7 @@ flatten_pixels (unsigned char *src,
 
 
 void
-gray_to_rgb_pixels (unsigned char *src,
+gray_to_rgb_pixels (const unsigned char *src,
 		    unsigned char *dest,
 		    int            length,
 		    int            bytes)
@@ -1110,7 +1110,7 @@ gray_to_rgb_pixels (unsigned char *src,
 
 void
 apply_mask_to_alpha_channel (unsigned char *src,
-			     unsigned char *mask,
+			     const unsigned char *mask,
 			     int            opacity,
 			     int            length,
 			     int            bytes)
@@ -1128,7 +1128,7 @@ apply_mask_to_alpha_channel (unsigned char *src,
 
 void
 combine_mask_and_alpha_channel (unsigned char *src,
-				unsigned char *mask,
+				const unsigned char *mask,
 				int            opacity,
 				int            length,
 				int            bytes)
@@ -1147,7 +1147,7 @@ combine_mask_and_alpha_channel (unsigned char *src,
 
 
 void
-copy_gray_to_inten_a_pixels (unsigned char *src,
+copy_gray_to_inten_a_pixels (const unsigned char *src,
 			     unsigned char *dest,
 			     int            length,
 			     int            bytes)
@@ -1169,7 +1169,7 @@ copy_gray_to_inten_a_pixels (unsigned char *src,
 
 
 void
-initial_channel_pixels (unsigned char *src,
+initial_channel_pixels (const unsigned char *src,
 			unsigned char *dest,
 			int            length,
 			int            bytes)
@@ -1191,9 +1191,9 @@ initial_channel_pixels (unsigned char *src,
 
 
 void
-initial_indexed_pixels (unsigned char *src,
+initial_indexed_pixels (const unsigned char *src,
 			unsigned char *dest,
-			unsigned char *cmap,
+			const unsigned char *cmap,
 			int            length)
 {
   int col_index;
@@ -1213,16 +1213,16 @@ initial_indexed_pixels (unsigned char *src,
 
 
 void
-initial_indexed_a_pixels (unsigned char *src,
+initial_indexed_a_pixels (const unsigned char *src,
 			  unsigned char *dest,
-			  unsigned char *mask,
-			  unsigned char *cmap,
+			  const unsigned char *mask,
+			  const unsigned char *cmap,
 			  int            opacity,
 			  int            length)
 {
   int col_index;
   unsigned char new_alpha;
-  unsigned char * m;
+  const unsigned char * m;
 
   if (mask)
     m = mask;
@@ -1247,16 +1247,16 @@ initial_indexed_a_pixels (unsigned char *src,
 
 
 void
-initial_inten_pixels (unsigned char *src,
+initial_inten_pixels (const unsigned char *src,
 		      unsigned char *dest,
-		      unsigned char *mask,
+		      const unsigned char *mask,
 		      int            opacity,
-		      int           *affect,
+		      const int     *affect,
 		      int            length,
 		      int            bytes)
 {
   int b, dest_bytes;
-  unsigned char * m;
+  const unsigned char * m;
 
   if (mask)
     m = mask;
@@ -1301,16 +1301,16 @@ initial_inten_pixels (unsigned char *src,
 
 
 void
-initial_inten_a_pixels (unsigned char *src,
-			unsigned char *dest,
-			unsigned char *mask,
-			int            opacity,
-			int           *affect,
-			int            length,
-			int            bytes)
+initial_inten_a_pixels (const unsigned char *src,
+			unsigned char       *dest,
+			const unsigned char *mask,
+			int                  opacity,
+			const int           *affect,
+			int                  length,
+			int                  bytes)
 {
   int alpha, b;
-  unsigned char * m;
+  const unsigned char * m;
 
   alpha = bytes - 1;
   if (mask)
@@ -1348,18 +1348,18 @@ initial_inten_a_pixels (unsigned char *src,
 
 
 void
-combine_indexed_and_indexed_pixels (unsigned char *src1,
-				    unsigned char *src2,
-				    unsigned char *dest,
-				    unsigned char *mask,
-				    int            opacity,
-				    int           *affect,
-				    int            length,
-				    int            bytes)
+combine_indexed_and_indexed_pixels (const unsigned char *src1,
+				    const unsigned char *src2,
+				    unsigned char       *dest,
+				    const unsigned char *mask,
+				    int                  opacity,
+				    const int           *affect,
+				    int                  length,
+				    int                  bytes)
 {
   int b;
   unsigned char new_alpha;
-  unsigned char * m;
+  const unsigned char * m;
 
   if (mask)
     {
@@ -1396,18 +1396,18 @@ combine_indexed_and_indexed_pixels (unsigned char *src1,
 
 
 void
-combine_indexed_and_indexed_a_pixels (unsigned char *src1,
-				      unsigned char *src2,
-				      unsigned char *dest,
-				      unsigned char *mask,
-				      int            opacity,
-				      int           *affect,
-				      int            length,
-				      int            bytes)
+combine_indexed_and_indexed_a_pixels (const unsigned char *src1,
+				      const unsigned char *src2,
+				      unsigned char       *dest,
+				      const unsigned char *mask,
+				      int                  opacity,
+				      const int           *affect,
+				      int                  length,
+				      int                  bytes)
 {
   int b, alpha;
   unsigned char new_alpha;
-  unsigned char * m;
+  const unsigned char * m;
   int src2_bytes;
 
   alpha = 1;
@@ -1448,18 +1448,18 @@ combine_indexed_and_indexed_a_pixels (unsigned char *src1,
 
 
 void
-combine_indexed_a_and_indexed_a_pixels (unsigned char *src1,
-					unsigned char *src2,
-					unsigned char *dest,
-					unsigned char *mask,
-					int            opacity,
-					int           *affect,
-					int            length,
-					int            bytes)
+combine_indexed_a_and_indexed_a_pixels (const unsigned char *src1,
+					const unsigned char *src2,
+					unsigned char       *dest,
+					const unsigned char *mask,
+					int                  opacity,
+					const int           *affect,
+					int                  length,
+					int                  bytes)
 {
   int b, alpha;
   unsigned char new_alpha;
-  unsigned char * m;
+  const unsigned char * m;
 
   alpha = 1;
 
@@ -1502,14 +1502,14 @@ combine_indexed_a_and_indexed_a_pixels (unsigned char *src1,
 
 
 void
-combine_inten_a_and_indexed_a_pixels (unsigned char *src1,
-				      unsigned char *src2,
-				      unsigned char *dest,
-				      unsigned char *mask,
-				      unsigned char *cmap,
-				      int            opacity,
-				      int            length,
-				      int            bytes)
+combine_inten_a_and_indexed_a_pixels (const unsigned char *src1,
+				      const unsigned char *src2,
+				      unsigned char       *dest,
+				      const unsigned char *mask,
+				      const unsigned char *cmap,
+				      int                  opacity,
+				      int                  length,
+				      int                  bytes)
 {
   int b, alpha;
   unsigned char new_alpha;
@@ -1521,7 +1521,7 @@ combine_inten_a_and_indexed_a_pixels (unsigned char *src1,
 
   if (mask)
     {
-      unsigned char *m = mask;
+      const unsigned char *m = mask;
       while (length --)
 	{
 	  new_alpha = (src2[alpha] * *m * opacity) / 65025;
@@ -1564,18 +1564,18 @@ combine_inten_a_and_indexed_a_pixels (unsigned char *src1,
 
 
 void
-combine_inten_and_inten_pixels (unsigned char *src1,
-				unsigned char *src2,
-				unsigned char *dest,
-				unsigned char *mask,
-				int            opacity,
-				int           *affect,
-				int            length,
-				int            bytes)
+combine_inten_and_inten_pixels (const unsigned char *src1,
+				const unsigned char *src2,
+				unsigned char       *dest,
+				const unsigned char *mask,
+				int                  opacity,
+				const int           *affect,
+				int                  length,
+				int                  bytes)
 {
   int b;
   unsigned char new_alpha;
-  unsigned char * m;
+  const unsigned char * m;
 
   if (mask)
     {
@@ -1616,19 +1616,19 @@ combine_inten_and_inten_pixels (unsigned char *src1,
 
 
 void
-combine_inten_and_inten_a_pixels (unsigned char *src1,
-				  unsigned char *src2,
-				  unsigned char *dest,
-				  unsigned char *mask,
-				  int            opacity,
-				  int           *affect,
-				  int            length,
-				  int            bytes)
+combine_inten_and_inten_a_pixels (const unsigned char *src1,
+				  const unsigned char *src2,
+				  unsigned char       *dest,
+				  const unsigned char *mask,
+				  int                  opacity,
+				  const int           *affect,
+				  int                  length,
+				  int                  bytes)
 {
   int alpha, b;
   int src2_bytes;
   unsigned char new_alpha;
-  unsigned char * m;
+  const unsigned char * m;
 
   alpha = bytes;
   src2_bytes = bytes + 1;
@@ -1742,21 +1742,21 @@ combine_inten_and_inten_a_pixels (unsigned char *src1,
 	  }*/
 	
 void
-combine_inten_a_and_inten_pixels (unsigned char *src1,
-				  unsigned char *src2,
-				  unsigned char *dest,
-				  unsigned char *mask,
-				  int            opacity,
-				  int           *affect,
-				  int            mode_affect,  /*  how does the combination mode affect alpha?  */
-				  int            length,
-				  int            bytes)  /*  4 or 2 depending on RGBA or GRAYA  */
+combine_inten_a_and_inten_pixels (const unsigned char *src1,
+				  const unsigned char *src2,
+				  unsigned char       *dest,
+				  const unsigned char *mask,
+				  int                  opacity,
+				  const int           *affect,
+				  int                  mode_affect,  /*  how does the combination mode affect alpha?  */
+				  int                  length,
+				  int                  bytes)  /*  4 or 2 depending on RGBA or GRAYA  */
 {
   int alpha, b;
   int src2_bytes;
   unsigned char src2_alpha;
   unsigned char new_alpha;
-  unsigned char * m;
+  const unsigned char * m;
   float ratio, compl_ratio;
 
   src2_bytes = bytes - 1;
@@ -1836,20 +1836,20 @@ combine_inten_a_and_inten_pixels (unsigned char *src1,
 
 
 void
-combine_inten_a_and_inten_a_pixels (unsigned char *src1,
-				    unsigned char *src2,
-				    unsigned char *dest,
-				    unsigned char *mask,
-				    int           opacity,
-				    int          *affect,
-				    int           mode_affect,  /*  how does the combination mode affect alpha?  */
-				    int           length,
-				    int           bytes)  /*  4 or 2 depending on RGBA or GRAYA  */
+combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
+				    const unsigned char *src2,
+				    unsigned char       *dest,
+				    const unsigned char *mask,
+				    int                 opacity,
+				    const int          *affect,
+				    int                 mode_affect,  /*  how does the combination mode affect alpha?  */
+				    int                 length,
+				    int                 bytes)  /*  4 or 2 depending on RGBA or GRAYA  */
 {
   int alpha, b;
   unsigned char src2_alpha;
   unsigned char new_alpha;
-  unsigned char * m;
+  const unsigned char * m;
   float ratio, compl_ratio;
 
   alpha = bytes - 1;
@@ -1963,13 +1963,13 @@ combine_inten_a_and_inten_a_pixels (unsigned char *src1,
 #undef alphify
 
 void
-combine_inten_a_and_channel_mask_pixels (unsigned char *src,
-					 unsigned char *channel,
-					 unsigned char *dest,
-					 unsigned char *col,
-					 int            opacity,
-					 int            length,
-					 int            bytes)
+combine_inten_a_and_channel_mask_pixels (const unsigned char *src,
+					 const unsigned char *channel,
+					 unsigned char       *dest,
+					 const unsigned char *col,
+					 int                  opacity,
+					 int                  length,
+					 int                  bytes)
 {
   int alpha, b;
   unsigned char channel_alpha;
@@ -2006,13 +2006,13 @@ combine_inten_a_and_channel_mask_pixels (unsigned char *src,
 
 
 void
-combine_inten_a_and_channel_selection_pixels (unsigned char *src,
-					      unsigned char *channel,
-					      unsigned char *dest,
-					      unsigned char *col,
-					      int            opacity,
-					      int            length,
-					      int            bytes)
+combine_inten_a_and_channel_selection_pixels (const unsigned char *src,
+					      const unsigned char *channel,
+					      unsigned char       *dest,
+					      const unsigned char *col,
+					      int                  opacity,
+					      int                  length,
+					      int                  bytes)
 {
   int alpha, b;
   unsigned char channel_alpha;
@@ -2049,23 +2049,23 @@ combine_inten_a_and_channel_selection_pixels (unsigned char *src,
 
 
 void
-behind_inten_pixels (unsigned char *src1,
-		     unsigned char *src2,
-		     unsigned char *dest,
-		     unsigned char *mask,
-		     int            opacity,
-		     int           *affect,
-		     int            length,
-		     int            b1,
-		     int            b2,
-		     int            ha1,
-		     int            ha2)
+behind_inten_pixels (const unsigned char *src1,
+		     const unsigned char *src2,
+		     unsigned char       *dest,
+		     const unsigned char *mask,
+		     int                  opacity,
+		     const int           *affect,
+		     int                  length,
+		     int                  bytes1,
+		     int                  bytes2,
+		     int                  has_alpha1,
+		     int                  has_alpha2)
 {
   int alpha, b;
   unsigned char src1_alpha;
   unsigned char src2_alpha;
   unsigned char new_alpha;
-  unsigned char * m;
+  const unsigned char * m;
   float ratio, compl_ratio;
 
   if (mask)
@@ -2074,7 +2074,7 @@ behind_inten_pixels (unsigned char *src1,
     m = &no_mask;
 
   /*  the alpha channel  */
-  alpha = b1 - 1;
+  alpha = bytes1 - 1;
 
   while (length --)
     {
@@ -2097,31 +2097,31 @@ behind_inten_pixels (unsigned char *src1,
       if (mask)
 	m++;
 
-      src1 += b1;
-      src2 += b2;
-      dest += b1;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes1;
     }
 }
 
 
 void
-behind_indexed_pixels (unsigned char *src1,
-		       unsigned char *src2,
-		       unsigned char *dest,
-		       unsigned char *mask,
-		       int            opacity,
-		       int           *affect,
-		       int            length,
-		       int            b1,
-		       int            b2,
-		       int            ha1,
-		       int            ha2)
+behind_indexed_pixels (const unsigned char *src1,
+		       const unsigned char *src2,
+		       unsigned char       *dest,
+		       const unsigned char *mask,
+		       int                  opacity,
+		       const int           *affect,
+		       int                  length,
+		       int                  bytes1,
+		       int                  bytes2,
+		       int                  has_alpha1,
+		       int                  has_alpha2)
 {
   int alpha, b;
   unsigned char src1_alpha;
   unsigned char src2_alpha;
   unsigned char new_alpha;
-  unsigned char * m;
+  const unsigned char * m;
 
   if (mask)
     m = mask;
@@ -2129,7 +2129,7 @@ behind_indexed_pixels (unsigned char *src1,
     m = &no_mask;
 
   /*  the alpha channel  */
-  alpha = b1 - 1;
+  alpha = bytes1 - 1;
 
   while (length --)
     {
@@ -2137,43 +2137,43 @@ behind_indexed_pixels (unsigned char *src1,
       src2_alpha = (src2[alpha] * *m * opacity) / 65025;
       new_alpha = (src2_alpha > 127) ? OPAQUE_OPACITY : TRANSPARENT_OPACITY;
 
-      for (b = 0; b < b1; b++)
+      for (b = 0; b < bytes1; b++)
 	dest[b] = (affect[b] && new_alpha == OPAQUE_OPACITY && (src1_alpha > 127)) ?
 	  src2[b] : src1[b];
 
       if (mask)
 	m++;
 
-      src1 += b1;
-      src2 += b2;
-      dest += b1;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes1;
     }
 }
 
 
 void
-replace_inten_pixels (unsigned char *src1,
-		      unsigned char *src2,
-		      unsigned char *dest,
-		      unsigned char *mask,
-		      int            opacity,
-		      int           *affect,
-		      int            length,
-		      int            b1,
-		      int            b2,
-		      int            ha1,
-		      int            ha2)
+replace_inten_pixels (const unsigned char *src1,
+		      const unsigned char *src2,
+		      unsigned char       *dest,
+		      const unsigned char *mask,
+		      int                  opacity,
+		      const int           *affect,
+		      int                  length,
+		      int                  bytes1,
+		      int                  bytes2,
+		      int                  has_alpha1,
+		      int                  has_alpha2)
 {
   int bytes, b;
   unsigned char mask_alpha;
-  unsigned char * m;
+  const unsigned char * m;
 
   if (mask)
     m = mask;
   else
     m = &no_mask;
 
-  bytes = MINIMUM (b1, b2);
+  bytes = MINIMUM (bytes1, bytes2);
   while (length --)
     {
       mask_alpha = (*m * opacity) / 255;
@@ -2183,42 +2183,42 @@ replace_inten_pixels (unsigned char *src1,
 	  (src2[b] * mask_alpha + src1[b] * (255 - mask_alpha)) / 255 :
 	src1[b];
 
-      if (ha1 && !ha2)
+      if (has_alpha1 && !has_alpha2)
 	dest[b] = src1[b];
 
       if (mask)
 	m++;
 
-      src1 += b1;
-      src2 += b2;
-      dest += b1;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes1;
     }
 }
 
 
 void
-replace_indexed_pixels (unsigned char *src1,
-			unsigned char *src2,
-			unsigned char *dest,
-			unsigned char *mask,
-			int            opacity,
-			int           *affect,
-			int            length,
-			int            b1,
-			int            b2,
-			int            ha1,
-			int            ha2)
+replace_indexed_pixels (const unsigned char *src1,
+			const unsigned char *src2,
+			unsigned char       *dest,
+			const unsigned char *mask,
+			int                  opacity,
+			const int           *affect,
+			int                  length,
+			int                  bytes1,
+			int                  bytes2,
+			int                  has_alpha1,
+			int                  has_alpha2)
 {
   int bytes, b;
   unsigned char mask_alpha;
-  unsigned char * m;
+  const unsigned char * m;
 
   if (mask)
     m = mask;
   else
     m = &no_mask;
 
-  bytes = MINIMUM (b1, b2);
+  bytes = MINIMUM (bytes1, bytes2);
   while (length --)
     {
       mask_alpha = (*m * opacity) / 255;
@@ -2227,32 +2227,32 @@ replace_indexed_pixels (unsigned char *src1,
 	dest[b] = (affect[b] && mask_alpha) ?
 	  src2[b] : src1[b];
 
-      if (ha1 && !ha2)
+      if (has_alpha1 && !has_alpha2)
 	dest[b] = src1[b];
 
       if (mask)
 	m++;
 
-      src1 += b1;
-      src2 += b2;
-      dest += b1;
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes1;
     }
 }
 
 
 void
-erase_inten_pixels (unsigned char *src1,
-		    unsigned char *src2,
-		    unsigned char *dest,
-		    unsigned char *mask,
-		    int            opacity,
-		    int           *affect,
-		    int            length,
-		    int            bytes)
+erase_inten_pixels (const unsigned char *src1,
+		    const unsigned char *src2,
+		    unsigned char       *dest,
+		    const unsigned char *mask,
+		    int                  opacity,
+		    const int           *affect,
+		    int                  length,
+		    int                  bytes)
 {
   int alpha, b;
   unsigned char src2_alpha;
-  unsigned char * m;
+  const unsigned char * m;
 
   if (mask)
     m = mask;
@@ -2279,18 +2279,18 @@ erase_inten_pixels (unsigned char *src1,
 
 
 void
-erase_indexed_pixels (unsigned char *src1,
-		      unsigned char *src2,
-		      unsigned char *dest,
-		      unsigned char *mask,
-		      int            opacity,
-		      int           *affect,
-		      int            length,
-		      int            bytes)
+erase_indexed_pixels (const unsigned char *src1,
+		      const unsigned char *src2,
+		      unsigned char       *dest,
+		      const unsigned char *mask,
+		      int                  opacity,
+		      const int           *affect,
+		      int                  length,
+		      int                  bytes)
 {
   int alpha, b;
   unsigned char src2_alpha;
-  unsigned char * m;
+  const unsigned char * m;
 
   if (mask)
     m = mask;
@@ -2318,17 +2318,17 @@ erase_indexed_pixels (unsigned char *src1,
 
 void
 extract_from_inten_pixels (unsigned char *src,
-			   unsigned char *dest,
-			   unsigned char *mask,
-			   unsigned char *bg,
-			   int            cut,
-			   int            length,
-			   int            bytes,
-			   int            has_alpha)
+			   unsigned char       *dest,
+			   const unsigned char *mask,
+			   const unsigned char *bg,
+			   int                  cut,
+			   int                  length,
+			   int                  bytes,
+			   int                  has_alpha)
 {
   int b, alpha;
   int dest_bytes;
-  unsigned char * m;
+  const unsigned char * m;
 
   if (mask)
     m = mask;
@@ -2366,19 +2366,19 @@ extract_from_inten_pixels (unsigned char *src,
 
 
 void
-extract_from_indexed_pixels (unsigned char *src,
-			     unsigned char *dest,
-			     unsigned char *mask,
-			     unsigned char *cmap,
-			     unsigned char *bg,
-			     int            cut,
-			     int            length,
-			     int            bytes,
-			     int            has_alpha)
+extract_from_indexed_pixels (unsigned char       *src,
+			     unsigned char       *dest,
+			     const unsigned char *mask,
+			     const unsigned char *cmap,
+			     const unsigned char *bg,
+			     int                  cut,
+			     int                  length,
+			     int                  bytes,
+			     int                  has_alpha)
 {
   int b;
   int index;
-  unsigned char * m;
+  const unsigned char * m;
   int t;
 
   if (mask)
@@ -2415,10 +2415,10 @@ extract_from_indexed_pixels (unsigned char *src,
 
 
 void
-map_to_color (int            src_type,
-	      unsigned char *cmap,
-	      unsigned char *src,
-	      unsigned char *rgb)
+map_to_color (int                  src_type,
+	      const unsigned char *cmap,
+	      const unsigned char *src,
+	      unsigned char       *rgb)
 {
   switch (src_type)
     {
@@ -2446,7 +2446,7 @@ map_to_color (int            src_type,
 
 
 int
-map_rgb_to_indexed (unsigned char *cmap,
+map_rgb_to_indexed (const unsigned char *cmap,
 		    int            num_cols,
 		    GimpImage*     gimage,
 		    int            r,
@@ -2470,7 +2470,7 @@ map_rgb_to_indexed (unsigned char *cmap,
   /*  Hash table lookup miss  */
   else
     {
-      unsigned char *col;
+      const unsigned char *col;
       int diff, sum, max;
       int i;
 
@@ -2512,22 +2512,22 @@ map_rgb_to_indexed (unsigned char *cmap,
 
 
 void
-color_region (PixelRegion   *src,
-	      unsigned char *col)
+color_region (PixelRegion   *dest,
+	      const unsigned char *col)
 {
   int h;
   unsigned char * s;
   void * pr;
 
-  for (pr = pixel_regions_register (1, src); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (1, dest); pr != NULL; pr = pixel_regions_process (pr))
     {
-      h = src->h;
-      s = src->data;
+      h = dest->h;
+      s = dest->data;
 
       while (h--)
 	{
-	  color_pixels (s, col, src->w, src->bytes);
-	  s += src->rowstride;
+	  color_pixels (s, col, dest->w, dest->bytes);
+	  s += dest->rowstride;
 	}
     }
 }
@@ -4455,7 +4455,7 @@ combine_regions (PixelRegion   *src1,
 		 int            type)
 {
   int h;
-  int ha1, ha2;
+  int has_alpha1, has_alpha2;
   int combine;
   int mode_affect;
   unsigned char * s, * s1, * s2;
@@ -4470,23 +4470,23 @@ combine_regions (PixelRegion   *src1,
     {
     case COMBINE_INTEN_INTEN:
     case COMBINE_INDEXED_INDEXED:
-      ha1 = ha2 = 0;
+      has_alpha1 = has_alpha2 = 0;
       break;
     case COMBINE_INTEN_A_INTEN:
-      ha1 = 1;
-      ha2 = 0;
+      has_alpha1 = 1;
+      has_alpha2 = 0;
       break;
     case COMBINE_INTEN_INTEN_A:
     case COMBINE_INDEXED_INDEXED_A:
-      ha1 = 0;
-      ha2 = 1;
+      has_alpha1 = 0;
+      has_alpha2 = 1;
       break;
     case COMBINE_INTEN_A_INTEN_A:
     case COMBINE_INDEXED_A_INDEXED_A:
-      ha1 = ha2 = 1;
+      has_alpha1 = has_alpha2 = 1;
       break;
     default:
-      ha1 = ha2 = 0;
+      has_alpha1 = has_alpha2 = 0;
     }
 
   buf = paint_funcs_get_buffer (src1->w * (src1->bytes + 1));
@@ -4515,7 +4515,7 @@ combine_regions (PixelRegion   *src1,
 	    case COMBINE_INDEXED_INDEXED_A:
 	    case COMBINE_INDEXED_A_INDEXED_A:
 	      /*  Now, apply the paint mode--for indexed images  */
-	      combine = apply_indexed_layer_mode (s1, s2, &s, mode, ha1, ha2);
+	      combine = apply_indexed_layer_mode (s1, s2, &s, mode, has_alpha1, has_alpha2);
 	      break;
 
 	    case COMBINE_INTEN_INTEN_A:
@@ -4524,7 +4524,7 @@ combine_regions (PixelRegion   *src1,
 	    case COMBINE_INTEN_A_INTEN_A:
 	      /*  Now, apply the paint mode  */
 	      combine = apply_layer_mode (s1, s2, &s, src1->x, src1->y + h, opacity, src1->w, mode,
-					  src1->bytes, src2->bytes, ha1, ha2, &mode_affect);
+					  src1->bytes, src2->bytes, has_alpha1, has_alpha2, &mode_affect);
 	      break;
 
 	    default:
@@ -4593,25 +4593,25 @@ combine_regions (PixelRegion   *src1,
 	    case BEHIND_INTEN:
 	      behind_inten_pixels (s1, s, d, m, opacity,
 				   affect, src1->w, src1->bytes,
-				   src2->bytes, ha1, ha2);
+				   src2->bytes, has_alpha1, has_alpha2);
 	      break;
 
 	    case BEHIND_INDEXED:
 	      behind_indexed_pixels (s1, s, d, m, opacity,
 				     affect, src1->w, src1->bytes,
-				     src2->bytes, ha1, ha2);
+				     src2->bytes, has_alpha1, has_alpha2);
 	      break;
 
 	    case REPLACE_INTEN:
 	      replace_inten_pixels (s1, s, d, m, opacity,
 				    affect, src1->w, src1->bytes,
-				    src2->bytes, ha1, ha2);
+				    src2->bytes, has_alpha1, has_alpha2);
 	      break;
 
 	    case REPLACE_INDEXED:
 	      replace_indexed_pixels (s1, s, d, m, opacity,
 				      affect, src1->w, src1->bytes,
-				      src2->bytes, ha1, ha2);
+				      src2->bytes, has_alpha1, has_alpha2);
 	      break;
 
 	    case ERASE_INTEN:
@@ -4966,19 +4966,19 @@ apply_layer_mode (unsigned char  *src1,
 		  int             opacity,
 		  int             length,
 		  int             mode,
-		  int             b1,   /* bytes */
-		  int             b2,   /* bytes */
-		  int             ha1,  /* has alpha */
-		  int             ha2,  /* has alpha */
+		  int             bytes1,   /* bytes */
+		  int             bytes2,   /* bytes */
+		  int             has_alpha1,  /* has alpha */
+		  int             has_alpha2,  /* has alpha */
 		  int            *mode_affect)
 {
   int combine;
 
-  if (!ha1 && !ha2)
+  if (!has_alpha1 && !has_alpha2)
     combine = COMBINE_INTEN_INTEN;
-  else if (!ha1 && ha2)
+  else if (!has_alpha1 && has_alpha2)
     combine = COMBINE_INTEN_INTEN_A;
-  else if (ha1 && !ha2)
+  else if (has_alpha1 && !has_alpha2)
     combine = COMBINE_INTEN_A_INTEN;
   else
     combine = COMBINE_INTEN_A_INTEN_A;
@@ -4992,69 +4992,69 @@ apply_layer_mode (unsigned char  *src1,
 
     case DISSOLVE_MODE:
       /*  Since dissolve requires an alpha channels...  */
-      if (! ha2)
-	add_alpha_pixels (src2, *dest, length, b2);
+      if (! has_alpha2)
+	add_alpha_pixels (src2, *dest, length, bytes2);
 
-      dissolve_pixels (src2, *dest, x, y, opacity, length, b2,
-		       ((ha2) ? b2 : b2 + 1), ha2);
-      combine = (ha1) ? COMBINE_INTEN_A_INTEN_A : COMBINE_INTEN_INTEN_A;
+      dissolve_pixels (src2, *dest, x, y, opacity, length, bytes2,
+		       ((has_alpha2) ? bytes2 : bytes2 + 1), has_alpha2);
+      combine = (has_alpha1) ? COMBINE_INTEN_A_INTEN_A : COMBINE_INTEN_INTEN_A;
       break;
 
     case MULTIPLY_MODE:
-      multiply_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);
+      multiply_pixels (src1, src2, *dest, length, bytes1, bytes2, has_alpha1, has_alpha2);
       break;
 
     case DIVIDE_MODE:
-      divide_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);
+      divide_pixels (src1, src2, *dest, length, bytes1, bytes2, has_alpha1, has_alpha2);
       break;
 
     case SCREEN_MODE:
-      screen_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);
+      screen_pixels (src1, src2, *dest, length, bytes1, bytes2, has_alpha1, has_alpha2);
       break;
 
     case OVERLAY_MODE:
-      overlay_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);
+      overlay_pixels (src1, src2, *dest, length, bytes1, bytes2, has_alpha1, has_alpha2);
       break;
 
     case DIFFERENCE_MODE:
-      difference_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);
+      difference_pixels (src1, src2, *dest, length, bytes1, bytes2, has_alpha1, has_alpha2);
       break;
 
     case ADDITION_MODE:
-      add_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);
+      add_pixels (src1, src2, *dest, length, bytes1, bytes2, has_alpha1, has_alpha2);
       break;
 
     case SUBTRACT_MODE:
-      subtract_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);
+      subtract_pixels (src1, src2, *dest, length, bytes1, bytes2, has_alpha1, has_alpha2);
       break;
 
     case DARKEN_ONLY_MODE:
-      darken_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);
+      darken_pixels (src1, src2, *dest, length, bytes1, bytes2, has_alpha1, has_alpha2);
       break;
 
     case LIGHTEN_ONLY_MODE:
-      lighten_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);
+      lighten_pixels (src1, src2, *dest, length, bytes1, bytes2, has_alpha1, has_alpha2);
       break;
 
     case HUE_MODE: case SATURATION_MODE: case VALUE_MODE:
       /*  only works on RGB color images  */
-      if (b1 > 2)
-	hsv_only_pixels (src1, src2, *dest, mode, length, b1, b2, ha1, ha2);
+      if (bytes1 > 2)
+	hsv_only_pixels (src1, src2, *dest, mode, length, bytes1, bytes2, has_alpha1, has_alpha2);
       else
 	*dest = src2;
       break;
 
     case COLOR_MODE:
       /*  only works on RGB color images  */
-      if (b1 > 2)
-	color_only_pixels (src1, src2, *dest, mode, length, b1, b2, ha1, ha2);
+      if (bytes1 > 2)
+	color_only_pixels (src1, src2, *dest, mode, length, bytes1, bytes2, has_alpha1, has_alpha2);
       else
 	*dest = src2;
       break;
 
     case BEHIND_MODE:
       *dest = src2;
-      if (ha1)
+      if (has_alpha1)
 	combine = BEHIND_INTEN;
       else
 	combine = NO_COMBINATION;
@@ -5070,7 +5070,7 @@ apply_layer_mode (unsigned char  *src1,
       /*  If both sources have alpha channels, call erase function.
        *  Otherwise, just combine in the normal manner
        */
-      combine = (ha1 && ha2) ? ERASE_INTEN : combine;
+      combine = (has_alpha1 && has_alpha2) ? ERASE_INTEN : combine;
       break;
 
     default :
@@ -5091,16 +5091,16 @@ apply_indexed_layer_mode (unsigned char  *src1,
 			  unsigned char  *src2,
 			  unsigned char **dest,
 			  int             mode,
-			  int             ha1, /* has alpha */
-			  int             ha2) /* has alpha */
+			  int             has_alpha1, /* has alpha */
+			  int             has_alpha2) /* has alpha */
 {
   int combine;
 
-  if (!ha1 && !ha2)
+  if (!has_alpha1 && !has_alpha2)
     combine = COMBINE_INDEXED_INDEXED;
-  else if (!ha1 && ha2)
+  else if (!has_alpha1 && has_alpha2)
     combine = COMBINE_INDEXED_INDEXED_A;
-  else if (ha1 && ha2)
+  else if (has_alpha1 && has_alpha2)
     combine = COMBINE_INDEXED_A_INDEXED_A;
   else
     combine = NO_COMBINATION;
@@ -5115,7 +5115,7 @@ apply_indexed_layer_mode (unsigned char  *src1,
 
     case BEHIND_MODE:
       *dest = src2;
-      if (ha1)
+      if (has_alpha1)
 	combine = BEHIND_INDEXED;
       else
 	combine = NO_COMBINATION;
@@ -5126,7 +5126,7 @@ apply_indexed_layer_mode (unsigned char  *src1,
       /*  If both sources have alpha channels, call erase function.
        *  Otherwise, just combine in the normal manner
        */
-      combine = (ha1 && ha2) ? ERASE_INDEXED : combine;
+      combine = (has_alpha1 && has_alpha2) ? ERASE_INDEXED : combine;
       break;
 
     default:
@@ -5145,9 +5145,9 @@ apply_layer_mode_replace (unsigned char  *src1,
 			  int             y,
 			  int             opacity,
 			  int             length,
-			  int             b1,   /* bytes */
-			  int             b2,   /* bytes */
+			  int             bytes1,   /* bytes */
+			  int             bytes2,   /* bytes */
 			  int            *affect)
 {
-  replace_pixels (src1, src2, dest, mask, length, opacity, affect, b1, b2);
+  replace_pixels (src1, src2, dest, mask, length, opacity, affect, bytes1, bytes2);
 }

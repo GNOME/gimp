@@ -34,76 +34,119 @@ void  paint_funcs_free      (void);
 
 /*  Paint functions  */
 
-void  color_pixels          (unsigned char *, unsigned char *,
-			     int, int);
+void  color_pixels          (unsigned char *dest, const unsigned char *color,
+			     int w, int bytes);
 
-void  blend_pixels          (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int);
+void  blend_pixels          (const unsigned char *src1,
+			     const unsigned char *src2,
+			     unsigned char *dest, 
+			     int blend, int w, int bytes, int has_alpha);
 
-void  shade_pixels          (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int);
+void  shade_pixels          (const unsigned char *src, unsigned char *dest,
+			     const unsigned char *color,
+			     int blend, int w, int bytes, int has_alpha);
 
-void  extract_alpha_pixels  (unsigned char *, unsigned char *,
-			     unsigned char *, int, int);
+void  extract_alpha_pixels  (const unsigned char *src,
+			     const unsigned char *mask,
+			     unsigned char *dest,
+			     int w, int bytes);
 
-void  darken_pixels         (unsigned char *, unsigned char *,
-	 		     unsigned char *, int, int, int, int, int);
+void  darken_pixels         (const unsigned char *src1,
+			     const unsigned char *src2,
+	 		     unsigned char *dest, int length,
+			     int bytes1, int bytes2,
+			     int has_alpha1, int has_alpha2);
 
-void  lighten_pixels        (unsigned char *, unsigned char *,
-	 		     unsigned char *, int, int, int, int, int);
+void  lighten_pixels        (const unsigned char *src1,
+			     const unsigned char *src2,
+	 		     unsigned char *dest, int length,
+			     int bytes1, int bytes2,
+			     int has_alpha1, int has_alpha2);
 
-void  hsv_only_pixels       (unsigned char *, unsigned char *,
-	 		     unsigned char *, int, int, int, int, int, int);
+void  hsv_only_pixels       (const unsigned char *src1,
+			     const unsigned char *src2,
+	 		     unsigned char *dest, int mode, int length,
+			     int bytes1, int bytes2,
+			     int has_alpha1, int has_alpha2);
 
-void  color_only_pixels     (unsigned char *, unsigned char *,
-	 		     unsigned char *, int, int, int, int, int, int);
+void  color_only_pixels     (const unsigned char *src1,
+			     const unsigned char *src2,
+	 		     unsigned char *dest, int mode, int length,
+			     int bytes1, int bytes2,
+			     int has_alpha1, int has_alpha2);
 
-void  multiply_pixels       (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
+void  multiply_pixels       (const unsigned char *src1,
+			     const unsigned char *src2,
+	 		     unsigned char *dest, int length,
+			     int bytes1, int bytes2,
+			     int has_alpha1, int has_alpha2);
 
-void  divide_pixels         (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
+void  divide_pixels         (const unsigned char *src1,
+			     const unsigned char *src2,
+	 		     unsigned char *dest, int length,
+			     int bytes1, int bytes2,
+			     int has_alpha1, int has_alpha2);
 
-void  screen_pixels         (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
+void  screen_pixels         (const unsigned char *src1,
+			     const unsigned char *src2,
+	 		     unsigned char *dest, int length,
+			     int bytes1, int bytes2,
+			     int has_alpha1, int has_alpha2);
 
-void  overlay_pixels        (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
+void  overlay_pixels        (const unsigned char *src1,
+			     const unsigned char *src2,
+	 		     unsigned char *dest, int length,
+			     int bytes1, int bytes2,
+			     int has_alpha1, int has_alpha2);
 
-void  add_pixels            (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
+void  add_pixels             (const unsigned char *src1,
+			     const unsigned char *src2,
+	 		     unsigned char *dest, int length,
+			     int bytes1, int bytes2,
+			     int has_alpha1, int has_alpha2);
 
-void  subtract_pixels       (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
+void  subtract_pixels       (const unsigned char *src1,
+			     const unsigned char *src2,
+	 		     unsigned char *dest, int length,
+			     int bytes1, int bytes2,
+			     int has_alpha1, int has_alpha2);
 
-void  difference_pixels     (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
+void  difference_pixels     (const unsigned char *src1,
+			     const unsigned char *src2,
+	 		     unsigned char *dest, int length,
+			     int bytes1, int bytes2,
+			     int has_alpha1, int has_alpha2);
 
-void  dissolve_pixels       (unsigned char *, unsigned char *, int, int,
-			     int, int, int, int, int);
+void  dissolve_pixels       (const unsigned char *src,
+			     unsigned char *dest, int x, int y,
+			     int opacity, int length, int sb, int db,
+			     int has_alpha);
 
-void  swap_pixels           (unsigned char *, unsigned char *, int);
+void  swap_pixels           (unsigned char *src, unsigned char *dest,
+			     int length);
 
-void  scale_pixels          (unsigned char *, unsigned char *,
-			     int, int);
+void  scale_pixels          (const unsigned char *src, unsigned char *dest,
+			     int length, int scale);
 
-void  add_alpha_pixels      (unsigned char *, unsigned char *,
-			     int, int);
+void  add_alpha_pixels      (const unsigned char *src, unsigned char *dest,
+			     int length, int bytes);
 
-void  flatten_pixels        (unsigned char *, unsigned char *,
-			     unsigned char *, int, int);
+void  flatten_pixels        (const unsigned char *src, unsigned char *dest,
+			     const unsigned char *bg, int length, int bytes);
 
-void  gray_to_rgb_pixels    (unsigned char *, unsigned char *,
-			     int, int);
+void  gray_to_rgb_pixels    (const unsigned char *src, unsigned char *dest,
+			     int length, int bytes);
 
 
 /*  apply the mask data to the alpha channel of the pixel data  */
-void  apply_mask_to_alpha_channel         (unsigned char *, unsigned char *,
-					   int, int, int);
+void  apply_mask_to_alpha_channel         (unsigned char *src,
+					   const unsigned char *mask,
+					   int opacity, int length, int bytes);
 
 /*  combine the mask data with the alpha channel of the pixel data  */
-void  combine_mask_and_alpha_channel      (unsigned char *, unsigned char *,
-					   int, int, int);
+void  combine_mask_and_alpha_channel      (unsigned char *src,
+					   const unsigned char *mask,
+					   int opacity, int length, int bytes);
 
 
 /*  copy gray pixels to intensity-alpha pixels.  This function
@@ -111,169 +154,276 @@ void  combine_mask_and_alpha_channel      (unsigned char *, unsigned char *,
  *  copies it to the destination, expanding to RGB if necessary and
  *  adding an alpha channel.  (OPAQUE)
  */
-void  copy_gray_to_inten_a_pixels         (unsigned char *, unsigned char *,
-					   int, int);
+void  copy_gray_to_inten_a_pixels         (const unsigned char *src,
+					   unsigned char *dest,
+					   int length, int bytes);
 
 /*  lay down the initial pixels in the case of only one
  *  channel being visible and no layers...In this singular
  *  case, we want to display a grayscale image w/o transparency
  */
-void  initial_channel_pixels              (unsigned char *, unsigned char *,
-					   int, int);
+void  initial_channel_pixels              (const unsigned char *src,
+					   unsigned char *dest,
+					   int length, int bytes);
 
 /*  lay down the initial pixels in the case of an indexed image.
  *  This process obviously requires no composition
  */
-void  initial_indexed_pixels              (unsigned char *, unsigned char *,
-					   unsigned char *, int);
+void  initial_indexed_pixels              (const unsigned char *src,
+					   unsigned char *dest,
+					   const unsigned char *cmap,
+					   int length);
 
 /*  lay down the initial pixels in the case of an indexed image.
  *  This process obviously requires no composition
  */
-void  initial_indexed_a_pixels            (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int);
+void  initial_indexed_a_pixels            (const unsigned char *src,
+					   unsigned char *dest,
+					   const unsigned char *mask,
+					   const unsigned char *cmap,
+					   int opacity, int length);
 
 /*  lay down the initial pixels for the base layer.
  *  This process obviously requires no composition.
  */
-void  initial_inten_pixels                (unsigned char *, unsigned char *,
-					   unsigned char *, int,
-					   int *, int, int);
+void  initial_inten_pixels                (const unsigned char *src,
+					   unsigned char *dest,
+					   const unsigned char *mask,
+					   int opacity, const int *affect,
+					   int length, int bytes);
 
 /*  lay down the initial pixels for the base layer.
  *  This process obviously requires no composition.
  */
-void  initial_inten_a_pixels              (unsigned char *, unsigned char *,
-					   unsigned char *, int,
-					   int *, int, int);
+void  initial_inten_a_pixels              (const unsigned char *src,
+					   unsigned char *dest,
+					   const unsigned char *mask,
+					   int opacity, const int *affect,
+					   int length, int bytes);
 
 /*  combine indexed images with an optional mask which
  *  is interpreted as binary...destination is indexed...
  */
-void  combine_indexed_and_indexed_pixels  (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int *, int, int);
+void  combine_indexed_and_indexed_pixels  (const unsigned char *src1,
+					   const unsigned char *src2,
+					   unsigned char *dest,
+					   const unsigned char *mask,
+					   int opacity, const int *affect,
+					   int length, int bytes);
 
 /*  combine indexed images with indexed-alpha images
  *  result is an indexed image
  */
-void  combine_indexed_and_indexed_a_pixels(unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int *, int, int);
+void  combine_indexed_and_indexed_a_pixels (const unsigned char *src1,
+					    const unsigned char *src2,
+					    unsigned char       *dest,
+					    const unsigned char *mask,
+					    int                  opacity,
+					    const int           *affect,
+					    int                  length,
+					    int                  bytes);
 
 /*  combine indexed-alpha images with indexed-alpha images
  *  result is an indexed-alpha image.  use this for painting
  *  to an indexed floating sel
  */
-void  combine_indexed_a_and_indexed_a_pixels(unsigned char *, unsigned char *,
-					     unsigned char *, unsigned char *,
-					     int, int *, int, int);
+void  combine_indexed_a_and_indexed_a_pixels(const unsigned char *src1,
+					     const unsigned char *src2,
+					     unsigned char       *dest,
+					     const unsigned char *mask,
+					     int                  opacity,
+					     const int           *affect,
+					     int                  length,
+					     int                  bytes);
 
 /*  combine intensity with indexed, destination is
  *  intensity-alpha...use this for an indexed floating sel
  */
-void  combine_inten_a_and_indexed_a_pixels(unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   unsigned char *, int, int, int);
+void  combine_inten_a_and_indexed_a_pixels (const unsigned char *src1,
+					    const unsigned char *src2,
+					    unsigned char       *dest,
+					    const unsigned char *mask,
+					    const unsigned char *cmap,
+					    int                  opacity,
+					    int                  length,
+					    int                  bytes);
 
 /*  combine RGB image with RGB or GRAY with GRAY
  *  destination is intensity-only...
  */
-void  combine_inten_and_inten_pixels      (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int *, int, int);
+void  combine_inten_and_inten_pixels       (const unsigned char *src1,
+					    const unsigned char *src2,
+					    unsigned char       *dest,
+					    const unsigned char *mask,
+					    int                  opacity,
+					    const int           *affect,
+					    int                  length,
+					    int                  bytes);
 
 /*  combine an RGBA or GRAYA image with an RGB or GRAY image
  *  destination is intensity-only...
  */
-void  combine_inten_and_inten_a_pixels    (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int *, int, int);
+void  combine_inten_and_inten_a_pixels    (const unsigned char *src1,
+					   const unsigned char *src2,
+					   unsigned char *dest,
+					   const unsigned char *mask,
+					   int opacity, const int *affect,
+					   int length, int bytes);
 
 /*  combine an RGB or GRAY image with an RGBA or GRAYA image
  *  destination is intensity-alpha...
  */
-void  combine_inten_a_and_inten_pixels    (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int *, int, int, int);
+void  combine_inten_a_and_inten_pixels    (const unsigned char *src1,
+					   const unsigned char *src2,
+					   unsigned char *dest,
+					   const unsigned char *mask,
+					   int opacity, const int *affect,
+					   int mode_affect, int length,
+					   int bytes);
 
 /*  combine an RGBA or GRAYA image with an RGBA or GRAYA image
  *  destination is of course intensity-alpha...
  */
-void  combine_inten_a_and_inten_a_pixels  (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int *, int, int, int);
+void  combine_inten_a_and_inten_a_pixels   (const unsigned char *src1,
+					    const unsigned char *src2,
+					    unsigned char       *dest,
+					    const unsigned char *mask,
+					    int                 opacity,
+					    const int          *affect,
+					    int                 mode_affect,
+					    int                 length,
+					    int                 bytes);
 
 /*  combine a channel with intensity-alpha pixels based
  *  on some opacity, and a channel color...
  *  destination is intensity-alpha
  */
-void  combine_inten_a_and_channel_mask_pixels       (unsigned char *, unsigned char *,
-						     unsigned char *, unsigned char *,
-						     int, int, int);
+void  combine_inten_a_and_channel_mask_pixels(const unsigned char *src,
+					      const unsigned char *channel,
+					      unsigned char       *dest,
+					      const unsigned char *col,
+					      int                  opacity,
+					      int                  length,
+					      int                  bytes);
 
-void  combine_inten_a_and_channel_selection_pixels  (unsigned char *, unsigned char *,
-						     unsigned char *, unsigned char *,
-						     int, int, int);
+void  combine_inten_a_and_channel_selection_pixels(const unsigned char *src,
+						 const unsigned char *channel,
+						 unsigned char       *dest,
+					         const unsigned char *col,
+					         int                  opacity,
+					         int                  length,
+					         int                  bytes);
 
 /*  paint "behind" the existing pixel row.
  *  This is similar in appearance to painting on a layer below
  *  the existing pixels.
  */
-void  behind_inten_pixels                 (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int *, int, int, int, int, int);
+void  behind_inten_pixels                    (const unsigned char *src1,
+					      const unsigned char *src2,
+					      unsigned char       *dest,
+					      const unsigned char *mask,
+					      int                  opacity,
+					      const int           *affect,
+					      int                  length,
+					      int                  bytes1,
+					      int                  bytes2,
+					      int                  has_alpha1,
+					      int                  has_alpha2);
 
 /*  paint "behind" the existing pixel row (for indexed images).
  *  This is similar in appearance to painting on a layer below
  *  the existing pixels.
  */
-void  behind_indexed_pixels               (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int *, int, int, int, int, int);
+void  behind_indexed_pixels                (const unsigned char *src1,
+					    const unsigned char *src2,
+					    unsigned char       *dest,
+					    const unsigned char *mask,
+					    int                  opacity,
+					    const int           *affect,
+					    int                  length,
+					    int                  bytes1,
+					    int                  bytes2,
+					    int                  has_alpha1,
+					    int                  has_alpha2);
 
 /*  replace the contents of one pixel row with the other
  *  The operation is still bounded by mask/opacity constraints
  */
-void  replace_inten_pixels                (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int *, int, int, int, int, int);
+void  replace_inten_pixels                (const unsigned char *src1,
+					   const unsigned char *src2,
+					   unsigned char       *dest,
+					   const unsigned char *mask,
+					   int                  opacity,
+					   const int           *affect,
+					   int                  length,
+					   int                  bytes1,
+					   int                  bytes2,
+					   int                  has_alpha1,
+					   int                  has_alpha2);
 
 /*  replace the contents of one pixel row with the other
  *  The operation is still bounded by mask/opacity constraints
  */
-void  replace_indexed_pixels                (unsigned char *, unsigned char *,
-					     unsigned char *, unsigned char *,
-					     int, int *, int, int, int, int, int);
+void  replace_indexed_pixels                (const unsigned char *src1,
+					     const unsigned char *src2,
+					     unsigned char       *dest,
+					     const unsigned char *mask,
+					     int                  opacity,
+					     const int           *affect,
+					     int                  length,
+					     int                  bytes1,
+					     int                  bytes2,
+					     int                  has_alpha1,
+					     int                  has_alpha2);
 
 /*  apply source 2 to source 1, but in a non-additive way,
  *  multiplying alpha channels  (works for intensity)
  */
-void  erase_inten_pixels                  (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int *, int, int);
+void  erase_inten_pixels                  (const unsigned char *src1,
+					   const unsigned char *src2,
+					   unsigned char       *dest,
+					   const unsigned char *mask,
+					   int                  opacity,
+					   const int           *affect,
+					   int                  length,
+					   int                  bytes);
 
 /*  apply source 2 to source 1, but in a non-additive way,
  *  multiplying alpha channels  (works for indexed)
  */
-void  erase_indexed_pixels                (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int *, int, int);
+void  erase_indexed_pixels                (const unsigned char *src1,
+					   const unsigned char *src2,
+					   unsigned char       *dest,
+					   const unsigned char *mask,
+					   int                  opacity,
+					   const int           *affect,
+					   int                  length,
+					   int                  bytes);
 
 /*  extract information from intensity pixels based on
  *  a mask.
  */
-void  extract_from_inten_pixels           (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   int, int, int, int);
+void  extract_from_inten_pixels           (unsigned char       *src,
+					   unsigned char       *dest,
+					   const unsigned char *mask,
+					   const unsigned char *bg,
+					   int                  cut,
+					   int                  length,
+					   int                  bytes,
+					   int                  has_alpha);
 
 /*  extract information from indexed pixels based on
  *  a mask.
  */
-void  extract_from_indexed_pixels         (unsigned char *, unsigned char *,
-					   unsigned char *, unsigned char *,
-					   unsigned char *, int, int, int, int);
+void  extract_from_indexed_pixels          (unsigned char *src,
+					    unsigned char       *dest,
+					    const unsigned char *mask,
+					    const unsigned char *cmap,
+					    const unsigned char *bg,
+					    int                  cut,
+					    int                  length,
+					    int                  bytes,
+					    int                  has_alpha);
 
 
 /*  variable source to RGB color mapping
@@ -282,8 +432,10 @@ void  extract_from_indexed_pixels         (unsigned char *, unsigned char *,
  *  src_type == 2  (INDEXED)
  */
 void
-map_to_color                              (int, unsigned char *,
-					   unsigned char *, unsigned char *);
+map_to_color                              (int                  src_type,
+					   const unsigned char *cmap,
+					   const unsigned char *src,
+					   unsigned char       *rgb);
 
 
 /*  RGB to index mapping functions...
@@ -291,12 +443,14 @@ map_to_color                              (int, unsigned char *,
  *  Hash table lookup speeds up the standard
  *  least squares method
  */
-int    map_rgb_to_indexed                 (unsigned char *, int, GimpImage*,
-					   int, int, int);
+int    map_rgb_to_indexed                 (const unsigned char *cmap,
+					   int num_cols, GimpImage* gimage,
+					   int r, int g, int b);
 
 
 /*  Region functions  */
-void  color_region                        (PixelRegion *, unsigned char *);
+void  color_region                        (PixelRegion *dest, 
+					   const unsigned char *color);
 
 
 void  blend_region                        (PixelRegion *, PixelRegion *,
