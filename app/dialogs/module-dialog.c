@@ -47,10 +47,10 @@
 char *module_db_load_inhibit = NULL;
 
 typedef enum {
-  ST_MODULE_ERROR,         /* missing module_load function or other error */
-  ST_LOADED_OK,            /* happy and running (normal state of affairs) */
-  ST_LOAD_FAILED,          /* module_load returned GIMP_MODULE_UNLOAD */
-  ST_UNLOAD_REQUESTED,     /* sent unload request, waiting for callback */
+  ST_MODULE_ERROR,         /* missing module_load function or other error    */
+  ST_LOADED_OK,            /* happy and running (normal state of affairs)    */
+  ST_LOAD_FAILED,          /* module_load returned GIMP_MODULE_UNLOAD        */
+  ST_UNLOAD_REQUESTED,     /* sent unload request, waiting for callback      */
   ST_UNLOADED_OK           /* callback arrived, module not in memory anymore */
 } module_state;
 
@@ -65,10 +65,13 @@ static const char * const statename[] = {
 #ifdef __EMX__
 extern void gimp_color_selector_register();
 extern void gimp_color_selector_unregister();
+
 static struct main_funcs_struc {
   gchar *name;
   void (*func)();
-} gimp_main_funcs[] = {
+} 
+
+gimp_main_funcs[] = {
   { "gimp_color_selector_register", gimp_color_selector_register },
   { "gimp_color_selector_unregister", gimp_color_selector_unregister },
   { NULL, NULL }
@@ -78,15 +81,15 @@ static struct main_funcs_struc {
 
 /* one of these objects is kept per-module */
 typedef struct {
-  GtkObject      object;
-  gchar          *fullpath;   /* path to the module */
-  module_state    state;      /* what's happened to the module */
-  gboolean        ondisk;     /* TRUE if file still exists */
-  gboolean        load_inhibit; /* user requests not to load at boot time */
-  gint            refs;       /* how many time we're running in the module */
-  /* stuff from now on may be NULL depending on the state the module is in */
-  GimpModuleInfo *info;       /* returned values from module_init */
-  GModule        *module;     /* handle on the module */
+  GtkObject       object;
+  gchar          *fullpath;     /* path to the module                        */
+  module_state    state;        /* what's happened to the module             */
+  gboolean        ondisk;       /* TRUE if file still exists                 */
+  gboolean        load_inhibit; /* user requests not to load at boot time    */
+  gint            refs;         /* how many time we're running in the module */
+  /* stuff from now on may be NULL depending on the state the module is in   */
+  GimpModuleInfo *info;         /* returned values from module_init          */
+  GModule        *module;       /* handle on the module                      */
   gchar          *last_module_error;
   GimpModuleInitFunc   *init;
   GimpModuleUnloadFunc *unload;
@@ -94,21 +97,21 @@ typedef struct {
 
 
 static guint module_info_get_type (void);
-#define MODULE_INFO_TYPE module_info_get_type()
-#define MODULE_INFO(obj) GTK_CHECK_CAST (obj, MODULE_INFO_TYPE, module_info)
+#define MODULE_INFO_TYPE    module_info_get_type()
+#define MODULE_INFO(obj)    GTK_CHECK_CAST (obj, MODULE_INFO_TYPE, module_info)
 #define IS_MODULE_INFO(obj) GTK_CHECK_TYPE (obj, MODULE_INFO_TYPE)
 
 
 #define NUM_INFO_LINES 7
 
 typedef struct {
-  GtkWidget *table;
-  GtkWidget *label[NUM_INFO_LINES];
-  GtkWidget *button_label;
+  GtkWidget   *table;
+  GtkWidget   *label[NUM_INFO_LINES];
+  GtkWidget   *button_label;
   module_info *last_update;
-  GtkWidget *button;
-  GtkWidget *list;
-  GtkWidget *load_inhibit_check;
+  GtkWidget   *button;
+  GtkWidget   *list;
+  GtkWidget   *load_inhibit_check;
 } browser_st;
 
 /* global set of module_info pointers */
@@ -134,27 +137,26 @@ static gboolean need_to_rewrite_modulerc = FALSE;
 
 
 /* prototypes */
-static void module_initialize (char *filename);
-static void mod_load (module_info *mod, gboolean verbose);
-static void mod_unload (module_info *mod, gboolean verbose);
-static module_info *module_find_by_path (const char *fullpath);
+static void         module_initialize    (char *filename);
+static void         mod_load             (module_info *mod, gboolean verbose);
+static void         mod_unload           (module_info *mod, gboolean verbose);
+static module_info *module_find_by_path  (const char *fullpath);
 #ifdef DUMP_DB
-static void print_module_info (gpointer data, gpointer user_data);
+static void         print_module_info    (gpointer data, gpointer user_data);
 #endif
-
-static void browser_popdown_callback (GtkWidget *w, gpointer client_data);
-static void browser_destroy_callback (GtkWidget *w, gpointer client_data);
-static void browser_info_update (module_info *, browser_st *);
-static void browser_info_add (GimpSet *, module_info *, browser_st *);
-static void browser_info_remove (GimpSet *, module_info *, browser_st *);
-static void browser_info_init (browser_st *st, GtkWidget *table);
-static void browser_select_callback (GtkWidget *widget, GtkWidget *child);
+static void browser_popdown_callback     (GtkWidget *w, gpointer client_data);
+static void browser_destroy_callback     (GtkWidget *w, gpointer client_data);
+static void browser_info_update          (module_info *, browser_st *);
+static void browser_info_add             (GimpSet *, module_info *, browser_st *);
+static void browser_info_remove          (GimpSet *, module_info *, browser_st *);
+static void browser_info_init            (browser_st *st, GtkWidget *table);
+static void browser_select_callback      (GtkWidget *widget, GtkWidget *child);
 static void browser_load_unload_callback (GtkWidget *widget, gpointer data);
-static void browser_refresh_callback (GtkWidget *widget, gpointer data);
-static void make_list_item (gpointer data, gpointer user_data);
+static void browser_refresh_callback     (GtkWidget *widget, gpointer data);
+static void make_list_item               (gpointer data, gpointer user_data);
 
-static void gimp_module_ref (module_info *mod);
-static void gimp_module_unref (module_info *mod);
+static void gimp_module_ref              (module_info *mod);
+static void gimp_module_unref            (module_info *mod);
 
 
 
@@ -184,7 +186,8 @@ module_db_init (void)
 }
 
 static void
-free_a_single_module (gpointer data, gpointer user_data)
+free_a_single_module (gpointer data, 
+		      gpointer user_data)
 {
   module_info *mod = data;
 
@@ -195,7 +198,8 @@ free_a_single_module (gpointer data, gpointer user_data)
 }
 
 static void
-add_to_inhibit_string (gpointer data, gpointer user_data)
+add_to_inhibit_string (gpointer data, 
+		       gpointer user_data)
 {
   module_info *mod = data;
   GString *str = user_data;
@@ -475,7 +479,8 @@ valid_module_name (const char *filename)
 
 
 static gboolean
-module_inhibited (const char *fullpath, const char *inhibit_list)
+module_inhibited (const char *fullpath, 
+		  const char *inhibit_list)
 {
   char *p;
   int pathlen;
@@ -559,7 +564,8 @@ module_initialize (char *filename)
 }
 
 static void
-mod_load (module_info *mod, gboolean verbose)
+mod_load (module_info *mod, 
+	  gboolean     verbose)
 {
   gpointer symbol;
 
@@ -649,7 +655,8 @@ mod_unload_completed_callback (void *data)
 }
 
 static void
-mod_unload (module_info *mod, gboolean verbose)
+mod_unload (module_info *mod, 
+	    gboolean     verbose)
 {
   g_return_if_fail (mod->module != NULL);
   g_return_if_fail (mod->unload != NULL);
@@ -673,7 +680,8 @@ mod_unload (module_info *mod, gboolean verbose)
 
 #ifdef DUMP_DB
 static void
-print_module_info (gpointer data, gpointer user_data)
+print_module_info (gpointer data, 
+		   gpointer user_data)
 {
   module_info *i = data;
 
@@ -703,20 +711,23 @@ print_module_info (gpointer data, gpointer user_data)
 /* UI functions */
 
 static void
-browser_popdown_callback (GtkWidget *w, gpointer client_data)
+browser_popdown_callback (GtkWidget *w, 
+			  gpointer   client_data)
 {
   gtk_widget_destroy (GTK_WIDGET (client_data));
 }
 
 static void
-browser_destroy_callback (GtkWidget *w, gpointer client_data)
+browser_destroy_callback (GtkWidget *w, 
+			  gpointer   client_data)
 {
   gtk_signal_disconnect_by_data (GTK_OBJECT (modules), client_data);
   g_free (client_data);
 }
 
 static void
-browser_load_inhibit_callback (GtkWidget *w, gpointer data)
+browser_load_inhibit_callback (GtkWidget *w, 
+			       gpointer   data)
 {
   browser_st *st = data;
   gboolean new_value;
@@ -735,7 +746,8 @@ browser_load_inhibit_callback (GtkWidget *w, gpointer data)
 }
 
 static void
-browser_info_update (module_info *mod, browser_st *st)
+browser_info_update (module_info *mod, 
+		     browser_st  *st)
 {
   int i;
   const char *text[NUM_INFO_LINES - 1];
@@ -818,7 +830,8 @@ browser_info_update (module_info *mod, browser_st *st)
 }
 
 static void
-browser_info_init (browser_st *st, GtkWidget *table)
+browser_info_init (browser_st *st, 
+		   GtkWidget  *table)
 {
   GtkWidget *label;
   int i;
@@ -858,7 +871,8 @@ browser_info_init (browser_st *st, GtkWidget *table)
 }
 
 static void
-browser_select_callback (GtkWidget *widget, GtkWidget *child)
+browser_select_callback (GtkWidget *widget, 
+			 GtkWidget *child)
 {
   module_info *i;
   browser_st *st;
@@ -876,7 +890,8 @@ browser_select_callback (GtkWidget *widget, GtkWidget *child)
 
 
 static void
-browser_load_unload_callback (GtkWidget *widget, gpointer data)
+browser_load_unload_callback (GtkWidget *widget, 
+			      gpointer   data)
 {
   browser_st *st = data;
 
@@ -890,7 +905,8 @@ browser_load_unload_callback (GtkWidget *widget, gpointer data)
 
 
 static void
-make_list_item (gpointer data, gpointer user_data)
+make_list_item (gpointer data, 
+		gpointer user_data)
 {
   module_info *info = data;
   browser_st *st = user_data;
@@ -909,14 +925,18 @@ make_list_item (gpointer data, gpointer user_data)
 
 
 static void
-browser_info_add (GimpSet *set, module_info *mod, browser_st *st)
+browser_info_add (GimpSet     *set, 
+		  module_info *mod, 
+		  browser_st  *st)
 {
   make_list_item (mod, st);
 }
 
 
 static void
-browser_info_remove (GimpSet *set, module_info *mod, browser_st *st)
+browser_info_remove (GimpSet     *set, 
+		     module_info *mod, 
+		     browser_st  *st)
 {
   GList *dlist, *free_list;
   GtkWidget *list_item;
@@ -949,7 +969,8 @@ browser_info_remove (GimpSet *set, module_info *mod, browser_st *st)
 
 
 static void
-module_db_module_ondisk (gpointer data, gpointer user_data)
+module_db_module_ondisk (gpointer data, 
+			 gpointer user_data)
 {
   module_info *mod = data;
   struct stat statbuf;
@@ -977,7 +998,8 @@ module_db_module_ondisk (gpointer data, gpointer user_data)
 
 
 static void
-module_db_module_remove (gpointer data, gpointer user_data)
+module_db_module_remove (gpointer data, 
+			 gpointer user_data)
 {
   module_info *mod = data;
 
@@ -989,12 +1011,13 @@ module_db_module_remove (gpointer data, gpointer user_data)
 
 
 typedef struct {
-  const char *search_key;
+  const char  *search_key;
   module_info *found;
 } find_by_path_closure;
 
 static void
-module_db_path_cmp (gpointer data, gpointer user_data)
+module_db_path_cmp (gpointer data, 
+		    gpointer user_data)
 {
   module_info *mod = data;
   find_by_path_closure *cl = user_data;
@@ -1019,7 +1042,8 @@ module_find_by_path (const char *fullpath)
 
 
 static void
-browser_refresh_callback (GtkWidget *widget, gpointer data)
+browser_refresh_callback (GtkWidget *widget, 
+			  gpointer   data)
 {
   GSList *kill_list = NULL;
 

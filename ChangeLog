@@ -1,3 +1,17 @@
+Sat Nov  6 03:57:20 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/gdisplay_color_ui.c: fixed a crash on Cancel that occured 
+	due to bad list handling
+
+	* app/module_db.c: indentation madness, no changes
+
+	* app/nav_window.c: set the zoom label and slider first, then 
+	update the preview. Gives better user feedback. This is now what 
+	bugreport #3354 suggest, but it comes close.
+
+	* plug-ins/common/plugindetails.c: tried to fix the strange resizing
+	of the dialog. Should fix bug #3352.
+
 Fri Nov  5 15:32:15 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/edit_selection.c: when moving layers/masks freeze the undo

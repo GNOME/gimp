@@ -211,6 +211,7 @@ color_display_cancel_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   GList *list;
+  GList *next;
 
   gtk_widget_hide (GTK_WIDGET (data));
   
@@ -221,10 +222,12 @@ color_display_cancel_callback (GtkWidget *widget,
 
       while (list)
 	{
+	  next = list->next;
+
 	  if (!g_list_find (cdd.old_nodes, list->data))
 	    gdisplay_color_detach_destroy (cdd.gdisp, list->data);
 
-	  list = list->next;
+	  list = next;
 	}
     }
 

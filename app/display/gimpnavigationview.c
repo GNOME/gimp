@@ -31,6 +31,7 @@
 #include "gimpui.h"
 #include "gximage.h"
 #include "interface.h"
+#include "nav_window.h"
 #include "scroll.h"
 #include "scale.h"
 
@@ -100,46 +101,20 @@ struct _NavWinData
 };
 
 
-static gint
-nav_window_preview_events (GtkWidget *,
-			   GdkEvent  *,
-			   gpointer  *);
-static gint
-nav_window_expose_events (GtkWidget *,
-			  GdkEvent  *,
-			  gpointer  *);
+static gint nav_window_preview_events       (GtkWidget *, GdkEvent *, gpointer *);
+static gint nav_window_expose_events        (GtkWidget *, GdkEvent *, gpointer *);
+static void nav_window_update_preview       (NavWinData *);
+static void nav_window_update_preview_blank (NavWinData *iwd);
+static void destroy_preview_widget          (NavWinData *);
+static void create_preview_widget           (NavWinData *);
+static void nav_window_draw_sqr             (NavWinData *, gboolean, 
+					     gint, gint, gint, gint );
+static void set_size_data                   (NavWinData *);
+static gint nav_preview_update_do_timer     (NavWinData *);
 
-static void
-nav_window_update_preview (NavWinData *);
 
-static void 
-nav_window_update_preview_blank (NavWinData *iwd);
 
 static void 
-destroy_preview_widget     (NavWinData *);
-
-static void 
-create_preview_widget      (NavWinData *);
-
-void
-nav_window_update_window_marker (InfoDialog *);
-
-static void
-nav_window_draw_sqr(NavWinData *,
-		    gboolean,
-		    gint ,
-		    gint ,
-		    gint ,
-		    gint );
-
-static void
-set_size_data(NavWinData *);
-
-static gint 
-nav_preview_update_do_timer (NavWinData *);
-
-
-static void
 nav_window_destroy_callback (GtkWidget *widget,
 			     gpointer   client_data)
 {
@@ -972,7 +947,7 @@ nav_preview_update_do (NavWinData *iwd)
 {
   nav_window_update_preview(iwd);
   nav_window_disp_area(iwd,iwd->gdisp_ptr);
-  gtk_widget_draw(iwd->preview, NULL); 
+  gtk_widget_queue_draw(iwd->preview); 
   iwd->installedDirtyTimer = FALSE;
   return FALSE;
 }
@@ -1309,26 +1284,26 @@ nav_window_update_window_marker (InfoDialog *info_win)
      iwd->block_window_marker == TRUE)
     return;
 
+  update_zoom_label (iwd);
+  update_zoom_adjustment (iwd);
+
   /* Undraw old size */
-  nav_window_draw_sqr(iwd,
-		      FALSE,
-		      iwd->dispx,
-		      iwd->dispy,
-		      iwd->dispwidth,iwd->dispheight);
-
-  /* Update to new size */
-  nav_window_disp_area(iwd,iwd->gdisp_ptr);
-
-  /* and redraw */
-  nav_window_draw_sqr(iwd,
+  nav_window_draw_sqr (iwd,
 		       FALSE,
 		       iwd->dispx,
 		       iwd->dispy,
-		       iwd->dispwidth,iwd->dispheight);
-  
-  update_zoom_label(iwd);
+		       iwd->dispwidth, iwd->dispheight);
 
-  update_zoom_adjustment(iwd);
+  /* Update to new size */
+  nav_window_disp_area (iwd,iwd->gdisp_ptr);
+
+  /* and redraw */
+  nav_window_draw_sqr (iwd,
+		       FALSE,
+		       iwd->dispx,
+		       iwd->dispy,
+		       iwd->dispwidth, iwd->dispheight);
+  
 }
 
 void
