@@ -606,7 +606,7 @@ ipal_draw (GimpColormapDialog* ipal)
 	  for (l = j * cellsize; l < xn * cellsize; l++)
 	    for (b = 0; b < 3; b++)
 	      row[l * 3 + b] = ((((i * cellsize + k) & 0x4) ? (l) : (l + 0x4)) & 0x4) ?
-		blend_light_check[0] : blend_dark_check[0];
+		render_blend_light_check[0] : render_blend_dark_check[0];
 
 	  gtk_preview_draw_row (ipal->palette, row, 0,
 				i * cellsize + k, cellsize * xn);
@@ -709,7 +709,8 @@ ipal_clear (GimpColormapDialog* ipal)
       for (j = 0; j < width; j++)
 	{
 	  row[j * 3 + 0] = row[j * 3 + 1] = row[j * 3 + 2] =
-	    ((j + offset) & 0x4) ? blend_light_check[0] : blend_dark_check[0];
+	    ((j + offset) & 0x4) ?
+	    render_blend_light_check[0] : render_blend_dark_check[0];
 	}
 
       for (j = 0; j < 4 && i+j < height; j++)

@@ -1,3 +1,12 @@
+2001-01-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/image_render.[ch]: prefixed all global variables with
+	"render_" (we had a global variable named "temp_buf", brrrr),
+	general cleanup.
+
+	* app/colormap_dialog.c
+	* app/layers_dialog.c: changed accordingly.
+
 2001-01-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialog_types.h: removed because it was unused.

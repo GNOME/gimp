@@ -22,35 +22,42 @@
 
 /*  Transparency representation  */
 
-#define LIGHT_CHECKS    0
-#define GRAY_CHECKS     1
-#define DARK_CHECKS     2
-#define WHITE_ONLY      3
-#define GRAY_ONLY       4
-#define BLACK_ONLY      5
+typedef enum
+{
+  LIGHT_CHECKS = 0,
+  GRAY_CHECKS  = 1,
+  DARK_CHECKS  = 2,
+  WHITE_ONLY   = 3,
+  GRAY_ONLY    = 4,
+  BLACK_ONLY   = 5
+} GimpCheckType;
 
-#define SMALL_CHECKS    0
-#define MEDIUM_CHECKS   1
-#define LARGE_CHECKS    2
+typedef enum
+{
+  SMALL_CHECKS  = 0,
+  MEDIUM_CHECKS = 1,
+  LARGE_CHECKS  = 2
+} GimpCheckSize;
+
 
 /*  Functions  */
-void render_setup (gint      check_type,
-		   gint      check_size);
-void render_free  (void);
-void render_image (GDisplay *gdisp,
-		   gint      x,
-		   gint      y,
-		   gint      w,
-		   gint      h);
+void   render_setup (GimpCheckType  check_type,
+		     GimpCheckSize  check_size);
+void   render_free  (void);
+void   render_image (GDisplay *gdisp,
+		     gint      x,
+		     gint      y,
+		     gint      w,
+		     gint      h);
 
 /*
  *  Extern variables
  */
-extern guchar *check_buf;
-extern guchar *empty_buf;
-extern guchar *temp_buf;
-extern guchar *blend_dark_check;
-extern guchar *blend_light_check;
+extern guchar *render_check_buf;
+extern guchar *render_empty_buf;
+extern guchar *render_temp_buf;
+extern guchar *render_blend_dark_check;
+extern guchar *render_blend_light_check;
 
 
 #endif  /*  __IMAGE_RENDER_H__  */

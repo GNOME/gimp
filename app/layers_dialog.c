@@ -775,13 +775,13 @@ render_preview (TempBuf   *preview_buf,
 
   if (has_alpha)
     {
-      buf = check_buf;
+      buf = render_check_buf;
       alpha = ((color) ? ALPHA_PIX :
 	       ((channel != -1) ? (preview_buf->bytes - 1) :
 		ALPHA_G_PIX));
     }
   else
-    buf = empty_buf;
+    buf = render_empty_buf;
 
   x1 = CLAMP (preview_buf->x, 0, width);
   y1 = CLAMP (preview_buf->y, 0, height);
@@ -815,7 +815,7 @@ render_preview (TempBuf   *preview_buf,
 	  /*  Handle the leading transparency  */
 	  for (j = 0; j < x1; j++)
 	    for (b = 0; b < image_bytes; b++)
-	      temp_buf[j * image_bytes + b] = cb[j * 3 + b];
+	      render_temp_buf[j * image_bytes + b] = cb[j * 3 + b];
 
 	  /*  The stuff in the middle  */
 	  s = src;
@@ -829,28 +829,28 @@ render_preview (TempBuf   *preview_buf,
 
 		      if ((j + offset) & 0x4)
 			{
-			  temp_buf[j * 3 + 0] = 
-			    blend_dark_check [(a | s[RED_PIX])];
-			  temp_buf[j * 3 + 1] = 
-			    blend_dark_check [(a | s[GREEN_PIX])];
-			  temp_buf[j * 3 + 2] = 
-			    blend_dark_check [(a | s[BLUE_PIX])];
+			  render_temp_buf[j * 3 + 0] = 
+			    render_blend_dark_check [(a | s[RED_PIX])];
+			  render_temp_buf[j * 3 + 1] = 
+			    render_blend_dark_check [(a | s[GREEN_PIX])];
+			  render_temp_buf[j * 3 + 2] = 
+			    render_blend_dark_check [(a | s[BLUE_PIX])];
 			}
 		      else
 			{
-			  temp_buf[j * 3 + 0] = 
-			    blend_light_check [(a | s[RED_PIX])];
-			  temp_buf[j * 3 + 1] = 
-			    blend_light_check [(a | s[GREEN_PIX])];
-			  temp_buf[j * 3 + 2] = 
-			    blend_light_check [(a | s[BLUE_PIX])];
+			  render_temp_buf[j * 3 + 0] = 
+			    render_blend_light_check [(a | s[RED_PIX])];
+			  render_temp_buf[j * 3 + 1] = 
+			    render_blend_light_check [(a | s[GREEN_PIX])];
+			  render_temp_buf[j * 3 + 2] = 
+			    render_blend_light_check [(a | s[BLUE_PIX])];
 			}
 		    }
 		  else
 		    {
-		      temp_buf[j * 3 + 0] = s[RED_PIX];
-		      temp_buf[j * 3 + 1] = s[GREEN_PIX];
-		      temp_buf[j * 3 + 2] = s[BLUE_PIX];
+		      render_temp_buf[j * 3 + 0] = s[RED_PIX];
+		      render_temp_buf[j * 3 + 1] = s[GREEN_PIX];
+		      render_temp_buf[j * 3 + 2] = s[BLUE_PIX];
 		    }
 		}
 	      else
@@ -863,43 +863,43 @@ render_preview (TempBuf   *preview_buf,
 			{
 			  if (color_buf)
 			    {
-			      temp_buf[j * 3 + 0] = 
-				blend_dark_check [(a | s[GRAY_PIX])];
-			      temp_buf[j * 3 + 1] = 
-				blend_dark_check [(a | s[GRAY_PIX])];
-			      temp_buf[j * 3 + 2] = 
-				blend_dark_check [(a | s[GRAY_PIX])];
+			      render_temp_buf[j * 3 + 0] = 
+				render_blend_dark_check [(a | s[GRAY_PIX])];
+			      render_temp_buf[j * 3 + 1] = 
+				render_blend_dark_check [(a | s[GRAY_PIX])];
+			      render_temp_buf[j * 3 + 2] = 
+				render_blend_dark_check [(a | s[GRAY_PIX])];
 			    }
 			  else
-			    temp_buf[j] = 
-			      blend_dark_check [(a | s[GRAY_PIX + channel])];
+			    render_temp_buf[j] = 
+			      render_blend_dark_check [(a | s[GRAY_PIX + channel])];
 			}
 		      else
 			{
 			  if (color_buf)
 			    {
-			      temp_buf[j * 3 + 0] = 
-				blend_light_check [(a | s[GRAY_PIX])];
-			      temp_buf[j * 3 + 1] = 
-				blend_light_check [(a | s[GRAY_PIX])];
-			      temp_buf[j * 3 + 2] = 
-				blend_light_check [(a | s[GRAY_PIX])];
+			      render_temp_buf[j * 3 + 0] = 
+				render_blend_light_check [(a | s[GRAY_PIX])];
+			      render_temp_buf[j * 3 + 1] = 
+				render_blend_light_check [(a | s[GRAY_PIX])];
+			      render_temp_buf[j * 3 + 2] = 
+				render_blend_light_check [(a | s[GRAY_PIX])];
 			    }
 			  else
-			    temp_buf[j] = 
-			      blend_light_check [(a | s[GRAY_PIX + channel])];
+			    render_temp_buf[j] = 
+			      render_blend_light_check [(a | s[GRAY_PIX + channel])];
 			}
 		    }
 		  else
 		    {
 		      if (color_buf)
 			{
-			  temp_buf[j * 3 + 0] = s[GRAY_PIX];
-			  temp_buf[j * 3 + 1] = s[GRAY_PIX];
-			  temp_buf[j * 3 + 2] = s[GRAY_PIX];
+			  render_temp_buf[j * 3 + 0] = s[GRAY_PIX];
+			  render_temp_buf[j * 3 + 1] = s[GRAY_PIX];
+			  render_temp_buf[j * 3 + 2] = s[GRAY_PIX];
 			}
 		      else
-			temp_buf[j] = s[GRAY_PIX + channel];
+			render_temp_buf[j] = s[GRAY_PIX + channel];
 		    }
 		}
 
@@ -909,7 +909,7 @@ render_preview (TempBuf   *preview_buf,
 	  /*  Handle the trailing transparency  */
 	  for (j = x2; j < width; j++)
 	    for (b = 0; b < image_bytes; b++)
-	      temp_buf[j * image_bytes + b] = cb[j * 3 + b];
+	      render_temp_buf[j * image_bytes + b] = cb[j * 3 + b];
 
 	  src += rowstride;
 	}
@@ -917,11 +917,11 @@ render_preview (TempBuf   *preview_buf,
 	{
 	  for (j = 0; j < width; j++)
 	    for (b = 0; b < image_bytes; b++)
-	      temp_buf[j * image_bytes + b] = cb[j * 3 + b];
+	      render_temp_buf[j * image_bytes + b] = cb[j * 3 + b];
 	}
 
       gtk_preview_draw_row (GTK_PREVIEW (preview_widget), 
-			    temp_buf, 0, i, width);
+			    render_temp_buf, 0, i, width);
     }
 }
 

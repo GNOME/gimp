@@ -38,57 +38,63 @@
 
 
 typedef struct _RenderInfo  RenderInfo;
-typedef void (*RenderFunc) (RenderInfo *info);
+
+typedef void (* RenderFunc) (RenderInfo *info);
 
 struct _RenderInfo
 {
-  GDisplay *gdisp;
+  GDisplay    *gdisp;
   TileManager *src_tiles;
-  guint *alpha;
-  guchar *scale;
-  guchar *src;
-  guchar *dest;
-  int x, y;
-  int w, h;
-  float scalex;
-  float scaley;
-  int src_x, src_y;
-  int src_bpp;
-  int dest_bpp;
-  int dest_bpl;
-  int dest_width;
-  int byte_order;
+  guint       *alpha;
+  guchar      *scale;
+  guchar      *src;
+  guchar      *dest;
+  gint         x, y;
+  gint         w, h;
+  gfloat       scalex;
+  gfloat       scaley;
+  gint         src_x, src_y;
+  gint         src_bpp;
+  gint         dest_bpp;
+  gint         dest_bpl;
+  gint         dest_width;
+  gint         byte_order;
 };
 
 
 /*  accelerate transparency of image scaling  */
-guchar *blend_dark_check = NULL;
-guchar *blend_light_check = NULL;
-guchar *tile_buf = NULL;
-guchar *check_buf = NULL;
-guchar *empty_buf = NULL;
-guchar *temp_buf = NULL;
+guchar *render_check_buf         = NULL;
+guchar *render_empty_buf         = NULL;
+guchar *render_temp_buf          = NULL;
+guchar *render_blend_dark_check  = NULL;
+guchar *render_blend_light_check = NULL;
 
-static guint   check_mod;
-static guint   check_shift;
-static guint   tile_shift;
+
+static guchar *tile_buf           = NULL;
+static guint   check_mod          = 0;
+static guint   check_shift        = 0;
+static guint   tile_shift         = 0;
 static guchar  check_combos[6][2] =
 {
   { 204, 255 },
   { 102, 153 },
-  { 0, 51 },
+  {   0,  51 },
   { 255, 255 },
   { 127, 127 },
-  { 0, 0 }
+  {   0,   0 }
 };
 
 
-
 void
-render_setup (int check_type,
-	      int check_size)
+render_setup (GimpCheckType check_type,
+	      GimpCheckSize check_size)
 {
-  int i, j;
+  gint i, j;
+
+  if (check_type < LIGHT_CHECKS || check_type > BLACK_ONLY)
+    g_error ("invalid check_type argument to render_setup: %d", check_type);
+  if (check_size < SMALL_CHECKS || check_size > LARGE_CHECKS)
+    g_error ("invalid check_size argument to render_setup: %d", check_size);
 
   /*  based on the tile size, determine the tile shift amount
    *  (assume here that tile_height and tile_width are equal)
@@ -98,79 +104,72 @@ render_setup (int check_type,
     tile_shift++;
 
   /*  allocate a buffer for arranging information from a row of tiles  */
-  if (!tile_buf)
+  if (! tile_buf)
     tile_buf = g_new (guchar, GXIMAGE_WIDTH * MAX_CHANNELS);
 
-  if (check_type < 0 || check_type > 5)
-    g_error ("invalid check_type argument to render_setup: %d", check_type);
-  if (check_size < 0 || check_size > 2)
-    g_error ("invalid check_size argument to render_setup: %d", check_size);
-
-  if (!blend_dark_check)
-    blend_dark_check = g_new (guchar, 65536);
-  if (!blend_light_check)
-    blend_light_check = g_new (guchar, 65536);
+  if (! render_blend_dark_check)
+    render_blend_dark_check = g_new (guchar, 65536);
+  if (! render_blend_light_check)
+    render_blend_light_check = g_new (guchar, 65536);
 
   for (i = 0; i < 256; i++)
     for (j = 0; j < 256; j++)
       {
-	blend_dark_check [(i << 8) + j] = (guchar)
+	render_blend_dark_check [(i << 8) + j] = (guchar)
 	  ((j * i + check_combos[check_type][0] * (255 - i)) / 255);
-	blend_light_check [(i << 8) + j] = (guchar)
+	render_blend_light_check [(i << 8) + j] = (guchar)
 	  ((j * i + check_combos[check_type][1] * (255 - i)) / 255);
       }
 
   switch (check_size)
     {
     case SMALL_CHECKS:
-      check_mod = 0x3;
+      check_mod   = 0x3;
       check_shift = 2;
       break;
     case MEDIUM_CHECKS:
-      check_mod = 0x7;
+      check_mod   = 0x7;
       check_shift = 3;
       break;
     case LARGE_CHECKS:
-      check_mod = 0xf;
+      check_mod   = 0xf;
       check_shift = 4;
       break;
     }
 
+  g_free (render_check_buf);
+  g_free (render_empty_buf);
+  g_free (render_temp_buf);
+
   /*  calculate check buffer for previews  */
   if (preview_size)
     {
-      if (check_buf)
-	g_free (check_buf);
-      if (empty_buf)
-	g_free (empty_buf);
-      if (temp_buf)
-	g_free (temp_buf);
+      render_check_buf = g_new (guchar, (preview_size + 4) * 3);
 
-      check_buf = (unsigned char *) g_malloc ((preview_size + 4) * 3);
       for (i = 0; i < (preview_size + 4); i++)
 	{
 	  if (i & 0x4)
 	    {
-	      check_buf[i * 3 + 0] = blend_dark_check[0];
-	      check_buf[i * 3 + 1] = blend_dark_check[0];
-	      check_buf[i * 3 + 2] = blend_dark_check[0];
+	      render_check_buf[i * 3 + 0] = render_blend_dark_check[0];
+	      render_check_buf[i * 3 + 1] = render_blend_dark_check[0];
+	      render_check_buf[i * 3 + 2] = render_blend_dark_check[0];
 	    }
 	  else
 	    {
-	      check_buf[i * 3 + 0] = blend_light_check[0];
-	      check_buf[i * 3 + 1] = blend_light_check[0];
-	      check_buf[i * 3 + 2] = blend_light_check[0];
+	      render_check_buf[i * 3 + 0] = render_blend_light_check[0];
+	      render_check_buf[i * 3 + 1] = render_blend_light_check[0];
+	      render_check_buf[i * 3 + 2] = render_blend_light_check[0];
 	    }
 	}
-      empty_buf = (unsigned char *) g_malloc ((preview_size + 4) * 3);
-      memset (empty_buf, 0, (preview_size + 4) * 3);
-      temp_buf = (unsigned char *) g_malloc ((preview_size + 4) * 3);
+
+      render_empty_buf = g_new0 (guchar, (preview_size + 4) * 3);
+      render_temp_buf  = g_new  (guchar, (preview_size + 4) * 3);
     }
   else
     {
-      check_buf = NULL;
-      empty_buf = NULL;
-      temp_buf = NULL;
+      render_check_buf = NULL;
+      render_empty_buf = NULL;
+      render_temp_buf  = NULL;
     }
 }
 
@@ -178,39 +177,40 @@ void
 render_free (void)
 {
   g_free (tile_buf);
-  g_free (check_buf);
+  g_free (render_check_buf);
 }
+
 
 /*  Render Image functions  */
 
-static void    render_image_rgb       (RenderInfo *info);
-static void    render_image_rgb_a     (RenderInfo *info);
-static void    render_image_gray      (RenderInfo *info);
-static void    render_image_gray_a    (RenderInfo *info);
-static void    render_image_indexed   (RenderInfo *info);
-static void    render_image_indexed_a (RenderInfo *info);
+static void     render_image_rgb                (RenderInfo   *info);
+static void     render_image_rgb_a              (RenderInfo   *info);
+static void     render_image_gray               (RenderInfo   *info);
+static void     render_image_gray_a             (RenderInfo   *info);
+static void     render_image_indexed            (RenderInfo   *info);
+static void     render_image_indexed_a          (RenderInfo   *info);
 
-static void    render_image_init_info          (RenderInfo   *info,
-						GDisplay     *gdisp,
-						int           x,
-						int           y,
-						int           w,
-						int           h);
-static guint*  render_image_init_alpha         (int           mult);
-static guchar* render_image_accelerate_scaling (int           width,
-						int           start,
-						float         scalex);
-static guchar* render_image_tile_fault         (RenderInfo   *info);
+static void     render_image_init_info          (RenderInfo   *info,
+						 GDisplay     *gdisp,
+						 gint          x,
+						 gint          y,
+						 gint          w,
+						 gint          h);
+static guint  * render_image_init_alpha         (gint          mult);
+static guchar * render_image_accelerate_scaling (gint          width,
+						 gint          start,
+						 gfloat        scalex);
+static guchar * render_image_tile_fault         (RenderInfo   *info);
 
 
 static RenderFunc render_funcs[6] =
 {
-    render_image_rgb,
-    render_image_rgb_a,
-    render_image_gray,
-    render_image_gray_a,
-    render_image_indexed,
-    render_image_indexed_a,
+  render_image_rgb,
+  render_image_rgb_a,
+  render_image_gray,
+  render_image_gray_a,
+  render_image_indexed,
+  render_image_indexed_a,
 };
 
 
@@ -223,17 +223,18 @@ static RenderFunc render_funcs[6] =
 
 void
 render_image (GDisplay *gdisp,
-	      int       x,
-	      int       y,
-	      int       w,
-	      int       h)
+	      gint      x,
+	      gint      y,
+	      gint      w,
+	      gint      h)
 {
   RenderInfo info;
-  int image_type;
+  gint       image_type;
 
   render_image_init_info (&info, gdisp, x, y, w, h);
 
   image_type = gimp_image_projection_type (gdisp->gimage);
+
   if ((image_type < 0) || (image_type > 5))
     {
       g_message ("unknown gimage projection type: %d",
@@ -248,13 +249,13 @@ render_image (GDisplay *gdisp,
     }
 
   /* Currently, only RGBA and GRAYA projection types are used - the rest
-   * are in case of future need.  -- austin, 28th Nov 1998. */
+   * are in case of future need.  -- austin, 28th Nov 1998.
+   */
   if (image_type != RGBA_GIMAGE && image_type != GRAYA_GIMAGE)
       g_warning ("using untested projection type %d", image_type);
 
   (* render_funcs[image_type]) (&info);
 }
-
 
 
 /*************************/
@@ -267,24 +268,24 @@ render_image_indexed (RenderInfo *info)
   guchar *src;
   guchar *dest;
   guchar *cmap;
-  gulong val;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-  float error;
-  float step;
+  gulong  val;
+  gint    byte_order;
+  gint    y, ye;
+  gint    x, xe;
+  gint    initial;
+  gfloat  error;
+  gfloat  step;
 
   cmap = gimp_image_cmap (info->gdisp->gimage);
 
-  y = info->y;
+  y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
 
   step = 1.0 / info->scaley;
 
-  error = y * step;
-  error -= ((int)error) - step;
+  error  = y * step;
+  error -= ((gint) error) - step;
 
   initial = TRUE;
   byte_order = info->byte_order;
@@ -293,14 +294,16 @@ render_image_indexed (RenderInfo *info)
   for (; y < ye; y++)
     {
       if (!initial && (error < 1.0))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	{
+	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	}
       else
 	{
 	  src = info->src;
 	  dest = info->dest;
 
 	  g_return_if_fail (src != NULL);
-	  
+
 	  for (x = info->x; x < xe; x++)
 	    {
 	      val = src[INDEXED_PIX] * 3;
@@ -334,30 +337,30 @@ render_image_indexed_a (RenderInfo *info)
 {
   guchar *src;
   guchar *dest;
-  guint *alpha;
+  guint  *alpha;
   guchar *cmap;
-  gulong r, g, b;
-  gulong val;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-  float error;
-  float step;
+  gulong  r, g, b;
+  gulong  val;
+  guint   a;
+  gint    dark_light;
+  gint    byte_order;
+  gint    y, ye;
+  gint    x, xe;
+  gint    initial;
+  gfloat  error;
+  gfloat  step;
 
   cmap = gimp_image_cmap (info->gdisp->gimage);
   alpha = info->alpha;
 
-  y = info->y;
+  y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
 
   step = 1.0 / info->scaley;
 
-  error = y * step;
-  error -= ((int)error) - step;
+  error  = y * step;
+  error -= ((gint) error) - step;
 
   initial = TRUE;
   byte_order = info->byte_order;
@@ -366,7 +369,9 @@ render_image_indexed_a (RenderInfo *info)
   for (; y < ye; y++)
     {
       if (!initial && (error < 1.0) && (y & check_mod))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	{
+	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	}
       else
 	{
 	  src = info->src;
@@ -384,15 +389,15 @@ render_image_indexed_a (RenderInfo *info)
 
 	      if (dark_light & 0x1)
 		{
-		  r = blend_dark_check[(a | cmap[val+0])];
-		  g = blend_dark_check[(a | cmap[val+1])];
-		  b = blend_dark_check[(a | cmap[val+2])];
+		  r = render_blend_dark_check[(a | cmap[val + 0])];
+		  g = render_blend_dark_check[(a | cmap[val + 1])];
+		  b = render_blend_dark_check[(a | cmap[val + 2])];
 		}
 	      else
 		{
-		  r = blend_light_check[(a | cmap[val+0])];
-		  g = blend_light_check[(a | cmap[val+1])];
-		  b = blend_light_check[(a | cmap[val+2])];
+		  r = render_blend_light_check[(a | cmap[val + 0])];
+		  g = render_blend_light_check[(a | cmap[val + 1])];
+		  b = render_blend_light_check[(a | cmap[val + 2])];
 		}
 
 		dest[0] = r;
@@ -426,22 +431,22 @@ render_image_gray (RenderInfo *info)
 {
   guchar *src;
   guchar *dest;
-  gulong val;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-  float error;
-  float step;
+  gulong  val;
+  gint    byte_order;
+  gint    y, ye;
+  gint    x, xe;
+  gint    initial;
+  gfloat  error;
+  gfloat  step;
 
-  y = info->y;
+  y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
 
   step = 1.0 / info->scaley;
 
-  error = y * step;
-  error -= ((int)error) - step;
+  error  = y * step;
+  error -= ((gint) error) - step;
 
   initial = TRUE;
   byte_order = info->byte_order;
@@ -450,7 +455,9 @@ render_image_gray (RenderInfo *info)
   for (; y < ye; y++)
     {
       if (!initial && (error < 1.0))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	{
+	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	}
       else
 	{
 	  src = info->src;
@@ -491,27 +498,27 @@ render_image_gray_a (RenderInfo *info)
 {
   guchar *src;
   guchar *dest;
-  guint *alpha;
-  gulong val;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-  float error;
-  float step;
+  guint  *alpha;
+  gulong  val;
+  guint   a;
+  gint    dark_light;
+  gint    byte_order;
+  gint    y, ye;
+  gint    x, xe;
+  gint    initial;
+  gfloat  error;
+  gfloat  step;
 
   alpha = info->alpha;
 
-  y = info->y;
+  y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
 
   step = 1.0 / info->scaley;
 
-  error = y * step;
-  error -= ((int)error) - step;
+  error  = y * step;
+  error -= ((gint) error) - step;
 
   initial = TRUE;
   byte_order = info->byte_order;
@@ -520,7 +527,9 @@ render_image_gray_a (RenderInfo *info)
   for (; y < ye; y++)
     {
       if (!initial && (error < 1.0) && (y & check_mod))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	{
+	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	}
       else
 	{
 	  src = info->src;
@@ -534,9 +543,9 @@ render_image_gray_a (RenderInfo *info)
 	    {
 	      a = alpha[src[ALPHA_G_PIX]];
 	      if (dark_light & 0x1)
-		val = blend_dark_check[(a | src[GRAY_PIX])];
+		val = render_blend_dark_check[(a | src[GRAY_PIX])];
 	      else
-		val = blend_light_check[(a | src[GRAY_PIX])];
+		val = render_blend_light_check[(a | src[GRAY_PIX])];
 	      src += 2;
 
 	      dest[0] = val;
@@ -570,21 +579,21 @@ render_image_rgb (RenderInfo *info)
 {
   guchar *src;
   guchar *dest;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-  float error;
-  float step;
+  gint    byte_order;
+  gint    y, ye;
+  gint    x, xe;
+  gint    initial;
+  gfloat  error;
+  gfloat  step;
 
-  y = info->y;
+  y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
 
   step = 1.0 / info->scaley;
 
-  error = y * step;
-  error -= (int)error - step;
+  error  = y * step;
+  error -= (gint) error - step;
 
   initial = TRUE;
   byte_order = info->byte_order;
@@ -593,7 +602,9 @@ render_image_rgb (RenderInfo *info)
   for (; y < ye; y++)
     {
       if (!initial && (error < 1.0))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	{
+	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	}
       else
 	{
 	  src = info->src;
@@ -629,34 +640,32 @@ render_image_rgb (RenderInfo *info)
     }
 }
 
-
-
 static void
 render_image_rgb_a (RenderInfo *info)
 {
   guchar *src;
   guchar *dest;
-  guint *alpha;
-  gulong r, g, b;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-  float error;
-  float step;
+  guint  *alpha;
+  gulong  r, g, b;
+  guint   a;
+  gint    dark_light;
+  gint    byte_order;
+  gint    y, ye;
+  gint    x, xe;
+  gint    initial;
+  gfloat  error;
+  gfloat  step;
 
   alpha = info->alpha;
 
-  y = info->y;
+  y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
 
   step = 1.0 / info->scaley;
 
-  error = y * step;
-  error -= ((int)error) - step;
+  error  = y * step;
+  error -= ((gint) error) - step;
 
   initial = TRUE;
   byte_order = info->byte_order;
@@ -665,7 +674,9 @@ render_image_rgb_a (RenderInfo *info)
   for (; y < ye; y++)
     {
       if (!initial && (error < 1.0) && (y & check_mod))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	{
+	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+	}
       else
 	{
 	  src = info->src;
@@ -680,15 +691,15 @@ render_image_rgb_a (RenderInfo *info)
 	      a = alpha[src[ALPHA_PIX]];
 	      if (dark_light & 0x1)
 		{
-		  r = blend_dark_check[(a | src[RED_PIX])];
-		  g = blend_dark_check[(a | src[GREEN_PIX])];
-		  b = blend_dark_check[(a | src[BLUE_PIX])];
+		  r = render_blend_dark_check[(a | src[RED_PIX])];
+		  g = render_blend_dark_check[(a | src[GREEN_PIX])];
+		  b = render_blend_dark_check[(a | src[BLUE_PIX])];
 		}
 	      else
 		{
-		  r = blend_light_check[(a | src[RED_PIX])];
-		  g = blend_light_check[(a | src[GREEN_PIX])];
-		  b = blend_light_check[(a | src[BLUE_PIX])];
+		  r = render_blend_light_check[(a | src[RED_PIX])];
+		  g = render_blend_light_check[(a | src[GREEN_PIX])];
+		  b = render_blend_light_check[(a | src[BLUE_PIX])];
 		}
 
 	      src += 4;
@@ -722,36 +733,37 @@ render_image_rgb_a (RenderInfo *info)
 static void
 render_image_init_info (RenderInfo *info,
 			GDisplay   *gdisp,
-			int         x,
-			int         y,
-			int         w,
-			int         h)
+			gint        x,
+			gint        y,
+			gint        w,
+			gint        h)
 {
-  info->gdisp = gdisp;
-  info->src_tiles = gimp_image_projection (gdisp->gimage);
-  info->x = x + gdisp->offset_x;
-  info->y = y + gdisp->offset_y;
-  info->w = w;
-  info->h = h;
-  info->scalex = SCALEFACTOR_X (gdisp);
-  info->scaley = SCALEFACTOR_Y (gdisp);
-  info->src_x = UNSCALEX (gdisp, info->x);
-  info->src_y = UNSCALEY (gdisp, info->y);
-  info->src_bpp = gimp_image_projection_bytes (gdisp->gimage);
-  info->dest = gximage_get_data ();
-  info->dest_bpp = gximage_get_bpp ();
-  info->dest_bpl = gximage_get_bpl ();
+  info->gdisp      = gdisp;
+  info->src_tiles  = gimp_image_projection (gdisp->gimage);
+  info->x          = x + gdisp->offset_x;
+  info->y          = y + gdisp->offset_y;
+  info->w          = w;
+  info->h          = h;
+  info->scalex     = SCALEFACTOR_X (gdisp);
+  info->scaley     = SCALEFACTOR_Y (gdisp);
+  info->src_x      = UNSCALEX (gdisp, info->x);
+  info->src_y      = UNSCALEY (gdisp, info->y);
+  info->src_bpp    = gimp_image_projection_bytes (gdisp->gimage);
+  info->dest       = gximage_get_data ();
+  info->dest_bpp   = gximage_get_bpp ();
+  info->dest_bpl   = gximage_get_bpl ();
   info->dest_width = info->w * info->dest_bpp;
   info->byte_order = gximage_get_byte_order ();
-  info->scale = render_image_accelerate_scaling (w, info->x, info->scalex);
-  info->alpha = NULL;
+  info->scale      = render_image_accelerate_scaling (w, info->x, info->scalex);
+  info->alpha      = NULL;
 
   switch (gimp_image_projection_type (gdisp->gimage))
     {
     case RGBA_GIMAGE:
     case GRAYA_GIMAGE:
     case INDEXEDA_GIMAGE:
-      info->alpha = render_image_init_alpha (gimp_image_projection_opacity (gdisp->gimage));
+      info->alpha =
+	render_image_init_alpha (gimp_image_projection_opacity (gdisp->gimage));
       break;
     default:
       /* nothing special needs doing */
@@ -760,11 +772,12 @@ render_image_init_info (RenderInfo *info,
 }
 
 static guint*
-render_image_init_alpha (int mult)
+render_image_init_alpha (gint mult)
 {
   static guint *alpha_mult = NULL;
-  static int alpha_val = -1;
-  int i;
+  static gint   alpha_val  = -1;
+
+  gint i;
 
   if (alpha_val != mult)
     {
@@ -780,14 +793,15 @@ render_image_init_alpha (int mult)
 }
 
 static guchar*
-render_image_accelerate_scaling (int   width,
-				 int   start,
-				 float scalex)
+render_image_accelerate_scaling (gint   width,
+				 gint   start,
+				 gfloat scalex)
 {
   static guchar *scale = NULL;
-  float error;
-  float step;
-  int i;
+
+  gfloat error;
+  gfloat step;
+  gint   i;
 
   if (!scale)
     scale = g_new (guchar, GXIMAGE_WIDTH + 1);
@@ -806,20 +820,20 @@ render_image_accelerate_scaling (int   width,
   return scale;
 }
 
-static guchar*
+static guchar *
 render_image_tile_fault (RenderInfo *info)
 {
-  Tile *tile;
+  Tile   *tile;
   guchar *data;
   guchar *dest;
   guchar *scale;
-  int width;
-  int tilex;
-  int tiley;
-  int srctilex, srctiley;
-  int step;
-  int bpp = info->src_bpp;
-  int x, b;
+  gint    width;
+  gint    tilex;
+  gint    tiley;
+  gint    srctilex, srctiley;
+  gint    step;
+  gint    bpp = info->src_bpp;
+  gint    x, b;
 
   tilex = info->src_x / TILE_WIDTH;
   tiley = info->src_y / TILE_HEIGHT;
@@ -834,9 +848,9 @@ render_image_tile_fault (RenderInfo *info)
 			    info->src_x % TILE_WIDTH,
 			    info->src_y % TILE_HEIGHT);
   scale = info->scale;
-  dest = tile_buf;
+  dest  = tile_buf;
 
-  x = info->src_x;
+  x     = info->src_x;
   width = info->w;
 
   while (width--)
@@ -868,5 +882,6 @@ render_image_tile_fault (RenderInfo *info)
     }
 
   tile_release (tile, FALSE);
+
   return tile_buf;
 }
