@@ -75,3 +75,34 @@ Utility functions provided and used by libgimpthumb
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_thumb_name_from_uri_local ##### -->
+<para>
+
+</para>
+
+@uri: 
+@size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_thumb_ensure_thumb_dir_local ##### -->
+<para>
+
+</para>
+
+@dirname: 
+@size: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_thumb_get_thumb_dir_local ##### -->
+<para>
+
+</para>
+
+@dirname: 
+@size: 
+@Returns: 
+
+

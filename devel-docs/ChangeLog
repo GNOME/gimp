@@ -1,3 +1,9 @@
+2004-10-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/libgimpthumb-sections.txt
+	* libgimpthumb/tmpl/gimpthumb-utils.sgml
+	* libgimpthumb/tmpl/gimpthumbnail.sgml: updated for new API.
+
 2004-10-06  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/tmpl/gimpgradient.sgml: s/gimpgradientedit/gimpgradient/

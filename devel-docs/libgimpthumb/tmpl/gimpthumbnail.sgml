@@ -163,3 +163,15 @@ using object properties.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_thumbnail_save_thumb_local ##### -->
+<para>
+
+</para>
+
+@thumbnail: 
+@pixbuf: 
+@software: 
+@error: 
+@Returns: 
+
+

@@ -44,7 +44,7 @@
 #include "libgimp/libgimp-intl.h"
 
 
-/*  #define GIMP_THUMB_DEBUG  */
+#define GIMP_THUMB_DEBUG
 
 
 #if defined (GIMP_THUMB_DEBUG) && defined (__GNUC__)
@@ -84,26 +84,32 @@ enum
 };
 
 
-static void   gimp_thumbnail_class_init   (GimpThumbnailClass *klass);
-static void   gimp_thumbnail_init         (GimpThumbnail      *thumbnail);
-static void   gimp_thumbnail_finalize     (GObject            *object);
-static void   gimp_thumbnail_set_property (GObject            *object,
-                                           guint               property_id,
-                                           const GValue       *value,
-                                           GParamSpec         *pspec);
-static void   gimp_thumbnail_get_property (GObject            *object,
-                                           guint               property_id,
-                                           GValue             *value,
-                                           GParamSpec         *pspec);
-static void   gimp_thumbnail_reset_info   (GimpThumbnail      *thumbnail);
+static void      gimp_thumbnail_class_init   (GimpThumbnailClass *klass);
+static void      gimp_thumbnail_init         (GimpThumbnail      *thumbnail);
+static void      gimp_thumbnail_finalize     (GObject            *object);
+static void      gimp_thumbnail_set_property (GObject            *object,
+                                              guint               property_id,
+                                              const GValue       *value,
+                                              GParamSpec         *pspec);
+static void      gimp_thumbnail_get_property (GObject            *object,
+                                              guint               property_id,
+                                              GValue             *value,
+                                              GParamSpec         *pspec);
+static void      gimp_thumbnail_reset_info   (GimpThumbnail      *thumbnail);
 
-static void   gimp_thumbnail_update_image (GimpThumbnail      *thumbnail);
-static void   gimp_thumbnail_update_thumb (GimpThumbnail      *thumbnail,
-                                           GimpThumbSize       size);
+static void      gimp_thumbnail_update_image (GimpThumbnail      *thumbnail);
+static void      gimp_thumbnail_update_thumb (GimpThumbnail      *thumbnail,
+                                              GimpThumbSize       size);
 
+static gboolean  gimp_thumbnail_save         (GimpThumbnail      *thumbnail,
+                                              GimpThumbSize       size,
+                                              const gchar        *filename,
+                                              GdkPixbuf          *pixbuf,
+                                              const gchar        *software,
+                                              GError            **error);
 #ifdef GIMP_THUMB_DEBUG
-static void   gimp_thumbnail_debug_notify (GObject            *object,
-                                           GParamSpec         *pspec);
+static void      gimp_thumbnail_debug_notify (GObject            *object,
+                                              GParamSpec         *pspec);
 #endif
 
 
@@ -749,163 +755,18 @@ gimp_thumbnail_set_info_from_pixbuf (GimpThumbnail *thumbnail,
   g_object_thaw_notify (G_OBJECT (thumbnail));
 }
 
-/**
- * gimp_thumbnail_load_thumb:
- * @thumbnail: a #GimpThumbnail object
- * @size: the preferred #GimpThumbSize for the preview
- * @error: return location for possible errors
- *
- * Attempts to load a thumbnail preview for the image associated with
- * @thumbnail. Before you use this function you need need to set an
- * image location using gimp_thumbnail_set_uri() or
- * gimp_thumbnail_set_filename(). You can also peek at the thumb
- * before loading it using gimp_thumbnail_peek_thumb.
- *
- * This function will return the best matching pixbuf for the
- * specified @size. It returns the pixbuf as loaded from disk. It is
- * left to the caller to scale it to the desired size. The returned
- * pixbuf may also represent an outdated preview of the image file.
- * In order to verify if the preview is uptodate, you should check the
- * "thumb_state" property after calling this function.
- *
- * Return value: a preview pixbuf or %NULL if no thumbnail was found
- **/
-GdkPixbuf *
-gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
-                           GimpThumbSize   size,
-                           GError        **error)
+static gboolean
+gimp_thumbnail_save (GimpThumbnail  *thumbnail,
+                     GimpThumbSize   size,
+                     const gchar    *filename,
+                     GdkPixbuf      *pixbuf,
+                     const gchar    *software,
+                     GError        **error)
 {
-  GimpThumbState  state;
-  GdkPixbuf      *pixbuf;
-  const gchar    *option;
-  gint64          image_mtime;
-  gint64          image_size;
-
-  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), NULL);
-
-  GIMP_THUMB_DEBUG_CALL (thumbnail);
-
-  if (! thumbnail->image_uri)
-    return NULL;
-
-  state = gimp_thumbnail_peek_thumb (thumbnail, size);
-
-  if (state < GIMP_THUMB_STATE_EXISTS || state == GIMP_THUMB_STATE_FAILED)
-    return NULL;
-
-  pixbuf = gdk_pixbuf_new_from_file (thumbnail->thumb_filename, NULL);
-  if (! pixbuf)
-    return NULL;
-
-#ifdef GIMP_THUMB_DEBUG
-  g_printerr ("thumbnail loaded from %s\n", thumbnail->thumb_filename);
-#endif
-
-  g_object_freeze_notify (G_OBJECT (thumbnail));
-
-  /* URI and mtime from the thumbnail need to match our file */
-  option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_URI);
-  if (!option || strcmp (option, thumbnail->image_uri))
-    goto finish;
-
-  state = GIMP_THUMB_STATE_OLD;
-
-  option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_MTIME);
-  if (!option || sscanf (option, "%" G_GINT64_FORMAT, &image_mtime) != 1)
-    goto finish;
-
-  option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_FILESIZE);
-  if (option && sscanf (option, "%" G_GINT64_FORMAT, &image_size) != 1)
-    goto finish;
-
-  /* TAG_THUMB_FILESIZE is optional but must match if present */
-  if (image_mtime == thumbnail->image_mtime &&
-      (option == NULL || image_size == thumbnail->image_filesize))
-    {
-      if (thumbnail->thumb_size == GIMP_THUMB_SIZE_FAIL)
-        state = GIMP_THUMB_STATE_FAILED;
-      else
-        state = GIMP_THUMB_STATE_OK;
-    }
-
-  if (state == GIMP_THUMB_STATE_FAILED)
-    gimp_thumbnail_reset_info (thumbnail);
-  else
-    gimp_thumbnail_set_info_from_pixbuf (thumbnail, pixbuf);
-
- finish:
-  if (thumbnail->thumb_size == GIMP_THUMB_SIZE_FAIL ||
-      (state != GIMP_THUMB_STATE_OLD && state != GIMP_THUMB_STATE_OK))
-    {
-      g_object_unref (pixbuf);
-      pixbuf = NULL;
-    }
-
-  g_object_set (thumbnail,
-                "thumb-state", state,
-                NULL);
-
-  g_object_thaw_notify (G_OBJECT (thumbnail));
-
-  return pixbuf;
-}
-
-/**
- * gimp_thumbnail_save_thumb:
- * @thumbnail: a #GimpThumbnail object
- * @pixbuf: a #GdkPixbuf representing the preview thumbnail
- * @software: a string describing the software saving the thumbnail
- * @error: return location for possible errors
- *
- * Saves a preview thumbnail for the image associated with @thumbnail.
- *
- * The caller is responsible for setting the image file location, it's
- * filesize, modification time. One way to set this info is to is to
- * call gimp_thumbnail_set_uri() followed by gimp_thumbnail_peek_image().
- * Since this won't work for remote images, it is left to the user of
- * gimp_thumbnail_save_thumb() to do this or to set the information
- * using the @thumbnail object properties.
- *
- * The image format type and the number of layers can optionally be
- * set in order to be stored with the preview image.
- *
- * Return value: %TRUE if a thumbnail was successfully written,
- *               %FALSE otherwise
- **/
-gboolean
-gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
-                           GdkPixbuf      *pixbuf,
-                           const gchar    *software,
-                           GError        **error)
-{
-  GimpThumbSize  size;
-  gchar         *name;
-  const gchar   *keys[12];
-  gchar         *values[12];
-  gboolean       success;
-  gint           i = 0;
-
-  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
-  g_return_val_if_fail (thumbnail->image_uri != NULL, FALSE);
-  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), FALSE);
-  g_return_val_if_fail (software != NULL, FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  GIMP_THUMB_DEBUG_CALL (thumbnail);
-
-  size = MAX (gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf));
-  if (size < 1)
-    return TRUE;
-
-  name = gimp_thumb_name_from_uri (thumbnail->image_uri, size);
-  if (! name)
-    return TRUE;
-
-  if (! gimp_thumb_ensure_thumb_dir (size, error))
-    {
-      g_free (name);
-      return FALSE;
-    }
+  const gchar  *keys[12];
+  gchar        *values[12];
+  gboolean      success;
+  gint          i = 0;
 
   keys[i]   = TAG_DESCRIPTION;
   values[i] = g_strdup_printf ("Thumbnail of %s",   thumbnail->image_uri);
@@ -965,7 +826,7 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
   keys[i]   = NULL;
   values[i] = NULL;
 
-  success = gdk_pixbuf_savev (pixbuf, name, "png",
+  success = gdk_pixbuf_savev (pixbuf, filename, "png",
                               (gchar **) keys, values,
                               error);
 
@@ -975,10 +836,10 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
   if (success)
     {
 #ifdef GIMP_THUMB_DEBUG
-      g_printerr ("thumbnail saved to file %s\n", name);
+      g_printerr ("thumbnail saved to file %s\n", filename);
 #endif
 
-      success = (chmod (name, 0600) == 0);
+      success = (chmod (filename, 0600) == 0);
 
       if (success)
         gimp_thumbnail_update_thumb (thumbnail, size);
@@ -988,6 +849,291 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
                      thumbnail->image_uri, g_strerror (errno));
     }
 
+  return success;
+}
+
+#ifdef GIMP_THUMB_DEBUG
+static void
+gimp_thumbnail_debug_notify (GObject    *object,
+                             GParamSpec *pspec)
+{
+  GValue       value = { 0, };
+  gchar       *str   = NULL;
+  const gchar *name;
+
+  g_value_init (&value, pspec->value_type);
+  g_object_get_property (object, pspec->name, &value);
+
+  if (G_VALUE_HOLDS_STRING (&value))
+    {
+      str = g_value_dup_string (&value);
+    }
+  else if (g_value_type_transformable (pspec->value_type, G_TYPE_STRING))
+    {
+      GValue  tmp = { 0, };
+
+      g_value_init (&tmp, G_TYPE_STRING);
+      g_value_transform (&value, &tmp);
+
+      str = g_value_dup_string (&tmp);
+
+      g_value_unset (&tmp);
+    }
+
+  g_value_unset (&value);
+
+  name = GIMP_THUMBNAIL (object)->image_uri;
+
+  g_printerr (" GimpThumb (%s) %s: %s\n",
+              name ? name : "(null)", pspec->name, str);
+
+  g_free (str);
+}
+#endif
+
+
+/**
+ * gimp_thumbnail_load_thumb:
+ * @thumbnail: a #GimpThumbnail object
+ * @size: the preferred #GimpThumbSize for the preview
+ * @error: return location for possible errors
+ *
+ * Attempts to load a thumbnail preview for the image associated with
+ * @thumbnail. Before you use this function you need need to set an
+ * image location using gimp_thumbnail_set_uri() or
+ * gimp_thumbnail_set_filename(). You can also peek at the thumb
+ * before loading it using gimp_thumbnail_peek_thumb.
+ *
+ * This function will return the best matching pixbuf for the
+ * specified @size. It returns the pixbuf as loaded from disk. It is
+ * left to the caller to scale it to the desired size. The returned
+ * pixbuf may also represent an outdated preview of the image file.
+ * In order to verify if the preview is uptodate, you should check the
+ * "thumb_state" property after calling this function.
+ *
+ * Return value: a preview pixbuf or %NULL if no thumbnail was found
+ **/
+GdkPixbuf *
+gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
+                           GimpThumbSize   size,
+                           GError        **error)
+{
+  GimpThumbState  state;
+  GdkPixbuf      *pixbuf;
+  const gchar    *option;
+  gint64          image_mtime;
+  gint64          image_size;
+
+  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), NULL);
+
+  GIMP_THUMB_DEBUG_CALL (thumbnail);
+
+  if (! thumbnail->image_uri)
+    return NULL;
+
+  state = gimp_thumbnail_peek_thumb (thumbnail, size);
+
+  if (state < GIMP_THUMB_STATE_EXISTS || state == GIMP_THUMB_STATE_FAILED)
+    return NULL;
+
+  pixbuf = gdk_pixbuf_new_from_file (thumbnail->thumb_filename, NULL);
+  if (! pixbuf)
+    return NULL;
+
+#ifdef GIMP_THUMB_DEBUG
+  g_printerr ("thumbnail loaded from %s\n", thumbnail->thumb_filename);
+#endif
+
+  g_object_freeze_notify (G_OBJECT (thumbnail));
+
+  /* URI and mtime from the thumbnail need to match our file */
+  option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_URI);
+  if (!option)
+    goto finish;
+
+  if (strcmp (option, thumbnail->image_uri))
+    {
+      /*  might be a local thumbnail, try if the local part matches  */
+      const gchar *baseuri = strrchr (thumbnail->image_uri, '/');
+
+      if (!baseuri || strcmp (option, baseuri))
+        goto finish;
+    }
+
+  state = GIMP_THUMB_STATE_OLD;
+
+  option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_MTIME);
+  if (!option || sscanf (option, "%" G_GINT64_FORMAT, &image_mtime) != 1)
+    goto finish;
+
+  option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_FILESIZE);
+  if (option && sscanf (option, "%" G_GINT64_FORMAT, &image_size) != 1)
+    goto finish;
+
+  /* TAG_THUMB_FILESIZE is optional but must match if present */
+  if (image_mtime == thumbnail->image_mtime &&
+      (option == NULL || image_size == thumbnail->image_filesize))
+    {
+      if (thumbnail->thumb_size == GIMP_THUMB_SIZE_FAIL)
+        state = GIMP_THUMB_STATE_FAILED;
+      else
+        state = GIMP_THUMB_STATE_OK;
+    }
+
+  if (state == GIMP_THUMB_STATE_FAILED)
+    gimp_thumbnail_reset_info (thumbnail);
+  else
+    gimp_thumbnail_set_info_from_pixbuf (thumbnail, pixbuf);
+
+ finish:
+  if (thumbnail->thumb_size == GIMP_THUMB_SIZE_FAIL ||
+      (state != GIMP_THUMB_STATE_OLD && state != GIMP_THUMB_STATE_OK))
+    {
+      g_object_unref (pixbuf);
+      pixbuf = NULL;
+    }
+
+  g_object_set (thumbnail,
+                "thumb-state", state,
+                NULL);
+
+  g_object_thaw_notify (G_OBJECT (thumbnail));
+
+  return pixbuf;
+}
+
+/**
+ * gimp_thumbnail_save_thumb:
+ * @thumbnail: a #GimpThumbnail object
+ * @pixbuf: a #GdkPixbuf representing the preview thumbnail
+ * @software: a string describing the software saving the thumbnail
+ * @error: return location for possible errors
+ *
+ * Saves a preview thumbnail for the image associated with @thumbnail.
+ * to the global thumbnail repository.
+ *
+ * The caller is responsible for setting the image file location, it's
+ * filesize, modification time. One way to set this info is to is to
+ * call gimp_thumbnail_set_uri() followed by gimp_thumbnail_peek_image().
+ * Since this won't work for remote images, it is left to the user of
+ * gimp_thumbnail_save_thumb() to do this or to set the information
+ * using the @thumbnail object properties.
+ *
+ * The image format type and the number of layers can optionally be
+ * set in order to be stored with the preview image.
+ *
+ * Return value: %TRUE if a thumbnail was successfully written,
+ *               %FALSE otherwise
+ **/
+gboolean
+gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
+                           GdkPixbuf      *pixbuf,
+                           const gchar    *software,
+                           GError        **error)
+{
+  GimpThumbSize  size;
+  gchar         *name;
+  gboolean       success;
+
+  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
+  g_return_val_if_fail (thumbnail->image_uri != NULL, FALSE);
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), FALSE);
+  g_return_val_if_fail (software != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  GIMP_THUMB_DEBUG_CALL (thumbnail);
+
+  size = MAX (gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf));
+  if (size < 1)
+    return TRUE;
+
+  name = gimp_thumb_name_from_uri (thumbnail->image_uri, size);
+  if (! name)
+    return TRUE;
+
+  if (! gimp_thumb_ensure_thumb_dir (size, error))
+    {
+      g_free (name);
+      return FALSE;
+    }
+
+  success = gimp_thumbnail_save (thumbnail,
+                                 size, name, pixbuf, software,
+                                 error);
+  g_free (name);
+
+  return success;
+}
+
+/**
+ * gimp_thumbnail_save_thumb_local:
+ * @thumbnail: a #GimpThumbnail object
+ * @pixbuf: a #GdkPixbuf representing the preview thumbnail
+ * @software: a string describing the software saving the thumbnail
+ * @error: return location for possible errors
+ *
+ * Saves a preview thumbnail for the image associated with @thumbnail
+ * to the local thumbnail repository. Local thumbnails have been added
+ * with version 0.7 of the spec.
+ *
+ * Please see also gimp_thumbnail_save_thumb(). The notes made there
+ * apply here as well.
+ *
+ * Return value: %TRUE if a thumbnail was successfully written,
+ *               %FALSE otherwise
+ *
+ * Since: GIMP 2.2
+ **/
+gboolean
+gimp_thumbnail_save_thumb_local (GimpThumbnail  *thumbnail,
+                                 GdkPixbuf      *pixbuf,
+                                 const gchar    *software,
+                                 GError        **error)
+{
+  GimpThumbSize  size;
+  gchar         *name;
+  gchar         *filename;
+  gchar         *dirname;
+  gboolean       success;
+
+  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
+  g_return_val_if_fail (thumbnail->image_uri != NULL, FALSE);
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), FALSE);
+  g_return_val_if_fail (software != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  GIMP_THUMB_DEBUG_CALL (thumbnail);
+
+  size = MAX (gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf));
+  if (size < 1)
+    return TRUE;
+
+  filename = g_filename_from_uri (thumbnail->image_uri, NULL, NULL);
+  if (! filename)
+    return TRUE;
+
+  dirname = g_path_get_dirname (filename);
+  g_free (filename);
+
+  name = gimp_thumb_name_from_uri_local (thumbnail->image_uri, size);
+  if (! name)
+    {
+      g_free (dirname);
+      return TRUE;
+    }
+
+  if (! gimp_thumb_ensure_thumb_dir_local (dirname, size, error))
+    {
+      g_free (name);
+      g_free (dirname);
+      return FALSE;
+    }
+
+  g_free (dirname);
+
+  success = gimp_thumbnail_save (thumbnail,
+                                 size, name, pixbuf, software,
+                                 error);
   g_free (name);
 
   return success;
@@ -1069,42 +1215,3 @@ gimp_thumbnail_save_failure (GimpThumbnail  *thumbnail,
 
   return success;
 }
-
-#ifdef GIMP_THUMB_DEBUG
-static void
-gimp_thumbnail_debug_notify (GObject    *object,
-                             GParamSpec *pspec)
-{
-  GValue       value = { 0, };
-  gchar       *str   = NULL;
-  const gchar *name;
-
-  g_value_init (&value, pspec->value_type);
-  g_object_get_property (object, pspec->name, &value);
-
-  if (G_VALUE_HOLDS_STRING (&value))
-    {
-      str = g_value_dup_string (&value);
-    }
-  else if (g_value_type_transformable (pspec->value_type, G_TYPE_STRING))
-    {
-      GValue  tmp = { 0, };
-
-      g_value_init (&tmp, G_TYPE_STRING);
-      g_value_transform (&value, &tmp);
-
-      str = g_value_dup_string (&tmp);
-
-      g_value_unset (&tmp);
-    }
-
-  g_value_unset (&value);
-
-  name = GIMP_THUMBNAIL (object)->image_uri;
-
-  g_printerr (" GimpThumb (%s) %s: %s\n",
-              name ? name : "(null)", pspec->name, str);
-
-  g_free (str);
-}
-#endif

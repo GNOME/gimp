@@ -1,3 +1,11 @@
+2004-10-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumb-utils.c
+	* libgimpthumb/gimpthumb-utils.[ch]
+	* libgimpthumb/gimpthumbnail.c: added support for local thumbnails
+	as introduced by version 0.7 of the thumbnail spec. Untested, but
+	at least the API is there.
+
 2004-10-10  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/AlienMap2.c: ported to GimpAspectPreview, and some

@@ -11,6 +11,7 @@ gimp_thumbnail_peek_thumb
 gimp_thumbnail_load_thumb
 gimp_thumbnail_save_thumb
 gimp_thumbnail_save_failure
+gimp_thumbnail_save_thumb_local
 <SUBSECTION Standard>
 GimpThumbnailClass
 GIMP_THUMBNAIL
@@ -30,6 +31,9 @@ gimp_thumb_find_thumb
 gimp_thumb_file_test
 gimp_thumb_ensure_thumb_dir
 gimp_thumb_get_thumb_dir
+gimp_thumb_name_from_uri_local
+gimp_thumb_ensure_thumb_dir_local
+gimp_thumb_get_thumb_dir_local
 </SECTION>
 
 <SECTION>
