@@ -314,6 +314,10 @@ if test x$GDK_PIXBUF_CSOURCE = xno; then
   AC_MSG_ERROR(Could not find gdk-pixbuf-csource in your PATH)
 fi
 
+PKG_CHECK_MODULES(LIBART, libart-2.0)
+AC_SUBST(LIBART_CFLAGS)
+AC_SUBST(LIBART_LIBS)
+
 PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= $PANGOFT2_REQUIRED_VERSION,,
   AC_MSG_ERROR([Test for PangoFT2 failed.
 *** We require Pango with the optional support for FreeType2 compiled in.
@@ -321,11 +325,16 @@ PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= $PANGOFT2_REQUIRED_VERSION,,
 AC_SUBST(PANGOFT2_CFLAGS)
 AC_SUBST(PANGOFT2_LIBS)
 
-PKG_CHECK_MODULES(LIBART, libart-2.0)
-AC_SUBST(LIBART_CFLAGS)
-AC_SUBST(LIBART_LIBS)
-
 PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= 1.0.1, have_fontconfig=true, :)
+
+AC_PATH_PROG(FREETYPE_CONFIG, freetype-config, no)
+if test "x$FREETYPE_CONFIG" != "xno" ; then
+  AC_MSG_CHECKING(FREETYPE_LIBS)
+  FREETYPE_LIBS=`$FREETYPE_CONFIG --libs`
+  AC_MSG_RESULT($FREETYPE_LIBS)
+fi
+AC_SUBST(FREETYPE_LIBS)
+
 
 ##########################################
 # Check for some special functions we need

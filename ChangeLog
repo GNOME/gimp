@@ -1,5 +1,11 @@
 2003-07-22  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: check for freetype-config and set FREETYPE_LIBS.
+
+	* app/Makefile.am: link explicitely against freetype.
+
+2003-07-22  Sven Neumann  <sven@gimp.org>
+
 	* app/composite/gimp-composite.[ch]: gimp_composite_dispatch()
 	doesn't have a return value, made it a void function.
 

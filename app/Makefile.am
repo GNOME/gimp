@@ -86,11 +86,12 @@ gimp_1_3_LDADD = \
 	$(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
-	$(PANGOFT2_LIBS)						\
 	$(LIBART_LIBS)							\
+	$(PANGOFT2_LIBS)						\
+	$(FONTCONFIG_LIBS)						\
+	$(FREETYPE_LIBS)						\
 	$(GIMP_THREAD_LIBS)						\
 	$(GIMP_MP_LIBS)							\
-	$(FONTCONFIG_LIBS)						\
 	$(INTLLIBS)							\
 	$(REGEXREPL)
 
