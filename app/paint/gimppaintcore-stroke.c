@@ -90,7 +90,6 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
                                  gint              offset_y)
 {
   GimpImage  *gimage;
-  BoundSeg   *sorted_segs;
   BoundSeg   *stroke_segs;
   gint        n_stroke_segs;
   gint        off_x;
@@ -108,10 +107,7 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  sorted_segs = sort_boundary (bound_segs, n_bound_segs, &n_stroke_segs);
-  stroke_segs = simplify_boundary (sorted_segs, n_stroke_segs, &n_bound_segs);
-
-  g_free (sorted_segs);
+  stroke_segs = sort_boundary (bound_segs, n_bound_segs, &n_stroke_segs);
 
   if (n_stroke_segs == 0)
     return TRUE;

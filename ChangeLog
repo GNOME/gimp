@@ -1,5 +1,20 @@
 2003-12-31  Simon Budig  <simon@gimp.org>
 
+	* app/core/gimpdrawable-stroke.c
+	* app/paint/gimppaintcore-stroke.c: Don't simplify the border
+	of the selection. Quite some people were confused by the
+	polygonal look of a stroked ellipse. The old behaviour doesn't
+	look good, but the new one isn't really better. Since the
+	old behaviour is more predictable, I am reverting this for now
+	(Please note that the function to simplify the boundary still
+	is available, it just is unused).
+
+	Hopefully at some point it will be possible to have non-integer
+	boundary coordinates or even a more sophisticated set of
+	"vector-selection" tools.
+
+2003-12-31  Simon Budig  <simon@gimp.org>
+
 	* app/tools/gimpvectortool.[ch]: Fixed missing undo step when
 	moving (components of) the path. Don't add an undo step when
 	nothing changes.
