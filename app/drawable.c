@@ -88,7 +88,7 @@ gimp_drawable_class_init (GimpDrawableClass *class)
 		    gtk_signal_default_marshaller,
 		    GTK_TYPE_NONE, 0);
 
-  gtk_object_class_add_signals (object_class, drawable_signals, LAST_SIGNAL);
+  gtk_object_class_add_signals (object_class, (guint *)drawable_signals, LAST_SIGNAL);
 
   object_class->destroy = gimp_drawable_destroy;
 }

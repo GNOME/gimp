@@ -65,6 +65,8 @@ void
 brushes_init ()
 {
   GSList * list;
+  GBrushP gb_start = NULL;
+  gint gb_count = 0;
 
   if (brush_list)
     brushes_free();
@@ -83,9 +85,39 @@ brushes_init ()
 
   while (list) {
     /*  Set the brush index  */
-    ((GBrush *) list->data)->index = num_brushes++;
-    list = g_slist_next (list);
-  }
+    /* ALT make names unique */
+    GBrushP gb = (GBrushP)list->data;
+    gb->index = num_brushes++;
+    list = g_slist_next(list);
+    if(list) {
+      GBrushP gb2 = (GBrushP)list->data;
+      
+      if(gb_start == NULL) {
+        gb_start = gb;
+      }
+      
+      if(gb_start->name
+	 && gb2->name
+	 && (strcmp(gb_start->name,gb2->name) == 0)) {
+	
+        gint b_digits = 2;
+        gint gb_tmp_cnt = gb_count++;
+	
+        /* Alter gb2... */
+        g_free(gb2->name);
+        while((gb_tmp_cnt /= 10) > 0)
+          b_digits++;
+        /* name str + " #" + digits + null */
+        gb2->name = g_malloc(strlen(gb_start->name)+3+b_digits);
+        sprintf(gb2->name,"%s #%d",gb_start->name,gb_count);
+      }
+      else
+      {
+        gb_start = gb2;
+        gb_count = 0;
+      }
+    }  
+  }                  
 }
 
 
