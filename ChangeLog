@@ -1,3 +1,17 @@
+2005-03-18  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontainerview.c: make "preview-size" and
+	"preview-border-width" construct properties. Fixes creation
+	using g_object_new().
+
+	* app/widgets/gimpcontainerentry.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimplayertreeview.c (set_preview_size): handle
+	unset model and/or view gracefully.
+
+	* app/dialogs/image-new-dialog.c: unset "focus-on-click" on the
+	template combo-box.
+
 2005-03-17  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/fp.c:  major code cleanup, make it

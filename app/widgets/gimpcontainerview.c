@@ -221,14 +221,16 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                                                          NULL, NULL,
                                                          1, GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
                                                          GIMP_VIEW_SIZE_MEDIUM,
-                                                         G_PARAM_READWRITE));
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 
   g_object_interface_install_property (view_iface,
                                        g_param_spec_int ("preview-border-width",
                                                          NULL, NULL,
                                                          0, GIMP_VIEW_MAX_BORDER_WIDTH,
                                                          1,
-                                                         G_PARAM_READWRITE));
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 }
 
 static void

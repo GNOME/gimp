@@ -718,14 +718,34 @@ gimp_container_tree_view_set_preview_size (GimpContainerView *view)
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkWidget             *tree_widget;
   GtkTreeIter            iter;
-  gboolean               iter_valid;
   GList                 *list;
+  gboolean               iter_valid;
   gint                   preview_size;
   gint                   border_width;
 
   preview_size = gimp_container_view_get_preview_size (view, &border_width);
 
+  if (tree_view->model)
+    {
+      for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
+           iter_valid;
+           iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
+        {
+          GimpViewRenderer *renderer;
+
+          gtk_tree_model_get (tree_view->model, &iter,
+                              COLUMN_RENDERER, &renderer,
+                              -1);
+
+          gimp_view_renderer_set_size (renderer, preview_size, border_width);
+          g_object_unref (renderer);
+        }
+    }
+
   tree_widget = GTK_WIDGET (tree_view->view);
+
+  if (! tree_widget)
+    return;
 
   for (list = tree_view->toggle_cells; list; list = g_list_next (list))
     {
@@ -748,20 +768,6 @@ gimp_container_tree_view_set_preview_size (GimpContainerView *view)
 
           g_free (stock_id);
         }
-    }
-
-  for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
-    {
-      GimpViewRenderer *renderer;
-
-      gtk_tree_model_get (tree_view->model, &iter,
-                          COLUMN_RENDERER, &renderer,
-                          -1);
-
-      gimp_view_renderer_set_size (renderer, preview_size, border_width);
-      g_object_unref (renderer);
     }
 
   gtk_tree_view_columns_autosize (tree_view->view);

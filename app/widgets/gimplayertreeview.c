@@ -614,28 +614,33 @@ static void
 gimp_layer_tree_view_set_preview_size (GimpContainerView *view)
 {
   GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (view);
-  GimpLayerTreeView     *layer_view = GIMP_LAYER_TREE_VIEW (view);
-  GtkTreeIter            iter;
-  gboolean               iter_valid;
-  gint                   preview_size;
-  gint                   border_width;
 
-  preview_size = gimp_container_view_get_preview_size (view, &border_width);
-
-  for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
+  if (tree_view->model)
     {
-      GimpViewRenderer *renderer;
+      GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
+      GtkTreeIter        iter;
+      gboolean           iter_valid;
+      gint               preview_size;
+      gint               border_width;
 
-      gtk_tree_model_get (tree_view->model, &iter,
-                          layer_view->model_column_mask, &renderer,
-                          -1);
+      preview_size = gimp_container_view_get_preview_size (view, &border_width);
 
-      if (renderer)
+      for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
+           iter_valid;
+           iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
         {
-          gimp_view_renderer_set_size (renderer, preview_size, border_width);
-          g_object_unref (renderer);
+          GimpViewRenderer *renderer;
+
+          gtk_tree_model_get (tree_view->model, &iter,
+                              layer_view->model_column_mask, &renderer,
+                              -1);
+
+          if (renderer)
+            {
+              gimp_view_renderer_set_size (renderer,
+                                           preview_size, border_width);
+              g_object_unref (renderer);
+            }
         }
     }
 

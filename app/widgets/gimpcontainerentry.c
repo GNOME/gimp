@@ -395,6 +395,9 @@ gimp_container_entry_set_preview_size (GimpContainerView *view)
   gint          preview_size;
   gint          border_width;
 
+  if (! model)
+    return;
+
   preview_size = gimp_container_view_get_preview_size (view, &border_width);
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
