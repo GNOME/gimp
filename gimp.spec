@@ -1,5 +1,6 @@
 %define name     gimp
 %define ver      1.1.14
+%define subver   1.1
 %define rel      1
 %define prefix	 /usr
 
@@ -73,12 +74,12 @@ fi
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/usr/info $RPM_BUILD_ROOT/usr/include \
 	$RPM_BUILD_ROOT/usr/lib $RPM_BUILD_ROOT/usr/bin
-make prefix=$RPM_BUILD_ROOT/usr install
+make prefix=$RPM_BUILD_ROOT/usr PREFIX=$RPM_BUILD_ROOT/usr install
 
 # Strip the executables
 strip $RPM_BUILD_ROOT/usr/bin/gimp
 # Only strip execuable files and leave scripts alone.
-strip `file $RPM_BUILD_ROOT/usr/lib/gimp/1.1/plug-ins/* | grep ELF | cut -d':' -f 1`
+strip `file $RPM_BUILD_ROOT/usr/lib/gimp/%{subver}/plug-ins/* | grep ELF | cut -d':' -f 1`
 
 # Compress down the online documentation.
 if [ -d $RPM_BUILD_ROOT/usr/man ]; then
@@ -86,8 +87,11 @@ if [ -d $RPM_BUILD_ROOT/usr/man ]; then
 fi
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+[-n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
 
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
 
 %files 
 %attr (0555, bin, man) %doc AUTHORS COPYING ChangeLog MAINTAINERS NEWS README TODO
@@ -106,9 +110,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir /usr/share/gimp/scripts
 %dir /usr/share/gimp/tips
 %dir /usr/share/locale
-%dir /usr/lib/gimp/1.1
-%dir /usr/lib/gimp/1.1/modules
-%dir /usr/lib/gimp/1.1/plug-ins
+%dir /usr/lib/gimp/%{subver}
+%dir /usr/lib/gimp/%{subver}/modules
+%dir /usr/lib/gimp/%{subver}/plug-ins
 
 %defattr (0444, bin, bin, 0555) 
 %{prefix}/share/gimp/scripts/3d-outline.scm
@@ -254,11 +258,12 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}/share/gimp/gfig/sprial
 %{prefix}/share/gimp/gfig/star2
 %{prefix}/share/gimp/gfig/stars
+
 %{prefix}/share/gimp/gflare/Bright_Star
 %{prefix}/share/gimp/gflare/Classic
 %{prefix}/share/gimp/gflare/Distant_Sun
 %{prefix}/share/gimp/gflare/Default
-%{prefix}/share/gimp/gflare/GFlare_101
+%{prefix}/share/gimp/gflare/GFlare_%{subver}
 %{prefix}/share/gimp/gflare/GFlare_102
 %{prefix}/share/gimp/gflare/Hidden_Planet
 
@@ -422,13 +427,13 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}/share/gimp/gradients/Flare_Glow_Radial_2
 %{prefix}/share/gimp/gradients/Flare_Glow_Radial_3
 %{prefix}/share/gimp/gradients/Flare_Glow_Radial_4
-%{prefix}/share/gimp/gradients/Flare_Radial_101
+%{prefix}/share/gimp/gradients/Flare_Radial_%{subver}
 %{prefix}/share/gimp/gradients/Flare_Radial_102
 %{prefix}/share/gimp/gradients/Flare_Radial_103
 %{prefix}/share/gimp/gradients/Flare_Rays_Radial_1
 %{prefix}/share/gimp/gradients/Flare_Rays_Radial_2
 %{prefix}/share/gimp/gradients/Flare_Rays_Size_1
-%{prefix}/share/gimp/gradients/Flare_Sizefac_101
+%{prefix}/share/gimp/gradients/Flare_Sizefac_%{subver}
 %{prefix}/share/gimp/gradients/Four_bars
 %{prefix}/share/gimp/gradients/French_flag
 %{prefix}/share/gimp/gradients/French_flag_smooth
@@ -574,13 +579,13 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}/share/gimp/patterns/wood5.pat
 
 %{prefix}/share/gimp/tips/gimp_tips.txt
-%{prefix}/share/gimp/tips/gimp_tips.de.txt
-%{prefix}/share/gimp/tips/gimp_tips.ja.txt
-%{prefix}/share/gimp/tips/gimp_tips.it.txt
-%{prefix}/share/gimp/tips/gimp_tips.ko.txt
-%{prefix}/share/gimp/tips/gimp_conseils.fr.txt
-%{prefix}/share/gimp/tips/gimp_tips.ru.txt
-%{prefix}/share/gimp/tips/gimp_tips.pl.txt
+%lang(de)	%{prefix}/share/gimp/tips/gimp_tips.de.txt
+%lang(ja)	%{prefix}/share/gimp/tips/gimp_tips.ja.txt
+%lang(it)	%{prefix}/share/gimp/tips/gimp_tips.it.txt
+%lang(ko)	%{prefix}/share/gimp/tips/gimp_tips.ko.txt
+%lang(fr)	%{prefix}/share/gimp/tips/gimp_conseils.fr.txt
+%lang(ru)	%{prefix}/share/gimp/tips/gimp_tips.ru.txt
+%lang(pl)	%{prefix}/share/gimp/tips/gimp_tips.pl.txt
 
 %{prefix}/share/gimp/help/C/dialogs/layers/add_mask.html
 %{prefix}/share/gimp/help/C/dialogs/layers/apply_mask.html
@@ -953,19 +958,304 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}/share/gimp/unitrc
 %{prefix}/share/gimp/gimp_logo.ppm
 %{prefix}/share/gimp/gimp_splash.ppm
-%{prefix}/share/gimp/gimp1_1_splash.ppm
+%{prefix}/share/gimp/gimp%{subver}_splash.ppm
 %{prefix}/share/gimp/ps-menurc
 %{prefix}/share/gimp/gtkrc.forest2
+
+
+%defattr (444, bin, bin, 555)
+%lang(cs)      /usr/share/locale/cs/LC_MESSAGES/gimp.mo
+%lang(da)      /usr/share/locale/da/LC_MESSAGES/gimp.mo
+%lang(de)      /usr/share/locale/de/LC_MESSAGES/gimp.mo
+%lang(fi)      /usr/share/locale/fi/LC_MESSAGES/gimp.mo
+%lang(fr)      /usr/share/locale/fr/LC_MESSAGES/gimp.mo
+%lang(hu)      /usr/share/locale/hu/LC_MESSAGES/gimp.mo
+%lang(it)      /usr/share/locale/it/LC_MESSAGES/gimp.mo
+%lang(ja)      /usr/share/locale/ja/LC_MESSAGES/gimp.mo
+%lang(ko)      /usr/share/locale/ko/LC_MESSAGES/gimp.mo
+%lang(nl)      /usr/share/locale/nl/LC_MESSAGES/gimp.mo
+%lang(no)      /usr/share/locale/no/LC_MESSAGES/gimp.mo
+%lang(pl)      /usr/share/locale/pl/LC_MESSAGES/gimp.mo
+%lang(ru)      /usr/share/locale/ru/LC_MESSAGES/gimp.mo
+%lang(sk)      /usr/share/locale/sk/LC_MESSAGES/gimp.mo
+%lang(sv)      /usr/share/locale/sv/LC_MESSAGES/gimp.mo
 
 %defattr (0555, bin, bin)
 %{prefix}/share/gimp/user_install
 
-/usr/share/locale/*/*
-/usr/lib/lib*.so
-/usr/lib/lib*.so.*
-/usr/bin/gimp
-/usr/lib/gimp/1.1/plug-ins/*
-/usr/lib/gimp/1.1/modules/*.so
+%{prefix}/lib/perl5/site_perl/i386-linux/auto/Gimp/Lib/Lib.so
+%{prefix}/lib/perl5/site_perl/i386-linux/auto/Gimp/Net/Net.so
+%{prefix}/lib/perl5/site_perl/i386-linux/auto/Gimp/UI/UI.so
+%{prefix}/lib/perl5/site_perl/i386-linux/auto/Gimp/Gimp.so
+
+%{prefix}lib/perl5/i386-linux/5.00405/perllocal.pod
+
+%{prefix}lib/perl5/man/man3/Gimp::Module.3
+%{prefix}lib/perl5/man/man3/Gimp::Lib.3
+%{prefix}lib/perl5/man/man3/Gimp::Pixel.3
+%{prefix}lib/perl5/man/man3/Gimp::Data.3
+%{prefix}lib/perl5/man/man3/Gimp::Fu.3
+%{prefix}lib/perl5/man/man3/Gimp::Feature.3
+%{prefix}lib/perl5/man/man3/Gimp::Util.3
+%{prefix}lib/perl5/man/man3/Gimp::PDL.3
+%{prefix}lib/perl5/man/man3/Gimp::Pod.3
+%{prefix}lib/perl5/man/man3/Gimp::OO.3
+%{prefix}lib/perl5/man/man3/Gimp::Compat.3
+%{prefix}lib/perl5/man/man3/Gimp::Net.3
+%{prefix}lib/perl5/man/man3/Gimp::UI.3
+%{prefix}lib/perl5/man/man3/Gimp::basewidget.3
+%{prefix}lib/perl5/man/man3/UI::UI.3
+%{prefix}lib/perl5/man/man3/UI::basewidget.3
+%{prefix}lib/perl5/man/man3/Gimp.3
+%{prefix}lib/perl5/man/man3/Net::Net.3
+
+%{prefix}lib/perl5/site_perl/Gimp/Data.pm
+%{prefix}lib/perl5/site_perl/Gimp/Fu.pm
+%{prefix}lib/perl5/site_perl/Gimp/Feature.pm
+%{prefix}lib/perl5/site_perl/Gimp/Util.pm
+%{prefix}lib/perl5/site_perl/Gimp/UI.pm
+%{prefix}lib/perl5/site_perl/Gimp/basewidget.pm
+%{prefix}lib/perl5/site_perl/Gimp/PDL.pm
+%{prefix}lib/perl5/site_perl/Gimp/Net.pm
+%{prefix}lib/perl5/site_perl/Gimp/Module.pm
+%{prefix}lib/perl5/site_perl/Gimp/Config.pm
+%{prefix}lib/perl5/site_perl/Gimp/Lib.pm
+%{prefix}lib/perl5/site_perl/Gimp/Pixel.pod
+%{prefix}lib/perl5/site_perl/Gimp/Pod.pm
+%{prefix}lib/perl5/site_perl/Gimp/Compat.pm
+%{prefix}lib/perl5/site_perl/Gimp/OO.pod
+%{prefix}lib/perl5/site_perl/Gimp.pm
+
+%{prefix}/lib/libgimp-%{subver}.so.14.0.0
+%{prefix}/lib/libgimp-%{subver}.so.14
+%{prefix}/lib/libgimpui-%{subver}.so.14.0.0
+%{prefix}/lib/libgimpui-%{subver}.so.14
+%{prefix}/lib/libgck-%{subver}.so.14.0.0
+%{prefix}/lib/libgck-%{subver}.so.14
+
+%{prefix}/bin/gimp
+%{prefix}/bin/scm2scm
+%{prefix}/bin/scm2perl
+%{prefix}/bin/embedxpm
+%{prefix}/bin/gimpdoc
+%{prefix}/bin/xcftopnm
+
+%{prefix}lib/gimp/%{subver}/plug-ins/dbbrowser
+%{prefix}lib/gimp/%{subver}/plug-ins/script-fu
+%{prefix}lib/gimp/%{subver}/plug-ins/PDB
+%{prefix}lib/gimp/%{subver}/plug-ins/Perl-Server
+%{prefix}lib/gimp/%{subver}/plug-ins/animate_cells
+%{prefix}lib/gimp/%{subver}/plug-ins/avi
+%{prefix}lib/gimp/%{subver}/plug-ins/blowinout.pl
+%{prefix}lib/gimp/%{subver}/plug-ins/border.pl
+%{prefix}lib/gimp/%{subver}/plug-ins/bricks
+%{prefix}lib/gimp/%{subver}/plug-ins/burst
+%{prefix}lib/gimp/%{subver}/plug-ins/centerguide
+%{prefix}lib/gimp/%{subver}/plug-ins/colorhtml
+%{prefix}lib/gimp/%{subver}/plug-ins/dataurl
+%{prefix}lib/gimp/%{subver}/plug-ins/ditherize.pl
+%{prefix}lib/gimp/%{subver}/plug-ins/feedback.pl
+%{prefix}lib/gimp/%{subver}/plug-ins/fire
+%{prefix}lib/gimp/%{subver}/plug-ins/fit-text
+%{prefix}lib/gimp/%{subver}/plug-ins/font_table
+%{prefix}lib/gimp/%{subver}/plug-ins/frame_filter
+%{prefix}lib/gimp/%{subver}/plug-ins/frame_reshuffle
+%{prefix}lib/gimp/%{subver}/plug-ins/gap-vcr
+%{prefix}lib/gimp/%{subver}/plug-ins/gimpmagick
+%{prefix}lib/gimp/%{subver}/plug-ins/glowing_steel
+%{prefix}lib/gimp/%{subver}/plug-ins/goldenmean
+%{prefix}lib/gimp/%{subver}/plug-ins/gouge
+%{prefix}lib/gimp/%{subver}/plug-ins/guide_remove
+%{prefix}lib/gimp/%{subver}/plug-ins/guidegrid
+%{prefix}lib/gimp/%{subver}/plug-ins/guides_to_selection
+%{prefix}lib/gimp/%{subver}/plug-ins/image_tile
+%{prefix}lib/gimp/%{subver}/plug-ins/innerbevel
+%{prefix}lib/gimp/%{subver}/plug-ins/layerfuncs
+%{prefix}lib/gimp/%{subver}/plug-ins/logulator
+%{prefix}lib/gimp/%{subver}/plug-ins/map_to_gradient
+%{prefix}lib/gimp/%{subver}/plug-ins/miff
+%{prefix}lib/gimp/%{subver}/plug-ins/mirrorsplit
+%{prefix}lib/gimp/%{subver}/plug-ins/parasite-editor
+%{prefix}lib/gimp/%{subver}/plug-ins/perlcc
+%{prefix}lib/gimp/%{subver}/plug-ins/perlotine
+%{prefix}lib/gimp/%{subver}/plug-ins/pixelmap
+%{prefix}lib/gimp/%{subver}/plug-ins/povray
+%{prefix}lib/gimp/%{subver}/plug-ins/prep4gif.pl
+%{prefix}lib/gimp/%{subver}/plug-ins/randomart1
+%{prefix}lib/gimp/%{subver}/plug-ins/randomblends
+%{prefix}lib/gimp/%{subver}/plug-ins/repdup
+%{prefix}lib/gimp/%{subver}/plug-ins/roundrectsel
+%{prefix}lib/gimp/%{subver}/plug-ins/scratches.pl
+%{prefix}lib/gimp/%{subver}/plug-ins/stampify
+%{prefix}lib/gimp/%{subver}/plug-ins/stamps
+%{prefix}lib/gimp/%{subver}/plug-ins/terral_text
+%{prefix}lib/gimp/%{subver}/plug-ins/tex-to-float
+%{prefix}lib/gimp/%{subver}/plug-ins/triangle
+%{prefix}lib/gimp/%{subver}/plug-ins/view3d.pl
+%{prefix}lib/gimp/%{subver}/plug-ins/yinyang
+%{prefix}lib/gimp/%{subver}/plug-ins/webify.pl
+%{prefix}lib/gimp/%{subver}/plug-ins/windify.pl
+%{prefix}lib/gimp/%{subver}/plug-ins/xachlego.pl
+%{prefix}lib/gimp/%{subver}/plug-ins/xachshadow.pl
+%{prefix}lib/gimp/%{subver}/plug-ins/xachvision.pl
+%{prefix}lib/gimp/%{subver}/plug-ins/AlienMap
+%{prefix}lib/gimp/%{subver}/plug-ins/AlienMap2
+%{prefix}lib/gimp/%{subver}/plug-ins/FractalExplorer
+%{prefix}lib/gimp/%{subver}/plug-ins/Lighting
+%{prefix}lib/gimp/%{subver}/plug-ins/MapObject
+%{prefix}lib/gimp/%{subver}/plug-ins/bmp
+%{prefix}lib/gimp/%{subver}/plug-ins/borderaverage
+%{prefix}lib/gimp/%{subver}/plug-ins/faxg3
+%{prefix}lib/gimp/%{subver}/plug-ins/fits
+%{prefix}lib/gimp/%{subver}/plug-ins/flame
+%{prefix}lib/gimp/%{subver}/plug-ins/fp
+%{prefix}lib/gimp/%{subver}/plug-ins/gap_plugins
+%{prefix}lib/gimp/%{subver}/plug-ins/gap_filter
+%{prefix}lib/gimp/%{subver}/plug-ins/gap_frontends
+%{prefix}lib/gimp/%{subver}/plug-ins/gdyntext
+%{prefix}lib/gimp/%{subver}/plug-ins/gfig
+%{prefix}lib/gimp/%{subver}/plug-ins/gflare
+%{prefix}lib/gimp/%{subver}/plug-ins/gfli
+%{prefix}lib/gimp/%{subver}/plug-ins/gimpressionist
+%{prefix}lib/gimp/%{subver}/plug-ins/helpbrowser
+%{prefix}lib/gimp/%{subver}/plug-ins/ifscompose
+%{prefix}lib/gimp/%{subver}/plug-ins/imagemap
+%{prefix}lib/gimp/%{subver}/plug-ins/maze
+%{prefix}lib/gimp/%{subver}/plug-ins/mosaic
+%{prefix}lib/gimp/%{subver}/plug-ins/pagecurl
+%{prefix}lib/gimp/%{subver}/plug-ins/print
+%{prefix}lib/gimp/%{subver}/plug-ins/rcm
+%{prefix}lib/gimp/%{subver}/plug-ins/sgi
+%{prefix}lib/gimp/%{subver}/plug-ins/sel2path
+%{prefix}lib/gimp/%{subver}/plug-ins/sinus
+%{prefix}lib/gimp/%{subver}/plug-ins/struc
+%{prefix}lib/gimp/%{subver}/plug-ins/unsharp
+%{prefix}lib/gimp/%{subver}/plug-ins/webbrowser
+%{prefix}lib/gimp/%{subver}/plug-ins/xjt
+%{prefix}lib/gimp/%{subver}/plug-ins/CEL
+%{prefix}lib/gimp/%{subver}/plug-ins/CML_explorer
+%{prefix}lib/gimp/%{subver}/plug-ins/align_layers
+%{prefix}lib/gimp/%{subver}/plug-ins/animationplay
+%{prefix}lib/gimp/%{subver}/plug-ins/animoptimize
+%{prefix}lib/gimp/%{subver}/plug-ins/apply_lens
+%{prefix}lib/gimp/%{subver}/plug-ins/autocrop
+%{prefix}lib/gimp/%{subver}/plug-ins/autostretch_hsv
+%{prefix}lib/gimp/%{subver}/plug-ins/blinds
+%{prefix}lib/gimp/%{subver}/plug-ins/blur
+%{prefix}lib/gimp/%{subver}/plug-ins/bumpmap
+%{prefix}lib/gimp/%{subver}/plug-ins/bz2
+%{prefix}lib/gimp/%{subver}/plug-ins/c_astretch
+%{prefix}lib/gimp/%{subver}/plug-ins/checkerboard
+%{prefix}lib/gimp/%{subver}/plug-ins/color_enhance
+%{prefix}lib/gimp/%{subver}/plug-ins/colorify
+%{prefix}lib/gimp/%{subver}/plug-ins/colortoalpha
+%{prefix}lib/gimp/%{subver}/plug-ins/compose
+%{prefix}lib/gimp/%{subver}/plug-ins/convmatrix
+%{prefix}lib/gimp/%{subver}/plug-ins/csource
+%{prefix}lib/gimp/%{subver}/plug-ins/cubism
+%{prefix}lib/gimp/%{subver}/plug-ins/curve_bend
+%{prefix}lib/gimp/%{subver}/plug-ins/decompose
+%{prefix}lib/gimp/%{subver}/plug-ins/deinterlace
+%{prefix}lib/gimp/%{subver}/plug-ins/depthmerge
+%{prefix}lib/gimp/%{subver}/plug-ins/despeckle
+%{prefix}lib/gimp/%{subver}/plug-ins/destripe
+%{prefix}lib/gimp/%{subver}/plug-ins/diffraction
+%{prefix}lib/gimp/%{subver}/plug-ins/displace
+%{prefix}lib/gimp/%{subver}/plug-ins/edge
+%{prefix}lib/gimp/%{subver}/plug-ins/emboss
+%{prefix}lib/gimp/%{subver}/plug-ins/engrave
+%{prefix}lib/gimp/%{subver}/plug-ins/exchange
+%{prefix}lib/gimp/%{subver}/plug-ins/film
+%{prefix}lib/gimp/%{subver}/plug-ins/flarefx
+%{prefix}lib/gimp/%{subver}/plug-ins/fractaltrace
+%{prefix}lib/gimp/%{subver}/plug-ins/gauss_iir
+%{prefix}lib/gimp/%{subver}/plug-ins/gauss_rle
+%{prefix}lib/gimp/%{subver}/plug-ins/gbr
+%{prefix}lib/gimp/%{subver}/plug-ins/gee
+%{prefix}lib/gimp/%{subver}/plug-ins/gicon
+%{prefix}lib/gimp/%{subver}/plug-ins/gif
+%{prefix}lib/gimp/%{subver}/plug-ins/gifload
+%{prefix}lib/gimp/%{subver}/plug-ins/glasstile
+%{prefix}lib/gimp/%{subver}/plug-ins/gpb
+%{prefix}lib/gimp/%{subver}/plug-ins/gqbist
+%{prefix}lib/gimp/%{subver}/plug-ins/gradmap
+%{prefix}lib/gimp/%{subver}/plug-ins/grid
+%{prefix}lib/gimp/%{subver}/plug-ins/gtm
+%{prefix}lib/gimp/%{subver}/plug-ins/guillotine
+%{prefix}lib/gimp/%{subver}/plug-ins/gz
+%{prefix}lib/gimp/%{subver}/plug-ins/header
+%{prefix}lib/gimp/%{subver}/plug-ins/hot
+%{prefix}lib/gimp/%{subver}/plug-ins/hrz
+%{prefix}lib/gimp/%{subver}/plug-ins/illusion
+%{prefix}lib/gimp/%{subver}/plug-ins/iwarp
+%{prefix}lib/gimp/%{subver}/plug-ins/jigsaw
+%{prefix}lib/gimp/%{subver}/plug-ins/jpeg
+%{prefix}lib/gimp/%{subver}/plug-ins/laplace
+%{prefix}lib/gimp/%{subver}/plug-ins/lic
+%{prefix}lib/gimp/%{subver}/plug-ins/mail
+%{prefix}lib/gimp/%{subver}/plug-ins/mapcolor
+%{prefix}lib/gimp/%{subver}/plug-ins/max_rgb
+%{prefix}lib/gimp/%{subver}/plug-ins/mblur
+%{prefix}lib/gimp/%{subver}/plug-ins/newsprint
+%{prefix}lib/gimp/%{subver}/plug-ins/nlfilt
+%{prefix}lib/gimp/%{subver}/plug-ins/noisify
+%{prefix}lib/gimp/%{subver}/plug-ins/normalize
+%{prefix}lib/gimp/%{subver}/plug-ins/nova
+%{prefix}lib/gimp/%{subver}/plug-ins/oilify
+%{prefix}lib/gimp/%{subver}/plug-ins/papertile
+%{prefix}lib/gimp/%{subver}/plug-ins/pat
+%{prefix}lib/gimp/%{subver}/plug-ins/pcx
+%{prefix}lib/gimp/%{subver}/plug-ins/pix
+%{prefix}lib/gimp/%{subver}/plug-ins/pixelize
+%{prefix}lib/gimp/%{subver}/plug-ins/plasma
+%{prefix}lib/gimp/%{subver}/plug-ins/plugindetails
+%{prefix}lib/gimp/%{subver}/plug-ins/png
+%{prefix}lib/gimp/%{subver}/plug-ins/pnm
+%{prefix}lib/gimp/%{subver}/plug-ins/polar
+%{prefix}lib/gimp/%{subver}/plug-ins/ps
+%{prefix}lib/gimp/%{subver}/plug-ins/psd
+%{prefix}lib/gimp/%{subver}/plug-ins/psp
+%{prefix}lib/gimp/%{subver}/plug-ins/randomize
+%{prefix}lib/gimp/%{subver}/plug-ins/ripple
+%{prefix}lib/gimp/%{subver}/plug-ins/rotate
+%{prefix}lib/gimp/%{subver}/plug-ins/sample_colorize
+%{prefix}lib/gimp/%{subver}/plug-ins/scatter_hsv
+%{prefix}lib/gimp/%{subver}/plug-ins/screenshot
+%{prefix}lib/gimp/%{subver}/plug-ins/sel_gauss
+%{prefix}lib/gimp/%{subver}/plug-ins/semiflatten
+%{prefix}lib/gimp/%{subver}/plug-ins/sharpen
+%{prefix}lib/gimp/%{subver}/plug-ins/shift
+%{prefix}lib/gimp/%{subver}/plug-ins/smooth_palette
+%{prefix}lib/gimp/%{subver}/plug-ins/snoise
+%{prefix}lib/gimp/%{subver}/plug-ins/sobel
+%{prefix}lib/gimp/%{subver}/plug-ins/sparkle
+%{prefix}lib/gimp/%{subver}/plug-ins/spheredesigner
+%{prefix}lib/gimp/%{subver}/plug-ins/spread
+%{prefix}lib/gimp/%{subver}/plug-ins/sunras
+%{prefix}lib/gimp/%{subver}/plug-ins/tga
+%{prefix}lib/gimp/%{subver}/plug-ins/threshold_alpha
+%{prefix}lib/gimp/%{subver}/plug-ins/tiff
+%{prefix}lib/gimp/%{subver}/plug-ins/tile
+%{prefix}lib/gimp/%{subver}/plug-ins/tileit
+%{prefix}lib/gimp/%{subver}/plug-ins/tiler
+%{prefix}lib/gimp/%{subver}/plug-ins/url
+%{prefix}lib/gimp/%{subver}/plug-ins/video
+%{prefix}lib/gimp/%{subver}/plug-ins/vinvert
+%{prefix}lib/gimp/%{subver}/plug-ins/vpropagate
+%{prefix}lib/gimp/%{subver}/plug-ins/warp
+%{prefix}lib/gimp/%{subver}/plug-ins/waves
+%{prefix}lib/gimp/%{subver}/plug-ins/whirlpinch
+%{prefix}lib/gimp/%{subver}/plug-ins/wind
+%{prefix}lib/gimp/%{subver}/plug-ins/wmf
+%{prefix}lib/gimp/%{subver}/plug-ins/xbm
+%{prefix}lib/gimp/%{subver}/plug-ins/xpm
+%{prefix}lib/gimp/%{subver}/plug-ins/xwd
+%{prefix}lib/gimp/%{subver}/plug-ins/zealouscrop
+
+%{prefix}/lib/gimp/%{subver}/modules/libcolorsel_gtk.so
+%{prefix}/lib/gimp/%{subver}/modules/libcolorsel_triangle.so
+%{prefix}/lib/gimp/%{subver}/modules/libcolorsel_water.so
+%{prefix}/lib/gimp/%{subver}/modules/libcdisplay_gamma.so
 
 %defattr (0444, bin, man)
 /usr/man/man1/gimp.1.gz
@@ -973,20 +1263,33 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr (0555, bin, bin) 
-%dir /usr/include/libgimp
-%dir /usr/include/gck
-/usr/bin/gimptool
+%dir %{prefix}/include/libgimp
+%dir %{prefix}/include/gck
+
+%{prefix}/bin/gimptool
 %{prefix}/share/aclocal/gimp.m4
-/usr/lib/libgimp.a
-/usr/lib/libgimp.la
-/usr/lib/libgimpui.a
-/usr/lib/libgimpui.la
-/usr/lib/libgpc.a
-/usr/lib/libmegawidget.a
-/usr/lib/libgck.a
-/usr/lib/libgck.la
-/usr/lib/gimp/1.1/modules/*.a
-/usr/lib/gimp/1.1/modules/*.la
+
+%{prefix}/lib/libgimp.so
+%{prefix}/lib/libgimp.la
+%{prefix}/lib/libgimp.a
+%{prefix}/lib/libgimpui.so
+%{prefix}/lib/libgimpui.la
+%{prefix}/lib/libgimpui.a
+%{prefix}/lib/libgck.so
+%{prefix}/lib/libgck.la
+%{prefix}/lib/libgck.a
+%{prefix}/lib/libmegawidget.a
+%{prefix}/lib/libgpc.a
+
+%{prefix}/lib/gimp/%{subver}/modules/libcolorsel_gtk.la
+%{prefix}/lib/gimp/%{subver}/modules/libcolorsel_gtk.a
+%{prefix}/lib/gimp/%{subver}/modules/libcolorsel_triangle.la
+%{prefix}/lib/gimp/%{subver}/modules/libcolorsel_triangle.a
+%{prefix}/lib/gimp/%{subver}/modules/libcolorsel_water.la
+%{prefix}/lib/gimp/%{subver}/modules/libcolorsel_water.a
+%{prefix}/lib/gimp/%{subver}/modules/libcdisplay_gamma.la
+%{prefix}/lib/gimp/%{subver}/modules/libcdisplay_gamma.a
+
 %defattr (0444, bin, bin, 0555) 
 %{prefix}/include/libgimp/color_display.h
 %{prefix}/include/libgimp/color_selector.h
@@ -1026,7 +1329,7 @@ rm -rf $RPM_BUILD_ROOT
 %{prefix}/include/gck/gckui.h
 %{prefix}/include/gck/gckvector.h
 
-%defattr (0444, bin, man)
-/usr/man/man1/gimptool.1.gz
-/usr/man/man3/gpc.3.gz
+%defattr (0444, bin, man, 0555)
+%{prefix}/man/man1/gimptool.1.gz
+%{prefix}/man/man3/gpc.3.gz
 
