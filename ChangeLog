@@ -1,3 +1,8 @@
+2000-12-11  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: forgot to bump gimp-print's version number and
+	release date when updating to 4.0.4
+
 Sat Dec  9 11:43:33 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.30 release (1.2final)
