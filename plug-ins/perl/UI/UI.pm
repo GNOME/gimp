@@ -775,7 +775,7 @@ sub interact($$$$@) {
            
         } elsif($type == PF_CUSTOM) {
            my (@widget)=&$extra;
-           $a=$widget[0];
+           $a=&{$widget[0]};
            push(@setvals,$widget[1]);
            push(@getvals,$widget[2]);
            
