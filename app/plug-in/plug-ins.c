@@ -1256,9 +1256,6 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 	{
 	  switch (type)
 	    {
-	    case -1:
-	      sensitive = FALSE;
-	      break;
 	    case RGB_GIMAGE:
 	      sensitive = proc_def->image_types_val & RGB_IMAGE;
 	      break;
@@ -1276,6 +1273,9 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 	      break;
 	    case INDEXEDA_GIMAGE:
 	      sensitive = proc_def->image_types_val & INDEXEDA_IMAGE;
+	      break;
+	    default:
+	      sensitive = FALSE;
 	      break;
 	    }
 
@@ -2146,7 +2146,7 @@ plug_in_init_file (char *filename)
 
       if (g_strcasecmp (name, plug_in_name) == 0)
 	{
-	  g_print ("duplicate plug-in: \"%s\" (skipping)\n"), filename;
+	  g_print ("duplicate plug-in: \"%s\" (skipping)\n", filename);
 	  return;
 	}
 
