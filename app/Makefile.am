@@ -295,6 +295,8 @@ gimp_SOURCES = \
 	gimpcontainerlistview.c		\
 	gimpcontainerview.h		\
 	gimpcontainerview.c		\
+	gimpdatacontainerview.h		\
+	gimpdatacontainerview.c		\
 	gimpdrawablepreview.c		\
 	gimpdrawablepreview.h		\
 	gimpgradientpreview.h		\

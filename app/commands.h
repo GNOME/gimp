@@ -130,14 +130,17 @@ void dialogs_undo_history_cmd_callback    (GtkWidget *, gpointer);
 void dialogs_module_browser_cmd_callback  (GtkWidget *, gpointer);
 
 void dialogs_test_image_container_list_view_cmd_callback    (GtkWidget *, gpointer);
+void dialogs_test_image_container_grid_view_cmd_callback    (GtkWidget *, gpointer);
+
 void dialogs_test_brush_container_list_view_cmd_callback    (GtkWidget *, gpointer);
 void dialogs_test_pattern_container_list_view_cmd_callback  (GtkWidget *, gpointer);
 void dialogs_test_gradient_container_list_view_cmd_callback (GtkWidget *, gpointer);
+void dialogs_test_palette_container_list_view_cmd_callback  (GtkWidget *, gpointer);
 
-void dialogs_test_image_container_grid_view_cmd_callback    (GtkWidget *, gpointer);
 void dialogs_test_brush_container_grid_view_cmd_callback    (GtkWidget *, gpointer);
 void dialogs_test_pattern_container_grid_view_cmd_callback  (GtkWidget *, gpointer);
 void dialogs_test_gradient_container_grid_view_cmd_callback (GtkWidget *, gpointer);
+void dialogs_test_palette_container_grid_view_cmd_callback  (GtkWidget *, gpointer);
 
 void dialogs_test_multi_container_list_view_cmd_callback (GtkWidget *, gpointer);
 void dialogs_test_multi_container_grid_view_cmd_callback   (GtkWidget *, gpointer);

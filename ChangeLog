@@ -1,3 +1,16 @@
+2001-02-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* po/POTFILES.in
+	* app/gimpdatacontainerview.[ch]: new widget which will replace the
+	current brush, pattern, ... selections. To really use it, there
+	needs to be a GimpDataFactory object (coming soon...)
+
+	* app/commands.[ch]
+	* app/menus.c: added test data container views.
+
+	* app/paint_funcs_simd.S: #include the implementation with "", not <>
+
 2001-02-13  Seth Burgess  <sjburges@gimp.org>
 
 	* plug-ins/perl/Gimp/Lib.xs : made perl compilable again.  Didn't
