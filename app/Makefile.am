@@ -35,8 +35,7 @@ else
 bin_PROGRAMS = gimp-2.1
 endif
 
-gimp_2_1_SOURCES = \
-	app_procs.c	\
+COMMON_SOURCES = \
 	app_procs.h	\
 	main.c		\
 	batch.c		\
@@ -49,10 +48,17 @@ gimp_2_1_SOURCES = \
 	units.h		\
 	gimp-intl.h
 
+gimp_2_1_SOURCES = \
+	$(COMMON_SOURCES)	\
+	app_procs.c
+
 EXTRA_DIST = \
 	makefile.msc	\
 	gimp.rc		\
 	wilber.ico
+
+CLEANFILES = \
+	app_procs_console.c
 
 if HAVE_GLIBC_REGEX
 REGEXREPL =
@@ -133,7 +139,17 @@ gimp_2_1_LDADD = \
 	$(REGEXREPL)
 
 if ENABLE_GIMP_CONSOLE
-gimp_console_2_1_SOURCES = $(gimp_2_1_SOURCES)
+app_procs_console.c: $(srcdir)/app_procs.c
+	cp -f $(srcdir)/app_procs.c app_procs_console.c
+
+gimp_console_2_1_SOURCES = \
+	$(COMMON_SOURCES)		\
+	app_procs_console.c
+
+gimp_console_2_1_CPPFLAGS = \
+	$(AM_CPPFLAGS)			\
+	-DGIMP_CONSOLE_COMPILATION
+
 gimp_console_2_1_LDFLAGS = $(gimp_2_1_LDFLAGS)
 
 gimp_console_2_1_LDADD = \

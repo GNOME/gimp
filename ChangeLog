@@ -1,3 +1,25 @@
+2004-07-12  Michael Natterer  <mitch@gimp.org>
+
+	Made the gimp-console binary compile.
+	Finishes core/GUI separation and fixes bug #71514:
+
+	* configure.in: removed the crazy-hacker warning for
+	--enable-gimp-console.
+
+	* app/Makefile.am: for gimp-console, copy app_procs.c to
+	app_procs_console.c and compile it instead of app_procs.c with
+	-DGIMP_CONSOLE_COMPILATION
+
+	* app/app_procs.[ch]: added some #ifndef GIMP_CONSOLE_COMPILATION
+	to skip GUI stuff for the gimp-console case.
+	Renamed app_gui_libs_init() to app_libs_init(), renamed
+	app_gui_abort() to app_abort() and added app_exit() so everything
+	that needs #ifdefs lives here now.
+
+	* app/main.c: changed accordingly.
+
+	* app/gui/gui.c (gui_abort): really abort (call exit()).
+
 2004-07-12  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: made the suggestion to use binary packages more

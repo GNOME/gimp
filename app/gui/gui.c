@@ -133,10 +133,7 @@ gui_libs_init (gint    *argc,
 
   abort_message = gui_sanity_check ();
   if (abort_message)
-    {
-      gui_abort (abort_message);
-      exit (EXIT_FAILURE);
-    }
+    gui_abort (abort_message);
 
   gimp_widgets_init (gui_help_func,
                      gui_get_foreground_func,
@@ -156,6 +153,7 @@ gui_abort (const gchar *abort_message)
   gimp_message_box (GIMP_STOCK_WILBER_EEK, NULL, abort_message,
                     (GtkCallback) gtk_main_quit, NULL);
   gtk_main ();
+  exit (EXIT_FAILURE);
 }
 
 GimpInitStatusFunc

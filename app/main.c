@@ -62,14 +62,12 @@
 #ifdef G_OS_WIN32
 #include <windows.h>
 #else
-static void  gimp_sigfatal_handler  (gint         sig_num) G_GNUC_NORETURN;
-static void  gimp_sigchld_handler   (gint         sig_num);
+static void  gimp_sigfatal_handler (gint         sig_num) G_GNUC_NORETURN;
+static void  gimp_sigchld_handler  (gint         sig_num);
 #endif
 
-
-static void  gimp_show_version      (void);
-static void  gimp_show_help         (const gchar *progname);
-static void  gimp_text_console_exit (gint         status) G_GNUC_NORETURN;
+static void  gimp_show_version     (void);
+static void  gimp_show_help        (const gchar *progname);
 
 
 /*
@@ -166,13 +164,13 @@ main (int    argc,
                (strcmp (arg, "-v") == 0))
 	{
 	  gimp_show_version ();
-	  gimp_text_console_exit (EXIT_SUCCESS);
+	  app_exit (EXIT_SUCCESS);
 	}
       else if ((strcmp (arg, "--help") == 0) ||
 	       (strcmp (arg, "-h") == 0))
 	{
 	  gimp_show_help (full_prog_name);
-	  gimp_text_console_exit (EXIT_SUCCESS);
+	  app_exit (EXIT_SUCCESS);
 	}
       else if (strncmp (arg, "--dump-gimprc", 13) == 0)
         {
@@ -200,22 +198,12 @@ main (int    argc,
 
               g_object_unref (gimp);
 
-              gimp_text_console_exit (success ? EXIT_SUCCESS : EXIT_FAILURE);
+              app_exit (success ? EXIT_SUCCESS : EXIT_FAILURE);
             }
         }
     }
 
-  if (no_interface)
-    {
-      gchar *basename;
-
-      basename = g_path_get_basename (argv[0]);
-      g_set_prgname (basename);
-      g_free (basename);
-
-      g_type_init ();
-    }
-  else if (! app_gui_libs_init (&argc, &argv))
+  if (! app_libs_init (&no_interface, &argc, &argv))
     {
       const gchar *msg;
 
@@ -223,20 +211,12 @@ main (int    argc,
               "Make sure a proper setup for your display environment exists.");
       g_print ("%s\n\n", msg);
 
-      gimp_text_console_exit (EXIT_FAILURE);
+      app_exit (EXIT_FAILURE);
     }
 
   abort_message = sanity_check ();
-
   if (abort_message)
-    {
-      if (no_interface)
-        g_print ("%s\n\n", abort_message);
-      else
-        app_gui_abort (abort_message);
-
-      exit (EXIT_FAILURE);
-    }
+    app_abort (no_interface, abort_message);
 
   g_set_application_name (_("The GIMP"));
 
@@ -442,7 +422,7 @@ main (int    argc,
   if (show_help)
     {
       gimp_show_help (full_prog_name);
-      gimp_text_console_exit (EXIT_FAILURE);
+      app_exit (EXIT_FAILURE);
     }
 
 #ifndef G_OS_WIN32
@@ -546,30 +526,6 @@ gimp_show_help (const gchar *progname)
   g_print (_("  -b, --batch <commands>   Process commands in batch mode.\n"));
   g_print ("\n");
 };
-
-
-static void
-gimp_text_console_exit (gint status)
-{
-#ifdef G_OS_WIN32
-  /* Give them time to read the message if it was printed in a
-   * separate console window. I would really love to have
-   * some way of asking for confirmation to close the console
-   * window.
-   */
-  HANDLE console;
-  DWORD mode;
-
-  console = GetStdHandle (STD_OUTPUT_HANDLE);
-  if (GetConsoleMode (console, &mode) != 0)
-    {
-      g_print (_("(This console window will close in ten seconds)\n"));
-      Sleep(10000);
-    }
-#endif
-
-  exit (status);
-}
 
 
 #ifdef G_OS_WIN32

@@ -1427,14 +1427,6 @@ AC_ARG_ENABLE(gimp-console, [  --enable-gimp-console   build a console-only bina
 
 AM_CONDITIONAL(ENABLE_GIMP_CONSOLE, test x$enable_gimp_console = xyes)
 
-if test x$enable_gimp_console = xyes ; then
-  AC_MSG_WARN([--enable-gimp-console... are you nuts?
-***
-*** --enable-gimp-console is for crazy hackers only!
-*** The build will fail badly in the app/ directory.
-*** You have been warned ;)
-***])
-fi
 
 dnl Possibly change default gimpdir from .gimp-major.minor
 gimpdir=.gimp-gimp_user_version

@@ -47,8 +47,10 @@
 
 #include "tools/gimp-tools.h"
 
+#ifndef GIMP_CONSOLE_COMPILATION
 #include "gui/gui.h"
 #include "gui/user-install-dialog.h"
+#endif
 
 #include "app_procs.h"
 #include "batch.h"
@@ -71,16 +73,77 @@ static gboolean   app_exit_after_callback (Gimp        *gimp,
 /*  public functions  */
 
 gboolean
-app_gui_libs_init (gint    *argc,
-                   gchar ***argv)
+app_libs_init (gboolean   *no_interface,
+               gint       *argc,
+               gchar    ***argv)
 {
-  return gui_libs_init (argc, argv);
+#ifdef GIMP_CONSOLE_COMPILATION
+  *no_interface = TRUE;
+#endif
+
+  if (*no_interface)
+    {
+      gchar *basename;
+
+      basename = g_path_get_basename ((*argv)[0]);
+      g_set_prgname (basename);
+      g_free (basename);
+
+      g_type_init ();
+
+      return TRUE;
+    }
+#ifndef GIMP_CONSOLE_COMPILATION
+  else
+    {
+      return gui_libs_init (argc, argv);
+    }
+#endif
+
+  return FALSE;
 }
 
 void
-app_gui_abort (const gchar *abort_message)
+app_abort (gboolean     no_interface,
+           const gchar *abort_message)
 {
-  gui_abort (abort_message);
+#ifndef GIMP_CONSOLE_COMPILATION
+  if (no_interface)
+#endif
+    {
+      g_print ("%s\n\n", abort_message);
+    }
+#ifndef GIMP_CONSOLE_COMPILATION
+  else
+    {
+      gui_abort (abort_message);
+    }
+#endif
+
+  app_exit (EXIT_FAILURE);
+}
+
+void
+app_exit (gint status)
+{
+#ifdef G_OS_WIN32
+  /* Give them time to read the message if it was printed in a
+   * separate console window. I would really love to have
+   * some way of asking for confirmation to close the console
+   * window.
+   */
+  HANDLE console;
+  DWORD  mode;
+
+  console = GetStdHandle (STD_OUTPUT_HANDLE);
+  if (GetConsoleMode (console, &mode) != 0)
+    {
+      g_print (_("(This console window will close in ten seconds)\n"));
+      Sleep(10000);
+    }
+#endif
+
+  exit (status);
 }
 
 void
@@ -182,7 +245,9 @@ app_run (const gchar         *full_prog_name,
     {
       /*  not properly installed  */
 
+#ifndef GIMP_CONSOLE_COMPILATION
       if (no_interface)
+#endif
 	{
           const gchar *msg;
 
@@ -190,14 +255,16 @@ app_run (const gchar         *full_prog_name,
                   "User installation was skipped because the '--no-interface' flag was used.\n"
                   "To perform user installation, run the GIMP without the '--no-interface' flag.");
 
-          g_print ("%s\n\n", msg);
+          g_printerr ("%s\n\n", msg);
 	}
+#ifndef GIMP_CONSOLE_COMPILATION
       else
 	{
           user_install_dialog_run (alternate_system_gimprc,
                                    alternate_gimprc,
                                    be_verbose);
 	}
+#endif
     }
 
   gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
@@ -205,8 +272,10 @@ app_run (const gchar         *full_prog_name,
   /*  initialize lowlevel stuff  */
   swap_is_ok = base_init (GIMP_BASE_CONFIG (gimp->config), use_cpu_accel);
 
+#ifndef GIMP_CONSOLE_COMPILATION
   if (! no_interface)
     update_status_func = gui_init (gimp, no_splash);
+#endif
 
   if (! update_status_func)
     update_status_func = app_init_update_none;
@@ -293,8 +362,10 @@ app_run (const gchar         *full_prog_name,
         }
     }
 
+#ifndef GIMP_CONSOLE_COMPILATION
   if (! no_interface)
     gui_post_init (gimp);
+#endif
 
   batch_run (gimp, batch_cmds);
 
