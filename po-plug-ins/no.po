@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: achtung 1.2.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-02 21:01+0100\n"
-"PO-Revision-Date: 2004-12-20 17:28+0100\n"
+"PO-Revision-Date: 2004-12-21 01:12+0100\n"
 "Last-Translator: Runar Ingebrigtsen <ringe@skolelinux.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5596,9 +5596,8 @@ msgid "Temporary Procedure"
 msgstr "Midlertidig prosedyre"
 
 #: plug-ins/common/plugindetails.c:153
-#, fuzzy
 msgid "<Toolbox>/Xtns/_Plugin Details"
-msgstr "<Toolbox>/Utvd/Enhetsredigering..."
+msgstr "<Toolbox>/Utvd/_Detaljer for tillegg..."
 
 #: plug-ins/common/plugindetails.c:225
 msgid "Details <<"
@@ -5704,14 +5703,12 @@ msgid "Save as PNG"
 msgstr "Lagre som PNG"
 
 #: plug-ins/common/png.c:1592
-#, fuzzy
 msgid "_Load Defaults"
-msgstr "_Fabrikkinnstillinger"
+msgstr "_Last standardverdier"
 
 #: plug-ins/common/png.c:1593
-#, fuzzy
 msgid "_Save Defaults"
-msgstr "Sett standardverdier"
+msgstr "L_agre standardverdier"
 
 #. parameter settings
 #: plug-ins/common/png.c:1606 plug-ins/common/sample_colorize.c:1377
@@ -5739,14 +5736,12 @@ msgid "Save _Resolution"
 msgstr "Lagre _oppløsning"
 
 #: plug-ins/common/png.c:1665
-#, fuzzy
 msgid "Save Creation _Time"
 msgstr "Lagre _tid for oppretting"
 
 #: plug-ins/common/png.c:1673
-#, fuzzy
 msgid "Save Comme_nt"
-msgstr "Lagre aktiv"
+msgstr "Lagre komme_ntar"
 
 #: plug-ins/common/png.c:1688
 msgid "Save Color _Values From Transparent Pixels"
@@ -7273,9 +7268,8 @@ msgid "The unit's plural form."
 msgstr "Enhetens form i flertall."
 
 #: plug-ins/common/uniteditor.c:117
-#, fuzzy
 msgid "<Toolbox>/Xtns/_Unit Editor"
-msgstr "<Toolbox>/Utvd/Enhetsredigering..."
+msgstr "<Toolbox>/Utvd/_Enhetsredigering"
 
 #: plug-ins/common/uniteditor.c:171
 msgid "New Unit"
@@ -8043,9 +8037,8 @@ msgid "Nothing to crop."
 msgstr "Ingenting å beskjære."
 
 #: plug-ins/dbbrowser/dbbrowser.c:89
-#, fuzzy
 msgid "<Toolbox>/Xtns/_DB Browser"
-msgstr "<Toolbox>/Utvd/Nettleser/Åpne URL..."
+msgstr "<Toolbox>/Utvd/_Databaseleser..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:118
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
