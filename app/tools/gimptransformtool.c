@@ -901,21 +901,24 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
         /*  always clip the selction and unfloated channels
          *  so they keep their size
          */
-        if (GIMP_IS_CHANNEL (active_item) &&
-            tile_manager_bpp (tr_tool->original) == 1)
-          clip_result = TRUE;
+        if (tr_tool->original)
+          {
+            if (GIMP_IS_CHANNEL (active_item) &&
+                tile_manager_bpp (tr_tool->original) == 1)
+              clip_result = TRUE;
 
-        ret =
-          gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (active_item),
-                                                context,
-                                                tr_tool->original,
-                                                &tr_tool->transform,
-                                                options->direction,
-                                                options->interpolation,
-                                                options->supersample,
-                                                options->recursion_level,
-                                                clip_result,
-                                                progress);
+            ret =
+              gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (active_item),
+                                                    context,
+                                                    tr_tool->original,
+                                                    &tr_tool->transform,
+                                                    options->direction,
+                                                    options->interpolation,
+                                                    options->supersample,
+                                                    options->recursion_level,
+                                                    clip_result,
+                                                    progress);
+          }
       }
       break;
 

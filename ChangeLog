@@ -1,3 +1,11 @@
+2005-03-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpfliptool.c
+	* app/core/gimpdrawabletransform.c: avoid messages and critical
+	error when transforming a drawable that does not intersect
+	the selection.  
+
 2005-03-21  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimpink.c: changed time-smoother code to use guint32

@@ -272,11 +272,12 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      ret = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (active_item),
-                                                context,
-                                                trans_tool->original,
-                                                options->flip_type, axis,
-                                                FALSE);
+      if (trans_tool->original)
+        ret = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (active_item),
+                                                  context,
+                                                  trans_tool->original,
+                                                  options->flip_type, axis,
+                                                  FALSE);
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:

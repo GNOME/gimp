@@ -976,7 +976,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
 
   if (orig_tiles)
     {
-      TileManager *new_tiles;
+      TileManager *new_tiles = NULL;
 
       if (auto_center)
         {
@@ -1007,13 +1007,16 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
         clip_result = TRUE;
 
       /* transform the buffer */
-      new_tiles = gimp_drawable_transform_tiles_flip (drawable, context,
-                                                      orig_tiles,
-                                                      flip_type, axis,
-                                                      clip_result);
+      if (orig_tiles)
+        {
+          new_tiles = gimp_drawable_transform_tiles_flip (drawable, context,
+                                                          orig_tiles,
+                                                          flip_type, axis,
+                                                          clip_result);
 
-      /* Free the cut/copied buffer */
-      tile_manager_unref (orig_tiles);
+          /* Free the cut/copied buffer */
+          tile_manager_unref (orig_tiles);
+        }
 
       if (new_tiles)
         {
@@ -1118,14 +1121,24 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
   /*  extract the selected mask if there is a selection  */
   if (! gimp_channel_is_empty (gimp_image_get_mask (gimage)))
     {
+      gint x, y, w, h;
+
       /* set the keep_indexed flag to FALSE here, since we use
        * gimp_layer_new_from_tiles() later which assumes that the tiles
        * are either RGB or GRAY.  Eeek!!!              (Sven)
        */
-      tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
-                                      drawable, context, TRUE, FALSE, TRUE);
+      if (gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
+        {
+          tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
+                                          drawable, context, TRUE, FALSE, TRUE);
 
-      *new_layer = TRUE;
+          *new_layer = TRUE;
+        }
+      else
+        {
+          tiles = NULL;
+          *new_layer = FALSE;
+        }
     }
   else  /*  otherwise, just copy the layer  */
     {
