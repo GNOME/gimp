@@ -43,6 +43,7 @@ static void file_new_units_inch_menu_callback (GtkWidget *, gpointer);
 static void file_new_units_cm_menu_callback (GtkWidget *, gpointer);
 static void file_new_res_units_inch_callback (GtkWidget *, gpointer);
 static void file_new_res_units_cm_callback (GtkWidget *, gpointer);
+static float file_new_default_unit_parse (int); 
 
 /*  static variables  */
 static   int          last_width = 256;
@@ -56,9 +57,11 @@ static   gboolean     last_new_image = TRUE;
 
 /* these are temps that should be set in gimprc eventually */
 /*  FIXME */
-static   float        default_resolution = 72;     /* this needs to be set in gimprc */
-static   float        default_unit =1;
-static   float        default_res_unit = 1;
+/* static   float        default_resolution = 72;      this needs to be set in gimprc */
+static   float        default_unit = 1;
+
+static float default_res_unit = 1;
+
 
 static int new_dialog_run;
 extern TileManager *global_buf;
@@ -406,6 +409,8 @@ file_new_cmd_callback (GtkWidget           *widget,
   GSList *group;
   float temp;
 
+  default_res_unit = file_new_default_unit_parse(default_resolution_units);
+
   if(!new_dialog_run)
     {
       last_width = default_width;
@@ -414,6 +419,7 @@ file_new_cmd_callback (GtkWidget           *widget,
       last_resolution = default_resolution;  /* this isnt set in gimprc yet */
       last_unit = default_unit;  /* not in gimprc either, inches for now */
       last_res_unit = default_res_unit;
+
       new_dialog_run = 1;  
     }
 
@@ -454,12 +460,10 @@ file_new_cmd_callback (GtkWidget           *widget,
   /*  if a cut buffer exist, default to using its size for the new image */
   /* also check to see if a new_image has been opened */
 
-  printf("last_new_image is: %d \n", last_new_image);
   if(global_buf && !last_new_image)
     {
       vals->width = global_buf->levels[0].width;
       vals->height = global_buf->levels[0].height;
-      printf("foo foo foo\n");
     }
 
   vals->dlg = gtk_dialog_new ();
@@ -527,7 +531,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   gtk_table_attach (GTK_TABLE (table), vals->width_spinbutton, 0, 1, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-    gtk_signal_connect (GTK_OBJECT (vals->width_spinbutton), "changed",
+    gtk_signal_connect (GTK_ENTRY (vals->width_spinbutton), "changed",
  		      (GtkSignalFunc) file_new_width_update_callback, vals);
   gtk_widget_show (vals->width_spinbutton);
  
@@ -539,17 +543,19 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_set_usize (vals->height_spinbutton, 75, 0);
   gtk_table_attach (GTK_TABLE (table), vals->height_spinbutton, 1, 2, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (vals->height_spinbutton), "changed",
+  gtk_signal_connect (GTK_ENTRY (vals->height_spinbutton), "changed",
 		      (GtkSignalFunc) file_new_height_update_callback, vals);
   gtk_widget_show (vals->height_spinbutton);
 
   /* width in units spinbutton */
   temp = (float) vals->width / vals->resolution;
   adj = (GtkAdjustment *) gtk_adjustment_new (temp, 1.0, 32767.0,
-                                              1.0, 5.0, 0.0);
+                                              1.0, 0.01, 0.0);
   vals->width_units_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
-  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON(vals->width_units_spinbutton), GTK_UPDATE_ALWAYS);
+  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON(vals->width_units_spinbutton), GTK_UPDATE_ALWAYS
+				     | GTK_UPDATE_IF_VALID );
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->width_units_spinbutton), GTK_SHADOW_NONE);
+  gtk_spin_button_set_snap_to_ticks(GTK_SPIN_BUTTON(vals->width_units_spinbutton), 0);
   gtk_widget_set_usize (vals->width_units_spinbutton, 75, 0);
   gtk_signal_connect (GTK_OBJECT (vals->width_units_spinbutton), "changed",
 		      (GtkSignalFunc) file_new_width_units_update_callback, vals);
@@ -560,10 +566,12 @@ file_new_cmd_callback (GtkWidget           *widget,
   /* height in units spinbutton */
   temp = (float) vals->height / vals->resolution; 
   adj = (GtkAdjustment *) gtk_adjustment_new (temp, 1.0, 32767.0,
-                                              1.0, 5.0, 0.0);
+                                              1.0, 0.01, 0.0);
   vals->height_units_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
-  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON(vals->height_units_spinbutton), GTK_UPDATE_ALWAYS);
+  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON(vals->height_units_spinbutton), GTK_UPDATE_ALWAYS |
+				     GTK_UPDATE_IF_VALID);
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->height_units_spinbutton), GTK_SHADOW_NONE);
+  gtk_spin_button_set_snap_to_ticks(GTK_SPIN_BUTTON(vals->height_units_spinbutton), 0);
   gtk_widget_set_usize (vals->height_units_spinbutton, 75, 0);
   gtk_signal_connect (GTK_OBJECT (vals->height_units_spinbutton), "changed",
 		      (GtkSignalFunc) file_new_height_units_update_callback, vals);
@@ -741,5 +749,19 @@ void file_new_reset_current_cut_buffer()
   /* this unction just changes the status of last_image_new
      so i can if theres been a cut/copy since the last file new */
   last_new_image = FALSE;
+
+}
+
+static float file_new_default_unit_parse (int ruler_unit)
+{
+
+  /* checks the enum passed from gimprc to see what the values are */
+
+  if(ruler_unit == 1)
+    return 1.0;
+  if(ruler_unit == 2)
+    return 2.54;
+  
+  return 1.0;
 
 }
