@@ -460,7 +460,7 @@ gimp_preview_button_press_event (GtkWidget      *widget,
           preview->has_grab    = TRUE;
 	  preview->press_state = bevent->state;
 
-	  if (preview->show_popup)
+	  if (preview->show_popup && preview->viewable)
             {
               bevent->x += widget->allocation.x;
               bevent->y += widget->allocation.y;

@@ -1,3 +1,8 @@
+2004-05-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppreview.c (gimp_preview_button_press_event):
+	don't invoke the popup preview if there is no viewable.
+
 2004-05-28  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimppropwidgets.c: same workaround for tooltips on
