@@ -21,7 +21,6 @@
 #include "canvas.h"
 #include "pixelrow.h"
 #include "pixelarea.h"
-#include "trace.h"
 
 
 typedef struct _PixelAreaGroup PixelAreaGroup;
@@ -36,13 +35,12 @@ struct _PixelAreaGroup
   int     portion_height;
 };
 
-static PixelAreaGroup * pixelareagroup_new            (int);
-static void             pixelareagroup_delete         (PixelAreaGroup *);
-static void             pixelareagroup_addarea        (PixelAreaGroup *, PixelArea *);
-static void *           pixelareagroup_configure      (PixelAreaGroup *);
-static void             pixelareagroup_unconfigure    (PixelAreaGroup *, void *);
-static int              pixelareagroup_portion_height (PixelAreaGroup *);
-static int              pixelareagroup_portion_width  (PixelAreaGroup *);
+static PixelAreaGroup * new_group      (int);
+static void             del_group      (PixelAreaGroup *);
+static void             add_area       (PixelAreaGroup *, PixelArea *);
+static PixelAreaGroup * next_chunk     (PixelAreaGroup *);
+static void *           configure      (PixelAreaGroup *);
+static void             unconfigure    (PixelAreaGroup *, void *);
 
 
 
@@ -96,21 +94,6 @@ pixelarea_resize (
 
 
 void 
-pixelarea_info  (
-                 PixelArea * pa
-                 )
-{
-  trace_begin ("PixelArea 0x%x", pa);
-  trace_printf ("coord (%d,%d)", pa->x, pa->y);
-  trace_printf ("start (%d,%d)", pa->startx, pa->starty);
-  trace_printf ("width (%d,%d)", pa->w, pa->h);
-  trace_printf ("canvas: 0x%x", pa->canvas);
-  trace_printf ("dirty: 0x%d", pa->dirty);
-  trace_end ();
-}
-
-
-void 
 pixelarea_getdata  (
                     PixelArea * pa,
                     PixelRow * pr,
@@ -130,6 +113,7 @@ pixelarea_getdata  (
 }
 
 
+#define FIXME /* this belongs elsewhere */
 void
 pixelarea_copy_row ( 
 		    PixelArea *pa,
@@ -174,6 +158,7 @@ pixelarea_copy_row (
 }
 
 
+#define FIXME /* this belongs elsewhere */
 void
 pixelarea_copy_col ( 
 		    PixelArea *pa,
@@ -212,6 +197,7 @@ pixelarea_copy_col (
 }
 
 
+#define FIXME /* this belongs elsewhere */
 void
 pixelarea_write_row ( 
 		    PixelArea *pa,
@@ -246,6 +232,7 @@ pixelarea_write_row (
 }
 
 
+#define FIXME /* this belongs elsewhere */
 void
 pixelarea_write_col ( 
 		    PixelArea *pa,
@@ -436,20 +423,19 @@ pixelarea_register (
   PixelAreaGroup *pag;
   va_list ap;
 
-  if (num_areas < 1)
-    return NULL;
+  g_return_val_if_fail ((num_areas > 0), NULL);
   
-  pag = pixelareagroup_new (TRUE);
+  pag = new_group (TRUE);
 
   va_start (ap, num_areas);
   while (num_areas --)
     {
       PixelArea * pa = va_arg (ap, PixelArea *);      
-      pixelareagroup_addarea (pag, pa);
+      add_area (pag, pa);
     }
   va_end (ap);
 
-  return pixelareagroup_configure (pag);
+  return configure (next_chunk (pag));
 }
 
 
@@ -462,20 +448,19 @@ pixelarea_register_noref  (
   PixelAreaGroup *pag;
   va_list ap;
 
-  if (num_areas < 1)
-    return NULL;
+  g_return_val_if_fail ((num_areas > 0), NULL);
   
-  pag = pixelareagroup_new (FALSE);
+  pag = new_group (FALSE);
 
   va_start (ap, num_areas);
   while (num_areas --)
     {
       PixelArea * pa = va_arg (ap, PixelArea *);      
-      pixelareagroup_addarea (pag, pa);
+      add_area (pag, pa);
     }
   va_end (ap);
 
-  return pixelareagroup_configure (pag);
+  return configure (next_chunk (pag));
 }
 
 
@@ -484,11 +469,13 @@ pixelarea_process  (
                     void * x
                     )
 {
-  PixelAreaGroup *pag = (PixelAreaGroup *) x;
+  PixelAreaGroup * pag = (PixelAreaGroup *) x;
+  
+  g_return_val_if_fail (pag != NULL, NULL);
+  
+  unconfigure (pag, NULL);
 
-  pixelareagroup_unconfigure (pag, NULL);
-
-  return pixelareagroup_configure (pag);
+  return configure (next_chunk (pag));
 }
 
 
@@ -497,40 +484,29 @@ pixelarea_process_stop (
                         void * x
                         )
 {
-  PixelAreaGroup *pag = (PixelAreaGroup *) x;
-  if (pag)
-    {
-      GList * list = pag->pixelareas;
+  PixelAreaGroup * pag = (PixelAreaGroup *) x;
 
-      while (list)
-        {
-          PixelArea * pa = (PixelArea *) list->data;
-          if ((pa != NULL) && pag->autoref)
-            {
-              if (pixelarea_unref (pa) != TRUE)
-                g_warning ("pixelarea_process_stop() failed to pixelarea_unref()?!?");
-            }
-          list = g_list_next (list);
-        }
-    }
-  
-  pixelareagroup_delete (pag);
+  g_return_if_fail (pag != NULL);
+
+  unconfigure (pag, NULL);  
+
+  del_group (pag);
 }
 
 
 
-/*-------------------------------------------------------------------------------
+/*-----------------------------------------------------------------------
 
-                                PixelAreaGroup
+                            PixelAreaGroup
 
-  -------------------------------------------------------------------------------*/
+  -----------------------------------------------------------------------*/
   
-static PixelAreaGroup *
-pixelareagroup_new (
-                    int autoref
-                    )
+static PixelAreaGroup * 
+new_group  (
+            int autoref
+            )
 {
-  PixelAreaGroup *pag;
+  PixelAreaGroup * pag;
   
   pag = (PixelAreaGroup *) g_malloc (sizeof (PixelAreaGroup));
 
@@ -545,225 +521,182 @@ pixelareagroup_new (
 }
 
 
-static void
-pixelareagroup_delete (
-                       PixelAreaGroup * pag
-                       )
+/* the data items are pointers to PixelAreas, which are always
+   located on the stack, so don;t free them... */
+static void 
+del_group  (
+            PixelAreaGroup * pag
+            )
 {
-  if (pag)
-    {
-      if (pag->pixelareas)
-        /* the data items are pointers to PixelAreas, which are always
-           located on the stack, so don;t free them... */
-        g_list_free (pag->pixelareas);
-      g_free (pag);
-    }
-}
+  g_return_if_fail (pag != NULL);
 
-
-static void
-pixelareagroup_addarea (
-                        PixelAreaGroup * pag,
-                        PixelArea * pa
-                        )
-{
-  if (pag)
-    {
-      pag->pixelareas = g_list_append (pag->pixelareas, pa);
-      if (pa)
-        {
-          pag->region_width  = MIN (pag->region_width, pa->w);
-          pag->region_height = MIN (pag->region_height, pa->h);
-        }
-    }
-}
-
-
-static void *
-pixelareagroup_configure (
-                          PixelAreaGroup * pag
-                          )
-{
-  guint success = FALSE;
-
-  if (pag == NULL)
-    return NULL;
+  if (pag->pixelareas)
+    g_list_free (pag->pixelareas);
   
-  /* loop until all areas work or we find a null portion */
-  while (success == FALSE)
+  g_free (pag);
+}
+
+
+static void 
+add_area  (
+           PixelAreaGroup * pag,
+           PixelArea * pa
+           )
+{
+  g_return_if_fail (pag != NULL);
+
+  if (pa)
     {
       GList * list;
-
-      /*  Determine the next portion width and height */
-      if ((pixelareagroup_portion_width (pag) == 0) ||
-          (pixelareagroup_portion_height (pag) == 0))
-        {
-          pixelareagroup_delete (pag);
-          return NULL;
-        }
-
-      /* adjust the width and height of each area */
+      
       for (list = pag->pixelareas;
            list;
            list = g_list_next (list))
         {
-          PixelArea * pa = (PixelArea *) list->data;
-          if (pa)
-            {
-              pa->w = pag->portion_width;
-              pa->h = pag->portion_height;
-            }
+          if ((PixelArea *) list->data == pa)
+            return;
         }
 
-      /* if we don;t want to ref, we're done */
-      if (pag->autoref != TRUE)
-        return (void *) pag;
-      
-      /* assume everything will work */
-      success = TRUE;
-      
-      /* fault each portion into memory */
-      for (list = pag->pixelareas;
-           list && (success == TRUE);
-           list = g_list_next (list))
-        {
-          PixelArea * pa = (PixelArea *) list->data;
-          if (pa)
-            success = pixelarea_ref (pa);
+      pag->pixelareas = g_list_append (pag->pixelareas, pa);
 
-          if (success == FALSE)
-            pixelareagroup_unconfigure (pag, list);
-        }
+      pag->region_width  = MIN (pag->region_width, pa->w);
+      pag->region_height = MIN (pag->region_height, pa->h);
     }
-  
-  /* not reached */
-  return pag;
 }
 
 
-static void
-pixelareagroup_unconfigure (
-                            PixelAreaGroup * pag,
-                            void * listtail
-                            )
+/* ref all areas, looping through chunks if required */
+static void * 
+configure  (
+            PixelAreaGroup * pag
+            )
+{
+  PixelArea * pa;
+  GList * list;
+
+ try_again:
+
+  if (pag == NULL)
+    return NULL;
+  
+  if (pag->autoref != TRUE)
+    return (void *) pag;
+
+  for (list = pag->pixelareas;
+       list;
+       list = g_list_next (list))
+    {
+      pa = (PixelArea *) list->data;
+
+      if (pixelarea_ref (pa) == FALSE)
+        {
+          unconfigure (pag, list);
+          pag = next_chunk (pag);
+          goto try_again;
+        }
+    }
+  
+  return (void *) pag;
+}
+
+
+/* unref as many areas as requested */
+static void 
+unconfigure  (
+              PixelAreaGroup * pag,
+              void * listtail
+              )
 {
   GList * list;
 
-  if (pag == NULL)
+  g_return_if_fail (pag != NULL);
+
+  if (pag->autoref != TRUE)
     return;
-
-  /* unref as many pieces as requested */
-  if (pag->autoref)
+      
+  for (list = pag->pixelareas;
+       list != listtail;
+       list = g_list_next (list))
     {
-      for (list = pag->pixelareas;
-           list != listtail;
-           list = g_list_next (list))
-        {
-          PixelArea * pa = (PixelArea *) list->data;
-          if (pa)
-            if (pixelarea_unref (pa) != TRUE)
-              g_warning ("pixelareagroup_unconfigure() failed to unref...");
-        }
+      PixelArea * pa = (PixelArea *) list->data;
+      if (pixelarea_unref (pa) != TRUE)
+        g_warning ("pixelareagroup_unconfigure() failed to unref...");
     }
+}
 
-  /* move to the right, moving down if we hit the edge of the
-     overall region */
+
+
+static PixelAreaGroup * 
+next_chunk  (
+             PixelAreaGroup * pag
+             )
+{
+  GList * list;
+  
+  g_return_val_if_fail (pag != NULL, NULL);
+
+  /* move all areas to the next chunk */
   for (list = pag->pixelareas;
        list;
        list = g_list_next (list))
     {
       PixelArea * pa = (PixelArea *) list->data;
-      if (pa)
+
+      pa->x += pag->portion_width;
+
+      if ((pa->x - pa->startx) >= pag->region_width)
         {
-          pa->x += pag->portion_width;
-          if ((pa->x - pa->startx) >= pag->region_width)
-            {
-              pa->x = pa->startx;
-              pa->y += pag->portion_height;
-            }
-        }
-    }
-}
-
-
-static int
-pixelareagroup_portion_height (
-                               PixelAreaGroup * pag
-                               )
-{
-  int min_height = G_MAXINT;
-
-  if (pag)
-    {
-      GList * list = pag->pixelareas;
-      int height;
-
-      /* find the smallest contiguous height among the areas */
-      while (list)
-        {
-          PixelArea * pa = (PixelArea *) list->data;
-          if (pa)
-            {
-              if ((pa->y - pa->starty) >= pag->region_height)
-                {
-                  min_height = 0;
-                  break;
-                }
-              height = canvas_portion_height (pa->canvas,
-                                              pa->x, pa->y);          
-#define PIXELAREA_C_4_cw
-              height = CLAMP (height,
-                              0 , pag->region_height - (pa->y - pa->starty)); 
-              if (height < min_height)
-                min_height = height;
-            }
-          list = g_list_next (list);
+          pa->x = pa->startx;
+          pa->y += pag->portion_height;
         }
       
-      pag->portion_height = min_height;
-    }
-  
-  return min_height;
-}
-
-
-static int
-pixelareagroup_portion_width (
-                              PixelAreaGroup * pag
-                              )
-{
-  int min_width = G_MAXINT;
-
-  if (pag)
-    {
-      GList * list = pag->pixelareas;
-      int width;
-
-      /* find the smallest contiguous width among the areas */
-      while (list)
+      if ((pa->y - pa->starty) >= pag->region_height)
         {
-          PixelArea * pa = (PixelArea *) list->data;
-          if (pa)
-            {
-              if ((pa->x - pa->startx) >= pag->region_width)
-                {
-                  min_width = 0;
-                  break;
-                }
-              width = canvas_portion_width (pa->canvas,
-                                            pa->x, pa->y);          
-#define PIXELAREA_C_3_cw
-              width = CLAMP (width,
-                             0, pag->region_width - (pa->x - pa->startx)); 
-              if (width < min_width)
-                min_width = width;
-            }
-          list = g_list_next (list);
+          del_group (pag);
+          return NULL;
         }
-      
-      pag->portion_width = min_width;
     }
-  
-  return min_width;
-}
 
+  /* determine width and height of next chunk */
+  pag->portion_width = G_MAXINT;
+  pag->portion_height = G_MAXINT;
+
+  for (list = pag->pixelareas;
+       list;
+       list = g_list_next (list))
+    {
+      PixelArea * pa = (PixelArea *) list->data;
+
+      guint w = CLAMP (canvas_portion_width (pa->canvas,
+                                             pa->x, pa->y),
+                       0,
+                       pag->region_width - (pa->x - pa->startx)); 
+      
+      guint h = CLAMP (canvas_portion_height (pa->canvas,
+                                              pa->x, pa->y),
+                       0,
+                       pag->region_height - (pa->y - pa->starty)); 
+      
+      pag->portion_width = MIN (w, pag->portion_width);
+      pag->portion_height = MIN (h, pag->portion_height);
+    }
+
+  if ((pag->portion_width == 0) || (pag->portion_height == 0))
+    {
+      del_group (pag);
+      return NULL;
+    }
+
+  /* adjust the width and height of each area */
+  for (list = pag->pixelareas;
+       list;
+       list = g_list_next (list))
+    {
+      PixelArea * pa = (PixelArea *) list->data;
+      
+      pa->w = pag->portion_width;
+      pa->h = pag->portion_height;
+    }
+
+  return pag;
+}
