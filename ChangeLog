@@ -2292,7 +2292,7 @@
 
 	* app/core/gimppalette-import.[ch]
 	* app/gui/palette-import-dialog.c: added palette import from RIFF
-	palette files based on a patch from Ã‰RDI GergÃµ (bug #129788).
+	palette files based on a patch from Ã‰RDI GergÃµ (bug #129788).
 
 2004-04-15  Michael Natterer  <mitch@gimp.org>
 
@@ -2489,7 +2489,7 @@
 
 	* app/pdb/*_cmds.c: regenerated.
 
-2004-04-14  RaphaÃ«l Quinet  <quinet@gamers.org>
+2004-04-14  RaphaÃ«l Quinet  <quinet@gamers.org>
 
 	* plug-ins/script-fu/scripts/copy-visible.scm: New version of the
 	script that works on a temporary copy of the image instead of
@@ -2509,7 +2509,7 @@
 
 	* Made 2.0.1 release.
 
-2004-04-13  RaphaÃ«l Quinet  <quinet@gamers.org>
+2004-04-13  RaphaÃ«l Quinet  <quinet@gamers.org>
 
 	* plug-ins/common/mng.c (query, run): Workaround for bug #139947:
 	do not register the plug-in for INDEXED* modes and do not declare
@@ -2688,11 +2688,11 @@
 	* configure.in (ALL_LINGUAS): revert addition of "is" until all
 	.po files are there.
 
-2004-04-07  SamÃºel JÃ³n Gunnarsson  <sammi@techattack.nu>
+2004-04-07  SamÃºel JÃ³n Gunnarsson  <sammi@techattack.nu>
 
 	* configure.in: Added "is" to ALL_LINGUAS
 
-2004-04-06  IÃ±aki LarraÃ±aga  <dooteo@euskalgnu.org>
+2004-04-06  IÃ±aki LarraÃ±aga  <dooteo@euskalgnu.org>
 
 	* configure.in: Added "eu" (Basque) to ALL_LINGUAS.
 
