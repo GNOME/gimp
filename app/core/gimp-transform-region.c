@@ -122,15 +122,16 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
   gdouble      u[5],v[5];             /* source coordinates,    
                                   2
-                                 /  \   0 is sample in the centre of pixel
+                                 / \    0 is sample in the centre of pixel
                                 1 0 3   1..4 is offset 1 pixel in each
-                                 \  /   direction (in target space)
+                                 \ /    direction (in target space)
                                   4
                                        */
 
   gdouble      tu[5],tv[5],tw[5];     /* undivided source coordinates and
                                          divisor */
 
+  gint         coords;
   gint         width;
   gint         alpha;
   gint         bytes;
@@ -267,6 +268,9 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   vinc = m[1][0];
   winc = m[2][0];
 
+  coords = ((interpolation_type != GIMP_INTERPOLATION_NONE) ?
+            5 : 1);
+
   /* these loops could be rearranged, depending on which bit of code
    * you'd most like to write more than once.
    */
@@ -277,37 +281,30 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
         (* progress_callback) (y1, y2, y, progress_data);
 
       /* set up inverse transform steps */
-      if (interpolation_type == GIMP_INTERPOLATION_NONE)
+      tu[0] = uinc * (x1 + 0.5) + m[0][1] * (y + 0.5) + m[0][2] - 0.5;
+      tv[0] = vinc * (x1 + 0.5) + m[1][1] * (y + 0.5) + m[1][2] - 0.5;
+      tw[0] = winc * (x1 + 0.5) + m[2][1] * (y + 0.5) + m[2][2];
+
+      if (interpolation_type != GIMP_INTERPOLATION_NONE)
         {
-          /*  need to transform the pixel's center for INTERPOLATION_NONE,
-           *  as we end up at discrete pixel positions and are not aware of
-           *  errors in the algorithm below
-           */
-          tu[0] = uinc * (x1 + 0.5) + m[0][1] * (y + 0.5) + m[0][2];
-          tv[0] = vinc * (x1 + 0.5) + m[1][1] * (y + 0.5) + m[1][2];
-          tw[0] = winc * (x1 + 0.5) + m[2][1] * (y + 0.5) + m[2][2];
-        }
-      else
-        {
-          tu[0] = uinc * (x1  ) + m[0][1] * (y  ) + m[0][2];
-          tv[0] = vinc * (x1  ) + m[1][1] * (y  ) + m[1][2];
-          tw[0] = winc * (x1  ) + m[2][1] * (y  ) + m[2][2];
+          gdouble xx = x1 + 0.5;
+          gdouble yy = y + 0.5;
 
-          tu[1] = uinc * (x1-1) + m[0][1] * (y  ) + m[0][2];
-          tv[1] = vinc * (x1-1) + m[1][1] * (y  ) + m[1][2];
-          tw[1] = winc * (x1-1) + m[2][1] * (y  ) + m[2][2];
+          tu[1] = uinc * (xx - 1) + m[0][1] * (yy    ) + m[0][2] - 0.5;
+          tv[1] = vinc * (xx - 1) + m[1][1] * (yy    ) + m[1][2] - 0.5;
+          tw[1] = winc * (xx - 1) + m[2][1] * (yy    ) + m[2][2];
 
-          tu[2] = uinc * (x1  ) + m[0][1] * (y-1) + m[0][2];
-          tv[2] = vinc * (x1  ) + m[1][1] * (y-1) + m[1][2];
-          tw[2] = winc * (x1  ) + m[2][1] * (y-1) + m[2][2];
+          tu[2] = uinc * (xx    ) + m[0][1] * (yy - 1) + m[0][2] - 0.5;
+          tv[2] = vinc * (xx    ) + m[1][1] * (yy - 1) + m[1][2] - 0.5;
+          tw[2] = winc * (xx    ) + m[2][1] * (yy - 1) + m[2][2];
 
-          tu[3] = uinc * (x1  ) + m[0][1] * (y+1) + m[0][2];
-          tv[3] = vinc * (x1  ) + m[1][1] * (y+1) + m[1][2];
-          tw[3] = winc * (x1  ) + m[2][1] * (y+1) + m[2][2];
+          tu[3] = uinc * (xx + 1) + m[0][1] * (yy    ) + m[0][2] - 0.5;
+          tv[3] = vinc * (xx + 1) + m[1][1] * (yy    ) + m[1][2] - 0.5;
+          tw[3] = winc * (xx + 1) + m[2][1] * (yy    ) + m[2][2];
 
-          tu[4] = uinc * (x1-1) + m[0][1] * (y  ) + m[0][2];
-          tv[4] = vinc * (x1-1) + m[1][1] * (y  ) + m[1][2];
-          tw[4] = winc * (x1-1) + m[2][1] * (y  ) + m[2][2];
+          tu[4] = uinc * (xx    ) + m[0][1] * (yy + 1) + m[0][2] - 0.5;
+          tv[4] = vinc * (xx    ) + m[1][1] * (yy + 1) + m[1][2] - 0.5;
+          tw[4] = winc * (xx    ) + m[2][1] * (yy + 1) + m[2][2];
         }
 
       d = dest;
@@ -315,26 +312,22 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       for (x = x1; x < x2; x++)
         {
           gint i;     /*  normalize homogeneous coords  */
-          gint coords = 1;
-
-          if (interpolation_type != GIMP_INTERPOLATION_NONE)
-            coords = 5;
 
           for (i = 0; i < coords; i++)
             {
-              if (tw[i] == 0.0)
+              if (tw[i] == 1.0)
                 {
-                  g_warning ("homogeneous coordinate = 0...\n");
+                  u[i] = tu[i];
+                  v[i] = tv[i];
                 }
-              else if (tw[i] != 1.0)
+              else if (tw[i] != 0.0)
                 {
                   u[i] = tu[i] / tw[i];
                   v[i] = tv[i] / tw[i];
                 }
               else
                 {
-                  u[i] = tu[i];
-                  v[i] = tv[i];
+                  g_warning ("homogeneous coordinate = 0...\n");
                 }
             }
 
@@ -342,8 +335,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
           if (interpolation_type == GIMP_INTERPOLATION_NONE)
             {
               guchar color[MAX_CHANNELS];
-              gint iu = floor (u[0]);
-              gint iv = floor (v[0]);
+              gint iu = RINT (u[0]);
+              gint iv = RINT (v[0]);
               gint b;
 
               if (iu >= u1 && iu < u2 &&
@@ -364,9 +357,9 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
                   for (b = 0; b < bytes; b++)
                     *d++ = bg_color[b];
-                }            
+                }
             }
-          else 
+          else
             {
               gint b;
 
@@ -385,7 +378,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                 {
                   guchar color[MAX_CHANNELS];
 
-                  if (RECURSION_LEVEL && 
+                  if (RECURSION_LEVEL &&
                       supersample_dtest (u[1], v[1], u[2], v[2],
                                          u[3], v[3], u[4], v[4]))
                     {
@@ -399,10 +392,10 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                     color, bg_color, bytes, alpha);
                     }
                   else
-                    { 
+                    {
                       /* cubic only needs to be done if no supersampling
                          is needed */
-                      
+
                       if (interpolation_type == GIMP_INTERPOLATION_LINEAR)
                         sample_linear (&surround, u[0] - u1, v[0] - v1,
                                        color, bytes, alpha);
@@ -414,7 +407,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                   /*  Set the destination pixel  */
                   for (b = 0; b < bytes; b++)
                     *d++ = color[b];
-                }    
+                }
             }
 
           for (i = 0; i < coords; i++)
@@ -1034,7 +1027,7 @@ sample_adapt (TileManager *tm,
                 x2 * 65535, y2 * 65535,
                 x3 * 65535, y3 * 65535,
                 &cc, level, C, bg_color, bpp, alpha);
-        
+
     if (!cc)
       cc=1;
 

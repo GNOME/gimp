@@ -1,3 +1,28 @@
+2003-05-05  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/core/gimpdrawable-blend.c: Cleanups.
+	(gradient_calc_linear_factor): Apply the gradient to both sides
+	when Repeat is set to Sawtooth Wave. Fixes bug #112106.
+
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_affine): Fix copy'n'paste slip in
+	coordinates calculation for supersampling code. Transform the
+	pixel centers properly. Fixes bug #10466.
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_rectangle,
+	gimp_draw_tool_draw_arc): Ported the fix for bug #17904 from the
+	STABLE branch (off-by-one when drawing the rectangle/ellipse
+	previews).
+
+	* app/tools/gimpeditselectiontool.c: Renamed
+	gimp_edit_selection_tool_snap to
+	gimp_edit_selection_tool_calc_coords, as it is no longer used for
+	snapping.
+	(gimp_edit_selection_tool_calc_coords): Use floor instead of
+	rounding. Callers changed to remove rounding, as it deals with
+	gdoubles directly. Thanks to Mitch for the help refining this
+	one. Fixes bug #17906.
+
 2003-05-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-scale.c: some more code cleanup.
@@ -82,7 +107,7 @@
 
 	* app/gui/file-new-dialog.[ch]: renamed file_new_dialog_create()
 	to file_new_dialog_new() and removed the gimage and template
-	paramaters. Adder new function file_new_dialog_set() to set
+	paramaters. Added new function file_new_dialog_set() to set
 	gimage and template after creation.
 
 	* app/gui/file-commands.c
@@ -131,12 +156,12 @@
 	(jigsaw): Use gimp_fixme_preview_do_row instead of memcpy.
 	Together with the fix to flarefx, fixes bug #112042.
 	(draw_jigsaw): Warn if passed a NULL buffer (solves the crash
-	reported in bug #112012).
+	reported in bug #112012 but not the bug itself).
 
 	* plug-ins/gimpressionist/orientation.c: Slightly reformatted.
 	(create_orientationpage): Modify orientfirst/orientlast instead of
-	sizefirst/sizelast in the corresponding adjustments. Fixes bug 
-	#112061.
+	sizefirst/sizelast in the corresponding adjustments. Fixes
+	bug #112061.
 
 2003-05-01  Manish Singh  <yosh@gimp.org>
 

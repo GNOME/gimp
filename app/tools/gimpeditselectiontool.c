@@ -190,10 +190,10 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
 }
 
 static void
-gimp_edit_selection_tool_snap (GimpEditSelectionTool *edit_select,
-			       GimpDisplay           *gdisp,
-			       gdouble                x,
-			       gdouble                y)
+gimp_edit_selection_tool_calc_coords (GimpEditSelectionTool *edit_select,
+                                      GimpDisplay           *gdisp,
+                                      gdouble                x,
+                                      gdouble                y)
 {
   GimpDisplayShell *shell;
   gdouble           x1, y1;
@@ -207,8 +207,8 @@ gimp_edit_selection_tool_snap (GimpEditSelectionTool *edit_select,
   x1 = edit_select->x1 + dx;
   y1 = edit_select->y1 + dy;
 
-  edit_select->x = (gint) RINT (x1) - (edit_select->x1 - edit_select->origx);
-  edit_select->y = (gint) RINT (y1) - (edit_select->y1 - edit_select->origy);
+  edit_select->x = (gint) floor (x1) - (edit_select->x1 - edit_select->origx);
+  edit_select->y = (gint) floor (y1) - (edit_select->y1 - edit_select->origy);
 }
 
 void
@@ -288,9 +288,9 @@ init_edit_selection (GimpTool    *tool,
 			     &edit_select->x1, &edit_select->y1,
 			     &edit_select->x2, &edit_select->y2);
 
-  gimp_edit_selection_tool_snap (edit_select, gdisp,
-                                 RINT (edit_select->origx),
-                                 RINT (edit_select->origy));
+  gimp_edit_selection_tool_calc_coords (edit_select, gdisp,
+                                        edit_select->origx,
+                                        edit_select->origy);
 
   {
     gint x1, y1, x2, y2;
@@ -409,7 +409,10 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
    */
   if (edit_select->edit_type == EDIT_MASK_TRANSLATE)
     {
-      gimp_edit_selection_tool_snap (edit_select, gdisp, coords->x, coords->y);
+      gimp_edit_selection_tool_calc_coords (edit_select,
+                                            gdisp,
+                                            coords->x,
+                                            coords->y);
 
       /* move the selection -- whether there has been net movement or not!
        * (to ensure that there's something on the undo stack)
@@ -498,10 +501,10 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
   /* now do the actual move. */
 
-  gimp_edit_selection_tool_snap (edit_select,
-				 gdisp,
-				 RINT (motion_x),
-				 RINT (motion_y));
+  gimp_edit_selection_tool_calc_coords (edit_select,
+                                        gdisp,
+                                        motion_x,
+                                        motion_y);
 
   /******************************************* adam's live move *******/
   /********************************************************************/
@@ -687,7 +690,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       floating_sel = gimp_layer_is_floating_sel (layer);
 
       if (! floating_sel)
-	{
+        {
           segs_copy = g_new (GdkSegment, edit_select->num_segs_in);
 
           selection_transform_segs (edit_select,
@@ -700,18 +703,18 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                              segs_copy, select->num_segs_in);
 
           g_free (segs_copy);
-	}
+        }
 
       segs_copy = g_new (GdkSegment, edit_select->num_segs_out);
 
       selection_transform_segs (edit_select,
-				edit_select->segs_out,
-				segs_copy,
-				edit_select->num_segs_out);
+                                edit_select->segs_out,
+                                segs_copy,
+                                edit_select->num_segs_out);
 
       /*  Draw the items  */
       gdk_draw_segments (draw_tool->win, draw_tool->gc,
-			 segs_copy, select->num_segs_out);
+                         segs_copy, select->num_segs_out);
 
       g_free (segs_copy);
       break;
@@ -735,29 +738,29 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
       /*  Now, expand the rectangle to include all linked layers as well  */
       for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
-	   layer_list;
-	   layer_list = g_list_next (layer_list))
-	{
-	  layer = (GimpLayer *) layer_list->data;
+           layer_list;
+           layer_list = g_list_next (layer_list))
+        {
+          layer = (GimpLayer *) layer_list->data;
 
-	  if ((layer != gdisp->gimage->active_layer) &&
-	      gimp_layer_get_linked (layer))
-	    {
-	      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x3, &y3);
+          if ((layer != gdisp->gimage->active_layer) &&
+              gimp_layer_get_linked (layer))
+            {
+              gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x3, &y3);
 
               x4 = x3 + gimp_drawable_width (GIMP_DRAWABLE (layer));
               y4 = y3 + gimp_drawable_height (GIMP_DRAWABLE (layer));
 
-	      if (x3 < x1)
-		x1 = x3;
-	      if (y3 < y1)
-		y1 = y3;
-	      if (x4 > x2)
-		x2 = x4;
-	      if (y4 > y2)
-		y2 = y4;
-	    }
-	}
+              if (x3 < x1)
+                x1 = x3;
+              if (y3 < y1)
+                y1 = y3;
+              if (x4 > x2)
+                x2 = x4;
+              if (y4 > y2)
+                y2 = y4;
+            }
+        }
 
       gimp_draw_tool_draw_rectangle (draw_tool,
                                      FALSE,
@@ -775,13 +778,13 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
        */
 
       selection_transform_segs (edit_select,
-				edit_select->segs_in,
-				segs_copy,
-				edit_select->num_segs_in);
+                                edit_select->segs_in,
+                                segs_copy,
+                                edit_select->num_segs_in);
 
       /*  Draw the items  */
       gdk_draw_segments (draw_tool->win, draw_tool->gc,
-			 segs_copy, select->num_segs_in);
+                         segs_copy, select->num_segs_in);
 
       g_free (segs_copy);
       break;

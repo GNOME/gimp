@@ -57,7 +57,7 @@ typedef struct
   GimpRGB           fg, bg;
   gdouble           dist;
   gdouble           vec[2];
-  BlendRepeatFunc    repeat_func;
+  BlendRepeatFunc   repeat_func;
 } RenderBlendData;
 
 typedef struct
@@ -217,7 +217,7 @@ gimp_drawable_blend (GimpDrawable     *drawable,
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
 
   gradient_fill_region (gimage, drawable,
-  			&bufPR, (x2 - x1), (y2 - y1),
+			&bufPR, (x2 - x1), (y2 - y1),
 			blend_mode, gradient_type, offset, repeat,
 			supersample, max_depth, threshold,
 			(startx - x1), (starty - y1),
@@ -280,7 +280,7 @@ gradient_calc_conical_sym_factor (gdouble  dist,
        * Ali Rahimi --- two more XCF losers.  */
 
       rat = acos (rat) / G_PI;
-      rat = pow (rat, (offset / 10) + 1);
+      rat = pow (rat, (offset / 10.0) + 1.0);
 
       rat = CLAMP (rat, 0.0, 1.0);
     }
@@ -311,8 +311,8 @@ gradient_calc_conical_asym_factor (gdouble  dist,
     {
       if ((x != 0) || (y != 0))
 	{
-	  ang0 = atan2(axis[0], axis[1]) + G_PI;
-	  ang1 = atan2(x, y) + G_PI;
+	  ang0 = atan2 (axis[0], axis[1]) + G_PI;
+	  ang1 = atan2 (x, y) + G_PI;
 
 	  ang = ang1 - ang0;
 
@@ -320,9 +320,9 @@ gradient_calc_conical_asym_factor (gdouble  dist,
 	    ang += (2.0 * G_PI);
 
 	  rat = ang / (2.0 * G_PI);
-	  rat = pow(rat, (offset / 10) + 1);
+	  rat = pow (rat, (offset / 10.0) + 1.0);
 
-	  rat = CLAMP(rat, 0.0, 1.0);
+	  rat = CLAMP (rat, 0.0, 1.0);
 	}
       else
 	{
@@ -357,8 +357,8 @@ gradient_calc_square_factor (gdouble dist,
 
       if (rat < offset)
 	rat = 0.0;
-      else if (offset == 1)
-        rat = (rat>=1) ? 1 : 0;
+      else if (offset == 1.0)
+	rat = (rat >= 1.0) ? 1.0 : 0.0;
       else
 	rat = (rat - offset) / (1.0 - offset);
     }
@@ -385,13 +385,13 @@ gradient_calc_radial_factor (gdouble dist,
 
       offset = offset / 100.0;
 
-      r   = sqrt(SQR(x) + SQR(y));
+      r   = sqrt (SQR (x) + SQR (y));
       rat = r / dist;
 
       if (rat < offset)
 	rat = 0.0;
-      else if (offset == 1)
-        rat = (rat>=1) ? 1 : 0;
+      else if (offset == 1.0)
+	rat = (rat >= 1.0) ? 1.0 : 0.0;
       else
 	rat = (rat - offset) / (1.0 - offset);
     }
@@ -406,8 +406,8 @@ gradient_calc_linear_factor (gdouble  dist,
 			     gdouble  x,
 			     gdouble  y)
 {
-  double r;
-  double rat;
+  gdouble r;
+  gdouble rat;
 
   if (dist == 0.0)
     {
@@ -420,10 +420,12 @@ gradient_calc_linear_factor (gdouble  dist,
       r   = vec[0] * x + vec[1] * y;
       rat = r / dist;
 
-      if (rat < offset)
+      if (rat >= 0.0 && rat < offset)
 	rat = 0.0;
-      else if (offset == 1)
-        rat = (rat>=1) ? 1 : 0;
+      else if (offset == 1.0)
+	rat = (rat >= 1.0) ? 1.0 : 0.0;
+      else if (rat < 0.0)
+	rat = rat / (1.0 - offset);
       else
 	rat = (rat - offset) / (1.0 - offset);
     }
@@ -454,12 +456,12 @@ gradient_calc_bilinear_factor (gdouble  dist,
       r   = vec[0] * x + vec[1] * y;
       rat = r / dist;
 
-      if (fabs(rat) < offset)
+      if (fabs (rat) < offset)
 	rat = 0.0;
-      else if (offset == 1)
-        rat = (rat>=1) ? 1 : 0;
+      else if (offset == 1.0)
+	rat = (rat == 1.0) ? 1.0 : 0.0;
       else
-	rat = (fabs(rat) - offset) / (1.0 - offset);
+	rat = (fabs (rat) - offset) / (1.0 - offset);
     }
 
   return rat;
@@ -514,8 +516,8 @@ gradient_calc_shapeburst_angular_factor (gdouble x,
   Tile   *tile;
   gfloat  value;
 
-  ix = (int) CLAMP (x, 0, distR.w);
-  iy = (int) CLAMP (y, 0, distR.h);
+  ix = (gint) CLAMP (x, 0.0, distR.w);
+  iy = (gint) CLAMP (y, 0.0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
   value = 1.0 - *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
   tile_release (tile, FALSE);
@@ -532,8 +534,8 @@ gradient_calc_shapeburst_spherical_factor (gdouble x,
   Tile   *tile;
   gfloat  value;
 
-  ix = (int) CLAMP (x, 0, distR.w);
-  iy = (int) CLAMP (y, 0, distR.h);
+  ix = (gint) CLAMP (x, 0.0, distR.w);
+  iy = (gint) CLAMP (y, 0.0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
   value = *((gfloat *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
   value = 1.0 - sin (0.5 * G_PI * value);
@@ -551,8 +553,8 @@ gradient_calc_shapeburst_dimpled_factor (gdouble x,
   Tile   *tile;
   gfloat  value;
 
-  ix = (int) CLAMP (x, 0, distR.w);
-  iy = (int) CLAMP (y, 0, distR.h);
+  ix = (gint) CLAMP (x, 0.0, distR.w);
+  iy = (gint) CLAMP (y, 0.0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
   value = *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
   value = cos (0.5 * G_PI * value);
@@ -570,26 +572,24 @@ gradient_repeat_none (gdouble val)
 static gdouble
 gradient_repeat_sawtooth (gdouble val)
 {
-  if (val >= 0.0)
-    return fmod (val, 1.0);
-  else
-    return 1.0 - fmod (-val, 1.0);
+  return val - floor (val);
 }
 
 static gdouble
 gradient_repeat_triangular (gdouble val)
 {
-  gint ival;
+  guint ival;
 
   if (val < 0.0)
     val = -val;
 
-  ival = (int) val;
+  ival = (guint) val;
+  val = val - floor (val);
 
   if (ival & 1)
-    return 1.0 - fmod (val, 1.0);
+    return 1.0 - val;
   else
-    return fmod (val, 1.0);
+    return val;
 }
 
 /*****/
@@ -753,7 +753,7 @@ gradient_render_pixel (double    x,
 
   /* Adjust for repeat */
 
-  factor = (*rbd->repeat_func)(factor);
+  factor = (*rbd->repeat_func) (factor);
 
   /* Blend the colors */
 

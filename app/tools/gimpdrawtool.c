@@ -365,6 +365,7 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
   GimpDisplayShell *shell;
   gdouble           tx1, ty1;
   gdouble           tx2, ty2;
+  guint             w, h;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
@@ -384,11 +385,17 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
                                      &tx2, &ty2,
                                      use_offsets);
 
-  gdk_draw_rectangle (draw_tool->win,
-                      draw_tool->gc,
-                      filled,
-                      RINT (tx1), RINT (ty1),
-                      RINT (tx2 - tx1), RINT (ty2 - ty1));
+  tx2 -= tx1;
+  ty2 -= ty1;
+  w = (tx2 >= 0.0) ? RINT (tx2) : 0;
+  h = (ty2 >= 0.0) ? RINT (ty2) : 0;
+
+  if (w > 0 && h > 0)
+    gdk_draw_rectangle (draw_tool->win,
+                        draw_tool->gc,
+                        filled,
+                        RINT (tx1), RINT (ty1),
+                        w - 1, h - 1);
 }
 
 void
@@ -405,6 +412,7 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
   GimpDisplayShell *shell;
   gdouble           tx1, ty1;
   gdouble           tx2, ty2;
+  guint             w, h;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
@@ -424,12 +432,29 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
                                      &tx2, &ty2,
                                      use_offsets);
 
-  gdk_draw_arc (draw_tool->win,
-                draw_tool->gc,
-                filled,
-                RINT (tx1), RINT (ty1),
-                RINT (tx2 - tx1), RINT (ty2 - ty1),
-                angle1, angle2);
+  tx2 -= tx1;
+  ty2 -= ty1;
+  w = (tx2 >= 0.0) ? RINT (tx2) : 0;
+  h = (ty2 >= 0.0) ? RINT (ty2) : 0;
+
+  if (w > 0 && h > 0)
+    {
+      if (w != 1 && h != 1)
+        gdk_draw_arc (draw_tool->win,
+                      draw_tool->gc,
+                      filled,
+                      RINT (tx1), RINT (ty1),
+                      w - 1, h - 1,
+                      angle1, angle2);
+      else
+        /* work around the problem of an 1xN or Nx1 arc not being shown
+           properly */
+        gdk_draw_rectangle (draw_tool->win,
+                            draw_tool->gc,
+                            filled,
+                            RINT (tx1), RINT (ty1),
+                            w - 1, h - 1);
+    }
 }
 
 void
