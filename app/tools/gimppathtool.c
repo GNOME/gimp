@@ -24,7 +24,9 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "core/gimpimage.h"
 
@@ -105,11 +107,10 @@ static GimpDrawToolClass *parent_class = NULL;
 
 
 void
-gimp_path_tool_register (Gimp                     *gimp,
-                         GimpToolRegisterCallback  callback)
+gimp_path_tool_register (GimpToolRegisterCallback  callback,
+                         Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_PATH_TOOL,
+  (* callback) (GIMP_TYPE_PATH_TOOL,
                 NULL,
                 FALSE,
                 "gimp-path-tool",
@@ -117,7 +118,8 @@ gimp_path_tool_register (Gimp                     *gimp,
                 _("Path tool prototype"),
                 N_("/Tools/Path"), NULL,
                 NULL, "tools/path.html",
-                GIMP_STOCK_TOOL_PATH);
+                GIMP_STOCK_TOOL_PATH,
+                gimp);
 }
 
 GType
@@ -205,7 +207,17 @@ gimp_path_tool_init (GimpPathTool *path_tool)
   path_tool->cur_path->state     = 0;
   /* path_tool->cur_path->path_tool = path_tool; */
 
-  tool->preserve = TRUE;  /*  Preserve on drawable change  */
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 }
 
 static void
@@ -250,7 +262,7 @@ gimp_path_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
-      tool->state = INACTIVE;
+      gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
       break;
 
     default:
@@ -289,7 +301,7 @@ gimp_path_tool_button_press (GimpTool        *tool,
   path_tool->click_halfheight = halfheight;
   
   tool->gdisp = gdisp;
-  tool->state = ACTIVE;
+  gimp_tool_control_activate(tool->control);
 
   if (! path_tool->cur_path->curves)
     gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
@@ -827,7 +839,7 @@ gimp_path_tool_cursor_update (GimpTool        *tool,
       break;
     }
 
-  tool->cursor_modifier = cmodifier;
+  gimp_tool_control_set_cursor_modifier(tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

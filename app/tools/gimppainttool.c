@@ -26,7 +26,8 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpbase/gimpbase.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -157,7 +158,8 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 
   tool = GIMP_TOOL (paint_tool);
 
-  tool->motion_mode       = GIMP_MOTION_MODE_EXACT;
+  /* tool->perfectmouse      = TRUE; */
+  /* FIXME tool->motion_mode       = GIMP_MOTION_MODE_EXACT; */
 
   paint_tool->pick_colors = FALSE;
   paint_tool->pick_state  = FALSE;
@@ -328,7 +330,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 	}
     }
 
-  tool->state = ACTIVE;
+  gimp_tool_control_activate(tool->control);
   tool->gdisp = gdisp;
 
   /*  pause the current selection  */
@@ -418,7 +420,7 @@ gimp_paint_tool_button_release (GimpTool        *tool,
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
 
   /*  Set tool state to inactive -- no longer painting */
-  tool->state = INACTIVE;
+  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
 
   gimp_paint_core_finish (core, drawable);
 

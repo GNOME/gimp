@@ -38,7 +38,7 @@
 
 #include "widgets/gimppreview.h"
 
-#include "tools/gimptool.h"
+/*#include "tools/gimptool.h"*/
 #include "tools/gimpmovetool.h"        /* need icon of move tool */
 #include "tools/gimpcolorpickertool.h" /* need icon of color picker tool */
 #include "tools/tool_manager.h"

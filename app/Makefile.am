@@ -116,8 +116,8 @@ INCLUDES = @STRIP_BEGIN@ \
 
 gimp_1_3_LDADD = @STRIP_BEGIN@ \
 	gui/libappgui.a							\
-	tools/libapptools.a						\
 	display/libappdisplay.a						\
+	tools/libapptools.a						\
 	widgets/libappwidgets.a						\
 	core/libappcore.a						\
 	pdb/libapppdb.a							\
@@ -133,6 +133,7 @@ gimp_1_3_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimptool/libgimptool-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(PANGOFT2_LIBS)						\
 	$(LIBART_LIBS)							\

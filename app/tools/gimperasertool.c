@@ -22,7 +22,8 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "core/gimptoolinfo.h"
 
@@ -55,11 +56,10 @@ static GimpPaintToolClass *parent_class = NULL;
 
 
 void
-gimp_eraser_tool_register (Gimp                     *gimp,
-                           GimpToolRegisterCallback  callback)
+gimp_eraser_tool_register (GimpToolRegisterCallback  callback,
+                           Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_ERASER_TOOL,
+  (* callback) (GIMP_TYPE_ERASER_TOOL,
                 gimp_eraser_tool_options_new,
                 TRUE,
                 "gimp-eraser-tool",
@@ -67,7 +67,8 @@ gimp_eraser_tool_register (Gimp                     *gimp,
                 _("Erase to background or transparency"),
                 N_("/Tools/Paint Tools/Eraser"), "<shift>E",
                 NULL, "tools/eraser.html",
-                GIMP_STOCK_TOOL_ERASER);
+                GIMP_STOCK_TOOL_ERASER,
+                gimp);
 }
 
 GType
@@ -120,10 +121,17 @@ gimp_eraser_tool_init (GimpEraserTool *eraser)
   tool       = GIMP_TOOL (eraser);
   paint_tool = GIMP_PAINT_TOOL (eraser);
 
-  tool->tool_cursor            = GIMP_ERASER_TOOL_CURSOR;
-  tool->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
-  tool->toggle_tool_cursor     = GIMP_ERASER_TOOL_CURSOR;
-  tool->toggle_cursor_modifier = GIMP_CURSOR_MODIFIER_MINUS;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_ERASER_TOOL_CURSOR,    /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_ERASER_TOOL_CURSOR,    /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_MINUS  /* toggle_cursor_modifier */);
 
   paint_tool->core = g_object_new (GIMP_TYPE_ERASER, NULL);
 }
@@ -157,7 +165,7 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
 
   options = (GimpEraserOptions *) tool->tool_info->tool_options;
 
-  tool->toggled = options->anti_erase;
+  gimp_tool_control_set_toggle(tool->control, options->anti_erase);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

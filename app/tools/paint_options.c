@@ -35,7 +35,6 @@
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gtkhwrapbox.h"
 
-#include "gimptool.h"
 #include "paint_options.h"
 #include "tool_manager.h"
 

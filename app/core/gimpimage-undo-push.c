@@ -25,7 +25,8 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "tools/tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
@@ -51,7 +52,7 @@
 #include "paint/gimppaintcore.h"
 
 #include "tools/gimpbycolorselecttool.h"
-#include "tools/gimptool.h"
+/*#include "tools/gimptool.h"*/
 #include "tools/gimpdrawtool.h"
 #include "tools/gimppainttool.h"
 #include "tools/gimptransformtool.h"
@@ -3137,7 +3138,7 @@ undo_pop_transform (GimpImage *gimage,
           /*  If we're re-implementing the first transform, reactivate tool  */
           if (state == REDO && tt->original)
             {
-              active_tool->state = ACTIVE;
+              gimp_tool_control_activate(active_tool->control);
 
               gimp_draw_tool_resume (GIMP_DRAW_TOOL (tt));
             }

@@ -1,0 +1,151 @@
+#!/usr/bin/perl -w
+
+# This is gimp-mkproxy, a perl script based on glib-mkenums.
+# It makes proxy objects for libgimptool.
+
+# gimp-mkproxy
+
+my $in_skip = 0;
+my $first_line = 1;
+my $include;
+
+sub parse_trigraph {
+    my $opts = shift;
+    my @opts;
+
+    for $opt (split /\s*,\s*/, $opts) {
+        $opt =~ s/^\s*//;
+        $opt =~ s/\s*$//;
+        my ($key,$val) = $opt =~ /([\w-]+)(?:=(.+))?/;
+        defined $val or $val = 1;
+        push @opts, $key, $val;
+    }
+    @opts;
+}
+
+
+sub version {
+    print STDERR "gimp-mkproxy based on gimp-mkenums based on glib-mkenums version glib-2.0\n";
+    print STDERR "gimp-mkproxy comes with ABSOLUTELY NO WARRANTY.\n";
+    print STDERR "You may redistribute copies of gimp-mkenums under the terms\n";
+    print STDERR "of the GNU General Public License which can be found in the\n";
+    print STDERR "GIMP source package.";
+    exit 0;
+}
+sub usage {
+    print STDERR "Usage: gimp-mkproxy [options] [files...]\n";
+    print STDERR "  --fhead <text>             output file header\n";
+    print STDERR "  --fprod <text>             per input file production\n";
+    print STDERR "  --ftail <text>             output file trailer\n";
+    print STDERR "  --comments <text>          comment structure\n";
+    print STDERR "  -h, --help                 show this help message\n";
+    print STDERR "  -v, --version              print version informations\n";
+    print STDERR "Production text substitutions:\n";
+    print STDERR "  \@filename\@                 name of current input file\n";
+    exit 0;
+}
+
+# production variables:
+my $fhead = "";   # output file header
+my $fprod = "";   # per input file production
+my $ftail = "";   # output file trailer
+# other options
+my $comment_tmpl = "/* \@comment\@ */";
+
+if (!defined $ARGV[0]) {
+    usage;
+}
+while ($_ = $ARGV[0], /^-/) {
+    shift;
+    last if /^--$/;
+    if    (/^--fhead$/)              { $fhead = $fhead . shift }
+    elsif (/^--fprod$/)              { $fprod = $fprod . shift }
+    elsif (/^--ftail$/)              { $ftail = $ftail . shift }
+    elsif (/^--comments$/)           { $comment_tmpl = shift }
+    elsif (/^--help$/ || /^-h$/)     { usage; }
+    elsif (/^--version$/ || /^-v$/)  { version; }
+    else { usage; }
+}
+
+# put auto-generation comment
+{
+    my $comment = $comment_tmpl;
+    $comment =~ s/\@comment\@/Generated data (by gimp-mkproxy)/;
+    print "\n" . $comment . "\n\n";
+}
+
+if (length($fhead)) {
+    my $prod = $fhead;
+
+    $prod =~ s/\@filename\@/$ARGV/g;
+    $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
+    $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
+		
+    print "$prod\n";
+}
+
+while (<>) {
+    $include=0;
+
+    if (m@/\*<
+           (([^*]|\*(?!/))*)
+          >\s*\*/
+         @x) {
+        my %options=parse_trigraph ($1);
+        defined $options{'proxy-skip'}    and $in_skip = 1;
+        defined $options{'proxy-resume'}  and $in_skip = 0;
+        defined $options{'proxy-include'} and $include = 1;
+    }
+        
+
+    # read lines until we have no open comments
+    while (m@/\*([^*]|\*(?!/))*$@) {
+	my $new;
+	defined ($new = <>) || die "Unmatched comment in $ARGV";
+	$_ .= $new;
+    }
+
+   # Spit out the output
+	
+    if (!$in_skip || $include) {        
+
+        if ($first_line) {
+            $first_line = 0;
+	    
+            if (length($fprod)) {
+                my $prod = $fprod;
+
+      	        $prod =~ s/\@filename\@/$ARGV/g;
+	        $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
+	        $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
+	
+	        print "$prod\n";
+	    }
+        }
+
+        print;
+   }
+   
+    if (eof) {
+	close (ARGV);		# reset line numbering
+	$first_line = 1;	# Flag to print filename at next line
+	$in_skip = 0;
+    }
+}
+
+if (length($ftail)) {
+    my $prod = $ftail;
+
+    $prod =~ s/\@filename\@/$ARGV/g;
+    $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
+    $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
+		
+    print "$prod\n";
+}
+
+# put auto-generation comment
+{
+    my $comment = $comment_tmpl;
+    $comment =~ s/\@comment\@/Generated data ends here/;
+    print "\n" . $comment . "\n\n";
+}

@@ -33,7 +33,9 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/gimphistogram.h"
 #include "base/gimplut.h"
@@ -205,11 +207,10 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_curves_tool_register (Gimp                     *gimp,
-                           GimpToolRegisterCallback  callback)
+gimp_curves_tool_register (GimpToolRegisterCallback  callback,
+                           Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_CURVES_TOOL,
+  (* callback) (GIMP_TYPE_CURVES_TOOL,
                 NULL,
                 FALSE,
                 "gimp-curves-tool",
@@ -217,7 +218,8 @@ gimp_curves_tool_register (Gimp                     *gimp,
                 _("Adjust color curves"),
                 N_("/Layer/Colors/Curves..."), NULL,
                 NULL, "tools/curves.html",
-                GIMP_STOCK_TOOL_CURVES);
+                GIMP_STOCK_TOOL_CURVES,
+                gimp);
 }
 
 GType
@@ -267,6 +269,17 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 static void
 gimp_curves_tool_init (GimpCurvesTool *bc_tool)
 {
+  GIMP_TOOL(bc_tool)->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                                        TRUE,                       /* auto_snap_to */
+                                                        TRUE,                       /* preserve */
+                                                        FALSE,                      /* handle_empty_image */
+                                                        FALSE,                      /* perfectmouse */
+                                                        GIMP_MOUSE_CURSOR,          /* cursor */
+                                                        GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
+                                                        GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                                        GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                                        GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                                        GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 }
 
 static void
@@ -367,9 +380,9 @@ gimp_curves_tool_button_press (GimpTool        *tool,
 
   if (drawable != tool->drawable)
     {
-      tool->preserve = TRUE;
+      gimp_tool_control_set_preserve(tool->control, TRUE);
       image_map_abort (curves_dialog->image_map);
-      tool->preserve = FALSE;
+      gimp_tool_control_set_preserve(tool->control, FALSE);
 
       tool->drawable = drawable;
 
@@ -383,7 +396,7 @@ gimp_curves_tool_button_press (GimpTool        *tool,
          curves_dialog);
     }
 
-  tool->state = ACTIVE;
+  gimp_tool_control_activate(tool->control);
 
   curves_color_update (tool, gdisp, drawable, coords->x, coords->y);
   curves_update (curves_dialog, GRAPH | DRAW);
@@ -501,7 +514,7 @@ curves_color_update (GimpTool       *tool,
   gboolean       is_indexed;
   GimpImageType  sample_type;
 
-  if (!tool || tool->state != ACTIVE)
+  if (!tool || !gimp_tool_control_is_active(tool->control))
     return;
 
   gimp_drawable_offsets (drawable, &offx, &offy);
@@ -585,9 +598,9 @@ curves_free (void)
 	{
 	  active_tool = tool_manager_get_active (the_gimp);
 
-	  active_tool->preserve = TRUE;
+	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 	  image_map_abort (curves_dialog->image_map);
-	  active_tool->preserve = FALSE;
+	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
 	  curves_dialog->image_map = NULL;
 	}
@@ -1219,10 +1232,10 @@ curves_preview (CurvesDialog *cd)
 
   active_tool = tool_manager_get_active (the_gimp);
 
-  active_tool->preserve = TRUE;
+  gimp_tool_control_set_preserve(active_tool->control, TRUE);
   image_map_apply (cd->image_map,  (ImageMapApplyFunc)gimp_lut_process_2,
 		   (void *) cd->lut);
-  active_tool->preserve = FALSE;
+  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 }
 
 static void
@@ -1376,7 +1389,7 @@ curves_ok_callback (GtkWidget *widget,
 
   active_tool = tool_manager_get_active (the_gimp);
 
-  active_tool->preserve = TRUE;  /* We're about to dirty... */
+  gimp_tool_control_set_preserve(active_tool->control, TRUE);  /* We're about to dirty... */
 
   if (!cd->preview)
     image_map_apply (cd->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
@@ -1385,7 +1398,7 @@ curves_ok_callback (GtkWidget *widget,
   if (cd->image_map)
     image_map_commit (cd->image_map);
 
-  active_tool->preserve = FALSE;
+  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
   cd->image_map = NULL;
 
@@ -1408,9 +1421,9 @@ curves_cancel_callback (GtkWidget *widget,
 
   if (cd->image_map)
     {
-      active_tool->preserve = TRUE;
+      gimp_tool_control_set_preserve(active_tool->control, TRUE);
       image_map_abort (cd->image_map);
-      active_tool->preserve = FALSE;
+      gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
       gdisplays_flush ();
       cd->image_map = NULL;
@@ -1471,9 +1484,9 @@ curves_preview_update (GtkWidget *widget,
 	{
 	  active_tool = tool_manager_get_active (the_gimp);
 
-	  active_tool->preserve = TRUE;
+	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 	  image_map_clear (cd->image_map);
-	  active_tool->preserve = FALSE;
+	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 	  gdisplays_flush ();
 	}
     }

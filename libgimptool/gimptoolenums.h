@@ -19,8 +19,6 @@
 #ifndef __TOOLS_ENUMS_H__
 #define __TOOLS_ENUMS_H__
 
-#include "core/core-enums.h"
-
 #if 0
    This file is parsed by two scripts, enumgen.pl in tools/pdbgen
    and gimp-mkenums. All enums that are not marked with /*< pdb-skip >*/
@@ -40,7 +38,7 @@
 
 #define GIMP_TYPE_CROP_TYPE (gimp_crop_type_get_type ())
 
-GType gimp_crop_type_get_type (void) G_GNUC_CONST;
+GType gimp_crop_type_get_type (void); /* G_GNUC_CONST;*/
 
 typedef enum /*< pdb-skip >*/
 {

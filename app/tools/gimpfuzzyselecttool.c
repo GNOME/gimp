@@ -26,7 +26,8 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "tools-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/boundary.h"
 #include "base/pixel-region.h"
@@ -91,11 +92,10 @@ static GimpSelectionToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_fuzzy_select_tool_register (Gimp                     *gimp,
-                                 GimpToolRegisterCallback  callback)
+gimp_fuzzy_select_tool_register (GimpToolRegisterCallback  callback,
+                                 Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_FUZZY_SELECT_TOOL,
+  (* callback) (GIMP_TYPE_FUZZY_SELECT_TOOL,
                 selection_options_new,
                 FALSE,
                 "gimp-fuzzy-select-tool",
@@ -103,7 +103,8 @@ gimp_fuzzy_select_tool_register (Gimp                     *gimp,
                 _("Select contiguous regions"),
                 _("/Tools/Selection Tools/Fuzzy Select"), "Z",
                 NULL, "tools/fuzzy_select.html",
-                GIMP_STOCK_TOOL_FUZZY_SELECT);
+                GIMP_STOCK_TOOL_FUZZY_SELECT,
+                gimp);
 }
 
 GType
@@ -168,9 +169,19 @@ gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
   tool        = GIMP_TOOL (fuzzy_select);
   select_tool = GIMP_SELECTION_TOOL (fuzzy_select);
 
-  tool->tool_cursor = GIMP_FUZZY_SELECT_TOOL_CURSOR;
-  tool->scroll_lock = TRUE;
-  tool->motion_mode = GIMP_MOTION_MODE_COMPRESS;
+  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_FUZZY_SELECT_TOOL_CURSOR,      /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+
+  /* FIXME!! tool->motion_mode = GIMP_MOTION_MODE_COMPRESS; */
 
   fuzzy_select->fuzzy_mask      = NULL;
   fuzzy_select->x               = 0;
@@ -216,7 +227,7 @@ gimp_fuzzy_select_tool_button_press (GimpTool        *tool,
   fuzzy_sel->first_y         = fuzzy_sel->y;
   fuzzy_sel->first_threshold = sel_options->threshold;
 
-  tool->state = ACTIVE;
+  gimp_tool_control_activate(tool->control);
   tool->gdisp = gdisp;
 
   switch (GIMP_SELECTION_TOOL (tool)->op)
@@ -253,7 +264,7 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-  tool->state = INACTIVE;
+  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
 
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))
@@ -332,7 +343,7 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
-  if (tool->state != ACTIVE)
+  if (!gimp_tool_control_is_active(tool->control))
     return;
 
   /* don't let the events come in too fast, ignore below a delay of 100 ms */

@@ -25,7 +25,9 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
@@ -112,11 +114,10 @@ static GimpDrawToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_magnify_tool_register (Gimp                     *gimp,
-                            GimpToolRegisterCallback  callback)
+gimp_magnify_tool_register (GimpToolRegisterCallback  callback,
+                            Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_MAGNIFY_TOOL,
+  (* callback) (GIMP_TYPE_MAGNIFY_TOOL,
                 magnify_options_new,
                 FALSE,
                 "gimp-magnify-tool",
@@ -124,7 +125,8 @@ gimp_magnify_tool_register (Gimp                     *gimp,
                 _("Zoom in & out"),
                 N_("/Tools/Magnify"), NULL,
                 NULL, "tools/magnify.html",
-                GIMP_STOCK_TOOL_ZOOM);
+                GIMP_STOCK_TOOL_ZOOM,
+                gimp);
 }
 
 GType
@@ -190,16 +192,18 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
   magnify_tool->w = 0;
   magnify_tool->h = 0;
 
-  tool->cursor                 = GIMP_ZOOM_CURSOR;
-  tool->tool_cursor            = GIMP_ZOOM_TOOL_CURSOR;
-  tool->cursor_modifier        = GIMP_CURSOR_MODIFIER_PLUS;
+  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
+                                          FALSE,                      /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_ZOOM_CURSOR,
+                                          GIMP_ZOOM_TOOL_CURSOR,
+                                          GIMP_CURSOR_MODIFIER_PLUS,
+                                          GIMP_ZOOM_CURSOR,
+                                          GIMP_ZOOM_TOOL_CURSOR,
+                                          GIMP_CURSOR_MODIFIER_MINUS);
 
-  tool->toggle_cursor          = GIMP_ZOOM_CURSOR;
-  tool->toggle_tool_cursor     = GIMP_ZOOM_TOOL_CURSOR;
-  tool->toggle_cursor_modifier = GIMP_CURSOR_MODIFIER_MINUS;
-
-  tool->scroll_lock            = TRUE;   /*  Disallow scrolling    */
-  tool->auto_snap_to           = FALSE;  /*  Don't snap to guides  */
 }
 
 static void
@@ -218,7 +222,7 @@ gimp_magnify_tool_button_press (GimpTool        *tool,
   magnify->w = 0;
   magnify->h = 0;
 
-  tool->state = ACTIVE;
+  gimp_tool_control_activate(tool->control);
   tool->gdisp = gdisp;
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
@@ -248,7 +252,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-  tool->state = INACTIVE;
+  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
 
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))
@@ -309,7 +313,7 @@ gimp_magnify_tool_motion (GimpTool        *tool,
 {
   GimpMagnifyTool *magnify;
 
-  if (tool->state != ACTIVE)
+  if (!gimp_tool_control_is_active(tool->control))
     return;
 
   magnify = GIMP_MAGNIFY_TOOL (tool);
@@ -361,7 +365,7 @@ gimp_magnify_tool_cursor_update (GimpTool        *tool,
 
   options = (MagnifyOptions *) tool->tool_info->tool_options;
 
-  tool->toggled = (options->type == GIMP_ZOOM_OUT);
+  gimp_tool_control_set_toggle(tool->control, (options->type == GIMP_ZOOM_OUT));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

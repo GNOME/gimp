@@ -20,7 +20,7 @@
 #define  __GIMP_IMAGE_MAP_TOOL_H__
 
 
-#include "gimptool.h"
+#include "libgimptool/gimptool.h"
 
 
 #define GIMP_TYPE_IMAGE_MAP_TOOL            (gimp_image_map_tool_get_type ())

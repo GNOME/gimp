@@ -22,7 +22,8 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "paint/gimppaintbrush.h"
 
@@ -42,11 +43,10 @@ static GimpPaintToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_paintbrush_tool_register (Gimp                     *gimp,
-                               GimpToolRegisterCallback  callback)
+gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
+                               Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_PAINTBRUSH_TOOL,
+  (* callback) (GIMP_TYPE_PAINTBRUSH_TOOL,
                 paint_options_new,
                 TRUE,
                 "gimp-paintbrush-tool",
@@ -54,7 +54,8 @@ gimp_paintbrush_tool_register (Gimp                     *gimp,
                 _("Paint fuzzy brush strokes"),
                 N_("/Tools/Paint Tools/Paintbrush"), "P",
                 NULL, "tools/paintbrush.html",
-                GIMP_STOCK_TOOL_PAINTBRUSH);
+                GIMP_STOCK_TOOL_PAINTBRUSH,
+                gimp);
 }
 
 GType
@@ -107,7 +108,18 @@ gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
   tool       = GIMP_TOOL (paintbrush);
   paint_tool = GIMP_PAINT_TOOL (paintbrush);
 
-  tool->tool_cursor       = GIMP_PAINTBRUSH_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_PAINTBRUSH_TOOL_CURSOR,/* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+
 
   paint_tool->pick_colors = TRUE;
   paint_tool->core        = g_object_new (GIMP_TYPE_PAINTBRUSH, NULL);

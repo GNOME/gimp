@@ -24,6 +24,9 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 #include "tools-types.h"
 
 #include "core/gimpchannel.h"
@@ -58,11 +61,10 @@ static GimpRectSelectToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_ellipse_select_tool_register (Gimp                     *gimp,
-                                   GimpToolRegisterCallback  callback)
+gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
+                                   Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_ELLIPSE_SELECT_TOOL,
+  (* callback) (GIMP_TYPE_ELLIPSE_SELECT_TOOL,
                 selection_options_new,
                 FALSE,
                 "gimp-ellipse-select-tool",
@@ -70,7 +72,8 @@ gimp_ellipse_select_tool_register (Gimp                     *gimp,
                 _("Select elliptical regions"),
                 _("/Tools/Selection Tools/Ellipse Select"), "E",
                 NULL, "tools/ellipse_select.html",
-                GIMP_STOCK_TOOL_ELLIPSE_SELECT);
+                GIMP_STOCK_TOOL_ELLIPSE_SELECT,
+                gimp);
 }
 
 GType
@@ -129,8 +132,17 @@ gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
   tool        = GIMP_TOOL (ellipse_select);
   select_tool = GIMP_SELECTION_TOOL (ellipse_select);
 
-  tool->tool_cursor = GIMP_ELLIPSE_SELECT_TOOL_CURSOR;
-  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          FALSE,                      /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_ELLIPSE_SELECT_TOOL_CURSOR,      /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 }
 
 static void

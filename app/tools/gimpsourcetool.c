@@ -22,7 +22,8 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -85,11 +86,10 @@ static GimpPaintToolClass *parent_class;
 /* public functions  */
 
 void
-gimp_clone_tool_register (Gimp                     *gimp,
-                          GimpToolRegisterCallback  callback)
+gimp_clone_tool_register (GimpToolRegisterCallback  callback,
+                          Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_CLONE_TOOL,
+  (* callback) (GIMP_TYPE_CLONE_TOOL,
                 clone_options_new,
                 TRUE,
                 "gimp-clone-tool",
@@ -97,7 +97,8 @@ gimp_clone_tool_register (Gimp                     *gimp,
                 _("Paint using Patterns or Image Regions"),
                 N_("/Tools/Paint Tools/Clone"), "C",
                 NULL, "tools/clone.html",
-                GIMP_STOCK_TOOL_CLONE);
+                GIMP_STOCK_TOOL_CLONE,
+                gimp);
 }
 
 GType
@@ -158,9 +159,18 @@ gimp_clone_tool_init (GimpCloneTool *clone)
   tool       = GIMP_TOOL (clone);
   paint_tool = GIMP_PAINT_TOOL (clone);
 
-  tool->tool_cursor = GIMP_CLONE_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_CLONE_TOOL_CURSOR,     /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
-  clone_core = g_object_new (GIMP_TYPE_CLONE, NULL);
 
   clone_core->init_callback      = gimp_clone_init_callback;
   clone_core->finish_callback    = gimp_clone_finish_callback;
@@ -266,7 +276,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 	ctype = GIMP_BAD_CURSOR;
     }
 
-  tool->cursor = ctype;
+  gimp_tool_control_set_cursor(tool->control, ctype);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -278,7 +288,7 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 
   tool = GIMP_TOOL (draw_tool);
 
-  if (tool->state == ACTIVE)
+  if (gimp_tool_control_is_active(tool->control))
     {
       GimpCloneOptions *options;
 

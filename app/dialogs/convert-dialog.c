@@ -33,7 +33,7 @@
 
 #include "display/gimpdisplay-foreach.h"
 
-#include "tools/gimptool.h"
+#include "libgimptool/gimptool.h"
 #include "tools/tool_manager.h"
 
 #include "widgets/gimpenummenu.h"

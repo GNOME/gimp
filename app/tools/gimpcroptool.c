@@ -25,7 +25,8 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 #include "gui/gui-types.h"
 
 #include "core/gimpdrawable.h"
@@ -176,11 +177,10 @@ static GimpDrawToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_crop_tool_register (Gimp                     *gimp,
-                         GimpToolRegisterCallback  callback)
+gimp_crop_tool_register (GimpToolRegisterCallback  callback,
+                         Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_CROP_TOOL,
+  (* callback) (GIMP_TYPE_CROP_TOOL,
                 crop_options_new,
                 FALSE,
                 "gimp-crop-tool",
@@ -188,7 +188,8 @@ gimp_crop_tool_register (Gimp                     *gimp,
                 _("Crop or Resize an image"),
                 N_("/Tools/Transform Tools/Crop Tool"), "<shift>C",
                 NULL, "tools/crop_tool.html",
-                GIMP_STOCK_TOOL_CROP);
+                GIMP_STOCK_TOOL_CROP,
+                gimp);
 }
 
 GType
@@ -252,8 +253,17 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
 
   tool = GIMP_TOOL (crop_tool);
 
-  tool->tool_cursor = GIMP_CROP_TOOL_CURSOR;
-  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          FALSE,                      /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_CROP_TOOL_CURSOR,      /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 }
 
 static void
@@ -310,7 +320,7 @@ gimp_crop_tool_button_press (GimpTool        *tool,
   crop      = GIMP_CROP_TOOL (tool);
   draw_tool = GIMP_DRAW_TOOL (tool);
 
-  if (tool->state == INACTIVE || gdisp != tool->gdisp)
+  if (!gimp_tool_control_is_active(tool->control) || gdisp != tool->gdisp)
     {
       crop->function = CREATING;
     }
@@ -379,7 +389,7 @@ gimp_crop_tool_button_press (GimpTool        *tool,
 
   if (crop->function == CREATING)
     {
-      if (tool->state == ACTIVE)
+      if (gimp_tool_control_is_active(tool->control))
 	gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
       tool->gdisp = gdisp;
@@ -393,7 +403,7 @@ gimp_crop_tool_button_press (GimpTool        *tool,
   crop->lastx = crop->startx = ROUND (coords->x);
   crop->lasty = crop->starty = ROUND (coords->y);
 
-  tool->state = ACTIVE;
+  gimp_tool_control_activate(tool->control);
 }
 
 static void
@@ -593,7 +603,7 @@ gimp_crop_tool_arrow_key (GimpTool    *tool,
 
   options = (CropOptions *) tool->tool_info->tool_options;
 
-  if (tool->state == ACTIVE)
+  if (gimp_tool_control_is_active(tool->control))
     {
       inc_x = inc_y = 0;
 
@@ -724,8 +734,9 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
 
   options = (CropOptions *) tool->tool_info->tool_options;
 
-  if (tool->state == INACTIVE ||
-      (tool->state == ACTIVE && tool->gdisp != gdisp))
+  if (!gimp_tool_control_is_active(tool->control) ||
+      (gimp_tool_control_is_active(tool->control) && tool->gdisp != gdisp))
+      /* this expression can be simplified to !..._is_active() || t->g != g */
     {
       ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
     }
@@ -769,10 +780,10 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
       ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
     }
 
-  tool->cursor          = ctype;
-  tool->tool_cursor     = (options->type == GIMP_CROP ? 
-                           GIMP_CROP_TOOL_CURSOR : GIMP_RESIZE_TOOL_CURSOR);
-  tool->cursor_modifier = cmodifier;
+  gimp_tool_control_set_cursor(tool->control, ctype);
+  gimp_tool_control_set_tool_cursor(tool->control, (options->type == GIMP_CROP ? 
+                                                    GIMP_CROP_TOOL_CURSOR : GIMP_RESIZE_TOOL_CURSOR));
+  gimp_tool_control_set_cursor_modifier(tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -1120,10 +1131,10 @@ crop_close_callback (GtkWidget *widget,
 
   if (GIMP_IS_CROP_TOOL (tool))
     {
-      if (tool->state == ACTIVE)
+      if (gimp_tool_control_is_active(tool->control))
         gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-      tool->state = INACTIVE;
+      gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
     }
 
   info_dialog_popdown (crop_info);

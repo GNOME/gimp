@@ -29,7 +29,7 @@
 
 #include "display/gimpdisplay.h"
 
-#include "tools/gimptool.h"
+#include "libgimptool/gimptool.h"
 #include "tools/tool_manager.h"
 
 

@@ -27,6 +27,7 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/tile.h"
 #include "base/tile-manager.h"

@@ -26,6 +26,9 @@
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpmath/gimpmath.h"
 
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 #include "tools-types.h"
 
 #include "base/pixel-region.h"
@@ -273,11 +276,10 @@ static GimpSelectionToolClass *parent_class = NULL;
 /* Public functions */
 
 void       
-gimp_bezier_select_tool_register (Gimp                     *gimp,
-                                  GimpToolRegisterCallback  callback)
+gimp_bezier_select_tool_register (GimpToolRegisterCallback  callback,
+                                  Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_BEZIER_SELECT_TOOL,
+  (* callback) (GIMP_TYPE_BEZIER_SELECT_TOOL,
                 selection_options_new,
                 FALSE,
                 "gimp-bezier-select-tool",
@@ -285,7 +287,8 @@ gimp_bezier_select_tool_register (Gimp                     *gimp,
                 _("Select regions using Bezier curves"),
                 _("/Tools/Selection Tools/Bezier Select"), "B",
                 NULL, "tools/bezier_select.html",
-                GIMP_STOCK_TOOL_BEZIER_SELECT);
+                GIMP_STOCK_TOOL_BEZIER_SELECT,
+                gimp);
 }
 
 GType
@@ -355,8 +358,17 @@ gimp_bezier_select_tool_init (GimpBezierSelectTool *bezier_select)
   bezier_select->num_points = 0;
   bezier_select->mask       = NULL;
 
-  tool->tool_cursor = GIMP_BEZIER_SELECT_TOOL_CURSOR;
-  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          FALSE,                      /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_BEZIER_SELECT_TOOL_CURSOR, /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
   curCore = draw_tool;
   curSel  = bezier_select;
@@ -389,7 +401,7 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
   /*  If the tool was being used in another image...reset it  */
-  if (tool->state == ACTIVE && gdisp != tool->gdisp)
+  if (gimp_tool_control_is_active(tool->control) && gdisp != tool->gdisp)
     {
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (bezier_sel));
       bezier_select_reset (bezier_sel);
@@ -411,7 +423,8 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
 	break;
 
       grab_pointer = TRUE;
-      tool->state  = ACTIVE;
+      
+      gimp_tool_control_activate(tool->control);
       tool->gdisp  = gdisp;
 
       bezier_sel->state = BEZIER_ADD;
@@ -734,7 +747,9 @@ gimp_bezier_select_tool_motion (GimpTool        *tool,
   gint                   offsetx;
   gint                   offsety;
 
-  if (tool->state != ACTIVE)
+  g_return_if_fail(GIMP_IS_BEZIER_SELECT_TOOL(tool)); /* never can be too careful */
+
+  if (!gimp_tool_control_is_active(tool->control))
     return;
 
   bezier_sel = GIMP_BEZIER_SELECT_TOOL(tool);
@@ -910,9 +925,10 @@ bezier_select_load (GimpDisplay           *gdisp,
 			 (gdisp->gimage->gimp, GIMP_TYPE_BEZIER_SELECT_TOOL));
 
   tool            = tool_manager_get_active (gdisp->gimage->gimp);
-  tool->state     = ACTIVE;
   tool->gdisp     = gdisp;
   bezier_sel =  (GimpBezierSelectTool *) tool;
+
+  gimp_tool_control_activate(tool->control);
 
   bezier_sel->points     = pts;
   bezier_sel->last_point = pts->prev;
@@ -2777,9 +2793,9 @@ bezier_tool_selected (void)
 
   tool = tool_manager_get_active (the_gimp);
 
-  return (tool                              &&
-	  GIMP_IS_BEZIER_SELECT_TOOL (tool) &&
-	  tool->state == ACTIVE);
+  return (tool                                     &&
+	  GIMP_IS_BEZIER_SELECT_TOOL (tool)        &&
+	  gimp_tool_control_is_active(tool->control));
 }
 
 void
@@ -2798,7 +2814,7 @@ bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
   tool = tool_manager_get_active (gdisp->gimage->gimp);
 
   /*  If the tool was being used before clear it */
-  if (GIMP_IS_BEZIER_SELECT_TOOL (tool) && tool->state == ACTIVE)
+  if (GIMP_IS_BEZIER_SELECT_TOOL (tool) && gimp_tool_control_is_active(tool->control))
     {
       GimpBezierSelectTool *bezier_sel = (GimpBezierSelectTool *) tool;
 
@@ -2815,7 +2831,8 @@ bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
 
   tool = tool_manager_get_active (gdisp->gimage->gimp);
 
-  tool->state    = ACTIVE;
+  gimp_tool_control_activate(tool->control);
+
   tool->gdisp    = gdisp;
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);  
 

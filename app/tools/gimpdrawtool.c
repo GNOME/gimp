@@ -22,7 +22,9 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"

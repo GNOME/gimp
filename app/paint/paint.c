@@ -20,6 +20,9 @@
 
 #include <gtk/gtk.h>
 
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
+
 #include "paint-types.h"
 
 #include "core/gimp.h"

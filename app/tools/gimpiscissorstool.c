@@ -257,11 +257,10 @@ static GimpSelectionToolClass *parent_class = NULL;
 
 
 void
-gimp_iscissors_tool_register (Gimp                     *gimp,
-                              GimpToolRegisterCallback  callback)
+gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
+                              Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_ISCISSORS_TOOL,
+  (* callback) (GIMP_TYPE_ISCISSORS_TOOL,
                 selection_options_new,
                 FALSE,
                 "gimp-iscissors-tool",
@@ -270,7 +269,8 @@ gimp_iscissors_tool_register (Gimp                     *gimp,
                 N_("/Tools/Selection Tools/Intelligent Scissors"),
                 "I",
                 NULL, "tools/iscissors.html",
-                GIMP_STOCK_TOOL_ISCISSORS);
+                GIMP_STOCK_TOOL_ISCISSORS,
+                gimp);
 }
 
 GType
@@ -342,9 +342,17 @@ gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
   iscissors->gradient_map = NULL;
   iscissors->livewire     = NULL;
 
-  tool->tool_cursor  = GIMP_SCISSORS_TOOL_CURSOR;
-
-  tool->auto_snap_to = FALSE;   /*  Don't snap to guides   */
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          FALSE,                      /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_SCISSORS_TOOL_CURSOR,  /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
   gimp_iscissors_tool_reset (iscissors);
 }
@@ -426,13 +434,13 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 
   /*  If the tool was being used in another image...reset it  */
 
-  if (tool->state == ACTIVE && gdisp != tool->gdisp)
+  if (gimp_tool_control_is_active(tool->control) && gdisp != tool->gdisp)
     {
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
       gimp_iscissors_tool_reset (iscissors);
     }
 
-  tool->state = ACTIVE;
+  gimp_tool_control_activate(tool->control);
   tool->gdisp = gdisp;
 
   switch (iscissors->state)
@@ -475,7 +483,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                    iscissors->y))
 	{
 	  /*  Undraw the curve  */
-	  tool->state = INACTIVE;
+	  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
 
 	  iscissors->draw = DRAW_CURVE;
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
@@ -688,7 +696,7 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
-  if (tool->state != ACTIVE || iscissors->state == NO_ACTION)
+  if (!gimp_tool_control_is_active(tool->control) || iscissors->state == NO_ACTION)
     return;
 
   if (iscissors->state == SEED_PLACEMENT)
@@ -1025,7 +1033,7 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
 
   gimp_tool_set_cursor (tool, gdisp,
                         cursor,
-                        tool->tool_cursor,
+                        GIMP_SCISSORS_TOOL_CURSOR /* tool->tool_cursor*/,
                         cmodifier);
 }
 

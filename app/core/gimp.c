@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core-types.h"
+#include "core-types.h" /* must come before gimptooltypes */
+#include "libgimptool/gimptooltypes.h"
 
 #include "pdb/procedural_db.h"
 #include "pdb/internal_procs.h"

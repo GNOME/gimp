@@ -21,6 +21,7 @@
 
 
 #include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 
 typedef struct _Argument   Argument;

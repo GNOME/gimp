@@ -23,7 +23,8 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -108,11 +109,10 @@ static void              bucket_options_reset       (GimpToolOptions *tool_optio
 /*  public functions  */
 
 void
-gimp_bucket_fill_tool_register (Gimp                     *gimp,
-                                GimpToolRegisterCallback  callback)
+gimp_bucket_fill_tool_register (GimpToolRegisterCallback  callback,
+                                Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_BUCKET_FILL_TOOL,
+  (* callback) (GIMP_TYPE_BUCKET_FILL_TOOL,
                 bucket_options_new,
                 TRUE,
                 "gimp-bucket-fill-tool",
@@ -120,7 +120,8 @@ gimp_bucket_fill_tool_register (Gimp                     *gimp,
                 _("Fill with a color or pattern"),
                 N_("/Tools/Paint Tools/Bucket Fill"), "<shift>B",
                 NULL, "tools/bucket_fill.html",
-                GIMP_STOCK_TOOL_BUCKET_FILL);
+                GIMP_STOCK_TOOL_BUCKET_FILL,
+                gimp);
 }
 
 GType
@@ -176,8 +177,17 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
 
   tool = GIMP_TOOL (bucket_fill_tool);
 
-  tool->tool_cursor = GIMP_BUCKET_FILL_TOOL_CURSOR;
-  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
+  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_BUCKET_FILL_TOOL_CURSOR,      /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 }
 
 static void
@@ -209,7 +219,7 @@ gimp_bucket_fill_tool_button_press (GimpTool        *tool,
     }
 
   tool->gdisp = gdisp;
-  tool->state = ACTIVE;
+  gimp_tool_control_activate(tool->control);
 }
 
 static void
@@ -246,7 +256,7 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
       gdisplays_flush ();
     }
 
-  tool->state = INACTIVE;
+  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
 }
 
 static void
@@ -322,7 +332,7 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
 	}
     }
 
-  tool->cursor_modifier = cmodifier;
+  gimp_tool_control_set_cursor_modifier(tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

@@ -3,8 +3,6 @@
 noinst_LIBRARIES = libapptools.a
 
 libapptools_a_SOURCES = @STRIP_BEGIN@ \
-	tools-enums.h			\
-	tools-enums.c			\
 	tools-types.h			\
 	tools.c				\
 	tools.h				\
@@ -100,6 +98,10 @@ libapptools_a_SOURCES = @STRIP_BEGIN@ \
 	gimpthresholdtool.h		\
 	gimptool.c			\
 	gimptool.h			\
+	gimptoolcontrol.c		\
+	gimptoolcontrol.h		\
+	gimptoolcontrol-displayshell.c  \
+	gimptoolcontrol-displayshell.h  \
 	gimptoolmodule.c		\
 	gimptoolmodule.h		\
 	gimptransformtool.c		\

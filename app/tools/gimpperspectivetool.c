@@ -23,7 +23,8 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 #include "gui/gui-types.h"
 
 #include "core/gimpimage.h"
@@ -66,11 +67,10 @@ static GimpTransformToolClass *parent_class = NULL;
 /*  public functions  */
 
 void 
-gimp_perspective_tool_register (Gimp                     *gimp,
-                                GimpToolRegisterCallback  callback)
+gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
+                                Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_PERSPECTIVE_TOOL,
+  (* callback) (GIMP_TYPE_PERSPECTIVE_TOOL,
                 transform_options_new,
                 FALSE,
                 "gimp-perspective-tool",
@@ -78,7 +78,8 @@ gimp_perspective_tool_register (Gimp                     *gimp,
                 _("Change perspective of the layer or selection"),
                 N_("/Tools/Transform Tools/Perspective"), "<shift>P",
                 NULL, "tools/perspective.html",
-                GIMP_STOCK_TOOL_PERSPECTIVE);
+                GIMP_STOCK_TOOL_PERSPECTIVE,
+                gimp);
 }
 
 GType
@@ -128,7 +129,18 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
 
   tool = GIMP_TOOL (perspective_tool);
 
-  tool->tool_cursor = GIMP_PERSPECTIVE_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_PERSPECTIVE_TOOL_CURSOR,    /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+
 }
 
 static TileManager *

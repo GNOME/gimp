@@ -24,7 +24,8 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 #include "gui/gui-types.h"
 
 #include "core/gimpimage.h"
@@ -80,11 +81,10 @@ static GimpTransformToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_scale_tool_register (Gimp                     *gimp,
-                          GimpToolRegisterCallback  callback)
+gimp_scale_tool_register (GimpToolRegisterCallback  callback,
+                          Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_SCALE_TOOL,
+  (* callback) (GIMP_TYPE_SCALE_TOOL,
                 transform_options_new,
                 FALSE,
                 "gimp-scale-tool",
@@ -92,7 +92,8 @@ gimp_scale_tool_register (Gimp                     *gimp,
                 _("Scale the layer or selection"),
                 N_("/Tools/Transform Tools/Scale"), "<shift>T",
                 NULL, "tools/transform.html",
-                GIMP_STOCK_TOOL_SCALE);
+                GIMP_STOCK_TOOL_SCALE,
+                gimp);
 }
 
 GType
@@ -149,7 +150,17 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
 
   tool = GIMP_TOOL (scale_tool);
 
-  tool->tool_cursor = GIMP_RESIZE_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_RESIZE_TOOL_CURSOR,    /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 }
 
 static TileManager *

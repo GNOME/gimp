@@ -27,7 +27,9 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/base-types.h"
 #include "base/pixel-region.h"
@@ -125,11 +127,10 @@ static GimpToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_text_tool_register (Gimp                     *gimp,
-                         GimpToolRegisterCallback  callback)
+gimp_text_tool_register (GimpToolRegisterCallback  callback,
+                         Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_TEXT_TOOL,
+  (* callback) (GIMP_TYPE_TEXT_TOOL,
                 text_tool_options_new,
                 FALSE,
                 "gimp-text-tool",
@@ -137,7 +138,8 @@ gimp_text_tool_register (Gimp                     *gimp,
                 _("Add text to the image"),
                 N_("/Tools/Text"), "T",
                 NULL, "tools/text.html",
-                GIMP_STOCK_TOOL_TEXT);
+                GIMP_STOCK_TOOL_TEXT,
+                gimp);
 }
 
 GType
@@ -200,10 +202,17 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   text_tool->pango_context = pango_ft2_get_context (gimprc.monitor_xres,
                                                     gimprc.monitor_yres);
 
-  tool->cursor      = GDK_FLEUR;
-  tool->tool_cursor = GIMP_TEXT_TOOL_CURSOR;
-
-  tool->scroll_lock = TRUE;  /* Disallow scrolling */
+  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GDK_FLEUR,                  /* cursor */
+                                          GIMP_TEXT_TOOL_CURSOR,      /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 }
 
 static void
@@ -259,7 +268,7 @@ text_tool_button_press (GimpTool        *tool,
 
   text_tool->gdisp = gdisp;
 
-  tool->state = ACTIVE;
+  gimp_tool_control_activate(tool->control);
   tool->gdisp = gdisp;
 
   text_tool->click_x = coords->x;
@@ -285,7 +294,7 @@ text_tool_button_release (GimpTool        *tool,
 			  GdkModifierType  state,
 			  GimpDisplay     *gdisp)
 {
-  tool->state = INACTIVE;
+  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
 }
 
 static void
@@ -302,11 +311,11 @@ text_tool_cursor_update (GimpTool        *tool,
     {
       /* if there is a floating selection, and this aint it ... */
 
-      tool->cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      gimp_tool_control_set_cursor_modifier(tool->control, GIMP_CURSOR_MODIFIER_MOVE);
     }
   else
     {
-      tool->cursor_modifier = GIMP_CURSOR_MODIFIER_NONE;
+      gimp_tool_control_set_cursor_modifier(tool->control, GIMP_CURSOR_MODIFIER_NONE);
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);

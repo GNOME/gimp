@@ -25,6 +25,7 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/pixel-region.h"
 #include "base/tile.h"

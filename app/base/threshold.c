@@ -22,7 +22,9 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/gimphistogram.h"
 #include "base/pixel-region.h"
@@ -103,11 +105,10 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_threshold_tool_register (Gimp                     *gimp,
-                              GimpToolRegisterCallback  callback)
+gimp_threshold_tool_register (GimpToolRegisterCallback  callback,
+                              Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_THRESHOLD_TOOL,
+  (* callback) (GIMP_TYPE_THRESHOLD_TOOL,
                 NULL,
                 FALSE,
                 "gimp-threshold-tool",
@@ -115,7 +116,8 @@ gimp_threshold_tool_register (Gimp                     *gimp,
                 _("Reduce image to two colors using a threshold"),
                 N_("/Layer/Colors/Threshold..."), NULL,
                 NULL, "tools/threshold.html",
-                GIMP_STOCK_TOOL_THRESHOLD);
+                GIMP_STOCK_TOOL_THRESHOLD,
+                gimp);
 }
 
 GType
@@ -462,9 +464,9 @@ threshold_preview (ThresholdDialog *td)
 
   active_tool = tool_manager_get_active (the_gimp);
 
-  active_tool->preserve = TRUE;
+  gimp_tool_control_set_preserve(active_tool->control, TRUE);
   image_map_apply (td->image_map, threshold, td);
-  active_tool->preserve = FALSE;
+  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 }
 
 static void
@@ -497,7 +499,7 @@ threshold_ok_callback (GtkWidget *widget,
 
   active_tool = tool_manager_get_active (the_gimp);
 
-  active_tool->preserve = TRUE;
+  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 
   if (!td->preview)
     image_map_apply (td->image_map, threshold, (gpointer) td);
@@ -505,7 +507,7 @@ threshold_ok_callback (GtkWidget *widget,
   if (td->image_map)
     image_map_commit (td->image_map);
 
-  active_tool->preserve = FALSE;
+  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
   td->image_map = NULL;
 
@@ -528,9 +530,9 @@ threshold_cancel_callback (GtkWidget *widget,
 
   if (td->image_map)
     {
-      active_tool->preserve = TRUE;
+      gimp_tool_control_set_preserve(active_tool->control, TRUE);
       image_map_abort (td->image_map);
-      active_tool->preserve = FALSE;
+      gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
       td->image_map = NULL;
       gdisplays_flush ();
@@ -561,9 +563,9 @@ threshold_preview_update (GtkWidget *widget,
 	{
 	  active_tool = tool_manager_get_active (the_gimp);
 
-	  active_tool->preserve = TRUE;
+	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 	  image_map_clear (td->image_map);
-	  active_tool->preserve = FALSE;
+	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 	  gdisplays_flush ();
 	}
     }

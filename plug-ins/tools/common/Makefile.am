@@ -13,7 +13,7 @@ INCLUDES = @STRIP_BEGIN@ \
 @STRIP_END@
 
 libexec_LTLIBRARIES = @STRIP_BEGIN@ \
-	libgimpbrushselecttool.la \
+##	libgimpbrushselecttool.la \
 @STRIP_END@
 
 EXTRA_LTLIBRARIES =
@@ -23,7 +23,6 @@ EXTRA_LTLIBRARIES =
 ###BEGIN EVIL KLUDGE
 
 install-exec-hook:
-	@$(NORMAL_UNINSTALL)
 	list='$(libexec_LTLIBRARIES)'; for p in $$list; do \
 	  rm -f $(DESTDIR)$(libexecdir)/$$p; \
 	  rm -f `echo $(DESTDIR)$(libexecdir)/$$p | sed -e "s/\\.la/.a/"`; \

@@ -28,6 +28,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "config/gimpscanner.h"
 

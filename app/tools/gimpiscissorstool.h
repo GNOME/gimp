@@ -102,8 +102,8 @@ struct _GimpIscissorsToolClass
 };
 
 
-void    gimp_iscissors_tool_register (Gimp                     *gimp,
-                                      GimpToolRegisterCallback  callback);
+void    gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
+                                      Gimp                     *gimp);
 
 GType   gimp_iscissors_tool_get_type (void) G_GNUC_CONST;
 

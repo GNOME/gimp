@@ -29,7 +29,9 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/pixel-region.h"
 
@@ -123,11 +125,10 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_hue_saturation_tool_register (Gimp                     *gimp,
-                                   GimpToolRegisterCallback  callback)
+gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
+                                   Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_HUE_SATURATION_TOOL,
+  (* callback) (GIMP_TYPE_HUE_SATURATION_TOOL,
                 NULL,
                 FALSE,
                 "gimp-hue-saturation-tool",
@@ -135,7 +136,8 @@ gimp_hue_saturation_tool_register (Gimp                     *gimp,
                 _("Adjust hue and saturation"),
                 N_("/Layer/Colors/Hue-Saturation..."), NULL,
                 NULL, "tools/hue_saturation.html",
-                GIMP_STOCK_TOOL_HUE_SATURATION);
+                GIMP_STOCK_TOOL_HUE_SATURATION,
+                gimp);
 }
 
 GType
@@ -180,8 +182,19 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 }
 
 static void
-gimp_hue_saturation_tool_init (GimpHueSaturationTool *bc_tool)
+gimp_hue_saturation_tool_init (GimpHueSaturationTool *tool)
 {
+  GIMP_TOOL(tool)->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                                     TRUE,                       /* auto_snap_to */
+                                                     TRUE,                       /* preserve */
+                                                     FALSE,                      /* handle_empty_image */
+                                                     FALSE,                      /* perfectmouse */
+                                                     GIMP_MOUSE_CURSOR,          /* cursor */
+                                                     GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
+                                                     GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                                     GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                                     GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                                     GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 }
 
 static void
@@ -375,9 +388,9 @@ hue_saturation_free (void)
     {
       if (hue_saturation_dialog->image_map)
 	{
-	  active_tool->preserve = TRUE;
+	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 	  image_map_abort (hue_saturation_dialog->image_map);
-	  active_tool->preserve = FALSE;
+	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
 	  hue_saturation_dialog->image_map = NULL;
 	}
@@ -716,9 +729,9 @@ hue_saturation_preview (HueSaturationDialog *hsd)
       return;
     }
 
-  active_tool->preserve = TRUE;
+  gimp_tool_control_set_preserve(active_tool->control, TRUE);
   image_map_apply (hsd->image_map, hue_saturation, (void *) hsd);
-  active_tool->preserve = FALSE;
+  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 }
 
 static void
@@ -752,7 +765,7 @@ hue_saturation_ok_callback (GtkWidget *widget,
 
   active_tool = tool_manager_get_active (the_gimp);
 
-  active_tool->preserve = TRUE;
+  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 
   if (!hsd->preview)
     image_map_apply (hsd->image_map, hue_saturation, (gpointer) hsd);
@@ -760,7 +773,7 @@ hue_saturation_ok_callback (GtkWidget *widget,
   if (hsd->image_map)
     image_map_commit (hsd->image_map);
 
-  active_tool->preserve = FALSE;
+  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
   hsd->image_map = NULL;
 
@@ -783,9 +796,9 @@ hue_saturation_cancel_callback (GtkWidget *widget,
 
   if (hsd->image_map)
     {
-      active_tool->preserve = TRUE;
+      gimp_tool_control_set_preserve(active_tool->control, TRUE);
       image_map_abort (hsd->image_map);
-      active_tool->preserve = FALSE;
+      gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
       gdisplays_flush ();
       hsd->image_map = NULL;
@@ -832,9 +845,9 @@ hue_saturation_preview_update (GtkWidget *widget,
 	{
 	  active_tool = tool_manager_get_active (the_gimp);
 
-	  active_tool->preserve = TRUE;
+	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 	  image_map_clear (hsd->image_map);
-	  active_tool->preserve = FALSE;
+	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 	  gdisplays_flush ();
 	}
     }

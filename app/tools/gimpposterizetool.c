@@ -22,7 +22,9 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
  
 #include "base/gimplut.h"
 #include "base/lut-funcs.h"
@@ -96,11 +98,10 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_posterize_tool_register (Gimp                     *gimp,
-                              GimpToolRegisterCallback  callback)
+gimp_posterize_tool_register (GimpToolRegisterCallback  callback,
+                              Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_POSTERIZE_TOOL,
+  (* callback) (GIMP_TYPE_POSTERIZE_TOOL,
                 NULL,
                 FALSE,
                 "gimp-posterize-tool",
@@ -108,7 +109,8 @@ gimp_posterize_tool_register (Gimp                     *gimp,
                 _("Reduce image to a fixed numer of colors"),
                 N_("/Layer/Colors/Posterize..."), NULL,
                 NULL, "tools/posterize.html",
-                GIMP_STOCK_TOOL_POSTERIZE);
+                GIMP_STOCK_TOOL_POSTERIZE,
+                gimp);
 }
 
 GType
@@ -324,11 +326,11 @@ posterize_preview (PosterizeDialog *pd)
       return;
     }
 
-  active_tool->preserve = TRUE;
+  gimp_tool_control_set_preserve(active_tool->control, TRUE);
   posterize_lut_setup (pd->lut, pd->levels, gimp_drawable_bytes (pd->drawable));
   image_map_apply (pd->image_map,  (ImageMapApplyFunc) gimp_lut_process_2,
 		   (void *) pd->lut);
-  active_tool->preserve = FALSE;
+  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 }
 
 static void
@@ -355,7 +357,7 @@ posterize_ok_callback (GtkWidget *widget,
 
   active_tool = tool_manager_get_active (the_gimp);
 
-  active_tool->preserve = TRUE;
+  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 
   if (!pd->preview)
     {
@@ -368,7 +370,7 @@ posterize_ok_callback (GtkWidget *widget,
   if (pd->image_map)
     image_map_commit (pd->image_map);
 
-  active_tool->preserve = FALSE;
+  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
   pd->image_map = NULL;
 
@@ -391,9 +393,9 @@ posterize_cancel_callback (GtkWidget *widget,
 
   if (pd->image_map)
     {
-      active_tool->preserve = TRUE;
+      gimp_tool_control_set_preserve(active_tool->control, TRUE);
       image_map_abort (pd->image_map);
-      active_tool->preserve = FALSE;
+      gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
       pd->image_map = NULL;
       gdisplays_flush ();
@@ -424,9 +426,9 @@ posterize_preview_update (GtkWidget *widget,
 	{
 	  active_tool = tool_manager_get_active (the_gimp);
 
-	  active_tool->preserve = TRUE;
+	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 	  image_map_clear (pd->image_map);
-	  active_tool->preserve = FALSE;
+	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 	  gdisplays_flush ();
 	}
     }

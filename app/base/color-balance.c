@@ -24,7 +24,9 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/pixel-region.h"
 
@@ -97,11 +99,10 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_color_balance_tool_register (Gimp                     *gimp,
-                                  GimpToolRegisterCallback  callback)
+gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
+                                  Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_COLOR_BALANCE_TOOL,
+  (* callback) (GIMP_TYPE_COLOR_BALANCE_TOOL,
                 NULL,
                 FALSE,
                 "gimp-color-balance-tool",
@@ -109,7 +110,8 @@ gimp_color_balance_tool_register (Gimp                     *gimp,
                 _("Adjust color balance"),
                 N_("/Layer/Colors/Color Balance..."), NULL,
                 NULL, "tools/color_balance.html",
-                GIMP_STOCK_TOOL_COLOR_BALANCE);
+                GIMP_STOCK_TOOL_COLOR_BALANCE,
+                gimp);
 }
 
 GType
@@ -158,6 +160,17 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 static void
 gimp_color_balance_tool_init (GimpColorBalanceTool *bc_tool)
 {
+  GIMP_TOOL(bc_tool)->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                                        TRUE,                       /* auto_snap_to */
+                                                        TRUE,                       /* preserve */
+                                                        FALSE,                      /* handle_empty_image */
+                                                        FALSE,                      /* perfectmouse */
+                                                        GIMP_MOUSE_CURSOR,          /* cursor */
+                                                        GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
+                                                        GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                                        GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                                        GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                                        GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 }
 
 static void
@@ -541,10 +554,10 @@ color_balance_preview (ColorBalanceDialog *cbd)
       return;
     }
 
-  active_tool->preserve = TRUE;
+  gimp_tool_control_set_preserve(active_tool->control, TRUE);
   color_balance_create_lookup_tables (cbd);
   image_map_apply (cbd->image_map, color_balance, (void *) cbd);
-  active_tool->preserve = FALSE;
+  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 }
 
 static void
@@ -578,7 +591,7 @@ color_balance_ok_callback (GtkWidget *widget,
   
   active_tool = tool_manager_get_active (the_gimp);
 
-  active_tool->preserve = TRUE;
+  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 
   if (!cbd->preview)
     image_map_apply (cbd->image_map, color_balance, (void *) cbd);
@@ -586,7 +599,7 @@ color_balance_ok_callback (GtkWidget *widget,
   if (cbd->image_map)
     image_map_commit (cbd->image_map);
 
-  active_tool->preserve = FALSE;
+  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
   cbd->image_map = NULL;
 
@@ -609,9 +622,9 @@ color_balance_cancel_callback (GtkWidget *widget,
 
   if (cbd->image_map)
     {
-      active_tool->preserve = TRUE;
+      gimp_tool_control_set_preserve(active_tool->control, TRUE);
       image_map_abort (cbd->image_map);
-      active_tool->preserve = FALSE;
+      gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
       gdisplays_flush ();
       cbd->image_map = NULL;
@@ -670,9 +683,9 @@ color_balance_preview_update (GtkWidget *widget,
 	{
 	  active_tool = tool_manager_get_active (the_gimp);
 
-	  active_tool->preserve = TRUE;
+	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 	  image_map_clear (cbd->image_map);
-	  active_tool->preserve = FALSE;
+	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 	  gdisplays_flush ();
 	}
     }

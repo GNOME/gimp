@@ -22,7 +22,11 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
+
+#include "libgimptool/gimptool.h"
 
 #include "core/gimptoolinfo.h"
 
@@ -30,7 +34,7 @@
 
 #include "gimpairbrushtool.h"
 #include "paint_options.h"
-#include "gimptool.h"
+
 
 #include "libgimp/gimpintl.h"
 
@@ -51,11 +55,10 @@ static GimpPaintToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_airbrush_tool_register (Gimp                     *gimp,
-                             GimpToolRegisterCallback  callback)
+gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
+			     Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_AIRBRUSH_TOOL,
+  (* callback) (GIMP_TYPE_AIRBRUSH_TOOL,
                 airbrush_options_new,
                 TRUE,
                 "gimp-airbrush-tool",
@@ -63,7 +66,8 @@ gimp_airbrush_tool_register (Gimp                     *gimp,
                 _("Airbrush with variable pressure"),
                 N_("/Tools/Paint Tools/Airbrush"), "A",
                 NULL, "tools/airbrush.html",
-                GIMP_STOCK_TOOL_AIRBRUSH);
+                GIMP_STOCK_TOOL_AIRBRUSH,
+                gimp);
 }
 
 GType
@@ -113,7 +117,17 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
   tool       = GIMP_TOOL (airbrush);
   paint_tool = GIMP_PAINT_TOOL (airbrush);
 
-  tool->tool_cursor       = GIMP_AIRBRUSH_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_AIRBRUSH_TOOL_CURSOR,  /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
   paint_tool->pick_colors = TRUE;
   paint_tool->core        = g_object_new (GIMP_TYPE_AIRBRUSH, NULL);

@@ -48,7 +48,7 @@
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 
-#include "tools/gimptool.h"
+/*#include "tools/gimptool.h"*/
 
 #include "gui/color-notebook.h"
 #include "gui/menus.h"

@@ -16,21 +16,25 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+/*< proxy-skip >*/
+
 #ifndef __CORE_ENUMS_H__
 #define __CORE_ENUMS_H__
 
 #if 0
-   This file is parsed by two scripts, enumgen.pl in tools/pdbgen
-   and gimp-mkenums. All enums that are not marked with /*< pdb-skip >*/
-   are exported to libgimp and the PDB. Enums that are not marked with
-   /*< skip >*/ are registered with the GType system. If you want the
-   enum to be skipped by both scripts, you have to use /*< pdb-skip >*/
-   _before_ /*< skip >*/. 
+   This file is parsed by three scripts, enumgen.pl in tools/pdbgen,
+   gimp-mkenums, and gimp-mkproxy. All enums that are not marked with 
+   /*< pdb-skip >*/ are exported to libgimp and the PDB. Enums that are
+   not marked with /*< skip >*/ are registered with the GType system. 
+   If you want the enum to be skipped by both scripts, you have to use 
+   /*< pdb-skip >*/ _before_ /*< skip >*/. 
 
    All enum values that are marked with /*< skip >*/ are skipped for
    both targets.
-#endif
 
+   Anything not between proxy-skip and proxy-resume 
+   pairs will be copied into libgimpproxy by gimp-mkproxy.
+#endif
 
 /* 
  * these enums that are registered with the type system
@@ -194,7 +198,7 @@ typedef enum  /*< pdb-skip >*/
  * non-registered enums; register them if needed
  */
 
-typedef enum  /*< skip >*/
+typedef enum  /*< proxy-resume >*/ /*< skip >*/
 {
   GIMP_CHANNEL_OP_ADD,
   GIMP_CHANNEL_OP_SUBTRACT,
@@ -202,7 +206,7 @@ typedef enum  /*< skip >*/
   GIMP_CHANNEL_OP_INTERSECT
 } GimpChannelOps;
 
-typedef enum  /*< skip >*/
+typedef enum  /*< proxy-skip >*/ /*< skip >*/
 {
   GIMP_MAKE_PALETTE,
   GIMP_REUSE_PALETTE,
@@ -278,4 +282,4 @@ typedef enum  /*< skip >*/
 } GimpOffsetType;
 
 
-#endif /* __CORE_TYPES_H__ */
+#endif /* __CORE_ENUMS_H__ */

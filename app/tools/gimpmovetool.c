@@ -24,7 +24,9 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
@@ -109,11 +111,10 @@ static GimpDrawToolClass *parent_class = NULL;
 
 
 void
-gimp_move_tool_register (Gimp                     *gimp,
-                         GimpToolRegisterCallback  callback)
+gimp_move_tool_register (GimpToolRegisterCallback  callback,
+                         Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_MOVE_TOOL,
+  (* callback) (GIMP_TYPE_MOVE_TOOL,
                 move_options_new,
                 FALSE,
                 "gimp-move-tool",
@@ -121,7 +122,8 @@ gimp_move_tool_register (Gimp                     *gimp,
                 _("Move layers & selections"),
                 N_("/Tools/Transform Tools/Move"), "M",
                 NULL, "tools/move.html",
-                GIMP_STOCK_TOOL_MOVE);
+                GIMP_STOCK_TOOL_MOVE,
+                gimp);
 }
 
 GType
@@ -185,10 +187,18 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   move_tool->guide = NULL;
   move_tool->disp  = NULL;
 
-  tool->auto_snap_to       = FALSE;  /*  Don't snap to guides     */
-  tool->handle_empty_image = TRUE;   /*  Can handle empty images  */
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          FALSE,                      /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          TRUE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_MOVE_TOOL_CURSOR,      /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
-  tool->tool_cursor  = GIMP_MOVE_TOOL_CURSOR;
 }
 
 static void
@@ -249,12 +259,12 @@ gimp_move_tool_button_press (GimpTool        *tool,
   if (options->move_mask && ! gimp_image_mask_is_empty (gdisp->gimage))
     {
       init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
-      tool->state = ACTIVE;
+      gimp_tool_control_activate(tool->control);
     }
   else if (options->move_current)
     {
       init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
-      tool->state = ACTIVE;
+      gimp_tool_control_activate(tool->control);
     }
   else
     {
@@ -271,8 +281,8 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	  move->guide = guide;
 	  move->disp  = gdisp;
 
-	  tool->scroll_lock = TRUE;
-	  tool->state       = ACTIVE;
+	  gimp_tool_control_set_scroll_lock(tool->control, TRUE);
+	  gimp_tool_control_activate(tool->control);
 
           gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 	}
@@ -295,7 +305,7 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	      init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
 	    }
 
-	  tool->state = ACTIVE;
+	  gimp_tool_control_activate(tool->control);
 	}
     }
 }
@@ -314,7 +324,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
 
   move = GIMP_MOVE_TOOL (tool);
 
-  tool->state = INACTIVE;
+  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
 
   if (move->guide)
     {
@@ -322,7 +332,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
 
       shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
-      tool->scroll_lock = FALSE;
+      gimp_tool_control_set_scroll_lock(tool->control, FALSE);
 
       delete_guide = FALSE;
       gdisplay_untransform_coords (gdisp,
@@ -495,7 +505,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
                                 GIMP_TOOL_CURSOR_NONE,
                                 GIMP_CURSOR_MODIFIER_HAND);
 
-	  if (tool->state != ACTIVE)
+	  if (!gimp_tool_control_is_active(tool->control))
 	    {
 	      if (move->guide)
 		{
@@ -624,8 +634,8 @@ gimp_move_tool_start_guide (GimpTool        *tool,
                                            GIMP_SELECTION_PAUSE);
 
   tool->gdisp       = gdisp;
-  tool->state       = ACTIVE;
-  tool->scroll_lock = TRUE;
+  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_set_scroll_lock(tool->control, TRUE);
 
   if (move->guide && move->disp && move->disp->gimage)
     gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (move->disp->shell),

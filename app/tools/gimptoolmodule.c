@@ -23,7 +23,7 @@
 #include "tools-types.h"
 #include "core/gimp.h"
 
-#include "gimptoolmodule.h"
+#include "libgimptool/gimptoolmodule.h"
 
 
 static void     gimp_tool_module_class_init (GimpToolModuleClass *klass);
@@ -132,10 +132,11 @@ gimp_tool_module_unload (GTypeModule *gmodule)
 
 GimpToolModule *
 gimp_tool_module_new (const gchar              *filename, 
-                      Gimp                     *gimp, 
-                      GimpToolRegisterCallback  callback)
+                      GimpToolRegisterCallback  callback,
+                      gpointer                  data)
 {
   GimpToolModule *module;
+  Gimp           *gimp = data;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -146,7 +147,7 @@ gimp_tool_module_new (const gchar              *filename,
   module->filename = g_strdup (filename); 
   /* FIXME: check for errors! */
   gimp_tool_module_load (G_TYPE_MODULE (module));
-  module->register_tool (gimp, callback);
+  module->register_tool (callback, gimp);
   gimp_tool_module_unload (G_TYPE_MODULE (module));
 
   return module;

@@ -26,6 +26,10 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
+
 #include "tools-types.h"
 
 #include "core/gimpchannel.h"
@@ -45,6 +49,8 @@
 #include "selection_options.h"
 
 #include "libgimp/gimpintl.h"
+
+
 
 
 static void   gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass);
@@ -81,11 +87,10 @@ static GimpSelectionToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_rect_select_tool_register (Gimp                     *gimp,
-                                GimpToolRegisterCallback  callback)
+gimp_rect_select_tool_register (GimpToolRegisterCallback  callback,
+                                Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_RECT_SELECT_TOOL,
+  (* callback) (GIMP_TYPE_RECT_SELECT_TOOL,
                 selection_options_new,
                 FALSE,
                 "gimp-rect-select-tool",
@@ -93,7 +98,8 @@ gimp_rect_select_tool_register (Gimp                     *gimp,
                 _("Select rectangular regions"),
                 _("/Tools/Selection Tools/Rect Select"), "R",
                 NULL, "tools/rect_select.html",
-                GIMP_STOCK_TOOL_RECT_SELECT);
+                GIMP_STOCK_TOOL_RECT_SELECT,
+                gimp);
 }
 
 GType
@@ -154,7 +160,17 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
 
   tool = GIMP_TOOL (rect_select);
 
-  tool->tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_RECT_SELECT_TOOL_CURSOR,  /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
   rect_select->x = rect_select->y = 0;
   rect_select->w = rect_select->h = 0;
@@ -212,7 +228,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
 
   rect_sel->center = FALSE;
 
-  tool->state = ACTIVE;
+  gimp_tool_control_activate(tool->control);
   tool->gdisp = gdisp;
 
   switch (sel_tool->op)
@@ -268,7 +284,7 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-  tool->state = INACTIVE;
+  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
 
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))
@@ -322,7 +338,7 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
   rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   sel_tool = GIMP_SELECTION_TOOL (tool);
 
-  if (tool->state != ACTIVE)
+  if (!gimp_tool_control_is_active(tool->control))
     return;
 
   if (sel_tool->op == SELECTION_ANCHOR)

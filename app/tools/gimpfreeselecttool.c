@@ -27,6 +27,9 @@
 
 #include "libgimpmath/gimpmath.h"
 
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 #include "tools-types.h"
 
 #include "core/gimpchannel.h"
@@ -42,6 +45,7 @@
 #include "gimpeditselectiontool.h"
 #include "gimpfreeselecttool.h"
 #include "selection_options.h"
+
 
 #include "libgimp/gimpintl.h"
 
@@ -82,11 +86,10 @@ static GimpSelectionToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_free_select_tool_register (Gimp                     *gimp,
-                                GimpToolRegisterCallback  callback)
+gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
+                                Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_FREE_SELECT_TOOL,
+  (* callback) (GIMP_TYPE_FREE_SELECT_TOOL,
                 selection_options_new,
                 FALSE,
                 "gimp-free-select-tool",
@@ -94,7 +97,8 @@ gimp_free_select_tool_register (Gimp                     *gimp,
                 _("Select hand-drawn regions"),
                 _("/Tools/Selection Tools/Free Select"), "F",
                 NULL, "tools/free_select.html",
-                GIMP_STOCK_TOOL_FREE_SELECT);
+                GIMP_STOCK_TOOL_FREE_SELECT,
+                gimp);
 }
 
 GType
@@ -158,8 +162,18 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
   tool        = GIMP_TOOL (free_select);
   select_tool = GIMP_SELECTION_TOOL (free_select);
 
-  tool->tool_cursor = GIMP_FREE_SELECT_TOOL_CURSOR;
-  tool->scroll_lock = TRUE;   /*  Do not allow scrolling  */
+  tool->control = gimp_tool_control_new(TRUE,
+				        TRUE,
+				        TRUE,
+				        FALSE,
+				        FALSE,
+				        GIMP_MOUSE_CURSOR,
+				        GIMP_FREE_SELECT_TOOL_CURSOR,
+				        GIMP_CURSOR_MODIFIER_NONE,
+				        GIMP_MOUSE_CURSOR,
+				        GIMP_TOOL_CURSOR_NONE,
+				        GIMP_CURSOR_MODIFIER_NONE);
+
 
   free_select->points     = NULL;
   free_select->num_points = 0;
@@ -193,7 +207,7 @@ gimp_free_select_tool_button_press (GimpTool        *tool,
 
   free_sel = GIMP_FREE_SELECT_TOOL (tool);
 
-  tool->state = ACTIVE;
+  gimp_tool_control_activate(tool->control);
   tool->gdisp = gdisp;
 
   switch (GIMP_SELECTION_TOOL (tool)->op)
@@ -231,7 +245,7 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-  tool->state = INACTIVE;
+  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
 
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))
@@ -275,7 +289,7 @@ gimp_free_select_tool_motion (GimpTool        *tool,
   free_sel  = GIMP_FREE_SELECT_TOOL (tool);
   sel_tool  = GIMP_SELECTION_TOOL (tool);
 
-  if (tool->state != ACTIVE)
+  if (!gimp_tool_control_is_active(tool->control))
     return;
 
   if (sel_tool->op == SELECTION_ANCHOR)

@@ -25,7 +25,8 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 #include "gui/gui-types.h"
 
 #include "core/gimpimage.h"
@@ -83,11 +84,10 @@ static GimpTransformToolClass *parent_class = NULL;
 /* Public functions */
 
 void 
-gimp_shear_tool_register (Gimp                     *gimp,
-                          GimpToolRegisterCallback  callback)
+gimp_shear_tool_register (GimpToolRegisterCallback  callback,
+                          Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_SHEAR_TOOL,
+  (* callback) (GIMP_TYPE_SHEAR_TOOL,
                 transform_options_new,
                 FALSE,
                 "gimp-shear-tool",
@@ -95,7 +95,8 @@ gimp_shear_tool_register (Gimp                     *gimp,
                 _("Shear the layer or selection"),
                 N_("/Tools/Transform Tools/Shear"), "<shift>F",
                 NULL, "tools/shear.html",
-                GIMP_STOCK_TOOL_SHEAR);
+                GIMP_STOCK_TOOL_SHEAR,
+                gimp);
 }
 
 GType
@@ -147,7 +148,17 @@ gimp_shear_tool_init (GimpShearTool *shear_tool)
   tool           = GIMP_TOOL (shear_tool);
   transform_tool = GIMP_TRANSFORM_TOOL (shear_tool);
 
-  tool->tool_cursor = GIMP_SHEAR_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_SHEAR_TOOL_CURSOR,     /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
   transform_tool->use_center = FALSE;
 }

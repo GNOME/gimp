@@ -35,7 +35,7 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gimptool.h"
+#include "gimptoolcontrol-displayshell.h"
 #include "gimprectselecttool.h"
 #include "paint_options.h"
 #include "tool_manager.h"
@@ -296,7 +296,7 @@ tool_manager_control_active (Gimp           *gimp,
     }
   else if (action == HALT)
     {
-      tool_manager->active_tool->state = INACTIVE;
+      gimp_tool_control_halt(tool_manager->active_tool->control);    /* sets paused_count to 0 -- is this ok? */
     }
 }
 
@@ -444,8 +444,7 @@ tool_manager_cursor_update_active (Gimp            *gimp,
 }
 
 void
-tool_manager_register_tool (Gimp                   *gimp,
-			    GType                   tool_type,
+tool_manager_register_tool (GType                   tool_type,
                             GimpToolOptionsNewFunc  options_new_func,
 			    gboolean                tool_context,
 			    const gchar            *identifier,
@@ -455,7 +454,8 @@ tool_manager_register_tool (Gimp                   *gimp,
 			    const gchar            *menu_accel,
 			    const gchar            *help_domain,
 			    const gchar            *help_data,
-			    const gchar            *stock_id)
+			    const gchar            *stock_id,
+			    Gimp                   *gimp)
 {
   GimpToolManager *tool_manager;
   GimpToolInfo    *tool_info;
@@ -695,7 +695,7 @@ tool_manager_image_dirty (GimpImage *gimage,
 
   tool_manager = (GimpToolManager *) data;
 
-  if (tool_manager->active_tool && ! tool_manager->active_tool->preserve)
+  if (tool_manager->active_tool && ! gimp_tool_control_preserve(tool_manager->active_tool->control))
     {
       GimpDisplay *gdisp;
 

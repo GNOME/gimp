@@ -28,7 +28,9 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/gimphistogram.h"
 #include "base/pixel-region.h"
@@ -120,11 +122,10 @@ static GimpToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_histogram_tool_register (Gimp                     *gimp,
-                              GimpToolRegisterCallback  callback)
+gimp_histogram_tool_register (GimpToolRegisterCallback  callback,
+                              Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_HISTOGRAM_TOOL,
+  (* callback) (GIMP_TYPE_HISTOGRAM_TOOL,
                 NULL,
                 FALSE,
                 "gimp-histogram-tool",
@@ -132,7 +133,8 @@ gimp_histogram_tool_register (Gimp                     *gimp,
                 _("View image histogram"),
                 N_("/Layer/Colors/Histogram..."), NULL,
                 NULL, "tools/histogram.html",
-                GIMP_STOCK_TOOL_HISTOGRAM);
+                GIMP_STOCK_TOOL_HISTOGRAM,
+                gimp);
 }
 
 GType
@@ -183,8 +185,17 @@ gimp_histogram_tool_init (GimpHistogramTool *bc_tool)
 
   tool = GIMP_TOOL (bc_tool);
 
-  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
-  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+  tool->control = gimp_tool_control_new  (TRUE, /* why? */            /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          FALSE,                      /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 }
 
 static void

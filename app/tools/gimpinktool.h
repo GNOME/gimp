@@ -20,7 +20,7 @@
 #define  __GIMP_INK_TOOL_H__
 
 
-#include "gimptool.h"
+#include "libgimptool/gimptool.h"
 #include "gimpinktool-blob.h"  /* only used by ink */
 
 
@@ -68,8 +68,8 @@ struct _GimpInkToolClass
 };
 
 
-void    gimp_ink_tool_register (Gimp                     *gimp,
-                                GimpToolRegisterCallback  callback);
+void    gimp_ink_tool_register (GimpToolRegisterCallback  callback,
+                                Gimp                     *gimp);
 
 GType   gimp_ink_tool_get_type (void) G_GNUC_CONST;
 

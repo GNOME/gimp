@@ -16,6 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+/*< proxy-skip >*/
+
 #ifndef __WIDGETS_ENUMS_H__
 #define __WIDGETS_ENUMS_H__
 
@@ -63,7 +65,7 @@ typedef enum  /*< skip >*/
   GIMP_LAST_CURSOR_ENTRY
 } GimpCursorType;
 
-typedef enum  /*< skip >*/
+typedef enum  /*< skip, proxy-resume >*/
 {
   GIMP_TOOL_CURSOR_NONE,
   GIMP_RECT_SELECT_TOOL_CURSOR,
@@ -116,7 +118,7 @@ typedef enum  /*< skip >*/
   GIMP_LAST_CURSOR_MODIFIER_ENTRY
 } GimpCursorModifier;
 
-typedef enum  /*< skip >*/
+typedef enum  /*< skip, proxy-skip >*/
 {
   GIMP_DEVICE_VALUE_MODE       = 1 << 0,
   GIMP_DEVICE_VALUE_AXES       = 1 << 1,

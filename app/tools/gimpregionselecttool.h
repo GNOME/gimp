@@ -52,8 +52,8 @@ struct _GimpFuzzySelectToolClass
 };
 
 
-void    gimp_fuzzy_select_tool_register (Gimp                     *gimp,
-                                         GimpToolRegisterCallback  callback);
+void    gimp_fuzzy_select_tool_register (GimpToolRegisterCallback  callback,
+                                         Gimp                     *gimp);
 
 GType   gimp_fuzzy_select_tool_get_type (void) G_GNUC_CONST;
 

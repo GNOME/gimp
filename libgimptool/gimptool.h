@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,12 @@
 #ifndef __GIMP_TOOL_H__
 #define __GIMP_TOOL_H__
 
+/* EEEEK! */
+/* #include "app/widgets/widgets-types.h" */
 
-#include "core/gimpobject.h"
+/* FIXME: what should we do about gimpobject? */
+/*#include "gimpobject.h"*/
+#include "gimptoolcontrol.h"
 
 
 /*  The possibilities for where the cursor lies  */
@@ -41,17 +45,21 @@ typedef struct _GimpToolClass GimpToolClass;
 
 struct _GimpTool
 {
-  GimpObject     parent_instance;
+  GimpObject         parent_instance;
 
-  GimpToolInfo  *tool_info;
+  GimpToolInfo      *tool_info;
 
-  gint           ID;           /*  unique tool ID                             */
+  gint               ID;           /*  unique tool ID                             */
 
+  GimpToolControl   *control;
+
+  GimpDisplay       *gdisp;        /*  pointer to currently active gdisp          */
+  GimpDrawable      *drawable;     /*  pointer to the tool's current drawable     */
+  
+/* This will soon go away */
+#if 0
   GimpToolState  state;        /*  state of tool activity                     */
   gint           paused_count; /*  paused control count                       */
-
-  GimpDisplay   *gdisp;        /*  pointer to currently active gdisp          */
-  GimpDrawable  *drawable;     /*  pointer to the tool's current drawable     */
 
   gboolean       scroll_lock;        /*  allow scrolling or not               */
   gboolean       auto_snap_to;       /*  snap to guides automatically         */
@@ -59,9 +67,8 @@ struct _GimpTool
                                       *  changes                              */
   gboolean       handle_empty_image; /*  invoke the tool on images without    *
                                       *  active drawable                      */
-  GimpMotionMode motion_mode;        /*  how to process motion events before  *
-                                      *  they are forwarded to the tool       */
-
+  gboolean       perfectmouse;       /*  tool is affected by gimprc's         *
+                                      *  "prefectmouse" setting               */
   GdkCursorType      cursor;
   GimpToolCursorType tool_cursor;
   GimpCursorModifier cursor_modifier;
@@ -71,6 +78,8 @@ struct _GimpTool
   GimpCursorModifier toggle_cursor_modifier;
 
   gboolean           toggled;
+#endif
+
 };
 
 struct _GimpToolClass

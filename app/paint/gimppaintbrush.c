@@ -24,6 +24,10 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 
+#include "core/core-types.h"
+
+#include "libgimptool/gimptooltypes.h"
+
 #include "paint-types.h"
 
 #include "base/temp-buf.h"

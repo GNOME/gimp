@@ -22,7 +22,8 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "core/gimptoolinfo.h"
 
@@ -57,11 +58,10 @@ static GimpPaintToolClass *parent_class = NULL;
 
 
 void
-gimp_dodgeburn_tool_register (Gimp                     *gimp,
-                              GimpToolRegisterCallback  callback)
+gimp_dodgeburn_tool_register (GimpToolRegisterCallback  callback,
+                              Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_DODGEBURN_TOOL,
+  (* callback) (GIMP_TYPE_DODGEBURN_TOOL,
                 gimp_dodgeburn_tool_options_new,
                 TRUE,
                 "gimp-dodgeburn-tool",
@@ -69,7 +69,8 @@ gimp_dodgeburn_tool_register (Gimp                     *gimp,
                 _("Dodge or Burn strokes"),
                 N_("/Tools/Paint Tools/DodgeBurn"), "<shift>D",
                 NULL, "tools/dodgeburn.html",
-                GIMP_STOCK_TOOL_DODGE);
+                GIMP_STOCK_TOOL_DODGE,
+                gimp);
 }
 
 GType
@@ -122,8 +123,17 @@ gimp_dodgeburn_tool_init (GimpDodgeBurnTool *dodgeburn)
   tool       = GIMP_TOOL (dodgeburn);
   paint_tool = GIMP_PAINT_TOOL (dodgeburn);
 
-  tool->tool_cursor         = GIMP_DODGE_TOOL_CURSOR;
-  tool->toggle_tool_cursor  = GIMP_BURN_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_DODGE_TOOL_CURSOR,     /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_BURN_TOOL_CURSOR,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
   paint_tool->core = g_object_new (GIMP_TYPE_DODGEBURN, NULL);
 }
@@ -157,7 +167,7 @@ gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
         }
     }
 
-  tool->toggled = (options->type == GIMP_BURN);
+  gimp_tool_control_set_toggle(tool->control, (options->type == GIMP_BURN));
 }
 
 static void
@@ -170,7 +180,8 @@ gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
 
   options = (GimpDodgeBurnOptions *) tool->tool_info->tool_options;
 
-  tool->toggled = (options->type == GIMP_BURN);
+
+  gimp_tool_control_set_toggle(tool->control, (options->type == GIMP_BURN));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

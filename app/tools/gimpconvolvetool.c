@@ -23,7 +23,8 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
@@ -77,11 +78,10 @@ static GimpPaintToolClass *parent_class;
 /*  public functions  */
 
 void
-gimp_convolve_tool_register (Gimp                     *gimp,
-                             GimpToolRegisterCallback  callback)
+gimp_convolve_tool_register (GimpToolRegisterCallback  callback,
+                             Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_CONVOLVE_TOOL,
+  (* callback) (GIMP_TYPE_CONVOLVE_TOOL,
                 convolve_options_new,
                 TRUE,
                 "gimp-convolve-tool",
@@ -89,7 +89,8 @@ gimp_convolve_tool_register (Gimp                     *gimp,
                 _("Blur or Sharpen"),
                 N_("/Tools/Paint Tools/Convolve"), "B",
                 NULL, "tools/convolve.html",
-                GIMP_STOCK_TOOL_BLUR);
+                GIMP_STOCK_TOOL_BLUR,
+                gimp);
 }
 
 GType
@@ -144,10 +145,18 @@ gimp_convolve_tool_init (GimpConvolveTool *convolve)
   tool       = GIMP_TOOL (convolve);
   paint_tool = GIMP_PAINT_TOOL (convolve);
 
-  tool->tool_cursor            = GIMP_BLUR_TOOL_CURSOR;
-  tool->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
-  tool->toggle_tool_cursor     = GIMP_BLUR_TOOL_CURSOR;
-  tool->toggle_cursor_modifier = GIMP_CURSOR_MODIFIER_MINUS;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_BLUR_TOOL_CURSOR,      /* cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_BLUR_TOOL_CURSOR,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_MINUS  /* toggle_cursor_modifier */);
+
 
   paint_tool->core = g_object_new (GIMP_TYPE_CONVOLVE, NULL);
 }
@@ -192,7 +201,7 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
 
   options = (GimpConvolveOptions *) tool->tool_info->tool_options;
 
-  tool->toggled = (options->type == GIMP_SHARPEN_CONVOLVE);
+  gimp_tool_control_set_toggle(tool->control, (options->type == GIMP_SHARPEN_CONVOLVE));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

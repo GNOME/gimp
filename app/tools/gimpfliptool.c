@@ -25,7 +25,9 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-transform.h"
@@ -84,11 +86,10 @@ static GimpTransformToolClass *parent_class = NULL;
 /*  public functions  */
 
 void 
-gimp_flip_tool_register (Gimp                     *gimp,
-                         GimpToolRegisterCallback  callback)
+gimp_flip_tool_register (GimpToolRegisterCallback  callback,
+                         Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_FLIP_TOOL,
+  (* callback) (GIMP_TYPE_FLIP_TOOL,
                 flip_options_new,
                 FALSE,
                 "gimp-flip-tool",
@@ -96,7 +97,8 @@ gimp_flip_tool_register (Gimp                     *gimp,
                 _("Flip the layer or selection"),
                 N_("/Tools/Transform Tools/Flip"), "<shift>F",
                 NULL, "tools/flip.html",
-                GIMP_STOCK_TOOL_FLIP);
+                GIMP_STOCK_TOOL_FLIP,
+                gimp);
 }
 
 GType
@@ -156,12 +158,18 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
   tool           = GIMP_TOOL (flip_tool);
   transform_tool = GIMP_TRANSFORM_TOOL (flip_tool);
 
-  tool->cursor             = GDK_SB_H_DOUBLE_ARROW;
-  tool->tool_cursor        = GIMP_FLIP_HORIZONTAL_TOOL_CURSOR;
-  tool->toggle_cursor      = GDK_SB_V_DOUBLE_ARROW;
-  tool->toggle_tool_cursor = GIMP_FLIP_VERTICAL_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          FALSE,                      /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GDK_SB_H_DOUBLE_ARROW,      /* cursor */
+                                          GIMP_FLIP_HORIZONTAL_TOOL_CURSOR,    /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GDK_SB_V_DOUBLE_ARROW,      /* toggle_cursor */
+                                          GIMP_FLIP_VERTICAL_TOOL_CURSOR,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
-  tool->auto_snap_to       = FALSE;  /*  Don't snap to guides  */
 
   transform_tool->use_grid = FALSE;
 }
@@ -229,16 +237,16 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 
   if (bad_cursor)
     {
-      tool->cursor        = GIMP_BAD_CURSOR;
-      tool->toggle_cursor = GIMP_BAD_CURSOR;
+      gimp_tool_control_set_cursor(tool->control, GIMP_BAD_CURSOR);
+      gimp_tool_control_set_toggle_cursor(tool->control, GIMP_BAD_CURSOR);
     }
   else
     {
-      tool->cursor        = GDK_SB_H_DOUBLE_ARROW;
-      tool->toggle_cursor = GDK_SB_V_DOUBLE_ARROW;
+      gimp_tool_control_set_cursor(tool->control, GDK_SB_H_DOUBLE_ARROW);
+      gimp_tool_control_set_toggle_cursor(tool->control, GDK_SB_V_DOUBLE_ARROW);
     }
 
-  tool->toggled = (options->type == ORIENTATION_VERTICAL);
+  gimp_tool_control_set_toggle(tool->control, (options->type == ORIENTATION_VERTICAL));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

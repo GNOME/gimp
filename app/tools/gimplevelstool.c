@@ -34,7 +34,9 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/gimphistogram.h"
 #include "base/gimplut.h"
@@ -130,7 +132,7 @@ struct _LevelsDialog
 /*  local function prototypes  */
 
 static void   gimp_levels_tool_class_init (GimpLevelsToolClass *klass);
-static void   gimp_levels_tool_init       (GimpLevelsTool      *bc_tool);
+static void   gimp_levels_tool_init       (GimpTool            *tool);
 
 static void   gimp_levels_tool_initialize (GimpTool       *tool,
 					   GimpDisplay    *gdisp);
@@ -202,11 +204,10 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_levels_tool_register (Gimp                     *gimp,
-                           GimpToolRegisterCallback  callback)
+gimp_levels_tool_register (GimpToolRegisterCallback  callback,
+                           Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_LEVELS_TOOL,
+  (* callback) (GIMP_TYPE_LEVELS_TOOL,
                 NULL,
                 FALSE,
                 "gimp-levels-tool",
@@ -214,7 +215,8 @@ gimp_levels_tool_register (Gimp                     *gimp,
                 _("Adjust color levels"),
                 N_("/Layer/Colors/Levels..."), NULL,
                 NULL, "tools/levels.html",
-                GIMP_STOCK_TOOL_LEVELS);
+                GIMP_STOCK_TOOL_LEVELS,
+                gimp);
 }
 
 GType
@@ -259,8 +261,19 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 }
 
 static void
-gimp_levels_tool_init (GimpLevelsTool *bc_tool)
+gimp_levels_tool_init (GimpTool *tool)
 {
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 }
 
 static void
@@ -358,9 +371,9 @@ levels_free (void)
     {
       if (levels_dialog->image_map)
 	{
-	  active_tool->preserve = TRUE;
+	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 	  image_map_abort (levels_dialog->image_map);
-	  active_tool->preserve = FALSE;
+	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
 	  levels_dialog->image_map = NULL;
 	}
@@ -945,10 +958,10 @@ levels_preview (LevelsDialog *ld)
     }
   if (!ld->preview)
     return;
-  active_tool->preserve = TRUE;
+  gimp_tool_control_set_preserve(active_tool->control, TRUE);
   image_map_apply (ld->image_map, (ImageMapApplyFunc) gimp_lut_process_2,
 		   (void *) ld->lut);
-  active_tool->preserve = FALSE;
+  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 }
 
 static void
@@ -1091,7 +1104,7 @@ levels_ok_callback (GtkWidget *widget,
 
   gtk_widget_hide (ld->shell);
 
-  active_tool->preserve = TRUE;
+  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 
   if (!ld->preview)
     {
@@ -1105,7 +1118,7 @@ levels_ok_callback (GtkWidget *widget,
   if (ld->image_map)
     image_map_commit (ld->image_map);
 
-  active_tool->preserve = FALSE;
+  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
   ld->image_map = NULL;
 
@@ -1128,9 +1141,9 @@ levels_cancel_callback (GtkWidget *widget,
 
   if (ld->image_map)
     {
-      active_tool->preserve = TRUE;
+      gimp_tool_control_set_preserve(active_tool->control, TRUE);
       image_map_abort (ld->image_map);
-      active_tool->preserve = FALSE;
+      gimp_tool_control_set_preserve(active_tool->control, FALSE);
 
       gdisplays_flush ();
       ld->image_map = NULL;
@@ -1220,9 +1233,9 @@ levels_preview_update (GtkWidget *widget,
 	{
 	  active_tool = tool_manager_get_active (the_gimp);
 
-	  active_tool->preserve = TRUE;
+	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
 	  image_map_clear (ld->image_map);
-	  active_tool->preserve = FALSE;
+	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
 	  gdisplays_flush ();
 	}
     }

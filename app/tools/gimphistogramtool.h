@@ -20,7 +20,7 @@
 #define __GIMP_HISTOGRAM_TOOL_H__
 
 
-#include "gimptool.h"
+#include "libgimptool/gimptool.h"
 
 
 #define HISTOGRAM_WIDTH  256
@@ -49,8 +49,8 @@ struct _GimpHistogramToolClass
 };
 
 
-void    gimp_histogram_tool_register (Gimp                     *gimp,
-                                      GimpToolRegisterCallback  callback);
+void    gimp_histogram_tool_register (GimpToolRegisterCallback  callback,
+                                      Gimp                     *gimp);
 
 GType   gimp_histogram_tool_get_type (void) G_GNUC_CONST;
 

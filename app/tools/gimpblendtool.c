@@ -25,7 +25,8 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -143,11 +144,10 @@ static GtkTargetEntry blend_target_table[] =
 /*  public functions  */
 
 void
-gimp_blend_tool_register (Gimp                     *gimp,
-                          GimpToolRegisterCallback  callback)
+gimp_blend_tool_register (GimpToolRegisterCallback  callback,
+                          Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_BLEND_TOOL,
+  (* callback) (GIMP_TYPE_BLEND_TOOL,
                 blend_options_new,
                 TRUE,
                 "gimp-blend-tool",
@@ -155,7 +155,8 @@ gimp_blend_tool_register (Gimp                     *gimp,
                 _("Fill with a color gradient"),
                 N_("/Tools/Paint Tools/Blend"), "L",
                 NULL, "tools/blend.html",
-                GIMP_STOCK_TOOL_BLEND);
+                GIMP_STOCK_TOOL_BLEND,
+                gimp);
 }
 
 GType
@@ -217,9 +218,18 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
 
   tool = GIMP_TOOL (blend_tool);
  
-  tool->tool_cursor = GIMP_BLEND_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_BLEND_TOOL_CURSOR,     /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
-  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
 }
 
 static void
@@ -252,7 +262,8 @@ gimp_blend_tool_button_press (GimpTool        *tool,
   blend_tool->endy = blend_tool->starty = coords->y - off_y;
 
   tool->gdisp = gdisp;
-  tool->state = ACTIVE;
+
+  gimp_tool_control_activate(tool->control);
 
   /* initialize the statusbar display */
   gimp_tool_push_status (tool, _("Blend: 0, 0"));
@@ -283,7 +294,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-  tool->state = INACTIVE;
+  gimp_tool_control_halt(tool->control); /* sets paused_count to 0 -- is this ok? */
 
   /*  if the 3rd button isn't pressed, fill the selected region  */
   if (! (state & GDK_BUTTON3_MASK) &&
@@ -385,10 +396,10 @@ gimp_blend_tool_cursor_update (GimpTool        *tool,
     {
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
-      tool->cursor = GIMP_BAD_CURSOR;
+      gimp_tool_control_set_cursor(tool->control, GIMP_BAD_CURSOR);
       break;
     default:
-      tool->cursor = GIMP_MOUSE_CURSOR;
+      gimp_tool_control_set_cursor(tool->control, GIMP_MOUSE_CURSOR);
       break;
     }
 

@@ -26,7 +26,8 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
@@ -248,11 +249,10 @@ static GimpToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_ink_tool_register (Gimp                     *gimp,
-                        GimpToolRegisterCallback  callback)
+gimp_ink_tool_register (GimpToolRegisterCallback  callback,
+                        Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_INK_TOOL,
+  (* callback) (GIMP_TYPE_INK_TOOL,
                 ink_options_new,
                 TRUE,
                 "gimp-ink-tool",
@@ -260,7 +260,8 @@ gimp_ink_tool_register (Gimp                     *gimp,
                 _("Draw in ink"),
                 N_("/Tools/Paint Tools/Ink"), "K",
                 NULL, "tools/ink.html",
-                GIMP_STOCK_TOOL_INK);
+                GIMP_STOCK_TOOL_INK,
+                gimp);
 }
 
 GType
@@ -321,8 +322,19 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
 
   tool = GIMP_TOOL (ink_tool);
 
-  tool->motion_mode = GIMP_MOTION_MODE_EXACT;
-  tool->tool_cursor = GIMP_INK_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          TRUE,                       /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_INK_TOOL_CURSOR,       /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+
+  /* FIXME tool->motion_mode = GIMP_MOTION_MODE_EXACT; */
 }
 
 static void
@@ -391,8 +403,8 @@ gimp_ink_tool_button_press (GimpTool        *tool,
 
   ink_init (ink_tool, drawable, coords->x, coords->y);
 
-  tool->state = ACTIVE;
-  tool->gdisp = gdisp;
+  gimp_tool_control_activate(tool->control);
+  /* EEEEEEEK!  FIXME! Should we really be setting the gdisp like this? tool->gdisp = gdisp; */
 
   /*  pause the current selection  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
@@ -436,7 +448,7 @@ gimp_ink_tool_button_release (GimpTool        *tool,
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
 
   /*  Set tool state to inactive -- no longer painting */
-  tool->state = INACTIVE;
+  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
 
   /*  free the last blob  */
   g_free (ink_tool->last_blob);
@@ -556,7 +568,7 @@ gimp_ink_tool_cursor_update (GimpTool        *tool,
 	}
     }
 
-  tool->cursor = ctype;
+  gimp_tool_control_set_cursor(tool->control, ctype);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

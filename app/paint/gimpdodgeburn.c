@@ -22,6 +22,9 @@
 
 #include "libgimpmath/gimpmath.h"
 
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
+
 #include "paint-types.h"
 
 #include "base/gimplut.h"

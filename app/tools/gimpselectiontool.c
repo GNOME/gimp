@@ -23,7 +23,11 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 #include "tools-types.h"
+
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -35,6 +39,8 @@
 #include "gimpeditselectiontool.h"
 #include "gimpselectiontool.h"
 #include "selection_options.h"
+
+
 
 
 static void   gimp_selection_tool_class_init    (GimpSelectionToolClass *klass);
@@ -235,9 +241,14 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
 
   selection_tool = GIMP_SELECTION_TOOL (tool);
 
-  tool_cursor = tool->tool_cursor;
+  /*FIXME tool_cursor = tool->tool_cursor;*/
   cmodifier   = GIMP_CURSOR_MODIFIER_NONE;
 
+#ifdef __GNUC__
+#warning FIXME!! (modifier cursors) 
+#endif
+
+#if 0
   switch (selection_tool->op)
     {
     case SELECTION_ADD:
@@ -262,7 +273,7 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
       cmodifier = GIMP_CURSOR_MODIFIER_ANCHOR;
       break;
     }
-
+#endif
   gimp_tool_set_cursor (tool, gdisp,
                         GIMP_MOUSE_CURSOR,
                         tool_cursor,

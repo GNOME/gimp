@@ -22,7 +22,8 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "core/gimptoolinfo.h"
 
@@ -47,11 +48,10 @@ static GimpPaintToolClass *parent_class = NULL;
 /* global functions  */
 
 void
-gimp_smudge_tool_register (Gimp                     *gimp,
-                           GimpToolRegisterCallback  callback)
+gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
+                           Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_SMUDGE_TOOL,
+  (* callback) (GIMP_TYPE_SMUDGE_TOOL,
                 smudge_options_new,
                 TRUE,
                 "gimp-smudge-tool",
@@ -59,7 +59,8 @@ gimp_smudge_tool_register (Gimp                     *gimp,
                 _("Smudge image"),
                 N_("/Tools/Paint Tools/Smudge"), "S",
                 NULL, "tools/smudge.html",
-                GIMP_STOCK_TOOL_SMUDGE);
+                GIMP_STOCK_TOOL_SMUDGE,
+                gimp);
 }
 
 GType
@@ -109,7 +110,17 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
   tool       = GIMP_TOOL (smudge);
   paint_tool = GIMP_PAINT_TOOL (smudge);
 
-  tool->tool_cursor       = GIMP_SMUDGE_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_SMUDGE_TOOL_CURSOR,    /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
   paint_tool->pick_colors = TRUE;
   paint_tool->core        = g_object_new (GIMP_TYPE_SMUDGE, NULL);

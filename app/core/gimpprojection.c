@@ -30,9 +30,9 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-projection.h"
 
-#include "tools/tools-types.h"
+#include "libgimptool/gimptooltypes.h"
+#include "libgimptool/gimptool.h"
 
-#include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
 #include "gui/info-window.h"

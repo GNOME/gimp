@@ -27,7 +27,9 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "base/boundary.h"
 
@@ -176,9 +178,19 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
 
   tool = GIMP_TOOL (edit_selection_tool);
 
-  tool->scroll_lock               = EDIT_SELECT_SCROLL_LOCK;
-  tool->auto_snap_to              = FALSE;
-  tool->motion_mode               = GIMP_MOTION_MODE_COMPRESS;
+  tool->control = gimp_tool_control_new  (EDIT_SELECT_SCROLL_LOCK,    /* scroll_lock */
+                                          FALSE,                      /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+
+/* FIXME!  tool->motion_mode               = GIMP_MOTION_MODE_COMPRESS; */
 
   edit_selection_tool->origx      = 0;
   edit_selection_tool->origy      = 0;
@@ -289,7 +301,7 @@ init_edit_selection (GimpTool    *tool,
                                  RINT (edit_select->origy));
 
   GIMP_TOOL (edit_select)->gdisp = gdisp;
-  GIMP_TOOL (edit_select)->state = ACTIVE;
+  gimp_tool_control_activate(GIMP_TOOL (edit_select)->control);
 
   g_object_ref (G_OBJECT (edit_select));
 
@@ -331,7 +343,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
 
   tool_manager_pop_tool (gdisp->gimage->gimp);
 
-  tool_manager_get_active (gdisp->gimage->gimp)->state = INACTIVE;
+  gimp_tool_control_halt(tool_manager_get_active (gdisp->gimage->gimp)->control);    /* sets paused_count to 0 -- is this ok? */
 
   /* EDIT_MASK_TRANSLATE is performed here at movement end, not 'live' like
    *  the other translation types.
@@ -411,7 +423,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (tool->state != ACTIVE)
+  if (!gimp_tool_control_is_active(tool->control))
     {
       g_warning ("BUG: Tracking motion while !ACTIVE");
       return;

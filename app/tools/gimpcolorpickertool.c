@@ -23,7 +23,8 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 #include "gui/gui-types.h"
 
 #include "core/gimp.h"
@@ -122,11 +123,10 @@ static GimpDrawToolClass *parent_class = NULL;
 
 
 void
-gimp_color_picker_tool_register (Gimp                     *gimp,
-                                 GimpToolRegisterCallback  callback)
+gimp_color_picker_tool_register (GimpToolRegisterCallback  callback,
+                                 Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_COLOR_PICKER_TOOL,
+  (* callback) (GIMP_TYPE_COLOR_PICKER_TOOL,
                 gimp_color_picker_tool_options_new,
                 FALSE,
                 "gimp-color-picker-tool",
@@ -134,7 +134,8 @@ gimp_color_picker_tool_register (Gimp                     *gimp,
                 _("Pick colors from the image"),
                 N_("/Tools/Color Picker"), "<shift>O",
                 NULL, "tools/color_picker.html",
-                GIMP_STOCK_TOOL_COLOR_PICKER);
+                GIMP_STOCK_TOOL_COLOR_PICKER,
+                gimp);
 }
 
 GtkType
@@ -196,9 +197,17 @@ gimp_color_picker_tool_init (GimpColorPickerTool *color_picker_tool)
 
   tool = GIMP_TOOL (color_picker_tool);
 
-  tool->tool_cursor = GIMP_COLOR_PICKER_TOOL_CURSOR;
-
-  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          FALSE,                      /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_COLOR_PICKER_TOOL_CURSOR,   /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 }
 
 static void
@@ -257,7 +266,7 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
   /*  Make the tool active and set it's gdisplay & drawable  */
   tool->gdisp    = gdisp;
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
-  tool->state    = ACTIVE;
+  gimp_tool_control_activate(tool->control);
 
   /*  create the info dialog if it doesn't exist  */
   if (! gimp_color_picker_tool_info)
@@ -424,7 +433,7 @@ gimp_color_picker_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (cp_tool));
 
-  tool->state = INACTIVE;
+  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
 }
 
 static void
@@ -482,11 +491,11 @@ gimp_color_picker_tool_cursor_update (GimpTool        *tool,
       coords->y > 0 &&
       coords->y < gdisp->gimage->height)
     {
-      tool->cursor = GIMP_COLOR_PICKER_CURSOR;
+      gimp_tool_control_set_cursor(tool->control, GIMP_COLOR_PICKER_CURSOR);
     }
   else
     {
-      tool->cursor = GIMP_BAD_CURSOR;
+      gimp_tool_control_set_cursor(tool->control, GIMP_BAD_CURSOR);
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);

@@ -29,7 +29,9 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -105,11 +107,10 @@ static GimpSelectionToolClass *parent_class = NULL;
 
 
 void
-gimp_vector_tool_register (Gimp                     *gimp,
-                           GimpToolRegisterCallback  callback)
+gimp_vector_tool_register (GimpToolRegisterCallback  callback,
+                           Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_VECTOR_TOOL,
+  (* callback) (GIMP_TYPE_VECTOR_TOOL,
                 vector_tool_options_new,
                 FALSE,
                 "gimp-vector-tool",
@@ -117,7 +118,8 @@ gimp_vector_tool_register (Gimp                     *gimp,
                 _("Vector angles and lengths"),
                 N_("/Tools/Vector"), NULL,
                 NULL, "tools/vector.html",
-                GIMP_STOCK_TOOL_PATH);
+                GIMP_STOCK_TOOL_PATH,
+                gimp);
 }
 
 GType
@@ -179,9 +181,17 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
 
   tool = GIMP_TOOL (vector_tool);
 
-  tool->tool_cursor = GIMP_CURSOR_MODIFIER_NONE;
-
-  tool->preserve    = TRUE;  /*  Preserve on drawable change  */
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
   
   vector_tool->vectors = NULL;
   vector_tool->active_anchors = NULL;
@@ -221,7 +231,7 @@ gimp_vector_tool_control (GimpTool       *tool,
 
     case HALT:
       gimp_tool_pop_status (tool);
-      tool->state = INACTIVE;
+      gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
       break;
 
     default:
@@ -252,12 +262,12 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  if we are changing displays, pop the statusbar of the old one  */ 
-  if (tool->state == ACTIVE && gdisp != tool->gdisp)
+  if (gimp_tool_control_is_active(tool->control) && gdisp != tool->gdisp)
     {
       gimp_tool_pop_status (tool);
     }
   
-  if (tool->state == ACTIVE && gdisp == tool->gdisp)
+  if (gimp_tool_control_is_active(tool->control) && gdisp == tool->gdisp)
     {
       /*  if the cursor is in one of the handles,
        *  the new function will be moving or adding a new point or guide
@@ -284,7 +294,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   
   if (vector_tool->function == VECTORS_CREATING)
     {
-      if (tool->state == ACTIVE)
+      if (gimp_tool_control_is_active(tool->control))
 	{
 	  /* reset everything */
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (vector_tool));
@@ -302,7 +312,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       /*  set the gdisplay  */
       tool->gdisp = gdisp;
 
-      if (tool->state == ACTIVE)
+      if (gimp_tool_control_is_active(tool->control))
 	{
 	  gimp_tool_pop_status (tool);
 	  gimp_tool_push_status (tool, "");
@@ -314,7 +324,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   if (vector_tool->function == VECTORS_ADDING)
     {
-      if (tool->state == ACTIVE)
+      if (gimp_tool_control_is_active(tool->control))
 	{
 	  /* reset everything */
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (vector_tool));
@@ -326,7 +336,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       /*  set the gdisplay  */
       tool->gdisp = gdisp;
 
-      if (tool->state == ACTIVE)
+      if (gimp_tool_control_is_active(tool->control))
 	{
 	  gimp_tool_pop_status (tool);
 	  gimp_tool_push_status (tool, "");
@@ -336,7 +346,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
     }
 
-  tool->state = ACTIVE;
+  gimp_tool_control_activate(tool->control);
 }
 
 static void
@@ -402,7 +412,7 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
 
-  if (tool->state == ACTIVE && tool->gdisp == gdisp)
+  if (gimp_tool_control_is_active(tool->control) && tool->gdisp == gdisp)
     {
       anchor = gimp_vectors_anchor_get (vector_tool->vectors, coords, NULL);
 
@@ -421,8 +431,8 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
         }
     }
 
-  tool->cursor          = ctype;
-  tool->cursor_modifier = cmodifier;
+  gimp_tool_control_set_cursor(tool->control, ctype);
+  gimp_tool_control_set_cursor_modifier(tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -540,7 +550,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
         }
 
       tool->gdisp = gdisp;
-      tool->state = ACTIVE;
+      gimp_tool_control_activate(tool->control);
 
       gimp_draw_tool_start (draw_tool, tool->gdisp);
     }

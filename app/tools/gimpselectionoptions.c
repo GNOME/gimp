@@ -34,11 +34,13 @@
 #include "gimpiscissorstool.h"
 #include "gimprectselecttool.h"
 #include "gimpbycolorselecttool.h"
-#include "gimptool.h"
+/*#include "gimptool.h"*/
 #include "selection_options.h"
 #include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
+
+
 
 
 void

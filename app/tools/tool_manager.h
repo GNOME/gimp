@@ -74,8 +74,7 @@ void           tool_manager_cursor_update_active  (Gimp             *gimp,
 const gchar  * tool_manager_active_get_help_data  (Gimp             *gimp);
 
 
-void           tool_manager_register_tool         (Gimp             *gimp,
-						   GType             tool_type,
+void           tool_manager_register_tool         (GType             tool_type,
                                                    GimpToolOptionsNewFunc  options_new_func,
 						   gboolean          tool_context,
 						   const gchar      *identifier,
@@ -85,7 +84,8 @@ void           tool_manager_register_tool         (Gimp             *gimp,
 						   const gchar      *menu_accel,
 						   const gchar      *help_domain,
 						   const gchar      *help_data,
-						   const gchar      *stock_id);
+						   const gchar      *stock_id,
+                                                   Gimp             *gimp);
 
 GimpToolInfo * tool_manager_get_info_by_type      (Gimp             *gimp,
 						   GType             tool_type);

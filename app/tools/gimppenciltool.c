@@ -22,7 +22,8 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "core/core-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 #include "paint/gimppencil.h"
 
@@ -42,11 +43,10 @@ static GimpPaintToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_pencil_tool_register (Gimp                     *gimp,
-                           GimpToolRegisterCallback  callback)
+gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
+                           Gimp                     *gimp)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_PENCIL_TOOL,
+  (* callback) (GIMP_TYPE_PENCIL_TOOL,
                 paint_options_new,
                 TRUE,
                 "gimp-pencil-tool",
@@ -54,7 +54,8 @@ gimp_pencil_tool_register (Gimp                     *gimp,
                 _("Paint hard edged pixels"),
                 N_("/Tools/Paint Tools/Pencil"), "P",
                 NULL, "tools/pencil.html",
-                GIMP_STOCK_TOOL_PENCIL);
+                GIMP_STOCK_TOOL_PENCIL,
+                gimp);
 }
 
 GType
@@ -104,7 +105,17 @@ gimp_pencil_tool_init (GimpPencilTool *pencil)
   tool       = GIMP_TOOL (pencil);
   paint_tool = GIMP_PAINT_TOOL (pencil);
 
-  tool->tool_cursor       = GIMP_PENCIL_TOOL_CURSOR;
+  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+                                          TRUE,                       /* auto_snap_to */
+                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* handle_empty_image */
+                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOUSE_CURSOR,          /* cursor */
+                                          GIMP_PENCIL_TOOL_CURSOR,    /* tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
+                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
+                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
+                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
   paint_tool->pick_colors = TRUE;
   paint_tool->core        = g_object_new (GIMP_TYPE_PENCIL, NULL);

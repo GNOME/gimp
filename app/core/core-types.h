@@ -16,6 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+/*< proxy-skip >*/
+
 #ifndef __CORE_TYPES_H__
 #define __CORE_TYPES_H__
 
@@ -93,7 +95,7 @@ typedef enum /*< pdb-skip >*/ /*< skip >*/
 
 /*  base objects  */
 
-typedef struct _GimpObject          GimpObject;
+typedef struct _GimpObject          GimpObject; /*< proxy-include >*/
 
 typedef struct _Gimp                Gimp;
 
@@ -115,13 +117,12 @@ typedef struct _GimpItem            GimpItem;
 typedef struct _GimpBuffer          GimpBuffer;
 
 typedef struct _GimpPaintInfo       GimpPaintInfo;
-typedef struct _GimpToolInfo        GimpToolInfo;
 
 typedef struct _GimpImagefile       GimpImagefile;
 
 /*  drawable objects  */
 
-typedef struct _GimpDrawable        GimpDrawable;
+typedef struct _GimpDrawable        GimpDrawable; /*< proxy-resume >*/
 
 typedef struct _GimpChannel         GimpChannel;
 
@@ -133,7 +134,7 @@ typedef struct _GimpImage           GimpImage;
 
 /*  data objects  */
 
-typedef struct _GimpData            GimpData;
+typedef struct _GimpData            GimpData; /*< proxy-skip >*/
 
 typedef struct _GimpBrush	    GimpBrush;
 typedef struct _GimpBrushGenerated  GimpBrushGenerated;
@@ -159,7 +160,7 @@ typedef struct _ImageMap            ImageMap; /* temp_hack, will be an object */
 
 /*  non-object types  */
 
-typedef struct _GimpCoords          GimpCoords;
+typedef struct _GimpCoords          GimpCoords; /*< proxy-include >*/
 
 typedef struct _GimpCoreConfig      GimpCoreConfig;
 
@@ -179,12 +180,6 @@ typedef struct _GimpPaletteEntry    GimpPaletteEntry;
 typedef struct _Path                Path;
 typedef struct _PathPoint           PathPoint;
 typedef struct _PathList            PathList;
-
-
-/*  stuff which is forward declared here so we don't need to cross-include it  */
-
-typedef struct _GimpToolOptions     GimpToolOptions;
-
 
 /*  functions  */
 
