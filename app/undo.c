@@ -1263,6 +1263,8 @@ undo_pop_transform (GimpImage *gimage,
 		    UndoType   type,
 		    gpointer   tu_ptr)
 {
+#warning very bogus
+#if 0
   TransformCore *tc;
   TransformUndo *tu;
   TileManager   *temp;
@@ -1270,8 +1272,6 @@ undo_pop_transform (GimpImage *gimage,
   gint           i;
 
 
-#warning very bogus
-#if 0
   /* Can't have ANY tool selected - maybe a plugin running */
   if (active_tool == NULL)
     return TRUE;

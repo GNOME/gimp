@@ -20,7 +20,7 @@
 #define __GIMP_TRANSFORM_TOOL_H__
 
 
-#include "tools/tool.h"
+#include "tools/gimptool.h"
 
 #define GIMP_TYPE_TRANSFORM_TOOL            (gimp_transform_tool_get_type ())
 #define GIMP_TRANSFORM_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_TRANSFORM_TOOL, GimpTransformTool))
@@ -101,7 +101,7 @@ struct _GimpTransformToolClass {
 		               GDisplay             *gdisp,
 		               TransformState        state);
 
-}
+};
 
 /*  Special undo type  */
 typedef struct _TransformUndo TransformUndo;
@@ -126,7 +126,7 @@ extern InfoDialog * transform_info;
 Tool        * gimp_transform_tool_new                    (GimpTransformToolType        tool_type,
 						     gboolean        interactive);
 */
-void          gimp_transform_tool_destroy                (GimpTransformTool    *tool);
+void          gimp_transform_tool_destroy                (GtkObject            *tool);
 void          gimp_transform_tool_draw                   (GimpTransformTool    *tool);
 void          gimp_transform_tool_no_draw                (GimpTransformTool    *tool);
 void          gimp_transform_tool_transform_bounding_box (GimpTransformTool    *tool);
@@ -134,19 +134,22 @@ void          gimp_transform_tool_reset                  (GimpTransformTool    *
                                                           GDisplay             *gdisp);
 void	      gimp_transform_tool_grid_density_changed   (void);
 void	      gimp_transform_tool_showpath_changed       (gint                  type);
-
+TileManager * gimp_transform_tool_transform              (GimpTransformTool    *tool,
+		                                          GDisplay             *gdisp,
+		                                          TransformState        state);
 /*  transform functions  */
-TileManager * gimp_transform_tool_transform             (GImage           *gimage,
+/* FIXME this function needs to be renamed */
+TileManager * gimp_transform_tool_do                    (GimpImage        *gimage,
 				                         GimpDrawable     *drawable,
 				                         TileManager      *float_tiles,
 				                         gboolean          interpolation,
 				                         GimpMatrix3       matrix,
                                                          GimpProgressFunc  progress_callback,
 				                         gpointer          progress_data);
-TileManager * gimp_transform_tool_cut                   (GImage           *gimage,
+TileManager * gimp_transform_tool_cut                   (GimpImage        *gimage,
 				                         GimpDrawable     *drawable,
 				                         gboolean         *new_layer);
-gboolean      gimp_transform_tool_paste                 (GImage           *gimage,
+gboolean      gimp_transform_tool_paste                 (GimpImage        *gimage,
 				                         GimpDrawable     *drawable,
 				                         TileManager      *tiles,
 				                         gboolean          new_layer);

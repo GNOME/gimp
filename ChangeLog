@@ -1,3 +1,12 @@
+2001-03-09  Nathan Summers <rock@gimp.org>
+
+	* app/tools/gimptransformtool.[ch]: More work on the transform tool.
+	Still does not compile, but it's much closer.
+
+	* app/tools/Makefile.am
+	* app/apptypes.h
+	* app/undo.c: changed accordingly
+
 2001-03-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/Makefile.am

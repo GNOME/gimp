@@ -177,7 +177,7 @@ typedef struct _Selection           Selection;
 
 typedef struct _SelectionOptions    SelectionOptions;
 
-typedef struct _TransformCore       TransformCore;
+typedef struct _GimpTransformTool   GimpTransformTool;
 
 
 /*  some undo stuff  */
