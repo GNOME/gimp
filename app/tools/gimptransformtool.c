@@ -1372,18 +1372,19 @@ gimp_transform_tool_notify_type (GimpTransformOptions *options,
                                  GParamSpec           *pspec,
                                  GimpTransformTool    *tr_tool)
 {
-  if (tr_tool->function == TRANSFORM_CREATING)
-    return;
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
+  if (tr_tool->function != TRANSFORM_CREATING)
+    gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 
   tr_tool->type      = options->type;
   tr_tool->direction = options->direction;
 
-  /*  recalculate the tool's transformation matrix  */
-  gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+  if (tr_tool->function != TRANSFORM_CREATING)
+    {
+      /*  recalculate the tool's transformation matrix  */
+      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
+    }
 }
 
 static void

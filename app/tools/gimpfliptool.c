@@ -275,7 +275,7 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      /* TODO */
+      gimp_item_flip (active_item, options->flip_type, axis, FALSE);
       break;
     }
 
