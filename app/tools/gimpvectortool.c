@@ -339,6 +339,20 @@ gimp_vector_tool_button_press (GimpTool        *tool,
           
           break;
 
+        case VECTORS_DELETE_SEGMENT:
+          if (gimp_vector_tool_on_curve (tool, coords, gdisp,
+                                         NULL, NULL, &segment_start, &stroke))
+            {
+              GimpStroke *new_stroke;
+              new_stroke = gimp_stroke_open (stroke, segment_start);
+              if (new_stroke)
+                gimp_vectors_stroke_add (vector_tool->vectors, new_stroke);
+
+              vector_tool->cur_stroke = NULL;
+              vector_tool->cur_anchor = NULL;
+              vector_tool->function = VECTORS_FINISHED;
+            }
+
         default:
           break;
         }
@@ -801,10 +815,21 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
                                      coords, gdisp,
                                      NULL, NULL, NULL, NULL))
         {
-          vector_tool->function =
-              edit_mode == GIMP_VECTOR_MODE_ADJUST ?
-                                 VECTORS_INSERT_ANCHOR :
-                                 VECTORS_MOVE_CURVE;
+          if (edit_mode == GIMP_VECTOR_MODE_ADJUST)
+            {
+              if (state & GDK_CONTROL_MASK)
+                {
+                  vector_tool->function = VECTORS_DELETE_SEGMENT;
+                }
+              else
+                {
+                  vector_tool->function = VECTORS_INSERT_ANCHOR;
+                }
+            }
+          else
+            {
+              vector_tool->function = VECTORS_MOVE_CURVE;
+            }
         }
       else
         {
@@ -857,6 +882,7 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
       cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
       break;
     case VECTORS_DELETE_ANCHOR:
+    case VECTORS_DELETE_SEGMENT:
       cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
       break;
     case VECTORS_MOVE_HANDLE:

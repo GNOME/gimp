@@ -77,6 +77,9 @@ struct _GimpStrokeClass
                                           GimpAnchorFeatureType  feature);
   void          (* anchor_delete)        (GimpStroke            *stroke,
                                           GimpAnchor            *anchor);
+
+  GimpStroke  * (* open)                 (GimpStroke            *stroke,
+                                          GimpAnchor            *end_anchor);
   gboolean      (* anchor_is_insertable) (GimpStroke            *stroke,
                                           GimpAnchor            *predec,
                                           gdouble                position);
@@ -85,16 +88,13 @@ struct _GimpStrokeClass
                                           gdouble                position);
   gboolean      (* is_extendable)        (GimpStroke            *stroke,
                                           GimpAnchor            *neighbor);
-
   GimpAnchor  * (* extend)               (GimpStroke            *stroke,
                                           const GimpCoords      *coords,
                                           GimpAnchor            *neighbor,
                                           GimpVectorExtendMode   extend_mode);
-                                          
+
   gboolean      (* is_empty)             (const GimpStroke      *stroke);
-
   gdouble       (* get_length)           (const GimpStroke      *stroke);
-
   gdouble       (* get_distance)         (const GimpStroke      *stroke,
                                           const GimpCoords      *coord);
 
@@ -193,6 +193,8 @@ void         gimp_stroke_anchor_convert       (GimpStroke            *stroke,
 void         gimp_stroke_anchor_delete        (GimpStroke            *stroke,
                                                GimpAnchor            *anchor);
 
+GimpStroke * gimp_stroke_open                 (GimpStroke            *stroke,
+                                               GimpAnchor            *end_anchor);
 gboolean     gimp_stroke_anchor_is_insertable (GimpStroke            *stroke,
                                                GimpAnchor            *predec,
                                                gdouble                position);

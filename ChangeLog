@@ -1,3 +1,14 @@
+2003-08-22  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpbezierstroke.c: added
+	gimp_(bezier_)stroke_open that opens up a stroke (possibly
+	returns a new one if it falls apart).
+
+	* app/tools/gimpvectortool.[ch]: make it possible to break
+	up a stroke by deleting (CTRL-Clicking in Insert/Delete mode)
+	the curve between two anchors.
+
 2003-08-21  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/selection.pdb (selection_load,combine): use

@@ -60,6 +60,8 @@ static void         gimp_stroke_real_anchor_convert  (GimpStroke       *stroke,
                                                       GimpAnchorFeatureType  feature);
 static void         gimp_stroke_real_anchor_delete   (GimpStroke       *stroke,
                                                       GimpAnchor       *anchor);
+static GimpStroke * gimp_stroke_real_open            (GimpStroke       *stroke,
+                                                      GimpAnchor       *end_anchor);
 static gboolean     gimp_stroke_real_anchor_is_insertable
                                                      (GimpStroke       *stroke,
                                                       GimpAnchor       *predec,
@@ -173,6 +175,8 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->anchor_move_absolute    = gimp_stroke_real_anchor_move_absolute;
   klass->anchor_convert          = gimp_stroke_real_anchor_convert;
   klass->anchor_delete           = gimp_stroke_real_anchor_delete;
+
+  klass->open                    = gimp_stroke_real_open;
   klass->anchor_is_insertable    = gimp_stroke_real_anchor_is_insertable;
   klass->anchor_insert           = gimp_stroke_real_anchor_insert;
   klass->is_extendable           = gimp_stroke_real_is_extendable;
@@ -470,6 +474,23 @@ gimp_stroke_real_anchor_delete (GimpStroke *stroke,
                                 GimpAnchor *anchor)
 {
   g_printerr ("gimp_stroke_anchor_delete: default implementation\n");
+}
+ 
+GimpStroke *
+gimp_stroke_open (GimpStroke *stroke,
+                  GimpAnchor *end_anchor)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
+
+  return GIMP_STROKE_GET_CLASS (stroke)->open (stroke, end_anchor);
+}
+
+static GimpStroke *
+gimp_stroke_real_open (GimpStroke *stroke,
+                       GimpAnchor *end_anchor)
+{
+  g_printerr ("gimp_stroke_open: default implementation\n");
+  return NULL;
 }
  
 gboolean

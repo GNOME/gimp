@@ -62,6 +62,8 @@ static void gimp_bezier_stroke_anchor_convert   (GimpStroke            *stroke,
                                                  GimpAnchorFeatureType  feature);
 static void gimp_bezier_stroke_anchor_delete        (GimpStroke        *stroke,
                                                      GimpAnchor        *anchor);
+static GimpStroke * gimp_bezier_stroke_open     (GimpStroke        *stroke,
+                                                 GimpAnchor        *end_anchor);
 static gboolean gimp_bezier_stroke_anchor_is_insertable
                                                     (GimpStroke        *stroke,
                                                      GimpAnchor        *predec,
@@ -161,6 +163,7 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
   stroke_class->anchor_move_absolute = gimp_bezier_stroke_anchor_move_absolute;
   stroke_class->anchor_convert       = gimp_bezier_stroke_anchor_convert;
   stroke_class->anchor_delete        = gimp_bezier_stroke_anchor_delete;
+  stroke_class->open                 = gimp_bezier_stroke_open;
   stroke_class->anchor_is_insertable = gimp_bezier_stroke_anchor_is_insertable;
   stroke_class->anchor_insert        = gimp_bezier_stroke_anchor_insert;
   stroke_class->is_extendable        = gimp_bezier_stroke_is_extendable;
@@ -257,6 +260,48 @@ gimp_bezier_stroke_anchor_delete (GimpStroke        *stroke,
       stroke->anchors = g_list_delete_link (stroke->anchors, list);
       list = list2;
     }
+}
+
+static GimpStroke *
+gimp_bezier_stroke_open (GimpStroke *stroke,
+                         GimpAnchor *end_anchor)
+{
+  GList *list, *list2;
+  GimpStroke *new_stroke = NULL;
+
+  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), FALSE);
+  g_return_val_if_fail (end_anchor &&
+                        end_anchor->type == GIMP_ANCHOR_ANCHOR, FALSE);
+
+  list = g_list_find (stroke->anchors, end_anchor);
+
+  g_return_val_if_fail (list != NULL && list->next != NULL, FALSE);
+
+  list = g_list_next (list);  /* protect the handle... */
+
+  if (stroke->closed)
+    {
+      list2 = list->next;
+      list->next = NULL;
+      list2->prev = NULL;
+
+      stroke->anchors = g_list_concat (list2, stroke->anchors);
+      stroke->closed = FALSE;
+    }
+  else
+    {
+      list2 = list->next;
+      list->next = NULL;
+      stroke->closed = FALSE;
+      
+      if (list2 != NULL)
+        {
+          list2->prev = NULL;
+          new_stroke = gimp_bezier_stroke_new ();
+          new_stroke->anchors = list2;
+        }
+    }
+  return new_stroke;
 }
 
 static gboolean
