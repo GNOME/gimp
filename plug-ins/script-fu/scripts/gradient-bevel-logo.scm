@@ -127,7 +127,7 @@
 		    ""
 		    SF-STRING     _"Text"                     "Moo"
 		    SF-ADJUSTMENT _"Font size (pixels)"       '(90 2 1000 1 10 0 1)
-		    SF-FONT       _"Font"                     "Futura_Poster"
+		    SF-FONT       _"Font"                     "Sans Bold"
 		    SF-ADJUSTMENT _"Bevel height (sharpness)" '(40 1 250 1 10 0 1)
 		    SF-ADJUSTMENT _"Bevel width"              '(2.5 1 200 1 10 1 1)
 		    SF-COLOR      _"Background color"         '(255 255 255))

@@ -144,7 +144,7 @@
 		    "July 1997"
 		    ""
 		    SF-STRING     _"Text"               "Hello world!"
-		    SF-FONT       _"Font"               "Futura_Poster"
+		    SF-FONT       _"Font"               "Sans Bold"
 		    SF-ADJUSTMENT _"Font size (pixels)" '(22 2 100 1 1 0 1)
 		    SF-COLOR      _"Text color"         '(0 0 0)
 		    SF-COLOR      _"Glow color"         '(63 252 0)

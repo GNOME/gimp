@@ -1,5 +1,18 @@
 2004-10-12  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/layers-actions.c (layers_actions_update): set
+	"layers-crop" insensitive if the selection is empty.
+
+	* plug-ins/script-fu/scripts/alien-glow-button.scm
+	* plug-ins/script-fu/scripts/alien-glow-logo.scm
+	* plug-ins/script-fu/scripts/basic2-logo.scm
+	* plug-ins/script-fu/scripts/gradient-bevel-logo.scm: use "Sans
+	Bold" instead of "Futura_Poster". The underscore in the font name
+	used to confuse intltool (bug #137029) and the freefont package
+	isn't that widely used any longer anyway.
+
+2004-10-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpsizebox.[ch]: added new widget GimpSizeBox.

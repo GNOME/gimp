@@ -373,6 +373,7 @@ layers_actions_update (GimpActionGroup *group,
   GimpLayerMask *mask       = FALSE;    /*  layer mask             */
   gboolean       fs         = FALSE;    /*  floating sel           */
   gboolean       ac         = FALSE;    /*  active channel         */
+  gboolean       sel        = FALSE;
   gboolean       alpha      = FALSE;    /*  alpha channel present  */
   gboolean       indexed    = FALSE;    /*  is indexed             */
   gboolean       preserve   = FALSE;
@@ -396,8 +397,9 @@ layers_actions_update (GimpActionGroup *group,
           preserve = gimp_layer_get_preserve_trans (layer);
         }
 
-      fs = (gimp_image_floating_sel (gimage) != NULL);
-      ac = (gimp_image_get_active_channel (gimage) != NULL);
+      fs  = (gimp_image_floating_sel (gimage) != NULL);
+      ac  = (gimp_image_get_active_channel (gimage) != NULL);
+      sel = ! gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
       alpha = layer && gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
@@ -457,6 +459,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-resize",          layer && !ac);
   SET_SENSITIVE ("layers-resize-to-image", layer && !ac);
   SET_SENSITIVE ("layers-scale",           layer && !ac);
+
+  SET_SENSITIVE ("layers-crop",            layer && sel);
 
   SET_SENSITIVE ("layers-alpha-add", layer && !fs && !alpha);
 
