@@ -3,6 +3,8 @@
 	* data/images/gimp-splash.png a different splash for the
         developers branch.
 
+	* data/images/gimp-splash.png fixed a commit conflict.
+
 2005-01-18  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* gimp/plug-ins/jpeg/gimpexif.c
