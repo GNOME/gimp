@@ -2,6 +2,7 @@
 
 	* app/Makefile.am (IGNORE_HFILES): added some more files to ignore.
 
+	* app/app-docs.sgml
 	* app/app-sections.txt: some updates, a lot more are needed.
 
 2003-09-03  Sven Neumann  <sven@gimp.org>
