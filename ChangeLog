@@ -1,3 +1,9 @@
+2003-10-18  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/templates-commands.[ch] (templates_new_template_dialog):
+	added an (unused) GimpTemplate parameter to make this function
+	match the GimpTemplateActionFunc signature.
+
 2003-10-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/text/gimp-fonts.c (gimp_fonts_load): added
@@ -32,8 +38,8 @@
 2003-10-17  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontainerview.c (gimp_container_view_get_preview):
-	we have a bad bug somewhere; this function shouldn't be called for
-	a view w/o a container. Added a g_return_if_fail() to avoid a crash.
+	we have a bug somewhere; this function shouldn't be called for a
+	view w/o a container. Added a g_return_if_fail() to avoid a crash.
 
 2003-10-17  Sven Neumann  <sven@gimp.org>
 

@@ -110,7 +110,8 @@ templates_new_template_ok_callback (GtkWidget *widget,
 }
 
 void
-templates_new_template_dialog (Gimp *gimp)
+templates_new_template_dialog (Gimp         *gimp,
+                               GimpTemplate *unused)
 {
   GimpTemplate *template;
   GtkWidget    *dialog;
