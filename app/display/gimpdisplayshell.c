@@ -1113,8 +1113,8 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
       return FALSE;
     }
 
-  gimp_display_shell_transform_xy (shell, *x1, *y1, x1, y1, 0);
-  gimp_display_shell_transform_xy (shell, *x2, *y2, x2, y2, 0);
+  gimp_display_shell_transform_xy (shell, *x1, *y1, x1, y1, FALSE);
+  gimp_display_shell_transform_xy (shell, *x2, *y2, x2, y2, FALSE);
 
   /*  Make sure the extents are within bounds  */
   *x1 = CLAMP (*x1, 0, shell->disp_width);
@@ -1574,8 +1574,9 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_canvas_draw_cursor (GIMP_CANVAS (shell->canvas),
-                           shell->cursor_x, shell->cursor_y);
+  if (shell->have_cursor)
+    gimp_canvas_draw_cursor (GIMP_CANVAS (shell->canvas),
+                             shell->cursor_x, shell->cursor_y);
 }
 
 void

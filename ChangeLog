@@ -1,5 +1,16 @@
 2004-02-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_mask_bounds):
+	fixed integer/boolean confusion: s/0/FALSE/.
+
+	(gimp_display_shell_draw_cursor): draw the cursor only if
+	shell->have_cursor is TRUE.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_expose): call the above unconditionally.
+
+2004-02-05  Michael Natterer  <mitch@gimp.org>
+
 	Disallow editing of data objects which have no save functionality.
 	Also fixed the misassumption that "deletable" is always equal to
 	"writable". Fixes bug #133456.
