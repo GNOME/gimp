@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.3\n"
-"POT-Creation-Date: 2001-11-13 03:03+0800\n"
-"PO-Revision-Date: 2001-11-13 05:05+0800\n"
+"POT-Creation-Date: 2001-11-23 06:18-0500\n"
+"PO-Revision-Date: 2001-11-24 07:32+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -100,11 +100,22 @@ msgstr "調色盤"
 msgid "Gradients"
 msgstr "漸層"
 
-#: app/app_procs.c:767
+#: app/app_procs.c:655
+#, c-format
+msgid ""
+"Unable to open a test swap file.  Please check the\n"
+"location and permissions of the swap directory defined\n"
+"in your Preferences (currently '%s')."
+msgstr ""
+"無法開啟測試用的交換檔。\n"
+"請在偏好設定裡檢查交換檔\n"
+"目錄（目前為 '%s'）的位置及權限。"
+
+#: app/app_procs.c:775
 msgid "Really Quit?"
 msgstr "真的要離開？"
 
-#: app/app_procs.c:771
+#: app/app_procs.c:779
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -114,12 +125,12 @@ msgstr ""
 "\n"
 "要離開 GIMP 嗎？"
 
-#: app/app_procs.c:772
+#: app/app_procs.c:780
 msgid "Quit"
 msgstr "離開"
 
 #. the cancel button
-#: app/app_procs.c:772 app/brightness_contrast.c:230 app/channel_ops.c:99
+#: app/app_procs.c:780 app/brightness_contrast.c:230 app/channel_ops.c:99
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
@@ -501,7 +512,7 @@ msgstr "偏移量 X："
 
 #: app/channel_ops.c:121 app/crop.c:1082 app/file_new_dialog.c:535
 #: app/resize.c:374 app/resize.c:466 app/resize.c:604 app/rotate_tool.c:111
-#: app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1442
+#: app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1443
 msgid "Y:"
 msgstr "Y："
 
@@ -1204,7 +1215,7 @@ msgid "New Image"
 msgstr "新圖像"
 
 #: app/file_new_dialog.c:458 app/preferences_dialog.c:1556
-#: app/preferences_dialog.c:1593 app/user_install.c:1429
+#: app/preferences_dialog.c:1593 app/user_install.c:1430
 msgid "Pixels"
 msgstr "像素"
 
@@ -4596,7 +4607,7 @@ msgstr "保守地使用記憶體"
 msgid "Levels of Undo:"
 msgstr "還原次數："
 
-#: app/preferences_dialog.c:2218 app/user_install.c:1342
+#: app/preferences_dialog.c:2218 app/user_install.c:1343
 msgid "Tile Cache Size:"
 msgstr "Tile Cache 大小："
 
@@ -4689,7 +4700,7 @@ msgstr "取得螢幕解析度"
 msgid "(Currently %d x %d dpi)"
 msgstr "（現在為 %d×%d dpi）"
 
-#: app/preferences_dialog.c:2431 app/user_install.c:1480
+#: app/preferences_dialog.c:2431 app/user_install.c:1481
 msgid "Calibrate"
 msgstr "微調"
 
@@ -4717,7 +4728,7 @@ msgstr "選擇暫存目錄"
 msgid "Swap Dir:"
 msgstr "交換檔目錄："
 
-#: app/preferences_dialog.c:2499 app/user_install.c:1362
+#: app/preferences_dialog.c:2499 app/user_install.c:1363
 msgid "Select Swap Dir"
 msgstr "選擇交換檔目錄"
 
@@ -5029,6 +5040,19 @@ msgstr "臨界值不適用於索引化圖像。"
 #: app/threshold.c:298
 msgid "Threshold Range:"
 msgstr "臨界值範圍："
+
+#: app/tile_swap.c:417
+msgid ""
+"Unable to open swap file.  The Gimp has run out of memory\n"
+"and cannot use the swap file.  Some parts of your images\n"
+"may be corrupted.  Try to save your work using different\n"
+"filenames, exit the Gimp and check the location of the\n"
+"swap directory in your Preferences."
+msgstr ""
+"無法開啟交換檔。The Gimp 已經耗盡記憶體\n"
+"而且無法使用交換檔。一部份圖像可能會損壞。\n"
+"請嘗試將圖像另存為其它檔案名稱，離開 Gimp\n"
+"並在偏好設定裡檢查交換檔目錄的位置。"
 
 #: app/tips_dialog.c:75
 msgid "gimp_tips.txt"
@@ -6227,14 +6251,24 @@ msgid "Cannot get status of file %s"
 msgstr "無法取得檔案 %s 的狀態"
 
 #: app/user_install.c:1094
-msgid "does not exist.  Cannot install."
-msgstr "不存在。無法安裝。"
+#, c-format
+msgid ""
+"%s does not exist.\n"
+"Cannot install."
+msgstr ""
+"%s 不存在。\n"
+"無法安裝。"
 
 #: app/user_install.c:1106
-msgid "has invalid permissions.  Cannot install."
-msgstr "權限不正確。無法安裝。"
+#, c-format
+msgid ""
+"%s has invalid permissions.\n"
+"Cannot install."
+msgstr ""
+"%s 的權限不正確。\n"
+"無法安裝。"
 
-#: app/user_install.c:1168
+#: app/user_install.c:1169
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -6244,44 +6278,44 @@ msgstr ""
 "若沒有，就是表示安裝已成功！\n"
 "否則請離開並查出可能的原因..."
 
-#: app/user_install.c:1179
+#: app/user_install.c:1180
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "請按「繼續」完成整個 GIMP 安裝過程。"
 
-#: app/user_install.c:1184 app/user_install.c:1305
+#: app/user_install.c:1185 app/user_install.c:1306
 msgid "Installation failed.  Contact system administrator."
 msgstr "安裝失敗。請聯絡系統管理員。"
 
-#: app/user_install.c:1221 app/user_install.c:1242
+#: app/user_install.c:1222 app/user_install.c:1243
 #, c-format
 msgid "Creating directory %s\n"
 msgstr "正在建立目錄 %s\n"
 
-#: app/user_install.c:1227 app/user_install.c:1248
+#: app/user_install.c:1228 app/user_install.c:1249
 #, c-format
 msgid "Cannot create directory -- %s"
 msgstr "無法建立目錄 ─ %s"
 
-#: app/user_install.c:1232 app/user_install.c:1293
+#: app/user_install.c:1233 app/user_install.c:1294
 msgid "  Success\n"
 msgstr "  成功\n"
 
-#: app/user_install.c:1269
+#: app/user_install.c:1270
 #, c-format
 msgid "Populating directory %s from %s\n"
 msgstr "由 %2$s 複製目錄 %1$s\n"
 
-#: app/user_install.c:1279
+#: app/user_install.c:1280
 #, c-format
 msgid "Copying file %s from %s\n"
 msgstr "由 %2$s 複製檔案 %1$s\n"
 
-#: app/user_install.c:1300
+#: app/user_install.c:1301
 #, c-format
 msgid "  Failure -- %s\n"
 msgstr "  失敗 ─ %s\n"
 
-#: app/user_install.c:1328
+#: app/user_install.c:1329
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -6291,7 +6325,7 @@ msgstr ""
 "「Tile Cache」。你應該調整它的大小以符合真正記憶體\n"
 "數目，同時也要考慮其它程序佔用的記憶體。"
 
-#: app/user_install.c:1353
+#: app/user_install.c:1354
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6303,11 +6337,11 @@ msgstr ""
 "（例如數百 MB）的本機檔案系統中。在 UNIX 的系統中，\n"
 "建議使用系統的暫存目錄(\"/tmp\" 或 \"/var/tmp\")。"
 
-#: app/user_install.c:1367
+#: app/user_install.c:1368
 msgid "Swap Directory:"
 msgstr "交換檔目錄："
 
-#: app/user_install.c:1402
+#: app/user_install.c:1403
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6315,20 +6349,20 @@ msgstr ""
 "GIMP 可以由視窗系統獲取此資訊。\n"
 "可是，這樣做通常不會得到有用的數值。"
 
-#: app/user_install.c:1409
+#: app/user_install.c:1410
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "由視窗系統取得解析度（目前為 %d×%d dpi）"
 
-#: app/user_install.c:1423
+#: app/user_install.c:1424
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "或者你可以自定螢幕的解析度。"
 
-#: app/user_install.c:1436
+#: app/user_install.c:1437
 msgid "Monitor Resolution X:"
 msgstr "螢幕解析度 X："
 
-#: app/user_install.c:1473
+#: app/user_install.c:1474
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
