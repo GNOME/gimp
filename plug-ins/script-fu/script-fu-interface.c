@@ -161,6 +161,7 @@ script_fu_interface (SFScript *script)
   GtkSizeGroup *group;
   GSList       *list;
   gchar        *title;
+  gchar        *help_id;
   gchar        *buf;
   gint          i;
 
@@ -197,16 +198,19 @@ script_fu_interface (SFScript *script)
   sf_interface->title = gimp_strip_uline (title);
   g_free (title);
 
+  help_id = g_strdup (script->pdb_name);
+  for (buf = help_id; buf && *buf; buf++)
+    if (*buf == '_')
+      *buf = '-';
+
   buf = strstr (sf_interface->title, "...");
   if (buf)
     *buf = '\0';
 
-  buf = g_strdup_printf (_("Script-Fu: %s"), sf_interface->title);
-
   sf_interface->dialog = dlg =
     gimp_dialog_new (buf, "script-fu",
                      NULL, 0,
-                     gimp_standard_help_func, script->pdb_name,
+                     gimp_standard_help_func, help_id,
 
                      _("_About"),      RESPONSE_ABOUT,
                      GIMP_STOCK_RESET, RESPONSE_RESET,
@@ -216,6 +220,7 @@ script_fu_interface (SFScript *script)
                      NULL);
 
   g_free (buf);
+  g_free (help_id);
 
   g_signal_connect (dlg, "response",
                     G_CALLBACK (script_fu_response),
@@ -1041,29 +1046,33 @@ script_fu_about (SFScript *script)
       gtk_widget_show (table);
 
       label = gtk_label_new (script->author);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				 _("Author:"), 0.0, 0.5,
+				 _("Author:"), 0.0, 0.0,
 				 label, 1, FALSE);
 
       label = gtk_label_new (script->copyright);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-				 _("Copyright:"), 0.0, 0.5,
+				 _("Copyright:"), 0.0, 0.0,
 				 label, 1, FALSE);
 
       label = gtk_label_new (script->date);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-				 _("Date:"), 0.0, 0.5,
+				 _("Date:"), 0.0, 0.0,
 				 label, 1, FALSE);
 
       if (strlen (script->img_types) > 0)
 	{
 	  label = gtk_label_new (script->img_types);
-	  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+          gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
 	  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-				     _("Image Types:"), 0.0, 0.5,
+				     _("Image Types:"), 0.0, 0.0,
 				     label, 1, FALSE);
 	}
     }

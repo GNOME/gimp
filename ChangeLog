@@ -1,3 +1,10 @@
+2004-10-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_about):
+	enabled line wrapping on labels.
+	(script_fu_interface): substitute underscores by hyphens to
+	generate the help_id from the procedure name.
+
 2004-10-04  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpwire.c: added assertions to make sure "count" is
