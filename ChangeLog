@@ -1,3 +1,9 @@
+2004-01-12  Sven Neumann  <sven@gimp.org>
+
+	* data/misc/gimp.desktop.in.in (Exec): use 'gimp-remote-1.3 --new'
+	here so that drops on the application icon don't necessarily spawn
+	a new instance.
+
 2004-01-12  Michael Natterer  <mitch@gimp.org>
 
 	Enabled/fixed moving of channels and layer masks (was something
