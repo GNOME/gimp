@@ -403,10 +403,8 @@ gimp_container_serialize (GimpConfig       *config,
                           GimpConfigWriter *writer,
                           gpointer          data)
 {
-  GimpContainer *container;
+  GimpContainer *container = GIMP_CONTAINER (config);
   SerializeData  serialize_data;
-
-  container = GIMP_CONTAINER (config);
 
   serialize_data.writer  = writer;
   serialize_data.data    = data;
@@ -425,10 +423,8 @@ gimp_container_deserialize (GimpConfig *config,
                             gint        nest_level,
                             gpointer    data)
 {
-  GimpContainer *container;
+  GimpContainer *container = GIMP_CONTAINER (config);
   GTokenType     token;
-
-  container = GIMP_CONTAINER (config);
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -508,10 +504,10 @@ gimp_container_deserialize (GimpConfig *config,
 
             g_free (name);
 
-            if (! GIMP_CONFIG_GET_INTERFACE (config)->deserialize (GIMP_CONFIG (child),
-                                                                   scanner,
-                                                                   nest_level + 1,
-                                                                   FALSE))
+            if (! GIMP_CONFIG_GET_INTERFACE (child)->deserialize (GIMP_CONFIG (child),
+                                                                  scanner,
+                                                                  nest_level + 1,
+                                                                  FALSE))
               {
                 /*  warning should be already set by child  */
                 return FALSE;
@@ -536,9 +532,7 @@ static void
 gimp_container_disconnect_callback (GimpObject *object,
 				    gpointer    data)
 {
-  GimpContainer *container;
-
-  container = GIMP_CONTAINER (data);
+  GimpContainer *container = GIMP_CONTAINER (data);
 
   gimp_container_remove (container, object);
 }

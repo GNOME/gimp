@@ -1,5 +1,9 @@
 2003-10-11  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcontainer.c (gimp_container_deserialize): when
+	deserializing a GimpContainer child, use the child's GimpConfig
+	implementation, not the container's.
+
 	* app/config/gimpconfig-deserialize.c: documentation fixes.
 
 2003-10-11  Sven Neumann  <sven@gimp.org>
