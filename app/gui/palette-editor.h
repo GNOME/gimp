@@ -38,6 +38,8 @@ void palette_get_background (unsigned char *, unsigned char *, unsigned char *);
 void palette_set_foreground (int, int, int);
 void palette_set_background (int, int, int);
 void palette_set_active_color (int, int, int, int);
+void palette_set_default_colors (void);
+void palette_swap_colors (void);
 
 struct _PaletteEntries {
   char *name;
@@ -64,5 +66,7 @@ extern ProcRecord palette_get_foreground_proc;
 extern ProcRecord palette_get_background_proc;
 extern ProcRecord palette_set_foreground_proc;
 extern ProcRecord palette_set_background_proc;
+extern ProcRecord palette_set_default_colors_proc;
+extern ProcRecord palette_swap_colors_proc;
 
 #endif /* __PALETTE_H__ */

@@ -2279,6 +2279,20 @@ layers_mask_select_cmd_callback (GtkWidget *widget,
 }
 
 void
+tools_default_colors_cmd_callback (GtkWidget *widget,
+				   gpointer   client_data)
+{
+  palette_set_default_colors ();
+}
+
+void
+tools_swap_colors_cmd_callback (GtkWidget *widget,
+				gpointer   client_data)
+{
+  palette_swap_colors ();
+}
+
+void
 tools_select_cmd_callback (GtkWidget *widget,
 			   gpointer   client_data)
 {

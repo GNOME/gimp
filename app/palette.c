@@ -358,6 +358,27 @@ palette_set_background (int r,
 }
 
 void
+palette_set_default_colors (void)
+{
+  palette_set_foreground (0, 0, 0);
+  palette_set_background (255, 255, 255);
+}
+
+
+void 
+palette_swap_colors (void)
+{
+  unsigned char fg_r, fg_g, fg_b;
+  unsigned char bg_r, bg_g, bg_b;
+  
+  palette_get_foreground (&fg_r, &fg_g, &fg_b);
+  palette_get_background (&bg_r, &bg_g, &bg_b);
+  
+  palette_set_foreground (bg_r, bg_g, bg_b);
+  palette_set_background (fg_r, fg_g, fg_b);
+}
+
+void
 palette_init_palettes (void)
 {
   datafiles_read_directories (palette_path, palette_entries_load, 0);
@@ -1615,4 +1636,82 @@ ProcRecord palette_set_background_proc =
 
   /*  Exec method  */
   { { palette_set_background_invoker } },
+};
+
+/*******************************/
+/*  PALETTE_SET_DEFAULT_COLORS */
+
+static Argument *
+palette_set_default_colors_invoker (Argument *args)
+{
+  int success;
+
+  success = TRUE;
+  if (success)
+    palette_set_default_colors ();
+
+  return procedural_db_return_args (&palette_set_background_proc, success);
+}
+
+/*  The procedure definition  */
+
+ProcRecord palette_set_default_colors_proc =
+{
+  "gimp_palette_set_default_colors",
+  "Set the current GIMP foreground and background colors to black and white",
+  "This procedure sets the current GIMP foreground and background colors to their initial default values, black and white.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  0,
+  NULL,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { palette_set_default_colors_invoker } },
+};
+
+/************************/
+/*  PALETTE_SWAP_COLORS */
+
+static Argument *
+palette_swap_colors_invoker (Argument *args)
+{
+  int success;
+
+  success = TRUE;
+  if (success)
+    palette_swap_colors ();
+
+  return procedural_db_return_args (&palette_swap_colors_proc, success);
+}
+
+/*  The procedure definition  */
+
+ProcRecord palette_swap_colors_proc =
+{
+  "gimp_palette_swap_colors",
+  "Swap the current GIMP foreground and background colors",
+  "This procedure swaps the current GIMP foreground and background colors, so that the new foreground color becomes the old background color and vice versa.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  0,
+  NULL,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { palette_swap_colors_invoker } },
 };

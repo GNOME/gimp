@@ -1,3 +1,16 @@
+Sun Mar  1 20:28:54 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/internal_procs.c
+ 	* app/palette.c
+ 	* app/palette.h
+ 	* app/commands.c
+ 	* app/commands.h
+ 	* app/menus.c
+ 	* libgimp/gimppalette.c: 
+	implemented gimp_palette_set_default_colors and
+	gimp_palette_swap_colors as pdb-calls and bound menu-entries and
+	keybindings to them (gimp-sven-980216-0.patch)	
+
 Sat Feb 28 22:05:15 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* autoconfed the data stuff

@@ -1,4 +1,4 @@
-/* The GIMP -- an image manipulation program
+#/* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
@@ -205,8 +205,6 @@ color_area_events (GtkWidget *widget,
 {
   GdkEventButton *bevent;
   int target;
-  unsigned char fg_r, fg_g, fg_b;
-  unsigned char bg_r, bg_g, bg_b;
 
   switch (event->type)
     {
@@ -239,18 +237,11 @@ color_area_events (GtkWidget *widget,
 		}
 	      break;
 	    case SWAP_AREA:
-	      palette_get_foreground (&fg_r, &fg_g, &fg_b);
-	      palette_get_background (&bg_r, &bg_g, &bg_b);
-
-	      palette_set_foreground (bg_r, bg_g, bg_b);
-	      palette_set_background (fg_r, fg_g, fg_b);
-
+	      palette_swap_colors();
 	      color_area_draw ();
 	      break;
 	    case DEF_AREA:
-	      palette_set_foreground (0, 0, 0);
-	      palette_set_background (255, 255, 255);
-
+	      palette_set_default_colors();
 	      color_area_draw ();
 	      break;
 	    }
