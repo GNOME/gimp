@@ -51,6 +51,9 @@
 #ifndef G_PI_4			/* As will G_PI_4 */
 #define G_PI_4  0.78539816339744830962
 #endif
+#ifndef G_SQRT2			/* As will G_SQRT2 */
+#define G_SQRT2 1.4142135623730951
+#endif
 
 #ifdef HAVE_RINT
 #define RINT(x) rint(x)

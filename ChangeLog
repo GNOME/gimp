@@ -1,3 +1,15 @@
+1999-08-16  Tor Lillqvist  <tml@iki.fi>
+
+	* app/appenv.h: Add G_SQRT2.
+
+	* app/iscissors.c: Use it.
+
+	* app/makefile.{cygwin,msc}: Add new files.
+	
+	* */makefile.{cygwin,msc}: Use libintl extracted from glibc from a
+	separate directory, not from gettext, because of licensing issues
+	(we want to use the LGPL version in GTk+, so use it here, too).
+
 Sun Aug 15 20:42:04 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/appenv.h: added a G_PI_2

@@ -12,11 +12,19 @@ or gcc without the produced executables depending on the cygwin dll
 necessary for building with gcc, what version you want and where to
 get it, etc, read README.win32 in the GLib 1.3 distribution.
 
-The GIMP wants to be built with the GNU gettext library for
+The GIMP wants to be built with the GNU "intl" library for
 internationalisation (i18n). Get the version ported to Win32 (not a
-very big deal) from tml's web site mentioned above. If you don't want
-any i18n stuff, undefine ENABLE_NLS in the config.h.win32 file, and
-remove references to the gnu-intl library from the makefiles.
+very big deal) from tml's web site mentioned above. We build the
+"intl" library to a DLL called gnu-intl.dll to reduce name clash
+risks. If you don't want any i18n stuff, undefine ENABLE_NLS in the
+config.h.win32 file, and remove references to the gnu-intl library
+from the makefiles.
+
+Note that while the GNU gettext package is under the GPL, the "intl"
+library part as distributed with GNU libc is under the LGPL (like GTk+
+or GLib). We want the LGPL one, even if they are the same, more or
+less. It doesn't matter much for the GIMP which itself is under the
+GPL, but does a bit for GTk+, which is under the LGPL.
 
 First, build in the libgimp directory, then in tools/gcg, then in app,
 plug-ins, and finally in modules. Check the makefile.msc or

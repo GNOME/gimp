@@ -31,9 +31,9 @@ GLIB_VER = 1.3
 GTK = ..\..\gtk+
 GLIB = ..\..\glib
 GMODULE = $(GLIB)\gmodule
-GETTEXT = ..\..\gettext-0.10.35
+INTL = ..\..\intl
 
-CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk\win32 -I$(GTK) -I$(GETTEXT)\intl
+CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk\win32 -I$(GTK) -I$(INTL)
 
 GCG = ..\tools\gcg\gcg -I. -I ..\tools\gcg\gh
 
@@ -188,10 +188,12 @@ gimp_OBJECTS = \
 	lut_funcs.obj		\
 	magnify.obj		\
 	main.obj		\
+	measure.obj		\
 	menus.obj		\
 	misc_cmds.obj		\
 	module_db.obj		\
 	move.obj		\
+	nav_window.obj		\
 	ops_buttons.obj		\
 	palette.obj		\
 	palette_cmds.obj	\
@@ -263,7 +265,7 @@ gimp.def: gimp.sym
 	copy /y $@+gimp.sym $@
 
 gimp.exe : ..\config.h $(gimp_OBJECTS) gimpim.lib gimp.def gimp.res ..\libgimp\gimpi.lib
-	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GETTEXT)\intl\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib /def:gimp.def
+	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib /def:gimp.def
 
 # General rule for building $(gimp_OBJECTS)
 .c.obj:

@@ -1209,7 +1209,7 @@ precalculate_arrays (void)
   for (i = 0; i < 256; i++)
     {
       /*  The diagonal weight array  */
-      diagonal_weight [i] = (int) (i * M_SQRT2);
+      diagonal_weight [i] = (int) (i * G_SQRT2);
 
       /*  The direction value array  */
       direction_value [i][0] = (127 - abs (127 - i)) * 2;
