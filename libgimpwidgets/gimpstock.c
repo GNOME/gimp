@@ -277,6 +277,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_GRAVITY_SOUTH,            stock_gravity_south_24            },
   { GIMP_STOCK_GRAVITY_SOUTH_EAST,       stock_gravity_south_east_24       },
   { GIMP_STOCK_GRAVITY_SOUTH_WEST,       stock_gravity_south_west_24       },
+  { GIMP_STOCK_GRAVITY_WEST,             stock_gravity_west_24             },
 
   { GIMP_STOCK_HCHAIN,                   stock_hchain_24                   },
   { GIMP_STOCK_HCHAIN_BROKEN,            stock_hchain_broken_24            },
