@@ -1,3 +1,9 @@
+Mon Apr  5 23:59:37 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/color_balance.c: Color-balance didn't work when used
+	from a script because the LUTs weren't set. This is fixed now 
+	and SOTA-Chrome works again.
+
 Mon Apr  5 22:28:01 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* configure.in

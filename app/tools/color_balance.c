@@ -1053,6 +1053,8 @@ color_balance_invoker (Argument *args)
       cbd.magenta_green[transfer_mode] = magenta_green;
       cbd.yellow_blue[transfer_mode] = yellow_blue;
 
+      color_balance_create_lookup_tables (&cbd);
+
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
