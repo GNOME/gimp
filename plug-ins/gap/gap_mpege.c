@@ -935,7 +935,7 @@ int p_mpege_gen_parfile(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr, t_gap_mpeg_en
  * ============================================================================
  */
 
-int gap_mpeg_encode(GRunModeType run_mode,
+int gap_mpeg_encode(GimpRunModeType run_mode,
                              gint32 image_id,
                              t_gap_mpeg_encoder encoder
                              )
@@ -1000,7 +1000,7 @@ int gap_mpeg_encode(GRunModeType run_mode,
       
       if(l_rc == 0)
       {
-         if(run_mode == RUN_INTERACTIVE)
+         if(run_mode == GIMP_RUN_INTERACTIVE)
          {
             l_genmode = p_mpege_dialog(ainfo_ptr, &mp_par, encoder);
             if(l_genmode < 0) l_rc = -1;

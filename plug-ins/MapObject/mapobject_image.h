@@ -4,14 +4,14 @@
 /* Externally visible variables */
 /* ============================ */
 
-extern GDrawable *input_drawable,*output_drawable;
-extern GPixelRgn  source_region,dest_region;
+extern GimpDrawable *input_drawable,*output_drawable;
+extern GimpPixelRgn  source_region,dest_region;
 
-extern GDrawable *box_drawables[6];
-extern GPixelRgn  box_regions[6];
+extern GimpDrawable *box_drawables[6];
+extern GimpPixelRgn  box_regions[6];
 
-extern GDrawable *cylinder_drawables[2];
-extern GPixelRgn  cylinder_regions[2];
+extern GimpDrawable *cylinder_drawables[2];
+extern GimpPixelRgn  cylinder_regions[2];
 
 extern guchar   *preview_rgb_data;
 extern GdkImage *image;
@@ -23,12 +23,12 @@ extern gdouble oldtreshold;
 
 extern gint border_x1, border_y1, border_x2, border_y2;
 
-extern GTile *current_in_tile, *current_out_tile;
+extern GimpTile *current_in_tile, *current_out_tile;
 
 /* Externally visible functions */
 /* ============================ */
 
-extern gint        image_setup     (GDrawable *drawable,
+extern gint        image_setup     (GimpDrawable *drawable,
 				    gint       interactive);
 extern glong       in_xy_to_index  (gint       x,
 				    gint       y);

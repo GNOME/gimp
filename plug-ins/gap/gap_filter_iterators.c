@@ -28,7 +28,7 @@
  * plugins internal settings.
  *
  * Common things to all Iteratur Plugins:
- * Interface:   run_mode        # is always RUN_NONINTERACTIVE
+ * Interface:   run_mode        # is always GIMP_RUN_NONINTERACTIVE
  *              total_steps     # total number of handled layers (drawables)
  *              current_step    # current layer (beginning wit 0)
  *                               has type gdouble for later extensions
@@ -658,16 +658,16 @@ static void p_install_proc_iter_ALT(char *name)
   gchar *l_iter_proc_name;
   gchar *l_blurb_text;
 
-  static GParamDef args_iter[] =
+  static GimpParamDef args_iter[] =
   {
-    {PARAM_INT32, "run_mode", "non-interactive"},
-    {PARAM_INT32, "total_steps", "total number of steps (# of layers-1 to apply the related plug-in)"},
-    {PARAM_FLOAT, "current_step", "current (for linear iterations this is the layerstack position, otherwise some value inbetween)"},
-    {PARAM_INT32, "len_struct", "length of stored data structure with id is equal to the plug_in  proc_name"},
+    {GIMP_PDB_INT32, "run_mode", "non-interactive"},
+    {GIMP_PDB_INT32, "total_steps", "total number of steps (# of layers-1 to apply the related plug-in)"},
+    {GIMP_PDB_FLOAT, "current_step", "current (for linear iterations this is the layerstack position, otherwise some value inbetween)"},
+    {GIMP_PDB_INT32, "len_struct", "length of stored data structure with id is equal to the plug_in  proc_name"},
   };
   static int nargs_iter = sizeof(args_iter) / sizeof(args_iter[0]);
 
-  static GParamDef *return_vals = NULL;
+  static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
   l_iter_proc_name = g_strdup_printf("%s_Iterator_ALT", name);
@@ -681,7 +681,7 @@ static void p_install_proc_iter_ALT(char *name)
 			 "Feb. 2000",
 			 NULL,    /* do not appear in menus */
 			 NULL,
-			 PROC_EXTENSION,
+			 GIMP_EXTENSION,
 			 nargs_iter, nreturn_vals,
 			 args_iter, return_vals);
 
@@ -703,7 +703,7 @@ void gap_query_iterators_ALT()
  * ---------------------------------------------------------------------- 
  */
 
-gint gap_run_iterators_ALT(char *name, GRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct)
+gint gap_run_iterators_ALT(char *name, GimpRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct)
 {
   gint l_rc;
   int l_idx;

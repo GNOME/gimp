@@ -127,19 +127,19 @@ extern FILE *siod_output;
 void
 script_fu_console_run (char     *name,
 		       int       nparams,
-		       GParam   *params,
+		       GimpParam   *params,
 		       int      *nreturn_vals,
-		       GParam  **return_vals)
+		       GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GStatusType status = STATUS_SUCCESS;
-  GRunModeType run_mode;
+  static GimpParam values[1];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpRunModeType run_mode;
 
   run_mode = params[0].data.d_int32;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /*  Enable SIOD output  */
       script_fu_open_siod_console ();
 
@@ -150,9 +150,9 @@ script_fu_console_run (char     *name,
       script_fu_close_siod_console ();
       break;
 
-    case RUN_WITH_LAST_VALS:
-    case RUN_NONINTERACTIVE:
-      status = STATUS_CALLING_ERROR;
+    case GIMP_RUN_WITH_LAST_VALS:
+    case GIMP_RUN_NONINTERACTIVE:
+      status = GIMP_PDB_CALLING_ERROR;
       gimp_message (_("Script-Fu console mode allows only interactive invocation"));
       break;
 
@@ -163,7 +163,7 @@ script_fu_console_run (char     *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
@@ -605,26 +605,26 @@ script_fu_close_siod_console (void)
 void
 script_fu_eval_run (char     *name,
 		    int       nparams,
-		    GParam   *params,
+		    GimpParam   *params,
 		    int      *nreturn_vals,
-		    GParam  **return_vals)
+		    GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GStatusType status = STATUS_SUCCESS;
-  GRunModeType run_mode;
+  static GimpParam values[1];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpRunModeType run_mode;
 
   run_mode = params[0].data.d_int32;
 
   switch (run_mode)
     {
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (repl_c_string (params[1].data.d_string, 0, 0, 1) != 0)
-	status = STATUS_EXECUTION_ERROR;
+	status = GIMP_PDB_EXECUTION_ERROR;
       break;
 
-    case RUN_INTERACTIVE:
-    case RUN_WITH_LAST_VALS:
-      status = STATUS_CALLING_ERROR;
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+      status = GIMP_PDB_CALLING_ERROR;
       gimp_message (_("Script-Fu evaluate mode allows only noninteractive invocation"));
       break;
 
@@ -635,6 +635,6 @@ script_fu_eval_run (char     *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }

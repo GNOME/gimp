@@ -113,8 +113,8 @@ GtkWidget *fp_create_pixels_select_by();
 void  fp_show_hide_frame(GtkWidget *button,
 			 GtkWidget *frame);
  
-ReducedImage  *Reduce_The_Image   (GDrawable *,
-				   GDrawable *,
+ReducedImage  *Reduce_The_Image   (GimpDrawable *,
+				   GimpDrawable *,
 				   gint,
 				   gint);
 
@@ -194,7 +194,7 @@ void      Adjust_Preview_Sizes     (int width,
 void      refreshPreviews          (int);
 void      initializeFilterPacks    (void);
 
-void      fp                       (GDrawable  *drawable);
+void      fp                       (GimpDrawable  *drawable);
 void      fp_row                   (const guchar *src_row,
 				    guchar *dest_row,
 				    gint row,

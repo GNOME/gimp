@@ -104,7 +104,7 @@ set_default_settings (void)
 }
 
 static void
-check_drawables (GDrawable *drawable)
+check_drawables (GimpDrawable *drawable)
 {
   gint i;
 
@@ -140,57 +140,57 @@ check_drawables (GDrawable *drawable)
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",              "Interactive (0), non-interactive (1)" },
-    { PARAM_IMAGE,    "image",                 "Input image" },
-    { PARAM_DRAWABLE, "drawable",              "Input drawable" },
-    { PARAM_INT32,    "maptype",               "Type of mapping (0=plane,1=sphere,2=box,3=cylinder)" },
-    { PARAM_FLOAT,    "viewpoint_x",           "Position of viewpoint (x,y,z)" },
-    { PARAM_FLOAT,    "viewpoint_y",           "Position of viewpoint (x,y,z)" },
-    { PARAM_FLOAT,    "viewpoint_z",           "Position of viewpoint (x,y,z)" },
-    { PARAM_FLOAT,    "position_x",            "Object position (x,y,z)" },
-    { PARAM_FLOAT,    "position_y",            "Object position (x,y,z)" },
-    { PARAM_FLOAT,    "position_z",            "Object position (x,y,z)" },
-    { PARAM_FLOAT,    "firstaxis_x",           "First axis of object [x,y,z]" },
-    { PARAM_FLOAT,    "firstaxis_y",           "First axis of object [x,y,z]" },
-    { PARAM_FLOAT,    "firstaxis_z",           "First axis of object [x,y,z]" },
-    { PARAM_FLOAT,    "secondaxis_x",          "Second axis of object [x,y,z]" },
-    { PARAM_FLOAT,    "secondaxis_y",          "Second axis of object [x,y,z]" },
-    { PARAM_FLOAT,    "secondaxis_z",          "Second axis of object [x,y,z]" },
-    { PARAM_FLOAT,    "rotationangle_x",       "Rotation about X axis in degrees" },
-    { PARAM_FLOAT,    "rotationangle_y",       "Rotation about Y axis in degrees" },
-    { PARAM_FLOAT,    "rotationangle_z",       "Rotation about Z axis in degrees" },
-    { PARAM_INT32,    "lighttype",             "Type of lightsource (0=point,1=directional,3=none)" },
-    { PARAM_COLOR,    "lightcolor",            "Lightsource color (r,g,b)" },
-    { PARAM_FLOAT,    "lightposition_x",       "Lightsource position (x,y,z)" },
-    { PARAM_FLOAT,    "lightposition_y",       "Lightsource position (x,y,z)" },
-    { PARAM_FLOAT,    "lightposition_z",       "Lightsource position (x,y,z)" },
-    { PARAM_FLOAT,    "lightdirection_x",      "Lightsource direction [x,y,z]" },
-    { PARAM_FLOAT,    "lightdirection_y",      "Lightsource direction [x,y,z]" },
-    { PARAM_FLOAT,    "lightdirection_z",      "Lightsource direction [x,y,z]" },
-    { PARAM_FLOAT,    "ambient_intensity",     "Material ambient intensity (0..1)" },
-    { PARAM_FLOAT,    "diffuse_intensity",     "Material diffuse intensity (0..1)" },
-    { PARAM_FLOAT,    "diffuse_reflectivity",  "Material diffuse reflectivity (0..1)" },
-    { PARAM_FLOAT,    "specular_reflectivity", "Material specular reflectivity (0..1)" },
-    { PARAM_FLOAT,    "highlight",             "Material highlight (0..->), note: it's expotential" },
-    { PARAM_INT32,    "antialiasing",          "Apply antialiasing (TRUE/FALSE)" },
-    { PARAM_INT32,    "tiled",                 "Tile source image (TRUE/FALSE)" },
-    { PARAM_INT32,    "newimage",              "Create a new image (TRUE/FALSE)" },
-    { PARAM_INT32,    "transparentbackground", "Make background transparent (TRUE/FALSE)" },
-    { PARAM_FLOAT,    "radius",                "Sphere/cylinder radius (only used when maptype=1 or 3)" },
-    { PARAM_FLOAT,    "x_scale",               "Box x size (0..->)" },
-    { PARAM_FLOAT,    "y_scale",               "Box y size (0..->)" },
-    { PARAM_FLOAT,    "z_scale",               "Box z size (0..->)"},
-    { PARAM_FLOAT,    "cylinder_length",       "Cylinder length (0..->)"},
-    { PARAM_DRAWABLE, "box_front_drawable",    "Box front face (set these to -1 if not used)" },
-    { PARAM_DRAWABLE, "box_back_drawable",     "Box back face" },
-    { PARAM_DRAWABLE, "box_top_drawable",      "Box top face" },
-    { PARAM_DRAWABLE, "box_bottom_drawable",   "Box bottom face" },
-    { PARAM_DRAWABLE, "box_left_drawable",     "Box left face" },
-    { PARAM_DRAWABLE, "box_right_drawable",    "Box right face" },
-    { PARAM_DRAWABLE, "cyl_top_drawable",      "Cylinder top face (set these to -1 if not used)" },
-    { PARAM_DRAWABLE, "cyl_bottom_drawable",   "Cylinder bottom face" }      
+    { GIMP_PDB_INT32,    "run_mode",              "Interactive (0), non-interactive (1)" },
+    { GIMP_PDB_IMAGE,    "image",                 "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",              "Input drawable" },
+    { GIMP_PDB_INT32,    "maptype",               "Type of mapping (0=plane,1=sphere,2=box,3=cylinder)" },
+    { GIMP_PDB_FLOAT,    "viewpoint_x",           "Position of viewpoint (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "viewpoint_y",           "Position of viewpoint (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "viewpoint_z",           "Position of viewpoint (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "position_x",            "Object position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "position_y",            "Object position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "position_z",            "Object position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "firstaxis_x",           "First axis of object [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "firstaxis_y",           "First axis of object [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "firstaxis_z",           "First axis of object [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "secondaxis_x",          "Second axis of object [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "secondaxis_y",          "Second axis of object [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "secondaxis_z",          "Second axis of object [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "rotationangle_x",       "Rotation about X axis in degrees" },
+    { GIMP_PDB_FLOAT,    "rotationangle_y",       "Rotation about Y axis in degrees" },
+    { GIMP_PDB_FLOAT,    "rotationangle_z",       "Rotation about Z axis in degrees" },
+    { GIMP_PDB_INT32,    "lighttype",             "Type of lightsource (0=point,1=directional,3=none)" },
+    { GIMP_PDB_COLOR,    "lightcolor",            "Lightsource color (r,g,b)" },
+    { GIMP_PDB_FLOAT,    "lightposition_x",       "Lightsource position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "lightposition_y",       "Lightsource position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "lightposition_z",       "Lightsource position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "lightdirection_x",      "Lightsource direction [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "lightdirection_y",      "Lightsource direction [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "lightdirection_z",      "Lightsource direction [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "ambient_intensity",     "Material ambient intensity (0..1)" },
+    { GIMP_PDB_FLOAT,    "diffuse_intensity",     "Material diffuse intensity (0..1)" },
+    { GIMP_PDB_FLOAT,    "diffuse_reflectivity",  "Material diffuse reflectivity (0..1)" },
+    { GIMP_PDB_FLOAT,    "specular_reflectivity", "Material specular reflectivity (0..1)" },
+    { GIMP_PDB_FLOAT,    "highlight",             "Material highlight (0..->), note: it's expotential" },
+    { GIMP_PDB_INT32,    "antialiasing",          "Apply antialiasing (TRUE/FALSE)" },
+    { GIMP_PDB_INT32,    "tiled",                 "Tile source image (TRUE/FALSE)" },
+    { GIMP_PDB_INT32,    "newimage",              "Create a new image (TRUE/FALSE)" },
+    { GIMP_PDB_INT32,    "transparentbackground", "Make background transparent (TRUE/FALSE)" },
+    { GIMP_PDB_FLOAT,    "radius",                "Sphere/cylinder radius (only used when maptype=1 or 3)" },
+    { GIMP_PDB_FLOAT,    "x_scale",               "Box x size (0..->)" },
+    { GIMP_PDB_FLOAT,    "y_scale",               "Box y size (0..->)" },
+    { GIMP_PDB_FLOAT,    "z_scale",               "Box z size (0..->)"},
+    { GIMP_PDB_FLOAT,    "cylinder_length",       "Cylinder length (0..->)"},
+    { GIMP_PDB_DRAWABLE, "box_front_drawable",    "Box front face (set these to -1 if not used)" },
+    { GIMP_PDB_DRAWABLE, "box_back_drawable",     "Box back face" },
+    { GIMP_PDB_DRAWABLE, "box_top_drawable",      "Box top face" },
+    { GIMP_PDB_DRAWABLE, "box_bottom_drawable",   "Box bottom face" },
+    { GIMP_PDB_DRAWABLE, "box_left_drawable",     "Box left face" },
+    { GIMP_PDB_DRAWABLE, "box_right_drawable",    "Box right face" },
+    { GIMP_PDB_DRAWABLE, "cyl_top_drawable",      "Cylinder top face (set these to -1 if not used)" },
+    { GIMP_PDB_DRAWABLE, "cyl_bottom_drawable",   "Cylinder bottom face" }      
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -204,7 +204,7 @@ query (void)
 			  "Version 1.2.0, July 16 1998",
 			  N_("<Image>/Filters/Map/Map Object..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -212,19 +212,19 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint i;
 
   run_mode = param[0].data.d_int32;
 
-  if (run_mode == RUN_INTERACTIVE)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       INIT_I18N_UI();
     }
@@ -233,7 +233,7 @@ run (gchar   *name,
       INIT_I18N();
     }
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -251,7 +251,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-      case RUN_INTERACTIVE:
+      case GIMP_RUN_INTERACTIVE:
         
         /* Possibly retrieve data */
         /* ====================== */
@@ -267,17 +267,17 @@ run (gchar   *name,
 	  }
         break;
 
-      case RUN_WITH_LAST_VALS:
+      case GIMP_RUN_WITH_LAST_VALS:
         gimp_get_data ("plug_in_map_object", &mapvals);
         check_drawables (drawable);
         image_setup (drawable, FALSE);
         compute_image ();
         break;
 
-      case RUN_NONINTERACTIVE:
+      case GIMP_RUN_NONINTERACTIVE:
         if (nparams != 49)
 	  {
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  }
         else
           {
@@ -340,13 +340,13 @@ run (gchar   *name,
 
   values[0].data.d_status = status;
   
-  if (run_mode != RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
 
   gimp_drawable_detach (drawable);
 }
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */

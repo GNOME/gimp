@@ -129,7 +129,7 @@ p_mov_call_render(t_mov_data *mov_ptr, t_mov_current *cur_ptr, gint apv_layersta
 
        if((mov_ptr->val_ptr->apv_scalex != 100.0) || (mov_ptr->val_ptr->apv_scaley != 100.0))
        {
-         GParam     *l_params;
+         GimpParam     *l_params;
          gint        l_retvals;
 	 gint32      l_size_x, l_size_y;
        
@@ -138,10 +138,10 @@ p_mov_call_render(t_mov_data *mov_ptr, t_mov_current *cur_ptr, gint apv_layersta
        
          l_params = gimp_run_procedure ("gimp_image_scale",
 			         &l_retvals,
-			         PARAM_IMAGE,    l_tmp_image_id,
-			         PARAM_INT32,    l_size_x,
-			         PARAM_INT32,    l_size_y,
-			         PARAM_END);
+			         GIMP_PDB_IMAGE,    l_tmp_image_id,
+			         GIMP_PDB_INT32,    l_size_x,
+			         GIMP_PDB_INT32,    l_size_y,
+			         GIMP_PDB_END);
        }
     }
     
@@ -343,7 +343,7 @@ p_mov_execute(t_mov_data *mov_ptr)
 
   l_apv_layerstack = 0;
   l_percentage = 0.0;  
-  if(mov_ptr->dst_ainfo_ptr->run_mode == RUN_INTERACTIVE)
+  if(mov_ptr->dst_ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
   { 
     if(mov_ptr->val_ptr->apv_mlayer_image < 0)
     {
@@ -568,7 +568,7 @@ p_mov_execute(t_mov_data *mov_ptr)
        l_rc = p_mov_call_render(mov_ptr, cur_ptr, l_apv_layerstack);
 
        /* show progress */
-       if(mov_ptr->dst_ainfo_ptr->run_mode == RUN_INTERACTIVE)
+       if(mov_ptr->dst_ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
        { 
          l_percentage = (gdouble)l_fridx / (gdouble)(l_cnt -1);
          gimp_progress_update (l_percentage);
@@ -599,9 +599,9 @@ p_mov_anim_preview(t_mov_values *pvals_orig, t_anim_info *ainfo_ptr, gint previe
   gint32      l_tmp_image_id;
   gint32      l_tmp_frame_id;
   gint32      l_mlayer_image_id;
-  GParam     *l_params;
+  GimpParam     *l_params;
   gint        l_retvals;
-  GImageType  l_type;
+  GimpImageBaseType  l_type;
   guint       l_width, l_height;
   gint32      l_stackpos;
   gint        l_nlayers;
@@ -638,10 +638,10 @@ p_mov_anim_preview(t_mov_values *pvals_orig, t_anim_info *ainfo_ptr, gint previe
     l_size_y = MAX(1, (gimp_image_height(l_tmp_image_id) * l_pvals->apv_scaley) / 100);
     l_params = gimp_run_procedure ("gimp_image_scale",
   		                 &l_retvals,
-			         PARAM_IMAGE,    l_tmp_image_id,
-			         PARAM_INT32,    l_size_x,
-			         PARAM_INT32,    l_size_y,
-			         PARAM_END);
+			         GIMP_PDB_IMAGE,    l_tmp_image_id,
+			         GIMP_PDB_INT32,    l_size_x,
+			         GIMP_PDB_INT32,    l_size_y,
+			         GIMP_PDB_END);
 
      /* findout the src_layer id in the scaled copy by stackpos index */
      l_pvals->src_layer_id = -1;
@@ -732,10 +732,10 @@ p_mov_anim_preview(t_mov_values *pvals_orig, t_anim_info *ainfo_ptr, gint previe
 	l_size_y = (gimp_image_height(l_tmp_frame_id) * l_pvals->apv_scaley) / 100;
 	l_params = gimp_run_procedure ("gimp_image_scale",
   		                   &l_retvals,
-			           PARAM_IMAGE,    l_tmp_frame_id,
-			           PARAM_INT32,    l_size_x,
-			           PARAM_INT32,    l_size_y,
-			           PARAM_END);
+			           GIMP_PDB_IMAGE,    l_tmp_frame_id,
+			           GIMP_PDB_INT32,    l_size_x,
+			           GIMP_PDB_INT32,    l_size_y,
+			           GIMP_PDB_END);
       }
       g_free(l_filename);
       break;
@@ -783,7 +783,7 @@ p_mov_anim_preview(t_mov_values *pvals_orig, t_anim_info *ainfo_ptr, gint previe
  * gap_move
  * ============================================================================
  */
-int gap_move(GRunModeType run_mode, gint32 image_id)
+int gap_move(GimpRunModeType run_mode, gint32 image_id)
 {
   int l_rc;
   t_anim_info *ainfo_ptr;
@@ -801,7 +801,7 @@ int gap_move(GRunModeType run_mode, gint32 image_id)
         if(0 != p_chk_framerange(ainfo_ptr))   return -1;
 
         l_mov_data.dst_ainfo_ptr = ainfo_ptr;
-        if(run_mode == RUN_INTERACTIVE)
+        if(run_mode == GIMP_RUN_INTERACTIVE)
         {
            l_rc = p_move_dialog (&l_mov_data);
            if(0 != p_chk_framechange(ainfo_ptr))

@@ -12,7 +12,7 @@
 
 static void query(void);
 static void gimpressionist_main(void);
-static void run(char *, int, GParam *, int *, GParam **);
+static void run(char *, int, GimpParam *, int *, GimpParam **);
 void repaint(struct ppm *p, struct ppm *a);
 
 int create_gimpressionist(void);
@@ -21,7 +21,7 @@ static gint img_width, img_height, img_bpp;
 gint img_has_alpha = 0;
 static gint sel_x1, sel_y1, sel_x2, sel_y2;
 
-GPlugInInfo PLUG_IN_INFO = {
+GimpPlugInInfo PLUG_IN_INFO = {
         NULL,   /* init_proc */
         NULL,   /* quit_proc */
         query,  /* query_proc */
@@ -79,18 +79,18 @@ gimpressionist_vals_t defaultpcvals = {
   0, 0.0
 };
 
-static GDrawable *drawable;
+static GimpDrawable *drawable;
 
 static void
 query(void)
 {
-  static GParamDef args[] = {
-    { PARAM_INT32,    "run_mode",  "Interactive" },
-    { PARAM_IMAGE,    "image",     "Input image" },
-    { PARAM_DRAWABLE, "drawable",  "Input drawable" },
+  static GimpParamDef args[] = {
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
   }; /* args */
 
-  static GParamDef *return_vals = NULL;
+  static GimpParamDef *return_vals = NULL;
   static int        nargs = sizeof(args) / sizeof(args[0]);
   static int        nreturn_vals = 0;
 
@@ -104,7 +104,7 @@ query(void)
 			 PLUG_IN_VERSION,
 			 N_("<Image>/Filters/Artistic/GIMPressionist..."),
 			 "RGB*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs,
 			 nreturn_vals,
 			 args,
@@ -120,17 +120,17 @@ gimpressionist_get_data(char *name, void *ptr)
 
 
 static void
-run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **return_vals)
+run(char *name, int nparams, GimpParam *param, int *nreturn_vals, GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
 
-  GRunModeType run_mode;
-  GStatusType  status;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType  status;
 
-  status = STATUS_SUCCESS;
+  status = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -148,35 +148,35 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **return_v
   gimp_drawable_mask_bounds(drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   switch (run_mode) {
-  case RUN_INTERACTIVE:
+  case GIMP_RUN_INTERACTIVE:
     INIT_I18N_UI();
     gimpressionist_get_data(PLUG_IN_NAME, &pcvals);
     if(!create_gimpressionist())
       return;
     break;
-  case RUN_NONINTERACTIVE:
+  case GIMP_RUN_NONINTERACTIVE:
     INIT_I18N();
-    g_message("GIMPressionist: RUN_NONINTERACTIVE not implemented yet!\n");
-    status = STATUS_EXECUTION_ERROR;
+    g_message("GIMPressionist: GIMP_RUN_NONINTERACTIVE not implemented yet!\n");
+    status = GIMP_PDB_EXECUTION_ERROR;
     break;
-  case RUN_WITH_LAST_VALS:
+  case GIMP_RUN_WITH_LAST_VALS:
     INIT_I18N_UI();
     gimpressionist_get_data(PLUG_IN_NAME, &pcvals);
     break;
   default:
     g_message("Huh?!\n");
-    status = STATUS_EXECUTION_ERROR;
+    status = GIMP_PDB_EXECUTION_ERROR;
     break;
   }
-  if((status == STATUS_SUCCESS) && (gimp_drawable_is_rgb(drawable->id) || gimp_drawable_is_gray(drawable->id))) {
+  if((status == GIMP_PDB_SUCCESS) && (gimp_drawable_is_rgb(drawable->id) || gimp_drawable_is_gray(drawable->id))) {
     gimpressionist_main();
     gimp_displays_flush ();
     
-    if (run_mode == RUN_INTERACTIVE)
+    if (run_mode == GIMP_RUN_INTERACTIVE)
       gimp_set_data(PLUG_IN_NAME, &pcvals, sizeof(gimpressionist_vals_t));
     
-  } else if(status == STATUS_SUCCESS)
-    status = STATUS_EXECUTION_ERROR;
+  } else if(status == GIMP_PDB_SUCCESS)
+    status = GIMP_PDB_EXECUTION_ERROR;
 
   values[0].data.d_status = status;
   
@@ -185,7 +185,7 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **return_v
 
 void grabarea(void)
 {
-  GPixelRgn src_rgn;
+  GimpPixelRgn src_rgn;
   guchar *src_row;
   guchar *src;
   gint alpha, has_alpha, bpp;
@@ -273,7 +273,7 @@ void grabarea(void)
 
 void gimpressionist_main(void)
 {
-  GPixelRgn dest_rgn;
+  GimpPixelRgn dest_rgn;
   guchar *dest_row;
   guchar *dest;
   gint alpha, has_alpha, bpp;

@@ -39,12 +39,12 @@
  * 1.1.10a  1999/10/22   hof: bugfix: have to use the changed PDB-Interface
  *                            for gimp_convert_indexed
  *                            (with extended dither options and extra dialog window)
- * 1.1.9a   1999/09/21   hof: bugfix RUN_NONINTERACTIVE did not work in
+ * 1.1.9a   1999/09/21   hof: bugfix GIMP_RUN_NONINTERACTIVE did not work in
  *                            plug_in_gap_range_convert
  *                            plug_in_gap_range_layer_del
  *                            plug_in_gap_range_flatten
  * 1.1.8    1999/08/31   hof: frames convert: save subsequent frames
- *                            with rumode RUN_WITH_LAST_VALS 
+ *                            with rumode GIMP_RUN_WITH_LAST_VALS 
  * 0.97.00; 1998/10/19   hof: gap_range_to_multilayer: extended layer selection
  * 0.96.03; 1998/08/31   hof: gap_range_to_multilayer: all params available
  *                            in non-interactive runmode
@@ -419,7 +419,7 @@ p_convert_indexed_dialog(gint32 *dest_colors, gint32 *dest_dither,
 static long
 p_convert_dialog(t_anim_info *ainfo_ptr,
                       long *range_from, long *range_to, long *flatten,
-                      GImageType *dest_type, gint32 *dest_colors, gint32 *dest_dither,
+                      GimpImageBaseType *dest_type, gint32 *dest_colors, gint32 *dest_dither,
                       char *basename, gint len_base,
                       char *extension, gint len_ext,
 		      gint32 *palette_type, gint32 *alpha_dither, gint32 *remove_unused, 
@@ -492,16 +492,16 @@ p_convert_dialog(t_anim_info *ainfo_ptr,
       switch(argv[5].radio_ret)
       {
         case 1: 
-           *dest_type = RGB;
+           *dest_type = GIMP_RGB;
            break;
         case 2: 
-           *dest_type = GRAY;
+           *dest_type = GIMP_GRAY;
            break;
         case 3: 
-           *dest_type = INDEXED;
+           *dest_type = GIMP_INDEXED;
            break;
         default:
-           *dest_type = 9444;
+	  *dest_type = 9444;   /*  huh ??  */
            break;
       }
       *flatten     = (long)(argv[6].int_ret);
@@ -512,7 +512,7 @@ p_convert_dialog(t_anim_info *ainfo_ptr,
       *alpha_dither = 0;
       *remove_unused = 0;
       
-       if(*dest_type == INDEXED)
+       if(*dest_type == GIMP_INDEXED)
        {
           /* Open a 2.nd dialog for the Dither Options */
           if(0 != p_convert_indexed_dialog(dest_colors,
@@ -719,7 +719,7 @@ p_frames_to_multilayer(t_anim_info *ainfo_ptr,
 		      gint32 sel_mode, gint32 sel_case,
 		      gint32 sel_invert, char *sel_pattern)
 {
-  GImageType l_type;
+  GimpImageBaseType l_type;
   guint   l_width, l_height;
   long    l_cur_frame_nr;
   long    l_step, l_begin, l_end;
@@ -742,7 +742,7 @@ p_frames_to_multilayer(t_anim_info *ainfo_ptr,
 
   l_percentage = 0.0;
   l_nlayers_result = 0;
-  if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+  if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
   { 
     gimp_progress_init( _("Creating Layer-Animated Image..."));
   }
@@ -897,7 +897,7 @@ p_frames_to_multilayer(t_anim_info *ainfo_ptr,
     /* destroy the tmp image */
     gimp_image_delete(l_tmp_image_id);
     
-    if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+    if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
     { 
       l_percentage += l_percentage_step;
       gimp_progress_update (l_percentage);
@@ -926,7 +926,7 @@ error:
  * gap_range_to_multilayer
  * ============================================================================
  */
-gint32 gap_range_to_multilayer(GRunModeType run_mode, gint32 image_id,
+gint32 gap_range_to_multilayer(GimpRunModeType run_mode, gint32 image_id,
                              long range_from, long range_to,
                              long flatten_mode, long bg_visible,
                              long   framerate,
@@ -952,7 +952,7 @@ gint32 gap_range_to_multilayer(GRunModeType run_mode, gint32 image_id,
   {
     if (0 == p_dir_ainfo(ainfo_ptr))
     {
-      if(run_mode == RUN_INTERACTIVE)
+      if(run_mode == GIMP_RUN_INTERACTIVE)
       {
 	 l_framerate = 24.0;
          vin_ptr = p_get_video_info(ainfo_ptr->basename);
@@ -1012,10 +1012,10 @@ gint32 gap_range_to_multilayer(GRunModeType run_mode, gint32 image_id,
  * ============================================================================
  */
 static int
-p_type_convert(gint32 image_id, GImageType dest_type, gint32 dest_colors, gint32 dest_dither,
+p_type_convert(gint32 image_id, GimpImageBaseType dest_type, gint32 dest_colors, gint32 dest_dither,
 	       gint32 palette_type, gint32  alpha_dither, gint32  remove_unused,  char *palette)
 {
-  GParam     *l_params;
+  GimpParam     *l_params;
   gint        l_retvals;
   int         l_rc;
 
@@ -1024,33 +1024,33 @@ p_type_convert(gint32 image_id, GImageType dest_type, gint32 dest_colors, gint32
 
   switch(dest_type)
   {
-    case INDEXED:
+    case GIMP_INDEXED:
       if(gap_debug) fprintf(stderr, "DEBUG: p_type_convert to INDEXED ncolors=%d, palette_type=%d palette_name=%s'\n",
                                    (int)dest_colors, (int)palette_type, palette);
       l_params = gimp_run_procedure ("gimp_convert_indexed",
 			           &l_retvals,
-			           PARAM_IMAGE,    image_id,
-			           PARAM_INT32,    dest_dither,      /* value 1== floyd-steinberg */
-			           PARAM_INT32,    palette_type,     /* value 0: MAKE_PALETTE, 2: WEB_PALETTE 4:CUSTOM_PALETTE */
-			           PARAM_INT32,    dest_colors,
-			           PARAM_INT32,    alpha_dither,
-			           PARAM_INT32,    remove_unused,
-			           PARAM_STRING,   palette,         /* name of custom palette */			           
-			           PARAM_END);
+			           GIMP_PDB_IMAGE,    image_id,
+			           GIMP_PDB_INT32,    dest_dither,      /* value 1== floyd-steinberg */
+			           GIMP_PDB_INT32,    palette_type,     /* value 0: MAKE_PALETTE, 2: WEB_PALETTE 4:CUSTOM_PALETTE */
+			           GIMP_PDB_INT32,    dest_colors,
+			           GIMP_PDB_INT32,    alpha_dither,
+			           GIMP_PDB_INT32,    remove_unused,
+			           GIMP_PDB_STRING,   palette,         /* name of custom palette */			           
+			           GIMP_PDB_END);
       break;
-    case GRAY:
+    case GIMP_GRAY:
       if(gap_debug) fprintf(stderr, "DEBUG: p_type_convert to GRAY'\n");
       l_params = gimp_run_procedure ("gimp_convert_grayscale",
 			           &l_retvals,
-			           PARAM_IMAGE,    image_id,
-			           PARAM_END);
+			           GIMP_PDB_IMAGE,    image_id,
+			           GIMP_PDB_END);
       break;
-    case RGB:
+    case GIMP_RGB:
       if(gap_debug) fprintf(stderr, "DEBUG: p_type_convert to RGB'\n");
       l_params = gimp_run_procedure ("gimp_convert_rgb",
 			           &l_retvals,
-			           PARAM_IMAGE,    image_id,
-			           PARAM_END);
+			           GIMP_PDB_IMAGE,    image_id,
+			           GIMP_PDB_END);
       break;
     default:
       if(gap_debug) fprintf(stderr, "DEBUG: p_type_convert AS_IT_IS (dont convert)'\n");
@@ -1085,10 +1085,10 @@ p_frames_convert(t_anim_info *ainfo_ptr,
                  long range_from, long range_to,
                  char *save_proc_name, char *new_basename, char *new_extension,
                  int flatten,
-                 GImageType dest_type, gint32 dest_colors, gint32 dest_dither,
+                 GimpImageBaseType dest_type, gint32 dest_colors, gint32 dest_dither,
 		 gint32  palette_type, gint32  alpha_dither, gint32  remove_unused,  char   *palette)
 {
-  GRunModeType l_run_mode;
+  GimpRunModeType l_run_mode;
   gint32  l_tmp_image_id;
   long    l_cur_frame_nr;
   long    l_step, l_begin, l_end;
@@ -1106,7 +1106,7 @@ p_frames_convert(t_anim_info *ainfo_ptr,
   l_overwrite_mode = 0;
   l_percentage = 0.0;
   l_run_mode  = ainfo_ptr->run_mode;
-  if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+  if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
   { 
     if(save_proc_name == NULL) gimp_progress_init( _("Flattening Frames..."));
     else                       gimp_progress_init( _("Converting Frames..."));
@@ -1262,9 +1262,9 @@ p_frames_convert(t_anim_info *ainfo_ptr,
 						"or desired save plugin not available."));
              }
           }
-          if(l_run_mode == RUN_INTERACTIVE)
+          if(l_run_mode == GIMP_RUN_INTERACTIVE)
           {
-            l_run_mode  = RUN_WITH_LAST_VALS;  /* for all further calls */
+            l_run_mode  = GIMP_RUN_WITH_LAST_VALS;  /* for all further calls */
           }
           g_free(l_sav_name);
        }
@@ -1273,7 +1273,7 @@ p_frames_convert(t_anim_info *ainfo_ptr,
     /* destroy the tmp image */
     gimp_image_delete(l_tmp_image_id);
 
-    if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+    if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
     { 
       l_percentage += l_percentage_step;
       gimp_progress_update (l_percentage);
@@ -1304,7 +1304,7 @@ int p_image_sizechange(gint32 image_id,
                long offs_x, long offs_y
 )
 {
-  GParam     *l_params;
+  GimpParam     *l_params;
   gint        l_retvals;
 
   switch(asiz_mode)
@@ -1312,12 +1312,12 @@ int p_image_sizechange(gint32 image_id,
     case ASIZ_CROP:
       l_params = gimp_run_procedure ("gimp_crop",
 			         &l_retvals,
-			         PARAM_IMAGE,    image_id,
-			         PARAM_INT32,    size_x,
-			         PARAM_INT32,    size_y,
-			         PARAM_INT32,    offs_x,
-			         PARAM_INT32,    offs_y,
-			         PARAM_END);
+			         GIMP_PDB_IMAGE,    image_id,
+			         GIMP_PDB_INT32,    size_x,
+			         GIMP_PDB_INT32,    size_y,
+			         GIMP_PDB_INT32,    offs_x,
+			         GIMP_PDB_INT32,    offs_y,
+			         GIMP_PDB_END);
       break;
     case ASIZ_RESIZE:
       gimp_image_resize(image_id, (guint)size_x, (guint)size_y, (gint)offs_x, (gint)offs_y);
@@ -1325,10 +1325,10 @@ int p_image_sizechange(gint32 image_id,
     default:
       l_params = gimp_run_procedure ("gimp_image_scale",
 			         &l_retvals,
-			         PARAM_IMAGE,    image_id,
-			         PARAM_INT32,    size_x,
-			         PARAM_INT32,    size_y,
-			         PARAM_END);
+			         GIMP_PDB_IMAGE,    image_id,
+			         GIMP_PDB_INT32,    size_x,
+			         GIMP_PDB_INT32,    size_y,
+			         GIMP_PDB_END);
       break;
   }
 
@@ -1352,7 +1352,7 @@ gint32 p_anim_sizechange(t_anim_info *ainfo_ptr,
   long    l_step, l_begin, l_end;
   gint32  l_tmp_image_id;
   gdouble    l_percentage, l_percentage_step;  
-  GParam     *l_params;
+  GimpParam     *l_params;
   int         l_rc;
 
   l_rc = 0;
@@ -1360,7 +1360,7 @@ gint32 p_anim_sizechange(t_anim_info *ainfo_ptr,
 
 
   l_percentage = 0.0;  
-  if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+  if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
   {
     switch(asiz_mode)
     {
@@ -1417,7 +1417,7 @@ gint32 p_anim_sizechange(t_anim_info *ainfo_ptr,
     /* destroy the tmp image */
     gimp_image_delete(l_tmp_image_id);
     
-    if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+    if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
     { 
       l_percentage += l_percentage_step;
       gimp_progress_update (l_percentage);
@@ -1441,7 +1441,7 @@ gint32 p_anim_sizechange(t_anim_info *ainfo_ptr,
  * gap_range_flatten
  * ============================================================================
  */
-int    gap_range_flatten(GRunModeType run_mode, gint32 image_id,
+int    gap_range_flatten(GimpRunModeType run_mode, gint32 image_id,
                          long range_from, long range_to)
 {
   int    l_rc;
@@ -1454,7 +1454,7 @@ int    gap_range_flatten(GRunModeType run_mode, gint32 image_id,
   {
     if (0 == p_dir_ainfo(ainfo_ptr))
     {
-      if(run_mode == RUN_INTERACTIVE)
+      if(run_mode == GIMP_RUN_INTERACTIVE)
       {
          l_rc = p_range_dialog (ainfo_ptr, &l_from, &l_to,
                                 _("Flatten Frames"),
@@ -1511,7 +1511,7 @@ p_frames_layer_del(t_anim_info *ainfo_ptr,
 
   l_rc = 0;
   l_percentage = 0.0;  
-  if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+  if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
   {
     l_buff = g_strdup_printf (_("Removing Layer (pos:%ld) from Frames..."), position); 
     gimp_progress_init(l_buff);
@@ -1597,7 +1597,7 @@ p_frames_layer_del(t_anim_info *ainfo_ptr,
     /* destroy the tmp image */
     gimp_image_delete(l_tmp_image_id);
 
-    if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+    if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
     { 
       l_percentage += l_percentage_step;
       gimp_progress_update (l_percentage);
@@ -1619,7 +1619,7 @@ p_frames_layer_del(t_anim_info *ainfo_ptr,
  * gap_range_layer_del
  * ============================================================================
  */
-int gap_range_layer_del(GRunModeType run_mode, gint32 image_id,
+int gap_range_layer_del(GimpRunModeType run_mode, gint32 image_id,
                          long range_from, long range_to, long position)
 {
   int    l_rc;
@@ -1634,7 +1634,7 @@ int gap_range_layer_del(GRunModeType run_mode, gint32 image_id,
   {
     if (0 == p_dir_ainfo(ainfo_ptr))
     {
-      if(run_mode == RUN_INTERACTIVE)
+      if(run_mode == GIMP_RUN_INTERACTIVE)
       {
          l_rc = p_range_dialog (ainfo_ptr, &l_from, &l_to,
                                 _("Delete Layers in Frames"),
@@ -1672,10 +1672,10 @@ int gap_range_layer_del(GRunModeType run_mode, gint32 image_id,
  *   convert frame range to any gimp supported fileformat
  * ============================================================================
  */
-gint32 gap_range_conv(GRunModeType run_mode, gint32 image_id,
+gint32 gap_range_conv(GimpRunModeType run_mode, gint32 image_id,
                       long range_from, long range_to,
                       long       flatten,
-                      GImageType dest_type,
+                      GimpImageBaseType dest_type,
                       gint32     dest_colors,
                       gint32     dest_dither,
                       char      *basename,
@@ -1693,7 +1693,7 @@ gint32 gap_range_conv(GRunModeType run_mode, gint32 image_id,
   gint32     l_palette_type;
   gint32     l_alpha_dither;
   gint32     l_remove_unused;
-  GImageType l_dest_type;
+  GimpImageBaseType l_dest_type;
   
   t_anim_info *ainfo_ptr;
   char  l_save_proc_name[128];
@@ -1715,7 +1715,7 @@ gint32 gap_range_conv(GRunModeType run_mode, gint32 image_id,
       strncpy(l_basename, ainfo_ptr->basename, sizeof(l_basename) -1);
       l_basename[sizeof(l_basename) -1] = '\0';
 
-      if(run_mode == RUN_INTERACTIVE)
+      if(run_mode == GIMP_RUN_INTERACTIVE)
       {
          
          l_flatten = 1;
@@ -1795,7 +1795,7 @@ gint32 gap_range_conv(GRunModeType run_mode, gint32 image_id,
  *    (depending on asiz_mode)
  * ============================================================================
  */
-int gap_anim_sizechange(GRunModeType run_mode, t_gap_asiz asiz_mode, gint32 image_id,
+int gap_anim_sizechange(GimpRunModeType run_mode, t_gap_asiz asiz_mode, gint32 image_id,
                   long size_x, long size_y, long offs_x, long offs_y)
 {
   int    l_rc;
@@ -1809,7 +1809,7 @@ int gap_anim_sizechange(GRunModeType run_mode, t_gap_asiz asiz_mode, gint32 imag
   {
     if (0 == p_dir_ainfo(ainfo_ptr))
     {
-      if(run_mode == RUN_INTERACTIVE)
+      if(run_mode == GIMP_RUN_INTERACTIVE)
       {
          l_rc = p_anim_sizechange_dialog (ainfo_ptr, asiz_mode,
                                           &l_size_x, &l_size_y,

@@ -68,9 +68,9 @@ typedef struct
 static void   query      (void);
 static void   run        (gchar   *name,
                           gint     nparams,
-                          GParam  *param,
+                          GimpParam  *param,
                           gint    *nreturn_vals,
-                          GParam **return_vals);
+                          GimpParam **return_vals);
 
 static gint32 load_image (gchar  *filename);
 static gint   save_image (gchar  *filename,
@@ -90,11 +90,11 @@ static gint32 create_new_image (gchar          *filename,
 				guint           pagenum,
 				guint           width,
 				guint           height,
-				GImageType      itype,
-				GDrawableType   dtype,
+				GimpImageBaseType      itype,
+				GimpImageType   dtype,
 				gint32         *layer_ID,
-				GDrawable     **drawable,
-				GPixelRgn       *pixel_rgn);
+				GimpDrawable     **drawable,
+				GimpPixelRgn       *pixel_rgn);
 
 static void   check_load_vals (void);
 
@@ -122,7 +122,7 @@ static FITSLoadInterface plint =
   FALSE
 };
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -131,7 +131,7 @@ GPlugInInfo PLUG_IN_INFO =
 };
 
 /* The run mode */
-static GRunModeType l_run_mode;
+static GimpRunModeType l_run_mode;
 
 
 MAIN ()
@@ -140,27 +140,27 @@ static void
 query (void)
 
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { PARAM_STRING,   "filename",     "The name of the file to load" },
-    { PARAM_STRING,   "raw_filename", "The name of the file to load" },
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to load" },
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE,    "image",        "Output image" },
+    { GIMP_PDB_IMAGE,    "image",        "Output image" },
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",        "Input image" },
-    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
-    { PARAM_STRING,   "filename",     "The name of the file to save the image in" },
-    { PARAM_STRING,   "raw_filename", "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" },
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -174,7 +174,7 @@ query (void)
                           "1997",
                           "<Load>/FITS",
                           NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -186,7 +186,7 @@ query (void)
                           "1997",
                           "<Save>/FITS",
                           "RGB, GRAY, INDEXED",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
 
@@ -204,23 +204,23 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
   gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
 
-  l_run_mode = run_mode = (GRunModeType)param[0].data.d_int32;
+  l_run_mode = run_mode = (GimpRunModeType)param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, "file_fits_load") == 0)
     {
@@ -228,20 +228,20 @@ run (gchar   *name,
 
       switch (run_mode)
 	{
-        case RUN_INTERACTIVE:
+        case GIMP_RUN_INTERACTIVE:
           /*  Possibly retrieve data  */
           gimp_get_data ("file_fits_load", &plvals);
 
           if (!load_dialog ())
-	    status = STATUS_CANCEL;
+	    status = GIMP_PDB_CANCEL;
 	  break;
 
-        case RUN_NONINTERACTIVE:
+        case GIMP_RUN_NONINTERACTIVE:
           if (nparams != 3)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
           break;
 
-        case RUN_WITH_LAST_VALS:
+        case GIMP_RUN_WITH_LAST_VALS:
           /* Possibly retrieve data */
           gimp_get_data ("file_fits_load", &plvals);
           break;
@@ -250,7 +250,7 @@ run (gchar   *name,
           break;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  check_load_vals ();
 	  image_ID = load_image (param[1].data.d_string);
@@ -261,16 +261,16 @@ run (gchar   *name,
 	  if (image_ID != -1)
 	    {
 	      *nreturn_vals = 2;
-	      values[1].type         = PARAM_IMAGE;
+	      values[1].type         = GIMP_PDB_IMAGE;
 	      values[1].data.d_image = image_ID;
 	    }
 	  else
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 
 	  /*  Store plvals data  */
-	  if (status == STATUS_SUCCESS)
+	  if (status == GIMP_PDB_SUCCESS)
 	    gimp_set_data ("file_fits_load", &plvals, sizeof (FITSLoadVals));
 	}
     }
@@ -284,8 +284,8 @@ run (gchar   *name,
       /*  eventually export the image */
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("fits", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "FITS",
 				      (CAN_HANDLE_RGB |
@@ -293,7 +293,7 @@ run (gchar   *name,
 				       CAN_HANDLE_INDEXED));
 	if (export == EXPORT_CANCEL)
 	  {
-	    values[0].data.d_status = STATUS_CANCEL;
+	    values[0].data.d_status = GIMP_PDB_CANCEL;
 	    return;
 	  }
 	break;
@@ -303,26 +303,26 @@ run (gchar   *name,
 
       switch (run_mode)
         {
-        case RUN_INTERACTIVE:
+        case GIMP_RUN_INTERACTIVE:
           break;
 
-        case RUN_NONINTERACTIVE:
+        case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
           if (nparams != 5)
-            status = STATUS_CALLING_ERROR;
+            status = GIMP_PDB_CALLING_ERROR;
           break;
 
-        case RUN_WITH_LAST_VALS:
+        case GIMP_RUN_WITH_LAST_VALS:
           break;
 
         default:
           break;
         }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (! save_image (param[3].data.d_string, image_ID, drawable_ID))
-	    status = STATUS_EXECUTION_ERROR;
+	    status = GIMP_PDB_EXECUTION_ERROR;
 	}
 
       if (export == EXPORT_EXPORT)
@@ -330,7 +330,7 @@ run (gchar   *name,
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -411,7 +411,7 @@ load_image (gchar *filename)
   fits_close (ifp);
 
   /* Display images in reverse order. The last will be displayed by GIMP itself*/
-  if (l_run_mode != RUN_NONINTERACTIVE)
+  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
     {
       for (k = n_images-1; k >= 1; k--)
 	{
@@ -434,7 +434,7 @@ save_image (gchar  *filename,
             gint32  drawable_ID)
 {
   FITS_FILE* ofp;
-  GDrawableType drawable_type;
+  GimpImageType drawable_type;
   gint retval;
   char *temp = ident; /* Just to satisfy lint/gcc */
 
@@ -449,9 +449,9 @@ save_image (gchar  *filename,
 
   switch (drawable_type)
     {
-    case INDEXED_IMAGE: case INDEXEDA_IMAGE:
-    case GRAY_IMAGE:    case GRAYA_IMAGE:
-    case RGB_IMAGE:     case RGBA_IMAGE:
+    case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
+    case GIMP_GRAY_IMAGE:    case GIMP_GRAYA_IMAGE:
+    case GIMP_RGB_IMAGE:     case GIMP_RGBA_IMAGE:
       break;
     default:
       g_message (_("Cannot operate on unknown image types"));
@@ -467,14 +467,14 @@ save_image (gchar  *filename,
       return (FALSE);
     }
 
-  if (l_run_mode != RUN_NONINTERACTIVE)
+  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
     {
       temp = g_strdup_printf (_("Saving %s:"), filename);
       gimp_progress_init (temp);
       g_free (temp);
     }
 
-  if ((drawable_type == INDEXED_IMAGE) || (drawable_type == INDEXEDA_IMAGE))
+  if ((drawable_type == GIMP_INDEXED_IMAGE) || (drawable_type == GIMP_INDEXEDA_IMAGE))
     retval = save_index (ofp,image_ID, drawable_ID);
   else
     retval = save_direct (ofp,image_ID, drawable_ID);
@@ -499,11 +499,11 @@ create_new_image (gchar *filename,
                   guint pagenum,
                   guint width,
                   guint height,
-                  GImageType itype,
-                  GDrawableType dtype,
+                  GimpImageBaseType itype,
+                  GimpImageType dtype,
                   gint32 *layer_ID,
-                  GDrawable **drawable,
-                  GPixelRgn *pixel_rgn)
+                  GimpDrawable **drawable,
+                  GimpPixelRgn *pixel_rgn)
 {
   gint32 image_ID;
   char *tmp;
@@ -519,7 +519,7 @@ create_new_image (gchar *filename,
     gimp_image_set_filename (image_ID, filename);
 
   *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
-			      dtype, 100, NORMAL_MODE);
+			      dtype, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, *layer_ID, 0);
 
   *drawable = gimp_drawable_get (*layer_ID);
@@ -545,10 +545,10 @@ load_fits (gchar     *filename,
   int i, j, channel, max_scan;
   double a, b;
   gint32 layer_ID, image_ID;
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
-  GImageType itype;
-  GDrawableType dtype;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  GimpImageBaseType itype;
+  GimpImageType dtype;
   gint err = 0;
   FITS_HDU_LIST *hdulist;
   FITS_PIX_TRANSFORM trans;
@@ -559,10 +559,10 @@ load_fits (gchar     *filename,
   width = hdulist->naxisn[0];  /* Set the size of the FITS image */
   height = hdulist->naxisn[1];
 
-  if (ncompose == 2) { itype = GRAY; dtype = GRAYA_IMAGE; }
-  else if (ncompose == 3) { itype = RGB; dtype = RGB_IMAGE; }
-  else if (ncompose == 4) { itype = RGB; dtype = RGBA_IMAGE; }
-  else { ncompose = 1; itype = GRAY; dtype = GRAY_IMAGE;}
+  if (ncompose == 2) { itype = GIMP_GRAY; dtype = GIMP_GRAYA_IMAGE; }
+  else if (ncompose == 3) { itype = GIMP_RGB; dtype = GIMP_RGB_IMAGE; }
+  else if (ncompose == 4) { itype = GIMP_RGB; dtype = GIMP_RGBA_IMAGE; }
+  else { ncompose = 1; itype = GIMP_GRAY; dtype = GIMP_GRAY_IMAGE;}
 
   image_ID = create_new_image (filename, picnum, width, height, itype, dtype,
 			       &layer_ID, &drawable, &pixel_rgn);
@@ -613,7 +613,7 @@ load_fits (gchar     *filename,
 
 	  scan_lines++;
 
-	  if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
+	  if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
 	    gimp_progress_update ((double)(i+1) / (double)height);
 
 	  if ((scan_lines == tile_height) || ((i+1) == height))
@@ -665,7 +665,7 @@ load_fits (gchar     *filename,
 	      dest -= width*ncompose;
 	      scan_lines++;
 
-	      if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
+	      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
 		gimp_progress_update (  (double)(channel*height+i+1)
 					/ (double)(height*ncompose));
 
@@ -704,16 +704,16 @@ create_fits_header (FITS_FILE *ofp,
   static char *ctype3_card[] =
   {
     NULL, NULL, NULL,  /* bpp = 0: no additional card */
-    "COMMENT Image type within GIMP: GRAY_IMAGE",
+    "COMMENT Image type within GIMP: GIMP_GRAY_IMAGE",
     NULL,
     NULL,
-    "COMMENT Image type within GIMP: GRAYA_IMAGE (gray with alpha channel)",
+    "COMMENT Image type within GIMP: GIMP_GRAYA_IMAGE (gray with alpha channel)",
     "COMMENT Sequence for NAXIS3   : GRAY, ALPHA",
     "CTYPE3  = 'GRAYA   '           / GRAY IMAGE WITH ALPHA CHANNEL",
-    "COMMENT Image type within GIMP: RGB_IMAGE",
+    "COMMENT Image type within GIMP: GIMP_RGB_IMAGE",
     "COMMENT Sequence for NAXIS3   : RED, GREEN, BLUE",
     "CTYPE3  = 'RGB     '           / RGB IMAGE",
-    "COMMENT Image type within GIMP: RGBA_IMAGE (rgb with alpha channel)",
+    "COMMENT Image type within GIMP: GIMP_RGBA_IMAGE (rgb with alpha channel)",
     "COMMENT Sequence for NAXIS3   : RED, GREEN, BLUE, ALPHA",
     "CTYPE3  = 'RGBA    '           / RGB IMAGE WITH ALPHA CHANNEL"
   };
@@ -768,9 +768,9 @@ save_direct (FITS_FILE *ofp,
   int tile_height, bpp, bpsl;
   long nbytes;
   guchar *data, *src;
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
-  GDrawableType drawable_type;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  GimpImageType drawable_type;
   FITS_HDU_LIST *hdu;
 
   drawable = gimp_drawable_get (drawable_ID);
@@ -819,7 +819,7 @@ save_direct (FITS_FILE *ofp,
 	  nbytes += bpsl;
 	  src -= 2*bpsl;
 
-	  if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
+	  if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
 	    gimp_progress_update ((double)(i+channel*height)/(double)(height*bpp));
 	}
     }
@@ -857,9 +857,9 @@ save_index (FITS_FILE *ofp,
   guchar *data, *src, *cmap, *cmapptr;
   guchar red[256], green[256], blue[256];
   guchar *channels[3];
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
-  GDrawableType drawable_type;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  GimpImageType drawable_type;
   FITS_HDU_LIST *hdu;
 
   channels[0] = red;   channels[1] = green;   channels[2] = blue;
@@ -918,7 +918,7 @@ save_index (FITS_FILE *ofp,
 	  src -= 2*bpsl;
 	}
 
-      if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
 	gimp_progress_update ((double) (i+channel*height) /
 			      (double) (height*(bpp+2)));
     }
@@ -943,7 +943,7 @@ save_index (FITS_FILE *ofp,
 	  src -= 2*bpsl;
 	}
 
-      if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
 	gimp_progress_update ((double) (i+channel*height) /
 			      (double) (height*(bpp+2)));
     }

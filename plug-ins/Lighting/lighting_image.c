@@ -13,14 +13,14 @@
 #include "lighting_preview.h"
 #include "lighting_ui.h"
 
-GDrawable *input_drawable,*output_drawable;
-GPixelRgn  source_region, dest_region;
+GimpDrawable *input_drawable,*output_drawable;
+GimpPixelRgn  source_region, dest_region;
 
-GDrawable *bump_drawable = NULL;
-GPixelRgn  bump_region;
+GimpDrawable *bump_drawable = NULL;
+GimpPixelRgn  bump_region;
 
-GDrawable *env_drawable = NULL;
-GPixelRgn  env_region;
+GimpDrawable *env_drawable = NULL;
+GimpPixelRgn  env_region;
 
 guchar   *preview_rgb_data = NULL;
 GdkImage *image = NULL;
@@ -38,7 +38,7 @@ guchar sinemap[256], spheremap[256], logmap[256];
 /******************/
 
 guchar
-peek_map (GPixelRgn *region,
+peek_map (GimpPixelRgn *region,
 	  gint       x,
 	  gint       y)
 {
@@ -269,7 +269,7 @@ get_image_color (gdouble  u,
 }
 
 gdouble
-get_map_value (GPixelRgn *region,
+get_map_value (GimpPixelRgn *region,
 	       gdouble    u,
 	       gdouble    v,
 	       gint      *inside)
@@ -330,7 +330,7 @@ compute_maps (void)
 /****************************************/
 
 gint
-image_setup (GDrawable *drawable,
+image_setup (GimpDrawable *drawable,
 	     gint       interactive)
 {
   glong numbytes;

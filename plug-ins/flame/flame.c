@@ -54,10 +54,10 @@
 static void query             (void);
 static void run               (gchar   *name,
 		               gint     nparams,
-		               GParam  *param,
+		               GimpParam  *param,
 		               gint    *nreturn_vals,
-			       GParam **return_vals);
-static void doit              (GDrawable *drawable);
+			       GimpParam **return_vals);
+static void doit              (GimpDrawable *drawable);
 
 static gint dialog            (void);
 static void set_flame_preview (void);
@@ -95,7 +95,7 @@ static GtkWidget     *edit_previews[NMUTANTS];
 static gdouble        pick_speed = 0.2;
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -127,11 +127,11 @@ MAIN ()
 static void 
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
   static gint nargs = sizeof(args) / sizeof(args[0]);
 
@@ -143,7 +143,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Render/Nature/Flame..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -179,14 +179,14 @@ maybe_init_cp (void)
 static void 
 run (gchar   *name, 
      gint     n_params, 
-     GParam  *param, 
+     GimpParam  *param, 
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable = NULL;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable = NULL;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -195,9 +195,9 @@ run (gchar   *name,
 
   run_mode = param[0].data.d_int32;
   
-  if (run_mode == RUN_NONINTERACTIVE)
+  if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
   else
     {
@@ -209,16 +209,16 @@ run (gchar   *name,
       config.cp.width = drawable->width;
       config.cp.height = drawable->height;
 
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	{
 	  if (!dialog ())
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       if (gimp_drawable_is_rgb (drawable->id))
 	{
@@ -228,18 +228,18 @@ run (gchar   *name,
 
 	  doit (drawable);
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 	  gimp_set_data ("plug_in_flame", &config, sizeof (config));
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
       gimp_drawable_detach (drawable);
     }
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
@@ -247,8 +247,8 @@ static void
 drawable_to_cmap (control_point *cp) 
 {
   gint       i, j;
-  GPixelRgn  pr;
-  GDrawable *d;
+  GimpPixelRgn  pr;
+  GimpDrawable *d;
   guchar    *p;
   gint       indexed;
 
@@ -291,7 +291,7 @@ drawable_to_cmap (control_point *cp)
 }
 
 static void 
-doit (GDrawable *drawable)
+doit (GimpDrawable *drawable)
 {
   gint    width, height;
   guchar *tmp;
@@ -321,7 +321,7 @@ doit (GDrawable *drawable)
   /* update destination */
   if (4 == bytes)
     {
-      GPixelRgn pr;
+      GimpPixelRgn pr;
       gimp_pixel_rgn_init (&pr, drawable, 0, 0, width, height,
 			   TRUE, TRUE);
       gimp_pixel_rgn_set_rect (&pr, tmp, 0, 0, width, height);
@@ -329,7 +329,7 @@ doit (GDrawable *drawable)
   else if (3 == bytes)
     {
       gint       i, j;
-      GPixelRgn  src_pr, dst_pr;
+      GimpPixelRgn  src_pr, dst_pr;
       guchar    *sl;
 
       sl = g_new (guchar, 3 * width);

@@ -426,7 +426,7 @@ p_init_xanim_global_name()
 static int
 p_convert_frames(gint32 frame_from, gint32 frame_to, char *basename, char *ext, char *ext2)
 {
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
    gint32           l_tmp_image_id;
    char             l_first_xa_frame[200];
@@ -441,27 +441,27 @@ p_convert_frames(gint32 frame_from, gint32 frame_to, char *basename, char *ext, 
     */   
    return_vals = gimp_run_procedure ("plug_in_gap_range_convert2",
                                     &nreturn_vals,
-                                    PARAM_INT32, RUN_NONINTERACTIVE,     /* runmode  */
-                                    PARAM_IMAGE, l_tmp_image_id,
-                                    PARAM_DRAWABLE, 0,         /* (unused)  */
-                                    PARAM_INT32, frame_from,
-                                    PARAM_INT32, frame_to,
-                                    PARAM_INT32, 0,            /* dont flatten */
-                                    PARAM_INT32, 4444,         /* dest type (keep type) */
-                                    PARAM_INT32, 256,          /* colors (unused)  */
-                                    PARAM_INT32, 0,            /* no dither (unused)  */
-                                    PARAM_STRING, ext2,        /* extension for dest. filetype  */
-                                    PARAM_STRING, basename,    /* basename for dest. filetype  */
-                                    PARAM_INT32, 0,            /* (unused)  */
-                                    PARAM_INT32, 0,            /* (unused)  */
-                                    PARAM_INT32, 0,            /* (unused)  */
-                                    PARAM_STRING, "none",      /* (unused) palettename */
-                                    PARAM_END);
+                                    GIMP_PDB_INT32, GIMP_RUN_NONINTERACTIVE,     /* runmode  */
+                                    GIMP_PDB_IMAGE, l_tmp_image_id,
+                                    GIMP_PDB_DRAWABLE, 0,         /* (unused)  */
+                                    GIMP_PDB_INT32, frame_from,
+                                    GIMP_PDB_INT32, frame_to,
+                                    GIMP_PDB_INT32, 0,            /* dont flatten */
+                                    GIMP_PDB_INT32, 4444,         /* dest type (keep type) */
+                                    GIMP_PDB_INT32, 256,          /* colors (unused)  */
+                                    GIMP_PDB_INT32, 0,            /* no dither (unused)  */
+                                    GIMP_PDB_STRING, ext2,        /* extension for dest. filetype  */
+                                    GIMP_PDB_STRING, basename,    /* basename for dest. filetype  */
+                                    GIMP_PDB_INT32, 0,            /* (unused)  */
+                                    GIMP_PDB_INT32, 0,            /* (unused)  */
+                                    GIMP_PDB_INT32, 0,            /* (unused)  */
+                                    GIMP_PDB_STRING, "none",      /* (unused) palettename */
+                                    GIMP_PDB_END);
 
    /* destroy the tmp image */
    gimp_image_delete(l_tmp_image_id);
 
-   if (return_vals[0].data.d_status != STATUS_SUCCESS)
+   if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS)
    {
       return(-1);  
    }
@@ -971,7 +971,7 @@ p_start_xanim_process_exec(gint32 first_frame, gint32 last_frame,
  */
 
 gint32
-gap_xanim_decode(GRunModeType run_mode)
+gap_xanim_decode(GimpRunModeType run_mode)
 {
   gint32 l_rc;
   gint32 first_frame;

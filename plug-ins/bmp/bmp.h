@@ -16,7 +16,7 @@ extern gint16       ToS           (guchar *);
 extern void         FromS         (gint16,
 				   guchar *);
 extern gint32       ReadBMP       (gchar *);
-extern GStatusType  WriteBMP      (gchar *,
+extern GimpPDBStatusType  WriteBMP      (gchar *,
 				   gint32,
 				   gint32);
 extern gint         ReadColorMap  (FILE *,

@@ -9,7 +9,7 @@
 
 extern FP_Params Current;
 
-extern GDrawable *drawable, *mask;
+extern GimpDrawable *drawable, *mask;
 extern ReducedImage *reduced;
 
 extern gint nudgeArray[256];
@@ -36,8 +36,8 @@ void resetFilterPacks()
   refreshPreviews(Current.VisibleFrames);  
 }
 
-ReducedImage *Reduce_The_Image(GDrawable *drawable,
-			       GDrawable *mask,
+ReducedImage *Reduce_The_Image(GimpDrawable *drawable,
+			       GimpDrawable *mask,
 			       gint LongerSize, 
 			       gint Slctn)
 {
@@ -45,7 +45,7 @@ ReducedImage *Reduce_The_Image(GDrawable *drawable,
   ReducedImage *temp=(ReducedImage *)malloc(sizeof(ReducedImage));
   guchar *tempRGB, *src_row, *tempmask, *src_mask_row,R,G,B;
   gint i, j, whichcol, whichrow, x1, x2, y1, y2;
-  GPixelRgn srcPR, srcMask;
+  GimpPixelRgn srcPR, srcMask;
   gint NoSelectionMade=TRUE;
   hsv *tempHSV, H, S, V;
 

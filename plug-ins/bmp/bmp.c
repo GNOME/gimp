@@ -76,11 +76,11 @@ struct Bitmap_Head_Struct Bitmap_Head;
 static void   query      (void);
 static void   run        (gchar   *name,
                           gint     nparams,
-                          GParam  *param,
+                          GimpParam  *param,
                           gint    *nreturn_vals,
-                          GParam **return_vals);
+                          GimpParam **return_vals);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -93,27 +93,27 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { PARAM_STRING,   "filename",     "The name of the file to load" },
-    { PARAM_STRING,   "raw_filename", "The name entered" },
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING,   "raw_filename", "The name entered" },
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { GIMP_PDB_IMAGE, "image", "Output image" },
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",        "Input image" },
-    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
-    { PARAM_STRING,   "filename",     "The name of the file to save the image in" },
-    { PARAM_STRING,   "raw_filename", "The name entered" },
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw_filename", "The name entered" },
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
   
@@ -127,7 +127,7 @@ query (void)
                           "1997",
                           "<Load>/BMP",
                           NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -139,7 +139,7 @@ query (void)
                           "1997",
                           "<Save>/BMP",
                           "INDEXED, GRAY, RGB",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
 
@@ -155,13 +155,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
   gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
@@ -170,8 +170,8 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, "file_bmp_load") == 0)
     {
@@ -179,34 +179,34 @@ run (gchar   *name,
 
        switch (run_mode)
         {
-        case RUN_INTERACTIVE:
+        case GIMP_RUN_INTERACTIVE:
 	  interactive_bmp = TRUE;
           break;
 
-        case RUN_NONINTERACTIVE:
+        case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
           interactive_bmp = FALSE;
 	  if (nparams != 3)
-            status = STATUS_CALLING_ERROR;
+            status = GIMP_PDB_CALLING_ERROR;
           break;
 
         default:
           break;
         }
 
-       if (status == STATUS_SUCCESS)
+       if (status == GIMP_PDB_SUCCESS)
 	 {
 	   image_ID = ReadBMP (param[1].data.d_string);
 
 	   if (image_ID != -1)
 	     {
 	       *nreturn_vals = 2;
-	       values[1].type         = PARAM_IMAGE;
+	       values[1].type         = GIMP_PDB_IMAGE;
 	       values[1].data.d_image = image_ID;
 	     }
 	   else
 	     {
-	       status = STATUS_EXECUTION_ERROR;
+	       status = GIMP_PDB_EXECUTION_ERROR;
 	     }
 	 }
     }
@@ -220,8 +220,8 @@ run (gchar   *name,
       /*  eventually export the image */ 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("bmp", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "BMP", 
 				      (CAN_HANDLE_RGB |
@@ -229,7 +229,7 @@ run (gchar   *name,
 				       CAN_HANDLE_INDEXED));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      values[0].data.d_status = STATUS_CANCEL;
+	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	    }
 	  break;
@@ -239,18 +239,18 @@ run (gchar   *name,
 
       switch (run_mode)
         {
-        case RUN_INTERACTIVE:
+        case GIMP_RUN_INTERACTIVE:
 	  interactive_bmp = TRUE;
           break;
 
-        case RUN_NONINTERACTIVE:
+        case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
           interactive_bmp = FALSE;
 	  if (nparams != 5)
-            status = STATUS_CALLING_ERROR;
+            status = GIMP_PDB_CALLING_ERROR;
           break;
 
-        case RUN_WITH_LAST_VALS:
+        case GIMP_RUN_WITH_LAST_VALS:
           interactive_bmp = FALSE;
           break;
 
@@ -258,7 +258,7 @@ run (gchar   *name,
           break;
         }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  status = WriteBMP (param[3].data.d_string, image_ID, drawable_ID);
 	}
@@ -268,7 +268,7 @@ run (gchar   *name,
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;

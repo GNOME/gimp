@@ -105,9 +105,9 @@ static gchar G_GNUC_UNUSED *dummy_entries[] =
 static void   query      (void);
 static void   run        (char    *name,
                           int      nparams,
-                          GParam  *param,
+                          GimpParam  *param,
                           int     *nreturn_vals,
-                          GParam **return_vals);
+                          GimpParam **return_vals);
 static gint32 load_image (char   *filename,
                           gint32  first_frame,
                           gint32  last_frame,
@@ -122,7 +122,7 @@ static gint32 load_range_dialog(gint32 *first_frame,
 				gint32 *autoload);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -136,34 +136,34 @@ MAIN ()
 static void
 query ()
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "(unused)"},
-    { PARAM_DRAWABLE, "drawable", "(unused)"},
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
-    { PARAM_INT32, "first_frame", "1st frame to extract (starting at number 1)" },
-    { PARAM_INT32, "last_frame", "last frame to extract (use 0 to load all remaining frames)" },
-    { PARAM_STRING, "animframe_basename", "The name for the single frames _0001.xcf is added" },
-    { PARAM_INT32, "autoload", "TRUE: load 1.st extracted frame on success" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "(unused)"},
+    { GIMP_PDB_DRAWABLE, "drawable", "(unused)"},
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name entered" },
+    { GIMP_PDB_INT32, "first_frame", "1st frame to extract (starting at number 1)" },
+    { GIMP_PDB_INT32, "last_frame", "last frame to extract (use 0 to load all remaining frames)" },
+    { GIMP_PDB_STRING, "animframe_basename", "The name for the single frames _0001.xcf is added" },
+    { GIMP_PDB_INT32, "autoload", "TRUE: load 1.st extracted frame on success" },
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { GIMP_PDB_IMAGE, "image", "Output image" },
   };
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
 
-  static GParamDef ext_args[] =
+  static GimpParamDef ext_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
-    { PARAM_INT32, "first_frame", "1st frame to extract (starting at number 1)" },
-    { PARAM_INT32, "last_frame", "last frame to extract (use 0 to load all remaining frames)" },
-    { PARAM_STRING, "animframe_basename", "The name for the single frames _0001.xcf is added" },
-    { PARAM_INT32, "autoload", "TRUE: load 1.st extracted frame on success" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name entered" },
+    { GIMP_PDB_INT32, "first_frame", "1st frame to extract (starting at number 1)" },
+    { GIMP_PDB_INT32, "last_frame", "last frame to extract (use 0 to load all remaining frames)" },
+    { GIMP_PDB_STRING, "animframe_basename", "The name for the single frames _0001.xcf is added" },
+    { GIMP_PDB_INT32, "autoload", "TRUE: load 1.st extracted frame on success" },
   };
   static int next_args = sizeof (ext_args) / sizeof (ext_args[0]);
 
@@ -177,7 +177,7 @@ query ()
                           "2000/01/01",
                           N_("<Image>/Video/Split Video to Frames/MPEG1"),
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -189,7 +189,7 @@ query ()
                           "2000/01/01",
                           N_("<Toolbox>/Xtns/Split Video to Frames/MPEG1"),
 			  NULL,
-                          PROC_EXTENSION,
+                          GIMP_EXTENSION,
                           next_args, nload_return_vals,
                           ext_args, load_return_vals);
 }
@@ -197,12 +197,12 @@ query ()
 static void
 run (char    *name,
      int      nparams,
-     GParam  *param,
+     GimpParam  *param,
      int     *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType run_mode;
+  static GimpParam values[2];
+  GimpRunModeType run_mode;
   gint32 image_ID;
   gint32 first_frame, last_frame;
   gint32 autoload;
@@ -216,8 +216,8 @@ run (char    *name,
   *return_vals = values;
   autoload = FALSE;
 
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  values[0].type = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
   run_mode = param[0].data.d_int32;
 
@@ -243,7 +243,7 @@ run (char    *name,
     }
 
     l_rc = 0;
-    if (run_mode == RUN_NONINTERACTIVE)
+    if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
        l_filename[0] = '\0';
        
@@ -293,13 +293,13 @@ run (char    *name,
     if (image_ID != -1)
     {
       *nreturn_vals = 2;
-      values[0].data.d_status = STATUS_SUCCESS;
-      values[1].type = PARAM_IMAGE;
+      values[0].data.d_status = GIMP_PDB_SUCCESS;
+      values[1].type = GIMP_PDB_IMAGE;
       values[1].data.d_image = image_ID;
     }
     else
     {
-      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
     }
   }
 
@@ -398,8 +398,8 @@ load_image (char   *filename,
 	    char    *basename,
 	    gint32   autoload)
 {
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
   gint32 first_image_ID;
   gint32 image_ID;
   gint32 layer_ID;
@@ -538,7 +538,7 @@ load_image (char   *filename,
        layer_ID = gimp_layer_new (image_ID, layername,
                                   wwidth,
                                   wheight,
-                                  RGBA_IMAGE, 100, NORMAL_MODE);
+                                  GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
        g_free(layername);
        gimp_image_add_layer (image_ID, layer_ID, 0);
        gimp_layer_set_visible(layer_ID, l_visible);
@@ -573,7 +573,7 @@ load_image (char   *filename,
 
        /* save each image as frame to disk */       
        {
-         GParam* l_params;
+         GimpParam* l_params;
 	 gint    l_retvals;
 
          l_overwrite_mode = p_overwrite_dialog(framename, l_overwrite_mode);
@@ -588,12 +588,12 @@ load_image (char   *filename,
 	 {
            l_params = gimp_run_procedure ("gimp_xcf_save",
 			           &l_retvals,
-			           PARAM_INT32,    RUN_NONINTERACTIVE,
-			           PARAM_IMAGE,    image_ID,
-			           PARAM_DRAWABLE, 0,
-			           PARAM_STRING, framename,
-			           PARAM_STRING, framename, /* raw name ? */
-			           PARAM_END);
+			           GIMP_PDB_INT32,    GIMP_RUN_NONINTERACTIVE,
+			           GIMP_PDB_IMAGE,    image_ID,
+			           GIMP_PDB_DRAWABLE, 0,
+			           GIMP_PDB_STRING, framename,
+			           GIMP_PDB_STRING, framename, /* raw name ? */
+			           GIMP_PDB_END);
            p_gimp_file_save_thumbnail(image_ID, framename);
 	 }
 

@@ -314,7 +314,7 @@ init_procedures (void)
   init_lsubr ("script-fu-register", script_fu_register_call);
   init_lsubr ("script-fu-quit", script_fu_quit_call);
 
-  gimp_query_database (".*", ".*", ".*", ".*", ".*", ".*", ".*", &num_procs, &proc_list);
+  gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*", &num_procs, &proc_list);
 
   /*  Register each procedure as a scheme func  */
   for (i = 0; i < num_procs; i++)
@@ -413,12 +413,12 @@ init_constants (void)
   setvar (cintern ("BLUR"), flocons (0), NIL);
   setvar (cintern ("SHARPEN"), flocons (1), NIL);
 
-  setvar (cintern ("RGB_IMAGE"), flocons (0), NIL);
-  setvar (cintern ("RGBA_IMAGE"), flocons (1), NIL);
-  setvar (cintern ("GRAY_IMAGE"), flocons (2), NIL);
-  setvar (cintern ("GRAYA_IMAGE"), flocons (3), NIL);
-  setvar (cintern ("INDEXED_IMAGE"), flocons (4), NIL);
-  setvar (cintern ("INDEXEDA_IMAGE"), flocons (5), NIL);
+  setvar (cintern ("GIMP_RGB_IMAGE"), flocons (0), NIL);
+  setvar (cintern ("GIMP_RGBA_IMAGE"), flocons (1), NIL);
+  setvar (cintern ("GIMP_GRAY_IMAGE"), flocons (2), NIL);
+  setvar (cintern ("GIMP_GRAYA_IMAGE"), flocons (3), NIL);
+  setvar (cintern ("GIMP_INDEXED_IMAGE"), flocons (4), NIL);
+  setvar (cintern ("GIMP_INDEXEDA_IMAGE"), flocons (5), NIL);
 
   /* Useful misc stuff */
   setvar (cintern ("TRUE"), flocons (1), NIL);

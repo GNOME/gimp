@@ -189,7 +189,7 @@ extern double       x_release,
                     y_release;
 extern float        cx;
 extern float        cy;
-extern GDrawable   *drawable;
+extern GimpDrawable   *drawable;
 extern gint         tile_width,
                     tile_height;
 extern gint         img_width,
@@ -203,7 +203,7 @@ extern gint         sel_width,
                     sel_height;
 extern gint         preview_width,
                     preview_height;
-extern GTile       *the_tile;
+extern GimpTile       *the_tile;
 extern double       cen_x,
                     cen_y;
 extern double       xpos,

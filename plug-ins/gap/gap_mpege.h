@@ -40,7 +40,7 @@ typedef enum
 } t_gap_mpeg_encoder;
 
 
-int gap_mpeg_encode(GRunModeType run_mode,
+int gap_mpeg_encode(GimpRunModeType run_mode,
                              gint32 image_id,
                              t_gap_mpeg_encoder encoder
                           /* ,

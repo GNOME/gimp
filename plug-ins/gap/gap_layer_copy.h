@@ -48,7 +48,7 @@
 gint32 p_my_layer_copy (gint32 dst_image_id,
                         gint32 src_layer_id,
                         gdouble    opacity, /* 0.0 upto 100.0 */
-                        GLayerMode mode,
+                        GimpLayerModeEffects mode,
                         gint *src_offset_x,
                         gint *src_offset_y );
 

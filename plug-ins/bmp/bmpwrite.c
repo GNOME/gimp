@@ -67,7 +67,7 @@ static gint  save_dialog      (void);
 static void  save_ok_callback (GtkWidget *widget,
 			       gpointer   data);
 
-GStatusType
+GimpPDBStatusType
 WriteBMP (gchar  *filename,
 	  gint32  image,
 	  gint32  drawable_ID)
@@ -82,9 +82,9 @@ WriteBMP (gchar  *filename,
   gint colors;
   gchar *temp_buf;
   guchar *pixels;
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
-  GDrawableType drawable_type;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  GimpImageType drawable_type;
   guchar puffer[50];
   gint i;
 
@@ -96,13 +96,13 @@ WriteBMP (gchar  *filename,
 		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
   switch (drawable_type)
     {
-    case RGB_IMAGE:
-    case GRAY_IMAGE:
-    case INDEXED_IMAGE:
+    case GIMP_RGB_IMAGE:
+    case GIMP_GRAY_IMAGE:
+    case GIMP_INDEXED_IMAGE:
       break;
     default:
       g_message(_("BMP: cannot operate on unknown image types or alpha images"));
-      return STATUS_EXECUTION_ERROR;
+      return GIMP_PDB_EXECUTION_ERROR;
       break;
     }
 
@@ -110,13 +110,13 @@ WriteBMP (gchar  *filename,
 
   switch (drawable_type)
     {
-    case RGB_IMAGE:
+    case GIMP_RGB_IMAGE:
       colors       = 0;
       BitsPerPixel = 24;
       MapSize      = 0;
       channels     = 3;
       break;
-    case GRAY_IMAGE:
+    case GIMP_GRAY_IMAGE:
       colors       = 256;
       BitsPerPixel = 8;
       MapSize      = 1024;
@@ -128,7 +128,7 @@ WriteBMP (gchar  *filename,
 	  Blue[i]  = i;
 	}
       break;
-    case INDEXED_IMAGE:
+    case GIMP_INDEXED_IMAGE:
       cmap     = gimp_image_get_cmap (image, &colors);
       MapSize  = 4 * colors;
       channels = 1;
@@ -149,7 +149,7 @@ WriteBMP (gchar  *filename,
       break;
     default:
       fprintf (stderr, "%s: This should not happen\n", prog_name);
-      return STATUS_EXECUTION_ERROR;
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
   /* Perhaps someone wants RLE encoded Bitmaps */
@@ -157,7 +157,7 @@ WriteBMP (gchar  *filename,
   if ((BitsPerPixel == 8 || BitsPerPixel == 4) && interactive_bmp)
     {
       if (! save_dialog ())
-	return STATUS_CANCEL;
+	return GIMP_PDB_CANCEL;
     }
 
   /* Let's take some file */  
@@ -165,7 +165,7 @@ WriteBMP (gchar  *filename,
   if (!outfile)
     {
       g_message (_("Can't open %s"), filename);
-      return STATUS_EXECUTION_ERROR;
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
   /* fetch the image */
@@ -298,7 +298,7 @@ WriteBMP (gchar  *filename,
   gimp_drawable_detach (drawable);
   g_free (pixels);
 
-  return STATUS_SUCCESS;
+  return GIMP_PDB_SUCCESS;
 }
 
 void 

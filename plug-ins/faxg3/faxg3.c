@@ -54,15 +54,15 @@
 static void   query      (void);
 static void   run        (gchar   *name,
 			  gint     nparams,
-			  GParam  *param,
+			  GimpParam  *param,
 			  gint    *nreturn_vals,
-			  GParam **return_vals);
+			  GimpParam **return_vals);
 
 static gint32 load_image (gchar *);
 
 gint32        emitgimp   (gint, gint, gchar *, gint, gchar *);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -74,15 +74,15 @@ MAIN ()
 
 void query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" },
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { GIMP_PDB_IMAGE, "image", "Output image" },
   };
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
@@ -95,7 +95,7 @@ void query (void)
                           VERSION,
 			  "<Load>/Fax G3",
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -108,20 +108,20 @@ void query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType run_mode;
+  static GimpParam values[2];
+  GimpRunModeType run_mode;
   gint32 image_ID;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  values[0].type = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
   if (strcmp (name, "file_faxg3_load") == 0)
     {
@@ -129,16 +129,16 @@ run (gchar   *name,
 
       *nreturn_vals = 2;
       image_ID = load_image (param[1].data.d_string);
-      values[1].type = PARAM_IMAGE;
+      values[1].type = GIMP_PDB_IMAGE;
       values[1].data.d_image = image_ID;
 
       if (image_ID != -1)
 	{
-	  values[0].data.d_status = STATUS_SUCCESS;
+	  values[0].data.d_status = GIMP_PDB_SUCCESS;
 	}
       else
 	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 }
@@ -426,8 +426,8 @@ do_write:      	/* write pbm (or whatever) file */
 
 gint32 emitgimp ( int hcol, int row, char *bitmap, int bperrow, char *filename )
 {
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
   gint32 image_ID;
   gint32 layer_ID;
   guchar *buf;
@@ -442,13 +442,13 @@ gint32 emitgimp ( int hcol, int row, char *bitmap, int bperrow, char *filename )
   fprintf( stderr, "emit gimp: %d x %d\n", hcol, row);
 #endif
 
-  image_ID = gimp_image_new (hcol, row, GRAY);
+  image_ID = gimp_image_new (hcol, row, GIMP_GRAY);
   gimp_image_set_filename (image_ID, filename);
 
   layer_ID = gimp_layer_new (image_ID, _("Background"),
 			     hcol,
 			     row,
-			     GRAY_IMAGE, 100, NORMAL_MODE);
+			     GIMP_GRAY_IMAGE, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get (layer_ID);

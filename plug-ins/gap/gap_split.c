@@ -26,9 +26,9 @@
  */
 
 /* revision history
- * 1.1.9a;  1999/09/21   hof: bugfix RUN_NONINTERACTIVE mode did not work
+ * 1.1.9a;  1999/09/21   hof: bugfix GIMP_RUN_NONINTERACTIVE mode did not work
  * 1.1.8a;  1999/08/31   hof: accept anim framenames without underscore '_'
- * 1.1.5a;  1999/05/08   hof: bugix (dont mix GDrawableType with GImageType)
+ * 1.1.5a;  1999/05/08   hof: bugix (dont mix GimpImageType with GimpImageBaseType)
  * 0.96.00; 1998/07/01   hof: - added scale, resize and crop 
  *                              (affects full range == all anim frames)
  *                            - now using gap_arr_dialog.h
@@ -75,9 +75,9 @@ p_split_image(t_anim_info *ainfo_ptr,
               char *new_extension,
               gint invers, gint no_alpha)
 {
-  GImageType l_type;
+  GimpImageBaseType l_type;
   guint   l_width, l_height;
-  GRunModeType l_run_mode;
+  GimpRunModeType l_run_mode;
   gint32  l_new_image_id;
   gint    l_nlayers;
   gint32 *l_layers_list;
@@ -95,7 +95,7 @@ p_split_image(t_anim_info *ainfo_ptr,
   l_rc = -1;
   l_percentage = 0.0;
   l_run_mode  = ainfo_ptr->run_mode;
-  if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+  if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
   { 
     gimp_progress_init( _("Splitting into Frames..."));
   }
@@ -149,7 +149,7 @@ p_split_image(t_anim_info *ainfo_ptr,
            /* add a dummy layer (flatten needs at least 2 layers) */
            l_cp_layer_id = gimp_layer_new(l_new_image_id, "dummy",
                                           4, 4,         /* width, height */
-                                          ((l_type * 2 ) + 1),  /* convert from GImageType to GDrawableType, and add alpha */
+                                          ((l_type * 2 ) + 1),  /* convert from GimpImageBaseType to GimpImageType, and add alpha */
                                           0.0,          /* Opacity full transparent */     
                                           0);           /* NORMAL */
            gimp_image_add_layer(l_new_image_id, l_cp_layer_id, 0);
@@ -178,7 +178,7 @@ p_split_image(t_anim_info *ainfo_ptr,
             break;
           }
 
-          l_run_mode  = RUN_NONINTERACTIVE;  /* for all further calls */
+          l_run_mode  = GIMP_RUN_NONINTERACTIVE;  /* for all further calls */
 
           /* set image name */
           gimp_image_set_filename (l_new_image_id, l_sav_name);
@@ -193,7 +193,7 @@ p_split_image(t_anim_info *ainfo_ptr,
        
  
        /* show progress bar */
-       if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+       if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
        { 
          l_percentage += l_percentage_step;
          gimp_progress_update (l_percentage);
@@ -268,7 +268,7 @@ p_split_dialog(t_anim_info *ainfo_ptr, gint *inverse_order, gint *no_alpha, char
  *    one frame per layer.
  * ============================================================================
  */
-int gap_split_image(GRunModeType run_mode,
+int gap_split_image(GimpRunModeType run_mode,
                       gint32     image_id,
                       gint32     inverse_order,
                       gint32     no_alpha,
@@ -301,7 +301,7 @@ int gap_split_image(GRunModeType run_mode,
       }
       else
       {
-        if(run_mode == RUN_INTERACTIVE)
+        if(run_mode == GIMP_RUN_INTERACTIVE)
         {
            l_rc = p_split_dialog (ainfo_ptr, &l_inverse_order, &l_no_alpha, &l_extension[0], sizeof(l_extension));
         }

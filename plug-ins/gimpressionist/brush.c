@@ -45,7 +45,7 @@ int colorfile(char *fn)
 
 void brushdmenuselect(gint32 id, gpointer data)
 {
-  GPixelRgn src_rgn;
+  GimpPixelRgn src_rgn;
   guchar *src_row;
   guchar *src;
   gint alpha, has_alpha, bpp;
@@ -53,7 +53,7 @@ void brushdmenuselect(gint32 id, gpointer data)
   struct ppm *p;
   gint x1, y1, x2, y2;
   gint row, col;
-  GDrawable *drawable;
+  GimpDrawable *drawable;
   int rowstride;
 
   if(brushfile == 2) return; /* Not finished GUI-building yet */

@@ -117,7 +117,7 @@ extern void * gdk_root_parent;
 		       GDK_KEY_PRESS_MASK | \
 		       GDK_KEY_RELEASE_MASK 
 
-static GDrawable *gfig_select_drawable;
+static GimpDrawable *gfig_select_drawable;
 static GtkWidget *gfig_preview;
 static GtkWidget *pic_preview;
 static GtkWidget *gfig_gtk_list;
@@ -133,9 +133,9 @@ static gint   img_width, img_height, img_bpp, real_img_bpp;
 static void      query  (void);
 static void      run    (gchar    *name,
 			 gint      nparams,
-			 GParam   *param,
+			 GimpParam   *param,
 			 gint     *nreturn_vals,
-			 GParam  **return_vals);
+			 GimpParam  **return_vals);
 
 static gint      gfig_dialog               (void);
 static void      gfig_clear_selection      (gint32 ID);
@@ -223,7 +223,7 @@ static gint      calculate_point_to_line_distance (GdkPoint *p,
 						   GdkPoint *B,
 						   GdkPoint *I);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -652,12 +652,12 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "dummy", "dummy" } 
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "dummy", "dummy" } 
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -669,7 +669,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Render/Gfig..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -677,14 +677,14 @@ query (void)
 static void
 run (gchar    *name,
      gint      nparams,
-     GParam   *param,
+     GimpParam   *param,
      gint     *nreturn_vals,
-     GParam  **return_vals)
+     GimpParam  **return_vals)
 {
-  GParam * values = g_new (GParam, 1);
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  GimpParam * values = g_new (GimpParam, 1);
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   gint pwidth, pheight;
 
@@ -697,7 +697,7 @@ run (gchar    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   gfig_select_drawable = drawable =
@@ -737,7 +737,7 @@ run (gchar    *name,
   
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /*gimp_get_data ("plug_in_gfig", &selvals);*/
       INIT_I18N_UI ();
       if (!gfig_dialog ())
@@ -747,11 +747,11 @@ run (gchar    *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
-      status = STATUS_CALLING_ERROR;
+    case GIMP_RUN_NONINTERACTIVE:
+      status = GIMP_PDB_CALLING_ERROR;
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*gimp_get_data ("plug_in_gfig", &selvals);*/
       break;
 
@@ -768,17 +768,17 @@ run (gchar    *name,
 
       do_gfig ();
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
 #if 0
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_gfig", &selvals, sizeof (SelectItVals));
 #endif /* 0 */
     }
   else
     {
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -789,7 +789,7 @@ run (gchar    *name,
 static void
 gfig_clear_selection (gint32 image_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   /* Clear any selection - needed because drawing circles/ellipses 
@@ -797,8 +797,8 @@ gfig_clear_selection (gint32 image_ID)
    */
   return_vals = gimp_run_procedure ("gimp_selection_clear",
                                     &nreturn_vals,
-                                    PARAM_IMAGE, image_ID,
-                                    PARAM_END);
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
   
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -1639,7 +1639,7 @@ void * yyy;
 static void
 cache_preview (void)
 {
-  GPixelRgn src_rgn;
+  GimpPixelRgn src_rgn;
   int y, x;
   guchar *src_rows;
   guchar *p;
@@ -1666,8 +1666,8 @@ cache_preview (void)
 
   switch (gimp_drawable_type (gfig_select_drawable->id))
     {
-    case GRAYA_IMAGE:
-    case GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY_IMAGE:
       isgrey = 1;
     default:
       break;
@@ -2422,8 +2422,8 @@ gfig_brush_fill_preview (GtkWidget *pw,
 			 gint32     layer_ID,
 			 BrushDesc *bdesc)
 {
-  GPixelRgn src_rgn;
-  GDrawable *brushdrawable;
+  GimpPixelRgn src_rgn;
+  GimpDrawable *brushdrawable;
   gint bcount = 3;
 
   if (bdesc->pv_buf)
@@ -2452,15 +2452,15 @@ gfig_brush_fill_preview (GtkWidget *pw,
 static void
 mygimp_brush_set (gchar *bname)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   int nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_brushes_set_brush",
 				    &nreturn_vals,
-				    PARAM_STRING, bname,
-				    PARAM_END);
+				    GIMP_PDB_STRING, bname,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status != STATUS_SUCCESS)
+  if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS)
     {
       g_message ("Can't set brush...(1)");
     }
@@ -2471,15 +2471,15 @@ mygimp_brush_set (gchar *bname)
 static gchar *
 mygimp_brush_get (void)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   int nreturn_vals;
   static gchar saved_bname[1024]; /* required to be static - returned from proc */
 
   return_vals = gimp_run_procedure ("gimp_brushes_get_brush",
                                     &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       strncpy (saved_bname, return_vals[1].data.d_string, sizeof (saved_bname));
     }
@@ -2497,14 +2497,14 @@ static void
 mygimp_brush_info (gint32 *width,
 		   gint32 *height)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   int nreturn_vals;
  
   return_vals = gimp_run_procedure ("gimp_brushes_get_brush",
                                     &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *width  = MAX (return_vals[2].data.d_int32, 32);
       *height = MAX (return_vals[3].data.d_int32, 32);
@@ -4621,8 +4621,8 @@ paint_layer_new (gchar *new_name)
 
   switch (gimp_drawable_type (gfig_select_drawable->id))
     {
-    case GRAYA_IMAGE:
-    case GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY_IMAGE:
       isgrey = 2;
     default:
       break;
@@ -7174,7 +7174,7 @@ d_draw_circle (Dobject * obj)
 static void
 d_paint_circle (Dobject *obj)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   DobjPoints * center_pnt;
   DobjPoints * edge_pnt;
@@ -7239,8 +7239,8 @@ d_paint_circle (Dobject *obj)
   gimp_edit_stroke (gfig_drawable);
 
   return_vals = gimp_run_procedure ("gimp_selection_clear", &nreturn_vals,
-				    PARAM_IMAGE, gfig_image,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, gfig_image,
+				    GIMP_PDB_END);
   
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -7644,7 +7644,7 @@ d_paint_approx_ellipse (Dobject *obj)
 static void
 d_paint_ellipse (Dobject *obj)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   DobjPoints * center_pnt;
   DobjPoints * edge_pnt;
@@ -7722,8 +7722,8 @@ d_paint_ellipse (Dobject *obj)
   gimp_edit_stroke (gfig_drawable);
 
   return_vals = gimp_run_procedure ("gimp_selection_clear", &nreturn_vals,
-				    PARAM_IMAGE, gfig_image,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, gfig_image,
+				    GIMP_PDB_END);
   
   gimp_destroy_params (return_vals, nreturn_vals);
 

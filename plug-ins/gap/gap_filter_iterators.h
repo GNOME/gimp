@@ -38,7 +38,7 @@
 #ifndef _GAP_FILTER_ITERATORS_H
 #define _GAP_FILTER_ITERATORS_H
 
-typedef gint (*t_iter_ALT_func) (GRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct);
+typedef gint (*t_iter_ALT_func) (GimpRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct);
 
  
 typedef struct t_iter_ALT_tab

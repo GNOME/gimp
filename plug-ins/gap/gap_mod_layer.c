@@ -29,7 +29,7 @@
 
 /* revision history:
  * gimp   1.1.6;     1999/06/21  hof: bugix: wrong iterator total_steps and direction
- * gimp   1.1.15.1;  1999/05/08  hof: bugix (dont mix GDrawableType with GImageType)
+ * gimp   1.1.15.1;  1999/05/08  hof: bugix (dont mix GimpImageType with GimpImageBaseType)
  * version 0.98.00   1998.11.27  hof: - use new module gap_pdb_calls.h
  * version 0.97.00   1998.10.19  hof: - created module
  */
@@ -385,7 +385,7 @@ p_alloc_layli(gint32 image_id, gint32 *l_sel_cnt, gint *nlayers,
 
 void p_prevent_empty_image(gint32 image_id)
 {
-  GImageType l_type;
+  GimpImageBaseType l_type;
   guint   l_width, l_height;
   gint32  l_layer_id;
   gint    l_nlayers;
@@ -407,7 +407,7 @@ void p_prevent_empty_image(gint32 image_id)
      l_height = gimp_image_height(image_id);
      l_type   = gimp_image_base_type(image_id);
 
-     l_type   = (l_type * 2); /* convert from GImageType to GDrawableType */
+     l_type   = (l_type * 2); /* convert from GimpImageBaseType to GimpImageType */
 
      /* add a transparent dummy layer */
      l_layer_id = gimp_layer_new(image_id, "dummy",
@@ -593,7 +593,7 @@ p_apply_action(gint32 image_id,
 	  l_rc = p_call_plugin(filter_procname,
 	                       image_id,
 			       l_layer_id,
-			       RUN_WITH_LAST_VALS);
+			       GIMP_RUN_WITH_LAST_VALS);
           if(gap_debug) fprintf(stderr, "gap: p_apply_action FILTER:%s rc =%d\n",
                                 filter_procname, (int)l_rc);      
 	  break;
@@ -649,7 +649,7 @@ p_do_filter_dialogs(t_anim_info *ainfo_ptr,
   static char l_key_from[512];
   static gint l_gtk_init = TRUE;   /* gkt_init at 1.st call */
 
-  if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+  if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
   { 
     l_gtk_init = FALSE;  /* gtk_init was done in 1.st modify dialog before */
   }
@@ -704,7 +704,7 @@ p_do_filter_dialogs(t_anim_info *ainfo_ptr,
   /* open a view for the 1.st handled frame */
   *dpy_id = gimp_display_new (image_id);
 
-  l_rc = p_call_plugin(filter_procname, image_id, l_layer_id, RUN_INTERACTIVE);
+  l_rc = p_call_plugin(filter_procname, image_id, l_layer_id, GIMP_RUN_INTERACTIVE);
 
   /* OOPS: cant delete the display here, because
    *       closing the last display seems to free up
@@ -799,7 +799,7 @@ p_do_2nd_filter_dialogs(char *filter_procname,
   l_idx = p_get_1st_selected(l_layli_ptr, l_nlayers);
   if(l_idx < 0)
   {
-     p_msg_win (RUN_INTERACTIVE, _("GAP Modify: No layer selected in last handled frame"));
+     p_msg_win (GIMP_RUN_INTERACTIVE, _("GAP Modify: No layer selected in last handled frame"));
      goto cleanup;
   }
   l_layer_id = l_layli_ptr[l_idx].layer_id;
@@ -809,7 +809,7 @@ p_do_2nd_filter_dialogs(char *filter_procname,
 
   /* 2.nd INTERACTIV Filtercall dialog */
   /* --------------------------------- */
-  l_rc = p_call_plugin(filter_procname, l_last_image_id, l_layer_id, RUN_INTERACTIVE);
+  l_rc = p_call_plugin(filter_procname, l_last_image_id, l_layer_id, GIMP_RUN_INTERACTIVE);
 
   /* get values, then store with suffix "_ITER_TO" */
   l_plugin_data_len = p_get_data(filter_procname);
@@ -866,7 +866,7 @@ p_frames_modify(t_anim_info *ainfo_ptr,
   gint32     l_sel_cnt;
   t_LayliElem *l_layli_ptr;
 
-  GParam     *l_params;
+  GimpParam     *l_params;
   gint        l_retvals;
   gint        l_plugin_data_len;
   char       l_filter_procname[256];
@@ -883,7 +883,7 @@ p_frames_modify(t_anim_info *ainfo_ptr,
         (int)action_mode, (int)sel_mode, (int)sel_case, (int)sel_invert, sel_pattern);
 
   l_percentage = 0.0;
-  if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+  if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
   { 
     gimp_progress_init( _("Modifying Frames/Layer(s)..."));
   }
@@ -966,7 +966,7 @@ p_frames_modify(t_anim_info *ainfo_ptr,
 
       if(l_sel_cnt < 1)
       {
-         p_msg_win(RUN_INTERACTIVE, _("No selected Layer in start frame"));
+         p_msg_win(GIMP_RUN_INTERACTIVE, _("No selected Layer in start frame"));
          goto error;
       }
       
@@ -1076,11 +1076,11 @@ p_frames_modify(t_anim_info *ainfo_ptr,
         		       l_plugin_iterator, (int)l_cur_frame_nr);
        l_params = gimp_run_procedure (l_plugin_iterator,
 	  		     &l_retvals,
-	  		     PARAM_INT32,   RUN_NONINTERACTIVE,
-	  		     PARAM_INT32,   l_total_steps,          /* total steps  */
-	  		     PARAM_FLOAT,   (gdouble)l_cur_step,    /* current step */
-	  		     PARAM_INT32,   l_plugin_data_len, /* length of stored data struct */
-	  		     PARAM_END);
+	  		     GIMP_PDB_INT32,   GIMP_RUN_NONINTERACTIVE,
+	  		     GIMP_PDB_INT32,   l_total_steps,          /* total steps  */
+	  		     GIMP_PDB_FLOAT,   (gdouble)l_cur_step,    /* current step */
+	  		     GIMP_PDB_INT32,   l_plugin_data_len, /* length of stored data struct */
+	  		     GIMP_PDB_END);
        if (l_params[0].data.d_status == FALSE) 
        { 
          fprintf(stderr, "ERROR: iterator %s  failed\n", l_plugin_iterator);
@@ -1106,7 +1106,7 @@ p_frames_modify(t_anim_info *ainfo_ptr,
  
 
     
-    if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+    if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
     { 
       l_percentage += l_percentage_step;
       gimp_progress_update (l_percentage);
@@ -1144,7 +1144,7 @@ error:
  * ============================================================================
  */
 
-gint gap_mod_layer(GRunModeType run_mode, gint32 image_id,
+gint gap_mod_layer(GimpRunModeType run_mode, gint32 image_id,
                    gint32 range_from,  gint32 range_to,
                    gint32 action_mode, gint32 sel_mode,
                    gint32 sel_case, gint32 sel_invert,
@@ -1171,7 +1171,7 @@ gint gap_mod_layer(GRunModeType run_mode, gint32 image_id,
 
     if (0 == p_dir_ainfo(ainfo_ptr))
     {
-      if(run_mode == RUN_INTERACTIVE)
+      if(run_mode == GIMP_RUN_INTERACTIVE)
       {
          l_rc = p_layer_modify_dialog (ainfo_ptr, &l_from, &l_to,
 	                               &l_action_mode,

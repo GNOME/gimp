@@ -123,6 +123,6 @@ static void
 convert_string (gchar *str);
 
 static gchar* 
-GParamType2char(GParamType t);
+GParamType2char(GimpPDBArgType t);
 
 #endif

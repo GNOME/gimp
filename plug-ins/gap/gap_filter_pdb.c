@@ -71,7 +71,7 @@ static gint32 g_current_image_id;
 
 
 
-gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GRunModeType run_mode)
+gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GimpRunModeType run_mode)
 {
   GimpDrawable    *l_drawable;
   GimpParam       *l_ret_params;
@@ -109,8 +109,8 @@ gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GRunMode
   }			    
 
   /* construct the procedures arguments */
-  l_argv = g_new (GParam, l_nparams);
-  memset (l_argv, 0, (sizeof (GParam) * l_nparams));
+  l_argv = g_new (GimpParam, l_nparams);
+  memset (l_argv, 0, (sizeof (GimpParam) * l_nparams));
 
   /* initialize the argument types */
   for (l_idx = 0; l_idx < l_nparams; l_idx++)
@@ -118,26 +118,26 @@ gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GRunMode
     l_argv[l_idx].type = l_params[l_idx].type;
     switch(l_params[l_idx].type)
     {
-      case PARAM_DISPLAY:
+      case GIMP_PDB_DISPLAY:
         l_argv[l_idx].data.d_display  = -1;
         break;
-      case PARAM_DRAWABLE:
-      case PARAM_LAYER:
-      case PARAM_CHANNEL:
+      case GIMP_PDB_DRAWABLE:
+      case GIMP_PDB_LAYER:
+      case GIMP_PDB_CHANNEL:
         l_argv[l_idx].data.d_drawable  = -1;
         break;
-      case PARAM_IMAGE:
+      case GIMP_PDB_IMAGE:
         l_argv[l_idx].data.d_image  = -1;
         break;
-      case PARAM_INT32:
-      case PARAM_INT16:
-      case PARAM_INT8:
+      case GIMP_PDB_INT32:
+      case GIMP_PDB_INT16:
+      case GIMP_PDB_INT8:
         l_argv[l_idx].data.d_int32  = 0;
         break;
-      case PARAM_FLOAT:
+      case GIMP_PDB_FLOAT:
         l_argv[l_idx].data.d_float  = 0.0;
         break;
-      case PARAM_STRING:
+      case GIMP_PDB_STRING:
         l_argv[l_idx].data.d_string  =  NULL;
         break;
       default:
@@ -187,7 +187,7 @@ gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GRunMode
 int
 p_save_xcf(gint32 image_id, char *sav_name)
 {
-  GParam* l_params;
+  GimpParam* l_params;
   gint   l_retvals;
 
     /* save current image as xcf file
@@ -196,12 +196,12 @@ p_save_xcf(gint32 image_id, char *sav_name)
      */
     l_params = gimp_run_procedure ("gimp_xcf_save",
 			         &l_retvals,
-			         PARAM_INT32,    RUN_NONINTERACTIVE,
-			         PARAM_IMAGE,    image_id,
-			         PARAM_DRAWABLE, 0,
-			         PARAM_STRING, sav_name,
-			         PARAM_STRING, sav_name, /* raw name ? */
-			         PARAM_END);
+			         GIMP_PDB_INT32,    GIMP_RUN_NONINTERACTIVE,
+			         GIMP_PDB_IMAGE,    image_id,
+			         GIMP_PDB_DRAWABLE, 0,
+			         GIMP_PDB_STRING, sav_name,
+			         GIMP_PDB_STRING, sav_name, /* raw name ? */
+			         GIMP_PDB_END);
 
     if (l_params[0].data.d_status == FALSE) return(-1);
     
@@ -296,20 +296,20 @@ gint p_procedure_available(char  *proc_name, t_proc_type ptype)
      {
         case PTYP_ITERATOR:
            /* check exactly for Input Parametertypes (common to all Iterators) */
-           if (l_proc_type != PROC_EXTENSION )     { l_rc = -1; break; }
+           if (l_proc_type != GIMP_EXTENSION )     { l_rc = -1; break; }
            if (l_nparams  != 4)                    { l_rc = -1; break; }
-           if (l_params[0].type != PARAM_INT32)    { l_rc = -1; break; }
-           if (l_params[1].type != PARAM_INT32)    { l_rc = -1; break; }
-           if (l_params[2].type != PARAM_FLOAT)    { l_rc = -1; break; }
-           if (l_params[3].type != PARAM_INT32)    { l_rc = -1; break; }
+           if (l_params[0].type != GIMP_PDB_INT32)    { l_rc = -1; break; }
+           if (l_params[1].type != GIMP_PDB_INT32)    { l_rc = -1; break; }
+           if (l_params[2].type != GIMP_PDB_FLOAT)    { l_rc = -1; break; }
+           if (l_params[3].type != GIMP_PDB_INT32)    { l_rc = -1; break; }
            break;
         case PTYP_CAN_OPERATE_ON_DRAWABLE:
            /* check if plugin can be a typical one, that works on one drawable */
-           if (l_proc_type != PROC_PLUG_IN)         { l_rc = -1; break; }
+           if (l_proc_type != GIMP_PLUGIN)         { l_rc = -1; break; }
            if (l_nparams  < 3)                      { l_rc = -1; break; }
-	   if (l_params[0].type !=  PARAM_INT32)    { l_rc = -1; break; }
-	   if (l_params[1].type !=  PARAM_IMAGE)    { l_rc = -1; break; }
-	   if (l_params[2].type !=  PARAM_DRAWABLE) { l_rc = -1; break; }
+	   if (l_params[0].type !=  GIMP_PDB_INT32)    { l_rc = -1; break; }
+	   if (l_params[1].type !=  GIMP_PDB_IMAGE)    { l_rc = -1; break; }
+	   if (l_params[2].type !=  GIMP_PDB_DRAWABLE) { l_rc = -1; break; }
            break;
         default:
            break;
@@ -384,7 +384,7 @@ char * p_get_iterator_proc(char *plugin_name)
 int p_constraint_proc_sel1(gchar *proc_name)
 {
   int        l_rc;
-  GImageType l_base_type;
+  GimpImageBaseType l_base_type;
 
   /* here we should check, if proc_name
    * can operate on the current Imagetype (RGB, INDEXED, GRAY)
@@ -399,9 +399,9 @@ int p_constraint_proc_sel1(gchar *proc_name)
   l_base_type =gimp_image_base_type(g_current_image_id);
   switch(l_base_type)
   {
-    case RGB:
-    case GRAY:
-    case INDEXED:
+    case GIMP_RGB:
+    case GIMP_GRAY:
+    case GIMP_INDEXED:
       l_rc = 1;
       break;
   }

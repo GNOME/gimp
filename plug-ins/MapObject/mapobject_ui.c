@@ -1346,7 +1346,7 @@ create_main_notebook (GtkWidget *container)
 /********************************/
 
 gboolean
-main_dialog (GDrawable *drawable)
+main_dialog (GimpDrawable *drawable)
 {
   GtkWidget *main_hbox;
   GtkWidget *vbox;

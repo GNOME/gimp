@@ -66,10 +66,10 @@ int gap_debug = 0;
 
 
 static void query(void);
-static void run(char *name, int nparam, GParam *param,
-                int *nretvals, GParam **retvals);
+static void run(char *name, int nparam, GimpParam *param,
+                int *nretvals, GimpParam **retvals);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc */
   NULL,  /* quit_proc */
@@ -82,29 +82,29 @@ MAIN ()
 static void
 query ()
 {
-  static GParamDef args_foreach[] =
+  static GimpParamDef args_foreach[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_STRING, "proc_name", "name of plugin procedure to run for each layer)"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_STRING, "proc_name", "name of plugin procedure to run for each layer)"},
   };
   static int nargs_foreach = sizeof(args_foreach) / sizeof(args_foreach[0]);
 
-  static GParamDef *return_vals = NULL;
+  static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
   INIT_I18N();
 
   gimp_install_procedure("plug_in_gap_layers_run_animfilter",
-			 "This plugin calls another plugin for each layer of an image, varying its settings (to produce animated effects). The called plugin must work on a single drawable and must be able to RUN_WITH_LAST_VALS",
+			 "This plugin calls another plugin for each layer of an image, varying its settings (to produce animated effects). The called plugin must work on a single drawable and must be able to GIMP_RUN_WITH_LAST_VALS",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_filter_version,
 			 N_("<Image>/Filters/Filter all Layers..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_foreach, nreturn_vals,
 			 args_foreach, return_vals);
 
@@ -119,16 +119,16 @@ query ()
 static void
 run (char    *name,
      int      n_params,
-     GParam  *param,
+     GimpParam  *param,
      int     *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
 #define  MAX_PLUGIN_NAME_LEN  256
 
   char l_plugin_name[MAX_PLUGIN_NAME_LEN];
-  static GParam values[1];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32     image_id;
   gint32  len_struct;
   gint32  total_steps;
@@ -155,11 +155,11 @@ run (char    *name,
   
   if (strcmp (name, "plug_in_gap_layers_run_animfilter") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 4)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
         else
         {
@@ -168,7 +168,7 @@ run (char    *name,
         }
         INIT_I18N();
       }
-      else if(run_mode == RUN_WITH_LAST_VALS)
+      else if(run_mode == GIMP_RUN_WITH_LAST_VALS)
       {
         /* probably get last values (name of last plugin) */
         gimp_get_data("plug_in_gap_layers_run_animfilter", l_plugin_name);
@@ -176,7 +176,7 @@ run (char    *name,
         INIT_I18N_UI();
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id    = param[1].data.d_image;
@@ -187,26 +187,26 @@ run (char    *name,
   }
   else
   {
-      if ((run_mode == RUN_NONINTERACTIVE) && (n_params == 4))
+      if ((run_mode == GIMP_RUN_NONINTERACTIVE) && (n_params == 4))
       {
         total_steps  =  param[1].data.d_int32;
         current_step =  param[2].data.d_float;
         len_struct   =  param[3].data.d_int32;
         l_rc =  gap_run_iterators_ALT(name, run_mode, total_steps, current_step, len_struct);
       }
-      else status = STATUS_CALLING_ERROR;
+      else status = GIMP_PDB_CALLING_ERROR;
   }
 
  if(l_rc < 0)
  {
-    status = STATUS_EXECUTION_ERROR;
+    status = GIMP_PDB_EXECUTION_ERROR;
  }
  
   
- if (run_mode != RUN_NONINTERACTIVE)
+ if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush();
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
 }

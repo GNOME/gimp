@@ -54,16 +54,16 @@ FP_Params Current =
   {0,0,0}
 };
 
-GDrawable *drawable, *mask;
+GimpDrawable *drawable, *mask;
 
 void      query  (void);
 void      run    (gchar     *name,
 		  gint       nparams,
-		  GParam    *param,
+		  GimpParam    *param,
 		  gint      *nreturn_vals,
-		  GParam   **return_vals);
+		  GimpParam   **return_vals);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -76,11 +76,11 @@ MAIN()
 void
 query (void)
 {
-  GParamDef args[] =
+  GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (used for indexed images)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (used for indexed images)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
   gint nargs = sizeof (args) / sizeof (args[0]);
   
@@ -92,7 +92,7 @@ query (void)
 			  "27th March 1997",
 			  N_("<Image>/Image/Colors/Filter Pack..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -102,19 +102,19 @@ query (void)
 void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  GParam values[1];
-  GStatusType status = STATUS_SUCCESS;
+  GimpParam values[1];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   
   *nreturn_vals = 1;
   *return_vals = values;
 
   INIT_I18N_UI(); 
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   initializeFilterPacks();
@@ -126,7 +126,7 @@ run (gchar   *name,
       gimp_drawable_is_gray (drawable->id) )
     {
       gimp_message (_("Convert the image to RGB first!"));
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
   else if (gimp_drawable_is_rgb (drawable->id) && fp_dialog())
     {
@@ -135,11 +135,11 @@ run (gchar   *name,
       fp (drawable);
       gimp_displays_flush ();
     }
-  else status = STATUS_EXECUTION_ERROR;
+  else status = GIMP_PDB_EXECUTION_ERROR;
   
   
   values[0].data.d_status = status;
-  if (status==STATUS_SUCCESS)
+  if (status==GIMP_PDB_SUCCESS)
     gimp_drawable_detach (drawable);
 }
 
@@ -221,9 +221,9 @@ fp_row (const guchar *src_row,
 }
 
 
-void fp (GDrawable *drawable)
+void fp (GimpDrawable *drawable)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint width, height;
   gint bytes;
   guchar *src_row, *dest_row;

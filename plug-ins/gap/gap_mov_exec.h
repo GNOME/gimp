@@ -38,7 +38,7 @@
 #include "libgimp/gimp.h"
 #include "gap_mov_dialog.h"
 
-int gap_move(GRunModeType run_mode, gint32 image_id);
+int gap_move(GimpRunModeType run_mode, gint32 image_id);
 gint32 p_mov_anim_preview(t_mov_values *pvals_orig, t_anim_info *ainfo_ptr, gint preview_frame_nr);
 
 #endif

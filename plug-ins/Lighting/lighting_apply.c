@@ -67,7 +67,7 @@ compute_image (void)
       /* Create a new image */
       /* ================== */
 
-      new_image_id=gimp_image_new(width,height,RGB);
+      new_image_id=gimp_image_new(width,height,GIMP_RGB);
 
       if (mapvals.transparent_background==TRUE)
         {
@@ -75,7 +75,7 @@ compute_image (void)
           /* ================================= */
 
           new_layer_id=gimp_layer_new(new_image_id,"Background",
-            width,height,RGBA_IMAGE,100.0,NORMAL_MODE);
+            width,height,GIMP_RGBA_IMAGE,100.0,GIMP_NORMAL_MODE);
         }
       else
         {
@@ -83,7 +83,7 @@ compute_image (void)
           /* ======================= */
 
           new_layer_id=gimp_layer_new(new_image_id,"Background",
-            width,height,RGB_IMAGE,100.0,NORMAL_MODE);
+            width,height,GIMP_RGB_IMAGE,100.0,GIMP_NORMAL_MODE);
         }
 
       gimp_image_add_layer(new_image_id,new_layer_id,0);

@@ -1,14 +1,14 @@
 #ifndef __LIGHTING_IMAGE_H__
 #define __LIGHTING_IMAGE_H__
 
-extern GDrawable *input_drawable,*output_drawable;
-extern GPixelRgn  source_region, dest_region;
+extern GimpDrawable *input_drawable,*output_drawable;
+extern GimpPixelRgn  source_region, dest_region;
 
-extern GDrawable *bump_drawable;
-extern GPixelRgn  bump_region;
+extern GimpDrawable *bump_drawable;
+extern GimpPixelRgn  bump_region;
 
-extern GDrawable *env_drawable;
-extern GPixelRgn  env_region;
+extern GimpDrawable *env_drawable;
+extern GimpPixelRgn  env_region;
 
 extern guchar   *preview_rgb_data;
 extern GdkImage *image;
@@ -21,7 +21,7 @@ extern gint   border_x1,border_y1,border_x2,border_y2;
 
 extern guchar sinemap[256], spheremap[256], logmap[256];
 
-guchar         peek_map        (GPixelRgn *region,
+guchar         peek_map        (GimpPixelRgn *region,
 				gint       x,
 				gint       y);
 GckRGB         peek            (gint       x,
@@ -48,11 +48,11 @@ void           pos_to_float    (gdouble    x,
 GckRGB         get_image_color (gdouble    u,
 				gdouble    v,
 				gint      *inside);
-gdouble        get_map_value   (GPixelRgn *region,
+gdouble        get_map_value   (GimpPixelRgn *region,
 				gdouble    u,
 				gdouble    v,
 				gint      *inside);
-gint           image_setup     (GDrawable *drawable,
+gint           image_setup     (GimpDrawable *drawable,
 				gint       interactive);
 
 #endif  /* __LIGHTING_IMAGE_H__ */

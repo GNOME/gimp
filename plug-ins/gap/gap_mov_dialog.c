@@ -114,11 +114,11 @@ typedef struct {
 
 typedef struct
 {
-  GDrawable	*drawable;
+  GimpDrawable	*drawable;
   gint		dwidth, dheight;
   gint		bpp;
   GtkWidget	*preview;
-  GPixelRgn	 src_rgn;
+  GimpPixelRgn	 src_rgn;
   gint           PixelRgnIsInitialized;
   gint           show_path;
   gint           startup;
@@ -206,12 +206,12 @@ static void        p_clear_point            ();
 static void        p_load_points            (char *filename);
 static void        p_save_points            (char *filename);
 
-static GDrawable * p_get_flattened_drawable (gint32 image_id);
-static GDrawable * p_get_prevw_drawable (t_mov_path_preview *path_ptr);
+static GimpDrawable * p_get_flattened_drawable (gint32 image_id);
+static GimpDrawable * p_get_prevw_drawable (t_mov_path_preview *path_ptr);
 
-static gint	   mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
+static gint	   mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
                                 gint min, gint max);
-static GtkWidget * mov_path_prevw_create ( GDrawable *drawable,
+static GtkWidget * mov_path_prevw_create ( GimpDrawable *drawable,
                                            t_mov_path_preview *path_ptr);
 static GtkWidget * mov_src_sel_create ();
 
@@ -261,20 +261,20 @@ static void mov_show_path_callback      (GtkWidget *, gpointer);
 /*  the option menu items -- the paint modes  */
 static MenuItem option_paint_items[] =
 {
-  { N_("Normal"), 0, 0, mov_paintmode_menu_callback, (gpointer) NORMAL_MODE, NULL, NULL },
-  { N_("Dissolve"), 0, 0, mov_paintmode_menu_callback, (gpointer) DISSOLVE_MODE, NULL, NULL },
-  { N_("Multiply"), 0, 0, mov_paintmode_menu_callback, (gpointer) MULTIPLY_MODE, NULL, NULL },
-  { N_("Screen"), 0, 0, mov_paintmode_menu_callback, (gpointer) SCREEN_MODE, NULL, NULL },
-  { N_("Overlay"), 0, 0, mov_paintmode_menu_callback, (gpointer) OVERLAY_MODE, NULL, NULL },
-  { N_("Difference"), 0, 0, mov_paintmode_menu_callback, (gpointer) DIFFERENCE_MODE, NULL, NULL },
-  { N_("Addition"), 0, 0, mov_paintmode_menu_callback, (gpointer) ADDITION_MODE, NULL, NULL },
-  { N_("Subtract"), 0, 0, mov_paintmode_menu_callback, (gpointer) SUBTRACT_MODE, NULL, NULL },
-  { N_("Darken Only"), 0, 0, mov_paintmode_menu_callback, (gpointer) DARKEN_ONLY_MODE, NULL, NULL },
-  { N_("Lighten Only"), 0, 0, mov_paintmode_menu_callback, (gpointer) LIGHTEN_ONLY_MODE, NULL, NULL },
-  { N_("Hue"), 0, 0, mov_paintmode_menu_callback, (gpointer) HUE_MODE, NULL, NULL },
-  { N_("Saturation"), 0, 0, mov_paintmode_menu_callback, (gpointer) SATURATION_MODE, NULL, NULL },
-  { N_("Color"), 0, 0, mov_paintmode_menu_callback, (gpointer) COLOR_MODE, NULL, NULL },
-  { N_("Value"), 0, 0, mov_paintmode_menu_callback, (gpointer) VALUE_MODE, NULL, NULL },
+  { N_("Normal"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_NORMAL_MODE, NULL, NULL },
+  { N_("Dissolve"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_DISSOLVE_MODE, NULL, NULL },
+  { N_("Multiply"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_MULTIPLY_MODE, NULL, NULL },
+  { N_("Screen"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_SCREEN_MODE, NULL, NULL },
+  { N_("Overlay"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_OVERLAY_MODE, NULL, NULL },
+  { N_("Difference"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_DIFFERENCE_MODE, NULL, NULL },
+  { N_("Addition"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_ADDITION_MODE, NULL, NULL },
+  { N_("Subtract"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_SUBTRACT_MODE, NULL, NULL },
+  { N_("Darken Only"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_DARKEN_ONLY_MODE, NULL, NULL },
+  { N_("Lighten Only"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_LIGHTEN_ONLY_MODE, NULL, NULL },
+  { N_("Hue"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_HUE_MODE, NULL, NULL },
+  { N_("Saturation"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_SATURATION_MODE, NULL, NULL },
+  { N_("Color"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_COLOR_MODE, NULL, NULL },
+  { N_("Value"), 0, 0, mov_paintmode_menu_callback, (gpointer) GIMP_VALUE_MODE, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
@@ -324,7 +324,7 @@ OpsButtonModifier global_key_modifier = OPS_BUTTON_MODIFIER_NONE;
 
 long      p_move_dialog    (t_mov_data *mov_ptr)
 {
-  GDrawable *l_drawable_ptr;
+  GimpDrawable *l_drawable_ptr;
   gint       l_first, l_last;  
   char      *l_str;
   t_mov_path_preview *path_ptr;
@@ -358,7 +358,7 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
   pvals->tmp_image_id = -1;
   pvals->src_image_id = -1;
   pvals->src_layer_id = -1;
-  pvals->src_paintmode = NORMAL_MODE;
+  pvals->src_paintmode = GIMP_NORMAL_MODE;
   pvals->src_handle = GAP_HANDLE_LEFT_TOP;
   pvals->src_stepmode = GAP_STEP_LOOP;
   pvals->src_force_visible  = 0;
@@ -421,7 +421,7 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
  */
 
 static gint
-mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
+mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
              gint first_nr, gint last_nr )
 {
   GtkWidget *vbox;
@@ -688,7 +688,7 @@ mov_ok_callback (GtkWidget *widget,
     if(pvals->src_layer_id < 0)
     {
 
-       p_msg_win(RUN_INTERACTIVE,
+       p_msg_win(GIMP_RUN_INTERACTIVE,
                  _("No Source Image was selected\n"
 		   "(Please open a 2nd Image of the same type before opening Move Path)"));
        return;
@@ -781,7 +781,7 @@ mov_apv_callback (GtkWidget *widget,
   t_video_info       *vin_ptr;
   static gint         apv_locked = FALSE;
   gint32              l_new_image_id;
-  GParam             *return_vals;
+  GimpParam             *return_vals;
   int                 nreturn_vals;
 
   static t_arr_arg  argv[ARGC_APV];
@@ -900,17 +900,17 @@ mov_apv_callback (GtkWidget *widget,
       l_new_image_id = p_mov_anim_preview(pvals, path_ptr->ainfo_ptr, path_ptr->preview_frame_nr);
       if(l_new_image_id < 0)
       {
-	 p_msg_win(RUN_INTERACTIVE,
+	 p_msg_win(GIMP_RUN_INTERACTIVE,
          _("Generate Animated Preview failed\n"));
       }
       else
       {
          return_vals = gimp_run_procedure ("plug_in_animationplay",
                                  &nreturn_vals,
-	                         PARAM_INT32,    RUN_NONINTERACTIVE,
-				 PARAM_IMAGE,    l_new_image_id,
-				 PARAM_DRAWABLE, -1,  /* dummy */
-                                 PARAM_END);
+	                         GIMP_PDB_INT32,    GIMP_RUN_NONINTERACTIVE,
+				 GIMP_PDB_IMAGE,    l_new_image_id,
+				 GIMP_PDB_DRAWABLE, -1,  /* dummy */
+                                 GIMP_PDB_END);
       }
   }
 
@@ -2044,7 +2044,7 @@ mov_src_sel_create()
  */
 
 static GtkWidget *
-mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
+mov_path_prevw_create ( GimpDrawable *drawable, t_mov_path_preview *path_ptr)
 {
   GtkWidget	 *frame;
   GtkWidget	 *vbox;
@@ -2503,7 +2503,7 @@ mov_path_prevw_destroy ( GtkWidget *widget,
   g_free( path_ptr );
 }
 
-static void render_preview ( GtkWidget *preview, GPixelRgn *srcrgn );
+static void render_preview ( GtkWidget *preview, GimpPixelRgn *srcrgn );
 
 /* ============================================================================
  *  mov_path_prevw_preview_init
@@ -2536,7 +2536,7 @@ mov_path_prevw_preview_init ( t_mov_path_preview *path_ptr )
 #endif
 
 static void
-render_preview ( GtkWidget *preview, GPixelRgn *srcrgn )
+render_preview ( GtkWidget *preview, GimpPixelRgn *srcrgn )
 {
   guchar	 *src_row, *dest_row, *src, *dest;
   gint		 row, col;
@@ -3050,11 +3050,11 @@ p_chk_keyframes(t_mov_path_preview *path_ptr)
  *   (only) remaining drawable. 
  * ============================================================================
  */
-GDrawable *
+GimpDrawable *
 p_get_flattened_drawable(gint32 image_id)
 {
-  GDrawable *l_drawable_ptr ;
-  GImageType l_type;
+  GimpDrawable *l_drawable_ptr ;
+  GimpImageBaseType l_type;
   guint   l_width, l_height;
   gint32  l_layer_id;
  
@@ -3063,7 +3063,7 @@ p_get_flattened_drawable(gint32 image_id)
   l_height = gimp_image_height(image_id);
   l_type   = gimp_image_base_type(image_id);
 
-  l_type   = (l_type * 2); /* convert from GImageType to GDrawableType */
+  l_type   = (l_type * 2); /* convert from GimpImageBaseType to GimpImageType */
 
   /* add 2 full transparent dummy layers at top
    * (because gimp_image_merge_visible_layers complains
@@ -3095,7 +3095,7 @@ p_get_flattened_drawable(gint32 image_id)
  * ============================================================================
  */
 
-GDrawable * 
+GimpDrawable * 
 p_get_prevw_drawable (t_mov_path_preview *path_ptr)
 {
   t_mov_current l_curr;
@@ -3287,8 +3287,8 @@ p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
   }
 
   l_resized_flag = 0;
-  l_orig_width  = gimp_layer_width(l_cp_layer_id);
-  l_orig_height = gimp_layer_height(l_cp_layer_id);
+  l_orig_width  = gimp_drawable_width(l_cp_layer_id);
+  l_orig_height = gimp_drawable_height(l_cp_layer_id);
   l_new_width  = l_orig_width;
   l_new_height = l_orig_height;
   
@@ -3313,8 +3313,8 @@ p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
     p_gimp_rotate(l_cp_layer_id, l_interpolation, cur_ptr->currRotation);
 
     
-    l_new_width  = gimp_layer_width(l_cp_layer_id);
-    l_new_height = gimp_layer_height(l_cp_layer_id);
+    l_new_width  = gimp_drawable_width(l_cp_layer_id);
+    l_new_height = gimp_drawable_height(l_cp_layer_id);
   }
   
   if(l_resized_flag == 1)

@@ -19,14 +19,14 @@
 #include "mapobject_ui.h"
 #include "mapobject_image.h"
 
-GDrawable *input_drawable,*output_drawable;
-GPixelRgn source_region,dest_region;
+GimpDrawable *input_drawable,*output_drawable;
+GimpPixelRgn source_region,dest_region;
 
-GDrawable *box_drawables[6];
-GPixelRgn box_regions[6];
+GimpDrawable *box_drawables[6];
+GimpPixelRgn box_regions[6];
 
-GDrawable *cylinder_drawables[2];
-GPixelRgn cylinder_regions[2];
+GimpDrawable *cylinder_drawables[2];
+GimpPixelRgn cylinder_regions[2];
 
 guchar   *preview_rgb_data = NULL;
 GdkImage *image = NULL;
@@ -326,7 +326,7 @@ get_cylinder_image_color (gint    image,
 /****************************************/
 
 gint
-image_setup (GDrawable *drawable,
+image_setup (GimpDrawable *drawable,
 	     gint       interactive)
 {
   glong numbytes;

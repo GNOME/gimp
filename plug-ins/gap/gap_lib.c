@@ -36,7 +36,7 @@
  *                            that are not the 4digit style. (like frame1.xcf)
  * 1.1.8a;  1999/08/31   hof: for AnimFrame Filtypes != XCF:
  *                            p_decide_save_as does save INTERACTIVE at 1.st time
- *                            and uses RUN_WITH_LAST_VALS for subsequent calls
+ *                            and uses GIMP_RUN_WITH_LAST_VALS for subsequent calls
  *                            (this enables to set Fileformat specific save-Parameters
  *                            at least at the 1.st call, using the save dialog
  *                            of the selected (by gimp_file_save) file_save procedure.
@@ -213,7 +213,7 @@ p_strdup_del_underscore(char *name)
  * ============================================================================
  */
 
-void p_msg_win(GRunModeType run_mode, char *msg)
+void p_msg_win(GimpRunModeType run_mode, char *msg)
 {
   static t_but_arg  l_argv[1];
   int               l_argc;  
@@ -229,7 +229,7 @@ void p_msg_win(GRunModeType run_mode, char *msg)
        fwrite(msg, 1, strlen(msg), stderr);
        fputc('\n', stderr);
 
-       if(run_mode == RUN_INTERACTIVE) p_buttons_dialog  (_("GAP Message"), msg, l_argc, l_argv, -1);
+       if(run_mode == GIMP_RUN_INTERACTIVE) p_buttons_dialog  (_("GAP Message"), msg, l_argc, l_argv, -1);
     }
   }
 }    /* end  p_msg_win */
@@ -609,7 +609,7 @@ char*  p_alloc_fname(char *basename, long nr, char *extension)
  * allocate and init an ainfo structure from the given image.
  * ============================================================================
  */
-t_anim_info *p_alloc_ainfo(gint32 image_id, GRunModeType run_mode)
+t_anim_info *p_alloc_ainfo(gint32 image_id, GimpRunModeType run_mode)
 {
    t_anim_info   *l_ainfo_ptr;
 
@@ -999,7 +999,7 @@ int p_decide_save_as(gint32 image_id, char *sav_name)
   static t_but_arg  l_argv[3];
   int               l_argc;  
   int               l_save_as_mode;
-  GRunModeType      l_run_mode;  
+  GimpRunModeType      l_run_mode;  
 
   l_msg = _("You are using a file format != xcf\n"
 	    "Save Operations may result\n"
@@ -1028,11 +1028,11 @@ int p_decide_save_as(gint32 image_id, char *sav_name)
     if(gap_debug) fprintf(stderr, "DEBUG: decide SAVE_AS_MODE %d\n", (int)l_save_as_mode);
     
     if(l_save_as_mode < 0) return -1;
-    l_run_mode = RUN_INTERACTIVE;
+    l_run_mode = GIMP_RUN_INTERACTIVE;
   }
   else
   {
-    l_run_mode = RUN_WITH_LAST_VALS;
+    l_run_mode = GIMP_RUN_WITH_LAST_VALS;
   }
 
   gimp_set_data (l_save_as_name, &l_save_as_mode, sizeof(l_save_as_mode));
@@ -1052,12 +1052,12 @@ int p_decide_save_as(gint32 image_id, char *sav_name)
  * p_save_named_image
  * ============================================================================
  */
-gint32 p_save_named_image(gint32 image_id, char *sav_name, GRunModeType run_mode)
+gint32 p_save_named_image(gint32 image_id, char *sav_name, GimpRunModeType run_mode)
 {
-  GDrawable  *l_drawable;
+  GimpDrawable  *l_drawable;
   gint        l_nlayers;
   gint32     *l_layers_list;
-  GParam     *l_params;
+  GimpParam     *l_params;
   gint        l_retvals;
 
   if(gap_debug) fprintf(stderr, "DEBUG: before   p_save_named_image: '%s'\n", sav_name);
@@ -1077,12 +1077,12 @@ gint32 p_save_named_image(gint32 image_id, char *sav_name, GRunModeType run_mode
   
   l_params = gimp_run_procedure ("gimp_file_save",
 			       &l_retvals,
-			       PARAM_INT32,    run_mode,
-			       PARAM_IMAGE,    image_id,
-			       PARAM_DRAWABLE, l_drawable->id,
-			       PARAM_STRING, sav_name,
-			       PARAM_STRING, sav_name, /* raw name ? */
-			       PARAM_END);
+			       GIMP_PDB_INT32,    run_mode,
+			       GIMP_PDB_IMAGE,    image_id,
+			       GIMP_PDB_DRAWABLE, l_drawable->id,
+			       GIMP_PDB_STRING, sav_name,
+			       GIMP_PDB_STRING, sav_name, /* raw name ? */
+			       GIMP_PDB_END);
 
   if(gap_debug) fprintf(stderr, "DEBUG: after    p_save_named_image: '%s' nlayers=%d image=%d drw=%d run_mode=%d\n", sav_name, (int)l_nlayers, (int)image_id, (int)l_drawable->id, (int)run_mode);
 
@@ -1118,7 +1118,7 @@ gint32 p_save_named_image(gint32 image_id, char *sav_name, GRunModeType run_mode
  */
 int p_save_named_frame(gint32 image_id, char *sav_name)
 {
-  GParam* l_params;
+  GimpParam* l_params;
   char  *l_ext;
   char  *l_tmpname;
   gint   l_retvals;
@@ -1159,9 +1159,9 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
       /* FILE exists: let gimp find another temp name */
       l_params = gimp_run_procedure ("gimp_temp_name",
                                 &l_retvals,
-                                PARAM_STRING, 
+                                GIMP_PDB_STRING, 
                                 &l_ext[1],
-                                PARAM_END);
+                                GIMP_PDB_END);
 
       if(l_params[1].data.d_string != NULL)
       {
@@ -1194,12 +1194,12 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
      */
     l_params = gimp_run_procedure ("gimp_xcf_save",
 			         &l_retvals,
-			         PARAM_INT32,    RUN_NONINTERACTIVE,
-			         PARAM_IMAGE,    image_id,
-			         PARAM_DRAWABLE, 0,
-			         PARAM_STRING, l_tmpname,
-			         PARAM_STRING, l_tmpname, /* raw name ? */
-			         PARAM_END);
+			         GIMP_PDB_INT32,    GIMP_RUN_NONINTERACTIVE,
+			         GIMP_PDB_IMAGE,    image_id,
+			         GIMP_PDB_DRAWABLE, 0,
+			         GIMP_PDB_STRING, l_tmpname,
+			         GIMP_PDB_STRING, l_tmpname, /* raw name ? */
+			         GIMP_PDB_END);
     if(gap_debug) fprintf(stderr, "DEBUG: after   xcf  p_save_named_frame: '%s'\n", l_tmpname);
 
     if (l_params[0].data.d_status != FALSE)
@@ -1301,7 +1301,7 @@ int p_save_old_frame(t_anim_info *ainfo_ptr)
  */
 gint32 p_load_image (char *lod_name)
 {
-  GParam* l_params;
+  GimpParam* l_params;
   char  *l_ext;
   char  *l_tmpname;
   gint   l_retvals;
@@ -1320,9 +1320,9 @@ gint32 p_load_image (char *lod_name)
       /* find a temp name */
       l_params = gimp_run_procedure ("gimp_temp_name",
 			           &l_retvals,
-			           PARAM_STRING, 
+			           GIMP_PDB_STRING, 
 			           &l_ext[1],           /* extension */
-			           PARAM_END);
+			           GIMP_PDB_END);
 
       if(l_params[1].data.d_string != NULL)
       {
@@ -1346,10 +1346,10 @@ gint32 p_load_image (char *lod_name)
 
   l_params = gimp_run_procedure ("gimp_file_load",  /* "gimp_xcf_load" */
 			       &l_retvals,
-			       PARAM_INT32,  RUN_NONINTERACTIVE,
-			       PARAM_STRING, l_tmpname,
-			       PARAM_STRING, l_tmpname, /* raw name ? */
-			       PARAM_END);
+			       GIMP_PDB_INT32,  GIMP_RUN_NONINTERACTIVE,
+			       GIMP_PDB_STRING, l_tmpname,
+			       GIMP_PDB_STRING, l_tmpname, /* raw name ? */
+			       GIMP_PDB_END);
 
   l_tmp_image_id = l_params[1].data.d_int32;
   
@@ -1597,7 +1597,7 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    
 
    l_percentage = 0.0;  
-   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+   if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
    { 
      gimp_progress_init( _("Duplicating frames..."));
    }
@@ -1622,7 +1622,7 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
 
 
    l_percentage_step = 1.0 / ((1.0 + l_hi) - l_src_nr_max);
-   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+   if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
    { 
       l_percentage += l_percentage_step;
       gimp_progress_update (l_percentage);
@@ -1640,7 +1640,7 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
          g_free(l_dup_name);
          g_free(l_curr_name);
       }
-      if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+      if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
       { 
          l_percentage += l_percentage_step;
          gimp_progress_update (l_percentage);
@@ -1773,7 +1773,7 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    g_free(l_curr_name);
 
    l_percentage = 0.0;  
-   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+   if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
    { 
      gimp_progress_init( _("Renumber Framesequence..."));
    }
@@ -1792,7 +1792,7 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
 	g_free(tmp_errtxt);
         return -1;
      }
-     if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+     if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
      { 
        l_percentage += l_percentage_step;
        gimp_progress_update (l_percentage);
@@ -1814,7 +1814,7 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
 	g_free(tmp_errtxt);
         return -1;
      }
-     if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
+     if(ainfo_ptr->run_mode == GIMP_RUN_INTERACTIVE)
      { 
        l_percentage += l_percentage_step;
        gimp_progress_update (l_percentage);
@@ -1848,7 +1848,7 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
  * and load it from the next/prev anim Frame on disk.
  * ============================================================================
  */
-int gap_next(GRunModeType run_mode, gint32 image_id)
+int gap_next(GimpRunModeType run_mode, gint32 image_id)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -1866,7 +1866,7 @@ int gap_next(GRunModeType run_mode, gint32 image_id)
   return(rc);    
 }	/* end gap_next */
 
-int gap_prev(GRunModeType run_mode, gint32 image_id)
+int gap_prev(GimpRunModeType run_mode, gint32 image_id)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -1892,7 +1892,7 @@ int gap_prev(GRunModeType run_mode, gint32 image_id)
  * ============================================================================
  */
 
-int gap_first(GRunModeType run_mode, gint32 image_id)
+int gap_first(GimpRunModeType run_mode, gint32 image_id)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -1912,7 +1912,7 @@ int gap_first(GRunModeType run_mode, gint32 image_id)
   return(rc);    
 }	/* end gap_first */
 
-int gap_last(GRunModeType run_mode, gint32 image_id)
+int gap_last(GimpRunModeType run_mode, gint32 image_id)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -1937,12 +1937,12 @@ int gap_last(GRunModeType run_mode, gint32 image_id)
  * 
  * store the current Gimp Image to disk
  * and load it from the anim Frame on disk that has the specified frame Nr.
- * RUN_INTERACTIVE:
+ * GIMP_RUN_INTERACTIVE:
  *    show dialogwindow where user can enter the destination frame Nr.
  * ============================================================================
  */
 
-int gap_goto(GRunModeType run_mode, gint32 image_id, int nr)
+int gap_goto(GimpRunModeType run_mode, gint32 image_id, int nr)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -1959,7 +1959,7 @@ int gap_goto(GRunModeType run_mode, gint32 image_id, int nr)
     {
       if(0 != p_chk_framerange(ainfo_ptr))   return -1;
 
-      if(run_mode == RUN_INTERACTIVE)
+      if(run_mode == GIMP_RUN_INTERACTIVE)
       {
         l_title = g_strdup_printf (_("Goto Frame (%ld/%ld)")
 				   , ainfo_ptr->curr_frame_nr
@@ -2009,7 +2009,7 @@ int gap_goto(GRunModeType run_mode, gint32 image_id, int nr)
  * gap_del
  * ============================================================================
  */
-int gap_del(GRunModeType run_mode, gint32 image_id, int nr)
+int gap_del(GimpRunModeType run_mode, gint32 image_id, int nr)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -2027,7 +2027,7 @@ int gap_del(GRunModeType run_mode, gint32 image_id, int nr)
     {
       if(0 != p_chk_framerange(ainfo_ptr))   return -1;
       
-      if(run_mode == RUN_INTERACTIVE)
+      if(run_mode == GIMP_RUN_INTERACTIVE)
       {
         l_title = g_strdup_printf (_("Delete Frames (%ld/%ld)")
 				   , ainfo_ptr->curr_frame_nr
@@ -2146,7 +2146,7 @@ int p_dup_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
  * gap_dup
  * ============================================================================
  */
-int gap_dup(GRunModeType run_mode, gint32 image_id, int nr,
+int gap_dup(GimpRunModeType run_mode, gint32 image_id, int nr,
             long range_from, long range_to)
 {
   int rc;
@@ -2160,7 +2160,7 @@ int gap_dup(GRunModeType run_mode, gint32 image_id, int nr,
   {
     if (0 == p_dir_ainfo(ainfo_ptr))
     {
-      if(run_mode == RUN_INTERACTIVE)
+      if(run_mode == GIMP_RUN_INTERACTIVE)
       {
          if(0 != p_chk_framechange(ainfo_ptr)) { l_cnt = -1; }
          else { l_cnt = p_dup_dialog(ainfo_ptr, &l_from, &l_to); }
@@ -2200,7 +2200,7 @@ int gap_dup(GRunModeType run_mode, gint32 image_id, int nr,
  * ============================================================================
  */
 
-int gap_exchg(GRunModeType run_mode, gint32 image_id, int nr)
+int gap_exchg(GimpRunModeType run_mode, gint32 image_id, int nr)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -2218,7 +2218,7 @@ int gap_exchg(GRunModeType run_mode, gint32 image_id, int nr)
     {
       if(0 != p_chk_framerange(ainfo_ptr))   return -1;
       
-      if(run_mode == RUN_INTERACTIVE)
+      if(run_mode == GIMP_RUN_INTERACTIVE)
       {
          if(ainfo_ptr->curr_frame_nr < ainfo_ptr->last_frame_nr)
          {
@@ -2323,7 +2323,7 @@ int p_shift_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
  * gap_shift
  * ============================================================================
  */
-int gap_shift(GRunModeType run_mode, gint32 image_id, int nr,
+int gap_shift(GimpRunModeType run_mode, gint32 image_id, int nr,
             long range_from, long range_to)
 {
   int rc;
@@ -2337,7 +2337,7 @@ int gap_shift(GRunModeType run_mode, gint32 image_id, int nr,
   {
     if (0 == p_dir_ainfo(ainfo_ptr))
     {
-      if(run_mode == RUN_INTERACTIVE)
+      if(run_mode == GIMP_RUN_INTERACTIVE)
       {
          l_cnt = 1;
          if(0 != p_chk_framechange(ainfo_ptr)) { l_cnt = 0; }
@@ -2515,7 +2515,7 @@ p_vid_edit_framecount()
  * ============================================================================
  */
 gint
-gap_vid_edit_copy(GRunModeType run_mode, gint32 image_id, long range_from, long range_to)
+gap_vid_edit_copy(GimpRunModeType run_mode, gint32 image_id, long range_from, long range_to)
 {
   int rc;
   t_anim_info *ainfo_ptr;
@@ -2620,7 +2620,7 @@ static gint p_custom_palette_file(char *filename, guchar *rgb, gint count)
  * ============================================================================
  */
 gint
-gap_vid_edit_paste(GRunModeType run_mode, gint32 image_id, long paste_mode)
+gap_vid_edit_paste(GimpRunModeType run_mode, gint32 image_id, long paste_mode)
 {
 #define CUSTOM_PALETTE_NAME "gap_cmap"
   int rc;
@@ -2637,9 +2637,9 @@ gap_vid_edit_paste(GRunModeType run_mode, gint32 image_id, long paste_mode)
   gint32 l_insert_frame_nr;
   gint32 l_tmp_image_id;
   gint       l_rc;
-  GParam     *l_params;
+  GimpParam     *l_params;
   gint        l_retvals;
-  GImageType  l_orig_basetype;
+  GimpImageBaseType  l_orig_basetype;
 
   l_cnt2 = p_vid_edit_framecount();
   if(gap_debug)
@@ -2723,7 +2723,7 @@ gap_vid_edit_paste(GRunModeType run_mode, gint32 image_id, long paste_mode)
      if((gimp_image_width(l_tmp_image_id) != gimp_image_width(image_id))
      || (gimp_image_height(l_tmp_image_id) != gimp_image_height(image_id)))
      {
-         GParam     *l_params;
+         GimpParam     *l_params;
          gint        l_retvals;
 	 gint32      l_size_x, l_size_y;
 
@@ -2733,10 +2733,10 @@ gap_vid_edit_paste(GRunModeType run_mode, gint32 image_id, long paste_mode)
  
          l_params = gimp_run_procedure ("gimp_image_scale",
 			         &l_retvals,
-			         PARAM_IMAGE,    l_tmp_image_id,
-			         PARAM_INT32,    l_size_x,
-			         PARAM_INT32,    l_size_y,
-			         PARAM_END);
+			         GIMP_PDB_IMAGE,    l_tmp_image_id,
+			         GIMP_PDB_INT32,    l_size_x,
+			         GIMP_PDB_INT32,    l_size_y,
+			         GIMP_PDB_END);
 
 
      }
@@ -2753,14 +2753,14 @@ gap_vid_edit_paste(GRunModeType run_mode, gint32 image_id, long paste_mode)
            gint        l_ncolors;
  
            /* convert tmp image to dest type */
-           case INDEXED:
+           case GIMP_INDEXED:
              l_cmap = gimp_image_get_cmap(image_id, &l_ncolors);
              if(gap_debug) printf("DEBUG: convert to INDEXED %d colors\n", (int)l_ncolors);
 
              l_params = gimp_run_procedure ("gimp_gimprc_query",
 			                    &l_retvals,
-			                    PARAM_STRING, "gimp_dir",
-			                    PARAM_END);
+			                    GIMP_PDB_STRING, "gimp_dir",
+			                    GIMP_PDB_END);
 
              l_gimp_dir = g_strdup(l_params[1].data.d_string);
              gimp_destroy_params(l_params, l_retvals);
@@ -2776,19 +2776,19 @@ gap_vid_edit_paste(GRunModeType run_mode, gint32 image_id, long paste_mode)
              {
                l_params = gimp_run_procedure ("gimp_palette_refresh",
 			                    &l_retvals,
-			                    PARAM_END);
+			                    GIMP_PDB_END);
                gimp_destroy_params(l_params, l_retvals);
                
                l_params = gimp_run_procedure ("gimp_convert_indexed",
 			                    &l_retvals,
-			                    PARAM_IMAGE,    l_tmp_image_id,
-			                    PARAM_INT32,    1,               /* dither  value 1== floyd-steinberg */
-			                    PARAM_INT32,    4,               /* palette_type 4 == CUSTOM_PALETTE */
-			                    PARAM_INT32,    l_ncolors,       /* number of colors */
-			                    PARAM_INT32,    0,               /* alpha_dither */
-			                    PARAM_INT32,    0,               /* remove_unused */
-			                    PARAM_STRING,   CUSTOM_PALETTE_NAME, /* name of the custom palette */
-			                    PARAM_END);
+			                    GIMP_PDB_IMAGE,    l_tmp_image_id,
+			                    GIMP_PDB_INT32,    1,               /* dither  value 1== floyd-steinberg */
+			                    GIMP_PDB_INT32,    4,               /* palette_type 4 == CUSTOM_PALETTE */
+			                    GIMP_PDB_INT32,    l_ncolors,       /* number of colors */
+			                    GIMP_PDB_INT32,    0,               /* alpha_dither */
+			                    GIMP_PDB_INT32,    0,               /* remove_unused */
+			                    GIMP_PDB_STRING,   CUSTOM_PALETTE_NAME, /* name of the custom palette */
+			                    GIMP_PDB_END);
                gimp_destroy_params(l_params, l_retvals);
              }
              else
@@ -2799,22 +2799,25 @@ gap_vid_edit_paste(GRunModeType run_mode, gint32 image_id, long paste_mode)
              g_free(l_palette_filename);
              g_free(l_gimp_dir);          
              break;
-           case GRAY:
+
+           case GIMP_GRAY:
              if(gap_debug) printf("DEBUG: convert to GRAY'\n");
              l_params = gimp_run_procedure ("gimp_convert_grayscale",
 			                  &l_retvals,
-			                  PARAM_IMAGE,    l_tmp_image_id,
-			                  PARAM_END);
+			                  GIMP_PDB_IMAGE,    l_tmp_image_id,
+			                  GIMP_PDB_END);
              gimp_destroy_params(l_params, l_retvals);
              break;
-           case RGB:
+
+           case GIMP_RGB:
              if(gap_debug) printf("DEBUG: convert to RGB'\n");
              l_params = gimp_run_procedure ("gimp_convert_rgb",
 			                  &l_retvals,
-			                  PARAM_IMAGE,    l_tmp_image_id,
-			                  PARAM_END);
+			                  GIMP_PDB_IMAGE,    l_tmp_image_id,
+			                  GIMP_PDB_END);
              gimp_destroy_params(l_params, l_retvals);
              break;
+
            default:
              printf( "DEBUG: unknown image type\n");
              return -1;

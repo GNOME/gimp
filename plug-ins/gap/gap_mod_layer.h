@@ -67,7 +67,7 @@ t_LayliElem *p_alloc_layli(gint32 image_id, gint32 *l_sel_cnt, gint *nlayers,
 int  p_get_1st_selected (t_LayliElem * layli_ptr, gint nlayers);
 void p_prevent_empty_image(gint32 image_id);
 
-gint gap_mod_layer(GRunModeType run_mode, gint32 image_id,
+gint gap_mod_layer(GimpRunModeType run_mode, gint32 image_id,
                    gint32 range_from,  gint32 range_to,
                    gint32 action_mode, gint32 sel_mode,
                    gint32 sel_case, gint32 sel_invert,

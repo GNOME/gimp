@@ -117,7 +117,7 @@ typedef struct {
 	gint    dst_range_start;  /* use current frame as default */
 	gint    dst_range_end;
 	gint    dst_layerstack;
-	gint    dst_combination_mode;   /* GLayerMode */
+	gint    dst_combination_mode;   /* GimpLayerModeEffects */
 
         /* for dialog only */	
 	gint32  dst_image_id;      /* frame image */

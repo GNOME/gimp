@@ -165,19 +165,19 @@ extern LISP   repl_return_val;
 void
 script_fu_server_run (char     *name,
 		      int       nparams,
-		      GParam   *params,
+		      GimpParam   *params,
 		      int      *nreturn_vals,
-		      GParam  **return_vals)
+		      GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GStatusType status = STATUS_SUCCESS;
-  GRunModeType run_mode;
+  static GimpParam values[1];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpRunModeType run_mode;
 
   run_mode = params[0].data.d_int32;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       if (server_interface ())
 	{
 	  server_mode = TRUE;
@@ -187,7 +187,7 @@ script_fu_server_run (char     *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /*  Set server_mode to TRUE  */
       server_mode = TRUE;
 
@@ -195,9 +195,9 @@ script_fu_server_run (char     *name,
       server_start (params[1].data.d_int32, params[2].data.d_string);
       break;
 
-    case RUN_WITH_LAST_VALS:
-      status = STATUS_CALLING_ERROR;
-      g_warning ("Script-Fu server does handle \"RUN_WITH_LAST_VALS\"");
+    case GIMP_RUN_WITH_LAST_VALS:
+      status = GIMP_PDB_CALLING_ERROR;
+      g_warning ("Script-Fu server does handle \"GIMP_RUN_WITH_LAST_VALS\"");
 
     default:
       break;
@@ -206,7 +206,7 @@ script_fu_server_run (char     *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 

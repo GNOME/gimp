@@ -78,7 +78,7 @@ static gint32 g_current_image_id;
 
 void p_gdisplays_update_full(gint32 image_id)
 {
-  GParam* l_params;
+  GimpParam* l_params;
   gint   l_retvals;
 
   if(p_procedure_available("gimp_image_update_full", PTYP_ANY) >= 0)
@@ -86,8 +86,8 @@ void p_gdisplays_update_full(gint32 image_id)
 
     l_params = gimp_run_procedure ("gimp_image_update_full",
 			         &l_retvals,
-			         PARAM_IMAGE,  image_id,
-			         PARAM_END);
+			         GIMP_PDB_IMAGE,  image_id,
+			         GIMP_PDB_END);
 
      /* Note: gimp_displays_update_full is not available in the official release gimp 0.99.16
       *       (dont care if procedure is not there,
@@ -105,7 +105,7 @@ void p_gdisplays_update_full(gint32 image_id)
 /* pitstop dialog
  *   return -1 on cancel, 0 .. on continue, 1 .. on skip
  */
-static gint p_pitstop(GRunModeType run_mode, char *plugin_name, gint text_flag,
+static gint p_pitstop(GimpRunModeType run_mode, char *plugin_name, gint text_flag,
                       char *step_backup_file, gint len_step_backup_file,
 		      gint32 layer_idx)
 {
@@ -138,7 +138,7 @@ static gint p_pitstop(GRunModeType run_mode, char *plugin_name, gint text_flag,
    l_but_argc = 2;
    l_argc = 0;
    /* optional dialog between both calls (to see the effect of 1.call) */
-   if(run_mode == RUN_INTERACTIVE)
+   if(run_mode == GIMP_RUN_INTERACTIVE)
    {
       l_env = g_getenv("GAP_FILTER_PITSTOP");
       if(l_env != NULL)
@@ -230,7 +230,7 @@ static gint32 p_get_indexed_layerid(gint32 image_id, gint *nlayers, gint32 idx, 
  * ============================================================================
  */
 
-int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
+int p_foreach_multilayer(GimpRunModeType run_mode, gint32 image_id,
                          char *plugin_name, t_apply_mode apply_mode)
 {
   static char l_key_from[512];
@@ -241,7 +241,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
   gint32     l_idx;
   gint       l_nlayers;
   gdouble    l_percentage, l_percentage_step;  
-  GParam     *l_params;
+  GimpParam     *l_params;
   gint        l_retvals;
   int         l_rc;
   gint        l_plugin_data_len;
@@ -271,7 +271,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
   l_plugin_iterator =  p_get_iterator_proc(plugin_name);
 
   l_percentage = 0.0;  
-  if(run_mode == RUN_INTERACTIVE)
+  if(run_mode == GIMP_RUN_INTERACTIVE)
   { 
     gimp_progress_init( _("Applying Filter to all Layers..."));
   }
@@ -330,7 +330,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
           else
           {
             if(gap_debug) fprintf(stderr, "DEBUG: apllying %s on Layerstack %d id=%d\n", plugin_name, (int)l_idx, (int)l_layer_id);
-            l_rc = p_call_plugin(plugin_name, image_id, l_layer_id, RUN_INTERACTIVE);
+            l_rc = p_call_plugin(plugin_name, image_id, l_layer_id, GIMP_RUN_INTERACTIVE);
 
             /* get values, then store with suffix "_ITER_FROM" */
             l_plugin_data_len = p_get_data(plugin_name);
@@ -341,7 +341,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
             }
             else l_rc = -1;
 
-            if(run_mode == RUN_INTERACTIVE)
+            if(run_mode == GIMP_RUN_INTERACTIVE)
             { 
               l_percentage += l_percentage_step;
               gimp_progress_update (l_percentage);
@@ -380,7 +380,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
                 p_gdisplays_update_full(image_id);
 
                 if(gap_debug) fprintf(stderr, "DEBUG: apllying %s on Layerstack 0  id=%d\n", plugin_name, (int)l_layer_id);
-                l_rc = p_call_plugin(plugin_name, image_id, l_layer_id, RUN_INTERACTIVE);
+                l_rc = p_call_plugin(plugin_name, image_id, l_layer_id, GIMP_RUN_INTERACTIVE);
 
                 /* get values, then store with suffix "_ITER_TO" */
                 l_plugin_data_len = p_get_data(plugin_name);
@@ -391,7 +391,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
                 }
                 else l_rc = -1;
 
-                if(run_mode == RUN_INTERACTIVE)
+                if(run_mode == GIMP_RUN_INTERACTIVE)
                 { 
                   l_percentage += l_percentage_step;
                   gimp_progress_update (l_percentage);
@@ -423,9 +423,9 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
           else
           {
             if(gap_debug) fprintf(stderr, "DEBUG: NO Varying, apllying %s on Layer id=%d\n", plugin_name, (int)l_layer_id);
-            l_rc = p_call_plugin(plugin_name, image_id, l_layer_id, RUN_INTERACTIVE);
+            l_rc = p_call_plugin(plugin_name, image_id, l_layer_id, GIMP_RUN_INTERACTIVE);
             l_top_layer = 0;
-            if(run_mode == RUN_INTERACTIVE)
+            if(run_mode == GIMP_RUN_INTERACTIVE)
             { 
               l_percentage += l_percentage_step;
               gimp_progress_update (l_percentage);
@@ -437,7 +437,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
       {
 
         /* call plugin foreach layer inbetween 
-         * with runmode RUN_WITH_LAST_VALS
+         * with runmode GIMP_RUN_WITH_LAST_VALS
          * and modify the last values
          */
         l_pit_rc = 1;
@@ -476,11 +476,11 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
 	                             l_plugin_iterator, (int)l_idx);
              l_params = gimp_run_procedure (l_plugin_iterator,
 			           &l_retvals,
-			           PARAM_INT32,   RUN_NONINTERACTIVE,
-			           PARAM_INT32,   l_nlayers -1,      /* total steps  */
-			           PARAM_FLOAT,   (gdouble)l_idx,    /* current step */
-			           PARAM_INT32,   l_plugin_data_len, /* length of stored data struct */
-			           PARAM_END);
+			           GIMP_PDB_INT32,   GIMP_RUN_NONINTERACTIVE,
+			           GIMP_PDB_INT32,   l_nlayers -1,      /* total steps  */
+			           GIMP_PDB_FLOAT,   (gdouble)l_idx,    /* current step */
+			           GIMP_PDB_INT32,   l_plugin_data_len, /* length of stored data struct */
+			           GIMP_PDB_END);
              if (l_params[0].data.d_status == FALSE) 
              { 
                fprintf(stderr, "ERROR: iterator %s  failed\n", l_plugin_iterator);
@@ -495,7 +495,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
           if(l_pit_rc == 0)  /* 0 == continue without further dialogs */
 	  {
              /* call the plugin itself with runmode RUN_WITH_LAST_VALUES */
-             l_rc = p_call_plugin(plugin_name, image_id, l_layer_id, RUN_WITH_LAST_VALS);
+             l_rc = p_call_plugin(plugin_name, image_id, l_layer_id, GIMP_RUN_WITH_LAST_VALS);
              /* check if to save each step to backup file */	  
 	     if((l_step_backup_file[0] != '\0') && (l_step_backup_file[0] != ' '))
 	     {
@@ -505,7 +505,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
 	     }
 	  }
 
-          if(run_mode == RUN_INTERACTIVE)
+          if(run_mode == GIMP_RUN_INTERACTIVE)
           { 
             l_percentage += l_percentage_step;
             gimp_progress_update (l_percentage);
@@ -536,7 +536,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
  * ============================================================================
  */
 
-gint gap_proc_anim_apply(GRunModeType run_mode, gint32 image_id, char *plugin_name)
+gint gap_proc_anim_apply(GimpRunModeType run_mode, gint32 image_id, char *plugin_name)
 {
   t_gap_db_browse_result  l_browser_result;
   t_apply_mode            l_apply_mode;
@@ -544,7 +544,7 @@ gint gap_proc_anim_apply(GRunModeType run_mode, gint32 image_id, char *plugin_na
   l_apply_mode = PAPP_CONSTANT;
   g_current_image_id = image_id;
   
-  if(run_mode == RUN_INTERACTIVE)
+  if(run_mode == GIMP_RUN_INTERACTIVE)
   {
 
     if(gap_db_browser_dialog( _("Select Filter for Animated apply"),

@@ -76,10 +76,10 @@ static char *gap_main_version =  "1.1.11b; 1999/11/20";
 int gap_debug = 0;
 
 static void query(void);
-static void run(char *name, int nparam, GParam *param,
-                int *nretvals, GParam **retvals);
+static void run(char *name, int nparam, GimpParam *param,
+                int *nretvals, GimpParam **retvals);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc */
   NULL,  /* quit_proc */
@@ -92,29 +92,29 @@ MAIN ()
 static void
 query ()
 {
-  static GParamDef args_xanim[] =
+  static GimpParamDef args_xanim[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive"},
-    {PARAM_IMAGE, "image", "(unused)"},
-    {PARAM_DRAWABLE, "drawable", "(unused)"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive"},
+    {GIMP_PDB_IMAGE, "image", "(unused)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "(unused)"},
   };
   static int nargs_xanim = sizeof(args_xanim) / sizeof(args_xanim[0]);
 
-  static GParamDef args_xanim_ext[] =
+  static GimpParamDef args_xanim_ext[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive"},
   };
   static int nargs_xanim_ext = sizeof(args_xanim_ext) / sizeof(args_xanim_ext[0]);
 
-  static GParamDef args_mpege[] =
+  static GimpParamDef args_mpege[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
   };
   static int nargs_mpege = sizeof(args_mpege) / sizeof(args_mpege[0]);
 
-  static GParamDef *return_vals = NULL;
+  static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
 
@@ -126,7 +126,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Split Video to Frames/Any XANIM readable..."),
 			 NULL,
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_xanim, nreturn_vals,
 			 args_xanim, return_vals);
 
@@ -138,7 +138,7 @@ query ()
 			 gap_main_version,
 			 N_("<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."),
 			 NULL,
-			 PROC_EXTENSION,
+			 GIMP_EXTENSION,
 			 nargs_xanim_ext, nreturn_vals,
 			 args_xanim_ext, return_vals);
 
@@ -150,7 +150,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Encode/MPEG1..."),
 			 "*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_mpege, nreturn_vals,
 			 args_mpege, return_vals);
 
@@ -163,7 +163,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Encode/MPEG2..."),
 			 "*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_mpege, nreturn_vals,
 			 args_mpege, return_vals);
 
@@ -175,9 +175,9 @@ query ()
 static void
 run (char    *name,
      int      n_params,
-     GParam  *param,
+     GimpParam  *param,
      int     *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
   typedef struct
   {
@@ -191,9 +191,9 @@ run (char    *name,
   char       *l_env;
   
   char        l_extension[32];
-  static GParam values[2];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32     image_id;
   gint32     nr;
    
@@ -229,8 +229,8 @@ run (char    *name,
     {
          fprintf(stderr, "gap_plugin is LOCKED for Image ID=%s\n", l_lockname);
 
-         status = STATUS_EXECUTION_ERROR;
-         values[0].type = PARAM_STATUS;
+         status = GIMP_PDB_EXECUTION_ERROR;
+         values[0].type = GIMP_PDB_STATUS;
          values[0].data.d_status = status;
          return ;
     }
@@ -242,7 +242,7 @@ run (char    *name,
     gimp_set_data (l_lockname, &l_lock, sizeof(l_lock));
   }
   
-  if (run_mode == RUN_NONINTERACTIVE) {
+  if (run_mode == GIMP_RUN_NONINTERACTIVE) {
     INIT_I18N();
   } else {
     INIT_I18N_UI();
@@ -251,13 +251,13 @@ run (char    *name,
   if ((strcmp (name, "plug_in_gap_xanim_decode") == 0)
   ||  (strcmp (name, "extension_gap_xanim_decode") == 0))
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
           /* planed: define non interactive PARAMS */
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
         /* planed: define non interactive PARAMS */
 
@@ -267,11 +267,11 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_mpeg_encode") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 3)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
         else
         {
@@ -280,7 +280,7 @@ run (char    *name,
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id    = param[1].data.d_image;
@@ -292,11 +292,11 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_mpeg2encode") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 3)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
         else
         {
@@ -305,7 +305,7 @@ run (char    *name,
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id    = param[1].data.d_image;
@@ -320,14 +320,14 @@ run (char    *name,
 
  if(l_rc < 0)
  {
-    status = STATUS_EXECUTION_ERROR;
+    status = GIMP_PDB_EXECUTION_ERROR;
  }
  
   
- if (run_mode != RUN_NONINTERACTIVE)
+ if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush();
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   if (strcmp (name, "extension_gap_xanim_decode") != 0)

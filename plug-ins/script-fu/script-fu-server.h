@@ -19,12 +19,12 @@
 #ifndef __SCRIPT_FU_SERVER_H__
 #define __SCRIPT_FU_SERVER_H__
 
-void  script_fu_server_run    (char     *name,
-			       int       nparams,
-			       GParam   *params,
-			       int      *nreturn_vals,
-			       GParam  **return_vals);
+void  script_fu_server_run    (gchar       *name,
+			       gint         nparams,
+			       GimpParam   *params,
+			       gint        *nreturn_vals,
+			       GimpParam  **return_vals);
 
-void  script_fu_server_listen (gint   timeout);
+void  script_fu_server_listen (gint         timeout);
 
 #endif /*  __SCRIPT_FU_SERVER__  */

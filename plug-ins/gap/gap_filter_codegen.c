@@ -54,31 +54,31 @@ void p_remove_codegen_files()
 
 
 static char* 
-p_type_to_string(GParamType t)
+p_type_to_string(GimpPDBArgType t)
 {
   switch (t) {
-  case PARAM_INT32:         return "long     ";
-  case PARAM_INT16:         return "short    ";
-  case PARAM_INT8:          return "char     ";
-  case PARAM_FLOAT:         return "gdouble  ";
-  case PARAM_STRING:        return "char     *";
-  case PARAM_INT32ARRAY:    return "INT32ARRAY";
-  case PARAM_INT16ARRAY:    return "INT16ARRAY";
-  case PARAM_INT8ARRAY:     return "INT8ARRAY";
-  case PARAM_FLOATARRAY:    return "FLOATARRAY";
-  case PARAM_STRINGARRAY:   return "STRINGARRAY";
-  case PARAM_COLOR:         return "t_color  ";
-  case PARAM_REGION:        return "REGION";
-  case PARAM_DISPLAY:       return "gint32   ";
-  case PARAM_IMAGE:         return "gint32   ";
-  case PARAM_LAYER:         return "gint32   ";
-  case PARAM_CHANNEL:       return "gint32   ";
-  case PARAM_DRAWABLE:      return "gint32   ";
-  case PARAM_SELECTION:     return "SELECTION";
-  case PARAM_BOUNDARY:      return "BOUNDARY";
-  case PARAM_PATH:          return "PATH";
-  case PARAM_STATUS:        return "STATUS";
-  case PARAM_END:           return "END";
+  case GIMP_PDB_INT32:         return "long     ";
+  case GIMP_PDB_INT16:         return "short    ";
+  case GIMP_PDB_INT8:          return "char     ";
+  case GIMP_PDB_FLOAT:         return "gdouble  ";
+  case GIMP_PDB_STRING:        return "char     *";
+  case GIMP_PDB_INT32ARRAY:    return "INT32ARRAY";
+  case GIMP_PDB_INT16ARRAY:    return "INT16ARRAY";
+  case GIMP_PDB_INT8ARRAY:     return "INT8ARRAY";
+  case GIMP_PDB_FLOATARRAY:    return "FLOATARRAY";
+  case GIMP_PDB_STRINGARRAY:   return "STRINGARRAY";
+  case GIMP_PDB_COLOR:         return "t_color  ";
+  case GIMP_PDB_REGION:        return "REGION";
+  case GIMP_PDB_DISPLAY:       return "gint32   ";
+  case GIMP_PDB_IMAGE:         return "gint32   ";
+  case GIMP_PDB_LAYER:         return "gint32   ";
+  case GIMP_PDB_CHANNEL:       return "gint32   ";
+  case GIMP_PDB_DRAWABLE:      return "gint32   ";
+  case GIMP_PDB_SELECTION:     return "SELECTION";
+  case GIMP_PDB_BOUNDARY:      return "BOUNDARY";
+  case GIMP_PDB_PATH:          return "PATH";
+  case GIMP_PDB_STATUS:        return "STATUS";
+  case GIMP_PDB_END:           return "END";
   default:                  return "UNKNOWN?";
   }
 }
@@ -193,11 +193,11 @@ gint p_gen_code_iter_ALT(char  *proc_name)
                             proc_name, l_proc_author, l_proc_copyright);
 
      /* check if plugin can be a typical one, that works on one drawable */
-     if (l_proc_type != PROC_PLUG_IN)         { l_rc = -1;  }
+     if (l_proc_type != GIMP_PLUGIN)         { l_rc = -1;  }
      if (l_nparams  < 3)                      { l_rc = -1;  }
-     if (l_params[0].type !=  PARAM_INT32)    { l_rc = -1;  }
-     if (l_params[1].type !=  PARAM_IMAGE)    { l_rc = -1;  }
-     if (l_params[2].type !=  PARAM_DRAWABLE) { l_rc = -1;  }
+     if (l_params[0].type !=  GIMP_PDB_INT32)    { l_rc = -1;  }
+     if (l_params[1].type !=  GIMP_PDB_IMAGE)    { l_rc = -1;  }
+     if (l_params[2].type !=  GIMP_PDB_DRAWABLE) { l_rc = -1;  }
 
      sprintf(l_filename, "%s_iter_ALT.inc", l_clean_proc_name);
      l_fp = fopen(l_filename, "w");
@@ -207,7 +207,7 @@ gint p_gen_code_iter_ALT(char  *proc_name)
        fprintf(l_fp, " * p_%s_iter_ALT \n", l_clean_proc_name);
        fprintf(l_fp, " * ----------------------------------------------------------------------\n");
        fprintf(l_fp, " */\n");            
-       fprintf(l_fp, "gint p_%s_iter_ALT(GRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) \n", l_clean_proc_name);
+       fprintf(l_fp, "gint p_%s_iter_ALT(GimpRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) \n", l_clean_proc_name);
        fprintf(l_fp, "{\n");               
        fprintf(l_fp, "    typedef struct t_%s_Vals \n", l_clean_proc_name);
        fprintf(l_fp, "    {\n");       
@@ -244,27 +244,27 @@ gint p_gen_code_iter_ALT(char  *proc_name)
 
          switch(l_params[l_idx].type)
          {
-         case PARAM_INT32:
+         case GIMP_PDB_INT32:
            fprintf(l_fp, "    p_delta_long(&buf.%s, buf_from->%s, buf_to->%s, total_steps, current_step);\n",
                    l_clean_par_name, l_clean_par_name, l_clean_par_name);
            break;
-         case PARAM_INT16:
+         case GIMP_PDB_INT16:
            fprintf(l_fp, "    p_delta_short(&buf.%s, buf_from->%s, buf_to->%s, total_steps, current_step);\n",
                    l_clean_par_name, l_clean_par_name, l_clean_par_name);
            break;
-         case PARAM_INT8:
+         case GIMP_PDB_INT8:
            fprintf(l_fp, "    p_delta_char(&buf.%s, buf_from->%s, buf_to->%s, total_steps, current_step);\n",
                    l_clean_par_name, l_clean_par_name, l_clean_par_name);
            break;
-         case PARAM_FLOAT:
+         case GIMP_PDB_FLOAT:
            fprintf(l_fp, "    p_delta_gdouble(&buf.%s, buf_from->%s, buf_to->%s, total_steps, current_step);\n",
                    l_clean_par_name, l_clean_par_name, l_clean_par_name);
            break;
-         case PARAM_COLOR:
+         case GIMP_PDB_COLOR:
            fprintf(l_fp, "    p_delta_color(&buf.%s, &buf_from->%s, &buf_to->%s, total_steps, current_step);\n",
                    l_clean_par_name, l_clean_par_name, l_clean_par_name);
            break;
-         case PARAM_DRAWABLE:
+         case GIMP_PDB_DRAWABLE:
            fprintf(l_fp, "    p_delta_drawable(&buf.%s, buf_from->%s, buf_to->%s, total_steps, current_step);\n",
                    l_clean_par_name, l_clean_par_name, l_clean_par_name);
            break;
@@ -311,7 +311,7 @@ gint p_gen_forward_iter_ALT(char  *proc_name)
   l_fp = fopen(GEN_FORWARDFILE_NAME, "a");
   if(l_fp != NULL)
   {
-    fprintf(l_fp, "static gint p_%s_iter_ALT (GRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct);\n",
+    fprintf(l_fp, "static gint p_%s_iter_ALT (GimpRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct);\n",
                    l_clean_proc_name);
     fclose(l_fp);
   }
@@ -384,11 +384,11 @@ gint p_gen_code_iter(char  *proc_name)
      if(gap_debug) fprintf(stderr, "DEBUG: found in PDB %s\n", proc_name);
 
      /* check if plugin can be a typical one, that works on one drawable */
-     if (l_proc_type != PROC_PLUG_IN)         { l_rc = -1;  }
+     if (l_proc_type != GIMP_PLUGIN)         { l_rc = -1;  }
      if (l_nparams  < 3)                      { l_rc = -1;  }
-     if (l_params[0].type !=  PARAM_INT32)    { l_rc = -1;  }
-     if (l_params[1].type !=  PARAM_IMAGE)    { l_rc = -1;  }
-     if (l_params[2].type !=  PARAM_DRAWABLE) { l_rc = -1;  }
+     if (l_params[0].type !=  GIMP_PDB_INT32)    { l_rc = -1;  }
+     if (l_params[1].type !=  GIMP_PDB_IMAGE)    { l_rc = -1;  }
+     if (l_params[2].type !=  GIMP_PDB_DRAWABLE) { l_rc = -1;  }
      
      
      sprintf(l_filename, "%s_iter.c", l_clean_proc_name);
@@ -431,9 +431,9 @@ gint p_gen_code_iter(char  *proc_name)
        fprintf(l_fp, "typedef struct { gint color[3]; }   t_gint_color; \n");
        fprintf(l_fp, "\n");
        fprintf(l_fp, "static void query(void); \n");
-       fprintf(l_fp, "static void run(char *name, int nparam, GParam *param, int *nretvals, GParam **retvals); \n");
+       fprintf(l_fp, "static void run(char *name, int nparam, GimpParam *param, int *nretvals, GimpParam **retvals); \n");
        fprintf(l_fp, "\n");
-       fprintf(l_fp, "GPlugInInfo PLUG_IN_INFO = \n");
+       fprintf(l_fp, "GimpPlugInInfo PLUG_IN_INFO = \n");
        fprintf(l_fp, "{\n");
        fprintf(l_fp, "  NULL,  /* init_proc */ \n");
        fprintf(l_fp, "  NULL,  /* quit_proc */ \n");
@@ -568,7 +568,7 @@ gint p_gen_code_iter(char  *proc_name)
        fprintf(l_fp, " * p_%s_iter \n", l_clean_proc_name);
        fprintf(l_fp, " * ----------------------------------------------------------------------\n");
        fprintf(l_fp, " */\n");            
-       fprintf(l_fp, "gint p_%s_iter(GRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) \n", l_clean_proc_name);
+       fprintf(l_fp, "gint p_%s_iter(GimpRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) \n", l_clean_proc_name);
        fprintf(l_fp, "{\n");               
        fprintf(l_fp, "    typedef struct t_%s_Vals \n", l_clean_proc_name);
        fprintf(l_fp, "    {\n");       
@@ -602,27 +602,27 @@ gint p_gen_code_iter(char  *proc_name)
 
          switch(l_params[l_idx].type)
          {
-         case PARAM_INT32:
+         case GIMP_PDB_INT32:
            fprintf(l_fp, "    p_delta_long(&buf.%s, buf_from.%s, buf_to.%s, total_steps, current_step);\n",
                    l_clean_par_name, l_clean_par_name, l_clean_par_name);
            break;
-         case PARAM_INT16:
+         case GIMP_PDB_INT16:
            fprintf(l_fp, "    p_delta_short(&buf.%s, buf_from.%s, buf_to.%s, total_steps, current_step);\n",
                    l_clean_par_name, l_clean_par_name, l_clean_par_name);
            break;
-         case PARAM_INT8:
+         case GIMP_PDB_INT8:
            fprintf(l_fp, "    p_delta_char(&buf.%s, buf_from.%s, buf_to.%s, total_steps, current_step);\n",
                    l_clean_par_name, l_clean_par_name, l_clean_par_name);
            break;
-         case PARAM_FLOAT:
+         case GIMP_PDB_FLOAT:
            fprintf(l_fp, "    p_delta_gdouble(&buf.%s, buf_from.%s, buf_to.%s, total_steps, current_step);\n",
                    l_clean_par_name, l_clean_par_name, l_clean_par_name);
            break;
-         case PARAM_COLOR:
+         case GIMP_PDB_COLOR:
            fprintf(l_fp, "    p_delta_color(&buf.%s, &buf_from.%s, &buf_to.%s, total_steps, current_step);\n",
                    l_clean_par_name, l_clean_par_name, l_clean_par_name);
            break;
-         case PARAM_DRAWABLE:
+         case GIMP_PDB_DRAWABLE:
            fprintf(l_fp, "    p_delta_drawable(&buf.%s, buf_from.%s, buf_to.%s, total_steps, current_step);\n",
                    l_clean_par_name, l_clean_par_name, l_clean_par_name);
            break;
@@ -647,16 +647,16 @@ gint p_gen_code_iter(char  *proc_name)
        fprintf(l_fp, "{\n");
        fprintf(l_fp, "  char l_blurb_text[300];\n");
        fprintf(l_fp, "\n");
-       fprintf(l_fp, "  static GParamDef args_iter[] =\n");
+       fprintf(l_fp, "  static GimpParamDef args_iter[] =\n");
        fprintf(l_fp, "  {\n");
-       fprintf(l_fp, "    {PARAM_INT32, \"run_mode\", \"non-interactive\"},\n");
-       fprintf(l_fp, "    {PARAM_INT32, \"total_steps\", \"total number of steps (# of layers-1 to apply the related plug-in)\"},\n");
-       fprintf(l_fp, "    {PARAM_FLOAT, \"current_step\", \"current (for linear iterations this is the layerstack position, otherwise some value inbetween)\"},\n");
-       fprintf(l_fp, "    {PARAM_INT32, \"len_struct\", \"length of stored data structure with id is equal to the plug_in  proc_name\"},\n");
+       fprintf(l_fp, "    {GIMP_PDB_INT32, \"run_mode\", \"non-interactive\"},\n");
+       fprintf(l_fp, "    {GIMP_PDB_INT32, \"total_steps\", \"total number of steps (# of layers-1 to apply the related plug-in)\"},\n");
+       fprintf(l_fp, "    {GIMP_PDB_FLOAT, \"current_step\", \"current (for linear iterations this is the layerstack position, otherwise some value inbetween)\"},\n");
+       fprintf(l_fp, "    {GIMP_PDB_INT32, \"len_struct\", \"length of stored data structure with id is equal to the plug_in  proc_name\"},\n");
        fprintf(l_fp, "  };\n");
        fprintf(l_fp, "  static int nargs_iter = sizeof(args_iter) / sizeof(args_iter[0]);\n");
        fprintf(l_fp, "\n");
-       fprintf(l_fp, "  static GParamDef *return_vals = NULL;\n");
+       fprintf(l_fp, "  static GimpParamDef *return_vals = NULL;\n");
        fprintf(l_fp, "  static int nreturn_vals = 0;\n");
        fprintf(l_fp, "\n");
        fprintf(l_fp, "  sprintf(l_blurb_text, \"This extension calculates the modified values for one iterationstep for the call of %s\");\n", l_clean_proc_name);
@@ -669,7 +669,7 @@ gint p_gen_code_iter(char  *proc_name)
        fprintf(l_fp, "                         \"%s\",\n", l_gendate);                   /* generation date */
        fprintf(l_fp, "                         NULL,    /* do not appear in menus */\n");
        fprintf(l_fp, "                         NULL,\n");
-       fprintf(l_fp, "                         PROC_EXTENSION,\n");
+       fprintf(l_fp, "                         GIMP_EXTENSION,\n");
        fprintf(l_fp, "                         nargs_iter, nreturn_vals,\n");
        fprintf(l_fp, "                         args_iter, return_vals);\n");
        fprintf(l_fp, "\n");
@@ -685,13 +685,13 @@ gint p_gen_code_iter(char  *proc_name)
        fprintf(l_fp, "static void\n");
        fprintf(l_fp, "run (char    *name,\n");
        fprintf(l_fp, "     int      n_params,\n");
-       fprintf(l_fp, "     GParam  *param,\n");
+       fprintf(l_fp, "     GimpParam  *param,\n");
        fprintf(l_fp, "     int     *nreturn_vals,\n");
-       fprintf(l_fp, "     GParam **return_vals)\n");
+       fprintf(l_fp, "     GimpParam **return_vals)\n");
        fprintf(l_fp, "{\n");
-       fprintf(l_fp, "  static GParam values[1];\n");
-       fprintf(l_fp, "  GRunModeType run_mode;\n");
-       fprintf(l_fp, "  GStatusType status = STATUS_SUCCESS;\n");
+       fprintf(l_fp, "  static GimpParam values[1];\n");
+       fprintf(l_fp, "  GimpRunModeType run_mode;\n");
+       fprintf(l_fp, "  GimpPDBStatusType status = GIMP_PDB_SUCCESS;\n");
        fprintf(l_fp, "  gint32     image_id;\n");
        fprintf(l_fp, "  gint32  len_struct;\n");
        fprintf(l_fp, "  gint32  total_steps;\n");
@@ -705,7 +705,7 @@ gint p_gen_code_iter(char  *proc_name)
        fprintf(l_fp, "\n");
        fprintf(l_fp, "  run_mode = param[0].data.d_int32;\n");
        fprintf(l_fp, "\n");
-       fprintf(l_fp, "  if ((run_mode == RUN_NONINTERACTIVE) && (n_params == 4))\n");
+       fprintf(l_fp, "  if ((run_mode == GIMP_RUN_NONINTERACTIVE) && (n_params == 4))\n");
        fprintf(l_fp, "  {\n");
        fprintf(l_fp, "    total_steps  =  param[1].data.d_int32;\n");
        fprintf(l_fp, "    current_step =  param[2].data.d_float;\n");
@@ -713,12 +713,12 @@ gint p_gen_code_iter(char  *proc_name)
        fprintf(l_fp, "    l_rc = p_%s_iter(run_mode, total_steps, current_step, len_struct);\n", l_clean_proc_name);
        fprintf(l_fp, "    if(l_rc < 0)\n");
        fprintf(l_fp, "    {\n");
-       fprintf(l_fp, "       status = STATUS_EXECUTION_ERROR;\n");
+       fprintf(l_fp, "       status = GIMP_PDB_EXECUTION_ERROR;\n");
        fprintf(l_fp, "    }\n");
        fprintf(l_fp, "  }\n");
-       fprintf(l_fp, "  else status = STATUS_CALLING_ERROR;\n");
+       fprintf(l_fp, "  else status = GIMP_PDB_CALLING_ERROR;\n");
        fprintf(l_fp, "\n");
-       fprintf(l_fp, "  values[0].type = PARAM_STATUS;\n");
+       fprintf(l_fp, "  values[0].type = GIMP_PDB_STATUS;\n");
        fprintf(l_fp, "  values[0].data.d_status = status;\n");
        fprintf(l_fp, "\n");
        fprintf(l_fp, "}\n");

@@ -130,32 +130,32 @@ check_drawables (void)
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",              "Interactive (0), non-interactive (1)" },
-    { PARAM_IMAGE,    "image",                 "Input image" },
-    { PARAM_DRAWABLE, "drawable",              "Input drawable" },
-    { PARAM_DRAWABLE, "bumpdrawable",          "Bumpmap drawable (set to 0 if disabled)" },
-    { PARAM_DRAWABLE, "envdrawable",           "Environmentmap drawable (set to 0 if disabled)" },
-    { PARAM_INT32,    "dobumpmap",             "Enable bumpmapping (TRUE/FALSE)" },
-    { PARAM_INT32,    "doenvmap",              "Enable envmapping (TRUE/FALSE)" },
-    { PARAM_INT32,    "bumpmaptype",           "Type of mapping (0=linear,1=log, 2=sinusoidal, 3=spherical)" },
-    { PARAM_INT32,    "lighttype",             "Type of lightsource (0=point,1=directional,3=spot,4=none)" },
-    { PARAM_COLOR,    "lightcolor",            "Lightsource color (r,g,b)" },
-    { PARAM_FLOAT,    "lightposition_x",       "Lightsource position (x,y,z)" },
-    { PARAM_FLOAT,    "lightposition_y",       "Lightsource position (x,y,z)" },
-    { PARAM_FLOAT,    "lightposition_z",       "Lightsource position (x,y,z)" },
-    { PARAM_FLOAT,    "lightdirection_x",      "Lightsource direction [x,y,z]" },
-    { PARAM_FLOAT,    "lightdirection_y",      "Lightsource direction [x,y,z]" },
-    { PARAM_FLOAT,    "lightdirection_z",      "Lightsource direction [x,y,z]" },
-    { PARAM_FLOAT,    "ambient_intensity",     "Material ambient intensity (0..1)" },
-    { PARAM_FLOAT,    "diffuse_intensity",     "Material diffuse intensity (0..1)" },
-    { PARAM_FLOAT,    "diffuse_reflectivity",  "Material diffuse reflectivity (0..1)" },
-    { PARAM_FLOAT,    "specular_reflectivity", "Material specular reflectivity (0..1)" },
-    { PARAM_FLOAT,    "highlight",             "Material highlight (0..->), note: it's expotential" },
-    { PARAM_INT32,    "antialiasing",          "Apply antialiasing (TRUE/FALSE)" },
-    { PARAM_INT32,    "newimage",              "Create a new image (TRUE/FALSE)" },
-    { PARAM_INT32,    "transparentbackground", "Make background transparent (TRUE/FALSE)" }
+    { GIMP_PDB_INT32,    "run_mode",              "Interactive (0), non-interactive (1)" },
+    { GIMP_PDB_IMAGE,    "image",                 "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",              "Input drawable" },
+    { GIMP_PDB_DRAWABLE, "bumpdrawable",          "Bumpmap drawable (set to 0 if disabled)" },
+    { GIMP_PDB_DRAWABLE, "envdrawable",           "Environmentmap drawable (set to 0 if disabled)" },
+    { GIMP_PDB_INT32,    "dobumpmap",             "Enable bumpmapping (TRUE/FALSE)" },
+    { GIMP_PDB_INT32,    "doenvmap",              "Enable envmapping (TRUE/FALSE)" },
+    { GIMP_PDB_INT32,    "bumpmaptype",           "Type of mapping (0=linear,1=log, 2=sinusoidal, 3=spherical)" },
+    { GIMP_PDB_INT32,    "lighttype",             "Type of lightsource (0=point,1=directional,3=spot,4=none)" },
+    { GIMP_PDB_COLOR,    "lightcolor",            "Lightsource color (r,g,b)" },
+    { GIMP_PDB_FLOAT,    "lightposition_x",       "Lightsource position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "lightposition_y",       "Lightsource position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "lightposition_z",       "Lightsource position (x,y,z)" },
+    { GIMP_PDB_FLOAT,    "lightdirection_x",      "Lightsource direction [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "lightdirection_y",      "Lightsource direction [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "lightdirection_z",      "Lightsource direction [x,y,z]" },
+    { GIMP_PDB_FLOAT,    "ambient_intensity",     "Material ambient intensity (0..1)" },
+    { GIMP_PDB_FLOAT,    "diffuse_intensity",     "Material diffuse intensity (0..1)" },
+    { GIMP_PDB_FLOAT,    "diffuse_reflectivity",  "Material diffuse reflectivity (0..1)" },
+    { GIMP_PDB_FLOAT,    "specular_reflectivity", "Material specular reflectivity (0..1)" },
+    { GIMP_PDB_FLOAT,    "highlight",             "Material highlight (0..->), note: it's expotential" },
+    { GIMP_PDB_INT32,    "antialiasing",          "Apply antialiasing (TRUE/FALSE)" },
+    { GIMP_PDB_INT32,    "newimage",              "Create a new image (TRUE/FALSE)" },
+    { GIMP_PDB_INT32,    "transparentbackground", "Make background transparent (TRUE/FALSE)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -169,7 +169,7 @@ query (void)
 			  "Version 0.2.0, March 15 1998",
 			  N_("<Image>/Filters/Light Effects/Lighting Effects..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -177,18 +177,18 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
-  if (run_mode == RUN_INTERACTIVE)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       INIT_I18N_UI();
     }
@@ -200,7 +200,7 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /* Set default values */
@@ -222,7 +222,7 @@ run (gchar   *name,
 
   check_drawables ();
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /* Make sure that the drawable is RGBA or RGB color */
       /* ================================================ */
@@ -236,7 +236,7 @@ run (gchar   *name,
           
           switch (run_mode)
             {
-              case RUN_INTERACTIVE:
+              case GIMP_RUN_INTERACTIVE:
                 if (main_dialog (drawable))
 		  {
 		    compute_image ();
@@ -246,15 +246,15 @@ run (gchar   *name,
 		  }
               break;
 
-              case RUN_WITH_LAST_VALS:
+              case GIMP_RUN_WITH_LAST_VALS:
                 image_setup (drawable, FALSE);
                 compute_image ();
                 break;
 
-              case RUN_NONINTERACTIVE:
+              case GIMP_RUN_NONINTERACTIVE:
                 if (nparams != 24)
 		  {
-		    status = STATUS_CALLING_ERROR;
+		    status = GIMP_PDB_CALLING_ERROR;
 		  }
                 else
                   {
@@ -291,10 +291,10 @@ run (gchar   *name,
             }
         }
       else
-        status = STATUS_EXECUTION_ERROR;
+        status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  if (run_mode != RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
 
   values[0].data.d_status = status;
@@ -306,7 +306,7 @@ run (gchar   *name,
     g_free (ypostab);
 }
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */

@@ -55,7 +55,7 @@ typedef enum
 
 
 
-gint32 gap_range_to_multilayer(GRunModeType run_mode,
+gint32 gap_range_to_multilayer(GimpRunModeType run_mode,
                              gint32 image_id,
                              long range_from, long range_to,
                              long flatten_mode, long bg_visible,
@@ -64,18 +64,18 @@ gint32 gap_range_to_multilayer(GRunModeType run_mode,
 			     gint32 sel_invert, char *sel_pattern
 			     );
 
-int gap_range_flatten(GRunModeType run_mode,
+int gap_range_flatten(GimpRunModeType run_mode,
                              gint32 image_id,
                              long range_from, long range_to);
-int gap_range_layer_del(GRunModeType run_mode,
+int gap_range_layer_del(GimpRunModeType run_mode,
                              gint32 image_id,
                              long range_from, long range_to, long position);
 
-int gap_range_conv(GRunModeType run_mode,
+int gap_range_conv(GimpRunModeType run_mode,
                              gint32 image_id,
                              long   range_from, long range_to, 
                              long   flatten,
-                             GImageType dest_type, 
+                             GimpImageBaseType dest_type, 
                              gint32     dest_colors,
                              gint32     dest_dither,
                              char   *basename,
@@ -86,7 +86,7 @@ int gap_range_conv(GRunModeType run_mode,
                              char   *palette
 			     );
 
-int gap_anim_sizechange(GRunModeType run_mode,
+int gap_anim_sizechange(GimpRunModeType run_mode,
                              t_gap_asiz asiz_mode,
                              gint32 image_id,
                              long size_x,

@@ -103,10 +103,10 @@ int gap_debug = 0;
 
 
 static void query(void);
-static void run(char *name, int nparam, GParam *param,
-                int *nretvals, GParam **retvals);
+static void run(char *name, int nparam, GimpParam *param,
+                int *nretvals, GimpParam **retvals);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc */
   NULL,  /* quit_proc */
@@ -119,246 +119,246 @@ MAIN ()
 static void
 query ()
 {
-  static GParamDef args_std[] =
+  static GimpParamDef args_std[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (current one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (current one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
   };
   static int nargs_std = sizeof(args_std) / sizeof(args_std[0]);
 
-  static GParamDef args_goto[] =
+  static GimpParamDef args_goto[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (current one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "nr", "frame nr where to go"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (current one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "nr", "frame nr where to go"},
   };
   static int nargs_goto = sizeof(args_goto) / sizeof(args_goto[0]);
 
-  static GParamDef args_del[] =
+  static GimpParamDef args_del[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (current one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "nr", "number of frames to delete (delete starts at current frame)"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (current one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "nr", "number of frames to delete (delete starts at current frame)"},
   };
   static int nargs_del = sizeof(args_del) / sizeof(args_del[0]);
 
 
-  static GParamDef args_dup[] =
+  static GimpParamDef args_dup[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (current one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "nr", "how often to copy current frame"},
-    {PARAM_INT32, "range_from", "frame nr to start"},
-    {PARAM_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (current one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "nr", "how often to copy current frame"},
+    {GIMP_PDB_INT32, "range_from", "frame nr to start"},
+    {GIMP_PDB_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
   };
   static int nargs_dup = sizeof(args_dup) / sizeof(args_dup[0]);
 
-  static GParamDef args_exchg[] =
+  static GimpParamDef args_exchg[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (current one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "nr", "nr of frame to exchange with current frame"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (current one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "nr", "nr of frame to exchange with current frame"},
   };
   static int nargs_exchg = sizeof(args_exchg) / sizeof(args_exchg[0]);
 
-  static GParamDef args_mov[] =
+  static GimpParamDef args_mov[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
   };
   static int nargs_mov = sizeof(args_std) / sizeof(args_mov[0]);
 
 
-  static GParamDef args_f2multi[] =
+  static GimpParamDef args_f2multi[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "range_from", "frame nr to start"},
-    {PARAM_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
-    {PARAM_INT32, "flatten_mode", "{ expand-as-necessary(0), CLIP-TO_IMG(1), CLIP-TO-BG-LAYER(2), FLATTEN(3) }"},
-    {PARAM_INT32, "bg_visible", "{ BG_NOT_VISIBLE (0), BG_VISIBLE(1) }"},
-    {PARAM_INT32, "framerate", "frame delaytime in ms"},
-    {PARAM_STRING, "frame_basename", "basename for all generated layers"},
-    {PARAM_INT32, "select_mode", "Mode how to identify a layer: 0-3 by layername 0=equal, 1=prefix, 2=suffix, 3=contains, 4=layerstack_numberslist, 5=inv_layerstack, 6=all_visible"},
-    {PARAM_INT32, "select_case", "0: ignore case 1: select_string is case sensitive"},
-    {PARAM_INT32, "select_invert", "0: select normal 1: invert (select all unselected layers)"},
-    {PARAM_STRING, "select_string", "string to match with layername (how to match is defined by select_mode)"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "range_from", "frame nr to start"},
+    {GIMP_PDB_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
+    {GIMP_PDB_INT32, "flatten_mode", "{ expand-as-necessary(0), CLIP-TO_IMG(1), CLIP-TO-BG-LAYER(2), FLATTEN(3) }"},
+    {GIMP_PDB_INT32, "bg_visible", "{ BG_NOT_VISIBLE (0), BG_VISIBLE(1) }"},
+    {GIMP_PDB_INT32, "framerate", "frame delaytime in ms"},
+    {GIMP_PDB_STRING, "frame_basename", "basename for all generated layers"},
+    {GIMP_PDB_INT32, "select_mode", "Mode how to identify a layer: 0-3 by layername 0=equal, 1=prefix, 2=suffix, 3=contains, 4=layerstack_numberslist, 5=inv_layerstack, 6=all_visible"},
+    {GIMP_PDB_INT32, "select_case", "0: ignore case 1: select_string is case sensitive"},
+    {GIMP_PDB_INT32, "select_invert", "0: select normal 1: invert (select all unselected layers)"},
+    {GIMP_PDB_STRING, "select_string", "string to match with layername (how to match is defined by select_mode)"},
   };
   static int nargs_f2multi = sizeof(args_f2multi) / sizeof(args_f2multi[0]);
 
-  static GParamDef return_f2multi[] =
+  static GimpParamDef return_f2multi[] =
   {
-    { PARAM_IMAGE, "new_image", "Output image" }
+    { GIMP_PDB_IMAGE, "new_image", "Output image" }
   };
   static int nreturn_f2multi = sizeof(return_f2multi) / sizeof(return_f2multi[0]);
 
 
 
 
-  static GParamDef args_rflatt[] =
+  static GimpParamDef args_rflatt[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "range_from", "frame nr to start"},
-    {PARAM_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "range_from", "frame nr to start"},
+    {GIMP_PDB_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
   };
   static int nargs_rflatt = sizeof(args_rflatt) / sizeof(args_rflatt[0]);
 
-  static GParamDef args_rlayerdel[] =
+  static GimpParamDef args_rlayerdel[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "range_from", "frame nr to start"},
-    {PARAM_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
-    {PARAM_INT32, "nr", "layerstack position (0 == on top)"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "range_from", "frame nr to start"},
+    {GIMP_PDB_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
+    {GIMP_PDB_INT32, "nr", "layerstack position (0 == on top)"},
   };
   static int nargs_rlayerdel = sizeof(args_rlayerdel) / sizeof(args_rlayerdel[0]);
 
 
-  static GParamDef args_rconv[] =
+  static GimpParamDef args_rconv[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "range_from", "frame nr to start"},
-    {PARAM_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
-    {PARAM_INT32, "flatten", "0 .. dont flatten image before save"},
-    {PARAM_INT32, "dest_type", "0=RGB, 1=GRAY, 2=INDEXED"},
-    {PARAM_INT32, "dest_colors", "1 upto 256 (used only for dest_type INDEXED)"},
-    {PARAM_INT32, "dest_dither", "0=no, 1=floyd-steinberg  2=fs/low-bleed, 3=fixed (used only for dest_type INDEXED)"},
-    {PARAM_STRING, "extension", "extension for the destination filetype (jpg, tif ...or any other gimp supported type)"},
-    {PARAM_STRING, "basename", "(optional parameter) here you may specify the basename of the destination frames \"/my_dir/myframe\"  _0001.ext is added)"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "range_from", "frame nr to start"},
+    {GIMP_PDB_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
+    {GIMP_PDB_INT32, "flatten", "0 .. dont flatten image before save"},
+    {GIMP_PDB_INT32, "dest_type", "0=RGB, 1=GRAY, 2=INDEXED"},
+    {GIMP_PDB_INT32, "dest_colors", "1 upto 256 (used only for dest_type INDEXED)"},
+    {GIMP_PDB_INT32, "dest_dither", "0=no, 1=floyd-steinberg  2=fs/low-bleed, 3=fixed (used only for dest_type INDEXED)"},
+    {GIMP_PDB_STRING, "extension", "extension for the destination filetype (jpg, tif ...or any other gimp supported type)"},
+    {GIMP_PDB_STRING, "basename", "(optional parameter) here you may specify the basename of the destination frames \"/my_dir/myframe\"  _0001.ext is added)"},
   };
   static int nargs_rconv = sizeof(args_rconv) / sizeof(args_rconv[0]);
 
 
-  static GParamDef args_rconv2[] =
+  static GimpParamDef args_rconv2[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "range_from", "frame nr to start"},
-    {PARAM_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
-    {PARAM_INT32, "flatten", "0 .. dont flatten image before save"},
-    {PARAM_INT32, "dest_type", "0=RGB, 1=GRAY, 2=INDEXED"},
-    {PARAM_INT32, "dest_colors", "1 upto 256 (used only for dest_type INDEXED)"},
-    {PARAM_INT32, "dest_dither", "0=no, 1=floyd-steinberg 2=fs/low-bleed, 3=fixed(used only for dest_type INDEXED)"},
-    {PARAM_STRING, "extension", "extension for the destination filetype (jpg, tif ...or any other gimp supported type)"},
-    {PARAM_STRING, "basename", "(optional parameter) here you may specify the basename of the destination frames \"/my_dir/myframe\"  _0001.ext is added)"},
-    {PARAM_INT32,  "palette_type", "0 == MAKE_PALETTE, 2 == WEB_PALETTE, 3 == MONO_PALETTE (bw) 4 == CUSTOM_PALETTE (used only for dest_type INDEXED)"},
-    {PARAM_INT32,  "alpha_dither", "dither transparency to fake partial opacity (used only for dest_type INDEXED)"},
-    {PARAM_INT32,  "remove_unused", "remove unused or double colors from final palette (used only for dest_type INDEXED)"},
-    {PARAM_STRING, "palette", "name of the cutom palette to use (used only for dest_type INDEXED and palette_type == CUSTOM_PALETTE) "},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "range_from", "frame nr to start"},
+    {GIMP_PDB_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
+    {GIMP_PDB_INT32, "flatten", "0 .. dont flatten image before save"},
+    {GIMP_PDB_INT32, "dest_type", "0=RGB, 1=GRAY, 2=INDEXED"},
+    {GIMP_PDB_INT32, "dest_colors", "1 upto 256 (used only for dest_type INDEXED)"},
+    {GIMP_PDB_INT32, "dest_dither", "0=no, 1=floyd-steinberg 2=fs/low-bleed, 3=fixed(used only for dest_type INDEXED)"},
+    {GIMP_PDB_STRING, "extension", "extension for the destination filetype (jpg, tif ...or any other gimp supported type)"},
+    {GIMP_PDB_STRING, "basename", "(optional parameter) here you may specify the basename of the destination frames \"/my_dir/myframe\"  _0001.ext is added)"},
+    {GIMP_PDB_INT32,  "palette_type", "0 == MAKE_PALETTE, 2 == WEB_PALETTE, 3 == MONO_PALETTE (bw) 4 == CUSTOM_PALETTE (used only for dest_type INDEXED)"},
+    {GIMP_PDB_INT32,  "alpha_dither", "dither transparency to fake partial opacity (used only for dest_type INDEXED)"},
+    {GIMP_PDB_INT32,  "remove_unused", "remove unused or double colors from final palette (used only for dest_type INDEXED)"},
+    {GIMP_PDB_STRING, "palette", "name of the cutom palette to use (used only for dest_type INDEXED and palette_type == CUSTOM_PALETTE) "},
   };
   static int nargs_rconv2 = sizeof(args_rconv2) / sizeof(args_rconv2[0]);
 
   /* resize and crop share the same parameters */
-  static GParamDef args_resize[] =
+  static GimpParamDef args_resize[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "new_width", "width of the resulting  anim_frame images in pixels"},
-    {PARAM_INT32, "new_height", "height of the resulting  anim_frame images in pixels"},
-    {PARAM_INT32, "offset_x", "X offset in pixels"},
-    {PARAM_INT32, "offset_y", "Y offset in pixels"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "new_width", "width of the resulting  anim_frame images in pixels"},
+    {GIMP_PDB_INT32, "new_height", "height of the resulting  anim_frame images in pixels"},
+    {GIMP_PDB_INT32, "offset_x", "X offset in pixels"},
+    {GIMP_PDB_INT32, "offset_y", "Y offset in pixels"},
   };
   static int nargs_resize = sizeof(args_resize) / sizeof(args_resize[0]);
 
-  static GParamDef args_scale[] =
+  static GimpParamDef args_scale[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "new_width", "width of the resulting  anim_frame images in pixels"},
-    {PARAM_INT32, "new_height", "height of the resulting  anim_frame images in pixels"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "new_width", "width of the resulting  anim_frame images in pixels"},
+    {GIMP_PDB_INT32, "new_height", "height of the resulting  anim_frame images in pixels"},
   };
   static int nargs_scale = sizeof(args_scale) / sizeof(args_scale[0]);
 
 
-  static GParamDef args_split[] =
+  static GimpParamDef args_split[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (NO Anim Frame allowed)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "inverse_order", "True/False"},
-    {PARAM_INT32, "no_alpha", "True: remove alpha channel(s) in the destination frames"},
-    {PARAM_STRING, "extension", "extension for the destination filetype (jpg, tif ...or any other gimp supported type)"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (NO Anim Frame allowed)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "inverse_order", "True/False"},
+    {GIMP_PDB_INT32, "no_alpha", "True: remove alpha channel(s) in the destination frames"},
+    {GIMP_PDB_STRING, "extension", "extension for the destination filetype (jpg, tif ...or any other gimp supported type)"},
   };
   static int nargs_split = sizeof(args_split) / sizeof(args_split[0]);
 
-  static GParamDef return_split[] =
+  static GimpParamDef return_split[] =
   {
-    { PARAM_IMAGE, "new_image", "Output image (first or last resulting frame)" }
+    { GIMP_PDB_IMAGE, "new_image", "Output image (first or last resulting frame)" }
   };
   static int nreturn_split = sizeof(return_split) / sizeof(return_split[0]);
 
 
-  static GParamDef *return_vals = NULL;
+  static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
-  static GParamDef args_shift[] =
+  static GimpParamDef args_shift[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (current one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "nr", "how many framenumbers to shift the framesequence"},
-    {PARAM_INT32, "range_from", "frame nr to start"},
-    {PARAM_INT32, "range_to", "frame nr to stop"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (current one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "nr", "how many framenumbers to shift the framesequence"},
+    {GIMP_PDB_INT32, "range_from", "frame nr to start"},
+    {GIMP_PDB_INT32, "range_to", "frame nr to stop"},
   };
   static int nargs_shift = sizeof(args_shift) / sizeof(args_shift[0]);
 
-  static GParamDef args_modify[] =
+  static GimpParamDef args_modify[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (current one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "range_from", "frame nr to start"},
-    {PARAM_INT32, "range_to", "frame nr to stop"},
-    {PARAM_INT32, "action_mode", "0:set_visible, 1:set_invisible, 2:set_linked, 3:set_unlinked, 4:raise, 5:lower, 6:merge_expand, 7:merge_img, 8:merge_bg, 9:apply_filter, 10:duplicate, 11:delete, 12:rename"},
-    {PARAM_INT32, "select_mode", "Mode how to identify a layer: 0-3 by layername 0=equal, 1=prefix, 2=suffix, 3=contains, 4=layerstack_numberslist, 5=inv_layerstack, 6=all_visible"},
-    {PARAM_INT32, "select_case", "0: ignore case 1: select_string is case sensitive"},
-    {PARAM_INT32, "select_invert", "0: select normal 1: invert (select all unselected layers)"},
-    {PARAM_STRING, "select_string", "string to match with layername (how to match is defined by select_mode)"},
-    {PARAM_STRING, "new_layername", "is only used at action rename. [####] is replaced by the framnumber"},
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (current one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "range_from", "frame nr to start"},
+    {GIMP_PDB_INT32, "range_to", "frame nr to stop"},
+    {GIMP_PDB_INT32, "action_mode", "0:set_visible, 1:set_invisible, 2:set_linked, 3:set_unlinked, 4:raise, 5:lower, 6:merge_expand, 7:merge_img, 8:merge_bg, 9:apply_filter, 10:duplicate, 11:delete, 12:rename"},
+    {GIMP_PDB_INT32, "select_mode", "Mode how to identify a layer: 0-3 by layername 0=equal, 1=prefix, 2=suffix, 3=contains, 4=layerstack_numberslist, 5=inv_layerstack, 6=all_visible"},
+    {GIMP_PDB_INT32, "select_case", "0: ignore case 1: select_string is case sensitive"},
+    {GIMP_PDB_INT32, "select_invert", "0: select normal 1: invert (select all unselected layers)"},
+    {GIMP_PDB_STRING, "select_string", "string to match with layername (how to match is defined by select_mode)"},
+    {GIMP_PDB_STRING, "new_layername", "is only used at action rename. [####] is replaced by the framnumber"},
   };
   static int nargs_modify = sizeof(args_modify) / sizeof(args_modify[0]);
 
-  static GParamDef args_video_copy[] =
+  static GimpParamDef args_video_copy[] =
   {
-    {PARAM_INT32, "run_mode", "always non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (current one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "range_from", "frame nr to start"},
-    {PARAM_INT32, "range_to", "frame nr to stop"},
+    {GIMP_PDB_INT32, "run_mode", "always non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (current one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "range_from", "frame nr to start"},
+    {GIMP_PDB_INT32, "range_to", "frame nr to stop"},
   };
   static int nargs_video_copy = sizeof(args_video_copy) / sizeof(args_video_copy[0]);
 
-  static GParamDef args_video_paste[] =
+  static GimpParamDef args_video_paste[] =
   {
-    {PARAM_INT32, "run_mode", "always non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (current one of the Anim Frames)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
-    {PARAM_INT32, "paste_mode", "0 .. paste at current frame (replacing current and following frames)"
+    {GIMP_PDB_INT32, "run_mode", "always non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (current one of the Anim Frames)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "paste_mode", "0 .. paste at current frame (replacing current and following frames)"
                                 "1 .. paste insert before current frame "
 				"2 .. paste insert after current frame"},
   };
   static int nargs_video_paste = sizeof(args_video_paste) / sizeof(args_video_paste[0]);
 
-  static GParamDef args_video_clear[] =
+  static GimpParamDef args_video_clear[] =
   {
-    {PARAM_INT32, "run_mode", "always non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (is ignored)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {GIMP_PDB_INT32, "run_mode", "always non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image (is ignored)"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
   };
   static int nargs_video_clear = sizeof(args_video_clear) / sizeof(args_video_clear[0]);
 
@@ -373,7 +373,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Goto/Next Frame"),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_std, nreturn_vals,
 			 args_std, return_vals);
 
@@ -385,7 +385,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Goto/Previous Frame"),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_std, nreturn_vals,
 			 args_std, return_vals);
 
@@ -397,7 +397,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Goto/First Frame"),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_std, nreturn_vals,
 			 args_std, return_vals);
 
@@ -409,7 +409,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Goto/Last Frame"),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_std, nreturn_vals,
 			 args_std, return_vals);
 
@@ -421,7 +421,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Goto/Any Frame..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_goto, nreturn_vals,
 			 args_goto, return_vals);
 
@@ -433,7 +433,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Delete Frames..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_del, nreturn_vals,
 			 args_del, return_vals);
 
@@ -445,7 +445,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Duplicate Frames..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_dup, nreturn_vals,
 			 args_dup, return_vals);
 
@@ -457,7 +457,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Exchange Frame..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_exchg, nreturn_vals,
 			 args_exchg, return_vals);
 
@@ -469,7 +469,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Move Path..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_mov, nreturn_vals,
 			 args_mov, return_vals);
 
@@ -481,7 +481,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Frames to Image..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_f2multi, nreturn_f2multi,
 			 args_f2multi, return_f2multi);
 
@@ -493,7 +493,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Frames Flatten..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_rflatt, nreturn_vals,
 			 args_rflatt, return_vals);
 
@@ -505,7 +505,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Frames LayerDel..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_rlayerdel, nreturn_vals,
 			 args_rlayerdel, return_vals);
 
@@ -517,7 +517,7 @@ query ()
 			 gap_main_version,
 			 NULL,                      /* do not appear in menus */
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_rconv, nreturn_vals,
 			 args_rconv, return_vals);
 
@@ -529,7 +529,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Frames Convert..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_rconv2, nreturn_vals,
 			 args_rconv2, return_vals);
 
@@ -541,7 +541,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Frames Resize..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_resize, nreturn_vals,
 			 args_resize, return_vals);
 
@@ -553,7 +553,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Frames Crop..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_resize, nreturn_vals,
 			 args_resize, return_vals);
 
@@ -565,7 +565,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Frames Scale..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_scale, nreturn_vals,
 			 args_scale, return_vals);
 
@@ -577,7 +577,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Split Image to Frames..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_split, nreturn_split,
 			 args_split, return_split);
 
@@ -590,7 +590,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Framesequence Shift..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_shift, nreturn_vals,
 			 args_shift, return_vals);
 
@@ -602,7 +602,7 @@ query ()
 			 gap_main_version,
 			 N_("<Image>/Video/Frames Modify..."),
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_modify, nreturn_vals,
 			 args_modify, return_vals);
 
@@ -616,7 +616,7 @@ query ()
 			 gap_main_version,
 			 NULL,                     /* do not appear in menus */
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_video_copy, nreturn_vals,
 			 args_video_copy, return_vals);
 
@@ -635,7 +635,7 @@ query ()
 			 gap_main_version,
 			 NULL,                     /* do not appear in menus */
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_video_paste, nreturn_vals,
 			 args_video_paste, return_vals);
 
@@ -649,7 +649,7 @@ query ()
 			 gap_main_version,
 			 NULL,                     /* do not appear in menus */
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs_video_clear, nreturn_vals,
 			 args_video_clear, return_vals);
 			 
@@ -660,9 +660,9 @@ query ()
 static void
 run (char    *name,
      int      n_params,
-     GParam  *param,
+     GimpParam  *param,
      int     *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
   typedef struct
   {
@@ -680,13 +680,13 @@ run (char    *name,
   char        l_layername[MAX_LAYERNAME];
   char       *l_basename_ptr;
   char       *l_palette_ptr;
-  static GParam values[2];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32     image_id;
   gint32     nr;
   long       range_from, range_to;
-  GImageType dest_type;
+  GimpImageBaseType dest_type;
   gint32     dest_colors;
   gint32     dest_dither;
   gint32     palette_type;
@@ -734,8 +734,8 @@ run (char    *name,
   {
        fprintf(stderr, "gap_plugin is LOCKED for Image ID=%s\n", l_lockname);
 
-       status = STATUS_EXECUTION_ERROR;
-       values[0].type = PARAM_STATUS;
+       status = GIMP_PDB_EXECUTION_ERROR;
+       values[0].type = GIMP_PDB_STATUS;
        values[0].data.d_status = status;
        return ;
   }
@@ -746,7 +746,7 @@ run (char    *name,
   l_lock.image_id = image_id;
   gimp_set_data (l_lockname, &l_lock, sizeof(l_lock));
    
-  if (run_mode == RUN_NONINTERACTIVE) {
+  if (run_mode == GIMP_RUN_NONINTERACTIVE) {
     INIT_I18N();
   } else {
     INIT_I18N_UI();
@@ -754,15 +754,15 @@ run (char    *name,
 
   if (strcmp (name, "plug_in_gap_next") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 3)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -773,15 +773,15 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_prev") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 3)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -792,15 +792,15 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_first") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 3)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -811,15 +811,15 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_last") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 3)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -830,15 +830,15 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_goto") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 4)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -850,15 +850,15 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_del") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 4)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -870,16 +870,16 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_dup") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         /* accept the old interface with 4 parameters */
         if ((n_params != 4) && (n_params != 6))
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -901,15 +901,15 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_exchg") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 4)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -921,13 +921,13 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_move") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         /* if (n_params != ?? ) */
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -939,15 +939,15 @@ run (char    *name,
   else if (strcmp (name, "plug_in_gap_range_to_multilayer") == 0)
   {
       l_rc = -1;
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if ((n_params != 7) && (n_params != 9) && (n_params != 13))
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -991,20 +991,20 @@ run (char    *name,
       }
 
       *nreturn_vals = 2;
-      values[1].type = PARAM_IMAGE;
+      values[1].type = GIMP_PDB_IMAGE;
       values[1].data.d_int32 = l_rc;   /* return the new generated image_id */
   }
   else if (strcmp (name, "plug_in_gap_range_flatten") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 5)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -1017,15 +1017,15 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_range_layer_del") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 6)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -1045,11 +1045,11 @@ run (char    *name,
       palette_type = GIMP_MAKE_PALETTE;
       alpha_dither = 0;
       remove_unused = 1;
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if ((n_params != 10) && (n_params != 11) && (n_params != 15))
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
         else
         {
@@ -1069,7 +1069,7 @@ run (char    *name,
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
         image_id    = param[1].data.d_image;
         range_from  = param[3].data.d_int32;  /* frame nr to start */	
@@ -1091,15 +1091,15 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_anim_resize") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 7)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -1115,15 +1115,15 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_anim_crop") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 7)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -1139,15 +1139,15 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_anim_scale") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 5)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -1162,11 +1162,11 @@ run (char    *name,
   else if (strcmp (name, "plug_in_gap_split") == 0)
   {
       l_rc = -1;
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 6)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
         else
         {
@@ -1175,7 +1175,7 @@ run (char    *name,
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
         image_id      = param[1].data.d_image;
         inverse_order = param[3].data.d_int32;
@@ -1186,20 +1186,20 @@ run (char    *name,
 
       }
       *nreturn_vals = 2;
-      values[1].type = PARAM_IMAGE;
+      values[1].type = GIMP_PDB_IMAGE;
       values[1].data.d_int32 = l_rc;   /* return the new generated image_id */
   }
   else if (strcmp (name, "plug_in_gap_shift") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 6)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -1215,10 +1215,10 @@ run (char    *name,
   {
      if (n_params != 5)
      {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
      }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
         image_id = param[1].data.d_image;
         range_from = param[3].data.d_int32;  /* frame nr to start */	
@@ -1231,10 +1231,10 @@ run (char    *name,
   {
       if (n_params != 4)
       {
-        status = STATUS_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
         image_id = param[1].data.d_image;
         nr       = param[3].data.d_int32;  /* paste_mode (0,1 or 2) */
@@ -1244,7 +1244,7 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_video_edit_clear") == 0)
   {
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
         if(p_vid_edit_clear() < 0)
 	{
@@ -1258,11 +1258,11 @@ run (char    *name,
   }
   else if (strcmp (name, "plug_in_gap_modify") == 0)
   {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
         if (n_params != 11)
         {
-          status = STATUS_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         }
 	else
 	{
@@ -1279,7 +1279,7 @@ run (char    *name,
 	}
       }
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
       {
 
         image_id = param[1].data.d_image;
@@ -1301,14 +1301,14 @@ run (char    *name,
 
  if(l_rc < 0)
  {
-    status = STATUS_EXECUTION_ERROR;
+    status = GIMP_PDB_EXECUTION_ERROR;
  }
  
   
- if (run_mode != RUN_NONINTERACTIVE)
+ if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush();
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /* remove LOCK on this image for all gap_plugins */

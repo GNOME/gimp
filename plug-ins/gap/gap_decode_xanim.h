@@ -45,7 +45,7 @@ typedef enum
 } t_gap_xa_formats;
 
 
-int gap_xanim_decode(GRunModeType run_mode
+int gap_xanim_decode(GimpRunModeType run_mode
                              );
 
 #endif

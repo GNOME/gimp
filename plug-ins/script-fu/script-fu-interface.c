@@ -779,7 +779,7 @@ script_fu_install_script (gpointer  foo,
                           script->date,
                           menu_path,
                           script->img_types,
-                          PROC_TEMPORARY,
+                          GIMP_TEMPORARY,
                           script->num_args + 1, 0,
                           script->args, NULL,
                           script_fu_script_proc);
@@ -812,7 +812,7 @@ script_fu_script_proc (gchar       *name,
 		       GimpParam  **return_vals)
 {
   static GimpParam values[1];
-  GimpPDBStatusType status = STATUS_SUCCESS;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   GimpRunModeType run_mode;
   SFScript *script;
   gint min_args;
@@ -821,16 +821,16 @@ script_fu_script_proc (gchar       *name,
   run_mode = params[0].data.d_int32;
 
   if (! (script = script_fu_find_script (name)))
-    status = STATUS_CALLING_ERROR;
+    status = GIMP_PDB_CALLING_ERROR;
   else
     {
       if (script->num_args == 0)
-	run_mode = RUN_NONINTERACTIVE;
+	run_mode = GIMP_RUN_NONINTERACTIVE;
 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Determine whether the script is image based (runs on an image)  */
 	  if (strncmp (script->description, "<Image>", 7) == 0)
 	    {
@@ -850,11 +850,11 @@ script_fu_script_proc (gchar       *name,
 	      break;
 	    }
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != (script->num_args + 1))
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS)
+	    status = GIMP_PDB_CALLING_ERROR;
+	  if (status == GIMP_PDB_SUCCESS)
 	    {
 	      gchar *text = NULL;
 	      gchar *command;

@@ -269,11 +269,11 @@ ReadImage (FILE   *fd,
 	   gint    grey)
 {
   guchar v,wieviel;
-  GPixelRgn pixel_rgn;
+  GimpPixelRgn pixel_rgn;
   gint xpos = 0, ypos = 0;
   Image image;
   gint32 layer;
-  GDrawable *drawable;
+  GimpDrawable *drawable;
   guchar *dest, *temp, *buffer;
   guchar gimp_cmap[768];
   gushort rgb;
@@ -284,23 +284,23 @@ ReadImage (FILE   *fd,
   
   if (bpp >= 16)
     {
-      image = gimp_image_new (width, height, RGB);
+      image = gimp_image_new (width, height, GIMP_RGB);
       layer = gimp_layer_new (image, _("Background"),
-                              width, height, RGB_IMAGE, 100, NORMAL_MODE);
+                              width, height, GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
       channels = 3;
     }
   else if (grey)
     {
-      image = gimp_image_new (width, height, GRAY);
+      image = gimp_image_new (width, height, GIMP_GRAY);
       layer = gimp_layer_new (image, _("Background"),
-			      width, height, GRAY_IMAGE, 100, NORMAL_MODE);
+			      width, height, GIMP_GRAY_IMAGE, 100, GIMP_NORMAL_MODE);
       channels = 1;
     }
   else
     {
-      image = gimp_image_new (width, height, INDEXED);
+      image = gimp_image_new (width, height, GIMP_INDEXED);
       layer = gimp_layer_new (image, _("Background"),
-                              width, height, INDEXED_IMAGE, 100, NORMAL_MODE);
+                              width, height, GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
       channels = 1;
     }
   

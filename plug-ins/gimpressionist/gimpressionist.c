@@ -522,7 +522,7 @@ int create_gimpressionist(void)
 
 char *standalone = NULL;
 
-extern GPlugInInfo PLUG_IN_INFO;
+extern GimpPlugInInfo PLUG_IN_INFO;
 
 #ifdef G_OS_WIN32
 /* No standalone on win32. */

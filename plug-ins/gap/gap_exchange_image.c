@@ -122,7 +122,7 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
    /* gimp_image_undo_disable (src_image_id); */ /* does not work !! if active we can not steal layers */
 
    /*  Copy the colormap if necessary  */
-   if(gimp_image_base_type(src_image_id) == INDEXED)
+   if(gimp_image_base_type(src_image_id) == GIMP_INDEXED)
    {
        l_cmap = gimp_image_get_cmap (src_image_id, &l_ncolors);
 

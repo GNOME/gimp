@@ -18,7 +18,7 @@ double              x_release = -1.0,
                     y_release = -1.0;
 float               cx = -0.75;
 float               cy = -0.2;
-GDrawable          *drawable;
+GimpDrawable          *drawable;
 gint                tile_width,
                     tile_height;
 gint                img_width,
@@ -32,7 +32,7 @@ gint                sel_width,
                     sel_height;
 gint                preview_width,
                     preview_height;
-GTile              *the_tile = NULL;
+GimpTile              *the_tile = NULL;
 double              cen_x,
                     cen_y;
 double              xpos,

@@ -316,7 +316,7 @@ typedef struct
 
 typedef struct
 {
-  GTile *tile;
+  GimpTile *tile;
   gint   col;
   gint   row;
   gint   shadow;
@@ -408,9 +408,9 @@ typedef void (*QueryFunc) (GtkWidget *, gpointer, gpointer);
 static void    plugin_query (void);
 static void    plugin_run   (gchar   *name,
 			     gint     nparams,
-			     GParam  *param,
+			     GimpParam  *param,
 			     gint    *nreturn_vals,
-			     GParam **return_vals);
+			     GimpParam **return_vals);
 
 static void     plug_in_parse_gflare_path (void);
 
@@ -507,7 +507,7 @@ static void             gradient_cache_flush  (void);
 ***	Variables
 **/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,	        /* init_proc  */
   NULL,	        /* quit_proc  */
@@ -598,7 +598,7 @@ static gchar *gflare_menu_modes[] =
 };
 
 static gint32              image_ID;
-static GDrawable          *drawable;
+static GimpDrawable          *drawable;
 static DrawableInfo        dinfo;
 static TileKeeper         *tk_read;
 static TileKeeper         *tk_write;
@@ -790,22 +790,22 @@ MAIN ();
 void
 plugin_query (void)
 {
-  static GParamDef args[]=
+  static GimpParamDef args[]=
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_STRING, "gflare_name", "The name of GFlare" },
-    { PARAM_INT32, "xcenter", "X coordinate of center of GFlare" },
-    { PARAM_INT32, "ycenter", "Y coordinate of center of GFlare" },
-    { PARAM_FLOAT, "radius",	"Radius of GFlare (pixel)" },
-    { PARAM_FLOAT, "rotation", "Rotation of GFlare (degree)" },
-    { PARAM_FLOAT, "hue", "Hue rotation of GFlare (degree)" },
-    { PARAM_FLOAT, "vangle", "Vector angle for second flares (degree)" },
-    { PARAM_FLOAT, "vlength", "Vector length for second flares (percentage to Radius)" },
-    { PARAM_INT32, "use_asupsample", "Whether it uses or not adaptive supersampling while rendering (boolean)" },
-    { PARAM_INT32, "asupsample_max_depth", "Max depth for adaptive supersampling"},
-    { PARAM_FLOAT, "asupsample_threshold", "Threshold for adaptive supersampling"}
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_STRING, "gflare_name", "The name of GFlare" },
+    { GIMP_PDB_INT32, "xcenter", "X coordinate of center of GFlare" },
+    { GIMP_PDB_INT32, "ycenter", "Y coordinate of center of GFlare" },
+    { GIMP_PDB_FLOAT, "radius",	"Radius of GFlare (pixel)" },
+    { GIMP_PDB_FLOAT, "rotation", "Rotation of GFlare (degree)" },
+    { GIMP_PDB_FLOAT, "hue", "Hue rotation of GFlare (degree)" },
+    { GIMP_PDB_FLOAT, "vangle", "Vector angle for second flares (degree)" },
+    { GIMP_PDB_FLOAT, "vlength", "Vector length for second flares (percentage to Radius)" },
+    { GIMP_PDB_INT32, "use_asupsample", "Whether it uses or not adaptive supersampling while rendering (boolean)" },
+    { GIMP_PDB_INT32, "asupsample_max_depth", "Max depth for adaptive supersampling"},
+    { GIMP_PDB_FLOAT, "asupsample_threshold", "Threshold for adaptive supersampling"}
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -825,7 +825,7 @@ plugin_query (void)
 			  "1997",
 			  N_("<Image>/Filters/Light Effects/GFlare..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -833,13 +833,13 @@ plugin_query (void)
 void
 plugin_run (gchar   *name,
 	    gint     nparams,
-	    GParam  *param,
+	    GimpParam  *param,
 	    gint    *nreturn_vals,
-	    GParam **return_vals)
+	    GimpParam **return_vals)
 {
-  static GParam values[1];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   /* Initialize */
   run_mode = param[0].data.d_int32;
@@ -847,7 +847,7 @@ plugin_run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*
@@ -881,7 +881,7 @@ plugin_run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
 
       /*  Possibly retrieve data  */
@@ -895,15 +895,15 @@ plugin_run (gchar   *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
 #if 0
       printf("Currently non interactive call of gradient flare is not supported\n");
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
       break;
 #endif
       if (nparams != 14)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -920,11 +920,11 @@ plugin_run (gchar   *name,
 	  pvals.asupsample_threshold = param[13].data.d_float;
 
 	  if (pvals.radius <= 0)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_gflare", &pvals);
       break;
@@ -933,7 +933,7 @@ plugin_run (gchar   *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) ||
@@ -942,17 +942,17 @@ plugin_run (gchar   *name,
 	  gimp_progress_init (_("Gradient Flare..."));
 	  plugin_do ();
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 
 	  /*  Store data  */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_gflare", &pvals, sizeof (PluginValues));
 	}
       else
 	{
 	  g_message (_("GFlare: cannot operate on indexed color images"));
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 
@@ -1063,7 +1063,7 @@ plugin_do (void)
 static void
 plugin_do_non_asupsample (void)
 {
-  GPixelRgn	src_rgn, dest_rgn;
+  GimpPixelRgn	src_rgn, dest_rgn;
   gpointer	pr;
   guchar	*src_row, *dest_row;
   guchar	*src, *dest;
@@ -2771,7 +2771,7 @@ dlg_preview_init_func (Preview *preview, gpointer data)
 static void
 dlg_preview_render_func (Preview *preview, guchar *dest, gint y, gpointer data)
 {
-  GPixelRgn	srcPR;
+  GimpPixelRgn	srcPR;
   gint		x;
   gint		dx, dy;		/* drawable x, y */
   guchar	*src_row, *src;

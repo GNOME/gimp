@@ -678,7 +678,7 @@ dialog_search_callback (GtkWidget *widget,
 	  query_text++;
 	}
 
-      gimp_query_database (query->str,
+      gimp_procedural_db_query (query->str,
 			   ".*", ".*", ".*", ".*", ".*", ".*", 
 			   &num_procs, &proc_list);
 
@@ -688,7 +688,7 @@ dialog_search_callback (GtkWidget *widget,
     {
       gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
 			    _("Animated Filter apply (by blurb - please wait)"));
-      gimp_query_database (".*", 
+      gimp_procedural_db_query (".*", 
 			   gtk_entry_get_text( GTK_ENTRY(dbbrowser->search_entry) ),
 			   ".*", ".*", ".*", ".*", ".*",
 			   &num_procs, &proc_list);
@@ -696,7 +696,7 @@ dialog_search_callback (GtkWidget *widget,
   else {
       gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
 			    _("Animated Filter apply (please wait)"));
-      gimp_query_database (".*", ".*", ".*", ".*", ".*", ".*", ".*", 
+      gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*", 
 			   &num_procs, &proc_list);
   }
 
@@ -762,32 +762,32 @@ convert_string (char *str)
 }
 
 static char* 
-GParamType2char(GParamType t)
+GParamType2char(GimpPDBArgType t)
 {
   switch (t) {
-  case PARAM_INT32: return "INT32";
-  case PARAM_INT16: return "INT16";
-  case PARAM_INT8: return "INT8";
-  case PARAM_FLOAT: return "FLOAT";
-  case PARAM_STRING: return "STRING";
-  case PARAM_INT32ARRAY: return "INT32ARRAY";
-  case PARAM_INT16ARRAY: return "INT16ARRAY";
-  case PARAM_INT8ARRAY: return "INT8ARRAY";
-  case PARAM_FLOATARRAY: return "FLOATARRAY";
-  case PARAM_STRINGARRAY: return "STRINGARRAY";
-  case PARAM_COLOR: return "COLOR";
-  case PARAM_REGION: return "REGION";
-  case PARAM_DISPLAY: return "DISPLAY";
-  case PARAM_IMAGE: return "IMAGE";
-  case PARAM_LAYER: return "LAYER";
-  case PARAM_CHANNEL: return "CHANNEL";
-  case PARAM_DRAWABLE: return "DRAWABLE";
-  case PARAM_SELECTION: return "SELECTION";
-  case PARAM_BOUNDARY: return "BOUNDARY";
-  case PARAM_PATH: return "PATH";
-  case PARAM_PARASITE: return "PARASITE";
-  case PARAM_STATUS: return "STATUS";
-  case PARAM_END: return "END";
+  case GIMP_PDB_INT32: return "INT32";
+  case GIMP_PDB_INT16: return "INT16";
+  case GIMP_PDB_INT8: return "INT8";
+  case GIMP_PDB_FLOAT: return "FLOAT";
+  case GIMP_PDB_STRING: return "STRING";
+  case GIMP_PDB_INT32ARRAY: return "INT32ARRAY";
+  case GIMP_PDB_INT16ARRAY: return "INT16ARRAY";
+  case GIMP_PDB_INT8ARRAY: return "INT8ARRAY";
+  case GIMP_PDB_FLOATARRAY: return "FLOATARRAY";
+  case GIMP_PDB_STRINGARRAY: return "STRINGARRAY";
+  case GIMP_PDB_COLOR: return "COLOR";
+  case GIMP_PDB_REGION: return "REGION";
+  case GIMP_PDB_DISPLAY: return "DISPLAY";
+  case GIMP_PDB_IMAGE: return "IMAGE";
+  case GIMP_PDB_LAYER: return "LAYER";
+  case GIMP_PDB_CHANNEL: return "CHANNEL";
+  case GIMP_PDB_DRAWABLE: return "DRAWABLE";
+  case GIMP_PDB_SELECTION: return "SELECTION";
+  case GIMP_PDB_BOUNDARY: return "BOUNDARY";
+  case GIMP_PDB_PATH: return "PATH";
+  case GIMP_PDB_PARASITE: return "PARASITE";
+  case GIMP_PDB_STATUS: return "STATUS";
+  case GIMP_PDB_END: return "END";
   default: return "UNKNOWN?";
   }
 }

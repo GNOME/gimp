@@ -44,7 +44,7 @@ typedef enum
  * ------------------------
  */
 
-gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GRunModeType run_mode);
+gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GimpRunModeType run_mode);
 int  p_save_xcf(gint32 image_id, char *sav_name);
 gint p_get_data(char *key);
 void p_set_data(char *key, gint plugin_data_len);

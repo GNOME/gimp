@@ -35,7 +35,7 @@
 
 
 
-int gap_split_image(GRunModeType run_mode,
+int gap_split_image(GimpRunModeType run_mode,
                              gint32     image_id,
                              gint32     inverse_order,
                              gint32     no_alpha,

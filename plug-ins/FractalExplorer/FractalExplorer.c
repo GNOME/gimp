@@ -96,11 +96,11 @@
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
-static void explorer            (GDrawable    *drawable);
+static void explorer            (GimpDrawable    *drawable);
 static void explorer_render_row (const guchar *src_row,
 				 guchar       *dest_row,
 				 gint          row,
@@ -158,7 +158,7 @@ static void        fractalexplorer_rescan_ok_callback        (GtkWidget *widget,
 static void        fractalexplorer_rescan_list               (void);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -179,29 +179,29 @@ MAIN()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT8, "fractaltype", "0: Mandelbrot; 1: Julia; 2: Barnsley 1; 3: Barnsley 2; 4: Barnsley 3; 5: Spider; 6: ManOWar; 7: Lambda; 8: Sierpinski" },
-    { PARAM_FLOAT, "xmin", "xmin fractal image delimiter" },
-    { PARAM_FLOAT, "xmax", "xmax fractal image delimiter" },
-    { PARAM_FLOAT, "ymin", "ymin fractal image delimiter" },
-    { PARAM_FLOAT, "ymax", "ymax fractal image delimiter" },
-    { PARAM_FLOAT, "iter", "Iteration value" },
-    { PARAM_FLOAT, "cx", "cx value ( only Julia)" },
-    { PARAM_FLOAT, "cy", "cy value ( only Julia)" },
-    { PARAM_INT8, "colormode", "0: Apply colormap as specified by the parameters below; 1: Apply active gradient to final image" },
-    { PARAM_FLOAT, "redstretch", "Red stretching factor" },
-    { PARAM_FLOAT, "greenstretch", "Green stretching factor" },
-    { PARAM_FLOAT, "bluestretch", "Blue stretching factor" },
-    { PARAM_INT8, "redmode", "Red application mode (0:SIN;1:COS;2:NONE)" },
-    { PARAM_INT8, "greenmode", "Green application mode (0:SIN;1:COS;2:NONE)" },
-    { PARAM_INT8, "bluemode", "Blue application mode (0:SIN;1:COS;2:NONE)" },
-    { PARAM_INT8, "redinvert", "Red inversion mode (1: enabled; 0: disabled)" },
-    { PARAM_INT8, "greeninvert", "Green inversion mode (1: enabled; 0: disabled)" },
-    { PARAM_INT8, "blueinvert", "Green inversion mode (1: enabled; 0: disabled)" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT8, "fractaltype", "0: Mandelbrot; 1: Julia; 2: Barnsley 1; 3: Barnsley 2; 4: Barnsley 3; 5: Spider; 6: ManOWar; 7: Lambda; 8: Sierpinski" },
+    { GIMP_PDB_FLOAT, "xmin", "xmin fractal image delimiter" },
+    { GIMP_PDB_FLOAT, "xmax", "xmax fractal image delimiter" },
+    { GIMP_PDB_FLOAT, "ymin", "ymin fractal image delimiter" },
+    { GIMP_PDB_FLOAT, "ymax", "ymax fractal image delimiter" },
+    { GIMP_PDB_FLOAT, "iter", "Iteration value" },
+    { GIMP_PDB_FLOAT, "cx", "cx value ( only Julia)" },
+    { GIMP_PDB_FLOAT, "cy", "cy value ( only Julia)" },
+    { GIMP_PDB_INT8, "colormode", "0: Apply colormap as specified by the parameters below; 1: Apply active gradient to final image" },
+    { GIMP_PDB_FLOAT, "redstretch", "Red stretching factor" },
+    { GIMP_PDB_FLOAT, "greenstretch", "Green stretching factor" },
+    { GIMP_PDB_FLOAT, "bluestretch", "Blue stretching factor" },
+    { GIMP_PDB_INT8, "redmode", "Red application mode (0:SIN;1:COS;2:NONE)" },
+    { GIMP_PDB_INT8, "greenmode", "Green application mode (0:SIN;1:COS;2:NONE)" },
+    { GIMP_PDB_INT8, "bluemode", "Blue application mode (0:SIN;1:COS;2:NONE)" },
+    { GIMP_PDB_INT8, "redinvert", "Red inversion mode (1: enabled; 0: disabled)" },
+    { GIMP_PDB_INT8, "greeninvert", "Green inversion mode (1: enabled; 0: disabled)" },
+    { GIMP_PDB_INT8, "blueinvert", "Green inversion mode (1: enabled; 0: disabled)" },
   };
   static gint nargs = sizeof(args) / sizeof(args[0]);
 
@@ -215,7 +215,7 @@ query (void)
 			  "December, 1998",
 			  N_("<Image>/Filters/Render/Pattern/Fractal Explorer..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -227,22 +227,22 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
   gint32        image_ID;
-  GRunModeType  run_mode;
+  GimpRunModeType  run_mode;
   gdouble       xhsiz;
   gdouble       yhsiz;
   gint          pwidth;
   gint          pheight;
-  GStatusType   status = STATUS_SUCCESS;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -289,7 +289,7 @@ run (gchar   *name,
   /* See how we will run */
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
       gimp_get_data ("plug_in_fractalexplorer", &wvals);
 
@@ -299,11 +299,11 @@ run (gchar   *name,
 
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /* Make sure all the arguments are present */
       if (nparams != 22)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -330,7 +330,7 @@ run (gchar   *name,
       make_color_map();
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
       gimp_get_data ("plug_in_fractalexplorer", &wvals);
       make_color_map ();
@@ -347,7 +347,7 @@ run (gchar   *name,
   cx = wvals.cx;
   cy = wvals.cy;
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_is_rgb(drawable->id))
@@ -359,17 +359,17 @@ run (gchar   *name,
 	  /* Run! */
 
 	  explorer (drawable);
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 
 	  /* Store data */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_fractalexplorer",
 			   &wvals, sizeof (explorer_vals_t));
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
   values[0].data.d_status = status;
@@ -382,10 +382,10 @@ run (gchar   *name,
  *********************************************************************/
 
 static void
-explorer (GDrawable * drawable)
+explorer (GimpDrawable * drawable)
 {
-  GPixelRgn   srcPR;
-  GPixelRgn   destPR;
+  GimpPixelRgn   srcPR;
+  GimpPixelRgn   destPR;
   gint        width;
   gint        height;
   gint        bytes;

@@ -51,14 +51,14 @@ extern      int gap_debug; /* ==0  ... dont print debug infos */
 gint32 p_my_layer_copy (gint32 dst_image_id,
                         gint32 src_layer_id,
                         gdouble    opacity, /* 0.0 upto 100.0 */
-                        GLayerMode mode,
+                        GimpLayerModeEffects mode,
                         gint *src_offset_x,
                         gint *src_offset_y )
 {
   gint32 l_new_layer_id;
   gint32 l_ret_id;     
   char  *l_name;
-  GDrawableType  l_src_type;
+  GimpImageType  l_src_type;
 
   if(gap_debug) printf("GAP p_my_layer_copy: START\n");
 
@@ -69,21 +69,21 @@ gint32 p_my_layer_copy (gint32 dst_image_id,
   if(opacity < 0.0)   opacity = 0.0;
   
   l_name = gimp_layer_get_name(src_layer_id);
-  l_src_type   = gimp_layer_type(src_layer_id);
+  l_src_type   = gimp_drawable_type(src_layer_id);
 
   switch(l_src_type)
   {
-    case RGB_IMAGE:         /* 0 */
-    case RGBA_IMAGE:        /* 1 */
-       if(gimp_image_base_type(dst_image_id) != RGB) { return -1; }
+    case GIMP_RGB_IMAGE:         /* 0 */
+    case GIMP_RGBA_IMAGE:        /* 1 */
+       if(gimp_image_base_type(dst_image_id) != GIMP_RGB) { return -1; }
        break;
-    case GRAY_IMAGE:        /* 2 */
-    case GRAYA_IMAGE:       /* 3 */
-       if(gimp_image_base_type(dst_image_id) != GRAY) { return -1; }
+    case GIMP_GRAY_IMAGE:        /* 2 */
+    case GIMP_GRAYA_IMAGE:       /* 3 */
+       if(gimp_image_base_type(dst_image_id) != GIMP_GRAY) { return -1; }
        break;
-    case INDEXED_IMAGE:     /* 4 */
-    case INDEXEDA_IMAGE:    /* 5 */
-       if(gimp_image_base_type(dst_image_id) != INDEXED) { return -1; }
+    case GIMP_INDEXED_IMAGE:     /* 4 */
+    case GIMP_INDEXEDA_IMAGE:    /* 5 */
+       if(gimp_image_base_type(dst_image_id) != GIMP_INDEXED) { return -1; }
        break;
   }
 

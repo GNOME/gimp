@@ -132,7 +132,7 @@ gdt_run (gchar       *name,
 
   switch(run_mode) 
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       memset (&oldvals, 0, sizeof(GdtVals));
       gimp_get_data ("plug_in_gdyntext", &oldvals);
 
@@ -158,13 +158,13 @@ gdt_run (gchar       *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
 #ifdef DEBUG
       g_print ("%d\n", nparams);
 #endif
       if (nparams != 11) 
 	{
-	  values[0].data.d_status = STATUS_CALLING_ERROR;
+	  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 	  return;
 	} 
       else 
@@ -183,7 +183,7 @@ gdt_run (gchar       *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data ("plug_in_gdyntext", &gdtvals);
       gdtvals.image_id		 = param[1].data.d_image;
       gdtvals.drawable_id	 = param[2].data.d_drawable;
@@ -194,7 +194,7 @@ gdt_run (gchar       *name,
   
   gdt_render_text (&gdtvals);
 
-  if (run_mode == RUN_INTERACTIVE)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       gdtvals.valid = TRUE;
       gimp_set_data ("plug_in_gdyntext", &gdtvals, sizeof(GdtVals));
@@ -304,8 +304,8 @@ gdt_save (GdtVals *data)
   g_free(text);
   
   parasite = gimp_parasite_new (GDYNTEXT_PARASITE,
-				PARASITE_PERSISTENT | PARASITE_UNDOABLE, strlen(lname), lname);
-  gimp_drawable_attach_parasite (data->drawable_id, parasite);
+				GIMP_PARASITE_PERSISTENT | GIMP_PARASITE_UNDOABLE, strlen(lname), lname);
+  gimp_drawable_parasite_attach (data->drawable_id, parasite);
   gimp_parasite_free (parasite);
   
   if (!data->change_layer_name) 
@@ -447,7 +447,7 @@ gdt_render_text_p (GdtVals  *data,
       data->layer_id = data->drawable_id = gimp_layer_new (data->image_id,
 							   _("GDynText Layer"), layer_width, layer_height,
 							   (GimpImageType)(gimp_image_base_type (data->image_id) * 2 + 1),
-							   100.0, NORMAL_MODE);
+							   100.0, GIMP_NORMAL_MODE);
       gimp_layer_add_alpha (data->layer_id);
       gimp_image_add_layer (data->image_id, data->layer_id, 0);
       gimp_image_set_active_layer (data->image_id, data->layer_id);

@@ -36,7 +36,7 @@ AdvancedWindow AW = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 extern FP_Params Current;
 
-extern GDrawable *drawable, *mask;
+extern GimpDrawable *drawable, *mask;
 
 FP_Intensity ShMidHi[]   = { SHADOWS, MIDTONES, HIGHLIGHTS };
 int          HueSatVal[] = { BY_HUE, BY_SAT, BY_VAL };
