@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-03-07 01:14+0000\n"
+"POT-Creation-Date: 2002-03-09 22:21+0000\n"
 "PO-Revision-Date: 2002-03-01 02:53+0000\n"
 "Last-Translator: Filipe Maia <fmaia@gmx.net>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
@@ -339,7 +339,7 @@ msgstr "Editor de pincéis"
 #: app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:333 app/nav_window.c:1426 app/palette.c:2058
 #: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:72
-#: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
+#: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:171
 #: app/tools.c:1549 app/undo_history.c:759
 msgid "Close"
 msgstr "Fechar"
@@ -5087,27 +5087,34 @@ msgstr ""
 "utilizando nomes de ficheiros diferentes, sair do Gimp e verificar\n"
 "a localização do ficheiro de swap nas suas Preferências."
 
-#: app/tips_dialog.c:75
+#.
+#. *  The string "gimp_tips.txt" needs special handling by
+#. *  translators. It is used to identify the tips file to
+#. *  be used for the current locale. Please translate it
+#. *  accordingly. For example for the german locale that
+#. *  would be "gimp_tips.de.txt".
+#.
+#: app/tips_dialog.c:82
 msgid "gimp_tips.txt"
-msgstr "gimp_tips.txt"
+msgstr "gimp_tips.pt.txt"
 
-#: app/tips_dialog.c:87
+#: app/tips_dialog.c:95
 msgid "GIMP Tip of the Day"
 msgstr "Dica Gimp do dia"
 
-#: app/tips_dialog.c:148
+#: app/tips_dialog.c:156
 msgid "Show tip next time GIMP starts"
 msgstr "Mostrar dica na próxima inicialização do Gimp"
 
-#: app/tips_dialog.c:178
+#: app/tips_dialog.c:186
 msgid "Previous Tip"
 msgstr "Dica anterior"
 
-#: app/tips_dialog.c:187
+#: app/tips_dialog.c:195
 msgid "Next Tip"
 msgstr "Próxima dica"
 
-#: app/tips_dialog.c:290
+#: app/tips_dialog.c:298
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in\n"
