@@ -104,6 +104,17 @@ typedef enum /*< pdb-skip >*/
 } GimpTransformType;
 
 
+#define GIMP_TYPE_VECTOR_MODE (gimp_vector_mode_get_type ())
+
+GType gimp_vector_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_VECTOR_MODE_CREATE,      /*< desc="Extend Stroke/Move Nodes" >*/
+  GIMP_VECTOR_MODE_ADJUST,      /*< desc="Insert/Delete Nodes"      >*/
+} GimpVectorMode;
+
+
 #define GIMP_TYPE_TRANSFORM_GRID_TYPE (gimp_transform_grid_type_get_type ())
 
 GType gimp_transform_grid_type_get_type (void) G_GNUC_CONST;

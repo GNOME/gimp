@@ -1,3 +1,22 @@
+2003-08-21  Simon Budig  <simon@gimp.org>
+	
+	* app/tools/tools-enums.h: Added enum for vector tool operation
+	mode
+	
+	* app/tools/tools-enums.c: regenerated
+
+	* app/tools/gimpvectoroptions.[ch]: Use new enum.
+	Add "Polygonal" Option
+
+	* app/tools/gimpvectortool.c: New Option "Polygonal" that
+	places all newly generated handles at the position of their
+	anchor, effectively ensuring that only polygons can be created.
+	
+	Cleaned up the editing states. It is now possible to move anchors
+	in the Insert/Delete mode. Cleaned up the associated cursors.
+
+	Fixed warning when Shift+Ctrl-Clicking on an inactive Anchor.
+
 2003-08-20  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpstroke.[ch]: Add hooks for insertion of points

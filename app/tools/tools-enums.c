@@ -68,6 +68,25 @@ gimp_transform_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_vector_mode_enum_values[] =
+{
+  { GIMP_VECTOR_MODE_CREATE, N_("Extend Stroke/Move Nodes"), "create" },
+  { GIMP_VECTOR_MODE_ADJUST, N_("Insert/Delete Nodes"), "adjust" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_vector_mode_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpVectorMode", gimp_vector_mode_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_transform_grid_type_enum_values[] =
 {
   { GIMP_TRANSFORM_GRID_TYPE_NONE, N_("Don't Show Grid"), "none" },

@@ -42,7 +42,8 @@
 enum
 {
   PROP_0,
-  PROP_VECTORS_EDIT_MODE
+  PROP_VECTORS_EDIT_MODE,
+  PROP_VECTORS_POLYGONAL
 };
 
 static void   gimp_vector_options_init       (GimpVectorOptions      *options);
@@ -100,8 +101,15 @@ gimp_vector_options_class_init (GimpVectorOptionsClass *klass)
   object_class->set_property = gimp_vector_options_set_property;
   object_class->get_property = gimp_vector_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VECTORS_EDIT_MODE,
-                                    "vectors-edit-mode", NULL,
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_VECTORS_EDIT_MODE,
+                                 "vectors-edit-mode", NULL,
+                                 GIMP_TYPE_VECTOR_MODE,
+                                 GIMP_VECTOR_MODE_CREATE,
+                                 0);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VECTORS_POLYGONAL,
+                                    "vectors-polygonal",
+                                    N_("restrict editing to polygonals"),
                                     FALSE,
                                     0);
 }
@@ -124,7 +132,10 @@ gimp_vector_options_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_VECTORS_EDIT_MODE:
-      options->edit_mode = g_value_get_boolean (value);
+      options->edit_mode = g_value_get_enum (value);
+      break;
+    case PROP_VECTORS_POLYGONAL:
+      options->polygonal = g_value_get_boolean (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -146,7 +157,10 @@ gimp_vector_options_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_VECTORS_EDIT_MODE:
-      g_value_set_boolean (value, options->edit_mode);
+      g_value_set_enum (value, options->edit_mode);
+      break;
+    case PROP_VECTORS_POLYGONAL:
+      g_value_set_boolean (value, options->polygonal);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -161,18 +175,22 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
   GObject   *config;
   GtkWidget *vbox;
   GtkWidget *frame;
+  GtkWidget *button;
 
   config = G_OBJECT (tool_options);
 
   vbox = gimp_tool_options_gui (tool_options);
 
   /*  tool toggle  */
-  frame = gimp_prop_boolean_radio_frame_new (config, "vectors-edit-mode",
-                                             _("Edit Mode"),
-                                             _("Insert/Delete Nodes"),
-                                             _("Extend Stroke/Move Nodes"));
+  frame = gimp_prop_enum_radio_frame_new (config, "vectors-edit-mode",
+                                          _("Edit Mode"), 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  button = gimp_prop_check_button_new (config, "vectors-polygonal",
+                                       _("Polygonal"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   return vbox;
 }

@@ -38,7 +38,8 @@ struct _GimpVectorOptions
 {
   GimpSelectionOptions  parent_instance;
 
-  gboolean              edit_mode;
+  GimpVectorMode        edit_mode;
+  gboolean              polygonal;
 };
 
 
