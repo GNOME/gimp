@@ -386,35 +386,41 @@ explorer_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  button = gtk_button_new_with_label (_("Undo Zoom"));
+  button = gtk_button_new_from_stock (GTK_STOCK_UNDO);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  gimp_help_set_help_data (button, _("Undo last zoom"), NULL);
+
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (dialog_undo_zoom_callback),
                     dialog);
-  gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Undo last zoom"), NULL);
 
-  button = gtk_button_new_with_label (_("Redo Zoom"));
+  button = gtk_button_new_from_stock (GTK_STOCK_REDO);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  gimp_help_set_help_data (button, _("Redo last zoom"), NULL);
+
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (dialog_redo_zoom_callback),
                     dialog);
-  gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Redo last zoom"), NULL);
 
-  button = gtk_button_new_with_label (_("Step In"));
+  button = gtk_button_new_from_stock (GTK_STOCK_ZOOM_IN);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (dialog_step_in_callback),
                     dialog);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_ZOOM_OUT);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_("Step Out"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (dialog_step_out_callback),
                     dialog);
-  gtk_widget_show (button);
 
 
   /*  Create notebook  */

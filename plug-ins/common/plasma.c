@@ -334,24 +334,26 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
 
   gimp_help_init ();
 
-  main_vbox = gtk_vbox_new (FALSE, 2);
+  main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   /* make a nice preview frame */
   frame = gtk_frame_new (_("Preview"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
+
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
+
   preview = preview_widget (drawable_type); /* we are here */
   gtk_container_add (GTK_CONTAINER (frame), preview);
 
@@ -363,15 +365,15 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
   
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   seed = gimp_random_seed_new (&pvals.seed,
 			       &pvals.timeseed,
@@ -404,8 +406,6 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
                             G_CALLBACK (plasma_seed_changed_callback),
                             drawable);
 
-  gtk_widget_show (frame);
-  gtk_widget_show (table);
   gtk_widget_show (dlg);
 
   gtk_main ();

@@ -267,7 +267,7 @@ mapmenu_callback (GtkWidget *widget,
           box_page = create_box_page ();
           gtk_notebook_append_page (options_note_book,
 				    box_page,
-				    gtk_label_new (_("Box")));
+				    gtk_label_new_with_mnemonic (_("_Box")));
         }
     }
   else if (mapvals.maptype == MAP_CYLINDER)
@@ -285,7 +285,7 @@ mapmenu_callback (GtkWidget *widget,
 	  cylinder_page = create_cylinder_page ();
 	  gtk_notebook_append_page (options_note_book,
 				    cylinder_page,
-				    gtk_label_new (_("Cylinder")));
+				    gtk_label_new_with_mnemonic (_("C_ylinder")));
 	}
     }
   else
@@ -633,40 +633,36 @@ create_options_page (void)
 
   /* Antialiasing options */
 
-  frame = gtk_frame_new (_("Antialiasing Options"));
+  frame = gtk_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  toggle = gtk_check_button_new_with_label (_("Enable Antialiasing"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Enable _Antialiasing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.antialiasing);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
   gtk_widget_show (toggle);
-
-  g_signal_connect (G_OBJECT (toggle), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mapvals.antialiasing);
 
   gimp_help_set_help_data (toggle,
 			   _("Enable/disable jagged edges removal "
 			     "(antialiasing)"), NULL);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mapvals.antialiasing);
+
   table = gtk_table_new (2, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   gtk_widget_set_sensitive (table, mapvals.antialiasing);
   g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Depth:"), 0, 0,
+			      _("_Depth:"), 0, 0,
 			      mapvals.maxdepth, 1.0, 5.0, 0.1, 1.0,
 			      1, TRUE, 0, 0,
 			      _("Antialiasing quality. Higher is better, "
@@ -678,7 +674,7 @@ create_options_page (void)
   spinbutton = gimp_spin_button_new (&adj, mapvals.pixeltreshold,
 				     0.001, 1000, 0.1, 1, 1, 0, 3);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Threshold:"), 1.0, 1.0,
+			     _("_Threshold:"), 1.0, 1.0,
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (G_OBJECT (adj), "value_changed",
@@ -1272,7 +1268,7 @@ create_cylinder_page (void)
   GtkObject *adj;
   gint       i;
 
-  static gchar *labels[] = { N_("Top:"), N_("Bottom:") };
+  static gchar *labels[] = { N_("_Top:"), N_("_Bottom:") };
 
   page = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (page), 4);
@@ -1318,7 +1314,7 @@ create_cylinder_page (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Radius:"), 0, 0,
+			      _("R_adius:"), 0, 0,
 			      mapvals.cylinder_radius,
 			      0.0, 2.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
@@ -1331,7 +1327,7 @@ create_cylinder_page (void)
                     &mapvals.cylinder_radius);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Length:"), 0, 0,
+			      _("L_ength:"), 0, 0,
 			      mapvals.cylinder_length,
 			      0.0, 2.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
@@ -1362,31 +1358,31 @@ create_main_notebook (GtkWidget *container)
 
   page = create_options_page ();
   gtk_notebook_append_page (options_note_book, page,
-			    gtk_label_new (_("Options")));
+			    gtk_label_new_with_mnemonic (_("O_ptions")));
   
   page = create_light_page ();
   gtk_notebook_append_page (options_note_book, page,
-			    gtk_label_new (_("Light")));
+			    gtk_label_new_with_mnemonic (_("_Light")));
   
   page = create_material_page ();
   gtk_notebook_append_page (options_note_book, page,
-			    gtk_label_new (_("Material")));
+			    gtk_label_new_with_mnemonic (_("_Material")));
   
   page = create_orientation_page ();
   gtk_notebook_append_page (options_note_book, page,
-			    gtk_label_new (_("Orientation")));
+			    gtk_label_new_with_mnemonic (_("O_rientation")));
 
   if (mapvals.maptype == MAP_BOX)
     {
       box_page = create_box_page ();
       gtk_notebook_append_page (options_note_book, box_page,
-				gtk_label_new (_("Box")));
+				gtk_label_new_with_mnemonic (_("_Box")));
     }
   else if (mapvals.maptype == MAP_CYLINDER)
     {
       cylinder_page = create_cylinder_page ();
       gtk_notebook_append_page (options_note_book, cylinder_page,
-				gtk_label_new (_("Cylinder")));
+				gtk_label_new_with_mnemonic (_("C_ylinder")));
     }
 
   gtk_widget_show (GTK_WIDGET (options_note_book));
@@ -1469,7 +1465,7 @@ main_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_label (_("Preview!"));
+  button = gtk_button_new_with_mnemonic (_("_Preview!"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -1508,7 +1504,7 @@ main_dialog (GimpDrawable *drawable)
 
   gimp_help_set_help_data (button, _("Zoom in (make image bigger)"), NULL);
 
-  toggle = gtk_check_button_new_with_label (_("Show Preview Wireframe"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Show Preview _Wireframe"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mapvals.showgrid);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

@@ -1384,25 +1384,29 @@ add_objects_list (void)
   build_list_items (list);
 
   /* Put buttons in */
-  button = gtk_button_new_with_label (_("Rescan"));
+  button = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
   gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (button);
+
+  gimp_help_set_help_data (button,
+			   _("Select folder and rescan collection"), NULL); 
+
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (fractalexplorer_rescan_list),
                     NULL);
-  gimp_help_set_help_data (button,
-			   _("Select folder and rescan collection"), NULL); 
-  gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_("Delete"));
+  button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
   gtk_table_attach (GTK_TABLE (table), button, 1, 2, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (button);
+
+  gimp_help_set_help_data (button,
+                           _("Delete currently selected fractal"), NULL); 
+
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (delete_fractal_callback),
                     list);
-  gtk_widget_show (button);
-  gimp_help_set_help_data (button,
-			   _("Delete currently selected fractal"), NULL); 
 
   return frame;
 }

@@ -370,6 +370,7 @@ do_checkerboard_dialog (gint32        image_ID,
 
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
 			 GTK_STOCK_OK, check_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 
@@ -383,15 +384,20 @@ do_checkerboard_dialog (gint32        image_ID,
   gimp_image_get_resolution (image_ID, &xres, &yres);
   unit = gimp_image_get_unit (image_ID);
 
+  width  = gimp_drawable_width (drawable->drawable_id);
+  height = gimp_drawable_height (drawable->drawable_id);
+  size   = MIN (width, height);
+
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Psychobilly"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -402,42 +408,39 @@ do_checkerboard_dialog (gint32        image_ID,
                     G_CALLBACK (gimp_toggle_button_update),
                     &cvals.mode);
 
-  size_entry = gimp_size_entry_new (1, unit, "%a", TRUE, TRUE, FALSE, 
-                                    SPIN_BUTTON_WIDTH, GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  size_entry = gimp_size_entry_new (1, unit, "%a",
+                                    TRUE, TRUE, FALSE, SPIN_BUTTON_WIDTH,
+                                    GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 0, 4);
+  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 1, 4);
 
   /*  set the unit back to pixels, since most times we will want pixels */
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
-
-  width = gimp_drawable_width (drawable->drawable_id);
-  height = gimp_drawable_height (drawable->drawable_id);
-  size = MIN (width, height);
 
   /*  set the resolution to the image resolution  */
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0, (gdouble) size);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0, size);
 
   /*  set upper and lower limits (in pixels)  */
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0, 1.0, size);
-  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 0, 4);
-  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 2, 12);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
+                                         1.0, size);
 
   /*  initialize the values  */
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0, (gdouble) cvals.size);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0, cvals.size);
 
   /*  attach labels  */
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry), _("_Size:"), 1, 0, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
+                                _("_Size:"), 1, 0, 0.0);
    
   g_signal_connect (G_OBJECT (size_entry), "value_changed",
                     G_CALLBACK (check_size_update_callback),
                     &cvals.size);
 
   gtk_container_add (GTK_CONTAINER (vbox), size_entry);
-
   gtk_widget_show (size_entry);
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
+
   gtk_widget_show (dlg);
 
   gtk_main ();

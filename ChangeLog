@@ -1,3 +1,20 @@
+2002-09-07  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.c: some stock items.
+
+	* plug-ins/MapObject/mapobject_ui.c: moved toggle button into
+	frame title, added mnemonics.
+
+	* plug-ins/common/curve_bend.c: reorganized the GUI completely
+	to be more usable. Added mnemonics and stock items.
+
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/film.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/plasma.c
+	* plug-ins/flame/flame.c: minor cleanups (spacing, stock items).
+
 2002-09-07  Dave Neary  <bolsh@gimp.org>
 
         * app/xcf/xcf-load.c: Unref layer mask rather than layer

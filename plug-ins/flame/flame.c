@@ -979,7 +979,7 @@ dialog (void)
     gtk_box_pack_start (GTK_BOX (box), vbbox, FALSE, FALSE, 0);
     gtk_widget_show (vbbox);
   
-    button = gtk_button_new_with_mnemonic (_("_Edit Flame"));
+    button = gtk_button_new_from_stock (GIMP_STOCK_EDIT);
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
 
@@ -987,7 +987,7 @@ dialog (void)
                       G_CALLBACK (edit_callback),
                       NULL);
 
-    load_button = button = gtk_button_new_with_mnemonic (_("_Load Flame"));
+    load_button = button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
 
@@ -995,7 +995,7 @@ dialog (void)
                       G_CALLBACK (load_callback),
                       NULL);
 
-    save_button = button = gtk_button_new_with_mnemonic (_("_Save Flame"));
+    save_button = button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
 
