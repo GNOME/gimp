@@ -1,5 +1,13 @@
 2005-01-13  Sven Neumann  <sven@gimp.org>
 
+	* app/units.c
+	* app/core/gimp-units.c
+	* app/core/gimp.c
+	* app/core/gimpunit.[ch]: added a utility function that frees the
+	memory allocated for user units. Minor cleanups.
+
+2005-01-13  Sven Neumann  <sven@gimp.org>
+
 	* configure.in (ALL_LINGUAS): added mk (Macedonian).
 
 2005-01-11  Sven Neumann  <sven@gimp.org>

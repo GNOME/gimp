@@ -73,7 +73,7 @@ units_unit_get_deletion_flag (GimpUnit unit)
 
 static void
 units_unit_set_deletion_flag (GimpUnit unit,
-			     gboolean deletion_flag)
+                              gboolean deletion_flag)
 {
   _gimp_unit_set_deletion_flag (the_unit_gimp, unit, deletion_flag);
 }
@@ -132,16 +132,16 @@ units_init (Gimp *gimp)
 
   vtable.unit_get_number_of_units          = units_get_number_of_units;
   vtable.unit_get_number_of_built_in_units = units_get_number_of_built_in_units;
-  vtable.unit_new                 = units_unit_new;
-  vtable.unit_get_deletion_flag   = units_unit_get_deletion_flag;
-  vtable.unit_set_deletion_flag   = units_unit_set_deletion_flag;
-  vtable.unit_get_factor          = units_unit_get_factor;
-  vtable.unit_get_digits          = units_unit_get_digits;
-  vtable.unit_get_identifier      = units_unit_get_identifier;
-  vtable.unit_get_symbol          = units_unit_get_symbol;
-  vtable.unit_get_abbreviation    = units_unit_get_abbreviation;
-  vtable.unit_get_singular        = units_unit_get_singular;
-  vtable.unit_get_plural          = units_unit_get_plural;
+  vtable.unit_new               = units_unit_new;
+  vtable.unit_get_deletion_flag = units_unit_get_deletion_flag;
+  vtable.unit_set_deletion_flag = units_unit_set_deletion_flag;
+  vtable.unit_get_factor        = units_unit_get_factor;
+  vtable.unit_get_digits        = units_unit_get_digits;
+  vtable.unit_get_identifier    = units_unit_get_identifier;
+  vtable.unit_get_symbol        = units_unit_get_symbol;
+  vtable.unit_get_abbreviation  = units_unit_get_abbreviation;
+  vtable.unit_get_singular      = units_unit_get_singular;
+  vtable.unit_get_plural        = units_unit_get_plural;
 
   gimp_base_init (&vtable);
 }

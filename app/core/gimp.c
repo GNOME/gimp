@@ -457,8 +457,7 @@ gimp_finalize (GObject *object)
       gimp->session_name = NULL;
     }
 
-  if (gimp->user_units)
-    gimp_units_exit (gimp);
+  gimp_units_exit (gimp);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

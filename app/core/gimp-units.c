@@ -62,14 +62,7 @@ gimp_units_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (gimp->user_units)
-    {
-      g_list_foreach (gimp->user_units, (GFunc) g_free, NULL);
-      g_list_free (gimp->user_units);
-
-      gimp->user_units   = NULL;
-      gimp->n_user_units = 0;
-    }
+  gimp_user_units_free (gimp);
 }
 
 
@@ -273,7 +266,6 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
   gchar      *singular     = NULL;
   gchar      *plural       = NULL;
   GTokenType  token;
-  GimpUnit    unit;
 
   if (! gimp_scanner_parse_string (scanner, &identifier))
     return G_TOKEN_STRING;
@@ -350,8 +342,10 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
 
       if (g_scanner_peek_next_token (scanner) == token)
         {
-          unit = _gimp_unit_new (gimp, identifier, factor, digits,
-                                 symbol, abbreviation, singular, plural);
+          GimpUnit unit = _gimp_unit_new (gimp,
+                                          identifier, factor, digits,
+                                          symbol, abbreviation,
+                                          singular, plural);
 
           /*  make the unit definition persistent  */
           _gimp_unit_set_deletion_flag (gimp, unit, FALSE);

@@ -56,5 +56,7 @@ const gchar * _gimp_unit_get_singular                 (Gimp     *gimp,
 const gchar * _gimp_unit_get_plural                   (Gimp     *gimp,
                                                        GimpUnit  unit);
 
+void           gimp_user_units_free                   (Gimp     *gimp);
+
 
 #endif  /*  __APP_GIMP_UNIT_H__  */
