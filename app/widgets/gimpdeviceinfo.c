@@ -554,7 +554,7 @@ devices_write_rc (void)
     {
       sprintf (filename, "%s/devicerc", gimp_dir);
 
-      fp = fopen (filename, "w");
+      fp = fopen (filename, "wb");
       if (!fp)
 	return;
 

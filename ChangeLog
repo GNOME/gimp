@@ -1,3 +1,8 @@
+Fri Jul 31 19:17:15 BST 1998  Adam D. Moss  <adam@gimp.org>
+
+	* app/[lots of files].c: On all gimp-core fopen()s
+	changed "[rw]"->"[rw]b" to appease OS/2 folk.
+
 Fri Jul 31 18:29:44 BST 1998  Adam D. Moss  <adam@gimp.org>
 
 	* app/layers_dialog.c: Removed an ancient kludge that was

@@ -46,7 +46,7 @@ batch_init ()
 	}
       else
 	{
-	  fp = fopen (batch_cmds[i], "r");
+	  fp = fopen (batch_cmds[i], "rb");
 	  if (!fp)
 	    g_print ("unable to open batch file: \"%s\"\n", batch_cmds[i]);
 

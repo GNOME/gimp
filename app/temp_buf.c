@@ -472,7 +472,7 @@ temp_buf_swap (buf)
     }
 
   /*  Open file for overwrite  */
-  if ((fp = fopen (filename, "w")))
+  if ((fp = fopen (filename, "wb")))
     {
       fwrite (swap->data, swap->width * swap->height * swap->bytes, 1, fp);
       fclose (fp);
@@ -520,7 +520,7 @@ temp_buf_unswap (buf)
   /*  (buf->filname HAS to be != 0 */
   if (!stat (buf->filename, &stat_buf))
     {
-      if ((fp = fopen (buf->filename, "r")))
+      if ((fp = fopen (buf->filename, "rb")))
 	{
 	  size_t blocksRead;
 	  blocksRead = fread (buf->data, buf->width * buf->height * buf->bytes, 1, fp);

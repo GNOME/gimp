@@ -167,7 +167,7 @@ load_pattern (char *filename)
   pattern->mask = NULL;
 
   /*  Open the requested file  */
-  if (! (fp = fopen (filename, "r")))
+  if (! (fp = fopen (filename, "rb")))
     {
       free_pattern (pattern);
       return;

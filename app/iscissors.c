@@ -2120,7 +2120,7 @@ construct_edge_map (Tool    *tool,
     
   /*  dump the edge buffer for debugging*/
 
-   dump=fopen("dump", "w"); 
+   dump=fopen("dump", "wb"); 
    fprintf(dump, "P5\n%d %d\n255\n", edge_buf->width, edge_buf->height); 
    fwrite(edge_buf->data, edge_buf->width * edge_buf->height, sizeof (guchar), dump); 
    fclose (dump);

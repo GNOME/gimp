@@ -213,7 +213,7 @@ read_tips_file (char *filename)
   char *tip = NULL;
   char *str = NULL;
 
-  fp = fopen (filename, "rt");
+  fp = fopen (filename, "rb");
   if (!fp)
     {
       store_tip ("Your GIMP tips file appears to be missing!\n"

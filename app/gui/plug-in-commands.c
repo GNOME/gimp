@@ -1924,7 +1924,7 @@ plug_in_write_rc (char *filename)
   GSList *tmp, *tmp2;
   int i;
 
-  fp = fopen (filename, "w");
+  fp = fopen (filename, "wb");
   if (!fp)
     return;
 

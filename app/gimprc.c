@@ -363,7 +363,7 @@ parse_gimprc_file (char *filename)
       filename = rfilename;
     }
 
-  parse_info.fp = fopen (filename, "rt");
+  parse_info.fp = fopen (filename, "rb");
   if (!parse_info.fp)
     return;
 
@@ -2121,7 +2121,7 @@ open_backup_file (char *filename,
   /*
     Rename the file to *.old, open it for reading and create the new file.
   */
-  if ((*fp_old = fopen (filename, "rt")) == NULL)
+  if ((*fp_old = fopen (filename, "rb")) == NULL)
     {
       if (errno == EACCES)
         return "Can't open gimprc; permission problems";
@@ -2142,7 +2142,7 @@ open_backup_file (char *filename,
       return "Can't rename gimprc to gimprc.old, reason unknown";
     }
 
-  if ((*fp_new = fopen (filename, "wt")) == NULL)
+  if ((*fp_new = fopen (filename, "wb")) == NULL)
     {
       (void) rename (oldfilename, filename);
       g_free (oldfilename);

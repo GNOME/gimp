@@ -148,7 +148,7 @@ gimp_brush_load(GimpBrush *brush, char *filename)
   brush->filename = g_strdup (filename);
 
   /*  Open the requested file  */
-  if (! (fp = fopen (filename, "r")))
+  if (! (fp = fopen (filename, "rb")))
     {
       gimp_object_destroy (brush);
       return;

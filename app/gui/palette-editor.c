@@ -533,7 +533,7 @@ palette_entries_load (char *filename)
 
   /*  Open the requested file  */
 
-  if (!(fp = fopen (filename, "r")))
+  if (!(fp = fopen (filename, "rb")))
     {
       palette_entries_free (entries);
       return;
@@ -612,7 +612,7 @@ palette_entries_save (PaletteEntriesP  palette,
     return;
 
   /*  Open the requested file  */
-  if (! (fp = fopen (filename, "w")))
+  if (! (fp = fopen (filename, "wb")))
     {
       g_message ("can't save palette \"%s\"\n", filename);
       return;

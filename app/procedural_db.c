@@ -844,7 +844,7 @@ procedural_db_dump (Argument *args)
 
   if (filename)
     {
-      if (! (procedural_db_out = fopen (filename, "w")))
+      if (! (procedural_db_out = fopen (filename, "wb")))
 	success = FALSE;
     }
   else

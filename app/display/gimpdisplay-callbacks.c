@@ -165,10 +165,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
       break;
 
     case GDK_LEAVE_NOTIFY:
-    case GDK_PROXIMITY_OUT:
-      gdisp->proximity = FALSE;
       gdisplay_update_cursor (gdisp, 0, 0);
       gtk_label_set(GTK_LABEL (gdisp->cursor_label), "");
+    case GDK_PROXIMITY_OUT:
+      gdisp->proximity = FALSE;
       update_cursor = 0;
       break;
 

@@ -1623,7 +1623,7 @@ ed_do_save_pov_callback(GtkWidget *widget, gpointer client_data)
 
 	filename = gtk_file_selection_get_filename(GTK_FILE_SELECTION(client_data));
 
-	file = fopen(filename, "w");
+	file = fopen(filename, "wb");
 
 	if (!file)
 		g_message ("ed_do_save_pov_callback(): oops, could not open \"%s\"", filename);
@@ -5330,7 +5330,7 @@ grad_load_gradient(char *filename)
 
 	g_assert(filename != NULL);
 
-	file = fopen(filename, "r");
+	file = fopen(filename, "rb");
 	if (!file)
 		return;
 
@@ -5408,7 +5408,7 @@ grad_save_gradient(gradient_t *grad, char *filename)
 		return;
 	} /* if */
 
-	file = fopen(filename, "w");
+	file = fopen(filename, "wb");
 	if (!file) {
 		g_message ("grad_save_gradient(): can't open \"%s\"", filename);
 		return;

@@ -1841,7 +1841,7 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
       
       pn_dlg = (PasteNamedDlg *) client_data;
 
-      f = fopen(filename, "r");
+      f = fopen(filename, "rb");
       printf("reading %s\n", filename);
       
       while(!feof(f))
@@ -1917,7 +1917,7 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
   else 
     {
       PasteNamedDlg *pn_dlg;
-      f = fopen(filename, "w");
+      f = fopen(filename, "wb");
       if (NULL == f) 
 	{
 	  perror(filename);

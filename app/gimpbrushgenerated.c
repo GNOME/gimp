@@ -108,7 +108,7 @@ gimp_brush_generated_load (char *file_name)
   char string[256];
   float fl;
   float version;
-  if ((fp = fopen(file_name, "r")) == NULL)
+  if ((fp = fopen(file_name, "rb")) == NULL)
     return NULL;
 
 /* make sure the file we are reading is the right type */
@@ -158,7 +158,7 @@ gimp_brush_generated_save (GimpBrushGenerated *brush,
 {
 /* WARNING: untested function */
   FILE *fp;
-  if ((fp = fopen(file_name, "w")) == NULL)
+  if ((fp = fopen(file_name, "wb")) == NULL)
   {
     g_warning("Unable to save file %s", file_name);
     return;

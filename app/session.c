@@ -135,7 +135,7 @@ save_sessionrc (void)
     {
       sprintf (filename, "%s/sessionrc", gimp_dir);
 
-      fp = fopen (filename, "w");
+      fp = fopen (filename, "wb");
       if (!fp)
 	return;
 

@@ -215,7 +215,7 @@ load_idea_manager( idea_manager *ideas )
       
       /* open persistant desktop file. */
       desktopfile = append2( home_dir, FALSE, IDEAPATH, FALSE );
-      fp = fopen( desktopfile, "r" );
+      fp = fopen( desktopfile, "rb" );
       g_free( desktopfile );
       
       /* Read in persistant desktop information. */
@@ -290,7 +290,7 @@ save_idea_manager( idea_manager *ideas )
   
   /* open persistant desktop file. */
   desktopfile = append2( home_dir, FALSE, IDEAPATH, FALSE );
-  fp = fopen( desktopfile, "w" );
+  fp = fopen( desktopfile, "wb" );
   g_free( desktopfile );
 
   if ( fp )
@@ -439,7 +439,7 @@ static void idea_add_in_position_with_select( gchar *title, gint position, gbool
 	  
 	  /* open persistant desktop file. */
 	  desktopfile = append2( home_dir, FALSE, IDEAPATH, FALSE );
-	  fp = fopen( desktopfile, "r" );
+	  fp = fopen( desktopfile, "rb" );
 	  g_free( desktopfile );
 	  
 	  /* Read in persistant desktop information. */
