@@ -193,33 +193,20 @@ plug_in_actions_update (GimpActionGroup *group,
               group->gimp->last_plug_in == &proc_def->db_info)
             {
               const gchar *progname;
-              const gchar *path;
-              gchar       *stripped;
-              gchar       *basename;
-              gchar       *ellipses;
+              const gchar *domain;
+              gchar       *label;
               gchar       *repeat;
               gchar       *reshow;
 
               progname = plug_in_proc_def_get_progname (proc_def);
+              domain   = plug_ins_locale_domain (group->gimp, progname, NULL);
 
-              path = dgettext (plug_ins_locale_domain (group->gimp,
-                                                       progname, NULL),
-                               proc_def->menu_paths->data);
+              label = plug_in_proc_def_get_label (proc_def, domain);
 
-              stripped = gimp_strip_uline (path);
-              basename = g_path_get_basename (stripped);
+              repeat = g_strdup_printf (_("Re_peat \"%s\""),  label);
+              reshow = g_strdup_printf (_("R_e-show \"%s\""), label);
 
-              g_free (stripped);
-
-              ellipses = strstr (basename, "...");
-
-              if (ellipses && ellipses == (basename + strlen (basename) - 3))
-                *ellipses = '\0';
-
-              repeat = g_strdup_printf (_("Re_peat \"%s\""), basename);
-              reshow = g_strdup_printf (_("R_e-show \"%s\""), basename);
-
-              g_free (basename);
+              g_free (label);
 
               gimp_action_group_set_action_label (group, "plug-in-repeat",
                                                   repeat);

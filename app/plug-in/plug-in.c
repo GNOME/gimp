@@ -890,7 +890,7 @@ gchar *
 plug_in_get_undo_desc (PlugIn *plug_in)
 {
   PlugInProcDef *proc_def;
-  gchar         *undo_desc;
+  gchar         *undo_desc = NULL;
 
   g_return_val_if_fail (plug_in != NULL, NULL);
 
@@ -903,39 +903,16 @@ plug_in_get_undo_desc (PlugIn *plug_in)
   else
     proc_def = NULL;
 
-  if (proc_def && (proc_def->menu_label || proc_def->menu_paths))
+  if (proc_def)
     {
-      const gchar *path;
-      gchar       *stripped;
-      gchar       *ellipses;
+      const gchar *domain = plug_ins_locale_domain (plug_in->gimp,
+                                                    plug_in->prog, NULL);
 
-      if (proc_def->menu_label)
-        path = dgettext (plug_ins_locale_domain (plug_in->gimp,
-                                                 plug_in->prog, NULL),
-                         proc_def->menu_label);
-      else
-        path = dgettext (plug_ins_locale_domain (plug_in->gimp,
-                                                 plug_in->prog, NULL),
-                         proc_def->menu_paths->data);
-
-      stripped = gimp_strip_uline (path);
-
-      if (proc_def->menu_label)
-        undo_desc = g_strdup (stripped);
-      else
-        undo_desc = g_strdup (strrchr (stripped, '/') + 1);
-
-      g_free (stripped);
-
-      ellipses = strstr (undo_desc, "...");
-
-      if (ellipses && ellipses == (undo_desc + strlen (undo_desc) - 3))
-        *ellipses = '\0';
+      undo_desc = plug_in_proc_def_get_label (proc_def, domain);
     }
-  else
-    {
-      undo_desc = g_filename_to_utf8 (plug_in->name, -1, NULL, NULL, NULL);
-    }
+
+  if (! undo_desc)
+    undo_desc = g_filename_to_utf8 (plug_in->name, -1, NULL, NULL, NULL);
 
   return undo_desc;
 }

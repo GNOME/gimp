@@ -1,3 +1,13 @@
+2004-05-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-proc.[ch] (plug_in_proc_def_get_label): new
+	function which returns a newly allocated string which is the menu
+	item's name stripped of mnemonics an ellipses.
+
+	* app/actions/plug-in-actions.c (plug_in_actions_update)
+	* app/plug-in/plug-in.c (plug_in_get_undo_desc): use the function
+	instead of implementing the same twice slightly different.
+
 2004-05-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/CEL.c

@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -110,6 +112,41 @@ plug_in_proc_def_get_progname (const PlugInProcDef *proc_def)
     }
 
   return NULL;
+}
+
+gchar *
+plug_in_proc_def_get_label (const PlugInProcDef *proc_def,
+                            const gchar         *locale_domain)
+{
+  const gchar *path;
+  gchar       *stripped;
+  gchar       *ellipses;
+  gchar       *label;
+
+  g_return_val_if_fail (proc_def != NULL, NULL);
+
+  if (proc_def->menu_label)
+    path = dgettext (locale_domain, proc_def->menu_label);
+  else if (proc_def->menu_paths)
+    path = dgettext (locale_domain, proc_def->menu_paths->data);
+  else
+    return NULL;
+
+  stripped = gimp_strip_uline (path);
+
+  if (proc_def->menu_label)
+    label = g_strdup (stripped);
+  else
+    label = g_path_get_basename (stripped);
+
+  g_free (stripped);
+
+  ellipses = strstr (label, "...");
+
+  if (ellipses && ellipses == (label + strlen (label) - 3))
+    *ellipses = '\0';
+
+  return label;
 }
 
 gchar *
