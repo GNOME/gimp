@@ -185,7 +185,7 @@ gimp_progress_init (char *message)
   return_vals = gimp_run_procedure ("gimp_progress_init",
 				    &nreturn_vals,
 				    PARAM_STRING, message,
-				    PARAM_INT8, _gdisp_ID,
+				    PARAM_INT32, _gdisp_ID,
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);

@@ -144,7 +144,7 @@ static ProcArg progress_init_args[] =
   { PDB_STRING,
     "message",
     "Message to use in the progress dialog." },
-  { PDB_INT8,
+  { PDB_INT32,
     "gdisplay",
     "GDisplay to update progressbar in, or -1 for a seperate window" }
 };

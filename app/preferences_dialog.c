@@ -504,7 +504,7 @@ file_prefs_mem_size_unit_callback (GtkWidget *widget,
 {
   int new_unit;
 
-  new_unit = (int*)data;
+  new_unit = (int)data;
 
   if (new_unit != mem_size_unit)
     {

@@ -115,7 +115,6 @@ static void   server_start       (gint       port,
 static gint   execute_command    (SFCommand *cmd);
 static gint   read_from_client   (gint       filedes);
 static gint   make_socket        (guint      port);
-static guint  clientname_hash    (gpointer   key);
 static void   server_log         (gchar     *format,
 				     ...);
 static void   server_quit        (void);

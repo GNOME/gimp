@@ -39,6 +39,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
@@ -484,7 +485,6 @@ tileit_dialog ()
   /* Table for the stuff next to the explict button */
   table3 = gtk_table_new (6, 6, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table3), 0);
-  gtk_container_add (GTK_CONTAINER (xframe), table3);
 
   label = gtk_label_new ("Row");
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);

@@ -72,6 +72,8 @@
 #undef RAND_FUNC
 #undef SRAND_FUNC
 
+#undef USE_PTHREADS
+
 /* #undef PACKAGE */
 /* #undef VERSION */
 

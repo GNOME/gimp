@@ -1,3 +1,24 @@
+Thu Jun 18 18:34:58 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* acconfig.h
+	* config.h.in
+	* configure.in: added --with-threads (taken from gtk+ configure.in)
+
+	* libgimp/Makefile.am: ugly hack to force libgimpi.a to get
+	rebuilt since libgimp.la compilations screws up the deps. Fixes
+	relinking on make install.
+
+	* configure.in
+	* plug-ins/Makefile.am: other cleanups
+
+	* libgimp/gimp.c
+	* app/plug_in.c: pass INT32 instead of INT8 for gdisp_id since
+	that's the correct type
+
+	* app/preferences_dialog.c
+	* plug-ins/script-fu/script-fu-server.c
+	* plug-ins/tileit/tileit.c: warning fixups
+
 Thu Jun 18 21:20:12 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/interface.c app/tools.c: Removed calls to
