@@ -1,3 +1,8 @@
+2003-11-01  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed app/widgets/gimphistogramtool.c;
+	added app/widgets/gimphistogrameditor.c
+
 2003-10-31  Hasbullah Bin Pit <sebol@ikhlas.com>
 
 	* ms.po: Updated Malay translation by

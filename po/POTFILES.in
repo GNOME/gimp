@@ -219,7 +219,6 @@ app/tools/gimpfliptool.c
 app/tools/gimpfreeselecttool.c
 app/tools/gimpfuzzyselecttool.c
 app/tools/gimphistogramoptions.c
-app/tools/gimphistogramtool.c
 app/tools/gimphuesaturationtool.c
 app/tools/gimpimagemaptool.c
 app/tools/gimpinkoptions.c
@@ -282,6 +281,7 @@ app/widgets/gimpfontview.c
 app/widgets/gimpgradienteditor.c
 app/widgets/gimpgrideditor.c
 app/widgets/gimphelp.c
+app/widgets/gimphistogrameditor.c
 app/widgets/gimpimagedock.c
 app/widgets/gimpimageview.c
 app/widgets/gimpitemfactory.c
