@@ -48,5 +48,7 @@ void   edit_fill_cmd_callback         (GtkWidget *widget,
 void   edit_stroke_cmd_callback       (GtkWidget *widget,
 				       gpointer   data);
 
+void   edit_stroke_selection          (GimpItem  *item);
+
 
 #endif /* __EDIT_COMMANDS_H__ */

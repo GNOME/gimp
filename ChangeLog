@@ -1,3 +1,29 @@
+2003-09-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore-stroke.c: cleanup.
+
+	(gimp_paint_core_stroke_boundary): don't push a separate undo
+	for each part of the boundary.
+
+	* app/core/gimpdrawable-stroke.[ch]: added empty stub
+	gimp_drawable_stroke_boundary(). Changed
+	gimp_drawable_stroke_vectors() to take the GimpStrokeOptions as
+	second parameter.
+
+	* app/core/gimpchannel.c (gimp_channel_stroke): use it. No need
+	to push an undo group around gimp_paint_core_stroke_boundary().
+
+	* app/vectors/gimpvectors.c: changed accordingly.
+
+	* app/widgets/gimpselectioneditor.[ch]: added a GimpStrokeItemFunc
+	pointer and use it for stroking.
+
+	* app/gui/edit-commands.[ch] (edit_stroke_selection): a
+	GimpStrokeItemFunc which strokes the selection using the
+	stroke-dialog.
+
+	* app/gui/dialogs-constructors.c: use it for the selection editor.
+
 2003-09-30  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpscanconvert.[ch]: replaced

@@ -79,6 +79,7 @@
 #include "channels-commands.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
+#include "edit-commands.h"
 #include "file-commands.h"
 #include "file-new-dialog.h"
 #include "layers-commands.h"
@@ -914,6 +915,7 @@ dialogs_selection_editor_new (GimpDialogFactory *factory,
 
   selection_editor = GIMP_SELECTION_EDITOR (view);
 
+  selection_editor->stroke_item_func          = edit_stroke_selection;
   selection_editor->selection_to_vectors_func = vectors_selection_to_vectors;
 
   dockable = dialogs_dockable_new (view,

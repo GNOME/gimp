@@ -46,9 +46,11 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
+#include "gimpdrawable-stroke.h"
 #include "gimplayer.h"
 #include "gimppaintinfo.h"
 #include "gimpparasitelist.h"
+#include "gimpstrokeoptions.h"
 
 #include "gimp-intl.h"
 
@@ -577,20 +579,18 @@ gimp_channel_transform (GimpItem               *item,
 }
 
 static gboolean
-gimp_channel_stroke (GimpItem         *item,
-                     GimpDrawable     *drawable,
-                     GimpObject       *stroke_desc)
+gimp_channel_stroke (GimpItem     *item,
+                     GimpDrawable *drawable,
+                     GimpObject   *stroke_desc)
 
 {
   GimpChannel    *channel;
   GimpImage      *gimage;
-  const BoundSeg *bs_in;
-  const BoundSeg *bs_out;
-  gint            num_segs_in;
-  gint            num_segs_out;
-  GimpPaintCore  *core;
-  GimpPaintInfo  *paint_info;
-  gboolean        retval;
+  const BoundSeg *segs_in;
+  const BoundSeg *segs_out;
+  gint            n_segs_in;
+  gint            n_segs_out;
+  gboolean        retval = FALSE;
 
   channel = GIMP_CHANNEL (item);
 
@@ -598,29 +598,37 @@ gimp_channel_stroke (GimpItem         *item,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
-  paint_info = GIMP_PAINT_INFO (stroke_desc);
-
-  if (! gimp_channel_boundary (channel, &bs_in, &bs_out,
-                               &num_segs_in, &num_segs_out,
+  if (! gimp_channel_boundary (channel, &segs_in, &segs_out,
+                               &n_segs_in, &n_segs_out,
                                0, 0, 0, 0))
     {
       g_message (_("Cannot stroke empty channel."));
       return FALSE;
     }
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
-                               _("Stroke Channel"));
+  if (GIMP_IS_STROKE_OPTIONS (stroke_desc))
+    {
+      gimp_drawable_stroke_boundary (drawable,
+                                     GIMP_STROKE_OPTIONS (stroke_desc),
+                                     segs_in, n_segs_in);
+      retval = TRUE;
+    }
+  else if (GIMP_IS_PAINT_INFO (stroke_desc))
+    {
+      GimpPaintInfo *paint_info;
+      GimpPaintCore *core;
 
-  core = g_object_new (paint_info->paint_type, NULL);
+      paint_info = GIMP_PAINT_INFO (stroke_desc);
 
-  retval = gimp_paint_core_stroke_boundary (core, drawable,
-                                            paint_info->paint_options,
-                                            bs_in, num_segs_in,
-                                            0, 0);
+      core = g_object_new (paint_info->paint_type, NULL);
 
-  g_object_unref (core);
+      retval = gimp_paint_core_stroke_boundary (core, drawable,
+                                                paint_info->paint_options,
+                                                segs_in, n_segs_in,
+                                                0, 0);
 
-  gimp_image_undo_group_end (gimage);
+      g_object_unref (core);
+    }
 
   return retval;
 }

@@ -538,13 +538,12 @@ gimp_vectors_transform (GimpItem               *item,
 }
 
 static gboolean
-gimp_vectors_stroke (GimpItem      *item,
-                     GimpDrawable  *drawable,
-                     GimpObject    *stroke_desc)
+gimp_vectors_stroke (GimpItem     *item,
+                     GimpDrawable *drawable,
+                     GimpObject   *stroke_desc)
 {
-  GimpVectors       *vectors;
-  GimpPaintInfo     *paint_info;
-  gboolean           retval;
+  GimpVectors *vectors;
+  gboolean     retval = FALSE;
 
   g_return_val_if_fail (GIMP_IS_PAINT_INFO (stroke_desc) ||
                         GIMP_IS_STROKE_OPTIONS (stroke_desc), FALSE);
@@ -559,15 +558,18 @@ gimp_vectors_stroke (GimpItem      *item,
 
   if (GIMP_IS_STROKE_OPTIONS (stroke_desc))
     {
-      gimp_drawable_stroke_vectors (drawable, vectors,
-                                    GIMP_STROKE_OPTIONS (stroke_desc));
+      gimp_drawable_stroke_vectors (drawable,
+                                    GIMP_STROKE_OPTIONS (stroke_desc),
+                                    vectors);
       retval = TRUE;
     }
-  else
+  else if (GIMP_IS_PAINT_INFO (stroke_desc))
     {
+      GimpPaintInfo *paint_info;
       GimpPaintCore *core;
 
       paint_info = GIMP_PAINT_INFO (stroke_desc);
+
       core = g_object_new (paint_info->paint_type, NULL);
 
       retval = gimp_paint_core_stroke_vectors (core, drawable,

@@ -23,8 +23,13 @@
 #define  __GIMP_DRAWABLE_STROKE_H__
 
 
-void gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
-                                   GimpVectors       *vectors,
-                                   GimpStrokeOptions *options);
+void   gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
+                                      GimpStrokeOptions *options,
+                                      const BoundSeg    *bound_segs,
+                                      gint               n_bound_segs);
+void   gimp_drawable_stroke_vectors  (GimpDrawable      *drawable,
+                                      GimpStrokeOptions *options,
+                                      GimpVectors       *vectors);
+
 
 #endif  /*  __GIMP_DRAWABLE_STROKE_H__  */

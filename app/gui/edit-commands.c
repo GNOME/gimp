@@ -44,6 +44,7 @@
 
 #include "dialogs.h"
 #include "edit-commands.h"
+#include "stroke-dialog.h"
 
 #include "gimp-intl.h"
 
@@ -260,24 +261,34 @@ void
 edit_stroke_cmd_callback (GtkWidget *widget,
 			  gpointer   data)
 {
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
+
+  edit_stroke_selection (GIMP_ITEM (gimp_image_get_mask (gimage)));
+}
+
+void
+edit_stroke_selection (GimpItem *item)
+{
   GimpImage    *gimage;
   GimpDrawable *active_drawable;
-  GimpToolInfo *tool_info;
-  return_if_no_image (gimage, data);
+  GtkWidget    *dialog;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  gimage = gimp_item_get_image (item);
 
   active_drawable = gimp_image_active_drawable (gimage);
 
   if (! active_drawable)
     {
-      g_message (_("There is no active layer or channel to stroke to."));
+      g_message (_("There is no active layer or channel to stroke to"));
       return;
     }
 
-  tool_info = gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
-
-  gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                    active_drawable, GIMP_OBJECT (tool_info->paint_info));
-  gimp_image_flush (gimage);
+  dialog = stroke_dialog_new (item, GIMP_STOCK_SELECTION_STROKE,
+                              GIMP_HELP_SELECTION_STROKE);
+  gtk_widget_show (dialog);
 }
 
 

@@ -37,6 +37,7 @@ struct _GimpSelectionEditor
 {
   GimpImageEditor             parent_instance;
 
+  GimpStrokeItemFunc          stroke_item_func;
   GimpSelectionToVectorsFunc  selection_to_vectors_func;
 
   GtkWidget                  *preview;

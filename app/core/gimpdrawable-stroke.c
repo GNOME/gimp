@@ -49,12 +49,26 @@
 #include "gimp-intl.h"
 
 
-/*  local function prototypes  */
+/*  public functions  */
+
+void
+gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
+                               GimpStrokeOptions *options,
+                               const BoundSeg    *bound_segs,
+                               gint               n_bound_segs)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
+  g_return_if_fail (bound_segs != NULL);
+  g_return_if_fail (n_bound_segs > 0);
+
+  g_message ("gimp_drawable_stroke_boundary() is unimplemented");
+}
 
 void
 gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
-                              GimpVectors       *vectors,
-                              GimpStrokeOptions *options)
+                              GimpStrokeOptions *options,
+                              GimpVectors       *vectors)
 {
   /* Stroke options */
   gdouble               width;
@@ -73,8 +87,8 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
   PixelRegion      maskPR, basePR;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
+  g_return_if_fail (GIMP_IS_VECTORS (vectors));
 
   context = GIMP_CONTEXT (options);
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
