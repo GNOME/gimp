@@ -88,7 +88,6 @@ app/gui/color-notebook.c
 app/gui/colormap-editor-commands.c
 app/gui/colormap-editor-menu.c
 app/gui/convert-dialog.c
-app/gui/device-status-dialog.c
 app/gui/dialogs-constructors.c
 app/gui/dialogs-menu.c
 app/gui/documents-menu.c
@@ -252,6 +251,7 @@ app/widgets/gimpcontainergridview.c
 app/widgets/gimpcontainerpopup.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdatafactoryview.c
+app/widgets/gimpdevicestatus.c
 app/widgets/gimpdock.c
 app/widgets/gimpdocumentview.c
 app/widgets/gimpdnd.c
