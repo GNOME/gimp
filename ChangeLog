@@ -1,5 +1,11 @@
 2005-01-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/MapObject/Makefile.am (MapObject_SOURCES): added
+	arcball.c; it isn't used but it doesn't hurt to have it in the
+	tarball in case someone wants to resurrect this functionality.
+
+2005-01-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/edge.c: don't read beyond the src buffer. Fixes
 	bug #164963.
 

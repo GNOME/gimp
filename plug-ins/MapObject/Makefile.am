@@ -18,6 +18,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = MapObject
 
 MapObject_SOURCES = \
+	arcball.c		\
 	arcball.h		\
 	mapobject_apply.c	\
 	mapobject_apply.h	\
