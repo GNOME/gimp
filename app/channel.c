@@ -1351,7 +1351,7 @@ channel_feather (Channel    *input,
   gaussian_blur_region (&srcPR, radius_x, radius_y);
 
   if (input != output) 
-    channel_combine_mask (output, input, op, 0, 0);
+    channel_combine_mask (output, input, op, off_x, off_y);
 
   output->bounds_known = FALSE;
 }

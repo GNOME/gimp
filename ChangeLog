@@ -1,3 +1,9 @@
+2003-01-02  Sven Neumann  <sven@gimp.org>
+
+	* app/channel.c (channel_feather): pass offsets to
+	channel_combine_mask() to fix bug #101731 [Fuzzy Selection with
+	feather is wrong].
+
 2002-12-31  Garry R. Osgood <grosgood@rcn.com>
 
 	* app/gimpimage.c: Unless DISSOLVE_MODE, temporarily set bottom
