@@ -201,10 +201,4 @@
 (transparency-type 1)
 (transparency-size 2)
 
-# gfig pattern directory
-(gfig-path "${gimp_dir}/gfig:${gimp_data_dir}/gfig")
-
-# path for gflare flares directory
-(gflare-path "${gimp_dir}/gflares:${gimp_data_dir}/gflares")
-
 # [end of file]

@@ -3,10 +3,8 @@
 SUBDIRS = 			\
 	megawidget		\
 	libgck 			\
-	MapObject		\
 	AlienMap		\
 	dbbrowser		\
-	fuse			\
 	gflare			\
 	@GIMPTCL@		\
 	script-fu		\
