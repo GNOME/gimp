@@ -1,3 +1,10 @@
+2001-01-02  Daniel Egger  <egger@suse.de>
+
+	* app/iscissors.c:
+	* app/selection_options.h:
+	* app/tool_options.c: Applied patch by laramieleavitt@onetel.net.uk to add
+	an interactive update to the iscissors tool.
+
 2001-01-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimphelp.c (gimp_idle_help): s/welcome.html/introduction.html/.

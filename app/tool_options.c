@@ -188,6 +188,8 @@ selection_options_init (SelectionOptions     *options,
   options->fixed_width_w    = NULL;
   options->fixed_unit_w     = NULL;
 
+  options->interactive      = FALSE;
+
   /*  the feather toggle button  */
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
@@ -252,8 +254,8 @@ selection_options_init (SelectionOptions     *options,
     {
     case FREE_SELECT:
     case BEZIER_SELECT:
-    case ISCISSORS:
       break;
+    case ISCISSORS:
     case RECT_SELECT:
     case ELLIPSE_SELECT:
     case FUZZY_SELECT:
@@ -264,6 +266,20 @@ selection_options_init (SelectionOptions     *options,
       break;
     default:
       break;
+    }
+
+  /* selection tool with an interactive boundary that can be toggled */
+  if (tool_type == ISCISSORS)
+    {
+      options->interactive_w =
+	gtk_check_button_new_with_label (_("Show Interactive Boundary"));
+
+      gtk_box_pack_start (GTK_BOX (vbox), options->interactive_w,
+			  FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (options->interactive_w), "toggled",
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+			  &options->interactive);
+      gtk_widget_show (options->interactive_w);
     }
 
   /*  selection tools which operate on contiguous regions  */

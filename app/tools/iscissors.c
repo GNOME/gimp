@@ -31,6 +31,9 @@
  * by Austin Donnelly.
  */
 
+/* Livewire boundary implementation done by Laramie Leavitt */
+
+
 #include "config.h"
 
 #include <stdlib.h>
@@ -98,8 +101,10 @@ typedef enum
   DRAW_NOTHING      = 0x0,
   DRAW_CURRENT_SEED = 0x1,
   DRAW_CURVE        = 0x2,
-  DRAW_ACTIVE_CURVE = 0x4
+  DRAW_ACTIVE_CURVE = 0x4,
+  DRAW_LIVEWIRE     = 0x8
 } Iscissors_draw;
+
 #define  DRAW_ALL          (DRAW_CURRENT_SEED | DRAW_CURVE)
 
 typedef struct _iscissors Iscissors;
@@ -115,6 +120,8 @@ struct _iscissors
   gint            nx, ny;       /*  new coordinates                  */
 
   TempBuf        *dp_buf;       /*  dynamic programming buffer              */
+
+  ICurve         *livewire;     /*  livewire boundary curve */
 
   ICurve         *curve1;       /*  1st curve connected to current point    */
   ICurve         *curve2;       /*  2nd curve connected to current point    */
@@ -383,6 +390,7 @@ tools_new_iscissors (void)
   private->state        = NO_ACTION;
   private->mask         = NULL;
   private->gradient_map = NULL;
+  private->livewire     = NULL;
 
   tool->auto_snap_to = FALSE;   /*  Don't snap to guides   */
 
@@ -494,6 +502,10 @@ iscissors_button_press (Tool           *tool,
 	  iscissors->ny = iscissors->y;
 	  iscissors->state = SEED_ADJUSTMENT;
 	  iscissors->draw = DRAW_ACTIVE_CURVE;
+
+          if ( ((SelectionOptions *) iscissors_options)->interactive )
+            iscissors->draw |= DRAW_LIVEWIRE;
+
 	  draw_core_resume (iscissors->core, tool);
 	  grab_pointer = TRUE;
 	}
@@ -530,6 +542,9 @@ iscissors_button_press (Tool           *tool,
 	{
 	  iscissors->state = SEED_PLACEMENT;
 	  iscissors->draw = DRAW_CURRENT_SEED;
+          if ( ((SelectionOptions *) iscissors_options)->interactive )
+            iscissors->draw |= DRAW_LIVEWIRE;
+
 	  grab_pointer = TRUE;
 	  
 	  draw_core_resume (iscissors->core, tool);
@@ -618,9 +633,13 @@ iscissors_button_release (Tool           *tool,
     {
     case SEED_PLACEMENT:
       iscissors->draw = DRAW_CURVE | DRAW_CURRENT_SEED;
+          if ( ((SelectionOptions *) iscissors_options)->interactive )
+            iscissors->draw |= DRAW_LIVEWIRE;
       break;
     case SEED_ADJUSTMENT:
       iscissors->draw = DRAW_CURVE | DRAW_ACTIVE_CURVE;
+          if ( ((SelectionOptions *) iscissors_options)->interactive )
+            iscissors->draw |= DRAW_LIVEWIRE;
       break;
     default:
       break;
@@ -721,7 +740,13 @@ iscissors_motion (Tool           *tool,
     return;
 
   if (iscissors->state == SEED_PLACEMENT)
+    {
     iscissors->draw = DRAW_CURRENT_SEED;
+
+    if (((SelectionOptions *) iscissors_options)->interactive )
+      iscissors->draw = DRAW_CURRENT_SEED | DRAW_LIVEWIRE;
+
+    }
   else if (iscissors->state == SEED_ADJUSTMENT)
     iscissors->draw = DRAW_ACTIVE_CURVE;
 
@@ -800,9 +825,57 @@ iscissors_draw (Tool *tool)
 		     tx2, ty2 - (TARGET_HEIGHT >> 1),
 		     tx2, ty2 + (TARGET_HEIGHT >> 1));
 
-      if (!iscissors->first_point)
+      /* Draw a line boundary */
+      if (!iscissors->first_point && !(iscissors->draw & DRAW_LIVEWIRE) )
+      {
 	gdk_draw_line (iscissors->core->win, iscissors->core->gc, 
 		       tx1, ty1, tx2, ty2);
+      }
+    }
+
+  /* Draw the livewire boundary */
+  if ( (iscissors->draw & DRAW_LIVEWIRE) && !iscissors->first_point )
+    {
+      /* See if the mouse has moved.  If so, create a new segment... */
+      if ( !iscissors->livewire ||
+            (iscissors->livewire
+             && ( iscissors->ix != iscissors->livewire->x1
+               || iscissors->x != iscissors->livewire->x2
+               || iscissors->iy != iscissors->livewire->y1
+               || iscissors->y != iscissors->livewire->y2 )
+            )
+         )
+        {
+          curve = g_new (ICurve, 1);
+
+          curve->x1 = iscissors->ix;
+          curve->y1 = iscissors->iy;
+          curve->x2 = iscissors->x;
+          curve->y2 = iscissors->y;
+          curve->points = NULL;
+
+          TRC (("create new livewire segment\n"));
+          if ( iscissors->livewire )
+            {
+              if (iscissors->livewire->points)
+                {
+                  TRC (("g_ptr_array_free (iscissors->livewire->points);\n"));
+                  g_ptr_array_free (iscissors->livewire->points, TRUE);
+                }
+
+              TRC (("g_free (iscissors->livewire);\n"));
+              g_free (iscissors->livewire);
+
+              iscissors->livewire = NULL;
+             }
+
+          iscissors->livewire = curve;
+          TRC (("calculate curve\n"));
+          calculate_curve (tool, curve);
+          curve = NULL;
+        }
+      /*  plot the curve  */
+      iscissors_draw_curve (gdisp, iscissors, iscissors->livewire );
     }
 
   if ((iscissors->draw & DRAW_CURVE) && !iscissors->first_point)

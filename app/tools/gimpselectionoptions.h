@@ -71,7 +71,13 @@ struct _SelectionOptions
 
   /*  used by bezier selection  */
   gint         extend;
+
+  /*  used by iscissors */
+  gboolean     interactive;
+  GtkWidget   *interactive_w;
+
 };
+
 
 /*  selection tool options functions
  */
