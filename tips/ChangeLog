@@ -1,3 +1,9 @@
+2003-07-05  Sven Neumann  <sven@gimp.org>
+
+	* gimp-tips.xml.in: removed a non-ASCII character. Seems to be
+	causing trouble with newer versions of xgettext and probably needs
+	a fix in intltool to work.
+
 2003-07-04  Sven Neumann  <sven@gimp.org>
 
 	* gimp-tips.xml.in: fixed a typo (bug #116698).
