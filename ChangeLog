@@ -1,3 +1,9 @@
+Sat Feb  5 13:22:47 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/global_edit.c: Reverted Stanislavs change. While I think that 
+	using the FG color would make sense, it is definitely too late to 
+	change this now since it breaks lots of scripts and plugins.
+
 2000-02-05  Tor Lillqvist  <tml@iki.fi>
 
 	* gimprc.in: user_install creates the gflare directory as

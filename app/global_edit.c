@@ -431,7 +431,7 @@ edit_fill (GImage *gimage,
   if (!gimage || drawable == NULL)
     return FALSE;
 
-  gimage_get_foreground (gimage, drawable, col);
+  gimage_get_background (gimage, drawable, col);
   if (drawable_has_alpha (drawable))
     col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 
