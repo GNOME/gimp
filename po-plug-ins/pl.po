@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
-"POT-Creation-Date: 2002-04-05 21:50+0200\n"
-"PO-Revision-Date: 2002-04-05 22:27+0200\n"
+"POT-Creation-Date: 2002-04-13 00:21+0200\n"
+"PO-Revision-Date: 2002-04-13 00:22+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -7276,7 +7276,7 @@ msgstr "Wybierz piksele przez"
 msgid "Show"
 msgstr "Wyświetl"
 
-#: plug-ins/fp/fp_gtk.c:1 plug-ins/rcm/rcm_dialog.c:1
+#: plug-ins/fp/fp_gtk.c:1
 msgid "Entire Image"
 msgstr "Cały obraz"
 
@@ -10171,6 +10171,10 @@ msgstr "Automatyczna aktualizacja"
 #: plug-ins/rcm/rcm_dialog.c:1
 msgid "Area:"
 msgstr "Obszar:"
+
+#: plug-ins/rcm/rcm_dialog.c:1
+msgid "Entire Layer"
+msgstr "Cała warstwa"
 
 #: plug-ins/rcm/rcm_dialog.c:1
 msgid "Context"
