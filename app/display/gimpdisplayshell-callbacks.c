@@ -67,7 +67,6 @@
 #include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpnavigationview.h"
-#include "gimpstatusbar.h"
 
 #include "gimp-intl.h"
 
@@ -280,8 +279,6 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
   gimp_display_shell_get_padding (shell, &padding_mode, &padding_color);
   gimp_display_shell_set_padding (shell, padding_mode, &padding_color);
-
-  gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 
   gimp_display_shell_update_title (shell);
 
@@ -532,7 +529,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           return TRUE;
 
         shell->proximity = FALSE;
-        gimp_display_shell_update_cursor (shell, -1, -1, -1, -1);
+        gimp_display_shell_clear_cursor (shell);
 
         tool_manager_oper_update_active (gimp,
                                          &image_coords, state,
@@ -548,7 +545,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_PROXIMITY_OUT:
       shell->proximity = FALSE;
-      gimp_display_shell_update_cursor (shell, -1, -1, -1, -1);
+      gimp_display_shell_clear_cursor (shell);
 
       tool_manager_oper_update_active (gimp,
                                        &image_coords, state,
@@ -1076,8 +1073,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         switch (kevent->keyval)
           {
-          case GDK_Left: case GDK_Right:
-          case GDK_Up: case GDK_Down:
+          case GDK_Left:
+          case GDK_Right:
+          case GDK_Up:
+          case GDK_Down:
             if (! gimp_image_is_empty (gimage))
               {
                 tool_manager_arrow_key_active (gimp,
@@ -1153,8 +1152,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             break;
 
             /*  Update the state based on modifiers being pressed  */
-          case GDK_Alt_L: case GDK_Alt_R:
-          case GDK_Shift_L: case GDK_Shift_R:
+          case GDK_Alt_L:     case GDK_Alt_R:
+          case GDK_Shift_L:   case GDK_Shift_R:
           case GDK_Control_L: case GDK_Control_R:
             {
               GdkModifierType key;
@@ -1210,8 +1209,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             break;
 
             /*  Update the state based on modifiers being pressed  */
-          case GDK_Alt_L: case GDK_Alt_R:
-          case GDK_Shift_L: case GDK_Shift_R:
+          case GDK_Alt_L:     case GDK_Alt_R:
+          case GDK_Shift_L:   case GDK_Shift_R:
           case GDK_Control_L: case GDK_Control_R:
             {
               GdkModifierType key;
@@ -1280,13 +1279,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     }
 
   if (update_cursor)
-    {
-      gimp_display_shell_update_cursor (shell,
-                                        RINT (display_coords.x),
-                                        RINT (display_coords.y),
-                                        RINT (image_coords.x),
-                                        RINT (image_coords.y));
-    }
+    gimp_display_shell_update_cursor (shell,
+                                      RINT (display_coords.x),
+                                      RINT (display_coords.y),
+                                      RINT (image_coords.x),
+                                      RINT (image_coords.y));
 
   return return_val;
 }

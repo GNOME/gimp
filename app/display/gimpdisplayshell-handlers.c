@@ -42,7 +42,6 @@
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-title.h"
-#include "gimpstatusbar.h"
 
 
 #define GIMP_DISPLAY_UPDATE_ICON_TIMEOUT  1000
@@ -398,8 +397,6 @@ static void
 gimp_display_shell_size_changed_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
-  gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
-
   gimp_display_shell_scale_resize (shell,
 				   GIMP_DISPLAY_CONFIG (gimage->gimp->config)->resize_windows_on_resize,
 				   TRUE);
@@ -411,8 +408,6 @@ gimp_display_shell_resolution_changed_handler (GimpImage        *gimage,
 {
   gimp_display_shell_scale_setup (shell);
   gimp_display_shell_scaled (shell);
-
-  gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 }
 
 static void
@@ -421,8 +416,6 @@ gimp_display_shell_unit_changed_handler (GimpImage        *gimage,
 {
   gimp_display_shell_scale_setup (shell);
   gimp_display_shell_scaled (shell);
-
-  gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 }
 
 static void
@@ -579,8 +572,6 @@ gimp_display_shell_monitor_res_notify_handler (GObject          *config,
     {
       gimp_display_shell_scale_setup (shell);
       gimp_display_shell_scaled (shell);
-
-      gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 
       gimp_display_shell_expose_full (shell);
     }

@@ -118,3 +118,20 @@ gimp_unit_combo_box_new_with_model (GimpUnitStore *model)
                        "model", model,
                        NULL);
 }
+
+GimpUnit
+gimp_unit_combo_box_get_active (GimpUnitComboBox *combo)
+{
+  g_return_val_if_fail (GIMP_IS_UNIT_COMBO_BOX (combo), -1);
+
+  return gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
+}
+
+void
+gimp_unit_combo_box_set_active (GimpUnitComboBox *combo,
+                                GimpUnit          unit)
+{
+  g_return_if_fail (GIMP_IS_UNIT_COMBO_BOX (combo));
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (combo), unit);
+}

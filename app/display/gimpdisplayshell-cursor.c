@@ -147,8 +147,8 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
   /*  use the passed image_coords for the statusbar because they are
    *  possibly snapped...
    */
-  gimp_statusbar_update_cursor (GIMP_STATUSBAR (shell->statusbar),
-                                image_x, image_y);
+  gimp_statusbar_set_cursor (GIMP_STATUSBAR (shell->statusbar),
+                             image_x, image_y);
 
   /*  ...but use the unsnapped display_coords for the info window  */
   if (display_x >= 0 && display_y >= 0)
@@ -166,6 +166,16 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
     {
       info_window_update_extended (shell->gdisp, t_x, t_y);
     }
+}
+
+void
+gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimp_statusbar_clear_cursor (GIMP_STATUSBAR (shell->statusbar));
+
+  info_window_update_extended (shell->gdisp, -1, -1);
 }
 
 static void

@@ -1,3 +1,32 @@
+2004-05-10  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/view-actions.c: added a stock icon for "view-zoom-1-1".
+
+	* app/widgets/gimpunitcombobox.[ch]: added functions to get and
+	set the active unit.
+
+	* app/widgets/gimpunitstore.c (gimp_unit_store_tree_model_get_value):
+	need to special case GIMP_UNIT_PIXEL.
+
+	* app/display/Makefile.am
+	* app/display/display-types.h
+	* app/display/gimpscalecombobox.[ch]: new widget to be used in the
+	display's statusbar.
+
+	* app/display/gimpdisplayshell-cursor.[ch]: always display the
+	cursor position, not only if the cursor is inside the image. Added
+	new function gimp_display_shell_clear_cursor() to clear the cursor
+	label.
+
+	* app/display/gimpdisplayshell-callbacks.c: changed accordingly.
+
+	* app/display/gimpstatusbar.[ch]
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-scale.c: do not explicitely resize
+	the statusbar cursor label, connect to GimpDisplayShell::scaled
+	instead. Added a GimpScaleComboBox to the status bar.
+
 2004-05-10  Michael Natterer  <mitch@gimp.org>
 
 	Started making the toolbox configurable.

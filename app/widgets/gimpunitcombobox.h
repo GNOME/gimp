@@ -49,7 +49,11 @@ struct _GimpUnitComboBox
 GType       gimp_unit_combo_box_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_unit_combo_box_new            (void);
-GtkWidget * gimp_unit_combo_box_new_with_model (GimpUnitStore *model);
+GtkWidget * gimp_unit_combo_box_new_with_model (GimpUnitStore    *model);
+
+GimpUnit    gimp_unit_combo_box_get_active     (GimpUnitComboBox *combo);
+void        gimp_unit_combo_box_set_active     (GimpUnitComboBox *combo,
+                                                GimpUnit          unit);
 
 
 #endif  /* __GIMP_UNIT_COMBO_BOX_H__ */

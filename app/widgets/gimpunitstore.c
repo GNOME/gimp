@@ -342,11 +342,17 @@ gimp_unit_store_tree_model_get_value (GtkTreeModel *tree_model,
 
         default:
           column -= GIMP_UNIT_STORE_UNIT_COLUMNS;
-          if (column < store->num_values && store->resolutions[column])
-            g_value_set_double (value,
-                                store->values[column] *
-                                gimp_unit_get_factor (unit) /
-                                store->resolutions[column]);
+          if (unit == GIMP_UNIT_PIXEL)
+            {
+              g_value_set_double (value, store->values[column]);
+            }
+          else if (store->resolutions[column])
+            {
+              g_value_set_double (value,
+                                  store->values[column] *
+                                  gimp_unit_get_factor (unit) /
+                                  store->resolutions[column]);
+            }
           break;
         }
     }

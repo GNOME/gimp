@@ -33,6 +33,7 @@ void   gimp_display_shell_update_cursor         (GimpDisplayShell   *shell,
                                                  gint                display_y,
                                                  gint                image_x,
                                                  gint                image_y);
+void   gimp_display_shell_clear_cursor          (GimpDisplayShell   *shell);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_CURSOR_H__ */

@@ -204,7 +204,7 @@ static GimpRadioActionEntry view_zoom_actions[] =
     20000,
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-1-1", NULL,
+  { "view-zoom-1-1", GTK_STOCK_ZOOM_100,
     N_("1:1  (100%)"), "1", NULL,
     10000,
     GIMP_HELP_VIEW_ZOOM_100 },

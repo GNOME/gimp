@@ -31,6 +31,7 @@ typedef struct _GimpDisplay        GimpDisplay;
 typedef struct _GimpDisplayShell   GimpDisplayShell;
 
 typedef struct _GimpNavigationView GimpNavigationView;
+typedef struct _GimpScaleComboBox  GimpScaleComboBox;
 typedef struct _GimpStatusbar      GimpStatusbar;
 
 typedef struct _Selection          Selection;

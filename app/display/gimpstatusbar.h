@@ -48,6 +48,7 @@ struct _GimpStatusbar
   GtkWidget        *cursor_label;
   gchar             cursor_format_str[CURSOR_FORMAT_LENGTH];
   GtkWidget        *unit_combo;
+  GtkWidget        *scale_combo;
 
   GtkWidget        *progressbar;
   guint             progressid;
@@ -60,26 +61,26 @@ struct _GimpStatusbarClass
 };
 
 
-GType       gimp_statusbar_get_type      (void) G_GNUC_CONST;
+GType       gimp_statusbar_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_statusbar_new           (GimpDisplayShell *shell);
+GtkWidget * gimp_statusbar_new          (GimpDisplayShell *shell);
 
-void        gimp_statusbar_push          (GimpStatusbar    *statusbar,
-                                          const gchar      *context_id,
-                                          const gchar      *message);
-void        gimp_statusbar_push_coords   (GimpStatusbar    *statusbar,
-                                          const gchar      *context_id,
-                                          const gchar      *title,
-                                          gdouble           x,
-                                          const gchar      *separator,
-                                          gdouble           y);
-void        gimp_statusbar_pop           (GimpStatusbar    *statusbar,
-                                          const gchar      *context_id);
+void        gimp_statusbar_push         (GimpStatusbar    *statusbar,
+                                         const gchar      *context_id,
+                                         const gchar      *message);
+void        gimp_statusbar_push_coords  (GimpStatusbar    *statusbar,
+                                         const gchar      *context_id,
+                                         const gchar      *title,
+                                         gdouble           x,
+                                         const gchar      *separator,
+                                         gdouble           y);
+void        gimp_statusbar_pop          (GimpStatusbar    *statusbar,
+                                         const gchar      *context_id);
 
-void	    gimp_statusbar_update_cursor (GimpStatusbar    *statusbar,
-                                          gdouble           x,
-                                          gdouble           y);
-void        gimp_statusbar_resize_cursor (GimpStatusbar    *statusbar);
+void	    gimp_statusbar_set_cursor   (GimpStatusbar    *statusbar,
+                                         gdouble           x,
+                                         gdouble           y);
+void	    gimp_statusbar_clear_cursor (GimpStatusbar    *statusbar);
 
 
 G_END_DECLS
