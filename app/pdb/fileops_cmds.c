@@ -399,7 +399,7 @@ temp_name_invoker (Gimp     *gimp,
       if (id == 0)
 	pid = getpid ();
     
-      filename = g_strdup_printf ("gimp_temp.%d%d.%s",
+      filename = g_strdup_printf ("gimp_temp_%d%d.%s",
 				  pid, id++, extension);
     
       name = g_build_filename (base_config->temp_path, filename, NULL);
