@@ -1,5 +1,10 @@
 2004-10-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.c: added a close button. Launch the
+	browser with the HTML focused.
+
+2004-10-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.c (gimp_table_attach_aligned):
 	left-justify the label.
 

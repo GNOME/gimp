@@ -187,20 +187,29 @@ browser_dialog_open (void)
   back_button = button = gtk_button_new_from_stock (GTK_STOCK_GO_BACK);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_set_sensitive (GTK_WIDGET (button), FALSE);
+  gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_BACK));
-  gtk_widget_show (button);
 
   forward_button = button = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_set_sensitive (GTK_WIDGET (button), FALSE);
+  gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_FORWARD));
+
+  button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
+  gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (bbox), button, TRUE);
   gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gtk_widget_destroy),
+                            window);
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -276,6 +285,8 @@ browser_dialog_open (void)
   g_signal_connect (HTML_VIEW (html)->document, "request_url",
                     G_CALLBACK (request_url),
                     NULL);
+
+  gtk_widget_grab_focus (html);
 
   gtk_widget_show (window);
 }
