@@ -39,6 +39,36 @@ static void show_gimprc_globals()
 /*    printf("%-20s=%s\n","",); */
 }
 
+const char *cstr_TokenType (TokenType val)
+{
+    switch (val)
+    {
+    case  TT_STRING: return ("TT_STRING");
+    case  TT_PATH: return ("TT_PATH");
+    case  TT_DOUBLE: return ("TT_DOUBLE");
+    case  TT_FLOAT: return ("TT_FLOAT");
+    case  TT_INT: return ("TT_INT");
+    case  TT_BOOLEAN: return ("TT_BOOLEAN");
+    case  TT_POSITION: return ("TT_POSITION");
+    case  TT_MEMSIZE: return ("TT_MEMSIZE");
+    case  TT_IMAGETYPE: return ("TT_IMAGETYPE");
+    case  TT_INTERP: return ("TT_INTERP");
+    case  TT_XCOLORCUBE: return ("TT_XCOLORCUBE");
+    case  TT_XPREVSIZE: return ("TT_XPREVSIZE");
+    case  TT_XUNIT: return ("TT_XUNIT");
+    case  TT_XPLUGIN: return ("TT_XPLUGIN");
+    case  TT_XPLUGINDEF: return ("TT_XPLUGINDEF");
+    case  TT_XMENUPATH: return ("TT_XMENUPATH");
+    case  TT_XDEVICE: return ("TT_XDEVICE");
+    case  TT_XSESSIONINFO: return ("TT_XSESSIONINFO");
+    case  TT_XUNITINFO: return ("TT_XUNITINFO");
+    case  TT_XPARASITE: return ("TT_XPARASITE");
+    case  TT_XNAVPREVSIZE: return ("TT_XNAVPREVSIZE");
+    default:
+	return ("TT_???");
+    };
+}
+
 static void show_gimprc_funcs_tab()
 {
     int i;
@@ -46,9 +76,15 @@ static void show_gimprc_funcs_tab()
 	
     for (i = 0; i < nfuncs; i++)
     {
-	printf("%2d: t:%02d %-25s =",i,funcs[i].type, funcs[i].name);
+	printf("%2d: t:%02d %-18s %-25s =",i,funcs[i].type,
+	       cstr_TokenType(funcs[i].type),
+	       funcs[i].name);
 	switch (funcs[i].type)
         {
+	case TT_XPARASITE:
+	{
+	    break;
+	}
         case TT_STRING:
 	case TT_PATH:
 	{
