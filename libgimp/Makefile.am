@@ -97,8 +97,8 @@ PDB_WRAPPERS_H = \
 	gimpunit_pdb.h
 
 libgimpi_a_SOURCES = \
-	gimpenv.c		\
-	gimpenv.h		\
+	gimpcolor.c		\
+	gimpcolor.h		\
 	gimpchainbutton.c	\
 	gimpchainbutton.h	\
 	gimpcolorbutton.c	\
@@ -106,6 +106,8 @@ libgimpi_a_SOURCES = \
 	gimpcolorspace.h	\
 	gimpdialog.c		\
 	gimpdialog.h		\
+	gimpenv.c		\
+	gimpenv.h		\
 	gimpfileselection.c	\
 	gimpfileselection.h	\
 	gimphelpui.c		\
@@ -154,6 +156,8 @@ libgimp_la_SOURCES = \
 	gimp.h			\
 	${PDB_WRAPPERS_C}	\
 	${PDB_WRAPPERS_H}	\
+	gimpcolor.c		\
+	gimpcolor.h		\
 	gimpcolorspace.c	\
 	gimpcolorspace.h	\
 	gimpchannel.c		\
@@ -225,6 +229,7 @@ gimpinclude_HEADERS = \
 	${PDB_WRAPPERS_H}	\
 	gimpchainbutton.h	\
 	gimpchannel.h		\
+	gimpcolor.h		\
 	gimpcolorbutton.h	\
 	gimpcolordisplay.h	\
 	gimpcolorselector.h	\

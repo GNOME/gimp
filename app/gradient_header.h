@@ -56,11 +56,11 @@ struct _gradient_t
 
 struct _grad_segment_t
 {
-  double       left, middle, right; /* Left pos, midpoint, right pos */
-  double       r0, g0, b0, a0;   	/* Left color */
-  double       r1, g1, b1, a1;   	/* Right color */
-  grad_type_t  type;             	/* Segment's blending function */
-  grad_color_t color;             /* Segment's coloring type */
+  gdouble      left, middle, right; /* Left pos, midpoint, right pos */
+  gdouble      r0, g0, b0, a0;      /* Left color */
+  gdouble      r1, g1, b1, a1;      /* Right color */
+  grad_type_t  type;                /* Segment's blending function */
+  grad_color_t color;               /* Segment's coloring type */
 
   struct _grad_segment_t *prev, *next; /* For linked list of segments */
 };

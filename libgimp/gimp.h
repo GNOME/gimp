@@ -28,6 +28,7 @@
 #include <libgimp/gimptypes.h>
 
 #include <libgimp/gimpchannel.h>
+#include <libgimp/gimpcolor.h>
 #include <libgimp/gimpcolorspace.h>
 #include <libgimp/gimpdrawable.h>
 #include <libgimp/gimpfeatures.h>

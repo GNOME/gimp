@@ -121,7 +121,7 @@ typedef struct
   gdouble      sx, sy;
   BlendMode    blend_mode;
   GradientType gradient_type;
-  color_t      fg, bg;
+  GimpRGB      fg, bg;
   gdouble      dist;
   gdouble      vec[2];
   RepeatFunc   repeat_func;
@@ -181,47 +181,47 @@ static void    blend_control                     (Tool           *tool,
 						  ToolAction      action,
 						  GDisplay       *gdisp);
 
-static void    blend_options_drop_gradient       (GtkWidget      *,
-						  gradient_t     *,
-						  gpointer        );
-static void    blend_options_drop_tool           (GtkWidget      *,
-						  ToolType        ,
-						  gpointer        );
+static void    blend_options_drop_gradient       (GtkWidget      *widget,
+						  gradient_t     *gradient,
+						  gpointer        data);
+static void    blend_options_drop_tool           (GtkWidget      *widget,
+						  ToolType        gradient,
+						  gpointer        data);
 
-static gdouble gradient_calc_conical_sym_factor  (gdouble  dist,
-						  gdouble *axis,
-						  gdouble  offset,
-						  gdouble  x,
-						  gdouble  y);
-static gdouble gradient_calc_conical_asym_factor (gdouble  dist,
-						  gdouble *axis,
-						  gdouble  offset,
-						  gdouble  x,
-						  gdouble  y);
-static gdouble gradient_calc_square_factor       (gdouble  dist,
-						  gdouble  offset,
-						  gdouble  x,
-						  gdouble  y);
-static gdouble gradient_calc_radial_factor   	 (gdouble  dist,
-						  gdouble  offset,
-						  gdouble  x,
-						  gdouble  y);
-static gdouble gradient_calc_linear_factor   	 (gdouble  dist,
-						  gdouble *vec,
-						  gdouble  offset,
-						  gdouble  x,
-						  gdouble  y);
-static gdouble gradient_calc_bilinear_factor 	 (gdouble  dist,
-						  gdouble *vec,
-						  gdouble  offset,
-						  gdouble  x,
-						  gdouble  y);
-static gdouble gradient_calc_spiral_factor       (gdouble  dist,
-						  gdouble *axis,
-						  gdouble  offset,
-						  gdouble  x,
-						  gdouble  y,
-						  gint     cwise);
+static gdouble gradient_calc_conical_sym_factor  (gdouble         dist,
+						  gdouble        *axis,
+						  gdouble         offset,
+						  gdouble         x,
+						  gdouble         y);
+static gdouble gradient_calc_conical_asym_factor (gdouble         dist,
+						  gdouble        *axis,
+						  gdouble         offset,
+						  gdouble         x,
+						  gdouble         y);
+static gdouble gradient_calc_square_factor       (gdouble         dist,
+						  gdouble         offset,
+						  gdouble         x,
+						  gdouble         y);
+static gdouble gradient_calc_radial_factor   	 (gdouble         dist,
+						  gdouble         offset,
+						  gdouble         x,
+						  gdouble         y);
+static gdouble gradient_calc_linear_factor   	 (gdouble         dist,
+						  gdouble        *vec,
+						  gdouble         offset,
+						  gdouble         x,
+						  gdouble         y);
+static gdouble gradient_calc_bilinear_factor 	 (gdouble         dist,
+						  gdouble        *vec,
+						  gdouble         offset,
+						  gdouble         x,
+						  gdouble         y);
+static gdouble gradient_calc_spiral_factor       (gdouble         dist,
+						  gdouble        *axis,
+						  gdouble         offset,
+						  gdouble         x,
+						  gdouble         y,
+						  gint            cwise);
 
 static gdouble gradient_calc_shapeburst_angular_factor   (gdouble x,
 							  gdouble y);
@@ -241,11 +241,11 @@ static void    gradient_precalc_shapeburst       (GImage       *gimage,
 
 static void    gradient_render_pixel             (gdouble       x,
 						  gdouble       y,
-						  color_t      *color,
+						  GimpRGB      *color,
 						  gpointer      render_data);
 static void    gradient_put_pixel                (gint          x,
 						  gint          y,
-						  color_t       color,
+						  GimpRGB       color,
 						  gpointer      put_pixel_data);
 
 static void    gradient_fill_region              (GImage       *gimage,
@@ -541,9 +541,9 @@ blend_button_release (Tool           *tool,
   BlendTool     *blend_tool;
 #ifdef BLEND_UI_CALLS_VIA_PDB
   Argument      *return_vals;
-  int nreturn_vals;
+  gint           nreturn_vals;
 #else
-  GimpProgress *progress;
+  GimpProgress  *progress;
 #endif
 
   gimage = gdisp->gimage;
@@ -801,9 +801,8 @@ blend_options_drop_tool (GtkWidget *widget,
 }
 
 
-/*****/
-
 /*  The actual blending procedure  */
+
 void
 blend (GImage           *gimage,
        GimpDrawable     *drawable,
@@ -865,70 +864,71 @@ blend (GImage           *gimage,
   /*  free the temporary buffer  */
   tile_manager_destroy (buf_tiles);
 
-  gimp_remove_busy_cursors(NULL);
+  gimp_remove_busy_cursors (NULL);
 }
 
-
-static double
-gradient_calc_conical_sym_factor (double  dist,
-				  double *axis,
-				  double  offset,
-				  double  x,
-				  double  y)
+static gdouble
+gradient_calc_conical_sym_factor (gdouble  dist,
+				  gdouble *axis,
+				  gdouble  offset,
+				  gdouble  x,
+				  gdouble  y)
 {
-  double vec[2];
-  double r;
-  double rat;
+  gdouble vec[2];
+  gdouble r;
+  gdouble rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
+  else if ((x != 0) || (y != 0))
+    {
+      /* Calculate offset from the start in pixels */
+
+      r = sqrt (x * x + y * y);
+
+      vec[0] = x / r;
+      vec[1] = y / r;
+
+      rat = axis[0] * vec[0] + axis[1] * vec[1]; /* Dot product */
+
+      if (rat > 1.0)
+	rat = 1.0;
+      else if (rat < -1.0)
+	rat = -1.0;
+
+      /* This cool idea is courtesy Josh MacDonald,
+       * Ali Rahimi --- two more XCF losers.  */
+
+      rat = acos (rat) / G_PI;
+      rat = pow (rat, (offset / 10) + 1);
+
+      rat = CLAMP (rat, 0.0, 1.0);
+    }
   else
-    if ((x != 0) || (y != 0))
-      {
-	/* Calculate offset from the start in pixels */
-
-	r = sqrt(x * x + y * y);
-
-	vec[0] = x / r;
-	vec[1] = y / r;
-
-	rat = axis[0] * vec[0] + axis[1] * vec[1]; /* Dot product */
-
-	if (rat > 1.0)
-	  rat = 1.0;
-	else if (rat < -1.0)
-	  rat = -1.0;
-
-	/* This cool idea is courtesy Josh MacDonald,
-	 * Ali Rahimi --- two more XCF losers.  */
-
-	rat = acos(rat) / G_PI;
-	rat = pow(rat, (offset / 10) + 1);
-
-	rat = CLAMP(rat, 0.0, 1.0);
-      }
-    else
+    {
       rat = 0.5;
+    }
 
   return rat;
-} /* gradient_calc_conical_sym_factor */
+}
 
-
-/*****/
-
-static double
-gradient_calc_conical_asym_factor (double  dist,
-				   double *axis,
-				   double  offset,
-				   double  x,
-				   double  y)
+static gdouble
+gradient_calc_conical_asym_factor (gdouble  dist,
+				   gdouble *axis,
+				   gdouble  offset,
+				   gdouble  x,
+				   gdouble  y)
 {
-  double ang0, ang1;
-  double ang;
-  double rat;
+  gdouble ang0, ang1;
+  gdouble ang;
+  gdouble rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
   else
     {
       if ((x != 0) || (y != 0))
@@ -947,26 +947,27 @@ gradient_calc_conical_asym_factor (double  dist,
 	  rat = CLAMP(rat, 0.0, 1.0);
 	}
       else
-	rat = 0.5; /* We are on middle point */
-    } /* else */
+	{
+	  rat = 0.5; /* We are on middle point */
+	}
+    }
 
   return rat;
-} /* gradient_calc_conical_asym_factor */
+}
 
-
-/*****/
-
-static double
-gradient_calc_square_factor (double dist,
-			     double offset,
-			     double x,
-			     double y)
+static gdouble
+gradient_calc_square_factor (gdouble dist,
+			     gdouble offset,
+			     gdouble x,
+			     gdouble y)
 {
-  double r;
-  double rat;
+  gdouble r;
+  gdouble rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
   else
     {
       /* Calculate offset from start as a value in [0, 1] */
@@ -982,25 +983,24 @@ gradient_calc_square_factor (double dist,
         rat = (rat>=1) ? 1 : 0;
       else
 	rat = (rat - offset) / (1.0 - offset);
-    } /* else */
+    }
 
   return rat;
-} /* gradient_calc_square_factor */
+}
 
-
-/*****/
-
-static double
-gradient_calc_radial_factor (double dist,
-			     double offset,
-			     double x,
-			     double y)
+static gdouble
+gradient_calc_radial_factor (gdouble dist,
+			     gdouble offset,
+			     gdouble x,
+			     gdouble y)
 {
-  double r;
-  double rat;
+  gdouble r;
+  gdouble rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
   else
     {
       /* Calculate radial offset from start as a value in [0, 1] */
@@ -1016,26 +1016,25 @@ gradient_calc_radial_factor (double dist,
         rat = (rat>=1) ? 1 : 0;
       else
 	rat = (rat - offset) / (1.0 - offset);
-    } /* else */
+    }
 
   return rat;
-} /* gradient_calc_radial_factor */
+}
 
-
-/*****/
-
-static double
-gradient_calc_linear_factor (double  dist,
-			     double *vec,
-			     double  offset,
-			     double  x,
-			     double  y)
+static gdouble
+gradient_calc_linear_factor (gdouble  dist,
+			     gdouble *vec,
+			     gdouble  offset,
+			     gdouble  x,
+			     gdouble  y)
 {
   double r;
   double rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
   else
     {
       offset = offset / 100.0;
@@ -1049,26 +1048,25 @@ gradient_calc_linear_factor (double  dist,
         rat = (rat>=1) ? 1 : 0;
       else
 	rat = (rat - offset) / (1.0 - offset);
-    } /* else */
+    }
 
   return rat;
-} /* gradient_calc_linear_factor */
+}
 
-
-/*****/
-
-static double
-gradient_calc_bilinear_factor (double  dist,
-			       double *vec,
-			       double  offset,
-			       double  x,
-			       double  y)
+static gdouble
+gradient_calc_bilinear_factor (gdouble  dist,
+			       gdouble *vec,
+			       gdouble  offset,
+			       gdouble  x,
+			       gdouble  y)
 {
-  double r;
-  double rat;
+  gdouble r;
+  gdouble rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
   else
     {
       /* Calculate linear offset from the start line outward */
@@ -1084,25 +1082,27 @@ gradient_calc_bilinear_factor (double  dist,
         rat = (rat>=1) ? 1 : 0;
       else
 	rat = (fabs(rat) - offset) / (1.0 - offset);
-    } /* else */
+    }
 
   return rat;
-} /* gradient_calc_bilinear_factor */
+}
 
-static double
-gradient_calc_spiral_factor (double  dist,
-			     double *axis,
-			     double  offset,
-			     double  x,
-			     double  y,
-			     gint    cwise)
+static gdouble
+gradient_calc_spiral_factor (gdouble  dist,
+			     gdouble *axis,
+			     gdouble  offset,
+			     gdouble  x,
+			     gdouble  y,
+			     gint     cwise)
 {
-  double ang0, ang1;
-  double ang, r;
-  double rat;
+  gdouble ang0, ang1;
+  gdouble ang, r;
+  gdouble rat;
 
   if (dist == 0.0)
-    rat = 0.0;
+    {
+      rat = 0.0;
+    }
   else
     {
       if (x != 0.0 || y != 0.0)
@@ -1128,13 +1128,13 @@ gradient_calc_spiral_factor (double  dist,
   return rat;
 }
 
-static double
-gradient_calc_shapeburst_angular_factor (double x,
-					 double y)
+static gdouble
+gradient_calc_shapeburst_angular_factor (gdouble x,
+					 gdouble y)
 {
-  int ix, iy;
-  Tile *tile;
-  float value;
+  gint    ix, iy;
+  Tile   *tile;
+  gfloat  value;
 
   ix = (int) CLAMP (x, 0, distR.w);
   iy = (int) CLAMP (y, 0, distR.h);
@@ -1146,18 +1146,18 @@ gradient_calc_shapeburst_angular_factor (double x,
 }
 
 
-static double
-gradient_calc_shapeburst_spherical_factor (double x,
-					   double y)
+static gdouble
+gradient_calc_shapeburst_spherical_factor (gdouble x,
+					   gdouble y)
 {
-  int ix, iy;
-  Tile *tile;
-  float value;
+  gint    ix, iy;
+  Tile   *tile;
+  gfloat  value;
 
   ix = (int) CLAMP (x, 0, distR.w);
   iy = (int) CLAMP (y, 0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
-  value = *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
+  value = *((gfloat *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
   value = 1.0 - sin (0.5 * G_PI * value);
   tile_release (tile, FALSE);
 
@@ -1165,13 +1165,13 @@ gradient_calc_shapeburst_spherical_factor (double x,
 }
 
 
-static double
-gradient_calc_shapeburst_dimpled_factor (double x,
-					 double y)
+static gdouble
+gradient_calc_shapeburst_dimpled_factor (gdouble x,
+					 gdouble y)
 {
-  int ix, iy;
-  Tile *tile;
-  float value;
+  gint    ix, iy;
+  Tile   *tile;
+  gfloat  value;
 
   ix = (int) CLAMP (x, 0, distR.w);
   iy = (int) CLAMP (y, 0, distR.h);
@@ -1183,25 +1183,25 @@ gradient_calc_shapeburst_dimpled_factor (double x,
   return value;
 }
 
-static double
-gradient_repeat_none (double val)
+static gdouble
+gradient_repeat_none (gdouble val)
 {
-  return CLAMP(val, 0.0, 1.0);
+  return CLAMP (val, 0.0, 1.0);
 }
 
-static double
-gradient_repeat_sawtooth (double val)
+static gdouble
+gradient_repeat_sawtooth (gdouble val)
 {
   if (val >= 0.0)
-    return fmod(val, 1.0);
+    return fmod (val, 1.0);
   else
-    return 1.0 - fmod(-val, 1.0);
+    return 1.0 - fmod (-val, 1.0);
 }
 
-static double
-gradient_repeat_triangular (double val)
+static gdouble
+gradient_repeat_triangular (gdouble val)
 {
-  int ival;
+  gint ival;
 
   if (val < 0.0)
     val = -val;
@@ -1209,9 +1209,9 @@ gradient_repeat_triangular (double val)
   ival = (int) val;
 
   if (ival & 1)
-    return 1.0 - fmod(val, 1.0);
+    return 1.0 - fmod (val, 1.0);
   else
-    return fmod(val, 1.0);
+    return fmod (val, 1.0);
 }
 
 /*****/
@@ -1219,20 +1219,20 @@ static void
 gradient_precalc_shapeburst (GImage       *gimage,
 			     GimpDrawable *drawable,
 			     PixelRegion  *PR,
-			     double        dist)
+			     gdouble       dist)
 {
-  Channel *mask;
-  PixelRegion tempR;
-  float max_iteration;
-  float *distp;
-  int size;
-  void * pr;
-  unsigned char white[1] = { OPAQUE_OPACITY };
+  Channel     *mask;
+  PixelRegion  tempR;
+  gfloat       max_iteration;
+  gfloat      *distp;
+  gint         size;
+  gpointer     pr;
+  guchar       white[1] = { OPAQUE_OPACITY };
 
   /*  allocate the distance map  */
   if (distR.tiles)
     tile_manager_destroy (distR.tiles);
-  distR.tiles = tile_manager_new (PR->w, PR->h, sizeof (float));
+  distR.tiles = tile_manager_new (PR->w, PR->h, sizeof (gfloat));
 
   /*  allocate the selection mask copy  */
   tempR.tiles = tile_manager_new (PR->w, PR->h, 1);
@@ -1264,13 +1264,16 @@ gradient_precalc_shapeburst (GImage       *gimage,
 	{
 	  PixelRegion drawableR;
 
-	  pixel_region_init (&drawableR, drawable_data (drawable), PR->x, PR->y, PR->w, PR->h, FALSE);
+	  pixel_region_init (&drawableR, drawable_data (drawable),
+			     PR->x, PR->y, PR->w, PR->h, FALSE);
 
 	  extract_alpha_region (&drawableR, NULL, &tempR);
 	}
-      /*  Otherwise, just fill the shapeburst to white  */
       else
-	color_region (&tempR, white);
+	{
+	  /*  Otherwise, just fill the shapeburst to white  */
+	  color_region (&tempR, white);
+	}
     }
 
   pixel_region_init (&tempR, tempR.tiles, 0, 0, PR->w, PR->h, TRUE);
@@ -1282,10 +1285,12 @@ gradient_precalc_shapeburst (GImage       *gimage,
     {
       pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, TRUE);
 
-      for (pr = pixel_regions_register (1, &distR); pr != NULL; pr = pixel_regions_process (pr))
+      for (pr = pixel_regions_register (1, &distR);
+	   pr != NULL;
+	   pr = pixel_regions_process (pr))
 	{
-	  distp = (float *) distR.data;
-	  size = distR.w * distR.h;
+	  distp = (gfloat *) distR.data;
+	  size  = distR.w * distR.h;
 
 	  while (size--)
 	    *distp++ /= max_iteration;
@@ -1299,13 +1304,13 @@ gradient_precalc_shapeburst (GImage       *gimage,
 
 
 static void
-gradient_render_pixel (double   x, 
-		       double   y, 
-		       color_t *color, 
-		       void    *render_data)
+gradient_render_pixel (double    x, 
+		       double    y, 
+		       GimpRGB  *color, 
+		       gpointer  render_data)
 {
   RenderBlendData *rbd;
-  double           factor;
+  gdouble          factor;
 
   rbd = render_data;
 
@@ -1397,11 +1402,11 @@ gradient_render_pixel (double   x,
 static void
 gradient_put_pixel (int      x, 
 		    int      y, 
-		    color_t  color, 
+		    GimpRGB  color, 
 		    void    *put_pixel_data)
 {
   PutPixelData  *ppd;
-  unsigned char *data;
+  guchar        *data;
 
   ppd = put_pixel_data;
 
@@ -1434,19 +1439,19 @@ static void
 gradient_fill_region (GImage           *gimage,
 		      GimpDrawable     *drawable,
 		      PixelRegion      *PR,
-		      int               width,
-		      int               height,
+		      gint              width,
+		      gint              height,
 		      BlendMode         blend_mode,
 		      GradientType      gradient_type,
-		      double            offset,
+		      gdouble           offset,
 		      RepeatMode        repeat,
-		      int               supersample,
-		      int               max_depth,
-		      double            threshold,
-		      double            sx,
-		      double            sy,
-		      double            ex,
-		      double            ey,
+		      gint              supersample,
+		      gint              max_depth,
+		      gdouble           threshold,
+		      gdouble           sx,
+		      gdouble           sy,
+		      gdouble           ex,
+		      gdouble           ey,
 		      GimpProgressFunc  progress_callback,
 		      gpointer          progress_data)
 {
@@ -1457,7 +1462,7 @@ gradient_fill_region (GImage           *gimage,
   gint             endx, endy;
   gpointer        *pr;
   guchar          *data;
-  color_t          color;
+  GimpRGB          color;
 
   /* Get foreground and background colors, normalized */
 
@@ -1483,8 +1488,8 @@ gradient_fill_region (GImage           *gimage,
     case FG_BG_HSV_MODE:
       /* Convert to HSV */
 
-      gimp_rgb_to_hsv_double(&rbd.fg.r, &rbd.fg.g, &rbd.fg.b);
-      gimp_rgb_to_hsv_double(&rbd.bg.r, &rbd.bg.g, &rbd.bg.b);
+      gimp_rgb_to_hsv_double (&rbd.fg.r, &rbd.fg.g, &rbd.fg.b);
+      gimp_rgb_to_hsv_double (&rbd.bg.r, &rbd.bg.g, &rbd.bg.b);
 
       break;
 
@@ -1500,8 +1505,8 @@ gradient_fill_region (GImage           *gimage,
       break;
 
     default:
-      gimp_fatal_error("gradient_fill_region(): Unknown blend mode %d",
-		       (int) blend_mode);
+      gimp_fatal_error ("gradient_fill_region(): Unknown blend mode %d",
+			(gint) blend_mode);
       break;
     }
 
@@ -1523,7 +1528,7 @@ gradient_fill_region (GImage           *gimage,
     case SPIRAL_ANTICLOCKWISE:
     case LINEAR:
     case BILINEAR:
-      rbd.dist = sqrt(SQR(ex - sx) + SQR(ey - sy));
+      rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
 
       if (rbd.dist > 0.0)
 	{
@@ -1536,13 +1541,13 @@ gradient_fill_region (GImage           *gimage,
     case SHAPEBURST_ANGULAR:
     case SHAPEBURST_SPHERICAL:
     case SHAPEBURST_DIMPLED:
-      rbd.dist = sqrt(SQR(ex - sx) + SQR(ey - sy));
-      gradient_precalc_shapeburst(gimage, drawable, PR, rbd.dist);
+      rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
+      gradient_precalc_shapeburst (gimage, drawable, PR, rbd.dist);
       break;
 
     default:
-      gimp_fatal_error("gradient_fill_region(): Unknown gradient type %d",
-		       (int) gradient_type);
+      gimp_fatal_error ("gradient_fill_region(): Unknown gradient type %d",
+			(gint) gradient_type);
       break;
     }
 
@@ -1563,8 +1568,8 @@ gradient_fill_region (GImage           *gimage,
       break;
 
     default:
-      gimp_fatal_error("gradient_fill_region(): Unknown repeat mode %d",
-		       (int) repeat);
+      gimp_fatal_error ("gradient_fill_region(): Unknown repeat mode %d",
+			(gint) repeat);
       break;
     }
 
@@ -1583,28 +1588,30 @@ gradient_fill_region (GImage           *gimage,
       /* Initialize put pixel data */
 
       ppd.PR       = PR;
-      ppd.row_data = g_malloc(width * PR->bytes);
+      ppd.row_data = g_malloc (width * PR->bytes);
       ppd.bytes    = PR->bytes;
       ppd.width    = width;
 
       /* Render! */
 
-      adaptive_supersample_area(0, 0, (width - 1), (height - 1),
-				max_depth, threshold,
-				gradient_render_pixel, &rbd,
-				gradient_put_pixel, &ppd,
-				progress_callback, progress_data);
+      adaptive_supersample_area (0, 0, (width - 1), (height - 1),
+				 max_depth, threshold,
+				 gradient_render_pixel, &rbd,
+				 gradient_put_pixel, &ppd,
+				 progress_callback, progress_data);
 
       /* Clean up */
 
-      g_free(ppd.row_data);
+      g_free (ppd.row_data);
     }
   else
     {
-      int max_progress = PR->w * PR->h;
-      int progress = 0;
+      gint max_progress = PR->w * PR->h;
+      gint progress = 0;
 
-      for (pr = pixel_regions_register(1, PR); pr != NULL; pr = pixel_regions_process(pr))
+      for (pr = pixel_regions_register(1, PR);
+	   pr != NULL;
+	   pr = pixel_regions_process(pr))
 	{
 	  data = PR->data;
 	  endx = PR->x + PR->w;
@@ -1633,7 +1640,7 @@ gradient_fill_region (GImage           *gimage,
 
 	  progress += PR->w * PR->h;
 	  if (progress_callback)
-	    (*progress_callback) (0, max_progress, progress, progress_data);
+	    (* progress_callback) (0, max_progress, progress, progress_data);
 	}
     }
 }
@@ -1643,10 +1650,10 @@ gradient_fill_region (GImage           *gimage,
 /****************************/
 
 Tool *
-tools_new_blend ()
+tools_new_blend (void)
 {
-  Tool * tool;
-  BlendTool * private;
+  Tool      *tool;
+  BlendTool *private;
 
   /*  The tool options  */
   if (! blend_options)
@@ -1676,7 +1683,7 @@ tools_new_blend ()
 void
 tools_free_blend (Tool *tool)
 {
-  BlendTool * blend_tool;
+  BlendTool *blend_tool;
 
   blend_tool = (BlendTool *) tool->private;
 

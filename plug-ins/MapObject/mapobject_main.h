@@ -34,7 +34,7 @@ typedef struct
   gdouble diffuse_ref;
   gdouble specular_ref;
   gdouble highlight;
-  GckRGB  color;
+  GimpRGB  color;
 } MaterialSettings;
 
 typedef struct
@@ -42,7 +42,7 @@ typedef struct
   LightType   type;
   GimpVector3 position;
   GimpVector3 direction;
-  GckRGB      color;
+  GimpRGB      color;
   gdouble     intensity;
 } LightSettings;
 
@@ -82,6 +82,6 @@ typedef struct
 /* ============================ */
 
 extern MapObjectValues mapvals;
-extern GckRGB background;
+extern GimpRGB background;
 
 #endif  /* __MAPOBJECT_MAIN_H__ */

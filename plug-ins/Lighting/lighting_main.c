@@ -54,7 +54,7 @@ set_default_settings (void)
   gimp_vector3_set (&mapvals.lightsource.position,   1.0,  0.0, 1.0);
   gimp_vector3_set (&mapvals.lightsource.direction, -1.0, -1.0, 1.0);
 
-  gck_rgb_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0);
+  gimp_rgb_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0);
   mapvals.lightsource.intensity = 1.0;
   mapvals.lightsource.type      = POINT_LIGHT;
 

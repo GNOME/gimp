@@ -27,7 +27,7 @@ GdkImage *image = NULL;
 
 glong  maxcounter;
 gint   imgtype, width, height, env_width, env_height, in_channels, out_channels;
-GckRGB background;
+GimpRGB background;
 
 gint border_x1, border_y1, border_x2, border_y2;
 
@@ -49,12 +49,12 @@ peek_map (GimpPixelRgn *region,
   return data;
 }
 
-GckRGB
+GimpRGB
 peek (gint x,
       gint y)
 {
   guchar data[4];
-  GckRGB color;
+  GimpRGB color;
 
   gimp_pixel_rgn_get_pixel (&source_region,data, x, y);
 
@@ -77,12 +77,12 @@ peek (gint x,
   return color;
 }
 
-GckRGB
+GimpRGB
 peek_env_map (gint x,
 	      gint y)
 {
   guchar data[4];
-  GckRGB color;
+  GimpRGB color;
 
   if (x < 0)
     x = 0;
@@ -106,7 +106,7 @@ peek_env_map (gint x,
 void
 poke (gint    x,
       gint    y,
-      GckRGB *color)
+      GimpRGB *color)
 {
   static guchar data[4];
 
@@ -235,13 +235,13 @@ pos_to_float (gdouble  x,
 /* Quartics bilinear interpolation stuff.     */
 /**********************************************/
 
-GckRGB
+GimpRGB
 get_image_color (gdouble  u,
 		 gdouble  v,
 		 gint    *inside)
 {
   gint   x1, y1, x2, y2;
-  GckRGB p[4];
+  GimpRGB p[4];
  
   x1 = RINT (u);
   y1 = RINT (v);

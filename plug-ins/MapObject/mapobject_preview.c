@@ -6,9 +6,9 @@
 
 #include <gtk/gtk.h>
 
-#include <gck/gck.h>
-
 #include <libgimp/gimp.h>
+
+#include <gck/gck.h>
 
 #include "arcball.h"
 #include "mapobject_main.h"
@@ -165,9 +165,9 @@ compute_preview (gint x,
   gdouble      realw;
   gdouble      realh;
   GimpVector3  p1, p2;
-  GckRGB       color;
-  GckRGB       lightcheck, darkcheck;
-  GckRGB       temp;
+  GimpRGB       color;
+  GimpRGB       lightcheck, darkcheck;
+  GimpRGB       temp;
   guchar       r, g, b;
   gint         xcnt, ycnt, f1, f2;
   glong        index = 0;
@@ -194,7 +194,7 @@ compute_preview (gint x,
 
   if (mapvals.transparent_background == TRUE)
     {
-      gck_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
+      gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
     }
   else
     {
@@ -205,8 +205,8 @@ compute_preview (gint x,
       background.a = 1.0;
     }
 
-  gck_rgb_set (&lightcheck, 0.75, 0.75, 0.75);
-  gck_rgb_set (&darkcheck, 0.50, 0.50, 0.50);
+  gimp_rgb_set (&lightcheck, 0.75, 0.75, 0.75);
+  gimp_rgb_set (&darkcheck, 0.50, 0.50, 0.50);
   gimp_vector3_set (&p2, -1.0, -1.0, 0.0);
 
   for (ycnt = 0; ycnt < ph; ycnt++)
@@ -233,10 +233,10 @@ compute_preview (gint x,
 		    }
                   else
                     {
-                      gck_rgb_mul (&color, color.a);
+                      gimp_rgb_mul (&color, color.a);
                       temp = lightcheck;
-                      gck_rgb_mul (&temp, 1.0 - color.a);
-                      gck_rgb_add (&color, &temp);
+                      gimp_rgb_mul (&temp, 1.0 - color.a);
+                      gimp_rgb_add (&color, &temp);
                     }
                 }
               else
@@ -247,10 +247,10 @@ compute_preview (gint x,
 		    }
                   else
                     {
-                      gck_rgb_mul (&color, color.a);
+                      gimp_rgb_mul (&color, color.a);
                       temp = darkcheck;
-                      gck_rgb_mul (&temp, 1.0 - color.a);
-                      gck_rgb_add (&color, &temp);
+                      gimp_rgb_mul (&temp, 1.0 - color.a);
+                      gimp_rgb_add (&color, &temp);
                     }
                 }
             }

@@ -1,14 +1,14 @@
 #ifndef __MAPOBJECT_SHADE_H__
 #define __MAPOBJECT_SHADE_H__
 
-typedef GckRGB (* get_ray_color_func) (GimpVector3 *pos);
+typedef GimpRGB (* get_ray_color_func) (GimpVector3 *pos);
 
 extern get_ray_color_func get_ray_color;
 
-GckRGB   get_ray_color_plane    (GimpVector3 *pos);
-GckRGB   get_ray_color_sphere   (GimpVector3 *pos);
-GckRGB   get_ray_color_box      (GimpVector3 *pos);
-GckRGB   get_ray_color_cylinder (GimpVector3 *pos);
+GimpRGB   get_ray_color_plane    (GimpVector3 *pos);
+GimpRGB   get_ray_color_sphere   (GimpVector3 *pos);
+GimpRGB   get_ray_color_box      (GimpVector3 *pos);
+GimpRGB   get_ray_color_cylinder (GimpVector3 *pos);
 void     compute_bounding_box   (void);
 
 void     vecmulmat              (GimpVector3 *u,

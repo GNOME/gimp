@@ -32,6 +32,8 @@
 
 #include <glib.h>
 
+#include "libgimp/gimpcolor.h"
+#include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpmath.h"
 
 #include "gck.h"
@@ -43,7 +45,7 @@
 typedef struct
 {
   guchar ready;
-  GckRGB color;
+  GimpRGB color;
 } _GckSampleType;
 
 
@@ -1365,11 +1367,11 @@ guint32 gck_bilinear_32(double x, double y, guint32 * values)
   return ((guint32) ((1.0 - yy) * m0 + yy * m1));
 }
 
-GckRGB gck_bilinear_rgb(double x, double y, GckRGB *values)
+GimpRGB gck_bilinear_rgb(double x, double y, GimpRGB *values)
 {
   double m0, m1;
   double ix, iy;
-  GckRGB v;
+  GimpRGB v;
 
   g_assert(values!=NULL);
 
@@ -1411,11 +1413,11 @@ GckRGB gck_bilinear_rgb(double x, double y, GckRGB *values)
   return (v);
 }				/* bilinear */
 
-GckRGB gck_bilinear_rgba(double x, double y, GckRGB *values)
+GimpRGB gck_bilinear_rgba(double x, double y, GimpRGB *values)
 {
   double m0, m1;
   double ix, iy;
-  GckRGB v;
+  GimpRGB v;
 
   g_assert(values!=NULL);
 
@@ -1465,540 +1467,6 @@ GckRGB gck_bilinear_rgba(double x, double y, GckRGB *values)
   return (v);
 }				/* bilinear */
 
-/********************************/
-/* Multiple channels operations */
-/********************************/
-
-void gck_rgb_add(GckRGB * p, GckRGB * q)
-{
-  g_assert(p!=NULL);
-  g_assert(q!=NULL);
-
-  p->r = p->r + q->r;
-  p->g = p->g + q->g;
-  p->b = p->b + q->b;
-  
-}
-
-void gck_rgb_sub(GckRGB * p, GckRGB * q)
-{
-  g_assert(p!=NULL);
-  g_assert(q!=NULL);
-
-  p->r = p->r - q->r;
-  p->g = p->g - q->g;
-  p->b = p->b - q->b;
-}
-
-void gck_rgb_mul(GckRGB * p, double b)
-{
-  g_assert(p!=NULL);
-
-  p->r = p->r * b;
-  p->g = p->g * b;
-  p->b = p->b * b;
-}
-
-double gck_rgb_dist(GckRGB * p, GckRGB * q)
-{
-  g_assert(p!=NULL);
-  g_assert(q!=NULL);
-
-  return (fabs(p->r - q->r) + fabs(p->g - q->g) + fabs(p->b - q->b));
-}
-
-double gck_rgb_max(GckRGB * p)
-{
-  double max;
-
-  g_assert(p!=NULL);
-
-  max = p->r;
-  if (p->g > max)
-    max = p->g;
-  if (p->b > max)
-    max = p->b;
-
-  return (max);
-}
-
-double gck_rgb_min(GckRGB * p)
-{
-  double min;
-
-  g_assert(p!=NULL);
-
-  min=p->r;
-  if (p->g < min)
-    min = p->g;
-  if (p->b < min)
-    min = p->b;
-
-  return (min);
-}
-
-void gck_rgb_clamp(GckRGB * p)
-{
-  g_assert(p!=NULL);
-
-  if (p->r > 1.0)
-    p->r = 1.0;
-  if (p->g > 1.0)
-    p->g = 1.0;
-  if (p->b > 1.0)
-    p->b = 1.0;
-  if (p->r < 0.0)
-    p->r = 0.0;
-  if (p->g < 0.0)
-    p->g = 0.0;
-  if (p->b < 0.0)
-    p->b = 0.0;
-}
-
-void gck_rgb_set(GckRGB * p, double r, double g, double b)
-{
-  g_assert(p!=NULL);
-
-  p->r = r;
-  p->g = g;
-  p->b = b;
-
-}
-
-void gck_rgb_gamma(GckRGB * p, double gamma)
-{
-  double ig;
-
-  g_assert(p!=NULL);
-
-  if (gamma != 0.0)
-    ig = 1.0 / gamma;
-  else
-    (ig = 0.0);
-
-  p->r = pow(p->r, ig);
-  p->g = pow(p->g, ig);
-  p->b = pow(p->b, ig);
-}
-
-void gck_rgba_add(GckRGB * p, GckRGB * q)
-{
-  g_assert(p!=NULL);
-  g_assert(q!=NULL);
-
-  p->r = p->r + q->r;
-  p->g = p->g + q->g;
-  p->b = p->b + q->b;
-  p->a = p->a + q->a;
-}
-
-void gck_rgba_sub(GckRGB * p, GckRGB * q)
-{
-  g_assert(p!=NULL);
-  g_assert(q!=NULL);
-
-  p->r = p->r - q->r;
-  p->g = p->g - q->g;
-  p->b = p->b - q->b;
-  p->a = p->a - q->a;
-}
-
-void gck_rgba_mul(GckRGB * p, double b)
-{
-  g_assert(p!=NULL);
-
-  p->r = p->r * b;
-  p->g = p->g * b;
-  p->b = p->b * b;
-  p->a = p->a * b;
-}
-
-double gck_rgba_dist(GckRGB *p, GckRGB *q)
-{
-  g_assert(p!=NULL);
-  g_assert(q!=NULL);
-
-  return (fabs(p->r - q->r) + fabs(p->g - q->g) +
-	  fabs(p->b - q->b) + fabs(p->a - q->a));
-}
-
-/* These two are probably not needed */
-
-double gck_rgba_max(GckRGB * p)
-{
-  double max;
-
-  g_assert(p!=NULL);
-
-  max = p->r;
-
-  if (p->g > max)
-    max = p->g;
-  if (p->b > max)
-    max = p->b;
-  if (p->a > max)
-    max = p->a;
-
-  return (max);
-}
-
-double gck_rgba_min(GckRGB * p)
-{
-  double min;
-
-  g_assert(p!=NULL);
-  
-  min = p->r;
-  if (p->g < min)
-    min = p->g;
-  if (p->b < min)
-    min = p->b;
-  if (p->a < min)
-    min = p->a;
-
-  return (min);
-}
-
-void gck_rgba_clamp(GckRGB * p)
-{
-  g_assert(p!=NULL);
-
-  if (p->r > 1.0)
-    p->r = 1.0;
-  if (p->g > 1.0)
-    p->g = 1.0;
-  if (p->b > 1.0)
-    p->b = 1.0;
-  if (p->a > 1.0)
-    p->a = 1.0;
-  if (p->r < 0.0)
-    p->r = 0.0;
-  if (p->g < 0.0)
-    p->g = 0.0;
-  if (p->b < 0.0)
-    p->b = 0.0;
-  if (p->a < 0.0)
-    p->a = 0.0;
-}
-
-void gck_rgba_set(GckRGB * p, double r, double g, double b, double a)
-{
-  g_assert(p!=NULL);
-
-  p->r = r;
-  p->g = g;
-  p->b = b;
-  p->a = a;
-}
-
-/* This one is also not needed */
-
-void gck_rgba_gamma(GckRGB * p, double gamma)
-{
-  double ig;
-
-  g_assert(p!=NULL);
-
-  if (gamma != 0.0)
-    ig = 1.0 / gamma;
-  else
-    (ig = 0.0);
-
-  p->r = pow(p->r, ig);
-  p->g = pow(p->g, ig);
-  p->b = pow(p->b, ig);
-  p->a = pow(p->a, ig);
-}
-
-/**************************/
-/* Colorspace conversions */
-/**************************/
-
-/***********************************************/
-/* (Red,Green,Blue) <-> (Hue,Saturation,Value) */
-/***********************************************/
-
-void gck_rgb_to_hsv(GckRGB * p, double *h, double *s, double *v)
-{
-  double max,min,delta;
-
-  g_assert(p!=NULL);
-  g_assert(h!=NULL);
-  g_assert(s!=NULL);
-  g_assert(v!=NULL);
-
-  max = gck_rgb_max(p);
-  min = gck_rgb_min(p);
-
-  *v = max;
-  if (max != 0.0)
-    {
-      *s = (max - min) / max;
-    }
-  else
-    *s = 0.0;
-  if (*s == 0.0)
-    *h = GCK_HSV_UNDEFINED;
-  else
-    {
-      delta = max - min;
-      if (p->r == max)
-	{
-	  *h = (p->g - p->b) / delta;
-	}
-      else if (p->g == max)
-	{
-	  *h = 2.0 + (p->b - p->r) / delta;
-	}
-      else if (p->b == max)
-	{
-	  *h = 4.0 + (p->r - p->g) / delta;
-	}
-      *h = *h * 60.0;
-      if (*h < 0.0)
-	*h = *h + 360;
-    }
-}
-
-void gck_hsv_to_rgb(double h, double s, double v, GckRGB * p)
-{
-  int i;
-  double f, w, q, t;
-
-  g_assert(p!=NULL);
-
-  if (s == 0.0)
-    {
-      if (h == GCK_HSV_UNDEFINED)
-	{
-	  p->r = v;
-	  p->g = v;
-	  p->b = v;
-	}
-    }
-  else
-    {
-      if (h == 360.0)
-	h = 0.0;
-      h = h / 60.0;
-      i = (int)h;
-      f = h - i;
-      w = v * (1.0 - s);
-      q = v * (1.0 - (s * f));
-      t = v * (1.0 - (s * (1.0 - f)));
-      switch (i)
-	{
-	case 0:
-	  p->r = v;
-	  p->g = t;
-	  p->b = w;
-	  break;
-	case 1:
-	  p->r = q;
-	  p->g = v;
-	  p->b = w;
-	  break;
-	case 2:
-	  p->r = w;
-	  p->g = v;
-	  p->b = t;
-	  break;
-	case 3:
-	  p->r = w;
-	  p->g = q;
-	  p->b = v;
-	  break;
-	case 4:
-	  p->r = t;
-	  p->g = w;
-	  p->b = v;
-	  break;
-	case 5:
-	  p->r = v;
-	  p->g = w;
-	  p->b = q;
-	  break;
-	}
-    }
-}
-
-/***************************************************/
-/* (Red,Green,Blue) <-> (Hue,Saturation,Lightness) */
-/***************************************************/
-
-void gck_rgb_to_hsl(GckRGB * p, double *h, double *s, double *l)
-{
-  double max,min,delta;
-
-  g_assert(p!=NULL);
-  g_assert(h!=NULL);
-  g_assert(s!=NULL);
-  g_assert(l!=NULL);
-
-  max = gck_rgb_max(p);
-  min = gck_rgb_min(p);
-
-  *l = (max + min) / 2.0;
-
-  if (max == min)
-    {
-      *s = 0.0;
-      *h = GCK_HSL_UNDEFINED;
-    }
-  else
-    {
-      if (*l <= 0.5)
-	*s = (max - min) / (max + min);
-      else
-	*s = (max - min) / (2.0 - max - min);
-
-      delta = max - min;
-      if (p->r == max)
-	{
-	  *h = (p->g - p->b) / delta;
-	}
-      else if (p->g == max)
-	{
-	  *h = 2.0 + (p->b - p->r) / delta;
-	}
-      else if (p->b == max)
-	{
-	  *h = 4.0 + (p->r - p->g) / delta;
-	}
-      *h = *h * 60.0;
-      if (*h < 0.0)
-	*h = *h + 360.0;
-    }
-}
-
-double _gck_value(double n1, double n2, double hue)
-{
-  double val;
-
-  if (hue > 360.0)
-    hue = hue - 360.0;
-  else if (hue < 0.0)
-    hue = hue + 360.0;
-  if (hue < 60.0)
-    val = n1 + (n2 - n1) * hue / 60.0;
-  else if (hue < 180.0)
-    val = n2;
-  else if (hue < 240.0)
-    val = n1 + (n2 - n1) * (240.0 - hue) / 60.0;
-  else
-    val = n1;
-
-  return (val);
-}
-
-void gck_hsl_to_rgb(double h, double s, double l, GckRGB * p)
-{
-  double m1, m2;
-
-  g_assert(p!=NULL);
-
-  if (l <= 0.5)
-    m2 = l * (l + s);
-  else
-    m2 = l + s + l * s;
-  m1 = 2.0 * l - m2;
-
-  if (s == 0)
-    {
-      if (h == GCK_HSV_UNDEFINED)
-	p->r = p->g = p->b = 1.0;
-    }
-  else
-    {
-      p->r = _gck_value(m1, m2, h + 120.0);
-      p->g = _gck_value(m1, m2, h);
-      p->b = _gck_value(m1, m2, h - 120.0);
-    }
-}
-
-#define GCK_RETURN_RGB(x, y, z) {rgb->r = x; rgb->g = y; rgb->b = z; return; }
-
-/***********************************************************************************/
-/* Theoretically, hue 0 (pure red) is identical to hue 6 in these transforms. Pure */
-/* red always maps to 6 in this implementation. Therefore UNDEFINED can be         */
-/* defined as 0 in situations where only unsigned numbers are desired.             */
-/***********************************************************************************/
-
-void gck_rgb_to_hwb(GckRGB *rgb, gdouble *hue,gdouble *whiteness,gdouble *blackness)
-{
-  /* RGB are each on [0, 1]. W and B are returned on [0, 1] and H is        */
-  /* returned on [0, 6]. Exception: H is returned UNDEFINED if W ==  1 - B. */
-  /* ====================================================================== */
-
-  gdouble R = rgb->r, G = rgb->g, B = rgb->b, w, v, b, f;
-  gint i;
-
-  w = gck_rgb_min(rgb);
-  v = gck_rgb_max(rgb);
-  b = 1.0 - v;
-  
-  if (v == w)
-    {
-      *hue=GCK_HSV_UNDEFINED;
-      *whiteness=w;
-      *blackness=b;
-    }
-  else
-    {
-      f = (R == w) ? G - B : ((G == w) ? B - R : R - G);
-      i = (R == w) ? 3.0 : ((G == w) ? 5.0 : 1.0);
-    
-      *hue=(360.0/6.0)*(i - f /(v - w));
-      *whiteness=w;
-      *blackness=b;
-    }
-}
-
-void gck_hwb_to_rgb(gdouble H,gdouble W, gdouble B, GckRGB *rgb)
-{
-  /* H is given on [0, 6] or UNDEFINED. W and B are given on [0, 1]. */
-  /* RGB are each returned on [0, 1].                                */
-  /* =============================================================== */
-  
-  gdouble h = H, w = W, b = B, v, n, f;
-  gint i;
-
-  h=6.0*h/360.0;
-    
-  v = 1.0 - b;
-  if (h == GCK_HSV_UNDEFINED)
-    {
-      rgb->r=v;
-      rgb->g=v;
-      rgb->b=v;
-    }
-  else
-    {
-      i = floor(h);
-      f = h - i;
-      if (i & 1) f = 1.0 - f;  /* if i is odd */
-      n = w + f * (v - w);     /* linear interpolation between w and v */
-    
-      switch (i)
-        {
-          case 6:
-          case 0: GCK_RETURN_RGB(v, n, w);
-            break;
-          case 1: GCK_RETURN_RGB(n, v, w);
-            break;
-          case 2: GCK_RETURN_RGB(w, v, n);
-            break;
-          case 3: GCK_RETURN_RGB(w, n, v);
-            break;
-          case 4: GCK_RETURN_RGB(n, w, v);
-            break;
-          case 5: GCK_RETURN_RGB(v, w, n);
-            break;
-        }
-    }
-
-}
-
 /*********************************************************************/
 /* Sumpersampling code (Quartic)                                     */
 /* This code is *largely* based on the sources for POV-Ray 3.0. I am */
@@ -2010,12 +1478,12 @@ void gck_hwb_to_rgb(gdouble H,gdouble W, gdouble B, GckRGB *rgb)
 
 gulong gck_render_sub_pixel(int max_depth, int depth, _GckSampleType ** block,
 			    int x, int y, int x1, int y1, int x3, int y3, double threshold,
-			    int sub_pixel_size, GckRenderFunction render_func, GckRGB * color)
+			    int sub_pixel_size, GckRenderFunction render_func, GimpRGB * color)
 {
   int x2, y2, cnt;		/* Coords of center sample */
   double dx1, dy1;		/* Delta to upper left sample */
   double dx3, dy3, weight;	/* Delta to lower right sample */
-  GckRGB c[4],tmpcol;
+  GimpRGB c[4],tmpcol;
   unsigned long num_samples = 0;
 
   /* Get offsets for corners */
@@ -2087,12 +1555,12 @@ gulong gck_render_sub_pixel(int max_depth, int depth, _GckSampleType ** block,
       /* Check whether we have to supersample */
       /* ==================================== */
 
-      if ((gck_rgba_dist(&c[0], &c[1]) >= threshold) ||
-	  (gck_rgba_dist(&c[0], &c[2]) >= threshold) ||
-	  (gck_rgba_dist(&c[0], &c[3]) >= threshold) ||
-	  (gck_rgba_dist(&c[1], &c[2]) >= threshold) ||
-	  (gck_rgba_dist(&c[1], &c[3]) >= threshold) ||
-	  (gck_rgba_dist(&c[2], &c[3]) >= threshold))
+      if ((gimp_rgba_dist(&c[0], &c[1]) >= threshold) ||
+	  (gimp_rgba_dist(&c[0], &c[2]) >= threshold) ||
+	  (gimp_rgba_dist(&c[0], &c[3]) >= threshold) ||
+	  (gimp_rgba_dist(&c[1], &c[2]) >= threshold) ||
+	  (gimp_rgba_dist(&c[1], &c[3]) >= threshold) ||
+	  (gimp_rgba_dist(&c[2], &c[3]) >= threshold))
 	{
 	  /* Calc coordinates of center subsample */
 	  /* ==================================== */
@@ -2161,7 +1629,7 @@ gulong gck_adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_dep
   int xt, xtt, yt;		/* Temporary counters */
   int sub_pixel_size;		/* Numbe of samples per pixel (1D) */
   size_t row_size;		/* Memory needed for one row */
-  GckRGB color;			/* Rendered pixel's color */
+  GimpRGB color;			/* Rendered pixel's color */
   _GckSampleType tmp_sample;	/* For swapping samples */
   _GckSampleType *top_row, *bot_row, *tmp_row;	/* Sample rows */
   _GckSampleType **block;	/* Sample block matrix */

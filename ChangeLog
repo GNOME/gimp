@@ -1,3 +1,51 @@
+2001-01-01  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/libgck/gck/gck.h
+	* plug-ins/libgck/gck/gckcolor.c: removed the GckRGB color type
+	and all it's functions.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpcolor.[ch]: new files containing the new GimpRGB color
+	type and assorted functions.
+
+	* libgimp/gimpcolorspace.[ch]: colorspace conversion routines for
+	the new GimpRGB type. Also taken from LibGCK.
+
+	* libgimp/gimp.h
+	* libgimp/gimptypes.h: #include "gimpcolor.h". It's ugly to include
+	it in both files but unavoidable to follow our new "*.c" file include
+	policy. This will go away as libgimp will be chopped up into pieces
+	anyway.
+
+	* app/apptypes.h
+	* app/asupsample.[ch]
+	* app/blend.c
+	* app/color_transfer.h
+	* app/gradient_header.h: removed "color_t" and use GimpRGB instead.
+
+	* plug-ins/Lighting/lighting_apply.c
+	* plug-ins/Lighting/lighting_image.c
+	* plug-ins/Lighting/lighting_image.h
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/Lighting/lighting_main.h
+	* plug-ins/Lighting/lighting_preview.c
+	* plug-ins/Lighting/lighting_shade.c
+	* plug-ins/Lighting/lighting_shade.h
+	* plug-ins/MapObject/mapobject_apply.c
+	* plug-ins/MapObject/mapobject_image.c
+	* plug-ins/MapObject/mapobject_image.h
+	* plug-ins/MapObject/mapobject_main.c
+	* plug-ins/MapObject/mapobject_main.h
+	* plug-ins/MapObject/mapobject_preview.c
+	* plug-ins/MapObject/mapobject_shade.c
+	* plug-ins/MapObject/mapobject_shade.h
+	* modules/colorsel_triangle.c: s/GckRGB/GimpRGB/g
+
+	* plug-ins/gdyntext/gdyntextcompat.h: check also for GIMP's minor
+	version when deciding if to add a missing PDB wrapper.
+	(All this compat cruft including libgimp/gimpcompat.h should go
+	away ASAP)
+
 2000-12-31  Michael Natterer  <mitch@gimp.org>
 
 	More preparation for LibGCK removal:

@@ -46,7 +46,7 @@
 typedef struct
 {
   gchar   ready;
-  color_t color;
+  GimpRGB color;
 } sample_t;
 
 
@@ -64,11 +64,8 @@ static gulong render_sub_pixel (gint           max_depth,
 				gdouble        threshold,
 				gint           sub_pixel_size,
 				render_func_t  render_func,
-				color_t       *color,
+				GimpRGB       *color,
 				gpointer       render_data);
-
-static gdouble color_dist      (color_t        c1,
-				color_t        c2);
 
 
 /***** Functions *****/
@@ -91,7 +88,7 @@ adaptive_supersample_area (gint              x1,
   int          	xt, xtt, yt;                 /* Temporary counters */
   int          	sub_pixel_size;              /* Numbe of samples per pixel (1D) */
   size_t       	row_size;                    /* Memory needed for one row */
-  color_t      	color;                       /* Rendered pixel's color */
+  GimpRGB      	color;                       /* Rendered pixel's color */
   sample_t     	tmp_sample;                  /* For swapping samples */
   sample_t       *top_row, *bot_row, *tmp_row; /* Sample rows */
   sample_t      **block;                       /* Sample block matrix */
@@ -253,13 +250,13 @@ render_sub_pixel (gint           max_depth,
 		  double         threshold,
 		  gint           sub_pixel_size,
 		  render_func_t  render_func,
-		  color_t       *color,
+		  GimpRGB       *color,
 		  gpointer       render_data)
 {
   int           x2, y2;   /* Coords of center sample */
   double        dx1, dy1; /* Delta to upper left sample */
   double        dx3, dy3; /* Delta to lower right sample */
-  color_t       c1, c2, c3, c4; /* Sample colors */
+  GimpRGB       c1, c2, c3, c4; /* Sample colors */
   unsigned long num_samples;
 
   /* Get offsets for corners */
@@ -338,12 +335,12 @@ render_sub_pixel (gint           max_depth,
     {
       /* Check whether we have tu supersample */
 
-      if ((color_dist(c1, c2) >= threshold) ||
-	  (color_dist(c1, c3) >= threshold) ||
-	  (color_dist(c1, c4) >= threshold) ||
-	  (color_dist(c2, c3) >= threshold) ||
-	  (color_dist(c2, c4) >= threshold) ||
-	  (color_dist(c3, c4) >= threshold)) {
+      if ((gimp_rgba_dist (&c1, &c2) >= threshold) ||
+	  (gimp_rgba_dist (&c1, &c3) >= threshold) ||
+	  (gimp_rgba_dist (&c1, &c4) >= threshold) ||
+	  (gimp_rgba_dist (&c2, &c3) >= threshold) ||
+	  (gimp_rgba_dist (&c2, &c4) >= threshold) ||
+	  (gimp_rgba_dist (&c3, &c4) >= threshold)) {
 	/* Calc coordinates of center subsample */
 
 	x2 = (x1 + x3) / 2;
@@ -375,14 +372,4 @@ render_sub_pixel (gint           max_depth,
   color->a = 0.25 * (c1.a + c2.a + c3.a + c4.a);
 
   return num_samples;
-}
-
-static gdouble
-color_dist (color_t c1,
-	    color_t c2)
-{
-  return (fabs (c1.r - c2.r) +
-	  fabs (c1.g - c2.g) +
-	  fabs (c1.b - c2.b) +
-	  fabs (c1.a - c2.a));
 }

@@ -28,6 +28,9 @@
  */
 
 #include "undo_types.h"
+
+/*  these will go into a general purpose library  */
+#include "libgimp/gimpcolor.h"
 #include "libgimp/gimpmatrix.h"
 #include "libgimp/gimpvector.h"
 #include "libgimp/gimpunit.h"

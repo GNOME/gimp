@@ -39,7 +39,7 @@ compute_preview (gint startx,
   gint          xcnt, ycnt, f1, f2;
   gdouble       imagex, imagey;
   gint32        index = 0;
-  GckRGB        color, darkcheck, lightcheck, temp;
+  GimpRGB        color, darkcheck, lightcheck, temp;
   GimpVector3   pos;
   get_ray_func  ray_func;
 
@@ -80,9 +80,9 @@ compute_preview (gint startx,
   init_compute ();
   precompute_init (width, height);
 
-  gck_rgb_set (&lightcheck, 0.75, 0.75, 0.75);
-  gck_rgb_set (&darkcheck,  0.50, 0.50, 0.50);
-  gck_rgb_set (&color,      0.3,  0.7,  1.0);
+  gimp_rgb_set (&lightcheck, 0.75, 0.75, 0.75);
+  gimp_rgb_set (&darkcheck,  0.50, 0.50, 0.50);
+  gimp_rgb_set (&color,      0.3,  0.7,  1.0);
 
   if (mapvals.bump_mapped == TRUE && mapvals.bumpmap_id != -1)
     {
@@ -146,10 +146,10 @@ compute_preview (gint startx,
 			}
 		      else
 			{
-			  gck_rgb_mul (&color, color.a);
+			  gimp_rgb_mul (&color, color.a);
 			  temp = lightcheck;
-			  gck_rgb_mul (&temp, 1.0 - color.a);
-			  gck_rgb_add (&color, &temp);
+			  gimp_rgb_mul (&temp, 1.0 - color.a);
+			  gimp_rgb_add (&color, &temp);
 			}
 		    }
 		  else
@@ -160,10 +160,10 @@ compute_preview (gint startx,
 			}
 		      else
 			{
-			  gck_rgb_mul (&color, color.a);
+			  gimp_rgb_mul (&color, color.a);
 			  temp = darkcheck;
-			  gck_rgb_mul (&temp, 1.0 - color.a);
-			  gck_rgb_add (&color, &temp);
+			  gimp_rgb_mul (&temp, 1.0 - color.a);
+			  gimp_rgb_add (&color, &temp);
 			}
 		    }
 		}

@@ -25,16 +25,16 @@ static gint pre_h = -1;
 /* Phong shading */
 /*****************/
 
-static GckRGB
+static GimpRGB
 phong_shade (GimpVector3 *position,
 	     GimpVector3 *viewpoint,
 	     GimpVector3 *normal,
 	     GimpVector3 *lightposition,
-	     GckRGB      *diff_col,
-	     GckRGB      *spec_col,
+	     GimpRGB      *diff_col,
+	     GimpRGB      *spec_col,
 	     LightType    light_type)
 {
-  GckRGB       ambient_color, diffuse_color, specular_color;
+  GimpRGB       ambient_color, diffuse_color, specular_color;
   gdouble      nl, rv, dist;
   GimpVector3  l, nn, v, n;
 
@@ -43,7 +43,7 @@ phong_shade (GimpVector3 *position,
 
   n = *normal;
   ambient_color = *diff_col;
-  gck_rgb_mul (&ambient_color, mapvals.material.ambient_int);
+  gimp_rgb_mul (&ambient_color, mapvals.material.ambient_int);
 
   /* Compute (N*L) term of Phong's equation */
   /* ====================================== */
@@ -77,21 +77,21 @@ phong_shade (GimpVector3 *position,
       /* =================================================== */
 
       diffuse_color = *diff_col;
-      gck_rgb_mul (&diffuse_color, mapvals.material.diffuse_ref);
-      gck_rgb_mul (&diffuse_color, nl);
+      gimp_rgb_mul (&diffuse_color, mapvals.material.diffuse_ref);
+      gimp_rgb_mul (&diffuse_color, nl);
 
       specular_color = *spec_col;
-      gck_rgb_mul (&specular_color, mapvals.material.specular_ref);
-      gck_rgb_mul (&specular_color, rv);
+      gimp_rgb_mul (&specular_color, mapvals.material.specular_ref);
+      gimp_rgb_mul (&specular_color, rv);
 
-      gck_rgb_add (&diffuse_color, &specular_color);
-      gck_rgb_mul (&diffuse_color, mapvals.material.diffuse_int);
-      gck_rgb_clamp (&diffuse_color);
+      gimp_rgb_add (&diffuse_color, &specular_color);
+      gimp_rgb_mul (&diffuse_color, mapvals.material.diffuse_int);
+      gimp_rgb_clamp (&diffuse_color);
 
-      gck_rgb_add (&ambient_color, &diffuse_color);
+      gimp_rgb_add (&ambient_color, &diffuse_color);
     }
 
-  gck_rgb_clamp (&ambient_color);
+  gimp_rgb_clamp (&ambient_color);
 
   return ambient_color;
 }
@@ -444,10 +444,10 @@ sphere_to_image (GimpVector3 *normal,
 /* These routines computes the color of the surface at a given point */
 /*********************************************************************/
 
-GckRGB
+GimpRGB
 get_ray_color (GimpVector3 *position)
 {
-  GckRGB       color;
+  GimpRGB       color;
   gint         x, f;
   gdouble      xf, yf;
   GimpVector3  normal, *p;
@@ -496,10 +496,10 @@ get_ray_color (GimpVector3 *position)
   return color;
 }
 
-GckRGB
+GimpRGB
 get_ray_color_ref (GimpVector3 *position)
 {
-  GckRGB      color, env_color;
+  GimpRGB      color, env_color;
   gint        x, f;
   gdouble     xf, yf;
   GimpVector3 normal, *p, v, r;
@@ -560,10 +560,10 @@ get_ray_color_ref (GimpVector3 *position)
   return color;
 }
 
-GckRGB
+GimpRGB
 get_ray_color_no_bilinear (GimpVector3 *position)
 {
-  GckRGB      color;
+  GimpRGB      color;
   gint        x;
   gdouble     xf, yf;
   GimpVector3 normal, *p;
@@ -612,10 +612,10 @@ get_ray_color_no_bilinear (GimpVector3 *position)
   return color;
 }
 
-GckRGB
+GimpRGB
 get_ray_color_no_bilinear_ref (GimpVector3 *position)
 {
-  GckRGB      color, env_color;
+  GimpRGB      color, env_color;
   gint        x;
   gdouble     xf, yf;
   GimpVector3 normal, *p, v, r;

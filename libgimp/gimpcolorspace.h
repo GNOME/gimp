@@ -17,8 +17,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMPCOLORSPACE_H__
-#define __GIMPCOLORSPACE_H__
+#ifndef __GIMP_COLOR_SPACE_H__
+#define __GIMP_COLOR_SPACE_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,6 +28,39 @@ extern "C" {
 
 
 /*  Color conversion routines  */
+
+
+/*  GimpRGB function  */
+
+#define GIMP_HSV_UNDEFINED -1.0
+#define GIMP_HSL_UNDEFINED -1.0
+
+void   gimp_rgb_to_hsv          (GimpRGB *rgb,
+				 gdouble *hue,
+				 gdouble *saturation,
+				 gdouble *value);
+void   gimp_rgb_to_hsl          (GimpRGB *rgb,
+				 gdouble *hue,
+				 gdouble *saturation,
+				 gdouble *lightness);
+
+void   gimp_hsv_to_rgb          (gdouble  hue,
+				 gdouble  saturation,
+				 gdouble  value,
+				 GimpRGB *rgb);
+void   gimp_hsl_to_rgb          (gdouble  hue,
+				 gdouble  saturation,
+				 gdouble  lightness,
+				 GimpRGB *rgb);
+
+void   gimp_rgb_to_hwb          (GimpRGB *rgb,
+				 gdouble *hue,
+				 gdouble *whiteness,
+				 gdouble *blackness);
+void   gimp_hwb_to_rgb          (gdouble  hue,
+				 gdouble  whiteness,
+				 gdouble  blackness,
+				 GimpRGB *rgb);
 
 
 /*  gint functions  */
@@ -83,4 +116,4 @@ void    gimp_hsv_to_rgb4        (guchar  *rgb,
 }
 #endif /* __cplusplus */
 
-#endif  /* __GIMPCOLORSPACE_H__ */
+#endif  /* __GIMP_COLOR_SPACE_H__ */

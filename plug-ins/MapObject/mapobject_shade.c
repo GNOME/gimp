@@ -31,16 +31,16 @@ typedef struct
 /* Phong shading */
 /*****************/
 
-static GckRGB
+static GimpRGB
 phong_shade (GimpVector3 *pos,
 	     GimpVector3 *viewpoint,
 	     GimpVector3 *normal,
 	     GimpVector3 *light,
-	     GckRGB      *diff_col,
-	     GckRGB      *spec_col,
+	     GimpRGB      *diff_col,
+	     GimpRGB      *spec_col,
 	     gint         type)
 {
-  GckRGB       ambientcolor, diffusecolor, specularcolor;
+  GimpRGB       ambientcolor, diffusecolor, specularcolor;
   gdouble      NL, RV, dist;
   GimpVector3  L, NN, V, N;
 
@@ -49,7 +49,7 @@ phong_shade (GimpVector3 *pos,
 
   N = *normal;
   ambientcolor = *diff_col;
-  gck_rgb_mul (&ambientcolor, mapvals.material.ambient_int);
+  gimp_rgb_mul (&ambientcolor, mapvals.material.ambient_int);
 
   /* Compute (N*L) term of Phong's equation */
   /* ====================================== */
@@ -83,18 +83,18 @@ phong_shade (GimpVector3 *pos,
       /* =================================================== */
 
       diffusecolor = *diff_col;
-      gck_rgb_mul (&diffusecolor, mapvals.material.diffuse_ref);
-      gck_rgb_mul (&diffusecolor, NL);
+      gimp_rgb_mul (&diffusecolor, mapvals.material.diffuse_ref);
+      gimp_rgb_mul (&diffusecolor, NL);
 
       specularcolor = *spec_col;
-      gck_rgb_mul (&specularcolor, mapvals.material.specular_ref);
-      gck_rgb_mul (&specularcolor, RV);
+      gimp_rgb_mul (&specularcolor, mapvals.material.specular_ref);
+      gimp_rgb_mul (&specularcolor, RV);
 
-      gck_rgb_add (&diffusecolor, &specularcolor);
-      gck_rgb_mul (&diffusecolor, mapvals.material.diffuse_int);
-      gck_rgb_clamp (&diffusecolor);
+      gimp_rgb_add (&diffusecolor, &specularcolor);
+      gimp_rgb_mul (&diffusecolor, mapvals.material.diffuse_int);
+      gimp_rgb_clamp (&diffusecolor);
 
-      gck_rgb_add (&ambientcolor, &diffusecolor);
+      gimp_rgb_add (&ambientcolor, &diffusecolor);
     }
 
   return ambientcolor;
@@ -179,10 +179,10 @@ plane_intersect (GimpVector3 *dir,
  * of the plane at a given point
  *****************************************************************************/
 
-GckRGB
+GimpRGB
 get_ray_color_plane (GimpVector3 *pos)
 {
-  GckRGB color = background;
+  GimpRGB color = background;
 
   static gint         inside = FALSE;
   static GimpVector3  ray, spos;
@@ -215,7 +215,7 @@ get_ray_color_plane (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
 
-          gck_rgb_clamp (&color);
+          gimp_rgb_clamp (&color);
         }
     }
   
@@ -317,12 +317,12 @@ sphere_intersect (GimpVector3 *dir,
  * of the sphere at a given point
  *****************************************************************************/
 
-GckRGB
+GimpRGB
 get_ray_color_sphere (GimpVector3 *pos)
 {
-  GckRGB color=background;
+  GimpRGB color=background;
 
-  static GckRGB       color2;
+  static GimpRGB       color2;
   static gint         inside = FALSE;
   static GimpVector3  normal, ray, spos1, spos2;
   static gdouble      vx, vy;
@@ -369,7 +369,7 @@ get_ray_color_sphere (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
 
-          gck_rgba_clamp (&color);
+          gimp_rgba_clamp (&color);
 
           gimp_vector3_sub (&normal, &spos2, &mapvals.position);
           gimp_vector3_normalize (&normal);
@@ -389,7 +389,7 @@ get_ray_color_sphere (GimpVector3 *pos)
 				&mapvals.lightsource.color,
 				mapvals.lightsource.type);
 
-          gck_rgba_clamp (&color2);
+          gimp_rgba_clamp (&color2);
 
           if (mapvals.transparent_background == FALSE && color2.a < 1.0)
             {
@@ -407,7 +407,7 @@ get_ray_color_sphere (GimpVector3 *pos)
           color.b = color.b*color.a+(1.0-color.a)*color2.b; 
           color.a = color.a+color2.a;
 
-          gck_rgba_clamp (&color);
+          gimp_rgba_clamp (&color);
         }
       else if (color.a!=0.0 &&
 	       inside==TRUE &&
@@ -424,7 +424,7 @@ get_ray_color_sphere (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
 
-          gck_rgba_clamp (&color);
+          gimp_rgba_clamp (&color);
         }
     }
   
@@ -840,11 +840,11 @@ intersect_box (GimpVector3        scale,
   return result;
 }
 
-GckRGB
+GimpRGB
 get_ray_color_box (GimpVector3 *pos)
 {
   GimpVector3        lvp, ldir, vp, p, dir, ns, nn;
-  GckRGB             color, color2;
+  GimpRGB             color, color2;
   gfloat             m[16];
   gint               i;
   FaceIntersectInfo  face_intersect[2];
@@ -931,7 +931,7 @@ get_ray_color_box (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);      
 
-          gck_rgba_clamp (&color);
+          gimp_rgba_clamp (&color);
 
           color2 = get_box_image_color (face_intersect[1].face,
 					face_intersect[1].u,
@@ -950,7 +950,7 @@ get_ray_color_box (GimpVector3 *pos)
 				&mapvals.lightsource.color,
 				mapvals.lightsource.type);      
 
-          gck_rgba_clamp (&color2);
+          gimp_rgba_clamp (&color2);
 
           if (mapvals.transparent_background == FALSE && color2.a < 1.0)
             {
@@ -968,7 +968,7 @@ get_ray_color_box (GimpVector3 *pos)
           color.b = color.b * color.a + (1.0 - color.a) * color2.b; 
           color.a = color.a + color2.a;
 
-          gck_rgba_clamp (&color);
+          gimp_rgba_clamp (&color);
         }
       else if (color.a != 0.0 && mapvals.lightsource.type != NO_LIGHT)
         {
@@ -980,7 +980,7 @@ get_ray_color_box (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);      
 
-	  gck_rgba_clamp (&color);
+	  gimp_rgba_clamp (&color);
         }
     }
   else
@@ -1121,12 +1121,12 @@ intersect_cylinder (GimpVector3        vp,
   return result;
 }
 
-static GckRGB
+static GimpRGB
 get_cylinder_color (gint    face,
 		    gdouble u,
 		    gdouble v)
 {
-  GckRGB  color;
+  GimpRGB  color;
   gint    inside;
   
   if (face == 0)
@@ -1137,11 +1137,11 @@ get_cylinder_color (gint    face,
   return color;
 }
 
-GckRGB
+GimpRGB
 get_ray_color_cylinder (GimpVector3 *pos)
 {
   GimpVector3       lvp, ldir, vp, p, dir, ns, nn;
-  GckRGB            color, color2;
+  GimpRGB            color, color2;
   gfloat            m[16];
   gint              i;
   FaceIntersectInfo face_intersect[2];
@@ -1216,7 +1216,7 @@ get_ray_color_cylinder (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);      
     
-          gck_rgba_clamp (&color);
+          gimp_rgba_clamp (&color);
 
           color2 = get_cylinder_color (face_intersect[1].face,
 				       face_intersect[1].u,
@@ -1235,7 +1235,7 @@ get_ray_color_cylinder (GimpVector3 *pos)
 				&mapvals.lightsource.color,
 				mapvals.lightsource.type);
 
-          gck_rgba_clamp (&color2);
+          gimp_rgba_clamp (&color2);
 
           if (mapvals.transparent_background == FALSE && color2.a < 1.0)
             {
@@ -1253,7 +1253,7 @@ get_ray_color_cylinder (GimpVector3 *pos)
           color.b = color.b*color.a + (1.0-color.a)*color2.b; 
           color.a = color.a+color2.a;
 
-          gck_rgba_clamp (&color);
+          gimp_rgba_clamp (&color);
         }
       else if (color.a != 0.0 && mapvals.lightsource.type != NO_LIGHT)
         {
@@ -1265,7 +1265,7 @@ get_ray_color_cylinder (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
 
-	  gck_rgba_clamp (&color);
+	  gimp_rgba_clamp (&color);
         }
     }
   else

@@ -15,23 +15,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __COLOR_TRANSFER_H__
 #define __COLOR_TRANSFER_H__
+
 
 /*************************/
 /*  color transfer data  */
 
 /*  for lightening  */
-extern double  highlights_add[];
-extern double  midtones_add[];
-extern double  shadows_add[];
+extern gdouble  highlights_add[];
+extern gdouble  midtones_add[];
+extern gdouble  shadows_add[];
 
 /*  for darkening  */
-extern double  highlights_sub[];
-extern double  midtones_sub[];
-extern double  shadows_sub[];
+extern gdouble  highlights_sub[];
+extern gdouble  midtones_sub[];
+extern gdouble  shadows_sub[];
+
 
 /*  color transfer functions  */
-void           color_transfer_init (void);
+void   color_transfer_init (void);
+
 
 #endif  /*  __COLOR_TRANSFER_H__  */

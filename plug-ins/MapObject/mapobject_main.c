@@ -24,10 +24,10 @@
 
 #include <gtk/gtk.h>
 
-#include <gck/gck.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
+#include <gck/gck.h>
 
 #include "arcball.h"
 #include "mapobject_ui.h"
@@ -89,7 +89,7 @@ set_default_settings (void)
   mapvals.tooltips_enabled       = TRUE;
 
   mapvals.lightsource.intensity = 1.0;
-  gck_rgb_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0);
+  gimp_rgb_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0);
 
   mapvals.material.ambient_int  = 0.3;
   mapvals.material.diffuse_int  = 1.0;

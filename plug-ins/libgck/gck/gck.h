@@ -36,19 +36,11 @@ extern "C" {
 #define GCK_CONSTRAIN_INDEXEDA 1<<5
 #define GCK_CONSTRAIN_ALL      0xff
 
-#define GCK_HSV_UNDEFINED -1.0
-#define GCK_HSL_UNDEFINED -1.0
-
 typedef enum
 {
   DITHER_NONE,
   DITHER_FLOYD_STEINBERG
 } GckDitherType;
-
-typedef struct
-{
-  gdouble r, g, b, a;
-} GckRGB;
 
 typedef struct
 {
@@ -64,10 +56,10 @@ typedef struct
   GckDitherType dithermethod;
 } GckVisualInfo;
 
-typedef void (* GckRenderFunction)      (gdouble, gdouble, GckRGB *);
-typedef void (* GckPutPixelFunction)    (gint, gint, GckRGB *);
+typedef void (* GckRenderFunction)      (gdouble, gdouble, GimpRGB *);
+typedef void (* GckPutPixelFunction)    (gint, gint, GimpRGB *);
 typedef void (* GckProgressFunction)    (gint, gint, gint);
-typedef void (* GckColorUpdateFunction) (GckRGB *);
+typedef void (* GckColorUpdateFunction) (GimpRGB *);
 
 
 GckVisualInfo *gck_visualinfo_new        (void);
@@ -96,37 +88,8 @@ double  gck_bilinear      (double x,double y, double    *values);
 guchar  gck_bilinear_8    (double x,double y, guchar    *values);
 guint16 gck_bilinear_16   (double x,double y, guint16   *values);
 guint32 gck_bilinear_32   (double x,double y, guint32   *values);
-GckRGB  gck_bilinear_rgb  (double x,double y, GckRGB *values);
-GckRGB  gck_bilinear_rgba (double x,double y, GckRGB *values);
-
-/* RGB pixel operations */
-/* ==================== */
-
-void      gck_rgb_add    (GckRGB *p,GckRGB *q);
-void      gck_rgb_sub    (GckRGB *p,GckRGB *q);
-void      gck_rgb_mul    (GckRGB *p,double b);
-void      gck_rgb_clamp  (GckRGB *p);
-void      gck_rgb_set    (GckRGB *p,double r,double g,double b);
-void      gck_rgb_gamma  (GckRGB *p,double gamma);
-
-void      gck_rgba_add   (GckRGB *p,GckRGB *q);
-void      gck_rgba_sub   (GckRGB *p,GckRGB *q);
-void      gck_rgba_mul   (GckRGB *p,double b);
-void      gck_rgba_clamp (GckRGB *p);
-void      gck_rgba_set   (GckRGB *p,double r,double g,double b,double a);
-void      gck_rgba_gamma (GckRGB *p,double gamma);
-
-/* Colorspace conversions */
-/* ====================== */
-
-void      gck_rgb_to_hsv (GckRGB *p, double *h,double *s,double *v);
-void      gck_rgb_to_hsl (GckRGB *p, double *h,double *s,double *l);
-
-void      gck_hsv_to_rgb (double h,double s,double v, GckRGB *p);
-void      gck_hsl_to_rgb (double h,double s,double l, GckRGB *p);
-
-void      gck_rgb_to_hwb (GckRGB *rgb, gdouble *hue,gdouble *whiteness,gdouble *blackness);
-void      gck_hwb_to_rgb (gdouble H,gdouble W, gdouble B, GckRGB *rgb);
+GimpRGB  gck_bilinear_rgb  (double x,double y, GimpRGB *values);
+GimpRGB  gck_bilinear_rgba (double x,double y, GimpRGB *values);
 
 /* Supersampling */
 /* ============= */

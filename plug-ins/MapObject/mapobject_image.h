@@ -18,7 +18,7 @@ extern GdkImage *image;
 
 extern glong   maxcounter, old_depth, max_depth;
 extern gint    imgtype, width,height, in_channels, out_channels;
-extern GckRGB  background;
+extern GimpRGB  background;
 extern gdouble oldtreshold;
 
 extern gint border_x1, border_y1, border_x2, border_y2;
@@ -36,11 +36,11 @@ extern glong       out_xy_to_index          (gint          x,
 					     gint          y);
 extern gint        checkbounds              (gint          x,
 					     gint          y);
-extern GckRGB      peek                     (gint          x,
+extern GimpRGB      peek                     (gint          x,
 					     gint          y);
 extern void        poke                     (gint          x,
 					     gint          y,
-					     GckRGB       *color);
+					     GimpRGB       *color);
 extern GimpVector3 int_to_pos               (gint          x,
 					     gint          y);
 extern void        pos_to_int               (gdouble       x,
@@ -48,13 +48,13 @@ extern void        pos_to_int               (gdouble       x,
 					     gint         *scr_x,
 					     gint         *scr_y);
 
-extern GckRGB      get_image_color          (gdouble       u,
+extern GimpRGB      get_image_color          (gdouble       u,
 					     gdouble       v,
 					     gint         *inside);
-extern GckRGB      get_box_image_color      (gint          image,
+extern GimpRGB      get_box_image_color      (gint          image,
 					     gdouble       u,
 					     gdouble       v);
-extern GckRGB      get_cylinder_image_color (gint          image,
+extern GimpRGB      get_cylinder_image_color (gint          image,
 					     gdouble       u,
 					     gdouble       v);
 

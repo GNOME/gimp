@@ -24,18 +24,13 @@
 #define __ASUPSAMPLE_H__
 
 
-typedef struct
-{
-  gdouble r, g, b, a; /* Range is [0, 1] */
-} color_t;
-
 typedef void (* render_func_t)    (gdouble   x,
 				   gdouble   y,
-				   color_t  *color,
+				   GimpRGB  *color,
 				   gpointer  render_data);
 typedef void (* put_pixel_func_t) (gint      x,
 				   gint      y,
-				   color_t   color,
+				   GimpRGB   color,
 				   gpointer  put_pixel_data);
 
 

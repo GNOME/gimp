@@ -11,9 +11,9 @@
 
 #include <sys/types.h>
 
-#include <gck/gck.h>
-
 #include <libgimp/gimp.h>
+
+#include <gck/gck.h>
 
 #include "mapobject_main.h"
 #include "mapobject_preview.h"
@@ -35,7 +35,7 @@ GdkImage *image = NULL;
 
 glong   maxcounter,old_depth,max_depth;
 gint    imgtype,width,height,in_channels,out_channels;
-GckRGB  background;
+GimpRGB  background;
 gdouble oldtreshold;
 
 gint border_x1, border_y1, border_x2, border_y2;
@@ -44,13 +44,13 @@ gint border_x1, border_y1, border_x2, border_y2;
 /* Implementation */
 /******************/
 
-GckRGB
+GimpRGB
 peek (gint x,
       gint y)
 {
   static guchar data[4];
 
-  GckRGB color;
+  GimpRGB color;
 
   gimp_pixel_rgn_get_pixel (&source_region, data, x, y);
 
@@ -73,14 +73,14 @@ peek (gint x,
   return color;
 }
 
-static GckRGB
+static GimpRGB
 peek_box_image (gint image,
 		gint x,
 		gint y)
 {
   static guchar data[4];
 
-  GckRGB color;
+  GimpRGB color;
 
   gimp_pixel_rgn_get_pixel (&box_regions[image], data, x, y);
 
@@ -103,14 +103,14 @@ peek_box_image (gint image,
   return color;
 }
 
-static GckRGB
+static GimpRGB
 peek_cylinder_image (gint image,
 		     gint x,
 		     gint y)
 {
   static guchar data[4];
 
-  GckRGB color;
+  GimpRGB color;
 
   gimp_pixel_rgn_get_pixel (&cylinder_regions[image],data, x, y);
 
@@ -136,7 +136,7 @@ peek_cylinder_image (gint image,
 void
 poke (gint    x,
       gint    y,
-      GckRGB *color)
+      GimpRGB *color)
 {
   static guchar data[4];
   
@@ -218,13 +218,13 @@ pos_to_int (gdouble  x,
 /* Quartics bilinear interpolation stuff.     */
 /**********************************************/
 
-GckRGB
+GimpRGB
 get_image_color (gdouble  u,
 		 gdouble  v,
 		 gint    *inside)
 {
   gint   x1, y1, x2, y2;
-  GckRGB p[4];
+  GimpRGB p[4];
 
   pos_to_int (u, v, &x1, &y1);
 
@@ -276,13 +276,13 @@ get_image_color (gdouble  u,
   return gck_bilinear_rgba (u * width, v * height, p);
 }
 
-GckRGB
+GimpRGB
 get_box_image_color (gint    image,
 		     gdouble u,
 		     gdouble v)
 {
   gint   w,h, x1, y1, x2, y2;
-  GckRGB p[4];
+  GimpRGB p[4];
  
   w = box_drawables[image]->width;
   h = box_drawables[image]->height;
@@ -307,13 +307,13 @@ get_box_image_color (gint    image,
   return gck_bilinear_rgba (u * w, v * h, p);
 }
 
-GckRGB
+GimpRGB
 get_cylinder_image_color (gint    image,
 			  gdouble u,
 			  gdouble v)
 {
   gint   w,h, x1, y1, x2, y2;
-  GckRGB p[4];
+  GimpRGB p[4];
  
   w = cylinder_drawables[image]->width;
   h = cylinder_drawables[image]->height;
@@ -374,7 +374,7 @@ image_setup (GimpDrawable *drawable,
 
   if (mapvals.transparent_background == TRUE)
     {
-      gck_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
+      gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
     }
   else
     {

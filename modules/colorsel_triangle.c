@@ -28,6 +28,7 @@
 #include "gimpmodregister.h"
 
 #include <libgimp/gimpcolorselector.h>
+#include <libgimp/gimpcolor.h>
 #include <libgimp/gimpcolorspace.h>
 #include <libgimp/gimpmodule.h>
 #include <libgimp/gimpmath.h>

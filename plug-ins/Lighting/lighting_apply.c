@@ -29,7 +29,7 @@ init_compute (void)
 static void
 render (gdouble  x,
 	gdouble  y,
-	GckRGB  *col)
+	GimpRGB  *col)
 {
   GimpVector3 pos;
 
@@ -51,7 +51,7 @@ void
 compute_image (void)
 {
   gint         xcount, ycount;
-  GckRGB       color;
+  GimpRGB       color;
   glong        progress_counter = 0;
   GimpVector3  p;
   gint32       new_image_id = -1;
