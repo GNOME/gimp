@@ -1,3 +1,13 @@
+2004-06-10  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimptemplateeditor.[ch]: added an API to
+	expand/collapse the "Advanced Options" frame.
+
+	* app/gui/preferences-dialog.c
+	* app/widgets/gimphelp-ids.h: applied a patch done by William
+	Skaggs that cleans up and reorganizes the Preferences dialog
+	(bug #144060).
+
 2004-06-09  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpcoords.[ch]: renamed gimp_coords_length2 to

@@ -358,6 +358,7 @@
 #define GIMP_HELP_PREFS_DEFAULT_GRID              "gimp-prefs-default-grid"
 #define GIMP_HELP_PREFS_INTERFACE                 "gimp-prefs-interface"
 #define GIMP_HELP_PREFS_HELP                      "gimp-prefs-help"
+#define GIMP_HELP_PREFS_THEME                     "gimp-prefs-theme"
 #define GIMP_HELP_PREFS_TOOL_OPTIONS              "gimp-prefs-tool-options"
 #define GIMP_HELP_PREFS_TOOLBOX                   "gimp-prefs-toolbox"
 #define GIMP_HELP_PREFS_INPUT_DEVICES             "gimp-prefs-input-devices"

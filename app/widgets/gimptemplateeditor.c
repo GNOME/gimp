@@ -194,7 +194,6 @@ gimp_template_editor_constructor (GType                  type,
   GtkWidget          *xres;
   GtkWidget          *yres;
   GtkWidget          *chainbutton;
-  GtkWidget          *expander;
   GtkWidget          *combo;
   GtkWidget          *scrolled_window;
   GtkWidget          *text_view;
@@ -298,18 +297,18 @@ gimp_template_editor_constructor (GType                  type,
   gtk_widget_show (editor->memsize_label);
 
   text = g_strdup_printf ("<b>%s</b>", _("_Advanced Options"));
-  expander = g_object_new (GTK_TYPE_EXPANDER,
-                           "label",         text,
-                           "use_markup",    TRUE,
-                           "use_underline", TRUE,
-                           NULL);
+  editor->expander = g_object_new (GTK_TYPE_EXPANDER,
+                                   "label",         text,
+                                   "use_markup",    TRUE,
+                                   "use_underline", TRUE,
+                                   NULL);
   g_free (text);
 
-  gtk_box_pack_start (GTK_BOX (editor), expander, TRUE, TRUE, 0);
-  gtk_widget_show (expander);
+  gtk_box_pack_start (GTK_BOX (editor), editor->expander, TRUE, TRUE, 0);
+  gtk_widget_show (editor->expander);
 
   frame = gimp_frame_new ("<expander>");
-  gtk_container_add (GTK_CONTAINER (expander), frame);
+  gtk_container_add (GTK_CONTAINER (editor->expander), frame);
   gtk_widget_show (frame);
 
   table = gtk_table_new (5, 2, FALSE);
@@ -543,6 +542,15 @@ gimp_template_editor_new (GimpTemplate *template,
     }
 
   return GTK_WIDGET (editor);
+}
+
+void
+gimp_template_editor_show_advanced (GimpTemplateEditor *editor,
+                                    gboolean            expanded)
+{
+  g_return_if_fail (GIMP_IS_TEMPLATE_EDITOR (editor));
+
+  gtk_expander_set_expanded (GTK_EXPANDER (editor->expander), expanded);
 }
 
 

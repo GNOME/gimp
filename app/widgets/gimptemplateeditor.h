@@ -48,6 +48,7 @@ struct _GimpTemplateEditor
   GtkWidget     *aspect_button;
   gboolean       block_aspect;
 
+  GtkWidget     *expander;
   GtkWidget     *size_se;
   GtkWidget     *memsize_label;
   GtkWidget     *resolution_se;
@@ -59,11 +60,14 @@ struct _GimpTemplateEditorClass
 };
 
 
-GType       gimp_template_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_template_editor_get_type      (void) G_GNUC_CONST;
 
-GtkWidget * gimp_template_editor_new      (GimpTemplate *template,
-                                           Gimp         *gimp,
-                                           gboolean      edit_template);
+GtkWidget * gimp_template_editor_new           (GimpTemplate       *template,
+                                                Gimp               *gimp,
+                                                gboolean            edit_template);
+
+void        gimp_template_editor_show_advanced (GimpTemplateEditor *editor,
+                                                gboolean            expanded);
 
 
 #endif  /*  __GIMP_TEMPLATE_EDITOR_H__  */

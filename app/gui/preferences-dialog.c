@@ -896,9 +896,9 @@ prefs_dialog_new (Gimp       *gimp,
   GtkTreeViewColumn *column;
   GtkCellRenderer   *cell;
   GtkTreeSelection  *sel;
+  GtkTreePath       *path;
   GtkTreeIter        top_iter;
   GtkTreeIter        child_iter;
-  GtkTreeIter        grandchild_iter;
   gint               page_index;
 
   GtkSizeGroup      *size_group = NULL;
@@ -1084,13 +1084,10 @@ prefs_dialog_new (Gimp       *gimp,
   }
 
   editor = gimp_template_editor_new (core_config->default_image, gimp, FALSE);
+  gimp_template_editor_show_advanced (GIMP_TEMPLATE_EDITOR (editor), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), editor, FALSE, FALSE, 0);
   gtk_widget_show (editor);
 
-  table = prefs_table_new (1, GTK_CONTAINER (vbox));
-  prefs_memsize_entry_add (object, "max-new-image-size",
-                           _("Maximum New Image Size:"),
-                           GTK_TABLE (table), 1, size_group);
 
 
   /******************/
@@ -1145,9 +1142,6 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_enum_combo_box_add (object, "navigation-preview-size", 0, 0,
                             _("_Navigation Preview Size:"),
                             GTK_TABLE (table), 1, size_group);
-  prefs_enum_combo_box_add (object, "undo-preview-size", 0, 0,
-                            _("_Undo History Preview Size:"),
-                            GTK_TABLE (table), 2, size_group);
 
   /* Keyboard Shortcuts */
   vbox2 = prefs_frame_new (_("Keyboard Shortcuts"),
@@ -1157,28 +1151,38 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Use Dynamic _Keyboard Shortcuts"),
                           GTK_BOX (vbox2));
 
-  /* Dialog Bahavior */
-  vbox2 = prefs_frame_new (_("Dialog Behavior"), GTK_CONTAINER (vbox), FALSE);
+  /*  Input Device Settings  */
+  vbox2 = prefs_frame_new (_("Extended Input Devices"),
+                           GTK_CONTAINER (vbox), FALSE);
 
-  prefs_check_button_add (object, "info-window-per-display",
-                          _("_Info Window Per Display"),
-                          GTK_BOX (vbox2));
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  /* Menus */
-  vbox2 = prefs_frame_new (_("Menus"), GTK_CONTAINER (vbox), FALSE);
+  button = gtk_button_new_with_label (_("Configure Extended Input Devices"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  prefs_check_button_add (object, "tearoff-menus",
-                          _("Enable _Tearoff Menus"),
-                          GTK_BOX (vbox2));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_input_devices_dialog),
+                    gimp);
 
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+  /***********/
+  /*  Theme  */
+  /***********/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Theme"),
+                                     "theme.png",
+				     GTK_TREE_STORE (tree),
+				     _("Theme"),
+				     GIMP_HELP_PREFS_THEME,
+				     NULL,
+				     &top_iter,
+				     page_index++);
 
-  prefs_spin_button_add (object, "last-opened-size", 1.0, 5.0, 0,
-                         _("Open _Recent Menu Size:"),
-                         GTK_TABLE (table), 3, size_group);
-
-  /* Themes */
-  vbox2 = prefs_frame_new (_("Select Theme"), GTK_CONTAINER (vbox), TRUE);
+  vbox2 = prefs_frame_new (_("Select Theme"), GTK_CONTAINER (vbox), FALSE);
 
   {
     GtkWidget         *scrolled_win;
@@ -1261,9 +1265,9 @@ prefs_dialog_new (Gimp       *gimp,
                     gimp);
 
 
-  /*****************************/
-  /*  Interface / Help System  */
-  /*****************************/
+  /*****************/
+  /*  Help System  */
+  /*****************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
                                      _("Help System"),
@@ -1271,8 +1275,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     GTK_TREE_STORE (tree),
 				     _("Help System"),
 				     GIMP_HELP_PREFS_HELP,
+				     NULL,
 				     &top_iter,
-				     &child_iter,
 				     page_index++);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -1282,9 +1286,6 @@ prefs_dialog_new (Gimp       *gimp,
 
   prefs_check_button_add (object, "show-tool-tips",
                           _("Show Tool _Tips"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "use-help",
-                          _("Context Sensitive _Help with \"F1\""),
                           GTK_BOX (vbox2));
   prefs_check_button_add (object, "show-tips",
                           _("Show Tips on _Startup"),
@@ -1315,9 +1316,9 @@ prefs_dialog_new (Gimp       *gimp,
   size_group = NULL;
 
 
-  /******************************/
-  /*  Interface / Tool Options  */
-  /******************************/
+  /******************/
+  /*  Tool Options  */
+  /******************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
                                      _("Tool Options"),
@@ -1325,8 +1326,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     GTK_TREE_STORE (tree),
 				     _("Tool Options"),
 				     GIMP_HELP_PREFS_TOOL_OPTIONS,
+				     NULL,
 				     &top_iter,
-				     &child_iter,
 				     page_index++);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -1375,9 +1376,9 @@ prefs_dialog_new (Gimp       *gimp,
   size_group = NULL;
 
 
-  /*************************/
-  /*  Interface / Toolbox  */
-  /*************************/
+  /*************/
+  /*  Toolbox  */
+  /*************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
                                      _("Toolbox"),
@@ -1385,8 +1386,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     GTK_TREE_STORE (tree),
 				     _("Toolbox"),
 				     GIMP_HELP_PREFS_TOOLBOX,
+				     NULL,
 				     &top_iter,
-				     &child_iter,
 				     page_index++);
 
   /*  Appearance  */
@@ -1407,41 +1408,9 @@ prefs_dialog_new (Gimp       *gimp,
                                     GTK_BOX (vbox2));
 
 
-  /*******************************/
-  /*  Interface / Input Devices  */
-  /*******************************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-				     _("Input Devices"),
-                                     "input-devices.png",
-				     GTK_TREE_STORE (tree),
-				     _("Input Devices"),
-				     GIMP_HELP_PREFS_INPUT_DEVICES,
-				     &top_iter,
-				     &child_iter,
-				     page_index++);
-
-  /*  Input Device Settings  */
-  vbox2 = prefs_frame_new (_("Extended Input Devices"),
-                           GTK_CONTAINER (vbox), FALSE);
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_with_label (_("Configure Extended Input Devices"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (prefs_input_devices_dialog),
-                    gimp);
-
-
-  /*******************************/
-  /*  Interface / Image Windows  */
-  /*******************************/
+  /*******************/
+  /*  Image Windows  */
+  /*******************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Image Windows"),
@@ -1449,8 +1418,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     GTK_TREE_STORE (tree),
 				     _("Image Windows"),
 				     GIMP_HELP_PREFS_IMAGE_WINDOW,
+				     NULL,
 				     &top_iter,
-				     &child_iter,
 				     page_index++);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -1494,15 +1463,6 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "show-brush-outline",
                           _("Show _Brush Outline"),
                           GTK_BOX (vbox2));
-  prefs_check_button_add (object, "show-paint-tool-cursor",
-                          _("Show Paint _Tool Cursor"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "perfect-mouse",
-                          _("Perfect-but-Slow _Pointer Tracking"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "cursor-updating",
-                          _("Enable Cursor _Updating"),
-                          GTK_BOX (vbox2));
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
@@ -1514,9 +1474,9 @@ prefs_dialog_new (Gimp       *gimp,
   size_group = NULL;
 
 
-  /********************************************/
-  /*  Interface / Image Windows / Appearance  */
-  /********************************************/
+  /********************************/
+  /*  Image Windows / Appearance  */
+  /********************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Image Window Appearance"),
@@ -1524,8 +1484,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     GTK_TREE_STORE (tree),
 				     _("Appearance"),
 				     GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
+				     &top_iter,
 				     &child_iter,
-				     &grandchild_iter,
 				     page_index++);
 
   prefs_display_options_frame_add (gimp,
@@ -1539,9 +1499,9 @@ prefs_dialog_new (Gimp       *gimp,
                                    GTK_CONTAINER (vbox));
 
 
-  /****************************************************************/
-  /*  Interface / Image Windows / Image Title & Statusbar Format  */
-  /****************************************************************/
+  /****************************************************/
+  /*  Image Windows / Image Title & Statusbar Format  */
+  /****************************************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Image Title & Statusbar Format"),
@@ -1549,8 +1509,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     GTK_TREE_STORE (tree),
 				     _("Title & Status"),
 				     GIMP_HELP_PREFS_IMAGE_WINDOW_TITLE,
+				     &top_iter,
 				     &child_iter,
-				     &grandchild_iter,
 				     page_index++);
 
   {
@@ -1663,9 +1623,9 @@ prefs_dialog_new (Gimp       *gimp,
   }
 
 
-  /*************************/
-  /*  Interface / Display  */
-  /*************************/
+  /*************/
+  /*  Display  */
+  /*************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Display"),
@@ -1673,8 +1633,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     GTK_TREE_STORE (tree),
 				     _("Display"),
 				     GIMP_HELP_PREFS_DISPLAY,
+				     NULL,
 				     &top_iter,
-				     &child_iter,
 				     page_index++);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -1689,42 +1649,6 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_enum_combo_box_add (object, "transparency-size", 0, 0,
                             _("Check _Size:"),
                             GTK_TABLE (table), 1, size_group);
-
-  /*  8-Bit Displays  */
-  vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_CONTAINER (vbox), FALSE);
-
-  /*  disabling this entry is not multi-head safe  */
-#if 0
-  if (gdk_rgb_get_visual ()->depth != 8)
-    gtk_widget_set_sensitive (GTK_WIDGET (vbox2->parent), FALSE);
-#endif
-
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
-
-  prefs_spin_button_add (object, "min-colors", 1.0, 8.0, 0,
-                         _("Minimum Number of Colors:"),
-                         GTK_TABLE (table), 0, size_group);
-  prefs_check_button_add (object, "install-colormap",
-                          _("Install Colormap"),
-                          GTK_BOX (vbox2));
-
-  g_object_unref (size_group);
-  size_group = NULL;
-
-
-  /*************************/
-  /*  Interface / Monitor  */
-  /*************************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-				     _("Monitor Resolution"),
-                                     "monitor.png",
-				     GTK_TREE_STORE (tree),
-				     _("Monitor"),
-				     GIMP_HELP_PREFS_MONITOR,
-				     &top_iter,
-				     &child_iter,
-				     page_index++);
 
   vbox2 = prefs_frame_new (_("Get Monitor Resolution"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -1883,9 +1807,9 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
 #ifdef ENABLE_MP
-  table = prefs_table_new (4, GTK_CONTAINER (vbox2));
+  table = prefs_table_new (5, GTK_CONTAINER (vbox2));
 #else
-  table = prefs_table_new (3, GTK_CONTAINER (vbox2));
+  table = prefs_table_new (4, GTK_CONTAINER (vbox2));
 #endif /* ENABLE_MP */
 
   prefs_spin_button_add (object, "undo-levels", 1.0, 5.0, 0,
@@ -1897,17 +1821,15 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_memsize_entry_add (object, "tile-cache-size",
                            _("Tile Cache Size:"),
                            GTK_TABLE (table), 2, size_group);
+  prefs_memsize_entry_add (object, "max-new-image-size",
+                           _("Maximum New Image Size:"),
+                           GTK_TABLE (table), 3, size_group);
 
 #ifdef ENABLE_MP
   prefs_spin_button_add (object, "num-processors", 1.0, 4.0, 0,
                          _("Number of Processors to Use:"),
-                         GTK_TABLE (table), 3, size_group);
+                         GTK_TABLE (table), 4, size_group);
 #endif /* ENABLE_MP */
-
-  /*  Resource Consumption  */
-  prefs_check_button_add (object, "stingy-memory-use",
-                          _("Conservative Memory Usage"),
-                          GTK_BOX (vbox2));
 
   /*  File Saving  */
   vbox2 = prefs_frame_new (_("File Saving"), GTK_CONTAINER (vbox), FALSE);
@@ -1916,16 +1838,11 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Confirm Closing of Unsaved Images"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
-  prefs_boolean_combo_box_add (object, "trust-dirty-flag",
-                               _("Only when Modified"),
-                               _("Always"),
-                               _("\"File -> Save\" Saves the Image:"),
-                               GTK_TABLE (table), 0, size_group);
   prefs_enum_combo_box_add (object, "thumbnail-size", 0, 0,
                             _("Size of Thumbnail Files:"),
-                            GTK_TABLE (table), 1, size_group);
+                            GTK_TABLE (table), 0, size_group);
 
   g_object_unref (size_group);
   size_group = NULL;
@@ -1950,9 +1867,6 @@ prefs_dialog_new (Gimp       *gimp,
 
   prefs_check_button_add (object, "save-session-info",
                           _("_Save Window Positions on Exit"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "restore-session",
-                          _("R_estore Saved Window Positions on Start-up"),
                           GTK_BOX (vbox2));
 
   hbox = gtk_hbox_new (FALSE, 6);
@@ -1982,9 +1896,6 @@ prefs_dialog_new (Gimp       *gimp,
 
   prefs_check_button_add (object, "save-accels",
                           _("Save Keyboard Shortcuts on Exit"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "restore-accels",
-                          _("Restore Saved Keyboard Shortcuts on Start-up"),
                           GTK_BOX (vbox2));
 
   hbox = gtk_hbox_new (FALSE, 6);
@@ -2160,10 +2071,15 @@ prefs_dialog_new (Gimp       *gimp,
       }
   }
 
+  gtk_tree_view_expand_all (GTK_TREE_VIEW (tv));
+
+  /*  collapse the Folders subtree */
+  path = gtk_tree_model_get_path (GTK_TREE_MODEL (tree), &top_iter);
+  gtk_tree_view_collapse_row (GTK_TREE_VIEW (tv), path);
+  gtk_tree_path_free (path);
+
   gtk_widget_show (tv);
   gtk_widget_show (notebook);
-
-  gtk_tree_view_expand_all (GTK_TREE_VIEW (tv));
 
   return dialog;
 }
