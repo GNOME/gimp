@@ -1,3 +1,25 @@
+Sun Oct  3 23:47:15 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/Makefile.am: add scan_convert.[ch]
+
+Mon Oct  4 01:46:46 EDT 1999  Austin Donnelly  <austin@gimp.org>
+   
+	NEW FILES:
+	* app/scan_convert.c
+	* app/scan_convert.h: common code from free_select.c and
+	bezier_select.c
+
+	MODIFIED FILES:
+	* app/disp_callbacks.c: Fix for bug #2517 - dragging colour swatch
+	to image with no layers causes segfault.  Something is
+	repainting empty images as white rather than chequerboard as
+	well, which still needs fixing.
+
+	* app/free_select.c: move code out to scan_convert.c
+	* app/free_select.h: use ScanConvertPoint not FreeSelectPoint
+	* tools/pdbgen/pdb/tools.pdb: ScanConvertPoint again
+	* app/tools_cmds.c: generated version of above.
+
 Sun Oct  3 23:35:20 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* libgimp/gimpexport.c: if there aren't any changes needed,

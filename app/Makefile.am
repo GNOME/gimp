@@ -382,6 +382,8 @@ gimp_SOURCES = \
 	scale.h			\
 	scale_tool.c		\
 	scale_tool.h		\
+	scan_convert.c		\
+	scan_convert.h		\
 	scroll.c		\
 	scroll.h		\
 	selection.c		\
