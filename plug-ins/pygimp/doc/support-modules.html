@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//Norman Walsh//DTD DocBook HTML 1.0//EN">
+<HTML
+><HEAD
+><TITLE
+>Support Modules</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet"><LINK
+REL="HOME"
+TITLE="Gimp Python Documentation"
+HREF="pygimp.html"><LINK
+REL="PREVIOUS"
+TITLE="Gimp Objects"
+HREF="gimp-objects.html"><LINK
+REL="NEXT"
+TITLE="End Note"
+HREF="end-note.html"></HEAD
+><BODY
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Gimp Python Documentation</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="gimp-objects.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="end-note.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="SUPPORT-MODULES"
+>Support Modules</A
+></H1
+><P
+>This section describes the modules that help make using the
+    <TT
+CLASS="FILENAME"
+>gimp</TT
+> module easier.  These range from a set
+    of constants to storing persistent data.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GIMPENUMS-MODULE"
+>The gimpenums Module</A
+></H2
+><P
+>This module contains all the constants found in the header
+      <TT
+CLASS="FILENAME"
+>libgimp/gimpenums.h</TT
+>, as well as some extra
+      constants that are available in Script-Fu.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN1466"
+>The gimpfu Module</A
+></H2
+><P
+>This module was fully described in an earlier section.  It
+      provides an easy interface for writing plugins, where you do not
+      need to worry about run_modes, GUI's and saving previous values.
+      It is the recommended module for writing plugins.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GIMPPLUGIN-MODULE"
+>The gimpplugin Module</A
+></H2
+><P
+>This module provides the framework for writing Gimp
+      plugins in Python.  It gives more flexibility for writing
+      plugins than the gimpfu module, but does not offer as many
+      features (such as automatic GUI building).</P
+><P
+>To use this framework you subclass
+      <TT
+CLASS="FUNCTION"
+><B
+>gimpplugin.plugin</B
+></TT
+> like so:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>import gimpplugin
+class myplugin(gimpplugin.plugin):
+	def init(self):
+		# initialisation routines
+		# called when gimp starts.
+	def quit(self):
+		# clean up routines
+		# called when gimp exits (normally).
+	def query(self):
+		# called to find what functionality the plugin provides.
+		gimp.install_procedure("procname", ...)
+	# note that this method name matches the first arg of
+	# gimp.install_procedure
+	def procname(self, arg1, ...):
+		# do what ever this plugin should do</PRE
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GIMPSHELF-MODULE"
+>The gimpshelf Module</A
+></H2
+><P
+>This module gives a nicer interface to the persistent
+      storage interface for Gimp plugins.  Due to the complicated
+      nature of Python objects (there is often a lot of connections
+      between them), it can be dificult to work out what to store in
+      gimp's persistent storage.  The python interface only allows
+      storage of strings, so this module wraps pickle and unpickle to
+      allow persistentstorage of any python object.</P
+><P
+>Here is some examples of using this module:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>&#62;&#62;&#62; from gimpshelf import shelf
+&#62;&#62;&#62; shelf['james'] = ['forty-two', (42, 42L, 42.0)]
+&#62;&#62;&#62; shelf.has_key('james')
+1
+&#62;&#62;&#62; shelf['james']
+['forty-two', (42, 42L, 42.0)]</PRE
+></TD
+></TR
+></TABLE
+><P
+>Anything you store with
+      <TT
+CLASS="FUNCTION"
+><B
+>gimpshelf.shelf</B
+></TT
+> will exist until Gimp
+      exits.  This makes this interface perfect for when a plugin is
+      executed with the run mode
+      <TT
+CLASS="LITERAL"
+>RUN_WITH_LAST_VALS</TT
+>.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="gimp-objects.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="pygimp.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="end-note.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Gimp Objects</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>End Note</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

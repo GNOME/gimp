@@ -1,0 +1,65 @@
+pygimp-0.5:  8-July-1999
+	- Fixed some bugs that I missed in gimpui.  It should actually work
+	  on other people's systems now (I don't know why it worked on mine).
+	- Included the foggify.py and shadow_bevel.py plugins in the package.
+	- Added a timeout function to flush the displays in the gimpconsole
+	  plugin.  This way you can see the results of what you type easily.
+
+pygimp-0.4:  5-July-1999
+	- Removed the drawable type -- now layer or channel objects are used
+	  in its place.  All drawable methods have been transfered to both
+	  the channel and layer objects.  The layer and channel objects have
+	  the following attributes in common:
+	    ID, bpp, has_alpha, height, image, is_color, is_colour, is_gray,
+	    is_grey, is_indexed, mask_bounds, name, offsets, opacity
+	  This means that the gimp.drawable(layer|channel) command is gone,
+	  and so is the gimp.layer(drawable) and gimp.channel(drawable)
+	  syntaxes (the gimp.layer and gimp.channel commands still exist).
+	  I made this change because the previous setup was confusing, and
+	  more complicated than it needed to be.
+	- Removed all tkinter code, and replaced it with pygtk code.  There
+	  is now also a convenience module gimpfu, which is a simpler
+	  interface to 
+
+pygimp-0.3:  8-February-1999
+	- Some small build cleanups.  Now you should be able to do the normal
+	  ./configure ; make ; make install.  It should compile fine with
+	  GIMP 1.0 (I haven't tested 1.1 series though).
+	- gimpmodule.c now prints exception messages, so now exceptions caused
+	  by a plugin will print a stack trace to stdout, and cause gimp to
+	  realise the plugin failed.
+	- The disable_undo and enable_undo methods of image now use the
+	  stack based enable/disable functions.
+	- Added function names to PyArg_ParseTuple calls, so exceptions
+	  are a little easier to understand.
+	- added a spec file for building RPMS for this package.
+	- added gimp.extension_ack, gimp.extension_process,
+	  gimp.install_temp_proc and gimp.uninstall_temp_proc which will be
+	  useful to implement an interface similar to script-fu's (ie. one
+	  copy of python running in the background, responding to requests
+	  from the gimp process every now and again).
+	- changed over to using glib's safe memory allocation routines g_new,
+	  g_strdup and g_free.
+	- Converted documentation to docbook -- linuxdoc is just about dead.
+
+pygimp-0.2.0: 19-Nov-1997
+	- implemented pixel regions.  You can access them as a mapping.  (ie.
+	  pr[x,y] is get_pixel, pr[x1:x2,y] is get_row, pr[x, y1:y2] is get_col
+	  and pr[x1:x2, y1:y2] is get_rect)
+	- to demonstrate the use of this low level object, I have included a
+	  translation of the c plugin Whirl and Pinch.
+	- fixed a problem where I didn't check for a NULL when parsing
+	  arguments for a plugin.  This caused a crash when you ran a plugin
+	  that took a string as an argument was run in interactive mode.
+
+pygimp-0.1.0: 18-Nov-1997
+	- first public release.
+	- implements images, layers, channels, drawables, tiles, and just about
+	  everything except pixel regions.
+	- I have included a number of example plugins:
+		- gimpcons is an interactive python console
+		- pdbbrowse is a browser for the PDB
+		- clothify is a translation of the Script-Fu script
+		- sphere is a translation of the Script-Fu script
+
+

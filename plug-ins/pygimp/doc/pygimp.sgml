@@ -1,0 +1,2101 @@
+<!DOCTYPE Article PUBLIC "-//Davenport//DTD DocBook V3.0//EN">
+
+<Article id=pygimp>
+
+  <ArtHeader>
+
+    <Title>Gimp Python Documentation</Title>
+    <AUTHOR>
+      <FirstName>James</FirstName>
+      <surname>Henstridge</surname>
+      <affiliation>
+	<address>
+          <email>james@daa.com.au</email>
+        </address>
+      </affiliation>
+    </AUTHOR>
+
+    <PubDate>v0.4, 5 July 1999</PubDate>
+
+    <Abstract>
+
+      <Para>This document outlines the interfaces to Gimp-Python,
+      which is a set of Python modules that act as a wrapper to
+      <filename>libgimp</filename> allowing the writing of
+      plug-ins for Gimp.  In this way, Gimp-Python is similar to
+      Script-Fu, except that you can use the full set of Python
+      extension modules from the plug-in.</Para>
+
+    </Abstract>
+    
+  </ArtHeader>
+
+  <Sect1 id=introduction>
+    <Title>Introduction</Title>
+
+    <Sect2 id=what-is-it>
+      <Title>What is it?</Title>
+
+      <Para>Gimp-Python is a scripting extension for Gimp, similar to
+      Script-Fu.  The main difference is in what is called first.  In
+      Script-Fu, the script-fu plugin executes the script, while in
+      Gimp-Python the script is in control.</Para>
+
+      <Para>In fact, you will find that the Gimp-Python scripts start
+      with the line <Literal>&num;!/usr/bin/python</Literal>.  The
+      gimp extension is loaded with the familiar
+      <Literal>import</Literal> command.</Para>
+
+      <Para>Another point of difference between Gimp-Python and
+      Script-Fu is that Gimp-Python stores images, layers, channels
+      and other types as objects rather than just storing their ID.
+      This allows better type checking that is missing from Script-Fu,
+      and allows those types to act as objects, complete with
+      attributes and methods.</Para>
+
+      <Para>Also, Gimp-Python is not limited to just calling
+      procedures from the PDB.  It also implements the rest of
+      <filename>libgimp</filename>, including tiles and pixel regions,
+      and access to other lower level functions.</Para>
+      
+    </Sect2>
+
+    <Sect2 id=installation>
+      <Title>Installation</Title>
+
+      <Para>Gimp-python consists of a Python module written in C and
+      some native python support modules.  You can build pygimp with
+      the commands:</Para>
+<programlisting>
+./configure
+make
+make install
+</programlisting>
+
+      <Para>This will build and install gimpmodule and its supporting
+      modules, and install the sample plugins in gimp's plugin
+      directory.</Para>
+
+    </Sect2>
+
+  </Sect1>
+
+  <Sect1 id=structure-of-plugin>
+    <Title>The Structure Of A Plugin</Title>
+
+    <Para>The majority of code in this package resides in
+    <filename>gimpmodule.c</filename>, but this provides a poor
+    interface for implementing some portions of a plugin.  For this
+    reason, there is a python module called
+    <filename>plugin.py</filename> that sets out a structure for
+    plugins and implements some things that were either too dificult
+    or impossible to do in C.</Para>
+
+    <Para>The main purpose of <filename>plugin.py</filename> was to
+    implement an object oriented structure for plug-ins.  As well as
+    this, it handles tracebacks, which are otherwise ignored by
+    <filename>libgimp</filename>, and gives a method to call
+    other Gimp-Python plug-ins without going through the procedural
+    database.</Para>
+
+    <Sect2 id=example-plugin>
+      <Title>An Example Plugin</Title>
+
+      <Para>As in a lot of manuals, the first thing you examine is an
+      example, so here is an example.  I have included it before
+      explaining what it does to allow more advanced programmers to
+      see the structure up front.  It is a translation of the clothify
+      Script-Fu extension:</para>
+
+<example>
+<title>A sample python plugin</title>
+<ProgramListing role="python">
+#!/usr/bin/python
+import math
+from gimpfu import *
+
+have_gimp11 = gimp.major_version > 1 or \
+	      gimp.major_version == 1 and gimp.minor_version >= 1
+
+def python_clothify(timg, tdrawable, bx=9, by=9,
+		    azimuth=135, elevation=45, depth=3):
+	bx = 9 ; by = 9 ; azimuth = 135 ; elevation = 45 ; depth = 3
+	width = tdrawable.width
+	height = tdrawable.height
+	img = gimp.image(width, height, RGB)
+	layer_one = gimp.layer(img, "X Dots", width, height, RGB_IMAGE,
+			       100, NORMAL_MODE)
+	img.disable_undo()
+	if have_gimp11:
+		pdb.gimp_edit_fill(layer_one)
+	else:
+		pdb.gimp_edit_fill(img, layer_one)
+	img.add_layer(layer_one, 0)
+	pdb.plug_in_noisify(img, layer_one, 0, 0.7, 0.7, 0.7, 0.7)
+	layer_two = layer_one.copy()
+	layer_two.mode = MULTIPLY_MODE
+	layer_two.name = "Y Dots"
+	img.add_layer(layer_two, 0)
+	pdb.plug_in_gauss_rle(img, layer_one, bx, 1, 0)
+	pdb.plug_in_gauss_rle(img, layer_two, by, 0, 1)
+	img.flatten()
+	bump_layer = img.active_layer
+	pdb.plug_in_c_astretch(img, bump_layer)
+	pdb.plug_in_noisify(img, bump_layer, 0, 0.2, 0.2, 0.2, 0.2)
+	pdb.plug_in_bump_map(img, tdrawable, bump_layer, azimuth,
+			     elevation, depth, 0, 0, 0, 0, TRUE, FALSE, 0)
+	gimp.delete(img)
+
+register(
+	"python_fu_clothify",
+	"Make the specified layer look like it is printed on cloth",
+	"Make the specified layer look like it is printed on cloth",
+	"James Henstridge",
+	"James Henstridge",
+	"1997-1999",
+	"&lt;Image&gt;/Python-Fu/Alchemy/Clothify",
+	"RGB*, GRAY*",
+	[
+		(PF_INT, "x_blur", "X Blur", 9),
+		(PF_INT, "y_blur", "Y Blur", 9),
+		(PF_INT, "azimuth", "Azimuth", 135),
+		(PF_INT, "elevation", "elevation", 45),
+		(PF_INT, "depth", "Depth", 3)
+	],
+	[],
+	python_clothify)
+
+main()
+</ProgramListing>
+</example>
+
+    </Sect2>
+
+    <Sect2 id=important-modules>
+      <Title>Import Modules</Title>
+
+      <Para>In this plugin, a number of modules are imported.  The
+      important ones are:</para>
+
+      <ItemizedList>
+	<ListItem>
+	  <para><filename>gimpfu</filename>: this module provides a
+	  simple interface for writing plugins, similar to what
+	  script-fu provides.  It provides the GUI for entering in
+	  parameters in interactive mode and performs some sanity
+	  checks when registering the plugin.</para>
+
+	  <para>By using "from gimpfu import *", this module also
+	  provides an easy way to get all the commonly used symbols
+	  into the plugin's namespace.</para>
+	</ListItem>
+	<ListItem>
+	  <Para><filename>gimp</filename>: the main part of the gimp
+	  extension.  This is imported with gimpfu.</Para>
+	</ListItem>
+	<ListItem>
+	  <Para><filename>gimpenums</filename>: a number of useful
+	  constants.  This is also automatically imported with
+	  gimpfu.</Para>
+	</ListItem>
+      </ItemizedList>
+
+      <para>The pdb variable is a variable for accessing the
+      procedural database.  It is imported into the plugin's namespace
+      with gimpfu for convenience.</para>
+
+    </Sect2>
+
+    <Sect2 id=plugin-framework>
+      <Title>Plugin Framework</Title>
+
+      <Para>With pygimp-0.4, the gimpfu module was introduced.  It
+      simplifies writing plugins a lot.  It handles the run mode
+      (interactive, non interactive or run with last values),
+      providing a GUI for interactive mode and saving the last used
+      settings.</Para>
+
+      <Para>Using the gimpfu plugin, all you need to do is write the
+      function that should be run, make a call to
+      <function>register</function>, and finally a call to
+      <function>main</function> to get the plugin started.</Para>
+
+      <Para>If the plugin is to be run on an image, the first
+      parameter to the plugin function should be the image, and the
+      second should be the current drawable (do not worry about the
+      run_mode parameter).  Plugins that do not act on an existing
+      image (and hence go in the toolbox's menus) do not need these
+      parameters.  Any other parameters are specific to the
+      plugin.</Para>
+
+      <Para>After defining the plugin function, you need to call
+      <function>register</function> to register the plugin with gimp
+      (When the plugin is run to query it, this information is passed
+      to gimp.  When it is run interactively, this information is used
+      to construct the GUI).  The parameters to
+      <function>register</function> are:</Para>
+      <SimpleList>
+	<member>name</member>
+	<member>blurb</member>
+	<member>help</member>
+	<member>author</member>
+	<member>copyright</member>
+	<member>date</member>
+	<member>menupath</member>
+	<member>imagetypes</member>
+	<member>params</member>
+	<member>results</member>
+	<member>function</member>
+      </SimpleList>
+
+      <Para>Most of these parameters are quite self explanatory.  The
+      menupath option should start with &lt;Image%gt;/ for image
+      plugins and &lt;Toolbox&gt;/ for toolbox plugins.  The remainder
+      of the menupath is a slash separated path to its menu item.</Para>
+
+      <Para>The params parameter holds a list parameters for the
+      function.  It is a list of tuples.  Note that you do not have to
+      specify the run_type, image or drawable parameters, as gimpfu
+      will add these automatically for you.  The tuple format is
+      (type, name, description, default [, extra]).  The allowed type
+      codes are:</Para>
+      <SimpleList>
+	<member>PF_INT8</member>
+	<member>PF_INT16</member>
+	<member>PF_INT32</member>
+	<member>PF_INT</member>
+	<member>PF_FLOAT</member>
+	<member>PF_STRING</member>
+	<member>PF_VALUE</member>
+	<member>PF_INT8ARRAY</member>
+	<member>PF_INT16ARRAY</member>
+	<member>PF_INT32ARRAY</member>
+	<member>PF_INTARRAY</member>
+	<member>PF_FLOATARRAY</member>
+	<member>PF_STRINGARRAY</member>
+	<member>PF_COLOR</member>
+	<member>PF_COLOUR</member>
+	<member>PF_REGION</member>
+	<member>PF_IMAGE</member>
+	<member>PF_LAYER</member>
+	<member>PF_CHANNEL</member>
+	<member>PF_DRAWABLE</member>
+	<member>PF_TOGGLE</member>
+	<member>PF_BOOL</member>
+	<member>PF_SLIDER</member>
+	<member>PF_SPINNER</member>
+	<member>PF_ADJUSTMENT</member>
+	<member>PF_FONT</member>
+	<member>PF_FILE</member>
+	<member>PF_BRUSH</member>
+	<member>PF_PATTERN</member>
+	<member>PF_GRADIENT</member>
+      </SimpleList>
+
+      <Para>These values map onto the standard PARAM_* constants.  The
+      reason to use the extra constants is that they give gimpfu more
+      information, so it can produce a better interface (for instance,
+      the PF_FONT type is equivalent to PARAM_STRING, but in the GUI
+      you get a small button that will bring up a font selection
+      dialog).</Para>
+
+      <Para>The PF_SLIDER, PF_SPINNER and PF_ADJUSTMENT types require
+      the extra parameter.  It is of the form (min, max, step), and
+      gives the limits for the spin button or slider.</Para>
+
+      <Para>The results parameter is a list of 3-tuples of the form
+      (type, name, description).  It defines the return values for the
+      function.  If there is only a single return value, the plugin
+      function should return just that value.  If there is more than
+      one, the plugin function should return a tuple of results.</Para>
+
+      <Para>The final parameter to <function>register</function> is
+      the plugin function itself.</Para>
+
+      <Para>After registering one or more plugin functions, you must
+      call the <function>main</function> function.  This will cause
+      the plugin to start running.  A GUI will be displayed when
+      needed, and your plugin function will be called at the
+      appropriate times.</Para>
+
+    </Sect2>
+
+  </Sect1>
+
+  <Sect1 id=procedural-database>
+    <Title>The Procedural Database</Title>
+
+    <Para>The procedural database is a registry of things gimp and its
+    plugins can do.  When you install a procedure for your plugin, you
+    are extending the procedural database.</Para>
+
+    <Para>The procedural database is self documenting, in that when
+    you install a procedure in it, you also add documentation for it,
+    its parameters and return values.</Para>
+
+    <Sect2 id=gimp-python-model>
+      <Title>The Gimp-Python Model</Title>
+
+      <Para>In Gimp-Python, the procedural database is represented by
+      the object <parameter>gimp.pdb</parameter>.  In most of my
+      plugins, I make an assignment from <parameter>gimp.pdb</parameter>
+      to <parameter>pdb</parameter> for convenience.</Para>
+
+      <Para>You can query the procedural database with
+      <parameter>pdb</parameter>'s method <function>query</function>.  Its
+      specification is:</para>
+
+<Screen>
+pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
+</Screen>
+
+      <Para>Each parameter is a regular expression that is checked
+      against the corresponding field in the procedural database.  The
+      method returns a list of the names of matching procedures.  If
+      <function>query</function> is called without any arguments, it will
+      return every procedure in the database.</Para>
+
+    </Sect2>
+
+    <Sect2 id=pdb-procedures>
+      <Title>Procedural Database Procedures</Title>
+
+      <Para>Procedures can be accessed as procedures, or by treating
+      <parameter>pdb</parameter> as a mapping objest.  As an example,
+      the probedure <function>gimp_edit_fill</function> can be
+      accessed as either <function>pdb.gimp_edit_fill</function> or
+      <function>pdb['gimp_edit_fill']</function>.  The second form is
+      mainly for procedures whose names are not valid Python names (eg
+      in script-fu-..., the dashes are interpreted as minuses).</Para>
+
+      <Para>These procedure objects have a number of attribute:</para>
+      <VariableList>
+
+	<VarListEntry>
+	  <term>proc_name</term>
+	  <ListItem>
+	    <Para>The name of the procedure.</Para>
+	  </ListItem>
+	</VarListEntry>
+	<VarListEntry>
+	  <term>proc_blurb</term>
+	  <ListItem>
+	    <Para>A short peice of information about the procedure.</Para>
+	  </ListItem>
+	</VarListEntry>
+	<VarListEntry>
+	  <term>proc_help</term>
+	  <ListItem>
+	    <Para>More detailed information about the procedure.</Para>
+	  </ListItem>
+	</VarListEntry>
+	<VarListEntry>
+	  <term>proc_author</term>
+	  <ListItem>
+	    <Para>The author of the procedure.</Para>
+	  </ListItem>
+	</VarListEntry>
+	<VarListEntry>
+	  <term>proc_copyright</term>
+	  <ListItem>
+	    <Para>The copyright holder for the procedure (usually the
+            same as the author).</Para>
+	  </ListItem>
+	</VarListEntry>
+	<VarListEntry>
+	  <term>proc_date</term>
+	  <ListItem>
+	    <Para>The date when the procedure was written.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <term>proc_type</term>
+	  <ListItem>
+	    <Para>The type of procedure.  This will be one of
+            PROC_PLUG_IN, PROC_EXTENSION or PROC_TEMPORARY.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <term>nparams</term>
+	  <ListItem>
+	    <Para>The number of parameters the procedure takes.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <term>nreturn_vals</term>
+	  <ListItem>
+	    <Para>The number of return values the procedure gives.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <term>params</term>
+	  <ListItem>
+	    <Para>A description of parameters of the procedure.  It
+            takes the form of a tuple of 3-tuples, where each 3-tuple
+            describes a parameter.  The items in the 3-tuple are a
+            parameter type (one of the PARAM_* constants), a
+            name for the parameter, and a description of the
+            parameter.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <term>return_vals</term>
+	  <ListItem>
+	    <Para>A description of the return values.  It takes the
+            same form as the <literal>params</literal>
+            attribute.</Para>
+	  </listitem>
+	</VarListEntry>
+      </VariableList>
+
+      <Para>A procedure object may also be called.  At this point,
+      Gimp-Python doesn't support keyword arguments for PDB
+      procedures.  Arguments are passed to the procedure in the normal
+      method.  The return depends on the number of return values:</para>
+
+      <ItemizedList>
+	<ListItem>
+	  <Para>If there are zero return values,
+	  <literal>None</literal> is returned.</Para>
+	</ListItem>
+	<ListItem>
+	  <Para>If there is only a single return value, it is
+	  returned.</Para>
+	</ListItem>
+	<ListItem>
+	  <Para>If there are more return values, then they are
+	  returned as a tuple.</Para>
+	</ListItem>
+      </ItemizedList>
+
+    </Sect2>
+
+    <Sect2 id=more-information>
+      <Title>More Information</Title>
+      
+      <Para>For more information on invoking PDB procedures, please
+      see the example plugins.  For information on individual
+      procedures, please see the PDB Browser plugin (in the Xtns
+      menu).  It alows you to peruse to the database
+      interactively.</Para>
+
+    </Sect2>
+
+  </Sect1>
+  
+  <Sect1 id=gimp-module-procedures>
+    <Title>Gimp Module Procedures</Title>
+
+    <Para>The <filename>gimp</filename> module contains a number of
+    procedures and functions, as well as the definitions of many gimp
+    types such as images, and the procedural database.  This section
+    explains the base level procedures.</Para>
+
+    <Sect2 id=constructors-and-destructors>
+      <Title>Constructors and Object Deletion</Title>
+
+      <Para>There are a number of functions in the
+      <filename>gimp</filename> module that are used to create the objects
+      used to make up an image in Gimp.  Here is a set of descriptions
+      of these constructors:</para>
+
+      <VariableList>
+	<VarListEntry>
+	  <Term><function>gimp.image</function>(<parameter>width</parameter>,
+	  <parameter>height</parameter>,
+	  <parameter>type</parameter>)</term>
+	  <ListItem>
+	    <Para>This procedure creates an image with the given
+            dimensions and type (type is one of
+            <literal>RGB</literal>, <literal>GRAY</literal> or
+            <literal>INDEXED</literal>).</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.layer</function>(<parameter>img</parameter>,
+	  <parameter>name</parameter>, <parameter>width</parameter>,
+	  <parameter>height</parameter>, <parameter>type</parameter>,
+	  <parameter>opacity</parameter>,
+	  <parameter>mode</parameter>)</Term>
+	  <ListItem>
+	    <Para>Create a new layer called
+            <parameter>name</parameter>, with the given dimensions and
+            <parameter>type</parameter> (one of the
+            <literal>*_IMAGE</literal> constants),
+            <literal>opacity</literal> (float between 0 and 100) and
+            a <literal>mode</literal> (one of the
+            <literal>*_MODE</literal> constants).  The layer can
+            then be added to the image with the
+            <function>img.add_layer</function> method.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.channel</function>(<parameter>img</parameter>,
+	  <parameter>name</parameter>, <parameter>width</parameter>,
+	  <parameter>height</parameter>,
+	  <parameter>opacity</parameter>,
+	  <parameter>colour</parameter>)</Term>
+	  <ListItem>
+	    <Para>Create a new channel object with the given
+            dimensions, <parameter>opacity</parameter> and
+            <parameter>colour</parameter> (one of the
+            <literal>*_CHANNEL</literal> constants).  This channel can
+            then be added to an image.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.display</function>(<parameter>img</parameter>)</Term>
+	  <ListItem>
+	    <Para>Create a new display window for the given image.
+            The window will not be displayed until a call to
+            <function>gimp.displays_flush</function> is made.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.parasite(name, flags, data)</function></Term>
+	  <ListItem>
+	    <Para>Create a new parasite.  The parasite can then be
+	    attached to gimp, an image or a drawable.  This is only
+	    available in gimp >= 1.1</Para>
+	  </ListItem>
+	</VarListEntry>
+      </VariableList>
+
+      <Para>When any of these objects get removed from memory (such as
+      when their name goes out of range), the gimp thing it represents
+      does not get deleted with it (otherwise when your plugin
+      finished running, it would delete all its work).  In order to
+      delete the thing the Python object represents, you should use
+      the <function>gimp.delete</function> procedure.  It deletes the
+      gimp thing associated with the Python object given as a
+      parameter.  If the object is not an image, layer, channel,
+      drawable or display <function>gimp.delete</function> does
+      nothing.</Para>
+
+    </Sect2>
+
+    <Sect2 id=configuration-information>
+      <Title>Configuration Information</Title>
+
+      <Para>There are a number of functions that can be used to gather
+      information about the environment the plugin is running in:</para>
+
+      <VariableList>
+	<VarListEntry>
+	  <Term><function>gimp.color_cube</function>() or
+	  <function>gimp.colour_cube</function>()</Term>
+	  <ListItem>
+	    <Para>Returns the current colour cube.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.gamma</function>()</Term>
+	  <ListItem>
+	    <Para>Returns the current gamma correction.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.install_cmap</function>()</Term>
+	  <ListItem>
+	    <Para>Returns non-zero if a colour map has been
+	    installed.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.use_xshm</function>()</Term>
+	  <ListItem>
+	    <Para>Returns non-zero if Gimp is using X shared
+	    memory.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.gtkrc</function>()</Term>
+	  <ListItem>
+	    <Para>Returns the file name of the GTK configuration
+	    file.</Para>
+	  </listitem>
+	</VarListEntry>
+      </VariableList>
+
+    </Sect2>
+
+    <Sect2 id=palette-operations>
+      <Title>Palette Operations</Title>
+
+      <Para>These functions alter the currently selected foreground
+      and background.</para>
+
+      <VariableList>
+	<VarListEntry>
+	  <Term><function>gimp.get_background</function>()</Term>
+	  <ListItem>
+	    <Para>Returns a 3-tuple containing the current background
+	    colour in RGB form.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.get_foreground</function>()</Term>
+	  <ListItem>
+	    <Para>Returns a 3-tuple containing the current foreground
+	    colour in RGB form.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.set_background</function>(<parameter>r</parameter>,
+	  <parameter>g</parameter>, <parameter>b</parameter>)</Term>
+	  <ListItem>
+	    <Para>Sets the current background colour.  The three
+            arguments can be replaced by a single 3-tuple like that
+            returned by <function>gimp.get_background</function>.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.set_foreground</function>(<parameter>r</parameter>,
+	  <parameter>g</parameter>, <parameter>b</parameter>)</Term>
+	  <ListItem>
+	    <Para>Sets the current foreground colour.  Like
+            <function>gimp.set_background</function>, the arguments may
+            be replaced by a 3-tuple.</para>
+	  </listitem>
+	</VarListEntry>
+      </VariableList>
+      
+    </Sect2>
+
+    <Sect2 id=gradient-operations>
+      <Title>Gradient Operations</Title>
+
+      <Para>These functions perform operations on gradients:</para>
+
+      <VariableList>
+	<VarListEntry>
+	  <Term><function>gimp.gradients_get_active</function>()</Term>
+	  <ListItem>
+	    <Para>Returns the name of the active gradient.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.gradients_set_active</function>(<parameter>name</parameter>)</Term>
+	  <ListItem>
+	    <Para>Sets the active gradient.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.gradients_get_list</function>()</Term>
+	  <ListItem>
+	    <Para>Returns a list of the names of the available
+	    gradients.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.gradients_sample_uniform</function>(<parameter>num</parameter>)</Term>
+	  <ListItem>
+	    <Para>Returns a list of <parameter>num</parameter>
+            samples, where samples consist of 4-tuples of floats
+            representing the red, green, blue and alpha values for the
+            sample.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.gradients_sample_custom</function>(<parameter>pos</parameter>)</Term>
+	  <ListItem>
+	    <Para>Similar to
+            <function>gimp.gradients_sample_uniform</function>, except
+            the samples are taken at the positions given in the list
+            of floats <parameter>pos</parameter> instead of uniformly
+            through the gradient.</Para>
+	  </listitem>
+	</VarListEntry>
+      </VariableList>
+
+    </Sect2>
+    
+    <Sect2 id=pdb-registration-functions>
+      <Title>PDB Registration Functions</Title>
+
+      <Para>These functions either install procedures into the PDB or
+      alert gimp to their special use (eg as file handlers).</Para>
+
+      <Para>For simple plugins, you will usually only need to use
+      <function>register</function> from gimpfu.</Para>
+
+      <VariableList>
+	<VarListEntry>
+	  <Term><function>gimp.install_procedure</function>(<parameter>name</parameter>,
+          <parameter>blurb</parameter>, <parameter>help</parameter>,
+          <parameter>author</parameter>,
+          <parameter>copyright</parameter>,
+          <parameter>date</parameter>,
+          <parameter>menu_path</parameter>,
+          <parameter>image_types</parameter>,
+          <parameter>type</parameter>, <parameter>params</parameter>,
+          <parameter>ret_vals</parameter>)</Term>
+	  <ListItem>
+	    <Para>This procedure is used to install a procedure into
+            the PDB.  The first eight parameters are strings,
+            <parameter>type</parameter> is a one of the
+            <literal>PROC_*</literal> constants, and the last two
+            parameters are sequences describing the parameters and
+            return values.  Their format is the same as the param and
+            ret_vals methods or PDB procedures.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.install_temp_proc</function>(<parameter>name</parameter>,
+          <parameter>blurb</parameter>, <parameter>help</parameter>,
+          <parameter>author</parameter>,
+          <parameter>copyright</parameter>,
+          <parameter>date</parameter>,
+          <parameter>menu_path</parameter>,
+          <parameter>image_types</parameter>, <parameter>type,
+          params</parameter>, <parameter>ret_vals</parameter>)</Term>
+	  <ListItem>
+	    <Para>This procedure is used to install a procedure into
+            the PDB temporarily.  That is, it must be added again
+            every time gimp is run.  This procedure will be called the
+            same way as all other procedures for a plugin.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.uninstall_temp_proc</function>(<parameter>name</parameter>)</Term>
+	  <ListItem>
+	    <Para>This removes a temporary procedure from the
+	    PDB.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.register_magic_load_handle</function>r(<parameter>name</parameter>,
+	  <parameter>extensions</parameter>,
+	  <parameter>prefixes</parameter>,
+	  <parameter>magics</parameter>)</Term>
+	  <ListItem>
+	    <Para>This procedure tells Gimp that the PDB procedure
+            <parameter>name</parameter> can load files with
+            <parameter>extensions</parameter> and
+            <parameter>prefixes</parameter> (eg http:) with magic
+            information <parameter>magics</parameter>.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.register_load_handler</function>(<parameter>name</parameter>,
+	  <parameter>extensions</parameter>,
+	  <parameter>prefixes</parameter>)</Term>
+	  <ListItem>
+	    <Para>This procedure tells Gimp that the PDB procedure
+            <parameter>name</parameter> can load files with
+            <parameter>extensions</parameter> and
+            <parameter>prefixes</parameter> (eg http:).</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.register_save_handler</function>(<parameter>name</parameter>,
+	  <parameter>extensions</parameter>,
+	  <parameter>prefixes</parameter>)</Term>
+	  <ListItem>
+	    <Para>This procedure tells Gimp that the PDB procedure
+            <parameter>name</parameter> can save files with
+            <parameter>extensions</parameter> and
+            <parameter>prefixes</parameter> (eg http:).</Para>
+	  </listitem>
+	</VarListEntry>
+      </VariableList>
+
+    </Sect2>
+
+    <Sect2 id=other-functions>
+      <Title>Other Functions</Title>
+
+      <Para>These are the other functions in the
+      <filename>gimp</filename> module.</para>
+
+      <VariableList>
+	<VarListEntry>
+	  <Term><function>gimp.main</function>(<parameter>init_func</parameter>,
+	  <parameter>quit_func</parameter>,
+	  <parameter>query_func</parameter>,
+	  <parameter>run_func</parameter>)</Term>
+	  <ListItem>
+	    <Para>This function is the one that controls the execution
+            of a Gimp-Python plugin.  It is better to not use this
+            directly but rather subclass the plugin class, defined in
+            the <XRef LinkEnd="gimpplugin-module">.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><parameter>gimp.pdb</parameter></Term>
+	  <ListItem>
+	    <Para>The procedural database object.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.progress_init</function>(<parameter>[label]</parameter>)</Term>
+	  <ListItem>
+	    <Para>(Re)Initialise the progress meter with
+            <parameter>label</parameter> (or the plugin name) as a
+            label in the window.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.progress_update</function>(<parameter>percnt</parameter>)</Term>
+	  <ListItem>
+	    <Para>Set the progress meter to
+	    <parameter>percnt</parameter> done.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.query_images</function>()</Term>
+	  <ListItem>
+	    <Para>Returns a list of all the image objects.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.quit</function>()</Term>
+	  <ListItem>
+	    <Para>Stops execution imediately and exits.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.displays_flush</function>()</Term>
+	  <ListItem>
+	    <Para>Update all the display windows.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.tile_width</function>()</Term>
+	  <ListItem>
+	    <Para>The maximum width of a tile.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.tile_height</function>()</Term>
+	  <ListItem>
+	    <Para>The maximum height of a tile.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.tile_cache_size</function>(<parameter>kb</parameter>)</Term>
+	  <ListItem>
+	    <Para>Set the size of the tile cache in kilobytes.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.tile_cache_ntiles</function>(<parameter>n</parameter>)</Term>
+	  <ListItem>
+	    <Para>Set the size of the tile cache in tiles.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.get_data</function>(<parameter>key</parameter>)</Term>
+	  <ListItem>
+	    <Para>Get the information associated with
+            <parameter>key</parameter>.  The data will be a string.
+            This function should probably be used through the <XRef
+            LinkEnd="gimpshelf-module">.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.set_data</function>(<parameter>key</parameter>,
+	  <parameter>data</parameter>)</Term>
+	  <ListItem>
+	    <Para>Set the information in the string
+            <parameter>data</parameter> with
+            <parameter>key</parameter>.  The data will persist for the
+            whole gimp session.  Rather than directly accessing this
+            function, it is better to go through the <XRef
+            LinkEnd="gimpshelf-module">.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.extension_ack</function>()</Term>
+	  <ListItem>
+	    <Para>Tells gimp that the plugin has finished its work,
+            while keeping the plugin connection open.  This is used by
+            an extension plugin to tell gimp it can continue, while
+            leaving the plugin connection open.  This is what the
+            script-fu plugin does so that only one scheme interpretter
+            is needed.</Para>
+	  </listitem>
+	</VarListEntry>
+	<VarListEntry>
+	  <Term><function>gimp.extension_process</function>(<parameter>timeout</parameter>)</Term>
+	  <ListItem>
+	    <Para>Makes the plugin check for messages from gimp.
+            generally this is not needed, as messages are checked
+            during most calls in the gimp module.</Para>
+	  </listitem>
+	</VarListEntry>
+      </VariableList>
+
+    </Sect2>
+
+    <Sect2 id=parasites>
+      <Title>Parasites</Title>
+
+      <Para>In gimp >= 1.1, it is possible to attach arbitrary data to
+      an image through the use of parasites.  Parasites are simply
+      wrappers for the data, containing its name and some flags.
+      Parasites have the following parameters:</Para>
+      <VariableList>
+	<varlistentry>
+	  <term>data</term>
+	  <listitem>
+	    <Para>The data for the parasite -- a string</Para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>flags</term>
+	  <listitem>
+	    <Para>The flags for the parasite</Para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>is_persistent</term>
+	  <listitem>
+	    <Para>True if this parasite is persistent</Para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>is_undoable</term>
+	  <listitem>
+	    <Para>True if this parasite is undoable</Para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>name</term>
+	  <listitem>
+	    <Para>The name of the parasite</Para>
+	  </listitem>
+	</varlistentry>
+      </VariableList>
+
+      <Para>Parasites also have the methods <function>copy</function>,
+      <function>is_type</function> and
+      <function>has_flag</function>.</Para>
+
+      <Para>There is a set of four functions that are used to
+      manipulate parasites.  They exist as functions in the
+      <filename>gimp</filename> module, and methods for image and
+      drawable objects.  They are:</Para>
+      <VariableList>
+	<varlistentry>
+	  <term><function>find_parasite</function>(<parameter>name</parameter>)</term>
+	  <listitem>
+	    <Para>find a parasite by its name.</Para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><function>attach_parasite</function>(<parameter>parasite</parameter>)</term>
+	  <listitem>
+	    <Para>Attach a parasite to this object.</Para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><function>attach_new_parasite</function>(<parameter>name</parameter>, <parameter>flags</parameter>, <parameter>data</parameter>)</term>
+	  <listitem>
+	    <Para>Create a new parasite and attach it.</Para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><function>detach_parasite</function>(<parameter>name</parameter>)</term>
+	  <listitem>
+	    <Para>Detach the named parasite</Para>
+	  </listitem>
+	</varlistentry>
+      </VariableList>
+
+    </Sect2>
+
+  </Sect1>
+
+  <Sect1 id=gimp-objects>
+    <Title>Gimp Objects</Title>
+
+    <Para>Gimp-Python implements a number of special object types that
+    represent the different types of parameters you can pass to a PDB
+    procedure.  Rather than just making these place holders, I have
+    added a number of members and methods to them that allow a lot of
+    configurability without directly calling PDB procedures.</Para>
+
+    <Para>There are also a couple of extra objects that allow low
+    level manipulation of images.  These are tile objects (working)
+    and pixel regions (not quite finished).</Para>
+
+    <Sect2 id=image-object>
+      <Title>Image Object</Title>
+
+      <Para>This is the object that represents an open image.  In this
+      section, <replaceable>image</replaceable> represents a generic
+      image object.</Para>
+
+      <Sect3 id=image-object-members>
+	<Title>Image Members</Title>
+
+	<Para></Para>
+
+	<VariableList>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<parameter>active_channel</parameter></Term>
+	    <ListItem>
+	      <Para>This is the active channel of the image.  You can
+              also assign to this member, or
+              <parameter>None</parameter> if there is no active
+              channel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<parameter>active_layer</parameter></Term>
+	    <ListItem>
+	      <Para>This is the active layer of the image.  You can
+              also assign to this member, or
+              <parameter>None</parameter> if there is no active
+              layer.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<parameter>base_type</parameter></Term>
+	    <ListItem>
+	      <Para>This is the type of the image (eg RGB, INDEXED).</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<parameter>channels</parameter></Term>
+	    <ListItem>
+	      <Para>This is a list of the channels of the image.
+              Altering this list has no effect, and you can not assign
+              to this member.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<parameter>cmap</parameter></Term>
+	    <ListItem>
+	      <Para>This is the colour map for the image.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<parameter>filename</parameter></Term>
+	    <ListItem>
+	      <Para>This is the filename for the image.  A file load
+              or save handler might assign to this.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<parameter>height</parameter></Term>
+	    <ListItem>
+	      <Para>This is the height of the image.  You can't assign
+              to this member.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<parameter>floating_selection</parameter></Term>
+	    <ListItem>
+	      <Para>The floating selection layer, or
+              <parameter>None</parameter> if there is no floating
+              selection.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<parameter>layers</parameter></Term>
+	    <ListItem>
+	      <Para>This is a list of the layers of the image.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<parameter>selection</parameter></Term>
+	    <ListItem>
+	      <Para>The selection mask for the image.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<parameter>width</parameter></Term>
+	    <ListItem>
+	      <Para>This is the width of the image.  You can't assign
+              to this member.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+
+      <Sect3 id=image-object-methods>
+	<Title>Image Methods</Title>
+
+	<Para></Para>
+	<VariableList>
+
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>add_channel</function>(<parameter>channel</parameter>,
+	    <parameter>position</parameter>)</Term>
+	    <ListItem>
+	      <Para>Adds <parameter>channel</parameter> to
+              <replaceable>image</replaceable> in position
+              <parameter>position</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>add_layer</function>(<parameter>layer</parameter>,
+	    <parameter>position</parameter>)</Term>
+	    <ListItem>
+	      <Para>Adds <parameter>layer</parameter> to
+              <replaceable>image</replaceable> in position
+              <parameter>position</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>add_layer_mask</function>(<parameter>layer</parameter>,
+	    <parameter>mask</parameter>)</Term>
+	    <ListItem>
+	      <Para>Adds the mask <parameter>mask</parameter> to
+	      <parameter>layer</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>clean_all</function>()</Term>
+	    <ListItem>
+	      <Para>Unsets the dirty flag on the image.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>disable_undo</function>()</Term>
+	    <ListItem>
+	      <Para>Disables undo for
+	      <replaceable>image</replaceable>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>enable_undo</function>()</Term>
+	    <ListItem>
+	      <Para>Enables undo for <replaceable>image</replaceable>.
+              You might use these commands round a plugin, so that the
+              plugin's actions can be undone in a single step.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>flatten</function>()</Term>
+	    <ListItem>
+	      <Para>Returns the resulting layer after merging all the
+              visible layers, discarding non visible ones and
+              stripping the alpha channel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>get_component_active</function>(<parameter>component</parameter>)</Term>
+	    <ListItem>
+	      <Para>Returns true if <parameter>component</parameter>
+              (one of the <literal>*_CHANNEL</literal> constants) is
+              active.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>get_component_visible</function>(<parameter>component</parameter>)</Term>
+	    <ListItem>
+	      <Para>Returns true if <parameter>component</parameter>
+              is visible.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>set_component_active</function>(<parameter>component</parameter>,
+	    <parameter>active</parameter>)</Term>
+	    <ListItem>
+	      <Para>Sets the activeness of
+	      <parameter>component</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>set_component_visible</function>(<parameter>component</parameter>,
+	    <parameter>active</parameter>)</Term>
+	    <ListItem>
+	      <Para>Sets the visibility of
+	      <parameter>component</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>lower_channel</function>(<parameter>channel</parameter>)</Term>
+	    <ListItem>
+	      <Para>Lowers <parameter>channel</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>lower_layer</function>(<parameter>layer</parameter>)</Term>
+	    <ListItem>
+	      <Para>Lowers <parameter>layer</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>merge_visible_layers</function>(<parameter>type</parameter>)</Term>
+	    <ListItem>
+	      <Para>Merges the visible layers of
+              <replaceable>image</replaceable> using the given merge
+              type.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>pick_correlate_layer</function>(<parameter>x</parameter>,
+	    <parameter>y</parameter>)</Term>
+	    <ListItem>
+	      <Para>Returns the layer that is visible at the point
+              <parameter>(x,y)</parameter>, or
+              <parameter>None</parameter> if no layer matches.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+<Term><replaceable>image</replaceable>.<function>raise_channel</function>(<parameter>channel</parameter>)</Term>
+	    <ListItem>
+	      <Para>Raises <parameter>channel</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>raise_layer</function>(<parameter>layer</parameter>)</Term>
+	    <ListItem>
+	      <Para>Raises <parameter>layer</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>remove_channel</function>(<parameter>channel</parameter>)</Term>
+	    <ListItem>
+	      <Para>Removes <parameter>channel</parameter> from
+	      <replaceable>image</replaceable>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>remove_layer</function>(<parameter>layer</parameter>)</Term>
+	    <ListItem>
+	      <Para>Removes <parameter>layer</parameter> from
+	      <replaceable>image</replaceable>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>remove_layer_mask</function>(<parameter>layer</parameter>,
+	    <parameter>mode</parameter>)</Term>
+	    <ListItem>
+	      <Para>Removes the mask from
+              <parameter>layer</parameter>, with the given
+              <parameter>mode</parameter> (either APPLY or
+              DISCARD).</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>image</replaceable>.<function>resize</function>(<parameter>width</parameter>,
+	    <parameter>height</parameter>, <parameter>x</parameter>,
+	    <parameter>y</parameter>)</Term>
+	    <ListItem>
+	      <Para>Resizes the image to size <parameter>(width,
+              height)</parameter> and places the old contents at
+              position <parameter>(x,y)</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+
+    </Sect2>
+
+    <Sect2 id=channel-object>
+      <Title>Channel Objects</Title>
+
+      <Para>These objects represent a Gimp Image's colour channels.
+      In this section, <replaceable>channel</replaceable> will refer
+      to a generic channel object.</Para>
+
+      <Sect3 id=channel-object-members>
+	<Title>Channel Members</Title>
+
+	<Para></Para>
+
+	<VariableList>
+	  <VarListEntry>
+	    <Term><replaceable>channel</replaceable>.<parameter>colour</parameter>
+	    or
+	    <replaceable>channel</replaceable>.<parameter>color</parameter></Term>
+	    <ListItem>
+	      <Para>The colour of the channel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>channel</replaceable>.<parameter>height</parameter></Term>
+	    <ListItem>
+	      <Para>The height of the channel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>channel</replaceable>.<parameter>width</parameter></Term>
+	    <ListItem>
+	      <Para>The width of the channel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>channel</replaceable>.<parameter>image</parameter></Term>
+	    <ListItem>
+	      <Para>The image the channel belongs to, or
+              <parameter>None</parameter> if it isn't attached
+              yet.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>channel</replaceable>.<parameter>layer</parameter></Term>
+	    <ListItem>
+	      <Para>The channel's layer (??) or
+              <parameter>None</parameter> if one doesn't exist.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>channel</replaceable>.<parameter>layer_mask</parameter></Term>
+	    <ListItem>
+	      <Para>Non zero if the channel is a layer mask.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>channel</replaceable>.<parameter>name</parameter></Term>
+	    <ListItem>
+	      <Para>The name of the channel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>channel</replaceable>.<parameter>opacity</parameter></Term>
+	    <ListItem>
+	      <Para>The opacity of the channel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>channel</replaceable>.<parameter>show_masked</parameter></Term>
+	    <ListItem>
+	      <Para>The show_masked value of the channel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>channel</replaceable>.<parameter>visible</parameter></Term>
+	    <ListItem>
+	      <Para>Non-zero if the channel is visible.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+
+      <Sect3 id=channel-object-methods>
+	<Title>Channel Methods</Title>
+
+	<Para></Para>
+
+	<VariableList>
+	  <VarListEntry>
+	    <Term><replaceable>channel</replaceable>.<function>copy</function>()</Term>
+	    <ListItem>
+	      <Para>returns a copy of the channel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+      
+    </Sect2>
+
+    <Sect2 id=layer-object>
+      <Title>Layer Objects</Title>
+
+      <Para>Layer objects represent the layers of a Gimp image.  In
+      this section I will refer to a generic layer called
+      <replaceable>layer</replaceable>.</Para>
+
+      <Sect3 id=layer-object-members>
+	<Title>Layer Members</Title>
+
+	<Para></Para>
+
+	<VariableList>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<parameter>apply_mask</parameter></Term>
+	    <ListItem>
+	      <Para>The apply mask setting. (non zero if the layer
+              mask is being composited with the layer's alpha
+              channel).</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<parameter>bpp</parameter></Term>
+	    <ListItem>
+	      <Para>The number of bytes per pixel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<parameter>edit_mask</parameter></Term>
+	    <ListItem>
+	      <Para>The edit mask setting.  (non zero if the mask is
+              active, rather than the layer).</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<parameter>height</parameter></Term>
+	    <ListItem>
+	      <Para>The height of the layer.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<parameter>image</parameter></Term>
+	    <ListItem>
+	      <Para>The image the layer is part of, or
+              <parameter>None</parameter> if the layer isn't
+              attached.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<parameter>is_floating_selection</parameter></Term>
+	    <ListItem>
+	      <Para>Non zero if this layer is the image's floating
+	      selection.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<parameter>mask</parameter></Term>
+	    <ListItem>
+	      <Para>The layer's mask, or <parameter>None</parameter>
+	      if it doesn't have one.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<parameter>mode</parameter></Term>
+	    <ListItem>
+	      <Para>The mode of the layer.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<parameter>name</parameter></Term>
+	    <ListItem>
+	      <Para>The name of the layer.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<parameter>opacity</parameter></Term>
+	    <ListItem>
+	      <Para>The opacity of the layer.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<parameter>preserve_transparency</parameter></Term>
+	    <ListItem>
+	      <Para>The layer's preserve transparency setting.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+
+      <Sect3 id=layer-object-methods>
+	<Title>Layer Methods</Title>
+
+	<Para></Para>
+
+	<VariableList>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<function>add_alpha</function>()</Term>
+	    <ListItem>
+	      <Para>Adds an alpha component to the layer.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<function>copy</function>(<parameter>[alpha]</parameter>)</Term>
+	    <ListItem>
+	      <Para>Creates a copy of the layer, optionally with an
+	      alpha layer.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<function>create_mask</function>(<parameter>type</parameter>)</Term>
+	    <ListItem>
+	      <Para>Creates a layer mask of type
+	      <parameter>type</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<function>resize</function>(<parameter>w</parameter>,
+	    <parameter>h</parameter>, <parameter>x</parameter>,
+	    <parameter>y</parameter>)</Term>
+	    <ListItem>
+	      <Para>Resizes the layer to <parameter>(w,
+              h)</parameter>, positioning the original contents at
+              <parameter>(x,y)</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<function>scale</function>(<parameter>h</parameter>,
+	    <parameter>w</parameter>,
+	    <parameter>origin</parameter>)</Term>
+	    <ListItem>
+	      <Para>Scales the layer to <parameter>(w, h)</parameter>,
+              using the specified <parameter>origin</parameter> (local
+              or image).</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<function>set_offsets</function>(<parameter>x</parameter>,
+	    <parameter>y</parameter>)</Term>
+	    <ListItem>
+	      <Para>Sets the offset of the layer, relative to the
+	      image's origin</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>layer</replaceable>.<function>translate</function>(<parameter>x</parameter>,
+	    <parameter>y</parameter>)</Term>
+	    <ListItem>
+	      <Para>Moves the layer to <parameter>(x, y)</parameter>
+              relative to its current position.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+
+    </Sect2>
+
+    <Sect2 id=drawable-object>
+      <Title>Drawable Objects</Title>
+
+      <Para>Both layers and channels are drawables.  Hence there are a
+      number of operations that can be performed on both objects.
+      They also have some common attributes and methods.  In the
+      description of these attributes, I will refer to a generic
+      drawable called <replaceable>drawable</replaceable>.</Para>
+
+      <Sect3 id=drawable-object-members>
+	<Title>Drawable Members</Title>
+
+	<Para></Para>
+
+	<VariableList>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>bpp</parameter></Term>
+	    <ListItem>
+	      <Para>The number of bytes per pixel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>is_colour</parameter>
+	    or
+	    <replaceable>drawable</replaceable>.<parameter>is_color</parameter></Term>
+	    <ListItem>
+	      <Para>Non zero if the drawable is colour.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>is_grey</parameter>
+	    or
+	    <replaceable>drawable</replaceable>.<parameter>is_gray</parameter></Term>
+	    <ListItem>
+	      <Para>Non zero if the drawable is greyscale.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>has_alpha</parameter></Term>
+	    <ListItem>
+	      <Para>Non zero if the drawable has an alpha channel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>height</parameter></Term>
+	    <ListItem>
+	      <Para>The height of the drawable.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>image</parameter></Term>
+	    <ListItem>
+	      <Para>The image the drawable belongs to.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>is_indexed</parameter></Term>
+	    <ListItem>
+	      <Para>Non zero if the drawable uses an indexed colour
+	      scheme.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>mask_bounds</parameter></Term>
+	    <ListItem>
+	      <Para>The bounds of the drawable's selection.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>name</parameter></Term>
+	    <ListItem>
+	      <Para>The name of the drawable.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>offsets</parameter></Term>
+	    <ListItem>
+	      <Para>The offset of the top left hand corner of the
+	      drawable.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>type</parameter></Term>
+	    <ListItem>
+	      <Para>The type of the drawable.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>visible</parameter></Term>
+	    <ListItem>
+	      <Para>Non zero if the drawable is visible.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<parameter>width</parameter></Term>
+	    <ListItem>
+	      <Para>The width of the drawable.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+
+      <Sect3 id=drawable-object-methods>
+	<Title>Drawable Methods</Title>
+
+	<Para></Para>
+
+	<VariableList>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<function>fill</function>(<parameter>fill_type</parameter>)</Term>
+	    <ListItem>
+	      <Para>Fills the drawable with given
+	      <parameter>fill_type</parameter> (one of the
+	      <literal>*_FILL</literal> constants).</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<function>flush</function>()</Term>
+	    <ListItem>
+	      <Para>Flush the changes to the drawable.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<function>get_pixel_rgn</function>(<parameter>x</parameter>,
+	    <parameter>y</parameter>, <parameter>w</parameter>,
+	    <parameter>h</parameter>, [<parameter>dirty</parameter>,
+	    [<parameter>shadow</parameter>])</Term>
+	    <ListItem>
+	      <Para>Creates a pixel region for the drawable.  It will
+              cover the region with origin
+              <parameter>(x,y)</parameter> and dimensions <parameter>w
+              x h</parameter>.  The <parameter>dirty</parameter>
+              argument sets whether any changes to the pixel region
+              will be reflected in the drawable (default is TRUE).
+              The <parameter>shadow</parameter> argument sets whether
+              the pixel region acts on the shadow tiles or not
+              (default is FALSE).  If you draw on the shadow tiles,
+              you must call
+              <replaceable>drawable</replaceable>.<function>merge_shadow</function>()
+              for changes to take effect.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<function>get_tile</function>(<parameter>shadow</parameter>,
+	    <parameter>row</parameter>,
+	    <parameter>col</parameter>)</Term>
+	    <ListItem>
+	      <Para>Get a tile at <parameter>(row,
+	      col)</parameter>. Either on or off the
+	      <parameter>shadow</parameter> buffer.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<function>get_tile2</function>(<parameter>shadow</parameter>,
+	    <parameter>x</parameter>, <parameter>y</parameter>)</Term>
+	    <ListItem>
+	      <Para>Get the tile that contains the pixel
+	      <parameter>(x, y)</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<function>merge_shadow</function>()</Term>
+	    <ListItem>
+	      <Para>Merge the shadow buffer back into the
+	      drawable.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>drawable</replaceable>.<function>update</function>(<parameter>x</parameter>,
+	    <parameter>y</parameter>, <parameter>w</parameter>,
+	    <parameter>h</parameter>)</Term>
+	    <ListItem>
+	      <Para>Update the given portion of the drawable.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+      
+    </Sect2>
+
+    <Sect2 id=tile-object>
+      <Title>Tile Objects</Title>
+
+      <Para>Tile objects represent the way Gimp stores information.  A
+      tile is basically just a 64x64 pixel region of the drawable.
+      The reason Gimp breaks the image into small pieces like this is
+      so that the whole image doesn't have to be loaded into memory in
+      order to alter one part of it.  This becomes important with
+      larger images.</Para>
+
+      <Para>In Gimp-Python, you would use Tiles if you wanted to
+      perform some low level operation on the image, instead of using
+      procedures in the PDB.  This type of object gives a Gimp-Python
+      plugin the power of a C plugin, rather than just the power of a
+      Script-Fu script.  Tile objects are created with either the
+      <replaceable>drawable</replaceable>.<function>get_tile</function>()
+      or
+      <replaceable>drawable</replaceable>.<function>get_tile2</function>()
+      functions.  In this section, I will refer to a generic tile
+      object named <replaceable>tile</replaceable>.</Para>
+
+      <Sect3 id=tile-object-members>
+	<Title>Tile Members</Title>
+
+	<Para>All tile members are read only.</Para>
+
+	<VariableList>
+	  <VarListEntry>
+	    <Term><replaceable>tile</replaceable>.<parameter>bpp</parameter></Term>
+	    <ListItem>
+	      <Para>The number of bytes per pixel.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>tile</replaceable>.<parameter>dirty</parameter></Term>
+	    <ListItem>
+	      <Para>If there have been changes to the tile since it
+	      was last flushed.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>tile</replaceable>.<parameter>drawable</parameter></Term>
+	    <ListItem>
+	      <Para>The drawable that the tile is from.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>tile</replaceable>.<parameter>eheight</parameter></Term>
+	    <ListItem>
+	      <Para>The actual height of the tile.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>tile</replaceable>.<parameter>ewidth</parameter></Term>
+	    <ListItem>
+	      <Para>The actual width of the tile.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>tile</replaceable>.<parameter>ref_count</parameter></Term>
+	    <ListItem>
+	      <Para>The reference count of the tile.  (this is
+	      independent of the Python object reference
+	      count).</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>tile</replaceable>.<parameter>shadow</parameter></Term>
+	    <ListItem>
+	      <Para>Non zero if the tile is part of the shadow
+	      buffer.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+
+      <Sect3 id=tile-object-methods>
+	<Title>Tile Methods</Title>
+
+	<Para></Para>
+
+	<VariableList>
+	  <VarListEntry>
+	    <Term><replaceable>tile</replaceable>.<function>flush</function>()</Term>
+	    <ListItem>
+	      <Para>Flush any changes in the tile.  Note that the tile
+	      is automatically flushed when the Python object is
+	      deleted from memory.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+      
+      <Sect3 id=tile-object-mapping>
+	<Title>Tile Mapping Behaviour</Title>
+
+	<Para>Tile objects also act as a mapping, or sequence.  You
+	can access the pixels in the tile in one of two ways.  You can
+	either access them with a single number, which refers to its
+	position in the tile
+	(eg. <replaceable>tile</replaceable><literal>[64]</literal>
+	refers to the first pixel in the second row of a 64x64 pixel
+	tile).  The other way is with a tuple, representing the
+	coordinates on the tile
+	(eg. <replaceable>tile</replaceable><literal>[0, 1]</literal>
+	refers to the first pixel on the second row of the
+	tile).</Para>
+
+	<Para>The type of these subscripts is a string of length
+	<replaceable>tile</replaceable>.<parameter>bpp</parameter>.
+	When you assign to a subscript, the dirty flag is
+	automatically set on the tile, so you don't have to explicitly
+	set the flag, or flush the tile.</Para>
+
+      </Sect3>
+
+    </Sect2>
+
+    <Sect2 id=pregion-object>
+      <Title>Pixel Regions</Title>
+
+      <Para>Pixel region objects give an interface for low level
+      operations to act on large regions of an image, instead of on
+      small 64x64 pixel tiles.  In this section I will refer to a
+      generic pixel region called <replaceable>pr</replaceable>.  For
+      an example of a pixel region's use, please see the example
+      plugin <filename>whirlpinch.py</filename>.</Para>
+
+      <Sect3 id=pregion-object-members>
+	<Title>Pixel Region Members</Title>
+
+	<Para></Para>
+
+	<VariableList>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>.<parameter>drawable</parameter></Term>
+	    <ListItem>
+	      <Para>The drawable this pixel region is for.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>.<parameter>bpp</parameter></Term>
+	    <ListItem>
+	      <Para>The number of bytes per pixel for the drawable.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>.<parameter>rowstride</parameter></Term>
+	    <ListItem>
+	      <Para>The rowstride for the pixel region.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>.<parameter>x</parameter></Term>
+	    <ListItem>
+	      <Para>The x coordinate of the top left hand corner.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>.<parameter>y</parameter></Term>
+	    <ListItem>
+	      <Para>The y coordinate of the top left hand corner.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>.<parameter>w</parameter></Term>
+	    <ListItem>
+	      <Para>The width of the pixel region.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>.<parameter>h</parameter></Term>
+	    <ListItem>
+	      <Para>The height of the pixel region.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>.<parameter>dirty</parameter></Term>
+	    <ListItem>
+	      <Para>Non zero if changes to the pixel region will be
+	      reflected in the drawable.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>.<parameter>shadow</parameter></Term>
+	    <ListItem>
+	      <Para>Non zero if the pixel region acts on the shadow
+	      tiles of the drawable.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+
+      <Sect3 id=pregion-object-methods>
+	<Title>Pixel Region Methods</Title>
+	
+	<Para></Para>
+
+	<VariableList>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>.<function>resize</function>(<parameter>x</parameter>,
+	    <parameter>y</parameter>, <parameter>w</parameter>,
+	    <parameter>h</parameter>)</Term>
+	    <ListItem>
+	      <Para>resize the pixel region so that it operates on the
+	      the region with corner <parameter>(x, y)</parameter>
+	      with dimensions <parameter>w x h</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+
+      <Sect3 id=pregion-object-mapping>
+	<Title>Pixel Region Mapping Behaviour</Title>
+
+	<Para>The pixel region acts as a mapping.  The index is a
+	2-tuple with components that are either integers or slices.
+	The subscripts may be read and assigned to.  The type of the
+	subscripts is a string containing the binary data of the
+	requested region.  Here is a description of the posible
+	operations:</Para>
+
+	<VariableList>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>[<parameter>x</parameter>,
+	    <parameter>y</parameter>]</Term>
+	    <ListItem>
+	      <Para>Get/Set the pixel at
+	      <parameter>(x,y)</parameter></Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>[<parameter>x1</parameter>:<parameter>x2</parameter>,
+	    <parameter>y</parameter>]</Term>
+	    <ListItem>
+	      <Para>Get/Set the row starting at <parameter>(x1,
+	      y)</parameter>, width <parameter>x2 -
+	      x1</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>[<parameter>x</parameter>,
+	    <parameter>y1</parameter>:<parameter>y2</parameter>]</Term>
+	    <ListItem>
+	      <Para>Get/Set the column starting at <parameter>(x,
+	      y1)</parameter>, height <parameter>y2 -
+	      y1</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	  <VarListEntry>
+	    <Term><replaceable>pr</replaceable>[<parameter>x1</parameter>:<parameter>x2</parameter>,
+	    <parameter>y1</parameter>:<parameter>y1</parameter>]</Term>
+	    <ListItem>
+	      <Para>Get/Set the rectangle starting at <parameter>(x1,
+	      y1)</parameter>, width <parameter>x2 - x1</parameter>
+	      and height <parameter>y2 - y1</parameter>.</Para>
+	    </listitem>
+	  </VarListEntry>
+	</VariableList>
+
+      </Sect3>
+
+    </Sect2>
+
+  </Sect1>
+
+  <Sect1 id=support-modules>
+    <Title>Support Modules</Title>
+
+    <Para>This section describes the modules that help make using the
+    <filename>gimp</filename> module easier.  These range from a set
+    of constants to storing persistent data.</Para>
+
+    <Sect2 id=gimpenums-module>
+      <Title>The gimpenums Module</Title>
+
+      <Para>This module contains all the constants found in the header
+      <filename>libgimp/gimpenums.h</filename>, as well as some extra
+      constants that are available in Script-Fu.</Para>
+
+    </Sect2>
+
+    <Sect2>
+      <Title>The gimpfu Module</Title>
+
+      <Para>This module was fully described in an earlier section.  It
+      provides an easy interface for writing plugins, where you do not
+      need to worry about run_modes, GUI's and saving previous values.
+      It is the recommended module for writing plugins.</Para>
+
+    </Sect2>
+
+    <Sect2 id=gimpplugin-module>
+      <Title>The gimpplugin Module</Title>
+
+      <Para>This module provides the framework for writing Gimp
+      plugins in Python.  It gives more flexibility for writing
+      plugins than the gimpfu module, but does not offer as many
+      features (such as automatic GUI building).</Para>
+
+      <Para>To use this framework you subclass
+      <function>gimpplugin.plugin</function> like so:</Para>
+
+<ProgramListing>
+import gimpplugin
+class myplugin(gimpplugin.plugin):
+	def init(self):
+		# initialisation routines
+		# called when gimp starts.
+	def quit(self):
+		# clean up routines
+		# called when gimp exits (normally).
+	def query(self):
+		# called to find what functionality the plugin provides.
+		gimp.install_procedure("procname", ...)
+	# note that this method name matches the first arg of
+	# gimp.install_procedure
+	def procname(self, arg1, ...):
+		# do what ever this plugin should do
+</ProgramListing>
+
+    </Sect2>
+
+    <Sect2 id="gimpshelf-module">
+      <Title>The gimpshelf Module</Title>
+
+      <Para>This module gives a nicer interface to the persistent
+      storage interface for Gimp plugins.  Due to the complicated
+      nature of Python objects (there is often a lot of connections
+      between them), it can be dificult to work out what to store in
+      gimp's persistent storage.  The python interface only allows
+      storage of strings, so this module wraps pickle and unpickle to
+      allow persistentstorage of any python object.</Para>
+
+      <Para>Here is some examples of using this module:</Para>
+
+<Screen>
+&gt;&gt;&gt; from gimpshelf import shelf
+&gt;&gt;&gt; shelf['james'] = ['forty-two', (42, 42L, 42.0)]
+&gt;&gt;&gt; shelf.has_key('james')
+1
+&gt;&gt;&gt; shelf['james']
+['forty-two', (42, 42L, 42.0)]
+</Screen>
+
+      <Para>Anything you store with
+      <function>gimpshelf.shelf</function> will exist until Gimp
+      exits.  This makes this interface perfect for when a plugin is
+      executed with the run mode
+      <literal>RUN_WITH_LAST_VALS</literal>.</Para>
+
+    </Sect2>
+
+  </Sect1>
+
+  <Sect1 id=end-note>
+    <Title>End Note</Title>
+
+    <Para>This package is not yet complete, but it has enough in it to
+    be useful for writing plugins for Gimp.  If you write any plugins
+    that might be useful as examples, please mail me at <ULink
+    URL="mailto:james@daa.com.au" >james@daa.com.au</ULink>.</Para>
+
+  </Sect1>
+
+</Article>

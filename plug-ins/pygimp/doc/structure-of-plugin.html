@@ -1,0 +1,573 @@
+<!DOCTYPE HTML PUBLIC "-//Norman Walsh//DTD DocBook HTML 1.0//EN">
+<HTML
+><HEAD
+><TITLE
+>The Structure Of A Plugin</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet"><LINK
+REL="HOME"
+TITLE="Gimp Python Documentation"
+HREF="pygimp.html"><LINK
+REL="PREVIOUS"
+TITLE="Gimp Python Documentation"
+HREF="pygimp.html"><LINK
+REL="NEXT"
+TITLE="The Procedural Database"
+HREF="procedural-database.html"></HEAD
+><BODY
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Gimp Python Documentation</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="pygimp.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="procedural-database.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="STRUCTURE-OF-PLUGIN"
+>The Structure Of A Plugin</A
+></H1
+><P
+>The majority of code in this package resides in
+    <TT
+CLASS="FILENAME"
+>gimpmodule.c</TT
+>, but this provides a poor
+    interface for implementing some portions of a plugin.  For this
+    reason, there is a python module called
+    <TT
+CLASS="FILENAME"
+>plugin.py</TT
+> that sets out a structure for
+    plugins and implements some things that were either too dificult
+    or impossible to do in C.</P
+><P
+>The main purpose of <TT
+CLASS="FILENAME"
+>plugin.py</TT
+> was to
+    implement an object oriented structure for plug-ins.  As well as
+    this, it handles tracebacks, which are otherwise ignored by
+    <TT
+CLASS="FILENAME"
+>libgimp</TT
+>, and gives a method to call
+    other Gimp-Python plug-ins without going through the procedural
+    database.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="EXAMPLE-PLUGIN"
+>An Example Plugin</A
+></H2
+><P
+>As in a lot of manuals, the first thing you examine is an
+      example, so here is an example.  I have included it before
+      explaining what it does to allow more advanced programmers to
+      see the structure up front.  It is a translation of the clothify
+      Script-Fu extension:</P
+><DIV
+CLASS="EXAMPLE"
+><P
+><B
+>Example 1. A sample python plugin</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>#!/usr/bin/python
+import math
+from gimpfu import *
+
+have_gimp11 = gimp.major_version &#62; 1 or \
+	      gimp.major_version == 1 and gimp.minor_version &#62;= 1
+
+def python_clothify(timg, tdrawable, bx=9, by=9,
+		    azimuth=135, elevation=45, depth=3):
+	bx = 9 ; by = 9 ; azimuth = 135 ; elevation = 45 ; depth = 3
+	width = tdrawable.width
+	height = tdrawable.height
+	img = gimp.image(width, height, RGB)
+	layer_one = gimp.layer(img, "X Dots", width, height, RGB_IMAGE,
+			       100, NORMAL_MODE)
+	img.disable_undo()
+	if have_gimp11:
+		pdb.gimp_edit_fill(layer_one)
+	else:
+		pdb.gimp_edit_fill(img, layer_one)
+	img.add_layer(layer_one, 0)
+	pdb.plug_in_noisify(img, layer_one, 0, 0.7, 0.7, 0.7, 0.7)
+	layer_two = layer_one.copy()
+	layer_two.mode = MULTIPLY_MODE
+	layer_two.name = "Y Dots"
+	img.add_layer(layer_two, 0)
+	pdb.plug_in_gauss_rle(img, layer_one, bx, 1, 0)
+	pdb.plug_in_gauss_rle(img, layer_two, by, 0, 1)
+	img.flatten()
+	bump_layer = img.active_layer
+	pdb.plug_in_c_astretch(img, bump_layer)
+	pdb.plug_in_noisify(img, bump_layer, 0, 0.2, 0.2, 0.2, 0.2)
+	pdb.plug_in_bump_map(img, tdrawable, bump_layer, azimuth,
+			     elevation, depth, 0, 0, 0, 0, TRUE, FALSE, 0)
+	gimp.delete(img)
+
+register(
+	"python_fu_clothify",
+	"Make the specified layer look like it is printed on cloth",
+	"Make the specified layer look like it is printed on cloth",
+	"James Henstridge",
+	"James Henstridge",
+	"1997-1999",
+	"&#60;Image&#62;/Python-Fu/Alchemy/Clothify",
+	"RGB*, GRAY*",
+	[
+		(PF_INT, "x_blur", "X Blur", 9),
+		(PF_INT, "y_blur", "Y Blur", 9),
+		(PF_INT, "azimuth", "Azimuth", 135),
+		(PF_INT, "elevation", "elevation", 45),
+		(PF_INT, "depth", "Depth", 3)
+	],
+	[],
+	python_clothify)
+
+main()</PRE
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="IMPORTANT-MODULES"
+>Import Modules</A
+></H2
+><P
+>In this plugin, a number of modules are imported.  The
+      important ones are:</P
+><P
+></P
+><UL
+><LI
+><P
+><TT
+CLASS="FILENAME"
+>gimpfu</TT
+>: this module provides a
+	  simple interface for writing plugins, similar to what
+	  script-fu provides.  It provides the GUI for entering in
+	  parameters in interactive mode and performs some sanity
+	  checks when registering the plugin.</P
+><P
+>By using "from gimpfu import *", this module also
+	  provides an easy way to get all the commonly used symbols
+	  into the plugin's namespace.</P
+></LI
+><LI
+><P
+><TT
+CLASS="FILENAME"
+>gimp</TT
+>: the main part of the gimp
+	  extension.  This is imported with gimpfu.</P
+></LI
+><LI
+><P
+><TT
+CLASS="FILENAME"
+>gimpenums</TT
+>: a number of useful
+	  constants.  This is also automatically imported with
+	  gimpfu.</P
+></LI
+></UL
+><P
+>The pdb variable is a variable for accessing the
+      procedural database.  It is imported into the plugin's namespace
+      with gimpfu for convenience.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PLUGIN-FRAMEWORK"
+>Plugin Framework</A
+></H2
+><P
+>With pygimp-0.4, the gimpfu module was introduced.  It
+      simplifies writing plugins a lot.  It handles the run mode
+      (interactive, non interactive or run with last values),
+      providing a GUI for interactive mode and saving the last used
+      settings.</P
+><P
+>Using the gimpfu plugin, all you need to do is write the
+      function that should be run, make a call to
+      <TT
+CLASS="FUNCTION"
+><B
+>register</B
+></TT
+>, and finally a call to
+      <TT
+CLASS="FUNCTION"
+><B
+>main</B
+></TT
+> to get the plugin started.</P
+><P
+>If the plugin is to be run on an image, the first
+      parameter to the plugin function should be the image, and the
+      second should be the current drawable (do not worry about the
+      run_mode parameter).  Plugins that do not act on an existing
+      image (and hence go in the toolbox's menus) do not need these
+      parameters.  Any other parameters are specific to the
+      plugin.</P
+><P
+>After defining the plugin function, you need to call
+      <TT
+CLASS="FUNCTION"
+><B
+>register</B
+></TT
+> to register the plugin with gimp
+      (When the plugin is run to query it, this information is passed
+      to gimp.  When it is run interactively, this information is used
+      to construct the GUI).  The parameters to
+      <TT
+CLASS="FUNCTION"
+><B
+>register</B
+></TT
+> are:</P
+><P
+></P
+><TABLE
+BORDER="0"
+><TR
+><TD
+>name</TD
+></TR
+><TR
+><TD
+>blurb</TD
+></TR
+><TR
+><TD
+>help</TD
+></TR
+><TR
+><TD
+>author</TD
+></TR
+><TR
+><TD
+>copyright</TD
+></TR
+><TR
+><TD
+>date</TD
+></TR
+><TR
+><TD
+>menupath</TD
+></TR
+><TR
+><TD
+>imagetypes</TD
+></TR
+><TR
+><TD
+>params</TD
+></TR
+><TR
+><TD
+>results</TD
+></TR
+><TR
+><TD
+>function</TD
+></TR
+></TABLE
+><P
+></P
+><P
+>Most of these parameters are quite self explanatory.  The
+      menupath option should start with &#60;Image%gt;/ for image
+      plugins and &#60;Toolbox&#62;/ for toolbox plugins.  The remainder
+      of the menupath is a slash separated path to its menu item.</P
+><P
+>The params parameter holds a list parameters for the
+      function.  It is a list of tuples.  Note that you do not have to
+      specify the run_type, image or drawable parameters, as gimpfu
+      will add these automatically for you.  The tuple format is
+      (type, name, description, default [, extra]).  The allowed type
+      codes are:</P
+><P
+></P
+><TABLE
+BORDER="0"
+><TR
+><TD
+>PF_INT8</TD
+></TR
+><TR
+><TD
+>PF_INT16</TD
+></TR
+><TR
+><TD
+>PF_INT32</TD
+></TR
+><TR
+><TD
+>PF_INT</TD
+></TR
+><TR
+><TD
+>PF_FLOAT</TD
+></TR
+><TR
+><TD
+>PF_STRING</TD
+></TR
+><TR
+><TD
+>PF_VALUE</TD
+></TR
+><TR
+><TD
+>PF_INT8ARRAY</TD
+></TR
+><TR
+><TD
+>PF_INT16ARRAY</TD
+></TR
+><TR
+><TD
+>PF_INT32ARRAY</TD
+></TR
+><TR
+><TD
+>PF_INTARRAY</TD
+></TR
+><TR
+><TD
+>PF_FLOATARRAY</TD
+></TR
+><TR
+><TD
+>PF_STRINGARRAY</TD
+></TR
+><TR
+><TD
+>PF_COLOR</TD
+></TR
+><TR
+><TD
+>PF_COLOUR</TD
+></TR
+><TR
+><TD
+>PF_REGION</TD
+></TR
+><TR
+><TD
+>PF_IMAGE</TD
+></TR
+><TR
+><TD
+>PF_LAYER</TD
+></TR
+><TR
+><TD
+>PF_CHANNEL</TD
+></TR
+><TR
+><TD
+>PF_DRAWABLE</TD
+></TR
+><TR
+><TD
+>PF_TOGGLE</TD
+></TR
+><TR
+><TD
+>PF_BOOL</TD
+></TR
+><TR
+><TD
+>PF_SLIDER</TD
+></TR
+><TR
+><TD
+>PF_SPINNER</TD
+></TR
+><TR
+><TD
+>PF_ADJUSTMENT</TD
+></TR
+><TR
+><TD
+>PF_FONT</TD
+></TR
+><TR
+><TD
+>PF_FILE</TD
+></TR
+><TR
+><TD
+>PF_BRUSH</TD
+></TR
+><TR
+><TD
+>PF_PATTERN</TD
+></TR
+><TR
+><TD
+>PF_GRADIENT</TD
+></TR
+></TABLE
+><P
+></P
+><P
+>These values map onto the standard PARAM_* constants.  The
+      reason to use the extra constants is that they give gimpfu more
+      information, so it can produce a better interface (for instance,
+      the PF_FONT type is equivalent to PARAM_STRING, but in the GUI
+      you get a small button that will bring up a font selection
+      dialog).</P
+><P
+>The PF_SLIDER, PF_SPINNER and PF_ADJUSTMENT types require
+      the extra parameter.  It is of the form (min, max, step), and
+      gives the limits for the spin button or slider.</P
+><P
+>The results parameter is a list of 3-tuples of the form
+      (type, name, description).  It defines the return values for the
+      function.  If there is only a single return value, the plugin
+      function should return just that value.  If there is more than
+      one, the plugin function should return a tuple of results.</P
+><P
+>The final parameter to <TT
+CLASS="FUNCTION"
+><B
+>register</B
+></TT
+> is
+      the plugin function itself.</P
+><P
+>After registering one or more plugin functions, you must
+      call the <TT
+CLASS="FUNCTION"
+><B
+>main</B
+></TT
+> function.  This will cause
+      the plugin to start running.  A GUI will be displayed when
+      needed, and your plugin function will be called at the
+      appropriate times.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="pygimp.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="pygimp.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="procedural-database.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Gimp Python Documentation</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>The Procedural Database</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,107 @@
+1999-07-08  James Henstridge  <james@daa.com.au>
+
+	* plug-ins/shadow_bevel.py: added {disable,enable}_undo() calls.  Also
+	made it possible to turn off the creation of a shadow.
+
+	* plug-ins/foggify.py: added disable_undo() and enable_undo() calls
+	round the plugin code.
+
+	* plug-ins/Makefile.am: forgot to add foggify and shadow_bevel to
+	the EXTRA_DIST list.
+
+	* gimpui.py: fixed some small bugs that caused an exception when
+	loading on some versions of python.  Weird thing is, it did not
+	cause problems on my computer (using 1.5.1)
+
+1999-07-05  James Henstridge  <james@daa.com.au>
+
+	* plug-ins/foggify.py, plug-ins/shadow_bevel.py: two new example
+	scripts.
+
+1999-07-04  James Henstridge  <james@daa.com.au>
+
+	* gimpmodule.c: added support for parasites.  This new code is
+	conditionally compiled if GIMP_HAVE_PARASITES is defined.
+	Added other gimp 1.1 features to gimpmodule.
+
+1999-07-03  James Henstridge  <james@daa.com.au>
+
+	* gimpmodule.c (initgimp): added {major,minor,micro}_version constants
+	to gimpmodule.
+	(*) removed all the empty __doc__ strings -- they were just wasting
+	space, and I have other docs in there now.
+
+	* plug-ins/clothify.py (python_clothify): same here.
+
+	* plug-ins/sphere.py (python_sphere): some small hacks to get the
+	plugin to work with both gimp 1.0 and 1.1 -- using the pattern
+	"if pdb.gimp_whatever.nparams == n" to check if the img parameter
+	should be removed.
+
+	* plug-ins/pdbbrowse.py (BrowseWin.extension_pdb_browse): fixed
+	small bug.
+
+1999-07-02  James Henstridge  <james@daa.com.au>
+
+	* plug-ins/whirlpinch.py (python_whirl_pinch): adjusted plug in to
+	work with drawable changes.
+
+	* gimpmodule.c: removed the drawable type -- now only layer or channel
+	types are used.  Also moved the drawable type's methods to both the
+	layer and channel object types.  Also added some of the attributes of
+	the drawable object to layer and channel objects (some aren't needed
+	anymore, since layers are clearly defined as layers, and channels
+	as channels).
+	Make tile and pixel region objects keep a reference to their
+	associated drawable.
+	Added attributes has_alpha, is_colour, is_grey and is_indexed to
+	layer and channel objects.
+
+1999-06-22  James Henstridge  <james@daa.com.au>
+
+	* gimpplugin.py: renamed from plugin.py.  This is mainly to reduce
+	namespace polution.
+	
+	* getvals.py: removed file.  It has been replaced by the much more
+	functional gimpfu module.
+
+	* plug-ins/gimpcons.py: added a browse button that will display the
+	pdbbrowse window, which can then be used to choose a pdb function.
+	The selected pdb function gets its prototype inserted on the
+	command line.
+
+	* plug-ins/pdbbrowse.py: converted to use GTK+ widgets and gimpfu.
+
+	* plug-ins/gimpcons.py: converted to use gimpfu and gtkcons.py.
+	
+	* plug-ings/gtkcons.py: a GTK replacement for tkcons.py.
+	
+	* plug-ins/whirlpinch.py, plug-ins/sphere.py: converted these two
+	to use gimpfu.
+	
+	* gimpshelf.py (shelf): some changes so that the gimp internal types
+	will pickle correctly.
+
+	* gimpmodule.c (initgimp): export the type objects for gimpmodule's
+	internal types.  This is mainly to help get pickling to work
+	correctly.
+	(_id2*): new functions to help convert id's to the builtin types.
+
+	* plug-ins/clothify.py: converted to use gimpfu module.
+
+1999-06-21  James Henstridge  <james@daa.com.au>
+
+	* gimpfu.py: a simplified interface to writing GIMP plugins.  It
+	handles all the user interaction stuff and saving the last used
+	values.  It uses pygtk, so should match the interface of the rest
+	of gimp.
+
+	* gimpui.py: new file that implements a number of useful widgets
+	for use with the interfaces of plugins.  It requires pygtk.
+
+	* gimpmodule.c (tuple_to_GParam): accept None for layer, channel
+	or drawable arguments to PDB functions.  This value gets treated
+	like an ID of -1.
+	(img_cmp, lay_cmp, chn_cmp, drw_cmp): added compare functions so
+	that the == operator works as expected with those object types.
+

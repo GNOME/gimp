@@ -1,0 +1,361 @@
+<!DOCTYPE HTML PUBLIC "-//Norman Walsh//DTD DocBook HTML 1.0//EN">
+<HTML
+><HEAD
+><TITLE
+>The Procedural Database</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet"><LINK
+REL="HOME"
+TITLE="Gimp Python Documentation"
+HREF="pygimp.html"><LINK
+REL="PREVIOUS"
+TITLE="The Structure Of A Plugin"
+HREF="structure-of-plugin.html"><LINK
+REL="NEXT"
+TITLE="Gimp Module Procedures"
+HREF="gimp-module-procedures.html"></HEAD
+><BODY
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Gimp Python Documentation</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="structure-of-plugin.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="gimp-module-procedures.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="PROCEDURAL-DATABASE"
+>The Procedural Database</A
+></H1
+><P
+>The procedural database is a registry of things gimp and its
+    plugins can do.  When you install a procedure for your plugin, you
+    are extending the procedural database.</P
+><P
+>The procedural database is self documenting, in that when
+    you install a procedure in it, you also add documentation for it,
+    its parameters and return values.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GIMP-PYTHON-MODEL"
+>The Gimp-Python Model</A
+></H2
+><P
+>In Gimp-Python, the procedural database is represented by
+      the object <TT
+CLASS="PARAMETER"
+><I
+>gimp.pdb</I
+></TT
+>.  In most of my
+      plugins, I make an assignment from <TT
+CLASS="PARAMETER"
+><I
+>gimp.pdb</I
+></TT
+>
+      to <TT
+CLASS="PARAMETER"
+><I
+>pdb</I
+></TT
+> for convenience.</P
+><P
+>You can query the procedural database with
+      <TT
+CLASS="PARAMETER"
+><I
+>pdb</I
+></TT
+>'s method <TT
+CLASS="FUNCTION"
+><B
+>query</B
+></TT
+>.  Its
+      specification is:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])</PRE
+></TD
+></TR
+></TABLE
+><P
+>Each parameter is a regular expression that is checked
+      against the corresponding field in the procedural database.  The
+      method returns a list of the names of matching procedures.  If
+      <TT
+CLASS="FUNCTION"
+><B
+>query</B
+></TT
+> is called without any arguments, it will
+      return every procedure in the database.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PDB-PROCEDURES"
+>Procedural Database Procedures</A
+></H2
+><P
+>Procedures can be accessed as procedures, or by treating
+      <TT
+CLASS="PARAMETER"
+><I
+>pdb</I
+></TT
+> as a mapping objest.  As an example,
+      the probedure <TT
+CLASS="FUNCTION"
+><B
+>gimp_edit_fill</B
+></TT
+> can be
+      accessed as either <TT
+CLASS="FUNCTION"
+><B
+>pdb.gimp_edit_fill</B
+></TT
+> or
+      <TT
+CLASS="FUNCTION"
+><B
+>pdb['gimp_edit_fill']</B
+></TT
+>.  The second form is
+      mainly for procedures whose names are not valid Python names (eg
+      in script-fu-..., the dashes are interpreted as minuses).</P
+><P
+>These procedure objects have a number of attribute:</P
+><P
+></P
+><DL
+><DT
+>proc_name</DT
+><DD
+><P
+>The name of the procedure.</P
+></DD
+><DT
+>proc_blurb</DT
+><DD
+><P
+>A short peice of information about the procedure.</P
+></DD
+><DT
+>proc_help</DT
+><DD
+><P
+>More detailed information about the procedure.</P
+></DD
+><DT
+>proc_author</DT
+><DD
+><P
+>The author of the procedure.</P
+></DD
+><DT
+>proc_copyright</DT
+><DD
+><P
+>The copyright holder for the procedure (usually the
+            same as the author).</P
+></DD
+><DT
+>proc_date</DT
+><DD
+><P
+>The date when the procedure was written.</P
+></DD
+><DT
+>proc_type</DT
+><DD
+><P
+>The type of procedure.  This will be one of
+            PROC_PLUG_IN, PROC_EXTENSION or PROC_TEMPORARY.</P
+></DD
+><DT
+>nparams</DT
+><DD
+><P
+>The number of parameters the procedure takes.</P
+></DD
+><DT
+>nreturn_vals</DT
+><DD
+><P
+>The number of return values the procedure gives.</P
+></DD
+><DT
+>params</DT
+><DD
+><P
+>A description of parameters of the procedure.  It
+            takes the form of a tuple of 3-tuples, where each 3-tuple
+            describes a parameter.  The items in the 3-tuple are a
+            parameter type (one of the PARAM_* constants), a
+            name for the parameter, and a description of the
+            parameter.</P
+></DD
+><DT
+>return_vals</DT
+><DD
+><P
+>A description of the return values.  It takes the
+            same form as the <TT
+CLASS="LITERAL"
+>params</TT
+>
+            attribute.</P
+></DD
+></DL
+><P
+>A procedure object may also be called.  At this point,
+      Gimp-Python doesn't support keyword arguments for PDB
+      procedures.  Arguments are passed to the procedure in the normal
+      method.  The return depends on the number of return values:</P
+><P
+></P
+><UL
+><LI
+><P
+>If there are zero return values,
+	  <TT
+CLASS="LITERAL"
+>None</TT
+> is returned.</P
+></LI
+><LI
+><P
+>If there is only a single return value, it is
+	  returned.</P
+></LI
+><LI
+><P
+>If there are more return values, then they are
+	  returned as a tuple.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MORE-INFORMATION"
+>More Information</A
+></H2
+><P
+>For more information on invoking PDB procedures, please
+      see the example plugins.  For information on individual
+      procedures, please see the PDB Browser plugin (in the Xtns
+      menu).  It alows you to peruse to the database
+      interactively.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="structure-of-plugin.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="pygimp.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="gimp-module-procedures.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>The Structure Of A Plugin</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Gimp Module Procedures</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

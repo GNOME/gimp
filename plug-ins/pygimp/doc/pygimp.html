@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//Norman Walsh//DTD DocBook HTML 1.0//EN">
+<HTML
+><HEAD
+><TITLE
+>Gimp Python Documentation</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet"><LINK
+REL="NEXT"
+TITLE="The Structure Of A Plugin"
+HREF="structure-of-plugin.html"></HEAD
+><BODY
+><DIV
+CLASS="ARTICLE"
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+>Gimp Python Documentation</H1
+><P
+CLASS="AUTHOR"
+><I
+>James Henstridge</I
+></P
+><DIV
+CLASS="AFFILIATION"
+><P
+CLASS="LITERALLAYOUT"
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<TT
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:james@daa.com.au"
+>james@daa.com.au</A
+>&#62;</TT
+><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</P
+></DIV
+><P
+>Published <SPAN
+CLASS="PUBDATE"
+>v0.4, 5 July 1999</SPAN
+></P
+><DIV
+CLASS="ABSTRACT"
+><P
+>This document outlines the interfaces to Gimp-Python,
+      which is a set of Python modules that act as a wrapper to
+      <TT
+CLASS="FILENAME"
+>libgimp</TT
+> allowing the writing of
+      plug-ins for Gimp.  In this way, Gimp-Python is similar to
+      Script-Fu, except that you can use the full set of Python
+      extension modules from the plug-in.</P
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="pygimp.html#INTRODUCTION"
+>Introduction</A
+></DT
+><DT
+><A
+HREF="structure-of-plugin.html"
+>The Structure Of A Plugin</A
+></DT
+><DT
+><A
+HREF="procedural-database.html"
+>The Procedural Database</A
+></DT
+><DT
+><A
+HREF="gimp-module-procedures.html"
+>Gimp Module Procedures</A
+></DT
+><DT
+><A
+HREF="gimp-objects.html"
+>Gimp Objects</A
+></DT
+><DT
+><A
+HREF="support-modules.html"
+>Support Modules</A
+></DT
+><DT
+><A
+HREF="end-note.html"
+>End Note</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="INTRODUCTION"
+>Introduction</A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="WHAT-IS-IT"
+>What is it?</A
+></H2
+><P
+>Gimp-Python is a scripting extension for Gimp, similar to
+      Script-Fu.  The main difference is in what is called first.  In
+      Script-Fu, the script-fu plugin executes the script, while in
+      Gimp-Python the script is in control.</P
+><P
+>In fact, you will find that the Gimp-Python scripts start
+      with the line <TT
+CLASS="LITERAL"
+>#!/usr/bin/python</TT
+>.  The
+      gimp extension is loaded with the familiar
+      <TT
+CLASS="LITERAL"
+>import</TT
+> command.</P
+><P
+>Another point of difference between Gimp-Python and
+      Script-Fu is that Gimp-Python stores images, layers, channels
+      and other types as objects rather than just storing their ID.
+      This allows better type checking that is missing from Script-Fu,
+      and allows those types to act as objects, complete with
+      attributes and methods.</P
+><P
+>Also, Gimp-Python is not limited to just calling
+      procedures from the PDB.  It also implements the rest of
+      <TT
+CLASS="FILENAME"
+>libgimp</TT
+>, including tiles and pixel regions,
+      and access to other lower level functions.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="INSTALLATION"
+>Installation</A
+></H2
+><P
+>Gimp-python consists of a Python module written in C and
+      some native python support modules.  You can build pygimp with
+      the commands:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>./configure
+make
+make install</PRE
+></TD
+></TR
+></TABLE
+><P
+>This will build and install gimpmodule and its supporting
+      modules, and install the sample plugins in gimp's plugin
+      directory.</P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="structure-of-plugin.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>The Structure Of A Plugin</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

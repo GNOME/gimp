@@ -1,0 +1,17 @@
+SUBDIRS = doc plug-ins
+
+INCLUDES = $(PYTHON_INCLUDES) $(PYTHON_CFLAGS) $(GIMP_CFLAGS_NOUI)
+
+pyexec_PROGRAMS = gimpmodule$(SO)
+
+gimpmodule__SO__SOURCES = gimpmodule.c
+gimpmodule__SO__LDADD = $(GIMP_LIBS_NOUI)
+gimpmodule__SO__LINK = $(PYTHON_LINK)
+
+python_PYTHON = gimpplugin.py gimpenums.py gimpshelf.py \
+	gimpui.py gimpfu.py
+
+EXTRA_DIST = pygimp.spec
+
+snap:
+	$(MAKE) dist distdir=$(PACKAGE)-SNAP-`date +"%Y%m%d"`

@@ -1,0 +1,26 @@
+AC_INIT(gimpmodule.c)
+
+AM_INIT_AUTOMAKE(pygimp, 0.5)
+
+AM_PATH_PYTHON
+AM_INIT_PYEXEC_MOD
+
+AM_CHECK_PYMOD(gtk,,,AC_MSG_ERROR([You need the pygtk package to use pygimp]))
+
+AC_PATH_PROG(GIMPTOOL, gimptool, no)
+
+if test "x$GIMPTOOL" = xno; then
+  AC_MSG_ERROR([could not find gimptool script])
+fi
+
+GIMP_CFLAGS_NOUI=`$GIMPTOOL --cflags-noui`
+GIMP_LIBS_NOUI=`$GIMPTOOL --libs-noui`
+
+gimp_ver=`$GIMPTOOL --version | cut -d. -f 1-2 `
+pluginexecdir=\${libdir}/gimp/$gimp_ver/plug-ins
+
+AC_SUBST(GIMP_CFLAGS_NOUI)
+AC_SUBST(GIMP_LIBS_NOUI)
+AC_SUBST(pluginexecdir)
+
+AC_OUTPUT(Makefile doc/Makefile plug-ins/Makefile)

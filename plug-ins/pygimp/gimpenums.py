@@ -1,0 +1,185 @@
+#   Gimp-Python - allows the writing of Gimp plugins in Python.
+#   Copyright (C) 1997  James Henstridge <james@daa.com.au>
+#
+#    This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+# gimpenums.py -- constants for use with the gimp module
+#
+# this file contains constants that are useful for use in
+# gimp plugins.  Just add 'from gimpenums import *' to the top
+# of the script
+
+RGB = 0
+GRAY = 1
+INDEXED = 2
+
+RGB_IMAGE = 0
+RGBA_IMAGE = 1
+GRAY_IMAGE = 2
+GRAYA_IMAGE = 3
+INDEXED_IMAGE = 4
+INDEXEDA_IMAGE = 5
+
+NORMAL_MODE = 0
+DISSOLVE_MODE = 1
+MULTIPLY_MODE = 3
+SCREEN_MODE = 4
+OVERLAY_MODE = 5
+DIFFERENCE_MODE = 6
+ADDITION_MODE = 7
+SUBTACT_MODE = 8
+DARKEN_ONLY_MODE = 9
+LIGHTEN_ONLY_MODE = 10
+HUE_MODE = 11
+SATURATION_MODE = 12
+COLOR_MODE = 13
+VALUE_MODE = 14
+
+BG_IMAGE_FILL = 0
+WHITE_IMAGE_FILL = 1
+TRANS_IMAGE_FILL = 2
+
+PARAM_INT32 = 0
+PARAM_INT16 = 1
+PARAM_INT8 = 2
+PARAM_FLOAT = 3
+PARAM_STRING = 4
+PARAM_INT32ARRAY = 5
+PARAM_INT16ARRAY = 6
+PARAM_INT8ARRAY = 7
+PARAM_FLOATARRAY = 8
+PARAM_STRINGARRAY = 9
+PARAM_COLOR = 10
+PARAM_REGION = 11
+PARAM_DISPLAY = 12
+PARAM_IMAGE = 13
+PARAM_LAYER = 14
+PARAM_CHANNEL = 15
+PARAM_DRAWABLE = 16
+PARAM_SELECTION = 17
+PARAM_BOUNDARY = 18
+PARAM_PATH = 19
+PARAM_STATUS = 20
+PARAM_END = 21
+
+PROC_PLUG_IN = 1
+PROC_EXTENSION = 2
+PROC_TEMPORARY = 3
+
+RUN_INTERACTIVE = 0
+RUN_NONINTERACTIVE = 1
+RUN_WITH_LAST_VALS = 2
+
+STATUS_EXECUTION_ERROR = 0
+STATUS_CALLING_ERROR = 1
+STATUS_PASS_THROUGH = 2
+STATUS_SUCCESS = 3
+
+# extra constants
+NORMAL = 0
+DISSOLVE = 1
+BEHIND = 2
+MULTIPLY = 3
+SCREEN = 4
+OVERLAY = 5
+DIFFERENCE = 6
+ADDITION = 7
+SUBTRACTION = 8
+DARKEN_ONLY = 9
+LIGHTEN_ONLY = 10
+HUE = 11
+SATURATION = 12
+COLOR = 13
+COLOUR = 13
+VALUE = 14
+
+FG_BG_RGB = 0
+FG_BG_HSV = 1
+FG_TRANS = 2
+CUSTOM = 3
+
+LINEAR = 0
+BILINEAR = 1
+RADIAL = 2
+SQUARE = 3
+CONICAL_SYMMETRIC = 4
+CONNUCAL_ASYMMETRIC = 5
+SHAPEBURST_ANGULAR = 6
+SHAPEBURST_SPHERICAL = 7
+SHAPEBURST_DIMPLED = 8
+
+REPEAT_NONE = 0
+REPEAT_SAWTOOTH = 1
+REPEAT_TRIANGULAR = 2
+
+FG_BUCKET_FILL = 0
+BG_BUCKET_FILL = 1
+PATTERN_BUCKET_FILL = 2
+
+BG_IMAGE_FILL = 0
+WHITE_IMAGE_FILL = 1
+TRANS_IMAGE_FILL = 2
+NO_IMAGE_FILL = 3
+
+RED_CHANNEL = 0
+GREEN_CHANNEL = 1
+BLUE_CHANNEL = 2
+GRAY_CHANNEL = 3
+GREY_CHANNEL = 3
+INDEXED_CHANNEL = 4
+
+WHITE_MASK = 0
+BLACK_MASK = 1
+ALPHA_MASK = 2
+
+APPLY = 0
+DISCARD = 1
+
+EXPAND_AS_NECESSARY = 0
+CLIP_TO_IMAGE = 1
+CLIP_TO_BOTTOM_LAYER = 2
+
+ADD = 0
+SUB = 1
+REPLACE = 2
+INTERSECT = 3
+
+PIXELS = 0
+POINTS = 1
+
+IMAGE_CLONE = 0
+PATTERN_CLONE = 1
+
+BLUR = 0
+SHARPEN = 1
+
+TRUE = 1
+FALSE = 0
+
+import gimp
+if gimp.major_version > 1 or gimp.major_version==1 and gimp.minor_version>=1:
+	PARASITE_PERSISTENT = 1
+	PARASITE_UNDOABLE   = 2
+	PARASITE_ATTACH_PARENT     = 0x80 << 8
+	PARASITE_PARENT_PERSISTENT = PARASITE_PERSISTENT << 8
+	PARASITE_PARENT_UNDOABLE   = PARASITE_UNDOABLE << 8
+	PARASITE_ATTACH_GRANDPARENT     = 0x80 << 16
+	PARASITE_GRANDPARENT_PERSISTENT = PARASITE_PERSISTENT << 16
+	PARASITE_GRANDPARENT_UNDOABLE   = PARASITE_UNDOABLE << 16
+
+	ORIENTATION_UNKNOWN    = 0
+	ORIENTATION_HORIZONTAL = 1
+	ORIENTATION_VERTICAL   = 2
+del gimp

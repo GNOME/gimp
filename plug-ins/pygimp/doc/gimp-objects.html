@@ -1,0 +1,3004 @@
+<!DOCTYPE HTML PUBLIC "-//Norman Walsh//DTD DocBook HTML 1.0//EN">
+<HTML
+><HEAD
+><TITLE
+>Gimp Objects</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet"><LINK
+REL="HOME"
+TITLE="Gimp Python Documentation"
+HREF="pygimp.html"><LINK
+REL="PREVIOUS"
+TITLE="Gimp Module Procedures"
+HREF="gimp-module-procedures.html"><LINK
+REL="NEXT"
+TITLE="Support Modules"
+HREF="support-modules.html"></HEAD
+><BODY
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Gimp Python Documentation</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="gimp-module-procedures.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="support-modules.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="GIMP-OBJECTS"
+>Gimp Objects</A
+></H1
+><P
+>Gimp-Python implements a number of special object types that
+    represent the different types of parameters you can pass to a PDB
+    procedure.  Rather than just making these place holders, I have
+    added a number of members and methods to them that allow a lot of
+    configurability without directly calling PDB procedures.</P
+><P
+>There are also a couple of extra objects that allow low
+    level manipulation of images.  These are tile objects (working)
+    and pixel regions (not quite finished).</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="IMAGE-OBJECT"
+>Image Object</A
+></H2
+><P
+>This is the object that represents an open image.  In this
+      section, <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+> represents a generic
+      image object.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="IMAGE-OBJECT-MEMBERS"
+>Image Members</A
+></H3
+><P
+></P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>active_channel</I
+></TT
+></DT
+><DD
+><P
+>This is the active channel of the image.  You can
+              also assign to this member, or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if there is no active
+              channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>active_layer</I
+></TT
+></DT
+><DD
+><P
+>This is the active layer of the image.  You can
+              also assign to this member, or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if there is no active
+              layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>base_type</I
+></TT
+></DT
+><DD
+><P
+>This is the type of the image (eg RGB, INDEXED).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>channels</I
+></TT
+></DT
+><DD
+><P
+>This is a list of the channels of the image.
+              Altering this list has no effect, and you can not assign
+              to this member.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>cmap</I
+></TT
+></DT
+><DD
+><P
+>This is the colour map for the image.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>filename</I
+></TT
+></DT
+><DD
+><P
+>This is the filename for the image.  A file load
+              or save handler might assign to this.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+></DT
+><DD
+><P
+>This is the height of the image.  You can't assign
+              to this member.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>floating_selection</I
+></TT
+></DT
+><DD
+><P
+>The floating selection layer, or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if there is no floating
+              selection.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>layers</I
+></TT
+></DT
+><DD
+><P
+>This is a list of the layers of the image.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>selection</I
+></TT
+></DT
+><DD
+><P
+>The selection mask for the image.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+></DT
+><DD
+><P
+>This is the width of the image.  You can't assign
+              to this member.</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="IMAGE-OBJECT-METHODS"
+>Image Methods</A
+></H3
+><P
+></P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>add_channel</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>position</I
+></TT
+>)</DT
+><DD
+><P
+>Adds <TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+> to
+              <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+> in position
+              <TT
+CLASS="PARAMETER"
+><I
+>position</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>add_layer</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>position</I
+></TT
+>)</DT
+><DD
+><P
+>Adds <TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+> to
+              <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+> in position
+              <TT
+CLASS="PARAMETER"
+><I
+>position</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>add_layer_mask</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>mask</I
+></TT
+>)</DT
+><DD
+><P
+>Adds the mask <TT
+CLASS="PARAMETER"
+><I
+>mask</I
+></TT
+> to
+	      <TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>clean_all</B
+></TT
+>()</DT
+><DD
+><P
+>Unsets the dirty flag on the image.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>disable_undo</B
+></TT
+>()</DT
+><DD
+><P
+>Disables undo for
+	      <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>enable_undo</B
+></TT
+>()</DT
+><DD
+><P
+>Enables undo for <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.
+              You might use these commands round a plugin, so that the
+              plugin's actions can be undone in a single step.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>flatten</B
+></TT
+>()</DT
+><DD
+><P
+>Returns the resulting layer after merging all the
+              visible layers, discarding non visible ones and
+              stripping the alpha channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>get_component_active</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>)</DT
+><DD
+><P
+>Returns true if <TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>
+              (one of the <TT
+CLASS="LITERAL"
+>*_CHANNEL</TT
+> constants) is
+              active.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>get_component_visible</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>)</DT
+><DD
+><P
+>Returns true if <TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>
+              is visible.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>set_component_active</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>active</I
+></TT
+>)</DT
+><DD
+><P
+>Sets the activeness of
+	      <TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>set_component_visible</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>active</I
+></TT
+>)</DT
+><DD
+><P
+>Sets the visibility of
+	      <TT
+CLASS="PARAMETER"
+><I
+>component</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>lower_channel</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+>)</DT
+><DD
+><P
+>Lowers <TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>lower_layer</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>)</DT
+><DD
+><P
+>Lowers <TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>merge_visible_layers</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+>)</DT
+><DD
+><P
+>Merges the visible layers of
+              <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+> using the given merge
+              type.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>pick_correlate_layer</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>)</DT
+><DD
+><P
+>Returns the layer that is visible at the point
+              <TT
+CLASS="PARAMETER"
+><I
+>(x,y)</I
+></TT
+>, or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if no layer matches.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>raise_channel</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+>)</DT
+><DD
+><P
+>Raises <TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>raise_layer</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>)</DT
+><DD
+><P
+>Raises <TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>remove_channel</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+>)</DT
+><DD
+><P
+>Removes <TT
+CLASS="PARAMETER"
+><I
+>channel</I
+></TT
+> from
+	      <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>remove_layer</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>)</DT
+><DD
+><P
+>Removes <TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+> from
+	      <TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>remove_layer_mask</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>mode</I
+></TT
+>)</DT
+><DD
+><P
+>Removes the mask from
+              <TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+>, with the given
+              <TT
+CLASS="PARAMETER"
+><I
+>mode</I
+></TT
+> (either APPLY or
+              DISCARD).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>image</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>resize</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>)</DT
+><DD
+><P
+>Resizes the image to size <TT
+CLASS="PARAMETER"
+><I
+>(width,
+              height)</I
+></TT
+> and places the old contents at
+              position <TT
+CLASS="PARAMETER"
+><I
+>(x,y)</I
+></TT
+>.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CHANNEL-OBJECT"
+>Channel Objects</A
+></H2
+><P
+>These objects represent a Gimp Image's colour channels.
+      In this section, <TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+> will refer
+      to a generic channel object.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="CHANNEL-OBJECT-MEMBERS"
+>Channel Members</A
+></H3
+><P
+></P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>colour</I
+></TT
+>
+	    or
+	    <TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>color</I
+></TT
+></DT
+><DD
+><P
+>The colour of the channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+></DT
+><DD
+><P
+>The height of the channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+></DT
+><DD
+><P
+>The width of the channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>image</I
+></TT
+></DT
+><DD
+><P
+>The image the channel belongs to, or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if it isn't attached
+              yet.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>layer</I
+></TT
+></DT
+><DD
+><P
+>The channel's layer (??) or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if one doesn't exist.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>layer_mask</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the channel is a layer mask.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+></DT
+><DD
+><P
+>The name of the channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>opacity</I
+></TT
+></DT
+><DD
+><P
+>The opacity of the channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>show_masked</I
+></TT
+></DT
+><DD
+><P
+>The show_masked value of the channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>visible</I
+></TT
+></DT
+><DD
+><P
+>Non-zero if the channel is visible.</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="CHANNEL-OBJECT-METHODS"
+>Channel Methods</A
+></H3
+><P
+></P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>channel</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>copy</B
+></TT
+>()</DT
+><DD
+><P
+>returns a copy of the channel.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="LAYER-OBJECT"
+>Layer Objects</A
+></H2
+><P
+>Layer objects represent the layers of a Gimp image.  In
+      this section I will refer to a generic layer called
+      <TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="LAYER-OBJECT-MEMBERS"
+>Layer Members</A
+></H3
+><P
+></P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>apply_mask</I
+></TT
+></DT
+><DD
+><P
+>The apply mask setting. (non zero if the layer
+              mask is being composited with the layer's alpha
+              channel).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>bpp</I
+></TT
+></DT
+><DD
+><P
+>The number of bytes per pixel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>edit_mask</I
+></TT
+></DT
+><DD
+><P
+>The edit mask setting.  (non zero if the mask is
+              active, rather than the layer).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+></DT
+><DD
+><P
+>The height of the layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>image</I
+></TT
+></DT
+><DD
+><P
+>The image the layer is part of, or
+              <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+> if the layer isn't
+              attached.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_floating_selection</I
+></TT
+></DT
+><DD
+><P
+>Non zero if this layer is the image's floating
+	      selection.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>mask</I
+></TT
+></DT
+><DD
+><P
+>The layer's mask, or <TT
+CLASS="PARAMETER"
+><I
+>None</I
+></TT
+>
+	      if it doesn't have one.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>mode</I
+></TT
+></DT
+><DD
+><P
+>The mode of the layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+></DT
+><DD
+><P
+>The name of the layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>opacity</I
+></TT
+></DT
+><DD
+><P
+>The opacity of the layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>preserve_transparency</I
+></TT
+></DT
+><DD
+><P
+>The layer's preserve transparency setting.</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="LAYER-OBJECT-METHODS"
+>Layer Methods</A
+></H3
+><P
+></P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>add_alpha</B
+></TT
+>()</DT
+><DD
+><P
+>Adds an alpha component to the layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>copy</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>[alpha]</I
+></TT
+>)</DT
+><DD
+><P
+>Creates a copy of the layer, optionally with an
+	      alpha layer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>create_mask</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+>)</DT
+><DD
+><P
+>Creates a layer mask of type
+	      <TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>resize</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>w</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>h</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>)</DT
+><DD
+><P
+>Resizes the layer to <TT
+CLASS="PARAMETER"
+><I
+>(w,
+              h)</I
+></TT
+>, positioning the original contents at
+              <TT
+CLASS="PARAMETER"
+><I
+>(x,y)</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>scale</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>h</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>w</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>origin</I
+></TT
+>)</DT
+><DD
+><P
+>Scales the layer to <TT
+CLASS="PARAMETER"
+><I
+>(w, h)</I
+></TT
+>,
+              using the specified <TT
+CLASS="PARAMETER"
+><I
+>origin</I
+></TT
+> (local
+              or image).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>set_offsets</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>)</DT
+><DD
+><P
+>Sets the offset of the layer, relative to the
+	      image's origin</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>layer</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>translate</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>)</DT
+><DD
+><P
+>Moves the layer to <TT
+CLASS="PARAMETER"
+><I
+>(x, y)</I
+></TT
+>
+              relative to its current position.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="DRAWABLE-OBJECT"
+>Drawable Objects</A
+></H2
+><P
+>Both layers and channels are drawables.  Hence there are a
+      number of operations that can be performed on both objects.
+      They also have some common attributes and methods.  In the
+      description of these attributes, I will refer to a generic
+      drawable called <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="DRAWABLE-OBJECT-MEMBERS"
+>Drawable Members</A
+></H3
+><P
+></P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>bpp</I
+></TT
+></DT
+><DD
+><P
+>The number of bytes per pixel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_colour</I
+></TT
+>
+	    or
+	    <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_color</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the drawable is colour.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_grey</I
+></TT
+>
+	    or
+	    <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_gray</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the drawable is greyscale.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>has_alpha</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the drawable has an alpha channel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+></DT
+><DD
+><P
+>The height of the drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>image</I
+></TT
+></DT
+><DD
+><P
+>The image the drawable belongs to.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>is_indexed</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the drawable uses an indexed colour
+	      scheme.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>mask_bounds</I
+></TT
+></DT
+><DD
+><P
+>The bounds of the drawable's selection.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+></DT
+><DD
+><P
+>The name of the drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>offsets</I
+></TT
+></DT
+><DD
+><P
+>The offset of the top left hand corner of the
+	      drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+></DT
+><DD
+><P
+>The type of the drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>visible</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the drawable is visible.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+></DT
+><DD
+><P
+>The width of the drawable.</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="DRAWABLE-OBJECT-METHODS"
+>Drawable Methods</A
+></H3
+><P
+></P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>fill</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>fill_type</I
+></TT
+>)</DT
+><DD
+><P
+>Fills the drawable with given
+	      <TT
+CLASS="PARAMETER"
+><I
+>fill_type</I
+></TT
+> (one of the
+	      <TT
+CLASS="LITERAL"
+>*_FILL</TT
+> constants).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>flush</B
+></TT
+>()</DT
+><DD
+><P
+>Flush the changes to the drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>get_pixel_rgn</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>w</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>h</I
+></TT
+>, [<TT
+CLASS="PARAMETER"
+><I
+>dirty</I
+></TT
+>,
+	    [<TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+>])</DT
+><DD
+><P
+>Creates a pixel region for the drawable.  It will
+              cover the region with origin
+              <TT
+CLASS="PARAMETER"
+><I
+>(x,y)</I
+></TT
+> and dimensions <TT
+CLASS="PARAMETER"
+><I
+>w
+              x h</I
+></TT
+>.  The <TT
+CLASS="PARAMETER"
+><I
+>dirty</I
+></TT
+>
+              argument sets whether any changes to the pixel region
+              will be reflected in the drawable (default is TRUE).
+              The <TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+> argument sets whether
+              the pixel region acts on the shadow tiles or not
+              (default is FALSE).  If you draw on the shadow tiles,
+              you must call
+              <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>merge_shadow</B
+></TT
+>()
+              for changes to take effect.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>get_tile</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>row</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>col</I
+></TT
+>)</DT
+><DD
+><P
+>Get a tile at <TT
+CLASS="PARAMETER"
+><I
+>(row,
+	      col)</I
+></TT
+>. Either on or off the
+	      <TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+> buffer.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>get_tile2</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>)</DT
+><DD
+><P
+>Get the tile that contains the pixel
+	      <TT
+CLASS="PARAMETER"
+><I
+>(x, y)</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>merge_shadow</B
+></TT
+>()</DT
+><DD
+><P
+>Merge the shadow buffer back into the
+	      drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>update</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>w</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>h</I
+></TT
+>)</DT
+><DD
+><P
+>Update the given portion of the drawable.</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TILE-OBJECT"
+>Tile Objects</A
+></H2
+><P
+>Tile objects represent the way Gimp stores information.  A
+      tile is basically just a 64x64 pixel region of the drawable.
+      The reason Gimp breaks the image into small pieces like this is
+      so that the whole image doesn't have to be loaded into memory in
+      order to alter one part of it.  This becomes important with
+      larger images.</P
+><P
+>In Gimp-Python, you would use Tiles if you wanted to
+      perform some low level operation on the image, instead of using
+      procedures in the PDB.  This type of object gives a Gimp-Python
+      plugin the power of a C plugin, rather than just the power of a
+      Script-Fu script.  Tile objects are created with either the
+      <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>get_tile</B
+></TT
+>()
+      or
+      <TT
+CLASS="REPLACEABLE"
+><I
+>drawable</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>get_tile2</B
+></TT
+>()
+      functions.  In this section, I will refer to a generic tile
+      object named <TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="TILE-OBJECT-MEMBERS"
+>Tile Members</A
+></H3
+><P
+>All tile members are read only.</P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>bpp</I
+></TT
+></DT
+><DD
+><P
+>The number of bytes per pixel.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>dirty</I
+></TT
+></DT
+><DD
+><P
+>If there have been changes to the tile since it
+	      was last flushed.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>drawable</I
+></TT
+></DT
+><DD
+><P
+>The drawable that the tile is from.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>eheight</I
+></TT
+></DT
+><DD
+><P
+>The actual height of the tile.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>ewidth</I
+></TT
+></DT
+><DD
+><P
+>The actual width of the tile.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>ref_count</I
+></TT
+></DT
+><DD
+><P
+>The reference count of the tile.  (this is
+	      independent of the Python object reference
+	      count).</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the tile is part of the shadow
+	      buffer.</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="TILE-OBJECT-METHODS"
+>Tile Methods</A
+></H3
+><P
+></P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>flush</B
+></TT
+>()</DT
+><DD
+><P
+>Flush any changes in the tile.  Note that the tile
+	      is automatically flushed when the Python object is
+	      deleted from memory.</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="TILE-OBJECT-MAPPING"
+>Tile Mapping Behaviour</A
+></H3
+><P
+>Tile objects also act as a mapping, or sequence.  You
+	can access the pixels in the tile in one of two ways.  You can
+	either access them with a single number, which refers to its
+	position in the tile
+	(eg. <TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+><TT
+CLASS="LITERAL"
+>[64]</TT
+>
+	refers to the first pixel in the second row of a 64x64 pixel
+	tile).  The other way is with a tuple, representing the
+	coordinates on the tile
+	(eg. <TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+><TT
+CLASS="LITERAL"
+>[0, 1]</TT
+>
+	refers to the first pixel on the second row of the
+	tile).</P
+><P
+>The type of these subscripts is a string of length
+	<TT
+CLASS="REPLACEABLE"
+><I
+>tile</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>bpp</I
+></TT
+>.
+	When you assign to a subscript, the dirty flag is
+	automatically set on the tile, so you don't have to explicitly
+	set the flag, or flush the tile.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PREGION-OBJECT"
+>Pixel Regions</A
+></H2
+><P
+>Pixel region objects give an interface for low level
+      operations to act on large regions of an image, instead of on
+      small 64x64 pixel tiles.  In this section I will refer to a
+      generic pixel region called <TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.  For
+      an example of a pixel region's use, please see the example
+      plugin <TT
+CLASS="FILENAME"
+>whirlpinch.py</TT
+>.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="PREGION-OBJECT-MEMBERS"
+>Pixel Region Members</A
+></H3
+><P
+></P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>drawable</I
+></TT
+></DT
+><DD
+><P
+>The drawable this pixel region is for.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>bpp</I
+></TT
+></DT
+><DD
+><P
+>The number of bytes per pixel for the drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>rowstride</I
+></TT
+></DT
+><DD
+><P
+>The rowstride for the pixel region.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+></DT
+><DD
+><P
+>The x coordinate of the top left hand corner.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+></DT
+><DD
+><P
+>The y coordinate of the top left hand corner.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>w</I
+></TT
+></DT
+><DD
+><P
+>The width of the pixel region.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>h</I
+></TT
+></DT
+><DD
+><P
+>The height of the pixel region.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>dirty</I
+></TT
+></DT
+><DD
+><P
+>Non zero if changes to the pixel region will be
+	      reflected in the drawable.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="PARAMETER"
+><I
+>shadow</I
+></TT
+></DT
+><DD
+><P
+>Non zero if the pixel region acts on the shadow
+	      tiles of the drawable.</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="PREGION-OBJECT-METHODS"
+>Pixel Region Methods</A
+></H3
+><P
+></P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>.<TT
+CLASS="FUNCTION"
+><B
+>resize</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>w</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>h</I
+></TT
+>)</DT
+><DD
+><P
+>resize the pixel region so that it operates on the
+	      the region with corner <TT
+CLASS="PARAMETER"
+><I
+>(x, y)</I
+></TT
+>
+	      with dimensions <TT
+CLASS="PARAMETER"
+><I
+>w x h</I
+></TT
+>.</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="PREGION-OBJECT-MAPPING"
+>Pixel Region Mapping Behaviour</A
+></H3
+><P
+>The pixel region acts as a mapping.  The index is a
+	2-tuple with components that are either integers or slices.
+	The subscripts may be read and assigned to.  The type of the
+	subscripts is a string containing the binary data of the
+	requested region.  Here is a description of the posible
+	operations:</P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>[<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>]</DT
+><DD
+><P
+>Get/Set the pixel at
+	      <TT
+CLASS="PARAMETER"
+><I
+>(x,y)</I
+></TT
+></P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>[<TT
+CLASS="PARAMETER"
+><I
+>x1</I
+></TT
+>:<TT
+CLASS="PARAMETER"
+><I
+>x2</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y</I
+></TT
+>]</DT
+><DD
+><P
+>Get/Set the row starting at <TT
+CLASS="PARAMETER"
+><I
+>(x1,
+	      y)</I
+></TT
+>, width <TT
+CLASS="PARAMETER"
+><I
+>x2 -
+	      x1</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>[<TT
+CLASS="PARAMETER"
+><I
+>x</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y1</I
+></TT
+>:<TT
+CLASS="PARAMETER"
+><I
+>y2</I
+></TT
+>]</DT
+><DD
+><P
+>Get/Set the column starting at <TT
+CLASS="PARAMETER"
+><I
+>(x,
+	      y1)</I
+></TT
+>, height <TT
+CLASS="PARAMETER"
+><I
+>y2 -
+	      y1</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="REPLACEABLE"
+><I
+>pr</I
+></TT
+>[<TT
+CLASS="PARAMETER"
+><I
+>x1</I
+></TT
+>:<TT
+CLASS="PARAMETER"
+><I
+>x2</I
+></TT
+>,
+	    <TT
+CLASS="PARAMETER"
+><I
+>y1</I
+></TT
+>:<TT
+CLASS="PARAMETER"
+><I
+>y1</I
+></TT
+>]</DT
+><DD
+><P
+>Get/Set the rectangle starting at <TT
+CLASS="PARAMETER"
+><I
+>(x1,
+	      y1)</I
+></TT
+>, width <TT
+CLASS="PARAMETER"
+><I
+>x2 - x1</I
+></TT
+>
+	      and height <TT
+CLASS="PARAMETER"
+><I
+>y2 - y1</I
+></TT
+>.</P
+></DD
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="gimp-module-procedures.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="pygimp.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="support-modules.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Gimp Module Procedures</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Support Modules</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

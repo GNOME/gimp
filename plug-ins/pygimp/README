@@ -1,0 +1,29 @@
+  Gimp-Python - allows the writing of plugins for Gimp in Python.
+  Copyright (C) 1997-1999  James Henstridge <james@daa.com.au>
+
+This is the Gimp-Python package.  It is free software and is covered
+by the GNU General Public Licence (A copy of which is in the file
+COPYING in the distribution) with the exception that you may link
+gimpmodule with the python program.
+
+For more information, please see the documentation in the directory
+doc.  The documentation is in SGML, and translations to text, html and
+texinfo are included in the distribution.
+
+To build the program, you should be able to just type:
+  ./configure --prefix=<gimp-prefix>
+  make
+  make install
+
+Pregenerated HTML docs are included with the package in the doc
+directory.  If you want ps or pdf documentation, get Mark Galassi's
+docbook SGML packages.
+
+Here is a list of what you will find in the subdirectories of this
+distribution:
+  .         - The actual source code.
+  doc/      - The documentation.
+  plug-ins/ - The sample plugins.  Contents are copied to GIMP plug-ins
+	      directory.
+
+

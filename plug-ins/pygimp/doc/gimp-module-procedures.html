@@ -1,0 +1,1503 @@
+<!DOCTYPE HTML PUBLIC "-//Norman Walsh//DTD DocBook HTML 1.0//EN">
+<HTML
+><HEAD
+><TITLE
+>Gimp Module Procedures</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet"><LINK
+REL="HOME"
+TITLE="Gimp Python Documentation"
+HREF="pygimp.html"><LINK
+REL="PREVIOUS"
+TITLE="The Procedural Database"
+HREF="procedural-database.html"><LINK
+REL="NEXT"
+TITLE="Gimp Objects"
+HREF="gimp-objects.html"></HEAD
+><BODY
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Gimp Python Documentation</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="procedural-database.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="gimp-objects.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="GIMP-MODULE-PROCEDURES"
+>Gimp Module Procedures</A
+></H1
+><P
+>The <TT
+CLASS="FILENAME"
+>gimp</TT
+> module contains a number of
+    procedures and functions, as well as the definitions of many gimp
+    types such as images, and the procedural database.  This section
+    explains the base level procedures.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CONSTRUCTORS-AND-DESTRUCTORS"
+>Constructors and Object Deletion</A
+></H2
+><P
+>There are a number of functions in the
+      <TT
+CLASS="FILENAME"
+>gimp</TT
+> module that are used to create the objects
+      used to make up an image in Gimp.  Here is a set of descriptions
+      of these constructors:</P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.image</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+>)</DT
+><DD
+><P
+>This procedure creates an image with the given
+            dimensions and type (type is one of
+            <TT
+CLASS="LITERAL"
+>RGB</TT
+>, <TT
+CLASS="LITERAL"
+>GRAY</TT
+> or
+            <TT
+CLASS="LITERAL"
+>INDEXED</TT
+>).</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.layer</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>img</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>opacity</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>mode</I
+></TT
+>)</DT
+><DD
+><P
+>Create a new layer called
+            <TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>, with the given dimensions and
+            <TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+> (one of the
+            <TT
+CLASS="LITERAL"
+>*_IMAGE</TT
+> constants),
+            <TT
+CLASS="LITERAL"
+>opacity</TT
+> (float between 0 and 100) and
+            a <TT
+CLASS="LITERAL"
+>mode</TT
+> (one of the
+            <TT
+CLASS="LITERAL"
+>*_MODE</TT
+> constants).  The layer can
+            then be added to the image with the
+            <TT
+CLASS="FUNCTION"
+><B
+>img.add_layer</B
+></TT
+> method.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.channel</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>img</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>width</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>height</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>opacity</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>colour</I
+></TT
+>)</DT
+><DD
+><P
+>Create a new channel object with the given
+            dimensions, <TT
+CLASS="PARAMETER"
+><I
+>opacity</I
+></TT
+> and
+            <TT
+CLASS="PARAMETER"
+><I
+>colour</I
+></TT
+> (one of the
+            <TT
+CLASS="LITERAL"
+>*_CHANNEL</TT
+> constants).  This channel can
+            then be added to an image.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.display</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>img</I
+></TT
+>)</DT
+><DD
+><P
+>Create a new display window for the given image.
+            The window will not be displayed until a call to
+            <TT
+CLASS="FUNCTION"
+><B
+>gimp.displays_flush</B
+></TT
+> is made.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.parasite(name, flags, data)</B
+></TT
+></DT
+><DD
+><P
+>Create a new parasite.  The parasite can then be
+	    attached to gimp, an image or a drawable.  This is only
+	    available in gimp &#62;= 1.1</P
+></DD
+></DL
+><P
+>When any of these objects get removed from memory (such as
+      when their name goes out of range), the gimp thing it represents
+      does not get deleted with it (otherwise when your plugin
+      finished running, it would delete all its work).  In order to
+      delete the thing the Python object represents, you should use
+      the <TT
+CLASS="FUNCTION"
+><B
+>gimp.delete</B
+></TT
+> procedure.  It deletes the
+      gimp thing associated with the Python object given as a
+      parameter.  If the object is not an image, layer, channel,
+      drawable or display <TT
+CLASS="FUNCTION"
+><B
+>gimp.delete</B
+></TT
+> does
+      nothing.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CONFIGURATION-INFORMATION"
+>Configuration Information</A
+></H2
+><P
+>There are a number of functions that can be used to gather
+      information about the environment the plugin is running in:</P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.color_cube</B
+></TT
+>() or
+	  <TT
+CLASS="FUNCTION"
+><B
+>gimp.colour_cube</B
+></TT
+>()</DT
+><DD
+><P
+>Returns the current colour cube.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.gamma</B
+></TT
+>()</DT
+><DD
+><P
+>Returns the current gamma correction.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.install_cmap</B
+></TT
+>()</DT
+><DD
+><P
+>Returns non-zero if a colour map has been
+	    installed.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.use_xshm</B
+></TT
+>()</DT
+><DD
+><P
+>Returns non-zero if Gimp is using X shared
+	    memory.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.gtkrc</B
+></TT
+>()</DT
+><DD
+><P
+>Returns the file name of the GTK configuration
+	    file.</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PALETTE-OPERATIONS"
+>Palette Operations</A
+></H2
+><P
+>These functions alter the currently selected foreground
+      and background.</P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.get_background</B
+></TT
+>()</DT
+><DD
+><P
+>Returns a 3-tuple containing the current background
+	    colour in RGB form.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.get_foreground</B
+></TT
+>()</DT
+><DD
+><P
+>Returns a 3-tuple containing the current foreground
+	    colour in RGB form.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.set_background</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>r</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>g</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>b</I
+></TT
+>)</DT
+><DD
+><P
+>Sets the current background colour.  The three
+            arguments can be replaced by a single 3-tuple like that
+            returned by <TT
+CLASS="FUNCTION"
+><B
+>gimp.get_background</B
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.set_foreground</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>r</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>g</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>b</I
+></TT
+>)</DT
+><DD
+><P
+>Sets the current foreground colour.  Like
+            <TT
+CLASS="FUNCTION"
+><B
+>gimp.set_background</B
+></TT
+>, the arguments may
+            be replaced by a 3-tuple.</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GRADIENT-OPERATIONS"
+>Gradient Operations</A
+></H2
+><P
+>These functions perform operations on gradients:</P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.gradients_get_active</B
+></TT
+>()</DT
+><DD
+><P
+>Returns the name of the active gradient.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.gradients_set_active</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>)</DT
+><DD
+><P
+>Sets the active gradient.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.gradients_get_list</B
+></TT
+>()</DT
+><DD
+><P
+>Returns a list of the names of the available
+	    gradients.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.gradients_sample_uniform</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>num</I
+></TT
+>)</DT
+><DD
+><P
+>Returns a list of <TT
+CLASS="PARAMETER"
+><I
+>num</I
+></TT
+>
+            samples, where samples consist of 4-tuples of floats
+            representing the red, green, blue and alpha values for the
+            sample.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.gradients_sample_custom</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>pos</I
+></TT
+>)</DT
+><DD
+><P
+>Similar to
+            <TT
+CLASS="FUNCTION"
+><B
+>gimp.gradients_sample_uniform</B
+></TT
+>, except
+            the samples are taken at the positions given in the list
+            of floats <TT
+CLASS="PARAMETER"
+><I
+>pos</I
+></TT
+> instead of uniformly
+            through the gradient.</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PDB-REGISTRATION-FUNCTIONS"
+>PDB Registration Functions</A
+></H2
+><P
+>These functions either install procedures into the PDB or
+      alert gimp to their special use (eg as file handlers).</P
+><P
+>For simple plugins, you will usually only need to use
+      <TT
+CLASS="FUNCTION"
+><B
+>register</B
+></TT
+> from gimpfu.</P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.install_procedure</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>blurb</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>help</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>author</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>copyright</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>date</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>menu_path</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>image_types</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>params</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>ret_vals</I
+></TT
+>)</DT
+><DD
+><P
+>This procedure is used to install a procedure into
+            the PDB.  The first eight parameters are strings,
+            <TT
+CLASS="PARAMETER"
+><I
+>type</I
+></TT
+> is a one of the
+            <TT
+CLASS="LITERAL"
+>PROC_*</TT
+> constants, and the last two
+            parameters are sequences describing the parameters and
+            return values.  Their format is the same as the param and
+            ret_vals methods or PDB procedures.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.install_temp_proc</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>blurb</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>help</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>author</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>copyright</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>date</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>menu_path</I
+></TT
+>,
+          <TT
+CLASS="PARAMETER"
+><I
+>image_types</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>type,
+          params</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>ret_vals</I
+></TT
+>)</DT
+><DD
+><P
+>This procedure is used to install a procedure into
+            the PDB temporarily.  That is, it must be added again
+            every time gimp is run.  This procedure will be called the
+            same way as all other procedures for a plugin.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.uninstall_temp_proc</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>)</DT
+><DD
+><P
+>This removes a temporary procedure from the
+	    PDB.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.register_magic_load_handle</B
+></TT
+>r(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>extensions</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>prefixes</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>magics</I
+></TT
+>)</DT
+><DD
+><P
+>This procedure tells Gimp that the PDB procedure
+            <TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+> can load files with
+            <TT
+CLASS="PARAMETER"
+><I
+>extensions</I
+></TT
+> and
+            <TT
+CLASS="PARAMETER"
+><I
+>prefixes</I
+></TT
+> (eg http:) with magic
+            information <TT
+CLASS="PARAMETER"
+><I
+>magics</I
+></TT
+>.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.register_load_handler</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>extensions</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>prefixes</I
+></TT
+>)</DT
+><DD
+><P
+>This procedure tells Gimp that the PDB procedure
+            <TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+> can load files with
+            <TT
+CLASS="PARAMETER"
+><I
+>extensions</I
+></TT
+> and
+            <TT
+CLASS="PARAMETER"
+><I
+>prefixes</I
+></TT
+> (eg http:).</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.register_save_handler</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>extensions</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>prefixes</I
+></TT
+>)</DT
+><DD
+><P
+>This procedure tells Gimp that the PDB procedure
+            <TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+> can save files with
+            <TT
+CLASS="PARAMETER"
+><I
+>extensions</I
+></TT
+> and
+            <TT
+CLASS="PARAMETER"
+><I
+>prefixes</I
+></TT
+> (eg http:).</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="OTHER-FUNCTIONS"
+>Other Functions</A
+></H2
+><P
+>These are the other functions in the
+      <TT
+CLASS="FILENAME"
+>gimp</TT
+> module.</P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.main</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>init_func</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>quit_func</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>query_func</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>run_func</I
+></TT
+>)</DT
+><DD
+><P
+>This function is the one that controls the execution
+            of a Gimp-Python plugin.  It is better to not use this
+            directly but rather subclass the plugin class, defined in
+            the <A
+HREF="support-modules.html#GIMPPLUGIN-MODULE"
+>the section called <I
+>The gimpplugin Module</I
+></A
+>.</P
+></DD
+><DT
+><TT
+CLASS="PARAMETER"
+><I
+>gimp.pdb</I
+></TT
+></DT
+><DD
+><P
+>The procedural database object.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.progress_init</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>[label]</I
+></TT
+>)</DT
+><DD
+><P
+>(Re)Initialise the progress meter with
+            <TT
+CLASS="PARAMETER"
+><I
+>label</I
+></TT
+> (or the plugin name) as a
+            label in the window.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.progress_update</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>percnt</I
+></TT
+>)</DT
+><DD
+><P
+>Set the progress meter to
+	    <TT
+CLASS="PARAMETER"
+><I
+>percnt</I
+></TT
+> done.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.query_images</B
+></TT
+>()</DT
+><DD
+><P
+>Returns a list of all the image objects.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.quit</B
+></TT
+>()</DT
+><DD
+><P
+>Stops execution imediately and exits.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.displays_flush</B
+></TT
+>()</DT
+><DD
+><P
+>Update all the display windows.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.tile_width</B
+></TT
+>()</DT
+><DD
+><P
+>The maximum width of a tile.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.tile_height</B
+></TT
+>()</DT
+><DD
+><P
+>The maximum height of a tile.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.tile_cache_size</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>kb</I
+></TT
+>)</DT
+><DD
+><P
+>Set the size of the tile cache in kilobytes.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.tile_cache_ntiles</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>n</I
+></TT
+>)</DT
+><DD
+><P
+>Set the size of the tile cache in tiles.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.get_data</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>key</I
+></TT
+>)</DT
+><DD
+><P
+>Get the information associated with
+            <TT
+CLASS="PARAMETER"
+><I
+>key</I
+></TT
+>.  The data will be a string.
+            This function should probably be used through the <A
+HREF="support-modules.html#GIMPSHELF-MODULE"
+>the section called <I
+>The gimpshelf Module</I
+></A
+>.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.set_data</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>key</I
+></TT
+>,
+	  <TT
+CLASS="PARAMETER"
+><I
+>data</I
+></TT
+>)</DT
+><DD
+><P
+>Set the information in the string
+            <TT
+CLASS="PARAMETER"
+><I
+>data</I
+></TT
+> with
+            <TT
+CLASS="PARAMETER"
+><I
+>key</I
+></TT
+>.  The data will persist for the
+            whole gimp session.  Rather than directly accessing this
+            function, it is better to go through the <A
+HREF="support-modules.html#GIMPSHELF-MODULE"
+>the section called <I
+>The gimpshelf Module</I
+></A
+>.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.extension_ack</B
+></TT
+>()</DT
+><DD
+><P
+>Tells gimp that the plugin has finished its work,
+            while keeping the plugin connection open.  This is used by
+            an extension plugin to tell gimp it can continue, while
+            leaving the plugin connection open.  This is what the
+            script-fu plugin does so that only one scheme interpretter
+            is needed.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>gimp.extension_process</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>timeout</I
+></TT
+>)</DT
+><DD
+><P
+>Makes the plugin check for messages from gimp.
+            generally this is not needed, as messages are checked
+            during most calls in the gimp module.</P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARASITES"
+>Parasites</A
+></H2
+><P
+>In gimp &#62;= 1.1, it is possible to attach arbitrary data to
+      an image through the use of parasites.  Parasites are simply
+      wrappers for the data, containing its name and some flags.
+      Parasites have the following parameters:</P
+><P
+></P
+><DL
+><DT
+>data</DT
+><DD
+><P
+>The data for the parasite -- a string</P
+></DD
+><DT
+>flags</DT
+><DD
+><P
+>The flags for the parasite</P
+></DD
+><DT
+>is_persistent</DT
+><DD
+><P
+>True if this parasite is persistent</P
+></DD
+><DT
+>is_undoable</DT
+><DD
+><P
+>True if this parasite is undoable</P
+></DD
+><DT
+>name</DT
+><DD
+><P
+>The name of the parasite</P
+></DD
+></DL
+><P
+>Parasites also have the methods <TT
+CLASS="FUNCTION"
+><B
+>copy</B
+></TT
+>,
+      <TT
+CLASS="FUNCTION"
+><B
+>is_type</B
+></TT
+> and
+      <TT
+CLASS="FUNCTION"
+><B
+>has_flag</B
+></TT
+>.</P
+><P
+>There is a set of four functions that are used to
+      manipulate parasites.  They exist as functions in the
+      <TT
+CLASS="FILENAME"
+>gimp</TT
+> module, and methods for image and
+      drawable objects.  They are:</P
+><P
+></P
+><DL
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>find_parasite</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>)</DT
+><DD
+><P
+>find a parasite by its name.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>attach_parasite</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>parasite</I
+></TT
+>)</DT
+><DD
+><P
+>Attach a parasite to this object.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>attach_new_parasite</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>flags</I
+></TT
+>, <TT
+CLASS="PARAMETER"
+><I
+>data</I
+></TT
+>)</DT
+><DD
+><P
+>Create a new parasite and attach it.</P
+></DD
+><DT
+><TT
+CLASS="FUNCTION"
+><B
+>detach_parasite</B
+></TT
+>(<TT
+CLASS="PARAMETER"
+><I
+>name</I
+></TT
+>)</DT
+><DD
+><P
+>Detach the named parasite</P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="procedural-database.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="pygimp.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="gimp-objects.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>The Procedural Database</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Gimp Objects</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

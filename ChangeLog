@@ -1,3 +1,9 @@
+1999-09-05  James Henstridge  <james@daa.com.au>
+
+	* plug-ins/pygimp/*: added pygimp to tree, as organised with Marc
+	Lehmann.  I have not hooked it into the main makefile yet.  That
+	should not be difficult though.
+
 Sun Sep  5 14:48:30 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/gimpcontextpreview.c: small cosmetic change
