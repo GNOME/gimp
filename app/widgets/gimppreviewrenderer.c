@@ -306,8 +306,8 @@ gimp_preview_renderer_set_viewable (GimpPreviewRenderer *renderer,
       if (renderer->size != -1)
         gimp_preview_renderer_set_size (renderer, renderer->size,
                                         renderer->border_width);
-      else
-        gimp_preview_renderer_invalidate (renderer);
+
+      gimp_preview_renderer_invalidate (renderer);
     }
 }
 
@@ -641,8 +641,8 @@ gimp_preview_renderer_size_changed (GimpPreviewRenderer *renderer,
   if (renderer->size != -1)
     gimp_preview_renderer_set_size (renderer, renderer->size,
                                     renderer->border_width);
-  else
-    gimp_preview_renderer_invalidate (renderer);
+
+  gimp_preview_renderer_invalidate (renderer);
 }
 
 

@@ -1,3 +1,12 @@
+2003-03-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppreviewrenderer.c
+	(gimp_preview_renderer_set_viewable)
+	(gimp_preview_renderer_size_changed): don't rely on
+	gimp_preview_renderer_set_size() to invalidate the
+	renderer. Instead, call gimp_preview_renderer_invalidate() after
+	resizing the renderer.
+
 2003-03-21  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/plug-in.c (plug_in_open): added
