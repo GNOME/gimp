@@ -25,8 +25,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #define DBL_LIST_WIDTH  250
 #define DBL_WIDTH       (DBL_LIST_WIDTH + 300)
@@ -34,10 +36,10 @@
 
 static char *proc_type_str[] =
 {
-  "Internal GIMP procedure",
-  "GIMP Plug-In",
-  "GIMP Extension",
-  "Temporary Procedure"
+  N_("Internal GIMP procedure"),
+  N_("GIMP Plug-In"),
+  N_("GIMP Extension"),
+  N_("Temporary Procedure")
 };
 
 
@@ -82,13 +84,15 @@ query ()
 
   static int nargs = sizeof (args) / sizeof (args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_details",
-                          "Displays plugin details",
-                          "Helps browse the plugin menus system. You can search for plugin names, sort by name or menu location and you can view a tree representation of the plugin menus. Can also be of help to find where new plugins have installed themselves in the menuing system",
+                          _("Displays plugin details"),
+                          _("Helps browse the plugin menus system. You can search for plugin names, sort by name or menu location and you can view a tree representation of the plugin menus. Can also be of help to find where new plugins have installed themselves in the menuing system"),
                           "Andy Thomas",
                           "Andy Thomas",
                           "1999",
-			  "<Toolbox>/Xtns/Plugin Details...",
+			  N_("<Toolbox>/Xtns/Plugin Details..."),
 			  "",
                           PROC_EXTENSION,
 			  nargs, 0,
@@ -112,6 +116,8 @@ run (char    *name,
   *return_vals = values;
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
+
+  INIT_I18N_UI();
 
   if (strcmp (name, "plug_in_details") == 0)
     {
@@ -200,7 +206,7 @@ details_callback (GtkWidget *widget,
       GTK_PANED(pdesc->paned)->child1_resize=FALSE;
       gtk_paned_set_handle_size(GTK_PANED(pdesc->paned),10);
       gtk_paned_set_gutter_size(GTK_PANED(pdesc->paned),6);
-      gtk_label_set_text(lab," Details <<< ");
+      gtk_label_set_text(lab, _(" Details <<< "));
       gtk_widget_show (pdesc->descr_scroll);
       pdesc->details_showing = TRUE;
     }
@@ -211,7 +217,7 @@ details_callback (GtkWidget *widget,
       GTK_PANED(pdesc->paned)->child2_resize=TRUE;
       gtk_paned_set_handle_size(GTK_PANED(pdesc->paned),0);
       gtk_paned_set_gutter_size(GTK_PANED(pdesc->paned),0);
-      gtk_label_set_text(lab," Details >>> ");
+      gtk_label_set_text(lab, _(" Details >>> "));
       gtk_widget_hide (pdesc->descr_scroll);
       gtk_paned_set_position(GTK_PANED(pdesc->paned),p->allocation.width);/*plugindesc->c1size);*/
       pdesc->details_showing = FALSE;
@@ -298,7 +304,7 @@ procedure_general_select_callback (PDesc *pdesc,
 
   /* Number of plugins */
 
-  label = gtk_label_new(g_strdup_printf(" Number of plugin interfaces :%d",pdesc->num_plugins));
+  label = gtk_label_new(g_strdup_printf( _(" Number of plugin interfaces :%d"),pdesc->num_plugins));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 0, 0);
@@ -314,7 +320,7 @@ procedure_general_select_callback (PDesc *pdesc,
 
   /* menu path */
 
-  label = gtk_label_new("Menu path :");
+  label = gtk_label_new( _("Menu path :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 1, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 0);
@@ -335,7 +341,7 @@ procedure_general_select_callback (PDesc *pdesc,
 
   /* show the name */
 
-  label = gtk_label_new("Name :");
+  label = gtk_label_new( _("Name :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 1, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
@@ -357,7 +363,7 @@ procedure_general_select_callback (PDesc *pdesc,
 
   /* show the description */
 
-  label = gtk_label_new("Blurb :");
+  label = gtk_label_new( _("Blurb :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 1, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 0);
@@ -379,7 +385,7 @@ procedure_general_select_callback (PDesc *pdesc,
   /* show the help */
   if ((selected_proc_help) && (strlen(selected_proc_help) > 1))
     {
-      label = gtk_label_new("Help :");
+      label = gtk_label_new( _("Help :"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
       gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 			0, 1, table_row, table_row+1, 
@@ -423,13 +429,13 @@ procedure_general_select_callback (PDesc *pdesc,
 
   /* show the type */
 
-  label = gtk_label_new("Type :");
+  label = gtk_label_new( _("Type :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    0, 1, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
   gtk_widget_show(label);
 
-  label = gtk_label_new(proc_type_str[selected_proc_type]);
+  label = gtk_label_new( gettext(proc_type_str[selected_proc_type]));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 		    1, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 0, 0);
@@ -980,7 +986,7 @@ gimp_plugin_desc ()
   plugindesc->dlg = gtk_dialog_new(); 
   plugindesc->details_showing = FALSE;
 
-  gtk_window_set_title (GTK_WINDOW (plugindesc->dlg), "Plugin Descriptions");
+  gtk_window_set_title (GTK_WINDOW (plugindesc->dlg), _("Plugin Descriptions"));
   gtk_window_position (GTK_WINDOW (plugindesc->dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (plugindesc->dlg), "destroy",
                       (GtkSignalFunc) dialog_close_callback,
@@ -1012,10 +1018,10 @@ gimp_plugin_desc ()
 
   /* list : list in a scrolled_win */
   
-  clabels[0] = g_strdup("Name"); 
-  clabels[1] = g_strdup("Ins Date"); 
-  clabels[2] = g_strdup("Menu Path"); 
-  clabels[3] = g_strdup("Image Types"); 
+  clabels[0] = g_strdup( _("Name")); 
+  clabels[1] = g_strdup( _("Ins Date")); 
+  clabels[2] = g_strdup( _("Menu Path")); 
+  clabels[3] = g_strdup( _("Image Types")); 
   plugindesc->clist = gtk_clist_new_with_titles(4,clabels); 
 
   gtk_signal_connect (GTK_OBJECT (plugindesc->clist), "click_column",
@@ -1032,16 +1038,16 @@ gimp_plugin_desc ()
 		      (GtkSignalFunc) procedure_clist_select_callback,
 		      plugindesc);
   
-  label = gtk_label_new ("List view");
+  label = gtk_label_new ( _("List view"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), swindow, label);
   gtk_container_add (GTK_CONTAINER (swindow), plugindesc->clist);
   gtk_widget_show (plugindesc->clist);
   gtk_widget_show (swindow);
 
   /* notebook->ctree */
-  clabels[0] = g_strdup("Menu Path/Name"); 
-  clabels[1] = g_strdup("Ins Date"); 
-  clabels[2] = g_strdup("Image Types"); 
+  clabels[0] = g_strdup( _("Menu Path/Name")); 
+  clabels[1] = g_strdup( _("Ins Date")); 
+  clabels[2] = g_strdup( _("Image Types")); 
   plugindesc->ctree = gtk_ctree_new_with_titles(3,0,clabels);  
   plugindesc->ctree_scrolled_win =
     swindow = gtk_scrolled_window_new (NULL, NULL);
@@ -1051,7 +1057,7 @@ gimp_plugin_desc ()
   gtk_signal_connect (GTK_OBJECT (plugindesc->ctree), "tree_select_row",
 		      (GtkSignalFunc) procedure_ctree_select_callback,
 		      plugindesc);
-  label = gtk_label_new("Tree view");
+  label = gtk_label_new( _("Tree view"));
   gtk_clist_set_column_auto_resize (GTK_CLIST (plugindesc->ctree), 0, TRUE);
   gtk_clist_set_column_auto_resize (GTK_CLIST (plugindesc->ctree), 1, TRUE);
   gtk_clist_set_column_auto_resize (GTK_CLIST (plugindesc->ctree), 2, TRUE);
@@ -1073,7 +1079,7 @@ gimp_plugin_desc ()
 		      searchhbox, FALSE, FALSE, 0);
   gtk_widget_show(searchhbox);
 
-  label = gtk_label_new("Search : ");
+  label = gtk_label_new( _("Search : "));
   gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (searchhbox), 
 		      label, FALSE, FALSE, 0);
@@ -1084,7 +1090,7 @@ gimp_plugin_desc ()
 		      plugindesc->search_entry, TRUE, TRUE, 0);
   gtk_widget_show(plugindesc->search_entry);
 
-  button = gtk_button_new_with_label (" Details >>> ");
+  button = gtk_button_new_with_label ( _(" Details >>> "));
   gtk_widget_show(button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) details_callback, plugindesc);
@@ -1098,7 +1104,7 @@ gimp_plugin_desc ()
 
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG(plugindesc->dlg)->action_area), 0);
 
-  plugindesc->name_button = gtk_button_new_with_label ("Search by name");
+  plugindesc->name_button = gtk_button_new_with_label ( _("Search by name"));
   GTK_WIDGET_SET_FLAGS (plugindesc->name_button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (plugindesc->name_button), "clicked",
                       (GtkSignalFunc) dialog_search_callback, plugindesc);
@@ -1107,7 +1113,7 @@ gimp_plugin_desc ()
   gtk_widget_show(plugindesc->name_button);
 
 
-  button = gtk_button_new_with_label ("Close");
+  button = gtk_button_new_with_label ( _("Close"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) dialog_close_callback, plugindesc);

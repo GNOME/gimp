@@ -1,3 +1,16 @@
+2000-01-03  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/plugindetails.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/ripple.c
+	* po-plug-ins/POTFILES.in: added gettext support.
+
+	* modules/cdisplay_gamma.c
+	* po/POTFILES.in: added gettext support.
+
 Sun Jan  2 23:29:05 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* app/color_area.[ch]: fill dummy gimage->base_type as well

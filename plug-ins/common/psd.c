@@ -153,6 +153,7 @@
 
 #include <glib.h>
 #include <libgimp/gimp.h>
+#include "libgimp/stdplugins-intl.h"
 
 /* Local types etc
  */
@@ -363,9 +364,11 @@ query ()
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_psd_load",
-                          "loads files of the Photoshop(tm) PSD file format",
-                          "This filter loads files of Adobe Photoshop(tm) native PSD format.  These files may be of any image type supported by GIMP, with or without layers, layer masks, aux channels and guides.",
+                          _("loads files of the Photoshop(tm) PSD file format"),
+                          _("This filter loads files of Adobe Photoshop(tm) native PSD format.  These files may be of any image type supported by GIMP, with or without layers, layer masks, aux channels and guides."),
                           "Adam D. Moss & Torsten Martinsen",
                           "Adam D. Moss & Torsten Martinsen",
                           "1996-1998",
@@ -1511,7 +1514,7 @@ void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
 	  }
 	
 	channel_ID = gimp_channel_new(image_ID,
-				      psd_image.aux_channel[chan-gimpstep].name ? psd_image.aux_channel[chan-gimpstep].name : "Unnamed channel",
+				      psd_image.aux_channel[chan-gimpstep].name ? psd_image.aux_channel[chan-gimpstep].name : _("Unnamed channel"),
 				      width, height,
 				      100.0, colour);
 	gimp_image_add_channel(image_ID, channel_ID, 0);
@@ -1641,12 +1644,7 @@ load_image(char *name)
   IFDBG printf("------- %s ---------------------------------\n",name);
 
 
-  name_buf = xmalloc(strlen(name) + 11);
-  if (number > 1)
-    sprintf (name_buf, "%s-%d", name, number);
-  else
-    sprintf (name_buf, "%s", name);
-  sprintf(name_buf, "Loading %s:", name);
+  name_buf = g_strdup_printf( _("Loading %s:"), name);
 
   gimp_progress_init(name_buf);
 
@@ -2026,7 +2024,7 @@ load_image(char *name)
 		}
 	    }
 
-	  layer_ID = gimp_layer_new (image_ID, "Background",
+	  layer_ID = gimp_layer_new (image_ID, _("Background"),
 				     PSDheader.columns, PSDheader.rows,
 				     psd_type_to_gimp_type(imagetype),
 				     100, NORMAL_MODE);

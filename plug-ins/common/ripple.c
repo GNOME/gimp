@@ -28,7 +28,7 @@
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-
+#include "libgimp/stdplugins-intl.h"
 
 /* Some useful macros */
 #define SCALE_WIDTH 200
@@ -155,13 +155,15 @@ query ()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_ripple",
-			  "Ripple the contents of the specified drawable",
-			  "Ripples the pixels of the specified drawable. Each row or colum will be displaced a certain number of pixels coinciding with the given wave form",
+			  _("Ripple the contents of the specified drawable"),
+			  _("Ripples the pixels of the specified drawable. Each row or colum will be displaced a certain number of pixels coinciding with the given wave form"),
 			  "Brian Degenhardt <bdegenha@ucsd.edu>",
 			  "Brian Degenhardt",
 			  "1997",
-			  "<Image>/Filters/Distorts/Ripple...",
+			  N_("<Image>/Filters/Distorts/Ripple..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -194,6 +196,7 @@ run (gchar  *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_ripple", &rvals);
 
@@ -203,6 +206,7 @@ run (gchar  *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 10)
 	status = STATUS_CALLING_ERROR;
@@ -222,6 +226,7 @@ run (gchar  *name,
       break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_ripple", &rvals);
       break;
@@ -235,7 +240,7 @@ run (gchar  *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ("Rippling...");
+	  gimp_progress_init ( _("Rippling..."));
 
 	  /*  set the tile cache size  */
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -574,7 +579,7 @@ ripple_dialog ()
     gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
     dlg = gtk_dialog_new ();
-    gtk_window_set_title (GTK_WINDOW (dlg), "Ripple");
+    gtk_window_set_title (GTK_WINDOW (dlg), _("Ripple"));
     gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
     gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
                         (GtkSignalFunc) ripple_close_callback,
@@ -588,7 +593,7 @@ ripple_dialog ()
     gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
     gtk_widget_show (hbbox);
     
-    button = gtk_button_new_with_label ("OK");
+    button = gtk_button_new_with_label ( _("OK"));
     GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
     gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			(GtkSignalFunc) ripple_ok_callback,
@@ -597,7 +602,7 @@ ripple_dialog ()
     gtk_widget_grab_default (button);
     gtk_widget_show (button);
     
-    button = gtk_button_new_with_label ("Cancel");
+    button = gtk_button_new_with_label ( _("Cancel"));
     GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
     gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			       (GtkSignalFunc) gtk_widget_destroy,
@@ -623,7 +628,7 @@ ripple_dialog ()
 
         /* Options section */
         /*  the vertical box and its toggle buttons  */
-    frame = gtk_frame_new ("Options");
+    frame = gtk_frame_new ( _("Options"));
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
                       GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 5, 5);
@@ -631,7 +636,7 @@ ripple_dialog ()
     gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
     gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-    toggle = gtk_check_button_new_with_label ("Antialiasing");
+    toggle = gtk_check_button_new_with_label ( _("Antialiasing"));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) ripple_toggle_update,
@@ -639,7 +644,7 @@ ripple_dialog ()
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), rvals.antialias);
     gtk_widget_show (toggle);
 
-    toggle = gtk_check_button_new_with_label ("Retain Tilability");
+    toggle = gtk_check_button_new_with_label ( _("Retain Tilability"));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) ripple_toggle_update,
@@ -652,7 +657,7 @@ ripple_dialog ()
 
 
 /*  Orientation toggle box  */
-    frame = gtk_frame_new ("Orientation");
+    frame = gtk_frame_new ( _("Orientation"));
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
                       GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 5, 5);
@@ -660,7 +665,7 @@ ripple_dialog ()
     gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
     gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-    toggle = gtk_radio_button_new_with_label (orientation_group, "Horizontal");
+    toggle = gtk_radio_button_new_with_label (orientation_group, _("Horizontal"));
     orientation_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -669,7 +674,7 @@ ripple_dialog ()
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_horizontal);
     gtk_widget_show (toggle);
 
-    toggle = gtk_radio_button_new_with_label (orientation_group, "Vertical");
+    toggle = gtk_radio_button_new_with_label (orientation_group, _("Vertical"));
     orientation_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -688,14 +693,14 @@ ripple_dialog ()
     gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
 
 /*  Edges toggle box  */
-    frame = gtk_frame_new ("Edges");
+    frame = gtk_frame_new ( _("Edges"));
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 5);
     toggle_vbox = gtk_vbox_new (FALSE, 5);
     gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
     gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-    toggle = gtk_radio_button_new_with_label (edges_group, "Wrap");
+    toggle = gtk_radio_button_new_with_label (edges_group, _("Wrap"));
     edges_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -704,7 +709,7 @@ ripple_dialog ()
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_wrap);
     gtk_widget_show (toggle);
 
-    toggle = gtk_radio_button_new_with_label (edges_group, "Smear");
+    toggle = gtk_radio_button_new_with_label (edges_group, _("Smear"));
     edges_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -713,7 +718,7 @@ ripple_dialog ()
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_smear);
     gtk_widget_show (toggle);
 
-    toggle = gtk_radio_button_new_with_label (edges_group, "Black");
+    toggle = gtk_radio_button_new_with_label (edges_group, _("Black"));
     edges_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -727,14 +732,14 @@ ripple_dialog ()
 
 
 /*  Edges toggle box  */
-    frame = gtk_frame_new ("Wave Type");
+    frame = gtk_frame_new ( _("Wave Type"));
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 5);
     toggle_vbox = gtk_vbox_new (FALSE, 5);
     gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
     gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-    toggle = gtk_radio_button_new_with_label (waveform_group, "Sawtooth");
+    toggle = gtk_radio_button_new_with_label (waveform_group, _("Sawtooth"));
     waveform_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -743,7 +748,7 @@ ripple_dialog ()
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_sawtooth);
     gtk_widget_show (toggle);
 
-    toggle = gtk_radio_button_new_with_label (waveform_group, "Sine");
+    toggle = gtk_radio_button_new_with_label (waveform_group, _("Sine"));
     waveform_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -759,7 +764,7 @@ ripple_dialog ()
 
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
@@ -771,7 +776,7 @@ ripple_dialog ()
 
 
 /* Period */
-  label = gtk_label_new ("Period");
+  label = gtk_label_new ( _("Period"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 10, 5);
   gtk_widget_show (label);
@@ -809,7 +814,7 @@ ripple_dialog ()
 
 
 /* Amplitude */
-  label = gtk_label_new ("Amplitude");
+  label = gtk_label_new ( _("Amplitude"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 10, 5);
   gtk_widget_show (label);

@@ -66,6 +66,7 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
+#include "libgimp/stdplugins-intl.h"
 
 #define WITHIN(a, b, c) ((((a) <= (b)) && ((b) <= (c))) ? 1 : 0)
 
@@ -211,13 +212,15 @@ query(void)
 	static int        nargs        = sizeof(args) / sizeof(args[0]);
 	static int        nreturn_vals = 0;
 
+    INIT_I18N();
+
 	gimp_install_procedure(PLUG_IN_NAME,
-			       "Converts and image to and from polar coords",
-			       "Remaps and image from rectangular coordinates to polar coordinats or vice versa",
+			       _("Converts and image to and from polar coords"),
+			       _("Remaps and image from rectangular coordinates to polar coordinats or vice versa"),
 			       "Daniel Dunbar and Federico Mena Quintero",
 			       "Daniel Dunbar and Federico Mena Quintero",
 			       PLUG_IN_VERSION,
-			       "<Image>/Filters/Distorts/Polar Coords...",
+			       N_("<Image>/Filters/Distorts/Polar Coords..."),
 			       "RGB*, GRAY*",
 			       PROC_PLUG_IN,
 			       nargs,
@@ -302,6 +305,7 @@ run(char    *name,
 
 	switch (run_mode) {
 		case RUN_INTERACTIVE:
+          INIT_I18N_UI();
 			/* Possibly retrieve data */
 
 			gimp_get_data(PLUG_IN_NAME, &pcvals);
@@ -314,6 +318,7 @@ run(char    *name,
 			break;
 
 		case RUN_NONINTERACTIVE:
+          INIT_I18N();
 			/* Make sure all the arguments are present */
 
 			if (nparams != 8)
@@ -330,6 +335,7 @@ run(char    *name,
 			break;
 
 		case RUN_WITH_LAST_VALS:
+          INIT_I18N();
 			/* Possibly retrieve data */
 
 			gimp_get_data(PLUG_IN_NAME, &pcvals);
@@ -410,7 +416,7 @@ polarize(void) {
   progress     = 0;
   max_progress = img_width * img_height;
 
-  gimp_progress_init("Polarizing...");
+  gimp_progress_init( _("Polarizing..."));
 
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr)) {
     dest = dest_rgn.data;
@@ -899,7 +905,7 @@ polarize_dialog(void)
 	build_preview_source_image();
 
 	dialog = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dialog), "Polarize");
+	gtk_window_set_title(GTK_WINDOW(dialog), _("Polarize"));
 	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
 	gtk_container_border_width(GTK_CONTAINER(dialog), 0);
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
@@ -946,8 +952,8 @@ polarize_dialog(void)
 	gtk_table_attach(GTK_TABLE(top_table), table, 0, 3, 1, 2, GTK_EXPAND | GTK_FILL, 0, 0, 0);
 	gtk_widget_show(table);
 
-	dialog_create_value("Circle depth in percent", GTK_TABLE(table), 0, &pcvals.circle, 0, 100.0, 1.0);
-	dialog_create_value("Offset angle", GTK_TABLE(table), 1, &pcvals.angle, 0, 359, 1.0);
+	dialog_create_value( _("Circle depth in percent"), GTK_TABLE(table), 0, &pcvals.circle, 0, 100.0, 1.0);
+	dialog_create_value( _("Offset angle"), GTK_TABLE(table), 1, &pcvals.angle, 0, 359, 1.0);
 
 
 	/* togglebuttons for backwards, top, polar->rectangular */
@@ -956,32 +962,32 @@ polarize_dialog(void)
 	gtk_table_attach( GTK_TABLE(top_table), hbox, 0, 3, 2, 3, 
 							GTK_FILL, 0 , 0, 0);
 
-	toggle = gtk_check_button_new_with_label("Map Backwards");
+	toggle = gtk_check_button_new_with_label(_("Map Backwards"));
 	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(toggle), pcvals.backwards);
 	gtk_signal_connect(GTK_OBJECT(toggle), "toggled", 
 			   (GtkSignalFunc) polar_toggle_callback,
 			   &pcvals.backwards);
 	gtk_box_pack_start( GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_widget_show(toggle);
-	set_tooltip(tips,toggle,"If checked the mapping will begin at the right side, as opposed to beginning at the left.");
+	set_tooltip(tips,toggle, _("If checked the mapping will begin at the right side, as opposed to beginning at the left."));
 
-	toggle = gtk_check_button_new_with_label("Map from Top");
+	toggle = gtk_check_button_new_with_label( _("Map from Top"));
 	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(toggle), pcvals.inverse);
 	gtk_signal_connect( GTK_OBJECT(toggle), "toggled", 
 			    (GtkSignalFunc) polar_toggle_callback,
 			    &pcvals.inverse);
 	gtk_box_pack_start( GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_widget_show(toggle);
-	set_tooltip(tips,toggle,"If unchecked the mapping will put the bottom row in the middle and the top row on the outside.  If checked it will be the opposite.");
+	set_tooltip(tips,toggle, _("If unchecked the mapping will put the bottom row in the middle and the top row on the outside.  If checked it will be the opposite."));
 
-	toggle = gtk_check_button_new_with_label("Polar to Rectangular");
+	toggle = gtk_check_button_new_with_label( _("To Polar"));
 	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(toggle), pcvals.polrec);
 	gtk_signal_connect( GTK_OBJECT(toggle), "toggled", 
 			    (GtkSignalFunc) polar_toggle_callback,
 			    &pcvals.polrec);
 	gtk_box_pack_start( GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_widget_show(toggle);
-	set_tooltip(tips,toggle,"If unchecked the image will be circularly mapped onto a rectangle.  If checked the image will be mapped onto a circle.");
+	set_tooltip(tips,toggle, _("If unchecked the image will be circularly mapped onto a rectangle.  If checked the image will be mapped onto a circle."));
 
 	gtk_widget_show(hbox);
 
@@ -993,7 +999,7 @@ polarize_dialog(void)
 	gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbbox);
 	
-	button = gtk_button_new_with_label ("OK");
+	button = gtk_button_new_with_label ( _("OK"));
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    (GtkSignalFunc) dialog_ok_callback,
@@ -1002,7 +1008,7 @@ polarize_dialog(void)
 	gtk_widget_grab_default (button);
 	gtk_widget_show (button);
 	
-	button = gtk_button_new_with_label ("Cancel");
+	button = gtk_button_new_with_label ( _("Cancel"));
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    (GtkSignalFunc) dialog_cancel_callback,

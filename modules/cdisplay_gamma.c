@@ -23,6 +23,7 @@
 #include <libgimp/color_display.h>
 #include <libgimp/gimpmodule.h>
 #include <libgimp/parasite.h>
+#include <libgimp/stdplugins-intl.h>
 
 #include <gtk/gtk.h>
 
@@ -313,7 +314,7 @@ gamma_configure (gpointer cd_ID,
 
       context->shell = gtk_dialog_new ();
       gtk_window_set_wmclass (GTK_WINDOW (context->shell), "gamma", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (context->shell), "Gamma");
+      gtk_window_set_title (GTK_WINDOW (context->shell), _("Gamma"));
 
       gtk_signal_connect (GTK_OBJECT (context->shell), "delete_event",
 			  GTK_SIGNAL_FUNC (gamma_configure_delete_callback),
@@ -323,7 +324,7 @@ gamma_configure (gpointer cd_ID,
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (context->shell)->vbox),
 			  hbox, FALSE, FALSE, 0);
 
-      label = gtk_label_new ("Gamma:");
+      label = gtk_label_new ( _("Gamma:"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
       gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
 
@@ -338,14 +339,14 @@ gamma_configure (gpointer cd_ID,
       gtk_box_pack_end (GTK_BOX (GTK_DIALOG (context->shell)->action_area),
 			hbbox, FALSE, FALSE, 0);  
 
-      button = gtk_button_new_with_label ("OK");
+      button = gtk_button_new_with_label ( _("OK"));
       GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
       gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  GTK_SIGNAL_FUNC (gamma_configure_ok_callback),
 			  cd_ID);
 
-      button = gtk_button_new_with_label ("Cancel");
+      button = gtk_button_new_with_label ( _("Cancel"));
       GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
       gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",

@@ -43,6 +43,7 @@
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include "libgimp/stdplugins-intl.h"
 
 #ifdef G_OS_WIN32
 #include <io.h>
@@ -232,8 +233,10 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_pnm_load",
-                          "loads files of the pnm file format",
+                          _("loads files of the pnm file format"),
                           "FIXME: write help for pnm_load",
                           "Erik Nygren",
                           "Erik Nygren",
@@ -245,8 +248,8 @@ query ()
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_pnm_save",
-                          "saves files in the pnm file format",
-                          "PNM saving handles all image types except those with alpha channels.",
+                          _("saves files in the pnm file format"),
+                          _("PNM saving handles all image types except those with alpha channels."),
                           "Erik Nygren",
                           "Erik Nygren",
                           "1996",
@@ -282,6 +285,12 @@ run (char    *name,
   values[0].data.d_status = STATUS_CALLING_ERROR;
   values[1].type = PARAM_IMAGE;
   values[1].data.d_image = -1;
+
+  if (run_mode == RUN_NONINTERACTIVE) {
+    INIT_I18N();
+  } else {
+    INIT_I18N_UI();
+  }
 
   if (strcmp (name, "file_pnm_load") == 0)
     {
@@ -381,7 +390,7 @@ load_image (char *filename)
   PNMScanner *scan;
   int ctr;
 
-  temp = g_strdup_printf ("Loading %s:", filename);
+  temp = g_strdup_printf (_("Loading %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
 
@@ -466,7 +475,7 @@ load_image (char *filename)
   image_ID = gimp_image_new (pnminfo->xres, pnminfo->yres, (pnminfo->np >= 3) ? RGB : GRAY);
   gimp_image_set_filename (image_ID, filename);
 
-  layer_ID = gimp_layer_new (image_ID, "Background",
+  layer_ID = gimp_layer_new (image_ID, _("Background"),
 			     pnminfo->xres, pnminfo->yres,
 			     (pnminfo->np >= 3) ? RGB_IMAGE : GRAY_IMAGE, 100, NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
@@ -744,11 +753,11 @@ save_image (char   *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
     {
-      gimp_message ("PNM save cannot handle images with alpha channels.");
+      gimp_message ( _("PNM save cannot handle images with alpha channels."));
       return FALSE;
     }
 
-  temp = g_strdup_printf ("Saving %s:", filename);
+  temp = g_strdup_printf ( _("Saving %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
 
@@ -912,7 +921,7 @@ save_dialog ()
   gint use_ascii = (psvals.raw == FALSE);
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save as PNM");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Save as PNM"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) save_close_callback,
@@ -926,7 +935,7 @@ save_dialog ()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) save_ok_callback,
@@ -935,7 +944,7 @@ save_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -944,7 +953,7 @@ save_dialog ()
   gtk_widget_show (button);
 
   /*  file save type  */
-  frame = gtk_frame_new ("Data Formatting");
+  frame = gtk_frame_new ( _("Data Formatting"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, TRUE, 0);
@@ -953,7 +962,7 @@ save_dialog ()
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
   group = NULL;
-  toggle = gtk_radio_button_new_with_label (group, "Raw");
+  toggle = gtk_radio_button_new_with_label (group, _("Raw"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -962,7 +971,7 @@ save_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_raw);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "Ascii");
+  toggle = gtk_radio_button_new_with_label (group, _("Ascii"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",

@@ -85,9 +85,15 @@ plug-ins/common/pcx.c
 plug-ins/common/pix.c
 plug-ins/common/pixelize.c
 plug-ins/common/plasma.c
+plug-ins/common/plugindetails.c
 plug-ins/common/png.c
+plug-ins/common/pnm.c
+plug-ins/common/polar.c
 plug-ins/common/ps.c
+plug-ins/common/psd.c
 plug-ins/common/psp.c
+plug-ins/common/randomize.c
+plug-ins/common/ripple.c
 plug-ins/common/rotate.c
 plug-ins/common/sample_colorize.c
 plug-ins/common/screenshot.c
