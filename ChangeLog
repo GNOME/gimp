@@ -1,3 +1,7 @@
+Thu Sep  2 23:26:36 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* libgimp/Makefile.am: install parasiteio.h
+
 Thu Sep  2 17:13:16 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/gtkvwrapbox.[ch]: new vwrapbox stuff

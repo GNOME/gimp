@@ -127,6 +127,7 @@ gimpinclude_HEADERS = \
 	parasite.h		\
 	parasiteF.h		\
 	parasiteP.h		\
+	parasiteio.h		\
 	stdplugins-intl.h
 
 libgimp_la_LDFLAGS = \
