@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-05 22:59+0800\n"
+"POT-Creation-Date: 2003-11-07 00:27+0800\n"
 "PO-Revision-Date: 2003-11-04 09:00+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
@@ -107,12 +107,11 @@ msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
-"  -d, --no-data            Jangan muatkan berus, kecerunan, pelet,, corak.\n"
+"  -d, --no-data            Jangan muatkan berus, kecerunan, pelet, corak.\n"
 
 #: app/main.c:469
-#, fuzzy
 msgid "  -f, --no-fonts           Do not load any fonts.\n"
-msgstr "  -s, --no-splash          Jangan tunjukkan tetingkap pemula.\n"
+msgstr "  -f, --no-fonts          Jangan muatkan sebarang fon.\n"
 
 #: app/main.c:470
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -120,7 +119,7 @@ msgstr "  -i, --no-interface       Jalankan tanpa antara muka pengguna.\n"
 
 #: app/main.c:471
 msgid "  --display <display>      Use the designated X display.\n"
-msgstr "  --display <display>      Gunakan paparan X yang ditandakan.\n"
+msgstr "  --display <papar>      Gunakan paparan X yang ditandakan.\n"
 
 #: app/main.c:472
 msgid "  -s, --no-splash          Do not show the startup window.\n"
@@ -147,7 +146,7 @@ msgstr "  --system-gimprc <gimprc> Gunakan fail sistem ganti gimprc.\n"
 #: app/main.c:477
 msgid ""
 "  --dump-gimprc            Output a gimprc file with default settings.\n"
-msgstr "  --dump-gimprc\t    Outputkan fail gimprc dengan seting piawai.\n"
+msgstr "  --dump-gimprc    \t   Outputkan fail gimprc dengan seting piawai.\n"
 
 #: app/main.c:478
 msgid ""
@@ -173,7 +172,7 @@ msgstr ""
 
 #: app/main.c:482
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
-msgstr "  -b, --kelompok <commands>   Proses arahan dalam mod kelompok.\n"
+msgstr "  -b, --batch <arahan>     Proses arahan dalam mod kelompok.\n"
 
 #: app/main.c:502
 msgid "(This console window will close in ten seconds)\n"
@@ -1025,7 +1024,7 @@ msgid "RGB"
 msgstr "RGB"
 
 #: app/core/core-enums.c:319 app/core/core-enums.c:340
-#: app/gui/info-window.c:84 app/gui/info-window.c:529
+#: app/gui/info-window.c:84 app/gui/info-window.c:530
 msgid "Grayscale"
 msgstr "Skala kelabu"
 
@@ -1041,13 +1040,13 @@ msgstr "Alfa-Skala kelabu"
 msgid "Indexed-Alpha"
 msgstr "Alfa-Berindeks"
 
-#: app/core/core-enums.c:361 app/gui/preferences-dialog.c:1615
-#: app/gui/user-install-dialog.c:1289
+#: app/core/core-enums.c:361 app/gui/preferences-dialog.c:1610
+#: app/gui/user-install-dialog.c:1285
 msgid "Horizontal"
 msgstr "Mengufuk"
 
-#: app/core/core-enums.c:362 app/gui/preferences-dialog.c:1617
-#: app/gui/user-install-dialog.c:1291
+#: app/core/core-enums.c:362 app/gui/preferences-dialog.c:1612
+#: app/gui/user-install-dialog.c:1287
 msgid "Vertical"
 msgstr "Menegak"
 
@@ -1112,7 +1111,7 @@ msgid "<<invalid>>"
 msgstr "<<tak sah>>"
 
 #: app/core/core-enums.c:551 app/core/gimpimage-scale.c:72
-#: app/gui/image-commands.c:558 app/gui/resize-dialog.c:203
+#: app/gui/image-commands.c:561 app/gui/resize-dialog.c:211
 msgid "Scale Image"
 msgstr "Skalakan Imej"
 
@@ -1137,7 +1136,7 @@ msgstr "Tukarkan Imej"
 msgid "Crop Image"
 msgstr "Potong Imej"
 
-#: app/core/core-enums.c:557 app/gui/image-commands.c:381
+#: app/core/core-enums.c:557 app/gui/image-commands.c:383
 msgid "Merge Layers"
 msgstr "Cantumkan Lapisan"
 
@@ -1146,7 +1145,7 @@ msgid "QuickMask"
 msgstr "QuickMask"
 
 #: app/core/core-enums.c:559 app/core/core-enums.c:588
-#: app/core/gimpimage-grid.c:59 app/gui/grid-dialog.c:165
+#: app/core/gimpimage-grid.c:59 app/gui/grid-dialog.c:140
 msgid "Grid"
 msgstr "Grid"
 
@@ -1176,14 +1175,14 @@ msgid "Linked Item"
 msgstr "Item yang Dipautkan"
 
 #: app/core/core-enums.c:566 app/core/gimplayer.c:569 app/core/gimplayer.c:571
-#: app/gui/layers-commands.c:1029 app/gui/resize-dialog.c:195
+#: app/gui/layers-commands.c:1044 app/gui/resize-dialog.c:203
 #: app/pdb/layer_cmds.c:407
 msgid "Scale Layer"
 msgstr "Skalakan Lapisan"
 
 #: app/core/core-enums.c:567 app/core/gimpimage-crop.c:117
 #: app/core/gimplayer.c:607 app/core/gimplayer.c:609
-#: app/gui/layers-commands.c:1123 app/pdb/layer_cmds.c:502
+#: app/gui/layers-commands.c:1138 app/pdb/layer_cmds.c:502
 msgid "Resize Layer"
 msgstr "Ubah saiz Lapisan"
 
@@ -1280,8 +1279,8 @@ msgstr "Namakan semula Imej"
 msgid "Set Item Linked"
 msgstr "Setkan Pautan Item"
 
-#: app/core/core-enums.c:596 app/gui/layers-commands.c:633
-#: app/gui/layers-commands.c:665 app/gui/layers-commands.c:697
+#: app/core/core-enums.c:596 app/gui/layers-commands.c:637
+#: app/gui/layers-commands.c:668 app/gui/layers-commands.c:701
 #: app/widgets/gimpdrawabletreeview.c:219 app/widgets/gimplayertreeview.c:210
 msgid "New Layer"
 msgstr "Lapisan Baru"
@@ -1295,7 +1294,7 @@ msgid "Layer Mod"
 msgstr "Mod Lapisan"
 
 #: app/core/core-enums.c:599 app/core/gimplayer.c:980
-#: app/gui/layers-commands.c:947
+#: app/gui/layers-commands.c:959
 msgid "Add Layer Mask"
 msgstr "Tambahkan Topeng Lapisan"
 
@@ -1319,8 +1318,8 @@ msgstr "Setkan Kelegapan Lapisan"
 msgid "Set Preserve Trans"
 msgstr "Setkan Pengekalan Trans"
 
-#: app/core/core-enums.c:605 app/gui/channels-commands.c:312
-#: app/gui/channels-commands.c:343 app/gui/channels-commands.c:380
+#: app/core/core-enums.c:605 app/gui/channels-commands.c:314
+#: app/gui/channels-commands.c:345 app/gui/channels-commands.c:383
 #: app/widgets/gimpchanneltreeview.c:121
 msgid "New Channel"
 msgstr "Saluran Baru"
@@ -1425,35 +1424,35 @@ msgstr "Parasit"
 
 #. initialize the list of gimp brushes
 #: app/core/gimp.c:882 app/gui/dialogs-constructors.c:300
-#: app/gui/dialogs-constructors.c:505 app/gui/preferences-dialog.c:1908
+#: app/gui/dialogs-constructors.c:505 app/gui/preferences-dialog.c:1903
 #: app/pdb/internal_procs.c:84
 msgid "Brushes"
 msgstr "Berus"
 
 #. initialize the list of gimp patterns
 #: app/core/gimp.c:886 app/gui/dialogs-constructors.c:320
-#: app/gui/dialogs-constructors.c:525 app/gui/preferences-dialog.c:1912
+#: app/gui/dialogs-constructors.c:525 app/gui/preferences-dialog.c:1907
 #: app/pdb/internal_procs.c:168
 msgid "Patterns"
 msgstr "Corak"
 
 #. initialize the list of gimp palettes
 #: app/core/gimp.c:890 app/gui/dialogs-constructors.c:360
-#: app/gui/dialogs-constructors.c:565 app/gui/preferences-dialog.c:1916
+#: app/gui/dialogs-constructors.c:565 app/gui/preferences-dialog.c:1911
 #: app/pdb/internal_procs.c:156
 msgid "Palettes"
 msgstr "Pelet"
 
 #. initialize the list of gimp gradients
 #: app/core/gimp.c:894 app/gui/dialogs-constructors.c:340
-#: app/gui/dialogs-constructors.c:545 app/gui/preferences-dialog.c:1920
+#: app/gui/dialogs-constructors.c:545 app/gui/preferences-dialog.c:1915
 #: app/pdb/internal_procs.c:123
 msgid "Gradients"
 msgstr "Kecerunan"
 
 #. initialize the list of gimp fonts
 #: app/core/gimp.c:898 app/gui/dialogs-constructors.c:379
-#: app/gui/dialogs-constructors.c:584 app/gui/preferences-dialog.c:1924
+#: app/gui/dialogs-constructors.c:584 app/gui/preferences-dialog.c:1919
 #: app/pdb/internal_procs.c:114
 msgid "Fonts"
 msgstr "fon"
@@ -1469,12 +1468,12 @@ msgid "Templates"
 msgstr "Templat"
 
 #. initialize the module list
-#: app/core/gimp.c:910 app/gui/preferences-dialog.c:1936
+#: app/core/gimp.c:910 app/gui/preferences-dialog.c:1931
 msgid "Modules"
 msgstr "Modul"
 
 #: app/core/gimp.c:1036 app/widgets/gimperrorconsole.c:258
-#: app/widgets/gimpwidgets-utils.c:89
+#: app/widgets/gimpwidgets-utils.c:93
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -1485,12 +1484,21 @@ msgstr "GIMP"
 msgid "Could not open '%s' for reading: %s"
 msgstr "Tidak dapat membuka '%s' untuk mebaca: %s"
 
-#: app/core/gimpbrush.c:552 app/core/gimppattern.c:358
+#: app/core/gimpbrush.c:555 app/core/gimppattern.c:358
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "Tidak dapat membaca %d bait dari '%s': %s"
 
-#: app/core/gimpbrush.c:572
+#: app/core/gimpbrush.c:589
+#, fuzzy, c-format
+msgid ""
+"Fatal parsing error (unknown depth %d):\n"
+"Brush file '%s'"
+msgstr ""
+"Ralat mati huraian (versi tak diketahui %d):\n"
+"Fail berus '%s'"
+
+#: app/core/gimpbrush.c:602
 #, c-format
 msgid ""
 "Fatal parsing error (unknown version %d):\n"
@@ -1499,7 +1507,7 @@ msgstr ""
 "Ralat mati huraian (versi tak diketahui %d):\n"
 "Fail berus '%s'"
 
-#: app/core/gimpbrush.c:597 app/core/gimpbrush.c:625 app/core/gimpbrush.c:646
+#: app/core/gimpbrush.c:618 app/core/gimpbrush.c:734
 #, c-format
 msgid ""
 "Fatal parsing error:\n"
@@ -1508,19 +1516,19 @@ msgstr ""
 "Ralat mati huraian:\n"
 "Fail berus '%s' yang muncul dipangkas."
 
-#: app/core/gimpbrush.c:605 app/core/gimpbrushpipe.c:374
+#: app/core/gimpbrush.c:626 app/core/gimpbrushpipe.c:374
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Rentetan UTF-8 tak sah dalam fail berus '%s'."
 
-#: app/core/gimpbrush.c:612 app/core/gimpbrushpipe.c:376
+#: app/core/gimpbrush.c:633 app/core/gimpbrushpipe.c:376
 #: app/core/gimpcontext.c:1274 app/core/gimpitem.c:422
-#: app/core/gimppattern.c:415 app/gui/templates-commands.c:147
+#: app/core/gimppattern.c:415 app/gui/templates-commands.c:148
 #: app/tools/gimpvectortool.c:323
 msgid "Unnamed"
 msgstr "Tanpa nama"
 
-#: app/core/gimpbrush.c:658
+#: app/core/gimpbrush.c:722
 #, c-format
 msgid ""
 "Unsupported brush depth %d\n"
@@ -1902,7 +1910,7 @@ msgid "Can't undo %s"
 msgstr "Tidak dapat buat asal %s"
 
 #: app/core/gimpimage.c:1058 app/core/gimppalette-import.c:205
-#: app/core/gimppalette.c:659 app/gui/palette-import-dialog.c:591
+#: app/core/gimppalette.c:659 app/gui/palette-import-dialog.c:586
 #: app/pdb/image_cmds.c:3754 app/widgets/gimpdatafactoryview.c:299
 msgid "Untitled"
 msgstr "Tak berjudul"
@@ -2058,7 +2066,7 @@ msgstr "Pralihat sudah ketinggalan zaman"
 msgid "Cannot create preview"
 msgstr "Tidak boleh mewujudkan pralihat"
 
-#: app/core/gimpimagefile.c:794 app/gui/info-window.c:496
+#: app/core/gimpimagefile.c:794 app/gui/info-window.c:497
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d piksel"
@@ -2349,7 +2357,7 @@ msgstr ""
 "Tidak dapat mengapungkan pemilihan kerana\n"
 "kawasan yang dipilih kosong."
 
-#: app/core/gimpselection.c:833 app/gui/layers-commands.c:872
+#: app/core/gimpselection.c:833 app/gui/layers-commands.c:883
 msgid "Floating Selection"
 msgstr "Pemilihan Apung"
 
@@ -2372,7 +2380,7 @@ msgstr "Resolusi imej menegak."
 msgid "pixel"
 msgstr "piksel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:865
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:867
 #: app/tools/gimppainttool.c:700
 msgid "pixels"
 msgstr "piksel"
@@ -2498,48 +2506,48 @@ msgstr "Gugurkan Lapisan Baru"
 msgid "Drop New Path"
 msgstr "Gugurkan Laluan Baru"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:125
+#: app/display/gimpdisplayshell-filter-dialog.c:124
 msgid "Color Display Filters"
 msgstr "Warnakan Penapis Paparan"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:165
+#: app/display/gimpdisplayshell-filter-dialog.c:164
 msgid "Available Filters"
 msgstr "Penapis yang Ada"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:191
+#: app/display/gimpdisplayshell-filter-dialog.c:190
 msgid "Add the selected filter to the list of active filters."
 msgstr "Tambahkan penapis yang dipilih ke senarai penapis aktif"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:208
+#: app/display/gimpdisplayshell-filter-dialog.c:207
 msgid "Remove the selected filter from the list of active filters."
 msgstr "Alihkan penapis yang dipilih dari senarai penapis aktif"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:222
+#: app/display/gimpdisplayshell-filter-dialog.c:221
 msgid "Move the selected filter up"
 msgstr "Alihkan penapis yang dipilih ke atas"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:231
+#: app/display/gimpdisplayshell-filter-dialog.c:230
 msgid "Move the selected filter down"
 msgstr "Alihkan penapis yang dipilih ke bawah"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:257
+#: app/display/gimpdisplayshell-filter-dialog.c:256
 msgid "Active Filters"
 msgstr "Penapis Aktif"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:289
+#: app/display/gimpdisplayshell-filter-dialog.c:288
 msgid "Reset the selected filter to default values"
 msgstr "Setkan semula penapis yang dipilih ke nilai piawai"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:661
+#: app/display/gimpdisplayshell-filter-dialog.c:653
 #, c-format
 msgid "Configure Selected Filter: %s"
 msgstr "Buat konfigurasi Penapis yang Dipilih: %s"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:668
+#: app/display/gimpdisplayshell-filter-dialog.c:660
 msgid "No Filter Selected"
 msgstr "Tiada Penapis yang Dipilih"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:672
+#: app/display/gimpdisplayshell-filter-dialog.c:664
 msgid "Configure Selected Filter"
 msgstr "Buat konfigurasi Penapis yang Dipilih"
 
@@ -2547,15 +2555,15 @@ msgstr "Buat konfigurasi Penapis yang Dipilih"
 msgid "Layer Select"
 msgstr "Pemilihan Lapisan"
 
-#: app/display/gimpdisplayshell-scale.c:470
+#: app/display/gimpdisplayshell-scale.c:468
 msgid "Zoom Ratio"
 msgstr "Nisbah Zum"
 
-#: app/display/gimpdisplayshell-scale.c:472
+#: app/display/gimpdisplayshell-scale.c:470
 msgid "Select Zoom Ratio"
 msgstr "Pilih Nisbah Zum"
 
-#: app/display/gimpdisplayshell-scale.c:501
+#: app/display/gimpdisplayshell-scale.c:498
 msgid "Zoom Ratio:"
 msgstr "Nisbah Zum"
 
@@ -2612,7 +2620,7 @@ msgstr "Zum supaya padan dengan tetingkap"
 msgid "Shrink Wrap"
 msgstr "Kecilkan Pusingan"
 
-#: app/display/gimpprogress.c:136
+#: app/display/gimpprogress.c:139
 msgid "Progress"
 msgstr "Kemajuan"
 
@@ -2661,12 +2669,12 @@ msgstr "Versi %s dibawa kepada anda oleh"
 msgid "Visit http://www.gimp.org/ for more information"
 msgstr "Lawati http://www.gimp.org/ untuk maklumat lanjut"
 
-#: app/gui/brush-select.c:183 app/tools/gimppaintoptions-gui.c:117
+#: app/gui/brush-select.c:186 app/tools/gimppaintoptions-gui.c:117
 #: app/widgets/gimplayertreeview.c:313
 msgid "Opacity:"
 msgstr "Kelegapan"
 
-#: app/gui/brush-select.c:200 app/tools/gimppaintoptions-gui.c:122
+#: app/gui/brush-select.c:203 app/tools/gimppaintoptions-gui.c:122
 #: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:306
 msgid "Mode:"
 msgstr "Mod:"
@@ -2720,35 +2728,35 @@ msgstr "/_Hapuskan Penimbal"
 msgid "%s Channel Copy"
 msgstr "%s Salinan Saluran"
 
-#: app/gui/channels-commands.c:316
+#: app/gui/channels-commands.c:318
 msgid "Empty Channel Copy"
 msgstr "Kosongkan Salinan Saluran"
 
-#: app/gui/channels-commands.c:333
+#: app/gui/channels-commands.c:335
 msgid "New Channel Color"
 msgstr "Warna Saluran Baru"
 
-#: app/gui/channels-commands.c:345
+#: app/gui/channels-commands.c:347
 msgid "New Channel Options"
 msgstr "Opsyen Saluran Baru"
 
-#: app/gui/channels-commands.c:382 app/gui/channels-commands.c:542
+#: app/gui/channels-commands.c:385 app/gui/channels-commands.c:546
 msgid "Channel Name:"
 msgstr "Nama Saluran:"
 
-#: app/gui/channels-commands.c:387 app/gui/channels-commands.c:547
+#: app/gui/channels-commands.c:390 app/gui/channels-commands.c:551
 msgid "Fill Opacity:"
 msgstr "Isi Kelegapan:"
 
-#: app/gui/channels-commands.c:459 app/gui/channels-commands.c:503
+#: app/gui/channels-commands.c:461 app/gui/channels-commands.c:506
 msgid "Channel Attributes"
 msgstr "Atribut Saluran"
 
-#: app/gui/channels-commands.c:493
+#: app/gui/channels-commands.c:496
 msgid "Edit Channel Color"
 msgstr "Edit Warna Saluran"
 
-#: app/gui/channels-commands.c:505 app/widgets/gimpchanneltreeview.c:119
+#: app/gui/channels-commands.c:508 app/widgets/gimpchanneltreeview.c:119
 msgid "Edit Channel Attributes"
 msgstr "Edit Atribut Saluran"
 
@@ -2792,19 +2800,19 @@ msgstr "/_Tolak dari Pemilihan"
 msgid "/_Intersect with Selection"
 msgstr "/_Bersilang dengan Pemilihan"
 
-#: app/gui/color-notebook.c:410
+#: app/gui/color-notebook.c:406
 msgid "Current:"
 msgstr "Semasa:"
 
-#: app/gui/color-notebook.c:431
+#: app/gui/color-notebook.c:427
 msgid "Old:"
 msgstr "Lama:"
 
-#: app/gui/color-notebook.c:452
+#: app/gui/color-notebook.c:448
 msgid "Revert to old color"
 msgstr "Kembali ke warna lama"
 
-#: app/gui/color-notebook.c:489
+#: app/gui/color-notebook.c:485
 msgid "Add the current color to the color history"
 msgstr "Tambahkan warna semasa ke sejarah warna"
 
@@ -2820,56 +2828,56 @@ msgstr "/_Tambahkan Warna dari FG"
 msgid "/_Add Color from BG"
 msgstr "/_Tambahkan Warna dari BG"
 
-#: app/gui/convert-dialog.c:129
+#: app/gui/convert-dialog.c:130
 msgid "Indexed Color Conversion"
 msgstr "Penukaran Warna Berindeks"
 
-#: app/gui/convert-dialog.c:132
+#: app/gui/convert-dialog.c:133
 msgid "Convert Image to Indexed Colors"
 msgstr "Tukarkan Imej ke Warna Berindeks"
 
-#: app/gui/convert-dialog.c:154
+#: app/gui/convert-dialog.c:156
 msgid "General Palette Options"
 msgstr "Opsyen Pelet Am"
 
-#: app/gui/convert-dialog.c:168
+#: app/gui/convert-dialog.c:170
 msgid "Generate Optimum Palette:"
 msgstr "Hasilkan Pelet Optimum:"
 
-#: app/gui/convert-dialog.c:193
+#: app/gui/convert-dialog.c:195
 msgid "Max. Number of Colors:"
 msgstr "Bilangan Maksimum Warna"
 
-#: app/gui/convert-dialog.c:216
+#: app/gui/convert-dialog.c:218
 msgid "Use WWW-Optimized Palette"
 msgstr "Gunakan Pelet WWW-Dioptimumkan"
 
-#: app/gui/convert-dialog.c:234
+#: app/gui/convert-dialog.c:236
 msgid "Use Black and White (1-Bit) Palette"
 msgstr "Gunakan Pelet Hitam dan Putih (1-Bit)"
 
-#: app/gui/convert-dialog.c:250
+#: app/gui/convert-dialog.c:252
 msgid "Remove Unused Colors from Final Palette"
 msgstr "Keluarkan Warna Tak Digunakan dari Pelet Terakhir"
 
-#: app/gui/convert-dialog.c:263
+#: app/gui/convert-dialog.c:265
 msgid "Use Custom Palette:"
 msgstr "Gunakan Pelet Biasa"
 
 #. the dither type
-#: app/gui/convert-dialog.c:303
+#: app/gui/convert-dialog.c:305
 msgid "Dithering Options"
 msgstr "Opsyen Penditeran"
 
-#: app/gui/convert-dialog.c:323
+#: app/gui/convert-dialog.c:325
 msgid "Enable Dithering of Transparency"
 msgstr "Membolehkan Penditeran Kelutsinaran"
 
-#: app/gui/convert-dialog.c:337
+#: app/gui/convert-dialog.c:339
 msgid "[ Warning ]"
 msgstr "[ Amaran ]"
 
-#: app/gui/convert-dialog.c:347
+#: app/gui/convert-dialog.c:349
 msgid ""
 "You are attempting to convert an image with an alpha channel to indexed "
 "colors.\n"
@@ -2880,12 +2888,12 @@ msgstr ""
 "Jangan hasilkan pelet lebih daripada 255 warna jika anda ingin mewujudkan "
 "fail GIF lut sinar atau animasi."
 
-#: app/gui/convert-dialog.c:518
+#: app/gui/convert-dialog.c:507
 msgid "Select Custom Palette"
 msgstr "Pilih Pelet Biasa"
 
 #: app/gui/dialogs-constructors.c:217 app/gui/gui.c:366
-#: app/gui/preferences-dialog.c:1242 app/gui/preferences-dialog.c:1245
+#: app/gui/preferences-dialog.c:1237 app/gui/preferences-dialog.c:1240
 msgid "Tool Options"
 msgstr "Opsyen Alat"
 
@@ -3231,7 +3239,7 @@ msgstr "Masukkan nama bagi penimbal ini"
 msgid "Copy Named"
 msgstr "Salin yang Dinamakan"
 
-#: app/gui/edit-commands.c:285 app/gui/stroke-dialog.c:258
+#: app/gui/edit-commands.c:285 app/gui/stroke-dialog.c:260
 #: app/gui/vectors-commands.c:273
 msgid "There is no active layer or channel to stroke to"
 msgstr "Tidak ada lapisan atau saluran aktif untuk ditandakan"
@@ -3328,20 +3336,20 @@ msgstr ""
 msgid "Determine File _Type:"
 msgstr "Tentukan _Jenis Fail"
 
-#: app/gui/file-new-dialog.c:103 app/gui/preferences-dialog.c:1064
-#: app/gui/preferences-dialog.c:1067
+#: app/gui/file-new-dialog.c:101 app/gui/preferences-dialog.c:1059
+#: app/gui/preferences-dialog.c:1062
 msgid "New Image"
 msgstr "Imej Baru"
 
-#: app/gui/file-new-dialog.c:105
+#: app/gui/file-new-dialog.c:103
 msgid "Create a New Image"
 msgstr "Wujudkan Imej Baru"
 
-#: app/gui/file-new-dialog.c:141 app/gui/preferences-dialog.c:1084
+#: app/gui/file-new-dialog.c:138 app/gui/preferences-dialog.c:1079
 msgid "From _Template:"
 msgstr "Dari _Templat:"
 
-#: app/gui/file-new-dialog.c:295
+#: app/gui/file-new-dialog.c:293
 #, c-format
 msgid ""
 "You are trying to create an image with\n"
@@ -3368,7 +3376,7 @@ msgstr ""
 "(pada masa ini %s) dalam\n"
 "dialog Keutamaan."
 
-#: app/gui/file-new-dialog.c:310
+#: app/gui/file-new-dialog.c:308
 msgid "Confirm Image Size"
 msgstr "Sahkan Saiz Imej"
 
@@ -3387,7 +3395,7 @@ msgstr ""
 "terkini"
 
 #. The preview toggle
-#: app/gui/file-open-dialog.c:248 app/tools/gimpimagemaptool.c:240
+#: app/gui/file-open-dialog.c:248 app/tools/gimpimagemaptool.c:232
 msgid "_Preview"
 msgstr "_Pralihat"
 
@@ -3429,7 +3437,7 @@ msgstr "Fail Wujud!"
 msgid "/By Extension"
 msgstr "/Dengan Sambungan"
 
-#: app/gui/font-select.c:231
+#: app/gui/font-select.c:234
 msgid ""
 "Unable to run font callback.\n"
 "The corresponding plug-in may have crashed."
@@ -3473,11 +3481,11 @@ msgstr "Ulang sama Pemilihan"
 msgid "Replicate Gradient Selection"
 msgstr "Ulang sama Pemilihan Kecerunan"
 
-#: app/gui/gradient-editor-commands.c:536
+#: app/gui/gradient-editor-commands.c:533
 msgid "Replicate"
 msgstr "Ulang sama"
 
-#: app/gui/gradient-editor-commands.c:549
+#: app/gui/gradient-editor-commands.c:548
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
@@ -3485,7 +3493,7 @@ msgstr ""
 "Pilih bilangan kali\n"
 "untuk mengulang sama segmen yang dipilih."
 
-#: app/gui/gradient-editor-commands.c:552
+#: app/gui/gradient-editor-commands.c:551
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
@@ -3493,27 +3501,27 @@ msgstr ""
 "Pilih bilangan kali\n"
 "untuk mengulang sama pemilihan."
 
-#: app/gui/gradient-editor-commands.c:622
+#: app/gui/gradient-editor-commands.c:621
 msgid "Split Segment Uniformly"
 msgstr "Pisahkan Segmen Secara Seragam"
 
-#: app/gui/gradient-editor-commands.c:623
+#: app/gui/gradient-editor-commands.c:622
 msgid "Split Gradient Segment Uniformly"
 msgstr "Pisahkan Segmen Kecerunan Secara Seragam"
 
-#: app/gui/gradient-editor-commands.c:627
+#: app/gui/gradient-editor-commands.c:626
 msgid "Split Segments Uniformly"
 msgstr "Pisahkan Segmen Secara Seragam"
 
-#: app/gui/gradient-editor-commands.c:628
+#: app/gui/gradient-editor-commands.c:627
 msgid "Split Gradient Segments Uniformly"
 msgstr "Pisahkan Segmen Kecerunan Secara Seragam"
 
-#: app/gui/gradient-editor-commands.c:643
+#: app/gui/gradient-editor-commands.c:638
 msgid "Split"
 msgstr "Pisahkan"
 
-#: app/gui/gradient-editor-commands.c:657
+#: app/gui/gradient-editor-commands.c:654
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
@@ -3521,7 +3529,7 @@ msgstr ""
 "Pilih bilangan bahagian secara seragam\n"
 "yang akan memisahkan segmen yang dipilih."
 
-#: app/gui/gradient-editor-commands.c:660
+#: app/gui/gradient-editor-commands.c:657
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
@@ -3705,7 +3713,7 @@ msgstr "_Letakkan semula Di tengah-tengah Titik Pertengahan dalam Pemilihan"
 msgid "Re-distribute _Handles in Selection"
 msgstr "Agihkan semula _Pengendali dalam Pemilihan"
 
-#: app/gui/gradient-select.c:269
+#: app/gui/gradient-select.c:272
 msgid ""
 "Unable to run gradient callback.\n"
 "The corresponding plug-in may have crashed."
@@ -3742,11 +3750,11 @@ msgstr "/_Hapuskan Kecerunan..."
 msgid "/_Refresh Gradients"
 msgstr "/_Muatkan semula Kecerunan"
 
-#: app/gui/grid-dialog.c:83
+#: app/gui/grid-dialog.c:80
 msgid "Configure Grid"
 msgstr "Konfigurasikan Grid"
 
-#: app/gui/grid-dialog.c:84
+#: app/gui/grid-dialog.c:81
 msgid "Configure Image Grid"
 msgstr "Konfigurasikan Grid Imej"
 
@@ -3776,43 +3784,43 @@ msgstr "Memutarkan..."
 msgid "Cannot crop because the current selection is empty."
 msgstr "Tidak dapat memotong kerana pemilihan semasa kosong"
 
-#: app/gui/image-commands.c:383
+#: app/gui/image-commands.c:385
 msgid "Layers Merge Options"
 msgstr "Opsyen Cantum Lapisan"
 
-#: app/gui/image-commands.c:408
+#: app/gui/image-commands.c:411
 msgid "Final, Merged Layer should be:"
 msgstr "Akhir, Lapisan yang Dicantum seharusnya:"
 
-#: app/gui/image-commands.c:409
+#: app/gui/image-commands.c:412
 msgid "Final, Anchored Layer should be:"
 msgstr "Akhir, Lapisan yang Ditambat seharusnya:"
 
-#: app/gui/image-commands.c:414
+#: app/gui/image-commands.c:417
 msgid "Expanded as necessary"
 msgstr "Tambahkan seperti yang diperlukan"
 
-#: app/gui/image-commands.c:417
+#: app/gui/image-commands.c:420
 msgid "Clipped to image"
 msgstr "Klip ke imej"
 
-#: app/gui/image-commands.c:420
+#: app/gui/image-commands.c:423
 msgid "Clipped to bottom layer"
 msgstr "Klip ke lapisan bawah"
 
-#: app/gui/image-commands.c:454
+#: app/gui/image-commands.c:457
 msgid "Resizing..."
 msgstr "Mensaiz semula..."
 
-#: app/gui/image-commands.c:470
+#: app/gui/image-commands.c:473
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Ubah saiz Ralat: Lebar dan tinggi mestilah lebih besar daripada sifar."
 
-#: app/gui/image-commands.c:503
+#: app/gui/image-commands.c:506
 msgid "Layer Too Small"
 msgstr "Lapisan Terlalu Kecil"
 
-#: app/gui/image-commands.c:507
+#: app/gui/image-commands.c:510
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -3822,11 +3830,11 @@ msgstr ""
 "sama sekali beberapa lapisan.\n"
 "Adakah ini yang anda inginkan?"
 
-#: app/gui/image-commands.c:574 app/tools/gimpscaletool.c:162
+#: app/gui/image-commands.c:577 app/tools/gimpscaletool.c:162
 msgid "Scaling..."
 msgstr "Menskalakan..."
 
-#: app/gui/image-commands.c:587
+#: app/gui/image-commands.c:590
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Ralat Skala: Lebar dan tinggi mestilah lebih besar daripada sifar."
 
@@ -4723,8 +4731,8 @@ msgid "/_Delete Image"
 msgstr "/_Hapuskan Imej"
 
 #. General
-#: app/gui/info-dialog.c:351 app/gui/preferences-dialog.c:1204
-#: app/gui/preferences-dialog.c:1316
+#: app/gui/info-dialog.c:351 app/gui/preferences-dialog.c:1199
+#: app/gui/preferences-dialog.c:1311
 msgid "General"
 msgstr "Am"
 
@@ -4748,98 +4756,98 @@ msgstr "Warna Sebenar"
 msgid "Direct Color"
 msgstr "Warna Terus"
 
-#: app/gui/info-window.c:135
+#: app/gui/info-window.c:136
 msgid "Extended"
 msgstr "Lanjutan"
 
-#: app/gui/info-window.c:145 app/gui/preferences-dialog.c:1597
-#: app/gui/user-install-dialog.c:1274 app/widgets/gimpgrideditor.c:271
+#: app/gui/info-window.c:146 app/gui/preferences-dialog.c:1592
+#: app/gui/user-install-dialog.c:1270 app/widgets/gimpgrideditor.c:271
 #: app/widgets/gimpgrideditor.c:317 app/widgets/gimptemplateeditor.c:304
 msgid "Pixels"
 msgstr "Piksel"
 
-#: app/gui/info-window.c:156 app/gui/info-window.c:162
-#: app/gui/info-window.c:179 app/gui/info-window.c:185
-#: app/gui/info-window.c:369 app/gui/info-window.c:370
-#: app/gui/info-window.c:371 app/gui/info-window.c:372
+#: app/gui/info-window.c:157 app/gui/info-window.c:163
+#: app/gui/info-window.c:180 app/gui/info-window.c:186
+#: app/gui/info-window.c:370 app/gui/info-window.c:371
+#: app/gui/info-window.c:372 app/gui/info-window.c:373
 #: app/widgets/gimpcolorframe.c:343
 msgid "n/a"
 msgstr "n/a"
 
-#: app/gui/info-window.c:159 app/gui/info-window.c:182
-#: app/gui/resize-dialog.c:479
+#: app/gui/info-window.c:160 app/gui/info-window.c:183
+#: app/gui/resize-dialog.c:486
 msgid "X:"
 msgstr "X:"
 
-#: app/gui/info-window.c:165 app/gui/info-window.c:188
-#: app/gui/resize-dialog.c:382 app/gui/resize-dialog.c:481
-#: app/gui/resize-dialog.c:628 app/tools/gimpcroptool.c:983
+#: app/gui/info-window.c:166 app/gui/info-window.c:189
+#: app/gui/resize-dialog.c:389 app/gui/resize-dialog.c:488
+#: app/gui/resize-dialog.c:635 app/tools/gimpcroptool.c:979
 #: app/tools/gimprotatetool.c:195 app/tools/gimpscaletool.c:200
 #: app/tools/gimpsheartool.c:175 app/widgets/gimptemplateeditor.c:381
 msgid "Y:"
 msgstr "Y:"
 
-#: app/gui/info-window.c:168 app/pdb/internal_procs.c:192
+#: app/gui/info-window.c:169 app/pdb/internal_procs.c:192
 msgid "Units"
 msgstr "Unit"
 
-#: app/gui/info-window.c:230
+#: app/gui/info-window.c:231
 msgid "Info Window"
 msgstr "Tetingkap Maklumat"
 
-#: app/gui/info-window.c:232
+#: app/gui/info-window.c:233
 msgid "Image Information"
 msgstr "Maklumat Imej"
 
 #. add the information fields
-#: app/gui/info-window.c:248
+#: app/gui/info-window.c:249
 msgid "Dimensions (W x H):"
 msgstr "Dimensi (L x T):"
 
-#: app/gui/info-window.c:252
+#: app/gui/info-window.c:253
 msgid "Resolution:"
 msgstr "Resolusi"
 
-#: app/gui/info-window.c:254
+#: app/gui/info-window.c:255
 msgid "Scale Ratio:"
 msgstr "Nisbah Skala:"
 
-#: app/gui/info-window.c:256
+#: app/gui/info-window.c:257
 msgid "Display Type:"
 msgstr "Jenis Paparan:"
 
-#: app/gui/info-window.c:258
+#: app/gui/info-window.c:259
 msgid "Visual Class:"
 msgstr "Kelas Visual:"
 
-#: app/gui/info-window.c:260
+#: app/gui/info-window.c:261
 msgid "Visual Depth:"
 msgstr "Kedalaman Visual:"
 
-#: app/gui/info-window.c:509
+#: app/gui/info-window.c:510
 #, c-format
 msgid "pixels/%s"
 msgstr "piksel/%s"
 
-#: app/gui/info-window.c:511
+#: app/gui/info-window.c:512
 #, c-format
 msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
-#: app/gui/info-window.c:514 app/gui/preferences-dialog.c:1619
-#: app/gui/user-install-dialog.c:1293
+#: app/gui/info-window.c:515 app/gui/preferences-dialog.c:1614
+#: app/gui/user-install-dialog.c:1289
 msgid "dpi"
 msgstr "dpi"
 
-#: app/gui/info-window.c:526
+#: app/gui/info-window.c:527
 msgid "RGB Color"
 msgstr "Warna RGB"
 
-#: app/gui/info-window.c:533
+#: app/gui/info-window.c:534
 msgid "Indexed Color"
 msgstr "Warna Berindeks"
 
-#: app/gui/info-window.c:533
+#: app/gui/info-window.c:534
 msgid "colors"
 msgstr "warna"
 
@@ -4851,60 +4859,60 @@ msgstr "Potong Lapisan"
 msgid "Layer Mask to Selection"
 msgstr "Topeng Lapisan ke Pemilihan"
 
-#: app/gui/layers-commands.c:639
+#: app/gui/layers-commands.c:643
 msgid "Empty Layer Copy"
 msgstr "Kosongkan Salinan Lapisan"
 
-#: app/gui/layers-commands.c:667
+#: app/gui/layers-commands.c:670
 msgid "Create a New Layer"
 msgstr "Wujudkan Lapisan Baru"
 
-#: app/gui/layers-commands.c:699
+#: app/gui/layers-commands.c:703
 msgid "Layer _Name:"
 msgstr "_Nama Lapisan:"
 
 #. The size labels
-#: app/gui/layers-commands.c:703
+#: app/gui/layers-commands.c:707
 msgid "Layer Width:"
 msgstr "Tinggi Lapisan:"
 
-#: app/gui/layers-commands.c:709 app/gui/resize-dialog.c:290
-#: app/gui/resize-dialog.c:315 app/gui/resize-dialog.c:561
-#: app/tools/gimpcroptool.c:1000 app/tools/gimpscaletool.c:174
+#: app/gui/layers-commands.c:713 app/gui/resize-dialog.c:297
+#: app/gui/resize-dialog.c:322 app/gui/resize-dialog.c:568
+#: app/tools/gimpcroptool.c:996 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
 #: app/widgets/gimptemplateeditor.c:242 app/widgets/gimptemplateeditor.c:260
 msgid "Height:"
 msgstr "Tinggi:"
 
-#: app/gui/layers-commands.c:768
+#: app/gui/layers-commands.c:772
 msgid "Layer Fill Type"
 msgstr "Jenis Isian Lapisan"
 
-#: app/gui/layers-commands.c:838
+#: app/gui/layers-commands.c:848
 msgid "Layer Attributes"
 msgstr "Atribut Lapisan"
 
-#: app/gui/layers-commands.c:841 app/widgets/gimplayertreeview.c:208
+#: app/gui/layers-commands.c:851 app/widgets/gimplayertreeview.c:208
 msgid "Edit Layer Attributes"
 msgstr "Edit Atribut Lapisan"
 
-#: app/gui/layers-commands.c:875
+#: app/gui/layers-commands.c:886
 msgid "Layer _Name"
 msgstr "_Nama Lapisan"
 
-#: app/gui/layers-commands.c:949
+#: app/gui/layers-commands.c:961
 msgid "Add a Mask to the Layer"
 msgstr "Tambahkan Topeng ke Lapisan"
 
-#: app/gui/layers-commands.c:965
+#: app/gui/layers-commands.c:979
 msgid "Initialize Layer Mask to:"
 msgstr "Berikan awalan Topeng Lapisan ke:"
 
-#: app/gui/layers-commands.c:981
+#: app/gui/layers-commands.c:996
 msgid "In_vert Mask"
 msgstr "Song_sangkan Topeng"
 
-#: app/gui/layers-commands.c:1054 app/gui/layers-commands.c:1148
+#: app/gui/layers-commands.c:1069 app/gui/layers-commands.c:1163
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -5096,122 +5104,122 @@ msgstr "Pengurus Modul"
 msgid "Manage Loadable Modules"
 msgstr "Uruskan Modul Boleh muat"
 
-#: app/gui/module-browser.c:166
+#: app/gui/module-browser.c:167
 msgid "Autoload"
 msgstr "Autoload"
 
-#: app/gui/module-browser.c:173
+#: app/gui/module-browser.c:174
 msgid "Module Path"
 msgstr "Laluan Modul"
 
-#: app/gui/module-browser.c:420
+#: app/gui/module-browser.c:418
 msgid "<No modules>"
 msgstr "<Tiada moduk>"
 
-#: app/gui/module-browser.c:432 app/gui/module-browser.c:441
+#: app/gui/module-browser.c:430 app/gui/module-browser.c:439
 msgid "On disk"
 msgstr "Dalam cakera"
 
-#: app/gui/module-browser.c:432
+#: app/gui/module-browser.c:430
 msgid "Only in memory"
 msgstr "Hanya dalam memori"
 
-#: app/gui/module-browser.c:441
+#: app/gui/module-browser.c:439
 msgid "No longer available"
 msgstr "Tidak ada lagi"
 
-#: app/gui/module-browser.c:477
+#: app/gui/module-browser.c:475
 msgid "Load"
 msgstr "Muat"
 
-#: app/gui/module-browser.c:479
+#: app/gui/module-browser.c:477
 msgid "Query"
 msgstr "Pertanyaan"
 
-#: app/gui/module-browser.c:486
+#: app/gui/module-browser.c:484
 msgid "Unload"
 msgstr "Punggah"
 
-#: app/gui/module-browser.c:501
+#: app/gui/module-browser.c:499
 msgid "Purpose:"
 msgstr "Tujuan:"
 
-#: app/gui/module-browser.c:502
+#: app/gui/module-browser.c:500
 msgid "Author:"
 msgstr "Pengarang:"
 
-#: app/gui/module-browser.c:503
+#: app/gui/module-browser.c:501
 msgid "Version:"
 msgstr "Versi:"
 
-#: app/gui/module-browser.c:504
+#: app/gui/module-browser.c:502
 msgid "Copyright:"
 msgstr "Hak cipta:"
 
-#: app/gui/module-browser.c:505
+#: app/gui/module-browser.c:503
 msgid "Date:"
 msgstr "Tarikh:"
 
-#: app/gui/module-browser.c:506
+#: app/gui/module-browser.c:504
 msgid "Location:"
 msgstr "Lokasi:"
 
-#: app/gui/module-browser.c:507
+#: app/gui/module-browser.c:505
 msgid "State:"
 msgstr "Keadaan:"
 
-#: app/gui/module-browser.c:508
+#: app/gui/module-browser.c:506
 msgid "Last Error:"
 msgstr "Ralat Terakhir:"
 
-#: app/gui/module-browser.c:509
+#: app/gui/module-browser.c:507
 msgid "Available Types:"
 msgstr "Jenis yang Ada:"
 
-#: app/gui/offset-dialog.c:93
+#: app/gui/offset-dialog.c:94
 msgid "Offset Layer"
 msgstr "Lapisan Ofset"
 
-#: app/gui/offset-dialog.c:95
+#: app/gui/offset-dialog.c:96
 msgid "Offset Layer Mask"
 msgstr "Topeng Lapisan Ofset"
 
-#: app/gui/offset-dialog.c:97
+#: app/gui/offset-dialog.c:98
 msgid "Offset Channel"
 msgstr "Saluran Ofset"
 
-#: app/gui/offset-dialog.c:103 app/gui/resize-dialog.c:449
+#: app/gui/offset-dialog.c:103 app/gui/resize-dialog.c:456
 #: app/widgets/gimpgrideditor.c:278
 msgid "Offset"
 msgstr "Ofset"
 
-#: app/gui/offset-dialog.c:148
+#: app/gui/offset-dialog.c:149
 msgid "Offset _X:"
 msgstr "Ofset _X:"
 
-#: app/gui/offset-dialog.c:150
+#: app/gui/offset-dialog.c:151
 msgid "_Y:"
 msgstr "_Y:"
 
 #. The by half height and half width option
-#: app/gui/offset-dialog.c:178
+#: app/gui/offset-dialog.c:179
 msgid "Offset by (x/_2),(y/2)"
 msgstr "Ofset dengan (x/_2),(y/2)"
 
 #. The wrap around option
-#: app/gui/offset-dialog.c:188
+#: app/gui/offset-dialog.c:189
 msgid "_Wrap"
 msgstr "_Pusing"
 
-#: app/gui/offset-dialog.c:199 app/widgets/gimptemplateeditor.c:470
+#: app/gui/offset-dialog.c:200 app/widgets/gimptemplateeditor.c:470
 msgid "Fill Type"
 msgstr "Jenis Isian"
 
-#: app/gui/offset-dialog.c:204
+#: app/gui/offset-dialog.c:205
 msgid "_Background"
 msgstr "-Latar belakang"
 
-#: app/gui/offset-dialog.c:207
+#: app/gui/offset-dialog.c:208
 msgid "_Transparent"
 msgstr "_Lut sinar"
 
@@ -5239,15 +5247,15 @@ msgstr "/Zum Ke _dalam"
 msgid "/Zoom _All"
 msgstr "/Zum _Semua"
 
-#: app/gui/palette-import-dialog.c:167
+#: app/gui/palette-import-dialog.c:166
 msgid "Import Palette"
 msgstr "Import Pelet"
 
-#: app/gui/palette-import-dialog.c:169
+#: app/gui/palette-import-dialog.c:168
 msgid "Import a New Palette"
 msgstr "Import Pelet Baru"
 
-#: app/gui/palette-import-dialog.c:176
+#: app/gui/palette-import-dialog.c:173
 msgid "_Import"
 msgstr "_Import"
 
@@ -5294,7 +5302,7 @@ msgstr "S_elang:"
 msgid "Preview"
 msgstr "Pralihat"
 
-#: app/gui/palette-select.c:247
+#: app/gui/palette-select.c:250
 msgid ""
 "Unable to run palette callback.\n"
 "The corresponding plug-in may have crashed."
@@ -5338,7 +5346,7 @@ msgstr "/_Hapuskan Pelet"
 msgid "/_Refresh Palettes"
 msgstr "/_Muatkan semula Pelet"
 
-#: app/gui/pattern-select.c:249
+#: app/gui/pattern-select.c:252
 msgid ""
 "Unable to run pattern callback.\n"
 "The corresponding plug-in may have crashed."
@@ -5384,7 +5392,7 @@ msgstr "Ulang yang Terakhir"
 msgid "Re-Show Last"
 msgstr "Tunjukkan semula yang Terakhir"
 
-#: app/gui/preferences-dialog.c:321
+#: app/gui/preferences-dialog.c:274
 msgid ""
 "You will have to restart GIMP for\n"
 "the following changes to take effect:"
@@ -5392,598 +5400,598 @@ msgstr ""
 "Anda perlu memulakan semula GIMP supaya\n"
 "perubahan berikut dilaksanakan:"
 
-#: app/gui/preferences-dialog.c:838
+#: app/gui/preferences-dialog.c:833
 msgid "Show _Menubar"
 msgstr "Tunjukkan _Bar menu"
 
-#: app/gui/preferences-dialog.c:841
+#: app/gui/preferences-dialog.c:836
 msgid "Show _Rulers"
 msgstr "Tunjukkan _Pembaris"
 
-#: app/gui/preferences-dialog.c:844
+#: app/gui/preferences-dialog.c:839
 msgid "Show Scroll_bars"
 msgstr "Tunjukkan Bar_tatal"
 
-#: app/gui/preferences-dialog.c:847
+#: app/gui/preferences-dialog.c:842
 msgid "Show S_tatusbar"
 msgstr "Tunjukkan B_ar status"
 
-#: app/gui/preferences-dialog.c:855
+#: app/gui/preferences-dialog.c:850
 msgid "Show S_election"
 msgstr "Tunjukkan P_emilihan"
 
-#: app/gui/preferences-dialog.c:858
+#: app/gui/preferences-dialog.c:853
 msgid "Show _Layer Boundary"
 msgstr "Tunjukkan Sempadan _Lapisan"
 
-#: app/gui/preferences-dialog.c:861
+#: app/gui/preferences-dialog.c:856
 msgid "Show _Guides"
 msgstr "Tunjukkan _Panduan"
 
-#: app/gui/preferences-dialog.c:864
+#: app/gui/preferences-dialog.c:859
 msgid "Show Gri_d"
 msgstr "Tunjukkan Gri_d"
 
-#: app/gui/preferences-dialog.c:870
+#: app/gui/preferences-dialog.c:865
 msgid "Canvas Padding Mode:"
 msgstr "Mod Pad Kanvas:"
 
-#: app/gui/preferences-dialog.c:873
+#: app/gui/preferences-dialog.c:868
 msgid "Custom Padding Color:"
 msgstr "Warna Pad Biasa:"
 
-#: app/gui/preferences-dialog.c:874
+#: app/gui/preferences-dialog.c:869
 msgid "Select Custom Canvas Padding Color"
 msgstr "Pilih Warna Pad Kanvas Biasa"
 
-#: app/gui/preferences-dialog.c:944
+#: app/gui/preferences-dialog.c:939
 msgid "Preferences"
 msgstr "Keutamaan"
 
-#: app/gui/preferences-dialog.c:1104
+#: app/gui/preferences-dialog.c:1099
 msgid "Maximum Image Size:"
 msgstr "Saiz Maksimum Imej"
 
-#: app/gui/preferences-dialog.c:1113
+#: app/gui/preferences-dialog.c:1108
 msgid "Default Image Grid"
 msgstr "Grid Imej Piawai"
 
-#: app/gui/preferences-dialog.c:1116
+#: app/gui/preferences-dialog.c:1111
 msgid "Default Grid"
 msgstr "Grid Piawai"
 
-#: app/gui/preferences-dialog.c:1136
+#: app/gui/preferences-dialog.c:1131
 msgid "User Interface"
 msgstr "Antara muka Pengguna"
 
-#: app/gui/preferences-dialog.c:1139
+#: app/gui/preferences-dialog.c:1134
 msgid "Interface"
 msgstr "Antara muka"
 
 #. Previews
-#: app/gui/preferences-dialog.c:1146
+#: app/gui/preferences-dialog.c:1141
 msgid "Previews"
 msgstr "Pralihat"
 
-#: app/gui/preferences-dialog.c:1149
+#: app/gui/preferences-dialog.c:1144
 msgid "_Enable Layer & Channel Previews"
 msgstr "_Membolehkan Pralihat Lapisan & Saluran"
 
-#: app/gui/preferences-dialog.c:1155
+#: app/gui/preferences-dialog.c:1150
 msgid "_Layer & Channel Preview Size:"
 msgstr "_Saiz Pralihat Lapisan & Saluran"
 
-#: app/gui/preferences-dialog.c:1158
+#: app/gui/preferences-dialog.c:1153
 msgid "_Navigation Preview Size:"
 msgstr "_Saiz Pralihat Pemanduan arah"
 
 #. Dialog Bahavior
-#: app/gui/preferences-dialog.c:1162
+#: app/gui/preferences-dialog.c:1157
 msgid "Dialog Behavior"
 msgstr "Dialog Peri laku"
 
-#: app/gui/preferences-dialog.c:1165
+#: app/gui/preferences-dialog.c:1160
 msgid "_Info Window Per Display"
 msgstr "_Tetingkap Maklumat bagi Setiap Paparan"
 
 #. Menus
-#: app/gui/preferences-dialog.c:1169
+#: app/gui/preferences-dialog.c:1164
 msgid "Menus"
 msgstr "Menu"
 
-#: app/gui/preferences-dialog.c:1172
+#: app/gui/preferences-dialog.c:1167
 msgid "Enable _Tearoff Menus"
 msgstr "Membolehkan Menu _Tearoff"
 
-#: app/gui/preferences-dialog.c:1178
+#: app/gui/preferences-dialog.c:1173
 msgid "Open _Recent Menu Size:"
 msgstr "buka Saiz Menu Terbaru:"
 
 #. Keyboard Shortcuts
-#: app/gui/preferences-dialog.c:1182 app/gui/preferences-dialog.c:1788
+#: app/gui/preferences-dialog.c:1177 app/gui/preferences-dialog.c:1783
 msgid "Keyboard Shortcuts"
 msgstr "Jalan Pintas Papan Kekunci"
 
-#: app/gui/preferences-dialog.c:1185
+#: app/gui/preferences-dialog.c:1180
 msgid "Use Dynamic _Keyboard Shortcuts"
 msgstr "Guna _Kekunci Pintasn Dinamik"
 
-#: app/gui/preferences-dialog.c:1194 app/gui/preferences-dialog.c:1197
+#: app/gui/preferences-dialog.c:1189 app/gui/preferences-dialog.c:1192
 msgid "Help System"
 msgstr "Sistem Bantuan"
 
-#: app/gui/preferences-dialog.c:1207
+#: app/gui/preferences-dialog.c:1202
 msgid "Show Tool _Tips"
 msgstr "Tunjukkan _Tip Alat"
 
-#: app/gui/preferences-dialog.c:1210
+#: app/gui/preferences-dialog.c:1205
 msgid "Context Sensitive _Help with \"F1\""
 msgstr "Bantuan Peka Konteks dengan \"F1\""
 
-#: app/gui/preferences-dialog.c:1213
+#: app/gui/preferences-dialog.c:1208
 msgid "Show Tips on _Startup"
 msgstr "Tunjukkan Tip pada Permulaan"
 
 #. Help Browser
-#: app/gui/preferences-dialog.c:1217
+#: app/gui/preferences-dialog.c:1212
 msgid "Help Browser"
 msgstr "Pelayar Bantuan"
 
-#: app/gui/preferences-dialog.c:1221
+#: app/gui/preferences-dialog.c:1216
 msgid "Help _Browser to Use:"
 msgstr "_Pelayar Bantuan untuk Digunakan"
 
 #. Web Browser
-#: app/gui/preferences-dialog.c:1225 app/widgets/widgets-enums.c:55
+#: app/gui/preferences-dialog.c:1220 app/widgets/widgets-enums.c:55
 msgid "Web Browser"
 msgstr "Pelayar Web"
 
-#: app/gui/preferences-dialog.c:1229
+#: app/gui/preferences-dialog.c:1224
 msgid "Select Web Browser"
 msgstr "Pilih Pelayar Web"
 
-#: app/gui/preferences-dialog.c:1233
+#: app/gui/preferences-dialog.c:1228
 msgid "Web Browser to Use:"
 msgstr "Pelayar Web untuk Digunakan:"
 
 #. Contiguous Regions
-#: app/gui/preferences-dialog.c:1252
+#: app/gui/preferences-dialog.c:1247
 msgid "Finding Contiguous Regions"
 msgstr "Mencari Kawasan Berhampiran"
 
-#: app/gui/preferences-dialog.c:1257
+#: app/gui/preferences-dialog.c:1252
 msgid "Default _Threshold:"
 msgstr "_Ambang Piawai: "
 
 #. Scaling
-#: app/gui/preferences-dialog.c:1261
+#: app/gui/preferences-dialog.c:1256
 msgid "Scaling"
 msgstr "Menskalakan"
 
-#: app/gui/preferences-dialog.c:1265
+#: app/gui/preferences-dialog.c:1260
 msgid "Default _Interpolation:"
 msgstr "_Sisipan Piawai:"
 
 #. Input Devices
-#: app/gui/preferences-dialog.c:1274 app/gui/preferences-dialog.c:1277
-#: app/gui/preferences-dialog.c:1821
+#: app/gui/preferences-dialog.c:1269 app/gui/preferences-dialog.c:1272
+#: app/gui/preferences-dialog.c:1816
 msgid "Input Devices"
 msgstr "Peranti Input"
 
 #. Input Device Settings
-#: app/gui/preferences-dialog.c:1284
+#: app/gui/preferences-dialog.c:1279
 msgid "Extended Input Devices"
 msgstr "Peranti Input Lanjutan"
 
-#: app/gui/preferences-dialog.c:1291
+#: app/gui/preferences-dialog.c:1286
 msgid "Configure Extended Input Devices"
 msgstr "Konfigurasikan Peranti Input Lanjutan"
 
-#: app/gui/preferences-dialog.c:1306 app/gui/preferences-dialog.c:1309
+#: app/gui/preferences-dialog.c:1301 app/gui/preferences-dialog.c:1304
 msgid "Image Windows"
 msgstr "Tetingkap Imej"
 
-#: app/gui/preferences-dialog.c:1319
+#: app/gui/preferences-dialog.c:1314
 msgid "Use \"_Dot for Dot\" by default"
 msgstr "Gunakan \"_Bintik untuk Bintik\" secara piawai"
 
-#: app/gui/preferences-dialog.c:1325
+#: app/gui/preferences-dialog.c:1320
 msgid "Marching _Ants Speed:"
 msgstr "Kelajuan _Semut Berjalan:"
 
 #. Zoom & Resize Behavior
-#: app/gui/preferences-dialog.c:1329
+#: app/gui/preferences-dialog.c:1324
 msgid "Zoom & Resize Behavior"
 msgstr "Zum dan Ubah saiz Peri laku"
 
-#: app/gui/preferences-dialog.c:1333
+#: app/gui/preferences-dialog.c:1328
 msgid "Resize Window on _Zoom"
 msgstr "Ubah saiz Tetingkap pada _Zum"
 
-#: app/gui/preferences-dialog.c:1336
+#: app/gui/preferences-dialog.c:1331
 msgid "Resize Window on Image _Size Change"
 msgstr "Ubah saiz Tetingkap mengikut Perubahan _Saiz Imej"
 
-#: app/gui/preferences-dialog.c:1342
+#: app/gui/preferences-dialog.c:1337
 msgid "Fit to Window"
 msgstr "Padankan ke Tetingkap"
 
-#: app/gui/preferences-dialog.c:1344
+#: app/gui/preferences-dialog.c:1339
 msgid "Inital Zoom Ratio:"
 msgstr "Nisbah Awal Zum:"
 
 #. Pointer Movement Feedback
-#: app/gui/preferences-dialog.c:1348
+#: app/gui/preferences-dialog.c:1343
 msgid "Pointer Movement Feedback"
 msgstr "Maklum balas Pergerakan Penuding"
 
-#: app/gui/preferences-dialog.c:1352
+#: app/gui/preferences-dialog.c:1347
 msgid "Show _Brush Outline"
 msgstr "Tunjuk Garis luar _Berus"
 
-#: app/gui/preferences-dialog.c:1355
+#: app/gui/preferences-dialog.c:1350
 msgid "Perfect-but-Slow _Pointer Tracking"
 msgstr "Mengesan _Penuding Sempurna tetapi Perlahan"
 
-#: app/gui/preferences-dialog.c:1358
+#: app/gui/preferences-dialog.c:1353
 msgid "Enable Cursor _Updating"
 msgstr "Membolehkan _Pengemaskinian Kursor"
 
-#: app/gui/preferences-dialog.c:1364
+#: app/gui/preferences-dialog.c:1359
 msgid "Cursor M_ode:"
 msgstr "M_od Kursor"
 
-#: app/gui/preferences-dialog.c:1373
+#: app/gui/preferences-dialog.c:1368
 msgid "Image Window Appearance"
 msgstr "Rupa Bentuk Tetingkap Imej"
 
-#: app/gui/preferences-dialog.c:1376 app/widgets/gimpgrideditor.c:203
+#: app/gui/preferences-dialog.c:1371 app/widgets/gimpgrideditor.c:203
 msgid "Appearance"
 msgstr "Rupa bentuk"
 
-#: app/gui/preferences-dialog.c:1384
+#: app/gui/preferences-dialog.c:1379
 msgid "Default Appearance in Normal Mode"
 msgstr "Rupa bentuk Piawai dalam Mod Normal"
 
-#: app/gui/preferences-dialog.c:1389
+#: app/gui/preferences-dialog.c:1384
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Rupa bentuk Piawai dalam Mod Skrin Penuh"
 
-#: app/gui/preferences-dialog.c:1398
+#: app/gui/preferences-dialog.c:1393
 msgid "Image Title & Statusbar Format"
 msgstr "Judul Imej & Format Bar status"
 
-#: app/gui/preferences-dialog.c:1401
+#: app/gui/preferences-dialog.c:1396
 msgid "Title & Status"
 msgstr "Judul & Status"
 
-#: app/gui/preferences-dialog.c:1420
+#: app/gui/preferences-dialog.c:1415
 msgid "Custom"
 msgstr "Biasa"
 
-#: app/gui/preferences-dialog.c:1421
+#: app/gui/preferences-dialog.c:1416
 msgid "Standard"
 msgstr "Piawai"
 
-#: app/gui/preferences-dialog.c:1422
+#: app/gui/preferences-dialog.c:1417
 msgid "Show zoom percentage"
 msgstr "Tunjukkan peratus zum"
 
-#: app/gui/preferences-dialog.c:1423
+#: app/gui/preferences-dialog.c:1418
 msgid "Show zoom ratio"
 msgstr "Tunjukkan nisbah zum"
 
-#: app/gui/preferences-dialog.c:1424
+#: app/gui/preferences-dialog.c:1419
 msgid "Show reversed zoom ratio"
 msgstr "Tunjukkan nisbah zum disongsangkan"
 
-#: app/gui/preferences-dialog.c:1425
+#: app/gui/preferences-dialog.c:1420
 msgid "Show memory usage"
 msgstr "Tunjukkan penggunaan memori"
 
-#: app/gui/preferences-dialog.c:1436
+#: app/gui/preferences-dialog.c:1431
 msgid "Image Title Format"
 msgstr "Formal Judul Imej"
 
-#: app/gui/preferences-dialog.c:1437
+#: app/gui/preferences-dialog.c:1432
 msgid "Image Statusbar Format"
 msgstr "Format Bar status Imej"
 
-#: app/gui/preferences-dialog.c:1523 app/gui/preferences-dialog.c:1526
+#: app/gui/preferences-dialog.c:1518 app/gui/preferences-dialog.c:1521
 msgid "Display"
 msgstr "Paparan"
 
 #. Transparency
-#: app/gui/preferences-dialog.c:1533
+#: app/gui/preferences-dialog.c:1528
 msgid "Transparency"
 msgstr "Kelutsinaran"
 
-#: app/gui/preferences-dialog.c:1537
+#: app/gui/preferences-dialog.c:1532
 msgid "Transparency _Type:"
 msgstr "_Jenis Kelutsinaran"
 
-#: app/gui/preferences-dialog.c:1540
+#: app/gui/preferences-dialog.c:1535
 msgid "Check _Size:"
 msgstr "Semak _Saiz:"
 
 #. 8-Bit Displays
-#: app/gui/preferences-dialog.c:1544
+#: app/gui/preferences-dialog.c:1539
 msgid "8-Bit Displays"
 msgstr "Paparan 8-Bit"
 
-#: app/gui/preferences-dialog.c:1555
+#: app/gui/preferences-dialog.c:1550
 msgid "Minimum Number of Colors:"
 msgstr "Bilangan Minimum Warna"
 
-#: app/gui/preferences-dialog.c:1558
+#: app/gui/preferences-dialog.c:1553
 msgid "Install Colormap"
 msgstr "Pasang Peta warna"
 
-#: app/gui/preferences-dialog.c:1561
+#: app/gui/preferences-dialog.c:1556
 msgid "Colormap Cycling"
 msgstr "Kitaran Peta warna"
 
-#: app/gui/preferences-dialog.c:1570 app/gui/user-install-dialog.c:954
+#: app/gui/preferences-dialog.c:1565 app/gui/user-install-dialog.c:953
 msgid "Monitor Resolution"
 msgstr "Resolusi Monitor"
 
-#: app/gui/preferences-dialog.c:1573
+#: app/gui/preferences-dialog.c:1568
 msgid "Monitor"
 msgstr "Monitor"
 
-#: app/gui/preferences-dialog.c:1579
+#: app/gui/preferences-dialog.c:1574
 msgid "Get Monitor Resolution"
 msgstr "Dapatkan Resolusi Monitor"
 
-#: app/gui/preferences-dialog.c:1588
+#: app/gui/preferences-dialog.c:1583
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(Pada masa kini %d x %d dpi)"
 
-#: app/gui/preferences-dialog.c:1628
+#: app/gui/preferences-dialog.c:1623
 msgid "C_alibrate"
 msgstr "Tentukur"
 
-#: app/gui/preferences-dialog.c:1642
+#: app/gui/preferences-dialog.c:1637
 msgid "From _Windowing System"
 msgstr "Dari Sistem Peningkapan"
 
-#: app/gui/preferences-dialog.c:1667
+#: app/gui/preferences-dialog.c:1662
 msgid "_Manually"
 msgstr "_Secara Manual"
 
-#: app/gui/preferences-dialog.c:1687 app/gui/preferences-dialog.c:1690
-#: app/gui/preferences-dialog.c:1940
+#: app/gui/preferences-dialog.c:1682 app/gui/preferences-dialog.c:1685
+#: app/gui/preferences-dialog.c:1935
 msgid "Environment"
 msgstr "Persekitaran"
 
-#: app/gui/preferences-dialog.c:1696
+#: app/gui/preferences-dialog.c:1691
 msgid "Resource Consumption"
 msgstr "Penggunaan Sumber"
 
-#: app/gui/preferences-dialog.c:1706
+#: app/gui/preferences-dialog.c:1701
 msgid "Minimal Number of Undo Levels:"
 msgstr "Bilangan Minimum Aras Buat asal"
 
-#: app/gui/preferences-dialog.c:1709
+#: app/gui/preferences-dialog.c:1704
 msgid "Maximum Undo Memory:"
 msgstr "Memori Buat asal Maksimum:"
 
-#: app/gui/preferences-dialog.c:1712 app/gui/user-install-dialog.c:1166
+#: app/gui/preferences-dialog.c:1707 app/gui/user-install-dialog.c:1162
 msgid "Tile Cache Size:"
 msgstr "Saiz Cache Jubin:"
 
-#: app/gui/preferences-dialog.c:1717
+#: app/gui/preferences-dialog.c:1712
 msgid "Number of Processors to Use:"
 msgstr "Bilangan Pemproses untuk Digunakan:"
 
-#: app/gui/preferences-dialog.c:1723
+#: app/gui/preferences-dialog.c:1718
 msgid "Conservative Memory Usage"
 msgstr "Penggunaan Memori Konservatif"
 
 #. File Saving
-#: app/gui/preferences-dialog.c:1727
+#: app/gui/preferences-dialog.c:1722
 msgid "File Saving"
 msgstr "Penyimpanan Fail"
 
-#: app/gui/preferences-dialog.c:1731
+#: app/gui/preferences-dialog.c:1726
 msgid "Only when Modified"
 msgstr "Hanya apabila Diubah suai"
 
-#: app/gui/preferences-dialog.c:1732
+#: app/gui/preferences-dialog.c:1727
 msgid "Always"
 msgstr "Sentiasa"
 
-#: app/gui/preferences-dialog.c:1733
+#: app/gui/preferences-dialog.c:1728
 msgid "\"File -> Save\" Saves the Image:"
 msgstr "\"Faik -> Simpan\" Simpan Imej:"
 
-#: app/gui/preferences-dialog.c:1736
+#: app/gui/preferences-dialog.c:1731
 msgid "Size of Thumbnail Files:"
 msgstr "Saiz Fail Kecil:"
 
-#: app/gui/preferences-dialog.c:1745
+#: app/gui/preferences-dialog.c:1740
 msgid "Session Management"
 msgstr "Pengurusan Sesi"
 
-#: app/gui/preferences-dialog.c:1748
+#: app/gui/preferences-dialog.c:1743
 msgid "Session"
 msgstr "Sesi"
 
 #. Window Positions
-#: app/gui/preferences-dialog.c:1755
+#: app/gui/preferences-dialog.c:1750
 msgid "Window Positions"
 msgstr "Kedudukan Tetingkap"
 
-#: app/gui/preferences-dialog.c:1758
+#: app/gui/preferences-dialog.c:1753
 msgid "_Save Window Positions on Exit"
 msgstr "_Simpan Kedudukan Tetingkap semasa Keluar"
 
-#: app/gui/preferences-dialog.c:1761
+#: app/gui/preferences-dialog.c:1756
 msgid "R_estore Saved Window Positions on Start-up"
 msgstr "S_impan semula Kedudukan Tetingkap pada Permulaan"
 
-#: app/gui/preferences-dialog.c:1769
+#: app/gui/preferences-dialog.c:1764
 msgid "Save Window Positions Now"
 msgstr "Simpan Kedudukan Tetingkap Sekarang"
 
-#: app/gui/preferences-dialog.c:1778
+#: app/gui/preferences-dialog.c:1773
 msgid "Clear Saved Window Positions Now"
 msgstr "Kosongkan Kedudukan Tetingkap yang Disimpan Sekarang"
 
-#: app/gui/preferences-dialog.c:1791
+#: app/gui/preferences-dialog.c:1786
 msgid "Save Keyboard Shortcuts on Exit"
 msgstr "Simpan Jalan Pintas Papan Kekunci semasa Keluar"
 
-#: app/gui/preferences-dialog.c:1794
+#: app/gui/preferences-dialog.c:1789
 msgid "Restore Saved Keyboard Shortcuts on Start-up"
 msgstr "Simpan semula Jalan Pintas Papan Kekunci pada Permulaan"
 
-#: app/gui/preferences-dialog.c:1802
+#: app/gui/preferences-dialog.c:1797
 msgid "Save Keyboard Shortcuts Now"
 msgstr "Simpan Jalan Pintas Papan Kekunci Sekarang"
 
-#: app/gui/preferences-dialog.c:1811
+#: app/gui/preferences-dialog.c:1806
 msgid "Clear Saved Keyboard Shortcuts Now"
 msgstr "Kosongkan Jalan Pintas Papan Kekunci yang Disimpan Sekarang"
 
-#: app/gui/preferences-dialog.c:1824
+#: app/gui/preferences-dialog.c:1819
 msgid "Save Input Device Settings on Exit"
 msgstr "Simpan Seting Peranti Input semasa Keluar"
 
-#: app/gui/preferences-dialog.c:1832
+#: app/gui/preferences-dialog.c:1827
 msgid "Save Input Device Settings Now"
 msgstr "Simpan Seting Peranti Input Sekarang"
 
-#: app/gui/preferences-dialog.c:1841
+#: app/gui/preferences-dialog.c:1836
 msgid "Clear Saved Input Device Settings Now"
 msgstr "Kosongkan Seting Peranti Input Yang Disimpan Sekarang"
 
-#: app/gui/preferences-dialog.c:1856 app/gui/preferences-dialog.c:1859
+#: app/gui/preferences-dialog.c:1851 app/gui/preferences-dialog.c:1854
 msgid "Folders"
 msgstr "Folder"
 
-#: app/gui/preferences-dialog.c:1874
+#: app/gui/preferences-dialog.c:1869
 msgid "Temp Dir:"
 msgstr "Direktori Sementara"
 
-#: app/gui/preferences-dialog.c:1874
+#: app/gui/preferences-dialog.c:1869
 msgid "Select Temp Dir"
 msgstr "Pilih Direktori Sementara"
 
-#: app/gui/preferences-dialog.c:1875
+#: app/gui/preferences-dialog.c:1870
 msgid "Swap Dir:"
 msgstr "Silih Direktori"
 
-#: app/gui/preferences-dialog.c:1875 app/gui/user-install-dialog.c:1188
+#: app/gui/preferences-dialog.c:1870 app/gui/user-install-dialog.c:1184
 msgid "Select Swap Dir"
 msgstr "Pilih Silih Direktori"
 
-#: app/gui/preferences-dialog.c:1908
+#: app/gui/preferences-dialog.c:1903
 msgid "Brush Folders"
 msgstr "Folder Berus"
 
-#: app/gui/preferences-dialog.c:1910
+#: app/gui/preferences-dialog.c:1905
 msgid "Select Brush Folders"
 msgstr "Pilih Folder Berus"
 
-#: app/gui/preferences-dialog.c:1912
+#: app/gui/preferences-dialog.c:1907
 msgid "Pattern Folders"
 msgstr "Folder Corak"
 
-#: app/gui/preferences-dialog.c:1914
+#: app/gui/preferences-dialog.c:1909
 msgid "Select Pattern Folders"
 msgstr "Pilih Folder Corak"
 
-#: app/gui/preferences-dialog.c:1916
+#: app/gui/preferences-dialog.c:1911
 msgid "Palette Folders"
 msgstr "Folder Pelet"
 
-#: app/gui/preferences-dialog.c:1918
+#: app/gui/preferences-dialog.c:1913
 msgid "Select Palette Folders"
 msgstr "Pilih Folder Pelet"
 
-#: app/gui/preferences-dialog.c:1920
+#: app/gui/preferences-dialog.c:1915
 msgid "Gradient Folders"
 msgstr "Folder Kecerunan"
 
-#: app/gui/preferences-dialog.c:1922
+#: app/gui/preferences-dialog.c:1917
 msgid "Select Gradient Folders"
 msgstr "Pilih Folder Kecerunan"
 
-#: app/gui/preferences-dialog.c:1924
+#: app/gui/preferences-dialog.c:1919
 msgid "Font Folders"
 msgstr "Folder Fon"
 
-#: app/gui/preferences-dialog.c:1926
+#: app/gui/preferences-dialog.c:1921
 msgid "Select Font Folders"
 msgstr "Pilih Folder Fon"
 
-#: app/gui/preferences-dialog.c:1928
+#: app/gui/preferences-dialog.c:1923
 msgid "Plug-Ins"
 msgstr "Plug-In"
 
-#: app/gui/preferences-dialog.c:1928
+#: app/gui/preferences-dialog.c:1923
 msgid "Plug-In Folders"
 msgstr "Folder Plug-In"
 
-#: app/gui/preferences-dialog.c:1930
+#: app/gui/preferences-dialog.c:1925
 msgid "Select Plug-In Folders"
 msgstr "Pilih Folder Plug-In"
 
-#: app/gui/preferences-dialog.c:1932
+#: app/gui/preferences-dialog.c:1927
 msgid "Scripts"
 msgstr "Skrip"
 
-#: app/gui/preferences-dialog.c:1932
+#: app/gui/preferences-dialog.c:1927
 msgid "Script-Fu Folders"
 msgstr "Folder Script-Fu"
 
-#: app/gui/preferences-dialog.c:1934
+#: app/gui/preferences-dialog.c:1929
 msgid "Select Script-Fu Folders"
 msgstr "Pilih Folder Script-Fu"
 
-#: app/gui/preferences-dialog.c:1936
+#: app/gui/preferences-dialog.c:1931
 msgid "Module Folders"
 msgstr "Folder Modul"
 
-#: app/gui/preferences-dialog.c:1938
+#: app/gui/preferences-dialog.c:1933
 msgid "Select Module Folders"
 msgstr "Pilih Folder Modul"
 
-#: app/gui/preferences-dialog.c:1940
+#: app/gui/preferences-dialog.c:1935
 msgid "Environment Folders"
 msgstr "Folder Persekitaran"
 
-#: app/gui/preferences-dialog.c:1942
+#: app/gui/preferences-dialog.c:1937
 msgid "Select Environment Folders"
 msgstr "Pilih Folder Persekitaran"
 
-#: app/gui/preferences-dialog.c:1944
+#: app/gui/preferences-dialog.c:1939
 msgid "Themes"
 msgstr "Tema"
 
-#: app/gui/preferences-dialog.c:1944
+#: app/gui/preferences-dialog.c:1939
 msgid "Theme Folders"
 msgstr "Folder Tema"
 
-#: app/gui/preferences-dialog.c:1946
+#: app/gui/preferences-dialog.c:1941
 msgid "Select Theme Folders"
 msgstr "Pilih Folder Tema"
 
-#: app/gui/qmask-commands.c:138
+#: app/gui/qmask-commands.c:139
 msgid "Edit Qmask Color"
 msgstr "Edit Warna Qmask"
 
-#: app/gui/qmask-commands.c:148
+#: app/gui/qmask-commands.c:149
 msgid "Qmask Attributes"
 msgstr "Atribut Qmask"
 
-#: app/gui/qmask-commands.c:150
+#: app/gui/qmask-commands.c:151
 msgid "Edit QuickMask Attributes"
 msgstr "Edit Atribut QuickMask"
 
-#: app/gui/qmask-commands.c:192
+#: app/gui/qmask-commands.c:194
 msgid "Mask Opacity:"
 msgstr "Kelegapan Topeng:"
 
@@ -6003,93 +6011,93 @@ msgstr "/Topengkan Kawasan yang _Tak Dipilih"
 msgid "/_Configure Color and Opacity..."
 msgstr "/Buat _Konfigurasi Warna dan Kelegapan..."
 
-#: app/gui/resize-dialog.c:196
+#: app/gui/resize-dialog.c:204
 msgid "Scale Layer Options"
 msgstr "Skalakan Opsyen Lapisan"
 
-#: app/gui/resize-dialog.c:198 app/gui/resize-dialog.c:230
+#: app/gui/resize-dialog.c:206 app/gui/resize-dialog.c:238
 #: app/tools/gimppaintoptions-gui.c:345
 msgid "Size"
 msgstr "Saiz"
 
-#: app/gui/resize-dialog.c:204
+#: app/gui/resize-dialog.c:212
 msgid "Scale Image Options"
 msgstr "Skalakan Opsyen Imej"
 
-#: app/gui/resize-dialog.c:206
+#: app/gui/resize-dialog.c:214
 msgid "Pixel Dimensions"
 msgstr "Dimensi Piksel"
 
-#: app/gui/resize-dialog.c:218
+#: app/gui/resize-dialog.c:226
 msgid "Layer Boundary Size"
 msgstr "Saiz Sempadan Lapisan"
 
-#: app/gui/resize-dialog.c:219
+#: app/gui/resize-dialog.c:227
 msgid "Set Layer Boundary Size"
 msgstr "Setkan Saiz Sempadan Lapisan"
 
-#: app/gui/resize-dialog.c:225
+#: app/gui/resize-dialog.c:233
 msgid "Canvas Size"
 msgstr "Saiz Kanvas"
 
-#: app/gui/resize-dialog.c:226
+#: app/gui/resize-dialog.c:234
 msgid "Set Image Canvas Size"
 msgstr "Setkan Saiz Kanvas Imej"
 
 #. the original width & height labels
-#: app/gui/resize-dialog.c:284 app/tools/gimpscaletool.c:171
+#: app/gui/resize-dialog.c:291 app/tools/gimpscaletool.c:171
 msgid "Original Width:"
 msgstr "Lebar Asal:"
 
 #. the new size labels
-#: app/gui/resize-dialog.c:309 app/gui/resize-dialog.c:555
+#: app/gui/resize-dialog.c:316 app/gui/resize-dialog.c:562
 msgid "New Width:"
 msgstr "Lebar Baru:"
 
 #. the scale ratio labels
-#: app/gui/resize-dialog.c:376
+#: app/gui/resize-dialog.c:383
 msgid "Ratio X:"
 msgstr "Nisbah X:"
 
-#: app/gui/resize-dialog.c:439
+#: app/gui/resize-dialog.c:446
 msgid "Constrain aspect ratio"
 msgstr "Kekang nisbah aspek"
 
-#: app/gui/resize-dialog.c:506
+#: app/gui/resize-dialog.c:513
 msgid "Center"
 msgstr "Tengah"
 
-#: app/gui/resize-dialog.c:540
+#: app/gui/resize-dialog.c:547
 msgid "Print Size & Display Unit"
 msgstr "Cetak Saiz & Unit Paparan"
 
 #. the resolution labels
-#: app/gui/resize-dialog.c:622 app/widgets/gimptemplateeditor.c:375
+#: app/gui/resize-dialog.c:629 app/widgets/gimptemplateeditor.c:375
 msgid "Resolution X:"
 msgstr "Resolusi X:"
 
-#: app/gui/resize-dialog.c:642 app/widgets/gimptemplateeditor.c:404
+#: app/gui/resize-dialog.c:649 app/widgets/gimptemplateeditor.c:404
 #, c-format
 msgid "pixels/%a"
 msgstr "piksel/%a"
 
-#: app/gui/resize-dialog.c:698 app/tools/gimptransformoptions.c:310
+#: app/gui/resize-dialog.c:705 app/tools/gimptransformoptions.c:310
 msgid "Interpolation:"
 msgstr "Sisipan:"
 
-#: app/gui/resolution-calibrate-dialog.c:114
+#: app/gui/resolution-calibrate-dialog.c:85
 msgid "Calibrate Monitor Resolution"
 msgstr "Tentukur Resolusi Monitor"
 
-#: app/gui/resolution-calibrate-dialog.c:238
+#: app/gui/resolution-calibrate-dialog.c:195
 msgid "Measure the rulers and enter their lengths below."
 msgstr "Ukur pembaris dan masukkan panjangnya di bawah."
 
-#: app/gui/resolution-calibrate-dialog.c:260
+#: app/gui/resolution-calibrate-dialog.c:217
 msgid "_Horizontal:"
 msgstr "_Mengufuk:"
 
-#: app/gui/resolution-calibrate-dialog.c:265
+#: app/gui/resolution-calibrate-dialog.c:222
 msgid "_Vertical:"
 msgstr "_Menegak:"
 
@@ -6117,35 +6125,35 @@ msgstr "Pemilihan Sempadan oleh"
 msgid "GIMP Startup"
 msgstr "Pemula GIMP"
 
-#: app/gui/stroke-dialog.c:96
+#: app/gui/stroke-dialog.c:98
 msgid "Stroke Options"
 msgstr "Tandakan Opsyen"
 
-#: app/gui/stroke-dialog.c:98
+#: app/gui/stroke-dialog.c:100
 msgid "Choose Stroke Style"
 msgstr "Pilih Gaya Tandaan"
 
-#: app/gui/stroke-dialog.c:128
+#: app/gui/stroke-dialog.c:129
 msgid "Stroke"
 msgstr "Tandakan"
 
-#: app/gui/stroke-dialog.c:158
+#: app/gui/stroke-dialog.c:159
 msgid "Stroke Using a Paint Tool"
 msgstr "Tanda Menggunakan Alat Cat"
 
-#: app/gui/stroke-dialog.c:184
+#: app/gui/stroke-dialog.c:185
 msgid "Paint Tool:"
 msgstr "Alat Cat:"
 
-#: app/gui/templates-commands.c:123
+#: app/gui/templates-commands.c:126
 msgid "New Template"
 msgstr "Templat Baru"
 
-#: app/gui/templates-commands.c:125
+#: app/gui/templates-commands.c:128
 msgid "Create a New Template"
 msgstr "Wujudkan Templat Baru"
 
-#: app/gui/templates-commands.c:192 app/gui/templates-commands.c:194
+#: app/gui/templates-commands.c:197 app/gui/templates-commands.c:199
 msgid "Edit Template"
 msgstr "Edit Templat"
 
@@ -6210,7 +6218,7 @@ msgstr "_Tip Seterusnya"
 #.
 #: app/gui/tips-parser.c:165
 msgid "tips-locale:C"
-msgstr "tip setempat:C"
+msgstr "tips-locale:ms"
 
 #: app/gui/tool-options-commands.c:91
 msgid "Save Tool Options"
@@ -6413,7 +6421,7 @@ msgstr "/Bantuan/_Tip Hari Ini"
 msgid "/Help/_About"
 msgstr "/Bantuan/_Tentang"
 
-#: app/gui/user-install-dialog.c:136
+#: app/gui/user-install-dialog.c:132
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -6427,7 +6435,7 @@ msgstr ""
 "corak, plug-in dan modul juga boleh dikonfigurasikan\n"
 "di sini."
 
-#: app/gui/user-install-dialog.c:145
+#: app/gui/user-install-dialog.c:141
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
@@ -6435,7 +6443,7 @@ msgstr ""
 "GIMP menggunakan fail tambahan gtkrc supaya anda boleh\n"
 "membuat konfigurasinya agar kelihatan berlainan daripada aplikasi GTK."
 
-#: app/gui/user-install-dialog.c:151
+#: app/gui/user-install-dialog.c:147
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -6451,7 +6459,7 @@ msgstr ""
 "dicache dalam fail ini.  Fail ini adalah untuk\n"
 "baca sahaja GIMP, dan tidak boleh diedit."
 
-#: app/gui/user-install-dialog.c:161
+#: app/gui/user-install-dialog.c:157
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
@@ -6467,7 +6475,7 @@ msgstr ""
 "kekunci dari dalam GIMP.  Menghapuskan fail ini akan\n"
 "menyimpan semula jalan pintas piawai."
 
-#: app/gui/user-install-dialog.c:171
+#: app/gui/user-install-dialog.c:167
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
@@ -6477,7 +6485,7 @@ msgstr ""
 "dibuka semasa anda keluar dari GIMP.  Anda boleh membuat konfigurasi\n"
 "GIMP untuk membuka semula dialog ini pada kedudukan ia disimpan."
 
-#: app/gui/user-install-dialog.c:178
+#: app/gui/user-install-dialog.c:174
 msgid ""
 "This file holds a collection of standard media sizes that\n"
 "serve as image templates."
@@ -6485,7 +6493,7 @@ msgstr ""
 "Fail ini menyimpan banyak saiz media piawai yang\n"
 "berfungsi sebagai templat imej."
 
-#: app/gui/user-install-dialog.c:184
+#: app/gui/user-install-dialog.c:180
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -6499,7 +6507,7 @@ msgstr ""
 "poin dan pika.  Fail ini ditulis ganti setiap kali\n"
 "anda keluar dari GIMP."
 
-#: app/gui/user-install-dialog.c:193
+#: app/gui/user-install-dialog.c:189
 msgid ""
 "This folder is used to store user defined brushes.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -6511,7 +6519,7 @@ msgstr ""
 "GIMP seluruh sistem semasa mencari\n"
 "berus."
 
-#: app/gui/user-install-dialog.c:201
+#: app/gui/user-install-dialog.c:197
 msgid ""
 "This folder is used to store fonts you only want\n"
 "visible in the GIMP. The GIMP checks this folder in\n"
@@ -6527,7 +6535,7 @@ msgstr ""
 "fon GIMP sahaja, jika tidak letakkan semuanya\n"
 "dalam direktori fon sejagat anda."
 
-#: app/gui/user-install-dialog.c:211
+#: app/gui/user-install-dialog.c:207
 msgid ""
 "This folder is used to store user defined gradients.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -6539,7 +6547,7 @@ msgstr ""
 "GIMP seluruh seluruh sistem semasa mencari\n"
 "kecerunan."
 
-#: app/gui/user-install-dialog.c:219
+#: app/gui/user-install-dialog.c:215
 msgid ""
 "This folder is used to store user defined palettes.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -6551,7 +6559,7 @@ msgstr ""
 "GIMP seluruh sistem semasa mencari\n"
 "pelet."
 
-#: app/gui/user-install-dialog.c:227
+#: app/gui/user-install-dialog.c:223
 msgid ""
 "This folder is used to store user defined patterns.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -6563,7 +6571,7 @@ msgstr ""
 "GIMP seluruh sistem semasa mencari\n"
 "corak."
 
-#: app/gui/user-install-dialog.c:235
+#: app/gui/user-install-dialog.c:231
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported plug-ins.  The GIMP\n"
@@ -6575,7 +6583,7 @@ msgstr ""
 "memeriksa folder ini selain folder plug-in\n"
 "GIMP seluruh sistem semasa mencari plug-in."
 
-#: app/gui/user-install-dialog.c:243
+#: app/gui/user-install-dialog.c:239
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported DLL modules.  The\n"
@@ -6589,7 +6597,7 @@ msgstr ""
 "GIMP seluruh sistem semasa mencari modul untuk dimuatkan\n"
 "ketika memberikan awalan"
 
-#: app/gui/user-install-dialog.c:252
+#: app/gui/user-install-dialog.c:248
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported additions to the\n"
@@ -6605,7 +6613,7 @@ msgstr ""
 "semasa mencari fail pengubahsuaian persekitaran\n"
 "plug-in."
 
-#: app/gui/user-install-dialog.c:262
+#: app/gui/user-install-dialog.c:258
 msgid ""
 "This folder is used to store user created and installed\n"
 "scripts.  The GIMP checks this folder in addition to\n"
@@ -6617,15 +6625,15 @@ msgstr ""
 "folder skrip GIMP seluruh sistem semasa mencari\n"
 "skrip."
 
-#: app/gui/user-install-dialog.c:270
+#: app/gui/user-install-dialog.c:266
 msgid "This folder is searched for image templates."
 msgstr "Mencari folder ini untuk templat imej."
 
-#: app/gui/user-install-dialog.c:275
+#: app/gui/user-install-dialog.c:271
 msgid "This folder is searched for user-installed themes."
 msgstr "Mencari folder ini untuk tema dipasang pengguna"
 
-#: app/gui/user-install-dialog.c:280
+#: app/gui/user-install-dialog.c:276
 msgid ""
 "This folder is used to temporarily store undo buffers\n"
 "to reduce memory usage.  If The GIMP is unceremoniously\n"
@@ -6639,11 +6647,11 @@ msgstr ""
 "folder ini.  Fail ini tidak digunakan sepanjang sesi\n"
 "GIMP dan boleh dimusnahkan pada bila-bila masa."
 
-#: app/gui/user-install-dialog.c:289
+#: app/gui/user-install-dialog.c:285
 msgid "This folder is used to store tool options."
 msgstr "Folder ini digunakan untuk menyimpan opsyen alat."
 
-#: app/gui/user-install-dialog.c:294
+#: app/gui/user-install-dialog.c:290
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Curves tool."
@@ -6651,7 +6659,7 @@ msgstr ""
 "Folder ini digunakan untuk menyimpan fail parameter bagi\n"
 "alat Lengkung."
 
-#: app/gui/user-install-dialog.c:300
+#: app/gui/user-install-dialog.c:296
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Levels tool."
@@ -6659,7 +6667,7 @@ msgstr ""
 "Folder ini digunakan untuk menyimpan fail parameter bagi\n"
 "alat Aras."
 
-#: app/gui/user-install-dialog.c:382
+#: app/gui/user-install-dialog.c:397
 msgid ""
 "Installation successful.\n"
 "Click \"Continue\" to proceed."
@@ -6667,7 +6675,7 @@ msgstr ""
 "Pemasangan berjaya.\n"
 "Klik \"Teruskan\" untuk meneruskan."
 
-#: app/gui/user-install-dialog.c:388
+#: app/gui/user-install-dialog.c:403
 msgid ""
 "Installation failed.\n"
 "Contact system administrator."
@@ -6675,15 +6683,15 @@ msgstr ""
 "Pemasangan gagal.\n"
 "Hubungi pentadbir sistem."
 
-#: app/gui/user-install-dialog.c:593
+#: app/gui/user-install-dialog.c:595
 msgid "GIMP User Installation"
 msgstr "Pemasangan Pengguna GIMP"
 
-#: app/gui/user-install-dialog.c:601
+#: app/gui/user-install-dialog.c:600
 msgid "Continue"
 msgstr "Teruskan"
 
-#: app/gui/user-install-dialog.c:751
+#: app/gui/user-install-dialog.c:750
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -6691,11 +6699,11 @@ msgstr ""
 "Selamat Datang ke\n"
 "Pemasangan Pengguna GIMP"
 
-#: app/gui/user-install-dialog.c:753
+#: app/gui/user-install-dialog.c:752
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Klik \"Teruskan\" untuk memasuki pemasangan pengguna GIMP"
 
-#: app/gui/user-install-dialog.c:758
+#: app/gui/user-install-dialog.c:757
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
 "Copyright (C) 1995-2003\n"
@@ -6705,7 +6713,7 @@ msgstr ""
 "Hak cipta (C) 1995-2003\n"
 "Spencer Kimball, Peter Mattis dan Pasukan Pembangunan GIMP."
 
-#: app/gui/user-install-dialog.c:768
+#: app/gui/user-install-dialog.c:767
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -6718,7 +6726,7 @@ msgstr ""
 "Free Software Foundation; sama ada versi 2 Lesen, atau\n"
 "(mengikut opsyen anda) sebarang versi terbaru."
 
-#: app/gui/user-install-dialog.c:774
+#: app/gui/user-install-dialog.c:773
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -6730,7 +6738,7 @@ msgstr ""
 "BOLEH DAGANG atau KESESUAIAN UNTUK TUJUAN TERTENTU.\n"
 "Lihat GNU General Public License untuk maklumat lanjut."
 
-#: app/gui/user-install-dialog.c:780
+#: app/gui/user-install-dialog.c:779
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -6742,15 +6750,15 @@ msgstr ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA."
 
-#: app/gui/user-install-dialog.c:804
+#: app/gui/user-install-dialog.c:803
 msgid "Personal GIMP Folder"
 msgstr "Folder Peribadi GIMP"
 
-#: app/gui/user-install-dialog.c:805
+#: app/gui/user-install-dialog.c:804
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Klik \"Teruskan\" untuk mewujudkan folder peribadi GIMP anda."
 
-#: app/gui/user-install-dialog.c:843
+#: app/gui/user-install-dialog.c:842
 #, c-format
 msgid ""
 "For a proper GIMP installation, a folder named\n"
@@ -6759,7 +6767,7 @@ msgstr ""
 "Untuk pemasangan GIMP yang sempurna, folder\n"
 "'<b>%s</b>' perlu diwujudkan."
 
-#: app/gui/user-install-dialog.c:850
+#: app/gui/user-install-dialog.c:849
 msgid ""
 "This folder will contain a number of important files.\n"
 "Click on one of the files or folders in the tree\n"
@@ -6769,11 +6777,11 @@ msgstr ""
 "Klik salah satu fail atau folder dalam pepohon\n"
 "untuk mendapatkan lebih banyak maklumat tentang item yang dipilih."
 
-#: app/gui/user-install-dialog.c:936
+#: app/gui/user-install-dialog.c:935
 msgid "User Installation Log"
 msgstr "Log Pemasangan Pengguna"
 
-#: app/gui/user-install-dialog.c:937
+#: app/gui/user-install-dialog.c:936
 msgid ""
 "Please wait while your personal\n"
 "GIMP folder is being created..."
@@ -6781,26 +6789,26 @@ msgstr ""
 "Sila tunggu sementara folder peribadi\n"
 "GIMP anda diwujudkan..."
 
-#: app/gui/user-install-dialog.c:944
+#: app/gui/user-install-dialog.c:943
 msgid "GIMP Performance Tuning"
 msgstr "Menalakan Pelaksanaan GIMP"
 
-#: app/gui/user-install-dialog.c:945
+#: app/gui/user-install-dialog.c:944
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Klik \"Teruskan\" untuk menerima seting di atas."
 
-#: app/gui/user-install-dialog.c:949
+#: app/gui/user-install-dialog.c:948
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Bagi pelaksanaan optimum GIMP, beberapa seting mungkin perlu diselaraskan."
 "</b>"
 
-#: app/gui/user-install-dialog.c:955
+#: app/gui/user-install-dialog.c:954
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "Klik \"Teruskan\" untuk memulakan GIMP."
 
-#: app/gui/user-install-dialog.c:959
+#: app/gui/user-install-dialog.c:958
 msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
@@ -6808,31 +6816,31 @@ msgstr ""
 "<b>Untuk memaparkan imej dalam saiz asalnya, GIMP perlu mengetahui resolusi "
 "monitor anda.</b>"
 
-#: app/gui/user-install-dialog.c:964
+#: app/gui/user-install-dialog.c:963
 msgid "Aborting Installation..."
 msgstr "Menghenti paksa Pemasangan..."
 
-#: app/gui/user-install-dialog.c:1050 app/gui/user-install-dialog.c:1083
+#: app/gui/user-install-dialog.c:1046 app/gui/user-install-dialog.c:1079
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Mewujudkan folder '%s'..."
 
-#: app/gui/user-install-dialog.c:1064
+#: app/gui/user-install-dialog.c:1060
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Tidak dapat mewujudkan folder '%s': %s"
 
-#: app/gui/user-install-dialog.c:1096
+#: app/gui/user-install-dialog.c:1092
 #, c-format
 msgid "Cannot create folder: %s"
 msgstr "Tidak dapat mewujudkan folder: %s"
 
-#: app/gui/user-install-dialog.c:1108
+#: app/gui/user-install-dialog.c:1104
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Menyalin fail '%s' dari '%s'..."
 
-#: app/gui/user-install-dialog.c:1154
+#: app/gui/user-install-dialog.c:1150
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -6844,7 +6852,7 @@ msgstr ""
 "dalam memori. Ambil kira\n"
 "jumlah memori yang digunakan oleh proses lain yang sedang dijalankan."
 
-#: app/gui/user-install-dialog.c:1178
+#: app/gui/user-install-dialog.c:1174
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6857,11 +6865,11 @@ msgstr ""
 "mungkin mahu menggunakan direktori sementara sistem-luas (\"/tmp\" atau \"/"
 "var/tmp\")."
 
-#: app/gui/user-install-dialog.c:1193
+#: app/gui/user-install-dialog.c:1189
 msgid "Swap Folder:"
 msgstr "Silih Folder:"
 
-#: app/gui/user-install-dialog.c:1244
+#: app/gui/user-install-dialog.c:1240
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6869,13 +6877,13 @@ msgstr ""
 "GIMP boleh mendapatkan maklumat ini daripada sistem peningkapan.\n"
 "Walau bagaimanapun, biasanya ini tidak memberikan nilai yang bermakna."
 
-#: app/gui/user-install-dialog.c:1252
+#: app/gui/user-install-dialog.c:1248
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr ""
 "Dapatkan Resolusi daripada sistem peningkapan (Pada masa ini %d x %d dpi)"
 
-#: app/gui/user-install-dialog.c:1272
+#: app/gui/user-install-dialog.c:1268
 msgid ""
 "Alternatively, you can set\n"
 "the monitor resolution manually."
@@ -6883,7 +6891,7 @@ msgstr ""
 "Secara alternatif, anda boleh mengesetkan\n"
 "resolusi monitor secara manual."
 
-#: app/gui/user-install-dialog.c:1317
+#: app/gui/user-install-dialog.c:1313
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
@@ -6891,7 +6899,7 @@ msgstr ""
 "Anda juga boleh menekan butang \"Tentukur\" untuk membuka tetingkap\n"
 "yang membolehkan anda menentukan resolusi monitor anda secara interaktif."
 
-#: app/gui/user-install-dialog.c:1320
+#: app/gui/user-install-dialog.c:1316
 msgid "Calibrate"
 msgstr "Tentukur"
 
@@ -6900,37 +6908,37 @@ msgstr "Tentukur"
 msgid "Path to Selection"
 msgstr "Laluan ke Pemilihan"
 
-#: app/gui/vectors-commands.c:423
+#: app/gui/vectors-commands.c:425
 msgid "Empty Vectors Copy"
 msgstr "Kosongkan Salinan Vektor"
 
-#: app/gui/vectors-commands.c:437 app/gui/vectors-commands.c:483
+#: app/gui/vectors-commands.c:439 app/gui/vectors-commands.c:486
 #: app/widgets/gimpvectorstreeview.c:131
 msgid "New Path"
 msgstr "Laluan Baru"
 
-#: app/gui/vectors-commands.c:439
+#: app/gui/vectors-commands.c:441
 msgid "New Path Options"
 msgstr "Opsyen Laluan Baru"
 
 #. The name entry hbox, label and entry
-#: app/gui/vectors-commands.c:472 app/gui/vectors-commands.c:587
+#: app/gui/vectors-commands.c:475 app/gui/vectors-commands.c:591
 msgid "Path name:"
 msgstr "Nama laluan:"
 
-#: app/gui/vectors-commands.c:552
+#: app/gui/vectors-commands.c:555
 msgid "Path Attributes"
 msgstr "Atribut Laluan"
 
-#: app/gui/vectors-commands.c:554 app/widgets/gimpvectorstreeview.c:129
+#: app/gui/vectors-commands.c:557 app/widgets/gimpvectorstreeview.c:129
 msgid "Edit Path Attributes"
 msgstr "Edit Atribut Laluan"
 
-#: app/gui/vectors-commands.c:647
+#: app/gui/vectors-commands.c:651
 msgid "Import Paths from SVG"
 msgstr "Import Laluan dari SVG"
 
-#: app/gui/vectors-commands.c:709
+#: app/gui/vectors-commands.c:713
 msgid "Export Path to SVG"
 msgstr "Eksport Laluan ke SVG"
 
@@ -7398,6 +7406,8 @@ msgid ""
 "Due to lack of any fonts,\n"
 "text functionality is not available."
 msgstr ""
+"Disebabkan kekurangan sebarang fon,\n"
+"fungsi teks tidak ada."
 
 #: app/text/gimptextlayer.c:414
 msgid "Empty Text Layer"
@@ -7744,19 +7754,19 @@ msgstr "Jejari:"
 msgid "Pick Mode  %s"
 msgstr "Pilih Mod  %s"
 
-#: app/tools/gimpcolorpickertool.c:96
+#: app/tools/gimpcolorpickertool.c:97
 msgid "Color Picker"
 msgstr "Pemilih Warna"
 
-#: app/tools/gimpcolorpickertool.c:97
+#: app/tools/gimpcolorpickertool.c:98
 msgid "Pick colors from the image"
 msgstr "Pilih warna dari imej"
 
-#: app/tools/gimpcolorpickertool.c:98
+#: app/tools/gimpcolorpickertool.c:99
 msgid "/Tools/C_olor Picker"
 msgstr "/Alat/Pemilih W_arna"
 
-#: app/tools/gimpcolorpickertool.c:312
+#: app/tools/gimpcolorpickertool.c:314
 msgid "Color Picker Information"
 msgstr "Maklumat Pemilih Warna"
 
@@ -7791,43 +7801,43 @@ msgstr "Lapisan Semasa sahaja"
 msgid "Allow Enlarging  %s"
 msgstr "Benarkan Pembesaran  %s"
 
-#: app/tools/gimpcroptool.c:161
+#: app/tools/gimpcroptool.c:158
 msgid "Crop & Resize"
 msgstr "Potong & Ubah saiz"
 
-#: app/tools/gimpcroptool.c:162
+#: app/tools/gimpcroptool.c:159
 msgid "Crop or Resize an image"
 msgstr "Potong & Ubah saiz imej"
 
-#: app/tools/gimpcroptool.c:163
+#: app/tools/gimpcroptool.c:160
 msgid "/Tools/Transform Tools/_Crop & Resize"
 msgstr "/Alat/Alat Penjelmaan/_Potong & Ubah saiz"
 
 #. initialize the statusbar display
-#: app/tools/gimpcroptool.c:501 app/tools/gimpcroptool.c:930
+#: app/tools/gimpcroptool.c:498 app/tools/gimpcroptool.c:927
 msgid "Crop: "
 msgstr "Potong: "
 
-#: app/tools/gimpcroptool.c:962
+#: app/tools/gimpcroptool.c:959
 msgid "Crop & Resize Information"
 msgstr "Potong & Ubah saiz Maklumat"
 
 #. add the information fields
-#: app/tools/gimpcroptool.c:980
+#: app/tools/gimpcroptool.c:976
 msgid "Origin X:"
 msgstr "X Asalan:"
 
 #. the pixel size labels
-#: app/tools/gimpcroptool.c:997 app/tools/gimpselectionoptions.c:565
+#: app/tools/gimpcroptool.c:993 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:236 app/widgets/gimptemplateeditor.c:254
 msgid "Width:"
 msgstr "Lebar:"
 
-#: app/tools/gimpcroptool.c:1023
+#: app/tools/gimpcroptool.c:1019
 msgid "From Selection"
 msgstr "Dari Pemilihan"
 
-#: app/tools/gimpcroptool.c:1031
+#: app/tools/gimpcroptool.c:1027
 msgid "Auto Shrink"
 msgstr "Auto Shrink"
 
@@ -8047,7 +8057,7 @@ msgstr "Penyelarasan"
 msgid "Size:"
 msgstr "Saiz:"
 
-#: app/tools/gimpinkoptions.c:278 app/tools/gimpmeasuretool.c:881
+#: app/tools/gimpinkoptions.c:278 app/tools/gimpmeasuretool.c:883
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "Sudut:"
@@ -8208,7 +8218,7 @@ msgstr "Tambahkan Panduan"
 msgid "Measure Distances and Angles"
 msgstr "Ukur Jarak dan Sudut"
 
-#: app/tools/gimpmeasuretool.c:855
+#: app/tools/gimpmeasuretool.c:857
 msgid "Distance:"
 msgstr "Jarak:"
 
@@ -8615,11 +8625,11 @@ msgstr ""
 msgid "Keep Width  %s"
 msgstr "Kekalkan Lebar  %s"
 
-#: app/tools/gimptransformtool.c:245
+#: app/tools/gimptransformtool.c:242
 msgid "Transforming..."
 msgstr "Menjelmakan..."
 
-#: app/tools/gimptransformtool.c:341
+#: app/tools/gimptransformtool.c:338
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -9068,7 +9078,7 @@ msgstr ""
 "Simpan semua Ralat\n"
 "%s Simpan Pemilihan"
 
-#: app/widgets/gimperrorconsole.c:269 app/widgets/gimpwidgets-utils.c:190
+#: app/widgets/gimperrorconsole.c:269 app/widgets/gimpwidgets-utils.c:195
 #, c-format
 msgid "%s Message"
 msgstr "Mesej %s"
@@ -9702,16 +9712,16 @@ msgstr "Warna"
 msgid "Saturation"
 msgstr "Kepekatan"
 
-#: app/widgets/gimpwidgets-utils.c:108
+#: app/widgets/gimpwidgets-utils.c:112
 #, c-format
 msgid "Message repeated %d times."
 msgstr "Mesej diulang %d kali."
 
-#: app/widgets/gimpwidgets-utils.c:124
+#: app/widgets/gimpwidgets-utils.c:128
 msgid "Message repeated once."
 msgstr "Mesej diulang sekali sahaja."
 
-#: app/widgets/gimpwidgets-utils.c:144
+#: app/widgets/gimpwidgets-utils.c:148
 msgid ""
 "WARNING:\n"
 "Too many open message dialogs.\n"
@@ -9721,14 +9731,14 @@ msgstr ""
 "Terlalu banyak dialog mesej dibuka.\n"
 "Mesej dihantar semula ke stderr."
 
-#: app/widgets/gimpwidgets-utils.c:151
+#: app/widgets/gimpwidgets-utils.c:155
 msgid "GIMP Message"
 msgstr "Mesej GIMP"
 
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
 #.
-#: app/widgets/gimpwidgets-utils.c:482
+#: app/widgets/gimpwidgets-utils.c:484
 #, c-format
 msgid "<%s>"
 msgstr "<%s>"
