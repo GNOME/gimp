@@ -107,9 +107,13 @@ app_init (gint    gimp_argc,
 
       if (no_interface)
 	{
-	  g_print (_("The GIMP is not properly installed for the current user\n"));
-	  g_print (_("User installation was skipped because the '--nointerface' flag was encountered\n"));
-	  g_print (_("To perform user installation, run the GIMP without the '--nointerface' flag\n"));
+          const gchar *msg;
+
+          msg = _("GIMP is not properly installed for the current user.\n"
+                  "User installation was skipped because the '--nointerface' flag was used.\n"
+                  "To perform user installation, run the GIMP without the '--nointerface' flag.");
+
+          g_print ("%s\n\n", msg);
 	}
       else
 	{

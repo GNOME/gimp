@@ -1,5 +1,11 @@
 2003-01-09  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c (main)
+	* app/app_procs.c (app_init): combined console output into single
+	messages to allow for better translation.
+
+2003-01-09  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable.c (gimp_drawable_configure): use _("Unnamed")
 	if no name was given. Fixes bug #89328 in a more general way.
 

@@ -165,8 +165,12 @@ main (int    argc,
     {
       if (! gui_libs_init (&argc, &argv))
 	{
-	  g_print (_("ERROR: GIMP could not initialize the GUI.\n\n"));
-	  g_print (_("Make sure a proper setup for your display environment exists.\n"));
+          const gchar *msg;
+
+          msg = _("GIMP could not initialize the GUI.\n"
+                  "Make sure a proper setup for your display environment exists.");
+          g_print ("%s\n\n", msg);
+
 	  gimp_text_console_exit (TRUE);
 	}
     }
@@ -468,8 +472,8 @@ gimp_show_help (const gchar *progname)
   g_print (_("  --debug-handlers         Enable non-fatal debugging signal handlers.\n"));
   g_print (_("  --display <display>      Use the designated X display.\n"));
   g_print (_("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"));
-  g_print ("  --enable-stack-trace <never | query | always>\n");
-  g_print (_("                           Debugging mode for fatal signals.\n\n"));
+  g_print (_("  --enable-stack-trace <never | query | always>\n"
+             "                           Debugging mode for fatal signals.\n\n"));
 }
 
 static void
