@@ -32,7 +32,8 @@ typedef enum {
 typedef enum {
   MAP_PLANE,
   MAP_SPHERE,
-  MAP_BOX
+  MAP_BOX,
+  MAP_CYLINDER
 } MapType;
 
 /* Typedefs */
@@ -72,6 +73,7 @@ typedef struct {
   gint tiled;
   gint showgrid;
   gint tooltips_enabled;
+  gint showcaps;
   
   glong preview_zoom_factor;
   
@@ -79,8 +81,11 @@ typedef struct {
   gdouble maxdepth;
   gdouble pixeltreshold;
   gdouble radius;
+  gdouble cylinder_radius;
+  gdouble cylinder_length;
 
   gint32 boxmap_id[6];
+  gint32 cylindermap_id[2];
   
 } MapObjectValues;
 

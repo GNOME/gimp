@@ -589,7 +589,7 @@ gboolean intersect_rect(gdouble u,gdouble v,gdouble w,
       face_info->t = (w-viewp.z)/dir.z;
       face_info->s.x = viewp.x + face_info->t*dir.x;
       face_info->s.y = viewp.y + face_info->t*dir.y;
-      face_info->s.z = 0.0;
+      face_info->s.z = w;
 
       if (face_info->s.x>=-u2 && face_info->s.x<=u2 && 
           face_info->s.y>=-v2 && face_info->s.y<=v2)
@@ -850,6 +850,317 @@ GckRGB get_ray_color_box(GckVector3 *pos)
 
           color2 = get_box_image_color(face_intersect[1].face,
                                        face_intersect[1].u,face_intersect[1].v);
+
+          /* Make the normal point inwards */
+          /* ============================= */
+
+          gck_vector3_mul(&face_intersect[1].n,-1.0);
+
+          color2=phong_shade(
+            &face_intersect[1].s,
+            &mapvals.viewpoint,
+            &face_intersect[1].n,
+            &mapvals.lightsource.position,
+            &color2,
+            &mapvals.lightsource.color,
+            mapvals.lightsource.type);      
+
+          gck_rgba_clamp(&color2);
+          
+          if (mapvals.transparent_background==FALSE && color2.a<1.0)
+            {
+              color2.r = (color2.r*color2.a)+(background.r*(1.0-color2.a));
+              color2.g = (color2.g*color2.a)+(background.g*(1.0-color2.a));
+              color2.b = (color2.b*color2.a)+(background.b*(1.0-color2.a));
+              color2.a = 1.0;
+            }
+
+          /* Compute a mix of the first and second colors */
+          /* ============================================ */
+          
+          color.r = color.r*color.a+(1.0-color.a)*color2.r;
+          color.g = color.g*color.a+(1.0-color.a)*color2.g;
+          color.b = color.b*color.a+(1.0-color.a)*color2.b; 
+          color.a = color.a+color2.a;
+
+          gck_rgba_clamp(&color);
+        }
+      else if (color.a!=0.0 && mapvals.lightsource.type!=NO_LIGHT)
+        {
+           color=phong_shade(
+             &face_intersect[0].s,
+             &mapvals.viewpoint,
+             &face_intersect[0].n,
+             &mapvals.lightsource.position,
+             &color,
+             &mapvals.lightsource.color,
+             mapvals.lightsource.type);      
+    
+           gck_rgba_clamp(&color);
+        }
+    }
+  else
+    {
+      if (mapvals.transparent_background==TRUE)
+        color.a = 0.0;
+    }
+  
+  return(color);
+}
+
+gboolean intersect_circle(GckVector3 vp,GckVector3 dir,gdouble w,
+                          FaceIntersectInfo *face_info)
+{
+  gboolean result = FALSE;
+  gdouble r,d;
+  
+#define sqr(a) a*a
+
+  if (dir.y!=0.0)
+    {
+      face_info->t = (w-vp.y)/dir.y;
+      face_info->s.x = vp.x + face_info->t*dir.x;
+      face_info->s.y = w;
+      face_info->s.z = vp.z + face_info->t*dir.z;
+
+      r = sqrt(sqr(face_info->s.x) + sqr(face_info->s.z));
+      
+      if (r<=mapvals.cylinder_radius)
+        {
+          d = 2.0*mapvals.cylinder_radius;
+          face_info->u = (face_info->s.x+mapvals.cylinder_radius)/d;
+          face_info->v = (face_info->s.z+mapvals.cylinder_radius)/d;
+          result = TRUE;
+        }
+    }
+
+#undef sqr
+  
+  return(result);  
+}
+
+gdouble compute_angle(gdouble x,gdouble y)
+{
+  gdouble a = 0;
+
+  /* Check which quadrant we're in and correct angle */
+  /* =============================================== */
+ 
+  if (y==0.0)
+    {
+      if (x<0)
+        a = 0;
+      else
+        a = M_PI;
+    }
+  else
+    {
+      if (x!=0.0)
+        a = atan(y/x);
+      else
+        {
+          if (y>0.0)
+            a = M_PI/2.0;
+          else
+            a = 1.5 * M_PI;
+        }
+        
+      if (y<0.0 && x>0.0)      /* 4th quad, a is negative */
+        a = 2.0*M_PI + a;
+      else if (y<0.0 && x<0.0) /* 3rd quad, a is positive */
+        a = M_PI + a;
+      else if (y>0.0 && x<0.0) /* 2nd quad, a is negative */
+        a = M_PI + a;
+    }
+  
+  return(a);
+}
+
+gboolean intersect_cylinder(GckVector3 vp,GckVector3 dir,FaceIntersectInfo *face_intersect)
+{
+  gdouble a,b,c,d,e,f,tmp,l;
+  gboolean result = FALSE;
+  gint i;
+
+#define sqr(a) a*a
+ 
+  a = sqr(dir.x) + sqr(dir.z);
+  b = 2.0*(vp.x*dir.x+vp.z*dir.z);
+  c = sqr(vp.x)+sqr(vp.z)-sqr(mapvals.cylinder_radius);
+
+  d = sqr(b)-4.0*a*c;
+  if (d>=0.0)
+    {
+      e = sqrt(d);
+      f = 2.0*a;
+    
+      if (f!=0.0)
+        {
+          result = TRUE;      
+    
+          face_intersect[0].t = (-b+e)/f;
+          face_intersect[1].t = (-b-e)/f;
+    
+          if (face_intersect[0].t>face_intersect[1].t)
+            {
+              tmp = face_intersect[0].t;
+              face_intersect[0].t = face_intersect[1].t;
+              face_intersect[1].t = tmp;
+            }
+          
+          for (i=0;i<2;i++)
+            {
+              face_intersect[i].s.x = vp.x + face_intersect[i].t * dir.x;
+              face_intersect[i].s.y = vp.y + face_intersect[i].t * dir.y;
+              face_intersect[i].s.z = vp.z + face_intersect[i].t * dir.z;
+
+              face_intersect[i].n = face_intersect[i].s;
+              face_intersect[i].n.y = 0.0;
+              gck_vector3_normalize(&face_intersect[i].n);
+
+              l = mapvals.cylinder_length/2.0;
+
+              face_intersect[i].u = compute_angle(face_intersect[i].s.x,face_intersect[i].s.z)/(2.0*M_PI);
+              face_intersect[i].v = (face_intersect[i].s.y+l)/mapvals.cylinder_length;
+
+              /* Mark hitpoint as on the cylinder hull */
+              /* ===================================== */
+              
+              face_intersect[i].face = 0;
+
+              /* Check if we're completely off the cylinder axis */
+              /* =============================================== */
+    
+              if (face_intersect[i].s.y>l || face_intersect[i].s.y<-l)
+                {
+                  /* Check if we've hit a cap */
+                  /* ======================== */
+    
+                  if (face_intersect[i].s.y>l)
+                    {
+                      if (intersect_circle(vp,dir,l,&face_intersect[i])==FALSE)
+                        result = FALSE;
+                      else
+                        {
+                          face_intersect[i].face = 1;
+                          gck_vector3_set(&face_intersect[i].n, 0.0, 1.0, 0.0);
+                        }
+                    }
+                  else
+                    {
+                      if (intersect_circle(vp,dir,-l,&face_intersect[i])==FALSE)
+                        result = FALSE;
+                      else
+                        {
+                          face_intersect[i].face = 2;
+                          gck_vector3_set(&face_intersect[i].n, 0.0, -1.0, 0.0);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+#undef sqr
+  
+  return(result);
+}
+
+GckRGB get_cylinder_color(gint face, gdouble u, gdouble v)
+{
+  GckRGB color;
+  gint inside;
+  
+  if (face==0)
+    color = get_image_color(u,v,&inside);
+  else
+    color = get_cylinder_image_color (face-1,u,v);
+  
+  return(color);
+}
+
+GckRGB get_ray_color_cylinder(GckVector3 *pos)
+{
+  GckVector3 lvp,ldir,vp,p,dir,ns,nn;
+  GckRGB color, color2;
+  gfloat m[16];
+  gint i;
+  FaceIntersectInfo face_intersect[2];
+  
+  color=background;
+  vp = mapvals.viewpoint;
+  p = *pos;
+
+  vp.x = vp.x - mapvals.position.x;
+  vp.y = vp.y - mapvals.position.y;
+  vp.z = vp.z - mapvals.position.z;
+
+  p.x = p.x - mapvals.position.x;
+  p.y = p.y - mapvals.position.y;
+  p.z = p.z - mapvals.position.z;
+
+  /* Compute direction */
+  /* ================= */
+  
+  gck_vector3_sub(&dir,&p,&vp);
+  gck_vector3_normalize(&dir);
+
+  /* Compute inverse of rotation matrix and apply it to   */
+  /* the viewpoint and direction. This transforms the     */
+  /* observer into the local coordinate system of the box */
+  /* ==================================================== */
+
+  memcpy(m,rotmat,sizeof(gfloat)*16);
+  
+  transpose_mat(m);
+  
+  vecmulmat(&lvp,&vp,m);
+  vecmulmat(&ldir,&dir,m);
+
+  if (intersect_cylinder(lvp,ldir,face_intersect)==TRUE)
+    {
+      /* We've hit the cylinder. Transform the hit points and */
+      /* normals back into the world coordinate system        */
+      /* ==================================================== */
+      
+      for (i=0;i<2;i++)
+        {
+          vecmulmat(&ns,&face_intersect[i].s,rotmat);
+          vecmulmat(&nn,&face_intersect[i].n,rotmat);
+
+          ns.x = ns.x + mapvals.position.x;
+          ns.y = ns.y + mapvals.position.y;
+          ns.z = ns.z + mapvals.position.z;
+          
+          face_intersect[i].s = ns;
+          face_intersect[i].n = nn;
+        }
+
+      color = get_cylinder_color(face_intersect[0].face,
+                                 face_intersect[0].u,face_intersect[0].v);
+
+      /* Check for total transparency... */
+      /* =============================== */
+
+      if (color.a<1.0)
+        {
+          /* Hey, we can see  through here!      */
+          /* Lets see what's on the other side.. */
+          /* =================================== */
+          
+          color=phong_shade(
+            &face_intersect[0].s,
+            &mapvals.viewpoint,
+            &face_intersect[0].n,
+            &mapvals.lightsource.position,
+            &color,
+            &mapvals.lightsource.color,
+            mapvals.lightsource.type);      
+    
+          gck_rgba_clamp(&color);
+
+          color2 = get_cylinder_color(face_intersect[1].face,
+                                      face_intersect[1].u,face_intersect[1].v);
 
           /* Make the normal point inwards */
           /* ============================= */

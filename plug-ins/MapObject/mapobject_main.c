@@ -1,5 +1,5 @@
 /*********************************************************************************/
-/* MapObject 1.10 -- image filter plug-in for The Gimp program                   */
+/* MapObject 1.2.0 -- image filter plug-in for The Gimp program                  */
 /* Copyright (C) 1996-98 Tom Bech                                                */
 /* Copyright (C) 1996-98 Federico Mena Quintero                                  */
 /*===============================================================================*/
@@ -59,6 +59,8 @@ void set_default_settings(void)
   mapvals.alpha=mapvals.beta=mapvals.gamma=0.0;
   mapvals.maxdepth=3.0;
   mapvals.radius=0.25;
+  mapvals.cylinder_radius=0.25;
+  mapvals.cylinder_length=1.0;
 
   mapvals.preview_zoom_factor=0;
 
@@ -82,6 +84,9 @@ void set_default_settings(void)
   
   for (i=0;i<6;i++)
     mapvals.boxmap_id[i] = -1;
+
+  for (i=0;i<2;i++)
+    mapvals.cylindermap_id[i] = -1;
 }
 
 void check_drawables(GDrawable *drawable)
@@ -91,7 +96,7 @@ void check_drawables(GDrawable *drawable)
   /* Check that boxmap images are valid */
   /* ================================== */
 
-  for (i=0;i<mapvals.boxmap_id[i];i++)
+  for (i=0;i<6;i++)
     {
       if (mapvals.boxmap_id[i]==-1)
         mapvals.boxmap_id[i] = drawable->id;
@@ -100,19 +105,32 @@ void check_drawables(GDrawable *drawable)
       else if (gimp_drawable_gray(mapvals.boxmap_id[i]))
         mapvals.boxmap_id[i] = drawable->id;
     }
+
+  /* Check that cylindermap images are valid */
+  /* ======================================= */
+
+  for (i=0;i<2;i++)
+    {
+      if (mapvals.cylindermap_id[i]==-1)
+        mapvals.cylindermap_id[i] = drawable->id;
+      else if (mapvals.cylindermap_id[i]!=-1 && 
+               gimp_drawable_image_id(mapvals.cylindermap_id[i])==-1)
+        mapvals.cylindermap_id[i] = drawable->id;
+      else if (gimp_drawable_gray(mapvals.cylindermap_id[i]))
+        mapvals.cylindermap_id[i] = drawable->id;
+    }
 }
 
-MAIN()
+MAIN();
 
 static void query(void)
 {
-
   static GParamDef args[] =
     {
       { PARAM_INT32,    "run_mode",              "Interactive (0), non-interactive (1)" },
       { PARAM_IMAGE,    "image",                 "Input image" },
       { PARAM_DRAWABLE, "drawable",              "Input drawable" },
-      { PARAM_INT32,    "maptype",               "Type of mapping (0=plane,1=sphere,2=box)" },
+      { PARAM_INT32,    "maptype",               "Type of mapping (0=plane,1=sphere,2=box,3=cylinder)" },
       { PARAM_FLOAT,    "viewpoint_x",           "Position of viewpoint (x,y,z)" },
       { PARAM_FLOAT,    "viewpoint_y",           "Position of viewpoint (x,y,z)" },
       { PARAM_FLOAT,    "viewpoint_z",           "Position of viewpoint (x,y,z)" },
@@ -145,17 +163,19 @@ static void query(void)
       { PARAM_INT32,    "tiled",                 "Tile source image (TRUE/FALSE)" },
       { PARAM_INT32,    "newimage",              "Create a new image (TRUE/FALSE)" },
       { PARAM_INT32,    "transparentbackground", "Make background transparent (TRUE/FALSE)" },
-      { PARAM_FLOAT,    "radius",                "Sphere radius (only used when maptype=1)" },
+      { PARAM_FLOAT,    "radius",                "Sphere/cylinder radius (only used when maptype=1 or 3)" },
       { PARAM_FLOAT,    "x_scale",               "Box x size (0..->)" },
       { PARAM_FLOAT,    "y_scale",               "Box y size (0..->)" },
       { PARAM_FLOAT,    "z_scale",               "Box z size (0..->)"},
-      { PARAM_DRAWABLE, "front_drawable",        "Box front face (set these to -1 if not used)" },
-      { PARAM_DRAWABLE, "back_drawable",         "Box back face" },
-      { PARAM_DRAWABLE, "top_drawable",          "Box top face" },
-      { PARAM_DRAWABLE, "bottom_drawable",       "Box bottom face" },
-      { PARAM_DRAWABLE, "left_drawable",         "Box left face" },
-      { PARAM_DRAWABLE, "right_drawable",        "Box right face" }
-      
+      { PARAM_FLOAT,    "cylinder_length",       "Cylinder length (0..->)"},
+      { PARAM_DRAWABLE, "box_front_drawable",    "Box front face (set these to -1 if not used)" },
+      { PARAM_DRAWABLE, "box_back_drawable",     "Box back face" },
+      { PARAM_DRAWABLE, "box_top_drawable",      "Box top face" },
+      { PARAM_DRAWABLE, "box_bottom_drawable",   "Box bottom face" },
+      { PARAM_DRAWABLE, "box_left_drawable",     "Box left face" },
+      { PARAM_DRAWABLE, "box_right_drawable",    "Box right face" },
+      { PARAM_DRAWABLE, "cyl_top_drawable",      "Cylinder top face (set these to -1 if not used)" },
+      { PARAM_DRAWABLE, "cyl_bottom_drawable",   "Cylinder bottom face" }      
     };
 
   static GParamDef *return_vals = NULL;
@@ -163,11 +183,11 @@ static void query(void)
   static gint nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_map_object",
-			  "Maps a picture to a object (plane, sphere or box)",
+			  "Maps a picture to a object (plane, sphere, box or cylinder)",
 			  "No help yet",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",
-			  "Version 1.10, July 17 1998",
+			  "Version 1.2.0, July 16 1998",
 			  "<Image>/Filters/Distorts/Map Object",
 			  "RGB*",
 			  PROC_PLUG_IN,
@@ -224,7 +244,7 @@ static void run(gchar   *name,
         compute_image();
         break;
       case RUN_NONINTERACTIVE:
-        if (nparams != 46)
+        if (nparams != 49)
           status = STATUS_CALLING_ERROR;
         else if (status == STATUS_SUCCESS)
           {
@@ -264,12 +284,17 @@ static void run(gchar   *name,
             mapvals.create_new_image        = (gint)param[34].data.d_int32;
             mapvals.transparent_background  = (gint)param[35].data.d_int32;
             mapvals.radius                  = param[36].data.d_float;
+            mapvals.cylinder_radius         = param[36].data.d_float;
             mapvals.scale.x                 = param[37].data.d_float;
             mapvals.scale.y                 = param[38].data.d_float;
             mapvals.scale.z                 = param[39].data.d_float;
-            
+            mapvals.cylinder_length         = param[40].data.d_float;
+
             for (i=0;i<6;i++)
-              mapvals.boxmap_id[i] = gimp_drawable_get(param[40+i].data.d_drawable)->id;
+              mapvals.boxmap_id[i] = gimp_drawable_get(param[41+i].data.d_drawable)->id;
+
+            for (i=0;i<2;i++)
+              mapvals.cylindermap_id[i] = gimp_drawable_get(param[47+i].data.d_drawable)->id;
 
             check_drawables(drawable);
             image_setup(drawable, FALSE);

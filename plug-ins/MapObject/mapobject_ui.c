@@ -14,8 +14,8 @@ GtkTooltips          *tooltips          = NULL;
 
 GdkGC *gc = NULL;
 GtkWidget *previewarea,*pointlightwid,*dirlightwid;
-GtkWidget *xentry,*yentry,*zentry, *scale_table;
-GtkWidget *images_page = NULL;
+GtkWidget *xentry,*yentry,*zentry;
+GtkWidget *box_page = NULL, *cylinder_page = NULL;
 
 GckRGB old_light_color;
 
@@ -24,9 +24,10 @@ gint color_dialog_id = -1;
 guint left_button_pressed = FALSE, light_hit = FALSE;
 guint32 blackpixel,whitepixel;
 
-GckScaleValues angle_scale_vals =  { 180, 0.0, -180.0, 180.0, 0.1, 1.0, 1.0, GTK_UPDATE_CONTINUOUS,TRUE };
-GckScaleValues scale_scale_vals =  { 180, 0.5,   0.01,   5.0, 0.1, 0.1, 0.1,     GTK_UPDATE_CONTINUOUS,TRUE };
-GckScaleValues sample_scale_vals = { 128, 3.0,    1.0,   6.0, 1.0, 1.0, 1.0, GTK_UPDATE_CONTINUOUS,TRUE };
+GckScaleValues angle_scale_vals =  { 180, 0.0, -180.0, 180.0,  0.1,  1.0,  1.0, GTK_UPDATE_CONTINUOUS,TRUE };
+GckScaleValues scale_scale_vals =  { 180, 0.5,   0.01,   5.0, 0.05, 0.05, 0.05, GTK_UPDATE_CONTINUOUS,TRUE };
+GckScaleValues cyl_scale_vals =    { 180, 0.5,   0.01,   2.0, 0.05, 0.05, 0.05, GTK_UPDATE_CONTINUOUS,TRUE };
+GckScaleValues sample_scale_vals = { 128, 3.0,    1.0,   6.0,  1.0,  1.0,  1.0, GTK_UPDATE_CONTINUOUS,TRUE };
 
 gchar *light_labels[] =
   {
@@ -41,6 +42,7 @@ gchar *map_labels[] =
     "Plane",
     "Sphere",
     "Box",
+    "Cylinder",
      NULL
   };
 
@@ -72,24 +74,28 @@ void toggleanti_update  (GtkWidget *widget, GtkCheckButton *button);
 void toggletips_update  (GtkWidget *widget, GtkCheckButton *button);
 void toggletrans_update (GtkWidget *widget, GtkCheckButton *button);
 
-void lightmenu_callback    (GtkWidget *widget, gpointer client_data);
-void preview_callback      (GtkWidget *widget, gpointer client_data);
-void apply_callback        (GtkWidget *widget, gpointer client_data);
-void exit_callback         (GtkWidget *widget, gpointer client_data);
-void color_ok_callback     (GtkWidget *widget, gpointer client_data);
-void color_cancel_callback (GtkWidget *widget, gpointer client_data);
-void light_color_callback  (GtkWidget *widget, gpointer client_data);
-gint color_delete_callback (GtkWidget *widget, GdkEvent *event, gpointer client_data);
+void lightmenu_callback     (GtkWidget *widget, gpointer client_data);
+void preview_callback       (GtkWidget *widget, gpointer client_data);
+void apply_callback         (GtkWidget *widget, gpointer client_data);
+void exit_callback          (GtkWidget *widget, gpointer client_data);
+void color_ok_callback      (GtkWidget *widget, gpointer client_data);
+void color_cancel_callback  (GtkWidget *widget, gpointer client_data);
+void light_color_callback   (GtkWidget *widget, gpointer client_data);
 void color_changed_callback (GtkColorSelection *colorsel, gpointer client_data);
+gint color_delete_callback  (GtkWidget *widget, GdkEvent *event, gpointer client_data);
 
 gint box_constrain         (gint32 image_id, gint32 drawable_id, gpointer data);
 void box_drawable_callback (gint32 id, gpointer data);
+
+gint cylinder_constrain         (gint32 image_id, gint32 drawable_id, gpointer data);
+void cylinder_drawable_callback (gint32 id, gpointer data);
 
 GtkWidget *create_options_page     (void);
 GtkWidget *create_light_page       (void);
 GtkWidget *create_material_page    (void);
 GtkWidget *create_orientation_page (void);
-GtkWidget *create_images_page      (void);
+GtkWidget *create_box_page         (void);
+GtkWidget *create_cylinder_page    (void);
 
 /******************/
 /* Implementation */
@@ -151,6 +157,34 @@ void angle_update(GtkWidget *widget, GtkScale *scale)
 /***************************************************/
 
 void boxscale_update(GtkWidget *widget, GtkScale *scale)
+{
+  gdouble *valueptr;
+  GtkAdjustment *adjustment;
+
+  valueptr=(gdouble *)gtk_object_get_data(GTK_OBJECT(widget),"ValuePtr");
+  adjustment=gtk_range_get_adjustment(GTK_RANGE(scale));
+  
+  *valueptr=(gdouble)adjustment->value;
+
+  if (mapvals.showgrid==TRUE)
+    draw_preview_wireframe();
+}
+
+void cylinderradius_update(GtkWidget *widget, GtkScale *scale)
+{
+  gdouble *valueptr;
+  GtkAdjustment *adjustment;
+
+  valueptr=(gdouble *)gtk_object_get_data(GTK_OBJECT(widget),"ValuePtr");
+  adjustment=gtk_range_get_adjustment(GTK_RANGE(scale));
+  
+  *valueptr=(gdouble)adjustment->value;
+
+  if (mapvals.showgrid==TRUE)
+    draw_preview_wireframe();
+}
+
+void cylinderlength_update(GtkWidget *widget, GtkScale *scale)
 {
   gdouble *valueptr;
   GtkAdjustment *adjustment;
@@ -350,27 +384,41 @@ void mapmenu_callback(GtkWidget *widget, gpointer client_data)
   
   if (mapvals.maptype==MAP_BOX)
     {
-      gtk_widget_show(scale_table);
-      
-      if (images_page==NULL)
+      if (box_page==NULL)
         {
-          images_page = create_images_page();
-          label=gtk_label_new("Face images");
+          box_page = create_box_page();
+          label=gtk_label_new("Box");
           gtk_widget_show(label);
     
-          gtk_notebook_append_page(options_note_book,images_page,label);
+          gtk_notebook_append_page(options_note_book,box_page,label);
         }
     }
   else
     {
-      if (images_page!=NULL)
+      if (box_page!=NULL)
         {
           gtk_notebook_remove_page(options_note_book, 
             g_list_length(options_note_book->children)-1);
-          images_page = NULL;
+          box_page = NULL;
         }
-
-      gtk_widget_hide(scale_table);
+      
+      if (mapvals.maptype==MAP_CYLINDER)
+        {
+          if (cylinder_page==NULL)
+            {
+              cylinder_page = create_cylinder_page();
+              label=gtk_label_new("Cylinder");
+              gtk_widget_show(label);
+    
+              gtk_notebook_append_page(options_note_book,cylinder_page,label);
+            }
+        }
+      else if (cylinder_page!=NULL)
+        {
+          gtk_notebook_remove_page(options_note_book, 
+          g_list_length(options_note_book->children)-1);
+          cylinder_page = NULL;
+        }
     }
 }
 
@@ -484,8 +532,8 @@ void color_changed_callback  (GtkColorSelection *colorsel, gpointer client_data)
 
 gint color_delete_callback(GtkWidget *widget, GdkEvent *event, gpointer client_data)
 {
-  color_select_diag=NULL;
-  return FALSE;
+  color_select_diag = NULL;
+  return(FALSE);
 }
 
 void color_cancel_callback(GtkWidget *widget, gpointer client_data)
@@ -530,6 +578,23 @@ void box_drawable_callback(gint32 id, gpointer data)
   i = (gint)gtk_object_get_data(GTK_OBJECT(data),"_mapwid_id");
 
   mapvals.boxmap_id[i] = id;
+}
+
+gint cylinder_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
+{
+  if (drawable_id == -1)
+    return(TRUE);
+
+  return (gimp_drawable_color(drawable_id) && !gimp_drawable_indexed(drawable_id));
+}
+
+void cylinder_drawable_callback(gint32 id, gpointer data)
+{
+  gint i;
+  
+  i = (gint)gtk_object_get_data(GTK_OBJECT(data),"_mapwid_id");
+
+  mapvals.cylindermap_id[i] = id;
 }
 
 /******************************/
@@ -1014,6 +1079,52 @@ GtkWidget *create_orientation_page(void)
   gtk_tooltips_set_tip(tooltips,widget2,"Rotation angle about Y axis",NULL);
   gtk_tooltips_set_tip(tooltips,widget3,"Rotation angle about Z axis",NULL);
 
+  gtk_widget_show(table);
+  gtk_widget_show(vbox);
+  gtk_widget_show(frame);
+
+  gtk_widget_show(page);
+
+  return page;
+}
+
+GtkWidget *create_box_page(void)
+{
+  GtkWidget *page,*frame,*vbox,*label,*table;
+  GtkWidget *widget1,*widget2,*widget3,*scale_table;
+  gint i;
+  gchar *labels[6] = {"Front:","Back:","Top:","Bottom:","Left:","Right:"};
+  
+  page=gck_vbox_new(NULL,FALSE,FALSE,FALSE,0,0,0);
+
+  frame=gck_frame_new("Map images to box faces",page,GTK_SHADOW_ETCHED_IN,TRUE,TRUE,0,5);
+  vbox=gck_vbox_new(frame,FALSE,FALSE,FALSE,0,0,5);
+
+  table = gtk_table_new(6,2,FALSE);
+  gtk_table_set_row_spacings(GTK_TABLE(table), 5);
+  gtk_table_set_col_spacings(GTK_TABLE(table), 5);
+  gtk_box_pack_start(GTK_BOX(vbox),table,FALSE,FALSE,5);
+
+  /* Option menues */
+  /* ============= */
+
+  for (i=0;i<6;i++)
+    {
+      label=gck_label_aligned_new(labels[i],NULL,GCK_ALIGN_RIGHT,0.7);
+      gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1, GTK_EXPAND|GTK_FILL,GTK_EXPAND|GTK_FILL, 0,0);
+      gtk_widget_show(label);
+
+      widget1=gtk_option_menu_new();
+      gtk_table_attach(GTK_TABLE(table),widget1, 1,2, i,i+1, GTK_EXPAND|GTK_FILL,GTK_EXPAND|GTK_FILL, 0,0);
+      gtk_widget_show(widget1);
+
+      gtk_object_set_data(GTK_OBJECT(widget1),"_mapwid_id",(gpointer)i);
+      
+      widget2 = gimp_drawable_menu_new (box_constrain, box_drawable_callback,
+        (gpointer)widget1, mapvals.boxmap_id[i]);
+      gtk_option_menu_set_menu(GTK_OPTION_MENU(widget1), widget2);      
+    }
+
   /* Scale scales */
   /* ============ */
 
@@ -1055,9 +1166,7 @@ GtkWidget *create_orientation_page(void)
   gtk_tooltips_set_tip(tooltips,widget2,"Y scale (size)",NULL);
   gtk_tooltips_set_tip(tooltips,widget3,"Z scale (size)",NULL);
 
-  if (mapvals.maptype==MAP_BOX)
-    gtk_widget_show(scale_table);
-
+  gtk_widget_show(scale_table);
   gtk_widget_show(table);
   gtk_widget_show(vbox);
   gtk_widget_show(frame);
@@ -1067,19 +1176,19 @@ GtkWidget *create_orientation_page(void)
   return page;
 }
 
-GtkWidget *create_images_page(void)
+GtkWidget *create_cylinder_page(void)
 {
   GtkWidget *page,*frame,*vbox,*label,*table;
-  GtkWidget *widget1,*widget2;
+  GtkWidget *widget1,*widget2,*scale_table;
   gint i;
-  gchar *labels[6] = {"Front:","Back:","Top:","Bottom:","Left:","Right:"};
+  gchar *labels[6] = {"Top:","Bottom:"};
   
   page=gck_vbox_new(NULL,FALSE,FALSE,FALSE,0,0,0);
 
-  frame=gck_frame_new("Map images to box faces",page,GTK_SHADOW_ETCHED_IN,TRUE,TRUE,0,5);
+  frame=gck_frame_new("Images for the cap faces",page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
   vbox=gck_vbox_new(frame,FALSE,FALSE,FALSE,0,0,5);
 
-  table = gtk_table_new(6,2,FALSE);
+  table = gtk_table_new(2,2,FALSE);
   gtk_table_set_row_spacings(GTK_TABLE(table), 5);
   gtk_table_set_col_spacings(GTK_TABLE(table), 5);
   gtk_box_pack_start(GTK_BOX(vbox),table,FALSE,FALSE,5);
@@ -1087,7 +1196,7 @@ GtkWidget *create_images_page(void)
   /* Option menues */
   /* ============= */
 
-  for (i=0;i<6;i++)
+  for (i=0;i<2;i++)
     {
       label=gck_label_aligned_new(labels[i],NULL,GCK_ALIGN_RIGHT,0.7);
       gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1, GTK_EXPAND|GTK_FILL,GTK_EXPAND|GTK_FILL, 0,0);
@@ -1099,12 +1208,47 @@ GtkWidget *create_images_page(void)
 
       gtk_object_set_data(GTK_OBJECT(widget1),"_mapwid_id",(gpointer)i);
       
-      widget2 = gimp_drawable_menu_new (box_constrain, box_drawable_callback,
-        (gpointer)widget1, mapvals.boxmap_id[i]);
+      widget2 = gimp_drawable_menu_new (cylinder_constrain, cylinder_drawable_callback,
+        (gpointer)widget1, mapvals.cylindermap_id[i]);
       gtk_option_menu_set_menu(GTK_OPTION_MENU(widget1), widget2);      
     }
 
+  gtk_widget_show(vbox);
+  gtk_widget_show(frame);
   gtk_widget_show(table);
+
+  frame=gck_frame_new("Size",page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
+  vbox=gck_vbox_new(frame,FALSE,FALSE,FALSE,0,0,5);
+
+  scale_table = gtk_table_new(2,2,FALSE);
+  gtk_box_pack_start(GTK_BOX(vbox),scale_table,FALSE,FALSE,5);
+
+  label=gck_label_aligned_new("Radius:",NULL,GCK_ALIGN_RIGHT,0.7);
+  gtk_table_attach(GTK_TABLE(scale_table),label,0,1,0,1, GTK_EXPAND|GTK_FILL,GTK_EXPAND|GTK_FILL, 0,0);
+  gtk_widget_show(label);
+
+  label=gck_label_aligned_new("Length:",NULL,GCK_ALIGN_RIGHT,0.7);
+  gtk_table_attach(GTK_TABLE(scale_table),label,0,1,1,2, GTK_EXPAND|GTK_FILL,GTK_EXPAND|GTK_FILL, 0,0);
+  gtk_widget_show(label);
+
+  cyl_scale_vals.value = mapvals.cylinder_radius;
+  widget1=gck_hscale_new(NULL,NULL,&cyl_scale_vals,(GtkSignalFunc)cylinderradius_update);
+  cyl_scale_vals.value = mapvals.cylinder_length;
+  widget2=gck_hscale_new(NULL,NULL,&cyl_scale_vals,(GtkSignalFunc)cylinderlength_update);
+
+  gtk_table_attach(GTK_TABLE(scale_table),widget1,1,2,0,1, GTK_EXPAND|GTK_FILL,GTK_EXPAND|GTK_FILL, 0,0);
+  gtk_table_attach(GTK_TABLE(scale_table),widget2,1,2,1,2, GTK_EXPAND|GTK_FILL,GTK_EXPAND|GTK_FILL, 0,0);
+
+  gtk_widget_show(widget1);
+  gtk_widget_show(widget2);
+
+  gtk_object_set_data(GTK_OBJECT(widget1),"ValuePtr",(gpointer)&mapvals.cylinder_radius);
+  gtk_object_set_data(GTK_OBJECT(widget2),"ValuePtr",(gpointer)&mapvals.cylinder_length);
+
+  gtk_tooltips_set_tip(tooltips,widget1,"Cylinder radius",NULL);
+  gtk_tooltips_set_tip(tooltips,widget2,"Cylinder length",NULL);
+
+  gtk_widget_show(scale_table);
   gtk_widget_show(vbox);
   gtk_widget_show(frame);
 
@@ -1152,11 +1296,19 @@ void create_main_notebook(GtkWidget *container)
 
   if (mapvals.maptype==MAP_BOX)
     {
-      images_page = create_images_page();
-      label=gtk_label_new("Face images");
+      box_page = create_box_page();
+      label=gtk_label_new("Box");
       gtk_widget_show(label);
     
-      gtk_notebook_append_page(options_note_book,images_page,label);
+      gtk_notebook_append_page(options_note_book,box_page,label);
+    }
+  else if (mapvals.maptype==MAP_CYLINDER)
+    {
+      cylinder_page = create_cylinder_page();
+      label=gtk_label_new("Cylinder");
+      gtk_widget_show(label);
+    
+      gtk_notebook_append_page(options_note_book,cylinder_page,label);
     }
 
   gtk_widget_show(GTK_WIDGET(options_note_book));

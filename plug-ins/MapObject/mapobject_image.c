@@ -13,6 +13,9 @@ GPixelRgn source_region,dest_region;
 GDrawable *box_drawables[6];
 GPixelRgn box_regions[6];
 
+GDrawable *cylinder_drawables[2];
+GPixelRgn cylinder_regions[2];
+
 guchar *preview_rgb_data = NULL;
 GdkImage *image = NULL;
 
@@ -51,7 +54,7 @@ GckRGB peek(gint x,gint y)
   return(color);
 }
 
-GckRGB peek_image(gint image, gint x,gint y)
+GckRGB peek_box_image(gint image, gint x,gint y)
 {
   static guchar data[4];
   GckRGB color;
@@ -65,6 +68,30 @@ GckRGB peek_image(gint image, gint x,gint y)
   if (box_drawables[image]->bpp==4)
     {
       if (gimp_drawable_has_alpha(box_drawables[image]->id))
+        color.a=(gdouble)(data[3])/255.0;
+      else
+        color.a=1.0;
+    }
+  else
+    color.a=1.0;
+
+  return(color);
+}
+
+GckRGB peek_cylinder_image(gint image, gint x,gint y)
+{
+  static guchar data[4];
+  GckRGB color;
+
+  gimp_pixel_rgn_get_pixel(&cylinder_regions[image],data,x,y);
+
+  color.r=(gdouble)(data[0])/255.0;
+  color.g=(gdouble)(data[1])/255.0;
+  color.b=(gdouble)(data[2])/255.0;
+
+  if (cylinder_drawables[image]->bpp==4)
+    {
+      if (gimp_drawable_has_alpha(cylinder_drawables[image]->id))
         color.a=(gdouble)(data[3])/255.0;
       else
         color.a=1.0;
@@ -95,12 +122,25 @@ gint checkbounds(gint x,gint y)
     return(TRUE);
 }
 
-gint checkbounds_image(gint image, gint x,gint y)
+gint checkbounds_box_image(gint image, gint x,gint y)
 {
   gint w,h;
 
   w = box_drawables[image]->width;
   h = box_drawables[image]->height;
+
+  if (x<0 || y<0 || x>=w || y>=h)
+    return(FALSE);
+  else
+    return(TRUE);
+}
+
+gint checkbounds_cylinder_image(gint image, gint x,gint y)
+{
+  gint w,h;
+
+  w = cylinder_drawables[image]->width;
+  h = cylinder_drawables[image]->height;
 
   if (x<0 || y<0 || x>=w || y>=h)
     return(FALSE);
@@ -190,19 +230,47 @@ GckRGB get_box_image_color(gint image,gdouble u,gdouble v)
   x1 = (gint)((u*(gdouble)w));
   y1 = (gint)((v*(gdouble)h));
 
-  if (checkbounds_image(image, x1,y1)==FALSE)
+  if (checkbounds_box_image(image, x1,y1)==FALSE)
     return(background);
 
   x2 = (x1 + 1);
   y2 = (y1 + 1);
 
-  if (checkbounds_image(image, x2,y2)==FALSE)
-    return(peek_image(image, x1,y1));
+  if (checkbounds_box_image(image, x2,y2)==FALSE)
+    return(peek_box_image(image, x1,y1));
 
-  p[0] = peek_image(image, x1, y1);
-  p[1] = peek_image(image, x2, y1);
-  p[2] = peek_image(image, x1, y2);
-  p[3] = peek_image(image, x2, y2);
+  p[0] = peek_box_image(image, x1, y1);
+  p[1] = peek_box_image(image, x2, y1);
+  p[2] = peek_box_image(image, x1, y2);
+  p[3] = peek_box_image(image, x2, y2);
+
+  return(gck_bilinear_rgba(u*w, v*h, p));
+}
+
+GckRGB get_cylinder_image_color(gint image,gdouble u,gdouble v)
+{
+  gint   w,h, x1, y1, x2, y2;
+  GckRGB p[4];
+ 
+  w = cylinder_drawables[image]->width;
+  h = cylinder_drawables[image]->height;
+
+  x1 = (gint)((u*(gdouble)w));
+  y1 = (gint)((v*(gdouble)h));
+
+  if (checkbounds_cylinder_image(image, x1,y1)==FALSE)
+    return(background);
+
+  x2 = (x1 + 1);
+  y2 = (y1 + 1);
+
+  if (checkbounds_cylinder_image(image, x2,y2)==FALSE)
+    return(peek_cylinder_image(image, x1,y1));
+
+  p[0] = peek_cylinder_image(image, x1, y1);
+  p[1] = peek_cylinder_image(image, x2, y1);
+  p[2] = peek_cylinder_image(image, x1, y2);
+  p[3] = peek_cylinder_image(image, x2, y2);
 
   return(gck_bilinear_rgba(u*w, v*h, p));
 }

@@ -6,7 +6,7 @@ The MapObject plug-in "todo"-list:
 * Rotation by mouse (doesn't work correctly yet and is disabled).
 * Faster mapping code
 * Multiple light-sources
-* More objects - cylinder?
+* More objects?
 * Presets (including save/load)
 * Gray-scale/channels support
 * Documentation

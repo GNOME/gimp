@@ -113,7 +113,44 @@ void init_compute(void)
                                  box_drawables[i]->width, box_drawables[i]->height,
                                  FALSE, FALSE);
           }
+        break;
+      case MAP_CYLINDER:
+        get_ray_color=get_ray_color_cylinder;
 
+        gck_vector3_set(&mapvals.firstaxis, 1.0,0.0,0.0);
+        gck_vector3_set(&mapvals.secondaxis,0.0,1.0,0.0);
+        gck_vector3_set(&mapvals.normal,0.0,0.0,1.0);
+
+        ident_mat(rotmat);
+        
+        rotatemat(mapvals.alpha, &mapvals.firstaxis, a);
+
+        matmul(a,rotmat,b);
+
+        memcpy(rotmat, b, sizeof(gfloat)*16);
+
+        rotatemat(mapvals.beta, &mapvals.secondaxis, a);
+        matmul(a,rotmat,b);
+
+        memcpy(rotmat, b, sizeof(gfloat)*16);
+
+        rotatemat(mapvals.gamma, &mapvals.normal, a);
+        matmul(a,rotmat,b);
+
+        memcpy(rotmat, b, sizeof(gfloat)*16);
+
+        /* Set up pixel regions for the cylinder cap images */
+        /* ================================================ */
+
+        for (i=0;i<2;i++)
+          {
+             cylinder_drawables[i] = gimp_drawable_get (mapvals.cylindermap_id[i]);
+             
+             gimp_pixel_rgn_init (&cylinder_regions[i], cylinder_drawables[i],
+                                 0, 0,
+                                 cylinder_drawables[i]->width, cylinder_drawables[i]->height,
+                                 FALSE, FALSE);
+          }
         break;
     }
 
@@ -182,16 +219,20 @@ void compute_image(void)
 
   switch (mapvals.maptype)
     {
-    case MAP_PLANE:
-      gimp_progress_init("Map to object (plane)");
-      break;
-    case MAP_SPHERE:
-      gimp_progress_init("Map to object (sphere)");
-      break;
-    case MAP_BOX:
-      gimp_progress_init("Map to object (box)");
-      break;
+      case MAP_PLANE:
+        gimp_progress_init("Map to object (plane)");
+        break;
+      case MAP_SPHERE:
+        gimp_progress_init("Map to object (sphere)");
+        break;
+      case MAP_BOX:
+        gimp_progress_init("Map to object (box)");
+        break;
+      case MAP_CYLINDER:
+        gimp_progress_init("Map to object (cylinder)");
+        break;
     }
+
   if (mapvals.antialiasing==FALSE)
     {
       for (ycount=0;ycount<height;ycount++)

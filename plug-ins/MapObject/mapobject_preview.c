@@ -21,9 +21,10 @@ gint draw_line (gint n, gint startx,gint starty,gint pw,gint ph,
                 gdouble cx1, gdouble cy1, gdouble cx2, gdouble cy2,
                 GckVector3 a,GckVector3 b);
 
-void draw_wireframe_plane  (gint startx,gint starty,gint pw,gint ph);
-void draw_wireframe_sphere (gint startx,gint starty,gint pw,gint ph);
-void draw_wireframe_box    (gint startx,gint starty,gint pw,gint ph);
+void draw_wireframe_plane    (gint startx,gint starty,gint pw,gint ph);
+void draw_wireframe_sphere   (gint startx,gint starty,gint pw,gint ph);
+void draw_wireframe_box      (gint startx,gint starty,gint pw,gint ph);
+void draw_wireframe_cylinder (gint startx,gint starty,gint pw,gint ph);
 
 void clear_wireframe (void);
 
@@ -319,6 +320,9 @@ void draw_wireframe(gint startx,gint starty,gint pw,gint ph)
       case MAP_BOX:
         draw_wireframe_box(startx,starty,pw,ph);
         break;
+      case MAP_CYLINDER:
+        draw_wireframe_cylinder(startx,starty,pw,ph);
+        break;
     }
 }
 
@@ -612,6 +616,75 @@ void draw_wireframe_box(gint startx,gint starty,gint pw,gint ph)
   n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[1],p[5]);
   n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[2],p[6]);
   n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[3],p[7]);
+
+  /* Mark end of lines */
+  /* ================= */
+
+  linetab[n].x1=-1;
+}
+
+void draw_wireframe_cylinder(gint startx,gint starty,gint pw,gint ph)
+{
+  GckVector3 p[2*8], a, axis, scale;
+  gint n=0,i;
+  gdouble cx1,cy1,cx2,cy2;
+  gfloat m[16], l, angle;
+ 
+  /* Compute wireframe points */
+  /* ======================== */
+
+  init_compute();
+
+  scale = mapvals.scale;
+  gck_vector3_mul(&scale,0.5);
+
+  l = mapvals.cylinder_length/2.0;
+  angle = 0;
+  
+  gck_vector3_set(&axis, 0.0,1.0,0.0);
+  
+  for (i=0;i<8;i++)
+    {
+      rotatemat(angle, &axis, m);     
+
+      gck_vector3_set(&a, mapvals.cylinder_radius,0.0,0.0);
+      
+      vecmulmat(&p[i], &a, m);
+      
+      p[i+8] = p[i];
+
+      p[i].y += l;
+      p[i+8].y -= l;
+      
+      angle += 360.0/8.0;
+    }
+  
+  /* Rotate and translate points */
+  /* =========================== */
+  
+  for (i=0;i<16;i++)
+    {
+      vecmulmat(&a,&p[i],rotmat);
+      gck_vector3_add(&p[i],&a,&mapvals.position);
+    }
+
+  /* Draw the box */
+  /* ============ */
+
+  cx1=(gdouble)startx;
+  cy1=(gdouble)starty;
+  cx2=cx1+(gdouble)pw;
+  cy2=cy1+(gdouble)ph;
+
+  for (i=0;i<7;i++)
+    {
+      n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[i],p[i+1]);
+      n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[i+8],p[i+9]);
+      n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[i],p[i+8]);
+    }
+
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[7],p[0]);
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[15],p[8]);
 
   /* Mark end of lines */
   /* ================= */

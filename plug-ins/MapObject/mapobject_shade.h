@@ -16,7 +16,8 @@ extern get_ray_color_func get_ray_color;
 extern GckRGB             get_ray_color_plane    (GckVector3 *pos);
 extern GckRGB             get_ray_color_sphere   (GckVector3 *pos);
 extern GckRGB             get_ray_color_box      (GckVector3 *pos);
-extern void               compute_bounding_box (void);
+extern GckRGB             get_ray_color_cylinder (GckVector3 *pos);
+extern void               compute_bounding_box   (void);
 
 extern void vecmulmat     (GckVector3 *u,GckVector3 *v,gfloat m[16]);
 extern void rotatemat     (gfloat angle,GckVector3 *v,gfloat m[16]);

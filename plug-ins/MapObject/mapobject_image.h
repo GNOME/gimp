@@ -23,6 +23,9 @@ extern GPixelRgn  source_region,dest_region;
 extern GDrawable *box_drawables[6];
 extern GPixelRgn box_regions[6];
 
+extern GDrawable *cylinder_drawables[2];
+extern GPixelRgn cylinder_regions[2];
+
 extern guchar   *preview_rgb_data;
 extern GdkImage *image;
 
@@ -38,15 +41,17 @@ extern GTile *current_in_tile, *current_out_tile;
 /* Externally visible functions */
 /* ============================ */
 
-extern gint       image_setup         (GDrawable *drawable,gint interactive);
-extern glong      in_xy_to_index      (gint x,gint y);
-extern glong      out_xy_to_index     (gint x,gint y);
-extern gint       checkbounds         (gint x,gint y);
-extern GckRGB     peek                (gint x,gint y);
-extern void       poke                (gint x,gint y,GckRGB *color);
-extern GckVector3 int_to_pos          (gint x,gint y);
-extern void       pos_to_int          (gdouble x,gdouble y,gint *scr_x,gint *scr_y);
-extern GckRGB     get_image_color     (gdouble u,gdouble v,gint *inside);
-extern GckRGB     get_box_image_color (gint image, gdouble u,gdouble v);
+extern gint       image_setup     (GDrawable *drawable,gint interactive);
+extern glong      in_xy_to_index  (gint x,gint y);
+extern glong      out_xy_to_index (gint x,gint y);
+extern gint       checkbounds     (gint x,gint y);
+extern GckRGB     peek            (gint x,gint y);
+extern void       poke            (gint x,gint y,GckRGB *color);
+extern GckVector3 int_to_pos      (gint x,gint y);
+extern void       pos_to_int      (gdouble x,gdouble y,gint *scr_x,gint *scr_y);
+
+extern GckRGB     get_image_color          (gdouble u,gdouble v,gint *inside);
+extern GckRGB     get_box_image_color      (gint image, gdouble u,gdouble v);
+extern GckRGB     get_cylinder_image_color (gint image, gdouble u,gdouble v);
 
 #endif
