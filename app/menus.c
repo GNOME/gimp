@@ -829,7 +829,7 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
   if (! strncmp (entry->entry.path, "<Image>", 7))
     {
       gchar *p;
-	
+
       p = strchr (entry->entry.path + 8, '/');
       while (p)
 	{
@@ -837,7 +837,7 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
 	  g_string_truncate (tearoff_path,
 			     p - entry->entry.path + 1 - 7);
 	  g_string_append (tearoff_path, "tearoff1");
-	    
+
 	  if (! gtk_item_factory_get_widget (image_factory,
 					     tearoff_path->str))
 	    {
@@ -861,8 +861,7 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
 
   if (!ifactory)
     {
-      g_warning ("menus_create_item_from_full_path(): "
-		 "entry refers to unknown item factory: \"%s\"", path);
+      g_warning ("entry refers to unknown item factory: \"%s\"", path);
       return;
     }
 
@@ -1007,7 +1006,8 @@ menus_set_sensitive (gchar    *path,
     {
       widget = gtk_item_factory_get_widget (ifactory, path);
 
-      gtk_widget_set_sensitive (widget, sensitive);
+      if (widget)
+	gtk_widget_set_sensitive (widget, sensitive);
     }
 
   if (!ifactory || !widget)
@@ -1015,22 +1015,7 @@ menus_set_sensitive (gchar    *path,
 	       path);
 }
 
-/* The following function will enhance our localesystem because
-   we don't need to have our menuentries twice in our catalog */ 
-
 void
-menus_set_sensitive_glue (gchar    *prepath,
-			  gchar    *path,
-			  gboolean  sensitive)
-{
-  gchar *menupath;
-
-  menupath = g_strdup_printf ("%s%s", prepath, path);
-  menus_set_sensitive (menupath, sensitive);
-  g_free (menupath); 
-}
-
-static void
 menus_set_state (gchar    *path,
 		 gboolean  state)
 {
@@ -1051,21 +1036,10 @@ menus_set_state (gchar    *path,
       else
 	widget = NULL;
     }
+
   if (!ifactory || !widget)
     g_warning ("Unable to set state for menu which doesn't exist:\n%s\n",
 	       path);
-}
-
-void
-menus_set_state_glue (gchar    *prepath,
-		      gchar    *path,
-		      gboolean  state)
-{
-  gchar *menupath;
-
-  menupath = g_strdup_printf ("%s%s", prepath, path);
-  menus_set_state (menupath, state);
-  g_free (menupath); 
 }
 
 void
@@ -1517,29 +1491,29 @@ menu_translate (const gchar *path,
   menupath[MENUPATH_SIZE - 1] = '\0';
 
   retval = gettext (path);
-  if (!strcmp (path, retval))
+  if (strcmp (path, retval))
+    return retval;
+
+  strncpy (menupath, path, MENUPATH_SIZE - 1);
+  strncat (menupath, "/tearoff1", MENUPATH_SIZE - 1 - strlen (menupath));
+  retval = gettext (menupath);
+  if (strcmp (menupath, retval))
     {
-      strncpy (menupath, path, MENUPATH_SIZE - 1);
-      strncat (menupath, "/tearoff1", MENUPATH_SIZE - 1 - strlen (menupath));
-      retval = gettext (menupath);
-      if (strcmp (menupath, retval))
-        {
-          strncpy (menupath, retval, MENUPATH_SIZE - 1);
-          *(strrchr(menupath, '/')) = '\0';
-          return menupath;
-        }
-      else
-        {
-          strcpy (menupath, "<Image>");
-          strncat (menupath, path, MENUPATH_SIZE - 1 - sizeof ("<Image>"));
-          retval = dgettext ("gimp-std-plugins", menupath) + strlen ("<Image>");
-          if (!strcmp (path, retval))
-            {
-              strcpy (menupath, "<Toolbox>");
-              strncat (menupath, path, MENUPATH_SIZE - 1 - sizeof ("<Toolbox>"));
-              retval = dgettext ("gimp-std-plugins", menupath) + strlen ("<Toolbox>");
-            }
-        }
+      strncpy (menupath, retval, MENUPATH_SIZE - 1);
+      *(strrchr(menupath, '/')) = '\0';
+      return menupath;
+    }
+  else
+    {
+      strcpy (menupath, "<Image>");
+      strncat (menupath, path, MENUPATH_SIZE - 1 - strlen ("<Image>"));
+      retval = dgettext ("gimp-std-plugins", menupath) + strlen ("<Image>");
+      if (!strcmp (path, retval))
+	{
+	  strcpy (menupath, "<Toolbox>");
+	  strncat (menupath, path, MENUPATH_SIZE - 1 - strlen ("<Toolbox>"));
+	  retval = dgettext ("gimp-std-plugins", menupath) + strlen ("<Toolbox>");
+	}
     }
 
   return retval;

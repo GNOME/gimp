@@ -1649,10 +1649,10 @@ file_save_ok_callback (GtkWidget *widget,
 static void
 file_dialog_show (GtkWidget *filesel)
 {
-  menus_set_sensitive_glue ("<Toolbox>", N_("/File/Open..."), FALSE);
-  menus_set_sensitive_glue ("<Image>", N_("/File/Open..."), FALSE);
-  menus_set_sensitive_glue ("<Image>", N_("/File/Save"), FALSE);
-  menus_set_sensitive_glue ("<Image>", N_("/File/Save as..."), FALSE);
+  menus_set_sensitive ("<Toolbox>/File/Open...", FALSE);
+  menus_set_sensitive ("<Image>/File/Open...", FALSE);
+  menus_set_sensitive ("<Image>/File/Save", FALSE);
+  menus_set_sensitive ("<Image>/File/Save as...", FALSE);
 
   gtk_widget_show (filesel);
 }
@@ -1662,13 +1662,13 @@ file_dialog_hide (GtkWidget *filesel)
 {
   gtk_widget_hide (filesel);
 
-  menus_set_sensitive_glue ("<Toolbox>", N_("/File/Open..."), TRUE);
-  menus_set_sensitive_glue ("<Image>", N_("/File/Open..."), TRUE);
+  menus_set_sensitive ("<Toolbox>/File/Open...", TRUE);
+  menus_set_sensitive ("<Image>/File/Open...", TRUE);
 
   if (gdisplay_active ())
     {
-      menus_set_sensitive_glue ("<Image>", N_("/File/Save"), TRUE);
-      menus_set_sensitive_glue ("<Image>", N_("/File/Save as..."), TRUE);
+      menus_set_sensitive ("<Image>/File/Save", TRUE);
+      menus_set_sensitive ("<Image>/File/Save as...", TRUE);
     }
 
   return TRUE;

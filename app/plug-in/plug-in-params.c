@@ -1282,8 +1282,8 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 	  menus_set_sensitive (proc_def->menu_path, sensitive);
           if (last_plug_in && (last_plug_in == &(proc_def->db_info)))
 	    {
-	      menus_set_sensitive_glue ("<Image>", N_("/Filters/Repeat last"), sensitive);
-	      menus_set_sensitive_glue ("<Image>", N_("/Filters/Re-show last"), sensitive);
+	      menus_set_sensitive ("<Image>/Filters/Repeat last", sensitive);
+	      menus_set_sensitive ("<Image>/Filters/Re-show last", sensitive);
 	    }
 	}
     }

@@ -56,12 +56,8 @@ void menus_quit                (void);
 
 void menus_set_sensitive       (gchar                 *path,
 				gboolean               sensitive);
-void menus_set_sensitive_glue  (gchar                 *prepath,
-				gchar                 *path,
-				gboolean               sensitive);
 
-void menus_set_state_glue      (gchar                 *prepath,
-				gchar                 *path,
+void menus_set_state           (gchar                 *path,
 				gboolean               state);
 
 void menus_last_opened_add     (gchar                 *filename);

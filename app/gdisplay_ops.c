@@ -296,7 +296,7 @@ gdisplay_close_warning_callback (GtkWidget *widget,
   GDisplay *gdisp;
   GtkWidget *mbox;
 
-  menus_set_sensitive_glue ("<Image>", N_("/File/Close"), TRUE);
+  menus_set_sensitive ("<Image>/File/Close", TRUE);
   mbox = (GtkWidget *) client_data;
   gdisp = (GDisplay *) gtk_object_get_user_data (GTK_OBJECT (mbox));
 
@@ -311,7 +311,7 @@ gdisplay_cancel_warning_callback (GtkWidget *widget,
 {
   GtkWidget *mbox;
 
-  menus_set_sensitive_glue ("<Image>", N_("/File/Close"), TRUE);
+  menus_set_sensitive ("<Image>/File/Close", TRUE);
   mbox = (GtkWidget *) client_data;
   gtk_widget_destroy (mbox);
 }
@@ -342,7 +342,7 @@ gdisplay_close_warning_dialog (char     *image_name,
       return;
     }
 
-  menus_set_sensitive_glue ("<Image>", N_("/File/Close"), FALSE);
+  menus_set_sensitive ("<Image>/File/Close", FALSE);
 
   warning_dialog = mbox =
     gimp_dialog_new (image_name, "really_close",

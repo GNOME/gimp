@@ -233,7 +233,7 @@ paths_dialog_set_menu_sensitivity (void)
     cpp = TRUE;
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive_glue ("<Paths>", (menu), (condition) != 0)
+        menus_set_sensitive ("<Paths>/" menu, (condition) != 0)
 #define SET_OPS_SENSITIVE(button,condition) \
         gtk_widget_set_sensitive (paths_ops_buttons[(button)].widget, \
                                  (condition) != 0)
@@ -241,29 +241,29 @@ paths_dialog_set_menu_sensitivity (void)
         gtk_widget_set_sensitive (point_ops_buttons[(button)].widget, \
                                  (condition) != 0)
 
-  SET_SENSITIVE (N_("/New Path"), gimage);
+  SET_SENSITIVE ("New Path", gimage);
   SET_OPS_SENSITIVE (0, gimage);
 
-  SET_SENSITIVE (N_("/Duplicate Path"), pp);
+  SET_SENSITIVE ("Duplicate Path", pp);
   SET_OPS_SENSITIVE (1, pp);
 
-  SET_SENSITIVE (N_("/Path to Selection"), pp);
+  SET_SENSITIVE ("Path to Selection", pp);
   SET_OPS_SENSITIVE (2, pp);
 
-  SET_SENSITIVE (N_("/Selection to Path"), gimage);
+  SET_SENSITIVE ("Selection to Path", gimage);
   SET_OPS_SENSITIVE (3, gimage);
 
-  SET_SENSITIVE (N_("/Stroke Path"), pp);
+  SET_SENSITIVE ("Stroke Path", pp);
   SET_OPS_SENSITIVE (4, pp);
 
-  SET_SENSITIVE (N_("/Delete Path"), pp);
+  SET_SENSITIVE ("Delete Path", pp);
   SET_OPS_SENSITIVE (5, pp);
 
-  SET_SENSITIVE (N_("/Copy Path"), pp);
-  SET_SENSITIVE (N_("/Paste Path"), pp && cpp);
+  SET_SENSITIVE ("Copy Path", pp);
+  SET_SENSITIVE ("Paste Path", pp && cpp);
 
-  SET_SENSITIVE (N_("/Import Path..."), gimage);
-  SET_SENSITIVE (N_("/Export Path..."), pp);
+  SET_SENSITIVE ("Import Path...", gimage);
+  SET_SENSITIVE ("Export Path...", pp);
 
   /*  new point  */
   SET_POINT_SENSITIVE (0, pp);

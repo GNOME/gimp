@@ -1,3 +1,22 @@
+1999-11-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c
+	* app/channels_dialog.c
+	* app/fileops.c
+	* app/gdisplay.c
+	* app/gdisplay_ops.c
+	* app/layers_dialog.c
+	* app/menus.[ch]
+	* app/paths_dialog.c
+	* app/plug_in.c: removed
+	menus_set_[sensitive|state]_glue(). Removed the N_()'s from all
+	menu paths which are not eventually passed to
+	gtk_item_factory_create_item().
+
+	* app/tool_options.c: minor updates.
+
+	* app/file_new_dialog.c: reordered the action_area buttons.
+
 Tue Nov 23 02:02:30 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/menus.c: fixed a possible buffer overflow

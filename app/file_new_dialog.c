@@ -374,17 +374,17 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
 			       GTK_WIN_POS_MOUSE,
 			       FALSE, FALSE, TRUE,
 
-			       _("OK"), file_new_ok_callback,
-			       info, NULL, FALSE, FALSE,
 			       _("Reset"), file_new_reset_callback,
 			       info, NULL, FALSE, FALSE,
+			       _("OK"), file_new_ok_callback,
+			       info, NULL, TRUE, FALSE,
 			       _("Cancel"), file_new_cancel_callback,
-			       info, NULL, TRUE, TRUE,
+			       info, NULL, FALSE, TRUE,
 
 			       NULL);
 
   /*  vbox holding the rest of the dialog  */
-  top_vbox = gtk_vbox_new (FALSE, 2);
+  top_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (top_vbox), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (info->dlg)->vbox),
 		      top_vbox, TRUE, TRUE, 0);

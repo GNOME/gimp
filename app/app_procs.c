@@ -687,7 +687,7 @@ app_exit_finish (void)
   if (!no_interface)
     {
       toolbox_free ();
-      close_idea_window();
+      close_idea_window ();
       gximage_free ();
       render_free ();
       tool_options_dialog_free ();
@@ -724,8 +724,8 @@ static void
 really_quit_cancel_callback (GtkWidget *widget,
 			     GtkWidget *dialog)
 {
-  menus_set_sensitive_glue ("<Toolbox>", N_("/File/Quit"), TRUE);
-  menus_set_sensitive_glue ("<Image>", N_("/File/Quit"), TRUE);
+  menus_set_sensitive ("<Toolbox>/File/Quit", TRUE);
+  menus_set_sensitive ("<Image>/File/Quit", TRUE);
   gtk_widget_destroy (dialog);
 }
 
@@ -740,8 +740,8 @@ really_quit_dialog (void)
   GtkStyle  *style;
   GtkWidget *label;
 
-  menus_set_sensitive_glue ("<Toolbox>", N_("/File/Quit"), FALSE);
-  menus_set_sensitive_glue ("<Image>", N_("/File/Quit"), FALSE);
+  menus_set_sensitive ("<Toolbox>/File/Quit", FALSE);
+  menus_set_sensitive ("<Image>/File/Quit", FALSE);
 
   dialog = gimp_dialog_new (_("Really Quit?"), "really_quit",
 			    gimp_standard_help_func,
