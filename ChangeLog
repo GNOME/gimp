@@ -1,3 +1,9 @@
+2000-04-21  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/png.c: Fix #9380 as K&R intended :)
+	Fixed for Sven and Felix, but loads partial or damaged images.
+	No more warnings either.
+
 2000-04-21 Garry R. Osgood <gosgood@idt.net>
 
 	* app/main.c

@@ -59,7 +59,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION  "1.2.2 - 14 April 2000"
+#define PLUG_IN_VERSION  "1.2.3 - 21 April 2000"
 #define SCALE_WIDTH      125
 
 #define DEFAULT_GAMMA    2.20
@@ -361,8 +361,8 @@ load_image (gchar *filename)	/* I - File to load */
 		end,		/* Ending tile row */
 		num;		/* Number of rows to load */
   FILE		*fp;		/* File pointer */
-  gint32	image,		/* Image */
-		layer;		/* Layer */
+  volatile gint32 image,	/* Image -- preserved against setjmp() */
+  gint32	layer;		/* Layer */
   GDrawable	*drawable;	/* Drawable for layer */
   GPixelRgn	pixel_rgn;	/* Pixel region for layer */
   png_structp	pp;		/* PNG read pointer */
