@@ -1,3 +1,9 @@
+2003-07-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/png.c: added support for reading and writing
+	comments. Handles tTXt (ISO-8859-1) and, if your libpng supports
+	it, iTXt (UTF-8) chunks.
+
 2003-07-02  Sven Neumann  <sven@gimp.org>
 
 	* RPM/*: removed these files, they are of no purpose any longer.

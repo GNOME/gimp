@@ -437,6 +437,9 @@ load_image (const gchar *filename)
   guchar alpha[256],            /* Index -> Alpha */
    *alpha_ptr;                  /* Temporary pointer */
 
+  png_textp  text;
+  gint       num_texts;
+
   /*
    * PNG 0.89 and newer have a sane, forwards compatible constructor.
    * Some SGI IRIX users will not have a new enough version though
@@ -715,11 +718,47 @@ load_image (const gchar *filename)
         };
     };
 
+  png_read_end (pp, info);
+
+  if (png_get_text (pp, info, &text, &num_texts))
+    {
+      gchar *comment = NULL;
+
+      for (i = 0; i < num_texts && !comment; i++)
+	{
+	  if (text->key == NULL || strcmp (text->key, "Comment"))
+	    continue;
+
+	  if (text->text_length > 0)   /*  tEXt  */
+	    {
+	      comment = g_convert (text->text, -1, 
+				   "UTF-8", "ISO-8859-1", 
+				   NULL, NULL, NULL);
+	    }
+	  else
+	    {                          /*  iTXt  */
+	      comment = g_strdup (text->text);
+	    }
+	}
+
+      if (comment && *comment)
+	{
+	  GimpParasite *parasite;
+
+	  parasite = gimp_parasite_new ("gimp-comment",
+					GIMP_PARASITE_PERSISTENT,
+					strlen (comment) + 1, comment);
+	  gimp_image_parasite_attach (image, parasite);
+	  gimp_parasite_free (parasite);
+	}
+
+      g_free (comment);
+    }
+
   /*
    * Done with the file...
    */
 
-  png_read_end (pp, info);
   png_read_destroy (pp, info, NULL);
 
   g_free (pixel);
@@ -810,6 +849,44 @@ save_image (const gchar *filename,
   struct tm *gmt;               /* GMT broken down */
 
   guchar remap[256];            /* Re-mapping for the palette */
+  
+  png_textp     text = NULL;
+
+  GimpParasite *parasite;
+
+  parasite = gimp_image_parasite_find (orig_image_ID, "gimp-comment");
+  if (parasite) 
+    {
+      gchar *comment = g_strndup (gimp_parasite_data (parasite),
+				  gimp_parasite_data_size (parasite));
+
+      gimp_parasite_free (parasite);
+
+      text = g_new0 (png_text, 1);
+      text->key         = "Comment";
+
+#ifdef PNG_iTXt_SUPPORTED
+
+      text->compression = PNG_ITXT_COMPRESSION_NONE;
+      text->text        = comment
+      text->itxt_length = strlen (comment);
+
+#else
+
+      text->compression = PNG_TEXT_COMPRESSION_NONE;
+      text->text        = g_convert (comment, -1, 
+				     "ISO-8859-1", "UTF-8", 
+				     NULL, &text->text_length, 
+				     NULL);
+
+#endif
+
+      if (!text->text)
+	{
+	  g_free (text);
+	  text = NULL;
+	}
+    }
 
   /*
    * PNG 0.89 and newer have a sane, forwards compatible constructor.
@@ -832,6 +909,9 @@ save_image (const gchar *filename,
       return 0;
     }
 
+  if (text)
+    png_set_text (pp, info, text, 1);
+
   /*
    * Open the file and initialize the PNG write "engine"...
    */
@@ -843,7 +923,7 @@ save_image (const gchar *filename,
                  filename, g_strerror (errno));
       return 0;
     }
-
+      
   png_init_io (pp, fp);
 
   progress = g_strdup_printf (_("Saving '%s'..."), filename);
@@ -1081,6 +1161,12 @@ save_image (const gchar *filename,
    * Done with the file...
    */
 
+  if (text)
+    {
+      g_free (text->text);
+      g_free (text);
+    }
+
   free (pp);
   free (info);
 
@@ -1222,7 +1308,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 pngvals.interlaced);
   gtk_widget_show (toggle);
-#
+
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &pngvals.interlaced);
