@@ -1,5 +1,6 @@
 Revision history for Gimp-Perl extension.
 
+	- moved sethspin back to Filters/Animation (sjb)
         - fixed problem in Net.pm/try_connect (AF_LOCAL vs. PF_UNIX, or
           "sysv rules the world, but sun shines everyhwere".
         - added ... to hopefully all plug-ins that open a dialog.
