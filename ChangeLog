@@ -1,3 +1,7 @@
+2001-01-30  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Added "nn" to ALL_LINGUAS.
+	
 2001-01-28  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* modules/gimpmodregister.h: add #include <libgimp/gimptypes.h>
