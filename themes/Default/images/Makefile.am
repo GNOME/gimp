@@ -77,6 +77,7 @@ STOCK_MENU_IMAGES = \
 	stock-swap-colors-12.png		\
 	stock-template-16.png			\
 	stock-text-layer-16.png			\
+	stock-toilet-paper-16.png		\
 	stock-tool-options-16.png		\
 	stock-video-16.png			\
 	stock-warning-16.png			\
@@ -137,6 +138,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-text-dir-rtl-24.png		\
 	stock-template-24.png			\
 	stock-text-layer-24.png			\
+	stock-toilet-paper-24.png		\
 	stock-vchain-24.png			\
 	stock-vchain-broken-24.png		\
 	stock-video-24.png			\

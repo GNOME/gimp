@@ -32,7 +32,8 @@
 #include "libgimp/libgimp-intl.h"
 
 
-#define LIBGIMP_DOMAIN GETTEXT_PACKAGE "-libgimp"
+#define LIBGIMP_DOMAIN     GETTEXT_PACKAGE "-libgimp"
+#define GIMP_TOILET_PAPER  "gimp-toilet-paper"
 
 
 static GtkIconFactory *gimp_stock_factory = NULL;
@@ -204,6 +205,7 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_PORTRAIT,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LANDSCAPE,                NULL,        0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_TOILET_PAPER,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_WEB,                      NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VIDEO,                    NULL,        0, 0, LIBGIMP_DOMAIN },
 
@@ -366,6 +368,7 @@ gimp_stock_button_pixbufs[] =
 
   { GIMP_STOCK_INFO,                     stock_info_24                     },
   { GIMP_STOCK_WARNING,                  stock_warning_24                  },
+  { GIMP_TOILET_PAPER,                   stock_toilet_paper_24             },
   { GIMP_STOCK_WEB,                      stock_web_24                      },
   { GIMP_STOCK_VIDEO,                    stock_video_24                    }
 };
@@ -483,6 +486,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_INFO,                     stock_info_16                     },
   { GIMP_STOCK_WARNING,                  stock_warning_16                  },
   { GIMP_STOCK_WILBER,                   stock_wilber_16                   },
+  { GIMP_TOILET_PAPER,                   stock_toilet_paper_16             },
   { GIMP_STOCK_WEB,                      stock_web_16                      },
   { GIMP_STOCK_VIDEO,                    stock_video_16                    }
 };
