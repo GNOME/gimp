@@ -157,7 +157,7 @@ static void     gradient_fill_single_region_gray (RenderBlendData *rbd,
                                                   PixelRegion     *PR);
 
 
-/*  variables for the shapeburst algs  */
+/*  variables for the shapeburst algorithms  */
 
 static PixelRegion distR =
 {
@@ -218,9 +218,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
 
   /*  Always create an alpha temp buf (for generality) */
   if (! gimp_drawable_has_alpha (drawable))
-    {
-      bytes += 1;
-    }
+    bytes += 1;
 
   buf_tiles = tile_manager_new (width, height, bytes);
   pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, TRUE);
@@ -261,16 +259,16 @@ gradient_calc_conical_sym_factor (gdouble  dist,
 				  gdouble  x,
 				  gdouble  y)
 {
-  gdouble vec[2];
-  gdouble r;
-  gdouble rat;
-
   if (dist == 0.0)
     {
-      rat = 0.0;
+      return 0.0;
     }
   else if ((x != 0) || (y != 0))
     {
+      gdouble vec[2];
+      gdouble r;
+      gdouble rat;
+
       /* Calculate offset from the start in pixels */
 
       r = sqrt (x * x + y * y);
@@ -291,14 +289,12 @@ gradient_calc_conical_sym_factor (gdouble  dist,
       rat = acos (rat) / G_PI;
       rat = pow (rat, (offset / 10.0) + 1.0);
 
-      rat = CLAMP (rat, 0.0, 1.0);
+      return CLAMP (rat, 0.0, 1.0);
     }
   else
     {
-      rat = 0.5;
+      return 0.5;
     }
-
-  return rat;
 }
 
 static gdouble
@@ -308,38 +304,34 @@ gradient_calc_conical_asym_factor (gdouble  dist,
 				   gdouble  x,
 				   gdouble  y)
 {
-  gdouble ang0, ang1;
-  gdouble ang;
-  gdouble rat;
-
   if (dist == 0.0)
     {
-      rat = 0.0;
+      return 0.0;
+    }
+  else if (x != 0 || y != 0)
+    {
+      gdouble ang0, ang1;
+      gdouble ang;
+      gdouble rat;
+
+      ang0 = atan2 (axis[0], axis[1]) + G_PI;
+
+      ang1 = atan2 (x, y) + G_PI;
+
+      ang = ang1 - ang0;
+
+      if (ang < 0.0)
+        ang += (2.0 * G_PI);
+
+      rat = ang / (2.0 * G_PI);
+      rat = pow (rat, (offset / 10.0) + 1.0);
+
+      return CLAMP (rat, 0.0, 1.0);
     }
   else
     {
-      if ((x != 0) || (y != 0))
-	{
-	  ang0 = atan2 (axis[0], axis[1]) + G_PI;
-	  ang1 = atan2 (x, y) + G_PI;
-
-	  ang = ang1 - ang0;
-
-	  if (ang < 0.0)
-	    ang += (2.0 * G_PI);
-
-	  rat = ang / (2.0 * G_PI);
-	  rat = pow (rat, (offset / 10.0) + 1.0);
-
-	  rat = CLAMP (rat, 0.0, 1.0);
-	}
-      else
-	{
-	  rat = 0.5; /* We are on middle point */
-	}
+      return 0.5; /* We are on middle point */
     }
-
-  return rat;
 }
 
 static gdouble
@@ -348,15 +340,15 @@ gradient_calc_square_factor (gdouble dist,
 			     gdouble x,
 			     gdouble y)
 {
-  gdouble r;
-  gdouble rat;
-
   if (dist == 0.0)
     {
-      rat = 0.0;
+      return 0.0;
     }
   else
     {
+      gdouble r;
+      gdouble rat;
+
       /* Calculate offset from start as a value in [0, 1] */
 
       offset = offset / 100.0;
@@ -365,14 +357,12 @@ gradient_calc_square_factor (gdouble dist,
       rat = r / dist;
 
       if (rat < offset)
-	rat = 0.0;
+	return 0.0;
       else if (offset == 1.0)
-	rat = (rat >= 1.0) ? 1.0 : 0.0;
+	return (rat >= 1.0) ? 1.0 : 0.0;
       else
-	rat = (rat - offset) / (1.0 - offset);
+	return (rat - offset) / (1.0 - offset);
     }
-
-  return rat;
 }
 
 static gdouble
@@ -381,15 +371,15 @@ gradient_calc_radial_factor (gdouble dist,
 			     gdouble x,
 			     gdouble y)
 {
-  gdouble r;
-  gdouble rat;
-
   if (dist == 0.0)
     {
-      rat = 0.0;
+      return 0.0;
     }
   else
     {
+      gdouble r;
+      gdouble rat;
+
       /* Calculate radial offset from start as a value in [0, 1] */
 
       offset = offset / 100.0;
@@ -398,14 +388,12 @@ gradient_calc_radial_factor (gdouble dist,
       rat = r / dist;
 
       if (rat < offset)
-	rat = 0.0;
+	return 0.0;
       else if (offset == 1.0)
-	rat = (rat >= 1.0) ? 1.0 : 0.0;
+	return (rat >= 1.0) ? 1.0 : 0.0;
       else
-	rat = (rat - offset) / (1.0 - offset);
+	return (rat - offset) / (1.0 - offset);
     }
-
-  return rat;
 }
 
 static gdouble
@@ -415,31 +403,29 @@ gradient_calc_linear_factor (gdouble  dist,
 			     gdouble  x,
 			     gdouble  y)
 {
-  gdouble r;
-  gdouble rat;
-
   if (dist == 0.0)
     {
-      rat = 0.0;
+      return 0.0;
     }
   else
     {
+      gdouble r;
+      gdouble rat;
+
       offset = offset / 100.0;
 
       r   = vec[0] * x + vec[1] * y;
       rat = r / dist;
 
       if (rat >= 0.0 && rat < offset)
-	rat = 0.0;
+	return 0.0;
       else if (offset == 1.0)
-	rat = (rat >= 1.0) ? 1.0 : 0.0;
+	return (rat >= 1.0) ? 1.0 : 0.0;
       else if (rat < 0.0)
-	rat = rat / (1.0 - offset);
+	return rat / (1.0 - offset);
       else
-	rat = (rat - offset) / (1.0 - offset);
+	return (rat - offset) / (1.0 - offset);
     }
-
-  return rat;
 }
 
 static gdouble
@@ -449,15 +435,15 @@ gradient_calc_bilinear_factor (gdouble  dist,
 			       gdouble  x,
 			       gdouble  y)
 {
-  gdouble r;
-  gdouble rat;
-
   if (dist == 0.0)
     {
-      rat = 0.0;
+      return 0.0;
     }
   else
     {
+      gdouble r;
+      gdouble rat;
+
       /* Calculate linear offset from the start line outward */
 
       offset = offset / 100.0;
@@ -466,14 +452,12 @@ gradient_calc_bilinear_factor (gdouble  dist,
       rat = r / dist;
 
       if (fabs (rat) < offset)
-	rat = 0.0;
+	return 0.0;
       else if (offset == 1.0)
-	rat = (rat == 1.0) ? 1.0 : 0.0;
+	return (rat == 1.0) ? 1.0 : 0.0;
       else
-	rat = (fabs (rat) - offset) / (1.0 - offset);
+	return (fabs (rat) - offset) / (1.0 - offset);
     }
-
-  return rat;
 }
 
 static gdouble
@@ -484,54 +468,52 @@ gradient_calc_spiral_factor (gdouble   dist,
 			     gdouble   y,
 			     gboolean  clockwise)
 {
-  gdouble ang0, ang1;
-  gdouble ang, r;
-  gdouble rat;
-
   if (dist == 0.0)
     {
-      rat = 0.0;
+      return 0.0;
+    }
+  else if (x != 0.0 || y != 0.0)
+    {
+      gdouble ang0, ang1;
+      gdouble ang;
+      double  r;
+
+      ang0 = atan2 (axis[0], axis[1]) + G_PI;
+      ang1 = atan2 (x, y) + G_PI;
+
+      if (clockwise)
+        ang = ang1 - ang0;
+      else
+        ang = ang0 - ang1;
+
+      if (ang < 0.0)
+        ang += (2.0 * G_PI);
+
+      r = sqrt (SQR (x) + SQR (y)) / dist;
+
+      return fmod (ang / (2.0 * G_PI) + r + offset, 1.0);
     }
   else
     {
-      if (x != 0.0 || y != 0.0)
-	{
-	  ang0 = atan2 (axis[0], axis[1]) + G_PI;
-	  ang1 = atan2 (x, y) + G_PI;
-
-	  if (clockwise)
-	    ang = ang1 - ang0;
-	  else
-	    ang = ang0 - ang1;
-
-	  if (ang < 0.0)
-	    ang += (2.0 * G_PI);
-
-	  r = sqrt (x * x + y * y) / dist;
-	  rat = ang / (2.0 * G_PI) + r + offset;
-	  rat = fmod (rat, 1.0);
-	}
-      else
-	rat = 0.5 ; /* We are on the middle point */
+      return 0.5 ; /* We are on the middle point */
     }
-
-  return rat;
 }
 
 static gdouble
 gradient_calc_shapeburst_angular_factor (gdouble x,
 					 gdouble y)
 {
-  gint    ix, iy;
   Tile   *tile;
   gfloat  value;
+  gint    ix = CLAMP (x, 0.0, distR.w - 0.7);
+  gint    iy = CLAMP (y, 0.0, distR.h - 0.7);
 
-  ix = (gint) CLAMP (x, 0.0, distR.w - 0.7);
-  iy = (gint) CLAMP (y, 0.0, distR.h - 0.7);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
+
   value = 1.0 - *((gfloat *) tile_data_pointer (tile,
                                                 ix % TILE_WIDTH,
                                                 iy % TILE_HEIGHT));
+
   tile_release (tile, FALSE);
 
   return value;
@@ -542,17 +524,18 @@ static gdouble
 gradient_calc_shapeburst_spherical_factor (gdouble x,
 					   gdouble y)
 {
-  gint    ix, iy;
   Tile   *tile;
   gfloat  value;
+  gint    ix = CLAMP (x, 0.0, distR.w - 0.7);
+  gint    iy = CLAMP (y, 0.0, distR.h - 0.7);
 
-  ix = (gint) CLAMP (x, 0.0, distR.w - 0.7);
-  iy = (gint) CLAMP (y, 0.0, distR.h - 0.7);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
+
   value = *((gfloat *) tile_data_pointer (tile,
                                           ix % TILE_WIDTH,
                                           iy % TILE_HEIGHT));
   value = 1.0 - sin (0.5 * G_PI * value);
+
   tile_release (tile, FALSE);
 
   return value;
@@ -563,17 +546,18 @@ static gdouble
 gradient_calc_shapeburst_dimpled_factor (gdouble x,
 					 gdouble y)
 {
-  gint    ix, iy;
   Tile   *tile;
   gfloat  value;
+  gint    ix = CLAMP (x, 0.0, distR.w - 0.7);
+  gint    iy = CLAMP (y, 0.0, distR.h - 0.7);
 
-  ix = (gint) CLAMP (x, 0.0, distR.w - 0.7);
-  iy = (gint) CLAMP (y, 0.0, distR.h - 0.7);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
+
   value = *((gfloat *) tile_data_pointer (tile,
                                           ix % TILE_WIDTH,
                                           iy % TILE_HEIGHT));
   value = cos (0.5 * G_PI * value);
+
   tile_release (tile, FALSE);
 
   return value;
@@ -619,7 +603,6 @@ gradient_precalc_shapeburst (GimpImage    *gimage,
       /*  copy the mask to the temp mask  */
       copy_region (&maskR, &tempR);
     }
-  /*  otherwise...  */
   else
     {
       /*  If the intended drawable has an alpha channel, use that  */
@@ -683,17 +666,20 @@ gradient_render_pixel (double    x,
   switch (rbd->gradient_type)
     {
     case GIMP_GRADIENT_LINEAR:
-      factor = gradient_calc_linear_factor (rbd->dist, rbd->vec, rbd->offset,
+      factor = gradient_calc_linear_factor (rbd->dist,
+                                            rbd->vec, rbd->offset,
 					    x - rbd->sx, y - rbd->sy);
       break;
 
     case GIMP_GRADIENT_BILINEAR:
-      factor = gradient_calc_bilinear_factor (rbd->dist, rbd->vec, rbd->offset,
+      factor = gradient_calc_bilinear_factor (rbd->dist,
+                                              rbd->vec, rbd->offset,
 					      x - rbd->sx, y - rbd->sy);
       break;
 
     case GIMP_GRADIENT_RADIAL:
-      factor = gradient_calc_radial_factor (rbd->dist, rbd->offset,
+      factor = gradient_calc_radial_factor (rbd->dist,
+                                            rbd->offset,
 					    x - rbd->sx, y - rbd->sy);
       break;
 
@@ -703,12 +689,14 @@ gradient_render_pixel (double    x,
       break;
 
     case GIMP_GRADIENT_CONICAL_SYMMETRIC:
-      factor = gradient_calc_conical_sym_factor (rbd->dist, rbd->vec, rbd->offset,
+      factor = gradient_calc_conical_sym_factor (rbd->dist,
+                                                 rbd->vec, rbd->offset,
 						 x - rbd->sx, y - rbd->sy);
       break;
 
     case GIMP_GRADIENT_CONICAL_ASYMMETRIC:
-      factor = gradient_calc_conical_asym_factor (rbd->dist, rbd->vec, rbd->offset,
+      factor = gradient_calc_conical_asym_factor (rbd->dist,
+                                                  rbd->vec, rbd->offset,
 						  x - rbd->sx, y - rbd->sy);
       break;
 
@@ -725,12 +713,14 @@ gradient_render_pixel (double    x,
       break;
 
     case GIMP_GRADIENT_SPIRAL_CLOCKWISE:
-      factor = gradient_calc_spiral_factor (rbd->dist, rbd->vec, rbd->offset,
+      factor = gradient_calc_spiral_factor (rbd->dist,
+                                            rbd->vec, rbd->offset,
 					    x - rbd->sx, y - rbd->sy,TRUE);
       break;
 
     case GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE:
-      factor = gradient_calc_spiral_factor (rbd->dist, rbd->vec, rbd->offset,
+      factor = gradient_calc_spiral_factor (rbd->dist,
+                                            rbd->vec, rbd->offset,
 					    x - rbd->sx, y - rbd->sy,FALSE);
       break;
 
@@ -800,12 +790,8 @@ gradient_put_pixel (gint      x,
 		    GimpRGB  *color,
 		    gpointer  put_pixel_data)
 {
-  PutPixelData  *ppd = put_pixel_data;
-  guchar        *data;
-
-  /* Paint */
-
-  data = ppd->row_data + ppd->bytes * x;
+  PutPixelData  *ppd  = put_pixel_data;
+  guchar        *dest = ppd->row_data + ppd->bytes * x;
 
   if (ppd->bytes >= 3)
     {
@@ -849,10 +835,10 @@ gradient_put_pixel (gint      x,
           if (color->a > 1.0) color->a = 1.0;
         }
 
-      *data++ = color->r * 255.0;
-      *data++ = color->g * 255.0;
-      *data++ = color->b * 255.0;
-      *data++ = color->a * 255.0;
+      *dest++ = color->r * 255.0;
+      *dest++ = color->g * 255.0;
+      *dest++ = color->b * 255.0;
+      *dest++ = color->a * 255.0;
     }
   else
     {
@@ -883,8 +869,8 @@ gradient_put_pixel (gint      x,
           if (color->a > 1.0) color->a = 1.0;
         }
 
-      *data++ = gray * 255.0;
-      *data++ = color->a * 255.0;
+      *dest++ = gray * 255.0;
+      *dest++ = color->a * 255.0;
     }
 
   /* Paint whole row if we are on the rightmost pixel */
@@ -1060,7 +1046,7 @@ static void
 gradient_fill_single_region_rgb (RenderBlendData *rbd,
                                  PixelRegion     *PR)
 {
-  guchar *data = PR->data;
+  guchar *dest = PR->data;
   gint    endx = PR->x + PR->w;
   gint    endy = PR->y + PR->h;
   gint    x, y;
@@ -1113,10 +1099,10 @@ gradient_fill_single_region_rgb (RenderBlendData *rbd,
               if (color.a > 1.0) color.a = 1.0;
             }
 
-          *data++ = color.r * 255.0;
-          *data++ = color.g * 255.0;
-          *data++ = color.b * 255.0;
-          *data++ = color.a * 255.0;
+          *dest++ = color.r * 255.0;
+          *dest++ = color.g * 255.0;
+          *dest++ = color.b * 255.0;
+          *dest++ = color.a * 255.0;
         }
     }
 }
@@ -1125,7 +1111,7 @@ static void
 gradient_fill_single_region_gray (RenderBlendData *rbd,
                                   PixelRegion     *PR)
 {
-  guchar *data = PR->data;
+  guchar *dest = PR->data;
   gint    endx = PR->x + PR->w;
   gint    endy = PR->y + PR->h;
   gint    x, y;
@@ -1165,8 +1151,8 @@ gradient_fill_single_region_gray (RenderBlendData *rbd,
               if (color.a > 1.0) color.a = 1.0;
             }
 
-          *data++ = gray * 255.0;
-          *data++ = color.a * 255.0;
+          *dest++ = gray * 255.0;
+          *dest++ = color.a * 255.0;
         }
     }
 }
