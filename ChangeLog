@@ -1,5 +1,15 @@
 1999-07-09  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* app/crop.c: mysteriously, using the new tool constructor fixed
+	the crop tool redraw problem.
+
+	* app/gdisplay.c: clode cleanup
+
+	* app/info_dialog.c: never emit signals when updating the info
+	fields. Fixes some more transform tool grid redraw bugs.
+
+1999-07-09  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	* app/commands.c (view_toggle_rulers_cmd_callback): set the
 	"visible" flags before mapping the widgets.
 

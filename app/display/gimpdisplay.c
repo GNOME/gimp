@@ -289,7 +289,6 @@ gdisplay_format_title (GDisplay *gdisp,
 static void
 gdisplay_delete (GDisplay *gdisp)
 {
-  GDisplay *tool_gdisp;
   GimpContext *context;
 
   g_hash_table_remove (display_ht, gdisp->shell);
@@ -299,15 +298,11 @@ gdisplay_delete (GDisplay *gdisp)
   active_tool_control (HALT, (void *) gdisp);
 
   /*  clear out the pointer to this gdisp from the active tool  */
-  if (active_tool && active_tool->gdisp_ptr)
+  if (active_tool &&
+      active_tool->gdisp_ptr == gdisp)
     {
-      tool_gdisp = active_tool->gdisp_ptr;
-
-      if (gdisp == tool_gdisp)
-	{
-	  active_tool->drawable = NULL;
-	  active_tool->gdisp_ptr = NULL;
-	}
+      active_tool->drawable = NULL;
+      active_tool->gdisp_ptr = NULL;
     }
 
   /*  free the selection structure  */
@@ -337,7 +332,7 @@ gdisplay_delete (GDisplay *gdisp)
   if (gdisp->window_info_dialog)
     info_window_free (gdisp->window_info_dialog);
 
-  /*  set the active display to NULL  */
+  /*  set the active display to NULL if it was this display  */
   context = gimp_context_get_user ();
   if (gimp_context_get_display (context) == gdisp)
     gimp_context_set_display (context, NULL);

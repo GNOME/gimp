@@ -742,30 +742,24 @@ tools_new_crop ()
       tools_register (CROP, (ToolOptions *) crop_options);
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (Crop *) g_malloc (sizeof (Crop));
+  tool = tools_new_tool (CROP);
+  private = g_new (Crop, 1);
 
   private->core = draw_core_new (crop_draw);
   private->startx = private->starty = 0;
   private->function = CREATING;
 
-  tool->type = CROP;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 0;  /*  Allow scrolling  */
-  tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
   tool->preserve = FALSE;  /* XXX Check me */
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
 
-  tool->button_press_func = crop_button_press;
+  tool->button_press_func   = crop_button_press;
   tool->button_release_func = crop_button_release;
-  tool->motion_func = crop_motion;
-  tool->arrow_keys_func = crop_arrow_keys_func;
-  tool->modifier_key_func = crop_modifier_key_func;
-  tool->cursor_update_func = crop_cursor_update;
-  tool->control_func = crop_control;
+  tool->motion_func         = crop_motion;
+  tool->arrow_keys_func     = crop_arrow_keys_func;
+  tool->modifier_key_func   = crop_modifier_key_func;
+  tool->cursor_update_func  = crop_cursor_update;
+  tool->control_func        = crop_control;
 
   return tool;
 }
