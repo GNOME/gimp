@@ -47,6 +47,8 @@ libapppaint_a_sources = \
 	gimpink.h		\
 	gimpink-blob.c		\
 	gimpink-blob.h		\
+	gimpink-undo.c		\
+	gimpink-undo.h		\
 	gimpinkoptions.c	\
 	gimpinkoptions.h	\
 	gimppaintcore.c		\

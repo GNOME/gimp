@@ -43,7 +43,9 @@ struct _GimpInk
 {
   GimpPaintCore  parent_instance;
 
-  Blob          *blob;         /*  current blob                   */
+  Blob          *start_blob;   /*  starting blob (for undo)       */
+
+  Blob          *cur_blob;     /*  current blob                   */
   Blob          *last_blob;    /*  blob for last cursor position  */
 
   /* circular distance history buffer */
@@ -55,7 +57,6 @@ struct _GimpInk
   gint           ts_index;
 
   gdouble        last_time;     /*  previous time of a motion event      */
-  gdouble        lastx, lasty;  /*  previous position of a motion event  */
 
   gboolean       init_velocity;
 };

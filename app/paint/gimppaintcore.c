@@ -138,6 +138,7 @@ gimp_paint_core_class_init (GimpPaintCoreClass *klass)
   klass->post_paint       = gimp_paint_core_real_post_paint;
   klass->interpolate      = gimp_paint_core_real_interpolate;
   klass->get_paint_area   = gimp_paint_core_real_get_paint_area;
+  klass->push_undo        = gimp_paint_core_real_push_undo;
 }
 
 static void
@@ -343,7 +344,7 @@ gimp_paint_core_finish (GimpPaintCore *core,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
                                paint_info ? paint_info->blurb : _("Paint"));
 
-  gimp_paint_core_push_undo (gimage, NULL, core);
+  GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, gimage, NULL);
 
   gimp_drawable_push_undo (drawable, NULL,
                            core->x1, core->y1,

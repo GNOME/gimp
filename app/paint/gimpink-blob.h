@@ -84,6 +84,7 @@ void   blob_bounds       (Blob      *b,
                           gint      *height);
 Blob * blob_convex_union (Blob      *b1,
                           Blob      *b2);
+Blob * blob_duplicate    (Blob      *b);
 
 
 #endif /* __GIMP_INK_BLOB_H__ */

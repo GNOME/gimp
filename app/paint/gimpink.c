@@ -37,6 +37,7 @@
 #include "gimpinkoptions.h"
 #include "gimpink.h"
 #include "gimpink-blob.h"
+#include "gimpink-undo.h"
 
 #include "gimp-intl.h"
 
@@ -141,6 +142,7 @@ gimp_ink_class_init (GimpInkClass *klass)
 
   paint_core_class->paint          = gimp_ink_paint;
   paint_core_class->get_paint_area = gimp_ink_get_paint_area;
+  paint_core_class->push_undo      = gimp_ink_push_undo;
 }
 
 static void
@@ -152,6 +154,12 @@ static void
 gimp_ink_finalize (GObject *object)
 {
   GimpInk *ink = GIMP_INK (object);
+
+  if (ink->start_blob)
+    {
+      g_free (ink->start_blob);
+      ink->start_blob = NULL;
+    }
 
   if (ink->last_blob)
     {
@@ -174,13 +182,31 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_INIT:
-      if (ink->last_blob                                        &&
-          paint_core->cur_coords.x == paint_core->last_coords.x &&
+      if (paint_core->cur_coords.x == paint_core->last_coords.x &&
           paint_core->cur_coords.y == paint_core->last_coords.y)
         {
-          /*  start with a new blob if we're not interpolating  */
-          g_free (ink->last_blob);
-          ink->last_blob = NULL;
+          /*  start with new blobs if we're not interpolating  */
+
+          if (ink->start_blob)
+            {
+              g_free (ink->start_blob);
+              ink->start_blob = NULL;
+            }
+
+          if (ink->last_blob)
+            {
+              g_free (ink->last_blob);
+              ink->last_blob = NULL;
+            }
+        }
+      else if (ink->last_blob)
+        {
+          /*  save the start blob of the line for undo otherwise  */
+
+          if (ink->start_blob)
+            g_free (ink->start_blob);
+
+          ink->start_blob = blob_duplicate (ink->last_blob);
         }
       break;
 
@@ -207,7 +233,7 @@ gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
 
   bytes = gimp_drawable_bytes_with_alpha (drawable);
 
-  blob_bounds (ink->blob, &x, &y, &width, &height);
+  blob_bounds (ink->cur_blob, &x, &y, &width, &height);
 
   dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
   dheight = gimp_item_height (GIMP_ITEM (drawable));
@@ -256,14 +282,16 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                                         paint_core->cur_coords.ytilt,
                                         10.0);
 
+      if (ink->start_blob)
+        g_free (ink->start_blob);
+
+      ink->start_blob = blob_duplicate (ink->last_blob);
+
       time_smoother_init (ink, time);
       ink->last_time = time;
 
       dist_smoother_init (ink, 0.0);
       ink->init_velocity = TRUE;
-
-      ink->lastx = paint_core->cur_coords.x;
-      ink->lasty = paint_core->cur_coords.y;
 
       blob_to_render = ink->last_blob;
     }
@@ -289,10 +317,10 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
       if (thistime == lasttime)
         thistime = lasttime + 1;
 
-      dist = sqrt ((ink->lastx - paint_core->cur_coords.x) *
-                   (ink->lastx - paint_core->cur_coords.x) +
-                   (ink->lasty - paint_core->cur_coords.y) *
-                   (ink->lasty - paint_core->cur_coords.y));
+      dist = sqrt ((paint_core->last_coords.x - paint_core->cur_coords.x) *
+                   (paint_core->last_coords.x - paint_core->cur_coords.x) +
+                   (paint_core->last_coords.y - paint_core->cur_coords.y) *
+                   (paint_core->last_coords.y - paint_core->cur_coords.y));
 
       if (ink->init_velocity)
         {
@@ -304,9 +332,6 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
           dist_smoother_add (ink, dist);
           dist = dist_smoother_result (ink);
         }
-
-      ink->lastx = paint_core->cur_coords.x;
-      ink->lasty = paint_core->cur_coords.y;
 
       velocity = 10.0 * sqrt ((dist) / (gdouble) (thistime - lasttime));
 
@@ -326,9 +351,10 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
     }
 
   /* Get the the buffer */
-  ink->blob = blob_to_render;
-
+  ink->cur_blob = blob_to_render;
   area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  ink->cur_blob = NULL;
+
   if (! area)
     return;
 

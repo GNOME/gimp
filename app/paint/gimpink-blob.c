@@ -448,6 +448,14 @@ blob_convex_union (Blob *b1,
   return result;
 }
 
+Blob *
+blob_duplicate (Blob *b)
+{
+  g_return_val_if_fail (b != NULL, NULL);
+
+  return g_memdup (b, sizeof (Blob) +  sizeof (BlobSpan) * (b->height - 1));
+}
+
 #if 0
 void
 blob_dump (Blob *b)
