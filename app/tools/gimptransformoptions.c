@@ -135,7 +135,7 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION,
                                  "interpolation", NULL,
                                  GIMP_TYPE_INTERPOLATION_TYPE,
-                                 GIMP_LINEAR,
+                                 GIMP_INTERPOLATION_LINEAR,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CLIP,
                                     "clip", NULL,

@@ -1,5 +1,11 @@
 2003-08-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptransformoptions.c
+	(gimp_transform_options_class_init): it's GIMP_INTERPOLATION_LINEAR,
+	not just GIMP_LINEAR, argh. Fixes part 1 of bug #120424.
+
+2003-08-26  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/helpbrowser/helpbrowser.c (open_browser_dialog): we
 	can't rely on "eek.png" from the help system being installed.
 	Use "stock-wilber-eek-64.png" from the default theme instead
