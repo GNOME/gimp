@@ -49,9 +49,9 @@ static char rcsid[] = "$Id$";
 #include <math.h>
 #include <ctype.h>
 #include <time.h>
+#include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include <dirent.h>
 #include "gtk/gtk.h"
 #include "../../libgimp/gimp.h"

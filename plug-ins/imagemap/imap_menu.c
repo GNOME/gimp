@@ -21,6 +21,7 @@
  *
  */
 
+#include <sys/types.h>
 #include <sys/stat.h>
 
 #include "imap_circle.h"

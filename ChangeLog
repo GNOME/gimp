@@ -1,3 +1,10 @@
+Fri Sep 24 17:09:30 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/common/jpeg.c: 
+	* plug-ins/gflare/gflare.c: 
+	* plug-ins/imagemap/imap_menu.c: Add <sys/types.h> before <sys/stat>
+	to remove compiler warnings in OS/2. 
+
 Fri Sep 24 02:19:05 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* configure.in
