@@ -21,8 +21,13 @@
 
 
 #include <gtk/gtk.h>
-#include "libgimp/gimpmenu.h"
+#include "libgimp/gimpchainbutton.h"
+#include "libgimp/gimpcolorbutton.h"
 #include "libgimp/gimpexport.h"
-
+#include "libgimp/gimpfileselection.h"
+#include "libgimp/gimpmenu.h"
+#include "libgimp/gimppatheditor.h"
+#include "libgimp/gimpsizeentry.h"
+#include "libgimp/gimpunitmenu.h"
 
 #endif /* __GIMP_UI_H__ */

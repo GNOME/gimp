@@ -36,9 +36,6 @@
 #include <tiffio.h>
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
-#ifdef GIMP_HAVE_RESOLUTION_INFO
-#include "libgimp/gimpunit.h"
-#endif
 
 typedef struct
 {

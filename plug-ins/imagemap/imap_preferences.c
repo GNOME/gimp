@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "libgimp/gimpenv.h"
+#include "libgimp/gimp.h"
 
 #include "imap_command.h"
 #include "imap_file.h"

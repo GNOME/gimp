@@ -21,7 +21,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#include "libgimp/gimpmath.h"
+#include "libgimp/gimp.h"
 
 #include "libifs.h"
 

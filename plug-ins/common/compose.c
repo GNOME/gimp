@@ -48,7 +48,7 @@ static char ident[] = "@(#) GIMP Compose plug-in v1.03 17-Mar-99";
 #include <ctype.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-#include "libgimp/gimpmenu.h"
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions

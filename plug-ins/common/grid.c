@@ -31,10 +31,8 @@
 #include <stdio.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-#include "libgimp/gimpintl.h"
-#include "libgimp/gimpchainbutton.h"
-#include "libgimp/gimpcolorbutton.h"
-#include "libgimp/gimpsizeentry.h"
+#include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 
 
 #define  SPIN_BUTTON_WIDTH   75

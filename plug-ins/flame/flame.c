@@ -32,8 +32,7 @@
 #include <time.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-#include "libgimp/gimpmenu.h"
-#include "libgimp/gimpwire.h"
+#include "libgimp/gimpui.h"
 
 #include "megawidget.h"
 

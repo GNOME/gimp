@@ -29,7 +29,7 @@
 #else
 #include <gdk/gdkx.h>		/* Need Xlib headers */
 #endif
-#include "libgimp/gimpintl.h"
+#include "libgimp/stdplugins-intl.h"
 #include "font_selection.h"
 
 

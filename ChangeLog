@@ -1,3 +1,22 @@
+Sun Nov 14 22:50:32 MET 1999  Sven Neumann <sven.gimp.org>
+	
+	* libgimp/gimpui.h: include all header files that belong to 
+	libgimpui
+	
+	* plug-ins/common/compose.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/tiff.c
+	* plug-ins/flame/flame.c
+	* plug-ins/flame/libifs.c
+	* plug-ins/gdyntext/charmap.c
+	* plug-ins/gdyntext/charmap_window.c
+	* plug-ins/gdyntext/font_selection.c
+	* plug-ins/gdyntext/message_window.c
+	* plug-ins/imagemap/imap_preferences.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/sel2path/math.c: out of libgimp only include gimp.h, 
+	gimpui.h and stdplugins-intl.h 
+
 Sun Nov 14 21:37:51 CET 1999 Olof S Kylander <olof@gimp.org>
 	
 	Update of the Xinput airbrush, fixed some bugs.

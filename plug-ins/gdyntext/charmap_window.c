@@ -22,7 +22,7 @@
 
 #include <stdio.h>
 #include <gtk/gtk.h>
-#include "libgimp/gimpintl.h"
+#include "libgimp/stdplugins-intl.h"
 #include "charmap.h"
 #include "charmap_window.h"
 

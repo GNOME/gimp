@@ -34,8 +34,6 @@
 
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
-#include "libgimp/gimpfileselection.h"
-
 #include "libgimp/stdplugins-intl.h"
 
 #include "siod.h"
