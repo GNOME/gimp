@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.16\n"
-"POT-Creation-Date: 2003-06-24 01:42+0200\n"
-"PO-Revision-Date: 2003-06-24 01:54+0200\n"
+"POT-Creation-Date: 2003-06-25 20:48+0200\n"
+"PO-Revision-Date: 2003-06-25 20:53+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -263,8 +263,8 @@ msgstr "Mitten"
 msgid "Highlights"
 msgstr "Glanzlichter"
 
-#: app/config/gimpconfig-deserialize.c:205 app/config/gimpconfig.c:351
-#: app/config/gimpconfig.c:364 app/config/gimpscanner.c:359
+#: app/config/gimpconfig-deserialize.c:205 app/config/gimpconfig.c:374
+#: app/config/gimpconfig.c:387 app/config/gimpscanner.c:388
 #: app/core/gimpunits.c:157 app/gui/session.c:176 app/plug-in/plug-in-rc.c:134
 msgid "fatal parse error"
 msgstr "Schwerwiegender Fehler beim Verarbeiten"
@@ -627,17 +627,17 @@ msgstr ""
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr ""
 
-#: app/config/gimpscanner.c:78 app/tools/gimpcurvestool.c:1291
+#: app/config/gimpscanner.c:88 app/tools/gimpcurvestool.c:1291
 #: app/tools/gimplevelstool.c:1489
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Datei »%s« konnte nicht geöffnet werden: %s"
 
-#: app/config/gimpscanner.c:181
+#: app/config/gimpscanner.c:210
 msgid "invalid UTF-8 string"
 msgstr "ungültiger UTF-8 Text"
 
-#: app/config/gimpscanner.c:387
+#: app/config/gimpscanner.c:416
 #, c-format
 msgid ""
 "Error while parsing '%s' in line %d:\n"
@@ -952,19 +952,16 @@ msgid "Selection Mask"
 msgstr "Auswahlmaske"
 
 #: app/core/core-enums.c:483
-#, fuzzy
 msgid "Item Properties"
-msgstr "Eigenschaften"
+msgstr "Ding Eigenschaften"
 
 #: app/core/core-enums.c:484 app/core/core-enums.c:513
-#, fuzzy
 msgid "Move Item"
-msgstr "Verschieben"
+msgstr "Ding verschieben"
 
 #: app/core/core-enums.c:485
-#, fuzzy
 msgid "Linked Item"
-msgstr "Verknüpft"
+msgstr "Ding verknüpfen"
 
 #: app/core/core-enums.c:486 app/core/core-enums.c:515
 msgid "Drawable Visibility"
@@ -1272,7 +1269,7 @@ msgstr "Ungültiger UTF-8 Text in Pinseldatei »%s«."
 #: app/core/gimpcontext.c:1302 app/core/gimpgradient.c:385
 #: app/core/gimpitem.c:382 app/core/gimppalette.c:438
 #: app/core/gimppattern.c:410 app/gui/templates-commands.c:126
-#: app/tools/gimpvectortool.c:313
+#: app/tools/gimpvectortool.c:329
 msgid "Unnamed"
 msgstr "Namenlos"
 
@@ -3661,7 +3658,7 @@ msgstr "Auf oberste Ebene beschnitten"
 
 #: app/gui/image-commands.c:423
 msgid "Resizing..."
-msgstr ""
+msgstr "Grösse verändern..."
 
 #: app/gui/image-commands.c:439
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -4311,7 +4308,7 @@ msgstr "/_Dialoge"
 
 #: app/gui/image-menu.c:853
 msgid "/Dialogs/_Create New Dock"
-msgstr "Dialoge/Neues _Dock"
+msgstr "/Dialoge/Neues _Dock"
 
 #: app/gui/image-menu.c:855
 msgid "/Dialogs/Create New Dock/Layers, Channels & Paths..."
@@ -5170,11 +5167,11 @@ msgstr ""
 #. Keyboard Shortcuts
 #: app/gui/preferences-dialog.c:1194
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Tastaturkürzel"
 
 #: app/gui/preferences-dialog.c:1197
 msgid "Dynamic _Keyboard Shortcuts"
-msgstr ""
+msgstr "Dynamische _Tastaturkürzel"
 
 #: app/gui/preferences-dialog.c:1200
 msgid "Save Keyboard Shortcuts on Exit"
@@ -5186,7 +5183,7 @@ msgstr "Tastaturbelegung beim Start _wiederherstellen"
 
 #: app/gui/preferences-dialog.c:1211
 msgid "Save Keyboard Shortcuts Now"
-msgstr ""
+msgstr "Tastaturkürzel jetzt speichern"
 
 #: app/gui/preferences-dialog.c:1220
 msgid "Clear Saved Keyboard Shortcuts Now"
@@ -6941,6 +6938,12 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Textebene hinzufügen"
 
+#: app/text/gimptext-parasite.c:162
+msgid ""
+"Can not convert GDynText layer because it contains text that is not UTF-8 "
+"encoded."
+msgstr ""
+
 #: app/text/gimptext.c:159
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
@@ -6960,11 +6963,11 @@ msgstr ""
 msgid "Additional line spacing (in pixels)"
 msgstr "Zusätzlicher Zeilenabstand (in Pixeln)"
 
-#: app/text/gimptextlayer.c:123
+#: app/text/gimptextlayer.c:124
 msgid "Text Layer"
 msgstr "Textebene"
 
-#: app/text/gimptextlayer.c:329
+#: app/text/gimptextlayer.c:409
 msgid "Empty Text Layer"
 msgstr "Leere Textebene"
 
@@ -8192,15 +8195,15 @@ msgstr ""
 "Transformationen funktionieren nicht\n"
 "auf Ebenen, die Masken enthalten."
 
-#: app/tools/gimpvectortool.c:112
+#: app/tools/gimpvectortool.c:114
 msgid "Vectors"
 msgstr "Vektoren"
 
-#: app/tools/gimpvectortool.c:113
+#: app/tools/gimpvectortool.c:115
 msgid "the most promising path tool prototype... :-)"
 msgstr "Der vielversprechendste Pfadwerkzeug-Prototyp... :-)"
 
-#: app/tools/gimpvectortool.c:114
+#: app/tools/gimpvectortool.c:116
 msgid "/Tools/Vectors"
 msgstr "/Werkzeuge/Vektoren"
 
@@ -9030,7 +9033,7 @@ msgstr "GIMP Meldung"
 msgid "<%s>"
 msgstr "<%s>"
 
-#: app/xcf/xcf-load.c:258
+#: app/xcf/xcf-load.c:261
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -9044,8 +9047,8 @@ msgstr ""
 msgid "(invalid UTF-8 string)"
 msgstr "(ungültige UTF-8-Zeichenkette)"
 
-#: app/xcf/xcf-save.c:143 app/xcf/xcf-save.c:153 app/xcf/xcf-save.c:163
-#: app/xcf/xcf-save.c:173 app/xcf/xcf-save.c:187 app/xcf/xcf.c:318
+#: app/xcf/xcf-save.c:146 app/xcf/xcf-save.c:156 app/xcf/xcf-save.c:166
+#: app/xcf/xcf-save.c:176 app/xcf/xcf-save.c:190 app/xcf/xcf.c:318
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Fehler beim Schreiben der XCF-Datei: %s"

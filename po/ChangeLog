@@ -1,3 +1,9 @@
+2003-06-25  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/text/gimptext-parasite.c.
+
+	* de.po: updated.
+
 2003-06-25  Mohammad DAMT  <mdamt@bisnisweb.com>
 
 	* id.po: Added Indonesian translation
