@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.21+\n"
-"POT-Creation-Date: 2000-06-18 19:40-0700\n"
-"PO-Revision-Date: 2000-06-08 23:43+00:00\n"
+"POT-Creation-Date: 2000-06-24 13:45+0000\n"
+"PO-Revision-Date: 2000-06-24 13:46+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -8790,9 +8790,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2423
-#, fuzzy
 msgid "Rotate Follow"
-msgstr "Вращение: "
+msgstr "Следующее вращение"
 
 #: plug-ins/gap/gap_mov_dialog.c:2434
 msgid ""
@@ -12832,9 +12831,8 @@ msgid "No selection to convert"
 msgstr "Нет выделения для преобразования"
 
 #: plug-ins/sel2path/sel2path.c:333
-#, fuzzy
 msgid "Sel2Path Advanced Settings"
-msgstr "Дополнительные настройки"
+msgstr "Дополнительные настройки Выделение->Контур"
 
 #: plug-ins/sel2path/sel2path.c:542
 #, c-format
