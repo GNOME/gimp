@@ -1,3 +1,8 @@
+2002-07-26  Sven Neumann  <sven@gimp.org>
+
+	* app/commands.c (select_shrink_cmd_callback): use _(), not N_() so
+	that the dialog title gets translated (bug #89093).
+
 2002-07-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_about.c
@@ -12,8 +17,8 @@
 
 2002-07-09  Sven Neumann  <sven@gimp.org>
 
-	* configure.in * plug-ins/common/mail.c: merged changes from HEAD
-	branch (bug #83208).
+	* configure.in
+	* plug-ins/common/mail.c: merged changes from HEAD branch (bug #83208).
 
 2002-07-09  Sven Neumann  <sven@gimp.org>
 

@@ -373,7 +373,7 @@ select_shrink_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp);
 
   shrink_dialog =
-    gimp_query_size_box (N_("Shrink Selection"),
+    gimp_query_size_box (_("Shrink Selection"),
 			 gimp_standard_help_func,
 			 "dialogs/shrink_selection.html",
 			 _("Shrink Selection by:"),
