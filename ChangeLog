@@ -1,3 +1,10 @@
+2005-03-01  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/mail.c: use g_spawn_async_with_pipes instead of
+	popen. Addresses bug #108659. Also some general cleanup.
+
+	* plug-ins/common/mblur.c: Fix some typos in comments.
+
 2005-03-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.[ch]: added VISIBLE and LINKED to the

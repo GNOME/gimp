@@ -38,8 +38,8 @@
  *     Bilinear interpolation from original mblur for 0.54
  *     Speed all things up
  *              ? better caching scheme
- *              - while bluring along long trajektory do not averrage all
- *                pixels but averrage only few samples
+ *              - while blurring along long trajectory do not average all
+ *                pixels but average only few samples
  *     Function for weight of samples along trajectory
  *     Preview
  *     Support paths in GiMP 1.1 :-)
