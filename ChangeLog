@@ -1,3 +1,11 @@
+2000-02-09  Garry R. Osgood <gosgood@idt.net>
+
+        * gimp/plug-ins/common/randomize.c
+	Inadvertent use of wrong adjustment
+	update callback failed to get proper
+	value of randomizing count from GUI.
+	[line 771, CVS-1.28] Closes #5948.
+	
 Mit Feb  9 15:32:39 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/menus.c: an attempt to guard us against badly translated

@@ -768,7 +768,7 @@ randomize_dialog (void)
 			      TRUE, 0, 0,
 			      _("Number of times to apply filter"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
                       &pivals.rndm_rcount);
 
   gtk_widget_show (frame);
