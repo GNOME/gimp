@@ -1,3 +1,8 @@
+2003-02-14  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimplayermask.c (gimp_layer_mask_duplicate): return the
+	duplicate, not the original mask. Fixes bug #106010.
+
 2003-02-13  Raphael Quinet  <quinet@gamers.org>
 
 	* docs/make-todo: fix the address of the GIMP bug database so that

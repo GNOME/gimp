@@ -158,7 +158,7 @@ gimp_layer_mask_duplicate (GimpItem *item,
   new_layer_mask->edit_mask  = layer_mask->edit_mask;
   new_layer_mask->show_mask  = layer_mask->show_mask;
 
-  return item;
+  return new_item;
 }
 
 GimpLayerMask *
