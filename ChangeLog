@@ -1,5 +1,10 @@
 2005-03-08  Sven Neumann  <sven@gimp.org>
 
+	* app/file/file-open.c (file_open_layer): open images interactively.
+	Fixes bug #168936.
+
+2005-03-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimppaintoptions-gui.c (fade_options_gui)
 	(gradient_options_gui)
 	* app/tools/gimpselectionoptions.c (gimp_selection_options_gui):
