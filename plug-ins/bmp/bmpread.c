@@ -291,6 +291,8 @@ ReadBMP (const gchar *name)
   if ((Bitmap_Head.biClrUsed == 0) && (Bitmap_Head.biBitCnt <= 8))
     ColormapSize = Bitmap_Head.biClrUsed = 1 << Bitmap_Head.biBitCnt;
 
+  if (ColormapSize > 256)
+    ColormapSize = 256;
 
   /* Sanity checks */
 
@@ -306,7 +308,7 @@ ReadBMP (const gchar *name)
       return -1;
   }
 
-  if (ColormapSize > 256 || Bitmap_Head.biClrUsed > 256) {
+  if (Bitmap_Head.biClrUsed > 256) {
       g_message (_("Error reading BMP file header from '%s'"),
                   gimp_filename_to_utf8 (filename));
       return -1;
