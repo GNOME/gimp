@@ -1,0 +1,860 @@
+# GIMP-PERL.HEAD in VN.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# T.M.Thanh <tmthanh@yahoo.com>, 2002.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-perl 1.14\n"
+"POT-Creation-Date: 1999-09-12 17:58+0200\n"
+"PO-Revision-Date: 2002-07-12 22:48+0700\n"
+"Last-Translator: Trinh Minh Thanh <tmthanh@linuxmail.org>\n"
+"Language-Team: Gnome-Vi Team <Gnomevi-list@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "expected perl-server at other end of socket, got @r\n"
+msgstr "máy chủ perl mong đợi tại phần kết thúc của socket, nhận @r\n"
+
+msgid "too many"
+msgstr "quá nhiều"
+
+msgid "<Image>/Filters/Logulator/Transparent Logo..."
+msgstr "<anh>/trình lọc/logulator/Logo trong suốt..."
+
+msgid "$s: not an integer\n"
+msgstr "$s: không phải một số nguyên\n"
+
+msgid "<Image>/Select/Round Rectangular Selection..."
+msgstr "<Ảnh>/Chọn/Việc chọn vuông góc tròn..."
+
+msgid "<Image>/Guides/To Selection..."
+msgstr "<Ảnh>/Hướng dẫn/Để chọn..."
+
+msgid "Help for "
+msgstr "Trợ giúp cho "
+
+msgid "illegal parasite specification, expected three array members"
+msgstr ""
+
+msgid "Last Modified"
+msgstr "Thay đổi gần nhất"
+
+msgid "unable to read '$fn': $!"
+msgstr "không thể đọc '$fn': $!"
+
+msgid "<Image>/Filters/Map/Image Tile..."
+msgstr "<Ảnh>/Trình lọc/Map/Tile ảnh..."
+
+msgid "<Image>/Filters/Logulator/Crystal"
+msgstr "<Ảnh>/Trình lọc/Logulator/Pha lê"
+
+msgid "Unable to read temporary image tile $tmp: $!"
+msgstr "Không thể đọc tile ảnh tạm thời $tmp: $!"
+
+msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
+msgstr "run_mode phải là INTERACTIVE, NONINTERACTIVE hay RUN_WITH_LAST_VALS\n"
+
+msgid "Font Selection Dialog ($desc)"
+msgstr "Thoại Chọn Phông ($desc)"
+
+msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
+msgstr "xlfd_unpack: unmatched XLFD '$fontname'\n"
+
+msgid "<Image>/Filters/Noise/Xach Vision..."
+msgstr "<Ảnh>/Trình lọc/Ồn/Nhìn Xach..."
+
+msgid "$function: function name contains unusual characters, good style is to use only 0-9, a-z and _"
+msgstr "$function: tên chức năng chứa các ký tự không thông dụng, kiểu dáng tốt là chỉ khi dùng 0-9, a-z và _"
+
+msgid "Help"
+msgstr "Trợ giúp"
+
+msgid "<Image>/Image/Alpha/Clear Alpha..."
+msgstr "<Ảnh>/Ảnh/Alpha/Xóa sạch Alpha..."
+
+msgid "<Image>/Filters/Map/Pixelmap..."
+msgstr "<Ảnh>/Trình lọc/Map/Pixelmap..."
+
+msgid "unable to fork: $!"
+msgstr "không thể rẽ nhánh: $!"
+
+msgid "FG"
+msgstr "FG"
+
+msgid "FATAL: unable to create $tmp: $!\n"
+msgstr "Nguy hiểm: không thể tạo $tmp: $!\n"
+
+msgid "/Filters/Logulator"
+msgstr "/Trình lọc/Logulator"
+
+msgid "dunno how to return param type %d"
+msgstr "không biết cách gửi trả lại loại tham số %d"
+
+msgid "<Image>/Image/Alpha/Alpha2Color..."
+msgstr "<Ảnh>/Ảnh/Alpha/Alpha2Color..."
+
+msgid "Image Types"
+msgstr "Các kiểu ảnh"
+
+msgid "<Image>/Filters/Render/Stampify..."
+msgstr "<Ảnh>/Trình lọc/Render/Stampify..."
+
+msgid "could not connect to the gimp server (make sure Perl-Server is running)"
+msgstr "không thể kết nối với máy chủ Gimp (hãy đảm bảo là Máy chủ Perl đang chạy)"
+
+msgid "<Toolbox>/Xtns/Render/Stamps..."
+msgstr "<Hộp công cụ>/Xtns/Render/Stamps..."
+
+msgid "More..."
+msgstr "Hơn nữa..."
+
+msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
+msgstr "<Hộp công cụ>/Xtns/Render/Logos/Firetext..."
+
+msgid "interface=... tag is no longer supported\n"
+msgstr "interface=... tag không còn được hỗ trợ\n"
+
+msgid "Text"
+msgstr "Văn bản"
+
+msgid "<Image>/Filters/Render/Random Blends..."
+msgstr "<Ảnh>/Trình lọc/Render/Random Blends..."
+
+msgid "Synopsis"
+msgstr "Bản tóm tắt"
+
+msgid "Plug-In Path"
+msgstr "Đường dẫn Plug-In"
+
+msgid "Restore values to the previous ones"
+msgstr "Khôi phục các giá trị về những giá trị trước"
+
+msgid "Illegal default font description for $function: $val\n"
+msgstr "Mô tả phông mặc định không hợp lệ cho $function: $val\n"
+
+msgid "parameter '$entry->[1]' is not optional\n"
+msgstr "tham số '$entry->[1]' không bắt buộc\n"
+
+msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+
+msgid "WARNING: client tried to unlock without holding a lock"
+msgstr "Cảnh Báo: máy khác đã cố mở khóa mà không có khóa"
+
+msgid "<Toolbox>/Xtns/Perl/Control Center..."
+msgstr "<Hộp công cụ>/Xtns/Perl/Trung Tâm Điều Khiển..."
+
+msgid "register called with too many or wrong arguments\n"
+msgstr "đăng ký được gọi với quá nhiều đối số hoặc sai\n"
+
+msgid "<Image>/Filters/Animation/Animate Cells..."
+msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/Đơn vị Hoạt cảnh..."
+
+msgid "Spin Layer SRC (250ms)"
+msgstr "Xoay SRC lớp (250ms)"
+
+msgid "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
+msgstr ""
+
+msgid "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 and report this error"
+msgstr ""
+
+msgid "last argument to gimp_pattern_select_widget must be scalar ref"
+msgstr ""
+
+msgid "\n\nEMBEDDED POD DOCUMENTATION:\n\n"
+msgstr ""
+
+msgid "Fileselector for $name"
+msgstr "Trình chọn tập tin cho $name"
+
+msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
+msgstr "<Hộp công cụ>/Xtns/Render/Trình tạo pixel..."
+
+msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
+msgstr ""
+
+msgid "<Image>/Filters/Distorts/MirrorSplit..."
+msgstr "<Anh>/Trình lọc/Biến dạng/Chia tách đôi..."
+
+msgid "<Image>/Filters/Noise/Feedback..."
+msgstr "<Ảnh>/Trình lọc/Độ ồn/Phản hồi..."
+
+msgid "<Toolbox>/Xtns/Animation/Billboard..."
+msgstr "<Hộp công cụ>/Xtns/Hoạt cảnh/Bảng niêm yết..."
+
+msgid "unable to create listening unix socket: $!\n"
+msgstr "không thể tạo listening unix socket: $!\n"
+
+msgid ", %d bytes data]"
+msgstr ", %d bytes data]"
+
+msgid "server requests authorization, but no authorization available\n"
+msgstr "máy chủ yêu cầu ủy quyền, nhưng không có sẵn sự ủy quyền\n"
+
+msgid "pdl height != region height"
+msgstr "chiều cao của pdl != chiều cao vùng"
+
+msgid "<Image>/Guides/Center Guide..."
+msgstr "<Ảnh>/Hướng dẫn/Trung Tâm Hướng Dẫn..."
+
+msgid "Close"
+msgstr "Đóng"
+
+msgid "unable to open $rgb_db_path"
+msgstr "không thể mở $rgb_db_path"
+
+msgid "You can't run this script with an INDEXED image!!"
+msgstr "Không thể chạy script này với ảnh chỉ mục!!"
+
+msgid "An even number of frames is needed for spin back.\nAdjusted frames up to $frames"
+msgstr ""
+
+msgid "<Image>/Filters/Render/Add Glow"
+msgstr "<Ảnh>/Trình lọc/Render/Thêm Rực rỡ"
+
+msgid "function name contains dashes instead of underscores"
+msgstr "tên chức năng chứa các nét thay cho đường gạch dưới"
+
+msgid "required callback 'run' not found\n"
+msgstr "không tìm thấy callback 'run' được yêu cầu\n"
+
+msgid "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z and _ allowed"
+msgstr "$function: tên đói số '$p->[1]' chứa các ký tự không hợp lệ, chỉ cho phép 0-9, a-z và _"
+
+msgid "required callback 'query' not found\n"
+msgstr "không tìm thấy callback 'query' được yêu cầu'\n"
+
+msgid "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
+msgstr "mong muốn INT32 nhưng nhận '%s'. Thêm '*1' nếu bạn thật sự muốn chết trong chuỗi"
+
+msgid "wrong authorization, aborting connection"
+msgstr "ủy quyền sai, bỏ kết nối"
+
+msgid "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
+msgstr "GIMP_HOST không hợp lệ: 'spawn' không phải phương thức kết nối hợp lệ cho máy chủ"
+
+msgid "WARNING"
+msgstr "CẢNH BÁO"
+
+msgid "Brush Selection Dialog"
+msgstr "Thoại chọn bút lông"
+
+msgid "(none)"
+msgstr "(không)"
+
+msgid "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use strict'"
+msgstr ""
+
+msgid "authorization required for tcp connections"
+msgstr "Yêu cầu ủy quyền cho các kết nối TCP"
+
+msgid "[undefined]"
+msgstr "[không định nghĩa]"
+
+msgid "<Image>/Guides/Remove Guides"
+msgstr "<Ảnh>/Hướng dẫn/Bỏ Hướng dẫn"
+
+msgid "unable to open Gimp::Net communications socket: $!\n"
+msgstr "không thể mở Gimp::Net communications socket: $!\n"
+
+msgid "You can't run this script without an ALPHA CHANNEL!!"
+msgstr "Không thể chạy script này mà không có một Kênh Alpha!!"
+
+msgid "WARNING: shared locking requested but not implemented"
+msgstr "CẢNH BÁO: việc khoá chia sẻ được yêu cầu nhưng không được thi hành"
+
+msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
+msgstr "<Hộp công cụ>/Xtns/Render/Yin-Yang..."
+
+msgid "<Image>/Filters/Logulator/SOTA Chrome"
+msgstr "<Ảnh>/Trình lọc/Logulator/SOTA Chrome"
+
+msgid "%s: procedural database execution failed"
+msgstr "%s: không thực thi được cơ sở dữ liệu thủ tục"
+
+msgid "<Image>/Video/VCR Console..."
+msgstr "<Ảnh>/Video/VCR Console..."
+
+msgid ", authorization required"
+msgstr ", yêu cầu ủy quyền"
+
+msgid "<Toolbox>/Xtns/Render/Golden Mean..."
+msgstr "<Hộp công cụ>/Xtns/Render/Golden Mean..."
+
+msgid "unable to create socketpair for gimp communications: $!"
+msgstr "không thể tạo socketpair cho các liên thông của Gimp: $!"
+
+msgid "<Image>/View/3D Surface..."
+msgstr "<Ảnh>/Xem/Bề mặt 3D..."
+
+msgid "trying to start gimp with options \"$opt\"\n"
+msgstr "đang cố chạy gimp với tùy chọn \"$opt\"\n"
+
+msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
+msgstr "<Hộp công cụ>/Xtns/Render/Logos/Inner Bevel..."
+
+msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
+msgstr "đường dẫn của menu _phải_ bắt đầu bằng <Ảnh>, <Hộp công cụ>, <Nạp>, <Lưu> hay <Không>!"
+
+msgid "<Image>/Filters/Misc/Magick..."
+msgstr "<Ảnh>/Trình lọc/Misc/Magick..."
+
+msgid "<Toolbox>/Xtns/Perl/Server"
+msgstr "<Hộp công cụ>/Xtns/Perl/Máy chủ"
+
+msgid "<Image>/Edit/Repeat & Duplicate..."
+msgstr "<Ảnh>/Biên soạn/Nhắc lại & Nhân đôi..."
+
+msgid "accepted unix connection"
+msgstr "kết nối unix được chấp nhận"
+
+msgid "<Image>/Filters/Colors/Map To Gradient..."
+msgstr "<Ảnh>/Trình lọc/Màu sắc/Map To Gradient..."
+
+msgid "<Image>/Filters/Logulator/Imigre-26"
+msgstr "<Ảnh>/Trình lọc/Logulator/Imigre-26"
+
+msgid "gimp_tile_get_data is not yet implemented\n"
+msgstr "gimp_tile_get_data vẫn chưa được thi hành\n"
+
+msgid "dunno how to pass arg type %d"
+msgstr "không biết cách đi qua kiểu đối số %d"
+
+msgid "Browse"
+msgstr "Duyệt"
+
+msgid "Author"
+msgstr "Tác giả"
+
+msgid "unable to create '$fn': $!"
+msgstr "không thể tạo '$fn': $!"
+
+msgid "received QUIT request"
+msgstr "đã nhận yêu cầu THOÁT"
+
+msgid "unable to create listening tcp socket: $!\n"
+msgstr "không thể tạo socket tcp nghe: $!\n"
+
+msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
+msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
+
+msgid "BLURB:\n\n$blurb\n\nHELP:\n\n$help"
+msgstr "BLURB:\n\n$blurb\n\nHELP:\n\n$help"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "gimp_tile_set_data is not yet implemented\n"
+msgstr "gimp_tile_set_data vẫn chưa được thực thi\n"
+
+msgid "argument incompatible with type IMAGE"
+msgstr "đối số không tương thích với loại ẢNH"
+
+msgid "accepting connections on port $port"
+msgstr "đang chấp nhận các kết nối tại cổng $port"
+
+msgid "<Image>/Filters/Text/Terral Text..."
+msgstr "<Ảnh>/Trình lọc/Văn bản/Terral Text..."
+
+msgid "Description"
+msgstr "Mô Tả"
+
+msgid "params and return_vals must be array refs (even if empty)!"
+msgstr ""
+
+msgid "<Image>/Filters/Logulator/Newsprint text"
+msgstr "<Ảnh>/Trình lọc/Logulator/Newsprint text"
+
+msgid "<Image>/Filters/Animation/BlowInOut..."
+msgstr "<Ảnh>/Trình lọc/Hoạt cảnh/BlowInOut..."
+
+msgid "$_: illegal switch, try $0 --help\n"
+msgstr "$_: chuyển mạch không hợp lệ, hãy thử $0 --help\n"
+
+msgid "Unable to convert a reference to type '%s'"
+msgstr "Không thể chuyển đổi một tham chiếu thành loại '%s'"
+
+msgid "<Image>/Filters/Text/TeX String..."
+msgstr "<Ảnh>/Trình lọc/Văn bản/Chuỗi TeX..."
+
+msgid "<Image>/Guides/Guide Grid..."
+msgstr "<Ảnh>/Hướng dẫn/Ô chỉ dẫn..."
+
+msgid "<Toolbox>/Xtns/PDB Explorer..."
+msgstr "<Hộp công cụ>/Xtns/Trình thăm dò PDB..."
+
+msgid "<Image>/Filters/Distorts/Windify..."
+msgstr ""
+
+msgid "<Image>/Filters/Apply Perl Expression..."
+msgstr ""
+
+msgid "gimp procedure '%s' not found"
+msgstr "không tìm thấy thủ tục Gimp '%s'"
+
+msgid "Visual Scriptor"
+msgstr ""
+
+msgid "<Image>/Filters/Map/Xach Blocks..."
+msgstr ""
+
+msgid "server going down..."
+msgstr "máy chủ đang tắt..."
+
+msgid "unable to read temporary file $tmp: $!"
+msgstr "không thể đọc tập tin tạm thời $tmp: $!"
+
+msgid "Saving '$filename' as COLORHTML..."
+msgstr "Đang lưu '$filename' là COLORHTML..."
+
+msgid "being called as '%s', but '%s' not registered in the pdb"
+msgstr "được gọi là '%s', nhưng '%s' không được đăng ký trong pdb"
+
+msgid "Shortcuts"
+msgstr "Lối tắt"
+
+msgid "<Image>/Filters/Logulator/Speed text"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Create_Images"
+msgstr "<Hộp công cụ>/Xtns/Tạo_Ảnh"
+
+msgid "<Toolbox>/Xtns/Parasite Editor..."
+msgstr "<Hộp công cụ>/Xtns/Trình biên soạn Parasite..."
+
+msgid "9x15bold"
+msgstr "9x15đậm"
+
+msgid "unauthorized command received, aborting connection"
+msgstr "đã nhận lệnh không ủy quyền, bỏ kết nối"
+
+msgid "%s: procedural database execution failed on invalid input arguments"
+msgstr "%s: không thực thi được cơ sở dữ liệu thủ tục trên các đối số đầu vào không hợp lệ"
+
+msgid "<Toolbox>/Xtns/Visual Scriptor..."
+msgstr "<Hộp công cụ>/Xtns/Visual Scriptor..."
+
+msgid "NAME"
+msgstr "TÊN"
+
+msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
+msgstr ""
+
+msgid "<Image>/Filters/Colors/Fire..."
+msgstr "<Ảnh>/Trình lọc/Màu/Lửa..."
+
+msgid "<Image>/Filters/Logulator/Web title header"
+msgstr ""
+
+msgid "FATAL: canonicalize_colour did not return a value!"
+msgstr ""
+
+msgid "export failed"
+msgstr "không xuất ra được"
+
+msgid ""
+"       interface-arguments are\n"
+"           -o | --output <filespec>   write image to disk, don't display\n"
+"           -i | --interact            let the user edit the values first\n"
+"       script-arguments are\n"
+msgstr ""
+
+msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
+msgstr ""
+
+msgid "<Image>/Layers/Center Layer"
+msgstr "<Ảnh>/Lớp/Lớp Trung Tâm"
+
+msgid "closing connection %d (%d requests in %g seconds)"
+msgstr "đang đóng kết nối %d (%d yêu cầu trong %g giây)"
+
+msgid "Reset all values to their default"
+msgstr "Lập lại toàn bộ các giá trị về mặc định"
+
+msgid "<Image>/Filters/Misc/Border Average..."
+msgstr ""
+
+msgid "conversion from string to type $pf_type2string{$type} is not yet implemented\n"
+msgstr ""
+
+msgid ""
+"Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
+"       gimp-arguments are\n"
+"           -gimp <anything>           used internally only\n"
+"           -h | -help | --help | -?   print some help\n"
+"           -v | --verbose             be more verbose in what you do\n"
+"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using PORT)\n"
+"                                      (for more info, see Gimp::Net(3))\n"
+msgstr ""
+
+msgid "too many arguments"
+msgstr "quá nhiều đối số"
+
+msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
+msgstr ""
+
+msgid "Load"
+msgstr "Nạp"
+
+msgid "unable to grok colour specification"
+msgstr ""
+
+msgid "no additional information available, use --help\n"
+msgstr "không có sẵn thông tin thêm, hãy dùng --help\n"
+
+msgid "the gtk perl module is required to open a dialog\nwindow, running with default values"
+msgstr "yêu cầu mô-đun perl gtk để mở một cửa sổ\nhộp thoại, đang chạy với các giá trị mặc định"
+
+msgid "Gradient Selection Dialog"
+msgstr "Thoại Chọn Gradient"
+
+msgid " matching functions"
+msgstr " làm khớp các chức năng"
+
+msgid "authorization ok, but: $r[1]\n"
+msgstr "việc ủy quyền tốt, nhưng: $r[1]\n"
+
+msgid "Cannot call '$AUTOLOAD' at this time"
+msgstr "không thể gọi '$AUTOLOAD' vào lúc này"
+
+msgid "function/macro \"$name\" not found in $class"
+msgstr "không tìm thấy chức năng/macro \"$name\" trong $class"
+
+msgid "arguments to main not yet supported!"
+msgstr "vẫn chưa hỗ trợ các đối số cho main!"
+
+msgid "accepting connections in $host"
+msgstr "đang chấp nhận các kết nối trong $host"
+
+msgid " (press Tab to complete)"
+msgstr " (nhấn Tab để hoàn thành)"
+
+msgid "Save $name"
+msgstr "Lưu $name"
+
+msgid "<Image>/Filters/Enhance/Warp Sharp..."
+msgstr ""
+
+msgid "<Image>/Filters/Web/Prepare for GIF..."
+msgstr "<Ảnh>/Trình lọc/Web/Chuẩn bị cho GIF..."
+
+msgid "illegal type for colour specification"
+msgstr "kiểu không hợp lệ cho việc chỉ định màu"
+
+msgid "<Image> plug-in called without both image and drawable arguments!\n"
+msgstr ""
+
+msgid "Seth Spin..."
+msgstr ""
+
+msgid "get current background colour from the gimp"
+msgstr "lấy màu nền hiện thời từ Gimp"
+
+msgid "<Image>/Filters/Text/Fit Text..."
+msgstr "<Ảnh>/Trình lọc/Văn bản/Làm Vừa Văn Bản..."
+
+msgid "No horizontal or vertical guides found. Aborted."
+msgstr "Không tìm thấy hướng dẫn ngang hay dọc. Bị bỏ qua."
+
+msgid "accepting connections on port $Gimp::Net::default_tcp_port"
+msgstr "đang chấp nhận các kết nối trên cổng $Gimp::Net::default_tcp_port"
+
+msgid "Menu Path"
+msgstr "Đường Dẫn MENU"
+
+msgid "TYPE"
+msgstr "LOẠI"
+
+msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
+msgstr ""
+
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr "Cần ít nhất hai lớp để thực hiện chuẩn bị cho gif"
+
+msgid "<Image>/Filters/Blur/2x2 Blur"
+msgstr ""
+
+msgid "interface '$interface_type' unsupported."
+msgstr "không hỗ trợ giao diện '$interface_type'."
+
+msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
+msgstr ""
+
+msgid "<Load> plug-in called without the 3 standard arguments!\n"
+msgstr "<Nạp> đã gọi plug-in mà không có 3 đối số chuẩn!\n"
+
+msgid "Unable to grok '%s' as colour specifier"
+msgstr ""
+
+msgid "gimp-perl-pixel functions require the PDL::Core module"
+msgstr "các chức năng gimp-perl-pixel yêu cầu PDL::Mô-đun lõi"
+
+msgid "a color must have three components (array elements)"
+msgstr "một màu phải có ba thành phần (các phần tử mảng)"
+
+msgid "Defaults"
+msgstr "Mặc định"
+
+msgid "Copyright"
+msgstr "Bản quyền"
+
+msgid "<Image>/Select/Triangle..."
+msgstr "<Ảnh>/Chọn/Tam giác..."
+
+msgid "<Image>/Filters/Render/Burst..."
+msgstr ""
+
+msgid "WARNING: client disconnected while holding an active lock\n"
+msgstr "Cảnh báo: máy khách đã bị bỏ kết nối khi đang giữ khóa hoạt động\n"
+
+msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
+msgstr "<Hộp công cụ>/Xtns/Gimp::Ví dụ về Fu..."
+
+msgid "/Xtns/Render/Logos"
+msgstr "/Xtns/Render/Logos"
+
+msgid "argument is not of type %s"
+msgstr "đối số không phải là loại %s"
+
+msgid "server version $Gimp::VERSION started"
+msgstr "phiên bản máy chủ $gimp::PHIÊN BẢN đã chạy"
+
+msgid "Background"
+msgstr "Nền"
+
+msgid "%s arguments for function '%s'"
+msgstr "%s đối số cho chức năng '%s'"
+
+msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
+msgstr ""
+
+msgid "only blessed scalars accepted here"
+msgstr ""
+
+msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
+msgstr ""
+
+msgid "illegal parasite specification, arrayref expected"
+msgstr ""
+
+msgid "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
+msgstr ""
+
+msgid "Save"
+msgstr "Lưu"
+
+msgid "<Image>/Filters/Logulator/Carved"
+msgstr ""
+
+msgid "Function Info"
+msgstr "Thông tin chức năng"
+
+msgid "no font specified, using default"
+msgstr "không có phông được chỉ định, đang dùng mặc định"
+
+msgid "the gtk perl module is required to run\nthis plug-in in interactive mode\n"
+msgstr ""
+
+msgid "authorization failed: $r[1]\n"
+msgstr ""
+
+msgid "Previous"
+msgstr "Trước"
+
+msgid "Command"
+msgstr "Lệnh"
+
+msgid "$function: calling $AUTOLOAD without specifying the :auto import tag is deprecated!\n"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Render/Bricks..."
+msgstr ""
+
+msgid "DESCRIPTION"
+msgstr "MÔ TẢ"
+
+msgid "Accelerator"
+msgstr "Trình tăng tốc"
+
+msgid "Cancel"
+msgstr "Bỏ qua"
+
+msgid "<Image>/Filters/Map/Xach Shadows..."
+msgstr ""
+
+msgid "argument type %s expected (not %s)"
+msgstr "mong muốn kiểu đối số %s (không phải %s)"
+
+msgid "BG"
+msgstr "BG"
+
+msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
+msgstr ""
+
+msgid "<Image>/Filters/Render/Highlight Edges..."
+msgstr ""
+
+msgid "This module was built without support for PDL."
+msgstr "Mô-đun này được làm nhưng không hỗ trợ PDL."
+
+msgid "[unfinished]\n"
+msgstr "[không được kết thúc]\n"
+
+msgid "Spin Layer DEST (250ms)"
+msgstr ""
+
+msgid "Bumpmap"
+msgstr ""
+
+msgid "Date/Version"
+msgstr "Ngày/Phiên bản"
+
+msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
+msgstr ""
+
+msgid "required callback 'net' not found\n"
+msgstr ""
+
+msgid "function '$exe' not found in this script (must be one of "
+msgstr "không tìm được '$exe' trong script này (phải là một trong những"
+
+msgid "<Image>/Filters/Colors/Colour To Alpha..."
+msgstr ""
+
+msgid "/Xtns/Perl"
+msgstr "/Xtns/Perl"
+
+msgid "<Toolbox>/Xtns/Render/Random Art #1..."
+msgstr ""
+
+msgid "accepted tcp connection from "
+msgstr "đã chấp nhận kết nối tcp từ "
+
+msgid "Status"
+msgstr "Trạng thái"
+
+msgid "Load $name"
+msgstr "Nạp $name"
+
+msgid "<Save> plug-in called without the 5 standard arguments!\n"
+msgstr "<Lưu> plug-in được gọi mà không kèm theo 5 đối số chuẩn!\n"
+
+msgid "unable to accept unix connection: $!\n"
+msgstr "không thể chấp nhận kết nối unix: $!\n"
+
+msgid "<Toolbox>/Xtns/Perl Example Plug-in"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
+msgstr ""
+
+msgid "unable to accept tcp connection: $!\n"
+msgstr "không thể chấp nhận kết nối tcp: $!\n"
+
+msgid "(UNINITIALIZED)"
+msgstr "(KHÔNG SƠ KHỞI)"
+
+msgid "<Image>/Filters/Render/Brushed Metal..."
+msgstr ""
+
+msgid "perl-arrayref required as datatype for a gimp-array"
+msgstr ""
+
+msgid "<Image>/Filters/Web/Webify..."
+msgstr ""
+
+msgid "Unable to open '$filename' for writing: $!\n"
+msgstr "Không thể mở '$filename' để ghi: $!\n"
+
+msgid "Unsupported argumenttype $type"
+msgstr "không hỗ trợ kiểu đối số $type"
+
+msgid "/Xtns/Render/Povray"
+msgstr "/Xtns/Render/Povray"
+
+msgid "Color"
+msgstr "Màu sắc"
+
+msgid "authorization unnecessary"
+msgstr "không cần thiết ủy quyền"
+
+msgid "illegal parasite specification, reference expected"
+msgstr ""
+
+msgid "too many arguments, use --help\n"
+msgstr "quá nhiều đối số, hãy dùng --help\n"
+
+msgid "<Toolbox>/Xtns/Render/Font Table..."
+msgstr "<Toolbox>/Xtns/Render/Bảng Phông..."
+
+msgid "Edit"
+msgstr "Biên soạn"
+
+msgid "<Image>/Filters/Logulator/Blended II..."
+msgstr "<Ảnh>/Trình lọc/Logulator/Blended II..."
+
+msgid "Saving '$filename' as DATAURL..."
+msgstr "Đang lưu '$filename' là DATAURL..."
+
+msgid "text string is empty"
+msgstr "chuỗi văn bản trống"
+
+msgid "<Image>/Filters/Distorts/Scratches..."
+msgstr ""
+
+msgid "$_: unknown/illegal file-save option"
+msgstr ""
+
+msgid "/Xtns/Render"
+msgstr "/Xtns/Render"
+
+msgid " = [argument error]\n"
+msgstr " = [lỗi đối số]\n"
+
+msgid "<Image>/Select/Round..."
+msgstr "<Ảnh>/Chọn/Tròn..."
+
+msgid "plug-in returned %d more values than expected"
+msgstr ""
+
+msgid "$_ is not a valid import tag for package $pkg"
+msgstr "$_ không phải tag nhập vào hợp lệ cho gói tin $pkg"
+
+msgid "url size is too large ($max > 1024)\n"
+msgstr "kích thước url quá lớn ($max > 1024)\n"
+
+msgid "illegal command received, aborting connection"
+msgstr "đã nhận lệnh không hợp lệ, bỏ kết nối"
+
+msgid "<Image>/Filters/Noise/Ditherize..."
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
+msgstr ""
+
+msgid "Pattern Selection Dialog"
+msgstr "Thoại Chọn Mẫu"
+
+msgid "get current foreground colour from the gimp"
+msgstr "lấy màu nền hiện thời từ Gimp"
+
+msgid "<Image>/Filters/Render/Add Dust..."
+msgstr "<Ảnh>/Trình lọc/Render/Thêm Bụi..."
+
+msgid "not enough"
+msgstr "chưa đủ"
+
+msgid "PDB Explorer - the olof edition (yet still an alpha version)"
+msgstr ""
+
+msgid "<Image>/Filters/Web/Perl-o-tine..."
+msgstr "<Ảnh>/Trình lọc/Web/Perl-o-tine..."
+
+msgid "<Image>/Layers/Stack/Reorder Layers..."
+msgstr "<Ảnh>/Lớp/Stack/Yêu cầu lại Lớp..."
+
+msgid "accepting connections on $unix_path"
+msgstr "đang chấp nhận các kết nối trên $unix_path"
+
