@@ -27,6 +27,10 @@ install : all
 	mkdir -p $(addsuffix /LC_MESSAGES,$(addprefix $(LOCALEDIR)/,$(LANGUAGES)))
 	for l in $(LANGUAGES); do cp $$l.gmo $(LOCALEDIR)/$$l/LC_MESSAGES/$(PACKAGE).mo; done
 
+# Hack...
+distdir: 
+	@echo Do it manually
+
 .SUFFIXES: .po .utf8 .gmo
 
 .utf8.gmo:
@@ -126,6 +130,9 @@ sv.utf8: sv.po
 
 uk.utf8: uk.po
 	iconv -f KOI8-U -t UTF-8 uk.po >$@
+
+ta.utf8: ta.po
+	iconv -f ISO-8859-1 -t UTF-8 ta.po >$@
 
 tr.utf8: tr.po
 	iconv -f ISO-8859-9 -t UTF-8 tr.po >$@

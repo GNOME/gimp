@@ -26,6 +26,10 @@
 
 	* ca.po: Updated Catalan file
 
+2002-05-27  Tor Lillqvist  <tml@iki.fi>
+
+	* makefile.mingw: Add ta.
+
 2002-05-23  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
 
 	* sk.po: Updated Slovak translation from Zdenko Podobny <zdpo@mailbox.sk>.
@@ -206,6 +210,10 @@
 
 	* pl.po: Updated Polish translation by
 	GNOME PL Team <translators@gnome.pl>.
+
+2001-11-09  Tor Lillqvist  <tml@iki.fi>
+
+	* makefile.mingw: Use Unixish locale directory.
 
 2001-11-07  Abel Cheung  <maddog@linux.org.hk>
 
