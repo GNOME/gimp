@@ -349,7 +349,10 @@ AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_HEADER_TIME
 
+AC_CHECK_HEADER(sys/param.h, AC_DEFINE(HAVE_SYS_PARAM_H))
 AC_CHECK_HEADER(sys/time.h, AC_DEFINE(HAVE_SYS_TIME_H))
+AC_CHECK_HEADER(sys/times.h, AC_DEFINE(HAVE_SYS_TIMES_H))
+AC_CHECK_HEADER(sys/wait.h, AC_DEFINE(HAVE_SYS_WAIT_H))
 AC_CHECK_HEADER(unistd.h, AC_DEFINE(HAVE_UNISTD_H))
 
 AC_TYPE_PID_T
@@ -392,6 +395,11 @@ AC_CHECK_FUNC(difftime, , AC_DEFINE(NO_DIFFTIME))
 
 dnl check for putenv (because %#@&% NeXTStep doesn't have it)
 AC_CHECK_FUNC(putenv, AC_DEFINE(HAVE_PUTENV))
+
+dnl check for rint
+AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT), [
+  AC_CHECK_LIB(m, rint, [
+    AC_DEFINE(HAVE_RINT)])])
 
 dnl check for inline
 AC_MSG_CHECKING([for inline definition in glibconfig.h])
@@ -652,11 +660,6 @@ gimprc_user
 gimprc.5
 gimptool
 libgimp/gimpfeatures.h
-Makefile
-po/Makefile.in
-intl/Makefile
-tools/Makefile
-libgimp/Makefile
 plug-ins/Makefile
 plug-ins/perl/config.pl:plug-ins/perl/etc/config.pl.in
 plug-ins/libgck/Makefile
@@ -808,6 +811,11 @@ data/Makefile
 data/brushes/Makefile
 data/gradients/Makefile
 data/palettes/Makefile
+Makefile
+po/Makefile.in
+intl/Makefile
+tools/Makefile
+libgimp/Makefile
 data/patterns/Makefile],
 [
    chmod +x gimptool

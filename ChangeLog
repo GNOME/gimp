@@ -1,3 +1,75 @@
+1999-02-21  Tor Lillqvist  <tml@iki.fi>
+
+	First batch of changes to merge the Win32 version. This will be
+	done in pieces, don't expect to be able to compile on Win32 from
+	these sources yet.  Ans of course, the official version of GTk+
+	doesn't include the Win32 stuff yet.
+ 	
+	* configure.in acconfig.h: Check for <sys/param.h> and
+	<sys/times.h>. Check for rint().
+
+	* app/appenv.h: There shouldn't be any need to include
+	<gdk/gdkx.h>. GDK hides the windowing system. Thus we cannot use
+	GDK_DISPLAY either, and the DISPLAY macro must go.
+	
+	* app/*.c: Guard inclusion of Unix-only headers. Include config.h
+	(as first header) where needed. Use G_DIR_SEPARATOR(_S) and
+	G_SEARCHPATH_SEPARATOR(_S) where appropriate.
+
+	* app/app_procs.c: Unreference fonts after use.
+
+	* app/asupsample.c: Include <stdlib.h> for size_t.
+
+	* app/batch.c (batch_init): No batch mode from stdin on Win32.
+
+	* app/blob.c app/gimpbrushgenerated.c: Define M_PI if needed.
+
+	* app/clone.c app/disp_callbacks.c app/rotate_tool.c
+	app/scale_tool.c: Use GDK constants instead of Xlib ones (with
+	identical value).
+
+	* app/color_area.c app/color_select.c app/gdisplay.c
+	app/parasitelist.c app/preferences_dialog.c app/tile_manager.c:
+	Include <string.h> as we use functions from there.
+
+	* app/colormap_dialog.i.c (ipal_draw_cell): Watch out for
+	allocation width and height calues that are in fact
+	negative. (This can happen at least on Win32 for some reason.)
+
+	* app/datafiles.c: Define S_IS* macros for MSC.
+
+	* app/docindex.c: Reorder header files. Otherwise guint32
+	isn't available for gimpimageF.h, for instance.
+
+	* app/docindexif.h: No need to incude <gdk/gdkprivate.h>.
+
+	* app/errorconsole.c: Define S_I[RW]USR for MSC.
+
+	* app/general.c: Define S_ISREG for MSC.
+
+	* app/fileops.c: Include <process.h> and <direct.h> for MSC.
+
+	* app/gimpbrushgenerated.c app/paint_funcs.c app/posterize.c:
+	Define rint() using floor if necessary.
+
+	* app/gimpbrushgenerated.c: Use unsigned char for lookup table.
+
+	* app/gimpdrawable.c: Use <string.h>, not <strings.h>.
+
+	* app/main.c: Conditionalize on signal names.
+
+	* app/module_db.c: Include <time.h> for time_t. Handle Win32 DLL
+	names.
+
+	* app/palette.c (palette_create_entries): If no HOME, ignore ~.
+
+	* app/procedural_db.c app/tips_dialog.c: No need to open text
+	files in binary mode.
+
+	* app/temp_buf.c: Include <process.h> for MSC.
+
+	* app/text_tool.c: Use GDK to get black and white pixel values. 
+
 1999-02-19  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* plug-ins/tiff/tiff.c (save_dialog): Changed the plugin dialog 
