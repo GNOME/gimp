@@ -18,131 +18,35 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
-
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
 
-#include "core/gimpimage.h"
-#include "core/gimpimage-colormap.h"
-
 #include "widgets/gimpcolormapeditor.h"
 
-#include "color-notebook.h"
-#include "dialogs.h"
 #include "colormap-editor-commands.h"
-
-#include "gimp-intl.h"
-
-
-/*  local function prototypes  */
-
-static void  colormap_editor_color_notebook_callback (ColorNotebook      *cnb,
-                                                      const GimpRGB      *color,
-                                                      ColorNotebookState  state,
-                                                      gpointer            data);
 
 
 /*  public functions  */
-
-void
-colormap_editor_add_color_cmd_callback (GtkWidget *widget,
-                                        gpointer   data,
-                                        guint      action)
-{
-  GimpColormapEditor *editor;
-  GimpImage          *gimage;
-
-  editor = GIMP_COLORMAP_EDITOR (data);
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
-
-  if (gimage && gimage->num_cols < 256)
-    {
-      GimpRGB color;
-
-      gimp_rgb_set_uchar (&color,
-                          gimage->cmap[editor->col_index * 3],
-                          gimage->cmap[editor->col_index * 3 + 1],
-                          gimage->cmap[editor->col_index * 3 + 2]);
-
-      gimp_image_add_colormap_entry (gimage, &color);
-    }
-}
 
 void
 colormap_editor_edit_color_cmd_callback (GtkWidget *widget,
                                          gpointer   data,
                                          guint      action)
 {
-  GimpColormapEditor *editor;
-  GimpImage          *gimage;
-  GimpRGB             color;
+  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
 
-  editor = GIMP_COLORMAP_EDITOR (data);
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
-
-  if (! gimage)
-    return;
-
-  gimp_rgba_set_uchar (&color,
-                       gimage->cmap[editor->col_index * 3],
-		       gimage->cmap[editor->col_index * 3 + 1],
-		       gimage->cmap[editor->col_index * 3 + 2],
-		       OPAQUE_OPACITY);
-
-  if (! editor->color_notebook)
-    {
-      editor->color_notebook =
-	color_notebook_viewable_new (GIMP_VIEWABLE (gimage),
-                                     _("Edit Indexed Color"),
-                                     GIMP_STOCK_CONVERT_INDEXED,
-                                     _("Edit Indexed Image Palette Color"),
-                                     global_dialog_factory,
-                                     "gimp-colormap-editor-color-dialog",
-                                     (const GimpRGB *) &color,
-                                     colormap_editor_color_notebook_callback,
-                                     editor,
-                                     FALSE, FALSE);
-    }
-  else
-    {
-      color_notebook_set_viewable (editor->color_notebook,
-                                   GIMP_VIEWABLE (gimage));
-      color_notebook_show (editor->color_notebook);
-      color_notebook_set_color (editor->color_notebook, &color);
-    }
+  if (GTK_WIDGET_SENSITIVE (editor->edit_button))
+    gtk_button_clicked (GTK_BUTTON (editor->edit_button));
 }
 
-
-/*  private functions  */
-
-static void
-colormap_editor_color_notebook_callback (ColorNotebook      *color_notebook,
-                                         const GimpRGB      *color,
-                                         ColorNotebookState  state,
-                                         gpointer            data)
+void
+colormap_editor_add_color_cmd_callback (GtkWidget *widget,
+                                        gpointer   data,
+                                        guint      action)
 {
-  GimpColormapEditor *editor;
-  GimpImage          *gimage;
+  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
 
-  editor = GIMP_COLORMAP_EDITOR (data);
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
-
-  switch (state)
-    {
-    case COLOR_NOTEBOOK_UPDATE:
-      break;
-
-    case COLOR_NOTEBOOK_OK:
-      gimp_image_set_colormap_entry (gimage, editor->col_index, color, TRUE);
-      gimp_image_flush (gimage);
-      /* Fall through */
-    case COLOR_NOTEBOOK_CANCEL:
-      color_notebook_hide (editor->color_notebook);
-      break;
-    }
+  if (GTK_WIDGET_SENSITIVE (editor->add_button))
+    gtk_button_clicked (GTK_BUTTON (editor->add_button));
 }

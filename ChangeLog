@@ -1,3 +1,26 @@
+2003-09-19  Michael Natterer  <mitch@gimp.org>
+
+	Fix for bug #122695:
+
+	* app/widgets/gimpcolormapeditor.c
+	(gimp_colormap_hex_entry_activate): call gimp_image_flush() after
+	gimp_image_set_colormap_entry() so the projection gets updated.
+
+	Cleanup / consistency with other dialogs:
+
+	* app/widgets/gimphelp-ids.h: added help IDs for the colormap
+	editor's menu items and buttons.
+
+	* app/gui/colormap-editor-menu.c (colormap_editor_menu_entries):
+	use the new help IDs.
+
+	* app/widgets/gimpcolormapeditor.[ch]: added buttons for "Edit Color"
+	and "Add Color" and moved the color_notebook code to this file.
+
+	* app/gui/colormap-editor-commands.[ch]: removed almost all code
+	and simply emit "clicked" from the editor's buttons so their
+	callbacks are invoked.
+
 2003-09-19  Seth Burgess <sjburges@gimp.org>
 
 	* tools/pdbgen/pdb/selection.pdb: corrected order of parameters for 

@@ -355,6 +355,10 @@
 #define GIMP_HELP_PREFS_FOLDERS_ENVIRONMENT       "gimp-prefs-folders-environment"
 #define GIMP_HELP_PREFS_FOLDERS_THEMES            "gimp-prefs-folders-themes"
 
+#define GIMP_HELP_INDEXED_PALETTE_DIALOG          "gimp-indexed-palette-dialog"
+#define GIMP_HELP_INDEXED_PALETTE_EDIT            "gimp-indexed-palette-edit"
+#define GIMP_HELP_INDEXED_PALETTE_ADD             "gimp-indexed-palette-add"
+
 #define GIMP_HELP_DOCK                            "gimp-dock"
 #define GIMP_HELP_DOCK_IMAGE_MENU                 "gimp-dock-image-menu"
 #define GIMP_HELP_DOCK_AUTO_BUTTON                "gimp-dock-auto-button"
@@ -372,7 +376,6 @@
 #define GIMP_HELP_NAVIGATION_DIALOG               "gimp-navigation-dialog"
 #define GIMP_HELP_DISPLAY_FILTER_DIALOG           "gimp-display-filter-dialog"
 #define GIMP_HELP_UNDO_DIALOG                     "gimp-undo-dialog"
-#define GIMP_HELP_INDEXED_PALETTE_DIALOG          "gimp-indexed-palette-dialog"
 #define GIMP_HELP_TEXT_EDITOR_DIALOG              "gimp-text-editor-dialog"
 #define GIMP_HELP_TIPS_DIALOG                     "gimp-tips-dialog"
 #define GIMP_HELP_ABOUT_DIALOG                    "gimp-about-dialog"

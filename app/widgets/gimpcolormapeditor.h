@@ -45,9 +45,14 @@ struct _GimpColormapEditor
   gint             xn;
   gint             yn;
   gint             cellsize;
+
+  GtkWidget       *edit_button;
+  GtkWidget       *add_button;
+
   GtkAdjustment   *index_adjustment;
   GtkWidget       *index_spinbutton;
   GtkWidget       *color_entry;
+
   ColorNotebook   *color_notebook;
 };
 

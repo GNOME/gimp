@@ -27,6 +27,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpcolormapeditor.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "colormap-editor-commands.h"
@@ -41,12 +42,12 @@ GimpItemFactoryEntry colormap_editor_menu_entries[] =
       colormap_editor_edit_color_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_INDEXED_PALETTE_EDIT, NULL },
   { { N_("/_Add Color"), "",
       colormap_editor_add_color_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_NEW },
+      "<StockItem>", GTK_STOCK_ADD },
     NULL,
-    NULL, NULL }
+    GIMP_HELP_INDEXED_PALETTE_ADD, NULL }
 };
 
 gint n_colormap_editor_menu_entries = G_N_ELEMENTS (colormap_editor_menu_entries);
