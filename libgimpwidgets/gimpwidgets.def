@@ -165,6 +165,7 @@ EXPORTS
 	gimp_radio_group_set_active
 	gimp_random_seed_new
 	gimp_scale_entry_new
+	gimp_scale_entry_set_logarithmic
 	gimp_scale_entry_set_sensitive
 	gimp_size_entry_add_field
 	gimp_size_entry_attach_label

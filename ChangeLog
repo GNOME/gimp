@@ -1,3 +1,8 @@
+2004-08-29  Michael Schumacher <schumaml@cvs.gnome.org>
+
+	* libgimpwidgets/gimpwidgets.def: added 
+	gimp_scale_entry_set_logarithmic
+
 2004-08-29  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfigwriter.c: don't emit critical warnings
