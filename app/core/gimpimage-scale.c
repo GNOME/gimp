@@ -181,6 +181,8 @@ gimp_image_scale (GimpImage             *gimage,
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
+  gimp_image_mask_changed (gimage);
+
   gimp_unset_busy (gimage->gimp);
 }
 

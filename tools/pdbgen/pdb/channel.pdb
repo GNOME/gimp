@@ -257,7 +257,7 @@ CODE
 
 &channel_accessors('visible', 'boolean', 'visibility', 1);
 
-&channel_accessors('show_masked', 'boolean', 'composite method', 0,
+&channel_accessors('show_masked', 'boolean', 'composite method', 1,
 		   <<'CODE');
     $help .= <<'HELP'
 If it is non-zero, then the channel is composited with the image so that masked

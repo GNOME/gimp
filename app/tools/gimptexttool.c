@@ -497,7 +497,7 @@ text_render (GimpImage    *gimage,
        *  it seems like the correct behavior.
        */
       if (! gimp_image_mask_is_empty (gimage))
-	gimp_channel_clear (gimp_image_get_mask (gimage));
+	gimp_image_mask_clear (gimage);
 
       /*  If the drawable is NULL, create a new layer  */
       if (drawable == NULL)

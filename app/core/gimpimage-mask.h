@@ -40,10 +40,6 @@ gint          gimp_image_mask_value       (GimpImage    *gimage,
 
 gboolean      gimp_image_mask_is_empty    (GimpImage    *gimage);
 
-void          gimp_image_mask_translate   (GimpImage    *gimage,
-                                           gint          off_x,
-                                           gint          off_y);
-
 TileManager * gimp_image_mask_extract     (GimpImage    *gimage,
                                            GimpDrawable *drawable,
                                            gboolean      cut_gimage,
@@ -55,16 +51,16 @@ GimpLayer   * gimp_image_mask_float       (GimpImage    *gimage,
                                            gint          off_x,
                                            gint          off_y);
 
-void          gimp_image_mask_clear       (GimpImage    *gimage);
-void          gimp_image_mask_undo        (GimpImage    *gimage);
-void          gimp_image_mask_invert      (GimpImage    *gimage);
-void          gimp_image_mask_sharpen     (GimpImage    *gimage);
-void          gimp_image_mask_all         (GimpImage    *gimage);
-void          gimp_image_mask_none        (GimpImage    *gimage);
+void          gimp_image_mask_push_undo   (GimpImage    *gimage);
 
 void          gimp_image_mask_feather     (GimpImage    *gimage,
                                            gdouble       feather_radius_x,
                                            gdouble       feather_radius_y);
+void          gimp_image_mask_sharpen     (GimpImage    *gimage);
+
+void          gimp_image_mask_clear       (GimpImage    *gimage);
+void          gimp_image_mask_all         (GimpImage    *gimage);
+void          gimp_image_mask_invert      (GimpImage    *gimage);
 
 void          gimp_image_mask_border      (GimpImage    *gimage,
                                            gint          border_radius_x,
@@ -79,14 +75,16 @@ void          gimp_image_mask_shrink      (GimpImage    *gimage,
                                            gint          shrink_pixels_y,
                                            gboolean      edge_lock);
 
-void          gimp_image_mask_layer_alpha (GimpImage    *gimage,
-                                           GimpLayer    *layer);
-
-void          gimp_image_mask_layer_mask  (GimpImage    *gimage,
-                                           GimpLayer    *layer);
+void          gimp_image_mask_translate   (GimpImage    *gimage,
+                                           gint          off_x,
+                                           gint          off_y);
 
 void          gimp_image_mask_load        (GimpImage    *gimage,
                                            GimpChannel  *channel);
+void          gimp_image_mask_layer_alpha (GimpImage    *gimage,
+                                           GimpLayer    *layer);
+void          gimp_image_mask_layer_mask  (GimpImage    *gimage,
+                                           GimpLayer    *layer);
 
 GimpChannel * gimp_image_mask_save        (GimpImage    *gimage);
 

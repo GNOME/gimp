@@ -96,7 +96,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
                   mask = gimp_channel_copy (gimp_image_get_mask (gimage),
                                             G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
                                             TRUE);
-                  gimp_image_mask_none (gimage);  /* Clear the selection */
+                  gimp_image_mask_clear (gimage);  /* Clear the selection */
 
                   gimp_image_add_channel (gimage, mask, 0);
                   gimp_channel_set_color (mask, &color);

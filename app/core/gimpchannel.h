@@ -22,6 +22,7 @@
 
 #include "gimpdrawable.h"
 
+/*< proxy-skip >*/
 
 /*  Half way point where a region is no longer visible in a selection  */
 #define HALF_WAY 127
@@ -36,6 +37,8 @@
 
 
 typedef struct _GimpChannelClass GimpChannelClass;
+
+/*< proxy-resume >*/
 
 struct _GimpChannel
 {
@@ -56,6 +59,8 @@ struct _GimpChannel
   gint          x1, y1;            /*  coordinates for bounding box   */
   gint          x2, y2;            /*  lower right hand coordinate    */
 };
+
+/*< proxy-skip >*/
 
 struct _GimpChannelClass
 {
@@ -84,6 +89,10 @@ void            gimp_channel_get_color         (const GimpChannel *channel,
                                                 GimpRGB           *color);
 void 		gimp_channel_set_color         (GimpChannel       *channel, 
 						const GimpRGB     *color);
+
+gboolean        gimp_channel_get_show_masked   (GimpChannel       *channel);
+void            gimp_channel_set_show_masked   (GimpChannel       *channel,
+                                                gboolean           show_masked);;
 
 void            gimp_channel_scale             (GimpChannel       *channel, 
 						gint               new_width, 
@@ -154,36 +163,44 @@ void            gimp_channel_feather           (GimpChannel       *mask,
 						gdouble            radius_x,
 						gdouble            radius_y,
                                                 gboolean           push_undo);
-void            gimp_channel_sharpen           (GimpChannel       *mask);
+void            gimp_channel_sharpen           (GimpChannel       *mask,
+                                                gboolean           push_undo);
 
-void            gimp_channel_push_undo         (GimpChannel       *mask);
-
-void            gimp_channel_clear             (GimpChannel       *mask);
-void            gimp_channel_all               (GimpChannel       *mask);
+void            gimp_channel_clear             (GimpChannel       *mask,
+                                                gboolean           push_undo);
+void            gimp_channel_all               (GimpChannel       *mask,
+                                                gboolean           push_undo);
 void            gimp_channel_invert            (GimpChannel       *mask,
                                                 gboolean           push_undo);
 
 void            gimp_channel_border            (GimpChannel      *mask,
 						gint              radius_x,
-						gint              radius_y);
+						gint              radius_y,
+                                                gboolean          push_undo);
 void            gimp_channel_grow              (GimpChannel      *mask,
 						gint              radius_x,
-						gint              radius_y);
+						gint              radius_y,
+                                                gboolean          push_undo);
 void            gimp_channel_shrink            (GimpChannel      *mask,
 						gint              radius_x,
 						gint              radius_y,
-						gboolean          edge_lock);
+						gboolean          edge_lock,
+                                                gboolean          push_undo);
 
 void            gimp_channel_translate         (GimpChannel      *mask,
 						gint              off_x,
-						gint              off_y);
-void            gimp_channel_load              (GimpChannel      *mask,
-						GimpChannel      *channel);
+						gint              off_y,
+                                                gboolean          push_undo);
 
+void            gimp_channel_load              (GimpChannel      *mask,
+						GimpChannel      *channel,
+                                                gboolean          push_undo);
 void            gimp_channel_layer_alpha       (GimpChannel      *mask, 
-						GimpLayer        *layer);
+						GimpLayer        *layer,
+                                                gboolean          push_undo);
 void            gimp_channel_layer_mask        (GimpChannel      *mask, 
-						GimpLayer        *layer);
+						GimpLayer        *layer,
+                                                gboolean          push_undo);
 
 void		gimp_channel_invalidate_bounds (GimpChannel      *channel);
 

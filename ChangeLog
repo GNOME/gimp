@@ -1,3 +1,61 @@
+2002-08-20  Michael Natterer  <mitch@gimp.org>
+
+	Make sure the selection (gimpimage-mask.c) functionality is really
+	built *on top* of the GimpChannel functionality:
+
+	* app/undo.[ch]: renamed undo_push_image_mask() to
+	undo_push_mask() and generalized it's API to take a GimpChannel
+	param so undos can be pushed for channels which are not the
+	image's selection. Simplified the API and added code which copies
+	the region of interest instead of leaving this to callers.
+
+	* app/undo_types.h: s/IMAGE_MASK_UNDO/MASK_UNDO/
+
+	* app/undo_history.c: changed accordingly.
+
+	* app/core/gimpchannel.[ch]: don't #include "gimpimage-mask.h".
+	Changed gimp_channel_push_undo() to really push a channel undo,
+	not a selection undo. Added "gboolean push_undo" params to all
+	functions which are called from gimpimage-mask.c. Various cleanups
+	and optimizations. Added /*< proxy-foo >*/ stuff to the header so
+	we export just the struct itself to libgimpproxy. Added accessors
+	gimp_channel_[get|set]_show_masked().
+
+	* app/core/gimpimage-mask.[ch]: renamed gimp_image_mask_undo() to
+	gimp_image_mask_push_undo(). Call it before calling GimpChannel
+	functions which modify the mask, also call all GimpChannel
+	functions with push_undo = FALSE. Emit gimp_image_mask_changed()
+	after each operation instead of calling it in
+	gimp_image_mask_invalidate(). Removed gimp_image_mask_none()
+	because it is the same as gimp_image_mask_clear().
+	General cleanup.
+
+	* app/core/gimpimage-mask-select.c
+	* app/core/gimpimage-qmask.c: changed accordingly.
+
+	* app/core/gimpedit.c: call gimp_image_mask_clear(), not
+	gimp_channel_clear (gimp_image_get_mask()).
+
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-scale.c: call gimp_image_mask_changed()
+
+	* app/gui/channels-commands.c
+	* app/gui/select-commands.c
+	* app/tools/gimptexttool.c
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/selection.pdb: follow GimpChannel and
+	gimp_image_mask* API changes.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/selection_cmds.c
+	* libgimpproxy/gimpchannel.h: regenerated.
+
+	Unrelated:
+
+	* app/core/gimpimage.c: call gimp_drawable_push_undo() instead of
+	undo_push_image() directly.
+
 2002-08-18  Manish Singh  <yosh@gimp.org>
 
 	* autogen.sh: remove bashism (function keyword)

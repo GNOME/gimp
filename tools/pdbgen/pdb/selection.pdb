@@ -239,7 +239,7 @@ HELP
 }
 
 sub selection_none {
-    &selection_simple_proc('none');
+    &selection_simple_proc('clear');
 
     $blurb = 'Deselect the entire image.';
 

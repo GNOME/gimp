@@ -1140,156 +1140,6 @@ undo_free_image_resolution (UndoState  state,
 }
 
 
-/*********************/
-/*  Image Mask Undo  */
-
-typedef struct _MaskUndo MaskUndo;
-
-struct _MaskUndo
-{
-  TileManager *tiles;    /*  the actual mask  */
-  gint         x, y;     /*  offsets          */
-};
-
-static gboolean undo_pop_image_mask  (GimpImage *,
-                                      UndoState, UndoType, gpointer);
-static void     undo_free_image_mask (UndoState, UndoType, gpointer);
-
-gboolean
-undo_push_image_mask (GimpImage   *gimage,
-                      TileManager *tiles,
-                      gint         x,
-                      gint         y)
-{
-  Undo  *new;
-  gsize  size;
-
-  size = sizeof (MaskUndo);
-
-  if (tiles)
-    size += tile_manager_get_memsize (tiles);
-
-  if ((new = undo_push (gimage, size, IMAGE_MASK_UNDO, FALSE)))
-    {
-      MaskUndo *mask_undo;
-
-      mask_undo = g_new0 (MaskUndo, 1);
-
-      new->data      = mask_undo;
-      new->pop_func  = undo_pop_image_mask;
-      new->free_func = undo_free_image_mask;
-
-      mask_undo->tiles = tiles;
-      mask_undo->x     = x;
-      mask_undo->y     = y;
-
-      return TRUE;
-    }
-
-  if (tiles)
-    tile_manager_destroy (tiles);
-
-  return FALSE;
-}
-
-static gboolean
-undo_pop_image_mask (GimpImage *gimage,
-                     UndoState  state,
-                     UndoType   type,
-                     gpointer   mask_ptr)
-{
-  MaskUndo    *mask_undo;
-  TileManager *new_tiles;
-  GimpChannel *sel_mask;
-  PixelRegion  srcPR, destPR;
-  gint         selection;
-  gint         x1, y1, x2, y2;
-  gint         width, height;
-  guchar       empty = 0;
-
-  width = height = 0;
-
-  mask_undo = (MaskUndo *) mask_ptr;
-
-  /*  save current selection mask  */
-  sel_mask = gimp_image_get_mask (gimage);
-  selection = gimp_channel_bounds (sel_mask, &x1, &y1, &x2, &y2);
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (sel_mask)->tiles,
-		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
-
-  if (selection)
-    {
-      new_tiles = tile_manager_new (srcPR.w, srcPR.h, 1);
-      pixel_region_init (&destPR, new_tiles,
-			 0, 0, srcPR.w, srcPR.h, TRUE);
-
-      copy_region (&srcPR, &destPR);
-
-      pixel_region_init (&srcPR, GIMP_DRAWABLE (sel_mask)->tiles,
-			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
-      color_region (&srcPR, &empty);
-    }
-  else
-    new_tiles = NULL;
-
-  if (mask_undo->tiles)
-    {
-      width  = tile_manager_width (mask_undo->tiles);
-      height = tile_manager_height (mask_undo->tiles);
-      pixel_region_init (&srcPR, mask_undo->tiles,
-			 0, 0, width, height, FALSE);
-      pixel_region_init (&destPR, GIMP_DRAWABLE (sel_mask)->tiles,
-			 mask_undo->x, mask_undo->y, width, height, TRUE);
-      copy_region (&srcPR, &destPR);
-
-      tile_manager_destroy (mask_undo->tiles);
-    }
-
-  /* invalidate the current bounds and boundary of the mask */
-  gimp_image_mask_invalidate (gimage);
-
-  if (mask_undo->tiles)
-    {
-      sel_mask->empty = FALSE;
-      sel_mask->x1 = mask_undo->x;
-      sel_mask->y1 = mask_undo->y;
-      sel_mask->x2 = mask_undo->x + width;
-      sel_mask->y2 = mask_undo->y + height;
-    }
-  else
-    {
-      sel_mask->empty = TRUE;
-      sel_mask->x1 = 0;
-      sel_mask->y1 = 0;
-      sel_mask->x2 = GIMP_DRAWABLE (sel_mask)->width;
-      sel_mask->y2 = GIMP_DRAWABLE (sel_mask)->height;
-    }
-
-  /*  set the new mask undo parameters  */
-  mask_undo->tiles = new_tiles;
-  mask_undo->x = x1;
-  mask_undo->y = y1;
-
-  /* we know the bounds */
-  sel_mask->bounds_known = TRUE;
-
-  return TRUE;
-}
-
-static void
-undo_free_image_mask (UndoState  state,
-                      UndoType   type,
-                      gpointer   mask_ptr)
-{
-  MaskUndo *mask_undo;
-
-  mask_undo = (MaskUndo *) mask_ptr;
-  if (mask_undo->tiles)
-    tile_manager_destroy (mask_undo->tiles);
-  g_free (mask_undo);
-}
-
-
 /****************/
 /*  Qmask Undo  */
 
@@ -1337,13 +1187,13 @@ undo_pop_image_qmask (GimpImage *gimage,
                       gpointer   data_ptr)
 {
   QmaskUndo *data;
-  gint       tmp;
+  gboolean   tmp;
 
   data = (QmaskUndo *) data_ptr;
   
-  tmp = gimage->qmask_state;
+  tmp                 = gimage->qmask_state;
   gimage->qmask_state = data->qmask;
-  data->qmask = tmp;
+  data->qmask         = tmp;
 
   gimp_image_qmask_changed (gimage);
 
@@ -1445,6 +1295,191 @@ undo_free_image_guide (UndoState state,
       g_free (data->guide);
     }
   g_free (data);
+}
+
+
+/***************/
+/*  Mask Undo  */
+
+typedef struct _MaskUndo MaskUndo;
+
+struct _MaskUndo
+{
+  GimpChannel *channel;  /*  the channel this undo is for  */
+  TileManager *tiles;    /*  the actual mask               */
+  gint         x, y;     /*  offsets                       */
+};
+
+static gboolean undo_pop_mask  (GimpImage *,
+                                UndoState, UndoType, gpointer);
+static void     undo_free_mask (UndoState, UndoType, gpointer);
+
+gboolean
+undo_push_mask (GimpImage   *gimage,
+                GimpChannel *mask)
+{
+  TileManager *undo_tiles;
+  gint         x1, y1, x2, y2;
+  Undo        *new;
+  gsize        size;
+
+  if (gimp_channel_bounds (mask, &x1, &y1, &x2, &y2))
+    {
+      PixelRegion srcPR, destPR;
+
+      undo_tiles = tile_manager_new ((x2 - x1), (y2 - y1), 1);
+
+      pixel_region_init (&srcPR, GIMP_DRAWABLE (mask)->tiles,
+                         x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, undo_tiles,
+                         0, 0, (x2 - x1), (y2 - y1), TRUE);
+
+      copy_region (&srcPR, &destPR);
+    }
+  else
+    undo_tiles = NULL;
+
+  size = sizeof (MaskUndo);
+
+  if (undo_tiles)
+    size += tile_manager_get_memsize (undo_tiles);
+
+  if ((new = undo_push (gimage, size, MASK_UNDO, FALSE)))
+    {
+      MaskUndo *mask_undo;
+
+      mask_undo = g_new0 (MaskUndo, 1);
+
+      new->data      = mask_undo;
+      new->pop_func  = undo_pop_mask;
+      new->free_func = undo_free_mask;
+
+      mask_undo->channel = mask;
+      mask_undo->tiles   = undo_tiles;
+      mask_undo->x       = x1;
+      mask_undo->y       = y1;
+
+      return TRUE;
+    }
+
+  if (undo_tiles)
+    tile_manager_destroy (undo_tiles);
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_mask (GimpImage *gimage,
+               UndoState  state,
+               UndoType   type,
+               gpointer   mask_ptr)
+{
+  MaskUndo    *mask_undo;
+  TileManager *new_tiles;
+  PixelRegion  srcPR, destPR;
+  gint         x1, y1, x2, y2;
+  gint         width, height;
+  guchar       empty = 0;
+
+  width = height = 0;
+
+  mask_undo = (MaskUndo *) mask_ptr;
+
+  if (gimp_channel_bounds (mask_undo->channel, &x1, &y1, &x2, &y2))
+    {
+      new_tiles = tile_manager_new ((x2 - x1), (y2 - y1), 1);
+
+      pixel_region_init (&srcPR, GIMP_DRAWABLE (mask_undo->channel)->tiles,
+                         x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, new_tiles,
+			 0, 0, (x2 - x1), (y2 - y1), TRUE);
+
+      copy_region (&srcPR, &destPR);
+
+      pixel_region_init (&srcPR, GIMP_DRAWABLE (mask_undo->channel)->tiles,
+			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+      color_region (&srcPR, &empty);
+    }
+  else
+    new_tiles = NULL;
+
+  if (mask_undo->tiles)
+    {
+      width  = tile_manager_width (mask_undo->tiles);
+      height = tile_manager_height (mask_undo->tiles);
+
+      pixel_region_init (&srcPR, mask_undo->tiles,
+			 0, 0, width, height, FALSE);
+      pixel_region_init (&destPR, GIMP_DRAWABLE (mask_undo->channel)->tiles,
+			 mask_undo->x, mask_undo->y, width, height, TRUE);
+
+      copy_region (&srcPR, &destPR);
+
+      tile_manager_destroy (mask_undo->tiles);
+    }
+
+  if (mask_undo->channel == gimp_image_get_mask (gimage))
+    {
+      /* invalidate the current bounds and boundary of the mask */
+      gimp_image_mask_invalidate (gimage);
+    }
+  else
+    {
+      mask_undo->channel->boundary_known = FALSE;
+    }
+
+  if (mask_undo->tiles)
+    {
+      mask_undo->channel->empty = FALSE;
+      mask_undo->channel->x1    = mask_undo->x;
+      mask_undo->channel->y1    = mask_undo->y;
+      mask_undo->channel->x2    = mask_undo->x + width;
+      mask_undo->channel->y2    = mask_undo->y + height;
+    }
+  else
+    {
+      mask_undo->channel->empty = TRUE;
+      mask_undo->channel->x1    = 0;
+      mask_undo->channel->y1    = 0;
+      mask_undo->channel->x2    = GIMP_DRAWABLE (mask_undo->channel)->width;
+      mask_undo->channel->y2    = GIMP_DRAWABLE (mask_undo->channel)->height;
+    }
+
+  /* we know the bounds */
+  mask_undo->channel->bounds_known = TRUE;
+
+  /*  set the new mask undo parameters  */
+  mask_undo->tiles = new_tiles;
+  mask_undo->x     = x1;
+  mask_undo->y     = y1;
+
+  if (mask_undo->channel == gimp_image_get_mask (gimage))
+    {
+      gimp_image_mask_changed (gimage);
+    }
+  else
+    {
+      gimp_drawable_update (GIMP_DRAWABLE (mask_undo->channel),
+                            0, 0,
+                            GIMP_DRAWABLE (mask_undo->channel)->width,
+                            GIMP_DRAWABLE (mask_undo->channel)->height);
+    }
+
+  return TRUE;
+}
+
+static void
+undo_free_mask (UndoState  state,
+                UndoType   type,
+                gpointer   mask_ptr)
+{
+  MaskUndo *mask_undo;
+
+  mask_undo = (MaskUndo *) mask_ptr;
+  if (mask_undo->tiles)
+    tile_manager_destroy (mask_undo->tiles);
+  g_free (mask_undo);
 }
 
 
@@ -1791,8 +1826,8 @@ undo_pop_layer_mod (GimpImage *gimage,
   GIMP_DRAWABLE (layer)->offset_y  = offset_y;
   if (layer->mask) 
     {
-      GIMP_DRAWABLE(layer->mask)->offset_x = offset_x;
-      GIMP_DRAWABLE(layer->mask)->offset_y = offset_y;
+      GIMP_DRAWABLE (layer->mask)->offset_x = offset_x;
+      GIMP_DRAWABLE (layer->mask)->offset_y = offset_y;
     }
 
   if (GIMP_DRAWABLE (layer)->has_alpha != old_has_alpha &&
@@ -1921,7 +1956,7 @@ undo_pop_layer_mask (GimpImage *gimage,
     {
       /*  restore layer  */
 
-     gimp_layer_add_mask (lmu->layer, lmu->mask, FALSE);
+      gimp_layer_add_mask (lmu->layer, lmu->mask, FALSE);
     }
 
   return TRUE;
@@ -2275,7 +2310,6 @@ undo_free_channel (UndoState  state,
 
   g_free (cu);
 }
-
 
 
 /**********************/
@@ -3550,9 +3584,9 @@ undo_name[] =
   { IMAGE_TYPE_UNDO,               N_("Image Type")                },
   { IMAGE_SIZE_UNDO,               N_("Image Size")                },
   { IMAGE_RESOLUTION_UNDO,         N_("Resolution Change")         },
-  { IMAGE_MASK_UNDO,               N_("Selection Mask")            },
   { IMAGE_QMASK_UNDO,              N_("QuickMask")                 },
   { IMAGE_GUIDE_UNDO,              N_("Guide")                     },
+  { MASK_UNDO,                     N_("Selection Mask")            },
   { ITEM_RENAME_UNDO,              N_("Rename Item")               },
   { LAYER_ADD_UNDO,                N_("New Layer")                 },
   { LAYER_REMOVE_UNDO,             N_("Delete Layer")              },

@@ -301,7 +301,7 @@ undo_history_set_pixmap_idle (gpointer data)
 
   utype = undo_get_undo_top_type (idle->gimage);
 
-  if ((utype != IMAGE_MASK_UNDO && utype != IMAGE_QMASK_UNDO) || 
+  if ((utype != MASK_UNDO && utype != IMAGE_QMASK_UNDO) || 
       (mbuf = mask_render_preview (idle->gimage, &width, &height)) == NULL)
     {
       buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (idle->gimage),

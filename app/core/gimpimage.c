@@ -1877,9 +1877,7 @@ gimp_image_apply_image (GimpImage	     *gimage,
 
   /*  If the calling procedure specified an undo step...  */
   if (push_undo)
-    undo_push_image (gimp_item_get_image (GIMP_ITEM (drawable)),
-                     drawable,
-                     x1, y1, x2, y2);
+    gimp_drawable_push_undo (drawable, x1, y1, x2, y2, NULL, FALSE);
 
   /* configure the pixel regions
    *  If an alternative to using the drawable's data as src1 was provided...

@@ -274,7 +274,7 @@ channels_new_channel_query (GimpImage   *gimage,
       gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
                                   gimp_get_user_context (gimage->gimp),
                                   GIMP_TRANSPARENT_FILL);
-      gimp_channel_translate (new_channel, off_x, off_y);
+      gimp_channel_translate (new_channel, off_x, off_y, FALSE);
       gimp_image_add_channel (gimage, new_channel, -1);
 
       undo_push_group_end (gimage);

@@ -50,7 +50,7 @@ gimp_image_mask_select_rectangle (GimpImage      *gimage,
   if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_image_mask_clear (gimage);
   else
-    gimp_image_mask_undo (gimage);
+    gimp_image_mask_push_undo (gimage);
 
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
@@ -95,7 +95,7 @@ gimp_image_mask_select_ellipse (GimpImage      *gimage,
   if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_image_mask_clear (gimage);
   else
-    gimp_image_mask_undo (gimage);
+    gimp_image_mask_push_undo (gimage);
 
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
@@ -145,7 +145,7 @@ gimp_image_mask_select_polygon (GimpImage       *gimage,
   if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_image_mask_clear (gimage);
   else
-    gimp_image_mask_undo (gimage);
+    gimp_image_mask_push_undo (gimage);
 
 #define SUPERSAMPLE 3
 
@@ -247,7 +247,7 @@ gimp_image_mask_select_channel (GimpImage      *gimage,
   if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_image_mask_clear (gimage);
   else
-    gimp_image_mask_undo (gimage);
+    gimp_image_mask_push_undo (gimage);
 
   if (feather)
     gimp_channel_feather (channel,

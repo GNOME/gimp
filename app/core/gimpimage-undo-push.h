@@ -84,13 +84,15 @@ gboolean      undo_push_image_mod             (GimpImage     *gimage,
 gboolean      undo_push_image_type            (GimpImage     *gimage);
 gboolean      undo_push_image_size            (GimpImage     *gimage);
 gboolean      undo_push_image_resolution      (GimpImage     *gimage);
-gboolean      undo_push_image_mask            (GimpImage     *gimage,
-                                               TileManager   *tiles,
-                                               gint           x,
-                                               gint           y);
 gboolean      undo_push_image_qmask           (GimpImage     *gimage);
 gboolean      undo_push_image_guide           (GimpImage     *gimage,
                                                GimpGuide     *guide);
+
+
+/*  mask undo  */
+
+gboolean      undo_push_mask                  (GimpImage     *gimage,
+                                               GimpChannel   *mask);
 
 
 /*  item undos  */
