@@ -105,7 +105,7 @@ gboolean     gimp_container_frozen             (GimpContainer       *container);
 void         gimp_container_clear              (GimpContainer       *container);
 gboolean     gimp_container_have               (const GimpContainer *container,
 						GimpObject          *object);
-void         gimp_container_foreach            (GimpContainer       *container,
+void         gimp_container_foreach            (const GimpContainer *container,
 						GFunc                func,
 						gpointer             user_data);
 

@@ -801,9 +801,9 @@ gimp_container_have (const GimpContainer *container,
 }
 
 void
-gimp_container_foreach (GimpContainer  *container,
-			GFunc           func,
-			gpointer        user_data)
+gimp_container_foreach (const GimpContainer *container,
+			GFunc                func,
+			gpointer             user_data)
 {
   g_return_if_fail (GIMP_IS_CONTAINER (container));
   g_return_if_fail (func != NULL);
@@ -854,13 +854,12 @@ gimp_container_get_child_index (const GimpContainer *container,
 
 static void
 gimp_container_get_name_array_foreach_func (GimpObject   *object,
-                                            gchar      ***names)
+                                            gchar      ***iter)
 {
-  gchar **name = *names;
+  gchar **array = *iter;
 
-  *name = g_strdup (gimp_object_get_name (object));
-
-  *names++;
+  *array = g_strdup (gimp_object_get_name (object));
+  (*iter)++;
 }
 
 gchar **
@@ -868,6 +867,7 @@ gimp_container_get_name_array (const GimpContainer *container,
                                gint                *length)
 {
   gchar **names;
+  gchar **iter;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (length != NULL, NULL);
@@ -876,11 +876,11 @@ gimp_container_get_name_array (const GimpContainer *container,
   if (*length == 0)
     return NULL;
 
-  names = g_new (gchar *, *length);
+  names = iter = g_new (gchar *, *length);
 
-  GIMP_CONTAINER_GET_CLASS (container)->foreach (container,
-                                                 (GFunc) gimp_container_get_name_array_foreach_func,
-                                                 &names);
+  gimp_container_foreach (container,
+                          (GFunc) gimp_container_get_name_array_foreach_func,
+                          &iter);
 
   return names;
 }
