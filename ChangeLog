@@ -1,5 +1,10 @@
 2002-05-05  Sven Neumann  <sven@gimp.org>
 
+	* NEWS: updated.
+	* configure.in: fixed check for libgtkhtml-2.0.
+	
+2002-05-05  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped our version number to 1.3.6. Added check
 	for libgtkhtml-2.0.
 
@@ -729,7 +734,7 @@
 
 	* app/widgets/gimppreview.c (gimp_preview_expose_event): don't draw
 	anything if an idle update is pending.
-	
+
 	* libgimpwidgets/gimpcolorarea.c (gimp_color_area_expose): reordered
 	conditions so that the one that is most expensive to check comes last.
 

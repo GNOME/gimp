@@ -608,7 +608,7 @@ dnl Test for libXpm
 
 dnl This is for the help browser
 
-PKG_CHECK_MODULES(GTKHTML2, libgtkhtml-2.0 >= GTKHTML2_REQUIRED_VERSION,
+PKG_CHECK_MODULES(GTKHTML2, libgtkhtml-2.0 >= $GTKHTML2_REQUIRED_VERSION,
   HELPBROWSER=helpbrowser,
   AC_MSG_WARN([*** Help browser plug-in will not be built (GtkHtml2 not found) ***]))
 

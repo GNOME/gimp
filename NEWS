@@ -8,6 +8,23 @@ development takes place on the road to the next stable release
 dubbed GIMP 1.4.
 
 
+Overview of Changes in GIMP 1.3.6
+=================================
+- Started to port the help browser to GtkHtml2 [Sven]
+- Finished implementation of the Thumbnail Managing Standard [Mitch, Sven]
+- Improved Open dialog using the new thumbnails [Mitch, Sven]
+- Use UTF-8 encoded URIs where we used to use filenames [Mitch]
+- Plug-in fixes [Iccii]
+- Added shortcuts to crop layer or image to selection boundary [Mitch]
+- Changes for build on Win32 [Tor Lillqvist]
+- Started framework for tools loaded as modules or plug-ins [Nathan]
+- Bugfixes
+- More stuff not mentioned here (see the ChangeLog)
+
+Other contributors:
+  Manish Singh, Zbigniew Chyla, OEyvind Kolaas, Nick Lamb
+
+
 Overview of Changes in GIMP 1.3.5
 =================================
 - Improved tool options and made them dockable [Mitch]
