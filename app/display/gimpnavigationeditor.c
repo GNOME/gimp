@@ -142,17 +142,17 @@ gimp_navigation_view_init (GimpNavigationView *view)
 
   /* the preview */
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (view), abox, TRUE, TRUE, 0);
-  gtk_widget_show (abox);
-
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (view), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
+
   view->preview = gimp_navigation_preview_new (NULL, gimprc.nav_preview_size);
-  gtk_container_add (GTK_CONTAINER (frame), view->preview);
+  gtk_container_add (GTK_CONTAINER (abox), view->preview);
   gtk_widget_show (view->preview);
 
   g_signal_connect (G_OBJECT (view->preview), "marker_changed",
@@ -234,7 +234,6 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
   GimpNavigationPreview *preview;
   gint                   x, y;
   gint                   x_org, y_org;
-  gint                   scr_w, scr_h;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -268,19 +267,17 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
   /* decide where to put the popup */
   gdk_window_get_origin (widget->window, &x_org, &y_org);
 
-  scr_w = gdk_screen_width ();
-  scr_h = gdk_screen_height ();
-
-#define BORDER_WIDTH  (2 * widget->style->xthickness)
-#define BORDER_HEIGHT (2 * widget->style->ythickness)
+#define BORDER_PEN_WIDTH  3
 
   x = (x_org + click_x -
        preview->p_x -
-       ((preview->p_width  - BORDER_WIDTH) * 0.5) - 2);
+       0.5 * (preview->p_width  - BORDER_PEN_WIDTH) -
+       2   * widget->style->xthickness);
 
   y = (y_org + click_y -
        preview->p_y -
-       ((preview->p_height - BORDER_HEIGHT) * 0.5) - 2);
+       0.5 * (preview->p_height - BORDER_PEN_WIDTH) -
+       2   * widget->style->ythickness);
 
   /* If the popup doesn't fit into the screen, we have a problem.
    * We move the popup onscreen and risk that the pointer is not
@@ -291,10 +288,12 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
    *
    * Warping the pointer would be another solution ... 
    */
-  x = (x < 0) ? 0 : x;
-  y = (y < 0) ? 0 : y;
-  x = (x + preview->p_width  > scr_w) ? scr_w - preview->p_width  - 2 : x;
-  y = (y + preview->p_height > scr_h) ? scr_h - preview->p_height - 2 : y;
+  x = CLAMP (x, 0, (gdk_screen_width ()  -
+                    GIMP_PREVIEW (preview)->width  -
+                    4 * widget->style->xthickness));
+  y = CLAMP (y, 0, (gdk_screen_height () -
+                    GIMP_PREVIEW (preview)->height -
+                    4 * widget->style->ythickness));
 
   gtk_window_move (GTK_WINDOW (shell->nav_popup), x, y);
   gtk_widget_show (shell->nav_popup);
@@ -302,11 +301,10 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
   gdk_flush ();
 
   /* fill in then grab pointer */
-  preview->motion_offset_x = (preview->p_width  - BORDER_WIDTH)  * 0.5;
-  preview->motion_offset_y = (preview->p_height - BORDER_HEIGHT) * 0.5;
+  preview->motion_offset_x = 0.5 * (preview->p_width  - BORDER_PEN_WIDTH);
+  preview->motion_offset_y = 0.5 * (preview->p_height - BORDER_PEN_WIDTH);
 
-#undef BORDER_WIDTH
-#undef BORDER_HEIGHT
+#undef BORDER_PEN_WIDTH
 
   gimp_navigation_preview_grab_pointer (preview);
 }
@@ -391,6 +389,15 @@ gimp_navigation_view_new_private (GimpDisplayShell *shell,
       view->zoom_label = gtk_label_new ("1:1");
       gtk_box_pack_end (GTK_BOX (view), view->zoom_label, FALSE, FALSE, 0);
       gtk_widget_show (view->zoom_label);
+
+      /* eek */
+      {
+        GtkRequisition requisition;
+
+        gtk_widget_size_request (view->zoom_label, &requisition);
+        gtk_widget_set_size_request (view->zoom_label,
+                                     4 * requisition.width, requisition.height);
+      }
     }
 
   if (shell)
@@ -612,8 +619,8 @@ gimp_navigation_view_shell_scrolled (GimpDisplayShell   *shell,
 static void
 gimp_navigation_view_update_marker (GimpNavigationView *view)
 {
-  gdouble    xratio;
-  gdouble    yratio;     /* Screen res ratio */
+  gdouble xratio;
+  gdouble yratio;
 
   xratio = SCALEFACTOR_X (view->shell->gdisp);
   yratio = SCALEFACTOR_Y (view->shell->gdisp);

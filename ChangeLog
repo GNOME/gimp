@@ -1,5 +1,13 @@
 2002-05-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpnavigationview.c: pack the preview's alignment
+	into the inner frame, not around it, so it looks like the other
+	dockables. Fixed popup window positioning. Tried to get rid of
+	insane scale_label allocation computation but failed. Left the
+	EEKy code there for further investigation.
+
+2002-05-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/undo_history.c: create the "Undo" and "Redo" buttons from
 	stock items.
 
