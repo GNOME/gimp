@@ -1,4 +1,4 @@
-Fri Oct  1 15:18:34 1999  Austin Donnelly  <and1000@research.att.com>
+Fri Oct  1 15:18:34 EDT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/channel.h: don't want sub-undo type
 	* app/gimpimage.c: undo_push_channel() takes ADD or REMOVE type
@@ -7,7 +7,7 @@ Fri Oct  1 15:18:34 1999  Austin Donnelly  <and1000@research.att.com>
 	* app/undo.h: undo_push_channel() prototype.
 	* app/undo_types.h: More specific CHANNEL_{ADD,REMOVE}_UNDO types.
 
-Fri Oct  1 12:46:12 1999  Austin Donnelly  <austin@gimp.org>
+Fri Oct  1 12:46:12 EDT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* gimprc.in: comment typo fix, plus add %D* to default
 	    image-title-format string, so people get a '*' in the titlebar
