@@ -1,3 +1,9 @@
+Tue Jul 28 19:46:53 BST 1998  Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/gee/gee.c
+	* plug-ins/animationplay/animationplay.c: Fixes for
+	gdkrgb output on pseudocolour displays.
+
 Mon Jul 27 12:27:47 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/fp/fp.c: make PDB entry for filter pack saner

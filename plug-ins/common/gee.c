@@ -6,7 +6,10 @@
  */
 
 /*
- *     Version 1.02 : 98.07.18
+ * Version 1.03 : 98.07.27
+ *
+ * 1.03:
+ * Fix for pseudocolor displays w/gdkrgb.
  *
  * 1.02:
  * Massive speedup if you have a very recent version of GTK 1.1.
@@ -192,6 +195,11 @@ build_dialog(GImageType basetype,
 
   gtk_rc_parse (gimp_gtkrc ());
   gdk_set_use_xshm (gimp_use_xshm ());
+
+#ifdef RAPH_IS_HOME
+  gtk_widget_set_default_visual (gdk_rgb_get_visual());
+  gtk_widget_set_default_colormap (gdk_rgb_get_cmap());
+#else
   gtk_preview_set_gamma (gimp_gamma ());
   gtk_preview_set_install_cmap (gimp_install_cmap ());
   color_cube = gimp_color_cube ();
@@ -199,6 +207,7 @@ build_dialog(GImageType basetype,
                               color_cube[2], color_cube[3]);
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+#endif
 
 
   dlg = gtk_dialog_new ();

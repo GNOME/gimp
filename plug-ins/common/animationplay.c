@@ -1,5 +1,5 @@
 /*
- * Animation Playback plug-in version 0.98.4
+ * Animation Playback plug-in version 0.98.5
  *
  * Adam D. Moss : 1997-98 : adam@gimp.org : adam@foxbox.org
  *
@@ -10,6 +10,9 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 98.07.27 : version 0.98.5
+ *            UI tweaks, fix for pseudocolor displays w/gdkrgb.
  *
  * 98.07.20 : version 0.98.4
  *            User interface improvements.
@@ -105,6 +108,7 @@
 /* Test for GTK1.2-style gdkrgb code, else use old 'preview' code. */
 #ifdef __GDK_RGB_H__
 #define RAPH_IS_HOME yep
+/* Dithertype for animated GIFs */
 #define DITHERTYPE GDK_RGB_DITHER_NORMAL
 #endif
 
@@ -506,7 +510,7 @@ repaint_da (GtkWidget *darea, gpointer data)
   gdk_draw_rgb_image (drawing_area->window,
 		      drawing_area->style->white_gc,
 		      0, 0, width, height,
-		      DITHERTYPE,
+		      (total_frames==1)?GDK_RGB_DITHER_MAX:DITHERTYPE,
 		      drawing_area_data, width * 3);
 }
 
@@ -518,7 +522,7 @@ repaint_sda (GtkWidget *darea, gpointer data)
   gdk_draw_rgb_image (shape_drawing_area->window,
 		      shape_drawing_area->style->white_gc,
 		      0, 0, width, height,
-		      DITHERTYPE,
+		      (total_frames==1)?GDK_RGB_DITHER_MAX:DITHERTYPE,
 		      shape_drawing_area_data, width * 3);
 }
 #endif
@@ -625,6 +629,11 @@ build_dialog(GImageType basetype,
 
   gtk_rc_parse (gimp_gtkrc ());
   gdk_set_use_xshm (gimp_use_xshm ());
+
+#ifdef RAPH_IS_HOME
+  gtk_widget_set_default_visual (gdk_rgb_get_visual());
+  gtk_widget_set_default_colormap (gdk_rgb_get_cmap());
+#else
   gtk_preview_set_gamma (gimp_gamma ());
   gtk_preview_set_install_cmap (gimp_install_cmap ());
   color_cube = gimp_color_cube ();
@@ -632,6 +641,7 @@ build_dialog(GImageType basetype,
                               color_cube[2], color_cube[3]);
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+#endif
 
 
   dlg = gtk_dialog_new ();
@@ -663,8 +673,15 @@ build_dialog(GImageType basetype,
     /* The 'playback' half of the dialog */
     
     windowname = g_malloc(strlen("Playback: ")+strlen(imagename)+1);
-    strcpy(windowname,"Playback: ");
-    strcat(windowname,imagename);
+    if (total_frames > 1)
+      {
+	strcpy(windowname,"Playback: ");
+	strcat(windowname,imagename);
+      }
+    else
+      {
+	strcpy(windowname,imagename);	
+      }
     frame = gtk_frame_new (windowname);
     g_free(windowname);
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -708,8 +725,11 @@ build_dialog(GImageType basetype,
 	  }
 	  /* If there aren't multiple frames, playback controls make no
 	     sense */
-	  if (total_frames<=1) gtk_widget_set_sensitive (hbox2, FALSE);
-	  gtk_widget_show(hbox2);
+	  /*	  if (total_frames<=1) gtk_widget_set_sensitive (hbox2, FALSE);
+	  gtk_widget_show(hbox2);*/
+
+	  if (total_frames>1)
+	    gtk_widget_show(hbox2);
 
 	  hbox2 = gtk_hbox_new (TRUE, 0);
 	  gtk_container_border_width (GTK_CONTAINER (hbox2), 0);
@@ -761,7 +781,8 @@ build_dialog(GImageType basetype,
 	    gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (progress),
 				TRUE, TRUE, 0);
 	  }
-	  gtk_widget_show (GTK_WIDGET (progress));
+	  if (total_frames>1)
+	    gtk_widget_show (GTK_WIDGET (progress));
 	}
 	gtk_widget_show(vbox);
 	
@@ -1067,7 +1088,8 @@ render_frame(gint32 whichframe)
 	      gdk_draw_rgb_image (shape_drawing_area->window,
 				  shape_drawing_area->style->white_gc,
 				  0, 0, width, height,
-				  DITHERTYPE,
+				  (total_frames==1)?GDK_RGB_DITHER_MAX
+				  :DITHERTYPE,
 				  preview_data, width * 3);
 #else
 	      for (i=0;i<height;i++)
@@ -1085,7 +1107,8 @@ render_frame(gint32 whichframe)
 	      gdk_draw_rgb_image (drawing_area->window,
 				  drawing_area->style->white_gc,
 				  0, 0, width, height,
-				  DITHERTYPE,
+				  (total_frames==1)?GDK_RGB_DITHER_MAX
+				  :DITHERTYPE,
 				  preview_data, width * 3);
 #else
 	      for (i=0;i<height;i++)
@@ -1185,7 +1208,8 @@ render_frame(gint32 whichframe)
 		  gdk_draw_rgb_image (shape_drawing_area->window,
 				      shape_drawing_area->style->white_gc,
 				      0, top, width, bottom-top,
-				      DITHERTYPE,
+				      (total_frames==1)?GDK_RGB_DITHER_MAX
+				      :DITHERTYPE,
 				      &preview_data[3*top*width], width * 3);
 #else
 		  for (i=rawy;i<rawy+rawheight;i++)
@@ -1204,7 +1228,8 @@ render_frame(gint32 whichframe)
 		  gdk_draw_rgb_image (shape_drawing_area->window,
 				      shape_drawing_area->style->white_gc,
 				      0, 0, width, height,
-				      DITHERTYPE,
+				      (total_frames==1)?GDK_RGB_DITHER_MAX
+				      :DITHERTYPE,
 				      preview_data, width * 3);
 #else
 		  for (i=0;i<height;i++)
@@ -1230,7 +1255,8 @@ render_frame(gint32 whichframe)
 		  gdk_draw_rgb_image (drawing_area->window,
 				      drawing_area->style->white_gc,
 				      0, top, width, bottom-top,
-				      DITHERTYPE,
+				      (total_frames==1)?GDK_RGB_DITHER_MAX
+				      :DITHERTYPE,
 				      &preview_data[3*top*width], width * 3);
 #else
 		  for (i=rawy;i<rawy+rawheight;i++)
@@ -1248,6 +1274,7 @@ render_frame(gint32 whichframe)
 		  gdk_draw_rgb_image (drawing_area->window,
 				      drawing_area->style->white_gc,
 				      0, 0, width, height,
+				      (total_frames==1)?GDK_RGB_DITHER_MAX:
 				      DITHERTYPE,
 				      preview_data, width * 3);
 #else
@@ -1341,6 +1368,7 @@ render_frame(gint32 whichframe)
 	      gdk_draw_rgb_image (shape_drawing_area->window,
 				  shape_drawing_area->style->white_gc,
 				  0, 0, width, height,
+				  (total_frames==1)?GDK_RGB_DITHER_MAX:
 				  DITHERTYPE,
 				  preview_data, width * 3);
 #else
@@ -1358,6 +1386,7 @@ render_frame(gint32 whichframe)
 	      gdk_draw_rgb_image (drawing_area->window,
 				  drawing_area->style->white_gc,
 				  0, 0, width, height,
+				  (total_frames==1)?GDK_RGB_DITHER_MAX:
 				  DITHERTYPE,
 				  preview_data, width * 3);
 #else
@@ -1464,7 +1493,8 @@ render_frame(gint32 whichframe)
 		  gdk_draw_rgb_image (shape_drawing_area->window,
 				      shape_drawing_area->style->white_gc,
 				      0, top, width, bottom-top,
-				      DITHERTYPE,
+				      (total_frames==1)?GDK_RGB_DITHER_MAX
+				      :DITHERTYPE,
 				      &preview_data[3*top*width], width * 3);
 #else
 		  for (i=rawy;i<rawy+rawheight;i++)
@@ -1483,7 +1513,8 @@ render_frame(gint32 whichframe)
 		  gdk_draw_rgb_image (shape_drawing_area->window,
 				      shape_drawing_area->style->white_gc,
 				      0, 0, width, height,
-				      DITHERTYPE,
+				      (total_frames==1)?GDK_RGB_DITHER_MAX
+				      :DITHERTYPE,
 				      preview_data, width * 3);
 #else
 		  for (i=0;i<height;i++)
@@ -1509,7 +1540,8 @@ render_frame(gint32 whichframe)
 		  gdk_draw_rgb_image (drawing_area->window,
 				      drawing_area->style->white_gc,
 				      0, top, width, bottom-top,
-				      DITHERTYPE,
+				      (total_frames==1)?GDK_RGB_DITHER_MAX
+				      :DITHERTYPE,
 				      &preview_data[3*top*width], width * 3);
 #else
 		  for (i=rawy;i<rawy+rawheight;i++)
@@ -1527,7 +1559,8 @@ render_frame(gint32 whichframe)
 		  gdk_draw_rgb_image (drawing_area->window,
 				      drawing_area->style->white_gc,
 				      0, 0, width, height,
-				      DITHERTYPE,
+				      (total_frames==1)?GDK_RGB_DITHER_MAX
+				      :DITHERTYPE,
 				      preview_data, width * 3);
 #else
 		  for (i=0;i<height;i++)
