@@ -149,6 +149,7 @@ gimp_procedural_db_get_data (gchar    *identifier,
  * gimp_procedural_db_set_data:
  * @identifier: The identifier associated with data.
  * @data: A byte array containing data.
+ * @bytes: The number of bytes in the data
  *
  * Associates the specified identifier with the supplied data.
  *

@@ -3,7 +3,7 @@
 	* libgimp/gimpchannel.c
 	* libgimp/gimpimage.c
 	* libgimp/gimplayer.c
-	* libgimp/gimpproceduraldb.c
+	* libgimp/gimpproceduraldb.[ch]
 	* libgimp/gimpselection.c: document wrapped PDB wrappers
 
 2000-08-25  Sven Neumann  <sven@gimp.org>

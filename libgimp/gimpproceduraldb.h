@@ -38,13 +38,13 @@ gboolean gimp_procedural_db_proc_info    (gchar            *procedure,
 					  GimpPDBProcType  *proc_type,
 					  gint             *num_args,
 					  gint             *num_values,
-					  GimpParamDef    **params,
+					  GimpParamDef    **args,
 					  GimpParamDef    **return_vals);
 gboolean gimp_procedural_db_get_data     (gchar            *identifier,
 					  gpointer          data);
 gboolean gimp_procedural_db_set_data     (gchar            *identifier,
 					  gpointer          data,
-					  guint32           length);
+					  guint32           bytes);
 
 
 #ifdef __cplusplus

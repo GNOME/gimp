@@ -3778,7 +3778,7 @@ gchar   *help_path
 <FUNCTION>
 <NAME>gimp_procedural_db_proc_info</NAME>
 <RETURNS>gboolean  </RETURNS>
-gchar            *procedure,gchar           **blurb,gchar           **help,gchar           **author,gchar           **copyright,gchar           **date,GimpPDBProcType  *proc_type,gint             *num_args,gint             *num_values,GimpParamDef    **params,GimpParamDef    **return_vals
+gchar            *procedure,gchar           **blurb,gchar           **help,gchar           **author,gchar           **copyright,gchar           **date,GimpPDBProcType  *proc_type,gint             *num_args,gint             *num_values,GimpParamDef    **args,GimpParamDef    **return_vals
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_procedural_db_get_data</NAME>
@@ -3788,7 +3788,7 @@ gchar            *identifier,gpointer          data
 <FUNCTION>
 <NAME>gimp_procedural_db_set_data</NAME>
 <RETURNS>gboolean  </RETURNS>
-gchar            *identifier,gpointer          data,guint32           length
+gchar            *identifier,gpointer          data,guint32           bytes
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_procedural_db_dump</NAME>

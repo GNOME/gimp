@@ -28,9 +28,11 @@ gimpproceduraldb
 @proc_type: 
 @num_args: 
 @num_values: 
-@params: 
+@args: 
 @return_vals: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@params: 
 
 
 <!-- ##### FUNCTION gimp_procedural_db_get_data ##### -->
@@ -50,8 +52,10 @@ gimpproceduraldb
 
 @identifier: 
 @data: 
-@length: 
+@bytes: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@length: 
 
 
 <!-- ##### FUNCTION gimp_procedural_db_dump ##### -->
