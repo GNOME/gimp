@@ -288,7 +288,6 @@ best_cmap_match (guchar  *cmap,
   return cmap_index;
 }
 
-
 G_INLINE_FUNC void
 pix_composite (guchar   *p1, 
 	       guchar    p2[4], 
@@ -323,7 +322,6 @@ pix_composite (guchar   *p1,
       *p1 = b > 255 ? 255 : b;
     }
 }
-
 
 static void
 doit (gint32        image_ID,
@@ -475,8 +473,7 @@ doit (gint32        image_ID,
         }
       if (preview_mode) 
 	{
-	  memcpy (preview->buffer + preview->rowstride * y, dest,
-		  preview->rowstride);
+          gimp_fixme_preview_do_row (preview, y, width, dest);
 	} 
       else 
 	{
@@ -533,7 +530,6 @@ ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-
 static void
 entry_callback (GtkWidget *widget, 
 		gpointer   data)
@@ -561,13 +557,10 @@ entry_callback (GtkWidget *widget,
     }
   else
     {
-      if (new_x != x)
-	x = new_x;
-      if (new_y != y)
-	y = new_y;
+      x = new_x;
+      y = new_y;
     }     
 }
-
 
 static void
 color_callback (GtkWidget *widget,
@@ -587,7 +580,6 @@ color_callback (GtkWidget *widget,
 				     &color);
     }
 }
-
 
 static void
 update_preview_callback (GtkWidget *widget, 

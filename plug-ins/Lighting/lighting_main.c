@@ -239,12 +239,14 @@ run (gchar      *name,
 
 		    gimp_set_data ("plug_in_lighting",
 				   &mapvals, sizeof (LightingValues));
+		    gimp_displays_flush ();
 		  }
               break;
 
               case GIMP_RUN_WITH_LAST_VALS:
                 image_setup (drawable, FALSE);
                 compute_image ();
+		gimp_displays_flush ();
                 break;
 
               case GIMP_RUN_NONINTERACTIVE:
@@ -288,16 +290,11 @@ run (gchar      *name,
         status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush ();
-
   values[0].data.d_status = status;
   gimp_drawable_detach (drawable);
 
-  if (xpostab)
-    g_free (xpostab);
-  if (ypostab)
-    g_free (ypostab);
+  g_free (xpostab);
+  g_free (ypostab);
 }
 
 GimpPlugInInfo PLUG_IN_INFO =

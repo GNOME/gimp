@@ -1,3 +1,22 @@
+2002-12-23  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* libgimp/gimpmiscui.c (gimp_fixme_preview_new): make sure preview
+	structure is correctly initialized.
+
+	* libgimp/gimpmisc.[ch] (gimp_pixel_fetcher_put_pixel): added new
+	routine to gimpmisc.
+
+2002-12-23  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/plasma.c: better use of libgimp routines, code
+	clean-up
+
+	* plug-ins/common/grid.c (doit): fixed small problem in preview when
+	displaying images with an alpha channel.
+
+	* plug-ins/Lighting/lighting_main.c (run): fixed #81479 ("Repeat Last" 
+	incorrectly enabled if Lighting Effects plug-in is cancelled)
+
 2002-12-23  Tor Lillqvist  <tml@iki.fi>
 
 	* configure.in: When bulding with GCC for Win32, use either

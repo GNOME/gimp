@@ -43,7 +43,7 @@
 GimpFixMePreview*
 gimp_fixme_preview_new (GimpDrawable *drawable, gboolean has_frame)
 {
-  GimpFixMePreview *preview = g_new (GimpFixMePreview, 1);
+  GimpFixMePreview *preview = g_new0 (GimpFixMePreview, 1);
 
   preview->widget = gtk_preview_new (GTK_PREVIEW_COLOR);
 

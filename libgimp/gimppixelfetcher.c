@@ -27,11 +27,6 @@
 
 #include <glib.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "config.h"
@@ -61,10 +56,12 @@ gimp_pixel_fetcher_new (GimpDrawable *drawable)
   pf->bg_color[0]   = 0;
   pf->bg_color[1]   = 0;
   pf->bg_color[2]   = 0;
-  pf->bg_color[3]   = 0;
+  pf->bg_color[3]   = 255;
 
   pf->drawable    = drawable;
   pf->tile        = NULL;
+  pf->tile_dirty  = FALSE;
+  pf->shadow	  = FALSE;
 
   return pf;
 }
@@ -72,44 +69,39 @@ gimp_pixel_fetcher_new (GimpDrawable *drawable)
 void
 gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf)
 {
-  GimpRGB  background;
+  GimpRGB background;
 
   gimp_palette_get_background (&background);
 
   switch (pf->img_bpp)
     {
+    case 2: pf->bg_color[1] = 255;
     case 1:
-    case 2:
       pf->bg_color[0] = gimp_rgb_intensity_uchar (&background);
       break;
 
+    case 4: pf->bg_color[3] = 255;
     case 3:
-    case 4:
       gimp_rgb_get_uchar (&background,
 			  pf->bg_color, pf->bg_color + 1, pf->bg_color + 2);
       break;
     }
 }
 
-void
-gimp_pixel_fetcher_get_pixel (GimpPixelFetcher *pf,
-			      gint             x,
-			      gint             y,
-			      guchar          *pixel)
+void		 
+gimp_pixel_fetcher_set_shadow (GimpPixelFetcher *pf,
+			       gboolean shadow)
+{
+  pf->shadow = shadow;
+}
+
+static guchar*
+gimp_pixel_fetcher_provide_tile (GimpPixelFetcher *pf,
+				 gint             x,
+				 gint             y)
 {
   gint    col, row;
   gint    coloff, rowoff;
-  guchar *p;
-  gint    i;
-
-  if ((x < pf->sel_x1) || (x >= pf->sel_x2) ||
-      (y < pf->sel_y1) || (y >= pf->sel_y2))
-    {
-      for (i = 0; i < pf->img_bpp; i++)
-	pixel[i] = pf->bg_color[i];
-
-      return;
-    }
 
   col    = x / pf->tile_width;
   coloff = x % pf->tile_width;
@@ -119,19 +111,61 @@ gimp_pixel_fetcher_get_pixel (GimpPixelFetcher *pf,
   if ((col != pf->col) || (row != pf->row) || (pf->tile == NULL))
     {
       if (pf->tile != NULL)
-	gimp_tile_unref(pf->tile, FALSE);
+	gimp_tile_unref(pf->tile, pf->tile_dirty);
 
-      pf->tile = gimp_drawable_get_tile (pf->drawable, FALSE, row, col);
+      pf->tile = gimp_drawable_get_tile (pf->drawable, pf->shadow, row, col);
+      pf->tile_dirty = FALSE;
       gimp_tile_ref (pf->tile);
 
       pf->col = col;
       pf->row = row;
     }
+  
+  return pf->tile->data + pf->img_bpp * (pf->tile->ewidth * rowoff + coloff);
+}
 
-  p = pf->tile->data + pf->img_bpp * (pf->tile->ewidth * rowoff + coloff);
+void
+gimp_pixel_fetcher_get_pixel (GimpPixelFetcher *pf,
+			      gint             x,
+			      gint             y,
+			      guchar          *pixel)
+{
+  guchar *p;
+  gint    i;
+
+  if (x < pf->sel_x1 || x >= pf->sel_x2 ||
+      y < pf->sel_y1 || y >= pf->sel_y2)
+    {
+      return;
+    }
+
+  p = gimp_pixel_fetcher_provide_tile (pf, x, y);
 
   for (i = pf->img_bpp; i; i--)
     *pixel++ = *p++;
+}
+
+void
+gimp_pixel_fetcher_put_pixel (GimpPixelFetcher *pf,
+			      gint             x,
+			      gint             y,
+			      guchar          *pixel)
+{
+  guchar *p;
+  gint    i;
+
+  if (x < pf->sel_x1 || x >= pf->sel_x2 ||
+      y < pf->sel_y1 || y >= pf->sel_y2)
+    {
+      return;
+    }
+
+  p = gimp_pixel_fetcher_provide_tile (pf, x, y);
+
+  for (i = pf->img_bpp; i; i--)
+    *p++ = *pixel++;
+
+  pf->tile_dirty = TRUE;
 }
 
 void
@@ -141,8 +175,6 @@ gimp_pixel_fetcher_get_pixel2 (GimpPixelFetcher *pf,
 			       gint		wrapmode,
 			       guchar          *pixel)
 {
-  gint    col, row;
-  gint    coloff, rowoff;
   guchar *p;
   gint    i;
 
@@ -165,14 +197,8 @@ gimp_pixel_fetcher_get_pixel2 (GimpPixelFetcher *pf,
 	  }
 	break;
       case PIXEL_SMEAR:
-	if (x < 0)
-	  x = 0;
-	if (x >= pf->img_width)
-	  x = pf->img_width - 1;
-	if (y < 0)
-	  y = 0;
-	if (y >= pf->img_height)
-	  y = pf->img_height - 1;
+	x = CLAMP (x, 0, pf->img_width);
+	y = CLAMP (y, 0, pf->img_height);
 	break;
       case PIXEL_BLACK:
 	if (x < 0 || x >= pf->img_width || 
@@ -187,24 +213,7 @@ gimp_pixel_fetcher_get_pixel2 (GimpPixelFetcher *pf,
 	return;
       }
 
-  col    = x / pf->tile_width;
-  coloff = x % pf->tile_width;
-  row    = y / pf->tile_height;
-  rowoff = y % pf->tile_height;
-
-  if ((col != pf->col) || (row != pf->row) || (pf->tile == NULL))
-    {
-      if (pf->tile != NULL)
-	gimp_tile_unref(pf->tile, FALSE);
-
-      pf->tile = gimp_drawable_get_tile (pf->drawable, FALSE, row, col);
-      gimp_tile_ref (pf->tile);
-
-      pf->col = col;
-      pf->row = row;
-    }
-
-  p = pf->tile->data + pf->img_bpp * (pf->tile->ewidth * rowoff + coloff);
+  p = gimp_pixel_fetcher_provide_tile (pf, x, y);
 
   for (i = pf->img_bpp; i; i--)
     *pixel++ = *p++;
@@ -214,7 +223,7 @@ void
 gimp_pixel_fetcher_destroy (GimpPixelFetcher *pf)
 {
   if (pf->tile != NULL)
-    gimp_tile_unref (pf->tile, FALSE);
+    gimp_tile_unref (pf->tile, pf->tile_dirty);
 
   g_free (pf);
 }

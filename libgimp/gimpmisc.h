@@ -34,7 +34,7 @@ enum
 {
   PIXEL_WRAP,
   PIXEL_SMEAR,
-  PIXEL_BLACK
+  PIXEL_BLACK,
 };
 
 typedef struct
@@ -49,10 +49,14 @@ typedef struct
   guchar     bg_color[4];
   GimpDrawable *drawable;
   GimpTile     *tile;
+  gboolean   tile_dirty;
+  gboolean   shadow;
 } GimpPixelFetcher;
 
 GimpPixelFetcher *gimp_pixel_fetcher_new         (GimpDrawable *drawable);
 void             gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf);
+void		 gimp_pixel_fetcher_set_shadow	 (GimpPixelFetcher *pf,
+						  gboolean shadow);
 void             gimp_pixel_fetcher_get_pixel    (GimpPixelFetcher *pf, 
 						  gint x, 
 						  gint y, 
@@ -61,6 +65,10 @@ void             gimp_pixel_fetcher_get_pixel2   (GimpPixelFetcher *pf,
 						  gint x, 
 						  gint y, 
 						  gint wrapmode,
+						  guchar *pixel);
+void             gimp_pixel_fetcher_put_pixel    (GimpPixelFetcher *pf, 
+						  gint x, 
+						  gint y, 
 						  guchar *pixel);
 void             gimp_pixel_fetcher_destroy      (GimpPixelFetcher *pf);
 
