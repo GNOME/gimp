@@ -36,7 +36,7 @@ if ($ARGV[0] ne "--writemakefile") {
 @pins =
    qw(
       windify prep4gif webify tex-to-float ditherize
-      xachlego xachshadow roundsel blended2
+      xachlego xachshadow roundsel blended2 warp-sharp
       scratches blowinout terral_text xachvision perlcc translogo
       animate_cells image_tile yinyang stamps font_table sethspin
       perlotine randomblends innerbevel fit-text guidegrid
@@ -318,6 +318,7 @@ WriteMakefile(
     'DIR'	=> [@DIRS],
     'NAME'	=> 'Gimp',
     'VERSION_FROM' => 'Gimp.pm',
+    'INSTALLBIN'=> $bindir,
     'PM'	=> {
     		    'Gimp.pm'		=> '$(INST_LIBDIR)/Gimp.pm',
     		    'Gimp/Data.pm'	=> '$(INST_LIBDIR)/Gimp/Data.pm',

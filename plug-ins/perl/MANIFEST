@@ -130,6 +130,7 @@ examples/billboard
 examples/blended2
 examples/dust
 examples/clear_alpha
+examples/warp-sharp
 pxgettext
 po/ChangeLog
 po/Makefile.PL

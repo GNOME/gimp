@@ -62,6 +62,7 @@ sub expand {
    $cfg;
 }
 
+# the next line should no longer be necessary, but...
 $cfg{_CFLAGS} =~ s/\B-Wall\b//g; # remove -Wall from cflags and pray...
 
 while (($k,$v)=each(%cfg)) {

@@ -1399,11 +1399,6 @@ echo $ac_n "checking for intelligent life""... $ac_c" 1>&6
 echo "configure:1400: checking for intelligent life" >&5
 echo "$ac_t""not found" 1>&6
 
-if test "x$GCC" = xyes; then
-   nowarn="-Wno-parentheses -Wno-unused -Wno-uninitialized"
-   GIMP_CFLAGS="$GIMP_CFLAGS $nowarn"
-   GIMP_CFLAGS_NOUI="$GIMP_CFLAGS"
-fi
 
 
 
@@ -1425,12 +1420,12 @@ fi
 for ac_func in _exit
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
-echo "configure:1429: checking for $ac_func" >&5
+echo "configure:1424: checking for $ac_func" >&5
 if eval "test \"`echo '$''{'ac_cv_func_$ac_func'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 1434 "configure"
+#line 1429 "configure"
 #include "confdefs.h"
 /* System header to define __stub macros and hopefully few prototypes,
     which can conflict with char $ac_func(); below.  */
@@ -1453,7 +1448,7 @@ $ac_func();
 
 ; return 0; }
 EOF
-if { (eval echo configure:1457: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1452: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_func_$ac_func=yes"
 else

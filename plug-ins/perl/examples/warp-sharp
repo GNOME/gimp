@@ -1,0 +1,92 @@
+#!/usr/bin/perl
+
+# slightly edited by pcg@goof.com
+
+use Gimp qw(:auto);
+use Gimp::Fu;
+
+sub warp_sharp  {
+    my ($img, $drw, $edge_strength, $blur_strength,
+	$bump_depth, $displace_amount)=@_;
+    my $drawable_width=$drw->width;
+    my $drawable_height=$drw->height;
+    my $drawable_type=($drw->type);
+    my $edge_layer=gimp_layer_copy($drw,0);
+    my $x_displace_layer=
+      $img->layer_new($drawable_width, $drawable_height,
+		      $drawable_type, "Displace X", 100, 0);
+    my $y_displace_layer=
+      $img->layer_new($drawable_width, $drawable_height,
+		      $drawable_type, "Displace Y", 100, 0);
+    my @selection_info=$img->selection_bounds;
+    my $has_selection=$selection_info[0];
+    my $old_selection;
+    my $bump_xoff;
+    my $bump_yoff;
+    my $version=1;
+
+#    Gimp::set_trace(TRACE_ALL);
+    $img->undo_push_group_start;
+    if ($has_selection) {
+        $old_selection=$img->gimp_selection_save;
+        $img->selection_grow($blur_strength + $bump_depth + $displace_amount);
+	$bump_xoff=$selection_info[1];
+	$bump_yoff=$selection_info[2];
+    }
+    $x_displace_layer->fill(1 + $version);
+    $y_displace_layer->fill(1 + $version);
+    $img->add_layer($edge_layer,-1);
+    $img->add_layer($x_displace_layer,-1);
+    $img->add_layer($y_displace_layer,-1);
+
+    plug_in_edge($img,$edge_layer,$edge_strength,1);
+
+    plug_in_gauss_iir($img, $edge_layer, $blur_strength, 1, 1)
+      if ($blur_strength >= 1);
+
+    plug_in_bump_map($img,$x_displace_layer,$edge_layer, 0, 30,
+		     $bump_depth, $bump_xoff,$bump_yoff, 0,0,0,0,0);
+
+    plug_in_bump_map($img,$y_displace_layer,$edge_layer, 270, 30,
+		     $bump_depth, $bump_xoff,$bump_yoff, 0,0,0,0,0);
+
+    if ($has_selection) {
+	$old_selection->gimp_selection_load;
+	$old_selection->remove_channel;
+	# will cause a crash:
+	# $old_selection->gimp_channel_delete;
+    }
+
+    plug_in_displace($img,$drw, $displace_amount, $displace_amount, 1,1,
+		     $x_displace_layer, $y_displace_layer, 1);
+
+    $img->remove_layer($edge_layer);
+    $img->remove_layer($x_displace_layer);
+    $img->remove_layer($y_displace_layer);
+    $img->undo_push_group_end; 
+    gimp_displays_flush();
+    return undef;
+}
+
+
+register
+  "plug_in_warp_sharp",
+  "Sharpen the current drawable",
+  "Sharpen the current drawable by squeezing unsharp edges. Algorithm described by Joern Loviscach in c't 22/1999, p 236.",
+  "Simon Budig <simon\@gimp.org>, Peter Daum <gator\@cs.tu-berlin.de>",
+  "Simon Budig, Peter Daum",
+  "2000-05-11",
+  N_"<Image>/Filters/Enhance/Warp Sharp...",
+  "RGB*, GRAY*",
+  [
+   [PF_SLIDER, "edge_detection", "Edge detection", 7, [1, 10, 0.1]],
+   [PF_SLIDER, "blur_radius", "Blur radius", 3, [0, 10, 0.1]],
+   [PF_SLIDER, "bump_depth", "Bump depth", 2, [1, 10, 1]],
+   [PF_SLIDER, "intensity", "Displace Intensity", 2.5, [0.1, 10, 0.1]]
+  ],
+  [],
+  ['gimp-1.1'],
+  \&warp_sharp;
+
+
+exit main;

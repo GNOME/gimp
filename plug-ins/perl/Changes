@@ -1,6 +1,6 @@
 Revision history for Gimp-Perl extension.
 
-1.20
+1.2   Thu May 11 18:55:13 CEST 2000
 	- image types updated to reflect gimp's reality.
         - updated perlotine.
         - fixed logulator (bugs are actually in the script-fu parts).
@@ -48,6 +48,10 @@ Revision history for Gimp-Perl extension.
           script-fu's.
         - added warning when using known-to-be-broken experimental threading
           feature. Maybe gimp-perl should refuse to build instead?
+        - added examples/warp-sharp.
+        - more $(CC) != perl's $(CC) fixes in configure.frag.
+        - Makefile.PL now uses $bindir to install programs. This is not optimal
+          for standalone installations, but gimp has priority ;)
 
 1.19  Thu Jan  6 00:21:58 CET 2000
         - used N_ to mark all the menu paths, since gimp now tries to
