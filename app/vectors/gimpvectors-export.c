@@ -40,10 +40,13 @@
 #include "gimp-intl.h"
 
 
-static void    gimp_vectors_export_path        (const GimpVectors *vectors,
-                                                FILE              *file);
-static gchar * gimp_vectors_export_path_data   (const GimpVectors *vectors);
-static gchar * gimp_vectors_export_image_size  (const GimpImage   *image);
+static GString * gimp_vectors_export            (const GimpImage   *image,
+                                                 const GimpVectors *vectors);
+static void      gimp_vectors_export_image_size (const GimpImage   *image,
+                                                 GString           *str);
+static void      gimp_vectors_export_path       (const GimpVectors *vectors,
+                                                 GString           *str);
+static gchar   * gimp_vectors_export_path_data  (const GimpVectors *vectors);
 
 
 /**
@@ -55,7 +58,8 @@ static gchar * gimp_vectors_export_image_size  (const GimpImage   *image);
  *
  * Exports one or more vectors to a SVG file.
  *
- * Return value: %TRUE on success, %FALSE if an error occured
+ * Return value: %TRUE on success,
+ *               %FALSE if there was an error writing the file
  **/
 gboolean
 gimp_vectors_export_file (const GimpImage    *image,
@@ -63,8 +67,8 @@ gimp_vectors_export_file (const GimpImage    *image,
                           const gchar        *filename,
                           GError            **error)
 {
-  FILE  *file;
-  gchar *size;
+  FILE    *file;
+  GString *str;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), FALSE);
@@ -79,32 +83,11 @@ gimp_vectors_export_file (const GimpImage    *image,
       return FALSE;
     }
 
-  fprintf (file,
-           "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
-           "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\"\n"
-           "              \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n"
-           "<svg xmlns=\"http://www.w3.org/2000/svg\"\n");
+  str = gimp_vectors_export (image, vectors);
 
-  size = gimp_vectors_export_image_size (image);
-  fprintf (file, "     %s\n", size);
-  g_free (size);
+  fprintf (file, str->str);
 
-  fprintf (file, "     viewBox=\"0 0 %d %d\">\n",
-           image->width, image->height);
-
-  if (vectors)
-    {
-      gimp_vectors_export_path (vectors, file);
-    }
-  else
-    {
-      GList *list;
-
-      for (list = GIMP_LIST (image->vectors)->list; list; list = list->next)
-        gimp_vectors_export_path (GIMP_VECTORS (list->data), file);
-    }
-
-  fprintf (file, "</svg>\n");
+  g_string_free (str, TRUE);
 
   if (fclose (file))
     {
@@ -116,22 +99,66 @@ gimp_vectors_export_file (const GimpImage    *image,
   return TRUE;
 }
 
+/**
+ * gimp_vectors_export_string:
+ * @image: the #GimpImage from which to export vectors
+ * @vectors: a #GimpVectors object or %NULL to export all vectors in @image
+ *
+ * Exports one or more vectors to a SVG string.
+ *
+ * Return value: a %NUL-terminated string that holds a complete XML document
+ **/
 gchar *
 gimp_vectors_export_string (const GimpImage    *image,
-                            const GimpVectors  *vectors,
-                            GError            **error)
+                            const GimpVectors  *vectors)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
 
-  g_warning ("gimp_vectors_export_string: unimplemented");
-
-  return NULL;
+  return g_string_free (gimp_vectors_export (image, vectors), FALSE);
 }
 
-static gchar *
-gimp_vectors_export_image_size (const GimpImage *image)
+static GString *
+gimp_vectors_export (const GimpImage   *image,
+                     const GimpVectors *vectors)
+{
+  GString *str = g_string_new (NULL);
+
+  g_string_append_printf (str,
+                          "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+                          "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\"\n"
+                          "              \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n"
+                          "\n"
+                          "<svg xmlns=\"http://www.w3.org/2000/svg\"\n");
+
+  g_string_append (str, "     ");
+  gimp_vectors_export_image_size (image, str);
+  g_string_append_c (str, '\n');
+
+  g_string_append_printf (str,
+                          "     viewBox=\"0 0 %d %d\">\n",
+                          image->width, image->height);
+
+  if (vectors)
+    {
+      gimp_vectors_export_path (vectors, str);
+    }
+  else
+    {
+      GList *list;
+
+      for (list = GIMP_LIST (image->vectors)->list; list; list = list->next)
+        gimp_vectors_export_path (GIMP_VECTORS (list->data), str);
+    }
+
+  g_string_append (str, "</svg>\n");
+
+  return str;
+}
+
+static void
+gimp_vectors_export_image_size (const GimpImage *image,
+                                GString         *str)
 {
   GimpUnit     unit;
   const gchar *abbrev;
@@ -161,13 +188,14 @@ gimp_vectors_export_image_size (const GimpImage *image)
   g_ascii_formatd (hbuf, sizeof (hbuf),
                    "%g", h * _gimp_unit_get_factor (image->gimp, unit));
 
-  return g_strdup_printf ("width=\"%s%s\" height=\"%s%s\"",
+  g_string_append_printf (str,
+                          "width=\"%s%s\" height=\"%s%s\"",
                           wbuf, abbrev, hbuf, abbrev);
 }
 
 static void
 gimp_vectors_export_path (const GimpVectors *vectors,
-                          FILE              *file)
+                          GString           *str)
 {
   const gchar *name = gimp_object_get_name (GIMP_OBJECT (vectors));
   gchar       *data = gimp_vectors_export_path_data (vectors);
@@ -175,11 +203,11 @@ gimp_vectors_export_path (const GimpVectors *vectors,
 
   esc_name = g_markup_escape_text (name, strlen (name));
 
-  fprintf (file,
-           "  <path id=\"%s\"\n"
-           "        fill=\"none\" stroke=\"black\" stroke-width=\"1\"\n"
-           "        d=\"%s\" />\n",
-           esc_name, data);
+  g_string_append_printf (str,
+                          "  <path id=\"%s\"\n"
+                          "        fill=\"none\" stroke=\"black\" stroke-width=\"1\"\n"
+                          "        d=\"%s\" />\n",
+                          esc_name, data);
 
   g_free (esc_name);
   g_free (data);
