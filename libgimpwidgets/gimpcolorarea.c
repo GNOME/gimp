@@ -230,7 +230,7 @@ gimp_color_area_expose (GtkWidget      *widget,
                                 event->area.y,
                                 event->area.width,
                                 event->area.height,
-                                GDK_RGB_DITHER_NORMAL,
+                                GDK_RGB_DITHER_MAX,
                                 buf,
                                 gca->rowstride,
                                 event->area.x,
@@ -421,7 +421,7 @@ gimp_color_area_idle_update (gpointer data)
 
 	  for (x = 0; x < width; x++)
 	    {
-	      if (x * height > y * width)
+	      if ((width - x) * height > y * width)
 		{
 		  *p++ = opaque[0];
 		  *p++ = opaque[1];
@@ -430,7 +430,7 @@ gimp_color_area_idle_update (gpointer data)
 		  continue;
 		}
 
-	      frac = y - (gdouble) (x * height) / (gdouble) width;
+	      frac = y - (gdouble) ((width - x) * height) / (gdouble) width;
 
 	      if (((x / check_size) ^ (y / check_size)) & 1) 
 		{

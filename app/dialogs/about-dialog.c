@@ -338,7 +338,7 @@ about_dialog_load_logo (GtkWidget *window)
                                  0, 0,
                                  logo_width,
                                  logo_height,
-                                 GDK_RGB_DITHER_MAX,
+                                 GDK_RGB_DITHER_NORMAL,
                                  0, 0);
 
   g_object_unref (G_OBJECT (gc));

@@ -1,3 +1,22 @@
+2002-01-30  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/about-dialog.c: GDK_RGB_DITHER_NORMAL should be good enough.
+	
+	* app/gui/preferences-dialog.c: undef GTK_DISABLE_DEPRECATED for
+	GtkListItem.
+	
+	* app/widgets/gimpcomponentlistitem.c: don't use GtkPreview methods
+	on a GimpPreview. The component views are still broken but at least
+	the warnings are gone.
+	
+	* app/widgets/gimpfontselection.c: fixed warnings by hardcoding a 
+	font size when validating a font name :-(
+	
+	* app/widgets/gimppreview.c: set allocation to desired size.
+	
+	* libgimpwidgets/gimpcolorarea.c: flipped so it looks like before
+	the port to GtkDrawingArea. Use GDK_RGB_DITHER_MAX to render.
+
 2002-01-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppreview.[ch]: derive from GtkDrawingArea

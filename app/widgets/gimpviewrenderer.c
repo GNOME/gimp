@@ -862,6 +862,9 @@ gimp_preview_size_allocate (GtkWidget     *widget,
 
   preview = GIMP_PREVIEW (widget);
 
+  allocation->width  = preview->width  + 2 * preview->border_width;
+  allocation->height = preview->height + 2 * preview->border_width;
+
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
     GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 

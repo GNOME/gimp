@@ -21,11 +21,6 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -161,9 +156,6 @@ gimp_component_list_item_new (GimpImage       *gimage,
   GIMP_COMPONENT_LIST_ITEM (list_item)->channel = channel;
 
   gimp_list_item_set_viewable (list_item, GIMP_VIEWABLE (gimage));
-
-  GTK_PREVIEW (list_item->preview)->bpp  = 1;
-  GTK_PREVIEW (list_item->preview)->type = GTK_PREVIEW_GRAYSCALE;
 
   return GTK_WIDGET (list_item);
 }
