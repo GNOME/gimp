@@ -1,3 +1,9 @@
+2004-11-07  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gflare/gflare.c: removed #undef GTK_DISABLE_DEPRECATED and
+	use a GtkListStore instead of the long-time deprecated GtkList. Done
+	some small cleanups, too.
+
 2004-11-06  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrushgenerated.c: changed minimum brush radius from
