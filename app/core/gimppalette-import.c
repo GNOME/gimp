@@ -25,6 +25,7 @@
 #include <unistd.h>
 #endif
 
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
 
@@ -370,17 +371,62 @@ gimp_palette_import_from_indexed_image (GimpImage   *gimage,
 }
 
 
-/*  create a palette from a PAL file  **********************************/
+/*  create a palette from a file  **********************************/
+
+typedef enum
+{
+  GIMP_PALETTE_FILE_FORMAT_UNKNOWN,
+  GIMP_PALETTE_FILE_FORMAT_GPL,    /*  GIMP palette file                    */
+  GIMP_PALETTE_FILE_FORMAT_PAL,    /*  RIFF palette file                    */
+  GIMP_PALETTE_FILE_FORMAT_ACT     /*  Photoshop binary color palette file  */
+} GimpPaletteFileFormat;
+
+static GimpPaletteFileFormat
+gimp_palette_detect_file_format (const gchar *filename)
+{
+  GimpPaletteFileFormat format = GIMP_PALETTE_FILE_FORMAT_UNKNOWN;
+  gint                  fd;
+  guchar                header[16];
+  struct stat           file_stat;
+
+  fd = open (filename, O_RDONLY);
+  if (fd)
+    {
+      if (read (fd, header, sizeof (header)) == sizeof (header))
+        {
+	  if (strncmp (header + 0, "RIFF", 4) == 0 &&
+              strncmp (header + 8, "PAL data", 8) == 0)
+ 	    {
+              format = GIMP_PALETTE_FILE_FORMAT_PAL;
+	    }
+
+	  if (strncmp (header, "GIMP Palette", 12) == 0)
+	    {
+              format = GIMP_PALETTE_FILE_FORMAT_GPL;
+	    }
+	}
+
+      if (fstat (fd, &file_stat) >= 0)
+        {
+          if (file_stat.st_size == 768)
+            format = GIMP_PALETTE_FILE_FORMAT_ACT;
+        }
+
+      close (fd);
+    }
+
+  return format;
+}
 
 GimpPalette *
 gimp_palette_import_from_file (const gchar  *filename,
                                const gchar  *palette_name,
                                GError      **error)
 {
-  GimpPalette *palette;
+  GimpPalette *palette = NULL;
+  GList       *palette_list;
   GimpRGB      color;
   gint         fd;
-  guchar       header[28];
   guchar       color_bytes[4];
 
   g_return_val_if_fail (filename != NULL, NULL);
@@ -397,32 +443,57 @@ gimp_palette_import_from_file (const gchar  *filename,
       return NULL;
     }
 
-  /* TODO: Parse header correctly. For now, we just skip the 28 bytes */
-  if (read (fd, header, sizeof (header)) != sizeof (header) ||
-      strncmp (header + 0, "RIFF", 4) ||
-      strncmp (header + 8, "PAL data", 8))
+  switch (gimp_palette_detect_file_format (filename))
     {
-      close (fd);
+    case GIMP_PALETTE_FILE_FORMAT_GPL:
+      palette_list = gimp_palette_load (filename, FALSE, error);
+      if (palette_list)
+        {
+          palette = palette_list->data;
+          g_list_free (palette_list);
+        }
+      break;
+
+    case GIMP_PALETTE_FILE_FORMAT_ACT:
+      palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
+
+      while (read (fd, color_bytes, 3) == 3)
+        {
+          gimp_rgba_set_uchar (&color,
+                               color_bytes[0],
+                               color_bytes[1],
+                               color_bytes[2],
+                               255);
+          gimp_palette_add_entry (palette, NULL, &color);
+        }
+      break;
+
+    case GIMP_PALETTE_FILE_FORMAT_PAL:
+      palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
+
+      lseek (fd, 28, SEEK_SET);
+      while (read (fd,
+                   color_bytes, sizeof (color_bytes)) == sizeof (color_bytes))
+        {
+          gimp_rgba_set_uchar (&color,
+                               color_bytes[0],
+                               color_bytes[1],
+                               color_bytes[2],
+                               255);
+          gimp_palette_add_entry (palette, NULL, &color);
+        }
+      break;
+
+    default:
       g_set_error (error,
                    0, 0,
-                   _("Not a RIFF palette file:\n%s"),
+                   _("Unknown type of palette file:\n%s"),
                    gimp_filename_to_utf8 (filename));
-      return NULL;
-    }
-
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
-
-  while (read (fd, color_bytes, sizeof (color_bytes)) == sizeof (color_bytes))
-    {
-      gimp_rgba_set_uchar (&color,
-                           color_bytes[0],
-                           color_bytes[1],
-                           color_bytes[2],
-                           255);
-      gimp_palette_add_entry (palette, NULL, &color);
+      break;
     }
 
   close (fd);
 
   return palette;
 }
+

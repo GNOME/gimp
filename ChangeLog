@@ -1,5 +1,12 @@
 2004-11-14  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimppalette-import.c: applied a (slightly modified)
+	patch from Nickolay V. Shmyrev that changes the palette import
+	function to not only read palettes in the RIFF format but also
+	GIMP and Photoshop ACT palette files (bug #158297).
+
+2004-11-14  Sven Neumann  <sven@gimp.org>
+
 	* Makefile.am (EXTRA_DIST)
 	* MAINTAINERS
 	* PLUGIN_MAINTAINERS
