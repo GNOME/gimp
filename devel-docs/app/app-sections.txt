@@ -149,6 +149,8 @@ GimpProgressRestartFunc
 GimpProgressUpdateFunc
 GimpProgressEndFunc
 GimpPDBDialogsCheckFunc
+GimpGetProgramClassFunc
+GimpGetDisplayNameFunc
 <TITLE>Gimp</TITLE>
 Gimp
 gimp_new
@@ -172,6 +174,8 @@ gimp_restart_progress
 gimp_update_progress
 gimp_end_progress
 gimp_pdb_dialogs_check
+gimp_get_program_class
+gimp_get_display_name
 gimp_get_standard_context
 gimp_set_default_context
 gimp_get_default_context
@@ -3244,6 +3248,7 @@ gimp_vectors_new
 gimp_vectors_freeze
 gimp_vectors_thaw
 gimp_vectors_copy_strokes
+gimp_vectors_add_strokes
 gimp_vectors_anchor_get
 gimp_vectors_anchor_get_next
 gimp_vectors_anchor_move_relative
@@ -5504,6 +5509,7 @@ gimp_image_merge_visible_layers
 gimp_image_merge_down
 gimp_image_flatten
 gimp_image_merge_layers
+gimp_image_merge_visible_vectors
 </SECTION>
 
 <SECTION>
@@ -6523,6 +6529,7 @@ vectors_raise_cmd_callback
 vectors_lower_cmd_callback
 vectors_duplicate_cmd_callback
 vectors_delete_cmd_callback
+vectors_merge_visible_cmd_callback
 vectors_to_selection_cmd_callback
 vectors_selection_to_vectors_cmd_callback
 vectors_stroke_cmd_callback
