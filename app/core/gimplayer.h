@@ -89,6 +89,7 @@ LayerMask *     layer_add_mask (Layer *, LayerMask *);
 LayerMask *     layer_create_mask (Layer *, AddMaskType);
 Layer *         layer_get_ID (int);
 void            layer_delete (Layer *);
+void            layer_removed (Layer *, gpointer);
 void            layer_apply_mask (Layer *, int);
 void            layer_temporarily_translate (Layer *, int, int);
 void            layer_translate (Layer *, int, int);

@@ -38,7 +38,6 @@
 #include "patterns.h"
 #include "plug_in.h"
 #include "posterize.h"
-#include "resize.h"
 #include "scale.h"
 #include "session.h"
 #include "threshold.h"
@@ -49,12 +48,6 @@
 #include "config.h"
 #include "libgimp/gimpintl.h"
 
-typedef struct
-{
-  GtkWidget * shell;
-  Resize *    resize;
-  int         gimage_id;
-} ImageResize;
 
 /*  preferences local functions  */
 static void file_prefs_ok_callback (GtkWidget *, GtkWidget *);

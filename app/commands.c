@@ -20,7 +20,6 @@
 #include <stdio.h>
 #include "appenv.h"
 #include "about_dialog.h"
-#include "actionarea.h"
 #include "app_procs.h"
 #include "brightness_contrast.h"
 #include "gimpbrushlist.h"
@@ -73,7 +72,6 @@
 
 typedef struct
 {
-  GtkWidget * shell;
   Resize *    resize;
   GimpImage*  gimage;
 } ImageResize;
@@ -761,104 +759,62 @@ void
 image_resize_cmd_callback (GtkWidget *widget,
 			   gpointer client_data)
 {
-  static ActionAreaItem action_items[2] =
-  {
-    { N_("OK"), image_resize_callback, NULL, NULL },
-    { N_("Cancel"), image_cancel_callback, NULL, NULL }
-  };
   GDisplay * gdisp;
-  GtkWidget *vbox;
+  GimpImage * gimage;
   ImageResize *image_resize;
 
   gdisp = gdisplay_active ();
+  g_return_if_fail (gdisp != NULL);
+
+  gimage = gdisp->gimage;
 
   /*  the ImageResize structure  */
   image_resize = (ImageResize *) g_malloc (sizeof (ImageResize));
-  image_resize->gimage = gdisp->gimage;
-  image_resize->resize = resize_widget_new (ResizeWidget, gdisp->gimage->width, gdisp->gimage->height);
+  image_resize->gimage = gimage;
+  image_resize->resize = resize_widget_new (ResizeWidget,
+					    ResizeImage,
+					    GTK_OBJECT (gimage),
+					    gimage->width,
+					    gimage->height,
+					    gimage->xresolution,
+					    gimage->yresolution,
+					    image_resize_callback,
+					    image_cancel_callback,
+					    image_delete_callback,
+					    image_resize);
 
-  /*  the dialog  */
-  image_resize->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (image_resize->shell), "image_resize", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (image_resize->shell), _("Image Resize"));
-  gtk_window_set_policy (GTK_WINDOW (image_resize->shell), FALSE, FALSE, TRUE);
-  gtk_window_set_position (GTK_WINDOW (image_resize->shell), GTK_WIN_POS_MOUSE);
-
-  /* handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (image_resize->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (image_delete_callback),
-		      image_resize);
-
-  /* handle the image disappearing under our feet */
-  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "destroy",
-		      GTK_SIGNAL_FUNC (image_cancel_callback),
-		      image_resize);
-
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (image_resize->shell)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), image_resize->resize->resize_widget, FALSE, FALSE, 0);
-
-  action_items[0].user_data = image_resize;
-  action_items[1].user_data = image_resize;
-  build_action_area (GTK_DIALOG (image_resize->shell), action_items, 2, 0);
-
-  gtk_widget_show (image_resize->resize->resize_widget);
-  gtk_widget_show (vbox);
-  gtk_widget_show (image_resize->shell);
+  gtk_widget_show (image_resize->resize->resize_shell);
 }
 
 void
 image_scale_cmd_callback (GtkWidget *widget,
 			  gpointer client_data)
 {
-  static ActionAreaItem action_items[2] =
-  {
-    { N_("OK"), image_scale_callback, NULL, NULL },
-    { N_("Cancel"), image_cancel_callback, NULL, NULL }
-  };
   GDisplay * gdisp;
-  GtkWidget *vbox;
+  GimpImage * gimage;
   ImageResize *image_scale;
 
   gdisp = gdisplay_active ();
+  g_return_if_fail (gdisp != NULL);
+
+  gimage = gdisp->gimage;
 
   /*  the ImageResize structure  */
   image_scale = (ImageResize *) g_malloc (sizeof (ImageResize));
-  image_scale->gimage = gdisp->gimage;
-  image_scale->resize = resize_widget_new (ScaleWidget, gdisp->gimage->width, gdisp->gimage->height);
+  image_scale->gimage = gimage;
+  image_scale->resize = resize_widget_new (ScaleWidget,
+					   ResizeImage,
+					   GTK_OBJECT (gimage),
+					   gimage->width,
+					   gimage->height,
+					   gimage->xresolution,
+					   gimage->yresolution,
+					   image_scale_callback,
+					   image_cancel_callback,
+					   image_delete_callback,
+					   image_scale);
 
-  /*  the dialog  */
-  image_scale->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (image_scale->shell), "image_scale", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (image_scale->shell), _("Image Scale"));
-  gtk_window_set_policy (GTK_WINDOW (image_scale->shell), FALSE, FALSE, TRUE);
-  gtk_window_set_position (GTK_WINDOW (image_scale->shell), GTK_WIN_POS_MOUSE);
-
-  /* handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (image_scale->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (image_delete_callback),
-		      image_scale);
-
-  /* handle the image disappearing under our feet */
-  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "destroy",
-		      GTK_SIGNAL_FUNC (image_cancel_callback),
-		      image_scale);
-
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (image_scale->shell)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), image_scale->resize->resize_widget, FALSE, FALSE, 0);
-
-  action_items[0].user_data = image_scale;
-  action_items[1].user_data = image_scale;
-  build_action_area (GTK_DIALOG (image_scale->shell), action_items, 2, 0);
-
-  gtk_widget_show (image_scale->resize->resize_widget);
-  gtk_widget_show (vbox);
-  gtk_widget_show (image_scale->shell);
+  gtk_widget_show (image_scale->resize->resize_shell);
 }
 
 void
@@ -1145,10 +1101,6 @@ image_resize_callback (GtkWidget *w,
 
   image_resize = (ImageResize *) client_data;
 
-  gtk_signal_disconnect_by_func (GTK_OBJECT (image_resize->gimage),
-				 GTK_SIGNAL_FUNC (image_cancel_callback),
-				 image_resize);
-
   if ((gimage = image_resize->gimage) != NULL)
     {
       if (image_resize->resize->width > 0 &&
@@ -1168,7 +1120,6 @@ image_resize_callback (GtkWidget *w,
 	}
     }
 
-  gtk_widget_destroy (image_resize->shell);
   resize_widget_free (image_resize->resize);
   g_free (image_resize);
 }
@@ -1181,10 +1132,6 @@ image_scale_callback (GtkWidget *w,
   GImage *gimage;
 
   image_scale = (ImageResize *) client_data;
-
-  gtk_signal_disconnect_by_func (GTK_OBJECT (image_scale->gimage),
-				 GTK_SIGNAL_FUNC (image_cancel_callback),
-				 image_scale);
 
   if ((gimage = image_scale->gimage) != NULL)
     {
@@ -1203,7 +1150,6 @@ image_scale_callback (GtkWidget *w,
 	}
     }
 
-  gtk_widget_destroy (image_scale->shell);
   resize_widget_free (image_scale->resize);
   g_free (image_scale);
 }
@@ -1224,14 +1170,8 @@ image_cancel_callback (GtkWidget *w,
 		       gpointer   client_data)
 {
   ImageResize *image_resize;
-
   image_resize = (ImageResize *) client_data;
 
-  gtk_signal_disconnect_by_func (GTK_OBJECT (image_resize->gimage),
-				 GTK_SIGNAL_FUNC (image_cancel_callback),
-				 image_resize);
-
-  gtk_widget_destroy (image_resize->shell);
   resize_widget_free (image_resize->resize);
   g_free (image_resize);
 }

@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include "appenv.h"
 #include "resize.h"
+#include "actionarea.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -38,6 +39,9 @@ struct _ResizePrivate
   GtkWidget *off_x_text;
   GtkWidget *off_y_text;
   GtkWidget *drawing_area;
+
+  GtkObject *object;
+  guint      object_destroy_handler;
 
   double ratio;
   int constrain;
@@ -61,10 +65,25 @@ static gint resize_events (GtkWidget *area, GdkEvent *event);
 
 
 Resize *
-resize_widget_new (ResizeType type,
-		   int        width,
-		   int        height)
+resize_widget_new (ResizeType    type,
+		   ResizeTarget  target,
+		   GtkObject    *object,
+		   int           width,
+		   int           height,
+		   float         resolution_x,
+		   float         resolution_y,
+		   GtkSignalFunc ok_cb,
+		   GtkSignalFunc cancel_cb,
+		   gint        (*delete_cb) (GtkWidget *,
+					     GdkEvent *,
+					     gpointer),
+		   gpointer      user_data)
 {
+  static ActionAreaItem action_items[2] =
+  {
+    { N_("OK"), NULL, NULL, NULL },
+    { N_("Cancel"), NULL, NULL, NULL }
+  };
   Resize *resize;
   ResizePrivate *private;
   GtkWidget *vbox;
@@ -77,6 +96,7 @@ resize_widget_new (ResizeType type,
   char ratio_text[12];
 
   table = NULL;
+  frame = NULL;
 
   resize = g_new (Resize, 1);
   private = g_new (ResizePrivate, 1);
@@ -84,6 +104,8 @@ resize_widget_new (ResizeType type,
   resize->private_part = private;
   resize->width = width;
   resize->height = height;
+  resize->resolution_x = resolution_x;
+  resize->resolution_y = resolution_y;
   resize->ratio_x = 1.0;
   resize->ratio_y = 1.0;
   resize->off_x = 0;
@@ -91,6 +113,7 @@ resize_widget_new (ResizeType type,
   private->old_width = width;
   private->old_height = height;
   private->constrain = TRUE;
+  private->object = NULL;
 
   /*  Get the image width and height variables, based on the gimage  */
   if (width > height)
@@ -100,23 +123,80 @@ resize_widget_new (ResizeType type,
   private->area_width = (int) (private->ratio * width);
   private->area_height = (int) (private->ratio * height);
 
-  switch (type)
-    {
+  /* dialog box */
+  {
+    const char *wmclass = NULL;
+    const char *window_title = NULL;
+
+    switch (type) {
     case ScaleWidget:
-      resize->resize_widget = gtk_frame_new (_("Scale"));
-      table = gtk_table_new (4, 2, TRUE);
-      break;
+	switch (target) {
+	case ResizeLayer:
+	    wmclass = "scale_layer";
+	    window_title = _("Scale Layer");
+	    break;
+	case ResizeImage:
+	    wmclass = "image_scale";
+	    window_title = _("Image Scale");
+	    break;
+	}
+	frame = gtk_frame_new (_("Scale"));
+	table = gtk_table_new (4, 2, TRUE);
+	break;
+
     case ResizeWidget:
-      resize->resize_widget = gtk_frame_new (_("Resize"));
-      table = gtk_table_new (6, 2, TRUE);
-      break;
-    }
-  gtk_frame_set_shadow_type (GTK_FRAME (resize->resize_widget), GTK_SHADOW_ETCHED_IN);
+	switch (target) {
+	case ResizeLayer:
+	    wmclass = "resize_layer";
+	    window_title = _("Resize Layer");
+	    break;
+	case ResizeImage:
+	    wmclass = "image_resize";
+	    window_title = _("Image Resize");
+	    break;
+	}
+	frame = gtk_frame_new (_("Resize"));
+	table = gtk_table_new (6, 2, TRUE);
+	break;
+    }	
+
+    resize->resize_shell = gtk_dialog_new();
+    gtk_window_set_wmclass (GTK_WINDOW (resize->resize_shell), wmclass,"Gimp");
+    gtk_window_set_title (GTK_WINDOW (resize->resize_shell), window_title);
+    gtk_window_set_policy(GTK_WINDOW (resize->resize_shell), FALSE,FALSE,TRUE);
+    gtk_window_position (GTK_WINDOW (resize->resize_shell), GTK_WIN_POS_MOUSE);
+  }
+
+  /*  handle the wm close singal */
+  if (delete_cb)
+    gtk_signal_connect (GTK_OBJECT (resize->resize_shell), "delete_event",
+			GTK_SIGNAL_FUNC (delete_cb), user_data);
+
+  /* handle the image disappearing under our feet */
+  if (object)
+  {
+    const char *signame;
+    signame = (target == ResizeLayer)? "removed" : "destroy";
+    private->object = object;
+    private->object_destroy_handler = gtk_signal_connect(GTK_OBJECT (object),
+							 signame,
+							 cancel_cb, user_data);
+  }
+
+  vbox = gtk_vbox_new (FALSE, 1);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (resize->resize_shell)->vbox),
+		      vbox, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_widget_show (vbox);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_widget_show (frame);
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
-  gtk_container_add (GTK_CONTAINER (resize->resize_widget), vbox);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
@@ -261,12 +341,25 @@ resize_widget_new (ResizeType type,
   gtk_widget_show (table);
   gtk_widget_show (vbox);
 
+  action_items[0].user_data = user_data;
+  action_items[0].callback  = ok_cb;
+  action_items[1].user_data = user_data;
+  action_items[1].callback  = cancel_cb;
+  build_action_area (GTK_DIALOG (resize->resize_shell), action_items, 2, 0);
+
   return resize;
 }
 
 void
 resize_widget_free (Resize *resize)
 {
+  ResizePrivate *private = resize->private_part;
+
+  if (private->object)
+    gtk_signal_disconnect (GTK_OBJECT (private->object),
+			   private->object_destroy_handler);
+
+  gtk_widget_destroy (resize->resize_shell);
   g_free (resize->private_part);
   g_free (resize);
 }

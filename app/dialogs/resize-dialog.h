@@ -24,16 +24,24 @@ typedef enum
   ResizeWidget
 } ResizeType;
 
+typedef enum
+{
+  ResizeImage,
+  ResizeLayer
+} ResizeTarget;
+
 typedef struct _Resize Resize;
 
 struct _Resize
 {
   /*  The calling procedure is respondible for showing this widget  */
-  GtkWidget *resize_widget;
+  GtkWidget *resize_shell;
 
   ResizeType type;
   int        width;
   int        height;
+  float      resolution_x;
+  float      resolution_y;
   double     ratio_x;
   double     ratio_y;
   int        off_x;
@@ -43,9 +51,22 @@ struct _Resize
   void *     private_part;
 };
 
-Resize * resize_widget_new    (ResizeType  type,
-			       int         width,
-			       int         height);
-void     resize_widget_free   (Resize *    resize);
+/* If resolution_x is zero, then don't show resolution modification
+ * parts of the dialog. If object is non-NULL, then attach the cancel
+ * callback to its destroy signal. */
+Resize * resize_widget_new    (ResizeType    type,
+			       ResizeTarget  target,
+			       GtkObject   * object,
+			       int           width,
+			       int           height,
+			       float         resolution_x,
+			       float         resolution_y,
+			       GtkSignalFunc ok_cb,
+			       GtkSignalFunc cancel_cb,
+			       gint        (*delete_cb) (GtkWidget *,
+							 GdkEvent *,
+							 gpointer),
+			       gpointer      user_data);
+void     resize_widget_free   (Resize      * resize);
 
 #endif  /*  __RESIZE_H__  */

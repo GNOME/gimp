@@ -1,3 +1,24 @@
+Sun Feb 14 20:43:55 GMT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/channels_dialog.c: don't #include resize.h - it's not needed
+	* app/preferences_dialog.c: ditto.
+
+	* app/resize.c: do all dialog creation here to factor out lots of
+	     common code in commands.c and layers_dialog.c.  Also cancel
+	     resize/scale dialog on destruction/removal of images/layers -
+	     proper fix for Peter Teichman's bug.
+	* app/resize.h: new prototype for resize_widget_new() - beginnings
+	     of resolution-aware scaling.
+	* app/commands.c: pull all the resize/scale dialog creation stuff
+	     out to resize.c
+	* app/layers_dialog.c: same again.
+
+	* app/layer.c: add REMOVED signal, sent when a layer is removed
+	     from an image.  Layers typically aren't destroyed until their
+	     undo info expires.
+	* app/layer.h: prototype for layer_removed() call.
+	* app/gimpimage.c: send out removed signal.
+
 Sun Feb 14 02:33:42 CET 1999 Marc Lehmann <pcg@goof.com>
 
 	* app/gimage_cmds.c: Corrected argument name.

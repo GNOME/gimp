@@ -2618,6 +2618,9 @@ gimp_image_remove_layer (GimpImage *gimage, Layer * layer)
        */
       undo_push_layer (gimage, lu);
 
+      /* Send out REMOVED signal from layer */
+      layer_removed (layer, gimage);
+
       /*  invalidate the composite preview  */
       gimp_image_invalidate_preview (gimage);
 

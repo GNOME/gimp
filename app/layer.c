@@ -32,6 +32,7 @@
 #include "temp_buf.h"
 #include "parasitelist.h"
 #include "undo.h"
+#include "gimpsignal.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -40,6 +41,7 @@
 #include "tile.h"			/* ick. */
 
 enum {
+  REMOVED,
   LAST_SIGNAL
 };
 
@@ -53,8 +55,8 @@ static void gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
 static void gimp_layer_mask_init       (GimpLayerMask      *layermask);
 static void gimp_layer_mask_destroy    (GtkObject          *object);
 
-/*
 static gint layer_signals[LAST_SIGNAL] = { 0 };
+/*
 static gint layer_mask_signals[LAST_SIGNAL] = { 0 };
 */
 
@@ -97,9 +99,11 @@ gimp_layer_class_init (GimpLayerClass *class)
 
   layer_parent_class = gtk_type_class (gimp_drawable_get_type ());
 
-  /*
+  layer_signals[REMOVED] =
+	  gimp_signal_new ("removed",
+			   0, object_class->type, 0, gimp_sigtype_void);
+
   gtk_object_class_add_signals (object_class, layer_signals, LAST_SIGNAL);
-  */
 
   object_class->destroy = gimp_layer_destroy;
   drawable_class->invalidate_preview = layer_invalidate_preview;
@@ -554,6 +558,21 @@ gimp_layer_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (layer_parent_class)->destroy)
     (*GTK_OBJECT_CLASS (layer_parent_class)->destroy) (object);
+}
+
+
+/* The removed signal is sent out when the layer is no longer
+ * associcated with an image.  It's needed because layers aren't
+ * destroyed immediately, but kept around for undo purposes.  Connect
+ * to the removed signal to update bits of UI that are tied to a
+ * particular layer. */
+void
+layer_removed (Layer *layer, gpointer image)
+{
+  g_return_if_fail (layer != NULL);
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  gtk_signal_emit (GTK_OBJECT (layer), layer_signals[REMOVED]);
 }
 
 void

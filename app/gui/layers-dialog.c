@@ -3676,9 +3676,7 @@ layers_dialog_apply_mask_query (Layer *layer)
 typedef struct _ScaleLayerOptions ScaleLayerOptions;
 
 struct _ScaleLayerOptions {
-  GtkWidget *query_box;
-  Layer * layer;
-
+  Layer  *layer;
   Resize *resize;
 };
 
@@ -3713,7 +3711,6 @@ scale_layer_query_ok_callback (GtkWidget *w,
 	  gdisplays_flush ();
 	}
 
-      gtk_widget_destroy (options->query_box);
       resize_widget_free (options->resize);
       g_free (options);
     }
@@ -3726,9 +3723,8 @@ scale_layer_query_cancel_callback (GtkWidget *w,
 				   gpointer   client_data)
 {
   ScaleLayerOptions *options;
-
   options = (ScaleLayerOptions *) client_data;
-  gtk_widget_destroy (options->query_box);
+
   resize_widget_free (options->resize);
   g_free (options);
 }
@@ -3746,46 +3742,23 @@ scale_layer_query_delete_callback (GtkWidget *w,
 static void
 layers_dialog_scale_layer_query (Layer *layer)
 {
-  static ActionAreaItem action_items[3] =
-  {
-    { N_("OK"), scale_layer_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), scale_layer_query_cancel_callback, NULL, NULL }
-  };
   ScaleLayerOptions *options;
-  GtkWidget *vbox;
 
   /*  the new options structure  */
   options = (ScaleLayerOptions *) g_malloc (sizeof (ScaleLayerOptions));
   options->layer = layer;
   options->resize = resize_widget_new (ScaleWidget,
+				       ResizeLayer,
+				       GTK_OBJECT (layer),
 				       drawable_width (GIMP_DRAWABLE(layer)),
-				       drawable_height (GIMP_DRAWABLE(layer)));
+				       drawable_height (GIMP_DRAWABLE(layer)),
+				       0.0, 0.0,  /* no resolution, please */
+				       scale_layer_query_ok_callback,
+				       scale_layer_query_cancel_callback,
+				       scale_layer_query_delete_callback,
+				       options);
 
-  /*  the dialog  */
-  options->query_box = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "scale_layer", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Scale Layer"));
-  gtk_window_set_policy (GTK_WINDOW (options->query_box), FALSE, FALSE, TRUE);
-  gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
-
-  /*  handle the wm close singal */
-  gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
-		      GTK_SIGNAL_FUNC (scale_layer_query_delete_callback),
-		      options);
-
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), options->resize->resize_widget, FALSE, FALSE, 0);
-
-  action_items[0].user_data = options;
-  action_items[1].user_data = options;
-  build_action_area (GTK_DIALOG (options->query_box), action_items, 2, 0);
-
-  gtk_widget_show (options->resize->resize_widget);
-  gtk_widget_show (vbox);
-  gtk_widget_show (options->query_box);
+  gtk_widget_show (options->resize->resize_shell);
 }
 
 
@@ -3796,9 +3769,7 @@ layers_dialog_scale_layer_query (Layer *layer)
 typedef struct _ResizeLayerOptions ResizeLayerOptions;
 
 struct _ResizeLayerOptions {
-  GtkWidget *query_box;
   Layer *layer;
-
   Resize *resize;
 };
 
@@ -3834,7 +3805,6 @@ resize_layer_query_ok_callback (GtkWidget *w,
 	  gdisplays_flush ();
 	}
 
-      gtk_widget_destroy (options->query_box);
       resize_widget_free (options->resize);
       g_free (options);
     }
@@ -3847,9 +3817,8 @@ resize_layer_query_cancel_callback (GtkWidget *w,
 				    gpointer   client_data)
 {
   ResizeLayerOptions *options;
-
   options = (ResizeLayerOptions *) client_data;
-  gtk_widget_destroy (options->query_box);
+
   resize_widget_free (options->resize);
   g_free (options);
 }
@@ -3867,47 +3836,23 @@ resize_layer_query_delete_callback (GtkWidget *w,
 static void
 layers_dialog_resize_layer_query (Layer *layer)
 {
-  static ActionAreaItem action_items[3] =
-  {
-    { N_("OK"), resize_layer_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), resize_layer_query_cancel_callback, NULL, NULL }
-  };
   ResizeLayerOptions *options;
-  GtkWidget *vbox;
 
   /*  the new options structure  */
   options = (ResizeLayerOptions *) g_malloc (sizeof (ResizeLayerOptions));
   options->layer = layer;
   options->resize = resize_widget_new (ResizeWidget,
+				       ResizeLayer,
+				       GTK_OBJECT (layer),
 				       drawable_width (GIMP_DRAWABLE(layer)),
-				       drawable_height (GIMP_DRAWABLE(layer)));
+				       drawable_height (GIMP_DRAWABLE(layer)),
+				       0.0, 0.0, /* no resolution, please */
+				       resize_layer_query_ok_callback,
+				       resize_layer_query_cancel_callback,
+				       resize_layer_query_delete_callback,
+				       options);
 
-  /*  the dialog  */
-  options->query_box = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "resize_layer", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Resize Layer"));
-  gtk_window_set_policy (GTK_WINDOW (options->query_box), FALSE, TRUE, TRUE);
-  gtk_window_set_policy (GTK_WINDOW (options->query_box), FALSE, FALSE, TRUE);
-  gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
-
-  /*  handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
-		      GTK_SIGNAL_FUNC (resize_layer_query_delete_callback),
-		      options);
-
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), options->resize->resize_widget, FALSE, FALSE, 0);
-
-  action_items[0].user_data = options;
-  action_items[1].user_data = options;
-  build_action_area (GTK_DIALOG (options->query_box), action_items, 2, 0);
-
-  gtk_widget_show (options->resize->resize_widget);
-  gtk_widget_show (vbox);
-  gtk_widget_show (options->query_box);
+  gtk_widget_show (options->resize->resize_shell);
 }
 
 
