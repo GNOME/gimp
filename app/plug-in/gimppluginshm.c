@@ -2124,34 +2124,34 @@ plug_in_write_rc (char *filename)
 	      proc_def = tmp2->data;
 	      tmp2 = tmp2->next;
 
-	      fprintf (fp, "             (proc-def \"%s\" %d\n",
+	      fprintf (fp, "\t(proc-def \"%s\" %d\n",
 		       proc_def->db_info.name, proc_def->db_info.proc_type);
-	      fprintf (fp, "                       ");
+	      fprintf (fp, "\t\t");
 	      plug_in_write_rc_string (fp, proc_def->db_info.blurb);
-	      fprintf (fp, "\n                       ");
+	      fprintf (fp, "\n\t\t");
 	      plug_in_write_rc_string (fp, proc_def->db_info.help);
-	      fprintf (fp, "\n                       ");
+	      fprintf (fp, "\n\t\t");
 	      plug_in_write_rc_string (fp, proc_def->db_info.author);
-	      fprintf (fp, "\n                       ");
+	      fprintf (fp, "\n\t\t");
 	      plug_in_write_rc_string (fp, proc_def->db_info.copyright);
-	      fprintf (fp, "\n                       ");
+	      fprintf (fp, "\n\t\t");
 	      plug_in_write_rc_string (fp, proc_def->db_info.date);
-	      fprintf (fp, "\n                       ");
+	      fprintf (fp, "\n\t\t");
 	      plug_in_write_rc_string (fp, proc_def->menu_path);
-	      fprintf (fp, "\n                       ");
+	      fprintf (fp, "\n\t\t");
 	      plug_in_write_rc_string (fp, proc_def->extensions);
-	      fprintf (fp, "\n                       ");
+	      fprintf (fp, "\n\t\t");
 	      plug_in_write_rc_string (fp, proc_def->prefixes);
-	      fprintf (fp, "\n                       ");
+	      fprintf (fp, "\n\t\t");
 	      plug_in_write_rc_string (fp, proc_def->magics);
-	      fprintf (fp, "\n                       ");
+	      fprintf (fp, "\n\t\t");
 	      plug_in_write_rc_string (fp, proc_def->image_types);
-	      fprintf (fp, "\n                       %d %d\n",
+	      fprintf (fp, "\n\t\t%d %d\n",
 		       proc_def->db_info.num_args, proc_def->db_info.num_values);
 
 	      for (i = 0; i < proc_def->db_info.num_args; i++)
 		{
-		  fprintf (fp, "                       (proc-arg %d ",
+		  fprintf (fp, "\t\t(proc-arg %d ",
 			   proc_def->db_info.args[i].arg_type);
 
 		  plug_in_write_rc_string (fp, proc_def->db_info.args[i].name);
@@ -2164,7 +2164,7 @@ plug_in_write_rc (char *filename)
 
 	      for (i = 0; i < proc_def->db_info.num_values; i++)
 		{
-		  fprintf (fp, "                       (proc-arg %d ",
+		  fprintf (fp, "\t\t(proc-arg %d ",
 			   proc_def->db_info.values[i].arg_type);
 
 		  plug_in_write_rc_string (fp, proc_def->db_info.values[i].name);

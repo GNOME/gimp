@@ -1,3 +1,16 @@
+Thu Jan 13 00:46:16 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
+
+	* app/plug_in.c: replace spaces to be inserted in pluginrc
+	by tabs. Saves space and reduces parsing time without
+	affecting readability.
+
+        (applied by pcg@goof.com)
+
+Mon Jan 10 03:18:45 CET 2000  Marc Lehmann <pcg@goof.com>
+
+        * app/main.c: Removed "serialization test passed" message. (But
+        left the test intact).
+
 Wed Jan 12 00:53:58 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/menus.c: correctly connect "Intersect with Selection" 
