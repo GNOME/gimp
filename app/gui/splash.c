@@ -39,6 +39,9 @@ static GtkWidget *label2         = NULL;
 static GtkWidget *progress       = NULL;
 
 
+static void  splash_map (void);
+
+
 /*  public functions  */
 
 void
@@ -58,6 +61,12 @@ splash_create (gboolean show_image)
 
   g_signal_connect (win_initstatus, "delete_event",
                     G_CALLBACK (gtk_true), NULL);
+
+  /* we don't want the splash screen to send the startup notification */
+  gtk_window_set_auto_startup_notification (FALSE);
+  g_signal_connect (win_initstatus, "map",
+                    G_CALLBACK (splash_map),
+                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_add (GTK_CONTAINER (win_initstatus), vbox);
@@ -153,3 +162,16 @@ splash_update (const gchar *text1,
   while (gtk_events_pending ())
     gtk_main_iteration ();
 }
+
+
+/*  private functions  */
+
+static void
+splash_map (void)
+{
+  /*  Reenable startup notification after the splash has been shown
+   *  so that the next window that is mapped sends the notification.  
+   */
+   gtk_window_set_auto_startup_notification (TRUE);
+}
+

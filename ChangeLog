@@ -1,5 +1,8 @@
 2003-03-13  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/splash.c (splash_create): suppress notifcation of
+	startup completion from the splash screen.
+
 	* app/widgets/gimptoolbox.c (gimp_toolbox_init): set a window type
 	hint of GDK_WINDOW_TYPE_HINT_NORMAL for the toolbox since UTILITY
 	doesn't match here.
