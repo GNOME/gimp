@@ -152,16 +152,11 @@ query (void)
     { GIMP_PDB_INT16,    "offset",      "Offset (use 1)" }
   };
 
-  gchar *help;
-
-  help = g_strdup_printf ("Generates a maze using either the depth-first "
-                          "search method or Prim's algorithm.  Can make "
-                          "tileable mazes too.  See %s for more help.",
-                          MAZE_URL);
-
   gimp_install_procedure ("plug_in_maze",
 			  "Draws a maze.",
-			  help,
+			  "Generates a maze using either the depth-first "
+                          "search method or Prim's algorithm.  Can make "
+                          "tileable mazes too.",
 			  "Kevin Turner <kevint@poboxes.com>",
 			  "Kevin Turner",
 			  "1997, 1998",
@@ -173,8 +168,6 @@ query (void)
 
   gimp_plugin_menu_register ("plug_in_maze",
                              "<Image>/Filters/Render/Pattern");
-
-  g_free (help);
 }
 
 static void

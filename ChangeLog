@@ -1,3 +1,9 @@
+2004-11-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/maze/maze.[ch]
+	* plug-ins/maze/maze_face.c: removed the extra help button from
+	the Maze plug-in. Fixes bug #158605.
+
 2004-11-18  Michael Natterer  <mitch@gimp.org>
 
 	The following fixes have no visible effect because nobody

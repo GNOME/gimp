@@ -1,5 +1,5 @@
 /* -*- mode: C; c-file-style: "gnu"; c-basic-offset: 2; -*- */
-/* $Id$
+/*
  * User interface for plug-in-maze.
  *
  * Implemented as a GIMP 0.99 Plugin by
@@ -73,11 +73,6 @@ gboolean     maze_dialog         (void);
 
 static void  maze_msg            (const gchar *format,
                                   ...) G_GNUC_PRINTF (1, 2);
-
-static void  maze_response       (GtkWidget   *widget,
-                                  gint         response_id,
-                                  gpointer     data);
-static void  maze_help           (void);
 
 #ifdef SHOW_PRNG_PRIVATES
 static void  maze_entry_callback (GtkWidget   *widget,
@@ -162,43 +157,36 @@ static void   entscale_int_entry_update     (GtkWidget     *widget,
 extern MazeValues mvals;
 extern guint      sel_w, sel_h;
 
-static gint       maze_run = FALSE;
 static GtkWidget *msg_label;
 
 gboolean
 maze_dialog (void)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *tilecheck;
   GtkWidget *entry;
   GtkWidget *hbox;
   GtkWidget *frame;
+  gboolean   run;
   gint       trow = 0;
 
   gimp_ui_init ("maze", FALSE);
 
-  dlg = gimp_dialog_new (_(MAZE_TITLE), "maze",
+  dialog = gimp_dialog_new (_(MAZE_TITLE), "maze",
                          NULL, 0,
 			 gimp_standard_help_func, "plug-in-maze",
 
-			 GTK_STOCK_HELP,   GTK_RESPONSE_HELP,
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
 
-  g_signal_connect (dlg, "response",
-                    G_CALLBACK (maze_response),
-                    NULL);
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
-
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), vbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                      vbox, FALSE, FALSE, 0);
 
 #ifdef SHOW_PRNG_PRIVATES
   table = gtk_table_new (8, 3, FALSE);
@@ -291,14 +279,15 @@ maze_dialog (void)
   trow++;
 
   /* Algorithm Choice */
-  frame = gimp_int_radio_group_new (FALSE, NULL,
-                                    G_CALLBACK (gimp_radio_button_update),
-				    &mvals.algorithm, mvals.algorithm,
+  frame =
+    gimp_int_radio_group_new (FALSE, NULL,
+                              G_CALLBACK (gimp_radio_button_update),
+                              &mvals.algorithm, mvals.algorithm,
 
-				    _("Depth first"),      DEPTH_FIRST,     NULL,
-				    _("Prim's algorithm"), PRIMS_ALGORITHM, NULL,
+                              _("Depth first"),      DEPTH_FIRST,     NULL,
+                              _("Prim's algorithm"), PRIMS_ALGORITHM, NULL,
 
-				    NULL);
+                              NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
@@ -308,11 +297,13 @@ maze_dialog (void)
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), msg_label, FALSE, FALSE, 0);
 
-  gtk_widget_show_all (dlg);
+  gtk_widget_show_all (dialog);
 
-  gtk_main ();
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return maze_run;
+  gtk_widget_destroy (dialog);
+
+  return run;
 }
 
 static GtkWidget*
@@ -544,44 +535,6 @@ height_width_callback (gint        width,
 }
 
 static void
-maze_help (void)
-{
-  gchar           *proc_blurb;
-  gchar           *proc_help;
-  gchar           *proc_author;
-  gchar           *proc_copyright;
-  gchar           *proc_date;
-  GimpPDBProcType  proc_type;
-  gint             nparams;
-  gint             nreturn_vals;
-  GimpParamDef    *params;
-  GimpParamDef    *return_vals;
-
-  if (gimp_procedural_db_proc_info ("plug_in_web_browser",
-				    &proc_blurb,
-				    &proc_help,
-				    &proc_author,
-				    &proc_copyright,
-				    &proc_date,
-				    &proc_type,
-				    &nparams, &nreturn_vals,
-				    &params, &return_vals))
-    {
-      gint baz;
-
-      maze_msg (_("Opening %s"), MAZE_URL);
-
-      gimp_run_procedure ("plug_in_web_browser", &baz,
-			  GIMP_PDB_STRING, MAZE_URL,
-			  GIMP_PDB_END);
-    }
-  else
-    {
-      maze_msg (_("See %s"), MAZE_URL);
-    }
-}
-
-static void
 maze_msg (const gchar *format,
           ...)
 {
@@ -596,25 +549,6 @@ maze_msg (const gchar *format,
   gtk_label_set_text (GTK_LABEL (msg_label), message);
 
   g_free (message);
-}
-
-static void
-maze_response (GtkWidget *widget,
-               gint       response_id,
-               gpointer   data)
-{
-  switch (response_id)
-    {
-    case GTK_RESPONSE_HELP:
-      maze_help ();
-      break;
-
-    case GTK_RESPONSE_OK:
-      maze_run = TRUE;
-
-    default:
-      gtk_widget_destroy (widget);
-    }
 }
 
 #ifdef SHOW_PRNG_PRIVATES

@@ -1,6 +1,5 @@
-/* $Id$ */
+
 #define MAZE_TITLE N_("Maze")
-#define MAZE_URL "http://gimp-plug-ins.sourceforge.net/maze/help.html"
 
 #define HELP_OPENS_NEW_WINDOW FALSE
 
@@ -13,7 +12,7 @@
    Instead, update every . . . */
 #define PRIMS_PROGRESS_UPDATE 256
 
-/* Don't draw in anything that has less than 
+/* Don't draw in anything that has less than
    this value in the selection channel. */
 #define MAZE_ALPHA_THRESHOLD 127
 
