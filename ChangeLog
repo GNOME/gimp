@@ -1,5 +1,14 @@
 2001-05-21  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimp.def: removed removed symbols :)
+
+	* libgimpbase/gimpbase.def
+	* libgimpbase/makefile.mingw.in
+	* libgimpbase/makefile.msc: added because they are in EXTRA_DIST.
+	Will definitely not work before a friendly visit by Tor or Hans.
+
+2001-05-21  Michael Natterer  <mitch@gimp.org>
+
 	* Makefile.am
 	* configure.in
 	* gimptool-1.4.in: added new directory libgimpbase/

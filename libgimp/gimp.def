@@ -57,11 +57,9 @@ EXPORTS
 	gimp_convolve
 	gimp_convolve_default
 	gimp_crop
-	gimp_data_directory
 	gimp_default_display
 	gimp_destroy_paramdefs
 	gimp_destroy_params
-	gimp_directory
 	gimp_display_delete
 	gimp_display_new
 	gimp_displays_flush
@@ -135,7 +133,6 @@ EXPORTS
 	gimp_gradients_sample_uniform
 	gimp_gradients_set_active
 	gimp_gradients_set_popup
-	gimp_gtkrc
 	gimp_help
 	gimp_image_add_channel
 	gimp_image_add_hguide
@@ -203,13 +200,13 @@ EXPORTS
 	gimp_layer_copy
 	gimp_layer_create_mask
 	gimp_layer_delete
-;	gimp_layer_get_apply_mask
-;	gimp_layer_get_edit_mask
+	gimp_layer_get_apply_mask
+	gimp_layer_get_edit_mask
 	gimp_layer_get_mode
 	gimp_layer_get_name
 	gimp_layer_get_opacity
 	gimp_layer_get_preserve_trans
-;	gimp_layer_get_show_mask
+	gimp_layer_get_show_mask
 	gimp_layer_get_tattoo
 	gimp_layer_get_visible
 	gimp_layer_is_floating_sel
@@ -217,14 +214,14 @@ EXPORTS
 	gimp_layer_new
 	gimp_layer_resize
 	gimp_layer_scale
-;	gimp_layer_set_apply_mask
-;	gimp_layer_set_edit_mask
+	gimp_layer_set_apply_mask
+	gimp_layer_set_edit_mask
 	gimp_layer_set_mode
 	gimp_layer_set_name
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity
 	gimp_layer_set_preserve_trans
-;	gimp_layer_set_show_mask
+	gimp_layer_set_show_mask
 	gimp_layer_set_visible
 	gimp_layer_translate
 	gimp_main
@@ -255,7 +252,6 @@ EXPORTS
 	gimp_parasite_name
 	gimp_parasite_new
 	gimp_path_delete
-	gimp_path_free
 	gimp_path_get_current
 	gimp_path_get_locked
 	gimp_path_get_point_at_dist
@@ -263,7 +259,6 @@ EXPORTS
 	gimp_path_get_tattoo
 	gimp_path_get_user_writable_dir
 	gimp_path_list
-	gimp_path_parse
 	gimp_path_set_current
 	gimp_path_set_locked
 	gimp_path_set_points
@@ -274,7 +269,6 @@ EXPORTS
 	gimp_patterns_get_pattern_data
 	gimp_patterns_set_popup
 	gimp_pencil
-	gimp_personal_rc_file
 	gimp_perspective
 	gimp_pixel_rgn_get_col
 	gimp_pixel_rgn_get_pixel
@@ -339,55 +333,6 @@ EXPORTS
 	gimp_undo_push_group_end
 	gimp_undo_push_group_start
 	gimp_uninstall_temp_proc
-	gimp_unit_get_abbreviation
-	gimp_unit_get_deletion_flag
-	gimp_unit_get_digits
-	gimp_unit_get_factor
-	gimp_unit_get_identifier
-	gimp_unit_get_number_of_built_in_units
-	gimp_unit_get_number_of_units
-	gimp_unit_get_plural
-	gimp_unit_get_singular
-	gimp_unit_get_symbol
-	gimp_unit_new
-	gimp_unit_set_deletion_flag
 	gimp_use_xshm
 	gimp_version
-	gp_config_write
-	gp_extension_ack_write
-	gp_init
-	gp_proc_install_write
-	gp_proc_return_write
-	gp_proc_run_write
-	gp_proc_uninstall_write
-	gp_quit_write
-	gp_temp_proc_return_write
-	gp_temp_proc_run_write
-	gp_tile_ack_write
-	gp_tile_data_write
-	gp_tile_req_write
 	set_gimp_PLUG_IN_INFO_PTR
-	wire_clear_error
-	wire_destroy
-	wire_error
-	wire_flush
-	wire_read
-	wire_read_double
-	wire_read_int16
-	wire_read_int32
-	wire_read_int8
-	wire_read_msg
-	wire_read_string
-	wire_register
-	wire_set_flusher
-	wire_set_reader
-	wire_set_writer
-	wire_write
-	wire_write_double
-	wire_write_int16
-	wire_write_int32
-	wire_write_int8
-	wire_write_msg
-	wire_write_string
-gimp_bilinear
-gimp_bilinear_rgba

@@ -1,0 +1,44 @@
+## Makefile for building the GIMP DLLs and LIBs with Microsoft C.
+## Use: nmake -f makefile.msc
+
+# Change this to wherever you want to install the DLLs. This directory
+# should be in your PATH. As these DLLs are for the GIMP and its plug-ins
+# only, it probably is best to keep them in the GIMP's bin directory.
+BIN = C:\install\gimp\bin
+TOP = ..\..
+!include ..\..\build\win32\make.msc
+
+GIMP_VER = 1.3
+
+# The name of the directory in your %HOME% where the GIMP's personal settings
+# and stuff is saved.
+GIMPDIR = _gimp$(GIMP_VER)
+
+################################################################
+
+# Nothing much configurable below
+
+INCLUDES = -I.. 
+# DEFINES = -DG_LOG_DOMAIN=\"LibGimpBase\"
+DEPCFLAGS = $(GLIB_CFLAGS)
+DEPLIBS = $(GLIB_LIBS)
+
+all : \
+	..\config.h \
+	gimpbase-$(GIMP_VER).dll
+
+..\config.h : ..\config.h.win32
+	copy ..\config.h.win32 ..\config.h
+
+install : all
+	$(INSTALL) gimpbase-$(GIMP_VER).dll $(BIN)
+
+OBJECTS = \
+	gimpadaptivesupersample.obj \
+	gimpbasespace.obj \
+	gimphsv.obj \
+	gimprgb.obj
+
+gimpbase-$(GIMP_VER).dll : $(OBJECTS) gimpbase.def
+	$(CC) $(CFLAGS) -LD -Fegimpbase-$(GIMP_VER).dll $(OBJECTS) $(DEPLIBS) $(LDFLAGS) user32.lib /def:gimpbase.def
+
