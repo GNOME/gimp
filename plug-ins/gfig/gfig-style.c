@@ -540,9 +540,9 @@ gfig_style_apply (Style *style)
   if (gfig_context->debug_styles)
     fprintf (stderr, "Applying style '%s' -- ", style->name);
 
-  gimp_palette_set_foreground (&style->foreground);
+  gimp_context_set_foreground (&style->foreground);
 
-  gimp_palette_set_background (&style->background);
+  gimp_context_set_background (&style->background);
 
   if (!gimp_brushes_set_brush (style->brush_name))
     g_message ("Style apply: Failed to set brush to '%s' in style '%s'", 
@@ -584,8 +584,8 @@ gfig_read_gimp_style (Style *style,
     fprintf (stderr, "Reading Gimp settings as style %s\n", name);
   style->name = g_strdup (name);
 
-  gimp_palette_get_foreground (&style->foreground);
-  gimp_palette_get_background (&style->background);
+  gimp_context_get_foreground (&style->foreground);
+  gimp_context_get_background (&style->background);
   style->brush_name = (gchar *) gimp_brushes_get_brush (&style->brush_width,
                                                         &style->brush_height,
                                                         &style->brush_spacing);

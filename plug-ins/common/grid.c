@@ -215,7 +215,7 @@ run (const gchar      *name,
     }
   else
     {
-      gimp_palette_get_foreground (&grid_cfg.hcolor);
+      gimp_context_get_foreground (&grid_cfg.hcolor);
       grid_cfg.vcolor = grid_cfg.icolor = grid_cfg.hcolor;
 
       /*  Possibly retrieve data  */

@@ -49,13 +49,13 @@
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img bands-layer 1)
     (gimp-selection-none img)
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill bands-layer BACKGROUND-FILL)
     ; The text layer is never shown: it is only used to create a selection
     (gimp-selection-layer-alpha logo-layer)
-    (gimp-palette-set-foreground '(255 255 255))
+    (gimp-context-set-foreground '(255 255 255))
     (gimp-edit-fill bands-layer FOREGROUND-FILL)
 
     ; Create multiple outlines by growing and inverting the selection
@@ -89,7 +89,7 @@
 
     ; Fill the layer with the foreground color.  The areas that are not
     ; masked become visible.
-    (gimp-palette-set-foreground fg-color)
+    (gimp-context-set-foreground fg-color)
     (gimp-edit-fill bands-layer FOREGROUND-FILL)
     ;; (gimp-layer-remove-mask bands-layer MASK-APPLY)
 

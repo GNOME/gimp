@@ -350,7 +350,7 @@ cubism (GimpDrawable *drawable)
     {
       GimpRGB color;
 
-      gimp_palette_get_background (&color);
+      gimp_context_get_background (&color);
       gimp_rgb_set_alpha (&color, 0.0);
       gimp_drawable_get_color_uchar (drawable->drawable_id, &color, bg_col);
     }

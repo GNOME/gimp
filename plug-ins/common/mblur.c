@@ -318,7 +318,7 @@ mblur_linear (GimpDrawable *drawable,
 
   pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
-  gimp_palette_get_background (&background);
+  gimp_context_get_background (&background);
   gimp_pixel_fetcher_set_bg_color (pft, &background);
 
   progress     = 0;
@@ -511,7 +511,7 @@ mblur_radial (GimpDrawable *drawable,
 
   pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
-  gimp_palette_get_background (&background);
+  gimp_context_get_background (&background);
   gimp_pixel_fetcher_set_bg_color (pft, &background);
 
   progress     = 0;
@@ -676,7 +676,7 @@ mblur_zoom (GimpDrawable *drawable,
 
   pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
-  gimp_palette_get_background (&background);
+  gimp_context_get_background (&background);
   gimp_pixel_fetcher_set_bg_color (pft, &background);
 
   progress     = 0;

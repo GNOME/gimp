@@ -20,8 +20,8 @@
 	 (burst-layer (car (gimp-layer-new img width height RGBA-IMAGE "Burst" 100 NORMAL-MODE)))
 	 (layer-mask (car (gimp-layer-create-mask burst-layer ADD-BLACK-MASK)))
 	 (old-pattern (car (gimp-patterns-get-pattern)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-fg (car (gimp-context-get-foreground)))
+	 (old-bg (car (gimp-context-get-background))))
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -31,7 +31,7 @@
     (gimp-layer-add-mask burst-layer layer-mask)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
 
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear shadow-layer)
     (gimp-edit-clear burst-layer)
@@ -43,14 +43,14 @@
 
     (gimp-selection-layer-alpha logo-layer)
 
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill layer-mask BACKGROUND-FILL)
     (gimp-selection-none img)
     (plug-in-nova 1 img burst-layer (car burst-coords) (cdr burst-coords)
 		  burst-color burstradius 100 0)
 
     (gimp-selection-layer-alpha logo-layer)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-selection-feather img feather)
     (gimp-selection-translate img -1 -1)
     (while (< count off)
@@ -60,8 +60,8 @@
     (gimp-selection-none img)
 
     (gimp-patterns-set-pattern old-pattern)
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)))
+    (gimp-context-set-background old-bg)
+    (gimp-context-set-foreground old-fg)))
 
 
 (define (script-fu-starburst-logo-alpha img

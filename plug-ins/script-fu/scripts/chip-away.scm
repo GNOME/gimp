@@ -58,7 +58,7 @@
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-patterns-set-pattern pattern)
 
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-selection-all img)
 
     (if (= bg-fill TRUE)
@@ -93,7 +93,7 @@
 	    (gimp-edit-clear shadow-layer)
 	    (gimp-selection-none img)
 	    (gimp-selection-layer-alpha logo-layer)
-	    (gimp-palette-set-background '(0 0 0))
+	    (gimp-context-set-background '(0 0 0))
 	    (gimp-edit-fill shadow-layer BACKGROUND-FILL)
 	    (gimp-selection-none img)
 	    (plug-in-gauss-rle 1 img shadow-layer 5 TRUE TRUE)

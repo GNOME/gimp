@@ -49,7 +49,7 @@
     (gimp-image-add-layer img ruler-layer -1)
      
    ; (gimp-layer-set-preserve-trans ruler-layer TRUE)
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear ruler-layer)
@@ -57,15 +57,15 @@
     (gimp-rect-select img
 		      (/ height 2) (/ height 2)
 		      length height CHANNEL-OP-REPLACE FALSE 0)
-    (gimp-palette-set-foreground '(79 79 79))
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-foreground '(79 79 79))
+    (gimp-context-set-background '(0 0 0))
 
     (gimp-edit-blend ruler-layer FG-BG-RGB-MODE NORMAL-MODE
 		     GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		     FALSE 0 0 TRUE
 		     0 0 height height)
 
-    (gimp-palette-set-foreground glow-color)
+    (gimp-context-set-foreground glow-color)
     (gimp-selection-grow img border)
     (gimp-edit-fill glow-layer FOREGROUND-FILL)
     (gimp-selection-none img)

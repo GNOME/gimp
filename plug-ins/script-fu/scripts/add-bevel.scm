@@ -110,13 +110,13 @@
     ;
     ; Initialise our bumpmap
     ;
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-drawable-fill bump-layer BACKGROUND-FILL)
 
     (set! index 1)
     (while (< index thickness)
            (set! greyness (/ (* index 255) thickness))
-           (gimp-palette-set-background (list greyness greyness greyness))
+           (gimp-context-set-background (list greyness greyness greyness))
            ;(gimp-selection-feather image 1) ;Stop the slopey jaggies?
            (gimp-edit-bucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE
                                   100 0 FALSE 0 0)
@@ -124,7 +124,7 @@
            (set! index (+ index 1))
     )
     ; Now the white interior
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-bucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE
                            100 0 FALSE 0 0)
 

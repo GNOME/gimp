@@ -32,7 +32,7 @@
                                       filename
                                       spacing)
   (let* ((type (car (gimp-drawable-type-with-alpha drawable)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-bg (car (gimp-context-get-background))))
   
     (set! selection-bounds (gimp-selection-bounds image))
     (set! select-offset-x  (cadr selection-bounds))
@@ -81,7 +81,7 @@
 
     (if (= type GRAYA-IMAGE)
         (begin 
-          (gimp-palette-set-background '(255 255 255))
+          (gimp-context-set-background '(255 255 255))
           (gimp-drawable-fill brush-draw BACKGROUND-FILL))
         (gimp-drawable-fill brush-draw TRANSPARENT-FILL))
 
@@ -103,7 +103,7 @@
 	  (gimp-selection-load active-selection)
 	  (gimp-image-remove-channel image active-selection)))
 
-    (gimp-palette-set-background old-bg)
+    (gimp-context-set-background old-bg)
 
     (gimp-image-undo-enable image)
     (gimp-image-set-active-layer image drawable)

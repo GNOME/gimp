@@ -15,45 +15,45 @@
      (posy (- (cadr (gimp-drawable-offsets logo-layer))))
 	 (glow-layer (car (gimp-layer-copy logo-layer TRUE)))
 	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-fg (car (gimp-context-get-foreground)))
+	 (old-bg (car (gimp-context-get-background))))
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img glow-layer 1)
     (gimp-layer-translate glow-layer posx posy)
 
     (gimp-selection-none img)
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     (gimp-layer-set-preserve-trans logo-layer TRUE)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill logo-layer BACKGROUND-FILL)
 
     (gimp-selection-layer-alpha logo-layer)
     (gimp-selection-feather img feather1)
-    (gimp-palette-set-background '(221 0 0))
+    (gimp-context-set-background '(221 0 0))
     (gimp-edit-fill glow-layer BACKGROUND-FILL)
     (gimp-edit-fill glow-layer BACKGROUND-FILL)
     (gimp-edit-fill glow-layer BACKGROUND-FILL)
 
     (gimp-selection-layer-alpha logo-layer)
     (gimp-selection-feather img feather2)
-    (gimp-palette-set-background '(232 217 18))
+    (gimp-context-set-background '(232 217 18))
     (gimp-edit-fill glow-layer BACKGROUND-FILL)
     (gimp-edit-fill glow-layer BACKGROUND-FILL)
 
     (gimp-selection-layer-alpha logo-layer)
     (gimp-selection-feather img feather3)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill glow-layer BACKGROUND-FILL)
     (gimp-selection-none img)
 
     (gimp-layer-set-mode logo-layer OVERLAY-MODE)
     (gimp-drawable-set-name glow-layer "Glow Layer")
 
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)))
+    (gimp-context-set-background old-bg)
+    (gimp-context-set-foreground old-fg)))
 
 
 (define (script-fu-glowing-logo-alpha img

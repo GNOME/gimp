@@ -379,7 +379,7 @@ film (void)
 
   tile_height = gimp_tile_height ();
   /* Save foreground colour */
-  gimp_palette_get_foreground (&foreground);
+  gimp_context_get_foreground (&foreground);
 
   if (filmvals.keep_height) /* Search maximum picture height */
     {
@@ -519,7 +519,7 @@ film (void)
 	  if ((number_height > 0) &&
 	      (filmvals.number_pos[0] || filmvals.number_pos[1]))
 	    {
-	      gimp_palette_set_foreground (&filmvals.number_color);
+	      gimp_context_set_foreground (&filmvals.number_color);
 
 	      if (filmvals.number_pos[0])
 		draw_number (layer_ID_dst, filmvals.number_start + picture_count,
@@ -531,7 +531,7 @@ film (void)
 			     film_height - (hole_offset + number_height)/2,
 			     number_height);
 
-	      gimp_palette_set_foreground (&foreground);
+	      gimp_context_set_foreground (&foreground);
 	    }
 
 	  picture_x0 += picture_width + (picture_space/2);
@@ -549,7 +549,7 @@ film (void)
   gimp_floating_sel_anchor (gimp_image_get_floating_sel (image_ID_dst));
 
   /* Restore foreground */
-  gimp_palette_set_foreground (&foreground);
+  gimp_context_set_foreground (&foreground);
 
   return image_ID_dst;
 }

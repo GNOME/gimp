@@ -15,7 +15,7 @@
 	  (gimp-context-push)
 
 	  (gimp-image-undo-disable img)
-	  (gimp-palette-set-background '(255 255 255))
+	  (gimp-context-set-background '(255 255 255))
 	  (gimp-edit-fill layer-one BACKGROUND-FILL)
 	  (gimp-image-add-layer img layer-one 0)
 

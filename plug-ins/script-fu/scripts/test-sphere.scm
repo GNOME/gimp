@@ -150,10 +150,10 @@
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
-    (gimp-palette-set-foreground sphere-color)
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-foreground sphere-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill drawable BACKGROUND-FILL)
-    (gimp-palette-set-background '(20 20 20))
+    (gimp-context-set-background '(20 20 20))
 
     (if (and
 	 (or (and (>= light 45) (<= light 75))
@@ -193,7 +193,7 @@
 
     (gimp-selection-none img)
 
-    (gimp-palette-set-foreground '(0 0 0))
+    (gimp-context-set-foreground '(0 0 0))
     (gimp-floating-sel-anchor (car (gimp-text-fontname img drawable
 						       x-position y-position
 						       text

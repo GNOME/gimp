@@ -86,8 +86,8 @@
     ; Create bumpmap layer
     
     (gimp-image-add-layer img bumpmap -1)
-    (gimp-palette-set-foreground '(0 0 0))
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-foreground '(0 0 0))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-rect-select img 0 0 bevel-width img-height CHANNEL-OP-REPLACE FALSE 0)
@@ -107,8 +107,8 @@
     ; Create gradient layer
 
     (gimp-image-add-layer img gradient -1)
-    (gimp-palette-set-foreground ul-color)
-    (gimp-palette-set-background lr-color)
+    (gimp-context-set-foreground ul-color)
+    (gimp-context-set-background lr-color)
 
     (gimp-edit-blend gradient FG-BG-RGB-MODE NORMAL-MODE
 		     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
@@ -120,7 +120,7 @@
 
     ; Create text layer
 
-    (gimp-palette-set-foreground text-color)
+    (gimp-context-set-foreground text-color)
     (let ((textl (car (gimp-text-fontname
 		       img -1 0 0 text 0 TRUE size PIXELS font))))
       (gimp-layer-set-offsets textl

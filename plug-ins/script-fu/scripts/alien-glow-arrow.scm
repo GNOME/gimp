@@ -116,8 +116,8 @@
 
     (gimp-free-select img 6 big-arrow CHANNEL-OP-REPLACE TRUE FALSE 0)
 
-    (gimp-palette-set-foreground '(103 103 103))
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-foreground '(103 103 103))
+    (gimp-context-set-background '(0 0 0))
 
     (gimp-edit-blend ruler-layer FG-BG-RGB-MODE NORMAL-MODE
                      GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
@@ -125,7 +125,7 @@
                      0 0 size size)
     
     (gimp-selection-grow img grow-amount)
-    (gimp-palette-set-foreground glow-color)
+    (gimp-context-set-foreground glow-color)
     (gimp-edit-fill glow-layer FOREGROUND-FILL)
 
     (gimp-selection-none img)
@@ -133,7 +133,7 @@
 
     (plug-in-gauss-rle 1 img glow-layer blur-radius TRUE TRUE)
 
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     (if (= flatten TRUE)

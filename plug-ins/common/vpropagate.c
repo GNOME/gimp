@@ -464,7 +464,7 @@ value_propagate_body (gint drawable_id)
   best = g_new (guchar, bytes);
 
   gimp_progress_init (_("Value Propagating..."));
-  gimp_palette_get_foreground (&foreground);
+  gimp_context_get_foreground (&foreground);
   gimp_rgb_get_uchar (&foreground, fore+0, fore+1, fore+2);
 
   /* start real job */
@@ -918,7 +918,7 @@ initialize_foreground (GimpImageBaseType   image_type,
     {
       *tmp = (void *) g_new (guchar, 3);
       ch = (guchar *)*tmp;
-      gimp_palette_get_foreground (&foreground);
+      gimp_context_get_foreground (&foreground);
       gimp_rgb_get_uchar (&foreground, &ch[0], &ch[1], &ch[2]);
     }
 }
@@ -937,7 +937,7 @@ initialize_background (GimpImageBaseType   image_type,
     {
       *tmp = (void *) g_new (guchar, 3);
       ch = (guchar *)*tmp;
-      gimp_palette_get_background (&background);
+      gimp_context_get_background (&background);
       gimp_rgb_get_uchar (&background, &ch[0], &ch[1], &ch[2]);
     }
 }

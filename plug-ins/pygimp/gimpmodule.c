@@ -663,7 +663,7 @@ pygimp_get_background(PyObject *self)
     GimpRGB colour;
     guchar r, g, b;
 
-    gimp_palette_get_background(&colour);
+    gimp_context_get_background(&colour);
     gimp_rgb_get_uchar(&colour, &r, &g, &b);
     return Py_BuildValue("(iii)", (int)r, (int)g, (int)b);
 }
@@ -674,7 +674,7 @@ pygimp_get_foreground(PyObject *self)
     GimpRGB colour;
     guchar r, g, b;
 
-    gimp_palette_get_foreground(&colour);
+    gimp_context_get_foreground(&colour);
     gimp_rgb_get_uchar(&colour, &r, &g, &b);
     return Py_BuildValue("(iii)", (int)r, (int)g, (int)b);
 }
@@ -693,7 +693,7 @@ pygimp_set_background(PyObject *self, PyObject *args)
     g = CLAMP(g, 0, 255);
     b = CLAMP(b, 0, 255);
     gimp_rgb_set_uchar(&colour, r, g, b);
-    gimp_palette_set_background(&colour);
+    gimp_context_set_background(&colour);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -712,7 +712,7 @@ pygimp_set_foreground(PyObject *self, PyObject *args)
     g = CLAMP(g, 0, 255);
     b = CLAMP(b, 0, 255);
     gimp_rgb_set_uchar(&colour, r, g, b);
-    gimp_palette_set_foreground(&colour);
+    gimp_context_set_foreground(&colour);
     Py_INCREF(Py_None);
     return Py_None;
 }

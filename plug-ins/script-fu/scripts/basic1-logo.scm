@@ -16,18 +16,18 @@
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img shadow-layer 1)
     (gimp-image-add-layer img bg-layer 2)
-    (gimp-palette-set-foreground text-color)
+    (gimp-context-set-foreground text-color)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-edit-fill logo-layer FOREGROUND-FILL)
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear shadow-layer)
     (gimp-selection-layer-alpha logo-layer)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-selection-feather img 7.5)
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-selection-none img)
-    (gimp-palette-set-foreground '(255 255 255))
+    (gimp-context-set-foreground '(255 255 255))
 
     (gimp-edit-blend logo-layer FG-BG-RGB-MODE MULTIPLY-MODE
 		     GRADIENT-RADIAL 100 20 REPEAT-NONE FALSE

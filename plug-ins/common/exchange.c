@@ -190,7 +190,7 @@ run (const gchar      *name,
       /* retrieve stored arguments (if any) */
       gimp_get_data ("plug_in_exchange", &xargs);
       /* initialize using foreground color */
-      gimp_palette_get_foreground (&xargs.from);
+      gimp_context_get_foreground (&xargs.from);
 
       if (! exchange_dialog ())
         return;
@@ -203,7 +203,7 @@ run (const gchar      *name,
        * run with the current foreground as 'from'
        * color, making ALT-F somewhat more useful.
        */
-      gimp_palette_get_foreground (&xargs.from);
+      gimp_context_get_foreground (&xargs.from);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:

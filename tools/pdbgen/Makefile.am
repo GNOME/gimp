@@ -26,7 +26,6 @@ pdb_sources = \
 	pdb/message.pdb		\
 	pdb/misc.pdb		\
 	pdb/paint_tools.pdb	\
-	pdb/palette.pdb		\
 	pdb/palette_select.pdb	\
 	pdb/palettes.pdb	\
 	pdb/parasite.pdb	\

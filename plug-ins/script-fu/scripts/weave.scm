@@ -51,13 +51,13 @@
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
 
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill drawable BACKGROUND-FILL)
 
     ; Create main horizontal ribbon
 
-    (gimp-palette-set-foreground '(255 255 255))
-    (gimp-palette-set-background (list darkness darkness darkness))
+    (gimp-context-set-foreground '(255 255 255))
+    (gimp-context-set-background (list darkness darkness darkness))
 
     (gimp-rect-select img
 		      0
@@ -174,14 +174,14 @@
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
 
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill drawable BACKGROUND-FILL)
 
     (gimp-rect-select img r1-x1 r1-y1 r1-width r1-height CHANNEL-OP-REPLACE FALSE 0)
     (gimp-rect-select img r2-x1 r2-y1 r2-width r2-height CHANNEL-OP-ADD FALSE 0)
     (gimp-rect-select img r3-x1 r3-y1 r3-width r3-height CHANNEL-OP-ADD FALSE 0)
 
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill drawable BACKGROUND-FILL)
     (gimp-selection-none img)
 
@@ -276,7 +276,7 @@
 					"Threads" 100 NORMAL-MODE)))
 	 (dense (/ density 100.0)))
     (gimp-image-add-layer img drawable -1)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill drawable BACKGROUND-FILL)
     (plug-in-noisify 1 img drawable FALSE dense dense dense dense)
     (plug-in-c-astretch 1 img drawable)
@@ -351,8 +351,8 @@
 			 thread-length
 			 thread-density
 			 thread-intensity)
-  (let* ((old-fg-color (car (gimp-palette-get-foreground)))
-	 (old-bg-color (car (gimp-palette-get-background)))
+  (let* ((old-fg-color (car (gimp-context-get-foreground)))
+	 (old-bg-color (car (gimp-context-get-background)))
 
 	 (d-img (car (gimp-drawable-get-image drawable)))
 	 (d-width (car (gimp-drawable-width drawable)))
@@ -381,8 +381,8 @@
       (gimp-layer-set-mode floating-sel MULTIPLY-MODE)
       (gimp-floating-sel-to-layer floating-sel))
 
-    (gimp-palette-set-foreground old-fg-color)
-    (gimp-palette-set-background old-bg-color)
+    (gimp-context-set-foreground old-fg-color)
+    (gimp-context-set-background old-bg-color)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-weave"

@@ -88,8 +88,8 @@
     ; Create bumpmap layer
     
     (gimp-image-add-layer img bg-layer -1)
-    (gimp-palette-set-foreground '(0 0 0))
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-foreground '(0 0 0))
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-image-add-layer img glow-layer -1)
 
@@ -99,8 +99,8 @@
     (gimp-layer-set-offsets button-layer (/ glow-radius 2) (/ glow-radius 2))
     (gimp-selection-none img)
     (gimp-rect-select img 0 0 img-width img-height CHANNEL-OP-REPLACE FALSE 0)
-    (gimp-palette-set-foreground '(100 100 100))
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-foreground '(100 100 100))
+    (gimp-context-set-background '(0 0 0))
 
     (gimp-edit-blend button-layer FG-BG-RGB-MODE NORMAL-MODE
 		     GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
@@ -116,11 +116,11 @@
 		      (- img-height (/ glow-radius 2))
 		      CHANNEL-OP-REPLACE FALSE 0 )
 
-    (gimp-palette-set-foreground glow-color)
+    (gimp-context-set-foreground glow-color)
     (gimp-edit-fill glow-layer FOREGROUND-FILL)
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img glow-layer glow-radius TRUE TRUE)
-    (gimp-palette-set-foreground text-color)
+    (gimp-context-set-foreground text-color)
     (let ((textl (car (gimp-text-fontname
 		       img -1 0 0 text 0 TRUE size PIXELS font))))
       (gimp-layer-set-offsets textl

@@ -45,8 +45,8 @@
 	 (bg-layer (car (gimp-layer-new  img 125 height
 					 RGB-IMAGE "Background" 100 NORMAL-MODE)))
 	 (shadow-layer (car (gimp-layer-copy text-layer TRUE)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-fg (car (gimp-context-get-foreground)))
+	 (old-bg (car (gimp-context-get-background))))
     
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img shadow-layer 1)
@@ -55,13 +55,13 @@
     (gimp-layer-set-preserve-trans text-layer TRUE)
     (gimp-layer-set-preserve-trans shadow-layer TRUE)
     
-    (gimp-palette-set-background text-color)
+    (gimp-context-set-background text-color)
     (gimp-edit-fill text-layer BACKGROUND-FILL)
 
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
-    (gimp-palette-set-background shadow-color)
+    (gimp-context-set-background shadow-color)
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-layer-translate shadow-layer 1 1)
 
@@ -79,8 +79,8 @@
    	(gimp-image-convert-indexed img FS-DITHER MAKE-PALETTE num-colors
 				    FALSE FALSE ""))
 
-    (gimp-palette-set-foreground old-fg)
-    (gimp-palette-set-background old-bg)
+    (gimp-context-set-foreground old-fg)
+    (gimp-context-set-background old-bg)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 

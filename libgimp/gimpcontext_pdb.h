@@ -29,8 +29,14 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_context_push (void);
-gboolean gimp_context_pop  (void);
+gboolean gimp_context_push               (void);
+gboolean gimp_context_pop                (void);
+gboolean gimp_context_get_foreground     (GimpRGB       *foreground);
+gboolean gimp_context_set_foreground     (const GimpRGB *foreground);
+gboolean gimp_context_get_background     (GimpRGB       *foreground);
+gboolean gimp_context_set_background     (const GimpRGB *background);
+gboolean gimp_context_set_default_colors (void);
+gboolean gimp_context_swap_colors        (void);
 
 
 G_END_DECLS

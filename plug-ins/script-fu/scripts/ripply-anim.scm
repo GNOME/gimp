@@ -17,7 +17,7 @@
 	(gimp-floating-sel-anchor floating-sel)))
 
 (define (script-fu-ripply-anim img drawable displacement num-frames edge-type)
-  (let* ((old-bg (car (gimp-palette-get-background)))
+  (let* ((old-bg (car (gimp-context-get-background)))
 	 (width (car (gimp-drawable-width drawable)))
 	 (height (car (gimp-drawable-height drawable)))
 	 (ripple-image (car (gimp-image-new width height GRAY)))
@@ -26,7 +26,7 @@
  ; this script generates its own displacement map
 
     (gimp-image-undo-disable ripple-image)
-    (gimp-palette-set-background '(127 127 127) )
+    (gimp-context-set-background '(127 127 127) )
     (gimp-image-add-layer ripple-image ripple-layer 0)
     (gimp-edit-fill ripple-layer BACKGROUND-FILL)
     (plug-in-noisify 1 ripple-image ripple-layer FALSE 1.0 1.0 1.0 0.0)
@@ -88,7 +88,7 @@
       
       (gimp-image-undo-enable rippletiled-image)
       (gimp-image-delete rippletiled-image)
-      (gimp-palette-set-background old-bg)
+      (gimp-context-set-background old-bg)
       (gimp-image-undo-enable out-imagestack)
       (gimp-display-new out-imagestack))))
 

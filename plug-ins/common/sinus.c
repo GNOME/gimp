@@ -389,8 +389,8 @@ prepare_coef (params *p)
           gimp_rgb_set (&color2, 0.0, 0.0, 0.0);
           break;
         case USE_FG_BG:
-          gimp_palette_get_background (&color1);
-          gimp_palette_get_foreground (&color2);
+          gimp_context_get_background (&color1);
+          gimp_context_get_foreground (&color2);
           break;
         }
     }

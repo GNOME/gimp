@@ -23,6 +23,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
@@ -33,12 +35,24 @@
 
 static ProcRecord context_push_proc;
 static ProcRecord context_pop_proc;
+static ProcRecord context_get_foreground_proc;
+static ProcRecord context_set_foreground_proc;
+static ProcRecord context_get_background_proc;
+static ProcRecord context_set_background_proc;
+static ProcRecord context_set_default_colors_proc;
+static ProcRecord context_swap_colors_proc;
 
 void
 register_context_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &context_push_proc);
   procedural_db_register (gimp, &context_pop_proc);
+  procedural_db_register (gimp, &context_get_foreground_proc);
+  procedural_db_register (gimp, &context_set_foreground_proc);
+  procedural_db_register (gimp, &context_get_background_proc);
+  procedural_db_register (gimp, &context_set_background_proc);
+  procedural_db_register (gimp, &context_set_default_colors_proc);
+  procedural_db_register (gimp, &context_swap_colors_proc);
 }
 
 static Argument *
@@ -103,4 +117,222 @@ static ProcRecord context_pop_proc =
   0,
   NULL,
   { { context_pop_invoker } }
+};
+
+static Argument *
+context_get_foreground_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
+{
+  Argument *return_args;
+  GimpRGB color;
+
+  gimp_context_get_foreground (context, &color);
+
+  return_args = procedural_db_return_args (&context_get_foreground_proc, TRUE);
+  return_args[1].value.pdb_color = color;
+
+  return return_args;
+}
+
+static ProcArg context_get_foreground_outargs[] =
+{
+  {
+    GIMP_PDB_COLOR,
+    "foreground",
+    "The foreground color"
+  }
+};
+
+static ProcRecord context_get_foreground_proc =
+{
+  "gimp_context_get_foreground",
+  "Get the current GIMP foreground color.",
+  "This procedure retrieves the current GIMP foreground color. The foreground color is used in a variety of tools such as paint tools, blending, and bucket fill.",
+  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  "Michael Natterer & Sven Neumann",
+  "2004",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  1,
+  context_get_foreground_outargs,
+  { { context_get_foreground_invoker } }
+};
+
+static Argument *
+context_set_foreground_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
+{
+  GimpRGB color;
+
+  color = args[0].value.pdb_color;
+
+  gimp_rgb_set_alpha (&color, 1.0);
+  gimp_context_set_foreground (context, &color);
+
+  return procedural_db_return_args (&context_set_foreground_proc, TRUE);
+}
+
+static ProcArg context_set_foreground_inargs[] =
+{
+  {
+    GIMP_PDB_COLOR,
+    "foreground",
+    "The foreground color"
+  }
+};
+
+static ProcRecord context_set_foreground_proc =
+{
+  "gimp_context_set_foreground",
+  "Set the current GIMP foreground color.",
+  "This procedure sets the current GIMP foreground color. After this is set, operations which use foreground such as paint tools, blending, and bucket fill will use the new value.",
+  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  "Michael Natterer & Sven Neumann",
+  "2004",
+  GIMP_INTERNAL,
+  1,
+  context_set_foreground_inargs,
+  0,
+  NULL,
+  { { context_set_foreground_invoker } }
+};
+
+static Argument *
+context_get_background_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
+{
+  Argument *return_args;
+  GimpRGB color;
+
+  gimp_context_get_background (context, &color);
+
+  return_args = procedural_db_return_args (&context_get_background_proc, TRUE);
+  return_args[1].value.pdb_color = color;
+
+  return return_args;
+}
+
+static ProcArg context_get_background_outargs[] =
+{
+  {
+    GIMP_PDB_COLOR,
+    "foreground",
+    "The foreground color"
+  }
+};
+
+static ProcRecord context_get_background_proc =
+{
+  "gimp_context_get_background",
+  "Get the current GIMP background color.",
+  "This procedure retrieves the current GIMP background color. The background color is used in a variety of tools such as blending, erasing (with non-alpha images), and image filling.",
+  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  "Michael Natterer & Sven Neumann",
+  "2004",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  1,
+  context_get_background_outargs,
+  { { context_get_background_invoker } }
+};
+
+static Argument *
+context_set_background_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
+{
+  GimpRGB color;
+
+  color = args[0].value.pdb_color;
+
+  gimp_rgb_set_alpha (&color, 1.0);
+  gimp_context_set_foreground (context, &color);
+
+  return procedural_db_return_args (&context_set_background_proc, TRUE);
+}
+
+static ProcArg context_set_background_inargs[] =
+{
+  {
+    GIMP_PDB_COLOR,
+    "background",
+    "The background color"
+  }
+};
+
+static ProcRecord context_set_background_proc =
+{
+  "gimp_context_set_background",
+  "Set the current GIMP background color.",
+  "This procedure sets the current GIMP background color. After this is set, operations which use background such as blending, filling images, clearing, and erasing (in non-alpha images) will use the new value.",
+  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  "Michael Natterer & Sven Neumann",
+  "2004",
+  GIMP_INTERNAL,
+  1,
+  context_set_background_inargs,
+  0,
+  NULL,
+  { { context_set_background_invoker } }
+};
+
+static Argument *
+context_set_default_colors_invoker (Gimp         *gimp,
+                                    GimpContext  *context,
+                                    GimpProgress *progress,
+                                    Argument     *args)
+{
+  gimp_context_set_default_colors (context);
+  return procedural_db_return_args (&context_set_default_colors_proc, TRUE);
+}
+
+static ProcRecord context_set_default_colors_proc =
+{
+  "gimp_context_set_default_colors",
+  "Set the current GIMP foreground and background colors to black and white.",
+  "This procedure sets the current GIMP foreground and background colors to their initial default values, black and white.",
+  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+  "Michael Natterer & Sven Neumann",
+  "2004",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  0,
+  NULL,
+  { { context_set_default_colors_invoker } }
+};
+
+static Argument *
+context_swap_colors_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
+{
+  gimp_context_swap_colors (context);
+  return procedural_db_return_args (&context_swap_colors_proc, TRUE);
+}
+
+static ProcRecord context_swap_colors_proc =
+{
+  "gimp_context_swap_colors",
+  "Swap the current GIMP foreground and background colors.",
+  "This procedure swaps the current GIMP foreground and background colors, so that the new foreground color becomes the old background color and vice versa.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  0,
+  NULL,
+  { { context_swap_colors_invoker } }
 };

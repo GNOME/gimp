@@ -117,7 +117,7 @@
          (cy 0)
 
          ; Save old foreground color, brush, opacity and paint mode
-         (old-fg-color (car (gimp-palette-get-foreground)))
+         (old-fg-color (car (gimp-context-get-foreground)))
          (old-brush (car (gimp-brushes-get-brush)))
          (old-opacity (car (gimp-brushes-get-opacity)))
          (old-paint-mode (car (gimp-brushes-get-paint-mode)))
@@ -245,7 +245,7 @@
     (gimp-image-undo-group-start img)
 
     ; Set new color, brush, opacity, paint mode.
-    (gimp-palette-set-foreground color)
+    (gimp-context-set-foreground color)
     (gimp-brushes-set-brush (car brush))
     (gimp-brushes-set-opacity (* 100 (car (cdr brush))))
     (gimp-brushes-set-paint-mode (car (cdr (cdr (cdr brush)))))
@@ -262,7 +262,7 @@
         (if (< 0 color-method)  ; use gradient.
            (if (< (/ (+ grad-index 4) gradn) (/ index steps))
              (begin
-              (gimp-palette-set-foreground 
+              (gimp-context-set-foreground 
                 (list 
                   (* 255 (aref grada grad-index))
                   (* 255 (aref grada (+ 1 grad-index)) )
@@ -286,7 +286,7 @@
     (flush-points point-index)   
 
     ; Restore foreground color, brush and opacity
-    (gimp-palette-set-foreground old-fg-color)
+    (gimp-context-set-foreground old-fg-color)
     (gimp-brushes-set-brush old-brush)
     (gimp-brushes-set-opacity old-opacity)
     (gimp-brushes-set-paint-mode old-paint-mode)

@@ -45,7 +45,7 @@
 	 )
 
     (gimp-selection-all img)
-    (gimp-palette-set-background backcolor)
+    (gimp-context-set-background backcolor)
     (gimp-edit-fill drawable1 BACKGROUND-FILL)
 
     (let* (
@@ -55,7 +55,7 @@
 	  )
       (gimp-image-undo-disable temp-img)
       (gimp-image-add-layer temp-img temp-draw 0)
-      (gimp-palette-set-background backcolor)
+      (gimp-context-set-background backcolor)
       (gimp-edit-fill temp-draw BACKGROUND-FILL)
       
       
@@ -64,7 +64,7 @@
       
       (center-ellipse temp-img (* size 2) (*  size 2)  outer-radius outer-radius CHANNEL-OP-ADD TRUE FALSE 0)
       (center-ellipse temp-img (* size 2) (*  size 2)  inner-radius inner-radius CHANNEL-OP-SUBTRACT TRUE FALSE 0)
-      (gimp-palette-set-background forecolor)
+      (gimp-context-set-background forecolor)
       (gimp-edit-fill temp-draw BACKGROUND-FILL)
       
       (gimp-selection-none temp-img)
@@ -106,7 +106,7 @@
 					 RGB-IMAGE "Cooper" 100 NORMAL-MODE)))
 	 (Xindex 0)
 	 (Yindex 0)
-	 (old-bg (car (gimp-palette-get-background)))
+	 (old-bg (car (gimp-context-get-background)))
 	 )
 
     (gimp-image-undo-disable img)
@@ -119,7 +119,7 @@
  
     ;just to look a little better
     (gimp-selection-all img)
-    (gimp-palette-set-background backcolor)
+    (gimp-context-set-background backcolor)
     (gimp-edit-fill layer-one BACKGROUND-FILL)
     (gimp-selection-none img)
 
@@ -140,7 +140,7 @@
     
     
     (gimp-image-delete tile)
-    (gimp-palette-set-background old-bg)
+    (gimp-context-set-background old-bg)
     (gimp-image-undo-enable img)
     (gimp-display-new img)
     )

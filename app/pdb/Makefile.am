@@ -31,7 +31,6 @@ libapppdb_a_SOURCES = \
 	message_cmds.c		\
 	misc_cmds.c		\
 	paint_tools_cmds.c	\
-	palette_cmds.c		\
 	palette_select_cmds.c	\
 	palettes_cmds.c		\
 	parasite_cmds.c		\

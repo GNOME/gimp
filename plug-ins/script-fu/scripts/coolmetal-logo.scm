@@ -38,10 +38,10 @@
     (gimp-image-add-layer img shadow-layer 1)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
 
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear reflect-layer)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
 
     (gimp-gradients-set-gradient gradient)
@@ -65,7 +65,7 @@
     (plug-in-gauss-rle 1 img channel feather TRUE TRUE)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-selection-invert img)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill channel BACKGROUND-FILL)
     (gimp-selection-none img)
 
@@ -92,8 +92,8 @@
 
     (set! layer-mask (car (gimp-layer-create-mask reflect-layer ADD-WHITE-MASK)))
     (gimp-layer-add-mask reflect-layer layer-mask)
-    (gimp-palette-set-foreground '(255 255 255))
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-foreground '(255 255 255))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-blend layer-mask FG-BG-RGB-MODE NORMAL-MODE
 		     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 		     FALSE 0 0 TRUE

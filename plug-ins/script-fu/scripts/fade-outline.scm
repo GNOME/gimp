@@ -48,7 +48,7 @@
         )
 
         (let* ((l-idx 0)
-               (l-old-bg-color (car (gimp-palette-get-background)))
+               (l-old-bg-color (car (gimp-context-get-background)))
                (l-has-selection TRUE)
               )
               
@@ -126,7 +126,7 @@
                         (set! l-gray l-from-gray)
                       )
                   )
-                  (gimp-palette-set-background (list (/ l-gray 100) (/ l-gray 100) (/ l-gray 100)))
+                  (gimp-context-set-background (list (/ l-gray 100) (/ l-gray 100) (/ l-gray 100)))
                   (gimp-edit-fill l-mask BACKGROUND-FILL)
                   (set! l-idx (+ l-idx 1))
                   (set! l-gray (+ l-gray l-step))
@@ -143,17 +143,17 @@
               (if (= inGrowingSelection  TRUE)
                   (begin
                     (gimp-selection-load l-orig-selection)
-                    (gimp-palette-set-background (list (/ l-to-gray 100) (/ l-to-gray 100) (/ l-to-gray 100)))
+                    (gimp-context-set-background (list (/ l-to-gray 100) (/ l-to-gray 100) (/ l-to-gray 100)))
                     (gimp-edit-fill l-mask BACKGROUND-FILL)
                     (gimp-selection-grow inImage inBorderSize)
                     (gimp-selection-invert inImage)
         	    (if (= inClearUnselected  TRUE)
                 	(begin
-                          ;(gimp-palette-set-background (list (/ l-from-gray 100) (/ l-from-gray 100) (/ l-from-gray 100)))
-                          (gimp-palette-set-background (list 0 0 0))
+                          ;(gimp-context-set-background (list (/ l-from-gray 100) (/ l-from-gray 100) (/ l-from-gray 100)))
+                          (gimp-context-set-background (list 0 0 0))
                 	 )
                 	(begin
-                          (gimp-palette-set-background (list 255 255 255))
+                          (gimp-context-set-background (list 255 255 255))
                 	)
         	     )
                     (gimp-edit-fill l-mask BACKGROUND-FILL)
@@ -171,7 +171,7 @@
                   (gimp-selection-none inImage)
               )
 
-             (gimp-palette-set-background l-old-bg-color)
+             (gimp-context-set-background l-old-bg-color)
              (gimp-image-undo-group-end inImage)
              (gimp-displays-flush)
              )

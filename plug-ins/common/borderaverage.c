@@ -165,7 +165,7 @@ run (const gchar      *name,
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             {
-              gimp_palette_set_foreground (&result_color);
+              gimp_context_set_foreground (&result_color);
             }
           if (run_mode == GIMP_RUN_INTERACTIVE)
             {

@@ -707,10 +707,10 @@ init_calculation (gint32 drawable_id)
 
   /* Colors */
 
-  gimp_palette_get_foreground (&color);
+  gimp_context_get_foreground (&color);
   gimp_rgb_get_uchar (&color, &fore_color[0], &fore_color[1], &fore_color[2]);
 
-  gimp_palette_get_background (&color);
+  gimp_context_get_background (&color);
   gimp_rgb_get_uchar (&color, &back_color[0], &back_color[1], &back_color[2]);
 }
 

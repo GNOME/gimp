@@ -87,8 +87,8 @@
     (set! active-layer (car (gimp-image-get-active-layer image)))
 
     (if (= remove-bg TRUE)
-	(gimp-palette-set-foreground '(0 0 0))
-	(gimp-palette-set-foreground '(14 14 14)))
+	(gimp-context-set-foreground '(0 0 0))
+	(gimp-context-set-foreground '(14 14 14)))
 
     (gimp-selection-load active-selection)
     (plug-in-maze 1 image active-layer 5 5 TRUE 0 seed 57 1)

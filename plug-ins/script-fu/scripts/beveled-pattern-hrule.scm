@@ -37,7 +37,7 @@
 
     ; Create pattern layer
 
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill background BACKGROUND-FILL)
     (gimp-patterns-set-pattern pattern)
     (gimp-edit-bucket-fill background PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
@@ -46,11 +46,11 @@
 
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
-    (gimp-palette-set-background '(127 127 127))
+    (gimp-context-set-background '(127 127 127))
     (gimp-rect-select img 1 1 (- width 2) (- height 2) CHANNEL-OP-REPLACE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-rect-select img 2 2 (- width 4) (- height 4) CHANNEL-OP-REPLACE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 

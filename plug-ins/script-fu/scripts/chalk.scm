@@ -35,7 +35,7 @@
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     ; the actual effect
@@ -90,7 +90,7 @@
 
     (gimp-image-undo-disable img)
     (gimp-drawable-set-name text-layer text)
-    (gimp-palette-set-foreground chalk-color)
+    (gimp-context-set-foreground chalk-color)
     (gimp-layer-set-preserve-trans text-layer TRUE)
     (gimp-edit-fill text-layer FOREGROUND-FILL)
     (apply-chalk-logo-effect img text-layer bg-color)

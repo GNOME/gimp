@@ -49,8 +49,8 @@
 
          (old-gradient (car (gimp-gradients-get-gradient)))
          (old-patterns (car (gimp-patterns-get-pattern)))
-         (old-fg (car (gimp-palette-get-foreground)))
-         (old-bg (car (gimp-palette-get-background))))
+         (old-fg (car (gimp-context-get-foreground)))
+         (old-bg (car (gimp-context-get-background))))
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-drawable-set-name grow-me "Grow-me")
@@ -58,11 +58,11 @@
     (gimp-layer-translate grow-me posx posy)
     (gimp-image-add-layer img bg-layer 2)
 
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-selection-all img)
     (gimp-edit-bucket-fill bg-layer BG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
-    (gimp-palette-set-background old-bg)
+    (gimp-context-set-background old-bg)
 
     (gimp-selection-layer-alpha logo-layer)
 
@@ -134,8 +134,8 @@
         (gimp-selection-none img)))
 
   (gimp-gradients-set-gradient old-gradient)
-  (gimp-palette-set-background old-bg)
-  (gimp-palette-set-foreground old-fg)))
+  (gimp-context-set-background old-bg)
+  (gimp-context-set-foreground old-fg)))
 
 
 (define (script-fu-glossy-logo-alpha img

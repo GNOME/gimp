@@ -52,7 +52,7 @@
 
     ; Create pattern layer
 
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill background BACKGROUND-FILL)
     (gimp-patterns-set-pattern pattern)
     (gimp-edit-bucket-fill background
@@ -62,12 +62,12 @@
 
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
-    (gimp-palette-set-background '(127 127 127))
+    (gimp-context-set-background '(127 127 127))
     (gimp-selection-layer-alpha textl)
     (gimp-selection-shrink img 1)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-selection-layer-alpha textl)
     (gimp-selection-shrink img 2)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
@@ -80,7 +80,7 @@
 
     ; Clean up
 
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-selection-layer-alpha textl)
     (gimp-selection-invert img)
     (gimp-edit-clear background)

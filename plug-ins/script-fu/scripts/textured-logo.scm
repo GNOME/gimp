@@ -33,8 +33,8 @@
 						 "Drop Shadow" 100 MULTIPLY-MODE)))
 	 (dsl-layer-mask (car (gimp-layer-create-mask drop-shadow-layer
 						      ADD-BLACK-MASK)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background)))
+	 (old-fg (car (gimp-context-get-foreground)))
+	 (old-bg (car (gimp-context-get-background)))
 	 (old-pattern (car (gimp-patterns-get-pattern))))
 
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -49,22 +49,22 @@
     (gimp-selection-none img)
     (gimp-edit-clear text-shadow-layer)
     (gimp-edit-clear drop-shadow-layer)
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-drawable-fill shadow-layer BACKGROUND-FILL)
     (gimp-rect-select img b-size-2 b-size-2 (- width b-size) (- height b-size)
 		      CHANNEL-OP-REPLACE TRUE b-size-2)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-layer-add-mask text-shadow-layer tsl-layer-mask)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill tsl-layer-mask BACKGROUND-FILL)
     (gimp-selection-feather img f-size)
-    (gimp-palette-set-background '(63 63 63))
+    (gimp-context-set-background '(63 63 63))
     (gimp-edit-fill drop-shadow-layer BACKGROUND-FILL)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill text-shadow-layer BACKGROUND-FILL)
-    (gimp-palette-set-foreground '(255 255 255))
+    (gimp-context-set-foreground '(255 255 255))
 
     (gimp-edit-blend text-shadow-layer FG-BG-RGB-MODE NORMAL-MODE
 		     GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
@@ -72,8 +72,8 @@
 		     0 0 1 1)
 
     (gimp-selection-none img)
-    (gimp-palette-set-foreground blend-fg)
-    (gimp-palette-set-background blend-bg)
+    (gimp-context-set-foreground blend-fg)
+    (gimp-context-set-background blend-bg)
 
     (gimp-edit-blend blend-layer FG-BG-RGB-MODE NORMAL-MODE
 		     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
@@ -89,13 +89,13 @@
     (gimp-layer-translate drop-shadow-layer ds-size ds-size)
     (gimp-selection-layer-alpha blend-layer)
     (gimp-layer-add-mask drop-shadow-layer dsl-layer-mask)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill dsl-layer-mask BACKGROUND-FILL)
     (gimp-layer-remove-mask drop-shadow-layer MASK-APPLY)
     (gimp-selection-none img)
     (gimp-patterns-set-pattern old-pattern)
-    (gimp-palette-set-foreground old-fg)
-    (gimp-palette-set-background old-bg)))
+    (gimp-context-set-foreground old-fg)
+    (gimp-context-set-background old-bg)))
 
 (define (script-fu-textured-logo-alpha img
 				       logo-layer

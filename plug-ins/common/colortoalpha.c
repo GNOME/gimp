@@ -138,7 +138,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_colortoalpha", &pvals);
-      gimp_palette_get_foreground (&pvals.color);
+      gimp_context_get_foreground (&pvals.color);
       if (! colortoalpha_dialog (drawable))
 	{
 	  gimp_drawable_detach (drawable);

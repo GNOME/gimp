@@ -683,7 +683,7 @@ filter (void)
       break;
 
     case BACKGROUND_TYPE_FOREGROUND:
-      gimp_palette_get_foreground (&color);
+      gimp_context_get_foreground (&color);
       gimp_rgb_get_uchar (&color, &pixel[0], &pixel[1], &pixel[2]);
       pixel[3] = 255;
       for (y = clear_y0; y < clear_y1; y++)
@@ -700,7 +700,7 @@ filter (void)
       break;
 
     case BACKGROUND_TYPE_BACKGROUND:
-      gimp_palette_get_background (&color);
+      gimp_context_get_background (&color);
       gimp_rgb_get_uchar (&color, &pixel[0], &pixel[1], &pixel[2]);
       pixel[3] = 255;
       for (y = clear_y0; y < clear_y1; y++)

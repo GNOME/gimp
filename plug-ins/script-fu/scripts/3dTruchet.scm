@@ -69,7 +69,7 @@
 	 )
 
     (gimp-selection-all img)
-    (gimp-palette-set-background backcolor)
+    (gimp-context-set-background backcolor)
     (gimp-edit-fill drawable1 BACKGROUND-FILL)
 
     (let* (
@@ -83,13 +83,13 @@
       (gimp-image-undo-disable temp-img)
       (gimp-image-add-layer temp-img temp-draw 0)
       (gimp-image-add-layer temp-img temp-draw2 0)
-      (gimp-palette-set-background backcolor)
+      (gimp-context-set-background backcolor)
       (gimp-edit-fill temp-draw BACKGROUND-FILL)
       (gimp-edit-fill temp-draw2 BACKGROUND-FILL)
 
       ;weird aint it
-      (gimp-palette-set-background begincolor)
-      (gimp-palette-set-foreground endcolor)
+      (gimp-context-set-background begincolor)
+      (gimp-context-set-foreground endcolor)
 
       (center-ellipse temp-img size size outer-radius outer-radius
 		      CHANNEL-OP-REPLACE TRUE FALSE 0)
@@ -181,7 +181,7 @@
  
     ;just to look a little better
     (gimp-selection-all img)
-    (gimp-palette-set-background backcolor)
+    (gimp-context-set-background backcolor)
     (gimp-edit-fill layer-one BACKGROUND-FILL)
     (gimp-selection-none img)
 

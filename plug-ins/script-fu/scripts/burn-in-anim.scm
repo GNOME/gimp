@@ -88,8 +88,8 @@
 					 CHANNEL-OP-REPLACE 0 0)))
 
                  ;--- alpha blending text to trans (fadeout)
-		 (gimp-palette-set-foreground '(255 255 255))
-		 (gimp-palette-set-background '(  0   0   0))
+		 (gimp-context-set-foreground '(255 255 255))
+		 (gimp-context-set-background '(  0   0   0))
 		 (if (= fadeout TRUE)
 		     (begin
                        ; blend with 20% offset to get less transparency in the front
@@ -100,7 +100,7 @@
 
 		 (if (= fadeout FALSE)
 		     (begin
-		       (gimp-palette-set-foreground '(255 255 255))
+		       (gimp-context-set-foreground '(255 255 255))
 		       (gimp-edit-bucket-fill bl-mask FG-BUCKET-FILL NORMAL-MODE
                                               100 255 0 0 0)))
 
@@ -114,7 +114,7 @@
 			   (gimp-brightness-contrast bl-layer 100 0))
 
                      ;--- blend glow color inside the letters
-		     (gimp-palette-set-foreground glow-color)
+		     (gimp-context-set-foreground glow-color)
 		     (gimp-edit-blend bl-layer FG-TRANSPARENT-MODE NORMAL-MODE
 				      GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 				      FALSE 0 0 TRUE
@@ -127,7 +127,7 @@
 		     (gimp-selection-grow img corona-width)
 		     (gimp-layer-set-preserve-trans bl-layer FALSE)
 		     (gimp-selection-feather img corona-width)
-		     (gimp-palette-set-foreground glow-color)
+		     (gimp-context-set-foreground glow-color)
 		     (gimp-edit-blend bl-layer FG-TRANSPARENT-MODE NORMAL-MODE
 				      GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 				      FALSE 0 0 TRUE

@@ -1277,7 +1277,7 @@ save_image (const gchar *filename,
     {
       GimpRGB color;
 
-      gimp_palette_get_background (&color);
+      gimp_context_get_background (&color);
       gimp_rgb_get_uchar (&color, &red, &green, &blue);
 
       background.index = 0;

@@ -42,7 +42,7 @@
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
 	 (image-height (car (gimp-image-height image)))
-	 (old-bg (car (gimp-palette-get-background)))
+	 (old-bg (car (gimp-context-get-background)))
 	 (from-selection 0)
 	 (active-selection 0)
 	 (shadow-layer 0))
@@ -101,7 +101,7 @@
     (gimp-image-add-layer image shadow-layer -1)
     (gimp-layer-set-offsets shadow-layer select-offset-x select-offset-y)
     (gimp-drawable-fill shadow-layer TRANSPARENT-FILL)
-    (gimp-palette-set-background shadow-color)
+    (gimp-context-set-background shadow-color)
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-selection-none image)
 
@@ -166,7 +166,7 @@
       (gimp-image-raise-layer image drawable))
 
   (gimp-image-set-active-layer image drawable)
-  (gimp-palette-set-background old-bg)
+  (gimp-context-set-background old-bg)
   (gimp-image-undo-group-end image)
   (gimp-displays-flush)))
 

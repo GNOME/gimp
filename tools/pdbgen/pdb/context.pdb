@@ -73,10 +73,135 @@ CODE
     );
 }
 
+sub context_get_foreground {
+    $blurb = "Get the current GIMP foreground color.";
+
+    $help = <<'HELP';
+This procedure retrieves the current GIMP foreground color. The foreground
+color is used in a variety of tools such as paint tools, blending, and bucket
+fill.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+        { name => 'foreground', type => 'color',
+          desc => "The foreground color", alias => 'color',
+          void_ret => 1 }
+    );
+
+    %invoke = ( code => 'gimp_context_get_foreground (context, &color);' );
+}
+
+sub context_set_foreground {
+    $blurb = "Set the current GIMP foreground color.";
+
+    $help = <<'HELP';
+This procedure sets the current GIMP foreground color. After this is set,
+operations which use foreground such as paint tools, blending, and bucket fill
+will use the new value.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        { name => 'foreground', type => 'color',
+          desc => "The foreground color", alias => 'color',
+          void_ret => 1 }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  gimp_rgb_set_alpha (&color, 1.0);
+  gimp_context_set_foreground (context, &color);
+}
+CODE
+    );
+}
+
+sub context_get_background {
+    $blurb = "Get the current GIMP background color.";
+
+    $help = <<'HELP';
+This procedure retrieves the current GIMP background color. The background
+color is used in a variety of tools such as blending, erasing (with non-alpha
+images), and image filling.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+        { name => 'foreground', type => 'color',
+          desc => "The foreground color", alias => 'color',
+          void_ret => 1 }
+    );
+
+    %invoke = ( code => 'gimp_context_get_background (context, &color);' );
+}
+
+sub context_set_background {
+    $blurb = "Set the current GIMP background color.";
+
+    $help = <<'HELP';
+This procedure sets the current GIMP background color. After this is set,
+operations which use background such as blending, filling images, clearing,
+and erasing (in non-alpha images) will use the new value.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        { name => 'background', type => 'color',
+          desc => "The background color", alias => 'color',
+          void_ret => 1 }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  gimp_rgb_set_alpha (&color, 1.0);
+  gimp_context_set_foreground (context, &color);
+}
+CODE
+    );
+}
+
+sub context_set_default_colors {
+    $blurb = <<'BLURB';
+Set the current GIMP foreground and background colors to black and white.
+BLURB
+
+    $help = <<'HELP';
+This procedure sets the current GIMP foreground and background colors to their
+initial default values, black and white.
+HELP
+
+    &pdb_misc;
+
+    %invoke = ( code => 'gimp_context_set_default_colors (context);' );
+}
+
+sub context_swap_colors {
+    $blurb = 'Swap the current GIMP foreground and background colors.';
+
+    $help = <<'HELP';
+This procedure swaps the current GIMP foreground and background colors, so that
+the new foreground color becomes the old background color and vice versa.
+HELP
+
+    &std_pdb_misc;
+
+    %invoke = ( code => 'gimp_context_swap_colors (context);' );
+}
+
 @headers = qw("core/gimp.h" "core/gimpcontext.h"
               "plug-in/plug-in.h" "plug-in/plug-in-context.h");
 
-@procs = qw(context_push context_pop);
+@procs = qw(context_push context_pop
+            context_get_foreground context_set_foreground
+            context_get_background context_set_background
+            context_set_default_colors context_swap_colors);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Context';

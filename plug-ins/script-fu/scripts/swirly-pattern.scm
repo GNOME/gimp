@@ -36,16 +36,16 @@
 
 	 ; Save old foregound and background colors
 
-	 (old-fg-color (car (gimp-palette-get-foreground)))
-	 (old-bg-color (car (gimp-palette-get-background))))
+	 (old-fg-color (car (gimp-context-get-foreground)))
+	 (old-bg-color (car (gimp-context-get-background))))
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
 
     ; Render checkerboard
 
-    (gimp-palette-set-foreground '(0 0 0))
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-foreground '(0 0 0))
+    (gimp-context-set-background '(255 255 255))
 
     (plug-in-checkerboard 1 img drawable 0 qsize)
 
@@ -74,8 +74,8 @@
     ; Terminate
 
     (gimp-selection-none img)
-    (gimp-palette-set-foreground old-fg-color)
-    (gimp-palette-set-background old-bg-color)
+    (gimp-context-set-foreground old-fg-color)
+    (gimp-context-set-background old-bg-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 

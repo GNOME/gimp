@@ -44,7 +44,7 @@
 	 (image-width (car (gimp-image-width image)))
 	 (hl-opacity (list hl-opacity-comp hl-opacity-comp hl-opacity-comp))
 	 (image-height (car (gimp-image-height image)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-bg (car (gimp-context-get-background))))
 
     (gimp-image-undo-group-start image)
     (gimp-layer-add-alpha drawable)
@@ -66,7 +66,7 @@
     (gimp-edit-clear hl-layer)
     (gimp-selection-load active-selection)
     
-    (gimp-palette-set-background hl-color)
+    (gimp-context-set-background hl-color)
     (gimp-edit-fill hl-layer BACKGROUND-FILL)
     (gimp-selection-translate image hl-offset-x hl-offset-y)
     (gimp-edit-fill hl-layer BACKGROUND-FILL)
@@ -76,7 +76,7 @@
     (set! mask (car (gimp-layer-create-mask hl-layer ADD-WHITE-MASK)))
     (gimp-layer-add-mask hl-layer mask)
     
-    (gimp-palette-set-background hl-opacity)
+    (gimp-context-set-background hl-opacity)
     (gimp-edit-fill mask BACKGROUND-FILL)
 
     (set! shadow-layer (car (gimp-layer-new image
@@ -91,7 +91,7 @@
     (gimp-edit-clear shadow-layer)
     (gimp-selection-load active-selection)
     (gimp-selection-translate image ds-offset-x ds-offset-y)
-    (gimp-palette-set-background ds-color)
+    (gimp-context-set-background ds-color)
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-selection-none image)
     (plug-in-gauss-rle 1 image shadow-layer ds-blur TRUE TRUE)
@@ -100,7 +100,7 @@
     (gimp-image-lower-layer image shadow-layer)
 
 
-    (gimp-palette-set-background old-bg)
+    (gimp-context-set-background old-bg)
 
     (if (= keep-selection FALSE)
 	(gimp-selection-none image))

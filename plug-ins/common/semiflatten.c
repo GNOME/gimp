@@ -154,7 +154,7 @@ semiflatten (GimpDrawable *drawable)
 {
   GimpRGB      background;
 
-  gimp_palette_get_background (&background);
+  gimp_context_get_background (&background);
   gimp_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);
 
   gimp_rgn_iterate2 (drawable, run_mode, semiflatten_func, NULL);

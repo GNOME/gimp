@@ -103,7 +103,7 @@
     (if (= carve-white FALSE)
 	(gimp-invert mask))
 
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-selection-none img)
     (gimp-edit-fill layer2 BACKGROUND-FILL)
     (gimp-edit-fill layer3 BACKGROUND-FILL)
@@ -113,7 +113,7 @@
     (gimp-drawable-set-visible shadow FALSE)
 
     (gimp-selection-load mask)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-selection-translate img offx1 offy1)
     (gimp-selection-feather img feather)
     (gimp-edit-fill layer2 BACKGROUND-FILL)
@@ -135,16 +135,16 @@
     (set! layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK)))
     (gimp-layer-add-mask layer1 layer-mask)
     (gimp-selection-load mask)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill layer-mask BACKGROUND-FILL)
 
     (set! layer2 (car (gimp-layer-copy layer1 TRUE)))
     (gimp-image-add-layer img layer2 0)
     (gimp-brushes-set-brush (brush brush-size))
-    (gimp-palette-set-foreground '(255 255 255))
+    (gimp-context-set-foreground '(255 255 255))
     (gimp-edit-stroke layer-mask)
 
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-selection-feather img (* feather 1.5))
     (gimp-selection-translate img (* 2.5 offx1) (* 2.5 offy1))
     (gimp-edit-fill shadow BACKGROUND-FILL)

@@ -114,7 +114,7 @@
     		       height
     		       xsize
     		       ysize)
-    (gimp-palette-set-background (adjcolour colour dvalue))
+    (gimp-context-set-background (adjcolour colour dvalue))
     (gimp-free-select img
 		      10
 		      (gen_top_array xsize ysize owidth oheight width height)
@@ -123,7 +123,7 @@
 		      0
 		      0.0)
     (gimp-edit-fill layer BACKGROUND-FILL)
-    (gimp-palette-set-background (adjcolour colour (/ dvalue 2)))
+    (gimp-context-set-background (adjcolour colour (/ dvalue 2)))
     (gimp-free-select img
 		      10
 		      (gen_left_array xsize ysize owidth oheight width height)
@@ -132,7 +132,7 @@
 		      0
 		      0.0)
     (gimp-edit-fill layer BACKGROUND-FILL)
-    (gimp-palette-set-background (adjcolour colour (- 0 (/ dvalue 2))))
+    (gimp-context-set-background (adjcolour colour (- 0 (/ dvalue 2))))
     (gimp-free-select img
 		      10
 		      (gen_right_array xsize ysize owidth oheight width height)
@@ -142,7 +142,7 @@
 		      0.0)
 
     (gimp-edit-fill layer BACKGROUND-FILL)
-    (gimp-palette-set-background (adjcolour colour (- 0 dvalue)))
+    (gimp-context-set-background (adjcolour colour (- 0 dvalue)))
     (gimp-free-select img
 		      10
 		      (gen_bottom_array xsize ysize owidth oheight width height)

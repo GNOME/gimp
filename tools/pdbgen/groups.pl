@@ -24,7 +24,6 @@
     message
     misc
     paint_tools
-    palette
     palette_select
     palettes
     parasite

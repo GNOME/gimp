@@ -223,10 +223,10 @@ do_checkerboard_pattern (GimpDrawable *drawable)
   GimpRgnIterator     *iter;
   GimpRGB              color;
 
-  gimp_palette_get_background (&color);
+  gimp_context_get_background (&color);
   gimp_drawable_get_color_uchar (drawable->drawable_id, &color, param.bg);
 
-  gimp_palette_get_foreground (&color);
+  gimp_context_get_foreground (&color);
   gimp_drawable_get_color_uchar (drawable->drawable_id, &color, param.fg);
 
   if (cvals.size < 1)

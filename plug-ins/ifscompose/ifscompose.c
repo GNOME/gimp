@@ -1372,7 +1372,7 @@ ifs_compose (GimpDrawable *drawable)
   data  = g_new (guchar, width * band_height * SQR (ifsvals.subdivide) * 3);
   nhits = g_new (guchar, width * band_height * SQR (ifsvals.subdivide));
 
-  gimp_palette_get_background (&color);
+  gimp_context_get_background (&color);
   gimp_rgb_get_uchar (&color, &rc, &gc, &bc);
 
   band_y = 0;
@@ -2449,7 +2449,7 @@ ifs_compose_set_defaults (void)
   gint     i;
   GimpRGB  color;
 
-  gimp_palette_get_foreground (&color);
+  gimp_context_get_foreground (&color);
 
   ifsvals.aspect_ratio =
     (gdouble)ifsD->drawable_height / ifsD->drawable_width;
@@ -2739,7 +2739,7 @@ ifs_compose_new_callback (GtkWidget *widget,
 
   undo_begin ();
 
-  gimp_palette_get_foreground (&color);
+  gimp_context_get_foreground (&color);
 
   elem = aff_element_new (0.5, 0.5 * height / width, &color,
                           ++count_for_naming);
@@ -2868,7 +2868,7 @@ ifs_compose_preview (void)
   if (!ifsD->preview_data)
     ifsD->preview_data = g_new (guchar, 3 * width * height);
 
-  gimp_palette_get_background (&color);
+  gimp_context_get_background (&color);
   gimp_rgb_get_uchar (&color, &rc, &gc, &bc);
 
   ptr = ifsD->preview_data;

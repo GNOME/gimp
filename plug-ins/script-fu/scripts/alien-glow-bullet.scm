@@ -58,7 +58,7 @@
     (gimp-image-add-layer img bullet-layer -1)
 
     ; (gimp-layer-set-preserve-trans ruler-layer TRUE)
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear bullet-layer)
@@ -67,8 +67,8 @@
 		    CHANNEL-OP-REPLACE TRUE FALSE 0)
     
     ; (gimp-rect-select img (/ height 2) (/ height 2) length height CHANNEL-OP-REPLACE FALSE 0)
-    (gimp-palette-set-foreground '(90 90 90))
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-foreground '(90 90 90))
+    (gimp-context-set-background '(0 0 0))
 
     (gimp-edit-blend bullet-layer FG-BG-RGB-MODE NORMAL-MODE
 		     GRADIENT-RADIAL 100 0 REPEAT-NONE FALSE
@@ -76,7 +76,7 @@
 		     blend-start blend-start
 		     (+ half-radius radius) (+ half-radius radius))
 
-    (gimp-palette-set-foreground glow-color)
+    (gimp-context-set-foreground glow-color)
     (gimp-selection-grow img border)
     (gimp-selection-feather img  border)
     (gimp-edit-fill glow-layer FOREGROUND-FILL)

@@ -37,7 +37,7 @@
 	 (image-width (car (gimp-image-width image)))
 	 (image-height (car (gimp-image-height image)))
 	 (old-gradient (car (gimp-gradients-get-gradient)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-bg (car (gimp-context-get-background))))
     
     (gimp-image-undo-disable image)
     (gimp-layer-add-alpha drawable)
@@ -88,7 +88,7 @@
     (plug-in-gradmap 1 image active-layer)
 
     (gimp-gradients-set-gradient old-gradient)
-    (gimp-palette-set-background old-bg)
+    (gimp-context-set-background old-bg)
 
     (if (= keep-selection FALSE)
 	(gimp-selection-none image))

@@ -74,8 +74,8 @@
 	 (hole-height (/ width 12))
 	 (hole-radius (/ hole-width 4))
 	 (hole-start (- (/ (rand 1000) 1000) 0.5))
-	 (old-bg (car (gimp-palette-get-background)))
-	 (old-fg (car (gimp-palette-get-foreground)))
+	 (old-bg (car (gimp-context-get-background)))
+	 (old-fg (car (gimp-context-get-foreground)))
 	 (film-layer (car (gimp-layer-new image
 					  width
 					  height
@@ -121,12 +121,12 @@
   (gimp-image-add-layer image bg-layer -1)
 
 ; add the film layer
-  (gimp-palette-set-background '(0 0 0))
+  (gimp-context-set-background '(0 0 0))
   (gimp-drawable-fill film-layer BACKGROUND-FILL)
   (gimp-image-add-layer image film-layer -1)
 
 ; add the text
-  (gimp-palette-set-foreground font-color)
+  (gimp-context-set-foreground font-color)
   (gimp-floating-sel-anchor (car (gimp-text-fontname image
 					    film-layer
 					    (+ hole-start (* -0.25 width))
@@ -197,7 +197,7 @@
 			     0)
 	   (set! hole (+ hole 1)))
 
-    (gimp-palette-set-foreground '(0 0 0))
+    (gimp-context-set-foreground '(0 0 0))
     (gimp-edit-fill film-mask BACKGROUND-FILL)
     (gimp-selection-none image)
     (plug-in-gauss-rle 1 image film-mask hole-radius TRUE TRUE)
@@ -220,8 +220,8 @@
 
 ; clean up after the script
   (gimp-selection-none image)
-  (gimp-palette-set-background old-bg)
-  (gimp-palette-set-foreground old-fg)
+  (gimp-context-set-background old-bg)
+  (gimp-context-set-foreground old-fg)
   (gimp-image-undo-enable image)
   (if (= work-on-copy TRUE) (gimp-display-new image))
   (gimp-displays-flush)))

@@ -33,7 +33,7 @@
 
     ; Create pattern layer
 
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill background BACKGROUND-FILL)
     (gimp-patterns-set-pattern pattern)
     (gimp-edit-bucket-fill background PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
@@ -42,11 +42,11 @@
 
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
-    (gimp-palette-set-background '(127 127 127))
+    (gimp-context-set-background '(127 127 127))
     (gimp-ellipse-select img 1 1 (- diameter 2) (- diameter 2) CHANNEL-OP-REPLACE TRUE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-ellipse-select img 2 2 (- diameter 4) (- diameter 4) CHANNEL-OP-REPLACE TRUE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
@@ -58,7 +58,7 @@
 
     ; Background
 
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-ellipse-select img 0 0 diameter diameter CHANNEL-OP-REPLACE TRUE FALSE 0)
     (gimp-selection-invert img)
     (gimp-edit-clear background)

@@ -1,3 +1,64 @@
+2004-09-22  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/groups.pl
+	* tools/pdbgen/pdb/palette.pdb: removed the "Palette" pdb group...
+
+	* tools/pdbgen/pdb/context.pdb: and added its functions to the
+	"Context" namespace instead.
+
+	* app/pdb/Makefile.am
+	* app/pdb/palette_cmds.c: removed.
+
+	* app/pdb/procedural_db.c: added them to the pdb_compat hash table.
+
+	* libgimp/Makefile.am
+	* libgimp/gimppalette_pdb.[ch]: removed.
+
+	* libgimp/gimppalette.[ch]: new files holding compat functions
+	which call gimp_context_*() functions.
+
+	* libgimp/gimp.h
+	* libgimp/gimpui.c: changed accordingly.
+
+	* app/pdb/context_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpcontext_pdb.[ch]: regenerated.
+
+	* plug-ins/MapObject/mapobject_image.c
+	* plug-ins/MapObject/mapobject_preview.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/borderaverage.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/exchange.c
+	* plug-ins/common/film.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/mng.c
+	* plug-ins/common/mosaic.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/png.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/semiflatten.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/gfig/gfig-style.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/maze/handy.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/script-fu/scripts/*.scm: changed accordingly.
+
 2004-09-22  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/view-actions.c (view_zoom_actions): mark menu label

@@ -374,7 +374,7 @@ image_setup (GimpDrawable *drawable,
     }
   else
     {
-      gimp_palette_get_background (&background);
+      gimp_context_get_background (&background);
       gimp_rgb_set_alpha (&background, 1.0);
     }
 

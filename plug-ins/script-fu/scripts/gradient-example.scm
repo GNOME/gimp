@@ -28,8 +28,8 @@
 
 	 ; Save old foreground and background colors
 
-	 (old-fg-color (car (gimp-palette-get-foreground)))
-	 (old-bg-color (car (gimp-palette-get-background)))
+	 (old-fg-color (car (gimp-context-get-foreground)))
+	 (old-bg-color (car (gimp-context-get-background)))
 
 	 ; Calculate colors for checkerboard... just like in the gradient editor
 
@@ -41,8 +41,8 @@
 
     ; Render background checkerboard
 
-    (gimp-palette-set-foreground (list fg-color fg-color fg-color))
-    (gimp-palette-set-background (list bg-color bg-color bg-color))
+    (gimp-context-set-foreground (list fg-color fg-color fg-color))
+    (gimp-context-set-background (list bg-color bg-color bg-color))
     (plug-in-checkerboard 1 img drawable 0 8)
 
     ; Render gradient
@@ -54,8 +54,8 @@
 
     ; Terminate
 
-    (gimp-palette-set-foreground old-fg-color)
-    (gimp-palette-set-background old-bg-color)
+    (gimp-context-set-foreground old-fg-color)
+    (gimp-context-set-background old-bg-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 

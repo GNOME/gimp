@@ -30,14 +30,14 @@
 	 (saved-select 0)
 	 (cell-size (/ font-size 8))
 	 (grey (/ (* density 255) 100))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-fg (car (gimp-context-get-foreground)))
+	 (old-bg (car (gimp-context-get-background))))
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img text-layer -1)
 
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-clear bg-layer)
     (gimp-edit-clear text-layer)
 
@@ -54,14 +54,14 @@
     ; grow the layer
     (gimp-layer-set-edit-mask text-layer FALSE)
     (gimp-selection-grow img 10)
-    (gimp-palette-set-foreground text-color)
+    (gimp-context-set-foreground text-color)
     (gimp-edit-fill text-layer FOREGROUND-FILL)
 
     ; feather the mask
     (gimp-layer-set-edit-mask text-layer TRUE)
     (gimp-selection-load saved-sel)
     (gimp-selection-feather img 10)
-    (gimp-palette-set-background (list grey grey grey))
+    (gimp-context-set-background (list grey grey grey))
     (gimp-edit-fill text-mask BACKGROUND-FILL)
     (gimp-edit-fill text-mask BACKGROUND-FILL)
     (gimp-edit-fill text-mask BACKGROUND-FILL)
@@ -71,8 +71,8 @@
 
     (gimp-layer-remove-mask text-layer MASK-APPLY)
 
-    (gimp-palette-set-foreground old-fg)
-    (gimp-palette-set-background old-bg)
+    (gimp-context-set-foreground old-fg)
+    (gimp-context-set-background old-bg)
 
     (gimp-image-undo-enable img)
     (gimp-display-new img)))

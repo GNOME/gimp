@@ -54,7 +54,6 @@ void register_layer_procs           (Gimp *gimp);
 void register_message_procs         (Gimp *gimp);
 void register_misc_procs            (Gimp *gimp);
 void register_paint_tools_procs     (Gimp *gimp);
-void register_palette_procs         (Gimp *gimp);
 void register_palette_select_procs  (Gimp *gimp);
 void register_palettes_procs        (Gimp *gimp);
 void register_parasite_procs        (Gimp *gimp);
@@ -95,65 +94,62 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Context"), 0.094);
   register_context_procs (gimp);
 
-  (* status_callback) (NULL, _("Convert"), 0.099);
+  (* status_callback) (NULL, _("Convert"), 0.115);
   register_convert_procs (gimp);
 
-  (* status_callback) (NULL, _("Display procedures"), 0.107);
+  (* status_callback) (NULL, _("Display procedures"), 0.123);
   register_display_procs (gimp);
 
-  (* status_callback) (NULL, _("Drawable procedures"), 0.117);
+  (* status_callback) (NULL, _("Drawable procedures"), 0.133);
   register_drawable_procs (gimp);
 
-  (* status_callback) (NULL, _("Edit procedures"), 0.201);
+  (* status_callback) (NULL, _("Edit procedures"), 0.217);
   register_edit_procs (gimp);
 
-  (* status_callback) (NULL, _("File Operations"), 0.222);
+  (* status_callback) (NULL, _("File Operations"), 0.238);
   register_fileops_procs (gimp);
 
-  (* status_callback) (NULL, _("Floating selections"), 0.245);
+  (* status_callback) (NULL, _("Floating selections"), 0.261);
   register_floating_sel_procs (gimp);
 
-  (* status_callback) (NULL, _("Font UI"), 0.261);
+  (* status_callback) (NULL, _("Font UI"), 0.277);
   register_font_select_procs (gimp);
 
-  (* status_callback) (NULL, _("Fonts"), 0.269);
+  (* status_callback) (NULL, _("Fonts"), 0.285);
   register_fonts_procs (gimp);
 
-  (* status_callback) (NULL, _("Gimprc procedures"), 0.274);
+  (* status_callback) (NULL, _("Gimprc procedures"), 0.29);
   register_gimprc_procs (gimp);
 
-  (* status_callback) (NULL, _("Gradient"), 0.29);
+  (* status_callback) (NULL, _("Gradient"), 0.305);
   register_gradient_edit_procs (gimp);
 
-  (* status_callback) (NULL, _("Gradient UI"), 0.35);
+  (* status_callback) (NULL, _("Gradient UI"), 0.366);
   register_gradient_select_procs (gimp);
 
-  (* status_callback) (NULL, _("Gradients"), 0.358);
+  (* status_callback) (NULL, _("Gradients"), 0.373);
   register_gradients_procs (gimp);
 
-  (* status_callback) (NULL, _("Guide procedures"), 0.386);
+  (* status_callback) (NULL, _("Guide procedures"), 0.402);
   register_guides_procs (gimp);
 
-  (* status_callback) (NULL, _("Help procedures"), 0.402);
+  (* status_callback) (NULL, _("Help procedures"), 0.418);
   register_help_procs (gimp);
 
-  (* status_callback) (NULL, _("Image"), 0.405);
+  (* status_callback) (NULL, _("Image"), 0.42);
   register_image_procs (gimp);
 
-  (* status_callback) (NULL, _("Layer"), 0.567);
+  (* status_callback) (NULL, _("Layer"), 0.582);
   register_layer_procs (gimp);
 
-  (* status_callback) (NULL, _("Message procedures"), 0.634);
+  (* status_callback) (NULL, _("Message procedures"), 0.65);
   register_message_procs (gimp);
 
-  (* status_callback) (NULL, _("Miscellaneous"), 0.642);
+  (* status_callback) (NULL, _("Miscellaneous"), 0.658);
   register_misc_procs (gimp);
 
-  (* status_callback) (NULL, _("Paint Tool procedures"), 0.648);
+  (* status_callback) (NULL, _("Paint Tool procedures"), 0.663);
   register_paint_tools_procs (gimp);
-
-  (* status_callback) (NULL, _("Palette"), 0.687);
-  register_palette_procs (gimp);
 
   (* status_callback) (NULL, _("Palette UI"), 0.702);
   register_palette_select_procs (gimp);

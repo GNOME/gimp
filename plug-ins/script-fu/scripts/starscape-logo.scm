@@ -61,8 +61,8 @@
 	 (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Drop Shadow" 100 NORMAL-MODE)))
 	 (bump-channel (car (gimp-channel-new img width height "Bump Map" 50 '(0 0 0))))
 	 (old-pattern (car (gimp-patterns-get-pattern)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-fg (car (gimp-context-get-foreground)))
+	 (old-bg (car (gimp-context-get-background))))
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -72,7 +72,7 @@
     (gimp-image-add-channel img bump-channel 0)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
 
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear shadow-layer)
     (gimp-edit-clear glow-layer)
@@ -80,19 +80,19 @@
     (gimp-selection-layer-alpha logo-layer)
     (gimp-selection-grow img grow)
     (gimp-selection-feather img feather)
-    (gimp-palette-set-background glow-color)
+    (gimp-context-set-background glow-color)
     (gimp-selection-feather img feather)
     (gimp-edit-fill glow-layer BACKGROUND-FILL)
 
     (gimp-selection-layer-alpha logo-layer)
     (gimp-selection-feather img shadow-feather)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-selection-translate img offx offy)
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
 
     (gimp-selection-none img)
-    (gimp-palette-set-background '(31 31 31))
-    (gimp-palette-set-foreground '(255 255 255))
+    (gimp-context-set-background '(31 31 31))
+    (gimp-context-set-foreground '(255 255 255))
 
     (gimp-edit-blend logo-layer FG-BG-RGB-MODE NORMAL-MODE
 		     GRADIENT-BILINEAR 100 0 REPEAT-NONE FALSE
@@ -110,8 +110,8 @@
     (gimp-selection-none img)
 
     (gimp-patterns-set-pattern old-pattern)
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)))
+    (gimp-context-set-background old-bg)
+    (gimp-context-set-foreground old-fg)))
 
 (define (script-fu-starscape-logo-alpha img
 					logo-layer

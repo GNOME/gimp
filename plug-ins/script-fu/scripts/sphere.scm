@@ -25,15 +25,15 @@
 	 (light-end-x (+ cx (* radius (cos (+ *pi* radians)))))
 	 (light-end-y (- cy (* radius (sin (+ *pi* radians)))))
 	 (offset (* radius 0.1))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-fg (car (gimp-context-get-foreground)))
+	 (old-bg (car (gimp-context-get-background))))
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
-    (gimp-palette-set-foreground sphere-color)
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-foreground sphere-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill drawable BACKGROUND-FILL)
-    (gimp-palette-set-background '(20 20 20))
+    (gimp-context-set-background '(20 20 20))
     (if (and
 	 (or (and (>= light 45) (<= light 75))
 	     (and (<= light 135) (>= light 105)))
@@ -59,8 +59,8 @@
 		     light-x light-y light-end-x light-end-y)
 
     (gimp-selection-none img)
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)
+    (gimp-context-set-background old-bg)
+    (gimp-context-set-foreground old-fg)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 

@@ -357,7 +357,7 @@ polarize (void)
 
   pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
-  gimp_palette_get_background (&background);
+  gimp_context_get_background (&background);
   gimp_pixel_fetcher_set_bg_color (pft, &background);
 
   gimp_progress_init (_("Polarizing..."));
@@ -726,7 +726,7 @@ dialog_update_preview (void)
   guchar  *buffer;
   guchar   k;
 
-  gimp_palette_get_background (&background);
+  gimp_context_get_background (&background);
   gimp_rgb_set_alpha (&background, 0.0);
   gimp_drawable_get_color_uchar (drawable->drawable_id, &background, outside);
 

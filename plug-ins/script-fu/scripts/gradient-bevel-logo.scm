@@ -31,20 +31,20 @@
 	 (indentY (+ b-size (/ height 8)))
 	 (bg-layer (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
 	 (blur-layer (car (gimp-layer-new img width height RGBA-IMAGE "Blur" 100 NORMAL-MODE)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-fg (car (gimp-context-get-foreground)))
+	 (old-bg (car (gimp-context-get-background))))
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img blur-layer 1)
 
     (gimp-selection-all img)
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-selection-none img)
 
     (gimp-layer-set-preserve-trans blur-layer TRUE)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-selection-all img)
     (gimp-edit-fill blur-layer BACKGROUND-FILL)
     (gimp-edit-clear blur-layer)
@@ -54,8 +54,8 @@
     (gimp-edit-fill blur-layer BACKGROUND-FILL)
     (plug-in-gauss-rle 1 img blur-layer bevel-width 1 1)
     (gimp-selection-none img)
-    (gimp-palette-set-background '(127 127 127))
-    (gimp-palette-set-foreground '(255 255 255))
+    (gimp-context-set-background '(127 127 127))
+    (gimp-context-set-foreground '(255 255 255))
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-selection-all img)
 
@@ -71,8 +71,8 @@
     (gimp-invert blur-layer)
     (gimp-layer-set-opacity blur-layer 50.0)
     (gimp-image-set-active-layer img logo-layer)
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)))
+    (gimp-context-set-background old-bg)
+    (gimp-context-set-foreground old-fg)))
 
 (define (script-fu-gradient-bevel-logo-alpha img
 					     logo-layer

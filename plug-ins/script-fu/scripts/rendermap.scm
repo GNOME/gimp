@@ -22,8 +22,8 @@
 			      inWiden)
 
   (set! old-gradient (car (gimp-gradients-get-gradient)))
-  (set! old-fg (car (gimp-palette-get-foreground)))
-  (set! old-bg (car (gimp-palette-get-background)))
+  (set! old-fg (car (gimp-context-get-foreground)))
+  (set! old-bg (car (gimp-context-get-background)))
 
   (set! theWidth inSize)
   (set! theHeight inSize)
@@ -50,8 +50,8 @@
 	  (plug-in-solid-noise TRUE theImage thinLayer 1 0 (rand 65536)
 			       theBigGrain theBigGrain theBigGrain))
 
-	(gimp-palette-set-background '(255 255 255))
-	(gimp-palette-set-foreground '(0 0 0))
+	(gimp-context-set-background '(255 255 255))
+	(gimp-context-set-foreground '(0 0 0))
 
 	(let ((theMask (car (gimp-layer-create-mask thinLayer 0))))
 	  (gimp-layer-add-mask thinLayer theMask)
@@ -67,8 +67,8 @@
   (gimp-gradients-set-gradient inGrad)
   (plug-in-gradmap TRUE theImage theLayer)
   (gimp-gradients-set-gradient old-gradient)
-  (gimp-palette-set-background old-bg)
-  (gimp-palette-set-foreground old-fg)
+  (gimp-context-set-background old-bg)
+  (gimp-context-set-foreground old-fg)
   (gimp-display-new theImage))
 
 (script-fu-register "script-fu-render-map"

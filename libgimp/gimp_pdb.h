@@ -48,7 +48,6 @@
 #include <libgimp/gimpmessage_pdb.h>
 #include <libgimp/gimpmisc_pdb.h>
 #include <libgimp/gimppainttools_pdb.h>
-#include <libgimp/gimppalette_pdb.h>
 #include <libgimp/gimppalettes_pdb.h>
 #include <libgimp/gimppaletteselect_pdb.h>
 #include <libgimp/gimpparasite_pdb.h>

@@ -408,8 +408,8 @@ run (const gchar      *name,
               break;
             }
 
-          gimp_palette_get_foreground (plvals.colors);
-          gimp_palette_get_background (plvals.colors + 1);
+          gimp_context_get_foreground (plvals.colors);
+          gimp_context_get_background (plvals.colors + 1);
 
           gimp_rgb_set (plvals.colors + 2, 0.0, 0.0, 0.0);
           gimp_rgb_set (plvals.colors + 3, 1.0, 1.0, 1.0);
@@ -442,8 +442,8 @@ run (const gchar      *name,
             {
               gimp_get_data (name, &plvals);
 
-              gimp_palette_get_foreground (plvals.colors);
-              gimp_palette_get_background (plvals.colors + 1);
+              gimp_context_get_foreground (plvals.colors);
+              gimp_context_get_background (plvals.colors + 1);
 
               if (!dialog (param[2].data.d_drawable))
                 break;

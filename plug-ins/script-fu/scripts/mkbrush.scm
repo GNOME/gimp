@@ -30,8 +30,8 @@
 
      ; Save old foregound and background colors
 
-     (old-fg-color (car (gimp-palette-get-foreground)))
-     (old-bg-color (car (gimp-palette-get-background)))
+     (old-fg-color (car (gimp-context-get-foreground)))
+     (old-bg-color (car (gimp-context-get-background)))
 
      ; construct variables 
 
@@ -54,9 +54,9 @@
     (gimp-image-add-layer img drawable 0)
 
 ; Actual code starts...
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-drawable-fill drawable BACKGROUND-FILL)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-rect-select img 0 0 width height CHANNEL-OP-REPLACE FALSE 0)
     
     (gimp-edit-fill    drawable BACKGROUND-FILL)
@@ -68,8 +68,8 @@
 ; Terminate, restoring old bg.
 
     (gimp-selection-none img)
-    (gimp-palette-set-foreground old-fg-color)
-    (gimp-palette-set-background old-bg-color)
+    (gimp-context-set-foreground old-fg-color)
+    (gimp-context-set-background old-bg-color)
     (gimp-image-undo-enable img)
     (gimp-image-delete img)
     )
@@ -102,8 +102,8 @@
 
      ; Save old foregound and background colors
 
-     (old-fg-color (car (gimp-palette-get-foreground)))
-     (old-bg-color (car (gimp-palette-get-background)))
+     (old-fg-color (car (gimp-context-get-foreground)))
+     (old-bg-color (car (gimp-context-get-background)))
      
     (filename (string-append gimp-directory
                "/brushes/r"
@@ -128,9 +128,9 @@
     (gimp-image-add-layer img drawable 0)
 
 ; Actual code starts...
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-drawable-fill drawable BACKGROUND-FILL)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (cond ((< 0 feathering)
            (gimp-rect-select img (/ feathering 2) (/ feathering 2) width height CHANNEL-OP-REPLACE TRUE feathering))
           ((>= 0 feathering)
@@ -145,8 +145,8 @@
 ; Terminate, restoring old bg.
 
     (gimp-selection-none img)
-    (gimp-palette-set-foreground old-fg-color)
-    (gimp-palette-set-background old-bg-color)
+    (gimp-context-set-foreground old-fg-color)
+    (gimp-context-set-background old-bg-color)
     (gimp-image-undo-enable img)
     (gimp-image-delete img)
     )
@@ -177,8 +177,8 @@
 
      ; Save old foregound and background colors
 
-     (old-fg-color (car (gimp-palette-get-foreground)))
-     (old-bg-color (car (gimp-palette-get-background)))
+     (old-fg-color (car (gimp-context-get-foreground)))
+     (old-bg-color (car (gimp-context-get-background)))
 
      ; Construct variables...
 
@@ -201,9 +201,9 @@
     (gimp-image-add-layer img drawable 0)
 
 ; Actual code starts...
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-drawable-fill drawable BACKGROUND-FILL)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-ellipse-select img 0 0 width height CHANNEL-OP-REPLACE TRUE FALSE 0)
     
     (gimp-edit-fill    drawable BACKGROUND-FILL)
@@ -215,8 +215,8 @@
 ; Terminate, restoring old bg.
 
     (gimp-selection-none img)
-    (gimp-palette-set-foreground old-fg-color)
-    (gimp-palette-set-background old-bg-color)
+    (gimp-context-set-foreground old-fg-color)
+    (gimp-context-set-background old-bg-color)
     (gimp-image-undo-enable img)
     (gimp-image-delete img)
     )
@@ -249,8 +249,8 @@
 
      ; Save old foregound and background colors
 
-     (old-fg-color (car (gimp-palette-get-foreground)))
-     (old-bg-color (car (gimp-palette-get-background)))
+     (old-fg-color (car (gimp-context-get-foreground)))
+     (old-bg-color (car (gimp-context-get-background)))
 
      ; Construct variables...
      (filename (string-append gimp-directory
@@ -277,9 +277,9 @@
     (gimp-image-add-layer img drawable 0)
 
 ; Actual code starts...
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-drawable-fill drawable BACKGROUND-FILL)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (cond ((> feathering 0)   ; keep from taking out gimp with stupid entry. 
         (gimp-ellipse-select img (/ feathering 2) (/ feathering 2) width height CHANNEL-OP-REPLACE TRUE TRUE feathering))
           ((<= feathering 0)
@@ -294,8 +294,8 @@
 ; Terminate, restoring old bg.
 
     (gimp-selection-none img)
-    (gimp-palette-set-foreground old-fg-color)
-    (gimp-palette-set-background old-bg-color)
+    (gimp-context-set-foreground old-fg-color)
+    (gimp-context-set-background old-bg-color)
     (gimp-image-undo-enable img)
     (gimp-image-delete img)
     )

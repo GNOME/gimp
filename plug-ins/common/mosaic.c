@@ -465,10 +465,10 @@ mosaic (GimpDrawable *drawable)
       break;
 
     case FG_BG:
-      gimp_palette_get_foreground (&color);
+      gimp_context_get_foreground (&color);
       gimp_drawable_get_color_uchar (drawable->drawable_id, &color, fore);
 
-      gimp_palette_get_background (&color);
+      gimp_context_get_background (&color);
       gimp_drawable_get_color_uchar (drawable->drawable_id, &color, back);
       break;
     }

@@ -78,6 +78,7 @@ PDB_WRAPPERS_C = \
 	gimpbrushselect_pdb.c		\
 	gimpchannel_pdb.c		\
 	gimpcolor_pdb.c			\
+	gimpcontext_pdb.c		\
 	gimpconvert_pdb.c		\
 	gimpdisplay_pdb.c		\
 	gimpdrawable_pdb.c		\
@@ -97,7 +98,6 @@ PDB_WRAPPERS_C = \
 	gimpmessage_pdb.c		\
 	gimpmisc_pdb.c			\
 	gimppainttools_pdb.c		\
-	gimppalette_pdb.c		\
 	gimppalettes_pdb.c		\
 	gimppaletteselect_pdb.c		\
 	gimpparasite_pdb.c		\
@@ -120,6 +120,7 @@ PDB_WRAPPERS_H = \
 	gimpbrushselect_pdb.h		\
 	gimpchannel_pdb.h		\
 	gimpcolor_pdb.h			\
+	gimpcontext_pdb.h		\
 	gimpconvert_pdb.h		\
 	gimpdisplay_pdb.h		\
 	gimpdrawable_pdb.h		\
@@ -139,7 +140,6 @@ PDB_WRAPPERS_H = \
 	gimpmessage_pdb.h		\
 	gimpmisc_pdb.h			\
 	gimppainttools_pdb.h		\
-	gimppalette_pdb.h		\
 	gimppalettes_pdb.h		\
 	gimppaletteselect_pdb.h		\
 	gimpparasite_pdb.h		\
@@ -177,6 +177,8 @@ libgimp_2_0_la_SOURCES = \
 	gimpimage.h		\
 	gimplayer.c		\
 	gimplayer.h		\
+	gimppalette.c		\
+	gimppalette.h		\
 	gimppaletteselect.c	\
 	gimppaletteselect.h	\
 	gimppatternselect.c	\
@@ -244,6 +246,7 @@ gimpinclude_HEADERS = \
 	gimpgradientselect.h	\
 	gimpimage.h		\
 	gimplayer.h		\
+	gimppalette.h		\
 	gimppaletteselect.h	\
 	gimppatternselect.h	\
 	gimppixelfetcher.h	\

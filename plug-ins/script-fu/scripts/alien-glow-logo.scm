@@ -24,18 +24,18 @@
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img glow-layer 1)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear glow-layer)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-selection-grow img grow)
     (gimp-selection-feather img feather)
-    (gimp-palette-set-foreground glow-color)
+    (gimp-context-set-foreground glow-color)
     (gimp-edit-fill glow-layer FOREGROUND-FILL)
     (gimp-selection-none img)
 
-    (gimp-palette-set-background '(0 0 0))
-    (gimp-palette-set-foreground '(79 79 79))
+    (gimp-context-set-background '(0 0 0))
+    (gimp-context-set-foreground '(79 79 79))
 
     (gimp-edit-blend logo-layer FG-BG-RGB-MODE NORMAL-MODE
 		     GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE

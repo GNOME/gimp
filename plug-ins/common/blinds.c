@@ -484,7 +484,7 @@ dialog_update_preview (void)
 
   p = preview_cache;
 
-  gimp_palette_get_background (&background);
+  gimp_context_get_background (&background);
 
   if (bvals.bg_trans)
     gimp_rgb_set_alpha (&background, 0.0);
@@ -590,7 +590,7 @@ apply_blinds (void)
   gint          sel_x1, sel_y1, sel_x2, sel_y2;
   gint          sel_width, sel_height;
 
-  gimp_palette_get_background (&background);
+  gimp_context_get_background (&background);
 
   if (bvals.bg_trans)
     gimp_rgb_set_alpha (&background, 0.0);

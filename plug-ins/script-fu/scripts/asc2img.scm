@@ -43,7 +43,7 @@
 
   (gimp-context-push)
 
-  (gimp-palette-set-background inBackColor)
+  (gimp-context-set-background inBackColor)
   (gimp-drawable-set-name theLayer "Background")
   (gimp-image-add-layer theImage theLayer 0)
 
@@ -97,7 +97,7 @@
   
   (gimp-context-push)
 
-  (gimp-palette-set-foreground inTextColor)
+  (gimp-context-set-foreground inTextColor)
   (gimp-selection-none theImage)
   (set! theData ())
   (set! theIndentList ())

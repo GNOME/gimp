@@ -79,8 +79,8 @@
 			   (car (gimp-layer-new img width height RGBA-IMAGE "Shadow" 100 NORMAL-MODE))
 			   0))
 	 (selection 0)
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-fg (car (gimp-context-get-foreground)))
+	 (old-bg (car (gimp-context-get-background))))
     (script-fu-util-image-resize-from-layer img tube-layer)
     (gimp-image-add-layer img bg-layer 1)
     (if (not (= shadow 0))
@@ -89,7 +89,7 @@
 	  (gimp-edit-clear shadow-layer)))
     (gimp-image-add-layer img glow-layer 1)
 
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-selection-layer-alpha tube-layer)
     (set! selection (car (gimp-selection-save img)))
     (gimp-selection-none img)
@@ -97,14 +97,14 @@
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear tube-layer)
 
-    (gimp-palette-set-background bg-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     (gimp-selection-load selection)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill tube-layer BACKGROUND-FILL)
     (gimp-selection-shrink img shrink)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill selection BACKGROUND-FILL)
     (gimp-edit-clear tube-layer)
 
@@ -130,7 +130,7 @@
     (gimp-layer-set-preserve-trans tube-layer 1)
     (gimp-selection-layer-alpha tube-layer)
     (gimp-selection-invert img)
-    (gimp-palette-set-background glow-color)
+    (gimp-context-set-background glow-color)
     (gimp-edit-fill tube-layer BACKGROUND-FILL)
 
     (gimp-selection-none img)
@@ -153,13 +153,13 @@
 	  (gimp-selection-shrink img shadow-shrink)
 	  (gimp-selection-feather img shadow-feather)
 	  (gimp-selection-translate img shadow-offx shadow-offy)
-	  (gimp-palette-set-background '(0 0 0))
+	  (gimp-context-set-background '(0 0 0))
 	  (gimp-edit-fill shadow-layer BACKGROUND-FILL)))
     (gimp-selection-none img)
 
     (gimp-drawable-set-name tube-layer "Neon Tubes")
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)
+    (gimp-context-set-background old-bg)
+    (gimp-context-set-foreground old-fg)
     (gimp-image-remove-channel img selection)))
 
 (define (script-fu-neon-logo-alpha img

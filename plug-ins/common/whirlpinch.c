@@ -362,7 +362,7 @@ whirl_pinch (void)
   pft = gimp_pixel_fetcher_new (drawable, FALSE);
   pfb = gimp_pixel_fetcher_new (drawable, FALSE);
 
-  gimp_palette_get_background (&background);
+  gimp_context_get_background (&background);
   gimp_pixel_fetcher_set_bg_color (pft, &background);
   gimp_pixel_fetcher_set_bg_color (pfb, &background);
 
@@ -732,7 +732,7 @@ dialog_update_preview (void)
   guchar   outside[4];
   GimpRGB  background;
 
-  gimp_palette_get_background (&background);
+  gimp_context_get_background (&background);
 
   switch (img_bpp)
     {

@@ -65,15 +65,15 @@
 	 (drawable   (car (gimp-layer-new img width height (if (= colors 0)
 							       GRAY-IMAGE RGB-IMAGE)
 					  "Background" 100 NORMAL-MODE)))
-	 (old-bg (car (gimp-palette-get-background)))
-	 (old-fg (car (gimp-palette-get-foreground)))) 
+	 (old-bg (car (gimp-context-get-background)))
+	 (old-fg (car (gimp-context-get-foreground)))) 
 
     (gimp-image-undo-disable img)
 
     (if (= colors 0)
 	(begin
-	  (gimp-palette-set-background '(255 255 255))
-	  (gimp-palette-set-foreground '(0 0 0))))
+	  (gimp-context-set-background '(255 255 255))
+	  (gimp-context-set-foreground '(0 0 0))))
 
     (gimp-edit-clear drawable)
     (gimp-image-add-layer img drawable 0)
@@ -123,8 +123,8 @@
 
     (if (= colors 0)
 	(begin
-	  (gimp-palette-set-background old-bg)
-	  (gimp-palette-set-foreground old-fg)))
+	  (gimp-context-set-background old-bg)
+	  (gimp-context-set-foreground old-fg)))
 
     (gimp-image-undo-enable img)
     (gimp-display-new img)))

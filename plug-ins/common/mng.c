@@ -657,7 +657,7 @@ mng_save_image (const gchar *filename,
                 GimpRGB bgcolor;
                 guchar red, green, blue;
 
-                gimp_palette_get_background(&bgcolor);
+                gimp_context_get_background(&bgcolor);
                 gimp_rgb_get_uchar(&bgcolor, &red, &green, &blue);
 
                 if ((ret = mng_putchunk_back(handle, red, green, blue, MNG_BACKGROUNDCOLOR_MANDATORY, 0, MNG_BACKGROUNDIMAGE_NOTILE)) != MNG_NOERROR)

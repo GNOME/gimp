@@ -27,7 +27,7 @@
   (let* (
 	 (draw-type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-type (car (gimp-image-base-type image)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-bg (car (gimp-context-get-background))))
 
     (set! selection-bounds (gimp-selection-bounds image))
     (set! select-offset-x (cadr selection-bounds))
@@ -57,7 +57,7 @@
       (gimp-floating-sel-anchor floating-sel)
       )
 
-    (gimp-palette-set-background old-bg)
+    (gimp-context-set-background old-bg)
     (gimp-image-undo-enable image)
     (gimp-image-set-active-layer image drawable)
     (gimp-display-new new-image)

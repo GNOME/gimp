@@ -126,7 +126,7 @@
 		  #f))))))
 
   (define (draw-segment img drawable segment limit rgb)
-    (gimp-palette-set-foreground rgb)
+    (gimp-context-set-foreground rgb)
     (gimp-airbrush drawable 100 (* 2 limit) (segment-strokes segment)))
 
   (define red-color '(255 10 10))
@@ -143,13 +143,13 @@
   (define (fill-dot img drawable x y segment color)
     (if (fill-segment! segment x y)
 	(begin
-	  (gimp-palette-set-foreground color)
+	  (gimp-context-set-foreground color)
 	  (draw-segment img drawable segment (segment-max-size segment) color)
 	  #t)
 	#f))
 
   (define (fill-color-band img drawable x scale x-base y-base color)
-    (gimp-palette-set-foreground color)
+    (gimp-context-set-foreground color)
     (gimp-rect-select img (+ x-base (* scale x)) 0 scale y-base CHANNEL-OP-REPLACE FALSE 0)
     (gimp-edit-bucket-fill drawable FG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img))
@@ -250,15 +250,15 @@
 	 (x-base border-size)
 	 (y-base (+ gimg-height border-size))
 	 (index 0)
-	 (old-foreground (car (gimp-palette-get-foreground)))
-	 (old-background (car (gimp-palette-get-background)))
+	 (old-foreground (car (gimp-context-get-foreground)))
+	 (old-background (car (gimp-context-get-background)))
 	 (old-paint-mode (car (gimp-brushes-get-paint-mode)))
 	 (old-brush (car (gimp-brushes-get-brush)))
 	 (old-opacity (car (gimp-brushes-get-opacity))))
     (gimp-image-undo-disable gimg)
     (gimp-image-add-layer gimg bglayer -1)
     (gimp-selection-all gimg)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill bglayer BACKGROUND-FILL)
     (gimp-image-add-layer gimg hsv-layer -1)
     (gimp-edit-clear hsv-layer)
@@ -293,7 +293,7 @@
      (lambda (segment color)
        (if (< 1 (segment-filled-size segment))
 	(begin
-	  (gimp-palette-set-foreground color)
+	  (gimp-context-set-foreground color)
 	  (draw-segment gimg hsv-layer segment (segment-filled-size segment)
 			color))))
      (list hue-segment saturation-segment value-segment)
@@ -302,12 +302,12 @@
      (lambda (segment color)
        (if (< 1 (segment-filled-size segment))
 	(begin
-	  (gimp-palette-set-foreground color)
+	  (gimp-context-set-foreground color)
 	  (draw-segment gimg rgb-layer segment (segment-filled-size segment)
 			color))))
      (list red-segment green-segment blue-segment)
      (list red-color green-color blue-color))
-    (gimp-palette-set-foreground '(255 255 255))
+    (gimp-context-set-foreground '(255 255 255))
     (let ((text-layer (car (gimp-text-fontname gimg -1 0 0
 				      "Red: Hue, Green: Sat, Blue: Val"
 				      1 1 12 PIXELS
@@ -319,8 +319,8 @@
     (gimp-image-set-active-layer gimg bglayer)
     (gimp-image-clean-all gimg)
     ;; return back the state
-    (gimp-palette-set-foreground old-foreground)
-    (gimp-palette-set-foreground old-background)
+    (gimp-context-set-foreground old-foreground)
+    (gimp-context-set-foreground old-background)
     (gimp-brushes-set-brush old-brush)
     (gimp-brushes-set-paint-mode old-paint-mode)
     (gimp-brushes-set-opacity old-opacity)

@@ -55,9 +55,9 @@
     (gimp-image-set-filename img "")
 
     (gimp-layer-set-preserve-trans mask-layer TRUE)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill mask-layer BACKGROUND-FILL)
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill mask BACKGROUND-FILL)
 
     (plug-in-tile 1 img layer1 width height FALSE)
@@ -75,7 +75,7 @@
     (gimp-image-add-channel img mask-fat 0)
     (gimp-selection-load mask-fat)
     (gimp-brushes-set-brush (carve-brush brush-size))
-    (gimp-palette-set-foreground '(255 255 255))
+    (gimp-context-set-foreground '(255 255 255))
     (gimp-edit-stroke mask-fat)
     (gimp-selection-none img)
 
@@ -84,7 +84,7 @@
     (plug-in-gauss-rle 1 img mask-emboss feather TRUE TRUE)
     (plug-in-emboss 1 img mask-emboss 315.0 45.0 7 TRUE)
 
-    (gimp-palette-set-background '(180 180 180))
+    (gimp-context-set-background '(180 180 180))
     (gimp-selection-load mask-fat)
     (gimp-selection-invert img)
     (gimp-edit-fill mask-emboss BACKGROUND-FILL)
@@ -120,7 +120,7 @@
     (set! csl-mask (car (gimp-layer-create-mask cast-shadow-layer ADD-BLACK-MASK)))
     (gimp-layer-add-mask cast-shadow-layer csl-mask)
     (gimp-selection-load mask)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill csl-mask BACKGROUND-FILL)
 
     (set! inset-layer (car (gimp-layer-copy layer1 TRUE)))
@@ -129,7 +129,7 @@
     (set! il-mask (car (gimp-layer-create-mask inset-layer ADD-BLACK-MASK)))
     (gimp-layer-add-mask inset-layer il-mask)
     (gimp-selection-load mask)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill il-mask BACKGROUND-FILL)
     (gimp-selection-none img)
 

@@ -107,8 +107,8 @@ gimp_ui_init (const gchar *prog_name,
   gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (screen));
 
   gimp_widgets_init (gimp_ui_help_func,
-                     gimp_palette_get_foreground,
-                     gimp_palette_get_background,
+                     gimp_context_get_foreground,
+                     gimp_context_get_background,
                      gimp_ensure_modules);
 
   if (! gimp_show_tool_tips ())

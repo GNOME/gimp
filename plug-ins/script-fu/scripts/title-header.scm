@@ -9,7 +9,7 @@
 ; For use with GIMP 1.1.
 ;
 ; The corresponding parameters have been replaced by an SF-FONT parameter.
-; The call to gimp-palette-set-background has been given a real layer
+; The call to gimp-context-set-background has been given a real layer
 ; (although it is not used) otherwise gimp 1.1 crashed.
 ; ************************************************************************
 ; 
@@ -39,8 +39,8 @@
 
 	 ; Save foreground and background colors
 
-	 (old-fg-color (car (gimp-palette-get-foreground)))
-	 (old-bg-color (car (gimp-palette-get-background)))
+	 (old-fg-color (car (gimp-context-get-foreground)))
+	 (old-bg-color (car (gimp-context-get-background)))
 
 	 ; Image 
 
@@ -102,17 +102,17 @@
 
     ; Create bumpmap layer
 
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill bumpmap-layer BACKGROUND-FILL)
     (gimp-selection-layer-alpha text-layer)
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill bumpmap-layer BACKGROUND-FILL)
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img bumpmap-layer 4.0 TRUE TRUE)
 
     ; Fore layer, bumpmap
 
-    (gimp-palette-set-background '(255 255 255))
+    (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill fore-layer BACKGROUND-FILL)
     (plug-in-bump-map 1 img fore-layer bumpmap-layer 135.0 45.0 4 0 0 0 0 FALSE FALSE 0)
 
@@ -129,11 +129,11 @@
 
     ; Semicircle at the left
 
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     (gimp-ellipse-select img 0 0 text-height text-height CHANNEL-OP-REPLACE TRUE FALSE 0)
-    (gimp-palette-set-background (car (gimp-image-pick-color img text-layer
+    (gimp-context-set-background (car (gimp-image-pick-color img text-layer
 							     text-layers-offset 0
 							     TRUE FALSE 0)))
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
@@ -142,8 +142,8 @@
 
     (gimp-rect-select img (- img-width fade-width) 0 fade-width text-height
 		      CHANNEL-OP-REPLACE FALSE 0)
-    (gimp-palette-set-foreground (car (gimp-palette-get-background)))
-    (gimp-palette-set-background '(0 0 0))
+    (gimp-context-set-foreground (car (gimp-context-get-background)))
+    (gimp-context-set-background '(0 0 0))
 
     (gimp-edit-blend bg-layer FG-BG-RGB-MODE NORMAL-MODE
 		     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
@@ -155,8 +155,8 @@
     ; Done
     
 ;    (gimp-image-flatten img)
-    (gimp-palette-set-foreground old-fg-color)
-    (gimp-palette-set-background old-bg-color)
+    (gimp-context-set-foreground old-fg-color)
+    (gimp-context-set-background old-bg-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 

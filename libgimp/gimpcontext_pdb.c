@@ -85,3 +85,200 @@ gimp_context_pop (void)
 
   return success;
 }
+
+/**
+ * gimp_context_get_foreground:
+ * @foreground: The foreground color.
+ *
+ * Get the current GIMP foreground color.
+ *
+ * This procedure retrieves the current GIMP foreground color. The
+ * foreground color is used in a variety of tools such as paint tools,
+ * blending, and bucket fill.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_context_get_foreground (GimpRGB *foreground)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_get_foreground",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *foreground = return_vals[1].data.d_color;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_foreground:
+ * @foreground: The foreground color.
+ *
+ * Set the current GIMP foreground color.
+ *
+ * This procedure sets the current GIMP foreground color. After this is
+ * set, operations which use foreground such as paint tools, blending,
+ * and bucket fill will use the new value.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_context_set_foreground (const GimpRGB *foreground)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_set_foreground",
+				    &nreturn_vals,
+				    GIMP_PDB_COLOR, foreground,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_background:
+ * @foreground: The foreground color.
+ *
+ * Get the current GIMP background color.
+ *
+ * This procedure retrieves the current GIMP background color. The
+ * background color is used in a variety of tools such as blending,
+ * erasing (with non-alpha images), and image filling.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_context_get_background (GimpRGB *foreground)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_get_background",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *foreground = return_vals[1].data.d_color;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_background:
+ * @background: The background color.
+ *
+ * Set the current GIMP background color.
+ *
+ * This procedure sets the current GIMP background color. After this is
+ * set, operations which use background such as blending, filling
+ * images, clearing, and erasing (in non-alpha images) will use the new
+ * value.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_context_set_background (const GimpRGB *background)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_set_background",
+				    &nreturn_vals,
+				    GIMP_PDB_COLOR, background,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_default_colors:
+ *
+ * Set the current GIMP foreground and background colors to black and
+ * white.
+ *
+ * This procedure sets the current GIMP foreground and background
+ * colors to their initial default values, black and white.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_context_set_default_colors (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_set_default_colors",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_swap_colors:
+ *
+ * Swap the current GIMP foreground and background colors.
+ *
+ * This procedure swaps the current GIMP foreground and background
+ * colors, so that the new foreground color becomes the old background
+ * color and vice versa.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_context_swap_colors (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_swap_colors",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
