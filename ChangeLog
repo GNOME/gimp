@@ -1,3 +1,12 @@
+Sat Sep 25 23:40:25 MEST 1999  Jens Lautenbacher <jens@tellux.de>
+                               Sven Neumann <sven@gimp.org>
+
+	* app/rect_selectP.h 			       
+	* app/selection_options.h
+	* app/tool_options.c: Changed width and height in the rect/ellipse 
+	tools to be of type double. This makes fixed_size work with real-life
+	units.
+	
 Sat Sep 25 21:43:35 MEST 1999  Jens Lautenbacher <jens@tellux.de>
                                Sven Neumann <sven@gimp.org>
 

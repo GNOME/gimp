@@ -421,7 +421,7 @@ selection_options_init (SelectionOptions     *options,
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width_spinbutton), TRUE);
       gtk_widget_set_usize (width_spinbutton, 75, 0);
       gtk_signal_connect (GTK_OBJECT (options->fixed_width_w), "value_changed",
-                          (GtkSignalFunc) tool_options_int_adjustment_update,
+                          (GtkSignalFunc) tool_options_double_adjustment_update,
                           &options->fixed_width);
       gtk_table_attach (GTK_TABLE (table), width_spinbutton, 1, 2, 0, 1,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -443,7 +443,7 @@ selection_options_init (SelectionOptions     *options,
       gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(height_spinbutton), TRUE);
       gtk_widget_set_usize (height_spinbutton, 75, 0);
       gtk_signal_connect (GTK_OBJECT (options->fixed_height_w), "value_changed",
-                          (GtkSignalFunc) tool_options_int_adjustment_update,
+                          (GtkSignalFunc) tool_options_double_adjustment_update,
                           &options->fixed_height);
       gtk_table_attach (GTK_TABLE (table), height_spinbutton, 1, 2, 1, 2,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

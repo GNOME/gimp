@@ -16,8 +16,8 @@ struct _RectSelect
   int             center;     /*  is the selection being created from the center out? */
 
   int             fixed_size;
-  int             fixed_width;
-  int             fixed_height;
+  double          fixed_width;
+  double          fixed_height;
   guint           context_id; /*  for the statusbar                       */ 
 };
 

@@ -54,12 +54,12 @@ struct _SelectionOptions
   int          fixed_size_d;
   GtkWidget   *fixed_size_w;
 
-  int          fixed_width;
-  int          fixed_width_d;
+  double       fixed_width;
+  double       fixed_width_d;
   GtkObject   *fixed_width_w;
 
-  int          fixed_height;
-  int          fixed_height_d;
+  double       fixed_height;
+  double       fixed_height_d;
   GtkObject   *fixed_height_w;
 
   GUnit        fixed_unit;
