@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2004-04-22 12:13-0400\n"
-"PO-Revision-Date: 2004-04-22 20:58-0400\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-05-30 14:28-0700\n"
+"PO-Revision-Date: 2004-05-30 14:29-0700\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
+"Content-Transfer-Encoding: 8bit"
 
 #: app/app_procs.c:189
 msgid ""
@@ -283,6 +283,18 @@ msgstr "Midtones"
 msgid "Highlights"
 msgstr "Highlights"
 
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
 #: app/config/gimpscanner.c:470 app/core/gimp-modules.c:126
@@ -326,7 +338,7 @@ msgstr "Cannot expand ${%s}"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:420
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:423
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -462,15 +474,15 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:74
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
-"algorithm.  The seed fill starts at the intially selected pixel and "
+"algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
-"algorithm.  The seed fill starts at the intially selected pixel and "
+"algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
-"the original is greater than a specified threshold. This value represents "
+"the original is greater than a specified threshold.  This value represents "
 "the default threshold."
 
 #: app/config/gimprc-blurbs.h:87
@@ -555,6 +567,26 @@ msgid ""
 msgstr ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colours allocated for the GIMP."
+
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+
+#: app/config/gimprc-blurbs.h:198
+msgid ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -2230,7 +2262,6 @@ msgstr ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 
-#. maybe we should just abort?
 #: app/core/gimppalette.c:493
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -2351,8 +2382,8 @@ msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr "The unit used for coordinate display when not in dot-for-dot mode."
 
 #: app/core/gimptemplate.c:150
-msgid "The horizonal image resolution."
-msgstr "The horizonal image resolution."
+msgid "The horizontal image resolution."
+msgstr "The horizontal image resolution."
 
 #: app/core/gimptemplate.c:155
 msgid "The vertical image resolution."
@@ -2363,8 +2394,8 @@ msgstr "The vertical image resolution."
 msgid "pixel"
 msgstr "pixel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:872
-#: app/tools/gimppainttool.c:707
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
+#: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "pixels"
 
@@ -3527,8 +3558,8 @@ msgid "/blendingfunction/_Curved"
 msgstr "/blendingfunction/_Curved"
 
 #: app/gui/gradient-editor-menu.c:178
-msgid "/blendingfunction/_Sinusodial"
-msgstr "/blendingfunction/_Sinusodial"
+msgid "/blendingfunction/_Sinusoidal"
+msgstr "/blendingfunction/_Sinusoidal"
 
 #: app/gui/gradient-editor-menu.c:183
 msgid "/blendingfunction/Spherical (i_ncreasing)"
@@ -3784,6 +3815,7 @@ msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Scale Error: Both width and height must be greater than zero."
 
 #. <Image>/File
+#. <Toolbox>/File
 #: app/gui/image-menu.c:101 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_File"
@@ -3797,6 +3829,7 @@ msgid "/File/_Open..."
 msgstr "/File/_Open..."
 
 #. <Image>/File/Open Recent
+#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:116 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/File/Open _Recent"
@@ -5625,8 +5658,8 @@ msgid "Fit to Window"
 msgstr "Fit to Window"
 
 #: app/gui/preferences-dialog.c:1512
-msgid "Inital Zoom Ratio:"
-msgstr "Inital Zoom Ratio:"
+msgid "Initial Zoom Ratio:"
+msgstr "Initial Zoom Ratio:"
 
 #. Pointer Movement Feedback
 #: app/gui/preferences-dialog.c:1516
@@ -6078,6 +6111,7 @@ msgid "Original Width:"
 msgstr "Original Width:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "New Width:"
@@ -6902,6 +6936,7 @@ msgid "New Path Options"
 msgstr "New Path Options"
 
 #. The name entry hbox, label and entry
+#. The name entry
 #: app/gui/vectors-commands.c:495 app/gui/vectors-commands.c:613
 msgid "Path name:"
 msgstr "Path name:"
@@ -7214,7 +7249,7 @@ msgstr "Text procedures"
 msgid "Transform Tool procedures"
 msgstr "Transform Tool procedures"
 
-#: app/pdb/procedural_db.c:246
+#: app/pdb/procedural_db.c:248
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7223,7 +7258,7 @@ msgstr ""
 "PDB calling error:\n"
 "procedure '%s' not found"
 
-#: app/pdb/procedural_db.c:284 app/pdb/procedural_db.c:387
+#: app/pdb/procedural_db.c:286 app/pdb/procedural_db.c:389
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7797,6 +7832,7 @@ msgid "Origin X:"
 msgstr "Origin X:"
 
 #. the pixel size labels
+#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
@@ -9600,11 +9636,11 @@ msgstr "Load Text from File"
 msgid "Clear all Text"
 msgstr "Clear all Text"
 
-#: app/widgets/gimptexteditor.c:364
+#: app/widgets/gimptexteditor.c:367
 msgid "Open Text File (UTF-8)"
 msgstr "Open Text File (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:449
+#: app/widgets/gimptexteditor.c:452
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Invalid UTF-8 data in file '%s'."
