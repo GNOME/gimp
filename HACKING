@@ -62,10 +62,18 @@ server:
    $ export CVSROOT=':pserver:anonymous@anoncvs.gimp.org:/cvs/gnome'
    $ cvs login
      (there is no password, just hit return)
-   $ cvs -z3 checkout <module>
+   $ cvs -z3 checkout [-r <branch>] <module>
 
-The interesting module are:  glib, atk, pango, gtk+, libart_lgpl,
-                             intltool, gtk-doc, gtkhtml2
+The interesting modules and the suggested branches to use are:
+
+   glib        (glib-2-0)
+   atk         (atk-1-0)
+   pango       (pango-1-0)
+   gtk+        (gtk-2-0)
+   libart_lgpl
+   intltool
+   gtk-doc
+   gtkhtml2
 
 
 Patches

@@ -1,5 +1,9 @@
 2002-06-10  Sven Neumann  <sven@gimp.org>
 
+	* HACKING: suggest to use the stable branches of gtk+ and friends.
+
+2002-06-10  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/helpbrowser/Makefile.am	
 	* plug-ins/helpbrowser/uri.[ch]: added new files that implement
 	conversion of a relative URI and an absolute base URI to a new
