@@ -46,8 +46,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "gimpoldpreview.h"
-
 typedef enum
 {
   BEZIER_1,
@@ -65,10 +63,10 @@ typedef enum
 
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
 static gint jigsaw                 (gboolean preview_mode);
 static void jigsaw_values_changed  (GtkWidget *widget, gpointer data);
@@ -78,105 +76,89 @@ static gboolean dialog_box (void);
 
 static void draw_jigsaw            (guchar    *buffer,
                                     gint       bufsize,
-				    gint       width,
-				    gint       height,
-				    gint       bytes,
-				    gboolean   preview_mode);
+                                    gint       width,
+                                    gint       height,
+                                    gint       bytes,
+                                    gboolean   preview_mode);
 
 static void draw_vertical_border   (guchar *buffer, gint bufsize,
                                     gint width, gint height,
-				    gint bytes, gint x_offset, gint ytiles,
-				    gint blend_lines, gdouble blend_amount,
-				    gboolean   preview_mode);
+                                    gint bytes, gint x_offset, gint ytiles,
+                                    gint blend_lines, gdouble blend_amount);
 static void draw_horizontal_border (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
                                     gint y_offset, gint xtiles,
-				    gint blend_lines, gdouble blend_amount,
-				    gboolean   preview_mode);
+                                    gint blend_lines, gdouble blend_amount);
 static void draw_vertical_line     (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint px[2], gint py[2],
-				    gboolean   preview_mode);
+                                    gint px[2], gint py[2]);
 static void draw_horizontal_line   (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint px[2], gint py[2],
-				    gboolean   preview_mode);
+                                    gint px[2], gint py[2]);
 static void darken_vertical_line   (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint *px, gint *py, gdouble delta,
-				    gboolean   preview_mode);
+                                    gint *px, gint *py, gdouble delta);
 static void lighten_vertical_line  (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint *px, gint *py, gdouble delta,
-				    gboolean   preview_mode);
+                                    gint *px, gint *py, gdouble delta);
 static void darken_horizontal_line (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint *px, gint *py, gdouble delta,
-				    gboolean   preview_mode);
+                                    gint *px, gint *py, gdouble delta);
 static void lighten_horizontal_line(guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint *px, gint *py, gdouble delta,
-				    gboolean   preview_mode);
+                                    gint *px, gint *py, gdouble delta);
 static void draw_right_bump        (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint x_offset, gint curve_start_offset,
-				    gint steps, gboolean   preview_mode);
+                                    gint x_offset, gint curve_start_offset,
+                                    gint steps);
 static void draw_left_bump         (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint x_offset, gint curve_start_offset,
-				    gint steps, gboolean   preview_mode);
+                                    gint x_offset, gint curve_start_offset,
+                                    gint steps);
 static void draw_up_bump           (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint y_offset, gint curve_start_offset,
-				    gint steps, gboolean   preview_mode);
+                                    gint y_offset, gint curve_start_offset,
+                                    gint steps);
 static void draw_down_bump         (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint y_offset, gint curve_start_offset,
-				    gint steps, gboolean   preview_mode);
+                                    gint y_offset, gint curve_start_offset,
+                                    gint steps);
 static void darken_right_bump      (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint x_offset, gint curve_start_offset,
-				    gint steps, gdouble delta, gint counter,
-				    gboolean   preview_mode);
+                                    gint x_offset, gint curve_start_offset,
+                                    gint steps, gdouble delta, gint counter);
 static void lighten_right_bump     (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint x_offset, gint curve_start_offset,
-				    gint steps, gdouble delta, gint counter,
-				    gboolean   preview_mode);
+                                    gint x_offset, gint curve_start_offset,
+                                    gint steps, gdouble delta, gint counter);
 static void darken_left_bump       (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint x_offset, gint curve_start_offset,
-				    gint steps, gdouble delta, gint counter,
-				    gboolean   preview_mode);
+                                    gint x_offset, gint curve_start_offset,
+                                    gint steps, gdouble delta, gint counter);
 static void lighten_left_bump      (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint x_offset, gint curve_start_offset,
-				    gint steps, gdouble delta, gint counter,
-				    gboolean   preview_mode);
+                                    gint x_offset, gint curve_start_offset,
+                                    gint steps, gdouble delta, gint counter);
 static void darken_up_bump         (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint y_offset, gint curve_start_offest,
-				    gint steps, gdouble delta, gint counter,
-				    gboolean   preview_mode);
+                                    gint y_offset, gint curve_start_offest,
+                                    gint steps, gdouble delta, gint counter);
 static void lighten_up_bump        (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint y_offset, gint curve_start_offset,
-				    gint steps, gdouble delta, gint counter,
-				    gboolean   preview_mode);
+                                    gint y_offset, gint curve_start_offset,
+                                    gint steps, gdouble delta, gint counter);
 static void darken_down_bump       (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint y_offset, gint curve_start_offset,
-				    gint steps, gdouble delta, gint counter,
-				    gboolean   preview_mode);
+                                    gint y_offset, gint curve_start_offset,
+                                    gint steps, gdouble delta, gint counter);
 static void lighten_down_bump      (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint y_offset, gint curve_start_offset,
-				    gint steps, gdouble delta, gint counter,
-				    gboolean   preview_mode);
+                                    gint y_offset, gint curve_start_offset,
+                                    gint steps, gdouble delta, gint counter);
 static void generate_grid          (gint width, gint height, gint xtiles, gint ytiles,
-				    gint *x, gint *y);
+                                    gint *x, gint *y);
 static void generate_bezier        (gint px[4], gint py[4], gint steps,
-				    gint *cachex, gint *cachey);
+                                    gint *cachex, gint *cachey);
 static void malloc_cache           (void);
 static void free_cache             (void);
 static void init_right_bump        (gint width, gint height);
@@ -185,32 +167,27 @@ static void init_up_bump           (gint width, gint height);
 static void init_down_bump         (gint width, gint height);
 static void draw_bezier_line       (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint steps, gint *cx, gint *cy,
-				    gboolean preview_mode);
+                                    gint steps, gint *cx, gint *cy);
 static void darken_bezier_line     (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint x_offset, gint y_offset, gint steps,
-				    gint *cx, gint *cy, gdouble delta,
-				    gboolean preview_mode);
+                                    gint x_offset, gint y_offset, gint steps,
+                                    gint *cx, gint *cy, gdouble delta);
 static void lighten_bezier_line    (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-				    gint x_offset, gint y_offset, gint steps,
-				    gint *cx, gint *cy, gdouble delta,
-				    gboolean preview_mode);
+                                    gint x_offset, gint y_offset, gint steps,
+                                    gint *cx, gint *cy, gdouble delta);
 static void draw_bezier_vertical_border   (guchar *buffer, gint bufsize,
                                            gint width, gint height,
                                            gint bytes,
-					   gint x_offset, gint xtiles,
-					   gint ytiles, gint blend_lines,
-					   gdouble blend_amount, gint steps,
-					   gboolean preview_mode);
+                                           gint x_offset, gint xtiles,
+                                           gint ytiles, gint blend_lines,
+                                           gdouble blend_amount, gint steps);
 static void draw_bezier_horizontal_border (guchar *buffer, gint bufsize,
                                            gint width, gint height,
                                            gint bytes,
-					   gint x_offset, gint xtiles,
-					   gint ytiles, gint blend_lines,
-					   gdouble blend_amount, gint steps,
-					   gboolean preview_mode);
+                                           gint x_offset, gint xtiles,
+                                           gint ytiles, gint blend_lines,
+                                           gdouble blend_amount, gint steps);
 static void check_config           (gint width, gint height);
 
 
@@ -380,7 +357,10 @@ static globals_t globals =
 };
 
 /* preview globals */
-static GimpOldPreview *preview;
+#define PREVIEW_SIZE 128
+static GtkWidget *preview;
+static gint       preview_width, preview_height, preview_bpp;
+static guchar    *preview_cache;
 
 MAIN ()
 
@@ -400,16 +380,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_jigsaw",
-			  "Renders a jigsaw puzzle look",
-			  "Jigsaw puzzle look",
-			  "Nigel Wetten",
-			  "Nigel Wetten",
-			  "May 2000",
-			  N_("_Jigsaw..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Renders a jigsaw puzzle look",
+                          "Jigsaw puzzle look",
+                          "Nigel Wetten",
+                          "Nigel Wetten",
+                          "May 2000",
+                          N_("_Jigsaw..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_jigsaw",
                              N_("<Image>/Filters/Render/Pattern"));
@@ -423,8 +403,8 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
   GimpRunMode        run_mode;
+  GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   INIT_I18N ();
@@ -438,36 +418,36 @@ run (const gchar      *name,
     {
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams == 8)
-	{
-	  config.x = param[3].data.d_int32;
-	  config.y = param[4].data.d_int32;
-	  config.style = param[5].data.d_int32;
-	  config.blend_lines = param[6].data.d_int32;
-	  config.blend_amount = param[7].data.d_float;
-	  if (jigsaw(FALSE) == -1)
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
-	}
+        {
+          config.x = param[3].data.d_int32;
+          config.y = param[4].data.d_int32;
+          config.style = param[5].data.d_int32;
+          config.blend_lines = param[6].data.d_int32;
+          config.blend_amount = param[7].data.d_float;
+          if (jigsaw(FALSE) == -1)
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
       else
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       break;
 
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data("plug_in_jigsaw", &config);
       if (! dialog_box())
         {
-	  status = GIMP_PDB_CANCEL;
-	  break;
-	}
+          status = GIMP_PDB_CANCEL;
+          break;
+        }
       gimp_progress_init (_("Assembling Jigsaw..."));
       if (jigsaw(FALSE) == -1)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	  break;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+          break;
+        }
       gimp_set_data("plug_in_jigsaw", &config, sizeof(config_t));
       gimp_displays_flush();
       break;
@@ -475,14 +455,14 @@ run (const gchar      *name,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data("plug_in_jigsaw", &config);
       if (jigsaw(FALSE) == -1)
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	  gimp_message("An execution error occured.");
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+          gimp_message("An execution error occured.");
+        }
       else
-	{
-	  gimp_displays_flush();
-	}
+        {
+          gimp_displays_flush();
+        }
 
     }  /* switch */
 
@@ -492,44 +472,38 @@ run (const gchar      *name,
   *return_vals = values;
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-
-  return;
 }
 
 static gint
 jigsaw (gboolean preview_mode)
 {
-  GimpPixelRgn src_pr, dest_pr;
-  guchar *buffer;
+  GimpPixelRgn  src_pr, dest_pr;
+  guchar       *buffer;
   GimpDrawable *drawable = globals.drawable;
-  gint width;
-  gint height;
-  gint bytes;
-  gint buffer_size;
+  gint          width;
+  gint          height;
+  gint          bytes;
+  gint          buffer_size;
 
   if (preview_mode)
     {
-      width  = preview->width;
-      height = preview->height;
-      bytes  = preview->bpp;
-      buffer_size = preview->rowstride * height;
-      if (buffer_size == 0)
-        return -1;
+      width  = preview_width;
+      height = preview_height;
     }
   else
     {
       width  = drawable->width;
       height = drawable->height;
-      bytes  = drawable->bpp;
-      buffer_size = bytes * width * height;
     }
+  bytes  = drawable->bpp;
+  buffer_size = bytes * width * height;
 
   /* setup image buffer */
-  buffer = g_malloc (buffer_size);
+  buffer = g_new (guchar, buffer_size);
 
   if (preview_mode)
     {
-      memcpy (buffer, preview->cache, buffer_size);
+      memcpy (buffer, preview_cache, buffer_size);
     }
   else
     {
@@ -550,15 +524,11 @@ jigsaw (gboolean preview_mode)
   /* cleanup */
   if (preview_mode)
     {
-      int y;
-
-      for (y = 0; y < preview->height; y++)
-	{
-	  gimp_old_preview_do_row (preview, y, preview->width,
-				     &buffer[preview->rowstride * y]);
-	}
-
-      gtk_widget_queue_draw (preview->widget);
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                              0, 0, width, height,
+                              gimp_drawable_type (drawable->drawable_id),
+                              buffer,
+                              width * bytes);
     }
   else
     {
@@ -581,10 +551,10 @@ jigsaw_values_changed (GtkWidget *widget, gpointer data)
 
 static void
 generate_bezier (gint  px[4],
-		 gint  py[4],
-		 gint  steps,
-		 gint *cachex,
-		 gint *cachey)
+                 gint  py[4],
+                 gint  steps,
+                 gint *cachex,
+                 gint *cachey)
 {
   gdouble t = 0.0;
   gdouble sigma = 1.0 / steps;
@@ -599,26 +569,25 @@ generate_bezier (gint  px[4],
       t3 = t2 * t;
       t_1 = 1 - t;
       x = t_1 * t_1 * t_1 * px[0]
-	+ 3 * t * t_1 * t_1 * px[1]
-	+ 3 * t2 * t_1 * px[2]
-	+ t3 * px[3];
+        + 3 * t * t_1 * t_1 * px[1]
+        + 3 * t2 * t_1 * px[2]
+        + t3 * px[3];
       y = t_1 * t_1 * t_1 * py[0]
-	+ 3 * t * t_1 * t_1 * py[1]
-	+ 3 * t2 * t_1 * py[2]
-	+ t3 * py[3];
+        + 3 * t * t_1 * t_1 * py[1]
+        + 3 * t2 * t_1 * py[2]
+        + t3 * py[3];
       cachex[i] = (gint) (x + 0.2);
       cachey[i] = (gint) (y + 0.2);
     }  /* for */
-  return;
 }
 
 static void
 draw_jigsaw (guchar   *buffer,
              gint      bufsize,
-	     gint      width,
-	     gint      height,
-	     gint      bytes,
-	     gboolean  preview_mode)
+             gint      width,
+             gint      height,
+             gint      bytes,
+             gboolean  preview_mode)
 {
   gint i;
   gint *x, *y;
@@ -649,39 +618,39 @@ draw_jigsaw (guchar   *buffer,
   if (style == BEZIER_1)
     {
       for (i = 0; i < xlines; i++)
-	{
+        {
           draw_vertical_border (buffer, bufsize, width, height, bytes,
                                 x[i], ytiles,
-				blend_lines, blend_amount, preview_mode);
-	  if (!preview_mode)
-	    gimp_progress_update ((gdouble) i / (gdouble) progress_total);
-	}
+                                blend_lines, blend_amount);
+          if (!preview_mode)
+            gimp_progress_update ((gdouble) i / (gdouble) progress_total);
+        }
       for (i = 0; i < ylines; i++)
-	{
+        {
           draw_horizontal_border (buffer, bufsize, width, bytes, y[i], xtiles,
-				  blend_lines, blend_amount, preview_mode);
-	  if (!preview_mode)
-	    gimp_progress_update ((gdouble) (i + xlines) / (gdouble) progress_total);
-	}
+                                  blend_lines, blend_amount);
+          if (!preview_mode)
+            gimp_progress_update ((gdouble) (i + xlines) / (gdouble) progress_total);
+        }
     }
   else if (style == BEZIER_2)
     {
       for (i = 0; i < xlines; i++)
-	{
+        {
           draw_bezier_vertical_border (buffer, bufsize, width, height, bytes,
                                        x[i], xtiles, ytiles, blend_lines,
-				       blend_amount, steps, preview_mode);
-	  if (!preview_mode)
-	    gimp_progress_update ((gdouble) i / (gdouble) progress_total);
-	}
+                                       blend_amount, steps);
+          if (!preview_mode)
+            gimp_progress_update ((gdouble) i / (gdouble) progress_total);
+        }
       for (i = 0; i < ylines; i++)
-	{
+        {
           draw_bezier_horizontal_border (buffer, bufsize, width, height, bytes,
                                          y[i], xtiles, ytiles, blend_lines,
-					 blend_amount, steps, preview_mode);
-	  if (!preview_mode)
-	    gimp_progress_update ((gdouble) (i + xlines) / (gdouble) progress_total);
-	}
+                                         blend_amount, steps);
+          if (!preview_mode)
+            gimp_progress_update ((gdouble) (i + xlines) / (gdouble) progress_total);
+        }
     }
   else
     {
@@ -691,21 +660,18 @@ draw_jigsaw (guchar   *buffer,
 
   g_free (globals.gridx);
   g_free (globals.gridy);
-
-  return;
 }
 
 static void
 draw_vertical_border (guchar  *buffer,
                       gint     bufsize,
-		      gint     width,
-		      gint     height,
-		      gint     bytes,
-		      gint     x_offset,
-		      gint     ytiles,
-		      gint     blend_lines,
-		      gdouble  blend_amount,
-		      gboolean preview_mode)
+                      gint     width,
+                      gint     height,
+                      gint     bytes,
+                      gint     x_offset,
+                      gint     ytiles,
+                      gint     blend_lines,
+                      gdouble  blend_amount)
 {
   gint i, j;
   gint tile_height = height / ytiles;
@@ -724,116 +690,108 @@ draw_vertical_border (guchar  *buffer,
     {
       right = g_random_int_range (0, 2);
       if (right)
-	{
-	  style_index = RIGHT;
-	}
+        {
+          style_index = RIGHT;
+        }
       else
-	{
-	  style_index = LEFT;
-	}
+        {
+          style_index = LEFT;
+        }
 
       /* first straight line from top downwards */
       px[0] = px[1] = x_offset;
       py[0] = y_offset; py[1] = y_offset + curve_start_offset - 1;
-      draw_vertical_line (buffer, bufsize, width, bytes, px, py,
-                          preview_mode);
+      draw_vertical_line (buffer, bufsize, width, bytes, px, py);
       delta = blend_amount;
       dy[0] = ly[0] = py[0]; dy[1] = ly[1] = py[1];
       if (!right)
-	{
-	  ly[1] += blend_lines + 2;
-	}
+        {
+          ly[1] += blend_lines + 2;
+        }
       for (j = 0; j < blend_lines; j++)
-	{
-	  dy[0]++; dy[1]--; ly[0]++; ly[1]--;
-	  px[0] = x_offset - j - 1;
-          darken_vertical_line (buffer, bufsize, width, bytes, px, dy, delta,
-                                preview_mode);
-	  px[0] = x_offset + j + 1;
-          lighten_vertical_line (buffer, bufsize, width, bytes, px, ly, delta,
-                                 preview_mode);
-	  delta -= sigma;
-	}
+        {
+          dy[0]++; dy[1]--; ly[0]++; ly[1]--;
+          px[0] = x_offset - j - 1;
+          darken_vertical_line (buffer, bufsize, width, bytes, px, dy, delta);
+          px[0] = x_offset + j + 1;
+          lighten_vertical_line (buffer, bufsize, width, bytes, px, ly, delta);
+          delta -= sigma;
+        }
 
       /* top half of curve */
       if (right)
-	{
+        {
           draw_right_bump (buffer, bufsize, width, bytes, x_offset,
-			   y_offset + curve_start_offset,
-			   globals.steps[RIGHT], preview_mode);
-	  delta = blend_amount;
-	  for (j = 0; j < blend_lines; j++)
-	    {
-	      /* use to be -j -1 */
+                           y_offset + curve_start_offset,
+                           globals.steps[RIGHT]);
+          delta = blend_amount;
+          for (j = 0; j < blend_lines; j++)
+            {
+              /* use to be -j -1 */
               darken_right_bump (buffer, bufsize, width, bytes, x_offset,
-				 y_offset + curve_start_offset,
-				 globals.steps[RIGHT], delta, j, preview_mode);
-	      /* use to be +j + 1 */
+                                 y_offset + curve_start_offset,
+                                 globals.steps[RIGHT], delta, j);
+              /* use to be +j + 1 */
               lighten_right_bump (buffer, bufsize, width, bytes, x_offset,
-				  y_offset + curve_start_offset,
-				  globals.steps[RIGHT], delta, j, preview_mode);
-	      delta -= sigma;
-	    }
-	}
+                                  y_offset + curve_start_offset,
+                                  globals.steps[RIGHT], delta, j);
+              delta -= sigma;
+            }
+        }
       else
-	{
+        {
           draw_left_bump (buffer, bufsize, width, bytes, x_offset,
-			  y_offset + curve_start_offset,
-			  globals.steps[LEFT], preview_mode);
-	  delta = blend_amount;
-	  for (j = 0; j < blend_lines; j++)
-	    {
-	      /* use to be -j -1 */
+                          y_offset + curve_start_offset,
+                          globals.steps[LEFT]);
+          delta = blend_amount;
+          for (j = 0; j < blend_lines; j++)
+            {
+              /* use to be -j -1 */
               darken_left_bump (buffer, bufsize, width, bytes, x_offset,
-				y_offset + curve_start_offset,
-				globals.steps[LEFT], delta, j, preview_mode);
-	      /* use to be -j - 1 */
+                                y_offset + curve_start_offset,
+                                globals.steps[LEFT], delta, j);
+              /* use to be -j - 1 */
               lighten_left_bump (buffer, bufsize, width, bytes, x_offset,
-				 y_offset + curve_start_offset,
-				 globals.steps[LEFT], delta, j, preview_mode);
-	      delta -= sigma;
-	    }
-	}
+                                 y_offset + curve_start_offset,
+                                 globals.steps[LEFT], delta, j);
+              delta -= sigma;
+            }
+        }
       /* bottom straight line of a tile wall */
       px[0] = px[1] = x_offset;
       py[0] = y_offset + curve_end_offset;
       py[1] = globals.gridy[i];
-      draw_vertical_line (buffer, bufsize, width, bytes, px, py, preview_mode);
+      draw_vertical_line (buffer, bufsize, width, bytes, px, py);
       delta = blend_amount;
       dy[0] = ly[0] = py[0]; dy[1] = ly[1] = py[1];
       if (right)
-	{
-	  dy[0] -= blend_lines + 2;
-	}
+        {
+          dy[0] -= blend_lines + 2;
+        }
       for (j = 0; j < blend_lines; j++)
-	{
-	  dy[0]++; dy[1]--; ly[0]++; ly[1]--;
-	  px[0] = x_offset - j - 1;
-          darken_vertical_line (buffer, bufsize, width, bytes, px, dy, delta,
-                                preview_mode);
-	  px[0] = x_offset + j + 1;
-          lighten_vertical_line (buffer, bufsize, width, bytes, px, ly, delta,
-                                 preview_mode);
-	  delta -= sigma;
-	}
+        {
+          dy[0]++; dy[1]--; ly[0]++; ly[1]--;
+          px[0] = x_offset - j - 1;
+          darken_vertical_line (buffer, bufsize, width, bytes, px, dy, delta);
+          px[0] = x_offset + j + 1;
+          lighten_vertical_line (buffer, bufsize, width, bytes, px, ly, delta);
+          delta -= sigma;
+        }
 
       y_offset = globals.gridy[i];
     }  /* for */
-
-  return;
 }
 
 /* assumes RGB* */
 static void
 draw_horizontal_border (guchar   *buffer,
                         gint      bufsize,
-			gint      width,
-			gint      bytes,
-			gint      y_offset,
-			gint      xtiles,
-			gint      blend_lines,
-			gdouble   blend_amount,
-			gboolean  preview_mode)
+                        gint      width,
+                        gint      bytes,
+                        gint      y_offset,
+                        gint      xtiles,
+                        gint      blend_lines,
+                        gdouble   blend_amount)
 {
   gint i, j;
   gint tile_width = width / xtiles;
@@ -853,87 +811,85 @@ draw_horizontal_border (guchar   *buffer,
       /* first horizontal line across */
       px[0] = x_offset; px[1] = x_offset + curve_start_offset - 1;
       py[0] = py[1] = y_offset;
-      draw_horizontal_line (buffer, bufsize, width, bytes, px, py,
-                            preview_mode);
+      draw_horizontal_line (buffer, bufsize, width, bytes, px, py);
       delta = blend_amount;
       dx[0] = lx[0] = px[0]; dx[1] = lx[1] = px[1];
       if (up)
-	{
-	  lx[1] += blend_lines + 2;
-	}
+        {
+          lx[1] += blend_lines + 2;
+        }
       for (j = 0; j < blend_lines; j++)
-	{
-	  dx[0]++; dx[1]--; lx[0]++; lx[1]--;
-	  py[0] = y_offset - j - 1;
+        {
+          dx[0]++; dx[1]--; lx[0]++; lx[1]--;
+          py[0] = y_offset - j - 1;
           darken_horizontal_line (buffer, bufsize, width, bytes, dx, py,
-                                  delta, preview_mode);
-	  py[0] = y_offset + j + 1;
+                                  delta);
+          py[0] = y_offset + j + 1;
           lighten_horizontal_line (buffer, bufsize, width, bytes, lx, py,
-                                   delta, preview_mode);
-	  delta -= sigma;
-	}
+                                   delta);
+          delta -= sigma;
+        }
 
       if (up)
-	{
+        {
           draw_up_bump (buffer, bufsize, width, bytes, y_offset,
-			x_offset + curve_start_offset,
-			globals.steps[UP], preview_mode);
-	  delta = blend_amount;
-	  for (j = 0; j < blend_lines; j++)
-	    {
-	      /* use to be -j -1 */
+                        x_offset + curve_start_offset,
+                        globals.steps[UP]);
+          delta = blend_amount;
+          for (j = 0; j < blend_lines; j++)
+            {
+              /* use to be -j -1 */
               darken_up_bump (buffer, bufsize, width, bytes, y_offset,
-			      x_offset + curve_start_offset,
-			      globals.steps[UP], delta, j, preview_mode);
-	      /* use to be +j + 1 */
+                              x_offset + curve_start_offset,
+                              globals.steps[UP], delta, j);
+              /* use to be +j + 1 */
               lighten_up_bump (buffer, bufsize, width, bytes, y_offset,
-			       x_offset + curve_start_offset,
-			       globals.steps[UP], delta, j, preview_mode);
-	      delta -= sigma;
-	    }
-	}
+                               x_offset + curve_start_offset,
+                               globals.steps[UP], delta, j);
+              delta -= sigma;
+            }
+        }
       else
-	{
+        {
           draw_down_bump (buffer, bufsize, width, bytes, y_offset,
-			  x_offset + curve_start_offset,
-			  globals.steps[DOWN], preview_mode);
-	  delta = blend_amount;
-	  for (j = 0; j < blend_lines; j++)
-	    {
-	      /* use to be +j + 1 */
+                          x_offset + curve_start_offset,
+                          globals.steps[DOWN]);
+          delta = blend_amount;
+          for (j = 0; j < blend_lines; j++)
+            {
+              /* use to be +j + 1 */
               darken_down_bump (buffer, bufsize, width, bytes, y_offset,
-				x_offset + curve_start_offset,
-				globals.steps[DOWN], delta, j, preview_mode);
-	      /* use to be -j -1 */
+                                x_offset + curve_start_offset,
+                                globals.steps[DOWN], delta, j);
+              /* use to be -j -1 */
               lighten_down_bump (buffer, bufsize, width, bytes, y_offset,
-				 x_offset + curve_start_offset,
-				 globals.steps[DOWN], delta, j, preview_mode);
-	      delta -= sigma;
-	    }
-	}
+                                 x_offset + curve_start_offset,
+                                 globals.steps[DOWN], delta, j);
+              delta -= sigma;
+            }
+        }
       /* right horizontal line of tile */
       px[0] = x_offset + curve_end_offset;
       px[1] = globals.gridx[i];
       py[0] = py[1] = y_offset;
-      draw_horizontal_line (buffer, bufsize, width, bytes, px, py,
-                            preview_mode);
+      draw_horizontal_line (buffer, bufsize, width, bytes, px, py);
       delta = blend_amount;
       dx[0] = lx[0] = px[0]; dx[1] = lx[1] = px[1];
       if (!up)
-	{
-	  dx[0] -= blend_lines + 2;
-	}
+        {
+          dx[0] -= blend_lines + 2;
+        }
       for (j = 0;j < blend_lines; j++)
-	{
-	  dx[0]++; dx[1]--; lx[0]++; lx[1]--;
-	  py[0] = y_offset - j - 1;
+        {
+          dx[0]++; dx[1]--; lx[0]++; lx[1]--;
+          py[0] = y_offset - j - 1;
           darken_horizontal_line (buffer, bufsize, width, bytes, dx, py,
-                                  delta, preview_mode);
-	  py[0] = y_offset + j + 1;
+                                  delta);
+          py[0] = y_offset + j + 1;
           lighten_horizontal_line (buffer, bufsize, width, bytes, lx, py,
-                                   delta, preview_mode);
-	  delta -= sigma;
-	}
+                                   delta);
+          delta -= sigma;
+        }
       x_offset = globals.gridx[i];
     }  /* for */
 }
@@ -942,18 +898,17 @@ draw_horizontal_border (guchar   *buffer,
 static void
 draw_vertical_line (guchar   *buffer,
                     gint      bufsize,
-		    gint      width,
-		    gint      bytes,
-		    gint      px[2],
-		    gint      py[2],
-		    gboolean  preview_mode)
+                    gint      width,
+                    gint      bytes,
+                    gint      px[2],
+                    gint      py[2])
 {
   gint i;
   gint rowstride;
   gint index;
   gint length;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
   index = px[0] * bytes + rowstride * py[0];
   length = py[1] - py[0] + 1;
 
@@ -968,18 +923,17 @@ draw_vertical_line (guchar   *buffer,
 static void
 draw_horizontal_line (guchar   *buffer,
                       gint      bufsize,
-		      gint      width,
-		      gint      bytes,
-		      gint      px[2],
-		      gint      py[2],
-		      gboolean  preview_mode)
+                      gint      width,
+                      gint      bytes,
+                      gint      px[2],
+                      gint      py[2])
 {
   gint i;
   gint rowstride;
   gint index;
   gint length;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
   index = px[0] * bytes + rowstride * py[0];
   length = px[1] - px[0] + 1;
 
@@ -993,19 +947,18 @@ draw_horizontal_line (guchar   *buffer,
 static void
 draw_right_bump (guchar   *buffer,
                  gint      bufsize,
-		 gint      width,
-		 gint      bytes,
-		 gint      x_offset,
-		 gint      curve_start_offset,
-		 gint      steps,
-		 gboolean  preview_mode)
+                 gint      width,
+                 gint      bytes,
+                 gint      x_offset,
+                 gint      curve_start_offset,
+                 gint      steps)
 {
   gint i;
   gint x, y;
   gint index;
   gint rowstride;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1024,19 +977,18 @@ draw_right_bump (guchar   *buffer,
 static void
 draw_left_bump (guchar   *buffer,
                 gint      bufsize,
-		gint      width,
-		gint      bytes,
-		gint      x_offset,
-		gint      curve_start_offset,
-		gint      steps,
-		gboolean  preview_mode)
+                gint      width,
+                gint      bytes,
+                gint      x_offset,
+                gint      curve_start_offset,
+                gint      steps)
 {
   gint i;
   gint x, y;
   gint index;
   gint rowstride;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1055,19 +1007,18 @@ draw_left_bump (guchar   *buffer,
 static void
 draw_up_bump (guchar   *buffer,
               gint      bufsize,
-	      gint      width,
-	      gint      bytes,
-	      gint      y_offset,
-	      gint      curve_start_offset,
-	      gint      steps,
-	      gboolean  preview_mode)
+              gint      width,
+              gint      bytes,
+              gint      y_offset,
+              gint      curve_start_offset,
+              gint      steps)
 {
   gint i;
   gint x, y;
   gint index;
   gint rowstride;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1086,19 +1037,18 @@ draw_up_bump (guchar   *buffer,
 static void
 draw_down_bump (guchar   *buffer,
                 gint      bufsize,
-		gint      width,
-		gint      bytes,
-		gint      y_offset,
-		gint      curve_start_offset,
-		gint      steps,
-		gboolean  preview_mode)
+                gint      width,
+                gint      bytes,
+                gint      y_offset,
+                gint      curve_start_offset,
+                gint      steps)
 {
   gint i;
   gint x, y;
   gint index;
   gint rowstride;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1137,16 +1087,16 @@ malloc_cache (void)
       globals.blend_inner_cachey1[i] = g_new (gint *, blend_lines);
       globals.blend_inner_cachey2[i] = g_new (gint *, blend_lines);
       for (j = 0; j < blend_lines; j++)
-	{
-	  globals.blend_outer_cachex1[i][j] = g_new (gint, steps);
-	  globals.blend_outer_cachex2[i][j] = g_new (gint, steps);
-	  globals.blend_outer_cachey1[i][j] = g_new (gint, steps);
-	  globals.blend_outer_cachey2[i][j] = g_new (gint, steps);
-	  globals.blend_inner_cachex1[i][j] = g_new (gint, steps);
-	  globals.blend_inner_cachex2[i][j] = g_new (gint, steps);
-	  globals.blend_inner_cachey1[i][j] = g_new (gint, steps);
-	  globals.blend_inner_cachey2[i][j] = g_new (gint, steps);
-	}
+        {
+          globals.blend_outer_cachex1[i][j] = g_new (gint, steps);
+          globals.blend_outer_cachex2[i][j] = g_new (gint, steps);
+          globals.blend_outer_cachey1[i][j] = g_new (gint, steps);
+          globals.blend_outer_cachey2[i][j] = g_new (gint, steps);
+          globals.blend_inner_cachex1[i][j] = g_new (gint, steps);
+          globals.blend_inner_cachex2[i][j] = g_new (gint, steps);
+          globals.blend_inner_cachey1[i][j] = g_new (gint, steps);
+          globals.blend_inner_cachey2[i][j] = g_new (gint, steps);
+        }
     }
 }
 
@@ -1163,16 +1113,16 @@ free_cache (void)
       g_free (globals.cachey1[i]);
       g_free (globals.cachey2[i]);
       for (j = 0; j < blend_lines; j++)
-	{
-	  g_free (globals.blend_outer_cachex1[i][j]);
-	  g_free (globals.blend_outer_cachex2[i][j]);
-	  g_free (globals.blend_outer_cachey1[i][j]);
-	  g_free (globals.blend_outer_cachey2[i][j]);
-	  g_free (globals.blend_inner_cachex1[i][j]);
-	  g_free (globals.blend_inner_cachex2[i][j]);
-	  g_free (globals.blend_inner_cachey1[i][j]);
-	  g_free (globals.blend_inner_cachey2[i][j]);
-	}
+        {
+          g_free (globals.blend_outer_cachex1[i][j]);
+          g_free (globals.blend_outer_cachex2[i][j]);
+          g_free (globals.blend_outer_cachey1[i][j]);
+          g_free (globals.blend_outer_cachey2[i][j]);
+          g_free (globals.blend_inner_cachex1[i][j]);
+          g_free (globals.blend_inner_cachex2[i][j]);
+          g_free (globals.blend_inner_cachey1[i][j]);
+          g_free (globals.blend_inner_cachey2[i][j]);
+        }
       g_free (globals.blend_outer_cachex1[i]);
       g_free (globals.blend_outer_cachex2[i]);
       g_free (globals.blend_outer_cachey1[i]);
@@ -1186,7 +1136,7 @@ free_cache (void)
 
 static void
 init_right_bump (gint width,
-		 gint height)
+                 gint height)
 {
   gint i;
   gint xtiles = config.x;
@@ -1210,14 +1160,14 @@ init_right_bump (gint width,
   py[2] = curve_start_offset - YFACTOR3 * tile_height;
   py[3] = curve_start_offset + YFACTOR4 * tile_height;
   generate_bezier(px, py, steps, globals.cachex1[RIGHT],
-		  globals.cachey1[RIGHT]);
+                  globals.cachey1[RIGHT]);
   /* outside right bump */
   for (i = 0; i < blend_lines; i++)
     {
        py[0]--; py[1]--; py[2]--; px[3]++;
        generate_bezier(px, py, steps,
-		       globals.blend_outer_cachex1[RIGHT][i],
-		       globals.blend_outer_cachey1[RIGHT][i]);
+                       globals.blend_outer_cachex1[RIGHT][i],
+                       globals.blend_outer_cachey1[RIGHT][i]);
     }
   /* inside right bump */
   py[0] += blend_lines; py[1] += blend_lines; py[2] += blend_lines;
@@ -1226,8 +1176,8 @@ init_right_bump (gint width,
     {
       py[0]++; py[1]++; py[2]++; px[3]--;
       generate_bezier(px, py, steps,
-		      globals.blend_inner_cachex1[RIGHT][i],
-		      globals.blend_inner_cachey1[RIGHT][i]);
+                      globals.blend_inner_cachex1[RIGHT][i],
+                      globals.blend_inner_cachey1[RIGHT][i]);
     }
 
   /* bottom half of bump */
@@ -1240,14 +1190,14 @@ init_right_bump (gint width,
   py[2] = curve_start_offset + YFACTOR7 * tile_height;
   py[3] = curve_end_offset;
   generate_bezier(px, py, steps, globals.cachex2[RIGHT],
-		  globals.cachey2[RIGHT]);
+                  globals.cachey2[RIGHT]);
   /* outer right bump */
   for (i = 0; i < blend_lines; i++)
     {
       py[1]++; py[2]++; py[3]++; px[0]++;
       generate_bezier(px, py, steps,
-		      globals.blend_outer_cachex2[RIGHT][i],
-		      globals.blend_outer_cachey2[RIGHT][i]);
+                      globals.blend_outer_cachex2[RIGHT][i],
+                      globals.blend_outer_cachey2[RIGHT][i]);
     }
   /* inner right bump */
   py[1] -= blend_lines; py[2] -= blend_lines; py[3] -= blend_lines;
@@ -1256,15 +1206,14 @@ init_right_bump (gint width,
     {
       py[1]--; py[2]--; py[3]--; px[0]--;
       generate_bezier(px, py, steps,
-		      globals.blend_inner_cachex2[RIGHT][i],
-		      globals.blend_inner_cachey2[RIGHT][i]);
+                      globals.blend_inner_cachex2[RIGHT][i],
+                      globals.blend_inner_cachey2[RIGHT][i]);
     }
-  return;
 }
 
 static void
 init_left_bump (gint width,
-		gint height)
+                gint height)
 {
   gint i;
   gint xtiles = config.x;
@@ -1288,14 +1237,14 @@ init_left_bump (gint width,
   py[2] = curve_start_offset - YFACTOR3 * tile_height;
   py[3] = curve_start_offset + YFACTOR4 * tile_height;
   generate_bezier(px, py, steps, globals.cachex1[LEFT],
-		  globals.cachey1[LEFT]);
+                  globals.cachey1[LEFT]);
   /* outer left bump */
   for (i = 0; i < blend_lines; i++)
     {
       py[0]--; py[1]--; py[2]--; px[3]--;
       generate_bezier(px, py, steps,
-		      globals.blend_outer_cachex1[LEFT][i],
-		      globals.blend_outer_cachey1[LEFT][i]);
+                      globals.blend_outer_cachex1[LEFT][i],
+                      globals.blend_outer_cachey1[LEFT][i]);
     }
   /* inner left bump */
   py[0] += blend_lines; py[1] += blend_lines; py[2] += blend_lines;
@@ -1304,8 +1253,8 @@ init_left_bump (gint width,
     {
       py[0]++; py[1]++; py[2]++; px[3]++;
       generate_bezier(px, py, steps,
-		      globals.blend_inner_cachex1[LEFT][i],
-		      globals.blend_inner_cachey1[LEFT][i]);
+                      globals.blend_inner_cachex1[LEFT][i],
+                      globals.blend_inner_cachey1[LEFT][i]);
     }
 
   /* bottom half of bump */
@@ -1318,14 +1267,14 @@ init_left_bump (gint width,
   py[2] = curve_start_offset + YFACTOR7 * tile_height;
   py[3] = curve_end_offset;
   generate_bezier(px, py, steps, globals.cachex2[LEFT],
-		  globals.cachey2[LEFT]);
+                  globals.cachey2[LEFT]);
   /* outer left bump */
   for (i = 0; i < blend_lines; i++)
     {
       py[1]++; py[2]++; py[3]++; px[0]--;
       generate_bezier(px, py, steps,
-		      globals.blend_outer_cachex2[LEFT][i],
-		      globals.blend_outer_cachey2[LEFT][i]);
+                      globals.blend_outer_cachex2[LEFT][i],
+                      globals.blend_outer_cachey2[LEFT][i]);
     }
   /* inner left bump */
   py[1] -= blend_lines; py[2] -= blend_lines; py[3] -= blend_lines;
@@ -1334,14 +1283,14 @@ init_left_bump (gint width,
     {
       py[1]--; py[2]--; py[3]--; px[0]++;
       generate_bezier(px, py, steps,
-		      globals.blend_inner_cachex2[LEFT][i],
-		      globals.blend_inner_cachey2[LEFT][i]);
+                      globals.blend_inner_cachex2[LEFT][i],
+                      globals.blend_inner_cachey2[LEFT][i]);
     }
 }
 
 static void
 init_up_bump (gint width,
-	      gint height)
+              gint height)
 {
   gint i;
   gint xtiles = config.x;
@@ -1365,14 +1314,14 @@ init_up_bump (gint width,
   py[2] = y_offset - XFACTOR3 * tile_height;
   py[3] = y_offset - XFACTOR4 * tile_height;
   generate_bezier(px, py, steps, globals.cachex1[UP],
-		  globals.cachey1[UP]);
+                  globals.cachey1[UP]);
   /* outer up bump */
   for (i = 0; i < blend_lines; i++)
     {
       px[0]--; px[1]--; px[2]--; py[3]--;
       generate_bezier(px, py, steps,
-		      globals.blend_outer_cachex1[UP][i],
-		      globals.blend_outer_cachey1[UP][i]);
+                      globals.blend_outer_cachex1[UP][i],
+                      globals.blend_outer_cachey1[UP][i]);
     }
   /* inner up bump */
   px[0] += blend_lines; px[1] += blend_lines; px[2] += blend_lines;
@@ -1381,8 +1330,8 @@ init_up_bump (gint width,
     {
       px[0]++; px[1]++; px[2]++; py[3]++;
       generate_bezier(px, py, steps,
-		      globals.blend_inner_cachex1[UP][i],
-		      globals.blend_inner_cachey1[UP][i]);
+                      globals.blend_inner_cachex1[UP][i],
+                      globals.blend_inner_cachey1[UP][i]);
     }
 
   /* bottom half of bump */
@@ -1395,14 +1344,14 @@ init_up_bump (gint width,
   py[2] = y_offset - XFACTOR7 * tile_height;
   py[3] = y_offset;
   generate_bezier(px, py, steps, globals.cachex2[UP],
-		  globals.cachey2[UP]);
+                  globals.cachey2[UP]);
   /* outer up bump */
   for (i = 0; i < blend_lines; i++)
     {
       px[1]++; px[2]++; px[3]++; py[0]--;
       generate_bezier(px, py, steps,
-		      globals.blend_outer_cachex2[UP][i],
-		      globals.blend_outer_cachey2[UP][i]);
+                      globals.blend_outer_cachex2[UP][i],
+                      globals.blend_outer_cachey2[UP][i]);
     }
   /* inner up bump */
   px[1] -= blend_lines; px[2] -= blend_lines; px[3] -= blend_lines;
@@ -1411,15 +1360,14 @@ init_up_bump (gint width,
     {
       px[1]--; px[2]--; px[3]--; py[0]++;
       generate_bezier(px, py, steps,
-		      globals.blend_inner_cachex2[UP][i],
-		      globals.blend_inner_cachey2[UP][i]);
+                      globals.blend_inner_cachex2[UP][i],
+                      globals.blend_inner_cachey2[UP][i]);
     }
-  return;
 }
 
 static void
 init_down_bump (gint width,
-		gint height)
+                gint height)
 {
   gint i;
   gint xtiles = config.x;
@@ -1443,14 +1391,14 @@ init_down_bump (gint width,
   py[2] = y_offset + XFACTOR3 * tile_height;
   py[3] = y_offset + XFACTOR4 * tile_height;
   generate_bezier(px, py, steps, globals.cachex1[DOWN],
-		  globals.cachey1[DOWN]);
+                  globals.cachey1[DOWN]);
   /* outer down bump */
   for (i = 0; i < blend_lines; i++)
     {
       px[0]--; px[1]--; px[2]--; py[3]++;
       generate_bezier(px, py, steps,
-		      globals.blend_outer_cachex1[DOWN][i],
-		      globals.blend_outer_cachey1[DOWN][i]);
+                      globals.blend_outer_cachex1[DOWN][i],
+                      globals.blend_outer_cachey1[DOWN][i]);
     }
   /* inner down bump */
   px[0] += blend_lines; px[1] += blend_lines; px[2] += blend_lines;
@@ -1459,8 +1407,8 @@ init_down_bump (gint width,
     {
       px[0]++; px[1]++; px[2]++; py[3]--;
       generate_bezier(px, py, steps,
-		      globals.blend_inner_cachex1[DOWN][i],
-		      globals.blend_inner_cachey1[DOWN][i]);
+                      globals.blend_inner_cachex1[DOWN][i],
+                      globals.blend_inner_cachey1[DOWN][i]);
     }
 
   /* bottom half of bump */
@@ -1473,14 +1421,14 @@ init_down_bump (gint width,
   py[2] = y_offset + XFACTOR7 * tile_height;
   py[3] = y_offset;
   generate_bezier(px, py, steps, globals.cachex2[DOWN],
-		  globals.cachey2[DOWN]);
+                  globals.cachey2[DOWN]);
   /* outer down bump */
   for (i = 0; i < blend_lines; i++)
     {
       px[1]++; px[2]++; px[3]++; py[0]++;
       generate_bezier(px, py, steps,
-		      globals.blend_outer_cachex2[DOWN][i],
-		      globals.blend_outer_cachey2[DOWN][i]);
+                      globals.blend_outer_cachex2[DOWN][i],
+                      globals.blend_outer_cachey2[DOWN][i]);
     }
   /* inner down bump */
   px[1] -= blend_lines; px[2] -= blend_lines; px[3] -= blend_lines;
@@ -1489,19 +1437,18 @@ init_down_bump (gint width,
     {
       px[1]--; px[2]--; px[3]--; py[0]--;
       generate_bezier(px, py, steps,
-		      globals.blend_inner_cachex2[DOWN][i],
-		      globals.blend_inner_cachey2[DOWN][i]);
+                      globals.blend_inner_cachex2[DOWN][i],
+                      globals.blend_inner_cachey2[DOWN][i]);
     }
-  return;
 }
 
 static void
 generate_grid (gint  width,
-	       gint  height,
-	       gint  xtiles,
-	       gint  ytiles,
-	       gint *x,
-	       gint *y)
+               gint  height,
+               gint  xtiles,
+               gint  ytiles,
+               gint *x,
+               gint *y)
 {
   gint i;
   gint xlines = xtiles - 1;
@@ -1523,9 +1470,9 @@ generate_grid (gint  width,
   while (tile_width_leftover)
     {
       for (i = carry; i < xlines; i++)
-	{
-	  x[i] += 1;
-	}
+        {
+          x[i] += 1;
+        }
       tile_width_leftover--;
       carry++;
     }
@@ -1540,9 +1487,9 @@ generate_grid (gint  width,
   while (tile_height_leftover)
     {
       for (i = carry; i < ylines; i++)
-	{
-	  y[i] += 1;
-	}
+        {
+          y[i] += 1;
+        }
       tile_height_leftover--;
       carry++;
     }
@@ -1554,12 +1501,11 @@ generate_grid (gint  width,
 static void
 darken_vertical_line (guchar   *buffer,
                       gint      bufsize,
-		      gint      width,
-		      gint      bytes,
-		      gint      px[2],
-		      gint      py[2],
-		      gdouble   delta,
-		      gboolean  preview_mode)
+                      gint      width,
+                      gint      bytes,
+                      gint      px[2],
+                      gint      py[2],
+                      gdouble   delta)
 {
   gint i;
   gint rowstride;
@@ -1567,7 +1513,7 @@ darken_vertical_line (guchar   *buffer,
   gint length;
   gint temp;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
   index = px[0] * bytes + py[0] * rowstride;
   length = py[1] - py[0] + 1;
 
@@ -1583,12 +1529,11 @@ darken_vertical_line (guchar   *buffer,
 static void
 lighten_vertical_line (guchar   *buffer,
                        gint      bufsize,
-		       gint      width,
-		       gint      bytes,
-		       gint      px[2],
-		       gint      py[2],
-		       gdouble   delta,
-		       gboolean  preview_mode)
+                       gint      width,
+                       gint      bytes,
+                       gint      px[2],
+                       gint      py[2],
+                       gdouble   delta)
 {
   gint i;
   gint rowstride;
@@ -1596,7 +1541,7 @@ lighten_vertical_line (guchar   *buffer,
   gint length;
   gint temp;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
   index = px[0] * bytes + py[0] * rowstride;
   length = py[1] - py[0] + 1;
 
@@ -1612,12 +1557,11 @@ lighten_vertical_line (guchar   *buffer,
 static void
 darken_horizontal_line (guchar   *buffer,
                         gint      bufsize,
-			gint      width,
-			gint      bytes,
-			gint      px[2],
-			gint      py[2],
-			gdouble   delta,
-			gboolean  preview_mode)
+                        gint      width,
+                        gint      bytes,
+                        gint      px[2],
+                        gint      py[2],
+                        gdouble   delta)
 {
   gint i;
   gint rowstride;
@@ -1625,7 +1569,7 @@ darken_horizontal_line (guchar   *buffer,
   gint length;
   gint temp;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
   index = px[0] * bytes + py[0] * rowstride;
   length = px[1] - px[0] + 1;
 
@@ -1641,12 +1585,11 @@ darken_horizontal_line (guchar   *buffer,
 static void
 lighten_horizontal_line (guchar   *buffer,
                          gint      bufsize,
-			 gint      width,
-			 gint      bytes,
-			 gint      px[2],
-			 gint      py[2],
-			 gdouble   delta,
-			 gboolean  preview_mode)
+                         gint      width,
+                         gint      bytes,
+                         gint      px[2],
+                         gint      py[2],
+                         gdouble   delta)
 {
   gint i;
   gint rowstride;
@@ -1654,7 +1597,7 @@ lighten_horizontal_line (guchar   *buffer,
   gint length;
   gint temp;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
   index = px[0] * bytes + py[0] * rowstride;
   length = px[1] - px[0] + 1;
 
@@ -1668,14 +1611,13 @@ lighten_horizontal_line (guchar   *buffer,
 static void
 darken_right_bump (guchar *buffer,
                    gint    bufsize,
-		   gint    width,
-		   gint    bytes,
-		   gint    x_offset,
-		   gint    curve_start_offset,
-		   gint    steps,
-		   gdouble delta,
-		   gint    counter,
-		   gboolean  preview_mode)
+                   gint    width,
+                   gint    bytes,
+                   gint    x_offset,
+                   gint    curve_start_offset,
+                   gint    steps,
+                   gdouble delta,
+                   gint    counter)
 {
   gint i;
   gint x, y;
@@ -1686,52 +1628,51 @@ darken_right_bump (guchar *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
       x = x_offset
-	+ globals.blend_inner_cachex1[RIGHT][j][i];
+        + globals.blend_inner_cachex1[RIGHT][j][i];
       y = curve_start_offset
-	+ globals.blend_inner_cachey1[RIGHT][j][i];
+        + globals.blend_inner_cachey1[RIGHT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
-	{
-	  if (i < steps / 1.3)
-	    {
+        {
+          if (i < steps / 1.3)
+            {
               LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  else
-	    {
+            }
+          else
+            {
               DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  last_index1 = index;
-	}
+            }
+          last_index1 = index;
+        }
 
       x = x_offset
-	+ globals.blend_inner_cachex2[RIGHT][j][i];
+        + globals.blend_inner_cachex2[RIGHT][j][i];
       y = curve_start_offset
-	+ globals.blend_inner_cachey2[RIGHT][j][i];
+        + globals.blend_inner_cachey2[RIGHT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
-	{
+        {
           DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	  last_index2 = index;
-	}
+          last_index2 = index;
+        }
     }
 }
 
 static void
 lighten_right_bump (guchar   *buffer,
                     gint      bufsize,
-		    gint      width,
-		    gint      bytes,
-		    gint      x_offset,
-		    gint      curve_start_offset,
-		    gint      steps,
-		    gdouble   delta,
-		    gint      counter,
-		    gboolean  preview_mode)
+                    gint      width,
+                    gint      bytes,
+                    gint      x_offset,
+                    gint      curve_start_offset,
+                    gint      steps,
+                    gdouble   delta,
+                    gint      counter)
 {
   gint i;
   gint x, y;
@@ -1742,52 +1683,51 @@ lighten_right_bump (guchar   *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
       x = x_offset
-	+ globals.blend_outer_cachex1[RIGHT][j][i];
+        + globals.blend_outer_cachex1[RIGHT][j][i];
       y = curve_start_offset
-	+ globals.blend_outer_cachey1[RIGHT][j][i];
+        + globals.blend_outer_cachey1[RIGHT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
-	{
-	  if (i < steps / 1.3)
-	    {
+        {
+          if (i < steps / 1.3)
+            {
               DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  else
-	    {
+            }
+          else
+            {
               LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  last_index1 = index;
-	}
+            }
+          last_index1 = index;
+        }
 
       x = x_offset
-	+ globals.blend_outer_cachex2[RIGHT][j][i];
+        + globals.blend_outer_cachex2[RIGHT][j][i];
       y = curve_start_offset
-	+ globals.blend_outer_cachey2[RIGHT][j][i];
+        + globals.blend_outer_cachey2[RIGHT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
-	{
+        {
           LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	  last_index2 = index;
-	}
+          last_index2 = index;
+        }
     }
 }
 
 static void
 darken_left_bump (guchar   *buffer,
                   gint      bufsize,
-		  gint      width,
-		  gint      bytes,
-		  gint      x_offset,
-		  gint      curve_start_offset,
-		  gint      steps,
-		  gdouble   delta,
-		  gint      counter,
-		  gboolean  preview_mode)
+                  gint      width,
+                  gint      bytes,
+                  gint      x_offset,
+                  gint      curve_start_offset,
+                  gint      steps,
+                  gdouble   delta,
+                  gint      counter)
 {
   gint i;
   gint x, y;
@@ -1798,52 +1738,51 @@ darken_left_bump (guchar   *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
       x = x_offset
-	+ globals.blend_outer_cachex1[LEFT][j][i];
+        + globals.blend_outer_cachex1[LEFT][j][i];
       y = curve_start_offset
-	+ globals.blend_outer_cachey1[LEFT][j][i];
+        + globals.blend_outer_cachey1[LEFT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
-	{
+        {
           DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	  last_index1 = index;
-	}
+          last_index1 = index;
+        }
 
       x = x_offset
-	+ globals.blend_outer_cachex2[LEFT][j][i];
+        + globals.blend_outer_cachex2[LEFT][j][i];
       y = curve_start_offset
-	+ globals.blend_outer_cachey2[LEFT][j][i];
+        + globals.blend_outer_cachey2[LEFT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
-	{
-	  if (i < steps / 4)
-	    {
+        {
+          if (i < steps / 4)
+            {
               DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  else
-	    {
+            }
+          else
+            {
               LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  last_index2 = index;
-	}
+            }
+          last_index2 = index;
+        }
     }
 }
 
 static void
 lighten_left_bump (guchar *buffer,
                    gint    bufsize,
-		   gint    width,
-		   gint    bytes,
-		   gint    x_offset,
-		   gint    curve_start_offset,
-		   gint    steps,
-		   gdouble delta,
-		   gint    counter,
-		   gboolean  preview_mode)
+                   gint    width,
+                   gint    bytes,
+                   gint    x_offset,
+                   gint    curve_start_offset,
+                   gint    steps,
+                   gdouble delta,
+                   gint    counter)
 {
   gint i;
   gint x, y;
@@ -1854,52 +1793,51 @@ lighten_left_bump (guchar *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
       x = x_offset
-	+ globals.blend_inner_cachex1[LEFT][j][i];
+        + globals.blend_inner_cachex1[LEFT][j][i];
       y = curve_start_offset
-	+ globals.blend_inner_cachey1[LEFT][j][i];
+        + globals.blend_inner_cachey1[LEFT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
-	{
+        {
           LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	  last_index1 = index;
-	}
+          last_index1 = index;
+        }
 
       x = x_offset
-	+ globals.blend_inner_cachex2[LEFT][j][i];
+        + globals.blend_inner_cachex2[LEFT][j][i];
       y = curve_start_offset
-	+ globals.blend_inner_cachey2[LEFT][j][i];
+        + globals.blend_inner_cachey2[LEFT][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
-	{
-	  if (i < steps / 4)
-	    {
+        {
+          if (i < steps / 4)
+            {
               LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  else
-	    {
+            }
+          else
+            {
               DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  last_index2 = index;
-	}
+            }
+          last_index2 = index;
+        }
     }
 }
 
 static void
 darken_up_bump (guchar   *buffer,
                 gint      bufsize,
-		gint      width,
-		gint      bytes,
-		gint      y_offset,
-		gint      curve_start_offset,
-		gint      steps,
-		gdouble   delta,
-		gint      counter,
-		gboolean  preview_mode)
+                gint      width,
+                gint      bytes,
+                gint      y_offset,
+                gint      curve_start_offset,
+                gint      steps,
+                gdouble   delta,
+                gint      counter)
 {
   gint i;
   gint x, y;
@@ -1910,52 +1848,51 @@ darken_up_bump (guchar   *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
       x = curve_start_offset
-	+ globals.blend_outer_cachex1[UP][j][i];
+        + globals.blend_outer_cachex1[UP][j][i];
       y = y_offset
-	+ globals.blend_outer_cachey1[UP][j][i];
+        + globals.blend_outer_cachey1[UP][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
-	{
+        {
           DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	  last_index1 = index;
-	}
+          last_index1 = index;
+        }
 
       x = curve_start_offset
-	+ globals.blend_outer_cachex2[UP][j][i];
+        + globals.blend_outer_cachex2[UP][j][i];
       y = y_offset
-	+ globals.blend_outer_cachey2[UP][j][i];
+        + globals.blend_outer_cachey2[UP][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
-	{
-	  if (i < steps / 4)
-	    {
+        {
+          if (i < steps / 4)
+            {
               DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  else
-	    {
+            }
+          else
+            {
               LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  last_index2 = index;
-	}
+            }
+          last_index2 = index;
+        }
     }
 }
 
 static void
 lighten_up_bump (guchar   *buffer,
                  gint      bufsize,
-		 gint      width,
-		 gint      bytes,
-		 gint      y_offset,
-		 gint      curve_start_offset,
-		 gint      steps,
-		 gdouble   delta,
-		 gint      counter,
-		 gboolean  preview_mode)
+                 gint      width,
+                 gint      bytes,
+                 gint      y_offset,
+                 gint      curve_start_offset,
+                 gint      steps,
+                 gdouble   delta,
+                 gint      counter)
 {
   gint i;
   gint x, y;
@@ -1966,52 +1903,51 @@ lighten_up_bump (guchar   *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
       x = curve_start_offset
-	+ globals.blend_inner_cachex1[UP][j][i];
+        + globals.blend_inner_cachex1[UP][j][i];
       y = y_offset
-	+ globals.blend_inner_cachey1[UP][j][i];
+        + globals.blend_inner_cachey1[UP][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
-	{
+        {
           LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	  last_index1 = index;
-	}
+          last_index1 = index;
+        }
 
       x = curve_start_offset
-	+ globals.blend_inner_cachex2[UP][j][i];
+        + globals.blend_inner_cachex2[UP][j][i];
       y = y_offset
-	+ globals.blend_inner_cachey2[UP][j][i];
+        + globals.blend_inner_cachey2[UP][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
-	{
-	  if (i < steps / 4)
-	    {
+        {
+          if (i < steps / 4)
+            {
               LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  else
-	    {
+            }
+          else
+            {
               DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  last_index2 = index;
-	}
+            }
+          last_index2 = index;
+        }
     }
 }
 
 static void
 darken_down_bump (guchar   *buffer,
                   gint      bufsize,
-		  gint      width,
-		  gint      bytes,
-		  gint      y_offset,
-		  gint      curve_start_offset,
-		  gint      steps,
-		  gdouble   delta,
-		  gint      counter,
-		  gboolean  preview_mode)
+                  gint      width,
+                  gint      bytes,
+                  gint      y_offset,
+                  gint      curve_start_offset,
+                  gint      steps,
+                  gdouble   delta,
+                  gint      counter)
 {
   gint i;
   gint x, y;
@@ -2022,52 +1958,51 @@ darken_down_bump (guchar   *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
       x = curve_start_offset
-	+ globals.blend_inner_cachex1[DOWN][j][i];
+        + globals.blend_inner_cachex1[DOWN][j][i];
       y = y_offset
-	+ globals.blend_inner_cachey1[DOWN][j][i];
+        + globals.blend_inner_cachey1[DOWN][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
-	{
-	  if (i < steps / 1.2)
-	    {
+        {
+          if (i < steps / 1.2)
+            {
               LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  else
-	    {
+            }
+          else
+            {
               DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  last_index1 = index;
-	}
+            }
+          last_index1 = index;
+        }
 
       x = curve_start_offset
-	+ globals.blend_inner_cachex2[DOWN][j][i];
+        + globals.blend_inner_cachex2[DOWN][j][i];
       y = y_offset
-	+ globals.blend_inner_cachey2[DOWN][j][i];
+        + globals.blend_inner_cachey2[DOWN][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
-	{
+        {
           DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	  last_index2 = index;
-	}
+          last_index2 = index;
+        }
     }
 }
 
 static void
 lighten_down_bump (guchar   *buffer,
                    gint      bufsize,
-		   gint      width,
-		   gint      bytes,
-		   gint      y_offset,
-		   gint      curve_start_offset,
-		   gint      steps,
-		   gdouble   delta,
-		   gint      counter,
-		   gboolean  preview_mode)
+                   gint      width,
+                   gint      bytes,
+                   gint      y_offset,
+                   gint      curve_start_offset,
+                   gint      steps,
+                   gdouble   delta,
+                   gint      counter)
 {
   gint i;
   gint x, y;
@@ -2078,57 +2013,56 @@ lighten_down_bump (guchar   *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
       x = curve_start_offset
-	+ globals.blend_outer_cachex1[DOWN][j][i];
+        + globals.blend_outer_cachex1[DOWN][j][i];
       y = y_offset
-	+ globals.blend_outer_cachey1[DOWN][j][i];
+        + globals.blend_outer_cachey1[DOWN][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index1)
-	{
-	  if (i < steps / 1.2)
-	    {
+        {
+          if (i < steps / 1.2)
+            {
               DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  else
-	    {
+            }
+          else
+            {
               LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	    }
-	  last_index1 = index;
-	}
+            }
+          last_index1 = index;
+        }
 
       x = curve_start_offset
-	+ globals.blend_outer_cachex2[DOWN][j][i];
+        + globals.blend_outer_cachex2[DOWN][j][i];
       y = y_offset
-	+ globals.blend_outer_cachey2[DOWN][j][i];
+        + globals.blend_outer_cachey2[DOWN][j][i];
       index = y * rowstride + x * bytes;
       if (index != last_index2)
-	{
+        {
           LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	  last_index2 = index;
-	}
+          last_index2 = index;
+        }
     }
 }
 
 static void
 draw_bezier_line (guchar   *buffer,
                   gint      bufsize,
-		  gint      width,
-		  gint      bytes,
-		  gint      steps,
-		  gint     *cx,
-		  gint     *cy,
-		  gboolean  preview_mode)
+                  gint      width,
+                  gint      bytes,
+                  gint      steps,
+                  gint     *cx,
+                  gint     *cy)
 {
   gint i;
   gint x, y;
   gint index;
   gint rowstride;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -2142,15 +2076,14 @@ draw_bezier_line (guchar   *buffer,
 static void
 darken_bezier_line (guchar   *buffer,
                     gint      bufsize,
-		    gint      width,
-		    gint      bytes,
-		    gint      x_offset,
-		    gint      y_offset,
-		    gint      steps,
-		    gint     *cx,
-		    gint     *cy,
-		    gdouble   delta,
-		    gboolean  preview_mode)
+                    gint      width,
+                    gint      bytes,
+                    gint      x_offset,
+                    gint      y_offset,
+                    gint      steps,
+                    gint     *cx,
+                    gint     *cy,
+                    gdouble   delta)
 {
   gint i;
   gint x, y;
@@ -2159,7 +2092,7 @@ darken_bezier_line (guchar   *buffer,
   gint rowstride;
   gint temp;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -2167,25 +2100,24 @@ darken_bezier_line (guchar   *buffer,
       y = cy[i] + y_offset;
       index = y * rowstride + x * bytes;
       if (index != last_index)
-	{
+        {
           DARKEN_POINT (buffer, bufsize, index, delta, temp);
-	  last_index = index;
-	}
+          last_index = index;
+        }
     }
 }
 
 static void
 lighten_bezier_line (guchar   *buffer,
                      gint      bufsize,
-		     gint      width,
-		     gint      bytes,
-		     gint      x_offset,
-		     gint      y_offset,
-		     gint      steps,
-		     gint     *cx,
-		     gint     *cy,
-		     gdouble   delta,
-		     gboolean  preview_mode)
+                     gint      width,
+                     gint      bytes,
+                     gint      x_offset,
+                     gint      y_offset,
+                     gint      steps,
+                     gint     *cx,
+                     gint     *cy,
+                     gdouble   delta)
 {
   gint i;
   gint x, y;
@@ -2194,7 +2126,7 @@ lighten_bezier_line (guchar   *buffer,
   gint rowstride;
   gint temp;
 
-  rowstride = preview_mode ? preview->rowstride : bytes * width;
+  rowstride = bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -2202,26 +2134,25 @@ lighten_bezier_line (guchar   *buffer,
       y = cy[i] + y_offset;
       index = y * rowstride + x * bytes;
       if (index != last_index)
-	{
+        {
           LIGHTEN_POINT (buffer, bufsize, index, delta, temp);
-	  last_index = index;
-	}
+          last_index = index;
+        }
     }
 }
 
 static void
 draw_bezier_vertical_border (guchar   *buffer,
                              gint      bufsize,
-			     gint      width,
-			     gint      height,
-			     gint      bytes,
-			     gint      x_offset,
-			     gint      xtiles,
-			     gint      ytiles,
-			     gint      blend_lines,
-			     gdouble   blend_amount,
-			     gint      steps,
-			     gboolean  preview_mode)
+                             gint      width,
+                             gint      height,
+                             gint      bytes,
+                             gint      x_offset,
+                             gint      xtiles,
+                             gint      ytiles,
+                             gint      blend_lines,
+                             gdouble   blend_amount,
+                             gint      steps)
 {
   gint i, j;
   gint tile_width = width / xtiles;
@@ -2244,13 +2175,13 @@ draw_bezier_vertical_border (guchar   *buffer,
     {
       right = g_random_int_range (0, 2);
       if (right)
-	{
-	  style_index = RIGHT;
-	}
+        {
+          style_index = RIGHT;
+        }
       else
-	{
-	  style_index = LEFT;
-	}
+        {
+          style_index = LEFT;
+        }
       px[0] = px[3] = x_offset;
       px[1] = x_offset + WALL_XFACTOR2 * tile_width * FUDGE;
       px[2] = x_offset + WALL_XFACTOR3 * tile_width * FUDGE;
@@ -2260,62 +2191,61 @@ draw_bezier_vertical_border (guchar   *buffer,
       py[3] = y_offset + curve_start_offset;
 
       if (right)
-	{
-	  px[1] = x_offset - WALL_XFACTOR2 * tile_width;
-	  px[2] = x_offset - WALL_XFACTOR3 * tile_width;
-	}
+        {
+          px[1] = x_offset - WALL_XFACTOR2 * tile_width;
+          px[2] = x_offset - WALL_XFACTOR3 * tile_width;
+        }
       generate_bezier (px, py, steps, cachex, cachey);
-      draw_bezier_line (buffer, bufsize, width, bytes, steps, cachex, cachey,
-                        preview_mode);
+      draw_bezier_line (buffer, bufsize, width, bytes, steps, cachex, cachey);
       delta = blend_amount;
       for (j = 0; j < blend_lines; j++)
-	{
-	  px[0] =  -j - 1;
+        {
+          px[0] =  -j - 1;
           darken_bezier_line (buffer, bufsize, width, bytes, px[0], 0,
-                              steps, cachex, cachey, delta, preview_mode);
-	  px[0] =  j + 1;
+                              steps, cachex, cachey, delta);
+          px[0] =  j + 1;
           lighten_bezier_line (buffer, bufsize, width, bytes, px[0], 0,
-                               steps, cachex, cachey, delta, preview_mode);
-	  delta -= sigma;
-	}
+                               steps, cachex, cachey, delta);
+          delta -= sigma;
+        }
       if (right)
-	{
+        {
           draw_right_bump (buffer, bufsize, width, bytes, x_offset,
                            y_offset + curve_start_offset,
-                           globals.steps[RIGHT], preview_mode);
-	  delta = blend_amount;
-	  for (j = 0; j < blend_lines; j++)
-	    {
-	      /* use to be -j -1 */
+                           globals.steps[RIGHT]);
+          delta = blend_amount;
+          for (j = 0; j < blend_lines; j++)
+            {
+              /* use to be -j -1 */
               darken_right_bump (buffer, bufsize, width, bytes, x_offset,
                                  y_offset + curve_start_offset,
-                                 globals.steps[RIGHT], delta, j, preview_mode);
-	      /* use to be +j + 1 */
-	      lighten_right_bump (buffer, bufsize, width, bytes, x_offset,
+                                 globals.steps[RIGHT], delta, j);
+              /* use to be +j + 1 */
+              lighten_right_bump (buffer, bufsize, width, bytes, x_offset,
                                   y_offset + curve_start_offset,
-                                  globals.steps[RIGHT], delta, j, preview_mode);
-	      delta -= sigma;
-	    }
-	}
+                                  globals.steps[RIGHT], delta, j);
+              delta -= sigma;
+            }
+        }
       else
-	{
+        {
           draw_left_bump (buffer, bufsize, width, bytes, x_offset,
                           y_offset + curve_start_offset,
-                          globals.steps[LEFT], preview_mode);
-	  delta = blend_amount;
-	  for (j = 0; j < blend_lines; j++)
-	    {
-	      /* use to be -j -1 */
+                          globals.steps[LEFT]);
+          delta = blend_amount;
+          for (j = 0; j < blend_lines; j++)
+            {
+              /* use to be -j -1 */
               darken_left_bump (buffer, bufsize, width, bytes, x_offset,
                                 y_offset + curve_start_offset,
-                                globals.steps[LEFT], delta, j, preview_mode);
-	      /* use to be -j - 1 */
+                                globals.steps[LEFT], delta, j);
+              /* use to be -j - 1 */
               lighten_left_bump (buffer, bufsize, width, bytes, x_offset,
                                  y_offset + curve_start_offset,
-                                 globals.steps[LEFT], delta, j, preview_mode);
-	      delta -= sigma;
-	    }
-	}
+                                 globals.steps[LEFT], delta, j);
+              delta -= sigma;
+            }
+        }
       px[0] = px[3] = x_offset;
       px[1] = x_offset + WALL_XFACTOR2 * tile_width * FUDGE;
       px[2] = x_offset + WALL_XFACTOR3 * tile_width * FUDGE;
@@ -2324,24 +2254,23 @@ draw_bezier_vertical_border (guchar   *buffer,
       py[2] = y_offset + curve_end_offset + WALL_YCONS3 * tile_height;
       py[3] = globals.gridy[i];
       if (right)
-	{
-	  px[1] = x_offset - WALL_XFACTOR2 * tile_width;
-	  px[2] = x_offset - WALL_XFACTOR3 * tile_width;
-	}
+        {
+          px[1] = x_offset - WALL_XFACTOR2 * tile_width;
+          px[2] = x_offset - WALL_XFACTOR3 * tile_width;
+        }
       generate_bezier (px, py, steps, cachex, cachey);
-      draw_bezier_line (buffer, bufsize, width, bytes, steps, cachex, cachey,
-                        preview_mode);
+      draw_bezier_line (buffer, bufsize, width, bytes, steps, cachex, cachey);
       delta = blend_amount;
       for (j = 0; j < blend_lines; j++)
-	{
-	  px[0] =  -j - 1;
+        {
+          px[0] =  -j - 1;
           darken_bezier_line (buffer, bufsize, width, bytes, px[0], 0,
-                              steps, cachex, cachey, delta, preview_mode);
-	  px[0] =  j + 1;
+                              steps, cachex, cachey, delta);
+          px[0] =  j + 1;
           lighten_bezier_line (buffer, bufsize, width, bytes, px[0], 0,
-                               steps, cachex, cachey, delta, preview_mode);
-	  delta -= sigma;
-	}
+                               steps, cachex, cachey, delta);
+          delta -= sigma;
+        }
       y_offset = globals.gridy[i];
     }  /* for */
   g_free(cachex);
@@ -2351,16 +2280,15 @@ draw_bezier_vertical_border (guchar   *buffer,
 static void
 draw_bezier_horizontal_border (guchar   *buffer,
                                gint      bufsize,
-			       gint      width,
-			       gint      height,
-			       gint      bytes,
-			       gint      y_offset,
-			       gint      xtiles,
-			       gint      ytiles,
-			       gint      blend_lines,
-			       gdouble   blend_amount,
-			       gint      steps,
-			       gboolean  preview_mode)
+                               gint      width,
+                               gint      height,
+                               gint      bytes,
+                               gint      y_offset,
+                               gint      xtiles,
+                               gint      ytiles,
+                               gint      blend_lines,
+                               gdouble   blend_amount,
+                               gint      steps)
 {
   gint i, j;
   gint tile_width = width / xtiles;
@@ -2383,13 +2311,13 @@ draw_bezier_horizontal_border (guchar   *buffer,
     {
       up = g_random_int_range (0, 2);
       if (up)
-	{
-	  style_index = UP;
-	}
+        {
+          style_index = UP;
+        }
       else
-	{
-	  style_index = DOWN;
-	}
+        {
+          style_index = DOWN;
+        }
       px[0] = x_offset;
       px[1] = x_offset + WALL_XCONS2 * tile_width;
       px[2] = x_offset + WALL_XCONS3 * tile_width;
@@ -2398,63 +2326,62 @@ draw_bezier_horizontal_border (guchar   *buffer,
       py[1] = y_offset + WALL_YFACTOR2 * tile_height * FUDGE;
       py[2] = y_offset + WALL_YFACTOR3 * tile_height * FUDGE;
       if (!up)
-	{
-	  py[1] = y_offset - WALL_YFACTOR2 * tile_height;
-	  py[2] = y_offset - WALL_YFACTOR3 * tile_height;
-	}
+        {
+          py[1] = y_offset - WALL_YFACTOR2 * tile_height;
+          py[2] = y_offset - WALL_YFACTOR3 * tile_height;
+        }
       generate_bezier (px, py, steps, cachex, cachey);
-      draw_bezier_line (buffer, bufsize, width, bytes, steps, cachex, cachey,
-                        preview_mode);
+      draw_bezier_line (buffer, bufsize, width, bytes, steps, cachex, cachey);
       delta = blend_amount;
       for (j = 0; j < blend_lines; j++)
-	{
-	  py[0] = -j - 1;
+        {
+          py[0] = -j - 1;
           darken_bezier_line (buffer, bufsize, width, bytes, 0, py[0],
-                              steps, cachex, cachey, delta, preview_mode);
-	  py[0] = j + 1;
+                              steps, cachex, cachey, delta);
+          py[0] = j + 1;
           lighten_bezier_line (buffer, bufsize, width, bytes, 0, py[0],
-                               steps, cachex, cachey, delta, preview_mode);
-	  delta -= sigma;
-	}
+                               steps, cachex, cachey, delta);
+          delta -= sigma;
+        }
       /* bumps */
       if (up)
-	{
+        {
           draw_up_bump (buffer, bufsize, width, bytes, y_offset,
                         x_offset + curve_start_offset,
-                        globals.steps[UP], preview_mode);
-	  delta = blend_amount;
-	  for (j = 0; j < blend_lines; j++)
-	    {
-	      /* use to be -j -1 */
+                        globals.steps[UP]);
+          delta = blend_amount;
+          for (j = 0; j < blend_lines; j++)
+            {
+              /* use to be -j -1 */
               darken_up_bump (buffer, bufsize, width, bytes, y_offset,
                               x_offset + curve_start_offset,
-                              globals.steps[UP], delta, j, preview_mode);
-	      /* use to be +j + 1 */
+                              globals.steps[UP], delta, j);
+              /* use to be +j + 1 */
               lighten_up_bump (buffer, bufsize, width, bytes, y_offset,
                                x_offset + curve_start_offset,
-                               globals.steps[UP], delta, j, preview_mode);
-	      delta -= sigma;
-	    }
-	}
+                               globals.steps[UP], delta, j);
+              delta -= sigma;
+            }
+        }
       else
-	{
+        {
           draw_down_bump (buffer, bufsize, width, bytes, y_offset,
                           x_offset + curve_start_offset,
-                          globals.steps[DOWN], preview_mode);
-	  delta = blend_amount;
-	  for (j = 0; j < blend_lines; j++)
-	    {
-	      /* use to be +j + 1 */
+                          globals.steps[DOWN]);
+          delta = blend_amount;
+          for (j = 0; j < blend_lines; j++)
+            {
+              /* use to be +j + 1 */
               darken_down_bump (buffer, bufsize, width, bytes, y_offset,
                                 x_offset + curve_start_offset,
-                                globals.steps[DOWN], delta, j, preview_mode);
-	      /* use to be -j -1 */
+                                globals.steps[DOWN], delta, j);
+              /* use to be -j -1 */
               lighten_down_bump (buffer, bufsize, width, bytes, y_offset,
                                  x_offset + curve_start_offset,
-                                 globals.steps[DOWN], delta, j, preview_mode);
-	      delta -= sigma;
-	    }
-	}
+                                 globals.steps[DOWN], delta, j);
+              delta -= sigma;
+            }
+        }
       /* ending side wall line */
       px[0] = x_offset + curve_end_offset;
       px[1] = x_offset + curve_end_offset + WALL_XCONS2 * tile_width;
@@ -2464,24 +2391,23 @@ draw_bezier_horizontal_border (guchar   *buffer,
       py[1] = y_offset + WALL_YFACTOR2 * tile_height * FUDGE;
       py[2] = y_offset + WALL_YFACTOR3 * tile_height * FUDGE;
       if (!up)
-	{
-	  py[1] = y_offset - WALL_YFACTOR2 * tile_height;
-	  py[2] = y_offset - WALL_YFACTOR3 * tile_height;
-	}
+        {
+          py[1] = y_offset - WALL_YFACTOR2 * tile_height;
+          py[2] = y_offset - WALL_YFACTOR3 * tile_height;
+        }
       generate_bezier (px, py, steps, cachex, cachey);
-      draw_bezier_line (buffer, bufsize, width, bytes, steps, cachex, cachey,
-                        preview_mode);
+      draw_bezier_line (buffer, bufsize, width, bytes, steps, cachex, cachey);
       delta = blend_amount;
       for (j = 0; j < blend_lines; j++)
-	{
-	  py[0] =  -j - 1;
+        {
+          py[0] =  -j - 1;
           darken_bezier_line (buffer, bufsize, width, bytes, 0, py[0],
-                              steps, cachex, cachey, delta, preview_mode);
-	  py[0] =  j + 1;
+                              steps, cachex, cachey, delta);
+          py[0] =  j + 1;
           lighten_bezier_line (buffer, bufsize, width, bytes, 0, py[0],
-                               steps, cachex, cachey, delta, preview_mode);
-	  delta -= sigma;
-	}
+                               steps, cachex, cachey, delta);
+          delta -= sigma;
+        }
       x_offset = globals.gridx[i];
     }  /* for */
   g_free(cachex);
@@ -2490,7 +2416,7 @@ draw_bezier_horizontal_border (guchar   *buffer,
 
 static void
 check_config (gint width,
-	      gint height)
+              gint height)
 {
   gint tile_width, tile_height;
   gint tile_width_limit, tile_height_limit;
@@ -2545,12 +2471,12 @@ dialog_box (void)
 
   dlg = gimp_dialog_new (_("Jigsaw"), "jigsaw",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-jigsaw",
+                         gimp_standard_help_func, "plug-in-jigsaw",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
@@ -2562,11 +2488,15 @@ dialog_box (void)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  preview = gimp_old_preview_new (drawable);
-  gtk_box_pack_start (GTK_BOX (vbox), preview->frame, FALSE, FALSE, 0);
-  gtk_widget_show (preview->frame);
-
-  jigsaw (TRUE); /* render preview */
+  preview = gimp_preview_area_new ();
+  preview_width = preview_height = PREVIEW_SIZE;
+  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                                    &preview_width,
+                                                    &preview_height,
+                                                    &preview_bpp);
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
@@ -2584,10 +2514,10 @@ dialog_box (void)
 
   /* xtiles */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Horizontal:"), SCALE_WIDTH, 0,
-			      config.x, MIN_XTILES, MAX_XTILES, 1.0, 4.0, 0,
-			      TRUE, 0, 0,
-			      _("Number of pieces going across"), NULL);
+                              _("_Horizontal:"), SCALE_WIDTH, 0,
+                              config.x, MIN_XTILES, MAX_XTILES, 1.0, 4.0, 0,
+                              TRUE, 0, 0,
+                              _("Number of pieces going across"), NULL);
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
   g_object_unref (group);
@@ -2601,10 +2531,10 @@ dialog_box (void)
 
   /* ytiles */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Vertical:"), SCALE_WIDTH, 0,
-			      config.y, MIN_YTILES, MAX_YTILES, 1.0, 4.0, 0,
-			      TRUE, 0, 0,
-			      _("Number of pieces going down"), NULL);
+                              _("_Vertical:"), SCALE_WIDTH, 0,
+                              config.y, MIN_YTILES, MAX_YTILES, 1.0, 4.0, 0,
+                              TRUE, 0, 0,
+                              _("Number of pieces going down"), NULL);
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
@@ -2628,11 +2558,11 @@ dialog_box (void)
 
   /* number of blending lines */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Bevel width:"), SCALE_WIDTH, 4,
-			      config.blend_lines,
-			      MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
-			      TRUE, 0, 0,
-			      _("Degree of slope of each piece's edge"), NULL);
+                              _("_Bevel width:"), SCALE_WIDTH, 4,
+                              config.blend_lines,
+                              MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
+                              TRUE, 0, 0,
+                              _("Degree of slope of each piece's edge"), NULL);
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
@@ -2645,12 +2575,12 @@ dialog_box (void)
 
   /* blending amount */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("H_ighlight:"), SCALE_WIDTH, 4,
-			      config.blend_amount,
-			      MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 0.05, 0.1, 2,
-			      TRUE, 0, 0,
-			      _("The amount of highlighting on the edges "
-				"of each piece"), NULL);
+                              _("H_ighlight:"), SCALE_WIDTH, 4,
+                              config.blend_amount,
+                              MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 0.05, 0.1, 2,
+                              TRUE, 0, 0,
+                              _("The amount of highlighting on the edges "
+                                "of each piece"), NULL);
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
@@ -2667,13 +2597,13 @@ dialog_box (void)
   /* frame for primitive radio buttons */
 
   frame = gimp_int_radio_group_new (TRUE, _("Jigsaw Style"),
-				    G_CALLBACK (jigsaw_radio_button_update),
-				    &config.style, config.style,
+                                    G_CALLBACK (jigsaw_radio_button_update),
+                                    &config.style, config.style,
 
-				    _("_Square"), BEZIER_1, &rbutton1,
-				    _("C_urved"), BEZIER_2, &rbutton2,
+                                    _("_Square"), BEZIER_1, &rbutton1,
+                                    _("C_urved"), BEZIER_2, &rbutton2,
 
-				    NULL);
+                                    NULL);
 
   gimp_help_set_help_data (rbutton1, _("Each piece has straight sides"), NULL);
   gimp_help_set_help_data (rbutton2, _("Each piece has curved sides"),   NULL);
@@ -2682,6 +2612,8 @@ dialog_box (void)
   gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
+
+  jigsaw (TRUE); /* render preview */
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
@@ -2696,10 +2628,11 @@ dialog_box (void)
 
 static void
 jigsaw_radio_button_update (GtkWidget *widget,
-			    gpointer   data)
+                            gpointer   data)
 {
   gimp_radio_button_update (widget, data);
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     jigsaw (TRUE);
 }
+
