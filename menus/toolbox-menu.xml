@@ -37,7 +37,7 @@
         <menuitem action="dialogs-colors" />
         <menuitem action="dialogs-brushes" />
         <menuitem action="dialogs-patterns" />
-        <menuitem action="dialogs-graidents" />
+        <menuitem action="dialogs-gradients" />
         <menuitem action="dialogs-palettes" />
         <menuitem action="dialogs-fonts" />
         <menuitem action="dialogs-buffers" />
@@ -57,7 +57,7 @@
     </menu>
 
     <menu action="extensions-menu">
-      <menuitem action="dicloag-module-manager" />
+      <menuitem action="dialogs-module-manager" />
       <separator />
     </menu>
 

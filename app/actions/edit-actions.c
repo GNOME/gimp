@@ -57,6 +57,9 @@ static void   edit_actions_foreground_changed (GimpContext     *context,
 static void   edit_actions_background_changed (GimpContext     *context,
                                                const GimpRGB   *color,
                                                GimpActionGroup *group);
+static void   edit_actions_pattern_changed    (GimpContext     *context,
+                                               GimpPattern     *pattern,
+                                               GimpActionGroup *group);
 
 
 static GimpActionEntry edit_actions[] =
@@ -174,6 +177,9 @@ edit_actions_setup (GimpActionGroup *group,
                            group, 0);
   g_signal_connect_object (user_context, "background_changed",
                            G_CALLBACK (edit_actions_background_changed),
+                           group, 0);
+  g_signal_connect_object (user_context, "pattern_changed",
+                           G_CALLBACK (edit_actions_pattern_changed),
                            group, 0);
 
   gimp_context_get_foreground (user_context, &color);
@@ -297,4 +303,13 @@ edit_actions_background_changed (GimpContext     *context,
                                  GimpActionGroup *group)
 {
   gimp_action_group_set_action_color (group, "edit-fill-bg", color, FALSE);
+}
+
+static void
+edit_actions_pattern_changed (GimpContext     *context,
+                              GimpPattern     *pattern,
+                              GimpActionGroup *group)
+{
+  gimp_action_group_set_action_viewable (group, "edit-fill-pattern",
+                                         GIMP_VIEWABLE (pattern));
 }

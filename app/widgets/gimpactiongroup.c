@@ -23,12 +23,16 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpviewable.h"
 
 #include "gimpactiongroup.h"
 #include "gimpenumaction.h"
+#include "gimppreview.h"
 #include "gimpstringaction.h"
 
 #include "gimp-intl.h"
@@ -475,6 +479,14 @@ gimp_action_group_set_action_active (GimpActionGroup *group,
       return;
     }
 
+  if (! GTK_IS_TOGGLE_ACTION (action))
+    {
+      g_warning ("%s: Unable to set \"active\" of action "
+                 "which is not a GtkToggleAction: %s",
+                 G_STRLOC, action_name);
+      return;
+    }
+
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), active);
 }
 
@@ -508,9 +520,11 @@ gimp_action_group_set_action_color (GimpActionGroup *group,
                                     gboolean         set_label)
 {
   GtkAction *action;
+  GSList    *list;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
+  g_return_if_fail (color != NULL);
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
 
@@ -520,6 +534,143 @@ gimp_action_group_set_action_color (GimpActionGroup *group,
                  "which doesn't exist: %s",
                  G_STRLOC, action_name);
       return;
+    }
+
+  if (set_label)
+    {
+      gchar *label = g_strdup_printf (_("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"),
+                                      color->r, color->g, color->b, color->a);
+
+      g_object_set (action, "label", label, NULL);
+      g_free (label);
+    }
+
+  for (list = gtk_action_get_proxies (action); list; list = g_slist_next (list))
+    {
+      GtkWidget *widget = list->data;
+      GtkWidget *area   = NULL;
+
+      if (! GTK_IS_MENU_ITEM (widget))
+        continue;
+
+      if (GTK_IS_HBOX (GTK_BIN (widget)->child))
+        {
+          area = g_object_get_data (G_OBJECT (GTK_BIN (widget)->child),
+                                    "gimp-color-area");
+        }
+      else if (GTK_IS_LABEL (GTK_BIN (widget)->child))
+        {
+          GdkScreen *screen;
+          GtkWidget *label;
+          GtkWidget *hbox;
+          gint       width, height;
+
+          label = GTK_BIN (widget)->child;
+
+          g_object_ref (label);
+
+          gtk_container_remove (GTK_CONTAINER (widget), label);
+
+          hbox = gtk_hbox_new (FALSE, 4);
+          gtk_container_add (GTK_CONTAINER (widget), hbox);
+          gtk_widget_show (hbox);
+
+          screen = gtk_widget_get_screen (widget);
+          gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
+                                             GTK_ICON_SIZE_MENU,
+                                             &width, &height);
+
+          area = gimp_color_area_new (color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
+          gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
+          gtk_widget_set_size_request (area, width, height);
+          gtk_box_pack_start (GTK_BOX (hbox), area, FALSE, FALSE, 0);
+          gtk_widget_show (area);
+
+          gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+          gtk_widget_show (label);
+
+          g_object_unref (label);
+
+          g_object_set_data (G_OBJECT (hbox), "gimp-color-area", area);
+        }
+
+      if (area)
+        gimp_color_area_set_color (GIMP_COLOR_AREA (area), color);
+    }
+}
+
+void
+gimp_action_group_set_action_viewable (GimpActionGroup *group,
+                                       const gchar     *action_name,
+                                       GimpViewable    *viewable)
+{
+  GtkAction *action;
+  GSList    *list;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (action_name != NULL);
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to set viewable of action "
+                 "which doesn't exist: %s",
+                 G_STRLOC, action_name);
+      return;
+    }
+
+  for (list = gtk_action_get_proxies (action); list; list = g_slist_next (list))
+    {
+      GtkWidget *widget  = list->data;
+      GtkWidget *preview = NULL;
+
+      if (! GTK_IS_MENU_ITEM (widget))
+        continue;
+
+      if (GTK_IS_HBOX (GTK_BIN (widget)->child))
+        {
+          preview = g_object_get_data (G_OBJECT (GTK_BIN (widget)->child),
+                                       "gimp-preview");
+        }
+      else if (GTK_IS_LABEL (GTK_BIN (widget)->child))
+        {
+          GdkScreen *screen;
+          GtkWidget *label;
+          GtkWidget *hbox;
+          gint       width, height;
+
+          label = GTK_BIN (widget)->child;
+
+          g_object_ref (label);
+
+          gtk_container_remove (GTK_CONTAINER (widget), label);
+
+          hbox = gtk_hbox_new (FALSE, 4);
+          gtk_container_add (GTK_CONTAINER (widget), hbox);
+          gtk_widget_show (hbox);
+
+          screen = gtk_widget_get_screen (widget);
+          gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
+                                             GTK_ICON_SIZE_MENU,
+                                             &width, &height);
+
+          preview = gimp_preview_new_full (viewable, width - 2, height - 2, 1,
+                                           FALSE, FALSE, FALSE);
+          gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+          gtk_widget_show (preview);
+
+          gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+          gtk_widget_show (label);
+
+          g_object_unref (label);
+
+          g_object_set_data (G_OBJECT (hbox), "gimp-preview", preview);
+        }
+
+      if (preview)
+        gimp_preview_set_viewable (GIMP_PREVIEW (preview), viewable);
     }
 }
 

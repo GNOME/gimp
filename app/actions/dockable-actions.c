@@ -45,11 +45,11 @@
 
 static GimpActionEntry dockable_actions[] =
 {
-  { "dockable-popup",             NULL, N_("Dialogs Menu")      },
-  { "dockable-menu",              GTK_STOCK_MISSING_IMAGE, NULL },
-  { "dockable-add-tab-menu",      NULL, N_("_Add Tab")          },
-  { "dockable-preview-size-menu", NULL, N_("Preview Si_ze")     },
-  { "dockable-tab-style-menu",    NULL, N_("/_Tab Style")       },
+  { "dockable-popup",             NULL, N_("Dialogs Menu")    },
+  { "dockable-menu",              GTK_STOCK_MISSING_IMAGE, "" },
+  { "dockable-add-tab-menu",      NULL, N_("_Add Tab")        },
+  { "dockable-preview-size-menu", NULL, N_("Preview Si_ze")   },
+  { "dockable-tab-style-menu",    NULL, N_("_Tab Style")      },
 
   { "dockable-close-tab", GTK_STOCK_CLOSE,
     N_("_Close Tab"), "", NULL,
@@ -108,11 +108,11 @@ static GimpRadioActionEntry dockable_preview_size_actions[] =
 
 static GimpRadioActionEntry dockable_tab_style_actions[] =
 {
-  TAB_STYLE ("icon",        N_("_Icon"),           GIMP_TAB_STYLE_ICON),
-  TAB_STYLE ("status",      N_("Current _Status"), GIMP_TAB_STYLE_PREVIEW),
-  TAB_STYLE ("text",        N_("_Text"),           GIMP_TAB_STYLE_NAME),
-  TAB_STYLE ("icon-text",   N_("I_con & Text"),    GIMP_TAB_STYLE_ICON_NAME),
-  TAB_STYLE ("status-text", N_("St_atus & Text"),  GIMP_TAB_STYLE_PREVIEW_NAME)
+  TAB_STYLE ("icon",         N_("_Icon"),           GIMP_TAB_STYLE_ICON),
+  TAB_STYLE ("preview",      N_("Current _Status"), GIMP_TAB_STYLE_PREVIEW),
+  TAB_STYLE ("name",         N_("_Text"),           GIMP_TAB_STYLE_NAME),
+  TAB_STYLE ("icon-name",    N_("I_con & Text"),    GIMP_TAB_STYLE_ICON_NAME),
+  TAB_STYLE ("preview-name", N_("St_atus & Text"),  GIMP_TAB_STYLE_PREVIEW_NAME)
 };
 
 #undef PREVIEW_SIZE
@@ -310,17 +310,17 @@ dockable_actions_update (GimpActionGroup *group,
       if (tab_style == GIMP_TAB_STYLE_ICON)
         SET_ACTIVE ("dockable-tab-style-icon", TRUE);
       else if (tab_style == GIMP_TAB_STYLE_PREVIEW)
-        SET_ACTIVE ("dockable-tab-style-status", TRUE);
+        SET_ACTIVE ("dockable-tab-style-preview", TRUE);
       else if (tab_style == GIMP_TAB_STYLE_NAME)
-        SET_ACTIVE ("dockable-tab-style-text", TRUE);
+        SET_ACTIVE ("dockable-tab-style-name", TRUE);
       else if (tab_style == GIMP_TAB_STYLE_ICON_NAME)
-        SET_ACTIVE ("dockable-tab-style-icon-text", TRUE);
+        SET_ACTIVE ("dockable-tab-style-icon-name", TRUE);
       else if (tab_style == GIMP_TAB_STYLE_PREVIEW_NAME)
-        SET_ACTIVE ("dockable-tab-style-status-text", TRUE);
+        SET_ACTIVE ("dockable-tab-style-preview-name", TRUE);
 
-      SET_SENSITIVE ("dockable-tab-style-status",
+      SET_SENSITIVE ("dockable-tab-style-preview",
                      docked_iface->get_preview);
-      SET_SENSITIVE ("dockable-tab-style-status-text",
+      SET_SENSITIVE ("dockable-tab-style-preview-name",
                      docked_iface->get_preview);
     }
 

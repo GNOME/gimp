@@ -46,10 +46,11 @@
 static GimpActionEntry image_actions[] =
 {
   { "toolbox-menubar",      NULL, N_("Toolbox Menu") },
-  { "image-menubar",        NULL, N_("Image Menu") },
-  { "image-menu",           NULL, N_("_Image")     },
-  { "image-mode-menu",      NULL, N_("_Mode")      },
-  { "image-transform-menu", NULL, N_("_Transform") },
+  { "extensions-menu",      NULL, N_("_Xtns")        },
+  { "image-menubar",        NULL, N_("Image Menu")   },
+  { "image-menu",           NULL, N_("_Image")       },
+  { "image-mode-menu",      NULL, N_("_Mode")        },
+  { "image-transform-menu", NULL, N_("_Transform")   },
 
   { "image-convert-rgb", GIMP_STOCK_CONVERT_RGB,
     N_("_RGB"), NULL, NULL,

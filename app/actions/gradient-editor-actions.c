@@ -42,7 +42,7 @@
 
 static GimpActionEntry gradient_editor_actions[] =
 {
-  { "gradient-editor-popup", NULL, N_("Gradient Editor Menu") },
+  { "gradient-editor-popup", GIMP_STOCK_GRADIENT, N_("Gradient Editor Menu") },
 
   { "gradient-editor-left-color", NULL,
     N_("L_eft Endpoint's Color..."), NULL, NULL,

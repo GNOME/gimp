@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup>
+  <popup action="colormap-editor-popup">
     <menuitem action="colormap-editor-edit-color" />
     <menuitem action="colormap-editor-add-color-from-fg" />
     <menuitem action="colormap-editor-add-color-from-bg" />

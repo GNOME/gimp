@@ -39,7 +39,7 @@
 
 static GimpActionEntry documents_actions[] =
 {
-  { "ducuments-popup", NULL, N_("Documents Menu") },
+  { "documents-popup", GTK_STOCK_OPEN, N_("Documents Menu") },
 
   { "documents-open", GTK_STOCK_OPEN,
     N_("_Open Image"), "", NULL,

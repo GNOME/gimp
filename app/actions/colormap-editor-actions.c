@@ -38,7 +38,8 @@
 
 static GimpActionEntry colormap_editor_actions[] =
 {
-  { "colormap-editor-popup", NULL, N_("Indexed Palette Menu") },
+  { "colormap-editor-popup", GIMP_STOCK_INDEXED_PALETTE,
+    N_("Indexed Palette Menu") },
 
   { "colormap-editor-edit-color", GIMP_STOCK_EDIT,
     N_("_Edit Color..."), NULL, NULL,

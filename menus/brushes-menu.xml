@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup>
+  <popup action="brushes-popup">
     <menuitem action="brushes-edit" />
     <separator />
     <menuitem action="brushes-new" />

@@ -36,6 +36,8 @@
 
 static GimpActionEntry error_console_actions[] =
 {
+  { "error-console-popup", GIMP_STOCK_WARNING, N_("Error Console Menu") },
+
   { "error-console-clear", GTK_STOCK_CLEAR,
     N_("_Clear Errors"), "", NULL,
     G_CALLBACK (error_console_clear_cmd_callback),
