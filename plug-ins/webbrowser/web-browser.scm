@@ -89,7 +89,7 @@
 		    "Link to http://www.gimp.org/gtk/")
 
 (define (script-fu-bookmark-10)
-    (script-fu-bookmark "http://xach.dorknet.com/gimp/news/"))
+    (script-fu-bookmark "http://www.xach.com/gimp/news/"))
 
 (bookmark-register  "script-fu-bookmark-10"
 		    "<Toolbox>/Xtns/Web Browser/GIMP News"
