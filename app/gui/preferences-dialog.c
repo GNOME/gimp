@@ -1344,6 +1344,13 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Keyboard Shortcuts"),
                            GTK_CONTAINER (vbox), FALSE);
 
+  prefs_check_button_add (object, "menu-mnemonics",
+                          _("Show menu _mnemonics (access keys)"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (object, "can-change-accels",
+                          _("Use dynamic _keyboard shortcuts"),
+                          GTK_BOX (vbox2));
+
   button = prefs_button_add (GTK_STOCK_PREFERENCES,
                              _("Configure Keyboard Shortcuts..."),
                              GTK_BOX (vbox2));
@@ -1351,12 +1358,6 @@ prefs_dialog_new (Gimp       *gimp,
                     G_CALLBACK (prefs_keyboard_shortcuts_dialog),
                     gimp);
 
-  prefs_check_button_add (object, "menu-mnemonics",
-                          _("Show menu _mnemonics (access keys)"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "can-change-accels",
-                          _("Use dynamic _keyboard shortcuts"),
-                          GTK_BOX (vbox2));
   prefs_check_button_add (object, "save-accels",
                           _("Save keyboard shortcuts on exit"),
                           GTK_BOX (vbox2));
