@@ -39,7 +39,7 @@ register(
     "James Henstridge",
     "1997-1999",
     "<Toolbox>/Xtns/Python-Fu/_PDB Browser",
-    "*",
+    "",
     [],
     [],
     plug_in_pdb_browse)

@@ -101,7 +101,7 @@ register(
     "James Henstridge",
     "1997-1999",
     "<Toolbox>/Xtns/Python-Fu/_Console",
-    "*",
+    "",
     [],
     [],
     plug_in_python_fu_console)
