@@ -62,6 +62,7 @@ struct _GimpConfigInterface
   GObject  * (* duplicate)            (GObject      *object);
   gboolean   (* equal)                (GObject      *a,
                                        GObject      *b);
+  void       (* reset)                (GObject      *object);
 };
 
 typedef void  (* GimpConfigForeachFunc) (const gchar *key,
@@ -89,6 +90,7 @@ gboolean      gimp_config_deserialize_return    (GScanner     *scanner,
 GObject     * gimp_config_duplicate             (GObject      *object);
 gboolean      gimp_config_is_equal_to           (GObject      *a,
                                                  GObject      *b);
+void          gimp_config_reset                 (GObject      *object);
 
 void          gimp_config_add_unknown_token     (GObject      *object,
                                                  const gchar  *key,

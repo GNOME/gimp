@@ -381,8 +381,8 @@ gimp_text_layer_position_layout (GimpTextLayer  *layer,
       pos->height += 2 * text->border;
     }
 
-  pos->x = - ink.x;
-  pos->y = - ink.y;
+  pos->x = 0;
+  pos->y = 0;
 
   if (!fixed)
     return TRUE;

@@ -28,6 +28,7 @@
 
 #include "text/text-types.h"
 
+#include "config/gimpconfig.h"
 #include "config/gimpconfig-params.h"
 
 #include "gimptext.h"
@@ -81,9 +82,19 @@ gimp_text_get_type (void)
 	0,              /* n_preallocs    */
 	NULL            /* instance_init  */
       };
+      static const GInterfaceInfo text_iface_info = 
+      {
+        NULL,           /* iface_init     */
+        NULL,           /* iface_finalize */ 
+        NULL            /* iface_data     */
+      };
 
       text_type = g_type_register_static (G_TYPE_OBJECT,
                                           "GimpText", &text_info, 0);
+
+      g_type_add_interface_static (text_type,
+                                   GIMP_TYPE_CONFIG_INTERFACE,
+                                   &text_iface_info);
     }
 
   return text_type;
@@ -108,7 +119,7 @@ gimp_text_class_init (GimpTextClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_TEXT,
 				   "text", NULL,
-				   NULL,
+				   "GIMP",
 				   0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_FONT,
 				   "font", NULL,
@@ -116,7 +127,7 @@ gimp_text_class_init (GimpTextClass *klass)
 				   0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
 				   "font-size", NULL,
-				   0.0, G_MAXFLOAT, 18.0,
+				   0.0, 1024.0, 18.0,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FONT_SIZE_UNIT,
 				 "font-size-unit", NULL,

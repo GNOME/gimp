@@ -1,9 +1,9 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * Utitility functions for GimpConfig.
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
- * 
+ * GimpTextEditor
+ * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -19,19 +19,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CONFIG_UTILS_H__
-#define __GIMP_CONFIG_UTILS_H__
+#ifndef __GIMP_TEXT_EDITOR_H__
+#define __GIMP_TEXT_EDITOR_H__
 
 
-GList    * gimp_config_diff               (GObject      *a,
-                                           GObject      *b,
-                                           GParamFlags   flags);
-void       gimp_config_copy_properties    (GObject      *src,
-                                           GObject      *dest);
-void       gimp_config_reset_properties   (GObject      *object);
+typedef void  (* GimpTextEditorCallback) (GtkWidget       *editor,
+					  GtkResponseType response,
+					  gpointer        data);
 
-gchar    * gimp_config_build_data_path    (const gchar  *name);
-gchar    * gimp_config_build_plug_in_path (const gchar  *name);
+GtkWidget * gimp_text_editor_new (GtkTextBuffer          *buffer,
+				  const gchar            *title,
+				  GimpTextEditorCallback  callback,
+				  gpointer                callback_data);
 
 
-#endif  /* __GIMP_CONFIG_UTILS_H__ */
+#endif  /* __GIMP_TEXT_EDITOR_H__ */

@@ -1,5 +1,24 @@
 2003-02-01  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig.[ch]
+	* app/config/gimpconfig-utils.[ch]: added a reset method to
+	GimpConfigInterface. Added the new function gimp_config_reset()
+
+	* app/text/gimptext.c: added a GimpConfigInterface to GimpText.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimptexteditor.[ch]: new files that hold the simple
+	text editor dialog used by the text tool.
+
+	* app/widgets/gimppropwidgets.[ch]: added new widget constructor
+	gimp_prop_scale_entry_new().
+
+	* app/tools/gimptexttool.[ch]: replaced old-style ToolOptions with
+	a GimpText object. Connect text layers to the text tool by means
+	of their GimpText objects. Still work in progress ...
+
+2003-02-01  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayer.c (gimp_text_layer_position_layout):
 	handle GIMP_GRAVITY_NONE.
 

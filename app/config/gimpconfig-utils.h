@@ -28,6 +28,7 @@ GList    * gimp_config_diff               (GObject      *a,
                                            GParamFlags   flags);
 void       gimp_config_copy_properties    (GObject      *src,
                                            GObject      *dest);
+void       gimp_config_reset_properties   (GObject      *object);
 
 gchar    * gimp_config_build_data_path    (const gchar  *name);
 gchar    * gimp_config_build_plug_in_path (const gchar  *name);

@@ -41,9 +41,7 @@ struct _GimpTextTool
   GimpDisplay   *gdisp;
   GimpText      *text;
 
-  GtkTextBuffer *buffer;
   GtkWidget     *editor;
-  GtkWidget     *filesel;
 };
 
 struct _GimpTextToolClass

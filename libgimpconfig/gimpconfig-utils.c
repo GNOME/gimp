@@ -96,24 +96,66 @@ gimp_config_copy_properties (GObject *src,
 
   for (i = 0; i < n_property_specs; i++)
     {
-      GParamSpec  *prop_spec;
-      GValue       value = { 0, };
-
+      GParamSpec *prop_spec;
+ 
       prop_spec = property_specs[i];
 
-      if (! (prop_spec->flags & G_PARAM_READWRITE))
-        continue;
+      if (prop_spec->flags & G_PARAM_READABLE &&
+	  prop_spec->flags & G_PARAM_WRITABLE)
+	{
+	  GValue value = { 0, };
 
-      g_value_init (&value, prop_spec->value_type);
+	  g_value_init (&value, prop_spec->value_type);
       
-      g_object_get_property (src,  prop_spec->name, &value);
-      g_object_set_property (dest, prop_spec->name, &value);
-
-      g_value_unset (&value);
+	  g_object_get_property (src,  prop_spec->name, &value);
+	  g_object_set_property (dest, prop_spec->name, &value);
+	  
+	  g_value_unset (&value);
+	}
     }
 
   g_free (property_specs);
 }
+
+void
+gimp_config_reset_properties (GObject *object)
+{
+  GObjectClass  *klass;
+  GParamSpec   **property_specs;
+  guint          n_property_specs;
+  guint          i;
+
+  g_return_if_fail (G_IS_OBJECT (object));
+  
+  klass = G_OBJECT_GET_CLASS (object);
+
+  property_specs = g_object_class_list_properties (klass, &n_property_specs);
+
+  if (!property_specs)
+    return;
+
+  for (i = 0; i < n_property_specs; i++)
+    {
+      GParamSpec *prop_spec;
+ 
+      prop_spec = property_specs[i];
+
+      if (prop_spec->flags & G_PARAM_WRITABLE)
+	{
+	  GValue value = { 0, };
+
+	  g_value_init (&value, prop_spec->value_type);
+      
+	  g_param_value_set_default (prop_spec, &value);
+	  g_object_set_property (object, prop_spec->name, &value);
+	  
+	  g_value_unset (&value);
+	}
+    }
+
+  g_free (property_specs);
+}
+
 
 gchar *
 gimp_config_build_data_path (const gchar *name)

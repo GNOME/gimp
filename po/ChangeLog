@@ -1,3 +1,7 @@
+2003-02-01  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/widgets/gimptexteditor.c.
+
 2003-02-01  Christophe Merlet  <redfox@redfoxcenter.org>
 
 	* fr.po: Updated French translation from work of

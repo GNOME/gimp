@@ -216,6 +216,7 @@ app/widgets/gimplayerlistview.c
 app/widgets/gimppaletteeditor.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimpselectioneditor.c
+app/widgets/gimptexteditor.c
 app/widgets/gimptoolbox-color-area.c
 app/widgets/gimptoolbox-indicator-area.c
 app/widgets/gimptoolbox.c

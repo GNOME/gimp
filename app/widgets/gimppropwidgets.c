@@ -382,6 +382,53 @@ gimp_prop_spin_button_new (GObject     *config,
   return spinbutton;
 }
 
+void
+gimp_prop_scale_entry_new (GObject     *config,
+			   const gchar *property_name,
+			   GtkTable    *table,
+			   gint         column,
+			   gint         row,
+			   const gchar *text,
+			   gdouble      step_increment,
+			   gdouble      page_increment,
+			   gint         digits)
+{
+  GtkWidget     *label;
+  GtkWidget     *scale;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+
+  label = gtk_label_new_with_mnemonic (text);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label,
+                    column, column + 1, row, row + 1,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  spinbutton = gimp_prop_spin_button_new (config, property_name,
+					  step_increment, page_increment,
+					  digits);
+
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 4 + digits);
+
+  gtk_table_attach (GTK_TABLE (table), spinbutton,
+		    column + 2, column + 3, row, row + 1,
+		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (spinbutton);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
+
+  adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
+  scale = gtk_hscale_new (adj);
+
+  gtk_scale_set_digits (GTK_SCALE (scale), digits);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+  gtk_table_attach (GTK_TABLE (table), scale,
+		    column + 1, column + 2, row, row + 1,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_widget_show (scale);
+}
+
 static void
 gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
                                GObject       *config)

@@ -65,6 +65,7 @@ static gboolean  gimp_config_iface_deserialize  (GObject  *object,
 static GObject  *gimp_config_iface_duplicate    (GObject  *object);
 static gboolean  gimp_config_iface_equal        (GObject  *a,
                                                  GObject  *b);
+static void      gimp_config_iface_reset        (GObject  *object);
 
 
 GType
@@ -101,6 +102,7 @@ gimp_config_iface_init (GimpConfigInterface *gimp_config_iface)
   gimp_config_iface->deserialize_property = NULL;
   gimp_config_iface->duplicate            = gimp_config_iface_duplicate;
   gimp_config_iface->equal                = gimp_config_iface_equal;
+  gimp_config_iface->reset                = gimp_config_iface_reset;
 }
 
 static gboolean
@@ -171,6 +173,12 @@ gimp_config_iface_equal (GObject *a,
   g_free (property_specs);
 
   return equal;
+}
+
+static void
+gimp_config_iface_reset (GObject *object)
+{
+  gimp_config_reset_properties (object);
 }
 
 /**
@@ -415,7 +423,6 @@ gimp_config_duplicate (GObject *object)
   return gimp_config_iface->duplicate (object);
 }
 
-
 /**
  * gimp_config_is_equal_to:
  * @a: a #GObject that implements the #GimpConfigInterface.
@@ -444,6 +451,28 @@ gimp_config_is_equal_to (GObject *a,
   g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
   return gimp_config_iface->equal (a, b);
+}
+
+/**
+ * gimp_config_reset:
+ * @object: a #GObject that implements the #GimpConfigInterface.
+ * 
+ * Resets the object to its default state. The default implementation of the
+ * #GimpConfigInterface only works for objects that are completely defined by
+ * their properties.
+ **/
+void
+gimp_config_reset (GObject *object)
+{
+  GimpConfigInterface *gimp_config_iface;
+
+  g_return_if_fail (G_IS_OBJECT (object));
+
+  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
+
+  g_return_if_fail (gimp_config_iface != NULL);
+
+  return gimp_config_iface->reset (object);
 }
 
 
