@@ -57,10 +57,6 @@ GtkWidget     * gimp_prop_enum_combo_box_new      (GObject     *config,
                                                    gint         minimum,
                                                    gint         maximum);
 
-GtkWidget     * gimp_prop_paint_mode_menu_new     (GObject     *config,
-                                                   const gchar *property_name,
-                                                   gboolean     with_behind_mode);
-
 GtkWidget     * gimp_prop_enum_check_button_new   (GObject     *config,
                                                    const gchar *property_name,
                                                    const gchar *label,
@@ -183,25 +179,12 @@ GtkWidget     * gimp_prop_color_area_new          (GObject     *config,
                                                    gint         width,
                                                    gint         height,
                                                    GimpColorAreaType  type);
-GtkWidget     * gimp_prop_color_button_new        (GObject     *config,
-                                                   const gchar *property_name,
-                                                   const gchar *title,
-                                                   gint         width,
-                                                   gint         height,
-                                                   GimpColorAreaType  type);
-
 
 /*  GimpParamUnit  */
 
 GtkWidget     * gimp_prop_unit_menu_new           (GObject     *config,
                                                    const gchar *property_name,
                                                    const gchar *unit_format);
-
-/*  GParamObject (GimpViewable)  */
-
-GtkWidget     * gimp_prop_preview_new             (GObject     *config,
-                                                   const gchar *property_name,
-                                                   gint         size);
 
 
 /*  GParamString (stock_id)  */

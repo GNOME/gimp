@@ -30,20 +30,10 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
-#include "widgets-types.h"
+#include "gimpwidgets.h"
 
-#include "core/gimpviewable.h"
-
-#include "gimpcolorpanel.h"
-#include "gimpdnd.h"
-#include "gimpview.h"
-#include "gimppropwidgets.h"
-#include "gimpwidgets-constructors.h"
-
-#include "gimp-intl.h"
-
+#include "libgimp/libgimp-intl.h"
 
 /*  utility function prototypes  */
 
@@ -87,7 +77,7 @@ static void   gimp_prop_check_button_notify   (GObject    *config,
 
 /**
  * gimp_prop_check_button_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of boolean property controlled by checkbutton.
  * @label:             Label to give checkbutton (including mnemonic).
  *
@@ -184,7 +174,7 @@ static void   gimp_prop_enum_check_button_notify   (GObject    *config,
 
 /**
  * gimp_prop_enum_check_button_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of enum property controlled by checkbutton.
  * @label:             Label to give checkbutton (including mnemonic).
  * @false_value:       Enum value corresponding to unchecked state.
@@ -326,7 +316,7 @@ static void   gimp_prop_int_combo_box_notify   (GObject     *config,
 
 /**
  * gimp_prop_int_combo_box_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of Int property controlled by combo box.
  * @store:             #GimpIntStore holding list of labels, values, etc.
  *
@@ -390,7 +380,7 @@ gimp_prop_int_combo_box_new (GObject      *config,
 
 /**
  * gimp_prop_enum_combo_box_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of Enum property controlled by combo box.
  * @minimum_value:     Smallest allowed value of enum.
  * @maximum_value:     Largest allowed value of enum.
@@ -525,7 +515,7 @@ static void   gimp_prop_boolean_combo_box_notify   (GObject     *config,
 
 /**
  * gimp_prop_boolean_combo_box_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of Boolean property controlled by combo box.
  * @true_text:         Label used for entry corresponding to #TRUE value.
  * @false_text:        Label used for entry corresponding to #FALSE value.
@@ -632,105 +622,6 @@ gimp_prop_boolean_combo_box_notify (GObject    *config,
 }
 
 
-/****************/
-/*  paint menu  */
-/****************/
-
-static void   gimp_prop_paint_menu_callback (GtkWidget   *widget,
-                                             GObject     *config);
-static void   gimp_prop_paint_menu_notify   (GObject     *config,
-                                             GParamSpec  *param_spec,
-                                             GtkWidget   *menu);
-
-/**
- * gimp_prop_paint_mode_menu_new:
- * @config:            #GimpConfig object to which property is attached.
- * @property_name:     Name of Enum property controlled by combo box.
- * @with_behind_mode:  Whether to include "Behind" mode in the menu.
- *
- * Creates a #GimpPaintModeMenu widget to display and set the specified
- * Enum property, for which the enum must be #GimpLayerModeEffects.
- *
- * Return value: The newly created #GimpPaintModeMenu widget.
- *
- * Since GIMP 2.4
- */
-GtkWidget *
-gimp_prop_paint_mode_menu_new (GObject     *config,
-                               const gchar *property_name,
-                               gboolean     with_behind_mode)
-{
-  GParamSpec *param_spec;
-  GtkWidget  *menu;
-  gint        value;
-
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
-  if (! param_spec)
-    return NULL;
-
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
-  menu = gimp_paint_mode_menu_new (G_CALLBACK (gimp_prop_paint_menu_callback),
-                                   config,
-                                   with_behind_mode,
-                                   value);
-
-  set_param_spec (G_OBJECT (menu), menu, param_spec);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_paint_menu_notify),
-                  menu);
-
-  return menu;
-}
-
-static void
-gimp_prop_paint_menu_callback (GtkWidget *widget,
-                               GObject   *config)
-{
-  if (GTK_IS_MENU (widget->parent))
-    {
-      GtkWidget *menu;
-
-      menu = gtk_menu_get_attach_widget (GTK_MENU (widget->parent));
-
-      if (menu)
-        {
-          GParamSpec *param_spec;
-          gint        value;
-
-          param_spec = get_param_spec (G_OBJECT (menu));
-          if (! param_spec)
-            return;
-
-          value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                                      "gimp-item-data"));
-
-          g_object_set (config,
-                        param_spec->name, value,
-                        NULL);
-        }
-    }
-}
-
-static void
-gimp_prop_paint_menu_notify (GObject    *config,
-                             GParamSpec *param_spec,
-                             GtkWidget  *menu)
-{
-  gint value;
-
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
-
-  gimp_paint_mode_menu_set_history (GTK_OPTION_MENU (menu), value);
-}
-
-
 /*****************/
 /*  radio boxes  */
 /*****************/
@@ -744,7 +635,7 @@ static void  gimp_prop_radio_button_notify   (GObject     *config,
 
 /**
  * gimp_prop_enum_radio_frame_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of Enum property controlled by the radio buttons.
  * @label:             Label for the frame holding the buttons
  * @minimum:           Smallest value of enum to be included.
@@ -813,7 +704,7 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
 
 /**
  * gimp_prop_enum_radio_box_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of Enum property controlled by the radio buttons.
  * @minimum:           Smallest value of enum to be included.
  * @maximum:           Largest value of enum to be included.
@@ -880,7 +771,7 @@ gimp_prop_enum_radio_box_new (GObject     *config,
 
 /**
  * gimp_prop_boolean_radio_frame_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of Enum property controlled by the radio buttons.
  * @title:             Label for the frame.
  * @true_text:         Label for the button corresponding to #TRUE.
@@ -937,7 +828,7 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
 
 /**
  * gimp_prop_enum_stock_box_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of Enum property controlled by the radio buttons.
  * @stock_prefix:      The prefix of the group of stock ids to use.
  * @minimum:           Smallest value of enum to be included.
@@ -1054,7 +945,7 @@ static void   gimp_prop_adjustment_notify   (GObject       *config,
 
 /**
  * gimp_prop_spin_button_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of Double property controlled by the spin button.
  * @step_increment:    Step size.
  * @page_increment:    Page size.
@@ -1112,7 +1003,7 @@ gimp_prop_spin_button_new (GObject     *config,
 
 /**
  * gimp_prop_scale_entry_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of Double property controlled by the spin button.
  * @table:             The #GtkTable the widgets will be attached to.
  * @column:            The column to start with.
@@ -1202,7 +1093,7 @@ gimp_prop_scale_entry_new (GObject     *config,
 
 /**
  * gimp_prop_opacity_entry_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of Double property controlled by the spin button.
  * @table:             The #GtkTable the widgets will be attached to.
  * @column:            The column to start with.
@@ -1431,7 +1322,7 @@ static void   gimp_prop_memsize_notify   (GObject          *config,
 
 /**
  * gimp_prop_memsize_entry_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of Memsize property.
  *
  * Creates a #GimpMemsizeEntry (spin button and option menu) to set and display the value
@@ -1540,7 +1431,7 @@ static void   gimp_prop_label_notify (GObject    *config,
 
 /**
  * gimp_prop_label_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of String property.
  *
  * Creates a #GtkLabel to  display the value of the specified String property.
@@ -1609,7 +1500,7 @@ static void   gimp_prop_entry_notify   (GObject    *config,
 
 /**
  * gimp_prop_entry_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of String property.
  * @max_len:           Maximum allowed length of string.
  *
@@ -1721,7 +1612,7 @@ static void   gimp_prop_text_buffer_notify   (GObject       *config,
 
 /**
  * gimp_prop_text_buffer_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of String property.
  * @max_len:           Maximum allowed length of text.
  *
@@ -1862,7 +1753,7 @@ static void   gimp_prop_file_entry_notify   (GObject       *config,
 
 /**
  * gimp_prop_file_entry_new:
- * @config:            #GimpConfig object to which property is attached.
+ * @config:            Object to which property is attached.
  * @property_name:     Name of Path property.
  * @filesel_title:     Label for the file selector.
  * @dir_only:          #TRUE if the file entry should accept directories only.
@@ -2229,7 +2120,7 @@ static void   gimp_prop_size_entry_notify_unit (GObject       *config,
 
 /**
  * gimp_prop_size_entry_new:
- * @config:             #GimpConfig object to which property is attached.
+ * @config:             Object to which property is attached.
  * @property_name:      Name of Int or Double property.
  * @unit_property_name: Name of Unit property.
  * @unit_format:        A printf-like unit-format string as is used with gimp_unit_menu_new().
@@ -2487,7 +2378,7 @@ static void   gimp_prop_coordinates_notify_unit (GObject       *config,
 
 /**
  * gimp_prop_coordinates_new:
- * @config:             #GimpConfig object to which property is attached.
+ * @config:             Object to which property is attached.
  * @x_property_name:    Name of Int or Double property for X coordinate.
  * @y_property_name:    Name of Int or Double property for Y coordinate.
  * @unit_property_name: Name of Unit property.
@@ -2930,7 +2821,7 @@ static void   gimp_prop_color_area_notify   (GObject    *config,
 
 /**
  * gimp_prop_color_area_new:
- * @config:             #GimpConfig object to which property is attached.
+ * @config:             Object to which property is attached.
  * @property_name:      Name of RGB property.
  * @width:              Width of color area.
  * @height:             Height of color area.
@@ -3033,120 +2924,6 @@ gimp_prop_color_area_notify (GObject    *config,
 }
 
 
-/******************/
-/*  color button  */
-/******************/
-
-static void   gimp_prop_color_button_callback (GtkWidget  *widget,
-                                               GObject    *config);
-static void   gimp_prop_color_button_notify   (GObject    *config,
-                                               GParamSpec *param_spec,
-                                               GtkWidget  *button);
-
-/**
- * gimp_prop_color_button_new:
- * @config:             #GimpConfig object to which property is attached.
- * @property_name:      Name of RGB property.
- * @width:              Width of color button.
- * @height:             Height of color button.
- * @type:               How transparency is represented.
- *
- * Creates a #GimpColorPanel to set and display the value of an RGB
- * property.  Pressing the button brings up a color selector dialog.
- *
- * Return value:  A new #GimpColorPanel widget.
- *
- * Since GIMP 2.4
- */
-GtkWidget *
-gimp_prop_color_button_new (GObject           *config,
-                            const gchar       *property_name,
-                            const gchar       *title,
-                            gint               width,
-                            gint               height,
-                            GimpColorAreaType  type)
-{
-  GParamSpec *param_spec;
-  GtkWidget  *button;
-  GimpRGB    *value;
-
-  param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_RGB, G_STRFUNC);
-  if (! param_spec)
-    return NULL;
-
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
-  button = gimp_color_panel_new (title, value, type, width, height);
-
-  g_free (value);
-
-  set_param_spec (G_OBJECT (button), button, param_spec);
-
-  g_signal_connect (button, "color_changed",
-		    G_CALLBACK (gimp_prop_color_button_callback),
-		    config);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_color_button_notify),
-                  button);
-
-  return button;
-}
-
-static void
-gimp_prop_color_button_callback (GtkWidget *button,
-                                 GObject   *config)
-{
-  GParamSpec *param_spec;
-  GimpRGB     value;
-
-  param_spec = get_param_spec (G_OBJECT (button));
-  if (! param_spec)
-    return;
-
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &value);
-
-  g_signal_handlers_block_by_func (config,
-                                   gimp_prop_color_button_notify,
-                                   button);
-
-  g_object_set (config,
-                param_spec->name, &value,
-                NULL);
-
-  g_signal_handlers_unblock_by_func (config,
-                                     gimp_prop_color_button_notify,
-                                     button);
-}
-
-static void
-gimp_prop_color_button_notify (GObject    *config,
-                               GParamSpec *param_spec,
-                               GtkWidget  *button)
-{
-  GimpRGB *value;
-
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
-
-  g_signal_handlers_block_by_func (button,
-                                   gimp_prop_color_button_callback,
-                                   config);
-
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (button), value);
-
-  g_free (value);
-
-  g_signal_handlers_unblock_by_func (button,
-                                     gimp_prop_color_button_callback,
-                                     config);
-}
-
-
 /***************/
 /*  unit menu  */
 /***************/
@@ -3159,7 +2936,7 @@ static void   gimp_prop_unit_menu_notify   (GObject    *config,
 
 /**
  * gimp_prop_unit_menu_new:
- * @config:             #GimpConfig object to which property is attached.
+ * @config:             Object to which property is attached.
  * @property_name:      Name of Unit property.
  * @unit_format:        A printf-like format string which is used to create the unit strings.
  *
@@ -3266,126 +3043,6 @@ gimp_prop_unit_menu_notify (GObject    *config,
 }
 
 
-/*************/
-/*  preview  */
-/*************/
-
-static void   gimp_prop_preview_drop   (GtkWidget    *menu,
-                                        gint          x,
-                                        gint          y,
-                                        GimpViewable *viewable,
-                                        gpointer      data);
-static void   gimp_prop_preview_notify (GObject      *config,
-                                        GParamSpec   *param_spec,
-                                        GtkWidget    *preview);
-
-/**
- * gimp_prop_preview_new:
- * @config:             #GimpConfig object to which property is attached.
- * @property_name:      Name of Unit property.
- * @size:               Width and height of preview display.
- *
- * Creates a widget to display the value of a Preview property.
- *
- * Return value:  A new #GimpView widget.
- *
- * Since GIMP 2.4
- */
-GtkWidget *
-gimp_prop_preview_new (GObject     *config,
-                       const gchar *property_name,
-                       gint         size)
-{
-  GParamSpec   *param_spec;
-  GtkWidget    *preview;
-  GimpViewable *viewable;
-
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_OBJECT, G_STRFUNC);
-  if (! param_spec)
-    return NULL;
-
-  if (! g_type_is_a (param_spec->value_type, GIMP_TYPE_VIEWABLE))
-    {
-      g_warning ("%s: property '%s' of %s is not a GimpViewable",
-                 G_STRFUNC, property_name,
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return NULL;
-    }
-
-  preview = gimp_view_new_by_types (GIMP_TYPE_VIEW,
-                                    param_spec->value_type,
-                                    size, 0, FALSE);
-
-  if (! preview)
-    {
-      g_warning ("%s: cannot create preview for type '%s'",
-                 G_STRFUNC, g_type_name (param_spec->value_type));
-      return NULL;
-    }
-
-  g_object_get (config,
-                property_name, &viewable,
-                NULL);
-
-  if (viewable)
-    {
-      gimp_view_set_viewable (GIMP_VIEW (preview), viewable);
-      g_object_unref (viewable);
-    }
-
-  set_param_spec (G_OBJECT (preview), preview, param_spec);
-
-  gimp_dnd_viewable_dest_add (preview, param_spec->value_type,
-                              gimp_prop_preview_drop,
-                              config);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_preview_notify),
-                  preview);
-
-  return preview;
-}
-
-static void
-gimp_prop_preview_drop (GtkWidget    *preview,
-                        gint          x,
-                        gint          y,
-                        GimpViewable *viewable,
-                        gpointer      data)
-{
-  GObject    *config;
-  GParamSpec *param_spec;
-
-  param_spec = get_param_spec (G_OBJECT (preview));
-  if (! param_spec)
-    return;
-
-  config = G_OBJECT (data);
-
-  g_object_set (config,
-                param_spec->name, viewable,
-                NULL);
-}
-
-static void
-gimp_prop_preview_notify (GObject      *config,
-                          GParamSpec   *param_spec,
-                          GtkWidget    *preview)
-{
-  GimpViewable *viewable;
-
-  g_object_get (config,
-                param_spec->name, &viewable,
-                NULL);
-
-  gimp_view_set_viewable (GIMP_VIEW (preview), viewable);
-
-  if (viewable)
-    g_object_unref (viewable);
-}
-
-
 /*****************/
 /*  stock image  */
 /*****************/
@@ -3396,7 +3053,7 @@ static void   gimp_prop_stock_image_notify (GObject    *config,
 
 /**
  * gimp_prop_stock_image_new:
- * @config:             #GimpConfig object to which property is attached.
+ * @config:             Object to which property is attached.
  * @property_name:      Name of String property.
  * @icon_size:          Size of desired stock image.
  *
@@ -3473,7 +3130,7 @@ static void   gimp_prop_expander_notify (GObject     *config,
 
 /**
  * gimp_prop_expander_new:
- * @config:             #GimpConfig object to which property is attached.
+ * @config:             Object to which property is attached.
  * @property_name:      Name of Boolean property.
  * @label:              Label for expander.
  *
