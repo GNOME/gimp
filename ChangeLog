@@ -1,3 +1,15 @@
+Wed Aug 19 21:00:00 PDT 1998 Ray Lehtiniemi <rayl@netrover.com>
+
+	* app/airbrush.c gdisplay.c gimage.h gimpimage.c gimpimage.h
+        gimpimageP.h image_render.c indexed_palette.c info_window.c
+        layers_dialog.c:
+
+        Remove the distinction between flat and layered gimages.  now
+        gimages always allocate a projection, even if there is only a
+        single layer.
+
+        Fix some gcc-isms.
+
 Tue Aug 18 15:42:44 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/gfig/gfig.c: kludged around the use of the disappearing
