@@ -105,8 +105,7 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",     "input image" },
     { GIMP_PDB_DRAWABLE, "drawable",  "input drawable" },
     { GIMP_PDB_INT32,    "division",  "the number of divisions" },
-    { GIMP_PDB_INT32,    "type1",     "Use Type 1 (default=1)" },
-    { GIMP_PDB_INT32,    "type2",     "Use Type 2 (default=0)" }
+    { GIMP_PDB_INT32,    "type",      "illusion type (0=type1, 1=type2)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -157,15 +156,23 @@ run (gchar   *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      if (nparams != 6)
+      if (nparams != 5)
 	{
 	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
 	  parameters.division = params[3].data.d_int32;
-          parameters.type1 = params[4].data.d_int32;
-	  parameters.type2 = params[5].data.d_int32;
+          if (params[4].data.d_int32 == 0)
+            {
+              parameters.type1 = 1;
+              parameters.type2 = 0;
+            }
+          else
+            {
+              parameters.type1 = 0;
+              parameters.type2 = 1;
+            }
 	}
       break;
 
