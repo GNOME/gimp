@@ -1,3 +1,8 @@
+2004-12-12  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimpdataeditor.c: make Revert button insensitive
+	because revert is not yet implemented (bug #152259).
+	
 2004-12-12  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdock.c: show a confirmation dialog if a dock

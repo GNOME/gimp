@@ -214,6 +214,10 @@ gimp_data_editor_constructor (GType                  type,
                             G_CALLBACK (gimp_data_editor_revert_clicked),
                             NULL,
                             editor);
+  /*
+   * Set insensitive because revert buttons are not yet implemented.
+   */
+  gtk_widget_set_sensitive (editor->revert_button, FALSE);
 
   return object;
 }
