@@ -1,9 +1,9 @@
 2004-10-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpdrawablecombobox.c
-	* libgimp/gimpimagecombobox.c: suggest to use
-	gimp_int_combo_box_connect() with these widgets. We don't want more
-	people to be caught by bug #156659.
+	* libgimp/gimpimagecombobox.c: changed the API docs to suggest to
+	use gimp_int_combo_box_connect() with these widgets. We don't want
+	more people to be caught by bug #156659.
 
 2004-10-28  Sven Neumann  <sven@gimp.org>
 
