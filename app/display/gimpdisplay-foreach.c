@@ -39,26 +39,6 @@ gdisplays_foreach (GFunc    func,
 }
 
 void
-gdisplays_expose_guide (GimpImage *gimage,
-			GimpGuide *guide)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (guide != NULL);
-
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gimp_display_shell_expose_guide (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                         guide);
-    }
-}
-
-void
 gdisplays_expose_full (void)
 {
   GimpDisplay *gdisp;

@@ -26,8 +26,6 @@ GimpDisplay * gdisplays_check_valid             (GimpDisplay *gdisp,
                                                  GimpImage   *gimage);
 void          gdisplays_reconnect               (GimpImage   *old,
                                                  GimpImage   *new);
-void          gdisplays_expose_guide            (GimpImage   *gimage,
-                                                 GimpGuide   *guide);
 void          gdisplays_expose_full             (void);
 gboolean      gdisplays_dirty                   (void);
 void          gdisplays_delete                  (void);

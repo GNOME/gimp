@@ -152,6 +152,8 @@ struct _GimpImageClass
 					 gint                  y,
 					 gint                  width,
 					 gint                  height);
+  void (* update_guide)                 (GimpImage            *gimage,
+                                         GimpGuide            *guide);
   void (* colormap_changed)             (GimpImage            *gimage,
 					 gint                  color_index);
   void (* undo_event)                   (GimpImage            *gimage,
@@ -316,6 +318,8 @@ void            gimp_image_update             (GimpImage            *gimage,
                                                gint                  y,
                                                gint                  width,
                                                gint                  height);
+void            gimp_image_update_guide       (GimpImage            *gimage,
+                                               GimpGuide            *guide);
 void            gimp_image_selection_control  (GimpImage            *gimage,
                                                GimpSelectionControl  control);
 

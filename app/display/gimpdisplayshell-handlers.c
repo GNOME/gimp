@@ -48,6 +48,9 @@ static void   gimp_display_shell_unit_changed_handler       (GimpImage        *g
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_qmask_changed_handler      (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
+static void   gimp_display_shell_update_guide_handler       (GimpImage        *gimage,
+                                                             GimpGuide        *guide,
+                                                             GimpDisplayShell *shell);
 
 
 /*  public functions  */
@@ -88,6 +91,9 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (G_OBJECT (gimage), "qmask_changed",
                     G_CALLBACK (gimp_display_shell_qmask_changed_handler),
                     shell);
+  g_signal_connect (G_OBJECT (gimage), "update_guide",
+                    G_CALLBACK (gimp_display_shell_update_guide_handler),
+                    shell);
 }
 
 void
@@ -101,6 +107,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
   gimage = shell->gdisp->gimage;
 
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+                                        gimp_display_shell_update_guide_handler,
+                                        shell);
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
                                         gimp_display_shell_qmask_changed_handler,
                                         shell);
@@ -190,4 +199,12 @@ gimp_display_shell_qmask_changed_handler (GimpImage        *gimage,
                                          gimp_display_shell_qmask_off_toggled,
 					 shell);
     }
+}
+
+static void
+gimp_display_shell_update_guide_handler (GimpImage        *gimage,
+                                         GimpGuide        *guide,
+                                         GimpDisplayShell *shell)
+{
+  gimp_display_shell_expose_guide (shell, guide);
 }

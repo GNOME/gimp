@@ -898,9 +898,9 @@ undo_push_image_mod (GimpImage    *gimage,
 		     gpointer      tiles_ptr,
 		     gboolean      sparse)
 {
-  glong  size;
-  gint   dwidth, dheight;
-  Undo  *new;
+  glong        size;
+  gint         dwidth, dheight;
+  Undo        *new;
   ImageUndo   *image_undo;
   TileManager *tiles;
 
@@ -1175,9 +1175,9 @@ undo_free_mask (UndoState  state,
 /***************************************/
 /*  Layer displacement Undo functions  */
 
-typedef struct _LayerDisplayUndo LayerDisplaceUndo;
+typedef struct _LayerDisplaceUndo LayerDisplaceUndo;
 
-struct _LayerDisplayUndo 
+struct _LayerDisplaceUndo
 {
   gint      info[3];
   PathUndo *path_undo;
@@ -2387,13 +2387,11 @@ undo_pop_qmask (GimpImage *gimage,
   tmp = gimage->qmask_state;
   gimage->qmask_state = data->qmask;
   data->qmask = tmp;
-  
-  /*  make sure the buttons on all displays are updated  */
-  gdisplays_flush ();
+
+  gimp_image_qmask_changed (gimage);
 
   return TRUE;
 }
-
 
 static void
 undo_free_qmask (UndoState  state,
@@ -2455,7 +2453,7 @@ undo_pop_guide (GimpImage *gimage,
 
   data = data_ptr;
 
-  gdisplays_expose_guide (gimage, data->guide);
+  gimp_image_update_guide (gimage, data->guide);
 
   tmp_ref = data->guide->ref_count;
   tmp = *(data->guide);
@@ -2463,7 +2461,7 @@ undo_pop_guide (GimpImage *gimage,
   data->guide->ref_count = tmp_ref;
   data->orig = tmp;
 
-  gdisplays_expose_guide (gimage, data->guide);
+  gimp_image_update_guide (gimage, data->guide);
 
   return TRUE;
 }

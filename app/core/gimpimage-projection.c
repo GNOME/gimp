@@ -181,6 +181,7 @@ enum
   CLEAN,
   DIRTY,
   UPDATE,
+  UPDATE_GUIDE,
   COLORMAP_CHANGED,
   UNDO_EVENT,
   LAST_SIGNAL
@@ -375,6 +376,16 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_TYPE_INT,
 		  G_TYPE_INT);
 
+  gimp_image_signals[UPDATE_GUIDE] =
+    g_signal_new ("update_guide",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, update_guide),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__POINTER,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_POINTER);
+
   gimp_image_signals[COLORMAP_CHANGED] =
     g_signal_new ("colormap_changed",
 		  G_TYPE_FROM_CLASS (klass),
@@ -417,6 +428,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
   klass->update                       = NULL;
+  klass->update_guide                 = NULL;
   klass->colormap_changed             = gimp_image_real_colormap_changed;
   klass->undo_event                   = NULL;
   klass->undo                         = gimp_image_undo;
@@ -2092,6 +2104,17 @@ gimp_image_update (GimpImage *gimage,
 
   g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UPDATE], 0,
 		 x, y, width, height);
+}
+
+void
+gimp_image_update_guide (GimpImage *gimage,
+                         GimpGuide *guide)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (guide != NULL);
+
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UPDATE_GUIDE], 0,
+                 guide);
 }
 
 void

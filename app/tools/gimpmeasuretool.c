@@ -309,7 +309,8 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 		      guide = gimp_image_add_hguide (gdisp->gimage);
 		      undo_push_guide (gdisp->gimage, guide);
 		      guide->position = measure_tool->y[i];
-		      gdisplays_expose_guide (gdisp->gimage, guide);
+
+		      gimp_image_update_guide (gdisp->gimage, guide);
 		    }
 
 		  if (create_vguide)
@@ -317,7 +318,8 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 		      guide = gimp_image_add_vguide (gdisp->gimage);
 		      undo_push_guide (gdisp->gimage, guide);
 		      guide->position = measure_tool->x[i];
-		      gdisplays_expose_guide (gdisp->gimage, guide);
+
+		      gimp_image_update_guide (gdisp->gimage, guide);
 		    }
 
 		  if (create_hguide && create_vguide)

@@ -239,7 +239,7 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	{
 	  undo_push_guide (gdisp->gimage, guide);
 
-	  gdisplays_expose_guide (gdisp->gimage, guide);
+	  gimp_image_update_guide (gdisp->gimage, guide);
 	  gimp_image_remove_guide (gdisp->gimage, guide);
 	  gimp_display_flush (gdisp);
 	  gimp_image_add_guide (gdisp->gimage, guide);
@@ -344,7 +344,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
 	  break;
 	}
 
-      gdisplays_expose_guide (gdisp->gimage, move->guide);
+      gimp_image_update_guide (gdisp->gimage, move->guide);
 
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 

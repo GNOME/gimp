@@ -1,3 +1,18 @@
+2001-11-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.[ch]: added "update_guide" signal.
+
+	* app/display/gimpdisplay-foreach.[ch]: removed
+	gdisplays_expose_guide().
+
+	* app/display/gimpdisplayshell-handlers.c: added a handler for
+	"update_guide" and expose the guide there.
+
+	* app/undo.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c: call gimp_image_update_guide() instead
+	of gdisplays_expose_guide().
+
 2001-11-14  Abel Cheung  <maddog@linux.org.hk>
 
 	* configure.in (ALL_LINGUAS): Rename zh_TW.Big5 -> zh_TW to
