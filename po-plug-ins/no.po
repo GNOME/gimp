@@ -6399,7 +6399,7 @@ msgstr "Forkortelse:"
 
 #: plug-ins/common/uniteditor.c:258
 msgid "Singular:"
-msgstr "Enkel:"
+msgstr "Entall:"
 
 #: plug-ins/common/uniteditor.c:271
 msgid "Plural:"
@@ -6451,15 +6451,15 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:551
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr ""
+msgstr "Forkortelse for enheten (f.eks \"cm\" for centimeter)."
 
 #: plug-ins/common/uniteditor.c:553
 msgid "The unit's singular form."
-msgstr ""
+msgstr "Enhetens form i entall."
 
 #: plug-ins/common/uniteditor.c:554
 msgid "The unit's plural form."
-msgstr ""
+msgstr "Enhetens form i flertall."
 
 #: plug-ins/common/uniteditor.c:570
 msgid "Saved"
@@ -6487,7 +6487,7 @@ msgstr "Fork."
 
 #: plug-ins/common/uniteditor.c:576
 msgid "Singular"
-msgstr ""
+msgstr "Entall"
 
 #: plug-ins/common/uniteditor.c:577
 msgid "Plural"
@@ -6495,23 +6495,23 @@ msgstr "Flertall"
 
 #: plug-ins/common/uniteditor.c:631
 msgid "Create a new unit from scratch."
-msgstr ""
+msgstr "Opprett en ny enhet fra bunnen av."
 
 #: plug-ins/common/uniteditor.c:633
 msgid "Duplicate Unit"
-msgstr ""
+msgstr "Duplisert enhet"
 
 #: plug-ins/common/uniteditor.c:640
 msgid "Create a new unit with the currently seleted unit as template."
-msgstr ""
+msgstr "Opprett en ny enhet med valgt enhet som mal."
 
 #: plug-ins/common/uniteditor.c:643
 msgid "Don't Save Unit"
-msgstr ""
+msgstr "Ikke lagre enhet"
 
 #: plug-ins/common/uniteditor.c:650
 msgid "Don't save the currently selected unit before GIMP exits."
-msgstr ""
+msgstr "Ikke lagre valgte enhet før GIMP avslutter."
 
 #: plug-ins/common/uniteditor.c:655
 msgid "Save Unit"
@@ -11637,7 +11637,7 @@ msgstr ""
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:574
 msgid "Asymmetry:"
-msgstr ""
+msgstr "Asymmetri:"
 
 #. Shear
 #: plug-ins/ifscompose/ifscompose.c:588
@@ -11647,7 +11647,7 @@ msgstr "Forskyv:"
 #. Flip
 #: plug-ins/ifscompose/ifscompose.c:602
 msgid "Flip"
-msgstr ""
+msgstr "Vend"
 
 #. Simple color control section
 #: plug-ins/ifscompose/ifscompose.c:633
@@ -11656,82 +11656,74 @@ msgstr "Enkel"
 
 #: plug-ins/ifscompose/ifscompose.c:645
 msgid "IfsCompose: Target"
-msgstr ""
+msgstr "IfsCompose: Mål"
 
 #: plug-ins/ifscompose/ifscompose.c:651
-#, fuzzy
 msgid "Scale Hue by:"
-msgstr "Skalering"
+msgstr "Skalér glød etter:"
 
 #: plug-ins/ifscompose/ifscompose.c:666
-#, fuzzy
 msgid "Scale Value by:"
-msgstr "Skalering"
+msgstr "Skalér verdi etter:"
 
 #. Full color control section
 #: plug-ins/ifscompose/ifscompose.c:683
 msgid "Full"
-msgstr ""
+msgstr "Full"
 
 #: plug-ins/ifscompose/ifscompose.c:692
 msgid "IfsCompose: Red"
-msgstr ""
+msgstr "IfsCompose: Rød"
 
 #: plug-ins/ifscompose/ifscompose.c:701
 msgid "IfsCompose: Green"
-msgstr ""
+msgstr "IfsCompose: Grønn"
 
 #: plug-ins/ifscompose/ifscompose.c:710
 msgid "IfsCompose: Blue"
-msgstr ""
+msgstr "IfsCompose: Blå"
 
 #: plug-ins/ifscompose/ifscompose.c:719
 msgid "IfsCompose: Black"
-msgstr ""
+msgstr "IfsCompose: Sort"
 
 #: plug-ins/ifscompose/ifscompose.c:781
 msgid "IfsCompose"
-msgstr ""
+msgstr "IfsCompose"
 
 #: plug-ins/ifscompose/ifscompose.c:865 plug-ins/ifscompose/ifscompose.c:1135
-#, fuzzy
 msgid "Rotate/Scale"
-msgstr "Roter"
+msgstr "Rotér/Skalér"
 
 #: plug-ins/ifscompose/ifscompose.c:874 plug-ins/ifscompose/ifscompose.c:1147
-#, fuzzy
 msgid "Stretch"
-msgstr "Oppsett"
+msgstr "Strekk"
 
 #: plug-ins/ifscompose/ifscompose.c:894
-#, fuzzy
 msgid "Render Options"
-msgstr "Alternativer for lagring"
+msgstr "Alternativer for rendring"
 
 #: plug-ins/ifscompose/ifscompose.c:908 plug-ins/print/gimp_main_window.c:452
 msgid "Auto"
 msgstr "Auto"
 
 #: plug-ins/ifscompose/ifscompose.c:941
-#, fuzzy
 msgid "Spatial Transformation"
-msgstr "Komposisjon"
+msgstr "Romtransformasjon"
 
 #: plug-ins/ifscompose/ifscompose.c:947
-#, fuzzy
 msgid "Color Transformation"
-msgstr "Komposisjon"
+msgstr "Fargetransformasjon"
 
 #: plug-ins/ifscompose/ifscompose.c:957
 msgid "Relative Probability:"
-msgstr ""
+msgstr "Relativ sannsynlighet:"
 
 #: plug-ins/ifscompose/ifscompose.c:1164
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
 #: plug-ins/imagemap/imap_menu.c:294
-#, fuzzy
 msgid "Select All"
-msgstr "Seed"
+msgstr "Velg alt"
 
 #: plug-ins/ifscompose/ifscompose.c:1176
 #, fuzzy
