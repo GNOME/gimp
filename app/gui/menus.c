@@ -45,6 +45,7 @@ static GtkItemFactoryEntry toolbox_entries[] =
   { "/File/Dialogs/Patterns...", "<control><shift>P", dialogs_patterns_cmd_callback, 0 },
   { "/File/Dialogs/Palette...", "<control>P", dialogs_palette_cmd_callback, 0 },
   { "/File/Dialogs/Gradient Editor...", "<control>G", dialogs_gradient_editor_cmd_callback, 0 },
+  { "/File/Dialogs/Layers & Channels...", "<control>L", dialogs_lc_cmd_callback, 0 },
   { "/File/Dialogs/Tool Options...", "<control><shift>T", dialogs_tools_options_cmd_callback, 0 },
   { "/File/Dialogs/Input Devices...", NULL, dialogs_input_devices_cmd_callback, 0 },
   { "/File/Dialogs/Device Status...", NULL, dialogs_device_status_cmd_callback, 0 },

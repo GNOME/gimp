@@ -982,7 +982,10 @@ dialogs_lc_cmd_callback (GtkWidget *widget,
 
   gdisp = gdisplay_active ();
 
-  lc_dialog_create (gdisp->gimage->ID);
+  if (gdisp == NULL) 
+    lc_dialog_create (-1);
+  else
+    lc_dialog_create (gdisp->gimage->ID);
 }
 
 void

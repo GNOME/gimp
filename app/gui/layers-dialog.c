@@ -378,6 +378,16 @@ lc_dialog_create (int gimage_id)
       gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 1);
       gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
 
+      if (gimage_id == -1)
+	{
+	  gtk_widget_set_sensitive (lc_subshell, FALSE);
+	  /* This is a little bit ugly, since we should also set
+	     the channels_ops_buttons insensitive, but they are
+	     never shown if the dialog is created on startup with 
+	     no image present. */
+	  ops_button_box_set_insensitive (layers_ops_buttons);
+	}
+
       layers_dialog_update (gimage_id);
       channels_dialog_update (gimage_id);
       gdisplays_flush ();

@@ -1,3 +1,11 @@
+Tue Jun 23 23:21:16 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/commands.c
+	* app/layers_dialog.c
+	* app/menus.c: The lc-dialog can now be opened from the
+	toolbox-menu. Did that in preparation for auto-opening dialogs on
+	start-up.
+
 Mon Jun 22 22:57:00 EDT 1998 Manish Vachharajani <mvachhar@vger.rutgers.edu>
 
 	* app/eraser.c:  Ack, try to get pressure sensitivity right this time.
