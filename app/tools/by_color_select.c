@@ -157,9 +157,9 @@ by_color_select_color (GImage        *gimage,
   unsigned char *mask_data;
   unsigned char *idata, *mdata;
   unsigned char rgb[MAX_CHANNELS];
-  int has_alpha;
+  int has_alpha, indexed;
   int width, height;
-  int bytes, alpha;
+  int bytes, color_bytes, alpha;
   int i, j;
   void * pr;
   int d_type;
@@ -172,6 +172,7 @@ by_color_select_color (GImage        *gimage,
       has_alpha = (d_type == RGBA_GIMAGE ||
 		   d_type == GRAYA_GIMAGE ||
 		   d_type == INDEXEDA_GIMAGE);
+      indexed = d_type == INDEXEDA_GIMAGE || d_type == INDEXED_GIMAGE;
       width = gimage->width;
       height = gimage->height;
       pixel_region_init (&imagePR, gimage_composite (gimage), 0, 0, width, height, FALSE);
@@ -181,11 +182,20 @@ by_color_select_color (GImage        *gimage,
       bytes = drawable_bytes (drawable);
       d_type = drawable_type (drawable);
       has_alpha = drawable_has_alpha (drawable);
+      indexed = drawable_indexed (drawable);
       width = drawable_width (drawable);
       height = drawable_height (drawable);
 
       pixel_region_init (&imagePR, drawable_data (drawable), 0, 0, width, height, FALSE);
     }
+
+  if (indexed) {
+    /* indexed colors are always RGB or RGBA */
+    color_bytes = has_alpha ? 4 : 3;
+  } else {
+    /* RGB, RGBA, GRAY and GRAYA colors are shaped just like the image */
+    color_bytes = bytes;
+  }
 
   alpha = bytes - 1;
   mask = channel_new_mask (gimage->ID, width, height);
@@ -208,11 +218,11 @@ by_color_select_color (GImage        *gimage,
 
 	      /*  Plug the alpha channel in there  */
 	      if (has_alpha)
-		rgb[alpha] = idata[alpha];
+		rgb[color_bytes - 1] = idata[alpha];
 
 	      /*  Find how closely the colors match  */
 	      *mdata++ = is_pixel_sufficiently_different (color, rgb, antialias,
-							  threshold, bytes, has_alpha);
+							  threshold, color_bytes, has_alpha);
 
 	      idata += bytes;
 	    }
@@ -321,7 +331,8 @@ by_color_select_button_release (Tool           *tool,
   int x, y;
   int drawable_id;
   Tile *tile;
-  unsigned char *col;
+  unsigned char col[MAX_CHANNELS];
+  unsigned char *data;
   int use_offsets;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -343,7 +354,7 @@ by_color_select_button_release (Tool           *tool,
 	    return;
 	  tile = tile_manager_get_tile (gimage_composite (gdisp->gimage), x, y, 0);
 	  tile_ref (tile);
-	  col = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+	  data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
 	}
       else
 	{
@@ -351,8 +362,11 @@ by_color_select_button_release (Tool           *tool,
 	    return;
 	  tile = tile_manager_get_tile (drawable_data (drawable_id), x, y, 0);
 	  tile_ref (tile);
-	  col = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+	  data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
 	}
+
+      gimage_get_color (gdisp->gimage, gimage_composite_type(gdisp->gimage), col, data);
+      tile_unref (tile, FALSE);
 
       /*  select the area  */
       by_color_select (gdisp->gimage, drawable_id, col,
@@ -362,8 +376,6 @@ by_color_select_button_release (Tool           *tool,
 		       by_color_options->feather,
 		       by_color_options->feather_radius,
 		       by_color_options->sample_merged);
-
-      tile_unref (tile, FALSE);
 
       /*  show selection on all views  */
       gdisplays_flush ();

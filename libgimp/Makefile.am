@@ -34,8 +34,8 @@ gimpinclude_HEADERS =	gimp.h		\
 			gimpmenu.h	\
 			gimpui.h
 
-libgimp_la_LDFLAGS = -version-info 1:0:0 -rpath $(libdir)
-libgimpui_la_LDFLAGS = -version-info 1:0:0 -rpath $(libdir)
+libgimp_la_LDFLAGS = -version-info 1:0:0
+libgimpui_la_LDFLAGS = -version-info 1:0:0
 
 INCLUDES = \
 	$(X_CFLAGS)			\

@@ -348,6 +348,9 @@ parse_colors (XpmImage *xpm_image, guchar **cmap)
           else if (xpm_color->m_color)
             colorspec = xpm_color->m_color;
         
+          if (strcmp(colorspec, "none") == 0)
+            colorspec = "None";
+
           /* parse if it's not transparent.  the assumption is that
              g_new will memset the buffer to zeros */
           if (strcmp(colorspec, "None") != 0) {
