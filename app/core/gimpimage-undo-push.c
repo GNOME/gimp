@@ -467,6 +467,7 @@ pop_stack (GImage     *gimage,
 	  /*  If the shrink_wrap flag was set  */
 	  if (shrink_wrap)
 	    {
+	      gdisplays_resize_cursor_label (gimage);
 	      gdisplays_shrink_wrap (gimage);
 	      shrink_wrap = FALSE;
 	    }
@@ -2499,11 +2500,10 @@ undo_pop_resolution (GImage    *gimage,
       tmpunit = gimage->unit;
       gimage->unit = data->unit;
       data->unit = tmpunit;
-      gdisplays_resize_cursor_label (gimage);
     }
 
   /* really just want to recalc size and repaint */
-  gdisplays_shrink_wrap (gimage);
+  shrink_wrap = TRUE;
 
   return TRUE;
 }

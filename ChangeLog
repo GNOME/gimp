@@ -1,3 +1,8 @@
+2000-10-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/undo.c: resize the cursor label if the shrink_wrap flag is
+	set. Closes #21936.
+
 2000-10-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpbrush.c
