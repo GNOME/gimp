@@ -297,10 +297,12 @@ N_("When set to yes, the GIMP will not save if the image is unchanged since " \
    "opening it.")
 
 #define UNDO_LEVELS_BLURB \
-N_("Sets the number of operations kept on the undo stack.")
+N_("Sets the minimal number of operations that can be undone. More undo " \
+   "levels are kept available until the undo-size limit is reached.")
 
 #define UNDO_SIZE_BLURB \
-N_("Sets the maximum memory used by operations kept on the undo stack.")
+N_("Sets an upper limit to the memory that is used per image to keep " \
+   "operations on the undo stack.")
 
 #define USE_HELP_BLURB  \
 N_("When set to no the F1 help binding will be disabled.")

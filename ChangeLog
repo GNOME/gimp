@@ -1,5 +1,11 @@
 2003-02-25  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc-blurbs.h
+	* app/gui/preferences-dialog.c: tried to improve the explanations
+	of the new undo limits.
+
+2003-02-25  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectselecttool.c (gimp_rect_select_tool_motion):
 	if in free select mode set width and height in the tool options.
 

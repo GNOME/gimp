@@ -1679,7 +1679,7 @@ prefs_dialog_new (Gimp    *gimp,
 #endif /* ENABLE_MP */
 
   prefs_spin_button_add (config, "undo-levels", 1.0, 5.0, 0,
-                         _("Levels of Undo:"),
+                         _("Minimal Number of Undo Levels:"),
                          GTK_TABLE (table), 0);
   prefs_memsize_entry_add (config, "undo-size",
                            _("Maximum Undo Memory:"),
