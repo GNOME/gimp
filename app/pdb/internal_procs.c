@@ -60,6 +60,7 @@ void register_selection_procs       (Gimp *gimp);
 void register_selection_tools_procs (Gimp *gimp);
 void register_text_tool_procs       (Gimp *gimp);
 void register_tools_procs           (Gimp *gimp);
+void register_transform_tools_procs (Gimp *gimp);
 void register_undo_procs            (Gimp *gimp);
 void register_unit_procs            (Gimp *gimp);
 
@@ -161,6 +162,9 @@ internal_procs_init (Gimp               *gimp,
 
   (* status_callback) (NULL, _("Tool procedures"), 0.885);
   register_tools_procs (gimp);
+
+  (* status_callback) (NULL, _("Tool procedures"), 0.939);
+  register_transform_tools_procs (gimp);
 
   (* status_callback) (NULL, _("Undo"), 0.958);
   register_undo_procs (gimp);

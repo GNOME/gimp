@@ -39,6 +39,7 @@ libapppdb_a_SOURCES = @STRIP_BEGIN@ \
 	selection_tools_cmds.c	\
 	text_tool_cmds.c	\
 	tools_cmds.c		\
+	transform_tools_cmds.c	\
 	undo_cmds.c		\
 	unit_cmds.c		\
 @STRIP_END@
