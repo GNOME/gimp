@@ -1,3 +1,12 @@
+Tue Mar 30 20:50:21 BST 1999  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/gif/gif.c:
+	3.00.01 - Round image timing to nearest 10ms instead of
+	truncating.  Insert a mandatory 10ms minimum delay
+	for the frames of looping animated GIFs, to avoid
+	generating an evil CPU-sucking animation that 'other'
+	GIF-animators sometimes like to save.
+
 Mon Mar 29 19:05:03 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.4 release

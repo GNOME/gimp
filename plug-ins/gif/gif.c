@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 3.0.0 - 99/03/20
+ * Version 3.0.1 - 99/03/30
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -22,6 +22,13 @@
 
 /*
  * REVISION HISTORY
+ *
+ * 99/03/30
+ * 3.00.01 - Round image timing to nearest 10ms instead of
+ *           truncating.  Insert a mandatory 10ms minimum delay
+ *           for the frames of looping animated GIFs, to avoid
+ *           generating an evil CPU-sucking animation that 'other'
+ *           GIF-animators sometimes like to save.
  *
  * 99/03/20
  * 3.00.00 - GIF-loading code moved to separate plugin.
@@ -1058,9 +1065,25 @@ save_image (char   *filename,
 	  g_free(layer_name);
 
 	  if (Delay89 < 0)
-	    Delay89 = gsvals.default_delay/10;
+	    Delay89 = (gsvals.default_delay + 5) / 10;
 	  else
-	    Delay89 /= 10;
+	    Delay89 = (Delay89 + 5) / 10;
+
+	  /* don't allow a CPU-sucking completely 0-delay looping anim */
+	  if ((nlayers > 1) &&
+	      gsvals.loop &&
+	      (Delay89 == 0))
+	    {
+	      static gboolean onceonly = FALSE;
+
+	      if (!onceonly)
+		{
+		  g_warning("GIF plugin: Delay inserted to prevent evil "
+			    "CPU-sucking anim.\n");
+		  onceonly = TRUE;
+		}
+	      Delay89 = 1;
+	    }
 
 	  GIFEncodeGraphicControlExt (outfile, Disposal, Delay89, nlayers,
 				      cols, rows, 0,
