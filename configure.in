@@ -280,6 +280,9 @@ AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
                    [The prefix for our gettext translation domains.])
 
+dnl Note to translators: you MUST have .po files in all 4 directories: po,
+dnl po-libgimp, po-plug-ins, and po-script-fu before adding you language
+dnl code to ALL_LINGUAS
 ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl he hu hr id it ja ko nl no pl pt pt_BR ro ru sk sr sr@Latn sv tr uk vi yi zh_CN zh_TW"
 
 AC_PROG_INTLTOOL

@@ -244,10 +244,6 @@ def _interact(func_name):
     # define a mapping of param types to edit objects ...
     class StringEntry(gtk.Entry):
 	def __init__(self, default=''):
-	    import pygtk
-	    pygtk.require('2.0')
-
-	    import gtk
 	    gtk.Entry.__init__(self)
 	    self.set_text(str(default))
 	def get_value(self):
@@ -266,9 +262,6 @@ def _interact(func_name):
     class SliderEntry(gtk.HScale):
 	# bounds is (upper, lower, step)
 	def __init__(self, default=0, bounds=(0, 100, 5)):
-	    import pygtk
-	    pygtk.require('2.0')
-	    import gtk
 	    self.adj = gtk.Adjustment(default, bounds[0],
 				      bounds[1], bounds[2],
 				      bounds[2], bounds[2])
@@ -278,9 +271,6 @@ def _interact(func_name):
     class SpinnerEntry(gtk.SpinButton):
 	# bounds is (upper, lower, step)
 	def __init__(self, default=0, bounds=(0, 100, 5)):
-	    import pygtk
-	    pygtk.require('2.0')
-	    import gtk
 	    self.adj = gtk.Adjustment(default, bounds[0],
 				      bounds[1], bounds[2],
 				      bounds[2], bounds[2])
@@ -289,9 +279,6 @@ def _interact(func_name):
 	    return int(self.adj.value)
     class ToggleEntry(gtk.ToggleButton):
 	def __init__(self, default=0):
-	    import pygtk
-	    pygtk.require('2.0')
-	    import gtk
 	    gtk.ToggleButton.__init__(self)
 	    self.label = gtk.Label("No")
 	    self.add(self.label)
@@ -307,9 +294,6 @@ def _interact(func_name):
 	    return self.get_active()
     class RadioEntry(gtk.Frame):
         def __init__(self, default=0, items=(("Yes", 1), ("No", 0))):
-	    import pygtk
-	    pygtk.require('2.0')
-            import gtk
             gtk.Frame.__init__(self)
             box = gtk.HBox(gtk.FALSE, 5)
             self.add(box)

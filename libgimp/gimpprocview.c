@@ -78,7 +78,7 @@ typedef struct
 
 static void         dialog_apply_callback        (GtkWidget         *widget,
 						  dbbrowser_t       *dbbrowser);
-static gint         procedure_select_callback    (GtkTreeSelection  *sel,
+static void         procedure_select_callback    (GtkTreeSelection  *sel,
 						  dbbrowser_t       *dbbrowser);
 static void         procedure_activated_callback (GtkTreeView       *treeview,
 						  GtkTreePath       *path,
@@ -99,12 +99,13 @@ static const gchar *GParamType2char              (GimpPDBArgType     t);
 GtkWidget *
 gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
 {
-  dbbrowser_t *dbbrowser;
-  GtkWidget   *hpaned;
-  GtkWidget   *searchhbox;
-  GtkWidget   *vbox;
-  GtkWidget   *label;
-  GtkWidget   *scrolled_window;
+  dbbrowser_t     *dbbrowser;
+  GtkWidget       *hpaned;
+  GtkWidget       *searchhbox;
+  GtkWidget       *vbox;
+  GtkWidget       *label;
+  GtkWidget       *scrolled_window;
+  GtkCellRenderer *renderer;
 
   dbbrowser = g_new0 (dbbrowser_t, 1);
   
@@ -178,10 +179,15 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
 
   dbbrowser->tv = gtk_tree_view_new ();
 
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_cell_renderer_text_set_fixed_height_from_font
+    (GTK_CELL_RENDERER_TEXT (renderer), 1);
+
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (dbbrowser->tv),
 					       -1, NULL,
-					       gtk_cell_renderer_text_new (),
-					       "text", 0, NULL);
+					       renderer,
+					       "text", 0,
+					       NULL);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (dbbrowser->tv), FALSE);
 
   if (apply_callback)
@@ -265,15 +271,15 @@ procedure_activated_callback (GtkTreeView       *treeview,
   dialog_apply_callback (NULL, dbbrowser);
 }
 
-static gint
+static void
 procedure_select_callback (GtkTreeSelection *sel,
 			   dbbrowser_t      *dbbrowser)
 {
   GtkTreeIter  iter;
   gchar       *func;
 
-  g_return_val_if_fail (sel != NULL, FALSE);
-  g_return_val_if_fail (dbbrowser != NULL, FALSE);
+  g_return_if_fail (sel != NULL);
+  g_return_if_fail (dbbrowser != NULL);
 
   if (gtk_tree_selection_get_selected (sel, NULL, &iter))
     {
@@ -283,8 +289,6 @@ procedure_select_callback (GtkTreeSelection *sel,
       dialog_select (dbbrowser, func);
       g_free (func);
     }
-
-  return FALSE;
 }
 
 /* update the description box (right) */

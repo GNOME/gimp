@@ -39,7 +39,6 @@
 #include "plug-in-commands.h"
 #include "plug-in-menus.h"
 
-#include "libgimpbase/gimpenv.h"
 #include "gimp-intl.h"
 
 

@@ -1,3 +1,30 @@
+2003-08-31  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: added a prominent comment for translators to make
+	sure they have all 4 po files before adding to ALL_LINGUAS.
+
+	* app/gui/plug-in-menus.c: remove redudant #include of gimpenv.h
+
+	* tools/pdbgen/pdb/plug_in.pdb: gimp_strip_uline menu_path before
+	passing it up.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+	* plug-ins/common/mng.c
+	* plug-ins/common/psd_save.c
+	* plug-ins/common/psp.c: use G_N_ELEMENTS
+
+	* plug-ins/common/screenshot.c: use GDK_WINDOWING_* for #includes
+	too. GDK cursor enums are ok to pass to XCreateFontCursor.
+
+	* plug-ins/dbbrowser/dbbrowser_utils.c: minor cleanups, also use
+	gtk_cell_renderer_text_set_fixed_height_from_font as an optimization.
+
+	* plug-ins/libgck/gck/gckcolor.c: #undef GDK_DISABLE_DEPRECATED and
+	add warning.
+
+	* plug-ins/pygimp/gimpfu.py: remove some redundant import gtk's
+
 2003-08-31  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimpcolorspace.c: applied a patch from S. Mukund
@@ -1839,7 +1866,7 @@
 
 	* gimp/app/plug-in/plug-in.c
 	* gimp/app/widgets/gimpitemfactory.c
-	* gimp/app/widgets/gimptoolbox.
+	* gimp/app/widgets/gimptoolbox.c
 	* gimp/app/gui/plug-in-menus.c: changed accordingly
 
 	* gimp/plug-ins/script-fu/script-fu-scripts.c

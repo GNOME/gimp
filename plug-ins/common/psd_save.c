@@ -170,7 +170,6 @@ query ()
     { GIMP_PDB_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2)" },
     { GIMP_PDB_INT32, "fillorder", "Fill Order: { MSB to LSB (0), LSB to MSB (1)" }
   };
-  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_psd_save",
                           "saves files in the Photoshop(tm) PSD file format",
@@ -181,7 +180,7 @@ query ()
                           "<Save>/PSD",
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
-                          nsave_args, 0,
+                          G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
   gimp_register_save_handler ("file_psd_save", "psd", "");
 }

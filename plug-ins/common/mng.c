@@ -1473,15 +1473,13 @@ query (void)
     {GIMP_PDB_INT32, "time", "Write tIME (creation time) chunk"}
   };
 
-  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-
   gimp_install_procedure ("file_mng_save",
 			  "Saves images in the MNG file format",
 			  "This plug-in saves images in the Multiple-image Network Graphics (MNG) format which can be used as a replacement for animated GIFs, and more.",
 			  "S. Mukund <muks@mukund.org>",
 			  "S. Mukund <muks@mukund.org>", "November 19, 2002",
 			  "<Save>/MNG", "RGB*,GRAY*,INDEXED*", GIMP_PLUGIN,
-			  nsave_args, 0, save_args, NULL);
+			  G_N_ELEMENTS (save_args), 0, save_args, NULL);
 
   gimp_register_save_handler ("file_mng_save", "mng", "");
 }

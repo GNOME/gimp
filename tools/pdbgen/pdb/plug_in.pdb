@@ -167,6 +167,7 @@ sub plugins_query {
     delete $outargs[0]->{array}->{no_declare};
 
     %invoke = (
+	headers => [ qw("libgimpbase/gimpbase.h") ],
 	vars => [ 'PlugInProcDef *proc_def', 'GSList *list = NULL',
 		  'gint i = 0', 'regex_t sregex' ],
 	code => <<'CODE'
@@ -228,7 +229,7 @@ sub plugins_query {
 	  if (search_str && match_strings(&sregex,name))
 	    continue;
 
-	  menu_strs[i]     = g_strdup (proc_def->menu_path);
+	  menu_strs[i]     = gimp_strip_uline (proc_def->menu_path);
 	  accel_strs[i]    = g_strdup (proc_def->accelerator);
 	  prog_strs[i]     = g_strdup (proc_def->prog);
 	  types_strs[i]    = g_strdup (proc_def->image_types);

@@ -44,6 +44,8 @@
 #endif
 
 
+#include "libgimpbase/gimpbase.h"
+
 static ProcRecord progress_init_proc;
 static ProcRecord progress_update_proc;
 static ProcRecord temp_PDB_name_proc;
@@ -290,7 +292,7 @@ plugins_query_invoker (Gimp     *gimp,
 	  if (search_str && match_strings(&sregex,name))
 	    continue;
 
-	  menu_strs[i]     = g_strdup (proc_def->menu_path);
+	  menu_strs[i]     = gimp_strip_uline (proc_def->menu_path);
 	  accel_strs[i]    = g_strdup (proc_def->accelerator);
 	  prog_strs[i]     = g_strdup (proc_def->prog);
 	  types_strs[i]    = g_strdup (proc_def->image_types);

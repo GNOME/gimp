@@ -30,6 +30,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef __GNUC__
+#warning GDK_DISABLE_DEPRECATED
+#endif
+#undef GDK_DISABLE_DEPRECATED
+
 #include <glib.h>
 
 #include "libgimpcolor/gimpcolor.h"

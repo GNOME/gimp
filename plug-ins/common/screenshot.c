@@ -32,13 +32,11 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#ifdef G_OS_WIN32
-#include <windows.h>
-#else /* ! G_OS_WIN32 */
-#include <X11/Xlib.h>
-#include <X11/cursorfont.h>
+#if defined(GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
-#endif /* ! G_OS_WIN32 */
+#elif defined(GDK_WINDOWING_WIN32)
+#include <windows.h>
+#endif
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -258,7 +256,7 @@ select_window (const GdkScreen *screen)
 
   x_win    = None;
   x_root   = RootWindow (x_dpy, x_scr);
-  x_cursor = XCreateFontCursor (x_dpy, XC_crosshair);
+  x_cursor = XCreateFontCursor (x_dpy, GDK_CROSSHAIR);
   buttons  = 0;
 
   status = XGrabPointer (x_dpy, x_root, False,

@@ -358,7 +358,6 @@ query (void)
 /*      { GIMP_PDB_INT32, "compression", "Specify 0 for no compression, " */
 /*        "1 for RLE, and 2 for LZ77" } */
 /*    }; */
-/*    static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]); */
 
   gimp_install_procedure ("file_psp_load",
                           "loads images from the Paint Shop Pro PSP file format",
@@ -389,7 +388,7 @@ query (void)
                           "<Save>/PSP",
 			  "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
-                          nsave_args, 0,
+                          G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 */
 
