@@ -395,7 +395,7 @@ gimp_prop_enum_combo_box_notify (GObject    *config,
                                    gimp_prop_enum_combo_box_callback,
                                    config);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo_box), value));
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo_box), value);
 
   g_signal_handlers_unblock_by_func (combo_box,
                                      gimp_prop_enum_combo_box_callback,
@@ -495,7 +495,15 @@ gimp_prop_boolean_combo_box_notify (GObject    *config,
                 param_spec->name, &value,
                 NULL);
 
+  g_signal_handlers_block_by_func (combo_box,
+                                   gimp_prop_boolean_combo_box_callback,
+                                   config);
+
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), value ? 0 : 1);
+
+  g_signal_handlers_unblock_by_func (combo_box,
+                                     gimp_prop_boolean_combo_box_callback,
+                                     config);
 }
 
 
