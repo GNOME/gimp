@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.11\n"
-"POT-Creation-Date: 1999-11-23 23:54+0100\n"
+"POT-Creation-Date: 1999-11-24 14:35-0800\n"
 "PO-Revision-Date: 1999-11-09 22:34+0100\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -4869,12 +4869,13 @@ msgid "Scaling"
 msgstr "Skalning"
 
 #: app/preferences_dialog.c:1439
-msgid "Nearest Neighbor"
+#, fuzzy
+msgid "Nearest Neighbor (Fast)"
 msgstr "Närmaste granne"
 
 #: app/preferences_dialog.c:1443
-msgid "Cubic"
-msgstr "Kubisk"
+msgid "Cubic (Slow)"
+msgstr ""
 
 #: app/preferences_dialog.c:1447
 msgid "Interpolation Type:"
@@ -6412,3 +6413,6 @@ msgstr "inte nog med tiles hittade i nuvarande nivå"
 #, c-format
 msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 msgstr "kunde ej läsa tile-data från xcf-filen: %d (%d) tecken lästa"
+
+#~ msgid "Cubic"
+#~ msgstr "Kubisk"

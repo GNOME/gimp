@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.11\n"
-"POT-Creation-Date: 1999-11-22 22:10+0100\n"
+"POT-Creation-Date: 1999-11-24 14:35-0800\n"
 "PO-Revision-Date: 1999-11-22 20:36+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -75,11 +75,6 @@ msgstr "Farbpaletten"
 msgid "Gradients"
 msgstr "Farbverläufe"
 
-#: app/app_procs.c:727 app/app_procs.c:728 app/app_procs.c:743
-#: app/app_procs.c:744 app/menus.c:183 app/menus.c:212
-msgid "/File/Quit"
-msgstr "/Datei/Beenden"
-
 #: app/app_procs.c:746
 msgid "Really Quit?"
 msgstr "Wirklich Beenden?"
@@ -124,7 +119,7 @@ msgstr "Kurve beschädigt"
 msgid "Curve not closed!"
 msgstr "Kurve nicht geschlossen!"
 
-#: app/bezier_select.c:3147 app/gimage_mask.c:604
+#: app/bezier_select.c:3150 app/gimage_mask.c:604
 msgid "Paintbrush operation failed."
 msgstr "Pinseloperation schlug fehl."
 
@@ -257,7 +252,7 @@ msgid "Brightness-Contrast"
 msgstr "Helligkeit-Kontrast"
 
 #: app/brightness_contrast.c:213 app/by_color_select.c:589
-#: app/color_balance.c:269 app/curves.c:560 app/file_new_dialog.c:379
+#: app/color_balance.c:269 app/curves.c:560 app/file_new_dialog.c:377
 #: app/hue_saturation.c:371 app/levels.c:364 app/posterize.c:196
 #: app/threshold.c:270 app/tools.c:1023 app/transform_core.c:395
 msgid "Reset"
@@ -266,7 +261,7 @@ msgstr "Zurücksetzen"
 #: app/brightness_contrast.c:215 app/channel_ops.c:92
 #: app/channels_dialog.c:2429 app/channels_dialog.c:2603
 #: app/color_balance.c:271 app/color_notebook.c:112 app/convert.c:498
-#: app/curves.c:562 app/file_new_dialog.c:197 app/file_new_dialog.c:377
+#: app/curves.c:562 app/file_new_dialog.c:197 app/file_new_dialog.c:379
 #: app/gdisplay_color_ui.c:115 app/hue_saturation.c:373
 #: app/layers_dialog.c:3332 app/layers_dialog.c:3538 app/layers_dialog.c:3663
 #: app/layers_dialog.c:4064 app/levels.c:366 app/module_db.c:277
@@ -348,7 +343,7 @@ msgstr ""
 msgid "Opacity:"
 msgstr "Deckkraft:"
 
-#: app/brush_select.c:456 app/layers_dialog.c:363 app/tool_options.c:617
+#: app/brush_select.c:456 app/layers_dialog.c:363 app/tool_options.c:618
 msgid "Mode:"
 msgstr "Modus:"
 
@@ -439,7 +434,7 @@ msgstr "Ersetzen"
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: app/by_color_select.c:654 app/layers_dialog.c:230 app/tool_options.c:995
+#: app/by_color_select.c:654 app/layers_dialog.c:230 app/tool_options.c:997
 msgid "Subtract"
 msgstr "Subtraktion"
 
@@ -531,42 +526,6 @@ msgstr ""
 #: app/channels_dialog.c:211
 msgid "Delete Channel"
 msgstr "Lösche Kanal"
-
-#: app/channels_dialog.c:630 app/menus.c:660
-msgid "/New Channel..."
-msgstr "/Neuer Kanal..."
-
-#: app/channels_dialog.c:633 app/menus.c:662
-msgid "/Raise Channel"
-msgstr "/Kanal rauf"
-
-#: app/channels_dialog.c:636 app/menus.c:664
-msgid "/Lower Channel"
-msgstr "/Kanal runter"
-
-#: app/channels_dialog.c:639 app/menus.c:666
-msgid "/Duplicate Channel"
-msgstr "/Dupliziere Kanal"
-
-#: app/channels_dialog.c:642 app/menus.c:671
-msgid "/Channel to Selection"
-msgstr "/Kanal zur Auswahl"
-
-#: app/channels_dialog.c:645 app/menus.c:673
-msgid "/Add to Selection"
-msgstr "/Zur Auswahl hinzufügen"
-
-#: app/channels_dialog.c:646 app/menus.c:675
-msgid "/Subtract From Selection"
-msgstr "/Von Auswahl abziehen"
-
-#: app/channels_dialog.c:647 app/menus.c:677
-msgid "/Intersect With Selection"
-msgstr "/Schnittmenge mit Auswahl"
-
-#: app/channels_dialog.c:649 app/menus.c:682
-msgid "/Delete Channel"
-msgstr "/Lösche Kanal"
 
 #: app/channels_dialog.c:1154
 msgid "Empty Channel Copy"
@@ -979,7 +938,7 @@ msgid "Curves Options"
 msgstr "Kurven Einstellungen"
 
 #: app/curves.c:413 app/histogram_tool.c:270 app/layers_dialog.c:242
-#: app/levels.c:242 app/paint_funcs.c:96 app/tool_options.c:1001
+#: app/levels.c:242 app/paint_funcs.c:96 app/tool_options.c:1003
 msgid "Value"
 msgstr "Wert"
 
@@ -1314,19 +1273,6 @@ msgstr "%s ist eine nicht reguläre Datei (%s)"
 msgid "Save failed: "
 msgstr "Sichern schlug fehl: "
 
-#: app/fileops.c:1652 app/fileops.c:1653 app/fileops.c:1665 app/fileops.c:1666
-#: app/menus.c:87 app/menus.c:199
-msgid "/File/Open..."
-msgstr "/Datei/Öffnen..."
-
-#: app/fileops.c:1654 app/fileops.c:1670 app/gdisplay.c:1639 app/menus.c:201
-msgid "/File/Save"
-msgstr "/Datei/Sichern"
-
-#: app/fileops.c:1655 app/fileops.c:1671 app/gdisplay.c:1640 app/menus.c:203
-msgid "/File/Save as..."
-msgstr "/Datei/Sichern unter..."
-
 #: app/fileops.c:1687
 #, c-format
 msgid "%s exists, overwrite?"
@@ -1403,272 +1349,6 @@ msgstr "Indiziert leer"
 #: app/gdisplay.c:221
 msgid "indexed"
 msgstr "Indiziert"
-
-#: app/gdisplay.c:1641 app/menus.c:205
-msgid "/File/Revert"
-msgstr "/Datei/Zurücksetzen"
-
-#: app/gdisplay.c:1642 app/gdisplay_ops.c:299 app/gdisplay_ops.c:314
-#: app/gdisplay_ops.c:345 app/menus.c:210
-msgid "/File/Close"
-msgstr "/Datei/Schließen"
-
-#: app/gdisplay.c:1644
-msgid "/Edit"
-msgstr "/Bearbeiten"
-
-#: app/gdisplay.c:1645
-msgid "/Edit/Buffer"
-msgstr "/Bearbeiten/Ablage"
-
-#: app/gdisplay.c:1648 app/menus.c:222
-msgid "/Edit/Undo"
-msgstr "/Bearbeiten/Rückgängig"
-
-#: app/gdisplay.c:1649 app/menus.c:224
-msgid "/Edit/Redo"
-msgstr "/Bearbeiten/Wiederholen"
-
-#: app/gdisplay.c:1650 app/menus.c:229
-msgid "/Edit/Cut"
-msgstr "/Bearbeiten/Ausschneiden"
-
-#: app/gdisplay.c:1651 app/menus.c:231
-msgid "/Edit/Copy"
-msgstr "/Bearbeiten/Kopieren"
-
-#: app/gdisplay.c:1652 app/menus.c:233
-msgid "/Edit/Paste"
-msgstr "/Bearbeiten/Einfügen"
-
-#: app/gdisplay.c:1653 app/menus.c:235
-msgid "/Edit/Paste Into"
-msgstr "/Bearbeiten/Einfügen in Auswahl"
-
-#: app/gdisplay.c:1654 app/menus.c:237
-msgid "/Edit/Paste As New"
-msgstr "/Bearbeiten/Als Neu Einfügen"
-
-#: app/gdisplay.c:1655 app/menus.c:244
-msgid "/Edit/Buffer/Cut Named..."
-msgstr "/Bearbeiten/Ablage/Ausschneiden..."
-
-#: app/gdisplay.c:1656 app/menus.c:246
-msgid "/Edit/Buffer/Copy Named..."
-msgstr "/Bearbeiten/Ablage/Kopieren..."
-
-#: app/gdisplay.c:1657 app/menus.c:248
-msgid "/Edit/Buffer/Paste Named..."
-msgstr "/Bearbeiten/Ablage/Einfügen..."
-
-#: app/gdisplay.c:1658 app/menus.c:253
-msgid "/Edit/Clear"
-msgstr "/Bearbeiten/Löschen"
-
-#: app/gdisplay.c:1659 app/menus.c:255
-msgid "/Edit/Fill"
-msgstr "/Bearbeiten/Füllen"
-
-#: app/gdisplay.c:1660 app/menus.c:257
-msgid "/Edit/Stroke"
-msgstr "/Bearbeiten/Nachfahren"
-
-#: app/gdisplay.c:1663
-msgid "/Select"
-msgstr "/Auswahl"
-
-#: app/gdisplay.c:1664 app/menus.c:291
-msgid "/Select/Save To Channel"
-msgstr "/Auswahl/In Kanal sichern"
-
-#: app/gdisplay.c:1666
-msgid "/View"
-msgstr "/Ansicht"
-
-#: app/gdisplay.c:1667 app/menus.c:71
-msgid "/View/Zoom"
-msgstr "/Ansicht/Zoom"
-
-#: app/gdisplay.c:1670 app/menus.c:340
-msgid "/View/Toggle Selection"
-msgstr "/Ansicht/Auswahl"
-
-#: app/gdisplay.c:1671 app/menus.c:342
-msgid "/View/Toggle Rulers"
-msgstr "/Ansicht/Lineale"
-
-#: app/gdisplay.c:1673 app/menus.c:346
-msgid "/View/Toggle Guides"
-msgstr "/Ansicht/Hilfslinien"
-
-#: app/gdisplay.c:1674 app/menus.c:348
-msgid "/View/Snap To Guides"
-msgstr "/Ansicht/magnetische Hilfslinien"
-
-#: app/gdisplay.c:1675 app/menus.c:344
-msgid "/View/Toggle Statusbar"
-msgstr "/Ansicht/Statusleiste"
-
-#: app/gdisplay.c:1677 app/menus.c:326
-msgid "/View/Dot for dot"
-msgstr "/Ansicht/Punkt für Punkt"
-
-#: app/gdisplay.c:1680
-msgid "/Image"
-msgstr "/Bild"
-
-#: app/gdisplay.c:1681
-msgid "/Image/Mode"
-msgstr "/Bild/Modus"
-
-#: app/gdisplay.c:1682 app/gdisplay.c:1694
-msgid "/Image/Colors"
-msgstr "/Bild/Farben"
-
-#: app/gdisplay.c:1683
-msgid "/Image/Colors/Auto"
-msgstr "/Bild/Farben/Auto"
-
-#: app/gdisplay.c:1684
-msgid "/Image/Alpha"
-msgstr "/Bild/Alpha"
-
-#: app/gdisplay.c:1685
-msgid "/Image/Transforms"
-msgstr "/Bild/Transformationen"
-
-#: app/gdisplay.c:1686
-msgid "/Image/Transforms/Rotate"
-msgstr "/Bild/Transformationen/Rotieren"
-
-#: app/gdisplay.c:1689 app/menus.c:370
-msgid "/Image/Mode/RGB"
-msgstr "/Bild/Modus/RGB"
-
-#: app/gdisplay.c:1690 app/menus.c:372
-msgid "/Image/Mode/Grayscale"
-msgstr "/Bild/Modus/Graustufen"
-
-#: app/gdisplay.c:1691 app/menus.c:374
-#, fuzzy
-msgid "/Image/Mode/Indexed..."
-msgstr "/Bild/Modus/Indiziert..."
-
-#: app/gdisplay.c:1692 app/tools.c:735
-msgid "/Image/Histogram..."
-msgstr "/Bild/Histogramm..."
-
-#: app/gdisplay.c:1695 app/tools.c:616
-msgid "/Image/Colors/Color Balance..."
-msgstr "/Bild/Farben/Ausgleichen..."
-
-#: app/gdisplay.c:1696 app/tools.c:650
-msgid "/Image/Colors/Hue-Saturation..."
-msgstr "/Bild/Farben/Farbton-Sättigung..."
-
-#: app/gdisplay.c:1697 app/tools.c:633
-msgid "/Image/Colors/Brightness-Contrast..."
-msgstr "/Bild/Farben/Helligkeit-Kontrast..."
-
-#: app/gdisplay.c:1698 app/tools.c:684
-msgid "/Image/Colors/Threshold..."
-msgstr "/Bild/Farben/Schwellwert..."
-
-#: app/gdisplay.c:1699 app/tools.c:718
-msgid "/Image/Colors/Levels..."
-msgstr "/Bild/Farben/Werte..."
-
-#: app/gdisplay.c:1700 app/tools.c:701
-msgid "/Image/Colors/Curves..."
-msgstr "/Bild/Farben/Kurven..."
-
-#: app/gdisplay.c:1701 app/menus.c:387
-msgid "/Image/Colors/Desaturate"
-msgstr "/Bild/Farben/Sättigung entfernen"
-
-#: app/gdisplay.c:1702 app/tools.c:667
-msgid "/Image/Colors/Posterize..."
-msgstr "/Bild/Farben/Posterisieren..."
-
-#: app/gdisplay.c:1703 app/menus.c:389
-msgid "/Image/Colors/Invert"
-msgstr "/Bild/Farben/Invertieren"
-
-#: app/gdisplay.c:1704 app/menus.c:399
-msgid "/Image/Colors/Auto/Equalize"
-msgstr "/Bild/Farben/Auto/Angleichen"
-
-#: app/gdisplay.c:1706 app/menus.c:409
-msgid "/Image/Alpha/Add Alpha Channel"
-msgstr "/Bild/Alpha/Neuer Alphakanal"
-
-#: app/gdisplay.c:1709 app/menus.c:416
-msgid "/Image/Transforms/Offset..."
-msgstr "/Bild/Transformationen/Versatz..."
-
-#: app/gdisplay.c:1712
-msgid "/Layers/Stack"
-msgstr "/Ebenen/Stapel"
-
-#: app/gdisplay.c:1713
-msgid "/Layers/Rotate"
-msgstr "/Ebenen/Rotieren"
-
-#: app/gdisplay.c:1716 app/menus.c:446
-msgid "/Layers/Stack/Previous Layer"
-msgstr "/Ebenen/Stapel/Vorherige Ebene"
-
-#: app/gdisplay.c:1718 app/menus.c:448
-msgid "/Layers/Stack/Next Layer"
-msgstr "/Ebenen/Stapel/Nächste Ebene"
-
-#: app/gdisplay.c:1720 app/menus.c:450
-msgid "/Layers/Stack/Raise Layer"
-msgstr "/Ebenen/Stapel/Ebene rauf"
-
-#: app/gdisplay.c:1722 app/menus.c:452
-msgid "/Layers/Stack/Lower Layer"
-msgstr "/Ebenen/Stapel/Ebene runter"
-
-#: app/gdisplay.c:1724 app/menus.c:454
-msgid "/Layers/Stack/Layer to Top"
-msgstr "/Ebenen/Stapel/Ebene nach ganz oben"
-
-#: app/gdisplay.c:1726 app/menus.c:456
-msgid "/Layers/Stack/Layer to Bottom"
-msgstr "Ebenen/Stapel/Ebene nach ganz unten"
-
-#: app/gdisplay.c:1730 app/menus.c:468
-msgid "/Layers/Anchor Layer"
-msgstr "/Ebenen/Ebene verankern"
-
-#: app/gdisplay.c:1731 app/menus.c:470
-msgid "/Layers/Merge Visible Layers..."
-msgstr "/Ebenen/Sichtbare Ebenen vereinen..."
-
-#: app/gdisplay.c:1732 app/menus.c:472
-msgid "/Layers/Flatten Image"
-msgstr "/Ebenen/Bild zusammenfügen"
-
-#: app/gdisplay.c:1733 app/menus.c:484
-msgid "/Layers/Alpha To Selection"
-msgstr "/Ebenen/Auswahl aus Alphakanal"
-
-#: app/gdisplay.c:1734 app/menus.c:477
-msgid "/Layers/Mask To Selection"
-msgstr "/Ebenen/Auswahl aus Maske"
-
-#: app/gdisplay.c:1735 app/menus.c:482
-msgid "/Layers/Add Alpha Channel"
-msgstr "/Ebenen/Neuer Alphakanal"
-
-#: app/gdisplay.c:1738
-msgid "/Filters"
-msgstr "/Filter"
-
-#: app/gdisplay.c:1740
-msgid "/Script-Fu"
-msgstr "/Script-Fu"
 
 #: app/gdisplay_color_ui.c:106
 msgid "Configure"
@@ -2508,7 +2188,7 @@ msgstr "Farbton / Helligkeit / Sättigung Einstellungen"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:455 app/layers_dialog.c:236 app/paint_funcs.c:93
-#: app/tool_options.c:998
+#: app/tool_options.c:1000
 msgid "Hue"
 msgstr "Farbton"
 
@@ -2519,7 +2199,7 @@ msgstr "Helligkeit"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:523 app/layers_dialog.c:238 app/paint_funcs.c:94
-#: app/tool_options.c:999
+#: app/tool_options.c:1001
 msgid "Saturation"
 msgstr "Sättigung"
 
@@ -3091,7 +2771,7 @@ msgid "Channel Ops"
 msgstr "Kanal"
 
 #: app/internal_procs.c:79 app/layers_dialog.c:240 app/paint_funcs.c:95
-#: app/tool_options.c:885 app/tool_options.c:1000
+#: app/tool_options.c:888 app/tool_options.c:1002
 msgid "Color"
 msgstr "Farbe"
 
@@ -3222,43 +2902,43 @@ msgstr ""
 msgid "Layer Select"
 msgstr "Ebenenauswahl"
 
-#: app/layers_dialog.c:214 app/paint_funcs.c:82 app/tool_options.c:986
+#: app/layers_dialog.c:214 app/paint_funcs.c:82 app/tool_options.c:988
 msgid "Normal"
 msgstr "Normal"
 
-#: app/layers_dialog.c:216 app/paint_funcs.c:83 app/tool_options.c:987
+#: app/layers_dialog.c:216 app/paint_funcs.c:83 app/tool_options.c:989
 msgid "Dissolve"
 msgstr "Vernichtend"
 
-#: app/layers_dialog.c:218 app/paint_funcs.c:85 app/tool_options.c:989
+#: app/layers_dialog.c:218 app/paint_funcs.c:85 app/tool_options.c:991
 msgid "Multiply (Burn)"
 msgstr "Multiplizieren"
 
-#: app/layers_dialog.c:220 app/paint_funcs.c:97 app/tool_options.c:990
+#: app/layers_dialog.c:220 app/paint_funcs.c:97 app/tool_options.c:992
 msgid "Divide (Dodge)"
 msgstr "Dividieren"
 
-#: app/layers_dialog.c:222 app/paint_funcs.c:86 app/tool_options.c:991
+#: app/layers_dialog.c:222 app/paint_funcs.c:86 app/tool_options.c:993
 msgid "Screen"
 msgstr "Schirm"
 
-#: app/layers_dialog.c:224 app/paint_funcs.c:87 app/tool_options.c:992
+#: app/layers_dialog.c:224 app/paint_funcs.c:87 app/tool_options.c:994
 msgid "Overlay"
 msgstr "Überlagern"
 
-#: app/layers_dialog.c:226 app/paint_funcs.c:88 app/tool_options.c:993
+#: app/layers_dialog.c:226 app/paint_funcs.c:88 app/tool_options.c:995
 msgid "Difference"
 msgstr "Unterschied"
 
-#: app/layers_dialog.c:228 app/paint_funcs.c:89 app/tool_options.c:994
+#: app/layers_dialog.c:228 app/paint_funcs.c:89 app/tool_options.c:996
 msgid "Addition"
 msgstr "Addition"
 
-#: app/layers_dialog.c:232 app/paint_funcs.c:91 app/tool_options.c:996
+#: app/layers_dialog.c:232 app/paint_funcs.c:91 app/tool_options.c:998
 msgid "Darken Only"
 msgstr "Nur Abdunkeln"
 
-#: app/layers_dialog.c:234 app/paint_funcs.c:92 app/tool_options.c:997
+#: app/layers_dialog.c:234 app/paint_funcs.c:92 app/tool_options.c:999
 msgid "Lighten Only"
 msgstr "Nur Aufhellen"
 
@@ -3293,88 +2973,6 @@ msgstr "Lösche Ebene"
 #: app/layers_dialog.c:377
 msgid "Keep Trans."
 msgstr "Erhalte Transp."
-
-#: app/layers_dialog.c:1017 app/menus.c:595
-msgid "/New Layer..."
-msgstr "/Neue Ebene..."
-
-#. <Layers>/Stack
-#: app/layers_dialog.c:1020 app/menus.c:600
-msgid "/Stack/Previous Layer"
-msgstr "/Stapel/Vorherige Ebene"
-
-#: app/layers_dialog.c:1021 app/menus.c:602
-msgid "/Stack/Next Layer"
-msgstr "/Spapel/Nächste Ebene"
-
-#: app/layers_dialog.c:1023 app/menus.c:604
-msgid "/Stack/Raise Layer"
-msgstr "/Stapel/Ebene rauf"
-
-#: app/layers_dialog.c:1027 app/menus.c:606
-msgid "/Stack/Lower Layer"
-msgstr "/Stapel/Ebene runter"
-
-#: app/layers_dialog.c:1031 app/menus.c:608
-msgid "/Stack/Layer to Top"
-msgstr "/Stapel/Ebene nach ganz oben"
-
-#: app/layers_dialog.c:1033 app/menus.c:610
-msgid "/Stack/Layer to Bottom"
-msgstr "/Stapel/Ebene nach ganz hinten"
-
-#: app/layers_dialog.c:1036 app/menus.c:613
-msgid "/Duplicate Layer"
-msgstr "/Dupliziere Ebene"
-
-#: app/layers_dialog.c:1039 app/menus.c:615
-msgid "/Anchor Layer"
-msgstr "/Ebene verankern"
-
-#: app/layers_dialog.c:1042 app/menus.c:617
-msgid "/Delete Layer"
-msgstr "/Lösche Ebene"
-
-#: app/layers_dialog.c:1045 app/menus.c:622
-#, fuzzy
-msgid "/Layer Boundary Size..."
-msgstr "/Ebenengröße verändern... "
-
-#: app/layers_dialog.c:1046 app/menus.c:624
-msgid "/Scale Layer..."
-msgstr "/Skaliere Ebene..."
-
-#: app/layers_dialog.c:1048 app/menus.c:629
-msgid "/Merge Visible Layers..."
-msgstr "/Sichtbare Ebenen vereinen..."
-
-#: app/layers_dialog.c:1049 app/menus.c:631
-msgid "/Merge Down"
-msgstr "/Nach unten vereinen"
-
-#: app/layers_dialog.c:1050 app/menus.c:633
-msgid "/Flatten Image"
-msgstr "/Bild zusammenfügen"
-
-#: app/layers_dialog.c:1052 app/menus.c:638
-msgid "/Add Layer Mask..."
-msgstr "/Ebenenmaske hinzufügen..."
-
-#: app/layers_dialog.c:1053 app/menus.c:640
-msgid "/Apply Layer Mask..."
-msgstr "/Ebenenmaske anwenden..."
-
-#: app/layers_dialog.c:1054 app/menus.c:642
-msgid "/Mask to Selection"
-msgstr "/Auswahl aus Maske"
-
-#: app/layers_dialog.c:1056 app/menus.c:647
-msgid "/Add Alpha Channel"
-msgstr "/Neuer Alphakanal"
-
-#: app/layers_dialog.c:1057 app/menus.c:649
-msgid "/Alpha to Selection"
-msgstr "/Auswahl aus Alphakanal"
 
 #: app/layers_dialog.c:1791
 msgid "Empty Layer Copy"
@@ -3715,6 +3313,10 @@ msgstr "/Datei/MRU00 "
 msgid "/File/Dialogs"
 msgstr "/Datei/Dialoge"
 
+#: app/menus.c:71
+msgid "/View/Zoom"
+msgstr "/Ansicht/Zoom"
+
 #: app/menus.c:72
 msgid "/Stack"
 msgstr "/Stapel"
@@ -3727,6 +3329,10 @@ msgstr "/Datei/tearoff1"
 #: app/menus.c:85 app/menus.c:197
 msgid "/File/New..."
 msgstr "/Datei/Neu..."
+
+#: app/menus.c:87 app/menus.c:199
+msgid "/File/Open..."
+msgstr "/Datei/Öffnen..."
 
 #. <Toolbox>/File/Acquire
 #: app/menus.c:92 app/menus.c:97 app/menus.c:104 app/menus.c:142
@@ -3841,9 +3447,29 @@ msgstr "/Hilfe/Über..."
 msgid "/Help/Dump Items (Debug)"
 msgstr "/Hilfe/Dump Items (Debug)"
 
+#: app/menus.c:183 app/menus.c:212
+msgid "/File/Quit"
+msgstr "/Datei/Beenden"
+
 #: app/menus.c:190
 msgid "/tearoff1"
 msgstr ""
+
+#: app/menus.c:201
+msgid "/File/Save"
+msgstr "/Datei/Sichern"
+
+#: app/menus.c:203
+msgid "/File/Save as..."
+msgstr "/Datei/Sichern unter..."
+
+#: app/menus.c:205
+msgid "/File/Revert"
+msgstr "/Datei/Zurücksetzen"
+
+#: app/menus.c:210
+msgid "/File/Close"
+msgstr "/Datei/Schließen"
 
 #: app/menus.c:215
 msgid "/File/---moved"
@@ -3854,14 +3480,66 @@ msgstr "/Datei/---moved"
 msgid "/Edit/tearoff1"
 msgstr "/Bearbeiten/tearoff1"
 
+#: app/menus.c:222
+msgid "/Edit/Undo"
+msgstr "/Bearbeiten/Rückgängig"
+
+#: app/menus.c:224
+msgid "/Edit/Redo"
+msgstr "/Bearbeiten/Wiederholen"
+
 #: app/menus.c:227 app/menus.c:251 app/menus.c:260
 msgid "/Edit/---"
 msgstr "/Bearbeiten/---"
+
+#: app/menus.c:229
+msgid "/Edit/Cut"
+msgstr "/Bearbeiten/Ausschneiden"
+
+#: app/menus.c:231
+msgid "/Edit/Copy"
+msgstr "/Bearbeiten/Kopieren"
+
+#: app/menus.c:233
+msgid "/Edit/Paste"
+msgstr "/Bearbeiten/Einfügen"
+
+#: app/menus.c:235
+msgid "/Edit/Paste Into"
+msgstr "/Bearbeiten/Einfügen in Auswahl"
+
+#: app/menus.c:237
+msgid "/Edit/Paste As New"
+msgstr "/Bearbeiten/Als Neu Einfügen"
 
 #. <Image>/Edit/Buffer
 #: app/menus.c:242
 msgid "/Edit/Buffer/tearoff1"
 msgstr "/Bearbeiten/Ablage/tearoff1"
+
+#: app/menus.c:244
+msgid "/Edit/Buffer/Cut Named..."
+msgstr "/Bearbeiten/Ablage/Ausschneiden..."
+
+#: app/menus.c:246
+msgid "/Edit/Buffer/Copy Named..."
+msgstr "/Bearbeiten/Ablage/Kopieren..."
+
+#: app/menus.c:248
+msgid "/Edit/Buffer/Paste Named..."
+msgstr "/Bearbeiten/Ablage/Einfügen..."
+
+#: app/menus.c:253
+msgid "/Edit/Clear"
+msgstr "/Bearbeiten/Löschen"
+
+#: app/menus.c:255
+msgid "/Edit/Fill"
+msgstr "/Bearbeiten/Füllen"
+
+#: app/menus.c:257
+msgid "/Edit/Stroke"
+msgstr "/Bearbeiten/Nachfahren"
 
 #. <Image>/Select
 #: app/menus.c:265
@@ -3907,6 +3585,10 @@ msgstr "/Auswahl/Vergrößern..."
 #: app/menus.c:286
 msgid "/Select/Border..."
 msgstr "/Auswahl/Rand..."
+
+#: app/menus.c:291
+msgid "/Select/Save To Channel"
+msgstr "/Auswahl/In Kanal sichern"
 
 #. <Image>/View
 #: app/menus.c:296
@@ -3962,6 +3644,10 @@ msgstr "/Ansicht/Zoom/1:8"
 msgid "/View/Zoom/1:16"
 msgstr "/Ansicht/Zoom/1:16"
 
+#: app/menus.c:326
+msgid "/View/Dot for dot"
+msgstr "/Ansicht/Punkt für Punkt"
+
 #: app/menus.c:329 app/menus.c:338 app/menus.c:351 app/menus.c:358
 msgid "/View/---"
 msgstr "/Ansicht/---"
@@ -3977,6 +3663,26 @@ msgstr "/Ansicht/Navigation..."
 #: app/menus.c:335
 msgid "/View/Undo history..."
 msgstr "/Bearbeiten/Journal..."
+
+#: app/menus.c:340
+msgid "/View/Toggle Selection"
+msgstr "/Ansicht/Auswahl"
+
+#: app/menus.c:342
+msgid "/View/Toggle Rulers"
+msgstr "/Ansicht/Lineale"
+
+#: app/menus.c:344
+msgid "/View/Toggle Statusbar"
+msgstr "/Ansicht/Statusleiste"
+
+#: app/menus.c:346
+msgid "/View/Toggle Guides"
+msgstr "/Ansicht/Hilfslinien"
+
+#: app/menus.c:348
+msgid "/View/Snap To Guides"
+msgstr "/Ansicht/magnetische Hilfslinien"
 
 #: app/menus.c:353
 msgid "/View/New View"
@@ -3996,6 +3702,19 @@ msgstr "/Bild/tearoff1"
 msgid "/Image/Mode/tearoff1"
 msgstr "/Bild/Modus/tearoff1"
 
+#: app/menus.c:370
+msgid "/Image/Mode/RGB"
+msgstr "/Bild/Modus/RGB"
+
+#: app/menus.c:372
+msgid "/Image/Mode/Grayscale"
+msgstr "/Bild/Modus/Graustufen"
+
+#: app/menus.c:374
+#, fuzzy
+msgid "/Image/Mode/Indexed..."
+msgstr "/Bild/Modus/Indiziert..."
+
 #: app/menus.c:377
 msgid "/Image/Mode/---"
 msgstr "/Bild/Modus/---"
@@ -4009,20 +3728,40 @@ msgstr "/Bild/Farben/tearoff1"
 msgid "/Image/Colors/---"
 msgstr "/Bild/Farben/---"
 
+#: app/menus.c:387
+msgid "/Image/Colors/Desaturate"
+msgstr "/Bild/Farben/Sättigung entfernen"
+
+#: app/menus.c:389
+msgid "/Image/Colors/Invert"
+msgstr "/Bild/Farben/Invertieren"
+
 #. <Image>/Image/Colors/Auto
 #: app/menus.c:397
 msgid "/Image/Colors/Auto/tearoff1"
 msgstr "/Bild/Farben/Auto/tearoff1"
+
+#: app/menus.c:399
+msgid "/Image/Colors/Auto/Equalize"
+msgstr "/Bild/Farben/Auto/Angleichen"
 
 #. <Image>/Image/Alpha
 #: app/menus.c:407
 msgid "/Image/Alpha/tearoff1"
 msgstr "/Bild/Alpha/tearoff1"
 
+#: app/menus.c:409
+msgid "/Image/Alpha/Add Alpha Channel"
+msgstr "/Bild/Alpha/Neuer Alphakanal"
+
 #. <Image>/Image/Transforms
 #: app/menus.c:414
 msgid "/Image/Transforms/tearoff1"
 msgstr "/Bild/Transformationen/tearoff1"
+
+#: app/menus.c:416
+msgid "/Image/Transforms/Offset..."
+msgstr "/Bild/Transformationen/Versatz..."
 
 #: app/menus.c:418
 #, fuzzy
@@ -4064,6 +3803,30 @@ msgstr "/Ebenen/Ebenen und Kanäle..."
 msgid "/Layers/Stack/tearoff1"
 msgstr "/Ebenen/Stapel/tearoff1"
 
+#: app/menus.c:446
+msgid "/Layers/Stack/Previous Layer"
+msgstr "/Ebenen/Stapel/Vorherige Ebene"
+
+#: app/menus.c:448
+msgid "/Layers/Stack/Next Layer"
+msgstr "/Ebenen/Stapel/Nächste Ebene"
+
+#: app/menus.c:450
+msgid "/Layers/Stack/Raise Layer"
+msgstr "/Ebenen/Stapel/Ebene rauf"
+
+#: app/menus.c:452
+msgid "/Layers/Stack/Lower Layer"
+msgstr "/Ebenen/Stapel/Ebene runter"
+
+#: app/menus.c:454
+msgid "/Layers/Stack/Layer to Top"
+msgstr "/Ebenen/Stapel/Ebene nach ganz oben"
+
+#: app/menus.c:456
+msgid "/Layers/Stack/Layer to Bottom"
+msgstr "Ebenen/Stapel/Ebene nach ganz unten"
+
 #: app/menus.c:458
 msgid "/Layers/Stack/---"
 msgstr "/Ebenen/Stapel/---"
@@ -4076,6 +3839,30 @@ msgstr "/Ebenen/Rotieren/tearoff1"
 #: app/menus.c:466 app/menus.c:475 app/menus.c:480 app/menus.c:487
 msgid "/Layers/---"
 msgstr "/Ebenen/---"
+
+#: app/menus.c:468
+msgid "/Layers/Anchor Layer"
+msgstr "/Ebenen/Ebene verankern"
+
+#: app/menus.c:470
+msgid "/Layers/Merge Visible Layers..."
+msgstr "/Ebenen/Sichtbare Ebenen vereinen..."
+
+#: app/menus.c:472
+msgid "/Layers/Flatten Image"
+msgstr "/Ebenen/Bild zusammenfügen"
+
+#: app/menus.c:477
+msgid "/Layers/Mask To Selection"
+msgstr "/Ebenen/Auswahl aus Maske"
+
+#: app/menus.c:482
+msgid "/Layers/Add Alpha Channel"
+msgstr "/Ebenen/Neuer Alphakanal"
+
+#: app/menus.c:484
+msgid "/Layers/Alpha To Selection"
+msgstr "/Ebenen/Auswahl aus Alphakanal"
 
 #. <Image>/Tools
 #: app/menus.c:492
@@ -4103,11 +3890,11 @@ msgstr "/Werkzeuge/---"
 msgid "/Filters/tearoff1"
 msgstr "/Filter/tearoff1"
 
-#: app/menus.c:508 app/plug_in.c:1285
+#: app/menus.c:508
 msgid "/Filters/Repeat last"
 msgstr "/Filter/Wiederhole letzten Vorgang"
 
-#: app/menus.c:510 app/plug_in.c:1286
+#: app/menus.c:510
 msgid "/Filters/Re-show last"
 msgstr "/Filter/Zeige letzten Vorgang nochmal"
 
@@ -4185,52 +3972,170 @@ msgstr "/Automatisch"
 msgid "/By extension"
 msgstr "/Nach Endung"
 
-#: app/menus.c:693 app/paths_dialog.c:244
+#: app/menus.c:595
+msgid "/New Layer..."
+msgstr "/Neue Ebene..."
+
+#. <Layers>/Stack
+#: app/menus.c:600
+msgid "/Stack/Previous Layer"
+msgstr "/Stapel/Vorherige Ebene"
+
+#: app/menus.c:602
+msgid "/Stack/Next Layer"
+msgstr "/Spapel/Nächste Ebene"
+
+#: app/menus.c:604
+msgid "/Stack/Raise Layer"
+msgstr "/Stapel/Ebene rauf"
+
+#: app/menus.c:606
+msgid "/Stack/Lower Layer"
+msgstr "/Stapel/Ebene runter"
+
+#: app/menus.c:608
+msgid "/Stack/Layer to Top"
+msgstr "/Stapel/Ebene nach ganz oben"
+
+#: app/menus.c:610
+msgid "/Stack/Layer to Bottom"
+msgstr "/Stapel/Ebene nach ganz hinten"
+
+#: app/menus.c:613
+msgid "/Duplicate Layer"
+msgstr "/Dupliziere Ebene"
+
+#: app/menus.c:615
+msgid "/Anchor Layer"
+msgstr "/Ebene verankern"
+
+#: app/menus.c:617
+msgid "/Delete Layer"
+msgstr "/Lösche Ebene"
+
+#: app/menus.c:622
+#, fuzzy
+msgid "/Layer Boundary Size..."
+msgstr "/Ebenengröße verändern... "
+
+#: app/menus.c:624
+msgid "/Scale Layer..."
+msgstr "/Skaliere Ebene..."
+
+#: app/menus.c:629
+msgid "/Merge Visible Layers..."
+msgstr "/Sichtbare Ebenen vereinen..."
+
+#: app/menus.c:631
+msgid "/Merge Down"
+msgstr "/Nach unten vereinen"
+
+#: app/menus.c:633
+msgid "/Flatten Image"
+msgstr "/Bild zusammenfügen"
+
+#: app/menus.c:638
+msgid "/Add Layer Mask..."
+msgstr "/Ebenenmaske hinzufügen..."
+
+#: app/menus.c:640
+msgid "/Apply Layer Mask..."
+msgstr "/Ebenenmaske anwenden..."
+
+#: app/menus.c:642
+msgid "/Mask to Selection"
+msgstr "/Auswahl aus Maske"
+
+#: app/menus.c:647
+msgid "/Add Alpha Channel"
+msgstr "/Neuer Alphakanal"
+
+#: app/menus.c:649
+msgid "/Alpha to Selection"
+msgstr "/Auswahl aus Alphakanal"
+
+#: app/menus.c:660
+msgid "/New Channel..."
+msgstr "/Neuer Kanal..."
+
+#: app/menus.c:662
+msgid "/Raise Channel"
+msgstr "/Kanal rauf"
+
+#: app/menus.c:664
+msgid "/Lower Channel"
+msgstr "/Kanal runter"
+
+#: app/menus.c:666
+msgid "/Duplicate Channel"
+msgstr "/Dupliziere Kanal"
+
+#: app/menus.c:671
+msgid "/Channel to Selection"
+msgstr "/Kanal zur Auswahl"
+
+#: app/menus.c:673
+msgid "/Add to Selection"
+msgstr "/Zur Auswahl hinzufügen"
+
+#: app/menus.c:675
+msgid "/Subtract From Selection"
+msgstr "/Von Auswahl abziehen"
+
+#: app/menus.c:677
+msgid "/Intersect With Selection"
+msgstr "/Schnittmenge mit Auswahl"
+
+#: app/menus.c:682
+msgid "/Delete Channel"
+msgstr "/Lösche Kanal"
+
+#: app/menus.c:693
 msgid "/New Path"
 msgstr "/Neuer Pfad"
 
-#: app/menus.c:695 app/paths_dialog.c:247
+#: app/menus.c:695
 msgid "/Duplicate Path"
 msgstr "/Dupliziere Pfad"
 
-#: app/menus.c:697 app/paths_dialog.c:250
+#: app/menus.c:697
 msgid "/Path to Selection"
 msgstr "/Pfad zur Auswahl"
 
-#: app/menus.c:699 app/paths_dialog.c:253
+#: app/menus.c:699
 msgid "/Selection to Path"
 msgstr "/Auswahl zum Pfad "
 
-#: app/menus.c:701 app/paths_dialog.c:256
+#: app/menus.c:701
 msgid "/Stroke Path"
 msgstr "/Pfad nachziehen"
 
-#: app/menus.c:703 app/paths_dialog.c:259
+#: app/menus.c:703
 msgid "/Delete Path"
 msgstr "/Pfad löschen"
 
-#: app/menus.c:708 app/paths_dialog.c:262
+#: app/menus.c:708
 msgid "/Copy Path"
 msgstr "/Pfad kopieren"
 
-#: app/menus.c:710 app/paths_dialog.c:263
+#: app/menus.c:710
 msgid "/Paste Path"
 msgstr "/Pfad einfügen"
 
-#: app/menus.c:712 app/paths_dialog.c:265
+#: app/menus.c:712
 msgid "/Import Path..."
 msgstr "/Pfad importieren..."
 
-#: app/menus.c:714 app/paths_dialog.c:266
+#: app/menus.c:714
 msgid "/Export Path..."
 msgstr "/Pfad exportieren..."
 
-#: app/menus.c:1150
+#: app/menus.c:1124
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Kann Datei nicht öffnen: %s\n"
 
-#: app/menus.c:1173 app/menus.c:1261
+#: app/menus.c:1147 app/menus.c:1235
 #, c-format
 msgid "/File/MRU%02d"
 msgstr "/Datei/MRU%02d"
@@ -4344,7 +4249,7 @@ msgstr "Kein Bild: Navigation"
 msgid "No brushes available for use with this tool."
 msgstr "Keine Pinsel für dieses Werkzeug vorhanden."
 
-#: app/paint_funcs.c:84 app/tool_options.c:988
+#: app/paint_funcs.c:84 app/tool_options.c:990
 msgid "Behind"
 msgstr "Hinter"
 
@@ -4860,12 +4765,13 @@ msgid "Scaling"
 msgstr "Skalierung"
 
 #: app/preferences_dialog.c:1439
-msgid "Nearest Neighbor"
+#, fuzzy
+msgid "Nearest Neighbor (Fast)"
 msgstr "Nächster Nachbar"
 
 #: app/preferences_dialog.c:1443
-msgid "Cubic"
-msgstr "Kubisch"
+msgid "Cubic (Slow)"
+msgstr ""
 
 #: app/preferences_dialog.c:1447
 msgid "Interpolation Type:"
@@ -5305,7 +5211,7 @@ msgstr "Auswahl: "
 msgid "Scale Layer"
 msgstr "Skaliere Ebene"
 
-#: app/resize.c:156 app/resize.c:181 app/tool_options.c:865
+#: app/resize.c:156 app/resize.c:181 app/tool_options.c:868
 msgid "Size"
 msgstr "Größe"
 
@@ -5632,23 +5538,23 @@ msgstr "Xinput Airbrush Einstellungen"
 msgid "ERROR: Unknown Paint Type"
 msgstr ""
 
-#: app/tool_options.c:670
+#: app/tool_options.c:672
 msgid "Incremental"
 msgstr "Steigernd"
 
-#: app/tool_options.c:780
+#: app/tool_options.c:783
 msgid "Pressure sensitivity"
 msgstr "Druckempfindlichkeit"
 
-#: app/tool_options.c:798
+#: app/tool_options.c:801
 msgid "Opacity"
 msgstr "Deckkraft"
 
-#: app/tool_options.c:821
+#: app/tool_options.c:824
 msgid "Pressure"
 msgstr "Druck"
 
-#: app/tool_options.c:841
+#: app/tool_options.c:844
 #, fuzzy
 msgid "Rate"
 msgstr "Geschwindigkeit:"
@@ -5979,33 +5885,65 @@ msgstr "/Auswahl/Nach Farbe..."
 msgid "Select regions by color"
 msgstr "Wählt Bereiche nach Farbe"
 
+#: app/tools.c:616
+msgid "/Image/Colors/Color Balance..."
+msgstr "/Bild/Farben/Ausgleichen..."
+
 #: app/tools.c:619
 msgid "Adjust color balance"
 msgstr "Farbausgleich einstellen"
+
+#: app/tools.c:633
+msgid "/Image/Colors/Brightness-Contrast..."
+msgstr "/Bild/Farben/Helligkeit-Kontrast..."
 
 #: app/tools.c:636
 msgid "Adjust brightness and contrast"
 msgstr "Helligkeit und Kontrast einstellen"
 
+#: app/tools.c:650
+msgid "/Image/Colors/Hue-Saturation..."
+msgstr "/Bild/Farben/Farbton-Sättigung..."
+
 #: app/tools.c:653
 msgid "Adjust hue and saturation"
 msgstr "Farbton und Sättigung einstellen"
+
+#: app/tools.c:667
+msgid "/Image/Colors/Posterize..."
+msgstr "/Bild/Farben/Posterisieren..."
 
 #: app/tools.c:670
 msgid "Reduce image to a fixed numer of colors"
 msgstr "Bild auf eine bestimmte Zahl von Farben reduzieren"
 
+#: app/tools.c:684
+msgid "/Image/Colors/Threshold..."
+msgstr "/Bild/Farben/Schwellwert..."
+
 #: app/tools.c:687
 msgid "Reduce image to two colors using a threshold"
 msgstr "Bild mittels Schwellwert auf zwei Farben reduzieren"
+
+#: app/tools.c:701
+msgid "/Image/Colors/Curves..."
+msgstr "/Bild/Farben/Kurven..."
 
 #: app/tools.c:704
 msgid "Adjust color curves"
 msgstr "Farbkurven einstellen"
 
+#: app/tools.c:718
+msgid "/Image/Colors/Levels..."
+msgstr "/Bild/Farben/Werte..."
+
 #: app/tools.c:721
 msgid "Adjust color levels"
 msgstr "Farbwerte einstellen"
+
+#: app/tools.c:735
+msgid "/Image/Histogram..."
+msgstr "/Bild/Histogramm..."
 
 #: app/tools.c:738
 msgid "View image histogram"
@@ -6359,3 +6297,51 @@ msgstr ""
 #, c-format
 msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 msgstr ""
+
+#~ msgid "/Edit"
+#~ msgstr "/Bearbeiten"
+
+#~ msgid "/Edit/Buffer"
+#~ msgstr "/Bearbeiten/Ablage"
+
+#~ msgid "/Select"
+#~ msgstr "/Auswahl"
+
+#~ msgid "/View"
+#~ msgstr "/Ansicht"
+
+#~ msgid "/Image"
+#~ msgstr "/Bild"
+
+#~ msgid "/Image/Mode"
+#~ msgstr "/Bild/Modus"
+
+#~ msgid "/Image/Colors"
+#~ msgstr "/Bild/Farben"
+
+#~ msgid "/Image/Colors/Auto"
+#~ msgstr "/Bild/Farben/Auto"
+
+#~ msgid "/Image/Alpha"
+#~ msgstr "/Bild/Alpha"
+
+#~ msgid "/Image/Transforms"
+#~ msgstr "/Bild/Transformationen"
+
+#~ msgid "/Image/Transforms/Rotate"
+#~ msgstr "/Bild/Transformationen/Rotieren"
+
+#~ msgid "/Layers/Stack"
+#~ msgstr "/Ebenen/Stapel"
+
+#~ msgid "/Layers/Rotate"
+#~ msgstr "/Ebenen/Rotieren"
+
+#~ msgid "/Filters"
+#~ msgstr "/Filter"
+
+#~ msgid "/Script-Fu"
+#~ msgstr "/Script-Fu"
+
+#~ msgid "Cubic"
+#~ msgstr "Kubisch"

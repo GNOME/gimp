@@ -1,3 +1,7 @@
+Wed Nov 24 17:38:45 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.12 release
+
 Wed Nov 24 15:26:21 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in: version number bump; add check for standalone
