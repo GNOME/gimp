@@ -119,10 +119,10 @@ xcf_load_bz_point_version1 (XcfInfo *info)
   gint32     y;
 
   info->cp += xcf_read_int32 (info->fp, &type, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32*)&x, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32*)&y, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &x, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &y, 1);
 
-  ptr = path_point_new (type, (gdouble)x, (gdouble)y);
+  ptr = path_point_new (type, (gdouble) x, (gdouble) y);
 
   return ptr;
 }
@@ -139,7 +139,7 @@ xcf_load_bz_point (XcfInfo *info)
   info->cp += xcf_read_float (info->fp, &x, 1);
   info->cp += xcf_read_float (info->fp, &y, 1);
  
-  ptr = path_point_new (type, (gdouble)x, (gdouble)y);
+  ptr = path_point_new (type, (gdouble) x, (gdouble) y);
 
   return ptr;
 }
@@ -180,7 +180,7 @@ xcf_load_path (GimpImage *gimage,
   else if (version == 2)
     {
       /* Had extra type field and points are stored as doubles */
-      info->cp += xcf_read_int32 (info->fp, (guint32 *)&ptype, 1);
+      info->cp += xcf_read_int32 (info->fp, (guint32 *) &ptype, 1);
       while(num_points-- > 0)
       {
         PathPoint *bpt;
@@ -208,7 +208,7 @@ xcf_load_path (GimpImage *gimage,
     }
   
   bzp = path_new (gimage, 
-                  ptype, pts_list, closed, (gint)state, locked, tattoo, name);
+                  ptype, pts_list, closed, (gint) state, locked, tattoo, name);
 
   return bzp;
 }
@@ -397,8 +397,8 @@ xcf_load_image_props (XcfInfo   *info,
 			   "did not save indexed colormaps correctly.\n"
 			   "Substituting grayscale map."));
 	      info->cp += 
-                xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
-	      gimage->cmap = g_new (guchar, gimage->num_cols*3);
+                xcf_read_int32 (info->fp, (guint32 *) &gimage->num_cols, 1);
+	      gimage->cmap = g_new (guchar, gimage->num_cols * 3);
 	      if (!xcf_seek_pos (info, info->cp + gimage->num_cols, NULL))
 	        return FALSE;
 
@@ -412,11 +412,11 @@ xcf_load_image_props (XcfInfo   *info,
 	  else 
 	    {
 	      info->cp += 
-                xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
-	      gimage->cmap = g_new (guchar, gimage->num_cols*3);
+                xcf_read_int32 (info->fp, (guint32 *) &gimage->num_cols, 1);
+	      gimage->cmap = g_new (guchar, gimage->num_cols * 3);
 	      info->cp += 
                 xcf_read_int8 (info->fp, 
-                               (guint8*) gimage->cmap, gimage->num_cols*3);
+                               (guint8 *) gimage->cmap, gimage->num_cols * 3);
 	    }
 	  break;
 
@@ -424,7 +424,7 @@ xcf_load_image_props (XcfInfo   *info,
 	  {
 	    guint8 compression;
 
-	    info->cp += xcf_read_int8 (info->fp, (guint8*) &compression, 1);
+	    info->cp += xcf_read_int8 (info->fp, (guint8 *) &compression, 1);
 
 	    if ((compression != COMPRESS_NONE) &&
 		(compression != COMPRESS_RLE) &&
@@ -645,7 +645,7 @@ xcf_load_layer_props (XcfInfo   *info,
 	  info->floating_sel = layer;
 	  info->cp += 
             xcf_read_int32 (info->fp, 
-                            (guint32*) &info->floating_sel_offset, 1);
+                            (guint32 *) &info->floating_sel_offset, 1);
 	  break;
 	case PROP_OPACITY:
           {
@@ -667,35 +667,35 @@ xcf_load_layer_props (XcfInfo   *info,
 	  }
 	  break;
 	case PROP_LINKED:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->linked, 1);
+	  info->cp += xcf_read_int32 (info->fp, (guint32 *) &layer->linked, 1);
 	  break;
 	case PROP_PRESERVE_TRANSPARENCY:
 	  info->cp += 
-            xcf_read_int32 (info->fp, (guint32*) &layer->preserve_trans, 1);
+            xcf_read_int32 (info->fp, (guint32 *) &layer->preserve_trans, 1);
 	  break;
 	case PROP_APPLY_MASK:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) apply_mask, 1);
+	  info->cp += xcf_read_int32 (info->fp, (guint32 *) apply_mask, 1);
 	  break;
 	case PROP_EDIT_MASK:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) edit_mask, 1);
+	  info->cp += xcf_read_int32 (info->fp, (guint32 *) edit_mask, 1);
 	  break;
 	case PROP_SHOW_MASK:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) show_mask, 1);
+	  info->cp += xcf_read_int32 (info->fp, (guint32 *) show_mask, 1);
 	  break;
 	case PROP_OFFSETS:
 	  info->cp += 
             xcf_read_int32 (info->fp, 
-                            (guint32*) &GIMP_DRAWABLE(layer)->offset_x, 1);
+                            (guint32 *) &GIMP_DRAWABLE(layer)->offset_x, 1);
 	  info->cp += 
             xcf_read_int32 (info->fp, 
-                            (guint32*) &GIMP_DRAWABLE(layer)->offset_y, 1);
+                            (guint32 *) &GIMP_DRAWABLE(layer)->offset_y, 1);
 	  break;
 	case PROP_MODE:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->mode, 1);
+	  info->cp += xcf_read_int32 (info->fp, (guint32 *) &layer->mode, 1);
 	  break;
 	case PROP_TATTOO:
 	  info->cp += xcf_read_int32 (info->fp,
-				      (guint32*) &GIMP_ITEM (layer)->tattoo,
+				      (guint32 *) &GIMP_ITEM (layer)->tattoo,
 				      1);
 	  break;
 	 case PROP_PARASITES:
@@ -705,7 +705,7 @@ xcf_load_layer_props (XcfInfo   *info,
 
              while (info->cp - base < prop_size)
                {
-                 p = xcf_load_parasite(info);
+                 p = xcf_load_parasite (info);
                  gimp_item_parasite_attach (GIMP_ITEM (layer), p);
                  gimp_parasite_free (p);
                }
@@ -780,13 +780,13 @@ xcf_load_channel_props (XcfInfo     *info,
 	  break;
 	case PROP_SHOW_MASKED:
 	  info->cp += 
-            xcf_read_int32 (info->fp, (guint32*) &channel->show_masked, 1);
+            xcf_read_int32 (info->fp, (guint32 *) &channel->show_masked, 1);
 	  break;
 	case PROP_COLOR:
 	  {
 	    guchar col[3];
 
-	    info->cp += xcf_read_int8 (info->fp, (guint8*) col, 3);
+	    info->cp += xcf_read_int8 (info->fp, (guint8 *) col, 3);
 
 	    gimp_rgb_set_uchar (&channel->color, col[0], col[1], col[2]);
 				
@@ -838,8 +838,8 @@ xcf_load_prop (XcfInfo  *info,
 	       PropType *prop_type,
 	       guint32  *prop_size)
 {
-  info->cp += xcf_read_int32 (info->fp, (guint32*) prop_type, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32*) prop_size, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) prop_type, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) prop_size, 1);
   return TRUE;
 }
 
@@ -867,9 +867,9 @@ xcf_load_layer (XcfInfo   *info,
   add_floating_sel = (info->cp == info->floating_sel_offset);
 
   /* read in the layer width, height, type and name */
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &type, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &type, 1);
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new layer */
@@ -952,8 +952,8 @@ xcf_load_channel (XcfInfo   *info,
   add_floating_sel = (info->cp == info->floating_sel_offset);
 
   /* read in the layer width, height and name */
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new channel */
@@ -1011,8 +1011,8 @@ xcf_load_layer_mask (XcfInfo   *info,
   add_floating_sel = (info->cp == info->floating_sel_offset);
 
   /* read in the layer width, height and name */
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new layer mask */
@@ -1126,8 +1126,8 @@ xcf_load_level (XcfInfo     *info,
   Tile *previous;
   Tile *tile;
 
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
 
   if (width  != tile_manager_width  (tiles) ||
       height != tile_manager_height (tiles))
@@ -1168,7 +1168,7 @@ xcf_load_level (XcfInfo     *info,
       /* if the offset is 0 then we need to read in the maximum possible
 	 allowing for negative compression */
       if (offset2 == 0)
-	offset2 = offset + TILE_WIDTH * TILE_WIDTH * 4* 1.5; 
+	offset2 = offset + TILE_WIDTH * TILE_WIDTH * 4 * 1.5; 
                                         /* 1.5 is probably more
 					   than we need to allow */
 
@@ -1295,7 +1295,7 @@ xcf_load_tile_rle (XcfInfo *info,
 
   /* we have to use fread instead of xcf_read_* because we may be
      reading past the end of the file here */
-  nmemb_read_successfully = fread ((gchar*) xcfdata, sizeof (char),
+  nmemb_read_successfully = fread ((gchar *) xcfdata, sizeof (gchar),
 				   data_length, info->fp);
   info->cp += nmemb_read_successfully;
 
@@ -1303,7 +1303,7 @@ xcf_load_tile_rle (XcfInfo *info,
   
   for (i = 0; i < bpp; i++)
     {
-      data = (guchar*) tile_data_pointer (tile, 0, 0) + i;
+      data = (guchar *) tile_data_pointer (tile, 0, 0) + i;
       size = tile_ewidth (tile) * tile_eheight (tile);
       count = 0;
 
