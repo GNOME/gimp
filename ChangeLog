@@ -1,5 +1,26 @@
 2001-04-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/menus.c: added some more dialog types.
+
+	* app/gui/Makefile.am
+	* app/gui/gimpdialogfactory.[ch]: removed again...
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpdialogfactory.[ch]: ...and added where it belongs.
+
+	* app/gui/dialogs.c
+	* app/widgets/gimpdock.c: changed #include's
+
+	* app/gui/dialogs-commands.c: dialogs can be removed via the menu
+	now.
+
+	* app/widgets/gimpdockbook.c: ref the dockbook while the item
+	factory is active because an item factory callback may destroy it
+	(we need to add the hijacked GtkNotebook menu back to the
+	notebook).
+
+2001-04-14  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in
 	* app/Makefile.am
 	* app/gui/Makefile.am: new directory which will contain all gui code

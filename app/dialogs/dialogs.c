@@ -22,9 +22,10 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpdialogfactory.h"
+
 #include "dialogs.h"
 #include "dialogs-constructors.h"
-#include "gimpdialogfactory.h"
 #include "menus.h"
 
 

@@ -22,12 +22,11 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockbook.h"
 
 #include "dialogs-commands.h"
-#include "dialogs-constructors.h"
-#include "gimpdialogfactory.h"
 
 
 void
@@ -62,6 +61,15 @@ dialogs_remove_tab_cmd_callback (GtkWidget *widget,
 
   if (dockbook)
     {
-      g_print ("remove\n");
+      GimpDockable *dockable;
+      gint          page_num;
+
+      page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+
+      dockable = (GimpDockable *)
+	gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+
+      if (dockable)
+	gimp_dockbook_remove (dockbook, dockable);
     }
 }

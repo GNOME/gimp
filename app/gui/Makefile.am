@@ -8,9 +8,7 @@ libappgui_la_SOURCES = \
 	dialogs-commands.c	\
 	dialogs-commands.h	\
 	dialogs-constructors.c	\
-	dialogs-constructors.h	\
-	gimpdialogfactory.c	\
-	gimpdialogfactory.h
+	dialogs-constructors.h
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-GUI\"

@@ -27,8 +27,7 @@
 
 #include "apptypes.h"
 
-#include "gui/gimpdialogfactory.h"
-
+#include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
@@ -46,6 +45,11 @@ static gboolean  gimp_dockbook_drag_drop        (GtkWidget          *widget,
 						 gint                y,
 						 guint               time);
 
+static void      gimp_dockbook_menu_switch_page (GtkWidget          *widget,
+						 GimpDockable       *dockable);
+static void      gimp_dockbook_menu_end         (GimpDockbook       *dockbook);
+static void      gimp_dockbook_menu_detacher    (GtkWidget          *widget,
+						 GtkMenu            *menu);
 static gboolean  gimp_dockbook_tab_button_press (GtkWidget          *widget,
 						 GdkEventButton     *bevent,
 						 gpointer            data);
@@ -180,18 +184,6 @@ gimp_dockbook_drag_drop (GtkWidget      *widget,
     }
 
   return FALSE;
-}
-
-static void
-gimp_dockbook_menu_switch_page (GtkWidget    *widget,
-				GimpDockable *dockable)
-{
-  gint page_num;
-
-  page_num = gtk_notebook_page_num (GTK_NOTEBOOK (dockable->dockbook),
-				    GTK_WIDGET (dockable));
-
-  gtk_notebook_set_page (GTK_NOTEBOOK (dockable->dockbook), page_num);
 }
 
 void
@@ -348,6 +340,38 @@ gimp_dockbook_remove (GimpDockbook *dockbook,
 }
 
 static void
+gimp_dockbook_menu_switch_page (GtkWidget    *widget,
+				GimpDockable *dockable)
+{
+  gint page_num;
+
+  page_num = gtk_notebook_page_num (GTK_NOTEBOOK (dockable->dockbook),
+				    GTK_WIDGET (dockable));
+
+  gtk_notebook_set_page (GTK_NOTEBOOK (dockable->dockbook), page_num);
+}
+
+static void
+gimp_dockbook_menu_end (GimpDockbook *dockbook)
+{
+  GtkWidget *notebook_menu;
+
+  notebook_menu = GTK_NOTEBOOK (dockbook)->menu;
+
+  gtk_object_ref (GTK_OBJECT (notebook_menu));
+  gtk_menu_detach (GTK_MENU (notebook_menu));
+
+  gtk_menu_attach_to_widget (GTK_MENU (notebook_menu),
+			     GTK_WIDGET (dockbook),
+			     gimp_dockbook_menu_detacher);
+
+  gtk_object_unref (GTK_OBJECT (notebook_menu));
+
+  /*  release gimp_dockbook_tab_button_press()'s reference  */
+  gtk_object_unref (GTK_OBJECT (dockbook));
+}
+
+static void
 gimp_dockbook_menu_detacher (GtkWidget *widget,
 			     GtkMenu   *menu)
 {
@@ -360,27 +384,6 @@ gimp_dockbook_menu_detacher (GtkWidget *widget,
   g_return_if_fail (notebook->menu == (GtkWidget*) menu);
 
   notebook->menu = NULL;
-}
-
-static void
-gimp_dockbook_tab_menu_end (GimpDockbook *dockbook)
-{
-  GtkItemFactory *ifactory;
-  GtkWidget      *add_widget;
-  GtkWidget      *notebook_menu;
-
-  ifactory      = GTK_ITEM_FACTORY (dockbook->dock->factory->item_factory);
-  add_widget    = gtk_item_factory_get_widget (ifactory, "/Select Tab");
-  notebook_menu = GTK_NOTEBOOK (dockbook)->menu;
-
-  gtk_object_ref (GTK_OBJECT (notebook_menu));
-  gtk_menu_detach (GTK_MENU (notebook_menu));
-
-  gtk_menu_attach_to_widget (GTK_MENU (notebook_menu),
-			     GTK_WIDGET (dockbook),
-			     gimp_dockbook_menu_detacher);
-
-  gtk_object_unref (GTK_OBJECT (notebook_menu));
 }
 
 static gboolean
@@ -404,6 +407,7 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
 	GtkWidget      *notebook_menu;
 	gint            origin_x;
 	gint            origin_y;
+	gint            x, y;
 
 	ifactory      = GTK_ITEM_FACTORY (dockbook->dock->factory->item_factory);
 	add_widget    = gtk_item_factory_get_widget (ifactory, "/Select Tab");
@@ -421,11 +425,24 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
 
 	gdk_window_get_origin (widget->window, &origin_x, &origin_y);
 
+	x = bevent->x + origin_x;
+	y = bevent->y + origin_y;
+
+	if (x + ifactory->widget->requisition.width > gdk_screen_width ())
+	  x -= ifactory->widget->requisition.width;
+
+	if (y + ifactory->widget->requisition.height > gdk_screen_height ())
+	  y -= ifactory->widget->requisition.height;
+
+	/*  an item factory callback may destroy the dockbook, so reference
+	 *  if for gimp_dockbook_menu_end()
+	 */
+	gtk_object_ref (GTK_OBJECT (dockbook));
+
 	gtk_item_factory_popup_with_data (ifactory,
 					  dockbook,
-					  (GtkDestroyNotify) gimp_dockbook_tab_menu_end,
-					  bevent->x + origin_x,
-					  bevent->y + origin_y,
+					  (GtkDestroyNotify) gimp_dockbook_menu_end,
+					  x, y,
 					  3, bevent->time);
       }
       break;

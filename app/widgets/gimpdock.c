@@ -27,12 +27,12 @@
 
 #include "apptypes.h"
 
-#include "gui/gimpdialogfactory.h" /* hm, maybe this should live here? */
-
-#include "gimpdnd.h"
+#include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
+
+#include "gimpdnd.h"
 
 
 static void        gimp_dock_class_init               (GimpDockClass  *klass);

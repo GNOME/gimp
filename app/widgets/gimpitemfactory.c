@@ -826,38 +826,50 @@ static GtkItemFactory *paths_factory = NULL;
 
 static GimpItemFactoryEntry dialogs_entries[] =
 {
-  { { "/Select Tab", NULL, NULL, 0 },
+  { { N_("/Select Tab"), NULL, NULL, 0 },
     NULL, NULL },
-  { { "/Remove Tab", NULL, dialogs_remove_tab_cmd_callback, 0 },
+  { { N_("/Remove Tab"), NULL, dialogs_remove_tab_cmd_callback, 0 },
     NULL, NULL },
 
-  { { "/Add Tab/Brush List...", NULL, dialogs_add_tab_cmd_callback,
+  { { N_("/Add Tab/Image List..."), NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:image_list") },
+    NULL, NULL },
+  { { N_("/Add Tab/Brush List..."), NULL, dialogs_add_tab_cmd_callback,
       GPOINTER_TO_UINT ("gimp:brush_list") },
     NULL, NULL },
-  { { "/Add Tab/Pattern List...", NULL, dialogs_add_tab_cmd_callback,
+  { { N_("/Add Tab/Pattern List..."), NULL, dialogs_add_tab_cmd_callback,
       GPOINTER_TO_UINT ("gimp:pattern_list") },
     NULL, NULL },
-  { { "/Add Tab/Gradient List...", NULL, dialogs_add_tab_cmd_callback,
+  { { N_("/Add Tab/Gradient List..."), NULL, dialogs_add_tab_cmd_callback,
       GPOINTER_TO_UINT ("gimp:gradient_list") },
     NULL, NULL },
-  { { "/Add Tab/Palette List...", NULL, dialogs_add_tab_cmd_callback,
+  { { N_("/Add Tab/Palette List..."), NULL, dialogs_add_tab_cmd_callback,
       GPOINTER_TO_UINT ("gimp:palette_list") },
+    NULL, NULL },
+  { { N_("/Add Tab/Tool List..."), NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:tool_list") },
     NULL, NULL },
 
   { { "/Add Tab/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 
-  { { "/Add Tab/Brush Grid...", NULL, dialogs_add_tab_cmd_callback,
+  { { N_("/Add Tab/Image Grid..."), NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:image_grid") },
+    NULL, NULL },
+  { { N_("/Add Tab/Brush Grid..."), NULL, dialogs_add_tab_cmd_callback,
       GPOINTER_TO_UINT ("gimp:brush_grid") },
     NULL, NULL },
-  { { "/Add Tab/Pattern Grid...", NULL, dialogs_add_tab_cmd_callback,
+  { { N_("/Add Tab/Pattern Grid..."), NULL, dialogs_add_tab_cmd_callback,
       GPOINTER_TO_UINT ("gimp:pattern_grid") },
     NULL, NULL },
-  { { "/Add Tab/Gradient Grid...", NULL, dialogs_add_tab_cmd_callback,
+  { { N_("/Add Tab/Gradient Grid..."), NULL, dialogs_add_tab_cmd_callback,
       GPOINTER_TO_UINT ("gimp:gradient_grid") },
     NULL, NULL },
-  { { "/Add Tab/Palette Grid...", NULL, dialogs_add_tab_cmd_callback,
+  { { N_("/Add Tab/Palette Grid..."), NULL, dialogs_add_tab_cmd_callback,
       GPOINTER_TO_UINT ("gimp:palette_grid") },
+    NULL, NULL },
+  { { N_("/Add Tab/Tool Grid..."), NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:tool_grid") },
     NULL, NULL },
 };
 static guint n_dialogs_entries = (sizeof (dialogs_entries) /
@@ -1779,8 +1791,7 @@ menus_init (void)
 
   menus_initialized = TRUE;
 
-  toolbox_factory = gtk_item_factory_new (GTK_TYPE_MENU_BAR, "<Toolbox>",
-					  NULL);
+  toolbox_factory = gtk_item_factory_new (GTK_TYPE_MENU_BAR, "<Toolbox>", NULL);
   gtk_object_set_data (GTK_OBJECT (toolbox_factory), "factory_path",
 		       (gpointer) "toolbox");
   gtk_item_factory_set_translate_func (toolbox_factory, menu_translate,
