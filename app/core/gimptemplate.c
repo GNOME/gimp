@@ -452,7 +452,7 @@ gimp_template_create_image (Gimp         *gimp,
       type = (template->image_type == GIMP_RGB) ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE;
       break;
     default:
-      type = (template->image_type == GIMP_RGB) ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE;
+      type = (template->image_type == GIMP_RGB) ? GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE;
       break;
     }
 
