@@ -121,7 +121,6 @@ run (char    *name,
       values[0].data.d_status = STATUS_SUCCESS;
 
       plugin_dialog = gimp_plugin_desc();
-      gtk_widget_show(plugin_dialog);
       gtk_main ();
       gdk_flush ();
     }
@@ -140,10 +139,13 @@ typedef struct
   GtkWidget * scrolled_win;
   GtkWidget * ctree_scrolled_win;
   GtkWidget * info_table;
+  GtkWidget * paned;
+  GtkWidget * left_paned;
   GtkWidget * info_align;
   gint        num_plugins;
   gint        ctree_row;
   gint        clist_row;
+  gint        c1size;
   gboolean    details_showing;
 } PLUGINDESC,*PLUGINDESCP;
 
@@ -169,6 +171,8 @@ dialog_close_callback (GtkWidget *widget,
   gtk_main_quit ();
 }
 
+/* Bit of a fiddle but sorta has the effect I want... */
+
 static void
 details_callback (GtkWidget *widget, 
 		  gpointer   data)
@@ -179,14 +183,23 @@ details_callback (GtkWidget *widget,
 
   if(pdesc->details_showing == FALSE)
     {
+      GTK_PANED(pdesc->paned)->child1_resize=FALSE;
+      gtk_paned_set_handle_size(GTK_PANED(pdesc->paned),10);
+      gtk_paned_set_gutter_size(GTK_PANED(pdesc->paned),6);
       gtk_label_set_text(lab,"Details <<<");
       gtk_widget_show (pdesc->descr_scroll);
       pdesc->details_showing = TRUE;
     }
   else
     {
+      GtkWidget *p = GTK_WIDGET(pdesc->paned)->parent;
+      GTK_PANED(pdesc->paned)->child1_resize=TRUE;
+      GTK_PANED(pdesc->paned)->child2_resize=TRUE;
+      gtk_paned_set_handle_size(GTK_PANED(pdesc->paned),0);
+      gtk_paned_set_gutter_size(GTK_PANED(pdesc->paned),0);
       gtk_label_set_text(lab,"Details >>>");
       gtk_widget_hide (pdesc->descr_scroll);
+      gtk_paned_set_position(GTK_PANED(pdesc->paned),p->allocation.width);/*plugindesc->c1size);*/
       pdesc->details_showing = FALSE;
     }
 }
@@ -955,15 +968,18 @@ gimp_plugin_desc()
   
   /* hbox : left=notebook ; right=description */
   
-  hbox = gtk_hpaned_new();
+  plugindesc->paned = hbox = gtk_hpaned_new();
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (plugindesc->dlg)->vbox), 
 		      hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
   
+  gtk_paned_set_handle_size(GTK_PANED(hbox),0);
+  gtk_paned_set_gutter_size(GTK_PANED(hbox),0);
+
 
   /* left = vbox : the list and the search entry */
   
-  vbox = gtk_vbox_new( FALSE, 0 );
+  plugindesc->left_paned = vbox = gtk_vbox_new( FALSE, 0 );
   gtk_container_border_width (GTK_CONTAINER (vbox), 3); 
   gtk_paned_add1 (GTK_PANED (hbox),vbox);
   gtk_widget_show(vbox);
@@ -1091,6 +1107,9 @@ gimp_plugin_desc()
 
   gtk_widget_show (plugindesc->clist); 
   gtk_widget_show (plugindesc->dlg);
+
+  plugindesc->c1size = GTK_PANED(plugindesc->paned)->child1_size;
+  GTK_PANED(plugindesc->paned)->child1_resize=TRUE;
 
   return plugindesc->dlg;
 }

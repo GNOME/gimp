@@ -609,7 +609,8 @@ devices_write_rc_device (DeviceInfo *device_info, FILE *fp)
         fprintf(fp, "\n        (brush \"%s\")",device_info->brush->name);
       if (device_info->pattern)
         fprintf(fp, "\n        (pattern \"%s\")",device_info->pattern->name);
-      if (device_info->tool)
+      /* Fixme: hard coded last tool....  see gimprc */
+      if (device_info->tool && device_info->tool <= LAST_TOOLBOX_TOOL)
         fprintf(fp, "\n        (tool \"%s\")",
 	      tool_info[device_info->tool].tool_name);
       fprintf(fp, "\n        (foreground %d %d %d)",

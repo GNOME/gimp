@@ -1,3 +1,15 @@
+Sat Feb  6 16:22:36 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
+
+	Changed:-
+		plug-ins/plugindetails/plugindetails.c
+		app/devices.c
+
+	Tidy up of plugindesc UI. Can now resize correctly.
+
+	Fixed problem with session saving. If the active dialog 
+	was not one on the toolbox (eg Histogram) then an error would
+	be produced the next time gimp is run up.
+
 Sat Feb  6 15:11:26 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/gimpset.c
