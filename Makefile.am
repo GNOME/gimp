@@ -61,6 +61,11 @@ EXTRA_DIST = \
 	po-plug-ins/update.sh	\
 	po-script-fu/update.sh
 
+DISTCLEANFILES = \
+	intltool-extract	\
+	intltool-merge		\
+	intltool-update
+
 gimpinstall-1.3:
 	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-1.3
 

@@ -1,3 +1,9 @@
+2002-06-21  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* data/misc/Makefile.am: added some files to DISTCLEANFILES
+	(bug #86086).
+
 2002-06-20  Michael Natterer  <mitch@gimp.org>
 
 	Fixed color picking (reported by jimmac on #gimp):
