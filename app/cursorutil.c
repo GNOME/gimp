@@ -294,8 +294,12 @@ gtkutil_compress_motion (GtkWidget *widget,
     {
       event = gdk_event_get ();
 
-      if ((gtk_get_event_widget (event) == widget) &&
-	  (event->any.type == GDK_MOTION_NOTIFY))
+      if (!event)
+	{
+	  /* Do nothing */
+	}
+      else if ((gtk_get_event_widget (event) == widget) &&
+	       (event->any.type == GDK_MOTION_NOTIFY))
 	{
 	  *lastmotion_x = event->motion.x;
 	  *lastmotion_y = event->motion.y;

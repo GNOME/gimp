@@ -1,3 +1,21 @@
+2000-03-08  Tor Lillqvist  <tml@iki.fi>
+
+	* app/cursorutil.c (gtkutil_compress_motion)
+	* app/edit_selection.c (process_event_queue_keys): Guard against
+	gdk_event_get returning NULL (which can happen at least on Win32).
+
+	* libgimp/gimp.def: Add a couple of new entry points.
+
+	* plug-ins/makefile.{cygwin,msc}: Update according to the source
+	file changes. Fix some typos in the .msc file.
+
+	Fixes by Hans Breuer:
+
+	* app/resize.c: Add some more includes.
+
+	* libgimp/gimpenv.c
+	* plug-ins/gflare/gflare.c: Win32 header lossage fixup.
+
 Wed Mar  8 14:50:57 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/align_layers.c

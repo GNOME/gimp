@@ -27,10 +27,10 @@ COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens au
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
 COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gpb gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
 COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd psp randomize ripple rotate
-COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spheredesigner spread sunras tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
+COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spheredesigner spread sunras tga threshold_alpha tiff tile tileit tiler unsharp video vinvert vpropagate waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
 
 # These have own subdirectories each
-SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp borderaverage dbbrowser faxg3 fits flame fp gdyntext gfig gflare gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi sinus struc twain unsharp winsnap
+SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp borderaverage dbbrowser faxg3 fits flame fp gdyntext gfig gflare gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi sinus struc twain winsnap
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
@@ -63,7 +63,7 @@ libs-clean :
 	$(MAKE) -f makefile.cygwin sub-libs TARGET=clean
 
 sub-libs:
-	cd libgck/gck; $(MAKE) -f ../../makefile.cygwin TOP=../../.. LIBRARY=gck OBJECTS="gckcolor.o gckui.o" $(TARGET)
+	cd libgck/gck; $(MAKE) -f ../../makefile.cygwin TOP=../../.. LIBRARY=gck OBJECTS="gckcolor.o" $(TARGET)
 
 
 
@@ -153,8 +153,7 @@ OBJECTS = \
 	Dialogs.o \
 	Events.o \
 	FractalExplorer.o \
-	Globals.o \
-	Languages.o
+	Globals.o
 endif
 
 ifdef EXTRA_Lighting
@@ -218,7 +217,6 @@ OBJECTS = \
 	fp.o	\
 	fp_gdk.o \
 	fp_gtk.o \
-	fp_hsv.o \
 	fp_misc.o
 endif
 
@@ -449,13 +447,6 @@ endif
 ifdef EXTRA_tiff
 EXTRACFLAGS = -I$(TIFF)
 EXTRALIBS = -L $(TIFF) -ltiff -L $(JPEG) -ljpeg -L $(ZLIB) -lz -luser32
-endif
-
-ifdef EXTRA_unsharp
-OBJECTS = \
-	dialog_f.o \
-	dialog_i.o \
-	unsharp.o
 endif
 
 ifdef EXTRA_gimp_ace

@@ -33,9 +33,17 @@
 #ifdef G_OS_WIN32
 #define STRICT
 #include <windows.h>		/* For GetModuleFileName */
+#include <io.h>
+#ifndef S_IWUSR
+# define S_IWUSR _S_IWRITE
+#endif
 #ifndef S_IWGRP
 #define S_IWGRP (_S_IWRITE>>3)
 #define S_IWOTH (_S_IWRITE>>6)
+#endif
+#ifndef S_ISDIR
+# define __S_ISTYPE(mode, mask)	(((mode) & _S_IFMT) == (mask))
+# define S_ISDIR(mode)	__S_ISTYPE((mode), _S_IFDIR)
 #endif
 #define uid_t gint
 #define gid_t gint

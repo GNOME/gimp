@@ -222,6 +222,8 @@ EXPORTS
 	gimp_pixel_rgns_process
 	gimp_pixel_rgns_register
 	gimp_pixel_rgns_register2
+	gimp_plugin_domain_add
+	gimp_plugin_domain_add_with_path
 	gimp_plugin_help_func
 	gimp_progress_init
 	gimp_progress_update

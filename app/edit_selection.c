@@ -675,7 +675,7 @@ process_event_queue_keys (GdkEventKey *kevent, ...)
   {
     discard_event = 0;
     event = gdk_event_get();
-    if (orig_widget != gtk_get_event_widget(event))
+    if (!event || orig_widget != gtk_get_event_widget(event))
     {
       done = 1;
     }
@@ -700,7 +700,9 @@ process_event_queue_keys (GdkEventKey *kevent, ...)
 	done = 1;
     }
 
-    if (!discard_event)
+    if (!event)
+      ; /* Do nothing */
+    else if (!discard_event)
       list = g_list_append(list, event);
     else
       gdk_event_free(event);

@@ -18,7 +18,9 @@
 #include <math.h>
 #include "config.h"
 #include "appenv.h"
+#include "gdisplay.h"
 #include "resize.h"
+#include "undo.h"
 #include "gimprc.h"
 #include "gimpui.h"
 
