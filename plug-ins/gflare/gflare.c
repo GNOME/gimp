@@ -2458,7 +2458,7 @@ dlg_run (void)
 
   shell = dlg->shell =
     gimp_dialog_new (_("GFlare"), "gflare",
-		     gimp_plugin_help_func, "filters/gflare.html",
+		     gimp_standard_help_func, "filters/gflare.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
@@ -3238,7 +3238,7 @@ dlg_selector_new_callback (GtkWidget *widget,
   GtkWidget *query_box;
 
   query_box = gimp_query_string_box (_("New GFlare"),
-				     gimp_plugin_help_func,
+				     gimp_standard_help_func,
 				     "filters/gflare.html",
 				     _("Enter a Name for the New GFlare:"),
 				     _("untitled"),
@@ -3309,7 +3309,7 @@ dlg_selector_copy_callback (GtkWidget *widget,
   name = g_strdup_printf ("%s copy", dlg->gflare->name);
 
   query_box = gimp_query_string_box (_("Copy GFlare"),
-				     gimp_plugin_help_func,
+				     gimp_standard_help_func,
 				     "filters/gflare.html",
 				     _("Enter a Name for the Copied GFlare:"),
 				     name,
@@ -3369,7 +3369,7 @@ dlg_selector_delete_callback (GtkWidget *widget,
 			 dlg->gflare->name);
 
   dialog = gimp_query_boolean_box (_("Delete GFlare"),
-				   gimp_plugin_help_func,
+				   gimp_standard_help_func,
 				   "filters/gflare.html",
 				   FALSE,
 				   str,
@@ -3466,7 +3466,7 @@ ed_run (GFlare		     *target_gflare,
    */
   shell = ed->shell =
     gimp_dialog_new (_("GFlare Editor"), "gflare",
-		     gimp_plugin_help_func, "filters/gflare.html",
+		     gimp_standard_help_func, "filters/gflare.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

@@ -165,7 +165,7 @@ new_unit (GimpUnit template)
   gtk_widget_set_sensitive (main_dialog, FALSE);
 
   dialog = gimp_dialog_new (_("New Unit"), "uniteditor",
-			    gimp_plugin_help_func, "filters/uniteditor.html",
+			    gimp_standard_help_func, "filters/uniteditor.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
@@ -516,7 +516,7 @@ unit_editor_dialog (void)
 
   main_dialog =
     gimp_dialog_new (_("Unit Editor"), "uniteditor",
-		     gimp_plugin_help_func, "filters/uniteditor.html",
+		     gimp_standard_help_func, "filters/uniteditor.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, TRUE,
 

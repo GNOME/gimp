@@ -4649,4 +4649,3 @@ initgimp()
     if (PyErr_Occurred())
 	Py_FatalError("can't initialize module gimp");
 }
-

@@ -86,5 +86,3 @@ select_prev_command_redo(Command_t *command)
 {
    redraw_preview();		/* Fix me! */
 }
-
-

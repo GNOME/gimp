@@ -612,7 +612,7 @@ despeckle_dialog (void)
   plugin_name = g_strdup_printf ("%s %s", _("Despeckle"), PLUG_IN_VERSION);
 
   dialog = gimp_dialog_new (plugin_name, "despeckle",
-			    gimp_plugin_help_func, "filters/despeckle.html",
+			    gimp_standard_help_func, "filters/despeckle.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

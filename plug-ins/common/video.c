@@ -2148,7 +2148,7 @@ video_dialog (void)
   gimp_ui_init ("video", TRUE);
 
   dlg = gimp_dialog_new ( _("Video"), "video",
-			 gimp_plugin_help_func, "filters/video.html",
+			 gimp_standard_help_func, "filters/video.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

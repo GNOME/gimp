@@ -137,4 +137,3 @@ object_do_popup(Object_t *obj, GdkEventButton *event)
       popup = make_object_popup();
    object_handle_popup(popup, obj, event);
 }
-

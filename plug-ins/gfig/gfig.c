@@ -1979,7 +1979,7 @@ num_sides_dialog (gchar *d_title,
   GtkObject *size_data;
 
   window = gimp_dialog_new (d_title, "gfig",
-			    gimp_plugin_help_func, "filters/gfig.html",
+			    gimp_standard_help_func, "filters/gfig.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
@@ -2039,7 +2039,7 @@ bezier_dialog (void)
     }
 
   window = gimp_dialog_new (_("Bezier Settings"), "gfig",
-			    gimp_plugin_help_func, "filters/gfig.html",
+			    gimp_standard_help_func, "filters/gfig.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, FALSE, FALSE,
 
@@ -3924,7 +3924,7 @@ gfig_dialog (void)
 
   /* Start buildng the dialog up */
   top_level_dlg = gimp_dialog_new (_("GFig"), "gfig",
-				   gimp_plugin_help_func, "filters/gfig.html",
+				   gimp_standard_help_func, "filters/gfig.html",
 				   GTK_WIN_POS_MOUSE,
 				   FALSE, FALSE, FALSE,
 
@@ -4081,7 +4081,7 @@ gfig_ok_callback (GtkWidget *widget,
 	g_strdup_printf (_("%d unsaved Gfig objects.\nContinue with exiting?"), count);
 
       dialog = gimp_query_boolean_box (_("Warning"),
-				       gimp_plugin_help_func,
+				       gimp_standard_help_func,
 				       "filters/gfig.html",
 				       FALSE,
 				       message,
@@ -4426,7 +4426,7 @@ gfig_dialog_edit_list (GtkWidget *lwidget,
   /*  the dialog  */
   options->query_box =
     gimp_dialog_new (_("Enter Gfig Entry Name"), "gfig",
-		     gimp_plugin_help_func, "filters/gfig.html",
+		     gimp_standard_help_func, "filters/gfig.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
@@ -4509,7 +4509,7 @@ gfig_rescan_list (void)
 
   /*  the dialog  */
   dlg = gimp_dialog_new (_("Rescan for Gfig Objects"), "gfig",
-			 gimp_plugin_help_func, "filters/gfig.html",
+			 gimp_standard_help_func, "filters/gfig.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
@@ -4855,7 +4855,7 @@ about_button_callback (GtkWidget *widget,
   GtkWidget *pm;
 
   window = gimp_dialog_new (_("About GFig"), "gfig",
-			    gimp_plugin_help_func, "filters/gfig.html",
+			    gimp_standard_help_func, "filters/gfig.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, FALSE, FALSE,
 
@@ -5063,7 +5063,7 @@ gfig_delete_gfig_callback (GtkWidget *widget,
 			 sel_obj->draw_name);
 
   delete_dialog = gimp_query_boolean_box (_("Delete Gfig Drawing"),
-					  gimp_plugin_help_func,
+					  gimp_standard_help_func,
 					  "filters/gfig.html",
 					  FALSE,
 					  str,

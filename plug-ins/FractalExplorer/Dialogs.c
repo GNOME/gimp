@@ -274,7 +274,7 @@ explorer_dialog (void)
   dialog = maindlg =
     gimp_dialog_new ("Fractal Explorer <Daniel Cotting/cotting@multimania.com>",
 		     "fractalexplorer",
-		     gimp_plugin_help_func, "filters/fractalexplorer.html",
+		     gimp_standard_help_func, "filters/fractalexplorer.html",
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
@@ -1369,7 +1369,7 @@ explorer_logo_dialog (void)
 
   xdlg = logodlg =
     gimp_dialog_new (_("About"), "fractalexplorer",
-		     gimp_plugin_help_func, "filters/fractalexplorer.html",
+		     gimp_standard_help_func, "filters/fractalexplorer.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

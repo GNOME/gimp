@@ -600,7 +600,7 @@ alienmap2_dialog (void)
 
   dialog = maindlg =
     gimp_dialog_new (_("AlienMap2"), "alienmap2",
-		     gimp_plugin_help_func, "filters/alienmap2.html",
+		     gimp_standard_help_func, "filters/alienmap2.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
@@ -888,7 +888,7 @@ alienmap2_logo_dialog (void)
   if (!logodlg)
     {
       logodlg = gimp_dialog_new (_("About AlienMap2"), "alienmap2",
-				 gimp_plugin_help_func, "filters/alienmap2.html",
+				 gimp_standard_help_func, "filters/alienmap2.html",
 				 GTK_WIN_POS_MOUSE,
 				 FALSE, TRUE, FALSE,
 

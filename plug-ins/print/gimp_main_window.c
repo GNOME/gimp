@@ -199,7 +199,7 @@ gimp_create_main_window (void)
 
   print_dialog = dialog =
     gimp_dialog_new (plug_in_name, "print",
-                     gimp_plugin_help_func, "filters/print.html",
+                     gimp_standard_help_func, "filters/print.html",
                      GTK_WIN_POS_MOUSE,
                      FALSE, TRUE, FALSE,
 
@@ -590,7 +590,7 @@ gimp_create_main_window (void)
 
   setup_dialog = dialog =
     gimp_dialog_new (_("Setup"), "print",
-                     gimp_plugin_help_func, "filters/print.html",
+                     gimp_standard_help_func, "filters/print.html",
                      GTK_WIN_POS_MOUSE,
                      FALSE, TRUE, FALSE,
 

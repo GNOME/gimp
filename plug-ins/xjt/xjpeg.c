@@ -940,4 +940,3 @@ xjpg_save_drawable (char   *filename,
 
   return TRUE;
 }	/* end xjpg_save_drawable */
-

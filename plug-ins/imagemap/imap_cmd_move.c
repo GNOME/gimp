@@ -162,4 +162,3 @@ move_command_execute(Command_t *parent)
 		      (GtkSignalFunc) button_motion, command);   
    return CMD_DESTRUCT;
 }
-

@@ -487,7 +487,7 @@ save_dialog (void)
   gimp_destroy_params (return_vals, nreturn_vals);
 
   dlg = gimp_dialog_new (_("Send to Mail"), "mail",
-			 gimp_plugin_help_func, "filters/mail.html",
+			 gimp_standard_help_func, "filters/mail.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -779,7 +779,7 @@ unsharp_mask_dialog (void)
   gimp_ui_init ("unsharp", TRUE);
 
   window = gimp_dialog_new (_("Unsharp Mask"), "unsharp",
-			    gimp_plugin_help_func, "filters/unsharp.html",
+			    gimp_standard_help_func, "filters/unsharp.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

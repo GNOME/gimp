@@ -801,7 +801,7 @@ whirl_pinch_dialog (void)
   build_preview_source_image ();
 
   dialog = gimp_dialog_new ( _("Whirl and Pinch"), "whirlpinch",
-			    gimp_plugin_help_func, "filters/whirlpinch.html",
+			    gimp_standard_help_func, "filters/whirlpinch.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

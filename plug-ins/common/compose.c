@@ -769,7 +769,7 @@ compose_dialog (gchar  *compose_type,
   gimp_ui_init ("compose", TRUE);
 
   dlg = gimp_dialog_new (_("Compose"), "compose",
-			 gimp_plugin_help_func, "filters/compose.html",
+			 gimp_standard_help_func, "filters/compose.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

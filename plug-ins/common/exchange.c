@@ -271,7 +271,7 @@ doDialog (void)
 
   /* set up the dialog */
   dialog = gimp_dialog_new (_("Color Exchange"), "exchange",
-			    gimp_plugin_help_func, "filters/exchange.html",
+			    gimp_standard_help_func, "filters/exchange.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

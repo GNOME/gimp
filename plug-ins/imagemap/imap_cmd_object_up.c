@@ -75,4 +75,3 @@ object_up_command_undo(Command_t *parent)
    object_list_move_down(command->list, command->obj);
    redraw_preview();		/* fix me! */
 }
-

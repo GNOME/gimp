@@ -70,5 +70,3 @@ select_command_undo(Command_t *parent)
    SelectCommand_t *command = (SelectCommand_t*) parent;
    object_unselect(command->obj);
 }
-
-

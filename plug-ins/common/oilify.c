@@ -451,7 +451,7 @@ oilify_dialog (void)
   gimp_ui_init ("oilify", FALSE);
 
   dlg = gimp_dialog_new (_("Oilify"), "oilify",
-			 gimp_plugin_help_func, "filters/oilify.html",
+			 gimp_standard_help_func, "filters/oilify.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

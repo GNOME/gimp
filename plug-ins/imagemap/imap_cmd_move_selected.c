@@ -73,4 +73,3 @@ move_selected_command_undo(Command_t *parent)
    redraw_preview();		/* fix me! */
 #endif
 }
-

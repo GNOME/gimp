@@ -60,4 +60,3 @@ int mask;		/* black mask (all ones), start bit i, j bits wide */
 	} 		/* end for (j) [span] */
     }			/* end for (i) [top bit] */
 }
-

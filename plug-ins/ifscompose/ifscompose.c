@@ -773,7 +773,7 @@ ifs_compose_dialog (GDrawable *drawable)
   gimp_ui_init ("ifscompose", TRUE);
 
   dlg = gimp_dialog_new (_("IfsCompose"), "ifscompose",
-			 gimp_plugin_help_func, "filters/ifscompose.html",
+			 gimp_standard_help_func, "filters/ifscompose.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
@@ -1225,7 +1225,7 @@ ifs_options_dialog (void)
 
       ifsOptD->dialog =
 	gimp_dialog_new (_("IfsCompose Options"), "ifscompose",
-			 gimp_plugin_help_func, "filters/ifscompose.html",
+			 gimp_standard_help_func, "filters/ifscompose.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

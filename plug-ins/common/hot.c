@@ -582,7 +582,7 @@ pluginCoreIA (struct piArgs *argp)
   gimp_ui_init ("hot", FALSE);
 
   dlg = gimp_dialog_new (_("Hot"), "hot",
-			 gimp_plugin_help_func, "filters/hot.html",
+			 gimp_standard_help_func, "filters/hot.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

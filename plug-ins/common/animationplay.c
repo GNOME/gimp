@@ -662,7 +662,7 @@ build_dialog (GImageType  basetype,
   windowname = g_strconcat (_("Animation Playback: "), imagename, NULL);
 
   dlg = gimp_dialog_new (windowname, "animationplay",
-			 gimp_plugin_help_func, "filters/animationplay.html",
+			 gimp_standard_help_func, "filters/animationplay.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
@@ -1969,5 +1969,3 @@ parse_disposal_tag (const char *str)
 
   return (DISPOSE_UNDEFINED); /* FIXME */
 }
-
-

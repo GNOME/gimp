@@ -557,7 +557,7 @@ save_dialog (void)
   GtkWidget *vbox;
   
   dlg = gimp_dialog_new (_("Save as BMP"), "bmp",
-			 gimp_plugin_help_func, "filters/bmp.html",
+			 gimp_standard_help_func, "filters/bmp.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -1375,7 +1375,7 @@ main_dialog (GDrawable *drawable)
   visinfo = gck_visualinfo_new ();
 
   appwin = gimp_dialog_new (_("Map to Object"), "MapObject",
-			    gimp_plugin_help_func,
+			    gimp_standard_help_func,
 			    "filters/mapobject.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,

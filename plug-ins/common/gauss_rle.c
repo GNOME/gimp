@@ -353,7 +353,7 @@ gauss_rle_dialog (void)
   gimp_ui_init ("gauss_rle", FALSE);
 
   dlg = gimp_dialog_new (_("RLE Gaussian Blur"), "gauss_rle",
-			 gimp_plugin_help_func, "filters/gauss_rle.html",
+			 gimp_standard_help_func, "filters/gauss_rle.html",
 			 GTK_WIN_POS_MOUSE,
 			 TRUE, FALSE, TRUE,
 
@@ -436,7 +436,7 @@ gauss_rle2_dialog (gint32     image_ID,
   gimp_ui_init ("gauss_rle2", FALSE);
 
   dlg = gimp_dialog_new (_("RLE Gaussian Blur"), "gauss_rle",
-			 gimp_plugin_help_func, "filters/gauss_rle.html",
+			 gimp_standard_help_func, "filters/gauss_rle.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

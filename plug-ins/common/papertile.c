@@ -243,7 +243,7 @@ open_dialog (void)
   gimp_ui_init ("papertile", TRUE);
 
   dialog = gimp_dialog_new (_("Paper Tile"), "papertile",
-			    gimp_plugin_help_func, "filters/papertile.html",
+			    gimp_standard_help_func, "filters/papertile.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, FALSE, FALSE,
 

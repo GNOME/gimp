@@ -449,7 +449,7 @@ save_dialog (void)
   GtkObject *adj;
 
   dlg = gimp_dialog_new (_("Save as Brush"), "gbr",
-			 gimp_plugin_help_func, "filters/gbr.html",
+			 gimp_standard_help_func, "filters/gbr.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

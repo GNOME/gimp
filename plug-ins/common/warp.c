@@ -430,7 +430,7 @@ warp_dialog (GDrawable *drawable)
   gimp_ui_init ("warp", FALSE);
 
   dlg = gimp_dialog_new (_("Warp"), "warp",
-			 gimp_plugin_help_func, "filters/warp.html",
+			 gimp_standard_help_func, "filters/warp.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -1705,6 +1705,3 @@ int main()
 	}
 #endif
 #line 81 "imap_cern.l"
-
-
-

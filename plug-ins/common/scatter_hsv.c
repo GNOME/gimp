@@ -366,7 +366,7 @@ scatter_hsv_dialog (void)
   gimp_ui_init (SHORT_NAME, TRUE);
 
   dlg = gimp_dialog_new (_("Scatter HSV"), SHORT_NAME,
-			 gimp_plugin_help_func, "filters/scatter_hsv.html",
+			 gimp_standard_help_func, "filters/scatter_hsv.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

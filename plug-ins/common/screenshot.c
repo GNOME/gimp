@@ -386,7 +386,7 @@ shoot_dialog (void)
 
   /* Main Dialog */
   dialog = gimp_dialog_new (_("Screen Shot"), "screenshot",
-			    gimp_plugin_help_func, "filters/screenshot.html",
+			    gimp_standard_help_func, "filters/screenshot.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

@@ -786,7 +786,7 @@ save_dialog (void)
   gimp_ui_init ("xjt", FALSE);
 
   dlg = gimp_dialog_new (_("Save as XJT"), "xjt",
-			 gimp_plugin_help_func, "filters/xjt.html",
+			 gimp_standard_help_func, "filters/xjt.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

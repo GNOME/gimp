@@ -527,7 +527,7 @@ diffraction_dialog (void)
   gimp_ui_init ("diffraction", TRUE);
 
   dialog = gimp_dialog_new (_("Diffraction Patterns"), "diffraction",
-			    gimp_plugin_help_func, "filters/diffraction.html",
+			    gimp_standard_help_func, "filters/diffraction.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

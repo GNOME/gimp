@@ -980,7 +980,7 @@ load_dialog (void)
   gimp_ui_init ("fits", FALSE);
 
   dialog = gimp_dialog_new (_("Load FITS File"), "fits",
-			    gimp_plugin_help_func, "filters/fits.html",
+			    gimp_standard_help_func, "filters/fits.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, FALSE, FALSE,
 

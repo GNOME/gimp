@@ -646,7 +646,7 @@ run_save_dialog	(Config *config)
   GtkObject *adj;
   
   dialog = gimp_dialog_new (_("Save as C-Source"), "csource",
-			    gimp_plugin_help_func, "filters/csource.html",
+			    gimp_standard_help_func, "filters/csource.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

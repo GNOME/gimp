@@ -653,7 +653,7 @@ dialog (gint32     image_ID,
   gimp_ui_init ("grid", TRUE);
 
   dlg = gimp_dialog_new (_("Grid"), "grid",
-			 gimp_plugin_help_func, "filters/grid.html",
+			 gimp_standard_help_func, "filters/grid.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

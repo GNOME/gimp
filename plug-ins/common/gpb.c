@@ -306,7 +306,7 @@ gpb_save_dialog (void)
   GtkWidget *table;
 
   dlg = gimp_dialog_new (_("Save as Pixmap Brush"), "gpb",
-			 gimp_plugin_help_func, "filters/gpb.html",
+			 gimp_standard_help_func, "filters/gpb.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 			 NULL);
@@ -363,7 +363,7 @@ gih_save_dialog (gint32 image_ID)
     }
 
   dlg = gimp_dialog_new (_("Save as Pixmap Brush Pipe"), "gpb",
-			 gimp_plugin_help_func, "filters/gpb.html",
+			 gimp_standard_help_func, "filters/gpb.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 			 NULL);

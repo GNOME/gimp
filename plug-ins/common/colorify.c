@@ -320,7 +320,7 @@ colorify_dialog (guchar red,
   gimp_ui_init ("colorify", TRUE);
 
   dialog = gimp_dialog_new (_("Colorify"), "colorify",
-			    gimp_plugin_help_func, "filters/colorify.html",
+			    gimp_standard_help_func, "filters/colorify.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

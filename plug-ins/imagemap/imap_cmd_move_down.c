@@ -93,5 +93,3 @@ move_down_command_redo(Command_t *parent)
 {
    redraw_preview();		/* fix me! */
 }
-
-

@@ -90,4 +90,3 @@ static void
 move_up_command_redo(Command_t *parent)
 {
 }
-

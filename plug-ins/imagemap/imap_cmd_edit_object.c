@@ -70,4 +70,3 @@ edit_object_command_undo(Command_t *parent)
 
    redraw_preview();		/* Fix me! */
 }
-

@@ -691,4 +691,3 @@ gtk_multi_option_menu_hide_all (GtkWidget *widget)
   gtk_widget_hide (widget);
   gtk_container_foreach (container, (GtkCallback) gtk_widget_hide_all, NULL);
 }
-

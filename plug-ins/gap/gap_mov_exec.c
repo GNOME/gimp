@@ -789,4 +789,3 @@ int gap_move(GRunModeType run_mode, gint32 image_id)
   
   return(l_rc);    
 }	/* end gap_move */
-

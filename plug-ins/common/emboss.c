@@ -518,7 +518,7 @@ pluginCoreIA (struct piArgs *argp)
   gimp_ui_init ("emboss", TRUE);
 
   dlg = gimp_dialog_new (_("Emboss"), "emboss",
-			 gimp_plugin_help_func, "filters/emboss.html",
+			 gimp_standard_help_func, "filters/emboss.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -405,7 +405,7 @@ save_dialog (void)
   GtkWidget *entry;
 
   dlg = gimp_dialog_new (_("Save as Pattern"), "pat",
-			 gimp_plugin_help_func, "filters/pat.html",
+			 gimp_standard_help_func, "filters/pat.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -877,5 +877,3 @@ void repaint(struct ppm *p, struct ppm *a)
   }
   running = 0;
 }
-
-

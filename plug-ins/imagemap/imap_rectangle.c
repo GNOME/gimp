@@ -504,4 +504,3 @@ get_rectangle_factory(guint state)
 {
    return &rectangle_factory;
 }
-

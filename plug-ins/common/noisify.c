@@ -318,7 +318,7 @@ noisify_dialog (gint channels)
   gimp_ui_init ("noisify", FALSE);
 
   dlg = gimp_dialog_new (_("Noisify"), "noisify",
-			 gimp_plugin_help_func, "filters/noisify.html",
+			 gimp_standard_help_func, "filters/noisify.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

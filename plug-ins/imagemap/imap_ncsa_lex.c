@@ -1694,6 +1694,3 @@ int main()
 	}
 #endif
 #line 101 "imap_ncsa.l"
-
-
-

@@ -543,7 +543,7 @@ destripe_dialog (void)
   gimp_ui_init ("destripe", TRUE);
 
   dialog = gimp_dialog_new (_("Destripe"), "destripe",
-			    gimp_plugin_help_func, "filters/destripe.html",
+			    gimp_standard_help_func, "filters/destripe.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

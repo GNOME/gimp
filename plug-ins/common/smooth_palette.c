@@ -395,7 +395,7 @@ dialog (void)
   gimp_ui_init ("smooth_palette", FALSE);
 
   dlg = gimp_dialog_new (_("Smooth Palette"), "smooth_palette",
-			 gimp_plugin_help_func, "filters/smooth_palette.html",
+			 gimp_standard_help_func, "filters/smooth_palette.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

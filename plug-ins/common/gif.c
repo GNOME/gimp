@@ -1133,7 +1133,7 @@ badbounds_dialog (void)
   GtkWidget *vbox;
 
   dlg = gimp_dialog_new (_("GIF Warning"), "gif_warning",
-			 gimp_plugin_help_func, "filters/gif.html#warning",
+			 gimp_standard_help_func, "filters/gif.html#warning",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, FALSE, FALSE,
 
@@ -1204,7 +1204,7 @@ save_dialog (gint32 image_ID)
   gimp_image_get_layers (image_ID, &nlayers);
 
   dlg = gimp_dialog_new (_("Save as GIF"), "gif",
-			 gimp_plugin_help_func, "filters/gif.html",
+			 gimp_standard_help_func, "filters/gif.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

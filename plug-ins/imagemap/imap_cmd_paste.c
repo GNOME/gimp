@@ -68,6 +68,3 @@ paste_command_execute(Command_t *parent)
    object_list_remove_add_cb(command->list, id);
    return CMD_APPEND;
 }
-
-
-

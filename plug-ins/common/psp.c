@@ -421,7 +421,7 @@ save_dialog (void)
   GtkWidget *frame;
 
   dlg = gimp_dialog_new (_("Save as PSP"), "psp",
-			 gimp_plugin_help_func, "filters/psp.html",
+			 gimp_standard_help_func, "filters/psp.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

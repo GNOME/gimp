@@ -90,4 +90,3 @@ insert_point_command_undo(Command_t *parent)
    polygon->points = g_list_remove_link(polygon->points, p);
    redraw_preview();		/* Fix me! */
 }
-

@@ -221,7 +221,7 @@ glass_dialog (void)
   gimp_ui_init ("glasstile", FALSE);
 
   dlg = gimp_dialog_new (_("Glass Tile"), "glasstile",
-			 gimp_plugin_help_func, "filters/glasstile.html",
+			 gimp_standard_help_func, "filters/glasstile.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -485,5 +485,3 @@ ifsvals_stringify (IfsComposeVals *vals, AffElement **elements)
 
   return res_str;
 }
-
-

@@ -385,7 +385,7 @@ lens_dialog (GDrawable *drawable)
   gimp_ui_init ("apply_lens", FALSE);
 
   dlg = gimp_dialog_new (_("Lens Effect"), "apply_lens",
-			 gimp_plugin_help_func, "filters/apply_lens.html",
+			 gimp_standard_help_func, "filters/apply_lens.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

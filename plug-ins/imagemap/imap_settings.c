@@ -166,4 +166,3 @@ do_settings_dialog(void)
    gtk_text_insert(GTK_TEXT(dialog->description), NULL, NULL, NULL,
 		   info->description, -1);
 }
-

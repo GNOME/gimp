@@ -369,7 +369,7 @@ shift_dialog (void)
   gimp_ui_init ("shift", FALSE);
 
   dlg = gimp_dialog_new (_("Shift"), "shift",
-			 gimp_plugin_help_func, "filters/shift.html",
+			 gimp_standard_help_func, "filters/shift.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -537,7 +537,7 @@ server_interface (void)
   gimp_ui_init ("script-fu", FALSE);
 
   dlg = gimp_dialog_new (_("Script-Fu Server Options"), "script-fu",
-			 gimp_plugin_help_func, "filters/script-fu.html", 
+			 gimp_standard_help_func, "filters/script-fu.html", 
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -1949,4 +1949,3 @@ append_index (index_list_type *list, unsigned new_index)
 /*   XRETALLOC (list->data, INDEX_LIST_LENGTH (*list), unsigned); */
   list->data[INDEX_LIST_LENGTH (*list) - 1] = new_index;
 }
-

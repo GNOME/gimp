@@ -336,4 +336,3 @@ int gap_split_image(GRunModeType run_mode,
   
   return(l_rc);    
 }	/* end   gap_split_image */
-

@@ -907,7 +907,7 @@ polarize_dialog (void)
   build_preview_source_image ();
 
   dialog = gimp_dialog_new (_("Polarize"), "polar",
-			    gimp_plugin_help_func, "filters/polar.html",
+			    gimp_standard_help_func, "filters/polar.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

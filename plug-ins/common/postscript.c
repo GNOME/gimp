@@ -2526,7 +2526,7 @@ load_dialog (void)
   gimp_ui_init ("ps", FALSE);
 
   dialog = gimp_dialog_new (_("Load PostScript"), "ps",
-			    gimp_plugin_help_func, "filters/ps.html",
+			    gimp_standard_help_func, "filters/ps.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
@@ -2707,7 +2707,7 @@ save_dialog (void)
   vals->level = (psvals.level > 1);
 
   dialog = gimp_dialog_new (_("Save as PostScript"), "ps",
-			    gimp_plugin_help_func, "filters/ps.html",
+			    gimp_standard_help_func, "filters/ps.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

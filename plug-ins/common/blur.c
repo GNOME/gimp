@@ -606,7 +606,7 @@ blur_dialog (void)
   gimp_ui_init ("blur", FALSE);
 
   dlg = gimp_dialog_new (BLUR_VERSION, "blur",
-			 gimp_plugin_help_func, "filters/blur.html",
+			 gimp_standard_help_func, "filters/blur.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

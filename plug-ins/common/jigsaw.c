@@ -2297,7 +2297,7 @@ dialog_box (void)
   gimp_ui_init ("jigsaw", FALSE);
 
   dlg = gimp_dialog_new (_("Jigsaw"), "jigsaw",
-			 gimp_plugin_help_func, "filters/jigsaw.html",
+			 gimp_standard_help_func, "filters/jigsaw.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

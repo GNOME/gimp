@@ -1204,7 +1204,7 @@ newsprint_dialog (GDrawable *drawable)
     }
 
   st.dlg = gimp_dialog_new (_("Newsprint"), "newsprint",
-			    gimp_plugin_help_func, "filters/newsprint.html",
+			    gimp_standard_help_func, "filters/newsprint.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

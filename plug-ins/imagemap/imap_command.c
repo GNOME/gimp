@@ -380,6 +380,3 @@ basic_command_execute(Command_t *command)
    ((BasicCommand_t*) command)->func();
    return CMD_DESTRUCT;
 }
-
-
-

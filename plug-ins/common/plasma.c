@@ -280,7 +280,7 @@ plasma_dialog (void)
   gimp_ui_init ("plasma", FALSE);
 
   dlg = gimp_dialog_new (_("Plasma"), "plasma",
-			 gimp_plugin_help_func, "filters/plasma.html",
+			 gimp_standard_help_func, "filters/plasma.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

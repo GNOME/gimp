@@ -1356,7 +1356,7 @@ bender_new_dialog (GDrawable *drawable)
 
   /*  The shell and main vbox  */
   cd->shell = gimp_dialog_new (_("Curve Bend"), "curve_bend",
-			       gimp_plugin_help_func, "filters/curve_bend.html",
+			       gimp_standard_help_func, "filters/curve_bend.html",
 			       GTK_WIN_POS_MOUSE,
 			       FALSE, TRUE, FALSE,
 

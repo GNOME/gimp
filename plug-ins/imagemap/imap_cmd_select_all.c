@@ -88,5 +88,3 @@ select_all_command_redo(Command_t *parent)
 {
    redraw_preview();		/* Fix me! */
 }
-
-

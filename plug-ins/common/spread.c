@@ -375,7 +375,7 @@ spread_dialog (gint32     image_ID,
   gimp_ui_init ("spread", FALSE);
 
   dlg = gimp_dialog_new (_("Spread"), "spread",
-			 gimp_plugin_help_func, "filters/spread.html",
+			 gimp_standard_help_func, "filters/spread.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

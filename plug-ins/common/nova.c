@@ -332,7 +332,7 @@ nova_dialog (GDrawable *drawable)
   gimp_ui_init ("nova", TRUE);
 
   dlg = gimp_dialog_new (_("SuperNova"), "nova",
-			 gimp_plugin_help_func, "filters/nova.html",
+			 gimp_standard_help_func, "filters/nova.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

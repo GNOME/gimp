@@ -292,6 +292,3 @@ run (char    *name,
   if (status == STATUS_SUCCESS)
     gimp_drawable_detach(Current.drawable);
 }
-
-
-

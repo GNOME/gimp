@@ -926,7 +926,7 @@ save_dialog (void)
   GtkWidget *frame;
 
   dlg = gimp_dialog_new (_("Save as PNM"), "pnm",
-			 gimp_plugin_help_func, "filters/pnm.html",
+			 gimp_standard_help_func, "filters/pnm.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

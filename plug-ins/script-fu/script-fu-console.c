@@ -185,7 +185,7 @@ script_fu_console_interface (void)
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), _("Script-Fu Console"));
-  gimp_help_connect_help_accel (dlg, gimp_plugin_help_func, 
+  gimp_help_connect_help_accel (dlg, gimp_standard_help_func, 
 				"filters/script-fu.html");
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) script_fu_close_callback,

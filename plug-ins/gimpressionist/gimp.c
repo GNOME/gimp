@@ -376,9 +376,3 @@ void gimpressionist_main(void)
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
-
-
-
-
-
-

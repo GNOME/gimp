@@ -490,5 +490,3 @@ rcm_render_circle (GtkWidget *preview,
   gtk_widget_draw (preview, NULL);
   gdk_flush ();
 }
-
-

@@ -1216,5 +1216,3 @@ gint gap_mod_layer(GRunModeType run_mode, gint32 image_id,
 
   return(l_rc);   
 }
-
-

@@ -747,4 +747,3 @@ gint p_gen_code_iter(char  *proc_name)
 
   return l_rc;
 }	/* p_gen_code_iter */
-

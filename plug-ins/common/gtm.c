@@ -368,7 +368,7 @@ save_dialog (image_ID)
   gimp_ui_init ("gtm", FALSE);
 
   dlg = gimp_dialog_new (_("GIMP Table Magic"), "gtm",
-			 gimp_plugin_help_func, "filters/gtm.html",
+			 gimp_standard_help_func, "filters/gtm.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

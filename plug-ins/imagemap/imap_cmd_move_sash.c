@@ -153,4 +153,3 @@ static void
 move_sash_command_redo(Command_t *parent)
 {
 }
-

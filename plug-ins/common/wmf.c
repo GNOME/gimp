@@ -924,7 +924,7 @@ load_dialog (gchar *file_name)
   vals = g_new (LoadDialogVals, 1);
 
   vals->dialog = gimp_dialog_new ( _("Load Windows Metafile"), "wmf",
-				  gimp_plugin_help_func, "filters/wmf.html",
+				  gimp_standard_help_func, "filters/wmf.html",
 				  GTK_WIN_POS_MOUSE,
 				  FALSE, TRUE, FALSE,
 

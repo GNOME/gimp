@@ -264,7 +264,7 @@ deinterlace_dialog (void)
   gimp_ui_init ("deinterlace", FALSE);
 
   dlg = gimp_dialog_new (_("Deinterlace"), "deinterlace",
-			 gimp_plugin_help_func, "filters/deinterlace.html",
+			 gimp_standard_help_func, "filters/deinterlace.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

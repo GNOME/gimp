@@ -573,7 +573,7 @@ ripple_dialog (void)
   gimp_ui_init ("ripple", TRUE);
 
   dlg = gimp_dialog_new (_("Ripple"), "ripple",
-			 gimp_plugin_help_func, "filters/ripple.html",
+			 gimp_standard_help_func, "filters/ripple.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

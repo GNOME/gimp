@@ -1179,7 +1179,7 @@ film_dialog (gint32 image_ID)
   gimp_ui_init ("film", TRUE);
 
   dlg = gimp_dialog_new (_("Film"), "film",
-			 gimp_plugin_help_func, "filters/film.html",
+			 gimp_standard_help_func, "filters/film.html",
 			 GTK_WIN_POS_NONE,
 			 FALSE, TRUE, FALSE,
 

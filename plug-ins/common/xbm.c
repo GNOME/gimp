@@ -886,7 +886,7 @@ not_bw_dialog (void)
     }
 
   dlg = gimp_dialog_new (_("XBM Warning"), "xbm",
-			 gimp_plugin_help_func, "filters/xbm.html",
+			 gimp_standard_help_func, "filters/xbm.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
@@ -1119,7 +1119,7 @@ save_dialog (gint32 drawable_ID)
   GtkObject *adj;
 
   dlg = gimp_dialog_new (_("Save as XBM"), "xbm",
-			 gimp_plugin_help_func, "filters/xbm.html",
+			 gimp_standard_help_func, "filters/xbm.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

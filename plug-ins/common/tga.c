@@ -1441,7 +1441,7 @@ save_dialog (void)
   GtkWidget *vbox;
 
   dlg = gimp_dialog_new (_("Save as TGA"), "tga",
-			 gimp_plugin_help_func, "filters/tga.html",
+			 gimp_standard_help_func, "filters/tga.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

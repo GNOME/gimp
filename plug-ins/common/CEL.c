@@ -625,7 +625,7 @@ palette_dialog (gchar *title)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  gimp_help_connect_help_accel (dialog, gimp_plugin_help_func,
+  gimp_help_connect_help_accel (dialog, gimp_standard_help_func,
 				"filters/cel.html");
 
   gtk_widget_show (dialog);

@@ -1167,7 +1167,7 @@ CML_explorer_dialog (void)
   gimp_ui_init (SHORT_NAME, TRUE);
 
   dlg = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), "cml_explorer",
-			 gimp_plugin_help_func, "filters/cml_explorer.html",
+			 gimp_standard_help_func, "filters/cml_explorer.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
@@ -1925,7 +1925,7 @@ function_graph_new (GtkWidget *widget,
   CML_PARAM *param = (CML_PARAM *) *((gpointer *) data + 1);
 
   dlg = gimp_dialog_new (_("Graph of the current settings"), "cml_explorer",
-			 gimp_plugin_help_func, "filters/cml_explorer.html",
+			 gimp_standard_help_func, "filters/cml_explorer.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
@@ -2129,7 +2129,7 @@ CML_save_to_file_callback (GtkWidget *widget,
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				     VALS.last_file_name);
 
-  gimp_help_connect_help_accel (filesel, gimp_plugin_help_func,
+  gimp_help_connect_help_accel (filesel, gimp_standard_help_func,
 				"filters/cml_explorer.html");
 
   gtk_widget_show (filesel);
@@ -2245,7 +2245,7 @@ force_overwrite (gchar *filename)
   gint       tmp;
 
   dlg = gimp_dialog_new (_("CML File Operation Warning"), "cml_explorer",
-			 gimp_plugin_help_func, "filters/cml_explorer.html",
+			 gimp_standard_help_func, "filters/cml_explorer.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, FALSE, FALSE,
 
@@ -2320,7 +2320,7 @@ CML_load_from_file_callback (GtkWidget *widget,
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				     VALS.last_file_name);
 
-  gimp_help_connect_help_accel (filesel, gimp_plugin_help_func,
+  gimp_help_connect_help_accel (filesel, gimp_standard_help_func,
 				"filters/cml_explorer.html");
 
   gtk_widget_show (filesel);

@@ -291,7 +291,7 @@ displace_dialog (GDrawable *drawable)
   gimp_ui_init ("displace", FALSE);
 
   dlg = gimp_dialog_new (_("Displace"), "displace",
-			 gimp_plugin_help_func, "filters/displace.html",
+			 gimp_standard_help_func, "filters/displace.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

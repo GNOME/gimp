@@ -159,4 +159,3 @@ gint32 p_my_channel_copy (gint32 dst_image_id,
 
   return l_ret_id;
 }	/* end p_my_channel_copy */
-

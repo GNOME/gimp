@@ -83,5 +83,3 @@ clear_command_redo(Command_t *parent)
 {
    redraw_preview();		/* Fix me! */
 }
-
-

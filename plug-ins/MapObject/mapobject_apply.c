@@ -273,4 +273,3 @@ void compute_image(void)
       gimp_drawable_detach (output_drawable);
     }
 }
-

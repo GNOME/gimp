@@ -316,7 +316,7 @@ blinds_dialog (void)
   cache_preview (); /* Get the preview image and store it also set has_alpha */
 
   dlg = gimp_dialog_new (_("Blinds"), "blinds",
-			 gimp_plugin_help_func, "filters/blinds.html",
+			 gimp_standard_help_func, "filters/blinds.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -1824,5 +1824,3 @@ int main()
 	}
 #endif
 #line 126 "imap_csim.l"
-
-

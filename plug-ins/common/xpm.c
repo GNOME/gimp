@@ -793,7 +793,7 @@ save_dialog (void)
   GtkObject *scale_data;
 
   dlg = gimp_dialog_new (_("Save as XPM"), "xpm",
-			 gimp_plugin_help_func, "filters/xpm.html",
+			 gimp_standard_help_func, "filters/xpm.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

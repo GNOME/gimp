@@ -358,7 +358,7 @@ gauss_iir_dialog (void)
   gimp_ui_init ("gauss_iir", FALSE);
 
   dlg = gimp_dialog_new (_("IIR Gaussian Blur"), "gauss_iir",
-			 gimp_plugin_help_func, "filters/gauss_iir.html",
+			 gimp_standard_help_func, "filters/gauss_iir.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
@@ -441,7 +441,7 @@ gauss_iir2_dialog (gint32     image_ID,
   gimp_ui_init ("gauss_iir2", FALSE);
 
   dlg = gimp_dialog_new (_("IIR Gaussian Blur"), "gauss_iir",
-			 gimp_plugin_help_func, "filters/gauss_iir.html",
+			 gimp_standard_help_func, "filters/gauss_iir.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -987,7 +987,7 @@ gimp_plugin_desc (void)
   /* the dialog box */
   plugindesc->dlg =
     gimp_dialog_new (_("Plugin Descriptions"), "plugindetails",
-		     gimp_plugin_help_func, "filters/plugindetails.html",
+		     gimp_standard_help_func, "filters/plugindetails.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, TRUE,
 

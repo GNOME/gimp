@@ -1585,7 +1585,7 @@ save_dialog (void)
   GDrawableType dtype;
 
   dlg = gimp_dialog_new (_("Save as Jpeg"), "jpeg",
-			 gimp_plugin_help_func, "filters/jpeg.html",
+			 gimp_standard_help_func, "filters/jpeg.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

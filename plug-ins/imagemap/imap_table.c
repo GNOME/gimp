@@ -78,4 +78,3 @@ create_entry_in_table(GtkWidget *table, int row, int col)
    gtk_widget_show(entry);
    return entry;
 }
-

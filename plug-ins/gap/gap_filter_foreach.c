@@ -579,4 +579,3 @@ gint gap_proc_anim_apply(GRunModeType run_mode, gint32 image_id, char *plugin_na
 			      l_apply_mode ));
 
 }
-

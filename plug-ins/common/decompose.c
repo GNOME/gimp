@@ -847,7 +847,7 @@ decompose_dialog (void)
   gimp_ui_init ("decompose", FALSE);
 
   dlg = gimp_dialog_new (_("Decompose"), "decompose",
-			 gimp_plugin_help_func, "filters/decompose.html",
+			 gimp_standard_help_func, "filters/decompose.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

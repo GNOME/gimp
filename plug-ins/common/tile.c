@@ -391,7 +391,7 @@ tile_dialog (gint32 image_ID,
   tvals.new_height = height;
 
   dlg = gimp_dialog_new (_("Tile"), "tile",
-			 gimp_plugin_help_func, "filters/tile.html",
+			 gimp_standard_help_func, "filters/tile.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -521,7 +521,7 @@ save_dialog (void)
   GtkWidget *dlg;
 
   dlg = gimp_dialog_new (_("Save as HRZ"), "hrz",
-			 gimp_plugin_help_func, "filters/hrz.html",
+			 gimp_standard_help_func, "filters/hrz.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

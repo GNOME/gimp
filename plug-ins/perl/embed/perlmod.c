@@ -112,6 +112,3 @@ module_unload (void *shutdown_data,
   /* perl is unloadable (atexit & friends), *sigh* */
   /* completed_cb (completed_data); */
 }
-
-
-

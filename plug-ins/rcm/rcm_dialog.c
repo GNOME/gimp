@@ -720,7 +720,7 @@ rcm_dialog (void)
 
   /* Create dialog */
   dlg = gimp_dialog_new (_("Colormap Rotation"), "rcm",
-			 gimp_plugin_help_func, "filters/rcm.html",
+			 gimp_standard_help_func, "filters/rcm.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

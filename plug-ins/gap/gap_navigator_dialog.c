@@ -3125,7 +3125,7 @@ int  gap_navigator(gint32 image_id)
 
   /*  The main shell */
   shell = gimp_dialog_new (_("Video Navigator"), "gap_navigator",
-			   gimp_plugin_help_func, "filters/gap_navigator_dialog.html",
+			   gimp_standard_help_func, "filters/gap_navigator_dialog.html",
 			   GTK_WIN_POS_NONE,
 			   FALSE, TRUE, FALSE,
 			   NULL);

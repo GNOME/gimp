@@ -339,7 +339,7 @@ type_dialog (int selected)
 
   /* Create the actual window. */
   dlg = gimp_dialog_new (_("Save as Text"), "aa",
-			 gimp_plugin_help_func, "filters/aa.html",
+			 gimp_standard_help_func, "filters/aa.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

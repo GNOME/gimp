@@ -516,7 +516,7 @@ sharpen_dialog (void)
   title = g_strdup_printf (_("Sharpen - %s"), PLUG_IN_VERSION);
 
   dialog = gimp_dialog_new (title, "sharpen",
-			    gimp_plugin_help_func, "filters/sharpen.html",
+			    gimp_standard_help_func, "filters/sharpen.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

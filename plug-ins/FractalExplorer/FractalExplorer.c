@@ -737,7 +737,7 @@ delete_fractal_callback (GtkWidget *widget,
 			 sel_obj->draw_name);
   
   delete_dialog = gimp_query_boolean_box (_("Delete Fractal"),
-					  gimp_plugin_help_func, 
+					  gimp_standard_help_func, 
 					  "filters/fractalexplorer.html", 
 					  FALSE,
 					  str, 
@@ -1469,7 +1469,7 @@ fractalexplorer_rescan_list (void)
 
   /*  the dialog  */
   dlg = gimp_dialog_new (_("Rescan for Fractals"), "fractalexplorer",
-                         gimp_plugin_help_func, "filters/fractalexplorer.html",
+                         gimp_standard_help_func, "filters/fractalexplorer.html",
                          GTK_WIN_POS_MOUSE,
                          FALSE, TRUE, FALSE,
 

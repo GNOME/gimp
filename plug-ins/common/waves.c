@@ -342,7 +342,7 @@ pluginCoreIA (struct piArgs *argp,
   gimp_ui_init ("waves", TRUE);
 
   dlg = gimp_dialog_new ( _("Waves"), "waves",
-			 gimp_plugin_help_func, "filters/waves.html",
+			 gimp_standard_help_func, "filters/waves.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

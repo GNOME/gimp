@@ -184,7 +184,7 @@ maze_dialog (void)
   gimp_help_init();
 
   dlg = gimp_dialog_new (MAZE_TITLE, "maze", 
-			 gimp_plugin_help_func, "filters/maze.html",
+			 gimp_standard_help_func, "filters/maze.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -1478,7 +1478,7 @@ save_dialog (void)
   GtkWidget *entry;
 
   dlg = gimp_dialog_new ( _("Save as TIFF"), "tiff",
-			 gimp_plugin_help_func, "filters/tiff.html",
+			 gimp_standard_help_func, "filters/tiff.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -145,7 +145,7 @@ gimp_db_browser (void (* apply_callback) (gchar     *selected_proc_name,
     {
       dbbrowser->dlg =
 	gimp_dialog_new (_("DB Browser (init...)"), "dbbrowser",
-			 gimp_plugin_help_func, "filters/dbbrowser.html",
+			 gimp_standard_help_func, "filters/dbbrowser.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
@@ -164,7 +164,7 @@ gimp_db_browser (void (* apply_callback) (gchar     *selected_proc_name,
     {
       dbbrowser->dlg =
 	gimp_dialog_new (_("DB Browser (init...)"), "dbbrowser",
-			 gimp_plugin_help_func, "filters/dbbrowser.html",
+			 gimp_standard_help_func, "filters/dbbrowser.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

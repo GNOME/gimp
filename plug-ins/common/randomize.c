@@ -695,7 +695,7 @@ randomize_dialog (void)
   gimp_ui_init ("randomize", FALSE);
 
   dlg = gimp_dialog_new (gettext (RNDM_VERSION[rndm_type - 1]), "randomize",
-			 gimp_plugin_help_func, "filters/randomize.html",
+			 gimp_standard_help_func, "filters/randomize.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

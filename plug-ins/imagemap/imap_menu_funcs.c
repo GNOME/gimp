@@ -164,4 +164,3 @@ menu_command(GtkWidget *widget, gpointer data)
    Command_t *command = (*factory)();
    command_execute(command);
 }
-

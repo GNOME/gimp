@@ -579,7 +579,7 @@ dialog_load (GtkWidget *widget,
 
   file_select = gtk_file_selection_new (_("Load QBE file..."));
 
-  gimp_help_connect_help_accel (file_select, gimp_plugin_help_func,
+  gimp_help_connect_help_accel (file_select, gimp_standard_help_func,
 				"filters/gqbist.html");
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button), 
@@ -603,7 +603,7 @@ dialog_save (GtkWidget *widget,
   file_select =
     gtk_file_selection_new (_("Save (middle transform) as QBE file..."));
 
-  gimp_help_connect_help_accel (file_select, gimp_plugin_help_func,
+  gimp_help_connect_help_accel (file_select, gimp_standard_help_func,
 				"filters/gqbist.html");
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
@@ -633,7 +633,7 @@ dialog_create (void)
   gimp_ui_init ("gqbist", TRUE);
 
   dialog = gimp_dialog_new (_("G-Qbist 1.10"), "gqbist",
-			    gimp_plugin_help_func, "filters/gqbist.html",
+			    gimp_standard_help_func, "filters/gqbist.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

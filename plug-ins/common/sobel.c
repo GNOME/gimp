@@ -244,7 +244,7 @@ sobel_dialog (void)
   gimp_ui_init ("sobel", FALSE);
 
   dlg = gimp_dialog_new (_("Sobel Edge Detection"), "sobel",
-			 gimp_plugin_help_func, "filters/sobel.html",
+			 gimp_standard_help_func, "filters/sobel.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

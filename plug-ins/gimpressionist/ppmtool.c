@@ -687,4 +687,3 @@ void drawline(struct ppm *p, float fx, float fy, float tx, float ty, guchar *col
     }
   }
 }
-

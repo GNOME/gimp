@@ -1360,7 +1360,7 @@ p_smp_dialog (void)
   /* Main Dialog */
   g_di.dialog = dialog =
     gimp_dialog_new (_("Sample Colorize"), "sample_colorize",
-		     gimp_plugin_help_func, "filters/sample_colorize.html",
+		     gimp_standard_help_func, "filters/sample_colorize.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

@@ -481,7 +481,7 @@ make_file_dlg (void)
      GTK_OBJECT (file_dlg));
 
   gimp_help_connect_help_accel (file_dlg,
-				gimp_plugin_help_func, "filters/flame.html");
+				gimp_standard_help_func, "filters/flame.html");
 }
 
 static void 
@@ -617,7 +617,7 @@ edit_callback (GtkWidget *widget,
       gint i, j;
 
       edit_dlg = gimp_dialog_new (_("Edit Flame"), "flame",
-				  gimp_plugin_help_func, "filters/flame.html",
+				  gimp_standard_help_func, "filters/flame.html",
 				  GTK_WIN_POS_MOUSE,
 				  FALSE, FALSE, FALSE,
 
@@ -906,7 +906,7 @@ dialog (void)
   gimp_ui_init ("flame", TRUE);
 
   dlg = gimp_dialog_new (_("Flame"), "flame",
-			 gimp_plugin_help_func, "filters/flame.html",
+			 gimp_standard_help_func, "filters/flame.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

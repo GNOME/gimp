@@ -524,7 +524,7 @@ mosaic_dialog (void)
   gimp_ui_init ("mosaic", TRUE);
 
   dlg = gimp_dialog_new (_("Mosaic"), "mosaic",
-			 gimp_plugin_help_func, "filters/mosaic.html",
+			 gimp_standard_help_func, "filters/mosaic.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

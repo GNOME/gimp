@@ -1085,6 +1085,3 @@ long p_slider_dialog(char *title, char *frame, char *label, char *tooltip,
   }
   else return -1;
 }	/* end p_slider_dialog */
-
-
-

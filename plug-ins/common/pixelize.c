@@ -273,7 +273,7 @@ pixelize_dialog (void)
   gimp_ui_init ("pixelize", FALSE);
 
   dlg = gimp_dialog_new (_("Pixelize"), "pixelize",
-			 gimp_plugin_help_func, "filters/pixelize.html",
+			 gimp_standard_help_func, "filters/pixelize.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

@@ -261,7 +261,7 @@ threshold_alpha_dialog (void)
   gimp_ui_init ("threshold_alpha", FALSE);
 
   dlg = gimp_dialog_new (_("Threshold Alpha"), "threshold_alpha",
-			 gimp_plugin_help_func, "filters/threshold_alpha.html",
+			 gimp_standard_help_func, "filters/threshold_alpha.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

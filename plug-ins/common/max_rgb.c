@@ -251,7 +251,7 @@ dialog (void)
   gimp_ui_init ("max_rgb", FALSE);
 
   dlg = gimp_dialog_new (_("Max RGB"), "max_rgb",
-			 gimp_plugin_help_func, "filters/max_rgb.html",
+			 gimp_standard_help_func, "filters/max_rgb.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

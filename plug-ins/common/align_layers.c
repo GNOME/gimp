@@ -418,7 +418,7 @@ align_layers_dialog (void)
   gimp_ui_init (SHORT_NAME, FALSE);
 
   dlg = gimp_dialog_new (_("Align Visible Layers"), SHORT_NAME,
-			 gimp_plugin_help_func, "filters/align_layers.html",
+			 gimp_standard_help_func, "filters/align_layers.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

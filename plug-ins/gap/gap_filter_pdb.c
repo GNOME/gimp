@@ -455,4 +455,3 @@ int p_constraint_proc(gchar *proc_name)
 
   return 1;    /* 1 add the plugin procedure */
 }
-

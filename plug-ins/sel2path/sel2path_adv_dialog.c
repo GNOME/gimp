@@ -574,4 +574,3 @@ dialog_create_selection_area(SELVALS *sels)
 
   return GTK_WIDGET(table1);
 }
-

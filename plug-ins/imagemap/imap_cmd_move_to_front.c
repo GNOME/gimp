@@ -94,5 +94,3 @@ move_to_front_command_redo(Command_t *command)
 {
    redraw_preview();		/* Fix me! */
 }
-
-

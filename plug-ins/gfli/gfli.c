@@ -826,7 +826,7 @@ load_dialog (gchar *name)
   gimp_ui_init ("gfli", FALSE);
 
   dialog = gimp_dialog_new (_("GFLI 1.3 - Load framestack"), "gfli",
-			    gimp_plugin_help_func, "filters/gfli.html",
+			    gimp_standard_help_func, "filters/gfli.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
@@ -895,7 +895,7 @@ save_dialog (gint32 image_id)
   to_frame   = nframes;
 
   dialog = gimp_dialog_new (_("GFLI 1.3 - Save framestack"), "gfli",
-			    gimp_plugin_help_func, "filters/gfli.html",
+			    gimp_standard_help_func, "filters/gfli.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
@@ -947,4 +947,3 @@ save_dialog (gint32 image_id)
 
   return result;
 }
-

@@ -386,7 +386,7 @@ borderaverage_dialog (void)
   gimp_ui_init ("borderaverage", FALSE);
 
   dlg = gimp_dialog_new (_("Borderaverage"), "borderaverage",
-			 gimp_plugin_help_func, "filters/borderaverage.html",
+			 gimp_standard_help_func, "filters/borderaverage.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

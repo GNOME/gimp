@@ -981,4 +981,3 @@ object_list_write_ncsa(ObjectList_t *list, gpointer param, OutputFunc_t output)
       output(param, "\n");
    }
 }
-

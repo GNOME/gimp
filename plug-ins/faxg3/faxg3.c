@@ -491,4 +491,3 @@ gint32 emitgimp ( int hcol, int row, char *bitmap, int bperrow, char *filename )
   return image_ID;
 
 }
-

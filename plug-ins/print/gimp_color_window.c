@@ -74,7 +74,7 @@ gimp_create_color_adjust_window (void)
  
   gimp_color_adjust_dialog = dialog =
     gimp_dialog_new (_("Print Color Adjust"), "print",
-		     gimp_plugin_help_func, "filters/print.html",
+		     gimp_standard_help_func, "filters/print.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

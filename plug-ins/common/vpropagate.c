@@ -928,7 +928,7 @@ vpropagate_dialog (GImageType image_type)
   gimp_ui_init ("vpropagate", FALSE);
 
   dlg = gimp_dialog_new (_("Value Propagate"), "vpropagate",
-			 gimp_plugin_help_func, "filters/vpropagate.html",
+			 gimp_standard_help_func, "filters/vpropagate.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 			 _("OK"), vpropagate_ok_callback,

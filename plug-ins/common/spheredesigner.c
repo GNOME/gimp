@@ -1868,7 +1868,7 @@ void fileselect(int action)
                               "clicked", GTK_SIGNAL_FUNC(gtk_widget_destroy),
                               GTK_OBJECT (windows[action]));
 
-    gimp_help_connect_help_accel (windows[action], gimp_plugin_help_func,
+    gimp_help_connect_help_accel (windows[action], gimp_standard_help_func,
 				  "filters/spheredesigner.html");
   }
   gtk_widget_show (windows[action]);
@@ -2225,7 +2225,7 @@ GtkWidget* makewindow (void)
   GtkWidget *tmpw;
 
   window = gimp_dialog_new (_("Sphere Designer"), "spheredesigner",
-			    gimp_plugin_help_func, "filters/spheredesigner.html",
+			    gimp_standard_help_func, "filters/spheredesigner.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

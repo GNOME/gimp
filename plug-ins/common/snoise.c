@@ -505,7 +505,7 @@ solid_noise_dialog (void)
 
   /*  Dialog initialization  */
   dlg = gimp_dialog_new (_("Solid Noise"), "snoise",
-			 gimp_plugin_help_func, "filters/snoise.html",
+			 gimp_standard_help_func, "filters/snoise.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

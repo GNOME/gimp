@@ -379,7 +379,7 @@ tileit_dialog (void)
 
   /* Start buildng the dialog up */
   dlg = gimp_dialog_new ( _("TileIt"), "tileit",
-			 gimp_plugin_help_func, "filters/tileit.html",
+			 gimp_standard_help_func, "filters/tileit.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

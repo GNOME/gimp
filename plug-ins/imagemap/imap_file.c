@@ -165,5 +165,3 @@ do_file_error_dialog(const char *error, const char *filename)
 
    default_dialog_show(dialog->dialog);
 }
-
-

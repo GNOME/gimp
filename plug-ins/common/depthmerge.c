@@ -636,7 +636,7 @@ DepthMerge_dialog (DepthMerge *dm)
 
   dm->interface->dialog =
     gimp_dialog_new (_("Depth Merge"), "depthmerge",
-		     gimp_plugin_help_func, "filters/depthmerge.html",
+		     gimp_standard_help_func, "filters/depthmerge.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

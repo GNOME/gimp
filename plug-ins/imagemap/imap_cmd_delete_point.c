@@ -82,4 +82,3 @@ delete_point_command_undo(Command_t *parent)
    polygon->points = g_list_insert(polygon->points, (gpointer) command->point,
 				   command->position);
 }
-

@@ -785,8 +785,3 @@ new_point(gint x, gint y)
    point->y = y;
    return point;
 }
-
-
-
-
-

@@ -739,7 +739,7 @@ sinus_dialog (void)
   /* Create Main window with a vbox */
   /* ============================== */
   dlg = gimp_dialog_new (_("Sinus"), "sinus",
-			 gimp_plugin_help_func, "filters/sinus.html",
+			 gimp_standard_help_func, "filters/sinus.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

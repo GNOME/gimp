@@ -551,7 +551,7 @@ dialog (gint32 drawable_ID)
   memset (&plinterface, 0, sizeof (plinterface));
 
   dlg = gimp_dialog_new (_("Map Color Range"), "mapcolor",
-			 gimp_plugin_help_func, "filters/mapcolor.html",
+			 gimp_standard_help_func, "filters/mapcolor.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

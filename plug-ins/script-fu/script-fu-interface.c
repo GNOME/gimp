@@ -1191,7 +1191,7 @@ script_fu_interface (SFScript *script)
 		      GTK_SIGNAL_FUNC (script_fu_destroy_callback),
 		      NULL);
 
-  gimp_help_connect_help_accel (dlg, gimp_plugin_help_func,
+  gimp_help_connect_help_accel (dlg, gimp_standard_help_func,
 				"filters/script-fu.html");
   
   /* the vbox holding all widgets */
@@ -1881,7 +1881,7 @@ script_fu_about_callback (GtkWidget *widget,
 			  GTK_SIGNAL_FUNC (script_fu_about_dialog_delete),
 			  dialog);
 
-      gimp_help_connect_help_accel (dialog, gimp_plugin_help_func,
+      gimp_help_connect_help_accel (dialog, gimp_standard_help_func,
 				    "filters/script-fu.html");
   
       frame = gtk_frame_new (NULL);

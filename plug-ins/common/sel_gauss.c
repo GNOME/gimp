@@ -235,7 +235,7 @@ sel_gauss_dialog (void)
   gimp_ui_init ("sel_gauss", FALSE);
 
   dlg = gimp_dialog_new (_("Selective Gaussian Blur"), "sel_gauss",
-			 gimp_plugin_help_func, "filters/sel_gauss.html",
+			 gimp_standard_help_func, "filters/sel_gauss.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 

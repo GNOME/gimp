@@ -248,7 +248,7 @@ struc_dialog (void)
   gimp_ui_init ("struc", FALSE);
 
   dlg = gimp_dialog_new (_("Apply Canvas"), "struc",
-			 gimp_plugin_help_func, "filters/struc.html",
+			 gimp_standard_help_func, "filters/struc.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
