@@ -1,3 +1,7 @@
+2001-01-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimphelp.c: disabled debugging output.
+
 2001-01-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/palette.c: plugged memory leaks.

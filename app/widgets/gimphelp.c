@@ -39,10 +39,11 @@
 
 #include "libgimp/gimpintl.h"
 
-
+/*
 #ifndef G_OS_WIN32
 #define DEBUG_HELP
 #endif
+*/
 
 typedef struct _GimpIdleHelp GimpIdleHelp;
 
