@@ -1505,7 +1505,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /* New File page */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("New File Settings"),
+					  _("New File"),
 					  GTK_CTREE (ctree),
 					  _("New File"),
 					  "dialogs/preferences/new_file.html",
@@ -1686,7 +1686,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /* Display page */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Display Settings"),
+					  _("Display"),
 					  GTK_CTREE (ctree),
 					  _("Display"),
 					  "dialogs/preferences/display.html",
@@ -1766,7 +1766,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /* Interface */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Interface Settings"),
+					  _("Interface"),
 					  GTK_CTREE (ctree),
 					  _("Interface"),
 					  "dialogs/preferences/interface.html",
@@ -1872,7 +1872,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /* Interface / Help System */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Help System Settings"),
+					  _("Help System"),
 					  GTK_CTREE (ctree),
 					  _("Help System"),
 					  "dialogs/preferences/interface.html#help_system",
@@ -1925,7 +1925,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /* Interface / Image Windows */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Image Windows Settings"),
+					  _("Image Windows"),
 					  GTK_CTREE (ctree),
 					  _("Image Windows"),
 					  "dialogs/preferences/interface.html#image_windows",
@@ -2056,7 +2056,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /* Interface / Tool Options */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Tool Options Settings"),
+					  _("Tool Options"),
 					  GTK_CTREE (ctree),
 					  _("Tool Options"),
 					  "dialogs/preferences/interface.html#tool_options",
@@ -2084,7 +2084,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /* Environment */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Environment Settings"),
+					  _("Environment"),
 					  GTK_CTREE (ctree),
 					  _("Environment"),
 					  "dialogs/preferences/environment.html",
@@ -2308,7 +2308,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /* Monitor */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Monitor Information"),
+					  _("Monitor"),
 					  GTK_CTREE (ctree),
 					  _("Monitor"),
 					  "dialogs/preferences/monitor.html",
@@ -2401,7 +2401,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /* Directories */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-					  _("Directories Settings"),
+					  _("Directories"),
 					  GTK_CTREE (ctree),
 					  _("Directories"),
 					  "dialogs/preferences/directories.html",

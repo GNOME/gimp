@@ -1,5 +1,10 @@
 2000-02-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/preferences_dialog.c: applied a (modified) patch from Daniel
+	which removes the useles word "Settings" from the prefs. dialog.
+
+2000-02-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/blend.c
 	* app/brightness_contrast.c
 	* app/color_balance.c
