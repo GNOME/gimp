@@ -86,7 +86,7 @@ static const UnitColumn columns[] =
   { N_("Digits"),       N_("This field is a hint for numerical input "
                            "fields. It specifies how many decimal digits "
                            "the input field should provide to get "
-                           "approximately  the same accuracy as an "
+                           "approximately the same accuracy as an "
                            "\"inch\" input field with two decimal digits.") },
   { N_("Symbol"),       N_("The unit's symbol if it has one (e.g. \"'\" "
                            "for inches). The unit's abbreviation is used "

@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
-"POT-Creation-Date: 2003-02-18 00:43+0100\n"
-"PO-Revision-Date: 2003-02-03 21:05+0100\n"
+"POT-Creation-Date: 2003-02-19 19:46+0100\n"
+"PO-Revision-Date: 2003-02-19 19:48+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,8 +30,8 @@ msgstr "Info"
 #: plug-ins/common/blinds.c:346 plug-ins/common/curve_bend.c:1383
 #: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:723
 #: plug-ins/common/fractaltrace.c:750 plug-ins/common/grid.c:664
-#: plug-ins/common/iwarp.c:1187 plug-ins/common/mapcolor.c:578
-#: plug-ins/common/nlfilt.c:559 plug-ins/common/polar.c:799
+#: plug-ins/common/iwarp.c:1207 plug-ins/common/mapcolor.c:578
+#: plug-ins/common/nlfilt.c:559 plug-ins/common/polar.c:825
 #: plug-ins/common/sharpen.c:558 plug-ins/common/sinus.c:2047
 #: plug-ins/common/spheredesigner.c:2296 plug-ins/common/tileit.c:406
 #: plug-ins/common/waves.c:451 plug-ins/common/whirlpinch.c:684
@@ -1076,7 +1076,7 @@ msgstr "R_adius:"
 msgid "Cylinder radius"
 msgstr "Zylinderradius"
 
-#: plug-ins/MapObject/mapobject_ui.c:1300 plug-ins/common/mblur.c:719
+#: plug-ins/MapObject/mapobject_ui.c:1300 plug-ins/common/mblur.c:787
 msgid "L_ength:"
 msgstr "Lä_nge:"
 
@@ -1386,7 +1386,7 @@ msgid "Change angle of the blue/luminance channel"
 msgstr "Ändere Phasenwinkel des blauen Kanals / der Helligkeit (Luminance)"
 
 #. * Gray: Operation-Mode *
-#: plug-ins/common/AlienMap2.c:1248 plug-ins/common/deinterlace.c:286
+#: plug-ins/common/AlienMap2.c:1248 plug-ins/common/deinterlace.c:316
 #: plug-ins/common/hot.c:612 plug-ins/common/waves.c:331
 #: plug-ins/rcm/rcm_dialog.c:501
 msgid "Mode"
@@ -1962,9 +1962,9 @@ msgstr "Sichtbare Ebenen anordnen"
 #: plug-ins/common/lic.c:898 plug-ins/common/max_rgb.c:301
 #: plug-ins/common/nlfilt.c:399 plug-ins/common/noisify.c:338
 #: plug-ins/common/nova.c:347 plug-ins/common/oilify.c:469
-#: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:340
-#: plug-ins/common/png.c:1209 plug-ins/common/polar.c:819
-#: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:602
+#: plug-ins/common/pixelize.c:340 plug-ins/common/plasma.c:340
+#: plug-ins/common/png.c:1209 plug-ins/common/polar.c:845
+#: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:591
 #: plug-ins/common/scatter_hsv.c:402 plug-ins/common/sel_gauss.c:255
 #: plug-ins/common/sharpen.c:618 plug-ins/common/shift.c:345
 #: plug-ins/common/smooth_palette.c:435 plug-ins/common/snoise.c:519
@@ -2180,16 +2180,16 @@ msgid "Blinds"
 msgstr "Jalousie"
 
 #. Orientation toggle box
-#: plug-ins/common/blinds.c:372 plug-ins/common/ripple.c:555
+#: plug-ins/common/blinds.c:372 plug-ins/common/ripple.c:544
 msgid "Orientation"
 msgstr "Orientierung"
 
-#: plug-ins/common/blinds.c:376 plug-ins/common/ripple.c:560
+#: plug-ins/common/blinds.c:376 plug-ins/common/ripple.c:549
 #: plug-ins/common/tileit.c:449
 msgid "_Horizontal"
 msgstr "_Horizontal"
 
-#: plug-ins/common/blinds.c:377 plug-ins/common/ripple.c:563
+#: plug-ins/common/blinds.c:377 plug-ins/common/ripple.c:552
 #: plug-ins/common/tileit.c:459
 msgid "_Vertical"
 msgstr "_Vertikal"
@@ -2215,7 +2215,7 @@ msgstr "<Image>/Filter/Weichzeichnen/Weichzeichnen..."
 #.
 #. *  JUST DO IT!
 #.
-#: plug-ins/common/blur.c:316 plug-ins/common/mblur.c:597
+#: plug-ins/common/blur.c:316 plug-ins/common/mblur.c:665
 #: plug-ins/common/unsharp.c:259
 msgid "Blurring..."
 msgstr "Weichzeichnen..."
@@ -2617,7 +2617,7 @@ msgid "E_xtend"
 msgstr "Er_weitern"
 
 #: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:389
-#: plug-ins/common/edge.c:471 plug-ins/common/ripple.c:577
+#: plug-ins/common/edge.c:471 plug-ins/common/ripple.c:566
 msgid "_Wrap"
 msgstr "_Umfalten"
 
@@ -2786,7 +2786,7 @@ msgstr "A_utomatische Echtzeitvorschau"
 
 #. Options area, bottom of column
 #: plug-ins/common/curve_bend.c:1436 plug-ins/common/lic.c:845
-#: plug-ins/common/ripple.c:524 plug-ins/gfig/gfig.c:3911
+#: plug-ins/common/ripple.c:513 plug-ins/gfig/gfig.c:3911
 #: plug-ins/mosaic/mosaic.c:602
 msgid "Options"
 msgstr "Einstellungen"
@@ -2803,7 +2803,7 @@ msgstr "_Glättung"
 
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1479 plug-ins/common/gqbist.c:866
-#: plug-ins/common/ripple.c:533 plug-ins/mosaic/mosaic.c:610
+#: plug-ins/common/ripple.c:522 plug-ins/mosaic/mosaic.c:610
 msgid "_Antialiasing"
 msgstr "K_antenglättung"
 
@@ -3038,15 +3038,15 @@ msgstr "<Image>/Filter/Verbessern/Entflackern..."
 msgid "Deinterlace..."
 msgstr "Entflackern..."
 
-#: plug-ins/common/deinterlace.c:265
+#: plug-ins/common/deinterlace.c:295
 msgid "Deinterlace"
 msgstr "Entflackern"
 
-#: plug-ins/common/deinterlace.c:291
+#: plug-ins/common/deinterlace.c:321
 msgid "Keep O_dd Fields"
 msgstr "Erhalte _Ungerade Zeilen"
 
-#: plug-ins/common/deinterlace.c:294
+#: plug-ins/common/deinterlace.c:324
 msgid "Keep _Even Fields"
 msgstr "Erhalte _Gerade Zeilen"
 
@@ -3256,13 +3256,13 @@ msgid "On Edges:"
 msgstr "Am Rand:"
 
 #: plug-ins/common/displace.c:403 plug-ins/common/edge.c:481
-#: plug-ins/common/ripple.c:578 plug-ins/common/waves.c:335
+#: plug-ins/common/ripple.c:567 plug-ins/common/waves.c:335
 msgid "_Smear"
 msgstr "_Verwischen"
 
 #: plug-ins/common/displace.c:417 plug-ins/common/edge.c:491
 #: plug-ins/common/fractaltrace.c:778 plug-ins/common/newsprint.c:435
-#: plug-ins/common/ripple.c:579
+#: plug-ins/common/ripple.c:568
 msgid "_Black"
 msgstr "_Schwarz"
 
@@ -3880,8 +3880,8 @@ msgstr "Auswahl:"
 msgid "Background (%dms)"
 msgstr "Hintergrund (%dms)"
 
-#: plug-ins/common/gifload.c:897 plug-ins/common/iwarp.c:745
-#: plug-ins/common/iwarp.c:770
+#: plug-ins/common/gifload.c:897 plug-ins/common/iwarp.c:765
+#: plug-ins/common/iwarp.c:790
 #, c-format
 msgid "Frame %d"
 msgstr "Frame %d"
@@ -4202,97 +4202,97 @@ msgstr "Modus _2"
 msgid "<Image>/Filters/Distorts/IWarp..."
 msgstr "<Image>/Filter/Verzerren/IWarp..."
 
-#: plug-ins/common/iwarp.c:655
+#: plug-ins/common/iwarp.c:678
 msgid "Warping..."
 msgstr "Warpe..."
 
-#: plug-ins/common/iwarp.c:751 plug-ins/common/iwarp.c:762
+#: plug-ins/common/iwarp.c:771 plug-ins/common/iwarp.c:782
 #, c-format
 msgid "Warping Frame Nr %d ..."
 msgstr "Warpe Frame Nr. %d ..."
 
-#: plug-ins/common/iwarp.c:763
+#: plug-ins/common/iwarp.c:783
 msgid "Ping Pong"
 msgstr "Ping-Pong"
 
-#: plug-ins/common/iwarp.c:937
+#: plug-ins/common/iwarp.c:957
 msgid "A_nimate"
 msgstr "Ani_mation"
 
-#: plug-ins/common/iwarp.c:957
+#: plug-ins/common/iwarp.c:977
 msgid "Number of _Frames:"
 msgstr "Anzahl der _Frames:"
 
-#: plug-ins/common/iwarp.c:966
+#: plug-ins/common/iwarp.c:986
 msgid "R_everse"
 msgstr "_Umgekehrt"
 
-#: plug-ins/common/iwarp.c:975
+#: plug-ins/common/iwarp.c:995
 msgid "_Ping Pong"
 msgstr "_Ping-Pong"
 
-#: plug-ins/common/iwarp.c:988
+#: plug-ins/common/iwarp.c:1008
 msgid "_Animate"
 msgstr "A_nimation"
 
-#: plug-ins/common/iwarp.c:1016
+#: plug-ins/common/iwarp.c:1036
 msgid "_Deform Radius:"
 msgstr "De_formations-Radius:"
 
-#: plug-ins/common/iwarp.c:1026
+#: plug-ins/common/iwarp.c:1046
 msgid "D_eform Amount:"
 msgstr "_Deformation:"
 
-#: plug-ins/common/iwarp.c:1035
+#: plug-ins/common/iwarp.c:1055
 msgid "Deform Mode"
 msgstr "Deformations-Modus"
 
-#: plug-ins/common/iwarp.c:1049
+#: plug-ins/common/iwarp.c:1069
 msgid "_Move"
 msgstr "Be_wegen"
 
-#: plug-ins/common/iwarp.c:1052
+#: plug-ins/common/iwarp.c:1072
 msgid "_Grow"
 msgstr "_Vergrößern"
 
-#: plug-ins/common/iwarp.c:1055
+#: plug-ins/common/iwarp.c:1075
 msgid "S_wirl CCW"
 msgstr "Verdrehen gegen den _Uhrzeigersinn"
 
-#: plug-ins/common/iwarp.c:1058
+#: plug-ins/common/iwarp.c:1078
 msgid "Remo_ve"
 msgstr "_Entfernen"
 
-#: plug-ins/common/iwarp.c:1061
+#: plug-ins/common/iwarp.c:1081
 msgid "S_hrink"
 msgstr "_Schrumpfen"
 
-#: plug-ins/common/iwarp.c:1064
+#: plug-ins/common/iwarp.c:1084
 msgid "Sw_irl CW"
 msgstr "Verdrehen i_m Uhrzeigersinn"
 
-#: plug-ins/common/iwarp.c:1087
+#: plug-ins/common/iwarp.c:1107
 msgid "_Bilinear"
 msgstr "_Bilinear"
 
-#: plug-ins/common/iwarp.c:1101
+#: plug-ins/common/iwarp.c:1121
 msgid "Adaptive S_upersample"
 msgstr "Anpassende _Hochrechnung"
 
-#: plug-ins/common/iwarp.c:1122
+#: plug-ins/common/iwarp.c:1142
 msgid "Ma_x Depth:"
 msgstr "Ma_x. Tiefe:"
 
-#: plug-ins/common/iwarp.c:1132
+#: plug-ins/common/iwarp.c:1152
 msgid "Thresho_ld:"
 msgstr "Sc_hwellwert:"
 
-#: plug-ins/common/iwarp.c:1145 plug-ins/common/sinus.c:1774
+#: plug-ins/common/iwarp.c:1165 plug-ins/common/sinus.c:1774
 #: plug-ins/gflare/gflare.c:2801
 msgid "_Settings"
 msgstr "_Einstellungen"
 
-#: plug-ins/common/iwarp.c:1162
+#: plug-ins/common/iwarp.c:1182
 msgid "IWarp"
 msgstr "IWarp"
 
@@ -4455,7 +4455,7 @@ msgstr "<Image>/Filter/Kanten finden/Laplace"
 msgid "Laplace..."
 msgstr "Laplace..."
 
-#: plug-ins/common/laplace.c:299
+#: plug-ins/common/laplace.c:302
 msgid "Cleanup..."
 msgstr "Räume auf..."
 
@@ -4667,36 +4667,36 @@ msgstr "Die maximalen Kanäle _halten"
 msgid "Ho_ld the Minimal Channels"
 msgstr "Die minimalen Kanäle h_alten"
 
-#: plug-ins/common/mblur.c:149
+#: plug-ins/common/mblur.c:150
 msgid "<Image>/Filters/Blur/Motion Blur..."
 msgstr "<Image>/Filter/Weichzeichnen/Bewegungsunschärfe..."
 
-#: plug-ins/common/mblur.c:666
+#: plug-ins/common/mblur.c:734
 msgid "Motion Blur"
 msgstr "Bewegungsunschärfe"
 
 # TODO
-#: plug-ins/common/mblur.c:688
+#: plug-ins/common/mblur.c:756
 msgid "Blur Type"
 msgstr "Weichzeichnungsart"
 
-#: plug-ins/common/mblur.c:693
+#: plug-ins/common/mblur.c:761
 msgid "_Linear"
 msgstr "_Linear"
 
-#: plug-ins/common/mblur.c:696
+#: plug-ins/common/mblur.c:764
 msgid "_Radial"
 msgstr "_Radial"
 
-#: plug-ins/common/mblur.c:699
+#: plug-ins/common/mblur.c:767
 msgid "_Zoom"
 msgstr "_Zoom"
 
-#: plug-ins/common/mblur.c:707
+#: plug-ins/common/mblur.c:775
 msgid "Blur Parameters"
 msgstr "Parameter"
 
-#: plug-ins/common/mblur.c:728 plug-ins/common/newsprint.c:1035
+#: plug-ins/common/mblur.c:796 plug-ins/common/newsprint.c:1035
 msgid "_Angle:"
 msgstr "_Winkel:"
 
@@ -5032,23 +5032,23 @@ msgstr "<Image>/Filter/Abbilden/Papierschnipsel..."
 msgid "Save as Pattern"
 msgstr "Als Mustern speichern"
 
-#: plug-ins/common/pixelize.c:183
+#: plug-ins/common/pixelize.c:184
 msgid "<Image>/Filters/Blur/Pixelize..."
 msgstr "<Image>/Filter/Weichzeichnen/Pixeln..."
 
-#: plug-ins/common/pixelize.c:282
+#: plug-ins/common/pixelize.c:283
 msgid "Pixelizing..."
 msgstr "Pixeln..."
 
-#: plug-ins/common/pixelize.c:321
+#: plug-ins/common/pixelize.c:322
 msgid "Pixelize"
 msgstr "Pixeln"
 
-#: plug-ins/common/pixelize.c:358
+#: plug-ins/common/pixelize.c:359
 msgid "Pixel _Width:"
 msgstr "Pixel_breite:"
 
-#: plug-ins/common/pixelize.c:363
+#: plug-ins/common/pixelize.c:364
 msgid "Pixel _Height:"
 msgstr "Pixel_höhe:"
 
@@ -5314,23 +5314,23 @@ msgstr "<Image>/Filter/Verzerren/Polarkoordinaten..."
 msgid "Polarizing..."
 msgstr "Polarisiere..."
 
-#: plug-ins/common/polar.c:776
+#: plug-ins/common/polar.c:802
 msgid "Polarize"
 msgstr "Polarkoordinaten"
 
-#: plug-ins/common/polar.c:835
+#: plug-ins/common/polar.c:861
 msgid "Circle _Depth in Percent:"
 msgstr "Kreis_tiefe in Prozent:"
 
-#: plug-ins/common/polar.c:844
+#: plug-ins/common/polar.c:870
 msgid "Offset _Angle:"
 msgstr "Versatz_winkel:"
 
-#: plug-ins/common/polar.c:856
+#: plug-ins/common/polar.c:882
 msgid "_Map Backwards"
 msgstr "Umgekehrt _abbilden"
 
-#: plug-ins/common/polar.c:862
+#: plug-ins/common/polar.c:888
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
@@ -5339,11 +5339,11 @@ msgstr ""
 "beginnen."
 
 # TODO
-#: plug-ins/common/polar.c:870
+#: plug-ins/common/polar.c:896
 msgid "Map from _Top"
 msgstr "_Oben beginnen"
 
-#: plug-ins/common/polar.c:876
+#: plug-ins/common/polar.c:902
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
@@ -5351,11 +5351,11 @@ msgstr ""
 "Normalerweise wird die unterste Zeile auf die Mitte abgebildet und die "
 "oberste nach außen. Dies kann hier umgedreht werden."
 
-#: plug-ins/common/polar.c:885
+#: plug-ins/common/polar.c:911
 msgid "To _Polar"
 msgstr "Nach _Polar"
 
-#: plug-ins/common/polar.c:891
+#: plug-ins/common/polar.c:917
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -5558,45 +5558,45 @@ msgstr "<Image>/Filter/Rauschen/Schmelzen..."
 msgid "R_andomization (%):"
 msgstr "_Zufallsanteil (%):"
 
-#: plug-ins/common/ripple.c:141
+#: plug-ins/common/ripple.c:147
 msgid "<Image>/Filters/Distorts/Ripple..."
 msgstr "<Image>/Filter/Verzerren/Zacken..."
 
-#: plug-ins/common/ripple.c:221
+#: plug-ins/common/ripple.c:227
 msgid "Rippling..."
 msgstr "Erzeuge Zacken..."
 
-#: plug-ins/common/ripple.c:495
+#: plug-ins/common/ripple.c:484
 msgid "Ripple"
 msgstr "Zacken"
 
-#: plug-ins/common/ripple.c:542
+#: plug-ins/common/ripple.c:531
 msgid "_Retain Tilability"
 msgstr "Kachelbarkeit _erhalten"
 
 #. Edges toggle box
-#: plug-ins/common/ripple.c:573
+#: plug-ins/common/ripple.c:562
 msgid "Edges"
 msgstr "Kanten"
 
 #. Wave toggle box
-#: plug-ins/common/ripple.c:587
+#: plug-ins/common/ripple.c:576
 msgid "Wave Type"
 msgstr "Wellentyp"
 
-#: plug-ins/common/ripple.c:591
+#: plug-ins/common/ripple.c:580
 msgid "Saw_tooth"
 msgstr "Säge_zahn"
 
-#: plug-ins/common/ripple.c:592
+#: plug-ins/common/ripple.c:581
 msgid "S_ine"
 msgstr "S_inus"
 
-#: plug-ins/common/ripple.c:614
+#: plug-ins/common/ripple.c:603
 msgid "_Period:"
 msgstr "_Periode:"
 
-#: plug-ins/common/ripple.c:624
+#: plug-ins/common/ripple.c:613
 msgid "A_mplitude:"
 msgstr "A_mplitude:"
 
@@ -6539,7 +6539,7 @@ msgid "Threshold:"
 msgstr "Schwellwert:"
 
 #: plug-ins/common/tiff.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "TIFF: Can't open '%s'"
 msgstr "TIFF: Kann '%s' nicht öffnen"
 
@@ -6702,29 +6702,21 @@ msgid "Digits"
 msgstr "Stellen"
 
 #: plug-ins/common/uniteditor.c:86
-#, fuzzy
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
-"decimal digits the input field should provide to get approximately  the same "
+"decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
-msgstr ""
-"Dieses Feld ist ein Hinweis für numerische Eingabefelder. Es legt fest,\n"
-"wieviele Dezimalstellen das Eingabefeld bereitstellen sollte,\n"
-"um ungefähr die gleiche Genauigkeit wie ein \"inch\"-Eingabefeld mit zwei\n"
-"Dezimalstellen zu bekommen."
+msgstr "Dieses Feld ist ein Hinweis für numerische Eingabefelder. Es legt fest, wieviele Dezimalstellen das Eingabefeld bereitstellen sollte, um ungefähr die gleiche Genauigkeit wie ein \"inch\"-Eingabefeld mit zwei Dezimalstellen zu bekommen."
 
 #: plug-ins/common/uniteditor.c:91
 msgid "Symbol"
 msgstr "Symbol"
 
 #: plug-ins/common/uniteditor.c:91
-#, fuzzy
 msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
-msgstr ""
-"Das Symbol der Einheit, wenn es eines hat (z.B. \"'\" für Inch. Benutzen Sie "
-"die Abkürzung wenn die Einheit kein Symbol hat."
+msgstr "Das Symbol der Einheit, wenn es eines hat (z.B. \"'\" für Inch. Wenn kein Symbol existiert, wird die Abkürzung verwendet."
 
 #: plug-ins/common/uniteditor.c:94
 msgid "Abbreviation"
@@ -8375,9 +8367,8 @@ msgstr ""
 "Wirklich beenden?"
 
 #: plug-ins/gfig/gfig.c:4296
-#, fuzzy
 msgid "Enter Gfig Object Name"
-msgstr "Gfig Objekt Name:"
+msgstr "Gfig Objekt Namen angeben"
 
 #: plug-ins/gfig/gfig.c:4321
 msgid "Gfig Object Name:"
@@ -9458,34 +9449,36 @@ msgstr ""
 "Voronoi-Modus: Nur der smvektor, der einem Punkt am nächsten ist, hat "
 "Einfluss"
 
-#: plug-ins/helpbrowser/helpbrowser.c:79
-#, c-format
-msgid ""
-"<html><head><title>Document Not Found</title></head><body bgcolor=\"white"
-"\"><div align=\"center\"><div>%s</div><h3>Could not locate help "
-"documentation</h3><tt>%s</tt></div><br /><br /><div align=\"justify"
-"\"><small>The requested document could not be found in your GIMP-Help path "
-"as shown above. This means that the topic has not yet been written or your "
-"installation is not complete. Ensure that your installation is complete "
-"before reporting this error as a bug.</small></div></body></html>"
-msgstr ""
-"<html><head><title>Dokument nicht gefunden</title></head><body bgcolor="
-"\"#ffffff\"><center><p>%s<h3>Dokument konnte nicht gefunden werden</h3><tt>%"
-"s</tt></center><p><small>Entweder heißt das, dass die Hilfe noch nicht "
-"geschrieben wurde, oder ihre Installation funktioniert nicht. Bitte "
-"überprüfen Sie das sorgfältig, bevor Sie einen Bug-Report schicken.</small></"
-"body></html>"
-
-#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:582
+#: plug-ins/helpbrowser/helpbrowser.c:319 plug-ins/imagemap/imap_main.c:582
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<Unbenannt>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:587
+#: plug-ins/helpbrowser/helpbrowser.c:458
+msgid "Document Not Found"
+msgstr "Dokument nicht gefunden"
+
+#: plug-ins/helpbrowser/helpbrowser.c:460
+msgid "Could not locate help documentation"
+msgstr "Konnte Hilfe nicht lokalisieren"
+
+#: plug-ins/helpbrowser/helpbrowser.c:462
+msgid ""
+"The requested document could not be found in your GIMP help path as shown "
+"above. This means that the topic has not yet been written or your "
+"installation is not complete. Ensure that your installation is complete "
+"before reporting this error as a bug."
+msgstr ""
+"Das gewünschte Dokument konnte nicht im Hilfe-Pfad wie oben angegeben "
+"gefunden werden. Entweder heißt das, dass die Hilfe noch nicht geschrieben "
+"wurde, oder ihre Installation ist nicht korrekt. Bitte überprüfen Sie das "
+"sorgfältig, bevor Sie einen Bug-Report schicken."
+
+#: plug-ins/helpbrowser/helpbrowser.c:595
 msgid "GIMP Help Browser"
 msgstr "GIMP Hilfe Browser"
 
-#: plug-ins/helpbrowser/helpbrowser.c:900
+#: plug-ins/helpbrowser/helpbrowser.c:908
 #, c-format
 msgid ""
 "GIMP Help Browser Error.\n"

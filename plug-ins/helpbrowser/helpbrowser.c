@@ -74,27 +74,6 @@ typedef struct
 } HistoryItem;
 
 
-/* please make sure the translation is a valid and complete HTML snippet */ 
-static const gchar *doc_not_found_format_string =
-N_("<html><head><title>Document Not Found</title></head>"
-   "<body bgcolor=\"white\">"
-   "<div align=\"center\">"
-   "<div>%s</div>"
-   "<h3>Could not locate help documentation</h3>"
-   "<tt>%s</tt>"
-   "</div>"
-   "<br /><br />"
-   "<div align=\"justify\">"
-   "<small>"
-   "The requested document could not be found in your GIMP-Help path as "
-   "shown above. This means that the topic has not yet been written or your "
-   "installation is not complete. Ensure that your installation is complete "
-   "before reporting this error as a bug."
-   "</small>"
-   "</div>"
-   "</body>"
-   "</html>");
-
 static const gchar *eek_png_tag = "<h1>Eeek!</h1>";
 
 static gchar       *gimp_help_root = NULL;
@@ -457,10 +436,39 @@ request_url (HtmlDocument *doc,
 
       if (fd == -1)
         {
-          gchar *msg = g_strdup_printf (gettext (doc_not_found_format_string),
-                                        eek_png_tag, filename);
+          gchar *name;
+          gchar *msg;
 
+          name = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+
+          msg = g_strdup_printf
+            ("<html>"
+             "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
+             "<head><title>%s</title></head>"
+             "<body bgcolor=\"white\">"
+             "<div align=\"center\">"
+             "<div>%s</div>"
+             "<h3>%s</h3>"
+             "<tt>%s</tt>"
+             "</div>"
+             "<br /><br />"
+             "<div align=\"justify\">%s</div>"
+             "</body>"
+             "</html>",
+             _("Document Not Found"),
+             eek_png_tag,
+             _("Could not locate help documentation"),
+             name,
+             _("The requested document could not be found in your GIMP help "
+               "path as shown above. This means that the topic has not yet "
+               "been written or your installation is not complete. Ensure "
+               "that your installation is complete before reporting this "
+               "error as a bug."));
+          
           html_document_write_stream (doc, msg, strlen (msg));
+
+          g_free (msg);
+          g_free (name);
         }
       else
         {

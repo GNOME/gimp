@@ -1,5 +1,12 @@
 2003-02-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/uniteditor.c: fixed typo.
+
+	* plug-ins/helpbrowser/helpbrowser.c: generate HTML with proper
+	encoding information, fixes bug #106543.
+
+2003-02-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/laplace.c: changed MIN to MAX as suggested by
 	Sunil Mohan Adapa in bug #106474.
 
