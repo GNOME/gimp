@@ -155,8 +155,6 @@ static HelpPage pages[] =
   }
 };
 
-static gchar     *current_locale = "C";
-
 static HelpPage  *current_page = &pages[HELP];
 static GList     *history = NULL;
 
@@ -431,7 +429,7 @@ load_page (HelpPage *source_page,
   old_dir  = g_dirname (source_page->current_ref);
   new_dir  = g_dirname (ref);
   new_base = g_basename (ref);
-  
+
   /* return value is intentionally ignored */
   chdir (old_dir);
 
@@ -462,7 +460,7 @@ load_page (HelpPage *source_page,
 
       if (add_to_queue)
 	queue_add (dest_page->queue, new_ref, pos);
-      
+
       goto FINISH;
     }
 
@@ -685,6 +683,36 @@ page_down_callback (GtkWidget *widget,
 }
 
 static gint
+wheel_callback (GtkWidget      *widget,
+		GdkEventButton *bevent,
+		GtkWidget      *html)
+{
+  GtkAdjustment *adj;
+  gfloat new_value;
+
+  adj = GTK_ADJUSTMENT (GTK_XMHTML (html)->vsba);
+
+  switch (bevent->button)
+    {
+    case 4:
+      new_value = adj->value - adj->page_increment / 2;
+      break;
+
+    case 5:
+      new_value = adj->value + adj->page_increment / 2;
+      break;
+
+    default:
+      return FALSE;
+    }
+
+  new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+  gtk_adjustment_set_value (adj, new_value);
+
+  return TRUE;
+}
+
+static gint
 set_initial_history (gpointer data)
 {
   gint   add_to_history = GPOINTER_TO_INT (data);
@@ -702,7 +730,8 @@ set_initial_history (gpointer data)
 }
 
 gboolean
-open_browser_dialog (gchar *path)
+open_browser_dialog (gchar *locale,
+		     gchar *path)
 {
   GtkWidget *window;
   GtkWidget *vbox, *hbox, *bbox, *html_box;
@@ -749,9 +778,11 @@ open_browser_dialog (gchar *path)
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
-		      GTK_SIGNAL_FUNC (close_callback), NULL);
+		      GTK_SIGNAL_FUNC (close_callback),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
-		      GTK_SIGNAL_FUNC (close_callback), NULL);
+		      GTK_SIGNAL_FUNC (close_callback),
+		      NULL);
   gtk_window_set_wmclass (GTK_WINDOW (window), "gimp_help_browser", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
 
@@ -769,14 +800,16 @@ open_browser_dialog (gchar *path)
   gtk_container_add (GTK_CONTAINER (bbox), back_button);
   gtk_widget_set_sensitive (GTK_WIDGET (back_button), FALSE);
   gtk_signal_connect (GTK_OBJECT (back_button), "clicked",
-		      GTK_SIGNAL_FUNC (back_callback), NULL);
+		      GTK_SIGNAL_FUNC (back_callback),
+		      NULL);
   gtk_widget_show (back_button);
 
   forward_button = pixmap_button_new (forward_xpm, _("Forward"), window);
   gtk_container_add (GTK_CONTAINER (bbox), forward_button);
   gtk_widget_set_sensitive (GTK_WIDGET (forward_button), FALSE);
   gtk_signal_connect (GTK_OBJECT (forward_button), "clicked",
-		      GTK_SIGNAL_FUNC (forward_callback), NULL);
+		      GTK_SIGNAL_FUNC (forward_callback),
+		      NULL);
   gtk_widget_show (forward_button);
 
   gtk_widget_show (bbox);
@@ -788,7 +821,8 @@ open_browser_dialog (gchar *path)
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
- 		      GTK_SIGNAL_FUNC (close_callback), NULL);
+ 		      GTK_SIGNAL_FUNC (close_callback),
+		      NULL);
   gtk_widget_show (button);
 
   gtk_widget_show (bbox);
@@ -808,7 +842,7 @@ open_browser_dialog (gchar *path)
       pages[i].html = gtk_xmhtml_new ();
       pages[i].queue = queue_new ();
       pages[i].current_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
-					  current_locale, G_DIR_SEPARATOR_S,
+					  locale, G_DIR_SEPARATOR_S,
 					  ".", NULL);
 
       gtk_xmhtml_set_anchor_underline_type (GTK_XMHTML (pages[i].html),
@@ -871,12 +905,12 @@ open_browser_dialog (gchar *path)
 	    initial_ref = g_strdup (path);
 	  else
 	    initial_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
-				       current_locale, G_DIR_SEPARATOR_S,
+				       locale, G_DIR_SEPARATOR_S,
 				       path, NULL);
 	}
       else
 	initial_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
-				   current_locale, G_DIR_SEPARATOR_S,
+				   locale, G_DIR_SEPARATOR_S,
 				   pages[i].home, NULL);
 
       success = load_page (&pages[i], &pages[i], initial_ref, 0, TRUE, FALSE);
@@ -885,7 +919,8 @@ open_browser_dialog (gchar *path)
       gtk_widget_show (pages[i].html);
       gtk_widget_show (html_box);
       gtk_signal_connect (GTK_OBJECT (pages[i].html), "activate",
-			  (GtkSignalFunc) xmhtml_activate, &pages[i]);
+			  (GtkSignalFunc) xmhtml_activate,
+			  &pages[i]);
 
       if (! page_up_signal)
 	{
@@ -905,16 +940,25 @@ open_browser_dialog (gchar *path)
 
       gtk_signal_connect (GTK_OBJECT (GTK_XMHTML (pages[i].html)->html.vsb),
 			  "page_up",
-			  GTK_SIGNAL_FUNC (page_up_callback), pages[i].html);
+			  GTK_SIGNAL_FUNC (page_up_callback),
+			  pages[i].html);
       gtk_signal_connect (GTK_OBJECT (GTK_XMHTML (pages[i].html)->html.vsb), 
 			  "page_down", 
-			  GTK_SIGNAL_FUNC (page_down_callback), pages[i].html);
+			  GTK_SIGNAL_FUNC (page_down_callback),
+			  pages[i].html);
+
+      gtk_signal_connect (GTK_OBJECT (GTK_XMHTML (pages[i].html)->html.work_area),
+			  "button_press_event",
+			  GTK_SIGNAL_FUNC (wheel_callback),
+			  pages[i].html);
     }
 
   gtk_signal_connect (GTK_OBJECT (notebook), "switch-page",
-		      GTK_SIGNAL_FUNC (notebook_switch_callback), NULL);
+		      GTK_SIGNAL_FUNC (notebook_switch_callback),
+		      NULL);
   gtk_signal_connect_after (GTK_OBJECT (notebook), "switch-page",
-			    GTK_SIGNAL_FUNC (notebook_switch_after_callback), NULL);
+			    GTK_SIGNAL_FUNC (notebook_switch_after_callback),
+			    NULL);
 
   gtk_notebook_set_page (GTK_NOTEBOOK (notebook), HELP);
   gtk_widget_show (notebook);
@@ -936,7 +980,7 @@ idle_load_page (gpointer data)
 
   load_page (&pages[HELP], &pages[HELP], path, 0, TRUE, TRUE);
   g_free (path);
-	  
+
   return FALSE;
 }
 
@@ -949,15 +993,24 @@ run_temp_proc (gchar   *name,
 {
   static GParam values[1];
   GStatusType status = STATUS_SUCCESS;
+  gchar *locale;
   gchar *path;
 
   /*  Make sure all the arguments are there!  */
-  if ((nparams != 1) ||
+  if ((nparams != 2) ||
       !param[0].data.d_string ||
-      !strlen (param[0].data.d_string))
-    path = "welcome.html";
+      !strlen (param[0].data.d_string) ||
+      !param[1].data.d_string ||
+      !strlen (param[1].data.d_string))
+    {
+      locale = "C";
+      path   = "welcome.html";
+    }
   else
-    path = param[0].data.d_string;
+    {
+      locale = param[0].data.d_string;
+      path   = param[1].data.d_string;
+    }
 
   g_strdelimit (path, "/", G_DIR_SEPARATOR);
 
@@ -966,7 +1019,7 @@ run_temp_proc (gchar   *name,
   else
     path = g_strconcat (gimp_data_directory (), G_DIR_SEPARATOR_S, 
 			GIMP_HELP_PREFIX, G_DIR_SEPARATOR_S,
-			current_locale, G_DIR_SEPARATOR_S,
+			locale, G_DIR_SEPARATOR_S,
 			path, NULL);
 
   gtk_idle_add (idle_load_page, path);
@@ -999,8 +1052,9 @@ install_temp_proc (void)
 {
   static GParamDef args[] =
   {
-    { PARAM_STRING, "path", "Path of a local document to open. "
-                            "Can be relative to GIMP_HELP_PATH." }
+    { PARAM_STRING, "locale", "Langusge to use" },
+    { PARAM_STRING, "path",   "Path of a local document to open. "
+                              "Can be relative to GIMP_HELP_PATH." }
   };
   static int nargs = sizeof (args) / sizeof (args[0]);
 
@@ -1031,9 +1085,10 @@ install_temp_proc (void)
 }
 
 static gboolean
-open_url (gchar *path)
+open_url (gchar *locale,
+	  gchar *path)
 {
-  if (! open_browser_dialog (path))
+  if (! open_browser_dialog (locale, path))
     return FALSE;
 
   install_temp_proc ();
@@ -1045,13 +1100,14 @@ open_url (gchar *path)
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
     { PARAM_INT32,  "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "path", "Path of a local document to open. "
-                            "Can be relative to GIMP_HELP_PATH." }
+    { PARAM_STRING, "locale"  , "Language to use" },
+    { PARAM_STRING, "path",     "Path of a local document to open. "
+                                "Can be relative to GIMP_HELP_PATH." }
   };
   static int nargs = sizeof (args) / sizeof (args[0]);
   static GParamDef *return_vals = NULL;
@@ -1082,6 +1138,7 @@ run (char    *name,
   static GParam values[1];
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
+  gchar *locale;
   gchar *path;
 
   run_mode = param[0].data.d_int32;
@@ -1100,15 +1157,24 @@ run (char    *name,
         case RUN_NONINTERACTIVE:
 	case RUN_WITH_LAST_VALS:
          /*  Make sure all the arguments are there!  */
-          if ((nparams != 2) ||
+          if ((nparams != 3) ||
 	      !param[1].data.d_string ||
-	      !strlen (param[1].data.d_string))
-	    path = g_strdup ("welcome.html");
+	      !strlen (param[1].data.d_string) ||
+	      !param[2].data.d_string ||
+	      !strlen (param[2].data.d_string))
+	    {
+	      locale = "C";
+	      path   = g_strdup ("welcome.html");
+	    }
 	  else
-	    path = g_strdup (param[1].data.d_string);
+	    {
+	      locale = g_strdup (param[1].data.d_string);
+	      path   = g_strdup (param[2].data.d_string);
+	    }
           break;
         default:
-	  path = NULL;
+	  locale = NULL;
+	  path   = NULL;
 	  status = STATUS_CALLING_ERROR;
           break;
         }
@@ -1117,7 +1183,7 @@ run (char    *name,
         {
 	  g_strdelimit (path, "/", G_DIR_SEPARATOR);
 
-       	  if (!open_url (path))
+       	  if (!open_url (locale, path))
             values[0].data.d_status = STATUS_EXECUTION_ERROR;
 	  else
 	    values[0].data.d_status = STATUS_SUCCESS;

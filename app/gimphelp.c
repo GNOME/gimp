@@ -182,6 +182,8 @@ gimp_help (gchar *help_data)
 {
   ProcRecord *proc_rec;
 
+  static gchar *current_locale = "C";
+
 #ifdef DEBUG_HELP
   g_print ("Help Page: %s\n", help_data);
 #endif  /*  DEBUG_HELP  */
@@ -203,13 +205,15 @@ gimp_help (gchar *help_data)
 	  return;
 	}
 
-      args = g_new (Argument, 2);
+      args = g_new (Argument, 3);
       args[0].arg_type = PDB_INT32;
       args[0].value.pdb_int = RUN_INTERACTIVE;
       args[1].arg_type = PDB_STRING;
-      args[1].value.pdb_pointer = help_data;
+      args[1].value.pdb_pointer = current_locale;
+      args[2].arg_type = PDB_STRING;
+      args[2].value.pdb_pointer = help_data;
 
-      plug_in_run (proc_rec, args, 2, FALSE, TRUE, 0);
+      plug_in_run (proc_rec, args, 3, FALSE, TRUE, 0);
 
       g_free (args);
     }
@@ -221,6 +225,7 @@ gimp_help (gchar *help_data)
       return_vals =
         procedural_db_run_proc ("extension_gimp_help_browser_temp",
                                 &nreturn_vals,
+				PDB_STRING, current_locale,
                                 PDB_STRING, help_data,
                                 PDB_END);
 

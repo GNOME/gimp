@@ -1,5 +1,14 @@
 1999-12-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimphelp.c
+	* plug-ins/helpbrowser/helpbrowser.c
+
+	- Pass the locale to use (currently always "C") to the help
+	  browser procedures instead of hardcoding it in the help browser.
+	- Wheel mouse support for the help browser.
+
+1999-12-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/menus.c
 	* app/paths_dialog.c: Minor help system fixes.
 
@@ -15,7 +24,7 @@
 	* app/tools.c
 	* app/transform_tool.c: Did some code browsing: I18N fixes,
 	s/gtk_window_position/gtk_window_set_position/g, indentation
-	paranoia, some g/<type>/g<type>/, various stuff (didn't change any
+	paranoia, some s/<type>/g<type>/, various stuff (didn't change any
 	logic).
 
 1999-12-17  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
