@@ -242,7 +242,7 @@ script_fu_console_interface (void)
       "strong",   "Welcome to SIOD, Scheme In One Defun\n",
       "weak",     "(C) Copyright 1988-1994 Paradigm Associates Inc.\n\n\n",
       "strong",   "Script-Fu Console - ",
-      "emphasis", "Interactive Scheme Development\n\n",
+      "emphasis", "Interactive Scheme Development",
       NULL
     };
 
@@ -471,7 +471,7 @@ script_fu_cc_key_function (GtkWidget   *widget,
       gtk_text_buffer_get_end_iter (cint.console, &cursor);
 
       gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
-						"=> ", -1,
+						"\n=> ", -1,
 						"strong",
 						NULL);
 
@@ -481,7 +481,7 @@ script_fu_cc_key_function (GtkWidget   *widget,
                                                 NULL);
 
       gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
-						"\n\n", -1,
+						"\n", -1,
 						"weak",
 						NULL);
 

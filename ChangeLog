@@ -1,5 +1,10 @@
 2004-03-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-console.c: applied a patch from
+	Kevin Cozens that slightly alters the Script-Fu console output.
+
+2004-03-18  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/layers-commands.c (layers_text_tool)
 	* app/gui/layers-menu.c (layers_menu_update): treat modified text
 	layers like normal layers.
