@@ -175,6 +175,7 @@ all other GIMP Library headers.
 
 </para>
 
+@info: 
 @argc: 
 @argv: 
 @Returns: 
@@ -316,14 +317,6 @@ all other GIMP Library headers.
 </para>
 
 @Returns: 
-
-
-<!-- ##### FUNCTION set_gimp_PLUG_IN_INFO_PTR ##### -->
-<para>
-
-</para>
-
-@Param1: 
 
 
 <!-- ##### FUNCTION gimp_parasite_find ##### -->

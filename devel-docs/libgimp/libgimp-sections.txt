@@ -33,7 +33,6 @@ gimp_install_cmap
 gimp_min_colors
 gimp_show_tool_tips
 gimp_get_progname
-set_gimp_PLUG_IN_INFO_PTR
 gimp_parasite_find
 gimp_parasite_list
 gimp_parasite_attach
