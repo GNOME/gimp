@@ -565,6 +565,25 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
           else if (index == 2)
             index = -1;
 
+          /*  if dropping to the same dock, take care that we don't try
+           *  to reorder the *only* dockable in the dock
+           */
+          if (src_dockable->dockbook->dock == dock)
+            {
+              gint n_books;
+              gint n_dockables;
+
+              n_books = g_list_length (dock->dockbooks);
+
+              children =
+                gtk_container_get_children (GTK_CONTAINER (src_dockable->dockbook));
+              n_dockables = g_list_length (children);
+              g_list_free (children);
+
+              if (n_books == 1 && n_dockables == 1)
+                return TRUE; /* successfully do nothing */
+            }
+
 	  g_object_ref (src_dockable);
 
 	  gimp_dockbook_remove (src_dockable->dockbook, src_dockable);

@@ -1,5 +1,11 @@
 2003-03-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdock.c (gimp_dock_separator_drag_drop): don't
+	try to reorder dockables in a dock containing exactly one dockable
+	(fixes bug #109042)
+
+2003-03-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/paint-enums.[ch]: register GimpPaintApplicationMode
 	with the type system.
 
