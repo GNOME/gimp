@@ -1,3 +1,8 @@
+2003-08-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/tiff.c (read_16bit): fixed bug that was
+	introduced during code cleanup (spotted by yourst, bug #120038).
+
 2003-08-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpcroptool.c: added GimpTool::oper_update()
