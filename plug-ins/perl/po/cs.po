@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.19\n"
 "POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: 2000-03-30 18:54+02:00\n"
+"PO-Revision-Date: 2000-04-08 23:28+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -286,9 +286,6 @@ msgid ""
 "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
 msgstr "neplatný GIMP_HOST: 'spawn' není pro server platná metoda spojení"
 
-msgid "unable to open Gimp::Net communications socket\n"
-msgstr "nepodaøilo se otevøít komunikaèní soket Gimp::Net\n"
-
 msgid "wrong authorization, aborting connection"
 msgstr "¹patná autorizace, ru¹í se spojení"
 
@@ -323,6 +320,9 @@ msgstr "[nedefinováno]"
 msgid "<Image>/Guides/Remove Guides"
 msgstr "<Image>/Vodítka/Smazat vodítka"
 
+msgid "unable to open Gimp::Net communications socket: $!\n"
+msgstr "nepodaøilo se otevøít komunikaèní soket Gimp::Net: $!\n"
+
 msgid "WARNING: shared locking requested but not implemented"
 msgstr "VAROVÁNÍ: po¾adováno neimplemetované sdílené uzamèení"
 
@@ -337,9 +337,6 @@ msgstr "%s: vykonání procedurální databáze selhalo"
 
 msgid "<Image>/Filters/Logulator/3D Outline"
 msgstr "<Image>/Filtry/Logulátor/3D obrys"
-
-msgid "<Image>/Filters/"
-msgstr "<Image>/Filtry/"
 
 msgid "<Image>/Video/VCR Console..."
 msgstr "<Image>/Video/Videopult..."
@@ -685,9 +682,6 @@ msgstr "<Image>/Filtry/Rùzné/Prùmìr okraje"
 msgid "<Image>/Filters/Blur/2x2 Blur"
 msgstr "<Image>/Filtry/Rozostøení/Rozostøení 2×2"
 
-msgid "<Image>/Layers/Layer to Image Size"
-msgstr "<Image>/Vrstvy/Velikost vrstvy dle obrázku"
-
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr "konverze na typ $pf_type2string{$type} není doposud implementovaná\n"
 
@@ -741,6 +735,9 @@ msgstr "<Image>/Filtry/Zkreslení/©krábance"
 
 msgid "argument is not of type %s"
 msgstr "argument není typu %s"
+
+msgid "Background"
+msgstr "Pozadí"
 
 msgid "%s arguments for function '%s'"
 msgstr "%s argumentù pro funkci '%s'"
@@ -812,7 +809,9 @@ msgstr "<Image>/Filtry/Logulátor/Køída"
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
-msgstr "$function: volání $AUTOLOAD bez specifikace importní znaèky :auto je zavrhováno!\n"
+msgstr ""
+"$function: volání $AUTOLOAD bez specifikace importní znaèky :auto je "
+"zavrhováno!\n"
 
 msgid "DESCRIPTION"
 msgstr "POPIS"
@@ -965,9 +964,6 @@ msgstr "$_: neznámá/neplatná volba zápisu souboru"
 msgid "/Xtns/Render"
 msgstr "/Roz¹./Vyobrazení"
 
-msgid "<Toolbox>/Xtns/"
-msgstr "<Toolbox>/Roz¹./"
-
 msgid " = [argument error]\n"
 msgstr " = [chyba argumentu]\n"
 
@@ -991,6 +987,9 @@ msgstr "získat aktuální barvu popøedí z programu gimp"
 
 msgid "Pattern Selection Dialog"
 msgstr "Dialog výbìru vzorku"
+
+msgid "<Image>/Filters/Render/Add Dust..."
+msgstr "<Image>/Filtry/Vyobrazení/Zaprá¹it..."
 
 msgid "not enough"
 msgstr "není dostatek"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.19\n"
 "POT-Creation-Date: 2000-04-03 22:04+0200\n"
-"PO-Revision-Date: 2000-04-04 09:52+02:00\n"
+"PO-Revision-Date: 2000-04-07 00:26+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2774,7 +2774,7 @@ msgstr "Pou¾ít maker namísto struct"
 #.
 #: plug-ins/common/csource.c:746
 msgid "Use 1 Byte Run-Length-Encoding"
-msgstr "Pou¾ít 1bytovéhu run-length kódování"
+msgstr "Pou¾ít 1bajtovéhu run-length kódování"
 
 #. Alpha
 #.
@@ -4250,7 +4250,7 @@ msgstr "JPEG náhled"
 #: plug-ins/common/jpeg.c:1115
 #, c-format
 msgid "Size: %lu bytes (%02.01f kB)"
-msgstr "Velikost v bytech: %lu (%02.01f kB)"
+msgstr "Velikost v bajtech: %lu (%02.01f kB)"
 
 #: plug-ins/common/jpeg.c:1513 plug-ins/common/jpeg.c:1647
 msgid "Size: unknown"
