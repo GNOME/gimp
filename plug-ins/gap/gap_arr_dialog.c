@@ -38,6 +38,7 @@
  */
 
 /* revision history:
+ * gimp   1.1.15.1; 1999/05/08  hof: call fileselect in gtk+1.2 style 
  * version 0.96.03; 1998/08/15  hof: p_arr_gtk_init 
  * version 0.96.01; 1998/07/09  hof: Bugfix: gtk_init should be called only
  *                                           once in a plugin process 
@@ -244,15 +245,19 @@ filesel_open_cb(GtkWidget *widget, t_arr_arg *arr_ptr)
 
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
-  gtk_signal_connect (GTK_OBJECT (filesel), "destroy",
-		      (GtkSignalFunc) filesel_close_cb,
-		      arr_ptr);
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
 		      "clicked", (GtkSignalFunc) filesel_ok_cb,
 		      arr_ptr);
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
-			     "clicked", (GtkSignalFunc) filesel_close_cb,
-			     (GtkObject *)arr_ptr);
+  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
+		      "clicked", (GtkSignalFunc) filesel_close_cb,
+		      arr_ptr);
+
+  /* "destroy" has to be the last signal, 
+   * (otherwise the other callbacks are never called)
+   */
+  gtk_signal_connect (GTK_OBJECT (filesel), "destroy",
+		      (GtkSignalFunc) filesel_close_cb,
+		      arr_ptr);
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				   arr_ptr->text_buf_ret);
   gtk_widget_show (filesel);

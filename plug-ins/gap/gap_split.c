@@ -26,6 +26,7 @@
  */
 
 /* revision history
+ * gimp   1.1.15.1;  1999/05/08  hof: bugix (dont mix GDrawableType with GImageType)
  * 0.96.00; 1998/07/01   hof: - added scale, resize and crop 
  *                              (affects full range == all anim frames)
  *                            - now using gap_arr_dialog.h
@@ -140,7 +141,7 @@ p_split_image(t_anim_info *ainfo_ptr,
            /* add a dummy layer (flatten needs at least 2 layers) */
            l_cp_layer_id = gimp_layer_new(l_new_image_id, "dummy",
                                           4, 4,         /* width, height */
-                                          l_type,
+                                          ((l_type * 2 ) + 1),  /* convert from GImageType to GDrawableType, and add alpha */
                                           0.0,          /* Opacity full transparent */     
                                           0);           /* NORMAL */
            gimp_image_add_layer(l_new_image_id, l_cp_layer_id, 0);

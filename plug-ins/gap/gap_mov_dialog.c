@@ -30,6 +30,7 @@
  */
 
 /* revision history:
+ * gimp   1.1.15.1; 1999/05/08  hof: call fileselect in gtk+1.2 style 
  * version 0.99.00; 1999.03.03  hof: bugfix: update of the preview (did'nt work with gimp1.1.2)
  * version 0.98.00; 1998.11.28  hof: Port to GIMP 1.1: replaced buildmenu.h, apply layermask (before rotate)
  *                                   mov_imglayer_constrain must check for drawable_id -1
@@ -819,17 +820,20 @@ mov_pload_callback (GtkWidget *widget,
 
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
-  gtk_signal_connect (GTK_OBJECT (filesel), "destroy",
-		      (GtkSignalFunc) p_filesel_close_cb,
-		      path_ptr);
-
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
 		      "clicked", (GtkSignalFunc) p_points_load_from_file,
 		      path_ptr);
 
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
-			     "clicked", (GtkSignalFunc) p_filesel_close_cb,
-			     (GtkObject *)path_ptr);
+  gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
+		     "clicked", (GtkSignalFunc) p_filesel_close_cb,
+	             path_ptr);
+	             
+  /* "destroy" has to be the last signal, 
+   * (otherwise the other callbacks are never called)
+   */
+  gtk_signal_connect (GTK_OBJECT (filesel), "destroy",
+		      (GtkSignalFunc) p_filesel_close_cb,
+		      path_ptr);
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				   path_ptr->pointfile_name);
@@ -852,17 +856,20 @@ mov_psave_callback (GtkWidget *widget,
 
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
-  gtk_signal_connect (GTK_OBJECT (filesel), "destroy",
-		      (GtkSignalFunc) p_filesel_close_cb,
-		      path_ptr);
-
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
 		      "clicked", (GtkSignalFunc) p_points_save_to_file,
 		      path_ptr);
 
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
-			     "clicked", (GtkSignalFunc) p_filesel_close_cb,
-			     (GtkObject *)path_ptr);
+  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
+		     "clicked", (GtkSignalFunc) p_filesel_close_cb,
+		     path_ptr);
+
+  /* "destroy" has to be the last signal, 
+   * (otherwise the other callbacks are never called)
+   */
+  gtk_signal_connect (GTK_OBJECT (filesel), "destroy",
+		      (GtkSignalFunc) p_filesel_close_cb,
+		      path_ptr);
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				   path_ptr->pointfile_name);

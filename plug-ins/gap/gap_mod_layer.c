@@ -28,6 +28,7 @@
  */
 
 /* revision history:
+ * gimp   1.1.15.1;  1999/05/08  hof: bugix (dont mix GDrawableType with GImageType)
  * version 0.98.00   1998.11.27  hof: - use new module gap_pdb_calls.h
  * version 0.97.00   1998.10.19  hof: - created module
  */
@@ -396,7 +397,9 @@ void p_prevent_empty_image(gint32 image_id)
      l_width  = gimp_image_width(image_id);
      l_height = gimp_image_height(image_id);
      l_type   = gimp_image_base_type(image_id);
-     
+
+     l_type   = (l_type * 2); /* convert from GImageType to GDrawableType */
+
      /* add a transparent dummy layer */
      l_layer_id = gimp_layer_new(image_id, "dummy",
                                     l_width, l_height,  l_type,

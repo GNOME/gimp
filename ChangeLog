@@ -1,3 +1,10 @@
+Wed May 19 01:05:08 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gap/gap_arr_dialog.c
+	* plug-ins/gap/gap_mod_layer.c
+	* plug-ins/gap/gap_mov_dialog.c
+	* plug-ins/gap/gap_split.c: bugfixes as provided by Wolfgang Hofer
+
 Mon May 17 16:56:36 CEST 1999 Marc Lehmann <pcg@goof.com>
 
 	* libgimp/gimppixelrgn.c: New function gimp_pixel_rgns_register2.
