@@ -2316,7 +2316,7 @@
 	target drawable.
 
 	* app/tools/gimpvectortool.c: Removed status message in
-	VECTORS_FINISHED mode as requested by Ville P䴳i.
+	VECTORS_FINISHED mode as requested by Ville Pätsi.
 
 	* app/vectors/gimpvectors.c: Determine the stroke parameters
 	from the current context (opacity/color/paint_mode).
@@ -2676,7 +2676,7 @@
 	* app/Makefile.am: special case windows for leading underscores in
 	symbol names.
 
-2003-09-17  Ville Pôsi  <drc@gimp.org>
+2003-09-17  Ville Pätsi  <drc@gimp.org>
 
 	* configure.in: Added AC_SUBST to required version numbers.
 	* gimp.spec.in: Changed the requires to use the version numbers from
@@ -11660,7 +11660,7 @@
 
 	* app/tools/tool_manager.c (tool_manager_tool_changed): make sure
 	that active_tool->tool_info is non-NULL before dereferencing it.
-	(Spotted by Ville PÃ$tsi).
+	(Spotted by Ville Pätsi).
 
 2003-05-11  Sven Neumann  <sven@gimp.org>
 
@@ -29904,7 +29904,7 @@
 	* themes/Default/images/stock-button-selection-subtract.png: cropped.
 
 	* themes/Default/images/tools/stock-tool-button-brightness-contrast.png:
-	a nicer one from Ville PÃ$tsi.
+	a nicer one from Ville Pätsi.
 
 	* app/gui/menus.c
 	* app/widgets/gimpvectorslistview.c: use the new stock items.
@@ -33001,7 +33001,7 @@
 2001-12-12  Michael Natterer  <mitch@gimp.org>
 
 	* docs/Wilber_Construction_Kit.xcf.gz: new version with additional
-	layers by Ville PÃ$tsi (drc).
+	layers by Ville Pätsi (drc).
 
 2001-12-12  Sven Neumann  <sven@gimp.org>
 
