@@ -1,3 +1,9 @@
+2004-09-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolormapeditor.c: moved stuff from
+	gimp_colormap_editor_new() to
+	gimp_colormap_editor_init(). Untabified.
+
 2004-09-25  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/dog.c: made the preview behave like in all other

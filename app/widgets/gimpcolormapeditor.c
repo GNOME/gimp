@@ -182,12 +182,12 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
 
   editor_signals[SELECTED] =
     g_signal_new ("selected",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpColormapEditorClass, selected),
-		  NULL, NULL,
-		  gimp_marshal_VOID__FLAGS,
-		  G_TYPE_NONE, 1,
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColormapEditorClass, selected),
+                  NULL, NULL,
+                  gimp_marshal_VOID__FLAGS,
+                  G_TYPE_NONE, 1,
                   GDK_TYPE_MODIFIER_TYPE);
 
   object_class->constructor     = gimp_colormap_editor_constructor;
@@ -204,16 +204,73 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
 static void
 gimp_colormap_editor_init (GimpColormapEditor *editor)
 {
-  editor->col_index        = 0;
-  editor->dnd_col_index    = 0;
-  editor->palette          = NULL;
-  editor->xn               = 0;
-  editor->yn               = 0;
-  editor->cellsize         = 0;
-  editor->index_adjustment = NULL;
-  editor->index_spinbutton = NULL;
-  editor->color_entry      = NULL;
-  editor->color_dialog     = NULL;
+  GtkWidget *frame;
+  GtkWidget *table;
+
+  editor->col_index     = 0;
+  editor->dnd_col_index = 0;
+  editor->xn            = 0;
+  editor->yn            = 0;
+  editor->cellsize      = 0;
+
+  /*  The palette frame  */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  editor->palette = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_widget_set_size_request (editor->palette, -1, 60);
+  gtk_preview_set_expand (GTK_PREVIEW (editor->palette), TRUE);
+  gtk_widget_add_events (editor->palette, GDK_BUTTON_PRESS_MASK);
+  gtk_container_add (GTK_CONTAINER (frame), editor->palette);
+  gtk_widget_show (editor->palette);
+
+  g_signal_connect_after (editor->palette, "size_allocate",
+                          G_CALLBACK (gimp_colormap_preview_size_allocate),
+                          editor);
+
+  g_signal_connect (editor->palette, "button_press_event",
+                    G_CALLBACK (gimp_colormap_preview_button_press),
+                    editor);
+
+  gimp_dnd_color_source_add (editor->palette, gimp_colormap_preview_drag_color,
+                             editor);
+  gimp_dnd_color_dest_add (editor->palette, gimp_colormap_preview_drop_color,
+                           editor);
+
+  /*  Some helpful hints  */
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
+  gtk_box_pack_end (GTK_BOX (editor), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  editor->index_spinbutton =
+    gimp_spin_button_new ((GtkObject **) &editor->index_adjustment,
+                          0, 0, 0, 1, 10, 10, 1.0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Color index:"), 0.0, 0.5,
+                             editor->index_spinbutton, 1, TRUE);
+
+  g_signal_connect (editor->index_adjustment, "value_changed",
+                    G_CALLBACK (gimp_colormap_adjustment_changed),
+                    editor);
+
+  editor->color_entry = gtk_entry_new ();
+  gtk_entry_set_width_chars (GTK_ENTRY (editor->color_entry), 8);
+  gtk_entry_set_max_length (GTK_ENTRY (editor->color_entry), 6);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("He_x triplet:"), 0.0, 0.5,
+                             editor->color_entry, 1, TRUE);
+
+  g_signal_connect (editor->color_entry, "activate",
+                    G_CALLBACK (gimp_colormap_hex_entry_activate),
+                    editor);
+  g_signal_connect (editor->color_entry, "focus_out_event",
+                    G_CALLBACK (gimp_colormap_hex_entry_focus_out),
+                    editor);
 }
 
 static GObject *
@@ -279,30 +336,30 @@ gimp_colormap_editor_unmap (GtkWidget *widget)
 
 static void
 gimp_colormap_editor_set_image (GimpImageEditor *image_editor,
-				GimpImage       *gimage)
+                                GimpImage       *gimage)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (image_editor);
 
   if (image_editor->gimage)
     {
       g_signal_handlers_disconnect_by_func (image_editor->gimage,
-					    gimp_colormap_image_mode_changed,
-					    editor);
+                                            gimp_colormap_image_mode_changed,
+                                            editor);
       g_signal_handlers_disconnect_by_func (image_editor->gimage,
-					    gimp_colormap_image_colormap_changed,
-					    editor);
+                                            gimp_colormap_image_colormap_changed,
+                                            editor);
 
       if (editor->color_dialog)
         gtk_widget_hide (editor->color_dialog);
 
       if (! HAVE_COLORMAP (gimage))
-	{
-	  editor->index_adjustment->upper = 0;
-	  gtk_adjustment_changed (editor->index_adjustment);
+        {
+          editor->index_adjustment->upper = 0;
+          gtk_adjustment_changed (editor->index_adjustment);
 
-	  if (GTK_WIDGET_MAPPED (GTK_WIDGET (editor)))
-	    gimp_colormap_editor_clear (editor, -1);
-	}
+          if (GTK_WIDGET_MAPPED (GTK_WIDGET (editor)))
+            gimp_colormap_editor_clear (editor, -1);
+        }
     }
 
   GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, gimage);
@@ -313,21 +370,21 @@ gimp_colormap_editor_set_image (GimpImageEditor *image_editor,
   if (gimage)
     {
       g_signal_connect (gimage, "mode_changed",
-			G_CALLBACK (gimp_colormap_image_mode_changed),
-			editor);
+                        G_CALLBACK (gimp_colormap_image_mode_changed),
+                        editor);
       g_signal_connect (gimage, "colormap_changed",
-			G_CALLBACK (gimp_colormap_image_colormap_changed),
-			editor);
+                        G_CALLBACK (gimp_colormap_image_colormap_changed),
+                        editor);
 
       if (HAVE_COLORMAP (gimage))
-	{
-	  gimp_colormap_editor_draw (editor);
+        {
+          gimp_colormap_editor_draw (editor);
 
-	  editor->index_adjustment->upper =
+          editor->index_adjustment->upper =
             gimp_image_get_colormap_size (gimage) - 1;
 
-	  gtk_adjustment_changed (editor->index_adjustment);
-	}
+          gtk_adjustment_changed (editor->index_adjustment);
+        }
     }
 
   gimp_colormap_editor_update_entries (editor);
@@ -340,9 +397,7 @@ GtkWidget *
 gimp_colormap_editor_new (GimpImage       *gimage,
                           GimpMenuFactory *menu_factory)
 {
-  GimpColormapEditor *editor;
-  GtkWidget          *frame;
-  GtkWidget          *table;
+  GtkWidget *editor;
 
   g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
@@ -353,69 +408,10 @@ gimp_colormap_editor_new (GimpImage       *gimage,
                          "ui-path",         "/colormap-editor-popup",
                          NULL);
 
-  /*  The palette frame  */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  editor->palette = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_widget_set_size_request (editor->palette, -1, 60);
-  gtk_preview_set_expand (GTK_PREVIEW (editor->palette), TRUE);
-  gtk_widget_add_events (editor->palette, GDK_BUTTON_PRESS_MASK);
-  gtk_container_add (GTK_CONTAINER (frame), editor->palette);
-  gtk_widget_show (editor->palette);
-
-  g_signal_connect_after (editor->palette, "size_allocate",
-			  G_CALLBACK (gimp_colormap_preview_size_allocate),
-			  editor);
-
-  g_signal_connect (editor->palette, "button_press_event",
-		    G_CALLBACK (gimp_colormap_preview_button_press),
-		    editor);
-
-  gimp_dnd_color_source_add (editor->palette, gimp_colormap_preview_drag_color,
-                             editor);
-  gimp_dnd_color_dest_add (editor->palette, gimp_colormap_preview_drop_color,
-                           editor);
-
-  /* some helpful hints */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-  gtk_box_pack_end (GTK_BOX (editor), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  editor->index_spinbutton =
-    gimp_spin_button_new ((GtkObject **) &editor->index_adjustment,
-			  0, 0, 0, 1, 10, 10, 1.0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Color index:"), 0.0, 0.5,
-			     editor->index_spinbutton, 1, TRUE);
-
-  g_signal_connect (editor->index_adjustment, "value_changed",
-		    G_CALLBACK (gimp_colormap_adjustment_changed),
-		    editor);
-
-  editor->color_entry = gtk_entry_new ();
-  gtk_entry_set_width_chars (GTK_ENTRY (editor->color_entry), 8);
-  gtk_entry_set_max_length (GTK_ENTRY (editor->color_entry), 6);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("He_x triplet:"), 0.0, 0.5,
-			     editor->color_entry, 1, TRUE);
-
-  g_signal_connect (editor->color_entry, "activate",
-		    G_CALLBACK (gimp_colormap_hex_entry_activate),
-		    editor);
-  g_signal_connect (editor->color_entry, "focus_out_event",
-		    G_CALLBACK (gimp_colormap_hex_entry_focus_out),
-		    editor);
-
   if (gimage)
     gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (editor), gimage);
 
-  return GTK_WIDGET (editor);
+  return editor;
 }
 
 void
@@ -465,7 +461,7 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
 
   cellsize = sqrt (width * height / ncol);
   while (cellsize >= MIN_CELL_SIZE
-	 && (xn = width / cellsize) * (yn = height / cellsize) < ncol)
+         && (xn = width / cellsize) * (yn = height / cellsize) < ncol)
     cellsize--;
 
   if (cellsize < MIN_CELL_SIZE)
@@ -495,26 +491,26 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
   for (i = 0; i < yn; i++)
     {
       for (j = 0; j < xn && col < ncol; j++, col++)
-	{
-	  for (k = 0; k < cellsize; k++)
-	    for (b = 0; b < 3; b++)
-	      row[(j * cellsize + k) * 3 + b] = gimage->cmap[col * 3 + b];
-	}
+        {
+          for (k = 0; k < cellsize; k++)
+            for (b = 0; b < 3; b++)
+              row[(j * cellsize + k) * 3 + b] = gimage->cmap[col * 3 + b];
+        }
 
       for (k = 0; k < cellsize; k++)
-	{
-	  for (l = j * cellsize; l < width; l++)
-	    for (b = 0; b < 3; b++)
-	      row[l * 3 + b] = (((((i * cellsize + k) & 0x4) ?
-				  (l) :
-				  (l + 0x4)) & 0x4) ?
-				render_blend_light_check[0] :
-				render_blend_dark_check[0]);
+        {
+          for (l = j * cellsize; l < width; l++)
+            for (b = 0; b < 3; b++)
+              row[l * 3 + b] = (((((i * cellsize + k) & 0x4) ?
+                                  (l) :
+                                  (l + 0x4)) & 0x4) ?
+                                render_blend_light_check[0] :
+                                render_blend_dark_check[0]);
 
-	  gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row, 0,
-				i * cellsize + k,
-				width);
-	}
+          gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row, 0,
+                                i * cellsize + k,
+                                width);
+        }
     }
 
   gimp_colormap_editor_clear (editor, yn * cellsize);
@@ -543,46 +539,46 @@ gimp_colormap_editor_draw_cell (GimpColormapEditor *editor,
   if (col == editor->col_index)
     {
       for(k = 0; k < cellsize; k++)
-	row[k*3] = row[k*3+1] = row[k*3+2] = (k & 1) * 255;
+        row[k*3] = row[k*3+1] = row[k*3+2] = (k & 1) * 255;
       gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row, x, y, cellsize);
 
       if (!(cellsize & 1))
-	for (k = 0; k < cellsize; k++)
-	  row[k*3] = row[k*3+1] = row[k*3+2] = ((x+y+1) & 1) * 255;
+        for (k = 0; k < cellsize; k++)
+          row[k*3] = row[k*3+1] = row[k*3+2] = ((x+y+1) & 1) * 255;
       gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
-			    x, y+cellsize-1, cellsize);
+                            x, y+cellsize-1, cellsize);
 
       row[0]=row[1]=row[2]=255;
       row[cellsize*3-3] = row[cellsize*3-2] = row[cellsize*3-1]
-	= 255 * (cellsize & 1);
+        = 255 * (cellsize & 1);
       for (k = 1; k < cellsize - 1; k++)
-	{
-	  row[k*3]   = gimage->cmap[col * 3];
-	  row[k*3+1] = gimage->cmap[col * 3 + 1];
-	  row[k*3+2] = gimage->cmap[col * 3 + 2];
-	}
+        {
+          row[k*3]   = gimage->cmap[col * 3];
+          row[k*3+1] = gimage->cmap[col * 3 + 1];
+          row[k*3+2] = gimage->cmap[col * 3 + 2];
+        }
       for (k = 1; k < cellsize - 1; k+=2)
-	gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
-			      x, y+k, cellsize);
+        gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
+                              x, y+k, cellsize);
 
       row[0] = row[1] = row[2] = 0;
       row[cellsize*3-3] = row[cellsize*3-2] = row[cellsize*3-1]
-	= 255 * ((cellsize+1) & 1);
+        = 255 * ((cellsize+1) & 1);
       for (k = 2; k < cellsize - 1; k += 2)
-	gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
-			      x, y+k, cellsize);
+        gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
+                              x, y+k, cellsize);
     }
   else
     {
       for (k = 0; k < cellsize; k++)
-	{
-	  row[k*3]   = gimage->cmap[col * 3];
-	  row[k*3+1] = gimage->cmap[col * 3 + 1];
-	  row[k*3+2] = gimage->cmap[col * 3 + 2];
-	}
+        {
+          row[k*3]   = gimage->cmap[col * 3];
+          row[k*3+1] = gimage->cmap[col * 3 + 1];
+          row[k*3+2] = gimage->cmap[col * 3 + 2];
+        }
       for (k = 0; k < cellsize; k++)
-	gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
-			      x, y+k, cellsize);
+        gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
+                              x, y+k, cellsize);
     }
 
   gtk_widget_queue_draw_area (editor->palette,
@@ -619,15 +615,15 @@ gimp_colormap_editor_clear (GimpColormapEditor *editor,
       offset = (start_row & 0x4) ? 0x4 : 0x0;
 
       for (j = 0; j < width; j++)
-	{
-	  row[j * 3 + 0] = row[j * 3 + 1] = row[j * 3 + 2] =
-	    ((j + offset) & 0x4) ?
-	    render_blend_dark_check[0] : render_blend_light_check[0];
-	}
+        {
+          row[j * 3 + 0] = row[j * 3 + 1] = row[j * 3 + 2] =
+            ((j + offset) & 0x4) ?
+            render_blend_dark_check[0] : render_blend_light_check[0];
+        }
 
       for (j = 0; j < (4 - (start_row & 0x3)) && start_row + j < height; j++)
-	gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
-			      0, start_row + j, width);
+        gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
+                              0, start_row + j, width);
 
       start_row += (4 - (start_row & 0x3));
     }
@@ -637,15 +633,15 @@ gimp_colormap_editor_clear (GimpColormapEditor *editor,
       offset = (i & 0x4) ? 0x4 : 0x0;
 
       for (j = 0; j < width; j++)
-	{
-	  row[j * 3 + 0] = row[j * 3 + 1] = row[j * 3 + 2] =
-	    ((j + offset) & 0x4) ?
-	    render_blend_dark_check[0] : render_blend_light_check[0];
-	}
+        {
+          row[j * 3 + 0] = row[j * 3 + 1] = row[j * 3 + 2] =
+            ((j + offset) & 0x4) ?
+            render_blend_dark_check[0] : render_blend_light_check[0];
+        }
 
       for (j = 0; j < 4 && i + j < height; j++)
-	gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
-			      0, i + j, width);
+        gtk_preview_draw_row (GTK_PREVIEW (editor->palette), row,
+                              0, i + j, width);
     }
 
   if (width > 0)
@@ -738,7 +734,7 @@ gimp_colormap_preview_button_press (GtkWidget          *widget,
     return TRUE;
 
   if (!(bevent->y < editor->cellsize * editor->yn
-	&& bevent->x < editor->cellsize * editor->xn))
+        && bevent->x < editor->cellsize * editor->xn))
     return TRUE;
 
   col = (editor->xn * ((gint) bevent->y / editor->cellsize) +
@@ -953,22 +949,22 @@ gimp_colormap_image_colormap_changed (GimpImage          *gimage,
   if (HAVE_COLORMAP (gimage))
     {
       if (ncol < 0)
-	{
-	  gimp_colormap_editor_draw (editor);
-	}
+        {
+          gimp_colormap_editor_draw (editor);
+        }
       else
-	{
-	  gimp_colormap_editor_draw_cell (editor, ncol);
-	}
+        {
+          gimp_colormap_editor_draw_cell (editor, ncol);
+        }
 
       if (editor->index_adjustment->upper !=
           (gimp_image_get_colormap_size (gimage) - 1))
-	{
-	  editor->index_adjustment->upper =
+        {
+          editor->index_adjustment->upper =
             gimp_image_get_colormap_size (gimage) - 1;
 
-	  gtk_adjustment_changed (editor->index_adjustment);
-	}
+          gtk_adjustment_changed (editor->index_adjustment);
+        }
     }
   else
     {
