@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "appenv.h"
 #include "resize.h"
 #include "actionarea.h"
+#include "gimprc.h"
 
+#include "libgimp/gimpchainbutton.h"
+#include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
 
 #define EVENT_MASK  GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
@@ -32,20 +33,31 @@ typedef struct _ResizePrivate ResizePrivate;
 
 struct _ResizePrivate
 {
-  GtkWidget *width_text;
-  GtkWidget *height_text;
-  GtkWidget *ratio_x_text;
-  GtkWidget *ratio_y_text;
-  GtkWidget *off_x_text;
-  GtkWidget *off_y_text;
+  /*  size frame  */
+  GtkWidget *orig_width_label;
+  GtkWidget *orig_height_label;
+
+  GtkWidget *size_se;
+
+  GtkObject *ratio_x_adj;
+  GtkObject *ratio_y_adj;
+  GtkWidget *constrain;
+
+  /*  offset frame  */
+  GtkWidget *offset_se;
   GtkWidget *drawing_area;
+
+  /*  resolution frame  */
+  GtkWidget *printsize_se;
+  GtkWidget *resolution_se;
+  GtkWidget *equal_res;
 
   GtkObject *object;
   guint      object_destroy_handler;
 
   double ratio;
-  int constrain;
   int old_width, old_height;
+  int old_res_x, old_res_y;
   int area_width, area_height;
   int start_x, start_y;
   int orig_x, orig_y;
@@ -54,13 +66,12 @@ struct _ResizePrivate
 static void resize_draw (Resize *);
 static int  resize_bound_off_x (Resize *, int);
 static int  resize_bound_off_y (Resize *, int);
-static void off_x_update (GtkWidget *w, gpointer data);
-static void off_y_update (GtkWidget *w, gpointer data);
-static void width_update (GtkWidget *w, gpointer data);
-static void height_update (GtkWidget *w, gpointer data);
-static void ratio_x_update (GtkWidget *w, gpointer data);
-static void ratio_y_update (GtkWidget *w, gpointer data);
-static void constrain_update (GtkWidget *w, gpointer data);
+static void offset_update (GtkWidget *w, gpointer data);
+static void size_update (GtkWidget *w, gpointer data);
+static void unit_update (GtkWidget *w, gpointer data);
+static void ratio_update (GtkWidget *w, gpointer data);
+static void printsize_update (GtkWidget *w, gpointer data);
+static void resolution_update (GtkWidget *w, gpointer data);
 static gint resize_events (GtkWidget *area, GdkEvent *event);
 
 
@@ -72,6 +83,8 @@ resize_widget_new (ResizeType    type,
 		   int           height,
 		   float         resolution_x,
 		   float         resolution_y,
+		   GUnit         unit,
+		   gboolean      dot_for_dot,
 		   GtkSignalFunc ok_cb,
 		   GtkSignalFunc cancel_cb,
 		   gint        (*delete_cb) (GtkWidget *,
@@ -87,32 +100,37 @@ resize_widget_new (ResizeType    type,
   Resize *resize;
   ResizePrivate *private;
   GtkWidget *vbox;
+  GtkWidget *vbox2;
+  GtkWidget *table;
+  GtkWidget *table2;
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *frame;
-  GtkWidget *constrain;
-  GtkWidget *table;
-  char size[12];
-  char ratio_text[12];
+  GtkWidget *spinbutton;
+  GtkWidget *alignment;
+  GtkObject *adjustment;
 
-  table = NULL;
+  alignment = NULL;
   frame = NULL;
 
   resize = g_new (Resize, 1);
   private = g_new (ResizePrivate, 1);
   resize->type = type;
+  resize->target = target;
   resize->private_part = private;
   resize->width = width;
   resize->height = height;
   resize->resolution_x = resolution_x;
   resize->resolution_y = resolution_y;
+  resize->unit = unit;
   resize->ratio_x = 1.0;
   resize->ratio_y = 1.0;
-  resize->off_x = 0;
-  resize->off_y = 0;
+  resize->offset_x = 0;
+  resize->offset_y = 0;
   private->old_width = width;
   private->old_height = height;
-  private->constrain = TRUE;
+  private->old_res_x = resolution_x;
+  private->old_res_y = resolution_y;
   private->object = NULL;
 
   /*  Get the image width and height variables, based on the gimage  */
@@ -134,14 +152,14 @@ resize_widget_new (ResizeType    type,
 	case ResizeLayer:
 	    wmclass = "scale_layer";
 	    window_title = _("Scale Layer");
+	    frame = gtk_frame_new (_("Size"));
 	    break;
 	case ResizeImage:
 	    wmclass = "image_scale";
 	    window_title = _("Image Scale");
+	    frame = gtk_frame_new (_("Pixel Dimensions & Image Unit"));
 	    break;
 	}
-	frame = gtk_frame_new (_("Scale"));
-	table = gtk_table_new (4, 2, TRUE);
 	break;
 
     case ResizeWidget:
@@ -155,175 +173,274 @@ resize_widget_new (ResizeType    type,
 	    window_title = _("Image Resize");
 	    break;
 	}
-	frame = gtk_frame_new (_("Resize"));
-	table = gtk_table_new (6, 2, TRUE);
+	frame = gtk_frame_new (_("Size"));
 	break;
     }	
 
-    resize->resize_shell = gtk_dialog_new();
+    resize->resize_shell = gtk_dialog_new ();
     gtk_window_set_wmclass (GTK_WINDOW (resize->resize_shell), wmclass,"Gimp");
     gtk_window_set_title (GTK_WINDOW (resize->resize_shell), window_title);
     gtk_window_set_policy(GTK_WINDOW (resize->resize_shell), FALSE,FALSE,TRUE);
     gtk_window_position (GTK_WINDOW (resize->resize_shell), GTK_WIN_POS_MOUSE);
   }
 
-  /*  handle the wm close singal */
+  /*  handle the wm close singal  */
   if (delete_cb)
     gtk_signal_connect (GTK_OBJECT (resize->resize_shell), "delete_event",
 			GTK_SIGNAL_FUNC (delete_cb), user_data);
 
-  /* handle the image disappearing under our feet */
+  /*  handle the image disappearing under our feet  */
   if (object)
   {
     const char *signame;
-    signame = (target == ResizeLayer)? "removed" : "destroy";
+    signame = (target == ResizeLayer) ? "removed" : "destroy";
     private->object = object;
-    private->object_destroy_handler = gtk_signal_connect(GTK_OBJECT (object),
-							 signame,
-							 cancel_cb, user_data);
+    private->object_destroy_handler =
+      gtk_signal_connect(GTK_OBJECT (object), signame, cancel_cb, user_data);
   }
 
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (resize->resize_shell)->vbox),
-		      vbox, TRUE, TRUE, 0);
+  /*  the main vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_widget_show (vbox);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (resize->resize_shell)->vbox),
+		     vbox);
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  /*  the pixel dimensions frame  */
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
 
+  table = gtk_table_new (6, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 3, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 4, 2);
+  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
 
-  /*  the width label and entry  */
-  sprintf (size, "%d", width);
-  label = gtk_label_new (_("New width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  /*  the original width & height labels  */
+  label = gtk_label_new (_("Original Width:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
-  private->width_text = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), private->width_text, 1, 2, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
-  gtk_widget_set_usize (private->width_text, TEXT_WIDTH, 25);
-  gtk_entry_set_text (GTK_ENTRY (private->width_text), size);
-  gtk_signal_connect (GTK_OBJECT (private->width_text), "changed",
-		      (GtkSignalFunc) width_update,
-		      resize);
-  gtk_widget_show (private->width_text);
 
-  /*  the height label and entry  */
-  sprintf (size, "%d", height);
-  label = gtk_label_new (_("New height:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new (_("Height:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
-  private->height_text = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), private->height_text, 1, 2, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
-  gtk_widget_set_usize (private->height_text, TEXT_WIDTH, 25);
-  gtk_entry_set_text (GTK_ENTRY (private->height_text), size);
-  gtk_signal_connect (GTK_OBJECT (private->height_text), "changed",
-		      (GtkSignalFunc) height_update,
-		      resize);
-  gtk_widget_show (private->height_text);
 
-  /*  the x scale ratio label and entry  */
-  sprintf (ratio_text, "%0.4f", resize->ratio_x);
-  label = gtk_label_new (_("X ratio:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  private->orig_width_label = gtk_label_new ("");
+  gtk_misc_set_alignment (GTK_MISC ( private->orig_width_label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table),  private->orig_width_label, 1, 2, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show ( private->orig_width_label);
+
+  private->orig_height_label = gtk_label_new ("");
+  gtk_misc_set_alignment (GTK_MISC (private->orig_height_label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), private->orig_height_label, 1, 2, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (private->orig_height_label);
+
+  /*  the size sizeentry  */
+  label = gtk_label_new (_("New Width:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
-  private->ratio_x_text = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), private->ratio_x_text, 1, 2, 2, 3,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
-  gtk_widget_set_usize (private->ratio_x_text, TEXT_WIDTH, 25);
-  gtk_entry_set_text (GTK_ENTRY (private->ratio_x_text), ratio_text);
-  gtk_signal_connect (GTK_OBJECT (private->ratio_x_text), "changed",
-		      (GtkSignalFunc) ratio_x_update,
-		      resize);
-  gtk_widget_show (private->ratio_x_text);
 
-  /*  the y scale ratio label and entry  */
-  sprintf (ratio_text, "%0.4f", resize->ratio_y);
-  label = gtk_label_new (_("Y ratio:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new (_("Height:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
-  private->ratio_y_text = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), private->ratio_y_text, 1, 2, 3, 4,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
-  gtk_widget_set_usize (private->ratio_y_text, TEXT_WIDTH, 25);
-  gtk_entry_set_text (GTK_ENTRY (private->ratio_y_text), ratio_text);
-  gtk_signal_connect (GTK_OBJECT (private->ratio_y_text), "changed",
-		      (GtkSignalFunc) ratio_y_update,
-		      resize);
-  gtk_widget_show (private->ratio_y_text);
 
+  adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+                                   GTK_SHADOW_NONE);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_set_usize (spinbutton, 75, 0);
+
+  private->size_se =
+    gimp_size_entry_new (1, dot_for_dot ? UNIT_PIXEL : unit, "%a",
+			 TRUE, TRUE, FALSE, 75,
+			 GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->size_se),
+			     GTK_SPIN_BUTTON (spinbutton), NULL);
+  gtk_table_attach_defaults (GTK_TABLE (private->size_se), spinbutton,
+			     1, 2, 0, 1);
+  gtk_widget_show (spinbutton);
+  gtk_table_attach (GTK_TABLE (table), private->size_se, 1, 2, 2, 4,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (private->size_se);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->size_se), 0, 1, 65536);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 0,
+				  resolution_x, FALSE);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->size_se), 0,
+			    0, width);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 0,
+			      width);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->size_se), 1, 1, 65536);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 1,
+				  resolution_x, FALSE);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->size_se), 1,
+			    0, height);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 1,
+			      height);
+
+  gtk_signal_connect (GTK_OBJECT (private->size_se), "value_changed",
+		      (GtkSignalFunc) size_update,
+		      resize);
+  gtk_signal_connect (GTK_OBJECT (private->size_se), "refval_changed",
+		      (GtkSignalFunc) size_update,
+		      resize);
+  gtk_signal_connect (GTK_OBJECT (private->size_se), "unit_changed",
+		      (GtkSignalFunc) unit_update,
+		      resize);
+
+  /*  initialize the original width & height labels  */
+  unit_update (private->size_se, resize);
+
+  /*  the scale ratio labels and spinbuttons  */
+  label = gtk_label_new (_("Ratio X:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new (_("Y:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  alignment = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
+  table2 = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table2), 0, 2);
+  gtk_container_add (GTK_CONTAINER (alignment), table2);
+  gtk_table_attach (GTK_TABLE (table), alignment, 1, 2, 4, 6,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (alignment);
+  
+  private->ratio_x_adj =
+    gtk_adjustment_new (resize->ratio_x, 0.0001, 10000, 0.01, 0.1, 1);
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_x_adj), 1, 4);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+                                   GTK_SHADOW_NONE);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 0, 1);
+  gtk_signal_connect (GTK_OBJECT ( private->ratio_x_adj), "value_changed",
+		      (GtkSignalFunc) ratio_update,
+		      resize);
+  gtk_widget_show (spinbutton);
+
+  private->ratio_y_adj =
+    gtk_adjustment_new (resize->ratio_y, 0.0001, 10000, 0.01, 0.1, 1);
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_y_adj), 1, 4);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+                                   GTK_SHADOW_NONE);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 1, 2);
+  gtk_signal_connect (GTK_OBJECT ( private->ratio_y_adj), "value_changed",
+		      (GtkSignalFunc) ratio_update,
+		      resize);
+  gtk_widget_show (spinbutton);
+
+  private->constrain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (private->constrain), TRUE);
+  gtk_table_attach_defaults (GTK_TABLE (table2), private->constrain, 1, 2, 0, 2);
+  gtk_widget_show (private->constrain);
+
+  gtk_widget_show (table2);
+  gtk_widget_show (table);
+  gtk_widget_show (vbox2);
+
+  /*  the offset frame  */
   if (type == ResizeWidget)
     {
-      /*  the off_x label and entry  */
-      sprintf (size, "%d", 0);
-      label = gtk_label_new (_("Offset X:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
+      frame = gtk_frame_new (_("Offset"));
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      hbox = gtk_hbox_new (FALSE, 0);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+      gtk_container_add (GTK_CONTAINER (frame), hbox);
+
+      vbox2 = gtk_vbox_new (FALSE, 2);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+      gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, FALSE, 0);
+
+      table = gtk_table_new (2, 2, FALSE);
+      gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+      gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+ 
+      label = gtk_label_new (_("X:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
-      private->off_x_text = gtk_entry_new ();
-      gtk_table_attach (GTK_TABLE (table), private->off_x_text, 1, 2, 4, 5,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
-      gtk_widget_set_usize (private->off_x_text, TEXT_WIDTH, 25);
-      gtk_entry_set_text (GTK_ENTRY (private->off_x_text), size);
-      gtk_signal_connect (GTK_OBJECT (private->off_x_text), "changed",
-			  (GtkSignalFunc) off_x_update,
-			  resize);
-      gtk_widget_show (private->off_x_text);
 
-      /*  the off_y label and entry  */
-      sprintf (size, "%d", 0);
-      label = gtk_label_new (_("Offset Y:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
+      label = gtk_label_new (_("Y:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
-      private->off_y_text = gtk_entry_new ();
-      gtk_table_attach (GTK_TABLE (table), private->off_y_text, 1, 2, 5, 6,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
-      gtk_widget_set_usize (private->off_y_text, TEXT_WIDTH, 25);
-      gtk_entry_set_text (GTK_ENTRY (private->off_y_text), size);
-      gtk_signal_connect (GTK_OBJECT (private->off_y_text), "changed",
-			  (GtkSignalFunc) off_y_update,
+
+      adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
+      spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+				       GTK_SHADOW_NONE);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+      gtk_widget_set_usize (spinbutton, 75, 0);
+
+      private->offset_se =
+	gimp_size_entry_new (1, dot_for_dot ? UNIT_PIXEL : unit, "%a",
+			     TRUE, FALSE, FALSE, 75,
+			     GIMP_SIZE_ENTRY_UPDATE_SIZE);
+      gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->offset_se),
+				 GTK_SPIN_BUTTON (spinbutton), NULL);
+      gtk_table_attach_defaults (GTK_TABLE (private->offset_se), spinbutton,
+				 1, 2, 0, 1);
+      gtk_widget_show (spinbutton);
+      gtk_table_attach (GTK_TABLE (table), private->offset_se, 1, 2, 0, 2,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (private->offset_se);
+
+      gimp_size_entry_set_refval_boundaries
+	(GIMP_SIZE_ENTRY (private->offset_se), 0, 0, 0);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 0,
+				      resolution_x, FALSE);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0, 0);
+
+      gimp_size_entry_set_refval_boundaries
+	(GIMP_SIZE_ENTRY (private->offset_se), 1, 0, 0);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 1,
+				      resolution_x, FALSE);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1, 0);
+
+      gtk_signal_connect (GTK_OBJECT (private->offset_se),
+			  "value_changed", (GtkSignalFunc) offset_update,
 			  resize);
-      gtk_widget_show (private->off_y_text);
-    }
+      gtk_signal_connect (GTK_OBJECT (private->offset_se),
+			  "refval_changed", (GtkSignalFunc) offset_update,
+			  resize);
 
-  /*  the constrain toggle button  */
-  constrain = gtk_check_button_new_with_label (_("Constrain Ratio"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (constrain), private->constrain);
-  gtk_box_pack_start (GTK_BOX (vbox), constrain, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (constrain), "toggled",
-		      (GtkSignalFunc) constrain_update,
-		      resize);
-  gtk_widget_show (constrain);
+      gtk_widget_show (table);
 
-  if (type == ResizeWidget)
-    {
       /*  frame to hold drawing area  */
-      hbox = gtk_hbox_new (FALSE, 1);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-      gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
-      gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, FALSE, 0);
       private->drawing_area = gtk_drawing_area_new ();
       gtk_drawing_area_size (GTK_DRAWING_AREA (private->drawing_area),
 			     private->area_width, private->area_height);
@@ -335,10 +452,148 @@ resize_widget_new (ResizeType    type,
       gtk_container_add (GTK_CONTAINER (frame), private->drawing_area);
       gtk_widget_show (private->drawing_area);
       gtk_widget_show (frame);
+
+      gtk_widget_show (vbox2);
       gtk_widget_show (hbox);
     }
 
-  gtk_widget_show (table);
+  /*  the resolution stuff  */
+  if ((type == ScaleWidget) && (target == ResizeImage))
+    {
+      frame = gtk_frame_new (_("Print Size"));
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      vbox2 = gtk_vbox_new (FALSE, 2);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+      gtk_container_add (GTK_CONTAINER (frame), vbox2);
+
+      table = gtk_table_new (4, 2, FALSE);
+      gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+      gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
+      gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+
+      /*  the print size sizeentry  */
+      label = gtk_label_new (_("New Width:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
+      label = gtk_label_new (_("Height:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
+      alignment = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
+      adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
+      spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+				       GTK_SHADOW_NONE);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+      gtk_widget_set_usize (spinbutton, 75, 0);
+      gtk_container_add (GTK_CONTAINER (alignment), spinbutton);
+      gtk_widget_show (spinbutton);
+      gtk_table_attach (GTK_TABLE (table), alignment, 1, 2, 0, 1,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (alignment);
+
+      alignment = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
+      private->printsize_se =
+	gimp_size_entry_new (1, unit, "%a", FALSE, FALSE, FALSE, 75,
+			     GIMP_SIZE_ENTRY_UPDATE_SIZE);
+      gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->printsize_se),
+				 GTK_SPIN_BUTTON (spinbutton), NULL);
+      gtk_container_add (GTK_CONTAINER (alignment), private->printsize_se);
+      gtk_table_attach (GTK_TABLE (table), alignment, 1, 2, 1, 2,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (private->printsize_se);
+      gtk_widget_show (alignment);
+
+      gimp_size_entry_set_refval_boundaries
+	(GIMP_SIZE_ENTRY (private->printsize_se), 0, 1, 65536);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->printsize_se),
+				      0, resolution_x, FALSE);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
+				  0, resize->width);
+      gimp_size_entry_set_refval_boundaries
+	(GIMP_SIZE_ENTRY (private->printsize_se), 1, 1, 65536);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->printsize_se),
+				      1, resolution_x, FALSE);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
+				  1, resize->height);
+
+      gtk_signal_connect (GTK_OBJECT (private->printsize_se),
+			  "value_changed", (GtkSignalFunc) printsize_update,
+			  resize);
+      gtk_signal_connect (GTK_OBJECT (private->printsize_se),
+			  "refval_changed", (GtkSignalFunc) printsize_update,
+			  resize);
+      
+      /*  the resolution sizeentry  */
+      label = gtk_label_new (_("Resolution X:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
+      label = gtk_label_new (_("Y:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+
+      adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
+      spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+				       GTK_SHADOW_NONE);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+      gtk_widget_set_usize (spinbutton, 75, 0);
+
+      private->resolution_se =
+	gimp_size_entry_new (1, default_resolution_units, "pixels/%a",
+			     FALSE, FALSE, FALSE, 75,
+			     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+      gtk_table_set_col_spacing (GTK_TABLE (private->resolution_se), 1, 2);
+      gtk_table_set_col_spacing (GTK_TABLE (private->resolution_se), 2, 2);
+      gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->resolution_se),
+				 GTK_SPIN_BUTTON (spinbutton), NULL);
+      gtk_table_attach_defaults (GTK_TABLE (private->resolution_se), spinbutton,
+				 1, 2, 0, 1);
+      gtk_widget_show (spinbutton);
+      gtk_table_attach (GTK_TABLE (table), private->resolution_se, 1, 2, 2, 4,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (private->resolution_se);
+
+      gimp_size_entry_set_refval_boundaries
+	(GIMP_SIZE_ENTRY (private->resolution_se), 0, 1e-5, 65536);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
+				  0, resize->resolution_x);
+      gimp_size_entry_set_refval_boundaries
+	(GIMP_SIZE_ENTRY (private->resolution_se), 1, 1e-5, 65536);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
+				  1, resize->resolution_y);
+
+      gtk_signal_connect (GTK_OBJECT (private->resolution_se),
+			  "value_changed", (GtkSignalFunc) resolution_update,
+			  resize);
+      gtk_signal_connect (GTK_OBJECT (private->resolution_se),
+			  "refval_changed", (GtkSignalFunc) resolution_update,
+			  resize);
+
+      private->equal_res = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+      gimp_chain_button_set_active
+	(GIMP_CHAIN_BUTTON (private->equal_res),
+	 ABS (resize->resolution_x - resize->resolution_y) < 1e-5);
+      gtk_table_attach_defaults (GTK_TABLE (private->resolution_se),
+				 private->equal_res, 2, 3, 0, 2);
+      gtk_widget_show (private->equal_res);
+
+      gtk_widget_show (table);
+      gtk_widget_show (vbox2);
+    }
+
   gtk_widget_show (vbox);
 
   action_items[0].user_data = user_data;
@@ -409,13 +664,13 @@ resize_draw (Resize *resize)
     }
 
   if (private->old_width <= resize->width)
-    x = private->ratio * resize->off_x;
+    x = private->ratio * resize->offset_x;
   else
-    x = private->ratio * (resize->off_x + private->old_width - resize->width);
+    x = private->ratio * (resize->offset_x + private->old_width - resize->width);
   if (private->old_height <= resize->height)
-    y = private->ratio * resize->off_y;
+    y = private->ratio * resize->offset_y;
   else
-    y = private->ratio * (resize->off_y + private->old_height - resize->height);
+    y = private->ratio * (resize->offset_y + private->old_height - resize->height);
 
   w = private->ratio * private->old_width;
   h = private->ratio * private->old_height;
@@ -454,7 +709,6 @@ resize_draw (Resize *resize)
 			  widget->style->black_gc, 0,
 			  x, y, w, h);
     }
-
 }
 
 static int
@@ -490,377 +744,356 @@ resize_bound_off_y (Resize *resize,
 }
 
 static void
-constrain_update (GtkWidget *w,
-		  gpointer   data)
+unit_update (GtkWidget *w,
+	     gpointer   data)
 {
   Resize *resize;
   ResizePrivate *private;
+  GUnit unit;
+  float unit_factor;
+  gchar format_buf[16];
+  gchar buf[32];
+
+  static GUnit label_unit = UNIT_PIXEL;
 
   resize = (Resize *) data;
   private = (ResizePrivate *) resize->private_part;
 
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    private->constrain = TRUE;
-  else
-    private->constrain = FALSE;
-}
+  unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (w));
 
-static void
-off_x_update (GtkWidget *w,
-	      gpointer   data)
-{
-  Resize *resize;
-  ResizePrivate *private;
-  char *str;
-  int offset;
+  if ((unit != UNIT_PIXEL) && (unit != UNIT_PERCENT))
+    resize->unit = unit;
 
-  resize = (Resize *) data;
-  private = (ResizePrivate *) resize->private_part;
-  str = gtk_entry_get_text (GTK_ENTRY (w));
+  if (unit != UNIT_PERCENT)
+    label_unit = unit;
 
-  offset = atoi (str);
-  offset = resize_bound_off_x (resize, offset);
-
-  if (offset != resize->off_x)
+  unit_factor = gimp_unit_get_factor (label_unit);
+  
+  if (label_unit) /* unit != UNIT_PIXEL */
     {
-      resize->off_x = offset;
-      resize_draw (resize);
+      g_snprintf (format_buf, 16, "%%.%df %s",
+                  gimp_unit_get_digits (label_unit) + 1,
+                  gimp_unit_get_symbol (label_unit));
+      g_snprintf (buf, 32, format_buf,
+                  private->old_width * unit_factor / private->old_res_x);
+      gtk_label_set_text (GTK_LABEL (private->orig_width_label), buf);
+      g_snprintf (buf, 32, format_buf,
+                  private->old_height * unit_factor / private->old_res_y);
+      gtk_label_set_text (GTK_LABEL (private->orig_height_label), buf);
+    }
+  else /* unit == UNIT_PIXEL */
+    {
+      g_snprintf (buf, 32, "%d", private->old_width);
+      gtk_label_set_text (GTK_LABEL (private->orig_width_label), buf);
+      g_snprintf (buf, 32, "%d", private->old_height);
+      gtk_label_set_text (GTK_LABEL (private->orig_height_label), buf);
     }
 }
 
 static void
-off_y_update (GtkWidget *w,
-	      gpointer   data)
-{
-  Resize *resize;
-  ResizePrivate *private;
-  char *str;
-  int offset;
-
-  resize = (Resize *) data;
-  private = (ResizePrivate *) resize->private_part;
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-
-  offset = atoi (str);
-  offset = resize_bound_off_y (resize, offset);
-
-  if (offset != resize->off_y)
-    {
-      resize->off_y = offset;
-      resize_draw (resize);
-    }
-}
-
-static void
-width_update (GtkWidget *w,
-	      gpointer   data)
-{
-  Resize *resize;
-  ResizePrivate *private;
-  char *str;
-  double ratio;
-  int new_height;
-  char size[12];
-  char ratio_text[12];
-
-  resize = (Resize *) data;
-  private = (ResizePrivate *) resize->private_part;
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-
-  resize->width = atoi (str);
-
-  ratio = (double) resize->width / (double) private->old_width;
-  resize->ratio_x = ratio;
-  sprintf (ratio_text, "%0.4f", ratio);  
-
-  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_x_text), data);
-  gtk_entry_set_text (GTK_ENTRY (private->ratio_x_text), ratio_text);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_x_text), data);
-
-  if (resize->type == ResizeWidget)
-    {
-      resize->off_x = resize_bound_off_x (resize, (resize->width - private->old_width) / 2);
-      sprintf (size, "%d", resize->off_x);
-
-      gtk_signal_handler_block_by_data (GTK_OBJECT (private->off_x_text), data);
-      gtk_entry_set_text (GTK_ENTRY (private->off_x_text), size);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->off_x_text), data);
-    }
-
-  if (private->constrain && resize->width != 0)
-    {
-      private->constrain = FALSE;
-      new_height = (int) (private->old_height * ratio);
-      if (new_height == 0) new_height = 1;
-
-      if (new_height != resize->height)
-	{
-	  resize->height = new_height;
-	  sprintf (size, "%d", resize->height);
-
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->height_text), data);
-	  gtk_entry_set_text (GTK_ENTRY (private->height_text), size);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->height_text), data);
-
-	  resize->ratio_y = ratio;
-
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_y_text), data);
-	  gtk_entry_set_text (GTK_ENTRY (private->ratio_y_text), ratio_text);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_y_text), data);
-
-	  if (resize->type == ResizeWidget)
-	    {
-	      resize->off_y = resize_bound_off_y (resize, (resize->height - private->old_height) / 2);
-	      sprintf (size, "%d", resize->off_y);
-
-	      gtk_signal_handler_block_by_data (GTK_OBJECT (private->off_y_text), data);
-	      gtk_entry_set_text (GTK_ENTRY (private->off_y_text), size);
-	      gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->off_y_text), data);
-	    }
-	}
-
-      private->constrain = TRUE;
-    }
-
-  resize_draw (resize);
-}
-
-static void
-height_update (GtkWidget *w,
+offset_update (GtkWidget *w,
 	       gpointer   data)
 {
   Resize *resize;
   ResizePrivate *private;
-  char *str;
-  double ratio;
-  int new_width;
-  char size[12];
-  char ratio_text[12];
+  int offset_x;
+  int offset_y;
 
   resize = (Resize *) data;
   private = (ResizePrivate *) resize->private_part;
-  str = gtk_entry_get_text (GTK_ENTRY (w));
 
-  resize->height = atoi (str);
+  offset_x =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 0);
+  offset_x = resize_bound_off_x (resize, offset_x);
 
-  ratio = (double) resize->height / (double) private->old_height;
-  resize->ratio_y = ratio;
-  sprintf (ratio_text, "%0.4f", ratio);
+  offset_y =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 1);
+  offset_y = resize_bound_off_y (resize, offset_y);
 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_y_text), data);
-  gtk_entry_set_text (GTK_ENTRY (private->ratio_y_text), ratio_text);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_y_text), data);
+  if ((offset_x != resize->offset_x) ||
+      (offset_y != resize->offset_y))
+    {
+      resize->offset_x = offset_x;
+      resize->offset_y = offset_y;
+      resize_draw (resize);
+    }
+}
+
+static void
+size_update (GtkWidget *w,
+	     gpointer   data)
+{
+  Resize *resize;
+  ResizePrivate *private;
+  int width;
+  int height;
+  double ratio_x = 1.0;
+  double ratio_y = 1.0;
+
+  resize = (Resize *) data;
+  private = (ResizePrivate *) resize->private_part;
+
+  width = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 0);
+  height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 1);
+
+  ratio_x = (double) width / (double) private->old_width;
+  ratio_y = (double) height / (double) private->old_height;
+
+  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (private->constrain)))
+    {
+      if (width != resize->width)
+	{
+	  ratio_y = ratio_x;
+	  height = (int) (private->old_height * ratio_y);
+	  if (height == 0) height = 1;
+	}
+      else
+	{
+	  ratio_x = ratio_y;
+	  width = (int) (private->old_width * ratio_x);
+	  if (width == 0) width = 1;
+	}
+    }
+  
+  resize->width = width;
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 0, width);
+  resize->height = height;
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 1, height);
+
+  resize->ratio_x = ratio_x;
+  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_x_adj), data);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (private->ratio_x_adj), ratio_x);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_x_adj), data);
+  resize->ratio_y = ratio_y;
+  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_y_adj), data);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (private->ratio_y_adj), ratio_y);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_y_adj), data);
+
   if (resize->type == ResizeWidget)
     {
-      resize->off_y = resize_bound_off_y (resize, (resize->height - private->old_height) / 2);
-      sprintf (size, "%d", resize->off_y);
+      gimp_size_entry_set_refval_boundaries
+	(GIMP_SIZE_ENTRY (private->offset_se), 0,
+	 MIN (0, resize->width - private->old_width),
+	 MAX (0, resize->width - private->old_width));
+      resize->offset_x = resize_bound_off_x (resize, resize->offset_x);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
+				  0, resize->offset_x);
 
-      gtk_signal_handler_block_by_data (GTK_OBJECT (private->off_y_text), data);
-      gtk_entry_set_text (GTK_ENTRY (private->off_y_text), size);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->off_y_text), data);
+      gimp_size_entry_set_refval_boundaries
+	(GIMP_SIZE_ENTRY (private->offset_se), 1,
+	 MIN (0, resize->height - private->old_height),
+	 MAX (0, resize->height - private->old_height));
+      resize->offset_y = resize_bound_off_y (resize, resize->offset_y);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
+				  1, resize->offset_y);
     }
 
-  if (private->constrain && resize->height != 0)
+  if ((resize->type == ScaleWidget) && (resize->target == ResizeImage))
     {
-      private->constrain = FALSE;
-      ratio = (double) resize->height / (double) private->old_height;
-      new_width = (int) (private->old_width * ratio);
-      if (new_width == 0) new_width = 1;
-
-      if (new_width != resize->width)
-	{
-	  resize->width = new_width;
-	  sprintf (size, "%d", resize->width);
-
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->width_text), data);
-	  gtk_entry_set_text (GTK_ENTRY (private->width_text), size);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->width_text), data);
-	  
-	  resize->ratio_x = ratio;
-
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_x_text), data);
-	  gtk_entry_set_text (GTK_ENTRY (private->ratio_x_text), ratio_text);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_x_text), data);
-
-	  if (resize->type == ResizeWidget)
-	    {
-	      resize->off_x = resize_bound_off_x (resize, (resize->width - private->old_width) / 2);
-	      sprintf (size, "%d", resize->off_x);
-
-	      gtk_signal_handler_block_by_data (GTK_OBJECT (private->off_x_text), data);
-	      gtk_entry_set_text (GTK_ENTRY (private->off_x_text), size);
-	      gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->off_x_text), data);
-	    }
-	}
-
-      private->constrain = TRUE;
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
+				  0, width);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
+				  1, height);
     }
 
   resize_draw (resize);
 }
 
 static void
-ratio_x_update (GtkWidget *w,
-		gpointer   data)
+ratio_update (GtkWidget *w,
+	      gpointer   data)
 {
   Resize *resize;
   ResizePrivate *private;
-  char *str;
-  int new_width;
-  int new_height;
-  char size[12];
-  char ratio_text[12];
+  double ratio_x;
+  double ratio_y;
   
   resize = (Resize *) data;
   private = (ResizePrivate *) resize->private_part;
-  str = gtk_entry_get_text (GTK_ENTRY (w));
 
-  resize->ratio_x = atof (str);
+  ratio_x = GTK_ADJUSTMENT (private->ratio_x_adj)->value;
+  ratio_y = GTK_ADJUSTMENT (private->ratio_y_adj)->value;
 
-  new_width = (int) ((double) private->old_width * resize->ratio_x);
-
-  if (new_width != resize->width)
+  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (private->constrain)))
     {
-      resize->width = new_width;
-      sprintf (size, "%d", new_width);
-
-      gtk_signal_handler_block_by_data (GTK_OBJECT (private->width_text), data);
-      gtk_entry_set_text (GTK_ENTRY (private->width_text), size);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->width_text), data);
-
-      if (resize->type == ResizeWidget)
+      if (ratio_x != resize->ratio_x)
 	{
-	  resize->off_x = resize_bound_off_x (resize, (resize->width - private->old_width) / 2);
-	  sprintf (size, "%d", resize->off_x);
-	  
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->off_x_text), data);
-	  gtk_entry_set_text (GTK_ENTRY (private->off_x_text), size);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->off_x_text), data);
+	  ratio_y = ratio_x;
+	}
+      else
+	{
+	  ratio_x = ratio_y;
 	}
     }
 
-  if (private->constrain && resize->width != 0)
+  resize->width = (int) (private->old_width * ratio_x);
+  if (resize->width == 0) resize->width = 1;
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se),
+			      0, resize->width);
+  resize->height = (int) (private->old_height * ratio_y);
+  if (resize->height == 0) resize->height = 1;
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se),
+			      1, resize->height);
+
+  resize->ratio_x = ratio_x;
+  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_x_adj), data);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (private->ratio_x_adj), ratio_x);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_x_adj), data);
+
+  resize->ratio_y = ratio_y;
+  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_y_adj), data);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (private->ratio_y_adj), ratio_y);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_y_adj), data);
+
+  if (resize->type == ResizeWidget)
     {
-      private->constrain = FALSE;
+      gimp_size_entry_set_refval_boundaries
+	(GIMP_SIZE_ENTRY (private->offset_se), 0,
+	 MIN (0, resize->width - private->old_width),
+	 MAX (0, resize->width - private->old_width));
+      resize->offset_x = resize_bound_off_x (resize, resize->offset_x);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
+				  0, resize->offset_x);
 
-      resize->ratio_y = resize->ratio_x;
+      gimp_size_entry_set_refval_boundaries
+	(GIMP_SIZE_ENTRY (private->offset_se), 1,
+	 MIN (0, resize->height - private->old_height),
+	 MAX (0, resize->height - private->old_height));
+      resize->offset_y = resize_bound_off_y (resize, resize->offset_y);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
+				  1, resize->offset_y);
+    }
 
-      new_height = (int) (private->old_height * resize->ratio_y);
-      if (new_height == 0) new_height = 1;
-
-      if (new_height != resize->height)
-	{
-	  resize->height = new_height;
-
-	  sprintf (size, "%d", resize->height);
-
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->height_text), data);
-	  gtk_entry_set_text (GTK_ENTRY (private->height_text), size);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->height_text), data);
-	  
-	  sprintf (ratio_text, "%0.4f", resize->ratio_y);  
-	  
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_y_text), data);
-	  gtk_entry_set_text (GTK_ENTRY (private->ratio_y_text), ratio_text);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_y_text), data);
-
-	  if (resize->type == ResizeWidget)
-	    {
-	      resize->off_y = resize_bound_off_y (resize, (resize->height - private->old_height) / 2);
-	      sprintf (size, "%d", resize->off_y);
-
-	      gtk_signal_handler_block_by_data (GTK_OBJECT (private->off_y_text), data);
-	      gtk_entry_set_text (GTK_ENTRY (private->off_y_text), size);
-	      gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->off_y_text), data);
-	    }
-	}
-
-      private->constrain = TRUE;
+  if ((resize->type == ScaleWidget) && (resize->target == ResizeImage))
+    {
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
+				  0, resize->width);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
+				  1, resize->height);
     }
 
   resize_draw (resize);
 }
 
 static void
-ratio_y_update (GtkWidget *w,
-		gpointer   data)
+printsize_update (GtkWidget *w,
+		  gpointer   data)
 {
   Resize *resize;
   ResizePrivate *private;
-  char *str;
-  int new_width;
-  int new_height;
-  char size[12];
-  char ratio_text[12];
+  double width;
+  double height;
+  double print_width;
+  double print_height;
+  double res_x;
+  double res_y;
+
+  resize = (Resize *) data;
+  private = (ResizePrivate *) resize->private_part;
+
+  width = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 0);
+  height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 1);
+
+  print_width =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->printsize_se), 0);
+  print_height =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->printsize_se), 1);
+
+  /*  this is tricky: we use the sizes in pixels (which is otherwise
+   *  meaningless for the "print size" widgets) to calculate the new
+   *  resolution.
+   */
+  res_x = resize->resolution_x * width / print_width;
+  res_y = resize->resolution_y * height / print_height;
+
+  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (private->equal_res)))
+    {
+      if (res_x != resize->resolution_x)
+	{
+	  res_y = res_x;
+	  gimp_size_entry_set_resolution
+	    (GIMP_SIZE_ENTRY (private->printsize_se), 0, res_x, FALSE);
+	  gimp_size_entry_set_resolution
+	    (GIMP_SIZE_ENTRY (private->printsize_se), 1, res_y, TRUE);
+	}
+      else
+	{
+	  res_x = res_y;
+	  gimp_size_entry_set_resolution
+	    (GIMP_SIZE_ENTRY (private->printsize_se), 0, res_x, TRUE);
+	  gimp_size_entry_set_resolution
+	    (GIMP_SIZE_ENTRY (private->printsize_se), 1, res_y, FALSE);
+	}
+    }
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
+			      0, res_x);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
+			      1, res_y);
+
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se),
+				  0, res_x, TRUE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se),
+				  1, res_y, TRUE);
+
+  if (! gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (private->equal_res)))
+    {
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->printsize_se),
+				      0, res_x, FALSE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->printsize_se),
+				      1, res_y, FALSE);
+    }
+
+  resize->resolution_x = res_x;
+  resize->resolution_y = res_y;
+}
+
+static void
+resolution_update (GtkWidget *w,
+		   gpointer   data)
+{
+  Resize *resize;
+  ResizePrivate *private;
+  double res_x;
+  double res_y;
   
   resize = (Resize *) data;
   private = (ResizePrivate *) resize->private_part;
-  str = gtk_entry_get_text (GTK_ENTRY (w));
 
-  resize->ratio_y = atof (str);
+  res_x =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->resolution_se), 0);
+  res_y =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->resolution_se), 1);
 
-  new_height = (int) ((double) private->old_height * resize->ratio_y);
-
-  if (new_height != resize->height)
+  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (private->equal_res)))
     {
-      resize->height = new_height;
-      sprintf (size, "%d", new_height);
-
-      gtk_signal_handler_block_by_data (GTK_OBJECT (private->height_text), data);
-      gtk_entry_set_text (GTK_ENTRY (private->height_text), size);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->height_text), data);
-
-      if (resize->type == ResizeWidget)
+      if (res_x != resize->resolution_x)
 	{
-	  resize->off_y = resize_bound_off_y (resize, (resize->height - private->old_height) / 2);
-	  sprintf (size, "%d", resize->off_y);
-	  
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->off_y_text), data);
-	  gtk_entry_set_text (GTK_ENTRY (private->off_y_text), size);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->off_y_text), data);
+	  res_y = res_x;
+	}
+      else
+	{
+	  res_x = res_y;
 	}
     }
 
-  if (private->constrain && resize->height != 0)
-    {
-      private->constrain = FALSE;
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
+			      0, res_x);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
+			      1, res_y);
 
-      resize->ratio_x = resize->ratio_y;
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se),
+				  0, res_x, TRUE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se),
+				  1, res_y, TRUE);
 
-      new_width = (int) (private->old_width * resize->ratio_x);
-      if (new_width == 0) new_width = 1;
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->printsize_se),
+				  0, res_x, TRUE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->printsize_se),
+				  1, res_y, TRUE);
 
-      if (new_width != resize->width)
-	{
-	  resize->width = new_width;
-
-	  sprintf (size, "%d", resize->width);
-
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->width_text), data);
-	  gtk_entry_set_text (GTK_ENTRY (private->width_text), size);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->width_text), data);
-	  
-	  sprintf (ratio_text, "%0.4f", resize->ratio_x);  
-	  
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_x_text), data);
-	  gtk_entry_set_text (GTK_ENTRY (private->ratio_x_text), ratio_text);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_x_text), data);
-
-	  if (resize->type == ResizeWidget)
-	    {
-	      resize->off_x = resize_bound_off_x (resize, (resize->width - private->old_width) / 2);
-	      sprintf (size, "%d", resize->off_x);
-
-	      gtk_signal_handler_block_by_data (GTK_OBJECT (private->off_x_text), data);
-	      gtk_entry_set_text (GTK_ENTRY (private->off_x_text), size);
-	      gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->off_x_text), data);
-	    }
-	}
-
-      private->constrain = TRUE;
-    }
-
-  resize_draw (resize);
+  resize->resolution_x = res_x;
+  resize->resolution_y = res_y;
 }
 
 static gint
@@ -871,7 +1104,6 @@ resize_events (GtkWidget *widget,
   ResizePrivate *private;
   int dx, dy;
   int off_x, off_y;
-  char size[12];
 
   resize = (Resize *) gtk_object_get_user_data (GTK_OBJECT (widget));
   private = (ResizePrivate *) resize->private_part;
@@ -886,8 +1118,8 @@ resize_events (GtkWidget *widget,
 			(GDK_BUTTON1_MOTION_MASK |
 			 GDK_BUTTON_RELEASE_MASK),
 			NULL, NULL, event->button.time);
-      private->orig_x = resize->off_x;
-      private->orig_y = resize->off_y;
+      private->orig_x = resize->offset_x;
+      private->orig_y = resize->offset_y;
       private->start_x = event->button.x;
       private->start_y = event->button.y;
       break;
@@ -896,15 +1128,18 @@ resize_events (GtkWidget *widget,
       dx = event->motion.x - private->start_x;
       off_x = private->orig_x + dx / private->ratio;
       off_x = resize_bound_off_x (resize, off_x);
-      sprintf (size, "%d", off_x);
-      gtk_entry_set_text (GTK_ENTRY (private->off_x_text), size);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
+				  0, off_x);
 
       /*  Y offset  */
       dy = event->motion.y - private->start_y;
       off_y = private->orig_y + dy / private->ratio;
       off_y = resize_bound_off_y (resize, off_y);
-      sprintf (size, "%d", off_y);
-      gtk_entry_set_text (GTK_ENTRY (private->off_y_text), size);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se),
+				  1, off_y);
+
+      gtk_signal_emit_by_name (GTK_OBJECT (private->offset_se), "refval_changed",
+			       resize);
       break;
     case GDK_BUTTON_RELEASE:
       gdk_pointer_ungrab (event->button.time);

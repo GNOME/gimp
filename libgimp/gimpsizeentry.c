@@ -464,7 +464,7 @@ gimp_size_entry_set_size (GimpSizeEntry *gse,
   g_return_if_fail (gse != NULL);
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
   g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
-  g_return_if_fail (lower < upper);
+  g_return_if_fail (lower <= upper);
 
   gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
   gsef->lower = lower;
@@ -487,7 +487,7 @@ gimp_size_entry_set_value_boundaries  (GimpSizeEntry *gse,
   g_return_if_fail (gse != NULL);
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
   g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
-  g_return_if_fail (lower < upper);
+  g_return_if_fail (lower <= upper);
 
   gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
   gsef->min_value = lower;
@@ -586,7 +586,7 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
 	    gsef->lower + (gsef->upper - gsef->lower) * value / 100;
 	  break;
 	default:
-	  gsef->refval = gsef->value * gsef->resolution /
+	  gsef->refval = value * gsef->resolution /
 	    gimp_unit_get_factor (gsef->gse->unit);
 	  break;
 	}
@@ -617,7 +617,7 @@ gimp_size_entry_set_value (GimpSizeEntry *gse,
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
   g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
 
-  gsef = (GimpSizeEntryField*)g_slist_nth_data (gse->fields, field);
+  gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
 
   if (value < gsef->min_value)
     value = gsef->min_value;
@@ -636,7 +636,7 @@ gimp_size_entry_value_callback (GtkWidget *widget,
   GimpSizeEntryField *gsef;
   gfloat              new_value;
 
-  gsef = (GimpSizeEntryField*)data;
+  gsef = (GimpSizeEntryField*) data;
 
   new_value = GTK_ADJUSTMENT (widget)->value;
 
@@ -662,7 +662,7 @@ gimp_size_entry_set_refval_boundaries  (GimpSizeEntry *gse,
   g_return_if_fail (gse != NULL);
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
   g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
-  g_return_if_fail (lower < upper);
+  g_return_if_fail (lower <= upper);
 
   gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
   gsef->min_refval = lower;
@@ -792,7 +792,7 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
 	    100 * (refval - gsef->lower) / (gsef->upper - gsef->lower);
 	  break;
 	default:
-	  gsef->value = gsef->refval * gimp_unit_get_factor (gsef->gse->unit) /
+	  gsef->value = refval * gimp_unit_get_factor (gsef->gse->unit) /
 	    gsef->resolution;
 	  break;
 	}
@@ -829,8 +829,7 @@ gimp_size_entry_set_refval (GimpSizeEntry *gse,
     refval = gsef->max_refval;
 
   if (gse->show_refval)
-    gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->refval_adjustment),
-			      refval);
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->refval_adjustment), refval);
   gimp_size_entry_update_refval (gsef, refval);
 }
 

@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "gdk/gdkkeysyms.h"
@@ -196,8 +195,8 @@ static void layers_dialog_new_layer_query (GimpImage*);
 static void layers_dialog_edit_layer_query (LayerWidget *);
 static void layers_dialog_add_mask_query (Layer *);
 static void layers_dialog_apply_mask_query (Layer *);
-static void layers_dialog_scale_layer_query (Layer *);
-static void layers_dialog_resize_layer_query (Layer *);
+static void layers_dialog_scale_layer_query (GImage *, Layer *);
+static void layers_dialog_resize_layer_query (GImage *, Layer *);
 void        layers_dialog_layer_merge_query (GImage *, int);
 
 
@@ -1795,7 +1794,7 @@ layers_dialog_scale_layer_callback (GtkWidget *w,
   if (! (gimage = layersD->gimage))
     return;
 
-  layers_dialog_scale_layer_query (gimage->active_layer);
+  layers_dialog_scale_layer_query (gimage, gimage->active_layer);
 }
 
 
@@ -1812,7 +1811,7 @@ layers_dialog_resize_layer_callback (GtkWidget *w,
   if (! (gimage = layersD->gimage))
     return;
 
-  layers_dialog_resize_layer_query (gimage->active_layer);
+  layers_dialog_resize_layer_query (gimage, gimage->active_layer);
 }
 
 
@@ -3226,7 +3225,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   gtk_widget_show (options->name_entry);
 
   /*  the xsize entry hbox, label and entry  */
-  sprintf (size, "%d", gimage->width);
+  g_snprintf (size, 12, "%d", gimage->width);
   label = gtk_label_new (_("Layer width: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
@@ -3240,7 +3239,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   gtk_widget_show (options->xsize_entry);
 
   /*  the ysize entry hbox, label and entry  */
-  sprintf (size, "%d", gimage->height);
+  g_snprintf (size, 12, "%d", gimage->height);
   label = gtk_label_new (_("Layer height: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
@@ -3761,7 +3760,8 @@ scale_layer_query_delete_callback (GtkWidget *w,
 }
 
 static void
-layers_dialog_scale_layer_query (Layer *layer)
+layers_dialog_scale_layer_query (GImage *gimage,
+				 Layer  *layer)
 {
   ScaleLayerOptions *options;
 
@@ -3773,7 +3773,10 @@ layers_dialog_scale_layer_query (Layer *layer)
 				       GTK_OBJECT (layer),
 				       drawable_width (GIMP_DRAWABLE(layer)),
 				       drawable_height (GIMP_DRAWABLE(layer)),
-				       0.0, 0.0,  /* no resolution, please */
+				       gimage->xresolution,
+				       gimage->yresolution,
+				       gimage->unit,
+				       TRUE,
 				       scale_layer_query_ok_callback,
 				       scale_layer_query_cancel_callback,
 				       scale_layer_query_delete_callback,
@@ -3816,7 +3819,7 @@ resize_layer_query_ok_callback (GtkWidget *w,
 
 	  layer_resize (layer,
 			options->resize->width, options->resize->height,
-			options->resize->off_x, options->resize->off_y);
+			options->resize->offset_x, options->resize->offset_y);
 
 	  if (layer_is_floating_sel (layer))
 	    floating_sel_rigor (layer, TRUE);
@@ -3855,7 +3858,8 @@ resize_layer_query_delete_callback (GtkWidget *w,
 }
 
 static void
-layers_dialog_resize_layer_query (Layer *layer)
+layers_dialog_resize_layer_query (GImage * gimage,
+				  Layer  * layer)
 {
   ResizeLayerOptions *options;
 
@@ -3867,7 +3871,10 @@ layers_dialog_resize_layer_query (Layer *layer)
 				       GTK_OBJECT (layer),
 				       drawable_width (GIMP_DRAWABLE(layer)),
 				       drawable_height (GIMP_DRAWABLE(layer)),
-				       0.0, 0.0, /* no resolution, please */
+				       gimage->xresolution,
+				       gimage->yresolution,
+				       gimage->unit,
+				       TRUE,
 				       resize_layer_query_ok_callback,
 				       resize_layer_query_cancel_callback,
 				       resize_layer_query_delete_callback,

@@ -785,6 +785,8 @@ image_resize_cmd_callback (GtkWidget *widget,
 					    gimage->height,
 					    gimage->xresolution,
 					    gimage->yresolution,
+					    gimage->unit,
+					    gdisp->dot_for_dot,
 					    image_resize_callback,
 					    image_cancel_callback,
 					    image_delete_callback,
@@ -816,6 +818,8 @@ image_scale_cmd_callback (GtkWidget *widget,
 					   gimage->height,
 					   gimage->xresolution,
 					   gimage->yresolution,
+					   gimage->unit,
+					   gdisp->dot_for_dot,
 					   image_scale_callback,
 					   image_cancel_callback,
 					   image_delete_callback,
@@ -1110,8 +1114,8 @@ image_resize_callback (GtkWidget *w,
 	  gimage_resize (gimage,
 			 image_resize->resize->width,
 			 image_resize->resize->height,
-			 image_resize->resize->off_x,
-			 image_resize->resize->off_y);
+			 image_resize->resize->offset_x,
+			 image_resize->resize->offset_y);
 	  gdisplays_flush ();
 	}
       else 
@@ -1131,26 +1135,44 @@ image_scale_callback (GtkWidget *w,
 {
   ImageResize *image_scale;
   GImage *gimage;
+  gboolean flush = FALSE;
 
   image_scale = (ImageResize *) client_data;
 
-  if ((gimage = image_scale->gimage) != NULL &&
-      (image_scale->resize->width != gimage->width ||
-       image_scale->resize->height != gimage->height))
+  if ((gimage = image_scale->gimage) != NULL)
     {
-      if (image_scale->resize->width > 0 &&
-	  image_scale->resize->height > 0) 
+      if (image_scale->resize->resolution_x != gimage->xresolution ||
+	  image_scale->resize->resolution_y != gimage->yresolution ||
+	  image_scale->resize->unit != gimage->unit)
 	{
-	  gimage_scale (gimage,
-			image_scale->resize->width,
-			image_scale->resize->height);
-	  gdisplays_flush ();
+	  gimage_set_resolution (gimage,
+				 image_scale->resize->resolution_x,
+				 image_scale->resize->resolution_y);
+	  gimage_set_unit (gimage, image_scale->resize->unit);
+	  flush = TRUE;
 	}
-      else 
+
+      if (image_scale->resize->width != gimage->width ||
+	  image_scale->resize->height != gimage->height)
 	{
-	  g_message (_("Scale Error: Both width and height must be greater than zero."));
-	  return;
+	  if (image_scale->resize->width > 0 &&
+	      image_scale->resize->height > 0) 
+	    {
+	      gimage_scale (gimage,
+			    image_scale->resize->width,
+			    image_scale->resize->height);
+	      flush = TRUE;
+	    }
+	  else 
+	    {
+	      g_message (_("Scale Error: Both width and height must be "
+			   "greater than zero."));
+	      return;
+	    }
 	}
+
+      if (flush)
+	gdisplays_flush ();
     }
 
   resize_widget_free (image_scale->resize);

@@ -1,3 +1,17 @@
+1999-05-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/commands.c
+	* app/layers_dialog.c
+	* app/resize.[ch]: new scale/resize ui:
+	Use size entries instead of text entries, chainbuttons instead of
+	check buttons. Put the stuff into frames. Added labels for the
+	original width and height.
+	It's possible to change resolution/unit now, please test if it
+	does the right thing.
+
+	* libgimp/gimpsizeentry.c: allow lower == upper when checking
+	boundaries.
+
 Sat May  1 14:43:42 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/fileops.pdb

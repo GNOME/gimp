@@ -18,6 +18,8 @@
 #ifndef __RESIZE_H__
 #define __RESIZE_H__
 
+#include "libgimp/gimpunit.h"
+
 typedef enum
 {
   ScaleWidget,
@@ -35,17 +37,23 @@ typedef struct _Resize Resize;
 struct _Resize
 {
   /*  The calling procedure is respondible for showing this widget  */
-  GtkWidget *resize_shell;
+  GtkWidget   *resize_shell;
 
-  ResizeType type;
-  int        width;
-  int        height;
-  float      resolution_x;
-  float      resolution_y;
-  double     ratio_x;
-  double     ratio_y;
-  int        off_x;
-  int        off_y;
+  ResizeType   type;
+  ResizeTarget target;
+
+  int          width;
+  int          height;
+
+  float        resolution_x;
+  float        resolution_y;
+  GUnit        unit;
+
+  double       ratio_x;
+  double       ratio_y;
+
+  int          offset_x;
+  int          offset_y;
 
   /*  Don't touch this :)  */
   void *     private_part;
@@ -61,6 +69,8 @@ Resize * resize_widget_new    (ResizeType    type,
 			       int           height,
 			       float         resolution_x,
 			       float         resolution_y,
+			       GUnit         unit,
+			       gboolean      dot_for_dot,
 			       GtkSignalFunc ok_cb,
 			       GtkSignalFunc cancel_cb,
 			       gint        (*delete_cb) (GtkWidget *,
