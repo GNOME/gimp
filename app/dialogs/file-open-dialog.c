@@ -58,6 +58,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimppreview.h"
+#include "widgets/gimpthumbbox.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "dialogs.h"
@@ -69,38 +70,23 @@
 
 /*  local function prototypes  */
 
-static GtkWidget * file_open_dialog_create          (Gimp             *gimp,
-                                                     GimpMenuFactory  *menu_factory);
-static void        file_open_selchanged_callback    (GtkTreeSelection *sel,
-                                                     GtkWidget        *open_dialog);
-static void        file_open_imagefile_info_changed (GimpImagefile    *imagefile,
-                                                     GtkLabel         *label);
-static gboolean    file_open_thumbnail_button_press (GtkWidget        *widget,
-                                                     GdkEventButton   *bevent,
-                                                     GtkWidget        *open_dialog);
-static void        file_open_thumbnail_clicked      (GtkWidget        *widget,
-                                                     GdkModifierType   state,
-                                                     GtkWidget        *open_dialog);
-static void        file_open_response_callback      (GtkWidget        *open_dialog,
-                                                     gint              response_id,
-                                                     Gimp             *gimp);
-static void        file_open_dialog_open_image      (GtkWidget        *open_dialog,
-                                                     Gimp             *gimp,
-                                                     const gchar      *uri,
-                                                     const gchar      *entered_filename,
-                                                     PlugInProcDef    *load_proc);
+static GtkWidget * file_open_dialog_create       (Gimp             *gimp,
+                                                  GimpMenuFactory  *menu_factory);
+static void        file_open_selchanged_callback (GtkTreeSelection *sel,
+                                                  GtkWidget        *open_dialog);
+static void        file_open_response_callback   (GtkWidget        *open_dialog,
+                                                  gint              response_id,
+                                                  Gimp             *gimp);
+static void        file_open_dialog_open_image   (GtkWidget        *open_dialog,
+                                                  Gimp             *gimp,
+                                                  const gchar      *uri,
+                                                  const gchar      *entered_filename,
+                                                  PlugInProcDef    *load_proc);
 
 
-static GtkWidget      *fileload               = NULL;
-
-static GtkWidget      *open_options_frame     = NULL;
-static GtkWidget      *open_options_title     = NULL;
-static GimpImagefile  *open_options_imagefile = NULL;
-static GtkWidget      *open_options_preview   = NULL;
-static GtkWidget      *open_options_label     = NULL;
-static GtkProgressBar *open_options_progress  = NULL;
-
-static PlugInProcDef  *load_file_proc         = NULL;
+static GtkWidget     *fileload       = NULL;
+static GtkWidget     *thumb_box      = NULL;
+static PlugInProcDef *load_file_proc = NULL;
 
 
 /*  public functions  */
@@ -178,7 +164,6 @@ file_open_dialog_create (Gimp            *gimp,
 {
   GtkWidget        *open_dialog;
   GtkFileSelection *fs;
-  GtkTreeSelection *tree_sel;
 
   open_dialog = file_dialog_new (gimp,
                                  global_dialog_factory,
@@ -194,172 +179,31 @@ file_open_dialog_create (Gimp            *gimp,
   fs = GTK_FILE_SELECTION (open_dialog);
 
   gtk_file_selection_set_select_multiple (fs, TRUE);
-  tree_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (fs->file_list));
 
   /*  The preview frame  */
   if (gimp->config->thumbnail_size > 0)
     {
-      GtkWidget *vbox;
-      GtkWidget *vbox2;
-      GtkWidget *ebox;
-      GtkWidget *hbox;
-      GtkWidget *button;
-      GtkWidget *label;
-      GtkWidget *progress;
-      GtkStyle  *style;
-      gchar     *str;
+      GtkTreeSelection *tree_sel;
+      GtkWidget        *hbox;
+
+      tree_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (fs->file_list));
 
       /* Catch file-list clicks so we can update the preview thumbnail */
       g_signal_connect (tree_sel, "changed",
                         G_CALLBACK (file_open_selchanged_callback),
                         open_dialog);
 
-      open_options_frame = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (open_options_frame),
-                                 GTK_SHADOW_IN);
-
-      ebox = gtk_event_box_new ();
-
-      gtk_widget_ensure_style (ebox);
-      style = gtk_widget_get_style (ebox);
-      gtk_widget_modify_bg (ebox, GTK_STATE_NORMAL,
-                            &style->base[GTK_STATE_NORMAL]);
-      gtk_widget_modify_bg (ebox, GTK_STATE_INSENSITIVE,
-                            &style->base[GTK_STATE_NORMAL]);
-
-      gtk_container_add (GTK_CONTAINER (open_options_frame), ebox);
-      gtk_widget_show (ebox);
-
-      g_signal_connect (ebox, "button_press_event",
-                        G_CALLBACK (file_open_thumbnail_button_press),
-                        open_dialog);
-
-      str = g_strdup_printf (_("Click to update preview\n"
-                               "%s  Click to force update even "
-                               "if preview is up-to-date"),
-                             gimp_get_mod_name_control ());
-
-      gimp_help_set_help_data (ebox, str, NULL);
-
-      g_free (str);
-
-      vbox = gtk_vbox_new (FALSE, 0);
-      gtk_container_add (GTK_CONTAINER (ebox), vbox);
-      gtk_widget_show (vbox);
-
-      button = gtk_button_new ();
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
-      label = gtk_label_new_with_mnemonic (_("_Preview"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_container_add (GTK_CONTAINER (button), label);
-      gtk_widget_show (label);
-
-      g_signal_connect (button, "button_press_event",
-                        G_CALLBACK (gtk_true),
-                        NULL);
-      g_signal_connect (button, "button_release_event",
-                        G_CALLBACK (gtk_true),
-                        NULL);
-      g_signal_connect (button, "enter_notify_event",
-                        G_CALLBACK (gtk_true),
-                        NULL);
-      g_signal_connect (button, "leave_notify_event",
-                        G_CALLBACK (gtk_true),
-                        NULL);
-
-      vbox2 = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-      gtk_container_add (GTK_CONTAINER (vbox), vbox2);
-      gtk_widget_show (vbox2);
-
-      hbox = gtk_hbox_new (TRUE, 0);
-      gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      open_options_imagefile = gimp_imagefile_new (gimp, NULL);
-
-      open_options_preview =
-        gimp_preview_new (GIMP_VIEWABLE (open_options_imagefile),
-                          gimp->config->thumbnail_size, 0, FALSE);
-
-      gtk_widget_ensure_style (open_options_preview);
-      style = gtk_widget_get_style (open_options_preview);
-      gtk_widget_modify_bg (open_options_preview, GTK_STATE_NORMAL,
-                            &style->base[GTK_STATE_NORMAL]);
-      gtk_widget_modify_bg (open_options_preview, GTK_STATE_INSENSITIVE,
-                            &style->base[GTK_STATE_NORMAL]);
-
-      gtk_box_pack_start (GTK_BOX (hbox),
-                          open_options_preview, TRUE, FALSE, 10);
-      gtk_widget_show (open_options_preview);
-
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label), open_options_preview);
-
-      g_signal_connect (open_options_preview, "clicked",
-                        G_CALLBACK (file_open_thumbnail_clicked),
-                        open_dialog);
-
-      open_options_title = gtk_label_new (_("No Selection"));
-      gtk_box_pack_start (GTK_BOX (vbox2),
-                          open_options_title, FALSE, FALSE, 0);
-      gtk_widget_show (open_options_title);
-
-      label = gtk_label_new (" \n \n ");
-      gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.0);
-      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-      gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      /* eek */
-      {
-        GtkRequisition requisition;
-
-        gtk_widget_size_request (label, &requisition);
-        gtk_widget_set_size_request (label, -1, requisition.height);
-      }
-
-      g_signal_connect (open_options_imagefile, "info_changed",
-                        G_CALLBACK (file_open_imagefile_info_changed),
-                        label);
-
-      open_options_label = label;
-
       /* pack the containing open_options hbox into the open-dialog */
       for (hbox = fs->dir_list; ! GTK_IS_HBOX (hbox); hbox = hbox->parent);
 
-      gtk_box_pack_end (GTK_BOX (hbox), open_options_frame, FALSE, FALSE, 0);
-      gtk_widget_show (open_options_frame);
+      thumb_box = gimp_thumb_box_new (gimp);
+      gtk_box_pack_end (GTK_BOX (hbox), thumb_box, FALSE, FALSE, 0);
+      gtk_widget_show (thumb_box);
 
-      gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), FALSE);
-
-      /*  The progress bar  */
-
-      progress = gtk_progress_bar_new ();
-      gtk_box_pack_end (GTK_BOX (vbox2), progress, FALSE, FALSE, 0);
-      /* don't gtk_widget_show (progress); */
-
-      open_options_progress = GTK_PROGRESS_BAR (progress);
-
-      /* eek */
-      {
-        GtkRequisition requisition;
-
-        gtk_progress_bar_set_text (open_options_progress, "foo");
-        gtk_widget_size_request (progress, &requisition);
-        gtk_widget_set_size_request (open_options_title, requisition.width, -1);
-      }
+      gtk_widget_set_sensitive (GTK_WIDGET (thumb_box), FALSE);
     }
 
   return open_dialog;
-}
-
-static void
-file_open_imagefile_info_changed (GimpImagefile *imagefile,
-                                  GtkLabel      *label)
-{
-  gtk_label_set_text (label, gimp_imagefile_get_desc_string (imagefile));
 }
 
 static void
@@ -393,182 +237,35 @@ file_open_selchanged_callback (GtkTreeSelection *sel,
   if (selected)
     {
       gchar *uri;
-      gchar *basename;
 
       fullfname = gtk_file_selection_get_filename (fs);
 
       uri = file_utils_filename_to_uri (gimp->load_procs, fullfname, NULL);
-      basename = file_utils_uri_to_utf8_basename (uri);
-
-      gimp_object_set_name (GIMP_OBJECT (open_options_imagefile), uri);
-      gtk_label_set_text (GTK_LABEL (open_options_title), basename);
-
+      gimp_thumb_box_set_uri (GIMP_THUMB_BOX (thumb_box), uri);
       g_free (uri);
-      g_free (basename);
     }
   else
     {
-      gimp_object_set_name (GIMP_OBJECT (open_options_imagefile), NULL);
-      gtk_label_set_text (GTK_LABEL (open_options_title), _("No Selection"));
+      gimp_thumb_box_set_uri (GIMP_THUMB_BOX (thumb_box), NULL);
     }
 
-  gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), selected);
-  gimp_imagefile_update (open_options_imagefile);
-}
+  {
+    gchar **selections;
+    GSList *uris = NULL;
+    gint    i;
 
-static void
-file_open_create_thumbnail (Gimp              *gimp,
-                            const gchar       *filename,
-                            GimpThumbnailSize  size,
-                            gboolean           always_create)
-{
-  if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-    {
-      gchar *uri;
-      gchar *basename;
+    selections = gtk_file_selection_get_selections (fs);
 
-      uri = g_filename_to_uri (filename, NULL, NULL);
-      basename = file_utils_uri_to_utf8_basename (uri);
+    for (i = 0; selections[i] != NULL; i++)
+      uris = g_slist_prepend (uris, g_filename_to_uri (selections[i],
+                                                       NULL, NULL));
 
-      gtk_label_set_text (GTK_LABEL (open_options_title), basename);
-      g_free (basename);
+    g_strfreev (selections);
 
-      gimp_object_set_name (GIMP_OBJECT (open_options_imagefile), uri);
-      g_free (uri);
+    uris = g_slist_reverse (uris);
 
-      if (always_create ||
-          gimp_thumbnail_peek_thumb (open_options_imagefile->thumbnail, size)
-          < GIMP_THUMB_STATE_FAILED)
-        gimp_imagefile_create_thumbnail (open_options_imagefile, size);
-    }
-}
-
-static void
-file_open_create_thumbnails (GtkWidget *open_dialog,
-                             gboolean   always_create)
-{
-  GtkFileSelection  *fs;
-  Gimp              *gimp;
-
-  fs = GTK_FILE_SELECTION (open_dialog);
-
-  gimp = GIMP (g_object_get_data (G_OBJECT (fs), "gimp"));
-
-  if (gimp->config->thumbnail_size != GIMP_THUMBNAIL_SIZE_NONE &&
-      gimp->config->layer_previews)
-    {
-      gchar **selections;
-      gint    n_selections;
-      gint    i;
-
-      gimp_set_busy (gimp);
-      gtk_widget_set_sensitive (open_dialog, FALSE);
-
-      selections = gtk_file_selection_get_selections (fs);
-
-      n_selections = 0;
-      for (i = 0; selections[i] != NULL; i++)
-        n_selections++;
-
-      if (n_selections > 1)
-        {
-          gtk_progress_bar_set_text (open_options_progress, NULL);
-          gtk_progress_bar_set_fraction (open_options_progress, 0.0);
-
-          gtk_widget_hide (open_options_label);
-          gtk_widget_show (GTK_WIDGET (open_options_progress));
-        }
-
-      for (i = 1; selections[i] != NULL; i++)
-        {
-          if (n_selections > 1)
-            {
-              gchar *str;
-
-              str = g_strdup_printf (_("Thumbnail %d of %d"),
-                                     i, n_selections);
-              gtk_progress_bar_set_text (open_options_progress, str);
-              g_free (str);
-
-              while (g_main_context_pending (NULL))
-                g_main_context_iteration (NULL, FALSE);
-            }
-
-          file_open_create_thumbnail (gimp,
-                                      selections[i],
-                                      gimp->config->thumbnail_size,
-                                      always_create);
-
-          if (n_selections > 1)
-            {
-              gtk_progress_bar_set_fraction (open_options_progress,
-                                             (gdouble) i /
-                                             (gdouble) n_selections);
-
-              while (g_main_context_pending (NULL))
-                g_main_context_iteration (NULL, FALSE);
-            }
-        }
-
-      if (selections[0])
-        {
-          if (n_selections > 1)
-            {
-              gchar *str;
-
-              str = g_strdup_printf (_("Thumbnail %d of %d"),
-                                     n_selections, n_selections);
-              gtk_progress_bar_set_text (open_options_progress, str);
-              g_free (str);
-
-               while (g_main_context_pending (NULL))
-                g_main_context_iteration (NULL, FALSE);
-           }
-
-          file_open_create_thumbnail (gimp,
-                                      selections[0],
-                                      gimp->config->thumbnail_size,
-                                      always_create);
-
-          if (n_selections > 1)
-            {
-              gtk_progress_bar_set_fraction (open_options_progress, 1.0);
-
-              while (g_main_context_pending (NULL))
-                g_main_context_iteration (NULL, FALSE);
-            }
-        }
-
-      if (n_selections > 1)
-        {
-          gtk_widget_hide (GTK_WIDGET (open_options_progress));
-          gtk_widget_show (open_options_label);
-        }
-
-      g_strfreev (selections);
-
-      gtk_widget_set_sensitive (open_dialog, TRUE);
-      gimp_unset_busy (gimp);
-    }
-}
-
-static gboolean
-file_open_thumbnail_button_press (GtkWidget      *widget,
-                                  GdkEventButton *bevent,
-                                  GtkWidget      *open_dialog)
-{
-  file_open_thumbnail_clicked (widget, bevent->state, open_dialog);
-
-  return TRUE;
-}
-
-static void
-file_open_thumbnail_clicked (GtkWidget       *widget,
-                             GdkModifierType  state,
-                             GtkWidget       *open_dialog)
-{
-  file_open_create_thumbnails (open_dialog,
-                               (state & GDK_CONTROL_MASK) ? TRUE : FALSE);
+    gimp_thumb_box_set_uris (GIMP_THUMB_BOX (thumb_box), uris);
+  }
 }
 
 static void

@@ -168,6 +168,8 @@ libappwidgets_a_sources = \
 	gimptemplateview.h		\
 	gimptexteditor.c		\
 	gimptexteditor.h		\
+	gimpthumbbox.c			\
+	gimpthumbbox.h			\
 	gimptoolbox.c			\
 	gimptoolbox.h			\
 	gimptoolbox-color-area.c	\

@@ -1,3 +1,12 @@
+2004-02-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpthumbbox.[ch]: new widget ripped out of the file
+	open dialog.
+
+	* app/gui/file-open-dialog.c: use it.
+
 2004-02-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.c: fixed my fixes.
