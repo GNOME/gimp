@@ -1,5 +1,10 @@
 2003-01-08  Sven Neumann  <sven@gimp.org>
 
+	*  plug-ins/gfig/images/stock-*.png: a new set of icons drawn by
+	Jimmac; fixes bug #92473.
+
+2003-01-08  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.c (gimp_statusbar_init): work around a
 	canvas size bug by setting an empty text to the progressbar.
 
