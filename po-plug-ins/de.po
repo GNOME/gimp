@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-02 15:36+0100\n"
-"PO-Revision-Date: 2004-11-02 16:39+0100\n"
+"PO-Revision-Date: 2004-11-02 17:04+0100\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -8747,8 +8747,7 @@ msgstr "_Gfig..."
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to "
 "drawable.\n"
-msgstr "Fehler beim Versuch die Abbildung als Parasit zu speichern: Parasit konnte nicht "
-"mit Bild verbunden werden."
+msgstr "Fehler beim Versuch die Abbildung als Parasit zu speichern: Parasit konnte nicht mit Bild verbunden werden.\n"
 
 #: plug-ins/gfig/gfig.c:744
 #, c-format
