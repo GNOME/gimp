@@ -1366,7 +1366,7 @@ xcf_load_old_path (XcfInfo   *info,
 
   GIMP_ITEM (vectors)->linked = locked;
 
-  coords     = g_new0 (GimpCoords, num_points);
+  coords     = g_new0 (GimpCoords, num_points + 1);
   num_coords = num_points;
 
   curr_coord = coords;
@@ -1423,12 +1423,6 @@ xcf_load_old_path (XcfInfo   *info,
   if (tattoo)
     GIMP_ITEM (vectors)->tattoo = tattoo;
 
-#ifdef __GNUC__
-#warning FIXME: support closed GimpBezierStrokes
-#endif
-  if (closed)
-    num_coords--;
-
   curr_coord = coords;
 
   while (num_coords > 0)
@@ -1449,14 +1443,27 @@ xcf_load_old_path (XcfInfo   *info,
 
       num_stroke_coords = next_stroke - curr_coord;
 
-#ifdef __GNUC__
-#warning FIXME: support closed GimpBezierStrokes
-#endif
-      if (num_coords > 0)
-        num_stroke_coords--;
+      if (num_coords == 0 && ! closed)
+        num_stroke_coords++;
+
+      {
+        GimpCoords temp_coords;
+        gint       i;
+
+        temp_coords = curr_coord[num_stroke_coords - 1];
+
+        for (i = num_stroke_coords - 1; i >= 0; i--)
+          curr_coord[i] = curr_coord[i - 1];
+
+        if (num_coords > 0 || closed)
+          curr_coord[0] = temp_coords;
+        else
+          curr_coord[0] = curr_coord[1];
+      }
 
       stroke = gimp_bezier_stroke_new_from_coords (curr_coord,
-                                                   num_stroke_coords);
+                                                   num_stroke_coords,
+                                                   num_coords > 0 || closed);
       gimp_vectors_stroke_add (vectors, stroke);
       g_object_unref (stroke);
 

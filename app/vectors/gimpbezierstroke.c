@@ -185,28 +185,34 @@ gimp_bezier_stroke_new (const GimpCoords *start)
 
 GimpStroke *
 gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
-                                    gint              n_coords)
+                                    gint              n_coords,
+                                    gboolean          closed)
 {
   GimpBezierStroke *bezier_stroke;
-  GimpStroke       *stroke = NULL;
+  GimpStroke       *stroke;
   GimpAnchor       *last_anchor;
   gint              count;
 
-  if (n_coords >= 1)
-    {
-      stroke = gimp_bezier_stroke_new (coords);
-      bezier_stroke = GIMP_BEZIER_STROKE (stroke);
-      last_anchor = (GimpAnchor *) (stroke->anchors->data);
+  g_return_val_if_fail (coords != NULL, NULL);
+  g_return_val_if_fail (n_coords >= 3, NULL);
+  g_return_val_if_fail ((n_coords % 3) == 0, NULL);
 
-      count = 1;
-      while (count < n_coords)
-        {
-          last_anchor = gimp_bezier_stroke_extend (bezier_stroke,
-                                                   &coords[count++],
-                                                   last_anchor,
-                                                   EXTEND_SIMPLE);
-        }
-    }
+  stroke = gimp_bezier_stroke_new (&coords[1]);
+
+  bezier_stroke = GIMP_BEZIER_STROKE (stroke);
+
+  last_anchor = (GimpAnchor *) stroke->anchors->data;
+
+  count = 2;
+
+  while (count < n_coords)
+    last_anchor = gimp_bezier_stroke_extend (bezier_stroke,
+                                             &coords[count++],
+                                             last_anchor,
+                                             EXTEND_SIMPLE);
+
+  stroke->closed = closed ? TRUE : FALSE;
+
   return stroke;
 }
 

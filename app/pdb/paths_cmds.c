@@ -564,11 +564,7 @@ path_set_points_invoker (Gimp     *gimp,
 	  vectors = gimp_vectors_new (gimage, pname);
     
 	  num_coords = num_path_points / 3;
-	  coords     = g_new0 (GimpCoords, num_coords);
-    
-	  /* FIXME */
-	  if (pclosed)
-	    num_coords--;
+	  coords     = g_new0 (GimpCoords, num_coords + 1);
     
 	  curr_coord      = coords;
 	  curr_point_pair = points_pairs;
@@ -596,12 +592,27 @@ path_set_points_invoker (Gimp     *gimp,
     
 	      num_stroke_coords = next_stroke - curr_coord;
     
-	      /* FIXME */
-	      if (num_coords > 0)
-		num_stroke_coords--;
+	      if (num_coords == 0 && ! pclosed)
+		num_stroke_coords++;
+    
+	      {
+		GimpCoords temp_coords;
+		gint       i;
+    
+		temp_coords = curr_coord[num_stroke_coords - 1];
+    
+		for (i = num_stroke_coords - 1; i >= 0; i--)
+		  curr_coord[i] = curr_coord[i - 1];
+    
+		if (num_coords > 0 || pclosed)
+		  curr_coord[0] = temp_coords;
+		else
+		  curr_coord[0] = curr_coord[1];
+	      }
     
 	      stroke = gimp_bezier_stroke_new_from_coords (curr_coord,
-							   num_stroke_coords);
+							   num_stroke_coords,
+							   num_coords > 0 || pclosed);
 	      gimp_vectors_stroke_add (vectors, stroke);
 	      g_object_unref (stroke);
     
