@@ -38,6 +38,7 @@
 
 #include "gimpbucketfilloptions.h"
 #include "gimppaintoptions-gui.h"
+#include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
 
@@ -227,6 +228,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox2;
   GtkWidget *table;
   GtkWidget *frame;
+  GtkWidget *hbox;
   GtkWidget *button;
   gchar     *str;
 
@@ -240,6 +242,9 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  hbox = gimp_tool_options_pattern_box_new (tool_options);
+  gimp_tool_options_radio_frame_add_box (frame, hbox, GIMP_PATTERN_BUCKET_FILL);
 
   /*  fill selection  */
   str = g_strdup_printf (_("Affected Area  %s"),

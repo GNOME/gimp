@@ -20,7 +20,16 @@
 #define __GIMP_TOOL_OPTIONS_GUI_H__
 
 
-GtkWidget *  gimp_tool_options_gui (GimpToolOptions *tool_options);
+GtkWidget * gimp_tool_options_gui              (GimpToolOptions *tool_options);
+
+GtkWidget * gimp_tool_options_brush_box_new    (GimpToolOptions *tool_options);
+GtkWidget * gimp_tool_options_pattern_box_new  (GimpToolOptions *tool_options);
+GtkWidget * gimp_tool_options_gradient_box_new (GimpToolOptions *tool_options);
+GtkWidget * gimp_tool_options_font_box_new     (GimpToolOptions *tool_options);
+
+void     gimp_tool_options_radio_frame_add_box (GtkWidget       *frame,
+                                                GtkWidget       *hbox,
+                                                gint             enum_value);
 
 
 #endif  /*  __GIMP_TOOL_OPTIONS_GUI_H__  */

@@ -1,3 +1,19 @@
+2004-10-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptooloptions-gui.[ch]: added utility functions
+	which create a GimpViewableButton+GimpContainerEntry combo for
+	brushes, patterns, gradients and fonts and a very ugly utility
+	function which packs one of these combos into a GtkFrame returned
+	by gimp_prop_enum_radio_frame_new(). This stuff does not really
+	belong here but is too ugly to be moved to a more general place.
+
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimptextoptions.c: use the new utility functions. Moved
+	the pattern previews into the radio frame where using the pattern
+	is selected. Make them insensitive if using the pattern is not
+	selected.
+
 2004-10-11  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc-blurbs.h: tweaked the thumbnail related blurbs.

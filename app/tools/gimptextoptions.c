@@ -31,18 +31,13 @@
 #include "config/gimpconfig-utils.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpcontainer.h"
 #include "core/gimptoolinfo.h"
 
 #include "text/gimptext.h"
 
 #include "widgets/gimpcolorpanel.h"
-#include "widgets/gimpcontainerentry.h"
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptexteditor.h"
-#include "widgets/gimpviewablebutton.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimptextoptions.h"
@@ -399,7 +394,6 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget         *table;
   GtkWidget         *hbox;
   GtkWidget         *button;
-  GimpDialogFactory *dialog_factory;
   GtkWidget         *auto_button;
   GtkWidget         *entry;
   GtkWidget         *box;
@@ -408,43 +402,20 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   vbox = gimp_tool_options_gui (tool_options);
 
-  dialog_factory = gimp_dialog_factory_from_name ("dock");
-
   table = gtk_table_new (9, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gimp_tool_options_font_box_new (tool_options);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Font:"), 0.0, 0.5,
                              hbox, 2, FALSE);
 
-  button = gimp_viewable_button_new (GIMP_CONTEXT (options)->gimp->fonts,
-                                     GIMP_CONTEXT (options),
-                                     GIMP_VIEW_SIZE_SMALL, 1,
-                                     dialog_factory,
-                                     "gimp-font-list|gimp-font-grid",
-                                     GIMP_STOCK_FONT,
-                                     _("Open the font selection dialog"));
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  entry = gimp_container_entry_new (GIMP_CONTEXT (options)->gimp->fonts,
-                                    GIMP_CONTEXT (options),
-                                    GIMP_VIEW_SIZE_SMALL, 1);
-  /*  set a silly smally size request on the entry to disable
-   *  GtkEntry's minimal width of 150 pixels.
-   */
-  gtk_widget_set_size_request (entry, 10, -1);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_show (entry);
-
   entry = gimp_prop_size_entry_new (config,
                                     "font-size", "font-size-unit", "%a",
                                     GIMP_SIZE_ENTRY_UPDATE_SIZE, 72.0);
-
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Size:"), 0.0, 0.5,
                              entry, 2, FALSE);
