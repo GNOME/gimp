@@ -30,10 +30,10 @@
 #define MMX_PIXEL_OP(x) \
 void \
 x( \
-  const unsigned char *src1, \
-  const unsigned char *src2, \
-  unsigned count, \
-  unsigned char *dst) __attribute((regparm(3)));
+  const guchar *src1, \
+  const guchar *src2, \
+  guint count, \
+  guchar *dst) __attribute((regparm(3)));
 
 /* A drawable has an alphachannel if contains either 4 or 2 bytes data
  * aka GRAYA and RGBA and thus the macro below works. This will have
@@ -46,12 +46,12 @@ x( \
   MMX_PIXEL_OP(op##_pixels_1a_1a)
 
 #define USE_MMX_PIXEL_OP_3A_1A(op) \
-  if (HAS_ALPHA (alms->bytes1) && HAS_ALPHA (bytes2)) \
+  if (HAS_ALPHA (alms->bytes1) && HAS_ALPHA (alms->bytes2)) \
     { \
       if (alms->bytes1==2 && alms->bytes2==2) \
-	return op##_pixels_1a_1a(alms->src1, alms->src2, alms->length, alms->dest); \
+	return op##_pixels_1a_1a(alms->src1, alms->src2, alms->length, *(alms->dest)); \
       if (alms->bytes1==4 && alms->bytes2==4) \
-	return op##_pixels_3a_3a(alms->src1, alms->src2, alms->length, alms->dest); \
+	return op##_pixels_3a_3a(alms->src1, alms->src2, alms->length, *(alms->dest)); \
     } 
 
 MMX_PIXEL_OP_3A_1A(multiply);

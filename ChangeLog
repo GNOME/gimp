@@ -1,3 +1,11 @@
+2001-11-19  Daniel Egger  <degger@fhm.edu>
+	
+	* app/paint-funcs/paint-funcs-mmx.h 
+	* app/paint-funcs/paint-funcs.c: Fixed typoes and brought the
+	code back to compileland.
+
+	Now the code IS tested. :)
+
 2001-11-19  Michael Natterer  <mitch@gimp.org>
 
 	Some moving of unused files so they don't clutter app/...

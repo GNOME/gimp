@@ -443,8 +443,8 @@ paint_funcs_setup (void)
   if (use_mmx)
   {
     layer_mode_funcs[DIFFERENCE_MODE] = layer_difference_mode_mmx;
-    layer_mode_funcs[ADD_MODE] = layer_add_mode_mmx;
-    layer_mode_funcs[SUBSTRACT_MODE] = layer_substract_mode_mmx;
+    layer_mode_funcs[ADDITION_MODE] = layer_addition_mode_mmx;
+    layer_mode_funcs[SUBTRACT_MODE] = layer_subtract_mode_mmx;
     layer_mode_funcs[OVERLAY_MODE] = layer_overlay_mode_mmx;
     layer_mode_funcs[SCREEN_MODE] = layer_screen_mode_mmx;
     layer_mode_funcs[MULTIPLY_MODE] = layer_multiply_mode_mmx;
