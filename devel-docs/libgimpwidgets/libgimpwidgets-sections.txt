@@ -802,6 +802,7 @@ gimp_preview_get_update
 gimp_preview_set_update
 gimp_preview_get_size
 gimp_preview_get_position
+gimp_preview_draw
 gimp_preview_invalidate
 <SUBSECTION Standard>
 GimpPreviewClass

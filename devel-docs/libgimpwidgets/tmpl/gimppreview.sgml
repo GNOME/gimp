@@ -75,6 +75,14 @@ GimpPreview
 @y: 
 
 
+<!-- ##### FUNCTION gimp_preview_draw ##### -->
+<para>
+
+</para>
+
+@preview: 
+
+
 <!-- ##### FUNCTION gimp_preview_invalidate ##### -->
 <para>
 
