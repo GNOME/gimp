@@ -1,3 +1,12 @@
+2003-09-06  Dave Neary  <bolsh@gimp.org>
+
+	* app/vectors/Makefile.am: Include libart headers
+	* app/vectors/gimpvectors.[ch]
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpbezierstroke.[ch]: Committing unfinished, 
+	useless stub code for converting a GimpVectors object to a 
+	libart vector path. Will pad this out later.
+ 
 2003-09-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable.c (gimp_drawable_fill): made my last

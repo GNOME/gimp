@@ -22,6 +22,7 @@
 #ifndef __GIMP_VECTORS_H__
 #define __GIMP_VECTORS_H__
 
+#include <libart_lgpl/libart.h>
 #include "core/gimpitem.h"
 
 
@@ -162,5 +163,7 @@ gint            gimp_vectors_interpolate        (const GimpVectors  *vectors,
 
 GimpVectors   * gimp_vectors_make_bezier        (const GimpVectors  *vectors);
 
+/* Convert to libart vector path */
+ArtVpath * gimp_vectors_to_art_vpath(const GimpVectors * vectors);
 
 #endif /* __GIMP_VECTORS_H__ */

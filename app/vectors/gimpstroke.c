@@ -21,6 +21,9 @@
 
 #include "config.h"
 
+/* For ArtVpath */
+#include <libart_lgpl/libart.h>
+
 #include "glib-object.h"
 
 #include "vectors-types.h"
@@ -146,6 +149,7 @@ static GList     * gimp_stroke_real_get_draw_anchors (const GimpStroke *stroke);
 static GList    * gimp_stroke_real_get_draw_controls (const GimpStroke *stroke);
 static GArray     * gimp_stroke_real_get_draw_lines  (const GimpStroke *stroke);
 
+static void gimp_stroke_to_art_point  (ArtVpath *vec);
 
 /*  private variables  */
 
@@ -237,6 +241,8 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->get_draw_anchors        = gimp_stroke_real_get_draw_anchors;
   klass->get_draw_controls       = gimp_stroke_real_get_draw_controls;
   klass->get_draw_lines          = gimp_stroke_real_get_draw_lines;
+
+  klass->to_art_point            = gimp_stroke_to_art_point;
 }
 
 static void
@@ -1204,4 +1210,12 @@ gimp_stroke_real_get_draw_lines (const GimpStroke  *stroke)
     }
 
   return ret_lines;
+}
+
+static void
+gimp_stroke_to_art_point (ArtVpath *vec)
+{
+  g_printerr ("gimp_stroke_to_art_point: default implementation\n");
+
+  return;
 }

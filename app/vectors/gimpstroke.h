@@ -22,6 +22,8 @@
 #ifndef __GIMP_STROKE_H__
 #define __GIMP_STROKE_H__
 
+/* For ArtVpath */
+#include <libart_lgpl/libart.h>
 
 #include "core/gimpobject.h"
 
@@ -163,6 +165,8 @@ struct _GimpStrokeClass
   GList       * (* get_draw_anchors)     (const GimpStroke      *stroke);
   GList       * (* get_draw_controls)    (const GimpStroke      *stroke);
   GArray      * (* get_draw_lines)       (const GimpStroke      *stroke);
+  void          (* to_art_point)        (ArtVpath              *vec);
+
 };
 
 
@@ -303,3 +307,4 @@ GArray     * gimp_stroke_get_draw_lines       (const GimpStroke      *stroke);
 
 
 #endif /* __GIMP_STROKE_H__ */
+
