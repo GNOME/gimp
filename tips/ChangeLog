@@ -1,3 +1,8 @@
+2004-05-25  Sven Neumann  <sven@gimp.org>
+
+	* gimp-tips.xml.in: applied a patch graciously provided by "biroa"
+	(bug #143125).
+
 2004-05-23  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am (tips_POFILES): added lt.po (Lithuanian).

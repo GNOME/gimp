@@ -22,11 +22,11 @@
 
   <tip level="start">
     <_welcome>
-      <big>Welcome to The GIMP !</big>
+      <big>Welcome to the GIMP!</big>
     </_welcome>
     <_thetip>
-      Nearly all image operations are performed by right-clicking
-      on the image.  And don't worry, you can undo most mistakes...
+      The GIMP can undo most changes to the image, so feel free
+      to experiment.
     </_thetip>
   </tip>
 
@@ -122,7 +122,7 @@
   </tip>
   <tip level="intermediate">
     <_thetip>
-    Click and drag on a ruler to place a Guide on an image.  All
+    Click and drag on a ruler to place a guide on an image.  All
     dragged selections will snap to the guides.  You can remove
     guides by dragging them off the image with the Move tool.
     </_thetip>
@@ -135,10 +135,10 @@
   </tip>
   <tip level="intermediate">
     <_thetip>
-    A Floating Selection must be anchored to a new layer or to the last
+    A floating selection must be anchored to a new layer or to the last
     active layer before doing other operations on the image.  Click on the
-    &quot;New Layer&quot; or &quot;Anchor Layer buttons&quot; in the Layers
-    dialog, or use the menus to do the same.
+    &quot;New Layer&quot; or the &quot;Anchor Layer&quot; button in the
+    Layers dialog, or use the menus to do the same.
     </_thetip>
   </tip>
   <tip level="intermediate">
@@ -160,13 +160,13 @@
   <tip level="intermediate">
     <_thetip>
     You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys
-    while you are making a selection in order to constrain it to a perfect
-    square or circle, or to have it centered on its starting point.
+    while you are making a selection in order to constrain it to a
+    square or a circle, or to have it centered on its starting point.
     </_thetip>
   </tip>
   <tip level="intermediate">
     <_thetip>
-    You can adjust and re-place a selection by using <tt>Alt</tt>-drag.
+    You can adjust or move a selection by using <tt>Alt</tt>-drag.
     If this makes the window move, your window manager uses the
     <tt>Alt</tt> key already. Try pressing <tt>Shift</tt> at the same
     time.
@@ -274,8 +274,8 @@
   </tip>
   <tip level="advanced">
     <_thetip>
-    To create a perfect circle, hold <tt>Shift</tt> while doing an
-    ellipse select. To place a circle precisely, drag horizontal and
+    To create a circle-shaped selection, hold <tt>Shift</tt> while doing
+    an ellipse select. To place a circle precisely, drag horizontal and
     vertical guides tangent to the circle you want to select, place
     your cursor at the intersection of the guides, and the resulting
     selection will just touch the guides.
