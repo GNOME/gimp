@@ -379,7 +379,7 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
       gtk_window_set_position (GTK_WINDOW (entry->file_dialog),
 			       GTK_WIN_POS_MOUSE);
       gtk_window_set_role (GTK_WINDOW (entry->file_dialog),
-                           "gimp-file-entry-file-selection");
+                           "gimp-file-entry-file-dialog");
 
       gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
       gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
