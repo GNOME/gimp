@@ -1,3 +1,9 @@
+2003-06-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/grid.c: fixed swapped horizontal/vertical
+	parameters (bug #114225). Always update the preview as soon as a
+	grid parameter is changed.
+
 2003-05-31  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/Makefile.am: Handle twain and winsnap subdirs normally.
