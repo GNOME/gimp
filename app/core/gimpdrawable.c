@@ -40,6 +40,8 @@
 #include "gimpdrawable-transform.h"
 #include "gimpimage.h"
 #include "gimpimage-undo-push.h"
+#include "gimplayer.h"
+#include "gimplayer-floating-sel.h"
 #include "gimpmarshal.h"
 #include "gimppattern.h"
 #include "gimppreviewcache.h"
@@ -70,6 +72,10 @@ static void       gimp_drawable_invalidate_preview (GimpViewable      *viewable)
 static GimpItem * gimp_drawable_duplicate          (GimpItem          *item,
                                                     GType              new_type,
                                                     gboolean           add_alpha);
+static void       gimp_drawable_translate          (GimpItem          *item,
+                                                    gint               offset_x,
+                                                    gint               offset_y,
+                                                    gboolean           push_undo);
 static void       gimp_drawable_scale              (GimpItem          *item,
                                                     gint               new_width,
                                                     gint               new_height,
@@ -213,6 +219,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   viewable_class->get_preview        = gimp_drawable_get_preview;
 
   item_class->duplicate              = gimp_drawable_duplicate;
+  item_class->translate              = gimp_drawable_translate;
   item_class->scale                  = gimp_drawable_scale;
   item_class->resize                 = gimp_drawable_resize;
   item_class->flip                   = gimp_drawable_flip;
@@ -347,6 +354,25 @@ gimp_drawable_duplicate (GimpItem *item,
     add_alpha_region (&srcPR, &destPR);
 
   return new_item;
+}
+
+static void
+gimp_drawable_translate (GimpItem *item,
+                         gint      offset_x,
+                         gint      offset_y,
+                         gboolean  push_undo)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
+  GimpImage    *gimage   = gimp_item_get_image (item);
+
+  if (gimp_drawable_has_floating_sel (drawable))
+    floating_sel_relax (gimp_image_floating_sel (gimage), FALSE);
+
+  GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y,
+                                             push_undo);
+
+  if (gimp_drawable_has_floating_sel (drawable))
+    floating_sel_rigor (gimp_image_floating_sel (gimage), FALSE);
 }
 
 static void
@@ -862,13 +888,16 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
                               gint                offset_x,
                               gint                offset_y)
 {
-  GimpItem *item;
+  GimpItem  *item;
+  GimpImage *gimage;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (tiles != NULL);
   g_return_if_fail (tile_manager_bpp (tiles) == GIMP_IMAGE_TYPE_BYTES (type));
 
   item = GIMP_ITEM (drawable);
+
+  gimage = gimp_item_get_image (item);
 
   if (item->width    != tile_manager_width (tiles)  ||
       item->height   != tile_manager_height (tiles) ||
@@ -878,10 +907,16 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
       gimp_drawable_update (drawable, 0, 0, item->width, item->height);
     }
 
+  if (gimp_drawable_has_floating_sel (drawable))
+    floating_sel_relax (gimp_image_floating_sel (gimage), FALSE);
+
   GIMP_DRAWABLE_GET_CLASS (drawable)->set_tiles (drawable,
                                                  push_undo, undo_desc,
                                                  tiles, type,
                                                  offset_x, offset_y);
+
+  if (gimp_drawable_has_floating_sel (drawable))
+    floating_sel_rigor (gimp_image_floating_sel (gimage), FALSE);
 
   gimp_drawable_update (drawable, 0, 0, item->width, item->height);
 }
@@ -1234,6 +1269,21 @@ gimp_drawable_bytes_without_alpha (const GimpDrawable *drawable)
   type = GIMP_IMAGE_TYPE_WITHOUT_ALPHA (gimp_drawable_type (drawable));
 
   return GIMP_IMAGE_TYPE_BYTES (type);
+}
+
+gboolean
+gimp_drawable_has_floating_sel (const GimpDrawable *drawable)
+{
+  GimpImage *gimage;
+  GimpLayer *floating_sel;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  floating_sel = gimp_image_floating_sel (gimage);
+
+  return (floating_sel && floating_sel->fs.drawable == drawable);
 }
 
 TileManager *

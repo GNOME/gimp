@@ -29,7 +29,6 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitem.h"
-#include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 
 
@@ -39,12 +38,11 @@ gimp_image_flip (GimpImage           *gimage,
                  GimpProgressFunc     progress_func,
                  gpointer             progress_data)
 {
-  GimpLayer *floating_layer;
-  GimpItem  *item;
-  GList     *list;
-  gdouble    axis;
-  gint       progress_max;
-  gint       progress_current = 1;
+  GimpItem *item;
+  GList    *list;
+  gdouble   axis;
+  gint      progress_max;
+  gint      progress_current = 1;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -70,14 +68,7 @@ gimp_image_flip (GimpImage           *gimage,
                   gimage->vectors->num_children  +
                   1 /* selection */);
 
-  /*  Get the floating layer if one exists  */
-  floating_layer = gimp_image_floating_sel (gimage);
-
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_FLIP, NULL);
-
-  /*  Relax the floating selection  */
-  if (floating_layer)
-    floating_sel_relax (floating_layer, TRUE);
 
   /*  Flip all channels  */
   for (list = GIMP_LIST (gimage->channels)->list;
@@ -148,10 +139,6 @@ gimp_image_flip (GimpImage           *gimage,
           break;
 	}
     }
-
-  /*  Rigor the floating selection  */
-  if (floating_layer)
-    floating_sel_rigor (floating_layer, TRUE);
 
   gimp_image_undo_group_end (gimage);
 

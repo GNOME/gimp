@@ -34,7 +34,6 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem-linked.h"
-#include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "gimp-intl.h"
@@ -426,8 +425,6 @@ layer_scale_invoker (Gimp     *gimp,
   gint32 new_width;
   gint32 new_height;
   gboolean local_origin;
-  GimpImage *gimage;
-  GimpLayer *floating_layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
@@ -444,27 +441,7 @@ layer_scale_invoker (Gimp     *gimp,
   local_origin = args[3].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    {
-      if ((gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-        {
-          floating_layer = gimp_image_floating_sel (gimage);
-
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_SCALE,
-                                       _("Scale Layer"));
-
-          if (floating_layer)
-            floating_sel_relax (floating_layer, TRUE);
-
-          gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, NULL, local_origin);
-
-          if (floating_layer)
-            floating_sel_rigor (floating_layer, TRUE);
-
-          gimp_image_undo_group_end (gimage);
-        }
-      else
-        success = FALSE;
-    }
+    gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, NULL, local_origin);
 
   return procedural_db_return_args (&layer_scale_proc, success);
 }
@@ -519,8 +496,6 @@ layer_resize_invoker (Gimp     *gimp,
   gint32 new_height;
   gint32 offx;
   gint32 offy;
-  GimpImage *gimage;
-  GimpLayer *floating_layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
@@ -539,27 +514,7 @@ layer_resize_invoker (Gimp     *gimp,
   offy = args[4].value.pdb_int;
 
   if (success)
-    {
-      if ((gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-        {
-          floating_layer = gimp_image_floating_sel (gimage);
-
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                                       _("Resize Layer"));
-
-          if (floating_layer)
-            floating_sel_relax (floating_layer, TRUE);
-
-          gimp_item_resize (GIMP_ITEM (layer), new_width, new_height, offx, offy);
-
-          if (floating_layer)
-            floating_sel_rigor (floating_layer, TRUE);
-
-          gimp_image_undo_group_end (gimage);
-        }
-      else
-        success = FALSE;
-    }
+    gimp_item_resize (GIMP_ITEM (layer), new_width, new_height, offx, offy);
 
   return procedural_db_return_args (&layer_resize_proc, success);
 }
@@ -664,8 +619,6 @@ layer_translate_invoker (Gimp     *gimp,
   GimpLayer *layer;
   gint32 offx;
   gint32 offy;
-  GimpImage *gimage;
-  GimpLayer *floating_layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
@@ -677,34 +630,23 @@ layer_translate_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-        {
-          floating_layer = gimp_image_floating_sel (gimage);
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                       _("Move Layer"));
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                   _("Move Layer"));
 
-          if (floating_layer)
-            floating_sel_relax (floating_layer, TRUE);
+      gimp_item_translate (GIMP_ITEM (layer),
+                           offx,
+                           offy,
+                           TRUE);
 
-          gimp_item_translate (GIMP_ITEM (layer),
-                               offx,
-                               offy,
-                               TRUE);
+      if (gimp_item_get_linked (GIMP_ITEM (layer)))
+        gimp_item_linked_translate (GIMP_ITEM (layer),
+                                    offx,
+                                    offy,
+                                    TRUE);
 
-          if (gimp_item_get_linked (GIMP_ITEM (layer)))
-            gimp_item_linked_translate (GIMP_ITEM (layer),
-                                        offx,
-                                        offy,
-                                        TRUE);
-
-          if (floating_layer)
-            floating_sel_rigor (floating_layer, TRUE);
-
-          gimp_image_undo_group_end (gimage);
-        }
-      else
-        success = FALSE;
+      gimp_image_undo_group_end (gimage);
     }
 
   return procedural_db_return_args (&layer_translate_proc, success);
@@ -753,8 +695,6 @@ layer_set_offsets_invoker (Gimp     *gimp,
   GimpLayer *layer;
   gint32 offx;
   gint32 offy;
-  GimpImage *gimage;
-  GimpLayer *floating_layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
@@ -766,34 +706,23 @@ layer_set_offsets_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-        {
-          floating_layer = gimp_image_floating_sel (gimage);
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                       _("Move Layer"));
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                   _("Move Layer"));
 
-          if (floating_layer)
-            floating_sel_relax (floating_layer, TRUE);
+      gimp_item_translate (GIMP_ITEM (layer),
+                           offx - GIMP_ITEM (layer)->offset_x,
+                           offy - GIMP_ITEM (layer)->offset_y,
+                           TRUE);
 
-          gimp_item_translate (GIMP_ITEM (layer),
-                               offx - GIMP_ITEM (layer)->offset_x,
-                               offy - GIMP_ITEM (layer)->offset_y,
-                               TRUE);
+      if (gimp_item_get_linked (GIMP_ITEM (layer)))
+        gimp_item_linked_translate (GIMP_ITEM (layer),
+                                    offx,
+                                    offy,
+                                    TRUE);
 
-          if (gimp_item_get_linked (GIMP_ITEM (layer)))
-            gimp_item_linked_translate (GIMP_ITEM (layer),
-                                        offx,
-                                        offy,
-                                        TRUE);
-
-          if (floating_layer)
-            floating_sel_rigor (floating_layer, TRUE);
-
-          gimp_image_undo_group_end (gimage);
-        }
-      else
-        success = FALSE;
+      gimp_image_undo_group_end (gimage);
     }
 
   return procedural_db_return_args (&layer_set_offsets_proc, success);

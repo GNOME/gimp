@@ -31,7 +31,6 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 
 #include "config/gimpguiconfig.h"
@@ -47,16 +46,15 @@ gimp_image_scale (GimpImage             *gimage,
                   GimpProgressFunc       progress_func,
                   gpointer               progress_data)
 {
-  GimpLayer *floating_layer;
-  GimpItem  *item;
-  GList     *list;
-  GList     *remove = NULL;
-  gint       old_width;
-  gint       old_height;
-  gdouble    img_scale_w = 1.0;
-  gdouble    img_scale_h = 1.0;
-  gint       progress_max;
-  gint       progress_current = 1;
+  GimpItem *item;
+  GList    *list;
+  GList    *remove = NULL;
+  gint      old_width;
+  gint      old_height;
+  gdouble   img_scale_w = 1.0;
+  gdouble   img_scale_h = 1.0;
+  gint      progress_max;
+  gint      progress_current = 1;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (new_width > 0 && new_height > 0);
@@ -68,15 +66,8 @@ gimp_image_scale (GimpImage             *gimage,
                   gimage->vectors->num_children  +
                   1 /* selection */);
 
-  /*  Get the floating layer if one exists  */
-  floating_layer = gimp_image_floating_sel (gimage);
-
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_SCALE,
                                _("Scale Image"));
-
-  /*  Relax the floating selection  */
-  if (floating_layer)
-    floating_sel_relax (floating_layer, TRUE);
 
   /*  Push the image size to the stack  */
   gimp_image_undo_push_image_size (gimage, NULL);
@@ -186,10 +177,6 @@ gimp_image_scale (GimpImage             *gimage,
           break;
 	}
     }
-
-  /*  Rigor the floating selection  */
-  if (floating_layer)
-    floating_sel_rigor (floating_layer, TRUE);
 
   gimp_image_undo_group_end (gimage);
 

@@ -29,7 +29,6 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 
 #include "gimp-intl.h"
@@ -44,10 +43,9 @@ gimp_image_resize (GimpImage        *gimage,
                    GimpProgressFunc  progress_func,
                    gpointer          progress_data)
 {
-  GimpLayer *floating_layer;
-  GList     *list;
-  gint       progress_max;
-  gint       progress_current = 1;
+  GList *list;
+  gint   progress_max;
+  gint   progress_current = 1;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (new_width > 0 && new_height > 0);
@@ -59,15 +57,8 @@ gimp_image_resize (GimpImage        *gimage,
                   gimage->vectors->num_children  +
                   1 /* selection */);
 
-  /*  Get the floating layer if one exists  */
-  floating_layer = gimp_image_floating_sel (gimage);
-
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_RESIZE,
                                _("Resize Image"));
-
-  /*  Relax the floating selection  */
-  if (floating_layer)
-    floating_sel_relax (floating_layer, TRUE);
 
   /*  Push the image size to the stack  */
   gimp_image_undo_push_image_size (gimage, NULL);
@@ -155,10 +146,6 @@ gimp_image_resize (GimpImage        *gimage,
       else if (new_position != guide->position)
         gimp_image_move_guide (gimage, guide, new_position, TRUE);
     }
-
-  /*  Rigor the floating selection  */
-  if (floating_layer)
-    floating_sel_rigor (floating_layer, TRUE);
 
   gimp_image_undo_group_end (gimage);
 

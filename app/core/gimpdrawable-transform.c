@@ -1100,8 +1100,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
     }
   else
     {
-      GimpLayer     *floating_layer = gimp_image_floating_sel (gimage);
-      GimpImageType  drawable_type;
+      GimpImageType drawable_type;
 
       if (GIMP_IS_LAYER (drawable) && (tile_manager_bpp (tiles) == 2 ||
                                        tile_manager_bpp (tiles) == 4))
@@ -1113,15 +1112,9 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
           drawable_type = gimp_drawable_type (drawable);
         }
 
-      if (floating_layer)
-        floating_sel_relax (floating_layer, TRUE);
-
       gimp_drawable_set_tiles_full (drawable, TRUE, NULL,
                                     tiles, drawable_type,
                                     offset_x, offset_y);
-
-      if (floating_layer)
-        floating_sel_rigor (floating_layer, TRUE);
     }
 
   gimp_image_undo_group_end (gimage);

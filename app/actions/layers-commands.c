@@ -382,13 +382,7 @@ layers_crop_cmd_callback (GtkWidget *widget,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                _("Crop Layer"));
 
-  if (gimp_layer_is_floating_sel (active_layer))
-    floating_sel_relax (active_layer, TRUE);
-
   gimp_item_resize (GIMP_ITEM (active_layer), x2 - x1, y2 - y1, off_x, off_y);
-
-  if (gimp_layer_is_floating_sel (active_layer))
-    floating_sel_rigor (active_layer, TRUE);
 
   gimp_image_undo_group_end (gimage);
 
@@ -1167,46 +1161,25 @@ scale_layer_query_ok_callback (GtkWidget *widget,
   if (options->resize->width > 0 && options->resize->height > 0 &&
       (layer =  (options->layer)))
     {
-      GimpImage *gimage;
+      GimpImage    *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+      GimpProgress *progress;
 
       gtk_widget_set_sensitive (options->resize->resize_shell, FALSE);
 
-      gimage = gimp_item_get_image (GIMP_ITEM (layer));
+      progress = gimp_progress_start (options->gdisp,
+                                      _("Scaling..."),
+                                      TRUE, NULL, NULL);
 
-      if (gimage)
-	{
-          GimpProgress *progress;
+      gimp_item_scale_by_origin (GIMP_ITEM (layer),
+                                 options->resize->width,
+                                 options->resize->height,
+                                 options->resize->interpolation,
+                                 gimp_progress_update_and_flush, progress,
+                                 TRUE);
 
-          progress = gimp_progress_start (options->gdisp,
-                                          _("Scaling..."),
-                                          TRUE, NULL, NULL);
+      gimp_progress_end (progress);
 
-	  if (gimp_layer_is_floating_sel (layer))
-            {
-              gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_SCALE,
-                                           _("Scale Layer"));
-
-              floating_sel_relax (layer, TRUE);
-            }
-
-	  gimp_item_scale_by_origin (GIMP_ITEM (layer),
-                                     options->resize->width,
-                                     options->resize->height,
-                                     options->resize->interpolation,
-                                     gimp_progress_update_and_flush, progress,
-                                     TRUE);
-
-	  if (gimp_layer_is_floating_sel (layer))
-            {
-              floating_sel_rigor (layer, TRUE);
-
-              gimp_image_undo_group_end (gimage);
-            }
-
-          gimp_progress_end (progress);
-
-          gimp_image_flush (gimage);
-	}
+      gimp_image_flush (gimage);
 
       gtk_widget_destroy (options->resize->resize_shell);
     }
@@ -1272,37 +1245,17 @@ resize_layer_query_ok_callback (GtkWidget *widget,
   if (options->resize->width > 0 && options->resize->height > 0 &&
       (layer = (options->layer)))
     {
-      GimpImage *gimage;
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
       gtk_widget_set_sensitive (options->resize->resize_shell, FALSE);
 
-      gimage = gimp_item_get_image (GIMP_ITEM (layer));
+      gimp_item_resize (GIMP_ITEM (layer),
+                        options->resize->width,
+                        options->resize->height,
+                        options->resize->offset_x,
+                        options->resize->offset_y);
 
-      if (gimage)
-	{
-	  if (gimp_layer_is_floating_sel (layer))
-            {
-              gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                                           _("Resize Layer"));
-
-              floating_sel_relax (layer, TRUE);
-            }
-
-	  gimp_item_resize (GIMP_ITEM (layer),
-                            options->resize->width,
-                            options->resize->height,
-                            options->resize->offset_x,
-                            options->resize->offset_y);
-
-	  if (gimp_layer_is_floating_sel (layer))
-            {
-              floating_sel_rigor (layer, TRUE);
-
-              gimp_image_undo_group_end (gimage);
-            }
-
-          gimp_image_flush (gimage);
-	}
+      gimp_image_flush (gimage);
 
       gtk_widget_destroy (options->resize->resize_shell);
     }

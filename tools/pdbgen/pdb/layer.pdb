@@ -23,52 +23,6 @@ sub layer_arg () {{
     desc => 'The layer'
 }}
 
-sub layer_change_invoke {
-    my ($undo, $undo_name, $code) = @_;
-    my $indent = 6;
-
-    chomp $code;
-    $code =~ s/\t/' ' x 8/eg;
-
-    if ($code =~ /^\s*{\s*\n.*\n\s*}\s*$/s) {
-        $code =~ s/^\s*{\s*\n//s;
-        $code =~ s/\n\s*}\s*$//s;
-	$indent = 4;
-    }
-    
-    $code =~ s/^/' ' x $indent/meg;
-    $code =~ s/^ {6}//s;
-    while ($code =~ /^\t* {8}/m) { $code =~ s/^(\t*) {8}/$1\t/mg }
-
-    %invoke = (
-	headers => [ qw("core/gimplayer-floating-sel.h") ],
-	vars => [ 'GimpImage *gimage', 'GimpLayer *floating_layer' ],
-	code => <<CODE
-{
-  if ((gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-    {
-      floating_layer = gimp_image_floating_sel (gimage);
-
-      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_${undo},
-                                   _("${undo_name}"));
-
-      if (floating_layer)
-	floating_sel_relax (floating_layer, TRUE);
-
-      $code
-
-      if (floating_layer)
-	floating_sel_rigor (floating_layer, TRUE);
-
-      gimp_image_undo_group_end (gimage);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub layer_dim_proc {
     my ($op, $morehelp, @args) = @_;
 
@@ -99,11 +53,9 @@ HELP
     }
 
     if ($op eq 'scale') {
-        &layer_change_invoke("ITEM_\U$op\E", 'Scale Layer',
-			     "gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, NULL, $args);");
+        $invoke{code} = "gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, NULL, $args);";
     } else {
-        &layer_change_invoke("ITEM_\U$op\E", 'Resize Layer',
-			     "gimp_item_resize (GIMP_ITEM (layer), new_width, new_height, $args);");
+        $invoke{code} = "gimp_item_resize (GIMP_ITEM (layer), new_width, new_height, $args);";
     }
 }
 
@@ -423,8 +375,13 @@ HELP
 			desc => "Offset in $_ direction" }
     }
 
-    &layer_change_invoke('ITEM_DISPLACE', 'Move Layer', <<'CODE');
+    %invoke = ( code => <<'CODE');
 {
+  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               _("Move Layer"));
+
   gimp_item_translate (GIMP_ITEM (layer),
                        offx,
                        offy,
@@ -435,6 +392,8 @@ HELP
                                 offx,
                                 offy,
                                 TRUE);
+
+  gimp_image_undo_group_end (gimage);
 }
 CODE
 }

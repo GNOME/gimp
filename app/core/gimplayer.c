@@ -396,10 +396,16 @@ gimp_layer_set_tiles (GimpDrawable *drawable,
 {
   GimpLayer *layer = GIMP_LAYER (drawable);
 
+  if (gimp_layer_is_floating_sel (layer))
+    floating_sel_relax (layer, FALSE);
+
   GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
                                                  push_undo, undo_desc,
                                                  tiles, type,
                                                  offset_x, offset_y);
+
+  if (gimp_layer_is_floating_sel (layer))
+    floating_sel_rigor (layer, FALSE);
 
   if (layer->mask)
     {
@@ -615,8 +621,14 @@ gimp_layer_translate (GimpItem *item,
   /*  invalidate the selection boundary because of a layer modification  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 
+  if (gimp_layer_is_floating_sel (layer))
+    floating_sel_relax (layer, FALSE);
+
   GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y,
                                              push_undo);
+
+  if (gimp_layer_is_floating_sel (layer))
+    floating_sel_rigor (layer, FALSE);
 
   /*  update the new region  */
   gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, item->width, item->height);
@@ -1355,15 +1367,9 @@ gimp_layer_resize_to_image (GimpLayer *layer)
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                _("Layer to Image Size"));
 
-  if (gimp_layer_is_floating_sel (layer))
-    floating_sel_relax (layer, TRUE);
-
    gimp_item_offsets (GIMP_ITEM (layer), &offset_x, &offset_y);
    gimp_item_resize (GIMP_ITEM (layer), gimage->width, gimage->height,
                      offset_x, offset_y);
-
-  if (gimp_layer_is_floating_sel (layer))
-    floating_sel_rigor (layer, TRUE);
 
   gimp_image_undo_group_end (gimage);
 }

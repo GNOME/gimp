@@ -672,48 +672,36 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
             /*  fallthru  */
 
 	  case EDIT_LAYER_TRANSLATE:
-            {
-              GimpLayer *floating_layer;
+            /*  for CHANNEL_TRANSLATE, only translate the linked layers
+             *  and vectors on-the-fly, the channel is translated
+             *  on button_release.
+             */
+            if (edit_select->edit_type != EDIT_CHANNEL_TRANSLATE)
+              gimp_item_translate (active_item, xoffset, yoffset, TRUE);
 
-              floating_layer = gimp_image_floating_sel (gdisp->gimage);
+            if (gimp_item_get_linked (active_item))
+              {
+                /*  translate all linked layers & vectors as well  */
 
-              if (floating_layer)
-                floating_sel_relax (floating_layer, TRUE);
+                GList *linked;
+                GList *list;
 
-              /*  for CHANNEL_TRANSLATE, only translate the linked layers
-               *  and vectors on-the-fly, the channel is translated
-               *  on button_release.
-               */
-              if (edit_select->edit_type != EDIT_CHANNEL_TRANSLATE)
-                gimp_item_translate (active_item, xoffset, yoffset, TRUE);
+                linked = gimp_item_linked_get_list (gdisp->gimage, active_item,
+                                                    GIMP_ITEM_LINKED_LAYERS |
+                                                    GIMP_ITEM_LINKED_VECTORS);
 
-              if (gimp_item_get_linked (active_item))
-                {
-                  /*  translate all linked layers & vectors as well  */
+                for (list = linked; list; list = g_list_next (list))
+                  gimp_item_translate (GIMP_ITEM (list->data),
+                                       xoffset, yoffset, TRUE);
 
-                  GList *linked;
-                  GList *list;
+                g_list_free (linked);
+              }
 
-                  linked = gimp_item_linked_get_list (gdisp->gimage, active_item,
-                                                      GIMP_ITEM_LINKED_LAYERS |
-                                                      GIMP_ITEM_LINKED_VECTORS);
-
-                  for (list = linked; list; list = g_list_next (list))
-                    gimp_item_translate (GIMP_ITEM (list->data),
-                                         xoffset, yoffset, TRUE);
-
-                  g_list_free (linked);
-                }
-
-              if (floating_layer)
-                floating_sel_rigor (floating_layer, TRUE);
-
-              if (edit_select->first_move)
-                {
-                  gimp_image_undo_freeze (gdisp->gimage);
-                  edit_select->first_move = FALSE;
-                }
-            }
+            if (edit_select->first_move)
+              {
+                gimp_image_undo_freeze (gdisp->gimage);
+                edit_select->first_move = FALSE;
+              }
 	    break;
 
 	  case EDIT_MASK_TO_LAYER_TRANSLATE:
@@ -750,9 +738,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
             /* fall through */
 
 	  case EDIT_FLOATING_SEL_TRANSLATE:
-            floating_sel_relax (GIMP_LAYER (active_item), TRUE);
             gimp_item_translate (active_item, xoffset, yoffset, TRUE);
-            floating_sel_rigor (GIMP_LAYER (active_item), TRUE);
 
             if (edit_select->first_move)
               {
@@ -1287,29 +1273,15 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
     case EDIT_VECTORS_TRANSLATE:
     case EDIT_CHANNEL_TRANSLATE:
     case EDIT_LAYER_TRANSLATE:
-      {
-        GimpLayer *floating_layer;
+      gimp_item_translate (item, inc_x, inc_y, push_undo);
 
-        floating_layer = gimp_image_floating_sel (gdisp->gimage);
-
-        if (floating_layer)
-          floating_sel_relax (floating_layer, push_undo);
-
-        gimp_item_translate (item, inc_x, inc_y, push_undo);
-
-        /*  translate all linked items as well  */
-        if (gimp_item_get_linked (item))
-          gimp_item_linked_translate (item, inc_x, inc_y, push_undo);
-
-        if (floating_layer)
-          floating_sel_rigor (floating_layer, push_undo);
-      }
+      /*  translate all linked items as well  */
+      if (gimp_item_get_linked (item))
+        gimp_item_linked_translate (item, inc_x, inc_y, push_undo);
       break;
 
     case EDIT_FLOATING_SEL_TRANSLATE:
-      floating_sel_relax (GIMP_LAYER (item), push_undo);
       gimp_item_translate (item, inc_x, inc_y, push_undo);
-      floating_sel_rigor (GIMP_LAYER (item), push_undo);
       break;
     }
 

@@ -1,3 +1,40 @@
+2004-04-13  Michael Natterer  <mitch@gimp.org>
+
+	Moved the calls to floating_sel_relax()/rigor() from various
+	places to two single spots in the core where they are actually
+	needed. Fixes bug #138356 (which was caused by the projection
+	being triggered in the middle of changing the floating selection's
+	size or the size of the drawable it is attached to). This commit
+	effectively removes floating selection fiddling from the core's
+	public API.
+
+	* app/core/gimpdrawable.[ch] (gimp_drawable_has_floating_sel): new
+	function which returns TRUE if there is a floating selection
+	attached to the drawable.
+
+	* app/core/gimpdrawable.c (gimp_drawable_translate)
+	(gimp_drawable_set_tiles_full): if the drawable *has* a floating
+	selection, relax/rigor it before/after modifying the drawable.
+
+	* app/core/gimplayer.c (gimp_layer_translate)
+	(gimp_layer_set_tiles): if the layer *is* the floating selection,
+	relax/rigor it before/after modifying it.
+
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-flip.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-scale.c
+	* app/gui/layers-commands.c
+	* app/tools/gimpeditselectiontool.c
+	* tools/pdbgen/pdb/layer.pdb: removed calls to
+	floating_sel_rigor()/relax() all over the place. Also removed
+	lots of undo groups which are obsolete now.
+
+	* app/pdb/layer_cmds.c: regenerated.
+
 2004-04-13  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_file.c (do_file_error_dialog): convert
@@ -7,7 +44,7 @@
 
 	GimpItem undo group cleanup in preparation of fixing bug #138356:
 
-	* app/core/core-enums.[c]: renamed LAYER_SCALE and LAYER_RESIZE
+	* app/core/core-enums.[ch]: renamed LAYER_SCALE and LAYER_RESIZE
 	undo groups to ITEM_SCALE and ITEM_RESIZE.
 
 	* app/core/gimpitem.[ch]: always push undo groups around

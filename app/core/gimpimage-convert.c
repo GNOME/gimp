@@ -144,7 +144,6 @@
 #include "gimpimage-undo-push.h"
 #include "gimplist.h"
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
 #include "gimppalette.h"
 
 #include "cpercep.h"
@@ -750,7 +749,6 @@ gimp_image_convert (GimpImage              *gimage,
 {
   QuantizeObj       *quantobj = NULL;
   GimpLayer         *layer;
-  GimpLayer         *floating_layer;
   GimpImageBaseType  old_type;
   GList             *list;
   GimpImageType      new_layer_type;
@@ -763,9 +761,6 @@ gimp_image_convert (GimpImage              *gimage,
   theCustomPalette = custom_palette;
 
   gimp_set_busy (gimage->gimp);
-
-  /*  Get the floating layer if one exists  */
-  floating_layer = gimp_image_floating_sel (gimage);
 
   switch (new_type)
     {
@@ -784,10 +779,6 @@ gimp_image_convert (GimpImage              *gimage,
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                undo_desc);
-
-  /*  Relax the floating selection  */
-  if (floating_layer)
-    floating_sel_relax (floating_layer, TRUE);
 
   /*  Push the image type to the stack  */
   gimp_image_undo_push_image_type (gimage, NULL);
@@ -1028,10 +1019,6 @@ gimp_image_convert (GimpImage              *gimage,
   /*  Delete the quantizer object, if there is one */
   if (quantobj)
     quantobj->delete_func (quantobj);
-
-  /*  Rigor the floating selection  */
-  if (floating_layer)
-    floating_sel_rigor (floating_layer, TRUE);
 
   gimp_image_undo_group_end (gimage);
 

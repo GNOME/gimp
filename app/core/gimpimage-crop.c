@@ -34,7 +34,6 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 
 #include "gimp-intl.h"
@@ -111,30 +110,12 @@ gimp_image_crop (GimpImage *gimage,
       off_x -= x1;
       off_y -= y1;
 
-      if (gimp_layer_is_floating_sel (layer))
-        {
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                                       _("Resize Layer"));
-
-          floating_sel_relax (layer, TRUE);
-        }
-
       gimp_item_resize (GIMP_ITEM (layer), width, height, off_x, off_y);
-
-      if (gimp_layer_is_floating_sel (layer))
-        {
-          floating_sel_rigor (layer, TRUE);
-
-          gimp_image_undo_group_end (gimage);
-        }
     }
   else
     {
-      GimpLayer *floating_layer;
-      GimpItem  *item;
-      GList     *list;
-
-      floating_layer = gimp_image_floating_sel (gimage);
+      GimpItem *item;
+      GList    *list;
 
       if (crop_layers)
         gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_CROP,
@@ -142,10 +123,6 @@ gimp_image_crop (GimpImage *gimage,
       else
         gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_RESIZE,
                                      _("Resize Image"));
-
-      /*  relax the floating layer  */
-      if (floating_layer)
-        floating_sel_relax (floating_layer, TRUE);
 
       /*  Push the image size to the stack  */
       gimp_image_undo_push_image_size (gimage, NULL);
@@ -248,10 +225,6 @@ gimp_image_crop (GimpImage *gimage,
           else if (new_position != guide->position)
             gimp_image_move_guide (gimage, guide, new_position, TRUE);
         }
-
-      /*  rigor the floating layer  */
-      if (floating_layer)
-        floating_sel_rigor (floating_layer, TRUE);
 
       gimp_image_undo_group_end (gimage);
 
