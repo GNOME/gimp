@@ -331,6 +331,8 @@ render_image_indexed_1 (RenderInfo *info)
       dest = info->dest;
       dither_matrix = ordered_dither_matrix[y & 0x7];
 
+      g_return_if_fail (src != NULL);
+      
       for (x = info->x; x < xe; x++)
 	{
 	  val = *src++ * 3;
@@ -390,6 +392,8 @@ render_image_indexed_2 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -464,6 +468,8 @@ render_image_indexed_3 (RenderInfo *info)
 	  src = info->src;
 	  dest = info->dest;
 
+	  g_return_if_fail (src != NULL);
+	  
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
@@ -538,6 +544,8 @@ render_image_indexed_4 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -618,6 +626,8 @@ render_image_indexed_a_1 (RenderInfo *info)
       dither_matrix = ordered_dither_matrix[y & 0x7];
 
       dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+      g_return_if_fail (src != NULL);
 
       for (x = info->x; x < xe; x++)
 	{
@@ -701,6 +711,8 @@ render_image_indexed_a_2 (RenderInfo *info)
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
 
+	  g_return_if_fail (src != NULL);
+      
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
@@ -816,6 +828,8 @@ render_image_indexed_a_3 (RenderInfo *info)
 	  dest = info->dest;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -935,6 +949,8 @@ render_image_indexed_a_4 (RenderInfo *info)
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
 
+	  g_return_if_fail (src != NULL);
+      
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
@@ -1036,6 +1052,8 @@ render_image_gray_1 (RenderInfo *info)
       dest = info->dest;
       dither_matrix = ordered_dither_matrix[y & 0x7];
 
+      g_return_if_fail (src != NULL);
+
       for (x = info->x; x < xe; x++)
 	{
 	  gray = dither_gray[*src++];
@@ -1087,6 +1105,8 @@ render_image_gray_2 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -1156,6 +1176,8 @@ render_image_gray_3 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+	  
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -1228,6 +1250,8 @@ render_image_gray_4 (RenderInfo *info)
 	  src = info->src;
 	  dest = info->dest;
 
+	  g_return_if_fail (src != NULL);
+
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
@@ -1297,6 +1321,8 @@ render_image_gray_a_1 (RenderInfo *info)
 
       dark_light = (y >> check_shift) + (info->x >> check_shift);
 
+      g_return_if_fail (src != NULL);
+
       for (x = info->x; x < xe; x++)
 	{
 	  a = alpha[src[ALPHA_G_PIX]];
@@ -1364,6 +1390,8 @@ render_image_gray_a_2 (RenderInfo *info)
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
 
+	  g_return_if_fail (src != NULL);
+      
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
@@ -1454,6 +1482,8 @@ render_image_gray_a_3 (RenderInfo *info)
 	  dest = info->dest;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -1548,6 +1578,8 @@ render_image_gray_a_4 (RenderInfo *info)
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
 
+	  g_return_if_fail (src != NULL);
+
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
@@ -1633,6 +1665,8 @@ render_image_rgb_1 (RenderInfo *info)
       dest = info->dest;
       dither_matrix = ordered_dither_matrix[y & 0x7];
 
+      g_return_if_fail (src != NULL);
+
       for (x = info->x; x < xe; x++)
 	{
 	  ra = dither_red[src[RED_PIX]];
@@ -1690,6 +1724,8 @@ render_image_rgb_2 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -1760,6 +1796,8 @@ render_image_rgb_3 (RenderInfo *info)
 	  src = info->src;
 	  dest = info->dest;
 
+	  g_return_if_fail (src != NULL);
+	  
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
@@ -1830,6 +1868,8 @@ render_image_rgb_4 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -1905,6 +1945,8 @@ render_image_rgb_a_1 (RenderInfo *info)
       dither_matrix = ordered_dither_matrix[y & 0x7];
 
       dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+      g_return_if_fail (src != NULL);
 
       for (x = info->x; x < xe; x++)
 	{
@@ -1983,6 +2025,16 @@ render_image_rgb_a_2 (RenderInfo *info)
 	  dest = info->dest;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	   
+	  /* this catches the case when ye is too large, and we loop through
+	   * regions where render_image_tile_fault returns NULL.  I don't 
+	   * think this is a long term solution, but better to warn than to
+	   * die.
+	   *
+	   *  --Larry
+	   */
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -2093,6 +2145,8 @@ render_image_rgb_a_3 (RenderInfo *info)
 	  dest = info->dest;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -2205,6 +2259,8 @@ render_image_rgb_a_4 (RenderInfo *info)
 	  dest = info->dest;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)

@@ -1,3 +1,8 @@
+Fri Mar 13 16:54:12 CST 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/image_render.c:  added some g_return_if_fails to the render
+	funcs until I can come up with a better fix.
+
 Fri Mar 13 12:53:22 1998  Tim Janik  <timj@gimp.org>
 
 
