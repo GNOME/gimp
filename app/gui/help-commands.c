@@ -569,7 +569,7 @@ file_prefs_ok_callback (GtkWidget *widget,
       levels_of_undo = old_levels_of_undo;
       return;
     }
-  if (marching_speed <= 50)
+  if (marching_speed < 50)
     {
       message_box("Error: Marching speed must be 50 or greater.",
 		  NULL, NULL);
