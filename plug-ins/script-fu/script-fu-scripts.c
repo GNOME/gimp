@@ -1081,13 +1081,11 @@ script_fu_interface (SFScript *script)
   GtkWidget *table;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *menu_item;
   GSList    *list;
   gchar     *title;
   gchar     *buf;
   gint       start_args;
   gint       i;
-  guint      j;
 
   static gboolean gtk_initted = FALSE;
 
@@ -1364,22 +1362,17 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_OPTION:
-	  widget = gtk_option_menu_new ();
-	  menu = gtk_menu_new ();
-	  for (list = script->arg_defaults[i].sfa_option.list, j = 0;
+	  widget = gtk_combo_box_new_text ();
+	  for (list = script->arg_defaults[i].sfa_option.list;
 	       list;
-	       list = g_slist_next (list), j++)
+	       list = g_slist_next (list))
 	    {
-	      menu_item = gtk_menu_item_new_with_label (gettext ((gchar *)list->data));
-	      g_object_set_data (G_OBJECT (menu_item), "gimp-item-data",
-                                 GUINT_TO_POINTER (j));
-	      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
-	      gtk_widget_show (menu_item);
+              gtk_combo_box_append_text (GTK_COMBO_BOX (widget),
+                                         gettext ((const gchar *) list->data));
 	    }
 
-	  gtk_option_menu_set_menu (GTK_OPTION_MENU (widget), menu);
-	  gtk_option_menu_set_history (GTK_OPTION_MENU (widget),
-                                       script->arg_values[i].sfa_option.history);
+          gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
+                                    script->arg_values[i].sfa_option.history);
 	  break;
 
 	default:
@@ -1541,15 +1534,14 @@ script_fu_response (GtkWidget *widget,
 static void
 script_fu_ok (SFScript *script)
 {
-  GtkWidget *menu_item;
-  gchar     *escaped;
-  gchar     *text = NULL;
-  gchar     *command;
-  gchar     *c;
-  guchar     r, g, b;
-  gchar      buffer[MAX_STRING_LENGTH];
-  gint       length;
-  gint       i;
+  gchar  *escaped;
+  gchar  *text = NULL;
+  gchar  *command;
+  gchar  *c;
+  guchar  r, g, b;
+  gchar   buffer[MAX_STRING_LENGTH];
+  gint    length;
+  gint    i;
 
   length = strlen (script->script_name) + 3;
 
@@ -1736,11 +1728,9 @@ script_fu_ok (SFScript *script)
           break;
 
         case SF_OPTION:
-          widget = gtk_option_menu_get_menu (GTK_OPTION_MENU (widget));
-          menu_item = gtk_menu_get_active (GTK_MENU (widget));
           script->arg_values[i].sfa_option.history =
-            GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (menu_item),
-                                                 "gimp-item-data"));
+            gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
+
           g_snprintf (buffer, sizeof (buffer), "%d",
                       script->arg_values[i].sfa_option.history);
           text = buffer;
@@ -1845,8 +1835,9 @@ script_fu_reset (SFScript *script)
         case SF_OPTION:
           script->arg_values[i].sfa_option.history =
             script->arg_defaults[i].sfa_option.history;
-          gtk_option_menu_set_history (GTK_OPTION_MENU (widget),
-                                       script->arg_values[i].sfa_option.history);
+          gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
+                                    script->arg_values[i].sfa_option.history);
+          break;
 
         default:
           break;

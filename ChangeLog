@@ -1,5 +1,10 @@
 2004-04-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c: use a GtkComboBox for
+	SF-OPTION.
+
+2004-04-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/winicon/icodialog.c
 	* plug-ins/winicon/icosave.c: ported GtkOptionMenu to GtkComboBox.
 
