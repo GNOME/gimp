@@ -1405,9 +1405,6 @@ gimp_layer_add_alpha (GimpLayer *layer)
   tile_manager_unref (new_tiles);
 
   GIMP_DRAWABLE (layer)->preview_valid = FALSE;
-
-  if (gimp_container_num_children (gimage->layers) == 1)
-    gimp_image_alpha_changed (gimage);
 }
 
 void

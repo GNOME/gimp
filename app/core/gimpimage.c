@@ -135,6 +135,8 @@ static void     gimp_image_drawable_update       (GimpDrawable   *drawable,
                                                   GimpImage      *gimage);
 static void     gimp_image_drawable_visibility   (GimpItem       *item,
                                                   GimpImage      *gimage);
+static void     gimp_image_layer_alpha_changed   (GimpDrawable   *drawable,
+                                                  GimpImage      *gimage);
 static void     gimp_image_layer_add             (GimpContainer  *container,
                                                   GimpLayer      *layer,
                                                   GimpImage      *gimage);
@@ -502,20 +504,23 @@ gimp_image_init (GimpImage *gimage)
     gimp_container_add_handler (gimage->layers, "update",
                                 G_CALLBACK (gimp_image_drawable_update),
                                 gimage);
-  gimage->channel_update_handler =
-    gimp_container_add_handler (gimage->channels, "update",
-                                G_CALLBACK (gimp_image_drawable_update),
-                                gimage);
-
   gimage->layer_visible_handler =
     gimp_container_add_handler (gimage->layers, "visibility_changed",
                                 G_CALLBACK (gimp_image_drawable_visibility),
+                                gimage);
+  gimage->layer_alpha_handler =
+    gimp_container_add_handler (gimage->layers, "alpha_changed",
+                                G_CALLBACK (gimp_image_layer_alpha_changed),
+                                gimage);
+
+  gimage->channel_update_handler =
+    gimp_container_add_handler (gimage->channels, "update",
+                                G_CALLBACK (gimp_image_drawable_update),
                                 gimage);
   gimage->channel_visible_handler =
     gimp_container_add_handler (gimage->channels, "visibility_changed",
                                 G_CALLBACK (gimp_image_drawable_visibility),
                                 gimage);
-
   gimage->channel_name_changed_handler =
     gimp_container_add_handler (gimage->channels, "name_changed",
                                 G_CALLBACK (gimp_image_channel_name_changed),
@@ -562,7 +567,8 @@ gimp_image_init (GimpImage *gimage)
   gimage->comp_preview          = NULL;
   gimage->comp_preview_valid    = FALSE;
 
-  gimage->flush_accum.mask_changed = FALSE;
+  gimage->flush_accum.alpha_changed = FALSE;
+  gimage->flush_accum.mask_changed  = FALSE;
 }
 
 static void
@@ -574,14 +580,15 @@ gimp_image_dispose (GObject *object)
 
   gimp_container_remove_handler (gimage->layers,
                                  gimage->layer_update_handler);
-  gimp_container_remove_handler (gimage->channels,
-                                 gimage->channel_update_handler);
-
   gimp_container_remove_handler (gimage->layers,
                                  gimage->layer_visible_handler);
+  gimp_container_remove_handler (gimage->layers,
+                                 gimage->layer_alpha_handler);
+
+  gimp_container_remove_handler (gimage->channels,
+                                 gimage->channel_update_handler);
   gimp_container_remove_handler (gimage->channels,
                                  gimage->channel_visible_handler);
-
   gimp_container_remove_handler (gimage->channels,
                                  gimage->channel_name_changed_handler);
 
@@ -857,6 +864,12 @@ gimp_image_real_colormap_changed (GimpImage *gimage,
 void
 gimp_image_real_flush (GimpImage *gimage)
 {
+  if (gimage->flush_accum.alpha_changed)
+    {
+      gimp_image_alpha_changed (gimage);
+      gimage->flush_accum.alpha_changed = FALSE;
+    }
+
   if (gimage->flush_accum.mask_changed)
     {
       gimp_image_mask_changed (gimage);
@@ -913,6 +926,14 @@ gimp_image_drawable_visibility (GimpItem  *item,
                      gimp_item_width (item),
                      gimp_item_height (item));
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+}
+
+static void
+gimp_image_layer_alpha_changed (GimpDrawable *drawable,
+                                GimpImage    *gimage)
+{
+  if (gimp_container_num_children (gimage->layers) == 1)
+    gimage->flush_accum.alpha_changed = TRUE;
 }
 
 static void

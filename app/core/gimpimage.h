@@ -80,6 +80,7 @@ typedef struct _GimpImageFlushAccumulator GimpImageFlushAccumulator;
 
 struct _GimpImageFlushAccumulator
 {
+  gboolean alpha_changed;
   gboolean mask_changed;
 };
 
@@ -140,8 +141,9 @@ struct _GimpImage
   GSList            *layer_stack;           /*  the layers in MRU order      */
 
   GQuark             layer_update_handler;
-  GQuark             channel_update_handler;
   GQuark             layer_visible_handler;
+  GQuark             layer_alpha_handler;
+  GQuark             channel_update_handler;
   GQuark             channel_visible_handler;
   GQuark             channel_name_changed_handler;
 

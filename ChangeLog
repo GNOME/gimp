@@ -1,3 +1,14 @@
+2004-03-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.[ch]: added "gboolean alpha_changed" to
+	GimpImageFlushAccumulator. Install an "alpha_changed" handler
+	on gimage->layers and set flush_accum.alpha_changed = TRUE
+	whenever the image's *only* layer changed its alpha.
+
+	* app/core/gimpimage-undo-push.c (undo_pop_layer_mod)
+	* app/core/gimplayer.c (gimp_layer_add_alpha): removed
+	explicit calls to gimp_image_alpha_changed().
+
 2004-03-15  Simon Budig  <simon@gimp.org>
 
 	* app/base/tile-swap.[ch]: Applied a modified version of a patch

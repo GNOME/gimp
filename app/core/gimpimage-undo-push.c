@@ -1425,13 +1425,6 @@ undo_pop_layer_mod (GimpUndo            *undo,
       GIMP_ITEM (layer->mask)->offset_y = offset_y;
     }
 
-  if (GIMP_IMAGE_TYPE_HAS_ALPHA (GIMP_DRAWABLE (layer)->type) !=
-      GIMP_IMAGE_TYPE_HAS_ALPHA (lmu->type) &&
-      undo->gimage->layers->num_children == 1)
-    {
-      gimp_image_alpha_changed (undo->gimage);
-    }
-
   if (GIMP_ITEM (layer)->width  != tile_manager_width  (lmu->tiles) ||
       GIMP_ITEM (layer)->height != tile_manager_height (lmu->tiles))
     {
