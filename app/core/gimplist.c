@@ -46,6 +46,7 @@ static void         gimp_list_remove             (GimpContainer       *container
 static void         gimp_list_reorder            (GimpContainer       *container,
 						  GimpObject          *object,
 						  gint                 new_index);
+static void         gimp_list_clear              (GimpContainer       *container);
 static gboolean     gimp_list_have               (const GimpContainer *container,
 						  const GimpObject    *object);
 static void         gimp_list_foreach            (const GimpContainer *container,
@@ -110,6 +111,7 @@ gimp_list_class_init (GimpListClass *klass)
   container_class->add                = gimp_list_add;
   container_class->remove             = gimp_list_remove;
   container_class->reorder            = gimp_list_reorder;
+  container_class->clear              = gimp_list_clear;
   container_class->have               = gimp_list_have;
   container_class->foreach            = gimp_list_foreach;
   container_class->get_child_by_name  = gimp_list_get_child_by_name;
@@ -131,10 +133,7 @@ gimp_list_dispose (GObject *object)
   list = GIMP_LIST (object);
 
   while (list->list)
-    {
-      gimp_container_remove (GIMP_CONTAINER (list),
-			     GIMP_OBJECT (list->list->data));
-    }
+    gimp_container_remove (GIMP_CONTAINER (list), list->list->data);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -201,6 +200,17 @@ gimp_list_reorder (GimpContainer *container,
     list->list = g_list_append (list->list, object);
   else
     list->list = g_list_insert (list->list, object, new_index);
+}
+
+static void
+gimp_list_clear (GimpContainer *container)
+{
+  GimpList *list;
+
+  list = GIMP_LIST (container);
+
+  while (list->list)
+    gimp_container_remove (container, list->list->data);
 }
 
 static gboolean
@@ -301,9 +311,7 @@ gimp_list_reverse (GimpList *list)
   if (GIMP_CONTAINER (list)->num_children > 1)
     {
       gimp_container_freeze (GIMP_CONTAINER (list));
-
       list->list = g_list_reverse (list->list);
-
       gimp_container_thaw (GIMP_CONTAINER (list));
     }
 }
@@ -318,9 +326,7 @@ gimp_list_sort (GimpList     *list,
   if (GIMP_CONTAINER (list)->num_children > 1)
     {
       gimp_container_freeze (GIMP_CONTAINER (list));
-
       list->list = g_list_sort (list->list, compare_func);
-
       gimp_container_thaw (GIMP_CONTAINER (list));
     }
 }

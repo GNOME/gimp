@@ -26,14 +26,6 @@
 #include "gimpobject.h"
 
 
-typedef enum
-{
-  GIMP_CONTAINER_POLICY_STRONG,
-  GIMP_CONTAINER_POLICY_WEAK
-} GimpContainerPolicy;
-
-#define GIMP_TYPE_CONTAINER_POLICY     (gimp_container_policy_get_type ())
-
 #define GIMP_TYPE_CONTAINER            (gimp_container_get_type ())
 #define GIMP_CONTAINER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER, GimpContainer))
 #define GIMP_CONTAINER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER, GimpContainerClass))
@@ -74,6 +66,7 @@ struct _GimpContainerClass
   void         (* thaw)               (GimpContainer       *container);
 
   /*  virtual functions  */
+  void         (* clear)              (GimpContainer       *container);
   gboolean     (* have)               (const GimpContainer *container,
 				       const GimpObject    *object);
   void         (* foreach)            (const GimpContainer *container,
@@ -87,8 +80,6 @@ struct _GimpContainerClass
 				       const GimpObject    *object);
 };
 
-
-GType        gimp_container_policy_get_type    (void) G_GNUC_CONST;
 
 GType        gimp_container_get_type           (void) G_GNUC_CONST;
 
@@ -111,6 +102,7 @@ void         gimp_container_freeze             (GimpContainer       *container);
 void         gimp_container_thaw               (GimpContainer       *container);
 gboolean     gimp_container_frozen             (GimpContainer       *container);
 
+void         gimp_container_clear              (GimpContainer       *container);
 gboolean     gimp_container_have               (GimpContainer       *container,
 						GimpObject          *object);
 void         gimp_container_foreach            (GimpContainer       *container,

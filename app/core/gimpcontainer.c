@@ -113,31 +113,10 @@ static void   gimp_container_disconnect_callback (GimpObject         *object,
 						  gpointer            data);
 
 
-static guint   container_signals[LAST_SIGNAL] = { 0 };
+static guint container_signals[LAST_SIGNAL] = { 0, };
 
 static GimpObjectClass *parent_class = NULL;
 
-
-GType
-gimp_container_policy_get_type (void)
-{
-  static GType policy_type = 0;
-
-  if (! policy_type)
-    {
-      static const GEnumValue container_policy_values[] =
-      {
-        { GIMP_CONTAINER_POLICY_STRONG, "GIMP_CONTAINER_POLICY_STRONG", "strong" },
-        { GIMP_CONTAINER_POLICY_WEAK,   "GIMP_CONTAINER_POLICY_WEAK",   "weak"   },
-        { 0, NULL, NULL }
-      };
-
-      policy_type = g_enum_register_static ("GimpContainerPolicy",
-                                            container_policy_values);
-    }
-
-  return policy_type;
-}
 
 GType
 gimp_container_get_type (void)
@@ -158,7 +137,7 @@ gimp_container_get_type (void)
 	0,              /* n_preallocs    */
 	(GInstanceInitFunc) gimp_container_init,
       };
-      static const GInterfaceInfo config_iface_info = 
+      static const GInterfaceInfo config_iface_info =
       {
         (GInterfaceInitFunc) gimp_container_config_iface_init,
         NULL,           /* iface_finalize */
@@ -166,7 +145,7 @@ gimp_container_get_type (void)
       };
 
       container_type = g_type_register_static (GIMP_TYPE_OBJECT,
-					       "GimpContainer", 
+					       "GimpContainer",
                                                &container_info, 0);
 
       g_type_add_interface_static (container_type,
@@ -249,6 +228,7 @@ gimp_container_class_init (GimpContainerClass *klass)
   klass->freeze                  = NULL;
   klass->thaw                    = NULL;
 
+  klass->clear                   = NULL;
   klass->have                    = NULL;
   klass->foreach                 = NULL;
   klass->get_child_by_name       = NULL;
@@ -296,11 +276,9 @@ gimp_container_dispose (GObject *object)
   container = GIMP_CONTAINER (object);
 
   while (container->handlers)
-    {
-      gimp_container_remove_handler (container,
-				     ((GimpContainerHandler *)
-				      container->handlers->data)->quark);
-    }
+    gimp_container_remove_handler (container,
+                                   ((GimpContainerHandler *)
+                                    container->handlers->data)->quark);
 
   if (container->children_type != G_TYPE_NONE)
     {
@@ -372,13 +350,11 @@ gimp_container_get_memsize (GimpObject *object,
 
   for (list = container->handlers; list; list = g_list_next (list))
     {
-      GimpContainerHandler *handler;
-
-      handler = (GimpContainerHandler *) list->data;
+      GimpContainerHandler *handler = list->data;
 
       memsize += (sizeof (GList) +
                   sizeof (GimpContainerHandler) +
-                  strlen (handler->signame));
+                  strlen (handler->signame) + 1);
     }
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
@@ -677,8 +653,8 @@ gimp_container_remove (GimpContainer *container,
     {
       handler = (GimpContainerHandler *) list->data;
 
-      handler_id = GPOINTER_TO_UINT
-	(g_object_get_qdata (G_OBJECT (object), handler->quark));
+      handler_id = GPOINTER_TO_UINT (g_object_get_qdata (G_OBJECT (object),
+                                                         handler->quark));
 
       if (handler_id)
 	{
@@ -799,6 +775,19 @@ gimp_container_frozen (GimpContainer *container)
   return (container->freeze_count > 0) ? TRUE : FALSE;
 }
 
+void
+gimp_container_clear (GimpContainer *container)
+{
+  g_return_if_fail (GIMP_IS_CONTAINER (container));
+
+  if (container->num_children > 0)
+    {
+      gimp_container_freeze (container);
+      GIMP_CONTAINER_GET_CLASS (container)->clear (container);
+      gimp_container_thaw (container);
+    }
+}
+
 gboolean
 gimp_container_have (GimpContainer *container,
 		     GimpObject    *object)
@@ -819,10 +808,8 @@ gimp_container_foreach (GimpContainer  *container,
   g_return_if_fail (GIMP_IS_CONTAINER (container));
   g_return_if_fail (func != NULL);
 
-  if (container->num_children < 1)
-    return;
-
-  GIMP_CONTAINER_GET_CLASS (container)->foreach (container, func, user_data);
+  if (container->num_children > 0)
+    GIMP_CONTAINER_GET_CLASS (container)->foreach (container, func, user_data);
 }
 
 GimpObject *
@@ -925,9 +912,8 @@ gimp_container_remove_handler_foreach_func (GimpObject           *object,
 {
   gulong handler_id;
 
-  handler_id =
-    GPOINTER_TO_UINT (g_object_get_qdata (G_OBJECT (object),
-					  handler->quark));
+  handler_id = GPOINTER_TO_UINT (g_object_get_qdata (G_OBJECT (object),
+                                                     handler->quark));
 
   if (handler_id)
     {

@@ -115,6 +115,25 @@ gimp_channel_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_container_policy_enum_values[] =
+{
+  { GIMP_CONTAINER_POLICY_STRONG, "GIMP_CONTAINER_POLICY_STRONG", "strong" },
+  { GIMP_CONTAINER_POLICY_WEAK, "GIMP_CONTAINER_POLICY_WEAK", "weak" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_container_policy_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpContainerPolicy", gimp_container_policy_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_convert_dither_type_enum_values[] =
 {
   { GIMP_NO_DITHER, N_("No Color Dithering"), "no-dither" },

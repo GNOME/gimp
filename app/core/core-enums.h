@@ -21,18 +21,18 @@
 
 #if 0
    This file is parsed by two scripts, enumgen.pl in tools/pdbgen,
-   and gimp-mkenums. All enums that are not marked with 
+   and gimp-mkenums. All enums that are not marked with
    /*< pdb-skip >*/ are exported to libgimp and the PDB. Enums that are
-   not marked with /*< skip >*/ are registered with the GType system. 
-   If you want the enum to be skipped by both scripts, you have to use 
-   /*< pdb-skip, skip >*/. 
+   not marked with /*< skip >*/ are registered with the GType system.
+   If you want the enum to be skipped by both scripts, you have to use
+   /*< pdb-skip, skip >*/.
 
    All enum values that are marked with /*< skip >*/ are skipped for
    both targets.
 #endif
 
 
-/* 
+/*
  * these enums that are registered with the type system
  */
 
@@ -103,6 +103,17 @@ typedef enum
 } GimpChannelType;
 
 
+#define GIMP_TYPE_CONTAINER_POLICY (gimp_container_policy_get_type ())
+
+GType gimp_container_policy_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_CONTAINER_POLICY_STRONG,
+  GIMP_CONTAINER_POLICY_WEAK
+} GimpContainerPolicy;
+
+
 #define GIMP_TYPE_CONVERT_DITHER_TYPE (gimp_convert_dither_type_get_type ())
 
 GType gimp_convert_dither_type_get_type (void) G_GNUC_CONST;
@@ -142,7 +153,7 @@ GType gimp_fill_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_FOREGROUND_FILL,   /*< desc="Foreground"  >*/ 
+  GIMP_FOREGROUND_FILL,   /*< desc="Foreground"  >*/
   GIMP_BACKGROUND_FILL,   /*< desc="Background"  >*/
   GIMP_WHITE_FILL,        /*< desc="White"       >*/
   GIMP_TRANSPARENT_FILL,  /*< desc="Transparent" >*/
@@ -156,7 +167,7 @@ GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_LINEAR,                /*< desc="Linear"                 >*/ 
+  GIMP_LINEAR,                /*< desc="Linear"                 >*/
   GIMP_BILINEAR,              /*< desc="Bi-Linear"              >*/
   GIMP_RADIAL,                /*< desc="Radial"                 >*/
   GIMP_SQUARE,                /*< desc="Square"                 >*/

@@ -1,5 +1,14 @@
 2003-08-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-enums.[ch]: added enum GimpContainerPolicy.
+
+	* app/core/gimpcontainer.[ch]: removed it here.  Added new virtual
+	function GimpContainer::clear() which removes all items. Cleanup.
+
+	* app/core/gimplist.c: implement GimpContainer::clear(). Cleanup.
+
+2003-08-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpitemfactory.[ch]
 	* app/widgets/gimpmenufactory.[ch]: added a help_id to
 	GimpItemFactory.  It's basically the code I removed some days ago,
