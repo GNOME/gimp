@@ -1,3 +1,8 @@
+2004-07-18  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpchannel-combine.c: improve anti-aliasing for
+	elliptical selections, as described in bug #147836.
+
 2004-07-18  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite-mmx.h: don't start a comment with
