@@ -288,7 +288,7 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
                */
               if (error)
                 {
-                  g_message (_("Warning: Failed to save data:\n%s"),
+                  g_message (_("Warning: Failed to save data:\n\n%s"),
                              error->message);
                   g_clear_error (&error);
                 }
@@ -497,7 +497,7 @@ gimp_data_factory_data_save_single (GimpDataFactory *factory,
        */
       if (error)
         {
-          g_message (_("Warning: Failed to save data:\n%s"),
+          g_message (_("Warning: Failed to save data:\n\n%s"),
                      error->message);
           g_clear_error (&error);
         }
@@ -600,7 +600,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
 
     if (! data)
       {
-	g_message (_("Warning: Failed to load data:\n%s"),
+	g_message (_("Warning: Failed to load data:\n\n%s"),
                    error->message);
         g_clear_error (&error);
       }

@@ -1,5 +1,13 @@
 2004-07-23  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdatafactory.c: some newlines to improve error
+	messages.
+
+	* app/core/gimpgradient-load.c (gimp_gradient_load_svg): fixed
+	error handling.
+
+2004-07-23  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/Makefile.am
 	* libgimpcolor/test-color-parser.c: added a simple unit test
 	framework for the color parser.

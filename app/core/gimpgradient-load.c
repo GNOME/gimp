@@ -300,7 +300,22 @@ gimp_gradient_load_svg (const gchar  *filename,
       /*  FIXME: this will be overwritten by GimpDataFactory  */
       data->writable = FALSE;
     }
-  /*  FIXME: error handling  */
+  else if (success)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("No gradients found in '%s'"),
+                   gimp_filename_to_utf8 (filename));
+    }
+  else if (error && *error) /*  parser reported an error  */
+    {
+      gchar *msg = (*error)->message;
+
+      (*error)->message =
+        g_strdup_printf (_("Failed to import gradient from '%s': %s"),
+                         gimp_filename_to_utf8 (filename), msg);
+
+      g_free (msg);
+    }
 
   if (parser.gradient)
     g_object_unref (parser.gradient);
