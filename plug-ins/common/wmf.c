@@ -1321,8 +1321,7 @@ load_image (char *filename)
       return -1;
     }
 
-  name_buf = g_malloc (strlen (filename) + 100);
-  sprintf (name_buf, "Interpreting %s:", filename);
+  name_buf = g_strdup_printf ( _("Interpreting %s:"), filename);
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
@@ -2335,7 +2334,7 @@ load_image (char *filename)
 	  
 	  if (canvas->height >= 100)
 	    {
-	      g_strdup_printf (name_buf, _("Transferring image"));
+	      name_buf = g_strdup_printf (_("Transferring image"));
 	      gimp_progress_init (name_buf);
 	      g_free (name_buf);
 	    }

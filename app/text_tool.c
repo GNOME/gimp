@@ -20,6 +20,7 @@
 
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdk.h>
+#include <gdk/gdkx.h>
 
 #include <gdk/gdkprivate.h>
 
@@ -567,6 +568,8 @@ text_render (GimpImage    *gimage,
   gint width, height;
   gint x, y, k;
   void * pr;
+  XFontStruct *xfs;
+  char *fname;
 
   /*  determine the layer type  */
   if (drawable)
@@ -588,6 +591,13 @@ text_render (GimpImage    *gimage,
   gdk_error_warnings = 0;
   gdk_error_code = 0;
   font = gdk_font_load (fontname);
+  xfs = GDK_FONT_XFONT(font);
+  if (xfs->min_byte1 != 0 || xfs->max_byte1 != 0) {
+    gdk_font_unref(font);
+    fname = g_strdup_printf("%s,*", fontname);
+    font = gdk_fontset_load (fname);
+    g_free(fname);
+  }
   gdk_error_warnings = 1;
   if (!font || (gdk_error_code == -1))
     {

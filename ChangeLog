@@ -8,6 +8,8 @@
 	* plug-ins/pagecurl/Makefile.am
 	* po-plug-ins/POTFILES.in: added gettext support.
 
+	* app/text_tool.c: i18n fix.
+
 2000-01-15 Garry R. Osgood <gosgood@idt.net>
 
 	* app/layers_dialog.c
