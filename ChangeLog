@@ -1,3 +1,19 @@
+2000-05-06  Michael Natterer  <mitch@gimp.org>
+
+	* po/POTFILES.in
+	* app/Makefile.am
+	* app/docindexif.[ch]: removed because it was not doing core/ui
+	separation at all. UI functions were randomly scattered across
+	both files.
+
+	* app/app_procs.c
+	* app/docindex.[ch]: swallow all functions from docindex.c,
+	removed functions which were called just once, replaced the
+	tree by a list. Actually raise displays of already open images.
+	When opening a file which is already in the list, move it's entry
+	to the top; this way the toolbox' last_opened list finally works
+	as expected.
+
 2000-05-06  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/bmp/*: Fixed #9802, added 32-bit and 16-bit support
