@@ -113,7 +113,7 @@ gui_themes_dir_foreach_func (const gchar *filename,
   basename = g_path_get_basename (filename);
 
   if (gimp->be_verbose)
-    g_print (_("adding theme \"%s\" (%s)\n"), basename, filename);
+    g_print (_("Adding theme '%s' (%s)\n"), basename, filename);
 
   g_hash_table_insert (themes_hash,
 		       basename,
@@ -179,7 +179,7 @@ gui_themes_init (Gimp *gimp)
     }
 
   if (gimp->be_verbose)
-    g_print (_("parsing \"%s\"\n"), gtkrc);
+    g_print (_("Parsing '%s'\n"), gtkrc);
 
   gtk_rc_parse (gtkrc);
 
@@ -190,7 +190,7 @@ gui_themes_init (Gimp *gimp)
   gtkrc = gimp_personal_rc_file ("gtkrc");
 
   if (gimp->be_verbose)
-    g_print (_("parsing \"%s\"\n"), gtkrc);
+    g_print (_("Parsing '%s'\n"), gtkrc);
 
   gtk_rc_parse (gtkrc);
 
@@ -376,11 +376,12 @@ gui_really_quit_dialog (GCallback quit_func)
   gimp_menu_item_set_sensitive ("<Toolbox>/File/Quit", FALSE);
   gimp_menu_item_set_sensitive ("<Image>/File/Quit", FALSE);
 
-  dialog = gimp_query_boolean_box (_("Quit the GIMP?"),
+  dialog = gimp_query_boolean_box (_("Quit The GIMP?"),
 				   gimp_standard_help_func,
 				   "dialogs/really_quit.html",
 				   TRUE,
-				   _("Some files unsaved.\n\nQuit the GIMP?"),
+				   _("Some files are unsaved.\n"
+				     "\nReally quit The GIMP?"),
 				   GTK_STOCK_QUIT, GTK_STOCK_CANCEL,
 				   NULL, NULL,
 				   gui_really_quit_callback,

@@ -265,7 +265,8 @@ gradient_select_change_callbacks (GradientSelect *gsp,
 				GIMP_PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
-	g_message ("failed to run gradient callback function");
+	g_message (_("Failed to run gradient callback function.\n"
+		   "The corresponding plug-in may have crashed."));
       else
 	procedural_db_destroy_args (return_vals, nreturn_vals);
     }

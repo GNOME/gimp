@@ -250,24 +250,28 @@ info_window_create_extended (InfoDialog  *info_win,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
   gtk_widget_show (preview);
 
+  /* Red */
   label = gtk_label_new (_("R:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
+  /* Green */
   label = gtk_label_new (_("G:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
+  /* Blue */
   label = gtk_label_new (_("B:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
+  /* Alpha */
   label = gtk_label_new (_("A:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
@@ -335,7 +339,7 @@ info_window_create (GimpDisplay *gdisp)
   info_win->user_data = iwd;
 
   /*  add the information fields  */
-  info_dialog_add_label (info_win, _("Dimensions (w x h):"),
+  info_dialog_add_label (info_win, _("Dimensions (W x H):"),
 			 iwd->dimensions_str);
   info_dialog_add_label (info_win, '\0',
 			 iwd->real_dimensions_str);

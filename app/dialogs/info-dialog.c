@@ -137,7 +137,7 @@ update_field (InfoField *field)
       break;
 
     default:
-      g_warning ("Unknown info_dialog field type.");
+      g_warning ("%s: Unknown info_dialog field type.", G_STRLOC);
       break;
     }
 

@@ -137,7 +137,7 @@ indicator_area_create (GimpContext *context)
 
   gimp_help_set_help_data (brush_preview, 
 			   _("The active brush.\n"
-			     "Click to open the Brushes Dialog."), NULL);
+			     "Click to open the Brush Dialog."), NULL);
 
   g_signal_connect_object (G_OBJECT (context), "brush_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
@@ -169,7 +169,7 @@ indicator_area_create (GimpContext *context)
 
   gimp_help_set_help_data (pattern_preview,
 			   _("The active pattern.\n"
-			     "Click to open the Patterns Dialog."), NULL);
+			     "Click to open the Pattern Dialog."), NULL);
 
   g_signal_connect_object (G_OBJECT (context), "pattern_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
@@ -201,7 +201,7 @@ indicator_area_create (GimpContext *context)
 
   gimp_help_set_help_data (gradient_preview, 
 			   _("The active gradient.\n"
-			     "Click to open the Gradients Dialog."), NULL);
+			     "Click to open the Gradient Dialog."), NULL);
 
   g_signal_connect_object (G_OBJECT (context), "gradient_changed",
 			   G_CALLBACK (gimp_preview_set_viewable),
