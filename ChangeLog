@@ -23,6 +23,10 @@
 
 2004-10-27  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/enumcode.pl: removed trailing commmas from output.
+
+2004-10-27  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/enumcode.pl: fixed loop control in
 	_gimp_enums_init(). This caused all plug-ins to crash immidiately.
 	You will need to make sure that libgimp/gimpenums.c.tail is

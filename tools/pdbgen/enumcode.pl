@@ -121,6 +121,7 @@ static GimpGetTypeFunc get_type_funcs[] =
 {
 CODE
 
+my $first = 1;
 foreach (sort keys %enums) {
     if (! ($_ =~ /GimpUnit/)) {
 	my $enum = $enums{$_};
@@ -128,9 +129,13 @@ foreach (sort keys %enums) {
 
 	for ($func) { s/Gimp//; s/PDB/Pdb/; s/([A-Z][^A-Z]+)/\L$1\E_/g; s/_$// }
 
-	print ENUMFILE "  gimp_$func\_get_type,\n";
+	print ENUMFILE ",\n" unless $first;
+	print ENUMFILE "  gimp_$func\_get_type";
+
+	$first = 0;
     }
 }
+print ENUMFILE "\n" unless $first;
 
 print ENUMFILE <<CODE;
 };
@@ -139,14 +144,19 @@ static const gchar *type_names[] =
 {
 CODE
 
+my $first = 1;
 foreach (sort keys %enums) {
     if (! ($_ =~ /GimpUnit/)) {
 	my $enum = $enums{$_};
 	my $gtype = $_;
 
-	print ENUMFILE "  \"$gtype\",\n";
+	print ENUMFILE ",\n" unless $first;
+	print ENUMFILE "  \"$gtype\"";
+
+        $first = 0;
     }
 }
+print ENUMFILE "\n" unless $first;
 
 print ENUMFILE <<CODE;
 };
@@ -187,7 +197,6 @@ gimp_enums_get_type_names (gint *n_type_names)
 
   return type_names;
 }
-
 CODE
 
 close ENUMFILE;
