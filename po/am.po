@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2003-01-06 05:03+0100\n"
-"PO-Revision-Date: 2003-01-09 21:53+EDT\n"
+"PO-Revision-Date: 2003-01-14 11:02+EDT\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
 "MIME-Version: 1.0\n"
@@ -968,7 +968,7 @@ msgstr ""
 #: app/core/gimpimage-new.c:114
 #, c-format
 msgid "%d Bytes"
-msgstr "%d Bytes"
+msgstr "%d ባይቶች"
 
 #: app/core/gimpimage-new.c:118
 #, c-format
@@ -6076,7 +6076,7 @@ msgstr ""
 
 #: app/tools/gimphistogramtool.c:364
 msgid "Information on Channel:"
-msgstr ""
+msgstr "ስለ ጣቢያን መረጃ፦"
 
 #: app/tools/gimphistogramtool.c:377
 msgid "Intensity Range:"
@@ -6836,7 +6836,7 @@ msgstr ""
 
 #: app/widgets/widgets-enums.c:13
 msgid "Internal"
-msgstr ""
+msgstr "በውስጥ"
 
 #: app/widgets/widgets-enums.c:14
 msgid "Netscape"
