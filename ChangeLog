@@ -1,3 +1,8 @@
+1999-06-21  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* pixmaps/delete.xpm: New icon for Delete (layer, path, channel etc..)
+	One that represents a trashcan. Looks more 3ye C4nDy ;)
+ 
 1999-06-20  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/commands.c
