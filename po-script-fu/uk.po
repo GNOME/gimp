@@ -568,37 +568,31 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Шаблони/Земля..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Сервер..."
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Шаблони/В╕зуал╕зац╕я мапи..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Консоль..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Консоль..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Сервер..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Сервер..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Консоль..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
@@ -745,9 +739,8 @@ msgid "Add Background"
 msgstr "Додати тло"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
-#, fuzzy
 msgid "Add Drop-Shadow"
-msgstr "Додати т╕нь"
+msgstr "Додати падаючу т╕нь"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Add Shadow"
@@ -756,7 +749,7 @@ msgstr "Додати т╕нь"
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Allow Resizing"
-msgstr ""
+msgstr "Дозволити зм╕ну розм╕ру"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Amplitude"
@@ -860,9 +853,8 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Bevel Width"
-msgstr "Ширина зображення"
+msgstr "Ширина фаски"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Outline)"
@@ -918,22 +910,19 @@ msgid "Blur Y"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
-#, fuzzy
 msgid "Border Color"
-msgstr "Кол╕р переднього плану"
+msgstr "Кол╕р облям╕вки"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
-#, fuzzy
 msgid "Border Size (pixels)"
-msgstr "Розм╕р тексту (в п╕кселях)"
+msgstr "Розм╕р облям╕вки (в п╕кселях)"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#, fuzzy
 msgid "Border Size"
-msgstr "Розм╕р тексту"
+msgstr "Розм╕р облям╕вки"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border X Size"
@@ -957,9 +946,8 @@ msgid "Bumpmap (Alpha Layer) Blur Radius"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#, fuzzy
 msgid "Burst Color"
-msgstr "Кол╕р шрифту"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Carve Raised Text"
@@ -970,14 +958,12 @@ msgid "Carve White Areas"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
-#, fuzzy
 msgid "Cell Size (pixels)"
-msgstr "Розм╕р тексту (в п╕кселях)"
+msgstr "Розм╕р ком╕рки (в п╕кселях)"
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
-#, fuzzy
 msgid "Chalk Color"
-msgstr "Кол╕р т╕н╕"
+msgstr "Кол╕р крейди"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Chip Amount"
@@ -1108,16 +1094,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Blur Radius"
-msgstr ""
+msgstr "Рад╕ус розмивання падаючо╖ т╕н╕"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
 msgid "Drop Shadow Color"
-msgstr "Кол╕р т╕н╕"
+msgstr "Кол╕р падаючо╖ т╕н╕"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Opacity"
-msgstr ""
+msgstr "Непрозор╕сть падаючо╖ т╕н╕"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow X Offset"
@@ -1128,9 +1113,8 @@ msgid "Drop Shadow Y Offset"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
-#, fuzzy
 msgid "Drop Shadow"
-msgstr "Т╕нь"
+msgstr "Падаюча т╕нь"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Edge Amount"
@@ -1141,46 +1125,38 @@ msgid "Edge Only"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
-#, fuzzy
 msgid "Edge Radius"
-msgstr "Рад╕ус"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#, fuzzy
 msgid "Edge Width"
-msgstr "Ширина зображення"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#, fuzzy
 msgid "Effect Size (pixels * 3)"
-msgstr "Розм╕р тексту (в п╕кселях)"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#, fuzzy
 msgid "Effect Size (pixels * 30)"
-msgstr "Розм╕р тексту (в п╕кселях)"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#, fuzzy
 msgid "Effect Size (pixels * 4)"
-msgstr "Розм╕р тексту (в п╕кселях)"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
-#, fuzzy
 msgid "Effect Size (pixels * 5)"
-msgstr "Розм╕р тексту (в п╕кселях)"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#, fuzzy
 msgid "Effect Size (pixels)"
-msgstr "Розм╕р тексту (в п╕кселях)"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
-#, fuzzy
 msgid "Elevation"
-msgstr "Ор╕╓нтац╕я"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
@@ -1366,14 +1342,12 @@ msgid "Foreground Color"
 msgstr "Кол╕р переднього плану"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#, fuzzy
 msgid "Frame Color"
-msgstr "Кол╕р шрифту"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#, fuzzy
 msgid "Frame Size"
-msgstr "Розм╕р зображення"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Frames"
@@ -1568,19 +1542,16 @@ msgid "Lower-Right color"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
-#, fuzzy
 msgid "Make New Background"
-msgstr "Видалити тло"
+msgstr "Зробити нове тло"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
-#, fuzzy
 msgid "Mask Opacity"
-msgstr "Непрозор╕сть"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
-#, fuzzy
 msgid "Mask Size"
-msgstr "Розм╕р зображення"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Max. Blur Radius"
@@ -1607,9 +1578,8 @@ msgid "Not Pressed"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#, fuzzy
 msgid "Number of Bands"
-msgstr "К╕льк╕сть кольор╕в"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1630,21 +1600,18 @@ msgid "Number of Lines"
 msgstr "К╕льк╕сть рядк╕в"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
-#, fuzzy
 msgid "Number of Times to Whirl"
-msgstr "К╕льк╕сть коп╕й"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
-#, fuzzy
 msgid "Number of X Tiles"
-msgstr "К╕льк╕сть коп╕й"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
-#, fuzzy
 msgid "Number of Y Tiles"
-msgstr "К╕льк╕сть коп╕й"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
@@ -2111,19 +2078,19 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Up"
-msgstr ""
+msgstr "Вгору"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color (Active)"
-msgstr "Верхн╕й кол╕р (активний)"
+msgstr "Гор╕шн╕й кол╕р (активний)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color"
-msgstr "Верхн╕й кол╕р"
+msgstr "Гор╕шн╕й кол╕р"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Upper-Left color"
-msgstr ""
+msgstr "Гор╕шн╕й л╕вий кол╕р"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Use Brush"
@@ -2134,13 +2101,12 @@ msgid "Use Current Gradient"
 msgstr "Використовувати поточний град╕╓нт"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
-#, fuzzy
 msgid "Use Growing Selection"
-msgstr "Виб╕р град╕╓нту Script-Fu"
+msgstr "Використовувати зростаюче вид╕лення"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern Overlay"
-msgstr ""
+msgstr "Використовувати перекривання шаблон╕в"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Outline instead of Gradient"
