@@ -73,6 +73,7 @@ main (int argc, char **argv)
   int show_version;
   int show_help;
   int i, j;
+  gchar *display_name, *display_env;
 
   atexit (g_mem_profile);
 
@@ -84,6 +85,14 @@ main (int argc, char **argv)
   gtk_accelerator_table_set_mod_mask (NULL, GDK_SHIFT_MASK |
                                             GDK_CONTROL_MASK |
                                             GDK_MOD1_MASK);
+
+  display_name = gdk_get_display ();
+  display_env = g_new (gchar, strlen (display_name) + 9);
+  *display_env = 0;
+  strcat (display_env, "DISPLAY=");
+  strcat (display_env, display_name);
+  putenv (display_env);
+  g_free (display_env);
 
   no_interface = FALSE;
   no_data = FALSE;

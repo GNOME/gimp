@@ -4,6 +4,8 @@
  * This filter's code is based on the GIF loading/saving filter for the GIMP,
  * by Peter Mattis, and Spencer Kimball. However, code from the "netpbm" package
  * is no longer used in this plug-in.
+ *
+ * Fixes to RLE saving by Nick Lamb (njl195@ecs.soton.ac.uk)
  */
 
 #include <stdio.h>
@@ -543,16 +545,11 @@ save_image (char   *filename,
 	int Blue[MAXCOLORS];
 	guchar *cmap;
 	int width, height;
-	int bpp;
+	int bpp= 0;
 	int colors;
 	FILE *outfile;
 	guchar *name_buf;
-	gint max_progress;
 	int i;
-
-	/* initialize */
-
-	bpp = 0;
 
 	drawable = gimp_drawable_get(drawable_ID);
 	drawable_type = gimp_drawable_type(drawable_ID);
@@ -562,8 +559,6 @@ save_image (char   *filename,
 	sprintf(name_buf, "Saving %s:", filename);
 	gimp_progress_init(name_buf);
 	g_free(name_buf);
-
-	max_progress = drawable->height;
 
 	switch(drawable_type) {
 		case INDEXED_IMAGE :
@@ -592,6 +587,7 @@ save_image (char   *filename,
 
 		default :
 			fprintf(stderr, "PCX: you should not receive this error for any reason\n");
+			return FALSE;
 			break;
 	}
 
@@ -615,6 +611,7 @@ save_image (char   *filename,
 	pcx_header.y2 = height - 1;
 	pcx_header.paletteinfo = 1;
 	if(bpp <= 8) {
+		pcx_header.bytesperline = width;
 		pcx_header.bitsperpixel = 8;
 		pcx_header.nplanes = 1;
 	}
@@ -670,21 +667,21 @@ save_8bit(FILE *out,
 	printf("saving %d * %d\n", len, height);
 
 	while(cur_y < height) {
-		while(cur_x <= len) {
+		while(cur_x < len) {
 			temp = (cur_y * len) + cur_x + buffer;
 			v = *temp;
 			times = 1;
 			++cur_x;
 			temp = (cur_y * len) + cur_x + buffer;
-			if(cur_x + 63 > len) {
+			if(cur_x + 62 > len) {
 				max = len;
 			}
 			else
-				max = cur_x + 63;
+				max = cur_x + 62;
 			while((*temp == v) && (cur_x < max)) {
 				times ++;
-				temp = (cur_y * len) + cur_x + buffer;
 				cur_x ++;
+				temp = (cur_y * len) + cur_x + buffer;
 			}
 			if(times == 1) {
 				if(v >= 0xC0) {
