@@ -29,6 +29,7 @@
 #include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
+#include "text/gimptext.h"
 
 #include "gimpdrawable.h"
 #include "gimpimage.h"
@@ -36,7 +37,6 @@
 #include "gimpimage-text.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
-#include "gimptext.h"
 
 #include "undo.h"
 

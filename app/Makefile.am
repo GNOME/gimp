@@ -18,9 +18,10 @@ SUBDIRS = \
 	paint-funcs	\
 	base 		\
 	core		\
-	vectors		\
 	config		\
 	paint		\
+	text		\
+	vectors		\
 	xcf		\
 	file		\
 	plug-in		\
@@ -114,8 +115,9 @@ gimp_1_3_LDADD = \
 	widgets/libappwidgets.a						\
 	core/libappcore.a						\
 	pdb/libapppdb.a							\
-	vectors/libappvectors.a						\
 	paint/libapppaint.a						\
+	text/libapptext.a						\
+	vectors/libappvectors.a						\
 	xcf/libappxcf.a							\
 	file/libappfile.a						\
 	plug-in/libappplug-in.a						\

@@ -38,8 +38,9 @@
 #include "core/gimpimage-text.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
-#include "core/gimptext.h"
 #include "core/gimptoolinfo.h"
+
+#include "text/gimptext.h"
 
 #include "widgets/gimpfontselection.h"
 #include "widgets/gimpwidgets-utils.h"

@@ -20,7 +20,7 @@
 
 #include <glib-object.h>
 
-#include "core-types.h"
+#include "text/text-types.h"
 
 #include "config/gimpconfig-params.h"
 

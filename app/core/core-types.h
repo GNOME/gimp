@@ -159,8 +159,6 @@ typedef struct _GimpPalette         GimpPalette;
 
 typedef struct _GimpImageMap        GimpImageMap;
 
-typedef struct _GimpText            GimpText;
-
 typedef struct _GimpEnvironTable    GimpEnvironTable;
 
 
@@ -221,6 +219,7 @@ struct _GimpCoords
 
 
 #include "paint/paint-types.h"
+#include "text/text-types.h"
 #include "vectors/vectors-types.h"
 #include "pdb/pdb-types.h"
 #include "plug-in/plug-in-types.h"

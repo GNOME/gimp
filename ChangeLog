@@ -1,3 +1,17 @@
+2003-01-29  Sven Neumann  <sven@gimp.org>
+	
+	* configure.in
+	* app/Makefile.am
+	* app/text/Makefile.am: added new directory text.
+
+	* app/text/text-types.h
+	* app/text/gimptext.[ch]: moved GimpText object here.
+	
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpimage-text.c
+	* app/tools/gimptexttool.c: changed accordingly.
+
 2003-01-29  Michael Natterer  <mitch@gimp.org>
 
 	Fixed bug #97449:
