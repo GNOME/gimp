@@ -223,7 +223,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
-	  strncpy (info.description, gimp_drawable_name (drawable_ID), 256);
+	  strncpy (info.description, gimp_drawable_get_name (drawable_ID), 256);
 	  gimp_get_data ("file_gbr_save", &info);
 	  if (! save_dialog ())
 	    status = GIMP_PDB_CANCEL;

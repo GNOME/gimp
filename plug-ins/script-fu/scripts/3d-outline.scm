@@ -49,7 +49,7 @@
     (gimp-layer-set-preserve-trans logo-layer FALSE)
     (plug-in-gauss-iir 1 img logo-layer outline-blur-radius TRUE TRUE)
 
-    (gimp-layer-set-visible pattern FALSE)
+    (gimp-drawable-set-visible pattern FALSE)
     (set! layer2 (car (gimp-image-merge-visible-layers img 1)))
     (plug-in-edge 1 img layer2 2 1 0)
     (set! layer3 (car (gimp-layer-copy layer2 TRUE)))
@@ -75,8 +75,8 @@
 
     (gimp-drawable-offset layer3 0 1 s-offset-x s-offset-y)
 
-    (gimp-layer-set-visible layer2 FALSE)
-    (gimp-layer-set-visible pattern TRUE)
+    (gimp-drawable-set-visible layer2 FALSE)
+    (gimp-drawable-set-visible pattern TRUE)
     ;;(set! final (car (gimp-image-flatten img)))
     
     (gimp-palette-set-background old-bg)

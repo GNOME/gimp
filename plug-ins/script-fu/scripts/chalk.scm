@@ -87,7 +87,7 @@
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
 	 (old-fg (car (gimp-palette-get-foreground))))
     (gimp-image-undo-disable img)
-    (gimp-layer-set-name text-layer text)
+    (gimp-drawable-set-name text-layer text)
     (gimp-palette-set-foreground chalk-color)
     (gimp-layer-set-preserve-trans text-layer TRUE)
     (gimp-edit-fill text-layer FOREGROUND-FILL)

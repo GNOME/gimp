@@ -37,13 +37,13 @@
   (while (<= layer-count num-layers)
 	 (set! layer (aref layer-array (- num-layers layer-count)))
 	 (aset visi-array (- num-layers layer-count)
-	                  (car (gimp-layer-get-visible layer)))
-	 (if (= TRUE (car (gimp-layer-get-visible layer)))
+	                  (car (gimp-drawable-get-visible layer)))
+	 (if (= TRUE (car (gimp-drawable-get-visible layer)))
 	     (begin
 	       (set! copy (car (gimp-layer-copy layer TRUE)))
 	       (gimp-image-add-layer image copy -1)
-	       (gimp-layer-set-visible copy TRUE)
-	       (gimp-layer-set-visible layer FALSE)
+	       (gimp-drawable-set-visible copy TRUE)
+	       (gimp-drawable-set-visible layer FALSE)
 	       (set! num-visi-layers (+ num-visi-layers 1))))
 	 (set! layer-count (+ layer-count 1)))
   
@@ -63,7 +63,7 @@
   (set! layer-count 0)
   (while (< layer-count num-layers)
 	 (set! layer (aref layer-array layer-count))
-	 (gimp-layer-set-visible layer (aref visi-array layer-count))
+	 (gimp-drawable-set-visible layer (aref visi-array layer-count))
 	 (set! layer-count (+ layer-count 1)))
   
   (gimp-image-set-active-layer image drawable)

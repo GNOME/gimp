@@ -782,7 +782,7 @@ iwarp (void)
 	  st = g_strdup_printf (_("Frame %d"), i);
 	  animlayers[i] = gimp_layer_copy (layerID);
 	  gimp_layer_add_alpha (animlayers[i]);
-	  gimp_layer_set_name (animlayers[i], st);
+	  gimp_drawable_set_name (animlayers[i], st);
 	  g_free (st);
 	  destdrawable = gimp_drawable_get (animlayers[i]);
 
@@ -809,7 +809,7 @@ iwarp (void)
       gimp_undo_push_group_end (imageID);
 	      gimp_layer_add_alpha (layerID);
 	      st = g_strdup_printf (_("Frame %d"), i + animate_num_frames);
-	      gimp_layer_set_name (layerID, st);
+	      gimp_drawable_set_name (layerID, st);
 	      g_free (st);
 	      gimp_image_add_layer (imageID, layerID, 0);
 	    }

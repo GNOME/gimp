@@ -143,7 +143,7 @@
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text b-size
 					      TRUE size PIXELS fontname))))
     (gimp-image-undo-disable img)
-    (gimp-layer-set-name text-layer text)
+    (gimp-drawable-set-name text-layer text)
     (apply-textured-logo-effect img text-layer b-size text-pattern tile-type
 				bg-color blend-fg blend-bg)
     (gimp-image-undo-enable img)

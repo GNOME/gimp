@@ -1437,7 +1437,7 @@ p_write_layer_prp(const gchar *dirname,
   l_param.int_val1 = (gint32)p_to_XJTLayerModeEffects(gimp_layer_get_mode(layer_id));
   p_write_prop (fp, PROP_MODE, &l_param, wr_all_prp);
 
-  l_param.int_val1 = p_invert(gimp_layer_get_visible(layer_id));
+  l_param.int_val1 = p_invert(gimp_drawable_get_visible(layer_id));
   p_write_prop (fp, PROP_VISIBLE, &l_param, wr_all_prp);
 
   l_param.int_val1 = gimp_layer_get_linked (layer_id);
@@ -1460,10 +1460,10 @@ p_write_layer_prp(const gchar *dirname,
   l_param.int_val2 = l_ofsy;
   p_write_prop (fp, PROP_OFFSETS, &l_param, wr_all_prp);
 
-  l_param.int_val1 = gimp_layer_get_tattoo(layer_id);
+  l_param.int_val1 = gimp_drawable_get_tattoo(layer_id);
   p_write_prop (fp, PROP_TATTOO, &l_param, wr_all_prp);
 
-  l_param.string_val = gimp_layer_get_name(layer_id);
+  l_param.string_val = gimp_drawable_get_name(layer_id);
   p_write_prop (fp, PROP_NAME, &l_param, wr_all_prp);
 
   p_write_drawable_parasites(dirname, fp, layer_id, wr_all_prp);
@@ -1507,7 +1507,7 @@ p_write_channel_prp(const gchar *dirname,
   l_param.flt_val1 = gimp_channel_get_opacity(channel_id);
   p_write_prop (fp, PROP_OPACITY, &l_param, wr_all_prp);
 
-  l_param.int_val1 = p_invert(gimp_channel_get_visible(channel_id));
+  l_param.int_val1 = p_invert(gimp_drawable_get_visible(channel_id));
   p_write_prop (fp, PROP_VISIBLE, &l_param, wr_all_prp);
 
   l_param.int_val1 = gimp_channel_get_show_masked(channel_id);
@@ -1525,10 +1525,10 @@ p_write_channel_prp(const gchar *dirname,
   l_param.int_val2 = l_ofsy;
   p_write_prop (fp, PROP_OFFSETS, &l_param, wr_all_prp);
 
-  l_param.int_val1 = gimp_channel_get_tattoo (channel_id);
+  l_param.int_val1 = gimp_drawable_get_tattoo (channel_id);
   p_write_prop (fp, PROP_TATTOO, &l_param, wr_all_prp);
 
-  l_param.string_val = gimp_channel_get_name(channel_id);
+  l_param.string_val = gimp_drawable_get_name(channel_id);
   p_write_prop (fp, PROP_NAME, &l_param, wr_all_prp);
 
   p_write_drawable_parasites(dirname, fp, channel_id, wr_all_prp);
@@ -3466,12 +3466,12 @@ load_xjt_image (const gchar *filename)
 
       /* adjust offsets and other layerproperties */
       gimp_layer_set_offsets(l_layer_id, l_layer_prp_ptr->offx, l_layer_prp_ptr->offy);
-      gimp_layer_set_visible (l_layer_id, l_layer_prp_ptr->visible);
+      gimp_drawable_set_visible (l_layer_id, l_layer_prp_ptr->visible);
       gimp_layer_set_linked (l_layer_id, l_layer_prp_ptr->linked);
       gimp_layer_set_preserve_transparency (l_layer_id, l_layer_prp_ptr->preserve_transparency);
       if (l_layer_prp_ptr->tattoo >= 0)
 	{
-	 gimp_layer_set_tattoo(l_layer_id, l_layer_prp_ptr->tattoo);
+	 gimp_drawable_set_tattoo(l_layer_id, l_layer_prp_ptr->tattoo);
 	}
 
       if (l_layer_prp_ptr->active_layer)
@@ -3524,7 +3524,7 @@ load_xjt_image (const gchar *filename)
 
 		  if (l_channel_prp_ptr->tattoo >= 0)
 		    {
-		      gimp_channel_set_tattoo(l_channel_id, l_channel_prp_ptr->tattoo);
+		      gimp_drawable_set_tattoo(l_channel_id, l_channel_prp_ptr->tattoo);
 		    }
 
 		  /* gimp_layer_set_offsets(l_channel_id, l_layer_prp_ptr->offx, l_layer_prp_ptr->offy); */
@@ -3578,7 +3578,7 @@ load_xjt_image (const gchar *filename)
 
       if(l_channel_prp_ptr->tattoo >= 0)
 	{
-	  gimp_channel_set_tattoo(l_channel_id, l_channel_prp_ptr->tattoo);
+	  gimp_drawable_set_tattoo(l_channel_id, l_channel_prp_ptr->tattoo);
 	}
       if(l_channel_prp_ptr->selection)
 	{
@@ -3595,7 +3595,7 @@ load_xjt_image (const gchar *filename)
 	  gimp_image_add_channel (l_image_id, l_channel_id, 0);
 
 	  /* adjust offsets and other channelproperties */
-	  gimp_channel_set_visible (l_channel_id, l_channel_prp_ptr->visible);
+	  gimp_drawable_set_visible (l_channel_id, l_channel_prp_ptr->visible);
 	  gimp_channel_set_show_masked (l_channel_id, l_channel_prp_ptr->show_masked);
 
 	  if(l_channel_prp_ptr->floating_attached)

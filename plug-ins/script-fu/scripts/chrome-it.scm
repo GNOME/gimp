@@ -110,8 +110,8 @@
     (gimp-edit-fill layer3 BACKGROUND-FILL)
     (gimp-edit-clear shadow)
 
-    (gimp-layer-set-visible bg-layer FALSE)
-    (gimp-layer-set-visible shadow FALSE)
+    (gimp-drawable-set-visible bg-layer FALSE)
+    (gimp-drawable-set-visible shadow FALSE)
 
     (gimp-selection-load mask)
     (gimp-palette-set-background '(0 0 0))
@@ -166,11 +166,11 @@
     (gimp-color-balance layer2 2 TRUE (highlights (rval cc)) (highlights (gval cc)) (highlights (bval cc)))
     (gimp-hue-saturation layer2 0 0 chrome-lightness chrome-saturation)
 
-    (gimp-layer-set-visible shadow TRUE)
-    (gimp-layer-set-visible bg-layer TRUE)
+    (gimp-drawable-set-visible shadow TRUE)
+    (gimp-drawable-set-visible bg-layer TRUE)
 
-    (gimp-layer-set-name layer2 "Chrome")
-    (gimp-layer-set-name layer1 "Highlight")
+    (gimp-drawable-set-name layer2 "Chrome")
+    (gimp-drawable-set-name layer1 "Highlight")
 
     (gimp-image-remove-channel img mask)
 

@@ -145,7 +145,7 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 	for (j = 0; j < n_layers; j++)
 	  if (! constraint || (* constraint) (images[i], layers[j], data))
 	    {
-	      name = gimp_layer_get_name (layers[j]);
+	      name = gimp_drawable_get_name (layers[j]);
               gimp_menu_add_item (menu, image_label, name, layers[j]);
 	      g_free (name);
 
@@ -212,7 +212,7 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 	for (j = 0; j < n_channels; j++)
 	  if (! constraint || (* constraint) (images[i], channels[j], data))
 	    {
-	      name = gimp_channel_get_name (channels[j]);
+	      name = gimp_drawable_get_name (channels[j]);
               gimp_menu_add_item (menu, image_label, name, channels[j]);
 	      g_free (name);
 
@@ -279,7 +279,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	for (j = 0; j < n_layers; j++)
 	  if (! constraint || (* constraint) (images[i], layers[j], data))
 	    {
-	      name = gimp_layer_get_name (layers[j]);
+	      name = gimp_drawable_get_name (layers[j]);
               gimp_menu_add_item (menu, image_label, name, layers[j]);
 	      g_free (name);
 
@@ -297,7 +297,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	for (j = 0; j < n_channels; j++)
 	  if (! constraint || (* constraint) (images[i], channels[j], data))
 	    {
-	      name = gimp_channel_get_name (channels[j]);
+	      name = gimp_drawable_get_name (channels[j]);
               gimp_menu_add_item (menu, image_label, name, channels[j]);
 	      g_free (name);
 

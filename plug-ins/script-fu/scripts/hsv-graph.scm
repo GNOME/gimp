@@ -263,7 +263,7 @@
     (gimp-image-add-layer gimg hsv-layer -1)
     (gimp-edit-clear hsv-layer)
     (gimp-image-add-layer gimg rgb-layer -1)
-    (gimp-layer-set-visible rgb-layer FALSE)
+    (gimp-drawable-set-visible rgb-layer FALSE)
     (gimp-edit-clear rgb-layer)
     (gimp-image-add-layer gimg clayer -1)
     (gimp-edit-clear clayer)

@@ -7,17 +7,17 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */         
+ */
 
 #ifndef __GIMP_DRAWABLE_H__
 #define __GIMP_DRAWABLE_H__
@@ -47,12 +47,6 @@ GimpDrawable * gimp_drawable_get                 (gint32          drawable_ID);
 void           gimp_drawable_detach              (GimpDrawable   *drawable);
 void           gimp_drawable_flush               (GimpDrawable   *drawable);
 void           gimp_drawable_delete              (GimpDrawable   *drawable);
-gchar        * gimp_drawable_name                (gint32          drawable_ID);
-gboolean       gimp_drawable_visible             (gint32          drawable_ID);
-void           gimp_drawable_set_name            (gint32          drawable_ID,
-						  const gchar    *name);
-void           gimp_drawable_set_visible         (gint32          drawable_ID,
-						  gboolean        visible);
 GimpTile     * gimp_drawable_get_tile            (GimpDrawable   *drawable,
 						  gint            shadow,
 						  gint            row,
@@ -68,9 +62,9 @@ guchar       * gimp_drawable_get_thumbnail_data  (gint32          drawable_ID,
 						  gint           *bpp);
 
 void           gimp_drawable_attach_new_parasite (gint32          drawable_ID,
-						  const gchar    *name, 
+						  const gchar    *name,
 						  gint            flags,
-						  gint            size, 
+						  gint            size,
 						  gconstpointer   data);
 
 G_END_DECLS

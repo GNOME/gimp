@@ -44,6 +44,23 @@ G_BEGIN_DECLS
 
 #define gimp_crop                               gimp_image_crop
 
+#define gimp_channel_get_name                   gimp_drawable_get_name
+#define gimp_channel_set_name                   gimp_drawable_set_name
+#define gimp_channel_get_visible                gimp_drawable_get_visible
+#define gimp_channel_set_visible                gimp_drawable_set_visible
+#define gimp_channel_get_tattoo                 gimp_drawable_get_tattoo
+#define gimp_channel_set_tattoo                 gimp_drawable_set_tattoo
+
+#define gimp_layer_get_name                     gimp_drawable_get_name
+#define gimp_layer_set_name                     gimp_drawable_set_name
+#define gimp_layer_get_visible                  gimp_drawable_get_visible
+#define gimp_layer_set_visible                  gimp_drawable_set_visible
+#define gimp_layer_get_tattoo                   gimp_drawable_get_tattoo
+#define gimp_layer_set_tattoo                   gimp_drawable_set_tattoo
+
+#define gimp_drawable_name                      gimp_drawable_get_name
+#define gimp_drawable_visible                   gimp_drawable_get_visible
+
 #define gimp_gradients_get_active               gimp_gradients_get_gradient
 #define gimp_gradients_set_active               gimp_gradients_set_gradient
 

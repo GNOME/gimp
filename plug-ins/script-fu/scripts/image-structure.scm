@@ -69,11 +69,11 @@
     (gimp-selection-none img)
     (while (< index num-of-layers)
       (set! layer (aref layers index))
-      (if (equal? "Background" (car (gimp-layer-get-name layer)))
+      (if (equal? "Background" (car (gimp-drawable-get-name layer)))
 	  (begin
 	    (gimp-layer-add-alpha layer)
-	    (gimp-layer-set-name layer "Original Background")))
-      (set! layer-names (cons (car (gimp-layer-get-name layer)) layer-names))
+	    (gimp-drawable-set-name layer "Original Background")))
+      (set! layer-names (cons (car (gimp-drawable-get-name layer)) layer-names))
       (if (not (= -1 (car (gimp-layer-mask layer))))
 	  (gimp-image-remove-layer-mask img layer
 					(if (= TRUE apply-layer-mask?)

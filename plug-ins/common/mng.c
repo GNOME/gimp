@@ -561,7 +561,7 @@ mng_save_image (const gchar *filename,
 	   mng_putchunk_term (handle, MNG_TERMACTION_REPEAT,
 			      MNG_ITERACTION_LASTFRAME,
 			      parse_ms_tag_from_layer_name
-			      (gimp_layer_get_name (layers[0])),
+			      (gimp_drawable_get_name (layers[0])),
 			      0x7fffffff)) != MNG_NOERROR)
 	{
 	  g_warning ("Unable to mng_putchunk_term() in mng_save_image()");
@@ -577,7 +577,7 @@ mng_save_image (const gchar *filename,
 	   mng_putchunk_term (handle, MNG_TERMACTION_LASTFRAME,
 			      MNG_ITERACTION_LASTFRAME,
 			      parse_ms_tag_from_layer_name
-			      (gimp_layer_get_name (layers[0])),
+			      (gimp_drawable_get_name (layers[0])),
 			      0x7fffffff)) != MNG_NOERROR)
 	{
 	  g_warning ("Unable to mng_putchunk_term() in mng_save_image()");
@@ -695,7 +695,7 @@ mng_save_image (const gchar *filename,
 
   for (i = (num_layers - 1); i >= 0; i--)
     {
-      layer_name = gimp_layer_get_name (layers[i]);
+      layer_name = gimp_drawable_get_name (layers[i]);
       layer_chunks_type = parse_chunks_type_from_layer_name (layer_name);
       layer_drawable_type = gimp_drawable_type (layers[i]);
 

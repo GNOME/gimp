@@ -142,44 +142,6 @@ Operations on single layers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_layer_get_name ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_name ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_visible ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_visible ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@visible: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_layer_get_preserve_trans ##### -->
 <para>
 
@@ -310,25 +272,6 @@ Operations on single layers.
 
 @layer_ID: 
 @linked: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_tattoo ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_tattoo ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@tattoo: 
 @Returns: 
 
 

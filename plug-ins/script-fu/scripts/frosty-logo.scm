@@ -104,7 +104,7 @@
 	 (border (/ size 5))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text (* border 2) TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
-    (gimp-layer-set-name text-layer text)
+    (gimp-drawable-set-name text-layer text)
     (apply-frosty-logo-effect img text-layer size bg-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))

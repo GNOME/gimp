@@ -88,6 +88,80 @@ HELP
     $outargs[0]->{alias} = $check . ' (drawable) ? TRUE : FALSE';
 }
 
+sub drawable_get_prop_proc {
+    my ($prop, $type, $desc, $undo, $core_type, $core_var) = @_;
+
+    $core_type = 'drawable' unless $core_type;
+    $core_var  = 'drawable' unless $core_var;
+
+    $blurb = "Get the $desc of the specified drawable.";
+
+    $help = "This procedure returns the specified drawable's $desc. ";
+
+    &std_pdb_misc;
+
+    @inargs = ( &drawable_arg );
+
+    @outargs = (
+	{ name => $prop, type => $type,
+	  desc => "The drawable $desc", no_declare => 1 }
+    );
+
+    my $alias = "gimp_${core_type}_get_$prop ($core_var)";
+    $alias = "g_strdup ($alias)" if $type eq 'string';
+    $outargs[0]->{alias} .= "$alias";
+}
+
+sub drawable_set_prop_proc {
+    my ($prop, $type, $desc, $undo, $core_type, $core_var) = @_;
+
+    $core_type = 'drawable' unless $core_type;
+    $core_var  = 'drawable' unless $core_var;
+
+    $blurb = "Set the $desc of the specified drawable.";
+
+    $help = "This procedure sets the specified drawable's $desc. ";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => $prop, type => $type,
+	  desc => "The new drawable $desc" }
+    );
+
+    if ($type =~ /float/) {
+	$inargs[1]->{desc} .= ' (%%desc%%)';
+    }
+
+    $invoke{code} = $undo ? "gimp_${core_type}_set_$prop ($core_var, $prop, TRUE);"
+                          : "gimp_${core_type}_set_$prop ($core_var, $prop);";
+}
+
+sub drawable_accessors {
+    my ($prop, $type, $desc, $undo, $extra, $core_type, $core_var) = @_;
+
+    $core_type = 'drawable' unless $core_type;
+    $core_var  = 'drawable' unless $core_var;
+
+    my (@extra, %extra); my $once = 0;
+
+    ref($extra) ? (@extra = @$extra) : (@extra = ($extra, $extra));
+    %extra = map { $once++ ? 'set' : 'get', $_ ? $_ : "" } @extra;
+
+    foreach (sort keys %extra) {
+	my $proc = "drawable_${_}_$prop";
+
+	eval <<SUB;
+sub @{[ scalar caller ]}::$proc {
+    \&drawable_${_}_prop_proc('$prop', '$type', '$desc', $undo,
+                              '$core_type', '$core_var');
+    $extra{$_}
+}
+SUB
+    }
+}
+
 sub drawable_merge_shadow {
     $blurb = 'Merge the shadow buffer with the specified drawable.';
 
@@ -340,6 +414,26 @@ sub drawable_is_channel {
     &drawable_is_proc('channel', 'GIMP_IS_CHANNEL');
 }
 
+&drawable_accessors('name', 'string', 'name', 0, [ undef, <<'CODE' ],
+$invoke{code} =~ s/gimp_object_set_name/gimp_item_rename/;
+$invoke{code} =~ s/GIMP_OBJECT/GIMP_ITEM/;
+CODE
+                 'object', 'GIMP_OBJECT (drawable)');
+
+&drawable_accessors('visible', 'boolean', 'visibility', 1, undef,
+                    'item', 'GIMP_ITEM (drawable)');
+
+&drawable_accessors('tattoo', 'tattoo', 'tattoo', 0,
+                    <<'CODE', 'item', 'GIMP_ITEM (drawable)');
+    $help .= <<'HELP';
+A tattoo is a unique and permanent identifier attached to a drawable that can be
+used to uniquely identify a drawable within an image even between sessions
+HELP
+
+    $author = $copyright = 'Jay Cox';
+    $date = '1998';
+CODE
+
 sub drawable_get_pixel {
     $blurb = 'Gets the value of the pixel at the specified coordinates.';
 
@@ -392,7 +486,8 @@ sub drawable_set_pixel {
     $help = <<'HELP';
 This procedure sets the pixel value at the specified coordinates. The
 'num_channels' argument must always be equal to the bytes-per-pixel value for
-the spec ified drawable.
+the spec ified drawable. Note that this function is not undoable, you should
+use it only on drawables you just created yourself.
 HELP
 
     &std_pdb_misc;
@@ -570,11 +665,14 @@ CODE
 	    drawable_mask_bounds drawable_image drawable_type
 	    drawable_has_alpha drawable_type_with_alpha drawable_is_rgb
 	    drawable_is_gray drawable_is_indexed drawable_bytes drawable_width
-	    drawable_height drawable_offsets drawable_is_layer
-	    drawable_is_layer_mask drawable_is_channel drawable_get_pixel
-	    drawable_set_pixel drawable_set_image drawable_thumbnail
-	    drawable_offset);
-%exports = (app => [@procs], lib => [@procs[0..17,21..22]]);
+	    drawable_height drawable_offsets
+            drawable_is_layer drawable_is_layer_mask drawable_is_channel
+            drawable_get_name drawable_set_name
+            drawable_get_visible drawable_set_visible
+            drawable_get_tattoo drawable_set_tattoo
+            drawable_get_pixel drawable_set_pixel drawable_set_image
+            drawable_thumbnail drawable_offset);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Drawable procedures';
 

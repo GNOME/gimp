@@ -53,7 +53,7 @@
          (old-bg (car (gimp-palette-get-background))))
 
     (script-fu-util-image-resize-from-layer img logo-layer)
-    (gimp-layer-set-name grow-me "Grow-me")
+    (gimp-drawable-set-name grow-me "Grow-me")
     (gimp-image-add-layer img grow-me 1)
     (gimp-layer-translate grow-me posx posy)
     (gimp-image-add-layer img bg-layer 2)
@@ -220,7 +220,7 @@
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text 30 TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
-    (gimp-layer-set-name text-layer text)
+    (gimp-drawable-set-name text-layer text)
     (apply-glossy-logo-effect img text-layer
 			      blend-gradient-text
 			      blend-gradient-text-reverse

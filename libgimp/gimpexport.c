@@ -61,7 +61,7 @@ export_merge (gint32  image_ID,
   layers = gimp_image_get_layers (image_ID, &nlayers);
   for (i = 0; i < nlayers; i++)
     {
-      if (gimp_drawable_visible (layers[i]))
+      if (gimp_drawable_get_visible (layers[i]))
 	nvisible++;
     }
 
@@ -701,7 +701,7 @@ gimp_export_image (gint32                 *image_ID,
           /*  If this is the last layer, it's visible and has no alpha
            *  channel, then the image has a "flat" background
            */
-      	  if (i == n_layers - 1 && gimp_layer_get_visible (layers[i]))
+      	  if (i == n_layers - 1 && gimp_drawable_get_visible (layers[i]))
 	    background_has_alpha = FALSE;
 
 	  if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)

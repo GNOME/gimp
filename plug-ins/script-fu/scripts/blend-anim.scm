@@ -77,7 +77,7 @@
 	(let* ((min-offset-x width)
 	       (min-offset-y height)
 	       (layer-count slots))
-	  (gimp-layer-set-visible bg-layer FALSE)
+	  (gimp-drawable-set-visible bg-layer FALSE)
 	  (while (> layer-count -1)
              (let* ((layer (aref layer-array layer-count))
 		    (layer-width (+ (car (gimp-drawable-width layer))
@@ -87,7 +87,7 @@
 		    (layer-offsets (gimp-drawable-offsets layer))
 		    (layer-offset-x (- (car layer-offsets) max-blur))
 		    (layer-offset-y (- (cadr layer-offsets) max-blur)))
-	       (gimp-layer-set-visible layer FALSE)
+	       (gimp-drawable-set-visible layer FALSE)
 	       (set! max-width (max max-width layer-width))
 	       (set! max-height (max max-height layer-height))
 	       (set! min-offset-x (min min-offset-x layer-offset-x))
@@ -114,9 +114,9 @@
 		    (gimp-image-add-layer image bg-copy 0)
 		    (gimp-image-add-layer image lower-copy 0)
 		    (gimp-image-add-layer image upper-copy 0)
-		    (gimp-layer-set-visible upper-copy TRUE)
-		    (gimp-layer-set-visible lower-copy TRUE)
-		    (gimp-layer-set-visible bg-copy TRUE)
+		    (gimp-drawable-set-visible upper-copy TRUE)
+		    (gimp-drawable-set-visible lower-copy TRUE)
+		    (gimp-drawable-set-visible bg-copy TRUE)
 		    (gimp-layer-set-opacity upper-copy (- 100 opacity))
 		    (gimp-layer-set-opacity lower-copy opacity)
 		    (gimp-layer-set-opacity bg-copy 100)
@@ -159,7 +159,7 @@
 				       offset-y)
 		    (let* ((merged-layer (car (gimp-image-merge-visible-layers
 					     image CLIP-TO-IMAGE))))
-		      (gimp-layer-set-visible merged-layer FALSE))
+		      (gimp-drawable-set-visible merged-layer FALSE))
 		    (set! frame-count (- frame-count 1))))
 	       (set! layer-count (- layer-count 1)))))
 	
@@ -175,8 +175,8 @@
 	       (multi-raise-layer image
 				  orig-layer
 				  (+ (* (- slots layer-count) frames) 1))
-	       (gimp-layer-set-visible orig-layer TRUE)
-	       (gimp-layer-set-visible bg-copy TRUE)
+	       (gimp-drawable-set-visible orig-layer TRUE)
+	       (gimp-drawable-set-visible bg-copy TRUE)
 	       (gimp-layer-resize bg-copy
 				  max-width
 				  max-height
@@ -184,13 +184,13 @@
 				  offset-y)
 	       (let* ((merged-layer (car (gimp-image-merge-visible-layers
 					image CLIP-TO-IMAGE))))
-		 (gimp-layer-set-visible merged-layer FALSE))
+		 (gimp-drawable-set-visible merged-layer FALSE))
 	       (set! layer-count (+ layer-count 1)))))
 	
 	; merge the lowest blend layer with the background layer  
 	(let* ((orig-layer (aref layer-array (- num-layers 2))))
-	  (gimp-layer-set-visible bg-layer TRUE)
-	  (gimp-layer-set-visible orig-layer TRUE)
+	  (gimp-drawable-set-visible bg-layer TRUE)
+	  (gimp-drawable-set-visible orig-layer TRUE)
 	  (gimp-image-merge-visible-layers image CLIP-TO-IMAGE))
 	
 	; make all layers visible again
@@ -203,8 +203,8 @@
 		    (name (string-append "Frame "
 					 (number->string
 					  (- num-result-layers layer-count) 10))))
-	       (gimp-layer-set-visible layer TRUE)
-	       (gimp-layer-set-name layer name)
+	       (gimp-drawable-set-visible layer TRUE)
+	       (gimp-drawable-set-name layer name)
 	       (set! layer-count (- layer-count 1))))
 	
 	  (if (= looped TRUE)

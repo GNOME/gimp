@@ -58,7 +58,7 @@
 					   " (replace)")))
          (gimp-layer-set-preserve-trans waves-layer FALSE)
 	 (gimp-image-add-layer image waves-layer -1)
-	 (gimp-layer-set-name waves-layer layer-name)
+	 (gimp-drawable-set-name waves-layer layer-name)
 	 
 	 (plug-in-waves 1
 			image
@@ -72,7 +72,7 @@
 	 (set! remaining-frames (- remaining-frames 1))
 	 (set! phase (- phase phaseshift))))
 
-  (gimp-layer-set-name source-layer "Frame 1")
+  (gimp-drawable-set-name source-layer "Frame 1")
   (plug-in-waves 1
 		 image
 		 source-layer

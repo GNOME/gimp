@@ -42,10 +42,10 @@
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img white-layer 1)
     (gimp-layer-translate white-layer posx posy)
-    (gimp-layer-set-name white-layer "White")
+    (gimp-drawable-set-name white-layer "White")
     (gimp-image-add-layer img black-layer 1)
     (gimp-layer-translate black-layer posx posy)
-    (gimp-layer-set-name black-layer "Black")
+    (gimp-drawable-set-name black-layer "Black")
   
     (gimp-selection-all img)
     (gimp-palette-set-background bg-color)
@@ -134,7 +134,7 @@
 	 (text-layer (car (gimp-text-fontname
 			   img -1 0 0 text border TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
-    (gimp-layer-set-name text-layer text)
+    (gimp-drawable-set-name text-layer text)
     (apply-comic-logo-effect img text-layer gradient gradient-reverse
 			     ol-width ol-color bg-color)
     (gimp-image-undo-enable img)

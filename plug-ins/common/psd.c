@@ -1563,9 +1563,9 @@ void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
     gimp_drawable_flush (drawable);
     gimp_drawable_detach (drawable);
   }
-  g_free(primary_data);
+  g_free (primary_data);
 
-  aux_data = g_malloc(width * height);
+  aux_data = g_malloc (width * height);
   {
     int pix, chan;
     gint32 channel_ID;
@@ -1585,10 +1585,10 @@ void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
                                        psd_image.aux_channel[chan-gimpstep].name,
                                        width, height,
                                        100.0, &colour);
-	gimp_image_add_channel(image_ID, channel_ID, 0);
-	gimp_channel_set_visible(channel_ID, FALSE);
+	gimp_image_add_channel (image_ID, channel_ID, 0);
+	gimp_drawable_set_visible (channel_ID, FALSE);
 
-	chdrawable = gimp_drawable_get(channel_ID);
+	chdrawable = gimp_drawable_get (channel_ID);
 
 	gimp_pixel_rgn_init (&pixel_rgn, chdrawable,
 			     0, 0, chdrawable->width, chdrawable->height,
@@ -1635,10 +1635,10 @@ extract_channels(guchar* src, gint num_wanted, gint psstep,
                                        psd_image.aux_channel[chan-(psstep-num_wanted)].name,
                                        width, height,
                                        100.0, &colour);
-	gimp_image_add_channel(image_ID, channel_ID, 0);
-	gimp_channel_set_visible(channel_ID, FALSE);
+	gimp_image_add_channel (image_ID, channel_ID, 0);
+	gimp_drawable_set_visible (channel_ID, FALSE);
 
-	chdrawable = gimp_drawable_get(channel_ID);
+	chdrawable = gimp_drawable_get (channel_ID);
 
 	gimp_pixel_rgn_init (&pixel_rgn, chdrawable,
 			     0, 0, chdrawable->width, chdrawable->height,
@@ -1960,10 +1960,10 @@ load_image (const gchar *name)
 	  IFDBG
 	    fprintf(stderr, "YAH4\n");
 
-	  gimp_layer_translate(layer_ID, layer->x, layer->y);
+	  gimp_layer_translate (layer_ID, layer->x, layer->y);
 
-	  gimp_layer_set_preserve_transparency(layer_ID, layer->protecttrans);
-	  gimp_layer_set_visible(layer_ID, layer->visible);
+	  gimp_layer_set_preserve_transparency (layer_ID, layer->protecttrans);
+	  gimp_drawable_set_visible (layer_ID, layer->visible);
 
 	  drawable = gimp_drawable_get (layer_ID);
 

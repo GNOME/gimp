@@ -50,7 +50,7 @@
     (gimp-selection-none img)
 
     (gimp-layer-set-mode logo-layer OVERLAY)
-    (gimp-layer-set-name glow-layer "Glow Layer")
+    (gimp-drawable-set-name glow-layer "Glow Layer")
 
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)))

@@ -3432,7 +3432,7 @@ paint_layer_copy (gchar *new_name)
       return;
     }
 
-  gimp_layer_set_name (gfig_drawable, new_name);
+  gimp_drawable_set_name (gfig_drawable, new_name);
   gimp_image_add_layer (gfig_image, gfig_drawable, -1);
 }
 

@@ -187,7 +187,7 @@
     (if (= keep-bump-layer TRUE)
 	(begin
 	  (gimp-image-add-layer image bump-layer 1)
-	  (gimp-layer-set-visible bump-layer 0))
+	  (gimp-drawable-set-visible bump-layer 0))
 	(gimp-layer-delete bump-layer)
 	)
 

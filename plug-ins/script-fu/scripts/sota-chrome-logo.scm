@@ -99,8 +99,8 @@
     (gimp-edit-fill layer2 BACKGROUND-FILL)
     (gimp-edit-fill layer3 BACKGROUND-FILL)
     (gimp-edit-clear shadow)
-    (gimp-layer-set-visible text-layer FALSE)
-    (gimp-layer-set-visible shadow FALSE)
+    (gimp-drawable-set-visible text-layer FALSE)
+    (gimp-drawable-set-visible shadow FALSE)
 
     (gimp-rect-select img (/ b-size 2) (/ b-size 2) (- width b-size) (- height b-size) REPLACE 0 0)
     (gimp-rect-select img b-size b-size (- width (* b-size 2)) (- height (* b-size 2)) SUB 0 0)
@@ -114,8 +114,8 @@
     (gimp-selection-translate img (* 2 offx2) (* 2 offy2))
     (gimp-edit-fill layer3 BACKGROUND-FILL)
     (gimp-selection-none img)
-    (gimp-layer-set-visible  layer2 TRUE)
-    (gimp-layer-set-visible  layer3 TRUE)
+    (gimp-drawable-set-visible  layer2 TRUE)
+    (gimp-drawable-set-visible  layer3 TRUE)
     (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-invert layer2)
 
@@ -125,8 +125,8 @@
     (gimp-layer-scale layer1 width height FALSE)
     (plug-in-gauss-iir 1 img layer1 10 TRUE TRUE)
     (gimp-layer-set-opacity layer1 50)
-    (gimp-layer-set-visible  layer1 TRUE)
-    (gimp-layer-set-visible  layer2 TRUE)
+    (gimp-drawable-set-visible  layer1 TRUE)
+    (gimp-drawable-set-visible  layer2 TRUE)
     (set! layer1 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-curves-spline layer1 0 18 (spline1))
 
@@ -163,12 +163,12 @@
     (gimp-color-balance layer2 2 TRUE (highlights (rval cc)) (highlights (gval cc)) (highlights (bval cc)))
     (gimp-hue-saturation layer2 0 0 chrome-lightness chrome-saturation)
 
-    (gimp-layer-set-visible shadow TRUE)
-    (gimp-layer-set-visible text-layer TRUE)
+    (gimp-drawable-set-visible shadow TRUE)
+    (gimp-drawable-set-visible text-layer TRUE)
 
-    (gimp-layer-set-name text-layer "Background")
-    (gimp-layer-set-name layer2 "Chrome")
-    (gimp-layer-set-name layer1 "Highlight")
+    (gimp-drawable-set-name text-layer "Background")
+    (gimp-drawable-set-name layer2 "Chrome")
+    (gimp-drawable-set-name layer1 "Highlight")
 
     (gimp-layer-translate shadow (/ b-size -4) (/ b-size -4))
     (gimp-layer-translate layer2 (/ b-size -4) (/ b-size -4))

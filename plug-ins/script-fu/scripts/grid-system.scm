@@ -48,7 +48,7 @@
     ;(gimp-undo-push-group-start img)
     (set! grid-layer (car (gimp-layer-copy drw TRUE)))
     (gimp-edit-clear grid-layer)
-    (gimp-layer-set-name grid-layer "grid layer")
+    (gimp-drawable-set-name grid-layer "grid layer")
     (while (not (null? (cdr x-divides)))
       (set! stepped-x (+ stepped-x (car x-divides)))
       (set! temp (* drw-width (/ stepped-x total-step-x)))

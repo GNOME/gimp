@@ -261,15 +261,6 @@ CODE
     );
 }
 
-&channel_accessors('name', 'string', 'name', 0, [ undef, <<'CODE' ],
-$invoke{code} =~ s/gimp_object_set_name/gimp_item_rename/;
-$invoke{code} =~ s/GIMP_OBJECT/GIMP_ITEM/;
-CODE
-                   'object', 'GIMP_OBJECT (channel)');
-
-&channel_accessors('visible', 'boolean', 'visibility', 1, undef,
-                   'item', 'GIMP_ITEM (channel)');
-
 &channel_accessors('show_masked', 'boolean', 'composite method', 0,
 		   <<'CODE');
     $help .= <<'HELP'
@@ -286,17 +277,6 @@ CODE
 
 &channel_accessors('color', 'color', 'compositing color', 0,
                    [ '$outargs[0]->{void_ret} = 1', '' ]);
-
-&channel_accessors('tattoo', 'tattoo', 'tattoo', 0,
-		   <<'CODE', 'item', 'GIMP_ITEM (channel)');
-    $help .= <<'HELP';
-A tattoo is a unique and permanent identifier attached to a channel that can be
-used to uniquely identify a channel within an image even between sessions.
-HELP
-
-    $author = $copyright = 'Jay Cox';
-    $date = '1998';
-CODE
 
 unshift @procs, qw(channel_new channel_copy channel_delete
 		   channel_combine_masks);

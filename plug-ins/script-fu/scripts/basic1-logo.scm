@@ -69,7 +69,7 @@
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text 10 TRUE size PIXELS font))))
 
     (gimp-image-undo-disable img)
-    (gimp-layer-set-name text-layer text)
+    (gimp-drawable-set-name text-layer text)
     (apply-basic1-logo-effect img text-layer bg-color text-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))

@@ -157,7 +157,7 @@
 	  (gimp-edit-fill shadow-layer BACKGROUND-FILL)))
     (gimp-selection-none img)
 
-    (gimp-layer-set-name tube-layer "Neon Tubes")
+    (gimp-drawable-set-name tube-layer "Neon Tubes")
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)
     (gimp-image-remove-channel img selection)))
@@ -199,7 +199,7 @@
 	 (border (/ size 4))
 	 (tube-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
-    (gimp-layer-set-name tube-layer text)
+    (gimp-drawable-set-name tube-layer text)
     (apply-neon-logo-effect img tube-layer size bg-color glow-color shadow)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))

@@ -147,16 +147,16 @@
 		  (gimp-rotate new-layer 1
 			       ((if (< 0 fill-angle-rad) + -) angle rad-90))))))
       (set! index (+ index 1)))
-    (gimp-layer-set-visible BG-layer 0)
+    (gimp-drawable-set-visible BG-layer 0)
     (if (not script-fu-text-circle-debug?)
 	(begin
 	  (set! merged-layer
 		(car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
-	  (gimp-layer-set-name merged-layer
+	  (gimp-drawable-set-name merged-layer
 			       (if (< (length text) 16)
 				   (wrap-string text)
 				   "Text Circle"))))
-    (gimp-layer-set-visible BG-layer 1)
+    (gimp-drawable-set-visible BG-layer 1)
     (gimp-image-undo-enable img)
     (gimp-image-clean-all img)
     (gimp-display-new img)

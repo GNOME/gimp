@@ -84,7 +84,7 @@
     
     (plug-in-bump-map 1 img logo-layer bump-layer 135.00 25.0 60 0 0 0 0 TRUE invert 1)
 
-    (gimp-layer-set-visible bump-layer FALSE)
+    (gimp-drawable-set-visible bump-layer FALSE)
 
      (if (= drop-shadow TRUE)
 	(begin
@@ -164,7 +164,7 @@
 	 (text-layer (car (gimp-text-fontname img -1 0 0
 				     text 30 TRUE font-size PIXELS font))))
     (gimp-image-undo-disable img)
-    (gimp-layer-set-name text-layer text)
+    (gimp-drawable-set-name text-layer text)
     (apply-chip-away-logo-effect img text-layer spread-amount blur-amount
 				 invert drop-shadow keep-bump bg-fill
 				 keep-back pattern)

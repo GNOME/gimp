@@ -59,6 +59,26 @@ gboolean      gimp_drawable_offsets         (gint32           drawable_ID,
 gboolean      gimp_drawable_is_layer        (gint32           drawable_ID);
 gboolean      gimp_drawable_is_layer_mask   (gint32           drawable_ID);
 gboolean      gimp_drawable_is_channel      (gint32           drawable_ID);
+gchar*        gimp_drawable_get_name        (gint32           drawable_ID);
+gboolean      gimp_drawable_set_name        (gint32           drawable_ID,
+					     const gchar     *name);
+gboolean      gimp_drawable_get_visible     (gint32           drawable_ID);
+gboolean      gimp_drawable_set_visible     (gint32           drawable_ID,
+					     gboolean         visible);
+gint          gimp_drawable_get_tattoo      (gint32           drawable_ID);
+gboolean      gimp_drawable_set_tattoo      (gint32           drawable_ID,
+					     gint             tattoo);
+guint8*       gimp_drawable_get_pixel       (gint32           drawable_ID,
+					     gint             x_coord,
+					     gint             y_coord,
+					     gint            *num_channels);
+gboolean      gimp_drawable_set_pixel       (gint32           drawable_ID,
+					     gint             x_coord,
+					     gint             y_coord,
+					     gint             num_channels,
+					     const guint8    *pixel);
+gboolean      gimp_drawable_set_image       (gint32           drawable_ID,
+					     gint32           image_ID);
 gboolean      _gimp_drawable_thumbnail      (gint32           drawable_ID,
 					     gint             width,
 					     gint             height,

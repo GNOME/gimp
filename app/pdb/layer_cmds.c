@@ -53,10 +53,6 @@ static ProcRecord layer_set_offsets_proc;
 static ProcRecord layer_mask_proc;
 static ProcRecord layer_is_floating_sel_proc;
 static ProcRecord layer_new_from_drawable_proc;
-static ProcRecord layer_get_name_proc;
-static ProcRecord layer_set_name_proc;
-static ProcRecord layer_get_visible_proc;
-static ProcRecord layer_set_visible_proc;
 static ProcRecord layer_get_preserve_trans_proc;
 static ProcRecord layer_set_preserve_trans_proc;
 static ProcRecord layer_get_apply_mask_proc;
@@ -71,8 +67,6 @@ static ProcRecord layer_get_mode_proc;
 static ProcRecord layer_set_mode_proc;
 static ProcRecord layer_get_linked_proc;
 static ProcRecord layer_set_linked_proc;
-static ProcRecord layer_get_tattoo_proc;
-static ProcRecord layer_set_tattoo_proc;
 
 void
 register_layer_procs (Gimp *gimp)
@@ -90,10 +84,6 @@ register_layer_procs (Gimp *gimp)
   procedural_db_register (gimp, &layer_mask_proc);
   procedural_db_register (gimp, &layer_is_floating_sel_proc);
   procedural_db_register (gimp, &layer_new_from_drawable_proc);
-  procedural_db_register (gimp, &layer_get_name_proc);
-  procedural_db_register (gimp, &layer_set_name_proc);
-  procedural_db_register (gimp, &layer_get_visible_proc);
-  procedural_db_register (gimp, &layer_set_visible_proc);
   procedural_db_register (gimp, &layer_get_preserve_trans_proc);
   procedural_db_register (gimp, &layer_set_preserve_trans_proc);
   procedural_db_register (gimp, &layer_get_apply_mask_proc);
@@ -108,8 +98,6 @@ register_layer_procs (Gimp *gimp)
   procedural_db_register (gimp, &layer_set_mode_proc);
   procedural_db_register (gimp, &layer_get_linked_proc);
   procedural_db_register (gimp, &layer_set_linked_proc);
-  procedural_db_register (gimp, &layer_get_tattoo_proc);
-  procedural_db_register (gimp, &layer_set_tattoo_proc);
 }
 
 static Argument *
@@ -1072,216 +1060,6 @@ static ProcRecord layer_new_from_drawable_proc =
 };
 
 static Argument *
-layer_get_name_invoker (Gimp     *gimp,
-                        Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpLayer *layer;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
-    success = FALSE;
-
-  return_args = procedural_db_return_args (&layer_get_name_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_pointer = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
-
-  return return_args;
-}
-
-static ProcArg layer_get_name_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer"
-  }
-};
-
-static ProcArg layer_get_name_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The layer name"
-  }
-};
-
-static ProcRecord layer_get_name_proc =
-{
-  "gimp_layer_get_name",
-  "Get the name of the specified layer.",
-  "This procedure returns the specified layer's name.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  layer_get_name_inargs,
-  1,
-  layer_get_name_outargs,
-  { { layer_get_name_invoker } }
-};
-
-static Argument *
-layer_set_name_invoker (Gimp     *gimp,
-                        Argument *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gchar *name;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  if (success)
-    gimp_item_rename (GIMP_ITEM (layer), name);
-
-  return procedural_db_return_args (&layer_set_name_proc, success);
-}
-
-static ProcArg layer_set_name_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer"
-  },
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The new layer name"
-  }
-};
-
-static ProcRecord layer_set_name_proc =
-{
-  "gimp_layer_set_name",
-  "Set the name of the specified layer.",
-  "This procedure sets the specified layer's name.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  layer_set_name_inargs,
-  0,
-  NULL,
-  { { layer_set_name_invoker } }
-};
-
-static Argument *
-layer_get_visible_invoker (Gimp     *gimp,
-                           Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpLayer *layer;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
-    success = FALSE;
-
-  return_args = procedural_db_return_args (&layer_get_visible_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimp_item_get_visible (GIMP_ITEM (layer));
-
-  return return_args;
-}
-
-static ProcArg layer_get_visible_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer"
-  }
-};
-
-static ProcArg layer_get_visible_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "visible",
-    "The layer visibility"
-  }
-};
-
-static ProcRecord layer_get_visible_proc =
-{
-  "gimp_layer_get_visible",
-  "Get the visibility of the specified layer.",
-  "This procedure returns the specified layer's visibility.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  layer_get_visible_inargs,
-  1,
-  layer_get_visible_outargs,
-  { { layer_get_visible_invoker } }
-};
-
-static Argument *
-layer_set_visible_invoker (Gimp     *gimp,
-                           Argument *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gboolean visible;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
-    success = FALSE;
-
-  visible = args[1].value.pdb_int ? TRUE : FALSE;
-
-  if (success)
-    gimp_item_set_visible (GIMP_ITEM (layer), visible, TRUE);
-
-  return procedural_db_return_args (&layer_set_visible_proc, success);
-}
-
-static ProcArg layer_set_visible_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer"
-  },
-  {
-    GIMP_PDB_INT32,
-    "visible",
-    "The new layer visibility"
-  }
-};
-
-static ProcRecord layer_set_visible_proc =
-{
-  "gimp_layer_set_visible",
-  "Set the visibility of the specified layer.",
-  "This procedure sets the specified layer's visibility.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  layer_set_visible_inargs,
-  0,
-  NULL,
-  { { layer_set_visible_invoker } }
-};
-
-static Argument *
 layer_get_preserve_trans_invoker (Gimp     *gimp,
                                   Argument *args)
 {
@@ -2011,110 +1789,4 @@ static ProcRecord layer_set_linked_proc =
   0,
   NULL,
   { { layer_set_linked_invoker } }
-};
-
-static Argument *
-layer_get_tattoo_invoker (Gimp     *gimp,
-                          Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpLayer *layer;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
-    success = FALSE;
-
-  return_args = procedural_db_return_args (&layer_get_tattoo_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimp_item_get_tattoo (GIMP_ITEM (layer));
-
-  return return_args;
-}
-
-static ProcArg layer_get_tattoo_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer"
-  }
-};
-
-static ProcArg layer_get_tattoo_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "tattoo",
-    "The layer tattoo"
-  }
-};
-
-static ProcRecord layer_get_tattoo_proc =
-{
-  "gimp_layer_get_tattoo",
-  "Get the tattoo of the specified layer.",
-  "This procedure returns the specified layer's tattoo. A tattoo is a unique and permanent identifier attached to a layer that can be used to uniquely identify a layer within an image even between sessions",
-  "Jay Cox",
-  "Jay Cox",
-  "1998",
-  GIMP_INTERNAL,
-  1,
-  layer_get_tattoo_inargs,
-  1,
-  layer_get_tattoo_outargs,
-  { { layer_get_tattoo_invoker } }
-};
-
-static Argument *
-layer_set_tattoo_invoker (Gimp     *gimp,
-                          Argument *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gint32 tattoo;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
-    success = FALSE;
-
-  tattoo = args[1].value.pdb_int;
-  if (tattoo == 0)
-    success = FALSE;
-
-  if (success)
-    gimp_item_set_tattoo (GIMP_ITEM (layer), tattoo);
-
-  return procedural_db_return_args (&layer_set_tattoo_proc, success);
-}
-
-static ProcArg layer_set_tattoo_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer"
-  },
-  {
-    GIMP_PDB_INT32,
-    "tattoo",
-    "The new layer tattoo"
-  }
-};
-
-static ProcRecord layer_set_tattoo_proc =
-{
-  "gimp_layer_set_tattoo",
-  "Set the tattoo of the specified layer.",
-  "This procedure sets the specified layer's tattoo. A tattoo is a unique and permanent identifier attached to a layer that can be used to uniquely identify a layer within an image even between sessions",
-  "Jay Cox",
-  "Jay Cox",
-  "1998",
-  GIMP_INTERNAL,
-  2,
-  layer_set_tattoo_inargs,
-  0,
-  NULL,
-  { { layer_set_tattoo_invoker } }
 };

@@ -62,16 +62,7 @@ Functions to manipulate drawables.
 @drawable: 
 
 
-<!-- ##### FUNCTION gimp_drawable_name ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_visible ##### -->
+<!-- ##### FUNCTION gimp_drawable_get_name ##### -->
 <para>
 
 </para>
@@ -87,6 +78,16 @@ Functions to manipulate drawables.
 
 @drawable_ID: 
 @name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_get_visible ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_drawable_set_visible ##### -->
@@ -96,6 +97,61 @@ Functions to manipulate drawables.
 
 @drawable_ID: 
 @visible: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_get_tattoo ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_set_tattoo ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@tattoo: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_get_pixel ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@x_coord: 
+@y_coord: 
+@num_channels: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_set_pixel ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@x_coord: 
+@y_coord: 
+@num_channels: 
+@pixel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_set_image ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@image_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_drawable_get_tile ##### -->

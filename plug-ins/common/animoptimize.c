@@ -1051,7 +1051,7 @@ do_optimizations (GimpRunMode run_mode,
 	   */
 
 	  oldlayer_name =
-	    gimp_layer_get_name(layers[total_frames-(this_frame_num+1)]);
+	    gimp_drawable_get_name(layers[total_frames-(this_frame_num+1)]);
 
 	  buflen = strlen(oldlayer_name) + 40;
 
@@ -1079,7 +1079,7 @@ do_optimizations (GimpRunMode run_mode,
 
 	      g_free (newlayer_name);
 
-	      oldlayer_name = gimp_layer_get_name (last_true_frame);
+	      oldlayer_name = gimp_drawable_get_name (last_true_frame);
 
 	      buflen = strlen (oldlayer_name) + 40;
 
@@ -1097,7 +1097,7 @@ do_optimizations (GimpRunMode run_mode,
                           (this_frame_num ==  0) ? "" :
                           can_combine ? "(combine)" : "(replace)");
 
-	      gimp_layer_set_name (last_true_frame, newlayer_name);
+	      gimp_drawable_set_name (last_true_frame, newlayer_name);
 
 	      g_free (newlayer_name);
 	    }
@@ -1106,13 +1106,13 @@ do_optimizations (GimpRunMode run_mode,
 	      cumulated_delay = this_delay;
 
 	      last_true_frame =
-		new_layer_id = gimp_layer_new(new_image_id,
-					      newlayer_name,
-					      bbox_right-bbox_left,
-					      bbox_bottom-bbox_top,
-					      drawabletype_alpha,
-					      100.0,
-					      GIMP_NORMAL_MODE);
+		new_layer_id = gimp_layer_new (new_image_id,
+                                               newlayer_name,
+                                               bbox_right-bbox_left,
+                                               bbox_bottom-bbox_top,
+                                               drawabletype_alpha,
+                                               100.0,
+                                               GIMP_NORMAL_MODE);
 	      g_free (newlayer_name);
 
 	      gimp_image_add_layer (new_image_id, new_layer_id, 0);
@@ -1170,7 +1170,7 @@ get_frame_disposal (guint whichframe)
   gchar       *layer_name;
   DisposeType  disposal;
 
-  layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
+  layer_name = gimp_drawable_get_name(layers[total_frames-(whichframe+1)]);
   disposal = parse_disposal_tag(layer_name);
   g_free(layer_name);
 
@@ -1185,7 +1185,7 @@ get_frame_duration (guint whichframe)
   gchar* layer_name;
   gint   duration = 0;
 
-  layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
+  layer_name = gimp_drawable_get_name(layers[total_frames-(whichframe+1)]);
   if (layer_name != NULL)
     {
       duration = parse_ms_tag(layer_name);

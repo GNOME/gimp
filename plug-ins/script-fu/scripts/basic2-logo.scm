@@ -53,7 +53,7 @@
 
     (gimp-layer-translate shadow-layer 3 3)
     (gimp-layer-translate highlight-layer (- posx 2) (- posy 2))
-    (gimp-layer-set-name highlight-layer "Highlight")
+    (gimp-drawable-set-name highlight-layer "Highlight")
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)))
 
@@ -88,7 +88,7 @@
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text 10 TRUE size PIXELS font))))
 
     (gimp-image-undo-disable img)
-    (gimp-layer-set-name text-layer text)
+    (gimp-drawable-set-name text-layer text)
     (apply-basic2-logo-effect img text-layer bg-color text-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))

@@ -95,7 +95,7 @@
     ; Clean up and exit.
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)
-    (gimp-layer-set-visible logo-layer 0)
+    (gimp-drawable-set-visible logo-layer 0)
     (gimp-image-set-active-layer img bands-layer)
     (gimp-displays-flush)))
 
@@ -144,7 +144,7 @@
 	 (fade-size (- (* (+ band-size gap-size) num-bands) 1))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text (+ fade-size 10) TRUE size PIXELS fontname))))
     (gimp-image-undo-disable img)
-    (gimp-layer-set-name text-layer text)
+    (gimp-drawable-set-name text-layer text)
     (apply-alien-neon-logo-effect img text-layer fg-color bg-color
 				  band-size gap-size num-bands do-fade)
     (gimp-image-undo-enable img)

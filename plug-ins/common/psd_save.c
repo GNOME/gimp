@@ -795,7 +795,7 @@ save_resources (FILE *fd, gint32 image_id)
 
   for (i = 0; i < PSDImageData.nChannels; i++)
     {
-      chName[i] = gimp_channel_get_name (PSDImageData.lChannels[i]);
+      chName[i] = gimp_drawable_get_name (PSDImageData.lChannels[i]);
       IFDBG printf ("      Channel %d name: %s\n", i, chName[i]);
     }
 
@@ -1143,7 +1143,7 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
 
       flags = 0;
       if (gimp_layer_get_preserve_transparency (PSDImageData.lLayers[i])) flags |= 1;
-      if (! gimp_layer_get_visible (PSDImageData.lLayers[i])) flags |= 2;
+      if (! gimp_drawable_get_visible (PSDImageData.lLayers[i])) flags |= 2;
       IFDBG printf ("         Flags: %u\n", flags);
       write_gchar (fd, flags, "Flags");
 
@@ -1161,7 +1161,7 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
       write_glong (fd, 0, "Layer blending size");
       IFDBG printf ("\n         Layer blending size: %d\n", 0);
 
-      layerName = gimp_layer_get_name (PSDImageData.lLayers[i]);
+      layerName = gimp_drawable_get_name (PSDImageData.lLayers[i]);
       write_pascalstring (fd, layerName, 4, "layer name");
       IFDBG printf ("\n         Layer name: %s\n", layerName);
 

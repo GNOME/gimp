@@ -645,6 +645,323 @@ gimp_drawable_is_channel (gint32 drawable_ID)
 }
 
 /**
+ * gimp_drawable_get_name:
+ * @drawable_ID: The drawable.
+ *
+ * Get the name of the specified drawable.
+ *
+ * This procedure returns the specified drawable's name.
+ *
+ * Returns: The drawable name.
+ */
+gchar *
+gimp_drawable_get_name (gint32 drawable_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_get_name",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
+ * gimp_drawable_set_name:
+ * @drawable_ID: The drawable.
+ * @name: The new drawable name.
+ *
+ * Set the name of the specified drawable.
+ *
+ * This procedure sets the specified drawable's name.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_drawable_set_name (gint32       drawable_ID,
+			const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_set_name",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_drawable_get_visible:
+ * @drawable_ID: The drawable.
+ *
+ * Get the visibility of the specified drawable.
+ *
+ * This procedure returns the specified drawable's visibility.
+ *
+ * Returns: The drawable visibility.
+ */
+gboolean
+gimp_drawable_get_visible (gint32 drawable_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean visible = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_get_visible",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    visible = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return visible;
+}
+
+/**
+ * gimp_drawable_set_visible:
+ * @drawable_ID: The drawable.
+ * @visible: The new drawable visibility.
+ *
+ * Set the visibility of the specified drawable.
+ *
+ * This procedure sets the specified drawable's visibility.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_drawable_set_visible (gint32   drawable_ID,
+			   gboolean visible)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_set_visible",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, visible,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_drawable_get_tattoo:
+ * @drawable_ID: The drawable.
+ *
+ * Get the tattoo of the specified drawable.
+ *
+ * This procedure returns the specified drawable's tattoo. A tattoo is
+ * a unique and permanent identifier attached to a drawable that can be
+ * used to uniquely identify a drawable within an image even between
+ * sessions
+ *
+ * Returns: The drawable tattoo.
+ */
+gint
+gimp_drawable_get_tattoo (gint32 drawable_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint tattoo = 0;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_get_tattoo",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    tattoo = return_vals[1].data.d_tattoo;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return tattoo;
+}
+
+/**
+ * gimp_drawable_set_tattoo:
+ * @drawable_ID: The drawable.
+ * @tattoo: The new drawable tattoo.
+ *
+ * Set the tattoo of the specified drawable.
+ *
+ * This procedure sets the specified drawable's tattoo. A tattoo is a
+ * unique and permanent identifier attached to a drawable that can be
+ * used to uniquely identify a drawable within an image even between
+ * sessions
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_drawable_set_tattoo (gint32 drawable_ID,
+			  gint   tattoo)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_set_tattoo",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, tattoo,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_drawable_get_pixel:
+ * @drawable_ID: The drawable.
+ * @x_coord: The x coordinate.
+ * @y_coord: The y coordinate.
+ * @num_channels: The number of channels for the pixel.
+ *
+ * Gets the value of the pixel at the specified coordinates.
+ *
+ * This procedure gets the pixel value at the specified coordinates.
+ * The 'num_channels' argument must always be equal to the
+ * bytes-per-pixel value for the specified drawable.
+ *
+ * Returns: The pixel value.
+ */
+guint8 *
+gimp_drawable_get_pixel (gint32  drawable_ID,
+			 gint    x_coord,
+			 gint    y_coord,
+			 gint   *num_channels)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  guint8 *pixel = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_get_pixel",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, x_coord,
+				    GIMP_PDB_INT32, y_coord,
+				    GIMP_PDB_END);
+
+  *num_channels = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      *num_channels = return_vals[1].data.d_int32;
+      pixel = g_new (guint8, *num_channels);
+      memcpy (pixel, return_vals[2].data.d_int8array,
+	      *num_channels * sizeof (guint8));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return pixel;
+}
+
+/**
+ * gimp_drawable_set_pixel:
+ * @drawable_ID: The drawable.
+ * @x_coord: The x coordinate.
+ * @y_coord: The y coordinate.
+ * @num_channels: The number of channels for the pixel.
+ * @pixel: The pixel value.
+ *
+ * Sets the value of the pixel at the specified coordinates.
+ *
+ * This procedure sets the pixel value at the specified coordinates.
+ * The 'num_channels' argument must always be equal to the
+ * bytes-per-pixel value for the spec ified drawable. Note that this
+ * function is not undoable, you should use it only on drawables you
+ * just created yourself.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_drawable_set_pixel (gint32        drawable_ID,
+			 gint          x_coord,
+			 gint          y_coord,
+			 gint          num_channels,
+			 const guint8 *pixel)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_set_pixel",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, x_coord,
+				    GIMP_PDB_INT32, y_coord,
+				    GIMP_PDB_INT32, num_channels,
+				    GIMP_PDB_INT8ARRAY, pixel,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_drawable_set_image:
+ * @drawable_ID: The drawable.
+ * @image_ID: The image.
+ *
+ * Set image where drawable belongs to.
+ *
+ * Set the image the drawable should be a part of (Use this before
+ * adding a drawable to another image).
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_drawable_set_image (gint32 drawable_ID,
+			 gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_set_image",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * _gimp_drawable_thumbnail:
  * @drawable_ID: The drawable.
  * @width: The thumbnail width.

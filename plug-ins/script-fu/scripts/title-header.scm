@@ -118,7 +118,7 @@
 
     ; Text layer
 
-    (gimp-layer-set-visible text-layer TRUE)
+    (gimp-drawable-set-visible text-layer TRUE)
     (gimp-layer-set-preserve-trans text-layer TRUE)
 
     (gimp-blend text-layer CUSTOM-MODE NORMAL-MODE

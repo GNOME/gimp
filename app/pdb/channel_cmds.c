@@ -38,18 +38,12 @@ static ProcRecord channel_new_proc;
 static ProcRecord channel_copy_proc;
 static ProcRecord channel_delete_proc;
 static ProcRecord channel_combine_masks_proc;
-static ProcRecord channel_get_name_proc;
-static ProcRecord channel_set_name_proc;
-static ProcRecord channel_get_visible_proc;
-static ProcRecord channel_set_visible_proc;
 static ProcRecord channel_get_show_masked_proc;
 static ProcRecord channel_set_show_masked_proc;
 static ProcRecord channel_get_opacity_proc;
 static ProcRecord channel_set_opacity_proc;
 static ProcRecord channel_get_color_proc;
 static ProcRecord channel_set_color_proc;
-static ProcRecord channel_get_tattoo_proc;
-static ProcRecord channel_set_tattoo_proc;
 
 void
 register_channel_procs (Gimp *gimp)
@@ -58,18 +52,12 @@ register_channel_procs (Gimp *gimp)
   procedural_db_register (gimp, &channel_copy_proc);
   procedural_db_register (gimp, &channel_delete_proc);
   procedural_db_register (gimp, &channel_combine_masks_proc);
-  procedural_db_register (gimp, &channel_get_name_proc);
-  procedural_db_register (gimp, &channel_set_name_proc);
-  procedural_db_register (gimp, &channel_get_visible_proc);
-  procedural_db_register (gimp, &channel_set_visible_proc);
   procedural_db_register (gimp, &channel_get_show_masked_proc);
   procedural_db_register (gimp, &channel_set_show_masked_proc);
   procedural_db_register (gimp, &channel_get_opacity_proc);
   procedural_db_register (gimp, &channel_set_opacity_proc);
   procedural_db_register (gimp, &channel_get_color_proc);
   procedural_db_register (gimp, &channel_set_color_proc);
-  procedural_db_register (gimp, &channel_get_tattoo_proc);
-  procedural_db_register (gimp, &channel_set_tattoo_proc);
 }
 
 static Argument *
@@ -369,216 +357,6 @@ static ProcRecord channel_combine_masks_proc =
   0,
   NULL,
   { { channel_combine_masks_invoker } }
-};
-
-static Argument *
-channel_get_name_invoker (Gimp     *gimp,
-                          Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpChannel *channel;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
-    success = FALSE;
-
-  return_args = procedural_db_return_args (&channel_get_name_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_pointer = g_strdup (gimp_object_get_name (GIMP_OBJECT (channel)));
-
-  return return_args;
-}
-
-static ProcArg channel_get_name_inargs[] =
-{
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel"
-  }
-};
-
-static ProcArg channel_get_name_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The channel name"
-  }
-};
-
-static ProcRecord channel_get_name_proc =
-{
-  "gimp_channel_get_name",
-  "Get the name of the specified channel.",
-  "This procedure returns the specified channel's name.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  channel_get_name_inargs,
-  1,
-  channel_get_name_outargs,
-  { { channel_get_name_invoker } }
-};
-
-static Argument *
-channel_set_name_invoker (Gimp     *gimp,
-                          Argument *args)
-{
-  gboolean success = TRUE;
-  GimpChannel *channel;
-  gchar *name;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  if (success)
-    gimp_item_rename (GIMP_ITEM (channel), name);
-
-  return procedural_db_return_args (&channel_set_name_proc, success);
-}
-
-static ProcArg channel_set_name_inargs[] =
-{
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel"
-  },
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The new channel name"
-  }
-};
-
-static ProcRecord channel_set_name_proc =
-{
-  "gimp_channel_set_name",
-  "Set the name of the specified channel.",
-  "This procedure sets the specified channel's name.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  channel_set_name_inargs,
-  0,
-  NULL,
-  { { channel_set_name_invoker } }
-};
-
-static Argument *
-channel_get_visible_invoker (Gimp     *gimp,
-                             Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpChannel *channel;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
-    success = FALSE;
-
-  return_args = procedural_db_return_args (&channel_get_visible_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimp_item_get_visible (GIMP_ITEM (channel));
-
-  return return_args;
-}
-
-static ProcArg channel_get_visible_inargs[] =
-{
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel"
-  }
-};
-
-static ProcArg channel_get_visible_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "visible",
-    "The channel visibility"
-  }
-};
-
-static ProcRecord channel_get_visible_proc =
-{
-  "gimp_channel_get_visible",
-  "Get the visibility of the specified channel.",
-  "This procedure returns the specified channel's visibility.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  channel_get_visible_inargs,
-  1,
-  channel_get_visible_outargs,
-  { { channel_get_visible_invoker } }
-};
-
-static Argument *
-channel_set_visible_invoker (Gimp     *gimp,
-                             Argument *args)
-{
-  gboolean success = TRUE;
-  GimpChannel *channel;
-  gboolean visible;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
-    success = FALSE;
-
-  visible = args[1].value.pdb_int ? TRUE : FALSE;
-
-  if (success)
-    gimp_item_set_visible (GIMP_ITEM (channel), visible, TRUE);
-
-  return procedural_db_return_args (&channel_set_visible_proc, success);
-}
-
-static ProcArg channel_set_visible_inargs[] =
-{
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel"
-  },
-  {
-    GIMP_PDB_INT32,
-    "visible",
-    "The new channel visibility"
-  }
-};
-
-static ProcRecord channel_set_visible_proc =
-{
-  "gimp_channel_set_visible",
-  "Set the visibility of the specified channel.",
-  "This procedure sets the specified channel's visibility.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  channel_set_visible_inargs,
-  0,
-  NULL,
-  { { channel_set_visible_invoker } }
 };
 
 static Argument *
@@ -904,110 +682,4 @@ static ProcRecord channel_set_color_proc =
   0,
   NULL,
   { { channel_set_color_invoker } }
-};
-
-static Argument *
-channel_get_tattoo_invoker (Gimp     *gimp,
-                            Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpChannel *channel;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
-    success = FALSE;
-
-  return_args = procedural_db_return_args (&channel_get_tattoo_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimp_item_get_tattoo (GIMP_ITEM (channel));
-
-  return return_args;
-}
-
-static ProcArg channel_get_tattoo_inargs[] =
-{
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel"
-  }
-};
-
-static ProcArg channel_get_tattoo_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "tattoo",
-    "The channel tattoo"
-  }
-};
-
-static ProcRecord channel_get_tattoo_proc =
-{
-  "gimp_channel_get_tattoo",
-  "Get the tattoo of the specified channel.",
-  "This procedure returns the specified channel's tattoo. A tattoo is a unique and permanent identifier attached to a channel that can be used to uniquely identify a channel within an image even between sessions.",
-  "Jay Cox",
-  "Jay Cox",
-  "1998",
-  GIMP_INTERNAL,
-  1,
-  channel_get_tattoo_inargs,
-  1,
-  channel_get_tattoo_outargs,
-  { { channel_get_tattoo_invoker } }
-};
-
-static Argument *
-channel_set_tattoo_invoker (Gimp     *gimp,
-                            Argument *args)
-{
-  gboolean success = TRUE;
-  GimpChannel *channel;
-  gint32 tattoo;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
-    success = FALSE;
-
-  tattoo = args[1].value.pdb_int;
-  if (tattoo == 0)
-    success = FALSE;
-
-  if (success)
-    gimp_item_set_tattoo (GIMP_ITEM (channel), tattoo);
-
-  return procedural_db_return_args (&channel_set_tattoo_proc, success);
-}
-
-static ProcArg channel_set_tattoo_inargs[] =
-{
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel"
-  },
-  {
-    GIMP_PDB_INT32,
-    "tattoo",
-    "The new channel tattoo"
-  }
-};
-
-static ProcRecord channel_set_tattoo_proc =
-{
-  "gimp_channel_set_tattoo",
-  "Set the tattoo of the specified channel.",
-  "This procedure sets the specified channel's tattoo. A tattoo is a unique and permanent identifier attached to a channel that can be used to uniquely identify a channel within an image even between sessions.",
-  "Jay Cox",
-  "Jay Cox",
-  "1998",
-  GIMP_INTERNAL,
-  2,
-  channel_set_tattoo_inargs,
-  0,
-  NULL,
-  { { channel_set_tattoo_invoker } }
 };

@@ -75,7 +75,7 @@
     (gimp-palette-set-background old-bg)
     (gimp-brushes-set-brush old-brush)
     (gimp-brushes-set-paint-mode old-paint-mode)
-    (gimp-layer-set-visible logo-layer 0)
+    (gimp-drawable-set-visible logo-layer 0)
     (gimp-image-set-active-layer img sparkle-layer)))
 
 
@@ -124,7 +124,7 @@
 	 (border (/ size 5))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text (* border 2) TRUE size PIXELS fontname))))
     (gimp-image-undo-disable img)
-    (gimp-layer-set-name text-layer text)
+    (gimp-drawable-set-name text-layer text)
     (apply-t-o-p-logo-effect img text-layer border hit-rate
 			     edge-size edge-only base-color bg-color)
     (gimp-image-undo-enable img)

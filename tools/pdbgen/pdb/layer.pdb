@@ -564,15 +564,6 @@ CODE
     );
 }
 
-&layer_accessors('name', 'string', 'name', 0, 0, [ undef, <<'CODE' ],
-$invoke{code} =~ s/gimp_object_set_name/gimp_item_rename/;
-$invoke{code} =~ s/GIMP_OBJECT/GIMP_ITEM/;
-CODE
-                 'object', 'GIMP_OBJECT (layer)');
-
-&layer_accessors('visible', 'boolean', 'visibility', 0, 1, undef,
-                 'item', 'GIMP_ITEM (layer)');
-
 &layer_accessors('preserve_trans', 'boolean', 'preserve transperancy', 1, 1);
 
 &layer_accessors('apply_mask', 'boolean', 'apply mask', 0, 0,
@@ -632,17 +623,6 @@ CODE2
     if (scalar @outargs) {
 	$outargs[0]->{desc} .= ' (for moves)'
     }
-CODE
-
-&layer_accessors('tattoo', 'tattoo', 'tattoo', 0, 0,
-		 <<'CODE', 'item', 'GIMP_ITEM (layer)');
-    $help .= <<'HELP';
-A tattoo is a unique and permanent identifier attached to a 
-layer that can be used to uniquely identify a layer within an image even between sessions
-HELP
-
-    $author = $copyright = 'Jay Cox';
-    $date = '1998';
 CODE
 
 @headers = qw("config/gimpcoreconfig.h" "core/gimp.h" "core/gimpimage-undo.h"

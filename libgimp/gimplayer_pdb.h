@@ -62,12 +62,6 @@ gint32               gimp_layer_mask                 (gint32                laye
 gboolean             gimp_layer_is_floating_sel      (gint32                layer_ID);
 gint32               gimp_layer_new_from_drawable    (gint32                drawable_ID,
 						      gint32                dest_image_ID);
-gchar*               gimp_layer_get_name             (gint32                layer_ID);
-gboolean             gimp_layer_set_name             (gint32                layer_ID,
-						      const gchar          *name);
-gboolean             gimp_layer_get_visible          (gint32                layer_ID);
-gboolean             gimp_layer_set_visible          (gint32                layer_ID,
-						      gboolean              visible);
 gboolean             gimp_layer_get_preserve_trans   (gint32                layer_ID);
 gboolean             gimp_layer_set_preserve_trans   (gint32                layer_ID,
 						      gboolean              preserve_trans);
@@ -89,9 +83,6 @@ gboolean             gimp_layer_set_mode             (gint32                laye
 gboolean             gimp_layer_get_linked           (gint32                layer_ID);
 gboolean             gimp_layer_set_linked           (gint32                layer_ID,
 						      gboolean              linked);
-gint                 gimp_layer_get_tattoo           (gint32                layer_ID);
-gboolean             gimp_layer_set_tattoo           (gint32                layer_ID,
-						      gint                  tattoo);
 
 
 G_END_DECLS

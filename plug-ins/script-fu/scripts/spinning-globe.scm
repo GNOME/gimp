@@ -41,7 +41,7 @@
 	 (set! n (+ n 1))
 	 (set! theFrame (car (gimp-layer-copy theLayer FALSE)))
 	 (gimp-image-add-layer theImage theFrame 0)
-	 (gimp-layer-set-name theFrame 
+	 (gimp-drawable-set-name theFrame 
 			      (string-append "Anim Frame: " 
 					     (number->string (- inFrames n) 10)
 					     " (replace)"))

@@ -1123,18 +1123,18 @@ save_image (const gchar *filename,
 
       if (is_gif89)
 	{
-	  if (i>0)
+	  if (i > 0)
 	    {
-	      layer_name = gimp_layer_get_name(layers[i-1]);
-	      Disposal = parse_disposal_tag(layer_name);
-	      g_free(layer_name);
+	      layer_name = gimp_drawable_get_name (layers[i - 1]);
+	      Disposal = parse_disposal_tag (layer_name);
+	      g_free (layer_name);
 	    }
 	  else
 	    Disposal = gsvals.default_dispose;
 
-	  layer_name = gimp_layer_get_name(layers[i]);
-	  Delay89 = parse_ms_tag(layer_name);
-	  g_free(layer_name);
+	  layer_name = gimp_drawable_get_name (layers[i]);
+	  Delay89 = parse_ms_tag (layer_name);
+	  g_free (layer_name);
 
 	  if (Delay89 < 0)
 	    Delay89 = (gsvals.default_delay + 5) / 10;
@@ -1169,8 +1169,6 @@ save_image (const gchar *filename,
 			  useBPP,
 			  GetPixel,
 			  offset_x, offset_y);
-
-
 
       gimp_drawable_detach (drawable);
 

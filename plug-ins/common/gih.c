@@ -298,7 +298,7 @@ run (const gchar      *name,
 	{
 	  if (!gimp_drawable_has_alpha (layer_ID[layer]))
 	    {
-	      layer_name = gimp_layer_get_name (layer_ID[layer]);
+	      layer_name = gimp_drawable_get_name (layer_ID[layer]);
 	      g_message (_("Layer %s doesn't have an alpha channel, skipped"),
 			 layer_name);
 	      g_free (layer_name);
@@ -1281,7 +1281,7 @@ gih_save_image (const gchar *filename,
 				   thisw, thish, FALSE, FALSE);
 
 	      if (! gih_save_one_brush (fd, &pixel_rgn,
-					gimp_drawable_name (layer_ID[layer])))
+					gimp_drawable_get_name (layer_ID[layer])))
 		{
 		  close (fd);
 		  return FALSE;
@@ -1300,4 +1300,3 @@ gih_save_image (const gchar *filename,
 
   return TRUE;
 }
-

@@ -45,7 +45,7 @@
 				      NORMAL-MODE) ) )
 
   (gimp-palette-set-background inBackColor)
-  (gimp-layer-set-name theLayer "Background")
+  (gimp-drawable-set-name theLayer "Background")
   (gimp-image-add-layer theImage theLayer 0)
 
   (script-fu-asc-2-img-layer theImage theLayer inFile inFont inFontSize
@@ -196,7 +196,7 @@
                       (gimp-floating-sel-anchor theText)
 		      ()
 		      )
-                  (gimp-layer-set-name theText theLine)
+                  (gimp-drawable-set-name theText theLine)
 		  )
 		)
 	  (set! theImageHeight

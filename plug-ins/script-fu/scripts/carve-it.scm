@@ -164,11 +164,11 @@
     (gimp-image-remove-channel img mask-highlight)
     (gimp-image-remove-channel img mask-shadow)
 
-    (gimp-layer-set-name layer1 "Carved Surface")
-    (gimp-layer-set-name shadow-layer "Bevel Shadow")
-    (gimp-layer-set-name highlight-layer "Bevel Highlight")
-    (gimp-layer-set-name cast-shadow-layer "Cast Shadow")
-    (gimp-layer-set-name inset-layer "Inset")
+    (gimp-drawable-set-name layer1 "Carved Surface")
+    (gimp-drawable-set-name shadow-layer "Bevel Shadow")
+    (gimp-drawable-set-name highlight-layer "Bevel Highlight")
+    (gimp-drawable-set-name cast-shadow-layer "Cast Shadow")
+    (gimp-drawable-set-name inset-layer "Inset")
 
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)

@@ -59,6 +59,12 @@ static ProcRecord drawable_offsets_proc;
 static ProcRecord drawable_is_layer_proc;
 static ProcRecord drawable_is_layer_mask_proc;
 static ProcRecord drawable_is_channel_proc;
+static ProcRecord drawable_get_name_proc;
+static ProcRecord drawable_set_name_proc;
+static ProcRecord drawable_get_visible_proc;
+static ProcRecord drawable_set_visible_proc;
+static ProcRecord drawable_get_tattoo_proc;
+static ProcRecord drawable_set_tattoo_proc;
 static ProcRecord drawable_get_pixel_proc;
 static ProcRecord drawable_set_pixel_proc;
 static ProcRecord drawable_set_image_proc;
@@ -86,6 +92,12 @@ register_drawable_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_is_layer_proc);
   procedural_db_register (gimp, &drawable_is_layer_mask_proc);
   procedural_db_register (gimp, &drawable_is_channel_proc);
+  procedural_db_register (gimp, &drawable_get_name_proc);
+  procedural_db_register (gimp, &drawable_set_name_proc);
+  procedural_db_register (gimp, &drawable_get_visible_proc);
+  procedural_db_register (gimp, &drawable_set_visible_proc);
+  procedural_db_register (gimp, &drawable_get_tattoo_proc);
+  procedural_db_register (gimp, &drawable_set_tattoo_proc);
   procedural_db_register (gimp, &drawable_get_pixel_proc);
   procedural_db_register (gimp, &drawable_set_pixel_proc);
   procedural_db_register (gimp, &drawable_set_image_proc);
@@ -1142,6 +1154,322 @@ static ProcRecord drawable_is_channel_proc =
 };
 
 static Argument *
+drawable_get_name_invoker (Gimp     *gimp,
+                           Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&drawable_get_name_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_pointer = g_strdup (gimp_object_get_name (GIMP_OBJECT (drawable)));
+
+  return return_args;
+}
+
+static ProcArg drawable_get_name_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcArg drawable_get_name_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The drawable name"
+  }
+};
+
+static ProcRecord drawable_get_name_proc =
+{
+  "gimp_drawable_get_name",
+  "Get the name of the specified drawable.",
+  "This procedure returns the specified drawable's name.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  drawable_get_name_inargs,
+  1,
+  drawable_get_name_outargs,
+  { { drawable_get_name_invoker } }
+};
+
+static Argument *
+drawable_set_name_invoker (Gimp     *gimp,
+                           Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gchar *name;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    gimp_item_rename (GIMP_ITEM (drawable), name);
+
+  return procedural_db_return_args (&drawable_set_name_proc, success);
+}
+
+static ProcArg drawable_set_name_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  },
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The new drawable name"
+  }
+};
+
+static ProcRecord drawable_set_name_proc =
+{
+  "gimp_drawable_set_name",
+  "Set the name of the specified drawable.",
+  "This procedure sets the specified drawable's name.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  drawable_set_name_inargs,
+  0,
+  NULL,
+  { { drawable_set_name_invoker } }
+};
+
+static Argument *
+drawable_get_visible_invoker (Gimp     *gimp,
+                              Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&drawable_get_visible_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_visible (GIMP_ITEM (drawable));
+
+  return return_args;
+}
+
+static ProcArg drawable_get_visible_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcArg drawable_get_visible_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "visible",
+    "The drawable visibility"
+  }
+};
+
+static ProcRecord drawable_get_visible_proc =
+{
+  "gimp_drawable_get_visible",
+  "Get the visibility of the specified drawable.",
+  "This procedure returns the specified drawable's visibility.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  drawable_get_visible_inargs,
+  1,
+  drawable_get_visible_outargs,
+  { { drawable_get_visible_invoker } }
+};
+
+static Argument *
+drawable_set_visible_invoker (Gimp     *gimp,
+                              Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gboolean visible;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  visible = args[1].value.pdb_int ? TRUE : FALSE;
+
+  if (success)
+    gimp_item_set_visible (GIMP_ITEM (drawable), visible, TRUE);
+
+  return procedural_db_return_args (&drawable_set_visible_proc, success);
+}
+
+static ProcArg drawable_set_visible_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  },
+  {
+    GIMP_PDB_INT32,
+    "visible",
+    "The new drawable visibility"
+  }
+};
+
+static ProcRecord drawable_set_visible_proc =
+{
+  "gimp_drawable_set_visible",
+  "Set the visibility of the specified drawable.",
+  "This procedure sets the specified drawable's visibility.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  drawable_set_visible_inargs,
+  0,
+  NULL,
+  { { drawable_set_visible_invoker } }
+};
+
+static Argument *
+drawable_get_tattoo_invoker (Gimp     *gimp,
+                             Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&drawable_get_tattoo_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_tattoo (GIMP_ITEM (drawable));
+
+  return return_args;
+}
+
+static ProcArg drawable_get_tattoo_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcArg drawable_get_tattoo_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "tattoo",
+    "The drawable tattoo"
+  }
+};
+
+static ProcRecord drawable_get_tattoo_proc =
+{
+  "gimp_drawable_get_tattoo",
+  "Get the tattoo of the specified drawable.",
+  "This procedure returns the specified drawable's tattoo. A tattoo is a unique and permanent identifier attached to a drawable that can be used to uniquely identify a drawable within an image even between sessions",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  GIMP_INTERNAL,
+  1,
+  drawable_get_tattoo_inargs,
+  1,
+  drawable_get_tattoo_outargs,
+  { { drawable_get_tattoo_invoker } }
+};
+
+static Argument *
+drawable_set_tattoo_invoker (Gimp     *gimp,
+                             Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 tattoo;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  tattoo = args[1].value.pdb_int;
+  if (tattoo == 0)
+    success = FALSE;
+
+  if (success)
+    gimp_item_set_tattoo (GIMP_ITEM (drawable), tattoo);
+
+  return procedural_db_return_args (&drawable_set_tattoo_proc, success);
+}
+
+static ProcArg drawable_set_tattoo_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  },
+  {
+    GIMP_PDB_INT32,
+    "tattoo",
+    "The new drawable tattoo"
+  }
+};
+
+static ProcRecord drawable_set_tattoo_proc =
+{
+  "gimp_drawable_set_tattoo",
+  "Set the tattoo of the specified drawable.",
+  "This procedure sets the specified drawable's tattoo. A tattoo is a unique and permanent identifier attached to a drawable that can be used to uniquely identify a drawable within an image even between sessions",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  GIMP_INTERNAL,
+  2,
+  drawable_set_tattoo_inargs,
+  0,
+  NULL,
+  { { drawable_set_tattoo_invoker } }
+};
+
+static Argument *
 drawable_get_pixel_invoker (Gimp     *gimp,
                             Argument *args)
 {
@@ -1340,7 +1668,7 @@ static ProcRecord drawable_set_pixel_proc =
 {
   "gimp_drawable_set_pixel",
   "Sets the value of the pixel at the specified coordinates.",
-  "This procedure sets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the spec ified drawable.",
+  "This procedure sets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the spec ified drawable. Note that this function is not undoable, you should use it only on drawables you just created yourself.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
