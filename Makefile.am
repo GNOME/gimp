@@ -34,6 +34,7 @@ EXTRA_DIST = \
 	MAINTAINERS		 \
 	TODO			 \
 	gtkrc			 \
+	unitrc			 \
 	gimp_logo.ppm		 \
 	gimp_splash.ppm		 \
 	gimp1_1_splash.ppm	 \
@@ -54,6 +55,7 @@ gimpdata_DATA = \
 	gimprc_user		 \
 	gimprc.5		 \
 	gtkrc			 \
+	unitrc			 \
 	gimp_logo.ppm		 \
 	gimp_splash.ppm		 \
 	gimp1_1_splash.ppm	 \

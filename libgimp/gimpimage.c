@@ -1033,6 +1033,47 @@ gimp_image_set_resolution (gint32  image_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
+GUnit
+gimp_image_get_unit (gint32  image_ID)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  GUnit unit;
+
+  g_return_if_fail(unit);
+
+  return_vals = gimp_run_procedure ("gimp_image_get_unit",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_END);
+
+  /* error return value */
+  unit = UNIT_INCH;
+
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    unit = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return unit;
+}
+
+void
+gimp_image_set_unit (gint32  image_ID,
+		     GUnit   unit)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_image_set_unit",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_INT32, unit,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
 gint32
 gimp_image_get_layer_by_tattoo (gint32  image_ID, gint32 tattoo)
 {

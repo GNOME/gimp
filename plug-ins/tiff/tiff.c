@@ -35,7 +35,9 @@
 #include <tiffio.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-
+#ifdef GIMP_HAVE_RESOLUTION_INFO
+#include "libgimp/gimpunit.h"
+#endif
 
 typedef struct
 {
@@ -467,33 +469,34 @@ static gint32 load_image (char *filename) {
   /* any resolution info in the file? */
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   {
-    float xres=0.0, yres=0.0;
-    unsigned short units;
+    float xres = 72.0, yres = 72.0;
+    unsigned short read_unit;
+    GUnit unit = UNIT_PIXEL; /* invalid unit */
 
     if (TIFFGetField (tif, TIFFTAG_XRESOLUTION, &xres)) {
       if (TIFFGetField (tif, TIFFTAG_YRESOLUTION, &yres)) {
 
-	if (TIFFGetField (tif, TIFFTAG_RESOLUTIONUNIT, &units)) {
-	  switch(units) {
+	if (TIFFGetField (tif, TIFFTAG_RESOLUTIONUNIT, &read_unit)) {
+	  switch(read_unit) {
 	  case RESUNIT_NONE:
 	    /* ImageMagick writes files with this silly resunit */
 	    g_message("TIFF warning: resolution units meaningless, "
 		      "forcing 72 dpi\n");
-	    xres = 72.0;
-	    yres = 72.0;
 	    break;
 
 	  case RESUNIT_INCH:
+	    unit = UNIT_INCH;
 	    break;
 
 	  case RESUNIT_CENTIMETER:
 	    xres *= 2.54;
 	    yres *= 2.54;
+	    unit = UNIT_MM; /* as this is our default metric unit */
 	    break;
 
 	  default:
 	    g_message("TIFF file error: unknown resolution unit type %d, "
-		      "assuming dpi\n", units);
+		      "assuming dpi\n", read_unit);
 	  }
 	} else { /* no res unit tag */
 	  /* old AppleScan software produces these */
@@ -514,6 +517,8 @@ static gint32 load_image (char *filename) {
 
       /* now set the new image's resolution info */
       gimp_image_set_resolution (image, xres, yres);
+      if (unit != UNIT_PIXEL)
+	gimp_image_set_unit(image, unit);
     }
 
     /* no x res tag => we assume we have no resolution info, so we
@@ -1135,14 +1140,31 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
   {
       float xresolution;
       float yresolution;
+      unsigned short save_unit = RESUNIT_INCH;
+      GUnit unit;
+      float factor;
 
       gimp_image_get_resolution (image, &xresolution, &yresolution);
+      unit = gimp_image_get_unit (image);
+      factor = gimp_unit_get_factor (unit);
+
+      /*  if we have a metric unit, save the resolution as centimeters
+       */
+      if ((ABS(factor - 0.0254) < 1e-5) ||  /* m */
+	  (ABS(factor - 0.254) < 1e-5) ||   /* why not ;) */
+	  (ABS(factor - 2.54) < 1e-5) ||    /* cm */
+	  (ABS(factor - 25.4) < 1e-5))      /* mm */
+	{
+	  save_unit = RESUNIT_CENTIMETER;
+	  xresolution /= 2.54;
+	  yresolution /= 2.54;
+	}
 
       if (xresolution > 1e-5 && yresolution > 1e-5)
       {
 	  TIFFSetField (tif, TIFFTAG_XRESOLUTION, xresolution);
 	  TIFFSetField (tif, TIFFTAG_YRESOLUTION, yresolution);
-	  TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, RESUNIT_INCH);
+	  TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, save_unit);
       }
   }
 #endif /* GIMP_HAVE_RESOLUTION_INFO */

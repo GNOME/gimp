@@ -50,6 +50,7 @@
 #include "gimage_cmds.h"
 #include "gimage_mask_cmds.h"
 #include "gimprc.h"
+#include "gimpunit_cmds.h"
 #include "gradient.h"
 #include "histogram_tool.h"
 #include "hue_saturation.h"
@@ -179,6 +180,8 @@ internal_procs_init ()
   procedural_db_register (&gimage_set_filename_proc); pcount++;
   procedural_db_register (&gimage_get_resolution_proc); pcount++;
   procedural_db_register (&gimage_set_resolution_proc); pcount++;
+  procedural_db_register (&gimage_get_unit_proc); pcount++;
+  procedural_db_register (&gimage_set_unit_proc); pcount++;
   procedural_db_register (&gimage_width_proc); pcount++;
   procedural_db_register (&gimage_height_proc); pcount++;
   procedural_db_register (&gimage_get_cmap_proc); pcount++;
@@ -419,6 +422,19 @@ internal_procs_init ()
 
   app_init_update_status(NULL, _("Procedural database"),
 			 pcount/total_pcount);
+
+  /*  Unit Procedures  */
+  procedural_db_register (&gimp_unit_get_number_of_units_proc); pcount++;
+  procedural_db_register (&gimp_unit_new_proc); pcount++;
+  procedural_db_register (&gimp_unit_get_deletion_flag_proc); pcount++;
+  procedural_db_register (&gimp_unit_set_deletion_flag_proc); pcount++;
+  procedural_db_register (&gimp_unit_get_identifier_proc); pcount++;
+  procedural_db_register (&gimp_unit_get_factor_proc); pcount++;
+  procedural_db_register (&gimp_unit_get_digits_proc); pcount++;
+  procedural_db_register (&gimp_unit_get_symbol_proc); pcount++;
+  procedural_db_register (&gimp_unit_get_abbreviation_proc); pcount++;
+  procedural_db_register (&gimp_unit_get_singular_proc); pcount++;
+  procedural_db_register (&gimp_unit_get_plural_proc); pcount++;
 
   /*  Procedural Database  */
   procedural_db_register (&procedural_db_dump_proc); pcount++;

@@ -64,12 +64,13 @@ typedef enum {
   TT_IMAGETYPE,
   TT_XCOLORCUBE,
   TT_XPREVSIZE,
-  TT_XRULERUNIT,
+  TT_XUNIT,
   TT_XPLUGIN,
   TT_XPLUGINDEF,
   TT_XMENUPATH,
   TT_XDEVICE,
-  TT_XSESSIONINFO
+  TT_XSESSIONINFO,
+  TT_XUNITINFO
 } TokenType;
 
 typedef struct _ParseFunc ParseFunc;
@@ -165,6 +166,7 @@ static int parse_plug_in_def (gpointer val1p, gpointer val2p);
 static int parse_device (gpointer val1p, gpointer val2p);
 static int parse_menu_path (gpointer val1p, gpointer val2p);
 static int parse_session_info (gpointer val1p, gpointer val2p);
+static int parse_unit_info (gpointer val1p, gpointer val2p);
 
 static int parse_proc_def (PlugInProcDef **proc_def);
 static int parse_proc_arg (ProcArg *arg);
@@ -242,7 +244,7 @@ static ParseFunc funcs[] =
   { "dont-show-rulers",      TT_BOOLEAN,    NULL, &show_rulers },
   { "show-statusbar",        TT_BOOLEAN,    &show_statusbar, NULL },
   { "dont-show-statusbar",   TT_BOOLEAN,    NULL, &show_statusbar },
-  { "default-units",         TT_XRULERUNIT, &default_units, NULL },
+  { "default-units",         TT_XUNIT,      &default_units, NULL },
   { "auto-save",             TT_BOOLEAN,    &auto_save, NULL },
   { "dont-auto-save",        TT_BOOLEAN,    NULL, &auto_save },
   { "cubic-interpolation",   TT_BOOLEAN,    &cubic_interpolation, NULL },
@@ -262,12 +264,13 @@ static ParseFunc funcs[] =
   { "default-image-type",    TT_IMAGETYPE,  &default_type, NULL },
   { "default-xresolution",   TT_FLOAT,      &default_xresolution, NULL },
   { "default-yresolution",   TT_FLOAT,      &default_yresolution, NULL },
-  { "default-resolution-units", TT_XRULERUNIT, &default_resolution_units, NULL },
+  { "default-resolution-units", TT_XUNIT,   &default_resolution_units, NULL },
   { "plug-in",               TT_XPLUGIN,    NULL, NULL },
   { "plug-in-def",           TT_XPLUGINDEF, NULL, NULL },
   { "menu-path",             TT_XMENUPATH,  NULL, NULL },
   { "device",                TT_XDEVICE,    NULL, NULL },
-  { "session-info",          TT_XSESSIONINFO, NULL, NULL},
+  { "session-info",          TT_XSESSIONINFO, NULL, NULL },
+  { "unit-info",             TT_XUNITINFO,  NULL, NULL },
   { "monitor-xresolution",   TT_FLOAT,      &monitor_xres, NULL },
   { "monitor-yresolution",   TT_FLOAT,      &monitor_yres, NULL },
   { "num-processors",        TT_INT,        &num_processors, NULL },
@@ -308,16 +311,20 @@ gimp_system_rc_file ()
 }
 
 void
+init_parse_buffers ()
+{
+  parse_info.buffer = g_new (char, 4096);
+  parse_info.tokenbuf = parse_info.buffer + 2048;
+  parse_info.buffer_size = 2048;
+  parse_info.tokenbuf_size = 2048;
+}
+
+void
 parse_gimprc ()
 {
   char libfilename[MAXPATHLEN];
   char filename[MAXPATHLEN];
   char *gimp_dir;
-
-  parse_info.buffer = g_new (char, 4096);
-  parse_info.tokenbuf = parse_info.buffer + 2048;
-  parse_info.buffer_size = 2048;
-  parse_info.tokenbuf_size = 2048;
 
   gimp_dir = gimp_directory ();
   add_gimp_directory_token (gimp_dir);
@@ -598,7 +605,7 @@ parse_statement ()
 	  return parse_color_cube (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPREVSIZE:
 	  return parse_preview_size (funcs[i].val1p, funcs[i].val2p);
-	case TT_XRULERUNIT:
+	case TT_XUNIT:
 	  return parse_units (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPLUGIN:
 	  return parse_plug_in (funcs[i].val1p, funcs[i].val2p);
@@ -610,6 +617,8 @@ parse_statement ()
 	  return parse_device (funcs[i].val1p, funcs[i].val2p);
 	case TT_XSESSIONINFO:
 	  return parse_session_info (funcs[i].val1p, funcs[i].val2p);
+	case TT_XUNITINFO:
+	  return parse_unit_info (funcs[i].val1p, funcs[i].val2p);
 	}
 
   return parse_unknown (token_sym);
@@ -1880,6 +1889,128 @@ parse_session_info (gpointer val1p,
 }
 
 static int
+parse_unit_info (gpointer val1p, 
+		 gpointer val2p)
+{
+  int token;
+
+  GUnit  unit;
+
+  gchar *identifier   = NULL;
+  float  factor       = 1.0;
+  int    digits       = 2.0;
+  gchar *symbol       = NULL;
+  gchar *abbreviation = NULL;
+  gchar *singular     = NULL;
+  gchar *plural       = NULL;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_STRING))
+    return ERROR;
+  token = get_next_token ();
+  identifier = g_strdup (token_str);
+
+  /* Parse options for unit info */
+
+  while ( peek_next_token () == TOKEN_LEFT_PAREN )
+    {
+      token = get_next_token ();
+
+      token = peek_next_token ();
+      if (!token || (token != TOKEN_SYMBOL))
+	goto parse_unit_info_error_label;
+      token = get_next_token ();
+
+      if (!strcmp ("factor", token_sym))
+	{
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_NUMBER))
+	    goto parse_unit_info_error_label;
+	  token = get_next_token ();
+	  factor = token_num;
+	}
+      else if (!strcmp ("digits", token_sym))
+	{
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_NUMBER))
+	    goto parse_unit_info_error_label;
+	  token = get_next_token ();
+	  digits = token_int;
+	}
+      else if (!strcmp ("symbol", token_sym))
+	{
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_STRING))
+	    goto parse_unit_info_error_label;
+	  token = get_next_token ();
+	  symbol = g_strdup (token_str);
+	}
+      else if (!strcmp ("abbreviation", token_sym))
+	{
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_STRING))
+	    goto parse_unit_info_error_label;
+	  token = get_next_token ();
+	  abbreviation = g_strdup (token_str);
+	}
+      else if (!strcmp ("singular", token_sym))
+	{
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_STRING))
+	    goto parse_unit_info_error_label;
+	  token = get_next_token ();
+	  singular = g_strdup (token_str);
+	}
+      else if (!strcmp ("plural", token_sym))
+	{
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_STRING))
+	    goto parse_unit_info_error_label;
+	  token = get_next_token ();
+	  plural = g_strdup (token_str);
+	}
+      else
+	goto parse_unit_info_error_label;
+      
+      token = peek_next_token ();
+      if (!token || (token != TOKEN_RIGHT_PAREN))
+	goto parse_unit_info_error_label;
+      token = get_next_token ();
+    }
+
+  if (!token || (token != TOKEN_RIGHT_PAREN))
+    goto parse_unit_info_error_label;
+  token = get_next_token ();
+
+  unit = gimp_unit_new (identifier, factor, digits,
+			symbol, abbreviation, singular, plural);
+  /*  make the unit definition persistent  */
+  gimp_unit_set_deletion_flag (unit, FALSE);
+
+  g_free (identifier);
+  g_free (symbol);
+  g_free (abbreviation);
+  g_free (singular);
+  g_free (plural);
+
+  return OK;
+
+ parse_unit_info_error_label:
+  if (identifier)
+    g_free (identifier);
+  if (symbol)
+    g_free (symbol);
+  if (abbreviation)
+    g_free (abbreviation);
+  if (singular)
+    g_free (singular);
+  if (plural)
+    g_free (plural);
+
+  return ERROR;
+}
+
+static int
 parse_unknown (char *token_sym)
 {
   int token;
@@ -1963,13 +2094,14 @@ value_to_str (char *name)
 	  return color_cube_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPREVSIZE:
 	  return preview_size_to_str (funcs[i].val1p, funcs[i].val2p);
-	case TT_XRULERUNIT:
+	case TT_XUNIT:
 	  return units_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPLUGIN:
 	case TT_XPLUGINDEF:
 	case TT_XMENUPATH:
 	case TT_XDEVICE:
 	case TT_XSESSIONINFO:
+	case TT_XUNITINFO:
 	  return NULL;
 	}
   return NULL;

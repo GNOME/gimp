@@ -233,7 +233,9 @@ gimp_size_entry_new (gint             number_of_fields,
 					    gsef->min_value, 
 					    gsef->max_value,
 					    1.0, 10.0, 0.0));
-      gsef->value_spinbutton = gtk_spin_button_new (adjustment, 1.0, 3);
+      gsef->value_spinbutton =
+	gtk_spin_button_new (adjustment, 1.0,
+			     MIN (gimp_unit_get_digits (unit), 5) + 1);
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(gsef->value_spinbutton),
 				       GTK_SHADOW_NONE);
       gtk_widget_set_usize (gsef->value_spinbutton, spinbutton_usize, 0);
@@ -789,7 +791,7 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 					gsef->refval_digits);
 	  else
 	    gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
-					MAX(gimp_unit_get_digits (unit) + 1, 3));
+					MIN(gimp_unit_get_digits (unit), 5) + 1);
 	}
       else if (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION)
 	{
@@ -856,7 +858,8 @@ gimp_size_entry_focus_in_callback (GtkWidget *widget,
 				   GdkEvent  *event,
 				   gpointer   data)
 {
-  gtk_editable_select_region (GTK_EDITABLE (widget), 0, -1);
+
+  /* gtk_editable_select_region (GTK_EDITABLE (widget), 0, -1); */
 
   return TRUE;
 }

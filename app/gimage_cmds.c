@@ -3061,6 +3061,149 @@ ProcRecord gimage_set_resolution_proc =
 
 
 
+/***************************/
+/*  GIMAGE_GET_UNIT  */
+
+static Argument *
+gimage_get_unit_invoker (Argument *args)
+{
+  GImage *gimage;
+  GUnit unit;
+  Argument *return_args;
+
+  unit = UNIT_PIXEL;  /*  pixel is not a valid image unit  */
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if ((gimage = gimage_get_ID (int_value))) {
+	unit = gimage->unit;
+      } else {
+	success = FALSE;
+      }
+    }
+
+  return_args= procedural_db_return_args(&gimage_get_unit_proc, success);
+
+  if (success)
+  {
+    return_args[1].value.pdb_int = unit;
+  }
+
+  return return_args;
+}
+
+/*  The procedure definition  */
+ProcArg gimage_get_unit_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the image"
+  }
+};
+
+ProcArg gimage_get_unit_out_args[] =
+{
+  { PDB_INT32,
+    "unit",
+    "the unit ID of the image's display unit",
+  }
+};
+
+ProcRecord gimage_get_unit_proc =
+{
+  "gimp_image_get_unit",
+  "Returns the unit of the image",
+  "This procedure returns the unit ID of the image's unit. This value is independent of any of the layers in this image. A return value of 0 means the image was invalid. See the gimp_unit_* procedure definitions for the valid range of unit IDs and a description of the unit system.",
+  "Michael Natterer",
+  "Michael Natterer",
+  "1999",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  1,
+  gimage_get_unit_args,
+
+  /*  Output arguments  */
+  1,
+  gimage_get_unit_out_args,
+
+  /*  Exec method  */
+  { { gimage_get_unit_invoker } },
+};
+
+
+/***************************/
+/*  GIMAGE_SET_UNIT  */
+
+static Argument *
+gimage_set_unit_invoker (Argument *args)
+{
+  GImage *gimage;
+  Argument *return_args;
+
+  GUnit unit;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (!(gimage = gimage_get_ID (int_value)))
+	success = FALSE;
+    }
+
+  if (success)
+    {
+      unit = args[1].value.pdb_int;
+      if ((unit < UNIT_INCH) || (unit >= gimp_unit_get_number_of_units ()))
+	success = FALSE;
+      else
+	gimage->unit = unit;
+    }
+
+  return_args= procedural_db_return_args(&gimage_set_unit_proc, success);
+
+  return return_args;
+}
+
+/*  The procedure definition  */
+ProcArg gimage_set_unit_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the image"
+  },
+  { PDB_INT32,
+    "unit",
+    "unit ID of the image's new unit",
+  }
+};
+
+ProcRecord gimage_set_unit_proc =
+{
+  "gimp_image_set_unit",
+  "Sets the unit of the image",
+  "This procedure sets the image's unit by it's unit ID. This value is independent of any of the layers in this image. No scaling or resizing is performed. See the gimp_unit_* procedure definitions for the valid range of unit IDs and a description of the unit system.",
+  "Michael Natterer",
+  "Michael Natterer",
+  "1999",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  gimage_set_unit_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { gimage_set_unit_invoker } },
+};
+
+
+
 /******************/
 /*  GIMAGE_WIDTH  */
 
@@ -5072,5 +5215,3 @@ gimp_image_get_channel_by_tattoo_invoker (Argument *args)
 
   return return_args;
 }
-
-

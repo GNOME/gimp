@@ -77,6 +77,9 @@ extern char *    image_title_format;
 
 
 /*  function prototypes  */
+void    init_parse_buffers (); /* this has to be called before any file
+				* is parsed
+				*/
 void    parse_gimprc (void);
 void    parse_gimprc_file (char *filename);
 void    save_gimprc (GList **updated_options, GList **conflicting_options);

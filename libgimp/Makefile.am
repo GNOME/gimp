@@ -40,8 +40,6 @@ libgimpi_a_SOURCES = \
 	gimpprotocol.h		\
 	gimpsizeentry.c		\
 	gimpsizeentry.h		\
-	gimpunit.c		\
-	gimpunit.h		\
 	gimpunitmenu.c		\
 	gimpunitmenu.h		\
 	gimpwire.c		\
@@ -75,6 +73,8 @@ libgimp_la_SOURCES = \
 	gimpprotocol.c	\
 	gimpprotocol.h	\
 	gimptile.c	\
+	gimpunit.c	\
+	gimpunit.h	\
 	gimpwire.c	\
 	gimpwire.h	\
 	gserialize.c	\

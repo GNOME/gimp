@@ -59,6 +59,7 @@ gimp_unit_menu_class_init (GimpUnitMenuClass *class)
 static void
 gimp_unit_menu_init (GimpUnitMenu *gum)
 {
+  gum->selection = NULL;
   gum->unit = UNIT_PIXEL;
   gum->start = 0;
 }
@@ -91,51 +92,85 @@ gimp_unit_menu_get_type ()
 
 
 GtkWidget*
-gimp_unit_menu_new (gchar    *format,
-		    GUnit     unit,
-		    gboolean  with_pixels,
-		    gboolean  with_custom)
+gimp_unit_menu_new (gchar       *format,
+		    GUnit        unit,
+		    gboolean     with_pixels,
+		    gboolean     with_custom)
 {
-  GimpUnitMenu  *gum;
-  GtkWidget     *menu;
-  GtkWidget     *menuitem;
-  GUnit          u;
+  GimpUnitMenu *gum;
+  GtkWidget    *menu;
+  GtkWidget    *menuitem;
+  GUnit         u;
+
+  g_return_val_if_fail ((unit >= UNIT_PIXEL) &&
+			(unit < gimp_unit_get_number_of_units ()), NULL);
 
   if (with_custom); /* avoid 'unused variable' compiler warning */
 
   gum = gtk_type_new (gimp_unit_menu_get_type ());
 
+  gum->format = g_strdup (format);
   /* if we don't want pixels, start with inches */
   gum->start = with_pixels ? UNIT_PIXEL : UNIT_INCH;
 
-  if ( (unit < gum->start) || (unit >= UNIT_END) )
+  if (unit < gum->start)
     unit = gum->start;
 
   menu = gtk_menu_new();
   for (u = gum->start; u < gimp_unit_get_number_of_built_in_units(); u++)
     {
       menuitem =
-	gtk_menu_item_new_with_label (gimp_unit_menu_build_string(format, u) );
+	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format, u));
       gtk_menu_append (GTK_MENU (menu), menuitem);
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  (GtkSignalFunc) gimp_unit_menu_callback, gum);
-      gtk_widget_show(menuitem);
       gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_unit_menu", (gpointer)u);
+      gtk_widget_show(menuitem);
 
       /* add a separator after pixels */
       if (u == UNIT_PIXEL)
 	{
 	  menuitem = gtk_menu_item_new ();
-	  gtk_widget_show (menuitem);
 	  gtk_menu_append (GTK_MENU (menu), menuitem);
+	  gtk_widget_show (menuitem);
 	}
-    } 
+    }
+  if (unit >= gimp_unit_get_number_of_built_in_units ())
+    {
+      menuitem = gtk_menu_item_new ();
+      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_widget_show (menuitem);
+      
+      menuitem =
+	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format, unit));
+      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			  (GtkSignalFunc) gimp_unit_menu_callback, gum);
+      gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_unit_menu", (gpointer)unit);
+      gtk_widget_show(menuitem);
+    }
 
+  menuitem = gtk_menu_item_new ();
+  gtk_menu_append (GTK_MENU (menu), menuitem);
+  gtk_widget_show (menuitem);
+      
+  menuitem =
+    gtk_menu_item_new_with_label (_("More..."));
+  gtk_menu_append (GTK_MENU (menu), menuitem);
+  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+		      (GtkSignalFunc) gimp_unit_menu_callback, gum);
+  gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_unit_menu",
+		       (gpointer)65536);
+  gtk_widget_show(menuitem);
+  
   gtk_option_menu_set_menu (GTK_OPTION_MENU (gum), menu);
 
   gum->unit = unit;
   gtk_option_menu_set_history (GTK_OPTION_MENU (gum),
-			       unit - gum->start + (with_pixels ? 1 : 0));
+			       ((unit < UNIT_END) ?
+				(unit - gum->start +
+				 (with_pixels ? 1 : 0)) :
+				(UNIT_END + (with_pixels ? 2 : 0))));
   
   return GTK_WIDGET (gum);
 }
@@ -145,17 +180,54 @@ void
 gimp_unit_menu_set_unit (GimpUnitMenu *gum,
 			 GUnit         unit)
 {
+  GtkWidget *menuitem = NULL;
+  GList     *items;
+  gint       user_unit;
+
   g_return_if_fail (gum != NULL);
   g_return_if_fail (GIMP_IS_UNIT_MENU (gum));
+  g_return_if_fail ((unit >= gum->start) &&
+		    (unit < gimp_unit_get_number_of_units ()));
 
-  /* replace UNIT_END when unit database is there */
+  if (unit == gum->unit)
+    return;
 
-  g_return_if_fail ((unit >= gum->start) && (unit < UNIT_END));
+  items = GTK_MENU_SHELL (GTK_OPTION_MENU (gum)->menu)->children;
+  user_unit = UNIT_END + ((gum->start == UNIT_PIXEL) ? 2 : 0);
+
+  if (unit >= UNIT_END)
+    {
+      if ((g_list_length (items) - 3) >= user_unit)
+	{
+	  gtk_widget_destroy (GTK_WIDGET (g_list_nth_data (items,
+							   user_unit - 1)));
+	  gtk_widget_destroy (GTK_WIDGET (g_list_nth_data (items,
+							   user_unit - 1)));
+	}
+
+      menuitem = gtk_menu_item_new ();
+      gtk_menu_append (GTK_MENU (GTK_OPTION_MENU (gum)->menu), menuitem);
+      gtk_menu_reorder_child (GTK_MENU (GTK_OPTION_MENU (gum)->menu),
+			      menuitem, user_unit - 1);
+      gtk_widget_show(menuitem);
+      
+      menuitem =
+	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (gum->format, unit));
+      gtk_menu_append (GTK_MENU (GTK_OPTION_MENU (gum)->menu), menuitem);
+      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			  (GtkSignalFunc) gimp_unit_menu_callback, gum);
+      gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_unit_menu", (gpointer)unit);
+      gtk_menu_reorder_child (GTK_MENU (GTK_OPTION_MENU (gum)->menu),
+			      menuitem, user_unit);
+      gtk_widget_show(menuitem);
+    }
 
   gum->unit = unit;
   gtk_option_menu_set_history (GTK_OPTION_MENU (gum),
-			       unit - gum->start +
-			       ((gum->start == UNIT_PIXEL) ? 1 : 0));
+			       ((unit < UNIT_END) ?
+				(unit - gum->start +
+				 ((gum->start == UNIT_PIXEL) ? 1 : 0)) :
+				(UNIT_END + ((gum->start == UNIT_PIXEL) ? 2 : 0))));
 }
 
 GUnit
@@ -260,6 +332,175 @@ gimp_unit_menu_build_string (gchar *format, GUnit unit)
 }
 
 
+/* private callbacks of gimp_unit_menu_create_selection ()
+ */
+
+static void
+gimp_unit_menu_selection_select_callback (GtkWidget *widget,
+					  gpointer   data)
+{
+  GimpUnitMenu *gum;
+  GUnit         unit;
+
+  gum = GIMP_UNIT_MENU (data);
+
+  if (gum->selection && GTK_CLIST (gum->clist)->selection)
+    {
+      unit = (GUnit)gtk_clist_get_row_data (GTK_CLIST (gum->clist),
+					    (int)(GTK_CLIST (gum->clist)->selection->data));
+      gimp_unit_menu_set_unit (gum, unit);
+      gtk_signal_emit (GTK_OBJECT (gum),
+		       gimp_unit_menu_signals[GUM_UNIT_CHANGED_SIGNAL]);
+      
+      gtk_widget_destroy (gum->selection);
+      gum->selection = NULL;
+      gum->clist = NULL;
+    }
+}
+
+static void
+gimp_unit_menu_selection_close_callback (GtkWidget *widget,
+					 gpointer   data)
+{
+  GimpUnitMenu *gum;
+
+  gum = GIMP_UNIT_MENU (data);
+
+  if (gum->selection)
+    {
+      gtk_widget_destroy (gum->selection);
+      gum->selection = NULL;
+      gum->clist = NULL;
+    }
+}
+
+static gint
+gimp_unit_menu_selection_delete_callback (GtkWidget *widget,
+					  GdkEvent  *event,
+					  gpointer   data)
+{
+  gimp_unit_menu_selection_close_callback (NULL, data);
+
+  return TRUE;
+}
+
+/* private function of gimp_unit_menu_callback ()
+ */
+
+static void
+gimp_unit_menu_create_selection (GimpUnitMenu *gum)
+{
+  GtkWidget *hbox;
+  GtkWidget *hbbox;
+  GtkWidget *vbox;
+  GtkWidget *scrolled_win;
+  GtkWidget *button;
+  gchar     *row[2];
+  GUnit      unit;
+  gint       num_units;
+  gchar      buffer[32];
+
+  gum->selection = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (gum->selection),
+			  "unitselection", "Gimp");
+  gtk_window_set_title (GTK_WINDOW (gum->selection), _("Unit Selection"));
+  gtk_window_set_policy(GTK_WINDOW(gum->selection), FALSE, TRUE, FALSE);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (gum->selection)->vbox), vbox);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_widget_show (vbox);
+
+  gtk_signal_connect (GTK_OBJECT (gum->selection), "delete_event",
+                      GTK_SIGNAL_FUNC (gimp_unit_menu_selection_delete_callback),
+                      gum);
+
+  gtk_signal_connect (GTK_OBJECT (gum), "destroy",
+                      GTK_SIGNAL_FUNC (gimp_unit_menu_selection_close_callback),
+                      gum);
+  gtk_signal_connect (GTK_OBJECT (gum), "unmap",
+                      GTK_SIGNAL_FUNC (gimp_unit_menu_selection_close_callback),
+                      gum);
+
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gum->clist = gtk_clist_new (2);
+  gtk_clist_set_shadow_type (GTK_CLIST (gum->clist), GTK_SHADOW_IN);
+  gtk_clist_set_selection_mode (GTK_CLIST (gum->clist), GTK_SELECTION_BROWSE);
+  gtk_widget_set_usize (gum->clist, 200, 150);
+
+  gtk_clist_set_column_title (GTK_CLIST (gum->clist), 0, _("Unit"));
+  gtk_clist_set_column_auto_resize (GTK_CLIST (gum->clist), 0, TRUE);
+  gtk_clist_set_column_title (GTK_CLIST (gum->clist), 1, _("Factor"));
+  gtk_clist_set_column_auto_resize (GTK_CLIST (gum->clist), 1, TRUE);
+  gtk_clist_column_titles_show (GTK_CLIST (gum->clist));
+
+  hbox = gtk_hbox_new (FALSE, 8);
+  gtk_container_border_width (GTK_CONTAINER (hbox), 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
+
+  gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0); 
+  gtk_container_add (GTK_CONTAINER (scrolled_win), gum->clist);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+				  GTK_POLICY_AUTOMATIC,
+				  GTK_POLICY_ALWAYS);
+
+  gtk_widget_show(scrolled_win);
+  gtk_widget_show(gum->clist);
+
+  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (gum->selection)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (gum->selection)->action_area),
+			   FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end(GTK_BOX (GTK_DIALOG (gum->selection)->action_area), hbbox,
+		   FALSE, FALSE, 0);
+  gtk_widget_show(hbbox);
+
+  button = gtk_button_new_with_label (_("Select"));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) gimp_unit_menu_selection_select_callback,
+		      gum);
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label (_("Close"));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) gimp_unit_menu_selection_close_callback,
+		      gum);
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
+
+  num_units = gimp_unit_get_number_of_units ();
+
+  for (unit = UNIT_END; unit < num_units; unit++)
+    {
+      row[0] = gimp_unit_menu_build_string (gum->format, unit);
+      g_snprintf (buffer, sizeof(buffer), "(%f)",
+		  gimp_unit_get_factor (unit));
+      row[1] = buffer;
+
+      gtk_clist_append (GTK_CLIST (gum->clist), row);
+      gtk_clist_set_row_data (GTK_CLIST (gum->clist),
+			      unit - UNIT_END, (gpointer)unit);
+    }
+
+  /* Now show the dialog */
+  gtk_widget_show(vbox);
+  gtk_widget_show(gum->selection);
+
+  if(gum->unit >= UNIT_END) 
+    {
+      gtk_clist_select_row (GTK_CLIST (gum->clist), gum->unit - UNIT_END, 0);
+      gtk_clist_moveto (GTK_CLIST (gum->clist), gum->unit - UNIT_END,
+			0, 0.0, 0.0); 
+    }
+}
+
+
 static void
 gimp_unit_menu_callback (GtkWidget *widget,
 			 gpointer   data)
@@ -274,7 +515,25 @@ gimp_unit_menu_callback (GtkWidget *widget,
   if (gum->unit == new_unit)
     return;
 
-  gum->unit = new_unit;
+  if (new_unit == 65536)
+    {
+      gtk_option_menu_set_history (GTK_OPTION_MENU (gum),
+				   ((gum->unit < UNIT_END) ?
+				    (gum->unit - gum->start +
+				     ((gum->start == UNIT_PIXEL) ? 1 : 0)) :
+				    (UNIT_END + ((gum->start == UNIT_PIXEL) ?
+						 2 : 0))));
+      if (! gum->selection)
+	gimp_unit_menu_create_selection (gum);
+      return;
+    }
+  else if (gum->selection)
+    {
+      gtk_widget_destroy (gum->selection);
+      gum->selection = NULL;
+    }
+
+  gimp_unit_menu_set_unit (gum, new_unit);
   gtk_signal_emit (GTK_OBJECT (gum),
 		   gimp_unit_menu_signals[GUM_UNIT_CHANGED_SIGNAL]);
 }

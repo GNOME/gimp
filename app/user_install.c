@@ -203,6 +203,18 @@ install_help (InstallCallback callback)
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   _("\t\tpatterns, plug-ins and modules are also configured here.\n"), -1);
   gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
+		   _("unitrc\n"), -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   _("\t\tThe unitrc is used to store your user units database.\n"), -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   _("\t\tYou can define additional units and use them just\n"), -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   _("\t\tlike you use the built-in units inches, millimeters,\n"), -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   _("\t\tpoints and picas. This file is overwritten each time\n"), -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   _("\t\tyou quit the GIMP.\n"), -1);
+  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
 		   _("pluginrc\n"), -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   _("\t\tPlug-ins and extensions are external programs run by\n"), -1);

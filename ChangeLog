@@ -1,3 +1,53 @@
+1999-03-16  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	This implements the rest of the unit system (unitrc loading and
+	saving and full PDB interface)
+	
+	* Makefile.am
+	* gimp.1
+	* user_install
+	* user_install.bat
+	* unitrc: new file (default unit database) and some documentation
+
+	* app/Makefile.am
+	* app/gimpunit.c
+	* app/gimpunit_cmds.h
+	* app/unitrc.h: new files enabling the unit database and PDB
+	access to the unit system
+
+	* app/app_procs.c: parse and save unitrc
+	* app/gimprc.[ch]: enable unit parsing. New function
+	init_parse_buffers() to enable unitrc to be loaded before gimprc
+
+	* app/gimage_cmds.[ch]: new PDB procedures which set/return an
+	image's unit 
+
+	* app/install.c: mention unitrc installation
+
+	* app/xcf.c: new xcf property for user defined units. An image's
+	unit is saved as either an integer ID (built in units) or as
+	a full unit definition without any ID
+
+	* libgimp/Makefile.am: moved gimpunit.o from libgimpi.a to
+	libgimp.a
+
+	* libgimp/gimp.h
+	* libgimp/gimpimage.c: get/set an image's unit with PDB calls
+
+	* libgimp/gimpunit.h: this file is now the header for both
+	app/gimpunit.c and libgimp/gimpunit.c
+
+	* libgimp/gimpunit.c: does the unit calls as PDB calls now
+
+	* libgimp/gimpunitmenu.[ch]: enable user unit functionality and a
+	unit selection dialog
+
+	* libgimp/gimpsizeentry.c: disble hilighting on focus_in_event and
+	minor bugfixes
+
+	* plug-ins/tiff/tiff.c: set image unit to "mm" if tiff unit is
+	"cm", save "cm" if image unit is metric
+
 Mon Mar 15 14:40:29 1999  Raph Levien  <raph@gimp.org>
 
 	* plug-ins/sharpen/sharpen.c: Fixed the algorithm so that it

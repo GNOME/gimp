@@ -199,6 +199,7 @@ gimp_SOURCES = \
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimphistogramP.h	\
+	gimpunit.c		\
 	global_edit.c		\
 	global_edit.h		\
 	gradient.c		\
@@ -349,6 +350,8 @@ gimp_SOURCES = \
 	undo.h			\
 	undo_cmds.c		\
 	undo_cmds.h		\
+	unit_cmds.h		\
+	unitrc.h		\
 	wilber.h		\
 	vector2d.c		\
 	vector2d.h		\

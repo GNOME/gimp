@@ -43,6 +43,13 @@ typedef struct _GimpUnitMenuClass  GimpUnitMenuClass;
 struct _GimpUnitMenu
 {
   GtkOptionMenu  optionmenu;
+
+  /* private stuff */
+  GtkWidget     *selection;
+  GtkWidget     *clist;
+
+  /* public */
+  gchar         *format;
   GUnit          unit;
   GUnit          start;
 };
@@ -54,7 +61,7 @@ struct _GimpUnitMenuClass
   void (* gimp_unit_menu) (GimpUnitMenu *gum);
 };
 
-guint          gimp_unit_menu_get_type            (void);
+guint          gimp_unit_menu_get_type (void);
 
 /* format      -- a printf-like format string for the menu items
  * unit        -- the unit selected on widget creation
@@ -71,14 +78,14 @@ guint          gimp_unit_menu_get_type            (void);
  *            %p -- plural
  *            %% -- literal percent
  */
-GtkWidget*     gimp_unit_menu_new                 (gchar*   format,
-						   GUnit    unit,
-						   gboolean with_pixels,
-						   gboolean with_custom);
+GtkWidget*     gimp_unit_menu_new      (gchar       *format,
+					GUnit        unit,
+					gboolean     with_pixels,
+					gboolean     with_custom);
 
-void           gimp_unit_menu_set_unit            (GimpUnitMenu *gum, 
-					           GUnit unit);
-GUnit          gimp_unit_menu_get_unit            (GimpUnitMenu *gum);
+void           gimp_unit_menu_set_unit (GimpUnitMenu *gum, 
+					GUnit         unit);
+GUnit          gimp_unit_menu_get_unit (GimpUnitMenu *gum);
 
 #ifdef __cplusplus
 }
@@ -86,4 +93,3 @@ GUnit          gimp_unit_menu_get_unit            (GimpUnitMenu *gum);
 
 
 #endif /* __GIMP_UNIT_MENU_H__ */
-

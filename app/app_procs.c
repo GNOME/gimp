@@ -77,6 +77,7 @@
 #include "tips_dialog.h"
 #include "tools.h"
 #include "undo.h"
+#include "unitrc.h"
 #include "xcf.h"
 #include "errors.h"
 #include "docindex.h"
@@ -507,6 +508,8 @@ app_init (void)
   procedural_db_register (&quit_proc);
 
   RESET_BAR();
+  init_parse_buffers ();
+  parse_unitrc ();         /*  this needs to be done before gimprc loading */
   parse_gimprc ();         /*  parse the local GIMP configuration file  */
   
   if (always_restore_session)
@@ -631,6 +634,7 @@ app_exit_finish (void)
   error_console_free ();
   menus_quit ();
   tile_swap_exit ();
+  save_unitrc ();
 
   /*  Things to do only if there is an interface  */
   if (no_interface == FALSE)

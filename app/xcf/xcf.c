@@ -69,7 +69,8 @@ typedef enum
   PROP_TATTOO = 20,
   PROP_PARASITES = 21,
   PROP_UNIT = 22,
-  PROP_PATHS = 23
+  PROP_PATHS = 23,
+  PROP_USER_UNIT = 24
 } PropType;
 
 typedef enum
@@ -614,9 +615,13 @@ xcf_save_image_props (XcfInfo *info,
   if (parasite_list_length(gimage->parasites) > 0)
     xcf_save_prop (info, PROP_PARASITES, gimage->parasites);
 
-  xcf_save_prop (info, PROP_UNIT, gimage->unit);
+  if (gimage->unit < gimp_unit_get_number_of_built_in_units ())
+    xcf_save_prop (info, PROP_UNIT, gimage->unit);
 
   xcf_save_prop (info, PROP_PATHS, gimage->paths);
+
+  if (gimage->unit >= gimp_unit_get_number_of_built_in_units ())
+    xcf_save_prop (info, PROP_USER_UNIT, gimage->unit);
 
   xcf_save_prop (info, PROP_END);
 }
@@ -1148,6 +1153,39 @@ xcf_save_prop (XcfInfo  *info,
 	  xcf_write_int32 (info->fp, &length, 1);
 	  fseek(info->fp, 0, SEEK_END);
 	}
+      }
+      break;
+    case PROP_USER_UNIT:
+      {
+	GUnit   unit;
+	gchar  *unit_strings[5];
+	float   factor;
+	guint32 digits;
+
+	unit = va_arg (args, guint32);
+
+	/* write the entire unit definition */
+	unit_strings[0] = gimp_unit_get_identifier (unit);
+	factor          = gimp_unit_get_factor (unit);
+	digits          = gimp_unit_get_digits (unit);
+	unit_strings[1] = gimp_unit_get_symbol (unit);
+	unit_strings[2] = gimp_unit_get_abbreviation (unit);
+	unit_strings[3] = gimp_unit_get_singular (unit);
+	unit_strings[4] = gimp_unit_get_plural (unit);
+
+	size =
+	  2 * 4 +
+	  strlen (unit_strings[0]) + 5 +
+	  strlen (unit_strings[1]) + 5 +
+	  strlen (unit_strings[2]) + 5 +
+	  strlen (unit_strings[3]) + 5 +
+	  strlen (unit_strings[4]) + 5;
+
+	info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
+	info->cp += xcf_write_int32 (info->fp, &size, 1);
+	info->cp += xcf_write_float (info->fp, &factor, 1);
+	info->cp += xcf_write_int32 (info->fp, &digits, 1);
+	info->cp += xcf_write_string (info->fp, unit_strings, 5);
       }
       break;
     }
@@ -1784,20 +1822,65 @@ xcf_load_image_props (XcfInfo *info,
 	   
 	   if ((unit >= gimp_unit_get_number_of_units()) )
 	     {
-	       g_message(_("Warning, unit out of range in XCF file, falling back to pixels"));
-	       unit = UNIT_PIXEL;
+	       g_message(_("Warning, unit out of range in XCF file, falling back to inches"));
+	       unit = UNIT_INCH;
 	     }
 
 	   gimage->unit = unit;
 	 }
 	 break;
 	case PROP_PATHS:
-	{
-	  PathsList *paths = read_bzpaths(gimage,info);
-	  /* add to gimage */
-	  gimp_image_set_paths(gimage,paths);
-	}
-	break;
+	  {
+	    PathsList *paths = read_bzpaths(gimage,info);
+	    /* add to gimage */
+	    gimp_image_set_paths(gimage,paths);
+	  }
+	  break;
+	case PROP_USER_UNIT:
+	  {
+	    gchar  *unit_strings[5];
+	    float   factor;
+	    guint32 digits;
+	    GUnit   unit;
+	    gint    num_units;
+	    gint    i;
+
+	    info->cp += xcf_read_float (info->fp, &factor, 1);
+	    info->cp += xcf_read_int32 (info->fp, &digits, 1);
+	    info->cp += xcf_read_string (info->fp, unit_strings, 5);
+
+	    num_units = gimp_unit_get_number_of_units ();
+	    
+	    for (unit = gimp_unit_get_number_of_built_in_units ();
+		 unit < num_units; unit++)
+	      {
+		/* if the factor and the identifier match some unit
+		 * in unitrc, use the unitrc unit
+		 */
+		if ((ABS (gimp_unit_get_factor (unit) - factor) < 1e-5) &&
+		    (strcmp (unit_strings[0],
+			     gimp_unit_get_identifier (unit)) == 0))
+		  {
+		    break;
+		  }
+	      }
+	    
+	    /* no match */
+	    if (unit == num_units)
+	      unit = gimp_unit_new (unit_strings[0],
+				    factor,
+				    digits,
+				    unit_strings[1],
+				    unit_strings[2],
+				    unit_strings[3],
+				    unit_strings[4]);
+
+	    gimage->unit = unit;
+
+	    for (i = 0; i < 5; i++)
+	      g_free (unit_strings[i]);
+	  }
+	 break;
 	default:
 	  g_message (_("unexpected/unknown image property: %d (skipping)"), prop_type);
 

@@ -1,4 +1,7 @@
-/* gimpunit.h
+/* LIBGIMP - The GIMP Library                                                   
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+ *
+ * gimpunit.h
  * Copyright (C) 1999 Michael Natterer <mitschel@cs.tu-berlin.de>
  *
  * This library is free software; you can redistribute it and/or
@@ -17,24 +20,23 @@
  * Boston, MA 02111-1307, USA.
  */
 
+/* NOTE:
+ *
+ * This file serves as header for both app/gimpunit.c and libgimp/gimpunit.c
+ * because the unit functions are needed by widgets which are used by both
+ * the gimp app and plugins.
+ */
+
 #ifndef __GIMPUNIT_H__
 #define __GIMPUNIT_H__
 
-
 #include <glib.h>
-
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
 
-/* I've put this here and not to libgimp/gimpenums.h, because if this
- * file includes libgimp/gimpenums.h there is a name clash wherever
- * someone includes libgimp/gimpunit.h and app/gimpimage.h
- * (the constants RGB, GRAY and INDEXED are defined in both
- * gimpenums.h and gimpimage.h) (is this a bug? don't know...)
- */
 typedef enum
 {
   UNIT_PIXEL = 0,
@@ -42,12 +44,13 @@ typedef enum
   UNIT_MM    = 2,
   UNIT_POINT = 3,
   UNIT_PICA  = 4,
-  UNIT_END /* never use UNIT_END but gimp_unit_get_number_of_units() instead */
+  UNIT_END   = 5     /* never use UNIT_END but
+			gimp_unit_get_number_of_units() instead */
 } GUnit;
 
 
-gint           gimp_unit_get_number_of_units          (void);
-gint           gimp_unit_get_number_of_built_in_units (void);
+gint     gimp_unit_get_number_of_units          (void);
+gint     gimp_unit_get_number_of_built_in_units (void);
 
 /* Create a new user unit and returns it's ID.
  *
@@ -55,13 +58,13 @@ gint           gimp_unit_get_number_of_built_in_units (void);
  * set to TRUE. You will have to set it to FALSE after creation to make
  * the unit definition persistant.
  */
-GUnit          gimp_unit_new                 (gchar  *identifier,
-					      gfloat  factor,
-					      gint    digits,
-					      gchar  *symbol,
-					      gchar  *abbreviation,
-					      gchar  *singular,
-					      gchar  *plural);
+GUnit    gimp_unit_new                 (gchar  *identifier,
+					gfloat  factor,
+					gint    digits,
+					gchar  *symbol,
+					gchar  *abbreviation,
+					gchar  *singular,
+					gchar  *plural);
 
 /* The following functions fall back to inch (not pixel, as pixel is not
  * a 'real' unit) if the value passed is out of range.
@@ -72,19 +75,16 @@ GUnit          gimp_unit_new                 (gchar  *identifier,
 /* If the deletion flag for a unit is TRUE on GIMP exit, this unit
  * will not be saved in the user units database.
  */
-guint          gimp_unit_get_deletion_flag   (GUnit  unit);
-void           gimp_unit_set_deletion_flag   (GUnit  unit,
+guint    gimp_unit_get_deletion_flag   (GUnit  unit);
+void     gimp_unit_set_deletion_flag   (GUnit  unit,
 					      guint  deletion_flag);
-
-/* This one is an untranslated string for gimprc */
-const gchar *  gimp_unit_get_identifier      (GUnit  unit);
 
 /* The meaning of 'factor' is:
  * distance_in_units == ( factor * distance_in_inches )
  *
  * Returns 0 for unit == UNIT_PIXEL as we don't have resolution info here
  */
-gfloat         gimp_unit_get_factor          (GUnit  unit);
+gfloat   gimp_unit_get_factor          (GUnit  unit);
 
 /* The following function gives a hint how many digits a spinbutton
  * should provide to get approximately the accuracy of an inch-spinbutton
@@ -92,12 +92,21 @@ gfloat         gimp_unit_get_factor          (GUnit  unit);
  *
  * Returns 0 for unit == UNIT_PIXEL as we don't have resolution info here.
  */
-gint           gimp_unit_get_digits          (GUnit  unit);
+gint     gimp_unit_get_digits          (GUnit  unit);
 
-const gchar *  gimp_unit_get_symbol          (GUnit  unit);
-const gchar *  gimp_unit_get_abbreviation    (GUnit  unit);
-const gchar *  gimp_unit_get_singular        (GUnit  unit);
-const gchar *  gimp_unit_get_plural          (GUnit  unit);
+/* NOTE:
+ *
+ * the gchar pointer returned is constant in the gimp application but must
+ * be g_free()'d by plug-ins.
+ */
+
+/* This one is an untranslated string for gimprc */
+gchar *  gimp_unit_get_identifier      (GUnit  unit);
+
+gchar *  gimp_unit_get_symbol          (GUnit  unit);
+gchar *  gimp_unit_get_abbreviation    (GUnit  unit);
+gchar *  gimp_unit_get_singular        (GUnit  unit);
+gchar *  gimp_unit_get_plural          (GUnit  unit);
 
 #ifdef __cplusplus
 }
