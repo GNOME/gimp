@@ -45,6 +45,7 @@ ReadBMP (gchar *name)
   gint ColormapSize, rowbytes, Maps, Grey;
   guchar ColorMap[256][3];
   gint32 image_ID;
+  guchar magick[2];
   
   if (interactive_bmp)
     {
@@ -65,8 +66,31 @@ ReadBMP (gchar *name)
     }
 
   /* It is a File. Now is it a Bitmap? Read the shortest possible header */
+
+  if (!ReadOK(fd, magick, 2) || !(!strncmp(magick,"BA",2) ||
+     !strncmp(magick,"BM",2) || !strncmp(magick,"IC",2) ||
+     !strncmp(magick,"PI",2) || !strncmp(magick,"CI",2) ||
+     !strncmp(magick,"CP",2)))
+    {
+      g_message (_("%s: %s is not a valid BMP file"), prog_name, filename);
+      return -1;
+    }
   
-  if (!ReadOK(fd, buffer, 18) || (strncmp(buffer,"BM",2)))
+  while (!strncmp(magick,"BA",2))
+    {
+      if (!ReadOK(fd, buffer, 12))
+	{
+          g_message (_("%s: %s is not a valid BMP file"), prog_name, filename);
+          return -1;
+        }
+      if (!ReadOK(fd, magick, 2))
+	{
+          g_message (_("%s: %s is not a valid BMP file"), prog_name, filename);
+          return -1;
+        }
+    }
+
+  if (!ReadOK(fd, buffer, 12))
     {
       g_message (_("%s: %s is not a valid BMP file"), prog_name, filename);
       return -1;
@@ -74,11 +98,18 @@ ReadBMP (gchar *name)
 
   /* bring them to the right byteorder. Not too nice, but it should work */
 
-  Bitmap_File_Head.bfSize    = ToL (&buffer[0x02]);
-  Bitmap_File_Head.zzHotX    = ToS (&buffer[0x06]);
-  Bitmap_File_Head.zzHotY    = ToS (&buffer[0x08]);
-  Bitmap_File_Head.bfOffs    = ToL (&buffer[0x0a]);
-  Bitmap_File_Head.biSize    = ToL (&buffer[0x0e]);
+  Bitmap_File_Head.bfSize    = ToL (&buffer[0x00]);
+  Bitmap_File_Head.zzHotX    = ToS (&buffer[0x04]);
+  Bitmap_File_Head.zzHotY    = ToS (&buffer[0x06]);
+  Bitmap_File_Head.bfOffs    = ToL (&buffer[0x08]);
+  
+  if (!ReadOK(fd, buffer, 4))
+    {
+      g_message(_("%s: %s is not a valid BMP file"), prog_name, filename);
+      return -1;
+    }
+  
+  Bitmap_File_Head.biSize    = ToL (&buffer[0x00]);
   
   /* What kind of bitmap is it? */  
   
@@ -154,7 +185,7 @@ ReadBMP (gchar *name)
   ColormapSize = (Bitmap_File_Head.bfOffs - Bitmap_File_Head.biSize - 14) / Maps;
 
   if ((Bitmap_Head.biClrUsed == 0) && (Bitmap_Head.biBitCnt <= 8))
-    Bitmap_Head.biClrUsed = ColormapSize;
+    ColormapSize = Bitmap_Head.biClrUsed = 1 << Bitmap_Head.biBitCnt;
 
 
   /* Sanity checks */
@@ -194,6 +225,8 @@ ReadBMP (gchar *name)
 #ifdef DEBUG
   printf("Colormap read\n");
 #endif
+
+  fseek(fd, Bitmap_File_Head.bfOffs, SEEK_SET);
 
   /* Get the Image and return the ID or -1 on error*/
   image_ID = ReadImage (fd, 
