@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2000-04-27 01:42+0200\n"
-"PO-Revision-Date: 2000-05-14 02:34+01:00\n"
+"PO-Revision-Date: 2000-05-14 12:34+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -6086,14 +6086,12 @@ msgid "Can't open file for reading"
 msgstr "Kan ikke åbne fil for læsning"
 
 #: plug-ins/common/sunras.c:397
-#, fuzzy
 msgid "Can't open file as SUN-raster-file"
-msgstr "Kan Fil ikke als SUN-raster-datei åbne"
+msgstr "Kan ikke åbne fil som SUN-raster-fil"
 
 #: plug-ins/common/sunras.c:404
-#, fuzzy
 msgid "The type of this SUN-rasterfile is not supported"
-msgstr "Der Typ dieser SUN-rasterdatei er ikke understøttet"
+msgstr "Typen for denne SUN-rasterfil er ikke understøttet"
 
 #: plug-ins/common/sunras.c:427
 msgid "Can't read color entries"
@@ -6108,33 +6106,29 @@ msgid "This image depth is not supported"
 msgstr "Denne farvedybde er ikke understøttet"
 
 #: plug-ins/common/sunras.c:498
-#, fuzzy
 msgid "SUNRAS save cannot handle images with alpha channels"
-msgstr "SUNRAS kann keine Bilder mit alpha Kanælen speichern"
+msgstr "SUNRAS kan ikke gemme billeder med alfa-kanaler"
 
 #: plug-ins/common/sunras.c:509
 msgid "Can't operate on unknown image types"
 msgstr "Kan ikke arbejde med ukendt billedtype"
 
 #: plug-ins/common/sunras.c:518 plug-ins/fits/fits.c:466
-#, fuzzy
 msgid "Can't open file for writing"
-msgstr "Kan Fil ikke zum Schreiben åbne"
+msgstr "Kan ikke åbne fil for skrivning"
 
 #: plug-ins/common/sunras.c:1026 plug-ins/common/sunras.c:1117
 #: plug-ins/common/sunras.c:1198 plug-ins/common/sunras.c:1293
 #: plug-ins/common/xwd.c:1265 plug-ins/common/xwd.c:1427
 #: plug-ins/common/xwd.c:1624 plug-ins/common/xwd.c:1875
 #: plug-ins/fits/fits.c:688
-#, fuzzy
 msgid "EOF encountered on reading"
-msgstr "beim Lesen på EOF gestossen"
+msgstr "EOF mødt ved læsning"
 
 #: plug-ins/common/sunras.c:1448 plug-ins/common/sunras.c:1556
 #: plug-ins/fits/fits.c:840 plug-ins/fits/fits.c:964
-#, fuzzy
 msgid "Write error occured"
-msgstr "Ein Schreibfehler er aufgetreten"
+msgstr "Der skete en skrivefejl"
 
 #: plug-ins/common/sunras.c:1572
 msgid "Save as SUNRAS"
@@ -6159,24 +6153,20 @@ msgid "RLE compression"
 msgstr "RLE Kompression"
 
 #: plug-ins/common/threshold_alpha.c:104
-#, fuzzy
 msgid "<Image>/Image/Alpha/Threshold Alpha..."
-msgstr "<Image>/Bild/Alpha/Alpha-Schwellwert..."
+msgstr "<Image>/Bild/Alfa/Alfa-tærskel..."
 
 #: plug-ins/common/threshold_alpha.c:147
-#, fuzzy
 msgid "The layer preserves transparency."
-msgstr "Die Ebene bewahrt ihre Transparenz."
+msgstr "Laget bevarer sin gennemsigtighed."
 
 #: plug-ins/common/threshold_alpha.c:153
-#, fuzzy
 msgid "RGBA/GRAYA drawable is not selected."
-msgstr "Keine RGBA/GRAYA Ebene ausgewæhlt."
+msgstr "RGBA/GRAYA tegning ikke valgt."
 
 #: plug-ins/common/threshold_alpha.c:220
-#, fuzzy
 msgid "Threshold Alpha: Coloring Transparency..."
-msgstr "Alpha-Schwellwert: Færbe Transparenz..."
+msgstr "Alfa-tærskel: farve-gennemsigtighed..."
 
 #: plug-ins/common/threshold_alpha.c:263
 msgid "Threshold Alpha"
@@ -6224,9 +6214,8 @@ msgstr "Flise"
 
 #. parameter settings
 #: plug-ins/common/tile.c:410
-#, fuzzy
 msgid "Tile to New Size"
-msgstr "Auf neue størrelse kacheln"
+msgstr "Giv fliser ny størrelse"
 
 #: plug-ins/common/tileit.c:235
 #, fuzzy
@@ -6236,7 +6225,6 @@ msgstr "<Image>/Filter/Afbilding/Kleine fliser..."
 #. Get the preview image and store it also set has_alpha
 #. Start buildng the dialog up
 #: plug-ins/common/tileit.c:381
-#, fuzzy
 msgid "TileIt"
 msgstr "TileIt"
 
@@ -6250,12 +6238,10 @@ msgid "Applied to Tile"
 msgstr "Anvendn på flise"
 
 #: plug-ins/common/tileit.c:487
-#, fuzzy
 msgid "All Tiles"
 msgstr "Alle fliser"
 
 #: plug-ins/common/tileit.c:498
-#, fuzzy
 msgid "Alternate Tiles"
 msgstr "Alternative fliser"
 
@@ -6273,23 +6259,20 @@ msgstr "Kolonne:"
 
 #. Lower frame saying howmany segments
 #: plug-ins/common/tileit.c:598
-#, fuzzy
 msgid "Segment Setting"
 msgstr "Segment indstillinger"
 
 #: plug-ins/common/tiler.c:73
-#, fuzzy
 msgid "<Image>/Filters/Map/Make Seamless"
-msgstr "<Image>/Filter/Afbilding/Nahtlos machen"
+msgstr "<Image>/Filter/Afbilding/Lav sømløs"
 
 #: plug-ins/common/tiler.c:185
 msgid "Tiler..."
 msgstr "Fliser..."
 
 #: plug-ins/common/uniteditor.c:72
-#, fuzzy
 msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr "<Toolbox>/Xtns/enheden-Editor..."
+msgstr "<Toolbox>/Xtns/enheds-redigering..."
 
 #: plug-ins/common/uniteditor.c:167 plug-ins/common/uniteditor.c:623
 msgid "New Unit"
@@ -6324,19 +6307,16 @@ msgid "Plural:"
 msgstr "Flertal:"
 
 #: plug-ins/common/uniteditor.c:307
-#, fuzzy
 msgid "Unit factor must not be 0."
-msgstr "enhedenfaktor darf ikke 0 sein."
+msgstr "Enhedsfaktor må ikke være 0."
 
 #: plug-ins/common/uniteditor.c:317
-#, fuzzy
 msgid "All text fields must contain a value."
-msgstr "Alle Textfelder myssen Werte enthalten."
+msgstr "Alle Textfelter skal indeholde en værdi."
 
 #: plug-ins/common/uniteditor.c:518
-#, fuzzy
 msgid "Unit Editor"
-msgstr "enheden-Editor"
+msgstr "enheds-redigering"
 
 #: plug-ins/common/uniteditor.c:523 plug-ins/gimpressionist/presets.c:656
 msgid "Refresh"
@@ -6352,17 +6332,14 @@ msgstr ""
 "ausgewæhlt ist."
 
 #: plug-ins/common/uniteditor.c:538
-#, fuzzy
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
-"Dieser Text wird benutzt, um die enhed in GIMPs Konfigurationsdateien zu "
-"identifizieren."
+"Denne tekst bliver brugt til at udpege en enhed i GIMPs Konfigurationsfil."
 
 #: plug-ins/common/uniteditor.c:540
-#, fuzzy
 msgid "How many units make up an inch."
-msgstr "Wieviele enheden machen ein Inch."
+msgstr "Hvor mange enheder der går på en tomme."
 
 #: plug-ins/common/uniteditor.c:541
 #, fuzzy
@@ -6386,19 +6363,16 @@ msgstr ""
 "die Abkyrzung wenn die enhed kein Symbol hat."
 
 #: plug-ins/common/uniteditor.c:550
-#, fuzzy
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr "Die Akyrzung der enhed (z.B. \"cm\" fyr Zentimeter)."
+msgstr "Forkortelsen for enheded (fx  \"cm\" for centimeter)."
 
 #: plug-ins/common/uniteditor.c:552
-#, fuzzy
 msgid "The unit's singular form."
-msgstr "Der Singular der enhed."
+msgstr "Entalsform for enhed."
 
 #: plug-ins/common/uniteditor.c:553
-#, fuzzy
 msgid "The unit's plural form."
-msgstr "Der Plural der enhed."
+msgstr "Flertalsform for enhed."
 
 #: plug-ins/common/uniteditor.c:569
 msgid "Saved"
@@ -6433,14 +6407,12 @@ msgid "Plural"
 msgstr "Flertal"
 
 #: plug-ins/common/uniteditor.c:630
-#, fuzzy
 msgid "Create a new unit from scratch."
-msgstr "Erzeuge eine neue enhed."
+msgstr "Lav en ny enhed fra bunden af."
 
 #: plug-ins/common/uniteditor.c:632
-#, fuzzy
 msgid "Duplicate Unit"
-msgstr "enhed duplizieren"
+msgstr "Duplikér enhed"
 
 #: plug-ins/common/uniteditor.c:639
 #, fuzzy
@@ -6448,9 +6420,8 @@ msgid "Create a new unit with the currently seleted unit as template."
 msgstr "Erzeuge eine neue enhed mit der ausgewæhlten enhed als Vorlage."
 
 #: plug-ins/common/uniteditor.c:642
-#, fuzzy
 msgid "Don't Save Unit"
-msgstr "Nicht speichern"
+msgstr "Gem ikke enhed"
 
 #: plug-ins/common/uniteditor.c:649
 #, fuzzy
@@ -6458,9 +6429,8 @@ msgid "Don't save the currently selected unit before GIMP exits."
 msgstr "Ausgewæhlte enhed ikke speichern wenn Gimp beendet wird."
 
 #: plug-ins/common/uniteditor.c:654
-#, fuzzy
 msgid "Save Unit"
-msgstr "enhed sichern"
+msgstr "Gem enhed"
 
 #: plug-ins/common/uniteditor.c:661
 #, fuzzy
@@ -6468,19 +6438,16 @@ msgid "Save the currently selected unit before GIMP exits."
 msgstr "Sichere die ausgewæhlte enhed, bevor Gimp beendet wird."
 
 #: plug-ins/common/unsharp.c:185
-#, fuzzy
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
-msgstr "<Image>/Filter/Forbedringer/Unscharf maskieren..."
+msgstr "<Image>/Filter/Forbedringer/Uskarp maske..."
 
 #: plug-ins/common/unsharp.c:395
-#, fuzzy
 msgid "Merging..."
-msgstr "Maskiere..."
+msgstr "Fletter..."
 
 #: plug-ins/common/unsharp.c:781
-#, fuzzy
 msgid "Unsharp Mask"
-msgstr "Unscharf Maskieren"
+msgstr "Uskarp maskering"
 
 #: plug-ins/common/video.c:44
 #, fuzzy
@@ -6493,14 +6460,12 @@ msgid "Large staggered"
 msgstr "Weit gestaffelt"
 
 #: plug-ins/common/video.c:46
-#, fuzzy
 msgid "Striped"
-msgstr "Gestreift"
+msgstr "Stripet"
 
 #: plug-ins/common/video.c:47
-#, fuzzy
 msgid "Wide-striped"
-msgstr "Weit gestreift"
+msgstr "Bredstripet"
 
 #: plug-ins/common/video.c:48
 #, fuzzy
@@ -6512,26 +6477,22 @@ msgid "3x3"
 msgstr "3x3"
 
 #: plug-ins/common/video.c:50
-#, fuzzy
 msgid "Large 3x3"
-msgstr "Groß 3x3"
+msgstr "Stor 3x3"
 
 #: plug-ins/common/video.c:51
-#, fuzzy
 msgid "Hex"
-msgstr "Hey"
+msgstr "Heks"
 
 #: plug-ins/common/video.c:52
 msgid "Dots"
 msgstr "punkter"
 
 #: plug-ins/common/video.c:1836
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Video..."
 msgstr "<Image>/Filter/Forvrængning/Video..."
 
 #: plug-ins/common/video.c:1907
-#, fuzzy
 msgid "Video/RGB..."
 msgstr "Video/RGB..."
 
@@ -6541,12 +6502,10 @@ msgstr "Video"
 
 #. frame for the radio buttons
 #: plug-ins/common/video.c:2177
-#, fuzzy
 msgid "RGB Pattern Type"
-msgstr "RGB Mustertyp"
+msgstr "RGB Mønstertype"
 
 #: plug-ins/common/video.c:2188
-#, fuzzy
 msgid "Additive"
 msgstr "Additiv"
 
@@ -6555,19 +6514,16 @@ msgid "Rotated"
 msgstr "Roteret"
 
 #: plug-ins/common/vinvert.c:91
-#, fuzzy
 msgid "<Image>/Filters/Colors/Value Invert"
-msgstr "<Image>/Filter/farven/Wertinvertiering..."
+msgstr "<Image>/Filter/Farver/Værdiinvertering..."
 
 #: plug-ins/common/vpropagate.c:159
-#, fuzzy
 msgid "More White (Larger Value)"
-msgstr "Mehr Weiss (Grøsserer Wert)"
+msgstr "Mere hvidt (større værdi)"
 
 #: plug-ins/common/vpropagate.c:162
-#, fuzzy
 msgid "More Black (Smaller Value)"
-msgstr "Mehr Schwarz (Kleinerer Wert)"
+msgstr "Mere Sort (mindre værdi)"
 
 #: plug-ins/common/vpropagate.c:165
 #, fuzzy
@@ -6580,9 +6536,8 @@ msgid "Foreground to Peaks"
 msgstr "forgrund in den Spitzen"
 
 #: plug-ins/common/vpropagate.c:171
-#, fuzzy
 msgid "Only Foreground"
-msgstr "Nur forgrund"
+msgstr "Kun forgrund"
 
 #: plug-ins/common/vpropagate.c:174
 msgid "Only Background"
@@ -6590,7 +6545,7 @@ msgstr "Kun baggrund"
 
 #: plug-ins/common/vpropagate.c:177
 msgid "More Opaque"
-msgstr "Meer dækning"
+msgstr "Mere dækning"
 
 #: plug-ins/common/vpropagate.c:180
 msgid "More Transparent"
@@ -6699,7 +6654,7 @@ msgstr "Rotationsvinkel:"
 
 #: plug-ins/common/warp.c:595
 msgid "Substeps:"
-msgstr "mellemskridt:"
+msgstr "Mellemskridt:"
 
 #. Magnitude map menu
 #: plug-ins/common/warp.c:602
@@ -6759,9 +6714,8 @@ msgid "Flow Step %d..."
 msgstr "Schritt %d..."
 
 #: plug-ins/common/waves.c:158
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Waves..."
-msgstr "<Image>/Filter/Forvrængning/Wellen..."
+msgstr "<Image>/Filter/Forvrængning/Bølger..."
 
 #: plug-ins/common/waves.c:344
 msgid "Waves"
