@@ -1,3 +1,9 @@
+2004-09-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpimagemaptool.c
+	(gimp_image_map_tool_settings_dialog): set the folder using
+	gtk_file_chooser_set_current_folder(), not set_filename().
+
 2004-09-24  Sven Neumann  <sven@gimp.org>
 
 	* app/base/curves.[ch]

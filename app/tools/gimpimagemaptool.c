@@ -642,10 +642,9 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
 
       tmp = g_build_filename (gimp_directory (),
                               GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name,
-                              G_DIR_SEPARATOR_S,
                               NULL);
 
-      gtk_file_chooser_set_filename (chooser, tmp);
+      gtk_file_chooser_set_current_folder (chooser, tmp);
       g_free (tmp);
     }
 
