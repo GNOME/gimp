@@ -3934,18 +3934,23 @@ gfig_dialog (void)
 				   GTK_WIN_POS_MOUSE,
 				   FALSE, FALSE, FALSE,
 
-				   _("Done"), gfig_ok_callback,
-				   NULL, NULL, NULL, TRUE, FALSE,
-				   _("Paint"), gfig_paint_callback,
-				   NULL, NULL, NULL, FALSE, FALSE,
-				   GTK_STOCK_SAVE, save_button_callback,
-				   NULL, NULL, &save_button, FALSE, FALSE,
-				   GTK_STOCK_CLEAR, gfig_clear_callback,
-				   NULL, NULL, NULL, FALSE, FALSE,
-				   GTK_STOCK_UNDO, gfig_undo_callback,
-				   NULL, NULL, &undo_widget, FALSE, FALSE,
 				   GTK_STOCK_CANCEL, gtk_widget_destroy,
 				   NULL, 1, NULL, FALSE, TRUE,
+
+				   GTK_STOCK_UNDO, gfig_undo_callback,
+				   NULL, NULL, &undo_widget, FALSE, FALSE,
+
+				   GTK_STOCK_CLEAR, gfig_clear_callback,
+				   NULL, NULL, NULL, FALSE, FALSE,
+
+				   GTK_STOCK_SAVE, save_button_callback,
+				   NULL, NULL, &save_button, FALSE, FALSE,
+
+				   _("Paint"), gfig_paint_callback,
+				   NULL, NULL, NULL, FALSE, FALSE,
+
+				   _("Done"), gfig_ok_callback,
+				   NULL, NULL, NULL, TRUE, FALSE,
 
 				   NULL);
 
@@ -4436,10 +4441,11 @@ gfig_dialog_edit_list (GtkWidget *lwidget,
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_OK, gfig_list_ok_callback,
-		     options, NULL, NULL, TRUE, FALSE,
 		     GTK_STOCK_CANCEL, gfig_list_cancel_callback,
 		     options, NULL, NULL, FALSE, TRUE,
+
+		     GTK_STOCK_OK, gfig_list_ok_callback,
+		     options, NULL, NULL, TRUE, FALSE,
 
 		     NULL);
 
@@ -4519,10 +4525,11 @@ gfig_rescan_list (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_OK, gfig_rescan_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
+			 GTK_STOCK_OK, gfig_rescan_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 

@@ -636,10 +636,11 @@ edit_callback (GtkWidget *widget,
 				  GTK_WIN_POS_MOUSE,
 				  FALSE, FALSE, FALSE,
 
-				  GTK_STOCK_OK, edit_ok_callback,
-				  NULL, NULL, NULL, TRUE, FALSE,
 				  GTK_STOCK_CANCEL, gtk_widget_hide,
 				  NULL, 1, NULL, FALSE, TRUE,
+
+				  GTK_STOCK_OK, edit_ok_callback,
+				  NULL, NULL, NULL, TRUE, FALSE,
 
 				  NULL);
 

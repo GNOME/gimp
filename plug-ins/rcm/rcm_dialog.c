@@ -776,10 +776,11 @@ rcm_dialog (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_OK, rcm_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
+			 GTK_STOCK_OK, rcm_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 
@@ -810,7 +811,7 @@ rcm_dialog (void)
 
   /* Notebook */
   notebook = gtk_notebook_new ();
-  gtk_notebook_set_tab_pos (GTK_NOTEBOOK(notebook), GTK_POS_TOP);
+  gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
   gtk_box_pack_start (GTK_BOX (hbox), notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook);
 

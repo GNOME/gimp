@@ -2535,10 +2535,11 @@ dlg_run (void)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_OK, dlg_ok_callback,
-		     NULL, NULL, NULL, TRUE, FALSE,
 		     GTK_STOCK_CANCEL, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
+
+		     GTK_STOCK_OK, dlg_ok_callback,
+		     NULL, NULL, NULL, TRUE, FALSE,
 
 		     NULL);
 
@@ -3549,12 +3550,14 @@ ed_run (GFlare		     *target_gflare,
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("Rescan Gradients"), ed_rescan_callback,
-		     NULL, NULL, NULL, FALSE, FALSE,
-		     GTK_STOCK_OK, ed_ok_callback,
-		     NULL, NULL, NULL, TRUE, FALSE,
 		     GTK_STOCK_CANCEL, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
+
+		     _("Rescan Gradients"), ed_rescan_callback,
+		     NULL, NULL, NULL, FALSE, FALSE,
+
+		     GTK_STOCK_OK, ed_ok_callback,
+		     NULL, NULL, NULL, TRUE, FALSE,
 
 		     NULL);
 

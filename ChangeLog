@@ -1,5 +1,24 @@
 2002-02-05  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/flame/flame.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/mosaic/mosaic.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/sel2path/sel2path.c: reordered action_area buttons.
+
+	* themes/Default/gtkrc: namespace cleanup.
+
+2002-02-05  Michael Natterer  <mitch@gimp.org>
+
 	Removed pointer grabbing from all tools:
 
 	* app/tools/gimptool.[ch]: added "gboolean perfectmouse" which

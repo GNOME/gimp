@@ -127,10 +127,10 @@ style "gimp-grid-view-style" = "gimp-dock-style"
 widget "*GimpContainerGridView*GtkViewport*" style "gimp-grid-view-style"
 
 
-style "gimp-tooltips"
+style "gimp-tooltips-style"
 {
   fg[NORMAL] = { 0.0,  0.0,  0.0  }
   bg[NORMAL] = { 0.94, 0.90, 0.54 }
 }
 
-widget "gtk-tooltips" style "gimp-tooltips"
+widget "gtk-tooltips" style "gimp-tooltips-style"
