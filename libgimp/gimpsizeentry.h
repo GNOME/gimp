@@ -16,7 +16,6 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-
 #ifndef __GIMP_SIZE_ENTRY_H__
 #define __GIMP_SIZE_ENTRY_H__
 
@@ -133,7 +132,7 @@ void        gimp_size_entry_attach_label          (GimpSizeEntry *gse,
  */
 void        gimp_size_entry_set_resolution        (GimpSizeEntry *gse,
 					           gint           field,
-					           gfloat         resolution,
+					           gdouble        resolution,
 						   guint          keep_size);
 
 /* this one sets the values (in pixels) which will be treated as
@@ -143,8 +142,8 @@ void        gimp_size_entry_set_resolution        (GimpSizeEntry *gse,
  */
 void        gimp_size_entry_set_size              (GimpSizeEntry *gse,
 					           gint           field,
-					           gfloat         lower,
-						   gfloat         upper);
+					           gdouble        lower,
+						   gdouble        upper);
 
 /* these functions set/return the value in the units the user selected
  * note that in some cases where the caller chooses not to have the
@@ -153,13 +152,13 @@ void        gimp_size_entry_set_size              (GimpSizeEntry *gse,
  */
 void        gimp_size_entry_set_value_boundaries  (GimpSizeEntry *gse,
 						   gint           field,
-						   gfloat         lower,
-						   gfloat         upper);
-gfloat      gimp_size_entry_get_value             (GimpSizeEntry *gse,
+						   gdouble        lower,
+						   gdouble        upper);
+gdouble     gimp_size_entry_get_value             (GimpSizeEntry *gse,
 					           gint           field);
 void        gimp_size_entry_set_value             (GimpSizeEntry *gse,
 					           gint           field,
-					           gfloat         value);
+					           gdouble        value);
 
 /* these functions set/return the value in the 'reference unit' for the
  * current update policy
@@ -171,16 +170,16 @@ void        gimp_size_entry_set_value             (GimpSizeEntry *gse,
  */
 void        gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
 						   gint           field,
-						   gfloat         lower,
-						   gfloat         upper);
+						   gdouble        lower,
+						   gdouble        upper);
 void        gimp_size_entry_set_refval_digits     (GimpSizeEntry *gse,
 					           gint           field,
 					           gint           digits);
-gfloat      gimp_size_entry_get_refval            (GimpSizeEntry *gse,
+gdouble     gimp_size_entry_get_refval            (GimpSizeEntry *gse,
 					           gint           field);
 void        gimp_size_entry_set_refval            (GimpSizeEntry *gse,
 					           gint           field,
-					           gfloat         refval);
+					           gdouble        refval);
 
 /* these functions set/return the currently used unit
  * note that for GIMP_SIZE_ENTRY_UPDATE_SIZE a value of UNIT_PIXEL

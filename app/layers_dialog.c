@@ -3129,11 +3129,6 @@ new_layer_query_fill_type_callback (GtkWidget *w,
 static void
 layers_dialog_new_layer_query (GimpImage* gimage)
 {
-  static ActionAreaItem action_items[2] =
-  {
-    { N_("OK"), new_layer_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), new_layer_query_cancel_callback, NULL, NULL }
-  };
   NewLayerOptions *options;
   GtkWidget *vbox;
   GtkWidget *table;
@@ -3145,12 +3140,17 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   GtkWidget *radio_button;
   GSList *group = NULL;
   int i;
-  char *button_names[4] =
+  char *button_names[] =
   {
     N_("Foreground"),
     N_("Background"),
     N_("White"),
     N_("Transparent")
+  };
+  static ActionAreaItem action_items[] =
+  {
+    { N_("OK"), new_layer_query_ok_callback, NULL, NULL },
+    { N_("Cancel"), new_layer_query_cancel_callback, NULL, NULL }
   };
 
   /*  the new options structure  */
@@ -3160,7 +3160,8 @@ layers_dialog_new_layer_query (GimpImage* gimage)
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "new_layer_options", "Gimp");
+  gtk_window_set_wmclass (GTK_WINDOW (options->query_box),
+			  "new_layer_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), _("New Layer Options"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
@@ -3215,7 +3216,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_usize (spinbutton, 75, 0);
   
-  options->size_se = gimp_size_entry_new (1, UNIT_PIXEL, "%a",
+  options->size_se = gimp_size_entry_new (1, gimage->unit, "%a",
 					  TRUE, TRUE, FALSE, 75,
 					  GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (options->size_se),
@@ -3248,6 +3249,8 @@ layers_dialog_new_layer_query (GimpImage* gimage)
 			      gimage->width);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (options->size_se), 1,
 			      gimage->height);
+
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (options->size_se), UNIT_PIXEL);
 
   gtk_widget_show (table);
 

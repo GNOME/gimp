@@ -99,7 +99,7 @@ rect_select_button_press (Tool           *tool,
   gchar select_mode[STATUSBAR_SIZE];
   int x, y;
   GUnit unit = UNIT_PIXEL;
-  float unit_factor;
+  double unit_factor;
 
   gdisp = (GDisplay *) gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
@@ -405,14 +405,14 @@ rect_select_motion (Tool           *tool,
     }
   else /* show real world units */
     {
-      float unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 
       g_snprintf (size, STATUSBAR_SIZE, gdisp->cursor_format_str,
 		  _("Selection: "),
-		  (float)abs(rect_sel->w) * unit_factor /
+		  (gdouble) abs(rect_sel->w) * unit_factor /
 		  gdisp->gimage->xresolution,
 		  " x ",
-		  (float)abs(rect_sel->h) * unit_factor /
+		  (gdouble) abs(rect_sel->h) * unit_factor /
 		  gdisp->gimage->yresolution);
     }
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id,

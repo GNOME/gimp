@@ -108,10 +108,11 @@ GtkType gimp_image_get_type(void);
 
 GimpImage *     gimp_image_new                    (int, int, int);
 void            gimp_image_set_filename           (GimpImage *, char *);
-void            gimp_image_set_resolution         (GimpImage *, float, float);
+void            gimp_image_set_resolution         (GimpImage *,
+						   double, double);
 void            gimp_image_get_resolution         (GimpImage *,
-						   float *,
-						   float *);
+						   double *,
+						   double *);
 void            gimp_image_set_unit               (GimpImage *, GUnit);
 GUnit           gimp_image_get_unit               (GimpImage *);
 void            gimp_image_set_save_proc    (GimpImage *, PlugInProcDef *);

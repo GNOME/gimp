@@ -45,8 +45,8 @@ struct _Resize
   int          width;
   int          height;
 
-  float        resolution_x;
-  float        resolution_y;
+  double       resolution_x;
+  double       resolution_y;
   GUnit        unit;
 
   double       ratio_x;
@@ -65,10 +65,10 @@ struct _Resize
 Resize * resize_widget_new    (ResizeType    type,
 			       ResizeTarget  target,
 			       GtkObject   * object,
-			       int           width,
-			       int           height,
-			       float         resolution_x,
-			       float         resolution_y,
+			       gint          width,
+			       gint          height,
+			       gdouble       resolution_x,
+			       gdouble       resolution_y,
 			       GUnit         unit,
 			       gboolean      dot_for_dot,
 			       GtkSignalFunc ok_cb,

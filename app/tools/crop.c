@@ -502,14 +502,14 @@ crop_motion (Tool           *tool,
 	}
       else /* show real world units */
 	{
-	  float unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+	  gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 	  
 	  g_snprintf (size, STATUSBAR_SIZE, gdisp->cursor_format_str,
 		      _("Crop: "), 
-		      (float)(crop->tx2 - crop->tx1) * unit_factor /
+		      (gdouble) (crop->tx2 - crop->tx1) * unit_factor /
 		      gdisp->gimage->xresolution,
 		      " x ",
-		      (float)(crop->ty2 - crop->ty1) * unit_factor /
+		      (gdouble) (crop->ty2 - crop->ty1) * unit_factor /
 		      gdisp->gimage->yresolution);
 	}
       gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), crop->context_id,

@@ -295,8 +295,9 @@ file_new_confirm_dialog (NewImageValues *vals)
 
   vals->confirm_dlg = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (vals->confirm_dlg),
-			  "really_create", "Gimp");
+			  "confirm_size", "Gimp");
   gtk_window_set_title (GTK_WINDOW (vals->confirm_dlg), _("Confirm Image Size"));
+  gtk_window_set_policy (GTK_WINDOW (vals->confirm_dlg), FALSE, FALSE, FALSE);
   gtk_window_position (GTK_WINDOW (vals->confirm_dlg), GTK_WIN_POS_MOUSE);
 
   /*  Handle the wm close signal  */
@@ -480,7 +481,6 @@ file_new_cmd_callback (GtkWidget *widget,
     N_("RGB"),
     N_("Grayscale")
   };
-
   static gchar *fill_type_names[] =
   {
     N_("Foreground"),

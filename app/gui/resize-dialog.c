@@ -58,7 +58,7 @@ struct _ResizePrivate
 
   double ratio;
   int old_width, old_height;
-  int old_res_x, old_res_y;
+  double old_res_x, old_res_y;
   int area_width, area_height;
   int start_x, start_y;
   int orig_x, orig_y;
@@ -82,10 +82,10 @@ Resize *
 resize_widget_new (ResizeType    type,
 		   ResizeTarget  target,
 		   GtkObject    *object,
-		   int           width,
-		   int           height,
-		   float         resolution_x,
-		   float         resolution_y,
+		   gint          width,
+		   gint          height,
+		   gdouble       resolution_x,
+		   gdouble       resolution_y,
 		   GUnit         unit,
 		   gboolean      dot_for_dot,
 		   GtkSignalFunc ok_cb,
@@ -281,8 +281,7 @@ resize_widget_new (ResizeType    type,
   gtk_widget_set_usize (spinbutton, 75, 0);
 
   private->size_se =
-    gimp_size_entry_new (1, dot_for_dot ? UNIT_PIXEL : unit, "%a",
-			 TRUE, TRUE, FALSE, 75,
+    gimp_size_entry_new (1, unit, "%a", TRUE, TRUE, FALSE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->size_se),
 			     GTK_SPIN_BUTTON (spinbutton), NULL);
@@ -310,6 +309,9 @@ resize_widget_new (ResizeType    type,
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 0, width);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 1, height);
+
+  if (dot_for_dot)
+    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->size_se), UNIT_PIXEL);
 
   gtk_signal_connect (GTK_OBJECT (private->size_se), "value_changed",
 		      (GtkSignalFunc) size_callback,
@@ -428,8 +430,7 @@ resize_widget_new (ResizeType    type,
       gtk_widget_set_usize (spinbutton, 75, 0);
 
       private->offset_se =
-	gimp_size_entry_new (1, dot_for_dot ? UNIT_PIXEL : unit, "%a",
-			     TRUE, FALSE, FALSE, 75,
+	gimp_size_entry_new (1, unit, "%a", TRUE, FALSE, FALSE, 75,
 			     GIMP_SIZE_ENTRY_UPDATE_SIZE);
       gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->offset_se),
 				 GTK_SPIN_BUTTON (spinbutton), NULL);
@@ -452,6 +453,10 @@ resize_widget_new (ResizeType    type,
 
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0, 0);
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1, 0);
+
+      if (dot_for_dot)
+	gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset_se),
+				  UNIT_PIXEL);
 
       gtk_signal_connect (GTK_OBJECT (private->offset_se),
 			  "value_changed", (GtkSignalFunc) offset_update,

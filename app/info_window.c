@@ -200,7 +200,7 @@ info_window_update (InfoDialog *info_win,
   GDisplay    *gdisp;
   InfoWinData *iwd;
   int          type;
-  gfloat       unit_factor;
+  gdouble      unit_factor;
   gint         unit_digits;
   gchar        format_buf[32];
 

@@ -40,6 +40,7 @@
 #include "parasitelist.h"
 #include "pathsP.h"
 #include <libgimp/gimpunit.h>
+#include <libgimp/gimplimits.h>
 
 /* #define SWAP_FROM_FILE */
 
@@ -1134,7 +1135,6 @@ xcf_save_prop (XcfInfo  *info,
 
 	info->cp += xcf_write_float (info->fp, &xresolution, 1);
 	info->cp += xcf_write_float (info->fp, &yresolution, 1);
-
       }
       break;
     case PROP_TATTOO:
@@ -1838,16 +1838,18 @@ xcf_load_image_props (XcfInfo *info,
 	  break;
 	 case PROP_RESOLUTION:
 	 {
-	   info->cp += xcf_read_float (info->fp, &gimage->xresolution, 1);
-	   info->cp += xcf_read_float (info->fp, &gimage->yresolution, 1);
-	   if (gimage->xresolution < 1e-5 || gimage->xresolution > 1e+5 ||
-	       gimage->yresolution < 1e-5 || gimage->yresolution > 1e+5)
-	   {
-	     g_message(_("Warning, resolution out of range in XCF file"));
-	     gimage->xresolution = 72.0;
-	     gimage->yresolution = 72.0;
-	   }
-	     
+	   float xres, yres;
+
+	   info->cp += xcf_read_float (info->fp, &xres, 1);
+	   info->cp += xcf_read_float (info->fp, &yres, 1);
+	   if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
+	       yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
+	     {
+	       g_message(_("Warning, resolution out of range in XCF file"));
+	       xres = yres = 72.0;
+	     }
+	   gimage->xresolution = xres;
+	   gimage->yresolution = yres;
 	 }
 	 break;
 	 case PROP_TATTOO:

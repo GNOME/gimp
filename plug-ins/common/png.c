@@ -37,6 +37,39 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.18  1999/05/22 17:56:32  mitch
+ *   1999-05-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
+ *
+ *   	* app/[all files with resolution info]
+ *   	* libgimp/gimp.h
+ *   	* libgimp/gimpimage.c
+ *   	* libgimp/gimpsizeentry.[ch]
+ *   	* libgimp/gimpunit.[ch]
+ *   	* plug-ins/newsprint/newsprint.c
+ *   	* plug-ins/pgn/png.c
+ *   	* plug-ins/tiff/tiff.c: double instead of float for all resolution
+ *   	and unit-factor variables.
+ *
+ *   	* app/commands.c
+ *   	* app/crop.c
+ *   	* app/interface.c
+ *   	* app/layers_dialog.c
+ *   	* app/move_tool.c
+ *   	* app/resize.c
+ *   	* app/rotate_tool.c
+ *   	* app/scale_tool.c: pass the image's unit *and* gdisp->dot_for_dot
+ *   	to all functions which create sizeentries. Never create a
+ *   	sizeentry with UNIT_PIXEL but with the image's unit and set it's
+ *   	unit to UNIT_PIXEL after creation if dot_for_dot is on.
+ *   	This way the image's unit can always be picked from the menu
+ *   	without selecting "More...".
+ *
+ *   	* app/interface.c: made the query_*_box() functions use the
+ *   	ActionArea.
+ *
+ *   	* plug-ins/gimpunitmenu.c: GTK_WIN_POS_MOUSE for the unit
+ *   	selection dialog.
+ *
  *   Revision 1.17  1999/05/04 17:20:05  mitch
  *   1999-05-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
  *
@@ -668,12 +701,12 @@ load_image(char *filename)	/* I - File to load */
     {
       if (info->phys_unit_type == PNG_RESOLUTION_METER)
 	gimp_image_set_resolution(image,
-				  ((float) info->x_pixels_per_unit) * 0.0254,
-				  ((float) info->y_pixels_per_unit) * 0.0254);
+				  ((double) info->x_pixels_per_unit) * 0.0254,
+				  ((double) info->y_pixels_per_unit) * 0.0254);
       else  /*  set aspect ratio as resolution  */
 	gimp_image_set_resolution(image,
-				  ((float) info->x_pixels_per_unit),
-				  ((float) info->y_pixels_per_unit));
+				  ((double) info->x_pixels_per_unit),
+				  ((double) info->y_pixels_per_unit));
     }
 #endif /* GIMP_HAVE_RESOLUTION_INFO */
 
@@ -793,7 +826,7 @@ save_image(char   *filename,	/* I - File to save to */
   guchar	**pixels,	/* Pixel rows */
 		*pixel;		/* Pixel data */
   char		progress[255];	/* Title for progress display... */
-  float	        xres, yres;	/* GIMP resolution (dpi) */
+  gdouble       xres, yres;	/* GIMP resolution (dpi) */
   gdouble	gamma;
 
  /*

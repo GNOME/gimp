@@ -1012,15 +1012,15 @@ gimp_image_detach_parasite (gint32 image_ID, const char *name)
 
 void
 gimp_image_get_resolution (gint32  image_ID,
-			   float   *xresolution,
-			   float   *yresolution)
+			   double *xresolution,
+			   double *yresolution)
 {
   GParam *return_vals;
   int nreturn_vals;
-  float xres;
-  float yres;
+  double xres;
+  double yres;
 
-  g_return_if_fail(xresolution && yresolution);
+  g_return_if_fail (xresolution && yresolution);
 
   return_vals = gimp_run_procedure ("gimp_image_get_resolution",
 				    &nreturn_vals,
@@ -1045,8 +1045,8 @@ gimp_image_get_resolution (gint32  image_ID,
 
 void
 gimp_image_set_resolution (gint32  image_ID,
-			   float   xresolution,
-			   float   yresolution)
+			   double  xresolution,
+			   double  yresolution)
 {
   GParam *return_vals;
   int nreturn_vals;

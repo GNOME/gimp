@@ -35,11 +35,11 @@
 #define  SCALESRC(g)    (g->scale & 0x00ff)
 #define  SCALEDEST(g)   (g->scale >> 8)
 
-/* finding the effective screen resolution (float) */
+/* finding the effective screen resolution (double) */
 #define  SCREEN_XRES(g) (g->dot_for_dot? g->gimage->xresolution : monitor_xres)
 #define  SCREEN_YRES(g) (g->dot_for_dot? g->gimage->yresolution : monitor_yres)
 
-/* calculate scale factors (float) */
+/* calculate scale factors (double) */
 #define  SCALEFACTOR_X(g)  ((SCALEDEST(g) * SCREEN_XRES(g)) /          \
 			    (SCALESRC(g) * g->gimage->xresolution))
 #define  SCALEFACTOR_Y(g)  ((SCALEDEST(g) * SCREEN_YRES(g)) /          \

@@ -1024,14 +1024,14 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 	    }
 	  else /* show real world units */
 	    {
-	      float unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+	      double unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 
-	      g_snprintf (buffer, CURSOR_STR_LENGTH,
-			  gdisp->cursor_format_str,
-			  "",
-			  (float)t_x * unit_factor / gdisp->gimage->xresolution,
-			  ", ",
-			  (float)t_y * unit_factor / gdisp->gimage->yresolution);
+	      g_snprintf
+		(buffer, CURSOR_STR_LENGTH, gdisp->cursor_format_str,
+		 "",
+		 (double) t_x * unit_factor / gdisp->gimage->xresolution,
+		 ", ",
+		 (double) t_y * unit_factor / gdisp->gimage->yresolution);
 	    }
 	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), buffer);
 	}
@@ -1076,7 +1076,7 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
     }
   else /* show real world units */
     {
-      float unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 
       g_snprintf (gdisp->cursor_format_str, sizeof(gdisp->cursor_format_str),
 		  "%%s%%.%df%%s%%.%df %s",
@@ -1086,14 +1086,14 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
 
       g_snprintf (buffer, sizeof(buffer), gdisp->cursor_format_str,
 		  "",
-		  (float)gdisp->gimage->width * unit_factor /
+		  (gdouble) gdisp->gimage->width * unit_factor /
 		  gdisp->gimage->xresolution,
 		  ", ",
-		  (float)gdisp->gimage->height * unit_factor /
+		  (gdouble) gdisp->gimage->height * unit_factor /
 		  gdisp->gimage->yresolution);
     }
   cursor_label_width = 
-    gdk_string_width ( gtk_widget_get_style(gdisp->cursor_label)->font, buffer );
+    gdk_string_width (gtk_widget_get_style (gdisp->cursor_label)->font, buffer);
   
   /* find out how many pixels the label's parent frame is bigger than
    * the label itself */

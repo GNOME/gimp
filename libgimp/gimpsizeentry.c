@@ -46,23 +46,22 @@ enum {
 struct _GimpSizeEntryField
 {
   GimpSizeEntry *gse;
-  gint           index;
 
-  gfloat         resolution;
-  gfloat         lower;
-  gfloat         upper;
+  gdouble        resolution;
+  gdouble        lower;
+  gdouble        upper;
 
   GtkObject     *value_adjustment;
   GtkWidget     *value_spinbutton;
-  gfloat         value;
-  gfloat         min_value;
-  gfloat         max_value;
+  gdouble        value;
+  gdouble        min_value;
+  gdouble        max_value;
 
   GtkObject     *refval_adjustment;
   GtkWidget     *refval_spinbutton;
-  gfloat         refval;
-  gfloat         min_refval;
-  gfloat         max_refval;
+  gdouble        refval;
+  gdouble        min_refval;
+  gdouble        max_refval;
   gint           refval_digits;
 
   gint           stop_recursion;
@@ -221,7 +220,6 @@ gimp_size_entry_new (gint             number_of_fields,
       gse->fields = g_slist_append (gse->fields, gsef);
 
       gsef->gse = gse;
-      gsef->index = i;
       gsef->resolution = 1.0; /*  just to avoid division by zero  */
       gsef->lower = 0.0;
       gsef->upper = 100.0;
@@ -343,7 +341,6 @@ gimp_size_entry_add_field  (GimpSizeEntry   *gse,
   gse->number_of_fields++;
 
   gsef->gse = gse;
-  gsef->index = 0;
   gsef->resolution = 1.0; /*  just to avoid division by zero  */
   gsef->lower = 0.0;
   gsef->upper = 100.0;
@@ -431,7 +428,7 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
 void
 gimp_size_entry_set_resolution (GimpSizeEntry *gse,
 				gint           field,
-				gfloat         resolution,
+				gdouble        resolution,
 				guint          keep_size)
 {
   GimpSizeEntryField *gsef;
@@ -461,8 +458,8 @@ gimp_size_entry_set_resolution (GimpSizeEntry *gse,
 void
 gimp_size_entry_set_size (GimpSizeEntry *gse,
 			  gint           field,
-			  gfloat         lower,
-			  gfloat         upper)
+			  gdouble        lower,
+			  gdouble        upper)
 {
   GimpSizeEntryField *gsef;
 
@@ -484,8 +481,8 @@ gimp_size_entry_set_size (GimpSizeEntry *gse,
 void
 gimp_size_entry_set_value_boundaries  (GimpSizeEntry *gse,
 				       gint           field,
-				       gfloat         lower,
-				       gfloat         upper)
+				       gdouble        lower,
+				       gdouble        upper)
 {
   GimpSizeEntryField *gsef;
 
@@ -552,7 +549,7 @@ gimp_size_entry_set_value_boundaries  (GimpSizeEntry *gse,
   gimp_size_entry_set_value (gse, field, gsef->value);
 }
 
-gfloat
+gdouble
 gimp_size_entry_get_value (GimpSizeEntry *gse,
 			   gint           field)
 {
@@ -568,7 +565,7 @@ gimp_size_entry_get_value (GimpSizeEntry *gse,
 
 static void
 gimp_size_entry_update_value (GimpSizeEntryField *gsef,
-			      gfloat              value)
+			      gdouble             value)
 {
   if (gsef->stop_recursion > 1)
     return;
@@ -619,7 +616,7 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
 void
 gimp_size_entry_set_value (GimpSizeEntry *gse,
 			   gint           field,
-			   gfloat         value)
+			   gdouble        value)
 {
   GimpSizeEntryField *gsef;
 
@@ -642,7 +639,7 @@ gimp_size_entry_value_callback (GtkWidget *widget,
 				gpointer   data)
 {
   GimpSizeEntryField *gsef;
-  gfloat              new_value;
+  gdouble             new_value;
 
   gsef = (GimpSizeEntryField*) data;
 
@@ -662,8 +659,8 @@ gimp_size_entry_value_callback (GtkWidget *widget,
 void
 gimp_size_entry_set_refval_boundaries  (GimpSizeEntry *gse,
 					gint           field,
-					gfloat         lower,
-					gfloat         upper)
+					gdouble        lower,
+					gdouble        upper)
 {
   GimpSizeEntryField *gsef;
 
@@ -761,7 +758,7 @@ gimp_size_entry_set_refval_digits (GimpSizeEntry *gse,
     }
 }
 
-gfloat
+gdouble
 gimp_size_entry_get_refval (GimpSizeEntry *gse,
 			    gint           field)
 {
@@ -778,7 +775,7 @@ gimp_size_entry_get_refval (GimpSizeEntry *gse,
 
 static void
 gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
-			       gfloat              refval)
+			       gdouble             refval)
 {
   if (gsef->stop_recursion > 1)
     return;
@@ -827,7 +824,7 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
 void
 gimp_size_entry_set_refval (GimpSizeEntry *gse,
 			    gint           field,
-			    gfloat         refval)
+			    gdouble        refval)
 {
   GimpSizeEntryField *gsef;
 
@@ -853,7 +850,7 @@ gimp_size_entry_refval_callback (GtkWidget *widget,
 				 gpointer   data)
 {
   GimpSizeEntryField *gsef;
-  gfloat              new_refval;
+  gdouble             new_refval;
 
   gsef = (GimpSizeEntryField*) data;
 

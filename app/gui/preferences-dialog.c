@@ -33,6 +33,7 @@
 #include "libgimp/gimpfileselection.h"
 #include "libgimp/gimppatheditor.h"
 #include "libgimp/gimpsizeentry.h"
+#include "libgimp/gimplimits.h"
 #include "libgimp/gimpintl.h"
 
 /*  preferences local functions  */
@@ -245,7 +246,8 @@ file_prefs_ok_callback (GtkWidget *widget,
       default_units = old_default_units;
       return;
     }
-  if (default_xresolution < 1e-5 || default_yresolution < 1e-5)
+  if (default_xresolution < GIMP_MIN_RESOLUTION ||
+      default_yresolution < GIMP_MIN_RESOLUTION)
     {
       g_message (_("Error: default resolution must not be zero."));
       default_xresolution = old_default_xresolution;
@@ -259,7 +261,8 @@ file_prefs_ok_callback (GtkWidget *widget,
       default_resolution_units = old_default_resolution_units;
       return;
     }
-  if (monitor_xres < 1e-5 || monitor_yres < 1e-5)
+  if (monitor_xres < GIMP_MIN_RESOLUTION ||
+      monitor_yres < GIMP_MIN_RESOLUTION)
     {
       g_message (_("Error: Monitor resolution must not be zero."));
       monitor_xres = old_monitor_xres;
@@ -388,9 +391,9 @@ file_prefs_save_callback (GtkWidget *widget,
     update = g_list_append (update, "default-image-size");
   if (default_units != old_default_units)
     update = g_list_append (update, "default-units");
-  if (ABS(default_xresolution - old_default_xresolution) > 1e-5)
+  if (ABS(default_xresolution - old_default_xresolution) > GIMP_MIN_RESOLUTION)
     update = g_list_append (update, "default-xresolution");
-  if (ABS(default_yresolution - old_default_yresolution) > 1e-5)
+  if (ABS(default_yresolution - old_default_yresolution) > GIMP_MIN_RESOLUTION)
     update = g_list_append (update, "default-yresolution");
   if (default_resolution_units != old_default_resolution_units)
     update = g_list_append (update, "default-resolution-units");
@@ -405,10 +408,10 @@ file_prefs_save_callback (GtkWidget *widget,
   if (transparency_size != old_transparency_size)
     update = g_list_append (update, "transparency-size");
   if (using_xserver_resolution != old_using_xserver_resolution ||
-      ABS(monitor_xres - old_monitor_xres) > 1e-5)
+      ABS(monitor_xres - old_monitor_xres) > GIMP_MIN_RESOLUTION)
     update = g_list_append (update, "monitor-xresolution");
   if (using_xserver_resolution != old_using_xserver_resolution ||
-      ABS(monitor_yres - old_monitor_yres) > 1e-5)
+      ABS(monitor_yres - old_monitor_yres) > GIMP_MIN_RESOLUTION)
     update = g_list_append (update, "monitor-yresolution");
   if (edit_num_processors != num_processors)
     update = g_list_append (update, "num-processors");
@@ -510,13 +513,7 @@ file_prefs_save_callback (GtkWidget *widget,
   save_gimprc (&update, &remove);
 
   if (using_xserver_resolution)
-    {
-      gfloat xres, yres;
-
-      gdisplay_xserver_resolution (&xres, &yres);
-      monitor_xres = xres;
-      monitor_yres = yres;
-    }
+    gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
 
   /* Restore variables which must not change */
   stingy_memory_use = save_stingy_memory_use;
@@ -863,21 +860,17 @@ file_prefs_res_source_callback (GtkWidget *widget,
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      gfloat xres, yres;
-
-      gdisplay_xserver_resolution (&xres, &yres);
-      monitor_xres = xres;
-      monitor_yres = yres;
+      gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
       using_xserver_resolution = TRUE;
     }
   else
     {
       if (monitor_resolution_sizeentry)
 	{
-	  monitor_xres =
-	    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 0);
-	  monitor_yres =
-	    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 1);
+	  monitor_xres = gimp_size_entry_get_refval
+	    (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 0);
+	  monitor_yres = gimp_size_entry_get_refval
+	    (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 1);
 	}
       using_xserver_resolution = FALSE;
     }
@@ -1535,9 +1528,11 @@ file_pref_cmd_callback (GtkWidget *widget,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (default_size_sizeentry),
 				  1, default_yresolution, FALSE);
   gimp_size_entry_set_refval_boundaries
-    (GIMP_SIZE_ENTRY (default_size_sizeentry), 0, 1, 32767);
+    (GIMP_SIZE_ENTRY (default_size_sizeentry), 0,
+     GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
   gimp_size_entry_set_refval_boundaries
-    (GIMP_SIZE_ENTRY (default_size_sizeentry), 1, 1, 32767);
+    (GIMP_SIZE_ENTRY (default_size_sizeentry), 1,
+     GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 0,
 			      default_width);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 1,
@@ -1572,9 +1567,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 			 FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gimp_size_entry_set_refval_boundaries
-    (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 0, 1, 32767);
+    (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 0,
+     GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
   gimp_size_entry_set_refval_boundaries
-    (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 1, 1, 32767);
+    (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 1,
+     GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_resolution_sizeentry),
 			      0, default_xresolution);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_resolution_sizeentry),
@@ -1603,7 +1600,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   gtk_table_attach_defaults (GTK_TABLE (default_resolution_sizeentry), 
 			     button, 1, 3, 3, 4);
-  if (ABS (default_xresolution - default_yresolution) < 1e-5)
+  if (ABS (default_xresolution - default_yresolution) < GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
@@ -2205,7 +2202,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (button);
 
   {
-    gfloat xres, yres;
+    gdouble xres, yres;
     gchar  buf[80];
 
     gdisplay_xserver_resolution (&xres, &yres);
@@ -2234,9 +2231,11 @@ file_pref_cmd_callback (GtkWidget *widget,
     gimp_size_entry_new (2, UNIT_INCH, "Pixels/%s", FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gimp_size_entry_set_refval_boundaries
-    (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 0, 1, 32767);
+    (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 0,
+     GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
   gimp_size_entry_set_refval_boundaries
-    (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 1, 1, 32767);
+    (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 1,
+     GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
 			      0, monitor_xres);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
@@ -2258,7 +2257,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_container_add (GTK_CONTAINER (abox), monitor_resolution_sizeentry);
   gtk_widget_show (monitor_resolution_sizeentry);
 
-  if (ABS (monitor_xres - monitor_yres) < 1e-5)
+  if (ABS (monitor_xres - monitor_yres) < GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (button), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (monitor_resolution_sizeentry), 
 			     button, 1, 3, 3, 4);

@@ -643,7 +643,7 @@ blend_motion (Tool           *tool,
     }
   else /* show real world units */
     {
-      float unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 
       g_snprintf (vector, STATUSBAR_SIZE, gdisp->cursor_format_str,
 		  _("Blend: "),

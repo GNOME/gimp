@@ -790,7 +790,7 @@ create_display_shell (GDisplay* gdisp,
 
 
 /*
- *  String, integer, float and size query boxes
+ *  String, integer, double and size query boxes
  */
 
 typedef struct _QueryBox QueryBox;
@@ -812,7 +812,7 @@ static gint query_box_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void query_box_cancel_callback (GtkWidget *, gpointer);
 static void string_query_box_ok_callback (GtkWidget *, gpointer);
 static void int_query_box_ok_callback (GtkWidget *, gpointer);
-static void float_query_box_ok_callback (GtkWidget *, gpointer);
+static void double_query_box_ok_callback (GtkWidget *, gpointer);
 static void size_query_box_ok_callback (GtkWidget *, gpointer);
 
 /* create a generic query box without any entry widget
@@ -830,8 +830,12 @@ create_query_box (gchar       *title,
   GtkWidget *qbox;
   GtkWidget *vbox;
   GtkWidget *label;
-  GtkWidget *ok_button;
-  GtkWidget *button;
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("OK"), (ActionCallback) NULL, NULL, NULL },
+    { N_("Cancel"), (ActionCallback) query_box_cancel_callback, NULL, NULL }
+  };
 
   query_box = (QueryBox *) g_malloc (sizeof (QueryBox));
 
@@ -852,23 +856,9 @@ create_query_box (gchar       *title,
   else
     object = NULL;
 
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (qbox)->action_area), 2);
-
-  ok_button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (ok_button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (qbox)->action_area), ok_button,
-		      TRUE, TRUE, 0);
-  gtk_widget_grab_default (ok_button);
-  gtk_widget_show (ok_button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) query_box_cancel_callback,
-                      query_box);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (qbox)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  /*  The action area  */
+  action_items[1].user_data = query_box;
+  build_action_area (GTK_DIALOG (qbox), action_items, 2, 0);
 
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
@@ -882,7 +872,7 @@ create_query_box (gchar       *title,
   query_box->qbox = qbox;
   query_box->vbox = vbox;
   query_box->entry = NULL;
-  query_box->ok_button = ok_button;
+  query_box->ok_button = action_items[0].widget;
   query_box->object = object;
   query_box->callback = callback;
   query_box->data = data;
@@ -958,16 +948,16 @@ query_int_box (gchar       *title,
 }
 
 GtkWidget *
-query_float_box (gchar       *title,
-		 gchar       *message,
-		 gfloat       initial,
-		 gfloat       lower,
-		 gfloat       upper,
-		 gint         digits,
-		 GtkObject   *object,
-		 gchar       *signal,
-		 QueryFunc    callback,
-		 gpointer     data)
+query_double_box (gchar       *title,
+		  gchar       *message,
+		  gdouble      initial,
+		  gdouble      lower,
+		  gdouble      upper,
+		  gint         digits,
+		  GtkObject   *object,
+		  gchar       *signal,
+		  QueryFunc    callback,
+		  gpointer     data)
 {
   QueryBox  *query_box;
   GtkAdjustment* adjustment;
@@ -976,7 +966,7 @@ query_float_box (gchar       *title,
   query_box = create_query_box (title, message, object, signal, callback, data);
 
   gtk_signal_connect (GTK_OBJECT (query_box->ok_button), "clicked",
-                      (GtkSignalFunc) float_query_box_ok_callback,
+                      (GtkSignalFunc) double_query_box_ok_callback,
                       query_box);
 
   adjustment = GTK_ADJUSTMENT (gtk_adjustment_new (initial, lower, upper,
@@ -996,12 +986,13 @@ query_float_box (gchar       *title,
 GtkWidget *
 query_size_box (gchar       *title,
 		gchar       *message,
-		gfloat       initial,
-		gfloat       lower,
-		gfloat       upper,
+		gdouble      initial,
+		gdouble      lower,
+		gdouble      upper,
 		gint         digits,
 		GUnit        unit,
-		gfloat       resolution,
+		gdouble      resolution,
+		gint         dot_for_dot,
 		GtkObject   *object,
 		gchar       *signal,
 		QueryFunc    callback,
@@ -1024,6 +1015,9 @@ query_size_box (gchar       *title,
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
 					 lower, upper);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, initial);
+
+  if (dot_for_dot)
+    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
 
   gtk_box_pack_start (GTK_BOX (query_box->vbox), sizeentry, TRUE, TRUE, 0);
   gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (sizeentry));
@@ -1106,7 +1100,7 @@ int_query_box_ok_callback (GtkWidget *w,
   /*  Get the spinbutton data  */
   integer_value = g_malloc (sizeof (gint));
   *integer_value =
-    gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(query_box->entry));
+    gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (query_box->entry));
 
   /*  Call the user defined callback  */
   (* query_box->callback) (w, query_box->data, (gpointer) integer_value);
@@ -1118,11 +1112,11 @@ int_query_box_ok_callback (GtkWidget *w,
 }
 
 static void
-float_query_box_ok_callback (GtkWidget *w,
-			     gpointer   client_data)
+double_query_box_ok_callback (GtkWidget *w,
+			      gpointer   client_data)
 {
   QueryBox *query_box;
-  gfloat   *float_value;
+  gdouble  *double_value;
 
   query_box = (QueryBox *) client_data;
 
@@ -1131,12 +1125,12 @@ float_query_box_ok_callback (GtkWidget *w,
     gtk_signal_disconnect_by_data (query_box->object, query_box);
 
   /*  Get the spinbutton data  */
-  float_value = g_malloc (sizeof (gfloat));
-  *float_value =
-    gtk_spin_button_get_value_as_float(GTK_SPIN_BUTTON(query_box->entry));
+  double_value = g_malloc (sizeof (gdouble));
+  *double_value =
+    gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (query_box->entry));
 
   /*  Call the user defined callback  */
-  (* query_box->callback) (w, query_box->data, (gpointer) float_value);
+  (* query_box->callback) (w, query_box->data, (gpointer) double_value);
 
   /*  Destroy the box  */
   gtk_widget_destroy (query_box->qbox);
@@ -1149,7 +1143,7 @@ size_query_box_ok_callback (GtkWidget *w,
 			    gpointer   client_data)
 {
   QueryBox *query_box;
-  gfloat   *float_value;
+  gdouble  *double_value;
 
   query_box = (QueryBox *) client_data;
 
@@ -1158,8 +1152,8 @@ size_query_box_ok_callback (GtkWidget *w,
     gtk_signal_disconnect_by_data (query_box->object, query_box);
 
   /*  Get the sizeentry data  */
-  float_value = g_malloc (sizeof (gfloat));
-  *float_value =
+  double_value = g_malloc (sizeof (gdouble));
+  *double_value =
     gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (query_box->entry), 0);
 
   /*  Pass the selected unit to the callback  */
@@ -1168,7 +1162,7 @@ size_query_box_ok_callback (GtkWidget *w,
      (gpointer) gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (query_box->entry)));
 
   /*  Call the user defined callback  */
-  (* query_box->callback) (w, query_box->data, (gpointer) float_value);
+  (* query_box->callback) (w, query_box->data, (gpointer) double_value);
 
   /*  Destroy the box  */
   gtk_widget_destroy (query_box->qbox);
@@ -1217,7 +1211,7 @@ message_box (char        *message,
   gtk_window_set_wmclass (GTK_WINDOW (mbox), "gimp_message", "Gimp");
   gtk_window_set_title (GTK_WINDOW (mbox), _("GIMP Message"));
   gtk_window_position (GTK_WINDOW (mbox), GTK_WIN_POS_MOUSE);
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (mbox)->action_area), 2);
+
   gtk_signal_connect (GTK_OBJECT (mbox), "delete_event",
 		      GTK_SIGNAL_FUNC (message_box_delete_callback),
 		      msg_box);

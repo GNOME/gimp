@@ -80,8 +80,7 @@ scale_tool_transform (Tool     *tool,
 	  sizeentry =
 	    info_dialog_add_sizeentry (transform_info, _("Height:"),
 				       size_vals, 1,
-				       gdisp->dot_for_dot ? 
-				       UNIT_PIXEL : gdisp->gimage->unit, "%a",
+				       gdisp->gimage->unit, "%a",
 				       TRUE, TRUE, FALSE,
 				       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 				       scale_size_changed, tool);
@@ -103,6 +102,9 @@ scale_tool_transform (Tool     *tool,
 					  gdisp->gimage->yresolution, FALSE);
 	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
 				      size_vals[1]);
+
+	  if (gdisp->dot_for_dot)
+	    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
 
 	  info_dialog_add_label (transform_info, _("Scale Ratio X:"),
 				 x_ratio_buf);
@@ -191,7 +193,7 @@ scale_info_update (Tool *tool)
   double          ratio_x, ratio_y;
   int             x1, y1, x2, y2, x3, y3, x4, y4;
   GUnit           unit;
-  float           unit_factor;
+  double          unit_factor;
   gchar           format_buf[16];
 
   static GUnit    label_unit = UNIT_PIXEL;

@@ -28,7 +28,7 @@
 
 typedef struct {
   guint    delete_on_exit;
-  float    factor;
+  gdouble  factor;
   gint     digits;
   gchar   *identifier;
   gchar   *symbol;
@@ -89,13 +89,13 @@ gimp_unit_get_number_of_built_in_units (void)
 
 
 GUnit
-gimp_unit_new (gchar  *identifier,
-	       gfloat  factor,
-	       gint    digits,
-	       gchar  *symbol,
-	       gchar  *abbreviation,
-	       gchar  *singular,
-	       gchar  *plural)
+gimp_unit_new (gchar   *identifier,
+	       gdouble  factor,
+	       gint     digits,
+	       gchar   *symbol,
+	       gchar   *abbreviation,
+	       gchar   *singular,
+	       gchar   *plural)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -172,13 +172,13 @@ gimp_unit_set_deletion_flag (GUnit  unit,
 }
 
 
-gfloat
+gdouble
 gimp_unit_get_factor (GUnit unit)
 {
   GParam *return_vals;
   int nreturn_vals;
 
-  gfloat factor;
+  gdouble factor;
 
   g_return_val_if_fail (unit >= UNIT_INCH, 1.0);
 

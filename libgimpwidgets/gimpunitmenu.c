@@ -453,9 +453,10 @@ gimp_unit_menu_create_selection (GimpUnitMenu *gum)
 
   gum->selection = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (gum->selection),
-			  "unitselection", "Gimp");
+			  "unit_selection", "Gimp");
   gtk_window_set_title (GTK_WINDOW (gum->selection), _("Unit Selection"));
-  gtk_window_set_policy (GTK_WINDOW(gum->selection), FALSE, TRUE, FALSE);
+  gtk_window_set_policy (GTK_WINDOW (gum->selection), FALSE, TRUE, FALSE);
+  gtk_window_position (GTK_WINDOW (gum->selection), GTK_WIN_POS_MOUSE);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (gum->selection)->vbox), vbox);

@@ -70,7 +70,7 @@ gdisplay_color_pixel (GDisplay *gdisp)
 
 
 void
-gdisplay_xserver_resolution (float *xres, float *yres)
+gdisplay_xserver_resolution (gdouble *xres, gdouble *yres)
 {
   gint width, height;
   gint widthMM, heightMM;
@@ -91,8 +91,8 @@ gdisplay_xserver_resolution (float *xres, float *yres)
    *         = N * 25.4 pixels / M inch
    */
 
-  *xres = (width  * 25.4) / ((float)widthMM);
-  *yres = (height * 25.4) / ((float)heightMM);
+  *xres = (width  * 25.4) / ((gdouble) widthMM);
+  *yres = (height * 25.4) / ((gdouble) heightMM);
 }
 
 

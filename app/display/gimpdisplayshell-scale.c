@@ -166,7 +166,7 @@ change_scale (GDisplay *gdisp,
 static gdouble
 img2real (GDisplay *gdisp, gboolean xdir, gdouble a)
 {
-  float res;
+  gdouble res;
 
   if (gdisp->dot_for_dot)
     return a;

@@ -103,8 +103,7 @@ rotate_tool_transform (Tool     *tool,
 	  sizeentry =
 	    info_dialog_add_sizeentry (transform_info, _("Y:"),
 				       center_vals, 1,
-				       gdisp->dot_for_dot ? 
-				       UNIT_PIXEL : gdisp->gimage->unit, "%a",
+				       gdisp->gimage->unit, "%a",
 				       TRUE, TRUE, FALSE,
 				       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 				       rotate_center_changed, tool);
@@ -126,6 +125,9 @@ rotate_tool_transform (Tool     *tool,
 					  gdisp->gimage->yresolution, FALSE);
 	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
 				      center_vals[1]);
+
+	  if (gdisp->dot_for_dot)
+	    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
 
 	  gtk_table_set_row_spacing (GTK_TABLE (transform_info->info_table),
 				     1, 6);

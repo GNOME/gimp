@@ -503,11 +503,11 @@ void       gimp_image_attach_new_parasite   (gint32      image_ID,
 void       gimp_image_detach_parasite       (gint32      image_ID,
 					     const char *name);
 void       gimp_image_set_resolution        (gint32     image_ID,
-					     float      xresolution,
-					     float      yresolution);
+					     double     xresolution,
+					     double     yresolution);
 void       gimp_image_get_resolution        (gint32     image_ID,
-					     float      *xresolution,
-					     float      *yresolution);
+					     double     *xresolution,
+					     double     *yresolution);
 void       gimp_image_set_unit              (gint32     image_ID,
 					     GUnit      unit);
 GUnit      gimp_image_get_unit              (gint32     image_ID);

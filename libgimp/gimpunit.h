@@ -67,13 +67,13 @@ gint     gimp_unit_get_number_of_built_in_units (void);
  * set to TRUE. You will have to set it to FALSE after creation to make
  * the unit definition persistant.
  */
-GUnit    gimp_unit_new                 (gchar  *identifier,
-					gfloat  factor,
-					gint    digits,
-					gchar  *symbol,
-					gchar  *abbreviation,
-					gchar  *singular,
-					gchar  *plural);
+GUnit    gimp_unit_new                 (gchar   *identifier,
+					gdouble  factor,
+					gint     digits,
+					gchar   *symbol,
+					gchar   *abbreviation,
+					gchar   *singular,
+					gchar   *plural);
 
 /* The following functions fall back to inch (not pixel, as pixel is not
  * a 'real' unit) if the value passed is out of range.
@@ -93,7 +93,7 @@ void     gimp_unit_set_deletion_flag   (GUnit  unit,
  *
  * Returns 0 for unit == UNIT_PIXEL as we don't have resolution info here
  */
-gfloat   gimp_unit_get_factor          (GUnit  unit);
+gdouble  gimp_unit_get_factor          (GUnit  unit);
 
 /* The following function gives a hint how many digits a spinbutton
  * should provide to get approximately the accuracy of an inch-spinbutton

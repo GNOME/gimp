@@ -319,8 +319,8 @@ gimp_image_set_filename (GimpImage *gimage, char *filename)
 
 void
 gimp_image_set_resolution (GimpImage *gimage,
-			   float xresolution,
-			   float yresolution)
+			   double     xresolution,
+			   double     yresolution)
 {
   gimage->xresolution = xresolution;
   gimage->yresolution = yresolution;
@@ -328,8 +328,8 @@ gimp_image_set_resolution (GimpImage *gimage,
 
 void
 gimp_image_get_resolution (GimpImage *gimage,
-			   float *xresolution,
-			   float *yresolution)
+			   double    *xresolution,
+			   double    *yresolution)
 {
   g_return_if_fail(xresolution && yresolution);
   *xresolution = gimage->xresolution;

@@ -1270,13 +1270,13 @@ newsprint_dialog (GDrawable *drawable)
 
 #ifdef GIMP_HAVE_RESOLUTION_INFO
     {
-	float xres, yres;
-	gimp_image_get_resolution(gimp_drawable_image_id(drawable->id),
-				  &xres, &yres);
-	/* XXX hack: should really note both resolutions, and use
-	 * rectangular cells, not square cells.  But I'm being lazy,
-	 * and the majority of the world works with xres == yres */
-	pvals_ui.input_spi = xres;
+      double xres, yres;
+      gimp_image_get_resolution(gimp_drawable_image_id(drawable->id),
+				&xres, &yres);
+      /* XXX hack: should really note both resolutions, and use
+       * rectangular cells, not square cells.  But I'm being lazy,
+       * and the majority of the world works with xres == yres */
+      pvals_ui.input_spi = xres;
     }
 #endif
 

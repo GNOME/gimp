@@ -87,6 +87,7 @@
 #include "color_select.h"
 #include "gimpparasite.h"
 
+#include "libgimp/gimplimits.h"
 #include "libgimp/gimpintl.h"
 
 #define LOGO_WIDTH_MIN 300
@@ -497,13 +498,10 @@ app_init (void)
     restore_session = TRUE;
 
   /* make sure the monitor resolution is valid */
-  if (monitor_xres < 1e-5 || monitor_yres < 1e-5)
+  if (monitor_xres < GIMP_MIN_RESOLUTION ||
+      monitor_yres < GIMP_MIN_RESOLUTION)
     {
-      gfloat xres, yres;
-
-      gdisplay_xserver_resolution (&xres, &yres);
-      monitor_xres = xres;
-      monitor_yres = yres;
+      gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
       using_xserver_resolution = TRUE;
     }
 

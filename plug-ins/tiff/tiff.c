@@ -518,7 +518,7 @@ static gint32 load_image (char *filename) {
       /* now set the new image's resolution info */
       gimp_image_set_resolution (image, xres, yres);
       if (unit != UNIT_PIXEL)
-	gimp_image_set_unit(image, unit);
+	gimp_image_set_unit (image, unit);
     }
 
     /* no x res tag => we assume we have no resolution info, so we
@@ -1138,33 +1138,33 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   /* resolution fields */
   {
-      float xresolution;
-      float yresolution;
-      unsigned short save_unit = RESUNIT_INCH;
-      GUnit unit;
-      float factor;
+    double xresolution;
+    double yresolution;
+    unsigned short save_unit = RESUNIT_INCH;
+    GUnit unit;
+    float factor;
 
-      gimp_image_get_resolution (image, &xresolution, &yresolution);
-      unit = gimp_image_get_unit (image);
-      factor = gimp_unit_get_factor (unit);
+    gimp_image_get_resolution (image, &xresolution, &yresolution);
+    unit = gimp_image_get_unit (image);
+    factor = gimp_unit_get_factor (unit);
 
-      /*  if we have a metric unit, save the resolution as centimeters
-       */
-      if ((ABS(factor - 0.0254) < 1e-5) ||  /* m */
-	  (ABS(factor - 0.254) < 1e-5) ||   /* why not ;) */
-	  (ABS(factor - 2.54) < 1e-5) ||    /* cm */
-	  (ABS(factor - 25.4) < 1e-5))      /* mm */
-	{
-	  save_unit = RESUNIT_CENTIMETER;
-	  xresolution /= 2.54;
-	  yresolution /= 2.54;
-	}
-
-      if (xresolution > 1e-5 && yresolution > 1e-5)
+    /*  if we have a metric unit, save the resolution as centimeters
+     */
+    if ((ABS(factor - 0.0254) < 1e-5) ||  /* m */
+	(ABS(factor - 0.254) < 1e-5) ||   /* why not ;) */
+	(ABS(factor - 2.54) < 1e-5) ||    /* cm */
+	(ABS(factor - 25.4) < 1e-5))      /* mm */
       {
-	  TIFFSetField (tif, TIFFTAG_XRESOLUTION, xresolution);
-	  TIFFSetField (tif, TIFFTAG_YRESOLUTION, yresolution);
-	  TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, save_unit);
+	save_unit = RESUNIT_CENTIMETER;
+	xresolution /= 2.54;
+	yresolution /= 2.54;
+      }
+
+    if (xresolution > 1e-5 && yresolution > 1e-5)
+      {
+	TIFFSetField (tif, TIFFTAG_XRESOLUTION, xresolution);
+	TIFFSetField (tif, TIFFTAG_YRESOLUTION, yresolution);
+	TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, save_unit);
       }
   }
 #endif /* GIMP_HAVE_RESOLUTION_INFO */
