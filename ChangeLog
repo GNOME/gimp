@@ -1,3 +1,7 @@
+2004-09-20  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version number to 2.1.6.
+
 2004-09-20  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/deinterlace.c: added a preview. Not sure if it is
