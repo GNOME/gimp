@@ -3,7 +3,7 @@
 # Balazs Nagy <julian7@kva.hu>, 1998.
 # Andras Timar <timar@gnome.hu>, 2000-2003.
 # Gabor Suveg <gabor@suveg.hu>, 2001.
-# Laszlo Dvornik <dvornikl@mailbox.hu>, 2004.
+# Laszlo Dvornik <dvornik@invitel.hu>, 2004.
 # Arpad Biro <biro_arpad@yahoo.com>, 2004.
 #
 msgid ""
@@ -11,9 +11,9 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-05-13 03:57+0200\n"
-"PO-Revision-Date: 2004-05-17 00:29+0200\n"
+"PO-Revision-Date: 2004-05-23 12:16+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
-"Language-Team: Hungarian\n"
+"Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -44,7 +44,7 @@ msgstr ""
 #: app/app_procs.c:281
 #, c-format
 msgid "Opening '%s' failed: %s"
-msgstr "'%s' megnyitása sikertelen: %s"
+msgstr "\"%s\" megnyitása sikertelen: %s"
 
 #: app/main.c:218
 msgid ""
@@ -73,7 +73,7 @@ msgstr ""
 
 #: app/main.c:504
 msgid "GIMP version"
-msgstr "GIMP verzió: "
+msgstr "GIMP-verzió: "
 
 #: app/main.c:512
 #, c-format
@@ -112,7 +112,7 @@ msgstr ""
 
 #: app/main.c:519
 msgid "  --no-cpu-accel           Do not use special CPU accelerations.\n"
-msgstr "  --no-cpu-accel           Nem használ speciális CPU gyorsításokat.\n"
+msgstr "  --no-cpu-accel           Nem használ speciális CPU-gyorsításokat.\n"
 
 #: app/main.c:520
 msgid ""
@@ -132,11 +132,11 @@ msgstr "  -i, --no-interface       Felhasználói felület nélküli futtatás.\
 
 #: app/main.c:523
 msgid "  --display <display>      Use the designated X display.\n"
-msgstr "  --display <display>      A megadott X képernyőt használja.\n"
+msgstr "  --display <display>      A megadott X-képernyőt használja.\n"
 
 #: app/main.c:524
 msgid "  -s, --no-splash          Do not show the startup window.\n"
-msgstr "  -s, --no-splash          Nem mutatja az üdvözlő képernyőt.\n"
+msgstr "  -s, --no-splash          Nem jeleníti meg az üdvözlő képernyőt.\n"
 
 #: app/main.c:525
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
@@ -184,7 +184,7 @@ msgid ""
 "                           Procedural Database compatibility mode.\n"
 msgstr ""
 "  --pdb-compat-mode <off | on | warn>\n"
-"                           Ügyrendi adatbázis kompatibilitási mód.\n"
+"                           Eljárási adatbázissal való kompatibilitási mód.\n"
 
 #: app/main.c:535
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
@@ -349,7 +349,7 @@ msgstr "${%s} nem bővíthető"
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Nem lehet olvasásra megnyitni '%s'-t: %s"
+msgstr "Nem lehet olvasásra megnyitni \"%s\"-t: %s"
 
 #: app/config/gimpconfig-utils.c:553 app/config/gimpconfigwriter.c:120
 #: app/core/gimpbrushgenerated.c:130 app/core/gimpgradient.c:498
@@ -358,18 +358,18 @@ msgstr "Nem lehet olvasásra megnyitni '%s'-t: %s"
 #: app/xcf/xcf.c:330
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Nem lehet írásra megnyitni '%s'-t: %s"
+msgstr "Nem lehet írásra megnyitni \"%s\"-t: %s"
 
 #: app/config/gimpconfig-utils.c:564 app/config/gimpconfig-utils.c:587
 #: app/vectors/gimpvectors-export.c:96
 #, c-format
 msgid "Error while writing '%s': %s"
-msgstr "Hiba a(z) '%s' fájl írása közben: %s"
+msgstr "Hiba a(z) \"%s\" fájl írása közben: %s"
 
 #: app/config/gimpconfig-utils.c:575
 #, c-format
 msgid "Error while reading '%s': %s"
-msgstr "Hiba a(z) '%s' fájl olvasása közben: %s"
+msgstr "Hiba a(z) \"%s\" fájl olvasása közben: %s"
 
 #: app/config/gimpconfig-utils.c:612
 #, c-format
@@ -383,7 +383,7 @@ msgstr ""
 #: app/config/gimpconfigwriter.c:107
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
-msgstr "Nem lehet átmeneti fájlt létrehozni a(z) '%s' számára: %s"
+msgstr "Nem lehet átmeneti fájlt létrehozni a(z) \"%s\" számára: %s"
 
 #: app/config/gimpconfigwriter.c:568
 #, c-format
@@ -406,22 +406,22 @@ msgstr ""
 #: app/config/gimpconfigwriter.c:587
 #, c-format
 msgid "Error writing to '%s': %s"
-msgstr "Hiba a(z) '%s' fájl írása közben: %s"
+msgstr "Hiba a(z) \"%s\" fájl írása közben: %s"
 
 #: app/config/gimpconfigwriter.c:605
 #, c-format
 msgid "Could not create '%s': %s"
-msgstr "Nem lehet létrehozni a(z) '%s'-t: %s"
+msgstr "Nem lehet létrehozni a(z) \"%s\"-t: %s"
 
 #: app/config/gimprc.c:335 app/config/gimprc.c:348
 #, c-format
 msgid "Parsing '%s'\n"
-msgstr "'%s' értelmezése\n"
+msgstr "\"%s\" feldolgozása\n"
 
 #: app/config/gimprc.c:595
 #, c-format
 msgid "Saving '%s'\n"
-msgstr "'%s' mentése\n"
+msgstr "\"%s\" mentése\n"
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -477,7 +477,7 @@ msgstr ""
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
 "Az a távolság képpontokban, amelynél a segédvonalakhoz és a rácshoz való "
-"igazítás aktiválódik."
+"illesztés aktiválódik."
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -891,7 +891,7 @@ msgid ""
 msgstr ""
 "A felhasználandó külső webböngészőt adja meg. Megadható abszolút útvonallal "
 "vagy egy olyan program nevével, amely szerepel a felhasználó keresési "
-"útvonalában. Ha a parancs tartalmazza a '%s' szöveget, akkor az "
+"útvonalában. Ha a parancs tartalmazza a \"%s\" szöveget, akkor az "
 "helyettesítve lesz az URL-lel, ellenkező esetben pedig hozzá lesz fűzve az "
 "URL a parancshoz (a kettő között szóközzel)."
 
@@ -902,7 +902,7 @@ msgstr "Érvénytelen UTF-8 karakterlánc"
 #: app/config/gimpscanner.c:497
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "Hiba a(z) %s fájl feldolgozásakor a(z) %d. sorban: %s"
+msgstr "Hiba a(z) \"%s\" fájl feldolgozásakor a(z) %d. sorban: %s"
 
 #: app/core/core-enums.c:13
 msgid "_White (Full Opacity)"
@@ -914,11 +914,11 @@ msgstr "_Fekete (teljesen átlátszó)"
 
 #: app/core/core-enums.c:15
 msgid "Layer's _Alpha Channel"
-msgstr "Réteg _alfa csatornája"
+msgstr "Réteg _alfa-csatornája"
 
 #: app/core/core-enums.c:16
 msgid "_Transfer Layer's Alpha Channel"
-msgstr "Réteg a_lfa csatornájának átvitele"
+msgstr "Réteg a_lfa-csatornájának átvitele"
 
 #: app/core/core-enums.c:17
 msgid "_Selection"
@@ -1603,17 +1603,17 @@ msgstr "GIMP"
 #: app/core/gimpbrush.c:534
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
-msgstr "Nem lehet %d bájtot beolvasni a(z) '%s' fájlból: %s"
+msgstr "Nem lehet %d bájtot beolvasni a(z) \"%s\" fájlból: %s"
 
 #: app/core/gimpbrush.c:569
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr "Végzetes feldolgozási hiba a(z) '%s' ecsetfájlban: Ismeretlen %d mélység."
+msgstr "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: ismeretlen \"%d\" mélység."
 
 #: app/core/gimpbrush.c:582
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr "Végzetes feldolgozási hiba a(z) '%s' ecsetfájlban: Ismeretlen %d verzió."
+msgstr "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: ismeretlen \"%d\" verzió."
 
 #: app/core/gimpbrush.c:598 app/core/gimpbrush.c:718
 #, c-format
@@ -1625,7 +1625,7 @@ msgstr ""
 #: app/core/gimpbrush.c:606 app/core/gimpbrushpipe.c:365
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Érvénytelen UTF-8 karakterlánc a(z) '%s' ecsetfájlban."
+msgstr "Érvénytelen UTF-8 karakterlánc a(z) \"%s\" ecsetfájlban."
 
 #: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
 #: app/core/gimpitem.c:466 app/core/gimppattern.c:400
@@ -1646,20 +1646,20 @@ msgstr ""
 #: app/core/gimpbrushgenerated.c:390
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "Végzetes feldolgozási hiba a(z) '%s' ecsetfájlban: Nem GIMP ecsetfájl."
+msgstr "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: nem GIMP-ecsetfájl."
 
 #: app/core/gimpbrushgenerated.c:401
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr ""
-"Végzetes feldolgozási hiba a(z) '%s' ecsetfájlban: Ismeretlen GIMP "
+"Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: ismeretlen GIMP "
 "ecsetverzió."
 
 #: app/core/gimpbrushpipe.c:380 app/core/gimpbrushpipe.c:400
 #: app/core/gimpbrushpipe.c:490
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr "Végzetes feldolgozási hiba a(z) '%s' ecsetfájlban: A fájl sérült."
+msgstr "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: a fájl sérült."
 
 #: app/core/gimpchannel.c:252 app/pdb/internal_procs.c:86
 msgid "Channel"
@@ -1748,7 +1748,7 @@ msgstr "Ellipszis-kijelölés"
 
 #: app/core/gimpchannel-select.c:367
 msgid "Alpha to Selection"
-msgstr "Alfa csatorna kijelöléssé alakítása"
+msgstr "Alfa-csatorna kijelöléssé alakítása"
 
 #: app/core/gimpchannel-select.c:409
 #, c-format
@@ -1766,7 +1766,7 @@ msgstr "Kijelölés szín szerint"
 #: app/core/gimpdata.c:249
 #, c-format
 msgid "Could not delete '%s': %s"
-msgstr "Nem lehet törölni a(z) '%s'-t: %s"
+msgstr "Nem lehet törölni a(z) \"%s\"-t: %s"
 
 #: app/core/gimpdatafactory.c:296 app/core/gimpdatafactory.c:478
 #, c-format
@@ -1774,7 +1774,7 @@ msgid ""
 "Warning: Failed to save data:\n"
 "%s"
 msgstr ""
-"Figyelem: Nem sikerült menteni az adatot:\n"
+"Figyelem: nem sikerült menteni az adatokat:\n"
 "%s"
 
 #: app/core/gimpdatafactory.c:410 app/core/gimpdatafactory.c:413
@@ -1798,7 +1798,7 @@ msgid ""
 "Warning: Failed to load data:\n"
 "%s"
 msgstr ""
-"Figyelem: Nem sikerült betölteni az adatot:\n"
+"Figyelem: nem sikerült betölteni az adatokat:\n"
 "%s"
 
 #: app/core/gimpdrawable-blend.c:238 app/tools/gimpblendtool.c:98
@@ -2068,7 +2068,7 @@ msgstr "Réteg legalulra helyezése"
 #: app/core/gimpimage.c:2799
 #, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
-msgstr "A(z) '%s' rétegnek nincs alfa csatornája. A réteg feljebb lett helyezve."
+msgstr "A(z) \"%s\" rétegnek nincs alfa-csatornája. A réteg feljebb lett helyezve."
 
 #: app/core/gimpimage.c:2853
 msgid "Add Channel"
@@ -2163,7 +2163,7 @@ msgstr "%d réteg"
 #: app/core/gimpimagefile.c:567
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
-msgstr "Nem lehet megnyitni a(z) '%s' bélyegképet: %s"
+msgstr "Nem lehet megnyitni a(z) \"%s\" bélyegképet: %s"
 
 #: app/core/gimpitem.c:997
 msgid "Attach Parasite to Item"
@@ -2232,8 +2232,8 @@ msgstr "Nem lehet rétegmaszkot hozzáadni, mert már van egy rétegmaszk."
 #: app/core/gimplayer.c:968
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
-"Nem lehet rétegmaszkot hozzáadni olyan réteghez, amelynek nincs alfa "
-"csatornája."
+"Nem lehet rétegmaszkot hozzáadni olyan réteghez, amelynek nincs "
+"alfa-csatornája."
 
 #: app/core/gimplayer.c:978
 msgid "Cannot add layer mask of different dimensions than specified layer."
@@ -2245,7 +2245,7 @@ msgstr "Alfa átvitele a maszkra"
 
 #: app/core/gimplayer.c:1348
 msgid "Add Alpha Channel"
-msgstr "Alfa csatorna hozzáadása"
+msgstr "Alfa-csatorna hozzáadása"
 
 #: app/core/gimplayer.c:1368
 msgid "Layer to Image Size"
@@ -2276,7 +2276,7 @@ msgstr ""
 #: app/core/gimppalette.c:419
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr "Érvénytelen UTF-8 karakterlánc a(z) '%s' palettafájlban"
+msgstr "Érvénytelen UTF-8 karakterlánc a(z) \"%s\" palettafájlban"
 
 #: app/core/gimppalette.c:447
 #, c-format
@@ -2341,7 +2341,7 @@ msgstr ""
 #: app/core/gimppattern.c:393
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Érvénytelen UTF-8 karakterlánc a(z) '%s' palettafájlban."
+msgstr "Érvénytelen UTF-8 karakterlánc a(z) \"%s\" palettafájlban."
 
 #: app/core/gimpselection.c:180 app/tools/gimpeditselectiontool.c:259
 #: app/tools/gimpeditselectiontool.c:1116 app/tools/gimpmoveoptions.c:184
@@ -2656,7 +2656,7 @@ msgstr "Ismeretlen fájltípus"
 
 #: app/file/file-open.c:105 app/file/file-save.c:132
 msgid "Not a regular file"
-msgstr "Nem reguláris fájl"
+msgstr "Nem szabályos fájl"
 
 #: app/file/file-open.c:166
 msgid "Plug-In returned SUCCESS but did not return an image"
@@ -2903,10 +2903,10 @@ msgid ""
 "Do not generate a palette of more than 255 colors if you intend to create a "
 "transparent or animated GIF file."
 msgstr ""
-"Alfa csatornával vagy rétegekkel rendelkező képet próbál indexelt módba "
-"konvertálni.\n"
+"Alfa-csatornával vagy rétegekkel rendelkező képet próbál indexelt módba "
+"alakítani.\n"
 "A színpaletta ne tartalmazzon több mint 255 színt, ha a képből átlátszó vagy "
-"animált GIF fájlt akar készíteni."
+"animált GIF-fájlt szeretne készíteni."
 
 #: app/gui/convert-dialog.c:498
 msgid "Cannot convert to a palette with more than 256 colors."
@@ -3304,7 +3304,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"'%s' megnyitása sikertelen:\n"
+"\"%s\" megnyitása sikertelen:\n"
 "\n"
 "%s"
 
@@ -3315,7 +3315,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"'%s' mentése sikertelen:\n"
+"\"%s\" mentése sikertelen:\n"
 "\n"
 "%s"
 
@@ -3339,8 +3339,8 @@ msgid ""
 "\n"
 "You will lose all your changes, including all undo information."
 msgstr ""
-"Visszaállítja '%s'-t\n"
-"'%s' alapján?\n"
+"Visszaállítja \"%s\"-t\n"
+"\"%s\" alapján?\n"
 "\n"
 "Minden változtatás elvész, a visszavonási információkat is beleértve."
 
@@ -3423,12 +3423,12 @@ msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
 msgstr ""
-"A(z) '%s' fájl már létezik.\n"
+"\"%s\" fájl már létezik.\n"
 "Felülírja?"
 
 #: app/gui/file-save-dialog.c:264
 msgid "File Exists!"
-msgstr "A fájl már létezik!"
+msgstr "A fájl már létezik."
 
 #: app/gui/file-save-menu.c:47
 msgid "/By Extension"
@@ -3717,7 +3717,7 @@ msgstr ""
 #: app/gui/gradients-commands.c:73
 #, c-format
 msgid "Save '%s' as POV-Ray"
-msgstr "'%s' mentése POV-Ray formátumba"
+msgstr "\"%s\" mentése POV-Ray formátumba"
 
 #: app/gui/gradients-menu.c:46
 msgid "/_Edit Gradient..."
@@ -4152,7 +4152,7 @@ msgstr "/Nézet/Rá_cs megjelenítése"
 
 #: app/gui/image-menu.c:472
 msgid "/View/Sna_p to Grid"
-msgstr "/Nézet/Rácshoz _igazítás"
+msgstr "/Nézet/Rácshoz _illesztés"
 
 #: app/gui/image-menu.c:479
 msgid "/View/Show _Menubar"
@@ -4422,11 +4422,11 @@ msgstr "/Réteg/Átláts_zóság"
 
 #: app/gui/image-menu.c:818
 msgid "/Layer/Transparency/_Add Alpha Channel"
-msgstr "/Réteg/Átlátszóság/_Alfa csatorna hozzáadása"
+msgstr "/Réteg/Átlátszóság/_Alfa-csatorna hozzáadása"
 
 #: app/gui/image-menu.c:826
 msgid "/Layer/Transparency/Al_pha to Selection"
-msgstr "/Réteg/Átlátszóság/Alfa csatorna k_ijelöléssé alakítása"
+msgstr "/Réteg/Átlátszóság/Alfa-csatorna k_ijelöléssé alakítása"
 
 #: app/gui/image-menu.c:831
 msgid "/Layer/Transparency/A_dd to Selection"
@@ -4677,11 +4677,11 @@ msgstr "/Szűrők/Üve_g-effektusok"
 
 #: app/gui/image-menu.c:1114
 msgid "/Filters/_Light Effects"
-msgstr "/Szűrők/_Fényeffektusok"
+msgstr "/Szűrők/_Fényhatások"
 
 #: app/gui/image-menu.c:1115
 msgid "/Filters/_Distorts"
-msgstr "/Szűrők/T_orzítások"
+msgstr "/Szűrők/T_orzítás"
 
 #: app/gui/image-menu.c:1116
 msgid "/Filters/_Artistic"
@@ -5042,11 +5042,11 @@ msgstr "/Maszk k_ijelöléssé alakítása"
 
 #: app/gui/layers-menu.c:154
 msgid "/Add Alpha C_hannel"
-msgstr "/Alfa csatorna _hozzáadása"
+msgstr "/Alfa-csatorna _hozzáadása"
 
 #: app/gui/layers-menu.c:159
 msgid "/Al_pha to Selection"
-msgstr "/Al_fa csatorna kijelöléssé alakítása"
+msgstr "/Al_fa-csatorna kijelöléssé alakítása"
 
 #: app/gui/layers-menu.c:167
 msgid "/Merge _Visible Layers..."
@@ -5518,7 +5518,7 @@ msgstr "Felhasználói felület"
 #. Previews
 #: app/gui/preferences-dialog.c:1203
 msgid "Previews"
-msgstr "Bemutatóképek"
+msgstr "Előnézetek"
 
 #: app/gui/preferences-dialog.c:1206
 msgid "_Enable Layer & Channel Previews"
@@ -5620,7 +5620,7 @@ msgstr "Használandó webböngésző:"
 #. Snapping Distance
 #: app/gui/preferences-dialog.c:1396
 msgid "Guide and Grid Snapping"
-msgstr "Segédvonalhoz és rácshoz igazítás"
+msgstr "Segédvonalhoz és rácshoz illesztés"
 
 #: app/gui/preferences-dialog.c:1401
 msgid "_Snap Distance:"
@@ -6305,12 +6305,12 @@ msgstr "/Sablon _törlése"
 #: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, c-format
 msgid "Writing '%s'\n"
-msgstr "'%s' írása\n"
+msgstr "\"%s\" írása\n"
 
 #: app/gui/themes.c:284
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
-msgstr "'%s' téma hozzáadása (%s)\n"
+msgstr "\"%s\" téma hozzáadása (%s)\n"
 
 #: app/gui/tips-dialog.c:88
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
@@ -6319,7 +6319,7 @@ msgstr "<b>Úgy tűnik, hogy hiányzik a GIMP tippfájlja!</b>"
 #: app/gui/tips-dialog.c:90
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr "Kell lennie egy '%s' nevű fájlnak. Ellenőrizze a telepítését."
+msgstr "Léteznie kellene egy \"%s\" nevű fájlnak. Ellenőrizze a telepítését."
 
 #: app/gui/tips-dialog.c:96
 msgid "<b>The GIMP tips file could not be parsed!</b>"
@@ -6588,7 +6588,7 @@ msgid ""
 "information about their functionality and mod-times is cached in this file.  "
 "This file is intended to be GIMP-readable only, and should not be edited."
 msgstr ""
-"A bővítmények és a kiterjesztések a GIMP által futtatott külső programok, "
+"A bővítmények és a kiegészítők a GIMP által futtatott külső programok, "
 "amelyek a tudását gazdagítják. Ezek a programok futási időben töltődnek be, "
 "és a funkcionalitásukról és módosítási idejükről szóló információk ebben a "
 "fájlban tárolódnak. Ezt a fájlt csak a GIMP olvashatja, nem szabad "
@@ -6906,12 +6906,12 @@ msgstr "Telepítés félbehagyása..."
 #: app/gui/user-install-dialog.c:1058 app/gui/user-install-dialog.c:1091
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "'%s' mappa létrehozása..."
+msgstr "\"%s\" mappa létrehozása..."
 
 #: app/gui/user-install-dialog.c:1071 app/gui/user-install-dialog.c:1104
 #, c-format
 msgid "Cannot create folder '%s': %s"
-msgstr "Nem lehet létrehozni a(z) '%s' mappát: %s"
+msgstr "Nem lehet létrehozni \"%s\" mappát: %s"
 
 #: app/gui/user-install-dialog.c:1117
 #, c-format
@@ -6936,7 +6936,7 @@ msgid ""
 "with enough free space (several hundred MB). On a UNIX system, you may want "
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
-"A program minden olyan a képpel és a visszavonással kapcsolatos adatot, "
+"A program minden olyan, a képpel és a visszavonással kapcsolatos adatot, "
 "amely nem fér bele a képgyorstárba, kiír egy cserefájlba. Ennek a "
 "cserefájlnak helyet kell biztosítania (több száz megabájtot) egy helyi "
 "fájlrendszeren. Unix rendszereken ez lehet a rendszer átmeneti fájlokat "
@@ -7307,8 +7307,8 @@ msgid ""
 "PDB calling error:\n"
 "procedure '%s' not found"
 msgstr ""
-"PDB hívási hiba:\n"
-"'%s' eljárás nem található"
+"PDB-hívási hiba:\n"
+"\"%s\" eljárás nem található"
 
 #: app/pdb/procedural_db.c:286 app/pdb/procedural_db.c:389
 #, c-format
@@ -7358,7 +7358,7 @@ msgstr ""
 #: app/plug-in/plug-in-rc.c:155
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "'%s' kihagyása: rossz GIMP protokoll verzió."
+msgstr "\"%s\" kihagyása: helytelen GIMP protokollverzió."
 
 #: app/plug-in/plug-ins.c:131
 msgid "Resource configuration"
@@ -7374,7 +7374,7 @@ msgstr "Új bővítmények lekérdezése"
 #: app/plug-in/plug-ins.c:164
 #, c-format
 msgid "Querying plug-in: '%s'\n"
-msgstr "Bővítmény lekérdezése: '%s'\n"
+msgstr "Bővítmény lekérdezése: \"%s\"\n"
 
 #. initialize the plug-ins
 #: app/plug-in/plug-ins.c:174
@@ -7384,7 +7384,7 @@ msgstr "Bővítmények inicializálása"
 #: app/plug-in/plug-ins.c:190
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
-msgstr "Bővítmény inicializálása: '%s'\n"
+msgstr "Bővítmény inicializálása: \"%s\"\n"
 
 #: app/plug-in/plug-ins.c:348
 msgid "Starting Extensions"
@@ -7393,7 +7393,7 @@ msgstr "Kiegészítők indítása"
 #: app/plug-in/plug-ins.c:357
 #, c-format
 msgid "Starting extension: '%s'\n"
-msgstr "Kiegészítő indítása: '%s'\n"
+msgstr "Kiegészítő elindítása: \"%s\"\n"
 
 #: app/text/text-enums.c:32
 msgid "From Left to Right"
@@ -9189,7 +9189,7 @@ msgstr "Frissítés"
 #: app/widgets/gimpdatafactoryview.c:408
 #, c-format
 msgid "Are you sure you want to delete '%s' from the list and from disk?"
-msgstr "Biztos, hogy törölni akarja \"%s\" fájlt a listáról és a lemezről?"
+msgstr "Biztos, hogy törölni kívánja \"%s\"-t a listáról és a lemezről?"
 
 #: app/widgets/gimpdatafactoryview.c:412
 msgid "Delete Data Object"
@@ -9220,7 +9220,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"A(z) \"%s\" fájlnév nem konvertálható érvényes URI-re:\n"
+"A(z) \"%s\" fájlnév nem alakítható át érvényes URI-re:\n"
 "\n"
 "%s"
 
@@ -9278,7 +9278,7 @@ msgstr ""
 #: app/widgets/gimperrorconsole.c:271 app/widgets/gimpwidgets-utils.c:199
 #, c-format
 msgid "%s Message"
-msgstr "%s üzenet"
+msgstr "%s-üzenet"
 
 #: app/widgets/gimperrorconsole.c:347
 msgid "Cannot save. Nothing is selected."
@@ -9294,7 +9294,7 @@ msgid ""
 "Error writing file '%s':\n"
 "%s"
 msgstr ""
-"Hiba a(z) '%s' fájl írásakor:\n"
+"Hiba a(z) \"%s\" fájl írásakor:\n"
 "%s"
 
 #: app/widgets/gimpfiledialog.c:191
@@ -9695,7 +9695,7 @@ msgstr "Szöveges fájl megnyitása (UTF-8)"
 #: app/widgets/gimptexteditor.c:452
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Érvénytelen UTF-8 adat a(z) '%s' fájlban."
+msgstr "Érvénytelen UTF-8 adat a(z) \"%s\" fájlban."
 
 #: app/widgets/gimpthumbbox.c:189
 #, c-format
@@ -9939,11 +9939,11 @@ msgid ""
 msgstr ""
 "FIGYELMEZTETÉS:\n"
 "Túl sok üzenetablak van nyitva.\n"
-"Az üzenetek ezentúl az stderr-en jelennek meg."
+"Az üzenetek a továbbiakban az stderr-en jelennek meg."
 
 #: app/widgets/gimpwidgets-utils.c:157
 msgid "GIMP Message"
-msgstr "GIMP üzenet"
+msgstr "GIMP-üzenet"
 
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
@@ -10031,19 +10031,19 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
-"XFC figyelmeztetés: az XFC fájlformátum 0-ás verziója\n"
+"XCF figyelmeztetés: az XCF fájlformátum 0-s verziója\n"
 "nem mentette helyesen az indexelt színtérképeket.\n"
 "Szürkeárnyalatos térképre cserélve."
 
 #: app/xcf/xcf-read.c:107
 msgid "Invalid UTF-8 string in XCF file"
-msgstr "Érvénytelen UTF-8 karakterlánc az XCF fájlban"
+msgstr "Érvénytelen UTF-8 karakterlánc az XCF-fájlban"
 
 #: app/xcf/xcf-save.c:157 app/xcf/xcf-save.c:167 app/xcf/xcf-save.c:177
 #: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:211 app/xcf/xcf.c:324
 #, c-format
 msgid "Error saving XCF file: %s"
-msgstr "Hiba az XCF fájl mentése közben: %s"
+msgstr "Hiba az XCF-fájl mentése közben: %s"
 
 #: app/xcf/xcf-write.c:86
 #, c-format
@@ -10053,12 +10053,12 @@ msgstr "Hiba az XCF írása közben: %s"
 #: app/xcf/xcf-seek.c:44 app/xcf/xcf-seek.c:61 app/xcf/xcf-seek.c:72
 #, c-format
 msgid "Could not seek in XCF file: %s"
-msgstr "Nem lehet pozicionálni az XCF fájlban: %s"
+msgstr "Nem lehet pozicionálni az XCF-fájlban: %s"
 
 #: app/xcf/xcf.c:264
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "XFC hiba: nem támogatott, %d verziójú XFC fájl"
+msgstr "XCF hiba: nem támogatott, %d verziójú XCF-fájl"
 
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"

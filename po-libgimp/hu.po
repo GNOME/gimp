@@ -1,7 +1,7 @@
 # Hungarian translation of gimp-libgimp.
 # Copyright (C) 2000-2004 Free Software Foundation, Inc.
 # Andras Timar <timar@gnome.hu>, 2000.
-# Laszlo Dvornik <dvornikl@mailbox.hu>, 2004.
+# Laszlo Dvornik <dvornik@invitel.hu>, 2004.
 # Arpad Biro <biro_arpad@yahoo.com>, 2004.
 #
 msgid ""
@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-05-13 04:02+0200\n"
-"PO-Revision-Date: 2004-05-16 23:10+0200\n"
-"Last-Translator: Laszlo Dvornik <dvornikl@mailbox.hu>\n"
+"PO-Revision-Date: 2004-05-23 12:17+0200\n"
+"Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -127,11 +127,11 @@ msgstr "%s csak szürkeárnyalatos vagy indexelt képeket kezel"
 #: libgimp/gimpexport.c:346
 #, c-format
 msgid "%s needs an alpha channel"
-msgstr "%s számára szükséges egy alfa csatorna"
+msgstr "%s számára szükséges egy alfa-csatorna"
 
 #: libgimp/gimpexport.c:347
 msgid "Add Alpha Channel"
-msgstr "Alfa csatorna hozzáadása"
+msgstr "Alfa-csatorna hozzáadása"
 
 #: libgimp/gimpexport.c:382
 msgid "Confirm Save"
@@ -160,13 +160,12 @@ msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
-"A képet exportálni kellene, mielőtt %s néven mentésre kerülne a következő "
-"okból:"
+"A képet a következő okokból exportálni kellene, mielőtt %s formátumban mentésre "
+"kerülne:"
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
-msgstr ""
-"Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
+msgstr "Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
 
 #: libgimp/gimpexport.c:665
 #, c-format
@@ -263,19 +262,19 @@ msgstr "%d GB"
 #: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr "Modul betöltése: '%s'\n"
+msgstr "Modul betöltése: \"%s\"\n"
 
 #: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
 #: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
 #: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr "'%s' modul betöltési hiba: %s"
+msgstr "Hiba a(z) \"%s\" modul betöltése közben: %s"
 
 #: libgimpmodule/gimpmodule.c:283
 #, c-format
 msgid "Skipping module: '%s'\n"
-msgstr "Modul kihagyása: '%s'\n"
+msgstr "Modul kihagyása: \"%s\"\n"
 
 #: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
@@ -296,7 +295,7 @@ msgstr "Nincs betöltve"
 #: libgimpthumb/gimpthumb-utils.c:196
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "A(z) '%s' bélyegkép mappa létrehozása sikertelen."
+msgstr "A(z) \"%s\" bélyegképmappa létrehozása sikertelen."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
@@ -521,7 +520,8 @@ msgstr "Ú_j kiindulóérték"
 
 #: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
-msgstr "A véletlenszám-előállítás kiindulóértékének beállítása egy "
+msgstr ""
+"A véletlenszám-előállítás kiindulóértékének beállítása egy "
 "előállított véletlenszámmal"
 
 #: libgimpwidgets/gimpwidgets.c:1312
@@ -530,7 +530,8 @@ msgstr "_Véletlenszerűen"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Színérzékelési problémát szimuláló szűrő "
+msgstr ""
+"Színérzékelési problémát szimuláló szűrő "
 "(Brettel-Vienot-Mollon-módszer)"
 
 #: modules/cdisplay_colorblind.c:190
