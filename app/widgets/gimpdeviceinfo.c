@@ -848,7 +848,7 @@ device_status_create (void)
 
 	  deviceD->foregrounds[i] = 
 	    gimp_color_area_new (&color,
-				 GIMP_COLOR_AREA_SMALL_CHECKS,
+				 GIMP_COLOR_AREA_FLAT,
 				 GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
 	  gtk_widget_set_usize (deviceD->foregrounds[i], CELL_SIZE, CELL_SIZE);
 	  gtk_signal_connect (GTK_OBJECT (deviceD->foregrounds[i]), 
@@ -864,7 +864,7 @@ device_status_create (void)
 
 	  deviceD->backgrounds[i] = 
 	    gimp_color_area_new (&color,
-				 GIMP_COLOR_AREA_SMALL_CHECKS,
+				 GIMP_COLOR_AREA_FLAT,
 				 GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
 	  gtk_widget_set_usize (deviceD->backgrounds[i], CELL_SIZE, CELL_SIZE);
 	  gtk_signal_connect (GTK_OBJECT (deviceD->backgrounds[i]), 
@@ -998,7 +998,7 @@ device_status_update (guint32 deviceid)
   GdkDeviceInfo *gdk_info;
   DeviceInfo    *device_info;
   GimpRGB        color;
-  guchar         red, green, blue, alpha;
+  guchar         red, green, blue;
   gchar          ttbuf[64];
   gint           i;
 
@@ -1052,10 +1052,10 @@ device_status_update (guint32 deviceid)
 				 &color);
       gtk_widget_show (deviceD->foregrounds[i]);
 
-      /*  Set the tip to be the RGBA value  */
-      gimp_rgba_get_uchar (&color, &red, &green, &blue, &alpha);
-      g_snprintf (ttbuf, sizeof (ttbuf), _("Foreground: %d, %d, %d, %d"),
-		  red, green, blue, alpha);
+      /*  Set the tip to be the RGB value  */
+      gimp_rgb_get_uchar (&color, &red, &green, &blue);
+      g_snprintf (ttbuf, sizeof (ttbuf), _("Foreground: %d, %d, %d"),
+		  red, green, blue);
       gtk_widget_add_events (deviceD->foregrounds[i],
 			     GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
       gimp_help_set_help_data (deviceD->foregrounds[i], ttbuf, NULL);
@@ -1066,10 +1066,10 @@ device_status_update (guint32 deviceid)
 				 &color);
       gtk_widget_show (deviceD->backgrounds[i]);
 
-      /*  Set the tip to be the RGBA value  */
-      gimp_rgba_get_uchar (&color, &red, &green, &blue, &alpha);
-      g_snprintf (ttbuf, sizeof (ttbuf), _("Background: %d, %d, %d, %d"),
-		  red, green, blue, alpha);
+      /*  Set the tip to be the RGB value  */
+      gimp_rgb_get_uchar (&color, &red, &green, &blue);
+      g_snprintf (ttbuf, sizeof (ttbuf), _("Background: %d, %d, %d"),
+		  red, green, blue);
       gtk_widget_add_events (deviceD->backgrounds[i],
 			     GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
       gimp_help_set_help_data (deviceD->backgrounds[i], ttbuf, NULL);
