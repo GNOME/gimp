@@ -18,27 +18,14 @@
 
 #include "config.h"
 
-#include <signal.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
 #endif
-#include <sys/types.h>
-#ifdef HAVE_DIRENT_H
-#include <dirent.h>
-#endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <gtk/gtk.h>
 
-#ifdef G_OS_WIN32
-#include <process.h>		/* For _getpid() */
-#endif
- 
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpfeatures.h"
 #include "libgimp/gimpenv.h"
@@ -46,11 +33,7 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
-#include "base/base-config.h"
-#include "base/temp-buf.h"
-#include "base/tile-swap.h"
-
-#include "paint-funcs/paint-funcs.h"
+#include "base/base.h"
 
 #include "core/gimpdatafactory.h"
 
@@ -94,8 +77,7 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   app_init             (void);
-static void   toast_old_temp_files (void);
+static void   app_init (void);
 
 
 /* FIXME: gimp_busy HACK */
@@ -147,7 +129,6 @@ app_init (void)
 {
   const gchar *gtkrc;
   gchar       *filename;
-  gchar       *path;
 
   /*  parse the systemwide gtkrc  */
   gtkrc = gimp_gtkrc ();
@@ -244,16 +225,8 @@ app_init (void)
 
   RESET_BAR();
 
-  /* Add the swap file  */
-  if (base_config->swap_path == NULL)
-    base_config->swap_path = g_get_tmp_dir ();
-
-  toast_old_temp_files ();
-  path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimpswap.%lu",
-			  base_config->swap_path,
-			  (unsigned long) getpid ());
-  tile_swap_add (path, NULL, NULL);
-  g_free (path);
+  /*  initialize lowlevel stuff  */
+  base_init ();
 
   if (! no_interface)
     {
@@ -267,7 +240,6 @@ app_init (void)
     }
 
   color_transfer_init ();
-  paint_funcs_setup ();
 
   if (! no_interface)
     {
@@ -304,15 +276,12 @@ app_exit_finish (void)
   gdisplays_delete ();
   global_edit_free ();
   named_buffers_free ();
-  swapping_free ();
   context_manager_free ();
   hue_saturation_free ();
   curves_free ();
   levels_free ();
-  paint_funcs_free ();
   plug_in_kill ();
   procedural_db_free ();
-  tile_swap_exit ();
   save_unitrc ();
   gimp_parasiterc_save ();
 
@@ -320,6 +289,8 @@ app_exit_finish (void)
     {
       gui_exit ();
     }
+
+  base_exit ();
 
   /*  There used to be gtk_main_quit() here, but there's a chance 
    *  that gtk_main() was never called before we reach this point. --Sven  
@@ -374,46 +345,4 @@ gimp_unset_busy (void)
 
   /* FIXME: gimp_busy HACK */
   gimp_busy = FALSE;
-}
-
-static void
-toast_old_temp_files (void)
-{
-  DIR           *dir;
-  struct dirent *entry;
-  GString       *filename = g_string_new ("");
-
-  dir = opendir (base_config->swap_path);
-
-  if (!dir)
-    return;
-
-  while ((entry = readdir (dir)) != NULL)
-    if (!strncmp (entry->d_name, "gimpswap.", 9))
-      {
-        /* don't try to kill swap files of running processes
-         * yes, I know they might not all be gimp processes, and when you
-         * unlink, it's refcounted, but lets not confuse the user by
-         * "where did my disk space go?" cause the filename is gone
-         * if the kill succeeds, and there running process isn't gimp
-         * we'll probably get it the next time around
-         */
-
-	gint pid = atoi (entry->d_name + 9);
-#ifndef G_OS_WIN32
-	if (kill (pid, 0))
-#endif
-	  {
-	    /*  On Windows, you can't remove open files anyhow,
-	     *  so no harm trying.
-	     */
-	    g_string_sprintf (filename, "%s" G_DIR_SEPARATOR_S "%s",
-			      base_config->swap_path, entry->d_name);
-	    unlink (filename->str);
-	  }
-      }
-
-  closedir (dir);
-  
-  g_string_free (filename, TRUE);
 }

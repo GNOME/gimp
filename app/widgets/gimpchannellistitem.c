@@ -40,9 +40,11 @@
 static void   gimp_channel_list_item_class_init (GimpChannelListItemClass *klass);
 static void   gimp_channel_list_item_init       (GimpChannelListItem      *list_item);
 
+/*
 static void   gimp_channel_list_item_drop_color (GtkWidget     *widget,
 						 const GimpRGB *color,
 						 gpointer       data);
+*/
 
 
 GtkType
@@ -99,6 +101,7 @@ gimp_channel_list_item_init (GimpChannelListItem *list_item)
   */
 }
 
+/*
 static void
 gimp_channel_list_item_drop_color (GtkWidget     *widget,
 				   const GimpRGB *color,
@@ -121,3 +124,4 @@ gimp_channel_list_item_drop_color (GtkWidget     *widget,
       gdisplays_flush ();
     }
 }
+*/

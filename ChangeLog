@@ -1,5 +1,15 @@
 2001-05-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/Makefile.am
+	* app/base/base.[ch]: new files for base_init() and base_exit()
+	which initialize/shutdown the paint_funcs and the tile_cache.
+
+	* app/app_procs.c: removed the stuff here.
+
+	* app/widgets/gimpchannellistitem.c: commented out unused code.
+
+2001-05-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* plug-ins/script-fu/Makefile.am: put the regex and MMX sources to
 	EXTRA_DIST so they get distributed unconditionally.

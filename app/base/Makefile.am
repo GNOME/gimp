@@ -3,6 +3,8 @@
 noinst_LTLIBRARIES = libappbase.la
 
 libappbase_la_SOURCES = \
+	base.c			\
+	base.h			\
 	base-types.h		\
 	base-config.c		\
 	base-config.h		\
