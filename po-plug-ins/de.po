@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-01 17:36+0100\n"
-"PO-Revision-Date: 2004-11-01 18:21+0100\n"
+"PO-Revision-Date: 2004-11-02 00:10+0100\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -875,17 +875,15 @@ msgstr "Laplace..."
 
 #: plug-ins/MapObject/mapobject_apply.c:276
 msgid "Map to Sphere..."
-msgstr ""
+msgstr "Map auf Kugel..."
 
 #: plug-ins/MapObject/mapobject_apply.c:279
-#, fuzzy
 msgid "Map to Box..."
-msgstr "Max RGB..."
+msgstr "Map zu Box..."
 
 #: plug-ins/MapObject/mapobject_apply.c:282
-#, fuzzy
 msgid "Map to Cylinder..."
-msgstr "Zylinder"
+msgstr "Map zu Zylinder..."
 
 #: plug-ins/MapObject/mapobject_main.c:199
 msgid "Map _Object..."
@@ -1282,18 +1280,16 @@ msgid "_Modify red channel"
 msgstr "Roten Kanal _verändern"
 
 #: plug-ins/common/AlienMap2.c:145
-#, fuzzy
 msgid "_Modify hue channel"
-msgstr "Roten Kanal _verändern"
+msgstr "Farbtonkanal _verändern"
 
 #: plug-ins/common/AlienMap2.c:146
 msgid "Mo_dify green channel"
 msgstr "Grünen Kanal verä_ndern"
 
 #: plug-ins/common/AlienMap2.c:146
-#, fuzzy
 msgid "Mo_dify saturation channel"
-msgstr "Sättigung verä_ndern"
+msgstr "Sättigungskanal verä_ndern"
 
 #: plug-ins/common/AlienMap2.c:147
 msgid "Mod_ify blue channel"
@@ -1304,64 +1300,52 @@ msgid "Mod_ify luminosity channel"
 msgstr "Helligkeit verän_dern"
 
 #: plug-ins/common/AlienMap2.c:152
-#, fuzzy
 msgid "Red _frequency:"
-msgstr "R/H-_Frequenz:"
+msgstr "Rot_frequenz:"
 
 #: plug-ins/common/AlienMap2.c:152
-#, fuzzy
 msgid "Hue _frequency:"
-msgstr "R/H-_Frequenz:"
+msgstr "Farbton_frequenz:"
 
 #: plug-ins/common/AlienMap2.c:153
-#, fuzzy
 msgid "Green fr_equency:"
-msgstr "G/S-F_requenz:"
+msgstr "Grünfr_equenz:"
 
 #: plug-ins/common/AlienMap2.c:153
-#, fuzzy
 msgid "Saturation fr_equency:"
-msgstr "Sättigung:"
+msgstr "Sättigungsfr_equenz:"
 
 #: plug-ins/common/AlienMap2.c:154
-#, fuzzy
 msgid "Blue freq_uency:"
-msgstr "B/L-Fre_quenz:"
+msgstr "Blaufreq_uenz:"
 
 #: plug-ins/common/AlienMap2.c:154
-#, fuzzy
 msgid "Luminosity freq_uency:"
-msgstr "B/L-Fre_quenz:"
+msgstr "Luminanzfreq_uenz:"
 
 #: plug-ins/common/AlienMap2.c:156
-#, fuzzy
 msgid "Red _phaseshift:"
-msgstr "R/H-_Phasenverschiebung"
+msgstr "Rote _Phasenverschiebung:"
 
 #: plug-ins/common/AlienMap2.c:156
-#, fuzzy
 msgid "Hue _phaseshift:"
-msgstr "R/H-_Phasenverschiebung"
+msgstr "Farbton _Phasenverschiebung"
 
 #: plug-ins/common/AlienMap2.c:157
-#, fuzzy
 msgid "Green ph_aseshift:"
-msgstr "G/S-Ph_asenverschiebung:"
+msgstr "Grüne Ph_asenverschiebung:"
 
 #: plug-ins/common/AlienMap2.c:157
-#, fuzzy
 msgid "Saturation ph_aseshift:"
-msgstr "G/S-Ph_asenverschiebung:"
+msgstr "Sättigungs-Ph_asenverschiebung:"
 
 #: plug-ins/common/AlienMap2.c:158
-#, fuzzy
 msgid "Blue pha_seshift:"
-msgstr "B/L-Pha_senverschiebung:"
+msgstr "Blaue Pha_senverschiebung:"
 
 #: plug-ins/common/AlienMap2.c:158
-#, fuzzy
 msgid "Luminosity pha_seshift:"
-msgstr "Leuchtstärke _Schwellwert:"
+msgstr "Luminanz-Pha_senverschiebung:"
 
 #: plug-ins/common/AlienMap2.c:193
 msgid "Alien Map _2..."
@@ -1401,7 +1385,7 @@ msgstr "_HSL-Farbraum"
 
 #: plug-ins/common/CEL.c:112 plug-ins/common/CEL.c:130
 msgid "KISS CEL"
-msgstr ""
+msgstr "KISS CEL"
 
 #: plug-ins/common/CEL.c:191
 msgid "Load KISS Palette"
@@ -1878,7 +1862,7 @@ msgstr "_Sichtbare Ebenen anordnen..."
 
 #: plug-ins/common/align_layers.c:173
 msgid "There are not enough layers to align."
-msgstr ""
+msgstr "Es gibt nicht ausreichend Ebenen zum Ausrichten."
 
 #: plug-ins/common/align_layers.c:399
 msgid "Align Visible Layers"
@@ -2171,9 +2155,8 @@ msgid "_Bump map:"
 msgstr "_Bumpmap:"
 
 #: plug-ins/common/bumpmap.c:908
-#, fuzzy
 msgid "_Map type:"
-msgstr "Map Typ"
+msgstr "_Map-Typ"
 
 #. Compensate darkening
 #: plug-ins/common/bumpmap.c:913
@@ -3932,7 +3915,9 @@ msgid ""
 "Warning:\n"
 "Transparent color in written file might be incorrect on viewers which don't "
 "support transparency."
-msgstr ""
+msgstr "Warnung:\n"
+"Die gerade gespeicherte Datei enthält transparente Farben. Unter Umständen wird deshalb "
+"die Datei in Bildbetrachtern die keine Transparenz unterstützen nicht richtig angezeigt."
 
 #: plug-ins/common/gif.c:1152
 msgid "Delay inserted to prevent evil CPU-sucking anim."
@@ -4026,7 +4011,7 @@ msgstr "Dies ist keine GIF Datei"
 
 #: plug-ins/common/gifload.c:352
 msgid "Non-square pixels.  Image might look squashed."
-msgstr ""
+msgstr "Unquadratische Pixel. Das Bild könnte gequetscht aussehen."
 
 #: plug-ins/common/gifload.c:867
 #, c-format
@@ -4049,7 +4034,8 @@ msgstr "Frame %d (%d%s)"
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
-msgstr ""
+msgstr "GIF: Undokumentierter GIF-Kompositortyp %d wird nicht verarbeitet. Die Animation läuft eventuell nicht richtig oder "
+"kann nicht erneut gespeichert werden."
 
 #: plug-ins/common/gih.c:205 plug-ins/common/gih.c:226
 msgid "GIMP brush (animated)"
@@ -4593,7 +4579,7 @@ msgstr "Export Vorschau"
 
 #: plug-ins/common/jpeg.c:763
 msgid "EXIF data will be ignored."
-msgstr ""
+msgstr "EXIF-Daten werden ignoriert."
 
 #: plug-ins/common/jpeg.c:977
 msgid "JPEG preview"
@@ -4626,9 +4612,8 @@ msgid "Show _Preview in image window"
 msgstr "Greife einzelnes Fenster"
 
 #: plug-ins/common/jpeg.c:1793
-#, fuzzy
 msgid "_Advanced Options"
-msgstr "Erweiterte Filterpaket Einstellungen"
+msgstr "_Erweiterte Optionen"
 
 #: plug-ins/common/jpeg.c:1821
 msgid "_Smoothing:"
@@ -4666,7 +4651,7 @@ msgstr "Zwischenschritte:"
 #. DCT method
 #: plug-ins/common/jpeg.c:1955
 msgid "DCT method:"
-msgstr ""
+msgstr "DCT-Methode:"
 
 #: plug-ins/common/jpeg.c:1961
 msgid "Fast Integer"
@@ -4830,7 +4815,7 @@ msgstr "Zweite Zielfarbe"
 
 #: plug-ins/common/mapcolor.c:154
 msgid "Adjust _FG-BG"
-msgstr ""
+msgstr "_VG-HG anpassen"
 
 #: plug-ins/common/mapcolor.c:172
 msgid "Color Range _Mapping..."
@@ -4883,12 +4868,10 @@ msgid "Max RGB"
 msgstr "Max RGB"
 
 #: plug-ins/common/max_rgb.c:295
-#, fuzzy
 msgid "_Hold the maximal channels"
 msgstr "Die maximalen Kanäle _halten"
 
 #: plug-ins/common/max_rgb.c:298
-#, fuzzy
 msgid "Ho_ld the minimal channels"
 msgstr "Die minimalen Kanäle h_alten"
 
@@ -4959,7 +4942,6 @@ msgid "Save background color"
 msgstr "Hintergrundfarbe sichern"
 
 #: plug-ins/common/mng.c:1351
-#, fuzzy
 msgid "Save gamma"
 msgstr "Gamma-Faktor speichern"
 
@@ -4981,11 +4963,11 @@ msgstr "JNG"
 
 #: plug-ins/common/mng.c:1395
 msgid "PNG + delta PNG"
-msgstr ""
+msgstr "PNG + delta PNG"
 
 #: plug-ins/common/mng.c:1396
 msgid "JNG + delta PNG"
-msgstr ""
+msgstr "JNG + delta PNG"
 
 #: plug-ins/common/mng.c:1397
 msgid "All PNG"
@@ -5129,9 +5111,8 @@ msgid "Unable to add additional point.\n"
 msgstr "Konnte keinen Kontrollpunkt hinzufügen.\n"
 
 #: plug-ins/common/neon.c:135
-#, fuzzy
 msgid "_Neon..."
-msgstr "Video/RGB..."
+msgstr "_Neon..."
 
 #: plug-ins/common/neon.c:204
 msgid "Neon..."
@@ -5586,7 +5567,7 @@ msgstr "Die PNG-Datei gibt einen Versatz an der dazu führt, dass sich die Ebene
 #: plug-ins/common/png.c:1163
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
-msgstr ""
+msgstr "Fehler beim Speichern von »%s«. Bild wurde nicht gespeichert."
 
 #: plug-ins/common/png.c:1591
 msgid "Save as PNG"
@@ -5632,7 +5613,7 @@ msgstr "_Kommentar sichern"
 
 #: plug-ins/common/png.c:1686
 msgid "Save color _values from transparent pixels"
-msgstr ""
+msgstr "Farb_werte aus Transparenz speichern"
 
 #: plug-ins/common/png.c:1699
 msgid "Co_mpression level:"
@@ -5784,7 +5765,7 @@ msgstr "Bildern mit Alpha-Kanal können nicht in Postscript gespeichert werden"
 #: plug-ins/common/postscript.c:1529
 #, c-format
 msgid "Error starting ghostscript (%s)"
-msgstr ""
+msgstr "Fehler beim Starten von GhostScript (%s)"
 
 #: plug-ins/common/postscript.c:1559
 #, fuzzy, c-format
@@ -5928,14 +5909,16 @@ msgstr "Photoshop-Bild"
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
 "more than 30000 pixels wide or tall."
-msgstr ""
+msgstr "»%s« konnte nicht gespeichert werden. Das PSD-Dateiformat unterstützt keine Bilder die höher "
+"oder breiter als 30.000 Pixel sind."
 
 #: plug-ins/common/psd_save.c:1576
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
 "layers that are more than 30000 pixels wide or tall."
-msgstr ""
+msgstr "»%s« konnte nicht gespeichert werden. Das PSD-Dateiformat unterstützt keine Bilder mit Ebenen die höher "
+"oder breiter als 30.000 Pixel sind."
 
 #: plug-ins/common/psp.c:362
 msgid "Paint Shop Pro image"
@@ -6006,7 +5989,7 @@ msgstr "Wie oft der Filter angewendet werden soll"
 
 #: plug-ins/common/raw.c:166 plug-ins/common/raw.c:181
 msgid "Raw Image Data"
-msgstr ""
+msgstr "Reine Bilddaten"
 
 #: plug-ins/common/raw.c:915
 #, fuzzy
@@ -6019,7 +6002,7 @@ msgstr "Bild"
 
 #: plug-ins/common/raw.c:955
 msgid "Planar RGB"
-msgstr ""
+msgstr "Planares RGB"
 
 #: plug-ins/common/raw.c:956
 msgid "Indexed"
@@ -6035,11 +6018,11 @@ msgstr "Palette"
 
 #: plug-ins/common/raw.c:1021 plug-ins/common/raw.c:1109
 msgid "R, G, B (normal)"
-msgstr ""
+msgstr "R, G, B (normal)"
 
 #: plug-ins/common/raw.c:1022 plug-ins/common/raw.c:1111
 msgid "B, G, R, X (bmp style)"
-msgstr ""
+msgstr "B, G, R, X (BMP-Stil)"
 
 #: plug-ins/common/raw.c:1027
 msgid "_Palette Type:"
@@ -6050,14 +6033,12 @@ msgid "Off_set:"
 msgstr "Ver_satz:"
 
 #: plug-ins/common/raw.c:1050
-#, fuzzy
 msgid "Select Palette File to Load"
-msgstr "Bilddatei auswählen"
+msgstr "Palettendatei auswählen"
 
 #: plug-ins/common/raw.c:1053
-#, fuzzy
 msgid "Pal_ette File:"
-msgstr "Muster"
+msgstr "Pal_ettendatei:"
 
 #: plug-ins/common/raw.c:1081
 #, fuzzy
@@ -6076,7 +6057,7 @@ msgstr "Standard"
 
 #: plug-ins/common/raw.c:1100
 msgid "Planar (RRR,GGG,BBB)"
-msgstr ""
+msgstr "Planar (RRR,GGG,BBB)"
 
 #: plug-ins/common/raw.c:1105
 #, fuzzy
@@ -6095,7 +6076,7 @@ msgstr "Rotiere..."
 
 #: plug-ins/common/retinex.c:252
 msgid "Retinex (4/4): updated..."
-msgstr ""
+msgstr "Retinex (4/4): aktualisiert..."
 
 #: plug-ins/common/retinex.c:289
 #, fuzzy
@@ -6104,27 +6085,23 @@ msgstr "_Kantenverstärkung"
 
 #: plug-ins/common/retinex.c:310
 msgid "Level"
-msgstr ""
+msgstr "Grad"
 
 #: plug-ins/common/retinex.c:314
-#, fuzzy
 msgid "_Uniform"
-msgstr "_Einheiten bearbeiten"
+msgstr "_Gleichmäßig"
 
 #: plug-ins/common/retinex.c:316
-#, fuzzy
 msgid "_Low"
-msgstr "_Untere"
+msgstr "_Niedrig"
 
 #: plug-ins/common/retinex.c:318
-#, fuzzy
 msgid "_High"
-msgstr "_Höhe"
+msgstr "_Hoch"
 
 #: plug-ins/common/retinex.c:343
-#, fuzzy
 msgid "_Scale:"
-msgstr "Skalierung:"
+msgstr "_Skalierung:"
 
 #: plug-ins/common/retinex.c:358
 #, fuzzy
@@ -6830,7 +6807,7 @@ msgstr "Datei sichern"
 
 #: plug-ins/common/spheredesigner.c:2485
 msgid "Sphere Designer"
-msgstr ""
+msgstr "Kugel-Designer"
 
 #: plug-ins/common/spheredesigner.c:2522
 msgid "Update _Preview"
@@ -6970,7 +6947,7 @@ msgstr "U_nten Rechts"
 
 #: plug-ins/common/sunras.c:217 plug-ins/common/sunras.c:237
 msgid "SUN Rasterfile image"
-msgstr ""
+msgstr "SUN-Rasterfile-Bild"
 
 #: plug-ins/common/sunras.c:392
 #, c-format
@@ -7029,7 +7006,7 @@ msgstr "Skalierbares SVG-Bild"
 
 #: plug-ins/common/svg.c:246 plug-ins/common/svg.c:629
 msgid "Unknown reason"
-msgstr ""
+msgstr "Unbekannte Ursache"
 
 #: plug-ins/common/svg.c:250
 msgid "Rendering SVG..."
@@ -7037,7 +7014,7 @@ msgstr "Rendere SVG..."
 
 #: plug-ins/common/svg.c:260
 msgid "Rendered SVG"
-msgstr ""
+msgstr "Gerendertes SVG"
 
 #: plug-ins/common/svg.c:425
 msgid ""
@@ -7056,7 +7033,7 @@ msgstr "%d x %d"
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
 #: plug-ins/common/svg.c:636
 msgid "Render Scalable Vector Graphics"
-msgstr ""
+msgstr "Skalierbare Vektorgrafik (SVG) rendern"
 
 #: plug-ins/common/svg.c:700 plug-ins/common/wmf.c:481
 #: plug-ins/print/gimp_main_window.c:1009
@@ -7091,15 +7068,15 @@ msgstr "_Pfade importieren"
 #: plug-ins/common/svg.c:847
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
-msgstr ""
+msgstr "Pfade aus der SVG importieren, so dass diese mit dem Pfadwerkzeug von The Gimp bearbeitet werden können"
 
 #: plug-ins/common/svg.c:860
 msgid "Merge imported paths"
-msgstr ""
+msgstr "Importierte Pfade zusammenfügen"
 
 #: plug-ins/common/tga.c:233 plug-ins/common/tga.c:249
 msgid "TarGA image"
-msgstr ""
+msgstr "TarGA-Bild"
 
 #: plug-ins/common/tga.c:428
 #, c-format
@@ -7171,13 +7148,17 @@ msgid ""
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
-msgstr ""
+msgstr "Warnung:\n"
+"Das Bild welches Sie zu laden möchten besitzt 16 Bit pro Farbkanal. The Gimp kann jedoch "
+"nur mit 8 Bit pro Kanal umgehen. Deshalb wird das Bild nun für Sie umgewandelt, dadurch wird es "
+"zu einem Informationsverlust kommen."
 
 #: plug-ins/common/tiff.c:1946
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
-msgstr ""
+msgstr "Das TIFF-Dateiformat unterstützt Kommentare nur\n"
+"in 7-Bit-ASCII-Kodierung. Es wurde kein Kommentar gespeichert."
 
 #: plug-ins/common/tiff.c:2095
 msgid "Save as TIFF"
@@ -7210,7 +7191,7 @@ msgstr "_JPEG"
 
 #: plug-ins/common/tiff.c:2126
 msgid "Save _color values from transparent pixels"
-msgstr ""
+msgstr "_Farbwerte aus transparenten Pixeln speichern"
 
 #: plug-ins/common/tiff.c:2142 plug-ins/common/xbm.c:1201
 msgid "Comment:"
@@ -7285,7 +7266,7 @@ msgstr "_Anz. Segmente:"
 
 #: plug-ins/common/tiler.c:66
 msgid "_Make Seamless"
-msgstr ""
+msgstr "Nahtlos _machen"
 
 #: plug-ins/common/tiler.c:322
 msgid "Tiler..."
@@ -7781,21 +7762,24 @@ msgstr "Wellen..."
 msgid ""
 "Web browser not specified.\n"
 "Please specify a web browser using the Preferences Dialog."
-msgstr ""
+msgstr "Kein Internet-Browser angegeben.\n"
+"Bitte legen Sie in den Einstellungen einen Internet-Browser fest."
 
 #: plug-ins/common/webbrowser.c:161
 #, c-format
 msgid ""
 "Could not parse specified web browser command:\n"
 "%s"
-msgstr ""
+msgstr "Der angegebene Internet-Browser-Befehl konnte nicht analysiert werden:\n"
+"%s"
 
 #: plug-ins/common/webbrowser.c:174
 #, c-format
 msgid ""
 "Could not execute specified web browser:\n"
 "%s"
-msgstr ""
+msgstr "Der eingestellte Internet-Browser konnte nicht gestartet werden:\n"
+"%s"
 
 #: plug-ins/common/whirlpinch.c:161
 msgid "W_hirl and Pinch..."
@@ -7974,13 +7958,15 @@ msgstr "PageSetupDlg schlug fehl: %d"
 
 #: plug-ins/common/wmf.c:121
 msgid "Microsoft WMF file"
-msgstr ""
+msgstr "Microsoft-WMF-Datei"
 
 #: plug-ins/common/wmf.c:263
 msgid ""
 "WMF file does not\n"
 "specify a size!"
 msgstr ""
+"Die WMF-Datei gibt\n"
+"keine Größe an!"
 
 #: plug-ins/common/wmf.c:411
 #, fuzzy
@@ -8128,7 +8114,7 @@ msgstr "_Alpha-Schwellwert:"
 
 #: plug-ins/common/xwd.c:277 plug-ins/common/xwd.c:297
 msgid "X window dump"
-msgstr ""
+msgstr "X-Window-Speicher"
 
 #: plug-ins/common/xwd.c:430
 #, c-format
@@ -8177,7 +8163,7 @@ msgstr "Nichts zum Zuschneiden."
 #: plug-ins/dbbrowser/gimpprocbrowser.c:123
 #: plug-ins/dbbrowser/gimpprocbrowser.c:137
 msgid "Procedure Browser"
-msgstr ""
+msgstr "Prozedur-Browser"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:127
 #: plug-ins/dbbrowser/gimpprocbrowser.c:141
@@ -8326,7 +8312,7 @@ msgstr "G3-Fax-Bild"
 
 #: plug-ins/fits/fits.c:159 plug-ins/fits/fits.c:178
 msgid "Flexible Image Transport System"
-msgstr ""
+msgstr "Flexible Image Transport System"
 
 #: plug-ins/fits/fits.c:346
 msgid "Error during open of FITS file"
@@ -8820,7 +8806,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:744
 #, c-format
 msgid "Error trying to open temp file '%s'for parasite loading.\n"
-msgstr ""
+msgstr "Fehler beim Versuch die temporäre Datei »%s« für parasitäres Laden zu öffnen.\n"
 
 #: plug-ins/gflare/gflare.c:564
 msgid "Addition"
@@ -9768,11 +9754,11 @@ msgstr ""
 
 #: plug-ins/help/domain.c:175
 msgid "The GIMP help files are not installed."
-msgstr ""
+msgstr "Die The-Gimp-Hilfedateien sind nicht installiert."
 
 #: plug-ins/help/domain.c:177
 msgid "There is a problem with the GIMP help files."
-msgstr ""
+msgstr "Es gibt ein Problem mit den The-Gimp-Hilfedateien."
 
 #: plug-ins/help/domain.c:182
 msgid "Please check your installation."
@@ -9781,7 +9767,7 @@ msgstr "Bitte überprüfen Sie Ihre Installation."
 #: plug-ins/help/domain.c:188
 #, c-format
 msgid "Help ID '%s' unknown"
-msgstr ""
+msgstr "Hilfe-ID »%s« ist unbekannt"
 
 #: plug-ins/help/domain.c:445
 #, c-format
@@ -9979,7 +9965,7 @@ msgstr "Öffnen fehlgeschlagen"
 #: plug-ins/ifscompose/ifscompose.c:2649
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Compose file."
-msgstr ""
+msgstr "Die Datei »%s« scheint keine IFS-Compose-Datei zu sein."
 
 #: plug-ins/ifscompose/ifscompose.c:2692
 msgid "Save as IFS file"
@@ -10104,17 +10090,16 @@ msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
 msgstr "Resultierende Hilfslinien-Reichweite: %d,%d bis %d,%d (%d Flächen)"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:142
-#, fuzzy
 msgid ""
 "Guides are pre-defined rectangles covering the image. You define them by "
 "their width, height, and spacing from each other. This allows you to rapidly "
 "create the most common image map type - image collection of \"thumbnails\", "
 "suitable for navigation bars."
 msgstr ""
-"Hilfslinien sind vordefinierte Rechtecke, die das Bild bedecken.  Sie\n"
+"Hilfslinien sind vordefinierte Rechtecke, die das Bild bedecken. Sie\n"
 "definieren sie über deren Breite, Höhe und Abstand voneinander.\n"
 "Dadurch können Sie schnell den typischsten Image-Map-Typ erstellen:\n"
-"Eine Bildansammlung von \"thumbnails\", praktisch für Navigationsleisten."
+"Eine Bildansammlung von Vorschaubildern, praktisch für Navigationsleisten."
 
 #: plug-ins/imagemap/imap_cmd_guides.c:172
 msgid "_Left Start at:"
@@ -10424,9 +10409,8 @@ msgid "_File"
 msgstr "_Datei"
 
 #: plug-ins/imagemap/imap_menu.c:187
-#, fuzzy
 msgid "Open recent"
-msgstr "Prozent"
+msgstr "Zuletzt geöffnet"
 
 #: plug-ins/imagemap/imap_menu.c:209
 #, c-format
@@ -10447,9 +10431,8 @@ msgid "Deselect _all"
 msgstr "_Alles abwählen"
 
 #: plug-ins/imagemap/imap_menu.c:279
-#, fuzzy
 msgid "Edit area info..."
-msgstr "Bereichs-Information bearbeiten..."
+msgstr "Bereichsinformation bearbeiten..."
 
 #: plug-ins/imagemap/imap_menu.c:294
 msgid "_View"
@@ -11648,11 +11631,11 @@ msgstr ""
 
 #: plug-ins/twain/twain.c:313
 msgid "TWAIN (Dump)..."
-msgstr ""
+msgstr "TWAIN (Zwischenspeichern)..."
 
 #: plug-ins/twain/twain.c:332
 msgid "TWAIN (Read)..."
-msgstr ""
+msgstr "TWAIN (Lesen)..."
 
 #: plug-ins/twain/twain.c:352
 msgid "_TWAIN..."
@@ -11665,15 +11648,15 @@ msgstr "Übertrage TWAIN Daten..."
 
 #: plug-ins/winicon/icodialog.c:124
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
-msgstr ""
+msgstr "1 bpp, 1-Bit Alpha, 2-Slot Palette"
 
 #: plug-ins/winicon/icodialog.c:125
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
-msgstr ""
+msgstr "4 bpp, 1-Bit Alpha, 16-Slot Palette"
 
 #: plug-ins/winicon/icodialog.c:126
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
-msgstr ""
+msgstr "8 bpp, 1-Bit Alpha, 256-Slot Palette"
 
 #: plug-ins/winicon/icodialog.c:127
 msgid "32 bpp, 8-bit alpha, no palette"
