@@ -61,7 +61,6 @@ oldtips = \
 EXTRA_DIST = \
 	POTFILES.in		\
 	$(tips_in_files)	\
-	$(tipsdata_DATA)	\
 	$(oldtips)		\
 	gimp-tips.dtd		\
 	ChangeLog		\
