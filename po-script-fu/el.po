@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-10 15:19+0200\n"
+"POT-Creation-Date: 2003-08-27 12:09+0200\n"
 "PO-Revision-Date: 2001-12-27 17:09+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -58,96 +58,96 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1113
-#: plug-ins/script-fu/script-fu-scripts.c:1115
+#: plug-ins/script-fu/script-fu-scripts.c:1114
+#: plug-ins/script-fu/script-fu-scripts.c:1116
 #, fuzzy
 msgid "/Script-Fu/"
 msgstr "Πρόγραμμα εντολών:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1123
+#: plug-ins/script-fu/script-fu-scripts.c:1128
 #, fuzzy, c-format
 msgid "Script-Fu: %s"
 msgstr "Πρόγραμμα εντολών:"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1157
+#: plug-ins/script-fu/script-fu-scripts.c:1162
 msgid "About"
 msgstr "Περί"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1167
+#: plug-ins/script-fu/script-fu-scripts.c:1172
 #, fuzzy
 msgid "Script Arguments"
 msgstr "Ορίσματα"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1240
+#: plug-ins/script-fu/script-fu-scripts.c:1245
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Επιλογή χρώματος"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1320
+#: plug-ins/script-fu/script-fu-scripts.c:1325
 #, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1325
+#: plug-ins/script-fu/script-fu-scripts.c:1330
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1342
+#: plug-ins/script-fu/script-fu-scripts.c:1347
 #, fuzzy
 msgid "Script-Fu Font Selection"
 msgstr "Επιλογή Γραμματοσειράς"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1350
+#: plug-ins/script-fu/script-fu-scripts.c:1355
 #, fuzzy
 msgid "Script-fu Pattern Selection"
 msgstr "Επιλογή Προφύλαξης Οθόνης"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1357
+#: plug-ins/script-fu/script-fu-scripts.c:1362
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Κλάδεμα της τρέχουσας επιλογής"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1365
+#: plug-ins/script-fu/script-fu-scripts.c:1370
 #, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1859
+#: plug-ins/script-fu/script-fu-scripts.c:1864
 #: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Συγγραφέας:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1865
+#: plug-ins/script-fu/script-fu-scripts.c:1870
 #: plug-ins/dbbrowser/dbbrowser_utils.c:504
 #, fuzzy
 msgid "Copyright:"
 msgstr "Πνευματικά Δικαιώματα"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1871
+#: plug-ins/script-fu/script-fu-scripts.c:1876
 #: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Ημ/νία:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1879
+#: plug-ins/script-fu/script-fu-scripts.c:1884
 #, fuzzy
 msgid "Image Types:"
 msgstr "Τύπος Στοιχείου:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2001
+#: plug-ins/script-fu/script-fu-scripts.c:2006
 #, fuzzy, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -174,11 +174,12 @@ msgid "Server Logfile:"
 msgstr "Αποθήκευση Αρχείου Καταγραφών"
 
 #: plug-ins/script-fu/script-fu.c:120
-msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr ""
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/_Console..."
+msgstr "Κονσόλα Script-Fu"
 
 #: plug-ins/script-fu/script-fu.c:145
-msgid "<Toolbox>/Xtns/Script-Fu/Server..."
+msgid "<Toolbox>/Xtns/Script-Fu/_Server..."
 msgstr ""
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
@@ -187,7 +188,7 @@ msgid "Re-read all available scripts"
 msgstr "εμφάνιση λίστας με διαθέσιμους αγωγούς"
 
 #: plug-ins/script-fu/script-fu.c:274
-msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
+msgid "<Toolbox>/Xtns/Script-Fu/_Refresh"
 msgstr ""
 
 #
@@ -259,12 +260,14 @@ msgstr ""
 msgid "No matches"
 msgstr ""
 
+#
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
@@ -439,7 +442,7 @@ msgid "Text"
 msgstr "Κείμενο"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
@@ -517,9 +520,11 @@ msgstr "Δείγμα"
 msgid "Thickness"
 msgstr "Μολυβιές"
 
+#
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:1
-msgid "<Image>/Script-Fu/Decor/Add Bevel..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Decor/Add B_evel..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
@@ -536,9 +541,11 @@ msgstr ""
 msgid "Work on Copy"
 msgstr "Αφύπνηση σε %s"
 
+#
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
-msgid "<Image>/Script-Fu/Decor/Add Border..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Decor/Add _Border..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:2
 #, fuzzy
@@ -561,7 +568,7 @@ msgid "Delta Value on Color"
 msgstr "Διαγραφή Χρώματος"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
 msgstr ""
 
 #
@@ -624,7 +631,7 @@ msgid "Up"
 msgstr "Επάνω"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
@@ -638,7 +645,7 @@ msgid "Bar Length"
 msgstr "Διάρκεια"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
@@ -649,7 +656,7 @@ msgid "Radius"
 msgstr "Ράδιο"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
@@ -679,12 +686,14 @@ msgstr "Σκίαση"
 msgid "Text Color"
 msgstr "Χρώμα Κειμένου"
 
+#
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
@@ -692,12 +701,14 @@ msgstr ""
 msgid "Glow Size (pixels * 4)"
 msgstr "Μέγεθος (εικονοστοιχεία)"
 
+#
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Neon..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
@@ -725,7 +736,7 @@ msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
@@ -746,24 +757,28 @@ msgstr "Όνομα αρχείου"
 msgid "Transparent Background"
 msgstr "Διαφανές Παρασκήνιο"
 
+#
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/_Basic I..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
 msgstr ""
 
+#
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/B_asic II..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple _Beveled Button..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
@@ -792,11 +807,11 @@ msgid "Upper-Left color"
 msgstr "Επιλογή χρώματος"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
@@ -805,15 +820,15 @@ msgid "Diameter"
 msgstr "Ελάττωση Χρωμάτων"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
@@ -831,9 +846,11 @@ msgstr "Ύψος"
 msgid "Width"
 msgstr "Πλάτος"
 
+#
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:1
-msgid "<Image>/Script-Fu/Animators/Blend..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Animators/_Blend..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 #, fuzzy
@@ -851,12 +868,14 @@ msgstr "Βρόχος"
 msgid "Max. Blur Radius"
 msgstr "Μπλούγκρας"
 
+#
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:4
@@ -907,12 +926,14 @@ msgstr "Βαθμίδα"
 msgid "Offset (pixels)"
 msgstr "Μέγεθος (εικονοστοιχεία)"
 
+#
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Bo_vination..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
@@ -961,7 +982,7 @@ msgid "Speed (pixels/frame)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm.h:2
@@ -994,9 +1015,11 @@ msgstr "Μέγεθος Εικόνας:"
 msgid "Smooth"
 msgstr "Ομαλό"
 
+#
 #: plug-ins/script-fu/scripts/carve-it.scm.h:1
-msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Stencil Ops/C_arve-It..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
 #, fuzzy
@@ -1029,12 +1052,14 @@ msgstr "Νέο Κείμενο"
 msgid "Padding Around Text"
 msgstr "Απλό Κείμενο"
 
+#
 #: plug-ins/script-fu/scripts/chalk.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/_Chalk..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:4
@@ -1042,12 +1067,14 @@ msgstr ""
 msgid "Chalk Color"
 msgstr "Χρώμα ρολογιού"
 
+#
 #: plug-ins/script-fu/scripts/chip-away.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
@@ -1079,9 +1106,11 @@ msgstr "Αντιστροφή"
 msgid "Keep Background"
 msgstr "Αρχικοποίηση Παρασκηνίου"
 
+#
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
-msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Stencil Ops/C_hrome-It..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
@@ -1128,12 +1157,14 @@ msgstr "Περιβάλλον"
 msgid "Highlight Balance"
 msgstr "Επιλεγμένο"
 
+#
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/C_hrome..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
@@ -1141,9 +1172,11 @@ msgstr ""
 msgid "Offsets (pixels * 2)"
 msgstr "Μέγεθος (εικονοστοιχεία)"
 
+#
 #: plug-ins/script-fu/scripts/circuit.scm.h:1
-msgid "<Image>/Script-Fu/Render/Circuit..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Render/_Circuit..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid "Circuit Seed"
@@ -1174,9 +1207,11 @@ msgstr "Αρχικό _Μέγεθος"
 msgid "Separate Layer"
 msgstr "Καθορισμός Στρώματος"
 
+#
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
-msgid "<Image>/Script-Fu/Alchemy/Clothify..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alchemy/_Clothify..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:2
 #: plug-ins/script-fu/scripts/swirltile.scm.h:2
@@ -1206,9 +1241,11 @@ msgstr "Τμήμ."
 msgid "Elevation"
 msgstr "τοποθεσία"
 
+#
 #: plug-ins/script-fu/scripts/coffee.scm.h:1
-msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Decor/_Coffee Stain..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid ""
@@ -1221,12 +1258,14 @@ msgstr ""
 msgid "Stains"
 msgstr "Ισπανία"
 
+#
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Comic Boo_k..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:8
@@ -1240,12 +1279,14 @@ msgstr "Περίγραμμα"
 msgid "Outline Size"
 msgstr "Περίγραμμα"
 
+#
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
@@ -1255,7 +1296,7 @@ msgid "Effect Size (pixels)"
 msgstr "Μέγεθος (εικονοστοιχεία)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "<Image>/Edit/Copy Visible"
+msgid "<Image>/Edit/Copy _Visible"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
@@ -1264,7 +1305,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 #, fuzzy
-msgid "<Image>/Script-Fu/Selection/Distress Selection..."
+msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
 msgstr "Κλάδεμα Επιλεγμένου"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
@@ -1292,9 +1333,11 @@ msgstr "SC/XSpread"
 msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr ""
 
+#
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Shadow/_Drop-Shadow..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1340,8 +1383,9 @@ msgid "Opacity"
 msgstr "Διαφάνεια:"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:1
-msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alchemy/_Erase every other Row..."
+msgstr "Κλάδεμα Επιλεγμένου"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:2
 msgid "Columns"
@@ -1386,9 +1430,11 @@ msgstr "Σειρές"
 msgid "Rows/Cols"
 msgstr "Γραμματοσειρές/Χρώματα"
 
+#
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
-msgid "<Image>/Script-Fu/Selection/Fade Outline..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
 msgid "Apply Generated Layermask"
@@ -1422,7 +1468,7 @@ msgid "Use Growing Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
@@ -1463,7 +1509,7 @@ msgid "Scale Y"
 msgstr "Κλιμάκωση"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
@@ -1474,17 +1520,21 @@ msgstr "Πλαίσιο"
 msgid "Fonts"
 msgstr "Γραμματοσειρές"
 
+#
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
 msgstr ""
 
+#
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
-msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 #, fuzzy
@@ -1502,11 +1552,11 @@ msgid "Shadow Weight (%)"
 msgstr "Εμφάνιση Λεπτομερειών"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -1556,30 +1606,32 @@ msgstr "Εμφάνιση Προχείρου"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
+"Label..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
-"Label..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
 msgstr ""
 
+#
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
@@ -1640,12 +1692,14 @@ msgstr "Εμφάνιση γνωμικών αντί υποδείξεων"
 msgid "Use Pattern for Text instead of Gradient"
 msgstr "Σελίδες για τα /query αντί ξεχωριστών παραθύρων"
 
+#
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
@@ -1653,12 +1707,14 @@ msgstr ""
 msgid "Effect Size (pixels * 3)"
 msgstr "Μέγεθος (εικονοστοιχεία)"
 
+#
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
@@ -1673,13 +1729,13 @@ msgid "Border Size (pixels)"
 msgstr "Μέγεθος (εικονοστοιχεία)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
 msgstr ""
 
 #
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
 #, fuzzy
-msgid "<Image>/Script-Fu/Render/Grid..."
+msgid "<Image>/Script-Fu/Render/_Grid..."
 msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
@@ -1690,9 +1746,11 @@ msgstr ""
 msgid "Y Divisions"
 msgstr ""
 
+#
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
@@ -1748,9 +1806,11 @@ msgstr "Νέο Χρώμα"
 msgid "Frame Size"
 msgstr "Μέγεθος Αρχείου:"
 
+#
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
-msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Utils/Show Image _Structure..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
 msgid "Apply Layer Mask (or discard)"
@@ -1802,7 +1862,7 @@ msgid "Space Between Layers"
 msgstr "Διάχυση μεταξύ γραμμών"
 
 #: plug-ins/script-fu/scripts/land.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Land..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/land.scm.h:6
@@ -1815,9 +1875,11 @@ msgstr "Κα_νονικό Ύψος"
 msgid "Sea Depth"
 msgstr "πραγματική διαδρομή"
 
+#
 #: plug-ins/script-fu/scripts/lava.scm.h:1
-msgid "<Image>/Script-Fu/Render/Lava..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Render/_Lava..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:8
@@ -1834,9 +1896,11 @@ msgstr "Σπόρος"
 msgid "Use Current Gradient"
 msgstr "Χρήση τρέχοντος"
 
+#
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
-msgid "<Image>/Script-Fu/Render/Line Nova..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Render/Line _Nova..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
 #, fuzzy
@@ -1859,19 +1923,19 @@ msgid "Sharpness (degrees)"
 msgstr "ανοιχτό πράσινο"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:3
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
 msgstr ""
 
 #
@@ -1889,12 +1953,14 @@ msgstr "Μακρύτερα"
 msgid "Spacing"
 msgstr "Διαστήματα"
 
+#
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/N_eon..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
 msgstr ""
 
 #
@@ -1923,9 +1989,11 @@ msgstr "Μέγεθος (εικονοστοιχεία)"
 msgid "Density (%)"
 msgstr "Πυκνότητα"
 
+#
 #: plug-ins/script-fu/scripts/old-photo.scm.h:1
-msgid "<Image>/Script-Fu/Decor/Old Photo..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Decor/_Old Photo..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:3
 #, fuzzy
@@ -1942,9 +2010,11 @@ msgstr "Μαγιότ"
 msgid "Sepia"
 msgstr "Σειριακό"
 
+#
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
-msgid "<Image>/Script-Fu/Shadow/Perspective..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Shadow/_Perspective..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 #, fuzzy
@@ -1964,9 +2034,11 @@ msgstr ""
 msgid "Relative Length of Shadow"
 msgstr ""
 
+#
 #: plug-ins/script-fu/scripts/predator.scm.h:1
-msgid "<Image>/Script-Fu/Alchemy/Predator..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alchemy/_Predator..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:2
 #, fuzzy
@@ -1985,7 +2057,7 @@ msgid "Pixelize"
 msgstr "Μέγεθος σε Εικ/χεία:"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:5
@@ -2039,7 +2111,7 @@ msgid "Upper Color (Active)"
 msgstr "Χαμήλωμα σημειώματος"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
@@ -2056,9 +2128,11 @@ msgstr "Διάλογος λεπτομερειών"
 msgid "Tile"
 msgstr "Παράθεση"
 
+#
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
-msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Animators/_Rippling..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
@@ -2088,9 +2162,11 @@ msgstr "Αναζήτηση: "
 msgid "Wrap"
 msgstr ""
 
+#
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
-msgid "<Image>/Script-Fu/Decor/Round Corners..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Decor/_Round Corners..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #
 #: plug-ins/script-fu/scripts/round-corners.scm.h:2
@@ -2108,9 +2184,11 @@ msgstr "Σκιά:"
 msgid "Edge Radius"
 msgstr "Ράδιο"
 
+#
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
-msgid "<Image>/Script-Fu/Selection/To Brush..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Selection/To _Brush..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Brush Name"
@@ -2119,13 +2197,13 @@ msgstr ""
 #
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 #, fuzzy
-msgid "<Image>/Script-Fu/Selection/To Image"
+msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "Επιλογή Γραμματοσειράς"
 
 #
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 #, fuzzy
-msgid "<Image>/Script-Fu/Selection/Round..."
+msgid "<Image>/Script-Fu/Selection/_Round..."
 msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
@@ -2133,9 +2211,11 @@ msgstr "Επιλογή Γραμματοσειράς"
 msgid "Relative Radius"
 msgstr "Συγγενείς"
 
+#
 #: plug-ins/script-fu/scripts/slide.scm.h:1
-msgid "<Image>/Script-Fu/Decor/Slide..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Decor/_Slide..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:3
 #, fuzzy
@@ -2155,7 +2235,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
+msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
@@ -2174,9 +2254,11 @@ msgstr "Γελοίο (128 εικονοστοιχεία)"
 msgid "Sphere Color"
 msgstr "Επιλέξτε Χρώμα"
 
+#
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
-msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
@@ -2318,12 +2400,14 @@ msgstr "Παράθεση"
 msgid "Type"
 msgstr "Μπλε Τύπος"
 
+#
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
@@ -2336,12 +2420,14 @@ msgstr "Ειδικό Χρώμα:"
 msgid "Effect Size (pixels * 30)"
 msgstr "Μέγεθος (εικονοστοιχεία)"
 
+#
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
@@ -2350,7 +2436,7 @@ msgid "Effect Size (pixels * 4)"
 msgstr "Μέγεθος (εικονοστοιχεία)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
@@ -2359,7 +2445,7 @@ msgid "Whirl Amount"
 msgstr "Αριθμός Λέξεων"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
@@ -2377,12 +2463,14 @@ msgstr "Μέγεθος Σ&ελίδας:"
 msgid "Whirl Angle"
 msgstr "Γωνία στρέβλωσης:"
 
+#
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
@@ -2419,12 +2507,14 @@ msgstr "Εξομάλυνση"
 msgid "Fill Angle"
 msgstr "Γεμισμένο Τρίγωνο"
 
+#
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/_Textured..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
@@ -2465,7 +2555,7 @@ msgstr "Σχέδιο"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
 #, fuzzy
-msgid "<Image>/Filters/Blur/Tileable Blur..."
+msgid "<Image>/Filters/Blur/_Tileable Blur..."
 msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:2
@@ -2498,7 +2588,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
@@ -2506,9 +2596,11 @@ msgstr ""
 msgid "Foreground Color"
 msgstr "Χρώμα Προσκηνίου"
 
+#
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
-msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
@@ -2521,9 +2613,11 @@ msgstr "Διαφάνεια:"
 msgid "Mask Size"
 msgstr "Μεγέθος Τετραγωνιδίων"
 
+#
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
-msgid "<Image>/Script-Fu/Animators/Waves..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Animators/_Waves..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:2
 msgid "Amplitude"
@@ -2539,9 +2633,11 @@ msgstr "Αντιστροφή Επιλογής"
 msgid "Wavelength"
 msgstr "ενδέκατο"
 
+#
 #: plug-ins/script-fu/scripts/weave.scm.h:1
-msgid "<Image>/Script-Fu/Alchemy/Weave..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Alchemy/_Weave..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
 #, fuzzy
@@ -2578,9 +2674,11 @@ msgstr "Τοπική θύελλα"
 msgid "Thread Length"
 msgstr "Διάρκεια"
 
+#
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
-msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
 #, fuzzy
@@ -2706,11 +2804,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Erase before Draw"
 #~ msgstr "ήταν πριν"
-
-#
-#, fuzzy
-#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-#~ msgstr "Επιλογή Γραμματοσειράς"
 
 #, fuzzy
 #~ msgid "Fill with BG Color"

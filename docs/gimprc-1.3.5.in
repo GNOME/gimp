@@ -332,6 +332,12 @@ they require overhead that you may want to do without.  Possible values are
 yes and no.
 
 .TP
+(show-brush-outline yes)
+
+When enabled, all paint tools will show a preview of the current brush's
+outline.  Possible values are yes and no.
+
+.TP
 (image-title-format "%f-%p.%i (%t)")
 
 Sets the text to appear in image window titles.  This is a format string;

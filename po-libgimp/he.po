@@ -8,7 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
-"POT-Creation-Date: 2003-07-27 12:03+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-08-27 00:16+0200\n"
 "PO-Revision-Date: 2003-08-13 22:08+0300\n"
 "Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -21,15 +22,12 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "בחירת מברשת"
 
-#: libgimp/gimpexport.c:183
-#: libgimp/gimpexport.c:219
+#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
 msgid "%s can't handle layers"
 msgstr "%s אינו יכול לטפל בשכבות "
 
-#: libgimp/gimpexport.c:184
-#: libgimp/gimpexport.c:193
-#: libgimp/gimpexport.c:202
+#: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
 msgstr "איחוד שכבות נראות"
 
@@ -38,20 +36,16 @@ msgstr "איחוד שכבות נראות"
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "%s לא יכול לטפל בהסטות, גודל או אטימות שכבה"
 
-#: libgimp/gimpexport.c:201
-#: libgimp/gimpexport.c:210
+#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "%s יכול לטפל בשכבות רק כשלד הנפשה"
 
-#: libgimp/gimpexport.c:202
-#: libgimp/gimpexport.c:211
+#: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
 msgstr "שמירה כהנפשה"
 
-#: libgimp/gimpexport.c:211
-#: libgimp/gimpexport.c:220
-#: libgimp/gimpexport.c:229
+#: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
 msgid "Flatten Image"
 msgstr "השטחת תמונה"
 
@@ -65,9 +59,7 @@ msgstr "%s לא יכול לטפל ברקע שקוף"
 msgid "%s can only handle RGB images"
 msgstr "%s יכול לטפל רק בתמונות RGB"
 
-#: libgimp/gimpexport.c:238
-#: libgimp/gimpexport.c:266
-#: libgimp/gimpexport.c:275
+#: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
 msgstr "הסבה ל RGB"
 
@@ -76,9 +68,7 @@ msgstr "הסבה ל RGB"
 msgid "%s can only handle grayscale images"
 msgstr "%s יכול לטפל רק בתמונות בגווני אפור"
 
-#: libgimp/gimpexport.c:247
-#: libgimp/gimpexport.c:266
-#: libgimp/gimpexport.c:287
+#: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
 msgstr "הסבה לגווני אפור"
 
@@ -87,9 +77,7 @@ msgstr "הסבה לגווני אפור"
 msgid "%s can only handle indexed images"
 msgstr "%s יכול לטפל רק בתמונות ממופתחות"
 
-#: libgimp/gimpexport.c:256
-#: libgimp/gimpexport.c:275
-#: libgimp/gimpexport.c:285
+#: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -152,7 +140,9 @@ msgid "Export"
 msgstr "ייצוא"
 
 #: libgimp/gimpexport.c:468
-msgid "Your image should be exported before it can be saved for the following reasons:"
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
 msgstr "יש לייצא את התמונה לפני שמירתה עקב הסיבות הבאות:"
 
 #. the footline
@@ -182,7 +172,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "בחירת גופן"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:103
 msgid "Gradient Selection"
 msgstr "בחירת מדרג צבעים"
 
@@ -250,10 +240,8 @@ msgstr "%.1f מ\"ב"
 msgid "Loading module: '%s'\n"
 msgstr "טוען את המודול: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:190
-#: libgimpmodule/gimpmodule.c:207
-#: libgimpmodule/gimpmodule.c:314
-#: libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
 #: libgimpmodule/gimpmodule.c:434
 #, c-format
 msgid ""
@@ -304,33 +292,27 @@ msgstr "/לבן"
 msgid "Scales"
 msgstr "קני מידה"
 
-#: libgimpwidgets/gimpcolorscales.c:164
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:165
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:166
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:167
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:168
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:169
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
 msgid "_B"
 msgstr "_B"
 
@@ -338,38 +320,31 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:174
-#: libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
 msgstr "גוון"
 
-#: libgimpwidgets/gimpcolorscales.c:175
-#: libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Saturation"
 msgstr "רוויה"
 
-#: libgimpwidgets/gimpcolorscales.c:176
-#: libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Value"
 msgstr "ערך"
 
-#: libgimpwidgets/gimpcolorscales.c:177
-#: libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
 msgstr "אדום"
 
-#: libgimpwidgets/gimpcolorscales.c:178
-#: libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
 msgstr "ירוק"
 
-#: libgimpwidgets/gimpcolorscales.c:179
-#: libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
 msgstr "כחול"
 
-#: libgimpwidgets/gimpcolorscales.c:180
-#: libgimpwidgets/gimpcolorselect.c:364
+#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
 msgstr "אלפא"
 
@@ -402,8 +377,11 @@ msgid "GigaBytes"
 msgstr "גיגה בתים"
 
 #: libgimpwidgets/gimppickbutton.c:141
-msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
-msgstr "יש ללחוץ על הטפטפת, ואז ללחוץ על צבע במקום כלשהו על המסך כדי לבחור בצבע זה."
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"יש ללחוץ על הטפטפת, ואז ללחוץ על צבע במקום כלשהו על המסך כדי לבחור בצבע זה."
 
 #: libgimpwidgets/gimpstock.c:101
 msgid "Anchor"
@@ -449,24 +427,23 @@ msgstr "ריווח _שורות"
 msgid "_Resize"
 msgstr "שינוי _גודל"
 
-#: libgimpwidgets/gimpstock.c:173
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
 msgid "_Scale"
 msgstr "שינוי _קנה מידה"
 
-#: libgimpwidgets/gimpstock.c:234
+#: libgimpwidgets/gimpstock.c:235
 msgid "Crop"
 msgstr "גזיזה"
 
-#: libgimpwidgets/gimpstock.c:252
+#: libgimpwidgets/gimpstock.c:253
 msgid "_Transform"
 msgstr "_עיבוד"
 
-#: libgimpwidgets/gimpstock.c:255
+#: libgimpwidgets/gimpstock.c:256
 msgid "_Rotate"
 msgstr "_סיבוב"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:258
 msgid "_Shear"
 msgstr "_חתיכה"
 
@@ -487,8 +464,12 @@ msgid "Factor"
 msgstr "יחס"
 
 #: libgimpwidgets/gimpwidgets.c:943
-msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
-msgstr "השתמש בערך זה כזרע למחולל מספר אקראי - זה מאפשר לך לחזור על פעולה \"אקראית\" נתונה"
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"השתמש בערך זה כזרע למחולל מספר אקראי - זה מאפשר לך לחזור על פעולה \"אקראית\" "
+"נתונה"
 
 #: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
@@ -609,4 +590,3 @@ msgstr "צבע מים"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "לחץ"
-

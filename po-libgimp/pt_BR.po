@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-10 15:17+0200\n"
+"POT-Creation-Date: 2003-08-27 00:16+0200\n"
 "PO-Revision-Date: 2003-02-28 03:15-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -175,7 +175,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Seleção da Unidade"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:103
 #, fuzzy
 msgid "Gradient Selection"
 msgstr "Seleção da Unidade"
@@ -429,23 +429,23 @@ msgstr "Espaçamento das L_inhas"
 msgid "_Resize"
 msgstr "_Redimensionar"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
 msgid "_Scale"
 msgstr "E_scalar"
 
-#: libgimpwidgets/gimpstock.c:234
+#: libgimpwidgets/gimpstock.c:235
 msgid "Crop"
 msgstr "Aparar"
 
-#: libgimpwidgets/gimpstock.c:252
+#: libgimpwidgets/gimpstock.c:253
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: libgimpwidgets/gimpstock.c:255
+#: libgimpwidgets/gimpstock.c:256
 msgid "_Rotate"
 msgstr "_Rotacionar"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:258
 msgid "_Shear"
 msgstr "_Inclinar"
 

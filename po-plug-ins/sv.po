@@ -9,14 +9,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-08-21 14:42+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-08-27 12:08+0200\n"
 "PO-Revision-Date: 2003-08-21 14:45+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:297
 #: plug-ins/FractalExplorer/Dialogs.c:1405 plug-ins/gfig/gfig.c:3216
@@ -28,14 +28,14 @@ msgstr "Om"
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:320 plug-ins/Lighting/lighting_ui.c:1150
 #: plug-ins/MapObject/mapobject_ui.c:1402 plug-ins/common/CML_explorer.c:1191
-#: plug-ins/common/curve_bend.c:1383 plug-ins/common/destripe.c:578
+#: plug-ins/common/curve_bend.c:1219 plug-ins/common/destripe.c:578
 #: plug-ins/common/emboss.c:722 plug-ins/common/fractaltrace.c:776
 #: plug-ins/common/grid.c:671 plug-ins/common/iwarp.c:1229
 #: plug-ins/common/mapcolor.c:576 plug-ins/common/nlfilt.c:466
 #: plug-ins/common/polar.c:704 plug-ins/common/sharpen.c:531
 #: plug-ins/common/sinus.c:2047 plug-ins/common/spheredesigner.c:2486
 #: plug-ins/common/tileit.c:403 plug-ins/common/waves.c:454
-#: plug-ins/common/whirlpinch.c:673 plug-ins/flame/flame.c:945
+#: plug-ins/common/whirlpinch.c:673 plug-ins/flame/flame.c:946
 #: plug-ins/gflare/gflare.c:2315 plug-ins/gflare/gflare.c:3242
 #: plug-ins/gimpressionist/orientmap.c:501
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:436
@@ -685,7 +685,7 @@ msgstr "Position"
 
 #: plug-ins/Lighting/lighting_ui.c:569 plug-ins/common/flarefx.c:769
 #: plug-ins/common/nova.c:482 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1203 plug-ins/gflare/gflare.c:2645
+#: plug-ins/flame/flame.c:1204 plug-ins/gflare/gflare.c:2645
 msgid "_X:"
 msgstr "_X:"
 
@@ -695,7 +695,7 @@ msgstr "Ljuskällans X-position i XYZ-rummet"
 
 #: plug-ins/Lighting/lighting_ui.c:586 plug-ins/common/flarefx.c:790
 #: plug-ins/common/nova.c:503 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1254 plug-ins/flame/flame.c:1217
+#: plug-ins/common/xbm.c:1254 plug-ins/flame/flame.c:1218
 #: plug-ins/gflare/gflare.c:2649
 msgid "_Y:"
 msgstr "_Y:"
@@ -813,7 +813,7 @@ msgstr "Använd/använd inte bumpmappning (bilddjup)"
 msgid "Bumpm_ap Image:"
 msgstr "Bumpm_ap-bild:"
 
-#: plug-ins/Lighting/lighting_ui.c:941 plug-ins/flame/flame.c:724
+#: plug-ins/Lighting/lighting_ui.c:941 plug-ins/flame/flame.c:725
 msgid "Linear"
 msgstr "Linjär"
 
@@ -821,11 +821,11 @@ msgstr "Linjär"
 msgid "Logarithmic"
 msgstr "Logaritmisk"
 
-#: plug-ins/Lighting/lighting_ui.c:943 plug-ins/flame/flame.c:725
+#: plug-ins/Lighting/lighting_ui.c:943 plug-ins/flame/flame.c:726
 msgid "Sinusoidal"
 msgstr "Sinusformad"
 
-#: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:726
+#: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:727
 msgid "Spherical"
 msgstr "Sfärisk"
 
@@ -1686,7 +1686,7 @@ msgid "Hue"
 msgstr "Nyans"
 
 #: plug-ins/common/CML_explorer.c:303 plug-ins/common/decompose.c:132
-#: plug-ins/fp/fp_gtk.c:494 plug-ins/rcm/rcm_dialog.c:543
+#: plug-ins/fp/fp_gtk.c:497 plug-ins/rcm/rcm_dialog.c:543
 msgid "Saturation"
 msgstr "Mättnad"
 
@@ -1721,7 +1721,7 @@ msgid "New Seed"
 msgstr "Nytt frö"
 
 #: plug-ins/common/CML_explorer.c:1275 plug-ins/common/lic.c:739
-#: plug-ins/fp/fp_gtk.c:292
+#: plug-ins/fp/fp_gtk.c:293
 msgid "_Hue"
 msgstr "_Nyans"
 
@@ -1729,7 +1729,7 @@ msgstr "_Nyans"
 msgid "Sat_uration"
 msgstr "Mä_ttnad"
 
-#: plug-ins/common/CML_explorer.c:1283 plug-ins/fp/fp_gtk.c:300
+#: plug-ins/common/CML_explorer.c:1283 plug-ins/fp/fp_gtk.c:301
 msgid "_Value"
 msgstr "_Värde"
 
@@ -1981,7 +1981,7 @@ msgstr "Justera synliga lager"
 #: plug-ins/common/blinds.c:346 plug-ins/common/blur.c:612
 #: plug-ins/common/bumpmap.c:1018 plug-ins/common/checkerboard.c:395
 #: plug-ins/common/cubism.c:281 plug-ins/common/despeckle.c:737
-#: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:697
+#: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:701
 #: plug-ins/common/emboss.c:542 plug-ins/common/engrave.c:234
 #: plug-ins/common/gauss_iir.c:368 plug-ins/common/gauss_rle.c:362
 #: plug-ins/common/glasstile.c:265 plug-ins/common/grid.c:699
@@ -2704,7 +2704,7 @@ msgstr "U_töka"
 
 # ?
 #: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:389
-#: plug-ins/common/edge.c:726 plug-ins/common/ripple.c:566
+#: plug-ins/common/edge.c:730 plug-ins/common/ripple.c:566
 msgid "_Wrap"
 msgstr "_Wrap"
 
@@ -2831,32 +2831,17 @@ msgstr "P_latt-mättnad"
 msgid "Cubistic Transformation"
 msgstr "Kubistisk transformation"
 
-#: plug-ins/common/curve_bend.c:358
-msgid "Upper"
-msgstr "Övre"
-
-#: plug-ins/common/curve_bend.c:359
-msgid "Lower"
-msgstr "Lägre"
-
-#: plug-ins/common/curve_bend.c:365
-msgid "Smooth"
-msgstr "Jämn"
-
-#: plug-ins/common/curve_bend.c:366
-msgid "Free"
-msgstr "Ledigt"
-
-#: plug-ins/common/curve_bend.c:683
-msgid "<Image>/Filters/Distorts/_CurveBend..."
+#: plug-ins/common/curve_bend.c:562
+#, fuzzy
+msgid "<Image>/Filters/Distorts/_Curve Bend..."
 msgstr "<Image>/Filter/Störningar/_Böj efter kurva..."
 
-#: plug-ins/common/curve_bend.c:812
+#: plug-ins/common/curve_bend.c:688
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
 msgstr ""
 "CurveBend arbetar endast med lager (men aktiverades på en kanal eller mask)"
 
-#: plug-ins/common/curve_bend.c:950
+#: plug-ins/common/curve_bend.c:812
 #, c-format
 msgid ""
 "Failed to write file '%s':\n"
@@ -2865,7 +2850,7 @@ msgstr ""
 "Misslyckades med att skriva fil \"%s\":\n"
 "%s"
 
-#: plug-ins/common/curve_bend.c:1005
+#: plug-ins/common/curve_bend.c:864
 #, c-format
 msgid ""
 "Failed to open file '%s':\n"
@@ -2874,112 +2859,137 @@ msgstr ""
 "Misslyckades med att öppna fil \"%s\":\n"
 "%s"
 
+#. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1358
+#: plug-ins/common/curve_bend.c:1190
 msgid "Curve Bend"
 msgstr "Böj efter kurva"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1417
+#: plug-ins/common/curve_bend.c:1253
 msgid "_Preview Once"
 msgstr "_Förhandsgranska en gång"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1426
+#: plug-ins/common/curve_bend.c:1262
 msgid "Automatic Pre_view"
 msgstr "Automatisk _förhandsgranskning"
 
 # src/menus.c:311
 #. Options area, bottom of column
-#: plug-ins/common/curve_bend.c:1436 plug-ins/common/ripple.c:513
+#: plug-ins/common/curve_bend.c:1272 plug-ins/common/ripple.c:513
 #: plug-ins/gfig/gfig.c:3830 plug-ins/mosaic/mosaic.c:592
 msgid "Options"
 msgstr "Alternativ"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1451
-msgid "R_otate:"
+#: plug-ins/common/curve_bend.c:1287
+#, fuzzy
+msgid "Rotat_e:"
 msgstr "R_otera:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1469
-msgid "Sm_oothing"
+#: plug-ins/common/curve_bend.c:1305
+#, fuzzy
+msgid "Smoo_thing"
 msgstr "Ut_jämnande"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1479 plug-ins/common/gqbist.c:859
+#: plug-ins/common/curve_bend.c:1315 plug-ins/common/gqbist.c:860
 #: plug-ins/common/ripple.c:522 plug-ins/mosaic/mosaic.c:600
 msgid "_Antialiasing"
 msgstr "_Kantutjämning"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1489
+#: plug-ins/common/curve_bend.c:1325
 msgid "Work on Cop_y"
 msgstr "Arbeta med _kopian"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1500
+#: plug-ins/common/curve_bend.c:1335
 msgid "Modify Curves"
 msgstr "Ändra kurvor"
 
-#: plug-ins/common/curve_bend.c:1535
-msgid "Curve for _Border:"
+#: plug-ins/common/curve_bend.c:1364
+#, fuzzy
+msgid "Curve for Border"
 msgstr "Kurva för _ram:"
 
-#: plug-ins/common/curve_bend.c:1543
-msgid "Curve _Type:"
+#: plug-ins/common/curve_bend.c:1369
+#, fuzzy
+msgid "_Upper"
+msgstr "Övre"
+
+#: plug-ins/common/curve_bend.c:1372
+#, fuzzy
+msgid "_Lower"
+msgstr "Lägre"
+
+#: plug-ins/common/curve_bend.c:1383
+#, fuzzy
+msgid "Curve Type"
 msgstr "kurv_typ:"
 
+#: plug-ins/common/curve_bend.c:1388
+#, fuzzy
+msgid "Smoot_h"
+msgstr "Jämn"
+
+#: plug-ins/common/curve_bend.c:1391
+#, fuzzy
+msgid "_Free"
+msgstr "Ledigt"
+
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1553
+#: plug-ins/common/curve_bend.c:1407
 msgid "_Copy"
 msgstr "_Kopiera"
 
-#: plug-ins/common/curve_bend.c:1558
+#: plug-ins/common/curve_bend.c:1412
 msgid "Copy the active curve to the other border"
 msgstr "Kopiera den aktiva kurvan till andra kanten"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1565
+#: plug-ins/common/curve_bend.c:1419
 msgid "_Mirror"
 msgstr "_Spegla"
 
-#: plug-ins/common/curve_bend.c:1570
+#: plug-ins/common/curve_bend.c:1424
 msgid "Mirror the active curve to the other border"
 msgstr "Spegla den aktiva kurvan på andra kanten"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1577
+#: plug-ins/common/curve_bend.c:1431
 msgid "S_wap"
 msgstr "Vä_xla"
 
-#: plug-ins/common/curve_bend.c:1582
+#: plug-ins/common/curve_bend.c:1436
 msgid "Swap the two curves"
 msgstr "Byt plats på kurvorna"
 
-#: plug-ins/common/curve_bend.c:1594
+#: plug-ins/common/curve_bend.c:1448
 msgid "Reset the active curve"
 msgstr "Återställ den aktiva kurvan"
 
-#: plug-ins/common/curve_bend.c:1611
+#: plug-ins/common/curve_bend.c:1465
 msgid "Load the curves from a file"
 msgstr "Läs in kurvorna från fil"
 
-#: plug-ins/common/curve_bend.c:1623
+#: plug-ins/common/curve_bend.c:1477
 msgid "Save the curves to a file"
 msgstr "Spara kurvorna till fil"
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2254
+#: plug-ins/common/curve_bend.c:2028
 msgid "Load Curve Points from file"
 msgstr "Ladda kurvlägen från fil"
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2287
+#: plug-ins/common/curve_bend.c:2060
 msgid "Save Curve Points to file"
 msgstr "Spara kurvälgen till fil"
 
-#: plug-ins/common/curve_bend.c:3427
+#: plug-ins/common/curve_bend.c:2962
 msgid "Curve Bend..."
 msgstr "Böj efter kurva..."
 
@@ -3311,7 +3321,7 @@ msgstr "Ko_nturer"
 msgid "_Sharp edges"
 msgstr "_Skarpa kanter"
 
-#: plug-ins/common/diffraction.c:715 plug-ins/flame/flame.c:1020
+#: plug-ins/common/diffraction.c:715 plug-ins/flame/flame.c:1021
 msgid "_Brightness:"
 msgstr "_Ljusstyrka:"
 
@@ -3360,60 +3370,60 @@ msgstr "_Y-förskjutning:"
 msgid "On Edges:"
 msgstr "På kanter:"
 
-#: plug-ins/common/displace.c:403 plug-ins/common/edge.c:736
+#: plug-ins/common/displace.c:403 plug-ins/common/edge.c:740
 #: plug-ins/common/ripple.c:567 plug-ins/common/waves.c:337
 msgid "_Smear"
 msgstr "_Smeta ut"
 
-#: plug-ins/common/displace.c:417 plug-ins/common/edge.c:746
+#: plug-ins/common/displace.c:417 plug-ins/common/edge.c:750
 #: plug-ins/common/fractaltrace.c:804 plug-ins/common/newsprint.c:435
 #: plug-ins/common/ripple.c:568
 msgid "_Black"
 msgstr "_Svart"
 
-#: plug-ins/common/edge.c:160
+#: plug-ins/common/edge.c:162
 msgid "<Image>/Filters/Edge-Detect/_Edge..."
 msgstr "<Image>/Filter/Leta kanter/_Kanter..."
 
-#: plug-ins/common/edge.c:228
+#: plug-ins/common/edge.c:232
 msgid "Edge Detection..."
 msgstr "Kantdetektion..."
 
-#: plug-ins/common/edge.c:651
+#: plug-ins/common/edge.c:655
 msgid "Edge Detection"
 msgstr "Kantdetektion"
 
 #. compression
-#: plug-ins/common/edge.c:668
+#: plug-ins/common/edge.c:672
 msgid "Algorithm"
 msgstr "algoritm"
 
-#: plug-ins/common/edge.c:673
+#: plug-ins/common/edge.c:677
 msgid "_Sobel"
 msgstr "_Sobel"
 
-#: plug-ins/common/edge.c:676
+#: plug-ins/common/edge.c:680
 msgid "_Prewitt"
 msgstr "_Prewitt"
 
-#: plug-ins/common/edge.c:679 plug-ins/common/lic.c:753
+#: plug-ins/common/edge.c:683 plug-ins/common/lic.c:753
 msgid "_Gradient"
 msgstr "_Färgskala"
 
-#: plug-ins/common/edge.c:682
+#: plug-ins/common/edge.c:686
 msgid "_Roberts"
 msgstr "_Roberts"
 
 # kanske "Differential" på svenska också, här
-#: plug-ins/common/edge.c:685
+#: plug-ins/common/edge.c:689
 msgid "_Differential"
 msgstr "_Skillnad"
 
-#: plug-ins/common/edge.c:688
+#: plug-ins/common/edge.c:692
 msgid "_Laplace"
 msgstr "_Laplace"
 
-#: plug-ins/common/edge.c:710 plug-ins/common/unsharp.c:685
+#: plug-ins/common/edge.c:714 plug-ins/common/unsharp.c:685
 msgid "_Amount:"
 msgstr "_Mängd:"
 
@@ -3793,7 +3803,7 @@ msgstr "Beskrivning:"
 msgid "<Image>/Filters/Toys/Gee-_Slime"
 msgstr "<Image>/Filter/Leksaker/Gee-_Slime"
 
-#: plug-ins/common/gee.c:174
+#: plug-ins/common/gee.c:173
 msgid "GEE-SLIME"
 msgstr "GEE-SLIME"
 
@@ -3802,7 +3812,7 @@ msgstr "GEE-SLIME"
 msgid "** Thank you for choosing GIMP **"
 msgstr "** Tack för att du valt GIMP **"
 
-#: plug-ins/common/gee.c:198
+#: plug-ins/common/gee.c:197
 msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
@@ -3814,11 +3824,11 @@ msgstr ""
 msgid "<Image>/Filters/Toys/Gee-_Zoom"
 msgstr "<Image>/Filter/Leksaker/Gee-_Zoom"
 
-#: plug-ins/common/gee_zoom.c:205
+#: plug-ins/common/gee_zoom.c:204
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
 msgstr "GEE-ZOOM: Plug-in:et Tidigare Känd Som \"GIMP Påskägg \""
 
-#: plug-ins/common/gee_zoom.c:229
+#: plug-ins/common/gee_zoom.c:228
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
@@ -4064,15 +4074,15 @@ msgstr "<Image>/Filter/Rendera/Mönster/_Qbist..."
 msgid "Qbist ..."
 msgstr "Qbist ..."
 
-#: plug-ins/common/gqbist.c:743
+#: plug-ins/common/gqbist.c:744
 msgid "Load QBE file..."
 msgstr "Läs in QBE-fil..."
 
-#: plug-ins/common/gqbist.c:770
+#: plug-ins/common/gqbist.c:771
 msgid "Save (middle transform) as QBE file..."
 msgstr "Spara (mellantransformen) som QBE-fil..."
 
-#: plug-ins/common/gqbist.c:810
+#: plug-ins/common/gqbist.c:811
 msgid "G-Qbist 1.12"
 msgstr "G-Qbist 1.12"
 
@@ -4617,7 +4627,7 @@ msgstr "Van Gogh (LIC)"
 msgid "Effect Channel"
 msgstr "Effektkanal"
 
-#: plug-ins/common/lic.c:740 plug-ins/fp/fp_gtk.c:296
+#: plug-ins/common/lic.c:740 plug-ins/fp/fp_gtk.c:297
 msgid "_Saturation"
 msgstr "_Mättnad"
 
@@ -7166,7 +7176,7 @@ msgid "Smear"
 msgstr "Smeta ut"
 
 #: plug-ins/common/warp.c:521 plug-ins/fits/fits.c:1005
-#: plug-ins/flame/flame.c:1123 plug-ins/gfig/gfig.c:3172
+#: plug-ins/flame/flame.c:1124 plug-ins/gfig/gfig.c:3172
 msgid "Black"
 msgstr "Svart"
 
@@ -7768,104 +7778,104 @@ msgstr "\"%s\" är inte en normal fil"
 msgid "Can't open '%s': %s"
 msgstr "Kan inte öppna \"%s\": %s"
 
-#: plug-ins/flame/flame.c:625
+#: plug-ins/flame/flame.c:626
 msgid "Edit Flame"
 msgstr "Redigera flamma"
 
-#: plug-ins/flame/flame.c:645
+#: plug-ins/flame/flame.c:646
 msgid "Directions"
 msgstr "Riktningar"
 
-#: plug-ins/flame/flame.c:676
+#: plug-ins/flame/flame.c:677
 msgid "Controls"
 msgstr "Kontroller"
 
-#: plug-ins/flame/flame.c:691
+#: plug-ins/flame/flame.c:692
 msgid "_Speed:"
 msgstr "_Hastighet:"
 
-#: plug-ins/flame/flame.c:708
+#: plug-ins/flame/flame.c:709
 msgid "_Randomize"
 msgstr "_Slumpa"
 
-#: plug-ins/flame/flame.c:722
+#: plug-ins/flame/flame.c:723
 msgid "Same"
 msgstr "Samma"
 
-#: plug-ins/flame/flame.c:723 plug-ins/gimpressionist/orientation.c:130
+#: plug-ins/flame/flame.c:724 plug-ins/gimpressionist/orientation.c:130
 #: plug-ins/gimpressionist/size.c:120
 msgid "Random"
 msgstr "Slumpvis"
 
-#: plug-ins/flame/flame.c:727
+#: plug-ins/flame/flame.c:728
 msgid "Swirl"
 msgstr "Virvla"
 
-#: plug-ins/flame/flame.c:728
+#: plug-ins/flame/flame.c:729
 msgid "Horseshoe"
 msgstr "Hästsko"
 
-#: plug-ins/flame/flame.c:729 plug-ins/gfig/gfig.c:3157
+#: plug-ins/flame/flame.c:730 plug-ins/gfig/gfig.c:3157
 msgid "Polar"
 msgstr "Polär"
 
-#: plug-ins/flame/flame.c:730
+#: plug-ins/flame/flame.c:731
 msgid "Bent"
 msgstr "Böjd"
 
-#: plug-ins/flame/flame.c:736
+#: plug-ins/flame/flame.c:737
 msgid "_Variation:"
 msgstr "_Variation:"
 
-#: plug-ins/flame/flame.c:767
+#: plug-ins/flame/flame.c:768
 msgid "Load Flame"
 msgstr "Läs in flamma"
 
-#: plug-ins/flame/flame.c:789
+#: plug-ins/flame/flame.c:790
 msgid "Save Flame"
 msgstr "Spara flamma"
 
-#: plug-ins/flame/flame.c:918 plug-ins/flame/flame.c:959
+#: plug-ins/flame/flame.c:919 plug-ins/flame/flame.c:960
 msgid "Flame"
 msgstr "flamma"
 
-#: plug-ins/flame/flame.c:1008
+#: plug-ins/flame/flame.c:1009
 msgid "_Rendering"
 msgstr "_Rendering"
 
-#: plug-ins/flame/flame.c:1034
+#: plug-ins/flame/flame.c:1035
 msgid "Co_ntrast:"
 msgstr "Ko_ntrast:"
 
-#: plug-ins/flame/flame.c:1048
+#: plug-ins/flame/flame.c:1049
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: plug-ins/flame/flame.c:1062
+#: plug-ins/flame/flame.c:1063
 msgid "Sample _Density:"
 msgstr "Sampel_täthet:"
 
-#: plug-ins/flame/flame.c:1073
+#: plug-ins/flame/flame.c:1074
 msgid "Spa_tial Oversample:"
 msgstr "Spa_tial översampling:"
 
-#: plug-ins/flame/flame.c:1084
+#: plug-ins/flame/flame.c:1085
 msgid "Spatial _Filter Radius:"
 msgstr "Spatial _filterradie:"
 
-#: plug-ins/flame/flame.c:1111
+#: plug-ins/flame/flame.c:1112
 msgid "Color_map:"
 msgstr "Färg_karta:"
 
-#: plug-ins/flame/flame.c:1160
+#: plug-ins/flame/flame.c:1161
 msgid "Custom Gradient"
 msgstr "Anpassad färgtoning"
 
-#: plug-ins/flame/flame.c:1184
+#: plug-ins/flame/flame.c:1185
 msgid "C_amera"
 msgstr "K_amera"
 
-#: plug-ins/flame/flame.c:1189
+#: plug-ins/flame/flame.c:1190
 msgid "_Zoom:"
 msgstr "_Zooma:"
 
@@ -7910,126 +7920,126 @@ msgstr "Före och efter"
 msgid "Original:"
 msgstr "Orginal:"
 
-#: plug-ins/fp/fp_gtk.c:204
+#: plug-ins/fp/fp_gtk.c:205
 msgid "Hue Variations"
 msgstr "Nyansvariation"
 
-#: plug-ins/fp/fp_gtk.c:220
+#: plug-ins/fp/fp_gtk.c:221
 msgid "Roughness"
 msgstr "Skrovlighet"
 
-#: plug-ins/fp/fp_gtk.c:251
+#: plug-ins/fp/fp_gtk.c:252
 msgid "Affected Range"
 msgstr "Påverkat område"
 
-#: plug-ins/fp/fp_gtk.c:261
+#: plug-ins/fp/fp_gtk.c:262
 msgid "Sha_dows"
 msgstr "_Skuggor"
 
-#: plug-ins/fp/fp_gtk.c:265
+#: plug-ins/fp/fp_gtk.c:266
 msgid "_Midtones"
 msgstr "_Mellantoner"
 
-#: plug-ins/fp/fp_gtk.c:269
+#: plug-ins/fp/fp_gtk.c:270
 msgid "H_ighlights"
 msgstr "_Ljuspunkter"
 
-#: plug-ins/fp/fp_gtk.c:282
+#: plug-ins/fp/fp_gtk.c:283
 msgid "Windows"
 msgstr "Fönster"
 
-#: plug-ins/fp/fp_gtk.c:304
+#: plug-ins/fp/fp_gtk.c:305
 msgid "A_dvanced"
 msgstr "_Avancerat"
 
-#: plug-ins/fp/fp_gtk.c:352
+#: plug-ins/fp/fp_gtk.c:354
 msgid "Value Variations"
 msgstr "Värdevariation"
 
-#: plug-ins/fp/fp_gtk.c:401
+#: plug-ins/fp/fp_gtk.c:404
 msgid "Saturation Variations"
 msgstr "Mättnadsvariationer"
 
-#: plug-ins/fp/fp_gtk.c:417
+#: plug-ins/fp/fp_gtk.c:420
 msgid "Select Pixels by"
 msgstr "Välj bildpunkter efter"
 
-#: plug-ins/fp/fp_gtk.c:426
+#: plug-ins/fp/fp_gtk.c:429
 msgid "H_ue"
 msgstr "_N_yans:"
 
-#: plug-ins/fp/fp_gtk.c:430
+#: plug-ins/fp/fp_gtk.c:433
 msgid "Satu_ration"
 msgstr "_Mättnad"
 
-#: plug-ins/fp/fp_gtk.c:434
+#: plug-ins/fp/fp_gtk.c:437
 msgid "V_alue"
 msgstr "_Värde"
 
-#: plug-ins/fp/fp_gtk.c:447
+#: plug-ins/fp/fp_gtk.c:450
 msgid "Show"
 msgstr "Visa"
 
-#: plug-ins/fp/fp_gtk.c:455
+#: plug-ins/fp/fp_gtk.c:458
 msgid "_Entire Image"
 msgstr "_Hela bilden"
 
-#: plug-ins/fp/fp_gtk.c:460
+#: plug-ins/fp/fp_gtk.c:463
 msgid "Se_lection Only"
 msgstr "_Endast markering"
 
-#: plug-ins/fp/fp_gtk.c:465
+#: plug-ins/fp/fp_gtk.c:468
 msgid "Selec_tion In Context"
 msgstr "_Kontextuell markering"
 
-#: plug-ins/fp/fp_gtk.c:479
+#: plug-ins/fp/fp_gtk.c:482
 msgid "Display"
 msgstr "Utseende"
 
-#: plug-ins/fp/fp_gtk.c:488
+#: plug-ins/fp/fp_gtk.c:491
 msgid "CirclePalette"
 msgstr "Cirkelpalett"
 
-#: plug-ins/fp/fp_gtk.c:491
+#: plug-ins/fp/fp_gtk.c:494
 msgid "Lighter And Darker"
 msgstr "Ljusare och mörkare"
 
 #. ******************************************************************
 #. ************************ All the Standard Stuff ******************
-#: plug-ins/fp/fp_gtk.c:915
+#: plug-ins/fp/fp_gtk.c:918
 msgid "Filter Pack Simulation"
 msgstr "Filterpacksimulering"
 
-#: plug-ins/fp/fp_gtk.c:1036
+#: plug-ins/fp/fp_gtk.c:1039
 msgid "Shadows:"
 msgstr "Skuggor:"
 
-#: plug-ins/fp/fp_gtk.c:1037
+#: plug-ins/fp/fp_gtk.c:1040
 msgid "Midtones:"
 msgstr "Mellantoner:"
 
-#: plug-ins/fp/fp_gtk.c:1038
+#: plug-ins/fp/fp_gtk.c:1041
 msgid "Highlights:"
 msgstr "Ljuspunkter:"
 
-#: plug-ins/fp/fp_gtk.c:1052
+#: plug-ins/fp/fp_gtk.c:1055
 msgid "Advanced Filter Pack Options"
 msgstr "Avancerade Filterpackinställningar"
 
-#: plug-ins/fp/fp_gtk.c:1063
+#: plug-ins/fp/fp_gtk.c:1066
 msgid "Smoothness of Aliasing"
 msgstr "Jämnhet för aliasing"
 
 #. ****************** MISC OPTIONS **************************
-#: plug-ins/fp/fp_gtk.c:1152
+#: plug-ins/fp/fp_gtk.c:1155
 msgid "Miscellaneous Options"
 msgstr "Diverse inställningar"
 
-#: plug-ins/fp/fp_gtk.c:1163
+#: plug-ins/fp/fp_gtk.c:1166
 msgid "Preview as You Drag"
 msgstr "Förhandsgranska medan du drar"
 
-#: plug-ins/fp/fp_gtk.c:1167
+#: plug-ins/fp/fp_gtk.c:1170
 msgid "Preview Size"
 msgstr "Förhandsvisningens storlek"
 
@@ -9556,20 +9566,21 @@ msgstr ""
 "Voronoi-läge medför att endast den sk-vektor som är närmast en given punkt "
 "har någon påverkan"
 
-#: plug-ins/helpbrowser/helpbrowser.c:318 plug-ins/imagemap/imap_main.c:585
+#: plug-ins/helpbrowser/helpbrowser.c:329 plug-ins/imagemap/imap_main.c:585
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<Namnlös>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:457
+#: plug-ins/helpbrowser/helpbrowser.c:500
 msgid "Document Not Found"
 msgstr "Dokumentet kunde inte hittas"
 
-#: plug-ins/helpbrowser/helpbrowser.c:459
-msgid "Could not locate help documentation"
+#: plug-ins/helpbrowser/helpbrowser.c:502
+#, fuzzy
+msgid "Could not locate help document"
 msgstr "Kunde inte hitta hjälpdokumentationen"
 
-#: plug-ins/helpbrowser/helpbrowser.c:461
+#: plug-ins/helpbrowser/helpbrowser.c:504
 msgid ""
 "The requested document could not be found in your GIMP help path as shown "
 "above. This means that the topic has not yet been written or your "
@@ -9581,11 +9592,11 @@ msgstr ""
 "installation inte är komplett. Kontrollera att din installation är komplett "
 "innan du rapporterar detta som ett fel."
 
-#: plug-ins/helpbrowser/helpbrowser.c:594
+#: plug-ins/helpbrowser/helpbrowser.c:634
 msgid "GIMP Help Browser"
 msgstr "GIMP hjälpläsare"
 
-#: plug-ins/helpbrowser/helpbrowser.c:874
+#: plug-ins/helpbrowser/helpbrowser.c:893
 #, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
@@ -11427,10 +11438,6 @@ msgstr "Diverse"
 msgid "Selection to Path..."
 msgstr "Val till slinga..."
 
-#: plug-ins/sel2path/sel2path.c:133
-msgid "<Image>/Select/To _Path"
-msgstr "<Image>/Välj/_Till slinga"
-
 #: plug-ins/sel2path/sel2path.c:186
 msgid "No selection to convert"
 msgstr "Inget val att konvertera"
@@ -11597,6 +11604,9 @@ msgstr "Fel: Kan ej läsa XJT egenskapsfil %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fel: XJT egenskapsfil %s är tom"
+
+#~ msgid "<Image>/Select/To _Path"
+#~ msgstr "<Image>/Välj/_Till slinga"
 
 #~ msgid "Save _background color"
 #~ msgstr "Spara _bakgrundsfärg"

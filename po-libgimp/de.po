@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-10 15:17+0200\n"
+"POT-Creation-Date: 2003-08-27 00:16+0200\n"
 "PO-Revision-Date: 2003-07-15 02:18+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -171,7 +171,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Schriftenauswahl"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:103
 msgid "Gradient Selection"
 msgstr "Gradientenauswahl"
 
@@ -423,23 +423,23 @@ msgstr "Z_eilenabstand"
 msgid "_Resize"
 msgstr "_Größe ändern"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: libgimpwidgets/gimpstock.c:234
+#: libgimpwidgets/gimpstock.c:235
 msgid "Crop"
 msgstr "Zuschneiden"
 
-#: libgimpwidgets/gimpstock.c:252
+#: libgimpwidgets/gimpstock.c:253
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: libgimpwidgets/gimpstock.c:255
+#: libgimpwidgets/gimpstock.c:256
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:258
 msgid "_Shear"
 msgstr "_Scheren"
 

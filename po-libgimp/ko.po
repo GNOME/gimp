@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-10 15:17+0200\n"
+"POT-Creation-Date: 2003-08-27 00:16+0200\n"
 "PO-Revision-Date: 2003-06-05 07:55+0800\n"
 "Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -170,7 +170,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "단위 셀렉션"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:103
 #, fuzzy
 msgid "Gradient Selection"
 msgstr "단위 셀렉션"
@@ -423,23 +423,23 @@ msgstr ""
 msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
 msgid "_Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:234
+#: libgimpwidgets/gimpstock.c:235
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:252
+#: libgimpwidgets/gimpstock.c:253
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:255
+#: libgimpwidgets/gimpstock.c:256
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:258
 msgid "_Shear"
 msgstr ""
 

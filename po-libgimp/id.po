@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-10 15:17+0200\n"
+"POT-Creation-Date: 2003-08-27 00:16+0200\n"
 "PO-Revision-Date: 2003-06-28 22:03+0700\n"
 "Last-Translator: Mohammad DAMT <mdamt@bisnisweb.com>\n"
 "Language-Team: Indonesian <sukarelawan@gnome.linux.or.id>\n"
@@ -159,7 +159,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Pilih Font"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:103
 msgid "Gradient Selection"
 msgstr ""
 
@@ -407,23 +407,23 @@ msgstr ""
 msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
 msgid "_Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:234
+#: libgimpwidgets/gimpstock.c:235
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:252
+#: libgimpwidgets/gimpstock.c:253
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:255
+#: libgimpwidgets/gimpstock.c:256
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:258
 msgid "_Shear"
 msgstr ""
 

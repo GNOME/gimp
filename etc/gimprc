@@ -8,8 +8,8 @@
 # documents the default values and shows what changes are possible.
 # 
 # The variable ${gimp_dir} is set to the value of the environment variable
-# GIMP_DIRECTORY or, if that is not set, the compiled-in default value is
-# used.  If GIMP_DIRECTORY is not an absolute path, it is interpreted
+# GIMP2_DIRECTORY or, if that is not set, the compiled-in default value is
+# used.  If GIMP2_DIRECTORY is not an absolute path, it is interpreted
 # relative to your home directory.
 
 # Sets the temporary storage directory. Files will appear here during the
@@ -266,6 +266,11 @@
 # yes and no.
 #
 # (cursor-updating yes)
+
+# When enabled, all paint tools will show a preview of the current brush's
+# outline.  Possible values are yes and no.
+#
+# (show-brush-outline yes)
 
 # Sets the text to appear in image window titles.  This is a format string;
 # certain % character sequences are recognised and expanded as follows:
