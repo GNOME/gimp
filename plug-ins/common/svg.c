@@ -64,9 +64,9 @@ typedef struct
 #define _(String) (String)
 
 static void     query                     (void);
-static void     run                       (gchar            *name,
+static void     run                       (const gchar            *name,
 					   gint              nparams,
-					   GimpParam        *param,
+					   const GimpParam        *param,
 					   gint             *nreturn_vals,
 					   GimpParam       **return_vals);
 
@@ -74,7 +74,7 @@ GimpPlugInInfo PLUG_IN_INFO = {
   NULL,                         /* init_proc  */
   NULL,                         /* quit_proc  */
   query,                        /* query_proc */
-  run,                          /* run_proc   */
+  (GimpRunProc)run,             /* run_proc   */
 };
 
 MAIN ()
@@ -301,9 +301,9 @@ query (void)
  * 'run()' - Run the plug-in...
  */
 static void
-run (gchar      *name,
+run (const gchar      *name,
      gint        nparams,
-     GimpParam  *param,
+     const GimpParam  *param,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
