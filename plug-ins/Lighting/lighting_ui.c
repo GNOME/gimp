@@ -18,6 +18,7 @@
  */
 
 #include "config.h"
+#include <string.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -44,28 +45,41 @@ GtkWidget *previewarea = NULL;
 
 static GtkWidget *pointlightwid[NUM_LIGHTS];
 static GtkWidget *dirlightwid[NUM_LIGHTS];
+static GtkWidget *colorbutton[NUM_LIGHTS];
+static GtkWidget *light_type_combo[NUM_LIGHTS];
+static gchar     *lighting_effects_path       = NULL;
 
 
-static void create_main_notebook      (GtkWidget *container);
+static void create_main_notebook      (GtkWidget      *container);
 
 #ifdef _LIGHTNING_UNUSED_CODE
-static void xyzval_update             (GtkEntry *entry);
+static void xyzval_update             (GtkEntry       *entry);
 #endif
 
-static void toggle_update             (GtkWidget *widget,
-                                       gpointer   data);
+static void toggle_update             (GtkWidget      *widget,
+                                       gpointer        data);
 
-static void lightmenu_callback        (GtkWidget *widget,
-                                       gpointer   data);
+static void lightmenu_callback        (GtkWidget      *widget,
+                                       gpointer        data);
 
-static gboolean  bumpmap_constrain    (gint32     image_id,
-                                       gint32     drawable_id,
-                                       gpointer   data);
-static gboolean  envmap_constrain     (gint32     image_id,
-                                       gint32     drawable_id,
-                                       gpointer   data);
-static void     envmap_combo_callback (GtkWidget *widget,
-                                       gpointer   data);
+static gboolean  bumpmap_constrain    (gint32          image_id,
+                                       gint32          drawable_id,
+                                       gpointer        data);
+static gboolean  envmap_constrain     (gint32          image_id,
+                                       gint32          drawable_id,
+                                       gpointer        data);
+static void     envmap_combo_callback (GtkWidget      *widget,
+                                       gpointer        data);
+static void     save_lighting_preset  (GtkWidget      *widget,
+                                       gpointer        data);
+static void     file_chooser_response (GtkFileChooser *chooser,
+                                       gint            response_id,
+                                       gpointer        data);
+static void     load_lighting_preset  (GtkWidget      *widget,
+                                       gpointer        data);
+static void     load_file_chooser_response (GtkFileChooser *chooser,
+                                            gint       response_id,
+                                            gpointer   data);
 
 
 #ifdef _LIGHTNING_UNUSED_CODE
@@ -294,9 +308,8 @@ create_light_page (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *table2;
-  GtkWidget *combo;
   GtkWidget *ebox;
-  GtkWidget *colorbutton;
+  GtkWidget *button;
   GtkObject *adj;
   GtkWidget *label;
   gint       k;
@@ -309,18 +322,18 @@ create_light_page (void)
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 8, FALSE);
+  table = gtk_table_new (8, 8, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   /* row labels */
-  label = gtk_label_new ("Type");
+  label = gtk_label_new (_("Type"));
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
   gtk_widget_show (label);
 
-  label = gtk_label_new ("Color");
+  label = gtk_label_new (_("Color"));
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 2, 3);
   gtk_widget_show (label);
 
@@ -334,36 +347,36 @@ create_light_page (void)
       gtk_table_attach_defaults (GTK_TABLE (table), label, 2*k + 1, 2*k + 2, 0, 1);
       gtk_widget_show (label);
 
-      combo = gimp_int_combo_box_new (_("None"),        NO_LIGHT,
-                                      _("Directional"), DIRECTIONAL_LIGHT,
-                                      _("Point"),       POINT_LIGHT,
-                                      /* _("Spot"),     SPOT_LIGHT, */
-                                      NULL);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+      light_type_combo[k] = gimp_int_combo_box_new (_("None"),        NO_LIGHT,
+                                                    _("Directional"), DIRECTIONAL_LIGHT,
+                                                    _("Point"),       POINT_LIGHT,
+                                                    /* _("Spot"),     SPOT_LIGHT, */
+                                                    NULL);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo[k]),
                                      mapvals.lightsource[k].type);
-      g_signal_connect (combo, "changed",
+      g_signal_connect (light_type_combo[k], "changed",
                         G_CALLBACK (lightmenu_callback),
                         &mapvals.lightsource[k].type);
       ebox = gtk_event_box_new ();
-      gtk_container_add (GTK_CONTAINER (ebox), combo);
+      gtk_container_add (GTK_CONTAINER (ebox), light_type_combo[k]);
       gtk_widget_show (ebox);
       gtk_table_attach_defaults (GTK_TABLE (table), ebox, 2*k + 1, 2*k + 2, 1, 2);
-      gtk_widget_show (combo);
+      gtk_widget_show (light_type_combo[k]);
       gimp_help_set_help_data (ebox, _("Type of light source to apply"), NULL);
       
-      colorbutton = gimp_color_button_new (_("Select lightsource color"),
+      colorbutton[k] = gimp_color_button_new (_("Select lightsource color"),
                                            64, 16,
                                            &mapvals.lightsource[k].color,
                                            GIMP_COLOR_AREA_FLAT);
-      g_signal_connect (colorbutton, "color_changed",
+      g_signal_connect (colorbutton[k], "color_changed",
                         G_CALLBACK (gimp_color_button_get_color),
                         &mapvals.lightsource[k].color);
-      g_signal_connect (colorbutton, "color_changed",
+      g_signal_connect (colorbutton[k], "color_changed",
                         G_CALLBACK (interactive_preview_callback),
                         NULL);
-      gtk_widget_show (colorbutton);
-      gtk_table_attach_defaults (GTK_TABLE (table), colorbutton, 2*k + 1, 2*k + 2, 2, 3);
-      gimp_help_set_help_data (colorbutton,
+      gtk_widget_show (colorbutton[k]);
+      gtk_table_attach_defaults (GTK_TABLE (table), colorbutton[k], 2*k + 1, 2*k + 2, 2, 3);
+      gimp_help_set_help_data (colorbutton[k],
                                _("Set light source color"), NULL);
 
       /* Position vector settings */
@@ -474,6 +487,25 @@ create_light_page (void)
                         NULL);
       gimp_help_set_help_data (spin_dir_z[k],
                                _("Light source Z direction in XYZ space"), NULL);
+
+      label = gtk_label_new (_("Lighting preset:"));
+      gtk_table_set_row_spacing (GTK_TABLE (table), 4, 24);
+      gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, 5, 6);
+      gtk_widget_show (label);
+
+      button = gtk_button_new_with_mnemonic (_("_Save"));
+      gtk_table_attach_defaults (GTK_TABLE (table), button, 3, 4, 5, 6);
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (save_lighting_preset),
+                        NULL);
+      gtk_widget_show (button);
+
+      button = gtk_button_new_with_mnemonic (_("_Load"));
+      gtk_table_attach_defaults (GTK_TABLE (table), button, 5, 6, 5, 6);
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (load_lighting_preset),
+                        NULL);
+      gtk_widget_show (button);
     }
 
   gtk_widget_show (page);
@@ -873,6 +905,7 @@ main_dialog (GimpDrawable *drawable)
   */
 
   gimp_ui_init ("Lighting", FALSE);
+  lighting_effects_path = gimp_gimprc_query ("lighting-effects-path");
 
   lighting_stock_init ();
 
@@ -977,3 +1010,274 @@ main_dialog (GimpDrawable *drawable)
 
   return run;
 }
+
+
+static void
+save_lighting_preset (GtkWidget *widget,
+                      gpointer   data)
+{
+  static GtkWidget *window = NULL;
+
+  if (! window)
+    {
+      window =
+        gtk_file_chooser_dialog_new (_("Save Lighting Preset"),
+                                     GTK_WINDOW (appwin),
+                                     GTK_FILE_CHOOSER_ACTION_SAVE,
+
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+
+                                     NULL);
+
+      g_signal_connect (window, "destroy",
+                        G_CALLBACK (gtk_widget_destroyed),
+                        &window);
+      g_signal_connect (window, "response",
+                        G_CALLBACK (file_chooser_response),
+                        NULL);
+    }
+
+  if (lighting_effects_path)
+    {
+      GList *list;
+      gchar *dir;
+
+      list = gimp_path_parse (lighting_effects_path, 16, FALSE, 0);
+      dir = gimp_path_get_user_writable_dir (list);
+      gimp_path_free (list);
+
+      if (! dir)
+        dir = g_strdup (gimp_directory ());
+
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), dir);
+
+      g_free (dir);
+    }
+  else
+    {
+      const gchar *tmp = g_get_tmp_dir ();
+
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), tmp);
+    }
+
+
+  gtk_window_present (GTK_WINDOW (window));
+}
+
+
+static void
+file_chooser_response (GtkFileChooser *chooser,
+                       gint            response_id,
+                       gpointer        data)
+{
+  FILE          *fp;
+  gint           num_lights = 0;
+  gint           k;
+  LightSettings *source;
+  gchar          buffer1[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar          buffer2[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar          buffer3[G_ASCII_DTOSTR_BUF_SIZE];
+  gint           blen       = G_ASCII_DTOSTR_BUF_SIZE;
+
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      gchar   *filename;
+
+      filename = gtk_file_chooser_get_filename (chooser);
+
+      fp = fopen (filename, "w");
+      if (!fp)
+          g_message ("Cannot open file '%s' for saving", filename);
+      else
+        {
+          for (k = 0; k < NUM_LIGHTS; k++)
+            if (mapvals.lightsource[k].type != NO_LIGHT)
+              ++num_lights;
+
+          fprintf (fp, "Number of lights: %d\n", num_lights);
+
+          for (k = 0; k < NUM_LIGHTS; k++)
+            if (mapvals.lightsource[k].type != NO_LIGHT)
+              {
+                source = &mapvals.lightsource[k];
+
+                switch (source->type)
+                  {
+                  case POINT_LIGHT:
+                    fprintf (fp, "Type: Point\n");
+                    break;
+                  case DIRECTIONAL_LIGHT:
+                    fprintf (fp, "Type: Directional\n");
+                    break;
+                  case SPOT_LIGHT:
+                    fprintf (fp, "Type: Spot\n");
+                    break;
+                  default:
+                    g_message ("Unknown light type: %d", mapvals.lightsource[k].type);
+                    continue;
+                  }
+
+                fprintf (fp, "Position: %s %s %s\n",
+                         g_ascii_dtostr (buffer1, blen, source->position.x),
+                         g_ascii_dtostr (buffer2, blen, source->position.y),
+                         g_ascii_dtostr (buffer3, blen, source->position.z));
+
+                fprintf (fp, "Direction: %s %s %s\n",
+                         g_ascii_dtostr (buffer1, blen, source->direction.x),
+                         g_ascii_dtostr (buffer2, blen, source->direction.y),
+                         g_ascii_dtostr (buffer3, blen, source->direction.z));
+
+                fprintf (fp, "Color: %s %s %s\n",
+                         g_ascii_dtostr (buffer1, blen, source->color.r),
+                         g_ascii_dtostr (buffer2, blen, source->color.g),
+                         g_ascii_dtostr (buffer3, blen, source->color.b));
+
+                fprintf (fp, "Intensity: %s\n", 
+                         g_ascii_dtostr (buffer1, blen, source->intensity));
+              }
+          
+          fclose (fp);
+        }
+    }
+
+  gtk_widget_destroy (GTK_WIDGET (chooser));
+}
+
+static void
+load_lighting_preset (GtkWidget *widget,
+                      gpointer   data)
+{
+  static GtkWidget *window = NULL;
+
+  if (! window)
+    {
+      window =
+        gtk_file_chooser_dialog_new (_("Load Lighting Preset"),
+                                     GTK_WINDOW (appwin),
+                                     GTK_FILE_CHOOSER_ACTION_OPEN,
+
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+
+                                     NULL);
+
+      gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
+
+      g_signal_connect (window, "destroy",
+                        G_CALLBACK (gtk_widget_destroyed),
+                        &window);
+      g_signal_connect (window, "response",
+                        G_CALLBACK (load_file_chooser_response),
+                        NULL);
+    }
+
+  if (lighting_effects_path)
+    {
+      GList *list;
+      gchar *dir;
+
+      list = gimp_path_parse (lighting_effects_path, 16, FALSE, 0);
+      dir = gimp_path_get_user_writable_dir (list);
+      gimp_path_free (list);
+
+      if (! dir)
+        dir = g_strdup (gimp_directory ());
+
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), dir);
+
+      g_free (dir);
+    }
+  else
+    {
+      const gchar *tmp = g_get_tmp_dir ();
+
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), tmp);
+    }
+
+
+  gtk_window_present (GTK_WINDOW (window));
+}
+
+
+static void
+load_file_chooser_response (GtkFileChooser *chooser,
+                            gint            response_id,
+                            gpointer        data)
+{
+  FILE          *fp;
+  gint           num_lights;
+  gint           k;
+  LightSettings *source;
+  gchar          buffer1[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar          buffer2[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar          buffer3[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar          type_label[20];
+  gchar         *endptr;
+
+
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      gchar   *filename;
+
+      filename = gtk_file_chooser_get_filename (chooser);
+
+      fp = fopen (filename, "r");
+      if (!fp)
+          g_message ("Cannot open file '%s' for reading", filename);
+      else
+        {
+          fscanf (fp, "Number of lights: %d", &num_lights);
+
+          for (k = 0; k < num_lights; k++)
+            {
+              source = &mapvals.lightsource[k];
+
+              fscanf (fp, " Type: %s", type_label);
+
+              if (!strcmp (type_label, "Point"))
+                source->type = POINT_LIGHT;
+              else if (!strcmp (type_label, "Directional"))
+                source->type = DIRECTIONAL_LIGHT;
+              else if (!strcmp (type_label, "Spot"))
+                source->type = SPOT_LIGHT;
+              else
+                {
+                  g_message ("Unknown light type: %s", type_label);
+                  fclose (fp);
+                  return;
+                }
+
+              fscanf (fp, " Position: %s %s %s", buffer1, buffer2, buffer3);
+              source->position.x = g_ascii_strtod (buffer1, &endptr);
+              source->position.y = g_ascii_strtod (buffer2, &endptr);
+              source->position.z = g_ascii_strtod (buffer3, &endptr);
+
+              fscanf (fp, " Direction: %s %s %s", buffer1, buffer2, buffer3);
+              source->direction.x = g_ascii_strtod (buffer1, &endptr);
+              source->direction.y = g_ascii_strtod (buffer2, &endptr);
+              source->direction.z = g_ascii_strtod (buffer3, &endptr);
+
+              fscanf (fp, " Color: %s %s %s", buffer1, buffer2, buffer3);
+              source->color.r = g_ascii_strtod (buffer1, &endptr);
+              source->color.g = g_ascii_strtod (buffer2, &endptr);
+              source->color.b = g_ascii_strtod (buffer3, &endptr);
+              source->color.a = 1.0;
+
+              fscanf (fp, " Intensity: %s", buffer1);
+              source->intensity = g_ascii_strtod (buffer1, &endptr);
+
+              gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo[k]),
+                                             source->type);
+              gimp_color_button_set_color (GIMP_COLOR_BUTTON (colorbutton[k]),
+                                           &source->color);
+              }
+
+          fclose (fp);
+        }
+    }
+  
+  gtk_widget_destroy (GTK_WIDGET (chooser));
+  interactive_preview_callback (GTK_WIDGET (chooser));
+}
+

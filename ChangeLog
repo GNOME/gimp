@@ -1,3 +1,8 @@
+2004-07-19  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/Lighting/lighting_ui.c: added ability to save and load
+	presets for lights.
+	
 2004-07-19  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/orientation.c: normalized some variables
