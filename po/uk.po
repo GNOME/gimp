@@ -199,7 +199,7 @@ msgstr "Зм╕щення:"
 
 #: app/blend.c:344
 msgid "Blend:"
-msgstr ""
+msgstr "Злиття:"
 
 #: app/blend.c:352
 msgid "Gradient:"
@@ -207,7 +207,7 @@ msgstr "Град╕╓нт:"
 
 #: app/blend.c:360
 msgid "Repeat:"
-msgstr ""
+msgstr "Повтор:"
 
 #: app/blend.c:379
 msgid "Adaptive Supersampling"
@@ -227,19 +227,19 @@ msgstr ""
 
 #: app/blend.c:472
 msgid "Blend: 0, 0"
-msgstr ""
+msgstr "Злиття: 0, 0"
 
 #: app/blend.c:535
 msgid "Blend operation failed."
-msgstr ""
+msgstr "Операц╕я злиття не вдалась."
 
 #: app/blend.c:541
 msgid "Blending..."
-msgstr ""
+msgstr "Зливання..."
 
 #: app/blend.c:618 app/blend.c:628
 msgid "Blend: "
-msgstr ""
+msgstr "Злиття: "
 
 #: app/brightness_contrast.c:126
 msgid "Brightness-Contrast Options"
@@ -515,6 +515,8 @@ msgid ""
 "Channel to Selection \n"
 "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
 msgstr ""
+"Канал -> Вид╕лення \n"
+"<Shift> Додати       <Ctrl> В╕дняти       <Shift><Ctrl> Перетнути"
 
 #: app/channels_dialog.c:211
 msgid "Delete Channel"
@@ -686,20 +688,20 @@ msgstr "Син╕й:"
 
 #: app/color_picker.c:258 app/color_picker.c:264 app/color_picker.c:273
 msgid "Alpha:"
-msgstr ""
+msgstr "Альфа:"
 
 #: app/color_picker.c:259 app/color_picker.c:274 app/color_select.c:437
 #: app/colormap_dialog.i.c:288
 msgid "Hex Triplet:"
-msgstr ""
+msgstr "Ш╕стнадцятковий триплет:"
 
 #: app/color_picker.c:263 app/colormap_dialog.i.c:277
 msgid "Index:"
-msgstr ""
+msgstr "╤ндекс:"
 
 #: app/color_picker.c:268
 msgid "Hex Triplet"
-msgstr ""
+msgstr "Ш╕стнадцятковий триплет"
 
 #: app/color_picker.c:272 app/histogram_tool.c:264
 msgid "Intensity:"
@@ -711,7 +713,7 @@ msgstr "╤нтенсивн╕сть:"
 #: app/color_picker.c:682 app/info_window.c:205 app/info_window.c:210
 #: app/info_window.c:215 app/info_window.c:220
 msgid "N/A"
-msgstr ""
+msgstr "Н/Д"
 
 #: app/colormap_dialog.i.c:179
 msgid "Indexed Color Palette"
@@ -776,7 +778,7 @@ msgstr ""
 
 #: app/convert.c:492
 msgid "Indexed Color Conversion"
-msgstr ""
+msgstr "Конвертац╕я в ╕ндексован╕ кольори"
 
 #: app/convert.c:511
 msgid "General Palette Options"
@@ -973,27 +975,27 @@ msgstr "Стан пристрою"
 #: app/devices.c:753 app/levels.c:613 app/palette.c:2113
 #: app/preferences_dialog.c:361 app/preferences_dialog.c:1355
 msgid "Save"
-msgstr ""
+msgstr "Зберегти"
 
 #: app/docindex.c:574
 msgid "This file cannot be moved up."
-msgstr ""
+msgstr "Цей файл не можна перем╕стити вище."
 
 #: app/docindex.c:578
 msgid "There's no selection to move up."
-msgstr ""
+msgstr "Нема╓ вид╕лення для перем╕щення вище."
 
 #: app/docindex.c:592
 msgid "This file cannot be moved down."
-msgstr ""
+msgstr "Цей файл не можна перем╕стити нижче."
 
 #: app/docindex.c:596
 msgid "There's no selection to move down."
-msgstr ""
+msgstr "Нема╓ вид╕лення для перем╕щення нижче."
 
 #: app/docindex.c:612
 msgid "There's no selection to remove."
-msgstr ""
+msgstr "Нема╓ вид╕лення для видалення."
 
 #: app/docindexif.c:84
 msgid "Open"
@@ -1038,19 +1040,19 @@ msgstr "Покажчик документ╕в"
 
 #: app/docindexif.c:244
 msgid "GTK successfully started"
-msgstr ""
+msgstr "GTK усп╕шно запущено"
 
 #: app/dodgeburn.c:123
 msgid "Dodge"
-msgstr ""
+msgstr "Осв╕тлювач"
 
 #: app/dodgeburn.c:123
 msgid "Burn"
-msgstr ""
+msgstr "Затемнювач"
 
 #: app/dodgeburn.c:151
 msgid "Exposure:"
-msgstr ""
+msgstr "Експозиц╕я:"
 
 #. the type (dodge or burn)
 #: app/dodgeburn.c:171 app/ink.c:418
@@ -1064,11 +1066,11 @@ msgstr "Режим"
 
 #: app/edit_selection.c:168
 msgid "Move: 0, 0"
-msgstr ""
+msgstr "Перем╕щення: 0, 0"
 
 #: app/edit_selection.c:393 app/edit_selection.c:403
 msgid "Move: "
-msgstr ""
+msgstr "Перем╕щення: "
 
 #: app/equalize.c:36
 msgid "Equalize does not operate on indexed drawables."
@@ -1107,7 +1109,7 @@ msgstr "Очистити"
 
 #: app/errorconsole.c:302
 msgid "Write all errors to file..."
-msgstr ""
+msgstr "Записати вс╕ помилки у файл..."
 
 #: app/errorconsole.c:309
 msgid "Write selection to file..."
@@ -1298,7 +1300,7 @@ msgstr ""
 
 #: app/gdisplay.c:220
 msgid "grayscale"
-msgstr "п╕втони"
+msgstr "градац╕╖ с╕рого"
 
 #: app/gdisplay.c:223
 msgid "indexed-empty"
@@ -1958,7 +1960,7 @@ msgstr ""
 #. The shell
 #: app/gradient_select.c:143
 msgid "Gradient Selection"
-msgstr ""
+msgstr "Виб╕р град╕╓нту"
 
 #: app/histogram_tool.c:169
 msgid "Histogram Options"
@@ -1978,28 +1980,28 @@ msgstr ""
 
 #: app/histogram_tool.c:262
 msgid "Median:"
-msgstr ""
+msgstr "Мед╕ана:"
 
 #: app/histogram_tool.c:263
 msgid "Pixels:"
-msgstr ""
+msgstr "П╕ксел╕в:"
 
 #: app/histogram_tool.c:265
 msgid "Count:"
-msgstr ""
+msgstr "К╕льк╕сть:"
 
 #: app/histogram_tool.c:266
 msgid "Percentile:"
-msgstr ""
+msgstr "В╕дсоток:"
 
 #. The shell and main vbox
 #: app/histogram_tool.c:287 app/tools.c:695
 msgid "Histogram"
-msgstr ""
+msgstr "Г╕стограма"
 
 #: app/histogram_tool.c:311
 msgid "Information on Channel:"
-msgstr ""
+msgstr "╤нформац╕я про канал:"
 
 #: app/hue_saturation.c:247
 msgid "Hue-Saturation Options"
@@ -2011,31 +2013,31 @@ msgstr "Тон-насичен╕сть працю╓ лише на RGB-зображеннях."
 
 #: app/hue_saturation.c:353
 msgid "Master"
-msgstr ""
+msgstr "Майстер"
 
 #: app/hue_saturation.c:354
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: app/hue_saturation.c:355
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #: app/hue_saturation.c:356
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: app/hue_saturation.c:357
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: app/hue_saturation.c:358
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: app/hue_saturation.c:359
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. The shell and main vbox
 #: app/hue_saturation.c:367 app/tools.c:615
@@ -2044,42 +2046,42 @@ msgstr "Тон-Насичен╕сть"
 
 #: app/hue_saturation.c:444
 msgid "Hue / Lightness / Saturation Adjustments"
-msgstr ""
+msgstr "П╕дб╕р Тону / Яскравост╕ / Насиченост╕"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:456 app/layers_dialog.c:236 app/paint_funcs.c:94
 #: app/tool_options.c:1012
 msgid "Hue"
-msgstr ""
+msgstr "Тон"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:490
 msgid "Lightness"
-msgstr ""
+msgstr "Яскрав╕сть"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:524 app/layers_dialog.c:238 app/paint_funcs.c:95
 #: app/tool_options.c:1013
 msgid "Saturation"
-msgstr ""
+msgstr "Насичен╕сть"
 
 #: app/image_new.c:59 app/info_window.c:65 app/info_window.c:603
 #: app/preferences_dialog.c:1524
 msgid "Grayscale"
-msgstr ""
+msgstr "Градац╕╖ с╕рого"
 
 #: app/image_new.c:65 app/layers_dialog.c:3329
 msgid "Foreground"
-msgstr ""
+msgstr "Переднього плану"
 
 #: app/image_new.c:75 app/layers_dialog.c:3331
 msgid "White"
-msgstr ""
+msgstr "Б╕ле"
 
 #: app/image_new.c:263
 #, c-format
 msgid "%d Bytes"
-msgstr "%d Бийт╕в"
+msgstr "%d Байт╕в"
 
 #: app/image_new.c:265
 #, c-format
@@ -2214,7 +2216,7 @@ msgstr ""
 #: app/info_window.c:377
 #, c-format
 msgid "Info: %s-%d.%d"
-msgstr ""
+msgstr "╤нформац╕я: %s-%d.%d"
 
 #: app/info_window.c:575
 msgid "%%d x %%d pixels (%%.%df x %%.%df %s)"
@@ -2481,7 +2483,7 @@ msgstr ""
 
 #: app/install.c:263
 msgid "GIMP Installation"
-msgstr ""
+msgstr "╤нсталяц╕я GIMP"
 
 #: app/install.c:268
 msgid "Install"
@@ -2543,7 +2545,7 @@ msgstr ""
 
 #: app/interface.c:535
 msgid "The GIMP"
-msgstr ""
+msgstr "GIMP"
 
 #: app/internal_procs.c:68
 msgid "Internal Procedures"
@@ -2555,7 +2557,7 @@ msgstr ""
 
 #: app/internal_procs.c:74
 msgid "Channel"
-msgstr ""
+msgstr "Канал"
 
 #: app/internal_procs.c:77
 msgid "Channel Ops"
@@ -2564,7 +2566,7 @@ msgstr ""
 #: app/internal_procs.c:80 app/layers_dialog.c:240 app/paint_funcs.c:96
 #: app/tool_options.c:900 app/tool_options.c:1014
 msgid "Color"
-msgstr ""
+msgstr "Кол╕р"
 
 #: app/internal_procs.c:83
 msgid "Convert"
@@ -2592,7 +2594,7 @@ msgstr ""
 
 #: app/internal_procs.c:101 app/palette.c:3243
 msgid "Image"
-msgstr ""
+msgstr "Зображення"
 
 #: app/internal_procs.c:104
 msgid "Image mask"
@@ -2630,7 +2632,7 @@ msgstr ""
 #: app/internal_procs.c:131 app/palette.c:2260 app/palette.c:2272
 #: app/palette_select.c:80
 msgid "Palette"
-msgstr ""
+msgstr "Пал╕тра"
 
 #: app/internal_procs.c:134
 msgid "Parasite procedures"
@@ -2687,11 +2689,11 @@ msgstr ""
 
 #: app/layer_select.c:101
 msgid "Layer Select"
-msgstr ""
+msgstr "Вибрати шар"
 
 #: app/layers_dialog.c:214 app/paint_funcs.c:83 app/tool_options.c:1000
 msgid "Normal"
-msgstr ""
+msgstr "Нормальня"
 
 #: app/layers_dialog.c:216 app/paint_funcs.c:84 app/tool_options.c:1001
 msgid "Dissolve"
@@ -2699,11 +2701,11 @@ msgstr ""
 
 #: app/layers_dialog.c:218 app/paint_funcs.c:86 app/tool_options.c:1003
 msgid "Multiply (Burn)"
-msgstr ""
+msgstr "Множення (Затемювач)"
 
 #: app/layers_dialog.c:220 app/paint_funcs.c:98 app/tool_options.c:1004
 msgid "Divide (Dodge)"
-msgstr ""
+msgstr "Д╕лення (Осв╕тлювач)"
 
 #: app/layers_dialog.c:222 app/paint_funcs.c:87 app/tool_options.c:1005
 msgid "Screen"
@@ -2715,23 +2717,23 @@ msgstr ""
 
 #: app/layers_dialog.c:226 app/paint_funcs.c:89 app/tool_options.c:1007
 msgid "Difference"
-msgstr ""
+msgstr "Р╕зниця"
 
 #: app/layers_dialog.c:228 app/paint_funcs.c:90 app/tool_options.c:1008
 msgid "Addition"
-msgstr ""
+msgstr "Додавання"
 
 #: app/layers_dialog.c:232 app/paint_funcs.c:92 app/tool_options.c:1010
 msgid "Darken Only"
-msgstr ""
+msgstr "Зам╕на темним"
 
 #: app/layers_dialog.c:234 app/paint_funcs.c:93 app/tool_options.c:1011
 msgid "Lighten Only"
-msgstr ""
+msgstr "Зам╕на св╕тлим"
 
 #: app/layers_dialog.c:261 app/layers_dialog.c:3378
 msgid "New Layer"
-msgstr ""
+msgstr "Новий шар"
 
 #: app/layers_dialog.c:265
 msgid ""
@@ -3528,7 +3530,7 @@ msgstr "/Зображення/Режим/RGB"
 
 #: app/menus.c:414
 msgid "/Image/Mode/Grayscale"
-msgstr "/Зображення/Режим/П╕втони"
+msgstr "/Зображення/Режим/Градац╕╖ с╕рого"
 
 #: app/menus.c:416
 msgid "/Image/Mode/Indexed..."
@@ -4076,21 +4078,21 @@ msgstr ""
 
 #: app/move.c:453
 msgid "Move Tool Options"
-msgstr ""
+msgstr "Параметри перем╕щення"
 
 #. create the info dialog
 #: app/nav_window.c:1254
 #, c-format
 msgid "Navigation: %s-%d.%d"
-msgstr ""
+msgstr "Нав╕гац╕я: %s-%d.%d"
 
 #: app/nav_window.c:1552
 msgid "Navigation: No Image"
-msgstr ""
+msgstr "Нав╕гац╕я: Нема╓ зображення"
 
 #: app/paint_core.c:707
 msgid "No brushes available for use with this tool."
-msgstr ""
+msgstr "Нема╓ пензл╕в доступних для використання з цим ╕нструментом."
 
 #: app/paint_funcs.c:85 app/tool_options.c:1002
 msgid "Behind"
@@ -4098,19 +4100,19 @@ msgstr ""
 
 #: app/paint_funcs.c:91
 msgid "Subtraction"
-msgstr ""
+msgstr "В╕дн╕мання"
 
 #: app/paint_funcs.c:99
 msgid "Erase"
-msgstr ""
+msgstr "Очищення"
 
 #: app/paintbrush.c:192
 msgid "Once Forward"
-msgstr ""
+msgstr "На один вперед"
 
 #: app/paintbrush.c:194
 msgid "Once Backward"
-msgstr ""
+msgstr "На один назад"
 
 #: app/paintbrush.c:196
 msgid "Loop Sawtooth"
@@ -4122,7 +4124,7 @@ msgstr ""
 
 #: app/paintbrush.c:240
 msgid "Fade Out"
-msgstr ""
+msgstr "Перех╕д"
 
 #. the gradient type
 #: app/paintbrush.c:318
@@ -5303,11 +5305,11 @@ msgstr ""
 
 #: app/tool_options.c:552
 msgid "Blend Options"
-msgstr ""
+msgstr "Параметри злиття"
 
 #: app/tool_options.c:554
 msgid "Pencil Options"
-msgstr ""
+msgstr "Параметри ол╕вця"
 
 #: app/tool_options.c:556
 msgid "Paintbrush Options"
@@ -5335,7 +5337,7 @@ msgstr "Параметри чорнила"
 
 #: app/tool_options.c:568
 msgid "Dodge or Burn Options"
-msgstr ""
+msgstr "Параметри осв╕тлювача чи затемнювача"
 
 #: app/tool_options.c:570
 msgid "Smudge Options"
@@ -5439,15 +5441,15 @@ msgstr ""
 
 #: app/tools.c:181
 msgid "Move"
-msgstr ""
+msgstr "Перем╕стити"
 
 #: app/tools.c:182
 msgid "/Tools/Move"
-msgstr ""
+msgstr "/╤нструменти/Перем╕стити"
 
 #: app/tools.c:185
 msgid "Move layers & selections"
-msgstr ""
+msgstr "Перем╕щення шар╕в та вид╕лень"
 
 #: app/tools.c:197
 msgid "Magnify"
@@ -5533,15 +5535,15 @@ msgstr ""
 
 #: app/tools.c:357
 msgid "Blend"
-msgstr ""
+msgstr "Злити"
 
 #: app/tools.c:358
 msgid "/Tools/Blend"
-msgstr ""
+msgstr "/╤нструменти/Злити"
 
 #: app/tools.c:361
 msgid "Fill with a color gradient"
-msgstr ""
+msgstr "Заповнити град╕╓нтом кольору"
 
 #: app/tools.c:373
 msgid "Pencil"
@@ -5629,11 +5631,11 @@ msgstr "Малювати чорнилом"
 
 #: app/tools.c:485 app/tools.c:489
 msgid "Dodge or Burn"
-msgstr ""
+msgstr "Осв╕тлення чи затемнення"
 
 #: app/tools.c:486
 msgid "/Tools/DodgeBurn"
-msgstr ""
+msgstr "/╤нструменти/Осв╕тлення-Затемнення"
 
 #: app/tools.c:501 app/tools.c:505
 msgid "Smudge"
@@ -6005,15 +6007,15 @@ msgstr "зм╕на розм╕ру шару"
 
 #: app/undo.c:2894
 msgid "quickmask"
-msgstr ""
+msgstr "швидка маска"
 
 #: app/undo.c:2895
 msgid "attach parasite"
-msgstr ""
+msgstr "долучення паразиту"
 
 #: app/undo.c:2896
 msgid "remove parasite"
-msgstr ""
+msgstr "видалення паразиту"
 
 #: app/undo.c:2897
 msgid "resolution change"
@@ -6029,12 +6031,12 @@ msgstr "зм╕на розм╕ру зображення"
 
 #: app/undo.c:2900
 msgid "misc"
-msgstr ""
+msgstr "╕нше"
 
 #: app/xcf.c:365
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr ""
+msgstr "Помилка XCF: верс╕я %d XCF-файлу, що не п╕дтриму╓ться"
 
 #: app/xcf.c:1777
 msgid ""
@@ -6042,6 +6044,9 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
+"Попередження XCF: формат файлу XCF верс╕╖ 0\n"
+"нев╕рно збер╕га╓ ╕ндексован╕ мапи кольор╕в.\n"
+"Зам╕щення на мапу градац╕й с╕рого."
 
 #. flow slider
 #: app/xinput_airbrush.c:322
