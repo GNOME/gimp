@@ -30,6 +30,15 @@ typedef struct _BoundBox BoundBox;
 typedef struct _PixelArea PixelArea;
 
 
+/* how to handle hitting the edge when iterating */
+typedef enum 
+{
+  EDGETYPE_NONE  = 0,
+  EDGETYPE_NEXT  = 1,  /* go to next row, stop at bottom */
+  EDGETYPE_WRAP  = 2   /* wrap right->left bottom->top */
+} EdgeType;
+
+
 struct _BoundBox
 {
   /* coords of upper left corner */
@@ -53,6 +62,9 @@ struct _PixelArea
 
   /* how to ref this area when iterating */
   RefType reftype;
+
+  /* how to handle hitting the edge */
+  EdgeType edgetype;
 };
 
 
@@ -61,6 +73,11 @@ struct _PixelArea
 void              pixelarea_init          (PixelArea *, Canvas *,
                                            int x, int y, int w, int h,
                                            int will_dirty);
+
+void              pixelarea_init2         (PixelArea *, Canvas *,
+                                           guint, guint, guint, guint,
+                                           RefType, EdgeType);
+
 void              pixelarea_getdata       (PixelArea *, struct _PixelRow *, int);
 Tag               pixelarea_tag           (PixelArea *);
 

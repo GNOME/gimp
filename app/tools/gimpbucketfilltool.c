@@ -482,7 +482,7 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
                     0, 0,
                     0, 0,
                     TRUE);
-    
+
     switch (fill_mode)
       {
       case FgColorFill:
@@ -496,11 +496,6 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
           else
             palette_get_background (&col);
         
-          pixelarea_init (&bufPR, buf_tiles,
-                          0, 0,
-                          0, 0,
-                          TRUE);
-          
           color_area (&bufPR, &col);
         }
         break;
@@ -510,21 +505,12 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
           PixelArea patPR;
           GPatternP pat = get_active_pattern ();
 
-#define FIXME
-#if 0
-          pixelarea_init_tiling (&patPR, pat->mask,
-                                 0, 0,
-                                 0, 0,
-                                 0,
-                                 FALSE) ;
+          pixelarea_init2 (&patPR, pat->mask,
+                           0, 0,
+                           0, 0,
+                           REFTYPE_READ, EDGETYPE_WRAP) ;
 
-          pixelarea_init (&bufPR, buf_tiles,
-                          0, 0,
-                          0, 0,
-                          TRUE);
-          
           copy_area (&patPR, &bufPR);
-#endif
         }
         break;
       

@@ -29,15 +29,16 @@ struct _PixelAreaGroup
 {
   /* the areas we iterate over */
   GList * pixelareas;
+
+  /* should we autoconfigure the areas */
   int     autoref;
 
   /* the size of the intersection of all areas */
   int     region_width;
   int     region_height;
 
-  /* the size of the current chunk */
-  int     portion_width;
-  int     portion_height;
+  /* the current chunk */
+  BoundBox chunk;
 };
 
 
@@ -62,34 +63,76 @@ pixelarea_init  (
                  int will_dirty
                  )
 {
-  if (pa)
-    {
-      pa->canvas = c;
-
-      /* handle the shorthand for width and height */
-      if (w == 0) w = canvas_width (pa->canvas);
-      if (h == 0) h = canvas_height (pa->canvas);
-      
-      /* clip the area to the canvas bounds */
-      pa->area.x2 = CLAMP (x+w, 0, canvas_width (pa->canvas));
-      pa->area.y2 = CLAMP (y+h, 0, canvas_height (pa->canvas));
-      pa->area.x1 = CLAMP (x, 0, canvas_width (pa->canvas));
-      pa->area.y1 = CLAMP (y, 0, canvas_height (pa->canvas));
-
-      /* start the chunk at the top of the area, with zero size */
-      pa->chunk.x1 = pa->area.x1;
-      pa->chunk.y1 = pa->area.y1;
-      pa->chunk.x2 = pa->area.x1;
-      pa->chunk.y2 = pa->area.y1;
-
-      /* remember how to ref the canvas portions */
-      if (will_dirty == TRUE)
-        pa->reftype = REFTYPE_WRITE;
-      else
-        pa->reftype = REFTYPE_READ;
-    }
+  pixelarea_init2 (pa, c,
+                   x, y,
+                   w, h,
+                   ((will_dirty == TRUE) ? REFTYPE_WRITE : REFTYPE_READ),
+                   EDGETYPE_NEXT);
 }
 
+
+void 
+pixelarea_init2  (
+                  PixelArea * pa,
+                  Canvas * c,
+                  guint x,
+                  guint y,
+                  guint w,
+                  guint h,
+                  RefType r,
+                  EdgeType e
+                  )
+{
+  g_return_if_fail (pa != NULL);
+  g_return_if_fail (c != NULL);
+
+  pa->canvas = c;
+
+  /* handle the shorthand for width and height */
+  if (w == 0) w = canvas_width (c);
+  if (h == 0) h = canvas_height (c);
+      
+  /* clip the area to the canvas bounds */
+  pa->area.x2 = CLAMP (x+w, 0, canvas_width (c));
+  pa->area.y2 = CLAMP (y+h, 0, canvas_height (c));
+  pa->area.x1 = CLAMP (x, 0, canvas_width (c));
+  pa->area.y1 = CLAMP (y, 0, canvas_height (c));
+
+  /* start the chunk at the top of the area, with zero size */
+  pa->chunk.x1 = pa->area.x1;
+  pa->chunk.y1 = pa->area.y1;
+  pa->chunk.x2 = pa->area.x1;
+  pa->chunk.y2 = pa->area.y1;
+
+  /* remember how to ref the canvas portions */
+  switch (r)
+    {
+    case REFTYPE_WRITE:
+    case REFTYPE_READ:
+    case REFTYPE_NONE:
+      pa->reftype = r;
+      break;
+    default:
+      g_warning ("bad ref type, setting to REFTYPE_WRITE");
+      pa->reftype = REFTYPE_WRITE;
+      break;
+    }
+
+  /* remember how to handle edges */
+  switch (e)
+    {
+    case EDGETYPE_NEXT:
+    case EDGETYPE_WRAP:
+      pa->edgetype = e;
+      break;
+
+    case EDGETYPE_NONE:
+    default:
+      g_warning ("bad edge type, setting to EDGETYPE_NEXT");
+      pa->edgetype = EDGETYPE_NEXT;
+      break;
+    }
+}
 
 void 
 pixelarea_getdata  (
@@ -282,9 +325,9 @@ pixelarea_tag  (
                 PixelArea * pa
                 )
 {
-  if (pa)
-    return canvas_tag (pa->canvas);
-  return tag_null ();
+  if (pa == NULL)
+    return tag_null ();
+  return canvas_tag (pa->canvas);
 }
 
 
@@ -293,9 +336,8 @@ pixelarea_areawidth  (
                       PixelArea * pa
                       )
 {
-  if (pa)
-    return pa->area.x2 - pa->area.x1;
-  return 0;
+  g_return_val_if_fail (pa != NULL, 0);
+  return pa->area.x2 - pa->area.x1;
 }
 
 
@@ -304,9 +346,8 @@ pixelarea_areaheight  (
                        PixelArea * pa
                        )
 {
-  if (pa)
-    return pa->area.y2 - pa->area.y1;
-  return 0;
+  g_return_val_if_fail (pa != NULL, 0);
+  return pa->area.y2 - pa->area.y1;
 }
 
 
@@ -315,9 +356,8 @@ pixelarea_x  (
               PixelArea * pa
               )
 {
-  if (pa)
-    return pa->chunk.x1;
-  return 0;
+  g_return_val_if_fail (pa != NULL, 0);
+  return pa->chunk.x1;
 }
 
 
@@ -326,9 +366,8 @@ pixelarea_y  (
               PixelArea * pa
               )
 {
-  if (pa)
-    return pa->chunk.y1;
-  return 0;
+  g_return_val_if_fail (pa != NULL, 0);
+  return pa->chunk.y1;
 }
 
 
@@ -337,9 +376,8 @@ pixelarea_width  (
                   PixelArea * pa
                   )
 {
-  if (pa)
-    return pa->chunk.x2 - pa->chunk.x1;
-  return 0;
+  g_return_val_if_fail (pa != NULL, 0);
+  return pa->chunk.x2 - pa->chunk.x1;
 }
 
 
@@ -348,9 +386,8 @@ pixelarea_height  (
                    PixelArea * pa
                    )
 {
-  if (pa)
-    return pa->chunk.y2 - pa->chunk.y1;
-  return 0;
+  g_return_val_if_fail (pa != NULL, 0);
+  return pa->chunk.y2 - pa->chunk.y1;
 }
 
 
@@ -359,10 +396,9 @@ pixelarea_data (
                 PixelArea * pa
                 )
 {
-  if (pa)
-    return canvas_portion_data (pa->canvas,
-                                pa->chunk.x1, pa->chunk.y1);
-  return NULL;
+  g_return_val_if_fail (pa != NULL, NULL);
+  return canvas_portion_data (pa->canvas,
+                              pa->chunk.x1, pa->chunk.y1);
 }
 
 
@@ -371,10 +407,9 @@ pixelarea_rowstride (
                      PixelArea * pa
                      )
 {
-  if (pa)
-    return canvas_portion_rowstride (pa->canvas,
-                                     pa->chunk.x1, pa->chunk.y1);
-  return 0;
+  g_return_val_if_fail (pa != NULL, 0);
+  return canvas_portion_rowstride (pa->canvas,
+                                   pa->chunk.x1, pa->chunk.y1);
 }
 
 
@@ -383,38 +418,31 @@ pixelarea_ref (
                PixelArea * pa
                )
 {
-  guint rc = FALSE;
+  RefRC rc = REFRC_FAIL;
   
-  if (pa)
+  g_return_val_if_fail (pa != NULL, FALSE);
+  
+  switch (pa->reftype)
     {
-      RefRC rrc = REFRC_FAIL;
+    case REFTYPE_WRITE:
+      rc = canvas_portion_refrw (pa->canvas,
+                                 pa->chunk.x1, pa->chunk.y1);
+      break;
       
-      switch (pa->reftype)
-        {
-        case REFTYPE_WRITE:
-          rrc = canvas_portion_refrw (pa->canvas,
-                                      pa->chunk.x1, pa->chunk.y1);
-          break;
-        case REFTYPE_READ:
-        default:
-          rrc = canvas_portion_refro (pa->canvas,
-                                      pa->chunk.x1, pa->chunk.y1);
-          break;
-        }
-
-      switch (rrc)
-        {
-        case REFRC_OK:
-          rc = TRUE;
-          break;
-        case REFRC_FAIL:
-        default:
-          rc = FALSE;
-          break;
-        }
+    case REFTYPE_READ:
+      rc = canvas_portion_refro (pa->canvas,
+                                 pa->chunk.x1, pa->chunk.y1);
+      break;
+      
+    case REFTYPE_NONE:
+      rc = REFRC_OK;
+      break;
     }
+
+  if (rc != REFRC_OK)
+    return FALSE;
   
-  return rc;
+  return TRUE;
 }
 
 
@@ -423,23 +451,27 @@ pixelarea_unref (
                  PixelArea * pa                 
                  )
 {
-  guint rc = FALSE;
-  
-  if (pa)
+   RefRC rc = REFRC_FAIL;
+
+   g_return_val_if_fail (pa != NULL, FALSE);
+
+  switch (pa->reftype)
     {
-      switch (canvas_portion_unref (pa->canvas,
-                                    pa->chunk.x1, pa->chunk.y1))
-        {
-        case REFRC_OK:
-          rc = TRUE;
-          break;
-        case REFRC_FAIL:
-        default:
-          break;
-        }
+    case REFTYPE_WRITE:
+    case REFTYPE_READ:
+      rc = canvas_portion_unref (pa->canvas,
+                                 pa->chunk.x1, pa->chunk.y1);
+      break;
+      
+     case REFTYPE_NONE:
+      rc = REFRC_OK;
+      break;
     }
+
+  if (rc != REFRC_OK)
+    return FALSE;
   
-  return rc;
+  return TRUE;
 }
 
 
@@ -468,7 +500,7 @@ pixelarea_register (
   return configure (next_chunk (pag));
 }
 
-
+#define FIXME /* clean this up */
 void * 
 pixelarea_register_noref  (
                            int num_areas,
@@ -541,11 +573,16 @@ new_group  (
   pag = (PixelAreaGroup *) g_malloc (sizeof (PixelAreaGroup));
 
   pag->pixelareas = NULL;
+
   pag->autoref = autoref;
+
   pag->region_width = G_MAXINT;
   pag->region_height = G_MAXINT;
-  pag->portion_width = 0;
-  pag->portion_height = 0;
+
+  pag->chunk.x1 = 0;
+  pag->chunk.y1 = 0;
+  pag->chunk.x2 = 0;
+  pag->chunk.y2 = 0;
 
   return pag;
 }
@@ -578,7 +615,8 @@ add_area  (
   if (pa)
     {
       GList * list;
-      
+
+      /* it's okay to register an area twice, but we only keep one */
       for (list = pag->pixelareas;
            list;
            list = g_list_next (list))
@@ -589,11 +627,14 @@ add_area  (
 
       pag->pixelareas = g_list_append (pag->pixelareas, pa);
 
-      pag->region_width  = MIN (pag->region_width,
-                                pa->area.x2 - pa->area.x1);
-      
-      pag->region_height = MIN (pag->region_height,
-                                pa->area.y2 - pa->area.y1);
+      if (pa->edgetype == EDGETYPE_NEXT)
+        {
+          pag->region_width = MIN (pag->region_width,
+                                   pa->area.x2 - pa->area.x1);
+          
+          pag->region_height = MIN (pag->region_height,
+                                    pa->area.y2 - pa->area.y1);
+        }
     }
 }
 
@@ -653,7 +694,7 @@ unconfigure  (
     {
       PixelArea * pa = (PixelArea *) list->data;
       if (pixelarea_unref (pa) != TRUE)
-        g_warning ("pixelareagroup_unconfigure() failed to unref...");
+        g_warning ("failed to unref...");
     }
 }
 
@@ -665,42 +706,64 @@ next_chunk  (
              )
 {
   GList * list;
+  guint ww = G_MAXINT;
+  guint hh = G_MAXINT;
   
   g_return_val_if_fail (pag != NULL, NULL);
 
-  /* move all areas to the next chunk */
-  for (list = pag->pixelareas;
-       list;
-       list = g_list_next (list))
+  /* move all chunks to the right or to the next row */
+  if (pag->chunk.x2 < pag->region_width)
     {
-      PixelArea * pa = (PixelArea *) list->data;
+      pag->chunk.x1 = pag->chunk.x2;
 
-      pa->chunk.x1 = pa->chunk.x2;
-
-      if ((pa->chunk.x1 - pa->area.x1) >= pag->region_width)
+      for (list = pag->pixelareas;
+           list;
+           list = g_list_next (list))
         {
+          PixelArea * pa = (PixelArea *) list->data;
+          
+          if ((pa->edgetype == EDGETYPE_WRAP) &&
+              (pa->chunk.x2 >= pa->area.x2))
+            {
+              pa->chunk.x2 = pa->area.x1;
+            }
+
+          pa->chunk.x1 = pa->chunk.x2;
+        }
+    }
+  else
+    {
+      pag->chunk.x1 = 0;
+      pag->chunk.x2 = 0;
+      
+      pag->chunk.y1 = pag->chunk.y2;      
+
+      for (list = pag->pixelareas;
+           list;
+           list = g_list_next (list))
+        {
+          PixelArea * pa = (PixelArea *) list->data;
+
           pa->chunk.x1 = pa->area.x1;
           pa->chunk.x2 = pa->area.x1;
-          pa->chunk.y1 = pa->chunk.y2;
-      
-          if ((pa->chunk.y1 - pa->area.y1) >= pag->region_height)
+
+          if ((pa->edgetype == EDGETYPE_WRAP) &&
+              (pa->chunk.y2 >= pa->area.y2))
             {
-              del_group (pag);
-              return NULL;
+              pa->chunk.y2 = pa->area.y1;
             }
+
+          pa->chunk.y1 = pa->chunk.y2;          
         }
     }
 
   /* determine width and height of next chunk */
-  pag->portion_width = G_MAXINT;
-  pag->portion_height = G_MAXINT;
-
   for (list = pag->pixelareas;
        list;
        list = g_list_next (list))
     {
       PixelArea * pa = (PixelArea *) list->data;
-
+      
       guint w = CLAMP (canvas_portion_width (pa->canvas,
                                              pa->chunk.x1, pa->chunk.y1),
                        0,
@@ -710,27 +773,33 @@ next_chunk  (
                                               pa->chunk.x1, pa->chunk.y1),
                        0,
                        pag->region_height - (pa->chunk.y1 - pa->area.y1)); 
-      
-      pag->portion_width = MIN (w, pag->portion_width);
-      pag->portion_height = MIN (h, pag->portion_height);
+        
+      ww = MIN (w, ww);
+      hh = MIN (h, hh);
+    
+      if ((ww == 0) || (hh == 0))
+        {
+          del_group (pag);
+          return NULL;
+        }
     }
-
-  if ((pag->portion_width == 0) || (pag->portion_height == 0))
-    {
-      del_group (pag);
-      return NULL;
-    }
-
+  
   /* adjust the width and height of each area */
+  pag->chunk.x2 += ww;
+  
+  if (pag->chunk.y2 == pag->chunk.y1)
+    pag->chunk.y2 += hh;
+  
   for (list = pag->pixelareas;
        list;
        list = g_list_next (list))
     {
       PixelArea * pa = (PixelArea *) list->data;
       
-      pa->chunk.x2 += pag->portion_width;
+      pa->chunk.x2 += ww;
+
       if (pa->chunk.y2 == pa->chunk.y1)
-        pa->chunk.y2 += pag->portion_height;
+        pa->chunk.y2 += hh;
     }
 
   return pag;
