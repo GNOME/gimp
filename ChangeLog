@@ -1,5 +1,9 @@
 2004-10-02  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/polar.c: use a GimpAspectPreview.
+
+2004-10-02  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/mapcolor.c: use a GimpAspectPreview and made the
 	code much simpler.
 

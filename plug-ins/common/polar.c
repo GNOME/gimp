@@ -81,22 +81,18 @@
 
 #define SCALE_WIDTH  200
 #define ENTRY_WIDTH   60
-#define PREVIEW_SIZE 128
 
 /***** Types *****/
 
 typedef struct
 {
-  gdouble circle;
-  gdouble angle;
-  gint backwards;
-  gint inverse;
-  gint polrec;
+  gdouble  circle;
+  gdouble  angle;
+  gboolean backwards;
+  gboolean inverse;
+  gboolean polrec;
+  gboolean preview;
 } polarize_vals_t;
-
-static GtkWidget *preview;
-static gint       preview_width, preview_height, preview_bpp;
-static guchar    *preview_cache;
 
 /***** Prototypes *****/
 
@@ -107,16 +103,15 @@ static void run   (const gchar      *name,
                    gint             *nreturn_vals,
                    GimpParam       **return_vals);
 
-static void   polarize(void);
-static gboolean calc_undistorted_coords(double wx, double wy,
-                                        double *x, double *y);
+static void     polarize                (GimpDrawable *drawable);
+static gboolean calc_undistorted_coords (double        wx,
+                                         double        wy,
+                                         double       *x,
+                                         double       *y);
 
-static gint polarize_dialog       (void);
-static void dialog_update_preview (void);
-
-static void dialog_scale_update (GtkAdjustment *adjustment, gdouble *value);
-
-static void polar_toggle_callback (GtkWidget *widget, gpointer data);
+static gboolean polarize_dialog         (GimpDrawable *drawable);
+static void     dialog_update_preview   (GimpDrawable *drawable,
+                                         GimpPreview  *preview);
 
 /***** Variables *****/
 
@@ -131,13 +126,12 @@ GimpPlugInInfo PLUG_IN_INFO =
 static polarize_vals_t pcvals =
 {
   100.0, /* circle */
-  0.0,  /* angle */
-  0, /* backwards */
-  1,  /* inverse */
-  1  /* polar to rectangular? */
+  0.0,   /* angle */
+  FALSE, /* backwards */
+  TRUE,  /* inverse */
+  TRUE,  /* polar to rectangular? */
+  TRUE   /* preview */
 };
-
-static GimpDrawable *drawable;
 
 static gint img_width, img_height, img_has_alpha;
 static gint sel_x1, sel_y1, sel_x2, sel_y2;
@@ -192,6 +186,7 @@ run (const gchar      *name,
 {
   static GimpParam values[1];
 
+  GimpDrawable      *drawable;
   GimpPDBStatusType  status;
   GimpRunMode        run_mode;
   gdouble            xhsiz, yhsiz;
@@ -253,7 +248,7 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_NAME, &pcvals);
 
       /* Get information from the dialog */
-      if (!polarize_dialog ())
+      if (! polarize_dialog (drawable))
         return;
 
       break;
@@ -293,7 +288,7 @@ run (const gchar      *name,
                               gimp_tile_width ());
 
       /* Run! */
-      polarize ();
+      polarize (drawable);
 
       /* If run mode is interactive, flush displays */
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -349,7 +344,7 @@ polarize_func (gint x,
 }
 
 static void
-polarize (void)
+polarize (GimpDrawable *drawable)
 {
   GimpRgnIterator  *iter;
   GimpPixelFetcher *pft;
@@ -578,11 +573,12 @@ calc_undistorted_coords (gdouble  wx,
   return inside;
 }
 
-static gint
-polarize_dialog (void)
+static gboolean
+polarize_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dialog;
-  GtkWidget *vbox;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *table;
   GtkWidget *hbox;
   GtkWidget *toggle;
@@ -600,33 +596,25 @@ polarize_dialog (void)
 
                             NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
   /* Preview */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  preview = gimp_preview_area_new ();
-  preview_width = preview_height = PREVIEW_SIZE;
-  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                    &preview_width,
-                                                    &preview_height,
-                                                    &preview_bpp);
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  preview = gimp_aspect_preview_new (drawable, &pcvals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (dialog_update_preview),
+                            drawable);
 
   /* Controls */
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -635,8 +623,11 @@ polarize_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_scale_update),
+                    G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.circle);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("Offset _angle:"), SCALE_WIDTH, 0,
@@ -644,12 +635,15 @@ polarize_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_scale_update),
+                    G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.angle);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /* togglebuttons for backwards, top, polar->rectangular */
   hbox = gtk_hbox_new (TRUE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Map backwards"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.backwards);
@@ -662,8 +656,11 @@ polarize_dialog (void)
                            NULL);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (polar_toggle_callback),
+                    G_CALLBACK (gimp_toggle_button_update),
                     &pcvals.backwards);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Map from _top"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.inverse);
@@ -677,8 +674,11 @@ polarize_dialog (void)
                            NULL);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (polar_toggle_callback),
+                    G_CALLBACK (gimp_toggle_button_update),
                     &pcvals.inverse);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("To _polar"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.polrec);
@@ -690,17 +690,18 @@ polarize_dialog (void)
                              "mapped onto a rectangle.  If checked the image "
                              "will be mapped onto a circle."),
                            NULL);
-
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (polar_toggle_callback),
+                    G_CALLBACK (gimp_toggle_button_update),
                     &pcvals.polrec);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (hbox);
 
   /* Done */
 
   gtk_widget_show (dialog);
-  dialog_update_preview ();
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
@@ -710,7 +711,8 @@ polarize_dialog (void)
 }
 
 static void
-dialog_update_preview (void)
+dialog_update_preview (GimpDrawable *drawable,
+                       GimpPreview  *preview)
 {
   gdouble  left, right, bottom, top;
   gdouble  dx, dy;
@@ -718,12 +720,13 @@ dialog_update_preview (void)
   gdouble  cx = 0.0, cy = 0.0;
   gint     ix, iy;
   gint     x, y;
+  gint     width, height;
   gint     bpp;
   gdouble  scale_x, scale_y;
   guchar  *p_ul, *i;
   GimpRGB  background;
   guchar   outside[4];
-  guchar  *buffer;
+  guchar  *buffer, *preview_cache;
   guchar   k;
 
   gimp_context_get_background (&background);
@@ -735,24 +738,26 @@ dialog_update_preview (void)
   bottom = sel_y2 - 1;
   top    = sel_y1;
 
-  dx = (right - left) / (preview_width - 1);
-  dy = (bottom - top) / (preview_height - 1);
+  gimp_preview_get_size (preview, &width, &height);
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                                    &width, &height, &bpp);
+  dx = (right - left) / (width - 1);
+  dy = (bottom - top) / (height - 1);
 
-  scale_x = (double) preview_width / (right - left + 1);
-  scale_y = (double) preview_height / (bottom - top + 1);
-
-  bpp = preview_bpp;
+  scale_x = (double) width / (right - left + 1);
+  scale_y = (double) height / (bottom - top + 1);
 
   py = top;
 
-  buffer = g_new (guchar, bpp * preview_width * preview_height);
+  buffer = g_new (guchar, bpp * width * height);
   p_ul = buffer;
 
-  for (y = 0; y < preview_height; y++)
+  for (y = 0; y < height; y++)
     {
       px = left;
 
-      for (x = 0; x < preview_width; x++)
+      for (x = 0; x < width; x++)
         {
           calc_undistorted_coords (px, py, &cx, &cy);
 
@@ -762,9 +767,9 @@ dialog_update_preview (void)
           ix = (int) (cx + 0.5);
           iy = (int) (cy + 0.5);
 
-          if ((ix >= 0) && (ix < preview_width) &&
-              (iy >= 0) && (iy < preview_height))
-            i = preview_cache + bpp * (preview_width * iy + ix);
+          if ((ix >= 0) && (ix < width) &&
+              (iy >= 0) && (iy < height))
+            i = preview_cache + bpp * (width * iy + ix);
           else
             i = outside;
 
@@ -779,28 +784,9 @@ dialog_update_preview (void)
       py += dy;
     }
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                          0, 0, preview_width, preview_height,
-                          gimp_drawable_type (drawable->drawable_id),
-                          buffer,
-                          bpp * preview_width);
+  gimp_preview_draw_buffer (preview, buffer, bpp * width);
+
   g_free (buffer);
+  g_free (preview_cache);
 }
 
-static void
-dialog_scale_update (GtkAdjustment *adjustment,
-                     gdouble       *value)
-{
-  gimp_double_adjustment_update (adjustment, value);
-
-  dialog_update_preview ();
-}
-
-static void
-polar_toggle_callback (GtkWidget *widget,
-                       gpointer   data)
-{
-  gimp_toggle_button_update (widget, data);
-
-  dialog_update_preview ();
-}
