@@ -35,7 +35,6 @@
 
 #include "widgets/gimpcontainerpopup.h"
 #include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gtkhwrapbox.h"
 
@@ -97,6 +96,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
+  g_object_set_data (G_OBJECT (vbox), GIMP_PAINT_OPTIONS_TABLE_KEY, table);
+
   /*  the opacity scale  */
   gimp_prop_opacity_entry_new (config, "opacity",
                                GTK_TABLE (table), 0, 0,
@@ -137,16 +138,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       g_signal_connect (button, "clicked",
                         G_CALLBACK (paint_options_brush_clicked),
                         context);
-    }
-
-  /*  a separator after the common paint options  */
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
-    {
-      GtkWidget *separator;
-
-      separator = gtk_hseparator_new ();
-      gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
-      gtk_widget_show (separator);
     }
 
   /*  the "incremental" toggle  */

@@ -28,10 +28,12 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 
+#include "widgets/gimpcontainerpopup.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -63,7 +65,13 @@ static void   gimp_bucket_fill_options_get_property (GObject      *object,
                                                      GValue       *value,
                                                      GParamSpec   *pspec);
 
-static void   gimp_bucket_fill_options_reset        (GimpToolOptions *tool_options);
+static void   gimp_bucket_fill_options_reset  (GimpToolOptions       *tool_options);
+
+static void   bucket_options_pattern_clicked  (GtkWidget             *widget,
+                                               GimpContext           *context);
+static void   bucket_options_fill_mode_notify (GimpBucketFillOptions *options,
+                                               GParamSpec            *pspec,
+                                               GtkWidget             *button);
 
 
 static GimpPaintOptionsClass *parent_class = NULL;
@@ -220,27 +228,46 @@ gimp_bucket_fill_options_reset (GimpToolOptions *tool_options)
 GtkWidget *
 gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 {
-  GObject    *config;
-  GtkWidget  *vbox;
-  GtkWidget  *vbox2;
-  GtkWidget  *table;
-  GtkWidget  *frame;
-  GtkWidget  *button;
-  gchar      *str;
+  GObject   *config;
+  GtkWidget *vbox;
+  GtkWidget *table;
+  GtkWidget *button;
+  GtkWidget *preview;
+  GtkWidget *vbox2;
+  GtkWidget *frame;
+  gchar     *str;
 
   config = G_OBJECT (tool_options);
 
   vbox = gimp_paint_options_gui (tool_options);
 
+  table = g_object_get_data (G_OBJECT (vbox), GIMP_PAINT_OPTIONS_TABLE_KEY);
+
+  /*  the brush preview  */
+  button = gtk_button_new ();
+  preview = gimp_prop_preview_new (config, "pattern", 24);
+  gtk_container_add (GTK_CONTAINER (button), preview);
+  gtk_widget_show (preview);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                             _("Pattern:"), 1.0, 0.5,
+                             button, 2, TRUE);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (bucket_options_pattern_clicked),
+                    tool_options);
+
   /*  fill type  */
   str = g_strdup_printf (_("Fill Type  %s"), gimp_get_mod_name_control ());
+  frame = gimp_prop_enum_radio_frame_new (config, "fill-mode", str, 0, 0);
+  g_free (str);
 
-  frame = gimp_prop_enum_radio_frame_new (config, "fill-mode",
-                                          str, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  g_free (str);
+  g_signal_connect (config, "notify::fill-mode",
+                    G_CALLBACK (bucket_options_fill_mode_notify),
+                    button);
 
   frame = gtk_frame_new (_("Finding Similar Colors"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -278,4 +305,24 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gimp_bucket_fill_options_reset (tool_options);
 
   return vbox;
+}
+
+static void
+bucket_options_pattern_clicked (GtkWidget   *widget,
+                                GimpContext *context)
+{
+  GtkWidget *popup;
+
+  popup = gimp_container_popup_new (context->gimp->pattern_factory->container,
+                                    context);
+  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
+}
+
+static void
+bucket_options_fill_mode_notify (GimpBucketFillOptions *options,
+                                 GParamSpec            *pspec,
+                                 GtkWidget             *button)
+{
+  gtk_widget_set_sensitive (button,
+                            options->fill_mode == GIMP_PATTERN_BUCKET_FILL);
 }

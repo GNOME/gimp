@@ -32,7 +32,6 @@
 
 #include "widgets/gimpcontainerpopup.h"
 #include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
 #include "widgets/gimppropwidgets.h"
 
 #include "gimpblendoptions.h"
@@ -56,20 +55,20 @@ enum
 static void   gimp_blend_options_init       (GimpBlendOptions      *options);
 static void   gimp_blend_options_class_init (GimpBlendOptionsClass *options_class);
 
-static void   gimp_blend_options_set_property (GObject          *object,
-                                               guint             property_id,
-                                               const GValue     *value,
-                                               GParamSpec       *pspec);
-static void   gimp_blend_options_get_property (GObject          *object,
-                                               guint             property_id,
-                                               GValue           *value,
-                                               GParamSpec       *pspec);
+static void   gimp_blend_options_set_property    (GObject          *object,
+                                                  guint             property_id,
+                                                  const GValue     *value,
+                                                  GParamSpec       *pspec);
+static void   gimp_blend_options_get_property    (GObject          *object,
+                                                  guint             property_id,
+                                                  GValue           *value,
+                                                  GParamSpec       *pspec);
 
-static void   gradient_type_notify            (GimpBlendOptions *options,
-                                               GParamSpec       *pspec,
-                                               GtkWidget        *repeat_menu);
-static void   blend_options_gradient_clicked  (GtkWidget        *widget,
-                                               GimpContext      *context);
+static void   blend_options_gradient_clicked     (GtkWidget        *widget,
+                                                  GimpContext      *context);
+static void   blend_options_gradient_type_notify (GimpBlendOptions *options,
+                                                  GParamSpec       *pspec,
+                                                  GtkWidget        *repeat_menu);
 
 
 static GimpPaintOptionsClass *parent_class = NULL;
@@ -240,18 +239,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 
   vbox = gimp_paint_options_gui (tool_options);
 
-  /*  the offset scale  */
-  table = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 1);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  gimp_prop_scale_entry_new (config, "offset",
-                             GTK_TABLE (table), 0, 0,
-                             _("Offset:"),
-                             1.0, 10.0, 1,
-                             FALSE, 0.0, 0.0);
+  table = g_object_get_data (G_OBJECT (vbox), GIMP_PAINT_OPTIONS_TABLE_KEY);
 
   /*  the gradient preview  */
   button = gtk_button_new ();
@@ -259,7 +247,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (button), preview);
   gtk_widget_show (preview);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("Gradient:"), 1.0, 0.5,
                              button, 2, TRUE);
 
@@ -267,20 +255,27 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                     G_CALLBACK (blend_options_gradient_clicked),
                     tool_options);
 
+  /*  the offset scale  */
+  gimp_prop_scale_entry_new (config, "offset",
+                             GTK_TABLE (table), 0, 3,
+                             _("Offset:"),
+                             1.0, 10.0, 1,
+                             FALSE, 0.0, 0.0);
+
   /*  the gradient type menu  */
   optionmenu = gimp_prop_enum_option_menu_new (config, "gradient-type", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
 			     _("Shape:"), 1.0, 0.5,
 			     optionmenu, 2, TRUE);
 
   /*  the repeat option  */
   optionmenu = gimp_prop_enum_option_menu_new (config, "repeat", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
 			     _("Repeat:"), 1.0, 0.5,
 			     optionmenu, 2, TRUE);
 
   g_signal_connect (config, "notify::gradient-type",
-                    G_CALLBACK (gradient_type_notify),
+                    G_CALLBACK (blend_options_gradient_type_notify),
                     optionmenu);
 
   /*  frame for supersampling options  */
@@ -335,9 +330,9 @@ blend_options_gradient_clicked (GtkWidget   *widget,
 }
 
 static void
-gradient_type_notify (GimpBlendOptions *options,
-                      GParamSpec       *pspec,
-                      GtkWidget        *repeat_menu)
+blend_options_gradient_type_notify (GimpBlendOptions *options,
+                                    GParamSpec       *pspec,
+                                    GtkWidget        *repeat_menu)
 {
   gtk_widget_set_sensitive (repeat_menu, options->gradient_type < 6);
 }

@@ -1,5 +1,17 @@
 2003-03-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/tool_manager.c: added GIMP_CONTEXT_PATTERN_MASK to the
+	context properties which are remembered per tool options.
+
+	* app/tools/paint_options.[ch]
+	* app/tools/gimpblendoptions.c: attach the brush and gradient
+	preview to the GtkTable that holds opacity and paint mode.
+
+	* app/tools/gimpbucketfilloptions.c: added a pattern preview
+	and popup.
+
+2003-03-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/text/Makefile.am
 	* app/text/text-types.h
 	* app/text/gimpfont.[ch]: new object. Does nothing yet.

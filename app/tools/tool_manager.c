@@ -57,6 +57,7 @@
 #define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK    | \
                            GIMP_CONTEXT_PAINT_MODE_MASK | \
                            GIMP_CONTEXT_BRUSH_MASK      | \
+                           GIMP_CONTEXT_PATTERN_MASK    | \
                            GIMP_CONTEXT_GRADIENT_MASK
 
 
