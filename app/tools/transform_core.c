@@ -62,6 +62,9 @@ static double      cubic                     (double, int, int, int, int);
 static void        transform_core_setup_grid (Tool *);
 static void        transform_core_grid_recalc (TransformCore *);
 
+/* Hmmm... Should be in a headerfile but which? */
+void          paths_draw_current(GDisplay *,DrawCore *,GimpMatrix);
+
 
 #define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
                 ((1-dy) * ((1-dx)*jk + dx*j1k) + \
@@ -668,6 +671,9 @@ transform_core_draw (tool)
 		    transform_core->scy - (srh >> 1),
 		    srw, srh, 0, 23040);
     }
+
+  if(transform_tool_showpath())
+    paths_draw_current(gdisp,transform_core->core,transform_core->transform);
 }
 
 Tool *
@@ -882,6 +888,22 @@ transform_core_grid_density_changed ()
   transform_core_grid_recalc (transform_core);
   transform_bounding_box (active_tool);
   draw_core_resume (transform_core->core, active_tool);
+}
+
+void
+transform_core_showpath_changed (gint type)
+{
+  TransformCore * transform_core;
+  
+  transform_core = (TransformCore *) active_tool->private;
+
+  if (transform_core->function == CREATING)
+    return;
+
+  if(type)
+    draw_core_pause (transform_core->core, active_tool);
+  else
+    draw_core_resume (transform_core->core, active_tool);
 }
 
 static void

@@ -61,6 +61,11 @@ struct _TransformOptions
   int	       clip;
   int          clip_d;
   GtkWidget   *clip_w;
+
+  int          showpath;
+  int          showpath_d;
+  GtkWidget   *showpath_w;
+
 };
 
 
@@ -88,6 +93,23 @@ transform_show_grid_update (GtkWidget *widget,
 
   tool_options_toggle_update (widget, data);
   transform_core_grid_density_changed ();
+}
+
+static void
+transform_show_path_update (GtkWidget *widget,
+			    gpointer   data)
+{
+  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfult */
+
+  if (first_call)
+    {
+      first_call = FALSE;
+      return;
+    }
+
+  transform_core_showpath_changed(1); /* pause */
+  tool_options_toggle_update (widget, data);
+  transform_core_showpath_changed(0); /* resume */
 }
 
 static void
@@ -133,6 +155,8 @@ transform_options_reset (void)
 				TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->smoothing_w),
 				options->smoothing_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->showpath_w),
+				options->showpath_d);
   gtk_toggle_button_set_active (((options->direction_d == TRANSFORM_TRADITIONAL) ?
 				 GTK_TOGGLE_BUTTON (options->direction_w[0]) :
 				 GTK_TOGGLE_BUTTON (options->direction_w[1])),
@@ -181,6 +205,7 @@ transform_options_new (void)
 		     transform_options_reset);
   options->type      = options->type_d      = ROTATE;
   options->smoothing = options->smoothing_d = TRUE;
+  options->showpath  = options->showpath_d  = TRUE;
   options->clip      = options->clip_d      = FALSE;
   options->direction = options->direction_d = TRANSFORM_TRADITIONAL;
   options->grid_size = options->grid_size_d = 32;
@@ -229,6 +254,13 @@ transform_options_new (void)
 		      &options->smoothing);
   gtk_box_pack_start (GTK_BOX (vbox), options->smoothing_w, FALSE, FALSE, 0);
   gtk_widget_show (options->smoothing_w);
+
+  options->showpath_w = gtk_check_button_new_with_label (_("Showpath"));
+  gtk_signal_connect (GTK_OBJECT (options->showpath_w), "toggled",
+                    (GtkSignalFunc) transform_show_path_update,
+                    &options->showpath);
+  gtk_box_pack_start (GTK_BOX (vbox), options->showpath_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->showpath_w);
 
   gtk_widget_show (vbox);
 
@@ -386,6 +418,15 @@ transform_tool_smoothing ()
     return TRUE;
   else
     return transform_options->smoothing;
+}
+
+int
+transform_tool_showpath ()
+{
+  if (!transform_options)
+    return TRUE;
+  else
+    return transform_options->showpath;
 }
 
 int

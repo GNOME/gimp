@@ -277,13 +277,15 @@ scale_size_changed (GtkWidget *w,
 	  (height != (transform_core->trans_info[Y1] -
 		      transform_core->trans_info[Y0])))
 	{
-	  draw_core_pause (transform_core->core, tool);
+	  if(transform_core->core->draw_state != INVISIBLE)
+	    draw_core_pause (transform_core->core, tool);
 	  transform_core->trans_info[X1] =
 	    transform_core->trans_info[X0] + width;
 	  transform_core->trans_info[Y1] =
 	    transform_core->trans_info[Y0] + height;
 	  scale_tool_recalc (tool, gdisp);
-	  draw_core_resume (transform_core->core, tool);
+	  if(transform_core->core->draw_state != INVISIBLE)
+	    draw_core_resume (transform_core->core, tool);
 	}
     }
 }

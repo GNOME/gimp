@@ -2473,6 +2473,59 @@ paths_transform_current_path(GimpImage  *gimage,
     }
 }
 
+void
+paths_draw_current(GDisplay * gdisp, 
+		   DrawCore *core,
+		   GimpMatrix  transform)
+{
+  PATHIMAGELISTP plp;
+  PATHP          bzp;
+  BezierSelect * bezier_sel;
+  PATHP          p_copy;
+  GSList       * points_list;
+
+  /* Get bzpath structure  */
+  plp = (PATHIMAGELISTP)gimp_image_get_paths(gdisp->gimage);
+
+  if(!plp)
+    return;
+
+  bzp = (PATHP)g_slist_nth_data(plp->bz_paths,plp->last_selected_row); 
+
+  /* This image path is locked */
+  if(bzp->locked)
+    {
+      p_copy = path_copy(NULL,bzp); /* NULL means dont want new tattoo */
+      
+      points_list = p_copy->path_details;
+      
+      while (points_list)
+	{
+	  gdouble newx,newy;
+	  PATHPOINTP ppoint = points_list->data;
+	  
+	  /*       printf("[x,y] = [%g,%g]\n",ppoint->x, ppoint->y); */
+	  
+	  gimp_matrix_transform_point (transform,
+				       ppoint->x,
+				       ppoint->y,
+				       &newx,&newy);
+	  
+	  /*       printf("->[x,y] = [%g,%g]\n", newx, newy); */
+	  
+	  ppoint->x = newx;
+	  ppoint->y = newy;
+	  points_list = points_list->next;
+	}
+      
+      bezier_sel = path_to_beziersel(p_copy);
+      bezier_sel->core = core; /* A bit hacky */
+      bezier_draw(gdisp,bezier_sel);
+      beziersel_free(bezier_sel);
+      path_free(p_copy,NULL);
+    }
+}
+
 /*************************************/
 /* PDB function aids                 */
 /*************************************/

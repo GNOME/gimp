@@ -246,10 +246,12 @@ rotate_angle_changed (GtkWidget *w,
 
       if (value != transform_core->trans_info[ANGLE])
 	{
-	  draw_core_pause (transform_core->core, tool);      
+	  if(transform_core->core->draw_state != INVISIBLE)
+	    draw_core_pause (transform_core->core, tool);      
 	  transform_core->trans_info[ANGLE] = value;
 	  rotate_tool_recalc (tool, gdisp);
-	  draw_core_resume (transform_core->core, tool);
+	  if(transform_core->core->draw_state != INVISIBLE)
+	    draw_core_resume (transform_core->core, tool);
 	}
     }
 }
@@ -277,11 +279,13 @@ rotate_center_changed (GtkWidget *w,
       if ((cx != transform_core->cx) ||
 	  (cy != transform_core->cy))
 	{
-	  draw_core_pause (transform_core->core, tool);      
+	  if(transform_core->core->draw_state != INVISIBLE)
+	    draw_core_pause (transform_core->core, tool);      
 	  transform_core->cx = cx;
 	  transform_core->cy = cy;
 	  rotate_tool_recalc (tool, gdisp);
-	  draw_core_resume (transform_core->core, tool);
+	  if(transform_core->core->draw_state != INVISIBLE)
+	    draw_core_resume (transform_core->core, tool);
 	}
     }
 }

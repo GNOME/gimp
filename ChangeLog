@@ -1,3 +1,24 @@
+Wed May 26 21:14:15 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/bezier_select.c
+	* app/bezier_selectP.h
+	* app/paths_dialog.c
+	* app/rotate_tool.c
+	* app/scale_tool.c
+	* app/transform_core.c
+	* app/transform_core.h
+	* app/transform_tool.c
+	* app/transform_tool.h
+
+	Add option to show currently selected path to be displayed 
+	during the transform tool operations. (Note if > 1 path locked
+	only the last selected path will be shown).
+
+	Reduced flashing of control points during update drawing of paths. 
+
+	Fixed problem in transform tool rotate/scale when changing
+	layer (used to get many gdk assert failures about "gc != NULL")
+
 Tue May 25 20:02:42 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/gdyntext/gdyntext_ui.c: Add include <sys/types.h> for OS/2

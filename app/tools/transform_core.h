@@ -140,6 +140,7 @@ Tool *        transform_core_new          (int, int);
 void          transform_core_free         (Tool *);
 void          transform_core_reset        (Tool *, void *);
 void	      transform_core_grid_density_changed (void);
+void	      transform_core_showpath_changed (gint);
 
 /*  transform functions  */
 TileManager * transform_core_do           (GImage *, GimpDrawable *, TileManager *, int, GimpMatrix, progress_func_t, gpointer);

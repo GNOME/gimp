@@ -22,6 +22,7 @@
 Tool *        tools_new_transform_tool      (void);
 void          tools_free_transform_tool     (Tool *);
 int           transform_tool_smoothing      (void);
+int           transform_tool_showpath       (void);
 int	      transform_tool_clip	    (void);
 int	      transform_tool_direction      (void);
 int	      transform_tool_grid_size	    (void);

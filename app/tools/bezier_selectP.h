@@ -46,6 +46,9 @@ struct _bezier_point
   BezierPoint *next;          /* next point on curve               */
   BezierPoint *prev;          /* prev point on curve               */
   BezierPoint *next_curve;    /* Next curve segment                */
+  gint pointflags;            /* Status of point 0 = not selected 
+			       * 1 = selected 
+			       */ 
 };
 
 typedef struct _bezier_select BezierSelect;
@@ -85,5 +88,6 @@ void  bezier_select_mode                   (gint);
 void  bezier_stroke 		           (BezierSelect *, GDisplay *, int, int);
 void  bezier_to_selection                  (BezierSelect *, GDisplay *);
 gint  bezier_distance_along                (BezierSelect *, gint, gdouble,gint *,gint *,gdouble *);
+void  bezier_draw                          (GDisplay *,BezierSelect *);
 
 #endif /* __BEZIER_SELECTP_H__ */
