@@ -191,7 +191,7 @@ void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELF
 /**
  * gimp_composite_dispatch:
  * @ctx: The compositing context
- * 
+ *
  * Given a compositing context, perform the compositing function
  * dictated by the compositing context operation.  There is no return
  * value, all results are in the compositing context.
@@ -230,10 +230,8 @@ gimp_composite_dispatch (GimpCompositeContext *ctx)
 /**
  * gimp_composite_context_print:
  * @ctx: The context to print
- * 
+ *
  * Print a human readable form of a GimpCompositeContext on stdout.
- * 
- * Return value: void
  **/
 void
 gimp_composite_context_print (GimpCompositeContext *ctx)
@@ -250,12 +248,12 @@ gimp_composite_context_print (GimpCompositeContext *ctx)
 
 /**
  * gimp_composite_mode_astext:
- * @op: 
- * 
+ * @op:
+ *
  * Given a GimpCompositeOperatin, return a string representation of the name
  * of that operation.
- * 
- * Return value:  const gchar *
+ *
+ * Return value:
  **/
 const gchar *
 gimp_composite_mode_astext (GimpCompositeOperation op)
@@ -304,11 +302,11 @@ gimp_composite_mode_astext (GimpCompositeOperation op)
 /**
  * gimp_composite_pixelformat_astext:
  * @format:  The format.
- * 
+ *
  * Given a GimpPixelFormat, return a string representation of the name
  * of that format.
- * 
- * Return value:  const gchar *
+ *
+ * Return value:
  **/
 const gchar *
 gimp_composite_pixelformat_astext (GimpPixelFormat format)
@@ -341,8 +339,7 @@ gimp_composite_pixelformat_astext (GimpPixelFormat format)
 
 /**
  * gimp_composite_init:
- * @void: 
- * 
+ *
  * Initialise the Gimp Compositing subsystem.  This includes checking
  * for user options and environment, installing the generic set of
  * compositing operation handlers, followed by overloading those which

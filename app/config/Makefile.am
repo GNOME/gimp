@@ -92,7 +92,7 @@ man: gimpconfig-dump
 
 TESTS = test-config
 
-test_config_DEPENDENCIES = $(gimpconfig_dependencies)
+test_config_DEPENDENCIES = $(gimpconfig_libs)
 
 test_config_LDADD =  $(GLIB_LIBS) $(gimpconfig_libs)
 

@@ -35,6 +35,7 @@
 #include "base/base-types.h"
 
 #include "gimp-composite.h"
+#include "gimp-composite-generic.h"
 
 
 #define OPAQUE_OPACITY       255
@@ -78,9 +79,9 @@ static gint32 random_table[RANDOM_TABLE_SIZE];
  */
 /**
  * gimp_composite_convert_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_convert_any_any_any_generic (GimpCompositeContext *ctx)
@@ -104,17 +105,20 @@ gimp_composite_convert_any_any_any_generic (GimpCompositeContext *ctx)
 
 /**
  * gimp_composite_color_any_any_any_generic:
- * @dest: 
- * @color: 
- * @w: 
- * @bytes: 
- * 
- * 
+ * @dest:
+ * @color:
+ * @w:
+ * @bytes:
+ *
+ *
  **/
 void
-gimp_composite_color_any_any_any_generic (guchar * dest, const guchar * color, guint w, guint bytes)
+gimp_composite_color_any_any_any_generic (guchar       *dest,
+                                          const guchar *color,
+                                          guint         w,
+                                          guint         bytes)
 {
-  /* dest % bytes and color % bytes must be 0 or we will crash 
+  /* dest % bytes and color % bytes must be 0 or we will crash
      when bytes = 2 or 4.
      Is this safe to assume?  Lets find out.
      This is 4-7X as fast as the simple version.
@@ -204,9 +208,9 @@ gimp_composite_color_any_any_any_generic (guchar * dest, const guchar * color, g
 
 /**
  * gimp_composite_blend_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_blend_any_any_any_generic (GimpCompositeContext *ctx)
@@ -256,9 +260,9 @@ gimp_composite_shade_generic (const guchar *src, guchar *dest, const guchar *col
 
 /**
  * gimp_composite_darken_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_darken_any_any_any_generic (GimpCompositeContext * ctx)
@@ -297,9 +301,9 @@ gimp_composite_darken_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_lighten_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_lighten_any_any_any_generic (GimpCompositeContext * ctx)
@@ -339,9 +343,9 @@ gimp_composite_lighten_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_hue_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_hue_any_any_any_generic (GimpCompositeContext * ctx)
@@ -392,9 +396,9 @@ gimp_composite_hue_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_saturation_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_saturation_any_any_any_generic (GimpCompositeContext * ctx)
@@ -445,9 +449,9 @@ gimp_composite_saturation_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_value_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_value_any_any_any_generic (GimpCompositeContext * ctx)
@@ -498,9 +502,9 @@ gimp_composite_value_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_color_only_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_color_only_any_any_any_generic (GimpCompositeContext * ctx)
@@ -552,9 +556,9 @@ gimp_composite_color_only_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_behind_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_behind_any_any_any_generic (GimpCompositeContext * ctx)
@@ -567,9 +571,9 @@ gimp_composite_behind_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_multiply_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_multiply_any_any_any_generic (GimpCompositeContext * ctx)
@@ -602,9 +606,9 @@ gimp_composite_multiply_any_any_any_generic (GimpCompositeContext * ctx)
       {
         for (b = 0; b < alpha; b++)
           dest[b] = INT_MULT(src1[b], src2[b], tmp);
-        
+
         dest[alpha] = src2[alpha];
-        
+
         src1 += bytes1;
         src2 += bytes2;
         dest += bytes2;
@@ -614,7 +618,7 @@ gimp_composite_multiply_any_any_any_generic (GimpCompositeContext * ctx)
       {
         for (b = 0; b < alpha; b++)
           dest[b] = INT_MULT(src1[b], src2[b], tmp);
-        
+
         src1 += bytes1;
         src2 += bytes2;
         dest += bytes2;
@@ -625,9 +629,9 @@ gimp_composite_multiply_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_divide_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_divide_any_any_any_generic (GimpCompositeContext * ctx)
@@ -665,9 +669,9 @@ gimp_composite_divide_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_screen_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_screen_any_any_any_generic (GimpCompositeContext * ctx)
@@ -702,9 +706,9 @@ gimp_composite_screen_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_overlay_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_overlay_any_any_any_generic (GimpCompositeContext * ctx)
@@ -741,9 +745,9 @@ gimp_composite_overlay_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_dodge_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_dodge_any_any_any_generic (GimpCompositeContext * ctx)
@@ -782,9 +786,9 @@ gimp_composite_dodge_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_burn_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_burn_any_any_any_generic (GimpCompositeContext * ctx)
@@ -826,9 +830,9 @@ gimp_composite_burn_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_hardlight_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_hardlight_any_any_any_generic (GimpCompositeContext * ctx)
@@ -874,9 +878,9 @@ gimp_composite_hardlight_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_softlight_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_softlight_any_any_any_generic (GimpCompositeContext * ctx)
@@ -916,9 +920,9 @@ gimp_composite_softlight_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_grain_extract_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_grain_extract_any_any_any_generic (GimpCompositeContext * ctx)
@@ -957,9 +961,9 @@ gimp_composite_grain_extract_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_grain_merge_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_grain_merge_any_any_any_generic (GimpCompositeContext * ctx)
@@ -998,9 +1002,9 @@ gimp_composite_grain_merge_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_addition_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_addition_any_any_any_generic (GimpCompositeContext * ctx)
@@ -1051,9 +1055,9 @@ gimp_composite_addition_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_subtract_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_subtract_any_any_any_generic (GimpCompositeContext * ctx)
@@ -1092,9 +1096,9 @@ gimp_composite_subtract_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_difference_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_difference_any_any_any_generic (GimpCompositeContext * ctx)
@@ -1133,9 +1137,9 @@ gimp_composite_difference_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_dissolve_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_dissolve_any_any_any_generic (GimpCompositeContext * ctx)
@@ -1212,9 +1216,9 @@ gimp_composite_dissolve_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_replace_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_replace_any_any_any_generic (GimpCompositeContext *ctx)
@@ -1226,9 +1230,9 @@ gimp_composite_replace_any_any_any_generic (GimpCompositeContext *ctx)
 
 /**
  * gimp_composite_swap_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_swap_any_any_any_generic (GimpCompositeContext * ctx)
@@ -1251,9 +1255,9 @@ gimp_composite_swap_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_normal_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_normal_any_any_any_generic (GimpCompositeContext * ctx)
@@ -1264,9 +1268,9 @@ gimp_composite_normal_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_erase_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_erase_any_any_any_generic (GimpCompositeContext *ctx)
@@ -1277,9 +1281,9 @@ gimp_composite_erase_any_any_any_generic (GimpCompositeContext *ctx)
 
 /**
  * gimp_composite_anti_erase_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_anti_erase_any_any_any_generic (GimpCompositeContext *ctx)
@@ -1290,9 +1294,9 @@ gimp_composite_anti_erase_any_any_any_generic (GimpCompositeContext *ctx)
 
 /**
  * gimp_composite_color_erase_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_color_erase_any_any_any_generic (GimpCompositeContext *ctx)
@@ -1306,9 +1310,9 @@ gimp_composite_color_erase_any_any_any_generic (GimpCompositeContext *ctx)
 
 /**
  * gimp_composite_scale_any_any_any_generic:
- * @ctx: 
- * 
- * 
+ * @ctx:
+ *
+ *
  **/
 void
 gimp_composite_scale_any_any_any_generic (GimpCompositeContext * ctx)
@@ -1332,11 +1336,10 @@ gimp_composite_scale_any_any_any_generic (GimpCompositeContext * ctx)
 
 /**
  * gimp_composite_generic_init:
- * @void: 
- * 
- * 
- * 
- * Return value: 
+ *
+ *
+ *
+ * Return value:
  **/
 gboolean
 gimp_composite_generic_init (void)

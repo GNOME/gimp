@@ -3650,7 +3650,6 @@ GIMP_DEVICE_STATUS_GET_CLASS
 <FILE>gimpdialogfactory</FILE>
 GimpDialogNewFunc
 GimpDialogFactoryEntry
-GimpSessionInfo
 <TITLE>GimpDialogFactory</TITLE>
 GimpDialogFactory
 gimp_dialog_factory_new
@@ -4333,9 +4332,12 @@ GIMP_SELECTION_EDITOR_GET_CLASS
 <FILE>gimpsessioninfo</FILE>
 <TITLE>GimpSessionInfo</TITLE>
 GimpSessionInfo
+GimpSessionInfoAux
 GimpSessionInfoBook
 GimpSessionInfoDockable
 gimp_session_info_free
+gimp_session_info_aux_new
+gimp_session_info_aux_free
 gimp_session_info_book_free
 gimp_session_info_dockable_free
 gimp_session_info_save
@@ -5064,7 +5066,6 @@ gimp_config_serialize_properties_diff
 gimp_config_serialize_unknown_tokens
 gimp_config_serialize_property
 gimp_config_serialize_value
-gimp_config_serialize_comment
 </SECTION>
 
 <SECTION>
@@ -5095,7 +5096,6 @@ gimp_config_disconnect
 gimp_config_copy_properties
 gimp_config_reset_properties
 gimp_config_string_append_escaped
-gimp_config_string_indent
 gimp_config_build_data_path
 gimp_config_build_plug_in_path
 </SECTION>
@@ -5131,14 +5131,15 @@ GimpConfigWriter
 gimp_config_writer_new_file
 gimp_config_writer_new_fd
 gimp_config_writer_new_string
+gimp_config_writer_comment_mode
 gimp_config_writer_open
 gimp_config_writer_print
 gimp_config_writer_printf
 gimp_config_writer_string
-gimp_config_writer_revert
-gimp_config_writer_close
 gimp_config_writer_linefeed
 gimp_config_writer_comment
+gimp_config_writer_close
+gimp_config_writer_revert
 gimp_config_writer_finish
 </SECTION>
 

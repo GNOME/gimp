@@ -168,6 +168,18 @@ gimp_config_writer_new_string (GString *string)
   return writer;
 }
 
+/**
+ * gimp_config_writer_comment_mode:
+ * @writer: a #GimpConfigWriter
+ * @enable: %TRUE to enable comment mode, %FALSE to disable it
+ *
+ * This function toggles whether the @writer should create commented
+ * or uncommented output. This feature is used to generate the
+ * system-wide installed gimprc that documents the default settings.
+ *
+ * Since comments have to start at the beginning of a line, this
+ * funtion will insert a newline if necessary.
+ **/
 void
 gimp_config_writer_comment_mode (GimpConfigWriter *writer,
                                  gboolean          enable)
@@ -179,13 +191,30 @@ gimp_config_writer_comment_mode (GimpConfigWriter *writer,
 
   enable = (enable ? TRUE : FALSE);
 
-  if (enable)
-    g_string_append_len (writer->buffer, "# ", 2);
+  if (writer->comment == enable)
+    return;
 
   writer->comment = enable;
+
+  if (enable)
+    {
+     if (writer->buffer->len == 0)
+       g_string_append_len (writer->buffer, "# ", 2);
+     else
+       gimp_config_writer_newline (writer);
+    }
 }
 
 
+/**
+ * gimp_config_writer_open:
+ * @writer: a #GimpConfigWriter
+ * @name: name of the element to open
+ *
+ * This function writes the opening parenthese followed by @name.
+ * It also increases the indentation level and sets a mark that
+ * can be used by gimp_config_writer_revert().
+ **/
 void
 gimp_config_writer_open (GimpConfigWriter *writer,
 			 const gchar      *name)
@@ -207,6 +236,15 @@ gimp_config_writer_open (GimpConfigWriter *writer,
   g_string_append_printf (writer->buffer, "(%s", name);
 }
 
+/**
+ * gimp_config_writer_print:
+ * @writer: a #GimpConfigWriter
+ * @string: a string to write
+ * @len: number of bytes from @string or -1 if @string is NUL-terminated.
+ *
+ * Appends a space followed by @string to the @writer. Note that string
+ * must not contain any special characters that might need to be escaped.
+ **/
 void
 gimp_config_writer_print (GimpConfigWriter  *writer,
 			  const gchar       *string,
@@ -228,6 +266,14 @@ gimp_config_writer_print (GimpConfigWriter  *writer,
     }
 }
 
+/**
+ * gimp_config_writer_printf:
+ * @writer: a #GimpConfigWriter
+ * @format: a format string as described for g_strdup_printf().
+ * @Varargs: list of arguments according to @format
+ *
+ * A printf-like function for #GimpConfigWriter.
+ **/
 void
 gimp_config_writer_printf (GimpConfigWriter *writer,
 			   const gchar      *format,
@@ -252,6 +298,14 @@ gimp_config_writer_printf (GimpConfigWriter *writer,
   g_free (buffer);
 }
 
+/**
+ * gimp_config_writer_string:
+ * @writer: a #GimpConfigWriter
+ * @string: a NUL-terminated string
+ *
+ * Writes a string value to @writer. The @string is quoted and special
+ * characters are escaped.
+ **/
 void
 gimp_config_writer_string (GimpConfigWriter *writer,
                            const gchar      *string)
@@ -265,6 +319,14 @@ gimp_config_writer_string (GimpConfigWriter *writer,
   gimp_config_string_append_escaped (writer->buffer, string);
 }
 
+/**
+ * gimp_config_writer_revert:
+ * @writer: a #GimpConfigWriter
+ *
+ * Reverts all changes to @writer that were done since the last call
+ * to gimp_config_writer_open(). This can only work if you didn't call
+ * gimp_config_writer_close() yet.
+ **/
 void
 gimp_config_writer_revert (GimpConfigWriter *writer)
 {
@@ -281,6 +343,12 @@ gimp_config_writer_revert (GimpConfigWriter *writer)
   writer->marker = -1;
 }
 
+/**
+ * gimp_config_writer_close:
+ * @writer: a #GimpConfigWriter
+ *
+ * Closes an element opened with gimp_config_writer_open().
+ **/
 void
 gimp_config_writer_close (GimpConfigWriter *writer)
 {
@@ -301,6 +369,20 @@ gimp_config_writer_close (GimpConfigWriter *writer)
     }
 }
 
+/**
+ * gimp_config_writer_finish:
+ * @writer: a #GimpConfigWriter
+ * @footer: text to include as comment at the bottom of the file
+ * @error: return location for possible errors
+ *
+ * This function finishes the work of @writer and frees it afterwards.
+ * It closes all open elements, appends an optional comment and
+ * releases all resources allocated by @writer. You must not access
+ * the @writer afterwards.
+ *
+ * Return value: %TRUE if everything could be successfully written,
+ *               %FALSE otherwise
+ **/
 gboolean
 gimp_config_writer_finish (GimpConfigWriter  *writer,
 			   const gchar       *footer,
@@ -381,6 +463,7 @@ gimp_config_writer_comment (GimpConfigWriter *writer,
 			    const gchar      *comment)
 {
   const gchar *s;
+  gboolean     comment_mode;
   gint         i, len, space;
 
 #define LINE_LENGTH 75
@@ -394,10 +477,10 @@ gimp_config_writer_comment (GimpConfigWriter *writer,
   if (!comment)
     return;
 
-  len = strlen (comment);
+  comment_mode = writer->comment;
+  gimp_config_writer_comment_mode (writer, TRUE);
 
-  if (! writer->comment)
-    g_string_append_len (writer->buffer, "# ", 2);
+  len = strlen (comment);
 
   while (len > 0)
     {
@@ -413,21 +496,25 @@ gimp_config_writer_comment (GimpConfigWriter *writer,
         i = space;
 
       g_string_append_len (writer->buffer, comment, i);
-      g_string_append_len (writer->buffer, "\n# ", 3);
 
       i++;
 
       comment += i;
       len     -= i;
+
+      if (len > 0)
+        gimp_config_writer_newline (writer);
     }
 
-  g_string_truncate (writer->buffer, writer->buffer->len - 2);
+  gimp_config_writer_comment_mode (writer, comment_mode);
+  gimp_config_writer_newline (writer);
 
   if (writer->depth == 0)
     gimp_config_writer_flush (writer);
 
 #undef LINE_LENGTH
 }
+
 
 static inline void
 gimp_config_writer_flush (GimpConfigWriter *writer)

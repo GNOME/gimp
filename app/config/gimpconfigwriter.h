@@ -44,7 +44,8 @@ void               gimp_config_writer_printf       (GimpConfigWriter  *writer,
 void               gimp_config_writer_string       (GimpConfigWriter  *writer,
                                                     const gchar       *string);
 void               gimp_config_writer_comment      (GimpConfigWriter  *writer,
-						    const gchar       *comment);void               gimp_config_writer_linefeed     (GimpConfigWriter  *writer);
+						    const gchar       *comment);
+void               gimp_config_writer_linefeed     (GimpConfigWriter  *writer);
 
 
 void               gimp_config_writer_revert       (GimpConfigWriter  *writer);

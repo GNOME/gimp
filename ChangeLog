@@ -1,5 +1,17 @@
 2003-10-12  Sven Neumann  <sven@gimp.org>
 
+	* app/config/Makefile.am: fixed dependencies for test-config.
+
+	* app/config/gimpconfigwriter.[ch]: code cleanup and documentation.
+
+	* app/composite/gimp-composite-generic.[ch]: made prototype for
+	gimp_composite_color_any_any_any_generic() match the implementation.
+
+	* app/composite/gimp-composite.c: fixed some issues with the
+	comment templates.
+
+2003-10-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_interface):
 	allow to use mnemonics in SF-TOGGLE.
 
