@@ -48,16 +48,16 @@ drawable_desaturate_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpImage    *gimage;
-  GimpDrawable *active_drawable;
-  return_if_no_drawable (gimage, active_drawable, data);
+  GimpDrawable *drawable;
+  return_if_no_drawable (gimage, drawable, data);
 
-  if (! gimp_drawable_is_rgb (active_drawable))
+  if (! gimp_drawable_is_rgb (drawable))
     {
       g_message (_("Desaturate operates only on RGB color layers."));
       return;
     }
 
-  gimp_drawable_desaturate (active_drawable);
+  gimp_drawable_desaturate (drawable);
   gimp_image_flush (gimage);
 }
 
@@ -66,16 +66,16 @@ drawable_invert_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpImage    *gimage;
-  GimpDrawable *active_drawable;
-  return_if_no_drawable (gimage, active_drawable, data);
+  GimpDrawable *drawable;
+  return_if_no_drawable (gimage, drawable, data);
 
-  if (gimp_drawable_is_indexed (active_drawable))
+  if (gimp_drawable_is_indexed (drawable))
     {
       g_message (_("Invert does not operate on indexed layers."));
       return;
     }
 
-  gimp_drawable_invert (active_drawable);
+  gimp_drawable_invert (drawable);
   gimp_image_flush (gimage);
 }
 
@@ -84,16 +84,16 @@ drawable_equalize_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
   GimpImage    *gimage;
-  GimpDrawable *active_drawable;
-  return_if_no_drawable (gimage, active_drawable, data);
+  GimpDrawable *drawable;
+  return_if_no_drawable (gimage, drawable, data);
 
-  if (gimp_drawable_is_indexed (active_drawable))
+  if (gimp_drawable_is_indexed (drawable))
     {
       g_message (_("Equalize does not operate on indexed layers."));
       return;
     }
 
-  gimp_drawable_equalize (active_drawable, TRUE);
+  gimp_drawable_equalize (drawable, TRUE);
   gimp_image_flush (gimage);
 }
 
@@ -103,14 +103,15 @@ drawable_flip_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
   GimpImage    *gimage;
-  GimpDrawable *active_drawable;
+  GimpDrawable *drawable;
   GimpItem     *item;
   GimpContext  *context;
   gint          off_x, off_y;
   gdouble       axis = 0.0;
-  return_if_no_drawable (gimage, active_drawable, data);
+  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_context (context, data);
 
-  item = GIMP_ITEM (active_drawable);
+  item = GIMP_ITEM (drawable);
 
   gimp_item_offsets (item, &off_x, &off_y);
 
@@ -127,8 +128,6 @@ drawable_flip_cmd_callback (GtkAction *action,
     default:
       break;
     }
-
-  context = gimp_get_user_context (gimage->gimp);
 
   if (gimp_item_get_linked (item))
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
@@ -152,21 +151,20 @@ drawable_rotate_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpImage    *gimage;
-  GimpDrawable *active_drawable;
-  GimpItem     *item;
+  GimpDrawable *drawable;
   GimpContext  *context;
+  GimpItem     *item;
   gint          off_x, off_y;
   gdouble       center_x, center_y;
-  return_if_no_drawable (gimage, active_drawable, data);
+  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_context (context, data);
 
-  item = GIMP_ITEM (active_drawable);
+  item = GIMP_ITEM (drawable);
 
   gimp_item_offsets (item, &off_x, &off_y);
 
   center_x = ((gdouble) off_x + (gdouble) gimp_item_width  (item) / 2.0);
   center_y = ((gdouble) off_y + (gdouble) gimp_item_height (item) / 2.0);
-
-  context = gimp_get_user_context (gimage->gimp);
 
   if (gimp_item_get_linked (item))
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,

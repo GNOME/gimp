@@ -237,7 +237,7 @@ edit_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("edit-undo",       undo_enabled && undo_name);
   SET_SENSITIVE ("edit-redo",       undo_enabled && redo_name);
-  SET_SENSITIVE ("edit-undo-clear", undo_enabled && (redo_name || redo_name));
+  SET_SENSITIVE ("edit-undo-clear", undo_enabled && (undo_name || redo_name));
 
   g_free (undo_name);
   g_free (redo_name);

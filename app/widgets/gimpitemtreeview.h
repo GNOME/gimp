@@ -65,6 +65,7 @@ struct _GimpItemTreeView
 {
   GimpContainerTreeView  parent_instance;
 
+  GimpContext           *context;
   GimpImage             *gimage;
 
   GType                  item_type;

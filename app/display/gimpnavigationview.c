@@ -57,9 +57,8 @@ static void   gimp_navigation_view_class_init (GimpNavigationViewClass *klass);
 static void   gimp_navigation_view_init       (GimpNavigationView      *view);
 
 static void   gimp_navigation_view_docked_iface_init  (GimpDockedInterface *docked_iface);
-static void   gimp_navigation_view_set_docked_context (GimpDocked       *docked,
-                                                       GimpContext      *context,
-                                                       GimpContext      *prev_context);
+static void   gimp_navigation_view_set_context      (GimpDocked       *docked,
+                                                     GimpContext      *context);
 
 static void   gimp_navigation_view_destroy          (GtkObject          *object);
 
@@ -192,13 +191,13 @@ gimp_navigation_view_init (GimpNavigationView *view)
 static void
 gimp_navigation_view_docked_iface_init (GimpDockedInterface *docked_iface)
 {
-  docked_iface->set_context = gimp_navigation_view_set_docked_context;
+  docked_iface->set_context = gimp_navigation_view_set_context;
 }
 
 static void
-gimp_navigation_view_docked_context_changed (GimpContext        *context,
-                                             GimpDisplay        *gdisp,
-                                             GimpNavigationView *view)
+gimp_navigation_view_context_changed (GimpContext        *context,
+                                      GimpDisplay        *gdisp,
+                                      GimpNavigationView *view)
 {
   GimpDisplayShell *shell = NULL;
 
@@ -209,23 +208,26 @@ gimp_navigation_view_docked_context_changed (GimpContext        *context,
 }
 
 static void
-gimp_navigation_view_set_docked_context (GimpDocked  *docked,
-                                         GimpContext *context,
-                                         GimpContext *prev_context)
+gimp_navigation_view_set_context (GimpDocked  *docked,
+                                  GimpContext *context)
 {
   GimpNavigationView *view  = GIMP_NAVIGATION_VIEW (docked);
   GimpDisplay        *gdisp = NULL;
   GimpDisplayShell   *shell = NULL;
 
-  if (prev_context)
-    g_signal_handlers_disconnect_by_func (prev_context,
-                                          gimp_navigation_view_docked_context_changed,
-                                          view);
+  if (view->context)
+    {
+      g_signal_handlers_disconnect_by_func (view->context,
+                                            gimp_navigation_view_context_changed,
+                                            view);
+    }
+
+  view->context = context;
 
   if (context)
     {
       g_signal_connect (context, "display_changed",
-                        G_CALLBACK (gimp_navigation_view_docked_context_changed),
+                        G_CALLBACK (gimp_navigation_view_context_changed),
                         view);
 
       gdisp = gimp_context_get_display (context);
@@ -240,9 +242,7 @@ gimp_navigation_view_set_docked_context (GimpDocked  *docked,
 static void
 gimp_navigation_view_destroy (GtkObject *object)
 {
-  GimpNavigationView *view;
-
-  view = GIMP_NAVIGATION_VIEW (object);
+  GimpNavigationView *view = GIMP_NAVIGATION_VIEW (object);
 
   if (view->shell)
     gimp_navigation_view_set_shell (view, NULL);

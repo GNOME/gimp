@@ -24,6 +24,9 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
+
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppaletteeditor.h"
@@ -87,29 +90,52 @@ palette_editor_actions_setup (GimpActionGroup *group)
 
 void
 palette_editor_actions_update (GimpActionGroup *group,
-                               gpointer         data)
+                               gpointer         user_data)
 {
   GimpPaletteEditor *editor;
   GimpDataEditor    *data_editor;
+  GimpContext       *context;
+  GimpData          *data;
   gboolean           editable = FALSE;
+  GimpRGB            fg;
+  GimpRGB            bg;
 
-  editor      = GIMP_PALETTE_EDITOR (data);
-  data_editor = GIMP_DATA_EDITOR (data);
+  editor      = GIMP_PALETTE_EDITOR (user_data);
+  data_editor = GIMP_DATA_EDITOR (user_data);
 
-  if (data_editor->data && data_editor->data_editable)
-    editable = TRUE;
+  context = gimp_get_user_context (group->gimp);
+
+  data = data_editor->data;
+
+  if (data)
+    {
+      if (data_editor->data_editable)
+        editable = TRUE;
+    }
+
+  if (context)
+    {
+      gimp_context_get_foreground (context, &fg);
+      gimp_context_get_background (context, &bg);
+    }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+#define SET_COLOR(action,color) \
+        gimp_action_group_set_action_color (group, action, color, FALSE);
 
   SET_SENSITIVE ("palette-editor-edit-color",   editable && editor->color);
   SET_SENSITIVE ("palette-editor-new-color-fg", editable);
   SET_SENSITIVE ("palette-editor-new-color-bg", editable);
   SET_SENSITIVE ("palette-editor-delete-color", editable && editor->color);
 
-  SET_SENSITIVE ("palette-editor-zoom-out", data_editor->data);
-  SET_SENSITIVE ("palette-editor-zoom-in",  data_editor->data);
-  SET_SENSITIVE ("palette-editor-zoom-all", data_editor->data);
+  SET_SENSITIVE ("palette-editor-zoom-out", data);
+  SET_SENSITIVE ("palette-editor-zoom-in",  data);
+  SET_SENSITIVE ("palette-editor-zoom-all", data);
+
+  SET_COLOR ("palette-editor-new-color-fg", context ? &fg : NULL);
+  SET_COLOR ("palette-editor-new-color-bg", context ? &bg : NULL);
 
 #undef SET_SENSITIVE
+#undef SET_COLOR
 }

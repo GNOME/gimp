@@ -66,22 +66,21 @@ typedef struct _GimpEnumComboBox        GimpEnumComboBox;
 typedef struct _GimpUnitComboBox        GimpUnitComboBox;
 
 typedef struct _GimpEditor              GimpEditor;
+typedef struct _GimpColorEditor         GimpColorEditor;
 typedef struct _GimpDeviceStatus        GimpDeviceStatus;
 typedef struct _GimpErrorConsole        GimpErrorConsole;
-typedef struct _GimpImageEditor         GimpImageEditor;
-typedef struct _GimpColorBar            GimpColorBar;
-typedef struct _GimpColorEditor         GimpColorEditor;
-typedef struct _GimpColormapEditor      GimpColormapEditor;
-typedef struct _GimpComponentEditor     GimpComponentEditor;
+typedef struct _GimpToolOptionsEditor   GimpToolOptionsEditor;
+
 typedef struct _GimpDataEditor          GimpDataEditor;
 typedef struct _GimpBrushEditor         GimpBrushEditor;
 typedef struct _GimpGradientEditor      GimpGradientEditor;
-typedef struct _GimpGridEditor          GimpGridEditor;
 typedef struct _GimpPaletteEditor       GimpPaletteEditor;
+
+typedef struct _GimpImageEditor         GimpImageEditor;
+typedef struct _GimpColormapEditor      GimpColormapEditor;
+typedef struct _GimpComponentEditor     GimpComponentEditor;
+typedef struct _GimpHistogramEditor     GimpHistogramEditor;
 typedef struct _GimpSelectionEditor     GimpSelectionEditor;
-typedef struct _GimpStrokeEditor        GimpStrokeEditor;
-typedef struct _GimpTemplateEditor      GimpTemplateEditor;
-typedef struct _GimpToolOptionsEditor   GimpToolOptionsEditor;
 typedef struct _GimpUndoEditor          GimpUndoEditor;
 
 typedef struct _GimpContainerView       GimpContainerView; /* dummy typedef */
@@ -103,6 +102,7 @@ typedef struct _GimpFontView            GimpFontView;
 typedef struct _GimpImageView           GimpImageView;
 typedef struct _GimpTemplateView        GimpTemplateView;
 typedef struct _GimpToolView            GimpToolView;
+
 typedef struct _GimpDataFactoryView     GimpDataFactoryView;
 typedef struct _GimpBrushFactoryView    GimpBrushFactoryView;
 typedef struct _GimpPatternFactoryView  GimpPatternFactoryView;
@@ -114,20 +114,22 @@ typedef struct _GimpDockable            GimpDockable;
 typedef struct _GimpDockbook            GimpDockbook;
 typedef struct _GimpDocked              GimpDocked; /* dummy typedef */
 
+typedef struct _GimpFileDialog          GimpFileDialog;
+typedef struct _GimpTextEditor          GimpTextEditor;
+typedef struct _GimpViewableDialog      GimpViewableDialog;
+
 typedef struct _GimpContainerPopup      GimpContainerPopup;
 typedef struct _GimpViewableButton      GimpViewableButton;
-typedef struct _GimpViewableDialog      GimpViewableDialog;
-typedef struct _GimpFileDialog          GimpFileDialog;
 
-typedef struct _GimpHistogramView       GimpHistogramView;
-typedef struct _GimpHistogramBox        GimpHistogramBox;
-typedef struct _GimpHistogramEditor     GimpHistogramEditor;
-
-typedef struct _GimpDashEditor          GimpDashEditor;
-typedef struct _GimpThumbBox            GimpThumbBox;
-
-typedef struct _GimpTextEditor          GimpTextEditor;
+typedef struct _GimpColorBar            GimpColorBar;
 typedef struct _GimpColorDisplayEditor  GimpColorDisplayEditor;
+typedef struct _GimpDashEditor          GimpDashEditor;
+typedef struct _GimpGridEditor          GimpGridEditor;
+typedef struct _GimpHistogramBox        GimpHistogramBox;
+typedef struct _GimpHistogramView       GimpHistogramView;
+typedef struct _GimpStrokeEditor        GimpStrokeEditor;
+typedef struct _GimpTemplateEditor      GimpTemplateEditor;
+typedef struct _GimpThumbBox            GimpThumbBox;
 
 
 /*  structs  */

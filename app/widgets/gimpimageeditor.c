@@ -30,20 +30,17 @@
 #include "gimpuimanager.h"
 
 
-static void   gimp_image_editor_class_init     (GimpImageEditorClass *klass);
-static void   gimp_image_editor_init           (GimpImageEditor      *editor);
+static void   gimp_image_editor_class_init (GimpImageEditorClass *klass);
+static void   gimp_image_editor_init       (GimpImageEditor      *editor);
+static void   gimp_image_editor_docked_iface_init (GimpDockedInterface *docked_iface);
 
-static void   gimp_image_editor_docked_iface_init  (GimpDockedInterface *docked_iface);
-static void   gimp_image_editor_set_docked_context (GimpDocked       *docked,
-                                                    GimpContext      *context,
-                                                    GimpContext      *prev_context);
-
-static void   gimp_image_editor_destroy            (GtkObject        *object);
-static void   gimp_image_editor_real_set_image     (GimpImageEditor  *editor,
-                                                    GimpImage        *gimage);
-
-static void   gimp_image_editor_image_flush        (GimpImage        *gimage,
-                                                    GimpImageEditor  *editor);
+static void   gimp_image_editor_set_context    (GimpDocked       *docked,
+                                                GimpContext      *context);
+static void   gimp_image_editor_destroy        (GtkObject        *object);
+static void   gimp_image_editor_real_set_image (GimpImageEditor  *editor,
+                                                GimpImage        *gimage);
+static void   gimp_image_editor_image_flush    (GimpImage        *gimage,
+                                                GimpImageEditor  *editor);
 
 
 static GimpEditorClass *parent_class = NULL;
@@ -109,34 +106,37 @@ gimp_image_editor_init (GimpImageEditor *editor)
 static void
 gimp_image_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
-  docked_iface->set_context = gimp_image_editor_set_docked_context;
+  docked_iface->set_context = gimp_image_editor_set_context;
 }
 
 static void
-gimp_image_editor_docked_context_changed (GimpContext     *context,
-                                          GimpImage       *gimage,
-                                          GimpImageEditor *editor)
+gimp_image_editor_context_changed (GimpContext     *context,
+                                   GimpImage       *gimage,
+                                   GimpImageEditor *editor)
 {
   gimp_image_editor_set_image (editor, gimage);
 }
 
 static void
-gimp_image_editor_set_docked_context (GimpDocked  *docked,
-                                      GimpContext *context,
-                                      GimpContext *prev_context)
+gimp_image_editor_set_context (GimpDocked  *docked,
+                               GimpContext *context)
 {
   GimpImageEditor *editor = GIMP_IMAGE_EDITOR (docked);
   GimpImage       *gimage = NULL;
 
-  if (prev_context)
-    g_signal_handlers_disconnect_by_func (prev_context,
-                                          gimp_image_editor_docked_context_changed,
-                                          editor);
+  if (editor->context)
+    {
+      g_signal_handlers_disconnect_by_func (editor->context,
+                                            gimp_image_editor_context_changed,
+                                            editor);
+    }
+
+  editor->context = context;
 
   if (context)
     {
       g_signal_connect (context, "image_changed",
-                        G_CALLBACK (gimp_image_editor_docked_context_changed),
+                        G_CALLBACK (gimp_image_editor_context_changed),
                         editor);
 
       gimage = gimp_context_get_image (context);

@@ -278,13 +278,13 @@ gimp_component_editor_new (gint             preview_size,
 			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
-  editor = g_object_new (GIMP_TYPE_COMPONENT_EDITOR, NULL);
+  editor = g_object_new (GIMP_TYPE_COMPONENT_EDITOR,
+                         "menu-factory",    menu_factory,
+                         "menu-identifier", "<Channels>",
+                         "ui-path",         "/channels-popup",
+                         NULL);
 
   gimp_component_editor_set_preview_size (editor, preview_size);
-
-  gimp_editor_create_menu (GIMP_EDITOR (editor),
-                           menu_factory, "<Channels>",
-                           "/channels-popup", editor);
 
   return GTK_WIDGET (editor);
 }

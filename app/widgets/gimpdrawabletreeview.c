@@ -227,13 +227,9 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
                                       "gimp-bucket-fill-tool");
 
   if (tool_info && tool_info->tool_options)
-    {
-      context = GIMP_CONTEXT (tool_info->tool_options);
-    }
+    context = GIMP_CONTEXT (tool_info->tool_options);
   else
-    {
-      context = gimp_get_user_context (view->gimage->gimp);
-    }
+    context = view->context;
 
   gimp_drawable_bucket_fill_full (drawable,
                                   fill_mode,

@@ -52,8 +52,7 @@ struct _GimpDockedInterface
   gchar         * (* get_title)     (GimpDocked   *docked);
 
   void            (* set_context)   (GimpDocked   *docked,
-                                     GimpContext  *context,
-                                     GimpContext  *prev_context);
+                                     GimpContext  *context);
 };
 
 
@@ -74,8 +73,7 @@ GimpUIManager * gimp_docked_get_menu           (GimpDocked   *docked,
 gchar         * gimp_docked_get_title          (GimpDocked   *docked);
 
 void            gimp_docked_set_context        (GimpDocked   *docked,
-                                                GimpContext  *context,
-                                                GimpContext  *prev_context);
+                                                GimpContext  *context);
 
 
 #endif  /* __GIMP_DOCKED_H__ */

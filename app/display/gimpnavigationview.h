@@ -43,6 +43,7 @@ struct _GimpNavigationView
 {
   GimpEditor        parent_instance;
 
+  GimpContext      *context;
   GimpDisplayShell *shell;
 
   GtkWidget        *preview;

@@ -77,9 +77,8 @@ static void   gimp_item_tree_view_init         (GimpItemTreeView      *view,
 static void   gimp_item_tree_view_view_iface_init   (GimpContainerViewInterface *view_iface);
 static void   gimp_item_tree_view_docked_iface_init (GimpDockedInterface *docked_iface);
 
-static void  gimp_item_tree_view_set_docked_context (GimpDocked        *docked,
-                                                     GimpContext       *context,
-                                                     GimpContext       *prev_context);
+static void  gimp_item_tree_view_set_context        (GimpDocked        *docked,
+                                                     GimpContext       *context);
 
 static GObject * gimp_item_tree_view_constructor    (GType              type,
                                                      guint              n_params,
@@ -429,34 +428,37 @@ static void
 gimp_item_tree_view_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->get_preview = NULL;
-  docked_iface->set_context = gimp_item_tree_view_set_docked_context;
+  docked_iface->set_context = gimp_item_tree_view_set_context;
 }
 
 static void
-gimp_item_tree_view_docked_context_changed (GimpContext      *context,
-                                            GimpImage        *gimage,
-                                            GimpItemTreeView *view)
+gimp_item_tree_view_context_changed (GimpContext      *context,
+                                     GimpImage        *gimage,
+                                     GimpItemTreeView *view)
 {
   gimp_item_tree_view_set_image (view, gimage);
 }
 
 static void
-gimp_item_tree_view_set_docked_context (GimpDocked  *docked,
-                                        GimpContext *context,
-                                        GimpContext *prev_context)
+gimp_item_tree_view_set_context (GimpDocked  *docked,
+                                 GimpContext *context)
 {
   GimpItemTreeView *view   = GIMP_ITEM_TREE_VIEW (docked);
   GimpImage        *gimage = NULL;
 
-  if (prev_context)
-    g_signal_handlers_disconnect_by_func (prev_context,
-                                          gimp_item_tree_view_docked_context_changed,
-                                          view);
+  if (view->context)
+    {
+      g_signal_handlers_disconnect_by_func (view->context,
+                                            gimp_item_tree_view_context_changed,
+                                            view);
+    }
+
+  view->context = context;
 
   if (context)
     {
       g_signal_connect (context, "image_changed",
-                        G_CALLBACK (gimp_item_tree_view_docked_context_changed),
+                        G_CALLBACK (gimp_item_tree_view_context_changed),
                         view);
 
       gimage = gimp_context_get_image (context);

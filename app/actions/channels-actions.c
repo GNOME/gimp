@@ -132,21 +132,18 @@ channels_actions_update (GimpActionGroup *group,
   GList       *next      = NULL;
   GList       *prev      = NULL;
 
-  if (GIMP_IS_COMPONENT_EDITOR (data))
-    {
-      gimage = GIMP_IMAGE_EDITOR (data)->gimage;
+  gimage = action_data_get_image (data);
 
-      if (gimage)
+  if (gimage)
+    {
+      fs = (gimp_image_floating_sel (gimage) != NULL);
+
+      if (GIMP_IS_COMPONENT_EDITOR (data))
         {
           if (GIMP_COMPONENT_EDITOR (data)->clicked_component != -1)
             component = TRUE;
         }
-    }
-  else
-    {
-      gimage = action_data_get_image (data);
-
-      if (gimage)
+      else
         {
           GList *list;
 
@@ -165,9 +162,6 @@ channels_actions_update (GimpActionGroup *group,
             }
         }
     }
-
-  if (gimage)
-    fs = (gimp_image_floating_sel (gimage) != NULL);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)

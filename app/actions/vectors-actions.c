@@ -181,6 +181,7 @@ vectors_actions_update (GimpActionGroup *group,
 {
   GimpImage   *gimage;
   GimpVectors *vectors    = NULL;
+  gint         n_vectors  = 0;
   gboolean     mask_empty = TRUE;
   gboolean     global_buf = FALSE;
   GList       *next       = NULL;
@@ -193,6 +194,8 @@ vectors_actions_update (GimpActionGroup *group,
       GList *list;
 
       vectors = gimp_image_get_active_vectors (gimage);
+
+      n_vectors = gimp_container_num_children (gimage->vectors);
 
       mask_empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
@@ -217,9 +220,10 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-path-tool",       vectors);
   SET_SENSITIVE ("vectors-edit-attributes", vectors);
 
-  SET_SENSITIVE ("vectors-new",       gimage);
-  SET_SENSITIVE ("vectors-duplicate", vectors);
-  SET_SENSITIVE ("vectors-delete",    vectors);
+  SET_SENSITIVE ("vectors-new",           gimage);
+  SET_SENSITIVE ("vectors-duplicate",     vectors);
+  SET_SENSITIVE ("vectors-delete",        vectors);
+  SET_SENSITIVE ("vectors-merge-visible", n_vectors > 1);
 
   SET_SENSITIVE ("vectors-raise",           vectors && prev);
   SET_SENSITIVE ("vectors-raise-to-top",    vectors && prev);

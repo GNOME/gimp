@@ -54,11 +54,9 @@ struct _GimpColorEditorClass
 };
 
 
-GType       gimp_color_editor_get_type    (void) G_GNUC_CONST;
+GType       gimp_color_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_editor_new         (GimpContext     *context);
-void        gimp_color_editor_set_context (GimpColorEditor *editor,
-                                           GimpContext     *context);
+GtkWidget * gimp_color_editor_new      (GimpContext *context);
 
 
 #endif /* __GIMP_COLOR_EDITOR_H__ */

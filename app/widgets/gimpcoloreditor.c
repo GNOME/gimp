@@ -48,12 +48,11 @@ static void   gimp_color_editor_destroy         (GtkObject         *object);
 static void   gimp_color_editor_style_set       (GtkWidget         *widget,
                                                  GtkStyle          *prev_style);
 
-static void   gimp_color_editor_set_aux_info     (GimpDocked       *docked,
-                                                  GList            *aux_info);
+static void   gimp_color_editor_set_aux_info    (GimpDocked        *docked,
+                                                 GList             *aux_info);
 static GList *gimp_color_editor_get_aux_info     (GimpDocked       *docked);
-static void gimp_color_editor_set_docked_context (GimpDocked       *docked,
-                                                  GimpContext      *context,
-                                                  GimpContext      *prev_context);
+static void   gimp_color_editor_set_context     (GimpDocked        *docked,
+                                                 GimpContext       *context);
 
 static void   gimp_color_editor_destroy         (GtkObject         *object);
 
@@ -304,7 +303,7 @@ gimp_color_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->set_aux_info = gimp_color_editor_set_aux_info;
   docked_iface->get_aux_info = gimp_color_editor_get_aux_info;
-  docked_iface->set_context  = gimp_color_editor_set_docked_context;
+  docked_iface->set_context  = gimp_color_editor_set_context;
 }
 
 #define AUX_INFO_CURRENT_PAGE "current-page"
@@ -369,61 +368,10 @@ gimp_color_editor_get_aux_info (GimpDocked *docked)
 }
 
 static void
-gimp_color_editor_set_docked_context (GimpDocked  *docked,
-                                      GimpContext *context,
-                                      GimpContext *prev_context)
+gimp_color_editor_set_context (GimpDocked  *docked,
+                               GimpContext *context)
 {
-  gimp_color_editor_set_context (GIMP_COLOR_EDITOR (docked), context);
-}
-
-static void
-gimp_color_editor_destroy (GtkObject *object)
-{
-  GimpColorEditor *editor = GIMP_COLOR_EDITOR (object);
-
-  if (editor->context)
-    gimp_color_editor_set_context (editor, NULL);
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-
-/*  public functions  */
-
-GtkWidget *
-gimp_color_editor_new (GimpContext *context)
-{
-  GimpColorEditor *editor;
-
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
-
-  editor = g_object_new (GIMP_TYPE_COLOR_EDITOR, NULL);
-
-  if (context)
-    gimp_color_editor_set_context (editor, context);
-
-  return GTK_WIDGET (editor);
-}
-
-static void
-gimp_color_editor_style_set (GtkWidget *widget,
-                             GtkStyle  *prev_style)
-{
-  GimpColorEditor *editor = GIMP_COLOR_EDITOR (widget);
-
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
-
-  if (editor->hbox)
-    gimp_editor_set_box_style (GIMP_EDITOR (editor), GTK_BOX (editor->hbox));
-}
-
-void
-gimp_color_editor_set_context (GimpColorEditor *editor,
-                               GimpContext     *context)
-{
-  g_return_if_fail (GIMP_IS_COLOR_EDITOR (editor));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  GimpColorEditor *editor = GIMP_COLOR_EDITOR (docked);
 
   if (context == editor->context)
     return;
@@ -465,6 +413,48 @@ gimp_color_editor_set_context (GimpColorEditor *editor,
           gimp_color_editor_fg_changed (editor->context, &rgb, editor);
         }
     }
+}
+
+static void
+gimp_color_editor_destroy (GtkObject *object)
+{
+  GimpColorEditor *editor = GIMP_COLOR_EDITOR (object);
+
+  if (editor->context)
+    gimp_docked_set_context (GIMP_DOCKED (editor), NULL);
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+
+/*  public functions  */
+
+GtkWidget *
+gimp_color_editor_new (GimpContext *context)
+{
+  GimpColorEditor *editor;
+
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+
+  editor = g_object_new (GIMP_TYPE_COLOR_EDITOR, NULL);
+
+  if (context)
+    gimp_docked_set_context (GIMP_DOCKED (editor), context);
+
+  return GTK_WIDGET (editor);
+}
+
+static void
+gimp_color_editor_style_set (GtkWidget *widget,
+                             GtkStyle  *prev_style)
+{
+  GimpColorEditor *editor = GIMP_COLOR_EDITOR (widget);
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  if (editor->hbox)
+    gimp_editor_set_box_style (GIMP_EDITOR (editor), GTK_BOX (editor->hbox));
 }
 
 

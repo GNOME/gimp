@@ -35,9 +35,10 @@ typedef struct _GimpImageEditorClass GimpImageEditorClass;
 
 struct _GimpImageEditor
 {
-  GimpEditor  parent_instance;
+  GimpEditor   parent_instance;
 
-  GimpImage  *gimage;
+  GimpContext *context;
+  GimpImage   *gimage;
 };
 
 struct _GimpImageEditorClass

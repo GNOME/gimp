@@ -1,3 +1,69 @@
+2004-05-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/widgets-types.h: reoedered to somehow reflect the
+	class hierarchy.
+
+	Some dockable context handling cleanup:
+
+	* app/widgets/gimpdocked.[ch]: removed "prev_context" parameter
+	from GimpDocked::set_context(). Widgets which need the old context
+	to disconnect from should remember it themselves.
+
+	* app/widgets/gimpdockable.c (gimp_dockable_set_context): don't
+	pass the old context to gimp_docked_set_context().
+	Some cleanup.
+
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontainereditor.c: changed accordingly.
+
+	* app/display/gimpnavigationview.[ch]
+	* app/widgets/gimpimageeditor.[ch]
+	* app/widgets/gimpitemtreeview.[ch]: added a "context" member
+	which holds the context set by GimpDocked::set_context().
+
+	* app/widgets/gimpdrawabletreeview.c: use the view's context
+	instead of gimp_get_user_context().
+
+	* app/widgets/gimpcoloreditor.[ch]: removed separate API to
+	set the context because it implements the GimpDockedInterface.
+
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimperrorconsole.c: pass "menu-factory",
+	"menu-identifier" and "ui-path" to g_object_new() instead of
+	calling gimp_editor_create_menu() later.
+
+	Action cleanup partly related to the context stuff above:
+
+	* app/actions/actions.c (action_data_get_gimp): get the Gimp from
+	context->gimp, not gimage->gimp because gimage may be NULL.
+
+	(action_data_get_context): changed to use the new context members
+	added above.
+
+	* app/actions/channels-actions.c (channels_actions_update): cleanup.
+
+	* app/actions/edit-actions.c (edit_actions_update): fixed
+	sensitivity of "edit-undo-clear".
+
+	* app/actions/vectors-actions.c (vectors_actions_update): make
+	"vectors-merge-visible" sensitive only if there is more than one
+	GimpVectors in the image.
+
+	* app/actions/colormap-editor-actions.c
+	* app/actions/gradient-editor-actions.c
+	* app/actions/palette-editor-actions.c: added FG/BG color previews
+	to actions which take colors from them. Changed code to be safe
+	against "context" being NULL.
+
+	* app/actions/drawable-commands.c:
+	s/active_drawable/drawable/g. Makes the code more readable.
+
+	* app/actions/select-commands.[ch]
+	* app/actions/vectors-commands.[ch]: removed public stroke utility
+	functions and other stuff which is not needed any more because
+	dialog buttons invoke the correct actions now. Moved the
+	functions' code to the resp. action callbacks.
+
 2004-05-21  Nathan Summers  <rock@gimp.org>
 
 	Somehow some of the changes from my commit on 2004-05-18 seem to have

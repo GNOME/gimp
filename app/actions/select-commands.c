@@ -282,36 +282,22 @@ select_stroke_cmd_callback (GtkAction *action,
   GimpImage    *gimage;
   GimpDrawable *drawable;
   GtkWidget    *widget;
-  return_if_no_drawable (gimage, drawable, data);
+  GtkWidget    *dialog;
+  return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  select_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)), widget);
-}
+  drawable = gimp_image_active_drawable (gimage);
 
-void
-select_stroke (GimpItem  *item,
-               GtkWidget *parent)
-{
-  GimpImage    *gimage;
-  GimpDrawable *active_drawable;
-  GtkWidget    *dialog;
-
-  g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (GTK_IS_WIDGET (parent));
-
-  gimage = gimp_item_get_image (item);
-
-  active_drawable = gimp_image_active_drawable (gimage);
-
-  if (! active_drawable)
+  if (! drawable)
     {
       g_message (_("There is no active layer or channel to stroke to."));
       return;
     }
 
-  dialog = stroke_dialog_new (item, GIMP_STOCK_SELECTION_STROKE,
+  dialog = stroke_dialog_new (GIMP_ITEM (gimp_image_get_mask (gimage)),
+                              GIMP_STOCK_SELECTION_STROKE,
                               GIMP_HELP_SELECTION_STROKE,
-                              parent);
+                              widget);
   gtk_widget_show (dialog);
 }
 

@@ -179,17 +179,15 @@ gimp_docked_get_title (GimpDocked *docked)
 
 void
 gimp_docked_set_context (GimpDocked  *docked,
-                         GimpContext *context,
-                         GimpContext *prev_context)
+                         GimpContext *context)
 {
   GimpDockedInterface *docked_iface;
 
   g_return_if_fail (GIMP_IS_DOCKED (docked));
   g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
-  g_return_if_fail (prev_context == NULL || GIMP_IS_CONTEXT (prev_context));
 
   docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
 
   if (docked_iface->set_context)
-    docked_iface->set_context (docked, context, prev_context);
+    docked_iface->set_context (docked, context);
 }

@@ -45,8 +45,5 @@ void   select_save_cmd_callback         (GtkAction *action,
 void   select_stroke_cmd_callback       (GtkAction *action,
                                          gpointer   data);
 
-void   select_stroke                    (GimpItem  *item,
-                                         GtkWidget *parent);
-
 
 #endif /* __SELECT_COMMANDS_H__ */

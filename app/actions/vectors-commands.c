@@ -197,23 +197,69 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
                                            gint       value,
                                            gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage   *gimage;
+  ProcRecord  *proc_rec;
+  Argument    *args;
+  GimpDisplay *gdisp;
   return_if_no_image (gimage, data);
 
-  vectors_selection_to_vectors (gimage, value);
+  if (value)
+    proc_rec = procedural_db_lookup (gimage->gimp,
+                                     "plug_in_sel2path_advanced");
+  else
+    proc_rec = procedural_db_lookup (gimage->gimp,
+                                     "plug_in_sel2path");
+
+  if (! proc_rec)
+    {
+      g_message ("Selection to path procedure lookup failed.");
+      return;
+    }
+
+  gdisp = gimp_context_get_display (gimp_get_user_context (gimage->gimp));
+
+  /*  plug-in arguments as if called by <Image>/Filters/...  */
+  args = g_new (Argument, 3);
+
+  args[0].arg_type      = GIMP_PDB_INT32;
+  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
+  args[1].arg_type      = GIMP_PDB_IMAGE;
+  args[1].value.pdb_int = (gint32) gimp_image_get_ID (gimage);
+  args[2].arg_type      = GIMP_PDB_DRAWABLE;
+  args[2].value.pdb_int = -1;  /*  unused  */
+
+  plug_in_run (gimage->gimp, gimp_get_user_context (gimage->gimp),
+               proc_rec, args, 3, FALSE, TRUE,
+	       gdisp ? gdisp->ID : 0);
+
+  g_free (args);
 }
 
 void
 vectors_stroke_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpVectors *active_vectors;
-  GtkWidget   *widget;
-  return_if_no_vectors (gimage, active_vectors, data);
+  GimpImage    *gimage;
+  GimpVectors  *vectors;
+  GimpDrawable *drawable;
+  GtkWidget    *widget;
+  GtkWidget    *dialog;
+  return_if_no_vectors (gimage, vectors, data);
   return_if_no_widget (widget, data);
 
-  vectors_stroke_vectors (GIMP_ITEM (active_vectors), widget);
+  drawable = gimp_image_active_drawable (gimage);
+
+  if (! drawable)
+    {
+      g_message (_("There is no active layer or channel to stroke to."));
+      return;
+    }
+
+  dialog = stroke_dialog_new (GIMP_ITEM (vectors),
+                              GIMP_STOCK_PATH_STROKE,
+                              GIMP_HELP_PATH_STROKE,
+                              widget);
+  gtk_widget_show (dialog);
 }
 
 void
@@ -288,74 +334,6 @@ vectors_edit_attributes_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
 
   vectors_edit_vectors_query (active_vectors, widget);
-}
-
-void
-vectors_stroke_vectors (GimpItem  *item,
-                        GtkWidget *parent)
-{
-  GimpImage    *gimage;
-  GimpDrawable *active_drawable;
-  GtkWidget    *dialog;
-
-  g_return_if_fail (GIMP_IS_ITEM (item));
-
-  gimage = gimp_item_get_image (item);
-
-  active_drawable = gimp_image_active_drawable (gimage);
-
-  if (! active_drawable)
-    {
-      g_message (_("There is no active layer or channel to stroke to."));
-      return;
-    }
-
-  dialog = stroke_dialog_new (item, GIMP_STOCK_PATH_STROKE,
-                              GIMP_HELP_PATH_STROKE,
-                              parent);
-  gtk_widget_show (dialog);
-}
-
-void
-vectors_selection_to_vectors (GimpImage *gimage,
-                              gboolean   advanced)
-{
-  ProcRecord   *proc_rec;
-  Argument     *args;
-  GimpDisplay  *gdisp;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  if (advanced)
-    proc_rec = procedural_db_lookup (gimage->gimp,
-                                     "plug_in_sel2path_advanced");
-  else
-    proc_rec = procedural_db_lookup (gimage->gimp,
-                                     "plug_in_sel2path");
-
-  if (! proc_rec)
-    {
-      g_message ("Selection to path procedure lookup failed.");
-      return;
-    }
-
-  gdisp = gimp_context_get_display (gimp_get_user_context (gimage->gimp));
-
-  /*  plug-in arguments as if called by <Image>/Filters/...  */
-  args = g_new (Argument, 3);
-
-  args[0].arg_type      = GIMP_PDB_INT32;
-  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
-  args[1].arg_type      = GIMP_PDB_IMAGE;
-  args[1].value.pdb_int = (gint32) gimp_image_get_ID (gimage);
-  args[2].arg_type      = GIMP_PDB_DRAWABLE;
-  args[2].value.pdb_int = -1;  /*  unused  */
-
-  plug_in_run (gimage->gimp, gimp_get_user_context (gimage->gimp),
-               proc_rec, args, 3, FALSE, TRUE,
-	       gdisp ? gdisp->ID : 0);
-
-  g_free (args);
 }
 
 void

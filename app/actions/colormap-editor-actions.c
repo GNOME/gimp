@@ -24,6 +24,7 @@
 
 #include "actions-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimpactiongroup.h"
@@ -79,11 +80,15 @@ void
 colormap_editor_actions_update (GimpActionGroup *group,
                                 gpointer         data)
 {
-  GimpImage *gimage;
-  gboolean   indexed    = FALSE;
-  gint       num_colors = 0;
+  GimpImage   *gimage;
+  GimpContext *context;
+  gboolean     indexed    = FALSE;
+  gint         num_colors = 0;
+  GimpRGB      fg;
+  GimpRGB      bg;
 
-  gimage = action_data_get_image (data);
+  gimage  = action_data_get_image (data);
+  context = action_data_get_context (data);
 
   if (gimage)
     {
@@ -91,8 +96,16 @@ colormap_editor_actions_update (GimpActionGroup *group,
       num_colors = gimage->num_cols;
     }
 
+  if (context)
+    {
+      gimp_context_get_foreground (context, &fg);
+      gimp_context_get_background (context, &bg);
+    }
+
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+#define SET_COLOR(action,color) \
+        gimp_action_group_set_action_color (group, action, color, FALSE);
 
   SET_SENSITIVE ("colormap-editor-edit-color",
                  gimage && indexed);
@@ -101,5 +114,9 @@ colormap_editor_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("colormap-editor-add-color-from-bg",
                  gimage && indexed && num_colors < 256);
 
+  SET_COLOR ("colormap-editor-add-color-from-fg", context ? &fg : NULL);
+  SET_COLOR ("colormap-editor-add-color-from-bg", context ? &bg : NULL);
+
 #undef SET_SENSITIVE
+#undef SET_COLOR
 }

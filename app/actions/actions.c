@@ -32,6 +32,7 @@
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdock.h"
+#include "widgets/gimpdockable.h"
 #include "widgets/gimpimageeditor.h"
 #include "widgets/gimpitemtreeview.h"
 
@@ -225,9 +226,9 @@ action_data_get_gimp (gpointer data)
   else if (GIMP_IS_DISPLAY_SHELL (data))
     return ((GimpDisplayShell *) data)->gdisp->gimage->gimp;
   else if (GIMP_IS_ITEM_TREE_VIEW (data))
-    return ((GimpItemTreeView *) data)->gimage->gimp;
+    return ((GimpItemTreeView *) data)->context->gimp;
   else if (GIMP_IS_IMAGE_EDITOR (data))
-    return ((GimpImageEditor *) data)->gimage->gimp;
+    return ((GimpImageEditor *) data)->context->gimp;
   else if (GIMP_IS_GIMP (data))
     return data;
   else if (GIMP_IS_DOCK (data))
@@ -246,10 +247,14 @@ action_data_get_context (gpointer data)
     return gimp_get_user_context (((GimpDisplay *) data)->gimage->gimp);
   else if (GIMP_IS_DISPLAY_SHELL (data))
     return gimp_get_user_context (((GimpDisplayShell *) data)->gdisp->gimage->gimp);
+  else if (GIMP_IS_ITEM_TREE_VIEW (data))
+    return ((GimpItemTreeView *) data)->context;
   else if (GIMP_IS_CONTAINER_VIEW (data))
     return gimp_container_view_get_context ((GimpContainerView *) data);
   else if (GIMP_IS_CONTAINER_EDITOR (data))
     return gimp_container_view_get_context (((GimpContainerEditor *) data)->view);
+  else if (GIMP_IS_IMAGE_EDITOR (data))
+    return ((GimpImageEditor *) data)->context;
   else if (GIMP_IS_DOCK (data))
     return ((GimpDock *) data)->context;
 

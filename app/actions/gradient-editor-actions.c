@@ -342,7 +342,7 @@ gradient_editor_actions_update (GimpActionGroup *group,
                                 gpointer         data)
 {
   GimpGradientEditor  *editor;
-  GimpContext         *user_context;
+  GimpContext         *context;
   GimpGradientSegment *left_seg;
   GimpGradientSegment *right_seg;
   GimpRGB              fg;
@@ -354,7 +354,7 @@ gradient_editor_actions_update (GimpActionGroup *group,
 
   editor = GIMP_GRADIENT_EDITOR (data);
 
-  user_context =
+  context =
     gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
 
   if (editor->control_sel_l->prev)
@@ -367,8 +367,11 @@ gradient_editor_actions_update (GimpActionGroup *group,
   else
     right_seg = gimp_gradient_segment_get_first (editor->control_sel_r);
 
-  gimp_context_get_foreground (user_context, &fg);
-  gimp_context_get_background (user_context, &bg);
+  if (context)
+    {
+      gimp_context_get_foreground (context, &fg);
+      gimp_context_get_background (context, &bg);
+    }
 
   {
     GimpGradientSegmentType  type;
@@ -411,8 +414,9 @@ gradient_editor_actions_update (GimpActionGroup *group,
              &left_seg->right_color, FALSE);
   SET_COLOR ("gradient-editor-load-left-right-endpoint",
              &editor->control_sel_r->right_color, FALSE);
-  SET_COLOR ("gradient-editor-load-left-fg", &fg, FALSE);
-  SET_COLOR ("gradient-editor-load-left-bg", &bg, FALSE);
+
+  SET_COLOR ("gradient-editor-load-left-fg", context ? &fg : NULL, FALSE);
+  SET_COLOR ("gradient-editor-load-left-bg", context ? &bg : NULL, FALSE);
 
   SET_COLOR ("gradient-editor-load-left-01", &editor->saved_colors[0], TRUE);
   SET_COLOR ("gradient-editor-load-left-02", &editor->saved_colors[1], TRUE);
@@ -442,8 +446,9 @@ gradient_editor_actions_update (GimpActionGroup *group,
              &right_seg->left_color, FALSE);
   SET_COLOR ("gradient-editor-load-right-left-endpoint",
              &editor->control_sel_l->left_color, FALSE);
-  SET_COLOR ("gradient-editor-load-right-fg", &fg, FALSE);
-  SET_COLOR ("gradient-editor-load-right-bg", &bg, FALSE);
+
+  SET_COLOR ("gradient-editor-load-right-fg", context ? &fg : NULL, FALSE);
+  SET_COLOR ("gradient-editor-load-right-bg", context ? &bg : NULL, FALSE);
 
   SET_COLOR ("gradient-editor-load-right-01", &editor->saved_colors[0], TRUE);
   SET_COLOR ("gradient-editor-load-right-02", &editor->saved_colors[1], TRUE);

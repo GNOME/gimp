@@ -60,15 +60,14 @@ static void   gimp_container_editor_context_item     (GtkWidget           *widge
 static void   gimp_container_editor_real_context_item(GimpContainerEditor *editor,
 						      GimpViewable        *viewable);
 
-static GtkWidget    * gimp_container_editor_get_preview (GimpDocked       *docked,
-                                                         GimpContext      *context,
-                                                         GtkIconSize       size);
-static void           gimp_container_editor_set_context (GimpDocked       *docked,
-                                                         GimpContext      *context,
-                                                         GimpContext      *prev_context);
-static GimpUIManager * gimp_container_editor_get_menu   (GimpDocked       *docked,
-                                                         const gchar     **ui_path,
-                                                         gpointer         *popup_data);
+static GtkWidget * gimp_container_editor_get_preview (GimpDocked       *docked,
+                                                      GimpContext      *context,
+                                                      GtkIconSize       size);
+static void        gimp_container_editor_set_context (GimpDocked       *docked,
+                                                      GimpContext      *context);
+static GimpUIManager * gimp_container_editor_get_menu(GimpDocked       *docked,
+                                                      const gchar     **ui_path,
+                                                      gpointer         *popup_data);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -274,13 +273,11 @@ gimp_container_editor_get_preview (GimpDocked   *docked,
 
 static void
 gimp_container_editor_set_context (GimpDocked  *docked,
-                                   GimpContext *context,
-                                   GimpContext *prev_context)
+                                   GimpContext *context)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (docked);
 
-  gimp_docked_set_context (GIMP_DOCKED (editor->view),
-                           context, prev_context);
+  gimp_docked_set_context (GIMP_DOCKED (editor->view), context);
 }
 
 static GimpUIManager *

@@ -50,8 +50,7 @@ static GtkWidget * gimp_container_box_get_preview  (GimpDocked   *docked,
                                                     GimpContext  *context,
                                                     GtkIconSize   size);
 static void        gimp_container_box_set_context  (GimpDocked   *docked,
-                                                    GimpContext  *context,
-                                                    GimpContext  *prev_context);
+                                                    GimpContext  *context);
 
 
 static GimpEditorClass *parent_class = NULL;
@@ -196,8 +195,7 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
 
 static void
 gimp_container_box_set_context (GimpDocked  *docked,
-                                GimpContext *context,
-                                GimpContext *prev_context)
+                                GimpContext *context)
 {
   gimp_container_view_set_context (GIMP_CONTAINER_VIEW (docked), context);
 }

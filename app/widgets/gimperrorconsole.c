@@ -228,13 +228,13 @@ gimp_error_console_new (Gimp            *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
-  console = g_object_new (GIMP_TYPE_ERROR_CONSOLE, NULL);
+  console = g_object_new (GIMP_TYPE_ERROR_CONSOLE,
+                          "menu-factory",   menu_factory,
+                          "menu-dentifier", "<ErrorConsole>",
+                          "ui-path",        "/error-console-popup",
+                          NULL);
 
   console->gimp = gimp;
-
-  gimp_editor_create_menu (GIMP_EDITOR (console),
-                           menu_factory, "<ErrorConsole>",
-                           "/error-console-popup", console);
 
   console->gimp->message_handler = GIMP_ERROR_CONSOLE;
 
