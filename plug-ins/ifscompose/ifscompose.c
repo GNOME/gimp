@@ -38,6 +38,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
