@@ -1,3 +1,9 @@
+2004-07-01  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* plug-ins/common/align_layers.c: there seems to be no reason why
+	this plug-in should not work on INDEXED* images, added it to the
+	registered image types
+
 2004-06-28  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version number to 2.0.3, interface_age 3,
