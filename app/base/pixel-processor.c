@@ -31,6 +31,7 @@
 
 #include "base-types.h"
 
+#include "base-config.h"
 #include "pixel-processor.h"
 #include "pixel-region.h"
 
@@ -233,7 +234,7 @@ pixel_regions_do_parallel (PixelProcessor *p_s)
   IF_THREAD(
   gint nthreads;
  
-  nthreads = MIN (num_processors, MAX_THREADS);
+  nthreads = MIN (base_config->num_processors, MAX_THREADS);
 
   /* make sure we have at least one tile per thread */
   nthreads = MIN (nthreads,

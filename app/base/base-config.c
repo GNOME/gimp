@@ -27,11 +27,12 @@
 
 static GimpBaseConfig  static_base_config =
 {
-  NULL,
-  NULL,
-  33554432,  /* 32 MB */
-  FALSE,
-  LINEAR_INTERPOLATION
+  NULL,                 /* temp_path           */
+  NULL,                 /* swap_path           */
+  33554432,             /* tile_cache_size     */
+  FALSE,                /* stingy_memory_usage */
+  LINEAR_INTERPOLATION, /* interpolation_type  */
+  1,                    /* num_processors      */
 };
 
 

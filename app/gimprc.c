@@ -243,7 +243,6 @@ gboolean           show_tool_tips            = TRUE;
 gdouble            monitor_xres              = 72.0;
 gdouble            monitor_yres              = 72.0;
 gboolean           using_xserver_resolution  = FALSE;
-gint               num_processors            = 1;
 gchar             *image_title_format        = NULL;
 gboolean           global_paint_options      = FALSE;
 gchar             *module_db_load_inhibit    = NULL;
@@ -327,7 +326,6 @@ static ParseFunc funcs[] =
   { "unit-info",                 TT_XUNITINFO,     NULL, NULL },
   { "monitor-xresolution",       TT_DOUBLE,        &monitor_xres, NULL },
   { "monitor-yresolution",       TT_DOUBLE,        &monitor_yres, NULL },
-  { "num-processors",            TT_INT,           &num_processors, NULL },
   { "image-title-format",        TT_STRING,        &image_title_format, NULL },
   { "parasite",                  TT_XPARASITE,     NULL, NULL },
   { "global-paint-options",      TT_BOOLEAN,       &global_paint_options, NULL },
@@ -393,7 +391,8 @@ gimprc_init (void)
 	{ "swap-path",          TT_PATH,    NULL, NULL },
 	{ "tile-cache-size",    TT_MEMSIZE, NULL, NULL },
 	{ "stingy-memory-use",  TT_BOOLEAN, NULL, NULL },
-	{ "interpolation-type", TT_INTERP,  NULL, NULL }
+	{ "interpolation-type", TT_INTERP,  NULL, NULL },
+	{ "num-processors",     TT_INT,     NULL, NULL }
       };
       static gint n_base_funcs = (sizeof (base_funcs) /
 				  sizeof (base_funcs[0]));
@@ -404,6 +403,7 @@ gimprc_init (void)
       base_funcs[2].val1p = &base_config->tile_cache_size;
       base_funcs[3].val1p = &base_config->stingy_memory_use;
       base_funcs[4].val1p = &base_config->interpolation_type;
+      base_funcs[4].val1p = &base_config->num_processors;
 
       parse_func_hash = g_hash_table_new (g_str_hash, g_str_equal);
 

@@ -68,7 +68,6 @@ extern gboolean           show_tool_tips;
 extern gdouble            monitor_xres;
 extern gdouble            monitor_yres;
 extern gboolean           using_xserver_resolution;
-extern gint               num_processors;
 extern gchar             *image_title_format;
 extern gboolean           global_paint_options;
 extern gchar             *module_db_load_inhibit;

@@ -30,6 +30,7 @@
 
 #include "base-types.h"
 
+#include "base-config.h"
 #include "gimphistogram.h"
 #include "pixel-processor.h"
 #include "pixel-region.h"
@@ -299,10 +300,10 @@ gimp_histogram_calculate (GimpHistogram *histogram,
 
 #ifdef ENABLE_MP
   pthread_mutex_init (&histogram->mutex, NULL);
-  histogram->tmp_slots  = g_new0 (gchar, num_processors);
-  histogram->tmp_values = g_new0 (gdouble **, num_processors);
+  histogram->tmp_slots  = g_new0 (gchar, base_config->num_processors);
+  histogram->tmp_values = g_new0 (gdouble **, base_config->num_processors);
 
-  for (i = 0; i < num_processors; i++)
+  for (i = 0; i < base_config->num_processors; i++)
     {
       histogram->tmp_values[i] = g_new0 (double *, histogram->n_channels);
       histogram->tmp_slots[i]  = 0;
@@ -326,7 +327,7 @@ gimp_histogram_calculate (GimpHistogram *histogram,
 
 #ifdef ENABLE_MP
   /* add up all the tmp buffers and free their memmory */
-  for (i = 0; i < num_processors; i++)
+  for (i = 0; i < base_config->num_processors; i++)
     {
       for (j = 0; j < histogram->n_channels; j++)
 	{

@@ -1,5 +1,15 @@
 2001-05-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimprc.[ch]: removed "num_processors".
+
+	* app/base/base-config.[ch]: and added it here.
+
+	* app/base/gimphistogram.c
+	* app/base/pixel-processor.c
+	* app/gui/preferences-dialog.c: changed accordingly.
+
+2001-05-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/gimpui.[ch]: removed.
 

@@ -328,10 +328,10 @@ prefs_check_settings (void)
       return PREFS_CORRUPT;
     }
 
-  if (num_processors < 1 || num_processors > 30) 
+  if (base_config->num_processors < 1 || base_config->num_processors > 30) 
     {
       g_message (_("Error: Number of processors must be between 1 and 30."));
-      num_processors = old_num_processors;
+      base_config->num_processors = old_num_processors;
       return PREFS_CORRUPT;
     }
 
@@ -704,7 +704,7 @@ prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "default-threshold");
     }
-  if (num_processors != old_num_processors)
+  if (base_config->num_processors != old_num_processors)
     {
       update = g_list_append (update, "num-processors");
     }
@@ -848,6 +848,8 @@ prefs_cancel_callback (GtkWidget *widget,
 
   /*  restore ordinary gimprc variables  */
   base_config->interpolation_type = old_interpolation_type;
+  base_config->num_processors     = old_num_processors;
+
   levels_of_undo           = old_levels_of_undo;
   marching_speed           = old_marching_speed;
   allow_resize_windows     = old_allow_resize_windows;
@@ -878,7 +880,6 @@ prefs_cancel_callback (GtkWidget *widget,
   help_browser             = old_help_browser;
   cursor_mode              = old_cursor_mode;
   default_threshold        = old_default_threshold;
-  num_processors           = old_num_processors;
 
   /*  restore variables which need some magic  */
   if (preview_size != old_preview_size)
@@ -1418,6 +1419,8 @@ preferences_dialog_create (void)
 
   /*  remember all old values  */
   old_interpolation_type       = base_config->interpolation_type;
+  old_num_processors           = base_config->num_processors;
+
   old_perfectmouse             = perfectmouse;
   old_transparency_type        = transparency_type;
   old_transparency_size        = transparency_size;
@@ -1454,7 +1457,6 @@ preferences_dialog_create (void)
   old_help_browser             = help_browser;
   old_cursor_mode              = cursor_mode;
   old_default_threshold        = default_threshold;
-  old_num_processors           = num_processors;
 
   prefs_strset (&old_image_title_format, image_title_format);	
   prefs_strset (&old_default_comment, default_comment);	
@@ -2242,11 +2244,11 @@ preferences_dialog_create (void)
 
 #ifdef ENABLE_MP
   spinbutton =
-    gimp_spin_button_new (&adjustment, num_processors,
+    gimp_spin_button_new (&adjustment, base_config->num_processors,
 			  1, 30, 1.0, 2.0, 0.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &num_processors);
+		      &base_config->num_processors);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Number of Processors to Use:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
