@@ -1,5 +1,12 @@
 2005-02-17  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpviewrenderergradient.c
+	(gimp_view_renderer_gradient_render): don't attempt to read beyond
+	the pre-calculated render buffers, even if the gradient somehow
+	has out-of-bounds values. Fixes the crash reported in bug #167604.
+
+2005-02-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/imap_main.c: fixed the build for compilers that
 	don't support C99 extensions.
 
