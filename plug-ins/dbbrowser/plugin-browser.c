@@ -883,6 +883,9 @@ get_plugin_info (PDesc *pdesc,
 	  row_count++;
 
 	  /* Now do the tree view.... */
+	  gtk_signal_handler_block_by_func (GTK_OBJECT(pdesc->ctree),
+					    GTK_SIGNAL_FUNC (procedure_ctree_select_callback),
+					    pdesc);
 	  insert_into_ctree (pdesc,
 			     name,
 			     xtimestr,
@@ -890,6 +893,9 @@ get_plugin_info (PDesc *pdesc,
 			     types_strs[loop],
 			     ghash,
 			     pinfo);
+	  gtk_signal_handler_unblock_by_func (GTK_OBJECT (pdesc->ctree),
+					      GTK_SIGNAL_FUNC (procedure_ctree_select_callback),
+					      pdesc);
 	}
     }
 

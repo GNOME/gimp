@@ -1644,7 +1644,7 @@ layers_dialog_delete_layer_callback (GtkWidget *widget,
   else
     gimp_image_remove_layer (gimage, gimage->active_layer);
 
-  gdisplays_flush ();
+  gdisplays_flush_now ();
 }
 
 void

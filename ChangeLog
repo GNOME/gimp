@@ -1,3 +1,28 @@
+
+Thu Aug 17 22:07:50 BST 2000 Andy Thomas <alt@gimp.org>
+
+	* plug-ins/sel2path/globals.h
+
+	Fixed compilation problems. Some really old compilers had problems
+	with the macros in sel2path. Thanks to  
+        Dougal_R_Scott@nag.national.com.aui for pointing it out.	
+
+	* app/layers_dialog.c
+
+	Fixes #16583: "new view" not being updated correctly. I still think
+	theres is a problem in the idle rendering when images that
+	have multiple views require updating. 
+	I could only get the deleting layers operation
+	to leave the "other views" out of date. This fix forces the views
+	to be updates as soon as the layer is deleted. I think this is 
+	acceptable since we are doing a "large scale" operation and the 
+	performance loss by not doing the update in the background is OK.
+
+	* plug-ins/common/plugindetails.c
+
+	Fixed problem when doing searches for plugins containing a 
+	given string caused gtk warnings to be issued.	
+
 2000-08-17  Sven Neumann  <sven@gimp.org>
 
 	* app/boundary.c (allocate_vert_segs): applied a fix for bug #16221

@@ -33,8 +33,8 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #define START_FATAL() do { fputs ("fatal: ", stderr)
 #define END_FATAL() fputs (".\n", stderr); exit (1); } while (0)
 
-#define FATAL(s)							\
-  START_FATAL (); fprintf (stderr, "%s", s); END_FATAL ()
+#define FATAL(x)							\
+  START_FATAL (); fprintf (stderr, "%s", x); END_FATAL ()
 #define FATAL1(s, e1)							\
   START_FATAL (); fprintf (stderr, s, e1); END_FATAL ()
 #define FATAL2(s, e1, e2)						\
@@ -48,8 +48,8 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #define START_WARNING() do { fputs ("warning: ", stderr)
 #define END_WARNING() fputs (".\n", stderr); fflush (stderr); } while (0)
 
-#define WARNING(s)							\
-  START_WARNING (); fprintf (stderr, "%s", s); END_WARNING ()
+#define WARNING(x)							\
+  START_WARNING (); fprintf (stderr, "%s", x); END_WARNING ()
 #define WARNING1(s, e1)							\
   START_WARNING (); fprintf (stderr, s, e1); END_WARNING ()
 #define WARNING2(s, e1, e2)						\
