@@ -21,25 +21,22 @@ package Gimp::CodeGen::enums;
 
 %enums = (
     GimpUnit =>
-	{ contig => 0,
+	{ contig => 1,
 	  header => 'libgimpbase/gimpbasetypes.h',
 	  symbols => [ qw(GIMP_UNIT_PIXEL GIMP_UNIT_INCH GIMP_UNIT_MM
-			  GIMP_UNIT_POINT GIMP_UNIT_PICA GIMP_UNIT_END
-			  GIMP_UNIT_PERCENT) ],
+			  GIMP_UNIT_POINT GIMP_UNIT_PICA GIMP_UNIT_END) ],
 	  mapping => { GIMP_UNIT_PIXEL => '0',
 		       GIMP_UNIT_INCH => '1',
 		       GIMP_UNIT_MM => '2',
 		       GIMP_UNIT_POINT => '3',
 		       GIMP_UNIT_PICA => '4',
-		       GIMP_UNIT_END => '5',
-		       GIMP_UNIT_PERCENT => '65536' },
+		       GIMP_UNIT_END => '5' },
 	  nicks   => { GIMP_UNIT_PIXEL => 'UNIT_PIXEL',
 		       GIMP_UNIT_INCH => 'UNIT_INCH',
 		       GIMP_UNIT_MM => 'UNIT_MM',
 		       GIMP_UNIT_POINT => 'UNIT_POINT',
 		       GIMP_UNIT_PICA => 'UNIT_PICA',
-		       GIMP_UNIT_END => 'UNIT_END',
-		       GIMP_UNIT_PERCENT => 'UNIT_PERCENT' }
+		       GIMP_UNIT_END => 'UNIT_END' }
 	},
     GimpPDBArgType =>
 	{ contig => 1,

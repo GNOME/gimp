@@ -45,7 +45,7 @@ typedef enum /*< chop=GIMP_ >*/
 
   GIMP_UNIT_END     = 5,
 
-  GIMP_UNIT_PERCENT = 65536
+  GIMP_UNIT_PERCENT = 65536 /*< skip >*/
 } GimpUnit;
 
 typedef enum /*< chop=GIMP_ >*/

@@ -38,7 +38,7 @@ struct _CurvesDialog
   GtkWidget    *curve_type_menu;
 
   GimpDrawable *drawable;
-  ImageMap      image_map;
+  ImageMap     *image_map;
 
   gint          color;
   gint          channel;

@@ -1,3 +1,38 @@
+2001-05-24  Michael Natterer  <mitch@gimp.org>
+
+	* config.guess
+	* config.sub: new versions from CVS (at least that's what my
+	debian package says...)
+
+	* app/Makefile.am
+	* app/gimppreviewcache.[ch]: removed.
+
+	* app/core/Makefile.am
+	* app/core/gimppreviewcache.c: added.
+
+	* app/core/gimpdrawable.c: reordered #includes
+
+	* app/apptypes.h: make ImageMap a proper opaque typedef, not
+	simply a gpointer.
+
+	* app/image_map.[ch]: changed accordingly. cleanup.
+
+	* app/tools/color_balance.h
+	* app/tools/curves.h
+	* app/tools/gimptool.c
+	* app/tools/histogram_tool.h
+	* app/tools/hue_saturation.h
+	* app/tools/threshold.h: changed here too.
+
+	* libgimpbase/gimpbasetypes.h: /*< skip >*/ GIMP_UNIT_PERCENT as
+	it's a UI convenience thing and no unit.
+
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* libgimpwidgets/gimpbutton.c: maybe this change makes GimpButton
+	behave even more careful when changing GtkButton's private stuff.
+
 2001-05-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimphistogram.[ch]

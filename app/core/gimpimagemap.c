@@ -41,8 +41,7 @@
 
 #define WORK_DELAY 1
 
-/*  Local structures  */
-typedef struct _ImageMap
+struct _ImageMap
 {
   GDisplay          *gdisp;
   GimpDrawable      *drawable;
@@ -53,7 +52,7 @@ typedef struct _ImageMap
   void              *pr;
   gint               state;
   gint               idle;
-} _ImageMap;
+};
 
 
 /**************************/
@@ -62,333 +61,346 @@ typedef struct _ImageMap
 static gint
 image_map_do (gpointer data)
 {
-  _ImageMap   *_image_map;
+  ImageMap    *image_map;
   GimpImage   *gimage;
   PixelRegion  shadowPR;
   gint         x, y, w, h;
 
-  _image_map = (_ImageMap *) data;
+  image_map = (ImageMap *) data;
 
-  if (! (gimage = gimp_drawable_gimage ( (_image_map->drawable))))
+  if (! (gimage = gimp_drawable_gimage (image_map->drawable)))
     {
-      _image_map->state = WAITING;
+      image_map->state = WAITING;
+
       return FALSE;
     }
 
   /*  Process the pixel regions and apply the image mapping  */
-  (* _image_map->apply_func) (&_image_map->srcPR, &_image_map->destPR, _image_map->user_data);
+  (* image_map->apply_func) (&image_map->srcPR,
+			     &image_map->destPR,
+			     image_map->user_data);
 
-  x = _image_map->destPR.x;
-  y = _image_map->destPR.y;
-  w = _image_map->destPR.w;
-  h = _image_map->destPR.h;
+  x = image_map->destPR.x;
+  y = image_map->destPR.y;
+  w = image_map->destPR.w;
+  h = image_map->destPR.h;
 
   /*  apply the results  */
   pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
-  gimp_image_apply_image (gimage, _image_map->drawable, &shadowPR,
+  gimp_image_apply_image (gimage, image_map->drawable, &shadowPR,
 			  FALSE, OPAQUE_OPACITY, REPLACE_MODE, NULL, x, y);
 
   /*  display the results  */
-  if (_image_map->gdisp)
+  if (image_map->gdisp)
     {
-      drawable_update ( (_image_map->drawable), x, y, w, h);
-      gdisplay_flush_now (_image_map->gdisp);
+      drawable_update ( (image_map->drawable), x, y, w, h);
+      gdisplay_flush_now (image_map->gdisp);
     }
 
-  _image_map->pr = pixel_regions_process (_image_map->pr);
+  image_map->pr = pixel_regions_process (image_map->pr);
 
-  if (_image_map->pr == NULL)
+  if (image_map->pr == NULL)
     {
-      _image_map->state = WAITING;
+      image_map->state = WAITING;
       gdisplays_flush ();
+
       return FALSE;
     }
-  else
-    return TRUE;
+
+  return TRUE;
 }
 
-ImageMap
+ImageMap *
 image_map_create (GDisplay     *gdisp,
 		  GimpDrawable *drawable)
 {
-  _ImageMap *_image_map;
+  ImageMap *image_map;
 
-  _image_map = g_new (_ImageMap, 1);
-  _image_map->gdisp      = gdisp;
-  _image_map->drawable   = drawable;
-  _image_map->undo_tiles = NULL;
-  _image_map->state      = WAITING;
+  g_return_val_if_fail (gdisp != NULL, NULL);
+  g_return_val_if_fail (drawable != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  /* Interactive tools based on image_map disable the undo stack */
-  /* to avert any unintented undo interaction through the UI     */
+  image_map = g_new0 (ImageMap, 1);
 
-  gimp_image_undo_freeze(_image_map->gdisp->gimage);
-  gdisplay_set_menu_sensitivity (_image_map->gdisp);
-  return (ImageMap) _image_map;
+  image_map->gdisp      = gdisp;
+  image_map->drawable   = drawable;
+  image_map->undo_tiles = NULL;
+  image_map->state      = WAITING;
+
+  /* Interactive tools based on image_map disable the undo stack
+   * to avert any unintented undo interaction through the UI
+   */
+  gimp_image_undo_freeze (image_map->gdisp->gimage);
+  gdisplay_set_menu_sensitivity (image_map->gdisp);
+
+  return image_map;
 }
 
 void
-image_map_apply (ImageMap           image_map,
+image_map_apply (ImageMap          *image_map,
 		 ImageMapApplyFunc  apply_func,
-		 void              *user_data)
+		 gpointer           apply_data)
 {
-  _ImageMap *_image_map;
-  gint x1, y1, x2, y2;
+  gint x1, y1;
+  gint x2, y2;
   gint offset_x, offset_y;
   gint width, height;
 
-  _image_map = (_ImageMap *) image_map;
-  _image_map->apply_func = apply_func;
-  _image_map->user_data = user_data;
+  g_return_if_fail (image_map != NULL);
+  g_return_if_fail (apply_func != NULL);
+
+  image_map->apply_func = apply_func;
+  image_map->user_data  = apply_data;
 
   /*  If we're still working, remove the timer  */
-  if (_image_map->state == WORKING)
+  if (image_map->state == WORKING)
     {
-      gtk_idle_remove (_image_map->idle);
-      pixel_regions_process_stop (_image_map->pr);
-      _image_map->pr = NULL;
+      gtk_idle_remove (image_map->idle);
+      pixel_regions_process_stop (image_map->pr);
+
+      image_map->pr = NULL;
     }
 
   /*  Make sure the drawable is still valid  */
-  if (! gimp_drawable_gimage (_image_map->drawable))
+  if (! gimp_drawable_gimage (image_map->drawable))
     return;
 
   /*  The application should occur only within selection bounds  */
-  gimp_drawable_mask_bounds (_image_map->drawable, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (image_map->drawable, &x1, &y1, &x2, &y2);
 
   /*  If undo tiles don't exist, or change size, (re)allocate  */
-  if (_image_map->undo_tiles)
+  if (image_map->undo_tiles)
     {
-      tile_manager_get_offsets (_image_map->undo_tiles, &offset_x, &offset_y);
-      width  = tile_manager_width (_image_map->undo_tiles);
-      height = tile_manager_height (_image_map->undo_tiles);
+      tile_manager_get_offsets (image_map->undo_tiles, &offset_x, &offset_y);
+      width  = tile_manager_width (image_map->undo_tiles);
+      height = tile_manager_height (image_map->undo_tiles);
     }
   else
     {
       offset_x = offset_y = width = height = 0;
     }
 
-  if (!_image_map->undo_tiles ||
+  if (! image_map->undo_tiles ||
       offset_x != x1 || offset_y != y1 ||
       width != (x2 - x1) || height != (y2 - y1))
     {
-      /*  If either the extents changed or the tiles don't exist, allocate new  */
-      if (!_image_map->undo_tiles ||
+      /* If either the extents changed or the tiles don't exist,
+       * allocate new
+       */
+      if (! image_map->undo_tiles ||
 	  width != (x2 - x1) || height != (y2 - y1))
 	{
 	  /*  Destroy old tiles--If they exist  */
-	  if (_image_map->undo_tiles != NULL)
-	    tile_manager_destroy (_image_map->undo_tiles);
-	  
+	  if (image_map->undo_tiles != NULL)
+	    tile_manager_destroy (image_map->undo_tiles);
+
 	  /*  Allocate new tiles  */
-	  _image_map->undo_tiles =
+	  image_map->undo_tiles =
 	    tile_manager_new ((x2 - x1), (y2 - y1),
-			      gimp_drawable_bytes (_image_map->drawable));
+			      gimp_drawable_bytes (image_map->drawable));
 	}
 
       /*  Copy from the image to the new tiles  */
-      pixel_region_init (&_image_map->srcPR,
-			 gimp_drawable_data (_image_map->drawable),
+      pixel_region_init (&image_map->srcPR,
+			 gimp_drawable_data (image_map->drawable),
 			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&_image_map->destPR, _image_map->undo_tiles,
+      pixel_region_init (&image_map->destPR, image_map->undo_tiles,
 			 0, 0, (x2 - x1), (y2 - y1), TRUE);
 
-      copy_region (&_image_map->srcPR, &_image_map->destPR);
+      copy_region (&image_map->srcPR, &image_map->destPR);
 
       /*  Set the offsets  */
-      tile_manager_set_offsets (_image_map->undo_tiles, x1, y1);
+      tile_manager_set_offsets (image_map->undo_tiles, x1, y1);
     }
-  else /* _image_map->undo_tiles exist AND drawable dimensions have not changed... */
+  else /* image_map->undo_tiles exist AND drawable dimensions have not changed... */
     {
       /* Reset to initial drawable conditions.            */
       /* Copy from the backup undo tiles to the drawable  */
-      pixel_region_init (&_image_map->srcPR, _image_map->undo_tiles, 
+      pixel_region_init (&image_map->srcPR, image_map->undo_tiles, 
 			 0, 0, width, height, FALSE);
-      pixel_region_init (&_image_map->destPR,
-			 gimp_drawable_data (_image_map->drawable), 
+      pixel_region_init (&image_map->destPR,
+			 gimp_drawable_data (image_map->drawable), 
 			 offset_x, offset_y, width, height, TRUE);
 
-      copy_region (&_image_map->srcPR, &_image_map->destPR);
+      copy_region (&image_map->srcPR, &image_map->destPR);
     }
 
   /*  Configure the src from the drawable data  */
-  pixel_region_init (&_image_map->srcPR, _image_map->undo_tiles,
+  pixel_region_init (&image_map->srcPR, image_map->undo_tiles,
 		     0, 0, (x2 - x1), (y2 - y1), FALSE);
 
   /*  Configure the dest as the shadow buffer  */
-  pixel_region_init (&_image_map->destPR,
-		     gimp_drawable_shadow (_image_map->drawable),
+  pixel_region_init (&image_map->destPR,
+		     gimp_drawable_shadow (image_map->drawable),
 		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
   /*  Apply the image transformation to the pixels  */
-  _image_map->pr = pixel_regions_register (2, &_image_map->srcPR, &_image_map->destPR);
+  image_map->pr = pixel_regions_register (2, &image_map->srcPR, &image_map->destPR);
 
   /*  Start the intermittant work procedure  */
-  _image_map->state = WORKING;
-  _image_map->idle = gtk_idle_add (image_map_do, image_map);
+  image_map->state = WORKING;
+  image_map->idle  = gtk_idle_add (image_map_do, image_map);
 }
 
 void
-image_map_commit (ImageMap image_map)
+image_map_commit (ImageMap *image_map)
 {
-  _ImageMap *_image_map;
   gint x1, y1, x2, y2;
 
-  _image_map = (_ImageMap *) image_map;
+  g_return_if_fail (image_map != NULL);
 
-  if (_image_map->state == WORKING)
+  if (image_map->state == WORKING)
     {
-      gtk_idle_remove (_image_map->idle);
+      gtk_idle_remove (image_map->idle);
 
       /*  Finish the changes  */
       while (image_map_do (image_map)) ;
     }
 
   /*  Make sure the drawable is still valid  */
-  if (! gimp_drawable_gimage (_image_map->drawable))
+  if (! gimp_drawable_gimage (image_map->drawable))
     return;
 
   /* Interactive phase ends: we can commit an undo frame now */
-  gimp_image_undo_thaw(_image_map->gdisp->gimage);
+  gimp_image_undo_thaw(image_map->gdisp->gimage);
 
   /*  Register an undo step  */
-  if (_image_map->undo_tiles)
+  if (image_map->undo_tiles)
     {
-      tile_manager_get_offsets (_image_map->undo_tiles, &x1, &y1);
-      x2 = x1 + tile_manager_width (_image_map->undo_tiles);
-      y2 = y1 + tile_manager_height (_image_map->undo_tiles);
-      drawable_apply_image (_image_map->drawable,
-			    x1, y1, x2, y2, _image_map->undo_tiles, FALSE);
+      tile_manager_get_offsets (image_map->undo_tiles, &x1, &y1);
+      x2 = x1 + tile_manager_width (image_map->undo_tiles);
+      y2 = y1 + tile_manager_height (image_map->undo_tiles);
+      drawable_apply_image (image_map->drawable,
+			    x1, y1, x2, y2, image_map->undo_tiles, FALSE);
     }
 
-  gdisplay_set_menu_sensitivity (_image_map->gdisp);
-  g_free (_image_map);
+  gdisplay_set_menu_sensitivity (image_map->gdisp);
+  g_free (image_map);
 }
 
 void
-image_map_clear (ImageMap image_map)
+image_map_clear (ImageMap *image_map)
 {
-  _ImageMap *_image_map;
   PixelRegion srcPR, destPR;
 
-  _image_map = (_ImageMap *) image_map;
+  g_return_if_fail (image_map != NULL);
 
-  if (_image_map->state == WORKING)
+  if (image_map->state == WORKING)
     {
-      gtk_idle_remove (_image_map->idle);
-      pixel_regions_process_stop (_image_map->pr);
-      _image_map->pr = NULL;
+      gtk_idle_remove (image_map->idle);
+      pixel_regions_process_stop (image_map->pr);
+      image_map->pr = NULL;
     }
 
-  _image_map->state = WAITING;
+  image_map->state = WAITING;
+
   /*  Make sure the drawable is still valid  */
-  if (! gimp_drawable_gimage (_image_map->drawable))
+  if (! gimp_drawable_gimage (image_map->drawable))
     return;
 
   /*  restore the original image  */
-  if (_image_map->undo_tiles)
+  if (image_map->undo_tiles)
     {
       gint offset_x;
       gint offset_y;
       gint width;
       gint height;
 
-      tile_manager_get_offsets (_image_map->undo_tiles, &offset_x, &offset_y);
-      width  = tile_manager_width (_image_map->undo_tiles);
-      height = tile_manager_height (_image_map->undo_tiles),
+      tile_manager_get_offsets (image_map->undo_tiles, &offset_x, &offset_y);
+      width  = tile_manager_width (image_map->undo_tiles);
+      height = tile_manager_height (image_map->undo_tiles),
 
       /*  Copy from the drawable to the tiles  */
-      pixel_region_init (&srcPR, _image_map->undo_tiles, 
+      pixel_region_init (&srcPR, image_map->undo_tiles, 
 			 0, 0, width, height, FALSE);
       pixel_region_init (&destPR,
-			 gimp_drawable_data (_image_map->drawable),
+			 gimp_drawable_data (image_map->drawable),
 			 offset_x, offset_y, width, height, TRUE);
 
       /* if the user has changed the image depth get out quickly */
       if (destPR.bytes != srcPR.bytes) 
 	{
 	  g_message ("image depth change, unable to restore original image");
-	  tile_manager_destroy (_image_map->undo_tiles);
-          gimp_image_undo_thaw (_image_map->gdisp->gimage);
-          gdisplay_set_menu_sensitivity (_image_map->gdisp);
-	  g_free (_image_map);
+	  tile_manager_destroy (image_map->undo_tiles);
+          gimp_image_undo_thaw (image_map->gdisp->gimage);
+          gdisplay_set_menu_sensitivity (image_map->gdisp);
+	  g_free (image_map);
 	  return;
 	}
-      
+
       copy_region (&srcPR, &destPR);
 
       /*  Update the area  */
-      drawable_update (_image_map->drawable, offset_x, offset_y, width, height);
+      drawable_update (image_map->drawable, offset_x, offset_y, width, height);
 
       /*  Free the undo_tiles tile manager  */
-      tile_manager_destroy (_image_map->undo_tiles);
-      _image_map->undo_tiles = NULL;
+      tile_manager_destroy (image_map->undo_tiles);
+      image_map->undo_tiles = NULL;
     }
 }
 
 void
-image_map_abort (ImageMap image_map)
+image_map_abort (ImageMap *image_map)
 {
-  _ImageMap *_image_map = (_ImageMap *) image_map;
+  g_return_if_fail (image_map != NULL);
 
-  image_map_clear(image_map);
-  gimp_image_undo_thaw(_image_map->gdisp->gimage);
-  gdisplay_set_menu_sensitivity (_image_map->gdisp);
+  image_map_clear (image_map);
+  gimp_image_undo_thaw (image_map->gdisp->gimage);
+  gdisplay_set_menu_sensitivity (image_map->gdisp);
   g_free (image_map);
 }
 
 guchar *
-image_map_get_color_at (ImageMap image_map, 
-			gint     x, 
-			gint     y)
+image_map_get_color_at (ImageMap *image_map, 
+			gint      x, 
+			gint      y)
 {
   Tile      *tile;
   guchar    *src;
   guchar    *dest;
-  _ImageMap *_image_map;
 
-  if (!image_map)
-    return NULL;
+  g_return_val_if_fail (image_map != NULL, NULL);
 
-  _image_map = (_ImageMap *) image_map;
-
-  if (x >= 0 && x < gimp_drawable_width (_image_map->drawable) && 
-      y >= 0 && y < gimp_drawable_height (_image_map->drawable))
+  if (x >= 0 && x < gimp_drawable_width (image_map->drawable) && 
+      y >= 0 && y < gimp_drawable_height (image_map->drawable))
     {
       /* Check if done damage to original image */
-      if (!_image_map->undo_tiles)
-	return (gimp_drawable_get_color_at (_image_map->drawable, x, y));
+      if (! image_map->undo_tiles)
+	return (gimp_drawable_get_color_at (image_map->drawable, x, y));
 
-      if (!image_map ||
-	  (!gimp_drawable_gimage (_image_map->drawable) && 
-	   gimp_drawable_is_indexed (_image_map->drawable)) ||
-	  x < 0 || y < 0                                    ||
-	  x >= tile_manager_width (_image_map->undo_tiles)  ||
-	  y >= tile_manager_height (_image_map->undo_tiles))
+      if (! image_map ||
+	  (! gimp_drawable_gimage (image_map->drawable) && 
+	   gimp_drawable_is_indexed (image_map->drawable)) ||
+	  x < 0 || y < 0                                   ||
+	  x >= tile_manager_width (image_map->undo_tiles)  ||
+	  y >= tile_manager_height (image_map->undo_tiles))
 	{
 	  return NULL;
 	}
 
       dest = g_new (guchar, 5);
 
-      tile = tile_manager_get_tile (_image_map->undo_tiles, x, y,
+      tile = tile_manager_get_tile (image_map->undo_tiles, x, y,
 				    TRUE, FALSE);
 
       src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
-      gimp_image_get_color (gimp_drawable_gimage (_image_map->drawable),
-			    gimp_drawable_type (_image_map->drawable),
+      gimp_image_get_color (gimp_drawable_gimage (image_map->drawable),
+			    gimp_drawable_type (image_map->drawable),
 			    dest, src);
 
-      if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_drawable_type (_image_map->drawable)))
-	dest[3] = src[gimp_drawable_bytes (_image_map->drawable) - 1];
+      if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_drawable_type (image_map->drawable)))
+	dest[3] = src[gimp_drawable_bytes (image_map->drawable) - 1];
       else
 	dest[3] = 255;
-      if (gimp_drawable_is_indexed (_image_map->drawable))
+
+      if (gimp_drawable_is_indexed (image_map->drawable))
 	dest[4] = src[0];
       else
 	dest[4] = 0;
+
       tile_release (tile, FALSE);
+
       return dest;
     }
   else /* out of bounds error */

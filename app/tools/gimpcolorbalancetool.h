@@ -38,7 +38,7 @@ struct _ColorBalanceDialog
   GtkAdjustment *yellow_blue_data;
 
   GimpDrawable  *drawable;
-  ImageMap       image_map;
+  ImageMap      *image_map;
 
   gdouble        cyan_red[3];
   gdouble        magenta_green[3];

@@ -44,7 +44,7 @@ struct _HueSaturationDialog
   GtkAdjustment *saturation_data;
 
   GimpDrawable  *drawable;
-  ImageMap       image_map;
+  ImageMap      *image_map;
 
   gdouble        hue[7];
   gdouble        lightness[7];

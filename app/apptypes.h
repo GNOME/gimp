@@ -43,7 +43,7 @@ typedef struct _GimpImageNewValues  GimpImageNewValues;
 
 typedef struct _GimpProgress        GimpProgress;
 
-typedef         gpointer            ImageMap;
+typedef struct _ImageMap            ImageMap;
 
 typedef struct _InfoDialog          InfoDialog;
 

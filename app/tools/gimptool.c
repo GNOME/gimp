@@ -508,34 +508,6 @@ ToolInfo tool_info[] =
   /*  Non-toolbox tools  */
   {
     NULL,
-    N_("By Color Select"),
-    N_("/Select/By Color..."),
-    NULL,
-    (char **) by_color_select_bits,
-    NULL,
-    NULL,
-    N_("Select regions by color"),
-    "tools/by_color_select.html",
-    BY_COLOR_SELECT,
-    tools_new_by_color_select,
-    tools_free_by_color_select,
-    by_color_select_initialize,
-    NULL,
-    NULL,
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
-  {
-    NULL,
     N_("Color Balance"),
     N_("/Image/Colors/Color Balance..."),
     NULL,

@@ -143,7 +143,7 @@ gimp_button_button_press (GtkWidget      *widget,
     }
 
   if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
-    GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
+    return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
 
   return TRUE;
 }
@@ -153,7 +153,8 @@ gimp_button_button_release (GtkWidget      *widget,
 			    GdkEventButton *bevent)
 {
   GtkButton *button;
-  gboolean   in_button = FALSE;
+  gboolean   extended_clicked = FALSE;
+  gboolean   retval           = TRUE;
 
   g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_BUTTON (widget), FALSE);
@@ -163,9 +164,7 @@ gimp_button_button_release (GtkWidget      *widget,
 
   if (bevent->button == 1)
     {
-      in_button = button->in_button;
-
-      if (in_button &&
+      if (button->in_button &&
 	  (GIMP_BUTTON (button)->press_state &
 	   (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)))
 	{
@@ -173,20 +172,30 @@ gimp_button_button_release (GtkWidget      *widget,
 			   button_signals[EXTENDED_CLICKED],
 			   GIMP_BUTTON (button)->press_state);
 
+	  extended_clicked  = TRUE;
+
+	  /* HACK: don't let GtkButton emit "clicked" by telling it that
+	   * the mouse pointer is outside the widget
+	   */
 	  button->in_button = FALSE;
 	}
     }
 
   if (GTK_WIDGET_CLASS (parent_class)->button_release_event)
-    GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, bevent);
+    retval = GTK_WIDGET_CLASS (parent_class)->button_release_event (widget,
+								    bevent);
 
-  if (bevent->button == 1 && in_button)
+  if (extended_clicked)
     {
+      /* revert the above HACK and let the button draw itself in the
+       * correct state, because upchaining with "in_button" == FALSE
+       * messed it up
+       */
       button->in_button = TRUE;
 
       gtk_widget_set_state (widget, GTK_STATE_PRELIGHT);
       gtk_widget_draw (widget, NULL);
    }
 
-  return TRUE;
+  return retval;
 }

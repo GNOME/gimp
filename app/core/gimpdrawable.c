@@ -44,6 +44,7 @@
 #include "gimplayer.h"
 #include "gimplist.h"
 #include "gimppreviewcache.h"
+
 #include "gimpparasite.h"
 #include "parasitelist.h"
 #include "undo.h"

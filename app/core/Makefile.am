@@ -69,6 +69,8 @@ libappcore_la_SOURCES = \
 	gimppalette.h			\
 	gimppalette-import.c		\
 	gimppalette-import.h		\
+	gimppreviewcache.c		\
+	gimppreviewcache.h		\
 	gimptoolinfo.c			\
 	gimptoolinfo.h			\
 	gimpundo.c			\

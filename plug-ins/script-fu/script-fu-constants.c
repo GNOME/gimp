@@ -151,7 +151,6 @@ init_generated_constants (void)
   setvar (cintern ("UNIT-POINT"), flocons (3), NIL);
   setvar (cintern ("UNIT-PICA"), flocons (4), NIL);
   setvar (cintern ("UNIT-END"), flocons (5), NIL);
-  setvar (cintern ("UNIT-PERCENT"), flocons (65536), NIL);
 
   setvar (cintern ("ONCE-FORWARD"), flocons (0), NIL);
   setvar (cintern ("ONCE-BACKWARDS"), flocons (1), NIL);

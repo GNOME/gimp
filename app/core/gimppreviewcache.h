@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMPPREVIEWCACHE_H__
-#define __GIMPPREVIEWCACHE_H__
+#ifndef __GIMP_PREVIEW_CACHE_H__
+#define __GIMP_PREVIEW_CACHE_H__
 
 
 #define PREVIEW_CACHE_PRIME_WIDTH  112
@@ -32,4 +32,4 @@ void      gimp_preview_cache_add        (GSList  **plist,
 void      gimp_preview_cache_invalidate (GSList  **plist);
 
 
-#endif /* __GIMPPREVIEWCACHE_H__ */
+#endif /* __GIMP_PREVIEW_CACHE_H__ */

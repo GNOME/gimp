@@ -47,7 +47,7 @@ struct _HistogramToolDialog
   gdouble          percentile;
 
   GimpDrawable    *drawable;
-  ImageMap         image_map;
+  ImageMap        *image_map;
   gint             channel;
   gint             color;
 };

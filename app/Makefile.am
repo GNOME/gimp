@@ -89,8 +89,6 @@ gimp_SOURCES = \
 	datafiles.h		\
 	floating_sel.c		\
 	floating_sel.h		\
-	gimppreviewcache.h	\
-	gimppreviewcache.c	\
 	parasitelist.c		\
 	parasitelist.h		\
 	scan_convert.c		\
