@@ -350,10 +350,10 @@ def gimp_composite_regression(fpout, function_tables, options):
             print >>fpout, '  if (gimp_composite_regression_compare_contexts ("%s", &generic_ctx, &special_ctx))' % (mode_name(mode))
             
             print >>fpout, '    {'
-            print >>fpout, '      printf("%s failed\\n");' % (mode_name(mode))
+            print >>fpout, '      printf("%s_%s_%s_%s failed\\n");' % (mode_name(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
             print >>fpout, '      return (1);'
             print >>fpout, '    }'
-            print >>fpout, '  gimp_composite_regression_timer_report ("%s", ft0, ft1);' % (mode_name(mode))
+            print >>fpout, '  gimp_composite_regression_timer_report ("%s_%s_%s_%s", ft0, ft1);' % (mode_name(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
             pass
           pass
         pass

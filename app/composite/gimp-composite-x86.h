@@ -235,7 +235,11 @@
                   "\tpaddw     %%"#opr1", %%"#opr2"; " \
                   "\tpsrlw     $8,        %%"#opr2"\n"
 
+typedef unsigned char  uint8;
+typedef unsigned short uint16;
+typedef unsigned long  uint32;
 typedef unsigned long long uint64;
+typedef struct { uint64 __uint64[2]; } uint128;
 
 extern const guint32 rgba8_alpha_mask_64[2];
 extern const guint32 rgba8_b1_64[2];
