@@ -29,7 +29,6 @@
 #include "gimpdrawtool.h"
 #include "gimpselectiontool.h"
 
-#include "cursorutil.h"
 #include "gdisplay.h"
 
 

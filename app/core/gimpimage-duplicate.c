@@ -25,6 +25,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
+#include "apptypes.h"
 #include "core-types.h"
 
 /* FIXME: remove the Path <-> BezierSelect dependency */
@@ -32,8 +33,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "apptypes.h"
-#include "cursorutil.h"
+#include "app_procs.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -73,7 +73,7 @@ gimp_image_duplicate (GimpImage *gimage)
   g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  gimp_add_busy_cursors_until_idle ();
+  gimp_set_busy_until_idle ();
 
   /*  Create a new image  */
   new_gimage = gimage_new (gimage->width, gimage->height, gimage->base_type);

@@ -52,6 +52,8 @@
 #include "toolbox.h"
 
 #include "app_procs.h"
+#include "dialog_handler.h"
+#include "gdisplay.h" /* for gdisplay_*_override_cursor() */
 
 #include "libgimp/gimpintl.h"
 
@@ -59,6 +61,9 @@
 static void   really_quit_callback (GtkWidget *button,
 				    gboolean   quit,
 				    gpointer   data);
+
+
+extern GSList *display_list;  /*  from gdisplay.c  */
 
 
 /*  public functions  */
@@ -162,6 +167,42 @@ gui_exit (void)
   toolbox_free ();
 
   gimp_help_free ();
+}
+
+void
+gui_set_busy (void)
+{
+  GDisplay *gdisp;
+  GSList   *list;
+
+  /* Canvases */
+  for (list = display_list; list; list = g_slist_next (list))
+    {
+      gdisp = (GDisplay *) list->data;
+      gdisplay_install_override_cursor (gdisp, GDK_WATCH);
+    }
+
+  /* Dialogs */
+  dialog_idle_all ();
+
+  gdk_flush ();
+}
+
+void
+gui_unset_busy (void)
+{
+  GDisplay *gdisp;
+  GSList   *list;
+
+  /* Canvases */
+  for (list = display_list; list; list = g_slist_next (list))
+    {
+      gdisp = (GDisplay *) list->data;
+      gdisplay_remove_override_cursor (gdisp);
+    }
+
+  /* Dialogs */
+  dialog_unidle_all ();
 }
 
 void

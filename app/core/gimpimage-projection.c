@@ -32,7 +32,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "cursorutil.h"
+#include "app_procs.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -733,7 +733,7 @@ gimp_image_resize (GimpImage *gimage,
   GList       *list;
   GList       *guide_list;
 
-  gimp_add_busy_cursors ();
+  gimp_set_busy ();
 
   g_assert (new_width > 0 && new_height > 0);
 
@@ -819,7 +819,7 @@ gimp_image_resize (GimpImage *gimage,
 
   gimp_image_size_changed (gimage);
 
-  gimp_remove_busy_cursors (NULL);
+  gimp_unset_busy ();
 }
 
 void
@@ -846,7 +846,7 @@ gimp_image_scale (GimpImage *gimage,
       return;
     }
 
-  gimp_add_busy_cursors ();
+  gimp_set_busy ();
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -948,7 +948,7 @@ gimp_image_scale (GimpImage *gimage,
 
   gimp_image_size_changed (gimage);
 
-  gimp_remove_busy_cursors (NULL);
+  gimp_unset_busy ();
 }
 
 TileManager *
@@ -2259,7 +2259,7 @@ gimp_image_validate (TileManager *tm,
   gint       x, y;
   gint       w, h;
 
-  gimp_add_busy_cursors_until_idle ();
+  gimp_set_busy_until_idle ();
 
   /*  Get the gimage from the tilemanager  */
   gimage = (GimpImage *) tile_manager_get_user_data (tm);
@@ -2942,12 +2942,12 @@ gimp_image_merge_visible_layers (GimpImage *gimage,
 
   if (merge_list && merge_list->next)
     {
-      gimp_add_busy_cursors ();
+      gimp_set_busy ();
 
       layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
       g_slist_free (merge_list);
 
-      gimp_remove_busy_cursors (NULL);
+      gimp_unset_busy ();
 
       return layer;
     }
@@ -2975,7 +2975,7 @@ gimp_image_flatten (GimpImage *gimage)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  gimp_add_busy_cursors ();
+  gimp_set_busy ();
 
   /* if there's a floating selection, anchor it */
   if (gimp_image_floating_sel (gimage))
@@ -2996,7 +2996,7 @@ gimp_image_flatten (GimpImage *gimage)
 
   gimp_image_alpha_changed (gimage);
 
-  gimp_remove_busy_cursors (NULL);
+  gimp_unset_busy ();
 
   return layer;
 }
@@ -3036,10 +3036,14 @@ gimp_image_merge_down (GimpImage *gimage,
   if (merge_list)
     {
       merge_list = g_slist_prepend (merge_list, current_layer);
-      gimp_add_busy_cursors ();
+
+      gimp_set_busy ();
+
       layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
       g_slist_free (merge_list);
-      gimp_remove_busy_cursors (NULL);
+
+      gimp_unset_busy ();
+
       return layer;
     }
   else 

@@ -31,7 +31,6 @@
 
 #include "gui/info-dialog.h"
 
-#include "cursorutil.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"

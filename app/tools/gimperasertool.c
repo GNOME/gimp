@@ -31,7 +31,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "cursorutil.h"
 #include "gdisplay.h"
 #include "selection.h"
 #include "temp_buf.h"

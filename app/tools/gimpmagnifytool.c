@@ -29,7 +29,6 @@
 
 #include "gui/info-window.h"
 #include "gdisplay.h"
-#include "cursorutil.h"
 
 #include "gimpmagnifytool.h"
 #include "tool_options.h"

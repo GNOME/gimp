@@ -104,7 +104,7 @@
 
 #include "core-types.h"
 
-#include "cursorutil.h"
+#include "app_procs.h"
 #include "gdisplay.h"
 
 #include "floating_sel.h"
@@ -692,7 +692,7 @@ gimp_image_convert (GimpImage          *gimage,
 
   theCustomPalette = custom_palette;
 
-  gimp_add_busy_cursors ();
+  gimp_set_busy ();
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -945,7 +945,7 @@ gimp_image_convert (GimpImage          *gimage,
 
   gimp_image_mode_changed (gimage);
 
-  gimp_remove_busy_cursors(NULL);
+  gimp_unset_busy ();
 }
 
 static void

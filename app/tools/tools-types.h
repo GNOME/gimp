@@ -22,6 +22,8 @@
 
 #include "core/core-types.h"
 
+#include "widgets/widgets-types.h"
+
 
 /*  tools  */
 

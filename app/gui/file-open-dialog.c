@@ -43,7 +43,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
-#include "cursorutil.h"
+#include "app_procs.h"
 #include "file-dialog-utils.h"
 #include "file-open-dialog.h"
 #include "dialog_handler.h"
@@ -680,7 +680,7 @@ file_open_genbutton_callback (GtkWidget *widget,
       return;
     }
 
-  gimp_add_busy_cursors ();
+  gimp_set_busy ();
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), FALSE);
 
   /* new mult-file preview make: */  
@@ -764,7 +764,7 @@ file_open_genbutton_callback (GtkWidget *widget,
   }
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
-  gimp_remove_busy_cursors (NULL);
+  gimp_unset_busy ();
 }
 
 static void

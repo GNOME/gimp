@@ -20,12 +20,9 @@
 
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "widgets/widgets-types.h"
 
-#include "appenv.h"
-#include "cursorutil.h"
-#include "dialog_handler.h"
-#include "gdisplay.h" /* for gdisplay_*_override_cursor() */
+#include "gimpcursor.h"
 
 /* standard gimp cursors */
 #include "cursors/mouse.xbm"
@@ -128,8 +125,18 @@
 #include "cursors/hand_mask.xbm"
 
 
-/* FIXME: gimp_busy HACK */
-gboolean gimp_busy = FALSE;
+typedef struct _GimpBitmapCursor GimpBitmapCursor;
+
+struct _GimpBitmapCursor
+{
+  guchar    *bits;
+  guchar    *mask_bits;
+  gint       width, height;
+  gint       x_hot, y_hot;
+  GdkBitmap *bitmap;
+  GdkBitmap *mask;
+  GdkCursor *cursor;
+};
 
 
 static GimpBitmapCursor gimp_cursors[] =
@@ -393,10 +400,6 @@ static GimpBitmapCursor gimp_modifier_cursors[] =
 };
 
 
-extern GSList   *display_list; /* It's in gdisplay.c, FYI */
-static gboolean  pending_removebusy = FALSE;
-
-
 static void
 create_cursor_bitmaps (GimpBitmapCursor *bmcursor)
 {
@@ -413,6 +416,7 @@ create_cursor_bitmaps (GimpBitmapCursor *bmcursor)
   g_return_if_fail (bmcursor->mask != NULL);
 }
 
+/*
 static void
 create_cursor (GimpBitmapCursor *bmcursor)
 {
@@ -424,7 +428,7 @@ create_cursor (GimpBitmapCursor *bmcursor)
     {
       GdkColor fg, bg;
 
-      /* should have a way to configure the mouse colors */
+      * should have a way to configure the mouse colors *
       gdk_color_parse ("#FFFFFF", &bg);
       gdk_color_parse ("#000000", &fg);
 
@@ -437,12 +441,12 @@ create_cursor (GimpBitmapCursor *bmcursor)
 
   g_return_if_fail (bmcursor->cursor != NULL);
 }
+*/
 
-static void
-gimp_change_win_cursor_internal (GdkWindow          *window,
-				 GimpCursorType      cursor_type,
-				 GimpToolCursorType  tool_cursor,
-				 GimpCursorModifier  modifier)
+GdkCursor *
+gimp_cursor_new (GimpCursorType      cursor_type,
+		 GimpToolCursorType  tool_cursor,
+		 GimpCursorModifier  modifier)
 {
   GdkCursor *cursor;
 
@@ -461,8 +465,12 @@ gimp_change_win_cursor_internal (GdkWindow          *window,
   GimpBitmapCursor *bmmodifier = NULL;
   GimpBitmapCursor *bmtool     = NULL;
 
-  g_return_if_fail (window != NULL);
-  g_return_if_fail (cursor_type < GIMP_LAST_CURSOR_ENTRY);
+  g_return_val_if_fail (cursor_type < GIMP_LAST_CURSOR_ENTRY, NULL);
+
+  if (cursor_type <= GDK_LAST_CURSOR)
+    {
+      return gdk_cursor_new (cursor_type);
+    }
 
   /*  allow the small tool cursor only with the standard mouse,
    *  the small crosshair and the bad cursor
@@ -479,6 +487,8 @@ gimp_change_win_cursor_internal (GdkWindow          *window,
 
   /*  if there are no modifiers, we can show the cursor immediately
    */
+
+  /* FIXME: ref the cursor in gtk-2.0 before returning it
   if (modifier    == GIMP_CURSOR_MODIFIER_NONE &&
       tool_cursor == GIMP_TOOL_CURSOR_NONE)
     {
@@ -489,8 +499,10 @@ gimp_change_win_cursor_internal (GdkWindow          *window,
 
       return;
     }
-  else if (bmcursor->bitmap == NULL ||
-	   bmcursor->mask == NULL)
+    else */
+
+  if (bmcursor->bitmap == NULL ||
+      bmcursor->mask == NULL)
     {
       create_cursor_bitmaps (bmcursor);
     }
@@ -597,159 +609,8 @@ gimp_change_win_cursor_internal (GdkWindow          *window,
 				       bmcursor->x_hot,
 				       bmcursor->y_hot);
 
-  gdk_window_set_cursor (window, cursor);
-
-  gdk_cursor_destroy (cursor);
   gdk_bitmap_unref (bitmap);
   gdk_bitmap_unref (mask);
-}
 
-void
-gimp_change_win_cursor (GdkWindow          *win,
-			GdkCursorType       cursor_type,
-			GimpToolCursorType  tool_cursor,
-			GimpCursorModifier  modifier)
-{
-  GdkCursor *cursor;
-
-  if (cursor_type > GDK_LAST_CURSOR)
-    {
-      gimp_change_win_cursor_internal (win,
-				       (GimpCursorType) cursor_type,
-				       tool_cursor,
-				       modifier);
-      return;
-    }
-
-  cursor = gdk_cursor_new (cursor_type);
-  gdk_window_set_cursor (win, cursor);
-  gdk_cursor_destroy (cursor);
-}
-
-void
-gimp_unset_win_cursor (GdkWindow *win)
-{
-  gdk_window_set_cursor (win, NULL);
-}
-     
-void
-gimp_add_busy_cursors_until_idle (void)
-{
-  if (!pending_removebusy)
-    {
-      gimp_add_busy_cursors ();
-      gtk_idle_add_priority (GTK_PRIORITY_HIGH,
-			     gimp_remove_busy_cursors, NULL);
-      pending_removebusy = TRUE;
-    }
-}
-     
-void
-gimp_add_busy_cursors (void)
-{
-  GDisplay *gdisp;
-  GSList   *list;
-
-  /* FIXME: gimp_busy HACK */
-  gimp_busy = TRUE;
-
-  /* Canvases */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GDisplay *) list->data;
-      gdisplay_install_override_cursor (gdisp, GDK_WATCH);
-    }
-
-  /* Dialogs */
-  dialog_idle_all ();
-
-  gdk_flush ();
-}
-
-gint
-gimp_remove_busy_cursors (gpointer data)
-{
-  GDisplay *gdisp;
-  GSList   *list;
-
-  /* Canvases */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GDisplay *) list->data;
-      gdisplay_remove_override_cursor (gdisp);
-    }
-
-  /* Dialogs */
-  dialog_unidle_all ();
-
-  pending_removebusy = FALSE;
-
-  /* FIXME: gimp_busy HACK */
-  gimp_busy = FALSE;
-
-  return 0;
-}
-
-
-/***************************************************************/
-/* gtkutil_compress_motion:
-
-   This function walks the whole GDK event queue seeking motion events
-   corresponding to the widget 'widget'.  If it finds any it will
-   remove them from the queue, write the most recent motion offset
-   to 'lastmotion_x' and 'lastmotion_y', then return TRUE.  Otherwise
-   it will return FALSE and 'lastmotion_x' / 'lastmotion_y' will be
-   untouched.
- */
-/* The gtkutil_compress_motion function source may be re-used under
-   the XFree86-style license. <adam@gimp.org> */
-gboolean
-gtkutil_compress_motion (GtkWidget *widget,
-			 gdouble   *lastmotion_x,
-			 gdouble   *lastmotion_y)
-{
-  GdkEvent *event;
-  GList    *requeued_events = NULL;
-  GList    *list;
-  gboolean  success = FALSE;
-
-  /* Move the entire GDK event queue to a private list, filtering
-     out any motion events for the desired widget. */
-  while (gdk_events_pending ())
-    {
-      event = gdk_event_get ();
-
-      if (!event)
-	{
-	  /* Do nothing */
-	}
-      else if ((gtk_get_event_widget (event) == widget) &&
-	       (event->any.type == GDK_MOTION_NOTIFY))
-	{
-	  *lastmotion_x = event->motion.x;
-	  *lastmotion_y = event->motion.y;
-	  
-	  gdk_event_free (event);
-	  success = TRUE;
-	}
-      else
-	{
-	  requeued_events = g_list_prepend (requeued_events, event);
-	}
-    }
-  
-  /* Replay the remains of our private event list back into the
-     event queue in order. */
-
-  requeued_events = g_list_reverse (requeued_events);
-
-  for (list = requeued_events; list; list = g_list_next (list))
-    {
-      gdk_event_put ((GdkEvent*) list->data);
-      gdk_event_free ((GdkEvent*) list->data);
-    }
-  
-  g_list_free (requeued_events);
-
-  return success;
+  return cursor;
 }

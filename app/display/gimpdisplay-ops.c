@@ -26,8 +26,8 @@
 
 #include "core/gimpimage.h"
 
+#include "appenv.h"
 #include "colormaps.h"
-#include "cursorutil.h"
 #include "gdisplay_ops.h"
 #include "gimprc.h"
 

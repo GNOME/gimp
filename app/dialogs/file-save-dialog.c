@@ -37,7 +37,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "cursorutil.h"
 #include "dialog_handler.h"
 #include "docindex.h"
 #include "file-dialog-utils.h"

@@ -41,7 +41,6 @@
 #include "tools/gimpmovetool.h"
 #include "tools/tool_manager.h"
 
-#include "cursorutil.h"
 #include "devices.h"
 #include "dialog_handler.h"
 #include "disp_callbacks.h"
@@ -50,6 +49,7 @@
 #include "gui/layer-select.h"
 
 #include "appenv.h"
+#include "app_procs.h"
 #include "drawable.h"
 #include "gimprc.h"
 #include "gimpui.h"
@@ -747,7 +747,7 @@ gdisplay_origin_button_press (GtkWidget      *widget,
 
   gdisp = (GDisplay *) data;
 
-  if (!gimp_busy && event->button == 1)
+  if (! gimp_busy && event->button == 1)
     {
       gint x, y;
 
@@ -903,7 +903,7 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   if (!drawable)
     return;
 
-  gimp_add_busy_cursors ();
+  gimp_set_busy ();
 
   /*  Get the bucket fill context  */
   tool_info = tool_manager_get_info_by_type (GIMP_TYPE_BUCKET_FILL_TOOL);
@@ -984,7 +984,7 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   if (new_buf)
     temp_buf_free (pat_buf);
 
-  gimp_remove_busy_cursors (NULL);
+  gimp_unset_busy ();
 }
 
 void

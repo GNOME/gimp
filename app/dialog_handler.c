@@ -25,8 +25,10 @@
 
 #include <gmodule.h>
 
-#include "apptypes.h"
-#include "cursorutil.h"
+#include "widgets/widgets-types.h"
+
+#include "widgets/gimpcursor.h"
+
 #include "dialog_handler.h"
 
 
@@ -172,27 +174,36 @@ dialog_idle_all (void)
 	}
       else if(GTK_WIDGET_VISIBLE (dstate->dialog))
 	{
-	  gimp_change_win_cursor (dstate->dialog->window,
-				  GDK_WATCH,
-				  GIMP_TOOL_CURSOR_NONE,
-				  GIMP_CURSOR_MODIFIER_NONE);
+	  GdkCursor *cursor;
+
+	  cursor = gimp_cursor_new (GDK_WATCH,
+				    GIMP_TOOL_CURSOR_NONE,
+				    GIMP_CURSOR_MODIFIER_NONE);
+	  gdk_window_set_cursor (dstate->dialog->window, cursor);
+	  gdk_cursor_destroy (cursor);
 	}
     }
 
   if (toolbox_shell && GTK_WIDGET_VISIBLE (toolbox_shell->dialog))
     {
-      gimp_change_win_cursor (toolbox_shell->dialog->window,
-			      GDK_WATCH,
-			      GIMP_TOOL_CURSOR_NONE,
-			      GIMP_CURSOR_MODIFIER_NONE);
+      GdkCursor *cursor;
+
+      cursor = gimp_cursor_new (GDK_WATCH,
+				GIMP_TOOL_CURSOR_NONE,
+				GIMP_CURSOR_MODIFIER_NONE);
+      gdk_window_set_cursor (toolbox_shell->dialog->window, cursor);
+      gdk_cursor_destroy (cursor);
     }
 
   if (fileload_shell && GTK_WIDGET_VISIBLE (fileload_shell->dialog))
     {
-      gimp_change_win_cursor (fileload_shell->dialog->window,
-			      GDK_WATCH,
-			      GIMP_TOOL_CURSOR_NONE,
-			      GIMP_CURSOR_MODIFIER_NONE);
+      GdkCursor *cursor;
+
+      cursor = gimp_cursor_new (GDK_WATCH,
+				GIMP_TOOL_CURSOR_NONE,
+				GIMP_CURSOR_MODIFIER_NONE);
+      gdk_window_set_cursor (fileload_shell->dialog->window, cursor);
+      gdk_cursor_destroy (cursor);
     }
 }
 
@@ -221,18 +232,18 @@ dialog_unidle_all (void)
 	}
       else if (GTK_WIDGET_VISIBLE (dstate->dialog))
 	{
-	  gimp_unset_win_cursor (dstate->dialog->window);
+	  gdk_window_set_cursor (dstate->dialog->window, NULL);
 	}
     }
 
   if (toolbox_shell && GTK_WIDGET_VISIBLE (toolbox_shell->dialog))
     {
-      gimp_unset_win_cursor (toolbox_shell->dialog->window);
+      gdk_window_set_cursor (toolbox_shell->dialog->window, NULL);
     }
 
   if (fileload_shell && GTK_WIDGET_VISIBLE (fileload_shell->dialog))
     {
-      gimp_unset_win_cursor (fileload_shell->dialog->window);
+      gdk_window_set_cursor (fileload_shell->dialog->window, NULL);
     }
 }
 

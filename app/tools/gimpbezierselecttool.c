@@ -34,7 +34,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
-#include "cursorutil.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"

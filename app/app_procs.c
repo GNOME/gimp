@@ -96,6 +96,9 @@ static void   app_init             (void);
 static void   toast_old_temp_files (void);
 
 
+/* FIXME: gimp_busy HACK */
+gboolean gimp_busy = FALSE;
+
 static gboolean is_app_exit_finish_done = FALSE;
 
 
@@ -325,6 +328,49 @@ gboolean
 app_exit_finish_done (void)
 {
   return is_app_exit_finish_done;
+}
+
+void
+gimp_set_busy (void)
+{
+  /* FIXME: gimp_busy HACK */
+  gimp_busy = TRUE;
+
+  gui_set_busy ();
+}
+
+static gboolean
+gimp_idle_unset_busy (gpointer data)
+{
+  gimp_unset_busy ();
+
+  *((guint *) data) = 0;
+
+  return FALSE;
+}
+
+void
+gimp_set_busy_until_idle (void)
+{
+  static guint busy_idle_id = 0;
+
+  if (! busy_idle_id)
+    {
+      gimp_set_busy ();
+
+      busy_idle_id = g_idle_add_full (G_PRIORITY_HIGH,
+				      gimp_idle_unset_busy, &busy_idle_id,
+				      NULL);
+    }
+}
+
+void
+gimp_unset_busy (void)
+{
+  gui_unset_busy ();
+
+  /* FIXME: gimp_busy HACK */
+  gimp_busy = FALSE;
 }
 
 static void

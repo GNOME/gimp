@@ -31,8 +31,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
+#include "app_procs.h"
 #include "boundary.h"
-#include "cursorutil.h"
 #include "gdisplay.h"
 #include "gimprc.h"
 #include "pixel_region.h"
@@ -627,7 +627,7 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
 
   drawable  = gimp_image_active_drawable (gdisp->gimage);
 
-  gimp_add_busy_cursors ();
+  gimp_set_busy ();
 
   use_offsets = fuzzy_options->sample_merged ? FALSE : TRUE;
 
@@ -673,7 +673,7 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
   /*  free boundary segments  */
   g_free (bsegs);
 
-  gimp_remove_busy_cursors (NULL);
+  gimp_unset_busy ();
 
   return segs;
 }

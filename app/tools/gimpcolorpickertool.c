@@ -31,7 +31,6 @@
 #include "gui/info-dialog.h"
 #include "gui/palette-editor.h"
 #include "gdisplay.h"
-#include "cursorutil.h"
 #include "gimpui.h"
 
 #include "gimpdrawtool.h"

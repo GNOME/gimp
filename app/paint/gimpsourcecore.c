@@ -48,7 +48,6 @@
 #include "pixel_region.h"
 #include "selection.h"
 #include "temp_buf.h"
-#include "cursorutil.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -294,10 +294,10 @@ HELP
     }
 
     %invoke = (
-	headers => [ qw("cursorutil.h") ],
+	headers => [ qw("app_procs.h") ],
 	code => <<'CODE'
 {
-  gimp_add_busy_cursors_until_idle ();
+  gimp_set_busy_until_idle ();
   gimp_image_resize (gimage, new_width, new_height, offx, offy);
 }
 CODE
@@ -325,7 +325,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_add_busy_cursors_until_idle ();
+  gimp_set_busy_until_idle ();
   gimp_image_scale (gimage, new_width, new_height);
 }
 CODE

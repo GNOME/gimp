@@ -39,10 +39,10 @@
 #include "core/gimptoolinfo.h"
 
 #include "gui/info-dialog.h"
-#include "cursorutil.h"
 #include "gdisplay.h"
 #include "gimpui.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gimprc.h"
@@ -559,7 +559,7 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
   gboolean       new_layer;
   gint           i, x, y;
 
-  gimp_add_busy_cursors ();
+  gimp_set_busy ();
 
   tool = GIMP_TOOL (gt_tool);
 
@@ -656,7 +656,7 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
 	}
     }
 
-  gimp_remove_busy_cursors (NULL);
+  gimp_unset_busy ();
 
   gdisplays_flush ();
 

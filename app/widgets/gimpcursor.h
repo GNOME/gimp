@@ -16,50 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __CURSORUTIL_H__
-#define __CURSORUTIL_H__
+#ifndef __GIMP_CURSOR_H__
+#define __GIMP_CURSOR_H__
 
 
-struct _GimpBitmapCursor
-{
-  guchar    *bits;
-  guchar    *mask_bits;
-  gint       width, height;
-  gint       x_hot, y_hot;
-  GdkBitmap *bitmap;
-  GdkBitmap *mask;
-  GdkCursor *cursor;
-};
+GdkCursor * gimp_cursor_new (GimpCursorType      curtype,
+			     GimpToolCursorType  tool_cursor,
+			     GimpCursorModifier  modifier);
 
 
-typedef enum
-{
-  GIMP_MOUSE_CURSOR = (GDK_LAST_CURSOR + 2),
-  GIMP_CROSSHAIR_CURSOR,
-  GIMP_CROSSHAIR_SMALL_CURSOR,
-  GIMP_BAD_CURSOR,
-  GIMP_ZOOM_CURSOR,
-  GIMP_COLOR_PICKER_CURSOR,
-  GIMP_LAST_CURSOR_ENTRY
-} GimpCursorType;
-
-
-/* FIXME: gimp_busy HACK */
-extern gboolean gimp_busy;
-
-
-void       gimp_change_win_cursor           (GdkWindow          *win,
-					     GdkCursorType       curtype,
-					     GimpToolCursorType  tool_cursor,
-					     GimpCursorModifier  modifier);
-void       gimp_unset_win_cursor            (GdkWindow          *win);
-
-void       gimp_add_busy_cursors_until_idle (void);
-void       gimp_add_busy_cursors            (void);
-gint       gimp_remove_busy_cursors         (gpointer            data);
-
-gboolean   gtkutil_compress_motion          (GtkWidget          *widget,
-					     gdouble            *lastmotion_x,
-					     gdouble            *lastmotion_y);
-
-#endif /*  __CURSORUTIL_H__  */
+#endif /*  __GIMP_CURSOR_H__  */

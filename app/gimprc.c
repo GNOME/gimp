@@ -50,7 +50,6 @@
 
 #include "app_procs.h"
 #include "appenv.h"
-#include "cursorutil.h"
 #include "devices.h"
 #include "errors.h"
 #include "general.h"

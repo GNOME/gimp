@@ -33,7 +33,6 @@
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
-#include "cursorutil.h"
 #include "gdisplay.h"
 #include "floating_sel.h"
 

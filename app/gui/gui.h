@@ -27,6 +27,9 @@ void   gui_post_init      (void);
 void   gui_shutdown       (void);
 void   gui_exit           (void);
 
+void   gui_set_busy       (void);
+void   gui_unset_busy     (void);
+
 void   really_quit_dialog (void);
 
 

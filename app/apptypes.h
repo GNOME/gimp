@@ -34,8 +34,6 @@
 
 typedef struct _Argument            Argument;
 
-typedef struct _GimpBitmapCursor    GimpBitmapCursor;
-
 typedef struct _BoundSeg            BoundSeg;
 
 typedef struct _ColorNotebook       ColorNotebook;

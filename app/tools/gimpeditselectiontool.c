@@ -35,7 +35,6 @@
 #include "core/gimplist.h"
 
 #include "boundary.h"
-#include "cursorutil.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimprc.h"
@@ -983,4 +982,67 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
   undo_push_group_end (gdisp->gimage);
   gdisplays_flush ();
+}
+
+/***************************************************************/
+/* gtkutil_compress_motion:
+
+   This function walks the whole GDK event queue seeking motion events
+   corresponding to the widget 'widget'.  If it finds any it will
+   remove them from the queue, write the most recent motion offset
+   to 'lastmotion_x' and 'lastmotion_y', then return TRUE.  Otherwise
+   it will return FALSE and 'lastmotion_x' / 'lastmotion_y' will be
+   untouched.
+ */
+/* The gtkutil_compress_motion function source may be re-used under
+   the XFree86-style license. <adam@gimp.org> */
+gboolean
+gtkutil_compress_motion (GtkWidget *widget,
+			 gdouble   *lastmotion_x,
+			 gdouble   *lastmotion_y)
+{
+  GdkEvent *event;
+  GList    *requeued_events = NULL;
+  GList    *list;
+  gboolean  success = FALSE;
+
+  /* Move the entire GDK event queue to a private list, filtering
+     out any motion events for the desired widget. */
+  while (gdk_events_pending ())
+    {
+      event = gdk_event_get ();
+
+      if (!event)
+	{
+	  /* Do nothing */
+	}
+      else if ((gtk_get_event_widget (event) == widget) &&
+	       (event->any.type == GDK_MOTION_NOTIFY))
+	{
+	  *lastmotion_x = event->motion.x;
+	  *lastmotion_y = event->motion.y;
+	  
+	  gdk_event_free (event);
+	  success = TRUE;
+	}
+      else
+	{
+	  requeued_events = g_list_prepend (requeued_events, event);
+	}
+    }
+  
+  /* Replay the remains of our private event list back into the
+     event queue in order. */
+
+  requeued_events = g_list_reverse (requeued_events);
+
+  for (list = requeued_events; list; list = g_list_next (list))
+    {
+      gdk_event_put ((GdkEvent*) list->data);
+      gdk_event_free ((GdkEvent*) list->data);
+    }
+  
+  g_list_free (requeued_events);
+
+  return success;
 }

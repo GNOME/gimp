@@ -20,16 +20,20 @@
 #define __APP_PROCS_H__
 
 
-void       gimp_init              (gint          gimp_argc,
-                                   gchar       **gimp_argv);
+void       gimp_init                (gint          gimp_argc,
+				     gchar       **gimp_argv);
 
-void       app_init_update_status (const gchar  *label1,
-                                   const gchar  *label2,
-                                   gdouble       percentage);
+void       app_init_update_status   (const gchar  *label1,
+				     const gchar  *label2,
+				     gdouble       percentage);
 
-void       app_exit               (gboolean      kill_it);
-void       app_exit_finish        (void);
-gboolean   app_exit_finish_done   (void);
+void       app_exit                 (gboolean      kill_it);
+void       app_exit_finish          (void);
+gboolean   app_exit_finish_done     (void);
+
+void       gimp_set_busy            (void);
+void       gimp_set_busy_until_idle (void);
+void       gimp_unset_busy          (void);
 
 
 #endif /* __APP_PROCS_H__ */

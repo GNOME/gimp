@@ -33,7 +33,6 @@
 #include "core/gimpimage.h"
 
 #include "gui/info-dialog.h"
-#include "cursorutil.h"
 #include "gdisplay.h"
 
 #include "gimpdrawtool.h"

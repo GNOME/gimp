@@ -31,7 +31,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
-#include "cursorutil.h"
+#include "app_procs.h"
 #include "dialog_handler.h"
 #include "gui/info-dialog.h"
 #include "gui/info-window.h"
@@ -445,7 +445,7 @@ nav_window_update_preview (NavWinData *iwd)
   gint       xoff = 0;
   gint       yoff = 0;
 
-  gimp_add_busy_cursors (); 
+  gimp_set_busy (); 
 
   gdisp  = iwd->gdisp;
   gimage = gdisp->gimage;
@@ -590,7 +590,7 @@ nav_window_update_preview (NavWinData *iwd)
   if (preview_buf_notdot)
     temp_buf_free (preview_buf_notdot);
 
-  gimp_remove_busy_cursors (NULL);
+  gimp_unset_busy ();
 }
 
 static void 

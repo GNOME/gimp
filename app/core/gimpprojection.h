@@ -20,6 +20,10 @@
 #define __GDISPLAY_H__
 
 
+/* FIXME: don't include gdisplay.h from core/ */
+#include "widgets/widgets-types.h"
+
+
 typedef enum
 {
   SelectionOff,

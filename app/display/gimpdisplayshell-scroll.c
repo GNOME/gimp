@@ -25,10 +25,11 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
+#include "widgets/gimpcursor.h"
+
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
-#include "cursorutil.h"
 #include "gdisplay.h"
 #include "scale.h"
 #include "scroll.h"
@@ -48,13 +49,16 @@ void
 start_grab_and_scroll (GDisplay       *gdisp,
 		       GdkEventButton *bevent)
 {
+  GdkCursor *cursor;
+
   startx = bevent->x + gdisp->offset_x;
   starty = bevent->y + gdisp->offset_y;
 
-  gimp_change_win_cursor (gdisp->canvas->window,
-			  GDK_FLEUR,
-			  GIMP_TOOL_CURSOR_NONE,
-			  GIMP_CURSOR_MODIFIER_NONE);
+  cursor = gimp_cursor_new (GDK_FLEUR,
+			    GIMP_TOOL_CURSOR_NONE,
+			    GIMP_CURSOR_MODIFIER_NONE);
+  gdk_window_set_cursor (gdisp->canvas->window, cursor);
+  gdk_cursor_destroy (cursor);
 }
 
 

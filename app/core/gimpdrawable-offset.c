@@ -29,8 +29,6 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "apptypes.h"
-#include "cursorutil.h"
 #include "drawable.h"
 #include "gimpcontext.h"
 #include "gimpdrawable.h"

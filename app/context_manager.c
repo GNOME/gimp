@@ -41,7 +41,6 @@
 #include "gui/brush-select.h"
 
 #include "appenv.h"
-#include "cursorutil.h"
 #include "context_manager.h"
 #include "gdisplay.h"
 #include "gimprc.h"

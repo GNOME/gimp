@@ -51,7 +51,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
-#include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "pixel_region.h"

@@ -35,7 +35,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
-#include "cursorutil.h"
 #include "drawable.h"
 #include "gimprc.h"
 #include "undo.h"

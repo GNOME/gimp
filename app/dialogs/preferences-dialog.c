@@ -31,7 +31,6 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
-#include "cursorutil.h"
 #include "gdisplay.h"
 #include "layer-select.h"
 #include "session.h"

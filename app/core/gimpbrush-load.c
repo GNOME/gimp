@@ -51,6 +51,7 @@
 #include "temp_buf.h"
 
 /*  this needs to go away  */
+#include "tools/tools-types.h"
 #include "tools/gimppainttool.h"
 #include "brush_scale.h"
 

@@ -76,7 +76,6 @@
 #include "gradient-editor.h"
 
 #include "context_manager.h"
-#include "cursorutil.h"
 #include "errors.h"
 #include "gimprc.h"
 

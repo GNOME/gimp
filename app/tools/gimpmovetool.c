@@ -28,7 +28,6 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 
-#include "cursorutil.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"

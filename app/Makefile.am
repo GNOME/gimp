@@ -53,11 +53,6 @@ gimp_SOURCES = \
 	undo_history.c		\
 	undo_history.h		\
 ##
-## stuff for widgets/
-##
-	cursorutil.c		\
-	cursorutil.h		\
-##
 ## display stuff
 ##
 	disp_callbacks.c	\

@@ -36,7 +36,6 @@
 #include "core/gimplist.h"
 
 #include "gui/info-dialog.h"
-#include "cursorutil.h"
 #include "gdisplay.h"
 
 #include "gimpcroptool.h"
@@ -45,6 +44,7 @@
 #include "tool_options.h"
 #include "tool_manager.h"
 
+#include "app_procs.h"
 #include "floating_sel.h"
 #include "pixel_region.h"
 #include "undo.h"
@@ -844,7 +844,7 @@ crop_image (GimpImage *gimage,
   /*  Make sure new width and height are non-zero  */
   if (width && height)
     {
-      gimp_add_busy_cursors ();
+      gimp_set_busy ();
 
       if (layer_only)
 	{
@@ -963,7 +963,7 @@ crop_image (GimpImage *gimage,
 	  gdisplays_shrink_wrap (gimage);
 	}
 
-      gimp_remove_busy_cursors (NULL);
+      gimp_unset_busy ();
       gdisplays_flush ();
     }
 }
@@ -1282,7 +1282,7 @@ crop_automatic_callback (GtkWidget *widget,
   gdisp = tool->gdisp;
 
   gimp_draw_tool_pause (draw);
-  gimp_add_busy_cursors ();
+  gimp_set_busy ();
  
   /* You should always keep in mind that crop->tx2 and crop->ty2 are the NOT the
      coordinates of the bottomright corner of the area to be cropped. They point 
@@ -1402,7 +1402,7 @@ crop_automatic_callback (GtkWidget *widget,
 
  FINISH:
   g_free (buffer);
-  gimp_remove_busy_cursors (NULL);
+  gimp_unset_busy ();
   gimp_draw_tool_resume (draw);
 
   return;

@@ -35,10 +35,11 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 
+#include "widgets/gimpcursor.h"
+
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
-#include "cursorutil.h"
 #include "disp_callbacks.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
@@ -1862,14 +1863,17 @@ gdisplay_real_install_tool_cursor (GDisplay           *gdisp,
       gdisp->cursor_modifier != modifier    ||
       always_install)
     {
+      GdkCursor *cursor;
+
       gdisp->current_cursor  = cursor_type;
       gdisp->tool_cursor     = tool_cursor;
       gdisp->cursor_modifier = modifier;
 
-      gimp_change_win_cursor (gdisp->canvas->window,
-			      cursor_type,
-			      tool_cursor,
-			      modifier);
+      cursor = gimp_cursor_new (cursor_type,
+				tool_cursor,
+				modifier);
+      gdk_window_set_cursor (gdisp->canvas->window, cursor);
+      gdk_cursor_destroy (cursor);
     }
 }
 
@@ -1895,13 +1899,16 @@ gdisplay_install_override_cursor (GDisplay      *gdisp,
       (gdisp->using_override_cursor &&
        (gdisp->override_cursor != cursor_type)))
     {
+      GdkCursor *cursor;
+
       gdisp->override_cursor       = cursor_type;
       gdisp->using_override_cursor = TRUE;
 
-      gimp_change_win_cursor (gdisp->canvas->window,
-			      cursor_type,
-			      GIMP_TOOL_CURSOR_NONE,
-			      GIMP_CURSOR_MODIFIER_NONE);
+      cursor = gimp_cursor_new (cursor_type,
+				GIMP_TOOL_CURSOR_NONE,
+				GIMP_CURSOR_MODIFIER_NONE);
+      gdk_window_set_cursor (gdisp->canvas->window, cursor);
+      gdk_cursor_destroy (cursor);
     }
 }
 
@@ -1922,7 +1929,7 @@ gdisplay_remove_override_cursor (GDisplay *gdisp)
 void
 gdisplay_remove_tool_cursor (GDisplay *gdisp)
 {
-  gimp_unset_win_cursor (gdisp->canvas->window);
+  gdk_window_set_cursor (gdisp->canvas->window, NULL);
 }
 
 void

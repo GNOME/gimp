@@ -27,6 +27,7 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
+#include "app_procs.h"
 #include "context_manager.h"
 #include "core/core-types.h"
 #include "core/gimpchannel.h"
@@ -36,7 +37,6 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
-#include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage.h"
@@ -344,7 +344,7 @@ image_resize_invoker (Argument *args)
 
   if (success)
     {
-      gimp_add_busy_cursors_until_idle ();
+      gimp_set_busy_until_idle ();
       gimp_image_resize (gimage, new_width, new_height, offx, offy);
     }
 
@@ -418,7 +418,7 @@ image_scale_invoker (Argument *args)
 
   if (success)
     {
-      gimp_add_busy_cursors_until_idle ();
+      gimp_set_busy_until_idle ();
       gimp_image_scale (gimage, new_width, new_height);
     }
 

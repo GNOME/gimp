@@ -35,7 +35,7 @@
 #include "core/gimppattern.h"
 
 #include "appenv.h"
-#include "cursorutil.h"
+#include "app_procs.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimprc.h"
@@ -528,7 +528,7 @@ bucket_fill (GimpImage      *gimage,
 	pat_buf = pattern->mask;
     }
 
-  gimp_add_busy_cursors ();
+  gimp_set_busy ();
 
   bytes = gimp_drawable_bytes (drawable);
   has_alpha = gimp_drawable_has_alpha (drawable);
@@ -604,7 +604,7 @@ bucket_fill (GimpImage      *gimage,
   if (new_buf)
     temp_buf_free (pat_buf);
 
-  gimp_remove_busy_cursors (NULL);
+  gimp_unset_busy ();
 }
 
 static void

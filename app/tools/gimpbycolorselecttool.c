@@ -28,19 +28,21 @@
 
 #include "tools-types.h"
 
-#include "boundary.h"
-#include "context_manager.h"
-#include "cursorutil.h"
+#include "paint-funcs/paint-funcs.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+
 #include "widgets/gimpdnd.h"
+
+#include "boundary.h"
+#include "context_manager.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "gdisplay.h"
-#include "paint-funcs/paint-funcs.h"
 #include "pixel_region.h"
 #include "temp_buf.h"
 #include "tile.h"

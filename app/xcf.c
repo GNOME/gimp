@@ -45,7 +45,7 @@
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
 
-#include "cursorutil.h"
+#include "app_procs.h"
 #include "floating_sel.h"
 #include "gimage.h"
 #include "gimprc.h"
@@ -340,7 +340,7 @@ xcf_load_invoker (Argument *args)
   gboolean   success;
   gchar      id[14];
 
-  gimp_add_busy_cursors ();
+  gimp_set_busy ();
 
   gimage = NULL;
 
@@ -399,7 +399,7 @@ xcf_load_invoker (Argument *args)
   if (success)
     return_args[1].value.pdb_int = gimp_image_get_ID (gimage);
 
-  gimp_remove_busy_cursors (NULL);
+  gimp_unset_busy ();
 
   return return_args;
 }
@@ -413,7 +413,7 @@ xcf_save_invoker (Argument *args)
   gchar     *filename;
   gboolean   success;
 
-  gimp_add_busy_cursors ();
+  gimp_set_busy ();
 
   success = FALSE;
 
@@ -446,7 +446,7 @@ xcf_save_invoker (Argument *args)
 
   return_args = procedural_db_return_args (&xcf_plug_in_save_proc.db_info, success);
 
-  gimp_remove_busy_cursors(NULL);
+  gimp_unset_busy ();
 
   return return_args;
 }

@@ -1,5 +1,76 @@
 2001-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/cursorutil.[ch]: removed. Stuff now lives in app_procs.[ch]
+	and in widgets/gimpcursor.[ch]
+
+	* app/appenv.h: added the "gimp_busy" boolean.
+
+	* app/app_procs.[ch]: added the "busy" stuff here.
+
+	* app/gui/gui.[ch]: "busy" stuff for the gui.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpcursor.[ch]: exports only one function:
+	gimp_cursor_new() which returns a GdkCursor which has to be
+	destroyed.
+
+	* app/apptypes.h
+	* app/appenums.h: removed the cursor types.
+	* app/widgets/widgets-types.h: added here.
+
+	* app/tools/gimpeditselectiontool.[ch]: added
+	gtkutil_compress_motion() here (will go to some utils file in
+	widgets/).
+
+	* app/tools/tools-types.h: #include "widgets/widgets-types.h"
+
+	* app/dialog_handler.c
+	* app/disp_callbacks.c
+	* app/gdisplay.[ch]
+	* app/nav_window.c
+	* app/scroll.c
+	* app/xcf.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage.c
+	* app/gui/file-open-dialog.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimptransformtool.c
+	* tools/pdbgen/pdb/image.pdb
+	* app/pdb/image_cmds.c: use the new cursor and "busy" functions.
+
+	* app/gdisplay.h
+	* app/core/gimpbrush.c: added some ugly cross-includes.
+
+	* app/context_manager.c
+	* app/gdisplay_ops.c
+	* app/gimprc.c
+	* app/core/gimpdrawable-offset.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/preferences-dialog.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpselectiontool.c: removed inclusion of "cursorutil.h"
+
+2001-05-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/appenums.h
 	* app/core/core-types.h
 	* app/tools/tools-types.h: moved some more types to core-types.h

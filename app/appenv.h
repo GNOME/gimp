@@ -40,6 +40,9 @@ extern gboolean double_speed;
 
 extern MessageHandlerType message_handler;
 
+/* FIXME: gimp_busy HACK */
+extern gboolean gimp_busy;
+
 
 #ifdef G_OS_WIN32
 gchar * quote_spaces (gchar *string);

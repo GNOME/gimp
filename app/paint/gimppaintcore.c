@@ -38,7 +38,6 @@
 #include "core/gimpimage-mask.h"
 
 #include "brush_scale.h"
-#include "cursorutil.h"
 #include "devices.h"
 #include "drawable.h"
 #include "gdisplay.h"
