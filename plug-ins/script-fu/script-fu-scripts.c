@@ -54,11 +54,11 @@
 typedef struct
 {
   GtkAdjustment    *adj;
-  gfloat            value;
-  gfloat            lower;
-  gfloat            upper;
-  gfloat            step;
-  gfloat            page;
+  gdouble           value;
+  gdouble           lower;
+  gdouble           upper;
+  gdouble           step;
+  gdouble           page;
   gint              digits;
   SFAdjustmentType  type;
 } SFAdjustment;
@@ -71,10 +71,10 @@ typedef struct
 
 typedef struct 
 {
-  gchar   *name;
-  gdouble  opacity;
-  gint     spacing;
-  gint     paint_mode;
+  gchar                *name;
+  gdouble               opacity;
+  gint                  spacing;
+  GimpLayerModeEffects  paint_mode;
 } SFBrush;
 
 typedef struct 
@@ -172,30 +172,30 @@ static void       script_fu_menu_callback           (gint32     id,
 static void       script_fu_file_selection_callback (GtkWidget *widget,
 						     gpointer   data);
 
-static void       script_fu_pattern_preview         (gchar     *name,
-						     gint       width,
-						     gint       height,
-						     gint       bytes,
-						     gchar     *mask_data,
-						     gboolean   closing,
-						     gpointer   data);
-static void       script_fu_gradient_preview        (gchar     *name,
-						     gint       width,
-						     gdouble   *mask_data,
-						     gboolean   closing,
-						     gpointer   data);
-static void       script_fu_font_preview            (gchar     *name,
-                                                     gboolean   closing,
-                                                     gpointer   data);
-static void       script_fu_brush_preview           (gchar     *name,
-						     gdouble    opacity,
-						     gint       spacing,
-						     gint       paint_mode,
-						     gint       width,
-						     gint       height,
-						     gchar     *mask_data,
-						     gboolean   closing,
-						     gpointer   data);
+static void       script_fu_pattern_preview         (const gchar   *name,
+						     gint           width,
+						     gint           height,
+						     gint           bytes,
+						     const guchar  *mask_data,
+						     gboolean       closing,
+						     gpointer       data);
+static void       script_fu_gradient_preview        (const gchar   *name,
+						     gint           width,
+						     const gdouble *mask_data,
+						     gboolean       closing,
+						     gpointer       data);
+static void       script_fu_font_preview            (const gchar   *name,
+                                                     gboolean       closing,
+                                                     gpointer       data);
+static void       script_fu_brush_preview           (const gchar   *name,
+						     gdouble        opacity,
+						     gint           spacing,
+						     GimpLayerModeEffects  paint_mode,
+						     gint           width,
+						     gint           height,
+						     const guchar  *mask_data,
+						     gboolean       closing,
+						     gpointer       data);
 
 
 /*
@@ -1184,12 +1184,14 @@ script_fu_interface (SFScript *script)
 
   for (i = start_args; i < script->num_args; i++)
     {
-      /*  we add a colon after the label; 
-	  some languages want an extra space here */
-      gchar     *label_text       = 
-	g_strdup_printf (_("%s:"), gettext (script->arg_labels[i]));
-      gfloat     label_yalign     = 0.5;
-      gboolean   widget_leftalign = TRUE;
+      gchar    *label_text;
+      gfloat    label_yalign     = 0.5;
+      gboolean  widget_leftalign = TRUE;
+
+      /*  we add a colon after the label;
+          some languages want an extra space here  */
+      label_text =  g_strdup_printf (_("%s:"),
+                                     gettext (script->arg_labels[i]));
 
       switch (script->arg_types[i])
 	{
@@ -1476,13 +1478,13 @@ script_fu_interface_quit (SFScript *script)
 }
 
 static void
-script_fu_pattern_preview (gchar    *name,
-			   gint      width,
-			   gint      height,
-			   gint      bytes,
-			   gchar    *mask_data,
-			   gboolean  closing,
-			   gpointer  data)
+script_fu_pattern_preview (const gchar  *name,
+			   gint          width,
+			   gint          height,
+			   gint          bytes,
+			   const guchar *mask_data,
+			   gboolean      closing,
+			   gpointer      data)
 {
   gchar **pname;
 
@@ -1493,11 +1495,11 @@ script_fu_pattern_preview (gchar    *name,
 }
 
 static void
-script_fu_gradient_preview (gchar    *name,
-			    gint      width,
-			    gdouble  *mask_data,
-			    gboolean  closing,
-			    gpointer  data)
+script_fu_gradient_preview (const gchar   *name,
+			    gint           width,
+			    const gdouble *mask_data,
+			    gboolean       closing,
+			    gpointer       data)
 {
   gchar **gname;
 
@@ -1508,9 +1510,9 @@ script_fu_gradient_preview (gchar    *name,
 }
 
 static void
-script_fu_font_preview (gchar    *name,
-                        gboolean  closing,
-                        gpointer  data)
+script_fu_font_preview (const gchar *name,
+                        gboolean     closing,
+                        gpointer     data)
 {
   gchar **fname;
 
@@ -1521,15 +1523,15 @@ script_fu_font_preview (gchar    *name,
 }
 
 static void      
-script_fu_brush_preview (gchar    *name,
-			 gdouble   opacity,
-			 gint      spacing,
-			 gint      paint_mode,
-			 gint      width,
-			 gint      height,
-			 gchar    *mask_data,
-			 gboolean  closing,
-			 gpointer  data)
+script_fu_brush_preview (const gchar          *name,
+			 gdouble               opacity,
+			 gint                  spacing,
+			 GimpLayerModeEffects  paint_mode,
+			 gint                  width,
+			 gint                  height,
+			 const guchar         *mask_data,
+			 gboolean              closing,
+			 gpointer              data)
 {
   SFBrush *brush;
 

@@ -81,7 +81,7 @@ typedef struct
   GtkObject    *advanced_adj[7];
   GtkTreeModel *image_list_all;
   GtkTreeModel *image_list_film;
-  gint          run;
+  gboolean      run;
 } FilmInterface;
 
 
@@ -151,19 +151,19 @@ static void        add_list_item_callback (GtkWidget        *widget,
 static void        del_list_item_callback (GtkWidget        *widget,
 					   GtkTreeSelection *sel);
 
-static GtkTreeModel * add_image_list      (gboolean          add_box_flag,
-					   gint              n,
-					   gint32           *image_id,
-					   GtkWidget        *hbox);
+static GtkTreeModel * add_image_list      (gboolean        add_box_flag,
+					   gint            n,
+					   gint32         *image_id,
+					   GtkWidget      *hbox);
 
-static gint        film_dialog               (gint32     image_ID);
-static void        film_ok_callback          (GtkWidget *widget,
-                                              gpointer   data);
-static void        film_reset_callback       (GtkWidget *widget,
-                                              gpointer   data);
-static void        film_font_select_callback (gchar     *name,
-                                              gboolean   closing,
-                                              gpointer   data);
+static gboolean    film_dialog               (gint32       image_ID);
+static void        film_ok_callback          (GtkWidget   *widget,
+                                              gpointer     data);
+static void        film_reset_callback       (GtkWidget   *widget,
+                                              gpointer     data);
+static void        film_font_select_callback (const gchar *name,
+                                              gboolean     closing,
+                                              gpointer     data);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -1476,7 +1476,7 @@ create_advanced_tab (GtkWidget *notebook)
                     NULL);
 }
 
-static gint
+static gboolean
 film_dialog (gint32 image_ID)
 {
   GtkWidget *dlg;
@@ -1518,7 +1518,6 @@ film_dialog (gint32 image_ID)
   gtk_widget_show (dlg);
 
   gtk_main ();
-  gdk_flush ();
 
   return filmint.run;
 }
@@ -1565,9 +1564,9 @@ film_reset_callback (GtkWidget *widget,
 }
 
 static void
-film_font_select_callback (gchar    *name,
-                           gboolean  closing,
-                           gpointer  data)
+film_font_select_callback (const gchar *name,
+                           gboolean     closing,
+                           gpointer     data)
 {
   FilmVals *vals = (FilmVals *) data;
 

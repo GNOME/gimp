@@ -207,10 +207,12 @@ explorer_number_of_colors_callback (GtkAdjustment *adjustment,
 
   g_free (gradient_samples);
 
-  if (gradient_name == NULL)
+  if (! gradient_name)
     gradient_name = gimp_gradients_get_gradient ();
 
-  gimp_gradients_get_gradient_data (gradient_name, wvals.ncolors, &dummy,
+  gimp_gradients_get_gradient_data (gradient_name,
+                                    wvals.ncolors,
+                                    &dummy,
                                     &gradient_samples);
 
   set_cmap_preview ();
@@ -218,11 +220,11 @@ explorer_number_of_colors_callback (GtkAdjustment *adjustment,
 }
 
 static void
-explorer_gradient_select_callback (gchar    *name,
-				   gint      width,
-				   gdouble  *gradient_data,
-				   gint      dialog_closing,
-				   gpointer  data)
+explorer_gradient_select_callback (const gchar   *name,
+				   gint           width,
+				   const gdouble *gradient_data,
+				   gboolean       dialog_closing,
+				   gpointer       data)
 {
   gint dummy;
 
@@ -231,7 +233,9 @@ explorer_gradient_select_callback (gchar    *name,
 
   gradient_name = g_strdup (name);
 
-  gimp_gradients_get_gradient_data (gradient_name, wvals.ncolors, &dummy,
+  gimp_gradients_get_gradient_data (gradient_name,
+                                    wvals.ncolors,
+                                    &dummy,
 				    &gradient_samples);
 
   if (wvals.colormode == 1)
