@@ -1,3 +1,8 @@
+2004-04-03  Michael Natterer  <mitch@gimp.org>
+
+	* de.po: translate "export" as "exportieren", not "importieren".
+	Fixes bug #138960.
+
 2004-04-03  Funda Wang  <fundawang@linux.net.cn>
 
 	* zh_CN.po: Updated Simplified Chinese translation.
