@@ -1103,7 +1103,7 @@ msgid "Move: "
 msgstr "Siirrä: "
 
 #: app/equalize.c:37
-dmsgid "Equalize does not operate on indexed drawables."
+msgid "Equalize does not operate on indexed drawables."
 msgstr "Ekvalistointi ei toimi indeksoiduilla kuvilla"
 
 #. the hard toggle
