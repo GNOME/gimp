@@ -27,16 +27,16 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
+#include "context_manager.h"
 #include "cursorutil.h"
 #include "dialog_handler.h"
 #include "info_dialog.h"
 #include "info_window.h"
 #include "gdisplay.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimage.h"
 #include "gimppreviewcache.h"
-#include "gimpset.h"
 #include "gimprc.h"
 #include "nav_window.h"
 #include "scroll.h"
@@ -1325,7 +1325,7 @@ nav_window_change_display (GimpContext *context, /* NOT USED */
 
   gimage = gdisp->gimage;
 
-  if (gimage && gimp_set_have (image_context, gimage))
+  if (gimage && gimp_container_lookup (image_context, GIMP_OBJECT (gimage)))
     {
       iwd->gdisp = gdisp;
 

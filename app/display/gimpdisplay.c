@@ -2261,19 +2261,16 @@ void
 gdisplays_delete (void)
 {
   GDisplay *gdisp;
-  GSList   *list;
 
-  /*  traverse the linked list of displays  */
-  for (list = display_list; list; list = g_slist_next (list))
+  /*  destroying the shell removes the GDisplay from the list, so
+   *  do a while loop "around" the first element to get them all
+   */
+  while (display_list)
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GDisplay *) display_list->data;
 
       gtk_widget_destroy (gdisp->shell);
     }
-
-  /*  free up linked list data  */
-  g_slist_free (display_list);
-  display_list = NULL;
 }
 
 GDisplay *

@@ -22,14 +22,14 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
+#include "context_manager.h"
 #include "dialog_handler.h"
 #include "gdisplay.h"
 #include "gimage.h"
+#include "gimpcontainer.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
-#include "gimpset.h"
 #include "lc_dialog.h"
 #include "paint_funcs.h"
 #include "palette_import.h"
@@ -87,7 +87,7 @@ gimage_new (gint              width,
 		      GTK_SIGNAL_FUNC (gimage_cmap_change_handler),
 		      NULL);
 
-  gimp_set_add (image_context, gimage);
+  gimp_container_add (image_context, GIMP_OBJECT (gimage));
 
   return gimage;
 }
@@ -119,7 +119,7 @@ invalidate_cb (gpointer image,
 void
 gimage_invalidate_previews (void)
 {
-  gimp_set_foreach (image_context, invalidate_cb, NULL);
+  gimp_container_foreach (image_context, invalidate_cb, NULL);
 }
 
 static void
@@ -292,5 +292,5 @@ void
 gimage_foreach (GFunc    func, 
 		gpointer user_data)
 {
-  gimp_set_foreach (image_context, func, user_data);
+  gimp_container_foreach (image_context, func, user_data);
 }

@@ -27,6 +27,7 @@ typedef enum
   ERROR_CONSOLE
 } MessageHandlerType;
 
+
 extern gboolean no_interface;
 extern gboolean no_splash;
 extern gboolean no_splash_image;
@@ -36,9 +37,10 @@ extern gboolean use_debug_handler;
 extern gboolean console_messages;
 extern gboolean restore_session;
 extern gboolean double_speed;
-extern gboolean we_are_exiting;      /* this is used in session_get_window_info() */
-extern GimpSet *image_context;
+extern gboolean we_are_exiting;   /* this is used in session_get_window_info() */
+
 extern MessageHandlerType message_handler;
+
 
 #ifdef G_OS_WIN32
 gchar * quote_spaces (gchar *string);
@@ -46,5 +48,3 @@ gchar * quote_spaces (gchar *string);
 
 
 #endif /*  __APPENV_H__  */
-
-

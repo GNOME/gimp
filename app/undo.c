@@ -25,7 +25,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "floating_sel.h"

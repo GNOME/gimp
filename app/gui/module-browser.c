@@ -41,7 +41,7 @@
 #include "module_db.h"
 #include "gimprc.h"
 #include "datafiles.h"
-#include "gimpset.h"
+#include "gimpcontainer.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimpmodule.h"
@@ -135,8 +135,8 @@ typedef struct
 } BrowserState;
 
 /* global set of module_info pointers */
-static GimpSet          *modules;
-static GimpSetHandlerId  modules_handler;
+static GimpContainer *modules;
+static GQuark         modules_handler_id;
 
 /* If the inhibit state of any modules changes, we might need to
  * re-write the modulerc.
@@ -159,41 +159,41 @@ static gboolean need_to_rewrite_modulerc = FALSE;
 
 
 /* prototypes */
-static void         module_initialize      (const gchar  *filename);
-static void         mod_load               (ModuleInfo   *mod,
-					    gboolean      verbose);
-static void         mod_unload             (ModuleInfo   *mod,
-					    gboolean      verbose);
-static gboolean     mod_idle_unref         (ModuleInfo   *mod);
-static ModuleInfo * module_find_by_path    (const gchar  *fullpath);
+static void         module_initialize      (const gchar   *filename);
+static void         mod_load               (ModuleInfo    *mod,
+					    gboolean       verbose);
+static void         mod_unload             (ModuleInfo    *mod,
+					    gboolean       verbose);
+static gboolean     mod_idle_unref         (ModuleInfo    *mod);
+static ModuleInfo * module_find_by_path    (const gchar   *fullpath);
 
 #ifdef DUMP_DB
-static void   print_module_info            (gpointer      data,
-					    gpointer      user_data);
+static void   print_module_info            (gpointer       data,
+					    gpointer       user_data);
 #endif
 
-static void   browser_popdown_callback     (GtkWidget    *widget,
-					    gpointer      data);
-static void   browser_destroy_callback     (GtkWidget    *widget,
-					    gpointer      data);
-static void   browser_info_update          (ModuleInfo   *mod,
-					    BrowserState *st);
-static void   browser_info_add             (GimpSet      *set,
-					    ModuleInfo   *mod,
-					    BrowserState *st);
-static void   browser_info_remove          (GimpSet      *set,
-					    ModuleInfo   *mod,
-					    BrowserState *st);
-static void   browser_info_init            (BrowserState *st,
-					    GtkWidget    *table);
-static void   browser_select_callback      (GtkWidget    *widget,
-					    GtkWidget    *child);
-static void   browser_load_unload_callback (GtkWidget    *widget,
-					    gpointer      data);
-static void   browser_refresh_callback     (GtkWidget    *widget,
-					    gpointer      data);
-static void   make_list_item               (gpointer      data,
-					    gpointer      user_data);
+static void   browser_popdown_callback     (GtkWidget     *widget,
+					    gpointer       data);
+static void   browser_destroy_callback     (GtkWidget     *widget,
+					    gpointer       data);
+static void   browser_info_update          (ModuleInfo    *mod,
+					    BrowserState  *st);
+static void   browser_info_add             (GimpContainer *container,
+					    ModuleInfo    *mod,
+					    BrowserState  *st);
+static void   browser_info_remove          (GimpContainer *container,
+					    ModuleInfo    *mod,
+					    BrowserState  *st);
+static void   browser_info_init            (BrowserState  *st,
+					    GtkWidget     *table);
+static void   browser_select_callback      (GtkWidget     *widget,
+					    GtkWidget     *child);
+static void   browser_load_unload_callback (GtkWidget     *widget,
+					    gpointer       data);
+static void   browser_refresh_callback     (GtkWidget     *widget,
+					    gpointer       data);
+static void   make_list_item               (gpointer       data,
+					    gpointer       user_data);
 
 static void   gimp_module_ref              (ModuleInfo   *mod);
 static void   gimp_module_unref            (ModuleInfo   *mod);
@@ -215,13 +215,14 @@ module_db_init (void)
 
   /* Load and initialize gimp modules */
 
-  modules = gimp_set_new (MODULE_INFO_TYPE, FALSE);
+  modules = gimp_container_new (MODULE_INFO_TYPE,
+				GIMP_CONTAINER_POLICY_WEAK);
 
   if (g_module_supported ())
     datafiles_read_directories (module_path,
 				module_initialize, 0 /* no flags */);
 #ifdef DUMP_DB
-  gimp_set_foreach (modules, print_module_info, NULL);
+  gimp_container_foreach (modules, print_module_info, NULL);
 #endif
 }
 
@@ -262,7 +263,7 @@ module_db_write_modulerc (void)
   gboolean  saved = FALSE;
 
   str = g_string_new (NULL);
-  gimp_set_foreach (modules, add_to_inhibit_string, str);
+  gimp_container_foreach (modules, add_to_inhibit_string, str);
   if (str->len > 0)
     p = str->str + 1;
   else
@@ -293,7 +294,7 @@ module_db_free (void)
 	  need_to_rewrite_modulerc = FALSE;
 	}
     }
-  gimp_set_foreach (modules, free_a_single_module, NULL);
+  gimp_container_foreach (modules, free_a_single_module, NULL);
 }
 
 
@@ -338,7 +339,7 @@ module_db_browser_new (void)
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox),
 					 st->list);
 
-  gimp_set_foreach (modules, make_list_item, st);
+  gimp_container_foreach (modules, make_list_item, st);
 
   gtk_widget_show (st->list);
 
@@ -374,10 +375,11 @@ module_db_browser_new (void)
   gtk_signal_connect (GTK_OBJECT (st->list), "select_child",
 		      browser_select_callback, NULL);
 
-  /* hook the gimpset signals so we can refresh the display
-   * appropriately. */
-  modules_handler =
-    gimp_set_add_handler (modules, "modified", browser_info_update, st);
+  /* hook the GimpContainer signals so we can refresh the display
+   * appropriately.
+   */
+  modules_handler_id =
+    gimp_container_add_handler (modules, "modified", browser_info_update, st);
 
   gtk_signal_connect (GTK_OBJECT (modules), "add", 
 		      browser_info_add, st);
@@ -629,7 +631,7 @@ module_initialize (const gchar *filename)
       mod->state = ST_UNLOADED_OK;
     }
 
-  gimp_set_add (modules, mod);
+  gimp_container_add (modules, GIMP_OBJECT (mod));
 }
 
 static void
@@ -797,7 +799,7 @@ browser_destroy_callback (GtkWidget *widget,
 			  gpointer   data)
 {
   gtk_signal_disconnect_by_data (GTK_OBJECT (modules), data);
-  gimp_set_remove_handler (modules, modules_handler);
+  gimp_container_remove_handler (modules, modules_handler_id);
   g_free (data);
 }
 
@@ -1003,21 +1005,22 @@ make_list_item (gpointer data,
 
 
 static void
-browser_info_add (GimpSet      *set, 
-		  ModuleInfo   *mod, 
-		  BrowserState *st)
+browser_info_add (GimpContainer *container,
+		  ModuleInfo    *mod, 
+		  BrowserState  *st)
 {
   make_list_item (mod, st);
 }
 
 
 static void
-browser_info_remove (GimpSet      *set, 
-		     ModuleInfo   *mod, 
-		     BrowserState *st)
+browser_info_remove (GimpContainer *container,
+		     ModuleInfo    *mod, 
+		     BrowserState  *st)
 {
-  GList *dlist, *free_list;
-  GtkWidget *list_item;
+  GList      *dlist;
+  GList      *free_list;
+  GtkWidget  *list_item;
   ModuleInfo *i;
 
   dlist = gtk_container_children (GTK_CONTAINER (st->list));
@@ -1081,7 +1084,7 @@ module_db_module_remove (gpointer data,
 {
   ModuleInfo *mod = data;
 
-  gimp_set_remove (modules, mod);
+  gimp_container_remove (modules, GIMP_OBJECT (mod));
 
   module_info_free (mod);
 }
@@ -1113,7 +1116,7 @@ module_find_by_path (const char *fullpath)
   cl.found = NULL;
   cl.search_key = fullpath;
 
-  gimp_set_foreach (modules, module_db_path_cmp, &cl);
+  gimp_container_foreach (modules, module_db_path_cmp, &cl);
 
   return cl.found;
 }
@@ -1127,7 +1130,7 @@ browser_refresh_callback (GtkWidget *widget,
   GSList *kill_list = NULL;
 
   /* remove modules we don't have on disk anymore */
-  gimp_set_foreach (modules, module_db_module_ondisk, &kill_list);
+  gimp_container_foreach (modules, module_db_module_ondisk, &kill_list);
   g_slist_foreach (kill_list, module_db_module_remove, NULL);
   g_slist_free (kill_list);
   kill_list = NULL;

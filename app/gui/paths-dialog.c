@@ -40,7 +40,6 @@
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "gimprc.h"
-#include "gimpset.h"
 #include "image_render.h"
 #include "lc_dialogP.h"
 #include "menus.h"

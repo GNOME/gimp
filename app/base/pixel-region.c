@@ -25,7 +25,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "gimpprogress.h"
 #include "gimprc.h"
 #include "pixel_region.h"

@@ -27,7 +27,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"

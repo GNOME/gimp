@@ -45,7 +45,7 @@ struct _GimpColormapDialog
   GtkWidget        *image_menu;
   GtkWidget        *popup_menu;
   GtkOptionMenu    *option_menu;
-  GimpSet          *context;
+  GimpContainer    *context;
   guint             event_handler;
   gint              xn;
   gint              yn;
@@ -68,7 +68,7 @@ struct _GimpColormapDialogClass
 
 
 GtkType              gimp_colormap_dialog_get_type (void);
-GimpColormapDialog * gimp_colormap_dialog_create   (GimpSet* context);
+GimpColormapDialog * gimp_colormap_dialog_create   (GimpContainer    *context);
 
 void        gimp_colormap_dialog_selected  (GimpColormapDialog       *colormap_dialog);
 

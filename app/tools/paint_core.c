@@ -28,7 +28,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "brush_scale.h"
 #include "cursorutil.h"
 #include "devices.h"

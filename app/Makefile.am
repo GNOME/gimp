@@ -150,8 +150,6 @@ gimp_SOURCES = \
 	gimpprogress.h		\
 	gimprc.c		\
 	gimprc.h		\
-	gimpset.c		\
-	gimpset.h		\
 	gimpui.c		\
 	gimpui.h		\
 	gimpunit.c		\

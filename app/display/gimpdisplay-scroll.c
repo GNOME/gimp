@@ -24,7 +24,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "cursorutil.h"
 #include "gdisplay.h"
 #include "scale.h"

@@ -26,9 +26,10 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "app_procs.h"
+#include "context_manager.h"
 #include "plug_in.h"
+
 #include "procedural_db.h"
 
 #include "libgimp/gimpparasite.h"
@@ -472,9 +473,9 @@ id_cmp_func (gconstpointer id1,
 }
 
 static void
-add_cb (GimpSet   *set,
-    	GimpImage *gimage,
-	gpointer   data)
+add_cb (GimpContainer *container,
+    	GimpImage     *gimage,
+	gpointer       data)
 {
   guint *id;
 
@@ -486,15 +487,15 @@ add_cb (GimpSet   *set,
 }
 
 static void
-remove_cb (GimpSet   *set,
-    	   GimpImage *image,
-	   gpointer   data)
+remove_cb (GimpContainer *container,
+    	   GimpImage     *image,
+	   gpointer       data)
 {
   guint *id;
 
   id = (guint *) gtk_object_get_data (GTK_OBJECT (image), "pdb_id");
 
-  gtk_object_remove_data (GTK_OBJECT(image), "pdb_id");
+  gtk_object_remove_data (GTK_OBJECT (image), "pdb_id");
   g_hash_table_remove (image_hash, id);
   g_free (id);
 }

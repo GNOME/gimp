@@ -79,8 +79,6 @@ gboolean console_messages  = FALSE;
 gboolean restore_session   = FALSE;
 gboolean double_speed      = FALSE;
 
-GimpSet *image_context = NULL;
-
 MessageHandlerType message_handler = CONSOLE;
 
 gchar  *prog_name 		= NULL; /* The path name we are invoked with */

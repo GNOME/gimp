@@ -122,7 +122,7 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
 	  break;
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
 	  type  = INDEXED;
-	  bytes = (gimp_drawable_bytes (drawable) == INDEXED_GIMAGE) ? 3 : 4;
+	  bytes = (gimp_drawable_type (drawable) == INDEXED_GIMAGE) ? 3 : 4;
 	  break;
 	}
 

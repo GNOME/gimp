@@ -286,6 +286,9 @@ gimp_container_remove (GimpContainer *container,
 	}
     }
 
+  container->children = g_list_remove (container->children, object);
+  container->num_children--;
+
   gtk_object_ref (GTK_OBJECT (object));
 
   switch (container->policy)
@@ -302,9 +305,6 @@ gimp_container_remove (GimpContainer *container,
       break;
     }
 
-  container->children = g_list_remove (container->children, object);
-  container->num_children--;
-
   gtk_signal_emit (GTK_OBJECT (container), container_signals[REMOVE], object);
 
   gtk_object_unref (GTK_OBJECT (object));
@@ -313,16 +313,13 @@ gimp_container_remove (GimpContainer *container,
 }
 
 const GList *
-gimp_container_lookup (GimpContainer *container,
-		       GimpObject    *object)
+gimp_container_lookup (const GimpContainer *container,
+		       const GimpObject    *object)
 {
   g_return_val_if_fail (container != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
 
-  g_return_val_if_fail (object != NULL, NULL);
-  g_return_val_if_fail (GTK_CHECK_TYPE (object, container->children_type), NULL);
-
-  return g_list_find (container->children, object);
+  return g_list_find (container->children, (gpointer) object);
 }
 
 void
@@ -369,11 +366,14 @@ gimp_container_add_handler (GimpContainer *container,
 
   g_free (key);
 
+  container->handlers = g_list_prepend (container->handlers, handler);
+
   for (list = container->children; list; list = g_list_next (list))
     {
       object = GTK_OBJECT (list->data);
 
-      handler_id = gtk_signal_connect (object, signame,
+      handler_id = gtk_signal_connect (object,
+				       handler->signame,
 				       handler->func,
 				       handler->user_data);
 
@@ -420,14 +420,14 @@ gimp_container_remove_handler (GimpContainer *container,
 
       if (handler_id)
 	{
-	  gtk_signal_disconnect (object, handler->quark);
+	  gtk_signal_disconnect (object, handler_id);
 
 	  gtk_object_set_data_by_id (object, handler->quark, NULL);
 	}
     }
 
+  container->handlers = g_list_remove (container->handlers, handler);
+
   g_free (handler->signame);
   g_free (handler);
-
-  container->handlers = g_list_remove (container->handlers, handler);
 }

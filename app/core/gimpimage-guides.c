@@ -3914,7 +3914,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
   gint         x, y, w, h;
   gint         x1, y1, x2, y2;
   gint         bytes;
-  gint         construct_flag;
+  gboolean     construct_flag;
   gint         visible[MAX_CHANNELS] = {1, 1, 1, 1};
   gint         off_x, off_y;
 
@@ -3965,7 +3965,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 	}
     }
 
-  construct_flag = 0;
+  construct_flag = FALSE;
 
   while (reverse_list)
     {
@@ -4051,7 +4051,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 	  break;
 	}
 
-      construct_flag = 1;
+      construct_flag = TRUE;
 
       reverse_list = g_slist_next (reverse_list);
     }

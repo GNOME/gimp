@@ -26,14 +26,22 @@
 #include "cursorutil.h"
 #include "context_manager.h"
 #include "gdisplay.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimpimage.h"
 #include "gimprc.h"
 
 #include "tools/paint_options.h"
 #include "tools/tools.h"
 
 
-static GimpContext * global_tool_context;
+/*
+ *  the list of all images
+ */
+GimpContainer *image_context = NULL;
+
+
+static GimpContext *global_tool_context = NULL;
 
 #define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK | \
                            GIMP_CONTEXT_PAINT_MODE_MASK
@@ -123,6 +131,10 @@ context_manager_init (void)
   GimpContext *default_context;
   GimpContext *user_context;
   gint i;
+
+  /* Create the context of all existing images */
+  image_context = gimp_container_new (GIMP_TYPE_IMAGE,
+				      GIMP_CONTAINER_POLICY_WEAK);
 
   /*  Implicitly create the standard context  */
   standard_context = gimp_context_get_standard ();

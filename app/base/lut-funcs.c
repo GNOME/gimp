@@ -26,7 +26,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "gimplut.h"
 #include "gimphistogram.h"
 

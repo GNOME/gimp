@@ -22,7 +22,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "boundary.h"
 #include "colormaps.h"
 #include "gdisplay.h"

@@ -25,7 +25,7 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
+#include "context_manager.h"
 #include "gimage.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
@@ -458,9 +458,9 @@ palette_import_image_count (ImportType type)
 }
 
 static void
-palette_import_image_new (GimpSet   *set,
-			  GimpImage *gimage,
-			  gpointer   data)
+palette_import_image_new (GimpContainer *container,
+			  GimpImage     *gimage,
+			  gpointer       data)
 {
   if (! import_dialog)
     return;
@@ -488,9 +488,9 @@ palette_import_image_new (GimpSet   *set,
 }
 
 static void
-palette_import_image_destroyed (GimpSet   *set,
-				GimpImage *gimage,
-				gpointer   data)
+palette_import_image_destroyed (GimpContainer *container,
+				GimpImage     *gimage,
+				gpointer       data)
 {
   if (! import_dialog)
     return;

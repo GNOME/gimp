@@ -38,7 +38,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "gimpimage.h"
 #include "gimprc.h"
 #include "paint_funcs.h"

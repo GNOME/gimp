@@ -60,7 +60,6 @@
 #include "gimpimage.h"
 #include "gimprc.h"
 #include "gimpparasite.h"
-#include "gimpset.h"
 #include "global_edit.h"
 #include "gradient_select.h"
 #include "gradient.h"
@@ -525,9 +524,6 @@ app_init (void)
 
   if (!no_interface && !no_splash && win_initstatus)
     splash_text_draw (logo_area);
-
-  /* Create the context of all existing images */
-  image_context = gimp_set_new (GIMP_TYPE_IMAGE, TRUE);
 
   /*  Initialize the context system before loading any data  */
   context_manager_init ();

@@ -38,9 +38,9 @@
 #include "colormaps.h"
 #include "color_area.h"
 #include "gdisplay.h"
+#include "gimpcontainer.h"
 #include "gimpdnd.h"
 #include "gimpimage.h"
-#include "gimpset.h"
 
 #include "pdb/procedural_db.h"
 
@@ -117,7 +117,7 @@ static void   index_adjustment_change_cb (GtkAdjustment      *adjustment,
 static void   hex_entry_change_cb        (GtkEntry           *entry,
 					  GimpColormapDialog *ipal);
 
-static void   set_addrem_cb              (GimpSet            *set,
+static void   container_addrem_cb        (GimpContainer      *container,
 					  GimpImage          *image,
 					  GimpColormapDialog *ipal);
 static void   image_rename_cb            (GimpImage          *img,
@@ -223,7 +223,7 @@ gimp_colormap_dialog_init (GimpColormapDialog *colormap_dialog)
 }
 
 GimpColormapDialog *
-gimp_colormap_dialog_create (GimpSet *context)
+gimp_colormap_dialog_create (GimpContainer *context)
 {
   GimpColormapDialog *ipal;
   GtkWidget     *vbox;
@@ -237,7 +237,7 @@ gimp_colormap_dialog_create (GimpSet *context)
   GtkAccelGroup *accel_group;
 
   g_return_val_if_fail (context != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_SET (context), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (context), NULL);
 
   ipal = gtk_type_new (GIMP_TYPE_COLORMAP_DIALOG);
 
@@ -251,14 +251,14 @@ gimp_colormap_dialog_create (GimpSet *context)
 
   ipal->image                = NULL;
   ipal->context              = context;
-  ipal->cmap_changed_handler = gimp_set_add_handler (context,
-						     "colormap_changed",
-						     image_cmap_change_cb,
-						     ipal);
-  ipal->rename_handler       = gimp_set_add_handler (context,
-						     "name_changed",
-						     image_rename_cb,
-						     ipal);
+  ipal->cmap_changed_handler = gimp_container_add_handler (context,
+							   "colormap_changed",
+							   image_cmap_change_cb,
+							   ipal);
+  ipal->rename_handler       = gimp_container_add_handler (context,
+							   "name_changed",
+							   image_rename_cb,
+							   ipal);
 
   accel_group = gtk_accel_group_new ();
   gtk_window_set_wmclass (GTK_WINDOW (ipal), "indexed_color_palette", "Gimp");
@@ -372,10 +372,10 @@ gimp_colormap_dialog_create (GimpSet *context)
   ipal_update_image_list (ipal);
 
   gtk_signal_connect (GTK_OBJECT (context), "add",
-		      GTK_SIGNAL_FUNC (set_addrem_cb),
+		      GTK_SIGNAL_FUNC (container_addrem_cb),
 		      ipal);
   gtk_signal_connect (GTK_OBJECT (context), "remove",
-		      GTK_SIGNAL_FUNC (set_addrem_cb),
+		      GTK_SIGNAL_FUNC (container_addrem_cb),
 		      ipal);
 
   return ipal;
@@ -802,9 +802,9 @@ hex_entry_change_cb (GtkEntry           *entry,
 }
 
 static void
-set_addrem_cb (GimpSet            *set,
-	       GimpImage          *image,
-	       GimpColormapDialog *ipal)
+container_addrem_cb (GimpContainer      *set,
+		     GimpImage          *image,
+		     GimpColormapDialog *ipal)
 {
   ipal_update_image_list (ipal);
 }	
@@ -878,7 +878,8 @@ ipal_set_image (GimpColormapDialog *ipal,
       if (!ipal->image)
 	gtk_signal_handler_unblock (GTK_OBJECT (ipal->palette),
 				    ipal->event_handler);
-      g_return_if_fail (gimp_set_have (ipal->context, gimage));
+      g_return_if_fail (gimp_container_lookup (ipal->context,
+					       GIMP_OBJECT (gimage)));
       g_return_if_fail (gimp_image_base_type (gimage) == INDEXED);
       ipal->image = gimage;
       ipal_draw (ipal);
@@ -1139,7 +1140,7 @@ create_image_menu (GimpColormapDialog  *ipal,
 
   *default_index = -1;
 
-  gimp_set_foreach (ipal->context, create_image_menu_cb, &data);
+  gimp_container_foreach (ipal->context, create_image_menu_cb, &data);
 
   if (!data.num_items)
     {

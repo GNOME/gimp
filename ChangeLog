@@ -1,6 +1,54 @@
 2001-02-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
+	* app/gimpset.[ch]: removed.
+
+	* app/gimpcontainer.[ch]: some minor fixes, cleanup.
+
+	* app/context_manager.[ch]: made the "image_context" a GimpContainer
+	and moved it here...
+
+	* app/appenv.h
+	* app/main.c: ...from here.
+
+	* app/app_procs.c
+	* app/colormap_dialog.[ch]
+	* app/commands.c
+	* app/gimage.c
+	* app/gimpcontext.c
+	* app/gimpimage.c
+	* app/info_window.c
+	* app/lc_dialog.c
+	* app/lut_funcs.c
+	* app/module_db.c
+	* app/nav_window.c
+	* app/palette_import.c
+	* app/paths_dialog.c
+	* app/pixel_region.c
+	* app/scale.c
+	* app/scroll.c
+	* app/selection.c
+	* app/temp_buf.c
+	* app/undo.c
+	* app/pdb/procedural_db.c
+	* app/tools/by_color_select.c
+	* app/tools/clone.c
+	* app/tools/color_balance.c
+	* app/tools/color_picker.c
+	* app/tools/convolve.c
+	* app/tools/crop.c
+	* app/tools/curves.c
+	* app/tools/paint_core.c
+	* app/tools/transform_core.c: s/GimpSet/GimpContainer/g, removed
+	many useless #include "appenv.h".
+
+	* app/gimpdrawablepreview.c
+	* app/gdisplay.c: found two badly crashing bugs i have introduced
+	with my last changes here.
+
+2001-02-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
 	* app/apptypes.h
 
 	* app/gimpcontainer.[ch]: new (yet unused and untested) object

@@ -29,13 +29,13 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "about_dialog.h"
 #include "app_procs.h"
 #include "brush_select.h"
 #include "colormap_dialog.h"
 #include "color_area.h"
 #include "commands.h"
+#include "context_manager.h"
 #include "convert.h"
 #include "desaturate.h"
 #include "devices.h"

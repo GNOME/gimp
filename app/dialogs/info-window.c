@@ -24,12 +24,12 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
+#include "context_manager.h"
 #include "colormaps.h"
 #include "gdisplay.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
-#include "gimpset.h"
 #include "info_dialog.h"
 #include "info_window.h"
 
@@ -345,7 +345,7 @@ info_window_change_display (GimpContext *context, /* NOT USED */
 
   gimage = gdisp->gimage;
 
-  if (gimage && gimp_set_have (image_context, gimage))
+  if (gimage && gimp_container_lookup (image_context, GIMP_OBJECT (gimage)))
     {
       iwd->gdisp = gdisp;
       info_window_update (gdisp);

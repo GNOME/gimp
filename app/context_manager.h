@@ -20,6 +20,12 @@
 #define __CONTEXT_MANAGER_H__
 
 
+/*
+ *  the list of all images
+ */
+extern GimpContainer *image_context;
+
+
 void   context_manager_init                     (void);
 void   context_manager_free                     (void);
 

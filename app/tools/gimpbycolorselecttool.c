@@ -26,17 +26,17 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "boundary.h"
+#include "context_manager.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "draw_core.h"
 #include "gimage_mask.h"
 #include "gimpchannel.h"
+#include "gimpcontainer.h"
 #include "gimpdnd.h"
 #include "gimpimage.h"
 #include "gimprc.h"
-#include "gimpset.h"
 #include "gimpui.h"
 #include "gdisplay.h"
 #include "paint_funcs.h"
@@ -1142,11 +1142,13 @@ by_color_select_close_callback (GtkWidget *widget,
   
   gimp_dialog_hide (bcd->shell);
 
-  if (bcd->gimage && gimp_set_have (image_context, bcd->gimage))
+  if (bcd->gimage && gimp_container_lookup (image_context,
+					    GIMP_OBJECT (bcd->gimage)))
     {
       bcd->gimage->by_color_select = FALSE;
-      bcd->gimage = NULL;
     }
+
+  bcd->gimage = NULL;
 }
 
 static void

@@ -78,8 +78,8 @@ gboolean        gimp_container_add            (GimpContainer       *container,
 gboolean        gimp_container_remove         (GimpContainer       *container,
 					       GimpObject          *object);
 
-const GList   * gimp_container_lookup         (GimpContainer       *container,
-					       GimpObject          *object);
+const GList   * gimp_container_lookup         (const GimpContainer *container,
+					       const GimpObject    *object);
 void            gimp_container_foreach        (GimpContainer       *container,
 					       GFunc                func,
 					       gpointer             user_data);

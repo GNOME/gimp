@@ -25,14 +25,14 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
+#include "context_manager.h"
 #include "dialog_handler.h"
 #include "gdisplay.h"
 #include "gimage.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimppreviewcache.h"
 #include "gimprc.h"
-#include "gimpset.h"
 #include "image_render.h"
 #include "lc_dialog.h"
 #include "lc_dialogP.h"
@@ -50,23 +50,23 @@
 
 
 /*  local function prototypes  */
-static void  lc_dialog_update              (GimpImage   *gimage);
-static void  lc_dialog_image_menu_callback (GtkWidget   *widget,
-					    gpointer     data);
-static void  lc_dialog_auto_callback       (GtkWidget   *widget,
-					    gpointer     data);
-static gint  lc_dialog_close_callback      (GtkWidget   *widget,
-					    gpointer     data);
-static void  lc_dialog_add_callback        (GimpSet     *set,
-					    GimpImage   *gimage,
-					    gpointer     data);
-static void  lc_dialog_remove_callback     (GimpSet     *set,
-					    GimpImage   *gimage,
-					    gpointer     data);
-static void  lc_dialog_change_image        (GimpContext *context,
-					    GimpImage   *gimage,
-					    gpointer     data);
-static void  lc_dialog_help_func           (const gchar *help_data);
+static void  lc_dialog_update              (GimpImage     *gimage);
+static void  lc_dialog_image_menu_callback (GtkWidget     *widget,
+					    gpointer       data);
+static void  lc_dialog_auto_callback       (GtkWidget     *widget,
+					    gpointer       data);
+static gint  lc_dialog_close_callback      (GtkWidget     *widget,
+					    gpointer       data);
+static void  lc_dialog_add_callback        (GimpContainer *container,
+					    GimpImage     *gimage,
+					    gpointer       data);
+static void  lc_dialog_remove_callback     (GimpContainer *container,
+					    GimpImage     *gimage,
+					    gpointer       data);
+static void  lc_dialog_change_image        (GimpContext   *context,
+					    GimpImage     *gimage,
+					    gpointer       data);
+static void  lc_dialog_help_func           (const gchar   *help_data);
 
 static void  lc_dialog_image_menu_preview_update_callback (GtkWidget *widget,
 							   gpointer   data);
@@ -354,7 +354,8 @@ lc_dialog_image_menu_preview_update_callback (GtkWidget *widget,
   gimage = (GimpImage *) gtk_object_get_data (GTK_OBJECT (widget),
 					      "menu_preview_gimage");
 
-  if (menu_preview && gimage && gimage_to_update == gimage)
+  if (menu_preview && gimage && gimage_to_update == gimage &&
+      gimp_container_lookup (image_context, (GimpObject *) gimage))
     {
       /* Must update the preview? */
       lc_dialog_fill_preview_with_thumb (menu_preview,
@@ -438,7 +439,7 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
 				   gint       height)
 {
   guchar    *drawable_data;
-  TempBuf   *buf;
+  TempBuf   *buf = NULL;
   gint       bpp;
   gint       x, y;
   guchar    *src;
@@ -715,9 +716,9 @@ lc_dialog_close_callback (GtkWidget *widget,
 }
 
 static void
-lc_dialog_add_callback (GimpSet   *set,
-			GimpImage *gimage,
-			gpointer   data)
+lc_dialog_add_callback (GimpContainer *container,
+			GimpImage     *gimage,
+			gpointer       data)
 {
   if (! lc_dialog)
     return;
@@ -726,9 +727,9 @@ lc_dialog_add_callback (GimpSet   *set,
 }
 
 static void
-lc_dialog_remove_callback (GimpSet   *set,
-			   GimpImage *gimage,
-			   gpointer   data)
+lc_dialog_remove_callback (GimpContainer *container,
+			   GimpImage     *gimage,
+			   gpointer       data)
 {
   if (! lc_dialog)
     return;
@@ -744,7 +745,7 @@ lc_dialog_change_image (GimpContext *context,
   if (! lc_dialog || ! lc_dialog->auto_follow_active)
     return;
 
-  if (gimage && gimp_set_have (image_context, gimage))
+  if (gimage && gimp_container_lookup (image_context, GIMP_OBJECT (gimage)))
     {
       lc_dialog_update (gimage);
       lc_dialog_update_image_list ();

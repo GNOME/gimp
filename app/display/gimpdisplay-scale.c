@@ -24,7 +24,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimpimage.h"

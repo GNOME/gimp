@@ -26,7 +26,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "color_transfer.h"
 #include "drawable.h"
 #include "gdisplay.h"

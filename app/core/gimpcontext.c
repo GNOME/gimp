@@ -26,7 +26,7 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
+#include "context_manager.h"
 #include "gdisplay.h"
 #include "gimpbrush.h"
 #include "gimpbrushlist.h"
