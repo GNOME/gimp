@@ -58,8 +58,6 @@ static gboolean   file_save_dialog_check_uri     (GtkWidget      *save_dialog,
                                                   PlugInProcDef **ret_save_proc);
 static gboolean   file_save_dialog_use_extension (GtkWidget      *save_dialog,
                                                   const gchar    *uri);
-static gboolean   file_save_dialog_overwrite     (GtkWidget      *save_dialog,
-                                                  const gchar    *uri);
 static gboolean   file_save_dialog_save_image    (GtkWidget      *save_dialog,
                                                   GimpImage      *gimage,
                                                   const gchar    *uri,
@@ -375,7 +373,7 @@ file_save_dialog_check_uri (GtkWidget      *save_dialog,
 
   if (gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (save_dialog), uri))
     {
-      if (! file_save_dialog_overwrite (save_dialog, uri))
+      if (! gimp_file_overwrite_dialog (save_dialog, uri))
         {
           g_free (uri);
           g_free (basename);
@@ -433,55 +431,6 @@ file_save_dialog_use_extension (GtkWidget   *save_dialog,
                                      GTK_RESPONSE_CANCEL, TRUE);
 
   return use_name;
-}
-
-static gboolean
-file_save_dialog_overwrite (GtkWidget   *save_dialog,
-                            const gchar *uri)
-{
-  GtkWidget *dialog;
-  gchar     *filename;
-  gboolean   overwrite = FALSE;
-
-  dialog =
-    gimp_message_dialog_new (_("File exists"), GIMP_STOCK_WARNING,
-                             save_dialog, GTK_DIALOG_DESTROY_WITH_PARENT,
-                             gimp_standard_help_func, NULL,
-
-                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                             _("_Replace"),    GTK_RESPONSE_OK,
-
-                             NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  filename = file_utils_uri_to_utf8_filename (uri);
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                     _("A file named '%s' already exists."),
-                                     filename);
-  g_free (filename);
-
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                             _("Do you want to replace it with the image "
-                               "you are saving?"));
-
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (save_dialog),
-                                     GTK_RESPONSE_CANCEL, FALSE);
-
-  g_object_ref (dialog);
-
-  overwrite = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dialog);
-  g_object_unref (dialog);
-
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (save_dialog),
-                                     GTK_RESPONSE_CANCEL, TRUE);
-
-  return overwrite;
 }
 
 static gboolean

@@ -40,6 +40,7 @@
 #include "file/file-utils.h"
 
 #include "gimpdnd-xds.h"
+#include "gimpfiledialog.h"
 
 #include "gimp-intl.h"
 
@@ -59,7 +60,6 @@ gimp_dnd_xds_source_set (GdkDragContext *context,
                          GimpImage      *image)
 {
   GdkAtom  property;
-  gchar   *filename;
 
   g_return_if_fail (GDK_IS_DRAG_CONTEXT (context));
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
@@ -68,14 +68,27 @@ gimp_dnd_xds_source_set (GdkDragContext *context,
 
   property = gdk_atom_intern ("XdndDirectSave0", FALSE);
 
-  if (image && (filename = gimp_image_get_filename (image)))
+  if (image)
     {
       GdkAtom  type     = gdk_atom_intern ("text/plain", FALSE);
-      gchar   *basename = g_path_get_basename (filename);
+      gchar   *filename = gimp_image_get_filename (image);
+      gchar   *basename;
+
+      if (filename)
+        {
+          basename = g_path_get_basename (filename);
+        }
+      else
+        {
+          gchar *tmp = g_strconcat (_("Untitled"), ".xcf", NULL);
+          basename = g_filename_from_utf8 (tmp, -1, NULL, NULL, NULL);
+          g_free (tmp);
+        }
+
 
       gdk_property_change (context->source_window,
                            property, type, 8, GDK_PROP_MODE_REPLACE,
-                           basename, strlen (basename));
+                           basename, basename ? strlen (basename) : 0);
 
       g_free (basename);
       g_free (filename);
@@ -116,33 +129,40 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
 
   proc = file_utils_find_proc (image->gimp->save_procs, uri);
 
-  if (! proc)
-    proc = file_utils_find_proc (image->gimp->save_procs,
-                                 gimp_object_get_name (GIMP_OBJECT (image)));
-
   if (proc)
     {
-      if (file_save (image, gimp_get_user_context (image->gimp), NULL,
-                     uri, proc, GIMP_RUN_INTERACTIVE, FALSE,
-                     &error) == GIMP_PDB_SUCCESS)
-        {
-          gtk_selection_data_set (selection, atom, 8, "S", 1);
-        }
-      else
-        {
-          gtk_selection_data_set (selection, atom, 8, "E", 1);
+      gchar *filename = file_utils_filename_from_uri (uri);
 
-          if (error)
+      /*  FIXME: shouldn't overwrite non-local files w/o confirmation  */
+
+      if (! filename ||
+          ! g_file_test (filename, G_FILE_TEST_EXISTS) ||
+          gimp_file_overwrite_dialog (NULL, uri))
+        {
+          if (file_save (image, gimp_get_user_context (image->gimp), NULL,
+                         uri, proc, GIMP_RUN_INTERACTIVE, FALSE,
+                         &error) == GIMP_PDB_SUCCESS)
             {
-              gchar *filename = file_utils_uri_to_utf8_filename (uri);
+              gtk_selection_data_set (selection, atom, 8, "S", 1);
+            }
+          else
+            {
+              gtk_selection_data_set (selection, atom, 8, "E", 1);
 
-              g_message (_("Saving '%s' failed:\n\n%s"),
-                         filename, error->message);
+              if (error)
+                {
+                  gchar *filename = file_utils_uri_to_utf8_filename (uri);
 
-              g_free (filename);
-              g_error_free (error);
+                  g_message (_("Saving '%s' failed:\n\n%s"),
+                             filename, error->message);
+
+                  g_free (filename);
+                  g_error_free (error);
+                }
             }
         }
+
+      g_free (filename);
     }
   else
     {

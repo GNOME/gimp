@@ -1,3 +1,13 @@
+2005-03-25  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/file-save-dialog.c
+	* app/widgets/gimpfiledialog.[ch]: moved overwrite confirmation
+	dialog to app/widgets.
+
+	* app/widgets/gimpdnd-xds.c: set "Untitled.xcf" as default name
+	for untitled images; ask for confirmation before overwriting a
+	local file.
+
 2005-03-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/emboss.c: fix usage of RGBA data,
