@@ -1,3 +1,7 @@
+2002-11-19  Manish Singh  <yosh@gimp.org>
+
+	* data/environ/Makefile.am: really fix a comment
+
 2002-11-18  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c: added a missing include.

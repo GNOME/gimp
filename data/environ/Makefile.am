@@ -1,4 +1,4 @@
-## Makefile.am for gimp/app/environ
+## Makefile.am for gimp/data/environ
 
 environdir = $(gimpplugindir)/environ
 
