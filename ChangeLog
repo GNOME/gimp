@@ -1,3 +1,11 @@
+2004-10-11  Michael Natterer  <mitch@gimp.org>
+
+	* tools/authorsgen/contributors: added missing contributors.
+	Thanks to Kevin Cozens for going through ChangeLog and making a list.
+
+	* AUTHORS
+	* app/dialogs/authors.h: regenerated.
+
 2004-10-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.c: ooops, forgot to disable the debug
