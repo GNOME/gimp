@@ -1,3 +1,9 @@
+1999-10-01  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
+
+	* po/it.po po-plug-ins/it.po plug-ins/perl/po/it.po
+	tips/gimp_tips.it.txt: Update for the it locale from Daniele Medri 
+	<madrid@linux.it>
+
 Fri Oct  1 19:05:04 EDT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/gimpimage.c: Factored out common code from 

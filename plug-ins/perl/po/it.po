@@ -99,8 +99,7 @@ msgstr "Sinoposi"
 
 msgid "WARNING: client tried to unlock without holding a lock"
 msgstr ""
-"ATTENZIONE: il cliente ha provato a sbloccare senza aver richiesto un "
-"bloccaggio"
+"ATTENZIONE: il client ha tentato di sbloccare pur non trovando nessun vincolo"
 
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr "$_: switch illegale, provare $0 --help\n"
@@ -117,7 +116,7 @@ msgid "Brush Selection Dialog"
 msgstr "Schermata selezione punta"
 
 msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr ""
+msgstr "Avviso: canonicalize_colour non ha ricevuto nessun valore!"
 
 # msgid "FATAL: canonicalize_colour did not return a value!"
 # msgstr ""
@@ -195,17 +194,15 @@ msgid "Status"
 msgstr "Status"
 
 msgid "<Image>/Layers/Center Layer"
-msgstr "<Image>/Livelli/Centra Livello"
+msgstr "<Image>/Layers/Centra Livello"
 
 # preferibile Piano al posto di Livello
 msgid "wrong authorization, aborting connection"
 msgstr "Autorizzazione scorretta, ora interrompo la connessione"
 
 msgid "Copyright"
-msgstr ""
+msgstr "Copyright"
 
-# msgid "Copyright"
-# msgstr "Copyright"
 msgid "<Toolbox>/Xtns/Render/Stamps"
 msgstr "<Toolbox>/Xtns/Render/Francobolli"
 
@@ -246,14 +243,13 @@ msgstr "<Image>/Filters/Colors/Fuoco"
 
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
-"l'ultimo argomento di gimp_pattern_select_widget deve essere un riferinmento "
-"a scalare"
+"l'ultimo argomento di gimp_pattern_select_widget deve essere un riferinmento scalare"
 
 msgid "<Image>/Filters/Misc/Prepare for GIF"
 msgstr "<Image>/Filters/Misc/Prepara per GIF"
 
 msgid "accepting connections on $unix_path"
-msgstr "ora accetto connessioni su $unix_path"
+msgstr "ricezione connessioni su $unix_path"
 
 msgid "Load $name"
 msgstr "Carico $name"
@@ -297,22 +293,20 @@ msgid "accepted unix connection"
 msgstr "connessione unix accettata"
 
 msgid "server going down..."
-msgstr "ora il serviente chiude..."
+msgstr "arresto del server..."
 
 msgid "trying to start gimp with options \"$opt\"\n"
 msgstr "ora provo ad eseguire gimp con le opzioni \"$opt\"\n"
 
 msgid "<Toolbox>/Xtns/Animation/Seth Spin"
-msgstr "<Toolbox>/Xtns/Animation/Billboard"
+msgstr "<Toolbox>/Xtns/Animation/Seth Spin"
 
-# msgid "<Toolbox>/Xtns/Animation/Seth Spin"
-# msgstr "<Toolbox>/Xtns/Animazione/Seth Spin"
 msgid "<Image>/Filters/Noise/Ditherize"
-msgstr ""
+msgstr "<Image>/Filters/Noise/Ditherize"
 
 msgid "expected perl-server at other end of socket, got @r\n"
 msgstr ""
-"attendevo perl-server all'altro capo della connessione socket, ottengo @r\n"
+"attendendo il perl-server durante la connessione socket, si riceve @r\n"
 
 msgid "too many"
 msgstr "troppi"
@@ -336,16 +330,13 @@ msgid "<Toolbox>/Xtns/PDB Explorer"
 msgstr "<Toolbox>/Xtns/Esploratore PDB"
 
 msgid "<Toolbox>/Xtns/"
-msgstr "<Toolbox>/Xtns/Perl/Serviente"
+msgstr "<Toolbox>/Xtns/"
 
-# msgid "<Toolbox>/Xtns/"
-# msgstr ""
-# mar: non so come e` stato generato questo file, e purtroppo non so se viene interpretato con intelligenza (traducendo per ricerca stringhe o per stringhe preconfezionate... in questo caso sembra che siano state preconfezionate male).
 msgid " = [argument error]\n"
 msgstr " = [argomento errato]\n"
 
 msgid "%s arguments for function '%s'"
-msgstr "%s argumenti per funzione '%s'"
+msgstr "%s argomenti per funzione '%s'"
 
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences"
 msgstr "<Toolbox>/Xtns/Render/Povray/Preferenze"
@@ -369,42 +360,40 @@ msgstr ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
 "       gimp-arguments are\n"
 "           -gimp <qualsiasicosa>      usato solo internamente\n"
-"           -h | -help | --help | -?   scrive alcune informazioni di aiuto\n"
-"           -v | --verbose             sia piu` prolisso\n"
-"           --host|--tcp HOST[:PORT]   connessione all'HOST (optionalmente "
+"           -h | -help | --help | -?   informazioni di aiuto\n"
+"           -v | --verbose             \n"
+"           --host|--tcp HOST[:PORT]   connessione all'HOST (opzionalmente "
 "usando la porta PORT)\n"
-"                                      (per piu` informazioni, vedere "
+"                                      (per maggiori informazioni, vedere "
 "Gimp::Net(3))\n"
 
-# mar: quest traduzione mi sembra inutile e durera` poco
 msgid "<Image>/Filters/Noise/Xach Vision"
 msgstr "<Image>/Filters/Noise/Xach Vision"
 
-# mar: noise e` bene tradurlo con disturbo.
 msgid "<Image>/Filters/Animation/Animate Cells"
-msgstr "<Image>/Filters/Animazione/Anima Celle"
+msgstr "<Image>/Filters/Animazione/Animazione Celle"
 
 msgid "arguments to main not yet supported!"
 msgstr "argomenti a main non ancora supportati!"
 
 msgid "unable to open Gimp::Net communications socket\n"
-msgstr "non in grado di aprire socket di comunicazione Gimp::Net\n"
+msgstr "impossibile aprire socket di comunicazione Gimp::Net\n"
 
 msgid "%s: procedural database execution failed"
 msgstr "%s: fallimento di esecuzione database procedurale"
 
 msgid "authorization required for tcp connections"
-msgstr "autorizzazione richiesta di connessione tcp"
+msgstr "autorizzazione richiesta per la connessione tcp"
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr ""
-"ATTENZIONE: sconnessione cliente mentre si sta mantenendo un lock attivo\n"
+"ATTENZIONE: sconnessione client durante un lock attivo\n"
 
 msgid "NAME"
 msgstr "NOME"
 
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr "<Toolbox>/Xtns/Perl/Serviente"
+msgstr "<Toolbox>/Xtns/Perl/Server"
 
 msgid "Help"
 msgstr "Aiuto"
@@ -413,7 +402,7 @@ msgid "function name contains dashes instead of underscores"
 msgstr "nome di funzione contiene cancelletti ('#') anziche` '_'"
 
 msgid "authorization ok, but: $r[1]\n"
-msgstr "autorizzazione ok, ma : $r[1]\n"
+msgstr "autorizzazione accettata, ma : $r[1]\n"
 
 msgid "<Image>/Filters/Render/Highlight Edges"
 msgstr "<Image>/Filters/Render/Evidenzia contorni"
@@ -422,16 +411,16 @@ msgid "<Toolbox>/Xtns/Animation/Billboard"
 msgstr "<Toolbox>/Xtns/Animation/Billboard"
 
 msgid "<Image>/Select/Triangle"
-msgstr "<Image>/Selezione/Triangolo"
+msgstr "<Image>/Select/Triangolo"
 
 msgid "no font specified, using default"
-msgstr "font non specificato, uso preimposato"
+msgstr "nessun font specificato, utilizzo valore preimpostato"
 
 msgid "a color must have three components (array elements)"
 msgstr "un colore deve avere tree componenti (elementi array)"
 
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator"
-msgstr "<Toolbox>/Xtns/Render/GeneratorePixel"
+msgstr "<Toolbox>/Xtns/Render/Generatore Pixel"
 
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr "conversione a tipo $pf_type2string{$type} non e` ancora implementata\n"
@@ -443,17 +432,17 @@ msgid "<Image>/Filters/Colors/Map To Gradient"
 msgstr "<Image>/Filters/Colors/Mappa a Gradiente"
 
 msgid "$_: unknown/illegal file-save option"
-msgstr "$_: opzione file-save sconosciuta/illegale"
+msgstr "$_: opzione salvataggio-file sconosciuta/illegale"
 
 msgid "unable to grok colour specification"
-msgstr "incapace di accettare specificazione di colore"
+msgstr "impossibile accettare specificazione di colore"
 
 # grok ?
 msgid "TYPE"
 msgstr "TIPO"
 
 msgid "Gradient Selection Dialog"
-msgstr "Dialogo selezione gradiente cromatico"
+msgstr "Finestra di Selezione Gradiente"
 
 msgid "Function Info"
 msgstr "Info Funzione"
@@ -462,7 +451,7 @@ msgid "unable to open $rgb_db_path"
 msgstr "non riesco ad aprire $rgb_db_path"
 
 msgid "<Image>/Filters/Render/Random Blends"
-msgstr "<Image>/Filters/Render/Random Blends"
+msgstr "<Image>/Filters/Render/Sfumature Casuali"
 
 msgid ""
 "Internal error: asked to deobjectify an object not in the cache, please "
@@ -471,10 +460,6 @@ msgstr ""
 "Errore interno: incapace di gestire argomento di tipoo '%c' in net2sv, per "
 "cortesia riportare"
 
-# msgid ""
-# "Internal error: asked to deobjectify an object not in the cache, please "
-# "report!"
-# msgstr ""
 msgid "<Image>/Script-Fu/Decor/Stampify"
 msgstr "<Image>/Script-Fu/Decor/Stampify"
 
@@ -482,25 +467,22 @@ msgid "too many arguments"
 msgstr "troppi argomenti"
 
 msgid "<Image>/Select/Round Rectangular Selection"
-msgstr "<Image>/Selezione/Selezione Rettangolare arrotondata"
+msgstr "<Image>/Select/Selezione Rettangolare arrotondata"
 
 msgid "<Image>/Filters/Map/Pixelmap"
 msgstr "<Image>/Filters/Map/Pixelmap"
 
 msgid "gimp didn't return an execution status, fatal error"
-msgstr ""
+msgstr "gimp non riesce a portare a termine l'operazione, errore fatale"
 
 # msgid "gimp didn't return an execution status, fatal error"
-# msgstr ""
+# msgstr "gimp non riesce a portare a termine l'operazione, errore fatale"
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
-msgstr ""
-"attesa versione di protocollo $Gimp::_PROT_VERSION, ma il server usa $r[0]\n"
+msgstr "attesa versione di protocollo $Gimp::_PROT_VERSION, ma il server usa $r[0]\n"
 
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
-msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
 
-# msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
-# msgstr ""
 msgid "Restore values to the previous ones"
 msgstr "Ripristina i valori a quelli precedenti"
 
@@ -514,14 +496,13 @@ msgid "gimp_tile_set_data is not yet implemented\n"
 msgstr "gimp_tile_set_data non e` ancora implementato\n"
 
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr ""
-"<Image> plug-in chiamato senza entrambi gli argomenti image e drawable!\n"
+msgstr "<Image> plug-in chiamato senza argomenti dell'image e della figura!\n"
 
 msgid ", authorization required"
 msgstr ", autorizzazione richiesta"
 
 msgid "unable to create listening unix socket: $!\n"
-msgstr "non riesco a creare connessione unix socket di ascolto: $!\n"
+msgstr "impossibile creare socket di connessione unix: $!\n"
 
 msgid ""
 "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
@@ -547,8 +528,7 @@ msgstr ""
 
 msgid "Internal error: stashname too long, please report!"
 msgstr ""
-"Errore interno: incapace di gestire argomento di tipoo '%c' in net2sv, per "
-"cortesia riportare"
+"Errore interno: stashname troppo lungo!"
 
 # msgid "Internal error: stashname too long, please report!"
 # msgstr "Errore interno: stashname troppo lungo, please report!"
@@ -562,16 +542,13 @@ msgid "<Image>/Filters/Distorts/MirrorSplit"
 msgstr "<Image>/Filters/Distorts/Divide Specchiato"
 
 msgid "Font Selection Dialog ($desc)"
-msgstr "Dialogo di sezione font ($desc)"
+msgstr "Finestra di Selezione Font ($desc)"
 
 msgid "<Image>/Filters/Misc/Webify"
 msgstr "<Image>/Filters/Misc/Webify"
 
 msgid "Internal error: Gimp::Net #101, please report!"
-msgstr ""
-
-# msgid "Internal error: Gimp::Net #101, please report!"
-# msgstr ""
+msgstr "Errore Interno: Gimp::Net #101."
 
 msgid "<Image>/Filters/Colors/Colour To Alpha"
 msgstr "<Image>/Filters/Colors/Colore ad Alfa"
@@ -621,7 +598,7 @@ msgid "required callback '$cb' not found\n"
 msgstr "callback '$cb' richiesto e non trovato\n"
 
 msgid "<Image>/Layers/Stack/Reorder Layers"
-msgstr "<Image>/Livelli/Pila/Reordina livelli"
+msgstr "<Image>/Layers/Pila/Riordina livelli"
 
 msgid "<Toolbox>/Xtns/Render/Font Table"
 msgstr "<Toolbox>/Xtns/Render/Tabella Caratteri"
@@ -636,18 +613,16 @@ msgid "unable to read temporary file $tmp: $!"
 msgstr "non riesco a leggere il file temporaneo $tmp: $!"
 
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr ""
+msgstr "PDB Explorer - edizione olof (versione alpha)"
 
-# msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-# msgstr ""
 msgid "FATAL: Gimp::Compat version mismatch\n"
-msgstr "FATALITA`: la versione di Gimp::Compat non corrisponde a quella attesa\n"
+msgstr "Avviso: la versione di Gimp::Compat non corrisponde a quella attesa\n"
 
 msgid "Illegal default font description for $function: $val\n"
 msgstr "Font descriprion di default illegale per $function: $val\n"
 
 msgid "server version $Gimp::VERSION started"
-msgstr "versione del server $Gimp::VERSION partita"
+msgstr "versione del server $Gimp::VERSION avviata"
 
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr "non riesco a convertire Gimp::Drawable in Gimp::GDrawable (id %d)"
@@ -661,16 +636,14 @@ msgid ""
 "\n"
 "$help"
 msgstr ""
+"BLURB:\n"
+"\n"
+"$blurb\n"
+"\n"
+"GUIDA:\n"
+"\n"
+"$help"
 
-# msgid ""
-# "BLURB:\n"
-# "\n"
-# "$blurb\n"
-# "\n"
-# "HELP:\n"
-# "\n"
-# "$help"
-# msgstr ""
 msgid "authorization unnecessary"
 msgstr "autorizzazione non necessaria"
 
@@ -678,8 +651,8 @@ msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
-"$function: ora chiamo $AUTOLOAD senza specificare il tag di importazione "
-":auto e` deprecato!\n"
+"$function: il richiamo a $AUTOLOAD senza specificare il tag di importazione "
+":auto viene deprecato!\n"
 
 msgid "Fileselector for $name"
 msgstr "Selettore di file per $name"
@@ -691,7 +664,7 @@ msgid "<Image>/Filters/Misc/Border Average"
 msgstr "<Image>/Filters/Misc/Media Bordo"
 
 msgid "Internal error: Gimp::Net #100, please report!"
-msgstr ""
+msgstr "Errore Interno: Gimp::Net #100."
 
 # msgid "Internal error: Gimp::Net #100, please report!"
 # msgstr ""
@@ -703,7 +676,7 @@ msgstr ""
 "stile usare solo 0-9, a-z e _"
 
 msgid "<Image>/Edit/Repeat & Duplicate"
-msgstr "<Image>/Modifica/Ripeti e duplica"
+msgstr "<Image>/Edit/Ripeti e Duplica"
 
 msgid "Close"
 msgstr "Chiudi"
@@ -749,10 +722,10 @@ msgid "Unsupported argumenttype $type"
 msgstr "Tipo di argomento non supportato $type"
 
 msgid "get current foreground colour from the gimp"
-msgstr "ottieni il colore corrente dell'inchiostro dal gimp"
+msgstr "utilizza il colore in primo piano di gimp"
 
 msgid "unable to accept unix connection: $!\n"
-msgstr "non riesco ad accettare connessioni unix: $!\n"
+msgstr "impossibile accettare connessioni unix: $!\n"
 
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
 msgstr "<Toolbox>/Xtns/Plug-in Perl di Esempio"
@@ -800,7 +773,7 @@ msgid "<Image>/Filters/Distorts/BlowInOut"
 msgstr "<Image>/Filters/Distorts/BlowInOut"
 
 msgid "dunno how to pass arg type %d"
-msgstr ""
+msgstr "impossibile passare tipo di argomento %d"
 
 # msgid "dunno how to pass arg type %d"
 # msgstr "come passare il tipo di argomenti %d"
@@ -839,12 +812,11 @@ msgid "plug-in returned %d more values than expected"
 msgstr "plug-in restituisce %d valori in piu` rispetto alle attese"
 
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
-msgstr ""
-"non posso collegarmi al serviente gimp (assicurarsi che il Perl-Server e` in "
+msgstr "non posso collegarmi al server gimp (assicurarsi che il Perl-Server sia in "
 "esecuzione)"
 
 msgid "FG"
-msgstr "Colore inchiostro"
+msgstr "Primo Piano"
 
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr "Ora non posso chiamare '$AUTOLOAD'"
@@ -873,7 +845,7 @@ msgid "text string is empty"
 msgstr "stringa di testo vuota"
 
 msgid "server requests authorization, but no authorization available\n"
-msgstr "il serviente richiede autorizzazione mancante\n"
+msgstr "il server richiede autorizzazioni che non sono state passate\n"
 
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext"
 msgstr "<Toolbox>/Xtns/Render/Logo/Testo di fuoco"
@@ -882,7 +854,7 @@ msgid "Image Types"
 msgstr "Tipo Immagine"
 
 msgid "<Image>/Filters/"
-msgstr "<Image>/Filtri/"
+msgstr "<Image>/Filters/"
 
 msgid "<Image>/Filters/Map/Xach Blocks"
 msgstr "<Image>/Filters/Map/Xach Blocks"
@@ -891,7 +863,7 @@ msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr "<Image>/Filters/Enhance/2x2 Rafforza Contrasto"
 
 msgid "Menu Path"
-msgstr "Percorso(path) del Menu"
+msgstr "Percorso del Menu"
 
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
@@ -905,7 +877,6 @@ msgstr "incapace di accettare specificazione di colore"
 
 # msgid "Unable to grok '%s' as colour specifier"
 # msgstr ""
-
 # grok
 msgid "OK"
 msgstr "OK"
@@ -923,16 +894,13 @@ msgid "Accelerator"
 msgstr "Acceleratore"
 
 msgid "dunno how to return param type %d"
-msgstr ""
+msgstr "impossibile passare tipo di argomento %d"
 
-# msgid "dunno how to return param type %d"
-# msgstr ""
-# ?dunno
 msgid "Cancel"
 msgstr "Cancella"
 
 msgid "<Image>/Layers/Layer to Image Size"
-msgstr "<Image>/Livelli/Porta a Grandezza Immagine"
+msgstr "<Image>/Layers/Porta a Grandezza Immagine"
 
 msgid "(none)"
 msgstr "(niente)"
