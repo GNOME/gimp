@@ -1,5 +1,12 @@
 2003-10-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainergridview.c: typo: s/vieport/viewport/g
+
+	(gimp_container_grid_view_insert_item): stop idle updating since
+	the widget will be exposed anyway.
+
+2003-10-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdialogfactory.[ch]: renamed
 	gimp_dialog_factories_idle() and _unidle() to
 	gimp_dialog_factories_set_busy() and _unset_busy().

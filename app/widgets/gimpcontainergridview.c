@@ -87,10 +87,10 @@ static void   gimp_container_grid_view_highlight_item (GimpContainerView      *v
 						       GimpViewable           *viewable,
 						       gpointer                insert_data);
 
-static void  gimp_container_grid_view_vieport_resized (GtkWidget              *widget,
+static void gimp_container_grid_view_viewport_resized (GtkWidget              *widget,
                                                        GtkAllocation          *allocation,
                                                        GimpContainerGridView  *view);
-static void  gimp_container_grid_view_vieport_realize (GtkWidget              *widget,
+static void gimp_container_grid_view_viewport_realize (GtkWidget              *widget,
                                                        GimpContainerGridView  *view);
 
 
@@ -214,7 +214,7 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
   gtk_widget_show (grid_view->wrap_box);
 
   g_signal_connect (grid_view->wrap_box->parent, "size_allocate",
-                    G_CALLBACK (gimp_container_grid_view_vieport_resized),
+                    G_CALLBACK (gimp_container_grid_view_viewport_resized),
                     grid_view);
 
 #ifdef __GNUC__
@@ -222,7 +222,7 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 #endif
   if (! GTK_CHECK_VERSION (2, 2, 2))
     g_signal_connect (grid_view->wrap_box->parent, "realize",
-                      G_CALLBACK (gimp_container_grid_view_vieport_realize),
+                      G_CALLBACK (gimp_container_grid_view_viewport_realize),
                       grid_view);
 
   GTK_WIDGET_SET_FLAGS (grid_view, GTK_CAN_FOCUS);
@@ -437,6 +437,7 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 				   FALSE, TRUE, TRUE);
   gimp_preview_renderer_set_border_color (GIMP_PREVIEW (preview)->renderer,
                                           &white_color);
+  gimp_preview_renderer_remove_idle (GIMP_PREVIEW (preview)->renderer);
 
   gtk_wrap_box_pack (GTK_WRAP_BOX (grid_view->wrap_box), preview,
 		     FALSE, FALSE, FALSE, FALSE);
@@ -648,9 +649,9 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
 }
 
 static void
-gimp_container_grid_view_vieport_resized (GtkWidget             *widget,
-                                          GtkAllocation         *allocation,
-                                          GimpContainerGridView *grid_view)
+gimp_container_grid_view_viewport_resized (GtkWidget             *widget,
+                                           GtkAllocation         *allocation,
+                                           GimpContainerGridView *grid_view)
 {
   GimpContainerView *view;
 
@@ -711,8 +712,8 @@ gimp_container_grid_view_vieport_resized (GtkWidget             *widget,
 }
 
 static void
-gimp_container_grid_view_vieport_realize (GtkWidget             *widget,
-                                          GimpContainerGridView *grid_view)
+gimp_container_grid_view_viewport_realize (GtkWidget             *widget,
+                                           GimpContainerGridView *grid_view)
 {
   GimpContainerView *view;
 
