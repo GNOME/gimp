@@ -1,5 +1,13 @@
 2003-03-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdock.c (gimp_dock_init): set a window type hint
+	of GDK_WINDOW_TYPE_HINT_UTILITY for dock windows (fixes bug #94669).
+
+	* app/gui/splash.c (splash_create): set a window type hint of
+	GDK_WINDOW_TYPE_HINT_SPLASHSCREEN.
+
+2003-03-12  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpchannel.[ch]: added gimp_channel_new_from_component()
 	which creates a new GimpChannel from an image's color component.
 

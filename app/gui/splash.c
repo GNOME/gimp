@@ -49,7 +49,7 @@ splash_create (gboolean show_image)
 
   win_initstatus = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_type_hint (GTK_WINDOW (win_initstatus),
-                            GDK_WINDOW_TYPE_HINT_DIALOG);
+                            GDK_WINDOW_TYPE_HINT_SPLASHSCREEN);
 
   gtk_window_set_title (GTK_WINDOW (win_initstatus), _("GIMP Startup"));
   gtk_window_set_wmclass (GTK_WINDOW (win_initstatus), "gimp_startup", "Gimp");
