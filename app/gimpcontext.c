@@ -645,11 +645,7 @@ GimpContext *
 gimp_context_get_standard (void)
 {
   if (! standard_context)
-    {
-      standard_context = gimp_context_new ("Standard", NULL);
-
-      gtk_quit_add_destroy (TRUE, GTK_OBJECT (standard_context));
-    }
+    standard_context = gimp_context_new ("Standard", NULL);
 
   return standard_context;
 }

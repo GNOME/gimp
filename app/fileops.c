@@ -287,7 +287,6 @@ file_open_callback (GtkWidget *widget,
 			  "clicked",
 			  GTK_SIGNAL_FUNC (file_open_ok_callback),
 			  fileload);
-      gtk_quit_add_destroy (1, GTK_OBJECT (fileload));
 
       gtk_clist_set_selection_mode (GTK_CLIST
 				    (GTK_FILE_SELECTION (fileload)->file_list),
@@ -511,7 +510,6 @@ file_save_as_callback (GtkWidget *widget,
 			  "clicked",
 			  GTK_SIGNAL_FUNC (file_save_ok_callback),
 			  filesave);
-      gtk_quit_add_destroy (1, GTK_OBJECT (filesave));
 
       /*  Connect the "F1" help key  */
       gimp_help_connect_help_accel (filesave,
