@@ -1,5 +1,10 @@
 2003-04-11  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppreviewrenderer.c (gimp_preview_renderer_create_gc):
+	lookup the border color in the window's colormap.
+
+2003-04-11  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppreview.[ch]
 	* app/widgets/gimppreviewrenderer.[ch]: moved background
 	functionality into the renderer. Removed some GimpPreview

@@ -982,6 +982,7 @@ gimp_preview_renderer_create_gc (GimpPreviewRenderer *renderer,
 {
   GdkGC           *gc;
   GdkPixmap       *pixmap = NULL;
+  GdkColormap     *colormap;
   GdkGCValues      values;
   GdkGCValuesMask  mask;
   guchar           r, g, b;
@@ -991,6 +992,9 @@ gimp_preview_renderer_create_gc (GimpPreviewRenderer *renderer,
   values.foreground.red   = r | r << 8;
   values.foreground.green = g | g << 8;
   values.foreground.blue  = b | b << 8;
+
+  colormap = gdk_drawable_get_colormap (window);
+  gdk_rgb_find_color (colormap, &values.foreground);
 
   mask = GDK_GC_FOREGROUND;
 
@@ -1004,11 +1008,8 @@ gimp_preview_renderer_create_gc (GimpPreviewRenderer *renderer,
 
       if (pixbuf)
         {
-          GdkColormap *colormap;
           gint         width;
           gint         height;
-
-          colormap = gdk_drawable_get_colormap (window);
 
           width  = gdk_pixbuf_get_width (pixbuf);
           height = gdk_pixbuf_get_height (pixbuf);
