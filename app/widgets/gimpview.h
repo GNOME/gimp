@@ -66,7 +66,7 @@ struct _GimpPreview
   gint            size;
   gboolean        in_button;
   guint           press_state;
-  guint           idle_id;
+  gboolean        needs_render;
   guint           popup_id;
   gint            popup_x;
   gint            popup_y;
@@ -130,7 +130,7 @@ void         gimp_preview_set_dot_for_dot  (GimpPreview   *preview,
 void         gimp_preview_set_border_color (GimpPreview   *preview,
 					    const GimpRGB *border_color);
 
-void         gimp_preview_render           (GimpPreview   *preview);
+void         gimp_preview_update           (GimpPreview   *preview);
 
 
 /*  protected  */

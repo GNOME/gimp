@@ -85,7 +85,6 @@ static void   gimp_selection_editor_drop_color     (GtkWidget           *widget,
 
 static void   gimp_selection_editor_mask_changed   (GimpImage           *gimage,
                                                     GimpSelectionEditor *editor);
-static gboolean  gimp_selection_editor_idle_render (GimpSelectionEditor *editor);
 
 
 static GimpEditorClass *parent_class = NULL;
@@ -137,8 +136,7 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
   GtkWidget *frame;
   GtkWidget *abox;
 
-  selection_editor->gimage         = NULL;
-  selection_editor->idle_render_id = 0;
+  selection_editor->gimage = NULL;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -249,12 +247,6 @@ gimp_selection_editor_set_image (GimpSelectionEditor *editor,
 
   if (gimage == editor->gimage)
     return;
-
-  if (editor->idle_render_id)
-    {
-      g_source_remove (editor->idle_render_id);
-      editor->idle_render_id = 0;
-    }
 
   if (editor->gimage)
     {
@@ -511,19 +503,5 @@ static void
 gimp_selection_editor_mask_changed (GimpImage           *gimage,
                                     GimpSelectionEditor *editor)
 {
-  if (editor->idle_render_id)
-    g_source_remove (editor->idle_render_id);
-
-  editor->idle_render_id =
-    g_idle_add ((GSourceFunc) gimp_selection_editor_idle_render, editor);
-}
-
-static gboolean
-gimp_selection_editor_idle_render (GimpSelectionEditor *editor)
-{
-  editor->idle_render_id = 0;
-
-  gimp_preview_render (GIMP_PREVIEW (editor->preview));
-
-  return FALSE;
+  gimp_preview_update (GIMP_PREVIEW (editor->preview));
 }

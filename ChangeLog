@@ -1,3 +1,13 @@
+2002-11-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppreview.[ch]: removed idle rendering and render
+	the preview on "expose" if needed. Renamed gimp_preview_render()
+	to gimp_preview_update(). Cleanup.
+
+	* app/widgets/gimpimagefilepreview.c
+	* app/widgets/gimpselectioneditor.[ch]
+	* app/widgets/gimptoolinfopreview.c: changed accordingly.
+
 2002-11-03  Garry R. Osgood <grosgood@rcn.com>
 	
 	* configure.in defined GIMP_ENABLE_MMX. Current value 0; to disable

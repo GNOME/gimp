@@ -109,11 +109,18 @@ gimp_imagefile_expose_event (GtkWidget      *widget,
                              GdkEventExpose *event)
 {
   GimpImagefilePreview *preview = GIMP_IMAGEFILE_PREVIEW (widget);
+  GimpPreview          *gimp_preview;
   GdkRectangle          draw_rect;
   GdkRectangle          rect; 
 
   if (!GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
+
+  preview      = GIMP_IMAGEFILE_PREVIEW (widget);
+  gimp_preview = GIMP_PREVIEW (widget);
+
+  if (gimp_preview->viewable && gimp_preview->needs_render)
+    gimp_imagefile_preview_render (gimp_preview);
 
   if (!preview->no_preview_pixbuf)
     return GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
@@ -250,7 +257,7 @@ gimp_imagefile_preview_render (GimpPreview *preview)
             file_preview->no_preview_pixbuf = pixbuf;
         }
 
-      gtk_widget_queue_draw (GTK_WIDGET (preview));
+      preview->needs_render = FALSE;
     }
 }
 

@@ -105,7 +105,7 @@ static void
 gimp_tool_info_preview_state_changed (GtkWidget    *widget,
 				      GtkStateType  previous_state)
 {
-  gimp_preview_render (GIMP_PREVIEW (widget));
+  gimp_preview_update (GIMP_PREVIEW (widget));
 }
 
 static void
