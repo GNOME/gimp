@@ -561,7 +561,7 @@ if test -n "$pic_flag"; then
   # Check to make sure the pic_flag actually works.
   echo $ac_n "checking if $compiler PIC flag $pic_flag works... $ac_c" 1>&6
   $rm conftest*
-  echo > conftest.c
+  echo "int some_variable = 0;" > conftest.c
   save_CFLAGS="$CFLAGS"
   CFLAGS="$CFLAGS $pic_flag -DPIC"
   echo "$progname:567: checking if $compiler PIC flag $pic_flag works" >&5

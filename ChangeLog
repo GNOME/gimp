@@ -1,3 +1,11 @@
+Wed Jul  1 10:14:41 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* ltconfig: fix for properly detecting shared lib support on
+	SunPro cc (taken from libtool 1.2.a)
+
+	* app/convert.c: PDB wrapper for convert_indexed_palette should
+	return args associated with it's own proc
+
 Tue Jun 30 12:19:58 CDT 1998 arturo@nuclecu.unam.mx
 
 	* pupi-button.scm: (script-fu-round-button) A new beveled button
