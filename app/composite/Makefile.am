@@ -82,15 +82,6 @@ TESTS = test-composite gimp-composite-test \
 	gimp-composite-altivec-test \
  gimp-composite-vis-test
 
-
-tests: $(TESTS)
-	for test in $(TESTS); do \
-		echo $${test};      \
-		if ! $${test}; then \
-			exit 1;            \
-		fi;                 \
-	done
-
 test_composite_SOURCES = \
 	gimp-composite-regression.c	\
 	gimp-composite-regression.h	\
