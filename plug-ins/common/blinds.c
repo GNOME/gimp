@@ -53,8 +53,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 /***** Magic numbers *****/
@@ -156,7 +158,7 @@ static gint   has_alpha;
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -188,11 +190,11 @@ query ()
 }
 
 static void
-run    (gchar    *name,
-	gint      nparams,
-	GParam   *param,
-	gint     *nreturn_vals,
-	GParam  **return_vals)
+run (gchar    *name,
+     gint      nparams,
+     GParam   *param,
+     gint     *nreturn_vals,
+     GParam  **return_vals)
 {
   static GParam values[1];
   GDrawable *drawable;
@@ -294,11 +296,9 @@ run    (gchar    *name,
 
 /* Build the dialog up. This was the hard part! */
 static gint
-blinds_dialog ()
+blinds_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *xframe;
   GtkWidget *table;
@@ -309,10 +309,10 @@ blinds_dialog ()
   GtkWidget *toggle_vbox;
   GtkWidget *toggle;
   GSList *orientation_group = NULL;
-  guchar     *color_cube;
+  guchar *color_cube;
   gchar **argv;
-  gint argc;
-  char buf[256];
+  gint    argc;
+  gchar   buf[256];
 
   argc = 1;
   argv = g_new (gchar *, 1);
@@ -326,47 +326,32 @@ blinds_dialog ()
   gtk_rc_parse (gimp_gtkrc ());
 
   /* Get the stuff for the preview window...*/
-  gtk_preview_set_gamma(gimp_gamma());
-  gtk_preview_set_install_cmap(gimp_install_cmap());
-  color_cube = gimp_color_cube();
-  gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2], color_cube[3]);
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
   
-  gtk_widget_set_default_visual(gtk_preview_get_visual());
-  gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
   cache_preview(); /* Get the preview image and store it also set has_alpha */
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Blinds"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("Blinds"), "blinds",
+			 gimp_plugin_help_func, "filters/blinds.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), blinds_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) blinds_close_callback,
+		      GTK_SIGNAL_FUNC (blinds_close_callback),
 		      NULL);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) blinds_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /* Start building the frame for the preview area */
 
@@ -475,7 +460,7 @@ blinds_dialog ()
   gtk_object_set_user_data(GTK_OBJECT(entry), size_data);
   gtk_object_set_user_data(size_data, entry);
   gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  sprintf(buf, "%.2d", bvals.angledsp);
+  g_snprintf (buf, sizeof (buf), "%.2d", bvals.angledsp);
   gtk_entry_set_text(GTK_ENTRY(entry), buf);
   gtk_signal_connect(GTK_OBJECT(entry), "changed",
 		     (GtkSignalFunc) blinds_entry_update,
@@ -505,7 +490,7 @@ blinds_dialog ()
   gtk_object_set_user_data(GTK_OBJECT(entry), size_data);
   gtk_object_set_user_data(size_data, entry);
   gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  sprintf(buf, "%d", bvals.numsegs);
+  g_snprintf (buf, sizeof (buf), "%d", bvals.numsegs);
   gtk_entry_set_text(GTK_ENTRY(entry), buf);
   gtk_signal_connect(GTK_OBJECT(entry), "changed",
 		     (GtkSignalFunc) blinds_entry_update,
@@ -536,14 +521,14 @@ blinds_dialog ()
 
 static void
 blinds_close_callback (GtkWidget *widget,
-			 gpointer   data)
+		       gpointer   data)
 {
   gtk_main_quit ();
 }
 
 static void
 blinds_ok_callback (GtkWidget *widget,
-		      gpointer   data)
+		    gpointer   data)
 {
   bint.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
@@ -551,8 +536,8 @@ blinds_ok_callback (GtkWidget *widget,
 
 
 static void
-blinds_toggle_update(GtkWidget *widget,
-                      gpointer   data)
+blinds_toggle_update (GtkWidget *widget,
+		      gpointer   data)
 {
   int *toggle_val;
 
@@ -570,8 +555,8 @@ blinds_toggle_update(GtkWidget *widget,
 }                  
 
 static void
-blinds_button_update(GtkWidget *widget,
-                      gpointer   data)
+blinds_button_update (GtkWidget *widget,
+		      gpointer   data)
 {
   int *toggle_val;
 
@@ -592,54 +577,58 @@ blinds_button_update(GtkWidget *widget,
 
 
 static void
-blinds_scale_update(GtkAdjustment *adjustment, gint *value)
+blinds_scale_update (GtkAdjustment *adjustment,
+		     gint          *value)
 {
-	GtkWidget *entry;
-	char       buf[256];
+  GtkWidget *entry;
+  gchar      buf[256];
 	
-	if (*value != adjustment->value) {
-		*value = adjustment->value;
+  if (*value != adjustment->value)
+    {
+      *value = adjustment->value;
 		
-		entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-		sprintf(buf,"%d",*value);
+      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
+      g_snprintf (buf, sizeof (buf), "%d", *value);
 		
-		gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
-		gtk_entry_set_text(GTK_ENTRY(entry), buf);
-		gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
-		
-		dialog_update_preview();
-	}
+      gtk_signal_handler_block_by_data (GTK_OBJECT (entry), value);
+      gtk_entry_set_text (GTK_ENTRY (entry), buf);
+      gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), value);
+
+      dialog_update_preview ();
+    }
 } 
 
 static void
-blinds_entry_update(GtkWidget *widget, gint *value)
+blinds_entry_update (GtkWidget *widget,
+		     gint      *value)
 {
-	GtkAdjustment *adjustment;
-	gdouble        new_value;
+  GtkAdjustment *adjustment;
+  gdouble        new_value;
 
-	new_value = atoi(gtk_entry_get_text(GTK_ENTRY(widget)));
+  new_value = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
 
-	if (*value != new_value) {
-		adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
+  if (*value != new_value)
+    {
+      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
 
-		if ((new_value >= adjustment->lower) &&
-		    (new_value <= adjustment->upper)) {
-			*value            = new_value;
-			adjustment->value = new_value;
+      if ((new_value >= adjustment->lower) &&
+	  (new_value <= adjustment->upper))
+	{
+	  *value            = new_value;
+	  adjustment->value = new_value;
 
-			gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
+	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
 
-			dialog_update_preview();
-		} 
+	  dialog_update_preview ();
 	} 
+    } 
 } 
-
 
 /* Cache the preview image - updates are a lot faster. */
 /* The preview_cache will contain the small image */
 
 static void
-cache_preview()
+cache_preview ()
 {
   GPixelRgn src_rgn;
   int y,x;
@@ -693,7 +682,11 @@ cache_preview()
 
 
 static void 
-blindsapply(guchar *srow,guchar *drow,gint width,gint bpp,guchar *bg)
+blindsapply (guchar *srow,
+	     guchar *drow,
+	     gint    width,
+	     gint    bpp,
+	     guchar *bg)
 {
   guchar *src;
   guchar *dst;
@@ -795,7 +788,7 @@ blindsapply(guchar *srow,guchar *drow,gint width,gint bpp,guchar *bg)
 }
 
 static int
-blinds_get_bg(guchar *bg)
+blinds_get_bg (guchar *bg)
 {
   GParam *return_vals;
   gint nreturn_vals;
@@ -848,7 +841,7 @@ blinds_get_bg(guchar *bg)
 }
 
 static void
-dialog_update_preview(void)
+dialog_update_preview (void)
 {
 
   int     y;
@@ -1009,7 +1002,7 @@ dialog_update_preview(void)
 #define STEP 40
 
 static void
-apply_blinds(void)
+apply_blinds (void)
 {
   GPixelRgn des_rgn;
   GPixelRgn src_rgn;
@@ -1159,4 +1152,3 @@ apply_blinds(void)
   gimp_drawable_update(blindsdrawable->id, sel_x1, sel_y1, sel_width, sel_height);  
   
 }
-

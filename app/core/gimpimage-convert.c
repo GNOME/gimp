@@ -496,9 +496,9 @@ convert_to_indexed (GimpImage *gimage)
 		     FALSE, FALSE, TRUE,
 
 		     _("OK"), indexed_ok_callback,
-		     dialog, NULL, TRUE, FALSE,
+		     dialog, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), indexed_cancel_callback,
-		     dialog, NULL, FALSE, TRUE,
+		     dialog, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 

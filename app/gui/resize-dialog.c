@@ -189,9 +189,9 @@ resize_widget_new (ResizeType    type,
 		       FALSE, FALSE, TRUE,
 
 		       _("OK"), ok_cb,
-		       user_data, NULL, TRUE, FALSE,
+		       user_data, NULL, NULL, TRUE, FALSE,
 		       _("Cancel"), cancel_cb,
-		       user_data, NULL, FALSE, TRUE,
+		       user_data, NULL, NULL, FALSE, TRUE,
 		       
 		       NULL);
   }

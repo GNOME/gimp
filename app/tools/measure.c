@@ -268,7 +268,7 @@ measure_tool_button_press (Tool           *tool,
 	 (GTK_DIALOG (measure_tool_info->shell),
 
 	  _("Close"), measure_tool_info_window_close_callback,
-	  measure_tool_info, NULL, TRUE, FALSE,
+	  measure_tool_info, NULL, NULL, TRUE, FALSE,
 
 	  NULL);
       }

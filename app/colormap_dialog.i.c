@@ -159,7 +159,7 @@ ipal_create (GimpSet *context)
   gimp_dialog_create_action_area (GTK_DIALOG (ipal),
 
 				  _("Close"), ipal_close_callback,
-				  ipal, NULL, TRUE, TRUE,
+				  ipal, NULL, NULL, TRUE, TRUE,
 
 				  NULL);
 

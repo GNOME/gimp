@@ -3347,9 +3347,9 @@ layers_dialog_new_layer_query (GimpImage* gimage)
 		     FALSE, TRUE, FALSE,
 
 		     _("OK"), new_layer_query_ok_callback,
-		     options, NULL, TRUE, FALSE,
+		     options, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), new_layer_query_cancel_callback,
-		     options, NULL, FALSE, TRUE,
+		     options, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 
@@ -3553,9 +3553,9 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
 		     FALSE, TRUE, FALSE,
 
 		     _("OK"), edit_layer_query_ok_callback,
-		     options, NULL, TRUE, FALSE,
+		     options, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), edit_layer_query_cancel_callback,
-		     options, NULL, FALSE, TRUE,
+		     options, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 
@@ -3678,9 +3678,9 @@ layers_dialog_add_mask_query (Layer *layer)
 		     FALSE, TRUE, FALSE,
 
 		     _("OK"), add_mask_query_ok_callback,
-		     options, NULL, TRUE, FALSE,
+		     options, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), add_mask_query_cancel_callback,
-		     options, NULL, FALSE, TRUE,
+		     options, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 
@@ -3790,11 +3790,11 @@ layers_dialog_apply_mask_query (Layer *layer)
 		     FALSE, TRUE, FALSE,
 
 		     _("Apply"), apply_mask_query_apply_callback,
-		     options, NULL, TRUE, FALSE,
+		     options, NULL, NULL, TRUE, FALSE,
 		     _("Discard"), apply_mask_query_discard_callback,
-		     options, NULL, FALSE, FALSE,
+		     options, NULL, NULL, FALSE, FALSE,
 		     _("Cancel"), apply_mask_query_cancel_callback,
-		     options, NULL, FALSE, TRUE,
+		     options, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 
@@ -4079,9 +4079,9 @@ layers_dialog_layer_merge_query (GImage   *gimage,
 		     FALSE, TRUE, FALSE,
 
 		     _("OK"), layer_merge_query_ok_callback,
-		     options, NULL, TRUE, FALSE,
+		     options, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), layer_merge_query_cancel_callback,
-		     options, NULL, FALSE, TRUE,
+		     options, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 

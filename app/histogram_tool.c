@@ -290,7 +290,7 @@ histogram_tool_dialog_new (void)
 				FALSE, TRUE, FALSE,
 
 				_("Close"), histogram_tool_close_callback,
-				htd, NULL, TRUE, TRUE,
+				htd, NULL, NULL, TRUE, TRUE,
 
 				NULL);
 

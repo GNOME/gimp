@@ -31,8 +31,11 @@
 #endif
 #include <sys/types.h>
 
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 /***** Magic numbers *****/
@@ -511,213 +514,198 @@ diff_intensity(double x, double y, double lam)
 /*****/
 
 static gint
-diffraction_dialog(void)
+diffraction_dialog (void)
 {
-	GtkWidget  *dialog;
-	GtkWidget  *top_table;
-	GtkWidget  *notebook;
-	GtkWidget  *frame;
-	GtkWidget  *vbox;
-	GtkWidget  *table;
-	GtkWidget  *label;
-	GtkWidget  *hbbox;
-	GtkWidget  *button;
-	gint        argc;
-	gchar     **argv;
-	guchar     *color_cube;
+  GtkWidget  *dialog;
+  GtkWidget  *top_table;
+  GtkWidget  *notebook;
+  GtkWidget  *frame;
+  GtkWidget  *vbox;
+  GtkWidget  *table;
+  GtkWidget  *label;
+  GtkWidget  *button;
+  gint        argc;
+  gchar     **argv;
+  guchar     *color_cube;
 
 #if 0
-	printf("Waiting... (pid %d)\n", getpid());
-	kill(getpid(), SIGSTOP);
+  g_print ("Waiting... (pid %d)\n", getpid ());
+  kill (getpid (), SIGSTOP);
 #endif
 
-	argc    = 1;
-	argv    = g_new(gchar *, 1);
-	argv[0] = g_strdup("diffraction");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("diffraction");
 
-	gtk_init(&argc, &argv);
-	gtk_rc_parse (gimp_gtkrc ());
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 
-	gdk_set_use_xshm (gimp_use_xshm ());
+  gdk_set_use_xshm (gimp_use_xshm ());
 
-	gtk_preview_set_gamma(gimp_gamma());
-	gtk_preview_set_install_cmap(gimp_install_cmap());
-	color_cube = gimp_color_cube();
-	gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2], color_cube[3]);
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
 
-	gtk_widget_set_default_visual(gtk_preview_get_visual());
-	gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-	dialog = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dialog), _("Diffraction patterns"));
-	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-	gtk_container_border_width(GTK_CONTAINER(dialog), 0);
-	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-			   (GtkSignalFunc) dialog_close_callback,
-			   NULL);
+  dialog = gimp_dialog_new (_("Diffraction Patterns"), "diffraction",
+			    gimp_plugin_help_func, "filters/diffraction.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
 
-	top_table = gtk_table_new(2, 2, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(top_table), 6);
-	gtk_table_set_row_spacings(GTK_TABLE(top_table), 4);
-	gtk_table_set_col_spacings(GTK_TABLE(top_table), 4);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), top_table, FALSE, FALSE, 0);
-	gtk_widget_show(top_table);
+			    _("OK"), dialog_ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), dialog_cancel_callback,
+			    NULL, NULL, NULL, FALSE, TRUE,
 
-	/* Preview */
+			    NULL);
 
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_border_width(GTK_CONTAINER(vbox), 0);
-	gtk_table_attach(GTK_TABLE(top_table), vbox, 0, 1, 0, 1,
-			 GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-	gtk_widget_show(vbox);
+  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+		      GTK_SIGNAL_FUNC (dialog_close_callback),
+		      NULL);
 
-	frame = gtk_frame_new(NULL);
-	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-	gtk_box_pack_start(GTK_BOX(vbox), frame, FALSE, FALSE, 0);
-	gtk_widget_show(frame);
+  top_table = gtk_table_new(2, 2, FALSE);
+  gtk_container_border_width(GTK_CONTAINER(top_table), 6);
+  gtk_table_set_row_spacings(GTK_TABLE(top_table), 4);
+  gtk_table_set_col_spacings(GTK_TABLE(top_table), 4);
+  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), top_table,
+		     FALSE, FALSE, 0);
+  gtk_widget_show(top_table);
 
-	dint.preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-	gtk_preview_size(GTK_PREVIEW(dint.preview), PREVIEW_WIDTH, PREVIEW_HEIGHT);
-	gtk_container_add(GTK_CONTAINER(frame), dint.preview);
-	gtk_widget_show(dint.preview);
+  /* Preview */
 
-	dint.progress = gtk_progress_bar_new();
-	gtk_widget_set_usize(dint.progress, PROGRESS_WIDTH, PROGRESS_HEIGHT);
-	gtk_box_pack_start(GTK_BOX(vbox), dint.progress, TRUE, FALSE, 0);
-	gtk_widget_show(dint.progress);
+  vbox = gtk_vbox_new(FALSE, 0);
+  gtk_container_border_width(GTK_CONTAINER(vbox), 0);
+  gtk_table_attach(GTK_TABLE(top_table), vbox, 0, 1, 0, 1,
+		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show(vbox);
 
-	button = gtk_button_new_with_label( _("Preview!"));
-	gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			   (GtkSignalFunc) dialog_update_callback,
-			   NULL);
-	gtk_table_attach(GTK_TABLE(top_table), button, 0, 1, 1, 2,
-			 GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-	gtk_widget_show(button);
+  frame = gtk_frame_new(NULL);
+  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
+  gtk_box_pack_start(GTK_BOX(vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show(frame);
 
-	/* Notebook */
+  dint.preview = gtk_preview_new(GTK_PREVIEW_COLOR);
+  gtk_preview_size(GTK_PREVIEW(dint.preview), PREVIEW_WIDTH, PREVIEW_HEIGHT);
+  gtk_container_add(GTK_CONTAINER(frame), dint.preview);
+  gtk_widget_show(dint.preview);
 
-	notebook = gtk_notebook_new();
-	gtk_notebook_set_tab_pos(GTK_NOTEBOOK(notebook), GTK_POS_TOP);
-	gtk_table_attach(GTK_TABLE(top_table), notebook, 1, 2, 0, 2, GTK_EXPAND | GTK_FILL, 0, 0, 0);
-	gtk_widget_show(notebook);
+  dint.progress = gtk_progress_bar_new();
+  gtk_widget_set_usize(dint.progress, PROGRESS_WIDTH, PROGRESS_HEIGHT);
+  gtk_box_pack_start(GTK_BOX(vbox), dint.progress, TRUE, FALSE, 0);
+  gtk_widget_show(dint.progress);
 
-	/* Frequencies tab */
+  button = gtk_button_new_with_label( _("Preview!"));
+  gtk_signal_connect(GTK_OBJECT(button), "clicked",
+		     (GtkSignalFunc) dialog_update_callback,
+		     NULL);
+  gtk_table_attach(GTK_TABLE(top_table), button, 0, 1, 1, 2,
+		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show(button);
 
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_border_width(GTK_CONTAINER(vbox), 4);
+  /* Notebook */
 
-	table = gtk_table_new(3, 2, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(table), 0);
-	gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
-	gtk_widget_show(table);
+  notebook = gtk_notebook_new();
+  gtk_notebook_set_tab_pos(GTK_NOTEBOOK(notebook), GTK_POS_TOP);
+  gtk_table_attach(GTK_TABLE(top_table), notebook, 1, 2, 0, 2,
+		   GTK_EXPAND | GTK_FILL, 0, 0, 0);
+  gtk_widget_show(notebook);
 
-	dialog_create_value( _("Red"),   GTK_TABLE(table), 0, &dvals.lam_r, 0.0, 20.0);
-	dialog_create_value( _("Green"), GTK_TABLE(table), 1, &dvals.lam_g, 0.0, 20.0);
-	dialog_create_value( _("Blue"),  GTK_TABLE(table), 2, &dvals.lam_b, 0.0, 20.0);
+  /* Frequencies tab */
 
-	label = gtk_label_new( _("Frequencies"));
-	gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
-	gtk_widget_show(vbox);
+  vbox = gtk_vbox_new(FALSE, 0);
+  gtk_container_border_width(GTK_CONTAINER(vbox), 4);
 
-	/* Contours tab */
+  table = gtk_table_new(3, 2, FALSE);
+  gtk_container_border_width(GTK_CONTAINER(table), 0);
+  gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show(table);
 
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_border_width(GTK_CONTAINER(vbox), 4);
+  dialog_create_value( _("Red"),   GTK_TABLE(table), 0, &dvals.lam_r, 0.0, 20.0);
+  dialog_create_value( _("Green"), GTK_TABLE(table), 1, &dvals.lam_g, 0.0, 20.0);
+  dialog_create_value( _("Blue"),  GTK_TABLE(table), 2, &dvals.lam_b, 0.0, 20.0);
 
-	table = gtk_table_new(3, 2, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(table), 0);
-	gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
-	gtk_widget_show(table);
+  label = gtk_label_new( _("Frequencies"));
+  gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
+  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+  gtk_widget_show(vbox);
 
-	dialog_create_value( _("Red"),   GTK_TABLE(table), 0, &dvals.contour_r, 0.0, 10.0);
-	dialog_create_value( _("Green"), GTK_TABLE(table), 1, &dvals.contour_g, 0.0, 10.0);
-	dialog_create_value( _("Blue"),  GTK_TABLE(table), 2, &dvals.contour_b, 0.0, 10.0);
+  /* Contours tab */
 
-	label = gtk_label_new( _("Contours"));
-	gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
-	gtk_widget_show(vbox);
+  vbox = gtk_vbox_new(FALSE, 0);
+  gtk_container_border_width(GTK_CONTAINER(vbox), 4);
 
-	/* Sharp edges tab */
+  table = gtk_table_new(3, 2, FALSE);
+  gtk_container_border_width(GTK_CONTAINER(table), 0);
+  gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show(table);
 
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_border_width(GTK_CONTAINER(vbox), 4);
+  dialog_create_value( _("Red"),   GTK_TABLE(table), 0, &dvals.contour_r, 0.0, 10.0);
+  dialog_create_value( _("Green"), GTK_TABLE(table), 1, &dvals.contour_g, 0.0, 10.0);
+  dialog_create_value( _("Blue"),  GTK_TABLE(table), 2, &dvals.contour_b, 0.0, 10.0);
 
-	table = gtk_table_new(3, 2, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(table), 0);
-	gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
-	gtk_widget_show(table);
+  label = gtk_label_new( _("Contours"));
+  gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
+  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+  gtk_widget_show(vbox);
 
-	dialog_create_value( _("Red"),   GTK_TABLE(table), 0, &dvals.edges_r, 0.0, 1.0);
-	dialog_create_value( _("Green"), GTK_TABLE(table), 1, &dvals.edges_g, 0.0, 1.0);
-	dialog_create_value( _("Blue"),  GTK_TABLE(table), 2, &dvals.edges_b, 0.0, 1.0);
+  /* Sharp edges tab */
 
-	label = gtk_label_new( _("Sharp edges"));
-	gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
-	gtk_widget_show(vbox);
+  vbox = gtk_vbox_new(FALSE, 0);
+  gtk_container_border_width(GTK_CONTAINER(vbox), 4);
 
-	/* Other options tab */
+  table = gtk_table_new(3, 2, FALSE);
+  gtk_container_border_width(GTK_CONTAINER(table), 0);
+  gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show(table);
 
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_border_width(GTK_CONTAINER(vbox), 4);
+  dialog_create_value( _("Red"),   GTK_TABLE(table), 0, &dvals.edges_r, 0.0, 1.0);
+  dialog_create_value( _("Green"), GTK_TABLE(table), 1, &dvals.edges_g, 0.0, 1.0);
+  dialog_create_value( _("Blue"),  GTK_TABLE(table), 2, &dvals.edges_b, 0.0, 1.0);
 
-	table = gtk_table_new(3, 2, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(table), 0);
-	gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
-	gtk_widget_show(table);
+  label = gtk_label_new( _("Sharp edges"));
+  gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
+  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+  gtk_widget_show(vbox);
 
-	dialog_create_value( _("Brightness"),   GTK_TABLE(table), 0, &dvals.brightness, 0.0, 1.0);
-	dialog_create_value( _("Scattering"),   GTK_TABLE(table), 1, &dvals.scattering, 0.0, 100.0);
-	dialog_create_value( _("Polarization"), GTK_TABLE(table), 2, &dvals.polarization, -1.0, 1.0);
+  /* Other options tab */
 
-	label = gtk_label_new( _("Other options"));
-	gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
-	gtk_widget_show(vbox);
+  vbox = gtk_vbox_new(FALSE, 0);
+  gtk_container_border_width(GTK_CONTAINER(vbox), 4);
 
-	/*  Action area  */
-	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-	gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-	hbbox = gtk_hbutton_box_new ();
-	gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-	gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
-	gtk_widget_show (hbbox);
-	
-	button = gtk_button_new_with_label ( _("OK"));
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    (GtkSignalFunc) dialog_ok_callback,
-			    dialog);
-	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	gtk_widget_grab_default (button);
-	gtk_widget_show (button);
-	
-	button = gtk_button_new_with_label ( _("Cancel"));
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    (GtkSignalFunc) dialog_cancel_callback,
-			    dialog);
-	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	gtk_widget_show (button);
-	
-	/* Done */
+  table = gtk_table_new(3, 2, FALSE);
+  gtk_container_border_width(GTK_CONTAINER(table), 0);
+  gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show(table);
 
-	gtk_widget_show(dialog);
-	dialog_update_preview();
+  dialog_create_value( _("Brightness"),   GTK_TABLE(table), 0, &dvals.brightness, 0.0, 1.0);
+  dialog_create_value( _("Scattering"),   GTK_TABLE(table), 1, &dvals.scattering, 0.0, 100.0);
+  dialog_create_value( _("Polarization"), GTK_TABLE(table), 2, &dvals.polarization, -1.0, 1.0);
 
-	gtk_main();
-	gdk_flush();
+  label = gtk_label_new( _("Other options"));
+  gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
+  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+  gtk_widget_show(vbox);
 
-	return dint.run;
+  /* Done */
+
+  gtk_widget_show(dialog);
+  dialog_update_preview();
+
+  gtk_main();
+  gdk_flush();
+
+  return dint.run;
 } /* diffraction_dialog */
 
 
 /*****/
 
 static void
-dialog_update_preview(void)
+dialog_update_preview (void)
 {
 	double  left, right, bottom, top;
 	double  px, py;

@@ -250,9 +250,9 @@ create_query_box (gchar         *title,
 			  FALSE, TRUE, FALSE,
 
 			  _("OK"), ok_callback,
-			  query_box, NULL, TRUE, FALSE,
+			  query_box, NULL, NULL, TRUE, FALSE,
 			  _("Cancel"), query_box_cancel_callback,
-			  query_box, NULL, FALSE, TRUE,
+			  query_box, NULL, NULL, FALSE, TRUE,
 
 			  NULL);
 
@@ -630,7 +630,7 @@ gimp_message_box (gchar       *message,
 			  FALSE, FALSE, FALSE,
 
 			  _("OK"), gimp_message_box_close_callback,
-			  msg_box, NULL, TRUE, TRUE,
+			  msg_box, NULL, NULL, TRUE, TRUE,
 
 			  NULL);
 

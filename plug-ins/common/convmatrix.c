@@ -59,8 +59,11 @@
 #include <unistd.h>
 #endif
 
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
-#include "gtk/gtk.h"
+#include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 typedef enum {
@@ -671,10 +674,9 @@ static void my_bmode_callback(GtkWidget * widget, gpointer data){
 
 
 
-static gint dialog()
+static gint dialog (void)
 {
 	GtkWidget *dlg;
-	GtkWidget *hbbox;
 	GtkWidget *button;
 	GtkWidget *label;
 	GtkWidget *entry;
@@ -697,45 +699,24 @@ static gint dialog()
 	gtk_init(&argc, &argv);
 	gtk_rc_parse (gimp_gtkrc ());
 
-	dlg = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dlg), _("Convolution Matrix"));
-	gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-	gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-			   (GtkSignalFunc) close_callback, NULL);
+	dlg = gimp_dialog_new (_("Convolution Matrix"), "convmatrix",
+			       gimp_plugin_help_func, "filters/convmatrix.html",
+			       GTK_WIN_POS_MOUSE,
+			       FALSE, TRUE, FALSE,
 
-	/*  Action area  */
-	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-	gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-	hbbox = gtk_hbutton_box_new ();
-	gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-	gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-	gtk_widget_show (hbbox);
-	
-	button = gtk_button_new_with_label(_("Defaults"));
-	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-	gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
-				  (GtkSignalFunc) defaults_callback,
-				  GTK_OBJECT(dlg));
-	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	gtk_widget_show(button);
+			       _("OK"), ok_callback,
+			       NULL, NULL, &my_widgets.ok, TRUE, FALSE,
+			       _("Reset"), defaults_callback,
+			       NULL, 1, NULL, FALSE, FALSE,
+			       _("Cancel"), gtk_widget_destroy,
+			       NULL, 1, NULL, FALSE, TRUE,
 
-	my_widgets.ok = button = gtk_button_new_with_label (_("OK"));
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    (GtkSignalFunc) ok_callback,
-			    dlg);
-	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	gtk_widget_grab_default (button);
-	gtk_widget_show (button);
-	
-	button = gtk_button_new_with_label (_("Cancel"));
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-				   (GtkSignalFunc) gtk_widget_destroy,
-				   GTK_OBJECT (dlg));
-	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	gtk_widget_show (button);
-	
+			       NULL);
+
+	gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+			    GTK_SIGNAL_FUNC (close_callback),
+			    NULL);
+
 /* Outbox */	
 	outbox=gtk_hbox_new(FALSE,0);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), outbox, TRUE, TRUE, 0);
@@ -747,7 +728,7 @@ static gint dialog()
 /* Outbox:YABox:Frame */	
 	frame = gtk_frame_new (_("Matrix"));
 	gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-	gtk_container_border_width (GTK_CONTAINER (frame), 10);
+	gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
 	gtk_box_pack_start (GTK_BOX (yetanotherbox), frame, TRUE, TRUE, 0);
 
 /* Outbox:YABox:Frame:Inbox */	

@@ -295,7 +295,7 @@ color_picker_button_press (Tool           *tool,
 	(GTK_DIALOG (color_picker_info->shell),
 
 	 _("Close"), color_picker_info_window_close_callback,
-	 color_picker_info, NULL, TRUE, FALSE,
+	 color_picker_info, NULL, NULL, TRUE, FALSE,
 
 	 NULL);
     }

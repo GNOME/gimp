@@ -1848,9 +1848,9 @@ palette_dialog_delete_callback (GtkWidget *widget,
                             FALSE, FALSE, FALSE,
 
                             _("Delete"), palette_dialog_do_delete_callback,
-                            palette, NULL, FALSE, FALSE,
+                            palette, NULL, NULL, FALSE, FALSE,
                             _("Cancel"), palette_dialog_cancel_delete_callback,
-                            palette, NULL, TRUE, TRUE,
+                            palette, NULL, NULL, TRUE, TRUE,
 
                             NULL);
 
@@ -2111,11 +2111,11 @@ palette_dialog_new (gint vert)
 			 FALSE, TRUE, FALSE,
 
 			 _("Save"), palette_dialog_save_callback,
-			 palette, NULL, FALSE, FALSE,
+			 palette, NULL, NULL, FALSE, FALSE,
 			 _("Refresh"), palette_dialog_refresh_callback,
-			 palette, NULL, FALSE, FALSE,
+			 palette, NULL, NULL, FALSE, FALSE,
 			 _("Close"), palette_dialog_close_callback,
-			 palette, NULL, TRUE, TRUE,
+			 palette, NULL, NULL, TRUE, TRUE,
 
 			 NULL);
     }
@@ -2129,9 +2129,9 @@ palette_dialog_new (gint vert)
 			 FALSE, TRUE, FALSE,
 
 			 _("Edit"), palette_dialog_edit_callback,
-			 palette, NULL, FALSE, FALSE,
+			 palette, NULL, NULL, FALSE, FALSE,
 			 _("Close"), palette_dialog_close_callback,
-			 palette, NULL, TRUE, TRUE,
+			 palette, NULL, NULL, TRUE, TRUE,
 
 			 NULL);
     }
@@ -3175,9 +3175,9 @@ palette_import_dialog_new (PaletteDialog *palette)
 		     FALSE, TRUE, FALSE,
 
 		     _("Import"), palette_import_import_callback,
-		     palette, NULL, FALSE, FALSE,
+		     palette, NULL, NULL, FALSE, FALSE,
 		     _("Close"), palette_import_close_callback,
-		     palette, NULL, TRUE, TRUE,
+		     palette, NULL, NULL, TRUE, TRUE,
 
 		     NULL);
 

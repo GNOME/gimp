@@ -32,13 +32,7 @@ gimp_standard_help_func (gchar *help_data)
 void
 gimp_plugin_help_func (gchar *help_data)
 {
-  gchar *help_page;
-
-  help_page = g_strdup_printf ("filters/%s.html", help_data);
-
   gimp_help (help_data);
-
-  g_free (help_page);
 }
 
 void

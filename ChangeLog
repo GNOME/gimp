@@ -1,3 +1,42 @@
+2000-01-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/[all files using the dialog or action area constructors]
+	* libgimp/gimpdialog.[ch]: added a "slot_object" agrument to the
+	constructors' va_args lists to allow the action area buttons to be
+	connected wich gtk_signal_connect_object().
+
+	* libgimp/gimphelp.c: show the correct help page for plugins.
+
+	* plug-ins/common/CEL.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/aa.c
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/blur.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/convmatrix.c
+	* plug-ins/common/csource.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/destripe.c
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/grid.c
+	* plug-ins/helpbrowser/Makefile.am
+	* plug-ins/helpbrowser/helpbrowser.c: use the dialog constructor
+	and enable the "F1" help key.
+
 2000-01-06  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
 	* PLUGIN_MAINTAINERS (AUTHOR): added myself as maintainer of
@@ -30,7 +69,7 @@ Thu Jan  6 00:58:32 CET 2000  Sven Neumann <sven@gimp.org>
 	* plug-ins/gfig/gfig.c
 	* plug-ins/gflare/gflare.c
 	* plug-ins/imagemap/imap_main.c: strtok() is dangerous !!
-	
+
 	"Never use this function. This function modifies its first argument."
 	So if you absolutely need to use it, save a pointer to your string
 	or bad things will happen soon.

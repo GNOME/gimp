@@ -30,6 +30,7 @@
 #include <gtk-xmhtml/gtk-xmhtml.h>
 #include <gdk/gdkkeysyms.h>
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 #include "queue.h"
@@ -786,8 +787,11 @@ open_browser_dialog (gchar *locale,
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
 		      GTK_SIGNAL_FUNC (close_callback),
 		      NULL);
-  gtk_window_set_wmclass (GTK_WINDOW (window), "gimp_help_browser", "Gimp");
+  gtk_window_set_wmclass (GTK_WINDOW (window), "helpbrowser", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
+
+  gimp_help_connect_help_accel (window, gimp_plugin_help_func,
+				"filters/helpbrowser.html");
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (window), vbox);
@@ -946,7 +950,7 @@ open_browser_dialog (gchar *locale,
 			  GTK_SIGNAL_FUNC (page_up_callback),
 			  pages[i].html);
       gtk_signal_connect (GTK_OBJECT (GTK_XMHTML (pages[i].html)->html.vsb), 
-			  "page_down", 
+			  "page_down",
 			  GTK_SIGNAL_FUNC (page_down_callback),
 			  pages[i].html);
 

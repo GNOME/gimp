@@ -58,9 +58,9 @@ palette_new_selection (gchar *title,
 				FALSE, TRUE, FALSE,
 
 				_("Edit"), palette_select_edit_callback,
-				psp, NULL, TRUE, FALSE,
+				psp, NULL, NULL, TRUE, FALSE,
 				_("Close"), palette_select_close_callback,
-				psp, NULL, FALSE, TRUE,
+				psp, NULL, NULL, FALSE, TRUE,
 
 				NULL);
 

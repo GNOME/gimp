@@ -160,6 +160,7 @@ CEL_SOURCES = \
 	CEL.c
 
 CEL_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -168,6 +169,7 @@ CML_explorer_SOURCES = \
 	CML_explorer.c
 
 CML_explorer_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -186,6 +188,7 @@ align_layers_SOURCES = \
 	align_layers.c
 
 align_layers_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -194,6 +197,7 @@ animationplay_SOURCES = \
 	animationplay.c
 
 animationplay_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -210,6 +214,7 @@ apply_lens_SOURCES = \
 	apply_lens.c
 
 apply_lens_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -234,6 +239,7 @@ blinds_SOURCES = \
 	blinds.c
 
 blinds_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -243,6 +249,7 @@ blur_SOURCES = \
 
 blur_LDADD = \
 	$(top_builddir)/plug-ins/gpc/libgpc.a	\
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -276,6 +283,7 @@ checkerboard_SOURCES = \
 	checkerboard.c
 
 checkerboard_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -284,7 +292,6 @@ color_enhance_SOURCES = \
 	color_enhance.c
 
 color_enhance_LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -293,6 +300,7 @@ colorify_SOURCES = \
 	colorify.c
 
 colorify_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -319,6 +327,7 @@ convmatrix_SOURCES = \
 	convmatrix.c
 
 convmatrix_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -336,6 +345,7 @@ cubism_SOURCES = \
 	cubism.c
 
 cubism_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -344,6 +354,7 @@ curve_bend_SOURCES = \
 	curve_bend.c
 
 curve_bend_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -352,6 +363,7 @@ decompose_SOURCES = \
 	decompose.c
 
 decompose_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -361,6 +373,7 @@ deinterlace_SOURCES = \
 
 deinterlace_LDADD = \
 	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -378,6 +391,7 @@ despeckle_SOURCES = \
 	despeckle.c
 
 despeckle_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -386,6 +400,7 @@ destripe_SOURCES = \
 	destripe.c
 
 destripe_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -394,6 +409,7 @@ diffraction_SOURCES = \
 	diffraction.c
 
 diffraction_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

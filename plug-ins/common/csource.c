@@ -591,7 +591,7 @@ cb_set_true (gboolean *bool_p)
 static gboolean
 run_save_dialog	(Config *config)
 {
-  GtkWidget *dialog, *vbox, *hbox;
+  GtkWidget *dialog, *vbox, *hbox, *button;
   GtkWidget *prefixed_name, *centry, *alpha, *use_macros, *use_rle, *gtype, *use_comment, *any;
   GtkObject *opacity;
   gboolean do_save = FALSE;
@@ -600,34 +600,32 @@ run_save_dialog	(Config *config)
   g_set_prgname ("Save");
   gtk_rc_parse (gimp_gtkrc ());
   
-  dialog = gtk_widget_new (GTK_TYPE_DIALOG,
-			   "title", "Save as C-Source",
-			   "window_position", GTK_WIN_POS_MOUSE,
-			   "signal::destroy", gtk_main_quit, NULL,
-			   NULL);
+  dialog = gimp_dialog_new ("Save as C-Source", "csource",
+			    gimp_plugin_help_func, "filters/csource.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
+
+			    "OK", cb_set_true,
+			    NULL, &do_save, &button, TRUE, FALSE,
+			    "Cancel", gtk_widget_destroy,
+			    NULL, 1, NULL, FALSE, TRUE,
+
+			    NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
+  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
+			     GTK_OBJECT (dialog));
+
   vbox = GTK_DIALOG (dialog)->vbox;
   gtk_widget_set (vbox,
 		  "border_width", 5,
 		  "spacing", 5,
 		  NULL);
-  hbox = GTK_DIALOG (dialog)->action_area;
-  gtk_widget_new (GTK_TYPE_BUTTON,
-		  "visible", TRUE,
-		  "label", "Ok",
-		  "object_signal::clicked", cb_set_true, &do_save,
-		  "object_signal::clicked", gtk_widget_destroy, dialog,
-		  "parent", hbox,
-		  "can_default", TRUE,
-		  "has_default", TRUE,
-		  NULL);
-  gtk_widget_new (GTK_TYPE_BUTTON,
-		  "visible", TRUE,
-		  "label", "Cancel",
-		  "object_signal::clicked", gtk_widget_destroy, dialog,
-		  "parent", hbox,
-		  "can_default", TRUE,
-		  NULL);
-  
+
   /* Prefixed Name
    */
   hbox = gtk_widget_new (GTK_TYPE_HBOX,

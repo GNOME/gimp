@@ -18,6 +18,7 @@ INCLUDES = \
 
 LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(GTKXMHTML_LIBS)			\
 	$(INTLLIBS)
 

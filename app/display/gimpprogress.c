@@ -112,7 +112,7 @@ progress_start (GDisplay      *gdisp,
 				   FALSE, TRUE, FALSE,
 
 				   _("Cancel"), NULL,
-				   NULL, &p->cancelbutton, TRUE, TRUE,
+				   NULL, NULL, &p->cancelbutton, TRUE, TRUE,
 
 				   NULL);
 

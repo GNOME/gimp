@@ -1035,11 +1035,11 @@ crop_info_create (Tool *tool)
   gimp_dialog_create_action_area (GTK_DIALOG (crop_info->shell),
 
 				  _("Crop"), crop_crop_callback,
-				  NULL, NULL, TRUE, FALSE,
+				  NULL, NULL, NULL, TRUE, FALSE,
 				  _("Resize"), crop_resize_callback,
-				  NULL, NULL, FALSE, FALSE,
+				  NULL, NULL, NULL, FALSE, FALSE,
 				  _("Close"), crop_close_callback,
-				  NULL, NULL, FALSE, FALSE,
+				  NULL, NULL, NULL, FALSE, FALSE,
 
 				  NULL);
 

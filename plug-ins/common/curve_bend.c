@@ -24,18 +24,19 @@
  *  (1999/04/23)  v0.0   hof: coding started,
  *                            splines and dialog parts are similar to curves.c
  */
- 
+
+#include "config.h"
  
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
-#include "config.h"
-
 #include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Defines */
@@ -283,7 +284,6 @@ static void            bender_copy_inv_callback       (GtkWidget *, gpointer);
 static void            bender_swap_callback           (GtkWidget *, gpointer);
 static void            bender_ok_callback             (GtkWidget *, gpointer);
 static void            bender_cancel_callback         (GtkWidget *, gpointer);
-static gint            bender_delete_callback         (GtkWidget *, GdkEvent *, gpointer);
 static void            bender_smoothing_callback      (GtkWidget *, gpointer);
 static void            bender_antialias_callback      (GtkWidget *, gpointer);
 static void            bender_work_on_copy_callback   (GtkWidget *, gpointer);
@@ -297,10 +297,6 @@ static void            bender_CR_compose              (CRMatrix, CRMatrix, CRMat
 static void            bender_init_min_max            (BenderDialog *, gint32);
 static BenderDialog *  do_dialog                      (GDrawable *);
 GtkWidget           *  p_buildmenu (MenuItem *);
-void build_action_area (GtkDialog *      dlg,
-			ActionAreaItem * actions,
-			int              num_actions,
-			int              default_action);
 static void      p_init_gdrw(t_GDRW *gdrw, GDrawable *drawable, int dirty, int shadow);
 static void      p_end_gdrw(t_GDRW *gdrw);
 static gint32    p_main_bend(BenderDialog *, GDrawable *, gint);
@@ -339,17 +335,6 @@ static CRMatrix CR_basis =
   {  1.0, -2.5,  2.0, -0.5 },
   { -0.5,  0.0,  0.5,  0.0 },
   {  0.0,  1.0,  0.0,  0.0 },
-};
-
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("Reset"), bender_reset_callback, NULL, NULL },
-  { N_("Copy"), bender_copy_callback, NULL, NULL },
-  { N_("CopyInv"), bender_copy_inv_callback, NULL, NULL },
-  { N_("Swap"), bender_swap_callback, NULL, NULL },
-  { N_("OK"), bender_ok_callback, NULL, NULL },
-  { N_("Cancel"), bender_cancel_callback, NULL, NULL }
 };
 
 static MenuItem outline_items[] =
@@ -1371,17 +1356,30 @@ bender_new_dialog (GDrawable *drawable)
     curve_type_items [i].user_data = (gpointer) cd;
 
   /*  The shell and main vbox  */
-  cd->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (cd->shell), "curve_bend", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (cd->shell), _("Curve Bend"));
+  cd->shell = gimp_dialog_new (_("Curve Bend"), "curve_bend",
+			       gimp_plugin_help_func, "filters/curve_bend.html",
+			       GTK_WIN_POS_MOUSE,
+			       FALSE, TRUE, FALSE,
 
-  gtk_signal_connect (GTK_OBJECT (cd->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (bender_delete_callback),
-		      cd);
-  
+			       _("Reset"), bender_reset_callback,
+			       cd, NULL, NULL, FALSE, FALSE,
+			       _("Copy"), bender_copy_callback,
+			       cd, NULL, NULL, FALSE, FALSE,
+			       _("CopyInv"), bender_copy_inv_callback,
+			       cd, NULL, NULL, FALSE, FALSE,
+			       _("Swap"), bender_swap_callback,
+			       cd, NULL, NULL, FALSE, FALSE,
+			       _("OK"), bender_ok_callback,
+			       cd, NULL, NULL, TRUE, FALSE,
+			       _("Cancel"), bender_cancel_callback,
+			       cd, NULL, NULL, FALSE, TRUE,
+
+			       NULL);
+
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cd->shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cd->shell)->vbox), vbox,
+		      TRUE, TRUE, 0);
 
   /*  The option menu for selecting outlines  */
   outline_hbox = gtk_hbox_new (FALSE, 2+4);
@@ -1391,31 +1389,30 @@ bender_new_dialog (GDrawable *drawable)
   button = gtk_button_new_with_label (_("LoadCurve"));
   gtk_box_pack_start (GTK_BOX (outline_hbox), button, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    (GtkSignalFunc) bender_load_callback,
-			    cd);
+		      GTK_SIGNAL_FUNC (bender_load_callback),
+		      cd);
   gtk_widget_show (button);
-
 
   /*  The Save button  */
   button = gtk_button_new_with_label (_("SaveCurve"));
   gtk_box_pack_start (GTK_BOX (outline_hbox), button, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    (GtkSignalFunc) bender_save_callback,
-			    cd);
+		      GTK_SIGNAL_FUNC (bender_save_callback),
+		      cd);
   gtk_widget_show (button);
 
   label = gtk_label_new (_("Rotate: "));
   gtk_box_pack_start (GTK_BOX (outline_hbox), label, FALSE, FALSE, 0);
 
   cd->rotate_entry = gtk_entry_new ();
-  gtk_signal_connect( GTK_OBJECT(cd->rotate_entry), "changed",
-		      (GtkSignalFunc) bender_rotate_entry_callback,
-		       cd);
-  gtk_widget_set_usize( GTK_WIDGET(cd->rotate_entry), ENTRY_WIDTH,0 );
+  gtk_signal_connect (GTK_OBJECT (cd->rotate_entry), "changed",
+		      GTK_SIGNAL_FUNC (bender_rotate_entry_callback),
+		      cd);
+  gtk_widget_set_usize (GTK_WIDGET (cd->rotate_entry), ENTRY_WIDTH,0 );
   gtk_box_pack_start (GTK_BOX (outline_hbox), cd->rotate_entry, FALSE, FALSE, 2);
   gtk_widget_show (label);
-  gtk_widget_show(cd->rotate_entry);
-  p_set_rotate_entry_text(cd);
+  gtk_widget_show (cd->rotate_entry);
+  p_set_rotate_entry_text (cd);
 
   label = gtk_label_new (_("Curve for Border: "));
   gtk_box_pack_start (GTK_BOX (outline_hbox), label, FALSE, FALSE, 0);
@@ -1540,15 +1537,6 @@ bender_new_dialog (GDrawable *drawable)
   gtk_widget_show (toggle);
 
   gtk_widget_show (hbox);
-
-  /*  The action area  */
-  action_items[0].user_data = cd;
-  action_items[1].user_data = cd;
-  action_items[2].user_data = cd;
-  action_items[3].user_data = cd;
-  action_items[4].user_data = cd;
-  action_items[5].user_data = cd;
-  build_action_area (GTK_DIALOG (cd->shell), action_items, 6, 0);
 
   gtk_widget_show (vbox);
 
@@ -1967,7 +1955,7 @@ bender_reset_callback (GtkWidget *widget,
 
 static void
 bender_copy_callback (GtkWidget *widget,
-		       gpointer   client_data)
+		      gpointer   client_data)
 {
   BenderDialog *cd;
   int i;
@@ -1999,7 +1987,7 @@ bender_copy_callback (GtkWidget *widget,
 
 static void
 bender_copy_inv_callback (GtkWidget *widget,
-		       gpointer   client_data)
+			  gpointer   client_data)
 {
   BenderDialog *cd;
   int i;
@@ -2032,7 +2020,7 @@ bender_copy_inv_callback (GtkWidget *widget,
 
 static void
 bender_swap_callback (GtkWidget *widget,
-		       gpointer   client_data)
+		      gpointer   client_data)
 {
 #define SWAP_VALUE(a, b, h) { h=a; a=b; b=h; }
   BenderDialog *cd;
@@ -2067,11 +2055,11 @@ bender_swap_callback (GtkWidget *widget,
 
 static void
 bender_ok_callback (GtkWidget *widget,
-		    gpointer   client_data)
+		    gpointer   data)
 {
   BenderDialog *cd;
 
-  cd = (BenderDialog *) client_data;
+  cd = (BenderDialog *) data;
 
   if (GTK_WIDGET_VISIBLE (cd->shell))
     gtk_widget_hide (cd->shell);
@@ -2083,33 +2071,23 @@ bender_ok_callback (GtkWidget *widget,
 
 static void
 bender_cancel_callback (GtkWidget *widget,
-			gpointer   client_data)
+			gpointer   data)
 {
   BenderDialog *cd;
 
-  cd = (BenderDialog *) client_data;
+  cd = (BenderDialog *) data;
   gtk_main_quit ();
 }
 
-static gint 
-bender_delete_callback (GtkWidget *w,
-			GdkEvent *e,
-			gpointer data) 
-{
-  bender_cancel_callback (w, data);
-
-  return TRUE;
-}
-
 static void
-bender_preview_update (GtkWidget *w,
+bender_preview_update (GtkWidget *widget,
 		       gpointer   data)
 {
   BenderDialog *cd;
 
   cd = (BenderDialog *) data;
   
-  if (GTK_TOGGLE_BUTTON (w)->active)
+  if (GTK_TOGGLE_BUTTON (widget)->active)
   {
       cd->preview = TRUE;
       bender_update (cd, UP_PREVIEW | UP_DRAW);
@@ -2121,8 +2099,8 @@ bender_preview_update (GtkWidget *w,
 }
 
 static void
-bender_preview_update_once (GtkWidget *w,
-		       gpointer   data)
+bender_preview_update_once (GtkWidget *widget,
+			    gpointer   data)
 {
   BenderDialog *cd;
 
@@ -2131,8 +2109,8 @@ bender_preview_update_once (GtkWidget *w,
 }
 
 static void
-p_filesel_close_cb(GtkWidget *widget,
-		   gpointer   data)
+p_filesel_close_cb (GtkWidget *widget,
+		    gpointer   data)
 {
   BenderDialog *cd;
 
@@ -2519,7 +2497,7 @@ bender_CR_compose (CRMatrix a,
  */
 
 GtkWidget *
-p_buildmenu (MenuItem            *items)
+p_buildmenu (MenuItem *items)
 {
   GtkWidget *menu;
   GtkWidget *menu_item;
@@ -2546,38 +2524,8 @@ p_buildmenu (MenuItem            *items)
 }	/* end p_buildmenu */
 
 void
-build_action_area (GtkDialog *      dlg,
-		   ActionAreaItem * actions,
-		   int              num_actions,
-		   int              default_action)
-{
-  GtkWidget *button;
-  int i;
-
-  gtk_container_border_width (GTK_CONTAINER (dlg->action_area), 2);
-
-  for (i = 0; i < num_actions; i++)
-    {
-      button = gtk_button_new_with_label ( gettext(actions[i].label));
-      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_box_pack_start (GTK_BOX (dlg->action_area), button, TRUE, TRUE, 0);
-
-      if (actions[i].callback)
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    (GtkSignalFunc) actions[i].callback,
-			    actions[i].user_data);
-
-      if (default_action == i)
-	gtk_widget_grab_default (button);
-      gtk_widget_show (button);
-
-      actions[i].widget = button;
-    }
-}
-
-
-void
-p_render_preview(BenderDialog *cd, gint32 layer_id)
+p_render_preview (BenderDialog *cd,
+		  gint32        layer_id)
 {
    guchar  l_rowbuf[PREVIEW_BPP * PREVIEW_SIZE_X];
    guchar  l_pixel[4];

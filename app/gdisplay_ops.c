@@ -352,9 +352,9 @@ gdisplay_close_warning_dialog (char     *image_name,
 		     FALSE, FALSE, FALSE,
 
 		     _("Close"), gdisplay_close_warning_callback,
-		     NULL, NULL, FALSE, FALSE,
+		     NULL, NULL, NULL, FALSE, FALSE,
 		     _("Cancel"), gdisplay_cancel_warning_callback,
-		     NULL, NULL, TRUE, TRUE,
+		     NULL, NULL, NULL, TRUE, TRUE,
 
 		     NULL);
 

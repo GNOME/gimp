@@ -111,10 +111,10 @@ color_notebook_new (int                    r,
 
 		     wants_updates ? _("Close") : _("OK"),
 		     color_notebook_ok_callback,
-		     cnp, NULL, TRUE, FALSE,
+		     cnp, NULL, NULL, TRUE, FALSE,
 		     wants_updates ? _("Revert to Old Color") : _("Cancel"),
 		     color_notebook_cancel_callback,
-		     cnp, NULL, FALSE, TRUE,
+		     cnp, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 

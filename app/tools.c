@@ -982,9 +982,9 @@ tool_options_dialog_new (void)
 		     FALSE, TRUE, TRUE,
 
 		     _("Reset"), tool_options_reset_callback,
-		     NULL, &options_reset_button, FALSE, FALSE,
+		     NULL, NULL, &options_reset_button, FALSE, FALSE,
 		     _("Close"), tool_options_close_callback,
-		     NULL, NULL, TRUE, TRUE,
+		     NULL, NULL, NULL, TRUE, TRUE,
 
 		     NULL);
 

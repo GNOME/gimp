@@ -211,11 +211,11 @@ brightness_contrast_dialog_new (void)
 		     FALSE, TRUE, FALSE,
 
 		     _("OK"), brightness_contrast_ok_callback,
-		     bcd, NULL, TRUE, FALSE,
+		     bcd, NULL, NULL, TRUE, FALSE,
 		     _("Reset"), brightness_contrast_reset_callback,
-		     bcd, NULL, TRUE, FALSE,
+		     bcd, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), brightness_contrast_cancel_callback,
-		     bcd, NULL, FALSE, TRUE,
+		     bcd, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 

@@ -1364,7 +1364,7 @@ nav_window_create (void *gdisp_ptr)
   gimp_dialog_create_action_area (GTK_DIALOG (info_win->shell),
 
 				  _("Close"), nav_window_close_callback,
-				  info_win, NULL, TRUE, FALSE,
+				  info_win, NULL, NULL, TRUE, FALSE,
 
 				  NULL);
 

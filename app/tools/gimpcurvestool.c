@@ -558,11 +558,11 @@ curves_dialog_new (void)
 			       FALSE, TRUE, FALSE,
 
 			       _("OK"), curves_ok_callback,
-			       cd, NULL, TRUE, FALSE,
+			       cd, NULL, NULL, TRUE, FALSE,
 			       _("Reset"), curves_reset_callback,
-			       cd, NULL, FALSE, FALSE,
+			       cd, NULL, NULL, FALSE, FALSE,
 			       _("Cancel"), curves_cancel_callback,
-			       cd, NULL, FALSE, TRUE,
+			       cd, NULL, NULL, FALSE, TRUE,
 
 			       NULL);
 

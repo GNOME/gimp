@@ -148,9 +148,9 @@ gradient_select_new (gchar *title,
 				FALSE, TRUE, FALSE,
 
 				_("Edit"), gradient_select_edit_callback,
-				gsp, NULL, FALSE, FALSE,
+				gsp, NULL, NULL, FALSE, FALSE,
 				_("Close"), gradient_select_close_callback,
-				gsp, NULL, TRUE, TRUE,
+				gsp, NULL, NULL, TRUE, TRUE,
 
 				NULL);
 

@@ -43,6 +43,46 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.22  2000/01/06 16:40:17  mitch
+ *   2000-01-06  Michael Natterer  <mitch@gimp.org>
+ *
+ *   	* app/[all files using the dialog or action area constructors]
+ *   	* libgimp/gimpdialog.[ch]: added a "slot_object" agrument to the
+ *   	constructors' va_args lists to allow the action area buttons to be
+ *   	connected wich gtk_signal_connect_object().
+ *
+ *   	* libgimp/gimphelp.c: show the correct help page for plugins.
+ *
+ *   	* plug-ins/common/CEL.c
+ *   	* plug-ins/common/CML_explorer.c
+ *   	* plug-ins/common/Makefile.am
+ *   	* plug-ins/common/aa.c
+ *   	* plug-ins/common/align_layers.c
+ *   	* plug-ins/common/animationplay.c
+ *   	* plug-ins/common/apply_lens.c
+ *   	* plug-ins/common/blinds.c
+ *   	* plug-ins/common/blur.c
+ *   	* plug-ins/common/bumpmap.c
+ *   	* plug-ins/common/checkerboard.c
+ *   	* plug-ins/common/colorify.c
+ *   	* plug-ins/common/colortoalpha.c
+ *   	* plug-ins/common/compose.c
+ *   	* plug-ins/common/convmatrix.c
+ *   	* plug-ins/common/csource.c
+ *   	* plug-ins/common/cubism.c
+ *   	* plug-ins/common/curve_bend.c
+ *   	* plug-ins/common/decompose.c
+ *   	* plug-ins/common/deinterlace.c
+ *   	* plug-ins/common/depthmerge.c
+ *   	* plug-ins/common/despeckle.c
+ *   	* plug-ins/common/destripe.c
+ *   	* plug-ins/common/diffraction.c
+ *   	* plug-ins/common/displace.c
+ *   	* plug-ins/common/grid.c
+ *   	* plug-ins/helpbrowser/Makefile.am
+ *   	* plug-ins/helpbrowser/helpbrowser.c: use the dialog constructor
+ *   	and enable the "F1" help key.
+ *
  *   Revision 1.21  1999/12/29 18:07:43  neo
  *   NEVER EVER use sprintf together with _(...) !
  *
@@ -184,9 +224,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /*
@@ -719,70 +762,80 @@ despeckle(void)
  */
 
 static gint
-despeckle_dialog(void)
+despeckle_dialog (void)
 {
-  GtkWidget	*dialog,	/* Dialog window */
-		*table,		/* Table "container" for controls */
-		*ptable,	/* Preview table */
-		*ftable,	/* Filter table */
-		*frame,		/* Frame for preview */
-		*scrollbar,	/* Horizontal + vertical scroller */
-		*hbbox,	        /* Buttonbox for the OK/Cancel buttons */
-		*button;	/* OK/Cancel buttons */
+  GtkWidget    *dialog,	        /* Dialog window */
+	       *table,		/* Table "container" for controls */
+	       *ptable,	        /* Preview table */
+	       *ftable,	        /* Filter table */
+	       *frame,		/* Frame for preview */
+	       *scrollbar,	/* Horizontal + vertical scroller */
+               *button;         /* Check Button */
   gint		argc;		/* Fake argc for GUI */
-  gchar		**argv;		/* Fake argv for GUI */
+  gchar	      **argv;		/* Fake argv for GUI */
   guchar	*color_cube;	/* Preview color cube... */
-  gchar     *plugin_name;
+  gchar         *plugin_name;
 
 
- /*
-  * Initialize the program's display...
-  */
+  /*
+   * Initialize the program's display...
+   */
 
   argc    = 1;
-  argv    = g_new(gchar *, 1);
-  argv[0] = g_strdup("despeckle");
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("despeckle");
 
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
-  gdk_set_use_xshm(gimp_use_xshm());
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+  gdk_set_use_xshm (gimp_use_xshm ());
 
-  gtk_preview_set_gamma(gimp_gamma());
-  gtk_preview_set_install_cmap(gimp_install_cmap());
-  color_cube = gimp_color_cube();
-  gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2], color_cube[3]);
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
 
-  gtk_widget_set_default_visual(gtk_preview_get_visual());
-  gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
- /*
-  * Dialog window...
-  */
+  /*
+   * Dialog window...
+   */
 
-  dialog = gtk_dialog_new();
   plugin_name = g_strdup_printf ("%s%s", _("Despeckle "), PLUG_IN_VERSION);
-  gtk_window_set_title(GTK_WINDOW(dialog), plugin_name);
-  g_free(plugin_name);
-  gtk_window_set_wmclass(GTK_WINDOW(dialog), "despeckle", "Gimp");
-  gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-  gtk_container_border_width(GTK_CONTAINER(dialog), 0);
-  gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-		     (GtkSignalFunc) dialog_close_callback,
-		     NULL);
 
- /*
-  * Top-level table for dialog...
-  */
+  dialog = gimp_dialog_new (plugin_name, "despeckle",
+			    gimp_plugin_help_func, "filters/despeckle.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
 
-  table = gtk_table_new(5, 3, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table), 6);
-  gtk_table_set_row_spacings(GTK_TABLE(table), 4);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show(table);
+			    _("OK"), dialog_ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), dialog_cancel_callback,
+			    NULL, NULL, NULL, FALSE, TRUE,
 
- /*
-  * Preview window...
-  */
+			    NULL);
+
+  g_free (plugin_name);
+
+  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+		      GTK_SIGNAL_FUNC (dialog_close_callback),
+		      NULL);
+
+  /*
+   * Top-level table for dialog...
+   */
+
+  table = gtk_table_new (5, 3, FALSE);
+  gtk_container_border_width (GTK_CONTAINER (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  /*
+   * Preview window...
+   */
 
   ptable = gtk_table_new(2, 2, FALSE);
   gtk_container_border_width(GTK_CONTAINER(ptable), 0);
@@ -879,31 +932,6 @@ despeckle_dialog(void)
   */
 
   dialog_create_ivalue( _("White Level"), GTK_TABLE(table), 4, &white_level, 0, 256);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) dialog_ok_callback,
-		      dialog);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		     (GtkSignalFunc) dialog_cancel_callback,
-		     dialog);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
  /*
   * Show it and wait for the user to do something...

@@ -275,7 +275,7 @@ module_db_browser_new (void)
 			   FALSE, TRUE, FALSE,
 
 			   _("OK"), browser_popdown_callback,
-			   NULL, NULL, TRUE, TRUE,
+			   NULL, NULL, NULL, TRUE, TRUE,
 
 			   NULL);
 

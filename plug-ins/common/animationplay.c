@@ -120,6 +120,7 @@
 #endif
 
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -648,7 +649,6 @@ build_dialog (GImageType  basetype,
   GtkAdjustment *adj;
 
   GtkWidget* dlg;
-  GtkWidget* hbbox;
   GtkWidget* button;
   GtkWidget* frame;
   GtkWidget* frame2;
@@ -687,50 +687,39 @@ build_dialog (GImageType  basetype,
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 #endif
 
-
-  dlg = gtk_dialog_new ();
   windowname = g_strconcat (_("Animation Playback: "), imagename, NULL);
-  gtk_window_set_title (GTK_WINDOW (dlg), windowname);
-  g_free(windowname);
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+
+  dlg = gimp_dialog_new (windowname, "animationplay",
+			 gimp_plugin_help_func, "filters/animationplay.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("Close"), window_close_callback,
+			 NULL, 1, NULL, TRUE, TRUE,
+
+			 NULL);
+
+  g_free (windowname);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "delete_event",
-		      (GtkSignalFunc) window_delete_callback,
+		      GTK_SIGNAL_FUNC (window_delete_callback),
 		      NULL);
-
-  
-  /* Action area - 'close' button only. */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
-
-  button = gtk_button_new_with_label ( _("Close"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) window_close_callback,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-  
 
   {
     /* The 'playback' half of the dialog */
     
-    windowname = g_malloc(strlen( _("Playback: "))+strlen(imagename)+1);
+    windowname = g_malloc (strlen (_("Playback: ")) + strlen (imagename) + 1);
     if (total_frames > 1)
       {
-	strcpy(windowname, _("Playback: "));
-	strcat(windowname,imagename);
+	strcpy (windowname, _("Playback: "));
+	strcat (windowname, imagename);
       }
     else
       {
-	strcpy(windowname,imagename);	
+	strcpy (windowname, imagename);	
       }
     frame = gtk_frame_new (windowname);
-    g_free(windowname);
+    g_free (windowname);
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_border_width (GTK_CONTAINER (frame), 3);
     gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),

@@ -213,7 +213,7 @@ brush_edit_generated_new (void)
 				 FALSE, TRUE, FALSE,
 
 				 _("Close"), brush_edit_close_callback,
-				 begw, NULL, TRUE, TRUE,
+				 begw, NULL, NULL, TRUE, TRUE,
 
 				 NULL);
 

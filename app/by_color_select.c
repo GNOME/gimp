@@ -587,9 +587,9 @@ by_color_select_dialog_new (void)
 				FALSE, TRUE, FALSE,
 
 				_("Reset"), by_color_select_reset_callback,
-				bcd, NULL, FALSE, FALSE,
+				bcd, NULL, NULL, FALSE, FALSE,
 				_("Close"), by_color_select_close_callback,
-				bcd, NULL, TRUE, TRUE,
+				bcd, NULL, NULL, TRUE, TRUE,
 
 				NULL);
 

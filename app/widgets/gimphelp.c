@@ -103,7 +103,7 @@ gimp_idle_help (gpointer help_data)
   return FALSE;
 }
 
-void
+static void
 gimp_help_internal (gchar *current_locale,
 		    gchar *help_data)
 {
@@ -154,7 +154,7 @@ gimp_help_internal (gchar *current_locale,
     }
 }
 
-void
+static void
 gimp_help_netscape (gchar *current_locale,
 		    gchar *help_data)
 {

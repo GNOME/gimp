@@ -124,9 +124,9 @@ make_dialog (ColorDisplayDialog *cdd)
 				FALSE, TRUE, FALSE,
 
 				_("OK"), color_display_ok_callback,
-				cdd, NULL, TRUE, FALSE,
+				cdd, NULL, NULL, TRUE, FALSE,
 				_("Cancel"), color_display_cancel_callback,
-				cdd, NULL, FALSE, TRUE,
+				cdd, NULL, NULL, FALSE, TRUE,
 
 				NULL);
 

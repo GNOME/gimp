@@ -751,9 +751,9 @@ device_status_create (void)
 			 FALSE, FALSE, TRUE,
 
 			 _("Save"), (GtkSignalFunc) devices_write_rc,
-			 NULL, NULL, FALSE, FALSE,
+			 NULL, NULL, NULL, FALSE, FALSE,
 			 _("Close"), devices_close_callback,
-			 NULL, NULL, TRUE, TRUE,
+			 NULL, NULL, NULL, TRUE, TRUE,
 
 			 NULL);
 

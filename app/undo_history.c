@@ -759,7 +759,7 @@ undo_history_new (GImage *gimage)
 				 FALSE, TRUE, FALSE,
 
 				 _("Close"), undo_history_close_callback,
-				 st, NULL, TRUE, TRUE,
+				 st, NULL, NULL, TRUE, TRUE,
 
 				 NULL);
     dialog_register (st->shell);

@@ -2427,9 +2427,9 @@ channels_dialog_new_channel_query (GimpImage* gimage)
 		     FALSE, TRUE, FALSE,
 
 		     _("OK"), new_channel_query_ok_callback,
-		     options, NULL, TRUE, FALSE,
+		     options, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), new_channel_query_cancel_callback,
-		     options, NULL, FALSE, TRUE,
+		     options, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 
@@ -2601,9 +2601,9 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
 		     FALSE, TRUE, FALSE,
 
 		     _("OK"), edit_channel_query_ok_callback,
-		     options, NULL, TRUE, FALSE,
+		     options, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), edit_channel_query_cancel_callback,
-		     options, NULL, FALSE, TRUE,
+		     options, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 

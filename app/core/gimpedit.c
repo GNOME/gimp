@@ -724,9 +724,9 @@ paste_named_buffer (GDisplay *gdisp)
 		     FALSE, TRUE, FALSE,
 
 		     _("Delete"), named_buffer_delete_callback,
-		     pn_dlg, NULL, FALSE, FALSE,
+		     pn_dlg, NULL, NULL, FALSE, FALSE,
 		     _("Cancel"), named_buffer_cancel_callback,
-		     pn_dlg, NULL, TRUE, TRUE,
+		     pn_dlg, NULL, NULL, TRUE, TRUE,
 
 		     NULL);
 		     

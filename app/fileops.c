@@ -1687,9 +1687,9 @@ file_overwrite (char *filename,
 					 FALSE, TRUE, FALSE,
 
 					 _("Yes"), file_overwrite_yes_callback,
-					 overwrite_box, NULL, TRUE, FALSE,
+					 overwrite_box, NULL, NULL, TRUE, FALSE,
 					 _("No"), file_overwrite_no_callback,
-					 overwrite_box, NULL, FALSE, TRUE,
+					 overwrite_box, NULL, NULL, FALSE, TRUE,
 
 					 NULL);
 

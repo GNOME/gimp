@@ -1260,11 +1260,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 		     FALSE, TRUE, FALSE,
 
 		     _("OK"), file_prefs_ok_callback,
-		     NULL, NULL, FALSE, FALSE,
+		     NULL, NULL, NULL, FALSE, FALSE,
 		     _("Save"), file_prefs_save_callback,
-		     NULL, NULL, FALSE, FALSE,
+		     NULL, NULL, NULL, FALSE, FALSE,
 		     _("Cancel"), file_prefs_cancel_callback,
-		     NULL, NULL, TRUE, TRUE,
+		     NULL, NULL, NULL, TRUE, TRUE,
 
 		     NULL);
 

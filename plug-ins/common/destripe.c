@@ -41,17 +41,20 @@
  *   1998/02/06 * Minor changes.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <gtk/gtk.h>
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
-#include <string.h>
-
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <string.h>
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /*
@@ -549,7 +552,6 @@ destripe_dialog(void)
 		*ftable,	/* Filter table */
 		*frame,		/* Frame for preview */
 		*scrollbar,	/* Horizontal + vertical scroller */
-                *hbbox,
 		*button;
   gint		argc;		/* Fake argc for GUI */
   gchar		**argv;		/* Fake argv for GUI */
@@ -561,36 +563,45 @@ destripe_dialog(void)
   */
 
   argc    = 1;
-  argv    = g_new(gchar *, 1);
-  argv[0] = g_strdup("destripe");
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("destripe");
 
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
-  gdk_set_use_xshm(gimp_use_xshm());
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+  gdk_set_use_xshm (gimp_use_xshm ());
 
 #ifdef SIGBUS
-  signal(SIGBUS, SIG_DFL);
+  signal (SIGBUS, SIG_DFL);
 #endif
-  signal(SIGSEGV, SIG_DFL);
-  gtk_preview_set_gamma(gimp_gamma());
-  gtk_preview_set_install_cmap(gimp_install_cmap());
-  color_cube = gimp_color_cube();
-  gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2], color_cube[3]);
+  signal (SIGSEGV, SIG_DFL);
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
 
-  gtk_widget_set_default_visual(gtk_preview_get_visual());
-  gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
  /*
   * Dialog window...
   */
 
-  dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dialog), _("Destripe"));
-  gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-  gtk_container_border_width(GTK_CONTAINER(dialog), 0);
-  gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-		     (GtkSignalFunc) dialog_close_callback,
-		     NULL);
+  dialog = gimp_dialog_new (_("Destripe"), "destripe",
+			    gimp_plugin_help_func, "filters/destripe.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
+
+			    _("OK"), dialog_ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), gtk_widget_destroy,
+			    NULL, 1, NULL, FALSE, TRUE,
+
+			    NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+		      GTK_SIGNAL_FUNC (dialog_close_callback),
+		      NULL);
 
  /*
   * Top-level table for dialog...
@@ -684,32 +695,6 @@ destripe_dialog(void)
   */
 
   dialog_create_ivalue(_("Width"), GTK_TABLE(table), 2, &avg_width, 2, MAX_AVG);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) dialog_ok_callback,
-		      dialog);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dialog));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
 
  /*
   * Show it and wait for the user to do something...

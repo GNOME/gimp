@@ -22,14 +22,17 @@
  *   Initial Release
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gtk/gtk.h"
+
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
-#include "config.h"
 #include "libgimp/stdplugins-intl.h"
 
 #define DEBUG
@@ -568,50 +571,58 @@ void DepthMerge_executeRegion(DepthMerge *dm,
   }
 }
 
-gint32 DepthMerge_dialog(DepthMerge *dm) {
-  GtkWidget *topTable;
-  GtkWidget   *previewFrame;
-  GtkWidget *sourceTable;
-  GtkWidget   *tempLabel;
-  GtkWidget   *tempOptionMenu;
-  GtkWidget   *tempMenu;
-  GtkWidget *numericParameterTable;
-  GtkWidget *hbbox;
-  GtkWidget *button;
-  gint      argc;
+gint32
+DepthMerge_dialog (DepthMerge *dm)
+{
+  GtkWidget  *topTable;
+  GtkWidget  *previewFrame;
+  GtkWidget  *sourceTable;
+  GtkWidget  *tempLabel;
+  GtkWidget  *tempOptionMenu;
+  GtkWidget  *tempMenu;
+  GtkWidget  *numericParameterTable;
+  gint        argc;
   gchar     **argv;
-  guchar    *color_cube;
+  guchar     *color_cube;
 
-  dm->interface = (DepthMergeInterface *)g_malloc(sizeof(DepthMergeInterface));
+  dm->interface = g_new (DepthMergeInterface, 1);
   dm->interface->active = FALSE;
-  dm->interface->run = FALSE;
+  dm->interface->run    = FALSE;
 
   argc = 1;
-  argv = g_new(gchar *, 1);
-  argv[0] = g_strdup(PLUG_IN_NAME);
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup (PLUG_IN_NAME);
 
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 
-  gdk_set_use_xshm(gimp_use_xshm());
+  gdk_set_use_xshm (gimp_use_xshm ());
 
-  gtk_preview_set_gamma(gimp_gamma());
-  gtk_preview_set_install_cmap(gimp_install_cmap());
-  color_cube = gimp_color_cube();
-  gtk_preview_set_color_cube(color_cube[0],
-			     color_cube[1],
-			     color_cube[2],
-			     color_cube[3]);
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
 
-  gtk_widget_set_default_visual(gtk_preview_get_visual());
-  gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-  dm->interface->dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dm->interface->dialog), _("Depth Merge"));
-  gtk_window_position(GTK_WINDOW(dm->interface->dialog), GTK_WIN_POS_MOUSE);
-  gtk_container_border_width(GTK_CONTAINER(dm->interface->dialog), 0);
-  gtk_signal_connect(GTK_OBJECT(dm->interface->dialog), "destroy",
-		     (GtkSignalFunc)dialogCloseCallback, NULL);
+  dm->interface->dialog =
+    gimp_dialog_new (_("Depth Merge"), "depthmerge",
+		     gimp_plugin_help_func, "filters/depthmerge.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
+
+		     _("OK"), dialogOkCallback,
+		     dm, NULL, NULL, TRUE, FALSE,
+		     _("Cancel"), dialogCancelCallback,
+		     dm, NULL, NULL, FALSE, TRUE,
+
+		     NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dm->interface->dialog), "destroy",
+		      GTK_SIGNAL_FUNC (dialogCloseCallback),
+		      NULL);
 
   /* topTable */
   topTable = gtk_table_new(3, 3, FALSE);
@@ -740,31 +751,6 @@ gint32 DepthMerge_dialog(DepthMerge *dm) {
 			       GTK_TABLE(numericParameterTable), 3, 0,
 			       &(dm->params.scale2),
 			       -1, 1, 0.001);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dm->interface->dialog)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dm->interface->dialog)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dm->interface->dialog)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) dialogOkCallback,
-		      dm);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		     (GtkSignalFunc)dialogCancelCallback,
-		     dm);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /* Done */
 

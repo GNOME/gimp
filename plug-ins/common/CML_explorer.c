@@ -71,9 +71,6 @@
  */
 #include "config.h"
 
-#include "gtk/gtk.h"
-
-
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -82,9 +79,12 @@
 #include <sys/stat.h>
 #include <time.h>		/* for seed of random number */
 
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
-#include "libgimp/stdplugins-intl.h"
+#include "libgimp/gimpui.h"
 #include "libgimp/gimpcolorspace.h"
+#include "libgimp/stdplugins-intl.h"
 
 #ifndef RAND_MAX
 #define RAND_MAX 2147483647
@@ -1662,36 +1662,26 @@ preview_update ()
 static void
 function_graph_new (GtkWidget *widget, gpointer data)
 {
-  GtkWidget	*dlg;
-  GtkWidget     *hbbox;
-  GtkWidget	*button;
-  GtkWidget	*frame;
-  GtkWidget	*vbox;
-  GtkWidget	*preview;
-  gint		channel_id = *(int *) data;
-  CML_PARAM	*param = (CML_PARAM *) *((gpointer *)data + 1);
+  GtkWidget *dlg;
+  GtkWidget *frame;
+  GtkWidget *vbox;
+  GtkWidget *preview;
+  gint	     channel_id = *(int *) data;
+  CML_PARAM *param = (CML_PARAM *) *((gpointer *) data + 1);
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Graph of the current settings"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("Graph of the current settings"), "cml_explorer",
+			 gimp_plugin_help_func, "filters/cml_explorer.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), gtk_widget_destroy,
+			 NULL, 1, NULL, TRUE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) gtkW_close_callback, NULL);
-  /* Action Area */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
-
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT(dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
+		      GTK_SIGNAL_FUNC (gtkW_close_callback),
+		      NULL);
 
   frame = gtkW_frame_new (GTK_DIALOG (dlg)->vbox, _("The Graph"));
   vbox = gtkW_vbox_new (frame);
@@ -1864,40 +1854,25 @@ CML_dialog_new (char * name,
 		 GtkSignalFunc ok_callback,
 		 GtkSignalFunc close_callback)
 {
-  GtkWidget *dlg, *button;
+  GtkWidget *dlg;
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), name);
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (name, "cml_explorer",
+			 gimp_plugin_help_func, "filters/cml_explorer.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("Execute"), execute_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Execute and Exit"), ok_callback,
+			 NULL, NULL, NULL, FALSE, FALSE,
+			 _("Exit"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) close_callback, NULL);
-
-  /* Action Area */
-  button = gtk_button_new_with_label (_("Execute"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) execute_callback, dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Execute and Exit"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ok_callback, dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Exit"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT(dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (button);
+		      GTK_SIGNAL_FUNC (close_callback),
+		      NULL);
 
   return dlg;
 }
@@ -1922,6 +1897,9 @@ CML_save_to_file_callback (GtkWidget *widget, gpointer client_data)
   if (strlen (VALS.last_file_name) > 0)
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				     VALS.last_file_name);
+
+  gimp_help_connect_help_accel (filesel, gimp_plugin_help_func,
+				"filters/cml_explorer.html");
 
   gtk_widget_show (filesel);
 }
@@ -2106,6 +2084,9 @@ CML_load_from_file_callback (GtkWidget *widget, gpointer client_data)
   if (strlen (VALS.last_file_name) > 0)
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				     VALS.last_file_name);
+
+  gimp_help_connect_help_accel (filesel, gimp_plugin_help_func,
+				"filters/cml_explorer.html");
 
   gtk_widget_show (filesel);
 }
@@ -2541,39 +2522,22 @@ gtkW_dialog_new (gchar		*name,
 		 GtkSignalFunc	close_callback)
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
-  GtkWidget *button;
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), name);
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (name, "cml_explorer",
+			 gimp_plugin_help_func, "filters/cml_explorer.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) close_callback, NULL);
-
-  /* Action Area */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
-
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+		      GTK_SIGNAL_FUNC (close_callback),
+		      NULL);
 
   return dlg;
 }

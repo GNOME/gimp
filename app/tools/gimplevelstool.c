@@ -362,11 +362,11 @@ levels_dialog_new (void)
 			       FALSE, TRUE, FALSE,
 
 			       _("OK"), levels_ok_callback,
-			       ld, NULL, TRUE, FALSE,
+			       ld, NULL, NULL, TRUE, FALSE,
 			       _("Reset"), levels_reset_callback,
-			       ld, NULL, FALSE, FALSE,
+			       ld, NULL, NULL, FALSE, FALSE,
 			       _("Cancel"), levels_cancel_callback,
-			       ld, NULL, FALSE, TRUE,
+			       ld, NULL, NULL, FALSE, TRUE,
 
 			       NULL);
 

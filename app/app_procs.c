@@ -744,9 +744,9 @@ really_quit_dialog (void)
 			    FALSE, FALSE, FALSE,
 
 			    _("Quit"), really_quit_callback,
-			    NULL, NULL, FALSE, FALSE,
+			    NULL, NULL, NULL, FALSE, FALSE,
 			    _("Cancel"), really_quit_cancel_callback,
-			    NULL, NULL, TRUE, TRUE,
+			    NULL, NULL, NULL, TRUE, TRUE,
 
 			    NULL);
 

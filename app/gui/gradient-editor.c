@@ -796,9 +796,9 @@ gradient_editor_create (void)
 		     FALSE, TRUE, FALSE,
 
 		     _("Refresh"), ed_refresh_grads_callback,
-		     NULL, NULL, FALSE, FALSE,
+		     NULL, NULL, NULL, FALSE, FALSE,
 		     _("Close"), ed_close_callback,
-		     NULL, NULL, TRUE, TRUE,
+		     NULL, NULL, NULL, TRUE, TRUE,
 
 		     NULL);
 
@@ -1785,9 +1785,9 @@ ed_delete_gradient_callback (GtkWidget *widget,
 			    FALSE, FALSE, FALSE,
 
 			    _("Delete"), ed_do_delete_gradient_callback,
-			    NULL, NULL, FALSE, FALSE,
+			    NULL, NULL, NULL, FALSE, FALSE,
 			    _("Cancel"), ed_cancel_delete_gradient_callback,
-			    NULL, NULL, TRUE, TRUE,
+			    NULL, NULL, NULL, TRUE, TRUE,
 
 			    NULL);
 
@@ -4867,9 +4867,9 @@ cpopup_split_uniform_callback (GtkWidget *widget,
 		     FALSE, TRUE, FALSE,
 
 		     _("Split"), cpopup_split_uniform_split_callback,
-		     NULL, NULL, TRUE, FALSE,
+		     NULL, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), cpopup_split_uniform_cancel_callback,
-		     NULL, NULL, FALSE, TRUE,
+		     NULL, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 
@@ -5428,9 +5428,9 @@ cpopup_replicate_callback (GtkWidget *widget,
 		     FALSE, TRUE, FALSE,
 
 		     _("Replicate"), cpopup_do_replicate_callback,
-		     NULL, NULL, FALSE, FALSE,
+		     NULL, NULL, NULL, FALSE, FALSE,
 		     _("Cancel"), cpopup_replicate_cancel_callback,
-		     NULL, NULL, TRUE, TRUE,
+		     NULL, NULL, NULL, TRUE, TRUE,
 
 		     NULL);
 

@@ -167,9 +167,9 @@ pattern_select_new (gchar *title,
 				 FALSE, TRUE, FALSE,
 
 				 _("Refresh"), pattern_select_refresh_callback,
-				 psp, NULL, FALSE, FALSE,
+				 psp, NULL, NULL, FALSE, FALSE,
 				 _("Close"), pattern_select_close_callback,
-				 psp, NULL, TRUE, TRUE,
+				 psp, NULL, NULL, TRUE, TRUE,
 
 				 NULL);
 

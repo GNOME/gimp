@@ -56,6 +56,7 @@
 #include <string.h>
 #include <time.h>
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "gtk/gtk.h"
 #include <plug-ins/gpc/gpc.h>
 
@@ -601,11 +602,21 @@ blur_dialog ()
  *  Open a new dialog, label it and set up its
  *  destroy callback.
  */
-    dlg = gtk_dialog_new();
-    gtk_window_set_title(GTK_WINDOW(dlg), BLUR_VERSION);
-    gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-    gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-        (GtkSignalFunc) gpc_close_callback, NULL);
+    dlg = gimp_dialog_new (BLUR_VERSION, "blur",
+			   gimp_plugin_help_func, "filters/blur.html",
+			   GTK_WIN_POS_MOUSE,
+			   FALSE, TRUE, FALSE,
+
+			   _("OK"), blur_ok_callback,
+			   NULL, NULL, NULL, TRUE, FALSE,
+			   _("Cancel"), gtk_widget_destroy,
+			   NULL, 1, NULL, FALSE, TRUE,
+
+			   NULL);
+
+    gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+			GTK_SIGNAL_FUNC (gpc_close_callback),
+			NULL);
 /*
  *  Parameter settings
  *
@@ -620,13 +631,6 @@ blur_dialog ()
     gtk_container_add(GTK_CONTAINER(frame), table);
     gtk_widget_show(table);
     gpc_setup_tooltips(table);
-/*
- *  Action area OK & Cancel buttons
- */
-    gpc_add_action_button(_("OK"), (GtkSignalFunc) blur_ok_callback, dlg,
-        _("Accept settings and apply filter to image"));
-    gpc_add_action_button(_("Cancel"), (GtkSignalFunc) gpc_cancel_callback, dlg,
-        _("Close plug-in without making any changes"));
 /*
  *  Randomization seed initialization controls
  */

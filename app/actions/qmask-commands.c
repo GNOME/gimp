@@ -253,9 +253,9 @@ edit_qmask_channel_query (GDisplay * gdisp)
 		     FALSE, TRUE, FALSE,
 
 		     _("OK"), edit_qmask_query_ok_callback,
-		     options, NULL, TRUE, FALSE,
+		     options, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), edit_qmask_query_cancel_callback,
-		     options, NULL, FALSE, TRUE,
+		     options, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 

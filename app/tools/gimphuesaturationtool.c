@@ -370,11 +370,11 @@ hue_saturation_dialog_new (void)
 				FALSE, TRUE, FALSE,
 
 				_("OK"), hue_saturation_ok_callback,
-				hsd, NULL, TRUE, FALSE,
+				hsd, NULL, NULL, TRUE, FALSE,
 				_("Reset"), hue_saturation_reset_callback,
-				hsd, NULL, FALSE, FALSE,
+				hsd, NULL, NULL, FALSE, FALSE,
 				_("Cancel"), hue_saturation_cancel_callback,
-				hsd, NULL, FALSE, TRUE,
+				hsd, NULL, NULL, FALSE, TRUE,
 
 				NULL);
 

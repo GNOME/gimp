@@ -474,14 +474,14 @@ dialog (gint32     image_ID,
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gimp_dialog_new (_("Grid"), "grid",
-			 gimp_plugin_help_func, argv[0],
+			 gimp_plugin_help_func, "filters/grid.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
 			 _("OK"), ok_callback,
-			 NULL, NULL, TRUE, FALSE,
+			 NULL, NULL, NULL, TRUE, FALSE,
 			 _("Cancel"), close_callback,
-			 NULL, NULL, FALSE, TRUE,
+			 NULL, NULL, NULL, FALSE, TRUE,
 
 			 NULL);
 

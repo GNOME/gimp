@@ -275,9 +275,9 @@ brush_select_new (gchar   *title,
 				FALSE, TRUE, FALSE,
 
 				_("Refresh"), brush_select_refresh_callback,
-				bsp, NULL, FALSE, FALSE,
+				bsp, NULL, NULL, FALSE, FALSE,
 				_("Close"), brush_select_close_callback,
-				bsp, NULL, TRUE, TRUE,
+				bsp, NULL, NULL, TRUE, TRUE,
 
 				NULL);
 

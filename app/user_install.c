@@ -266,11 +266,11 @@ install_help (InstallCallback callback)
 				 FALSE, TRUE, FALSE,
 
 				 _("Install"), help_install_callback,
-				 callback, NULL, TRUE, FALSE,
+				 callback, NULL, NULL, TRUE, FALSE,
 				 _("Ignore"), help_ignore_callback,
-				 callback, NULL, FALSE, FALSE,
+				 callback, NULL, NULL, FALSE, FALSE,
 				 _("Quit"), help_quit_callback,
-				 callback, NULL, FALSE, TRUE,
+				 callback, NULL, NULL, FALSE, TRUE,
 
 				 NULL);
 
@@ -414,9 +414,9 @@ install_run (InstallCallback callback)
 				    FALSE, TRUE, FALSE,
 
 				    _("Continue"), install_continue_callback,
-				    callback, NULL, TRUE, FALSE,
+				    callback, NULL, NULL, TRUE, FALSE,
 				    _("Quit"), install_quit_callback,
-				    callback, NULL, FALSE, TRUE,
+				    callback, NULL, NULL, FALSE, TRUE,
 
 				    NULL);
 

@@ -195,9 +195,9 @@ file_new_confirm_dialog (NewImageInfo *info)
 		     FALSE, FALSE, FALSE,
 
 		     _("OK"), file_new_confirm_dialog_ok_callback,
-		     info, NULL, TRUE, FALSE,
+		     info, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), file_new_confirm_dialog_cancel_callback,
-		     info, NULL, FALSE, TRUE,
+		     info, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 
@@ -377,11 +377,11 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
 			       FALSE, FALSE, TRUE,
 
 			       _("OK"), file_new_ok_callback,
-			       info, NULL, TRUE, FALSE,
+			       info, NULL, NULL, TRUE, FALSE,
 			       _("Reset"), file_new_reset_callback,
-			       info, NULL, FALSE, FALSE,
+			       info, NULL, NULL, FALSE, FALSE,
 			       _("Cancel"), file_new_cancel_callback,
-			       info, NULL, FALSE, TRUE,
+			       info, NULL, NULL, FALSE, TRUE,
 
 			       NULL);
 

@@ -90,9 +90,9 @@ channel_ops_offset (GimpImage* gimage)
 				FALSE, TRUE, FALSE,
 
 				_("OK"), offset_ok_callback,
-				off_d, NULL, TRUE, FALSE,
+				off_d, NULL, NULL, TRUE, FALSE,
 				_("Cancel"), offset_cancel_callback,
-				off_d, NULL, FALSE, TRUE,
+				off_d, NULL, NULL, FALSE, TRUE,
 
 				NULL);
 				

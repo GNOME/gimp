@@ -277,9 +277,9 @@ error_console_create_window (void)
 				   TRUE, TRUE, FALSE,
 
 				   _("Clear"), error_console_clear_callback,
-				   NULL, NULL, FALSE, FALSE,
+				   NULL, NULL, NULL, FALSE, FALSE,
 				   _("Close"), error_console_close_callback,
-				   text, NULL, TRUE, TRUE,
+				   text, NULL, NULL, TRUE, TRUE,
 
 				   NULL);
   /* register this one only */

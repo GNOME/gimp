@@ -409,9 +409,9 @@ transform_core_button_press (Tool           *tool,
 
 		   gettext (action_labels[tool->type - ROTATE]),
 		   transform_ok_callback,
-		   tool, NULL, TRUE, FALSE,
+		   tool, NULL, NULL, TRUE, FALSE,
 		   _("Reset"), transform_reset_callback,
-		   tool, NULL, FALSE, FALSE,
+		   tool, NULL, NULL, FALSE, FALSE,
 
 		   NULL);
 

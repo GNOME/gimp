@@ -268,11 +268,11 @@ threshold_dialog_new (void)
 		     FALSE, TRUE, FALSE,
 
 		     _("OK"), threshold_ok_callback,
-		     td, NULL, TRUE, FALSE,
+		     td, NULL, NULL, TRUE, FALSE,
 		     _("Reset"), threshold_reset_callback,
-		     td, NULL, TRUE, FALSE,
+		     td, NULL, NULL, TRUE, FALSE,
 		     _("Cancel"), threshold_cancel_callback,
-		     td, NULL, FALSE, TRUE,
+		     td, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 

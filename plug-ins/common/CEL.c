@@ -22,7 +22,6 @@
  * Possible future additions:
  *  +   Save (perhaps optionally?) the palette in a KCF
  */
-
 #include "config.h"
 
 #include <stdio.h>
@@ -33,7 +32,9 @@
 #endif
 
 #include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 #include "libgimp/stdplugins-intl.h"
 
 static void query(void);
@@ -497,19 +498,22 @@ static void palette_cancel (GtkWidget  *widget, GtkWidget **window) {
   gtk_main_quit ();
 }
 
-static gint palette_dialog(char *title) {
+static gint
+palette_dialog (gchar *title)
+{
   gchar **argv;
   gint argc = 1;
   GtkWidget *dialog;
 
-  argv= g_malloc(sizeof(gchar *));
-  argv[0]= g_strdup("CEL file-filter");
+  argv= g_malloc (sizeof (gchar *));
+  argv[0]= g_strdup ("CEL file-filter");
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  dialog= gtk_file_selection_new(title);
-  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-  gtk_file_selection_set_filename(GTK_FILE_SELECTION(dialog), palette_file);
+  dialog = gtk_file_selection_new (title);
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (dialog), palette_file);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (dialog)->ok_button),
                       "clicked", (GtkSignalFunc) palette_ok, dialog);
@@ -517,7 +521,10 @@ static gint palette_dialog(char *title) {
                       "destroy", (GtkSignalFunc) palette_cancel, NULL);
   gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (dialog)->cancel_button), "clicked", (GtkSignalFunc) palette_cancel, GTK_OBJECT (dialog));
 
-  gtk_widget_show(dialog);
+  gimp_help_connect_help_accel (dialog, gimp_plugin_help_func,
+				"filters/cel.html");
+
+  gtk_widget_show (dialog);
 
   gtk_main ();
   gdk_flush ();
