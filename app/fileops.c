@@ -1574,7 +1574,6 @@ file_open_genbutton_callback (GtkWidget *widget,
         }
       
       g_free (full_filename);
-      list = g_slist_next (list);
     }
 
   g_free (dirname);

@@ -1,3 +1,9 @@
+2002-03-25  Sven Neumann  <sven@gimp.org>
+
+	* app/fileops.c (file_open_genbutton_callback): removed a call to
+	g_slist_next() which shouldn't have been there. Thanks to Oliver Rapp
+	and Nem W Schlecht for spotting this problem.
+
 2002-03-21  Tor Lillqvist  <tml@iki.fi>
 
 	* app/Makefile.am: Remove unnecessary empty assignment to INTLLIBS
