@@ -5,7 +5,25 @@ scriptdata =
 bin_PROGRAMS = gimp
 noinst_LIBRARIES = libgimpim.a
 
-libgimpim_a_SOURCES = gimpobject.c gimpimage.c gimpset.c gimpsignal.c gimpdrawable.c
+libgimpim_a_SOURCES = \
+	gimpdrawable.c	\
+	gimpdrawable.h	\
+	gimpdrawableF.h	\
+	gimpdrawableP.h	\
+	gimpimage.c	\
+	gimpimage.h	\
+	gimpimageF.h	\
+	gimpimageP.h	\
+	gimpobject.c	\
+	gimpobject.h	\
+	gimpobjectF.h	\
+	gimpobjectP.h	\
+	gimpset.c	\
+	gimpset.h	\
+	gimpsetF.h	\
+	gimpsetP.h	\
+	gimpsignal.c	\
+	gimpsignal.h
 
 gimp_SOURCES = \
 	about_dialog.c		\
@@ -156,6 +174,8 @@ gimp_SOURCES = \
 	gimpbrushgenerated.h	\
 	gimpbrushlist.c		\
 	gimpbrushlist.h		\
+	gimpbrushlistF.h	\
+	gimpbrushlistP.h	\
 	gimplist.c		\
 	gimplist.h		\
 	gimplistF.h		\
