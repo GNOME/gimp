@@ -1,5 +1,10 @@
 2002-03-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdock.c: reduced the gimp_dock_remove_book()
+	if() {} else if () {} ... paned removal madness to two cases.
+
+2002-03-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdock.c: pack the dock's GimpDockbooks in
 	GtkVPaneds instead of a GtkVBoxed so they are resizable. It's
 	hackish, uncommented and weird code that will change, but I wanted
