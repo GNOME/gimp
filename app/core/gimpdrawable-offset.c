@@ -576,7 +576,7 @@ duplicate (GimpImage *gimage)
   GimpChannel  *channel, *new_channel;
   GList        *list;
   Guide        *guide = NULL;
-  GimpLayer    *active_layer = NULL;
+  GimpLayer    *active_layer   = NULL;
   GimpChannel  *active_channel = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
   GimpDrawable *floating_sel_drawable = NULL;
@@ -627,7 +627,7 @@ duplicate (GimpImage *gimage)
 				gimp_object_get_name (GIMP_OBJECT (layer->mask)));
 	}
 
-      if (gimage->active_layer == layer)
+      if (gimp_image_get_active_layer (gimage) == layer)
 	active_layer = new_layer;
 
       if (gimage->floating_sel == layer)
@@ -656,7 +656,7 @@ duplicate (GimpImage *gimage)
       gimp_object_set_name (GIMP_OBJECT (new_channel),
 			    gimp_object_get_name (GIMP_OBJECT (channel)));
 
-      if (gimage->active_channel == channel)
+      if (gimp_image_get_active_channel (gimage) == channel)
 	active_channel = (new_channel);
 
       if (floating_sel_drawable == GIMP_DRAWABLE (channel))
@@ -678,8 +678,12 @@ duplicate (GimpImage *gimage)
   new_gimage->selection_mask->boundary_known = FALSE;
 
   /*  Set active layer, active channel  */
-  new_gimage->active_layer = active_layer;
-  new_gimage->active_channel = active_channel;
+  if (active_layer)
+    gimp_image_set_active_layer (new_gimage, active_layer);
+
+  if (active_channel)
+    gimp_image_set_active_channel (new_gimage, active_channel);
+
   if (floating_layer)
     floating_sel_attach (floating_layer, new_floating_sel_drawable);
 

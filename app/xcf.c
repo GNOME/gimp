@@ -649,7 +649,7 @@ xcf_save_layer_props (XcfInfo   *info,
 		      GImage    *gimage,
 		      GimpLayer *layer)
 {
-  if (layer == gimage->active_layer)
+  if (layer == gimp_image_get_active_layer (gimage))
     xcf_save_prop (info, PROP_ACTIVE_LAYER);
 
   if (layer == gimp_image_floating_sel (gimage))
@@ -679,7 +679,7 @@ xcf_save_channel_props (XcfInfo     *info,
 			GImage      *gimage,
 			GimpChannel *channel)
 {
-  if (channel == gimage->active_channel)
+  if (channel == gimp_image_get_active_channel (gimage))
     xcf_save_prop (info, PROP_ACTIVE_CHANNEL);
 
   if (channel == gimage->selection_mask)

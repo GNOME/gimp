@@ -155,18 +155,23 @@ floating_sel_reset (GimpLayer *layer)
 
   /*  set the underlying drawable to active  */
   if (GIMP_IS_LAYER (layer->fs.drawable))
-    gimp_image_set_active_layer (gimage, GIMP_LAYER (layer->fs.drawable));
+    {
+      gimp_image_set_active_layer (gimage, GIMP_LAYER (layer->fs.drawable));
+    }
   else if (GIMP_IS_LAYER_MASK (layer->fs.drawable))
-    gimp_image_set_active_layer (gimage,
-			     GIMP_LAYER_MASK (layer->fs.drawable)->layer);
+    {
+      gimp_image_set_active_layer (gimage,
+				   GIMP_LAYER_MASK (layer->fs.drawable)->layer);
+    }
   else if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
       gimp_image_set_active_channel (gimage, GIMP_CHANNEL (layer->fs.drawable));
 
       if (gimp_container_num_children (gimage->layers))
-	gimage->active_layer = (((GimpLayer *) gimage->layer_stack->data));
-      else
-	gimage->active_layer = NULL;
+	{
+	  gimp_image_set_active_layer (gimage,
+				       (GimpLayer *) gimage->layer_stack->data);
+	}
     }
 }
 

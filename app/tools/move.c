@@ -493,7 +493,7 @@ move_tool_cursor_update (GimpTool       *tool,
 					    GIMP_RECT_SELECT_TOOL_CURSOR,
 					    GIMP_CURSOR_MODIFIER_ANCHOR);
 	    }
-	  else if (layer == gdisp->gimage->active_layer)
+	  else if (layer == gimp_image_get_active_layer (gdisp->gimage))
 	    {
 	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
 					    GIMP_MOVE_TOOL_CURSOR,

@@ -1965,8 +1965,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 	      alpha = gimp_layer_has_alpha (layer);
 	    }
 
-	  lind = gimp_image_get_layer_index (gdisp->gimage, 
-					     gdisp->gimage->active_layer);
+	  lind = gimp_image_get_layer_index (gdisp->gimage, layer);
 	  lnum = gimp_container_num_children (gdisp->gimage->layers);
 	}
     }

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpwidgetsincludedir = $(includedir)/gimp-$(GIMP_MAJOR_VERSION).$(GIMP_MINOR_VERSION)/libgimpwidgets
+libgimpwidgetsincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpwidgets
 
 AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"		\
@@ -22,9 +22,9 @@ EXTRA_DIST = \
 	makefile.msc		\
 	gimpwidgets.def
 
-lib_LTLIBRARIES = libgimpwidgets.la
+lib_LTLIBRARIES = libgimpwidgets-1.3.la
 
-libgimpwidgets_la_SOURCES = \
+libgimpwidgets_1_3_la_SOURCES = \
 	gimpwidgets.c		\
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
@@ -66,10 +66,10 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpsizeentry.h		\
 	gimpunitmenu.h
 
-libgimpwidgets_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	-release $(LT_RELEASE)
-libgimpwidgets_la_LIBADD = $(GLIB_LIBS) -lm
+libgimpwidgets_1_3_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+
+libgimpwidgets_1_3_la_LIBADD = $(GLIB_LIBS) -lm
 
 .PHONY: files
 

@@ -19,9 +19,9 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimp.la		\
-	$(top_builddir)/libgimpcolor/libgimpcolor.la	\
-	$(GLIB_LIBS)					\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
 .PHONY: files

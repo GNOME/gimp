@@ -618,8 +618,8 @@ channels_dialog_flush (void)
 	}
 
       /*  Set the active channel  */
-      if (channelsD->active_channel != gimage->active_channel)
-	channelsD->active_channel = gimage->active_channel;
+      if (channelsD->active_channel != gimp_image_get_active_channel (gimage))
+	channelsD->active_channel = gimp_image_get_active_channel (gimage);
 
       /*  set the menus if floating sel status has changed  */
       if (channelsD->floating_sel != gimage->floating_sel)
@@ -1044,9 +1044,9 @@ channels_dialog_raise_channel_callback (GtkWidget *widget,
   if (!channelsD || !(gimage = channelsD->gimage))
     return;
 
-  if (gimage->active_channel != NULL)
+  if (gimp_image_get_active_channel (gimage))
     {
-      gimp_image_raise_channel (gimage, gimage->active_channel);
+      gimp_image_raise_channel (gimage, gimp_image_get_active_channel (gimage));
       gdisplays_flush ();
     }
 }
@@ -1060,9 +1060,9 @@ channels_dialog_lower_channel_callback (GtkWidget *widget,
   if (!channelsD || !(gimage = channelsD->gimage))
     return;
 
-  if (gimage->active_channel != NULL)
+  if (gimp_image_get_active_channel (gimage))
     {
-      gimp_image_lower_channel (gimage, gimage->active_channel);
+      gimp_image_lower_channel (gimage, gimp_image_get_active_channel (gimage));
       gdisplays_flush ();
     }
 }
@@ -1090,14 +1090,15 @@ void
 channels_dialog_delete_channel_callback (GtkWidget *widget,
 					 gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage   *gimage;
+  GimpChannel *active_channel;
 
   if (!channelsD || !(gimage = channelsD->gimage))
     return;
 
-  if (gimage->active_channel != NULL)
+  if ((active_channel = gimp_image_get_active_channel (gimage)))
     {
-      gimp_image_remove_channel (gimage, gimage->active_channel);
+      gimp_image_remove_channel (gimage, active_channel);
       gdisplays_flush ();
     }
 }
@@ -1106,14 +1107,15 @@ void
 channels_dialog_channel_to_sel_callback (GtkWidget *widget,
 					 gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage   *gimage;
+  GimpChannel *active_channel;
 
   if (!channelsD || !(gimage = channelsD->gimage))
     return;
 
-  if (gimage->active_channel != NULL)
+  if ((active_channel = gimp_image_get_active_channel (gimage)))
     {
-      gimage_mask_load (gimage, gimage->active_channel);
+      gimage_mask_load (gimage, active_channel);
       gdisplays_flush ();
     }
 }

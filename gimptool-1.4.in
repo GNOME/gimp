@@ -22,7 +22,7 @@ gimpdatadir=@gimpdatadir@
 usage()
 {
   cat <<EOF
-Usage: gimptool [OPTION]...
+Usage: gimptool-1.4 [OPTION]...
 
 General options:
   --help                  print this message
@@ -179,7 +179,7 @@ while test $# -gt 0; do
         --cflags-noui)
           my_gtk_cflags=`echo $gtk_cflags | sed 's/^.*\(-I[^ ]*glib[^ ]*  *-I[^ ]*\).*$/\1/'` ;;
       esac
-      includes=-I@includedir@/gimp-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@
+      includes=-I@includedir@/gimp-@LT_RELEASE@
       echo $includes $my_gtk_cflags
       ;;
     --libs | --libs-nogimpui)
@@ -196,9 +196,9 @@ while test $# -gt 0; do
       done
       case $1 in
         --libs)
-          echo $libdirs -lgimpui -lgimpwidgets -lgimp -lgimpcolor -lgimpmath $my_gtk_libs ;;
+          echo $libdirs -lgimpui-@LT_RELEASE@ -lgimpwidgets-@LT_RELEASE@ -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ $my_gtk_libs ;;
         --libs-nogimpui)
-          echo $libdirs -lgimp -lgimpcolor -lgimpmath $my_gtk_libs ;;
+          echo $libdirs -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ $my_gtk_libs ;;
       esac
       ;;
     --libs-noui)

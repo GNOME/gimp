@@ -318,16 +318,16 @@ gimp_SOURCES = \
 	histogramwidget.c		\
 	histogramwidget.h		\
 	\
-	marching_ants.h		\
+	marching_ants.h			\
 	pixmaps2.h
 
 EXTRA_DIST = \
-	makefile.mingw		\
-	makefile.mingw.in	\
-	makefile.msc		\
-	gimp.rc			\
-	gimp.sym		\
-	wilber.ico		\
+	makefile.mingw			\
+	makefile.mingw.in		\
+	makefile.msc			\
+	gimp.rc				\
+	gimp.sym			\
+	wilber.ico			\
 	arch/i386/mmx/paint_funcs_mmx.S
 
 
@@ -348,15 +348,15 @@ INCLUDES = \
 	-I$(includedir)
 
 gimp_LDADD = \
-	pdb/libapppdb.la					\
-	tools/libapptools.la					\
-	$(top_builddir)/libgimpcolor/libgimpcolor.la		\
-	$(top_builddir)/libgimpmath/libgimpmath.la		\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets.la	\
-	$(top_builddir)/libgimp/libgimpi.a			\
-	$(GTK_LIBS)						\
-	$(GIMP_THREAD_LIBS)					\
-	$(GIMP_MP_LIBS)						\
+	pdb/libapppdb.la						\
+	tools/libapptools.la						\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimp/libgimpi.a				\
+	$(GTK_LIBS)							\
+	$(GIMP_THREAD_LIBS)						\
+	$(GIMP_MP_LIBS)							\
 	$(INTLLIBS)
 
 .PHONY: files

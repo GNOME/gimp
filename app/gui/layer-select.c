@@ -266,7 +266,8 @@ layer_select_end (LayerSelect *layer_select,
   gtk_widget_hide (layer_select->shell);
 
   /*  only reset the active layer if a new layer was specified  */
-  if (layer_select->current_layer != layer_select->gimage->active_layer)
+  if (layer_select->current_layer !=
+      gimp_image_get_active_layer (layer_select->gimage))
     {
       gimp_image_set_active_layer (layer_select->gimage, 
 				   layer_select->current_layer);
@@ -281,9 +282,9 @@ layer_select_set_gimage (LayerSelect *layer_select,
   gint image_width;
   gint image_height;
 
-  layer_select->gimage = gimage;
-  layer_select->current_layer = gimage->active_layer;
-  layer_select->dirty = TRUE;
+  layer_select->gimage        = gimage;
+  layer_select->current_layer = gimp_image_get_active_layer (gimage);
+  layer_select->dirty         = TRUE;
 
   /*  Get the image width and height variables, based on the gimage  */
   if (gimage->width > gimage->height)

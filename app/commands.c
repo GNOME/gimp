@@ -940,10 +940,12 @@ layers_previous_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp);
 
   current_layer =
-    gimp_image_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
+    gimp_image_get_layer_index (gdisp->gimage,
+				gimp_image_get_active_layer (gdisp->gimage));
 
-  new_layer = (GimpLayer *) gimp_container_get_child_by_index (gdisp->gimage->layers, 
-							       current_layer - 1);
+  new_layer = (GimpLayer *)
+    gimp_container_get_child_by_index (gdisp->gimage->layers, 
+				       current_layer - 1);
 
   if (new_layer)
     {
@@ -964,10 +966,12 @@ layers_next_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp);
 
   current_layer =
-    gimp_image_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
+    gimp_image_get_layer_index (gdisp->gimage,
+				gimp_image_get_active_layer (gdisp->gimage));
 
-  new_layer = (GimpLayer *) gimp_container_get_child_by_index (gdisp->gimage->layers, 
-							       current_layer + 1);
+  new_layer = (GimpLayer *)
+    gimp_container_get_child_by_index (gdisp->gimage->layers, 
+				       current_layer + 1);
 
   if (new_layer)
     {
@@ -984,7 +988,8 @@ layers_raise_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimp_image_raise_layer (gdisp->gimage, gdisp->gimage->active_layer);
+  gimp_image_raise_layer (gdisp->gimage,
+			  gimp_image_get_active_layer (gdisp->gimage));
   gdisplays_flush ();
 }
 
@@ -995,7 +1000,8 @@ layers_lower_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimp_image_lower_layer (gdisp->gimage, gdisp->gimage->active_layer);
+  gimp_image_lower_layer (gdisp->gimage,
+			  gimp_image_get_active_layer (gdisp->gimage));
   gdisplays_flush ();
 }
 
@@ -1006,7 +1012,8 @@ layers_raise_to_top_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimp_image_raise_layer_to_top (gdisp->gimage, gdisp->gimage->active_layer);
+  gimp_image_raise_layer_to_top (gdisp->gimage,
+				 gimp_image_get_active_layer (gdisp->gimage));
   gdisplays_flush ();
 }
 
@@ -1017,7 +1024,8 @@ layers_lower_to_bottom_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimp_image_lower_layer_to_bottom (gdisp->gimage, gdisp->gimage->active_layer);
+  gimp_image_lower_layer_to_bottom (gdisp->gimage,
+				    gimp_image_get_active_layer (gdisp->gimage));
   gdisplays_flush ();
 }
 
@@ -1060,7 +1068,8 @@ layers_mask_select_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimage_mask_layer_mask (gdisp->gimage, gdisp->gimage->active_layer);
+  gimage_mask_layer_mask (gdisp->gimage,
+			  gimp_image_get_active_layer (gdisp->gimage));
   gdisplays_flush ();
 }
 
@@ -1071,7 +1080,7 @@ layers_add_alpha_channel_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimp_layer_add_alpha ( gdisp->gimage->active_layer);
+  gimp_layer_add_alpha (gimp_image_get_active_layer (gdisp->gimage));
   gdisplays_flush ();
 }
 
@@ -1082,7 +1091,8 @@ layers_alpha_select_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimage_mask_layer_alpha (gdisp->gimage, gdisp->gimage->active_layer);
+  gimage_mask_layer_alpha (gdisp->gimage,
+			   gimp_image_get_active_layer (gdisp->gimage));
   gdisplays_flush ();
 }
 
@@ -1093,7 +1103,7 @@ layers_resize_to_image_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimp_layer_resize_to_image (gdisp->gimage->active_layer);
+  gimp_layer_resize_to_image (gimp_image_get_active_layer (gdisp->gimage));
   gdisplays_flush ();
 }
 

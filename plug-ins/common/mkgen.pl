@@ -79,21 +79,21 @@ EOT
 foreach (sort keys %plugins) {
     my $libgimp = "";
 
-    $libgimp .= "\$(top_builddir)/libgimp/libgimp.la";
+    $libgimp .= "\$(top_builddir)/libgimp/libgimp-\$(LT_RELEASE).la";
     if (exists $plugins{$_}->{ui}) {
-	$libgimp .= "\t\t\t\\\n\t$libgimp";
-	$libgimp =~ s/gimp\./gimpui./;
+	$libgimp .= "\t\t\\\n\t$libgimp";
+	$libgimp =~ s/gimp-/gimpui-/;
 
-        $libgimp .= "\t\t\t\\\n\t\$(top_builddir)/libgimpwidgets/libgimpwidgets.la";
-        $libgimp .= "\t\\\n\t\$(top_builddir)/libgimpcolor/libgimpcolor.la";
+        $libgimp .= "\t\t\\\n\t\$(top_builddir)/libgimpwidgets/libgimpwidgets-\$(LT_RELEASE).la";
+        $libgimp .= "\t\\\n\t\$(top_builddir)/libgimpcolor/libgimpcolor-\$(LT_RELEASE).la";
     } else {
-        $libgimp .= "\t\t\t\\\n\t\$(top_builddir)/libgimpcolor/libgimpcolor.la";
+        $libgimp .= "\t\t\\\n\t\$(top_builddir)/libgimpcolor/libgimpcolor-\$(LT_RELEASE).la";
     }
 
     my $optlib = "";
     if (exists $plugins{$_}->{optional}) {
 	my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
-	$optlib = "\n\t\$(LIB\U$name\E)\t\t\t\t\t\t\\";
+	$optlib = "\n\t\$(LIB\U$name\E)\t\t\t\t\t\t\t\\";
     }
 
     if (exists $plugins{$_}->{libsupp}) {
@@ -109,8 +109,8 @@ ${_}_SOURCES = \\
 	$_.c
 
 ${_}_LDADD = \\
-	$libgimp		\\$optlib
-	\$(\U$plugins{$_}->{libdep}\E_LIBS)						\\
+	$libgimp	\\$optlib
+	\$(\U$plugins{$_}->{libdep}\E_LIBS)							\\
 	\$(INTLLIBS)
 EOT
 

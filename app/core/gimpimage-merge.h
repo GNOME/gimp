@@ -91,7 +91,7 @@ struct _GimpImage
 
   TileManager       *shadow;                /*  shadow buffer tiles          */
 
-                                            /*  Projection attributes  */
+  /*  Projection attributes  */
   gint               construct_flag;        /*  flag for construction        */
   GimpImageType      proj_type;             /*  type of the projection image */
   gint               proj_bytes;            /*  bpp in projection image      */
@@ -101,15 +101,15 @@ struct _GimpImage
 
   GList             *guides;                /*  guides                       */
 
-                                            /*  Layer/Channel attributes  */
+  /*  Layer/Channel attributes  */
   GimpContainer     *layers;                /*  the list of layers           */
   GimpContainer     *channels;              /*  the list of masks            */
   GSList            *layer_stack;           /*  the layers in MRU order      */
 
-  GimpLayer         *active_layer;          /*  ID of active layer           */
-  GimpChannel       *active_channel;        /*  ID of active channel         */
-  GimpLayer         *floating_sel;          /*  ID of fs layer               */
-  GimpChannel       *selection_mask;        /*  selection mask channel       */
+  GimpLayer         *active_layer;          /*  the active layer             */
+  GimpChannel       *active_channel;        /*  the active channel           */
+  GimpLayer         *floating_sel;          /*  the FS layer                 */
+  GimpChannel       *selection_mask;        /*  the selection mask channel   */
 
   ParasiteList      *parasites;             /*  Plug-in parasite data        */
 
@@ -124,7 +124,7 @@ struct _GimpImage
   gboolean           qmask_state;           /*  TRUE if qmask is on          */
   GimpRGB            qmask_color;           /*  rgba triplet of the color    */
 
-                                            /*  Undo apparatus  */
+  /*  Undo apparatus  */
   GSList            *undo_stack;            /*  stack for undo operations    */
   GSList            *redo_stack;            /*  stack for redo operations    */
   gint               undo_bytes;            /*  bytes in undo stack          */
@@ -133,7 +133,7 @@ struct _GimpImage
   UndoType           pushing_undo_group;    /*  undo group status flag       */
   GtkWidget         *undo_history;	    /*  history viewer, or NULL      */
 
-                                            /*  Composite preview  */
+  /*  Composite preview  */
   TempBuf           *comp_preview;          /*  the composite preview        */
   gboolean           comp_preview_valid;    /*  preview valid-1/channel      */
 };

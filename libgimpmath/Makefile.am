@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpmathincludedir = $(includedir)/gimp-$(GIMP_MAJOR_VERSION).$(GIMP_MINOR_VERSION)/libgimpmath
+libgimpmathincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpmath
 
 AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"		\
@@ -22,9 +22,9 @@ EXTRA_DIST = \
 	makefile.msc		\
 	gimpmath.def
 
-lib_LTLIBRARIES = libgimpmath.la
+lib_LTLIBRARIES = libgimpmath-1.3.la
 
-libgimpmath_la_SOURCES = \
+libgimpmath_1_3_la_SOURCES = \
 	gimpmath.h	\
 	gimpmathtypes.h	\
 	gimpmatrix.c	\
@@ -38,10 +38,10 @@ libgimpmathinclude_HEADERS = \
 	gimpmatrix.h	\
 	gimpvector.h
 
-libgimpmath_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	-release $(LT_RELEASE)
-libgimpmath_la_LIBADD = $(GLIB_LIBS) -lm
+libgimpmath_1_3_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+
+libgimpmath_1_3_la_LIBADD = $(GLIB_LIBS) -lm
 
 .PHONY: files
 

@@ -1488,11 +1488,11 @@ undo_pop_layer (GimpImage *gimage,
   else
     {
       /*  record the active layer  */
-      lu->prev_layer = gimage->active_layer;
+      lu->prev_layer = gimp_image_get_active_layer (gimage);
 
       /*  hide the current selection--for all views  */
-      if (gimage->active_layer != NULL)
-	gimp_layer_invalidate_boundary ((gimage->active_layer));
+      if (gimp_image_get_active_layer (gimage))
+	gimp_layer_invalidate_boundary (gimp_image_get_active_layer (gimage));
 
       /*  if this is a floating selection, set the fs pointer  */
       if (gimp_layer_is_floating_sel (lu->layer))
@@ -1501,8 +1501,7 @@ undo_pop_layer (GimpImage *gimage,
       /*  add the new layer  */
       gimp_container_insert (gimage->layers, 
 			     GIMP_OBJECT (lu->layer), lu->prev_position);
-      gimage->layer_stack = g_slist_prepend (gimage->layer_stack, lu->layer);
-      gimage->active_layer = lu->layer;
+      gimp_image_set_active_layer (gimage, lu->layer);
 
       drawable_update (GIMP_DRAWABLE (lu->layer), 0, 0,
 		       GIMP_DRAWABLE (lu->layer)->width,
@@ -1834,7 +1833,7 @@ undo_pop_channel (GimpImage *gimage,
   else
     {
       /*  record the active channel  */
-      cu->prev_channel = gimage->active_channel;
+      cu->prev_channel = gimp_image_get_active_channel (gimage);
 
       /*  add the new channel  */
       gimp_container_insert (gimage->channels, 
@@ -2009,7 +2008,7 @@ undo_pop_fs_to_layer (GimpImage *gimage,
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->layer));
 
       fsu->layer->fs.drawable = fsu->drawable;
-      gimage->active_layer = fsu->layer;
+      gimp_image_set_active_layer (gimage, fsu->layer);
       gimage->floating_sel = fsu->layer;
 
       /*  restore the contents of the drawable  */

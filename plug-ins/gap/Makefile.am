@@ -209,20 +209,20 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la			\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets.la	\
-	$(top_builddir)/libgimp/libgimp.la			\
-	$(top_builddir)/libgimpcolor/libgimpcolor.la		\
-	$(GTK_LIBS)						\
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
 gap_decode_mpeg_LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la			\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets.la	\
-	$(top_builddir)/libgimp/libgimp.la			\
-	$(top_builddir)/libgimpcolor/libgimpcolor.la		\
-	$(LIBMPEG)						\
-	$(GTK_LIBS)						\
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(LIBMPEG)							\
+	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
 files:

@@ -695,12 +695,12 @@ layers_dialog_flush (void)
         }
 
       /*  Set the active layer  */
-      if (layersD->active_layer != gimage->active_layer)
-        layersD->active_layer = gimage->active_layer;
+      if (layersD->active_layer != gimp_image_get_active_layer (gimage))
+        layersD->active_layer = gimp_image_get_active_layer (gimage);
 
       /*  Set the active channel  */
-      if (layersD->active_channel != gimage->active_channel)
-        layersD->active_channel = gimage->active_channel;
+      if (layersD->active_channel != gimp_image_get_active_channel (gimage))
+        layersD->active_channel = gimp_image_get_active_channel (gimage);
 
       /*  set the menus if floating sel status has changed  */
       if (layersD->floating_sel != gimage->floating_sel)
@@ -1390,7 +1390,8 @@ paint_mode_menu_callback (GtkWidget *widget,
   GimpLayer        *layer;
   LayerModeEffects  mode;
 
-  if (!(gimage = layersD->gimage) || !(layer = gimage->active_layer))
+  if (! (gimage = layersD->gimage) ||
+      ! (layer  = gimp_image_get_active_layer (gimage)))
     return;
 
   /*  If the layer has an alpha channel, set the transparency and redraw  */
@@ -1418,7 +1419,8 @@ opacity_scale_update (GtkAdjustment *adjustment,
   GimpLayer *layer;
   gint       opacity;
 
-  if (!(gimage = layersD->gimage) || !(layer = gimage->active_layer))
+  if (! (gimage = layersD->gimage) ||
+      ! (layer  = gimp_image_get_active_layer (gimage)))
     return;
 
   /*  add the 0.001 to insure there are no subtle rounding errors  */
@@ -1442,7 +1444,8 @@ preserve_trans_update (GtkWidget *widget,
   GimpImage *gimage;
   GimpLayer *layer;
 
-  if (!(gimage = layersD->gimage) || !(layer = gimage->active_layer))
+  if (! (gimage = layersD->gimage) ||
+      ! (layer  = gimp_image_get_active_layer (gimage)))
     return;
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
@@ -1538,16 +1541,19 @@ layers_dialog_previous_layer_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  current_layer = gimp_image_get_layer_index (gimage, gimage->active_layer);
+  current_layer =
+    gimp_image_get_layer_index (gimage, gimp_image_get_active_layer (gimage));
 
-  new_layer = 
-    GIMP_LAYER (gimp_container_get_child_by_index (gimage->layers, 
-						   current_layer - 1));
-
-  if (new_layer)
+  if (current_layer > 0)
     {
-      gimp_image_set_active_layer (gimage, new_layer);
-      gdisplays_flush ();
+      new_layer = (GimpLayer *)
+	gimp_container_get_child_by_index (gimage->layers, current_layer - 1);
+
+      if (new_layer)
+	{
+	  gimp_image_set_active_layer (gimage, new_layer);
+	  gdisplays_flush ();
+	}
     }
 }
 
@@ -1562,7 +1568,8 @@ layers_dialog_next_layer_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  current_layer = gimp_image_get_layer_index (gimage, gimage->active_layer);
+  current_layer =
+    gimp_image_get_layer_index (gimage, gimp_image_get_active_layer (gimage));
 
   new_layer = 
     GIMP_LAYER (gimp_container_get_child_by_index (gimage->layers, 
@@ -1584,7 +1591,7 @@ layers_dialog_raise_layer_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  gimp_image_raise_layer (gimage, gimage->active_layer);
+  gimp_image_raise_layer (gimage, gimp_image_get_active_layer (gimage));
   gdisplays_flush ();
 }
 
@@ -1597,7 +1604,7 @@ layers_dialog_lower_layer_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  gimp_image_lower_layer (gimage, gimage->active_layer);
+  gimp_image_lower_layer (gimage, gimp_image_get_active_layer (gimage));
   gdisplays_flush ();
 }
 
@@ -1610,7 +1617,7 @@ layers_dialog_raise_layer_to_top_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  gimp_image_raise_layer_to_top (gimage, gimage->active_layer);
+  gimp_image_raise_layer_to_top (gimage, gimp_image_get_active_layer (gimage));
   gdisplays_flush ();
 }
 
@@ -1623,7 +1630,8 @@ layers_dialog_lower_layer_to_bottom_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  gimp_image_lower_layer_to_bottom (gimage, gimage->active_layer);
+  gimp_image_lower_layer_to_bottom (gimage,
+				    gimp_image_get_active_layer (gimage));
   gdisplays_flush ();
 }
 
@@ -1681,16 +1689,16 @@ layers_dialog_delete_layer_callback (GtkWidget *widget,
   GimpImage *gimage;
   GimpLayer *layer;
 
-  if (!layersD ||
-      !(gimage = layersD->gimage) ||
-      !(layer = gimp_image_get_active_layer (gimage)))
+  if (! layersD ||
+      ! (gimage = layersD->gimage) ||
+      ! (layer = gimp_image_get_active_layer (gimage)))
     return;
 
   /*  if the layer is a floating selection, take special care  */
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_remove (layer);
   else
-    gimp_image_remove_layer (gimage, gimage->active_layer);
+    gimp_image_remove_layer (gimage, gimp_image_get_active_layer (gimage));
 
   gdisplays_flush_now ();
 }
@@ -1704,7 +1712,8 @@ layers_dialog_scale_layer_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  layers_dialog_scale_layer_query (gimage, gimage->active_layer);
+  layers_dialog_scale_layer_query (gimage,
+				   gimp_image_get_active_layer (gimage));
 }
 
 void
@@ -1716,7 +1725,8 @@ layers_dialog_resize_layer_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  layers_dialog_resize_layer_query (gimage, gimage->active_layer);
+  layers_dialog_resize_layer_query (gimage,
+				    gimp_image_get_active_layer (gimage));
 }
 
 void
@@ -1728,7 +1738,7 @@ layers_dialog_resize_to_image_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
   
-  gimp_layer_resize_to_image (gimage->active_layer);
+  gimp_layer_resize_to_image (gimp_image_get_active_layer (gimage));
 
   gdisplays_flush ();
 }
@@ -1742,7 +1752,7 @@ layers_dialog_add_layer_mask_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  layers_dialog_add_mask_query (gimage->active_layer);
+  layers_dialog_add_mask_query (gimp_image_get_active_layer (gimage));
 }
 
 void
@@ -1755,11 +1765,12 @@ layers_dialog_apply_layer_mask_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
+  layer = gimp_image_get_active_layer (gimage);
+
   /*  Make sure there is a layer mask to apply  */
-  if ((layer = gimage->active_layer) != NULL &&
-      gimp_layer_get_mask (layer))
+  if (layer && gimp_layer_get_mask (layer))
     {
-      gboolean flush = !layer->apply_mask || layer->show_mask;
+      gboolean flush = ! layer->apply_mask || layer->show_mask;
 
       gimp_image_remove_layer_mask (gimp_drawable_gimage (GIMP_DRAWABLE (layer)),
 				    layer, APPLY);
@@ -1788,9 +1799,10 @@ layers_dialog_delete_layer_mask_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
+  layer = gimp_image_get_active_layer (gimage);
+
   /*  Make sure there is a layer mask to apply  */
-  if ((layer = gimage->active_layer) != NULL &&
-      gimp_layer_get_mask (layer))
+  if (layer && gimp_layer_get_mask (layer))
     {
       gboolean flush = layer->apply_mask || layer->show_mask;
 
@@ -1845,7 +1857,8 @@ layers_dialog_merge_down_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
   
-  gimp_image_merge_down (gimage, gimage->active_layer, EXPAND_AS_NECESSARY);
+  gimp_image_merge_down (gimage, gimp_image_get_active_layer (gimage),
+			 EXPAND_AS_NECESSARY);
   gdisplays_flush ();
 }
 
@@ -1871,7 +1884,7 @@ layers_dialog_alpha_select_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  gimage_mask_layer_alpha (gimage, gimage->active_layer);
+  gimage_mask_layer_alpha (gimage, gimp_image_get_active_layer (gimage));
   gdisplays_flush ();
 }
 
@@ -1884,7 +1897,7 @@ layers_dialog_mask_select_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  gimage_mask_layer_mask (gimage, gimage->active_layer);
+  gimage_mask_layer_mask (gimage, gimp_image_get_active_layer (gimage));
   gdisplays_flush ();
 }
 

@@ -717,7 +717,8 @@ gimp_image_scale (GimpImage *gimage,
 
   if ((new_width == 0) || (new_height == 0))
     {
-      g_message (("gimp_image_scale: Scaling to zero width or height has been rejected."));
+      g_message ("%s(): Scaling to zero width or height has been rejected.",
+		 G_GNUC_FUNCTION);
       return;
     }
 
@@ -884,7 +885,7 @@ gimp_image_apply_image (GimpImage	 *gimage,
   operation = valid_combinations[gimp_drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
-      g_message ("gimp_image_apply_image sent illegal parameters");
+      g_message ("%s(): illegal parameters", G_GNUC_FUNCTION);
       return;
     }
 
@@ -991,7 +992,7 @@ gimp_image_replace_image (GimpImage    *gimage,
   operation = valid_combinations [gimp_drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
-      g_message ("gimp_image_apply_image sent illegal parameters");
+      g_message ("%s(): got illegal parameters", G_GNUC_FUNCTION);
       return;
     }
 
@@ -1561,7 +1562,7 @@ project_indexed (GimpImage   *gimage,
     initial_region (src, dest, NULL, gimage->cmap, layer->opacity,
 		    layer->mode, gimage->visible, INITIAL_INDEXED);
   else
-    g_message ("Unable to project indexed image.");
+    g_message ("%s(): unable to project indexed image.", G_GNUC_FUNCTION);
 }
 
 static void
@@ -2298,7 +2299,9 @@ gimp_image_layer_boundary (const GimpImage  *gimage,
   /*  The second boundary corresponds to the active layer's
    *  perimeter...
    */
-  if ((layer = gimage->active_layer))
+  layer = gimp_image_get_active_layer (gimage);
+
+  if (layer)
     {
       *segs = gimp_layer_boundary (layer, n_segs);
       return TRUE;
@@ -2474,7 +2477,8 @@ gimp_image_raise_layer (GimpImage *gimage,
   /* is this the top layer already? */
   if (curpos == 0)
     {
-      g_message (_("Layer cannot be raised any further"));
+      g_message (_("%s(): layer cannot be raised any further"),
+		 G_GNUC_FUNCTION);
       return FALSE;
     }
   
@@ -2501,7 +2505,8 @@ gimp_image_lower_layer (GimpImage *gimage,
   length = gimp_container_num_children (gimage->layers);
   if (curpos >= length - 1)
     {
-      g_message (_("Layer cannot be lowered any further"));
+      g_message (_("%s(): layer cannot be lowered any further"),
+		 G_GNUC_FUNCTION);
       return FALSE;
     }
   
@@ -2525,13 +2530,14 @@ gimp_image_raise_layer_to_top (GimpImage *gimage,
   
   if (curpos == 0)
     {
-      g_message (_("Layer is already on top"));
+      g_message (_("%s(): layer is already on top"),
+		 G_GNUC_FUNCTION);
       return FALSE;
     }
   
   if (! gimp_layer_has_alpha (layer))
     {
-      g_message (_("Can't raise Layer without alpha"));
+      g_message (_("%s(): can't raise Layer without alpha"), G_GNUC_FUNCTION);
       return FALSE;
     }
   
@@ -2558,7 +2564,7 @@ gimp_image_lower_layer_to_bottom (GimpImage *gimage,
 
   if (curpos >= length - 1)
     {
-      g_message (_("Layer is already on bottom"));
+      g_message (_("%s(): layer is already on bottom"), G_GNUC_FUNCTION);
       return FALSE;
     }
   
@@ -2615,7 +2621,7 @@ gimp_image_position_layer (GimpImage *gimage,
     }
 
   if (push_undo)
-      undo_push_layer_reposition (gimage, layer);
+    undo_push_layer_reposition (gimage, layer);
 
   gimp_container_reorder (gimage->layers, GIMP_OBJECT (layer), new_index);
 
@@ -2816,8 +2822,8 @@ gimp_image_merge_layers (GimpImage *gimage,
 	    {
 	      x1 = off_x;
 	      y1 = off_y;
-	      x2 = off_x + gimp_drawable_width (GIMP_DRAWABLE(layer));
-	      y2 = off_y + gimp_drawable_height (GIMP_DRAWABLE(layer));
+	      x2 = off_x + gimp_drawable_width (GIMP_DRAWABLE (layer));
+	      y2 = off_y + gimp_drawable_height (GIMP_DRAWABLE (layer));
 	    }
 	  else
 	    {
@@ -2825,10 +2831,10 @@ gimp_image_merge_layers (GimpImage *gimage,
 		x1 = off_x;
 	      if (off_y < y1)
 		y1 = off_y;
-	      if ((off_x + gimp_drawable_width (GIMP_DRAWABLE(layer))) > x2)
-		x2 = (off_x + gimp_drawable_width (GIMP_DRAWABLE(layer)));
-	      if ((off_y + gimp_drawable_height (GIMP_DRAWABLE(layer))) > y2)
-		y2 = (off_y + gimp_drawable_height (GIMP_DRAWABLE(layer)));
+	      if ((off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) > x2)
+		x2 = (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)));
+	      if ((off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))) > y2)
+		y2 = (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)));
 	    }
 	  if (merge_type == CLIP_TO_IMAGE)
 	    {
@@ -2844,8 +2850,8 @@ gimp_image_merge_layers (GimpImage *gimage,
 	    {
 	      x1 = off_x;
 	      y1 = off_y;
-	      x2 = off_x + gimp_drawable_width (GIMP_DRAWABLE(layer));
-	      y2 = off_y + gimp_drawable_height (GIMP_DRAWABLE(layer));
+	      x2 = off_x + gimp_drawable_width (GIMP_DRAWABLE (layer));
+	      y2 = off_y + gimp_drawable_height (GIMP_DRAWABLE (layer));
 	    }
 	  break;
 
@@ -2936,7 +2942,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 
       /*  Set the layer to transparent  */
       pixel_region_init (&src1PR, 
-			 gimp_drawable_data (GIMP_DRAWABLE(merge_layer)), 
+			 gimp_drawable_data (GIMP_DRAWABLE (merge_layer)), 
 			 0, 0, 
 			 (x2 - x1), (y2 - y1), 
 			 TRUE);
@@ -2972,7 +2978,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   gimp_drawable_set_tattoo (GIMP_DRAWABLE (merge_layer),
 			    gimp_drawable_get_tattoo (GIMP_DRAWABLE (layer)));
   GIMP_DRAWABLE (merge_layer)->parasites =
-    parasite_list_copy (GIMP_DRAWABLE(layer)->parasites);
+    parasite_list_copy (GIMP_DRAWABLE (layer)->parasites);
 
   while (reverse_list)
     {
@@ -3109,7 +3115,7 @@ gimp_image_add_layer (GimpImage *gimage,
   lu = g_new (LayerUndo, 1);
   lu->layer         = layer;
   lu->prev_position = 0;
-  lu->prev_layer    = gimage->active_layer;
+  lu->prev_layer    = gimp_image_get_active_layer (gimage);
   undo_push_layer (gimage, LAYER_ADD_UNDO, lu);
 
   /*  If the layer is a floating selection, set the ID  */
@@ -3142,8 +3148,6 @@ gimp_image_add_layer (GimpImage *gimage,
     }
 
   gimp_container_insert (gimage->layers, GIMP_OBJECT (layer), position);
-
-  gimage->layer_stack = g_slist_prepend (gimage->layer_stack, layer);
 
   /*  notify the layers dialog of the currently active layer  */
   gimp_image_set_active_layer (gimage, layer);
@@ -3197,7 +3201,7 @@ gimp_image_remove_layer (GimpImage *gimage,
       floating_sel_reset (layer);
     }
 
-  if (gimage->active_layer == layer)
+  if (layer == gimp_image_get_active_layer (gimage))
     {
       if (gimage->layer_stack)
 	gimp_image_set_active_layer (gimage, gimage->layer_stack->data);
@@ -3223,6 +3227,8 @@ gimp_image_add_layer_mask (GimpImage     *gimage,
   LayerMaskUndo *lmu;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (GIMP_IS_LAYER_MASK (mask), NULL);
 
   if (layer->mask != NULL)
     {
@@ -3274,7 +3280,8 @@ gimp_image_remove_layer_mask (GimpImage     *gimage,
   gint           off_x;
   gint           off_y;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage) && GIMP_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
   if (!layer || !layer->mask)
     return NULL;
@@ -3419,16 +3426,18 @@ gimp_image_add_channel (GimpImage   *gimage,
   g_return_val_if_fail (channel != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
-  if (GIMP_DRAWABLE(channel)->gimage != NULL &&
-      GIMP_DRAWABLE(channel)->gimage != gimage)
+  if (GIMP_DRAWABLE (channel)->gimage != NULL &&
+      GIMP_DRAWABLE (channel)->gimage != gimage)
     {
-      g_message ("gimp_image_add_channel: attempt to add channel to wrong image");
+      g_message ("%s(): attempt to add channel to wrong image",
+		 G_GNUC_FUNCTION);
       return FALSE;
     }
 
   if (gimp_container_have (gimage->channels, GIMP_OBJECT (channel)))
     {
-      g_message ("gimp_image_add_channel: trying to add channel to image twice");
+      g_message ("%s(): trying to add channel to image twice",
+		 G_GNUC_FUNCTION);
       return FALSE;
     }
 
@@ -3436,7 +3445,7 @@ gimp_image_add_channel (GimpImage   *gimage,
   cu = g_new (ChannelUndo, 1);
   cu->channel       = channel;
   cu->prev_position = 0;
-  cu->prev_channel  = gimage->active_channel;
+  cu->prev_channel  = gimp_image_get_active_channel (gimage);
   undo_push_channel (gimage, CHANNEL_ADD_UNDO, cu);
 
   /*  add the channel to the list  */
@@ -3475,9 +3484,9 @@ gimp_image_remove_channel (GimpImage   *gimage,
   cu->channel       = channel;
   cu->prev_position = gimp_container_get_child_index (gimage->channels, 
 						      GIMP_OBJECT (channel));
-  cu->prev_channel  = gimage->active_channel;
+  cu->prev_channel  = gimp_image_get_active_channel (gimage);
   undo_push_channel (gimage, CHANNEL_REMOVE_UNDO, cu);
-  
+
   gtk_object_ref (GTK_OBJECT (channel));
 
   gimp_container_remove (gimage->channels, GIMP_OBJECT (channel));
@@ -3485,9 +3494,12 @@ gimp_image_remove_channel (GimpImage   *gimage,
   /* Send out REMOVED signal from channel */
   gimp_drawable_removed (GIMP_DRAWABLE (channel));
 
-  if (gimage->active_channel == channel)
-    gimage->active_channel = 
-      GIMP_CHANNEL (gimp_container_get_child_by_index (gimage->channels, 0));
+  if (channel == gimp_image_get_active_channel (gimage))
+    {
+      gimp_image_set_active_channel
+	(gimage,
+	 GIMP_CHANNEL (gimp_container_get_child_by_index (gimage->channels, 0)));
+    }
 
   gtk_object_unref (GTK_OBJECT (channel));
 
@@ -3520,11 +3532,11 @@ gimp_image_active_drawable (const GimpImage *gimage)
   /*  If there is an active channel (a saved selection, etc.),
    *  we ignore the active layer
    */
-  if (gimage->active_channel != NULL)
+  if (gimage->active_channel)
     {
       return GIMP_DRAWABLE (gimage->active_channel);
     }
-  else if (gimage->active_layer != NULL)
+  else if (gimage->active_layer)
     {
       layer = gimage->active_layer;
 

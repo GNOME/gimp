@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpcolorincludedir = $(includedir)/gimp-$(GIMP_MAJOR_VERSION).$(GIMP_MINOR_VERSION)/libgimpcolor
+libgimpcolorincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpcolor
 
 AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"		\
@@ -22,9 +22,9 @@ EXTRA_DIST = \
 	makefile.msc		\
 	gimpcolor.def
 
-lib_LTLIBRARIES = libgimpcolor.la
+lib_LTLIBRARIES = libgimpcolor-1.3.la
 
-libgimpcolor_la_SOURCES = \
+libgimpcolor_1_3_la_SOURCES = \
 	gimpcolor.h		\
 	gimpcolortypes.h	\
 	gimpcolorspace.c	\
@@ -41,10 +41,10 @@ libgimpcolorinclude_HEADERS = \
 	gimphsv.h		\
 	gimprgb.h
 
-libgimpcolor_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	-release $(LT_RELEASE)
-libgimpcolor_la_LIBADD = $(GLIB_LIBS) -lm
+libgimpcolor_1_3_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+
+libgimpcolor_1_3_la_LIBADD = $(GLIB_LIBS) -lm
 
 .PHONY: files
 

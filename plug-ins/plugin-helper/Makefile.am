@@ -8,20 +8,20 @@ plugin_helper_SOURCES = \
 	plugin-helper.c
 
 AM_CPPFLAGS = \
-        -DLOCALEDIR=\""$(localedir)"\"
+	-DLOCALEDIR=\""$(localedir)"\"
 
 INCLUDES = \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
 	-I$(includedir)
 
 LDADD = \
-        $(top_builddir)/libgimp/libgimpui.la                    \
-        $(top_builddir)/libgimpwidgets/libgimpwidgets.la        \
-        $(top_builddir)/libgimp/libgimp.la                      \
-        $(top_builddir)/libgimpcolor/libgimpcolor.la            \
-        $(GTK_LIBS)                                             \
-        $(INTLLIBS)
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(GTK_LIBS)							\
+	$(INTLLIBS)
 
 
 .PHONY: files

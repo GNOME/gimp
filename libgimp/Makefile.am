@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-gimpincludedir = $(includedir)/gimp-$(GIMP_MAJOR_VERSION).$(GIMP_MINOR_VERSION)/libgimp
+gimpincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimp
 
 AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"	\
@@ -24,7 +24,7 @@ EXTRA_DIST = \
 	gimp.def		\
 	gimpui.def
 
-lib_LTLIBRARIES = libgimp.la libgimpui.la
+lib_LTLIBRARIES = libgimp-1.3.la libgimpui-1.3.la
 noinst_LIBRARIES = libgimpi.a
 
 PDB_WRAPPERS_C = \
@@ -123,7 +123,7 @@ endif
 ../libgimp/gimpfeatures.h: gimpfeatures.h
 	@:
 
-libgimp_la_SOURCES = \
+libgimp_1_3_la_SOURCES = \
 	gimp.c				\
 	gimp.h				\
 	gimptypes.h			\
@@ -176,7 +176,7 @@ libgimp_la_SOURCES = \
 	stdplugins-intl.h		\
 	libgimp-intl.h
 
-libgimpui_la_SOURCES = \
+libgimpui_1_3_la_SOURCES = \
 	gimpui.c		\
 	gimpui.h		\
 	gimpuitypes.h		\
@@ -231,15 +231,15 @@ gimpinclude_HEADERS = \
 	\
 	gimpmenu.h
 
-libgimp_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	-release $(LT_RELEASE)
-libgimp_la_LIBADD = $(GLIB_LIBS)
+libgimp_1_3_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
-libgimpui_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	-release $(LT_RELEASE)
-libgimpui_la_LIBADD = $(GTK_LIBS)
+libgimp_1_3_la_LIBADD = $(GLIB_LIBS)
+
+libgimpui_1_3_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+
+libgimpui_1_3_la_LIBADD = $(GTK_LIBS)
 
 .PHONY: files
 

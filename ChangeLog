@@ -1,3 +1,69 @@
+2001-02-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/channel_ops.c
+	* app/channels_dialog.c
+	* app/commands.c
+	* app/floating_sel.c
+	* app/gdisplay.c
+	* app/gimpimage.[ch]
+	* app/layer_select.c
+	* app/layers_dialog.c
+	* app/undo.c
+	* app/xcf.c
+	* app/tools/move.c: remove direct access of gimage->active_layer and
+	gimage->active_channel. Reading access is of course harmless, but
+	gimp_image_set_active_blah() will trigger a signal emission soon.
+
+	It will probably be neccessary to change the functions to accept
+	NULL layers and channels to acheive exactly what weird places like
+	floating_sel.c did before by setting it directly.
+
+	* gimptool-1.4.in
+	* libgimp/Makefile.am
+	* libgimpcolor/Makefile.am
+	* libgimpmath/Makefile.am
+	* libgimpwidgets/Makefile.am
+	* plug-ins/libgck/gck/Makefile.am: made linking against stable
+	GIMP installed in the same prefix work again by renaming all our
+	libraries explicitly to libgimp<foo>-1.3.* (not as part of the
+	libtool revision but as part of the library name). Removed the
+	libtool revision to avoid double versioning. This has to be
+	hardcoded in the libraries' Makefile.am ...
+
+	* app/Makefile.am
+	* plug-ins/FractalExplorer/Makefile.am
+	* plug-ins/Lighting/Makefile.am
+	* plug-ins/MapObject/Makefile.am
+	* plug-ins/bmp/Makefile.am
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/mkgen.pl
+	* plug-ins/dbbrowser/Makefile.am
+	* plug-ins/faxg3/Makefile.am
+	* plug-ins/fits/Makefile.am
+	* plug-ins/flame/Makefile.am
+	* plug-ins/fp/Makefile.am
+	* plug-ins/gap/Makefile.am
+	* plug-ins/gdyntext/Makefile.am
+	* plug-ins/gfig/Makefile.am
+	* plug-ins/gflare/Makefile.am
+	* plug-ins/gfli/Makefile.am
+	* plug-ins/gimpressionist/Makefile.am
+	* plug-ins/helpbrowser/Makefile.am
+	* plug-ins/ifscompose/Makefile.am
+	* plug-ins/imagemap/Makefile.am
+	* plug-ins/maze/Makefile.am
+	* plug-ins/mosaic/Makefile.am
+	* plug-ins/pagecurl/Makefile.am
+	* plug-ins/plugin-helper/Makefile.am
+	* plug-ins/print/Makefile.am
+	* plug-ins/rcm/Makefile.am
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/sel2path/Makefile.am
+	* plug-ins/sgi/Makefile.am
+	* plug-ins/webbrowser/Makefile.am
+	* plug-ins/xjt/Makefile.am: ... while all other Makefiles can simply
+	link against "libgimp<foo>-$(LT_REVISION).la"
+
 2001-02-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/pixmaps2.h: commented out "text_width" and "text_height"
