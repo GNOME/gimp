@@ -1180,9 +1180,6 @@ plug_in_parse_fractalexplorer_path (void)
 
       if (!err && S_ISDIR (filestat.st_mode))
 	{
-	  if (path[strlen (path) - 1] != G_DIR_SEPARATOR)
-	    strcat (path, G_DIR_SEPARATOR_S);
-
 	  fractalexplorer_path_list = g_list_append (fractalexplorer_path_list, path);
 	}
       else
@@ -1333,6 +1330,8 @@ fractalexplorer_list_load_all (GList *plist)
   struct dirent *dir_ent;
   struct stat	filestat;
   gint		err;
+  gchar       pathlast;
+
   /*  Make sure to clear any existing fractalexplorers  */
   current_obj = pic_obj = NULL;
   fractalexplorer_list_free_all ();
@@ -1341,6 +1340,7 @@ fractalexplorer_list_load_all (GList *plist)
     {
       path = list->data;
       list = list->next;
+      pathlast = path[strlen (path) - 1];
 
       /* Open directory */
       dir = opendir (path);
@@ -1351,7 +1351,10 @@ fractalexplorer_list_load_all (GList *plist)
 	{
 	  while ((dir_ent = readdir (dir)))
 	    {
-	      filename = g_strdup_printf ("%s%s", path, dir_ent->d_name);
+	      filename = g_strdup_printf
+		("%s%s%s", path,
+		 (pathlast == G_DIR_SEPARATOR ? "" : G_DIR_SEPARATOR_S),
+		 dir_ent->d_name);
 
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);

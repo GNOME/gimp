@@ -112,7 +112,16 @@ sub-one-separate :
 	cd $(DIR); $(MAKE) -f ../makefile.cygwin TOP=../.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
 
 
-data-install : gimpressionist-data-install script-fu-data-install gap-data-install guash-data-install
+data-install : gap-data-install gflare-data-install gimpressionist-data-install guash-data-install script-fu-data-install
+
+gap-data-install:
+	-mkdir $(GIMP)/scripts
+	$(INSTALL) gap/*.scm $(GIMP)/scripts
+	
+gflare-data-install:
+	-mkdir $(GIMP)/gflare
+	-$(INSTALL) gflare/gflares/* $(GIMP)/gflare
+	-rm $(GIMP)/gflare/Makefile.am
 
 gimpressionist-data-install :
 	-mkdir $(GIMP)/gimpressionist $(GIMP)/gimpressionist/Brushes $(GIMP)/gimpressionist/Paper $(GIMP)/gimpressionist/Presets
@@ -121,18 +130,14 @@ gimpressionist-data-install :
 	-$(INSTALL) gimpressionist/Presets/* $(GIMP)/gimpressionist/Presets
 	-rm $(GIMP)/gimpressionist/Presets/Makefile.am
 
+guash-data-install:
+
 script-fu-data-install:
 	-mkdir $(GIMP)/scripts
 	$(INSTALL) script-fu/scripts/*.scm $(GIMP)/scripts
 	$(INSTALL) script-fu/scripts/*.jpg $(GIMP)/scripts
 	for d in FractalExplorer/fractalexplorer-examples/*; do if [ -f $$d ]; then $(INSTALL) $$d $(GIMP)/fractalexplorer; fi; done
 	rm $(GIMP)/fractalexplorer/Makefile.am
-
-gap-data-install:
-	-mkdir $(GIMP)/scripts
-	$(INSTALL) gap/*.scm $(GIMP)/scripts
-	
-guash-data-install:
 
 endif # ifndef MODULE
 endif # ifndef PLUGIN
