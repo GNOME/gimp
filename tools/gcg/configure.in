@@ -10,6 +10,9 @@ AC_PROG_RANLIB
 AC_PROG_YACC
 AM_PROG_LEX
 
+dnl Utility conditional
+AM_CONDITIONAL(FALSE, test x = y)
+
 AM_PATH_GLIB(1.0.0,,AC_ERROR(need at least Glib version 1.0))
 
 CPP_PROGRAM="$CPP"

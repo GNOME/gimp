@@ -388,6 +388,7 @@ EXTRA_DIST = \
 	makefile.msc		\
 	gimp.def		\
 	gimp.rc			\
+	gimp.sym		\
 	wilber.ico
 
 

@@ -120,7 +120,8 @@ gimpinclude_HEADERS = \
 	gserialize.h		\
 	parasite.h		\
 	parasiteF.h		\
-	parasiteP.h
+	parasiteP.h		\
+	stdplugins-intl.h
 
 libgimp_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \

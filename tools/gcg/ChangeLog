@@ -1,4 +1,10 @@
+Sun Jun  6 11:16:56 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am
+	* configure.in: various dist fixes
+
 1999-05-19  Tor Lillqvist  <tml@iki.fi>
+
 	* Makefile.am: Distribute getopt.c and makefile.msc.
 
 	* getopt.c makefile.msc: New files.

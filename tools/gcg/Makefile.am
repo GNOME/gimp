@@ -4,10 +4,13 @@ noinst_PROGRAMS = gcg
 
 EXTRA_DIST = \
 	getopt.c	\
-	makefile.msc
+	makefile.msc	\
+	gh/gcg.gh	\
+	gh/glib.gh	\
+	gh/gtk.gh
 
-#CPPFLAGS		= -DCPP_SEARCH=\"" -I $(datadir)/gcg -I ."\"
-CPPFLAGS		= -DCPP_SEARCH=\"" -I ."\"
+#AM_CPPFLAGS		= -DCPP_SEARCH=\"" -I $(datadir)/gcg -I ."\"
+AM_CPPFLAGS		= -DCPP_SEARCH=\"" -I ."\"
 INCLUDES		= @GLIB_CFLAGS@
 YFLAGS			= -d -v
 LFLAGS			= -d 
@@ -25,3 +28,9 @@ gcg_SOURCES = \
 	output_object.c	\
 	fp.c		\
 	marshall.c
+
+if FALSE
+ex = ex
+endif
+
+SUBDIRS = $(ex)

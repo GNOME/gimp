@@ -14,7 +14,8 @@ rcm_SOURCES = \
 	rcm_gdk.c	\
 	rcm_gdk.h	\
 	rcm_misc.c	\
-	rcm_misc.h
+	rcm_misc.h	\
+	rcm_pixmaps.h
 
 INCLUDES = \
 	-I$(top_srcdir)			\
