@@ -1,5 +1,14 @@
 2004-06-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/file/file-open.[ch] (file_open_layer): new utility function
+	which opens an image, flattens it if needed and returns the only
+	layer, converted for a passed destination image.
+
+	* app/display/gimpdisplayshell-dnd.c
+	(gimp_display_shell_drop_files): use the new function.
+
+2004-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/gimpselectiondata.[ch]: new files containing the
 	code which encodes/decodes all sorts of stuff to/from its

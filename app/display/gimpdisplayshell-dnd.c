@@ -282,67 +282,31 @@ gimp_display_shell_drop_files (GtkWidget *widget,
   for (list = files; list; list = g_list_next (list))
     {
       const gchar       *uri   = list->data;
-      GimpImage         *new_image;
+      GimpLayer         *new_layer;
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
-      new_image = file_open_image (gimage->gimp, context, uri, uri,
-                                   NULL, GIMP_RUN_NONINTERACTIVE,
-                                   &status, NULL, &error);
+      new_layer = file_open_layer (gimage->gimp, context, gimage, uri,
+                                   &status, &error);
 
-      if (new_image)
+      if (new_layer)
         {
-          GimpLayer *layer;
+          GimpItem *new_item = GIMP_ITEM (new_layer);
+          gint      x, y;
+          gint      width, height;
+          gint      off_x, off_y;
 
-          gimp_image_undo_disable (new_image);
+          gimp_display_shell_untransform_viewport (shell, &x, &y,
+                                                   &width, &height);
 
-          if (gimp_container_num_children (new_image->layers) > 1)
-            {
-              layer = gimp_image_merge_visible_layers (new_image, context,
-                                                       GIMP_CLIP_TO_IMAGE);
-            }
-          else
-            {
-              layer = (GimpLayer *)
-                gimp_container_get_child_by_index (new_image->layers, 0);
-            }
+          gimp_item_offsets (new_item, &off_x, &off_y);
 
-          if (layer)
-            {
-              GimpItem *new_item;
+          off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
+          off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
 
-              new_item = gimp_item_convert (GIMP_ITEM (layer), gimage,
-                                            G_TYPE_FROM_INSTANCE (layer),
-                                            TRUE);
+          gimp_item_translate (new_item, off_x, off_y, FALSE);
 
-              if (new_item)
-                {
-                  GimpLayer *new_layer;
-                  gint       x, y, width, height;
-                  gint       off_x, off_y;
-                  gchar     *basename;
-
-                  new_layer = GIMP_LAYER (new_item);
-
-                  basename = file_utils_uri_to_utf8_basename (uri);
-                  gimp_object_set_name (GIMP_OBJECT (new_layer), basename);
-                  g_free (basename);
-
-                  gimp_display_shell_untransform_viewport (shell, &x, &y,
-                                                           &width, &height);
-
-                  gimp_item_offsets (new_item, &off_x, &off_y);
-
-                  off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
-                  off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
-
-                  gimp_item_translate (new_item, off_x, off_y, FALSE);
-
-                  gimp_image_add_layer (gimage, new_layer, -1);
-                }
-            }
-
-          g_object_unref (new_image);
+          gimp_image_add_layer (gimage, new_layer, -1);
         }
       else if (status != GIMP_PDB_CANCEL)
         {

@@ -42,10 +42,12 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdocumentlist.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimagefile.h"
-#include "core/gimpdocumentlist.h"
+#include "core/gimplayer.h"
 
 #include "pdb/procedural_db.h"
 
@@ -244,4 +246,69 @@ file_open_with_proc_and_display (Gimp               *gimp,
     }
 
   return gimage;
+}
+
+GimpLayer *
+file_open_layer (Gimp               *gimp,
+                 GimpContext        *context,
+                 GimpImage          *dest_image,
+                 const gchar        *uri,
+                 GimpPDBStatusType  *status,
+                 GError            **error)
+{
+  GimpLayer *new_layer = NULL;
+  GimpImage *new_image;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+  g_return_val_if_fail (uri != NULL, NULL);
+  g_return_val_if_fail (status != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  new_image = file_open_image (gimp, context, uri, uri,
+                               NULL, GIMP_RUN_NONINTERACTIVE,
+                               status, NULL, error);
+
+  if (new_image)
+    {
+      GimpLayer *layer;
+
+      gimp_image_undo_disable (new_image);
+
+      if (gimp_container_num_children (new_image->layers) > 1)
+        {
+          layer = gimp_image_merge_visible_layers (new_image, context,
+                                                   GIMP_CLIP_TO_IMAGE);
+        }
+      else
+        {
+          layer = (GimpLayer *)
+            gimp_container_get_child_by_index (new_image->layers, 0);
+        }
+
+      if (layer)
+        {
+          GimpItem *new_item;
+
+          new_item = gimp_item_convert (GIMP_ITEM (layer), dest_image,
+                                        G_TYPE_FROM_INSTANCE (layer),
+                                        TRUE);
+
+          if (new_item)
+            {
+              gchar *basename;
+
+              new_layer = GIMP_LAYER (new_item);
+
+              basename = file_utils_uri_to_utf8_basename (uri);
+              gimp_object_set_name (GIMP_OBJECT (new_layer), basename);
+              g_free (basename);
+            }
+        }
+
+      g_object_unref (new_image);
+    }
+
+  return new_layer;
 }

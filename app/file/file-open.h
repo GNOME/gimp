@@ -44,5 +44,12 @@ GimpImage * file_open_with_proc_and_display (Gimp               *gimp,
                                              GimpPDBStatusType  *status,
                                              GError            **error);
 
+GimpLayer * file_open_layer                 (Gimp               *gimp,
+                                             GimpContext        *context,
+                                             GimpImage          *dest_image,
+                                             const gchar        *uri,
+                                             GimpPDBStatusType  *status,
+                                             GError            **error);
+
 
 #endif /* __FILE_OPEN_H__ */
