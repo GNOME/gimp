@@ -133,8 +133,6 @@ gimp_channel_finalize (GObject *object)
 {
   GimpChannel *channel;
 
-  g_return_if_fail (GIMP_IS_CHANNEL (object));
-
   channel = GIMP_CHANNEL (object);
 
   if (channel->segs_in)
@@ -173,6 +171,8 @@ gimp_channel_push_undo (GimpChannel *mask)
 
   gimage = gimp_item_get_image (GIMP_ITEM (mask));
 
+  g_return_if_fail (gimage != NULL);
+
   undo_push_mask (gimage, mask);
 
   mask->boundary_known = FALSE;
@@ -202,6 +202,7 @@ gimp_channel_new (GimpImage     *gimage,
 {
   GimpChannel *channel;
 
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
   channel = g_object_new (GIMP_TYPE_CHANNEL, NULL);
@@ -283,7 +284,7 @@ gimp_channel_get_color (const GimpChannel *channel,
 gdouble
 gimp_channel_get_opacity (const GimpChannel *channel)
 {
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), 0);
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), GIMP_OPACITY_TRANSPARENT);
 
   return channel->color.a;
 }
@@ -403,6 +404,7 @@ gimp_channel_resize (GimpChannel *channel,
   y1 = CLAMP (offy, 0, new_height);
   x2 = CLAMP ((offx + GIMP_DRAWABLE (channel)->width), 0, new_width);
   y2 = CLAMP ((offy + GIMP_DRAWABLE (channel)->height), 0, new_height);
+
   w = x2 - x1;
   h = y2 - y1;
 
@@ -524,6 +526,10 @@ gimp_channel_boundary (GimpChannel  *mask,
   PixelRegion bPR;
 
   g_return_val_if_fail (GIMP_IS_CHANNEL (mask), FALSE);
+  g_return_val_if_fail (segs_in != NULL, FALSE);
+  g_return_val_if_fail (segs_out != NULL, FALSE);
+  g_return_val_if_fail (num_segs_in != NULL, FALSE);
+  g_return_val_if_fail (num_segs_out != NULL, FALSE);
 
   if (! mask->boundary_known)
     {
@@ -630,6 +636,10 @@ gimp_channel_bounds (GimpChannel *mask,
   gpointer     pr;
 
   g_return_val_if_fail (GIMP_IS_CHANNEL (mask), FALSE);
+  g_return_val_if_fail (x1 != NULL, FALSE);
+  g_return_val_if_fail (y1 != NULL, FALSE);
+  g_return_val_if_fail (x2 != NULL, FALSE);
+  g_return_val_if_fail (y2 != NULL, FALSE);
 
   /*  if the mask's bounds have already been reliably calculated...  */
   if (mask->bounds_known)
@@ -639,7 +649,7 @@ gimp_channel_bounds (GimpChannel *mask,
       *x2 = mask->x2;
       *y2 = mask->y2;
 
-      return !mask->empty;
+      return ! mask->empty;
     }
 
   /*  go through and calculate the bounds  */
@@ -652,6 +662,7 @@ gimp_channel_bounds (GimpChannel *mask,
 		     0, 0,
 		     GIMP_DRAWABLE (mask)->width,
 		     GIMP_DRAWABLE (mask)->height, FALSE);
+
   for (pr = pixel_regions_register (1, &maskPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
@@ -667,38 +678,44 @@ gimp_channel_bounds (GimpChannel *mask,
 	  /* Check upper left and lower right corners to see if we can
 	     avoid checking the rest of the pixels in this tile */
 	  if (data[0] && data[maskPR.rowstride*(maskPR.h - 1) + maskPR.w - 1])
-	  {
-	    if (maskPR.x < tx1)
-	      tx1 = maskPR.x;
-	    if (ex > tx2)
-	      tx2 = ex;
-	    if (maskPR.y < ty1)
-	      ty1 = maskPR.y;
-	    if (ey > ty2)
-	      ty2 = ey;
-	  }
+            {
+              if (maskPR.x < tx1)
+                tx1 = maskPR.x;
+              if (ex > tx2)
+                tx2 = ex;
+              if (maskPR.y < ty1)
+                ty1 = maskPR.y;
+              if (ey > ty2)
+                ty2 = ey;
+            }
 	  else
-	    for (y = maskPR.y; y < ey; y++, data1 += maskPR.rowstride)
-	    {
-	      for (x = maskPR.x, data = data1; x < ex; x++, data++)
-		if (*data)
-		{
-		  minx = x;
-		  maxx = x;
-		  for (; x < ex; x++, data++)
-		    if (*data)
-		      maxx = x;
-		  if (minx < tx1)
-		    tx1 = minx;
-		  if (maxx > tx2)
-		    tx2 = maxx;
-		  if (y < ty1)
-		    ty1 = y;
-		  if (y > ty2)
-		    ty2 = y;
-	      }
-	    }
-	}
+            {
+              for (y = maskPR.y; y < ey; y++, data1 += maskPR.rowstride)
+                {
+                  for (x = maskPR.x, data = data1; x < ex; x++, data++)
+                    {
+                      if (*data)
+                        {
+                          minx = x;
+                          maxx = x;
+
+                          for (; x < ex; x++, data++)
+                            if (*data)
+                              maxx = x;
+
+                          if (minx < tx1)
+                            tx1 = minx;
+                          if (maxx > tx2)
+                            tx2 = maxx;
+                          if (y < ty1)
+                            ty1 = y;
+                          if (y > ty2)
+                            ty2 = y;
+                        }
+                    }
+                }
+            }
+        }
     }
 
   tx2 = CLAMP (tx2 + 1, 0, GIMP_DRAWABLE (mask)->width);
@@ -755,6 +772,7 @@ gimp_channel_is_empty (GimpChannel *mask)
     {
       /*  check if any pixel in the mask is non-zero  */
       data = maskPR.data;
+
       for (y = 0; y < maskPR.h; y++)
 	for (x = 0; x < maskPR.w; x++)
 	  if (*data++)
@@ -802,18 +820,18 @@ gimp_channel_add_segment (GimpChannel *mask,
 
   /*  check horizontal extents...  */
   x2 = x + width;
-  if (x2 < 0) x2 = 0;
-  if (x2 > GIMP_DRAWABLE (mask)->width) x2 = GIMP_DRAWABLE (mask)->width;
-  if (x < 0) x = 0;
-  if (x > GIMP_DRAWABLE (mask)->width) x = GIMP_DRAWABLE (mask)->width;
+  x2 = CLAMP (x2, 0, GIMP_DRAWABLE (mask)->width);
+  x  = CLAMP (x,  0, GIMP_DRAWABLE (mask)->width);
   width = x2 - x;
-  if (!width) return;
+  if (!width)
+    return;
 
   if (y < 0 || y > GIMP_DRAWABLE (mask)->height)
     return;
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
 		     x, y, width, 1, TRUE);
+
   for (pr = pixel_regions_register (1, &maskPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
@@ -847,17 +865,19 @@ gimp_channel_sub_segment (GimpChannel *mask,
 
   /*  check horizontal extents...  */
   x2 = x + width;
-  if (x2 < 0) x2 = 0;
-  if (x2 > GIMP_DRAWABLE (mask)->width) x2 = GIMP_DRAWABLE (mask)->width;
-  if (x < 0) x = 0;
-  if (x > GIMP_DRAWABLE (mask)->width) x = GIMP_DRAWABLE (mask)->width;
+  x2 = CLAMP (x2, 0, GIMP_DRAWABLE (mask)->width);
+  x =  CLAMP (x,  0, GIMP_DRAWABLE (mask)->width);
   width = x2 - x;
-  if (!width) return;
+
+  if (! width)
+    return;
 
   if (y < 0 || y > GIMP_DRAWABLE (mask)->height)
     return;
 
-  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles, x, y, width, 1, TRUE);
+  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
+                     x, y, width, 1, TRUE);
+
   for (pr = pixel_regions_register (1, &maskPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
@@ -903,9 +923,9 @@ gimp_channel_combine_rect (GimpChannel    *mask,
 		     x, y, x2 - x, y2 - y, TRUE);
 
   if (op == GIMP_CHANNEL_OP_ADD || op == GIMP_CHANNEL_OP_REPLACE)
-    color = 255;
+    color = OPAQUE_OPACITY;
   else
-    color = 0;
+    color = TRANSPARENT_OPACITY;
 
   color_region (&maskPR, &color);
 
@@ -924,10 +944,10 @@ gimp_channel_combine_rect (GimpChannel    *mask,
   else if (op == GIMP_CHANNEL_OP_REPLACE || mask->empty)
     {
       mask->empty = FALSE;
-      mask->x1 = x;
-      mask->y1 = y;
-      mask->x2 = x + w;
-      mask->y2 = y + h;
+      mask->x1    = x;
+      mask->y1    = y;
+      mask->x2    = x + w;
+      mask->y2    = y + h;
     }
   else
     mask->bounds_known = FALSE;
@@ -989,9 +1009,11 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
 		case GIMP_CHANNEL_OP_REPLACE:
 		  gimp_channel_add_segment (mask, x1, i, (x2 - x1), 255);
 		  break;
+
 		case GIMP_CHANNEL_OP_SUBTRACT:
 		  gimp_channel_sub_segment (mask, x1, i, (x2 - x1), 255);
 		  break;
+
 		default:
 		  g_warning ("Only ADD, REPLACE, and SUBTRACT are valid for channel_combine!");
 		  break;
@@ -1033,9 +1055,11 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
 			case GIMP_CHANNEL_OP_REPLACE:
 			  gimp_channel_add_segment (mask, x0, i, j - x0, last);
 			  break;
+
 			case GIMP_CHANNEL_OP_SUBTRACT:
 			  gimp_channel_sub_segment (mask, x0, i, j - x0, last);
 			  break;
+
 			default:
 			  g_warning ("Only ADD, REPLACE, and SUBTRACT are valid for channel_combine!");
 			  break;
@@ -1061,9 +1085,11 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
                     case GIMP_CHANNEL_OP_REPLACE:
                       gimp_channel_add_segment (mask, x0, i, j - x0, last);
                       break;
+
                     case GIMP_CHANNEL_OP_SUBTRACT:
                       gimp_channel_sub_segment (mask, x0, i, j - x0, last);
                       break;
+
                     default:
                       g_warning ("Only ADD, REPLACE, and SUBTRACT are valid for channel_combine!");
                       break;
@@ -1089,10 +1115,10 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
   else if (op == GIMP_CHANNEL_OP_REPLACE || mask->empty)
     {
       mask->empty = FALSE;
-      mask->x1 = x;
-      mask->y1 = y;
-      mask->x2 = x + w;
-      mask->y2 = y + h;
+      mask->x1    = x;
+      mask->y1    = y;
+      mask->x2    = x + w;
+      mask->y2    = y + h;
     }
   else
     mask->bounds_known = FALSE;
@@ -1202,7 +1228,8 @@ gimp_channel_combine_mask (GimpChannel    *mask,
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE (add_on)->tiles,
 		     (x1 - off_x), (y1 - off_y), w, h, FALSE);
-  pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles, x1, y1, w, h, TRUE);
+  pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
+                     x1, y1, w, h, TRUE);
 
   switch (op)
     {
@@ -1212,16 +1239,19 @@ gimp_channel_combine_mask (GimpChannel    *mask,
 				      gimp_channel_combine_sub_region_add,
 				      NULL, 2, &srcPR, &destPR);
       break;
+
     case GIMP_CHANNEL_OP_SUBTRACT:
       pixel_regions_process_parallel ((p_func)
 				      gimp_channel_combine_sub_region_sub,
 				      NULL, 2, &srcPR, &destPR);
       break;
+
     case GIMP_CHANNEL_OP_INTERSECT:
       pixel_regions_process_parallel ((p_func)
 				      gimp_channel_combine_sub_region_intersect,
 				      NULL, 2, &srcPR, &destPR);
       break;
+
     default:
       g_warning ("%s: unknown operation type\n", G_GNUC_PRETTY_FUNCTION);
       break;
@@ -1239,7 +1269,6 @@ gimp_channel_feather (GimpChannel *mask,
   PixelRegion srcPR;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
-  g_return_if_fail (push_undo && gimp_item_get_image (GIMP_ITEM (mask)));
 
   if (push_undo)
     gimp_channel_push_undo (mask);
@@ -1540,15 +1569,13 @@ gimp_channel_translate (GimpChannel *mask,
 			gint         off_y,
                         gboolean     push_undo)
 {
+  GimpChannel *tmp_mask = NULL;
   gint         width, height;
-  GimpChannel *tmp_mask;
   PixelRegion  srcPR, destPR;
-  guchar       empty = 0;
+  guchar       empty = TRANSPARENT_OPACITY;
   gint         x1, y1, x2, y2;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
-
-  tmp_mask = NULL;
 
   if (push_undo)
     gimp_channel_push_undo (mask);
@@ -1559,7 +1586,7 @@ gimp_channel_translate (GimpChannel *mask,
   x2 = CLAMP ((x2 + off_x), 0, GIMP_DRAWABLE (mask)->width);
   y2 = CLAMP ((y2 + off_y), 0, GIMP_DRAWABLE (mask)->height);
 
-  width = x2 - x1;
+  width  = x2 - x1;
   height = y2 - y1;
 
   /*  make sure width and height are non-zero  */
@@ -1602,9 +1629,10 @@ gimp_channel_translate (GimpChannel *mask,
   if (width == 0 || height == 0)
     {
       mask->empty = TRUE;
-      mask->x1 = 0; mask->y1 = 0;
-      mask->x2 = GIMP_DRAWABLE (mask)->width;
-      mask->y2 = GIMP_DRAWABLE (mask)->height;
+      mask->x1    = 0;
+      mask->y1    = 0;
+      mask->x2    = GIMP_DRAWABLE (mask)->width;
+      mask->y2    = GIMP_DRAWABLE (mask)->height;
     }
   else
     {
