@@ -1,3 +1,8 @@
+Fri Feb 27 23:02:10 MET 1998 Sven Neumann (sven@gimp.org)
+
+	* app/about_dialog.c: (about_dialog_load_logo) 
+	use a correct gc
+
 1998-02-26  Federico Mena Quintero  <federico@nuclecu.unam.mx>
 
 	* app/app_procs.c (make_initialization_status_window): Push/pop
