@@ -10,9 +10,12 @@ GIMP version 2.0.
 
 Overview of Changes in GIMP 1.3.22
 ==================================
+- Replaced histogram tool with a histogram dialog [Sven] 
+- Multi-head safety [Sven]
+- Changes for future compatibility of text layers [Sven]
 - Histogram scale configurable for all tools and defaults to linear [Sven]
 - Better default settings
-- Complete configurability of normal and fullscreen view [Sven, Bolsh]
+- Completed configurability of normal and fullscreen view [Sven, Bolsh]
 - GimpConfig cleanups and improvements [Mitch, Sven]
 - Allow to configure the default grid in your gimprc [Brix]
 - Improved session handling; store more settings like the position of

@@ -1,12 +1,20 @@
 2003-11-01  Sven Neumann  <sven@gimp.org>
 
+	* app/base/gimphistogram.c (gimp_histogram_get_mean): forgot to
+	also add a range check here.
+
+	* app/widgets/gimphistogrameditor.c: update the channel menu when
+	the image mode changes or an alpha channel is added/removed.
+
+2003-11-01  Sven Neumann  <sven@gimp.org>
+
 	Replaced the histogram tool by a histogram dialog:
 
 	* themes/Default/images/Makefile.am
 	* themes/Default/images/tools/stock-tool-histogram-[16|22].png:
 	removed here ...
 	
-	* themes/Default/images/stock-histogram-[16|22].png: ,,, and added
+	* themes/Default/images/stock-histogram-[16|22].png: ... and added
 	under these new names.
 
 	* libgimpwidgets/gimpstock.[ch]: register the icons as

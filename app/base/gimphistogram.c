@@ -253,7 +253,7 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
 
   g_return_val_if_fail (histogram != NULL, 0.0);
 
-  if (! histogram->values)
+  if (! histogram->values || channel >= histogram->n_channels)
     return 0.0;
 
   for (i = start; i <= end; i++)
@@ -341,7 +341,7 @@ gimp_histogram_alloc_values (GimpHistogram *histogram,
       histogram->values     = g_new0 (gdouble *, histogram->n_channels);
 
       for (i = 0; i < histogram->n_channels; i++)
-	histogram->values[i] = g_new (double, 256);
+	histogram->values[i] = g_new (gdouble, 256);
     }
 }
 
