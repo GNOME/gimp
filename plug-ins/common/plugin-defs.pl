@@ -90,7 +90,7 @@
     'polar' => { libdep => 'gtk', ui => 1 },
     'ps' => { libdep => 'gtk', ui => 1 },
     'psd' => { libdep => 'glib' },
-    'psd_save' => { libdep => 'glib' },
+    'psd_save' => { libdep => 'gtk', ui => 1 },
     'psp' => { libdep => 'gtk', ui => 1, optional => 1, libopt => 'z' },
     'randomize' => { libdep => 'gtk', ui => 1 },
     'ripple' => { libdep => 'gtk', ui => 1 },

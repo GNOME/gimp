@@ -1,3 +1,19 @@
+2003-11-15  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpexport.[ch]: added new export capabilities
+	GIMP_EXPORT_CAN_HANDLE_BITMAP and _CAN_HANDLE_LAYER_MASKS and
+	export the image accordingly. Code cleanup.
+
+	* plug-ins/common/xbm.c (run): replaced _CAN_HANDLE_INDEXED by
+	_CAN_HANDLE_BITMAP. Fixes bug #65788.
+
+	* plug-ins/common/psd_save.c (run): added export stuff so
+	layer masks are applied before saving. Fixes bug #119732.
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl: link psd_save against GTK+
+	and libgimpui.
+
 2003-11-15  Henrik Brix Andersen  <brix@gimp.org>
 
 	* libgimpmath/gimpmatrix.c (gimp_matrix4_to_deg): added an inline

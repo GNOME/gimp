@@ -33,10 +33,12 @@ typedef enum
   GIMP_EXPORT_CAN_HANDLE_RGB                 = 1 << 0,
   GIMP_EXPORT_CAN_HANDLE_GRAY                = 1 << 1,
   GIMP_EXPORT_CAN_HANDLE_INDEXED             = 1 << 2,
-  GIMP_EXPORT_CAN_HANDLE_ALPHA               = 1 << 3,
-  GIMP_EXPORT_CAN_HANDLE_LAYERS              = 1 << 4,
-  GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION = 1 << 5,
-  GIMP_EXPORT_NEEDS_ALPHA                    = 1 << 6
+  GIMP_EXPORT_CAN_HANDLE_BITMAP              = 1 << 3,
+  GIMP_EXPORT_CAN_HANDLE_ALPHA               = 1 << 4,
+  GIMP_EXPORT_CAN_HANDLE_LAYERS              = 1 << 5,
+  GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION = 1 << 6,
+  GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS         = 1 << 7,
+  GIMP_EXPORT_NEEDS_ALPHA                    = 1 << 8
 } GimpExportCapabilities;
 
 typedef enum

@@ -61,9 +61,10 @@
 #endif
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -116,32 +117,32 @@ typedef struct PsdImageData
 static PSD_Image_Data PSDImageData;
 
 
-
 /* Declare some local functions.
  */
 
-static void   query      (void);
-static void   run        (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
-static void* xmalloc (size_t n);
-static void psd_lmode_layer (gint32 idLayer, gchar* psdMode);
-static void reshuffle_cmap_write (guchar *mapGimp);
-static void save_header (FILE *fd, gint32 image_id);
-static void save_color_mode_data (FILE *fd, gint32 image_id);
-static void save_resources (FILE *fd, gint32 image_id);
-static void save_layer_and_mask (FILE *fd, gint32 image_id);
-static void save_data (FILE *fd, gint32 image_id);
-static gint save_image (const gchar *filename, gint32 image_id);
-static void xfwrite (FILE *fd, void *buf, long len, gchar *why);
-static void write_pascalstring (FILE *fd, char *val, gint padding,
-                                gchar *why);
-static void write_string (FILE *fd, char *val, gchar *why);
-static void write_gchar (FILE *fd, unsigned char val, gchar *why);
-static void write_gshort (FILE *fd, gshort val, gchar *why);
-static void write_glong (FILE *fd, glong val, gchar *why);
+static void   query                (void);
+static void   run                  (const gchar      *name,
+                                    gint              nparams,
+                                    const GimpParam  *param,
+                                    gint             *nreturn_vals,
+                                    GimpParam       **return_vals);
+
+static void * xmalloc              (size_t n);
+static void   psd_lmode_layer      (gint32 idLayer, gchar* psdMode);
+static void   reshuffle_cmap_write (guchar *mapGimp);
+static void   save_header          (FILE *fd, gint32 image_id);
+static void   save_color_mode_data (FILE *fd, gint32 image_id);
+static void   save_resources       (FILE *fd, gint32 image_id);
+static void   save_layer_and_mask  (FILE *fd, gint32 image_id);
+static void   save_data            (FILE *fd, gint32 image_id);
+static gint   save_image           (const gchar *filename, gint32 image_id);
+static void   xfwrite              (FILE *fd, void *buf, long len, gchar *why);
+static void   write_pascalstring   (FILE *fd, char *val, gint padding,
+                                    gchar *why);
+static void   write_string         (FILE *fd, char *val, gchar *why);
+static void   write_gchar          (FILE *fd, unsigned char val, gchar *why);
+static void   write_gshort         (FILE *fd, gshort val, gchar *why);
+static void   write_glong          (FILE *fd, glong val, gchar *why);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -200,23 +201,51 @@ run (const gchar      *name,
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = GIMP_PDB_STATUS;
+  *return_vals  = values;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
   if (strcmp (name, "file_psd_save") == 0)
     {
+      gint32           image_id;
+      gint32           drawable_id;
+      GimpExportReturn export = GIMP_EXPORT_IGNORE;
+
       IFDBG printf ("\n---------------- %s ----------------\n", param[3].data.d_string);
 
-      if (save_image (param[3].data.d_string,  /* File name */
-                      param[1].data.d_image))  /* Image identifier */
-        {
-          values[0].data.d_status = GIMP_PDB_SUCCESS;
+      image_id    = param[1].data.d_int32;
+      drawable_id = param[2].data.d_int32;
+
+      switch (run_mode)
+	{
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init ("psd_save", FALSE);
+          export = gimp_export_image (&image_id, &drawable_id, "PSD",
+                                      GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                      GIMP_EXPORT_CAN_HANDLE_LAYERS);
+
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
+          break;
+
+        default:
+          break;
         }
+
+      if (save_image (param[3].data.d_string, image_id))
+        values[0].data.d_status = GIMP_PDB_SUCCESS;
       else
-        {
-          values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-        }
+        values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+
+      if (export == GIMP_EXPORT_EXPORT)
+        gimp_image_delete (image_id);
     }
 }
 

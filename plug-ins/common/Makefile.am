@@ -1268,10 +1268,12 @@ psd_save_SOURCES = \
 	psd_save.c
 
 psd_save_LDADD = \
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	@GLIB_LIBS@							\
+	@GTK_LIBS@							\
 	@INTLLIBS@
 
 psp_SOURCES = \

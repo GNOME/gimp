@@ -270,24 +270,25 @@ run (const gchar      *name,
     }
   else if (strcmp (name, "file_xbm_save") == 0)
     {
-      image_ID = param[1].data.d_int32;
+      image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("xbm", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "XBM",
-				      GIMP_EXPORT_CAN_HANDLE_INDEXED |
-				      GIMP_EXPORT_CAN_HANDLE_ALPHA );
+				      GIMP_EXPORT_CAN_HANDLE_BITMAP |
+				      GIMP_EXPORT_CAN_HANDLE_ALPHA);
+
 	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
-	  }
+            }
 	  break;
+
 	default:
 	  break;
 	}
@@ -945,16 +946,16 @@ save_image (const gchar *filename,
   gchar  *name_buf, *intfmt;
 
   drawable = gimp_drawable_get (drawable_ID);
-  width  = drawable->width;
-  height = drawable->height;
-  cmap = gimp_image_get_cmap (image_ID, &colors);
+  width    = drawable->width;
+  height   = drawable->height;
+  cmap     = gimp_image_get_cmap (image_ID, &colors);
 
-  if (!gimp_drawable_is_indexed (drawable_ID) || colors > 2)
+  if (! gimp_drawable_is_indexed (drawable_ID) || colors > 2)
     {
       /* The image is not black-and-white. */
-      g_message (_("The image which you are trying to save as\n"
+      g_message (_("The image which you are trying to save as "
 		   "an XBM contains more than two colors.\n\n"
-		   "Please convert it to a black and white\n"
+		   "Please convert it to a black and white "
 		   "(1-bit) indexed image and try again."));
       return FALSE;
     }

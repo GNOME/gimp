@@ -129,6 +129,25 @@ export_flatten (gint32  image_ID,
 }
 
 static void
+export_apply_masks (gint32  image_ID,
+                    gint   *drawable_ID)
+{
+  gint32  n_layers;
+  gint32 *layers;
+  gint    i;
+
+  layers = gimp_image_get_layers (image_ID, &n_layers);
+
+  for (i = 0; i < n_layers; i++)
+    {
+      if (gimp_layer_mask (layers[i]) != -1)
+        gimp_image_remove_layer_mask (image_ID, layers[i], GIMP_MASK_APPLY);
+    }
+
+  g_free (layers);
+}
+
+static void
 export_convert_rgb (gint32  image_ID,
 		    gint32 *drawable_ID)
 {
@@ -151,9 +170,22 @@ export_convert_indexed (gint32  image_ID,
   /* check alpha */
   g_free (gimp_image_get_layers (image_ID, &nlayers));
   if (nlayers > 1 || gimp_drawable_has_alpha (*drawable_ID))
-    gimp_image_convert_indexed (image_ID, GIMP_FS_DITHER, GIMP_MAKE_PALETTE, 255, FALSE, FALSE, "");
+    gimp_image_convert_indexed (image_ID, GIMP_FS_DITHER,
+                                GIMP_MAKE_PALETTE, 255, FALSE, FALSE, "");
   else
-    gimp_image_convert_indexed (image_ID, GIMP_FS_DITHER, GIMP_MAKE_PALETTE, 256, FALSE, FALSE, "");
+    gimp_image_convert_indexed (image_ID, GIMP_FS_DITHER,
+                                GIMP_MAKE_PALETTE, 256, FALSE, FALSE, "");
+}
+
+static void
+export_convert_bitmap (gint32  image_ID,
+                       gint32 *drawable_ID)
+{
+  if (gimp_image_base_type (image_ID) == GIMP_INDEXED)
+    gimp_image_convert_rgb (image_ID);
+
+  gimp_image_convert_indexed (image_ID, GIMP_FS_DITHER,
+                              GIMP_MAKE_PALETTE, 2, FALSE, FALSE, "");
 }
 
 static void
@@ -230,6 +262,15 @@ static ExportAction export_action_flatten =
   0
 };
 
+static ExportAction export_action_apply_masks =
+{
+  export_apply_masks,
+  NULL,
+  N_("%s can't handle layer masks"),
+  { N_("Apply Layer Masks"), NULL },
+  0
+};
+
 static ExportAction export_action_convert_rgb =
 {
   export_convert_rgb,
@@ -254,6 +295,16 @@ static ExportAction export_action_convert_indexed =
   NULL,
   N_("%s can only handle indexed images"),
   { N_("Convert to Indexed using default settings\n"
+       "(Do it manually to tune the result)"), NULL },
+  0
+};
+
+static ExportAction export_action_convert_bitmap =
+{
+  export_convert_bitmap,
+  NULL,
+  N_("%s can only handle bitmap (two color) indexed images"),
+  { N_("Convert to Indexed using bitmap default settings\n"
        "(Do it manually to tune the result)"), NULL },
   0
 };
@@ -580,11 +631,10 @@ gimp_export_image (gint32                 *image_ID,
   GSList            *list;
   GimpImageBaseType  type;
   gint32             i;
-  gint32             nlayers;
+  gint32             n_layers;
   gint32            *layers;
-  gint               offset_x;
-  gint               offset_y;
-  gboolean           added_flatten = FALSE;
+  gboolean           added_flatten        = FALSE;
+  gboolean           has_layer_masks      = FALSE;
   gboolean           background_has_alpha = TRUE;
   ExportAction      *action;
   GimpExportReturn   retval = GIMP_EXPORT_CANCEL;
@@ -594,8 +644,15 @@ gimp_export_image (gint32                 *image_ID,
   /* do some sanity checks */
   if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_ALPHA;
+
   if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+
+  if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS)
+    capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+
+  if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS)
+    capabilities |= GIMP_EXPORT_CAN_HANDLE_ALPHA;
 
   /* ask for confirmation if the user is not saving a layer (see bug #51114) */
   if (! gimp_drawable_is_layer (*drawable_ID) &&
@@ -624,25 +681,27 @@ gimp_export_image (gint32                 *image_ID,
 	return GIMP_EXPORT_CANCEL;
     }
 
-  /* check alpha */
-  layers = gimp_image_get_layers (*image_ID, &nlayers);
-  for (i = 0; i < nlayers; i++)
+
+  /* check alpha and layer masks */
+  layers = gimp_image_get_layers (*image_ID, &n_layers);
+
+  for (i = 0; i < n_layers; i++)
     {
       if (gimp_drawable_has_alpha (layers[i]))
 	{
-
-	  if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA ) )
+	  if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA))
 	    {
 	      actions = g_slist_prepend (actions, &export_action_flatten);
 	      added_flatten = TRUE;
-	      break;
+              break;
 	    }
 	}
       else
 	{
-          /* If this is the last layer, it's visible and has no alpha
-             channel, then the image has a "flat" background */
-      	  if (i == nlayers - 1 && gimp_layer_get_visible (layers[i]))
+          /*  If this is the last layer, it's visible and has no alpha
+           *  channel, then the image has a "flat" background
+           */
+      	  if (i == n_layers - 1 && gimp_layer_get_visible (layers[i]))
 	    background_has_alpha = FALSE;
 
 	  if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
@@ -652,52 +711,77 @@ gimp_export_image (gint32                 *image_ID,
 	    }
 	}
     }
+
+  if (! added_flatten)
+    {
+      for (i = 0; i < n_layers; i++)
+        {
+          if (gimp_layer_mask (layers[i]) != -1)
+            has_layer_masks = TRUE;
+        }
+    }
+
   g_free (layers);
 
-  /* check if layer size != canvas size, opacity != 100%, or offsets != 0 */
-  if (!added_flatten && nlayers == 1 && gimp_drawable_is_layer (*drawable_ID)
-      && !(capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
+  if (! added_flatten)
     {
-      gimp_drawable_offsets (*drawable_ID, &offset_x, &offset_y);
-      if ((gimp_layer_get_opacity (*drawable_ID) < 100.0)
-	  || (gimp_image_width (*image_ID)
-	      != gimp_drawable_width (*drawable_ID))
-	  || (gimp_image_height (*image_ID)
-	      != gimp_drawable_height (*drawable_ID))
-	  || offset_x || offset_y)
-	{
-	  if (capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA)
-	    actions = g_slist_prepend (actions,
-                                       &export_action_merge_single);
-	  else
-	    {
-	      actions = g_slist_prepend (actions,
-                                         &export_action_flatten);
-	      added_flatten = TRUE;
-	    }
-	}
-    }
-  /* check multiple layers */
-  else if (!added_flatten && nlayers > 1)
-    {
-      if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
-	{
-	  if (background_has_alpha || capabilities & GIMP_EXPORT_NEEDS_ALPHA)
-	    actions = g_slist_prepend (actions,
-                                       &export_action_animate_or_merge);
-	  else
-	    actions = g_slist_prepend (actions,
-                                       &export_action_animate_or_flatten);
-	}
-      else if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
-	{
-	  if (background_has_alpha || capabilities & GIMP_EXPORT_NEEDS_ALPHA)
-	    actions = g_slist_prepend (actions,
-                                       &export_action_merge);
-	  else
-	    actions = g_slist_prepend (actions,
-                                       &export_action_merge_flat);
-	}
+      /* check if layer size != canvas size, opacity != 100%, or offsets != 0 */
+      if (n_layers == 1                         &&
+          gimp_drawable_is_layer (*drawable_ID) &&
+          ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
+        {
+          gint offset_x;
+          gint offset_y;
+
+          gimp_drawable_offsets (*drawable_ID, &offset_x, &offset_y);
+
+          if ((gimp_layer_get_opacity (*drawable_ID) < 100.0) ||
+              (gimp_image_width (*image_ID) !=
+               gimp_drawable_width (*drawable_ID))            ||
+              (gimp_image_height (*image_ID) !=
+               gimp_drawable_height (*drawable_ID))           ||
+              offset_x || offset_y)
+            {
+              if (capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA)
+                {
+                  actions = g_slist_prepend (actions,
+                                             &export_action_merge_single);
+                }
+              else
+                {
+                  actions = g_slist_prepend (actions,
+                                             &export_action_flatten);
+                  added_flatten = TRUE;
+                }
+            }
+        }
+      /* check multiple layers */
+      else if (n_layers > 1)
+        {
+          if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
+            {
+              if (background_has_alpha || capabilities & GIMP_EXPORT_NEEDS_ALPHA)
+                actions = g_slist_prepend (actions,
+                                           &export_action_animate_or_merge);
+              else
+                actions = g_slist_prepend (actions,
+                                           &export_action_animate_or_flatten);
+            }
+          else if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
+            {
+              if (background_has_alpha || capabilities & GIMP_EXPORT_NEEDS_ALPHA)
+                actions = g_slist_prepend (actions,
+                                           &export_action_merge);
+              else
+                actions = g_slist_prepend (actions,
+                                           &export_action_merge_flat);
+            }
+        }
+
+      /* check layer masks */
+      if (has_layer_masks &&
+          ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS))
+        actions = g_slist_prepend (actions, &export_action_apply_masks);
     }
 
   /* check the image type */
@@ -705,7 +789,7 @@ gimp_export_image (gint32                 *image_ID,
   switch (type)
     {
     case GIMP_RGB:
-       if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) )
+      if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_RGB))
 	{
 	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED) &&
               (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
@@ -717,10 +801,14 @@ gimp_export_image (gint32                 *image_ID,
 	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY)
 	    actions = g_slist_prepend (actions,
                                        &export_action_convert_grayscale);
+	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_BITMAP)
+	    actions = g_slist_prepend (actions,
+                                       &export_action_convert_bitmap);
 	}
       break;
+
     case GIMP_GRAY:
-      if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY) )
+      if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
 	{
 	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) &&
               (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED))
@@ -732,22 +820,36 @@ gimp_export_image (gint32                 *image_ID,
 	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED)
 	    actions = g_slist_prepend (actions,
                                        &export_action_convert_indexed);
+	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_BITMAP)
+	    actions = g_slist_prepend (actions,
+                                       &export_action_convert_bitmap);
 	}
       break;
+
     case GIMP_INDEXED:
-       if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED) )
-	{
-	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) &&
+      if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED))
+        {
+          if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) &&
               (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
-	    actions = g_slist_prepend (actions,
+            actions = g_slist_prepend (actions,
                                        &export_action_convert_rgb_or_grayscale);
-	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_RGB)
-	    actions = g_slist_prepend (actions,
+          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_RGB)
+            actions = g_slist_prepend (actions,
                                        &export_action_convert_rgb);
-	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY)
-	    actions = g_slist_prepend (actions,
+          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY)
+            actions = g_slist_prepend (actions,
                                        &export_action_convert_grayscale);
-	}
+	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_BITMAP)
+            {
+              gint n_colors;
+
+              g_free (gimp_image_get_cmap (*image_ID, &n_colors));
+
+              if (n_colors > 2)
+                actions = g_slist_prepend (actions,
+                                           &export_action_convert_bitmap);
+            }
+        }
       break;
     }
 
