@@ -704,32 +704,45 @@ gimp_layer_create_mask (const GimpLayer *layer,
     case GIMP_ADD_COPY_MASK:
     case GIMP_ADD_INVERSE_COPY_MASK:
       {
-        TileManager   *copy_tiles;
+        TileManager   *copy_tiles = NULL;
         GimpImageType  layer_type;
-        GimpImageType  copy_type;
-        guchar         black_uchar[] = { 0, 0, 0, 0 };
 
         layer_type = GIMP_DRAWABLE (layer)->type;
 
-        copy_type = (GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type) ?
-                     GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE);
+        if (GIMP_IMAGE_TYPE_BASE_TYPE (layer_type) != GIMP_GRAY)
+          {
+            GimpImageType copy_type;
 
-        copy_tiles = tile_manager_new (GIMP_DRAWABLE (layer)->width,
-                                       GIMP_DRAWABLE (layer)->height,
-                                       GIMP_IMAGE_TYPE_BYTES (copy_type));
+            copy_type = (GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type) ?
+                         GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE);
 
-        gimp_drawable_convert_grayscale (GIMP_DRAWABLE (layer),
-                                         copy_tiles,
-                                         GIMP_IMAGE_TYPE_BASE_TYPE (layer_type));
+            copy_tiles = tile_manager_new (GIMP_DRAWABLE (layer)->width,
+                                           GIMP_DRAWABLE (layer)->height,
+                                           GIMP_IMAGE_TYPE_BYTES (copy_type));
 
-        pixel_region_init (&srcPR, copy_tiles,
-                           0, 0,
-                           GIMP_DRAWABLE (layer)->width, 
-                           GIMP_DRAWABLE (layer)->height, 
-                           FALSE);
+            gimp_drawable_convert_grayscale (GIMP_DRAWABLE (layer),
+                                             copy_tiles,
+                                             GIMP_IMAGE_TYPE_BASE_TYPE (layer_type));
+
+            pixel_region_init (&srcPR, copy_tiles,
+                               0, 0,
+                               GIMP_DRAWABLE (layer)->width, 
+                               GIMP_DRAWABLE (layer)->height, 
+                               FALSE);
+          }
+        else
+          {
+            pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+                               0, 0,
+                               GIMP_DRAWABLE (layer)->width, 
+                               GIMP_DRAWABLE (layer)->height, 
+                               FALSE);
+          }
 
         if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
           {
+            guchar black_uchar[] = { 0, 0, 0, 0 };
+
             flatten_region (&srcPR, &destPR, black_uchar);
           }
         else
@@ -737,7 +750,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
             copy_region (&srcPR, &destPR);
           }
 
-        tile_manager_destroy (copy_tiles);
+        if (copy_tiles)
+          tile_manager_destroy (copy_tiles);
       }
 
       GIMP_CHANNEL (mask)->bounds_known = FALSE;

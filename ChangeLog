@@ -1,3 +1,8 @@
+2003-03-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayer.c (gimp_layer_create_mask): don't try to
+	convert a grayscale layer to grayscale. Fixes bug #107422.
+
 2003-03-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimpbilinear.[ch]
