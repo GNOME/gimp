@@ -814,6 +814,19 @@ gimp_dnd_file_dest_add (GtkWidget           *widget,
 			GimpDndDropFileFunc  set_file_func,
 			gpointer             data)
 {
+  /*  Set a default drag dest if not already done. Explicitely set
+   *  DEFAULT, COPY and MOVE for file drag destinations. Some file
+   *  managers such as Konqueror only offer MOVE by default.
+   */
+  if (! g_object_get_data (G_OBJECT (widget), "gtk-drag-dest"))
+    gtk_drag_dest_set (widget,
+                       GTK_DEST_DEFAULT_ALL, NULL, 0,
+                       GDK_ACTION_DEFAULT | GDK_ACTION_COPY | GDK_ACTION_MOVE);
+
+  gtk_drag_dest_set (widget,
+                     GTK_DEST_DEFAULT_ALL, NULL, 0,
+                     GDK_ACTION_COPY | GDK_ACTION_MOVE);
+
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_NETSCAPE_URL, widget,
 			  G_CALLBACK (set_file_func),
 			  data);

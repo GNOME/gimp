@@ -1,5 +1,11 @@
 2003-10-17  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdnd.c (gimp_dnd_file_dest_add): for file drag
+	destinations, set GDK_ACTION_DEFAULT and GDK_ACTION_MOVE in
+	addition to GDK_ACTION_COPY. Enables DND from Konqueror.
+
+2003-10-17  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptooloptionseditor.c: gimp_dnd_viewable_dest_add()
 	calls gtk_drag_dest_set() for us so we don't need to do it here.
 
