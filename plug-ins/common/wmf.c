@@ -18,7 +18,9 @@
  * See http://www.iki.fi/tml/gimp/wmf/
  */
 
-#define VERSION "1999-10-22"
+#define VERSION "1999-10-30"
+
+/* #define DEBUG */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1159,8 +1161,14 @@ make_canvas (OrgAndExt *window,
 
   if (!window->valid)
     {
+#ifdef DEBUG
+      g_print ("make_canvas: !window->valid\n");
+#endif
       if (have_bbox)
 	{
+#ifdef DEBUG
+	  g_print ("make_canvas: have_bbox\n");
+#endif
 	  window->org_x = bbox->x;
 	  window->ext_x = bbox->width;
 	  window->org_y = bbox->y;
@@ -1180,15 +1188,19 @@ make_canvas (OrgAndExt *window,
   
   if (!viewport->valid)
     {
+#ifdef DEBUG
+      g_print ("make_canvas: !viewport->valid\n");
+#endif
       viewport->org_x = viewport->org_y = 0;
       viewport->ext_x = canvas->scalex * fabs (window->ext_x) / units_per_in * pixs_per_in;
       viewport->ext_y = canvas->scaley * fabs (window->ext_y) / units_per_in * pixs_per_in;
       viewport->valid = TRUE;
     }
-#if 0
-  g_print ("window: (%d,%d)--(%d,%d), viewport: (%d,%d)--(%d,%d)\n",
+#ifdef DEBUG
+  g_print ("make_canvas: w: (%d,%d)--(%d,%d), vp: (%d,%d)--(%d,%d)\n",
 	   window->org_x, window->org_y, window->org_x + window->ext_x, window->org_y + window->ext_y, 
-	   viewport->org_x, viewport->org_y, viewport->org_x + viewport->ext_x, viewport->org_y + viewport->ext_y);
+	   viewport->org_x, viewport->org_y,
+	   viewport->org_x + viewport->ext_x, viewport->org_y + viewport->ext_y);
 #endif
 
   canvas->colormap = gdk_colormap_get_system ();
@@ -1359,6 +1371,12 @@ load_image (char *filename)
       have_bbox = TRUE;
       units_per_in = GUINT16_FROM_LE (apm_head.Inch);
 
+#ifdef DEBUG
+      g_print ("placeable metafile header: (%d,%d)--(%d,%d), bbox: %dx%d@+%d+%d\n",
+	       apm_head.Left, apm_head.Top, apm_head.Right, apm_head.Bottom,
+	       bbox.width, bbox.height, bbox.x, bbox.y);
+      g_print ("units_per_in: %d\n", units_per_in);
+#endif
       if (!ReadOK (fp, buffer, SIZE_WMFHEAD))
 	{
 	  g_message ("WMF: Failed to read metafile header");
@@ -1379,7 +1397,9 @@ load_image (char *filename)
 #else
   pixs_per_in = 72;
 #endif
-
+#ifdef DEBUG
+  g_print ("pixs_per_in: %d\n", pixs_per_in);
+#endif
   g_memmove (&wmf_head.Version, buffer + 4, 2);
   g_memmove (&wmf_head.FileSize, buffer + 6, 4);
   g_memmove (&wmf_head.NumOfObjects, buffer + 10, 2);
@@ -1406,7 +1426,7 @@ load_image (char *filename)
       g_memmove (&record.Size, buffer, 4);
       g_memmove (&record.Function, buffer + 4, 2);
       record_counter++;
-#if 0
+#ifdef DEBUG
       g_print ("%#x %d\n", GUINT16_FROM_LE (record.Function), GUINT32_FROM_LE (record.Size));
 #endif
       switch (GUINT16_FROM_LE (record.Function))
@@ -1497,12 +1517,19 @@ load_image (char *filename)
 	  if (canvas == NULL)
 	    canvas = make_canvas (&window, &viewport, have_bbox, &bbox, units_per_in);
 	  set_color (params + 0, &canvas->dc.bg);
+#ifdef DEBUG
+	  g_print ("SetBkColor: %d %d %d\n", canvas->dc.bg.red,
+		   canvas->dc.bg.green, canvas->dc.bg.blue);
+#endif
 	  if (!gdk_color_alloc (canvas->colormap, &canvas->dc.bg))
 	    {
 	      fclose (fp);
 	      g_message ("WMF: Couldn't allocate color");
 	      return -1;
 	    }
+#ifdef DEBUG
+	  g_print ("...allocated color %#.06lx\n", canvas->dc.bg.pixel);
+#endif
 	  sync_record (record.Size, 2, fp);
 	  break;
 
@@ -1537,12 +1564,19 @@ load_image (char *filename)
 	  if (canvas == NULL)
 	    canvas = make_canvas (&window, &viewport, have_bbox, &bbox, units_per_in);
 	  set_color (params + 0, &canvas->dc.textColor);
+#ifdef DEBUG
+	  g_print ("SetTextColor: %d %d %d\n", canvas->dc.textColor.red,
+		   canvas->dc.textColor.green, canvas->dc.textColor.blue);
+#endif
 	  if (!gdk_color_alloc (canvas->colormap, &canvas->dc.textColor))
 	    {
 	      fclose (fp);
 	      g_message ("WMF: Couldn't allocate color");
 	      return -1;
 	    }
+#ifdef DEBUG
+	  g_print ("...allocated color %#.06lx\n", canvas->dc.textColor.pixel);
+#endif
 	  sync_record (record.Size, 2, fp);
 	  break;
 
@@ -1711,14 +1745,29 @@ load_image (char *filename)
 	  if (canvas == NULL)
 	    canvas = make_canvas (&window, &viewport, have_bbox, &bbox, units_per_in);
 	  objp->u.pen.width = (int) XSCALE (GUINT16_FROM_LE (params[1]) + (GUINT16_FROM_LE (params[2]) << 16));
-
 	  set_color (params+3, &objp->u.pen.color);
+#ifdef DEBUG
+	  g_print ("CreatePenIndirect: %#x width %d%s %s color: %d %d %d\n",
+		   objp,
+		   objp->u.pen.width,
+		   (objp->u.pen.invisible ? " invisible" : ""),
+		   (objp->u.pen.style == GDK_LINE_SOLID ? "solid" :
+		    (objp->u.pen.style == GDK_LINE_ON_OFF_DASH ? "on-off-dash" :
+		     (objp->u.pen.style == GDK_LINE_DOUBLE_DASH ? "double-dash" :
+		      "???"))),
+		   objp->u.pen.color.red,
+		   objp->u.pen.color.green,
+		   objp->u.pen.color.blue); 
+#endif
 	  if (!gdk_color_alloc (canvas->colormap, &objp->u.pen.color))
 	    {
 	      g_message ("WMF: Couldn't allocate color");
 	      fclose (fp);
 	      return -1;
 	    }
+#ifdef DEBUG
+	  g_print ("...allocated color %#.06lx\n", objp->u.pen.color.pixel);
+#endif
 	  /* CreatePenIndirect records sometimes have junk padding? */
 	  sync_record (record.Size, 5, fp);
 	  break;
@@ -1736,6 +1785,14 @@ load_image (char *filename)
 	  if (objp->u.brush.style == BS_NULL)
 	    objp->u.brush.invisible = TRUE;
 	  set_color (params+1, &objp->u.brush.color);
+#ifdef DEBUG
+	  g_print ("CreateBrushIndirect: %#x%s color: %d %d %d\n",
+		   objp,
+		   (objp->u.brush.invisible ? " invisible" : ""),
+		   objp->u.brush.color.red,
+		   objp->u.brush.color.green,
+		   objp->u.brush.color.blue); 
+#endif
 	  if (canvas == NULL)
 	    canvas = make_canvas (&window, &viewport, have_bbox, &bbox, units_per_in);
 	  if (!gdk_color_alloc (canvas->colormap, &objp->u.brush.color))
@@ -1744,6 +1801,9 @@ load_image (char *filename)
 	      fclose (fp);
 	      return -1;
 	    }
+#ifdef DEBUG
+	  g_print ("...allocated color %#.06lx\n", objp->u.brush.color.pixel);
+#endif
 	  objp->u.brush.hatch = GUINT16_FROM_LE (params[3]);
 	  sync_record (record.Size, 4, fp);
 	  break;
@@ -1754,6 +1814,9 @@ load_image (char *filename)
 	      fclose (fp);
 	      return -1;
 	    }
+#ifdef DEBUG
+	  g_print ("DibCreatePatternBrush: %#x\n", objp);
+#endif
 	  /* Ignored for now */
 	  sync_record (record.Size, 0, fp);
 	  break;
@@ -1764,6 +1827,9 @@ load_image (char *filename)
 	      fclose (fp);
 	      return -1;
 	    }
+#ifdef DEBUG
+	  g_print ("CreatePalette: %#x\n", objp);
+#endif
 	  /* XXX */
 	  sync_record (record.Size, 0, fp);
 	  break;
@@ -1776,6 +1842,8 @@ load_image (char *filename)
 	      fclose (fp);
 	      return -1;
 	    }
+	  if (canvas == NULL)
+	    canvas = make_canvas (&window, &viewport, have_bbox, &bbox, units_per_in);
 	  {
 	    gint height, orientation, weight, italic, pitch_family;
 	    char *pitch, *slant, *fontname, *name, *name2;
@@ -1833,12 +1901,17 @@ load_image (char *filename)
 	      }
 	    name[k*2] = '\0';
 
-#if 0
-	    g_print ("font name: %s\n", name);
+#ifdef DEBUG
+	    g_print ("CreateFontIndirect: %#x %s\n", objp, name);
 #endif
-	    /* Very rough mapping from typical Windows fonts to XLFD */
+	    /* Very rough mapping from typical Windows fonts to
+	     * typical X11 fonts. If you run GIMP on Win32,
+	     * they will be mapped back to typical Windows
+	     * fonts, sigh...
+	     */
 	    g_strdown (name);
-	    if (strcmp (name, "system") == 0)
+	    if (strcmp (name, "system") == 0
+		|| strcmp (name, "fixedsys") == 0)
 	      name2 = "courier";
 	    else if (strncmp (name, "arial", 5) == 0)
 	      name2 = "helvetica";
@@ -1846,33 +1919,35 @@ load_image (char *filename)
 	      name2 = "courier";
 	    else
 	      name2 = name;
-	    fontname = g_malloc (200);
-	    sprintf (fontname, "-*-%s-%s-%s-%s-*-%d-*-*-*-%s-*-*-*",
-		     name2,
-		     (weight >= 700 ? "bold" :
-		      (weight >= 400 ? "medium" :
-		       "*")),
-		     slant,
-		     "*",
-		     (int) YSCALE (height),
-		     pitch);
-#if 0
-	    g_print ("XLFD font: %s\n", fontname);
+	    fontname = 
+	      g_strdup_printf ("-*-%s-%s-%s-%s-*-%d-*-*-*-%s-*-*-*",
+			       name2,
+			       (weight >= 700 ? "bold" :
+				(weight >= 400 ? "medium" :
+				 "*")),
+			       slant,
+			       "*",
+			       (int) YSCALE (height),
+			       pitch);
+#ifdef DEBUG
+	    g_print ("...XLFD font: %s\n", fontname);
 #endif
 	    objp->u.font.font = gdk_font_load (fontname);
 	    if (objp->u.font.font == NULL)
 	      {
-		sprintf (fontname, "-*-%s-%s-%s-%s-*-%d-*-*-*-%s-*-*-*",
-			 "*",
-			 (weight >= 700 ? "bold" :
-			  (weight >= 400 ? "medium" :
-			   "*")),
-			 "*",
-			 "*",
-			 (int) YSCALE (height),
-			 "*");
-#if 0
-		g_print ("Another XLFD font: %s\n", fontname);
+		g_free (fontname);
+		fontname =
+		  g_strdup_printf ("-*-%s-%s-%s-%s-*-%d-*-*-*-%s-*-*-*",
+				   "*",
+				   (weight >= 700 ? "bold" :
+				    (weight >= 400 ? "medium" :
+				     "*")),
+				   "*",
+				   "*",
+				   (int) YSCALE (height),
+				   "*");
+#ifdef DEBUG
+		g_print ("...another XLFD font: %s\n", fontname);
 #endif
 		objp->u.font.font = gdk_font_load (fontname);
 		if (objp->u.font.font == NULL)
@@ -1905,6 +1980,15 @@ load_image (char *filename)
 	      g_message ("WMF: Selecting NULL object");
 	      return -1;
 	    }
+#ifdef DEBUG
+	  g_print ("SelectObject: %#x %s\n",
+		   objp,
+		   (objp->type == OBJ_BRUSH ? "brush" :
+		    (objp->type == OBJ_PEN ? "pen" :
+		     (objp->type == OBJ_PATTERNBRUSH ? "patternbrush" :
+		      (objp->type == OBJ_FONT ? "font" :
+		       "???")))));
+#endif
 	  switch (objp->type)
 	    {
 	    case OBJ_BRUSH:
@@ -2014,6 +2098,12 @@ load_image (char *filename)
 	    canvas = make_canvas (&window, &viewport, have_bbox, &bbox, units_per_in);
 	  x = XMAPPAR (params[1]);
 	  y = YMAPPAR (params[0]);
+#ifdef DEBUG
+	  g_print ("LineTo: (%d,%d)--(%d,%d)\n", 
+		   (gint) canvas->curx, (gint) canvas->cury,
+		   (gint) x, (gint) y);
+#endif
+	  gdk_gc_set_foreground (canvas->dc.gc, &canvas->dc.pen->color);
 	  gdk_draw_line (canvas->pixmap, canvas->dc.gc,
 			 (gint) canvas->curx, (gint) canvas->cury,
 			 (gint) x, (gint) y);

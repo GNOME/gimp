@@ -1,3 +1,11 @@
+1999-10-30  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/wmf.c: Fix a couple of bugs: Must call
+	make_canvas if necessary when handling CreateFontIndirect. Must
+	call gdk_gc_set_foreground with the pen colour when handling
+	LineTo (strange that this hasn't showed up before). Added lots of
+	debugging printouts (behind #ifdef DEBUG).
+
 Sat Oct 30 10:14:35 BST 1999 Nick Lamb <njl195@zepler.org>
 	* app/fileops.c: Fix #3179 (Revert uses wrong filename)
 
