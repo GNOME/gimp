@@ -1,8 +1,12 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimagefile.h
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * gimpfileimage.h
+ * Thumbnail handling according to the Thumbnail Managing Standard.
+ * http://triq.net/~pearl/thumbnail-spec/
+ *
+ * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
+ *                          Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +42,7 @@ typedef enum
   GIMP_IMAGEFILE_STATE_NOT_FOUND,
   GIMP_IMAGEFILE_STATE_EXISTS,
   GIMP_IMAGEFILE_STATE_THUMBNAIL_NOT_FOUND,
+  GIMP_IMAGEFILE_STATE_THUMBNAIL_EXISTS,
   GIMP_IMAGEFILE_STATE_THUMBNAIL_OLD,
   GIMP_IMAGEFILE_STATE_THUMBNAIL_FAILED,
   GIMP_IMAGEFILE_STATE_THUMBNAIL_OK
@@ -62,7 +67,6 @@ struct _GimpImagefile
 
   time_t              image_mtime;
   gssize              image_size;
-  time_t              thumb_mtime;
 
   gint                width;
   gint                height;

@@ -1,3 +1,13 @@
+2002-04-29  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagefile.[ch]: save empty thumbnails to
+	~/.thumbnails/fail/gimp-1.3 if we cannot create a thumbnail. Added
+	new state GIMP_IMAGEFILE_STATE_THUMBNAIL_EXISTS to indicate that a
+	thumbnail was found but is not yet loaded. Removed unused thumb_mtime
+	from GimpImagefile struct and simplified some parts of the code.
+
+	* app/gui/file-open-dialog.c: cosmetic changes.
+
 2002-04-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpviewable.[ch]: added "gchar *name_changed_signal"

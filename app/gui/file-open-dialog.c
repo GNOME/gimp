@@ -98,7 +98,7 @@ static GtkWidget      *open_options_preview   = NULL;
 static GtkWidget      *open_options_label     = NULL;
 static GtkProgressBar *open_options_progress  = NULL;
 
-static PlugInProcDef *load_file_proc = NULL;
+static PlugInProcDef  *load_file_proc         = NULL;
 
 
 /*  public functions  */
@@ -234,7 +234,7 @@ file_open_dialog_create (Gimp *gimp)
 		      G_CALLBACK (file_open_thumbnail_button_press),
                       open_dialog);
 
-    gimp_help_set_help_data (ebox, _("Click to create preview"), NULL);
+    gimp_help_set_help_data (ebox, _("Click to update preview"), NULL);
 
     vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (ebox), vbox);
@@ -645,7 +645,5 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
                                    NULL);
 
   if (status == GIMP_PDB_SUCCESS)
-    {
-      file_dialog_hide (open_dialog);
-    }
+    file_dialog_hide (open_dialog);
 }
