@@ -95,7 +95,7 @@ splash_create (void)
 
           if (splashes)
             {
-              gint32 i = g_random_int_range (0, g_list_length (splashes) - 1);
+              gint32 i = g_random_int_range (0, g_list_length (splashes));
 
               filename = g_build_filename (dirname,
                                            g_list_nth_data (splashes, i),
