@@ -441,14 +441,15 @@ load_page (HelpPage *source_page,
 {
   GString  *file_contents;
   FILE     *afile = NULL;
-  char      aline[1024];
+  gchar     aline[1024];
   gchar    *old_dir;
   gchar    *new_dir, *new_base;
   gchar    *new_ref;
+  gchar    *anchor;
   gboolean  page_valid  = FALSE;
-  gboolean  filters_dir = FALSE;
 
-  g_return_val_if_fail (ref != NULL && source_page != NULL && dest_page != NULL, FALSE);
+  g_return_val_if_fail (ref != NULL &&  
+                        source_page != NULL && dest_page != NULL, FALSE);
 
   old_dir  = g_dirname (source_page->current_ref);
   new_dir  = g_dirname (ref);
@@ -473,9 +474,6 @@ load_page (HelpPage *source_page,
       goto FINISH;
     }
 
-  if (strcmp (g_basename (new_dir), "filters") == 0)
-    filters_dir = TRUE;
-
   g_free (new_dir);
   new_dir = g_get_current_dir ();
 
@@ -493,8 +491,13 @@ load_page (HelpPage *source_page,
 
   /*
    *  handle basename like: filename.html#11111 -> filename.html
-   */ 
-  g_strdelimit (new_base,"#",'\0');
+   */
+  anchor = strchr (new_base, '#');
+  if (anchor)
+    {
+      *anchor = '\0';
+      anchor++;
+    }
 
   afile = fopen (new_base, "rt");
 
@@ -503,25 +506,6 @@ load_page (HelpPage *source_page,
       while (fgets (aline, sizeof (aline), afile))
 	file_contents = g_string_append (file_contents, aline);
       fclose (afile);
-    }
-  else if (filters_dir)
-    {
-      gchar *undocumented_filter;
-
-      undocumented_filter = g_strconcat (new_dir, G_DIR_SEPARATOR_S,
-					 "undocumented_filter.html", NULL);
-
-
-      afile = fopen (undocumented_filter, "rt");
-
-      if (afile != NULL)
-	{
-	  while (fgets (aline, sizeof (aline), afile))
-	    file_contents = g_string_append (file_contents, aline);
-	  fclose (afile);
-	}
-
-      g_free (undocumented_filter);
     }
 
   if (strlen (file_contents->str) <= 0)
@@ -535,6 +519,9 @@ load_page (HelpPage *source_page,
 
   html_source (dest_page, new_ref, 0, file_contents->str, 
 	       add_to_queue, add_to_history && page_valid);
+
+  if (anchor)
+    jump_to_anchor (current_page, anchor);
 
  FINISH:
 
