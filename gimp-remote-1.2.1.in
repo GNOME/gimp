@@ -7,11 +7,12 @@ gimp-remote - tells a running gimp to open a (local or remote) image file.
 
 .SH DESCRIPTION
 .PP
-\fIgimp-remote\fP is a small utility that tells a running gimp to open a 
-(local or remote) image file. It does so by searching a gimp toolbox on the 
-active display. If it can identify a gimp toolbox, a synthetic drop event is 
-created which makes gimp think the files would have been dropped onto the 
-toolbox. More than one filename or URL can be specified on the commandline.
+\fIgimp-remote\fP is a small utility that tells a running gimp to open
+a (local or remote) image file.  It does so by searching for a gimp
+toolbox on the active display.  If it can find a gimp toolbox, a
+synthetic drop event is created which makes gimp think the files would
+have been dropped onto the toolbox. More than one filename or URL can
+be specified on the commandline.
 
 .SH OPTIONS
 .l 

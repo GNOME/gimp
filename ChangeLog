@@ -1,3 +1,7 @@
+Mon Sep 25 12:25:34 BST 2000  Austin Donnelly <austin@gimp.org>
+
+	* gimp-remote.1.in: minor English fix.
+
 2000-09-24  Seth Burgess  <sjburges@gimp.org>
 	
 	* fileops.c : made the dialog have the name of whatever file was last
