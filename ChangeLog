@@ -1,5 +1,15 @@
 2005-03-25  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpmarshal.list: added VOID: OBJECT, OBJECT.
+
+	* app/widgets/gimpview.[ch]: pass old and new viewable in the
+	"set-viewable" signal.
+
+	* app/widgets/gimptoolbox-image-area.c: don't add the XDS drag source
+	more than once.
+
+2005-03-25  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdnd-xds.c (gimp_dnd_xds_save_image): in case of
 	an error, answer with E (error) instead of F (failure).
 

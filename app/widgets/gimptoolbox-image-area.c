@@ -67,12 +67,19 @@ image_preview_drop_image (GtkWidget    *widget,
 
 static void
 image_preview_set_viewable (GimpView     *view,
-                            GimpViewable *viewable)
+                            GimpViewable *old_viewable,
+                            GimpViewable *new_viewable)
 {
-  if (viewable)
-    gimp_dnd_xds_source_add (GTK_WIDGET (view),
-                             (GimpDndDragViewableFunc) gimp_view_get_viewable,
-                             NULL);
+  if (! old_viewable && new_viewable)
+    {
+      gimp_dnd_xds_source_add (GTK_WIDGET (view),
+                               (GimpDndDragViewableFunc) gimp_view_get_viewable,
+                               NULL);
+    }
+  else if (old_viewable && ! new_viewable)
+    {
+      gimp_dnd_xds_source_remove (GTK_WIDGET (view));
+    }
 }
 
 /*  public functions  */

@@ -82,6 +82,7 @@ static gboolean    gimp_view_leave_notify_event   (GtkWidget        *widget,
                                                    GdkEventCrossing *event);
 
 static void        gimp_view_real_set_viewable    (GimpView         *view,
+                                                   GimpViewable     *old,
                                                    GimpViewable     *viewable);
 
 static void        gimp_view_update_callback      (GimpViewRenderer *renderer,
@@ -139,9 +140,9 @@ gimp_view_class_init (GimpViewClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpViewClass, set_viewable),
                   NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
-                  G_TYPE_NONE, 1,
-                  GIMP_TYPE_VIEWABLE);
+                  gimp_marshal_VOID__OBJECT_OBJECT,
+                  G_TYPE_NONE, 2,
+                  GIMP_TYPE_VIEWABLE, GIMP_TYPE_VIEWABLE);
 
   view_signals[CLICKED] =
     g_signal_new ("clicked",
@@ -560,6 +561,7 @@ gimp_view_leave_notify_event (GtkWidget        *widget,
 
 static void
 gimp_view_real_set_viewable (GimpView     *view,
+                             GimpViewable *old,
                              GimpViewable *viewable)
 {
   GType viewable_type = G_TYPE_NONE;
@@ -754,7 +756,7 @@ gimp_view_set_viewable (GimpView     *view,
   if (viewable == view->viewable)
     return;
 
-  g_signal_emit (view, view_signals[SET_VIEWABLE], 0, viewable);
+  g_signal_emit (view, view_signals[SET_VIEWABLE], 0, view->viewable, viewable);
 }
 
 void

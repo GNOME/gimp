@@ -59,7 +59,8 @@ struct _GimpViewClass
 
   /*  signals  */
   void        (* set_viewable)     (GimpView        *view,
-                                    GimpViewable    *viewable);
+                                    GimpViewable    *old_viewable,
+                                    GimpViewable    *new_viewable);
   void        (* clicked)          (GimpView        *view,
                                     GdkModifierType  modifier_state);
   void        (* double_clicked)   (GimpView        *view);
