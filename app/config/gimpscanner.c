@@ -83,12 +83,16 @@ gimp_scanner_new_file (const gchar  *filename,
 
   if (fd == -1)
     {
+      GimpConfigError code;
+
+      code = (errno == ENOENT ?
+              GIMP_CONFIG_ERROR_OPEN_ENOENT : GIMP_CONFIG_ERROR_OPEN);
+
       g_set_error (error,
-                   GIMP_CONFIG_ERROR, 
-                   (errno == ENOENT ?
-                    GIMP_CONFIG_ERROR_OPEN_ENOENT : GIMP_CONFIG_ERROR_OPEN),
+                   GIMP_CONFIG_ERROR, code,
                    _("Failed to open file: '%s': %s"),
                    filename, g_strerror (errno));
+
       return NULL;
     }
 

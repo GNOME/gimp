@@ -1,5 +1,11 @@
 2003-09-23  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpscanner.c (gimp_scanner_new_file): workaround for
+	GLib bug #116617: set GimpConfigError before calling g_strerror().
+	Fixes bug #122939.
+
+2003-09-23  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/menus.c (menus_last_opened_add): add a shortcut of
 	Ctrl-0 for the 10th entry.
 
