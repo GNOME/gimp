@@ -1,3 +1,9 @@
+2003-07-13  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-dispatch.[ch] are in CVS although
+	they are generated files.  This is preparation for building the
+	table at run-time, instead of compile time.
+
 2003-07-13  Manish Singh  <yosh@gimp.org>
 
 	* app/composite/Makefile.am: remove bogus trailing slash
