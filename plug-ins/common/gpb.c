@@ -32,6 +32,7 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 #include <libgimp/parasiteio.h>
 
 #include "app/brush_header.h"
@@ -76,17 +77,20 @@ typedef struct
   GtkWidget *warning_label;
 } SizeAdjustmentData;
 
-static gint32 *vguides, *hguides;
-static gint nvguides = 0, nhguides = 0;
+/* static gint32 *vguides, *hguides;       */
+/* static gint nvguides = 0, nhguides = 0; */
 
 /* Declare some local functions.
  */
-static void   query (void);
-static void   run   (char    *name,
-		     int      nparams,
-		     GParam  *param,
-		     int     *nreturn_vals,
-		     GParam **return_vals);
+static void   query    (void);
+static void   run      (char    *name,
+			int      nparams,
+			GParam  *param,
+			int     *nreturn_vals,
+			GParam **return_vals);
+
+static void   init_gtk (void);
+
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -103,29 +107,27 @@ query ()
 {
   static GParamDef gpb_save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the brush in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the brush in" },
-    { PARAM_INT32, "spacing", "Spacing of the brush" },
-    { PARAM_STRING, "description", "Short description of the brush" },
+    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",        "Input image" },
+    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
+    { PARAM_STRING,   "filename",     "The name of the file to save the brush in" },
+    { PARAM_STRING,   "raw_filename", "The name of the file to save the brush in" },
+    { PARAM_INT32,    "spacing",      "Spacing of the brush" },
+    { PARAM_STRING,   "description",  "Short description of the brush" },
   };
-  static int ngpb_save_args = sizeof (gpb_save_args)
-    / sizeof (gpb_save_args[0]);
+  static int ngpb_save_args = sizeof (gpb_save_args) / sizeof (gpb_save_args[0]);
 
   static GParamDef gih_save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the brush pipe in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the brush pipe in" },
-    { PARAM_INT32, "spacing", "Spacing of the brush" },
-    { PARAM_STRING, "description", "Short description of the brush pipe" },
+    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",        "Input image" },
+    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
+    { PARAM_STRING,   "filename",     "The name of the file to save the brush pipe in" },
+    { PARAM_STRING,   "raw_filename", "The name of the file to save the brush pipe in" },
+    { PARAM_INT32,    "spacing",      "Spacing of the brush" },
+    { PARAM_STRING,   "description",  "Short description of the brush pipe" },
   };
-  static int ngih_save_args = sizeof (gih_save_args)
-    / sizeof (gih_save_args[0]);
+  static int ngih_save_args = sizeof (gih_save_args) / sizeof (gih_save_args[0]);
 
   gimp_install_procedure ("file_gpb_save",
 			  "saves images in GIMP pixmap brush format", 
@@ -162,6 +164,21 @@ query ()
 
   gimp_register_save_handler ("file_gih_save", "gih", "");
 }
+
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("gpb_save");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
+
 
 static void
 adjustment_callback (GtkWidget *widget,
@@ -271,7 +288,6 @@ common_save_dialog (GtkWidget *dlg,
   GtkWidget *box;
   GtkWidget *spinbutton;
   GtkWidget *entry;
-  gchar buffer[12];
 
   /*  Action area  */
   button = gtk_button_new_with_label ("OK");
@@ -352,17 +368,6 @@ gpb_save_dialog ()
 {
   GtkWidget *dlg;
   GtkWidget *table;
-  GtkWidget *entry;
-  gchar **argv;
-  gint argc;
-  gchar buffer[100];
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gpb_save");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Save As Pixmap Brush");
@@ -394,13 +399,10 @@ gih_save_dialog (gint32 image_ID)
   GtkWidget *label;
   GtkObject *adjustment;
   GtkWidget *spinbutton;
-  GtkWidget *entry;
   GtkWidget *box;
   GtkWidget *cb;
   GList *cbitems = NULL;
   gint i;
-  gchar **argv;
-  gint argc;
   gchar buffer[100];
   SizeAdjustmentData cellw_adjust, cellh_adjust;
   gint32 *layer_ID;
@@ -417,13 +419,6 @@ gih_save_dialog (gint32 image_ID)
       gihparms.cellwidth = gimp_image_width (image_ID) / gihparms.cols;
       gihparms.cellheight = gimp_image_height (image_ID) / gihparms.rows;
     }
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gpb_save");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Save As Pixmap Brush Pipe");
@@ -659,10 +654,12 @@ gih_save_dialog (gint32 image_ID)
       gtk_widget_show (spinbutton);
       gtk_widget_show (box);
       if (i == 0)
-	if (gihparms.dim == 1)
-	  cellw_adjust.rank0 = cellh_adjust.rank0 = adjustment;
-	else
-	  cellw_adjust.rank0 = cellh_adjust.rank0 = NULL;
+	{ 
+	  if (gihparms.dim == 1)
+	    cellw_adjust.rank0 = cellh_adjust.rank0 = adjustment;
+	  else
+	    cellw_adjust.rank0 = cellh_adjust.rank0 = NULL;
+	}
     }
   gtk_table_attach (GTK_TABLE (table), dimtable, 1, 2,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
@@ -896,7 +893,11 @@ gpb_save_image (char   *filename,
   FILE *file;
   gchar *temp;
 
-  g_assert (gimp_drawable_has_alpha (drawable_ID));
+  if (!(gimp_drawable_has_alpha (drawable_ID)))
+    {
+      g_warning ("drawable has no alpha channel -- aborting!\n");
+      return (FALSE);
+    }
 
   drawable = gimp_drawable_get (drawable_ID);
   gimp_tile_cache_size (gimp_tile_height () * drawable->width * 4);
@@ -926,6 +927,7 @@ gpb_save_image (char   *filename,
 static gboolean
 gih_save_image (char   *filename,
 		gint32  image_ID,
+		gint32  orig_image_ID,
 		gint32  drawable_ID)
 {
   GDrawable *drawable;
@@ -971,7 +973,7 @@ gih_save_image (char   *filename,
   pipe_parasite = parasite_new ("gimp-brush-pipe-parameters",
 				PARASITE_PERSISTENT,
 				strlen (parstring) + 1, parstring);
-  gimp_image_attach_parasite (image_ID, pipe_parasite);
+  gimp_image_attach_parasite (orig_image_ID, pipe_parasite);
   parasite_free (pipe_parasite);
 
   g_free (parstring);
@@ -1036,9 +1038,12 @@ run (char    *name,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
   Parasite *pipe_parasite;
-  gint32 image_ID, *layer_ID;
+  gint32 image_ID;
+  gint32 orig_image_ID;
+  gint32 drawable_ID, *layer_ID;
   gint nlayers, layer;
   gchar *layer_name;
+  GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -1049,41 +1054,88 @@ run (char    *name,
 
   if (strcmp (name, "file_gpb_save") == 0)
     {
-      switch (run_mode) {
-      case RUN_INTERACTIVE:
-	/*  Possibly retrieve data  */
-	gimp_get_data ("file_gpb_save", &info);
-	if (!gpb_save_dialog ())
-	  return;
-	break;
+      image_ID    = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
+      
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "GPB", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_ALPHA));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+	  break;
+	default:
+	  break;
+	}
 
-      case RUN_NONINTERACTIVE:  /* FIXME - need a real RUN_NONINTERACTIVE */
-	if (nparams != 7)
-	  status = STATUS_CALLING_ERROR;
-	if (status == STATUS_SUCCESS)
-	  {
-	    info.spacing = param[5].data.d_int32;
-	    strncpy (info.description, param[6].data.d_string, MAXDESCLEN);
-	    info.description[MAXDESCLEN] = 0;
-	  }
-	break;
-
-      case RUN_WITH_LAST_VALS:
-	gimp_get_data ("file_gpb_save", &info);
-	break;
-      }
-
-      if (gpb_save_image (param[3].data.d_string, param[1].data.d_int32, param[2].data.d_int32))
+      switch (run_mode) 
+	{
+	case RUN_INTERACTIVE:
+	  /*  Possibly retrieve data  */
+	  gimp_get_data ("file_gpb_save", &info);
+	  if (!gpb_save_dialog ())
+	    return;
+	  break;
+	  
+	case RUN_NONINTERACTIVE:  /* FIXME - need a real RUN_NONINTERACTIVE */
+	  if (nparams != 7)
+	    status = STATUS_CALLING_ERROR;
+	  if (status == STATUS_SUCCESS)
+	    {
+	      info.spacing = param[5].data.d_int32;
+	      strncpy (info.description, param[6].data.d_string, MAXDESCLEN);
+	      info.description[MAXDESCLEN] = 0;
+	    }
+	  break;
+	  
+	case RUN_WITH_LAST_VALS:
+	  gimp_get_data ("file_gpb_save", &info);
+	  break;
+	}
+      
+      if (gpb_save_image (param[3].data.d_string, image_ID, drawable_ID))
 	{
 	  gimp_set_data ("file_gpb_save", &info, sizeof (info));
 	  status = STATUS_SUCCESS;
 	}
       else
 	status = STATUS_EXECUTION_ERROR;
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
     }
   else if (strcmp (name, "file_gih_save") == 0)
     {
-      image_ID = param[1].data.d_int32;
+      image_ID = orig_image_ID = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32; 
+
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "GIH", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_ALPHA | CAN_HANDLE_LAYERS));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+	  break;
+	default:
+	  break;
+	}
+
       layer_ID = gimp_image_get_layers (image_ID, &nlayers);
       num_layers_with_alpha = 0;
       for (layer = 0; layer < nlayers; layer++)
@@ -1105,7 +1157,7 @@ run (char    *name,
 	case RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_gih_save", &info);
-	  pipe_parasite = gimp_image_find_parasite (image_ID, "gimp-brush-pipe-parameters");
+	  pipe_parasite = gimp_image_find_parasite (orig_image_ID, "gimp-brush-pipe-parameters");
 	  pixpipeparams_init (&gihparms);
 	  if (pipe_parasite)
 	    pixpipeparams_parse (pipe_parasite->data, &gihparms);
@@ -1127,20 +1179,24 @@ run (char    *name,
 	  
 	case RUN_WITH_LAST_VALS:
 	  gimp_get_data ("file_gih_save", &info);
-	  pipe_parasite = gimp_image_find_parasite (image_ID, "gimp-brush-pipe-parameters");
+	  pipe_parasite = gimp_image_find_parasite (orig_image_ID, "gimp-brush-pipe-parameters");
 	  pixpipeparams_init (&gihparms);
 	  if (pipe_parasite)
 	    pixpipeparams_parse (pipe_parasite->data, &gihparms);
 	  break;
 	}
       
-      if (gih_save_image (param[3].data.d_string, param[1].data.d_int32, param[2].data.d_int32))
+      if (gih_save_image (param[3].data.d_string, 
+			  image_ID, orig_image_ID, drawable_ID))
 	{
 	  gimp_set_data ("file_gih_save", &info, sizeof (info));
 	  status = STATUS_SUCCESS;
 	}
       else
 	status = STATUS_EXECUTION_ERROR;
+
+        if (export == EXPORT_EXPORT)
+	  gimp_image_delete (image_ID);
     }
   values[0].data.d_status = status;
 }

@@ -1,3 +1,19 @@
+Fri Oct  8 22:00:00 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpfeatures.h.in: #define GIMP_HAVE_EXPORT so that authors
+	of save plug-ins can check if gimp_export_image is available
+
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/aa.c
+	* plug-ins/common/csource.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gpb.c: more file plug-ins that make use the export
+	functionality
+
+	* plug-ins/common/jpeg.c: set the filename of the export preview so
+	the user has a chance to realize what happens
+
 Fri Oct  8 18:46:43 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/undo_history.c: fixed scrolling to currently selected row

@@ -176,6 +176,7 @@ aa_SOURCES = \
 	aa.c
 
 aa_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(LIBAA)				\
 	$(GTK_LIBS)				\
@@ -317,6 +318,7 @@ csource_SOURCES = \
 	csource.c
 
 csource_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -473,6 +475,7 @@ gbr_SOURCES = \
 	gbr.c
 
 gbr_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -522,6 +525,7 @@ gpb_SOURCES = \
 	gpb.c
 
 gpb_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

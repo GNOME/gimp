@@ -47,6 +47,8 @@ extern "C" {
 
 #define GIMP_HAVE_NEW_ENUMS				1-1-10
 
+#define GIMP_HAVE_EXPORT                                1-1-10
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

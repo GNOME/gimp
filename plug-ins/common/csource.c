@@ -22,6 +22,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include <gtk/gtk.h>
 
 
@@ -101,6 +102,7 @@ run (gchar   *name,
 {
   static GParam values[2];
   GRunModeType run_mode;
+  GimpExportReturnType export = EXPORT_CANCEL;
   
   run_mode = param[0].data.d_int32;
   
@@ -117,7 +119,8 @@ run (gchar   *name,
       Parasite *parasite;
       gchar *x;
       GDrawableType drawable_type = gimp_drawable_type (drawable_ID);
-      Config config = {
+      Config config = 
+      {
 	NULL,			/* file_name */
 	"gimp_image",		/* prefixed_name */
 	NULL,			/* comment */
@@ -161,10 +164,25 @@ run (gchar   *name,
 	    }
 
 	  *nreturn_vals = 1;
+
+	  
+
+	  export = gimp_export_image (&image_ID, &drawable_ID, "C Source", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_ALPHA));
+
+	  if (export == EXPORT_CANCEL)
+	    {
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+
 	  if (save_image (&config, image_ID, drawable_ID))
 	    values[0].data.d_status = STATUS_SUCCESS;
 	  else
 	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+
+	  if (export == EXPORT_EXPORT)
+	    gimp_image_delete (image_ID);
 	}
     }
 }

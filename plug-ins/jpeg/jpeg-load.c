@@ -403,6 +403,7 @@ run (char    *name,
 	    {
 	    case EXPORT_EXPORT: 
 	      display_ID = gimp_display_new (image_ID);
+	      gimp_image_set_filename (image_ID, _("Export Preview"));
 	      gimp_displays_flush ();
 	      break;
 	    case EXPORT_IGNORE:
