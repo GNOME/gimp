@@ -7,14 +7,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
-"POT-Creation-Date: 2003-02-18 01:09+0100\n"
-"PO-Revision-Date: 2003-02-07 05:46+0100\n"
-"Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
+"POT-Creation-Date: 2003-02-25 20:04+0100\n"
+"PO-Revision-Date: 2003-02-22 23:24+0100\n"
+"Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
 msgid "Script-Fu console mode allows only interactive invocation"
@@ -106,18 +105,18 @@ msgstr ""
 "Nejméně jedno ze zvolených písem je neplatné.\n"
 "Zkontrolujte si nastavení.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 #: plug-ins/script-fu/script-fu-scripts.c:1960
+#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:498
 #: plug-ins/script-fu/script-fu-scripts.c:1966
+#: plug-ins/dbbrowser/dbbrowser_utils.c:498
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:490
 #: plug-ins/script-fu/script-fu-scripts.c:1972
+#: plug-ins/dbbrowser/dbbrowser_utils.c:490
 msgid "Date:"
 msgstr "Datum:"
 
@@ -1877,7 +1876,7 @@ msgstr "<Image>/Skript-fu/Výběr/Do stopy..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Brush Name"
-msgstr ""
+msgstr "Název stopy"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Image"
@@ -2299,8 +2298,8 @@ msgstr "<Toolbox>/Rozš./Webový prohlížeč/Registr modulů"
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Rozš./Webový prohlížeč/Otázky (FAQ) uživatelů"
 
-#~ msgid "Reset to Defaults"
-#~ msgstr "Nastavit na implicitní hodnody"
+msgid "Reset to Defaults"
+msgstr "Nastavit na implicitní hodnody"
 
-#~ msgid "NOT SET"
-#~ msgstr "NENÍ URČENO"
+msgid "NOT SET"
+msgstr "NENÍ URČENO"
