@@ -91,7 +91,7 @@ plug_in_shm_init (Gimp *gimp)
    *  to plug-ins. if we can't allocate a piece of shared memory then
    *  we'll fall back on sending the data over the pipe.
    */
-  
+
 #if defined(USE_SYSV_SHM)
   /* Use SysV shared memory mechanisms for transferring tile data. */
 
@@ -133,7 +133,7 @@ plug_in_shm_init (Gimp *gimp)
 
   gint  pid;
   gchar fileMapName[MAX_PATH];
-  
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp->plug_in_shm = g_new0 (PlugInShm, 1);
@@ -141,7 +141,7 @@ plug_in_shm_init (Gimp *gimp)
 
   /* Our shared memory id will be our process ID */
   pid = GetCurrentProcessId ();
-  
+
   /* From the id, derive the file map name */
   g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", pid);
 
@@ -150,7 +150,7 @@ plug_in_shm_init (Gimp *gimp)
                                                      PAGE_READWRITE, 0,
                                                      TILE_MAP_SIZE,
                                                      fileMapName);
-  
+
   if (gimp->plug_in_shm->shm_handle)
     {
       /* Map the shared memory into our address space for use */
@@ -158,7 +158,7 @@ plug_in_shm_init (Gimp *gimp)
         MapViewOfFile (gimp->plug_in_shm->shm_handle,
                        FILE_MAP_ALL_ACCESS,
                        0, 0, TILE_MAP_SIZE);
-      
+
       /* Verify that we mapped our view */
       if (gimp->plug_in_shm->shm_addr)
         gimp->plug_in_shm->shm_ID = pid;
@@ -179,7 +179,7 @@ plug_in_shm_init (Gimp *gimp)
   gint  pid;
   gchar shm_handle[32];
   gint  shm_fd;
-  
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp->plug_in_shm = g_new0 (PlugInShm, 1);
@@ -187,13 +187,13 @@ plug_in_shm_init (Gimp *gimp)
 
   /* Our shared memory id will be our process ID */
   pid = getpid ();
-  
+
   /* From the id, derive the file map name */
   g_snprintf (shm_handle, sizeof (shm_handle), "/gimp-shm-%d", pid);
 
   /* Create the file mapping into paging space */
   shm_fd = shm_open (shm_handle, O_RDWR | O_CREAT, 0600);
- 
+
   if (shm_fd != -1)
     {
       if (ftruncate (shm_fd, TILE_MAP_SIZE) != -1)
@@ -202,7 +202,7 @@ plug_in_shm_init (Gimp *gimp)
           gimp->plug_in_shm->shm_addr = (guchar *)
             mmap (NULL, TILE_MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED,
                   shm_fd, 0);
-      
+
           /* Verify that we mapped our view */
           if (gimp->plug_in_shm->shm_addr != MAP_FAILED)
             gimp->plug_in_shm->shm_ID = pid;
@@ -283,9 +283,8 @@ gint
 plug_in_shm_get_ID (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), -1);
-  g_return_val_if_fail (gimp->plug_in_shm != NULL, -1);
 
-  return gimp->plug_in_shm->shm_ID;
+  return gimp->plug_in_shm ? gimp->plug_in_shm->shm_ID : -1;
 }
 
 guchar *

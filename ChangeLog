@@ -1,3 +1,9 @@
+2004-02-07  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-in-shm.c (plug_in_shm_get_ID): don't
+	g_return_if_fail() if gimp->plug_in_shm is NULL; return -1 instead.
+	This allows to run gimp with --no-shm again.
+
 2004-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]: removed all drawing functions.
