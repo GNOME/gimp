@@ -1,5 +1,11 @@
 2004-12-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/colortoalpha.c: if possible, use
+	gimp_preview_draw_buffer() so that the selection mask is correctly
+	previewed. Minor cleanups.
+
+2004-12-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpregioniterator.c: added some checks to avoid
 	division by zero.
 

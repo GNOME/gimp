@@ -54,7 +54,6 @@ static void        run                    (const gchar       *name,
 
 static void inline color_to_alpha         (GimpRGB           *src,
                                            const GimpRGB     *color);
-static void        to_alpha               (GimpDrawable      *drawable);
 static void        to_alpha_func          (const guchar      *src,
                                            guchar            *dest,
                                            gint               bpp,
@@ -123,9 +122,9 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  gint32             image_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
+  gint32             image_ID;
 
   run_mode = param[0].data.d_int32;
 
@@ -137,9 +136,8 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  /*  Get the specified drawable  */
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
   image_ID = param[1].data.d_image;
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch (run_mode)
     {
@@ -181,7 +179,7 @@ run (const gchar      *name,
           gimp_drawable_is_layer (drawable->drawable_id))
         {
           gimp_progress_init (_("Removing color..."));
-          to_alpha (drawable);
+          gimp_rgn_iterate2 (drawable, 0 /* unused */, to_alpha_func, NULL);
         }
 
       gimp_drawable_detach (drawable);
@@ -265,31 +263,37 @@ color_to_alpha (GimpRGB       *src,
 }
 
 /*
+ * An excerpt from a discussion on #gimp that sheds some light on the ideas
+ * behind the algorithm that is being used here.
+ *
   <clahey>   so if a1 > c1, a2 > c2, and a3 > c2 and a1 - c1 > a2-c2, a3-c3,
              then a1 = b1 * alpha + c1 * (1-alpha)
              So, maximizing alpha without taking b1 above 1 gives
              a1 = alpha + c1(1-alpha) and therefore alpha = (a1-c1) / (1-c1).
   <sjburges> clahey: btw, the ordering of that a2, a3 in the white->alpha didn't
              matter
-  <clahey>   sjburges: You mean that it could be either a1, a2, a3 or a1, a3, a2?
+  <clahey>   sjburges: You mean that it could be either a1, a2, a3 or
+             a1, a3, a2?
   <sjburges> yeah
   <sjburges> because neither one uses the other
-  <clahey>   sjburges: That's exactly as it should be.  They are both just getting
-             reduced to the same amount, limited by the the darkest color.
+  <clahey>   sjburges: That's exactly as it should be.  They are both just
+             getting reduced to the same amount, limited by the the darkest
+             color.
   <clahey>   Then a2 = b2 * alpha + c2 * (1- alpha).  Solving for b2 gives
              b2 = (a1-c2)/alpha + c2.
   <sjburges> yeah
   <clahey>   That gives us are formula for if the background is darker than the
              foreground? Yep.
-  <clahey>   Next if a1 < c1, a2 < c2, a3 < c3, and c1-a1 > c2-a2, c3-a3, and by our
-             desired result a1 = b1 * alpha + c1 * (1-alpha), we maximize alpha
-             without taking b1 negative gives alpha = 1 - a1 / c1.
+  <clahey>   Next if a1 < c1, a2 < c2, a3 < c3, and c1-a1 > c2-a2, c3-a3, and
+             by our desired result a1 = b1 * alpha + c1 * (1-alpha),
+             we maximize alpha without taking b1 negative gives
+             alpha = 1 - a1 / c1.
   <clahey>   And then again, b2 = (a2-c2) / alpha + c2 by the same formula.
-             (Actually, I think we can use that formula for all cases, though it
-             may possibly introduce rounding error.
+             (Actually, I think we can use that formula for all cases, though
+             it may possibly introduce rounding error.
   <clahey>   sjburges: I like the idea of using floats to avoid rounding error.
              Good call.
-*/
+ */
 
 static void
 to_alpha_func (const guchar *src,
@@ -303,14 +307,9 @@ to_alpha_func (const guchar *src,
     gimp_rgba_set_uchar (&color, src[0], src[1], src[2], 255);
   else
     gimp_rgba_set_uchar (&color, src[0], src[1], src[2], src[3]);
+
   color_to_alpha (&color, &pvals.color);
   gimp_rgba_get_uchar (&color, &dest[0], &dest[1], &dest[2], &dest[3]);
-}
-
-static void
-to_alpha (GimpDrawable *drawable)
-{
-  gimp_rgn_iterate2 (drawable, 0 /* unused */, to_alpha_func, NULL);
 }
 
 static void
@@ -328,8 +327,8 @@ color_to_alpha_preview (GimpPreview  *preview,
   gimp_preview_get_position (preview, &x, &y);
   gimp_preview_get_size (preview, &width, &height);
 
-  src = g_new (guchar, width * height * bpp);
   dest = g_new (guchar, width * height * 4);
+  src = g_new (guchar, width * height * bpp);
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
                        x, y, width, height,
@@ -339,12 +338,26 @@ color_to_alpha_preview (GimpPreview  *preview,
   for (i = 0; i < width * height; i++)
     to_alpha_func (src + i * bpp, dest + i * 4, bpp, NULL);
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
-                          0, 0, width, height,
-                          GIMP_RGBA_IMAGE,
-                          dest,
-                          width * 4);
   g_free (src);
+
+  /* Our code assumes that the drawable has an alpha channel (and adds
+   * one later if the effect is actually performed). For that reason
+   * we have to take care when drawing the preview.
+   */
+  if (bpp == 4)
+    {
+      gimp_preview_draw_buffer (preview, dest, width * 4);
+    }
+  else
+    {
+      /* This is not correct because we ignore the selection, but it
+       * is the best we can easily do.
+       */
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
+                              0, 0, width, height,
+                              GIMP_RGBA_IMAGE, dest, width * 4);
+    }
+
   g_free (dest);
 }
 
