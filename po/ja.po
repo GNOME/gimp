@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:18+0100\n"
+"POT-Creation-Date: 2004-03-23 16:10+0100\n"
 "PO-Revision-Date: 2004-03-23 23:46+0800\n"
 "Last-Translator: SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -32,7 +32,10 @@ msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
-msgstr "スワップファイルを開けません. データの消失を防ぐ為には, 現在環境設定において \"%s\" に設定されている, スワップディレクトリの場所とパーミッションをチェックしてください."
+msgstr ""
+"スワップファイルを開けません. データの消失を防ぐ為には, 現在環境設定において "
+"\"%s\" に設定されている, スワップディレクトリの場所とパーミッションをチェック"
+"してください."
 
 #: app/app_procs.c:275
 #, c-format
@@ -410,7 +413,10 @@ msgid ""
 "When enabled, an image will become the active image when its image window "
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
-msgstr "有効にすると, 画像ウインドウにフォーカスを当てた際に画像がアクティブ画像になります.「クリックしてフォーカスを移動」させるウインドウマネージャに対して有効です."
+msgstr ""
+"有効にすると, 画像ウインドウにフォーカスを当てた際に画像がアクティブ画像にな"
+"ります.「クリックしてフォーカスを移動」させるウインドウマネージャに対して有効"
+"です."
 
 #: app/config/gimprc-blurbs.h:23
 msgid "Specifies how the area around the image should be drawn."
@@ -434,13 +440,16 @@ msgstr "GIMP が使うカーソルモードを設定します."
 msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
-msgstr "コンテキストによったカーソルはクールです. 標準で有効になっていますが, 多少のオーバーヘッドがあるため, 無効にすることもできます."
+msgstr ""
+"コンテキストによったカーソルはクールです. 標準で有効になっていますが, 多少の"
+"オーバーヘッドがあるため, 無効にすることもできます."
 
 #: app/config/gimprc-blurbs.h:44
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
-msgstr "有効にすると, 画像上の個々のピクセルが画面上の個々のピクセルに対応します."
+msgstr ""
+"有効にすると, 画像上の個々のピクセルが画面上の個々のピクセルに対応します."
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
@@ -453,13 +462,18 @@ msgid ""
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
-msgstr "あいまい選択や塗りつぶしツールは目的の領域を種-充填アルゴリズムを用いて決定します. 種-充填は起点となるピクセルから, 全方向にピクセルの彩度の変化が指定したしきい値になるまで展開していきます. ここで指定する値はその初期値です."
+msgstr ""
+"あいまい選択や塗りつぶしツールは目的の領域を種-充填アルゴリズムを用いて決定し"
+"ます. 種-充填は起点となるピクセルから, 全方向にピクセルの彩度の変化が指定した"
+"しきい値になるまで展開していきます. ここで指定する値はその初期値です."
 
 #: app/config/gimprc-blurbs.h:87
 msgid ""
 "The window type hint that is set on dock windows. This may affect the way "
 "your window manager decorates and handles dock windows."
-msgstr "ドックウインドウに指定されるウインドウタイプヒントです. ウインドウマネージャによる, ドックウインドウの装飾と取扱いに影響を与えます."
+msgstr ""
+"ドックウインドウに指定されるウインドウタイプヒントです. ウインドウマネージャ"
+"による, ドックウインドウの装飾と取扱いに影響を与えます."
 
 #: app/config/gimprc-blurbs.h:118
 msgid "When enabled, the selected brush will be used for all tools."
@@ -493,11 +507,15 @@ msgstr "オンの場合, GIMP は画像毎に情報ウィンドウを用意し�
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
-msgstr "有効にすると, 開いたファイルの画像全体が表示されるようになります. 無効な場合には, 画像は拡大率 1:1 で表示されます."
+msgstr ""
+"有効にすると, 開いたファイルの画像全体が表示されるようになります. 無効な場合"
+"には, 画像は拡大率 1:1 で表示されます."
 
 #: app/config/gimprc-blurbs.h:164
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
-msgstr "プライベートカラーマップを設定します; 擬似カラービジュアルに対して有効でしょう."
+msgstr ""
+"プライベートカラーマップを設定します; 擬似カラービジュアルに対して有効でしょ"
+"う."
 
 #: app/config/gimprc-blurbs.h:167
 msgid ""
@@ -512,31 +530,40 @@ msgstr "ファイルメニュー上で覚えておく最近開いたファイル
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
-msgstr "選択領域周囲の蟻の行進速度です. この値はミリ秒単位で, 値を小くすると速く行進するようになります."
+msgstr ""
+"選択領域周囲の蟻の行進速度です. この値はミリ秒単位で, 値を小くすると速く行進"
+"するようになります."
 
 #: app/config/gimprc-blurbs.h:178
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
-msgstr "ここで指定した以上のメモリ領域を必要とする画像を作成しようとすると, GIMP が警告を行います."
+msgstr ""
+"ここで指定した以上のメモリ領域を必要とする画像を作成しようとすると, GIMP が警"
+"告を行います."
 
 #: app/config/gimprc-blurbs.h:182
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
-msgstr "8-bit ディスプレイにのみ関係しますが, GIMP で利用できる最小のシステムカラー数を指定します."
+msgstr ""
+"8-bit ディスプレイにのみ関係しますが, GIMP で利用できる最小のシステムカラー数"
+"を指定します."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
-msgstr "画像ウインドウの右下に表示されるナビゲーションプレビューの大きさを設定します."
+msgstr ""
+"画像ウインドウの右下に表示されるナビゲーションプレビューの大きさを設定します."
 
 #: app/config/gimprc-blurbs.h:207
 msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
-msgstr "--enable-mp を指定してコンパイルされた GIMP が, マルチプロセッサ機上で同時に利用するプロセッサの数を指定します."
+msgstr ""
+"--enable-mp を指定してコンパイルされた GIMP が, マルチプロセッサ機上で同時に"
+"利用するプロセッサの数を指定します."
 
 #: app/config/gimprc-blurbs.h:221
 msgid ""
@@ -545,14 +572,21 @@ msgid ""
 "painting with large brushes should be more accurate, but it may be slower.  "
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
-msgstr "有効にすると, 位置のヒントに基くのではなく, 個々のモーションイベントに対してマウスの現在位置を X サーバに問合せるようになります. 大きなブラシを用いて描画する際に正確になりますが, 多少遅くなります. いくつかの天邪鬼な X サーバに対しては, 逆に速くなる場合もあります."
+msgstr ""
+"有効にすると, 位置のヒントに基くのではなく, 個々のモーションイベントに対して"
+"マウスの現在位置を X サーバに問合せるようになります. 大きなブラシを用いて描画"
+"する際に正確になりますが, 多少遅くなります. いくつかの天邪鬼な X サーバに対し"
+"ては, 逆に速くなる場合もあります."
 
 #: app/config/gimprc-blurbs.h:234
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
-msgstr "GIMP がレイヤーとチャンネルのプレビューを作成するかどうかを指定します. レイヤーとチャンネルのダイアログにおけるプレビューは便利ですが, 大きな画像を取り扱う場合には動作が重くなります."
+msgstr ""
+"GIMP がレイヤーとチャンネルのプレビューを作成するかどうかを指定します. レイ"
+"ヤーとチャンネルのダイアログにおけるプレビューは便利ですが, 大きな画像を取り"
+"扱う場合には動作が重くなります."
 
 #: app/config/gimprc-blurbs.h:239
 msgid "Sets the default preview size for layers and channels."
@@ -562,13 +596,17 @@ msgstr "レイヤーとチャンネルのデフォルトのプレビューサイ
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
-msgstr "有効にすると, 実際の画像サイズが変わった時に自動的に画像ウィンドウがリサイズされます."
+msgstr ""
+"有効にすると, 実際の画像サイズが変わった時に自動的に画像ウィンドウがリサイズ"
+"されます."
 
 #: app/config/gimprc-blurbs.h:246
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
-msgstr "有効にすると, 画像のズームインやアウトを行った際に自動的に画像ウィンドウがリサイズされます."
+msgstr ""
+"有効にすると, 画像のズームインやアウトを行った際に自動的に画像ウィンドウがリ"
+"サイズされます."
 
 #: app/config/gimprc-blurbs.h:250
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -587,19 +625,25 @@ msgstr "GIMP 終了時にメインダイアログの位置と大きさを保存�
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
-msgstr "有効にすると, 全てツールにおいて現在のブラシのアウトラインプレビューが表示されます."
+msgstr ""
+"有効にすると, 全てツールにおいて現在のブラシのアウトラインプレビューが表示さ"
+"れます."
 
 #: app/config/gimprc-blurbs.h:267
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
-msgstr "有効にすると, デフォルトでメニューバーを表示します. これは \"表示->メニューバー\" コマンドでも切り替えられます."
+msgstr ""
+"有効にすると, デフォルトでメニューバーを表示します. これは \"表示->メニュー"
+"バー\" コマンドでも切り替えられます."
 
 #: app/config/gimprc-blurbs.h:271
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
-msgstr "有効にすると, デフォルトでものさしが表示されます. これは \"表示->ものさし\" コマンドでも切り替えられます."
+msgstr ""
+"有効にすると, デフォルトでものさしが表示されます. これは \"表示->ものさし\" "
+"コマンドでも切り替えられます."
 
 #: app/config/gimprc-blurbs.h:275
 msgid ""
@@ -662,7 +706,10 @@ msgid ""
 "There is always a tradeoff between memory usage and speed.  In most cases, "
 "the GIMP opts for speed over memory.  However, if memory is a big issue, try "
 "to enable this setting."
-msgstr "メモリ使用量と速度には常時トレードオフが成立します. 大抵の場合, GIMP はメモリよりもスピードを優先するようになっています. しかしながら, メモリ使用量の方が重要である場合には, これを有効にしてみてください."
+msgstr ""
+"メモリ使用量と速度には常時トレードオフが成立します. 大抵の場合, GIMP はメモリ"
+"よりもスピードを優先するようになっています. しかしながら, メモリ使用量の方が"
+"重要である場合には, これを有効にしてみてください."
 
 #: app/config/gimprc-blurbs.h:310
 msgid ""
@@ -672,7 +719,13 @@ msgid ""
 "GIMP is used with large images. Also, things can get horribly slow if the "
 "swap file is created on a directory that is mounted over NFS.  For these "
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
-msgstr "スワップファイルの場所を設定します. GIMP はタイルベースのメモリ確保方式を利用します. スワップファイルはスワップタイルをディスクに書き出したり戻したりする際に利用されます. GIMP で大きな画像を取り扱う場合には, スワップファイルは容易に巨大になってしまいます. NFS 経由でマウントされたディレクトリ上にスワップファイルを作成すると, とてつもなく動作が遅くなってしまいます. そのため, \"/tmp\" にスワップファイルを作成することが望ましいです."
+msgstr ""
+"スワップファイルの場所を設定します. GIMP はタイルベースのメモリ確保方式を利用"
+"します. スワップファイルはスワップタイルをディスクに書き出したり戻したりする"
+"際に利用されます. GIMP で大きな画像を取り扱う場合には, スワップファイルは容易"
+"に巨大になってしまいます. NFS 経由でマウントされたディレクトリ上にスワップ"
+"ファイルを作成すると, とてつもなく動作が遅くなってしまいます. そのため, \"/"
+"tmp\" にスワップファイルを作成することが望ましいです."
 
 #: app/config/gimprc-blurbs.h:319
 msgid "When enabled, menus can be torn off."
@@ -700,13 +753,19 @@ msgid ""
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
 "but some files are likely to remain, so it is best if this directory not be "
 "one that is shared by other users."
-msgstr "一時保存ディレクトリを指定します. GIMP 実行中にファイルが作成されます. ほとんどのファイルは GIMP 終了時に削除されます, しかしながら, いくつかのファイルは残りますので, 他のユーザと共有されないディレクトリを指定することをお勧めします."
+msgstr ""
+"一時保存ディレクトリを指定します. GIMP 実行中にファイルが作成されます. ほとん"
+"どのファイルは GIMP 終了時に削除されます, しかしながら, いくつかのファイルは"
+"残りますので, 他のユーザと共有されないディレクトリを指定することをお勧めしま"
+"す."
 
 #: app/config/gimprc-blurbs.h:344
 msgid ""
 "Sets the size of the thumbnail saved with each image. Note that GIMP can not "
 "save thumbnails if layer previews are disabled."
-msgstr "個々の画像について保存されるサムネイルの大きさを指定します. GIMP はレイヤープレビューが無効になっている場合にはサムネイルを保存しません."
+msgstr ""
+"個々の画像について保存されるサムネイルの大きさを指定します. GIMP はレイヤープ"
+"レビューが無効になっている場合にはサムネイルを保存しません."
 
 #: app/config/gimprc-blurbs.h:348
 msgid ""
@@ -714,13 +773,19 @@ msgid ""
 "memory and disk. Setting this value higher will cause the GIMP to use less "
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
-msgstr "タイルキャッシュは GIMP がタイルをメモリとディスクの間でスラッシングさせないようにするために用いられます. この値を大きくすると GIMP のスワップ利用量は減少しますが, メモリ利用量は増加します. 逆に小くすると, スワップ利用量は増加し, メモリ利用量は減少します."
+msgstr ""
+"タイルキャッシュは GIMP がタイルをメモリとディスクの間でスラッシングさせない"
+"ようにするために用いられます. この値を大きくすると GIMP のスワップ利用量は減"
+"少しますが, メモリ利用量は増加します. 逆に小くすると, スワップ利用量は増加"
+"し, メモリ利用量は減少します."
 
 #: app/config/gimprc-blurbs.h:355
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
-msgstr "ツールボックスに設定されるウィンドウタイプヒントです. ウィンドウマネージャによるツールボックスウィンドウの装飾と取扱いに影響を与えます."
+msgstr ""
+"ツールボックスに設定されるウィンドウタイプヒントです. ウィンドウマネージャに"
+"よるツールボックスウィンドウの装飾と取扱いに影響を与えます."
 
 #: app/config/gimprc-blurbs.h:359
 msgid "Sets the manner in which transparency is displayed in images."
@@ -740,14 +805,19 @@ msgstr "オンの場合, GIMP は画像が変更されない限り保存しな�
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
-msgstr "アンドゥ可能な操作の最小回数を指定します. アンドゥサイズの限界に達するまで, アンドゥを増やすことができます."
+msgstr ""
+"アンドゥ可能な操作の最小回数を指定します. アンドゥサイズの限界に達するまで, "
+"アンドゥを増やすことができます."
 
 #: app/config/gimprc-blurbs.h:373
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
-msgstr "アンドゥスタックに配置される操作の一画像あたりのメモリ使用量の上限値を設定します. この設定によらず, 少くともアンドゥレベルで設定された回数分はアンドゥ可能です."
+msgstr ""
+"アンドゥスタックに配置される操作の一画像あたりのメモリ使用量の上限値を設定し"
+"ます. この設定によらず, 少くともアンドゥレベルで設定された回数分はアンドゥ可"
+"能です."
 
 #: app/config/gimprc-blurbs.h:378
 msgid "Sets the size of the previews in the Undo History."
@@ -764,7 +834,10 @@ msgid ""
 "the name of an executable to search for in the user's PATH. If the command "
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
-msgstr "利用する外部ブラウザを指定します. 絶対パスか利用者の PATH 中にある実行ファイル名です. コマンドが '%s' を含む場合には, URL で置換され, 含まない場合にはコマンドの後にスペースで区切って URL が指定されます."
+msgstr ""
+"利用する外部ブラウザを指定します. 絶対パスか利用者の PATH 中にある実行ファイ"
+"ル名です. コマンドが '%s' を含む場合には, URL で置換され, 含まない場合にはコ"
+"マンドの後にスペースで区切って URL が指定されます."
 
 #: app/config/gimpscanner.c:220
 msgid "invalid UTF-8 string"
@@ -1194,7 +1267,7 @@ msgstr "レイヤーマスク追加"
 msgid "Apply Layer Mask"
 msgstr "レイヤーマスクの適用"
 
-#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:223
+#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:224
 msgid "Floating Selection to Layer"
 msgstr "フローティング選択領域をレイヤーに"
 
@@ -1202,7 +1275,7 @@ msgstr "フローティング選択領域をレイヤーに"
 msgid "Float Selection"
 msgstr "フローティング選択領域"
 
-#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:129
+#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:130
 msgid "Anchor Floating Selection"
 msgstr "フローティング選択領域を固定"
 
@@ -1216,7 +1289,7 @@ msgid "Cut"
 msgstr "切り取り"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:636
-#: app/tools/gimptexttool.c:127 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "文字"
 
@@ -1854,7 +1927,7 @@ msgstr "クイックマスク有効"
 msgid "Disable QuickMask"
 msgstr "クイックマスク無効"
 
-#: app/core/gimpimage-undo-push.c:2974
+#: app/core/gimpimage-undo-push.c:2847
 #, c-format
 msgid "Can't undo %s"
 msgstr "%s はアンドゥできません"
@@ -1873,110 +1946,110 @@ msgstr "画像解像度の変更"
 msgid "Change Image Unit"
 msgstr "画像単位の変更"
 
-#: app/core/gimpimage.c:2033
+#: app/core/gimpimage.c:2030
 msgid "Attach Parasite to Image"
 msgstr "画像にパラサイトを付加"
 
-#: app/core/gimpimage.c:2066
+#: app/core/gimpimage.c:2063
 msgid "Remove Parasite from Image"
 msgstr "画像からパラサイトを削除"
 
-#: app/core/gimpimage.c:2538
+#: app/core/gimpimage.c:2535
 msgid "Add Layer"
 msgstr "レイヤーを追加"
 
-#: app/core/gimpimage.c:2605
+#: app/core/gimpimage.c:2602
 msgid "Remove Layer"
 msgstr "レイヤーを削除"
 
-#: app/core/gimpimage.c:2676
+#: app/core/gimpimage.c:2673
 msgid "Layer cannot be raised higher."
 msgstr "これ以上レイヤーを前面に移動させられません"
 
-#: app/core/gimpimage.c:2682 app/core/gimpimage.c:2732
+#: app/core/gimpimage.c:2679 app/core/gimpimage.c:2729
 msgid "Cannot raise a layer without alpha."
 msgstr "アルファチャンネルの無いレイヤーを前面には出せません."
 
-#: app/core/gimpimage.c:2687 app/widgets/gimplayertreeview.c:213
+#: app/core/gimpimage.c:2684 app/widgets/gimplayertreeview.c:213
 msgid "Raise Layer"
 msgstr "レイヤーを前面へ"
 
-#: app/core/gimpimage.c:2704
+#: app/core/gimpimage.c:2701
 msgid "Layer cannot be lowered more."
 msgstr "これ以上レイヤーを背面に移動させられません"
 
-#: app/core/gimpimage.c:2709 app/widgets/gimplayertreeview.c:217
+#: app/core/gimpimage.c:2706 app/widgets/gimplayertreeview.c:217
 msgid "Lower Layer"
 msgstr "レイヤーを背面へ"
 
-#: app/core/gimpimage.c:2726
+#: app/core/gimpimage.c:2723
 msgid "Layer is already on top."
 msgstr "レイヤーは既に最前面にあります"
 
-#: app/core/gimpimage.c:2737 app/widgets/gimplayertreeview.c:215
+#: app/core/gimpimage.c:2734 app/widgets/gimplayertreeview.c:215
 msgid "Raise Layer to Top"
 msgstr "レイヤーを最前面へ"
 
-#: app/core/gimpimage.c:2757
+#: app/core/gimpimage.c:2754
 msgid "Layer is already on the bottom."
 msgstr "レイヤーは既に最背面にあります"
 
-#: app/core/gimpimage.c:2762 app/widgets/gimplayertreeview.c:219
+#: app/core/gimpimage.c:2759 app/widgets/gimplayertreeview.c:219
 msgid "Lower Layer to Bottom"
 msgstr "レイヤーを最背面へ"
 
-#: app/core/gimpimage.c:2801
+#: app/core/gimpimage.c:2798
 #, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
 msgstr ""
 "レイヤー '%s' にはアルファチャンネルがありません. レイヤーはアルファチャンネ"
 "ルの前面に置かれています."
 
-#: app/core/gimpimage.c:2855
+#: app/core/gimpimage.c:2852
 msgid "Add Channel"
 msgstr "チャンネルを追加"
 
-#: app/core/gimpimage.c:2900
+#: app/core/gimpimage.c:2897
 msgid "Remove Channel"
 msgstr "チャンネルを削除"
 
-#: app/core/gimpimage.c:2944
+#: app/core/gimpimage.c:2941
 msgid "Channel cannot be raised higher."
 msgstr "これ以上チャンネルを上昇させられません"
 
-#: app/core/gimpimage.c:2949 app/widgets/gimpchanneltreeview.c:127
+#: app/core/gimpimage.c:2946 app/widgets/gimpchanneltreeview.c:127
 msgid "Raise Channel"
 msgstr "チャンネル上昇"
 
-#: app/core/gimpimage.c:2966
+#: app/core/gimpimage.c:2963
 msgid "Channel cannot be lowered more."
 msgstr "これ以上チャンネルを下降させられません"
 
-#: app/core/gimpimage.c:2971 app/widgets/gimpchanneltreeview.c:131
+#: app/core/gimpimage.c:2968 app/widgets/gimpchanneltreeview.c:131
 msgid "Lower Channel"
 msgstr "チャンネル下降"
 
-#: app/core/gimpimage.c:3048
+#: app/core/gimpimage.c:3045
 msgid "Add Path"
 msgstr "パスを追加"
 
-#: app/core/gimpimage.c:3093
+#: app/core/gimpimage.c:3090
 msgid "Remove Path"
 msgstr "パスを削除"
 
-#: app/core/gimpimage.c:3137
+#: app/core/gimpimage.c:3134
 msgid "Path cannot be raised higher."
 msgstr "パスをこれ以上前面に移動させられません."
 
-#: app/core/gimpimage.c:3142 app/widgets/gimpvectorstreeview.c:137
+#: app/core/gimpimage.c:3139 app/widgets/gimpvectorstreeview.c:137
 msgid "Raise Path"
 msgstr "パスを上昇"
 
-#: app/core/gimpimage.c:3159
+#: app/core/gimpimage.c:3156
 msgid "Path cannot be lowered more."
 msgstr "パスをこれ以上背面に移動させられません."
 
-#: app/core/gimpimage.c:3164 app/widgets/gimpvectorstreeview.c:141
+#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:141
 msgid "Lower Path"
 msgstr "パスを下降"
 
@@ -2035,11 +2108,11 @@ msgstr "アイテムにパラサイト付加"
 msgid "Remove Parasite from Item"
 msgstr "アイテムからパラサイト削除"
 
-#: app/core/gimplayer-floating-sel.c:122
+#: app/core/gimplayer-floating-sel.c:123
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr "このレイヤーはフローティング選択ではないので固定できません."
 
-#: app/core/gimplayer-floating-sel.c:204
+#: app/core/gimplayer-floating-sel.c:205
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -2375,21 +2448,21 @@ msgstr "/設定通り(_P)"
 msgid "Toggle QuickMask"
 msgstr "クイックマスクの切り替え"
 
-#: app/display/gimpdisplayshell.c:1403
+#: app/display/gimpdisplayshell.c:1404
 #, c-format
 msgid "Close %s?"
 msgstr "%s を閉じる?"
 
-#: app/display/gimpdisplayshell.c:1413
+#: app/display/gimpdisplayshell.c:1414
 msgid "_Discard changes"
 msgstr "変更を破棄(_D)"
 
-#: app/display/gimpdisplayshell.c:1453
+#: app/display/gimpdisplayshell.c:1454
 #, c-format
 msgid "Changes were made to '%s'."
 msgstr "'%s' は変更されています."
 
-#: app/display/gimpdisplayshell.c:1467
+#: app/display/gimpdisplayshell.c:1468
 msgid "Unsaved changes will be lost."
 msgstr "未保存の変更は失われます."
 
@@ -2503,11 +2576,11 @@ msgstr "不明なファイルタイプ"
 msgid "Not a regular file"
 msgstr "通常のファイルではありません"
 
-#: app/file/file-open.c:158
+#: app/file/file-open.c:166
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr "プラグインは SUCCESS を返しましたが画像が返ってきません"
 
-#: app/file/file-open.c:166
+#: app/file/file-open.c:174
 msgid "Plug-In could not open image"
 msgstr "プラグインから画像をオープンできません"
 
@@ -2557,7 +2630,9 @@ msgstr "モード:"
 #: app/gui/brush-select.c:322
 msgid ""
 "Unable to run brush callback. The corresponding plug-in may have crashed."
-msgstr "ブラシコールバックを実行できません. 対応するプラグインがクラッシュしたかもしれません."
+msgstr ""
+"ブラシコールバックを実行できません. 対応するプラグインがクラッシュしたかもし"
+"れません."
 
 #: app/gui/brushes-menu.c:45
 msgid "/_Edit Brush..."
@@ -3137,7 +3212,7 @@ msgstr "/全てのエラーをファイルに保存(_A)..."
 msgid "/Save _Selection to File..."
 msgstr "/選択したものをファイルに保存(_S)..."
 
-#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:244
+#: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
 #: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
@@ -3149,7 +3224,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:234 app/gui/file-save-dialog.c:341
+#: app/gui/file-commands.c:233 app/gui/file-save-dialog.c:341
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3160,19 +3235,19 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:275
+#: app/gui/file-commands.c:274
 msgid "Create New Template"
 msgstr "新しいテンプレートを作成"
 
-#: app/gui/file-commands.c:279
+#: app/gui/file-commands.c:278
 msgid "Enter a name for this template"
 msgstr "このテンプレートに対する名前を入力して下さい"
 
-#: app/gui/file-commands.c:302
+#: app/gui/file-commands.c:301
 msgid "Revert failed. No file name associated with this image."
 msgstr "復帰に失敗しました. この画像に対するファイル名がありません."
 
-#: app/gui/file-commands.c:315
+#: app/gui/file-commands.c:314
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -3185,15 +3260,15 @@ msgstr ""
 "\n"
 "(アンドゥ情報も含めた全ての変更が失われます)"
 
-#: app/gui/file-commands.c:323
+#: app/gui/file-commands.c:322
 msgid "Revert Image"
 msgstr "画像の復帰"
 
-#: app/gui/file-commands.c:391
+#: app/gui/file-commands.c:390
 msgid "(Unnamed Template)"
 msgstr "(名前の無いテンプレート)"
 
-#: app/gui/file-commands.c:465
+#: app/gui/file-commands.c:462
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3276,7 +3351,9 @@ msgstr "/拡張子で判別"
 #: app/gui/font-select.c:234
 msgid ""
 "Unable to run font callback. The corresponding plug-in may have crashed."
-msgstr "フォントコールバックを実行できません. 対応するプラグインがクラッシュしたかもしれません."
+msgstr ""
+"フォントコールバックを実行できません. 対応するプラグインがクラッシュしたかも"
+"しれません."
 
 #: app/gui/fonts-menu.c:44
 msgid "/_Rescan Font List"
@@ -3549,7 +3626,9 @@ msgstr "選択領域の制御点を再分配(_H)"
 #: app/gui/gradient-select.c:272
 msgid ""
 "Unable to run gradient callback. The corresponding plug-in may have crashed."
-msgstr "グラデーションコールバックを実行できません. 対応するプラグインがクラッシュしたかもしれません."
+msgstr ""
+"グラデーションコールバックを実行できません. 対応するプラグインがクラッシュし"
+"たかもしれません."
 
 #: app/gui/gradients-commands.c:73
 #, c-format
@@ -5190,7 +5269,9 @@ msgstr "プレビュー"
 #: app/gui/palette-select.c:250
 msgid ""
 "Unable to run palette callback. The corresponding plug-in may have crashed."
-msgstr "パレットコールバックを実行できません. 対応するプラグインがクラッシュしたかもしれません."
+msgstr ""
+"パレットコールバックを実行できません. 対応するプラグインがクラッシュしたかも"
+"しれません."
 
 #: app/gui/palettes-commands.c:82
 msgid "Merge Palette"
@@ -5231,7 +5312,9 @@ msgstr "/パレットのリフレッシュ(_R)"
 #: app/gui/pattern-select.c:252
 msgid ""
 "Unable to run pattern callback. The corresponding plug-in may have crashed."
-msgstr "パターンコールバックを実行できません. 対応するプラグインがクラッシュしたかもしれません."
+msgstr ""
+"パターンコールバックを実行できません. 対応するプラグインがクラッシュしたかも"
+"しれません."
 
 #. disabled because they are useless now
 #: app/gui/patterns-menu.c:47
@@ -6028,7 +6111,9 @@ msgstr "補間の種類:"
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect scaling channels and masks only."
-msgstr "インデックスカラーのレイヤーは常時補間なしで拡大縮小されます. その場合, 補間の種類はチャンンネルとマスクにのみ影響します."
+msgstr ""
+"インデックスカラーのレイヤーは常時補間なしで拡大縮小されます. その場合, 補間"
+"の種類はチャンンネルとマスクにのみ影響します."
 
 #: app/gui/resolution-calibrate-dialog.c:85
 msgid "Calibrate Monitor Resolution"
@@ -6450,7 +6535,8 @@ msgstr ""
 msgid ""
 "This file holds a collection of standard media sizes that serve as image "
 "templates."
-msgstr "このファイルは画像テンプレートに用いられる標準メディアサイズを保持します."
+msgstr ""
+"このファイルは画像テンプレートに用いられる標準メディアサイズを保持します."
 
 #: app/gui/user-install-dialog.c:180
 msgid ""
@@ -7157,7 +7243,7 @@ msgstr "一時プロシージャ"
 msgid "Free Select"
 msgstr "自由選択"
 
-#: app/plug-in/plug-in.c:694
+#: app/plug-in/plug-in.c:702
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -7246,7 +7332,7 @@ msgstr ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:634
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:687
 msgid "Add Text Layer"
 msgstr "文字レイヤーを追加"
 
@@ -7258,15 +7344,15 @@ msgstr "(不適切な UTF-8 文字列)"
 msgid "Text Layer"
 msgstr "文字レイヤー"
 
-#: app/text/gimptextlayer.c:531
+#: app/text/gimptextlayer.c:537
 msgid "Discard Text Information"
 msgstr "文字情報を破棄する"
 
-#: app/text/gimptextlayer.c:581
+#: app/text/gimptextlayer.c:587
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "フォントが足りないため, 文字機能は利用できません."
 
-#: app/text/gimptextlayer.c:607
+#: app/text/gimptextlayer.c:615
 msgid "Empty Text Layer"
 msgstr "空の文字レイヤー"
 
@@ -7290,7 +7376,8 @@ msgstr ""
 "レイヤー '%s' のテキストパラサイトを解析中の問題:\n"
 "%s\n"
 "\n"
-"幾つかのテキストパラサイトが不正です. テキストレイヤーを編集する場合以外は, 問題ありません."
+"幾つかのテキストパラサイトが不正です. テキストレイヤーを編集する場合以外は, "
+"問題ありません."
 
 #: app/tools/tools-enums.c:14
 msgid "Pick Only"
@@ -7926,7 +8013,7 @@ msgstr "選択した色を調整"
 msgid "R_eset Color"
 msgstr "色のリセット(_E)"
 
-#: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:187
+#: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:206
 msgid "_Preview"
 msgstr "プレビュー(_P)"
 
@@ -8390,7 +8477,9 @@ msgstr "小さい文字サイズの場合に明瞭なビットマップを生成
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
-msgstr "利用可能ならば, フォントからヒントを利用しますが, 常時自動ヒントを利用する方がよいかもしれません."
+msgstr ""
+"利用可能ならば, フォントからヒントを利用しますが, 常時自動ヒントを利用する方"
+"がよいかもしれません."
 
 #: app/tools/gimptextoptions.c:178
 msgid "Indentation of the first line"
@@ -8448,23 +8537,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "テキストからパスを作成"
 
-#: app/tools/gimptexttool.c:128
+#: app/tools/gimptexttool.c:142
 msgid "Add text to the image"
 msgstr "画像に文字を追加"
 
-#: app/tools/gimptexttool.c:129
+#: app/tools/gimptexttool.c:143
 msgid "/Tools/Te_xt"
 msgstr "/道具/文字(_X)"
 
-#: app/tools/gimptexttool.c:667
+#: app/tools/gimptexttool.c:718
 msgid "GIMP Text Editor"
 msgstr "GIMP 文字エディタ"
 
-#: app/tools/gimptexttool.c:757 app/tools/gimptexttool.c:760
+#: app/tools/gimptexttool.c:828 app/tools/gimptexttool.c:831
 msgid "Confirm Text Editing"
 msgstr "文字編集確認"
 
-#: app/tools/gimptexttool.c:781
+#: app/tools/gimptexttool.c:852
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -8472,9 +8561,11 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"選択したレイヤーは文字レイヤーですが, 他のツールによって変更されました. このレイヤーを文字ツールで編集すると, それらの変更は失われます.\n"
+"選択したレイヤーは文字レイヤーですが, 他のツールによって変更されました. この"
+"レイヤーを文字ツールで編集すると, それらの変更は失われます.\n"
 "\n"
-"このレイヤーを編集することも, 文字アトリビュートを用いて新しい文字レイヤーを生成することもできます."
+"このレイヤーを編集することも, 文字アトリビュートを用いて新しい文字レイヤーを"
+"生成することもできます."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
@@ -9034,7 +9125,7 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "不適切な UTF-8 文字列"
 
-#: app/widgets/gimpdock.c:383
+#: app/widgets/gimpdock.c:394
 msgid "You can drop dockable dialogs here."
 msgstr "ここにドッキング可能なダイアログをドロップできます."
 
@@ -9503,7 +9594,7 @@ msgstr "テキストファイル (UTF-8) を開く"
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "ファイル '%s' 中に無効な UTF-8 データがあります."
 
-#: app/widgets/gimpthumbbox.c:170
+#: app/widgets/gimpthumbbox.c:189
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -9512,11 +9603,11 @@ msgstr ""
 "クリックしてプレビューを更新\n"
 "%s  クリックして最新のプレビューを強制更新"
 
-#: app/widgets/gimpthumbbox.c:239 app/widgets/gimpthumbbox.c:285
+#: app/widgets/gimpthumbbox.c:250 app/widgets/gimpthumbbox.c:296
 msgid "No Selection"
 msgstr "選択なし"
 
-#: app/widgets/gimpthumbbox.c:371 app/widgets/gimpthumbbox.c:391
+#: app/widgets/gimpthumbbox.c:382 app/widgets/gimpthumbbox.c:402
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "サムネイル %d / %d"
@@ -9557,7 +9648,9 @@ msgstr ""
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
-msgstr "前景色と背景色です. 黒と白の四角で色を初期化できます. 矢印は前景色描画色を交換します. ダブルクリックすると色を選択できます."
+msgstr ""
+"前景色と背景色です. 黒と白の四角で色を初期化できます. 矢印は前景色描画色を交"
+"換します. ダブルクリックすると色を選択できます."
 
 #: app/widgets/gimptooloptionseditor.c:146
 msgid "Save options to..."

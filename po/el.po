@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:18+0100\n"
+"POT-Creation-Date: 2004-03-23 16:10+0100\n"
 "PO-Revision-Date: 2004-01-25 15:36-0200\n"
 "Last-Translator: Nikos Charonitakis <charosn@her.fothnet.gr>\n"
 "Language-Team: Greek <nls@hellug.gr>\n"
@@ -1215,7 +1215,7 @@ msgid "Apply Layer Mask"
 msgstr "Εφαρμογή Μάσκας Στρωμάτων"
 
 #
-#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:223
+#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:224
 msgid "Floating Selection to Layer"
 msgstr "Επιπλέουσα Επιλογή στο Στρώμα"
 
@@ -1225,7 +1225,7 @@ msgid "Float Selection"
 msgstr "Επίπλευση Επιλογής"
 
 #
-#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:129
+#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:130
 msgid "Anchor Floating Selection"
 msgstr "Αγκύρωση Επιπλέουσας Επιλογής"
 
@@ -1241,7 +1241,7 @@ msgstr "Αποκοπή"
 
 #
 #: app/core/core-enums.c:608 app/core/core-enums.c:636
-#: app/tools/gimptexttool.c:127 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Κείμενο"
 
@@ -1931,7 +1931,7 @@ msgstr "Ενεργοποίηση ΤαχυΜάσκας"
 msgid "Disable QuickMask"
 msgstr "Απενεργοποίηση ΤαχυΜάσκας"
 
-#: app/core/gimpimage-undo-push.c:2974
+#: app/core/gimpimage-undo-push.c:2847
 #, c-format
 msgid "Can't undo %s"
 msgstr "Αδυναμία ακύρωσης της προηγούμενης ενέργειας %s"
@@ -1954,125 +1954,125 @@ msgid "Change Image Unit"
 msgstr "Επαναφορά Εικόνας;"
 
 #
-#: app/core/gimpimage.c:2033
+#: app/core/gimpimage.c:2030
 #, fuzzy
 msgid "Attach Parasite to Image"
 msgstr "Επισύναψη αρχείου"
 
-#: app/core/gimpimage.c:2066
+#: app/core/gimpimage.c:2063
 #, fuzzy
 msgid "Remove Parasite from Image"
 msgstr "Αφαίρεση του στοιχείου"
 
-#: app/core/gimpimage.c:2538
+#: app/core/gimpimage.c:2535
 msgid "Add Layer"
 msgstr "Προσθήκη στρώματος"
 
 #
-#: app/core/gimpimage.c:2605
+#: app/core/gimpimage.c:2602
 msgid "Remove Layer"
 msgstr "Διαγραφή Στρώματος"
 
-#: app/core/gimpimage.c:2676
+#: app/core/gimpimage.c:2673
 msgid "Layer cannot be raised higher."
 msgstr "Το στρώμα δεν μπορεί ανυψωθεί περισσότερο."
 
-#: app/core/gimpimage.c:2682 app/core/gimpimage.c:2732
+#: app/core/gimpimage.c:2679 app/core/gimpimage.c:2729
 msgid "Cannot raise a layer without alpha."
 msgstr ""
 
-#: app/core/gimpimage.c:2687 app/widgets/gimplayertreeview.c:213
+#: app/core/gimpimage.c:2684 app/widgets/gimplayertreeview.c:213
 msgid "Raise Layer"
 msgstr "Ανύψωση Στρώματος"
 
-#: app/core/gimpimage.c:2704
+#: app/core/gimpimage.c:2701
 msgid "Layer cannot be lowered more."
 msgstr "Το στρώμα δεν μπορεί να βυθισθεί περισσότερο."
 
 # # FIX?  see above for "send to back"
-#: app/core/gimpimage.c:2709 app/widgets/gimplayertreeview.c:217
+#: app/core/gimpimage.c:2706 app/widgets/gimplayertreeview.c:217
 msgid "Lower Layer"
 msgstr "Βύθιση Στρώματος"
 
 #
-#: app/core/gimpimage.c:2726
+#: app/core/gimpimage.c:2723
 #, fuzzy
 msgid "Layer is already on top."
 msgstr "Το στρώμα είναι ήδη στην κορυφή"
 
-#: app/core/gimpimage.c:2737 app/widgets/gimplayertreeview.c:215
+#: app/core/gimpimage.c:2734 app/widgets/gimplayertreeview.c:215
 #, fuzzy
 msgid "Raise Layer to Top"
 msgstr "/Στοίβαγμα/Στρώμα στην Κορυφή"
 
 #
-#: app/core/gimpimage.c:2757
+#: app/core/gimpimage.c:2754
 #, fuzzy
 msgid "Layer is already on the bottom."
 msgstr "Το στρώμα είναι ήδη στην κορυφή"
 
-#: app/core/gimpimage.c:2762 app/widgets/gimplayertreeview.c:219
+#: app/core/gimpimage.c:2759 app/widgets/gimplayertreeview.c:219
 #, fuzzy
 msgid "Lower Layer to Bottom"
 msgstr "/Στοίβαγμα/Στρώμα στο Βάθος"
 
-#: app/core/gimpimage.c:2801
+#: app/core/gimpimage.c:2798
 #, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
 msgstr ""
 
-#: app/core/gimpimage.c:2855
+#: app/core/gimpimage.c:2852
 #, fuzzy
 msgid "Add Channel"
 msgstr "Προσθήκη στο ταμπλώ"
 
-#: app/core/gimpimage.c:2900
+#: app/core/gimpimage.c:2897
 #, fuzzy
 msgid "Remove Channel"
 msgstr "Ανασήκωση Καναλιού"
 
-#: app/core/gimpimage.c:2944
+#: app/core/gimpimage.c:2941
 msgid "Channel cannot be raised higher."
 msgstr ""
 
-#: app/core/gimpimage.c:2949 app/widgets/gimpchanneltreeview.c:127
+#: app/core/gimpimage.c:2946 app/widgets/gimpchanneltreeview.c:127
 #, fuzzy
 msgid "Raise Channel"
 msgstr "Κανάλι"
 
-#: app/core/gimpimage.c:2966
+#: app/core/gimpimage.c:2963
 msgid "Channel cannot be lowered more."
 msgstr ""
 
-#: app/core/gimpimage.c:2971 app/widgets/gimpchanneltreeview.c:131
+#: app/core/gimpimage.c:2968 app/widgets/gimpchanneltreeview.c:131
 msgid "Lower Channel"
 msgstr "Χαμήλωμα Καναλιού"
 
-#: app/core/gimpimage.c:3048
+#: app/core/gimpimage.c:3045
 #, fuzzy
 msgid "Add Path"
 msgstr "Μονοπάτια"
 
 #
-#: app/core/gimpimage.c:3093
+#: app/core/gimpimage.c:3090
 #, fuzzy
 msgid "Remove Path"
 msgstr "Μετονομασία διαβάθμισης"
 
-#: app/core/gimpimage.c:3137
+#: app/core/gimpimage.c:3134
 msgid "Path cannot be raised higher."
 msgstr ""
 
-#: app/core/gimpimage.c:3142 app/widgets/gimpvectorstreeview.c:137
+#: app/core/gimpimage.c:3139 app/widgets/gimpvectorstreeview.c:137
 #, fuzzy
 msgid "Raise Path"
 msgstr "Επικόλληση Έργου"
 
-#: app/core/gimpimage.c:3159
+#: app/core/gimpimage.c:3156
 msgid "Path cannot be lowered more."
 msgstr ""
 
-#: app/core/gimpimage.c:3164 app/widgets/gimpvectorstreeview.c:141
+#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:141
 #, fuzzy
 msgid "Lower Path"
 msgstr "Εμφάνιση ημερομηνίας"
@@ -2138,11 +2138,11 @@ msgstr "Επισύναψη αρχείου"
 msgid "Remove Parasite from Item"
 msgstr "Αφαίρεση του στοιχείου"
 
-#: app/core/gimplayer-floating-sel.c:122
+#: app/core/gimplayer-floating-sel.c:123
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr ""
 
-#: app/core/gimplayer-floating-sel.c:204
+#: app/core/gimplayer-floating-sel.c:205
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -2506,21 +2506,21 @@ msgid "Toggle QuickMask"
 msgstr "Αλλαγή Κατάστασης ΤαχυΜάσκας"
 
 #
-#: app/display/gimpdisplayshell.c:1403
+#: app/display/gimpdisplayshell.c:1404
 #, fuzzy, c-format
 msgid "Close %s?"
 msgstr "Κλείσιμο"
 
-#: app/display/gimpdisplayshell.c:1413
+#: app/display/gimpdisplayshell.c:1414
 msgid "_Discard changes"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:1453
+#: app/display/gimpdisplayshell.c:1454
 #, c-format
 msgid "Changes were made to '%s'."
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:1467
+#: app/display/gimpdisplayshell.c:1468
 msgid "Unsaved changes will be lost."
 msgstr ""
 
@@ -2656,11 +2656,11 @@ msgstr ""
 "%s απέτυχε.\n"
 "%s: δεν είναι κανονικό αρχείο."
 
-#: app/file/file-open.c:158
+#: app/file/file-open.c:166
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr ""
 
-#: app/file/file-open.c:166
+#: app/file/file-open.c:174
 #, fuzzy
 msgid "Plug-In could not open image"
 msgstr "Αδύνατο το επανάνοιγμα του %s\n"
@@ -3424,7 +3424,7 @@ msgstr "/Αποθήκευση _Όλων των σφαλμάτων σε αρχε�
 msgid "/Save _Selection to File..."
 msgstr "/Αποθήκευση _Επιλογής σε αρχείο..."
 
-#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:244
+#: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
 #: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
 #, fuzzy, c-format
 msgid ""
@@ -3435,7 +3435,7 @@ msgstr ""
 "Σφάλμα ανοίγματος.\n"
 "%s"
 
-#: app/gui/file-commands.c:234 app/gui/file-save-dialog.c:341
+#: app/gui/file-commands.c:233 app/gui/file-save-dialog.c:341
 #, fuzzy, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3446,21 +3446,21 @@ msgstr ""
 "%s"
 
 #
-#: app/gui/file-commands.c:275
+#: app/gui/file-commands.c:274
 #, fuzzy
 msgid "Create New Template"
 msgstr "Νέα Εικόνα"
 
-#: app/gui/file-commands.c:279
+#: app/gui/file-commands.c:278
 #, fuzzy
 msgid "Enter a name for this template"
 msgstr "Εισάγετε ένα όνομα για αυτόν τον ενταμιευτή"
 
-#: app/gui/file-commands.c:302
+#: app/gui/file-commands.c:301
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 
-#: app/gui/file-commands.c:315
+#: app/gui/file-commands.c:314
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -3469,17 +3469,17 @@ msgid ""
 "You will lose all your changes, including all undo information."
 msgstr ""
 
-#: app/gui/file-commands.c:323
+#: app/gui/file-commands.c:322
 #, fuzzy
 msgid "Revert Image"
 msgstr "Επαναφορά Εικόνας;"
 
-#: app/gui/file-commands.c:391
+#: app/gui/file-commands.c:390
 #, fuzzy
 msgid "(Unnamed Template)"
 msgstr "Επικολλημένο Στρώμα"
 
-#: app/gui/file-commands.c:465
+#: app/gui/file-commands.c:462
 #, fuzzy, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -8010,7 +8010,7 @@ msgstr "Αποθηκευμένες Διαδικασίες"
 msgid "Free Select"
 msgstr "Επιλογή"
 
-#: app/plug-in/plug-in.c:694
+#: app/plug-in/plug-in.c:702
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -8098,7 +8098,7 @@ msgid ""
 msgstr ""
 
 #
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:634
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:687
 #, fuzzy
 msgid "Add Text Layer"
 msgstr "Καθορισμός Στρώματος"
@@ -8115,17 +8115,17 @@ msgstr "Σφάλμα στο αρχείο πινέλων του GIMP \"%s\"."
 msgid "Text Layer"
 msgstr "Καθορισμός Στρώματος"
 
-#: app/text/gimptextlayer.c:531
+#: app/text/gimptextlayer.c:537
 #, fuzzy
 msgid "Discard Text Information"
 msgstr "Πληροφορίες Εικόνας"
 
-#: app/text/gimptextlayer.c:581
+#: app/text/gimptextlayer.c:587
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 
 #
-#: app/text/gimptextlayer.c:607
+#: app/text/gimptextlayer.c:615
 #, fuzzy
 msgid "Empty Text Layer"
 msgstr "Καθορισμός Στρώματος"
@@ -8904,7 +8904,7 @@ msgid "R_eset Color"
 msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #
-#: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:187
+#: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:206
 #, fuzzy
 msgid "_Preview"
 msgstr "Προεπισκόπηση"
@@ -9531,24 +9531,24 @@ msgid "Create Path from Text"
 msgstr "Δημιουργία Διαδρομής από Κείμενο"
 
 #
-#: app/tools/gimptexttool.c:128
+#: app/tools/gimptexttool.c:142
 msgid "Add text to the image"
 msgstr "Προσθήκη κειμένου στην εικόνα"
 
 #
-#: app/tools/gimptexttool.c:129
+#: app/tools/gimptexttool.c:143
 msgid "/Tools/Te_xt"
 msgstr "/Εργαλεία/_Κείμενο"
 
-#: app/tools/gimptexttool.c:667
+#: app/tools/gimptexttool.c:718
 msgid "GIMP Text Editor"
 msgstr "Επεξεργαστής Κειμένου GIMP"
 
-#: app/tools/gimptexttool.c:757 app/tools/gimptexttool.c:760
+#: app/tools/gimptexttool.c:828 app/tools/gimptexttool.c:831
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:781
+#: app/tools/gimptexttool.c:852
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -10192,7 +10192,7 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Σφάλμα στο αρχείο πινέλων του GIMP \"%s\"."
 
-#: app/widgets/gimpdock.c:383
+#: app/widgets/gimpdock.c:394
 msgid "You can drop dockable dialogs here."
 msgstr ""
 
@@ -10712,19 +10712,19 @@ msgstr ""
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Σφάλμα στο αρχείο πινέλων του GIMP \"%s\"."
 
-#: app/widgets/gimpthumbbox.c:170
+#: app/widgets/gimpthumbbox.c:189
 #, c-format
 msgid ""
 "Click to update preview\n"
 "%s  Click to force update even if preview is up-to-date"
 msgstr ""
 
-#: app/widgets/gimpthumbbox.c:239 app/widgets/gimpthumbbox.c:285
+#: app/widgets/gimpthumbbox.c:250 app/widgets/gimpthumbbox.c:296
 #, fuzzy
 msgid "No Selection"
 msgstr "Καμία Επιλογή"
 
-#: app/widgets/gimpthumbbox.c:371 app/widgets/gimpthumbbox.c:391
+#: app/widgets/gimpthumbbox.c:382 app/widgets/gimpthumbbox.c:402
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr ""

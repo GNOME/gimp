@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp po-plug-ins CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
+"POT-Creation-Date: 2004-03-23 16:11+0100\n"
 "PO-Revision-Date: 2004-03-21 00:23+0000\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Gaeilge <gaeilge-a@listserv.heanet.ie>\n"
@@ -9678,20 +9678,20 @@ msgstr ""
 msgid "GIMP Help Browser"
 msgstr ""
 
-#: plug-ins/helpbrowser/dialog.c:463 plug-ins/imagemap/imap_main.c:586
+#: plug-ins/helpbrowser/dialog.c:465 plug-ins/imagemap/imap_main.c:586
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr ""
 
-#: plug-ins/helpbrowser/dialog.c:531
+#: plug-ins/helpbrowser/dialog.c:533
 msgid "Document Not Found"
 msgstr ""
 
-#: plug-ins/helpbrowser/dialog.c:533
+#: plug-ins/helpbrowser/dialog.c:535
 msgid "Could not locate help document"
 msgstr ""
 
-#: plug-ins/helpbrowser/dialog.c:535
+#: plug-ins/helpbrowser/dialog.c:537
 msgid ""
 "The requested document could not be found in your GIMP help path as shown "
 "above. This means that the topic has not yet been written or your "
@@ -11521,23 +11521,23 @@ msgid "Error: XJT property file '%s' is empty."
 msgstr ""
 
 #, fuzzy
-msgid "_after"
-msgstr "Réamhthaispeántas Beo"
+#~ msgid "_after"
+#~ msgstr "Réamhthaispeántas Beo"
 
 #, fuzzy
-msgid "A_bout..."
-msgstr "Faoi"
+#~ msgid "A_bout..."
+#~ msgstr "Faoi"
 
 #, fuzzy
-msgid "_Update Preview"
-msgstr "Réamhthaispeántas Beo"
+#~ msgid "_Update Preview"
+#~ msgstr "Réamhthaispeántas Beo"
 
 #, fuzzy
-msgid "Image preview"
-msgstr "Réamhthaispeántas Beo"
+#~ msgid "Image preview"
+#~ msgstr "Réamhthaispeántas Beo"
 
-msgid "OK"
-msgstr "Ceart go leor"
+#~ msgid "OK"
+#~ msgstr "Ceart go leor"
 
-msgid "Cancel"
-msgstr "Cealaigh"
+#~ msgid "Cancel"
+#~ msgstr "Cealaigh"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
+"POT-Creation-Date: 2004-03-23 16:11+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -10905,22 +10905,22 @@ msgstr "Eroare la deschiderea fişierului: %s\n"
 msgid "GIMP Help Browser"
 msgstr "Afişare informaţii de ajutor"
 
-#: plug-ins/helpbrowser/dialog.c:463 plug-ins/imagemap/imap_main.c:586
+#: plug-ins/helpbrowser/dialog.c:465 plug-ins/imagemap/imap_main.c:586
 #: plug-ins/imagemap/imap_settings.c:167
 #, fuzzy
 msgid "<Untitled>"
 msgstr "Fara nume"
 
-#: plug-ins/helpbrowser/dialog.c:531
+#: plug-ins/helpbrowser/dialog.c:533
 #, fuzzy
 msgid "Document Not Found"
 msgstr "Index document"
 
-#: plug-ins/helpbrowser/dialog.c:533
+#: plug-ins/helpbrowser/dialog.c:535
 msgid "Could not locate help document"
 msgstr ""
 
-#: plug-ins/helpbrowser/dialog.c:535
+#: plug-ins/helpbrowser/dialog.c:537
 msgid ""
 "The requested document could not be found in your GIMP help path as shown "
 "above. This means that the topic has not yet been written or your "

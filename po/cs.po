@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-22 03:45+0100\n"
+"POT-Creation-Date: 2004-03-23 16:10+0100\n"
 "PO-Revision-Date: 2004-03-22 10:09+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1289,7 +1289,7 @@ msgstr "Přidat masku vrstvy"
 msgid "Apply Layer Mask"
 msgstr "Použít masku vrstvy"
 
-#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:223
+#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:224
 msgid "Floating Selection to Layer"
 msgstr "Plovoucí výběr do vrstvy"
 
@@ -1297,7 +1297,7 @@ msgstr "Plovoucí výběr do vrstvy"
 msgid "Float Selection"
 msgstr "Plovoucí výběr"
 
-#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:129
+#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:130
 msgid "Anchor Floating Selection"
 msgstr "Ukotvit plovoucí výběr"
 
@@ -1311,7 +1311,7 @@ msgid "Cut"
 msgstr "Vyjmout"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:636
-#: app/tools/gimptexttool.c:133 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Text"
 
@@ -1968,108 +1968,108 @@ msgstr "Změna rozlišení obrázku"
 msgid "Change Image Unit"
 msgstr "Změna jednotky obrázku"
 
-#: app/core/gimpimage.c:2033
+#: app/core/gimpimage.c:2030
 msgid "Attach Parasite to Image"
 msgstr "Připojit parazita k obrázku"
 
-#: app/core/gimpimage.c:2066
+#: app/core/gimpimage.c:2063
 msgid "Remove Parasite from Image"
 msgstr "Odstranění parazita z obrázku"
 
-#: app/core/gimpimage.c:2538
+#: app/core/gimpimage.c:2535
 msgid "Add Layer"
 msgstr "Přidat vrstvu"
 
-#: app/core/gimpimage.c:2605
+#: app/core/gimpimage.c:2602
 msgid "Remove Layer"
 msgstr "Odstranit vrstvu"
 
-#: app/core/gimpimage.c:2676
+#: app/core/gimpimage.c:2673
 msgid "Layer cannot be raised higher."
 msgstr "Vrstva nemůže být ještě výš."
 
-#: app/core/gimpimage.c:2682 app/core/gimpimage.c:2732
+#: app/core/gimpimage.c:2679 app/core/gimpimage.c:2729
 msgid "Cannot raise a layer without alpha."
 msgstr "Nelze posunout výš vrstvu bez alfy."
 
-#: app/core/gimpimage.c:2687 app/widgets/gimplayertreeview.c:213
+#: app/core/gimpimage.c:2684 app/widgets/gimplayertreeview.c:213
 msgid "Raise Layer"
 msgstr "Vrstvu výš"
 
-#: app/core/gimpimage.c:2704
+#: app/core/gimpimage.c:2701
 msgid "Layer cannot be lowered more."
 msgstr "Vrstva nemůže být ještě níž."
 
-#: app/core/gimpimage.c:2709 app/widgets/gimplayertreeview.c:217
+#: app/core/gimpimage.c:2706 app/widgets/gimplayertreeview.c:217
 msgid "Lower Layer"
 msgstr "Vrstvu níž"
 
-#: app/core/gimpimage.c:2726
+#: app/core/gimpimage.c:2723
 msgid "Layer is already on top."
 msgstr "Vrstva je již nahoře."
 
-#: app/core/gimpimage.c:2737 app/widgets/gimplayertreeview.c:215
+#: app/core/gimpimage.c:2734 app/widgets/gimplayertreeview.c:215
 msgid "Raise Layer to Top"
 msgstr "Vrstvu nahoru"
 
-#: app/core/gimpimage.c:2757
+#: app/core/gimpimage.c:2754
 msgid "Layer is already on the bottom."
 msgstr "Vrstva je již vespod."
 
-#: app/core/gimpimage.c:2762 app/widgets/gimplayertreeview.c:219
+#: app/core/gimpimage.c:2759 app/widgets/gimplayertreeview.c:219
 msgid "Lower Layer to Bottom"
 msgstr "Vrstvu dospod"
 
-#: app/core/gimpimage.c:2801
+#: app/core/gimpimage.c:2798
 #, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
 msgstr "Vrstva '%s' nemá alfu. Vrstva byla umístěna nad ni."
 
-#: app/core/gimpimage.c:2855
+#: app/core/gimpimage.c:2852
 msgid "Add Channel"
 msgstr "Přidat kanál"
 
-#: app/core/gimpimage.c:2900
+#: app/core/gimpimage.c:2897
 msgid "Remove Channel"
 msgstr "Odstranit kanál"
 
-#: app/core/gimpimage.c:2944
+#: app/core/gimpimage.c:2941
 msgid "Channel cannot be raised higher."
 msgstr "Kanál nemůže být ještě výš."
 
-#: app/core/gimpimage.c:2949 app/widgets/gimpchanneltreeview.c:127
+#: app/core/gimpimage.c:2946 app/widgets/gimpchanneltreeview.c:127
 msgid "Raise Channel"
 msgstr "Kanál výš"
 
-#: app/core/gimpimage.c:2966
+#: app/core/gimpimage.c:2963
 msgid "Channel cannot be lowered more."
 msgstr "Kanál nemůže být ještě níž."
 
-#: app/core/gimpimage.c:2971 app/widgets/gimpchanneltreeview.c:131
+#: app/core/gimpimage.c:2968 app/widgets/gimpchanneltreeview.c:131
 msgid "Lower Channel"
 msgstr "Kanál níž"
 
-#: app/core/gimpimage.c:3048
+#: app/core/gimpimage.c:3045
 msgid "Add Path"
 msgstr "Přidat cestu"
 
-#: app/core/gimpimage.c:3093
+#: app/core/gimpimage.c:3090
 msgid "Remove Path"
 msgstr "Odstranit cestu"
 
-#: app/core/gimpimage.c:3137
+#: app/core/gimpimage.c:3134
 msgid "Path cannot be raised higher."
 msgstr "Cesta nemůže být ještě výš."
 
-#: app/core/gimpimage.c:3142 app/widgets/gimpvectorstreeview.c:137
+#: app/core/gimpimage.c:3139 app/widgets/gimpvectorstreeview.c:137
 msgid "Raise Path"
 msgstr "Zvýšit cestu"
 
-#: app/core/gimpimage.c:3159
+#: app/core/gimpimage.c:3156
 msgid "Path cannot be lowered more."
 msgstr "Cesta nemůže být ještě níž."
 
-#: app/core/gimpimage.c:3164 app/widgets/gimpvectorstreeview.c:141
+#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:141
 msgid "Lower Path"
 msgstr "Snížit cestu"
 
@@ -2128,11 +2128,11 @@ msgstr "Připojení parazita k položce"
 msgid "Remove Parasite from Item"
 msgstr "Odstranění parazita z položky"
 
-#: app/core/gimplayer-floating-sel.c:122
+#: app/core/gimplayer-floating-sel.c:123
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr "Nemohu pohltit tuto vrstvu, protože to není plovoucí výběr."
 
-#: app/core/gimplayer-floating-sel.c:204
+#: app/core/gimplayer-floating-sel.c:205
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -2472,21 +2472,21 @@ msgstr "/Podle _předvoleb"
 msgid "Toggle QuickMask"
 msgstr "Přepnout Rychlou masku"
 
-#: app/display/gimpdisplayshell.c:1403
+#: app/display/gimpdisplayshell.c:1404
 #, c-format
 msgid "Close %s?"
 msgstr "Zavřít %s?"
 
-#: app/display/gimpdisplayshell.c:1413
+#: app/display/gimpdisplayshell.c:1414
 msgid "_Discard changes"
 msgstr "Za_hodit změny"
 
-#: app/display/gimpdisplayshell.c:1453
+#: app/display/gimpdisplayshell.c:1454
 #, c-format
 msgid "Changes were made to '%s'."
 msgstr "V '%s' byly provedeny změny."
 
-#: app/display/gimpdisplayshell.c:1467
+#: app/display/gimpdisplayshell.c:1468
 msgid "Unsaved changes will be lost."
 msgstr "Neuložené změny budou ztraceny."
 
@@ -2600,11 +2600,11 @@ msgstr "Neznámý typ souboru"
 msgid "Not a regular file"
 msgstr "Není běžný soubor"
 
-#: app/file/file-open.c:158
+#: app/file/file-open.c:166
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr "Zásuvný modul navrátil stav ÚSPĚCH, ale nevrátil žádný obrázek"
 
-#: app/file/file-open.c:166
+#: app/file/file-open.c:174
 msgid "Plug-In could not open image"
 msgstr "Zásuvný modul nemohl otevřít obrázek"
 
@@ -3235,7 +3235,7 @@ msgstr "/Uložit vš_echny chyby do souboru..."
 msgid "/Save _Selection to File..."
 msgstr "/Uložit vý_běr do souboru..."
 
-#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:244
+#: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
 #: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
@@ -3247,7 +3247,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:234 app/gui/file-save-dialog.c:341
+#: app/gui/file-commands.c:233 app/gui/file-save-dialog.c:341
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3258,19 +3258,19 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:275
+#: app/gui/file-commands.c:274
 msgid "Create New Template"
 msgstr "Vytvořit novou šablonu"
 
-#: app/gui/file-commands.c:279
+#: app/gui/file-commands.c:278
 msgid "Enter a name for this template"
 msgstr "Zadejte jméno této šablony"
 
-#: app/gui/file-commands.c:302
+#: app/gui/file-commands.c:301
 msgid "Revert failed. No file name associated with this image."
 msgstr "Navrácení selhalo. S tímto obrázkem není spojen žádný název souboru."
 
-#: app/gui/file-commands.c:315
+#: app/gui/file-commands.c:314
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -3283,15 +3283,15 @@ msgstr ""
 "\n"
 "Ztratíte všechny své změny, včetně informací o zpětných úpravách."
 
-#: app/gui/file-commands.c:323
+#: app/gui/file-commands.c:322
 msgid "Revert Image"
 msgstr "Navrátit obrázek"
 
-#: app/gui/file-commands.c:391
+#: app/gui/file-commands.c:390
 msgid "(Unnamed Template)"
 msgstr "(Nepojmenovaná šablona)"
 
-#: app/gui/file-commands.c:465
+#: app/gui/file-commands.c:462
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -7261,7 +7261,7 @@ msgstr "Pomocná procedura"
 msgid "Free Select"
 msgstr "Volný výběr"
 
-#: app/plug-in/plug-in.c:694
+#: app/plug-in/plug-in.c:702
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -7350,7 +7350,7 @@ msgstr ""
 "Příliš žluťoučký kůň\n"
 "úpěl ďábelské kódy."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:676
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:687
 msgid "Add Text Layer"
 msgstr "Přidat textovou vrstvu"
 
@@ -7362,15 +7362,15 @@ msgstr "(neplatný řetězec v kódování UTF-8)"
 msgid "Text Layer"
 msgstr "Textová vrstva"
 
-#: app/text/gimptextlayer.c:531
+#: app/text/gimptextlayer.c:537
 msgid "Discard Text Information"
 msgstr "Zahodit informace o textu"
 
-#: app/text/gimptextlayer.c:581
+#: app/text/gimptextlayer.c:587
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Funkce textu nejsou k dispozici kvůli nedostupnosti písem."
 
-#: app/text/gimptextlayer.c:607
+#: app/text/gimptextlayer.c:615
 msgid "Empty Text Layer"
 msgstr "Prázdná textová vrstva"
 
@@ -8556,23 +8556,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Vytvořit cestu z textu"
 
-#: app/tools/gimptexttool.c:134
+#: app/tools/gimptexttool.c:142
 msgid "Add text to the image"
 msgstr "Přidání textu do obrázku"
 
-#: app/tools/gimptexttool.c:135
+#: app/tools/gimptexttool.c:143
 msgid "/Tools/Te_xt"
 msgstr "/Nástroje/_Text"
 
-#: app/tools/gimptexttool.c:709
+#: app/tools/gimptexttool.c:718
 msgid "GIMP Text Editor"
 msgstr "Textový editor pro GIMP"
 
-#: app/tools/gimptexttool.c:799 app/tools/gimptexttool.c:802
+#: app/tools/gimptexttool.c:828 app/tools/gimptexttool.c:831
 msgid "Confirm Text Editing"
 msgstr "Potvrdit úpravu textu"
 
-#: app/tools/gimptexttool.c:823
+#: app/tools/gimptexttool.c:852
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -8580,9 +8580,11 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"Vrstva, kterou jste vybrali, je vrstva textu, ale byla upravena jinými nástroji. Úprava vrstvy s nástrojem text tyto změny zahodí.\n"
+"Vrstva, kterou jste vybrali, je vrstva textu, ale byla upravena jinými "
+"nástroji. Úprava vrstvy s nástrojem text tyto změny zahodí.\n"
 "\n"
-"Můžete vrstvu upravovat nebo vytvořit novou vrstvu textu z atributů jejího textu."
+"Můžete vrstvu upravovat nebo vytvořit novou vrstvu textu z atributů jejího "
+"textu."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"

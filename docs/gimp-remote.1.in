@@ -1,4 +1,4 @@
-.TH GIMP-REMOTE 1 "20 January 2004" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP-REMOTE 1 "March 23 2004" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
 gimp-remote - tells a running GIMP to open a (local or remote) image file.
 .SH SYNOPSIS

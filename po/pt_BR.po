@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 09:55-0500\n"
+"POT-Creation-Date: 2004-03-23 16:10+0100\n"
 "PO-Revision-Date: 2004-03-23 09:56-0500\n"
 "Last-Translator: Joao S. O. Bueno <gwidion@mpc.com.br>\n"
 "Language-Team: Postuguês Brasileiro <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -3867,6 +3867,7 @@ msgstr ""
 "Erro de redimensionamento: largura e altura devem ser maiores que zero."
 
 #. <Image>/File
+#. <Toolbox>/File
 #: app/gui/image-menu.c:101 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Arquivo"
@@ -3880,6 +3881,7 @@ msgid "/File/_Open..."
 msgstr "/Arquivo/_Abrir..."
 
 #. <Image>/File/Open Recent
+#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:116 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/Arquivo/Abrir _Recente"
@@ -6165,6 +6167,7 @@ msgid "Original Width:"
 msgstr "Largura original:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "Nova largura:"
@@ -7012,6 +7015,7 @@ msgid "New Path Options"
 msgstr "Opções do Novo Vetor"
 
 #. The name entry hbox, label and entry
+#. The name entry
 #: app/gui/vectors-commands.c:495 app/gui/vectors-commands.c:613
 msgid "Path name:"
 msgstr "Nome do vetor:"
@@ -7904,6 +7908,7 @@ msgid "Origin X:"
 msgstr "Origem X:"
 
 #. the pixel size labels
+#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp20-std-plug-ins 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 21:55+0800\n"
+"POT-Creation-Date: 2004-03-23 16:11+0100\n"
 "PO-Revision-Date: 2004-03-24 01:26+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -5545,6 +5545,8 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr ""
 
+#. Inform the user that we couldn't losslessly save the
+#. * transparency & just use the full palette
 #: plug-ins/common/png.c:1527
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "儲存時無法不損失任何透明度資訊，因此改用不透明的方式儲存。"
@@ -7730,6 +7732,7 @@ msgstr ""
 "‘%s’：\n"
 "未指定影像資料類型"
 
+#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:959
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -9255,6 +9258,7 @@ msgstr "<Image>/濾鏡/藝術效果/_GIMPressionist..."
 msgid "Painting..."
 msgstr "繪畫中..."
 
+#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-22 23:30+0200\n"
+"POT-Creation-Date: 2004-03-23 16:10+0100\n"
 "PO-Revision-Date: 2004-03-22 18:36+0200\n"
 "Last-Translator: Mikko Paananen\n"
 "Language-Team:\n"
@@ -1279,7 +1279,7 @@ msgstr "Lisää tasoon maski"
 msgid "Apply Layer Mask"
 msgstr "Sovella tason maskia"
 
-#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:223
+#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:224
 msgid "Floating Selection to Layer"
 msgstr "Kelluva valinta"
 
@@ -1287,7 +1287,7 @@ msgstr "Kelluva valinta"
 msgid "Float Selection"
 msgstr "Kelluva valinta"
 
-#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:129
+#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:130
 msgid "Anchor Floating Selection"
 msgstr "Kelluva valinta"
 
@@ -1301,7 +1301,7 @@ msgid "Cut"
 msgstr "Leikkaa"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:636
-#: app/tools/gimptexttool.c:133 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Teksti"
 
@@ -1957,108 +1957,108 @@ msgstr "Vaihda kuvan tarkkuutta"
 msgid "Change Image Unit"
 msgstr "Vaihda kuvan yksiköt"
 
-#: app/core/gimpimage.c:2033
+#: app/core/gimpimage.c:2030
 msgid "Attach Parasite to Image"
 msgstr "Lisää kuvaan kenttä"
 
-#: app/core/gimpimage.c:2066
+#: app/core/gimpimage.c:2063
 msgid "Remove Parasite from Image"
 msgstr "Poista kuvasta kenttä"
 
-#: app/core/gimpimage.c:2538
+#: app/core/gimpimage.c:2535
 msgid "Add Layer"
 msgstr "Lisää taso"
 
-#: app/core/gimpimage.c:2605
+#: app/core/gimpimage.c:2602
 msgid "Remove Layer"
 msgstr "Poista taso"
 
-#: app/core/gimpimage.c:2676
+#: app/core/gimpimage.c:2673
 msgid "Layer cannot be raised higher."
 msgstr "Tasoa ei voi nostaa enempää."
 
-#: app/core/gimpimage.c:2682 app/core/gimpimage.c:2732
+#: app/core/gimpimage.c:2679 app/core/gimpimage.c:2729
 msgid "Cannot raise a layer without alpha."
 msgstr "Tasoa ilman alfakanavaa ei voi nostaa."
 
-#: app/core/gimpimage.c:2687 app/widgets/gimplayertreeview.c:213
+#: app/core/gimpimage.c:2684 app/widgets/gimplayertreeview.c:213
 msgid "Raise Layer"
 msgstr "Nosta taso"
 
-#: app/core/gimpimage.c:2704
+#: app/core/gimpimage.c:2701
 msgid "Layer cannot be lowered more."
 msgstr "Tasoa ei voi laskea enempää."
 
-#: app/core/gimpimage.c:2709 app/widgets/gimplayertreeview.c:217
+#: app/core/gimpimage.c:2706 app/widgets/gimplayertreeview.c:217
 msgid "Lower Layer"
 msgstr "Laske taso"
 
-#: app/core/gimpimage.c:2726
+#: app/core/gimpimage.c:2723
 msgid "Layer is already on top."
 msgstr "Taso on jo päällimmäisenä."
 
-#: app/core/gimpimage.c:2737 app/widgets/gimplayertreeview.c:215
+#: app/core/gimpimage.c:2734 app/widgets/gimplayertreeview.c:215
 msgid "Raise Layer to Top"
 msgstr "Nosta taso päällimmäiseksi"
 
-#: app/core/gimpimage.c:2757
+#: app/core/gimpimage.c:2754
 msgid "Layer is already on the bottom."
 msgstr "Taso on jo pohjimmaisena."
 
-#: app/core/gimpimage.c:2762 app/widgets/gimplayertreeview.c:219
+#: app/core/gimpimage.c:2759 app/widgets/gimplayertreeview.c:219
 msgid "Lower Layer to Bottom"
 msgstr "Laske taso pohjimmaiseksi"
 
-#: app/core/gimpimage.c:2801
+#: app/core/gimpimage.c:2798
 #, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
 msgstr "Tasolla \"%s\" ei ole alfakanavaa. Taso sijoitettiin sen yläpuolelle."
 
-#: app/core/gimpimage.c:2855
+#: app/core/gimpimage.c:2852
 msgid "Add Channel"
 msgstr "Lisää kanava"
 
-#: app/core/gimpimage.c:2900
+#: app/core/gimpimage.c:2897
 msgid "Remove Channel"
 msgstr "Poista kanava"
 
-#: app/core/gimpimage.c:2944
+#: app/core/gimpimage.c:2941
 msgid "Channel cannot be raised higher."
 msgstr "Kanavaa ei voi nostaa enempää."
 
-#: app/core/gimpimage.c:2949 app/widgets/gimpchanneltreeview.c:127
+#: app/core/gimpimage.c:2946 app/widgets/gimpchanneltreeview.c:127
 msgid "Raise Channel"
 msgstr "Nosta kanava"
 
-#: app/core/gimpimage.c:2966
+#: app/core/gimpimage.c:2963
 msgid "Channel cannot be lowered more."
 msgstr "Kanavaa ei voi laskea enempää."
 
-#: app/core/gimpimage.c:2971 app/widgets/gimpchanneltreeview.c:131
+#: app/core/gimpimage.c:2968 app/widgets/gimpchanneltreeview.c:131
 msgid "Lower Channel"
 msgstr "Laske kanava"
 
-#: app/core/gimpimage.c:3048
+#: app/core/gimpimage.c:3045
 msgid "Add Path"
 msgstr "Lisää polku"
 
-#: app/core/gimpimage.c:3093
+#: app/core/gimpimage.c:3090
 msgid "Remove Path"
 msgstr "Poista polku"
 
-#: app/core/gimpimage.c:3137
+#: app/core/gimpimage.c:3134
 msgid "Path cannot be raised higher."
 msgstr "Polkua ei voi nostaa enempää."
 
-#: app/core/gimpimage.c:3142 app/widgets/gimpvectorstreeview.c:137
+#: app/core/gimpimage.c:3139 app/widgets/gimpvectorstreeview.c:137
 msgid "Raise Path"
 msgstr "Nosta polku"
 
-#: app/core/gimpimage.c:3159
+#: app/core/gimpimage.c:3156
 msgid "Path cannot be lowered more."
 msgstr "Polkua ei voi laskea enempää."
 
-#: app/core/gimpimage.c:3164 app/widgets/gimpvectorstreeview.c:141
+#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:141
 msgid "Lower Path"
 msgstr "Laske polku"
 
@@ -2117,11 +2117,11 @@ msgstr "Liitä kenttä"
 msgid "Remove Parasite from Item"
 msgstr "Poista kenttä"
 
-#: app/core/gimplayer-floating-sel.c:122
+#: app/core/gimplayer-floating-sel.c:123
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr "Tason ankkurointi epäonnistui, koska se ei ole kelluva valinta."
 
-#: app/core/gimplayer-floating-sel.c:204
+#: app/core/gimplayer-floating-sel.c:205
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -2465,21 +2465,21 @@ msgstr "/Kuten asetuksissa"
 msgid "Toggle QuickMask"
 msgstr "Aseta maski"
 
-#: app/display/gimpdisplayshell.c:1403
+#: app/display/gimpdisplayshell.c:1404
 #, c-format
 msgid "Close %s?"
 msgstr "Sulje %s ?"
 
-#: app/display/gimpdisplayshell.c:1413
+#: app/display/gimpdisplayshell.c:1414
 msgid "_Discard changes"
 msgstr "_Hylkää muutokset"
 
-#: app/display/gimpdisplayshell.c:1453
+#: app/display/gimpdisplayshell.c:1454
 #, c-format
 msgid "Changes were made to '%s'."
 msgstr "Kuvaan %s on tehty muutoksia."
 
-#: app/display/gimpdisplayshell.c:1467
+#: app/display/gimpdisplayshell.c:1468
 msgid "Unsaved changes will be lost."
 msgstr "Tallentamattomat muutokset menetetään."
 
@@ -2593,11 +2593,11 @@ msgstr "Tuntematon tiedoston tyyppi."
 msgid "Not a regular file"
 msgstr "Ei ole tavallinen tiedosto"
 
-#: app/file/file-open.c:158
+#: app/file/file-open.c:166
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr "Liitännäinen ei palauttanut kuvaa"
 
-#: app/file/file-open.c:166
+#: app/file/file-open.c:174
 msgid "Plug-In could not open image"
 msgstr "Liitännäinen: tiedoston avaaminen epäonnistui"
 
@@ -3230,7 +3230,7 @@ msgstr "/T_allenna virheet tiedostoon..."
 msgid "/Save _Selection to File..."
 msgstr "/Tallenna _valinta tiedostoon..."
 
-#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:244
+#: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
 #: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
@@ -3241,7 +3241,7 @@ msgstr ""
 "Tiedoston '%s' avaaminen epäonnistui:\n"
 "%s"
 
-#: app/gui/file-commands.c:234 app/gui/file-save-dialog.c:341
+#: app/gui/file-commands.c:233 app/gui/file-save-dialog.c:341
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3251,19 +3251,19 @@ msgstr ""
 "Tiedoston %s tallennus epäonnistui:\n"
 "%s"
 
-#: app/gui/file-commands.c:275
+#: app/gui/file-commands.c:274
 msgid "Create New Template"
 msgstr "Luo uusi malli"
 
-#: app/gui/file-commands.c:279
+#: app/gui/file-commands.c:278
 msgid "Enter a name for this template"
 msgstr "Anna mallille nimi"
 
-#: app/gui/file-commands.c:302
+#: app/gui/file-commands.c:301
 msgid "Revert failed. No file name associated with this image."
 msgstr "En voi palauttaa kuvaa ennalleen. Kuvalle ei ole tiedostonimeä."
 
-#: app/gui/file-commands.c:315
+#: app/gui/file-commands.c:314
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -3274,15 +3274,15 @@ msgstr ""
 "Palautetaanko \"%s\" -> \"%s\"?\n"
 "Menetät kaikki muutokset ja toimintohistorian."
 
-#: app/gui/file-commands.c:323
+#: app/gui/file-commands.c:322
 msgid "Revert Image"
 msgstr "Palauta alkuperäinen kuvaa?"
 
-#: app/gui/file-commands.c:391
+#: app/gui/file-commands.c:390
 msgid "(Unnamed Template)"
 msgstr "(Nimeämätön malli)"
 
-#: app/gui/file-commands.c:465
+#: app/gui/file-commands.c:462
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3775,6 +3775,7 @@ msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Virhe: Sekä leveyden että korkeuden pitää olla nollaa suurempia."
 
 #. <Image>/File
+#. <Toolbox>/File
 #: app/gui/image-menu.c:101 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Tiedosto"
@@ -3788,6 +3789,7 @@ msgid "/File/_Open..."
 msgstr "/Tiedosto/_Avaa..."
 
 #. <Image>/File/Open Recent
+#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:116 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/Tiedosto/_Pikavalinnat"
@@ -6067,6 +6069,7 @@ msgid "Original Width:"
 msgstr "Alkuperäinen leveys:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "Uusi leveys:"
@@ -6893,6 +6896,7 @@ msgid "New Path Options"
 msgstr "Uuden polun asetukset"
 
 #. The name entry hbox, label and entry
+#. The name entry
 #: app/gui/vectors-commands.c:495 app/gui/vectors-commands.c:613
 msgid "Path name:"
 msgstr "Polun nimi:"
@@ -7242,7 +7246,7 @@ msgstr "Tilapäinen proseduuri"
 msgid "Free Select"
 msgstr "Vapaa valinta"
 
-#: app/plug-in/plug-in.c:694
+#: app/plug-in/plug-in.c:702
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -7330,7 +7334,7 @@ msgstr ""
 "Isoviisaria Aira siivosi.\n"
 "ABCabc XYZxyz åäöÅÄÖàášü€"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:676
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:687
 msgid "Add Text Layer"
 msgstr "Lisää tekstitaso"
 
@@ -7342,15 +7346,15 @@ msgstr "(epäkelpo unicode-merkkijono)"
 msgid "Text Layer"
 msgstr "Tekstitaso"
 
-#: app/text/gimptextlayer.c:531
+#: app/text/gimptextlayer.c:537
 msgid "Discard Text Information"
 msgstr "Hylkää tekstitieto"
 
-#: app/text/gimptextlayer.c:581
+#: app/text/gimptextlayer.c:587
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Kirjasinten puutteen vuoksi toiminnallisuus ei ole käytettävissä."
 
-#: app/text/gimptextlayer.c:607
+#: app/text/gimptextlayer.c:615
 msgid "Empty Text Layer"
 msgstr "Tyhjä tekstitaso"
 
@@ -7784,6 +7788,7 @@ msgid "Origin X:"
 msgstr "Origo X:"
 
 #. the pixel size labels
+#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
@@ -8532,23 +8537,23 @@ msgstr "Riviväli:"
 msgid "Create Path from Text"
 msgstr "Luo polku tekstistä"
 
-#: app/tools/gimptexttool.c:134
+#: app/tools/gimptexttool.c:142
 msgid "Add text to the image"
 msgstr "Lisää kuvaan tekstiä"
 
-#: app/tools/gimptexttool.c:135
+#: app/tools/gimptexttool.c:143
 msgid "/Tools/Te_xt"
 msgstr "/Työkalut/Teksti"
 
-#: app/tools/gimptexttool.c:709
+#: app/tools/gimptexttool.c:718
 msgid "GIMP Text Editor"
 msgstr "Tekstieditori"
 
-#: app/tools/gimptexttool.c:799 app/tools/gimptexttool.c:802
+#: app/tools/gimptexttool.c:828 app/tools/gimptexttool.c:831
 msgid "Confirm Text Editing"
 msgstr "Vahvista tekstin muokkaus"
 
-#: app/tools/gimptexttool.c:823
+#: app/tools/gimptexttool.c:852
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:18+0100\n"
+"POT-Creation-Date: 2004-03-23 16:10+0100\n"
 "PO-Revision-Date: 2003-07-14 00:11+0200\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -1220,7 +1220,7 @@ msgstr "/Rétegmaszk hozzáadása..."
 msgid "Apply Layer Mask"
 msgstr "/Rétegmaszk érvényesítése"
 
-#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:223
+#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:224
 #, fuzzy
 msgid "Floating Selection to Layer"
 msgstr "Lebegő kijelölés"
@@ -1230,7 +1230,7 @@ msgstr "Lebegő kijelölés"
 msgid "Float Selection"
 msgstr "Lebegő kijelölés"
 
-#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:129
+#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:130
 #, fuzzy
 msgid "Anchor Floating Selection"
 msgstr "Lebegő kijelölés"
@@ -1246,7 +1246,7 @@ msgid "Cut"
 msgstr "Szám:"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:636
-#: app/tools/gimptexttool.c:127 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Szöveg"
 
@@ -1962,7 +1962,7 @@ msgstr "gyorsmaszk"
 msgid "Disable QuickMask"
 msgstr "gyorsmaszk"
 
-#: app/core/gimpimage-undo-push.c:2974
+#: app/core/gimpimage-undo-push.c:2847
 #, c-format
 msgid "Can't undo %s"
 msgstr "%s nem visszavonható"
@@ -1983,131 +1983,131 @@ msgstr "réteg áthelyezése"
 msgid "Change Image Unit"
 msgstr "Visszaállítsam az eredetit?"
 
-#: app/core/gimpimage.c:2033
+#: app/core/gimpimage.c:2030
 #, fuzzy
 msgid "Attach Parasite to Image"
 msgstr "élősködő hozzáadása"
 
-#: app/core/gimpimage.c:2066
+#: app/core/gimpimage.c:2063
 #, fuzzy
 msgid "Remove Parasite from Image"
 msgstr "élősködő eltávolítása"
 
-#: app/core/gimpimage.c:2538
+#: app/core/gimpimage.c:2535
 #, fuzzy
 msgid "Add Layer"
 msgstr "/Rétegmaszk hozzáadása..."
 
-#: app/core/gimpimage.c:2605
+#: app/core/gimpimage.c:2602
 #, fuzzy
 msgid "Remove Layer"
 msgstr "réteg átnevezése"
 
-#: app/core/gimpimage.c:2676
+#: app/core/gimpimage.c:2673
 #, fuzzy
 msgid "Layer cannot be raised higher."
 msgstr "A réteget nem lehet feljebb helyezni"
 
-#: app/core/gimpimage.c:2682 app/core/gimpimage.c:2732
+#: app/core/gimpimage.c:2679 app/core/gimpimage.c:2729
 #, fuzzy
 msgid "Cannot raise a layer without alpha."
 msgstr "Nem lehet nem átlátszó réteget feljebb helyezni"
 
-#: app/core/gimpimage.c:2687 app/widgets/gimplayertreeview.c:213
+#: app/core/gimpimage.c:2684 app/widgets/gimplayertreeview.c:213
 #, fuzzy
 msgid "Raise Layer"
 msgstr "/Verem/Feljebb"
 
-#: app/core/gimpimage.c:2704
+#: app/core/gimpimage.c:2701
 #, fuzzy
 msgid "Layer cannot be lowered more."
 msgstr "A réteget nem lehet lejjebb helyezni"
 
-#: app/core/gimpimage.c:2709 app/widgets/gimplayertreeview.c:217
+#: app/core/gimpimage.c:2706 app/widgets/gimplayertreeview.c:217
 #, fuzzy
 msgid "Lower Layer"
 msgstr "/Verem/Lejjebb"
 
-#: app/core/gimpimage.c:2726
+#: app/core/gimpimage.c:2723
 #, fuzzy
 msgid "Layer is already on top."
 msgstr "A réteg már legfelül van"
 
-#: app/core/gimpimage.c:2737 app/widgets/gimplayertreeview.c:215
+#: app/core/gimpimage.c:2734 app/widgets/gimplayertreeview.c:215
 #, fuzzy
 msgid "Raise Layer to Top"
 msgstr "/Verem/Legfelülre"
 
-#: app/core/gimpimage.c:2757
+#: app/core/gimpimage.c:2754
 #, fuzzy
 msgid "Layer is already on the bottom."
 msgstr "A réteg már legalul van"
 
-#: app/core/gimpimage.c:2762 app/widgets/gimplayertreeview.c:219
+#: app/core/gimpimage.c:2759 app/widgets/gimplayertreeview.c:219
 #, fuzzy
 msgid "Lower Layer to Bottom"
 msgstr "/Verem/Legalulra"
 
-#: app/core/gimpimage.c:2801
+#: app/core/gimpimage.c:2798
 #, fuzzy, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
 msgstr "A háttérnek nincs alfa csatornája, a réteg feljebb lett helyezve"
 
-#: app/core/gimpimage.c:2855
+#: app/core/gimpimage.c:2852
 #, fuzzy
 msgid "Add Channel"
 msgstr "/Alfa csatorna hozzáadása"
 
-#: app/core/gimpimage.c:2900
+#: app/core/gimpimage.c:2897
 #, fuzzy
 msgid "Remove Channel"
 msgstr "Feljebb"
 
-#: app/core/gimpimage.c:2944
+#: app/core/gimpimage.c:2941
 #, fuzzy
 msgid "Channel cannot be raised higher."
 msgstr "A csatorna tovább nem emelhető."
 
-#: app/core/gimpimage.c:2949 app/widgets/gimpchanneltreeview.c:127
+#: app/core/gimpimage.c:2946 app/widgets/gimpchanneltreeview.c:127
 #, fuzzy
 msgid "Raise Channel"
 msgstr "/Csatorna felemelése"
 
-#: app/core/gimpimage.c:2966
+#: app/core/gimpimage.c:2963
 #, fuzzy
 msgid "Channel cannot be lowered more."
 msgstr "A csatorna tovább nem sülyeszthető."
 
-#: app/core/gimpimage.c:2971 app/widgets/gimpchanneltreeview.c:131
+#: app/core/gimpimage.c:2968 app/widgets/gimpchanneltreeview.c:131
 msgid "Lower Channel"
 msgstr "Lejjebb"
 
-#: app/core/gimpimage.c:3048
+#: app/core/gimpimage.c:3045
 #, fuzzy
 msgid "Add Path"
 msgstr "Útvonalak"
 
-#: app/core/gimpimage.c:3093
+#: app/core/gimpimage.c:3090
 #, fuzzy
 msgid "Remove Path"
 msgstr "Színátmenet átnevezése"
 
-#: app/core/gimpimage.c:3137
+#: app/core/gimpimage.c:3134
 #, fuzzy
 msgid "Path cannot be raised higher."
 msgstr "A réteget nem lehet feljebb helyezni"
 
-#: app/core/gimpimage.c:3142 app/widgets/gimpvectorstreeview.c:137
+#: app/core/gimpimage.c:3139 app/widgets/gimpvectorstreeview.c:137
 #, fuzzy
 msgid "Raise Path"
 msgstr "/Útvonal beillesztése"
 
-#: app/core/gimpimage.c:3159
+#: app/core/gimpimage.c:3156
 #, fuzzy
 msgid "Path cannot be lowered more."
 msgstr "A réteget nem lehet lejjebb helyezni"
 
-#: app/core/gimpimage.c:3164 app/widgets/gimpvectorstreeview.c:141
+#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:141
 #, fuzzy
 msgid "Lower Path"
 msgstr "Útvonal mutatása"
@@ -2176,14 +2176,14 @@ msgstr "élősködő hozzáadása"
 msgid "Remove Parasite from Item"
 msgstr "élősködő eltávolítása"
 
-#: app/core/gimplayer-floating-sel.c:122
+#: app/core/gimplayer-floating-sel.c:123
 #, fuzzy
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr ""
 "Nem lehet rögzíteni ezt a réteget,\n"
 "mert nem lebegő kijelölés."
 
-#: app/core/gimplayer-floating-sel.c:204
+#: app/core/gimplayer-floating-sel.c:205
 #, fuzzy
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
@@ -2569,23 +2569,23 @@ msgstr "Beállítások"
 msgid "Toggle QuickMask"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:1403
+#: app/display/gimpdisplayshell.c:1404
 #, fuzzy, c-format
 msgid "Close %s?"
 msgstr "Bezárás"
 
-#: app/display/gimpdisplayshell.c:1413
+#: app/display/gimpdisplayshell.c:1414
 msgid "_Discard changes"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:1453
+#: app/display/gimpdisplayshell.c:1454
 #, fuzzy, c-format
 msgid "Changes were made to '%s'."
 msgstr ""
 "%s megváltozott.\n"
 " Mégis bezárod?"
 
-#: app/display/gimpdisplayshell.c:1467
+#: app/display/gimpdisplayshell.c:1468
 msgid "Unsaved changes will be lost."
 msgstr ""
 
@@ -2718,11 +2718,11 @@ msgstr ""
 "%s sikertelen.\n"
 "%s nem reguláris fájl."
 
-#: app/file/file-open.c:158
+#: app/file/file-open.c:166
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr ""
 
-#: app/file/file-open.c:166
+#: app/file/file-open.c:174
 #, fuzzy
 msgid "Plug-In could not open image"
 msgstr "Nem sikerült %s újramegnyitása\n"
@@ -3472,7 +3472,7 @@ msgstr "Minden hiba fájlba mentése..."
 msgid "/Save _Selection to File..."
 msgstr "Kijelölés fájlba mentése..."
 
-#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:244
+#: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
 #: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
 #, fuzzy, c-format
 msgid ""
@@ -3483,7 +3483,7 @@ msgstr ""
 "Sikertelen megnyitás:\n"
 "%s"
 
-#: app/gui/file-commands.c:234 app/gui/file-save-dialog.c:341
+#: app/gui/file-commands.c:233 app/gui/file-save-dialog.c:341
 #, fuzzy, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3493,24 +3493,24 @@ msgstr ""
 "Sikertelen mentés.\n"
 "%s"
 
-#: app/gui/file-commands.c:275
+#: app/gui/file-commands.c:274
 #, fuzzy
 msgid "Create New Template"
 msgstr "Az új képekhez használt megjegyzés"
 
-#: app/gui/file-commands.c:279
+#: app/gui/file-commands.c:278
 #, fuzzy
 msgid "Enter a name for this template"
 msgstr "Írd be a tároló nevét"
 
-#: app/gui/file-commands.c:302
+#: app/gui/file-commands.c:301
 #, fuzzy
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Visszaállítás sikertelen.\n"
 "Nem kapcsolható fájlnév a képhez."
 
-#: app/gui/file-commands.c:315
+#: app/gui/file-commands.c:314
 #, fuzzy, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -3523,17 +3523,17 @@ msgstr ""
 "(Minden változtatás elvész\n"
 "beleértve a visszavonási információkat)"
 
-#: app/gui/file-commands.c:323
+#: app/gui/file-commands.c:322
 #, fuzzy
 msgid "Revert Image"
 msgstr "Visszaállítsam az eredetit?"
 
-#: app/gui/file-commands.c:391
+#: app/gui/file-commands.c:390
 #, fuzzy
 msgid "(Unnamed Template)"
 msgstr "Nevesített tároló beillesztése"
 
-#: app/gui/file-commands.c:465
+#: app/gui/file-commands.c:462
 #, fuzzy, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -8173,7 +8173,7 @@ msgstr "Ideiglenes eljárás"
 msgid "Free Select"
 msgstr "Szabadkézi kijelölés"
 
-#: app/plug-in/plug-in.c:694
+#: app/plug-in/plug-in.c:702
 #, fuzzy, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -8266,7 +8266,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:634
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:687
 #, fuzzy
 msgid "Add Text Layer"
 msgstr "Szöveg réteg"
@@ -8281,16 +8281,16 @@ msgstr "Hiba a GIMP ecsetfájlban: \"%s\""
 msgid "Text Layer"
 msgstr "Szöveg réteg"
 
-#: app/text/gimptextlayer.c:531
+#: app/text/gimptextlayer.c:537
 #, fuzzy
 msgid "Discard Text Information"
 msgstr "Átméretezési információ"
 
-#: app/text/gimptextlayer.c:581
+#: app/text/gimptextlayer.c:587
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 
-#: app/text/gimptextlayer.c:607
+#: app/text/gimptextlayer.c:615
 #, fuzzy
 msgid "Empty Text Layer"
 msgstr "Szöveg réteg"
@@ -9032,7 +9032,7 @@ msgstr "/Kijelölés/Szín szerint..."
 msgid "R_eset Color"
 msgstr "/Eszközök/Alapértelmezett színek"
 
-#: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:187
+#: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:206
 #, fuzzy
 msgid "_Preview"
 msgstr "Bemutatókép"
@@ -9620,25 +9620,25 @@ msgstr "Távolság:"
 msgid "Create Path from Text"
 msgstr "Az új képekhez használt megjegyzés"
 
-#: app/tools/gimptexttool.c:128
+#: app/tools/gimptexttool.c:142
 msgid "Add text to the image"
 msgstr "Szöveg írása a képre"
 
-#: app/tools/gimptexttool.c:129
+#: app/tools/gimptexttool.c:143
 #, fuzzy
 msgid "/Tools/Te_xt"
 msgstr "/Eszközök/Szöveg"
 
-#: app/tools/gimptexttool.c:667
+#: app/tools/gimptexttool.c:718
 #, fuzzy
 msgid "GIMP Text Editor"
 msgstr "Színpaletta szerkesztése"
 
-#: app/tools/gimptexttool.c:757 app/tools/gimptexttool.c:760
+#: app/tools/gimptexttool.c:828 app/tools/gimptexttool.c:831
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:781
+#: app/tools/gimptexttool.c:852
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -10273,7 +10273,7 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Hiba a GIMP ecsetfájlban: \"%s\""
 
-#: app/widgets/gimpdock.c:383
+#: app/widgets/gimpdock.c:394
 msgid "You can drop dockable dialogs here."
 msgstr ""
 
@@ -10781,19 +10781,19 @@ msgstr ""
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Hiba a GIMP ecsetfájlban: \"%s\""
 
-#: app/widgets/gimpthumbbox.c:170
+#: app/widgets/gimpthumbbox.c:189
 #, c-format
 msgid ""
 "Click to update preview\n"
 "%s  Click to force update even if preview is up-to-date"
 msgstr ""
 
-#: app/widgets/gimpthumbbox.c:239 app/widgets/gimpthumbbox.c:285
+#: app/widgets/gimpthumbbox.c:250 app/widgets/gimpthumbbox.c:296
 #, fuzzy
 msgid "No Selection"
 msgstr "Nincs kijelölés."
 
-#: app/widgets/gimpthumbbox.c:371 app/widgets/gimpthumbbox.c:391
+#: app/widgets/gimpthumbbox.c:382 app/widgets/gimpthumbbox.c:402
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr ""

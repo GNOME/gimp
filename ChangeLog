@@ -1,3 +1,15 @@
+2004-03-23  Sven Neumann  <sven@gimp.org>
+	    Michael Natterer <mitch@gimp.org>
+
+	* Made 2.0.0 release.
+
+2004-03-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimpprotocol.h
+	* libgimpmodule/gimpmodule.h: incremented GIMP_PROTOCOL_VERSION
+	and GIMP_MODULE_ABI_VERSION. This means that plug-ins or modules
+	built for gimp-1.3 will not work with GIMP 2.0.
+
 2004-03-23  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/script-fu/scripts/alien-glow-arrow.scm

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 21:54+0800\n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2004-03-23 22:13+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -154,6 +154,7 @@ msgstr "忽略(_I)"
 msgid "_Export"
 msgstr "匯出(_E)"
 
+#. the headline
 #: libgimp/gimpexport.c:485
 #, fuzzy, c-format
 msgid ""
@@ -668,4 +669,3 @@ msgstr "水彩"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "壓力"
-

@@ -159,7 +159,8 @@ msgstr "エクスポート(_E)"
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "以下の理由のため %s として保存する前に画像のエクスポートを行う必要があります:"
+msgstr ""
+"以下の理由のため %s として保存する前に画像のエクスポートを行う必要があります:"
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."

@@ -38,7 +38,7 @@ G_BEGIN_DECLS
  *  - one of the classes implemented by modules (currently GimpColorDisplay
  *    and GimpColorSelector).
  */
-#define GIMP_MODULE_ABI_VERSION 0x0002
+#define GIMP_MODULE_ABI_VERSION 0x0003
 
 
 typedef enum
