@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
 "POT-Creation-Date: 2000-05-09 20:27-0700\n"
-"PO-Revision-Date: 2000-05-13 03:41+01:00\n"
+"PO-Revision-Date: 2000-05-16 11:41+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -806,9 +806,8 @@ msgid "Blur Radius"
 msgstr "Sløringsradius"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
-#, fuzzy
 msgid "Blur Type"
-msgstr "Sløring X"
+msgstr "Sløringstype"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Vertically"
@@ -1292,9 +1291,8 @@ msgid "Highlight Color"
 msgstr "Glanslys Farve"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
 msgid "Highlight Opacity"
-msgstr "Glanslys-balance"
+msgstr "Glanslys uigennemsigtighed"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight X Offset"
@@ -1314,7 +1312,7 @@ msgstr "Glød rate"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "IIR"
-msgstr ""
+msgstr "IIR"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -1613,7 +1611,7 @@ msgstr "Størrelse på fjerdedel"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "RLE"
-msgstr ""
+msgstr "RLE"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Radius (pixels)"
