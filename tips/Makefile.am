@@ -33,6 +33,7 @@ tips_POFILES = \
 	pt.po		\
 	pt_BR.po	\
 	ru.po		\
+	rw.po		\
 	sk.po		\
 	sr.po		\
 	sr@Latn.po	\

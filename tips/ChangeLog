@@ -1,15 +1,19 @@
+2005-04-03  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (tips_POFILES): added rw.po.
+
 2005-04-03  Ole Laursen  <olau@hardworking.dk>
 
 	* da.po: Ported updated Danish translation from gimp-2-2 branch.
 
 2005-04-01  Steve Murphy  <murf@e-tools.com>
 
-	* rw.po: Added Kinyarwanda translations from compendium, even if I couldn't use intltool-update.
+	* rw.po: Added Kinyarwanda translations from compendium, even if I
+	couldn't use intltool-update.
 
 2005-03-31  Takeshi AIHANA <aihana@gnome.gr.jp>
 
-	* ja.po: Fixed a typo reported by
-		Aaron Madlon-Kay <amake@mac.com>.
+	* ja.po: Fixed a typo reported by Aaron Madlon-Kay <amake@mac.com>.
 
 2005-02-24 Maxim Dziumanenko <mvd@mylinux.com.ua>
 

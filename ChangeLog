@@ -1,10 +1,14 @@
+2005-04-03  Sven Neumann  <sven@gimp.org>
+
+	* configure.in (ALL_LINGUAS): readded "rw" (Kinyarwanda).
+
 2005-04-03  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-cursor-16.png
 	* themes/Default/images/stock-cursor-24.png
 	* themes/Default/images/stock-sample-point-16.png
 	* themes/Default/images/stock-sample-point-24.png: touch up a
-	  little.
+	little.
 
 2005-04-03  Michael Natterer  <mitch@gimp.org>
 
@@ -83,7 +87,7 @@
 
 2005-04-01  Steve Murphy  <murf@e-tools.com>
 
-        * configure.in: Added "rw" to ALL_LINGUAS.
+	* configure.in: Added "rw" to ALL_LINGUAS.
 
 2005-04-01  Sven Neumann  <sven@gimp.org>
 
@@ -102,7 +106,7 @@
 
 2005-04-01  Sven Neumann  <sven@gimp.org>
 
-	* configure.in (ALL_LINGUAS): removed sl until all required files
+	* configure.in (ALL_LINGUAS): removed "sl" until all required files
 	have been added to CVS.
 
 2005-03-31  Manish Singh  <yosh@gimp.org>
