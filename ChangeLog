@@ -1,5 +1,20 @@
 2003-02-21  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplay-foreach.[ch]: added new function
+	gimp_displays_invalidate() which queues a redraw on all displays
+	by calling gimp_display_shell_expose_full().
+
+	* app/display/gimpdisplayshell-render.c (render_setup_notify):
+	invalidate all displays when the transparency type or size changes.
+
+	* app/tools/gimptexttool.c (text_tool_button_press): readded some
+	code I accidentally removed in my last commit.
+
+	* app/text/gimptextlayout.c (gimp_text_layout_new): always set the
+	font size but make sure it is at least 1.
+
+2003-02-21  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpviewabledialog.c: added missing cast.
 
 	* app/widgets/gimpcontainertreeview.c: do not include a non-existant

@@ -231,9 +231,10 @@ text_tool_button_press (GimpTool        *tool,
         }
     }
 
-  gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), text);
+  if (!text || text == text_tool->text)
+    text_tool_editor (text_tool);
 
-  text_tool_editor (text_tool);
+  gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), text);
 }
 
 static void

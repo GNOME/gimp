@@ -173,8 +173,7 @@ gimp_text_layout_new (GimpText  *text,
       break;
     }
   
-  if (size > 1)
-    pango_font_description_set_size (font_desc, size);
+  pango_font_description_set_size (font_desc, MAX (1, size));
 
   context = gimp_image_get_pango_context (image);
 

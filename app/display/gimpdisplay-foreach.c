@@ -130,6 +130,24 @@ gimp_displays_flush (Gimp *gimp)
   flushing = FALSE;
 }
 
+void
+gimp_displays_invalidate (Gimp *gimp)
+{
+  GList       *list;
+  GimpDisplay *gdisp;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  for (list = GIMP_LIST (gimp->displays)->list;
+       list;
+       list = g_list_next (list))
+    {
+      gdisp = (GimpDisplay *) list->data;
+
+      gimp_display_shell_expose_full (GIMP_DISPLAY_SHELL (gdisp->shell));
+    }
+}
+
 /* Force all gdisplays to finish their idlerender projection */
 void
 gimp_displays_finish_draw (Gimp *gimp)
