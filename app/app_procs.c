@@ -211,7 +211,7 @@ app_run (const gchar         *full_prog_name,
                    pdb_compat_mode);
 
   for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
-    g_log_set_handler (log_domains[0],
+    g_log_set_handler (log_domains[i],
                        G_LOG_LEVEL_MESSAGE,
                        gimp_message_log_func, &gimp);
 

@@ -1,5 +1,12 @@
 2004-07-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/file/file-open.c (file_open_layer): don't crash if no
+	layer or only one layer is visible. Fixes bug #143804.
+
+	* app/app_procs.c (app_run): fixed log domain registration.
+
+2004-07-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpviewable.[ch]: corrected API docs and fixed
 	function parameter names to silent gtk-doc warnings.
 

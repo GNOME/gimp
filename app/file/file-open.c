@@ -272,20 +272,28 @@ file_open_layer (Gimp               *gimp,
 
   if (new_image)
     {
-      GimpLayer *layer;
+      GList     *list;
+      GimpLayer *layer     = NULL;
+      gint       n_visible = 0;
 
       gimp_image_undo_disable (new_image);
 
-      if (gimp_container_num_children (new_image->layers) > 1)
+      for (list = GIMP_LIST (new_image->layers)->list;
+           list;
+           list = g_list_next (list))
         {
-          layer = gimp_image_merge_visible_layers (new_image, context,
-                                                   GIMP_CLIP_TO_IMAGE);
+          if (gimp_item_get_visible (list->data))
+            {
+              n_visible++;
+
+              if (! layer)
+                layer = list->data;
+            }
         }
-      else
-        {
-          layer = (GimpLayer *)
-            gimp_container_get_child_by_index (new_image->layers, 0);
-        }
+
+      if (n_visible > 1)
+        layer = gimp_image_merge_visible_layers (new_image, context,
+                                                 GIMP_CLIP_TO_IMAGE);
 
       if (layer)
         {
@@ -306,6 +314,12 @@ file_open_layer (Gimp               *gimp,
               g_free (basename);
             }
         }
+      else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Image doesn't contain any visible layers"));
+          *status = GIMP_PDB_EXECUTION_ERROR;
+       }
 
       g_object_unref (new_image);
     }
