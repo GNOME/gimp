@@ -10939,7 +10939,7 @@ msgstr "Розмивання т╕н╕:"
 
 #: plug-ins/gimpressionist/general.c:330
 msgid "How much to blur the drop shadow"
-msgstr ""
+msgstr "Як сильно розмивати т╕нь"
 
 #: plug-ins/gimpressionist/general.c:336
 msgid "Deviation threshold:"
@@ -11275,7 +11275,7 @@ msgstr "Перечитати каталог параметр╕в"
 
 #: plug-ins/gimpressionist/presets.c:664
 msgid "(Desc)"
-msgstr ""
+msgstr "(Опис)"
 
 #: plug-ins/gimpressionist/presets.c:669
 msgid ""
