@@ -396,7 +396,7 @@ gui_exit_callback (Gimp     *gimp,
                                        gimp_standard_help_func,
                                        GIMP_HELP_FILE_QUIT_CONFIRM,
                                        GIMP_STOCK_WILBER_EEK,
-                                       _("Some files are unsaved.\n\n"
+                                       _("Some images have unsaved changes.\n\n"
                                          "Really quit The GIMP?"),
                                        GTK_STOCK_QUIT, GTK_STOCK_CANCEL,
                                        NULL, NULL,

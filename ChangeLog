@@ -1,5 +1,11 @@
 2004-06-21  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/gui.c (gui_exit_callback): improved message in quit
+	dialog just in case that we don't manage to redo this dialog
+	before 2.2.
+
+2004-06-21  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.[ch]
 	* libgimpwidgets/gimpwidgets.def: added new utility function
 	gimp_label_set_attributes().
