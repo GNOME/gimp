@@ -110,7 +110,7 @@ gimp_config_connect (GObject     *a,
 /**
  * gimp_config_disconnect:
  * @a: a #GObject
- * @a: another #GObject
+ * @b: another #GObject
  *
  * Removes a connection between @dest and @src that was previously set
  * up using gimp_config_connect().
