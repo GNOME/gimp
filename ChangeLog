@@ -1,3 +1,14 @@
+2002-05-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolormapeditor.c: Added a comment to explain why
+	the "correct" size calculation is commented out and put back the
+	old buffer size so we don't crash. Made the code robust against
+	whether we render only the color cells or the whole widget's
+	allocation->width.
+
+	* app/widgets/gimpdialogfactory.c: Don't try to #define DEBUG(...)
+	but wrap the whole g_print(...) statement in a debugging macro.
+
 2002-05-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/stdplugins-intl.h

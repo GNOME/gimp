@@ -439,16 +439,21 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
 
   yn     = ((ncol + xn - 1) / xn);
 
-  /*
-    width  = xn * cellsize;
-    height = yn * cellsize;
-  */
+  /* We used to render just multiples of "cellsize" here, but the
+   *  colormap as dockable looks better if it always fills the
+   *  available allocation->width (which should always be larger than
+   *  "xn * cellsize"). Defensively, we use MAX(width,xn*cellsize)
+   *  below   --Mitch
+   *
+
+   width  = xn * cellsize;
+   height = yn * cellsize; */
 
   editor->xn       = xn;
   editor->yn       = yn;
   editor->cellsize = cellsize;
 
-  row = g_new (guchar, xn * cellsize * 3);
+  row = g_new (guchar, MAX (width, xn * cellsize) * 3);
   col = 0;
   for (i = 0; i < yn; i++)
     {
