@@ -2103,8 +2103,9 @@ construct_edge_map (Tool    *tool,
 	   printf("bdata:%d edata:%d\n", block->data, edge_buf->data);
 	   if((dboffset + (srcPR.h*destPR.rowstride)) > (edge_buf->height * edge_buf -> width)) printf ("ERROR\n");
 	   */
-	   
-	  copy_region (&srcPR, &destPR);
+	   if(!((dboffset + (srcPR.h*destPR.rowstride)) >
+		(edge_buf->height * edge_buf -> width)))
+	     copy_region (&srcPR, &destPR);
 	  }
 
 	col ++;

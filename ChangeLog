@@ -1,3 +1,8 @@
+Thu May 14 21:18:27 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* app/iscissors.c: a very sad attempt to fix some iscissors
+	lockups/segfaults
+
 Thu May 14 18:10:38 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/app_procs.c: made the splash screen a GTK_WINDOW_POPUP,
