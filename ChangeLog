@@ -1,5 +1,11 @@
 2004-07-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/channel_mixer.c: don't attempt to store a
+	pointer to the last used filename in the plug-in parameter
+	struct. Fixes bug #145380.
+
+2004-07-04  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_gamma.c
 	* modules/cdisplay_highcontrast.c: added object properties for
 	configurable values.
