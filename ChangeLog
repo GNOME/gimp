@@ -1,3 +1,8 @@
+2000-04-24  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* gimp_splash.ppm: Prepare for the 1.2.. Let us celebrate that
+	with a cute pink splash screen.
+
 2000-04-23  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimpui.def: Add gimp_ui_init.
