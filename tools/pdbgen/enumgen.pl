@@ -240,12 +240,12 @@ while (<>) {
 	    $nicks = ",\n\t  nicks   => { " . $nicks . " }";
 	}
 
-	$ARGV =~ m@([^/]*)$@;
+	$ARGV =~ s@(?:(?:..|app)/)*@@;
 
 	$code .= <<ENTRY if !$skip;
 :    $enumname =>
 :	{ contig => $contig,
-:	  header => '$1',
+:	  header => '$ARGV',
 :	  symbols => [ qw($symbols) ],
 :	  mapping => { $mapping }$nicks
 :	},
