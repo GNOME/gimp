@@ -1,3 +1,7 @@
+1999-09-18  Tomas Ogren  <stric@ing.umu.se>
+
+	* plug-ins/common/tiff.c: "u_long" isn't portable at all..
+
 Fri Sep 17 23:26:40 BST 1999 Nick Lamb <njl195@zepler.org>
 
         * plug-ins/common/tiff.c: Update to version supporting 16-bit

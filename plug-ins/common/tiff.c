@@ -595,13 +595,13 @@ static void
 load_rgba (TIFF *tif, channel_data *channel)
 {
   uint32 imageWidth, imageLength;
-  u_long *buffer;
+  gulong *buffer;
 
   TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &imageWidth);
   TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &imageLength);
   gimp_pixel_rgn_init (&(channel[0].pixel_rgn), channel[0].drawable,
                           0, 0, imageWidth, imageLength, TRUE, FALSE);
-  buffer = g_new(u_long, imageWidth * imageLength);
+  buffer = g_new(gulong, imageWidth * imageLength);
   channel[0].pixels = (guchar*) buffer;
   if (buffer == NULL) {
     g_message("TIFF Unable to allocate temporary buffer\n");
