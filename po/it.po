@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-09-19 17:30+0200\n"
-"PO-Revision-Date: 2003-10-02 18:30+0200\n"
+"PO-Revision-Date: 2003-10-05 23:24+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -560,40 +560,40 @@ msgstr "Se abilitata la barra di stato è visibile. Questo può essere modificat
 msgid ""
 "When enabled, the menubar is visible by default in fullscreen mode. This can "
 "also be toggled with the \"View->Show Menubar\" command."
-msgstr ""
+msgstr "Se abilitata la barra dei menu è visibile in modalità pieno schermo. Questo può essere modificato anche con il comando \"Visualizza->Mostra barra di stato\"."
 
 #: app/config/gimprc-blurbs.h:274
 msgid ""
 "When enabled, the rulers are visible by default in fullscreen mode. This can "
 "also be toggled with the \"View->Show Rulers\" command."
-msgstr ""
+msgstr "Se abilitata i righelli sono visibili in modalità pieno schermo. Questo può essere modificato con il comando \"Visualizza->Mostra i righelli\"."
 
 #: app/config/gimprc-blurbs.h:278
 msgid ""
 "When enabled, the scrollbars are visible by default in fullscreen mode. This "
 "can also be toggled with the \"View->Show Scrollbars\" command."
-msgstr ""
+msgstr "Se abilitata, le barre di scorrimento sono visibili in modalità pieno schermo. Questo può essere modificato anche con il comando \"Visualizza->Mostra le barre di scorrimento\"."
 
 #: app/config/gimprc-blurbs.h:282
 msgid ""
 "When enabled, the statusbar is visible by default in fullscreen mode. This "
 "can also be toggled with the \"View->Show Statusbar\" command."
-msgstr ""
+msgstr "Se abilitata la barra di stato è visibile in modalità pieno schermo. Questo può essere modificato anche con il comando \"Visualizza->Mostra barra di stato\"."
 
 #: app/config/gimprc-blurbs.h:286
 msgid "Enable to display a handy GIMP tip on startup."
-msgstr ""
+msgstr "Abilita la visualizzazione di pratici suggerimenti su GIMP alla partenza."
 
 #: app/config/gimprc-blurbs.h:289
 msgid "Enable to display tooltips."
-msgstr ""
+msgstr "Abilita la visualizzazione dei suggerimenti."
 
 #: app/config/gimprc-blurbs.h:292
 msgid ""
 "There is always a tradeoff between memory usage and speed.  In most cases, "
 "the GIMP opts for speed over memory.  However, if memory is a big issue, try "
 "to enable this setting."
-msgstr ""
+msgstr "C'è sempre un compromesso tra uso della memoria e velocità. Normalmente GIMP opta per la velocità ma se il risparmio di memoria è necessario, provate ad abilitare quest'opzione."
 
 #: app/config/gimprc-blurbs.h:297
 msgid ""
@@ -603,24 +603,24 @@ msgid ""
 "GIMP is used with large images. Also, things can get horribly slow if the "
 "swap file is created on a directory that is mounted over NFS.  For these "
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
-msgstr ""
+msgstr "Imposta la locazione del file di scambio. Gimp usa uno schema di allocazione \"tile based\". Il file di scambio viene usato per spostare facilmente e velocemente le 'tile' da e verso il disco. Attenzione al fatto che il file di scambio di GIMP può allargarsi molto se si elaborano immagini molto grandi. Inoltre è possono diventare terribilmente lenti se il file di scambio viene creato in una directory di un file NFS. Per queste ragioni è preferibile mettere il file di scambio in \"/tmp\"."
 
 #: app/config/gimprc-blurbs.h:306
 msgid "When enabled, menus can be torn off."
-msgstr ""
+msgstr "Se abilitata i menu possono essere staccati."
 
 #: app/config/gimprc-blurbs.h:309
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items on the fly."
-msgstr ""
+msgstr "Se abilitata è possibile cambiare le scorciatoie di tastiera per le voci di menu al volo."
 
 #: app/config/gimprc-blurbs.h:312
 msgid "Save changed keyboard shortcuts when the GIMP exits."
-msgstr ""
+msgstr "Salva le scorciatoie di tastiera all'uscita da GIMP."
 
 #: app/config/gimprc-blurbs.h:315
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr ""
+msgstr "Ripristina le scorciatoie di tastiera salvate ad ogni avvio di GIMP."
 
 #: app/config/gimprc-blurbs.h:318
 msgid ""
@@ -628,13 +628,13 @@ msgid ""
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
 "but some files are likely to remain, so it is best if this directory not be "
 "one that is shared by other users."
-msgstr ""
+msgstr "Imposta la cartella per la memorizzazione temporanea. Durante una sessione di GIMP, appariranno qui dei file. Alcuni scompariranno alla chiusura di GIMP ma altri resteranno, perciò è meglio che questa cartella non venga condivisa con altri utenti. "
 
 #: app/config/gimprc-blurbs.h:330
 msgid ""
 "Sets the size of the thumbnail saved with each image. Note that GIMP can not "
 "save thumbnails if layer previews are disabled."
-msgstr ""
+msgstr "Imposta l'ampiezza delle miniature salvate per ogni immagine. Notare che GIMP non salva le miniature se le anteprime dei livelli sono disabilitate."
 
 #: app/config/gimprc-blurbs.h:334
 msgid ""
@@ -646,33 +646,33 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:341
 msgid "Sets the manner in which transparency is displayed in images."
-msgstr ""
+msgstr "Imposta la maniera in cui viene visualizzata la trasparenza nelle immagini."
 
 #: app/config/gimprc-blurbs.h:344
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr ""
+msgstr "Imposta la grandezza della scacchiera usata per mostrare la trasparenza."
 
 #: app/config/gimprc-blurbs.h:347
 msgid ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
-msgstr ""
+msgstr "Se abilitata, GIMP non salva l'immagine se questa non è cambiata dalla sua apertura."
 
 #: app/config/gimprc-blurbs.h:351
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
-msgstr ""
+msgstr "Imposta il numero minimo di operazioni che può essere ripristinato. Vengono mantenuti disponibili più livelli di ripristino se non viene raggiunta l'ampiezza massima."
 
 #: app/config/gimprc-blurbs.h:355
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack."
-msgstr ""
+msgstr "Imposta un limite massimo alla memoria che viene usata per ogni immage per mantenere la pila dei ripristini."
 
 #: app/config/gimprc-blurbs.h:359
 msgid "When enabled, pressing F1 will open the help browser."
-msgstr ""
+msgstr "Se abilitata, premendo F1 si aprirà il visualizzatore dell'aiuto."
 
 #: app/config/gimpscanner.c:90 app/tools/gimpcurvestool.c:1292
 #: app/tools/gimplevelstool.c:1490 app/vectors/gimpvectors-export.c:79
@@ -932,7 +932,7 @@ msgstr "Onde triangolari"
 
 #: app/core/core-enums.c:410
 msgid "No Thumbnails"
-msgstr ""
+msgstr "No miniature"
 
 #: app/core/core-enums.c:411
 msgid "Normal (128x128)"
@@ -983,7 +983,7 @@ msgstr "Crop immagine"
 
 #: app/core/core-enums.c:498 app/gui/image-commands.c:379
 msgid "Merge Layers"
-msgstr "Fonde i ivelli"
+msgstr "Fondi i ivelli"
 
 #: app/core/core-enums.c:499 app/core/core-enums.c:528
 msgid "QuickMask"
@@ -1458,12 +1458,11 @@ msgstr "Trasforma canale"
 
 #: app/core/gimpchannel.c:603
 msgid "Cannot stroke empty channel."
-msgstr ""
+msgstr "Impossibile disegnare un canale vuoto."
 
 #: app/core/gimpchannel.c:608
-#, fuzzy
 msgid "Stroke Channel"
-msgstr "Riduci canale"
+msgstr "Disegna canale"
 
 #: app/core/gimpchannel.c:1377
 msgid "Set Channel Color"
@@ -1545,7 +1544,7 @@ msgstr "Invertita"
 #: app/core/gimpdrawable-offset.c:317
 #, fuzzy
 msgid "Offset Drawable"
-msgstr "Livello del testo"
+msgstr "Offset disegnabile"
 
 #. Start a transform undo group
 #: app/core/gimpdrawable-transform.c:880 app/tools/gimpfliptool.c:84
@@ -1958,11 +1957,8 @@ msgid "Rotate Layer"
 msgstr "Ruota livello"
 
 #: app/core/gimplayer.c:917
-#, fuzzy
 msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr ""
-"Impossibile aggiungere una maschera livello\n"
-"ad un livello senza canale alpha."
+msgstr "Impossibile aggiungere una maschera di livello ad un livello che non è parte di un'immagine."
 
 #: app/core/gimplayer.c:924
 msgid "Unable to add a layer mask since the layer already has one."
@@ -2081,9 +2077,9 @@ msgid "Black"
 msgstr "Nero"
 
 #: app/core/gimppattern.c:374
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown pattern format version %d in '%s'."
-msgstr "Formato pennello #%d in \"%s\" sconosciuto\n"
+msgstr "Versione formato pattern %d in '%s' sconosciuta."
 
 #: app/core/gimppattern.c:383
 #, c-format
@@ -2107,9 +2103,9 @@ msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Errore nel file pattern di GIMP '%s'."
 
 #: app/core/gimppattern.c:424
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
-msgstr "Il file pattern \"%s\" di GIMP sembra riportare problemi."
+msgstr "Errore di elaborazione fatale: il file pattern '%s' sembra troncato."
 
 #: app/core/gimpselection.c:192 app/tools/gimpeditselectiontool.c:247
 #: app/tools/gimpeditselectiontool.c:1031
@@ -2150,14 +2146,12 @@ msgid "Shrink Selection"
 msgstr "Riduci selezione"
 
 #: app/core/gimpselection.c:300
-#, fuzzy
 msgid "No selection to stroke."
-msgstr "Nessuna selezione"
+msgstr "Nessuna selezione da disegnare"
 
 #: app/core/gimpselection.c:309 app/widgets/gimpselectioneditor.c:217
-#, fuzzy
 msgid "Stroke Selection"
-msgstr "Riduci selezione"
+msgstr "Disegna selezione"
 
 #: app/core/gimpselection.c:625 app/gui/channels-commands.c:206
 #: app/pdb/selection_cmds.c:915 app/pdb/selection_cmds.c:1032
@@ -2230,12 +2224,10 @@ msgid "From Theme"
 msgstr "Dal tema"
 
 #: app/display/display-enums.c:34
-#, fuzzy
 msgid "Light Check Color"
-msgstr "Scacchi piccoli"
+msgstr "Scacchi chiari"
 
 #: app/display/display-enums.c:35
-#, fuzzy
 msgid "Dark Check Color"
 msgstr "Scacchi scuri"
 
@@ -2333,19 +2325,17 @@ msgid "Reset the selected filter to default values"
 msgstr "Reimposta il filtro selezionato ai valori predefiniti"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:661
-#, fuzzy, c-format
+#, c-format
 msgid "Configure Selected Filter: %s"
-msgstr "Rimuovi la voce selezionata dall'indice"
+msgstr "Configura filtro selezionato: %s"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:668
-#, fuzzy
 msgid "No Filter Selected"
-msgstr "Selezione Bezier"
+msgstr "Nessun filtro selezionato"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:672
-#, fuzzy
 msgid "Configure Selected Filter"
-msgstr "Rimuovi la voce selezionata dall'indice"
+msgstr "Configura filtro selezionato"
 
 #: app/display/gimpdisplayshell-layer-select.c:117
 msgid "Layer Select"
@@ -2406,7 +2396,7 @@ msgstr "Zoom a finestra intera"
 #: app/display/gimpnavigationview.c:415
 #, fuzzy
 msgid "Shrink Wrap"
-msgstr "/Visualizza/Riposiziona vista"
+msgstr "Riposiziona vista"
 
 #: app/display/gimpprogress.c:136
 msgid "Progress"
@@ -2441,12 +2431,10 @@ msgid "Plug-In could not save image"
 msgstr "Il plug-in non può salvare l'immagine"
 
 #: app/file/file-utils.c:106
-#, fuzzy
 msgid "Invalid character sequence in URI"
-msgstr "Nome di classe del carattere non valido"
+msgstr "Carattere non valido in sequenza URI"
 
 #: app/gui/about-dialog.c:240
-#, fuzzy
 msgid "About The GIMP"
 msgstr "Informazioni su GIMP"
 
@@ -2599,9 +2587,8 @@ msgid "Old:"
 msgstr "Vecchio:"
 
 #: app/gui/color-notebook.c:452
-#, fuzzy
 msgid "Revert to old color"
-msgstr "Inverti a vecchi colori"
+msgstr "Ripristina al vecchio colore"
 
 #: app/gui/color-notebook.c:489
 msgid "Add the current color to the color history"
@@ -2665,15 +2652,14 @@ msgid "[ Warning ]"
 msgstr "[ Attenzione ]"
 
 #: app/gui/convert-dialog.c:347
-#, fuzzy
 msgid ""
 "You are attempting to convert an image with an alpha channel to indexed "
 "colors.\n"
 "Do not generate a palette of more than 255 colors if you intend to create a "
 "transparent or animated GIF file."
 msgstr ""
-"Si sta tentando di convertire una immagine con canali alfa a colori indicizzati.\n"
-"E' necessario usare una palette con meno di 256 colori se desiderate creare un file GIF trasparente o con animazione da questo formato."
+"Si sta tentando di convertire una immagine con un canale alfa a colori indicizzati.\n"
+"Non usare una palette con più di 255 colori si desidera creare un file GIF trasparente o con animazione da questo formato."
 
 #: app/gui/convert-dialog.c:518
 msgid "Select Custom Palette"
@@ -2871,24 +2857,20 @@ msgid "Palette Editor"
 msgstr "Editor palette"
 
 #: app/gui/dialogs-menu.c:61
-#, fuzzy
 msgid "/_Select Tab"
-msgstr "/Selezione"
+msgstr "/_Seleziona scheda"
 
 #: app/gui/dialogs-menu.c:64
-#, fuzzy
 msgid "/_Add Tab"
-msgstr "/Aggiungi scheda/Strumenti..."
+msgstr "/_Aggiungi scheda"
 
 #: app/gui/dialogs-menu.c:66
-#, fuzzy
 msgid "/Add Tab/Tool _Options..."
-msgstr "/File/Finestre/Console degli errori..."
+msgstr "/Aggiungi scheda/_Opzioni strumenti..."
 
 #: app/gui/dialogs-menu.c:68
-#, fuzzy
 msgid "/Add Tab/_Device Status..."
-msgstr "/Finestre/Stato dei dispositivi..."
+msgstr "/Aggiungi scheda/Stato _dispositivo..."
 
 #: app/gui/dialogs-menu.c:73
 msgid "/Add Tab/_Layers..."
@@ -2968,12 +2950,11 @@ msgstr "/Aggiungi scheda/Strumenti..."
 
 #: app/gui/dialogs-menu.c:121
 msgid "/_Remove Tab"
-msgstr "_Rimuovi scheda"
+msgstr "/_Rimuovi scheda"
 
 #: app/gui/dialogs-menu.c:129
-#, fuzzy
 msgid "/Preview Si_ze"
-msgstr "/Dimensione anteprima/Gran_dissima"
+msgstr "/Dimensione anteprima"
 
 #: app/gui/dialogs-menu.c:131
 msgid "/Preview Size/_Tiny"
@@ -7532,13 +7513,13 @@ msgstr "(stringa UTF-8 non valida)"
 #: app/text/gimptext.c:168
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
-msgstr ""
+msgstr "Il suggerimento altera la rappresentazione del carattere per produrre un bitmap chiaro a piccole ampiezze"
 
 #: app/text/gimptext.c:175
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
-msgstr ""
+msgstr "Se disponibili vengono usati i suggerimenti per i caratteri ma si potrebbe preferire l'uso esclusivo del suggeritore automatico"
 
 #: app/text/gimptext.c:206
 msgid "How many pixels the first line should be shorter"
@@ -8985,8 +8966,9 @@ msgid "/Tools/_Paths"
 msgstr "/Strumenti/_Tracciati"
 
 #: app/tools/gimpvectortool.c:345
+#, fuzzy
 msgid "Add Stroke"
-msgstr ""
+msgstr "Aggiungi tratto"
 
 #: app/tools/gimpvectortool.c:361
 msgid "Add Anchor"
@@ -9013,13 +8995,14 @@ msgid "Drag Curve"
 msgstr "Trascina curve"
 
 #: app/tools/gimpvectortool.c:487
+#, fuzzy
 msgid "Connect Strokes"
-msgstr ""
+msgstr "Collega tratti"
 
 #: app/tools/gimpvectortool.c:525
 #, fuzzy
 msgid "Convert Edge"
-msgstr "Converte spigolo"
+msgstr "Converti spigolo"
 
 #: app/tools/gimpvectortool.c:554
 msgid "Delete Anchor"
@@ -9133,7 +9116,7 @@ msgstr "Trasforma tracciato"
 
 #: app/vectors/gimpvectors.c:548
 msgid "Cannot stroke empty path."
-msgstr ""
+msgstr "Impossibile tratteggiare un tracciato vuoto."
 
 #: app/vectors/gimpvectors-import.c:209
 msgid "Imported Path"
@@ -9615,8 +9598,9 @@ msgstr ""
 "%s  In basso"
 
 #: app/widgets/gimpitemtreeview.c:1197
+#, fuzzy
 msgid "Set Item Exclusive Visible"
-msgstr ""
+msgstr "Imposta voce esclusiva visibile"
 
 #: app/widgets/gimplayertreeview.c:212
 msgid "Duplicate Layer"
@@ -9668,7 +9652,7 @@ msgid "Save Selection to Channel"
 msgstr "Salva la selezione nel canale"
 
 #: app/widgets/gimpselectioneditor.c:200 app/widgets/gimpvectorstreeview.c:173
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Selection to Path\n"
 "%s  Advanced Options"
@@ -9693,9 +9677,8 @@ msgid "Create a new image from the selected template"
 msgstr "Crea una nuova immagine dal modello selezionato"
 
 #: app/widgets/gimptemplateview.c:188
-#, fuzzy
 msgid "Create a new template"
-msgstr "Commento utilizzato per le nuove immagini"
+msgstr "Crea un nuovo modello"
 
 #: app/widgets/gimptemplateview.c:197
 msgid "Duplicate the selected template"
@@ -9706,9 +9689,8 @@ msgid "Edit the selected template"
 msgstr "Modifica il modello selezionato"
 
 #: app/widgets/gimptemplateview.c:215
-#, fuzzy
 msgid "Delete the selected template"
-msgstr "Rimuovi la voce selezionata dall'indice"
+msgstr "Rimuovi il modello selezionato"
 
 #: app/widgets/gimptemplateview.c:384
 #, c-format
@@ -9736,67 +9718,58 @@ msgid "Open Text File (UTF-8)"
 msgstr "Apri file di testo (UTF-8)"
 
 #: app/widgets/gimptexteditor.c:368
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening file '%s': %s"
-msgstr "Errore aprendo il file %s: %s"
+msgstr "Errore aprendo il file '%s': %s"
 
 #: app/widgets/gimptexteditor.c:397
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Errore nel file pattern di GIMP \"%s\""
+msgstr "Dato UTF-8 non valido nel file '%s'"
 
 #: app/widgets/gimptoolbox-color-area.c:392
-#, fuzzy
 msgid "Change Foreground Color"
-msgstr "Primo piano"
+msgstr "Cambia colore di primo piano"
 
 #: app/widgets/gimptoolbox-color-area.c:394
-#, fuzzy
 msgid "Change Background Color"
-msgstr "Sfondo"
+msgstr "Cambia colore dello sfondo"
 
 #: app/widgets/gimptoolbox-indicator-area.c:144
-#, fuzzy
 msgid ""
 "The active brush.\n"
 "Click to open the Brush Dialog."
 msgstr ""
 "Pennello attivo.\n"
-"Cliccare per la finestra di dialogo."
+"Fare clic per la finestra pennello."
 
 #: app/widgets/gimptoolbox-indicator-area.c:172
-#, fuzzy
 msgid ""
 "The active pattern.\n"
 "Click to open the Pattern Dialog."
 msgstr ""
 "Pattern attivo.\n"
-"Cliccare per la finestra di dialogo."
+"Fare clic per la finestra pattern."
 
 #: app/widgets/gimptoolbox-indicator-area.c:200
-#, fuzzy
 msgid ""
 "The active gradient.\n"
 "Click to open the Gradient Dialog."
 msgstr ""
 "Gradiente attivo.\n"
-"Cliccare per la finestra di dialogo."
+"Fare clic per la finestra gradiente."
 
 #: app/widgets/gimptoolbox.c:736
-#, fuzzy
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
-msgstr ""
-"Colori di primo piano e sfondo. I quadrati neri e bianchi cancellano i "
-"colori. Le frecce ruotano i colori. Doppio click per selezionare un colore."
+msgstr "Colori di primo piano e sfondo. I quadrati neri e bianchi reimpostano i colori. Le frecce scambiano i colori. Doppio clic per la finestra di selezione colore."
 
 #: app/widgets/gimpundoeditor.c:130
 msgid "Redo"
-msgstr "Successiva"
+msgstr "Rifai"
 
 #: app/widgets/gimpundoeditor.c:173
-#, fuzzy
 msgid "[ Base Image ]"
 msgstr "[ immagine base ]"
 
@@ -9809,34 +9782,29 @@ msgid "Delete Path"
 msgstr "Cancella tracciato"
 
 #: app/widgets/gimpvectorstreeview.c:136
-#, fuzzy
 msgid "Raise Path to Top"
-msgstr ""
-"Alza livello\t\n"
-"<Shift> In alto"
+msgstr "Alza tracciato in cima"
 
 #: app/widgets/gimpvectorstreeview.c:140
-#, fuzzy
 msgid "Lower Path to Bottom"
-msgstr ""
-"Abbassa Livello   \n"
-"<Shift> In basso"
+msgstr "Abbassa tracciato in fondo"
 
 #: app/widgets/gimpvectorstreeview.c:142
-#, fuzzy
 msgid "Reorder Path"
-msgstr "Mostra tracciato"
+msgstr "Ordina tracciato"
 
 #: app/widgets/gimpvectorstreeview.c:153
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Path to Selection\n"
 "%s  Add\n"
 "%s  Subtract\n"
 "%s%s%s  Intersect"
 msgstr ""
-"Canale a selezione\n"
-"<Shift> Aggiungi     <Ctrl> Sottrai\t   <Shift><Ctrl> Interseca"
+"Tracciato a selezione\n"
+"%s  Aggiungi\n"
+"%s  Sottrai\n"
+"%s%s%s  Interseca"
 
 #: app/widgets/gimpvectorstreeview.c:189
 msgid "Stroke Path"
