@@ -38,11 +38,11 @@
 #include "gimppreview.h"
 
 
-#define DEFAULT_TAB_BORDER   0
-#define DEFAULT_TAB_HEIGHT  24
-#define DND_WIDGET_SIZE     32
-#define MENU_WIDGET_SIZE    16
-#define MENU_WIDGET_SPACING  4
+#define DEFAULT_TAB_BORDER  0
+#define DEFAULT_TAB_SIZE    GTK_ICON_SIZE_BUTTON
+#define DND_WIDGET_SIZE     GTK_ICON_SIZE_DND
+#define MENU_WIDGET_SIZE    GTK_ICON_SIZE_MENU
+#define MENU_WIDGET_SPACING 4
 
 
 static void        gimp_dockbook_class_init       (GimpDockbookClass *klass);
@@ -135,11 +135,11 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
                                                              DEFAULT_TAB_BORDER,
                                                              G_PARAM_READABLE));
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("tab_height",
-                                                             NULL, NULL,
-                                                             0, G_MAXINT,
-                                                             DEFAULT_TAB_HEIGHT,
-                                                             G_PARAM_READABLE));
+                                           g_param_spec_enum ("tab_size",
+                                                              NULL, NULL,
+                                                              GTK_TYPE_ICON_SIZE,
+                                                              DEFAULT_TAB_SIZE,
+                                                              G_PARAM_READABLE));
 }
 
 static void
@@ -260,7 +260,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   g_return_if_fail (GTK_IS_WIDGET (menu_widget));
 
-  if (GIMP_IS_PREVIEW (menu_widget))
+  if (GIMP_IS_PREVIEW (menu_widget) || GTK_IS_IMAGE (menu_widget))
     {
       GtkWidget *hbox;
       GtkWidget *label;
@@ -387,14 +387,14 @@ static GtkWidget *
 gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
                               GimpDockable *dockable)
 {
-  GtkWidget *tab_widget;
-  gint       tab_height;
+  GtkWidget   *tab_widget;
+  GtkIconSize  tab_size = DEFAULT_TAB_SIZE;
 
   gtk_widget_style_get (GTK_WIDGET (dockbook),
-                        "tab_height", &tab_height,
+                        "tab_size", &tab_size,
                         NULL);
 
-  tab_widget = gimp_dockable_get_tab_widget (dockable, dockbook, tab_height);
+  tab_widget = gimp_dockable_get_tab_widget (dockable, dockbook, tab_size);
 
   if (GTK_WIDGET_NO_WINDOW (tab_widget))
     {

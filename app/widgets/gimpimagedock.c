@@ -47,8 +47,8 @@
 #include "libgimp/gimpintl.h"
 
 
-#define DEFAULT_MINIMAL_WIDTH       250
-#define DEFAULT_MENU_PREVIEW_HEIGHT  24
+#define DEFAULT_MINIMAL_WIDTH     250
+#define DEFAULT_MENU_PREVIEW_SIZE GTK_ICON_SIZE_SMALL_TOOLBAR
 
 
 static void   gimp_image_dock_class_init       (GimpImageDockClass *klass);
@@ -126,12 +126,11 @@ gimp_image_dock_class_init (GimpImageDockClass *klass)
                                                              DEFAULT_MINIMAL_WIDTH,
                                                              G_PARAM_READABLE));
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("menu_preview_height",
-                                                             NULL, NULL,
-                                                             0,
-                                                             G_MAXINT,
-                                                             DEFAULT_MENU_PREVIEW_HEIGHT,
-                                                             G_PARAM_READABLE));
+                                           g_param_spec_enum ("menu_preview_size",
+                                                              NULL, NULL,
+                                                              GTK_TYPE_ICON_SIZE,
+                                                              DEFAULT_MENU_PREVIEW_SIZE,
+                                                              G_PARAM_READABLE));
 }
 
 static void
@@ -199,7 +198,9 @@ gimp_image_dock_style_set (GtkWidget *widget,
 {
   GimpImageDock *image_dock;
   gint           minimal_width;
-  gint           menu_preview_height;
+  GtkIconSize    menu_preview_size;
+  gint           menu_preview_width  = 18;
+  gint           menu_preview_height = 18;
   gint           focus_line_width;
   gint           focus_padding;
   gint           ythickness;
@@ -210,9 +211,13 @@ gimp_image_dock_style_set (GtkWidget *widget,
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget,
-                        "minimal_width",       &minimal_width,
-                        "menu_preview_height", &menu_preview_height,
+                        "minimal_width",     &minimal_width,
+                        "menu_preview_size", &menu_preview_size,
 			NULL);
+
+  gtk_icon_size_lookup (menu_preview_size,
+                        &menu_preview_width,
+                        &menu_preview_height);
 
   gtk_widget_style_get (image_dock->auto_button,
                         "focus_line_width", &focus_line_width,
@@ -242,6 +247,8 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
   GimpImageDock *image_dock;
   GimpContext   *context;
   gchar         *title;
+  gint           menu_preview_width;
+  gint           menu_preview_height;
 
   static gint dock_counter = 1;
 
@@ -294,8 +301,11 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
 			   G_OBJECT (image_dock),
 			   0);
 
+  gtk_icon_size_lookup (DEFAULT_MENU_PREVIEW_SIZE,
+                        &menu_preview_width, &menu_preview_height);
+
   image_dock->menu = gimp_container_menu_new (image_container, context,
-                                              DEFAULT_MENU_PREVIEW_HEIGHT);
+                                              menu_preview_height);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (image_dock->option_menu),
 			    image_dock->menu);
   gtk_widget_show (image_dock->menu);

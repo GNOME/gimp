@@ -196,15 +196,21 @@ static GimpItemFactoryEntry toolbox_entries[] =
       "<StockItem>", GTK_STOCK_PASTE },
     "gimp-buffer-list",
     NULL, NULL },
+
+  SEPARATOR ("/File/Dialogs/---"),
+
+  { { N_("/File/Dialogs/Navigation..."), NULL,
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_MOVE },
+    "gimp-navigation-view",
+    NULL, NULL },
   { { N_("/File/Dialogs/Images..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
     "gimp-image-list",
     NULL, NULL },
-
-  SEPARATOR ("/File/Dialogs/---"),
-
-  { { N_("/File/Dialogs/Document History..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0 },
+  { { N_("/File/Dialogs/Document History..."), "foo",
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_OPEN },
     "gimp-document-history",
     "file/dialogs/document_index.html", NULL },
   { { N_("/File/Dialogs/Error Console..."), NULL,
@@ -899,15 +905,21 @@ static GimpItemFactoryEntry image_entries[] =
       "<StockItem>", GTK_STOCK_PASTE },
     "gimp-buffer-list",
     NULL, NULL },
+
+  SEPARATOR ("/Dialogs/---"),
+
+  { { N_("/Dialogs/Navigation..."), NULL,
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_MOVE },
+    "gimp-navigation-view",
+    NULL, NULL },
   { { N_("/Dialogs/Images..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
     "gimp-image-list",
     NULL, NULL },
-
-  SEPARATOR ("/Dialogs/---"),
-
-  { { N_("/Dialogs/Document History..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0 },
+  { { N_("/Dialogs/Document History..."), "foo",
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_OPEN },
     "gimp-document-history",
     "dialogs/document_index.html", NULL },
   { { N_("/Dialogs/Error Console..."), NULL,
@@ -1356,34 +1368,36 @@ static GimpItemFactoryEntry dialogs_entries[] =
   ADD_TAB (N_("/Add Tab/Layers..."),           "gimp-layer-list", NULL, NULL),
   ADD_TAB (N_("/Add Tab/Channels..."),         "gimp-channel-list", NULL, NULL),
   ADD_TAB (N_("/Add Tab/Paths..."),            "gimp-vectors-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Tool Options..."),     "gimp-tool-options", NULL, NULL),
+
+  SEPARATOR ("/Add Tab/---"),
+
+  ADD_TAB (N_("/Add Tab/Brushes..."),          "gimp-brush-grid",
+           "<StockItem>",                      GIMP_STOCK_TOOL_PAINTBRUSH),
+  ADD_TAB (N_("/Add Tab/Patterns..."),         "gimp-pattern-grid",
+           "<StockItem>",                      GIMP_STOCK_TOOL_BUCKET_FILL),
+  ADD_TAB (N_("/Add Tab/Gradients..."),        "gimp-gradient-list",
+           "<StockItem>",                      GIMP_STOCK_TOOL_BLEND),
+  ADD_TAB (N_("/Add Tab/Palettes..."),         "gimp-palette-list",
+           "<StockItem>",                      GTK_STOCK_SELECT_COLOR),
+  ADD_TAB (N_("/Add Tab/Indexed Palette..."),  "gimp-indexed-palette",
+           "<StockItem>",                      GTK_STOCK_SELECT_COLOR),
+  ADD_TAB (N_("/Add Tab/Buffers..."),          "gimp-buffer-list",
+           "<StockItem>",                      GTK_STOCK_PASTE),
+
+  SEPARATOR ("/Add Tab/---"),
+
+  ADD_TAB (N_("/Add Tab/Navigation..."),       "gimp-navigation-view",
+           "<StockItem>",                      GIMP_STOCK_TOOL_MOVE),
+  ADD_TAB (N_("/Add Tab/Images..."),           "gimp-image-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Document History..."), "gimp-document-history",
+           "<StockItem>",                      GTK_STOCK_OPEN),
+  ADD_TAB (N_("/Add Tab/Error Console..."),    "gimp-error-console", NULL, NULL),
+
+  SEPARATOR ("/Add Tab/---"),
+
+  ADD_TAB (N_("/Add Tab/Tools..."),            "gimp-tool-list", NULL, NULL),
   ADD_TAB (N_("/Add Tab/Old Paths..."),        "gimp-path-list", NULL, NULL),
-
-  SEPARATOR ("/Add Tab/---"),
-
-  ADD_TAB (N_("/Add Tab/Navigation..."),      "gimp-navigation-view",
-           "<StockItem>",                     GIMP_STOCK_TOOL_MOVE),
-  ADD_TAB (N_("/Add Tab/Images..."),          "gimp-image-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Document History..."), "gimp-document-history", NULL, NULL),
-
-  SEPARATOR ("/Add Tab/---"),
-
-  ADD_TAB (N_("/Add Tab/Brushes..."),         "gimp-brush-grid",
-           "<StockItem>",                     GIMP_STOCK_TOOL_PAINTBRUSH),
-  ADD_TAB (N_("/Add Tab/Patterns..."),        "gimp-pattern-grid",
-           "<StockItem>",                     GIMP_STOCK_TOOL_BUCKET_FILL),
-  ADD_TAB (N_("/Add Tab/Gradients..."),       "gimp-gradient-list",
-           "<StockItem>",                     GIMP_STOCK_TOOL_BLEND),
-  ADD_TAB (N_("/Add Tab/Palettes..."),        "gimp-palette-list",
-           "<StockItem>",                     GTK_STOCK_SELECT_COLOR),
-  ADD_TAB (N_("/Add Tab/Indexed Palette..."), "gimp-indexed-palette",
-           "<StockItem>",                     GTK_STOCK_SELECT_COLOR),
-  ADD_TAB (N_("/Add Tab/Buffers..."),         "gimp-buffer-list",
-           "<StockItem>",                     GTK_STOCK_PASTE),
-
-  SEPARATOR ("/Add Tab/---"),
-
-  ADD_TAB (N_("/Add Tab/Tools..."),           "gimp-tool-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Error Console..."),   "gimp-error-console", NULL, NULL),
 
   { { N_("/Remove Tab"), NULL,
       dialogs_remove_tab_cmd_callback, 0 },

@@ -40,7 +40,7 @@ static void        gimp_dockable_style_set           (GtkWidget    *widget,
 
 static GtkWidget * gimp_dockable_real_get_tab_widget (GimpDockable *dockable,
 						      GimpDockbook *dockbook,
-						      gint          size);
+						      GtkIconSize   size);
 static void        gimp_dockable_real_set_context    (GimpDockable *dockable,
 						      GimpContext  *context);
 
@@ -116,6 +116,7 @@ gimp_dockable_init (GimpDockable *dockable)
 {
   dockable->name             = NULL;
   dockable->short_name       = NULL;
+  dockable->stock_id         = NULL;
   dockable->dockbook         = NULL;
   dockable->context          = NULL;
   dockable->get_tab_func     = NULL;
@@ -144,6 +145,12 @@ gimp_dockable_destroy (GtkObject *object)
       dockable->short_name = NULL;
     }
 
+  if (dockable->stock_id)
+    {
+      g_free (dockable->stock_id);
+      dockable->stock_id = NULL;
+    }
+
   if (GTK_OBJECT_CLASS (parent_class))
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -170,6 +177,7 @@ gimp_dockable_style_set (GtkWidget *widget,
 GtkWidget *
 gimp_dockable_new (const gchar                *name,
 		   const gchar                *short_name,
+                   const gchar                *stock_id,
 		   GimpDockableGetTabFunc      get_tab_func,
 		   GimpDockableSetContextFunc  set_context_func)
 {
@@ -182,6 +190,7 @@ gimp_dockable_new (const gchar                *name,
 
   dockable->name        = g_strdup (name);
   dockable->short_name  = g_strdup (short_name);
+  dockable->stock_id    = g_strdup (stock_id);
 
   dockable->get_tab_func     = get_tab_func;
   dockable->set_context_func = set_context_func;
@@ -192,11 +201,10 @@ gimp_dockable_new (const gchar                *name,
 GtkWidget *
 gimp_dockable_get_tab_widget (GimpDockable *dockable,
 			      GimpDockbook *dockbook,
-			      gint          size)
+			      GtkIconSize   size)
 {
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
   g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
-  g_return_val_if_fail (size >= -1 && size < 64, NULL);
 
   return GIMP_DOCKABLE_GET_CLASS (dockable)->get_tab_widget (dockable,
 							     dockbook,
@@ -220,16 +228,18 @@ gimp_dockable_set_context (GimpDockable *dockable,
 static GtkWidget *
 gimp_dockable_real_get_tab_widget (GimpDockable *dockable,
 				   GimpDockbook *dockbook,
-				   gint          size)
+				   GtkIconSize   size)
 {
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
   g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
-  g_return_val_if_fail (size >= -1 && size < 64, NULL);
 
   if (dockable->get_tab_func)
     {
       return dockable->get_tab_func (dockable, dockbook, size);
     }
+
+  if (dockable->stock_id)
+    return gtk_image_new_from_stock (dockable->stock_id, size);
 
   return gtk_label_new (dockable->short_name);
 }

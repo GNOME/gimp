@@ -1,3 +1,29 @@
+2002-05-10  Michael Natterer  <mitch@gimp.org>
+
+	We can always create GimpPreviews for any GtkIconSize, but
+	not vice versa. therefore:
+
+	* app/widgets/gimpdockable.[ch]: changed the "gint size" parameter
+	used for tab sizes to "GtkIconSize size" all over the place. Added
+	"stock_id" in addition to "name" and "short_name".
+
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimpimagedock.c: use GtkIconSize instead of integer
+	preview sizes for all widget style properties. Renamed them from
+	"blah_height" to "blah_size" because "height" is an implementation
+	detail.
+
+	* app/gui/dialogs-constructors.c: changed calls to
+	gimp_dockable_new() and all *_tab_func()s accordingly. Removed
+	the hack for the navigation tab and added a general tab_func
+	which returns a hbox with an icon & label.
+
+	* app/gui/menus.c: made the dialog menus found under <Toolbox>,
+	<Image> and <Dialogs> more consistent and added more stock icons.
+
+	* etc/gtkrc_user
+	* themes/Default/gtkrc: changed accordingly.
+
 2002-05-10  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/user-install-dialog.c
