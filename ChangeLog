@@ -1,5 +1,15 @@
 2004-01-27  Michael Natterer  <mitch@gimp.org>
 
+	Re-enabled filling the whole selection using the bucket fill
+	tool. Fixes bug #132649.
+
+	* app/tools/gimpbucketfilloptions.[ch]: added boolean property
+	"fill-selection" and a GUI for it.
+
+	* app/tools/gimpbucketfilltool.c: changed accordingly.
+
+2004-01-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/image-menu.c (image_menu_entries)
 	* app/gui/layers-menu.c (layers_menu_entries): use the new
 	GIMP_STOCK_LAYER_MASK icons for "Add Layer Mask".

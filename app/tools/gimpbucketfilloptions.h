@@ -38,10 +38,11 @@ struct _GimpBucketFillOptions
 {
   GimpPaintOptions    paint_options;
 
+  GimpBucketFillMode  fill_mode;
+  gboolean            fill_selection;
   gboolean            fill_transparent;
   gboolean            sample_merged;
   gdouble             threshold;
-  GimpBucketFillMode  fill_mode;
 };
 
 
