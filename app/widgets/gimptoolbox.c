@@ -446,8 +446,7 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
-  gtk_window_set_type_hint (GTK_WINDOW (toolbox),
-                            gimp_window_type_hint_to_gdk_hint (config->toolbox_window_type));
+  gimp_window_set_hint (GTK_WINDOW (toolbox), config->toolbox_window_hint);
 
   /* We need to know when the current device changes, so we can update
    * the correct tool - to do this we connect to motion events.

@@ -1,3 +1,16 @@
+2004-01-17  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpguiconfig.[ch]
+	* app/config/gimprc-blurbs.h
+	* app/widgets/gimpdock.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimpwidgets-utils.[ch]
+	* app/widgets/gimpwidgets-utils.[ch]
+	* app/widgets/widgets-enums.[ch]: GTK+-2.4 will allow to request
+	windows to be kept above. This change prepares the code so that we
+	can optionally do this for docks and the toolbox as soon as we
+	depend on GTK+-2.4 (see bug #131672).
+
 2004-01-16  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/tiff.c: Apply a (modified) patch from Pablo 

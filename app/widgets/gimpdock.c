@@ -285,8 +285,7 @@ gimp_dock_constructor (GType                  type,
 
   config = GIMP_GUI_CONFIG (GIMP_DOCK (object)->context->gimp->config);
 
-  gtk_window_set_type_hint (GTK_WINDOW (object),
-                            gimp_window_type_hint_to_gdk_hint (config->dock_window_type));
+  gimp_window_set_hint (GTK_WINDOW (object), config->dock_window_hint);
 
   return object;
 }

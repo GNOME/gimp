@@ -66,7 +66,8 @@ void          gimp_rgb_get_gdk_color     (const GimpRGB   *rgb,
 void          gimp_rgb_set_gdk_color     (GimpRGB         *rgb,
                                           const GdkColor  *gdk_color);
 
-GdkWindowTypeHint  gimp_window_type_hint_to_gdk_hint (GimpWindowTypeHint  hint);
+void          gimp_window_set_hint       (GtkWindow       *window,
+                                          GimpWindowHint   hint);
 
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

@@ -83,8 +83,8 @@ enum
   PROP_USE_HELP,
   PROP_HELP_BROWSER,
   PROP_WEB_BROWSER,
-  PROP_TOOLBOX_WINDOW_TYPE,
-  PROP_DOCK_WINDOW_TYPE
+  PROP_TOOLBOX_WINDOW_HINT,
+  PROP_DOCK_WINDOW_HINT
 };
 
 static GObjectClass *parent_class = NULL;
@@ -223,17 +223,17 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_PARAM_PATH_FILE,
                                  DEFAULT_WEB_BROWSER,
                                  0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TOOLBOX_WINDOW_TYPE,
-                                 "toolbox-window-type",
-                                 TOOLBOX_WINDOW_TYPE_BLURB,
-                                 GIMP_TYPE_WINDOW_TYPE_HINT,
-                                 GIMP_WINDOW_TYPE_HINT_NORMAL,
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TOOLBOX_WINDOW_HINT,
+                                 "toolbox-window-hint",
+                                 TOOLBOX_WINDOW_HINT_BLURB,
+                                 GIMP_TYPE_WINDOW_HINT,
+                                 GIMP_WINDOW_HINT_NORMAL,
                                  GIMP_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DOCK_WINDOW_TYPE,
-                                 "dock-window-type",
-                                 DOCK_WINDOW_TYPE_BLURB,
-                                 GIMP_TYPE_WINDOW_TYPE_HINT,
-                                 GIMP_WINDOW_TYPE_HINT_NORMAL,
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DOCK_WINDOW_HINT,
+                                 "dock-window-hint",
+                                 DOCK_WINDOW_HINT_BLURB,
+                                 GIMP_TYPE_WINDOW_HINT,
+                                 GIMP_WINDOW_HINT_NORMAL,
                                  GIMP_PARAM_RESTART);
 }
 
@@ -325,11 +325,11 @@ gimp_gui_config_set_property (GObject      *object,
       g_free (gui_config->web_browser);
       gui_config->web_browser = g_value_dup_string (value);
       break;
-    case PROP_TOOLBOX_WINDOW_TYPE:
-      gui_config->toolbox_window_type = g_value_get_enum (value);
+    case PROP_TOOLBOX_WINDOW_HINT:
+      gui_config->toolbox_window_hint = g_value_get_enum (value);
       break;
-    case PROP_DOCK_WINDOW_TYPE:
-      gui_config->dock_window_type = g_value_get_enum (value);
+    case PROP_DOCK_WINDOW_HINT:
+      gui_config->dock_window_hint = g_value_get_enum (value);
       break;
 
     default:
@@ -411,11 +411,11 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_WEB_BROWSER:
       g_value_set_string (value, gui_config->web_browser);
       break;
-    case PROP_TOOLBOX_WINDOW_TYPE:
-      g_value_set_enum (value, gui_config->toolbox_window_type);
+    case PROP_TOOLBOX_WINDOW_HINT:
+      g_value_set_enum (value, gui_config->toolbox_window_hint);
       break;
-    case PROP_DOCK_WINDOW_TYPE:
-      g_value_set_enum (value, gui_config->dock_window_type);
+    case PROP_DOCK_WINDOW_HINT:
+      g_value_set_enum (value, gui_config->dock_window_hint);
       break;
 
     default:
