@@ -1,3 +1,8 @@
+2000-12-12  Kelly Martin  <kmartin@kiva.net>
+
+	* plug-ins/perl/Gimp/Fu.pm: fixed default JPEG quality (0.75
+	  instead of 75 -- jpeg plug-in wants a fraction)
+
 2000-12-12  Austin Donnelly  <austin@gimp.org>
 
 	* plug-ins/common/autocrop.c: Fixed #7689: plug-in-autocrop shows
