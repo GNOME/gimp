@@ -1,5 +1,15 @@
 2002-10-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/menus.c: some shortcut changes: Ctrl+Shift+S is now
+	"File/Save as...", not "View/Toggle Statusbar" (HIG compliance).
+	Removed Ctrl+Shift+B from "Select/Border..." because it is already
+	taken by "Dialogs/Brushes...". Set the shortcut to "" instead of
+	NULL whenever we abuse GTK_STOCK_NEW, so the menu item doesn't get
+	the Ctrl+N shortcut (will need separate stock icons for these menu
+	items).
+
+2002-10-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpgradientpreview.c
 	* app/widgets/gimppalettepreview.c: set "height" to size/2 instead
 	of "width" to size*3 in get_size() so the preview size is

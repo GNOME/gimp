@@ -325,7 +325,7 @@ static GimpItemFactoryEntry image_entries[] =
       "<StockItem>", GTK_STOCK_SAVE },
     NULL,
     "file/dialogs/file_save.html", NULL },
-  { { N_("/File/Save as..."), NULL,
+  { { N_("/File/Save as..."), "<control><shift>S",
       file_save_as_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SAVE_AS },
     NULL,
@@ -481,7 +481,7 @@ static GimpItemFactoryEntry image_entries[] =
       "<StockItem>", GIMP_STOCK_GROW },
     NULL,
     "select/dialogs/grow_selection.html", NULL },
-  { { N_("/Select/Border..."), "<control><shift>B",
+  { { N_("/Select/Border..."), NULL,
       select_border_cmd_callback, 0 },
     NULL,
     "select/dialogs/border_selection.html", NULL },
@@ -616,14 +616,14 @@ static GimpItemFactoryEntry image_entries[] =
       view_toggle_rulers_cmd_callback, 0, "<ToggleItem>" },
     NULL,
     "view/toggle_rulers.html", NULL },
-  { { N_("/View/Toggle Statusbar"), "<control><shift>S",
+  { { N_("/View/Toggle Statusbar"), NULL,
       view_toggle_statusbar_cmd_callback, 0, "<ToggleItem>" },
     NULL,
     "view/toggle_statusbar.html", NULL },
 
   SEPARATOR ("/View/---"),
 
-  { { N_("/View/New View"), NULL,
+  { { N_("/View/New View"), "",
       view_new_view_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
@@ -731,7 +731,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   SEPARATOR ("/Layer/Stack/---"),
 
-  { { N_("/Layer/New Layer..."), NULL,
+  { { N_("/Layer/New Layer..."), "",
       layers_new_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
