@@ -160,6 +160,8 @@ static HelpPage pages[] =
   }
 };
 
+static gchar     *gimp_help_root = NULL;
+
 static HelpPage  *current_page = &pages[HELP];
 static GList     *history = NULL;
 
@@ -767,14 +769,13 @@ open_browser_dialog (gchar *help_path,
 
   gimp_ui_init ("helpbrowser", TRUE);
 
-  root_dir = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
-			  GIMP_HELP_PREFIX, NULL);
+  root_dir = g_strdup (gimp_help_root);
 
   if (chdir (root_dir) == -1)
     {
-      gimp_message (_("GIMP Help Browser Error.\n\n"
-		      "Couldn't find my root html directory.\n"
-		      "(%s)"));
+      g_message (_("GIMP Help Browser Error.\n\n"
+		   "Couldn't find my root html directory.\n"
+		   "(%s)"), root_dir);
       return FALSE;
     }
 
@@ -788,9 +789,9 @@ open_browser_dialog (gchar *help_path,
 
   if (chdir (help_path) == -1)
     {
-      gimp_message (_("GIMP Help Browser Error.\n\n"
-		      "Couldn't find my root html directory.\n"
-		      "(%s)"));
+      g_message (_("GIMP Help Browser Error.\n\n"
+		   "Couldn't find my root html directory.\n"
+		   "(%s)"), help_path);
       return FALSE;
     }
 
@@ -1034,8 +1035,7 @@ run_temp_proc (gchar      *name,
   gchar *path;
 
   /*  set default values  */
-  help_path = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
-			   GIMP_HELP_PREFIX, NULL);
+  help_path = g_strdup (gimp_help_root);
   locale    = g_strdup ("C");
   help_file = g_strdup ("introduction.html");
 
@@ -1180,9 +1180,10 @@ run (gchar      *name,
   static GimpParam  values[1];
   GimpRunModeType   run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gchar *help_path = NULL;
-  gchar *locale    = NULL;
-  gchar *help_file = NULL;
+  gchar *env_root_dir = NULL;
+  gchar *help_path    = NULL;
+  gchar *locale       = NULL;
+  gchar *help_file    = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -1202,8 +1203,30 @@ run (gchar      *name,
         case GIMP_RUN_NONINTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  set default values  */
-	  help_path = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
-				   GIMP_HELP_PREFIX, NULL);
+	  env_root_dir = g_getenv ("GIMP_HELP_ROOT");
+
+	  if (env_root_dir)
+	    {
+	      if (chdir (env_root_dir) == -1)
+		{
+		  g_message (_("GIMP Help Browser Error.\n\n"
+			       "Couldn't find GIMP_HELP_ROOT html directory.\n"
+			       "(%s)"), env_root_dir);
+
+		  status = GIMP_PDB_EXECUTION_ERROR;
+		  break;
+		}
+
+	      gimp_help_root = g_strdup (env_root_dir);
+	    }
+	  else
+	    {
+	      gimp_help_root = g_strconcat (gimp_data_directory(),
+					    G_DIR_SEPARATOR_S, 
+					    GIMP_HELP_PREFIX, NULL);
+	    }
+
+	  help_path = g_strdup (gimp_help_root);
 	  locale    = g_strdup ("C");
 	  help_file = g_strdup ("introduction.html");
 	  
