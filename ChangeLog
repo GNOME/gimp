@@ -22,7 +22,7 @@
 	* app/gui/dialogs-constructors.[ch]
 	(dialogs_edit_brush,gradient,palette_func): use the passed parent
 	widget for finding the right screen instead of
-	gdk_screen_get_deafault().
+	gdk_screen_get_default().
 
 	* app/gui/gui.c: minor cleanup.
 
@@ -104,10 +104,10 @@
 
 	* app/display/gimpdisplayshell.c
 	(gimp_display_shell_screen_changed): don't chain up
-	undonditionally (don't crash).
+	unconditionally (don't crash).
 
 	* libgimpwidgets/gimpdialog.c (gimp_dialog_new_valist): set the
-	dialog's screen from a non-GtkWidget parent widget. The rest of
+	dialog's screen from a non-GtkWindow parent widget. The rest of
 	non-window parent widget handling is still unimplemented.
 
 	* libgimpwidgets/gimpcolorbutton.c
