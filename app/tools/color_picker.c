@@ -312,9 +312,14 @@ color_picker_button_press (Tool           *tool,
       gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
 
       gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
-      color_area = gimp_color_area_new (&color,
-					gimp_drawable_has_alpha (tool->drawable) ? GIMP_COLOR_AREA_LARGE_CHECKS : GIMP_COLOR_AREA_FLAT, 0);
-      gtk_widget_set_usize (GTK_WIDGET (color_area), 48, 64);
+      color_area = 
+	gimp_color_area_new (&color,
+			     gimp_drawable_has_alpha (tool->drawable) ? 
+			     GIMP_COLOR_AREA_LARGE_CHECKS : 
+			     GIMP_COLOR_AREA_FLAT, 
+			     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
+      gtk_widget_set_usize (color_area, 48, 64);
+      gtk_drag_dest_unset (color_area);
       gtk_container_add (GTK_CONTAINER (frame), color_area);
       gtk_widget_show (color_area);
       gtk_widget_show (frame);
@@ -445,16 +450,27 @@ color_picker_cursor_update (Tool           *tool,
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
 			       FALSE, FALSE);
 
-  if (gimp_image_pick_correlate_layer (gdisp->gimage, x, y))
-    gdisplay_install_tool_cursor (gdisp, GIMP_COLOR_PICKER_CURSOR,
-				  COLOR_PICKER,
-				  CURSOR_MODIFIER_NONE,
-				  FALSE);
+  /*  We used to use the following code here:
+   *
+   *  if (gimp_image_pick_correlate_layer (gdisp->gimage, x, y)) { ... }
+   */
+
+  if (gdisp->gimage &&
+      x > 0 && x < gdisp->gimage->width &&
+      y > 0 && y < gdisp->gimage->height)
+    {
+      gdisplay_install_tool_cursor (gdisp, GIMP_COLOR_PICKER_CURSOR,
+				    COLOR_PICKER,
+				    CURSOR_MODIFIER_NONE,
+				    FALSE);
+    }
   else
-    gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
-				  COLOR_PICKER,
-				  CURSOR_MODIFIER_NONE,
-				  FALSE);
+    {
+      gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
+				    COLOR_PICKER,
+				    CURSOR_MODIFIER_NONE,
+				    FALSE);
+    }
 }
 
 static void

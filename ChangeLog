@@ -1,3 +1,9 @@
+2001-01-15  Sven Neumann  <sven@gimp.org>
+
+	* app/color_picker.c: enable drags from and disable drops to
+	the ColorArea in the color_info dialog. Changed the cursor_update
+	function so it only displays the bad cursor when outside the image.
+
 2001-01-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/devices.c
