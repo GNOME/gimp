@@ -3,6 +3,9 @@ Wed Jun 17 23:52:13 EDT 1998 Adrian Likins <adrian@gimp.org>
 	* app/file_new_dialog.c: updated the spinbuttons
 	to use the new api
 
+	* app/gimprc.[ch]: added some stuff in preparation for
+	making a preference
+
 Thu Jun 18 00:56:41 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* channels_dialog.c

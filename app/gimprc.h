@@ -62,6 +62,8 @@ extern int       confirm_on_close;
 extern int       save_window_positions_on_exit;
 extern int       default_width, default_height;
 extern int       default_type;
+extern int       default_resolution;
+extern int       default_resolution_units;
 extern int       show_tips;
 extern int       last_tip;
 extern int       show_tool_tips;

@@ -117,6 +117,10 @@ int       save_window_positions_on_exit = FALSE;
 int       default_width = 256;
 int       default_height = 256;
 int       default_type = RGB;
+int       default_resolution = 72;
+int       default_resolution_units = GTK_INCHES;
+int       default_width_units = GTK_INCHES;
+int       default_height_units = GTK_INCHES;
 int       show_tips = TRUE;
 int       last_tip = -1;
 int       show_tool_tips = TRUE;
@@ -226,6 +230,8 @@ static ParseFunc funcs[] =
   { "last-tip-shown",        TT_INT,        &last_tip, NULL },
   { "default-image-size",    TT_POSITION,   &default_width, &default_height },
   { "default-image-type",    TT_IMAGETYPE,  &default_type, NULL },
+  { "default-resolution",    TT_INT,        &default_resolution, NULL },
+  { "default-resolution-units", TT_XRULERUNIT, &default_resolution_units, NULL },
   { "plug-in",               TT_XPLUGIN,    NULL, NULL },
   { "plug-in-def",           TT_XPLUGINDEF, NULL, NULL },
   { "menu-path",             TT_XMENUPATH,  NULL, NULL },
