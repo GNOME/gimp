@@ -1,3 +1,10 @@
+2005-03-02  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/resize-dialog.c (resize_dialog_reset)
+	* app/dialogs/scale-dialog.c (scale_dialog_reset): don't rely on
+	GObject internals about the order in which properties are being
+	set. Fixes one aspect of bug #169011.
+
 2005-03-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/tools-enums.[ch]: oops, missed in previous 
@@ -26,13 +33,6 @@
 	* app/widgets/gimpgradienteditor.c: allow dnd of colors
 	into preview and control areas, as described in
 	bug #119470.
-
-2005-03-02  Sven Neumann  <sven@gimp.org>
-
-	* app/dialogs/resize-dialog.c (resize_dialog_reset)
-	* app/dialogs/scale-dialog.c (scale_dialog_reset): don't rely on
-	GObject internals about the order in which properties are being
-	set. Fixes one aspect of bug #169011.
 
 2005-03-02  Sven Neumann  <sven@gimp.org>
 
