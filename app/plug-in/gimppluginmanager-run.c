@@ -104,7 +104,7 @@ plug_in_run (Gimp       *gimp,
       config.min_colors     = CLAMP (gimp->config->min_colors, 27, 256);
       config.gdisp_ID       = gdisp_ID;
       config.wm_name        = g_get_prgname ();
-      config.wm_class       = gimp_get_program_class (gimp);
+      config.wm_class       = (gchar *) gimp_get_program_class (gimp);
       config.display_name   = gimp_get_display_name (gimp, gdisp_ID, &monitor);
       config.monitor_number = monitor;
 
@@ -116,9 +116,9 @@ plug_in_run (Gimp       *gimp,
           ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
           ! wire_flush (plug_in->my_write, plug_in))
         {
-          g_free (config.display_name);
-
           return_vals = procedural_db_return_args (proc_rec, FALSE);
+
+          g_free (config.display_name);
 
           goto done;
         }

@@ -1,5 +1,10 @@
 2003-11-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-run.c (plug_in_run): cast the return value
+	of gimp_get_program_class() for the GPConfig message.
+
+2003-11-08  Michael Natterer  <mitch@gimp.org>
+
 	To be multihead safe, each new window or menu needs to be
 	associated with a GdkScreen or it will pop up on the default
 	screen.
@@ -97,7 +102,7 @@
 	* app/tools/gimptransformtool.c
 	* plug-ins/FractalExplorer/FractalExplorer.c
 	* plug-ins/gfig/gfig.c
-	* plug-ins/gflare/gflare.c: changed addordingly. Changed all
+	* plug-ins/gflare/gflare.c: changed accordingly. Changed all
 	menu_position funcs to place the menu on the right screen.
 
 2003-11-08  Sven Neumann  <sven@gimp.org>
