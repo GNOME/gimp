@@ -1,3 +1,8 @@
+2001-01-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimphelp.c (gimp_idle_help): s/welcome.html/introduction.html/
+	Fixes #36456.
+
 2001-01-01  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/gdyntext/gdyntextcompat.h: also check for GIMP's minor
