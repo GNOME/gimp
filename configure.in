@@ -574,7 +574,7 @@ AC_SUBST(GIMP_MP_LIBS)
 dnl Check if building for GTK+-X11
 gdk_target=`$PKG_CONFIG --variable=target gtk+-2.0`
 if test "$gdk_target" = x11; then
-  dnl Test for Xmu
+    dnl Test for Xmu
     if test -z "$LIBXMU"; then
       gimp_save_CFLAGS="$CFLAGS"
       gimp_save_LDFLAGS="$LDFLAGS"
@@ -596,11 +596,7 @@ if test "$gdk_target" = x11; then
       CFLAGS="$gimp_save_CFLAGS"
       LDFLAGS="$gimp_save_LDFLAGS"
     fi
-  else
-     AC_MSG_WARN([ 
-*** Not building for GTK+-X11 (GDK backend is $gdk_target).
-*** Webbrowser plug-in and gimp-remote will not be built.])
-  fi
+fi
 
 AC_SUBST(LIBXMU)
 AC_SUBST(WEBBROWSER)
@@ -909,6 +905,8 @@ AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 if test x"$os_win32" = xyes; then
   WINCLIPBOARD='winclipboard'
   WINPRINT='winprint'
+  dnl webbrowser has ifdefs for Win32
+  WEBBROWSER='webbrowser'
   dnl xjt does build, but it isn't more confusing than useful on Win32,
   dnl as it wants to run tar, mv and bzip2, which seldom are available
   XJT=''

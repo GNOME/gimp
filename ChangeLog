@@ -1,3 +1,10 @@
+2003-05-27  Tor Lillqvist  <tml@iki.fi>
+
+	* configure.in: Don't warn about webbrowser and gimp-remote not
+	being built on non-X11. Webbrowser does build on Win32, and
+	anyway, anybody who builds on Win32 should know that some plug-ins
+	are platform-dependent. Do set WEBBROWSER on Win32, too.
+
 2003-05-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpexport.c (export_merge): check that the merged layer
