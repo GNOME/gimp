@@ -448,10 +448,12 @@ xcf_load_image_props (XcfInfo   *info,
 	    nguides = prop_size / (4 + 1);
 	    for (i = 0; i < nguides; i++)
 	      {
-		info->cp += 
-                  xcf_read_int32 (info->fp, (guint32 *) &position, 1);
-		info->cp += 
-                  xcf_read_int8 (info->fp, (guint8 *) &orientation, 1);
+		info->cp += xcf_read_int32 (info->fp, (guint32 *) &position, 1);
+		info->cp += xcf_read_int8 (info->fp, (guint8 *) &orientation, 1);
+
+                /*  skip -1 guides from old XCFs  */
+                if (position < 0)
+                  continue;
 
 		switch (orientation)
 		  {

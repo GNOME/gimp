@@ -1,3 +1,9 @@
+2003-04-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf-load.c (xcf_load_image_props): skip guides with
+	negative positions. Fixes warning since gimp_image_add_[hv]guide()
+	doesn't allow positions < 0 any more.
+
 2003-04-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.c
