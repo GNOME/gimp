@@ -3367,7 +3367,7 @@ plugins_query_invoker (Argument *args)
       proc_def = tmp->data;
       tmp = tmp->next;
 
-      if (proc_def->prog && proc_def->menu_path);
+      if (proc_def->prog && proc_def->menu_path)
 	{
 	  ProcRecord *pr = &proc_def->db_info;
 
