@@ -1,3 +1,7 @@
+2004-11-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/retinex.c (retinex_dialog): fixed table size.
+
 2004-11-13  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpimage-merge.c: Return the active layer instead of
@@ -8,7 +12,7 @@
 
 2004-11-12  Sven Neumann  <sven@gimp.org>
 
-	* app/config/gimpconfig-dump.c better fix for bug #157971.
+	* app/config/gimpconfig-dump.c: better fix for bug #157971.
 
 	* docs/gimprc.5.in: regenerated.
 
