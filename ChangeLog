@@ -1,3 +1,9 @@
+Sun Nov  7 15:41:07 GMT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/module_db.c: fix button resize behaviour.  Closes Bug#3350.
+	    Also, i18n stuff for state names, and make them a little
+	    prettier.
+
 Sat Nov  6 19:16:57 *ET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/about_dialog.c

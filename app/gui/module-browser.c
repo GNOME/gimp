@@ -55,11 +55,11 @@ typedef enum {
 } module_state;
 
 static const char * const statename[] = {
-  "ST_MODULE_ERROR",
-  "ST_LOADED_OK",
-  "ST_LOAD_FAILED",
-  "ST_UNLOAD_REQUESTED",
-  "ST_UNLOADED_OK"
+  N_("Module error"),
+  N_("Loaded OK"),
+  N_("Load failed"),
+  N_("Unload requested"),
+  N_("Unloaded OK")
 };
 
 #ifdef __EMX__
@@ -302,9 +302,11 @@ module_db_browser_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), st->table, FALSE, FALSE, 0);
   gtk_widget_show (st->table);
 
-  hbox = gtk_hbox_new (FALSE, 10);
+  hbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbox), GTK_BUTTONBOX_SPREAD);
+
   gtk_widget_show (hbox);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 5);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 5);
 
   button = gtk_button_new_with_label (_("Refresh"));
   gtk_widget_show (button);
@@ -788,11 +790,11 @@ browser_info_update (module_info *mod,
 
 
   if (mod->state == ST_MODULE_ERROR && mod->last_module_error)
-    status = g_strdup_printf ("%s (%s)", statename[mod->state],
+    status = g_strdup_printf ("%s (%s)", gettext (statename[mod->state]),
 			      mod->last_module_error);
   else
   {
-    status = g_strdup (statename[mod->state]);
+    status = g_strdup (gettext (statename[mod->state]));
   }
 
   for (i=0; i < NUM_INFO_LINES - 1; i++)
