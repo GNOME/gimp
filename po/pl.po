@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2000-10-25 21:19+0200\n"
-"PO-Revision-Date: 2000-10-27 02:12+0200\n"
+"PO-Revision-Date: 2000-10-28 11:25+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -800,7 +800,7 @@ msgstr "B³±d zmiany rozmiaru: Szeroko¶æ i wysoko¶æ musz± byæ wiêksze od zera."
 
 #: app/convert.c:1
 msgid "Indexed Color Conversion"
-msgstr "Konwersja koloru indeksowanego"
+msgstr "Konwersja do rtybu indeksowanego"
 
 #: app/convert.c:1
 msgid "General Palette Options"
@@ -2882,7 +2882,8 @@ msgstr ""
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
-"  --debug-handlers         Aktywuje obs³ugê analizowania b³êdów przy mniej gro¼nych sygna³ach.\n"
+"  --debug-handlers         Aktywuje obs³ugê analizowania b³êdów przy mniej "
+"gro¼nych sygna³ach.\n"
 
 #: app/main.c:1
 msgid "  --display <display>      Use the designated X display.\n"
@@ -3243,7 +3244,7 @@ msgstr "/Obraz/Kolory/Odwróæ"
 
 #: app/menus.c:1
 msgid "/Image/Colors/Auto/Equalize"
-msgstr "/Obraz/Kolory/Auto/Zrównaj"
+msgstr "/Obraz/Kolory/Automatyczne/Zrównaj"
 
 #: app/menus.c:1
 msgid "/Image/Alpha/Add Alpha Channel"
@@ -3431,7 +3432,7 @@ msgstr "/Filtry/Efekty szk³a"
 
 #: app/menus.c:1
 msgid "/Filters/Light Effects"
-msgstr "/Filtry/Efekty ¶wiat³a"
+msgstr "/Filtry/Efekty ¶wietlne"
 
 #: app/menus.c:1
 msgid "/Filters/Distorts"
@@ -4132,15 +4133,15 @@ msgstr ""
 
 #: app/posterize.c:1
 msgid "Posterize does not operate on indexed drawables."
-msgstr ""
+msgstr "Redukcja kolorów nie jest dostêpna w trybie indeksowanym."
 
 #: app/posterize.c:1 app/tools.c:1
 msgid "Posterize"
-msgstr "Izochelia"
+msgstr "Redukcja kolorów"
 
 #: app/posterize.c:1
 msgid "Posterize Levels:"
-msgstr ""
+msgstr "Poziomy redukcji kolorów:"
 
 #: app/preferences_dialog.c:1
 msgid "Error: Levels of undo must be zero or greater."
@@ -4368,7 +4369,7 @@ msgstr "Zachowanie siê okna dialogowego"
 
 #: app/preferences_dialog.c:1
 msgid "Navigation Window per Display"
-msgstr ""
+msgstr "Niezale¿ny podgl±d nawigacyjny dla ka¿dego obrazu"
 
 #: app/preferences_dialog.c:1
 msgid "Info Window Follows Mouse"
@@ -4719,7 +4720,7 @@ msgstr "Baza procedur"
 #: app/procedural_db.c:1 app/procedural_db.c:1
 #, c-format
 msgid "PDB calling error %s not found"
-msgstr ""
+msgstr "B³±d przy wywo³aniu PDB: nie odnaleziono %s"
 
 #: app/procedural_db.c:1
 #, c-format
@@ -4844,7 +4845,7 @@ msgstr "Kalibracja rozdzielczo¶ci monitora"
 
 #: app/resolution_calibrate.c:1
 msgid "Measure the rulers and enter their lengths below."
-msgstr ""
+msgstr "Zmierz linijki i wprowad¼ poni¿ej ich d³ugo¶ci."
 
 #: app/resolution_calibrate.c:1
 msgid "Horizontal:"
@@ -5381,7 +5382,7 @@ msgstr "Modyfikuje odcieñ i nasycenie"
 
 #: app/tools.c:1
 msgid "/Image/Colors/Posterize..."
-msgstr "/Obraz/Kolory/Izochelia..."
+msgstr "/Obraz/Kolory/Redukcja kolorów..."
 
 #: app/tools.c:1
 msgid "Reduce image to a fixed numer of colors"
@@ -5828,6 +5829,14 @@ msgid ""
 "palettes during GIMP execution to persist across\n"
 "sessions."
 msgstr ""
+"Katalog ten jest wykorzystywany do przechowywania palet\n"
+"kolorów zdefiniowanych przez u¿ytkownika. Domy¶lny plik\n"
+"gimprc przegl±da ten katalog (bez systemowego) w\n"
+"poszukiwaniu palet. Podczas osobistej instalacji palety\n"
+"systemowe zostan± skopiowane do tego katalogu. Podej¶cie\n"
+"to pozwala na wykonywanie przez u¿ytkownika zmian\n"
+"w istniej±cych paletach, które s± zapamiêtywane pomiêdzy\n"
+"sesjami."
 
 #: app/user_install.c:1
 msgid ""
@@ -5933,6 +5942,11 @@ msgid ""
 "addition to the systemwide GIMP GFig installation\n"
 "when searching for gfig figures."
 msgstr ""
+"Katalog ten jest wykorzystywany do przechowywania figur\n"
+"zdefiniowanych przez u¿ytkownika i wykorzystywanych\n"
+"przez wtyczkê GFig. Domy¶lny plik gimprc oprócz\n"
+"systemowego przegl±da równie¿ ten katalog w poszukiwaniu\n"
+"figur GFiga."
 
 #: app/user_install.c:1
 msgid ""
@@ -5951,6 +5965,11 @@ msgid ""
 "in addition to the systemwide GIMP Gimpressionist\n"
 "installation when searching for data."
 msgstr ""
+"Katalog ten jest wykorzystywany do przechowywania danych\n"
+"zdefiniowanych przez u¿ytkownika i wykorzystywanych\n"
+"przez wtyczkê Gimpresjonista. Domy¶lny plik gimprc oprócz\n"
+"systemowego przegl±da równie¿ ten katalog w poszukiwaniu\n"
+"danych Gimpresjonisty."
 
 #: app/user_install.c:1
 msgid ""
@@ -6017,6 +6036,9 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA."
 msgstr ""
+"Kopia licencji GNU GPL powinna zostaæ dostarczona wraz z tym\n"
+"programem. Je¶li jej brak, napisz na adres Free Software Foundation,\n"
+"Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
 #: app/user_install.c:1
 msgid "Personal GIMP Directory"
