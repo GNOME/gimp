@@ -43,21 +43,33 @@
 
 GimpItemFactoryEntry palettes_menu_entries[] =
 {
-  { { N_("/_New Palette"), NULL,
-      data_new_data_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_NEW },
-    NULL,
-    GIMP_HELP_PALETTE_NEW, NULL },
-  { { N_("/D_uplicate Palette"), NULL,
-      data_duplicate_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DUPLICATE },
-    NULL,
-    GIMP_HELP_PALETTE_DUPLICATE, NULL },
   { { N_("/_Edit Palette..."), NULL,
       data_edit_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
     GIMP_HELP_PALETTE_EDIT, NULL },
+
+  MENU_SEPARATOR ("/---"),
+
+  { { N_("/_New Palette"), NULL,
+      data_new_data_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_NEW },
+    NULL,
+    GIMP_HELP_PALETTE_NEW, NULL },
+  { { N_("/_Import Palette..."), NULL,
+      palettes_import_palette_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_CONVERT },
+    NULL,
+    GIMP_HELP_PALETTE_IMPORT, NULL },
+  { { N_("/D_uplicate Palette"), NULL,
+      data_duplicate_data_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_DUPLICATE },
+    NULL,
+    GIMP_HELP_PALETTE_DUPLICATE, NULL },
+  { { N_("/_Merge Palettes..."), NULL,
+      palettes_merge_palettes_cmd_callback, 0 },
+    NULL,
+    GIMP_HELP_PALETTE_MERGE, NULL },
   { { N_("/_Delete Palette..."), NULL,
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
@@ -70,19 +82,7 @@ GimpItemFactoryEntry palettes_menu_entries[] =
       data_refresh_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
-    GIMP_HELP_PALETTE_REFRESH, NULL },
-
-  MENU_SEPARATOR ("/---"),
-
-  { { N_("/_Import Palette..."), NULL,
-      palettes_import_palette_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_CONVERT },
-    NULL,
-    GIMP_HELP_PALETTE_IMPORT, NULL },
-  { { N_("/_Merge Palettes..."), NULL,
-      palettes_merge_palettes_cmd_callback, 0 },
-    NULL,
-    GIMP_HELP_PALETTE_MERGE, NULL }
+    GIMP_HELP_PALETTE_REFRESH, NULL }
 };
 
 gint n_palettes_menu_entries = G_N_ELEMENTS (palettes_menu_entries);
@@ -106,14 +106,14 @@ palettes_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Duplicate Palette",
-		 palette && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Edit Palette...",
 		 palette && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("/Delete Palette...",
-		 palette && data->writeable && !data->internal);
+  SET_SENSITIVE ("/Duplicate Palette",
+		 palette && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Merge Palettes...",
 		 FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
+  SET_SENSITIVE ("/Delete Palette...",
+		 palette && data->writeable && !data->internal);
 
 #undef SET_SENSITIVE
 }

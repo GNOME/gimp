@@ -28,6 +28,7 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimppaletteeditor.h"
 
+#include "menus.h"
 #include "palette-editor-commands.h"
 #include "palette-editor-menu.h"
 
@@ -36,23 +37,26 @@
 
 GimpItemFactoryEntry palette_editor_menu_entries[] =
 {
-  { { N_("/_New Color"), "",
-      palette_editor_new_color_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_NEW },
-    NULL,
-    GIMP_HELP_PALETTE_EDITOR_NEW, NULL },
   { { N_("/_Edit Color..."), "",
       palette_editor_edit_color_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
     GIMP_HELP_PALETTE_EDITOR_EDIT, NULL },
+
+  MENU_SEPARATOR ("/---"),
+
+  { { N_("/_New Color"), "",
+      palette_editor_new_color_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_NEW },
+    NULL,
+    GIMP_HELP_PALETTE_EDITOR_NEW, NULL },
   { { N_("/_Delete Color"), "",
       palette_editor_delete_color_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     GIMP_HELP_PALETTE_EDITOR_DELETE, NULL },
 
-  { { "/---", NULL, NULL, 0, "<Separator>", NULL }, NULL, NULL, NULL },
+  MENU_SEPARATOR ("/---"),
 
   { { N_("/Zoom _Out"), "",
       palette_editor_zoom_out_cmd_callback, 0,
@@ -91,8 +95,8 @@ palette_editor_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/New Color",     editable);
   SET_SENSITIVE ("/Edit Color...", editable && editor->color);
+  SET_SENSITIVE ("/New Color",     editable);
   SET_SENSITIVE ("/Delete Color",  editable && editor->color);
 
   SET_SENSITIVE ("/Zoom Out", data_editor->data);

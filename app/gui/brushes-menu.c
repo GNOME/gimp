@@ -42,6 +42,14 @@
 
 GimpItemFactoryEntry brushes_menu_entries[] =
 {
+  { { N_("/_Edit Brush..."), NULL,
+      data_edit_data_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_EDIT },
+    NULL,
+    GIMP_HELP_BRUSH_EDIT, NULL },
+
+  MENU_SEPARATOR ("/---"),
+
   { { N_("/_New Brush"), NULL,
       data_new_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
@@ -52,11 +60,6 @@ GimpItemFactoryEntry brushes_menu_entries[] =
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
     GIMP_HELP_BRUSH_DUPLICATE, NULL },
-  { { N_("/_Edit Brush..."), NULL,
-      data_edit_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_EDIT },
-    NULL,
-    GIMP_HELP_BRUSH_EDIT, NULL },
   { { N_("/_Delete Brush..."), NULL,
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
@@ -93,10 +96,10 @@ brushes_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Duplicate Brush",
-		 brush && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Edit Brush...",
 		 brush && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
+  SET_SENSITIVE ("/Duplicate Brush",
+		 brush && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Delete Brush...",
 		 brush && data->writeable && !data->internal);
 

@@ -41,6 +41,19 @@
 
 GimpItemFactoryEntry vectors_menu_entries[] =
 {
+  { { N_("/Path _Tool"), NULL,
+      vectors_vectors_tool_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_PATH },
+    NULL,
+    GIMP_HELP_TOOL_VECTORS, NULL },
+  { { N_("/_Edit Path Attributes..."), NULL,
+      vectors_edit_attributes_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_EDIT },
+    NULL,
+    GIMP_HELP_PATH_EDIT, NULL },
+
+  MENU_SEPARATOR ("/---"),
+
   { { N_("/_New Path..."), "",
       vectors_new_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
@@ -123,20 +136,7 @@ GimpItemFactoryEntry vectors_menu_entries[] =
       vectors_export_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SAVE },
     NULL,
-    GIMP_HELP_PATH_EXPORT, NULL },
-
-  MENU_SEPARATOR ("/---"),
-
-  { { N_("/Path _Tool"), NULL,
-      vectors_vectors_tool_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TOOL_PATH },
-    NULL,
-    GIMP_HELP_TOOL_VECTORS, NULL },
-  { { N_("/_Edit Path Attributes..."), NULL,
-      vectors_edit_attributes_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_EDIT },
-    NULL,
-    GIMP_HELP_PATH_EDIT, NULL }
+    GIMP_HELP_PATH_EXPORT, NULL }
 };
 
 gint n_vectors_menu_entries = G_N_ELEMENTS (vectors_menu_entries);
@@ -181,6 +181,9 @@ vectors_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
+  SET_SENSITIVE ("/Path Tool",                vectors);
+  SET_SENSITIVE ("/Edit Path Attributes...",  vectors);
+
   SET_SENSITIVE ("/New Path...",              gimage);
   SET_SENSITIVE ("/Raise Path",               vectors && prev);
   SET_SENSITIVE ("/Lower Path",               vectors && next);
@@ -199,10 +202,6 @@ vectors_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Paste Path",               global_buf);
   SET_SENSITIVE ("/Import Path...",           gimage);
   SET_SENSITIVE ("/Export Path...",           vectors);
-
-  SET_SENSITIVE ("/Path Tool",                vectors);
-
-  SET_SENSITIVE ("/Edit Path Attributes...",  vectors);
 
 #undef SET_SENSITIVE
 }

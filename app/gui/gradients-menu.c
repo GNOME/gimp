@@ -43,6 +43,14 @@
 
 GimpItemFactoryEntry gradients_menu_entries[] =
 {
+  { { N_("/_Edit Gradient..."), NULL,
+      data_edit_data_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_EDIT },
+    NULL,
+    GIMP_HELP_GRADIENT_EDIT, NULL },
+
+  MENU_SEPARATOR ("/---"),
+
   { { N_("/_New Gradient"), NULL,
       data_new_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
@@ -53,11 +61,11 @@ GimpItemFactoryEntry gradients_menu_entries[] =
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
     GIMP_HELP_GRADIENT_DUPLICATE, NULL },
-  { { N_("/_Edit Gradient..."), NULL,
-      data_edit_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_EDIT },
+  { { N_("/Save as _POV-Ray..."), NULL,
+      gradients_save_as_pov_ray_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_SAVE_AS },
     NULL,
-    GIMP_HELP_GRADIENT_EDIT, NULL },
+    GIMP_HELP_GRADIENT_SAVE_AS_POV, NULL },
   { { N_("/_Delete Gradient..."), NULL,
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
@@ -70,15 +78,7 @@ GimpItemFactoryEntry gradients_menu_entries[] =
       data_refresh_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
-    GIMP_HELP_GRADIENT_REFRESH, NULL },
-
-  MENU_SEPARATOR ("/---"),
-
-  { { N_("/Save as _POV-Ray..."), NULL,
-      gradients_save_as_pov_ray_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_SAVE_AS },
-    NULL,
-    GIMP_HELP_GRADIENT_SAVE_AS_POV, NULL }
+    GIMP_HELP_GRADIENT_REFRESH, NULL }
 };
 
 gint n_gradients_menu_entries = G_N_ELEMENTS (gradients_menu_entries);
@@ -102,14 +102,14 @@ gradients_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Duplicate Gradient",
-		 gradient && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Edit Gradient...",
 		 gradient && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("/Delete Gradient...",
-		 gradient && data->writeable && !data->internal);
+  SET_SENSITIVE ("/Duplicate Gradient",
+		 gradient && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Save as POV-Ray...",
 		 gradient);
+  SET_SENSITIVE ("/Delete Gradient...",
+		 gradient && data->writeable && !data->internal);
 
 #undef SET_SENSITIVE
 }

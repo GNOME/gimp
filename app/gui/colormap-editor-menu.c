@@ -37,16 +37,16 @@
 
 GimpItemFactoryEntry colormap_editor_menu_entries[] =
 {
-  { { N_("/_Add Color"), NULL,
-      colormap_editor_add_color_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_NEW },
-    NULL,
-    NULL, NULL },
   { { N_("/_Edit Color..."), NULL,
       colormap_editor_edit_color_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
     NULL, NULL },
+  { { N_("/_Add Color"), NULL,
+      colormap_editor_add_color_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_NEW },
+    NULL,
+    NULL, NULL }
 };
 
 gint n_colormap_editor_menu_entries = G_N_ELEMENTS (colormap_editor_menu_entries);
@@ -71,8 +71,8 @@ colormap_editor_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Add Color",     gimage && num_colors < 256);
   SET_SENSITIVE ("/Edit Color...", gimage);
+  SET_SENSITIVE ("/Add Color",     gimage && num_colors < 256);
 
 #undef SET_SENSITIVE
 }

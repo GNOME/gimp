@@ -42,6 +42,14 @@
 
 GimpItemFactoryEntry patterns_menu_entries[] =
 {
+  { { N_("/Edit Pattern..."), NULL,
+      data_edit_data_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_EDIT },
+    NULL,
+    GIMP_HELP_PATTERN_EDIT, NULL },
+
+  MENU_SEPARATOR ("/---"),
+
   { { N_("/New Pattern"), NULL,
       data_new_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
@@ -52,11 +60,6 @@ GimpItemFactoryEntry patterns_menu_entries[] =
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
     GIMP_HELP_PATTERN_DUPLICATE, NULL },
-  { { N_("/Edit Pattern..."), NULL,
-      data_edit_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_EDIT },
-    NULL,
-    GIMP_HELP_PATTERN_EDIT, NULL },
   { { N_("/Delete Pattern..."), NULL,
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
@@ -93,10 +96,10 @@ patterns_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Duplicate Pattern",
-		 pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Edit Pattern...",
 		 pattern && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
+  SET_SENSITIVE ("/Duplicate Pattern",
+		 pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Delete Pattern...",
 		 pattern && data->writeable && !data->internal);
 

@@ -1,3 +1,20 @@
+2003-09-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/brushes-menu.c
+	* app/gui/buffers-menu.c
+	* app/gui/channels-menu.c
+	* app/gui/colormap-editor-menu.c
+	* app/gui/gradients-menu.c
+	* app/gui/images-menu.c
+	* app/gui/layers-menu.c
+	* app/gui/palette-editor-menu.c
+	* app/gui/palettes-menu.c
+	* app/gui/patterns-menu.c
+	* app/gui/templates-menu.c
+	* app/gui/vectors-menu.c: made the default (== double click)
+	action the first menu entry as suggested by the HIG and
+	added/removed separators where appropriate.
+
 2003-09-11  Sven Neumann  <sven@gimp.org>
 
 	* app/text/Makefile.am: removed PANGO_DISABLE_DEPRECATED again since

@@ -41,6 +41,14 @@
 
 GimpItemFactoryEntry layers_menu_entries[] =
 {
+  { { N_("/_Edit Layer Attributes..."), NULL,
+      layers_edit_attributes_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_EDIT },
+    NULL,
+    GIMP_HELP_LAYER_EDIT, NULL },
+
+  MENU_SEPARATOR ("/---"),
+
   { { N_("/_New Layer..."), "",
       layers_new_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
@@ -151,15 +159,7 @@ GimpItemFactoryEntry layers_menu_entries[] =
       layers_flatten_image_cmd_callback, 0,
       NULL, NULL },
     NULL,
-    GIMP_HELP_IMAGE_FLATTEN, NULL },
-
-  MENU_SEPARATOR ("/---"),
-
-  { { N_("/_Edit Layer Attributes..."), NULL,
-      layers_edit_attributes_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_EDIT },
-    NULL,
-    GIMP_HELP_LAYER_EDIT, NULL }
+    GIMP_HELP_IMAGE_FLATTEN, NULL }
 };
 
 gint n_layers_menu_entries = G_N_ELEMENTS (layers_menu_entries);
@@ -219,6 +219,8 @@ layers_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
+  SET_SENSITIVE ("/Edit Layer Attributes...", layer && !fs && !ac);
+
   SET_SENSITIVE ("/New Layer...",    gimage);
 
   SET_SENSITIVE ("/Raise Layer",     layer && !fs && !ac && alpha && prev);
@@ -246,8 +248,6 @@ layers_menu_update (GtkItemFactory *factory,
 
   SET_SENSITIVE ("/Merge Visible Layers...", layer && !fs && !ac);
   SET_SENSITIVE ("/Flatten Image",           layer && !fs && !ac);
-
-  SET_SENSITIVE ("/Edit Layer Attributes...", layer && !fs && !ac);
 
 #undef SET_SENSITIVE
 }

@@ -39,7 +39,7 @@
 
 GimpItemFactoryEntry buffers_menu_entries[] =
 {
-  { { N_("/_Paste Buffer"), NULL,
+  { { N_("/_Paste Buffer"), "",
       buffers_paste_buffer_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_PASTE },
     NULL,
@@ -54,7 +54,7 @@ GimpItemFactoryEntry buffers_menu_entries[] =
       "<StockItem>", GIMP_STOCK_PASTE_AS_NEW },
     NULL,
     GIMP_HELP_BUFFER_PASTE_AS_NEW, NULL },
-  { { N_("/_Delete Buffer"), NULL,
+  { { N_("/_Delete Buffer"), "",
       buffers_delete_buffer_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
