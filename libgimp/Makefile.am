@@ -6,6 +6,11 @@ conditional_libgimp_la = libgimp.la
 endif
 
 if OS_WIN32
+else
+libmath = -lm
+endif
+
+if OS_WIN32
 gimp_def = gimp.def
 gimpui_def = gimpui.def
 libgimp_export_symbols = -export-symbols gimp.def
@@ -317,7 +322,7 @@ libgimp_la_LDFLAGS = \
 	-release $(LT_RELEASE) \
 	$(no_undefined) \
 	$(libgimp_export_symbols)
-libgimp_la_LIBADD = $(GLIB_LIBS) -lm
+libgimp_la_LIBADD = $(GLIB_LIBS) $(libmath)
 
 libgimp_la_DEPENDENCIES = $(gimp_def)
 
@@ -337,9 +342,6 @@ files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
 	  echo $$p; \
 	done
-
-## makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/libgimp/makefile.mingw.in
-## 	cd $(top_builddir) && CONFIG_FILES=libgimp/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 install-data-local: install-ms-lib install-libtool-import-lib
 
