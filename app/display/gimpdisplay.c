@@ -273,8 +273,14 @@ gimp_display_delete (GimpDisplay *gdisp)
 
   if (gdisp->shell)
     {
-      gtk_widget_destroy (gdisp->shell);
+      GtkWidget *shell = gdisp->shell;
+
+      /*  set gdisp->shell to NULL *before* destroying the shell.
+       *  all callbacks in gimpdisplayshell-callbacks.c will check
+       *  this pointer and do nothing if the shell is in destruction.
+       */
       gdisp->shell = NULL;
+      gtk_widget_destroy (shell);
     }
 
   /*  unrefs the gimage  */

@@ -1,3 +1,19 @@
+2004-01-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppainttool.c: removed GimpTool::cursor_update()
+	implementation (which was there only to stop drawing the brush
+	preview when the mouse leaves the canvas). Instead, look at
+	shell->proximity in GimpTool::oper_update() and just don't start
+	drawing the preview if proximity is FALSE.
+
+	* app/display/gimpdisplay.c (gimp_display_delete): set
+	gdisp->shell to NULL *before* gtk_widget_destroy()ing the shell so
+	our tool callbacks don't dispatch stuff while the shell is in the
+	middle of being destroyed.
+
+	Both changes fix bug #129374, though the latter is the fix for the
+	real problem.
+
 2003-12-31  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpdrawable-stroke.c

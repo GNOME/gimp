@@ -103,10 +103,6 @@ static void   gimp_paint_tool_oper_update    (GimpTool            *tool,
                                               GimpCoords          *coords,
 					      GdkModifierType      state,
 					      GimpDisplay         *gdisp);
-static void   gimp_paint_tool_cursor_update  (GimpTool            *tool,
-                                              GimpCoords          *coords,
-					      GdkModifierType      state,
-					      GimpDisplay         *gdisp);
 
 static void   gimp_paint_tool_draw           (GimpDrawTool        *draw_tool);
 
@@ -176,7 +172,6 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   tool_class->arrow_key      = gimp_paint_tool_arrow_key;
   tool_class->modifier_key   = gimp_paint_tool_modifier_key;
   tool_class->oper_update    = gimp_paint_tool_oper_update;
-  tool_class->cursor_update  = gimp_paint_tool_cursor_update;
 
   draw_tool_class->draw      = gimp_paint_tool_draw;
 
@@ -664,7 +659,9 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
       tool->gdisp = gdisp;
     }
 
-  if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  if (drawable && shell->proximity)
     {
       paint_tool->brush_x = coords->x;
       paint_tool->brush_y = coords->y;
@@ -730,30 +727,6 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
-}
-
-static void
-gimp_paint_tool_cursor_update (GimpTool        *tool,
-                               GimpCoords      *coords,
-                               GdkModifierType  state,
-                               GimpDisplay     *gdisp)
-{
-  if (gimp_image_active_drawable (gdisp->gimage))
-    {
-      GimpDrawTool     *draw_tool;
-      GimpDisplayShell *shell;
-
-      draw_tool = GIMP_DRAW_TOOL (tool);
-      shell     = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-      if (! shell->proximity &&
-          gimp_draw_tool_is_active (draw_tool))
-        {
-          gimp_draw_tool_stop (draw_tool);
-        }
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void
