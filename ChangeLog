@@ -1,3 +1,14 @@
+2000-07-29  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/decompose.c: 
+	applied gimp-kirchgessner-000728-0, a patch by Peter Kirchgessner
+	that resolves request #16795 and changes the generated filenames
+	for decomposed images.
+
+	* app/authors.h
+	* tools/authorsgen/Makefile.am
+	* tools/authorsgen/authorsgen.pl: works better now
+
 2000-07-29  Michael Natterer  <mitch@gimp.org>
 
 	* cursors/background.xbm

@@ -4,9 +4,7 @@ EXTRA_DIST = \
 authorsgen_scripts = \
 	authorsgen.pl
 
-$(srcdir)/authorsgen.pl: stamp-authors
-	@:
-stamp-authors: contributors Makefile.am
+stamp-authors: authorsgen.pl contributors Makefile.am
 	rootme=`pwd`; \
 	cd $(srcdir) && $(PERL) authorsgen.pl \
 	&& echo timestamp > $$rootme/stamp-authors
