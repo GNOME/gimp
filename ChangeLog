@@ -1,5 +1,12 @@
 2005-01-03  Sven Neumann  <sven@gimp.org>
 
+	Merged from HEAD branch:
+
+	* plug-ins/common/fp.c: removed GtkFrame from dialog and replaced
+	a call to free() by g_free().
+
+2005-01-03  Sven Neumann  <sven@gimp.org>
+
 	* etc/ps-menurc: another update from Eric Pierce.
 
 2005-01-02  Sven Neumann  <sven@gimp.org>
