@@ -255,7 +255,7 @@ transform_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), options->smoothing_w, FALSE, FALSE, 0);
   gtk_widget_show (options->smoothing_w);
 
-  options->showpath_w = gtk_check_button_new_with_label (_("Showpath"));
+  options->showpath_w = gtk_check_button_new_with_label (_("Show path"));
   gtk_signal_connect (GTK_OBJECT (options->showpath_w), "toggled",
                     (GtkSignalFunc) transform_show_path_update,
                     &options->showpath);

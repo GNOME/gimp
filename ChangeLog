@@ -1,5 +1,9 @@
 1999-07-27  Tomas Ogren  <stric@ing.umu.se>
 
+	* app/transform_tool.c: Fixed a typo
+
+1999-07-27  Tomas Ogren  <stric@ing.umu.se>
+
 	* app/actionarea.c
 	* app/dodgeburn.c
 	* app/fuzzy_select.c
