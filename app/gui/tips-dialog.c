@@ -34,6 +34,8 @@
 
 #include "core/gimp.h"
 
+#include "widgets/gimppropwidgets.h"
+
 #include "tips-dialog.h"
 #include "tips-parser.h"
 
@@ -46,8 +48,6 @@ static void  tips_dialog_destroy (GtkWidget   *widget,
 static void  tips_show_previous  (GtkWidget   *widget,
                                   gpointer     data);
 static void  tips_show_next      (GtkWidget   *widget,
-                                  gpointer     data);
-static void  tips_toggle_update  (GtkWidget   *widget,
                                   gpointer     data);
 
 
@@ -171,15 +171,10 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = 
-    gtk_check_button_new_with_mnemonic (_("Show tip next time GIMP starts"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), config->show_tips);
+  button = gimp_prop_check_button_new (G_OBJECT (config), "show-tips",
+                                       _("Show tip next time GIMP starts"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-  g_signal_connect (G_OBJECT (button), "toggled",
-		    G_CALLBACK (tips_toggle_update),
-		    config);
 
   bbox = gtk_hbutton_box_new ();
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
@@ -277,13 +272,4 @@ tips_show_next (GtkWidget *widget,
   current_tip = current_tip->next ? current_tip->next : tips;
 
   tips_set_labels (current_tip->data);
-}
-
-static void
-tips_toggle_update (GtkWidget *widget,
-		    gpointer   data)
-{
-  g_object_set (G_OBJECT (data),
-		"show-tips", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)),
-		NULL);
 }

@@ -1,3 +1,11 @@
+2002-11-22  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/preferences-dialog.c: allow to configure whether tips
+	are shown on startup.
+
+	* app/gui/tips-dialog.c: threw out lots of code and use
+	gimp_prop_check_button_new() instead.
+
 2002-11-21  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/blinds.c: use gimp_get_bg_guchar

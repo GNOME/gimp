@@ -1253,6 +1253,9 @@ prefs_dialog_new (Gimp    *gimp,
   prefs_check_button_add (config, "use-help",
                           _("Context Sensitive _Help with \"F1\""),
                           GTK_BOX (vbox2));
+  prefs_check_button_add (config, "show-tips",
+                          _("Show Tips on _Startup"),
+                          GTK_BOX (vbox2));
 
   vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox));
 
