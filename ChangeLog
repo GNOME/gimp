@@ -1,3 +1,11 @@
+2000-04-11  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpmath.h: defined FINITE() macro that defaults to
+	finite(). Hopefully this is more portable than isnan() and isinf().
+
+	* app/gimage_cmds.c
+	* tools/pdbgen/pdb/gimage.pdb: use FINITE() here
+
 2000-04-11  Tor Lillqvist  <tml@iki.fi>
 
 	* README: Warn about the ads in the messages from the

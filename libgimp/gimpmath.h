@@ -81,11 +81,9 @@ extern "C" {
 #define gimp_rad_to_deg(angle) ((angle) * 360.0 / (2.0 * G_PI))
 
 #ifdef G_OS_WIN32
-#define ISNAN(x) _isnan(x)
-#define ISINF(x) (_fpclass(x) & (_FPCLASS_NINF | _FPCLASS_PINF))
+#define FINITE(x) _finite(x)
 #else
-#define ISNAN(x) isnan(x)
-#define ISINF(x) isinf(x)
+#define FINITE(x) finite(x) 
 #endif
 
 #ifdef __cplusplus
