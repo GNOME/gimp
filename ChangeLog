@@ -1,4 +1,12 @@
 2000-08-04  Daniel Egger  <egger@suse.de>
+
+	* newhelp/*:
+	As suggested by Sven and Mitch I moved the newhelp
+	directory out to the new module gimp-help which will
+	be embedded as virtual module as soon as it's ready
+	for that step.
+
+2000-08-04  Daniel Egger  <egger@suse.de>
 	
 	* newhelp: Created new directory which will contain the base
 	of our new SGML help system. Rebecca, Piers and I are
