@@ -31,7 +31,7 @@ Sat Mar 27 22:37:35 PST 1999 Manish Singh <yosh@gimp.org>
 
 Sun Mar 28 00:28:57 EST 1999 Adrian Likins <adrian@gimp.org>
 
-	* app/paintbrush.c: added the ability to select the 
+	* app/paintbrush.[ch]: added the ability to select the 
 	gradient repeat mode from the gui. Made the gradient
 	length slider hopefully a bit more useful (ie, a
 	more useful range)

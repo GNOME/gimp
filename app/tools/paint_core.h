@@ -42,10 +42,9 @@
 /* gradient paint modes */
 #define ONCE_FORWARD 0     /* paint through once, then stop */
 #define ONCE_BACKWARDS 1   /* paint once, then stop, but run the gradient the other way */
-#define ONCE_END_COLOR 2   /* paint once, but keep painting with the end color */
-#define LOOP_SAWTOOTH 3    /* keep painting, looping through the grad start->end,start->end /|/|/| */
-#define LOOP_TRIANGLE 4    /* keep paiting, looping though the grad start->end,end->start /\/\/\/  */
-
+#define LOOP_SAWTOOTH 2    /* keep painting, looping through the grad start->end,start->end /|/|/| */
+#define LOOP_TRIANGLE 3    /* keep paiting, looping though the grad start->end,end->start /\/\/\/  */
+#define ONCE_END_COLOR 4   /* paint once, but keep painting with the end color */
 
 
 typedef struct _paint_core PaintCore;
