@@ -1,5 +1,10 @@
 2000-12-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpimage.c: gimp_image_merge_layers(): apply the layer mask
+	only if layer->apply_mask is TRUE.
+
+2000-12-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/layers_dialog.c: layers_dialog_scroll_index(): don't fiddle
 	around with magic numbers when calculating the layer widget's
 	height but simply ask one of them for it's allocation.  Fixes

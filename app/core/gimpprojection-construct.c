@@ -2858,7 +2858,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 			 (x4 - x3), (y4 - y3), 
 			 FALSE);
 
-      if (layer->mask)
+      if (layer->mask && layer->apply_mask)
 	{
 	  pixel_region_init (&maskPR, 
 			     drawable_data (GIMP_DRAWABLE(layer->mask)), 
