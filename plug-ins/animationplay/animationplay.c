@@ -1,7 +1,7 @@
 /*
- * Animation Playback plug-in version 0.83.0
+ * Animation Playback plug-in version 0.84.0
  *
- * by Adam D. Moss, 1997
+ * by Adam D. Moss, 1997-98
  *     adam@gimp.org
  *     adam@foxbox.org
  *
@@ -10,6 +10,10 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 98.03.15 : version 0.84.0
+ *            Tried to clear up the GTK object/cast warnings.  Only
+ *            partially successful.  Could use some help.
  *
  * 97.12.11 : version 0.83.0
  *            GTK's timer logic changed a little... adjusted
@@ -111,8 +115,8 @@ GPlugInInfo PLUG_IN_INFO =
 
 /* Global widgets'n'stuff */
 guchar*    preview_data;
-static     GtkWidget* preview = NULL;
-GtkWidget* progress;
+static     GtkPreview* preview = NULL;
+GtkProgressBar* progress;
 guint      width,height;
 guchar*    preview_alpha1_data;
 guchar*    preview_alpha2_data;
@@ -306,7 +310,7 @@ build_dialog(GImageType basetype,
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) window_close_callback,
-			     dlg);
+			     GTK_OBJECT (dlg));
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area),
 		      button, TRUE, TRUE, 0);
   gtk_widget_grab_default (button);
@@ -337,10 +341,11 @@ build_dialog(GImageType basetype,
 	gtk_container_add (GTK_CONTAINER (hbox), vbox);
 	
 	{
-	  progress = gtk_progress_bar_new ();
-	  gtk_widget_set_usize (progress, 150, 15);
-	  gtk_box_pack_start (GTK_BOX (vbox), progress, TRUE, TRUE, 0);
-	  gtk_widget_show (progress);
+	  progress = GTK_PROGRESS_BAR (gtk_progress_bar_new ());
+	  gtk_widget_set_usize (GTK_WIDGET (progress), 150, 15);
+	  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (progress),
+			      TRUE, TRUE, 0);
+	  gtk_widget_show (GTK_WIDGET (progress));
 
 	  hbox2 = gtk_hbox_new (FALSE, 0);
 	  gtk_container_border_width (GTK_CONTAINER (hbox2), 0);
@@ -375,10 +380,11 @@ build_dialog(GImageType basetype,
 	  gtk_box_pack_start (GTK_BOX (vbox), frame2, FALSE, FALSE, 0);
 	    
 	  {
-	    preview = gtk_preview_new (GTK_PREVIEW_COLOR); /* FIXME */
-	    gtk_preview_size (GTK_PREVIEW (preview), width, height);
-	    gtk_container_add (GTK_CONTAINER (frame2), preview);
-	    gtk_widget_show(preview);
+	    preview =
+	      GTK_PREVIEW (gtk_preview_new (GTK_PREVIEW_COLOR)); /* FIXME */
+	    gtk_preview_size (preview, width, height);
+	    gtk_container_add (GTK_CONTAINER (frame2), GTK_WIDGET (preview));
+	    gtk_widget_show(GTK_WIDGET (preview));
 	  }
 	  gtk_widget_show(frame2);
 	}
@@ -436,7 +442,7 @@ static void do_playback(void)
   total_alpha_preview();
   for (i=0;i<height;i++)
   {
-    gtk_preview_draw_row (GTK_PREVIEW (preview),
+    gtk_preview_draw_row (preview,
                           &preview_data[3*i*width],
                           0, i, width);
   }
@@ -573,7 +579,7 @@ render_frame(gint32 whichframe)
 	  /* Display the preview buffer... finally. */
 	  for (i=0;i<height;i++)
 	    {
-	      gtk_preview_draw_row (GTK_PREVIEW (preview),
+	      gtk_preview_draw_row (preview,
 				    &preview_data[3*i*width],
 				    0, i, width);
 	    }
@@ -621,7 +627,7 @@ render_frame(gint32 whichframe)
 	      for (i=rawy;i<rawy+rawheight;i++)
 		{
 		  if (i>=0 && i<height)
-		    gtk_preview_draw_row (GTK_PREVIEW (preview),
+		    gtk_preview_draw_row (preview,
 					  &preview_data[3*i*width],
 					  0, i, width);
 		}
@@ -630,7 +636,7 @@ render_frame(gint32 whichframe)
 	    {
 	      for (i=0;i<height;i++)
 		{
-		  gtk_preview_draw_row (GTK_PREVIEW (preview),
+		  gtk_preview_draw_row (preview,
 					&preview_data[3*i*width],
 					0, i, width);
 		}
@@ -687,7 +693,7 @@ render_frame(gint32 whichframe)
 	  /* Display the preview buffer... finally. */
 	  for (i=0;i<height;i++)
 	    {
-	      gtk_preview_draw_row (GTK_PREVIEW (preview),
+	      gtk_preview_draw_row (preview,
 				    &preview_data[3*i*width],
 				    0, i, width);
 	    }
@@ -738,7 +744,7 @@ render_frame(gint32 whichframe)
 	      for (i=rawy;i<rawy+rawheight;i++)
 		{
 		  if (i>=0 && i<height)
-		    gtk_preview_draw_row (GTK_PREVIEW (preview),
+		    gtk_preview_draw_row (preview,
 					  &preview_data[3*i*width],
 					  0, i, width);
 		}
@@ -747,7 +753,7 @@ render_frame(gint32 whichframe)
 	    {
 	      for (i=0;i<height;i++)
 		{
-		  gtk_preview_draw_row (GTK_PREVIEW (preview),
+		  gtk_preview_draw_row (preview,
 					&preview_data[3*i*width],
 					0, i, width);
 		}
@@ -769,11 +775,11 @@ static void
 show_frame(void)
 {
   /* Tell GTK to physically draw the preview */
-  gtk_widget_draw (preview, NULL);
+  gtk_widget_draw (GTK_WIDGET (preview), NULL);
   gdk_flush ();
 
   /* update the dialog's progress bar */
-  gtk_progress_bar_update (GTK_PROGRESS_BAR (progress),
+  gtk_progress_bar_update (progress,
 			   ((float)frame_number/(float)(total_frames-0.999)));
 }
 

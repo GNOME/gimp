@@ -1,13 +1,14 @@
-/* GIF loading and saving file filter for the Gimp version 0.99+
- *    - Peter Mattis, Spencer Kimball, Adam Moss.
+/* GIF loading and saving file filter for The GIMP version 1.0
+ *
+ *    - Adam D. Moss
+ *    - Peter Mattis
+ *    - Spencer Kimball
+ *
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 1.99.18 - 97/12/11
- *
- *   Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
- *
- *     This is beta code.  See TODO section for current shortcomings.
+ * Version 2.0.0 - 98/03/15
+ *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
  * This filter uses code taken from the "giftopnm" and "ppmtogif" programs
@@ -22,6 +23,18 @@
 /*
  * REVISION HISTORY
  *
+ * 98/03/15
+ * 2.00.00 - No longer beta.  Uses the current GIMP brush background
+ *           colour as the transparent-index colour for viewers that
+ *           don't know about transparency, instead of magenta.  Note
+ *           that this is by no means likely to actually work, but
+ *           is more likely to do so if your image has been freshly
+ *           to-index'd before saving.
+ *
+ *           Also added some analysis to gif-reading to prevent the
+ *           number of encoded bits being pumped up inadvertantly for
+ *           successive load/saves of the same image.  [Adam]
+ *
  * 97/12/11
  * 1.99.18 - Bleh.  Disposals should specify how the next frame will
  *           be composed with this frame, NOT how this frame will
@@ -30,7 +43,6 @@
  * 97/11/30
  * 1.99.17 - No more bogus transparency indices in animated GIFs,
  *           hopefully.  Saved files are better-behaved, sometimes
- *           smaller.  [Adam]files are better-behaved, sometimes
  *           smaller.  [Adam]
  *
  * 97/09/29
@@ -271,9 +283,14 @@ static void   comment_entry_callback  (GtkWidget *widget,
 
 
 
-static gint   radio_pressed[3];
-static guchar used_cmap[3][256];
+static gint     radio_pressed[3];
+
+static guchar   used_cmap[3][256];
 static gboolean can_crop;
+static guchar   highest_used_index;
+static gboolean promote_to_rgb = FALSE;
+static guchar   gimp_cmap[768];
+
 
 
 
@@ -385,6 +402,22 @@ run (char    *name,
   if (strcmp (name, "file_gif_load") == 0)
     {
       image_ID = load_image (param[1].data.d_string);
+
+      /* The GIF format only tells you how many bits per pixel
+       *  are in the image, not the actual number of used indices (D'OH!)
+       *
+       * So if we're not careful, repeated load/save of a transparent GIF
+       *  without intermediate indexed->RGB->indexed pumps up the number of
+       *  bits used, as we add an index each time for the transparent
+       *  colour.  Ouch.  We either do some heavier analysis at save-time,
+       *  or trim down the number of GIMP colours at load-time.  We do the
+       *  latter for now.
+       */
+      printf("GIF: Highest used index is %d\n", highest_used_index);
+      if (!promote_to_rgb)
+	{
+	  gimp_image_set_cmap (image_ID, gimp_cmap, highest_used_index+1);
+	}
 
       if (image_ID != -1)
         {
@@ -622,6 +655,10 @@ load_image (char *filename)
     {
       printf ("GIF: warning - non-square pixels\n");
     }
+
+
+  highest_used_index = 0;
+      
 
   for (;;)
     {
@@ -1033,14 +1070,12 @@ ReadImage (FILE *fd,
 	   guint screenheight)
 {
   static gint32 image_ID;
-  static gboolean promote_to_rgb = FALSE;
   static gint frame_number = 1;
 
   gint32 layer_ID;
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
   guchar *dest, *temp;
-  guchar gimp_cmap[768];
   guchar c;
   gint xpos = 0, ypos = 0, pass = 0;
   gint cur_progress, max_progress;
@@ -1089,20 +1124,6 @@ ReadImage (FILE *fd,
 
       previous_disposal = Gif89.disposal;
 
-      /*      switch (Gif89.disposal)
-	{
-	case 0x00: break; 
-	case 0x01: strcat(framename," (combine)"); break;
-	case 0x02: strcat(framename," (replace)"); break;
-	case 0x03: strcat(framename," (combine)"); break;
-	case 0x04:
-	case 0x05:
-	case 0x06:
-	case 0x07: printf("GIF: Hmm... please forward this GIF to the "
-			  "GIF plugin author!\n  (adam@foxbox.org)\n"); break;
-	default: printf("GIF: Something got corrupted.\n"); break;
-	}*/
-  
       if (Gif89.transparent == -1)
 	{
 	  layer_ID = gimp_layer_new (image_ID, framename,
@@ -1205,6 +1226,9 @@ ReadImage (FILE *fd,
     {
       if (alpha_frame)
 	{
+	  if (((guchar)v > highest_used_index) && !(v == Gif89.transparent))
+	    highest_used_index = (guchar)v;
+
 	  if (promote_to_rgb)
 	    {
 	      temp = dest + ( (ypos * len) + xpos ) * 4;
@@ -1217,11 +1241,14 @@ ReadImage (FILE *fd,
 	    {
 	      temp = dest + ( (ypos * len) + xpos ) * 2;
 	      *temp = (guchar) v;
-	      *(temp+1) = (guchar) (v == Gif89.transparent ? 0 : 255);
+	      *(temp+1) = (guchar) ((v == Gif89.transparent) ? 0 : 255);
 	    }
 	}
       else
 	{
+	  if ((guchar)v > highest_used_index)
+	    highest_used_index = (guchar)v;
+
 	  temp = dest + (ypos * len) + xpos;
 	  *temp = (guchar) v;
 	}
@@ -1399,9 +1426,9 @@ static int find_unused_ia_colour (guchar *pixels,
   for (i=0;i<256;i++)
     if (ix_used[i] == (gboolean)FALSE)
       {
-	/*
+
 	fprintf(stderr,"GIF: Found unused colour index %d.\n",(int)i);
-	*/
+
 	return i;
       }
 
@@ -1595,6 +1622,8 @@ save_image (char   *filename,
   int Disposal;
   char *layer_name;
 
+  unsigned char bgred, bggreen, bgblue;
+
 
 
   /* get a list of layers for this image_ID */
@@ -1619,6 +1648,8 @@ save_image (char   *filename,
     case INDEXED_IMAGE:
       cmap = gimp_image_get_cmap (image_ID, &colors);
       
+      gimp_palette_get_background(&bgred, &bggreen, &bgblue);
+
       for (i = 0; i < colors; i++)
 	{
 	  Red[i] = *cmap++;
@@ -1627,15 +1658,15 @@ save_image (char   *filename,
 	}
       for ( ; i < 256; i++)
 	{
-	  Red[i] = 255;
-	  Green[i] = 0;
-	  Blue[i] = 255;
+	  Red[i] = bgred;
+	  Green[i] = bggreen;
+	  Blue[i] = bgblue;
 	}
       break;
     case GRAYA_IMAGE:
       is_gif89 = TRUE;
     case GRAY_IMAGE:
-      colors = 256;
+      colors = 256;                   /* FIXME: Not ideal. */
       for ( i = 0;  i < 256; i++)
 	{
 	  Red[i] = Green[i] = Blue[i] = i;
@@ -1670,10 +1701,15 @@ save_image (char   *filename,
   /* write the GIFheader */
 
   if (colors < 256)
-    BitsPerPixel = colorstobpp (colors +
-				((drawable_type==INDEXEDA_IMAGE) ? 1 : 0));
+    {
+      BitsPerPixel = colorstobpp (colors +
+				  ((drawable_type==INDEXEDA_IMAGE) ? 1 : 0));
+    }
   else
-    BitsPerPixel = colorstobpp (256);
+    {
+      BitsPerPixel = colorstobpp (256);
+      fprintf (stderr, "GIF: Too many colours?\n");
+    }
 
   cols = gimp_image_width(image_ID);
   rows = gimp_image_height(image_ID);
@@ -1702,7 +1738,6 @@ save_image (char   *filename,
 
   while (i >= 0)
     {
-
       drawable_type = gimp_drawable_type (layers[i]);
       drawable = gimp_drawable_get (layers[i]);
       gimp_drawable_offsets (layers[i], &offset_x, &offset_y);
@@ -1710,7 +1745,8 @@ save_image (char   *filename,
       rows = drawable->height;
       rowstride = drawable->width;
       
-      gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
+      gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
+			   drawable->width, drawable->height, FALSE, FALSE);
 
       cur_progress = 0;
       max_progress = drawable->height;
@@ -1720,7 +1756,8 @@ save_image (char   *filename,
 				    (((drawable_type == INDEXEDA_IMAGE)||
 				      (drawable_type == GRAYA_IMAGE)) ? 2:1) );
       
-      gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0, drawable->width, drawable->height);
+      gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0,
+			       drawable->width, drawable->height);
 
 
       /* sort out whether we need to do transparency jiggery-pokery */

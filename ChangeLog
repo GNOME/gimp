@@ -1,3 +1,7 @@
+Mon Mar 16 02:03:47 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* updated gif and animationplay plugins
+
 Sun Mar 15 22:32:17 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* all plugins parse gtkrc now
