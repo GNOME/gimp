@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2002-02-11 13:34-0800\n"
-"PO-Revision-Date: 2002-01-20 00:25+0100\n"
+"POT-Creation-Date: 2002-02-14 00:03+0100\n"
+"PO-Revision-Date: 2002-02-14 00:05+0100\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6212,9 +6212,8 @@ msgstr "Komprese RLE"
 
 #. origin
 #: plug-ins/common/tga.c:1217
-#, fuzzy
 msgid "Origin at bottom left"
-msgstr "dolù doleva"
+msgstr "Poèátek dole vlevo"
 
 #: plug-ins/common/threshold_alpha.c:104
 msgid "<Image>/Image/Alpha/Threshold Alpha..."
