@@ -68,8 +68,8 @@ domain_register (const gchar *domain_name,
   g_return_if_fail (domain_name != NULL);
   g_return_if_fail (domain_uri != NULL);
 
-  g_print ("helpbrowser: registering help domain \"%s\" with base uri \"%s\"\n",
-           domain_name, domain_uri);
+  g_printerr ("help: registering help domain \"%s\" with base uri \"%s\"\n",
+              domain_name, domain_uri);
 
   if (! domain_hash)
     domain_hash = g_hash_table_new_full (g_str_hash, g_str_equal,
@@ -83,7 +83,7 @@ domain_register (const gchar *domain_name,
 HelpDomain *
 domain_lookup (const gchar *domain_name)
 {
-  g_return_val_if_fail (domain_name != NULL, NULL);
+  g_return_val_if_fail (domain_name, NULL);
 
   if (domain_hash)
     return g_hash_table_lookup (domain_hash, domain_name);
@@ -406,8 +406,8 @@ domain_parser_parse_namespace (DomainParser  *parser,
           g_free (parser->id_attr_name);
           parser->id_attr_name = g_strdup_printf ("%s:id", *names + 6);
 
-          g_print ("domain parser: id attribute name for \"%s\" is \"%s\"\n",
-                   parser->domain->help_domain, parser->id_attr_name);
+          g_printerr ("help: id attribute name for \"%s\" is \"%s\"\n",
+                      parser->domain->help_domain, parser->id_attr_name);
         }
 
       names++;
@@ -446,6 +446,6 @@ domain_parser_parse_item (DomainParser  *parser,
       g_hash_table_insert (parser->domain->help_id_mapping,
                            g_strdup (id), g_strdup (ref));
 
-      g_print ("domain parser: added mapping \"%s\" -> \"%s\"\n", id, ref);
+      g_printerr ("help: added mapping \"%s\" -> \"%s\"\n", id, ref);
     }
 }

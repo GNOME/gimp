@@ -2,7 +2,8 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimphelp.c
- * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 1999-2004 Michael Natterer <mitch@gimp.org>
+ *                         Henrik Brix Andersen <brix@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,9 +50,8 @@
 #include "gimp-intl.h"
 
 
-#ifndef G_OS_WIN32
 #define DEBUG_HELP
-#endif
+
 
 typedef struct _GimpIdleHelp GimpIdleHelp;
 
@@ -66,15 +66,13 @@ struct _GimpIdleHelp
 
 /*  local function prototypes  */
 
-static gint      gimp_idle_help        (gpointer     data);
-static gboolean  gimp_help_internal    (Gimp        *gimp,
-                                        const gchar *help_domain,
-                                        const gchar *help_locale,
-                                        const gchar *help_id);
-static void      gimp_help_web_browser (Gimp        *gimp,
-                                        const gchar *help_domain,
-                                        const gchar *help_locale,
-                                        const gchar *help_id);
+static gint      gimp_idle_help      (gpointer     data);
+static gboolean  gimp_help_internal  (Gimp        *gimp);
+static void      gimp_help_call      (Gimp        *gimp,
+                                      const gchar *procedure,
+                                      const gchar *help_domain,
+                                      const gchar *help_locale,
+                                      const gchar *help_id);
 
 
 /*  public functions  */
@@ -88,9 +86,7 @@ gimp_help (Gimp        *gimp,
 
   if (GIMP_GUI_CONFIG (gimp->config)->use_help)
     {
-      GimpIdleHelp *idle_help;
-
-      idle_help = g_new0 (GimpIdleHelp, 1);
+      GimpIdleHelp *idle_help = g_new0 (GimpIdleHelp, 1);
 
       idle_help->gimp = gimp;
 
@@ -112,37 +108,36 @@ gimp_help (Gimp        *gimp,
 static gboolean
 gimp_idle_help (gpointer data)
 {
-  GimpIdleHelp        *idle_help = data;
-  GimpHelpBrowserType  browser;
-
-  browser = GIMP_GUI_CONFIG (idle_help->gimp->config)->help_browser;
+  GimpIdleHelp *idle_help = data;
+  const gchar  *procedure = NULL;
 
 #ifdef DEBUG_HELP
-  g_print ("Help Domain: %s\n",
-           idle_help->help_domain ? idle_help->help_domain : "NULL");
-  g_print ("Help ID: %s\n\n",
-           idle_help->help_id ? idle_help->help_id : "NULL");
-#endif  /*  DEBUG_HELP  */
+  g_printerr ("Help Domain: %s\n",
+              idle_help->help_domain ? idle_help->help_domain : "NULL");
+  g_printerr ("Help ID: %s\n\n",
+              idle_help->help_id     ? idle_help->help_id     : "NULL");
+#endif
 
-  switch (browser)
+  switch (GIMP_GUI_CONFIG (idle_help->gimp->config)->help_browser)
     {
     case GIMP_HELP_BROWSER_GIMP:
-      if (gimp_help_internal (idle_help->gimp,
-                              idle_help->help_domain,
-			      idle_help->help_locale,
-			      idle_help->help_id))
-	break;
+      if (gimp_help_internal (idle_help->gimp))
+        {
+          procedure = "extension_gimp_help_browser_temp";
+          break;
+        }
 
     case GIMP_HELP_BROWSER_WEB_BROWSER:
-      gimp_help_web_browser (idle_help->gimp,
-                             idle_help->help_domain,
-                             idle_help->help_locale,
-                             idle_help->help_id);
-      break;
-
-    default:
+      /*  FIXME: should check for procedure availability  */
+      procedure = "plug_in_web_browser";
       break;
     }
+
+  gimp_help_call (idle_help->gimp,
+                  procedure,
+                  idle_help->help_domain,
+                  idle_help->help_locale,
+                  idle_help->help_id);
 
   g_free (idle_help->help_domain);
   g_free (idle_help->help_locale);
@@ -168,10 +163,7 @@ gimp_help_internal_not_found_callback (GtkWidget *widget,
 }
 
 static gboolean
-gimp_help_internal (Gimp        *gimp,
-                    const gchar *help_domain,
-		    const gchar *help_locale,
-		    const gchar *help_id)
+gimp_help_internal (Gimp *gimp)
 {
   ProcRecord *proc_rec;
 
@@ -187,10 +179,7 @@ gimp_help_internal (Gimp        *gimp,
 
   if (proc_rec == NULL)
     {
-      Argument  *args         = NULL;
-      gint       n_domains    = 0;
-      gchar    **help_domains = NULL;
-      gchar    **help_uris    = NULL;
+      Argument *args = NULL;
 
       proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_browser");
 
@@ -217,21 +206,12 @@ gimp_help_internal (Gimp        *gimp,
 		  != GIMP_HELP_BROWSER_WEB_BROWSER);
 	}
 
-      n_domains = plug_ins_help_domains (gimp, &help_domains, &help_uris);
+      args = g_new (Argument, 1);
 
-      args = g_new (Argument, 5);
-      args[0].arg_type          = GIMP_PDB_INT32;
-      args[0].value.pdb_int     = GIMP_RUN_INTERACTIVE;
-      args[1].arg_type          = GIMP_PDB_INT32;
-      args[1].value.pdb_int     = n_domains;
-      args[2].arg_type          = GIMP_PDB_STRINGARRAY;
-      args[2].value.pdb_pointer = help_domains;
-      args[3].arg_type          = GIMP_PDB_INT32;
-      args[3].value.pdb_int     = n_domains;
-      args[4].arg_type          = GIMP_PDB_STRINGARRAY;
-      args[4].value.pdb_pointer = help_uris;
+      args[0].arg_type      = GIMP_PDB_INT32;
+      args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
 
-      plug_in_run (gimp, proc_rec, args, 5, FALSE, TRUE, -1);
+      plug_in_run (gimp, proc_rec, args, 1, FALSE, TRUE, -1);
 
       procedural_db_destroy_args (args, 5);
     }
@@ -258,22 +238,6 @@ gimp_help_internal (Gimp        *gimp,
       return (GIMP_GUI_CONFIG (gimp->config)->help_browser
               != GIMP_HELP_BROWSER_WEB_BROWSER);
     }
-  else
-    {
-      Argument *return_vals;
-      gint      nreturn_vals;
-
-      return_vals =
-        procedural_db_run_proc (gimp,
-				"extension_gimp_help_browser_temp",
-                                &nreturn_vals,
-				GIMP_PDB_STRING, help_domain,
-				GIMP_PDB_STRING, help_locale,
-                                GIMP_PDB_STRING, help_id,
-                                GIMP_PDB_END);
-
-      procedural_db_destroy_args (return_vals, nreturn_vals);
-    }
 
   busy = FALSE;
 
@@ -281,43 +245,80 @@ gimp_help_internal (Gimp        *gimp,
 }
 
 static void
-gimp_help_web_browser (Gimp        *gimp,
-                       const gchar *help_domain,
-                       const gchar *help_locale,
-                       const gchar *help_id)
+gimp_help_call (Gimp        *gimp,
+                const gchar *procedure,
+                const gchar *help_domain,
+                const gchar *help_locale,
+                const gchar *help_id)
 {
-  Argument *return_vals;
-  gint      nreturn_vals;
-  gchar    *url;
+  ProcRecord *proc_rec;
 
-  if (! help_id)
-    help_id = GIMP_HELP_MAIN;
+  /*  Check if a help parser is already running  */
+  proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_temp");
 
-  if (! help_domain)
+  if (proc_rec == NULL)
     {
-      url = g_strconcat ("file:",
-                         gimp_data_directory (), "/help/",
-                         help_locale, "/",
-                         help_id,
-                         NULL);
+      Argument  *args         = NULL;
+      gint       n_domains    = 0;
+      gchar    **help_domains = NULL;
+      gchar    **help_uris    = NULL;
+
+      proc_rec = procedural_db_lookup (gimp, "extension_gimp_help");
+
+      if (proc_rec == NULL)
+        {
+          /*  FIXME: error msg  */
+          return;
+	}
+
+      n_domains = plug_ins_help_domains (gimp, &help_domains, &help_uris);
+
+      args = g_new (Argument, 4);
+      args[0].arg_type          = GIMP_PDB_INT32;
+      args[0].value.pdb_int     = n_domains;
+      args[1].arg_type          = GIMP_PDB_STRINGARRAY;
+      args[1].value.pdb_pointer = help_domains;
+      args[2].arg_type          = GIMP_PDB_INT32;
+      args[2].value.pdb_int     = n_domains;
+      args[3].arg_type          = GIMP_PDB_STRINGARRAY;
+      args[3].value.pdb_pointer = help_uris;
+
+      plug_in_run (gimp, proc_rec, args, 4, FALSE, TRUE, -1);
+
+      procedural_db_destroy_args (args, 4);
+    }
+
+  /*  Check if the help parser started properly  */
+  proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_temp");
+
+  if (proc_rec == NULL)
+    {
+      /*  FIXME: error msg  */
+      return;
     }
   else
     {
-      url = g_strconcat ("file:",
-                         help_domain, "/",
-                         help_locale, "/",
-                         help_id,
-                         NULL);
+      Argument *return_vals;
+      gint      n_return_vals;
+
+#ifdef DEBUG_HELP
+      g_printerr ("Calling help via %s: %s %s %s\n",
+                  procedure,
+                  help_domain ? help_domain : NULL,
+                  help_locale ? help_locale : NULL,
+                  help_id     ? help_id     : NULL);
+#endif
+
+      return_vals =
+        procedural_db_run_proc (gimp,
+				"extension_gimp_help_temp",
+                                &n_return_vals,
+                                GIMP_PDB_STRING, procedure,
+				GIMP_PDB_STRING, help_domain,
+				GIMP_PDB_STRING, help_locale,
+                                GIMP_PDB_STRING, help_id,
+                                GIMP_PDB_END);
+
+      procedural_db_destroy_args (return_vals, n_return_vals);
     }
-
-  return_vals =
-    procedural_db_run_proc (gimp,
-			    "plug_in_web_browser",
-			    &nreturn_vals,
-			    GIMP_PDB_STRING, url,
-			    GIMP_PDB_END);
-
-  procedural_db_destroy_args (return_vals, nreturn_vals);
-
-  g_free (url);
 }

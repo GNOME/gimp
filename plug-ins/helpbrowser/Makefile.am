@@ -14,8 +14,6 @@ helpbrowser_SOURCES = \
 	helpbrowser.c	\
 	dialog.c	\
 	dialog.h	\
-	domain.c	\
-	domain.h	\
 	queue.c		\
 	queue.h		\
 	uri.c		\

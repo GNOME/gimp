@@ -1,3 +1,23 @@
+2004-03-09  Sven Neumann  <sven@gimp.org>
+
+	Finished some work that Brix started on the help system. It's
+	now possibly to use an external web-browser for context help
+	(bug #136081):
+
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/help/Makefile.am
+	* plug-ins/help/domain.[ch]
+	* plug-ins/help/help.c: new plug-in that does the help domain
+	management. Most of this used to live in the helpbrowser plug-in.
+
+	* plug-ins/helpbrowser/Makefile.am
+	* plug-ins/helpbrowser/domain.[ch]: removed these two files here.
+
+	* plug-ins/helpbrowser/helpbrowser.c: changed accordingly.
+
+	* app/widgets/gimphelp.c: use the new help plug-in.
+	
 2004-03-08  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/convert-dialog.c (indexed_palette_select_palette): added

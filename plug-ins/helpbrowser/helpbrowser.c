@@ -2,8 +2,9 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * The GIMP Help Browser
- * Copyright (C) 1999-2002 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 1999-2004 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
+ *                         Henrik Brix Andersen <brix@gimp.org>
  *
  * Some code & ideas stolen from the GNOME help browser.
  *
@@ -24,55 +25,38 @@
 
 #include "config.h"
 
-#include <string.h>
+#include <string.h>  /*  strlen, strcmp  */
 
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
 #include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
 
 #include "dialog.h"
-#include "domain.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 
 /*  defines  */
 
-#define GIMP_HELP_EXT_NAME       "extension_gimp_help_browser"
-#define GIMP_HELP_TEMP_EXT_NAME  "extension_gimp_help_browser_temp"
-#define GIMP_HELP_PREFIX         "help"
-
-
-typedef struct
-{
-  gchar *help_domain;
-  gchar *help_locale;
-  gchar *help_id;
-} IdleHelp;
+#define GIMP_HELP_BROWSER_EXT_NAME       "extension_gimp_help_browser"
+#define GIMP_HELP_BROWSER_TEMP_EXT_NAME  "extension_gimp_help_browser_temp"
 
 
 /*  forward declarations  */
 
-static void         query             (void);
-static void         run               (const gchar      *name,
-                                       gint              nparams,
-                                       const GimpParam  *param,
-                                       gint             *nreturn_vals,
-                                       GimpParam       **return_vals);
+static void   query             (void);
+static void   run               (const gchar      *name,
+                                 gint              nparams,
+                                 const GimpParam  *param,
+                                 gint             *nreturn_vals,
+                                 GimpParam       **return_vals);
 
-static void         temp_proc_install (void);
-static void         temp_proc_run     (const gchar      *name,
-                                       gint              nparams,
-                                       const GimpParam  *param,
-                                       gint             *nreturn_vals,
-                                       GimpParam       **return_vals);
-
-static void         load_help         (const gchar      *help_domain,
-                                       const gchar      *help_locale,
-                                       const gchar      *help_id);
-static gboolean     load_help_idle    (gpointer          data);
+static void   temp_proc_install (void);
+static void   temp_proc_run     (const gchar      *name,
+                                 gint              nparams,
+                                 const GimpParam  *param,
+                                 gint             *nreturn_vals,
+                                 GimpParam       **return_vals);
 
 
 /*  local variables  */
@@ -93,21 +77,18 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,       "run_mode",         "Interactive" },
-    { GIMP_PDB_INT32,       "num_domain_names", ""            },
-    { GIMP_PDB_STRINGARRAY, "domain_names",     ""            },
-    { GIMP_PDB_INT32,       "num_domain_uris",  ""            },
-    { GIMP_PDB_STRINGARRAY, "domain_uris",      ""            }
+    { GIMP_PDB_INT32, "run_mode", "Interactive" },
   };
 
-  gimp_install_procedure (GIMP_HELP_EXT_NAME,
+  gimp_install_procedure (GIMP_HELP_BROWSER_EXT_NAME,
                           "Browse the GIMP help pages",
                           "A small and simple HTML browser optimized for "
 			  "browsing the GIMP help pages.",
                           "Sven Neumann <sven@gimp.org>, "
-			  "Michael Natterer <mitch@gimp.org>",
-			  "Sven Neumann & Michael Natterer",
-                          "1999-2003",
+			  "Michael Natterer <mitch@gimp.org>"
+                          "Henrik Brix Andersen <brix@gimp.org>",
+			  "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
+                          "1999-2004",
                           NULL,
                           "",
                           GIMP_EXTENSION,
@@ -122,11 +103,10 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[1];
-  GimpRunMode        run_mode;
+  GimpRunMode        run_mode = param[0].data.d_int32;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
-  run_mode = param[0].data.d_int32;
+  static GimpParam   values[1];
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
@@ -136,70 +116,13 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
-  if (strcmp (name, GIMP_HELP_EXT_NAME) == 0)
+  switch (run_mode)
     {
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_NONINTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-          {
-            const gchar *default_env_domain_uri;
-            gchar       *default_domain_uri;
-
-            /*  set default values  */
-            default_env_domain_uri = g_getenv ("GIMP2_HELP_URI");
-
-            if (default_env_domain_uri)
-              {
-                default_domain_uri = g_strdup (default_env_domain_uri);
-              }
-            else
-              {
-                gchar *help_root;
-
-                help_root = g_build_filename (gimp_data_directory (),
-                                              GIMP_HELP_PREFIX, NULL);
-
-                default_domain_uri = g_filename_to_uri (help_root, NULL, NULL);
-
-                g_free (help_root);
-              }
-
-            /*  Make sure all the arguments are there!  */
-            if (nparams == 5)
-              {
-                if (param[1].data.d_int32 == param[3].data.d_int32)
-                  {
-                    gint i;
-
-                    domain_register (GIMP_HELP_DEFAULT_DOMAIN,
-                                     default_domain_uri);
-
-                    for (i = 0; i < param[1].data.d_int32; i++)
-                      domain_register (param[2].data.d_stringarray[i],
-                                       param[4].data.d_stringarray[i]);
-                  }
-                else
-                  {
-                    status = GIMP_PDB_CALLING_ERROR;
-                  }
-              }
-            else
-              {
-                status = GIMP_PDB_CALLING_ERROR;
-              }
-
-            g_free (default_domain_uri);
-          }
-          break;
-
-        default:
-	  status = GIMP_PDB_CALLING_ERROR;
-          break;
-        }
-
-      if (status == GIMP_PDB_SUCCESS)
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+      /*  Make sure all the arguments are there!  */
+      if (nparams == 1)
         {
           browser_dialog_open ();
 
@@ -213,10 +136,15 @@ run (const gchar      *name,
 
           gtk_main ();
         }
-    }
-  else
-    {
+      else
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
+      break;
+
+    default:
       status = GIMP_PDB_CALLING_ERROR;
+      break;
     }
 
   values[0].data.d_status = status;
@@ -227,18 +155,17 @@ temp_proc_install (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_STRING, "help_domain", "Help domain to use" },
-    { GIMP_PDB_STRING, "help_locale", "Language to use"    },
-    { GIMP_PDB_STRING, "help_id",     "Help ID to open"    }
+    { GIMP_PDB_STRING, "uri", "Full uri of the file to open" }
   };
 
-  gimp_install_temp_proc (GIMP_HELP_TEMP_EXT_NAME,
+  gimp_install_temp_proc (GIMP_HELP_BROWSER_TEMP_EXT_NAME,
 			  "DON'T USE THIS ONE",
 			  "(Temporary procedure)",
 			  "Sven Neumann <sven@gimp.org>, "
-			  "Michael Natterer <mitch@gimp.org>",
-			  "Sven Neumann & Michael Natterer",
-			  "1999-2003",
+			  "Michael Natterer <mitch@gimp.org>"
+                          "Henrik Brix Andersen <brix@gimp.org>",
+			  "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
+			  "1999-2004",
 			  NULL,
 			  "",
 			  GIMP_TEMPORARY,
@@ -254,80 +181,29 @@ temp_proc_run (const gchar      *name,
 	       gint             *nreturn_vals,
 	       GimpParam       **return_vals)
 {
-  static GimpParam   values[1];
-  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
-  const gchar       *help_domain = GIMP_HELP_DEFAULT_DOMAIN;
-  const gchar       *help_locale = "C";
-  const gchar       *help_id     = "gimp-main";
-
-  /*  Make sure all the arguments are there!  */
-  if (nparams == 3)
-    {
-      if (param[0].data.d_string && strlen (param[0].data.d_string))
-        help_domain = param[0].data.d_string;
-
-      if (param[1].data.d_string && strlen (param[1].data.d_string))
-        help_locale = param[1].data.d_string;
-
-      if (param[2].data.d_string && strlen (param[2].data.d_string))
-        help_id = param[2].data.d_string;
-    }
-
-  load_help (help_domain, help_locale, help_id);
+  static GimpParam  values[1];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals  = values;
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-}
-
-static void
-load_help (const gchar *help_domain,
-           const gchar *help_locale,
-           const gchar *help_id)
-{
-  IdleHelp *idle_help;
-
-  idle_help = g_new0 (IdleHelp, 1);
-
-  idle_help->help_domain = g_strdup (help_domain);
-  idle_help->help_locale = g_strdup (help_locale);
-  idle_help->help_id     = g_strdup (help_id);
-
-  g_idle_add (load_help_idle, idle_help);  /* frees idle_help */
-}
-
-static gboolean
-load_help_idle (gpointer data)
-{
-  IdleHelp   *idle_help;
-  HelpDomain *domain;
-
-  idle_help = (IdleHelp *) data;
-
-  domain = domain_lookup (idle_help->help_domain);
-
-  if (domain)
+  /*  make sure all the arguments are there  */
+  if (nparams == 1)
     {
-      gchar *full_uri;
-
-      full_uri = domain_map (domain,
-                             idle_help->help_locale,
-                             idle_help->help_id);
-
-      if (full_uri)
+      if (param[0].data.d_string && strlen (param[0].data.d_string))
         {
-          browser_dialog_load (full_uri, TRUE);
-
-          g_free (full_uri);
+          browser_dialog_load (param[0].data.d_string, TRUE);
+        }
+      else
+        {
+          status = GIMP_PDB_CALLING_ERROR;
         }
     }
+  else
+    {
+      status = GIMP_PDB_CALLING_ERROR;
+    }
 
-  g_free (idle_help->help_domain);
-  g_free (idle_help->help_locale);
-  g_free (idle_help->help_id);
-  g_free (idle_help);
-
-  return FALSE;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
 }

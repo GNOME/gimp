@@ -42,6 +42,7 @@ SUBDIRS = \
 	gflare			\
 	gfli			\
 	gimpressionist		\
+	help			\
 	$(helpbrowser)		\
 	ifscompose		\
 	imagemap		\

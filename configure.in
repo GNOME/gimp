@@ -1549,6 +1549,7 @@ plug-ins/gimpressionist/Makefile
 plug-ins/gimpressionist/Brushes/Makefile
 plug-ins/gimpressionist/Paper/Makefile
 plug-ins/gimpressionist/Presets/Makefile
+plug-ins/help/Makefile
 plug-ins/helpbrowser/Makefile
 plug-ins/ifscompose/Makefile
 plug-ins/imagemap/Makefile

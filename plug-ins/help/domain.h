@@ -26,7 +26,7 @@
 #define __DOMAIN_H__
 
 
-#define GIMP_HELP_DEFAULT_DOMAIN "http://www.gimp.org/help"
+#define GIMP_HELP_DEFAULT_DOMAIN  "http://www.gimp.org/help"
 
 
 typedef struct _HelpDomain HelpDomain;
