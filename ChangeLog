@@ -1,3 +1,8 @@
+2003-06-25  Mohammad DAMT  <mdamt@bisnisweb.com>
+
+	* po/id.po: Added Indonesian translation
+	* configure.in: Added "id" to ALL_LINGUAS
+
 2003-06-25  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c: If an control handle gets
