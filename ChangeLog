@@ -1,3 +1,15 @@
+Mon Jan 11 22:02:10 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/paint_funcs.c:
+	The bottleneck combine_inten_a_and_inten_a_pixels()
+	function is a couple of times faster when there is a
+	layer mask, for the common case, due to working with whole
+	word-aligned ints where feasible instead of a char at a time.
+	The same optimization could be implemented in lots of other
+	places, but I'm going to bed.  Good night!
+
+	* app/gimage_cmds.c: #include <cursorutil.h>
+
 Mon Jan 11 21:35:44 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* configure.in: build the Makefile in the modules directory
