@@ -21,6 +21,7 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "drawable.h"
+#include "float16.h"
 #include "gdisplay.h"
 #include "image_map.h"
 #include "interface.h"
@@ -77,6 +78,7 @@ static PosterizeFunc posterize_func (Tag dest_tag);
 static void posterize_u8 (PixelArea *, PixelArea *, void *);
 static void posterize_u16 (PixelArea *, PixelArea *, void *);
 static void posterize_float (PixelArea *, PixelArea *, void *);
+static void posterize_float16 (PixelArea *, PixelArea *, void *);
 
 
 /*  posterize machinery  */
@@ -92,6 +94,8 @@ posterize_func (Tag dest_tag)
     return posterize_u16; 
   case PRECISION_FLOAT:
     return posterize_float; 
+  case PRECISION_FLOAT16:
+    return posterize_float16; 
   default:
     return NULL;
   } 
@@ -215,7 +219,110 @@ posterize_float (PixelArea *src_area,
 	   PixelArea *dest_area,
 	   void        *user_data)
 {
-  g_warning ("posterize_float not implemented yet");
+  PosterizeDialog *pd;
+  Tag src_tag = pixelarea_tag (src_area);
+  Tag dest_tag = pixelarea_tag (dest_area);
+  guchar *src, *dest;
+  gfloat *s, *d;
+  gint alpha = tag_alpha (src_tag);
+  gint has_alpha;
+  gint s_num_channels = tag_num_channels (src_tag);
+  gint d_num_channels = tag_num_channels (dest_tag);
+  int w, h, b, i;
+  gfloat interval, half_interval;
+
+  pd = (PosterizeDialog *) user_data;
+
+  /*  Set the transfer array  */
+  interval = 1.0/ (gfloat) (pd->levels - 1);
+  half_interval = interval / 2.0;
+
+  h = pixelarea_height (src_area);
+  src = (guchar*)pixelarea_data (src_area);
+  dest = (guchar*)pixelarea_data (dest_area);
+
+  has_alpha = (alpha == ALPHA_YES) ? TRUE: FALSE;
+  alpha = has_alpha ? s_num_channels - 1 : s_num_channels;
+
+  while (h--)
+    {
+      w = pixelarea_width (src_area);
+      s = (gfloat*)src;
+      d = (gfloat*)dest;
+      while (w--)
+	{
+	  for (b = 0; b < alpha; b++)
+	    {	
+	      d[b] = ((int)((s[b] + half_interval)/interval) * interval);
+	    }
+
+	  if (has_alpha)
+	    d[alpha] = s[alpha];
+	   
+	  s+= s_num_channels;
+	  d+= d_num_channels;
+	}
+
+      src += pixelarea_rowstride (src_area);
+      dest += pixelarea_rowstride (dest_area); 
+    }
+}
+
+static void
+posterize_float16 (PixelArea *src_area,
+	   PixelArea *dest_area,
+	   void        *user_data)
+{
+  PosterizeDialog *pd;
+  Tag src_tag = pixelarea_tag (src_area);
+  Tag dest_tag = pixelarea_tag (dest_area);
+  guchar *src, *dest;
+  guint16 *s, *d;
+  gint alpha = tag_alpha (src_tag);
+  gint has_alpha;
+  gint s_num_channels = tag_num_channels (src_tag);
+  gint d_num_channels = tag_num_channels (dest_tag);
+  int w, h, b, i;
+  gfloat interval, half_interval;
+  gfloat sb;
+  ShortsFloat u;
+
+  pd = (PosterizeDialog *) user_data;
+
+  /*  Set the transfer array  */
+  interval = 1.0/ (gfloat) (pd->levels - 1);
+  half_interval = interval / 2.0;
+
+  h = pixelarea_height (src_area);
+  src = (guchar*)pixelarea_data (src_area);
+  dest = (guchar*)pixelarea_data (dest_area);
+
+  has_alpha = (alpha == ALPHA_YES) ? TRUE: FALSE;
+  alpha = has_alpha ? s_num_channels - 1 : s_num_channels;
+
+  while (h--)
+    {
+      w = pixelarea_width (src_area);
+      s = (guint16*)src;
+      d = (guint16*)dest;
+      while (w--)
+	{
+	  for (b = 0; b < alpha; b++)
+	    {	
+ 	      sb = FLT (s[b], u);
+	      d[b] = FLT16 (((int)((sb + half_interval)/interval) * interval), u);
+	    }
+
+	  if (has_alpha)
+	    d[alpha] = s[alpha];
+	   
+	  s+= s_num_channels;
+	  d+= d_num_channels;
+	}
+
+      src += pixelarea_rowstride (src_area);
+      dest += pixelarea_rowstride (dest_area); 
+    }
 }
 
 /*  posterize select action functions  */

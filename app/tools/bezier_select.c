@@ -23,6 +23,7 @@
 #include "draw_core.h"
 #include "edit_selection.h"
 #include "errors.h"
+#include "float16.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
@@ -1585,6 +1586,106 @@ bezier_convert_helper_float  (
 }
 
 
+static void 
+bezier_convert_helper_float16  (
+                              BezierSelect * bezier_sel,
+                              int antialias,
+                              int width,
+                              int height
+                              )
+{
+  PixelArea maskPR;
+  guint16 *buf, *b;
+  gfloat * vals, val;
+  int start, end;
+  GSList * list;
+  int x, x2, w;
+  int i, j;
+  ShortsFloat u;
+
+  if (antialias)
+    {
+      buf = (guint16 *) g_malloc (width/SUPERSAMPLE*sizeof (guint16));
+      vals = (gfloat *) g_malloc (sizeof (gfloat) * width);
+    }
+  else
+    {
+      buf = NULL;
+      vals = NULL;
+    }
+
+  pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(bezier_sel->mask)), 
+                  0, 0,
+                  0, 0,
+                  TRUE);
+
+  for (i = 0; i < height; i++)
+    {
+      list = bezier_sel->scanlines[i];
+
+      /*  zero the vals array  */
+      if (antialias && !(i % SUPERSAMPLE))
+	memset (vals, 0, width * sizeof (gfloat));
+
+      while (list)
+        {
+          x = (long) list->data;
+          list = list->next;
+          if (!list)
+	    g_message ("cannot properly scanline convert bezier curve: %d", i);
+          else
+            {
+	      /*  bounds checking  */
+	      x = BOUNDS (x, 0, width);
+	      x2 = BOUNDS ((long) list->data, 0, width);
+
+	      w = x2 - x;
+
+	      if (!antialias)
+		channel_add_segment (bezier_sel->mask, x, i, w, 1.0);
+	      else
+		for (j = 0; j < w; j++)
+		  vals[j + x] += 1.0;
+
+              list = g_slist_next (list);
+            }
+        }
+
+      if (antialias && !((i+1) % SUPERSAMPLE))
+	{
+	  b = buf;
+	  start = 0;
+	  end = width;
+	  for (j = start; j < end; j += SUPERSAMPLE)
+	    {
+	      val = 0;
+	      for (x = 0; x < SUPERSAMPLE; x++)
+		val += vals[j + x];
+
+	      *b++ = FLT16 ((gfloat) (val / SUPERSAMPLE2), u);
+	    }
+
+          {
+            gint w = drawable_width (GIMP_DRAWABLE(bezier_sel->mask));
+            PixelRow row;
+		
+            pixelrow_init (&row, pixelarea_tag (&maskPR), (guchar*) buf, w);
+            pixelarea_write_row (&maskPR, &row, 0, (i / SUPERSAMPLE), w);
+          }
+        }
+
+      g_slist_free (bezier_sel->scanlines[i]);
+    }
+
+  if (antialias)
+    {
+      g_free (vals);
+      g_free (buf);
+    }
+}
+
+
+
 static void
 bezier_convert_helper (
                        BezierSelect * bezier_sel,
@@ -1609,6 +1710,11 @@ bezier_convert_helper (
       break;
     case PRECISION_FLOAT:
       bezier_convert_helper_float (bezier_sel,
+                                   antialias,
+                                   width,
+                                   height);
+    case PRECISION_FLOAT16:
+      bezier_convert_helper_float16 (bezier_sel,
                                    antialias,
                                    width,
                                    height);

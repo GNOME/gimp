@@ -1373,7 +1373,7 @@ tm_interpolate_funcs (
     (_t)->refs++; \
     (_p)->tile = (_t); \
     (_p)->data = \
-      (_t)->data + \
+      ((guchar*) (_t)->data) + \
       (((_p)->x - (_t)->x0) * (_t)->ps) + \
       (((_p)->y - (_t)->y0) * (_t)->rs); \
     } while (0)
@@ -1898,9 +1898,13 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
 }
 
 static gfloat
-cubic (dx, jm1, j, jp1, jp2)
-     double dx;
-     gfloat jm1, j, jp1, jp2;
+cubic (
+       double dx,
+       gfloat jm1,
+       gfloat j,
+       gfloat jp1,
+       gfloat jp2
+       )
 {
   double dx1, dx2, dx3;
   double h1, h2, h3, h4;

@@ -24,6 +24,7 @@
 #include "color_balance.h"
 #include "color_transfer.h"
 #include "drawable.h"
+#include "float16.h"
 #include "general.h"
 #include "gimage_mask.h"
 #include "gdisplay.h"
@@ -121,8 +122,12 @@ static ColorBalanceDialog *color_balance_dialog = NULL;
 static void       color_balance (PixelArea *, PixelArea *, void *);
 static Argument * color_balance_invoker (Argument *);
 
+static gdouble f0_u8 (gdouble);
 static gdouble f1_u8 (gdouble);
 static gdouble f2_u8 (gdouble);
+static gdouble f0 (gdouble);
+static gdouble f1 (gdouble);
+static gdouble f2 (gdouble);
 
 static void color_balance_allocate_transfer_arrays (gint);
 static void color_balance_free_transfer_arrays (void);
@@ -298,6 +303,9 @@ color_balance_row_u16 (
   double *magenta_green_transfer[3];
   double *yellow_blue_transfer[3];
   gint w = pixelrow_width (src_row);
+  gfloat cr_shadows, cr_midtones, cr_highlights;
+  gfloat mg_shadows, mg_midtones, mg_highlights;
+  gfloat yb_shadows, yb_midtones, yb_highlights;
 
   /*  Set the transfer arrays  (for speed)  */
   cyan_red_transfer[SHADOWS] = (cr[SHADOWS] > 0) ? shadows_add_ptr : shadows_sub_ptr;
@@ -310,6 +318,17 @@ color_balance_row_u16 (
   yellow_blue_transfer[MIDTONES] = (yb[MIDTONES] > 0) ? midtones_add_ptr : midtones_sub_ptr;
   yellow_blue_transfer[HIGHLIGHTS] = (yb[HIGHLIGHTS] > 0) ? highlights_add_ptr : highlights_sub_ptr;
   
+  /* scale cr, mg, yb to [0-65535] */
+  cr_shadows = (cr[SHADOWS]/255.0) * 65535;
+  cr_midtones = (cr[MIDTONES]/255.0) * 65535;
+  cr_highlights = (cr[HIGHLIGHTS]/255.0) * 65535;
+  mg_shadows = (mg[SHADOWS]/255.0) * 65535;
+  mg_midtones = (mg[MIDTONES]/255.0) * 65535;
+  mg_highlights = (mg[HIGHLIGHTS]/255.0) * 65535;
+  yb_shadows = (yb[SHADOWS]/255.0) * 65535;
+  yb_midtones = (yb[MIDTONES]/255.0) * 65535;
+  yb_highlights = (yb[HIGHLIGHTS]/255.0) * 65535;
+
   s = (guint16 *)pixelrow_data (src_row);
   d = (guint16 *)pixelrow_data (dest_row);
   has_alpha = tag_alpha (src_tag) == ALPHA_YES? TRUE: FALSE;
@@ -319,33 +338,35 @@ color_balance_row_u16 (
       g = g_n = s[GREEN_PIX];
       b = b_n = s[BLUE_PIX];
 
-      r_n += cr[SHADOWS] * cyan_red_transfer[SHADOWS][r_n];
+      r_n += cr_shadows * cyan_red_transfer[SHADOWS][r_n];
       r_n = BOUNDS (r_n, 0, 65535);
-      r_n += cr[MIDTONES] * cyan_red_transfer[MIDTONES][r_n];
+      r_n += cr_midtones * cyan_red_transfer[MIDTONES][r_n];
       r_n = BOUNDS (r_n, 0, 65535);
-      r_n += cr[HIGHLIGHTS] * cyan_red_transfer[HIGHLIGHTS][r_n];
+      r_n += cr_highlights * cyan_red_transfer[HIGHLIGHTS][r_n];
       r_n = BOUNDS (r_n, 0, 65535);
 
-      g_n += mg[SHADOWS] * magenta_green_transfer[SHADOWS][g_n];
+      g_n += mg_shadows * magenta_green_transfer[SHADOWS][g_n];
       g_n = BOUNDS (g_n, 0, 65535);
-      g_n += mg[MIDTONES] * magenta_green_transfer[MIDTONES][g_n];
+      g_n += mg_midtones * magenta_green_transfer[MIDTONES][g_n];
       g_n = BOUNDS (g_n, 0, 65535);
-      g_n += mg[HIGHLIGHTS] * magenta_green_transfer[HIGHLIGHTS][g_n];
+      g_n += mg_highlights * magenta_green_transfer[HIGHLIGHTS][g_n];
       g_n = BOUNDS (g_n, 0, 65535);
 
-      b_n += yb[SHADOWS] * yellow_blue_transfer[SHADOWS][b_n];
+      b_n += yb_shadows * yellow_blue_transfer[SHADOWS][b_n];
       b_n = BOUNDS (b_n, 0, 65535);
-      b_n += yb[MIDTONES] * yellow_blue_transfer[MIDTONES][b_n];
+      b_n += yb_midtones * yellow_blue_transfer[MIDTONES][b_n];
       b_n = BOUNDS (b_n, 0, 65535);
-      b_n += yb[HIGHLIGHTS] * yellow_blue_transfer[HIGHLIGHTS][b_n];
+      b_n += yb_highlights * yellow_blue_transfer[HIGHLIGHTS][b_n];
       b_n = BOUNDS (b_n, 0, 65535);
 
       if (preserve_luminosity)
 	{
+#if 0
 	  rgb_to_hls (&r, &g, &b);
 	  rgb_to_hls (&r_n, &g_n, &b_n);
 	  g_n = g;
 	  hls_to_rgb (&r_n, &g_n, &b_n);
+#endif
 	}
 
       d[RED_PIX] = r_n;
@@ -370,7 +391,95 @@ color_balance_row_float (
 			gint preserve_luminosity
 		  )
 {
-  g_warning ("color_balance_row_float not implemented yet\n");
+  Tag src_tag = pixelrow_tag (src_row);
+  Tag dest_tag = pixelrow_tag (dest_row);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
+  gfloat *s, *d;
+  int has_alpha;
+  gdouble r, g, b;
+  gdouble r_n, g_n, b_n;
+  gfloat cr_shadows, cr_midtones, cr_highlights;
+  gfloat mg_shadows, mg_midtones, mg_highlights;
+  gfloat yb_shadows, yb_midtones, yb_highlights;
+
+  gdouble (*cyan_red_transfer[3])(gdouble);
+  gdouble (*magenta_green_transfer[3])(gdouble);
+  gdouble (*yellow_blue_transfer[3])(gdouble);
+  gint w = pixelrow_width (src_row);
+ 
+  /* scale cr, mg, yb to [0-1] */
+  cr_shadows = cr[SHADOWS]/255.0;
+  cr_midtones = cr[MIDTONES]/255.0;
+  cr_highlights = cr[HIGHLIGHTS]/255.0;
+  mg_shadows = mg[SHADOWS]/255.0;
+  mg_midtones = mg[MIDTONES]/255.0;
+  mg_highlights = mg[HIGHLIGHTS]/255.0;
+  yb_shadows = yb[SHADOWS]/255.0;
+  yb_midtones = yb[MIDTONES]/255.0;
+  yb_highlights = yb[HIGHLIGHTS]/255.0;
+
+  /*  Set the function_ptrs for the computations  */
+  cyan_red_transfer[SHADOWS] = (cr[SHADOWS] > 0) ? f2: f0;
+  cyan_red_transfer[MIDTONES] = f2;
+  cyan_red_transfer[HIGHLIGHTS] = (cr[HIGHLIGHTS] > 0) ? f1 : f2;
+  magenta_green_transfer[SHADOWS] = (mg[SHADOWS] > 0) ? f2 : f0;
+  magenta_green_transfer[MIDTONES] = f2;
+  magenta_green_transfer[HIGHLIGHTS] = (mg[HIGHLIGHTS] > 0) ? f1 : f2;
+  yellow_blue_transfer[SHADOWS] = (yb[SHADOWS] > 0) ? f2 : f0;
+  yellow_blue_transfer[MIDTONES] = f2;
+  yellow_blue_transfer[HIGHLIGHTS] = (yb[HIGHLIGHTS] > 0) ? f1 : f2;
+  
+  s = (gfloat *)pixelrow_data (src_row);
+  d = (gfloat *)pixelrow_data (dest_row);
+  has_alpha = tag_alpha (src_tag) == ALPHA_YES? TRUE: FALSE;
+  while (w--)
+    {
+      r = r_n = s[RED_PIX];
+      g = g_n = s[GREEN_PIX];
+      b = b_n = s[BLUE_PIX];
+      
+      r_n += cr_shadows * cyan_red_transfer[SHADOWS](r_n);
+      r_n = BOUNDS (r_n, 0, 1.0);
+      r_n += cr_midtones * cyan_red_transfer[MIDTONES](r_n);
+      r_n = BOUNDS (r_n, 0, 1.0);
+      r_n += cr_highlights * cyan_red_transfer[HIGHLIGHTS](r_n);
+      r_n = BOUNDS (r_n, 0, 1.0);
+
+      g_n += mg_shadows * magenta_green_transfer[SHADOWS](g_n);
+      g_n = BOUNDS (g_n, 0, 1.0);
+      g_n += mg_midtones * magenta_green_transfer[MIDTONES](g_n);
+      g_n = BOUNDS (g_n, 0, 1.0);
+      g_n += mg_highlights * magenta_green_transfer[HIGHLIGHTS](g_n);
+      g_n = BOUNDS (g_n, 0, 1.0);
+
+      b_n += yb_shadows * yellow_blue_transfer[SHADOWS](b_n);
+      b_n = BOUNDS (b_n, 0, 1.0);
+      b_n += yb_midtones * yellow_blue_transfer[MIDTONES](b_n);
+      b_n = BOUNDS (b_n, 0, 1.0);
+      b_n += yb_highlights * yellow_blue_transfer[HIGHLIGHTS](b_n);
+      b_n = BOUNDS (b_n, 0, 1.0);
+      
+      if (preserve_luminosity)
+	{
+#if 0
+	  rgb_to_hls (&r, &g, &b);
+	  rgb_to_hls (&r_n, &g_n, &b_n);
+	  g_n = g;
+	  hls_to_rgb (&r_n, &g_n, &b_n);
+#endif
+	}
+
+      d[RED_PIX] = r_n;
+      d[GREEN_PIX] = g_n;
+      d[BLUE_PIX] = b_n;
+
+      if (has_alpha)
+	d[ALPHA_PIX] = s[ALPHA_PIX];
+
+      s += src_num_channels;
+      d += dest_num_channels;
+    }
 }
 
 static void 
@@ -388,12 +497,26 @@ color_balance_allocate_transfer_arrays (gint size)
 static void 
 color_balance_free_transfer_arrays (void)
 {
-  g_free (highlights_add_ptr);
-  g_free (midtones_add_ptr);
-  g_free (shadows_add_ptr);
-  g_free (highlights_sub_ptr);
-  g_free (midtones_sub_ptr);
-  g_free (shadows_sub_ptr);
+  if (highlights_add_ptr) 
+    g_free (highlights_add_ptr);
+  if (midtones_add_ptr) 
+    g_free (midtones_add_ptr);
+  if (shadows_add_ptr) 
+    g_free (shadows_add_ptr);
+  if (highlights_sub_ptr) 
+    g_free (highlights_sub_ptr);
+  if (midtones_sub_ptr)
+    g_free (midtones_sub_ptr);
+  if (shadows_sub_ptr)
+    g_free (shadows_sub_ptr);
+  
+  highlights_add_ptr = NULL;
+  midtones_add_ptr = NULL;
+  shadows_add_ptr = NULL;
+
+  highlights_sub_ptr = NULL;
+  midtones_sub_ptr = NULL;
+  shadows_sub_ptr = NULL;
 }
 
 static void
@@ -412,16 +535,15 @@ color_balance_init_transfers_u8 (void)
 static void
 color_balance_init_transfers_u16 (void) 
 {
-  gdouble x_8;
+  gdouble x;
   gint i;
   color_balance_allocate_transfer_arrays (65536);
   for (i = 0; i < 65536; i++)
     {
-      /* scale the input to [0-255] space and then scale the output back to [0-65535] space */
-      x_8 = ((double)i/65535.0) * 255.0;   
-      highlights_add_ptr[i] = shadows_sub_ptr[65535 - i] =  65535.0 * (f1_u8 (x_8)/255.0);
-      midtones_add_ptr[i] = midtones_sub_ptr[i] = 65535.0 * (f2_u8 (x_8)/255.0);
-      shadows_add_ptr[i] = highlights_sub_ptr[i] = 65535.0 * (f2_u8 (x_8)/255.0);
+      x = ((double)i/65535.0);   
+      highlights_add_ptr[i] = shadows_sub_ptr[65535 - i] =  f1(x);
+      midtones_add_ptr[i] = midtones_sub_ptr[i] = f2(x);
+      shadows_add_ptr[i] = highlights_sub_ptr[i] = f2(x);
     }
 }
 
@@ -430,7 +552,14 @@ color_balance_init_transfers_float (void)
 {
 }
 
-/* Formula for highlights_add and shadows_sub arrays [0-255] based*/
+static 
+gdouble f0_u8(
+		gdouble x
+		)
+{
+  return 1.075 - 1/((255.0-x)/16.0 + 1);
+}
+
 static 
 gdouble f1_u8(
 		gdouble x
@@ -440,14 +569,39 @@ gdouble f1_u8(
 }
 
 
+static 
+gdouble f0(
+		gdouble x
+		)
+{
+  return 1.075 - 1.0 /(.0625 * (1.0-x) + 1.0);
+}
+
+static 
+gdouble f1(
+		gdouble x
+		)
+{
+  return 1.075 - 1.0 /(.0625 * x + 1.0);
+}
+
 /* Formula for midtones_add, midtones_sub, 
    shadows_add and highlights_sub arrays  [0-255] based*/
+
 static 
 gdouble f2_u8(
 		gdouble x
 		)
 {
   return 0.667 * (1 - SQR ((x - 127.0) / 127.0));
+}
+
+static 
+gdouble f2(
+		gdouble x
+		)
+{
+  return .667 * (1.0 - SQR ( 2.0 * x - 1.0));
 }
 
 /*  by_color select action functions  */

@@ -21,6 +21,7 @@
 #include "appenv.h"
 #include "canvas.h"
 #include "drawable.h"
+#include "float16.h"
 #include "interface.h"
 #include "invert.h"
 #include "gimage.h"
@@ -35,6 +36,7 @@ static InvertRowFunc invert_row_func (Tag row_tag);
 static void invert_row_u8 (PixelRow *, PixelRow *);
 static void invert_row_u16 (PixelRow *, PixelRow *);
 static void invert_row_float (PixelRow *, PixelRow *);
+static void invert_row_float16 (PixelRow *, PixelRow *);
 
 
 /*  Inverter  */
@@ -50,6 +52,8 @@ invert_row_func (Tag row_tag)
     return invert_row_u16; 
   case PRECISION_FLOAT:
     return invert_row_float; 
+  case PRECISION_FLOAT16:
+    return invert_row_float16; 
   default:
     return NULL;
   } 
@@ -183,6 +187,41 @@ invert_row_float(
     }
 }
 
+
+void
+invert_row_float16(
+		PixelRow *src_row,
+		PixelRow *dest_row
+		)
+
+{
+  gint    alpha, b;
+  Tag     src_tag      = pixelrow_tag (src_row); 
+  gint 	  has_alpha    = tag_alpha (src_tag) == ALPHA_YES ? TRUE: FALSE;
+  guint16 *dest         = (guint16*)pixelrow_data (dest_row);
+  guint16 *src          = (guint16*)pixelrow_data (src_row);
+  gint    width        = pixelrow_width (src_row);
+  gint    num_channels = tag_num_channels (src_tag);
+  ShortsFloat u;
+  gfloat sb;
+  
+  alpha = has_alpha ? (num_channels - 1) : num_channels;
+  
+  while (width --)
+    {
+      for (b = 0; b < alpha; b++)
+	{
+	  sb = FLT (src[b], u);
+	  dest[b] = FLT16 (1.0 - sb, u);
+	}
+
+      if (has_alpha)
+	dest[alpha] = src[alpha];
+
+      dest += num_channels;
+      src += num_channels;
+    }
+}
 
 void
 image_invert (gimage_ptr)

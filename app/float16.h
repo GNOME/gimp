@@ -19,7 +19,7 @@
 #define __FLOAT16_H__
 
 #include <glib.h>
-#include <sys/endian.h>
+#include "config.h"
 
 #define ONE_FLOAT16 16256
 #define HALF_FLOAT16 16128
@@ -31,12 +31,12 @@ typedef union
   gfloat f;
 }ShortsFloat;
 
-#define FLT16( x, t ) (t.f = (x), t.s[0])   
-
-#if BYTE_ORDER == BIG_ENDIAN
+#if WORDS_BIGENDIAN 
 #define FLT( x, t ) (t.s[0] = (x), t.s[1]= 0, t.f) 
+#define FLT16( x, t ) (t.f = (x), t.s[0])   
 #else
 #define FLT( x, t ) (t.s[1] = (x), t.s[0]= 0, t.f) 
+#define FLT16( x, t ) (t.f = (x), t.s[1])   
 #endif
 
 #endif

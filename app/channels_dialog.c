@@ -52,7 +52,7 @@
 #include "tools/delete_is.xpm"
 
 #include "channel_pvt.h"
-
+#include "pixelarea.h"
 
 #define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK
 #define BUTTON_EVENT_MASK  GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | \
@@ -1971,6 +1971,8 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   GtkWidget *label;
   GtkWidget *opacity_scale;
   GtkObject *opacity_scale_data;
+  Tag channel_tag = drawable_tag (GIMP_DRAWABLE (channel_widget->channel));
+  Tag color_tag = tag_new (tag_precision (channel_tag), FORMAT_RGB, ALPHA_NO);
 
   /*  the new options structure  */
   options = (EditChannelOptions *) g_malloc (sizeof (EditChannelOptions));
@@ -1978,8 +1980,8 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   options->gimage_id = channel_widget->gimage->ID;
   options->opacity = (double) channel_widget->channel->opacity * 100.0;
 
-  pixelrow_init (&channel_color, drawable_tag (GIMP_DRAWABLE (channel_widget->channel)),
-                 channel_color_data, 1);
+
+  pixelrow_init (&channel_color, color_tag, channel_color_data, 1);
   copy_row (&channel_widget->channel->col, &channel_color);
 
   options->color_panel = color_panel_new (&channel_color, 48, 64);

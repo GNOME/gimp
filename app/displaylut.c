@@ -40,6 +40,10 @@ display_u8_init(void)
 	  }
       }
       break;
+    case PRECISION_NONE:
+    default:
+      g_warning("display_u8_init: bad precision\n"); 
+      break;
     }
 }
 	
@@ -55,12 +59,12 @@ display_u8_from_float(gfloat code)
       break;
     case PRECISION_U16:
       {
-	return ((guint16)(code  * 65535.0)) >> 8; 
+	return (guint8)(code * 255.0);	
       }
       break;
     case PRECISION_FLOAT:
       {
-	return code; 
+	return (guint8)(code * 255.0); 
       }
       break;
     case PRECISION_FLOAT16:
@@ -90,6 +94,11 @@ display_u8_from_float(gfloat code)
 	    return 0;  /* if its negative or inf or nan */
 	}
       }
+      break;
+    case PRECISION_NONE:
+    default:
+      g_warning("display_u8_from_float: bad precision\n"); 
+      return 0;
       break;
     }
 }
