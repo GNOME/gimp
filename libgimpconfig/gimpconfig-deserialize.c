@@ -183,8 +183,7 @@ gimp_config_deserialize_properties (GObject   *object,
 
   g_scanner_set_scope (scanner, old_scope_id);
 
-  return gimp_config_deserialize_return (scanner, token,
-                                         nest_level, NULL);
+  return gimp_config_deserialize_return (scanner, token, nest_level);
 }
 
 static GTokenType

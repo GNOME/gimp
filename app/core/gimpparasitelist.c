@@ -317,8 +317,7 @@ gimp_parasite_list_deserialize (GObject  *list,
         }
     }
 
-  return gimp_config_deserialize_return (scanner, token,
-                                         nest_level, parasite_symbol);
+  return gimp_config_deserialize_return (scanner, token, nest_level);
 }
 
 GimpParasiteList *

@@ -1,5 +1,22 @@
 2002-06-17  Sven Neumann  <sven@gimp.org>
 
+	Obviously I disagree with Tim about the symbol_name parameter in
+	g_scanner_unexp_token(). As it seems it's not supposed to be used
+	to tell the user about the expected symbol (see bug #81850):
+
+	* gimpconfig.[ch] (gimp_config_deserialize_return): removed the
+	symbol_name parameter.
+
+	* app/config/gimpconfig-deserialize.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpdocumentlist.c
+	* app/core/gimpparasitelist.c: changed the callers accordingly.
+
+	* app/core/gimpunits.c (gimp_unitrc_load): pass NULL as symbol_name
+	to g_scanner_unexp_token().
+	
+2002-06-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-server.c (read_from_client): merged
 	fix for bug #85573 from stable branch. We should port this stuff
 	to use GIOChannels.

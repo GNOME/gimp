@@ -322,8 +322,7 @@ gimp_config_deserialize (GObject      *object,
 gboolean
 gimp_config_deserialize_return (GScanner     *scanner,
                                 GTokenType    expected_token,
-                                gint          nest_level,
-                                const gchar  *symbol_name)
+                                gint          nest_level)
 {
   GTokenType next_token;
 
@@ -334,8 +333,7 @@ gimp_config_deserialize_return (GScanner     *scanner,
   if (expected_token != G_TOKEN_LEFT_PAREN)
     {
       g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, expected_token, NULL, NULL,
-                             symbol_name,
+      g_scanner_unexp_token (scanner, expected_token, NULL, NULL, NULL,
                              _("fatal parse error"), TRUE);
       return FALSE;
     }
@@ -348,8 +346,7 @@ gimp_config_deserialize_return (GScanner     *scanner,
       else if (next_token != G_TOKEN_EOF)
         {
           g_scanner_get_next_token (scanner);
-          g_scanner_unexp_token (scanner, expected_token, NULL, NULL,
-                                 symbol_name,
+          g_scanner_unexp_token (scanner, expected_token, NULL, NULL, NULL,
                                  _("fatal parse error"), TRUE);
           return FALSE;
         }

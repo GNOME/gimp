@@ -581,8 +581,7 @@ gimp_container_deserialize (GObject  *object,
         }
     }
 
-  return gimp_config_deserialize_return (scanner, token,
-                                         nest_level, NULL);
+  return gimp_config_deserialize_return (scanner, token, nest_level);
 }
 
 static void

@@ -154,8 +154,7 @@ gimp_unitrc_load (Gimp *gimp)
   if (token != G_TOKEN_LEFT_PAREN)
     {
       g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, NULL,
-                             scanner->scope_id == 0 ? "unit-info" : NULL,
+      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
                              _("fatal parse error"), TRUE);
 
       g_message (error->message);

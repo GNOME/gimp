@@ -84,8 +84,7 @@ gboolean      gimp_config_deserialize           (GObject      *object,
 
 gboolean      gimp_config_deserialize_return    (GScanner     *scanner,
                                                  GTokenType    expected_token,
-                                                 gint          nest_level,
-                                                 const gchar  *symbol_name);
+                                                 gint          nest_level);
 
 GObject     * gimp_config_duplicate             (GObject      *object);
 gboolean      gimp_config_equal                 (GObject      *a,
