@@ -132,7 +132,7 @@ gimp_pick_button_init (GimpPickButton *button)
 {
   GtkWidget *image;
 
-  image = gtk_image_new_from_stock (GIMP_STOCK_TOOL_COLOR_PICKER,
+  image = gtk_image_new_from_stock (GIMP_STOCK_COLOR_PICK_FROM_SCREEN,
                                     GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);

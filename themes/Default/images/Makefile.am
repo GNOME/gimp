@@ -134,6 +134,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-color-picker-black-18.png		\
 	stock-color-picker-gray-18.png		\
 	stock-color-picker-white-18.png		\
+	stock-color-pick-from-screen-16.png	\
 	stock-color-triangle-16.png		\
 	stock-curve-free-16.png			\
 	stock-curve-smooth-16.png		\

@@ -848,6 +848,13 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_COLOR_PICK_FROM_SCREEN ##### -->
+<para>
+<inlinegraphic fileref="stock-color-pick-from-screen-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_CONVERT_GRAYSCALE ##### -->
 <para>
 <inlinegraphic fileref="stock-convert-grayscale-16.png" format="png"></inlinegraphic>
@@ -1313,6 +1320,13 @@ RTL variant
 <!-- ##### MACRO GIMP_STOCK_PATTERN ##### -->
 <para>
 
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_ZOOM_FOLLOW_WINDOW ##### -->
+<para>
+<inlinegraphic fileref="stock-zoom-follow-window-12.png" format="png"></inlinegraphic>
 </para>
 
 

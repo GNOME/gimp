@@ -976,7 +976,8 @@ process_event_queue_keys (GdkEventKey *kevent,
 
   va_start (argp, kevent);
 
-  while (n_keys < FILTER_MAX_KEYS && (keys[n_keys] = va_arg (argp, guint)) != 0)
+  while (n_keys < FILTER_MAX_KEYS &&
+         (keys[n_keys] = va_arg (argp, guint)) != 0)
     {
       modifiers[n_keys] = va_arg (argp, GdkModifierType);
       values[n_keys]    = va_arg (argp, gint);
@@ -1061,8 +1062,9 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
   EditType      edit_type = EDIT_MASK_TRANSLATE;
   GimpUndoType  undo_type = GIMP_UNDO_GROUP_MASK;
   const gchar  *undo_desc = NULL;
+  gint          velocity;
 
-  /* Bail out early if it is not an arrow key event */
+  /* bail out early if it is not an arrow key event */
 
   if (kevent->keyval != GDK_Left &&
       kevent->keyval != GDK_Right &&
@@ -1070,19 +1072,23 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
       kevent->keyval != GDK_Down)
     return FALSE;
 
+  /*  adapt arrow velocity to the zoom factor  */
+  velocity = ARROW_VELOCITY / GIMP_DISPLAY_SHELL (gdisp->shell)->scale;
+  velocity = MAX (1, velocity);
+
   /*  check for mask translation first because the translate_layer
    *  modifiers match the translate_mask ones...
    */
   inc_x =
     process_event_queue_keys (kevent,
 			      GDK_Left, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
-                              -1 * ARROW_VELOCITY,
+                              -1 * velocity,
 
 			      GDK_Left, GDK_MOD1_MASK,
                               -1,
 
 			      GDK_Right, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
-                              1 * ARROW_VELOCITY,
+                              1 * velocity,
 
 			      GDK_Right, GDK_MOD1_MASK,
                               1,
@@ -1092,13 +1098,13 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
   inc_y =
     process_event_queue_keys (kevent,
 			      GDK_Up, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
-                              -1 * ARROW_VELOCITY,
+                              -1 * velocity,
 
 			      GDK_Up, GDK_MOD1_MASK,
                               -1,
 
 			      GDK_Down, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
-                              1 * ARROW_VELOCITY,
+                              1 * velocity,
 
 			      GDK_Down, GDK_MOD1_MASK,
                               1,
@@ -1116,13 +1122,13 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
     {
       inc_x = process_event_queue_keys (kevent,
                                         GDK_Left, (GDK_CONTROL_MASK | GDK_SHIFT_MASK),
-                                        -1 * ARROW_VELOCITY,
+                                        -1 * velocity,
 
                                         GDK_Left, GDK_CONTROL_MASK,
                                         -1,
 
                                         GDK_Right, (GDK_CONTROL_MASK | GDK_SHIFT_MASK),
-                                        1 * ARROW_VELOCITY,
+                                        1 * velocity,
 
                                         GDK_Right, GDK_CONTROL_MASK,
                                         1,
@@ -1131,13 +1137,13 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
 
       inc_y = process_event_queue_keys (kevent,
                                         GDK_Up, (GDK_CONTROL_MASK | GDK_SHIFT_MASK),
-                                        -1 * ARROW_VELOCITY,
+                                        -1 * velocity,
 
                                         GDK_Up, GDK_CONTROL_MASK,
                                         -1,
 
                                         GDK_Down, (GDK_CONTROL_MASK | GDK_SHIFT_MASK),
-                                        1 * ARROW_VELOCITY,
+                                        1 * velocity,
 
                                         GDK_Down, GDK_CONTROL_MASK,
                                         1,
@@ -1155,13 +1161,13 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
         {
           inc_x = process_event_queue_keys (kevent,
                                             GDK_Left, GDK_SHIFT_MASK,
-                                            -1 * ARROW_VELOCITY,
+                                            -1 * velocity,
 
                                             GDK_Left, 0,
                                             -1,
 
                                             GDK_Right, GDK_SHIFT_MASK,
-                                            1 * ARROW_VELOCITY,
+                                            1 * velocity,
 
                                             GDK_Right, 0,
                                             1,
@@ -1170,13 +1176,13 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
 
           inc_y = process_event_queue_keys (kevent,
                                             GDK_Up, GDK_SHIFT_MASK,
-                                            -1 * ARROW_VELOCITY,
+                                            -1 * velocity,
 
                                             GDK_Up, 0,
                                             -1,
 
                                             GDK_Down, GDK_SHIFT_MASK,
-                                            1 * ARROW_VELOCITY,
+                                            1 * velocity,
 
                                             GDK_Down, 0,
                                             1,

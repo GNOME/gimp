@@ -1,3 +1,8 @@
+2004-07-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpstock.sgml: added new icons.
+
 2004-07-05  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-docs.sgml: oops, gimpenums.xml used to be there

@@ -163,6 +163,7 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_COLOR_PICKER_GRAY,        NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_PICKER_WHITE,       NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_TRIANGLE,           NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_COLOR_PICK_FROM_SCREEN,   NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_CHAR_PICKER,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LETTER_SPACING, N_("L_etter Spacing"), 0, 0, LIBGIMP_DOMAIN },
@@ -335,6 +336,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_COLOR_PICKER_GRAY,        stock_color_picker_gray_18        },
   { GIMP_STOCK_COLOR_PICKER_WHITE,       stock_color_picker_white_18       },
   { GIMP_STOCK_COLOR_TRIANGLE,           stock_color_triangle_16           },
+  { GIMP_STOCK_COLOR_PICK_FROM_SCREEN,   stock_color_pick_from_screen_16   },
 
   { GIMP_STOCK_CHAR_PICKER,              stock_char_picker_22              },
   { GIMP_STOCK_LETTER_SPACING,           stock_letter_spacing_22           },

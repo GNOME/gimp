@@ -1,3 +1,19 @@
+2004-07-07  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpeditselectiontool.c
+	(gimp_edit_selection_tool_key_press): adapt the arrow key velocity
+	to the display scale factor. Please test and complain if you
+	dislike this behaviour.
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-color-pick-from-screen-16.png: new
+	icon drawn by Jimmac.
+
+	* libgimpwidgets/gimpstock.[ch]: register the new icon.
+
+	* libgimpwidgets/gimppickbutton.c: use it for the screen color
+	picker instead of reusing the color picker tool icon.
+
 2004-07-06  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/gfig/*.[ch]:  a bunch of code clean-up and 
