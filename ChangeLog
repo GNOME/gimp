@@ -1,3 +1,9 @@
+Tue May  5 11:40:28 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/psd/psd.c: updates from Adam
+
+	* plug-ins/script-fu/scripts/text-circle.scm: new version
+
 Mon May  4 21:24:03 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 0.99.29 release

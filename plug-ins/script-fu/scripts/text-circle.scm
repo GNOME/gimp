@@ -1,9 +1,26 @@
 ;; text-circle.scm -- a script for The GIMP 1.0
 ;; Author: Shuji Narazaki <narazaki@InetQ.or.jp>
-;; Time-stamp: <1998/01/28 22:09:41 narazaki@InetQ.or.jp>
-;; Version 2.3
+;; Time-stamp: <1998/04/30 22:00:40 narazaki@InetQ.or.jp>
+;; Version 2.4
 ;; Thanks:
 ;;   jseymour@jimsun.LinxNet.com (Jim Seymour)
+;;   Sven Neumann <neumanns@uni-duesseldorf.de>
+
+;; Note:
+;;  Please remove /usr/local/share/gimp/scripts/circle-logo.scm, which is
+;;  obsolete version of this script.
+
+;; Implementation memo:
+;; This script uses "extra-pole".
+;; Namely, when rendering a letter, gimp-text is invoked with the letter
+;; followed by " lAgy", then strips it by gimp-layer-resize. I call this " lAgy"
+;; extra-pole. Why is it needed?
+;; Since a text is located by its left-upper corner's position, THERE IS NO WAY
+;; TO PLACE LETTERS ON A BASE LINE!
+;; (FURTHERMORE, GIMP-TEXT EATS WHITESPACES AT THE BEGINNING/END OF LINE.)
+;; Thus, as a dirty trick, by adding tall letters: "lA", and "gy" which have
+;; large descent value to each letter temporally, most letters in most fonts
+;; are aligned correctly. But don't expect completeness :-<
 
 (if (not (symbol-bound? 'script-fu-text-circle-text (the-environment)))
     (define script-fu-text-circle-text
@@ -18,6 +35,8 @@
     (define script-fu-text-circle-font-size 18))
 (if (not (symbol-bound? 'script-fu-text-circle-antialias (the-environment)))
     (define script-fu-text-circle-antialias TRUE))
+(if (not (symbol-bound? 'script-fu-text-circle-extra-pole (the-environment)))
+    (define script-fu-text-circle-extra-pole TRUE))
 (if (not (symbol-bound? 'script-fu-text-circle-font-foundry (the-environment)))
     (define script-fu-text-circle-font-foundry "\"*\""))
 (if (not (symbol-bound? 'script-fu-text-circle-font-family (the-environment)))
@@ -30,10 +49,14 @@
     (define script-fu-text-circle-font-width "\"*\""))
 (if (not (symbol-bound? 'script-fu-text-circle-font-spacing (the-environment)))
     (define script-fu-text-circle-font-spacing "\"*\""))
+(if (not (symbol-bound? 'script-fu-text-circle-debug? (the-environment)))
+    (define script-fu-text-circle-debug? #f))
 
 (define (script-fu-text-circle text radius start-angle fill-angle
 			       font-size antialias
 			       foundry family weight slant width spacing)
+  ;;(set! script-fu-text-circle-debug? #t)
+  (define extra-pole TRUE)		; for debugging purpose
   (define modulo fmod)			; in R4RS way
   (define (wrap-string str) (string-append "\"" str "\""))
   (define (white-space-string? str)
@@ -48,7 +71,11 @@
 	 (rad-90 (/ *pi* 2))
 	 (center-x (/ drawable-size 2))
 	 (center-y center-x)
-	 (fixed-pole " ]Ag")		; some fonts have no "]" "g" has desc.
+	 ;; widths of " lAgy" and of "l Agy" will be different, because gimp-text
+	 ;; strips spaces at the beginning of a string![Mon Apr 27 15:10:39 1998]
+	 (fixed-pole0 "l Agy")
+	 ;; the following used as real pad.
+	 (fixed-pole " lAgy")
 	 (font-infos (gimp-text-get-extents fixed-pole font-size PIXELS
 					    "*" family "*" slant "*" "*"))
 	 (desc (nth 3 font-infos))
@@ -65,13 +92,15 @@
     (set! fill-angle-rad (* (/ fill-angle 360) 2 *pi*))
     (set! radian-step (/ fill-angle-rad char-num))
     ;; set extra
-    (let ((temp-pole-layer (car (gimp-text img -1 0 0
-					   fixed-pole
-					   1 antialias
-					   font-size PIXELS
-					   "*" family "*" slant "*" "*"))))
-      (set! extra (car (gimp-drawable-width temp-pole-layer)))
-      (gimp-image-remove-layer img temp-pole-layer))
+    (if (eq? extra-pole TRUE)
+	(let ((temp-pole-layer (car (gimp-text img -1 0 0
+					       fixed-pole0
+					       1 antialias
+					       font-size PIXELS
+					       "*" family "*" slant "*" "*"))))
+	  (set! extra (car (gimp-drawable-width temp-pole-layer)))
+	  (gimp-image-remove-layer img temp-pole-layer))
+	(set! extra 0))
     ;; make width-list
     ;;  In a situation,
     ;; (car (gimp-drawable-width (car (gimp-text ...)))
@@ -86,7 +115,7 @@
       (while (< index char-num)
 	(set! temp-str (substring text index (+ index 1)))
 	(if (white-space-string? temp-str)
-	    (set! temp-str "]"))
+	    (set! temp-str "x"))
 	(set! temp-layer (car (gimp-text img -1 0 0
 					 temp-str
 					 1 antialias
@@ -111,43 +140,49 @@
       (if (not (white-space-string? letter))
 	  ;; Running gimp-text with " " causes an error!
 	  (let* ((new-layer (car (gimp-text img -1 0 0
-					    (string-append letter fixed-pole)
+					    (if (eq? extra-pole TRUE)
+						(string-append letter fixed-pole)
+						letter)
 					    1 antialias
 					    font-size PIXELS
 					    "*" family "*" slant "*" "*")))
 		 (width (car (gimp-drawable-width new-layer)))
 		 (height (car (gimp-drawable-height new-layer)))
 		 (rotate-radius (- (/ height 2) desc))
-		 (new-width (- width extra 1))
+		 (new-width (- width extra))
 		 (angle (+ start-angle-rad (- (nth index angle-list) rad-90))))
 	    ;; delete fixed-pole
 	    (gimp-layer-resize new-layer new-width height 0 0)
 	    (set! width (car (gimp-drawable-width new-layer)))
-	    (gimp-layer-translate new-layer
-				  (+ center-x
-				     (* radius (cos angle))
-				     (* rotate-radius
-					(cos (if (< 0 fill-angle-rad)
-						 angle
-						 (+ angle *pi*))))
-				     (- (/ width 2)))
-				  (+ center-y
-				     (* radius (sin angle))
-				     (* rotate-radius
-					(sin (if (< 0 fill-angle-rad) 
-						 angle
-						 (+ angle *pi*))))
-				     (- (/ height 2))))
-	    (gimp-rotate img new-layer 1 
-			 ((if (< 0 fill-angle-rad) + -) angle rad-90))))
+	    (if (not script-fu-text-circle-debug?)
+		(begin
+		  (gimp-layer-translate new-layer
+					(+ center-x
+					   (* radius (cos angle))
+					   (* rotate-radius
+					      (cos (if (< 0 fill-angle-rad)
+						       angle
+						       (+ angle *pi*))))
+					   (- (/ width 2)))
+					(+ center-y
+					   (* radius (sin angle))
+					   (* rotate-radius
+					      (sin (if (< 0 fill-angle-rad) 
+						       angle
+						       (+ angle *pi*))))
+					   (- (/ height 2))))
+		  (gimp-rotate img new-layer 1 
+			       ((if (< 0 fill-angle-rad) + -) angle rad-90))))))
       (set! index (+ index 1)))
     (gimp-layer-set-visible BG-layer 0)
-    (set! merged-layer 
-	  (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
-    (gimp-layer-set-name merged-layer 
-			 (if (< (length text) 16)
-			     (wrap-string text)
-			     "Circle Logo"))
+    (if (not script-fu-text-circle-debug?)
+	(begin
+	  (set! merged-layer 
+		(car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
+	  (gimp-layer-set-name merged-layer 
+			       (if (< (length text) 16)
+				   (wrap-string text)
+				   "Text Circle"))))
     (gimp-layer-set-visible BG-layer 1)
     (gimp-image-enable-undo img)
     (gimp-image-clean-all img)
@@ -158,6 +193,7 @@
     (set! script-fu-text-circle-fill-angle fill-angle)
     (set! script-fu-text-circle-font-size font-size)
     (set! script-fu-text-circle-antialias antialias)
+    (set! script-fu-text-circle-extra-pole extra-pole)
     (set! script-fu-text-circle-font-foundry (wrap-string foundry))
     (set! script-fu-text-circle-font-family (wrap-string family))
     (set! script-fu-text-circle-font-weight (wrap-string weight))
