@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.17\n"
-"POT-Creation-Date: 2000-02-17 00:32+0100\n"
-"PO-Revision-Date: 2000-02-17 00:36+01:00\n"
+"POT-Creation-Date: 2000-02-19 10:39+0100\n"
+"PO-Revision-Date: 2000-02-19 10:16+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,9 +39,10 @@ msgstr "O programu"
 #: plug-ins/AlienMap2/AlienMap2.c:626 plug-ins/AlienMap2/AlienMap2.c:912
 #: plug-ins/FractalExplorer/Dialogs.c:300
 #: plug-ins/FractalExplorer/Dialogs.c:1393
-#: plug-ins/FractalExplorer/FractalExplorer.c:853
-#: plug-ins/FractalExplorer/FractalExplorer.c:1582 plug-ins/bmp/bmpwrite.c:562
-#: plug-ins/borderaverage/borderaverage.c:401
+#: plug-ins/FractalExplorer/FractalExplorer.c:852
+#: plug-ins/FractalExplorer/FractalExplorer.c:1581
+#: plug-ins/Lighting/lighting_ui.c:1075 plug-ins/MapObject/mapobject_ui.c:1382
+#: plug-ins/bmp/bmpwrite.c:562 plug-ins/borderaverage/borderaverage.c:401
 #: plug-ins/common/CML_explorer.c:1188 plug-ins/common/CML_explorer.c:1946
 #: plug-ins/common/CML_explorer.c:2266 plug-ins/common/aa.c:363
 #: plug-ins/common/align_layers.c:420 plug-ins/common/apply_lens.c:404
@@ -105,8 +106,8 @@ msgstr "O programu"
 #: plug-ins/gimpressionist/gimpressionist.c:490
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
-#: plug-ins/ifscompose/ifscompose.c:798
-#: plug-ins/imagemap/imap_default_dialog.c:101 plug-ins/maze/maze_face.c:203
+#: plug-ins/ifscompose/ifscompose.c:797
+#: plug-ins/imagemap/imap_default_dialog.c:102 plug-ins/maze/maze_face.c:203
 #: plug-ins/mosaic/mosaic.c:548 plug-ins/pagecurl/pagecurl.c:581
 #: plug-ins/print/print.c:1497 plug-ins/rcm/rcm_dialog.c:746
 #: plug-ins/script-fu/script-fu-scripts.c:1475
@@ -120,11 +121,11 @@ msgstr "OK"
 #. the  Action Button
 #: plug-ins/AlienMap/AlienMap.c:636 plug-ins/AlienMap2/AlienMap2.c:628
 #: plug-ins/FractalExplorer/Dialogs.c:302
-#: plug-ins/FractalExplorer/FractalExplorer.c:747
-#: plug-ins/FractalExplorer/FractalExplorer.c:862
-#: plug-ins/FractalExplorer/FractalExplorer.c:1616
-#: plug-ins/Lighting/lighting_ui.c:1071 plug-ins/bmp/bmpwrite.c:564
-#: plug-ins/borderaverage/borderaverage.c:403
+#: plug-ins/FractalExplorer/FractalExplorer.c:746
+#: plug-ins/FractalExplorer/FractalExplorer.c:861
+#: plug-ins/FractalExplorer/FractalExplorer.c:1615
+#: plug-ins/Lighting/lighting_ui.c:1077 plug-ins/MapObject/mapobject_ui.c:1384
+#: plug-ins/bmp/bmpwrite.c:564 plug-ins/borderaverage/borderaverage.c:403
 #: plug-ins/common/CML_explorer.c:1190 plug-ins/common/CML_explorer.c:2268
 #: plug-ins/common/aa.c:365 plug-ins/common/align_layers.c:422
 #: plug-ins/common/apply_lens.c:406 plug-ins/common/blinds.c:344
@@ -188,8 +189,8 @@ msgstr "OK"
 #: plug-ins/gfli/gfli.c:928 plug-ins/gimpressionist/gimpressionist.c:499
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
-#: plug-ins/ifscompose/ifscompose.c:806
-#: plug-ins/imagemap/imap_default_dialog.c:116 plug-ins/maze/maze_face.c:207
+#: plug-ins/ifscompose/ifscompose.c:805
+#: plug-ins/imagemap/imap_default_dialog.c:117 plug-ins/maze/maze_face.c:207
 #: plug-ins/mosaic/mosaic.c:550 plug-ins/pagecurl/pagecurl.c:583
 #: plug-ins/print/print.c:1395 plug-ins/print/print.c:1505
 #: plug-ins/rcm/rcm_dialog.c:748 plug-ins/script-fu/script-fu-scripts.c:1484
@@ -443,7 +444,8 @@ msgid "About AlienMap2"
 msgstr "O cizím mapování 2"
 
 #. Preview
-#: plug-ins/FractalExplorer/Dialogs.c:324 plug-ins/common/CML_explorer.c:1214
+#: plug-ins/FractalExplorer/Dialogs.c:324 plug-ins/Lighting/lighting_ui.c:1093
+#: plug-ins/MapObject/mapobject_ui.c:1399 plug-ins/common/CML_explorer.c:1214
 #: plug-ins/common/blinds.c:362 plug-ins/common/bumpmap.c:828
 #: plug-ins/common/curve_bend.c:1515 plug-ins/common/destripe.c:597
 #: plug-ins/common/emboss.c:762 plug-ins/common/exchange.c:319
@@ -455,9 +457,9 @@ msgstr "O cizím mapování 2"
 #: plug-ins/gflare/gflare.c:2514 plug-ins/gflare/gflare.c:3519
 #: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/ifscompose/ifscompose.c:913
-#: plug-ins/imagemap/imap_edit_area_info.c:286
-#: plug-ins/imagemap/imap_grid.c:231 plug-ins/rcm/rcm_dialog.c:115
+#: plug-ins/ifscompose/ifscompose.c:912
+#: plug-ins/imagemap/imap_edit_area_info.c:287
+#: plug-ins/imagemap/imap_grid.c:232 plug-ins/rcm/rcm_dialog.c:115
 #: plug-ins/rcm/rcm_dialog.c:627 plug-ins/sinus/sinus.c:1184
 msgid "Preview"
 msgstr "Náhled"
@@ -601,7 +603,7 @@ msgstr "Naèíst fraktál ze souboru"
 #: plug-ins/common/curve_bend.c:1379 plug-ins/common/iwarp.c:967
 #: plug-ins/common/spheredesigner.c:2238 plug-ins/common/tileit.c:486
 #: plug-ins/fp/fp_gtk.c:884 plug-ins/gimpressionist/preview.c:124
-#: plug-ins/ifscompose/ifscompose.c:804
+#: plug-ins/ifscompose/ifscompose.c:803
 msgid "Reset"
 msgstr "Obnovit"
 
@@ -612,7 +614,7 @@ msgstr "Nastaví parametry na implicitní hodnody"
 #: plug-ins/FractalExplorer/Dialogs.c:553 plug-ins/common/CML_explorer.c:1234
 #: plug-ins/common/gqbist.c:713 plug-ins/common/spheredesigner.c:2340
 #: plug-ins/gfig/gfig.c:4886 plug-ins/gfig/gfig.c:6508
-#: plug-ins/imagemap/imap_menu.c:217 plug-ins/imagemap/imap_toolbar.c:110
+#: plug-ins/imagemap/imap_menu.c:218 plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
 msgstr "Zapsat"
 
@@ -662,8 +664,8 @@ msgid "Sierpinski"
 msgstr "Sierpinski"
 
 #: plug-ins/FractalExplorer/Dialogs.c:637 plug-ins/common/mapcolor.c:349
-#: plug-ins/sinus/sinus.c:910 plug-ins/sinus/sinus.c:928
-#: plug-ins/sinus/sinus.c:1014
+#: plug-ins/imagemap/imap_preferences.c:542 plug-ins/sinus/sinus.c:910
+#: plug-ins/sinus/sinus.c:928 plug-ins/sinus/sinus.c:1014
 msgid "Colors"
 msgstr "Barvy"
 
@@ -824,13 +826,13 @@ msgid "Click here to cancel save procedure"
 msgstr "Klepnutím zde lze zru¹it zápisovou proceduru"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1984
-#: plug-ins/FractalExplorer/FractalExplorer.c:1288
+#: plug-ins/FractalExplorer/FractalExplorer.c:1287
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Soubor '%s' není souborem pro badatele fraktálù"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1989
-#: plug-ins/FractalExplorer/FractalExplorer.c:1296
+#: plug-ins/FractalExplorer/FractalExplorer.c:1295
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -847,7 +849,7 @@ msgstr "<Image>/Filtry/Vyobrazení/Vzorky/Badatel fraktálù..."
 msgid "Rendering Fractal..."
 msgstr "Poèítá se fraktál..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:738
+#: plug-ins/FractalExplorer/FractalExplorer.c:737
 #: plug-ins/gflare/gflare.c:3386
 #, c-format
 msgid ""
@@ -857,32 +859,33 @@ msgstr ""
 "Opravdu chcete smazat\n"
 "\"%s\" ze seznamu a z disku?"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:742
+#: plug-ins/FractalExplorer/FractalExplorer.c:741
 msgid "Delete Fractal"
 msgstr "Smazat fraktál"
 
 #. Buttons
-#: plug-ins/FractalExplorer/FractalExplorer.c:747
-#: plug-ins/FractalExplorer/FractalExplorer.c:1467 plug-ins/gfig/gfig.c:6261
+#: plug-ins/FractalExplorer/FractalExplorer.c:746
+#: plug-ins/FractalExplorer/FractalExplorer.c:1466 plug-ins/gfig/gfig.c:6261
 #: plug-ins/gflare/gflare.c:3119 plug-ins/gflare/gflare.c:3395
-#: plug-ins/gimpressionist/presets.c:648 plug-ins/ifscompose/ifscompose.c:802
+#: plug-ins/gimpressionist/presets.c:648 plug-ins/ifscompose/ifscompose.c:801
 #: plug-ins/imagemap/imap_cmd_delete.c:53
+#: plug-ins/imagemap/imap_selection.c:175
 msgid "Delete"
 msgstr "Smazat"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:832
+#: plug-ins/FractalExplorer/FractalExplorer.c:831
 msgid "Edit fractal name"
 msgstr "Zmìnit jméno fraktálu"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:843
+#: plug-ins/FractalExplorer/FractalExplorer.c:842
 msgid "Fractal name:"
 msgstr "Jméno fraktálu:"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:884
+#: plug-ins/FractalExplorer/FractalExplorer.c:883
 msgid "New Fractal"
 msgstr "Nový fraktál"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1162
+#: plug-ins/FractalExplorer/FractalExplorer.c:1161
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
 "You need to add an entry like\n"
@@ -896,7 +899,7 @@ msgstr ""
 "\"${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer\")\n"
 "do souboru ~/.gimp-1.1/gimprc\n"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1209
+#: plug-ins/FractalExplorer/FractalExplorer.c:1208
 #, c-format
 msgid ""
 "fractalexplorer-path miss-configured - \n"
@@ -905,391 +908,542 @@ msgstr ""
 "fractalexplorer-path ¹patnì nastavena -\n"
 "cesta `%.100s' nebyla nalezena\n"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1409
+#: plug-ins/FractalExplorer/FractalExplorer.c:1408
 msgid "My first fractal"
 msgstr "Mùj první fraktál"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1426
+#: plug-ins/FractalExplorer/FractalExplorer.c:1425
 msgid "Choose Fractal by double-clicking on it"
 msgstr "Dvojitým poklepem lze zvolit fraktál"
 
 #. Put buttons in
-#: plug-ins/FractalExplorer/FractalExplorer.c:1457
+#: plug-ins/FractalExplorer/FractalExplorer.c:1456
 msgid "Rescan"
 msgstr "Zaktualizovat"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1464
+#: plug-ins/FractalExplorer/FractalExplorer.c:1463
 msgid "Select directory and rescan collection"
 msgstr "Volba adresáøe a aktualizace sbírky"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1475
+#: plug-ins/FractalExplorer/FractalExplorer.c:1474
 msgid "Delete currently selected fractal"
 msgstr "Smazat právì zvolený fraktál"
 
 #. Call up the file sel dialogue
-#: plug-ins/FractalExplorer/FractalExplorer.c:1512
+#: plug-ins/FractalExplorer/FractalExplorer.c:1511
 msgid "Add FractalExplorer path"
 msgstr "Pøidat cestu pro badatele fraktálù"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1546
+#: plug-ins/FractalExplorer/FractalExplorer.c:1545
 msgid "Rescan for fractals"
 msgstr "Zaktualizovat fraktály"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1604
+#: plug-ins/FractalExplorer/FractalExplorer.c:1603
 msgid "Add dir"
 msgstr "Pøidat adresáø"
 
-#: plug-ins/Lighting/lighting_main.c:177
+#: plug-ins/Lighting/lighting_main.c:170
 msgid "<Image>/Filters/Light Effects/Lighting Effects..."
 msgstr "<Image>/Filtry/Efekty se svìtlem/Svìtelné efekty..."
 
-#: plug-ins/Lighting/lighting_ui.c:34
-msgid "Point light"
-msgstr "Bodové svìtlo"
-
-#: plug-ins/Lighting/lighting_ui.c:35
-msgid "Directional light"
-msgstr "Smìrové svìtlo"
-
-#: plug-ins/Lighting/lighting_ui.c:36
-msgid "Spot light"
-msgstr "Místní svìtlo"
-
-#: plug-ins/Lighting/lighting_ui.c:37
-msgid "No light"
-msgstr "®ádné svìtlo"
-
-#: plug-ins/Lighting/lighting_ui.c:43
-msgid "From image"
-msgstr "Z obrázku"
-
-#: plug-ins/Lighting/lighting_ui.c:44 plug-ins/common/waves.c:351
-msgid "Waves"
-msgstr "Vlny"
-
-#: plug-ins/Lighting/lighting_ui.c:50 plug-ins/common/mblur.c:804
-#: plug-ins/flame/flame.c:667 plug-ins/sinus/sinus.c:1039
-msgid "Linear"
-msgstr "Lineární"
-
-#: plug-ins/Lighting/lighting_ui.c:51
-msgid "Logarithmic"
-msgstr "Logaritmický"
-
-#: plug-ins/Lighting/lighting_ui.c:52 plug-ins/flame/flame.c:668
-msgid "Sinusoidal"
-msgstr "Sinusoidní"
-
-#: plug-ins/Lighting/lighting_ui.c:53 plug-ins/flame/flame.c:669
-msgid "Spherical"
-msgstr "Kulový"
-
-#: plug-ins/Lighting/lighting_ui.c:210 plug-ins/Lighting/lighting_ui.c:1016
+#: plug-ins/Lighting/lighting_ui.c:147 plug-ins/Lighting/lighting_ui.c:1029
 #: plug-ins/common/spheredesigner.c:2612
 msgid "Bump"
 msgstr "Vyvý¹ení"
 
-#: plug-ins/Lighting/lighting_ui.c:238 plug-ins/Lighting/lighting_ui.c:1025
+#: plug-ins/Lighting/lighting_ui.c:174 plug-ins/Lighting/lighting_ui.c:1037
 msgid "Env"
 msgstr "Prostøedí"
 
-#: plug-ins/Lighting/lighting_ui.c:569
-msgid "General options"
+#. General options
+#: plug-ins/Lighting/lighting_ui.c:393 plug-ins/MapObject/mapobject_ui.c:532
+msgid "General Options"
 msgstr "Obecné volby"
 
-#: plug-ins/Lighting/lighting_ui.c:572
-msgid "Use bump mapping"
+#: plug-ins/Lighting/lighting_ui.c:402
+msgid "Use Bump Mapping"
 msgstr "Pou¾ít mapování vyvý¹ení"
 
-#: plug-ins/Lighting/lighting_ui.c:574
-msgid "Use environment mapping"
-msgstr "Pou¾ít mapování prostøedí"
-
-#. togglerefraction=gck_checkbutton_new("Use refraction mapping",vbox,mapvals.ref_mapped,
-#. (GtkSignalFunc)togglerefraction_update);
-#: plug-ins/Lighting/lighting_ui.c:578
-msgid "Transparent background"
-msgstr "Prùhledné pozadí"
-
-#: plug-ins/Lighting/lighting_ui.c:580
-msgid "Create new image"
-msgstr "Vytvoøit nový obrázek"
-
-#: plug-ins/Lighting/lighting_ui.c:582
-msgid "High preview quality"
-msgstr "Vysoká kvalita náhledu"
-
-#: plug-ins/Lighting/lighting_ui.c:584
-msgid "Enable tooltips"
-msgstr "Povolit tipy"
-
-#: plug-ins/Lighting/lighting_ui.c:587
+#: plug-ins/Lighting/lighting_ui.c:412
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr "Povolení/zákaz mapování vyvý¹ení (hloubka obrázku)"
 
-#: plug-ins/Lighting/lighting_ui.c:588
+#: plug-ins/Lighting/lighting_ui.c:415
+msgid "Use Environment Mapping"
+msgstr "Pou¾ít mapování prostøedí"
+
+#: plug-ins/Lighting/lighting_ui.c:425
 msgid "Enable/disable environment mapping (reflection)"
 msgstr "Povolení/zákaz mapování prostøedí (odraz)"
 
-#. gtk_tooltips_set_tips(tooltips,togglerefraction,"Enable/disable refractive layer");
-#: plug-ins/Lighting/lighting_ui.c:590
+#: plug-ins/Lighting/lighting_ui.c:428
+msgid "Transparent Background"
+msgstr "Prùhledné pozadí"
+
+#: plug-ins/Lighting/lighting_ui.c:438
 msgid "Make destination image transparent where bump height is zero"
 msgstr ""
 "Vytvoøení prùhledného cílového obrázku v místech, kde je vyvý¹ení nulové"
 
-#: plug-ins/Lighting/lighting_ui.c:591
+#: plug-ins/Lighting/lighting_ui.c:441 plug-ins/MapObject/mapobject_ui.c:590
+#: plug-ins/common/tile.c:434
+msgid "Create New Image"
+msgstr "Vytvoøit nový obrázek"
+
+#: plug-ins/Lighting/lighting_ui.c:451 plug-ins/MapObject/mapobject_ui.c:600
 msgid "Create a new image when applying filter"
 msgstr "Vytvoøení nového obrázku pøi pou¾ití filtru"
 
-#: plug-ins/Lighting/lighting_ui.c:592
+#: plug-ins/Lighting/lighting_ui.c:453
+msgid "High Preview Quality"
+msgstr "Vysoká kvalita náhledu"
+
+#: plug-ins/Lighting/lighting_ui.c:463
 msgid "Enable/disable high quality previews"
 msgstr "Povolení/zákaz náhledù vysoké kvality"
 
-#: plug-ins/Lighting/lighting_ui.c:593
+#: plug-ins/Lighting/lighting_ui.c:465 plug-ins/MapObject/mapobject_ui.c:602
+msgid "Enable Tooltips"
+msgstr "Povolit tipy"
+
+#: plug-ins/Lighting/lighting_ui.c:475 plug-ins/MapObject/mapobject_ui.c:611
 msgid "Enable/disable tooltip messages"
 msgstr "Povolení/zákaz zpráv v tipech"
 
-#: plug-ins/Lighting/lighting_ui.c:612
-msgid "Antialiasing options"
+#. Antialiasing options
+#: plug-ins/Lighting/lighting_ui.c:479 plug-ins/MapObject/mapobject_ui.c:615
+msgid "Antialiasing Options"
 msgstr "Volby vyhlazování"
 
-#: plug-ins/Lighting/lighting_ui.c:615
-msgid "Enable antialiasing"
+#: plug-ins/Lighting/lighting_ui.c:488 plug-ins/MapObject/mapobject_ui.c:624
+msgid "Enable Antialiasing"
 msgstr "Povolit vyhlazování"
 
-#: plug-ins/Lighting/lighting_ui.c:618
+#: plug-ins/Lighting/lighting_ui.c:498 plug-ins/MapObject/mapobject_ui.c:634
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Povolení/zákaz odstraòování zubatých hran (vyhlazování)"
 
-#: plug-ins/Lighting/lighting_ui.c:628 plug-ins/common/bumpmap.c:962
-#: plug-ins/common/emboss.c:602 plug-ins/struc/struc.c:304
+#: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:647
+#: plug-ins/common/bumpmap.c:962 plug-ins/common/emboss.c:602
+#: plug-ins/struc/struc.c:304
 msgid "Depth:"
 msgstr "Hloubka:"
 
-#: plug-ins/Lighting/lighting_ui.c:633 plug-ins/common/threshold_alpha.c:297
-#: plug-ins/common/unsharp.c:837 plug-ins/common/wind.c:857
-#: plug-ins/gflare/gflare.c:3041
-msgid "Threshold:"
-msgstr "Práh:"
-
-#: plug-ins/Lighting/lighting_ui.c:645
+#: plug-ins/Lighting/lighting_ui.c:514 plug-ins/MapObject/mapobject_ui.c:650
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Kvalita vyhlazování. Vy¹¹í je lep¹í, ale pomalej¹í"
 
-#: plug-ins/Lighting/lighting_ui.c:646
+#: plug-ins/Lighting/lighting_ui.c:526 plug-ins/MapObject/mapobject_ui.c:662
+msgid "Treshold:"
+msgstr "Práh:"
+
+#: plug-ins/Lighting/lighting_ui.c:530 plug-ins/MapObject/mapobject_ui.c:666
 msgid "Stop when pixel differences are smaller than this value"
 msgstr "Zastavit, jesou-li rozdíly pixelù men¹í ne¾ tato hodnota"
 
-#: plug-ins/Lighting/lighting_ui.c:674
-msgid "Light settings"
+#: plug-ins/Lighting/lighting_ui.c:556 plug-ins/MapObject/mapobject_ui.c:692
+msgid "Light Settings"
 msgstr "Nastavení svìtla"
 
-#: plug-ins/Lighting/lighting_ui.c:678
-msgid "Lightsource type:"
+#: plug-ins/Lighting/lighting_ui.c:571 plug-ins/MapObject/mapobject_ui.c:706
+msgid "Point Light"
+msgstr "Bodové svìtlo"
+
+#: plug-ins/Lighting/lighting_ui.c:573 plug-ins/MapObject/mapobject_ui.c:708
+msgid "Directional Light"
+msgstr "Smìrové svìtlo"
+
+#: plug-ins/Lighting/lighting_ui.c:575
+msgid "Spot Light"
+msgstr "Místní svìtlo"
+
+#: plug-ins/Lighting/lighting_ui.c:577 plug-ins/MapObject/mapobject_ui.c:710
+msgid "No Light"
+msgstr "®ádné svìtlo"
+
+#: plug-ins/Lighting/lighting_ui.c:582 plug-ins/MapObject/mapobject_ui.c:715
+msgid "Lightsource Type:"
 msgstr "Druh svìtelného zdroje:"
 
-#: plug-ins/Lighting/lighting_ui.c:683
-msgid "Lightsource color"
-msgstr "Barva svìtelného zdroje"
-
-#: plug-ins/Lighting/lighting_ui.c:690
+#: plug-ins/Lighting/lighting_ui.c:585 plug-ins/MapObject/mapobject_ui.c:718
 msgid "Type of light source to apply"
 msgstr "Typ pou¾itého svìtelného zdroje"
 
-#: plug-ins/Lighting/lighting_ui.c:691
-msgid "Set light source color (white is default)"
-msgstr "Nastavení barvy svìtelného zdroje (implicitnì bílá)"
+#: plug-ins/Lighting/lighting_ui.c:587 plug-ins/MapObject/mapobject_ui.c:720
+msgid "Select Lightsource Color"
+msgstr "Volba barvy svìtelného zdroje"
 
-#: plug-ins/Lighting/lighting_ui.c:693
+#: plug-ins/Lighting/lighting_ui.c:591 plug-ins/MapObject/mapobject_ui.c:724
+msgid "Lightsource Color:"
+msgstr "Barva svìtelného zdroje:"
+
+#: plug-ins/Lighting/lighting_ui.c:595 plug-ins/MapObject/mapobject_ui.c:728
+msgid "Set light source color"
+msgstr "Nastavení barvy svìtelného zdroje"
+
+#: plug-ins/Lighting/lighting_ui.c:597 plug-ins/MapObject/mapobject_ui.c:730
+#: plug-ins/MapObject/mapobject_ui.c:1028
 msgid "Position"
 msgstr "Poloha"
 
 #. X
-#: plug-ins/Lighting/lighting_ui.c:696 plug-ins/Lighting/lighting_ui.c:718
-#: plug-ins/common/flarefx.c:745 plug-ins/common/nova.c:494
-#: plug-ins/common/papertile.c:283 plug-ins/gflare/gflare.c:2896
-#: plug-ins/ifscompose/ifscompose.c:513
+#: plug-ins/Lighting/lighting_ui.c:614 plug-ins/Lighting/lighting_ui.c:666
+#: plug-ins/MapObject/mapobject_ui.c:747 plug-ins/MapObject/mapobject_ui.c:799
+#: plug-ins/MapObject/mapobject_ui.c:1040
+#: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:745
+#: plug-ins/common/nova.c:494 plug-ins/common/papertile.c:283
+#: plug-ins/gflare/gflare.c:2896 plug-ins/ifscompose/ifscompose.c:512
 msgid "X:"
 msgstr "X:"
 
-#. Y
-#: plug-ins/Lighting/lighting_ui.c:697 plug-ins/Lighting/lighting_ui.c:719
-#: plug-ins/common/flarefx.c:763 plug-ins/common/nova.c:512
-#: plug-ins/common/papertile.c:292 plug-ins/gflare/gflare.c:2900
-#: plug-ins/ifscompose/ifscompose.c:527
-msgid "Y:"
-msgstr "Y:"
-
-#: plug-ins/Lighting/lighting_ui.c:698 plug-ins/Lighting/lighting_ui.c:720
-msgid "Z:"
-msgstr "Z:"
-
-#: plug-ins/Lighting/lighting_ui.c:704
+#: plug-ins/Lighting/lighting_ui.c:621 plug-ins/MapObject/mapobject_ui.c:754
 msgid "Light source X position in XYZ space"
 msgstr "Poloha X svìtelného zdroje v prostoru XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:705
+#. Y
+#: plug-ins/Lighting/lighting_ui.c:627 plug-ins/Lighting/lighting_ui.c:678
+#: plug-ins/MapObject/mapobject_ui.c:760 plug-ins/MapObject/mapobject_ui.c:811
+#: plug-ins/MapObject/mapobject_ui.c:1051
+#: plug-ins/MapObject/mapobject_ui.c:1093
+#: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:763
+#: plug-ins/common/nova.c:512 plug-ins/common/papertile.c:292
+#: plug-ins/gflare/gflare.c:2900 plug-ins/ifscompose/ifscompose.c:526
+msgid "Y:"
+msgstr "Y:"
+
+#: plug-ins/Lighting/lighting_ui.c:634 plug-ins/MapObject/mapobject_ui.c:767
 msgid "Light source Y position in XYZ space"
 msgstr "Poloha Y svìtelného zdroje v prostoru XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:706
+#: plug-ins/Lighting/lighting_ui.c:640 plug-ins/Lighting/lighting_ui.c:690
+#: plug-ins/MapObject/mapobject_ui.c:773 plug-ins/MapObject/mapobject_ui.c:823
+#: plug-ins/MapObject/mapobject_ui.c:1062
+#: plug-ins/MapObject/mapobject_ui.c:1102
+#: plug-ins/MapObject/mapobject_ui.c:1200
+msgid "Z:"
+msgstr "Z:"
+
+#: plug-ins/Lighting/lighting_ui.c:647 plug-ins/MapObject/mapobject_ui.c:780
 msgid "Light source Z position in XYZ space"
 msgstr "Poloha Z svìtelného zdroje v prostoru XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:715
-msgid "Direction vector"
+#: plug-ins/Lighting/lighting_ui.c:650 plug-ins/MapObject/mapobject_ui.c:783
+msgid "Direction Vector"
 msgstr "Smìrový vektor"
 
-#: plug-ins/Lighting/lighting_ui.c:722
+#: plug-ins/Lighting/lighting_ui.c:673 plug-ins/MapObject/mapobject_ui.c:806
 msgid "Light source X direction in XYZ space"
 msgstr "Smìr X svìtelného zdroje v prostoru XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:723
+#: plug-ins/Lighting/lighting_ui.c:685 plug-ins/MapObject/mapobject_ui.c:818
 msgid "Light source Y direction in XYZ space"
 msgstr "Smìr Y svìtelného zdroje v prostoru XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:724
+#: plug-ins/Lighting/lighting_ui.c:697 plug-ins/MapObject/mapobject_ui.c:830
 msgid "Light source Z direction in XYZ space"
 msgstr "Smìr Z svìtelného zdroje v prostoru XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:756
-msgid "Intensity levels"
+#: plug-ins/Lighting/lighting_ui.c:722 plug-ins/MapObject/mapobject_ui.c:855
+msgid "Intensity Levels"
 msgstr "Úrovnì intenzity"
 
-#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:998
+#: plug-ins/Lighting/lighting_ui.c:740 plug-ins/MapObject/mapobject_ui.c:873
+#: plug-ins/common/bumpmap.c:998
 msgid "Ambient:"
 msgstr "Okolí:"
 
-#: plug-ins/Lighting/lighting_ui.c:762 plug-ins/Lighting/lighting_ui.c:813
-msgid "Diffuse:"
-msgstr "Difúze:"
-
-#: plug-ins/Lighting/lighting_ui.c:802
+#: plug-ins/Lighting/lighting_ui.c:753 plug-ins/MapObject/mapobject_ui.c:886
 msgid "Amount of original color to show where no direct light falls"
 msgstr "Míra, v jaké je zobrazena pùvodní barva tam, kam nedopadá pøímé svìtlo"
 
-#: plug-ins/Lighting/lighting_ui.c:803
+#: plug-ins/Lighting/lighting_ui.c:765 plug-ins/Lighting/lighting_ui.c:804
+#: plug-ins/MapObject/mapobject_ui.c:898 plug-ins/MapObject/mapobject_ui.c:937
+msgid "Diffuse:"
+msgstr "Difúze:"
+
+#: plug-ins/Lighting/lighting_ui.c:778 plug-ins/MapObject/mapobject_ui.c:911
 msgid "Intensity of original color when lit by a light source"
 msgstr "Intenzita pùvodní barvy, je-li ozáøena zdrojem svìtla"
 
-#: plug-ins/Lighting/lighting_ui.c:808
+#: plug-ins/Lighting/lighting_ui.c:786 plug-ins/MapObject/mapobject_ui.c:919
 msgid "Reflectivity"
 msgstr "Odrazivost"
 
-#: plug-ins/Lighting/lighting_ui.c:814
-msgid "Specular:"
-msgstr "Odraz:"
-
-#: plug-ins/Lighting/lighting_ui.c:815 plug-ins/common/jigsaw.c:2397
-msgid "Highlight:"
-msgstr "Odlesk:"
-
-#: plug-ins/Lighting/lighting_ui.c:829
+#: plug-ins/Lighting/lighting_ui.c:817 plug-ins/MapObject/mapobject_ui.c:950
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr "Vy¹¹í hodnota znamená, ¾e objekt odrá¾í více svìtla (vypadá svìtleji)"
 
-#: plug-ins/Lighting/lighting_ui.c:830
+#: plug-ins/Lighting/lighting_ui.c:829 plug-ins/MapObject/mapobject_ui.c:962
+msgid "Specular:"
+msgstr "Odraz:"
+
+#: plug-ins/Lighting/lighting_ui.c:842 plug-ins/MapObject/mapobject_ui.c:975
 msgid "Controls how intense the highlights will be"
 msgstr "Ovládání intenzity odleskù"
 
-#: plug-ins/Lighting/lighting_ui.c:831
+#: plug-ins/Lighting/lighting_ui.c:854 plug-ins/MapObject/mapobject_ui.c:987
+#: plug-ins/common/jigsaw.c:2397
+msgid "Highlight:"
+msgstr "Odlesk:"
+
+#: plug-ins/Lighting/lighting_ui.c:867 plug-ins/MapObject/mapobject_ui.c:1000
 msgid "Higher values makes the highlights more focused"
 msgstr "Vy¹¹í hodnota znamená, ¾e odlesky ostøej¹í"
 
-#: plug-ins/Lighting/lighting_ui.c:897
-msgid "Bumpmap settings"
+#: plug-ins/Lighting/lighting_ui.c:895
+msgid "Bumpmap Settings"
 msgstr "Nastavení mapování vyvý¹ení"
 
-#: plug-ins/Lighting/lighting_ui.c:903
-msgid "Bumpmap image:"
+#: plug-ins/Lighting/lighting_ui.c:911
+msgid "Bumpmap Image:"
 msgstr "Obrázek vyvý¹ení:"
 
-#: plug-ins/Lighting/lighting_ui.c:917
+#: plug-ins/Lighting/lighting_ui.c:919 plug-ins/common/mblur.c:804
+#: plug-ins/flame/flame.c:667 plug-ins/sinus/sinus.c:1039
+msgid "Linear"
+msgstr "Lineární"
+
+#: plug-ins/Lighting/lighting_ui.c:920
+msgid "Logarithmic"
+msgstr "Logaritmický"
+
+#: plug-ins/Lighting/lighting_ui.c:921 plug-ins/flame/flame.c:668
+msgid "Sinusoidal"
+msgstr "Sinusoidní"
+
+#: plug-ins/Lighting/lighting_ui.c:922 plug-ins/flame/flame.c:669
+msgid "Spherical"
+msgstr "Kulový"
+
+#: plug-ins/Lighting/lighting_ui.c:926
 msgid "Curve:"
 msgstr "Køivka:"
 
-#: plug-ins/Lighting/lighting_ui.c:922
-msgid "Minimum height:"
+#: plug-ins/Lighting/lighting_ui.c:932
+msgid "Minimum Height:"
 msgstr "Nejmen¹í vý¹ka:"
 
-#: plug-ins/Lighting/lighting_ui.c:924
-msgid "Maximum height:"
+#: plug-ins/Lighting/lighting_ui.c:941
+msgid "Maximum Height:"
 msgstr "Nejvìt¹í vý¹ka:"
 
-#: plug-ins/Lighting/lighting_ui.c:932
-msgid "Autostretch to fit value range"
+#: plug-ins/Lighting/lighting_ui.c:947
+msgid "Autostretch to Fit Value Range"
 msgstr "Roztáhnout, aby vyplnilo rozsah hodnot"
 
-#: plug-ins/Lighting/lighting_ui.c:955
-msgid "Environment settings"
+#: plug-ins/Lighting/lighting_ui.c:974
+msgid "Environment Settings"
 msgstr "Nastavení prostøedí"
 
-#: plug-ins/Lighting/lighting_ui.c:962
-msgid "Environment image:"
+#: plug-ins/Lighting/lighting_ui.c:983
+msgid "Environment Image:"
 msgstr "Obrázek prostøedí:"
 
 #. Options section
-#: plug-ins/Lighting/lighting_ui.c:996 plug-ins/common/lic.c:1036
-#: plug-ins/common/ripple.c:620 plug-ins/gfig/gfig.c:4997
-#: plug-ins/maze/maze_face.c:338
+#: plug-ins/Lighting/lighting_ui.c:1014 plug-ins/MapObject/mapobject_ui.c:1314
+#: plug-ins/common/lic.c:1036 plug-ins/common/ripple.c:620
+#: plug-ins/gfig/gfig.c:4997 plug-ins/maze/maze_face.c:338
 msgid "Options"
 msgstr "Volby"
 
-#: plug-ins/Lighting/lighting_ui.c:1002 plug-ins/common/spheredesigner.c:1574
-#: plug-ins/common/spheredesigner.c:2618
+#: plug-ins/Lighting/lighting_ui.c:1018 plug-ins/MapObject/mapobject_ui.c:1318
+#: plug-ins/common/spheredesigner.c:1574 plug-ins/common/spheredesigner.c:2618
 msgid "Light"
 msgstr "Svìtlo"
 
-#: plug-ins/Lighting/lighting_ui.c:1008
+#: plug-ins/Lighting/lighting_ui.c:1022 plug-ins/MapObject/mapobject_ui.c:1322
 msgid "Material"
 msgstr "Materiál"
 
-#: plug-ins/Lighting/lighting_ui.c:1046
-msgid "Lighting effects"
+#: plug-ins/Lighting/lighting_ui.c:1069
+msgid "Lighting Effects"
 msgstr "Svìtelné efekty"
 
-#. Add Ok, Cancel and Help buttons to the action area
-#. ==================================================
-#: plug-ins/Lighting/lighting_ui.c:1070 plug-ins/common/sample_colorize.c:1299
-#: plug-ins/common/tileit.c:583 plug-ins/dbbrowser/dbbrowser_utils.c:155
-#: plug-ins/gdyntext/gdyntext_ui.c:525 plug-ins/gimpressionist/orientmap.c:633
-#: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
-#: plug-ins/imagemap/imap_default_dialog.c:109
-msgid "Apply"
-msgstr "Pou¾ít"
+#: plug-ins/Lighting/lighting_ui.c:1129 plug-ins/MapObject/mapobject_ui.c:1433
+#: plug-ins/common/diffraction.c:606
+msgid "Preview!"
+msgstr "Náhled!"
 
-#: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/imagemap/imap_menu.c:409
-#: plug-ins/maze/maze_face.c:205
-msgid "Help"
-msgstr "Nápovìda"
-
-#: plug-ins/Lighting/lighting_ui.c:1081
-msgid "Apply filter with current settings"
-msgstr "Pou¾ít filtru s aktuálním nastavením"
-
-#: plug-ins/Lighting/lighting_ui.c:1082
-msgid "Close filter without doing anything"
-msgstr "Zavøít filtr bez provedení èehokoliv"
-
-#: plug-ins/Lighting/lighting_ui.c:1102
-msgid "  Preview!  "
-msgstr "  Náhled!  "
-
-#: plug-ins/Lighting/lighting_ui.c:1103
+#: plug-ins/Lighting/lighting_ui.c:1137 plug-ins/MapObject/mapobject_ui.c:1441
 msgid "Recompute preview image"
 msgstr "Pøepoèítat náhled"
 
-#: plug-ins/Lighting/lighting_ui.c:1106
-msgid "Zoom in (make image bigger)"
-msgstr "Pøiblí¾ít (obrázek bude vìt¹í)"
-
-#: plug-ins/Lighting/lighting_ui.c:1108
+#: plug-ins/Lighting/lighting_ui.c:1146 plug-ins/MapObject/mapobject_ui.c:1450
 msgid "Zoom out (make image smaller)"
 msgstr "Vzdálit (obrázek bude men¹í)"
 
-#: plug-ins/MapObject/mapobject_main.c:189
+#: plug-ins/Lighting/lighting_ui.c:1155 plug-ins/MapObject/mapobject_ui.c:1459
+msgid "Zoom in (make image bigger)"
+msgstr "Pøiblí¾ít (obrázek bude vìt¹í)"
+
+#: plug-ins/MapObject/mapobject_main.c:203
 msgid "<Image>/Filters/Map/Map Object..."
 msgstr "<Image>/Filtry/Mapování/Mapování objektu..."
+
+#: plug-ins/MapObject/mapobject_ui.c:262 plug-ins/MapObject/mapobject_ui.c:556
+#: plug-ins/MapObject/mapobject_ui.c:1332
+msgid "Box"
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_ui.c:280 plug-ins/MapObject/mapobject_ui.c:557
+#: plug-ins/MapObject/mapobject_ui.c:1338
+msgid "Cylinder"
+msgstr "Válec"
+
+#: plug-ins/MapObject/mapobject_ui.c:545
+msgid "Map to:"
+msgstr "Mapovat na:"
+
+#: plug-ins/MapObject/mapobject_ui.c:554
+msgid "Plane"
+msgstr "Rovinu"
+
+#: plug-ins/MapObject/mapobject_ui.c:555
+msgid "Sphere"
+msgstr "Kouli"
+
+#: plug-ins/MapObject/mapobject_ui.c:563
+msgid "Type of object to map to"
+msgstr "Typ objektu, na který se mapuje"
+
+#: plug-ins/MapObject/mapobject_ui.c:565
+msgid "Transpararent Background"
+msgstr "Prùhledné pozadí"
+
+#: plug-ins/MapObject/mapobject_ui.c:575
+msgid "Make image transparent outside object"
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_ui.c:577
+msgid "Tile Source Image"
+msgstr "Dla¾dice zdrojového obrázku"
+
+#: plug-ins/MapObject/mapobject_ui.c:587
+msgid "Tile source image: useful for infinite planes"
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_ui.c:1043
+msgid "Object X position in XYZ space"
+msgstr "Poloha X objektu v prostoru XYZ"
+
+#: plug-ins/MapObject/mapobject_ui.c:1054
+msgid "Object Y position in XYZ space"
+msgstr "Poloha Y objektu v prostoru XYZ"
+
+#: plug-ins/MapObject/mapobject_ui.c:1065
+msgid "Object Z position in XYZ space"
+msgstr "Poloha Z objektu v prostoru XYZ"
+
+#. Rotation
+#: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2559
+#: plug-ins/gdyntext/gdyntext_ui.c:388
+msgid "Rotation"
+msgstr "Rotace"
+
+#: plug-ins/MapObject/mapobject_ui.c:1087
+msgid "Rotation angle about X axis"
+msgstr "Úhel rotace kolem osy X"
+
+#: plug-ins/MapObject/mapobject_ui.c:1096
+msgid "Rotation angle about Y axis"
+msgstr "Úhel rotace kolem osy Y"
+
+#: plug-ins/MapObject/mapobject_ui.c:1105
+msgid "Rotation angle about Z axis"
+msgstr "Úhel rotace kolem osy Z"
+
+#: plug-ins/MapObject/mapobject_ui.c:1129
+msgid "Front:"
+msgstr "Vepøedu:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1129
+msgid "Back:"
+msgstr "Vzadu:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1130
+#: plug-ins/MapObject/mapobject_ui.c:1226
+msgid "Top:"
+msgstr "Nahoøe:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1130
+#: plug-ins/MapObject/mapobject_ui.c:1226
+msgid "Bottom:"
+msgstr "Dole:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1131
+msgid "Left:"
+msgstr "Nalevo:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1131
+msgid "Right:"
+msgstr "Napravo:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1137
+msgid "Map Images to Box Faces"
+msgstr "Mapovat obrázek do plo¹ek boxù"
+
+#: plug-ins/MapObject/mapobject_ui.c:1178
+#: plug-ins/common/spheredesigner.c:2446
+msgid "Scale X:"
+msgstr "Zvìt¹ení X:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1181
+msgid "X scale (size)"
+msgstr "Zvìt¹ení X (velikost)"
+
+#: plug-ins/MapObject/mapobject_ui.c:1192
+msgid "Y scale (size)"
+msgstr "Zvìt¹ení Y (velikost)"
+
+#: plug-ins/MapObject/mapobject_ui.c:1203
+msgid "Z scale (size)"
+msgstr "Zvìt¹ení Z (velikost)"
+
+#: plug-ins/MapObject/mapobject_ui.c:1231
+msgid "Images for the Cap Faces"
+msgstr "Obrázky pro uzavírací plo¹ky"
+
+#: plug-ins/MapObject/mapobject_ui.c:1260 plug-ins/gimpressionist/size.c:51
+#: plug-ins/gimpressionist/size.c:56
+msgid "Size"
+msgstr "Velikost"
+
+#: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:763
+#: plug-ins/common/nlfilt.c:421 plug-ins/common/nova.c:399
+#: plug-ins/common/unsharp.c:819 plug-ins/common/whirlpinch.c:898
+#: plug-ins/gflare/gflare.c:2928 plug-ins/imagemap/imap_circle.c:273
+msgid "Radius:"
+msgstr "Polomìr:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1276
+msgid "Cylinder radius"
+msgstr "Polomìr válce"
+
+#: plug-ins/MapObject/mapobject_ui.c:1284 plug-ins/common/mblur.c:824
+msgid "Length:"
+msgstr "Délka:"
+
+#: plug-ins/MapObject/mapobject_ui.c:1288
+msgid "Cylinder length"
+msgstr "Délka válce"
+
+#: plug-ins/MapObject/mapobject_ui.c:1326 plug-ins/common/blinds.c:388
+#: plug-ins/common/ripple.c:650 plug-ins/gimpressionist/orientation.c:52
+#: plug-ins/gimpressionist/orientation.c:57
+msgid "Orientation"
+msgstr "Orientace"
+
+#: plug-ins/MapObject/mapobject_ui.c:1376
+msgid "Map to Object"
+msgstr "Mapovat na objekt"
+
+#: plug-ins/MapObject/mapobject_ui.c:1461
+msgid "Show Preview Wireframe"
+msgstr "Ukázat náhledový drátový model"
+
+#: plug-ins/MapObject/mapobject_ui.c:1469
+msgid "Show/hide preview wireframe"
+msgstr "Ukázat/skrýt náhledový drátový model"
 
 #. memory mapped file data
 #. must check file size
@@ -2080,7 +2234,7 @@ msgstr "Pøehrátí animace: "
 #: plug-ins/gap/gap_navigator_dialog.c:2852
 #: plug-ins/gdyntext/charmap_window.c:140 plug-ins/gdyntext/gdyntext_ui.c:518
 #: plug-ins/helpbrowser/helpbrowser.c:827
-#: plug-ins/ifscompose/ifscompose.c:1250 plug-ins/imagemap/imap_menu.c:226
+#: plug-ins/ifscompose/ifscompose.c:1249 plug-ins/imagemap/imap_menu.c:227
 #: plug-ins/script-fu/script-fu-console.c:205
 #: plug-ins/script-fu/script-fu-scripts.c:1956
 msgid "Close"
@@ -2187,12 +2341,6 @@ msgstr "Pøidávají se pruhy..."
 #: plug-ins/common/blinds.c:337
 msgid "Blinds"
 msgstr "Pruhy"
-
-#: plug-ins/common/blinds.c:388 plug-ins/common/ripple.c:650
-#: plug-ins/gimpressionist/orientation.c:52
-#: plug-ins/gimpressionist/orientation.c:57
-msgid "Orientation"
-msgstr "Orientace"
 
 #. attach labels
 #: plug-ins/common/blinds.c:392 plug-ins/common/grid.c:526
@@ -2363,7 +2511,7 @@ msgstr "Kolorování"
 #: plug-ins/common/colorify.c:344 plug-ins/common/colortoalpha.c:429
 #: plug-ins/common/ps.c:2370 plug-ins/common/xpm.c:431
 #: plug-ins/gap/gap_mov_dialog.c:261 plug-ins/gimpressionist/color.c:51
-#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:324
+#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/print.c:954
 msgid "Color"
 msgstr "Barva"
@@ -2698,7 +2846,7 @@ msgstr "Zkøivení"
 #: plug-ins/common/curve_bend.c:1381 plug-ins/gfig/gfig.c:6535
 #: plug-ins/gflare/gflare.c:3118 plug-ins/imagemap/imap_cmd_copy.c:49
 #: plug-ins/imagemap/imap_cmd_copy_object.c:50
-#: plug-ins/imagemap/imap_menu.c:286 plug-ins/imagemap/imap_toolbar.c:131
+#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:132
 msgid "Copy"
 msgstr "Kopírovat"
 
@@ -2974,13 +3122,6 @@ msgstr "Adaptivní"
 msgid "Recursive"
 msgstr "Rekurzivní"
 
-#: plug-ins/common/despeckle.c:763 plug-ins/common/nlfilt.c:421
-#: plug-ins/common/nova.c:399 plug-ins/common/unsharp.c:819
-#: plug-ins/common/whirlpinch.c:898 plug-ins/gflare/gflare.c:2928
-#: plug-ins/imagemap/imap_circle.c:272
-msgid "Radius:"
-msgstr "Prùmìr:"
-
 #: plug-ins/common/despeckle.c:776
 msgid "Black Level:"
 msgstr "Úroveò èerné:"
@@ -3008,7 +3149,7 @@ msgstr "Vytvoøit histogram"
 #: plug-ins/common/destripe.c:692 plug-ins/common/gtm.c:531
 #: plug-ins/common/ps.c:2327 plug-ins/common/ps.c:2502
 #: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:420
-#: plug-ins/imagemap/imap_rectangle.c:386
+#: plug-ins/imagemap/imap_rectangle.c:387
 msgid "Width:"
 msgstr "©íøka:"
 
@@ -3023,10 +3164,6 @@ msgstr "Vytváøejí se difrakèní obrazce..."
 #: plug-ins/common/diffraction.c:560
 msgid "Diffraction Patterns"
 msgstr "Difrakèní obrazce"
-
-#: plug-ins/common/diffraction.c:606
-msgid "Preview!"
-msgstr "Náhled!"
 
 #: plug-ins/common/diffraction.c:657
 msgid "Frequencies"
@@ -3163,7 +3300,7 @@ msgstr "Omezení ¹íøky øádku"
 #: plug-ins/common/engrave.c:266 plug-ins/common/film.c:1263
 #: plug-ins/common/gtm.c:545 plug-ins/common/ps.c:2336
 #: plug-ins/common/ps.c:2511 plug-ins/common/smooth_palette.c:440
-#: plug-ins/common/tile.c:424 plug-ins/imagemap/imap_rectangle.c:392
+#: plug-ins/common/tile.c:424 plug-ins/imagemap/imap_rectangle.c:393
 msgid "Height:"
 msgstr "Vý¹ka:"
 
@@ -3242,7 +3379,7 @@ msgid "Add >>"
 msgstr "Pøidat >>"
 
 #: plug-ins/common/film.c:1147 plug-ins/common/iwarp.c:925
-#: plug-ins/imagemap/imap_polygon.c:460
+#: plug-ins/imagemap/imap_polygon.c:464
 msgid "Remove"
 msgstr "Odstranit"
 
@@ -3305,31 +3442,31 @@ msgstr "Roz¹íøená nastavení (v¹echny hodnoty jsou díly vý¹ky filmu)"
 msgid "Image Height:"
 msgstr "Vý¹ka obrázku:"
 
-#: plug-ins/common/film.c:1394
+#: plug-ins/common/film.c:1391
 msgid "Image Spacing:"
 msgstr "Rozestup obrázkù:"
 
-#: plug-ins/common/film.c:1418
+#: plug-ins/common/film.c:1412
 msgid "Hole Offset:"
 msgstr "Posun dìr:"
 
-#: plug-ins/common/film.c:1435
+#: plug-ins/common/film.c:1426
 msgid "Hole Width:"
 msgstr "©íøka dìr:"
 
-#: plug-ins/common/film.c:1452
+#: plug-ins/common/film.c:1440
 msgid "Hole Height:"
 msgstr "Vý¹ka dìr:"
 
-#: plug-ins/common/film.c:1469
+#: plug-ins/common/film.c:1454
 msgid "Hole Spacing:"
 msgstr "Rozestup dìr:"
 
-#: plug-ins/common/film.c:1493
+#: plug-ins/common/film.c:1475
 msgid "Number Height:"
 msgstr "Vý¹ka èíslic:"
 
-#: plug-ins/common/film.c:1521
+#: plug-ins/common/film.c:1500
 msgid "Reset to Defaults"
 msgstr "Nastavit na implicitní hodnody"
 
@@ -3399,12 +3536,12 @@ msgstr "Rozostøit svisle"
 #: plug-ins/common/gauss_iir.c:392 plug-ins/common/gauss_rle.c:389
 #: plug-ins/common/sel_gauss.c:274
 msgid "Blur Radius:"
-msgstr "Prùmìr rozostøení:"
+msgstr "Polomìr rozostøení:"
 
 #. parameter settings
 #: plug-ins/common/gauss_iir.c:454 plug-ins/common/gauss_rle.c:451
 msgid "Blur Radius"
-msgstr "Prùmìr rozostøení"
+msgstr "Polomìr rozostøení"
 
 #: plug-ins/common/gauss_iir.c:469 plug-ins/common/gauss_rle.c:466
 #: plug-ins/common/jigsaw.c:2353 plug-ins/common/spread.c:408
@@ -3444,7 +3581,7 @@ msgstr "Rozestup:"
 
 #: plug-ins/common/gbr.c:504 plug-ins/common/gpb.c:312
 #: plug-ins/common/pat.c:451 plug-ins/gimpressionist/presets.c:373
-#: plug-ins/imagemap/imap_settings.c:92
+#: plug-ins/imagemap/imap_settings.c:93
 msgid "Description:"
 msgstr "Popis:"
 
@@ -3702,8 +3839,8 @@ msgstr "<Image>/Filtry/Vyobrazení/Vzorky/Møí¾..."
 msgid "Drawing Grid..."
 msgstr "Kreslí se møí¾..."
 
-#: plug-ins/common/grid.c:466 plug-ins/imagemap/imap_menu.c:399
-#: plug-ins/imagemap/imap_popup.c:147 plug-ins/imagemap/imap_toolbar.c:162
+#: plug-ins/common/grid.c:466 plug-ins/imagemap/imap_menu.c:400
+#: plug-ins/imagemap/imap_popup.c:148 plug-ins/imagemap/imap_toolbar.c:163
 msgid "Grid"
 msgstr "Møí¾"
 
@@ -3936,14 +4073,14 @@ msgstr "Zpìtnì"
 
 #: plug-ins/common/iwarp.c:862
 msgid "Deform Radius"
-msgstr "Prùmìr deformace"
+msgstr "Polomìr deformace"
 
 #: plug-ins/common/iwarp.c:878
 msgid "Deform Amount"
 msgstr "Míra deformace"
 
-#: plug-ins/common/iwarp.c:898 plug-ins/ifscompose/ifscompose.c:868
-#: plug-ins/ifscompose/ifscompose.c:1135 plug-ins/imagemap/imap_cmd_move.c:80
+#: plug-ins/common/iwarp.c:898 plug-ins/ifscompose/ifscompose.c:867
+#: plug-ins/ifscompose/ifscompose.c:1134 plug-ins/imagemap/imap_cmd_move.c:80
 #: plug-ins/imagemap/imap_cmd_object_move.c:53
 msgid "Move"
 msgstr "Posun"
@@ -4249,7 +4386,7 @@ msgstr "Do:"
 msgid "Subject:"
 msgstr "Pøedmìt:"
 
-#: plug-ins/common/mail.c:578 plug-ins/imagemap/imap_settings.c:78
+#: plug-ins/common/mail.c:578 plug-ins/imagemap/imap_settings.c:79
 msgid "Filename:"
 msgstr "Jméno souboru:"
 
@@ -4370,7 +4507,7 @@ msgid "Radial"
 msgstr "Radiální"
 
 #: plug-ins/common/mblur.c:806 plug-ins/flame/flame.c:1034
-#: plug-ins/imagemap/imap_popup.c:140
+#: plug-ins/imagemap/imap_popup.c:141
 msgid "Zoom"
 msgstr "Pøiblí¾ení"
 
@@ -4378,14 +4515,10 @@ msgstr "Pøiblí¾ení"
 msgid "Blur Parameters"
 msgstr "Parametry rozostøení"
 
-#: plug-ins/common/mblur.c:824
-msgid "Length:"
-msgstr "Délka:"
-
 #. Angle
 #: plug-ins/common/mblur.c:833 plug-ins/common/newsprint.c:1025
 #: plug-ins/common/warp.c:693 plug-ins/gimpressionist/orientmap.c:551
-#: plug-ins/ifscompose/ifscompose.c:555
+#: plug-ins/ifscompose/ifscompose.c:554
 msgid "Angle:"
 msgstr "Úhel:"
 
@@ -5028,11 +5161,6 @@ msgstr "Palec"
 msgid "Millimeter"
 msgstr "Milimetr"
 
-#. Rotation
-#: plug-ins/common/ps.c:2559 plug-ins/gdyntext/gdyntext_ui.c:388
-msgid "Rotation"
-msgstr "Rotace"
-
 #. Format
 #: plug-ins/common/ps.c:2573
 msgid "Output"
@@ -5189,6 +5317,15 @@ msgstr "<Image>/Filtry/Barvy/Mapování/Vzor vybarvení..."
 #: plug-ins/common/sample_colorize.c:1294
 msgid "Sample Colorize"
 msgstr "Vzor vybarvení"
+
+#. gtk_container_border_width (GTK_CONTAINER (box2), 5);
+#: plug-ins/common/sample_colorize.c:1299 plug-ins/common/tileit.c:583
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/gdyntext/gdyntext_ui.c:525 plug-ins/gimpressionist/orientmap.c:633
+#: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
+#: plug-ins/imagemap/imap_default_dialog.c:110
+msgid "Apply"
+msgstr "Pou¾ít"
 
 #: plug-ins/common/sample_colorize.c:1301
 msgid "Get Sample Colors"
@@ -5663,7 +5800,7 @@ msgstr "Tvorba koulí"
 
 #: plug-ins/common/spheredesigner.c:2272 plug-ins/gimpressionist/preview.c:117
 #: plug-ins/gimpressionist/repaint.c:873 plug-ins/gimpressionist/repaint.c:875
-#: plug-ins/imagemap/imap_polygon.c:442
+#: plug-ins/imagemap/imap_polygon.c:446
 msgid "Update"
 msgstr "Zaktualizovat"
 
@@ -5704,13 +5841,9 @@ msgstr "Barvy:"
 
 #. Scale
 #: plug-ins/common/spheredesigner.c:2412 plug-ins/gimpressionist/paper.c:169
-#: plug-ins/ifscompose/ifscompose.c:541
+#: plug-ins/ifscompose/ifscompose.c:540
 msgid "Scale:"
 msgstr "Velikost:"
-
-#: plug-ins/common/spheredesigner.c:2446
-msgid "Scale X:"
-msgstr "Zvìt¹ení X:"
 
 #: plug-ins/common/spheredesigner.c:2463
 msgid "Scale Y:"
@@ -5872,6 +6005,11 @@ msgstr "Práh alfy: Barvení prùhlednosti..."
 msgid "Threshold Alpha"
 msgstr "Práh alfy"
 
+#: plug-ins/common/threshold_alpha.c:297 plug-ins/common/unsharp.c:837
+#: plug-ins/common/wind.c:857 plug-ins/gflare/gflare.c:3041
+msgid "Threshold:"
+msgstr "Práh:"
+
 #: plug-ins/common/tiff.c:659
 msgid "TIFF Channel"
 msgstr "TIFF kanál"
@@ -5908,10 +6046,6 @@ msgstr "Dla¾dice"
 #: plug-ins/common/tile.c:409
 msgid "Tile to New Size"
 msgstr "Dla¾dice nové velikosti"
-
-#: plug-ins/common/tile.c:434
-msgid "Create New Image"
-msgstr "Vytvoøit nový obrázek"
 
 #: plug-ins/common/tileit.c:236
 msgid "<Image>/Filters/Map/Small Tiles..."
@@ -6143,7 +6277,7 @@ msgstr "Hlavní volby"
 msgid "Step Size:"
 msgstr "Velikost kroku:"
 
-#: plug-ins/common/warp.c:485 plug-ins/ifscompose/ifscompose.c:1278
+#: plug-ins/common/warp.c:485 plug-ins/ifscompose/ifscompose.c:1277
 msgid "Iterations:"
 msgstr "Iterace:"
 
@@ -6232,6 +6366,10 @@ msgstr "Krok toku %d..."
 #: plug-ins/common/waves.c:158
 msgid "<Image>/Filters/Distorts/Waves..."
 msgstr "<Image>/Filtry/Zkreslení/Vlny..."
+
+#: plug-ins/common/waves.c:351
+msgid "Waves"
+msgstr "Vlny"
 
 #: plug-ins/common/waves.c:398
 msgid "Reflective"
@@ -6769,7 +6907,7 @@ msgstr "Prostorové pøevzorkování"
 
 #: plug-ins/flame/flame.c:943
 msgid "Spatial Filter Radius"
-msgstr "Prùmìr prostorového filtru"
+msgstr "Polomìr prostorového filtru"
 
 #: plug-ins/flame/flame.c:957
 msgid "Colormap"
@@ -7039,9 +7177,9 @@ msgstr "ZRU©IT"
 msgid "GAP Question"
 msgstr "GAP: Otázka"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:339
-msgid "file already exists:"
-msgstr "soubor ji¾ existuje:"
+#: plug-ins/gap/gap_decode_mpeg_main.c:343
+msgid "File already exists:"
+msgstr "Soubor ji¾ existuje:"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:437
 msgid "Decoding MPEG movie..."
@@ -7084,7 +7222,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:676 plug-ins/gap/gap_decode_xanim.c:278
-#: plug-ins/imagemap/imap_toolbar.c:109
+#: plug-ins/imagemap/imap_toolbar.c:110
 msgid "Open"
 msgstr "Otevøít"
 
@@ -7245,6 +7383,10 @@ msgstr "Rozdìlit video èitelné Xanim do políèek"
 msgid "Select Frame range"
 msgstr "Výbìr rozsahu políèek"
 
+#: plug-ins/gap/gap_decode_xanim.c:339
+msgid "file already exists:"
+msgstr "soubor ji¾ existuje:"
+
 #: plug-ins/gap/gap_decode_xanim.c:531
 #, c-format
 msgid ""
@@ -7358,19 +7500,19 @@ msgstr ""
 
 #: plug-ins/gap/gap_filter_foreach.c:276
 msgid "Applying Filter to all Layers .."
-msgstr ""
+msgstr "Aplikuje se filtr na v¹echny vrstvy..."
 
 #: plug-ins/gap/gap_filter_foreach.c:550
 msgid "Select Filter for Animated apply"
-msgstr ""
+msgstr "Volba filtru pro animované pou¾ití"
 
 #: plug-ins/gap/gap_filter_foreach.c:551 plug-ins/gap/gap_mod_layer.c:661
 msgid "Apply Constant"
-msgstr ""
+msgstr "Konstantní u¾ití"
 
 #: plug-ins/gap/gap_filter_foreach.c:552 plug-ins/gap/gap_mod_layer.c:662
 msgid "Apply Varying"
-msgstr ""
+msgstr "Promìnné u¾ití"
 
 #: plug-ins/gap/gap_filter_main.c:105
 msgid "<Image>/Filters/Filter all Layers..."
@@ -7707,24 +7849,24 @@ msgstr ""
 #: plug-ins/gap/gap_mod_layer.c:155 plug-ins/gap/gap_mpege.c:259
 #: plug-ins/gap/gap_range_ops.c:425
 msgid "From Frame:"
-msgstr ""
+msgstr "Výchozí políèko:"
 
 #: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mov_dialog.c:593
 #: plug-ins/gap/gap_mpege.c:260 plug-ins/gap/gap_range_ops.c:426
 #: plug-ins/gap/gap_range_ops.c:585
 msgid "first handled frame"
-msgstr ""
+msgstr "první obslou¾ené políèko"
 
 #: plug-ins/gap/gap_mod_layer.c:163 plug-ins/gap/gap_mpege.c:267
 #: plug-ins/gap/gap_range_ops.c:433
 msgid "To   Frame:"
-msgstr ""
+msgstr "Koncové políèko:"
 
 #: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mov_dialog.c:597
 #: plug-ins/gap/gap_mpege.c:268 plug-ins/gap/gap_range_ops.c:434
 #: plug-ins/gap/gap_range_ops.c:593
 msgid "last handled frame"
-msgstr ""
+msgstr "poslední obslou¾ené políèko"
 
 #: plug-ins/gap/gap_mod_layer.c:172 plug-ins/gap/gap_range_ops.c:632
 msgid "Select Layer(s):"
@@ -7756,7 +7898,7 @@ msgstr "Invertovat výbìr"
 
 #: plug-ins/gap/gap_mod_layer.c:196
 msgid "Perform actions on all unselected Layers"
-msgstr ""
+msgstr "Provedení akcí na v¹ech nevybraných vrstvách"
 
 #: plug-ins/gap/gap_mod_layer.c:201
 msgid "Function :"
@@ -7765,7 +7907,7 @@ msgstr "Funkce:"
 #. argv[7].radio_help_argv = action_help
 #: plug-ins/gap/gap_mod_layer.c:205
 msgid "Function to be performed on all selected layers"
-msgstr ""
+msgstr "Funkce, která bude provedena na v¹ech vybraných vrstvách"
 
 #: plug-ins/gap/gap_mod_layer.c:211
 msgid "New Layername:"
@@ -7781,7 +7923,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:218
 msgid "Frames Modify"
-msgstr ""
+msgstr "Úpravy políèek"
 
 #: plug-ins/gap/gap_mod_layer.c:282
 #, c-format
@@ -7789,12 +7931,14 @@ msgid ""
 "Non-Interactive call of %s\n"
 "(for all selected layers)"
 msgstr ""
+"Neinteraktivní volání %s\n"
+"(na v¹ech vybraných vrstvách)"
 
 #. GAP-PDB-Browser Dialog
 #. ----------------------
 #: plug-ins/gap/gap_mod_layer.c:660
 msgid "Select Filter for Animated frames-apply"
-msgstr ""
+msgstr "Volba filtru pro pou¾ití na animovaná políèka"
 
 #: plug-ins/gap/gap_mod_layer.c:802
 msgid "GAP Modify: No layer selected in last handled frame\n"
@@ -7806,7 +7950,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:969
 msgid "No selected Layer in start frame\n"
-msgstr ""
+msgstr "Není vybrána vrstva v poèáteèním políèku\n"
 
 #: plug-ins/gap/gap_mov_dialog.c:249 plug-ins/gflare/gflare.c:587
 #: plug-ins/gimpressionist/orientmap.c:590
@@ -7899,7 +8043,7 @@ msgstr ""
 #. parameter settings
 #: plug-ins/gap/gap_mov_dialog.c:490
 msgid "Copy moving source-layer(s) into frames"
-msgstr ""
+msgstr "Pøená¹ejí se zdrojové vrstvy do políèek"
 
 #. Point Buttons
 #: plug-ins/gap/gap_mov_dialog.c:513
@@ -7908,7 +8052,7 @@ msgstr "Naèíst body"
 
 #: plug-ins/gap/gap_mov_dialog.c:521
 msgid "Load Controlpoints from file"
-msgstr ""
+msgstr "Ètení øídících bodù ze souboru"
 
 #: plug-ins/gap/gap_mov_dialog.c:525
 msgid "Save Points"
@@ -7927,6 +8071,8 @@ msgid ""
 "Reset Controlpoints  \n"
 "to one Defaultpoint"
 msgstr ""
+"Vymazat øídící body  \n"
+"do jednoho implicitního bodu"
 
 #: plug-ins/gap/gap_mov_dialog.c:549
 msgid "Add Point"
@@ -8119,15 +8265,15 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_exec.c:228
 msgid "Copying Layers into Frames .."
-msgstr ""
+msgstr "Kopírují se vrstvy do políèek..."
 
 #: plug-ins/gap/gap_mpege.c:111
 msgid "Conditions to run mpeg_encode 1.5:"
-msgstr ""
+msgstr "Podmínky spu¹tìní mpeg_encode 1.5:"
 
 #: plug-ins/gap/gap_mpege.c:114
 msgid "Conditions to run mpeg2encode 1.2:"
-msgstr ""
+msgstr "Podmínky spu¹tìní mpeg2encode 1.2:"
 
 #: plug-ins/gap/gap_mpege.c:124
 msgid "1.) mpeg_encode 1.5 must be installed"
@@ -8265,7 +8411,7 @@ msgid ""
 "(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
 msgstr ""
 "Generuje parametrický soubor pro mpeg_encode 1.5\n"
-"(volnì ¹í¾ený Berkeley MPEG-1 video kodér.)\n"
+"(volnì ¹íøený Berkeley MPEG-1 video kodér.)\n"
 
 #: plug-ins/gap/gap_mpege.c:323
 msgid "Constant Bitrate :"
@@ -8350,6 +8496,8 @@ msgid ""
 "Generate parameterfile for mpeg2encode 1.2\n"
 "(MPEG-2 Video  Encoder.)\n"
 msgstr ""
+"Generuje parametrický soubor pro mpeg_encode 1.2\n"
+"(MPEG-2 video kodér.)\n"
 
 #: plug-ins/gap/gap_mpege.c:395
 msgid "MPEG-type :"
@@ -8381,12 +8529,16 @@ msgid ""
 "\n"
 "ERROR: width not a multiple of 16"
 msgstr ""
+"\n"
+"CHYBA: ¹íøka není násobkem 16"
 
 #: plug-ins/gap/gap_mpege.c:981
 msgid ""
 "\n"
 "ERROR: height not a multiple of 16"
 msgstr ""
+"\n"
+"CHYBA: vý¹ka není násobkem 16"
 
 #: plug-ins/gap/gap_mpege.c:987
 msgid ""
@@ -8446,7 +8598,7 @@ msgstr "Jít na poslední políèko"
 
 #: plug-ins/gap/gap_navigator_dialog.c:443
 msgid "GAP video navigator dialog"
-msgstr ""
+msgstr "Dialog video navigátoru GAP"
 
 #: plug-ins/gap/gap_navigator_dialog.c:448
 msgid "<Image>/Video/VCR Navigator..."
@@ -8454,7 +8606,7 @@ msgstr "<Image>/Video/Video navigátor..."
 
 #: plug-ins/gap/gap_navigator_dialog.c:2689
 msgid "Videoframes:"
-msgstr ""
+msgstr "Video políèka:"
 
 #: plug-ins/gap/gap_navigator_dialog.c:2704
 msgid "Framerate:"
@@ -8487,30 +8639,30 @@ msgstr "Posun Y:"
 
 #: plug-ins/gap/gap_range_ops.c:147
 msgid "Crop AnimFrames (all)"
-msgstr ""
+msgstr "Oøez animaèních políèek (v¹ech)"
 
 #: plug-ins/gap/gap_range_ops.c:148
 #, c-format
 msgid "Crop (original %dx%d)"
-msgstr ""
+msgstr "Oøez (pùvodnì %d×%d)"
 
 #: plug-ins/gap/gap_range_ops.c:158
 msgid "Resize AnimFrames (all)"
-msgstr ""
+msgstr "Zmìna velikosti plátna animaèních políèek (v¹ech)"
 
 #: plug-ins/gap/gap_range_ops.c:159
 #, c-format
 msgid "Resize (original %dx%d)"
-msgstr ""
+msgstr "Zmìna velikosti plátna (pùvodnì %d×%d)"
 
 #: plug-ins/gap/gap_range_ops.c:165
 msgid "Scale AnimFrames (all)"
-msgstr ""
+msgstr "Velikost animaèních políèek (v¹ech)"
 
 #: plug-ins/gap/gap_range_ops.c:166
 #, c-format
 msgid "Scale (original %dx%d)"
-msgstr ""
+msgstr "Velikost (pùvodnì %d×%d)"
 
 #: plug-ins/gap/gap_range_ops.c:256
 msgid "Layerstack :"
@@ -8708,6 +8860,8 @@ msgid ""
 "Resulting Layer Size is the frame size     \n"
 "transparent parts are filled with BG color"
 msgstr ""
+"Výsledná velikost vrstvy je velikost políèka     \n"
+"prùhledné èásti jsou vyplnìny barvou pozadí"
 
 #: plug-ins/gap/gap_range_ops.c:599
 msgid "Layer Basename:"
@@ -8845,6 +8999,8 @@ msgid ""
 "Remove Alpha Channel in resulting Frames,    \n"
 "transparent parts are filled with BG color"
 msgstr ""
+"Odstraní ve výsledných políèkách alfa kanál,    \n"
+"prùhledné èásti jsou vyplnìny barvou pozadí"
 
 #: plug-ins/gap/gap_split.c:247
 msgid "Split Image into Frames"
@@ -8900,7 +9056,7 @@ msgstr "Znak: %c, %d, 0x%02x"
 msgid "Selected char:"
 msgstr "Vybraný znak:"
 
-#: plug-ins/gdyntext/charmap_window.c:134 plug-ins/imagemap/imap_polygon.c:448
+#: plug-ins/gdyntext/charmap_window.c:134 plug-ins/imagemap/imap_polygon.c:452
 msgid "Insert"
 msgstr "Vlo¾it"
 
@@ -8916,14 +9072,14 @@ msgstr ""
 #: plug-ins/gdyntext/font_selection.c:212
 #: plug-ins/gdyntext/font_selection.c:266
 #: plug-ins/gdyntext/font_selection.c:353
-#: plug-ins/gdyntext/font_selection.c:377 plug-ins/imagemap/imap_circle.c:264
-#: plug-ins/imagemap/imap_circle.c:270 plug-ins/imagemap/imap_circle.c:276
-#: plug-ins/imagemap/imap_grid.c:201 plug-ins/imagemap/imap_grid.c:207
-#: plug-ins/imagemap/imap_polygon.c:433 plug-ins/imagemap/imap_polygon.c:440
-#: plug-ins/imagemap/imap_rectangle.c:378
-#: plug-ins/imagemap/imap_rectangle.c:384
-#: plug-ins/imagemap/imap_rectangle.c:390
-#: plug-ins/imagemap/imap_rectangle.c:396
+#: plug-ins/gdyntext/font_selection.c:377 plug-ins/imagemap/imap_circle.c:265
+#: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
+#: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
+#: plug-ins/imagemap/imap_polygon.c:437 plug-ins/imagemap/imap_polygon.c:444
+#: plug-ins/imagemap/imap_rectangle.c:379
+#: plug-ins/imagemap/imap_rectangle.c:385
+#: plug-ins/imagemap/imap_rectangle.c:391
+#: plug-ins/imagemap/imap_rectangle.c:397
 msgid "pixels"
 msgstr "pixely"
 
@@ -9001,7 +9157,7 @@ msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:339
 msgid "Left aligned text"
-msgstr ""
+msgstr "Text na levou zará¾ku"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:348
 msgid "Centered text"
@@ -9009,7 +9165,7 @@ msgstr "Text na støed"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:357
 msgid "Right aligned text"
-msgstr ""
+msgstr "Text na pravou zará¾ku"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:366
 msgid "Toggle text font preview"
@@ -9082,12 +9238,12 @@ msgid "Paint"
 msgstr "Kreslit"
 
 #: plug-ins/gfig/gfig.c:4895 plug-ins/imagemap/imap_cmd_clear.c:50
-#: plug-ins/imagemap/imap_menu.c:297
+#: plug-ins/imagemap/imap_menu.c:298
 msgid "Clear"
 msgstr "Vymazat"
 
-#: plug-ins/gfig/gfig.c:4904 plug-ins/ifscompose/ifscompose.c:1200
-#: plug-ins/imagemap/imap_toolbar.c:119
+#: plug-ins/gfig/gfig.c:4904 plug-ins/ifscompose/ifscompose.c:1199
+#: plug-ins/imagemap/imap_toolbar.c:120
 msgid "Undo"
 msgstr "Vrátit"
 
@@ -9147,7 +9303,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:5806
 msgid "Error in copy layer for onlayers\n"
-msgstr ""
+msgstr "Chyba v kopírování vrstvy pro vkládání\n"
 
 #. RGBA or GRAYA type
 #. opacity
@@ -9213,7 +9369,7 @@ msgid "Save as..."
 msgstr "Zapsat jako..."
 
 #: plug-ins/gfig/gfig.c:6548 plug-ins/gflare/gflare.c:3117
-#: plug-ins/imagemap/imap_menu.c:276
+#: plug-ins/imagemap/imap_menu.c:277 plug-ins/imagemap/imap_selection.c:171
 msgid "Edit"
 msgstr "Úpravy"
 
@@ -9314,7 +9470,7 @@ msgid "Auto Update Preview"
 msgstr "Automatická aktualizace náhledu"
 
 #. Window radiobutton
-#: plug-ins/gflare/gflare.c:3116 plug-ins/ifscompose/ifscompose.c:800
+#: plug-ins/gflare/gflare.c:3116 plug-ins/ifscompose/ifscompose.c:799
 #: plug-ins/webbrowser/webbrowser.c:345
 msgid "New"
 msgstr "Nový"
@@ -9391,6 +9547,7 @@ msgstr "Volby kreslení druhé záøe"
 
 #: plug-ins/gflare/gflare.c:3701 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
+#: plug-ins/imagemap/imap_preferences.c:467
 msgid "General"
 msgstr "V¹eobecné"
 
@@ -9451,13 +9608,13 @@ msgstr "Pøechod pravdìpodobnosti:"
 msgid "Shape of Second Flares"
 msgstr "Tvar druhé záøe"
 
-#: plug-ins/gflare/gflare.c:4071 plug-ins/imagemap/imap_circle.c:59
-#: plug-ins/imagemap/imap_menu.c:386 plug-ins/imagemap/imap_popup.c:134
+#: plug-ins/gflare/gflare.c:4071 plug-ins/imagemap/imap_circle.c:60
+#: plug-ins/imagemap/imap_menu.c:387 plug-ins/imagemap/imap_popup.c:135
 msgid "Circle"
 msgstr "Kruh"
 
-#: plug-ins/gflare/gflare.c:4087 plug-ins/imagemap/imap_menu.c:388
-#: plug-ins/imagemap/imap_polygon.c:68 plug-ins/imagemap/imap_popup.c:137
+#: plug-ins/gflare/gflare.c:4087 plug-ins/imagemap/imap_menu.c:389
+#: plug-ins/imagemap/imap_polygon.c:69 plug-ins/imagemap/imap_popup.c:138
 msgid "Polygon"
 msgstr "Polygon"
 
@@ -9754,7 +9911,7 @@ msgstr "Nech» hodnota (jas) oblasti urèí smìr tahu"
 #: plug-ins/gimpressionist/orientation.c:141
 #: plug-ins/gimpressionist/size.c:140
 msgid "Radius"
-msgstr "Prùmìr"
+msgstr "Polomìr"
 
 #: plug-ins/gimpressionist/orientation.c:147
 msgid ""
@@ -9804,7 +9961,7 @@ msgstr "Úpravy..."
 
 #: plug-ins/gimpressionist/orientation.c:228
 msgid "Opens up the Orientation Map Editor"
-msgstr "Otvírá editor map orientace"
+msgstr "Otvírá editor mapy orientace"
 
 #: plug-ins/gimpressionist/orientmap.c:461
 msgid "Orientation Map Editor"
@@ -9937,7 +10094,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/paper.c:197
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr ""
+msgstr "Urèuje míru vyvý¹ení pou¾itou na obrázek (v procentech)"
 
 #: plug-ins/gimpressionist/placement.c:52
 #: plug-ins/gimpressionist/placement.c:57
@@ -9970,7 +10127,7 @@ msgstr "Hustota tahu:"
 
 #: plug-ins/gimpressionist/placement.c:123
 msgid "The relative density of the brush strokes"
-msgstr "Relativní hustota stop ¹tìtce"
+msgstr "Pomìrná hustota stop ¹tìtce"
 
 #: plug-ins/gimpressionist/placement.c:125
 msgid "Centerize"
@@ -10029,10 +10186,6 @@ msgstr ""
 msgid "Revert to the original image"
 msgstr "Navrácení pùvodního obrázku"
 
-#: plug-ins/gimpressionist/size.c:51 plug-ins/gimpressionist/size.c:56
-msgid "Size"
-msgstr "Velikost"
-
 #: plug-ins/gimpressionist/size.c:72
 msgid "Sizes:"
 msgstr "Velikosti:"
@@ -10047,45 +10200,45 @@ msgstr "Nejvìt¹í velikost:"
 
 #: plug-ins/gimpressionist/size.c:104
 msgid "The smallest brush to create"
-msgstr ""
+msgstr "Nejmen¹í vytváøená stopa"
 
 #: plug-ins/gimpressionist/size.c:113
 msgid "The largest brush to create"
-msgstr ""
+msgstr "Nejvìt¹í vytváøená stopa"
 
 #: plug-ins/gimpressionist/size.c:136
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr ""
+msgstr "Nech» hodnota (jas) oblasti urèí velikost tahu"
 
 #: plug-ins/gimpressionist/size.c:146
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
-msgstr ""
+msgstr "Vzdálenost od støedu obrázku urèí velikost tahu"
 
 #: plug-ins/gimpressionist/size.c:156
 msgid "Selects a random size for each stroke"
-msgstr ""
+msgstr "Zvolí náhodnou velikost ka¾dého tahu"
 
 #: plug-ins/gimpressionist/size.c:166
 msgid "Let the direction from the center determine the size of the stroke"
-msgstr ""
+msgstr "Nech» smìr od støedu urèí velikost tahu"
 
 #: plug-ins/gimpressionist/size.c:192
 msgid "The hue of the region determines the size of the stroke"
-msgstr ""
+msgstr "Odstín oblasti urèí velikost tahu"
 
 #: plug-ins/gimpressionist/size.c:202
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr ""
+msgstr "Bude zvolena velikost stopy nejlépe odpovídající pùvodnímu obrázku"
 
 #: plug-ins/gimpressionist/size.c:216
 msgid "Manually specify the stroke size"
-msgstr ""
+msgstr "Velikost stopy bude urèena ruènì"
 
 #: plug-ins/gimpressionist/size.c:225
 msgid "Opens up the Size Map Editor"
-msgstr ""
+msgstr "Otvírá editor mapy velikosti"
 
 #: plug-ins/gimpressionist/sizemap.c:361
 msgid "Size Map Editor"
@@ -10103,7 +10256,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/sizemap.c:422
 msgid "Select previous smvector"
-msgstr ""
+msgstr "Vybrat pøedchozí vektor mv"
 
 #: plug-ins/gimpressionist/sizemap.c:429
 msgid "Select next smvector"
@@ -10129,7 +10282,7 @@ msgstr "Zmìna pevnosti zvoleného vektoru mv"
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
-msgstr ""
+msgstr "Re¾im Voronoi bere v úvahu pouze vliv bodu nejbli¾¹ího vektor mv"
 
 #: plug-ins/helpbrowser/helpbrowser.c:91
 #, c-format
@@ -10173,8 +10326,8 @@ msgstr "Obsah"
 msgid "Index"
 msgstr "Rejstøík"
 
-#: plug-ins/helpbrowser/helpbrowser.c:397 plug-ins/imagemap/imap_main.c:509
-#: plug-ins/imagemap/imap_settings.c:148
+#: plug-ins/helpbrowser/helpbrowser.c:397 plug-ins/imagemap/imap_main.c:507
+#: plug-ins/imagemap/imap_settings.c:149
 msgid "<Untitled>"
 msgstr "<Beze jména>"
 
@@ -10197,132 +10350,132 @@ msgstr "Zpìt"
 msgid "Forward"
 msgstr "Dopøedu"
 
-#: plug-ins/ifscompose/ifscompose.c:360
+#: plug-ins/ifscompose/ifscompose.c:359
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
 msgstr "<Image>/Filtry/Vyobrazení/Pøíroda/Ifs kompozice..."
 
 #. Asym
-#: plug-ins/ifscompose/ifscompose.c:569
+#: plug-ins/ifscompose/ifscompose.c:568
 msgid "Asymmetry:"
 msgstr ""
 
 #. Shear
-#: plug-ins/ifscompose/ifscompose.c:583
+#: plug-ins/ifscompose/ifscompose.c:582
 msgid "Shear:"
 msgstr "Støih:"
 
 #. Flip
-#: plug-ins/ifscompose/ifscompose.c:597
+#: plug-ins/ifscompose/ifscompose.c:596
 msgid "Flip"
 msgstr "Otoèit"
 
 #. Simple color control section
-#: plug-ins/ifscompose/ifscompose.c:628
+#: plug-ins/ifscompose/ifscompose.c:627
 msgid "Simple"
 msgstr "Jednoduchý"
 
-#: plug-ins/ifscompose/ifscompose.c:640
+#: plug-ins/ifscompose/ifscompose.c:639
 msgid "IfsCompose: Target"
 msgstr "Ifs kompozice: cíl"
 
-#: plug-ins/ifscompose/ifscompose.c:646
+#: plug-ins/ifscompose/ifscompose.c:645
 msgid "Scale Hue by:"
 msgstr "©kála odstínù:"
 
-#: plug-ins/ifscompose/ifscompose.c:661
+#: plug-ins/ifscompose/ifscompose.c:660
 msgid "Scale Value by:"
 msgstr "©kála jasu:"
 
 #. Full color control section
-#: plug-ins/ifscompose/ifscompose.c:678
+#: plug-ins/ifscompose/ifscompose.c:677
 msgid "Full"
 msgstr "Plný"
 
-#: plug-ins/ifscompose/ifscompose.c:687
+#: plug-ins/ifscompose/ifscompose.c:686
 msgid "IfsCompose: Red"
 msgstr "Ifs kompozice: èervená"
 
-#: plug-ins/ifscompose/ifscompose.c:696
+#: plug-ins/ifscompose/ifscompose.c:695
 msgid "IfsCompose: Green"
 msgstr "Ifs kompozice: zelená"
 
-#: plug-ins/ifscompose/ifscompose.c:705
+#: plug-ins/ifscompose/ifscompose.c:704
 msgid "IfsCompose: Blue"
 msgstr "Ifs kompozice: modrá"
 
-#: plug-ins/ifscompose/ifscompose.c:714
+#: plug-ins/ifscompose/ifscompose.c:713
 msgid "IfsCompose: Black"
 msgstr "Ifs kompozice: èerná"
 
-#: plug-ins/ifscompose/ifscompose.c:793
+#: plug-ins/ifscompose/ifscompose.c:792
 msgid "IfsCompose"
 msgstr "Ifs kompozice"
 
-#: plug-ins/ifscompose/ifscompose.c:877 plug-ins/ifscompose/ifscompose.c:1147
+#: plug-ins/ifscompose/ifscompose.c:876 plug-ins/ifscompose/ifscompose.c:1146
 msgid "Rotate/Scale"
 msgstr "Rotate/zvìt¹ení"
 
-#: plug-ins/ifscompose/ifscompose.c:886 plug-ins/ifscompose/ifscompose.c:1159
+#: plug-ins/ifscompose/ifscompose.c:885 plug-ins/ifscompose/ifscompose.c:1158
 msgid "Stretch"
 msgstr "Rozta¾ení"
 
-#: plug-ins/ifscompose/ifscompose.c:906
+#: plug-ins/ifscompose/ifscompose.c:905
 msgid "Render Options"
 msgstr "Volby vyobrazení"
 
-#: plug-ins/ifscompose/ifscompose.c:920 plug-ins/print/print.c:760
+#: plug-ins/ifscompose/ifscompose.c:919 plug-ins/print/print.c:760
 msgid "Auto"
 msgstr "Automaticky"
 
-#: plug-ins/ifscompose/ifscompose.c:953
+#: plug-ins/ifscompose/ifscompose.c:952
 msgid "Spatial Transformation"
 msgstr "Prostorová transformace"
 
-#: plug-ins/ifscompose/ifscompose.c:959
+#: plug-ins/ifscompose/ifscompose.c:958
 msgid "Color Transformation"
 msgstr "Barevná transformace"
 
-#: plug-ins/ifscompose/ifscompose.c:969
+#: plug-ins/ifscompose/ifscompose.c:968
 msgid "Relative Probability:"
-msgstr ""
+msgstr "Pomìrná pravdìpodobnost:"
 
-#: plug-ins/ifscompose/ifscompose.c:1176
+#: plug-ins/ifscompose/ifscompose.c:1175
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
-#: plug-ins/imagemap/imap_menu.c:293
+#: plug-ins/imagemap/imap_menu.c:294
 msgid "Select All"
 msgstr "Vybrat v¹e"
 
-#: plug-ins/ifscompose/ifscompose.c:1188
+#: plug-ins/ifscompose/ifscompose.c:1187
 msgid "Recompute Center"
 msgstr "Pøepoèítat støed"
 
-#: plug-ins/ifscompose/ifscompose.c:1212 plug-ins/imagemap/imap_toolbar.c:122
+#: plug-ins/ifscompose/ifscompose.c:1211 plug-ins/imagemap/imap_toolbar.c:123
 msgid "Redo"
 msgstr "Zru¹it vrácení"
 
-#: plug-ins/ifscompose/ifscompose.c:1245
+#: plug-ins/ifscompose/ifscompose.c:1244
 msgid "IfsCompose Options"
 msgstr "Volby Ifs kompozice"
 
-#: plug-ins/ifscompose/ifscompose.c:1265
+#: plug-ins/ifscompose/ifscompose.c:1264
 msgid "Max. Memory:"
 msgstr "Limit pamìti:"
 
-#: plug-ins/ifscompose/ifscompose.c:1292
+#: plug-ins/ifscompose/ifscompose.c:1291
 msgid "Subdivide:"
 msgstr "Poddìlení:"
 
-#: plug-ins/ifscompose/ifscompose.c:1305
+#: plug-ins/ifscompose/ifscompose.c:1304
 msgid "Spot Radius:"
-msgstr "Prùmìr teèky:"
+msgstr "Polomìr teèky:"
 
-#: plug-ins/ifscompose/ifscompose.c:1375
+#: plug-ins/ifscompose/ifscompose.c:1374
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Poèítá se IFS (%d/%d)..."
 
 #. transfer the image to the drawable
-#: plug-ins/ifscompose/ifscompose.c:1394
+#: plug-ins/ifscompose/ifscompose.c:1393
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "ISF se kopíruje do obrázku (%d/%d)..."
@@ -10337,11 +10490,11 @@ msgid ""
 "  Released under the GNU General Public License  "
 msgstr ""
 
-#: plug-ins/imagemap/imap_circle.c:260
+#: plug-ins/imagemap/imap_circle.c:261
 msgid "Center x:"
 msgstr "Støed x:"
 
-#: plug-ins/imagemap/imap_circle.c:266
+#: plug-ins/imagemap/imap_circle.c:267
 msgid "Center y:"
 msgstr "Støed y:"
 
@@ -10351,12 +10504,12 @@ msgstr "Vytvoøit"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:53
 #: plug-ins/imagemap/imap_cmd_cut_object.c:51
-#: plug-ins/imagemap/imap_menu.c:283 plug-ins/imagemap/imap_toolbar.c:128
+#: plug-ins/imagemap/imap_menu.c:284 plug-ins/imagemap/imap_toolbar.c:129
 msgid "Cut"
 msgstr "Vyøíznout"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:57
-#: plug-ins/imagemap/imap_polygon.c:665
+#: plug-ins/imagemap/imap_polygon.c:669
 msgid "Delete Point"
 msgstr "Smazat bod"
 
@@ -10364,16 +10517,16 @@ msgstr "Smazat bod"
 msgid "Edit Object"
 msgstr "Upravit objekt"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:70
+#: plug-ins/imagemap/imap_cmd_guides.c:71
 msgid "Create Guides"
 msgstr "Vytvoøit vodítka"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:110
+#: plug-ins/imagemap/imap_cmd_guides.c:111
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:135
+#: plug-ins/imagemap/imap_cmd_guides.c:136
 msgid ""
 "Guides are pre-defined rectangles covering the image. You define\n"
 "them by their width, height, and spacing from each other. This\n"
@@ -10381,58 +10534,59 @@ msgid ""
 "image collection of \"thumbnails\", suitable for navigation bars."
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:163 plug-ins/imagemap/imap_grid.c:197
+#: plug-ins/imagemap/imap_cmd_guides.c:164 plug-ins/imagemap/imap_grid.c:198
 msgid "Width"
 msgstr "©íøka"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:168
+#: plug-ins/imagemap/imap_cmd_guides.c:169
 msgid "Left Start at"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:173 plug-ins/imagemap/imap_grid.c:203
+#: plug-ins/imagemap/imap_cmd_guides.c:174 plug-ins/imagemap/imap_grid.c:204
 msgid "Height"
 msgstr "Vý¹ka"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:178
+#: plug-ins/imagemap/imap_cmd_guides.c:179
 msgid "Top Start at"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:183
+#: plug-ins/imagemap/imap_cmd_guides.c:184
 msgid "Horz. Spacing"
 msgstr "Vodorovný rozestup"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:188
+#: plug-ins/imagemap/imap_cmd_guides.c:189
 msgid "No. Across"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:193
+#: plug-ins/imagemap/imap_cmd_guides.c:194
 msgid "Vert. Spacing"
 msgstr "Svislý rozestup"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:198
+#: plug-ins/imagemap/imap_cmd_guides.c:199
 msgid "No. Down"
-msgstr ""
+msgstr "È. dolù"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:223
+#: plug-ins/imagemap/imap_cmd_guides.c:224
 #, c-format
 msgid "Image dimensions: %d x %d"
-msgstr ""
+msgstr "Rozmìry obrázku: %d × %d"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:228
+#: plug-ins/imagemap/imap_cmd_guides.c:229
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:263
+#: plug-ins/imagemap/imap_cmd_guides.c:264
 msgid "Guides"
-msgstr ""
+msgstr "Vodítka"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
-#: plug-ins/imagemap/imap_polygon.c:679
+#: plug-ins/imagemap/imap_polygon.c:683
 msgid "Insert Point"
 msgstr "Vlo¾it bod"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:52
 #: plug-ins/imagemap/imap_cmd_object_down.c:51
+#: plug-ins/imagemap/imap_selection.c:166
 msgid "Move Down"
 msgstr "Pøesunout dolù"
 
@@ -10446,11 +10600,12 @@ msgstr "Pøesunout zvolené objekty"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:51
+#: plug-ins/imagemap/imap_selection.c:163
 msgid "Move Up"
 msgstr "Pøesunout nahoru"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:48 plug-ins/imagemap/imap_menu.c:289
-#: plug-ins/imagemap/imap_popup.c:152 plug-ins/imagemap/imap_toolbar.c:134
+#: plug-ins/imagemap/imap_cmd_paste.c:48 plug-ins/imagemap/imap_menu.c:290
+#: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:135
 msgid "Paste"
 msgstr "Vlo¾it"
 
@@ -10463,9 +10618,9 @@ msgid "Select Region"
 msgstr "Vybrat oblast"
 
 #: plug-ins/imagemap/imap_cmd_send_to_back.c:51
-#: plug-ins/imagemap/imap_toolbar.c:157
+#: plug-ins/imagemap/imap_toolbar.c:158
 msgid "Send To Back"
-msgstr ""
+msgstr "Poslat nazpìt"
 
 #: plug-ins/imagemap/imap_cmd_unselect.c:49
 msgid "Unselect"
@@ -10473,338 +10628,440 @@ msgstr "Zru¹it výbìr"
 
 #: plug-ins/imagemap/imap_cmd_unselect_all.c:50
 msgid "Unselect All"
-msgstr ""
+msgstr "Odvybrat v¹e"
 
-#: plug-ins/imagemap/imap_default_dialog.c:123
+#: plug-ins/imagemap/imap_default_dialog.c:124
 msgid "Help..."
 msgstr "Nápovìda..."
 
-#: plug-ins/imagemap/imap_edit_area_info.c:167
+#: plug-ins/imagemap/imap_edit_area_info.c:168
 msgid "Link Type"
 msgstr "Typ odkazu"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:176
+#: plug-ins/imagemap/imap_edit_area_info.c:177
 msgid "Web Site"
 msgstr "Web stanice"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:182
+#: plug-ins/imagemap/imap_edit_area_info.c:183
 msgid "Ftp Site"
 msgstr "Ftp stanice"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:188
+#: plug-ins/imagemap/imap_edit_area_info.c:189
 msgid "Gopher"
 msgstr "Gopher"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:194
+#: plug-ins/imagemap/imap_edit_area_info.c:195
 msgid "Other"
 msgstr "Jiné"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:200
-#: plug-ins/imagemap/imap_menu.c:210 plug-ins/print/print.c:3123
+#: plug-ins/imagemap/imap_edit_area_info.c:201
+#: plug-ins/imagemap/imap_menu.c:211 plug-ins/print/print.c:3123
 msgid "File"
 msgstr "Soubor"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:206
+#: plug-ins/imagemap/imap_edit_area_info.c:207
 msgid "WAIS"
 msgstr "WAIS"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:212
+#: plug-ins/imagemap/imap_edit_area_info.c:213
 msgid "Telnet"
 msgstr "Telnet"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:218
+#: plug-ins/imagemap/imap_edit_area_info.c:219
 msgid "e-mail"
 msgstr "e-mail"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:224
+#: plug-ins/imagemap/imap_edit_area_info.c:225
 msgid "URL to activate when this area is clicked: (required)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:234
+#: plug-ins/imagemap/imap_edit_area_info.c:227
+msgid "Select HTML file"
+msgstr "Výbìr HTML souboru"
+
+#: plug-ins/imagemap/imap_edit_area_info.c:235
 msgid "Relative link"
 msgstr "Relativní odkaz"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:240
+#: plug-ins/imagemap/imap_edit_area_info.c:241
 msgid "Target frame name/ID: (optional - used for FRAMES only)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:244
+#: plug-ins/imagemap/imap_edit_area_info.c:245
 msgid "Comment about this area: (optional)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:247
+#: plug-ins/imagemap/imap_edit_area_info.c:248
 msgid "Link"
 msgstr "Odkaz"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:282
+#: plug-ins/imagemap/imap_edit_area_info.c:283
 msgid "Dimensions"
 msgstr "Rozmìry"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:324
+#: plug-ins/imagemap/imap_edit_area_info.c:325
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:415
+#: plug-ins/imagemap/imap_edit_area_info.c:416
 msgid "Area Settings"
 msgstr "Nastavení oblasti"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:458
+#: plug-ins/imagemap/imap_edit_area_info.c:459
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Nastavení oblasti è. %d"
 
-#: plug-ins/imagemap/imap_file.c:46 plug-ins/imagemap/imap_menu.c:65
+#: plug-ins/imagemap/imap_file.c:47 plug-ins/imagemap/imap_menu.c:66
 msgid "Error opening file"
 msgstr "Chyba pøi otvírání souboru"
 
-#: plug-ins/imagemap/imap_file.c:55
+#: plug-ins/imagemap/imap_file.c:56
 msgid "Load Imagemap"
-msgstr ""
+msgstr "Naèíst obrázkovou mapu"
 
-#: plug-ins/imagemap/imap_file.c:78
+#: plug-ins/imagemap/imap_file.c:79
 msgid "File exists!"
 msgstr "Soubor existuje!"
 
-#: plug-ins/imagemap/imap_file.c:83
+#: plug-ins/imagemap/imap_file.c:84
 msgid ""
 "File already exists.\n"
 "  Do you really want to overwrite?  "
 msgstr ""
 
-#: plug-ins/imagemap/imap_file.c:115
+#: plug-ins/imagemap/imap_file.c:116
 msgid "Save Imagemap"
-msgstr ""
+msgstr "Zapsat obrázkovou mapu"
 
-#: plug-ins/imagemap/imap_file.c:138
+#: plug-ins/imagemap/imap_file.c:139
 msgid "Error"
-msgstr ""
+msgstr "Chyba"
 
-#: plug-ins/imagemap/imap_grid.c:142
+#: plug-ins/imagemap/imap_grid.c:143
 msgid "Grid Settings"
 msgstr "Nastavení møí¾e"
 
-#: plug-ins/imagemap/imap_grid.c:153
+#: plug-ins/imagemap/imap_grid.c:154
 msgid "Snap-To Grid Enabled"
-msgstr ""
+msgstr "Chytání na møí¾ povoleno"
 
-#: plug-ins/imagemap/imap_grid.c:159
+#: plug-ins/imagemap/imap_grid.c:160
 msgid "Grid Visibility and Type"
-msgstr ""
+msgstr "Viditelnost a druh møí¾e"
 
-#: plug-ins/imagemap/imap_grid.c:166
+#: plug-ins/imagemap/imap_grid.c:167
 msgid "Hidden"
-msgstr ""
+msgstr "Skrytá"
 
-#: plug-ins/imagemap/imap_grid.c:173
+#: plug-ins/imagemap/imap_grid.c:174
 msgid "Lines"
 msgstr "Èáry"
 
-#: plug-ins/imagemap/imap_grid.c:182
+#: plug-ins/imagemap/imap_grid.c:183
 msgid "Crosses"
 msgstr "Prùseèíky"
 
-#: plug-ins/imagemap/imap_grid.c:189
+#: plug-ins/imagemap/imap_grid.c:190
 msgid "Grid Granularity"
 msgstr ""
 
-#: plug-ins/imagemap/imap_grid.c:212
+#: plug-ins/imagemap/imap_grid.c:213
 msgid "Grid Offset"
 msgstr "Posun møí¾e"
 
-#: plug-ins/imagemap/imap_grid.c:223
+#: plug-ins/imagemap/imap_grid.c:224
 msgid "pixels from left"
-msgstr ""
+msgstr "pixely zleva"
 
-#: plug-ins/imagemap/imap_grid.c:228
+#: plug-ins/imagemap/imap_grid.c:229
 msgid "pixels from top"
-msgstr ""
+msgstr "pixely odshora"
 
-#: plug-ins/imagemap/imap_main.c:142
+#: plug-ins/imagemap/imap_main.c:141
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/Filtry/Web/Obrázková mapa..."
 
-#: plug-ins/imagemap/imap_main.c:657
+#: plug-ins/imagemap/imap_main.c:656
 msgid "Data changed"
 msgstr "Data zmìnìna"
 
-#: plug-ins/imagemap/imap_main.c:661
+#: plug-ins/imagemap/imap_main.c:660
 msgid ""
-"   Some data has been changed.   \n"
+"Some data has been changed.\n"
 "Do you really want to continue?"
 msgstr ""
 "Nìkterá data byla zmìnìna.\n"
 "Opravdu pokraèovat?"
 
-#: plug-ins/imagemap/imap_menu.c:214
+#: plug-ins/imagemap/imap_main.c:869
+#, c-format
+msgid "File \"%s\" saved."
+msgstr ""
+
+#: plug-ins/imagemap/imap_main.c:873
+msgid "Couldn't save file:"
+msgstr "Nelze zapsat soubor:"
+
+#: plug-ins/imagemap/imap_main.c:898
+msgid "Image size changed"
+msgstr "Velikost obrázku byla zmìnìna"
+
+#: plug-ins/imagemap/imap_main.c:902
+msgid ""
+"Image size has changed.\n"
+"Resize Area's?"
+msgstr ""
+"Velikost obrázku byla zmìnìna.\n"
+"Zmìnit velikost oblasti?"
+
+#: plug-ins/imagemap/imap_main.c:933
+msgid "Couldn't read file:"
+msgstr "Nelze èíst soubor:"
+
+#: plug-ins/imagemap/imap_main.c:979
+#, c-format
+msgid "URL: %s"
+msgstr "URL: %s"
+
+#: plug-ins/imagemap/imap_menu.c:215
 msgid "Open..."
 msgstr "Otevøít..."
 
-#: plug-ins/imagemap/imap_menu.c:220
+#: plug-ins/imagemap/imap_menu.c:221
 msgid "Save As..."
 msgstr "Zapsat jako..."
 
-#: plug-ins/imagemap/imap_menu.c:223
+#: plug-ins/imagemap/imap_menu.c:224
 msgid "Preferences..."
 msgstr "Pøedvolby..."
 
-#: plug-ins/imagemap/imap_menu.c:242
+#: plug-ins/imagemap/imap_menu.c:230
+msgid "Quit"
+msgstr "Konec"
+
+#: plug-ins/imagemap/imap_menu.c:243
 #, c-format
 msgid "Undo %s"
 msgstr "Vrátit %s"
 
-#: plug-ins/imagemap/imap_menu.c:253
+#: plug-ins/imagemap/imap_menu.c:254
 #, c-format
 msgid "Redo %s"
 msgstr "Zru¹it vrácení %s"
 
-#: plug-ins/imagemap/imap_menu.c:300
+#: plug-ins/imagemap/imap_menu.c:301
 msgid "Edit Area Info..."
 msgstr "Úpravy informace o oblastech..."
 
-#: plug-ins/imagemap/imap_menu.c:312
+#: plug-ins/imagemap/imap_menu.c:313
 msgid "View"
 msgstr "Zobrazit"
 
-#: plug-ins/imagemap/imap_menu.c:316
+#: plug-ins/imagemap/imap_menu.c:317
 msgid "Area List"
 msgstr "Seznam oblastí"
 
-#: plug-ins/imagemap/imap_menu.c:320
+#: plug-ins/imagemap/imap_menu.c:321
 msgid "Source..."
 msgstr "Zdroj..."
 
-#: plug-ins/imagemap/imap_menu.c:328
+#: plug-ins/imagemap/imap_menu.c:329
 msgid "Grayscale"
 msgstr "Odstíny ¹edi"
 
-#: plug-ins/imagemap/imap_menu.c:340
+#: plug-ins/imagemap/imap_menu.c:341
 msgid "Zoom In"
 msgstr "Pøiblí¾it"
 
-#: plug-ins/imagemap/imap_menu.c:343
+#: plug-ins/imagemap/imap_menu.c:344
 msgid "Zoom Out"
 msgstr "Oddálit"
 
-#: plug-ins/imagemap/imap_menu.c:348
+#: plug-ins/imagemap/imap_menu.c:349
 msgid "Zoom To"
 msgstr "Pøibí¾ít na"
 
-#: plug-ins/imagemap/imap_menu.c:378
+#: plug-ins/imagemap/imap_menu.c:379
 msgid "Mapping"
 msgstr "Mapování"
 
-#: plug-ins/imagemap/imap_menu.c:381 plug-ins/imagemap/imap_popup.c:128
+#: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:129
 msgid "Arrow"
 msgstr "©ipka"
 
-#: plug-ins/imagemap/imap_menu.c:383 plug-ins/imagemap/imap_popup.c:131
-#: plug-ins/imagemap/imap_rectangle.c:59
+#: plug-ins/imagemap/imap_menu.c:384 plug-ins/imagemap/imap_popup.c:132
+#: plug-ins/imagemap/imap_rectangle.c:60
 msgid "Rectangle"
 msgstr "Obdélník"
 
-#: plug-ins/imagemap/imap_menu.c:391
+#: plug-ins/imagemap/imap_menu.c:392
 msgid "Edit Map Info..."
 msgstr "Úpravy informace o mapování..."
 
-#: plug-ins/imagemap/imap_menu.c:398
+#: plug-ins/imagemap/imap_menu.c:399
 msgid "Goodies"
 msgstr "Speciality"
 
-#: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
+#: plug-ins/imagemap/imap_menu.c:401 plug-ins/imagemap/imap_popup.c:149
 msgid "Grid Settings..."
 msgstr "Nastavení møí¾e..."
 
-#: plug-ins/imagemap/imap_menu.c:402
+#: plug-ins/imagemap/imap_menu.c:403
 msgid "Create Guides..."
 msgstr "Vytvoøit vodítka..."
 
-#: plug-ins/imagemap/imap_menu.c:412
+#: plug-ins/imagemap/imap_menu.c:410 plug-ins/maze/maze_face.c:205
+msgid "Help"
+msgstr "Nápovìda"
+
+#: plug-ins/imagemap/imap_menu.c:413
 msgid "About ImageMap..."
 msgstr "O obrázkové mapì..."
 
-#: plug-ins/imagemap/imap_polygon.c:390
+#: plug-ins/imagemap/imap_polygon.c:391
 msgid "x (pixels)"
 msgstr "x (pixelù)"
 
-#: plug-ins/imagemap/imap_polygon.c:390
+#: plug-ins/imagemap/imap_polygon.c:391
 msgid "y (pixels)"
 msgstr "y (pixelù)"
 
-#: plug-ins/imagemap/imap_polygon.c:454
+#: plug-ins/imagemap/imap_polygon.c:458
 msgid "Append"
 msgstr "Pøipojit"
 
-#: plug-ins/imagemap/imap_popup.c:124
+#: plug-ins/imagemap/imap_popup.c:125
 msgid "Map Info..."
-msgstr ""
+msgstr "Informace o mapování..."
 
-#: plug-ins/imagemap/imap_popup.c:127
+#: plug-ins/imagemap/imap_popup.c:128
 msgid "Tools"
 msgstr "Nástroje"
 
-#: plug-ins/imagemap/imap_popup.c:141
+#: plug-ins/imagemap/imap_popup.c:142
 msgid "In"
 msgstr "Vstup"
 
-#: plug-ins/imagemap/imap_popup.c:143
+#: plug-ins/imagemap/imap_popup.c:144
 msgid "Out"
 msgstr "Výstup"
 
-#: plug-ins/imagemap/imap_popup.c:150
+#: plug-ins/imagemap/imap_popup.c:151
 msgid "Guides..."
 msgstr "Vodítka..."
 
-#: plug-ins/imagemap/imap_rectangle.c:374
+#: plug-ins/imagemap/imap_preferences.c:204
+msgid "Couldn't save resource file:"
+msgstr "Nelze zapsat soubor zdrojù:"
+
+#: plug-ins/imagemap/imap_preferences.c:356
+msgid "Select Color"
+msgstr "Výbìr barvy"
+
+#: plug-ins/imagemap/imap_preferences.c:434
+msgid "Default Map Type"
+msgstr "Implicitní druh mapy"
+
+#: plug-ins/imagemap/imap_preferences.c:453
+msgid "Prompt for area info"
+msgstr "Výzva k informaci o oblasti"
+
+#: plug-ins/imagemap/imap_preferences.c:455
+msgid "Require default URL"
+msgstr "Vy¾aduje implicitní URL"
+
+#: plug-ins/imagemap/imap_preferences.c:457
+msgid "Show area handles"
+msgstr ""
+
+#: plug-ins/imagemap/imap_preferences.c:459
+msgid "Keep NCSA circles true"
+msgstr ""
+
+#: plug-ins/imagemap/imap_preferences.c:461
+msgid "Show area URL tip"
+msgstr ""
+
+#: plug-ins/imagemap/imap_preferences.c:464
+msgid "Use double-sized grab handles"
+msgstr ""
+
+#: plug-ins/imagemap/imap_preferences.c:488
+msgid "Number of Undo levels (1 - 99):"
+msgstr ""
+
+#: plug-ins/imagemap/imap_preferences.c:491
+msgid "Number of MRU entries (1 - 16):"
+msgstr ""
+
+#: plug-ins/imagemap/imap_preferences.c:494
+msgid "Menu"
+msgstr "Menu"
+
+#: plug-ins/imagemap/imap_preferences.c:530
+msgid "Normal:"
+msgstr "Normální:"
+
+#: plug-ins/imagemap/imap_preferences.c:536
+msgid "Selected:"
+msgstr "Vybrané:"
+
+#: plug-ins/imagemap/imap_preferences.c:564
+msgid "General Preferences"
+msgstr "Obecné pøedvolby"
+
+#: plug-ins/imagemap/imap_rectangle.c:375
 msgid "Upper left x:"
 msgstr "X odleva odshora:"
 
-#: plug-ins/imagemap/imap_rectangle.c:380
+#: plug-ins/imagemap/imap_rectangle.c:381
 msgid "Upper left y:"
 msgstr "Y odleva odshora:"
 
-#: plug-ins/imagemap/imap_selection.c:335
+#: plug-ins/imagemap/imap_selection.c:336
 msgid "URL"
 msgstr "URL"
 
-#: plug-ins/imagemap/imap_selection.c:335
+#: plug-ins/imagemap/imap_selection.c:336
 msgid "Target"
 msgstr "Cíl"
 
-#: plug-ins/imagemap/imap_selection.c:335
+#: plug-ins/imagemap/imap_selection.c:336
 msgid "Comment"
 msgstr "Komentáø"
 
 #. Create selection
-#: plug-ins/imagemap/imap_selection.c:356 plug-ins/rcm/rcm_dialog.c:664
+#: plug-ins/imagemap/imap_selection.c:358 plug-ins/rcm/rcm_dialog.c:664
 msgid "Selection"
 msgstr "Výbìr"
 
-#: plug-ins/imagemap/imap_settings.c:67
+#: plug-ins/imagemap/imap_settings.c:68
 msgid "Settings for this Mapfile"
 msgstr "Nastavení pro tento soubor obrázkové mapy"
 
-#: plug-ins/imagemap/imap_settings.c:81
+#: plug-ins/imagemap/imap_settings.c:82
 msgid "Image name:"
 msgstr "Jméno obrázku:"
 
-#: plug-ins/imagemap/imap_settings.c:82
+#: plug-ins/imagemap/imap_settings.c:83
 msgid "Select Image File"
 msgstr "Výbìr souboru obrázku"
 
-#: plug-ins/imagemap/imap_settings.c:86
+#: plug-ins/imagemap/imap_settings.c:87
 msgid "Title:"
 msgstr "Titul:"
 
-#: plug-ins/imagemap/imap_settings.c:88
+#: plug-ins/imagemap/imap_settings.c:89
 #: plug-ins/script-fu/script-fu-scripts.c:1927
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/imagemap/imap_settings.c:90
+#: plug-ins/imagemap/imap_settings.c:91
 msgid "Default URL:"
 msgstr "Implicitní URL:"
 
-#: plug-ins/imagemap/imap_settings.c:107
+#: plug-ins/imagemap/imap_settings.c:108
 msgid "Map file format"
 msgstr "Formát souboru mapy"
 
@@ -10812,47 +11069,47 @@ msgstr "Formát souboru mapy"
 msgid "View Source"
 msgstr "Zobrazit zdroj"
 
-#: plug-ins/imagemap/imap_toolbar.c:114
+#: plug-ins/imagemap/imap_toolbar.c:115
 msgid "Preferences"
 msgstr "Pøedvolby"
 
-#: plug-ins/imagemap/imap_toolbar.c:141
+#: plug-ins/imagemap/imap_toolbar.c:142
 msgid "Zoom in"
 msgstr "Pøiblí¾it"
 
-#: plug-ins/imagemap/imap_toolbar.c:144
+#: plug-ins/imagemap/imap_toolbar.c:145
 msgid "Zoom out"
 msgstr "Oddálit"
 
-#: plug-ins/imagemap/imap_toolbar.c:149
+#: plug-ins/imagemap/imap_toolbar.c:150
 msgid "Edit Map Info"
-msgstr ""
+msgstr "Úpravy informace o mapování"
 
-#: plug-ins/imagemap/imap_toolbar.c:153
+#: plug-ins/imagemap/imap_toolbar.c:154
 msgid "Move To Front"
-msgstr ""
+msgstr "Pøesunout dopøedu"
 
-#: plug-ins/imagemap/imap_tools.c:127
+#: plug-ins/imagemap/imap_tools.c:128
 msgid "Select existing area"
 msgstr "Výbìr existující oblasti"
 
-#: plug-ins/imagemap/imap_tools.c:131
+#: plug-ins/imagemap/imap_tools.c:132
 msgid "Define Rectangle area"
 msgstr "Definovat obdélníkovou oblast"
 
-#: plug-ins/imagemap/imap_tools.c:135
+#: plug-ins/imagemap/imap_tools.c:136
 msgid "Define Circle/Oval area"
-msgstr ""
+msgstr "Definovat kruhovou/oválnou oblast"
 
-#: plug-ins/imagemap/imap_tools.c:139
+#: plug-ins/imagemap/imap_tools.c:140
 msgid "Define Polygon area"
-msgstr ""
+msgstr "Definovat mnohoúhelníkovou oblast"
 
-#: plug-ins/imagemap/imap_tools.c:143
+#: plug-ins/imagemap/imap_tools.c:144
 msgid "Edit selected area info"
 msgstr "Upravit informaci o vybrané oblasti"
 
-#: plug-ins/imagemap/imap_tools.c:147
+#: plug-ins/imagemap/imap_tools.c:148
 msgid "Delete selected area"
 msgstr "Smazat vybranou oblast"
 
@@ -10929,7 +11186,7 @@ msgstr "První hloubka"
 
 #: plug-ins/maze/maze_face.c:438
 msgid "Prim's Algorithm"
-msgstr ""
+msgstr "Pedantský algoritmus"
 
 #: plug-ins/maze/maze_face.c:565
 msgid ""
@@ -11014,14 +11271,6 @@ msgstr "Barevná variace:"
 #: plug-ins/mosaic/mosaic.c:2486
 msgid "Unable to add additional point.\n"
 msgstr "Nepodaøilo se pøidat dal¹í bod.\n"
-
-#: plug-ins/pagecurl/pagecurl.c:223
-msgid "Pagecurl effect"
-msgstr ""
-
-#: plug-ins/pagecurl/pagecurl.c:224
-msgid "This plug-in creates a pagecurl-effect."
-msgstr "Tento modul vytváøí efekt rozèeøení stránky."
 
 #: plug-ins/pagecurl/pagecurl.c:228
 msgid "<Image>/Filters/Distorts/Pagecurl..."
@@ -11340,11 +11589,11 @@ msgstr ""
 
 #: plug-ins/rcm/rcm_dialog.c:121
 msgid "Original"
-msgstr ""
+msgstr "Pùvodní"
 
 #: plug-ins/rcm/rcm_dialog.c:269
 msgid "Change order of arrows"
-msgstr ""
+msgstr "Zmìnit smìr ¹ipek"
 
 #: plug-ins/rcm/rcm_dialog.c:275
 msgid "Select all"
@@ -11423,7 +11672,7 @@ msgstr "Konzole skript-fu"
 #. The info vbox
 #: plug-ins/script-fu/script-fu-console.c:213
 msgid "SIOD Output"
-msgstr ""
+msgstr "Výstup SIOD"
 
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:290
@@ -11624,15 +11873,15 @@ msgstr "Volby kalkulace"
 
 #: plug-ins/sinus/sinus.c:876
 msgid "Force Tiling?"
-msgstr ""
+msgstr "Vnutit dla¾dicování?"
 
 #: plug-ins/sinus/sinus.c:889
 msgid "Ideal"
-msgstr ""
+msgstr "Ideální"
 
 #: plug-ins/sinus/sinus.c:890
 msgid "Distorted"
-msgstr "Zkresleno"
+msgstr "Zkreslený"
 
 #. if in grey scale, the colors are necessarily black and white
 #: plug-ins/sinus/sinus.c:921

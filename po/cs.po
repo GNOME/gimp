@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.17\n"
 "POT-Creation-Date: 2000-02-17 00:31+0100\n"
-"PO-Revision-Date: 2000-02-17 00:34+01:00\n"
+"PO-Revision-Date: 2000-02-18 14:08+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -330,7 +330,7 @@ msgstr "Zavøít"
 #. the feather radius scale
 #: app/brush_edit.c:276 app/color_picker.c:181 app/tool_options.c:203
 msgid "Radius:"
-msgstr "Prùmìr:"
+msgstr "Polomìr:"
 
 #: app/brush_edit.c:288
 msgid "Hardness:"
