@@ -746,6 +746,8 @@ tools_free_color_picker (Tool *tool)
     {
       info_dialog_free (color_picker_info);
       color_picker_info = NULL;
+
+      color_panel_free (color_panel);
       color_panel = NULL;
     }
 
