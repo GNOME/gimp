@@ -1,3 +1,15 @@
+2004-05-06  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/fp/fp_gdk.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/fp/fp_misc.c
+	* plug-ins/fp/fp.h: removed
+
+	* plug-ins/fp/Makefile.am: changed accordingly
+	
+	* plug-ins/fp/fp.c: merged into one single file to get rid of all 
+	global variables and functions. Major clean-up. Still more to come.
+
 2004-05-06  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/about-dialog.c: center the about dialog on the monitor,
@@ -1898,7 +1910,7 @@
 
 	* app/core/gimppalette-import.[ch]
 	* app/gui/palette-import-dialog.c: added palette import from RIFF
-	palette files based on a patch from √âRDI Gerg√µ (bug #129788).
+	palette files based on a patch from Å√âRDI GergÅ√Åµ (bug #129788).
 
 2004-04-15  Michael Natterer  <mitch@gimp.org>
 
@@ -2095,7 +2107,7 @@
 
 	* app/pdb/*_cmds.c: regenerated.
 
-2004-04-14  Rapha√´l Quinet  <quinet@gamers.org>
+2004-04-14  RaphaÅ√Å´l Quinet  <quinet@gamers.org>
 
 	* plug-ins/script-fu/scripts/copy-visible.scm: New version of the
 	script that works on a temporary copy of the image instead of
@@ -2115,7 +2127,7 @@
 
 	* Made 2.0.1 release.
 
-2004-04-13  Rapha√´l Quinet  <quinet@gamers.org>
+2004-04-13  RaphaÅ√Å´l Quinet  <quinet@gamers.org>
 
 	* plug-ins/common/mng.c (query, run): Workaround for bug #139947:
 	do not register the plug-in for INDEXED* modes and do not declare
@@ -2294,11 +2306,11 @@
 	* configure.in (ALL_LINGUAS): revert addition of "is" until all
 	.po files are there.
 
-2004-04-07  Sam√∫el J√≥n Gunnarsson  <sammi@techattack.nu>
+2004-04-07  SamÅ√Å∫el JÅ√Å≥n Gunnarsson  <sammi@techattack.nu>
 
 	* configure.in: Added "is" to ALL_LINGUAS
 
-2004-04-06  I√±aki Larra√±aga  <dooteo@euskalgnu.org>
+2004-04-06  IÅ√Å±aki LarraÅ√Å±aga  <dooteo@euskalgnu.org>
 
 	* configure.in: Added "eu" (Basque) to ALL_LINGUAS.
 

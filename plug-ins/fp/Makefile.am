@@ -17,11 +17,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = fp
 
 fp_SOURCES = \
-	fp.c		\
-	fp.h		\
-	fp_gdk.c	\
-	fp_gtk.c	\
-	fp_misc.c
+	fp.c
 
 INCLUDES = \
 	-I$(top_srcdir)	\
