@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
-"PO-Revision-Date: 2004-02-02 18:43+0100\n"
+"POT-Creation-Date: 2004-03-15 03:38+0100\n"
+"PO-Revision-Date: 2004-03-15 10:30+0100\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -411,6 +411,14 @@ msgstr "megabajtů"
 msgid "GigaBytes"
 msgstr "gigabajtů"
 
+#: libgimpwidgets/gimppatheditor.c:243
+msgid "Writable"
+msgstr "Zapisovatelný"
+
+#: libgimpwidgets/gimppatheditor.c:252
+msgid "Folder"
+msgstr "Adresář"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -517,7 +525,7 @@ msgstr "Hnízdo generátoru náhodného čísla z generovaného náhodného čí
 
 #: libgimpwidgets/gimpwidgets.c:1292
 #, fuzzy
-msgid "Randomize"
+msgid "_Randomize"
 msgstr "_Generovat náhodná čísla"
 
 #: modules/cdisplay_colorblind.c:124
