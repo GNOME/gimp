@@ -77,6 +77,7 @@ static int nopen_swap_files = 0;
 static int next_swap_num = 1;
 static long swap_file_grow = 16 * TILE_WIDTH * TILE_HEIGHT * 4;
 
+static gboolean seek_err_msg = TRUE, read_err_msg = TRUE, write_err_msg = TRUE;
 
 static void
 tile_swap_print_gaps (DefSwapFile *def_swap_file)
@@ -104,7 +105,7 @@ tile_swap_exit1 (gpointer key,
   DefSwapFile *def_swap_file;
 
   if (tile_ref_count != 0)
-    g_print ("tile ref count balance: %d\n", tile_ref_count);
+    g_message ("tile ref count balance: %d\n", tile_ref_count);
 
   swap_file = value;
   if (swap_file->swap_func == tile_swap_default)
@@ -112,7 +113,7 @@ tile_swap_exit1 (gpointer key,
       def_swap_file = swap_file->user_data;
       if (def_swap_file->swap_file_end != 0)
 	{
-	  g_print ("swap file not empty: \"%s\"\n", swap_file->filename);
+	  g_message ("swap file not empty: \"%s\"\n", swap_file->filename);
 	  tile_swap_print_gaps (def_swap_file);
 	}
 
@@ -352,7 +353,9 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
       offset = lseek (fd, tile->swap_offset, SEEK_SET);
       if (offset == -1)
 	{
-	  g_message ("unable to seek to tile location on disk: %d", err);
+	  if (seek_err_msg)
+	    g_message ("unable to seek to tile location on disk: %d", err);
+	  seek_err_msg = FALSE;
 	  return;
 	}
     }
@@ -369,7 +372,9 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
 
       if (err <= 0)
 	{
-	  g_message ("unable to read tile data from disk: %d ( %d ) bytes read", err, nleft);
+	  if (read_err_msg)
+	    g_message ("unable to read tile data from disk: %d ( %d ) bytes read", err, nleft);
+	  read_err_msg = FALSE;
 	  return;
 	}
 
@@ -380,6 +385,8 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
 
   /*  Do not delete the swap from the file  */
   /*  tile_swap_default_delete (def_swap_file, fd, tile);  */
+
+  read_err_msg = seek_err_msg = TRUE;
 }
 
 static void
@@ -407,7 +414,9 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       offset = lseek (fd, tile->swap_offset, SEEK_SET);
       if (offset == -1)
 	{
-	  g_message ("unable to seek to tile location on disk: %d", errno);
+	  if (seek_err_msg)
+	    g_message ("unable to seek to tile location on disk: %d", errno);
+	  seek_err_msg = FALSE;
 	  return;
 	}
     }
@@ -418,7 +427,9 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       err = write (fd, tile->data + rbytes - nleft, nleft);
       if (err <= 0)
 	{
-	  g_message ("unable to write tile data to disk: %d ( %d ) bytes written", err, nleft);
+	  if (write_err_msg)
+	    g_message ("unable to write tile data to disk: %d ( %d ) bytes written", err, nleft);
+	  write_err_msg = FALSE;
 	  return;
 	}
 
@@ -429,6 +440,8 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
 
   g_free (tile->data);
   tile->data = NULL;
+
+  write_err_msg = seek_err_msg = TRUE;
 }
 
 static void

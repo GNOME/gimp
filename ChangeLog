@@ -1,3 +1,8 @@
+Sat Jul  4 16:58:43 PDT 1998 Manish Singh <yosh@gimp.org>
+
+        * app/tile_swap.c: made the g_message errors a little smarter instead
+        of popping up a ton of dialogs
+
 Wed Jul  1 14:13:45 PDT 1998 Manish Singh <yosh@gimp.org>
 
         * plug-ins/jpeg/jpeg.c: fix for non-interactive mode
