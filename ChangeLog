@@ -1,3 +1,7 @@
+2003-10-24  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: an attempt to improve our installation instructions.
+
 2003-10-24  Dave Neary  <bolsh@gimp.org>
 
 	* tools/pdbgen/pdb/paths.pdb: Applied a patch from 

@@ -1,8 +1,16 @@
-THIS IS A DEVELOPMENT VERSION OF THE GIMP !! YOU SHOULD BE USING THE
-STABLE VERSION 1.2 INSTEAD !! YOU HAVE BEEN WARNED!
+THIS IS A DEVELOPMENT VERSION OF THE GIMP!
+
+If you are looking for the stable version, use GIMP 1.2.  We do
+however encourage you to try GIMP-1.3. Read on further to learn more
+about the installation process...
 
 
-There are some basic steps to building and installing the GIMP:
+There are some basic steps to building and installing the GIMP.
+
+The most important part is to make sure the requirements for a build
+are fulfilled.  We depend on a number of tools and libraries which are
+listed below. For libraries this means you need to also have the
+header files installed.
 
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
@@ -14,16 +22,18 @@ There are some basic steps to building and installing the GIMP:
      with GTK+-1.2.
 
   3. We require PangoFT2, a Pango backend that uses FreeType2. Make sure 
-     you have FreeType2 installed before you compile Pango. It can be
-     downloaded from http://www.freetype.org/.
+     you have FreeType2 and fontconfig installed before you compile Pango.
+     FreetType2 can be downloaded from http://www.freetype.org/.
+     Fontconfig from http://x2.freedesktop.org/software/fontconfig.
 
   4. We use libart2. Grab the module libart_lgpl out of GNOME CVS or
      fetch the tarball from
      ftp://ftp.gnome.org/pub/gnome/sources/libart_lgpl/
 
   5. You may want to install other third party libraries or programs that
-     are needed for some of the available plugins: tiff, png, jpeg,
-     print, helpbrowser, ...
+     are needed for some of the available plugins. We recommend to check
+     that the following libraries are installed: libpng, libjpeg,
+     libtiff, gimp-print (4.2.x), gtkhtml-2, libmng, librsvg.
 
   6. Configure the GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
@@ -35,6 +45,10 @@ There are some basic steps to building and installing the GIMP:
   8. Install the GIMP by running `make install'. In order to avoid clashes
      with an installed stable version of The GIMP, we install a binary
      called gimp-1.3.
+
+Unless you are experienced with building software from source, you
+should not attempt to build all these libraries yourself. We suggest
+you check if your distributor has development packages of them.
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries 
 lying around on your system, otherwise configure may fail to find the 
