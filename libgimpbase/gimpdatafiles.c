@@ -45,11 +45,11 @@
 #endif
 #endif /* G_OS_WIN32 */
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core/core-types.h"
 
 #include "datafiles.h"
-
-#include "libgimp/gimpenv.h"
 
 
 static gboolean    filestat_valid = FALSE;

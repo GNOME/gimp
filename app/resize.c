@@ -35,8 +35,6 @@
 #include "resize.h"
 #include "undo.h"
 
-#include "libgimp/gimplimits.h"
-
 #include "libgimp/gimpintl.h"
 
 

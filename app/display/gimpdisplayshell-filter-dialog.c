@@ -20,7 +20,10 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbsse.h"
+
 #include "apptypes.h"
+
 #include "color_area.h"
 #include "dialog_handler.h"
 #include "gdisplay.h"
@@ -28,8 +31,6 @@
 #include "gdisplay_color_ui.h"
 #include "gimpimageP.h"
 #include "gimpui.h"
-
-#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
@@ -47,7 +48,6 @@
 #include "devices.h"
 #include "dialog_handler.h"
 #include "gimprc.h"
-#include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
 

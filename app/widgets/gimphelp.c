@@ -31,8 +31,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
-#include "libgimp/gimpenv.h"
 
 #include "core/core-types.h"
 

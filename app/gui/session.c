@@ -47,7 +47,7 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimpenv.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "apptypes.h"
 #include "widgets/widgets-types.h"

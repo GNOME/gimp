@@ -45,6 +45,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "core/core-types.h"
@@ -61,8 +62,6 @@
 #include "dialog_handler.h"
 #include "gimprc.h"
 #include "undo.h"
-
-#include "libgimp/gimplimits.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -1,5 +1,52 @@
 2001-05-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/app_procs.c
+	* app/datafiles.c
+	* app/devices.c
+	* app/docindex.c
+	* app/gdisplay_color.c
+	* app/gdisplay_color_ui.c
+	* app/gimphelp.c
+	* app/main.c
+	* app/module_db.c
+	* app/plug_in.c
+	* app/resize.c
+	* app/resolution_calibrate.c
+	* app/undo_history.c
+	* app/user_install.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpdata.c
+	* app/core/gimpgradient.c
+	* app/core/gimppalette.c
+	* app/gui/about-dialog.c
+	* app/gui/file-new-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/layers-commands.c
+	* app/gui/menus.c
+	* app/gui/palette-editor.c
+	* app/gui/session.c
+	* app/gui/splash.c
+	* app/gui/tips-dialog.c
+	* app/pdb/image_cmds.c
+	* app/pdb/text_tool_cmds.c
+	* app/tools/curves.c
+	* app/tools/gimptexttool.c
+	* app/tools/levels.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimppreview.c
+	* libgimp/gimpcolordisplay.h
+	* libgimpbase/gimpbase.h
+	* libgimpwidgets/gimpcolorarea.c
+	* libgimpwidgets/libgimp-glue.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/psp.c
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/text_tool.pdb: last checkin didn't get all
+	#include "libgimp/i_dont_exist_any_more.h". This one should make
+	it compile again without old crap hanging around in <prefix>/include.
+
+2001-05-21  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimp.def: removed removed symbols :)
 
 	* libgimpbase/gimpbase.def
@@ -141,7 +188,7 @@ Mon May 21 04:08:29 CEST 2001  Marc Lehmann <pcg@goof.com>
 
 	* app/gui/menus.c: use the correct callback for opening L&C.
 
-	* app/widgets/gimpdock.c: set the window title, the WM name/class
+	* app/widgets/gimpdock.c: set the window title, the WM-name/class
 	and the icon.
 
 2001-05-16  Michael Natterer  <mitch@gimp.org>

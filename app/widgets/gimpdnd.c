@@ -24,8 +24,8 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
-#include "libgimp/gimplimits.h"
 
 #include "widgets-types.h"
 

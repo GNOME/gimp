@@ -27,8 +27,8 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimp/gimpfeatures.h"
-#include "libgimp/gimpenv.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "core/core-types.h"

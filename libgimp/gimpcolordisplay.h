@@ -22,7 +22,7 @@
 #include <glib.h>
 #include <gmodule.h>
 
-#include <libgimp/gimpparasite.h>
+#include <libgimpbase/gimpparasite.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -31,7 +31,7 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimpenv.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
 

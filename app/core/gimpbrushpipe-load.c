@@ -42,6 +42,7 @@
 #endif
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpbase/gimpparasiteio.h"
 
 #include "core-types.h"
 
@@ -53,8 +54,6 @@
 
 /*  this needs to go away  */
 #include "tools/gimppainttool.h"
-
-#include "libgimp/gimpparasiteio.h"
 
 #include "libgimp/gimpintl.h"
 

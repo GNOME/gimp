@@ -45,7 +45,7 @@
 #include "gimage.h"
 
 #include "libgimp/gimpintl.h"
-#include "libgimp/gimplimits.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
 static ProcRecord image_list_proc;

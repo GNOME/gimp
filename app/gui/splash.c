@@ -23,7 +23,7 @@
 
 #include <gtk/gtk.h>
  
-#include "libgimp/gimpenv.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimp/gimpfeatures.h"
 #include "libgimpwidgets/gimpwidgets.h"
 

@@ -22,6 +22,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "core/core-types.h"
@@ -36,8 +37,6 @@
 #include "docindex.h"
 #include "gdisplay.h"
 #include "ops_buttons.h"
-
-#include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
 

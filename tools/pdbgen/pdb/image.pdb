@@ -1462,7 +1462,7 @@ CODE
 
 @headers = qw(<string.h> "gimage.h" "context_manager.h" "core/gimpcontainer.h"
 	      "core/gimplist.h" "base/temp-buf.h" 
-	      "libgimpmath/gimpmath.h" "libgimp/gimplimits.h"
+	      "libgimpmath/gimpmath.h" "libgimpbase/gimpbase.h"
               "libgimp/gimpintl.h");
 
 $extra{app}->{code} = <<'CODE';

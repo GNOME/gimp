@@ -66,7 +66,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimp/gimpparasiteio.h>
+#include <libgimpbase/gimpparasiteio.h>
 
 #include "app/core/gimpbrush-header.h"
 #include "app/core/gimppattern-header.h"

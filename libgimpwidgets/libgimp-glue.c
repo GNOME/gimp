@@ -41,10 +41,11 @@ gimp_unit_get_symbol
  */
 
 #include <glib.h>
-#include <libgimpcolor/gimpcolortypes.h>
+
+#include "libgimpcolor/gimpcolortypes.h"
+#include "libgimpbase/gimpunit.h"
 
 #include "libgimp/gimppalette_pdb.h"
-#include "libgimp/gimpunit.h"
 
 /*
  too much depencencies

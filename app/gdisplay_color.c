@@ -22,13 +22,13 @@
 
 #include <gmodule.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "apptypes.h"
 #include "gdisplay_color.h"
 #include "gdisplay.h"
 #include "gimpimageP.h"
 #include "gimpui.h"
-
-#include "libgimp/gimpparasite.h"
 
 #include <gtk/gtk.h>
 

@@ -27,6 +27,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -53,8 +54,6 @@
 #include "gimptoolinfopreview.h"
 
 #include "image_render.h"
-
-#include "libgimp/gimplimits.h"
 
 
 #define PREVIEW_POPUP_DELAY 150

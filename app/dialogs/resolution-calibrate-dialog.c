@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "core/core-types.h"
@@ -29,9 +30,6 @@
 #include "gimprc.h"
 #include "resolution_calibrate.h"
 #include "unitrc.h"
-
-#include "libgimp/gimpenv.h"
-#include "libgimp/gimplimits.h"
 
 #include "libgimp/gimpintl.h"
 

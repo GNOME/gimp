@@ -37,7 +37,7 @@
 #include "drawable.h"
 #include "tools/gimptexttool.h"
 
-#include "libgimp/gimplimits.h"
+#include "libgimpbase/gimpbase.h"
 
 static ProcRecord text_fontname_proc;
 static ProcRecord text_get_extents_fontname_proc;

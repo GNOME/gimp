@@ -26,7 +26,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
-#include "libgimp/gimplimits.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
 

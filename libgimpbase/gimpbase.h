@@ -29,5 +29,9 @@
 #include <libgimpbase/gimpunit.h>
 #include <libgimpbase/gimputils.h>
 
+#ifndef G_OS_WIN32
+#include <libgimpbase/gimpsignal.h>
+#endif
+
 
 #endif  /* __GIMP_BASE_H__ */

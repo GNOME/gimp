@@ -80,13 +80,11 @@
 #include <sys/shm.h>
 #endif
 
-#include "libgimp/gimpenv.h"
-
-#include "core/core-types.h"
-
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
+
+#include "core/core-types.h"
 
 #include "base/tile.h"
 #include "base/tile-manager.h"

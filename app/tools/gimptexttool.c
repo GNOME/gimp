@@ -31,6 +31,7 @@
 
 #include <gdk/gdkprivate.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -60,8 +61,6 @@
 #include "gimptool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
-
-#include "libgimp/gimplimits.h"
 
 #include "libgimp/gimpintl.h"
 

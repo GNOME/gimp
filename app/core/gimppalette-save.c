@@ -28,7 +28,6 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
-#include "libgimp/gimpenv.h"
 
 #include "core-types.h"
 

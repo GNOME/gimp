@@ -50,7 +50,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimp/gimpparasiteio.h>
+#include <libgimpbase/gimpparasiteio.h>
 
 #include "libgimp/stdplugins-intl.h"
 

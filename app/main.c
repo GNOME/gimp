@@ -38,12 +38,9 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimpfeatures.h"
-#include "libgimp/gimpenv.h"
+#include "libgimpbase/gimpbase.h"
 
-#ifndef  G_OS_WIN32
-#include "libgimp/gimpsignal.h"
-#endif
+#include "libgimp/gimpfeatures.h"
 
 #include "apptypes.h"
 
