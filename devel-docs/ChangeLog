@@ -1,3 +1,7 @@
+2003-11-19  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/tmpl/gimphelpui.sgml: updated.
+
 2003-11-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/tmpl/gimpquerybox.sgml: updated.

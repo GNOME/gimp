@@ -23,27 +23,24 @@ gimp_query_int_box() etc.
 </para>
 
 <para>
-Note that all help paths are relative to the root of the help system
-in the current language. So if your language is "C", a help path of
-"filters/foo_bar.html" will expand to
-"${gimp_data_dir}/help/C/filters/foo_bar.html".
+Help IDs are textual identifiers the help system uses to figure which
+page to display.
 </para>
 
 <para>
-All these functions finally call gimp_help_connect_help_accel() which
-does the work of installing the "F1" accelerator.
+All these dialog constructors functions call gimp_help_connect().
 </para>
 
 <para>
-In most cases it will be ok to use gimp_plugin_help_func() which does
-nothing but passing the @help_data string to gimp_help(). If your
+In most cases it will be ok to use gimp_standard_help_func() which does
+nothing but passing the @help_id string to gimp_help(). If your
 plug-in needs some more sophisticated help handling you can provide
 your own @help_func which has to call gimp_help() to actually display
 the help.
 </para>
 
 @help_id: 
-@data: 
+@help_data: 
 
 
 <!-- ##### FUNCTION gimp_help_enable_tooltips ##### -->
@@ -62,23 +59,11 @@ the help.
 
 <!-- ##### FUNCTION gimp_standard_help_func ##### -->
 <para>
-This is the standard GIMP help function which does nothing but calling
-gimp_help(). Please use gimp_plugin_help_func() for your plug-in's
-help links.
-</para>
 
-<para>
-Currently, gimp_standard_help_func() and gimp_plugin_help_func() do
-exactly the same. The latter one was introduced to ensure future
-flexibility.
-</para>
-
-<para>
-See #GimpHelpFunc for the naming conventions of HTML help files.
 </para>
 
 @help_id: 
-@help_data: A unique help identifier.
+@help_data: 
 
 
 <!-- ##### FUNCTION gimp_help_connect ##### -->
