@@ -44,6 +44,8 @@
 
 #include "apptypes.h"
 
+#include "gui/dialogs.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "pdb/internal_procs.h"
@@ -618,6 +620,8 @@ app_init (void)
     {
       gximage_init ();
       render_setup (transparency_type, transparency_size);
+
+      dialogs_register ();
 
       devices_init ();
       session_init ();

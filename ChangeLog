@@ -1,3 +1,34 @@
+2001-04-14  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in
+	* app/Makefile.am
+	* app/gui/Makefile.am: new directory which will contain all gui code
+	except widgets (I was tired off adding new files to app/).
+
+	* app/apptypes.h
+	* app/gui/gimpdialogfactory.[ch]: factory which produces dialogs
+	from string descriptions. Should maybe go to widgets/.
+
+	* app/gui/dialogs-commands.[ch]: callbacks for the new menu
+	factory below.
+
+	* app/gui/dialogs-constructors.[ch]: dialog constructors which are
+	registered with the dialog factory.
+
+	* app/gui/dialogs.[ch]: register the dialogs with the factory.
+
+	* app/app_procs.c: call dialogs_register().
+
+	* app/menus.[ch]: a new item factory for creating dialogs.
+
+	* app/test_commands.c
+	* app/widgets/gimpdock.[ch]: added a dialog factory pointer to the
+	GimpDock struct.
+
+	* app/widgets/gimpdockbook.[ch]: badly (badly!) fiddle around with
+	GtkNotebook's menu to get it integrated in the GtkItemFactory
+	which produces new dialogs.
+
 2001-04-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/procedural_db.[ch]: removed the ID system from the pdb/

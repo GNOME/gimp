@@ -91,6 +91,11 @@ typedef struct _GimpUndo            GimpUndo;
 typedef struct _GimpUndoStack       GimpUndoStack;
 
 
+/*  gui objects  */
+
+typedef struct _GimpDialogFactory     GimpDialogFactory;
+
+
 /*  widgets  */
 
 typedef struct _GimpPreview           GimpPreview;

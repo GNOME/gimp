@@ -24,9 +24,12 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimp/gimpenv.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
+
+#include "gui/dialogs-commands.h"
 
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
@@ -46,8 +49,6 @@
 
 /* test dialogs */
 #include "test_commands.h"
-
-#include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -253,10 +254,10 @@ static GimpItemFactoryEntry toolbox_entries[] =
     NULL, NULL }
 #endif
 };
-
 static guint n_toolbox_entries = (sizeof (toolbox_entries) /
 				  sizeof (toolbox_entries[0]));
 static GtkItemFactory *toolbox_factory = NULL;
+
 
 /*****  <Image>  *****/
 
@@ -584,7 +585,6 @@ static GimpItemFactoryEntry image_entries[] =
   { { N_("/Dialogs/Undo History..."), NULL, dialogs_undo_history_cmd_callback, 0},
     "dialogs/undo_history.html", NULL },
 
-
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 
@@ -643,6 +643,7 @@ static guint n_image_entries = (sizeof (image_entries) /
 				sizeof (image_entries[0]));
 static GtkItemFactory *image_factory = NULL;
 
+
 /*****  <Load>  *****/
 
 static GimpItemFactoryEntry load_entries[] =
@@ -656,6 +657,7 @@ static GimpItemFactoryEntry load_entries[] =
 static guint n_load_entries = (sizeof (load_entries) /
 			       sizeof (load_entries[0]));
 static GtkItemFactory *load_factory = NULL;
+
   
 /*****  <Save>  *****/
 
@@ -670,6 +672,7 @@ static GimpItemFactoryEntry save_entries[] =
 static guint n_save_entries = (sizeof (save_entries) /
 			       sizeof (save_entries[0]));
 static GtkItemFactory *save_factory = NULL;
+
 
 /*****  <Layers>  *****/
 
@@ -741,6 +744,7 @@ static guint n_layers_entries = (sizeof (layers_entries) /
 				 sizeof (layers_entries[0]));
 static GtkItemFactory *layers_factory = NULL;
 
+
 /*****  <Channels>  *****/
 
 static GimpItemFactoryEntry channels_entries[] =
@@ -779,6 +783,7 @@ static guint n_channels_entries = (sizeof (channels_entries) /
 				   sizeof (channels_entries[0]));
 static GtkItemFactory *channels_factory = NULL;
 
+
 /*****  <Paths>  *****/
 
 static GimpItemFactoryEntry paths_entries[] =
@@ -815,6 +820,50 @@ static GimpItemFactoryEntry paths_entries[] =
 static guint n_paths_entries = (sizeof (paths_entries) /
 				sizeof (paths_entries[0]));
 static GtkItemFactory *paths_factory = NULL;
+
+
+/*****  <Dialogs>  *****/
+
+static GimpItemFactoryEntry dialogs_entries[] =
+{
+  { { "/Select Tab", NULL, NULL, 0 },
+    NULL, NULL },
+  { { "/Remove Tab", NULL, dialogs_remove_tab_cmd_callback, 0 },
+    NULL, NULL },
+
+  { { "/Add Tab/Brush List...", NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:brush_list") },
+    NULL, NULL },
+  { { "/Add Tab/Pattern List...", NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:pattern_list") },
+    NULL, NULL },
+  { { "/Add Tab/Gradient List...", NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:gradient_list") },
+    NULL, NULL },
+  { { "/Add Tab/Palette List...", NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:palette_list") },
+    NULL, NULL },
+
+  { { "/Add Tab/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+
+  { { "/Add Tab/Brush Grid...", NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:brush_grid") },
+    NULL, NULL },
+  { { "/Add Tab/Pattern Grid...", NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:pattern_grid") },
+    NULL, NULL },
+  { { "/Add Tab/Gradient Grid...", NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:gradient_grid") },
+    NULL, NULL },
+  { { "/Add Tab/Palette Grid...", NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:palette_grid") },
+    NULL, NULL },
+};
+static guint n_dialogs_entries = (sizeof (dialogs_entries) /
+				  sizeof (dialogs_entries[0]));
+static GtkItemFactory *dialogs_factory = NULL;
+
 
 static gboolean menus_initialized = FALSE;
 
@@ -908,6 +957,16 @@ menus_get_paths_menu (GtkWidget     **menu,
   if (accel_group)
     *accel_group = paths_factory->accel_group;
 }
+
+GtkItemFactory *
+menus_get_dialogs_factory (void)
+{
+  if (!menus_initialized)
+    menus_init ();
+
+  return dialogs_factory;
+}
+
 
 void
 menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
@@ -1349,6 +1408,7 @@ menus_quit (void)
       gtk_object_unref (GTK_OBJECT (layers_factory));
       gtk_object_unref (GTK_OBJECT (channels_factory));
       gtk_object_unref (GTK_OBJECT (paths_factory));
+      gtk_object_unref (GTK_OBJECT (dialogs_factory));
     }
 }
 
@@ -1790,6 +1850,16 @@ menus_init (void)
   menus_create_items (paths_factory,
 		      n_paths_entries,
 		      paths_entries,
+		      NULL, 2);
+
+  dialogs_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Dialogs>", NULL);
+  gtk_object_set_data (GTK_OBJECT (paths_factory), "factory_path",
+		       (gpointer) "dialogs");
+  gtk_item_factory_set_translate_func (dialogs_factory, menu_translate,
+				       "<Dialogs>", NULL);
+  menus_create_items (dialogs_factory,
+		      n_dialogs_entries,
+		      dialogs_entries,
 		      NULL, 2);
 
 

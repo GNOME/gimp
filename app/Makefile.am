@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = paint-funcs pdb tools widgets
+SUBDIRS = paint-funcs pdb tools widgets gui
 
 scriptdata =
 
@@ -334,6 +334,7 @@ INCLUDES = \
 	-I$(includedir)
 
 gimp_LDADD = \
+	gui/libappgui.la						\
 	paint-funcs/libapppaint-funcs.la				\
 	pdb/libapppdb.la						\
 	tools/libapptools.la						\

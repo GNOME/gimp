@@ -40,10 +40,6 @@ struct _GimpDockbook
   GtkNotebook  parent_instance;
 
   GimpDock    *dock;
-
-  /*< private >*/
-  GtkWidget   *remove_item;
-  GtkWidget   *add_item;
 };
 
 struct _GimpDockbookClass

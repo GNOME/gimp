@@ -25,6 +25,8 @@
 
 #include "apptypes.h"
 
+#include "gui/dialogs.h"
+
 #include "tools/tool_manager.h"
 
 #include "widgets/gimpcontainerlistview.h"
@@ -696,7 +698,7 @@ test_dock_new (GimpViewType  view_type,
   GtkWidget *dockable;
   GtkWidget *view;
 
-  dock = gimp_dock_new ();
+  dock = gimp_dock_new (global_dialog_factory);
 
   dockbook = gimp_dockbook_new ();
 

@@ -46,6 +46,11 @@ void   menus_get_channels_menu          (GtkWidget            **menu,
 void   menus_get_paths_menu             (GtkWidget            **menu,
 					 GtkAccelGroup        **accel_group);
 
+/*  finally, all above functions will return the factory
+ */
+GtkItemFactory * menus_get_dialogs_factory (void);
+
+
 void   menus_create_item_from_full_path (GimpItemFactoryEntry  *entry,
 					 gchar                 *domain_name,
 					 gpointer               callback_data);

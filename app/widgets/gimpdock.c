@@ -27,6 +27,8 @@
 
 #include "apptypes.h"
 
+#include "gui/gimpdialogfactory.h" /* hm, maybe this should live here? */
+
 #include "gimpdnd.h"
 #include "gimpdock.h"
 #include "gimpdockable.h"
@@ -141,9 +143,18 @@ gimp_dock_destroy (GtkObject *object)
 }
 
 GtkWidget *
-gimp_dock_new (void)
+gimp_dock_new (GimpDialogFactory *factory)
 {
-  return GTK_WIDGET (gtk_type_new (GIMP_TYPE_DOCK));
+  GimpDock *dock;
+
+  g_return_val_if_fail (factory != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+
+  dock = gtk_type_new (GIMP_TYPE_DOCK);
+
+  dock->factory = factory;
+
+  return GTK_WIDGET (dock);
 }
 
 static GtkWidget *
