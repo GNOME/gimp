@@ -32,6 +32,7 @@
 #include "context_manager.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimplist.h"
 
 static ProcRecord brushes_popup_proc;
@@ -257,7 +258,8 @@ brushes_set_popup_invoker (Argument *args)
 	  (bsp = brush_get_brushselect (name)))
 	{
 	  GimpObject *object =
-	    gimp_container_get_child_by_name (global_brush_list, brush_name);
+	    gimp_container_get_child_by_name (global_brush_factory->container,
+					      brush_name);
     
 	  if (object)
 	    {

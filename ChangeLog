@@ -1,5 +1,69 @@
 2001-02-13  Michael Natterer  <mitch@gimp.org>
 
+	* gimprc.in
+	* user_install
+	* user_install.bat
+	* app/gimprc.[ch]
+	* app/preferences_dialog.c: removed the "brush_vbr_path" variable,
+	because all data types will be editable and saveable soon.
+
+	* app/Makefile.am
+	* app/apptypes.h
+	* app/gimpdatafactory.[ch]: new object which holds a data list and
+	knows how to create, edit, duplicate etc. the items in it. Will
+	completely replace the brushes.[ch], patterns.[ch], ... files soon.
+
+	* po/POTFILES.in
+	* app/gimpdatacontainerview.[ch]: removed.
+	* app/gimpdatafactoryview.[ch]: added.
+
+	A view on the GimpDataFactory with a GUI for creating, editing,
+	deleting etc. items (mostly unimplemented).
+
+	* app/context_manager.[ch]: replaced the global data lists by global
+	data factories.
+
+	* app/brush_select.c
+	* app/brushes.[ch]
+	* app/commands.c
+	* app/convert.c
+	* app/devices.c
+	* app/gimpbrush.[ch]
+	* app/gimpbrushgenerated.c
+	* app/gimpcontext.c
+	* app/gimpdata.[ch]
+	* app/gimpdatalist.[ch]
+	* app/gimpdnd.c
+	* app/gimpgradient.[ch]
+	* app/gimppalette.[ch]
+	* app/gimppattern.[ch]
+	* app/gradient_editor.c
+	* app/gradient_select.c
+	* app/gradients.[ch]
+	* app/indicator_area.c
+	* app/palette.c
+	* app/palette_import.c
+	* app/palette_select.c
+	* app/palettes.[ch]
+	* app/pattern_select.c
+	* app/patterns.[ch]
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/convert_cmds.c
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/pattern_select_cmds.c
+	* app/pdb/patterns_cmds.c
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* tools/pdbgen/pdb/patterns.pdb: changed accordingly.
+
+2001-02-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* po/POTFILES.in
 	* app/gimpdatacontainerview.[ch]: new widget which will replace the

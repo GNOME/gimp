@@ -31,6 +31,7 @@
 #include "context_manager.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimplist.h"
 #include "temp_buf.h"
 
@@ -169,7 +170,8 @@ brushes_set_brush_invoker (Argument *args)
 
   if (success)
     {
-      object = gimp_container_get_child_by_name (global_brush_list, name);
+      object = gimp_container_get_child_by_name (global_brush_factory->container,
+						 name);
     
       if (object)
 	gimp_context_set_brush (NULL, GIMP_BRUSH (object));
@@ -445,9 +447,9 @@ brushes_list_invoker (Argument *args)
   GList *list = NULL;
   int i = 0;
 
-  brushes = g_new (char *, global_brush_list->num_children);
+  brushes = g_new (char *, global_brush_factory->container->num_children);
 
-  success = (list = GIMP_LIST (global_brush_list)->list) != NULL;
+  success = (list = GIMP_LIST (global_brush_factory->container)->list) != NULL;
 
   while (list)
     {
@@ -459,7 +461,7 @@ brushes_list_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_int = global_brush_list->num_children;
+      return_args[1].value.pdb_int = global_brush_factory->container->num_children;
       return_args[2].value.pdb_pointer = brushes;
     }
 
@@ -518,7 +520,9 @@ brushes_get_brush_data_invoker (Argument *args)
     
 	  success = FALSE;
     
-	  for (list = GIMP_LIST (global_brush_list)->list; list; list = g_list_next (list))
+	  for (list = GIMP_LIST (global_brush_factory->container)->list;
+	       list;
+	       list = g_list_next (list))
 	    {
 	      brush = (GimpBrush *) list->data;
     

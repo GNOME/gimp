@@ -29,6 +29,7 @@
 
 #include "context_manager.h"
 #include "gimpcontainer.h"
+#include "gimpdatafactory.h"
 #include "gimppalette.h"
 #include "palette_select.h"
 #include "palette.h"
@@ -117,11 +118,11 @@ palette_select_new (const gchar *title,
   gtk_widget_show (psp->clist);
 
   palette = (GimpPalette *)
-    gimp_container_get_child_by_name (global_palette_list,
+    gimp_container_get_child_by_name (global_palette_factory->container,
 				      initial_palette);
 
   if (palette)
-    select_pos = gimp_container_get_child_index (global_palette_list,
+    select_pos = gimp_container_get_child_index (global_palette_factory->container,
 						 GIMP_OBJECT (palette));
 
   gtk_widget_realize (psp->shell);
@@ -156,7 +157,7 @@ palette_select_clist_insert_all (GimpPalette *entries)
   GSList        *list;
   gint           pos;
 
-  pos = gimp_container_get_child_index (global_palette_list,
+  pos = gimp_container_get_child_index (global_palette_factory->container,
 					GIMP_OBJECT (entries));
 
   for (list = active_dialogs; list; list = g_slist_next (list))
@@ -177,7 +178,7 @@ palette_select_set_text_all (GimpPalette *entries)
   gchar         *num_buf;
   gint           pos;
 
-  pos = gimp_container_get_child_index (global_palette_list,
+  pos = gimp_container_get_child_index (global_palette_factory->container,
 					GIMP_OBJECT (entries));
 
   num_buf = g_strdup_printf ("%d", entries->n_colors);

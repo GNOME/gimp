@@ -116,6 +116,8 @@ gimp_SOURCES = \
 	gimpcontext.h		\
 	gimpdata.c		\
 	gimpdata.h		\
+	gimpdatafactory.c	\
+	gimpdatafactory.h	\
 	gimpdatalist.c		\
 	gimpdatalist.h		\
 	gimpdnd.c		\
@@ -295,8 +297,8 @@ gimp_SOURCES = \
 	gimpcontainerlistview.c		\
 	gimpcontainerview.h		\
 	gimpcontainerview.c		\
-	gimpdatacontainerview.h		\
-	gimpdatacontainerview.c		\
+	gimpdatafactoryview.h		\
+	gimpdatafactoryview.c		\
 	gimpdrawablepreview.c		\
 	gimpdrawablepreview.h		\
 	gimpgradientpreview.h		\

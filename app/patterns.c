@@ -23,6 +23,7 @@
 #include "apptypes.h"
 
 #include "context_manager.h"
+#include "gimpdatafactory.h"
 #include "gimpdatalist.h"
 #include "gimppattern.h"
 #include "gimprc.h"
@@ -39,7 +40,7 @@ patterns_init (gboolean no_data)
 
   if (pattern_path != NULL && !no_data)
     {
-      gimp_data_list_load (GIMP_DATA_LIST (global_pattern_list),
+      gimp_data_list_load (GIMP_DATA_LIST (global_pattern_factory->container),
 			   pattern_path,
 
 			   (GimpDataObjectLoaderFunc) gimp_pattern_load,
@@ -52,44 +53,9 @@ patterns_init (gboolean no_data)
 void
 patterns_free (void)
 {
-  if (gimp_container_num_children (global_pattern_list) == 0)
+  if (gimp_container_num_children (global_pattern_factory->container) == 0)
     return;
 
-  gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_pattern_list),
-				 pattern_path,
-				 GIMP_PATTERN_FILE_EXTENSION);
-}
-
-GimpPattern *
-patterns_get_standard_pattern (void)
-{
-  static GimpPattern *standard_pattern = NULL;
-
-  if (! standard_pattern)
-    {
-      guchar *data;
-      gint    row, col;
-
-      standard_pattern = GIMP_PATTERN (gtk_type_new (GIMP_TYPE_PATTERN));
-
-      gimp_object_set_name (GIMP_OBJECT (standard_pattern), "Standard");
-
-      standard_pattern->mask = temp_buf_new (32, 32, 3, 0, 0, NULL);
-
-      data = temp_buf_data (standard_pattern->mask);
-
-      for (row = 0; row < standard_pattern->mask->height; row++)
-	for (col = 0; col < standard_pattern->mask->width; col++)
-	  {
-	    memset (data, (col % 2) && (row % 2) ? 255 : 0, 3);
-	    data += 3;
-	  }
-
-      /*  set ref_count to 2 --> never swap the standard pattern  */
-      gtk_object_ref (GTK_OBJECT (standard_pattern));
-      gtk_object_ref (GTK_OBJECT (standard_pattern));
-      gtk_object_sink (GTK_OBJECT (standard_pattern));
-    }
-
-  return standard_pattern;
+  gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_pattern_factory->container),
+				 pattern_path);
 }

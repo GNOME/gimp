@@ -29,6 +29,7 @@
 
 #include "context_manager.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimplist.h"
 #include "gimppattern.h"
 #include "pattern_select.h"
@@ -218,9 +219,9 @@ patterns_set_popup_invoker (Argument *args)
       if ((prec = procedural_db_lookup (name)) &&
 	  (psp = pattern_get_patternselect (name)))
 	{
-	  GimpPattern *active =
-	    (GimpPattern *) gimp_container_get_child_by_name (global_pattern_list,
-							      pattern_name);
+	  GimpPattern *active = (GimpPattern *)
+	    gimp_container_get_child_by_name (global_pattern_factory->container,
+					      pattern_name);
     
 	  if (active)
 	    {

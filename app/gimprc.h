@@ -25,7 +25,6 @@ extern gchar             *plug_in_path;
 extern gchar             *temp_path;
 extern gchar             *swap_path;
 extern gchar             *brush_path;
-extern gchar             *brush_vbr_path;
 extern gchar             *default_brush;
 extern gchar             *pattern_path;
 extern gchar             *default_pattern;

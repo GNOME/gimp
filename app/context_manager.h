@@ -26,12 +26,12 @@
 extern GimpContainer *image_context;
 
 /*
- *  the global data lists
+ *  the global data factories which contain the global data lists
  */
-extern GimpContainer *global_brush_list;
-extern GimpContainer *global_pattern_list;
-extern GimpContainer *global_gradient_list;
-extern GimpContainer *global_palette_list;
+extern GimpDataFactory *global_brush_factory;
+extern GimpDataFactory *global_pattern_factory;
+extern GimpDataFactory *global_gradient_factory;
+extern GimpDataFactory *global_palette_factory;
 
 
 void   context_manager_init                     (void);

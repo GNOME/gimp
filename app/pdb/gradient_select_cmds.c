@@ -30,6 +30,7 @@
 #include "context_manager.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimpgradient.h"
 #include "gradient_select.h"
 #include "gradients.h"
@@ -234,7 +235,7 @@ gradients_set_popup_invoker (Argument *args)
 	  GimpGradient *active = NULL;
     
 	  active = (GimpGradient *)
-	    gimp_container_get_child_by_name (global_gradient_list,
+	    gimp_container_get_child_by_name (global_gradient_factory->container,
 					      gradient_name);
     
 	  if (active)
@@ -307,7 +308,8 @@ gradients_get_gradient_data_invoker (Argument *args)
 	  success = FALSE;
     
 	  gradient = (GimpGradient *)
-	    gimp_container_get_child_by_name (global_gradient_list, name);
+	    gimp_container_get_child_by_name (global_gradient_factory->container,
+					      name);
     
 	  if (gradient)
 	    success = TRUE;

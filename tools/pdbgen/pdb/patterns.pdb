@@ -94,7 +94,7 @@ HELP
 {
   success = FALSE;
 
-  for (list = GIMP_LIST (global_pattern_list)->list;
+  for (list = GIMP_LIST (global_pattern_factory->container)->list;
        list;
        list = g_list_next (list))
     {
@@ -128,16 +128,16 @@ HELP
 	  alias => 'patterns',
 	  array => { name => 'num_patterns',
 		     desc => 'The number of patterns in the pattern list',
-		     alias => 'global_pattern_list->num_children', no_declare => 1 } }
+		     alias => 'global_pattern_factory->container->num_children', no_declare => 1 } }
     );
 
     %invoke = (
 	vars => [ 'GList *list = NULL', 'gint i = 0' ],
 	code => <<'CODE'
 {
-  patterns = g_new (gchar *, global_pattern_list->num_children);
+  patterns = g_new (gchar *, global_pattern_factory->container->num_children);
 
-  success = ((list = GIMP_LIST (global_pattern_list)->list) != NULL);
+  success = ((list = GIMP_LIST (global_pattern_factory->container)->list) != NULL);
 
   while (list)
     {
@@ -192,7 +192,7 @@ HELP
 
       success = FALSE;
 
-      for (list = GIMP_LIST (global_pattern_list)->list;
+      for (list = GIMP_LIST (global_pattern_factory->container)->list;
            list;
            list = g_list_next (list))
 	{
@@ -220,8 +220,8 @@ CODE
     );
 }
 
-@headers = qw("context_manager.h" "gimpcontext.h" "patterns.h"
-	      "gimplist.h" "gimppattern.h" "temp_buf.h");
+@headers = qw("context_manager.h" "gimpcontext.h" "gimpdatafactory.h"
+              "patterns.h" "gimplist.h" "gimppattern.h" "temp_buf.h");
 
 @procs = qw(patterns_get_pattern patterns_set_pattern patterns_list
 	    patterns_get_pattern_data);

@@ -31,6 +31,7 @@
 #include "dialog_handler.h"
 #include "gimage.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimpdatalist.h"
 #include "gimpdnd.h"
 #include "gimppalette.h"
@@ -189,7 +190,7 @@ palette_clist_init (GtkWidget *clist,
   GList       *list;
   gint         pos;
 
-  for (list = GIMP_LIST (global_palette_list)->list, pos = 0;
+  for (list = GIMP_LIST (global_palette_factory->container)->list, pos = 0;
        list;
        list = g_list_next (list), pos++)
     {
@@ -237,7 +238,7 @@ palette_dialog_clist_insert (PaletteDialog *palette_dialog,
 {
   gint pos;
 
-  pos = gimp_container_get_child_index (global_palette_list,
+  pos = gimp_container_get_child_index (global_palette_factory->container,
 					GIMP_OBJECT (palette));
 
   gtk_clist_freeze (GTK_CLIST (palette_dialog->clist));
@@ -258,7 +259,7 @@ palette_dialog_clist_set_text (PaletteDialog *palette_dialog,
   gchar *num_buf;
   gint   pos;
 
-  pos = gimp_container_get_child_index (global_palette_list,
+  pos = gimp_container_get_child_index (global_palette_factory->container,
 					GIMP_OBJECT (palette));
 
   num_buf = g_strdup_printf ("%d", palette->n_colors);;
@@ -281,7 +282,7 @@ palette_dialog_clist_refresh (PaletteDialog *palette_dialog)
   gtk_clist_thaw (GTK_CLIST (palette_dialog->clist));
 
   palette_dialog->palette = (GimpPalette *)
-    gimp_container_get_child_by_index (global_palette_list, 0);
+    gimp_container_get_child_by_index (global_palette_factory->container, 0);
 }
 
 static void 
@@ -292,7 +293,7 @@ palette_dialog_clist_scroll_to_current (PaletteDialog *palette_dialog)
   if (! (palette_dialog && palette_dialog->palette))
     return;
 
-  pos = gimp_container_get_child_index (global_palette_list,
+  pos = gimp_container_get_child_index (global_palette_factory->container,
 					GIMP_OBJECT (palette_dialog->palette));
 
   gtk_clist_unselect_all (GTK_CLIST (palette_dialog->clist));
@@ -1261,7 +1262,7 @@ palette_dialog_add_entries_callback (GtkWidget *widget,
 
   palette = gimp_palette_new (palette_name);
 
-  gimp_container_add (global_palette_list, GIMP_OBJECT (palette));
+  gimp_container_add (global_palette_factory->container, GIMP_OBJECT (palette));
 
   /*  update all dialogs  */
   palette_insert_all (palette);
@@ -1306,7 +1307,8 @@ palette_dialog_do_delete_callback (GtkWidget *widget,
   if (GIMP_DATA (palette)->filename)
     gimp_data_delete_from_disk (GIMP_DATA (palette));
 
-  gimp_container_remove (global_palette_list, GIMP_OBJECT (palette));
+  gimp_container_remove (global_palette_factory->container,
+			 GIMP_OBJECT (palette));
 
   palette_refresh_all ();
 }
@@ -1390,7 +1392,8 @@ palette_dialog_merge_entries_callback (GtkWidget *widget,
       sel_list = sel_list->next;
     }
 
-  gimp_container_add (global_palette_list, GIMP_OBJECT (new_palette));
+  gimp_container_add (global_palette_factory->container,
+		      GIMP_OBJECT (new_palette));
 
   /*  update all dialogs  */
   palette_insert_all (new_palette);

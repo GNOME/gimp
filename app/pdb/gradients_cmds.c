@@ -29,6 +29,7 @@
 #include "context_manager.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimpgradient.h"
 #include "gimplist.h"
 #include "gradients.h"
@@ -60,13 +61,14 @@ gradients_get_list_invoker (Argument *args)
   GList *list = NULL;
   int i = 0;
 
-  num_gradients = gimp_container_num_children (global_gradient_list);
+  num_gradients =
+    gimp_container_num_children (global_gradient_factory->container);
 
   gradients = g_new (gchar *, num_gradients);
 
   if (num_gradients)
     {
-      list = GIMP_LIST (global_gradient_list)->list;
+      list = GIMP_LIST (global_gradient_factory->container)->list;
     }
 
   success = (list != NULL);
@@ -174,7 +176,7 @@ gradients_set_active_invoker (Argument *args)
   if (success)
     {
       gradient = (GimpGradient *)
-	gimp_container_get_child_by_name (global_gradient_list, name);
+	gimp_container_get_child_by_name (global_gradient_factory->container, name);
     
       success = FALSE;
     

@@ -26,7 +26,8 @@
 
 #include "gimpcontainer.h"
 #include "gimpcontainerview.h"
-#include "gimpdatacontainerview.h"
+#include "gimpdatafactory.h"
+#include "gimpdatafactoryview.h"
 #include "gimpcontainergridview.h"
 #include "gimpcontainerlistview.h"
 #include "gimpcontext.h"
@@ -42,27 +43,27 @@
 #include "pixmaps/refresh.xpm"
 
 
-static void   gimp_data_container_view_class_init (GimpDataContainerViewClass *klass);
-static void   gimp_data_container_view_init       (GimpDataContainerView      *view);
-static void   gimp_data_container_view_destroy    (GtkObject                  *object);
+static void   gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass);
+static void   gimp_data_factory_view_init       (GimpDataFactoryView      *view);
+static void   gimp_data_factory_view_destroy    (GtkObject                *object);
 
-static void   gimp_data_container_view_new_clicked       (GtkWidget             *widget,
-							  GimpDataContainerView *view);
-static void   gimp_data_container_view_duplicate_clicked (GtkWidget             *widget,
-							  GimpDataContainerView *view);
-static void   gimp_data_container_view_edit_clicked      (GtkWidget             *widget,
-							  GimpDataContainerView *view);
-static void   gimp_data_container_view_delete_clicked    (GtkWidget             *widget,
-							  GimpDataContainerView *view);
-static void   gimp_data_container_view_refresh_clicked   (GtkWidget             *widget,
-							  GimpDataContainerView *view);
+static void   gimp_data_factory_view_new_clicked       (GtkWidget           *widget,
+							GimpDataFactoryView *view);
+static void   gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
+							GimpDataFactoryView *view);
+static void   gimp_data_factory_view_edit_clicked      (GtkWidget           *widget,
+							GimpDataFactoryView *view);
+static void   gimp_data_factory_view_delete_clicked    (GtkWidget           *widget,
+							GimpDataFactoryView *view);
+static void   gimp_data_factory_view_refresh_clicked   (GtkWidget           *widget,
+							GimpDataFactoryView *view);
 
 
 static GtkVBoxClass *parent_class = NULL;
 
 
 GtkType
-gimp_data_container_view_get_type (void)
+gimp_data_factory_view_get_type (void)
 {
   static guint view_type = 0;
 
@@ -70,11 +71,11 @@ gimp_data_container_view_get_type (void)
     {
       GtkTypeInfo view_info =
       {
-	"GimpDataContainerView",
-	sizeof (GimpDataContainerView),
-	sizeof (GimpDataContainerViewClass),
-	(GtkClassInitFunc) gimp_data_container_view_class_init,
-	(GtkObjectInitFunc) gimp_data_container_view_init,
+	"GimpDataFactoryView",
+	sizeof (GimpDataFactoryView),
+	sizeof (GimpDataFactoryViewClass),
+	(GtkClassInitFunc) gimp_data_factory_view_class_init,
+	(GtkObjectInitFunc) gimp_data_factory_view_init,
 	/* reserved_1 */ NULL,
 	/* reserved_2 */ NULL,
         (GtkClassInitFunc) NULL
@@ -87,7 +88,7 @@ gimp_data_container_view_get_type (void)
 }
 
 static void
-gimp_data_container_view_class_init (GimpDataContainerViewClass *klass)
+gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 {
   GtkObjectClass *object_class;
 
@@ -95,11 +96,11 @@ gimp_data_container_view_class_init (GimpDataContainerViewClass *klass)
 
   parent_class = gtk_type_class (GTK_TYPE_VBOX);
 
-  object_class->destroy = gimp_data_container_view_destroy;
+  object_class->destroy = gimp_data_factory_view_destroy;
 }
 
 static void
-gimp_data_container_view_init (GimpDataContainerView *view)
+gimp_data_factory_view_init (GimpDataFactoryView *view)
 {
   GtkWidget *pixmap;
 
@@ -121,7 +122,7 @@ gimp_data_container_view_init (GimpDataContainerView *view)
   gimp_help_set_help_data (view->new_button, _("New"), NULL);
 
   gtk_signal_connect (GTK_OBJECT (view->new_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_data_container_view_new_clicked),
+		      GTK_SIGNAL_FUNC (gimp_data_factory_view_new_clicked),
 		      view);
 
   pixmap = gimp_pixmap_new (new_xpm);
@@ -138,7 +139,7 @@ gimp_data_container_view_init (GimpDataContainerView *view)
   gimp_help_set_help_data (view->duplicate_button, _("Duplicate"), NULL);
 
   gtk_signal_connect (GTK_OBJECT (view->duplicate_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_data_container_view_duplicate_clicked),
+		      GTK_SIGNAL_FUNC (gimp_data_factory_view_duplicate_clicked),
 		      view);  
 
   pixmap = gimp_pixmap_new (duplicate_xpm);
@@ -155,7 +156,7 @@ gimp_data_container_view_init (GimpDataContainerView *view)
   gimp_help_set_help_data (view->edit_button, _("Edit"), NULL);
 
   gtk_signal_connect (GTK_OBJECT (view->edit_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_data_container_view_edit_clicked),
+		      GTK_SIGNAL_FUNC (gimp_data_factory_view_edit_clicked),
 		      view);  
 
   pixmap = gimp_pixmap_new (pennorm_xpm);
@@ -172,7 +173,7 @@ gimp_data_container_view_init (GimpDataContainerView *view)
   gimp_help_set_help_data (view->delete_button, _("Delete"), NULL);
 
   gtk_signal_connect (GTK_OBJECT (view->delete_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_data_container_view_delete_clicked),
+		      GTK_SIGNAL_FUNC (gimp_data_factory_view_delete_clicked),
 		      view);  
 
   pixmap = gimp_pixmap_new (delete_xpm);
@@ -189,7 +190,7 @@ gimp_data_container_view_init (GimpDataContainerView *view)
   gimp_help_set_help_data (view->refresh_button, _("Refresh"), NULL);
 
   gtk_signal_connect (GTK_OBJECT (view->refresh_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_data_container_view_refresh_clicked),
+		      GTK_SIGNAL_FUNC (gimp_data_factory_view_refresh_clicked),
 		      view);  
 
   pixmap = gimp_pixmap_new (refresh_xpm);
@@ -198,40 +199,41 @@ gimp_data_container_view_init (GimpDataContainerView *view)
 }
 
 static void
-gimp_data_container_view_destroy (GtkObject *object)
+gimp_data_factory_view_destroy (GtkObject *object)
 {
-  GimpDataContainerView *view;
+  GimpDataFactoryView *view;
 
-  view = GIMP_DATA_CONTAINER_VIEW (object);
+  view = GIMP_DATA_FACTORY_VIEW (object);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *
-gimp_data_container_view_new (GimpViewType   view_type,
-			      GimpContainer *container,
-                              GimpContext   *context,
-                              gint           preview_size,
-                              gint           min_items_x,
-                              gint           min_items_y)
+gimp_data_factory_view_new (GimpViewType     view_type,
+			    GimpDataFactory *factory,
+			    GimpContext     *context,
+			    gint             preview_size,
+			    gint             min_items_x,
+			    gint             min_items_y)
 {
-  GimpDataContainerView *data_view;
+  GimpDataFactoryView *factory_view;
 
-  g_return_val_if_fail (container != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
-  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (factory != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (preview_size > 0 && preview_size <= 64, NULL);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, NULL);
 
-  data_view = gtk_type_new (GIMP_TYPE_DATA_CONTAINER_VIEW);
+  factory_view = gtk_type_new (GIMP_TYPE_DATA_FACTORY_VIEW);
+
+  factory_view->factory = factory;
 
   switch (view_type)
     {
     case GIMP_VIEW_TYPE_GRID:
-      data_view->view =
-	GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (container,
+      factory_view->view =
+	GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (factory->container,
 							   context,
 							   preview_size,
 							   min_items_x,
@@ -239,8 +241,8 @@ gimp_data_container_view_new (GimpViewType   view_type,
       break;
 
     case GIMP_VIEW_TYPE_LIST:
-      data_view->view =
-	GIMP_CONTAINER_VIEW (gimp_container_list_view_new (container,
+      factory_view->view =
+	GIMP_CONTAINER_VIEW (gimp_container_list_view_new (factory->container,
 							   context,
 							   preview_size,
 							   min_items_x,
@@ -249,47 +251,49 @@ gimp_data_container_view_new (GimpViewType   view_type,
 
     default:
       g_warning ("%s(): unknown GimpViewType passed", G_GNUC_FUNCTION);
-      gtk_object_unref (GTK_OBJECT (data_view));
+      gtk_object_unref (GTK_OBJECT (factory_view));
       return NULL;
     }
 
-  gtk_container_add (GTK_CONTAINER (data_view), GTK_WIDGET (data_view->view));
-  gtk_widget_show (GTK_WIDGET (data_view->view));
+  gtk_container_add (GTK_CONTAINER (factory_view),
+		     GTK_WIDGET (factory_view->view));
+  gtk_widget_show (GTK_WIDGET (factory_view->view));
 
-  return GTK_WIDGET (data_view);
+  return GTK_WIDGET (factory_view);
 }
 
 static void
-gimp_data_container_view_new_clicked (GtkWidget             *widget,
-				      GimpDataContainerView *view)
+gimp_data_factory_view_new_clicked (GtkWidget           *widget,
+				    GimpDataFactoryView *view)
 {
-  g_print ("new %s\n", gimp_object_get_name (gimp_context_get_by_type (view->view->context, view->view->container->children_type)));
+  g_print ("new %s\n",
+	   gimp_object_get_name (gimp_context_get_by_type (view->view->context, view->factory->container->children_type)));
 }
 
 static void
-gimp_data_container_view_duplicate_clicked (GtkWidget             *widget,
-					    GimpDataContainerView *view)
+gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
+					  GimpDataFactoryView *view)
 {
-  g_print ("duplicate %s\n", gimp_object_get_name (gimp_context_get_by_type (view->view->context, view->view->container->children_type)));
+  g_print ("duplicate %s\n", gimp_object_get_name (gimp_context_get_by_type (view->view->context, view->factory->container->children_type)));
 }
 
 static void
-gimp_data_container_view_edit_clicked (GtkWidget             *widget,
-				       GimpDataContainerView *view)
+gimp_data_factory_view_edit_clicked (GtkWidget           *widget,
+				     GimpDataFactoryView *view)
 {
-  g_print ("edit %s\n", gimp_object_get_name (gimp_context_get_by_type (view->view->context, view->view->container->children_type)));
+  g_print ("edit %s\n", gimp_object_get_name (gimp_context_get_by_type (view->view->context, view->factory->container->children_type)));
 }
 
 static void
-gimp_data_container_view_delete_clicked (GtkWidget             *widget,
-					 GimpDataContainerView *view)
+gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
+				       GimpDataFactoryView *view)
 {
-  g_print ("delete %s\n", gimp_object_get_name (gimp_context_get_by_type (view->view->context, view->view->container->children_type)));
+  g_print ("delete %s\n", gimp_object_get_name (gimp_context_get_by_type (view->view->context, view->factory->container->children_type)));
 }
 
 static void
-gimp_data_container_view_refresh_clicked (GtkWidget             *widget,
-					  GimpDataContainerView *view)
+gimp_data_factory_view_refresh_clicked (GtkWidget           *widget,
+					GimpDataFactoryView *view)
 {
   g_print ("refresh\n");
 }

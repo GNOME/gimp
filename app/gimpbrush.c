@@ -46,6 +46,7 @@
 #include "brush_header.h"
 #include "brush_scale.h"
 #include "gimpbrush.h"
+#include "gimpbrushgenerated.h"
 #include "gimprc.h"
 #include "temp_buf.h"
 
@@ -62,6 +63,7 @@ static void        gimp_brush_destroy          (GtkObject      *object);
 static TempBuf   * gimp_brush_get_new_preview  (GimpViewable   *viewable,
 						gint            width,
 						gint            height);
+static gchar     * gimp_brush_get_extension    (GimpData       *data);
 
 static GimpBrush * gimp_brush_select_brush     (PaintCore      *paint_core);
 static gboolean    gimp_brush_want_null_motion (PaintCore      *paint_core);
@@ -99,15 +101,19 @@ gimp_brush_class_init (GimpBrushClass *klass)
 {
   GtkObjectClass    *object_class;
   GimpViewableClass *viewable_class;
+  GimpDataClass     *data_class;
 
   object_class   = (GtkObjectClass *) klass;
   viewable_class = (GimpViewableClass *) klass;
+  data_class     = (GimpDataClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_DATA);
   
   object_class->destroy = gimp_brush_destroy;
 
   viewable_class->get_new_preview = gimp_brush_get_new_preview;
+
+  data_class->get_extension = gimp_brush_get_extension;
 
   klass->select_brush     = gimp_brush_select_brush;
   klass->want_null_motion = gimp_brush_want_null_motion;
@@ -247,6 +253,47 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
     }
 
   return return_buf;
+}
+
+static gchar *
+gimp_brush_get_extension (GimpData *data)
+{
+  return GIMP_BRUSH_FILE_EXTENSION;
+}
+
+GimpBrush *
+gimp_brush_new (const gchar *name)
+{
+  GimpBrush *brush;
+
+  g_return_val_if_fail (name != NULL, NULL);
+
+  brush = GIMP_BRUSH (gimp_brush_generated_new (5.0, 0.5, 0.0, 1.0));
+
+  gimp_object_set_name (GIMP_OBJECT (brush), name);
+
+  return brush;
+}
+
+GimpBrush *
+gimp_brush_get_standard (void)
+{
+  static GimpBrush *standard_brush = NULL;
+
+  if (! standard_brush)
+    {
+      standard_brush =
+	GIMP_BRUSH (gimp_brush_generated_new (5.0, 0.5, 0.0, 1.0));
+
+      gimp_object_set_name (GIMP_OBJECT (standard_brush), "Standard");
+
+      /*  set ref_count to 2 --> never swap the standard brush  */
+      gtk_object_ref (GTK_OBJECT (standard_brush));
+      gtk_object_ref (GTK_OBJECT (standard_brush));
+      gtk_object_sink (GTK_OBJECT (standard_brush));
+    }
+
+  return standard_brush;
 }
 
 GimpBrush *

@@ -23,7 +23,5 @@
 void           gradients_init                   (gboolean  no_data);
 void           gradients_free                   (void);
 
-GimpGradient * gradients_get_standard_gradient  (void);
-
 
 #endif  /* __GRADIENTS_H__ */

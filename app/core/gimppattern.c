@@ -58,6 +58,7 @@ static void      gimp_pattern_destroy         (GtkObject        *object);
 static TempBuf * gimp_pattern_get_new_preview (GimpViewable     *viewable,
 					       gint              width,
 					       gint              height);
+static gchar   * gimp_pattern_get_extension   (GimpData         *data);
 
 
 static GimpDataClass *parent_class = NULL;
@@ -93,15 +94,19 @@ gimp_pattern_class_init (GimpPatternClass *klass)
 {
   GtkObjectClass    *object_class;
   GimpViewableClass *viewable_class;
+  GimpDataClass     *data_class;
 
   object_class   = (GtkObjectClass *) klass;
   viewable_class = (GimpViewableClass *) klass;
+  data_class     = (GimpDataClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_DATA);
 
   object_class->destroy = gimp_pattern_destroy;
 
   viewable_class->get_new_preview = gimp_pattern_get_new_preview;
+
+  data_class->get_extension = gimp_pattern_get_extension;
 }
 
 static void
@@ -155,6 +160,73 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
 		      x, y);
 
   return temp_buf;
+}
+
+static gchar *
+gimp_pattern_get_extension (GimpData *data)
+{
+  return GIMP_PATTERN_FILE_EXTENSION;
+}
+
+GimpPattern *
+gimp_pattern_new (const gchar *name)
+{
+  GimpPattern *pattern;
+  guchar      *data;
+  gint         row, col;
+
+  g_return_val_if_fail (name != NULL, NULL);
+
+  pattern = GIMP_PATTERN (gtk_type_new (GIMP_TYPE_PATTERN));
+
+  gimp_object_set_name (GIMP_OBJECT (pattern), name);
+
+  pattern->mask = temp_buf_new (32, 32, 3, 0, 0, NULL);
+
+  data = temp_buf_data (pattern->mask);
+
+  for (row = 0; row < pattern->mask->height; row++)
+    for (col = 0; col < pattern->mask->width; col++)
+      {
+	memset (data, (col % 2) && (row % 2) ? 255 : 0, 3);
+	data += 3;
+      }
+
+  return pattern;
+}
+
+GimpPattern *
+gimp_pattern_get_standard (void)
+{
+  static GimpPattern *standard_pattern = NULL;
+
+  if (! standard_pattern)
+    {
+      guchar *data;
+      gint    row, col;
+
+      standard_pattern = GIMP_PATTERN (gtk_type_new (GIMP_TYPE_PATTERN));
+
+      gimp_object_set_name (GIMP_OBJECT (standard_pattern), "Standard");
+
+      standard_pattern->mask = temp_buf_new (32, 32, 3, 0, 0, NULL);
+
+      data = temp_buf_data (standard_pattern->mask);
+
+      for (row = 0; row < standard_pattern->mask->height; row++)
+	for (col = 0; col < standard_pattern->mask->width; col++)
+	  {
+	    memset (data, (col % 2) && (row % 2) ? 255 : 0, 3);
+	    data += 3;
+	  }
+
+      /*  set ref_count to 2 --> never swap the standard pattern  */
+      gtk_object_ref (GTK_OBJECT (standard_pattern));
+      gtk_object_ref (GTK_OBJECT (standard_pattern));
+      gtk_object_sink (GTK_OBJECT (standard_pattern));
+    }
+
+  return standard_pattern;
 }
 
 GimpPattern *

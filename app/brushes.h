@@ -23,7 +23,5 @@
 void        brushes_init               (gboolean  no_data);
 void        brushes_free               (void);
 
-GimpBrush * brushes_get_standard_brush (void);
-
 
 #endif  /*  __BRUSHES_H__  */

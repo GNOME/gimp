@@ -26,21 +26,18 @@
 
 #include "apptypes.h"
 
-#include "brushes.h"
 #include "context_manager.h"
 #include "gdisplay.h"
 #include "gimpbrush.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimpmarshal.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
 #include "gimprc.h"
-#include "gradients.h"
-#include "palettes.h"
-#include "patterns.h"
 #include "temp_buf.h"
 
 
@@ -719,38 +716,46 @@ gimp_context_new (const gchar *name,
 				  context,
 				  GTK_OBJECT (context));
   
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_brush_list), "remove",
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_brush_factory->container),
+				  "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_brush_removed),
 				  context,
 				  GTK_OBJECT (context));
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_brush_list), "thaw",
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_brush_factory->container),
+				  "thaw",
 				  GTK_SIGNAL_FUNC (gimp_context_brush_list_thaw),
 				  context,
 				  GTK_OBJECT (context));
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_pattern_list), "remove",
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_pattern_factory->container),
+				  "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_pattern_removed),
 				  context,
 				  GTK_OBJECT (context));
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_pattern_list), "thaw",
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_pattern_factory->container),
+				  "thaw",
 				  GTK_SIGNAL_FUNC (gimp_context_pattern_list_thaw),
 				  context,
 				  GTK_OBJECT (context));
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_gradient_list), "remove",
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_gradient_factory->container),
+				  "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_gradient_removed),
 				  context,
 				  GTK_OBJECT (context));
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_gradient_list), "thaw",
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_gradient_factory->container),
+				  "thaw",
 				  GTK_SIGNAL_FUNC (gimp_context_gradient_list_thaw),
 				  context,
 				  GTK_OBJECT (context));
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_palette_list), "remove",
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_palette_factory->container),
+				  "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_palette_removed),
 				  context,
 				  GTK_OBJECT (context));
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_palette_list), "thaw",
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_palette_factory->container),
+				  "thaw",
 				  GTK_SIGNAL_FUNC (gimp_context_palette_list_thaw),
 				  context,
 				  GTK_OBJECT (context));
@@ -1606,7 +1611,7 @@ gimp_context_brush_list_thaw (GimpContainer *container,
     gimp_context_real_set_brush 
       (context, GIMP_BRUSH (gimp_container_get_child_by_index (container, 0)));
   else
-    gimp_context_real_set_brush (context, brushes_get_standard_brush ());
+    gimp_context_real_set_brush (context, gimp_brush_get_standard ());
 }
 
 /*  the active brush disappeared  */
@@ -1634,7 +1639,7 @@ gimp_context_real_set_brush (GimpContext *context,
 			     GimpBrush   *brush)
 {
   if (! standard_brush)
-    standard_brush = brushes_get_standard_brush ();
+    standard_brush = gimp_brush_get_standard ();
 
   if (context->brush == brush)
     return;
@@ -1773,7 +1778,7 @@ gimp_context_pattern_list_thaw (GimpContainer *container,
       (context,
        GIMP_PATTERN (gimp_container_get_child_by_index (container, 0)));
   else
-    gimp_context_real_set_pattern (context, patterns_get_standard_pattern ());
+    gimp_context_real_set_pattern (context, gimp_pattern_get_standard ());
 }
 
 /*  the active pattern disappeared  */
@@ -1801,7 +1806,7 @@ gimp_context_real_set_pattern (GimpContext *context,
 			       GimpPattern *pattern)
 {
   if (! standard_pattern)
-    standard_pattern = patterns_get_standard_pattern ();
+    standard_pattern = gimp_pattern_get_standard ();
 
   if (context->pattern == pattern)
     return;
@@ -1937,7 +1942,7 @@ gimp_context_gradient_list_thaw (GimpContainer *container,
       (context,
        GIMP_GRADIENT (gimp_container_get_child_by_index (container, 0)));
   else
-    gimp_context_real_set_gradient (context, gradients_get_standard_gradient ());
+    gimp_context_real_set_gradient (context, gimp_gradient_get_standard ());
 }
 
 /*  the active gradient disappeared  */
@@ -1965,7 +1970,7 @@ gimp_context_real_set_gradient (GimpContext  *context,
 				GimpGradient *gradient)
 {
   if (! standard_gradient)
-    standard_gradient = gradients_get_standard_gradient ();
+    standard_gradient = gimp_gradient_get_standard ();
 
   if (context->gradient == gradient)
     return;
@@ -2086,7 +2091,7 @@ gimp_context_palette_list_thaw (GimpContainer *container,
       (context,
        GIMP_PALETTE (gimp_container_get_child_by_index (container, 0)));
   else
-    gimp_context_real_set_palette (context, palettes_get_standard_palette ());
+    gimp_context_real_set_palette (context, gimp_palette_get_standard ());
 }
 
 /*  the active palette disappeared  */
@@ -2114,7 +2119,7 @@ gimp_context_real_set_palette (GimpContext *context,
 			       GimpPalette *palette)
 {
   if (! standard_palette)
-    standard_palette = palettes_get_standard_palette ();
+    standard_palette = gimp_palette_get_standard ();
 
   if (context->palette == palette)
     return;

@@ -51,6 +51,7 @@ static TempBuf  * gimp_palette_get_new_preview  (GimpViewable      *viewable,
                                                  gint               height);
 static void       gimp_palette_dirty            (GimpData          *data);
 static gboolean   gimp_palette_save             (GimpData          *data);
+static gchar    * gimp_palette_get_extension    (GimpData          *data);
 
 static void       gimp_palette_entry_free       (GimpPaletteEntry  *entry);
 
@@ -102,8 +103,9 @@ gimp_palette_class_init (GimpPaletteClass *klass)
 
   viewable_class->get_new_preview = gimp_palette_get_new_preview;
 
-  data_class->dirty = gimp_palette_dirty;
-  data_class->save  = gimp_palette_save;
+  data_class->dirty         = gimp_palette_dirty;
+  data_class->save          = gimp_palette_save;
+  data_class->get_extension = gimp_palette_get_extension;
 }
 
 static void
@@ -228,6 +230,21 @@ gimp_palette_new (const gchar *name)
   gimp_data_dirty (GIMP_DATA (palette));
 
   return palette;
+}
+
+GimpPalette *
+gimp_palette_get_standard (void)
+{
+  static GimpPalette *standard_palette = NULL;
+
+  if (! standard_palette)
+    {
+      standard_palette = GIMP_PALETTE (gtk_type_new (GIMP_TYPE_PALETTE));
+
+      gimp_object_set_name (GIMP_OBJECT (standard_palette), "Standard");
+    }
+
+  return standard_palette;
 }
 
 GimpPalette *
@@ -458,6 +475,12 @@ gimp_palette_save (GimpData *data)
     return GIMP_DATA_CLASS (parent_class)->save (data);
 
   return TRUE;
+}
+
+static gchar *
+gimp_palette_get_extension (GimpData *data)
+{
+  return GIMP_PALETTE_FILE_EXTENSION;
 }
 
 GimpPaletteEntry *

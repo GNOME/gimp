@@ -30,6 +30,7 @@
 #include "context_manager.h"
 #include "convert.h"
 #include "gimpcontainer.h"
+#include "gimpdatafactory.h"
 #include "gimpimage.h"
 #include "gimppalette.h"
 #include "palette.h"
@@ -194,11 +195,11 @@ convert_indexed_invoker (Argument *args)
 	      break;
     
 	    case CUSTOM_PALETTE:
-	      if (! global_palette_list)
+	      if (! global_palette_factory->container->num_children)
 		palettes_init (FALSE);
     
 	      palette = (GimpPalette *)
-		gimp_container_get_child_by_name (global_palette_list,
+		gimp_container_get_child_by_name (global_palette_factory->container,
 						  palette_name);
     
 	      if (palette == NULL)

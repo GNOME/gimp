@@ -23,6 +23,7 @@
 #include "apptypes.h"
 
 #include "context_manager.h"
+#include "gimpdatafactory.h"
 #include "gimpdatalist.h"
 #include "gimppalette.h"
 #include "gimprc.h"
@@ -39,7 +40,7 @@ palettes_init (gboolean no_data)
 
   if (palette_path != NULL && !no_data)
     {
-      gimp_data_list_load (GIMP_DATA_LIST (global_palette_list),
+      gimp_data_list_load (GIMP_DATA_LIST (global_palette_factory->container),
 			   palette_path,
 
 			   (GimpDataObjectLoaderFunc) gimp_palette_load,
@@ -53,25 +54,9 @@ palettes_init (gboolean no_data)
 void
 palettes_free (void)
 {
-  if (gimp_container_num_children (global_palette_list) == 0)
+  if (gimp_container_num_children (global_palette_factory->container) == 0)
     return;
 
-  gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_palette_list),
-				 palette_path,
-				 GIMP_PALETTE_FILE_EXTENSION);
-}
-
-GimpPalette *
-palettes_get_standard_palette (void)
-{
-  static GimpPalette *standard_palette = NULL;
-
-  if (! standard_palette)
-    {
-      standard_palette = GIMP_PALETTE (gtk_type_new (GIMP_TYPE_PALETTE));
-
-      gimp_object_set_name (GIMP_OBJECT (standard_palette), "Standard");
-    }
-
-  return standard_palette;
+  gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_palette_factory->container),
+				 palette_path);
 }

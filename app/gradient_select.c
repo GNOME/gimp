@@ -33,6 +33,7 @@
 #include "gimpcontainer.h"
 #include "gimpcontainerlistview.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimpdnd.h"
 #include "gimpgradient.h"
 #include "gradient_editor.h"
@@ -147,7 +148,7 @@ gradient_select_new (gchar *title,
   if (title && initial_gradient && strlen (initial_gradient))
     {
       active = (GimpGradient *)
-	gimp_container_get_child_by_name (global_gradient_list,
+	gimp_container_get_child_by_name (global_gradient_factory->container,
 					  initial_gradient);
     }
   else
@@ -166,7 +167,7 @@ gradient_select_new (gchar *title,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (gsp->shell)->vbox), vbox);
 
   /*  The Gradient List  */
-  gsp->view = gimp_container_list_view_new (global_gradient_list,
+  gsp->view = gimp_container_list_view_new (global_gradient_factory->container,
 					    gsp->context,
 					    16,
 					    10, 10);

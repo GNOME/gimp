@@ -69,6 +69,8 @@ struct _GimpPaletteClass
 GtkType            gimp_palette_get_type       (void);
 GimpPalette      * gimp_palette_new            (const gchar      *name);
 
+GimpPalette      * gimp_palette_get_standard   (void);
+
 GimpPalette      * gimp_palette_load           (const gchar      *filename);
 
 GimpPaletteEntry * gimp_palette_add_entry      (GimpPalette      *palette,

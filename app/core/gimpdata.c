@@ -31,6 +31,7 @@
 #include "apptypes.h"
 
 #include "gimpdata.h"
+#include "gimpmarshal.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -39,15 +40,16 @@ enum
 {
   DIRTY,
   SAVE,
+  GET_EXTENSION,
   LAST_SIGNAL
 };
 
 
-static void   gimp_data_class_init   (GimpDataClass *klass);
-static void   gimp_data_init         (GimpData      *data);
-static void   gimp_data_destroy      (GtkObject     *object);
-static void   gimp_data_name_changed (GimpObject    *object);
-static void   gimp_data_real_dirty   (GimpData      *data);
+static void          gimp_data_class_init         (GimpDataClass *klass);
+static void          gimp_data_init               (GimpData      *data);
+static void          gimp_data_destroy            (GtkObject     *object);
+static void          gimp_data_name_changed       (GimpObject    *object);
+static void          gimp_data_real_dirty         (GimpData      *data);
 
 
 static guint data_signals[LAST_SIGNAL] = { 0 };
@@ -109,12 +111,22 @@ gimp_data_class_init (GimpDataClass *klass)
                     gtk_marshal_BOOL__NONE,
                     GTK_TYPE_BOOL, 0);
 
+  data_signals[GET_EXTENSION] = 
+    gtk_signal_new ("get_extension",
+                    GTK_RUN_LAST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpDataClass,
+                                       get_extension),
+                    gimp_marshal_POINTER__NONE,
+                    GTK_TYPE_POINTER, 0);
+
   object_class->destroy = gimp_data_destroy;
 
   gimp_object_class->name_changed = gimp_data_name_changed;
 
-  klass->dirty = gimp_data_real_dirty;
-  klass->save  = NULL;
+  klass->dirty         = gimp_data_real_dirty;
+  klass->save          = NULL;
+  klass->get_extension = NULL;
 }
 
 static void
@@ -204,6 +216,20 @@ gimp_data_delete_from_disk (GimpData *data)
   return TRUE;
 }
 
+const gchar *
+gimp_data_get_extension (GimpData *data)
+{
+  const gchar *extension = NULL;
+
+  g_return_val_if_fail (data != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
+
+  gtk_signal_emit (GTK_OBJECT (data), data_signals[GET_EXTENSION],
+		   &extension);
+
+  return extension;
+}
+
 void
 gimp_data_set_filename (GimpData    *data,
 			const gchar *filename)
@@ -219,7 +245,6 @@ gimp_data_set_filename (GimpData    *data,
 void
 gimp_data_create_filename (GimpData    *data,
 			   const gchar *basename,
-			   const gchar *extension,
 			   const gchar *data_path)
 {
   GList *path;
@@ -233,7 +258,6 @@ gimp_data_create_filename (GimpData    *data,
   g_return_if_fail (data != NULL);
   g_return_if_fail (GIMP_IS_DATA (data));
   g_return_if_fail (basename != NULL);
-  g_return_if_fail (extension != NULL);
   g_return_if_fail (data_path != NULL);
 
   path = gimp_path_parse (data_path, 16, TRUE, NULL);
@@ -250,14 +274,18 @@ gimp_data_create_filename (GimpData    *data,
     if (safe_name[i] == G_DIR_SEPARATOR || isspace (safe_name[i]))
       safe_name[i] = '_';
 
-  filename = g_strdup_printf ("%s%s%s", dir, safe_name, extension);
+  filename = g_strdup_printf ("%s%s%s",
+			      dir, safe_name,
+			      gimp_data_get_extension (data));
 
   while ((file = fopen (filename, "r")))
     {
       fclose (file);
 
       g_free (filename);
-      filename = g_strdup_printf ("%s%s_%d%s", dir, safe_name, unum, extension);
+      filename = g_strdup_printf ("%s%s_%d%s",
+				  dir, safe_name, unum,
+				  gimp_data_get_extension (data));
       unum++;
     }
 

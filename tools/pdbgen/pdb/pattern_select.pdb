@@ -118,9 +118,9 @@ sub patterns_set_popup {
   if ((prec = procedural_db_lookup (name)) &&
       (psp = pattern_get_patternselect (name)))
     {
-      GimpPattern *active =
-        (GimpPattern *) gimp_container_get_child_by_name (global_pattern_list,
-                                                          pattern_name);
+      GimpPattern *active = (GimpPattern *)
+        gimp_container_get_child_by_name (global_pattern_factory->container,
+                                          pattern_name);
 
       if (active)
 	{
@@ -138,8 +138,8 @@ CODE
 }
 
 @headers = qw(<string.h> "context_manager.h" "patterns.h"
-	      "pattern_select.h" "gimpcontext.h" "gimplist.h"
-	      "gimppattern.h");
+	      "pattern_select.h" "gimpcontext.h" "gimpdatafactory.h"
+              "gimplist.h" "gimppattern.h");
 
 $extra{app}->{code} = <<'CODE';
 static PatternSelect *

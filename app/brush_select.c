@@ -37,6 +37,7 @@
 #include "gimpcontainergridview.h"
 #include "gimpcontext.h"
 #include "gimpdata.h"
+#include "gimpdatafactory.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
 #include "session.h"
@@ -205,7 +206,7 @@ brush_select_new (gchar   *title,
   if (title && init_name && strlen (init_name))
     {
       active = (GimpBrush *)
-	gimp_container_get_child_by_name (GIMP_CONTAINER (global_brush_list),
+	gimp_container_get_child_by_name (global_brush_factory->container,
 					  init_name);
     }
   else
@@ -242,7 +243,7 @@ brush_select_new (gchar   *title,
   gtk_container_add (GTK_CONTAINER (bsp->left_box), bsp->brush_selection_box);
 
   /*  The Brush Grid  */
-  bsp->view = gimp_container_grid_view_new (global_brush_list,
+  bsp->view = gimp_container_grid_view_new (global_brush_factory->container,
                                             bsp->context,
                                             MIN_CELL_SIZE,
                                             STD_BRUSH_COLUMNS,
@@ -386,7 +387,7 @@ brush_select_new (gchar   *title,
   /*  add callbacks to keep the display area current  */
   bsp->name_changed_handler_id =
     gimp_container_add_handler
-    (GIMP_CONTAINER (global_brush_list), "name_changed",
+    (global_brush_factory->container, "name_changed",
      GTK_SIGNAL_FUNC (brush_select_brush_renamed_callback),
      bsp);
 
@@ -435,7 +436,7 @@ brush_select_free (BrushSelect *bsp)
       gtk_object_unref (GTK_OBJECT (bsp->context));
     }
 
-  gimp_container_remove_handler (GIMP_CONTAINER (global_brush_list),
+  gimp_container_remove_handler (global_brush_factory->container,
 				 bsp->name_changed_handler_id);
 
   g_free (bsp);
@@ -623,7 +624,8 @@ static void
 brush_select_select (BrushSelect *bsp,
 		     GimpBrush   *brush)
 {
-  if (! gimp_container_have (global_brush_list, GIMP_OBJECT (brush)));
+  if (! gimp_container_have (global_brush_factory->container,
+			     GIMP_OBJECT (brush)));
 
   if (GIMP_IS_BRUSH_GENERATED (brush))
     {
@@ -758,7 +760,7 @@ brush_select_new_brush_callback (GtkWidget *widget,
 
   brush = gimp_brush_generated_new (10, .5, 0.0, 1.0);
 
-  gimp_container_add (GIMP_CONTAINER (global_brush_list),
+  gimp_container_add (global_brush_factory->container,
 		      GIMP_OBJECT (brush));
 
   gimp_context_set_brush (bsp->context, brush);
@@ -817,7 +819,8 @@ brush_select_delete_brush_callback (GtkWidget *widget,
       if (GIMP_DATA (brush)->filename)
 	gimp_data_delete_from_disk (GIMP_DATA (brush));
 
-      gimp_container_remove (global_brush_list, GIMP_OBJECT (brush));
+      gimp_container_remove (global_brush_factory->container,
+			     GIMP_OBJECT (brush));
     }
   else
     {

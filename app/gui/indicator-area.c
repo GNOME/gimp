@@ -61,12 +61,11 @@ brush_preview_clicked (GtkWidget *widget,
 }
 
 static void
-brush_preview_drop_brush (GtkWidget *widget,
-			  GimpBrush *brush,
-			  gpointer   data)
+brush_preview_drop_brush (GtkWidget    *widget,
+			  GimpViewable *viewable,
+			  gpointer      data)
 {
-  if (brush)
-    gimp_context_set_brush (gimp_context_get_user (), brush);
+  gimp_context_set_brush (gimp_context_get_user (), GIMP_BRUSH (viewable));
 }
 
 static void
@@ -77,12 +76,11 @@ pattern_preview_clicked (GtkWidget *widget,
 }
 
 static void
-pattern_preview_drop_pattern (GtkWidget   *widget,
-			      GimpPattern *pattern,
-			      gpointer     data)
+pattern_preview_drop_pattern (GtkWidget    *widget,
+			      GimpViewable *viewable,
+			      gpointer      data)
 {
-  if (pattern)
-    gimp_context_set_pattern (gimp_context_get_user (), pattern);
+  gimp_context_set_pattern (gimp_context_get_user (), GIMP_PATTERN (viewable));
 }
 
 static void
@@ -94,11 +92,10 @@ gradient_preview_clicked (GtkWidget *widget,
 
 static void
 gradient_preview_drop_gradient (GtkWidget    *widget,
-				GimpGradient *gradient,
+				GimpViewable *viewable,
 				gpointer      data)
 {
-  if (gradient)
-    gimp_context_set_gradient (gimp_context_get_user (), gradient);
+  gimp_context_set_gradient (gimp_context_get_user (), GIMP_GRADIENT (viewable));
 }
 
 GtkWidget *
@@ -112,7 +109,6 @@ indicator_area_create (void)
   indicator_table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacing (GTK_TABLE (indicator_table), 0, CELL_PADDING);
   gtk_table_set_col_spacing (GTK_TABLE (indicator_table), 0, CELL_PADDING);
-
 
   /*  brush preview  */
 

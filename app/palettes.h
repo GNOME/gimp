@@ -23,7 +23,5 @@
 void          palettes_init                 (gboolean  no_data);
 void          palettes_free                 (void);
 
-GimpPalette * palettes_get_standard_palette (void);
-
 
 #endif /* __PALETTES_H__ */

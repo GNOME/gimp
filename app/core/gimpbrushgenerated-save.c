@@ -53,6 +53,7 @@ static void       gimp_brush_generated_init     (GimpBrushGenerated *brush);
 static void       gimp_brush_generated_destroy  (GtkObject          *object);
 static gboolean   gimp_brush_generated_save     (GimpData           *data);
 static void       gimp_brush_generated_dirty    (GimpData           *data);
+static gchar    * gimp_brush_generated_get_extension (GimpData      *data);
 
 
 static GimpBrushClass *parent_class = NULL;
@@ -96,8 +97,9 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
 
   object_class->destroy = gimp_brush_generated_destroy;
 
-  data_class->save  = gimp_brush_generated_save;
-  data_class->dirty = gimp_brush_generated_dirty;
+  data_class->save          = gimp_brush_generated_save;
+  data_class->dirty         = gimp_brush_generated_dirty;
+  data_class->get_extension = gimp_brush_generated_get_extension;
 }
 
 static void
@@ -162,6 +164,12 @@ gimp_brush_generated_save (GimpData *data)
   fclose (fp);
 
   return TRUE;
+}
+
+static gchar *
+gimp_brush_generated_get_extension (GimpData *data)
+{
+  return GIMP_BRUSH_GENERATED_FILE_EXTENSION;
 }
 
 static double

@@ -71,6 +71,7 @@
 #include "gimpcontainer.h"
 #include "gimpcontainerlistview.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimpdnd.h"
 #include "gimpgradient.h"
 #include "gimplist.h"
@@ -585,9 +586,10 @@ gradient_editor_create (void)
                       GTK_SIGNAL_FUNC (gradient_editor_gradient_changed),
                       g_editor);
 
-  g_editor->view = gimp_container_list_view_new (global_gradient_list,
-						 g_editor->context,
-						 16, 10, 6);
+  g_editor->view =
+    gimp_container_list_view_new (global_gradient_factory->container,
+				  g_editor->context,
+				  16, 10, 6);
   gtk_box_pack_start (GTK_BOX (hbox), g_editor->view, TRUE, TRUE, 0); 
   gtk_widget_show (g_editor->view);
 
@@ -835,10 +837,10 @@ gradient_editor_create (void)
   ed_initialize_saved_colors ();
   cpopup_create_main_menu ();
 
-  if (gimp_container_num_children (global_gradient_list))
+  if (gimp_container_num_children (global_gradient_factory->container))
     {
       gimp_context_set_gradient (g_editor->context,
-				 GIMP_GRADIENT (gimp_container_get_child_by_index (global_gradient_list, 0)));
+				 GIMP_GRADIENT (gimp_container_get_child_by_index (global_gradient_factory->container, 0)));
     }
   else
     {
@@ -846,7 +848,8 @@ gradient_editor_create (void)
 
       gradient = gimp_gradient_new (_("Default"));
 
-      gimp_container_add (global_gradient_list, GIMP_OBJECT (gradient));
+      gimp_container_add (global_gradient_factory->container,
+			  GIMP_OBJECT (gradient));
     }
 
   gtk_widget_show (g_editor->shell);
@@ -860,7 +863,8 @@ gradient_editor_free (void)
 void
 gradient_editor_set_gradient (GimpGradient *gradient)
 {
-  if (gimp_container_have (global_gradient_list, GIMP_OBJECT (gradient)) &&
+  if (gimp_container_have (global_gradient_factory->container,
+			   GIMP_OBJECT (gradient)) &&
       g_editor)
     {
       gimp_context_set_gradient (g_editor->context, gradient);
@@ -1049,7 +1053,8 @@ ed_do_new_gradient_callback (GtkWidget *widget,
 
   gimp_data_dirty (GIMP_DATA (grad));
 
-  gimp_container_add (global_gradient_list, GIMP_OBJECT (grad));
+  gimp_container_add (global_gradient_factory->container,
+		      GIMP_OBJECT (grad));
 
   gimp_context_set_gradient (g_editor->context, grad);
 
@@ -1128,7 +1133,7 @@ ed_do_copy_gradient_callback (GtkWidget *widget,
 
   grad->segments = head;
 
-  gimp_container_add (global_gradient_list, GIMP_OBJECT (grad));
+  gimp_container_add (global_gradient_factory->container, GIMP_OBJECT (grad));
 
   gimp_context_set_gradient (g_editor->context, grad);
 
@@ -1188,7 +1193,8 @@ ed_delete_gradient_callback (GtkWidget *widget,
 
   gradient = gimp_context_get_gradient (g_editor->context);
 
-  if (! (gimp_container_num_children (global_gradient_list) && gradient))
+  if (! (gimp_container_num_children (global_gradient_factory->container) &&
+	 gradient))
     return;
 
   gtk_widget_set_sensitive (g_editor->shell, FALSE);
@@ -1227,14 +1233,15 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
 
   delete_gradient = (GimpGradient *) data;
 
-  if (! gimp_container_have (global_gradient_list,
+  if (! gimp_container_have (global_gradient_factory->container,
 			     GIMP_OBJECT (delete_gradient)))
     return;
 
   if (GIMP_DATA (delete_gradient)->filename)
     gimp_data_delete_from_disk (GIMP_DATA (delete_gradient));
 
-  gimp_container_remove (global_gradient_list, GIMP_OBJECT (delete_gradient));
+  gimp_container_remove (global_gradient_factory->container,
+			 GIMP_OBJECT (delete_gradient));
 }
 
 /***** The "save as pov" dialog functions *****/
@@ -1370,7 +1377,7 @@ ed_refresh_grads_callback (GtkWidget *widget,
 {
   gradients_init (FALSE);
 
-  if (! gimp_container_num_children (global_gradient_list))
+  if (! gimp_container_num_children (global_gradient_factory->container))
     {
       GimpGradient *gradient;
 
@@ -1378,7 +1385,8 @@ ed_refresh_grads_callback (GtkWidget *widget,
 
       gimp_data_dirty (GIMP_DATA (gradient));
 
-      gimp_container_add (global_gradient_list, GIMP_OBJECT (gradient));
+      gimp_container_add (global_gradient_factory->container,
+			  GIMP_OBJECT (gradient));
     }
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL); 

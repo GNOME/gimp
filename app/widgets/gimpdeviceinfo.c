@@ -35,6 +35,7 @@
 #include "dialog_handler.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimpdnd.h"
 #include "gimpgradient.h"
 #include "gimppattern.h"
@@ -131,13 +132,13 @@ static void     device_status_foreground_changed (GtkWidget    *widget,
 static void     device_status_background_changed (GtkWidget    *widget,
 						  gpointer      data);
 static void     device_status_drop_brush         (GtkWidget    *widget,
-						  GimpBrush    *brush,
+						  GimpViewable *viewable,
 						  gpointer      data);
 static void     device_status_drop_pattern       (GtkWidget    *widget,
-						  GimpPattern  *pattern,
+						  GimpViewable *viewable,
 						  gpointer      data);
 static void     device_status_drop_gradient      (GtkWidget    *widget,
-						  GimpGradient *gradient,
+						  GimpViewable *viewable,
 						  gpointer      data);
 
 static void     device_status_data_changed       (GimpContext  *context,
@@ -470,7 +471,7 @@ devices_rc_update (gchar        *name,
       GimpBrush *brush;
 
       brush = (GimpBrush *)
-	gimp_container_get_child_by_name (GIMP_CONTAINER (global_brush_list),
+	gimp_container_get_child_by_name (global_brush_factory->container,
 					  brush_name);
 
       if (brush)
@@ -489,7 +490,7 @@ devices_rc_update (gchar        *name,
       GimpPattern *pattern;
 
       pattern = (GimpPattern *)
-	gimp_container_get_child_by_name (GIMP_CONTAINER (global_pattern_list),
+	gimp_container_get_child_by_name (global_pattern_factory->container,
 					  pattern_name);
 
       if (pattern)
@@ -508,7 +509,7 @@ devices_rc_update (gchar        *name,
       GimpGradient *gradient;
 
       gradient = (GimpGradient *)
-	gimp_container_get_child_by_name (global_gradient_list,
+	gimp_container_get_child_by_name (global_gradient_factory->container,
 					  gradient_name);
 
       if (gradient)
@@ -1202,9 +1203,9 @@ device_status_background_changed (GtkWidget *widget,
 }
 
 static void
-device_status_drop_brush (GtkWidget *widget,
-			  GimpBrush *brush,
-			  gpointer   data)
+device_status_drop_brush (GtkWidget    *widget,
+			  GimpViewable *viewable,
+			  gpointer      data)
 {
   DeviceInfo *device_info;
 
@@ -1212,14 +1213,14 @@ device_status_drop_brush (GtkWidget *widget,
 
   if (device_info && device_info->is_present)
     {
-      gimp_context_set_brush (device_info->context, brush);
+      gimp_context_set_brush (device_info->context, GIMP_BRUSH (viewable));
     }
 }
 
 static void
-device_status_drop_pattern (GtkWidget   *widget,
-			    GimpPattern *pattern,
-			    gpointer     data)
+device_status_drop_pattern (GtkWidget    *widget,
+			    GimpViewable *viewable,
+			    gpointer      data)
 {
   DeviceInfo *device_info;
   
@@ -1227,13 +1228,13 @@ device_status_drop_pattern (GtkWidget   *widget,
 
   if (device_info && device_info->is_present)
     {
-      gimp_context_set_pattern (device_info->context, pattern);
+      gimp_context_set_pattern (device_info->context, GIMP_PATTERN (viewable));
     }
 }
 
 static void
 device_status_drop_gradient (GtkWidget    *widget,
-			     GimpGradient *gradient,
+			     GimpViewable *viewable,
 			     gpointer      data)
 {
   DeviceInfo *device_info;
@@ -1242,7 +1243,7 @@ device_status_drop_gradient (GtkWidget    *widget,
 
   if (device_info && device_info->is_present)
     {
-      gimp_context_set_gradient (device_info->context, gradient);
+      gimp_context_set_gradient (device_info->context, GIMP_GRADIENT (viewable));
     }
 }
 

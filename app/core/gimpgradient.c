@@ -52,6 +52,7 @@ static TempBuf  * gimp_gradient_get_new_preview (GimpViewable      *viewable,
 						 gint               height);
 static void       gimp_gradient_dirty           (GimpData          *data);
 static gboolean   gimp_gradient_save            (GimpData          *data);
+static gchar    * gimp_gradient_get_extension   (GimpData          *data);
 
 static gdouble    gimp_gradient_calc_linear_factor            (gdouble  middle,
 							       gdouble  pos);
@@ -110,8 +111,9 @@ gimp_gradient_class_init (GimpGradientClass *klass)
 
   viewable_class->get_new_preview = gimp_gradient_get_new_preview;
 
-  data_class->dirty = gimp_gradient_dirty;
-  data_class->save  = gimp_gradient_save;
+  data_class->dirty         = gimp_gradient_dirty;
+  data_class->save          = gimp_gradient_save;
+  data_class->get_extension = gimp_gradient_get_extension;
 }
 
 static void
@@ -224,6 +226,22 @@ gimp_gradient_new (const gchar *name)
   gradient->segments = gimp_gradient_segment_new ();
 
   return gradient;
+}
+
+GimpGradient *
+gimp_gradient_get_standard (void)
+{
+  static GimpGradient *standard_gradient = NULL;
+
+  if (! standard_gradient)
+    {
+      standard_gradient = gimp_gradient_new ("Standard");
+
+      gtk_object_ref (GTK_OBJECT (standard_gradient));
+      gtk_object_sink (GTK_OBJECT (standard_gradient));
+    }
+
+  return standard_gradient;
 }
 
 GimpGradient *
@@ -403,6 +421,12 @@ gimp_gradient_save (GimpData *data)
   fclose (file);
 
   return TRUE;
+}
+
+static gchar *
+gimp_gradient_get_extension (GimpData *data)
+{
+  return GIMP_GRADIENT_FILE_EXTENSION;
 }
 
 void

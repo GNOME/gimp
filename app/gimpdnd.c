@@ -28,11 +28,11 @@
 #include "apptypes.h"
 
 #include "context_manager.h"
-#include "brushes.h"
 #include "fileops.h"
 #include "gimpimage.h"
 #include "gimpbrush.h"
 #include "gimpcontainer.h"
+#include "gimpdatafactory.h"
 #include "gimpdnd.h"
 #include "gimpdrawable.h"
 #include "gimpgradient.h"
@@ -40,9 +40,6 @@
 #include "gimppattern.h"
 #include "gimppreview.h"
 #include "gimprc.h"
-#include "gradients.h"
-#include "palettes.h"
-#include "patterns.h"
 #include "temp_buf.h"
 
 #include "tools/tools.h"
@@ -65,6 +62,7 @@ typedef enum
   GIMP_DND_DATA_LAST = GIMP_DND_DATA_TOOL
 } GimpDndDataType;
 
+
 typedef GtkWidget * (* GimpDndGetIconFunc)  (GtkWidget     *widget,
 					     GtkSignalFunc  get_data_func,
 					     gpointer       get_data_data);
@@ -80,6 +78,7 @@ typedef void        (* GimpDndDropDataFunc) (GtkWidget     *widget,
 					     gint           format,
 					     gint           length);
 
+
 typedef struct _GimpDndDataDef GimpDndDataDef;
 
 struct _GimpDndDataDef
@@ -93,6 +92,7 @@ struct _GimpDndDataDef
   GimpDndDragDataFunc  get_data_func;
   GimpDndDropDataFunc  set_data_func;
 };
+
 
 static GtkWidget * gimp_dnd_get_color_icon    (GtkWidget     *widget,
 					       GtkSignalFunc  get_color_func,
@@ -181,6 +181,7 @@ static void        gimp_dnd_set_tool_data     (GtkWidget     *widget,
 					       gint           format,
 					       gint           length);
 
+
 static GimpDndDataDef dnd_data_defs[] =
 {
   {
@@ -260,6 +261,7 @@ static GimpDndDataDef dnd_data_defs[] =
     gimp_dnd_set_tool_data
   }
 };
+
 
 /********************************/
 /*  general data dnd functions  */
@@ -511,6 +513,7 @@ gimp_dnd_data_dest_unset (GimpDndDataType  data_type,
 		       NULL);
 }
 
+
 /*************************/
 /*  color dnd functions  */
 /*************************/
@@ -615,6 +618,7 @@ gimp_dnd_color_dest_unset (GtkWidget *widget)
 {
   gimp_dnd_data_dest_unset (GIMP_DND_DATA_COLOR, widget);
 }
+
 
 /*********************************************/
 /*  GimpViewable (by GtkType) dnd functions  */
@@ -753,6 +757,7 @@ gimp_dnd_viewable_dest_unset (GtkWidget *widget,
     }
 }
 
+
 /*************************/
 /*  brush dnd functions  */
 /*************************/
@@ -821,10 +826,11 @@ gimp_dnd_set_brush_data (GtkWidget     *widget,
   name = (gchar *) vals;
 
   if (strcmp (name, "Standard") == 0)
-    brush = brushes_get_standard_brush ();
+    brush = gimp_brush_get_standard ();
   else
-    brush = (GimpBrush *) gimp_container_get_child_by_name (global_brush_list,
-							    name);
+    brush = (GimpBrush *)
+      gimp_container_get_child_by_name (global_brush_factory->container,
+					name);
 
   if (brush)
     (* (GimpDndDropBrushFunc) set_brush_func) (widget, brush, set_brush_data);
@@ -855,6 +861,7 @@ gimp_dnd_brush_dest_unset (GtkWidget *widget)
 {
   gimp_dnd_data_dest_unset (GIMP_DND_DATA_BRUSH, widget);
 }
+
 
 /***************************/
 /*  pattern dnd functions  */
@@ -923,10 +930,11 @@ gimp_dnd_set_pattern_data (GtkWidget     *widget,
   name = (gchar *) vals;
 
   if (strcmp (name, "Standard") == 0)
-    pattern = patterns_get_standard_pattern ();
+    pattern = gimp_pattern_get_standard ();
   else
-    pattern = (GimpPattern *) gimp_container_get_child_by_name (global_pattern_list,
-								name);
+    pattern = (GimpPattern *)
+      gimp_container_get_child_by_name (global_pattern_factory->container,
+					name);
 
   if (pattern)
     (* (GimpDndDropPatternFunc) set_pattern_func) (widget, pattern,
@@ -958,6 +966,7 @@ gimp_dnd_pattern_dest_unset (GtkWidget *widget)
 {
   gimp_dnd_data_dest_unset (GIMP_DND_DATA_PATTERN, widget);
 }
+
 
 /****************************/
 /*  gradient dnd functions  */
@@ -1029,10 +1038,11 @@ gimp_dnd_set_gradient_data (GtkWidget     *widget,
   name = (gchar *) vals;
 
   if (strcmp (name, "Standard") == 0)
-    gradient = gradients_get_standard_gradient ();
+    gradient = gimp_gradient_get_standard ();
   else
     gradient = (GimpGradient *)
-      gimp_container_get_child_by_name (global_gradient_list, name);
+      gimp_container_get_child_by_name (global_gradient_factory->container,
+					name);
 
   if (gradient)
     (* (GimpDndDropGradientFunc) set_gradient_func) (widget, gradient,
@@ -1064,6 +1074,7 @@ gimp_dnd_gradient_dest_unset (GtkWidget *widget)
 {
   gimp_dnd_data_dest_unset (GIMP_DND_DATA_GRADIENT, widget);
 }
+
 
 /***************************/
 /*  palette dnd functions  */
@@ -1132,10 +1143,11 @@ gimp_dnd_set_palette_data (GtkWidget     *widget,
   name = (gchar *) vals;
 
   if (strcmp (name, "Standard") == 0)
-    palette = palettes_get_standard_palette ();
+    palette = gimp_palette_get_standard ();
   else
-    palette = (GimpPalette *) gimp_container_get_child_by_name (global_palette_list,
-								name);
+    palette = (GimpPalette *)
+      gimp_container_get_child_by_name (global_palette_factory->container,
+					name);
 
   if (palette)
     (* (GimpDndDropPaletteFunc) set_palette_func) (widget, palette,
@@ -1167,6 +1179,7 @@ gimp_dnd_palette_dest_unset (GtkWidget *widget)
 {
   gimp_dnd_data_dest_unset (GIMP_DND_DATA_PALETTE, widget);
 }
+
 
 /************************/
 /*  tool dnd functions  */
@@ -1268,6 +1281,7 @@ gimp_dnd_tool_dest_unset (GtkWidget *widget)
 {
   gimp_dnd_data_dest_unset (GIMP_DND_DATA_TOOL, widget);
 }
+
 
 /****************************/
 /*  drawable dnd functions  */
@@ -1433,6 +1447,7 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
   gtk_drag_set_icon_widget (context, window,
 			    DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
 }
+
 
 /******************************/
 /*  file / url dnd functions  */

@@ -135,7 +135,8 @@ HELP
 	vars => [ 'GimpObject *object' ],
 	code => <<'CODE'
 {
-  object = gimp_container_get_child_by_name (global_brush_list, name);
+  object = gimp_container_get_child_by_name (global_brush_factory->container,
+					     name);
 
   if (object)
     gimp_context_set_brush (NULL, GIMP_BRUSH (object));
@@ -262,16 +263,16 @@ HELP
 	  alias => 'brushes',
 	  array => { name => 'num_brushes',
 		     desc => 'The number of brushes in the brush list',
-		     alias => 'global_brush_list->num_children', no_declare => 1 } }
+		     alias => 'global_brush_factory->container->num_children', no_declare => 1 } }
     );
 
     %invoke = (
 	vars => [ 'GList *list = NULL', 'int i = 0' ],
 	code => <<'CODE'
 {
-  brushes = g_new (char *, global_brush_list->num_children);
+  brushes = g_new (char *, global_brush_factory->container->num_children);
 
-  success = (list = GIMP_LIST (global_brush_list)->list) != NULL;
+  success = (list = GIMP_LIST (global_brush_factory->container)->list) != NULL;
 
   while (list)
     {
@@ -329,7 +330,9 @@ HELP
 
       success = FALSE;
 
-      for (list = GIMP_LIST (global_brush_list)->list; list; list = g_list_next (list))
+      for (list = GIMP_LIST (global_brush_factory->container)->list;
+           list;
+           list = g_list_next (list))
 	{
 	  brush = (GimpBrush *) list->data;
 
@@ -355,7 +358,7 @@ CODE
 }
 
 @headers = qw("context_manager.h" "brushes.h" "gimplist.h"
-              "gimpbrush.h" "gimpcontext.h" "temp_buf.h");
+              "gimpbrush.h" "gimpcontext.h" "gimpdatafactory.h" "temp_buf.h");
 
 @procs = qw(brushes_refresh brushes_get_brush brushes_set_brush
 	    brushes_get_opacity brushes_set_opacity brushes_get_spacing

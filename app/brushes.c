@@ -27,6 +27,7 @@
 #include "gimpbrush.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
+#include "gimpdatafactory.h"
 #include "gimpdatalist.h"
 #include "gimprc.h"
 
@@ -40,15 +41,8 @@ brushes_init (gboolean no_data)
 
   if (brush_path != NULL && !no_data)
     {
-      gchar *common_brush_path;
-
-      common_brush_path = g_strconcat (brush_path,
-				       G_SEARCHPATH_SEPARATOR_S,
-				       brush_vbr_path,
-				       NULL);
-
-      gimp_data_list_load (GIMP_DATA_LIST (global_brush_list),
-			   common_brush_path,
+      gimp_data_list_load (GIMP_DATA_LIST (global_brush_factory->container),
+			   brush_path,
 
 			   (GimpDataObjectLoaderFunc) gimp_brush_load,
 			   GIMP_BRUSH_FILE_EXTENSION,
@@ -63,39 +57,16 @@ brushes_init (gboolean no_data)
 			   GIMP_BRUSH_PIPE_FILE_EXTENSION,
 
 			   NULL);
-
-      g_free (common_brush_path);
     }
 }
 
 void
 brushes_free (void)
 {
-  if (gimp_container_num_children (global_brush_list) == 0)
+  if (gimp_container_num_children (global_brush_factory->container) == 0)
     return;
 
-  gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_brush_list),
-				 brush_vbr_path,
-				 GIMP_BRUSH_GENERATED_FILE_EXTENSION);
-}
-
-GimpBrush *
-brushes_get_standard_brush (void)
-{
-  static GimpBrush *standard_brush = NULL;
-
-  if (! standard_brush)
-    {
-      standard_brush =
-	GIMP_BRUSH (gimp_brush_generated_new (5.0, 0.5, 0.0, 1.0));
-
-      gimp_object_set_name (GIMP_OBJECT (standard_brush), "Standard");
-
-      /*  set ref_count to 2 --> never swap the standard brush  */
-      gtk_object_ref (GTK_OBJECT (standard_brush));
-      gtk_object_ref (GTK_OBJECT (standard_brush));
-      gtk_object_sink (GTK_OBJECT (standard_brush));
-    }
-
-  return standard_brush;
+  gimp_data_list_save_and_clear
+    (GIMP_DATA_LIST (global_brush_factory->container),
+     brush_path);
 }

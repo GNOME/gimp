@@ -23,7 +23,5 @@
 void          patterns_init                 (gboolean  no_data);
 void          patterns_free                 (void);
 
-GimpPattern * patterns_get_standard_pattern (void);
-
 
 #endif  /*  __PATTERNS_H__  */

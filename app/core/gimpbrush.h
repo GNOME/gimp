@@ -58,18 +58,22 @@ struct _GimpBrushClass
 };
 
 
-GtkType     gimp_brush_get_type    (void);
-GimpBrush * gimp_brush_load        (const gchar     *filename);
+GtkType     gimp_brush_get_type     (void);
+GimpBrush * gimp_brush_new          (const gchar     *name);
 
-GimpBrush * gimp_brush_load_brush  (gint             fd,
-				    const gchar     *filename);
+GimpBrush * gimp_brush_get_standard (void);
 
-TempBuf   * gimp_brush_get_mask    (const GimpBrush *brush);
-TempBuf   * gimp_brush_get_pixmap  (const GimpBrush *brush);
+GimpBrush * gimp_brush_load         (const gchar     *filename);
 
-gint        gimp_brush_get_spacing (const GimpBrush *brush);
-void        gimp_brush_set_spacing (GimpBrush       *brush,
-				    gint             spacing);
+GimpBrush * gimp_brush_load_brush   (gint             fd,
+				     const gchar     *filename);
+
+TempBuf   * gimp_brush_get_mask     (const GimpBrush *brush);
+TempBuf   * gimp_brush_get_pixmap   (const GimpBrush *brush);
+
+gint        gimp_brush_get_spacing  (const GimpBrush *brush);
+void        gimp_brush_set_spacing  (GimpBrush       *brush,
+				     gint             spacing);
 
 
 #endif /* __GIMP_BRUSH_H__ */

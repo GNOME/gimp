@@ -32,6 +32,7 @@
 #include "gimpcontainer.h"
 #include "gimpcontainergridview.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimpdnd.h"
 #include "gimppattern.h"
 #include "patterns.h"
@@ -161,7 +162,7 @@ pattern_select_new (gchar *title,
   if (title && initial_pattern && strlen (initial_pattern))
     {
       active = (GimpPattern *)
-	gimp_container_get_child_by_name (global_pattern_list,
+	gimp_container_get_child_by_name (global_pattern_factory->container,
 					  initial_pattern);
     }
   else
@@ -199,7 +200,7 @@ pattern_select_new (gchar *title,
   gtk_widget_show (psp->pattern_size);
 
   /*  The Brush Grid  */
-  psp->view = gimp_container_grid_view_new (global_pattern_list,
+  psp->view = gimp_container_grid_view_new (global_pattern_factory->container,
 					    psp->context,
 					    MIN_CELL_SIZE,
 					    STD_PATTERN_COLUMNS,
@@ -220,8 +221,8 @@ pattern_select_new (gchar *title,
 
   /*  add callbacks to keep the display area current  */
   psp->name_changed_handler_id =
-    gimp_container_add_handler
-    (GIMP_CONTAINER (global_pattern_list), "name_changed",
+    gimp_container_add_handler 
+    (global_pattern_factory->container, "name_changed",
      GTK_SIGNAL_FUNC (pattern_select_pattern_dirty_callback),
      psp);
 
@@ -257,7 +258,7 @@ pattern_select_free (PatternSelect *psp)
       gtk_object_unref (GTK_OBJECT (psp->context));
     }
 
-  gimp_container_remove_handler (GIMP_CONTAINER (global_pattern_list),
+  gimp_container_remove_handler (global_pattern_factory->container,
 				 psp->name_changed_handler_id);
 
   g_free (psp);

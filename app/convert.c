@@ -103,6 +103,7 @@
 #include "floating_sel.h"
 #include "fsdither.h"
 #include "gdisplay.h"
+#include "gimpdatafactory.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimplist.h"
@@ -793,7 +794,7 @@ build_palette_button (void)
 
   UserHasWebPal = FALSE;
 
-  list = GIMP_LIST (global_palette_list)->list;
+  list = GIMP_LIST (global_palette_factory->container)->list;
 
   if (! list)
     {
@@ -835,7 +836,7 @@ build_palette_button (void)
 	 }
        else
 	 {
-	   for (i = 0, list = GIMP_LIST (global_palette_list)->list;
+	   for (i = 0, list = GIMP_LIST (global_palette_factory->container)->list;
 		list && default_palette == -1;
 		i++, list = g_list_next (list))
 	     {

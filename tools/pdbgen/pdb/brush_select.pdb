@@ -133,7 +133,8 @@ sub brushes_set_popup {
       (bsp = brush_get_brushselect (name)))
     {
       GimpObject *object =
-        gimp_container_get_child_by_name (global_brush_list, brush_name);
+        gimp_container_get_child_by_name (global_brush_factory->container,
+					  brush_name);
 
       if (object)
 	{
@@ -157,7 +158,8 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "context_manager.h" "gimpcontext.h" "brush_select.h");
+@headers = qw(<string.h> "context_manager.h" "gimpcontext.h"
+	      "gimpdatafactory.h" "brush_select.h");
 
 $extra{app}->{code} = <<'CODE';
 static BrushSelect *

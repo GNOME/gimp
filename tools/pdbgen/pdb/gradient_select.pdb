@@ -132,7 +132,7 @@ sub gradients_set_popup {
       GimpGradient *active = NULL;
 
       active = (GimpGradient *)
-        gimp_container_get_child_by_name (global_gradient_list,
+        gimp_container_get_child_by_name (global_gradient_factory->container,
                                           gradient_name);
 
       if (active)
@@ -188,7 +188,8 @@ HELP
       success = FALSE;
 
       gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (global_gradient_list, name);
+        gimp_container_get_child_by_name (global_gradient_factory->container,
+                                          name);
 
       if (gradient)
         success = TRUE;
@@ -227,8 +228,8 @@ CODE
 }
 
 @headers = qw(<string.h> "context_manager.h" "gimpcontext.h"
-	      "gimpcontainer.h" "gradients.h" "gimpgradient.h"
-	      "gradient_select.h");
+	      "gimpcontainer.h" "gimpdatafactory.h" "gradients.h"
+              "gimpgradient.h" "gradient_select.h");
 
 $extra{app}->{code} = <<'CODE';
 static GradientSelect *

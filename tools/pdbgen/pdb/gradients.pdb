@@ -45,13 +45,14 @@ HELP
 	success => 'NONE',
 	code => <<'CODE'
 {
-  num_gradients = gimp_container_num_children (global_gradient_list);
+  num_gradients =
+    gimp_container_num_children (global_gradient_factory->container);
 
   gradients = g_new (gchar *, num_gradients);
 
   if (num_gradients)
     {
-      list = GIMP_LIST (global_gradient_list)->list;
+      list = GIMP_LIST (global_gradient_factory->container)->list;
     }
 
   success = (list != NULL);
@@ -109,7 +110,7 @@ HELP
         code => <<'CODE'
 {
   gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (global_gradient_list, name);
+    gimp_container_get_child_by_name (global_gradient_factory->container, name);
 
   success = FALSE;
 
@@ -237,7 +238,7 @@ CODE
 }
 
 @headers = qw("context_manager.h" "gimpcontext.h" "gimpcontainer.h"
-	      "gimplist.h" "gradients.h" "gimpgradient.h");
+	      "gimpdatafactory.h" "gimplist.h" "gradients.h" "gimpgradient.h");
 
 @procs = qw(gradients_get_list gradients_get_active gradients_set_active
 	    gradients_sample_uniform gradients_sample_custom);

@@ -29,6 +29,7 @@
 #include "gimpbrush.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimpdatalist.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
@@ -49,10 +50,10 @@ GimpContainer *image_context        = NULL;
 /*
  *  the global data lists
  */
-GimpContainer *global_brush_list    = NULL;
-GimpContainer *global_pattern_list  = NULL;
-GimpContainer *global_gradient_list = NULL;
-GimpContainer *global_palette_list  = NULL;
+GimpDataFactory *global_brush_factory    = NULL;
+GimpDataFactory *global_pattern_factory  = NULL;
+GimpDataFactory *global_gradient_factory = NULL;
+GimpDataFactory *global_palette_factory  = NULL;
 
 
 static GimpContext *global_tool_context = NULL;
@@ -150,11 +151,30 @@ context_manager_init (void)
   image_context = GIMP_CONTAINER (gimp_list_new (GIMP_TYPE_IMAGE,
 						 GIMP_CONTAINER_POLICY_WEAK));
 
-  /* Create the global data lists */
-  global_brush_list    = GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_BRUSH));
-  global_pattern_list  = GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_PATTERN));
-  global_gradient_list = GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_GRADIENT));
-  global_palette_list  = GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_PALETTE));
+  /* Create the global data factories */
+  global_brush_factory =
+    gimp_data_factory_new (GIMP_TYPE_BRUSH,
+			   (const gchar **) &brush_path,
+			   gimp_brush_new,
+			   gimp_brush_get_standard);
+
+  global_pattern_factory =
+    gimp_data_factory_new (GIMP_TYPE_PATTERN,
+			   (const gchar **) &pattern_path,
+			   gimp_pattern_new,
+			   gimp_pattern_get_standard);
+
+  global_gradient_factory =
+    gimp_data_factory_new (GIMP_TYPE_GRADIENT,
+			   (const gchar **) &gradient_path,
+			   gimp_gradient_new,
+			   gimp_gradient_get_standard);
+
+  global_palette_factory =
+    gimp_data_factory_new (GIMP_TYPE_PALETTE,
+			   (const gchar **) &palette_path,
+			   gimp_palette_new,
+			   gimp_palette_get_standard);
 
   /*  Implicitly create the standard context  */
   standard_context = gimp_context_get_standard ();

@@ -44,24 +44,26 @@ struct _GimpDataClass
 {
   GimpViewableClass  parent_class;
 
-  void     (* dirty) (GimpData *data);
-  gboolean (* save)  (GimpData *data);
+  void       (* dirty)         (GimpData *data);
+  gboolean   (* save)          (GimpData *data);
+  gchar    * (* get_extension) (GimpData *data);
 };
 
 
-GtkType    gimp_data_get_type         (void);
+GtkType       gimp_data_get_type         (void);
 
-gboolean   gimp_data_save             (GimpData    *data);
+gboolean      gimp_data_save             (GimpData    *data);
 
-void       gimp_data_dirty            (GimpData    *data);
-gboolean   gimp_data_delete_from_disk (GimpData    *data);
+void          gimp_data_dirty            (GimpData    *data);
+gboolean      gimp_data_delete_from_disk (GimpData    *data);
 
-void       gimp_data_set_filename     (GimpData    *data,
-				       const gchar *filename);
-void       gimp_data_create_filename  (GimpData    *data,
-				       const gchar *filename,
-				       const gchar *extension,
-				       const gchar *data_path);
+const gchar * gimp_data_get_extension    (GimpData    *data);
+
+void          gimp_data_set_filename     (GimpData    *data,
+					  const gchar *filename);
+void          gimp_data_create_filename  (GimpData    *data,
+					  const gchar *filename,
+					  const gchar *data_path);
 
 
 #endif /* __GIMP_DATA_H__ */

@@ -48,10 +48,14 @@ struct _GimpPatternClass
 };
 
 
-GtkType       gimp_pattern_get_type (void);
-GimpPattern * gimp_pattern_load     (const gchar       *filename);
+GtkType       gimp_pattern_get_type     (void);
+GimpPattern * gimp_pattern_new          (const gchar       *name);
 
-TempBuf     * gimp_pattern_get_mask (const GimpPattern *pattern);
+GimpPattern * gimp_pattern_get_standard (void);
+
+GimpPattern * gimp_pattern_load         (const gchar       *filename);
+
+TempBuf     * gimp_pattern_get_mask     (const GimpPattern *pattern);
 
 
 #endif /* __GIMP_PATTERN_H__ */

@@ -265,8 +265,7 @@ gimp_data_list_load (GimpDataList             *data_list,
 
 void
 gimp_data_list_save_and_clear (GimpDataList *data_list,
-			       const gchar  *data_path,
-			       const gchar  *extension)
+			       const gchar  *data_path)
 {
   GimpList *list;
 
@@ -286,7 +285,6 @@ gimp_data_list_save_and_clear (GimpDataList *data_list,
       if (! data->filename)
 	gimp_data_create_filename (data,
 				   GIMP_OBJECT (data)->name,
-				   extension,
 				   data_path);
 
       if (data->dirty)

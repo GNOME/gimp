@@ -23,6 +23,7 @@
 #include "apptypes.h"
 
 #include "context_manager.h"
+#include "gimpdatafactory.h"
 #include "gimpdatalist.h"
 #include "gimpgradient.h"
 #include "gimprc.h"
@@ -38,7 +39,7 @@ gradients_init (gint no_data)
 
   if (gradient_path != NULL && !no_data)
     {
-      gimp_data_list_load (GIMP_DATA_LIST (global_gradient_list),
+      gimp_data_list_load (GIMP_DATA_LIST (global_gradient_factory->container),
 			   gradient_path,
 
 			   (GimpDataObjectLoaderFunc) gimp_gradient_load,
@@ -52,26 +53,9 @@ gradients_init (gint no_data)
 void
 gradients_free (void)
 {
-  if (gimp_container_num_children (global_gradient_list) == 0)
+  if (gimp_container_num_children (global_gradient_factory->container) == 0)
     return;
 
-  gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_gradient_list),
-				 gradient_path,
-				 GIMP_GRADIENT_FILE_EXTENSION);
-}
-
-GimpGradient *
-gradients_get_standard_gradient (void)
-{
-  static GimpGradient *standard_gradient = NULL;
-
-  if (! standard_gradient)
-    {
-      standard_gradient = gimp_gradient_new ("Standard");
-
-      gtk_object_ref (GTK_OBJECT (standard_gradient));
-      gtk_object_sink (GTK_OBJECT (standard_gradient));
-    }
-
-  return standard_gradient;
+  gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_gradient_factory->container),
+				 gradient_path);
 }

@@ -86,6 +86,8 @@ struct _GimpGradientClass
 GtkType               gimp_gradient_get_type         (void);
 GimpGradient        * gimp_gradient_new              (const gchar   *name);
 
+GimpGradient        * gimp_gradient_get_standard     (void);
+
 GimpGradient        * gimp_gradient_load             (const gchar   *filename);
 
 void                  gimp_gradient_get_color_at     (GimpGradient  *gradient,
