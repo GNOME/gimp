@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,30 +30,10 @@ GtkWidget *make_toolbar_stock_icon(GtkWidget *toolbar, const gchar *stock_id,
 				   const char *tooltip, 
 				   void (*callback)(GtkWidget*, gpointer), 
 				   gpointer udata);
-GtkWidget *make_toolbar_radio_icon(GtkWidget *toolbar, const gchar *stock_id,
-				   GtkWidget *prev, const char *identifier, 
-				   const char *tooltip, 
-				   void (*callback)(GtkWidget*, gpointer),
-				   gpointer udata);
-GtkWidget *make_toolbar_toggle_icon(GtkWidget *toolbar, const gchar *stock_id,
-				    const char *identifier, 
-				    const char *tooltip, 
-				    void (*callback)(GtkWidget*, gpointer),
-				    gpointer udata);
 
 void set_sash_size(gboolean double_size);
 void draw_sash(GdkWindow *window, GdkGC *gc, gint x, gint y);
 gboolean near_sash(gint sash_x, gint sash_y, gint x, gint y);
-
-typedef struct {
-   DefaultDialog_t *dialog;
-   GtkWidget *label;
-} Alert_t;
-
-Alert_t *create_alert(const gchar *stock_id);
-Alert_t *create_confirm_alert(const gchar *stock_id);
-void alert_set_text(Alert_t *alert, const char *primary_text, 
-		    const char *secondary_text);
 
 #endif /* _IMAP_MISC_H */
 

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@
 
 #include "imap_file.h"
 #include "imap_main.h"
-#include "imap_misc.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -122,6 +121,7 @@ do_file_exists_dialog (GtkWidget *parent)
                                                GTK_MESSAGE_QUESTION,
                                                GTK_BUTTONS_YES_NO,
                                                message);
+  g_free (message);
   g_signal_connect (dialog, "response",
                     G_CALLBACK (really_overwrite_cb),
                     parent);
@@ -188,14 +188,19 @@ void
 do_file_error_dialog (const char *error,
                       const char *filename)
 {
-  static Alert_t *alert;
+   GtkWidget *dialog;
 
-  if (!alert)
-    alert = create_alert (GTK_STOCK_DIALOG_ERROR);
+   dialog = gtk_message_dialog_new_with_markup 
+     (NULL,
+      GTK_DIALOG_DESTROY_WITH_PARENT,
+      GTK_MESSAGE_ERROR,
+      GTK_BUTTONS_CLOSE,
+      "<span weight=\"bold\" size=\"larger\">%s</span>\n\n%s",
+      error,
+      gimp_filename_to_utf8 (filename));
 
-  alert_set_text(alert, error, gimp_filename_to_utf8 (filename));
-
-  alert_set_text (alert, error, filename);
-
-  default_dialog_show (alert->dialog);
+   g_signal_connect_swapped (dialog, "response",
+			     G_CALLBACK (gtk_widget_destroy),
+			     dialog);
+   gtk_dialog_run (GTK_DIALOG (dialog));
 }

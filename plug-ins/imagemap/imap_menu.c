@@ -158,7 +158,7 @@ static GtkActionEntry entries[] = {
   { "Open", GTK_STOCK_OPEN, "_Open...", NULL, "Open", do_file_open_dialog},
   { "OpenRecentMenu", NULL, "Open Recent" },
   { "Save", GTK_STOCK_SAVE, "_Save...", NULL, "Save", save},
-  { "SaveAs", GTK_STOCK_SAVE_AS, "Save _as...", NULL, NULL, 
+  { "SaveAs", GTK_STOCK_SAVE_AS, "Save _as...", "<shift><control>S", NULL, 
     do_file_save_as_dialog},
   { "Close", GTK_STOCK_CLOSE, NULL, NULL, NULL, do_close},
   { "Quit", GTK_STOCK_QUIT, NULL, NULL, NULL, do_quit},
@@ -169,7 +169,7 @@ static GtkActionEntry entries[] = {
   { "Cut", GTK_STOCK_CUT, NULL, NULL, "Cut", do_cut},
   { "Copy", GTK_STOCK_COPY, NULL, NULL, "Copy", do_copy},
   { "Paste", GTK_STOCK_PASTE, NULL, NULL, "Paste", do_paste},
-  { "Clear", GTK_STOCK_CLEAR, NULL, "<control>K", NULL, do_clear},
+  { "Clear", GTK_STOCK_DELETE, NULL, "Delete", NULL, do_clear},
   { "SelectAll", NULL, "Select _All", "<control>A", NULL, do_select_all},
   { "DeselectAll", NULL, "Deselect _All", "<shift><control>A", NULL, 
     do_deselect_all},
@@ -183,8 +183,8 @@ static GtkActionEntry entries[] = {
 
   { "ViewMenu", NULL, "_View" },
   { "Source", NULL, "Source...", NULL, NULL, NULL},
-  { "ZoomIn", GTK_STOCK_ZOOM_IN, NULL, NULL, "Zoom in", NULL},
-  { "ZoomOut", GTK_STOCK_ZOOM_OUT, NULL, NULL, "Zoom out", NULL},
+  { "ZoomIn", GTK_STOCK_ZOOM_IN, NULL, "plus", "Zoom in", NULL},
+  { "ZoomOut", GTK_STOCK_ZOOM_OUT, NULL, "minus", "Zoom out", NULL},
   { "ZoomToMenu", NULL, "_Zoom To" },
 
   { "MappingMenu", NULL, "_Mapping" },

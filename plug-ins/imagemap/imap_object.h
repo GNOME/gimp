@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,7 +104,6 @@ void object_set_mouse_out(Object_t *obj, const gchar *mouse_out);
 void object_set_focus(Object_t *obj, const gchar *focus);
 void object_set_blur(Object_t *obj, const gchar *blur);
 gint object_get_position_in_list(Object_t *obj);
-GdkPixmap* object_get_icon(Object_t *obj, GtkWidget *widget, GdkBitmap **mask);
 
 void object_emit_changed_signal(Object_t *obj);
 void object_emit_geometry_signal(Object_t *obj);
@@ -130,6 +129,9 @@ void object_emit_update_signal(Object_t *obj);
 
 #define object_fill_info_tab(obj, data) \
 	((obj)->class->fill_info_tab((obj), (data)))
+
+#define object_get_stock_icon_name(obj) \
+	((obj)->class->get_stock_icon_name())
 
 typedef struct {
    Object_t *obj;

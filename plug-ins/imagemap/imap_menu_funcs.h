@@ -36,15 +36,7 @@ GtkWidget *prepend_item_with_label(GtkWidget *parent, gchar *label,
 GtkWidget *insert_item_with_label(GtkWidget *parent, gint position,
 				  gchar *label, MenuCallback activate,
 				  gpointer data);
-GtkWidget *make_check_item(GtkWidget *parent, gchar *label,
-			   MenuCallback activate, gpointer data);
-GtkWidget *make_radio_item(GtkWidget *parent, GSList *group, gchar *label,
-			   MenuCallback activate, gpointer data);
 
-void make_separator(GtkWidget *parent);
-void insert_separator(GtkWidget *parent, gint position);
-GtkWidget *make_sub_menu(GtkWidget *parent, gchar *label);
-GtkWidget *make_menu_bar_item(GtkWidget *menu_bar, gchar *label);
 void menu_command(GtkWidget *widget, gpointer data);
 
 void add_accelerator(GtkWidget *widget, guint accelerator_key,

@@ -46,42 +46,6 @@ add_accelerator(GtkWidget *widget, guint accelerator_key,
 			      GTK_ACCEL_VISIBLE);
 }
 
-static GtkWidget*
-append_item(GtkWidget *parent, GtkWidget *item)
-{
-   gtk_menu_shell_append(GTK_MENU_SHELL(parent), item);
-   gtk_widget_show(item);
-   return item;
-}
-
-static GtkWidget*
-append_active_item(GtkWidget *parent, GtkWidget *item, MenuCallback activate,
-		   gpointer data)
-{
-   g_signal_connect(item, "activate", G_CALLBACK(activate), data);
-   return append_item(parent, item);
-}
-
-/* Fix me: check if 'gpointer data' can work */
-
-GtkWidget*
-make_item_with_label(GtkWidget *parent, gchar *label, MenuCallback activate,
-		     gpointer data)
-{
-   return append_active_item(parent, gtk_menu_item_new_with_mnemonic(label),
-			     activate, data);
-}
-
-GtkWidget*
-make_item_with_image(GtkWidget *parent, const gchar *stock_id, 
-		     MenuCallback activate, gpointer data)
-{
-   return append_active_item(parent, 
-			     gtk_image_menu_item_new_from_stock(
-				stock_id, accelerator_group),
-			     activate, data);
-}
-
 GtkWidget*
 prepend_item_with_label(GtkWidget *parent, gchar *label,
 			MenuCallback activate, gpointer data)
@@ -104,68 +68,6 @@ insert_item_with_label(GtkWidget *parent, gint position, gchar *label,
    gtk_widget_show(item);
 
    return item;
-}
-
-GtkWidget*
-make_check_item(GtkWidget *parent, gchar *label, MenuCallback activate,
-		gpointer data)
-{
-   return append_active_item(
-      parent, gtk_check_menu_item_new_with_mnemonic(label),
-      activate, data);
-}
-
-GtkWidget*
-make_radio_item(GtkWidget *parent, GSList *group, gchar *label,
-		MenuCallback activate, gpointer data)
-{
-   return append_active_item(
-      parent, gtk_radio_menu_item_new_with_mnemonic(group, label),
-      activate, data);
-}
-
-void
-make_separator(GtkWidget *parent)
-{
-   (void) append_item(parent, gtk_menu_item_new());
-}
-
-void
-insert_separator(GtkWidget *parent, gint position)
-{
-   GtkWidget *item = gtk_menu_item_new();
-   gtk_menu_shell_insert(GTK_MENU_SHELL(parent), item, position);
-   gtk_widget_show(item);
-}
-
-GtkWidget*
-make_sub_menu(GtkWidget *parent, gchar *label)
-{
-   GtkWidget *sub_menu = gtk_menu_new();
-   GtkWidget *item;
-
-   item = append_item(parent, gtk_menu_item_new_with_mnemonic(label));
-   gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), sub_menu);
-
-   return sub_menu;
-}
-
-GtkWidget*
-make_menu_bar_item(GtkWidget *menu_bar, gchar *label)
-{
-   GtkWidget *menu = gtk_menu_new();
-   GtkWidget *item = gtk_menu_item_new_with_mnemonic(label);
-   GtkWidget *tearoff = gtk_tearoff_menu_item_new();
-
-   gtk_menu_shell_insert(GTK_MENU_SHELL(menu), tearoff, 0);
-   gtk_widget_show(tearoff);
-   gtk_widget_show(item);
-
-   gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), menu);
-   gtk_menu_shell_append(GTK_MENU_SHELL(menu_bar), item);
-   gtk_menu_set_accel_group(GTK_MENU(menu), accelerator_group);
-
-   return menu;
 }
 
 void

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -373,23 +373,6 @@ void
 object_emit_update_signal(Object_t *obj)
 {
    object_list_callback_call(&obj->list->update_cb, obj);
-}
-
-GdkPixmap* 
-object_get_icon(Object_t *obj, GtkWidget *widget, GdkBitmap **mask)
-{
-#ifdef _NOT_READY_YET_
-  /* This won't work: can't get a pixmap from a stock icon */
-   if (!obj->class->icon) {
-      GtkWidget *image = gtk_image_new_from_stock(
-	 obj->class->get_stock_icon_name(), GTK_ICON_SIZE_MENU);
-      gtk_image_get_pixmap(GTK_IMAGE(image), &obj->class->icon,
-			   &obj->class->mask);
-   }
-   *mask = obj->class->mask;
-
-#endif
-   return obj->class->icon;
 }
 
 void

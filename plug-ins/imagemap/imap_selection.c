@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -329,7 +329,7 @@ render_image (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 	      GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   Object_t *obj = selection_get_object (tree_model, iter);
-  g_object_set(cell, "stock-id", obj->class->get_stock_icon_name(), NULL);
+  g_object_set(cell, "stock-id", object_get_stock_icon_name(obj), NULL);
 }
 
 static void

@@ -123,7 +123,7 @@ static void query(void)
 			  "",
 			  "Maurits Rijk",
 			  "Maurits Rijk",
-			  "1998-2002",
+			  "1998-2005",
 			  N_("_ImageMap..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
@@ -725,24 +725,31 @@ clear_map_info(void)
 static void
 do_data_changed_dialog(void (*continue_cb)(gpointer), gpointer param)
 {
-   static Alert_t *alert;
+   GtkWidget *dialog;
 
-   if (!alert) {
-     alert = create_confirm_alert(GTK_STOCK_DIALOG_WARNING);
-     alert_set_text(alert, _("Some data has been changed!"),
-		    _("Do you really want to discard your changes?"));
-   }
-   default_dialog_set_ok_cb(alert->dialog, continue_cb, param);
-   default_dialog_show(alert->dialog);
+   dialog = gtk_message_dialog_new_with_markup 
+     (NULL,
+      GTK_DIALOG_DESTROY_WITH_PARENT,
+      GTK_MESSAGE_QUESTION,
+      GTK_BUTTONS_YES_NO,
+      "<span weight=\"bold\" size=\"larger\">%s</span>\n\n%s",
+      _("Some data has been changed!"),
+      _("Do you really want to discard your changes?"));
+
+   gint result = gtk_dialog_run (GTK_DIALOG (dialog));
+   if (result == GTK_RESPONSE_YES)
+     continue_cb (param);
+
+   gtk_widget_destroy (dialog);
 }
 
 static void
 check_if_changed(void (*func)(gpointer), gpointer param)
 {
-   if (object_list_get_changed(_shapes))
-      do_data_changed_dialog(func, param);
+   if (object_list_get_changed (_shapes))
+     do_data_changed_dialog (func, param);
    else
-      func(param);
+     func (param);
 }
 
 static void
@@ -834,7 +841,7 @@ save_as_cern(gpointer param, OutputFunc_t output)
    write_cern_comment(param, output);
    output(param, "-:Please do not edit lines starting with \"#$\"\n");
    write_cern_comment(param, output);
-   output(param, "VERSION:2.0\n");
+   output(param, "VERSION:2.3\n");
    write_cern_comment(param, output);
    output(param, "TITLE:%s\n", _map_info.title);
    write_cern_comment(param, output);
@@ -870,7 +877,7 @@ save_as_csim(gpointer param, OutputFunc_t output)
    output(param, "<!-- #$-:GIMP Imagemap Plugin by Maurits Rijk -->\n");
    output(param,
 	  "<!-- #$-:Please do not edit lines starting with \"#$\" -->\n");
-   output(param, "<!-- #$VERSION:2.0 -->\n");
+   output(param, "<!-- #$VERSION:2.3 -->\n");
    output(param, "<!-- #$AUTHOR:%s -->\n", _map_info.author);
 
    description = g_strdup(_map_info.description);
@@ -894,7 +901,7 @@ save_as_ncsa(gpointer param, OutputFunc_t output)
    output(param, "#$-:Image Map file created by GIMP Imagemap Plugin\n");
    output(param, "#$-:GIMP Imagemap Plugin by Maurits Rijk\n");
    output(param, "#$-:Please do not edit lines starting with \"#$\"\n");
-   output(param, "#$VERSION:2.0\n");
+   output(param, "#$VERSION:2.3\n");
    output(param, "#$TITLE:%s\n", _map_info.title);
    output(param, "#$AUTHOR:%s\n", _map_info.author);
    output(param, "#$FORMAT:ncsa\n");
@@ -947,33 +954,29 @@ save_as(const gchar *filename)
 }
 
 static void
-resize_image_ok_cb(gpointer data)
-{
-   gint per_x = _image_width * 100 / _map_info.old_image_width;
-   gint per_y = _image_height * 100 / _map_info.old_image_height;
-   object_list_resize(_shapes, per_x, per_y);
-   preview_thaw();
-}
-
-static void
-resize_image_cancel_cb(gpointer data)
-{
-   preview_thaw();
-}
-
-static void
 do_image_size_changed_dialog(void)
 {
-   static Alert_t *alert;
+   GtkWidget *dialog;
 
-   if (!alert) {
-     alert = create_confirm_alert(GTK_STOCK_DIALOG_WARNING);
-     alert_set_text(alert, _("Image size has changed."),
-		    _("Resize area's?"));
-   }
-   default_dialog_set_ok_cb(alert->dialog, resize_image_ok_cb, NULL);
-   default_dialog_set_cancel_cb(alert->dialog, resize_image_cancel_cb, NULL);
-   default_dialog_show(alert->dialog);
+   dialog = gtk_message_dialog_new_with_markup 
+     (NULL,
+      GTK_DIALOG_DESTROY_WITH_PARENT,
+      GTK_MESSAGE_QUESTION,
+      GTK_BUTTONS_YES_NO,
+      "<span weight=\"bold\" size=\"larger\">%s</span>\n\n%s",
+      _("Image size has changed."),
+      _("Resize area's?"));
+
+   gint result = gtk_dialog_run (GTK_DIALOG (dialog));
+   if (result == GTK_RESPONSE_YES)
+     {
+       gint per_x = _image_width * 100 / _map_info.old_image_width;
+       gint per_y = _image_height * 100 / _map_info.old_image_height;
+       object_list_resize(_shapes, per_x, per_y);
+     }
+
+   preview_thaw();
+   gtk_widget_destroy (dialog);
 }
 
 static void
