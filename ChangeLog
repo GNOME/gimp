@@ -1,3 +1,8 @@
+2000-04-29  Jay Cox  <jaycox@earthlink.net>
+
+	* app/gimage_mask.c: Fix the end of group check in 
+	gimage_mask_stroke.  This fixes bug #8699
+
 2000-04-29  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* app/gimage_cmds.c (finite): #define finite(d) isfinite(d) for OS/2

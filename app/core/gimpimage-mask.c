@@ -587,7 +587,10 @@ gimage_mask_stroke (GImage       *gimage,
 
   for (i = 0; i < num_strokes; i++)
     {
-      while (stroke_segs[seg].x2 != -1)
+      while ((stroke_segs[seg].x1 != -1 ||
+	      stroke_segs[seg].x2 != -1 ||
+	      stroke_segs[seg].y1 != -1 ||
+	      stroke_segs[seg].y2 != -1))
 	{
 	  stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].x2 - offx);
 	  stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].y2 - offy);
