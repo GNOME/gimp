@@ -1,4 +1,4 @@
-;; selection-rounded-rectangle.scm -*-scheme-*- 
+ch;; selection-rounded-rectangle.scm -*-scheme-*- 
 
 ;; The GIMP -- an image manipulation program
 ;; Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -159,7 +159,7 @@
 		    SF-ADJUSTMENT _"Radius (%)" '(50 0 100 1 10 0 0)
 		    SF-TOGGLE     _"Concave"    FALSE)
 
-(script-fu-register "script-fu-selection-rounded"
+(script-fu-register "script-fu-selection-round"
 		    ""
 		    "Rounds the active selection. This procedure exists for backward compatibility only. Please use script-fu-selection-rounded-rectangle instead."
 		    "Sven Neumann"              ; authors
