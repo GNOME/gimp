@@ -1,3 +1,8 @@
+Thu Sep  9 18:52:28 CDT 1999 James Mitchell <mitchell@gimp.org>
+
+	* it.po: More translations from Daniele Medri <madrid@linux.it>
+	         590 translated messages, 73 untranslated messages.
+
 Thu Sep  9 00:03:04 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* POTFILES.in: list more files
@@ -13,7 +18,7 @@ Thu Sep  9 00:03:04 PDT 1999 Manish Singh <yosh@gimp.org>
 Tue Sep  7 21:02:48 CDT 1999 James Mitchell <mitchell@gimp.org>
 
         * it.po: More translations from Daniele Medri <madrid@linux.it>
-	  521 translated messages, 116 untranslated messages. 
+	         521 translated messages, 116 untranslated messages. 
 
 1999-09-06  Kjartan Maraas  <kmaraas@online.no>
 

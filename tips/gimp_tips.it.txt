@@ -1,0 +1,142 @@
+# This is a list of tips for the GIMP.  Every time the GIMP is
+# started, one tip will be selected from this file and will be
+# displayed in the "Tip of the day" dialog.
+#
+# - Lines starting with '#' are comments.
+# - Blank lines or comments separate two tips (they are not ignored).
+#   Multiple blank lines are treated as one.  If you want to have a
+#   blank line in a tip, put a space or tab in it.
+# - Text will appear in the dialog as it is in this file.  This is
+#   done on purpose in order to have more freedom in the layout of the
+#   tips than with automatic word-wrapping, but this also means that
+#   you have to avoid excessively long lines in this file.
+# - Tips should be concise: 3 lines or less.
+#
+# Tips in this file have been contributed by Zachary Beane, Mo Oishi,
+# Raphael Quinet, Sven Neumann and other people on the gimp mailing 
+# lists.
+# --------------------------------------------------------------------
+
+# The first tip should be a welcome message, because this is the
+# first thing that a new user will see.
+#
+
+# FIXME: re-write this welcome message:
+
+                            Benvenuto in GIMP!
+
+Per accedere ai menù del programma posizionatevi
+sull'immagine e cliccate con il tasto destro.
+Ogni operazione eseguita può essere sempre
+annullata successivamente.
+
+# Tips for beginners start here
+#
+
+Per trovare informazioni su Gimp in Italiano si
+consiglia di visitare il sito http://gimp.linux.it
+dove troverete moltissime informazioni per imparare
+e migliorare la propria tecnica.
+
+Gimp utilizza i livelli per organizzare meglio  le
+operazioni  da  compiere  sull'immagine. Utilizzare
+i livelli vuol dire acquisire maggiore
+controllo sulle operazioni dell'immagine.
+
+Quando tentate di salvare una immagine nel formato Gif,
+Xpm o altri formati con metodo di colore indicizzato, è
+necessario convertire le immagini attraverso la voce di
+menù Immagine e segliere l'indicizzazione.
+
+Cliccando due volte sulle icone del Pannello dei
+Comandi potete accedere alla finestra delle opzioni
+di ogni singolo strumento e cambiarne i parametri a
+seconda delle vostre personali esigenze.
+
+E' possibile cambiare il nome del livello cliccando
+due volte su quest'ultimo nella finestra dei
+Livelli.
+
+Il livello chiamato "Sfondo" è speciale. Non potete
+aggiungere a quest'ultimo trasparenza o un livello
+di maschera. Per compiere queste operazioni è
+necessario cliccare con il tasto destro sul
+livello e selezionare "Aggiungi Canale Alpha".
+
+Quando viene utilizzato uno strumento di disegno
+(matita, aerografo, pennello) e si preme il tasto
+Shift cliccando, verrà disegnata una linea
+dall'ultimo punto alla posizione del cursore
+corrente.
+
+La maggior parte dei plugin lavora sul livello
+corrente della immagine selezionata. In alcuni casi
+per applicare questi ultimi all'intera immagine è
+necessario unire i livelli con (Livelli->Unifica
+Livelli).
+
+Molti formati di file non supportano i livelli e
+per questa ragione viene salvato solamente il
+livello attivo. Utilizzando XCF, il formato nativo
+di Gimp, canali e guide sono salvati.
+
+Non tutti gli effetti possono essere applicati alle
+immagini. Una della cause potrebbe essere il metodo
+di colore utilizzato da quest'ultima. Cambiatelo in
+RGB e aggiungete un canale alpha.
+
+# Tips for intermediate users start here
+#
+
+La maschera di selezione file ha il completamento
+automatico tramite il tasto Tab come in ogni shell
+di sistema. Digitate parte del nome e premete il
+tasto tabulatore per completare il nome.
+
+Per assegnare una scorciatoia di tasti ad una
+operazione, lasciate selezionata la voce di menu e
+premete la combinazione di tasti. Per elimare la
+scorciatoia, selezionate la voce del menù e premete
+il tasto Canc sulla vostra tastiera.
+
+Se l'immagine è più grande dello schermo che la
+contiene è possibile utilizzare il tasto centrale
+per muovere la superficie di quest'ultima in base
+alle proprie preferenze.
+
+Cliccate e trascinate sui righelli per poter disporre di una
+guida sull'immagine. Potete rimuoverla trascinandola fuori
+dell'immagine con lo strumento Sposta.
+
+Gimp supporta la compressone gzip in tempo reale. Aggiungete
+l'estensione '.gz'(o '.bz2', se avete bzip2 installato) al
+nome del file e l'immagine verrà salvata in forma compressa.
+L'immagine potrà essere successivamente essere aperta anche
+con la compressione applicata.
+
+I tasti Shift e Ctrl prima di fare una selezione permettono
+di aggiungere o sottrarre la corrente selezione invece di
+rimpiazzarla con quest'ultima.
+
+Premendo Shift e Ctrl mentre create una selezione, potete
+ottenere un quadrato ed un cerchio perfetti, oppure avere
+questi ultimi centrati in un punto.
+
+# Tips for advanced users start here
+#
+
+Per gestire la soglia di una selezione fuzzy è sufficiente
+cliccare su quest'ultima e trascinare il mouse a destra o a
+sinistra rispettivamente per aumentare o diminuire il
+valore da considerare.
+
+Con Shift-clic sull'occhio di un livello selezionato nella
+relativa finestra vi permette di nascondere gli altri livelli
+visibili. Ripetendo l'operazione vengono visualizzati ancora
+tutti i livelli presenti.
+
+Si può aggiustare e riposizionare la selezione premendo il
+tasto Alt e trascinando la selezione con il mouse.
+
+# (end of tips)
+

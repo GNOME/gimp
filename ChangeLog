@@ -1,3 +1,9 @@
+Thu Sep  9 18:52:28 CDT 1999 James Mitchell <mitchell@gimp.org>
+
+	* tips/gimp_tips.it.txt
+	* tips/Makefile.am: Added tips translations from Daniele Medri
+			    <madrid@linux.it>
+
 Thu Sep  9 15:45:20 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/rotate.c: i18n buglet fix
