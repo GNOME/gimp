@@ -1,3 +1,11 @@
+2005-01-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merged from HEAD branch:
+
+	* app/tools/gimpcroptool.c (crop_aspect_changed): don't 
+	accept aspect ratios that make image less than 1 byte high, 
+	fixes bug #164827.
+
 2005-01-23  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
