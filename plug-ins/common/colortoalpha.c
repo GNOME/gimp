@@ -109,6 +109,8 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_colortoalpha",
 			  _("Convert the color in an image to alpha"),
 			  _("This replaces as much of a given color as possible in each pixel with a corresponding amount of alpha, then readjusts the color accordingly."),

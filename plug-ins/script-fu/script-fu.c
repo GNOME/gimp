@@ -137,6 +137,8 @@ query (void)
   };
   static gint nserver_args = sizeof (server_args) / sizeof (server_args[0]);
 
+  INIT_I18N ();
+
   gimp_install_procedure ("extension_script_fu",
 			  _("A scheme interpreter for scripting GIMP operations"),
 			  _("More help here later"),

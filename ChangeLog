@@ -1,3 +1,16 @@
+Sun Jan  9 18:15:44 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/xbm.c
+	* plug-ins/helpbrowser/helpbrowser.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/sinus/sinus.c: i18n fixes
+
 Sun Jan  9 14:48:21 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gdisplay.c

@@ -127,6 +127,8 @@ static void query (void)
   static gint nargs = NUMBER_IN_ARGS;
   static GParamDef return_vals[] = { OUT_ARGS };
   static gint nreturn_vals = NUMBER_OUT_ARGS;
+  
+  INIT_I18N ();
 
   /* the actual installation of the plugin */
   gimp_install_procedure (PLUG_IN_NAME,
@@ -182,8 +184,10 @@ run (gchar *name,		/* name of plugin           */
       gimp_get_data (PLUG_IN_NAME, &shootvals);
       shootvals.window_id = NULL;
 
-      /* Get information from the dialog */
-      if (!shoot_dialog())
+      INIT_I18N_UI ();
+
+     /* Get information from the dialog */
+      if (!shoot_dialog ())
 	return;
       break;
 
@@ -211,9 +215,9 @@ run (gchar *name,		/* name of plugin           */
   if (status == STATUS_SUCCESS)
   {
     if (shootvals.delay > 0)
-      shoot_delay(shootvals.delay);
+      shoot_delay (shootvals.delay);
     /* Run the main function */
-    shoot();
+    shoot ();
   }
 
   status = (image_ID != -1) ? STATUS_SUCCESS : STATUS_EXECUTION_ERROR;

@@ -339,6 +339,8 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N ();
+
   gimp_install_procedure ("plug_in_ifs_compose",
 			  _("Create an Iterated Function System Fractal"),
    _("Interactively create an Iterated Function System fractal."

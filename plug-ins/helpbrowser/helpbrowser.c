@@ -1120,6 +1120,8 @@ query (void)
   static GParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure (GIMP_HELP_EXT_NAME,
                           _("Browse the GIMP help pages"),
                           _("A small and simple HTML browser optimzed for "
@@ -1155,6 +1157,8 @@ run (char    *name,
 
   *nreturn_vals = 1;
   *return_vals = values;
+
+  INIT_I18N_UI ();
 
   if (strcmp (name, GIMP_HELP_EXT_NAME) == 0)
     {

@@ -163,7 +163,7 @@ query ()
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_save_handler ("file_GTM_save", "htm,html", "");
+  gimp_register_save_handler ("file_GTM_save", "html,htm", "");
 }
 
 static void

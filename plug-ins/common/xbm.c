@@ -161,6 +161,8 @@ query ()
   } ;
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N ();
+
   gimp_install_procedure ("file_xbm_load",
                           _("Load a file in X10 or X11 bitmap (XBM) file format"),
                           _("Load a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless format for flat black-and-white (two color indexed) images."),

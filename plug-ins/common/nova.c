@@ -92,18 +92,18 @@ static char rcsid[] = "$Id$";
 static void dummy_printf( char *fmt, ... ) {}
 #endif
 
-#define ENTRY_WIDTH 40
-#define SCALE_WIDTH 125
-#define PREVIEW_SIZE 100
+#define ENTRY_WIDTH     40
+#define SCALE_WIDTH     125
+#define PREVIEW_SIZE    100
 #define TILE_CACHE_SIZE 16
 
 #define PREVIEW   0x1
 #define CURSOR    0x2
 #define ALL       0xf
 
-#define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
+#define PREVIEW_MASK ( GDK_EXPOSURE_MASK | \
                        GDK_BUTTON_PRESS_MASK | \
-                       GDK_BUTTON1_MOTION_MASK
+                       GDK_BUTTON1_MOTION_MASK )
 
 typedef struct {
   gint    xcenter, ycenter;
@@ -147,50 +147,37 @@ static void     run     (gchar    *name,
                          gint     *nreturn_vals,
                          GParam  **return_vals);
 
-static gint     nova_dialog ( GDrawable *drawable );
+static gint        nova_dialog                       (GDrawable  *drawable);
 
-static GtkWidget * nova_center_create ( GDrawable *drawable );
-static void        nova_center_destroy ( GtkWidget *widget,
-                                         gpointer data );
-static void        nova_center_preview_init ( NovaCenter *center );
-static void        nova_center_draw ( NovaCenter *center, gint update );
-static void        nova_center_entry_update ( GtkWidget *widget,
-                                              gpointer data );
-static void        nova_center_cursor_update ( NovaCenter *center );
-static gint        nova_center_preview_expose ( GtkWidget *widget,
-                                                GdkEvent *event );
-static gint        nova_center_preview_events ( GtkWidget *widget,
-                                                GdkEvent *event );
+static GtkWidget * nova_center_create                (GDrawable  *drawable);
+static void        nova_center_destroy               (GtkWidget  *widget, gpointer data);
+static void        nova_center_preview_init          (NovaCenter *center);
+static void        nova_center_draw                  (NovaCenter *center, gint update);
+static void        nova_center_entry_update          (GtkWidget  *widget, gpointer data);
+static void        nova_center_cursor_update         (NovaCenter *center);
+static gint        nova_center_preview_expose        (GtkWidget  *widget, GdkEvent *event);
+static gint        nova_center_preview_events        (GtkWidget  *widget, GdkEvent *event);
 
-static void     nova_int_entryscale_new ( GtkTable *table, gint x, gint y,
-                                         gchar *caption, gint *intvar,
-                                         gint min, gint max, gint constraint);
+static void        nova_int_entryscale_new           (GtkTable *table, gint x, gint y,
+						      gchar *caption, gint *intvar,
+						      gint min, gint max, gint constraint);
 
-static void     nova_ok_callback            (GtkWidget *widget,
-                                             gpointer   data);
+static void        nova_ok_callback                  (GtkWidget      *widget,
+						      gpointer        data);
+static void       nova_paired_entry_destroy_callback (GtkWidget      *widget,
+						      gpointer        data);
 
-static void     nova_paired_entry_destroy_callback (GtkWidget *widget,
-                                                    gpointer data);
+static void       nova_paired_int_scale_update        (GtkAdjustment *adjustment,
+						       gpointer       data);
+static void       nova_paired_int_entry_update        (GtkWidget     *widget,
+						       gpointer       data );
 
-static void     nova_paired_int_scale_update (GtkAdjustment *adjustment,
-                                              gpointer   data);
-static void     nova_paired_int_entry_update (GtkWidget *widget,
-                                             gpointer data );
+static void       nova          (GDrawable *drawable);
 
-static void     nova    (GDrawable *drawable);
-
-static void     rgb_to_hsl                   (gdouble    r,
-					      gdouble    g,
-					      gdouble    b,
-					      gdouble *  h,
-					      gdouble *  s,
-					      gdouble *  l);
-static void     hsl_to_rgb                   (gdouble    h,
-					      gdouble    sl,
-					      gdouble    l,
-					      gdouble *  r,
-					      gdouble *  g,
-					      gdouble *  b);
+static void       rgb_to_hsl    (gdouble  r, gdouble  g, gdouble  b,
+				 gdouble *h, gdouble *s, gdouble *l);
+static void       hsl_to_rgb    (gdouble  h, gdouble  s, gdouble  l,
+				 gdouble *r, gdouble *g, gdouble *b);
 
 
 GPlugInInfo PLUG_IN_INFO =
@@ -223,19 +210,21 @@ query ()
 {
   static GParamDef args[]=
     {
-      { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-      { PARAM_IMAGE, "image", "Input image (unused)" },
-      { PARAM_DRAWABLE, "drawable", "Input drawable" },
-      { PARAM_INT32, "xcenter", "X coordinates of the center of supernova" },
-      { PARAM_INT32, "ycenter", "Y coordinates of the center of supernova" },
-      { PARAM_COLOR, "color",   "Color of supernova" },
-      { PARAM_INT32, "radius",  "Radius of supernova" },
-      { PARAM_INT32, "nspoke",  "Number of spokes" },
-      { PARAM_INT32, "randomhue", "Random hue" }
+      { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },
+      { PARAM_IMAGE,    "image",     "Input image (unused)" },
+      { PARAM_DRAWABLE, "drawable",  "Input drawable" },
+      { PARAM_INT32,    "xcenter",   "X coordinates of the center of supernova" },
+      { PARAM_INT32,    "ycenter",   "Y coordinates of the center of supernova" },
+      { PARAM_COLOR,    "color",     "Color of supernova" },
+      { PARAM_INT32,    "radius",    "Radius of supernova" },
+      { PARAM_INT32,    "nspoke",    "Number of spokes" },
+      { PARAM_INT32,    "randomhue", "Random hue" }
    };
   static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
+
+  INIT_I18N();
 
   gimp_install_procedure ("plug_in_nova",
                           _("Produce Supernova effect to the specified drawable"),
@@ -1026,7 +1015,7 @@ nova_paired_int_scale_update (GtkAdjustment *adjustment,
 static void
 nova_paired_int_entry_update (GtkWidget *widget,
                               gpointer   data)
- {
+{
    NovaEntryScaleData *userdata;
    GtkAdjustment *adjustment;
    int new_val, constraint_val;
@@ -1053,9 +1042,8 @@ nova_paired_int_entry_update (GtkWidget *widget,
    adjustment->value = constraint_val;
    gtk_signal_handler_block_by_data ( GTK_OBJECT(adjustment), data );
    gtk_signal_emit_by_name ( GTK_OBJECT(adjustment), "value_changed");
-   gtk_signal_handler_unblock_by_data ( GTK_OBJECT(adjustment), data );
- 
- }
+   gtk_signal_handler_unblock_by_data ( GTK_OBJECT(adjustment), data ); 
+}
  
  /*
  ################################################################
@@ -1064,20 +1052,20 @@ nova_paired_int_entry_update (GtkWidget *widget,
  ##                                                            ##
  ################################################################
  */
- 
- 
- static double gauss()
- {
-   double sum=0;
-   int i;
-   for(i=0; i<6; i++)
-     sum+=(double)rand()/RAND_MAX;
-   return sum/6;
- }
- 
- static void
- nova (GDrawable *drawable)
- {
+
+static double 
+gauss (void)
+{
+  double sum=0;
+  int i;
+  for(i=0; i<6; i++)
+    sum+=(double)rand()/RAND_MAX;
+  return sum/6;
+}
+
+static void
+nova (GDrawable *drawable)
+{
    GPixelRgn src_rgn, dest_rgn;
    gpointer pr;
    guchar *src_row, *dest_row;
@@ -1224,7 +1212,7 @@ nova_paired_int_entry_update (GtkWidget *widget,
  
    g_free( spoke );
    g_free( spokecolor );
- }
+}
  
  /*
   * RGB-HSL transforms.
@@ -1236,14 +1224,14 @@ nova_paired_int_entry_update (GtkWidget *widget,
   * return (h,s,l) on [0 ... 1]
   */
 
- static void
- rgb_to_hsl (gdouble  r,
-	     gdouble  g,
- 	     gdouble  b,
-	     gdouble *h,
-	     gdouble *s,
-	     gdouble *l)
- {
+static void
+rgb_to_hsl (gdouble  r,
+	    gdouble  g,
+	    gdouble  b,
+	    gdouble *h,
+	    gdouble *s,
+	    gdouble *l)
+{
    gdouble v;
    gdouble m;
    gdouble vm;
@@ -1275,21 +1263,21 @@ nova_paired_int_entry_update (GtkWidget *widget,
      *h = (r == m ? 3.0 + g2 : 5.0 - r2);
 
    *h /= 6;
- }
+}
 
  /*
   * given h,s,l on [0..1],
   * return r,g,b on [0..1]
   */
 
- static void
- hsl_to_rgb (gdouble  h,
-	     gdouble  sl,
-	     gdouble  l,
-	     gdouble *r,
-	     gdouble *g,
-	     gdouble *b)
- {
+static void
+hsl_to_rgb (gdouble  h,
+	    gdouble  sl,
+	    gdouble  l,
+	    gdouble *r,
+	    gdouble *g,
+	    gdouble *b)
+{
    gdouble v;
 
    v = (l <= 0.5) ? (l * (1.0 + sl)) : (l + sl - l * sl);
@@ -1322,5 +1310,11 @@ nova_paired_int_entry_update (GtkWidget *widget,
 	   case 5: *r = v; *g = m; *b = mid2; break;
 	 }
      }
- }
+}
  
+
+
+
+
+
+

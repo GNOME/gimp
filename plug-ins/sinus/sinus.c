@@ -164,6 +164,8 @@ static void query ()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
+  INIT_I18N ();
+
   gimp_install_procedure ("plug_in_sinus",
 			  _("Generates a texture with sinus functions"),
 			  "FIX ME: sinus help",

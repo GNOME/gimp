@@ -908,6 +908,8 @@ plugin_query ( void )
   static gint          numof_args        = sizeof args / sizeof args[0];
   static gint          numof_return_vals = 0;
 
+  INIT_I18N ();
+
   gimp_install_procedure
     ( PLUGIN_PROCEDURE_NAME,
       _("Cuts an image into paper tiles, and slides each paper tile."),
