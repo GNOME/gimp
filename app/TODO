@@ -1,5 +1,0 @@
-convert to using gtk+
-remove traces of autodialog
-remove traces of action areas
-remove use of mem chunks from memutils.[ch]
-remove use of xmalloc and xfree (use g_malloc and g_free instead)
