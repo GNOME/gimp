@@ -424,6 +424,16 @@ tiff_warning(const gchar *module,
              const gchar *fmt,
              va_list      ap)
 {
+  va_list ap_test;
+
+  /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=131975 */
+  /* Ignore the warnings about unregistered private tags (>= 32768) */
+  if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored"))
+    {
+      ap_test = ap;
+      if (va_arg (ap_test, int) >= 32768)
+	return;
+    }
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
 }
 
@@ -432,6 +442,10 @@ tiff_error (const gchar *module,
             const gchar *fmt,
             va_list      ap)
 {
+  /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=132297 */
+  /* Ignore the errors related to random access and JPEG compression */
+  if (! strcmp (fmt, "Compression algorithm does not support random access"))
+    return;
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
 }
 

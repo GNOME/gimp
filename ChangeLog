@@ -1,3 +1,13 @@
+2004-01-31  Raphaël Quinet  <quinet@gamers.org>
+
+	* plug-ins/common/tiff.c (tiff_warning, tiff_error): Do not
+	display the warning message about unknown tags for unregistered
+	private tags (>= 32768).  Fixes bug #131975.  Do not display the
+	error message about random access not supported for images using
+	JPEG compression.  Fixes bug #132297.  It would be better to allow
+	the user to customize which messages should be displayed or not,
+	but this can be done in a future release.
+
 2004-01-31  Michael Natterer  <mitch@gimp.org>
 
 	Use the global <Image> accel_group in all docks except the
