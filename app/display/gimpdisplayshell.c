@@ -94,6 +94,9 @@ enum
 };
 
 
+#define SNAP_WIDTH 5.0
+
+
 /*  local function prototypes  */
 
 static void      gimp_display_shell_class_init    (GimpDisplayShellClass *klass);
@@ -1046,6 +1049,8 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                                snap_height,
                                                &tx,
                                                &ty,
+                                               FUNSCALEX (shell, SNAP_WIDTH),
+                                               FUNSCALEY (shell, SNAP_WIDTH),
                                                snap_to_guides,
                                                snap_to_grid);
         }
@@ -1056,6 +1061,8 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                            coords->y + snap_offset_y,
                                            &tx,
                                            &ty,
+                                           FUNSCALEX (shell, SNAP_WIDTH),
+                                           FUNSCALEY (shell, SNAP_WIDTH),
                                            snap_to_guides,
                                            snap_to_grid);
         }

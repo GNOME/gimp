@@ -31,9 +31,6 @@
 #include "gimp-intl.h"
 
 
-#define EPSILON 5
-
-
 /*  public functions  */
 
 
@@ -41,6 +38,7 @@ gboolean
 gimp_image_snap_x (GimpImage *gimage,
                    gdouble    x,
                    gint      *tx,
+                   gdouble    epsilon_x,
                    gboolean   snap_to_guides,
                    gboolean   snap_to_grid)
 {
@@ -78,7 +76,7 @@ gimp_image_snap_x (GimpImage *gimage,
             {
               dist = ABS (guide->position - x);
 
-              if (dist < MIN (EPSILON, mindist))
+              if (dist < MIN (epsilon_x, mindist))
                 {
                   mindist = dist;
                   *tx = guide->position;
@@ -104,7 +102,7 @@ gimp_image_snap_x (GimpImage *gimage,
 
           dist = ABS (i - x);
 
-          if (dist < MIN (EPSILON, mindist))
+          if (dist < MIN (epsilon_x, mindist))
             {
               mindist = dist;
               *tx = i;
@@ -120,6 +118,7 @@ gboolean
 gimp_image_snap_y (GimpImage *gimage,
                    gdouble    y,
                    gint      *ty,
+                   gdouble    epsilon_y,
                    gboolean   snap_to_guides,
                    gboolean   snap_to_grid)
 {
@@ -157,7 +156,7 @@ gimp_image_snap_y (GimpImage *gimage,
             {
               dist = ABS (guide->position - y);
 
-              if (dist < MIN (EPSILON, mindist))
+              if (dist < MIN (epsilon_y, mindist))
                 {
                   mindist = dist;
                   *ty = guide->position;
@@ -183,7 +182,7 @@ gimp_image_snap_y (GimpImage *gimage,
 
           dist = ABS (i - y);
 
-          if (dist < MIN (EPSILON, mindist))
+          if (dist < MIN (epsilon_y, mindist))
             {
               mindist = dist;
               *ty = i;
@@ -201,6 +200,8 @@ gimp_image_snap_point (GimpImage *gimage,
                        gdouble    y,
                        gint      *tx,
                        gint      *ty,
+                       gdouble    epsilon_x,
+                       gdouble    epsilon_y,
                        gboolean   snap_to_guides,
                        gboolean   snap_to_grid)
 {
@@ -247,7 +248,7 @@ gimp_image_snap_point (GimpImage *gimage,
             case GIMP_ORIENTATION_HORIZONTAL:
               dist = ABS (guide->position - y);
 
-              if (dist < MIN (EPSILON, minydist))
+              if (dist < MIN (epsilon_y, minydist))
                 {
                   minydist = dist;
                   *ty = guide->position;
@@ -258,7 +259,7 @@ gimp_image_snap_point (GimpImage *gimage,
             case GIMP_ORIENTATION_VERTICAL:
               dist = ABS (guide->position - x);
 
-              if (dist < MIN (EPSILON, minxdist))
+              if (dist < MIN (epsilon_x, minxdist))
                 {
                   minxdist = dist;
                   *tx = guide->position;
@@ -290,7 +291,7 @@ gimp_image_snap_point (GimpImage *gimage,
 
           dist = ABS (i - x);
 
-          if (dist < MIN (EPSILON, minxdist))
+          if (dist < MIN (epsilon_x, minxdist))
             {
               minxdist = dist;
               *tx = i;
@@ -305,7 +306,7 @@ gimp_image_snap_point (GimpImage *gimage,
 
           dist = ABS (i - y);
 
-          if (dist < MIN (EPSILON, minydist))
+          if (dist < MIN (epsilon_y, minydist))
             {
               minydist = dist;
               *ty = i;
@@ -325,6 +326,8 @@ gimp_image_snap_rectangle (GimpImage *gimage,
                            gdouble    y2,
                            gint      *tx1,
                            gint      *ty1,
+                           gdouble    epsilon_x,
+                           gdouble    epsilon_y,
                            gboolean   snap_to_guides,
                            gboolean   snap_to_grid)
 {
@@ -343,15 +346,19 @@ gimp_image_snap_rectangle (GimpImage *gimage,
   *ty1 = ROUND (y1);
 
   snap1 = gimp_image_snap_x (gimage, x1, &nx1,
+                             epsilon_x,
                              snap_to_guides,
                              snap_to_grid);
   snap2 = gimp_image_snap_x (gimage, x2, &nx2,
+                             epsilon_x,
                              snap_to_guides,
                              snap_to_grid);
   snap3 = gimp_image_snap_y (gimage, y1, &ny1,
+                             epsilon_y,
                              snap_to_guides,
                              snap_to_grid);
   snap4 = gimp_image_snap_y (gimage, y2, &ny2,
+                             epsilon_y,
                              snap_to_guides,
                              snap_to_grid);
 

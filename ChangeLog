@@ -1,3 +1,13 @@
+2004-02-13  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpimage-snap.[ch]: make the snapping width a
+	parameter of the snapping functions.
+
+	* app/display/gimpdisplayshell.c: make sure that the snapping
+	width always is 5 pixels in the view coordinates.
+
+	Fixes bug #134285
+
 2004-02-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-units.c (gimp_units_init, _exit): removed
