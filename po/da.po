@@ -3,12 +3,12 @@
 # Kenneth Christiansen <kenneth@ripe.dk>, 1999, 2000
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
 # Keld Simonsen <keld@dkuug.dk>, 2000.
-#
+
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
 "POT-Creation-Date: 2000-04-19 13:56+0200\n"
-"PO-Revision-Date: 2000-04-18 23:31+02:00\n"
+"PO-Revision-Date: 2000-04-21 14:31+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -5924,6 +5924,8 @@ msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
 msgstr ""
+"Vent venligst mens dit personlige\n"
+"GIMP katalog bliver oprettet..."
 
 #: app/user_install.c:541
 msgid "GIMP User Installation"
@@ -6223,125 +6225,3 @@ msgstr "Vandfarve"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Farvehistorie"
-
-#~ msgid "Angle"
-#~ msgstr "Vinkel"
-
-#~ msgid "Pressure"
-#~ msgstr "Tryk"
-
-#~ msgid "/Edit/Fill"
-#~ msgstr "/Redigér/Fyld"
-
-#~ msgid "Custom from Editor"
-#~ msgstr "Egendefineret fra editor"
-
-#~ msgid ""
-#~ "The GIMP - GNU Image Manipulation Program\n"
-#~ "\n"
-#~ msgstr ""
-#~ "GIMP'en - GNU's billedemanipuleringsprogram\n"
-#~ "\n"
-
-#~ msgid "Install"
-#~ msgstr "Installér"
-
-#~ msgid "Ignore"
-#~ msgstr "Ignorér"
-
-#~ msgid "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
-#~ msgstr "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
-
-#~ msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
-#~ msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
-
-#~ msgid "Installation Log"
-#~ msgstr "Installationslog"
-
-#~ msgid "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
-#~ msgstr "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
-
-#~ msgid ""
-#~ "\n"
-#~ "Installation successful!\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Installation var en success!\n"
-
-#~ msgid "/File/Dialogs"
-#~ msgstr "/Filer/Dialoger"
-
-#~ msgid "/File"
-#~ msgstr "/Filer"
-
-#~ msgid "/Edit"
-#~ msgstr "/Redigér"
-
-#~ msgid "/Edit/Buffer"
-#~ msgstr "/Redigér/Buffer"
-
-#~ msgid "/Select"
-#~ msgstr "/Markering"
-
-#~ msgid "/View"
-#~ msgstr "/Vis"
-
-#~ msgid "/View/Zoom"
-#~ msgstr "/Vis/Zoom"
-
-#~ msgid "/Image"
-#~ msgstr "/Billede"
-
-#~ msgid "/Image/Mode"
-#~ msgstr "/Billede/Tilstand"
-
-#~ msgid "/Image/Colors"
-#~ msgstr "/Billede/Farver"
-
-#~ msgid "/Image/Colors/Auto"
-#~ msgstr "/Billede/Farver/Auto"
-
-#~ msgid "/Image/Alpha"
-#~ msgstr "/Billede/Alfa"
-
-#~ msgid "/Image/Transforms"
-#~ msgstr "/Billede/Transformér"
-
-#~ msgid "/Layers"
-#~ msgstr "/Lag"
-
-#~ msgid "/Layers/Stack"
-#~ msgstr "/Lag/Stak"
-
-#~ msgid "/Tools"
-#~ msgstr "/Værktøj"
-
-#~ msgid "/Tools/Select Tools"
-#~ msgstr "/Værktøj/Markeringsværktøjer"
-
-#~ msgid "/Tools/Transform Tools"
-#~ msgstr "/Værktøj/Transformeringsværktøjer"
-
-#~ msgid "/Tools/Paint Tools"
-#~ msgstr "/Værktøj/Maleværktøjer"
-
-#~ msgid "/Dialogs"
-#~ msgstr "/Dialoger"
-
-#~ msgid "/Filters"
-#~ msgstr "/Filtre"
-
-#~ msgid "/Script-Fu"
-#~ msgstr "/Skript-Fu"
-
-#~ msgid "/Stack"
-#~ msgstr "/Stak"
-
-#~ msgid "Bytes"
-#~ msgstr "Bytes"
-
-#~ msgid "KiloBytes"
-#~ msgstr "Kilobytes"
-
-#~ msgid "MegaBytes"
-#~ msgstr "Megabytes"
