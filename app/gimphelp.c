@@ -34,12 +34,13 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
+
 #include "pdb/procedural_db.h"
 
 #include "plug-in/plug-ins.h"
 #include "plug-in/plug-in.h"
 
-#include "app_procs.h"
 #include "gimphelp.h"
 #include "gimprc.h"
 
@@ -54,6 +55,7 @@ typedef struct _GimpIdleHelp GimpIdleHelp;
 
 struct _GimpIdleHelp
 {
+  Gimp  *gimp;
   gchar *help_path;
   gchar *help_data;
 };
@@ -62,10 +64,12 @@ struct _GimpIdleHelp
 /*  local function prototypes  */
 
 static gint      gimp_idle_help     (gpointer     data);
-static gboolean  gimp_help_internal (const gchar *help_path,
+static gboolean  gimp_help_internal (Gimp        *gimp,
+                                     const gchar *help_path,
 				     const gchar *current_locale,
 				     const gchar *help_data);
-static void      gimp_help_netscape (const gchar *help_path,
+static void      gimp_help_netscape (Gimp        *gimp,
+                                     const gchar *help_path,
 				     const gchar *current_locale,
 				     const gchar *help_data);
 
@@ -74,21 +78,29 @@ static void      gimp_help_netscape (const gchar *help_path,
 
 /*  The standard help function  */
 void
-gimp_standard_help_func (const gchar *help_data)
+_gimp_standard_help_func (Gimp        *gimp,
+                          const gchar *help_data)
 {
-  gimp_help (NULL, help_data);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gimp_help (gimp, NULL, help_data);
 }
 
 /*  the main help function  */
 void
-gimp_help (const gchar *help_path,
+gimp_help (Gimp        *gimp,
+           const gchar *help_path,
 	   const gchar *help_data)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   if (gimprc.use_help)
     {
       GimpIdleHelp *idle_help;
 
       idle_help = g_new0 (GimpIdleHelp, 1);
+
+      idle_help->gimp = gimp;
 
       if (help_path && strlen (help_path))
 	idle_help->help_path = g_strdup (help_path);
@@ -131,13 +143,15 @@ gimp_idle_help (gpointer data)
   switch (gimprc.help_browser)
     {
     case HELP_BROWSER_GIMP:
-      if (gimp_help_internal (idle_help->help_path,
+      if (gimp_help_internal (idle_help->gimp,
+                              idle_help->help_path,
 			      current_locale,
 			      idle_help->help_data))
 	break;
 
     case HELP_BROWSER_NETSCAPE:
-      gimp_help_netscape (idle_help->help_path,
+      gimp_help_netscape (idle_help->gimp,
+                          idle_help->help_path,
 			  current_locale,
 			  idle_help->help_data);
       break;
@@ -175,22 +189,21 @@ gimp_help_internal_not_found_callback (GtkWidget *widget,
 }
 
 static gboolean
-gimp_help_internal (const gchar *help_path,
+gimp_help_internal (Gimp        *gimp,
+                    const gchar *help_path,
 		    const gchar *current_locale,
 		    const gchar *help_data)
 {
   ProcRecord *proc_rec;
 
   /*  Check if a help browser is already running  */
-  proc_rec = procedural_db_lookup (the_gimp,
-				   "extension_gimp_help_browser_temp");
+  proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_browser_temp");
 
   if (proc_rec == NULL)
     {
       Argument *args = NULL;
 
-      proc_rec = procedural_db_lookup (the_gimp,
-				       "extension_gimp_help_browser");
+      proc_rec = procedural_db_lookup (gimp, "extension_gimp_help_browser");
 
       if (proc_rec == NULL)
 	{
@@ -221,7 +234,7 @@ gimp_help_internal (const gchar *help_path,
       args[3].arg_type          = GIMP_PDB_STRING;
       args[3].value.pdb_pointer = (gpointer) help_data;
 
-      plug_in_run (the_gimp, proc_rec, args, 4, FALSE, TRUE, 0);
+      plug_in_run (gimp, proc_rec, args, 4, FALSE, TRUE, 0);
 
       g_free (args);
     }
@@ -231,7 +244,7 @@ gimp_help_internal (const gchar *help_path,
       gint      nreturn_vals;
 
       return_vals =
-        procedural_db_run_proc (the_gimp,
+        procedural_db_run_proc (gimp,
 				"extension_gimp_help_browser_temp",
                                 &nreturn_vals,
 				GIMP_PDB_STRING, help_path,
@@ -246,7 +259,8 @@ gimp_help_internal (const gchar *help_path,
 }
 
 static void
-gimp_help_netscape (const gchar *help_path,
+gimp_help_netscape (Gimp        *gimp,
+                    const gchar *help_path,
 		    const gchar *current_locale,
 		    const gchar *help_data)
 {
@@ -282,7 +296,7 @@ gimp_help_netscape (const gchar *help_path,
     }
 
   return_vals =
-    procedural_db_run_proc (the_gimp,
+    procedural_db_run_proc (gimp,
 			    "extension_web_browser",
 			    &nreturn_vals,
 			    GIMP_PDB_INT32,  GIMP_RUN_NONINTERACTIVE,

@@ -53,6 +53,8 @@ struct _GimpItemFactory
 {
   GtkItemFactory             parent_instance;
 
+  Gimp                      *gimp;
+
   gchar                     *factory_path;
   GimpItemFactoryUpdateFunc  update_func;
 };
@@ -67,7 +69,8 @@ struct _GimpItemFactoryClass
 
 GType   gimp_item_factory_get_type            (void) G_GNUC_CONST;
 
-GimpItemFactory * gimp_item_factory_new       (GType                 container_type,
+GimpItemFactory * gimp_item_factory_new       (Gimp                 *gimp,
+                                               GType                 container_type,
                                                const gchar          *path,
                                                const gchar          *factory_path,
                                                GimpItemFactoryUpdateFunc  update_func,

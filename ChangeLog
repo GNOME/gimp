@@ -1,3 +1,29 @@
+2002-04-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimphelp.[ch]: removed usage of "the_gimp" by passing around
+	more "Gimp" pointers. Renamed gimp_standard_help_func() to
+	_gimp_standard_help_func() and declare it in the header.  Don't
+	include "app_procs.h".
+
+	* app/libgimp_glue.[ch]: added gimp_standard_help_func() here.
+	Call _gimp_standard_help_func (the_gimp, ...) like all other
+	wrappers in this file do. I know this is ugly but better let's
+	have all uglyness in one place (here) :-)
+
+	* app/widgets/gimpitemfactory.[ch]: added a "Gimp" member to the
+	GimpItemFactory struct. Pass it to gimp_help(),
+
+	* app/gui/menus.c: pass a Gimp to gimp_item_factory_new(), removed
+	useless inclusion of "gimphelp.h".
+
+	* tools/pdbgen/pdb/help.pdb: pass a Gimp to gimp_help()
+
+	* app/pdb/help_cmds.c: regenerated.
+
+	* app/gui/tips-dialog.c: removed gtk_quit_add_destroy() here too
+	because the tips dialog is created by a dialog factory which takes
+	care of dialog destruction.
+
 2002-04-12  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/file-open-dialog.c

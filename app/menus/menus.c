@@ -64,7 +64,6 @@
 #include "vectors-commands.h"
 #include "view-commands.h"
 
-#include "gimphelp.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -1937,7 +1936,8 @@ menus_init (Gimp *gimp)
 
 #define ADD_FACTORY(f) (all_factories = g_list_append (all_factories, (f)));
 
-  toolbox_factory = gimp_item_factory_new (GTK_TYPE_MENU_BAR,
+  toolbox_factory = gimp_item_factory_new (gimp,
+                                           GTK_TYPE_MENU_BAR,
                                            "<Toolbox>", "toolbox",
                                            NULL,
                                            G_N_ELEMENTS (toolbox_entries),
@@ -1947,7 +1947,8 @@ menus_init (Gimp *gimp)
   menus_last_opened_add (toolbox_factory, gimp);
   ADD_FACTORY (toolbox_factory);
 
-  image_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+  image_factory = gimp_item_factory_new (gimp,
+                                         GTK_TYPE_MENU,
                                          "<Image>", "image",
                                          NULL,
                                          G_N_ELEMENTS (image_entries),
@@ -1957,119 +1958,136 @@ menus_init (Gimp *gimp)
   menus_last_opened_add (image_factory, gimp);
   ADD_FACTORY (image_factory);
 
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Load>", "open",
                                       NULL,
                                       G_N_ELEMENTS (load_entries),
                                       load_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Save>", "save",
                                       NULL,
                                       G_N_ELEMENTS (save_entries),
                                       save_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Layers>", "layers",
                                       layers_menu_update,
                                       G_N_ELEMENTS (layers_entries),
                                       layers_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Channels>", "channels",
                                       channels_menu_update,
                                       G_N_ELEMENTS (channels_entries),
                                       channels_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Vectors>", "vectors",
                                       vectors_menu_update,
                                       G_N_ELEMENTS (vectors_entries),
                                       vectors_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Paths>", "paths",
                                       NULL,
                                       G_N_ELEMENTS (paths_entries),
                                       paths_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Dialogs>", "dialogs",
                                       dialogs_menu_update,
                                       G_N_ELEMENTS (dialogs_entries),
                                       dialogs_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Brushes>", "brushes",
                                       brushes_menu_update,
                                       G_N_ELEMENTS (brushes_entries),
                                       brushes_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Patterns>", "patterns",
                                       patterns_menu_update,
                                       G_N_ELEMENTS (patterns_entries),
                                       patterns_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<GradientEditor>", "gradient_editor",
                                       gradient_editor_menu_update,
                                       G_N_ELEMENTS (gradient_editor_entries),
                                       gradient_editor_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Gradients>", "gradients",
                                       gradients_menu_update,
                                       G_N_ELEMENTS (gradients_entries),
                                       gradients_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<PaletteEditor>", "palette_editor",
                                       palette_editor_menu_update,
                                       G_N_ELEMENTS (palette_editor_entries),
                                       palette_editor_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Palettes>", "palettes",
                                       palettes_menu_update,
                                       G_N_ELEMENTS (palettes_entries),
                                       palettes_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Buffers>", "buffers",
                                       buffers_menu_update,
                                       G_N_ELEMENTS (buffers_entries),
                                       buffers_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<Documents>", "documents",
                                       documents_menu_update,
                                       G_N_ELEMENTS (documents_entries),
                                       documents_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<ColormapEditor>", "colormap_editor",
                                       colormap_editor_menu_update,
                                       G_N_ELEMENTS (colormap_editor_entries),
                                       colormap_editor_entries,
                                       gimp,
                                       FALSE));
-  ADD_FACTORY (gimp_item_factory_new (GTK_TYPE_MENU,
+  ADD_FACTORY (gimp_item_factory_new (gimp,
+                                      GTK_TYPE_MENU,
                                       "<QMask>", "qmask",
                                       qmask_menu_update,
                                       G_N_ELEMENTS (qmask_entries),

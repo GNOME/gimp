@@ -29,6 +29,7 @@
 #include "core/gimpunit.h"
 
 #include "app_procs.h"
+#include "gimphelp.h"
 
 #define __LIBGIMP_GLUE_C__
 #include "libgimp_glue.h"
@@ -73,6 +74,7 @@ gimp_palette_get_background (GimpRGB *color)
 
   return TRUE;
 }
+
 
 gint
 gimp_unit_get_number_of_units (void)
@@ -119,13 +121,11 @@ gimp_unit_set_deletion_flag (GimpUnit unit,
   _gimp_unit_set_deletion_flag (the_gimp, unit, deletion_flag);
 }
 
-
 gdouble
 gimp_unit_get_factor (GimpUnit unit)
 {
   return _gimp_unit_get_factor (the_gimp, unit);
 }
-
 
 gint
 gimp_unit_get_digits (GimpUnit unit)
@@ -133,13 +133,11 @@ gimp_unit_get_digits (GimpUnit unit)
   return _gimp_unit_get_digits (the_gimp, unit);
 }
 
-
 const gchar * 
 gimp_unit_get_identifier (GimpUnit unit)
 {
   return _gimp_unit_get_identifier (the_gimp, unit);
 }
-
 
 const gchar *
 gimp_unit_get_symbol (GimpUnit unit)
@@ -147,13 +145,11 @@ gimp_unit_get_symbol (GimpUnit unit)
   return _gimp_unit_get_symbol (the_gimp, unit);
 }
 
-
 const gchar *
 gimp_unit_get_abbreviation (GimpUnit unit)
 {
   return _gimp_unit_get_abbreviation (the_gimp, unit);
 }
-
 
 const gchar *
 gimp_unit_get_singular (GimpUnit unit)
@@ -161,9 +157,14 @@ gimp_unit_get_singular (GimpUnit unit)
   return _gimp_unit_get_singular (the_gimp, unit);
 }
 
-
 const gchar *
 gimp_unit_get_plural (GimpUnit unit)
 {
   return _gimp_unit_get_plural (the_gimp, unit);
+}
+
+void
+gimp_standard_help_func (const gchar *help_data)
+{
+  _gimp_standard_help_func (the_gimp, help_data);
 }

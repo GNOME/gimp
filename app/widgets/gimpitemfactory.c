@@ -33,6 +33,8 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
+
 #include "gimpitemfactory.h"
 #include "gimpwidgets-utils.h"
 
@@ -138,7 +140,8 @@ gimp_item_factory_finalize (GObject *object)
 /*  public functions  */
 
 GimpItemFactory *
-gimp_item_factory_new (GType                      container_type,
+gimp_item_factory_new (Gimp                      *gimp,
+                       GType                      container_type,
                        const gchar               *path,
                        const gchar               *factory_path,
                        GimpItemFactoryUpdateFunc  update_func,
@@ -150,6 +153,7 @@ gimp_item_factory_new (GType                      container_type,
   GimpItemFactoryClass *factory_class;
   GimpItemFactory      *factory;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (path != NULL, NULL);
   g_return_val_if_fail (factory_path != NULL, NULL);
 
@@ -175,6 +179,8 @@ gimp_item_factory_new (GType                      container_type,
 				       gimp_item_factory_translate_func,
 				       (gpointer) path,
 				       NULL);
+
+  factory->gimp = gimp;
 
   /*  this is correct!  <mitch>  */
   factory->factory_path = g_strdup (path);
@@ -827,7 +833,8 @@ gimp_item_factory_item_key_press (GtkWidget   *widget,
 	  help_string = g_strdup_printf ("%s/%s", factory_path, help_page);
 	}
 
-      gimp_help (help_path, help_string);
+      gimp_help (GIMP_ITEM_FACTORY (item_factory)->gimp,
+                 help_path, help_string);
 
       g_free (help_string);
       g_free (help_page);

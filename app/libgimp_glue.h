@@ -56,5 +56,7 @@ const gchar * gimp_unit_get_abbreviation             (GimpUnit       unit);
 const gchar * gimp_unit_get_singular                 (GimpUnit       unit);
 const gchar * gimp_unit_get_plural                   (GimpUnit       unit);
 
+void          gimp_standard_help_func                (const gchar   *help_data);
+
 
 #endif /* __LIBGIMP_GLUE_H__ */
