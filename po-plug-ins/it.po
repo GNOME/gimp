@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-11-24 01:38+0100\n"
-"PO-Revision-Date: 2003-11-26 16:30+0100\n"
+"PO-Revision-Date: 2003-11-27 17:52+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -6826,7 +6826,7 @@ msgstr "RLE encodato"
 
 #: plug-ins/common/svg.c:242 plug-ins/common/svg.c:624
 msgid "Unknown reason"
-msgstr ""
+msgstr "Motivo sconosciuto"
 
 #: plug-ins/common/svg.c:246
 #, fuzzy
@@ -6835,28 +6835,29 @@ msgstr "Rendering superNova..."
 
 #: plug-ins/common/svg.c:256
 msgid "Rendered SVG"
-msgstr ""
+msgstr "SVG renderizzato"
 
 #: plug-ins/common/svg.c:421
 msgid ""
 "SVG file does not\n"
 "specify a size!"
 msgstr ""
+"Il file SVG non\n"
+"specifica l'ampiezza!"
 
 #: plug-ins/common/svg.c:427
 #, c-format
 msgid "%d x %d"
-msgstr ""
+msgstr "%d x %d"
 
 #: plug-ins/common/svg.c:630
-#, fuzzy
 msgid "Open SVG"
-msgstr "Apri"
+msgstr "Apri SVG"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
 #: plug-ins/common/svg.c:642
 msgid "Render Scalable Vector Graphics"
-msgstr ""
+msgstr "Renderizza Grafica Vettoriale Scalabile (SVG)"
 
 #: plug-ins/common/svg.c:702 plug-ins/print/gimp_main_window.c:1025
 #: plug-ins/print/gimp_main_window.c:1237
@@ -6881,16 +6882,16 @@ msgstr "Pixel"
 #. Path Import
 #: plug-ins/common/svg.c:843
 msgid "Import _Paths"
-msgstr ""
+msgstr "Importa _tracciati"
 
 #: plug-ins/common/svg.c:849
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
-msgstr ""
+msgstr "Importa elementi di tracciati dell'SVG cosicché possano essere usati con lo strumento tracciati di GIMP"
 
 #: plug-ins/common/svg.c:862
 msgid "Merge Imported Paths"
-msgstr ""
+msgstr "Fondi tracciati importati"
 
 #: plug-ins/common/tga.c:424
 #, fuzzy, c-format
@@ -6980,23 +6981,20 @@ msgid "Compression"
 msgstr "Compressione"
 
 #: plug-ins/common/tiff.c:1793
-#, fuzzy
 msgid "_LZW"
-msgstr "LZW"
+msgstr "_LZW"
 
 #: plug-ins/common/tiff.c:1794
 msgid "_Pack Bits"
-msgstr ""
+msgstr "_Pack bits"
 
 #: plug-ins/common/tiff.c:1795
-#, fuzzy
 msgid "_Deflate"
-msgstr "Elimina"
+msgstr "_Deflate"
 
 #: plug-ins/common/tiff.c:1796
-#, fuzzy
 msgid "_JPEG"
-msgstr "JPEG"
+msgstr "_JPEG"
 
 #: plug-ins/common/tiff.c:1808 plug-ins/common/xbm.c:1198
 msgid "Comment:"
@@ -7503,7 +7501,7 @@ msgstr "Angolo rotazione:"
 
 #: plug-ins/common/warp.c:572
 msgid "Substeps:"
-msgstr ""
+msgstr "Sottopassi:"
 
 #. Magnitude map menu
 #: plug-ins/common/warp.c:579
@@ -7655,17 +7653,16 @@ msgid "<Toolbox>/File/Acquire/From Clipboard"
 msgstr "<Toolbox>/File/Acquisizione/Da Clipboard"
 
 #: plug-ins/common/winclipboard.c:308
-#, fuzzy
 msgid "Copying..."
 msgstr "Copia..."
 
 #: plug-ins/common/winclipboard.c:471
 msgid "Unsupported format or Clipboard empty!"
-msgstr ""
+msgstr "Formato non supportato o appunti vuoti!"
 
 #: plug-ins/common/winclipboard.c:482
 msgid "Can't get Clipboard data."
-msgstr ""
+msgstr "Impossibile ottenere i dati appunti."
 
 #. ??? gimp_convert_rgb (image_ID);
 #.
@@ -7702,31 +7699,27 @@ msgid "Style"
 msgstr "Stile"
 
 #: plug-ins/common/wind.c:910
-#, fuzzy
 msgid "_Wind"
-msgstr "Vento"
+msgstr "_Vento"
 
 #: plug-ins/common/wind.c:911
-#, fuzzy
 msgid "_Blast"
-msgstr "Raffica"
+msgstr "_Raffica"
 
 #: plug-ins/common/wind.c:930
-#, fuzzy
 msgid "_Left"
-msgstr "Sinistra"
+msgstr "_Sinistra"
 
 #: plug-ins/common/wind.c:931
-#, fuzzy
 msgid "_Right"
-msgstr "Destra"
+msgstr "_Destra"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
 #: plug-ins/common/wind.c:946
 msgid "Edge Affected"
-msgstr ""
+msgstr "Bordi compresi"
 
 #: plug-ins/common/wind.c:950
 #, fuzzy
@@ -7739,32 +7732,28 @@ msgid "Tr_ailing"
 msgstr "Copertura..."
 
 #: plug-ins/common/wind.c:952
-#, fuzzy
 msgid "Bot_h"
-msgstr "Entrambi"
+msgstr "_Entrambi"
 
 #: plug-ins/common/wind.c:983
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
 #: plug-ins/common/wind.c:998 plug-ins/gimpressionist/orientmap.c:600
-#, fuzzy
 msgid "_Strength:"
-msgstr "Lunghezza:"
+msgstr "_Forza:"
 
 #: plug-ins/common/wind.c:1002
-#, fuzzy
 msgid "Higher values increase the magnitude of the effect"
-msgstr "Alti valori possono rendere la luminosità molto focalizzata"
+msgstr "Alti valori possono incrementarne l'effetto"
 
 #: plug-ins/common/winprint.c:186
-#, fuzzy
 msgid "<Image>/File/_Print"
-msgstr "<Image>/File/Stampa"
+msgstr "<Image>/File/Stam_pa"
 
 #: plug-ins/common/winprint.c:198
 msgid "<Image>/File/Page Setup"
-msgstr "<Image>/File/Configurazione pagina"
+msgstr "<Image>/File/Impostazione pagina"
 
 #: plug-ins/common/winprint.c:300
 #, c-format
@@ -7773,11 +7762,11 @@ msgstr ""
 
 #: plug-ins/common/winprint.c:336
 msgid "Printer doesn't support bitmaps"
-msgstr ""
+msgstr "La stampante non supporta i disegni per punti"
 
 #: plug-ins/common/winprint.c:378
 msgid "StartPage failed"
-msgstr ""
+msgstr "Inizio pagina fallito"
 
 #: plug-ins/common/winprint.c:387 plug-ins/print/print-image-gimp.c:320
 msgid "Printing..."
@@ -7800,7 +7789,7 @@ msgstr ""
 
 #: plug-ins/common/winprint.c:545
 msgid "EndPage failed"
-msgstr ""
+msgstr "Fallito fine pagina"
 
 #: plug-ins/common/winprint.c:592
 #, c-format
@@ -7917,7 +7906,7 @@ msgstr ""
 #. mask file
 #: plug-ins/common/xbm.c:1245
 msgid "Mask File"
-msgstr ""
+msgstr "Maschera dei file"
 
 #: plug-ins/common/xbm.c:1256
 msgid "W_rite Extra Mask File"
@@ -7935,7 +7924,7 @@ msgstr "Errore di apertura file \"%s\" in lettura!\n"
 
 #: plug-ins/common/xpm.c:344
 msgid "XPM file invalid"
-msgstr ""
+msgstr "File XPM non valido"
 
 #: plug-ins/common/xpm.c:769
 msgid "Save as XPM"
