@@ -2,22 +2,22 @@
 # Copyright © 1998-2000,2003 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
-# Pablo Gonzalo del Campo <pablodc@bigfoot.com>, 2003.
-# Pablo G. del Campo <pablodc@bigfoot.com>, 2003.
+# Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 00:54+0100\n"
-"PO-Revision-Date: 2003-11-25 18:18-0300\n"
+"POT-Creation-Date: 2004-01-27 14:48+0100\n"
+"PO-Revision-Date: 2004-01-27 16:03-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.0.2\n"
+"X-Generator: KBabel 1.3\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: plug-ins/script-fu/script-fu-console.c:141
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -28,31 +28,30 @@ msgstr "El modo de consola de Script-Fu sólo permite invocación interactiva"
 msgid "Script-Fu Console"
 msgstr "Consola Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:190
+#: plug-ins/script-fu/script-fu-console.c:191
 msgid "SIOD Output"
 msgstr "Salida SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:263
+#: plug-ins/script-fu/script-fu-console.c:264
 msgid "Current Command"
 msgstr "Comando actual"
 
-#: plug-ins/script-fu/script-fu-console.c:282
+#: plug-ins/script-fu/script-fu-console.c:283
 msgid "Browse..."
 msgstr "Ojear..."
 
-#: plug-ins/script-fu/script-fu-console.c:581
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "No se puede abrir un flujo en la tubería de salida de SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:587
+#: plug-ins/script-fu/script-fu-console.c:588
 msgid "Unable to open the SIOD output pipe"
 msgstr "No se puede abrir la tubería SIOD de salida"
 
-#: plug-ins/script-fu/script-fu-console.c:632
+#: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr ""
-"El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
+msgstr "El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1115
@@ -109,26 +108,26 @@ msgstr "Selección de gradiente de Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Selección de brocha de Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1943
+#: plug-ins/script-fu/script-fu-scripts.c:1942
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1949
+#: plug-ins/script-fu/script-fu-scripts.c:1948
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1955
+#: plug-ins/script-fu/script-fu-scripts.c:1954
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Fecha:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1963
+#: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Image Types:"
 msgstr "Tipos de imagen:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1992
+#: plug-ins/script-fu/script-fu-scripts.c:1991
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -510,8 +509,7 @@ msgstr "Valor delta en el color"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Flecha..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Flecha..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -567,8 +565,7 @@ msgstr "Arriba"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Barra _Hor..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Barra _Hor..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -580,8 +577,7 @@ msgstr "Longitud de la barra"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Bolita..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Bolita..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -600,8 +596,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/B_otón..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/B_otón..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -680,9 +675,8 @@ msgid "Width of Gaps"
 msgstr "Anchura de las bandas"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils/_ASCII to Layer..."
-msgstr "<Image>/Script-Fu/Utilidades/ASCII a capa de imagen..."
+msgstr "<Image>/Script-Fu/Utilidades/_ASCII a capa..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
@@ -695,6 +689,7 @@ msgstr "Tamaño del búfer (% altura del texto)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
 msgid "Filename"
 msgstr "Archivo"
 
@@ -747,13 +742,11 @@ msgstr "Color superior-izquierdo"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Flecha..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Flecha..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Bolita..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Bolita..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -761,18 +754,15 @@ msgstr "Diámetro"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/B_otón..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/B_otón..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/E_ncabezado..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/E_ncabezado..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Barra _Hor...."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Barra _Hor...."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -1425,13 +1415,11 @@ msgstr "Peso de la sombra (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Enca_bezado grande..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Enca_bezado grande..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Encabezado pe_queño..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Encabezado pe_queño..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1472,8 +1460,7 @@ msgid "Shadow Color"
 msgstr "Color de la sombra"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Etiqueta de sub-botón "
 "del t_ubo del tubo..."
@@ -1487,8 +1474,7 @@ msgstr ""
 "botón del tubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Etiquetas _generales "
 "del tubo..."
@@ -2008,6 +1994,24 @@ msgstr "Nombre de la brocha"
 msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "<Image>/Script-Fu/Selección/A _imagen"
 
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid ""
+")))\n"
+"  (set! filename2 (string-append data-dir\n"
+"\t\t\t\t "
+msgstr ""
+")))\n"
+"    (set! filename2 (string-append data-dir\n"
+"\t\t\t\t "
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
+msgid "<Image>/Script-Fu/Selection/To _Pattern..."
+msgstr "<Image>/Script-Fu/Selección/A _patrón..."
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
+msgid "Pattern Name"
+msgstr "Nombre del patrón"
+
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Round..."
 msgstr "<Image>/Script-Fu/Selección/_Redondear..."
@@ -2474,143 +2478,3 @@ msgstr "Desplazamiento X del brillo"
 msgid "Highlight Y Offset"
 msgstr "Desplazamiento Y del brillo"
 
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Patrones/E_spiral (en mosaico)..."
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-#~ msgstr "<Toolbox>/Exts/Visor Web/FAQ del desarrollador"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-#~ msgstr "<Toolbox>/Exts/Visor Web/Errores de El GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-#~ msgstr "<Toolbox>/Exts/Visor Web/Manual de GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-#~ msgstr "<Toolbox>/Exts/Visor Web/Noticias de El GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-#~ msgstr "<Toolbox>/Exts/Visor Web/Tutoriales de El GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-#~ msgstr "<Toolbox>/Exts/Visor Web/GIMP.ORG/Documentación"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-#~ msgstr "<Toolbox>/Exts/Visor Web/GIMP.ORG/Descarga"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-#~ msgstr "<Toolbox>/Exts/Visor Web/GIMP.ORG/Arte con El GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-#~ msgstr "<Toolbox>/Exts/Visor Web/GIMP.ORG/GTK"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-#~ msgstr "<Toolbox>/Exts/Visor Web/GIMP.ORG/Enlaces"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-#~ msgstr "<Toolbox>/Exts/Visor Web/GIMP.ORG/Listas de correo"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-#~ msgstr "<Toolbox>/Exts/Visor Web/GIMP.ORG/Recursos"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-#~ msgstr "<Toolbox>/Exts/Visor Web/GIMP.ORG/El GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-#~ msgstr "<Toolbox>/Exts/Visor Web/Gimp-Savvy.com"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-#~ msgstr "<Toolbox>/Exts/Visor Web/Grokking El GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-#~ msgstr "<Toolbox>/Exts/Visor Web/FAQ de usuario"
-
-#~ msgid "Border"
-#~ msgstr "Borde"
-
-#~ msgid "Fonts"
-#~ msgstr "Fuente"
-
-#~ msgid ""
-#~ "Burn-In: Need two layers in total!\n"
-#~ "        A foreground text layer with transparency\n"
-#~ "        and a background layer."
-#~ msgstr ""
-#~ "Quemándose: Necesita dos capas en total!\n"
-#~ "         Una capa de texto de frente con transaparencia\n"
-#~ "         y una capa de fondo"
-
-#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
-#~ msgstr "<Image>/Script-Fu/Render/Crear rejilla..."
-
-# //O Revisar traduccestas traducciones en un futuro...
-#~ msgid "Grids X"
-#~ msgstr "Rejillas X"
-
-#~ msgid "Grids Y"
-#~ msgstr "Rejillas Y"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-#~ msgstr "<Toolbox>/Exts/Script-Fu/Patrones/Trocoide..."
-
-#~ msgid "Base Radius (pixels)"
-#~ msgstr "Radio base (píxeles)"
-
-#~ msgid "Erase before Draw"
-#~ msgstr "Borrar antes de dibujar"
-
-# //O Revisar traducción en un futura para ver si esto es correcto.
-#~ msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-#~ msgstr "Radio lápiz / Radio rueda [0.0:1.0]"
-
-#~ msgid "Wheel Radius (hypo < 0 < epi)"
-#~ msgstr "Radio de la rueda (hypo < 0 < epi)"
-
-#~ msgid ""
-#~ "At least one font you've choosen is invalid.\n"
-#~ "Please check your settings.\n"
-#~ msgstr ""
-#~ "Al menos una de las fuentes que ha elegido no es válida.\n"
-#~ "Por favor compruebe sus ajustes.\n"
-
-#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-#~ msgstr "<Image>/Script-Fu/Animación/Selección a imagen animada..."
-
-#~ msgid "Anim-Filter for all Copies"
-#~ msgstr "Filtro-animación para todas las copias"
-
-#~ msgid "Fill with BG Color"
-#~ msgstr "Rellenar con color de fondo"
-
-#~ msgid "Number of Copies"
-#~ msgstr "Número de copias"
-
-#, fuzzy
-#~ msgid "DB Browser (init...)"
-#~ msgstr "Ojear..."
-
-#~ msgid "Reset to Defaults"
-#~ msgstr "Restaurar valores por omisión"
-
-#, fuzzy
-#~ msgid "Script-Fu Directory Selection"
-#~ msgstr "Selección de Ficheros de Script-Fu"
-
-#~ msgid "NOT SET"
-#~ msgstr "NO PUESTO"
-
-#~ msgid "Close"
-#~ msgstr "Cerrar"
-
-#~ msgid "OK"
-#~ msgstr "Aceptar"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancelar"
-
-#~ msgid ""
-#~ "Script-Fu Error\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Error de Script-Fu\n"
-#~ "%s"
