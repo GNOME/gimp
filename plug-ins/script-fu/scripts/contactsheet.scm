@@ -95,7 +95,8 @@
           (text-height)
           )
       (gimp-selection-all img)
-      (gimp-edit-fill (car (gimp-image-get-active-layer img)) BACKGROUND-FILL)
+      (gimp-drawable-fill (car (gimp-image-get-active-layer img))
+                          BACKGROUND-FILL)
       (gimp-selection-none img)
       (set! text-layer (car (gimp-text-fontname img -1 0 0
                               (string-append _"Sheet " (number->string num)
