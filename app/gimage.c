@@ -232,7 +232,6 @@ gimage_new_tag (int width, int height, Tag tag)
 {
   GImage *gimage;
   int i;
-  Tag selection_mask_tag;
 
   gimage = gimage_create ();
 
@@ -274,9 +273,9 @@ gimage_new_tag (int width, int height, Tag tag)
     }
 
   /* create the selection mask */
-  selection_mask_tag = tag_new (tag_precision (tag), FORMAT_GRAY, ALPHA_NO); 
-  gimage->selection_mask = channel_new_mask_tag (gimage->ID, 
-				gimage->width, gimage->height, selection_mask_tag);
+  gimage->selection_mask = channel_new_mask (gimage->ID, 
+                                             gimage->width, gimage->height,
+                                             tag_precision (tag));
 
   lc_dialog_update_image_list ();
   indexed_palette_update_image_list ();
@@ -1234,14 +1233,14 @@ project_channel (GImage *gimage, Channel *channel,
     {
       type = (channel->show_masked) ?
 	INITIAL_CHANNEL_MASK : INITIAL_CHANNEL_SELECTION;
-      initial_area (src2, src, NULL, channel->col, channel->opacity/255.0,
+      initial_area (src2, src, NULL, &channel->col, channel->opacity/255.0,
 		      NORMAL, NULL, type);
     }
   else
     {
       type = (channel->show_masked) ?
 	COMBINE_INTEN_A_CHANNEL_MASK : COMBINE_INTEN_A_CHANNEL_SELECTION;
-      combine_areas (src, src2, src, NULL, channel->col, channel->opacity/255.0,
+      combine_areas (src, src2, src, NULL, &channel->col, channel->opacity,
 		       NORMAL, NULL, type);
     }
 }
@@ -3035,7 +3034,7 @@ gimage_composite_bytes (GImage *gimage)
   return gimage_projection_bytes (gimage);
 }
 
-static TempBuf *
+static Canvas *
 gimage_construct_composite_preview (GImage *gimage, int width, int height)
 {
 #define FIXME
@@ -3174,7 +3173,7 @@ gimage_construct_composite_preview (GImage *gimage, int width, int height)
   return NULL;
 }
 
-TempBuf *
+Canvas *
 gimage_composite_preview (GImage *gimage, ChannelType type,
 			  int width, int height)
 {
@@ -3192,14 +3191,14 @@ gimage_composite_preview (GImage *gimage, ChannelType type,
 
   /*  The easy way  */
   if (gimage->comp_preview_valid[channel] &&
-      gimage->comp_preview->width == width &&
-      gimage->comp_preview->height == height)
+      canvas_width (gimage->comp_preview) == width &&
+      canvas_height (gimage->comp_preview) == height)
     return gimage->comp_preview;
   /*  The hard way  */
   else
     {
       if (gimage->comp_preview)
-	temp_buf_free (gimage->comp_preview);
+	canvas_delete (gimage->comp_preview);
 
       /*  Actually construct the composite preview from the layer previews!
        *  This might seem ridiculous, but it's actually the best way, given

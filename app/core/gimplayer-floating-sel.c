@@ -34,7 +34,6 @@
 #include "undo.h"
 
 #include "layer_pvt.h"
-#include "tile_manager_pvt.h"		/* ick. */
 
 void
 floating_sel_attach (Layer *layer,
@@ -406,7 +405,7 @@ floating_sel_composite (Layer *layer,
       if ((x2 - x1) > 0 && (y2 - y1) > 0)
 	{
 	  /*  composite the area from the layer to the drawable  */
-	  pixelarea_init (&fsPR, GIMP_DRAWABLE(layer)->canvas,
+	  pixelarea_init (&fsPR, GIMP_DRAWABLE(layer)->tiles,
 			     	(x1 - GIMP_DRAWABLE(layer)->offset_x), 
 				(y1 - GIMP_DRAWABLE(layer)->offset_y),
 			     	(x2 - x1), (y2 - y1), FALSE);
@@ -467,7 +466,7 @@ floating_sel_boundary (Layer *layer,
 	g_free (layer->fs.segs);
 
       /*  find the segments  */
-      pixelarea_init (&bPR, GIMP_DRAWABLE(layer)->canvas, 
+      pixelarea_init (&bPR, GIMP_DRAWABLE(layer)->tiles, 
 		0, 0, 
 		GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
       layer->fs.segs = find_mask_boundary (&bPR, &layer->fs.num_segs,

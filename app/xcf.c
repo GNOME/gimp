@@ -15,10 +15,12 @@
 #include "floating_sel.h"
 #include "gimage.h"
 #include "gimage_mask.h"
+#include "gimprc.h"
 #include "interface.h"
 #include "paint_funcs_area.h"
 #include "plug_in.h"
 #include "procedural_db.h"
+#include "tile_manager.h"
 #include "tile_swap.h"
 #include "xcf.h"
 #include "frac.h"
@@ -1541,7 +1543,7 @@ xcf_load_channel_props (XcfInfo *info,
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &channel->show_masked, 1);
 	  break;
 	case PROP_COLOR:
-	  info->cp += xcf_read_int8 (info->fp, (guint8*) channel->col, 3);
+	  info->cp += xcf_read_int8 (info->fp, (guint8*) channel->_col, 3);
 	  break;
 	default:
 	  g_message ("unexpected/unknown channel property: %d (skipping)", prop_type);
@@ -1691,7 +1693,7 @@ xcf_load_channel (XcfInfo *info,
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new channel */
-  channel = channel_new (gimage->ID, width, height, name, 255, color);
+  channel = channel_new (gimage->ID, width, height, default_precision, name, 1.0, color);
   if (!channel)
     {
       g_free (name);
@@ -1750,7 +1752,7 @@ xcf_load_layer_mask (XcfInfo *info,
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new layer mask */
-  layer_mask = layer_mask_new (gimage->ID, width, height, name, 255, color);
+  layer_mask = layer_mask_new (gimage->ID, width, height, default_precision, name, 1.0, color);
   if (!layer_mask)
     {
       g_free (name);

@@ -430,7 +430,7 @@ Canvas *
 drawable_data (GimpDrawable *drawable)
 {
   if (drawable) 
-    return drawable->canvas;
+    return drawable->tiles;
   else
     return NULL;
 }
@@ -537,9 +537,7 @@ void
 drawable_deallocate (GimpDrawable *drawable)
 {
   if (drawable->tiles)
-    tile_manager_destroy (drawable->tiles);
-  if (drawable->canvas)
-    canvas_delete (drawable->canvas);
+    canvas_delete (drawable->tiles);
 }
 
 static void
@@ -547,7 +545,7 @@ gimp_drawable_init (GimpDrawable *drawable)
 {
   drawable->name = NULL;
   drawable->tiles = NULL;
-  drawable->canvas = NULL;
+  drawable->tiles = NULL;
   drawable->visible = FALSE;
   drawable->width = drawable->height = 0;
   drawable->offset_x = drawable->offset_y = 0;
@@ -582,13 +580,10 @@ gimp_drawable_destroy (GtkObject *object)
     g_free (drawable->name);
 
   if (drawable->tiles)
-    tile_manager_destroy (drawable->tiles);
-
-  if (drawable->canvas)
-    canvas_delete (drawable->canvas);
+    canvas_delete (drawable->tiles);
 
   if (drawable->preview)
-    temp_buf_free (drawable->preview);
+    canvas_delete (drawable->preview);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     (*GTK_OBJECT_CLASS (parent_class)->destroy) (object);
@@ -688,13 +683,8 @@ gimp_drawable_configure_tag  (
   drawable->offset_y = 0;
 
   if (drawable->tiles)
-    tile_manager_destroy (drawable->tiles);
-  /*drawable->tiles = tile_manager_new (width, height, tag_bytes (drawable->tag));*/
-  drawable->tiles = NULL;
-  
-  if (drawable->canvas)
-    canvas_delete (drawable->canvas);
-  drawable->canvas = canvas_new (drawable->tag, width, height, storage);
+    canvas_delete (drawable->tiles);
+  drawable->tiles = canvas_new (drawable->tag, width, height, storage);
 
   drawable->dirty = FALSE;
   drawable->visible = TRUE;

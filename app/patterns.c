@@ -225,7 +225,7 @@ load_pattern (char *filename)
   tag = tag_from_drawable_type ( header.type );
 
 #define PATTERNS_C_2_cw
-  if (tag_precision (tag) != PRECISION_CONFIG )
+  if (tag_precision (tag) != default_precision )
      { 
 	  fclose (fp);
 	  free_pattern (pattern);

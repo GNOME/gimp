@@ -19,17 +19,24 @@
 #include "appenv.h"
 #include "brush_select.h"
 #include "bucket_fill.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "fuzzy_select.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "interface.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
 #include "patterns.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 #include "selection.h"
+//#include "temp_buf.h"
 #include "tools.h"
 #include "undo.h"
+
+#define TileManager Canvas
+#define tile_manager_destroy canvas_delete
 
 /*  the Bucket Fill structures  */
 typedef enum
@@ -57,12 +64,10 @@ static void  bucket_fill_control         (Tool *, int, gpointer);
 static void  bucket_fill                 (GImage *, GimpDrawable *, FillMode, int,
 					  double, double, int, double, double);
 
-static void  bucket_fill_region          (FillMode, PixelRegion *, PixelRegion *,
-					  unsigned char *, TempBuf *, int, int, int);
-static void  bucket_fill_line_color      (unsigned char *, unsigned char *,
-					  unsigned char *, int, int, int);
+static void  bucket_fill_region          (FillMode, PixelArea *, PixelArea *,
+					  PixelRow *, Canvas *, int, int);
 static void  bucket_fill_line_pattern    (unsigned char *, unsigned char *,
-					  TempBuf *, int, int, int, int, int);
+					  Canvas *, int, int, int, int, int);
 
 static Argument *bucket_fill_invoker     (Argument *);
 
@@ -401,24 +406,24 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
      int sample_merged;
      double x, y;
 {
-#if 0
   TileManager *buf_tiles;
-  PixelRegion bufPR, maskPR;
+  PixelArea bufPR, maskPR;
   Channel * mask = NULL;
-  int bytes, has_alpha;
   int x1, y1, x2, y2;
-  unsigned char col [MAX_CHANNELS];
   unsigned char *d1, *d2;
   GPatternP pattern;
-  TempBuf * pat_buf;
+  Canvas * pat_buf = NULL;
   int new_buf = 0;
+  Tag tag = drawable_tag (drawable);
+  COLOR16_NEW (col, tag);
 
-  pat_buf = NULL;
-
+  COLOR16_INIT (col);
+  
   if (fill_mode == FgColorFill)
-    gimage_get_foreground (gimage, drawable, col);
+    color16_foreground (&col);
   else if (fill_mode == BgColorFill)
-    gimage_get_background (gimage, drawable, col);
+    color16_background (&col);
+#if 0
   else if (fill_mode == PatternFill)
     {
       pattern = get_active_pattern ();
@@ -459,13 +464,13 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
       else
 	pat_buf = pattern->mask;
     }
-
-  bytes = drawable_bytes (drawable);
-  has_alpha = drawable_has_alpha (drawable);
+#endif
 
   /*  If there is no selection mask, the do a seed bucket
    *  fill...To do this, calculate a new contiguous region
    */
+  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+#if 0
   if (! drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2))
     {
       mask = find_contiguous_region (gimage, drawable, TRUE, (int) threshold,
@@ -508,18 +513,21 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
 	  has_alpha = 1;
 	}
     }
+#endif
+  
+  buf_tiles = canvas_new (tag, (x2 - x1), (y2 - y1), STORAGE_TILED);
 
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
+  pixelarea_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
 
   if (mask)
-    bucket_fill_region (fill_mode, &bufPR, &maskPR, col, pat_buf, x1, y1, has_alpha);
+    bucket_fill_region (fill_mode, &bufPR, &maskPR, &col, pat_buf, x1, y1);
   else
-    bucket_fill_region (fill_mode, &bufPR, NULL, col, pat_buf, x1, y1, has_alpha);
+    bucket_fill_region (fill_mode, &bufPR, NULL, &col, pat_buf, x1, y1);
 
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, TRUE,
-		      (opacity * 255) / 100, paint_mode, NULL, x1, y1);
+  pixelarea_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
+
+  gimage_apply_painthit (gimage, drawable, NULL, &bufPR, TRUE,
+                         (opacity / 100), paint_mode, x1, y1);
 
   /*  update the image  */
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
@@ -532,17 +540,14 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
     channel_delete (mask);
 
   if (new_buf)
-    temp_buf_free (pat_buf);
-#endif
+    canvas_delete (pat_buf);
 }
 
-
+#if 0
 static void
-bucket_fill_line_color (buf, mask, col, has_alpha, bytes, width)
-     unsigned char * buf, * mask;
-     unsigned char * col;
-     int has_alpha;
-     int bytes;
+bucket_fill_line_color (buf, mask, col, width)
+     PixelRow * buf, * mask;
+     PixelRow * col;
      int width;
 {
   int alpha, b;
@@ -564,12 +569,13 @@ bucket_fill_line_color (buf, mask, col, has_alpha, bytes, width)
       buf += bytes;
     }
 }
+#endif
 
-
+#if 0
 static void
 bucket_fill_line_pattern (buf, mask, pattern, has_alpha, bytes, x, y, width)
      unsigned char * buf, * mask;
-     TempBuf * pattern;
+     Canvas * pattern;
      int has_alpha;
      int bytes;
      int x, y;
@@ -602,47 +608,44 @@ bucket_fill_line_pattern (buf, mask, pattern, has_alpha, bytes, x, y, width)
       buf += bytes;
     }
 }
-
+#endif
 
 static void
-bucket_fill_region (fill_mode, bufPR, maskPR, col, pattern, off_x, off_y, has_alpha)
+bucket_fill_region (fill_mode, bufPR, maskPR, col, pattern, off_x, off_y)
      FillMode fill_mode;
-     PixelRegion * bufPR;
-     PixelRegion * maskPR;
-     unsigned char * col;
-     TempBuf * pattern;
+     PixelArea * bufPR;
+     PixelArea * maskPR;
+     PixelRow * col;
+     Canvas * pattern;
      int off_x, off_y;
-     int has_alpha;
 {
-  unsigned char *s, *m;
-  int y;
   void *pr;
+  int y;
 
-  for (pr = pixel_regions_register (2, bufPR, maskPR); pr != NULL; pr = pixel_regions_process (pr))
+  switch (fill_mode)
     {
-      s = bufPR->data;
-      if (maskPR)
-	m = maskPR->data;
-      else
-	m = NULL;
-
-      for (y = 0; y < bufPR->h; y++)
-	{
-	  switch (fill_mode)
-	    {
-	    case FgColorFill:
-	    case BgColorFill:
-	      bucket_fill_line_color (s, m, col, has_alpha, bufPR->bytes, bufPR->w);
-	      break;
-	    case PatternFill:
-	      bucket_fill_line_pattern (s, m, pattern, has_alpha, bufPR->bytes,
-					off_x + bufPR->x, off_y + y + bufPR->y, bufPR->w);
-	      break;
+    case FgColorFill:
+    case BgColorFill:
+      color_area (bufPR, col);
+      /* need to copy maskPR in somehow */
+      break;
+    default:
+      for (pr = pixelarea_register (2, bufPR, maskPR);
+           pr != NULL;
+           pr = pixelarea_process (pr))
+        {
+          PixelRow s, m;
+          
+          for (y = 0; y < bufPR->h; y++)
+            {
+              pixelarea_getdata (bufPR, &s, y);
+              pixelarea_getdata (maskPR, &m, y);
+#if 0
+              bucket_fill_line_pattern (s, m, pattern,
+                                        off_x + bufPR->x, off_y + y + bufPR->y,
+                                        bufPR->w);
+#endif
 	    }
-	  s += bufPR->rowstride;
-
-	  if (maskPR)
-	    m += maskPR->rowstride;
 	}
     }
 }

@@ -25,9 +25,12 @@
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimprc.h"
 #include "rect_select.h"
 #include "interface.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 
 #define BEZIER_START     1
 #define BEZIER_ADD       2
@@ -1041,7 +1044,7 @@ bezier_convert (BezierSelect *bezier_sel,
 		int           subdivisions,
 		int           antialias)
 {
-  PixelRegion maskPR;
+  PixelArea maskPR;
   BezierPoint * points;
   BezierPoint * start_pt;
   GSList * list;
@@ -1083,8 +1086,9 @@ bezier_convert (BezierSelect *bezier_sel,
 
   /* create a new mask */
   bezier_sel->mask = channel_ref (channel_new_mask (gdisp->gimage->ID, 
-						    gdisp->gimage->width,
-						    gdisp->gimage->height));
+                                                    gdisp->gimage->width,
+                                                    gdisp->gimage->height,
+                                                    default_precision));
 
   /* allocate room for the scanlines */
   bezier_sel->scanlines = g_malloc (sizeof (GSList *) * height);
@@ -1117,7 +1121,7 @@ bezier_convert (BezierSelect *bezier_sel,
     bezier_convert_line (bezier_sel->scanlines, lastx, lasty,
 			 bezier_sel->points->x, bezier_sel->points->y);
 
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(bezier_sel->mask)), 
+  pixelarea_init    (&maskPR, drawable_data (GIMP_DRAWABLE(bezier_sel->mask)), 
 		     0, 0,
 		     drawable_width (GIMP_DRAWABLE(bezier_sel->mask)),
 		     drawable_height (GIMP_DRAWABLE(bezier_sel->mask)), TRUE);
@@ -1167,9 +1171,15 @@ bezier_convert (BezierSelect *bezier_sel,
 	      *b++ = (unsigned char) (val / SUPERSAMPLE2);
 	    }
 
-	  pixel_region_set_row (&maskPR, 0, (i / SUPERSAMPLE), 
-				drawable_width (GIMP_DRAWABLE(bezier_sel->mask)), buf);
-	}
+          {
+            int w = drawable_width (GIMP_DRAWABLE(bezier_sel->mask));
+            PixelRow row;
+
+            pixelrow_init (&row, tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
+                           buf, w);
+            pixelarea_write_row (&maskPR, &row, 0, (i / SUPERSAMPLE), w);
+          }
+        }
 
       g_slist_free (bezier_sel->scanlines[i]);
     }

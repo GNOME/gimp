@@ -355,7 +355,12 @@ render_image (GDisplay *gdisp,
 
   render_image_init_info (&info, gdisp, x, y, w, h);
 
-  image_type = gimage_projection_type (gdisp->gimage);
+  {
+    Tag t = canvas_tag (info.src_canvas);
+    t = tag_set_precision (t, PRECISION_U8);
+    image_type = tag_to_drawable_type (t);
+  }
+  
   switch (image_type)
     {
     case 0:
@@ -374,8 +379,7 @@ render_image (GDisplay *gdisp,
       break;
 
     default:
-      g_message ("unknown gimage projection type: %d",
-		 gimage_projection_type (gdisp->gimage));
+      g_message ("unknown gimage projection type: %d", image_type);
       return;
     }
 

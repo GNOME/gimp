@@ -288,7 +288,7 @@ edit_paste (GImage      *gimage,
   int cx, cy;
 
   /*  Make a new floating layer  */
-  float_layer = layer_from_canvas (gimage, drawable, paste, "Pasted Layer", OPAQUE_OPACITY, NORMAL);
+  float_layer = layer_from_tiles (gimage, drawable, paste, "Pasted Layer", OPAQUE_OPACITY, NORMAL);
 
   if (float_layer)
     {

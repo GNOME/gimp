@@ -151,7 +151,8 @@ gdisplay_format_title (GImage *gimage,
 {
   char *image_type_str;
   int empty;
-
+  Tag t = gimage_tag (gimage);
+  
   empty = gimage_is_empty (gimage);
 
   if (gimage_is_flat (gimage))
@@ -172,10 +173,13 @@ gdisplay_format_title (GImage *gimage,
 	image_type_str = NULL;
       }
 
-  sprintf (title, "%s-%d.%d (%s)",
+  sprintf (title, "%s-%d.%d (%s - %s - %s)%s",
 	   prune_filename (gimage_filename (gimage)),
 	   gimage->ID, gimage->instance_count,
-	   image_type_str);
+	   tag_string_precision (tag_precision (t)),
+	   tag_string_format (tag_format (t)),
+	   tag_string_alpha (tag_alpha (t)),
+           empty ? " (empty)" : "");
 }
 
 

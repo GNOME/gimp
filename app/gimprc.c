@@ -112,6 +112,7 @@ int       confirm_on_close = TRUE;
 int       default_width = 256;
 int       default_height = 256;
 int       default_type = RGB;
+Precision default_precision = PRECISION_U16;
 int       show_tips = TRUE;
 int       last_tip = -1;
 int       show_tool_tips = TRUE;
@@ -215,6 +216,7 @@ static ParseFunc funcs[] =
   { "last-tip-shown",        TT_INT,        &last_tip, NULL },
   { "default-image-size",    TT_POSITION,   &default_width, &default_height },
   { "default-image-type",    TT_IMAGETYPE,  &default_type, NULL },
+  { "default-image-precision",TT_INT,       &default_precision, NULL },
   { "plug-in",               TT_XPLUGIN,    NULL, NULL },
   { "plug-in-def",           TT_XPLUGINDEF, NULL, NULL },
   { "menu-path",             TT_XMENUPATH,  NULL, NULL },

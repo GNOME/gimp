@@ -23,6 +23,7 @@
 #include "errors.h"
 #include "free_select.h"
 #include "gimage_mask.h"
+#include "gimprc.h"
 #include "gdisplay.h"
 #include "rect_select.h"
 #include "paint_funcs.h"
@@ -155,7 +156,7 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
   if (num_pts < 3)
     return NULL;
 
-  mask = channel_new_mask (gimage_ID, width, height);
+  mask = channel_new_mask (gimage_ID, width, height, default_precision);
 
   if (antialias)
     {

@@ -20,6 +20,8 @@
 #include "appenv.h"
 #include "general.h"
 #include "gimage.h"
+#include "gimprc.h"
+#include "paint_funcs_area.h"
 #include "channel.h"
 #include "channel_cmds.h"
 
@@ -40,13 +42,14 @@ channel_new_invoker (Argument *args)
   int gimage_id;
   int width, height;
   char *name;
-  int opacity;
-  unsigned char color[3];
+  gfloat opacity;
+  unsigned char _color[3];
+  PixelRow color;
   Argument *return_args;
 
   channel   = NULL;
   gimage_id = -1;
-  opacity   = 255;
+  opacity   = 1.0;
 
   success = TRUE;
   if (success)
@@ -69,7 +72,7 @@ channel_new_invoker (Argument *args)
     {
       fp_value = args[4].value.pdb_float;
       if (fp_value >= 0 && fp_value <= 100)
-	opacity = (int) ((fp_value * 255) / 100);
+	opacity = fp_value / 100;
       else
 	success = FALSE;
     }
@@ -79,12 +82,15 @@ channel_new_invoker (Argument *args)
       unsigned char *color_array;
 
       color_array = (unsigned char *) args[5].value.pdb_pointer;
+      pixelrow_init (&color, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO),
+                     _color, 1);
+      
       for (i = 0; i < 3; i++)
-	color[i] = color_array[i];
+	_color[i] = color_array[i];
     }
 
   if (success)
-    success = ((channel = channel_new (gimage_id, width, height, name, opacity, color)) != NULL);
+    success = ((channel = channel_new (gimage_id, width, height, default_precision, name, opacity, &color)) != NULL);
 
   return_args = procedural_db_return_args (&channel_new_proc, success);
 
@@ -823,10 +829,10 @@ channel_get_color_invoker (Argument *args)
       int_value = args[0].value.pdb_int;
       if ((channel = channel_get_ID (int_value)))
 	{
-	  color = (unsigned char *) g_malloc (3);
-	  color[RED_PIX] = channel->col[RED_PIX];
-	  color[GREEN_PIX] = channel->col[GREEN_PIX];
-	  color[BLUE_PIX] = channel->col[BLUE_PIX];
+          PixelRow c;
+          color = (unsigned char *) g_malloc (3);
+          pixelrow_init (&c, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), color, 1);
+          copy_row (&channel->col, &c);
 	}
       else
 	success = FALSE;
@@ -888,7 +894,6 @@ channel_set_color_invoker (Argument *args)
 {
   Channel *channel;
   unsigned char * color;
-  int i;
 
   success = TRUE;
   if (success)
@@ -899,9 +904,10 @@ channel_set_color_invoker (Argument *args)
     }
   if (success)
     {
+      PixelRow c;
       color = (unsigned char *) args[1].value.pdb_pointer;
-      for (i = 0; i < 3; i++)
-	channel->col[i] = color[i];
+      pixelrow_init (&c, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), color, 1);
+      copy_row (&c, &channel->col);
     }
 
   return procedural_db_return_args (&channel_set_color_proc, success);

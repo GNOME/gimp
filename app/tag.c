@@ -18,7 +18,6 @@
 
 #include "tag.h"
 
-
 /* fields within a Tag */
 
 #define MASK_PRECISION  0xff

@@ -37,7 +37,8 @@ trace_begin  (
 {
   va_list args, args2;
   char *buf;
-
+  extern char * g_vsprintf ();
+    
   va_start (args, format);
   va_start (args2, format);
   buf = g_vsprintf (format, &args, &args2);
@@ -70,6 +71,7 @@ trace_printf  (
 {
   va_list args, args2;
   char *buf;
+  extern char * g_vsprintf ();
 
   va_start (args, format);
   va_start (args2, format);

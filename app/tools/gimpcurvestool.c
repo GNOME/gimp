@@ -85,7 +85,7 @@ struct _CurvesDialog
   GdkPixmap *    pixmap;
 
   GimpDrawable * drawable;
-  ImageMap16     image_map;
+  ImageMap       image_map;
   int            color;
   int            channel;
   gint           preview;
@@ -472,7 +472,7 @@ curves_control (Tool     *tool,
       if (curves_dialog)
 	{
 	  active_tool->preserve = TRUE;
-	  image_map_abort_16 (curves_dialog->image_map);
+	  image_map_abort (curves_dialog->image_map);
 	  active_tool->preserve = FALSE;
 	  curves_dialog->image_map = NULL;
 	  curves_cancel_callback (NULL, (gpointer) curves_dialog);
@@ -603,7 +603,7 @@ curves_initialize (void *gdisp_ptr)
 
   curves_dialog->drawable = gimage_active_drawable (gdisp->gimage);
   curves_dialog->color = drawable_color ( (curves_dialog->drawable));
-  curves_dialog->image_map = image_map_create_16 (gdisp_ptr, curves_dialog->drawable);
+  curves_dialog->image_map = image_map_create (gdisp_ptr, curves_dialog->drawable);
 
   /* check for alpha channel */
   if (drawable_has_alpha ( (curves_dialog->drawable)))
@@ -637,7 +637,7 @@ curves_free ()
       if (curves_dialog->image_map)
 	{
 	  active_tool->preserve = TRUE;
-	  image_map_abort_16 (curves_dialog->image_map);
+	  image_map_abort (curves_dialog->image_map);
 	  active_tool->preserve = FALSE;
 	  curves_dialog->image_map = NULL;
 	}
@@ -1275,7 +1275,7 @@ curves_preview (CurvesDialog *cd)
   active_tool->preserve = TRUE;  /* Going to dirty the display... */
 
   curves_calculate_image_data_curves(cd); 
-  image_map_apply_16 (cd->image_map, curves, (void *) cd);
+  image_map_apply (cd->image_map, curves, (void *) cd);
 
   active_tool->preserve = FALSE;  /* All done */
 }
@@ -1478,12 +1478,12 @@ curves_ok_callback (GtkWidget *widget,
   if (!cd->preview)
   {
     curves_calculate_image_data_curves (cd);
-    image_map_apply_16 (cd->image_map, curves, (void *) cd);
+    image_map_apply (cd->image_map, curves, (void *) cd);
   }
 
   if (cd->image_map)
   {
-    image_map_commit_16 (cd->image_map);
+    image_map_commit (cd->image_map);
     curves_free_curves(cd);
   }
 
@@ -1505,7 +1505,7 @@ curves_cancel_callback (GtkWidget *widget,
   if (cd->image_map)
     {
       active_tool->preserve = TRUE;
-      image_map_abort_16 (cd->image_map);
+      image_map_abort (cd->image_map);
       active_tool->preserve = FALSE;
       gdisplays_flush ();
     }

@@ -37,7 +37,6 @@
 #include "undo.h"
 
 #include "layer_pvt.h"
-#include "tile_manager_pvt.h"
 #include "drawable_pvt.h"
 
 #define FIXME
@@ -258,7 +257,7 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
   /*  If there is a selection, extract from it  */
   if (non_empty)
     {
-      pixelarea_init (&maskPR, GIMP_DRAWABLE(sel_mask)->canvas, 
+      pixelarea_init (&maskPR, GIMP_DRAWABLE(sel_mask)->tiles, 
 		(x1 + off_x), (y1 + off_y), (x2 - x1), (y2 - y1), FALSE);
 
       extract_from_area (&srcPR, &destPR, &maskPR, &bg_color, 
@@ -335,7 +334,7 @@ gimage_mask_float (gimage, drawable, off_x, off_y)
   tiles = gimage_mask_extract (gimage, drawable, TRUE, FALSE);
 
   /*  Create a new layer from the buffer  */
-  layer = layer_from_canvas (gimage, drawable, tiles, "Floated Layer", OPAQUE_OPACITY, NORMAL);
+  layer = layer_from_tiles (gimage, drawable, tiles, "Floated Layer", OPAQUE_OPACITY, NORMAL);
 
   /*  Set the offsets  */
   GIMP_DRAWABLE(layer)->offset_x = tilesx + off_x;

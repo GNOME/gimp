@@ -61,7 +61,7 @@ struct _BrightnessContrastDialog
   GtkAdjustment  *contrast_data;
 
   GimpDrawable *drawable;
-  ImageMap16   image_map;
+  ImageMap     image_map;
 
   double       brightness;
   double       contrast;
@@ -401,7 +401,7 @@ brightness_contrast_control (Tool     *tool,
       if (brightness_contrast_dialog)
 	{
 	  active_tool->preserve = TRUE;
-          image_map_abort_16 (brightness_contrast_dialog->image_map);
+          image_map_abort (brightness_contrast_dialog->image_map);
           active_tool->preserve = FALSE;
           brightness_contrast_free_transfers();
 	  brightness_contrast_dialog->image_map = NULL;
@@ -492,7 +492,7 @@ brightness_contrast_initialize (void *gdisp_ptr)
   brightness_contrast_dialog->contrast = 0.0;
 
   brightness_contrast_dialog->drawable = drawable;
-  brightness_contrast_dialog->image_map = image_map_create_16 (gdisp_ptr,
+  brightness_contrast_dialog->image_map = image_map_create (gdisp_ptr,
 							    brightness_contrast_dialog->drawable);
 
   brightness_contrast_update (brightness_contrast_dialog, ALL);
@@ -675,7 +675,7 @@ brightness_contrast_preview (BrightnessContrastDialog *bcd)
     g_message ("brightness_contrast_preview(): No image map");
   active_tool->preserve = TRUE;
   (*brightness_contrast_init_transfers) ((void *)bcd); 
-  image_map_apply_16 (bcd->image_map, brightness_contrast, (void *) bcd);
+  image_map_apply (bcd->image_map, brightness_contrast, (void *) bcd);
   active_tool->preserve = FALSE;
 }
 
@@ -695,12 +695,12 @@ brightness_contrast_ok_callback (GtkWidget *widget,
   if (!bcd->preview)
   {
     (*brightness_contrast_init_transfers) ((void *)bcd); 
-    image_map_apply_16 (bcd->image_map, brightness_contrast, (void *) bcd);
+    image_map_apply (bcd->image_map, brightness_contrast, (void *) bcd);
   }
 
   if (bcd->image_map)
   {
-    image_map_commit_16 (bcd->image_map);
+    image_map_commit (bcd->image_map);
     brightness_contrast_free_transfers();
   }
 
@@ -732,7 +732,7 @@ brightness_contrast_cancel_callback (GtkWidget *widget,
   if (bcd->image_map)
     {
       active_tool->preserve = TRUE;
-      image_map_abort_16 (bcd->image_map);
+      image_map_abort (bcd->image_map);
       brightness_contrast_free_transfers();
       active_tool->preserve = FALSE;
       gdisplays_flush ();

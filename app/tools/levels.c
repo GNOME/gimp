@@ -83,7 +83,7 @@ struct _LevelsDialog
   Histogram *    histogram;
 
   GimpDrawable * drawable;
-  ImageMap16     image_map;
+  ImageMap     image_map;
   int            color;
   int            channel;
   gint           preview;
@@ -1310,7 +1310,7 @@ levels_control (Tool     *tool,
       if (levels_dialog)
 	{
           active_tool->preserve = TRUE;
-	  image_map_abort_16 (levels_dialog->image_map);
+	  image_map_abort (levels_dialog->image_map);
           active_tool->preserve = FALSE;
 	  levels_free_transfers(levels_dialog);
 	  levels_dialog->image_map = NULL;
@@ -1409,7 +1409,7 @@ levels_initialize (void *gdisp_ptr)
 
   levels_dialog->drawable = drawable;
   levels_dialog->color = drawable_color (levels_dialog->drawable);
-  levels_dialog->image_map = image_map_create_16 (gdisp_ptr, levels_dialog->drawable);
+  levels_dialog->image_map = image_map_create (gdisp_ptr, levels_dialog->drawable);
 
   /* check for alpha channel */
   if (drawable_has_alpha (levels_dialog->drawable))
@@ -1448,7 +1448,7 @@ levels_free ()
       if (levels_dialog->image_map)
 	{
 	  active_tool->preserve = TRUE;
-	  image_map_abort_16 (levels_dialog->image_map);
+	  image_map_abort (levels_dialog->image_map);
 	  active_tool->preserve = FALSE;
 	  levels_free_transfers(levels_dialog);
 	  levels_dialog->image_map = NULL;
@@ -1838,7 +1838,7 @@ levels_preview (LevelsDialog *ld)
     g_warning ("No image map");
   (*levels_calculate_transfers) (ld);
   active_tool->preserve = TRUE;
-  image_map_apply_16 (ld->image_map, levels, (void *) ld);
+  image_map_apply (ld->image_map, levels, (void *) ld);
   active_tool->preserve = FALSE;
 }
 
@@ -2033,12 +2033,12 @@ levels_ok_callback (GtkWidget *widget,
   if (!ld->preview)
   {
     (*levels_calculate_transfers) (ld);
-    image_map_apply_16 (ld->image_map, levels, (void *) ld);
+    image_map_apply (ld->image_map, levels, (void *) ld);
   }
 
   if (ld->image_map)
   {
-    image_map_commit_16 (ld->image_map);
+    image_map_commit (ld->image_map);
     levels_free_transfers(ld);
   }
 
@@ -2070,7 +2070,7 @@ levels_cancel_callback (GtkWidget *widget,
   if (ld->image_map)
     {
       active_tool->preserve = TRUE;
-      image_map_abort_16 (ld->image_map);
+      image_map_abort (ld->image_map);
       active_tool->preserve = FALSE;
       levels_free_transfers(ld);
       gdisplays_flush ();

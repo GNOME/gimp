@@ -25,11 +25,35 @@
 struct _PixelArea;
 struct _PixelRow;
 
-/* FIXME */
+/* FIXME - this stuff needs to be cleaned up */
 void copy_row (struct _PixelRow *, struct _PixelRow *);
 
-/* hack */
 #define OPAQUE_OPACITY 255
+
+/*  Color conversion routines  */
+void  rgb_to_hsv            (int *, int *, int *);
+void  hsv_to_rgb            (int *, int *, int *);
+void  rgb_to_hls            (int *, int *, int *);
+void  hls_to_rgb            (int *, int *, int *);
+
+/*  variable source to RGB color mapping
+ *  src_type == 0  (RGB)
+ *  src_type == 1  (GRAY)
+ *  src_type == 2  (INDEXED)
+ */
+void
+map_to_color                              (int, unsigned char *,
+					   unsigned char *, unsigned char *);
+
+/*  RGB to index mapping functions...
+ *
+ *  Hash table lookup speeds up the standard
+ *  least squares method
+ */
+int    map_rgb_to_indexed                 (unsigned char *, int, int,
+					   int, int, int);
+/* end FIXME */
+
 
 /*  The types of convolutions  */
 #define NORMAL     0   /*  Negative numbers truncated  */
@@ -97,8 +121,8 @@ void copy_row (struct _PixelRow *, struct _PixelRow *);
 #define REPLACE_MODE       21
 
 
-void              paint_funcs_area_setup       (void);
-void              paint_funcs_area_free        (void);
+void paint_funcs_area_setup (void);
+void paint_funcs_area_free (void);
 
 
 void 

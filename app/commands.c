@@ -126,6 +126,7 @@ static   int          old_confirm_on_close;
 static   int          old_default_width;
 static   int          old_default_height;
 static   int          old_default_type;
+static   Precision    old_default_precision;
 static   int          new_dialog_run;
 static   int          old_stingy_memory_use;
 static   int          old_tile_cache_size;
@@ -217,7 +218,7 @@ file_new_ok_callback (GtkWidget *widget,
       break;
     }
 
-  precision = PRECISION_CONFIG; 
+  precision = default_precision; 
 
   {  
     Tag tag = tag_new ( precision, format, alpha);
@@ -745,6 +746,8 @@ file_prefs_save_callback (GtkWidget *widget,
     update = g_list_append (update, "default-image-size");
   if (default_type != old_default_type)
     update = g_list_append (update, "default-image-type");
+  if (default_precision != old_default_precision)
+    update = g_list_append (update, "default-image-precision");
   if (preview_size != old_preview_size)
     update = g_list_append (update, "preview-size");
   if (transparency_type != old_transparency_type)
@@ -868,6 +871,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   default_width = old_default_width;
   default_height = old_default_height;
   default_type = old_default_type;
+  default_precision = old_default_precision;
   if (preview_size != old_preview_size)
     {
       lc_dialog_rebuild (old_preview_size);
@@ -927,6 +931,10 @@ file_prefs_toggle_callback (GtkWidget *widget,
   else if (data==&default_type)
     {
       default_type = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
+    } 
+  else if (data==&default_precision)
+    {
+      default_precision = (Precision) gtk_object_get_user_data (GTK_OBJECT (widget));
     } 
   else if (GTK_TOGGLE_BUTTON (widget)->active)
     {
@@ -1079,6 +1087,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_default_width = default_width;
       old_default_height = default_height;
       old_default_type = default_type;
+      old_default_precision = default_precision;
       old_stingy_memory_use = edit_stingy_memory_use;
       old_tile_cache_size = edit_tile_cache_size;
       old_install_cmap = edit_install_cmap;
@@ -1232,6 +1241,49 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
       gtk_widget_show (hbox);
       
+      frame = gtk_frame_new ("Image precision");
+      gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+      gtk_widget_show (frame);
+
+      radio_box = gtk_vbox_new (FALSE, 1);
+      gtk_container_border_width (GTK_CONTAINER (radio_box), 2);
+      gtk_container_add (GTK_CONTAINER (frame), radio_box);
+      gtk_widget_show (radio_box);
+
+      button = gtk_radio_button_new_with_label (NULL, "U8");
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) PRECISION_U8);
+      if (default_precision == PRECISION_U8)
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			  (GtkSignalFunc) file_prefs_toggle_callback,
+			  &default_precision);
+      gtk_widget_show (button);
+      button = gtk_radio_button_new_with_label (group, "U16");
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) PRECISION_U16);
+      if (default_precision == PRECISION_U16) 
+	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                         (GtkSignalFunc) file_prefs_toggle_callback,
+			  &default_precision);
+      gtk_widget_show (button);
+      button = gtk_radio_button_new_with_label (group, "FLOAT");
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) PRECISION_FLOAT);
+      if (default_precision == PRECISION_FLOAT) 
+	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                         (GtkSignalFunc) file_prefs_toggle_callback,
+			  &default_precision);
+      gtk_widget_show (button);
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+      gtk_widget_show (hbox);
+
       label = gtk_label_new ("Preview size:");
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);

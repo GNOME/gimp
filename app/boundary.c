@@ -126,7 +126,7 @@ find_empty_segs (PixelArea  *maskPR,
     }
 
   /*get pixelarea for scanline from start to end */
-  pixelarea_init (&area, maskPR->canvas, start, scanline, end, 1, FALSE);  
+  pixelarea_init (&area, maskPR->canvas, start, scanline, end-start, 1, FALSE);  
 
   empty_segs[(*num_empty)++] = 0;
   last = -1;

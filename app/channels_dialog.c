@@ -1338,7 +1338,7 @@ channel_widget_preview_events (GtkWidget *widget,
 static void
 channel_widget_preview_redraw (ChannelWidget *channel_widget)
 {
-  TempBuf * preview_buf;
+  Canvas * preview_buf;
   int width, height;
   int channel;
 
@@ -1724,7 +1724,8 @@ new_channel_query_ok_callback (GtkWidget *w,
   if ((gimage = gimage_get_ID (options->gimage_id)))
     {
       new_channel = channel_new (gimage->ID, gimage->width, gimage->height,
-				 channel_name, (int) (255 * options->opacity) / 100,
+                                 default_precision,
+				 channel_name, options->opacity / 100,
 				 options->color_panel->color);
       drawable_fill (GIMP_DRAWABLE(new_channel), TRANSPARENT_FILL);
 
@@ -1884,11 +1885,10 @@ edit_channel_query_ok_callback (GtkWidget *w,
   Channel *channel;
   int opacity;
   int update = FALSE;
-  int i;
 
   options = (EditChannelOptions *) client_data;
   channel = options->channel_widget->channel;
-  opacity = (int) (255 * options->opacity) / 100;
+  opacity = options->opacity / 100;
 
 
   if (gimage_get_ID (options->gimage_id)) {
@@ -1904,12 +1904,14 @@ edit_channel_query_ok_callback (GtkWidget *w,
 	channel->opacity = opacity;
 	update = TRUE;
       }
-    for (i = 0; i < 3; i++)
-      if (options->color_panel->color[i] != channel->col[i])
-	{
-	  channel->col[i] = options->color_panel->color[i];
-	  update = TRUE;
-	}
+
+    {
+      PixelRow c;
+      pixelrow_init (&c, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO),
+                     options->color_panel->color, 1);
+      copy_row (&c, &channel->col);
+      update = TRUE;
+    }
     
     if (update)
       {
@@ -1960,15 +1962,18 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   GtkWidget *label;
   GtkWidget *opacity_scale;
   GtkObject *opacity_scale_data;
-  int i;
 
   /*  the new options structure  */
   options = (EditChannelOptions *) g_malloc (sizeof (EditChannelOptions));
   options->channel_widget = channel_widget;
   options->gimage_id = channel_widget->gimage->ID;
-  options->opacity = (double) channel_widget->channel->opacity / 2.55;
-  for (i = 0; i < 3; i++) 
-    channel_color[i] =  channel_widget->channel->col[i];
+  options->opacity = (double) channel_widget->channel->opacity;
+  {
+    PixelRow c;
+    pixelrow_init (&c, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO),
+                   channel_color, 1);
+    copy_row (&channel_widget->channel->col, &c);
+  }
 
   options->color_panel = color_panel_new (channel_color, 48, 64);
 

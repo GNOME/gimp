@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
+#include "canvas.h"
 #include "colormaps.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -401,7 +402,7 @@ static void
 preview_redraw (LayerSelect *layer_select)
 {
   Layer * layer;
-  TempBuf * preview_buf;
+  Canvas * preview_buf;
   int w, h;
   int offx, offy;
 
@@ -427,9 +428,9 @@ preview_redraw (LayerSelect *layer_select)
       offy = (int) (layer_select->ratio * off_y);
 
       preview_buf = layer_preview (layer, w, h);
-      preview_buf->x = offx;
-      preview_buf->y = offy;
-
+      canvas_fixme_setx (preview_buf, offx);
+      canvas_fixme_sety (preview_buf, offy);
+      
       render_preview (preview_buf,
 		      layer_select->preview,
 		      layer_select->image_width,

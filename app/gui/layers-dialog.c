@@ -22,6 +22,7 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "buildmenu.h"
+#include "canvas.h"
 #include "colormaps.h"
 #include "drawable.h"
 #include "errors.h"
@@ -871,7 +872,7 @@ layers_dialog_clear ()
 
 
 void
-render_preview (TempBuf   *preview_buf,
+render_preview (Canvas    *preview_buf,
 		GtkWidget *preview_widget,
 		int        width,
 		int        height,
@@ -891,6 +892,8 @@ render_preview (TempBuf   *preview_buf,
   int image_bytes;
   int offset;
 
+  return;
+  
   alpha = ALPHA_PIX;
 
   /*  Here are the different cases this functions handles correctly:
@@ -906,8 +909,8 @@ render_preview (TempBuf   *preview_buf,
    */
   color_buf = (GTK_PREVIEW (preview_widget)->type == GTK_PREVIEW_COLOR);
   image_bytes = (color_buf) ? 3 : 1;
-  has_alpha = (preview_buf->bytes == 2 || preview_buf->bytes == 4);
-  rowstride = preview_buf->width * preview_buf->bytes;
+  has_alpha = (canvas_alpha (preview_buf) == ALPHA_YES);
+  rowstride = canvas_width (preview_buf) * canvas_bytes (preview_buf);
 
   /*  Determine if the preview buf supplied is color
    *   Generally, if the bytes == {3, 4}, this is true.
@@ -915,23 +918,24 @@ render_preview (TempBuf   *preview_buf,
    *   the preview buf is assumed to be gray despite the number of
    *   channels it contains
    */
-  color = (preview_buf->bytes == 3 || preview_buf->bytes == 4) && (channel == -1);
+  color = (canvas_format (preview_buf) == FORMAT_RGB) && (channel == -1);
 
   if (has_alpha)
     {
       buf = check_buf;
-      alpha = (color) ? ALPHA_PIX : ((channel != -1) ? (preview_buf->bytes - 1) : ALPHA_G_PIX);
+      alpha = (color) ? ALPHA_PIX : ((channel != -1) ? (canvas_bytes (preview_buf) - 1) : ALPHA_G_PIX);
     }
   else
     buf = empty_buf;
 
-  x1 = BOUNDS (preview_buf->x, 0, width);
-  y1 = BOUNDS (preview_buf->y, 0, height);
-  x2 = BOUNDS (preview_buf->x + preview_buf->width, 0, width);
-  y2 = BOUNDS (preview_buf->y + preview_buf->height, 0, height);
+  x1 = BOUNDS (canvas_fixme_getx (preview_buf), 0, width);
+  y1 = BOUNDS (canvas_fixme_gety (preview_buf), 0, height);
+  x2 = BOUNDS (canvas_fixme_getx (preview_buf) + canvas_width (preview_buf), 0, width);
+  y2 = BOUNDS (canvas_fixme_gety (preview_buf) + canvas_height (preview_buf), 0, height);
 
-  src = temp_buf_data (preview_buf) + (y1 - preview_buf->y) * rowstride +
-    (x1 - preview_buf->x) * preview_buf->bytes;
+  src = canvas_portion_data (preview_buf,
+                             (x1 - canvas_fixme_getx (preview_buf)),
+                             (y1 - canvas_fixme_gety (preview_buf)));
 
   /*  One last thing for efficiency's sake:  */
   if (channel == -1)
@@ -1030,7 +1034,7 @@ render_preview (TempBuf   *preview_buf,
 		    }
 		}
 
-	      s += preview_buf->bytes;
+	      s += canvas_bytes (preview_buf);
 	    }
 
 	  /*  Handle the trailing transparency  */
@@ -2415,7 +2419,7 @@ static void
 layer_widget_preview_redraw (LayerWidget *layer_widget,
 			     int          preview_type)
 {
-  TempBuf *preview_buf;
+  Canvas *preview_buf;
   GdkPixmap **pixmap;
   GtkWidget *widget;
   int offx, offy;
@@ -2473,8 +2477,8 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
 	  break;
 	}
 
-      preview_buf->x = offx;
-      preview_buf->y = offy;
+      canvas_fixme_setx (preview_buf, offx);
+      canvas_fixme_sety (preview_buf, offy);
 
       render_preview (preview_buf,
 		      layersD->layer_preview,

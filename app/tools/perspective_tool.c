@@ -24,6 +24,7 @@
 #include "perspective_tool.h"
 #include "selection.h"
 #include "tools.h"
+#include "tile_manager.h"
 #include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"

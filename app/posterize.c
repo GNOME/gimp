@@ -45,7 +45,7 @@ struct _PosterizeDialog
   GtkWidget   *levels_text;
 
   GimpDrawable *drawable;
-  ImageMap16   image_map;
+  ImageMap   image_map;
   int          levels;
 
   gint         preview;
@@ -275,7 +275,7 @@ posterize_control (Tool     *tool,
       if (posterize_dialog)
 	{
 	  active_tool->preserve = TRUE;
-	  image_map_abort_16 (posterize_dialog->image_map);
+	  image_map_abort (posterize_dialog->image_map);
 	  active_tool->preserve = FALSE;
 	  posterize_dialog->image_map = NULL;
 	  posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
@@ -356,7 +356,7 @@ posterize_initialize (void *gdisp_ptr)
     if (!GTK_WIDGET_VISIBLE (posterize_dialog->shell))
       gtk_widget_show (posterize_dialog->shell);
   posterize_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  posterize_dialog->image_map = image_map_create_16 (gdisp_ptr, posterize_dialog->drawable);
+  posterize_dialog->image_map = image_map_create (gdisp_ptr, posterize_dialog->drawable);
   if (posterize_dialog->preview)
     posterize_preview (posterize_dialog);
 }
@@ -458,7 +458,7 @@ posterize_preview (PosterizeDialog *pd)
     PosterizeFunc posterize;
     posterize = posterize_func (drawable_tag (pd->drawable));
     active_tool->preserve = TRUE;
-    image_map_apply_16 (pd->image_map, posterize, (void *) pd);
+    image_map_apply (pd->image_map, posterize, (void *) pd);
     active_tool->preserve = FALSE;
   }
 }
@@ -480,11 +480,11 @@ posterize_ok_callback (GtkWidget *widget,
   {
     PosterizeFunc posterize;
     posterize = posterize_func (drawable_tag (pd->drawable));
-    image_map_apply_16 (pd->image_map, posterize, (void *) pd);
+    image_map_apply (pd->image_map, posterize, (void *) pd);
   }
 
   if (pd->image_map)
-    image_map_commit_16 (pd->image_map);
+    image_map_commit (pd->image_map);
 
   active_tool->preserve = FALSE;
 
@@ -512,7 +512,7 @@ posterize_cancel_callback (GtkWidget *widget,
   if (pd->image_map)
     {
       active_tool->preserve = TRUE;
-      image_map_abort_16 (pd->image_map);
+      image_map_abort (pd->image_map);
       active_tool->preserve = FALSE;
       gdisplays_flush ();
     }

@@ -105,4 +105,12 @@ RefRC          canvas_portion_unref     (Canvas *, int x, int y);
 /* initialize the backing store for this pixel */
 guint          canvas_portion_init      (Canvas *, int x, int y);
 
+
+
+/* FIXME FIXME FIXME */
+int canvas_fixme_getx (Canvas *);
+int canvas_fixme_gety (Canvas *);
+int canvas_fixme_setx (Canvas *, int);
+int canvas_fixme_sety (Canvas *, int);
+
 #endif /* __CANVAS_H__ */

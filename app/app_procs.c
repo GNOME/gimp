@@ -546,7 +546,6 @@ app_exit_finish (void)
   gdisplays_delete ();
   global_edit_free ();
   named_buffers_free ();
-  swapping_free ();
   brushes_free ();
   patterns_free ();
   palettes_free ();

@@ -19,7 +19,6 @@
 #define __DRAWABLE_H__
 
 #include <gtk/gtkdata.h>
-//#include "tile_manager.h"
 
 #include "tag.h"
 #include "canvas.h"

@@ -744,7 +744,8 @@ pixelareagroup_portion_width (
               width = canvas_portion_width (pa->canvas,
                                             pa->x, pa->y);          
 #define PIXELAREA_C_3_cw
-              width = CLAMP (width, 0 , pag->region_width); 
+              width = CLAMP (width,
+                             0, pag->region_width - (pa->x - pa->startx)); 
               if (width < min_width)
                 min_width = width;
             }

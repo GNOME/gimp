@@ -50,6 +50,9 @@
 #include "plug_in.h"
 #include "tag.h"
 
+#define FIXME
+#define TILE_WIDTH 64
+#define TILE_HEIGHT 64
 
 #define SEPARATE_PROGRESS_BAR
 

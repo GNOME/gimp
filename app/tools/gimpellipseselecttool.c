@@ -47,7 +47,8 @@ ellipse_select (gimage, x, y, w, h, op, antialias, feather, feather_radius)
      double feather_radius;
 {
   Channel * new_mask;
-
+  Tag tag = drawable_tag (GIMP_DRAWABLE (gimage_get_mask (gimage)));
+  
   /*  if applicable, replace the current selection  */
   if (op == REPLACE)
     gimage_mask_clear (gimage);
@@ -59,7 +60,8 @@ ellipse_select (gimage, x, y, w, h, op, antialias, feather, feather_radius)
    */
   if (feather)
     {
-      new_mask = channel_new_mask (gimage->ID, gimage->width, gimage->height);
+      new_mask = channel_new_mask (gimage->ID, gimage->width, gimage->height,
+                                   tag_precision (tag));
       channel_combine_ellipse (new_mask, ADD, x, y, w, h, antialias);
       channel_feather (new_mask, gimage_get_mask (gimage),
 		       feather_radius, op, 0, 0);
@@ -67,7 +69,8 @@ ellipse_select (gimage, x, y, w, h, op, antialias, feather, feather_radius)
     }
   else if (op == INTERSECT)
     {
-      new_mask = channel_new_mask (gimage->ID, gimage->width, gimage->height);
+      new_mask = channel_new_mask (gimage->ID, gimage->width, gimage->height,
+                                   tag_precision (tag));
       channel_combine_ellipse (new_mask, ADD, x, y, w, h, antialias);
       channel_combine_mask (gimage_get_mask (gimage), new_mask, op, 0, 0);
       channel_delete (new_mask);

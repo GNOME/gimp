@@ -244,7 +244,7 @@ create_default_brush (gint width, gint height)
   GBrushP brush;
 #define BRUSHES_C_1_cw
 
-  Tag brush_tag = tag_new (PRECISION_CONFIG, FORMAT_GRAY, ALPHA_NO);
+  Tag brush_tag = tag_new (default_precision, FORMAT_GRAY, ALPHA_NO);
   brush = g_new (GBrush, 1);
 
   brush->filename = NULL;
@@ -361,7 +361,7 @@ load_brush(char *filename)
 
 
 #define BRUSHES_C_5_cw
-  if (tag_precision (tag) != PRECISION_CONFIG )
+  if (tag_precision (tag) != default_precision )
      { 
 	  fclose (fp);
 	  free_brush (brush);

@@ -1871,7 +1871,7 @@ text_render (GImage *gimage,
     }
 
   /*  Crop the mask buffer  */
-  newmask = crop ? /* crop_buffer (mask, border) */ mask : mask;
+  newmask = crop ? crop_buffer (mask, border) : mask;
   if (newmask != mask)
     tile_manager_destroy (mask);
 
@@ -1884,12 +1884,12 @@ text_render (GImage *gimage,
       gimage_get_foreground (gimage, drawable, color);
       color[GIMP_DRAWABLE(layer)->bytes - 1] = OPAQUE_OPACITY;
       pixel_region_init (&textPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-      color_region (&textPR, color);
+      color_area (&textPR, color);
 
       /*  apply the text mask  */
       pixel_region_init (&textPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
       pixel_region_init (&maskPR, newmask, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-      apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
+      apply_mask_to_area (&textPR, &maskPR, OPAQUE_OPACITY);
 
       /*  Start a group undo  */
       undo_push_group_start (gimage, EDIT_PASTE_UNDO);

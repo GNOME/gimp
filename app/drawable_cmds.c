@@ -1234,7 +1234,6 @@ drawable_set_pixel_invoker (Argument *args)
   int num_channels;
   unsigned char *pixel, *p;
   int b;
-  Tile *tile;
 
   success = TRUE;
   if (success)
@@ -1265,7 +1264,8 @@ drawable_set_pixel_invoker (Argument *args)
 
   if (success)
     {
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
+#if 0
+      Tile * tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
       tile_ref (tile);
 
       x %= TILE_WIDTH;
@@ -1276,6 +1276,7 @@ drawable_set_pixel_invoker (Argument *args)
 	*p++ = *pixel++;
 
       tile_unref (tile, TRUE);
+#endif
     }
 
   return procedural_db_return_args (&drawable_set_pixel_proc, success);
@@ -1337,7 +1338,6 @@ drawable_get_pixel_invoker (Argument *args)
   int x, y;
   int num_channels;
   unsigned char *pixel, *p;
-  Tile *tile;
   int b;
   Argument *return_args;
 
@@ -1369,8 +1369,9 @@ drawable_get_pixel_invoker (Argument *args)
 
   if (success)
     {
+#if 0
       pixel = (unsigned char *) g_new (unsigned char, num_channels);
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
+      Tile * tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
       tile_ref (tile);
 
       x %= TILE_WIDTH;
@@ -1381,6 +1382,7 @@ drawable_get_pixel_invoker (Argument *args)
 	pixel[b] = p[b];
 
       tile_unref (tile, FALSE);
+#endif
     }
 
   return_args = procedural_db_return_args (&drawable_get_pixel_proc, success);

@@ -31,6 +31,7 @@
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimprc.h"
 #include "interface.h"
 #include "iscissors.h"
 #include "edit_selection.h"
@@ -2104,7 +2105,7 @@ construct_edge_map (Tool    *tool,
 	   */
 	   if(!((dboffset + (srcPR.h*destPR.rowstride)) >
 		(edge_buf->height * edge_buf -> width)))
-	     copy_region (&srcPR, &destPR);
+	     copy_area (&srcPR, &destPR);
 	  }
 
 	col ++;
@@ -2585,7 +2586,7 @@ CR_convert (Iscissors *iscissors,
 
   /* create a new mask */
   iscissors->mask = channel_new_mask (gdisp->gimage->ID, gdisp->gimage->width,
-				      gdisp->gimage->height);
+				      gdisp->gimage->height, default_precision);
 
   /* allocate room for the scanlines */
   CR_scanlines = g_malloc (sizeof (GSList *) * height);

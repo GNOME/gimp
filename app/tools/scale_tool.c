@@ -384,9 +384,9 @@ scale_tool_scale (gimage, drawable, trans_info, float_tiles, interpolation, matr
   if (drawable_type (drawable) == INDEXED_GIMAGE ||
       drawable_type (drawable) == INDEXEDA_GIMAGE ||
       !interpolation)
-    scale_region_no_resample (&srcPR, &destPR);
+    scale_area_no_resample (&srcPR, &destPR);
   else
-    scale_region (&srcPR, &destPR);
+    scale_area (&srcPR, &destPR);
 
   new_tiles->x = x1;
   new_tiles->y = y1;

@@ -19,6 +19,7 @@
 #define __GIMPRC_H__
 
 #include <glib.h>
+#include "tag.h"
 #include "procedural_db.h"
 
 /*  global gimprc variables  */
@@ -60,6 +61,7 @@ extern int       tool_options_x, tool_options_y;
 extern int       confirm_on_close;
 extern int       default_width, default_height;
 extern int       default_type;
+extern Precision default_precision;
 extern int       show_tips;
 extern int       last_tip;
 extern int       show_tool_tips;

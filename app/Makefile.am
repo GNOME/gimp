@@ -219,8 +219,6 @@ gimp_SOURCES = \
 	ops_buttons.h		\
 	palette.c		\
 	palette.h		\
-	paint_funcs.c		\
-	paint_funcs.h		\
 	paintbrush.c		\
 	paintbrush.h		\
 	pattern_header.h	\

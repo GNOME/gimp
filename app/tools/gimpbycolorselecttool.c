@@ -21,6 +21,7 @@
 #include "appenv.h"
 #include "boundary.h"
 #include "by_color_select.h"
+#include "canvas.h"
 #include "colormaps.h"
 #include "drawable.h"
 #include "draw_core.h"
@@ -29,7 +30,9 @@
 #include "gimprc.h"
 #include "gdisplay.h"
 #include "rect_select.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 
 
 #define DEFAULT_FUZZINESS 15
@@ -84,33 +87,30 @@ static void             by_color_select_preview_button_press (ByColorDialog *, G
 static SelectionOptions *by_color_options = NULL;
 static ByColorDialog *by_color_dialog = NULL;
 
-static int        is_pixel_sufficiently_different (unsigned char *, unsigned char *, int, int, int, int);
-static Channel *  by_color_select_color (GImage *, GimpDrawable *, unsigned char *, int, int, int);
-static void       by_color_select (GImage *, GimpDrawable *, unsigned char *, int, int, int, int, double, int);
+static int        is_pixel_sufficiently_different (PixelRow *, PixelRow *, int, int);
+static Channel *  by_color_select_color (GImage *, GimpDrawable *, PixelRow *, int, int, int);
+static void       by_color_select (GImage *, GimpDrawable *, PixelRow *, int, int, int, int, double, int);
 static Argument * by_color_select_invoker (Argument *);
 
 /*  by_color selection machinery  */
 
 static int
-is_pixel_sufficiently_different (unsigned char *col1,
-				 unsigned char *col2,
-				 int            antialias,
-				 int            threshold,
-				 int            bytes,
-				 int            has_alpha)
+is_pixel_sufficiently_different (PixelRow *col1,
+				 PixelRow *col2,
+				 int       antialias,
+				 int       threshold)
 {
   int diff;
   int max;
   int b;
-  int alpha;
 
   max = 0;
-  alpha = (has_alpha) ? bytes - 1 : bytes;
 
   /*  if there is an alpha channel, never select transparent regions  */
+#if 0
   if (has_alpha && col2[alpha] == 0)
     return 0;
-
+  
   for (b = 0; b < alpha; b++)
     {
       diff = col1[b] - col2[b];
@@ -138,23 +138,27 @@ is_pixel_sufficiently_different (unsigned char *col1,
       else
 	return 255;
     }
+#endif
+  return 0;
 }
 
 static Channel *
 by_color_select_color (GImage        *gimage,
 		       GimpDrawable  *drawable,
-		       unsigned char *color,
+		       PixelRow      *color,
 		       int            antialias,
 		       int            threshold,
 		       int            sample_merged)
 {
+  return NULL;
+#if 0
   /*  Scan over the gimage's active layer, finding pixels within the specified
    *  threshold from the given R, G, & B values.  If antialiasing is on,
    *  use the same antialiasing scheme as in fuzzy_select.  Modify the gimage's
    *  mask to reflect the additional selection
    */
   Channel *mask;
-  PixelRegion imagePR, maskPR;
+  PixelArea imagePR, maskPR;
   unsigned char *image_data;
   unsigned char *mask_data;
   unsigned char *idata, *mdata;
@@ -177,7 +181,7 @@ by_color_select_color (GImage        *gimage,
       indexed = d_type == INDEXEDA_GIMAGE || d_type == INDEXED_GIMAGE;
       width = gimage->width;
       height = gimage->height;
-      pixel_region_init (&imagePR, gimage_composite (gimage), 0, 0, width, height, FALSE);
+      pixelarea_init (&imagePR, gimage_composite (gimage), 0, 0, width, height, FALSE);
     }
   else
     {
@@ -188,7 +192,7 @@ by_color_select_color (GImage        *gimage,
       width = drawable_width (drawable);
       height = drawable_height (drawable);
 
-      pixel_region_init (&imagePR, drawable_data (drawable), 0, 0, width, height, FALSE);
+      pixelarea_init (&imagePR, drawable_data (drawable), 0, 0, width, height, FALSE);
     }
 
   if (indexed) {
@@ -200,8 +204,8 @@ by_color_select_color (GImage        *gimage,
   }
 
   alpha = bytes - 1;
-  mask = channel_new_mask (gimage->ID, width, height);
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
+  mask = channel_new_mask (gimage->ID, width, height, default_precision);
+  pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
 		     0, 0, width, height, TRUE);
 
   /*  iterate over the entire image  */
@@ -236,12 +240,13 @@ by_color_select_color (GImage        *gimage,
     }
 
   return mask;
+#endif
 }
 
 static void
 by_color_select (GImage        *gimage,
 		 GimpDrawable  *drawable,
-		 unsigned char *color,
+		 PixelRow      *color,
 		 int            threshold,
 		 int            op,
 		 int            antialias,
@@ -338,9 +343,6 @@ by_color_select_button_release (Tool           *tool,
   GDisplay * gdisp;
   int x, y;
   GimpDrawable *drawable;
-  Tile *tile;
-  unsigned char col[MAX_CHANNELS];
-  unsigned char *data;
   int use_offsets;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -352,6 +354,8 @@ by_color_select_button_release (Tool           *tool,
   /*  First take care of the case where the user "cancels" the action  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
+      Canvas * canvas;
+  
       use_offsets = (by_color_options->sample_merged) ? FALSE : TRUE;
       gdisplay_untransform_coords (gdisp, by_color_sel->x, by_color_sel->y, &x, &y, FALSE, use_offsets);
 
@@ -360,38 +364,39 @@ by_color_select_button_release (Tool           *tool,
 	{
 	  if (x < 0 || y < 0 || x >= gdisp->gimage->width || y >= gdisp->gimage->height)
 	    return;
-	  tile = tile_manager_get_tile (gimage_composite (gdisp->gimage), x, y, 0);
-	  tile_ref (tile);
-	  data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
-          gimage_get_color (gdisp->gimage, gimage_composite_type(gdisp->gimage), col, data);
-          tile_unref (tile, FALSE);
+          canvas = gimage_composite (gdisp->gimage);
 	}
       else
 	{
 	  if (x < 0 || y < 0 || x >= drawable_width (drawable) || y >= drawable_height (drawable))
 	    return;
-	  tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
-	  tile_ref (tile);
-	  data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
-          gimage_get_color (gdisp->gimage, drawable_type(drawable), col, data);
-          tile_unref (tile, FALSE);
+          canvas = drawable_data (drawable);
 	}
 
-      /*  select the area  */
-      by_color_select (gdisp->gimage, drawable, col,
-		       by_color_dialog->threshold,
-		       by_color_sel->operation,
-		       by_color_options->antialias,
-		       by_color_options->feather,
-		       by_color_options->feather_radius,
-		       by_color_options->sample_merged);
+      if (canvas_portion_refro (canvas, x, y) == REFRC_OK)
+        {
+          PixelRow col;
 
-      /*  show selection on all views  */
-      gdisplays_flush ();
+          pixelrow_init (&col, canvas_tag (canvas), canvas_portion_data (canvas, x, y), 1);
+          
+          /*  select the area  */
+          by_color_select (gdisp->gimage, drawable, &col,
+                           by_color_dialog->threshold,
+                           by_color_sel->operation,
+                           by_color_options->antialias,
+                           by_color_options->feather,
+                           by_color_options->feather_radius,
+                           by_color_options->sample_merged);
 
-      /*  update the preview window  */
-      by_color_select_render (by_color_dialog, gdisp->gimage);
-      by_color_select_draw (by_color_dialog, gdisp->gimage);
+          canvas_portion_unref (canvas, x, y);
+          
+          /*  show selection on all views  */
+          gdisplays_flush ();
+
+          /*  update the preview window  */
+          by_color_select_render (by_color_dialog, gdisp->gimage);
+          by_color_select_draw (by_color_dialog, gdisp->gimage);
+        }
     }
 }
 
@@ -687,10 +692,11 @@ static void
 by_color_select_render (ByColorDialog *bcd,
 			GImage        *gimage)
 {
+#if 0
   Channel * mask;
-  MaskBuf * scaled_buf = NULL;
+  Canvas * scaled_buf = NULL;
   unsigned char *buf;
-  PixelRegion srcPR, destPR;
+  PixelArea srcPR, destPR;
   unsigned char * src;
   int subsample;
   int width, height;
@@ -747,7 +753,7 @@ by_color_select_render (ByColorDialog *bcd,
 	     (height * (subsample + 1) * 2 < drawable_height (GIMP_DRAWABLE (mask))))
 	subsample = subsample + 1;
 
-      pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE (mask)), 
+      pixelarea_init (&srcPR, drawable_data (GIMP_DRAWABLE (mask)), 
 			 0, 0, 
 			 drawable_width (GIMP_DRAWABLE (mask)), 
 			 drawable_height (GIMP_DRAWABLE (mask)), FALSE);
@@ -762,11 +768,11 @@ by_color_select_render (ByColorDialog *bcd,
       destPR.data = mask_buf_data (scaled_buf);
       destPR.tiles = NULL;
 
-      subsample_region (&srcPR, &destPR, subsample);
+      subsample_area (&srcPR, &destPR, subsample);
     }
   else
     {
-      pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE (mask)), 
+      pixelarea_init (&srcPR, drawable_data (GIMP_DRAWABLE (mask)), 
 			 0, 0, 
 			 drawable_width (GIMP_DRAWABLE (mask)), 
 			 drawable_height (GIMP_DRAWABLE (mask)), FALSE);
@@ -781,11 +787,11 @@ by_color_select_render (ByColorDialog *bcd,
       destPR.data = mask_buf_data (scaled_buf);
       destPR.tiles = NULL;
 
-      copy_region (&srcPR, &destPR);
+      copy_area (&srcPR, &destPR);
     }
 
   src = mask_buf_data (scaled_buf);
-  srcwidth = scaled_buf->width;
+  srcwidth = canvas_width (scaled_buf);
   for (i = 0; i < height; i++)
     {
       gtk_preview_draw_row (GTK_PREVIEW (bcd->preview), src, 0, i, width);
@@ -793,6 +799,7 @@ by_color_select_render (ByColorDialog *bcd,
     }
 
   mask_buf_free (scaled_buf);
+#endif
 }
 
 static void
@@ -893,6 +900,7 @@ static void
 by_color_select_preview_button_press (ByColorDialog  *bcd,
 				      GdkEventButton *bevent)
 {
+#if 0
   int x, y;
   int replace, operation;
   GimpDrawable *drawable;
@@ -965,6 +973,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   /*  update the preview window  */
   by_color_select_render (bcd, bcd->gimage);
   by_color_select_draw (bcd, bcd->gimage);
+#endif
 }
 
 

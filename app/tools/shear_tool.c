@@ -26,6 +26,7 @@
 #include "palette.h"
 #include "shear_tool.h"
 #include "selection.h"
+#include "tile_manager.h"
 #include "tools.h"
 #include "transform_core.h"
 #include "transform_tool.h"

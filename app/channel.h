@@ -21,11 +21,12 @@
 #include "drawable.h"
 
 #include "boundary.h"
-#include "temp_buf.h"
 #include "tag.h"
-#include "tile_manager.h"
 
 struct _Canvas;
+struct _PixelRow;
+
+
 /* OPERATIONS */
 
 #define ADD       0
@@ -73,8 +74,7 @@ struct _mask_undo
 
 /* function declarations */
 
-Channel *       channel_new (int, int, int, char *, int, unsigned char *);
-Channel *       channel_new_tag (int, int, int, Tag, char *, int, unsigned char *);
+Channel *       channel_new (int, int, int, Precision, char *, gfloat, struct _PixelRow *);
 Channel *       channel_copy (Channel *);
 Channel *	channel_ref (Channel *);
 void   		channel_unref (Channel *);
@@ -88,14 +88,13 @@ void            channel_resize (Channel *, int, int, int, int);
 
 unsigned char * channel_data (Channel *);
 int             channel_toggle_visibility (Channel *);
-TempBuf *       channel_preview (Channel *, int, int);
+struct _Canvas *channel_preview (Channel *, int, int);
 
 void            channel_invalidate_previews (int);
 
 /* selection mask functions  */
 
-Channel *       channel_new_mask        (int, int, int);
-Channel *       channel_new_mask_tag    (int, int, int, Tag);
+Channel *       channel_new_mask        (int, int, int, Precision);
 int             channel_boundary        (Channel *, BoundSeg **, BoundSeg **,
 					 int *, int *, int, int, int, int);
 int             channel_bounds          (Channel *, int *, int *, int *, int *);

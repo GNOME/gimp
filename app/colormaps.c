@@ -223,7 +223,6 @@ get_standard_colormaps ()
     g_print("GIMP cannot get enough colormaps to boot.\n");
     g_print("Try exiting other color intensive applications.\n");
     g_print("Also try enabling the (install-colormap) option in gimprc.\n");
-    swapping_free ();
     brushes_free ();
     patterns_free ();
     palettes_free ();

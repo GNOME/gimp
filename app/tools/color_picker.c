@@ -24,6 +24,7 @@
 #include "gdisplay.h"
 #include "info_dialog.h"
 #include "palette.h"
+#include "tile_manager.h"
 #include "tools.h"
 
 

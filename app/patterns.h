@@ -19,7 +19,6 @@
 #define __PATTERNS_H__
 
 #include <glib.h>
-//#include "temp_buf.h"
 #include "procedural_db.h"
 
 struct _Canvas;

@@ -211,11 +211,9 @@ rect_select (GImage *gimage,
    */
   if (feather)
     {
-      Tag tag = gimage_tag (gimage);
-      Tag new_mask_tag = tag_new (tag_precision (tag),FORMAT_GRAY, ALPHA_NO);
-  
-      new_mask = channel_new_mask_tag (gimage->ID, 
-			gimage->width, gimage->height, new_mask_tag);
+      new_mask = channel_new_mask (gimage->ID, 
+                                   gimage->width, gimage->height,
+                                   tag_precision (gimage_tag (gimage)));
       channel_combine_rect (new_mask, ADD, x, y, w, h);
       channel_feather (new_mask, gimage_get_mask (gimage),
 		       feather_radius, op, 0, 0);
@@ -223,10 +221,9 @@ rect_select (GImage *gimage,
     }
   else if (op == INTERSECT)
     {
-      Tag tag = gimage_tag (gimage);
-      Tag new_mask_tag = tag_new (tag_precision (tag),FORMAT_GRAY, ALPHA_NO);
-      new_mask = channel_new_mask_tag (gimage->ID, 
-                        gimage->width, gimage->height, new_mask_tag);
+      new_mask = channel_new_mask (gimage->ID, 
+                                   gimage->width, gimage->height,
+                                   tag_precision (gimage_tag (gimage)));
       channel_combine_rect (new_mask, ADD, x, y, w, h);
       channel_combine_mask (gimage_get_mask (gimage), new_mask, op, 0, 0);
       channel_delete (new_mask);

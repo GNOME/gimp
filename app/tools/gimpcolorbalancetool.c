@@ -29,6 +29,7 @@
 #include "gdisplay.h"
 #include "image_map.h"
 #include "interface.h"
+#include "paint_funcs_area.h"
 #include "pixelarea.h"
 #include "pixelrow.h"
 
@@ -77,7 +78,7 @@ struct _ColorBalanceDialog
   GtkAdjustment  *yellow_blue_data;
 
   GimpDrawable *drawable;
-  ImageMap16   image_map;
+  ImageMap     image_map;
 
   double       cyan_red[3];
   double       magenta_green[3];
@@ -505,8 +506,8 @@ color_balance_control (Tool     *tool,
     case HALT :
       if (color_balance_dialog)
 	{
-          active_tool->preserve = TRUE;
-          image_map_abort_16 (color_balance_dialog->image_map);
+	  active_tool->preserve = TRUE;
+	  image_map_abort (color_balance_dialog->image_map);
 	  active_tool->preserve = FALSE;
           color_balance_free_transfer_arrays();
 	  color_balance_dialog->image_map = NULL;
@@ -600,7 +601,7 @@ color_balance_initialize (void *gdisp_ptr)
   /* Init the transfer arrays */
   (*color_balance_init_transfers) ();
   color_balance_dialog->drawable = drawable;
-  color_balance_dialog->image_map = image_map_create_16 (gdisp_ptr, color_balance_dialog->drawable);
+  color_balance_dialog->image_map = image_map_create (gdisp_ptr, color_balance_dialog->drawable);
   color_balance_update (color_balance_dialog, ALL);
 }
 
@@ -883,7 +884,7 @@ color_balance_preview (ColorBalanceDialog *cbd)
   if (!cbd->image_map)
     g_message ("color_balance_preview(): No image map");
   active_tool->preserve = TRUE;
-  image_map_apply_16 (cbd->image_map, color_balance, (void *) cbd);
+  image_map_apply (cbd->image_map, color_balance, (void *) cbd);
   active_tool->preserve = FALSE;
 }
 
@@ -901,11 +902,11 @@ color_balance_ok_callback (GtkWidget *widget,
   active_tool->preserve = TRUE;
 
   if (!cbd->preview)
-    image_map_apply_16 (cbd->image_map, color_balance, (void *) cbd);
+    image_map_apply (cbd->image_map, color_balance, (void *) cbd);
 
   if (cbd->image_map)
   {
-    image_map_commit_16 (cbd->image_map);
+    image_map_commit (cbd->image_map);
     color_balance_free_transfer_arrays();
   }
 
@@ -937,7 +938,7 @@ color_balance_cancel_callback (GtkWidget *widget,
   if (cbd->image_map)
     {
       active_tool->preserve = TRUE;
-      image_map_abort_16 (cbd->image_map);
+      image_map_abort (cbd->image_map);
       active_tool->preserve = FALSE;
       color_balance_free_transfer_arrays();
       gdisplays_flush ();

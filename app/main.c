@@ -27,6 +27,7 @@
 
 #include "libgimp/gimpfeatures.h"
 #include "tag.h"
+#include "gimprc.h"
 
 #ifndef  WAIT_ANY
 #define  WAIT_ANY -1
@@ -36,8 +37,8 @@
 #include "app_procs.h"
 #include "errors.h"
 #include "install.h"
-#include "tile.h"
 
+#include "gdisplay.h"
 static RETSIGTYPE on_signal (int);
 static RETSIGTYPE on_sig_child (int);
 static RETSIGTYPE on_sig_refresh (int);
@@ -296,7 +297,7 @@ static void
 init_shmem()
 {
 	/*  Continue initializing  */
-	shmemImage_ID = gimp_shmem_init( PRECISION_CONFIG, shmid, chans, offset, 
+	shmemImage_ID = gimp_shmem_init( default_precision, shmid, chans, offset, 
 					xSize, ySize );
 }
 

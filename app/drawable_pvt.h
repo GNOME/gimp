@@ -19,8 +19,6 @@
 #define __DRAWABLE_PVT_H__
 
 #include <gtk/gtkdata.h>
-#include "tile_manager.h"
-#include "temp_buf.h"
 
 /* forward declarations */
 struct _Canvas;
@@ -31,8 +29,7 @@ struct _GimpDrawable
   GtkData data;
 
   char *name;				/* name of drawable */
-  TileManager *tiles;			/* tiles for drawable data */
-  struct _Canvas * canvas;
+  struct _Canvas *tiles;		/* tiles for drawable data */
   int visible;				/* controls visibility */
   int width, height;			/* size of drawable */
   int offset_x, offset_y;		/* offset of layer in image */
@@ -47,7 +44,7 @@ struct _GimpDrawable
   int has_alpha;			/* drawable has alpha */
 
   /*  Preview variables  */
-  TempBuf *preview;			/* preview of the channel */
+  struct _Canvas *preview;		/* preview of the channel */
   int preview_valid;			/* is the preview valid? */
 };
 

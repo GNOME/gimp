@@ -188,6 +188,7 @@ struct _ColorHash
   int colormap_ID;     /*  colormap ID           */
 };
 
+#define MAXDIFF            195076
 #define HASH_TABLE_SIZE    1021
 static ColorHash color_hash_table [HASH_TABLE_SIZE];
 static int color_hash_misses;
@@ -279,7 +280,6 @@ color_area  (
 {
   void * pag;
   Tag area_tag = pixelarea_tag (area); 
-  Tag color_tag = pixelrow_tag (color); 
   ColorRowFunc color_row = color_area_funcs (area_tag);
   /* put in tags check*/
 
@@ -329,8 +329,6 @@ blend_area  (
              )
 {
   void * pag;
-  Tag src1_tag = pixelarea_tag (src1_area); 
-  Tag src2_tag = pixelarea_tag (src2_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
   BlendRowFunc blend_row = blend_area_funcs (dest_tag); 
   /* put in tags check */
@@ -388,7 +386,6 @@ shade_area  (
 {
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
-  Tag dest_tag = pixelarea_tag (dest_area); 
   ShadeRowFunc shade_row = shade_area_funcs (src_tag);
   /*put in tags check*/
   
@@ -465,7 +462,6 @@ copy_area  (
             )
 {
   Tag src_tag = pixelarea_tag (src_area);
-  Tag dest_tag = pixelarea_tag (dest_area);
   PixelRow srow;
   PixelRow drow;
   void * pag;
@@ -517,7 +513,6 @@ add_alpha_area  (
 {
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
-  Tag dest_tag = pixelarea_tag (dest_area); 
   AddAlphaRowFunc add_alpha_row = add_alpha_area_funcs (src_tag);
 
    /*put in tags check*/
@@ -573,7 +568,6 @@ flatten_area  (
 {
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
-  Tag dest_tag = pixelarea_tag (dest_area); 
   FlattenRowFunc flatten_row = flatten_area_funcs (src_tag);
 
    /*put in tags check*/
@@ -628,8 +622,6 @@ extract_alpha_area  (
 {
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
-  Tag dest_tag = pixelarea_tag (dest_area); 
-  Tag mask_tag = pixelarea_tag (mask_area); 
   ExtractAlphaRowFunc extract_alpha_row = extract_alpha_area_funcs (src_tag);
 
    /*put in tags check*/
@@ -700,8 +692,6 @@ extract_from_area  (
 {
   void * pag;
   Tag src_tag = pixelarea_tag (src_area); 
-  Tag dest_tag = pixelarea_tag (dest_area); 
-  Tag mask_tag = pixelarea_tag (mask_area); 
   Format format = tag_format (src_tag);
 
   extract_from_area_funcs (src_tag);
@@ -1805,7 +1795,6 @@ border_area  (
 {
   BoundSeg * bs;
   gint r, i, j;
-  Tag dest_tag = pixelarea_tag (dest_area);
   gfloat opacity;
   
   /* should do a check on the dest_tag to make sure grayscale */
@@ -3305,7 +3294,6 @@ swap_area  (
 {
   void * pag;
   Tag src_tag = pixelarea_tag (src_area); 
-  Tag dest_tag = pixelarea_tag (dest_area); 
   SwapRowFunc swap_row = swap_area_funcs (src_tag);
    /* put in tags check */
   
@@ -3359,7 +3347,6 @@ apply_mask_to_area  (
 {
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
-  Tag mask_tag = pixelarea_tag (mask_area); 
   ApplyMaskToAlphaChannelRowFunc apply_mask_to_alpha_channel_row = apply_mask_to_area_funcs (src_tag);
 
   /* put in tags check */
@@ -3415,7 +3402,6 @@ combine_mask_and_area  (
 {
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
-  Tag mask_tag = pixelarea_tag (mask_area); 
   CombineMaskAndAlphaChannelRowFunc combine_mask_and_alpha_channel_row = 
 			combine_mask_and_area_funcs (src_tag);
 
@@ -3471,7 +3457,6 @@ copy_gray_to_area  (
 {
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
-  Tag dest_tag = pixelarea_tag (dest_area); 
   CopyGrayToIntenARowFunc copy_gray_to_inten_a_row = 
 			copy_gray_to_area_funcs (src_tag);
 
@@ -3573,8 +3558,6 @@ initial_area  (
   PixelRow buf_row;
   guchar *buf_row_data = 0; 
   Tag src_tag = pixelarea_tag (src_area); 
-  Tag dest_tag = pixelarea_tag (dest_area); 
-  Tag mask_tag = pixelarea_tag (mask_area); 
   gint src_width = pixelarea_width (src_area);
   gint src_num_channels = tag_num_channels (src_tag);
   gint src_bytes = tag_bytes (src_tag); /* per pixel */
@@ -3805,10 +3788,6 @@ combine_areas  (
   guchar *buf_row_data = 0; 
   Tag src1_tag = pixelarea_tag (src1_area); 
   Tag src2_tag = pixelarea_tag (src2_area); 
-  Tag dest_tag = pixelarea_tag (dest_area); 
-  Tag mask_tag = pixelarea_tag (mask_area); 
-  gint src1_num_channels = tag_num_channels (src1_tag);
-  gint src1_bytes = tag_bytes (src1_tag);
   Tag buf_tag = src2_tag;
   gint src2_width = pixelarea_width (src2_area);
   gint src2_bytes = tag_bytes (src2_tag);
@@ -3987,10 +3966,6 @@ combine_areas_replace  (
                         )
 {
   void *  pag;
-  Tag src1_tag = pixelarea_tag (src1_area); 
-  Tag src2_tag = pixelarea_tag (src2_area); 
-  Tag dest_tag = pixelarea_tag (dest_area); 
-  Tag mask_tag = pixelarea_tag (mask_area); 
   
    /*put in tags check*/
   
@@ -4547,3 +4522,370 @@ apply_layer_mode_replace  (
   /*replace_pixels (src1, src2, dest, mask, length, opacity, affect, b1, b2);*/
   (*replace_row) (src1_row, src2_row, dest_row, mask_row, opacity, affect);
 }
+
+
+/*********************************
+ *   color conversion routines   *
+ *********************************/
+
+void
+rgb_to_hsv (int *r,
+	    int *g,
+	    int *b)
+{
+  int red, green, blue;
+  float h, s, v;
+  int min, max;
+  int delta;
+
+  h = 0.0;
+
+  red = *r;
+  green = *g;
+  blue = *b;
+
+  if (red > green)
+    {
+      if (red > blue)
+	max = red;
+      else
+	max = blue;
+
+      if (green < blue)
+	min = green;
+      else
+	min = blue;
+    }
+  else
+    {
+      if (green > blue)
+	max = green;
+      else
+	max = blue;
+
+      if (red < blue)
+	min = red;
+      else
+	min = blue;
+    }
+
+  v = max;
+
+  if (max != 0)
+    s = ((max - min) * 255) / (float) max;
+  else
+    s = 0;
+
+  if (s == 0)
+    h = 0;
+  else
+    {
+      delta = max - min;
+      if (red == max)
+	h = (green - blue) / (float) delta;
+      else if (green == max)
+	h = 2 + (blue - red) / (float) delta;
+      else if (blue == max)
+	h = 4 + (red - green) / (float) delta;
+      h *= 42.5;
+
+      if (h < 0)
+	h += 255;
+      if (h > 255)
+	h -= 255;
+    }
+
+  *r = h;
+  *g = s;
+  *b = v;
+}
+
+
+void
+hsv_to_rgb (int *h,
+	    int *s,
+	    int *v)
+{
+  float hue, saturation, value;
+  float f, p, q, t;
+
+  if (*s == 0)
+    {
+      *h = *v;
+      *s = *v;
+      *v = *v;
+    }
+  else
+    {
+      hue = *h * 6.0 / 255.0;
+      saturation = *s / 255.0;
+      value = *v / 255.0;
+
+      f = hue - (int) hue;
+      p = value * (1.0 - saturation);
+      q = value * (1.0 - (saturation * f));
+      t = value * (1.0 - (saturation * (1.0 - f)));
+
+      switch ((int) hue)
+	{
+	case 0:
+	  *h = value * 255;
+	  *s = t * 255;
+	  *v = p * 255;
+	  break;
+	case 1:
+	  *h = q * 255;
+	  *s = value * 255;
+	  *v = p * 255;
+	  break;
+	case 2:
+	  *h = p * 255;
+	  *s = value * 255;
+	  *v = t * 255;
+	  break;
+	case 3:
+	  *h = p * 255;
+	  *s = q * 255;
+	  *v = value * 255;
+	  break;
+	case 4:
+	  *h = t * 255;
+	  *s = p * 255;
+	  *v = value * 255;
+	  break;
+	case 5:
+	  *h = value * 255;
+	  *s = p * 255;
+	  *v = q * 255;
+	  break;
+	}
+    }
+}
+
+
+void
+rgb_to_hls (int *r,
+	    int *g,
+	    int *b)
+{
+  int red, green, blue;
+  float h, l, s;
+  int min, max;
+  int delta;
+
+  red = *r;
+  green = *g;
+  blue = *b;
+
+  if (red > green)
+    {
+      if (red > blue)
+	max = red;
+      else
+	max = blue;
+
+      if (green < blue)
+	min = green;
+      else
+	min = blue;
+    }
+  else
+    {
+      if (green > blue)
+	max = green;
+      else
+	max = blue;
+
+      if (red < blue)
+	min = red;
+      else
+	min = blue;
+    }
+
+  l = (max + min) / 2.0;
+
+  if (max == min)
+    {
+      s = 0.0;
+      h = 0.0;
+    }
+  else
+    {
+      delta = (max - min);
+
+      if (l < 128)
+	s = 255 * (float) delta / (float) (max + min);
+      else
+	s = 255 * (float) delta / (float) (511 - max - min);
+
+      if (red == max)
+	h = (green - blue) / (float) delta;
+      else if (green == max)
+	h = 2 + (blue - red) / (float) delta;
+      else
+	h = 4 + (red - green) / (float) delta;
+
+      h = h * 42.5;
+
+      if (h < 0)
+	h += 255;
+      if (h > 255)
+	h -= 255;
+    }
+
+  *r = h;
+  *g = l;
+  *b = s;
+}
+
+
+static int
+hls_value (float n1,
+	   float n2,
+	   float hue)
+{
+  float value;
+
+  if (hue > 255)
+    hue -= 255;
+  else if (hue < 0)
+    hue += 255;
+  if (hue < 42.5)
+    value = n1 + (n2 - n1) * (hue / 42.5);
+  else if (hue < 127.5)
+    value = n2;
+  else if (hue < 170)
+    value = n1 + (n2 - n1) * ((170 - hue) / 42.5);
+  else
+    value = n1;
+
+  return (int) (value * 255);
+}
+
+
+void
+hls_to_rgb (int *h,
+	    int *l,
+	    int *s)
+{
+  float hue, lightness, saturation;
+  float m1, m2;
+
+  hue = *h;
+  lightness = *l;
+  saturation = *s;
+
+  if (saturation == 0)
+    {
+      /*  achromatic case  */
+      *h = lightness;
+      *l = lightness;
+      *s = lightness;
+    }
+  else
+    {
+      if (lightness < 128)
+	m2 = (lightness * (255 + saturation)) / 65025.0;
+      else
+	m2 = (lightness + saturation - (lightness * saturation)/255.0) / 255.0;
+
+      m1 = (lightness / 127.5) - m2;
+
+      /*  chromatic case  */
+      *h = hls_value (m1, m2, hue + 85);
+      *l = hls_value (m1, m2, hue);
+      *s = hls_value (m1, m2, hue - 85);
+    }
+}
+
+void
+map_to_color (int            src_type,
+	      unsigned char *cmap,
+	      unsigned char *src,
+	      unsigned char *rgb)
+{
+  switch (src_type)
+    {
+    case 0:  /*  RGB      */
+      /*  Straight copy  */
+      *rgb++ = *src++;
+      *rgb++ = *src++;
+      *rgb   = *src;
+      break;
+    case 1:  /*  GRAY     */
+      *rgb++ = *src;
+      *rgb++ = *src;
+      *rgb   = *src;
+      break;
+    case 2:  /*  INDEXED  */
+      {
+	int index = *src * 3;
+	*rgb++ = cmap [index++];
+	*rgb++ = cmap [index++];
+	*rgb   = cmap [index++];
+      }
+      break;
+    }
+}
+
+
+int
+map_rgb_to_indexed (unsigned char *cmap,
+		    int            num_cols,
+		    int            ID,
+		    int            r,
+		    int            g,
+		    int            b)
+{
+  unsigned int pixel;
+  int hash_index;
+  int cmap_index;
+
+  pixel = (r << 16) | (g << 8) | b;
+  hash_index = pixel % HASH_TABLE_SIZE;
+
+  /*  Hash table lookup hit  */
+  if (color_hash_table[hash_index].colormap_ID == ID &&
+      color_hash_table[hash_index].pixel == pixel)
+    {
+      cmap_index = color_hash_table[hash_index].index;
+      color_hash_hits++;
+    }
+  /*  Hash table lookup miss  */
+  else
+    {
+      unsigned char *col;
+      int diff, sum, max;
+      int i;
+
+      max = MAXDIFF;
+      cmap_index = 0;
+
+      col = cmap;
+      for (i = 0; i < num_cols; i++)
+	{
+	  diff = r - *col++;
+	  sum = diff * diff;
+	  diff = g - *col++;
+	  sum += diff * diff;
+	  diff = b - *col++;
+	  sum += diff * diff;
+
+	  if (sum < max)
+	    {
+	      cmap_index = i;
+	      max = sum;
+	    }
+	}
+
+      /*  update the hash table  */
+      color_hash_table[hash_index].pixel = pixel;
+      color_hash_table[hash_index].index = cmap_index;
+      color_hash_table[hash_index].colormap_ID = ID;
+      color_hash_misses++;
+    }
+
+  return cmap_index;
+}
+
+

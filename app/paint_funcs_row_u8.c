@@ -50,7 +50,7 @@ color_row_u8  (
   while (width--)
     {
       for (b = 0; b < num_channels; b++)
-	dest[b] = color[b];
+        dest[b] = color[b];
 
       dest += num_channels;
     }

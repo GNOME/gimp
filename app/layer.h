@@ -18,12 +18,13 @@
 #ifndef __LAYER_H__
 #define __LAYER_H__
 
+struct _PixelRow;
+
+
 #include "drawable.h"
 
 #include "boundary.h"
 #include "channel.h"
-#include "temp_buf.h"
-#include "tile_manager.h"
 
 struct _Canvas;
 #define APPLY   0
@@ -101,8 +102,7 @@ Layer *         layer_copy (Layer *, int);
 Layer *		layer_ref (Layer *);
 void   		layer_unref (Layer *);
 
-Layer *         layer_from_tiles (void *, GimpDrawable *, TileManager *, char *, int, int);
-Layer *         layer_from_canvas (void *, GimpDrawable *, struct _Canvas *, char *, int, int);
+Layer *         layer_from_tiles (void *, GimpDrawable *, struct _Canvas *, char *, int, int);
 LayerMask *     layer_add_mask (Layer *, LayerMask *);
 LayerMask *     layer_create_mask (Layer *, AddMaskType);
 Layer *         layer_get_ID (int);
@@ -116,10 +116,8 @@ BoundSeg *      layer_boundary (Layer *, int *);
 void            layer_invalidate_boundary (Layer *);
 int             layer_pick_correlate (Layer *, int, int);
 
-LayerMask *     layer_mask_new	(int, int, int, char *, 
-				 int, unsigned char *);
-LayerMask *     layer_mask_new_tag(int, int, int, Tag, 
-				 char *, int, unsigned char *);
+LayerMask *     layer_mask_new  (int, int, int, Precision, 
+				 char *, gfloat, struct _PixelRow *);
 LayerMask *	layer_mask_copy	(LayerMask *);
 void		layer_mask_delete	(LayerMask *);
 LayerMask *	layer_mask_get_ID    (int);
@@ -133,8 +131,8 @@ LayerMask *     layer_mask (Layer *);
 int             layer_has_alpha (Layer *);
 int             layer_is_floating_sel (Layer *);
 int		layer_linked (Layer *);
-TempBuf *       layer_preview (Layer *, int, int);
-TempBuf *       layer_mask_preview (Layer *, int, int);
+struct _Canvas *layer_preview (Layer *, int, int);
+struct _Canvas *layer_mask_preview (Layer *, int, int);
 
 void            layer_invalidate_previews  (int);
 

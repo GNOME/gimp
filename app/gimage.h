@@ -23,8 +23,6 @@
 #include "channel.h"
 #include "layer.h"
 #include "tag.h"
-#include "temp_buf.h"
-#include "tile_manager.h"
 
 struct _PixelArea;
 struct _Canvas;
@@ -176,7 +174,7 @@ struct _GImage
   int pushing_undo_group;             /*  undo group status flag       */
 
                                       /*  Composite preview  */
-  TempBuf *comp_preview;              /*  the composite preview        */
+  struct _Canvas *comp_preview;       /*  the composite preview        */
   int comp_preview_valid[3];          /*  preview valid-1/channel      */
 };
 
@@ -293,7 +291,7 @@ void            gimage_projection_realloc     (GImage *);
 struct _Canvas *gimage_composite              (GImage *);
 int             gimage_composite_type         (GImage *);
 int             gimage_composite_bytes        (GImage *);
-TempBuf *       gimage_composite_preview      (GImage *, ChannelType, int, int);
+struct _Canvas *gimage_composite_preview      (GImage *, ChannelType, int, int);
 int             gimage_preview_valid          (GImage *, ChannelType);
 void            gimage_invalidate_preview     (GImage *);
 

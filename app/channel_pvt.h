@@ -21,6 +21,7 @@
 #include "drawable.h"
 
 #include "boundary.h"
+#include "pixelrow.h"
 
 #include "drawable_pvt.h"
 
@@ -28,8 +29,9 @@ struct _GimpChannel
 {
   GimpDrawable drawable;
 
-  unsigned char col[3];         /*  RGB triplet for channel color*/
-  int opacity;                  /*  Channel opacity              */
+  PixelRow col;                 /* channel color*/
+  unsigned char _col[TAG_MAX_BYTES];
+  gfloat opacity;               /*  Channel opacity              */
   int show_masked;              /*  Show masked areas--as        */
                                 /*  opposed to selected areas    */
 

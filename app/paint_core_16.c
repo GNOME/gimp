@@ -62,9 +62,10 @@ static void      painthit_finish               (GimpDrawable *, PaintCore16 *,
 
 
 static Canvas *  brush_mask_get                (PaintCore16 *, int);
+#ifdef BRUSH_WITH_BORDER 
 static Canvas *  brush_mask_subsample          (Canvas *, double, double);
+#endif
 static Canvas *  brush_mask_solidify           (Canvas *);
-static Canvas *  brush_mask_enlarge            (Canvas *);
 
 static void brush_solidify_mask_float ( Canvas *, Canvas *);
 static void brush_solidify_mask_u8 ( Canvas *, Canvas *);
@@ -973,10 +974,9 @@ brush_mask_get  (
   switch (brush_hardness)
     {
     case SOFT:
-#ifdef BRUSH_WIDTH_BORDER 
+#ifdef BRUSH_WITH_BORDER 
       bm = brush_mask_subsample (paint_core->brush_mask,
                                  paint_core->curx, paint_core->cury);
-      /* bm = brush_mask_enlarge (paint_core->brush_mask); */
 #else
       bm = paint_core->brush_mask;
 #endif
@@ -992,6 +992,7 @@ brush_mask_get  (
 }
 
 
+#ifdef BRUSH_WITH_BORDER 
 static Canvas * 
 brush_mask_subsample  (
                        Canvas * mask,
@@ -1109,6 +1110,8 @@ brush_mask_subsample  (
 
   return dest;
 }
+#endif
+
 
 typedef void  (*BrushSolidifyMaskFunc) (Canvas*,Canvas*);
 static BrushSolidifyMaskFunc brush_solidify_mask_funcs[] =
@@ -1243,47 +1246,4 @@ static void brush_solidify_mask_float (
 #endif
     }
 }
-
-
-static Canvas * 
-brush_mask_enlarge  (
-                     Canvas * brush_mask
-                     )
-{
-  static Canvas * solid_brush = NULL;
-  static Canvas * last_brush  = NULL;
-  
-  if (brush_mask == last_brush)
-    return solid_brush;
-
-  last_brush = brush_mask;
-  if (solid_brush)
-    canvas_delete (solid_brush);
-  solid_brush = canvas_new (canvas_tag (brush_mask),
-                            canvas_width (brush_mask) + 2,
-                            canvas_height (brush_mask) + 2,
-                            canvas_storage (brush_mask));
-  {
-    PixelArea src, dest;
-    pixelarea_init (&src, brush_mask,
-                    0, 0,
-                    0, 0,
-                    FALSE);
-    pixelarea_init (&dest, solid_brush,
-                    1, 1,
-                    canvas_width (brush_mask), canvas_height (brush_mask),
-                    TRUE);
-    copy_area (&src, &dest);
-  }
-  
-  /* canvas_portion_unref (solid_brush, 0, 0); */
-  /* canvas_portion_unref (brush_mask, 0, 0); */
-  
-  return solid_brush;
-}
-
-
-
-
-
 

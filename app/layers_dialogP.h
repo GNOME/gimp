@@ -18,6 +18,8 @@
 #ifndef  __LAYERS_DIALOGP_H__
 #define  __LAYERS_DIALOGP_H__
 
+struct _Canvas;
+
 #include "buildmenu.h"
 
 GtkWidget *  layers_dialog_create    (void);
@@ -35,7 +37,7 @@ void         layers_dialog_free      (void);
 void         channels_dialog_free    (void);
 
 void         render_fs_preview       (GtkWidget *, GdkPixmap *);
-void         render_preview          (TempBuf *, GtkWidget *, int, int, int);
+void         render_preview          (struct _Canvas *, GtkWidget *, int, int, int);
 
 /*  Main dialog widget  */
 extern GtkWidget *lc_shell;

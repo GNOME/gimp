@@ -41,8 +41,46 @@ struct _Canvas
   /* cached info about the physical rep */
   Tag   tag;
   int   bytes;
+
+  /* this is so wrong */
+  int x;
+  int y;
 };
 
+
+int 
+canvas_fixme_getx  (
+                    Canvas * c
+                    )
+{
+  return (c ? c->x : 0);
+}
+
+int 
+canvas_fixme_gety  (
+                    Canvas * c
+                    )
+{
+  return (c ? c->y : 0);
+}
+
+int 
+canvas_fixme_setx  (
+                    Canvas * c,
+                    int n
+                    )
+{
+  return (c ? c->x=n : 0);
+}
+
+int 
+canvas_fixme_sety  (
+                    Canvas * c,
+                    int n
+                    )
+{
+  return (c ? c->y=n : 0);
+}
 
 
 Canvas *
@@ -65,6 +103,9 @@ canvas_new (
   c->width  = w;
   c->height = h;
 
+  c->x = 0;
+  c->y = 0;
+  
   switch (storage)
     {
     case STORAGE_FLAT:

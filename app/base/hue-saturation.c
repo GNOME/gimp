@@ -78,7 +78,7 @@ struct _HueSaturationDialog
   GtkAdjustment  *saturation_data;
 
   GimpDrawable *drawable;
-  ImageMap16   image_map;
+  ImageMap     image_map;
 
   double       hue[7];
   double       lightness[7];
@@ -658,7 +658,7 @@ hue_saturation_control (Tool     *tool,
       if (hue_saturation_dialog)
 	{
 	  active_tool->preserve = TRUE;
-	  image_map_abort_16 (hue_saturation_dialog->image_map);
+	  image_map_abort (hue_saturation_dialog->image_map);
 	  active_tool->preserve = FALSE;
           hue_saturation_free_transfers();
 	  hue_saturation_dialog->image_map = NULL;
@@ -749,7 +749,7 @@ hue_saturation_initialize (void *gdisp_ptr)
   (*hue_saturation_alloc_transfers)();
 
   hue_saturation_dialog->drawable = drawable;
-  hue_saturation_dialog->image_map = image_map_create_16 (gdisp_ptr, hue_saturation_dialog->drawable);
+  hue_saturation_dialog->image_map = image_map_create (gdisp_ptr, hue_saturation_dialog->drawable);
   hue_saturation_update (hue_saturation_dialog, ALL);
 }
 
@@ -761,7 +761,7 @@ hue_saturation_free ()
       if (hue_saturation_dialog->image_map)
 	{
 	  active_tool->preserve = TRUE;
-	  image_map_abort_16 (hue_saturation_dialog->image_map);
+	  image_map_abort (hue_saturation_dialog->image_map);
 	  active_tool->preserve = FALSE;
 	  hue_saturation_dialog->image_map = NULL;
 	}
@@ -1104,7 +1104,7 @@ hue_saturation_preview (HueSaturationDialog *hsd)
   if (!hsd->image_map)
     g_message ("hue_saturation_preview(): No image map");
   active_tool->preserve = TRUE;
-  image_map_apply_16 (hsd->image_map, hue_saturation, (void *) hsd);
+  image_map_apply (hsd->image_map, hue_saturation, (void *) hsd);
   active_tool->preserve = FALSE;
   hue_saturation_init_transfers ((void *)hsd);
 }
@@ -1124,13 +1124,13 @@ hue_saturation_ok_callback (GtkWidget *widget,
 
   if (!hsd->preview)
   {
-    image_map_apply_16 (hsd->image_map, hue_saturation, (void *) hsd);
+    image_map_apply (hsd->image_map, hue_saturation, (void *) hsd);
     hue_saturation_init_transfers ((void *)hsd);
   }
 
   if (hsd->image_map)
   {
-    image_map_commit_16 (hsd->image_map);
+    image_map_commit (hsd->image_map);
     hue_saturation_free_transfers();
   }
 
@@ -1162,7 +1162,7 @@ hue_saturation_cancel_callback (GtkWidget *widget,
   if (hsd->image_map)
     {
       active_tool->preserve = TRUE;
-      image_map_abort_16 (hsd->image_map);
+      image_map_abort (hsd->image_map);
       active_tool->preserve = FALSE;
       hue_saturation_free_transfers();
       gdisplays_flush ();

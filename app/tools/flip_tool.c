@@ -21,6 +21,7 @@
 #include "drawable.h"
 #include "flip_tool.h"
 #include "gdisplay.h"
+#include "tile_manager.h"
 #include "transform_core.h"
 #include "undo.h"
 #include "gimage.h"
@@ -252,7 +253,7 @@ flip_tool_flip_horz (GImage      *gimage,
       pixel_region_init (&srcPR, orig, 0, 0, orig->levels[0].width, orig->levels[0].height, FALSE);
       pixel_region_init (&destPR, new, 0, 0, orig->levels[0].width, orig->levels[0].height, TRUE);
 
-      copy_region (&srcPR, &destPR);
+      copy_area (&srcPR, &destPR);
       new->x = orig->x;
       new->y = orig->y;
     }
@@ -267,7 +268,7 @@ flip_tool_flip_horz (GImage      *gimage,
 	  pixel_region_init (&srcPR, orig, i, 0, 1, orig->levels[0].height, FALSE);
 	  pixel_region_init (&destPR, new, (orig->levels[0].width - i - 1), 0, 1, orig->levels[0].height, TRUE);
 
-	  copy_region (&srcPR, &destPR);
+	  copy_area (&srcPR, &destPR);
 	}
     }
 
@@ -293,7 +294,7 @@ flip_tool_flip_vert (GImage      *gimage,
       pixel_region_init (&srcPR, orig, 0, 0, orig->levels[0].width, orig->levels[0].height, FALSE);
       pixel_region_init (&destPR, new, 0, 0, orig->levels[0].width, orig->levels[0].height, TRUE);
 
-      copy_region (&srcPR, &destPR);
+      copy_area (&srcPR, &destPR);
       new->x = orig->x;
       new->y = orig->y;
     }
@@ -308,7 +309,7 @@ flip_tool_flip_vert (GImage      *gimage,
 	  pixel_region_init (&srcPR, orig, 0, i, orig->levels[0].width, 1, FALSE);
 	  pixel_region_init (&destPR, new, 0, (orig->levels[0].height - i - 1), orig->levels[0].width, 1, TRUE);
 
-	  copy_region (&srcPR, &destPR);
+	  copy_area (&srcPR, &destPR);
 	}
     }
 
