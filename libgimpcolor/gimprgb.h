@@ -53,13 +53,13 @@ void      gimp_rgb_get_uchar   (const GimpRGB *rgb,
 
 gboolean  gimp_rgb_parse_name  (GimpRGB       *rgb,
                                 const gchar   *name,
-                                gsize          len);
+                                gint           len);
 gboolean  gimp_rgb_parse_hex   (GimpRGB       *rgb,
                                 const gchar   *hex,
-                                gsize          len);
+                                gint           len);
 gboolean  gimp_rgb_parse_css   (GimpRGB       *rgb,
                                 const gchar   *css,
-                                gsize          len);
+                                gint           len);
 
 void      gimp_rgb_add         (GimpRGB       *rgb1,
                                 const GimpRGB *rgb2);

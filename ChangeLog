@@ -1,5 +1,19 @@
 2004-07-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimprgb-parse.c
+	* libgimpcolor/gimprgb.h: use a signed integer to pass the string
+	length to the new parser functions. The API explicitely asks for
+	-1 to be passed...
+
+	* app/core/gimp.c
+	* app/core/gimpgradient-load.[ch]
+	* app/core/gimpgradient.h: added preliminary support for loading
+	simple SVG gradients (see bug #148127).  Be careful with this new
+	feature; editing the loaded gradient will cause the SVG file to be
+	overwritten! Work in progress...
+
+2004-07-22  Sven Neumann  <sven@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimpgradient-load.[ch]
 	* app/core/gimpgradient-save.[ch]

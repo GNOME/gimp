@@ -66,7 +66,7 @@ static gboolean  gimp_rgb_parse_css_internal  (GimpRGB     *rgb,
 gboolean
 gimp_rgb_parse_name (GimpRGB     *rgb,
                      const gchar *name,
-                     gsize        len)
+                     gint         len)
 {
   gchar    *tmp;
   gboolean  result;
@@ -105,7 +105,7 @@ gimp_rgb_parse_name (GimpRGB     *rgb,
 gboolean
 gimp_rgb_parse_hex (GimpRGB     *rgb,
                     const gchar *hex,
-                    gsize        len)
+                    gint         len)
 {
   gchar    *tmp;
   gboolean  result;
@@ -131,17 +131,12 @@ gimp_rgb_parse_hex (GimpRGB     *rgb,
  * @css: a string describing a color in CSS notation
  * @len: the length of @hex, in bytes. or -1 if @hex is nul-terminated
  *
- * Attempts to parse a string describing a color in RGB value in
- * CSS notation. This can be either a numerical representation:
- *   <informalexample><programlisting>
- *     rgb (255, 0, 0)
- *     rgb (100%, 0%, 0%)
- *   </programlisting></informalexample>
- * or a hexadecimal notation as parsed by gimp_rgb_parse_hex():
- *   <informalexample><programlisting>
- *     #ff0000
- *   </programlisting></informalexample>
- * or a color name as parsed by  gimp_rgb_parse_name().
+ * Attempts to parse a string describing a color in RGB value in CSS
+ * notation. This can be either a numerical representation
+ * (<code>rgb (255, 0, 0)</code> or <code>rgb (100%, 0%, 0%)</code>) or
+ * a hexadecimal notation as parsed by gimp_rgb_parse_hex()
+ * (<code>##ff0000</code>) or a color name as parsed by
+ * gimp_rgb_parse_name() (<code>red</code>).
  *
  * This funcion does not touch the alpha component of @rgb.
  *
@@ -153,7 +148,7 @@ gimp_rgb_parse_hex (GimpRGB     *rgb,
 gboolean
 gimp_rgb_parse_css (GimpRGB     *rgb,
                     const gchar *css,
-                    gsize        len)
+                    gint         len)
 {
   gchar    *tmp;
   gboolean  result;
@@ -453,6 +448,7 @@ gimp_rgb_parse_css_internal (GimpRGB     *rgb,
       if (*css == ')')
         {
           gimp_rgb_set (rgb, values[0], values[1], values[2]);
+          gimp_rgb_clamp (rgb);
 
           return TRUE;
         }

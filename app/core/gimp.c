@@ -544,6 +544,7 @@ gimp_real_initialize (Gimp               *gimp,
   static const GimpDataFactoryLoaderEntry gradient_loader_entries[] =
   {
     { gimp_gradient_load,        GIMP_GRADIENT_FILE_EXTENSION        },
+    { gimp_gradient_load_svg,    GIMP_GRADIENT_SVG_FILE_EXTENSION    },
     { gimp_gradient_load,        NULL /* legacy loader */            }
   };
 
