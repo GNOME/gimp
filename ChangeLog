@@ -1,8 +1,18 @@
+2003-06-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimptoolinfo.[ch]: added "in_toolbox"; defaults to TRUE.
+
+	* app/tools/tool_manager.c: set "in_toolbox" to FALSE for tools
+	derived from GimpImageTool.
+
+	* app/widgets/gimptoolbox.c: respect the new flag when constructing
+	the toolbox.
+
 2003-06-06  Jakub Steiner <jimmac@ximian.com>
 
-	* M themes/Default/images/tools/stock-tool-smudge-16.png
+	* themes/Default/images/tools/stock-tool-smudge-16.png
 	* themes/Default/images/tools/stock-tool-smudge-22.png: make it
-	  more clear it's a smudge tool, not a path tool
+	more clear it's a smudge tool, not a path tool.
 
 2003-06-06  Sven Neumann  <sven@gimp.org>
 

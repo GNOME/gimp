@@ -38,6 +38,7 @@
 #include "gimpconvolvetool.h"
 #include "gimpdodgeburntool.h"
 #include "gimperasertool.h"
+#include "gimpimagemaptool.h"
 #include "gimppaintbrushtool.h"
 #include "gimppenciltool.h"
 #include "gimprectselecttool.h"
@@ -596,6 +597,9 @@ tool_manager_register_tool (GType                   tool_type,
 				  help_data,
                                   paint_core_name,
 				  stock_id);
+
+  if (g_type_is_a (tool_type, GIMP_TYPE_IMAGE_MAP_TOOL))
+    tool_info->in_toolbox = FALSE;
 
   g_object_set_data (G_OBJECT (tool_info), "gimp-tool-options-gui-func",
                      options_gui_func);

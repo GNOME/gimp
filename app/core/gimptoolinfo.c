@@ -103,6 +103,8 @@ gimp_tool_info_init (GimpToolInfo *tool_info)
   tool_info->help_domain       = NULL;
   tool_info->help_data         = NULL;
 
+  tool_info->in_toolbox        = TRUE;
+  tool_info->use_context       = FALSE;
   tool_info->tool_options      = NULL;
   tool_info->paint_info        = NULL;
 }

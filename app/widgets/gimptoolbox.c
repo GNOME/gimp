@@ -209,7 +209,8 @@ gimp_toolbox_init (GimpToolbox *toolbox)
 
   toolbox->wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->wbox), GTK_JUSTIFY_TOP);
-  gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->wbox), GTK_JUSTIFY_LEFT);
+  gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->wbox),
+                                 GTK_JUSTIFY_LEFT);
 
   gtk_box_pack_start (GTK_BOX (vbox), toolbox->wbox, FALSE, FALSE, 0);
   gtk_widget_show (toolbox->wbox);
@@ -251,6 +252,7 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
       GtkRequisition  button_requisition;
       GtkRequisition  color_requisition;
       GtkRequisition  indicator_requisition;
+      GList          *list;
       gint            n_tools;
       gint            tool_rows;
       gint            tool_columns;
@@ -261,12 +263,18 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
       gtk_widget_size_request (toolbox->color_area,     &color_requisition);
       gtk_widget_size_request (toolbox->indicator_area, &indicator_requisition);
 
-      n_tools = gimp_container_num_children (gimp->tool_info_list);
+      for (list = GIMP_LIST (gimp->tool_info_list)->list, n_tools = 0;
+           list;
+           list = list->next)
+        {
+          tool_info = (GimpToolInfo *) list->data;
 
-      tool_columns = MAX (1, (allocation->width /
-                              button_requisition.width));
+          if (tool_info->in_toolbox)
+            n_tools++;
+        }
 
-      tool_rows = n_tools / tool_columns;
+      tool_columns = MAX (1, (allocation->width / button_requisition.width));
+      tool_rows    = n_tools / tool_columns;
 
       if (n_tools % tool_columns)
         tool_rows++;
@@ -328,7 +336,11 @@ gimp_toolbox_style_set (GtkWidget *widget,
     {
       tool_info = GIMP_TOOL_INFO (list->data);
 
-      tool_button = g_object_get_data (G_OBJECT (tool_info), "toolbox-button");
+      if (! tool_info->in_toolbox)
+        continue;
+
+      tool_button = g_object_get_data (G_OBJECT (tool_info),
+                                       "toolbox-button");
 
       if (tool_button)
         {
@@ -647,17 +659,21 @@ toolbox_create_tools (GimpToolbox *toolbox,
       button = gtk_radio_button_new (group);
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-      gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->wbox), button,
-			 FALSE, FALSE, FALSE, FALSE);
-      gtk_widget_show (button);
+
+      if (tool_info->in_toolbox)
+        {
+          gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->wbox), button,
+                             FALSE, FALSE, FALSE, FALSE);
+          gtk_widget_show (button);
+
+          stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+          image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+          gtk_container_add (GTK_CONTAINER (button), image);
+          gtk_widget_show (image);
+        }
 
       g_object_set_data (G_OBJECT (tool_info), "toolbox-button", button);
       g_object_set_data (G_OBJECT (button), "tool-info", tool_info);
-
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
-      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-      gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
 
       if (tool_info == active_tool)
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);

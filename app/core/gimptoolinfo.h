@@ -51,6 +51,7 @@ struct _GimpToolInfo
   gchar           *help_domain;
   gchar           *help_data;
 
+  gboolean         in_toolbox;
   gboolean         use_context;
   GimpToolOptions *tool_options;
   GimpPaintInfo   *paint_info;
