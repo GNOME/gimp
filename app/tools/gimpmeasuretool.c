@@ -35,6 +35,7 @@
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 
+
 /*  definitions  */
 #define  TARGET         8
 #define  ARC_RADIUS     30
@@ -89,19 +90,30 @@ struct _MeasureOptions
 static MeasureOptions *measure_tool_options = NULL;
 
 /*  the measure tool info window  */
-static InfoDialog  *measure_tool_info = NULL;
-static gchar        distance_buf [MAX_INFO_BUF];
-static gchar        angle_buf    [MAX_INFO_BUF];
+static InfoDialog *measure_tool_info = NULL;
+static gchar       distance_buf[MAX_INFO_BUF];
+static gchar       angle_buf[MAX_INFO_BUF];
 
 
 /*  local function prototypes  */
-static void   measure_tool_button_press   (Tool *, GdkEventButton *, gpointer);
-static void   measure_tool_button_release (Tool *, GdkEventButton *, gpointer);
-static void   measure_tool_motion         (Tool *, GdkEventMotion *, gpointer);
-static void   measure_tool_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   measure_tool_control	  (Tool *, ToolAction,       gpointer);
+static void   measure_tool_button_press   (Tool           *tool,
+					   GdkEventButton *bevent,
+					   gpointer        gdisp_ptr);
+static void   measure_tool_button_release (Tool           *tool,
+					   GdkEventButton *bevent,
+					   gpointer        gdisp_ptr);
+static void   measure_tool_motion         (Tool           *tool,
+					   GdkEventMotion *mevent,
+					   gpointer        gdisp_ptr);
+static void   measure_tool_cursor_update  (Tool           *tool,
+					   GdkEventMotion *mevent,
+					   gpointer        gdisp_ptr);
+static void   measure_tool_control	  (Tool           *tool,
+					   ToolAction      action,
+					   gpointer        gdisp_ptr);
 
-static void   measure_tool_info_window_close_callback (GtkWidget *, gpointer);
+static void   measure_tool_info_window_close_callback (GtkWidget *widget,
+						       gpointer   data);
 static void   measure_tool_info_update                (void);
 
 
@@ -118,7 +130,7 @@ static MeasureOptions *
 measure_tool_options_new (void)
 {
   MeasureOptions *options;
-  GtkWidget *vbox;
+  GtkWidget      *vbox;
 
   /*  the new measure tool options structure  */
   options = g_new (MeasureOptions, 1);
@@ -144,7 +156,7 @@ measure_tool_options_new (void)
   return options;
 }
 
-static double
+static gdouble
 measure_get_angle (gint    dx,
 		   gint    dy,
 		   gdouble xres,
@@ -153,12 +165,13 @@ measure_get_angle (gint    dx,
   gdouble angle;
 
   if (dx)
-    angle = gimp_rad_to_deg (atan (((double)(dy) / yres) / ((double)(dx) / xres)));
+    angle = gimp_rad_to_deg (atan (((gdouble) (dy) / yres) /
+				   ((gdouble) (dx) / xres)));
   else if (dy)
     angle = dy > 0 ? 270.0 : 90.0;
   else
     angle = 180.0;
-  
+
   if (dx > 0)
     {
       if (dy > 0)
@@ -167,9 +180,11 @@ measure_get_angle (gint    dx,
 	angle = -angle;
     }
   else
-    angle = 180.0 - angle;
+    {
+      angle = 180.0 - angle;
+    }
 
-  return (angle);
+  return angle;
 }
 
 static void
@@ -177,11 +192,11 @@ measure_tool_button_press (Tool           *tool,
 			   GdkEventButton *bevent,
 			   gpointer        gdisp_ptr)
 {
-  GDisplay * gdisp;
-  MeasureTool * measure_tool;
-  gint x[3];
-  gint y[3];
-  gint i;
+  GDisplay    *gdisp;
+  MeasureTool *measure_tool;
+  gint         x[3];
+  gint         y[3];
+  gint         i;
 
   gdisp = (GDisplay *) gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
@@ -190,6 +205,7 @@ measure_tool_button_press (Tool           *tool,
   if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr)
     {
       GDisplay *old_gdisp = tool->gdisp_ptr;
+
       gtk_statusbar_pop (GTK_STATUSBAR (old_gdisp->statusbar),
 			 measure_tool->context_id);
       gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), 
@@ -200,12 +216,15 @@ measure_tool_button_press (Tool           *tool,
 
   if (tool->state == ACTIVE && gdisp_ptr == tool->gdisp_ptr)
     {
-      /*  if the cursor is in one of the handles, 
-	  the new function will be moving or adding a new point or guide */
-      for (i=0; i < measure_tool->num_points; i++)
+      /*  if the cursor is in one of the handles,
+       *  the new function will be moving or adding a new point or guide
+       */
+      for (i = 0; i < measure_tool->num_points; i++)
 	{
-	  gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i], 
-				     &x[i], &y[i], FALSE);      
+	  gdisplay_transform_coords (gdisp,
+				     measure_tool->x[i], measure_tool->y[i], 
+				     &x[i], &y[i], FALSE);
+
 	  if (bevent->x == CLAMP (bevent->x, x[i] - TARGET, x[i] + TARGET) &&
 	      bevent->y == CLAMP (bevent->y, y[i] - TARGET, y[i] + TARGET))
 	    {
@@ -258,6 +277,7 @@ measure_tool_button_press (Tool           *tool,
 	      break;
 	    }
 	}
+
       /*  adding to the middle point makes no sense  */
       if (i == 0 && measure_tool->function == ADDING && measure_tool->num_points == 3)
 	measure_tool->function = MOVING;
@@ -282,8 +302,10 @@ measure_tool_button_press (Tool           *tool,
 	  /* reset everything */
 	  draw_core_stop (measure_tool->core, tool);
 
-	  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id);
-	  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id, "");
+	  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar),
+			     measure_tool->context_id);
+	  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
+			      measure_tool->context_id, "");
 
 	  distance_buf[0] = '\0';
 	  angle_buf[0] = '\0';
@@ -294,15 +316,17 @@ measure_tool_button_press (Tool           *tool,
 	{
 	  /* initialize the statusbar display */
 	  measure_tool->context_id = 
-	    gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "measure");
+	    gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar),
+					  "measure");
 	}
       
       /*  set the first point and go into ADDING mode  */
       gdisplay_untransform_coords (gdisp,  bevent->x, bevent->y, 
-				   &measure_tool->x[0], &measure_tool->y[0], TRUE, FALSE);
-      measure_tool->point = 0;
+				   &measure_tool->x[0], &measure_tool->y[0],
+				   TRUE, FALSE);
+      measure_tool->point      = 0;
       measure_tool->num_points = 1;
-      measure_tool->function = ADDING;
+      measure_tool->function   = ADDING;
 
       /*  set the gdisplay  */
       tool->gdisp_ptr = gdisp_ptr;
@@ -312,20 +336,21 @@ measure_tool_button_press (Tool           *tool,
     }
 
   /*  create the info window if necessary  */
-  if (!measure_tool_info &&
+  if (! measure_tool_info &&
       (measure_tool_options->use_info_window ||
-       !GTK_WIDGET_VISIBLE (gdisp->statusarea)))
+       ! GTK_WIDGET_VISIBLE (gdisp->statusarea)))
     {
       measure_tool_info = info_dialog_new (_("Measure Tool"),
 					   tools_help_func, NULL);
       info_dialog_add_label (measure_tool_info, _("Distance:"), distance_buf);
       info_dialog_add_label (measure_tool_info, _("Angle:"), angle_buf);
-      
+
       gimp_dialog_create_action_area (GTK_DIALOG (measure_tool_info->shell),
-				      
-				      _("Close"), measure_tool_info_window_close_callback,
+
+				      _("Close"),
+				      measure_tool_info_window_close_callback,
 				      measure_tool_info, NULL, NULL, TRUE, FALSE,
-				      
+
 				      NULL);
     }
   
@@ -350,8 +375,8 @@ measure_tool_button_release (Tool           *tool,
 			     GdkEventButton *bevent,
 			     gpointer        gdisp_ptr)
 {
-  GDisplay * gdisp;
-  MeasureTool * measure_tool;
+  GDisplay    *gdisp;
+  MeasureTool *measure_tool;
 
   gdisp = (GDisplay *) gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
@@ -367,17 +392,17 @@ measure_tool_motion (Tool           *tool,
 		     GdkEventMotion *mevent,
 		     gpointer        gdisp_ptr)
 {
-  GDisplay * gdisp;
-  MeasureTool * measure_tool;
-  gint x, y;
-  gint ax, ay;
-  gint bx, by;
-  gint dx, dy;
-  gint i;
-  gint tmp;
-  gdouble angle;
-  gdouble distance;
-  gchar status_str[STATUSBAR_SIZE];
+  GDisplay    *gdisp;
+  MeasureTool *measure_tool;
+  gint         x, y;
+  gint         ax, ay;
+  gint         bx, by;
+  gint         dx, dy;
+  gint         i;
+  gint         tmp;
+  gdouble      angle;
+  gdouble      distance;
+  gchar        status_str[STATUSBAR_SIZE];
 
   gdisp = (GDisplay *) gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
@@ -387,7 +412,7 @@ measure_tool_motion (Tool           *tool,
 
   /*  get the coordinates  */
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, FALSE);
-  
+
   /*  
    *  A few comments here, because this routine looks quite weird at first ...
    *
@@ -519,18 +544,19 @@ measure_tool_motion (Tool           *tool,
 	}
       else /* show real world units */
 	{
-	  gchar *format_str = g_strdup_printf ("%%.%df %s, %%.2f %s",
-					       gimp_unit_get_digits (gdisp->gimage->unit),
-					       gimp_unit_get_symbol (gdisp->gimage->unit),
-					       _("degrees"));
-	  
+	  gchar *format_str =
+	    g_strdup_printf ("%%.%df %s, %%.2f %s",
+			     gimp_unit_get_digits (gdisp->gimage->unit),
+			     gimp_unit_get_symbol (gdisp->gimage->unit),
+			     _("degrees"));
+
 	  distance =  gimp_unit_get_factor (gdisp->gimage->unit) * 
 	    sqrt (SQR ((gdouble)(ax - bx) / gdisp->gimage->xresolution) +
 		  SQR ((gdouble)(ay - by) / gdisp->gimage->yresolution));
-	  
+
 	  if (measure_tool->num_points != 3)
 	    bx = ax > 0 ? 1 : -1;
-	  
+
 	  measure_tool->angle1 = measure_get_angle (ax, ay, 
 						    gdisp->gimage->xresolution, 
 						    gdisp->gimage->yresolution); 
@@ -540,32 +566,35 @@ measure_tool_motion (Tool           *tool,
 	  angle = fabs (measure_tool->angle1 - measure_tool->angle2);     
 	  if (angle > 180.0)
 	    angle = fabs (360.0 - angle);
-	  
+
 	  g_snprintf (status_str, STATUSBAR_SIZE, format_str, distance , angle);
 	  g_free (format_str);
-	  
+
 	  if (measure_tool_options)
 	    {
-	      gchar *format_str = g_strdup_printf ("%%.%df %s",
-						   gimp_unit_get_digits (gdisp->gimage->unit),
-						   gimp_unit_get_symbol (gdisp->gimage->unit));
+	      gchar *format_str =
+		g_strdup_printf ("%%.%df %s",
+				 gimp_unit_get_digits (gdisp->gimage->unit),
+				 gimp_unit_get_symbol (gdisp->gimage->unit));
 	      g_snprintf (distance_buf, MAX_INFO_BUF, format_str, distance);
 	      g_snprintf (angle_buf, MAX_INFO_BUF, "%.2f %s", angle, _("degrees"));
 	      g_free (format_str);
 	    }
 	}
-      
+
       /*  show info in statusbar  */
-      gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id);
-      gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id,
+      gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar),
+			 measure_tool->context_id);
+      gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
+			  measure_tool->context_id,
 			  status_str);
-      
+
       /*  and in the info window  */
       if (measure_tool_info)
 	measure_tool_info_update ();
 
     }  /*  measure_tool->function == MOVING  */
-  
+
   /*  redraw the current tool  */
   draw_core_resume (measure_tool->core, tool);
 }
@@ -599,7 +628,7 @@ measure_tool_cursor_update (Tool           *tool,
 	      mevent->y == CLAMP (mevent->y, y[i] - TARGET, y[i] + TARGET))
 	    {
 	      in_handle = TRUE;
-	      
+
 	      if (mevent->state & GDK_CONTROL_MASK)
 		{
 		  if (mevent->state & GDK_MOD1_MASK)
@@ -640,13 +669,13 @@ measure_tool_cursor_update (Tool           *tool,
 static void
 measure_tool_draw (Tool *tool)
 {
-  GDisplay * gdisp;
-  MeasureTool * measure_tool;
-  gint x[3];
-  gint y[3];
-  gint i;
-  gint angle1, angle2;
-  gint draw_arc = 0;
+  GDisplay    *gdisp;
+  MeasureTool *measure_tool;
+  gint         x[3];
+  gint         y[3];
+  gint         i;
+  gint         angle1, angle2;
+  gint         draw_arc = 0;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
@@ -697,7 +726,7 @@ measure_tool_draw (Tool *tool)
 			x[0] - ARC_RADIUS, y[0] - ARC_RADIUS,
 			2 * ARC_RADIUS, 2 * ARC_RADIUS, 
 			angle1, angle2); 
-	  
+
 	  if (measure_tool->num_points == 2)
 	    gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
 			   x[0], y[0],
@@ -713,8 +742,8 @@ measure_tool_control (Tool       *tool,
 		      ToolAction  action,
 		      gpointer    gdisp_ptr)
 {
-  GDisplay * gdisp;
-  MeasureTool * measure_tool;
+  GDisplay    *gdisp;
+  MeasureTool *measure_tool;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
@@ -758,8 +787,8 @@ measure_tool_info_window_close_callback (GtkWidget *widget,
 Tool *
 tools_new_measure_tool (void)
 {
-  Tool * tool;
-  MeasureTool * private;
+  Tool        *tool;
+  MeasureTool *private;
 
   /*  The tool options  */
   if (! measure_tool_options)
@@ -791,15 +820,16 @@ tools_new_measure_tool (void)
 void
 tools_free_measure_tool (Tool *tool)
 {
-  GDisplay * gdisp;
-  MeasureTool * measure_tool;
+  GDisplay    *gdisp;
+  MeasureTool *measure_tool;
 
   measure_tool = (MeasureTool *) tool->private;
   gdisp = (GDisplay *) tool->gdisp_ptr;
 
   if (tool->state == ACTIVE)
     {
-      gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id);
+      gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar),
+			 measure_tool->context_id);
       draw_core_stop (measure_tool->core, tool);
     }
 
