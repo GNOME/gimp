@@ -1,3 +1,11 @@
+Tue Sep 21 11:07:23 MEST 1999  Sven Neuman <sven@gimp.org>
+
+	* blend.c
+	* measure.c
+	* paint_core.c: Changed the behaviour of the 45-degrees constraints
+	again. Now it mimics the selection tools. Using the <Shift> key
+	with the blend tool restricts it to 15 degrees.
+
 Mon Sep 20 23:06:36 MEST 1999  Sven Neuman <sven@gimp.org>
 
 	* app/measure.c: made the creation of guides undoable.

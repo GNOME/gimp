@@ -384,14 +384,13 @@ measure_tool_motion (Tool           *tool,
 	{
 	  if (mevent->state & GDK_CONTROL_MASK)
 	    {
-	      int d;
-	      
 	      dx = measure_tool->x[i] - measure_tool->x[0];
 	      dy = measure_tool->y[i] - measure_tool->y[0];
-	      d  = (abs(dx) + abs(dy)) >> 1;
       
-	      measure_tool->x[i] = measure_tool->x[0] + ((dx < 0) ? -d : d);
-	      measure_tool->y[i] = measure_tool->y[0] + ((dy < 0) ? -d : d);
+	      measure_tool->x[i] = measure_tool->x[0] + 
+		(dx > 0 ? MAX (abs (dx), abs (dy)) : - MAX (abs (dx), abs (dy)));
+	      measure_tool->y[i] = measure_tool->y[0] + 
+		(dy > 0  ? MAX (abs (dx), abs (dy)) : - MAX (abs (dx), abs (dy)));
 	    }
 	  else
 	    measure_tool->x[i] = measure_tool->x[0];

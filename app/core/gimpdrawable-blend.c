@@ -631,45 +631,46 @@ blend_motion (Tool           *tool,
 			       &blend_tool->endx, &blend_tool->endy, FALSE, 1);
 
 
-  /* Restrict to multiples of 45 degrees if shift is pressed */
-  if (mevent->state & GDK_SHIFT_MASK) {
-    int dx, dy, d;
-    int abs_dx, abs_dy;
+  /* Restrict to multiples of 15 degrees if shift is pressed */
+  if (mevent->state & GDK_SHIFT_MASK) 
+    {
+      int tangens[6] = { 34, 106, 196, 334, 618, 1944 };
+      int cosinus[7] = { 256, 247, 222, 181, 128, 66, 0 };
+      int dx, dy, i, radius, frac;
 
-    dx = blend_tool->endx - blend_tool->startx;
-    dy = blend_tool->endy - blend_tool->starty;
-    abs_dx = abs(dx);
-    abs_dy = abs(dy);
+      dx = blend_tool->endx - blend_tool->startx;
+      dy = blend_tool->endy - blend_tool->starty;
 
-    d  = (abs_dx + abs_dy) >> 1;
-
-    if ((abs_dx >> 1) < abs_dy && (abs_dy >> 1) < abs_dx) 
-      {
-        blend_tool->endx = blend_tool->startx + ((dx < 0) ? -d : d);
-        blend_tool->endy = blend_tool->starty + ((dy < 0) ? -d : d);
-      }
-    else
-      {
-        if (abs_dx > abs_dy)
-          blend_tool->endy = blend_tool->starty;
-        else
-          blend_tool->endx = blend_tool->startx;
-      }
-  }
-
+      if (dy)
+	{
+	  radius = sqrt (SQR (dx) + SQR (dy));
+	  frac = abs ((dx << 8) / dy);
+	  for (i = 0; i < 6; i++)
+	    {
+	      if (frac < tangens[i])
+		break;  
+	    }
+	  dx = dx > 0 ? (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
+	  dy = dy > 0 ? (cosinus[i] * radius) >> 8 : - ((cosinus[i] * radius) >> 8);
+	}
+      blend_tool->endx = blend_tool->startx + dx;
+      blend_tool->endy = blend_tool->starty + dy;
+    }
+  
   /* restrict to horizontal/vertical blend, if modifiers are pressed */
   if (mevent->state & GDK_MOD1_MASK)
     {
       if (mevent->state & GDK_CONTROL_MASK)
 	{
-	  int dx, dy, d;
+	  int dx, dy;
 	  
 	  dx = blend_tool->endx - blend_tool->startx;
 	  dy = blend_tool->endy - blend_tool->starty;
-	  d  = (abs(dx) + abs(dy)) >> 1;
-
-	  blend_tool->endx = blend_tool->startx + ((dx < 0) ? -d : d);
-	  blend_tool->endy = blend_tool->starty + ((dy < 0) ? -d : d);
+	  
+	  blend_tool->endx = blend_tool->startx +
+	    (dx > 0 ? MAX (abs (dx), abs (dy)) : - MAX (abs (dx), abs (dy)));
+	  blend_tool->endy = blend_tool->starty + 
+	    (dy > 0  ? MAX (abs (dx), abs (dy)) : - MAX (abs (dx), abs (dy)));
 	}
       else
 	blend_tool->endx = blend_tool->startx;

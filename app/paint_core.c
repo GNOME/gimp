@@ -244,14 +244,15 @@ paint_core_button_press (Tool           *tool,
 	{
 	  if (bevent->state & GDK_CONTROL_MASK)
 	    {
-	      double dx, dy, d;
+	      double dx, dy;
 	
 	      dx = paint_core->curx - paint_core->lastx;
 	      dy = paint_core->cury - paint_core->lasty;
-	      d  = (fabs(dx) + fabs(dy)) / 2;  
-	      
-	      paint_core->curx = paint_core->lastx + ((dx < 0) ? -d : d);
-	      paint_core->cury = paint_core->lasty + ((dy < 0) ? -d : d);
+
+	      paint_core->curx = paint_core->lastx + 
+		(dx > 0 ? MAX (fabs (dx), fabs (dy)) : - MAX (fabs (dx), fabs (dy)));
+	      paint_core->cury = paint_core->lasty + 
+		(dy > 0  ? MAX (fabs (dx), fabs (dy)) : - MAX (fabs (dx), fabs (dy)));
 	    }
 	  else
 	    paint_core->curx = paint_core->lastx;
@@ -449,10 +450,11 @@ paint_core_cursor_update (Tool           *tool,
 		{
 		  dx = paint_core->curx - paint_core->lastx;
 		  dy = paint_core->cury - paint_core->lasty;
-		  d = (fabs(dx) + fabs(dy)) / 2;
 
-		  paint_core->curx = paint_core->lastx + ((dx < 0) ? -d : d);
-		  paint_core->cury = paint_core->lasty + ((dy < 0) ? -d : d);
+		  paint_core->curx = paint_core->lastx + 
+		    (dx > 0 ? MAX (fabs (dx), fabs (dy)) : - MAX (fabs (dx), fabs (dy)));
+		  paint_core->cury = paint_core->lasty + 
+		    (dy > 0  ? MAX (fabs (dx), fabs (dy)) : - MAX (fabs (dx), fabs (dy)));
 		}
 	      else
 		paint_core->curx = paint_core->lastx;
