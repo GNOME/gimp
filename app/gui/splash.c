@@ -145,8 +145,8 @@ splash_update (const gchar *text1,
   if (text2)
     gtk_label_set_text (GTK_LABEL (label2), text2);
   
-  gtk_progress_bar_update (GTK_PROGRESS_BAR (progress), 
-                           CLAMP (percentage, 0.0, 1.0));
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress), 
+                                 CLAMP (percentage, 0.0, 1.0));
   
   while (gtk_events_pending ())
     gtk_main_iteration ();

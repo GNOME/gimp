@@ -1396,9 +1396,9 @@ alienmap2_dialog (void)
 
 		     NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   top_table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (top_table), 4);
@@ -1436,9 +1436,9 @@ alienmap2_dialog (void)
 			      TRUE, 0, 0,
 			      _("Change frequency of the red/hue channel"),
 			      NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &wvals.redfrequency);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &wvals.redfrequency);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("R/H-Phaseshift:"), SCALE_WIDTH, 0,
@@ -1446,9 +1446,9 @@ alienmap2_dialog (void)
 			      TRUE, 0, 0,
 			      _("Change angle of the red/hue channel"),
 			      NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &wvals.redangle);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &wvals.redangle);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("G/S-Frequency:"), SCALE_WIDTH, 0,
@@ -1456,9 +1456,9 @@ alienmap2_dialog (void)
 			      TRUE, 0, 0,
 			      _("Change frequency of the green/saturation "
 				"channel"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &wvals.greenfrequency);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &wvals.greenfrequency);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 			      _("G/S-Phaseshift:"), SCALE_WIDTH, 0,
@@ -1466,9 +1466,9 @@ alienmap2_dialog (void)
 			      TRUE, 0, 0,
 			      _("Change angle of the green/saturation channel"),
 			      NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &wvals.greenangle);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &wvals.greenangle);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
 			      _("B/L-Frequency:"), SCALE_WIDTH, 0,
@@ -1476,9 +1476,9 @@ alienmap2_dialog (void)
 			      TRUE, 0, 0,
 			      _("Change frequency of the blue/luminance "
 				"channel"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &wvals.bluefrequency);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &wvals.bluefrequency);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
 			      _("B/L-Phaseshift:"), SCALE_WIDTH, 0,
@@ -1486,9 +1486,9 @@ alienmap2_dialog (void)
 			      TRUE, 0, 0,
 			      _("Change angle of the blue/luminance channel"),
 			      NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &wvals.blueangle);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &wvals.blueangle);
 
   /*  Mode toggle box  */
   frame =
@@ -1511,35 +1511,41 @@ alienmap2_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Modify Red/Hue Channel"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
-		      &wvals.redmode);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.redmode);
   gtk_widget_show (toggle);
+
   gimp_help_set_help_data (toggle, _("Use function for red/hue component"),
 			   NULL);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (alienmap2_toggle_update),
+                    &wvals.redmode);
+
   toggle = gtk_check_button_new_with_label (_("Modify Green/Saturation Channel"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
-		      &wvals.greenmode);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.greenmode);
   gtk_widget_show (toggle);
+
   gimp_help_set_help_data (toggle,
 			   _("Use function for green/saturation component"),
 			   NULL);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (alienmap2_toggle_update),
+                    &wvals.greenmode);
+
   toggle = gtk_check_button_new_with_label (_("Modify Blue/Luminance Channel"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
-		      &wvals.bluemode);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.bluemode);
   gtk_widget_show (toggle);
+
   gimp_help_set_help_data (toggle,
 			   _("Use function for blue/luminance component"),
 			   NULL);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (alienmap2_toggle_update),
+                    &wvals.bluemode);
 
   gtk_widget_show (frame);
 
@@ -1614,7 +1620,7 @@ dialog_update_preview (void)
       gtk_preview_draw_row (GTK_PREVIEW (wint.preview), p, 0, y, preview_width);
       p += preview_width * 3;
     }
-  gtk_widget_draw (wint.preview, NULL);
+  gtk_widget_queue_draw (wint.preview);
   gdk_flush ();
 }
 
@@ -1680,8 +1686,8 @@ alienmap2_logo_dialog (void)
 
 				 NULL);
 
-      gtk_signal_connect (GTK_OBJECT (logodlg), "destroy",
-			 GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+      g_signal_connect (G_OBJECT (logodlg), "destroy",
+			 G_CALLBACK (gtk_widget_destroyed),
 			  &logodlg);
 
       gtk_quit_add_destroy (1, GTK_OBJECT (logodlg));

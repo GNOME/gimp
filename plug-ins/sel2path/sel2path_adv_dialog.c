@@ -27,10 +27,11 @@
  * 0.1 First version.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <types.h>
-
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -52,7 +53,8 @@ reset_adv_dialog (void)
   for (list = adjust_widgets; list; list = g_slist_next (list))
     {
       widget = GTK_OBJECT (list->data);
-      value  = (gdouble *) gtk_object_get_data (widget ,"default_value");
+      value  = (gdouble *) g_object_get_data (G_OBJECT (widget),
+                                              "default_value");
 
       if (GTK_IS_ADJUSTMENT (widget))
 	{
@@ -99,11 +101,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      TRUE, 0, 0,
 			      "If two endpoints are closer than this,"
 			      "they are made to be equal.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->align_threshold);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->align_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (0.5));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (0.5));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Corner Always Threshold:", SCALE_WIDTH, 0,
@@ -114,11 +116,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      "and successors is smaller than this, it's a corner, "
 			      "even if it's within `corner_surround' pixels of a "
 			      "point with a smaller angle.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->corner_always_threshold);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->corner_always_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (60.0));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (60.0));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Corner Surround:", SCALE_WIDTH, 0,
@@ -127,11 +129,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      TRUE, 0, 0,
 			      "Number of points to consider when determining if a "
 			      "point is a corner or not.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->corner_surround);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->corner_surround);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (4.0));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (4.0));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Corner Threshold:", SCALE_WIDTH, 0,
@@ -141,11 +143,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      "If a point, its predecessors, and its successors "
 			      "define an angle smaller than this, it's a corner.", 
 			      NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->corner_threshold);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->corner_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (100.0));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (100.0));
 
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -157,11 +159,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      "unacceptable.  If any pixel is further away "
 			      "than this from the fitted curve, we try again.", 
 			      NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->error_threshold);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->error_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (0.40));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (0.40));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Filter Alternative Surround:", SCALE_WIDTH, 0,
@@ -170,11 +172,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      TRUE, 0, 0,
 			      "A second number of adjacent points to consider "
 			      "when filtering.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->filter_alternative_surround);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->filter_alternative_surround);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (1.0));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (1.0));
 
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -186,11 +188,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      "filter_surround and filter_alternative_surround "
 			      "points differ by more than this, use the one from "
 			      "filter_alternative_surround.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->filter_epsilon);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->filter_epsilon);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (10.0));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (10.0));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Filter Iteration Count:", SCALE_WIDTH, 0,
@@ -202,11 +204,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      "so --- can produce vastly better results.  But if "
 			      "any points that ``should'' be corners aren't found, "
 			      "the curve goes to hell around that point.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->filter_iteration_count);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->filter_iteration_count);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (4.0));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (4.0));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Filter Percent:", SCALE_WIDTH, 0,
@@ -215,11 +217,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      TRUE, 0, 0,
 			      "To produce the new point, use the old point plus "
 			      "this times the neighbors.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->filter_percent);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->filter_percent);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (0.33));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (0.33));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Filter Secondary Surround:", SCALE_WIDTH, 0,
@@ -229,11 +231,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      "Number of adjacent points to consider if "
 			      "`filter_surround' points defines a straight line.", 
 			      NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->filter_secondary_surround);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->filter_secondary_surround);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (3.0));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (3.0));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Filter Surround:", SCALE_WIDTH, 0,
@@ -242,11 +244,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      TRUE, 0, 0,
 			      "Number of adjacent points to consider when filtering.", 
 			      NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->filter_surround);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->filter_surround);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (2.0));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (2.0));
 
   check = gtk_check_button_new_with_label ("Keep Knees");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), sels->keep_knees);  
@@ -255,12 +257,12 @@ dialog_create_selection_area (SELVALS *sels)
   gimp_help_set_help_data (GTK_WIDGET (check), 
 			   "Says whether or not to remove ``knee'' "
 			   "points after finding the outline.", NULL);
-  gtk_signal_connect (GTK_OBJECT (check), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &sels->keep_knees);
+  g_signal_connect (G_OBJECT (check), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &sels->keep_knees);
   gtk_widget_show (check);
   adjust_widgets = g_slist_append (adjust_widgets, check);
-  gtk_object_set_data (GTK_OBJECT (check), "default_value", def_val ((gdouble)FALSE));
+  g_object_set_data (G_OBJECT (check), "default_value", def_val ((gdouble)FALSE));
   row++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -273,11 +275,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      "be changed back to a curve. This is weighted by the "
 			      "square of the curve length, to make shorter curves "
 			      "more likely to be reverted.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->line_reversion_threshold);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->line_reversion_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (0.01));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (0.01));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Line Threshold:", SCALE_WIDTH, 0,
@@ -287,11 +289,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      "How many pixels (on the average) a spline can "
 			      "diverge from the line determined by its endpoints "
 			      "before it is changed to a straight line.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->line_threshold);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->line_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (0.5));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (0.5));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Reparametrize Improvement:", SCALE_WIDTH, 0,
@@ -301,11 +303,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      "If reparameterization doesn't improve the fit by this "
 			      "much percent, stop doing it. ""Amount of error at which "
 			      "it is pointless to reparameterize.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->reparameterize_improvement);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->reparameterize_improvement);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (0.01));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (0.01));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Reparametrize Threshold:", SCALE_WIDTH, 0,
@@ -318,11 +320,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      "The initial fit is not good enough for the Newton-Raphson "
 			      "iteration to improve it.  It may be that it would be better "
 			      "to detect the cases where we didn't find any corners.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->reparameterize_threshold);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->reparameterize_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (1.0));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (1.0));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Subdivide Search:", SCALE_WIDTH, 0,
@@ -331,11 +333,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      TRUE, 0, 0,
 			      "Percentage of the curve away from the worst point "
 			      "to look for a better place to subdivide.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->subdivide_search);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->subdivide_search);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (0.1));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (0.1));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Subdivide Surround:", SCALE_WIDTH, 0,
@@ -345,11 +347,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      "Number of points to consider when deciding whether "
 			      "a given point is a better place to subdivide.", 
 			      NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->subdivide_surround);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->subdivide_surround);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (4.0));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (4.0));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Subdivide Threshold:", SCALE_WIDTH, 0,
@@ -359,11 +361,11 @@ dialog_create_selection_area (SELVALS *sels)
 			      "How many pixels a point can diverge from a straight "
 			      "line and still be considered a better place to "
 			      "subdivide.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->subdivide_threshold);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->subdivide_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (0.03));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (0.03));
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      "Tangent Surround:", SCALE_WIDTH, 0,
@@ -373,13 +375,13 @@ dialog_create_selection_area (SELVALS *sels)
 			      "Number of points to look at on either side of a "
 			      "point when computing the approximation to the "
 			      "tangent at that point.", NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                      &sels->tangent_surround);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &sels->tangent_surround);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
-  gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (3.0));
+  g_object_set_data (G_OBJECT (adj), "default_value", def_val (3.0));
 
-  return GTK_WIDGET(table);
+  return GTK_WIDGET (table);
 }
 
 

@@ -609,18 +609,18 @@ palette_dialog (gchar *title)
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (dialog), palette_file);
 
-  gtk_signal_connect
-    (GTK_OBJECT (GTK_FILE_SELECTION (dialog)->ok_button), "clicked",
-     GTK_SIGNAL_FUNC (palette_ok),
+  g_signal_connect
+    (G_OBJECT (GTK_FILE_SELECTION (dialog)->ok_button), "clicked",
+     G_CALLBACK (palette_ok),
      dialog);
-  gtk_signal_connect_object
-    (GTK_OBJECT (GTK_FILE_SELECTION (dialog)->cancel_button), "clicked",
-     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-     GTK_OBJECT (dialog));
+  g_signal_connect_swapped
+    (G_OBJECT (GTK_FILE_SELECTION (dialog)->cancel_button), "clicked",
+     G_CALLBACK (gtk_widget_destroy),
+     dialog);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   gimp_help_connect (dialog, gimp_standard_help_func,
 		     "filters/cel.html");

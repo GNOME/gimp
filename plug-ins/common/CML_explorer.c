@@ -853,7 +853,7 @@ CML_main_function (gint preview_p)
     }
   if (preview_p)
     {
-      gtk_widget_draw (preview, NULL);
+      gtk_widget_queue_draw (preview);
       gdk_flush ();
     }
   else
@@ -1179,9 +1179,9 @@ CML_explorer_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   memset (&widget_pointers, (gint) 0, sizeof (widget_pointers));
 
@@ -1220,17 +1220,19 @@ CML_explorer_dialog (void)
 
   button = gtk_button_new_with_label (_("Save"));
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (CML_save_to_file_callback),
-		      &VALS);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (CML_save_to_file_callback),
+                    &VALS);
 
   button = gtk_button_new_with_label (_("Load"));
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (CML_load_from_file_callback),
-		      &VALS);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (CML_load_from_file_callback),
+                    &VALS);
 
   hseparator = gtk_hseparator_new ();
   gtk_box_pack_end (GTK_BOX (vbox), hseparator, FALSE, FALSE, 4);
@@ -1238,30 +1240,33 @@ CML_explorer_dialog (void)
 
   button = gtk_button_new_with_label (_("Random Seed"));
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (CML_set_or_randomize_seed_callback),
-		      &VALS);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (CML_set_or_randomize_seed_callback),
+                    &VALS);
 
   random_sensitives[2].widget = button;
   random_sensitives[2].logic  = FALSE;
 
   button = gtk_button_new_with_label (_("Fix Seed"));
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (CML_set_or_randomize_seed_callback),
-		      &VALS);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (CML_set_or_randomize_seed_callback),
+                    &VALS);
 
   random_sensitives[1].widget = button;
   random_sensitives[1].logic  = TRUE;
 
   button = gtk_button_new_with_label (_("New Seed"));
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (CML_preview_update_callback),
-		      &VALS);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (CML_preview_update_callback),
+                    &VALS);
 
   random_sensitives[0].widget = button;
   random_sensitives[0].logic  = TRUE;
@@ -1408,10 +1413,11 @@ CML_explorer_dialog (void)
 	gtk_button_new_with_label
 	(_("Switch to \"From Seed\" with the last Seed"));
       gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, 1, 2);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  GTK_SIGNAL_FUNC (CML_set_or_randomize_seed_callback),
-			  &VALS);
       gtk_widget_show (button);
+
+      g_signal_connect (G_OBJECT (button), "clicked",
+                        G_CALLBACK (CML_set_or_randomize_seed_callback),
+                        &VALS);
 
       random_sensitives[4].widget = button;
       random_sensitives[4].logic  = TRUE;
@@ -1490,10 +1496,11 @@ CML_explorer_dialog (void)
       button = gtk_button_new_with_label (_("Copy Parameters"));
       gtk_table_attach (GTK_TABLE (table), button, 0, 2, 2, 3,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  GTK_SIGNAL_FUNC (CML_copy_parameters_callback),
-			  &VALS);
       gtk_widget_show (button);
+
+      g_signal_connect (G_OBJECT (button), "clicked",
+                        G_CALLBACK (CML_copy_parameters_callback),
+                        &VALS);
 
       subframe = gtk_frame_new (_("Selective Load Settings"));
       gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
@@ -1830,10 +1837,12 @@ CML_dialog_channel_panel_new (gchar     *name,
   button = gtk_button_new_with_label (_("Plot the Graph of the Settings"));
   gtk_table_attach_defaults (GTK_TABLE (table), button,
 			     0, 3, index, index + 1);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (function_graph_new),
-		      chank);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (function_graph_new),
+                    chank);
+
   index++;
 
   return frame;
@@ -1939,9 +1948,9 @@ function_graph_new (GtkWidget *widget,
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   frame = gtk_frame_new (_("The Graph"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
@@ -2120,15 +2129,15 @@ CML_save_to_file_callback (GtkWidget *widget,
   filesel = gtk_file_selection_new (_("Save Parameters to"));
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
-		      "clicked",
-		      GTK_SIGNAL_FUNC (CML_execute_save_to_file),
-		      filesel);
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
+                    "clicked",
+                    G_CALLBACK (CML_execute_save_to_file),
+                    filesel);
 
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
-			     "clicked",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT (filesel));
+  g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
+                            "clicked",
+                            G_CALLBACK (gtk_widget_destroy),
+                            filesel);
 
   if (strlen (VALS.last_file_name) > 0)
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
@@ -2260,9 +2269,9 @@ force_overwrite (const gchar *filename)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 6);
@@ -2310,15 +2319,15 @@ CML_load_from_file_callback (GtkWidget *widget,
     filesel = gtk_file_selection_new (_("Selective Load from"));
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
-		      "clicked",
-		      GTK_SIGNAL_FUNC (CML_execute_load_from_file),
-		      filesel);
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
+                    "clicked",
+                    G_CALLBACK (CML_execute_load_from_file),
+                    filesel);
 
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
-			     "clicked",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT (filesel));
+  g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
+                            "clicked",
+                            G_CALLBACK (gtk_widget_destroy),
+                            filesel);
 
   if (strlen (VALS.last_file_name) > 0)
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
@@ -2590,9 +2599,9 @@ CML_explorer_toggle_entry_init (WidgetEntry *widget_entry,
 				GtkWidget   *widget,
 				gpointer     value_ptr)
 {
-  gtk_signal_connect (GTK_OBJECT (widget), "toggled",
-		      GTK_SIGNAL_FUNC (CML_explorer_toggle_update),
-		      value_ptr);
+  g_signal_connect (G_OBJECT (widget), "toggled",
+                    G_CALLBACK (CML_explorer_toggle_update),
+                    value_ptr);
 
   widget_entry->widget  = widget;
   widget_entry->value   = value_ptr;
@@ -2623,9 +2632,9 @@ CML_explorer_int_entry_init (WidgetEntry *widget_entry,
 			     GtkObject   *adjustment,
 			     gpointer     value_ptr)
 {
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (CML_explorer_int_adjustment_update),
-		      value_ptr);
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                    G_CALLBACK (CML_explorer_int_adjustment_update),
+                    value_ptr);
 
   widget_entry->widget  = (GtkWidget *) adjustment;
   widget_entry->value   = value_ptr;
@@ -2656,9 +2665,9 @@ CML_explorer_double_entry_init (WidgetEntry *widget_entry,
 				GtkObject   *adjustment,
 				gpointer     value_ptr)
 {
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (CML_explorer_double_adjustment_update),
-		      value_ptr);
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                    G_CALLBACK (CML_explorer_double_adjustment_update),
+                    value_ptr);
 
   widget_entry->widget  = (GtkWidget *) adjustment;
   widget_entry->value   = value_ptr;

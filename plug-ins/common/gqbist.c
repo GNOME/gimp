@@ -606,7 +606,8 @@ dialog_update_previews (GtkWidget *widget,
 	  gtk_preview_draw_row (GTK_PREVIEW (preview[j]), buf,
 				0, i, PREVIEW_SIZE);
 	}
-      gtk_widget_draw (preview[j], NULL);
+
+      gtk_widget_queue_draw (preview[j]);
     }
 }
 
@@ -735,15 +736,17 @@ dialog_load (GtkWidget *widget,
   gimp_help_connect (file_select, gimp_standard_help_func,
 		     "filters/gqbist.html");
 
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select), qbist_info.path);
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
-		      "clicked",
-		      GTK_SIGNAL_FUNC (file_selection_load),
-		      (gpointer) file_select);
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button),
-			     "clicked",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT (file_select));
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select),
+                                   qbist_info.path);
+
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
+                    "clicked",
+                    G_CALLBACK (file_selection_load),
+                    file_select);
+  g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button),
+                            "clicked",
+                            G_CALLBACK (gtk_widget_destroy),
+                            file_select);
 
   gtk_widget_show (file_select);
 }
@@ -762,14 +765,15 @@ dialog_save (GtkWidget *widget,
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select), 
 				   qbist_info.path);
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
-		      "clicked",
-		      GTK_SIGNAL_FUNC (file_selection_save),
-		      (gpointer) file_select);
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button),
-			     "clicked",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT (file_select));
+
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
+                    "clicked",
+                    G_CALLBACK (file_selection_save),
+                    file_select);
+  g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button),
+                            "clicked",
+                            G_CALLBACK (gtk_widget_destroy),
+                            file_select);
 
   gtk_widget_show (file_select);
 }
@@ -808,9 +812,9 @@ dialog_create (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -830,13 +834,14 @@ dialog_create (void)
   for (i = 0; i < 9; i++)
     {
       button = gtk_button_new ();
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  GTK_SIGNAL_FUNC (dialog_select_preview),
-			  (gpointer) & (info[(i + 5) % 9]));
       gtk_table_attach (GTK_TABLE (table), 
 			button, i % 3, (i % 3) + 1, i / 3, (i / 3) + 1,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (button);
+
+      g_signal_connect (G_OBJECT (button), "clicked",
+                        G_CALLBACK (dialog_select_preview),
+                        (gpointer) & (info[(i + 5) % 9]));
 
       preview[i] = gtk_preview_new (GTK_PREVIEW_COLOR);
       gtk_preview_size (GTK_PREVIEW (preview[i]), PREVIEW_SIZE, PREVIEW_SIZE);
@@ -848,10 +853,11 @@ dialog_create (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
 				qbist_info.oversampling > 1);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (dialog_toggle_antialaising),
-		      NULL);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (dialog_toggle_antialaising),
+                    NULL);
 
   bbox = gtk_hbutton_box_new ();
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
@@ -860,18 +866,20 @@ dialog_create (void)
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (dialog_load),
-		      NULL);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (dialog_load),
+                    NULL);
 
   button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (dialog_save),
-		      NULL);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (dialog_save),
+                    NULL);
 
   dialog_update_previews (NULL, NULL);
   gtk_widget_show (dialog);

@@ -113,6 +113,11 @@
 #include <string.h>
 #include <ctype.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #if defined (GDK_WINDOWING_X11)

@@ -137,7 +137,7 @@ offset_dialog_create (GimpDrawable *drawable)
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_widget_set_size_request (spinbutton, 75, 0);
   
   off_d->off_se = gimp_size_entry_new (1, off_d->gimage->unit, "%a",
 				       TRUE, TRUE, FALSE, 75,

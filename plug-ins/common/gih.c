@@ -54,6 +54,8 @@
 #endif
 #include <ctype.h>
 
+#include <glib.h>
+
 #ifdef G_OS_WIN32
 #include <io.h>
 #endif
@@ -227,7 +229,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam      values[1];
-  GimpRunMode       run_mode;
+  GimpRunMode           run_mode;
   GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
   GimpParasite         *pipe_parasite;
   gint32                image_ID;
@@ -243,6 +245,7 @@ run (gchar      *name,
 
   *return_vals  = values;
   *nreturn_vals = 1;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -853,9 +856,9 @@ gih_save_dialog (gint32 image_ID)
 			 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* The main table */
   table = gtk_table_new (8, 2, FALSE);
@@ -873,9 +876,10 @@ gih_save_dialog (gint32 image_ID)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Spacing (Percent):"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &info.spacing);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &info.spacing);
 
   /*
    * Description: ___________
@@ -886,9 +890,10 @@ gih_save_dialog (gint32 image_ID)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Description:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (entry_callback),
-		      info.description);
+
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (entry_callback),
+                    info.description);
 
   /*
    * Cell size: __ x __ pixels
@@ -900,6 +905,7 @@ gih_save_dialog (gint32 image_ID)
 				     2, gimp_image_width (image_ID), 1, 1, 1,
 				     1, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
 
   layer_ID = gimp_image_get_layers (image_ID, &nlayers);
   cellw_adjust.orientation = GIMP_VERTICAL;
@@ -908,10 +914,10 @@ gih_save_dialog (gint32 image_ID)
   cellw_adjust.nguides     = 0;
   cellw_adjust.guides      = NULL;
   cellw_adjust.value       = &gihparams.cellwidth;
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (size_adjustment_callback),
-		      &cellw_adjust);
-  gtk_widget_show (spinbutton);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                    G_CALLBACK (size_adjustment_callback),
+                    &cellw_adjust);
 
   label = gtk_label_new ("x");
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
@@ -922,16 +928,18 @@ gih_save_dialog (gint32 image_ID)
 				     2, gimp_image_height (image_ID), 1, 1, 1,
 				     1, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+
   cellh_adjust.orientation = GIMP_HORIZONTAL;
   cellh_adjust.image       = image_ID;
   cellh_adjust.toplayer    = layer_ID[nlayers-1];
   cellh_adjust.nguides     = 0;
   cellh_adjust.guides      = NULL;
   cellh_adjust.value       = &gihparams.cellheight;
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (size_adjustment_callback),
-		      &cellh_adjust);
-  gtk_widget_show (spinbutton);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                    G_CALLBACK (size_adjustment_callback),
+                    &cellh_adjust);
 
   label = gtk_label_new ( _("Pixels"));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
@@ -952,9 +960,10 @@ gih_save_dialog (gint32 image_ID)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Number of Cells:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &gihparams.ncells);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &gihparams.ncells);
 
   if (gihparams.dim == 1)
     cellw_adjust.ncells = cellh_adjust.ncells = adjustment;
@@ -1010,9 +1019,10 @@ gih_save_dialog (gint32 image_ID)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
 			     _("Dimension:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &gihparams.dim);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &gihparams.dim);
 
   /*
    * Ranks: __ __ __ __ __
@@ -1030,10 +1040,12 @@ gih_save_dialog (gint32 image_ID)
 					 gihparams.rank[i], 0, 100, 1, 1, 1,
 					 1, 0);
       gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 0);
-      gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-			  &gihparams.rank[i]);
       gtk_widget_show (spinbutton);
+
+      g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &gihparams.rank[i]);
+
       if (i == 0)
 	{ 
 	  if (gihparams.dim == 1)
@@ -1058,23 +1070,27 @@ gih_save_dialog (gint32 image_ID)
   cbitems = g_list_append (cbitems, "ytilt");
 
   box = gtk_hbox_new (TRUE, 4);
+
   for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
     {
       cb = gtk_combo_new ();
+      gtk_editable_set_editable (GTK_EDITABLE (GTK_COMBO (cb)->entry), FALSE);
+
       gtk_combo_set_popdown_strings (GTK_COMBO (cb), cbitems);
       if (gihparams.selection[i])
-	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry)
-			    , gihparams.selection[i]);
+	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry),
+			    gihparams.selection[i]);
       else
 	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry), "random");
-      gtk_entry_set_editable (GTK_ENTRY (GTK_COMBO (cb)->entry), FALSE);
 
       gtk_box_pack_start (GTK_BOX (box), cb, FALSE, TRUE, 0);
-      gtk_signal_connect (GTK_OBJECT (GTK_COMBO (cb)->entry), "changed",
-			  GTK_SIGNAL_FUNC (cb_callback),
-			  &gihparams.selection[i]);
       gtk_widget_show (cb);
+
+      g_signal_connect (G_OBJECT (GTK_COMBO (cb)->entry), "changed",
+                        G_CALLBACK (cb_callback),
+                        &gihparams.selection[i]);
     }
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 7,
 			     _("Selection:"), 1.0, 0.5,
 			     box, 1, FALSE);

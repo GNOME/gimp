@@ -425,9 +425,9 @@ colortoalpha_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_main_quit),
-                      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   frame = gtk_frame_new (_("Color"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
@@ -449,17 +449,18 @@ colortoalpha_dialog (GimpDrawable *drawable)
 				  PRV_WIDTH, PRV_HEIGHT,
 				  &pvals.color, 
 				  GIMP_COLOR_AREA_FLAT);
-  gtk_signal_connect (GTK_OBJECT (button), "color_changed",
-		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
-		      &pvals.color);
   gtk_table_attach (GTK_TABLE (table), button, 1, 2, 0, 1, 
 		    GTK_FILL, GTK_SHRINK, 0, 0) ; 
   gtk_widget_show (button);
   ppreview.color_button = button;
 
+  g_signal_connect (G_OBJECT (button), "color_changed",
+                    G_CALLBACK (gimp_color_button_get_color),
+                    &pvals.color);
+
   label = gtk_label_new (_("to Alpha"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach_defaults (GTK_TABLE(table), label, 2, 3, 0, 1);
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 0, 1);
   gtk_widget_show (label);
 
   gtk_widget_show (dlg);

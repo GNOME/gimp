@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
 #include "imap_cmd_unselect.h"
 #include "imap_main.h"
 

@@ -46,16 +46,16 @@
 /******************************************************************************/
 
 static void      query  (void);
-static void      run    (gchar   *name,
-			 gint     nparam,
+static void      run    (gchar      *name,
+			 gint        nparam,
 			 GimpParam  *param,
-			 gint    *nreturn_vals,
+			 gint       *nreturn_vals,
 			 GimpParam **return_vals);
 
 static void      filter                  (GimpDrawable *drawable);
 static void      filter_preview          (void);
-static void      fill_preview_with_thumb (GtkWidget *preview_widget, 
-					  gint32     drawable_ID);
+static void      fill_preview_with_thumb (GtkWidget    *preview_widget, 
+					  gint32        drawable_ID);
 static gboolean  dialog                  (GimpDrawable *drawable);
 
 /******************************************************************************/
@@ -124,19 +124,20 @@ query (void)
 /******************************************************************************/
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *params,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  GimpDrawable     *drawable;
-  GimpRunMode   run_mode;
-  static GimpParam  returnv[1];
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  static GimpParam   returnv[1];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = params[0].data.d_int32;
   drawable = gimp_drawable_get (params[2].data.d_drawable);
+
   *nreturn_vals = 1;
   *return_vals  = returnv;
 
@@ -568,35 +569,40 @@ dialog (GimpDrawable *mangle)
 			 
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
 			 GTK_STOCK_OK, dialog_ok_handler,
 			 NULL, NULL, NULL, TRUE, FALSE,
 			 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* Initialize Tooltips */
   gimp_help_init ();
   
   main_vbox = gtk_vbox_new (FALSE, 3);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
+                      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   frame = gtk_frame_new (_("Preview"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
+
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
+
   preview = preview_widget (mangle);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   filter_preview();
@@ -619,36 +625,43 @@ dialog (GimpDrawable *mangle)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Division:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &parameters.division);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (filter_preview),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &parameters.division);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (filter_preview),
+                    NULL);
 
   radio = gtk_radio_button_new_with_label (group, _("Mode 1"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio));
-  gtk_signal_connect (GTK_OBJECT (radio), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &parameters.type1);
-  gtk_signal_connect (GTK_OBJECT (radio), "toggled",
-		      GTK_SIGNAL_FUNC (filter_preview),
-		      NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), parameters.type1);
-  gtk_table_attach (GTK_TABLE (table), radio, 0, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio));
+  gtk_table_attach (GTK_TABLE (table), radio, 0, 2, 1, 2,
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (radio);
 
+  g_signal_connect (G_OBJECT (radio), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &parameters.type1);
+  g_signal_connect (G_OBJECT (radio), "toggled",
+                    G_CALLBACK (filter_preview),
+                    NULL);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), parameters.type1);
+
   radio = gtk_radio_button_new_with_label (group, _("Mode 2"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio));
-  gtk_signal_connect (GTK_OBJECT (radio), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &parameters.type2);
-  gtk_signal_connect (GTK_OBJECT (radio), "toggled",
-		      GTK_SIGNAL_FUNC (filter_preview),
-		      NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), parameters.type2);
-  gtk_table_attach (GTK_TABLE (table), radio, 0, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio));
+  gtk_table_attach (GTK_TABLE (table), radio, 0, 2, 2, 3,
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (radio);
+
+  g_signal_connect (G_OBJECT (radio), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &parameters.type2);
+  g_signal_connect (G_OBJECT (radio), "toggled",
+                    G_CALLBACK (filter_preview),
+                    NULL);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), parameters.type2);
 
   gtk_widget_show (dlg);
 

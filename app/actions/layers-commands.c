@@ -662,7 +662,7 @@ layers_new_layer_query (GimpImage *gimage,
   gtk_widget_show (label);
 
   options->name_entry = gtk_entry_new ();
-  gtk_widget_set_usize (options->name_entry, 75, 0);
+  gtk_widget_set_size_request (options->name_entry, 75, -1);
   gtk_table_attach_defaults (GTK_TABLE (table), 
 			     options->name_entry, 1, 2, 0, 1);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
@@ -686,7 +686,7 @@ layers_new_layer_query (GimpImage *gimage,
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   
   options->size_se = gimp_size_entry_new (1, gimage->unit, "%a",
 					  TRUE, TRUE, FALSE, 75,

@@ -93,10 +93,10 @@ static gboolean run_flag = FALSE;
 /* Declare some local functions.
  */
 static void   query (void);
-static void   run   (gchar   *name,
-		     gint     nparams,
+static void   run   (gchar      *name,
+		     gint        nparams,
 		     GimpParam  *param,
-		     gint    *nreturn_vals,
+		     gint       *nreturn_vals,
 		     GimpParam **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -378,22 +378,22 @@ run (gchar      *name,
 
 {
   static GimpParam   values[1];
-  GimpRunMode    run_mode;
+  GimpRunMode        run_mode;
   GimpDrawable      *drawable = NULL;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  guchar *c;
-  gint    j;
+  guchar            *c;
+  gint               j;
 
-  c = (guchar *)ident;
+  c = (guchar *) ident;
 
   INIT_I18N_UI();
 
   l_run_mode = run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   while (status == GIMP_PDB_SUCCESS)
@@ -559,9 +559,9 @@ dialog (gint32 drawable_ID)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_main_quit),
-                      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* Preview */
   ip = img_preview_create_from_drawable (IMG_PRV_SIZE, drawable_ID);
@@ -648,15 +648,16 @@ add_color_button (gint       csel_index,
 				  PRV_WIDTH, PRV_HEIGHT,
 				  &plvals.colors[csel_index], 
 				  GIMP_COLOR_AREA_FLAT);
-  gtk_signal_connect (GTK_OBJECT (button), "color_changed", 
-		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
-		      &plvals.colors[csel_index]);
-  gtk_signal_connect (GTK_OBJECT (button), "color_changed",
-                      GTK_SIGNAL_FUNC (update_img_preview),
-                      NULL);
   gtk_table_attach (GTK_TABLE (table), button, left+1, left+2, top, top+1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "color_changed", 
+                    G_CALLBACK (gimp_color_button_get_color), 
+                    &plvals.colors[csel_index]);
+  g_signal_connect (G_OBJECT (button), "color_changed",
+                    G_CALLBACK (update_img_preview),
+                    NULL);
 }
 
 

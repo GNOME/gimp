@@ -23,6 +23,10 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
+#include "libgimp/gimp.h"
+
 #include "imap_cmd_move.h"
 #include "imap_cmd_object_move.h"
 #include "imap_main.h"
@@ -132,10 +136,10 @@ button_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
    MoveCommand_t *command = (MoveCommand_t*) data;
 
-   gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
-				 (GtkSignalFunc) button_motion, data);
-   gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
-				 (GtkSignalFunc) button_release, data);
+   g_signal_handlers_disconnect_by_func (G_OBJECT(widget), 
+                                         button_motion, data);
+   g_signal_handlers_disconnect_by_func (G_OBJECT(widget), 
+                                         button_release, data);
 
    if (!command->moved_first_time) {
       preview_set_cursor(command->preview, command->cursor);
@@ -159,9 +163,9 @@ move_command_execute(Command_t *parent)
    GtkWidget *widget = command->preview->preview;
 
    preview_freeze();
-   gtk_signal_connect(GTK_OBJECT(widget), "button_release_event", 
-		      (GtkSignalFunc) button_release, command);   
-   gtk_signal_connect(GTK_OBJECT(widget), "motion_notify_event", 
-		      (GtkSignalFunc) button_motion, command);   
+   g_signal_connect(G_OBJECT(widget), "button_release_event", 
+                    G_CALLBACK (button_release), command);   
+   g_signal_connect(G_OBJECT(widget), "motion_notify_event", 
+                    G_CALLBACK (button_motion), command);   
    return CMD_DESTRUCT;
 }

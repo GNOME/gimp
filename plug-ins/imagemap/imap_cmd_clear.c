@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
 #include "imap_cmd_clear.h"
 #include "imap_cmd_delete.h"
 #include "imap_main.h"

@@ -794,9 +794,9 @@ save_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -814,38 +814,40 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1,
 		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &jsvals.optimize);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.optimize);
 
   toggle = gtk_check_button_new_with_label (_("Clear Transparent"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 			       jsvals.clr_transparent);
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 1, 2,
 		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &jsvals.clr_transparent);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.clr_transparent);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 				     _("Quality:"), SCALE_WIDTH, 0,
 				     jsvals.quality, 0.0, 1.0, 0.01, 0.11, 2,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &jsvals.quality);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &jsvals.quality);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 				     _("Smoothing:"), SCALE_WIDTH, 0,
 				     jsvals.smoothing, 0.0, 1.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &jsvals.smoothing);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &jsvals.smoothing);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);

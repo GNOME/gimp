@@ -21,10 +21,15 @@
  *
  */
 
+#include "config.h"
+
+#include <gtk/gtk.h>
+
 #include "imap_cmd_unselect.h"
 #include "imap_cmd_unselect_all.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 COMMAND_PROTO(unselect_all_command);
 

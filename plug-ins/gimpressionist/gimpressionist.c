@@ -8,8 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <gtk/gtk.h>
-#include <glib.h>
 #include <sys/types.h>
 #ifdef HAVE_DIRENT_H
 #include <dirent.h>
@@ -18,6 +16,11 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>

@@ -45,11 +45,11 @@ enum
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar     *name,
-			 gint       nparams,
-			 GimpParam    *param,
-			 gint      *nreturn_vals,
-			 GimpParam   **return_vals);
+static void      run    (gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
 static void      deinterlace        (GimpDrawable  *drawable);
 
@@ -96,16 +96,16 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -274,24 +274,28 @@ deinterlace_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Mode"),
-			   G_CALLBACK (gimp_radio_button_update),
-			   &DeinterlaceValue, (gpointer) DeinterlaceValue,
+  frame = gimp_radio_group_new2 (TRUE, _("Mode"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &DeinterlaceValue,
+                                 GINT_TO_POINTER (DeinterlaceValue),
 
-			   _("Keep Odd Fields"), (gpointer) ODD_FIELDS, NULL,
-			   _("Keep Even Fields"), (gpointer) EVEN_FIELDS, NULL,
+                                 _("Keep Odd Fields"),
+                                 GINT_TO_POINTER (ODD_FIELDS), NULL,
 
-				 NULL);
+                                 _("Keep Even Fields"),
+                                 GINT_TO_POINTER (EVEN_FIELDS), NULL,
+
+                                 NULL);
+
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

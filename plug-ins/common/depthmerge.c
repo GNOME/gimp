@@ -149,10 +149,10 @@ void util_convertColorspace (guchar *dest,
 /* ----- plug-in entry points ----- */
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -202,21 +202,22 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     numParams,
+run (gchar      *name,
+     gint        numParams,
      GimpParam  *param,
-     gint    *numReturnVals,
+     gint       *numReturnVals,
      GimpParam **returnVals)
 {
-  static GimpParam    values[1];
-  GimpRunMode     runMode;
-  GimpPDBStatusType      status;
-  DepthMerge       dm;
+  static GimpParam  values[1];
+  GimpRunMode       runMode;
+  GimpPDBStatusType status;
+  DepthMerge        dm;
 
   INIT_I18N_UI();
 
   runMode = (GimpRunMode) param[0].data.d_int32;
-  status = GIMP_PDB_SUCCESS;
+  status  = GIMP_PDB_SUCCESS;
+
   *numReturnVals = 1;
   *returnVals    = values;
 
@@ -646,9 +647,9 @@ DepthMerge_dialog (DepthMerge *dm)
 
 		     NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dm->interface->dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dm->interface->dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* topTable */
   topTable = gtk_table_new (3, 3, FALSE);
@@ -765,40 +766,40 @@ DepthMerge_dialog (DepthMerge *dm)
 			      dm->params.overlap, 0, 2, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialogValueScaleUpdateCallback),
-		      &(dm->params.overlap));
-  gtk_object_set_user_data (GTK_OBJECT (adj), dm);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialogValueScaleUpdateCallback),
+                    &(dm->params.overlap));
+  g_object_set_data (G_OBJECT (adj), "dm", dm);
 
   adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 1,
 			      _("Offset:"), 0, 0,
 			      dm->params.offset, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialogValueScaleUpdateCallback),
-		      &(dm->params.offset));
-  gtk_object_set_user_data (GTK_OBJECT (adj), dm);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialogValueScaleUpdateCallback),
+                    &(dm->params.offset));
+  g_object_set_data (G_OBJECT (adj), "dm", dm);
 
   adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 2,
 			      _("Scale 1:"), 0, 0,
 			      dm->params.scale1, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialogValueScaleUpdateCallback),
-		      &(dm->params.scale1));
-  gtk_object_set_user_data (GTK_OBJECT (adj), dm);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialogValueScaleUpdateCallback),
+                    &(dm->params.scale1));
+  g_object_set_data (G_OBJECT (adj), "dm", dm);
 
   adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 3,
 			      _("Scale 2:"), 0, 0,
 			      dm->params.scale2, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialogValueScaleUpdateCallback),
-		      &(dm->params.scale2));
-  gtk_object_set_user_data (GTK_OBJECT (adj), dm);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialogValueScaleUpdateCallback),
+                    &(dm->params.scale2));
+  g_object_set_data (G_OBJECT (adj), "dm", dm);
 
   dm->interface->active = TRUE;
 
@@ -926,8 +927,7 @@ DepthMerge_updatePreview (DepthMerge *dm)
   g_free(resultRowRGBA);
   g_free(resultRow);
 
-  gtk_widget_draw(dm->interface->preview, NULL);
-  gdk_flush();
+  gtk_widget_queue_draw(dm->interface->preview);
 }
 
 /* ----- Callbacks ----- */
@@ -1078,7 +1078,7 @@ void
 dialogValueScaleUpdateCallback (GtkAdjustment *adjustment,
 				gpointer       data)
 {
-  DepthMerge *dm = gtk_object_get_user_data (GTK_OBJECT (adjustment));
+  DepthMerge *dm = g_object_get_data (G_OBJECT (adjustment), "dm");
 
   gimp_float_adjustment_update (adjustment, data);
 

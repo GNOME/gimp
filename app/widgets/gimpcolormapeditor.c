@@ -215,7 +215,7 @@ gimp_colormap_dialog_new (GimpImage *gimage)
   gtk_widget_show (frame);
 
   ipal->palette = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_widget_set_usize (ipal->palette, -1, 60);
+  gtk_widget_set_size_request (ipal->palette, -1, 60);
   gtk_preview_set_expand (GTK_PREVIEW (ipal->palette), TRUE);
   gtk_widget_add_events (ipal->palette, GDK_BUTTON_PRESS_MASK);
   gtk_container_add (GTK_CONTAINER (frame), ipal->palette);
@@ -265,7 +265,8 @@ gimp_colormap_dialog_new (GimpImage *gimage)
 		    G_CALLBACK (index_adjustment_change_cb),
 		    ipal);
 
-  ipal->color_entry = gtk_entry_new_with_max_length (7);
+  ipal->color_entry = gtk_entry_new ();
+  gtk_entry_set_max_length (GTK_ENTRY (ipal->color_entry), 7);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Hex Triplet:"), 1.0, 0.5,
 			     ipal->color_entry, 1, TRUE);
@@ -540,9 +541,8 @@ static void
 ipal_draw_cell (GimpColormapDialog *ipal,
 		gint                col)
 {
-  guchar       *row;
-  gint          cellsize, x, y, k;
-  GdkRectangle  rec;
+  guchar *row;
+  gint    cellsize, x, y, k;
   
   g_assert (ipal);
   g_assert (ipal->image);
@@ -597,10 +597,10 @@ ipal_draw_cell (GimpColormapDialog *ipal,
 	gtk_preview_draw_row (GTK_PREVIEW (ipal->palette), row,
 			      x, y+k, cellsize);
     }
-  rec.x = x;
-  rec.y = y;
-  rec.width = rec.height = cellsize;
-  gtk_widget_draw (ipal->palette, &rec);
+
+  gtk_widget_queue_draw_area (ipal->palette,
+                              x, y,
+                              cellsize, cellsize);
 }
     
 static void
@@ -667,7 +667,7 @@ ipal_clear (GimpColormapDialog *ipal,
   if (width > 0)
     g_free (row);
 
-  gtk_widget_draw (palette, NULL);
+  gtk_widget_queue_draw (palette);
 }
 
 static void

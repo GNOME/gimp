@@ -357,14 +357,14 @@ color_select_update (ColorSelect           *csp,
     {
       color_select_image_fill (csp->xy_color, csp->xy_color_fill,
 			       &csp->hsv, &csp->rgb);
-      gtk_widget_draw (csp->xy_color, NULL);
+      gtk_widget_queue_draw (csp->xy_color);
     }
 
   if (update & UPDATE_Z_COLOR)
     {
       color_select_image_fill (csp->z_color, csp->z_color_fill,
 			       &csp->hsv, &csp->rgb);
-      gtk_widget_draw (csp->z_color, NULL);
+      gtk_widget_queue_draw (csp->z_color);
     }
 
   if (update & UPDATE_CALLER)

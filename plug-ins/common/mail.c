@@ -231,10 +231,10 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam   values[2];
-  GimpRunMode    run_mode;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32  image_ID;
-  gint32  drawable_ID;
+  gint32             image_ID;
+  gint32             drawable_ID;
 
   INIT_I18N_UI();
 
@@ -244,6 +244,7 @@ run (gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -470,9 +471,9 @@ save_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* table */
   table = gtk_table_new (7, 2, FALSE);
@@ -491,9 +492,9 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Recipient:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (mail_entry_callback),
-		      &mail_info.receipt);
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (mail_entry_callback),
+                    &mail_info.receipt);
 
   /* From entry */
   entry = gtk_entry_new ();
@@ -503,9 +504,9 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Sender:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (mail_entry_callback),
-		      &mail_info.from);
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (mail_entry_callback),
+                    &mail_info.from);
 
   /* Subject entry */
   entry = gtk_entry_new ();
@@ -515,9 +516,9 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Subject:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (mail_entry_callback),
-		      &mail_info.subject);
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (mail_entry_callback),
+                    &mail_info.subject);
 
   /* Comment entry */
   entry = gtk_entry_new ();
@@ -527,9 +528,9 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Comment:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (mail_entry_callback),
-		      &mail_info.comment);
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (mail_entry_callback),
+                    &mail_info.comment);
 
   /* Filename entry */
   entry = gtk_entry_new ();
@@ -539,9 +540,9 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
 			     _("Filename:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (mail_entry_callback),
-		      &mail_info.filename);
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (mail_entry_callback),
+                    &mail_info.filename);
 
   /* comment  */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);

@@ -26,13 +26,22 @@
 #include <stdarg.h>
 #include <stdio.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#include <gtk/gtk.h>
+
 #include "imap_default_dialog.h"
 #include "imap_main.h"
 #include "imap_source.h"
 
 #include "libgimp/stdplugins-intl.h"
 
-/* FIXME: remove usage of the 'broken' GtkText */
+#ifdef __GNUC__
+#warning GTK_ENABLE_BROKEN
+#endif
 #define GTK_ENABLE_BROKEN
 #include <gtk/gtktext.h>
 

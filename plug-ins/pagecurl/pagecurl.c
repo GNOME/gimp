@@ -48,6 +48,7 @@
  *      - Exchanged the meaning of FG/BG Color, because mostly the FG
  *        color is darker.
  */
+
 #include "config.h"
 
 #include <stdio.h>
@@ -228,7 +229,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam  values[2];
-  GimpRunMode   run_mode;
+  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
@@ -430,7 +431,7 @@ static void
 dialog_scale_update (GtkAdjustment *adjustment,
 		     gdouble       *value)
 {
-  *value = ((double) adjustment->value) / 100.0;
+  *value = ((gdouble) adjustment->value) / 100.0;
 }
 
 static void
@@ -513,16 +514,17 @@ do_dialog (void)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_OK, dialog_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
 			    GTK_STOCK_CANCEL, gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
+			    GTK_STOCK_OK, dialog_ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+
 			    NULL);
 
-   gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		       GTK_SIGNAL_FUNC (gtk_main_quit),
-		       NULL);
+   g_signal_connect (G_OBJECT (dialog), "destroy",
+                     G_CALLBACK (gtk_main_quit),
+                     NULL);
 
    vbox = gtk_vbox_new (FALSE, 4);
    gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -607,23 +609,22 @@ do_dialog (void)
        {
 	 button = gtk_radio_button_new_with_label
 	   ((button == NULL) ?
-	    NULL : gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
+	    NULL : gtk_radio_button_get_group (GTK_RADIO_BUTTON (button)),
 	    gettext(name[i]));
 	 gtk_toggle_button_set_active
 	   (GTK_TOGGLE_BUTTON (button),
 	    (i == 0 ? curl.do_upper_left : i == 1 ? curl.do_upper_right :
 	     i == 2 ? curl.do_lower_left : curl.do_lower_right));
 
-	 gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			     GTK_SIGNAL_FUNC (dialog_toggle_update),
-			     (gpointer) i);
-
 	 gtk_table_attach (GTK_TABLE (table), button,
 			   (i % 2) ? 2 : 0, (i % 2) ? 3 : 1,
 			   (i < 2) ? 0 : 2, (i < 2) ? 1 : 3,
 			   GTK_SHRINK, GTK_SHRINK, 0, 0);
-
 	 gtk_widget_show (button);
+
+	 g_signal_connect (G_OBJECT (button), "toggled",
+                           G_CALLBACK (dialog_toggle_update),
+                           GINT_TO_POINTER (i));
        }
    }
 
@@ -651,18 +652,18 @@ do_dialog (void)
        {
 	 button = gtk_radio_button_new_with_label
 	   ((button == NULL) ?
-	    NULL : gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
+	    NULL : gtk_radio_button_get_group (GTK_RADIO_BUTTON (button)),
 	    gettext(name[i]));
 	 gtk_toggle_button_set_active
 	   (GTK_TOGGLE_BUTTON (button),
 	    (i == 0 ? curl.do_horizontal : curl.do_vertical));
 
-	 gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			     GTK_SIGNAL_FUNC (dialog_toggle_update),
-			     (gpointer) (i + 5));
-
 	 gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 	 gtk_widget_show (button);
+
+	 g_signal_connect (G_OBJECT (button), "toggled",
+                           G_CALLBACK (dialog_toggle_update),
+                           GINT_TO_POINTER (i + 5));
        }
    }
 
@@ -672,11 +673,12 @@ do_dialog (void)
    shade_button = gtk_check_button_new_with_label (_("Shade under Curl"));
    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shade_button),
 				 curl.do_shade_under ? TRUE : FALSE);
-   gtk_signal_connect (GTK_OBJECT (shade_button), "toggled",
-		       GTK_SIGNAL_FUNC (dialog_toggle_update),
-		       (gpointer) 8);
    gtk_box_pack_start (GTK_BOX (vbox), shade_button, FALSE, FALSE, 0);
    gtk_widget_show (shade_button);
+
+   g_signal_connect (G_OBJECT (shade_button), "toggled",
+                     G_CALLBACK (dialog_toggle_update),
+                     GINT_TO_POINTER (8));
 
    gradient_button =
      gtk_check_button_new_with_label (_("Use Current Gradient\n"
@@ -685,11 +687,12 @@ do_dialog (void)
 			  GTK_JUSTIFY_LEFT);
    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gradient_button),
 				 curl.do_curl_gradient ? TRUE : FALSE);
-   gtk_signal_connect (GTK_OBJECT (gradient_button), "toggled",
-		       GTK_SIGNAL_FUNC (dialog_toggle_update),
-		       (gpointer) 9);
    gtk_box_pack_start (GTK_BOX (vbox), gradient_button, FALSE, FALSE, 0);
    gtk_widget_show (gradient_button);
+
+   g_signal_connect (G_OBJECT (gradient_button), "toggled",
+                     G_CALLBACK (dialog_toggle_update),
+                     GINT_TO_POINTER (9));
 
    frame = gtk_frame_new (_("Curl Opacity"));
    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -702,12 +705,12 @@ do_dialog (void)
 
    adjustment = gtk_adjustment_new (curl.do_curl_opacity * 100, 0.0, 100.0,
 				    1.0, 1.0, 0.0);
-   gtk_signal_connect (adjustment, "value_changed",
-		       GTK_SIGNAL_FUNC (dialog_scale_update),
-		       &(curl.do_curl_opacity));
+   g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                     G_CALLBACK (dialog_scale_update),
+                     &(curl.do_curl_opacity));
 
    scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-   gtk_widget_set_usize (GTK_WIDGET (scale), 150, 30);
+   gtk_widget_set_size_request (GTK_WIDGET (scale), 150, 30);
    gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
    gtk_scale_set_digits (GTK_SCALE (scale), 0);
    gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);

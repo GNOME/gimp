@@ -26,8 +26,6 @@
 
 typedef struct AreaInfoDialog_t AreaInfoDialog_t;
 
-#include "gtk/gtk.h"
-
 #include "imap_default_dialog.h"
 #include "imap_object.h"
 

@@ -21,6 +21,10 @@
  *
  */
 
+#include "config.h"
+
+#include <gtk/gtk.h>
+
 #include "imap_cmd_create.h"
 #include "imap_command.h"
 #include "imap_default_dialog.h"
@@ -436,9 +440,9 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
    if (obj) {
       if (event->button == 1) {
 	 if (!factory->finish || factory->finish(obj, x, y)) {
-	    gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
-					  (GtkSignalFunc) button_motion, 
-					  factory);
+	    g_signal_handlers_disconnect_by_func(G_OBJECT(widget), 
+                                                 button_motion, 
+                                                 factory);
 
 	    if (object_is_valid(obj)) {
 	       Command_t *command = create_command_new(get_shapes(), obj);
@@ -457,9 +461,9 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
       } else if (event->button == 3) {
 	 object_draw(obj, widget->window);
 	 if (!factory->cancel || factory->cancel(event, obj)) {
-	    gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
-					  (GtkSignalFunc) button_motion, 
-					  factory);
+	    g_signal_handlers_disconnect_by_func(G_OBJECT(widget), 
+                                                 button_motion, 
+                                                 factory);
 	    object_unref(obj);
 	    gdk_gc_set_function(preferences->normal_gc, GDK_COPY);
 	    obj = NULL;
@@ -475,8 +479,9 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	 
 	 gdk_gc_set_function(preferences->normal_gc, GDK_EQUIV);
 	 
-	 gtk_signal_connect(GTK_OBJECT(widget), "motion_notify_event", 
-			    (GtkSignalFunc) button_motion, factory);   
+	 g_signal_connect(G_OBJECT(widget), "motion_notify_event", 
+                          G_CALLBACK (button_motion),
+                          factory);   
       }
    }
 }

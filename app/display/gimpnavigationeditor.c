@@ -599,7 +599,7 @@ nav_popup_click_handler (GtkWidget      *widget,
   x = (x + nav_dialog->pwidth  > scr_w) ? scr_w - nav_dialog->pwidth  - 2: x;
   y = (y + nav_dialog->pheight > scr_h) ? scr_h - nav_dialog->pheight - 2: y;
 
-  gtk_widget_set_uposition (nav_dialog->shell, x, y);
+  gtk_window_move (GTK_WINDOW (nav_dialog->shell), x, y);
   gtk_widget_show (nav_dialog->shell);
 
   gdk_flush();
@@ -784,7 +784,7 @@ nav_dialog_disp_area (NavigationDialog *nav_dialog,
 	{
 	  nav_dialog_update_preview (nav_dialog);
 
-	  gtk_widget_draw (nav_dialog->preview, NULL); 
+	  gtk_widget_queue_draw (nav_dialog->preview);
 	}
     }
 }

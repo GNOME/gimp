@@ -662,9 +662,11 @@ brush_widget_expose (GtkWidget      *widget,
 		      TRUE,	/* filled */
 		      rect.x, rect.y, 
 		      rect.width, rect.height);
-  gtk_draw_shadow (widget->style, widget->window, widget->state, GTK_SHADOW_OUT,
-		   rect.x, rect.y,
-		   rect.width, rect.height);
+  gtk_paint_shadow (widget->style, widget->window, widget->state,
+                    GTK_SHADOW_OUT,
+                    NULL, widget, NULL,
+                    rect.x, rect.y,
+                    rect.width, rect.height);
 }
 
 static void
@@ -724,7 +726,7 @@ brush_widget_motion_notify (GtkWidget      *widget,
 	  if (brush_widget->ink_options->aspect > 10.0)
 	    brush_widget->ink_options->aspect = 10.0;
 
-	  gtk_widget_draw (widget, NULL);
+	  gtk_widget_queue_draw (widget);
 	}
     }
 }
@@ -1653,7 +1655,7 @@ ink_options_new (GimpToolInfo *tool_info)
   darea = gtk_drawing_area_new();
   options->brush_w->widget = darea;
 
-  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 60, 60);
+  gtk_widget_set_size_request (darea, 60, 60);
   gtk_container_add (GTK_CONTAINER (frame), darea);
 
   gtk_widget_set_events (darea, 

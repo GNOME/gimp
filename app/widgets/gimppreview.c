@@ -794,7 +794,7 @@ gimp_preview_popup_timeout (GimpPreview *preview)
   x = (x + popup_width  > scr_width)  ? scr_width  - popup_width  : x;
   y = (y + popup_height > scr_height) ? scr_height - popup_height : y;
 
-  gtk_widget_set_uposition (window, x, y);
+  gtk_window_move (GTK_WINDOW (window), x, y);
   gtk_widget_show (window);
 
   g_object_set_data_full (G_OBJECT (preview), "preview_popup_window", window,

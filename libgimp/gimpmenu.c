@@ -242,9 +242,9 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 				       MENU_THUMBNAIL_WIDTH,
 				       MENU_THUMBNAIL_HEIGHT);
 
-	      gtk_widget_set_usize (GTK_WIDGET (wcolor_box),
-				    MENU_THUMBNAIL_WIDTH,
-				    MENU_THUMBNAIL_HEIGHT);
+	      gtk_widget_set_size_request (GTK_WIDGET (wcolor_box),
+                                           MENU_THUMBNAIL_WIDTH,
+                                           MENU_THUMBNAIL_HEIGHT);
 
 	      gtk_container_add (GTK_CONTAINER (vbox), wcolor_box);
 	      gtk_widget_show (wcolor_box);
@@ -360,9 +360,9 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 				       MENU_THUMBNAIL_WIDTH, 
 				       MENU_THUMBNAIL_HEIGHT); 
 
-	      gtk_widget_set_usize (GTK_WIDGET (wcolor_box),
-				    MENU_THUMBNAIL_WIDTH,
-				    MENU_THUMBNAIL_HEIGHT);
+	      gtk_widget_set_size_request (GTK_WIDGET (wcolor_box),
+                                           MENU_THUMBNAIL_WIDTH,
+                                           MENU_THUMBNAIL_HEIGHT);
 
 	      gtk_container_add (GTK_CONTAINER(vbox), wcolor_box);
 	      gtk_widget_show (wcolor_box);
@@ -481,9 +481,9 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 				       MENU_THUMBNAIL_WIDTH,
 				       MENU_THUMBNAIL_HEIGHT);
 
-	      gtk_widget_set_usize (GTK_WIDGET (wcolor_box), 
-				    MENU_THUMBNAIL_WIDTH , 
-				    MENU_THUMBNAIL_HEIGHT);
+	      gtk_widget_set_size_request (GTK_WIDGET (wcolor_box), 
+                                           MENU_THUMBNAIL_WIDTH , 
+                                           MENU_THUMBNAIL_HEIGHT);
 
 	      gtk_container_add (GTK_CONTAINER(vbox), wcolor_box);
 	      gtk_widget_show (wcolor_box);
@@ -545,9 +545,9 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 				       MENU_THUMBNAIL_WIDTH, 
 				       MENU_THUMBNAIL_HEIGHT); 
 
-	      gtk_widget_set_usize (GTK_WIDGET (wcolor_box), 
-				    MENU_THUMBNAIL_WIDTH , 
-				    MENU_THUMBNAIL_HEIGHT);
+	      gtk_widget_set_size_request (GTK_WIDGET (wcolor_box), 
+                                           MENU_THUMBNAIL_WIDTH , 
+                                           MENU_THUMBNAIL_HEIGHT);
 	      
 	      gtk_container_add (GTK_CONTAINER (vbox), wcolor_box);
 	      gtk_widget_show (wcolor_box);

@@ -50,15 +50,15 @@ static CheckInterface cint =
 };
 
 static void      query  (void);
-static void      run    (gchar    *name,
-			 gint      nparams,
-			 GimpParam   *param,
-			 gint     *nreturn_vals,
-			 GimpParam  **return_vals);
+static void      run    (gchar          *name,
+			 gint            nparams,
+			 GimpParam      *param,
+			 gint           *nreturn_vals,
+			 GimpParam     **return_vals);
 
-static void      check   (GimpDrawable *drawable);
-static gint      inblock (gint       pos,
-			  gint       size);
+static void      check   (GimpDrawable  *drawable);
+static gint      inblock (gint           pos,
+			  gint           size);
 
 static gint      check_dialog      (void);
 static void      check_ok_callback (GtkWidget *widget,
@@ -74,8 +74,8 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static CheckVals cvals =
 {
-   0,
-   10
+  0,
+  10
 };
 
 MAIN ()
@@ -106,25 +106,25 @@ query (void)
 }
 
 static void
-run    (gchar    *name,
-	gint      nparams,
-	GimpParam   *param,
-	gint     *nreturn_vals,
-	GimpParam  **return_vals)
+run (gchar      *name,
+     gint        nparams,
+     GimpParam  *param,
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   INIT_I18N_UI();
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -364,9 +364,9 @@ check_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -380,11 +380,12 @@ check_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Psychobilly"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &cvals.mode);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cvals.mode);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &cvals.mode);
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -396,9 +397,9 @@ check_dialog (void)
 				    cvals.size, 1, 400, 1, 10, 0,
 				    TRUE, 0, 0,
 				    NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &cvals.size);
+  g_signal_connect (G_OBJECT (size_data), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &cvals.size);
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);

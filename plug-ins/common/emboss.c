@@ -525,9 +525,9 @@ pluginCoreIA (struct piArgs *argp)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -540,7 +540,7 @@ pluginCoreIA (struct piArgs *argp)
   gtk_widget_show (hbox);
 
   preview = mw_preview_new (hbox, thePreview);
-  gtk_object_set_data (GTK_OBJECT (preview), "piArgs", argp);
+  g_object_set_data (G_OBJECT (preview), "piArgs", argp);
   emboss_do_preview (preview);
 
   frame = gimp_radio_group_new2 (TRUE, _("Function"),
@@ -571,27 +571,27 @@ pluginCoreIA (struct piArgs *argp)
 			      argp->azimuth, 0.0, 360.0, 1.0, 10.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (emboss_float_adjustment_callback),
-		      &argp->azimuth);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (emboss_float_adjustment_callback),
+                    &argp->azimuth);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Elevation:"), 100, 0,
 			      argp->elevation, 0.0, 180.0, 1.0, 10.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (emboss_float_adjustment_callback),
-		      &argp->elevation);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (emboss_float_adjustment_callback),
+                    &argp->elevation);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Depth:"), 100, 0,
 			      argp->depth, 1.0, 100.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (emboss_int_adjustment_callback),
-		      &argp->depth);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (emboss_int_adjustment_callback),
+                    &argp->depth);
 
   gtk_widget_show (table);
 
@@ -619,7 +619,7 @@ emboss_do_preview (GtkWidget *w)
       theWidget = w;
     }
 
-  ap = gtk_object_get_data (GTK_OBJECT (theWidget), "piArgs");
+  ap = g_object_get_data (G_OBJECT (theWidget), "piArgs");
   rowsize = thePreview->width * thePreview->bpp;
 
   dst = g_malloc (rowsize);
@@ -653,8 +653,8 @@ emboss_do_preview (GtkWidget *w)
 			    dst, 0, y, thePreview->width);
     }
 
-  gtk_widget_draw (theWidget, NULL);
-  gdk_flush ();
+  gtk_widget_queue_draw (theWidget);
+
   g_free (dst);
 }
 
@@ -757,11 +757,12 @@ mw_preview_new (GtkWidget        *parent,
 
   button = gtk_check_button_new_with_label (_("Do Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                      GTK_SIGNAL_FUNC (mw_preview_toggle_callback),
-                      &do_preview);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (mw_preview_toggle_callback),
+                    &do_preview);
 
   return preview;
 }

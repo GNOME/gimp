@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
 #include "imap_cmd_copy_object.h"
 
 #include "libgimp/stdplugins-intl.h"

@@ -121,23 +121,23 @@ typedef struct
 
 /* --- Declare local functions --- */
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
 static void FlareFX                    (GimpDrawable *drawable, 
-					gint       preview_mode);
-static void fill_preview_with_thumb    (GtkWidget *preview_widget, 
-					gint32     drawable_ID);
+					gint          preview_mode);
+static void fill_preview_with_thumb    (GtkWidget    *preview_widget, 
+					gint32        drawable_ID);
 static GtkWidget *preview_widget       (GimpDrawable *drawable);
 
 static gint flare_dialog               (GimpDrawable *drawable);
-static void flare_ok_callback          (GtkWidget *widget,
-					gpointer   data);
+static void flare_ok_callback          (GtkWidget    *widget,
+					gpointer      data);
 
-static GtkWidget * flare_center_create            (GimpDrawable     *drawable);
+static GtkWidget * flare_center_create            (GimpDrawable  *drawable);
 static void	   flare_center_destroy           (GtkWidget     *widget,
 						   gpointer       data);
 static void	   flare_center_draw              (FlareCenter   *center,
@@ -224,23 +224,23 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
   
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   
   /*  Get the specified drawable  */
@@ -332,14 +332,15 @@ flare_dialog (GimpDrawable *drawable)
 
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
 			 GTK_STOCK_OK, flare_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   main_vbox = gtk_vbox_new (FALSE, 2);
@@ -349,7 +350,7 @@ flare_dialog (GimpDrawable *drawable)
 
 
   frame = flare_center_create (drawable);
-  center = gtk_object_get_user_data (GTK_OBJECT (frame));
+  center = g_object_get_data (G_OBJECT (frame), "center");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
@@ -771,11 +772,12 @@ flare_center_create (GimpDrawable *drawable)
   center->in_call  = TRUE;  /* to avoid side effects while initialization */
 
   frame = gtk_frame_new (_("Center of FlareFX"));
-  gtk_signal_connect (GTK_OBJECT (frame), "destroy",
-		      GTK_SIGNAL_FUNC (flare_center_destroy),
-		      center);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+
+  g_signal_connect (G_OBJECT (frame), "destroy",
+                    G_CALLBACK (flare_center_destroy),
+                    center);
 
   table = gtk_table_new (3, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -794,13 +796,15 @@ flare_center_create (GimpDrawable *drawable)
     gimp_spin_button_new (&center->xadj,
                           fvals.posx, G_MININT, G_MAXINT,
                           1, 10, 10, 0, 0);
-  gtk_object_set_user_data (GTK_OBJECT (center->xadj), center);
-  gtk_signal_connect (GTK_OBJECT (center->xadj), "value_changed",
-                      GTK_SIGNAL_FUNC (flare_center_adjustment_update),
-                      &fvals.posx);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
+
+  g_object_set_data (G_OBJECT (center->xadj), "center", center);
+
+  g_signal_connect (G_OBJECT (center->xadj), "value_changed",
+                    G_CALLBACK (flare_center_adjustment_update),
+                    &fvals.posx);
 
   label = gtk_label_new (_("Y:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5 );
@@ -812,13 +816,15 @@ flare_center_create (GimpDrawable *drawable)
     gimp_spin_button_new (&center->yadj,
                           fvals.posy, G_MININT, G_MAXINT,
                           1, 10, 10, 0, 0);
-  gtk_object_set_user_data (GTK_OBJECT (center->yadj), center);
-  gtk_signal_connect (GTK_OBJECT (center->yadj), "value_changed",
-                      GTK_SIGNAL_FUNC (flare_center_adjustment_update),
-                      &fvals.posy);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 3, 4, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
+
+  g_object_set_data (G_OBJECT (center->yadj), "center", center);
+
+  g_signal_connect (G_OBJECT (center->yadj), "value_changed",
+                    G_CALLBACK (flare_center_adjustment_update),
+                    &fvals.posy);
 
   /* frame (shadow_in) that contains preview */
   pframe = gtk_frame_new (NULL);
@@ -827,20 +833,22 @@ flare_center_create (GimpDrawable *drawable)
 
   /* PREVIEW */
   preview = preview_widget (drawable);
-  gtk_object_set_user_data (GTK_OBJECT (preview), center);
   gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_MASK);
-  gtk_signal_connect_after (GTK_OBJECT (preview), "expose_event",
-			    (GtkSignalFunc) flare_center_preview_expose,
-			    center);
-  gtk_signal_connect (GTK_OBJECT (preview), "event",
-		      (GtkSignalFunc) flare_center_preview_events,
-		      center);
-  gtk_container_add (GTK_CONTAINER (pframe ), preview);
+  gtk_container_add (GTK_CONTAINER (pframe), preview);
   gtk_widget_show (preview);
+
+  g_object_set_data (G_OBJECT (preview), "center", center);
+
+  g_signal_connect_after (G_OBJECT (preview), "expose_event",
+                          G_CALLBACK (flare_center_preview_expose),
+                          center);
+  g_signal_connect (G_OBJECT (preview), "event",
+                    G_CALLBACK (flare_center_preview_events),
+                    center);
 
   gtk_widget_show (pframe);
   gtk_widget_show (table);
-  gtk_object_set_user_data (GTK_OBJECT (frame), center);
+  g_object_set_data (G_OBJECT (frame), "center", center);
   gtk_widget_show (frame);
 
   /* show / hide cursor */
@@ -848,13 +856,14 @@ flare_center_create (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), check, 0, 4, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);
-  gtk_signal_connect (GTK_OBJECT (check), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &show_cursor);
-  gtk_signal_connect_object (GTK_OBJECT (check), "toggled",
-			     GTK_SIGNAL_FUNC (FlareFX),
-			     (gpointer)drawable);
   gtk_widget_show (check);
+
+  g_signal_connect (G_OBJECT (check), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &show_cursor);
+  g_signal_connect_swapped (G_OBJECT (check), "toggled",
+                            G_CALLBACK (FlareFX),
+                            drawable);
 
   flare_center_cursor_update (center);
 
@@ -1069,7 +1078,7 @@ flare_center_adjustment_update (GtkAdjustment *adjustment,
 
   gimp_int_adjustment_update (adjustment, data);
 
-  center = gtk_object_get_user_data (GTK_OBJECT (adjustment));
+  center = g_object_get_data (G_OBJECT (adjustment), "center");
 
   if (!center->in_call)
     {
@@ -1112,7 +1121,7 @@ flare_center_preview_expose (GtkWidget *widget,
 {
   FlareCenter *center;
 
-  center = gtk_object_get_user_data (GTK_OBJECT (widget));
+  center = g_object_get_data (G_OBJECT (widget), "center");
   flare_center_draw (center, ALL);
   return FALSE;
 }
@@ -1126,11 +1135,11 @@ static gint
 flare_center_preview_events (GtkWidget *widget,
 			     GdkEvent  *event)
 {
-  FlareCenter *center;
+  FlareCenter    *center;
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
 
-  center = gtk_object_get_user_data (GTK_OBJECT (widget));
+  center = g_object_get_data (G_OBJECT (widget), "center");
 
   switch (event->type)
     {

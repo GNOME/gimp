@@ -7,14 +7,22 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <gtk/gtk.h>
 #include <sys/types.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#include <gtk/gtk.h>
+
 #include "gimpressionist.h"
 #include "ppmtool.h"
-#include <libgimp/stdplugins-intl.h>
+
+#include "libgimp/stdplugins-intl.h"
 
 
 GtkObject *orientnumadjust = NULL;

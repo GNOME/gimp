@@ -170,14 +170,14 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  gint32 image_ID;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  gint32             image_ID;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   INIT_I18N_UI(); 
 
@@ -521,17 +521,20 @@ ok_callback (GtkWidget *widget,
 
   run_flag = TRUE;
 
-  entry = gtk_object_get_data (GTK_OBJECT (data), "width");
+  entry = g_object_get_data (G_OBJECT (data), "width");
+
   grid_cfg.hwidth = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
   grid_cfg.vwidth = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
   grid_cfg.iwidth = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
   
-  entry = gtk_object_get_data (GTK_OBJECT (data), "space");
+  entry = g_object_get_data (G_OBJECT (data), "space");
+
   grid_cfg.hspace = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
   grid_cfg.vspace = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
   grid_cfg.ispace = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
  
-  entry = gtk_object_get_data (GTK_OBJECT (data), "offset");
+  entry = g_object_get_data (G_OBJECT (data), "offset");
+
   grid_cfg.hoffset = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
   grid_cfg.voffset = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
   grid_cfg.ioffset = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
@@ -602,19 +605,22 @@ update_preview_callback (GtkWidget *widget,
   GimpDrawable *drawable;
   GtkWidget    *entry;
 
-  drawable = gtk_object_get_data (GTK_OBJECT (widget), "drawable");
+  drawable = g_object_get_data (G_OBJECT (widget), "drawable");
 
-  entry = gtk_object_get_data (GTK_OBJECT (widget), "width");
+  entry = g_object_get_data (G_OBJECT (widget), "width");
+
   grid_cfg.hwidth = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
   grid_cfg.vwidth = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
   grid_cfg.iwidth = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
 
-  entry = gtk_object_get_data (GTK_OBJECT (widget), "space");
+  entry = g_object_get_data (G_OBJECT (widget), "space");
+
   grid_cfg.hspace = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
   grid_cfg.vspace = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
   grid_cfg.ispace = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
 
-  entry = gtk_object_get_data (GTK_OBJECT (widget), "offset");
+  entry = g_object_get_data (G_OBJECT (widget), "offset");
+
   grid_cfg.hoffset = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
   grid_cfg.voffset = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
   grid_cfg.ioffset = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
@@ -658,9 +664,9 @@ dialog (gint32        image_ID,
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  Get the image resolution and unit  */
   gimp_image_get_resolution (image_ID, &xres, &yres);
@@ -703,12 +709,15 @@ dialog (gint32        image_ID,
   gtk_widget_show (abox);
   button = gtk_button_new_with_label (_("Update Preview"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_object_set_data (GTK_OBJECT (button), "drawable", drawable);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (update_preview_callback),
-		      NULL);
   gtk_container_add (GTK_CONTAINER (abox), button);
   gtk_widget_show (button);
+
+  g_object_set_data (G_OBJECT (button), "drawable", drawable);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (update_preview_callback),
+                    NULL);
+
   /* left side of the UI is done */
  
   /* right side */
@@ -731,7 +740,7 @@ dialog (gint32        image_ID,
 			       FALSE,                        /*  show_refval       */
 			       SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
-  gtk_object_set_data (GTK_OBJECT (button), "width", width);
+  g_object_set_data (G_OBJECT (button), "width", width);
 
   /*  set the unit back to pixels, since most times we will want pixels */
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (width), GIMP_UNIT_PIXEL);
@@ -774,10 +783,12 @@ dialog (gint32        image_ID,
   gtk_table_attach_defaults (GTK_TABLE (width), chain_button, 1, 3, 2, 3);
   gtk_widget_show (chain_button);
 
-  /*  connect to the 'value_changed' signal because we have to take care 
-      of keeping the entries in sync when the chainbutton is active        */
-  gtk_signal_connect (GTK_OBJECT (width), "value_changed", 
-		      (GtkSignalFunc) entry_callback, chain_button);
+  /* connect to the 'value_changed' signal because we have to take care 
+   * of keeping the entries in sync when the chainbutton is active
+   */
+  g_signal_connect (G_OBJECT (width), "value_changed", 
+                    G_CALLBACK (entry_callback),
+                    chain_button);
 
   abox = gtk_alignment_new (1.0, 0.5, 0.0, 0.0);
   gtk_container_add (GTK_CONTAINER (abox), width);
@@ -794,7 +805,7 @@ dialog (gint32        image_ID,
 			       FALSE,                        /*  show_refval       */
 			       SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
-  gtk_object_set_data (GTK_OBJECT (button), "space", space);
+  g_object_set_data (G_OBJECT (button), "space", space);
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (space), GIMP_UNIT_PIXEL);
 
   /*  set the resolution to the image resolution  */
@@ -831,12 +842,16 @@ dialog (gint32        image_ID,
   gtk_table_attach_defaults (GTK_TABLE (space), chain_button, 1, 3, 2, 3);
   gtk_widget_show (chain_button);
 
-  /*  connect to the 'value_changed' and "unit_changed" signals because we have to 
-      take care of keeping the entries in sync when the chainbutton is active        */
-  gtk_signal_connect (GTK_OBJECT (space), "value_changed", 
-		      (GtkSignalFunc) entry_callback, chain_button);
-  gtk_signal_connect (GTK_OBJECT (space), "unit_changed", 
-		      (GtkSignalFunc) entry_callback, chain_button);
+  /* connect to the 'value_changed' and "unit_changed" signals because
+   * we have to take care of keeping the entries in sync when the
+   * chainbutton is active
+   */
+  g_signal_connect (G_OBJECT (space), "value_changed", 
+                    G_CALLBACK (entry_callback),
+                    chain_button);
+  g_signal_connect (G_OBJECT (space), "unit_changed", 
+                    G_CALLBACK (entry_callback),
+                    chain_button);
 
   abox = gtk_alignment_new (1.0, 0.5, 0.0, 0.0);
   gtk_container_add (GTK_CONTAINER (abox), space);
@@ -853,7 +868,7 @@ dialog (gint32        image_ID,
 				FALSE,                        /*  show_refval       */
 				SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
 				GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
-  gtk_object_set_data (GTK_OBJECT (button), "offset", offset);
+  g_object_set_data (G_OBJECT (button), "offset", offset);
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (offset), GIMP_UNIT_PIXEL);
 
   /*  set the resolution to the image resolution  */
@@ -897,13 +912,16 @@ dialog (gint32        image_ID,
   gtk_table_attach_defaults (GTK_TABLE (table), chain_button, 0, 2, 0, 1);
   gtk_widget_show (chain_button);
 
-  /*  connect to the 'value_changed' and "unit_changed" signals because we 
-      have to take care of keeping the entries in sync when the chainbutton 
-      is active        */
-  gtk_signal_connect (GTK_OBJECT (offset), "value_changed", 
-		      (GtkSignalFunc) entry_callback, chain_button);
-  gtk_signal_connect (GTK_OBJECT (offset), "unit_changed",
-		      (GtkSignalFunc) entry_callback, chain_button);
+  /* connect to the 'value_changed' and "unit_changed" signals because
+   * we have to take care of keeping the entries in sync when the
+   * chainbutton is active
+   */
+  g_signal_connect (G_OBJECT (offset), "value_changed", 
+                    G_CALLBACK (entry_callback),
+                    chain_button);
+  g_signal_connect (G_OBJECT (offset), "unit_changed",
+                    G_CALLBACK (entry_callback),
+                    chain_button);
 
   /*  put a chain_button under the color_buttons  */
   chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
@@ -913,50 +931,58 @@ dialog (gint32        image_ID,
   gtk_widget_show (chain_button);
 
   /*  attach color selectors  */
+  align = gtk_alignment_new (0.0, 0.5, 0, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), align, 0, 1, 1, 2);
+  gtk_widget_show (align);
+
   hcolor_button = gimp_color_button_new (_("Horizontal Color"), 
 					 COLOR_BUTTON_WIDTH, 16, 
 					 &grid_cfg.hcolor, 
 					 GIMP_COLOR_AREA_SMALL_CHECKS);
-  gtk_signal_connect (GTK_OBJECT (hcolor_button), "color_changed", 
-		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
-		      &grid_cfg.hcolor);
-  gtk_signal_connect (GTK_OBJECT (hcolor_button), "color_changed", 
-		      GTK_SIGNAL_FUNC (color_callback), 
-		      chain_button);
-  align = gtk_alignment_new (0.0, 0.5, 0, 0);
   gtk_container_add (GTK_CONTAINER (align),  hcolor_button);
-  gtk_table_attach_defaults (GTK_TABLE (table), align, 0, 1, 1, 2);
   gtk_widget_show (hcolor_button);
+
+  g_signal_connect (G_OBJECT (hcolor_button), "color_changed", 
+                    G_CALLBACK (gimp_color_button_get_color), 
+                    &grid_cfg.hcolor);
+  g_signal_connect (G_OBJECT (hcolor_button), "color_changed", 
+                    G_CALLBACK (color_callback), 
+                    chain_button);
+
+
+  align = gtk_alignment_new (0.0, 0.5, 0, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), align, 1, 2, 1, 2);
   gtk_widget_show (align);
 
   vcolor_button = gimp_color_button_new (_("Vertical Color"), 
 					 COLOR_BUTTON_WIDTH, 16, 
 					 &grid_cfg.vcolor, 
 					 GIMP_COLOR_AREA_SMALL_CHECKS);
-  gtk_signal_connect (GTK_OBJECT (vcolor_button), "color_changed", 
-		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
-		      &grid_cfg.vcolor);
-  gtk_signal_connect (GTK_OBJECT (vcolor_button), "color_changed", 
-		      GTK_SIGNAL_FUNC (color_callback), 
-		      chain_button);  
-  align = gtk_alignment_new (0.0, 0.5, 0, 0);
   gtk_container_add (GTK_CONTAINER (align), vcolor_button);
-  gtk_table_attach_defaults (GTK_TABLE (table), align, 1, 2, 1, 2);
   gtk_widget_show (vcolor_button);
+
+  g_signal_connect (G_OBJECT (vcolor_button), "color_changed", 
+                    G_CALLBACK (gimp_color_button_get_color), 
+                    &grid_cfg.vcolor);
+  g_signal_connect (G_OBJECT (vcolor_button), "color_changed", 
+                    G_CALLBACK (color_callback), 
+                    chain_button);  
+
+  align = gtk_alignment_new (0.0, 0.5, 0, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), align, 2, 3, 1, 2);
   gtk_widget_show (align);
 
   button = gimp_color_button_new (_("Intersection Color"), 
 				  COLOR_BUTTON_WIDTH, 16, 
 				  &grid_cfg.icolor, 
 				  GIMP_COLOR_AREA_SMALL_CHECKS);
-  gtk_signal_connect (GTK_OBJECT (button), "color_changed", 
-		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
-		      &grid_cfg.icolor);
-  align = gtk_alignment_new (0.0, 0.5, 0, 0);
   gtk_container_add (GTK_CONTAINER (align), button);
-  gtk_table_attach_defaults (GTK_TABLE (table), align, 2, 3, 1, 2);
   gtk_widget_show (button);
-  gtk_widget_show (align);
+
+  g_signal_connect (G_OBJECT (button), "color_changed", 
+                    G_CALLBACK (gimp_color_button_get_color), 
+                    &grid_cfg.icolor);
+
   gtk_widget_show (table);
 
   abox = gtk_alignment_new (1.0, 0.5, 0.0, 0.0);
@@ -968,9 +994,9 @@ dialog (gint32        image_ID,
   gtk_widget_show (main_hbox); 
   gtk_widget_show (dlg);
 
-  gtk_object_set_data (GTK_OBJECT (dlg), "width",  width);
-  gtk_object_set_data (GTK_OBJECT (dlg), "space",  space);  
-  gtk_object_set_data (GTK_OBJECT (dlg), "offset", offset);  
+  g_object_set_data (G_OBJECT (dlg), "width",  width);
+  g_object_set_data (G_OBJECT (dlg), "space",  space);  
+  g_object_set_data (G_OBJECT (dlg), "offset", offset);  
 
   gtk_main ();
   gdk_flush ();

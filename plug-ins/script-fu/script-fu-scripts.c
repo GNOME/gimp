@@ -1315,7 +1315,8 @@ script_fu_interface (SFScript *script)
 	  widget_leftalign = FALSE;
 
 	  sf_interface->args_widgets[i] = gtk_entry_new ();
-	  gtk_widget_set_usize (sf_interface->args_widgets[i], TEXT_WIDTH, 0);
+	  gtk_widget_set_size_request (sf_interface->args_widgets[i],
+                                       TEXT_WIDTH, -1);
 	  gtk_entry_set_text (GTK_ENTRY (sf_interface->args_widgets[i]),
 			      script->arg_values[i].sfa_value);
 	  break;
@@ -1335,8 +1336,8 @@ script_fu_interface (SFScript *script)
 
 	      sf_interface->args_widgets[i] =
 		gtk_hscale_new (script->arg_values[i].sfa_adjustment.adj);
-	      gtk_widget_set_usize (GTK_WIDGET (sf_interface->args_widgets[i]), 
-				    SLIDER_WIDTH, -1);
+	      gtk_widget_set_size_request (GTK_WIDGET (sf_interface->args_widgets[i]), 
+                                           SLIDER_WIDTH, -1);
 	      gtk_scale_set_digits (GTK_SCALE (sf_interface->args_widgets[i]), 
 				    script->arg_defaults[i].sfa_adjustment.digits);
 	      gtk_scale_set_draw_value (GTK_SCALE (sf_interface->args_widgets[i]), TRUE);
@@ -1348,7 +1349,8 @@ script_fu_interface (SFScript *script)
 	      sf_interface->args_widgets[i] =
 		gtk_spin_button_new (script->arg_values[i].sfa_adjustment.adj, 0, 0);
 	      gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]), TRUE);
-	      gtk_widget_set_usize (sf_interface->args_widgets[i], SPINNER_WIDTH, 0);
+	      gtk_widget_set_size_request (sf_interface->args_widgets[i],
+                                           SPINNER_WIDTH, -1);
 	      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]),
 					  script->arg_defaults[i].sfa_adjustment.digits);
 	      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]), TRUE);
@@ -1390,8 +1392,8 @@ script_fu_interface (SFScript *script)
 	  sf_interface->args_widgets[i] = gtk_button_new ();
 	  script->arg_values[i].sfa_font.preview = gtk_label_new ("");
 	  script->arg_values[i].sfa_font.dialog = NULL;
-	  gtk_widget_set_usize (sf_interface->args_widgets[i], 
-				FONT_PREVIEW_WIDTH, 0);
+	  gtk_widget_set_size_request (sf_interface->args_widgets[i], 
+                                       FONT_PREVIEW_WIDTH, -1);
 	  gtk_container_add (GTK_CONTAINER (sf_interface->args_widgets[i]),
 			     script->arg_values[i].sfa_font.preview);
 	  gtk_widget_show (script->arg_values[i].sfa_font.preview);
@@ -1438,8 +1440,8 @@ script_fu_interface (SFScript *script)
 	       list = g_slist_next (list), j++)
 	    {
 	      menu_item = gtk_menu_item_new_with_label (gettext ((gchar *)list->data));
-	      gtk_object_set_user_data (GTK_OBJECT (menu_item), 
-					GUINT_TO_POINTER (j));
+	      g_object_set_data (G_OBJECT (menu_item), "gimp-item-data",
+                                 GUINT_TO_POINTER (j));
 	      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 	      gtk_widget_show (menu_item);
 	    }
@@ -1493,7 +1495,7 @@ script_fu_interface (SFScript *script)
   gtk_widget_show (hbox);
 
   bbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 4);
+  gtk_box_set_spacing (GTK_BOX (bbox), 4);
   gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
@@ -1507,7 +1509,7 @@ script_fu_interface (SFScript *script)
 		    script);
 
   bbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 4);
+  gtk_box_set_spacing (GTK_BOX (bbox), 4);
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
@@ -1537,7 +1539,7 @@ script_fu_interface (SFScript *script)
   gtk_widget_show (hbox);
 
   sf_interface->status = gtk_entry_new ();
-  gtk_entry_set_editable (GTK_ENTRY (sf_interface->status), FALSE);
+  gtk_editable_set_editable (GTK_EDITABLE (sf_interface->status), FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), sf_interface->status, TRUE, TRUE, 2);
   gtk_entry_set_text (GTK_ENTRY (sf_interface->status), 
 		      sf_interface->window_title);
@@ -1828,7 +1830,7 @@ script_fu_ok_callback (GtkWidget *widget,
 
 	    case SF_SPINNER:
 	      script->arg_values[i].sfa_adjustment.value = 
-		gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]));
+		gtk_spin_button_get_value (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]));
 	      g_snprintf (buffer, sizeof (buffer), "%f",
 			  script->arg_values[i].sfa_adjustment.value);
 	      text = buffer;
@@ -1879,7 +1881,8 @@ script_fu_ok_callback (GtkWidget *widget,
 	  menu_item = 
 	    gtk_menu_get_active (GTK_MENU (gtk_option_menu_get_menu (GTK_OPTION_MENU (sf_interface->args_widgets[i]))));
 	  script->arg_values[i].sfa_option.history = 
-	    GPOINTER_TO_UINT (gtk_object_get_user_data (GTK_OBJECT (menu_item))); 
+	    GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (menu_item),
+                                                 "gimp-item-data"));
 	  g_snprintf (buffer, sizeof (buffer), "%d",
 		      script->arg_values[i].sfa_option.history);
 	  text = buffer;
@@ -1976,7 +1979,7 @@ script_fu_about_callback (GtkWidget *widget,
 
       gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
       gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
-      gtk_widget_set_usize (text_view, 200, 60);
+      gtk_widget_set_size_request (text_view, 200, 60);
       gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
       gtk_widget_show (text_view);
 

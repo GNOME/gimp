@@ -111,15 +111,15 @@ static GTMValues gtmvals =
 /* Declare some local functions */
 
 static void   query      (void);
-static void   run        (gchar   *name,
-                          gint     nparams,
+static void   run        (gchar      *name,
+                          gint        nparams,
                           GimpParam  *param,
-                          gint    *nreturn_vals,
+                          gint       *nreturn_vals,
                           GimpParam **return_vals);
 
-static gint   save_image  (gchar     *filename,
+static gint   save_image  (gchar        *filename,
 			   GimpDrawable *drawable);
-static gint   save_dialog (gint32     image_ID);
+static gint   save_dialog (gint32        image_ID);
 
 static gint   color_comp               (guchar    *buffer,
 					guchar    *buf2);
@@ -175,15 +175,15 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  GimpDrawable *drawable;
+  static GimpParam   values[2];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpDrawable      *drawable;
 
   INIT_I18N_UI();
 
@@ -191,6 +191,7 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -378,9 +379,9 @@ save_dialog (image_ID)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_main_quit),
-                      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* Initialize Tooltips */
   gimp_help_init ();
@@ -428,16 +429,18 @@ save_dialog (image_ID)
 
   toggle = gtk_check_button_new_with_label (_("Generate Full HTML Document"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &gtmvals.fulldoc);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.fulldoc);
   gtk_widget_show (toggle);
+
   gimp_help_set_help_data (toggle,
 			   _("If checked GTM will output a full HTML document "
 			     "with <HTML>, <BODY>, etc. tags instead of just "
 			     "the table html."),
 			   NULL);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &gtmvals.fulldoc);
 
   gtk_widget_show (main_vbox);
   gtk_widget_show (frame);
@@ -455,24 +458,24 @@ save_dialog (image_ID)
 
   toggle = gtk_check_button_new_with_label (_("Use Cellspan"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &gtmvals.spantags);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.spantags);
   gtk_widget_show (toggle);
+
   gimp_help_set_help_data (toggle,
 			   _("If checked GTM will replace any rectangular "
 			     "sections of identically colored blocks with one "
 			     "large cell with ROWSPAN and COLSPAN values."),
 			   NULL);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &gtmvals.spantags);
+
   toggle = gtk_check_button_new_with_label (_("Compress TD tags"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &gtmvals.tdcomp);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.tdcomp);
   gtk_widget_show (toggle);
+
   gimp_help_set_help_data (toggle,
 			   _("Checking this tag will cause GTM to leave no "
 			     "whitespace between the TD tags and the "
@@ -480,43 +483,53 @@ save_dialog (image_ID)
 			     "level positioning control."),
 			   NULL);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &gtmvals.tdcomp);
+
   toggle = gtk_check_button_new_with_label (_("Caption"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &gtmvals.caption);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.caption);
   gtk_widget_show (toggle);
+
   gimp_help_set_help_data (toggle,
 			   _("Check if you would like to have the table "
 			     "captioned."),
 			   NULL);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &gtmvals.caption);
+
   entry = gtk_entry_new ();
+  gtk_widget_set_size_request (entry, 200, -1);
+  gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.captiontxt);
   gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 2, 3,
 		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
-  gtk_widget_set_size_request (entry, 200, -1);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (gtm_caption_callback),
-		      NULL);
-  gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.captiontxt);
   gtk_widget_show (entry);
+
   gimp_help_set_help_data (entry, _("The text for the table caption."), NULL);
 
-  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", entry);
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (gtm_caption_callback),
+                    NULL);
+
+  g_object_set_data (G_OBJECT (toggle), "set_sensitive", entry);
   gtk_widget_set_sensitive (entry, gtmvals.caption);
 
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
+  gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.cellcontent);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Cell Content:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (gtm_cellcontent_callback),
-		      NULL);
-  gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.cellcontent);
   gtk_widget_show (entry);
+
   gimp_help_set_help_data (entry, _("The text to go into each cell."), NULL);
+
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (gtm_cellcontent_callback),
+                    NULL);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -537,62 +550,72 @@ save_dialog (image_ID)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Border:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-                      &gtmvals.border);
+
   gimp_help_set_help_data (spinbutton,
 			   _("The number of pixels in the table border."),
 			   NULL);
 
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &gtmvals.border);
+
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 60, -1);
+  gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clwidth);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Width:"), 1.0, 0.5,
 			     entry, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      GTK_SIGNAL_FUNC (gtm_clwidth_callback),
-                      NULL);
-  gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clwidth);
+
   gimp_help_set_help_data (entry,
 			   _("The width for each table cell.  "
 			     "Can be a number or a percent."),
 			   NULL);
 
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (gtm_clwidth_callback),
+                    NULL);
+
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 60, -1);
+  gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clheight);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Height:"), 1.0, 0.5,
 			     entry, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      GTK_SIGNAL_FUNC (gtm_clheight_callback),
-                      NULL);
-  gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clheight);
+
   gimp_help_set_help_data (entry,
 			   _("The height for each table cell.  "
 			     "Can be a number or a percent."),
 			   NULL);
+
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (gtm_clheight_callback),
+                    NULL);
 
   spinbutton = gimp_spin_button_new (&adj, gtmvals.cellpadding,
 				     0, 1000, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Cell-Padding:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-                      &gtmvals.cellpadding);
+
   gimp_help_set_help_data (spinbutton,
 			   _("The amount of cellpadding."), NULL);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &gtmvals.cellpadding);
 
   spinbutton = gimp_spin_button_new (&adj, gtmvals.cellspacing,
 				     0, 1000, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
 			     _("Cell-Spacing:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-                      &gtmvals.cellspacing);
+
   gimp_help_set_help_data (spinbutton,
 			   _("The amount of cellspacing."), NULL);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &gtmvals.cellspacing);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);

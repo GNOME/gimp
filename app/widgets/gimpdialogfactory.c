@@ -1186,7 +1186,7 @@ gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
   info->x = CLAMP (info->x, 0, screen_width  - 32);
   info->y = CLAMP (info->y, 0, screen_height - 32);
 
-  gtk_widget_set_uposition (window, info->x, info->y);
+  gtk_window_move (GTK_WINDOW (window), info->x, info->y);
 
   if (! info->toplevel_entry || info->toplevel_entry->remember_size)
     {

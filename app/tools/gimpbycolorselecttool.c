@@ -727,10 +727,8 @@ by_color_select_draw (ByColorDialog *bcd,
 {
   gchar *basename;
 
-  /*  Draw the image buf to the preview window  */
-  gtk_widget_draw (bcd->preview, NULL);
+  gtk_widget_queue_draw (bcd->preview);
 
-  /*  Update the gimage label to reflect the displayed gimage name  */
   basename = g_path_get_basename (gimp_image_get_filename (gimage));
 
   gtk_label_set_text (GTK_LABEL (bcd->gimage_name), basename);

@@ -13,7 +13,6 @@ EXTRA_DIST = @STRIP_BEGIN@ \
 	zoom_in.xpm		\
 	zoom_out.xpm		\
 	\
-	chain.xpm		\
 	default.xpm		\
 	eek.xpm			\
 	first.xpm		\

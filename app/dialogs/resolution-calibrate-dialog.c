@@ -145,7 +145,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   
   ruler = gtk_hruler_new ();
   SET_STYLE (ruler, ruler_style);
-  gtk_widget_set_usize (ruler, ruler_width, 32);
+  gtk_widget_set_size_request (ruler, ruler_width, 32);
   gtk_ruler_set_range (GTK_RULER (ruler), 0, ruler_width, 0, ruler_width);
   gtk_table_attach (GTK_TABLE (table), ruler, 1, 3, 0, 1,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
@@ -153,7 +153,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
   ruler = gtk_vruler_new ();
   SET_STYLE (ruler, ruler_style);
-  gtk_widget_set_usize (ruler, 32, ruler_height);
+  gtk_widget_set_size_request (ruler, 32, ruler_height);
   gtk_ruler_set_range (GTK_RULER (ruler), 0, ruler_height, 0, ruler_height);
   gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 3,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
@@ -171,7 +171,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
   darea = gtk_drawing_area_new ();
   SET_STYLE (darea, dialog_style);  
-  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
+  gtk_widget_set_size_request (darea, 16, 16);
   if (expose_callback)
     g_signal_connect (G_OBJECT (darea), "expose_event",
                       G_CALLBACK (expose_callback),
@@ -182,7 +182,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
   darea = gtk_drawing_area_new ();
   SET_STYLE (darea, dialog_style);  
-  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
+  gtk_widget_set_size_request (darea, 16, 16);
   if (expose_callback)
     g_signal_connect (G_OBJECT (darea), "expose_event",
                       G_CALLBACK (expose_callback),
@@ -193,7 +193,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
   darea = gtk_drawing_area_new ();
   SET_STYLE (darea, dialog_style);  
-  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
+  gtk_widget_set_size_request (darea, 16, 16);
   if (expose_callback)
     g_signal_connect (G_OBJECT (darea), "expose_event",
                       G_CALLBACK (expose_callback),
@@ -204,7 +204,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
   darea = gtk_drawing_area_new ();
   SET_STYLE (darea, dialog_style);  
-  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
+  gtk_widget_set_size_request (darea, 16, 16);
   if (expose_callback)
     g_signal_connect (G_OBJECT (darea), "expose_event",
                       G_CALLBACK (expose_callback),

@@ -21,6 +21,10 @@
  *
  */
 
+#include "config.h"
+
+#include <gtk/gtk.h>
+
 #include "imap_table.h"
 
 GtkWidget*

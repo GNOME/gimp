@@ -861,9 +861,9 @@ dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
@@ -894,10 +894,11 @@ dialog (void)
 	gtk_table_attach (GTK_TABLE (table), entry, x, x+1, y, y+1,
 			  GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 	gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-	gtk_signal_connect (GTK_OBJECT (entry), "changed",
-			    GTK_SIGNAL_FUNC (entry_callback),
-			    &my_config.matrix[x][y]);
 	gtk_widget_show (entry);
+
+	g_signal_connect (G_OBJECT (entry), "changed",
+                          G_CALLBACK (entry_callback),
+                          &my_config.matrix[x][y]);
       }
 
   gtk_widget_show (table);
@@ -917,10 +918,11 @@ dialog (void)
   my_widgets.divisor = entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 40, -1);
   gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 0, 1);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (entry_callback),
-		      &my_config.divisor);
   gtk_widget_show (entry);
+
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (entry_callback),
+                    &my_config.divisor);
 
   gtk_widget_show (table);
 
@@ -936,10 +938,11 @@ dialog (void)
   my_widgets.offset = entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 40, -1);
   gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 0, 1);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entry_callback,
-		      &my_config.offset);
   gtk_widget_show (entry);
+
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (entry_callback),
+                    &my_config.offset);
 
   gtk_widget_show (table);
 
@@ -954,20 +957,22 @@ dialog (void)
   my_widgets.autoset = button =
     gtk_check_button_new_with_label (_("Automatic"));
   gtk_box_pack_start (GTK_BOX (box), button, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      (GtkSignalFunc) my_toggle_callback,
-		      &my_config.autoset);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (my_toggle_callback),
+                    &my_config.autoset);
 
   my_widgets.alpha_alg = button =
     gtk_check_button_new_with_label (_("Alpha-weighting"));
   if (my_config.alpha_alg == -1)
     gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (box), button, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      (GtkSignalFunc)my_toggle_callback,
-		      &my_config.alpha_alg);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (my_toggle_callback),
+                    &my_config.alpha_alg);
 
   gtk_widget_show (box);
   gtk_widget_show (yetanotherbox);
@@ -989,12 +994,13 @@ dialog (void)
     {
       my_widgets.bmode[i] = button =
 	gtk_radio_button_new_with_label (group, gettext (bmode_labels[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  (GtkSignalFunc) my_bmode_callback,
-			  (gpointer) (i + 1));
+
+      g_signal_connect (G_OBJECT (button), "toggled",
+                        G_CALLBACK (my_bmode_callback),
+                        (gpointer) (i + 1));
     }
 
   gtk_widget_show (box);
@@ -1012,13 +1018,16 @@ dialog (void)
     {
       my_widgets.channels[i] = button =
 	gtk_check_button_new_with_label (gettext (channel_labels[i]));
+
       if (my_config.channels[i] < 0)
 	gtk_widget_set_sensitive (button, FALSE);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  (GtkSignalFunc)my_toggle_callback,
-			  &my_config.channels[i]);
+
       gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
+
+      g_signal_connect (G_OBJECT (button), "toggled",
+                        G_CALLBACK (my_toggle_callback),
+                        &my_config.channels[i]);
     }
 
   gtk_widget_show(box);

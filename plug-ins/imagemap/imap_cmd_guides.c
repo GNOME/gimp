@@ -25,6 +25,8 @@
 
 #include <stdio.h>
 
+#include <gtk/gtk.h>
+
 #include "imap_cmd_create.h"
 #include "imap_default_dialog.h"
 #include "imap_cmd_guides.h"
@@ -165,43 +167,43 @@ make_guides_dialog()
 
    create_label_in_table(table, 0, 0, _("Width"));
    data->width = create_spin_button_in_table(table, 0, 1, 32, 1, 100);
-   gtk_signal_connect(GTK_OBJECT(data->width), "changed",
-		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
+   g_signal_connect(G_OBJECT(data->width), "changed",
+                    G_CALLBACK(recalc_bounds), (gpointer) data);
 
    create_label_in_table(table, 0, 2, _("Left Start at"));
    data->left = create_spin_button_in_table(table, 0, 3, 0, 0, 100);
-   gtk_signal_connect(GTK_OBJECT(data->left), "changed",
-		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
+   g_signal_connect(G_OBJECT(data->left), "changed",
+                    G_CALLBACK(recalc_bounds), (gpointer) data);
 
    create_label_in_table(table, 1, 0, _("Height"));
    data->height = create_spin_button_in_table(table, 1, 1, 32, 1, 100);
-   gtk_signal_connect(GTK_OBJECT(data->height), "changed",
-		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
+   g_signal_connect(G_OBJECT(data->height), "changed",
+                    G_CALLBACK(recalc_bounds), (gpointer) data);
 
    create_label_in_table(table, 1, 2, _("Top Start at"));
    data->top = create_spin_button_in_table(table, 1, 3, 0, 0, 100);
-   gtk_signal_connect(GTK_OBJECT(data->top), "changed",
-		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
+   g_signal_connect(G_OBJECT(data->top), "changed",
+                    G_CALLBACK(recalc_bounds), (gpointer) data);
 
    create_label_in_table(table, 2, 0, _("Horz. Spacing"));
    data->horz_spacing = create_spin_button_in_table(table, 2, 1, 0, 0, 100);
-   gtk_signal_connect(GTK_OBJECT(data->horz_spacing), "changed",
-		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
+   g_signal_connect(G_OBJECT(data->horz_spacing), "changed",
+                    G_CALLBACK(recalc_bounds), (gpointer) data);
 
    create_label_in_table(table, 2, 2, _("No. Across"));
    data->no_across = create_spin_button_in_table(table, 2, 3, 0, 0, 100);
-   gtk_signal_connect(GTK_OBJECT(data->no_across), "changed",
-		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
+   g_signal_connect(G_OBJECT(data->no_across), "changed",
+                    G_CALLBACK(recalc_bounds), (gpointer) data);
 
    create_label_in_table(table, 3, 0, _("Vert. Spacing"));
    data->vert_spacing = create_spin_button_in_table(table, 3, 1, 0, 0, 100);
-   gtk_signal_connect(GTK_OBJECT(data->vert_spacing), "changed",
-		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
+   g_signal_connect(G_OBJECT(data->vert_spacing), "changed",
+                    G_CALLBACK(recalc_bounds), (gpointer) data);
 
    create_label_in_table(table, 3, 2, _("No. Down"));
    data->no_down = create_spin_button_in_table(table, 3, 3, 0, 0, 100);
-   gtk_signal_connect(GTK_OBJECT(data->no_down), "changed",
-		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
+   g_signal_connect(G_OBJECT(data->no_down), "changed",
+                    G_CALLBACK(recalc_bounds), (gpointer) data);
 
    hbox = gtk_hbox_new(FALSE, 1);
    gtk_container_set_border_width(GTK_CONTAINER(hbox), 10);

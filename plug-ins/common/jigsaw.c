@@ -66,10 +66,10 @@ typedef enum
 
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
 static gint jigsaw     (gboolean preview_mode);
@@ -398,21 +398,21 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get(param[2].data.d_drawable);
   globals.drawable = drawable;
-  gimp_tile_cache_ntiles(drawable->width / gimp_tile_width() + 1);
+  gimp_tile_cache_ntiles (drawable->width / gimp_tile_width () + 1);
 
   switch (run_mode)
     {
@@ -2489,9 +2489,9 @@ dialog_box (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* init tooltips */
   gimp_help_init ();
@@ -2545,12 +2545,12 @@ dialog_box (void)
 			      config.x, MIN_XTILES, MAX_XTILES, 1.0, 4.0, 0,
 			      TRUE, 0, 0,
 			      _("Number of pieces going across"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &config.x);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (jigsaw),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &config.x);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (jigsaw),
+                    NULL);
 
   /* ytiles */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -2558,12 +2558,12 @@ dialog_box (void)
 			      config.y, MIN_YTILES, MAX_YTILES, 1.0, 4.0, 0,
 			      TRUE, 0, 0,
 			      _("Number of pieces going down"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &config.y);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (jigsaw),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &config.y);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (jigsaw),
+                    NULL);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -2585,12 +2585,12 @@ dialog_box (void)
 			      MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
 			      TRUE, 0, 0,
 			      _("Degree of slope of each piece's edge"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &config.blend_lines);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (jigsaw),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &config.blend_lines);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (jigsaw),
+                    NULL);
 
   /* blending amount */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -2600,12 +2600,12 @@ dialog_box (void)
 			      TRUE, 0, 0,
 			      _("The amount of highlighting on the edges "
 				"of each piece"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &config.blend_amount);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (jigsaw),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &config.blend_amount);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (jigsaw),
+                    NULL);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -2617,10 +2617,14 @@ dialog_box (void)
 
   frame = gimp_radio_group_new2 (TRUE, _("Jigsaw Style"),
 				 G_CALLBACK (jigsaw_radio_button_update),
-				 &config.style, (gpointer) config.style,
+				 &config.style,
+                                 GINT_TO_POINTER (config.style),
 
-				 _("Square"), (gpointer) BEZIER_1, &rbutton1,
-				 _("Curved"), (gpointer) BEZIER_2, &rbutton2,
+				 _("Square"),
+                                 GINT_TO_POINTER (BEZIER_1), &rbutton1,
+
+				 _("Curved"),
+                                 GINT_TO_POINTER (BEZIER_2), &rbutton2,
 
 				 NULL);
 
@@ -2636,12 +2640,14 @@ dialog_box (void)
   cbutton = gtk_check_button_new_with_label (_("Disable Tooltips"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cbutton),
 				globals.tooltips ? FALSE : TRUE);
-  gtk_signal_connect (GTK_OBJECT (cbutton), "toggled",
-		      GTK_SIGNAL_FUNC (check_button_callback),
-		      NULL);
   gtk_table_attach (GTK_TABLE (table), cbutton, 0, 1, 1, 2, 0, 0, 0, 20);
   gtk_widget_show (cbutton);
+
   gimp_help_set_help_data (cbutton, _("Toggle Tooltips on/off"), NULL);
+
+  g_signal_connect (G_OBJECT (cbutton), "toggled",
+                    G_CALLBACK (check_button_callback),
+                    NULL);
 
   gtk_widget_show (table);
   gtk_widget_show (hbox);

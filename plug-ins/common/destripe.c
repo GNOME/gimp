@@ -69,10 +69,10 @@
  */
 
 static void	query (void);
-static void	run   (gchar   *name,
-		       gint     nparams,
+static void	run   (gchar      *name,
+		       gint        nparams,
 		       GimpParam  *param,
-		       gint    *nreturn_vals,
+		       gint       *nreturn_vals,
 		       GimpParam **return_vals);
 
 static void	destripe (void);
@@ -129,10 +129,10 @@ query (void)
 {
   static GimpParamDef	args[] =
   {
-    { GIMP_PDB_INT32,	"run_mode",	"Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,	"image",	"Input image" },
-    { GIMP_PDB_DRAWABLE,	"drawable",	"Input drawable" },
-    { GIMP_PDB_INT32,	"avg_width",	"Averaging filter width (default = 36)" }
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
+    { GIMP_PDB_INT32,    "avg_width", "Averaging filter width (default = 36)" }
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -151,15 +151,15 @@ query (void)
 }
 
 static void
-run (gchar  *name,
-     gint   nparams,
-     GimpParam *param,
-     gint   *nreturn_vals,
+run (gchar      *name,
+     gint        nparams,
+     GimpParam  *param,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  GimpRunMode	run_mode;	/* Current run mode */
-  GimpPDBStatusType	status;		/* Return status */
-  static GimpParam	values[1];	/* Return values */
+  GimpRunMode       run_mode;   /* Current run mode */
+  GimpPDBStatusType status;     /* Return status */
+  static GimpParam  values[1];  /* Return values */
 
   INIT_I18N_UI();
 
@@ -503,8 +503,7 @@ destripe_rect (gint      sel_x1,
 
   if (do_preview)
     {
-      gtk_widget_draw (preview, NULL);
-      gdk_flush ();
+      gtk_widget_queue_draw (preview);
     }
   else
     {
@@ -555,9 +554,9 @@ destripe_dialog (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*
    * Top-level table for dialog...
@@ -604,9 +603,9 @@ destripe_dialog (void)
 				     MIN (preview_width, sel_x2 - sel_x1),
 				     MIN (preview_width, sel_x2 - sel_x1));
 
-  gtk_signal_connect (hscroll_data, "value_changed",
-		      GTK_SIGNAL_FUNC (preview_scroll_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (hscroll_data), "value_changed",
+                    G_CALLBACK (preview_scroll_callback),
+                    NULL);
 
   scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (hscroll_data));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
@@ -618,9 +617,9 @@ destripe_dialog (void)
 				     MIN (preview_height, sel_y2 - sel_y1),
 				     MIN (preview_height, sel_y2 - sel_y1));
 
-  gtk_signal_connect (vscroll_data, "value_changed",
-		      GTK_SIGNAL_FUNC (preview_scroll_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (vscroll_data), "value_changed",
+                    G_CALLBACK (preview_scroll_callback),
+                    NULL);
 
   scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (vscroll_data));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
@@ -649,18 +648,19 @@ destripe_dialog (void)
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, 0, 1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				histogram ? TRUE : FALSE);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (dialog_histogram_callback),
-		      NULL);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (dialog_histogram_callback),
+                    NULL);
 
 /*  button = gtk_check_button_new_with_label("Recursive");
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 1, 2);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 (filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (dialog_recursive_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (button), "toggled",
+	            G_CALLBACK (dialog_recursive_callback),
+		    NULL);
   gtk_widget_show (button);*/
 
   /*
@@ -672,9 +672,9 @@ destripe_dialog (void)
 			      avg_width, 2, MAX_AVG, 1, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_iscale_update),
-		      &avg_width);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_iscale_update),
+                    &avg_width);
 
   gtk_widget_show (dialog);
 

@@ -47,6 +47,12 @@
 #include "appenv.h"
 #include "gimprc.h"
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+#include <gtk/gtkctree.h>
+
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps/eek.xpm"
@@ -303,9 +309,9 @@ user_install_notebook_set_page (GtkNotebook *notebook,
 
   if (index == EEK_PAGE)
     {
-      gtk_widget_set_usize (title_pixmap, 
-			    title_pixmap->allocation.width,
-			    title_pixmap->allocation.height);
+      gtk_widget_set_size_request (title_pixmap, 
+                                   title_pixmap->allocation.width,
+                                   title_pixmap->allocation.height);
       gimp_pixmap_set (GIMP_PIXMAP (title_pixmap), eek_xpm);
     }
   
@@ -390,11 +396,11 @@ user_install_cancel_callback (GtkWidget *widget,
   static gint timeout = 0;
 
   if (timeout)
-    gtk_exit (0);
+    exit (0);
 
   gtk_widget_destroy (continue_button);
   user_install_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);
-  timeout = gtk_timeout_add (1024, (GtkFunction) gtk_exit, (gpointer) 0);
+  timeout = gtk_timeout_add (1024, (GtkFunction) exit, NULL);
 }
 
 static gboolean
@@ -597,7 +603,7 @@ user_install_dialog_create (Gimp *gimp)
   ebox = gtk_event_box_new ();
   TITLE_STYLE (ebox);
   gtk_widget_set_events (ebox, GDK_EXPOSURE_MASK);
-  gtk_widget_set_usize (ebox, WILBER_WIDTH + 16, -1);
+  gtk_widget_set_size_request (ebox, WILBER_WIDTH + 16, -1);
   gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, FALSE, 0);
   gtk_widget_show (ebox);
 
@@ -622,7 +628,7 @@ user_install_dialog_create (Gimp *gimp)
 
   ebox = gtk_event_box_new ();
   TITLE_STYLE (ebox);  
-  gtk_widget_set_usize (ebox, 16, -1);
+  gtk_widget_set_size_request (ebox, 16, -1);
   gtk_box_pack_start (GTK_BOX (hbox), ebox, FALSE, FALSE, 0);
   gtk_widget_show (ebox);
 
@@ -637,8 +643,8 @@ user_install_dialog_create (Gimp *gimp)
   gtk_widget_show (table);
 
   darea = gtk_drawing_area_new ();
-  TITLE_STYLE (darea);  
-  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
+  TITLE_STYLE (darea);
+  gtk_widget_set_size_request (darea, 16, 16);
   g_signal_connect (G_OBJECT (darea), "expose_event",
                     G_CALLBACK (user_install_corner_expose),
                     GINT_TO_POINTER (GTK_CORNER_TOP_LEFT));
@@ -648,7 +654,7 @@ user_install_dialog_create (Gimp *gimp)
 
   darea = gtk_drawing_area_new ();
   TITLE_STYLE (darea);
-  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
+  gtk_widget_set_size_request (darea, 16, 16);
   g_signal_connect (G_OBJECT (darea), "expose_event",
                     G_CALLBACK (user_install_corner_expose),
                     GINT_TO_POINTER (GTK_CORNER_BOTTOM_LEFT));
@@ -816,7 +822,7 @@ user_install_dialog_create (Gimp *gimp)
     gtk_clist_set_column_width (GTK_CLIST (ctree), 0,
 				gtk_clist_optimal_column_width (GTK_CLIST (ctree), 0));
 
-    gtk_widget_set_usize (ctree, -1, ctree->requisition.height);
+    gtk_widget_set_size_request (ctree, -1, ctree->requisition.height);
 
     g_object_unref (file_pixmap);
     g_object_unref (file_mask);

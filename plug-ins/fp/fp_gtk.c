@@ -122,15 +122,17 @@ fp_create_bna (void)
 }
 
 /* close a sub dialog (from window manager) by simulating toggle click */
-void
+gboolean
 sub_dialog_destroy (GtkWidget *dialog,
 		    GdkEvent  *ev,
 		    gpointer   dummy)
 {
   GtkWidget *button =
-    GTK_WIDGET (gtk_object_get_data (GTK_OBJECT (dialog), "ctrlButton"));
+    GTK_WIDGET (g_object_get_data (G_OBJECT (dialog), "ctrlButton"));
 
-  gtk_signal_emit_by_name (GTK_OBJECT (button), "clicked", dialog);
+  gtk_button_clicked (GTK_BUTTON (button));
+
+  return TRUE;
 }
 
 GtkWidget *
@@ -196,9 +198,10 @@ fp_create_circle_palette (void)
 
   gtk_window_set_title (GTK_WINDOW (win), _("Hue Variations"));
   gtk_container_add (GTK_CONTAINER (win), frame);
-  gtk_signal_connect (GTK_OBJECT (win), "delete_event",
-		      GTK_SIGNAL_FUNC (sub_dialog_destroy),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (win), "delete_event",
+                    G_CALLBACK (sub_dialog_destroy),
+                    NULL);
 
   return win;
 }
@@ -216,13 +219,14 @@ fp_create_rough (void)
   data = gtk_adjustment_new (Current.Rough, 0, 1.0, 0.05, 0.01, 0.0);
   Current.roughnessScale = scale = gtk_hscale_new (GTK_ADJUSTMENT (data));
 
-  gtk_widget_set_usize (scale, 60, 0);
+  gtk_widget_set_size_request (scale, 60, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_signal_connect (GTK_OBJECT (data), "value_changed",
-		      GTK_SIGNAL_FUNC (fp_scale_update),
-		      &Current.Rough);      
   gtk_widget_show (scale);
+
+  g_signal_connect (G_OBJECT (data), "value_changed",
+                    G_CALLBACK (fp_scale_update),
+                    &Current.Rough);      
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -342,9 +346,10 @@ fp_create_lnd (void)
 
   gtk_window_set_title (GTK_WINDOW (win), _("Value Variations"));
   gtk_container_add (GTK_CONTAINER (win), frame);
-  gtk_signal_connect (GTK_OBJECT (win), "delete_event",
-		      GTK_SIGNAL_FUNC (sub_dialog_destroy),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (win), "delete_event",
+                    G_CALLBACK (sub_dialog_destroy),
+                    NULL);
  
   return win;
 }
@@ -390,9 +395,10 @@ fp_create_msnls (void)
 
   gtk_window_set_title (GTK_WINDOW (win), _("Saturation Variations"));
   gtk_container_add (GTK_CONTAINER (win), frame);
-  gtk_signal_connect (GTK_OBJECT (win), "delete_event",
-		      GTK_SIGNAL_FUNC (sub_dialog_destroy),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (win), "delete_event",
+                    G_CALLBACK (sub_dialog_destroy),
+                    NULL);
 
   return win;
 }
@@ -515,15 +521,17 @@ Button_In_A_Box (GtkWidget     *vbox,
   GtkWidget *button;
 
   button = gtk_radio_button_new_with_label (group, label);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (function),
-		      data);
   gtk_widget_show (button);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (function),
+                    data);
+
   if (clicked)
     gtk_button_clicked (GTK_BUTTON (button));
 
-  return gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  return gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
 }
 
 void
@@ -536,13 +544,14 @@ Check_Button_In_A_Box (GtkWidget     *vbox,
   GtkWidget *button;
 
   button = gtk_check_button_new_with_label (label);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (function),
-		      data);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), clicked);
-
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (function),
+                    data);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), clicked);
 }
 
 void
@@ -555,14 +564,15 @@ Frames_Check_Button_In_A_Box (GtkWidget     *vbox,
   GtkWidget *button;
 
   button = gtk_check_button_new_with_label (label);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (function),
-		      frame);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), clicked);
-  gtk_object_set_data (GTK_OBJECT (frame), "ctrlButton", (gpointer) button);
-
+  g_object_set_data (G_OBJECT (frame), "ctrlButton", (gpointer) button);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (function),
+                    frame);
+#
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), clicked);
 }
 
 void
@@ -593,14 +603,15 @@ Create_A_Table_Entry (GtkWidget   **box,
   if (description != current_val)
     {
       button = gtk_button_new ();
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  GTK_SIGNAL_FUNC (selectionMade),
-			  (gchar *) description);
-
-      gtk_container_add (GTK_CONTAINER (button), SmallerFrame);
-      gtk_widget_show (button);
       gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
 			0, 0, 0, 4);
+      gtk_widget_show (button);
+
+      gtk_container_add (GTK_CONTAINER (button), SmallerFrame);
+
+      g_signal_connect (G_OBJECT (button), "clicked",
+                        G_CALLBACK (selectionMade),
+                        (gchar *) description);
     }
   else
     {
@@ -618,16 +629,16 @@ fp_redraw_all_windows (void)
   Adjust_Preview_Sizes (reduced->width, reduced->height);
 
   /*gtk_container_check_resize(GTK_CONTAINER(fpFrames.palette), NULL);*/
-  gtk_widget_draw (fpFrames.palette, NULL);
+  gtk_widget_queue_draw (fpFrames.palette);
 
   /*gtk_container_check_resize(GTK_CONTAINER(fpFrames.satur), NULL);*/
-  gtk_widget_draw (fpFrames.satur, NULL);
+  gtk_widget_queue_draw (fpFrames.satur);
 
   /*gtk_container_check_resize(GTK_CONTAINER(fpFrames.lnd), NULL);*/
-  gtk_widget_draw (fpFrames.lnd, NULL);
+  gtk_widget_queue_draw (fpFrames.lnd);
 
   /*gtk_container_check_resize(GTK_CONTAINER(dlg), NULL);*/
-  gtk_widget_draw (dlg, NULL);
+  gtk_widget_queue_draw (dlg);
 
   refreshPreviews (Current.VisibleFrames);
 }
@@ -910,9 +921,9 @@ fp_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /********************************************************************/
   
@@ -1032,9 +1043,10 @@ fp_advanced_dialog (void)
 
   gtk_window_set_title (GTK_WINDOW (AW.window),
 			_("Advanced Filter Pack Options"));
-  gtk_signal_connect (GTK_OBJECT (AW.window), "delete_event",
-		      GTK_SIGNAL_FUNC (sub_dialog_destroy),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (AW.window), "delete_event",
+                    G_CALLBACK (sub_dialog_destroy),
+                    NULL);
 
   mainvbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (mainvbox), 6);
@@ -1099,15 +1111,16 @@ fp_advanced_dialog (void)
   /************************************************************/
   
   AW.aliasingGraph = gtk_drawing_area_new ();
-  gtk_drawing_area_size (GTK_DRAWING_AREA (AW.aliasingGraph),
-	  		 2 * MARGIN + 256,
-	 		 RANGE_HEIGHT);
+  gtk_widget_set_size_request (AW.aliasingGraph,
+                               2 * MARGIN + 256,
+                               RANGE_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox), AW.aliasingGraph, TRUE, TRUE, 0);
   gtk_widget_show (AW.aliasingGraph);
   gtk_widget_set_events (AW.aliasingGraph, RANGE_ADJUST_MASK);
-  gtk_signal_connect (GTK_OBJECT (AW.aliasingGraph),"event",
-		      GTK_SIGNAL_FUNC (FP_Range_Change_Events),
-		     &Current);
+
+  g_signal_connect (G_OBJECT (AW.aliasingGraph),"event",
+                    G_CALLBACK (FP_Range_Change_Events),
+                    &Current);
 
   /************************************************************/
 
@@ -1115,16 +1128,17 @@ fp_advanced_dialog (void)
 
   Current.aliasingScale = scale =
     gtk_hscale_new (GTK_ADJUSTMENT (smoothnessData));
-  gtk_widget_set_usize (scale, 200, 0);
+  gtk_widget_set_size_request (scale, 200, -1);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), 0);
-  gtk_signal_connect (GTK_OBJECT (smoothnessData), "value_changed",
-		      GTK_SIGNAL_FUNC (fp_scale_update),
-		      &Current.Alias);
-  gtk_widget_show (scale);
   gtk_table_attach (GTK_TABLE (table), scale, 0, 1, 2, 3,
 		    0, 0, 0, 0);
+  gtk_widget_show (scale);
+
+  g_signal_connect (G_OBJECT (smoothnessData), "value_changed",
+                    G_CALLBACK (fp_scale_update),
+                    &Current.Alias);
 
   /******************* MISC OPTIONS ***************************/
 
@@ -1153,14 +1167,15 @@ fp_advanced_dialog (void)
   Current.previewSizeScale = scale =
     gtk_hscale_new (GTK_ADJUSTMENT (smoothnessData));
   gtk_container_add (GTK_CONTAINER (frame),scale);
-  gtk_widget_set_usize (scale, 100, 0);
+  gtk_widget_set_size_request (scale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), 0);
-  gtk_signal_connect (GTK_OBJECT (smoothnessData), "value_changed",
-		      GTK_SIGNAL_FUNC (preview_size_scale_update),
-		      &Current.PreviewSize);        
   gtk_widget_show (scale);
+
+  g_signal_connect (G_OBJECT (smoothnessData), "value_changed",
+                    G_CALLBACK (preview_size_scale_update),
+                    &Current.PreviewSize);        
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 

@@ -319,8 +319,8 @@ gradient_editor_new (Gimp *gimp)
 		    GRAD_PREVIEW_WIDTH, GRAD_PREVIEW_HEIGHT);
 
   /*  Enable auto-resizing of the preview but ensure a minimal size  */
-  gtk_widget_set_usize (editor->preview,
-			GRAD_PREVIEW_WIDTH, GRAD_PREVIEW_HEIGHT);
+  gtk_widget_set_size_request (editor->preview,
+                               GRAD_PREVIEW_WIDTH, GRAD_PREVIEW_HEIGHT);
   gtk_preview_set_expand (GTK_PREVIEW (editor->preview), TRUE);
 
   gtk_widget_set_events (editor->preview, GRAD_PREVIEW_EVENT_MASK);
@@ -354,8 +354,8 @@ gradient_editor_new (Gimp *gimp)
   editor->control_orig_pos                = 0.0;
 
   editor->control = gtk_drawing_area_new ();
-  gtk_drawing_area_size (GTK_DRAWING_AREA (editor->control),
-			 GRAD_PREVIEW_WIDTH, GRAD_CONTROL_HEIGHT);
+  gtk_widget_set_size_request (editor->control,
+                               GRAD_PREVIEW_WIDTH, GRAD_CONTROL_HEIGHT);
   gtk_widget_set_events (editor->control, GRAD_CONTROL_EVENT_MASK);
   gtk_box_pack_start (GTK_BOX (vbox2), editor->control, FALSE, FALSE, 0);
   gtk_widget_show (editor->control);
@@ -1017,7 +1017,7 @@ preview_update (GradientEditor *editor,
 			  adjustment->value,
 			  adjustment->value + adjustment->page_size);
 
-      gtk_widget_draw (editor->preview, NULL);
+      gtk_widget_queue_draw (editor->preview);
     }
 }
 

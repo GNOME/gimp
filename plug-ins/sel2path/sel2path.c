@@ -29,18 +29,15 @@
 
 #include "config.h"
 
-#include <glib.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
-#include <gtk/gtk.h>
+#include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
-
+#include "libgimpmath/gimpmath.h"
+#
 #include "global.h"
 #include "types.h"
 #include "pxl-outline.h"
@@ -342,11 +339,11 @@ sel2path_dialog (SELVALS *sels)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
   
-  table = dialog_create_selection_area(sels);
+  table = dialog_create_selection_area (sels);
   gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), table);
   gtk_widget_show (table);

@@ -26,6 +26,12 @@
 #include "config.h"
 
 #include <string.h>
+
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -35,17 +41,18 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-/* FIXME: remove usage of the 'broken' GtkText */
+#ifdef __GNUC__
+#warning GTK_ENABLE_BROKEN
+#endif
 #define GTK_ENABLE_BROKEN
+
 #include <gtk/gtktext.h>
 
-/* configuration */
 
 #define DBL_LIST_WIDTH 220
-#define DBL_WIDTH DBL_LIST_WIDTH+400
-#define DBL_HEIGHT 250
+#define DBL_WIDTH      DBL_LIST_WIDTH+400
+#define DBL_HEIGHT     250
 
-/* end of configuration */
 
 typedef struct
 {

@@ -24,8 +24,6 @@
 #ifndef _IMAP_TOOLBAR_H
 #define _IMAP_TOOLBAR_H
 
-#include "gtk/gtk.h"
-
 #include "imap_command.h"
 
 typedef struct {

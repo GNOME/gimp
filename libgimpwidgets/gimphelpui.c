@@ -23,7 +23,15 @@
 #include "config.h"
 
 #include <gdk/gdkkeysyms.h>
+
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
+
+#define GTK_DISABLE_DEPRECATED
 
 #include "gimpwidgetstypes.h"
 
@@ -165,9 +173,9 @@ gimp_help_connect (GtkWidget    *widget,
 
       tips_query = gtk_tips_query_new ();
 
-      gtk_widget_set (tips_query,
-		      "GtkTipsQuery::emit_always", TRUE,
-		      NULL);
+      g_object_set (G_OBJECT (tips_query),
+                    "emit_always", TRUE,
+                    NULL);
 
       g_signal_connect (G_OBJECT (tips_query), "widget_selected",
 			G_CALLBACK (gimp_help_tips_query_widget_selected),

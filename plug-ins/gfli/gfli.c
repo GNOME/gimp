@@ -67,10 +67,10 @@
 
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
 /* return the image-ID of the new image, or -1 in case of an error */
@@ -823,9 +823,9 @@ load_dialog (gchar *name)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   table = gtk_table_new (2, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 6);
@@ -844,18 +844,18 @@ load_dialog (gchar *name)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("From:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &from_frame);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &from_frame);
 
   spinbutton = gimp_spin_button_new (&adj,
 				     to_frame, 1, nframes, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("To:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &to_frame);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &to_frame);
 
   gtk_widget_show (dialog);
 
@@ -892,9 +892,9 @@ save_dialog (gint32 image_id)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   table = gtk_table_new (2, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 6);
@@ -913,18 +913,18 @@ save_dialog (gint32 image_id)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("From:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &from_frame);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &from_frame);
 
   spinbutton = gimp_spin_button_new (&adj,
 				     to_frame, 1, nframes, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("To:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &to_frame);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &to_frame);
 
   gtk_widget_show (dialog);
 

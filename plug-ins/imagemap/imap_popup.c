@@ -22,7 +22,8 @@
  */
 
 #include "config.h"
-#include "libgimp/stdplugins-intl.h"
+
+#include <gtk/gtk.h>
 
 #include "imap_edit_area_info.h"
 #include "imap_grid.h"
@@ -31,6 +32,8 @@
 #include "imap_menu_funcs.h"
 #include "imap_popup.h"
 #include "imap_tools.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static gint _popup_callback_lock;
 static PopupMenu_t _popup;

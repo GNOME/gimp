@@ -83,30 +83,30 @@ typedef struct
  */
 
 static void      query  (void);
-static void      run    (gchar    *name,
-			 gint      nparams,
-			 GimpParam   *param,
-			 gint     *nreturn_vals,
-			 GimpParam  **return_vals);
+static void      run    (gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
 static void      displace        (GimpDrawable *drawable);
 static gint      displace_dialog (GimpDrawable *drawable);
-static GimpTile *   displace_pixel  (GimpDrawable * drawable,
-				  GimpTile *     tile,
-				  gint        width,
-				  gint        height,
-				  gint        x1,
-				  gint        y1,
-				  gint        x2,
-				  gint        y2,
-				  gint        x,
-				  gint        y,
-				  gint *      row,
-				  gint *      col,
-				  guchar *    pixel);
-static guchar    bilinear        (gdouble    x,
-				  gdouble    y,
-				  guchar *   v);
+static GimpTile *displace_pixel  (GimpDrawable *drawable,
+				  GimpTile     *tile,
+				  gint          width,
+				  gint          height,
+				  gint          x1,
+				  gint          y1,
+				  gint          x2,
+				  gint          y2,
+				  gint          x,
+				  gint          y,
+				  gint         *row,
+				  gint         *col,
+				  guchar       *pixel);
+static guchar    bilinear        (gdouble       x,
+				  gdouble       y,
+				  guchar       *v);
 
 static gint      displace_map_constrain    (gint32     image_id,
 					    gint32     drawable_id,
@@ -117,9 +117,10 @@ static void      displace_map_y_callback   (gint32     id,
 					    gpointer   data);
 static void      displace_ok_callback      (GtkWidget *widget,
 					    gpointer   data);
-static gdouble   displace_map_give_value   (guchar* ptr,
-					    gint    alpha,
-					    gint    bytes);
+static gdouble   displace_map_give_value   (guchar    *ptr,
+					    gint       alpha,
+					    gint       bytes);
+
 /***** Local vars *****/
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -155,16 +156,16 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "amount_x", "Displace multiplier for X direction" },
-    { GIMP_PDB_FLOAT, "amount_y", "Displace multiplier for Y direction" },
-    { GIMP_PDB_INT32, "do_x", "Displace in X direction?" },
-    { GIMP_PDB_INT32, "do_y", "Displace in Y direction?" },
+    { GIMP_PDB_INT32,    "run_mode",       "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",          "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable" },
+    { GIMP_PDB_FLOAT,    "amount_x",       "Displace multiplier for X direction" },
+    { GIMP_PDB_FLOAT,    "amount_y",       "Displace multiplier for Y direction" },
+    { GIMP_PDB_INT32,    "do_x",           "Displace in X direction?" },
+    { GIMP_PDB_INT32,    "do_y",           "Displace in Y direction?" },
     { GIMP_PDB_DRAWABLE, "displace_map_x", "Displacement map for X direction" },
     { GIMP_PDB_DRAWABLE, "displace_map_y", "Displacement map for Y direction" },
-    { GIMP_PDB_INT32, "displace_type", "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
+    { GIMP_PDB_INT32,    "displace_type",  "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
   };
 
   gimp_install_procedure ("plug_in_displace",
@@ -187,16 +188,16 @@ query (void)
 }
 
 static void
-run (gchar  *name,
-     gint    nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint   *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -205,6 +206,7 @@ run (gchar  *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -301,9 +303,9 @@ displace_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  The main table  */
   frame = gtk_frame_new (_("Displace Options"));
@@ -321,11 +323,12 @@ displace_dialog (GimpDrawable *drawable)
   toggle = gtk_check_button_new_with_label (_("X Displacement:"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &dvals.do_x);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_x);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &dvals.do_x);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.amount_x,
 				     (gint) drawable->width * -2,
@@ -333,12 +336,13 @@ displace_dialog (GimpDrawable *drawable)
 				     1, 10, 0, 1, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &dvals.amount_x);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &dvals.amount_x);
 
   gtk_widget_set_sensitive (spinbutton, dvals.do_x);
-  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", spinbutton);
+  g_object_set_data (G_OBJECT (toggle), "set_sensitive", spinbutton);
   gtk_widget_show (spinbutton);
 
   option_menu = gtk_option_menu_new ();
@@ -349,18 +353,19 @@ displace_dialog (GimpDrawable *drawable)
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
 
   gtk_widget_set_sensitive (option_menu, dvals.do_x);
-  gtk_object_set_data (GTK_OBJECT (spinbutton), "set_sensitive", option_menu);
+  g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", option_menu);
   gtk_widget_show (option_menu);
 
   /*  Y Options  */
   toggle = gtk_check_button_new_with_label (_("Y Displacement:"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &dvals.do_y);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_y);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &dvals.do_y);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.amount_y,
 				     (gint) drawable->height * -2,
@@ -368,12 +373,13 @@ displace_dialog (GimpDrawable *drawable)
 				     1, 10, 0, 1, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &dvals.amount_y);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &dvals.amount_y);
 
   gtk_widget_set_sensitive (spinbutton, dvals.do_y);
-  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", spinbutton);
+  g_object_set_data (G_OBJECT (toggle), "set_sensitive", spinbutton);
   gtk_widget_show (spinbutton);
 
   option_menu = gtk_option_menu_new ();
@@ -384,7 +390,7 @@ displace_dialog (GimpDrawable *drawable)
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
 
   gtk_widget_set_sensitive (option_menu, dvals.do_y);
-  gtk_object_set_data (GTK_OBJECT (spinbutton), "set_sensitive", option_menu);
+  g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", option_menu);
   gtk_widget_show (option_menu);
 
   /*  Displacement Type  */
@@ -401,37 +407,46 @@ displace_dialog (GimpDrawable *drawable)
   gtk_widget_show (label);
 
   toggle = gtk_radio_button_new_with_label (group, _("Wrap"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) WRAP);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_radio_button_update),
-		      &dvals.displace_type);
+  gtk_widget_show (toggle);
+
+  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+                     GINT_TO_POINTER (WRAP));
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    &dvals.displace_type);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dvals.displace_type == WRAP);
-  gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, _("Smear"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) SMEAR);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_radio_button_update),
-		      &dvals.displace_type);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dvals.displace_type == SMEAR);
   gtk_widget_show (toggle);
 
+  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+                     GINT_TO_POINTER (SMEAR));
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    &dvals.displace_type);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				dvals.displace_type == SMEAR);
+
   toggle = gtk_radio_button_new_with_label (group, _("Black"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) BLACK);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_radio_button_update),
-		      &dvals.displace_type);
+  gtk_widget_show (toggle);
+
+  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+                     GINT_TO_POINTER (BLACK));
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    &dvals.displace_type);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dvals.displace_type == BLACK);
-  gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_hbox);
   gtk_widget_show (table);

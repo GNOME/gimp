@@ -35,6 +35,12 @@
 #include "gimplistitem.h"
 #include "gimppreview.h"
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+#include <gtk/gtklist.h>
+
 
 static void     gimp_container_list_view_class_init   (GimpContainerListViewClass *klass);
 static void     gimp_container_list_view_init         (GimpContainerListView      *panel);
@@ -178,9 +184,9 @@ gimp_container_list_view_new (GimpContainer *container,
     GTK_SCROLLED_WINDOW_GET_CLASS (list_view->scrolled_win)->scrollbar_spacing +
     list_view->scrolled_win->style->xthickness * 4;
 
-  gtk_widget_set_usize (list_view->gtk_list->parent,
-			(preview_size + 2) * min_items_x + window_border,
-			(preview_size + 6) * min_items_y + window_border);
+  gtk_widget_set_size_request (list_view->gtk_list->parent,
+                               (preview_size + 2) * min_items_x + window_border,
+                               (preview_size + 6) * min_items_y + window_border);
 
   if (container)
     gimp_container_view_set_container (view, container);

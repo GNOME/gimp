@@ -324,15 +324,17 @@ gimp_dockbook_add (GimpDockbook *dockbook,
    */
   {
     GtkWidget *menu_item;
-    GList     *widget_list;
+    GList     *widget_list, *free_list;
     GList     *page_list;
 
     menu_item = menu_widget->parent;
 
-    /*  EEK: we rely a 1:1 and left-to-right mapping of gtk_container_children()
-     *  and notebook->children
+    free_list = gtk_container_get_children (GTK_CONTAINER (dockbook));
+
+    /*  EEK: we rely a 1:1 and left-to-right mapping of
+     *  gtk_container_get_children() and notebook->children
      */
-    for (widget_list = gtk_container_children (GTK_CONTAINER (dockbook)),
+    for (widget_list = free_list,
 	   page_list = GTK_NOTEBOOK (dockbook)->children;
 	 widget_list && page_list;
 	 widget_list = g_list_next (widget_list),
@@ -358,6 +360,8 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 	    break;
 	  }
       }
+
+    g_list_free (free_list);
   }
 
   gtk_widget_show (GTK_WIDGET (dockable));

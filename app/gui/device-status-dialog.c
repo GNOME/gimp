@@ -211,7 +211,8 @@ device_status_dialog_create (Gimp *gimp)
 	gimp_color_area_new (&color,
 			     GIMP_COLOR_AREA_FLAT,
 			     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
-      gtk_widget_set_usize (deviceD->foregrounds[i], CELL_SIZE, CELL_SIZE);
+      gtk_widget_set_size_request (deviceD->foregrounds[i],
+                                   CELL_SIZE, CELL_SIZE);
       g_signal_connect (G_OBJECT (deviceD->foregrounds[i]), "color_changed",
                         G_CALLBACK (device_status_foreground_changed),
                         device_info);
@@ -226,7 +227,8 @@ device_status_dialog_create (Gimp *gimp)
 	gimp_color_area_new (&color,
 			     GIMP_COLOR_AREA_FLAT,
 			     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
-      gtk_widget_set_usize (deviceD->backgrounds[i], CELL_SIZE, CELL_SIZE);
+      gtk_widget_set_size_request (deviceD->backgrounds[i],
+                                   CELL_SIZE, CELL_SIZE);
       g_signal_connect (G_OBJECT (deviceD->backgrounds[i]), "color_changed",
                         G_CALLBACK (device_status_background_changed),
                         device_info);

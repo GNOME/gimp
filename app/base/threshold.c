@@ -361,7 +361,7 @@ threshold_dialog_new (void)
   td->low_threshold_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (td->low_threshold_data, 1.0, 0);
-  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -374,7 +374,7 @@ threshold_dialog_new (void)
   td->high_threshold_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (td->high_threshold_data, 1.0, 0);
-  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 

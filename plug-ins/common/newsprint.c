@@ -500,21 +500,34 @@ static const gint cspace_nchans[] =
 
 /* Declare local functions.  */
 static void	query	(void);
-static void	run	(gchar	 *name,
-			 gint	 nparams,
-			 GimpParam	 *param,
-			 gint	 *nreturn_vals,
-			 GimpParam	 **return_vals);
+static void	run	(gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
-static gint	newsprint_dialog        (GimpDrawable *drawable);
-static void	newsprint_ok_callback   (GtkWidget *widget,
-					 gpointer   data);
-static void	newsprint_cspace_update (GtkWidget *widget,
-					 gpointer   data);
+static gint	newsprint_dialog            (GimpDrawable  *drawable);
+static void	newsprint_ok_callback       (GtkWidget     *widget,
+                                             gpointer       data);
+static void	newsprint_cspace_update     (GtkWidget     *widget,
+                                             gpointer       data);
 
-static void	newsprint	(GimpDrawable *drawable);
-static guchar *	spot2thresh	(gint       type,
-				 gint       width);
+static void     newsprint_menu_callback     (GtkWidget     *widget,
+                                             gpointer       data);
+static void     angle_callback              (GtkAdjustment *adjustment,
+                                             gpointer       data);
+static void     lpi_callback                (GtkAdjustment *adjustment,
+                                             gpointer       data);
+static void     spi_callback                (GtkAdjustment *adjustment,
+                                             gpointer       data);
+static void     cellsize_callback           (GtkAdjustment *adjustment,
+                                             gpointer       data);
+static void     newsprint_defaults_callback (GtkWidget     *widget,
+                                             gpointer       data);
+
+static void	newsprint	            (GimpDrawable  *drawable);
+static guchar *	spot2thresh	            (gint           type,
+                                             gint           width);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -575,23 +588,23 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint    nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam  **return_vals)
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /* basic defaults */
@@ -814,23 +827,20 @@ preview_update (channel_st *st)
 	}
 
       /* redraw preview widget */
-      gtk_widget_draw (prev->widget, NULL);
+      gtk_widget_queue_draw (prev->widget);
 
       g_snprintf (pct, sizeof (pct), "%2d%%",
 		  (int) RINT (spotfn_list[sfn].prev_lvl[i] * 100));
       gtk_label_set_text (GTK_LABEL(prev->label), pct);
     }
-
-  gdk_flush ();
 }
 
-    
+
 static void
 newsprint_menu_callback (GtkWidget *widget,
 			 gpointer   data)
 {
   channel_st  *st = data;
-  gpointer     ud;
   gint         menufn;
   static gint  in_progress = FALSE;
 
@@ -845,8 +855,8 @@ newsprint_menu_callback (GtkWidget *widget,
 
   in_progress = TRUE;
 
-  ud = gtk_object_get_user_data (GTK_OBJECT (widget));
-  menufn = GPOINTER_TO_INT (ud);
+  menufn = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                               "gimp-item-data"));
 
   *(st->spotfn_num) = menufn;
 
@@ -884,7 +894,7 @@ angle_callback (GtkAdjustment *adjustment,
   gdouble    *angle_ptr;
   static gint in_progress = FALSE;
 
-  angle_ptr = gtk_object_get_user_data (GTK_OBJECT (adjustment));
+  angle_ptr = g_object_get_data (G_OBJECT (adjustment), "angle");
 
   gimp_double_adjustment_update (adjustment, angle_ptr);
 
@@ -905,22 +915,6 @@ angle_callback (GtkAdjustment *adjustment,
 }
 
 static void
-spi_callback (GtkAdjustment *adjustment,
-	      gpointer       data)
-{
-  NewsprintDialog_st *st = data;
-
-  gimp_double_adjustment_update (adjustment, &pvals_ui.input_spi);
-
-  gtk_signal_handler_block_by_data (GTK_OBJECT (st->output_lpi), data);
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (st->output_lpi),
-			    pvals_ui.input_spi / pvals.cell_width);
-
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (st->output_lpi), data);
-}
-
-static void
 lpi_callback (GtkAdjustment *adjustment,
 	      gpointer       data)
 {
@@ -928,12 +922,36 @@ lpi_callback (GtkAdjustment *adjustment,
 
   gimp_double_adjustment_update (adjustment, &pvals_ui.output_lpi);
 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (st->cellsize), data);
+  g_signal_handlers_block_by_func (G_OBJECT (st->cellsize),
+                                   cellsize_callback,
+                                   data);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (st->cellsize),
 			    pvals_ui.input_spi / pvals_ui.output_lpi);
 
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (st->cellsize), data);
+  g_signal_handlers_unblock_by_func (G_OBJECT (st->cellsize),
+                                     cellsize_callback,
+                                     data);
+}
+
+static void
+spi_callback (GtkAdjustment *adjustment,
+	      gpointer       data)
+{
+  NewsprintDialog_st *st = data;
+
+  gimp_double_adjustment_update (adjustment, &pvals_ui.input_spi);
+
+  g_signal_handlers_block_by_func (G_OBJECT (st->output_lpi),
+                                   lpi_callback,
+                                   data);
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (st->output_lpi),
+			    pvals_ui.input_spi / pvals.cell_width);
+
+  g_signal_handlers_unblock_by_func (G_OBJECT (st->output_lpi),
+                                     lpi_callback,
+                                     data);
 }
 
 static void
@@ -944,12 +962,16 @@ cellsize_callback (GtkAdjustment *adjustment,
 
   gimp_int_adjustment_update (adjustment, &pvals.cell_width);
 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (st->output_lpi), data);
+  g_signal_handlers_block_by_func (G_OBJECT (st->output_lpi),
+                                   lpi_callback,
+                                   data);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (st->output_lpi),
 			    pvals_ui.input_spi / pvals.cell_width);
 
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (st->output_lpi), data);
+  g_signal_handlers_unblock_by_func (G_OBJECT (st->output_lpi),
+                                     lpi_callback,
+                                     data);
 }
 
 static void
@@ -1034,10 +1056,11 @@ new_channel (const chan_tmpl *ct)
 					  -90, 90, 1, 15, 1,
 					  TRUE, 0, 0,
 					  NULL, NULL);
-  gtk_object_set_user_data (chst->angle_adj, ct->angle);
-  gtk_signal_connect (GTK_OBJECT (chst->angle_adj), "value_changed",
-		      GTK_SIGNAL_FUNC (angle_callback),
-		      chst);
+  g_object_set_data (G_OBJECT (chst->angle_adj), "angle", ct->angle);
+
+  g_signal_connect (G_OBJECT (chst->angle_adj), "value_changed",
+                    G_CALLBACK (angle_callback),
+                    chst);
 
   /* spot function popup */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -1068,14 +1091,17 @@ new_channel (const chan_tmpl *ct)
   while (sf->name)
     {
       chst->menuitem[i] = gtk_menu_item_new_with_label( gettext(sf->name));
-      gtk_signal_connect (GTK_OBJECT (chst->menuitem[i]), "activate",
-			  GTK_SIGNAL_FUNC (newsprint_menu_callback),
-			  chst);
-      gtk_object_set_user_data (GTK_OBJECT (chst->menuitem[i]),
-				GINT_TO_POINTER (i));
-      gtk_widget_show (chst->menuitem[i]);
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), 
                              GTK_WIDGET (chst->menuitem[i]));
+      gtk_widget_show (chst->menuitem[i]);
+
+      g_signal_connect (G_OBJECT (chst->menuitem[i]), "activate",
+                        G_CALLBACK (newsprint_menu_callback),
+                        chst);
+
+      g_object_set_data (G_OBJECT (chst->menuitem[i]), "gimp-item-data",
+                         GINT_TO_POINTER (i));
+
       sf++;
       i++;
     }
@@ -1116,7 +1142,6 @@ new_channel (const chan_tmpl *ct)
 
   /* create the menuitem used to select this channel for editing */
   chst->ch_menuitem = gtk_menu_item_new_with_label (gettext (ct->name));
-  gtk_object_set_user_data (GTK_OBJECT (chst->ch_menuitem), chst);
   /* signal attachment and showing left to caller */
 
   /* deliberately don't show the chst->frame, leave that up to
@@ -1221,9 +1246,9 @@ newsprint_dialog (GimpDrawable *drawable)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (st.dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (st.dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -1256,9 +1281,9 @@ newsprint_dialog (GimpDrawable *drawable)
 			  1.0, 1200.0, 1.0, 10.0, 0,
 			  FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
 			  NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (st.input_spi), "value_changed",
-		      GTK_SIGNAL_FUNC (spi_callback),
-		      &st);
+  g_signal_connect (G_OBJECT (st.input_spi), "value_changed",
+                    G_CALLBACK (spi_callback),
+                    &st);
 
   st.output_lpi =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -1267,9 +1292,9 @@ newsprint_dialog (GimpDrawable *drawable)
 			  1.0, 1200.0, 1.0, 10.0, 1,
 			  FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
 					NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (st.output_lpi), "value_changed",
-		      GTK_SIGNAL_FUNC (lpi_callback),
-		      &st);
+  g_signal_connect (G_OBJECT (st.output_lpi), "value_changed",
+                    G_CALLBACK (lpi_callback),
+                    &st);
 
   st.cellsize = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 				      _("Cell Size:"), SCALE_WIDTH, 0,
@@ -1277,9 +1302,9 @@ newsprint_dialog (GimpDrawable *drawable)
 				      3.0, 100.0, 1.0, 5.0, 0,
 				      FALSE, 3.0, GIMP_MAX_IMAGE_SIZE,
 				      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (st.cellsize), "value_changed",
-		      GTK_SIGNAL_FUNC (cellsize_callback),
-		      &st);
+  g_signal_connect (G_OBJECT (st.cellsize), "value_changed",
+                    G_CALLBACK (cellsize_callback),
+                    &st);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -1313,12 +1338,12 @@ newsprint_dialog (GimpDrawable *drawable)
 				      0, 100, 1, 10, 0,
 				      TRUE, 0, 0,
 				      NULL, NULL);
-      gtk_signal_connect (GTK_OBJECT (st.pull), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-			  &pvals.k_pullout);
       gtk_widget_set_sensitive (st.pull_table, (pvals.colourspace == CS_CMYK));
-
       gtk_widget_show (st.pull_table);
+
+      g_signal_connect (G_OBJECT (st.pull), "value_changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &pvals.k_pullout);
 
       /* RGB / CMYK / Intensity select */
       hbox = gtk_hbox_new (FALSE, 6);
@@ -1336,62 +1361,69 @@ newsprint_dialog (GimpDrawable *drawable)
       gtk_widget_show(label);
 
       toggle = gtk_radio_button_new_with_label(group, _("RGB"));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-      gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     (pvals.colourspace == CS_RGB));
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                          (GtkSignalFunc) newsprint_cspace_update,
-                          GINT_TO_POINTER(CS_RGB));
       gtk_widget_show (toggle);
+
+      g_object_set_data (G_OBJECT (toggle), "dialog", &st);
+
+      g_signal_connect (G_OBJECT (toggle), "toggled",
+                        G_CALLBACK (newsprint_cspace_update),
+                        GINT_TO_POINTER (CS_RGB));
 
       toggle = gtk_radio_button_new_with_label (group, _("CMYK"));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-      gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     (pvals.colourspace == CS_CMYK));
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                          (GtkSignalFunc) newsprint_cspace_update,
-                          GINT_TO_POINTER(CS_CMYK));
       gtk_widget_show (toggle);
 
+      g_object_set_data (G_OBJECT (toggle), "dialog", &st);
+
+      g_signal_connect (G_OBJECT (toggle), "toggled",
+                        G_CALLBACK (newsprint_cspace_update),
+                        GINT_TO_POINTER (CS_CMYK));
+
       toggle = gtk_radio_button_new_with_label (group, _("Intensity"));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-      gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     (pvals.colourspace == CS_INTENSITY));
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                          (GtkSignalFunc) newsprint_cspace_update,
-                          GINT_TO_POINTER(CS_INTENSITY));
       gtk_widget_show (toggle);
+
+      g_object_set_data (G_OBJECT (toggle), "dialog", &st);
+
+      g_signal_connect (G_OBJECT (toggle), "toggled",
+                        G_CALLBACK (newsprint_cspace_update),
+                        GINT_TO_POINTER (CS_INTENSITY));
 
       gtk_widget_show (hbox);
 
       /* channel lock & factory defaults button */
       hbox = gtk_hbutton_box_new ();
-      gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbox), 10);
+      gtk_box_set_spacing (GTK_BOX (hbox), 10);
       gtk_box_pack_start (GTK_BOX (st.vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
       toggle = gtk_check_button_new_with_label (_("Lock Channels"));
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &pvals_ui.lock_channels);
-      gtk_object_set_user_data (GTK_OBJECT (toggle), NULL);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    pvals_ui.lock_channels);
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 
+      g_signal_connect (G_OBJECT (toggle), "toggled",
+			  G_CALLBACK (gimp_toggle_button_update),
+			  &pvals_ui.lock_channels);
+
       button = gtk_button_new_with_label (_("Factory Defaults"));
-      gtk_signal_connect(GTK_OBJECT (button), "clicked",
-			 GTK_SIGNAL_FUNC (newsprint_defaults_callback),
-			 &st);
       gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
+
+      g_signal_connect (G_OBJECT (button), "clicked",
+                        G_CALLBACK (newsprint_defaults_callback),
+                        &st);
     }
 
   /*  Make the channels appropriate for this colourspace and
@@ -1423,9 +1455,9 @@ newsprint_dialog (GimpDrawable *drawable)
 			      1.0, 15.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &pvals.oversample);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &pvals.oversample);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -1457,7 +1489,7 @@ newsprint_cspace_update (GtkWidget *widget,
   gint new_cs = GPOINTER_TO_INT (data);
   gint old_cs = pvals.colourspace;
 
-  st = gtk_object_get_user_data (GTK_OBJECT (widget));
+  st = g_object_get_data (G_OBJECT (widget), "dialog");
 
   if (!st)
     printf ("newsprint: cspace_update: no state, can't happen!\n");

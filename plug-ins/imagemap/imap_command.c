@@ -21,7 +21,12 @@
  *
  */
 
+#include "config.h"
+
 #include <stdio.h>
+
+#include <gtk/gtk.h>
+
 #include "imap_command.h"
 
 #define INFINITE_UNDO_LEVELS -1

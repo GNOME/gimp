@@ -326,9 +326,9 @@ blinds_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -378,16 +378,21 @@ blinds_dialog (void)
 
   frame = gtk_frame_new (_("Background"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   toggle_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
+  gtk_widget_show (toggle_vbox);
 
   toggle = gtk_check_button_new_with_label (_("Transparent"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (blinds_button_update),
-		      &bvals.bg_trans);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (blinds_button_update),
+                    &bvals.bg_trans);
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.bg_trans);
 
   if (!has_alpha)
@@ -396,41 +401,35 @@ blinds_dialog (void)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
     }
 
-  gtk_widget_show (toggle);
-
-  gtk_widget_show (toggle_vbox);
-  gtk_widget_show (frame);
-
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				    _("Displacement:"), SCALE_WIDTH, 0,
 				    bvals.angledsp, 1, 90, 1, 15, 0,
 				    TRUE, 0, 0,
 				    NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
-		      GTK_SIGNAL_FUNC (blinds_scale_update),
-		      &bvals.angledsp);
+  g_signal_connect (G_OBJECT (size_data), "value_changed",
+                    G_CALLBACK (blinds_scale_update),
+                    &bvals.angledsp);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				    _("Num Segments:"), SCALE_WIDTH, 0,
 				    bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
 				    TRUE, 0, 0,
 				    NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
-		      GTK_SIGNAL_FUNC (blinds_scale_update),
+  g_signal_connect (G_OBJECT (size_data), "value_changed",
+		      G_CALLBACK (blinds_scale_update),
 		      &bvals.numsegs);
-
-  gtk_widget_show (frame);
-  gtk_widget_show (table);
 
   gtk_widget_show (dlg);
 
@@ -839,7 +838,7 @@ dialog_update_preview (void)
       g_free (dr);
     }
 
-  gtk_widget_draw (bint.preview, NULL);
+  gtk_widget_queue_draw (bint.preview);
   gdk_flush ();
 }
 

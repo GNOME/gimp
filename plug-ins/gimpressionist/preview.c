@@ -1,17 +1,22 @@
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#else
-#define HAVE_DIRENT_H
-#define HAVE_UNISTD_H
-#endif
+
 #include <string.h>
-#include <gtk/gtk.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#include <gtk/gtk.h>
+
 #include "gimpressionist.h"
 #include "ppmtool.h"
-#include <libgimp/stdplugins-intl.h>
+
+#include "libgimp/stdplugins-intl.h"
+
 
 GtkWidget *previewprev = NULL;
 GtkWidget *previewbutton = NULL;

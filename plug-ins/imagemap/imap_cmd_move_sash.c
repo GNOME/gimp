@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
 #include "imap_cmd_copy.h"
 #include "imap_cmd_edit_object.h"
 #include "imap_main.h"
@@ -119,10 +121,10 @@ sash_end(GtkWidget *widget, GdkEventButton *event, gpointer data)
    MoveSashCommand_t *command = (MoveSashCommand_t*) data;
    Object_t *obj = command->obj;
 
-   gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
-				 (GtkSignalFunc) sash_move, data);
-   gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
-				 (GtkSignalFunc) sash_end, data);
+   g_signal_handlers_disconnect_by_func(G_OBJECT(widget), 
+                                        sash_move, data);
+   g_signal_handlers_disconnect_by_func(G_OBJECT(widget), 
+                                        sash_end, data);
    if (obj->class->normalize)
       object_normalize(obj);
    gdk_gc_set_function(get_preferences()->selected_gc, GDK_COPY);
@@ -138,10 +140,10 @@ move_sash_command_execute(Command_t *parent)
 
    hide_url();
    preview_freeze();
-   gtk_signal_connect(GTK_OBJECT(command->widget), "button_release_event",
-		      (GtkSignalFunc) sash_end, command);   
-   gtk_signal_connect(GTK_OBJECT(command->widget), "motion_notify_event", 
-		      (GtkSignalFunc) sash_move, command);   
+   g_signal_connect(G_OBJECT(command->widget), "button_release_event",
+                    G_CALLBACK (sash_end), command);   
+   g_signal_connect(G_OBJECT(command->widget), "motion_notify_event", 
+                    G_CALLBACK (sash_move), command);   
    gdk_gc_set_function(get_preferences()->selected_gc, GDK_EQUIV);
 
    return CMD_APPEND;

@@ -4,6 +4,12 @@
 #include "Events.h"
 #include "Dialogs.h"
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+#include <gtk/gtkpreview.h>
+
 /**********************************************************************
  FUNCTION: preview_button_press_event
  *********************************************************************/
@@ -87,8 +93,7 @@ preview_button_press_event (GtkWidget      *widget,
 	  p += preview_width * 3;
 	}
 
-      gtk_widget_draw (wint.preview, NULL);
-      gdk_flush ();
+      gtk_widget_queue_draw (wint.preview);
     }
   return TRUE;
 }
@@ -207,8 +212,7 @@ preview_motion_notify_event (GtkWidget      *widget,
       p += preview_width * 3;
     }
 
-  gtk_widget_draw (wint.preview, NULL);
-  gdk_flush ();
+  gtk_widget_queue_draw (wint.preview);
 
   return TRUE;
 }
@@ -282,8 +286,7 @@ preview_leave_notify_event (GtkWidget      *widget,
       p += preview_width * 3;
     }
 
-  gtk_widget_draw (wint.preview, NULL);
-  gdk_flush ();
+  gtk_widget_queue_draw (wint.preview);
 
   MyCursor = gdk_cursor_new (GDK_TOP_LEFT_ARROW);
   gdk_window_set_cursor (maindlg->window, MyCursor);

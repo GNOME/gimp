@@ -139,18 +139,18 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  GimpDrawable    *drawable;
-  static GimpParam	values[1];
-  GimpPDBStatusType	status = GIMP_PDB_EXECUTION_ERROR;
-  GimpRunMode	run_mode;
+  GimpDrawable      *drawable;
+  static GimpParam   values[1];
+  GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
+  GimpRunMode        run_mode;
   
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
   
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
@@ -185,7 +185,6 @@ run (gchar      *name,
     gimp_set_data (PLUG_IN_NAME, &pvals, sizeof (ValueType));
     g_free(preview_bits);
 
-  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
@@ -352,9 +351,9 @@ dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 0);
@@ -380,16 +379,19 @@ dialog (GimpDrawable *drawable)
   
   frame = gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
 				 G_CALLBACK (radio_callback),
-				 &pvals.max_p, (gpointer) pvals.max_p,
+				 &pvals.max_p,
+                                 GINT_TO_POINTER (pvals.max_p),
 
 				 _("Hold the Maximal Channels"),
-				 (gpointer) MAX_CHANNELS, &max,
+				 GINT_TO_POINTER (MAX_CHANNELS), &max,
+
 				 _("Hold the Minimal Channels"),
-				 (gpointer) MIN_CHANNELS, &min,
+				 GINT_TO_POINTER (MIN_CHANNELS), &min,
 
 				 NULL);
-  gtk_object_set_data (GTK_OBJECT (max), "drawable", drawable);
-  gtk_object_set_data (GTK_OBJECT (min), "drawable", drawable);
+
+  g_object_set_data (G_OBJECT (max), "drawable", drawable);
+  g_object_set_data (G_OBJECT (min), "drawable", drawable);
 
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_container_add (GTK_CONTAINER (main_vbox), frame);
@@ -413,7 +415,7 @@ radio_callback (GtkWidget *widget,
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      drawable = gtk_object_get_data (GTK_OBJECT (widget), "drawable");
+      drawable = g_object_get_data (G_OBJECT (widget), "drawable");
       main_function (drawable, TRUE);
     }
 }

@@ -51,16 +51,16 @@ static char ident[] = "@(#) GIMP Decompose plug-in v1.01 19-Mar-99";
 /* Declare local functions
  */
 static void      query  (void);
-static void      run    (gchar     *name,
-			 gint       nparams,
-			 GimpParam    *param,
-			 gint      *nreturn_vals,
-			 GimpParam   **return_vals);
+static void      run    (gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
-static gint32    decompose (gint32  image_id,
-                            gint32  drawable_ID,
-                            gchar   *extract_type,
-                            gint32  *drawable_ID_dst);
+static gint32    decompose (gint32   image_id,
+                            gint32   drawable_ID,
+                            gchar    *extract_type,
+                            gint32   *drawable_ID_dst);
 
 static gint32 create_new_image (gchar       *filename,
 				guint        width,
@@ -210,31 +210,31 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[MAX_EXTRACT_IMAGES+1];
+  static GimpParam  values[MAX_EXTRACT_IMAGES+1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpImageType drawable_type;
-  gint32 num_images;
-  gint32 image_ID_extract[MAX_EXTRACT_IMAGES];
-  gint j;
+  GimpImageType     drawable_type;
+  gint32            num_images;
+  gint32            image_ID_extract[MAX_EXTRACT_IMAGES];
+  gint              j;
 
   INIT_I18N_UI();
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = MAX_EXTRACT_IMAGES+1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   for (j = 0; j < MAX_EXTRACT_IMAGES; j++)
     {
-      values[j+1].type = GIMP_PDB_IMAGE;
+      values[j+1].type         = GIMP_PDB_IMAGE;
       values[j+1].data.d_int32 = -1;
     }
 
@@ -860,8 +860,8 @@ decompose_dialog (void)
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *vbox;
-  GSList *group;
-  gint    j;
+  GSList    *group;
+  gint       j;
 
   gimp_ui_init ("decompose", FALSE);
 
@@ -877,9 +877,9 @@ decompose_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Extract Channels:"));
@@ -897,16 +897,18 @@ decompose_dialog (void)
       if (!extract[j].dialog) 
 	continue;
       toggle = gtk_radio_button_new_with_label (group, gettext (extract[j].type));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
       decoint.extract_flag[j] =
 	(g_ascii_strcasecmp (decovals.extract_type, extract[j].type) == 0);
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &(decoint.extract_flag[j]));
+      gtk_widget_show (toggle);
+
+      g_signal_connect (G_OBJECT (toggle), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &(decoint.extract_flag[j]));
+
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    decoint.extract_flag[j]);
-      gtk_widget_show (toggle);
     }
   gtk_widget_show (vbox);
   gtk_widget_show (frame);

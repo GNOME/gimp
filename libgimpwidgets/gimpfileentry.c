@@ -297,7 +297,7 @@ gimp_file_selection_entry_callback (GtkWidget *widget,
 
   gimp_file_selection_check_filename (gfs);
 
-  gtk_entry_set_position (GTK_ENTRY (gfs->entry), -1);
+  gtk_editable_set_position (GTK_EDITABLE (gfs->entry), -1);
 
   g_signal_emit (G_OBJECT (gfs),
                  gimp_file_selection_signals[FILENAME_CHANGED], 0);

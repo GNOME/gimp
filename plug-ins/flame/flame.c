@@ -383,7 +383,7 @@ ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static void
+static gboolean
 file_cancel_callback (GtkWidget *widget,
 		      gpointer   data)
 {
@@ -394,6 +394,8 @@ file_cancel_callback (GtkWidget *widget,
 
   if (! GTK_WIDGET_SENSITIVE (save_button))
     gtk_widget_set_sensitive (save_button, TRUE);
+
+  return TRUE;
 }
 
 static void 
@@ -476,18 +478,18 @@ make_file_dlg (void)
   gtk_quit_add_destroy (1, GTK_OBJECT (file_dlg));
 
   gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect_object (GTK_OBJECT (file_dlg), "delete_event",
-			     GTK_SIGNAL_FUNC (file_cancel_callback),
-			     GTK_OBJECT (file_dlg));
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
-		      "clicked",
-		      GTK_SIGNAL_FUNC (file_ok_callback),
+  g_signal_connect_swapped (G_OBJECT (file_dlg), "delete_event",
+                            G_CALLBACK (file_cancel_callback),
+                            file_dlg);
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
+                    "clicked",
+                    G_CALLBACK (file_ok_callback),
 		      file_dlg);
-  gtk_signal_connect_object
-    (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
+  g_signal_connect_swapped
+    (G_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
      "clicked",
-     GTK_SIGNAL_FUNC (file_cancel_callback),
-     GTK_OBJECT (file_dlg));
+     G_CALLBACK (file_cancel_callback),
+     file_dlg);
 
   gimp_help_connect (file_dlg, gimp_standard_help_func, "filters/flame.html");
 }
@@ -576,7 +578,7 @@ set_edit_preview (void)
 	  gtk_preview_draw_row (GTK_PREVIEW (edit_previews[mut]),
 				b + y * EDIT_PREVIEW_SIZE * 3,
 				0, y, EDIT_PREVIEW_SIZE);
-	gtk_widget_draw (edit_previews[mut], NULL);  
+	gtk_widget_queue_draw (edit_previews[mut]);
       }
   g_free (b);
 }
@@ -664,13 +666,14 @@ edit_callback (GtkWidget *widget,
 			      EDIT_PREVIEW_SIZE, EDIT_PREVIEW_SIZE);
 	    button = gtk_button_new ();
 	    gtk_container_add (GTK_CONTAINER(button), edit_previews[mut]);
-	    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-				GTK_SIGNAL_FUNC (preview_clicked),
-				(gpointer) mut);
 	    gtk_table_attach (GTK_TABLE (table), button, i, i+1, j, j+1,
 			      GTK_EXPAND, GTK_EXPAND, 0, 0);
 	    gtk_widget_show (edit_previews[mut]);
 	    gtk_widget_show (button);
+
+	    g_signal_connect (G_OBJECT (button), "clicked",
+                              G_CALLBACK (preview_clicked),
+                              GINT_TO_POINTER (mut));
 	  }
 
       frame = gtk_frame_new( _("Controls"));
@@ -693,12 +696,13 @@ edit_callback (GtkWidget *widget,
 				  0.05, 0.5, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
 				  NULL, NULL);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-			  &pick_speed);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (set_edit_preview),
-			  NULL);
+
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (gimp_double_adjustment_update),
+                        &pick_speed);
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (set_edit_preview),
+                        NULL);
 
       hbox = gtk_hbox_new (FALSE, 4);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -707,10 +711,11 @@ edit_callback (GtkWidget *widget,
       button = gtk_button_new_with_label( _("Randomize"));
       gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-				 GTK_SIGNAL_FUNC (randomize_callback),
-				 NULL);
       gtk_widget_show (button);
+
+      g_signal_connect_swapped (G_OBJECT (button), "clicked",
+                                G_CALLBACK (randomize_callback),
+                                NULL);
 
       optionmenu =
 	gimp_option_menu_new2 (FALSE, G_CALLBACK (menu_cb),
@@ -837,7 +842,7 @@ set_flame_preview (void)
 			  b+y*preview_width*3, 0, y, preview_width);
   g_free (b);
 
-  gtk_widget_draw (flame_preview, NULL);
+  gtk_widget_queue_draw (flame_preview);
 }
 
 static void 
@@ -867,7 +872,7 @@ set_cmap_preview (void)
     gtk_preview_draw_row (GTK_PREVIEW (cmap_preview), b, 0, y+3, 32);
   }
 
-  gtk_widget_draw (cmap_preview, NULL);  
+  gtk_widget_queue_draw (cmap_preview);
 }
 
 static void 
@@ -918,15 +923,17 @@ dialog (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_OK, ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
+			 GTK_STOCK_OK, ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+
 			 NULL);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -966,30 +973,33 @@ dialog (void)
 
     vbbox= gtk_vbutton_box_new ();
     gtk_box_set_homogeneous (GTK_BOX (vbbox), FALSE);
-    gtk_button_box_set_spacing (GTK_BUTTON_BOX (vbbox), 4);
+    gtk_box_set_spacing (GTK_BOX (vbbox), 4);
     gtk_box_pack_start (GTK_BOX (box), vbbox, FALSE, FALSE, 0);
     gtk_widget_show (vbbox);
   
     button = gtk_button_new_with_label (_("Edit Flame"));
-    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			GTK_SIGNAL_FUNC (edit_callback),
-			NULL);
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
+
+    g_signal_connect (G_OBJECT (button), "clicked",
+                      G_CALLBACK (edit_callback),
+                      NULL);
 
     load_button = button = gtk_button_new_with_label (_("Load Flame"));
-    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			GTK_SIGNAL_FUNC (load_callback),
-			NULL);
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
 
+    g_signal_connect (G_OBJECT (button), "clicked",
+                      G_CALLBACK (load_callback),
+                      NULL);
+
     save_button = button = gtk_button_new_with_label (_("Save Flame"));
-    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			GTK_SIGNAL_FUNC (save_callback),
-			NULL);
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
+
+    g_signal_connect (G_OBJECT (button), "clicked",
+                      G_CALLBACK (save_callback),
+                      NULL);
   }
 
   frame = gtk_frame_new (_("Rendering"));
@@ -1014,12 +1024,13 @@ dialog (void)
 			      0, 5, 0.1, 1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &config.cp.brightness);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (set_flame_preview),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &config.cp.brightness);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (set_flame_preview),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Contrast:"), SCALE_WIDTH, 0,
@@ -1027,12 +1038,13 @@ dialog (void)
 			      0, 5, 0.1, 1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &config.cp.contrast);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (set_flame_preview),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &config.cp.contrast);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (set_flame_preview),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Gamma:"), SCALE_WIDTH, 0,
@@ -1040,12 +1052,13 @@ dialog (void)
 			      1, 5, 0.1, 1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &config.cp.gamma);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (set_flame_preview),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &config.cp.gamma);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (set_flame_preview),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 			      _("Sample Density:"), SCALE_WIDTH, 0,
@@ -1053,9 +1066,10 @@ dialog (void)
 			      0.1, 20, 1, 5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &config.cp.sample_density);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &config.cp.sample_density);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
 			      _("Spatial Oversample:"), SCALE_WIDTH, 0,
@@ -1063,9 +1077,10 @@ dialog (void)
 			      0, 1, 0.01, 0.1, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &config.cp.spatial_oversample);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &config.cp.spatial_oversample);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
 			      _("Spatial Filter Radius:"), SCALE_WIDTH, 0,
@@ -1073,9 +1088,10 @@ dialog (void)
 			      0, 4, 0.2, 1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &config.cp.spatial_filter_radius);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &config.cp.spatial_filter_radius);
 
   {
     GtkWidget *sep;
@@ -1106,9 +1122,9 @@ dialog (void)
     config.cmap_drawable = save_drawable;
 #if 0
     menuitem = gtk_menu_item_new_with_label (_("Black"));
-    gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			GTK_SIGNAL_FUNC (gradient_cb),
-			(gpointer) BLACK_DRAWABLE);
+    g_signal_connect (G_OBJECT (menuitem), "activate",
+                      G_CALLBACK (gradient_cb),
+                      (gpointer) BLACK_DRAWABLE);
     gtk_menu_prepend (GTK_MENU (menu), menuitem);
     if (BLACK_DRAWABLE == save_drawable)
       gtk_menu_set_active (GTK_MENU (menu), 0);
@@ -1132,9 +1148,9 @@ dialog (void)
 	  gint d = TABLE_DRAWABLE - good[i];
 
 	  menuitem = gtk_menu_item_new_with_label (names[i]);
-	  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			      GTK_SIGNAL_FUNC (gradient_cb),
-			      (gpointer) d);
+	  g_signal_connect (G_OBJECT (menuitem), "activate",
+                            G_CALLBACK (gradient_cb),
+                            (gpointer) d);
 	  gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuitem);
 	  if (d == save_drawable)
 	    gtk_menu_set_active (GTK_MENU (menu), 0);
@@ -1143,9 +1159,9 @@ dialog (void)
     }
 
     menuitem = gtk_menu_item_new_with_label (_("Custom Gradient"));
-    gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			GTK_SIGNAL_FUNC (gradient_cb),
-			(gpointer) GRADIENT_DRAWABLE);
+    g_signal_connect (G_OBJECT (menuitem), "activate",
+                      G_CALLBACK (gradient_cb),
+                      (gpointer) GRADIENT_DRAWABLE);
     gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuitem);
     if (GRADIENT_DRAWABLE == save_drawable)
       gtk_menu_set_active (GTK_MENU (menu), 0);
@@ -1179,12 +1195,13 @@ dialog (void)
 			      -4, 4, 0.5, 1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &config.cp.zoom);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (set_flame_preview),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &config.cp.zoom);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (set_flame_preview),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("X:"), SCALE_WIDTH, 0,
@@ -1192,12 +1209,13 @@ dialog (void)
 			      -2, 2, 0.5, 1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &config.cp.center[0]);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (set_flame_preview),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &config.cp.center[0]);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (set_flame_preview),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Y:"), SCALE_WIDTH, 0,
@@ -1205,12 +1223,13 @@ dialog (void)
 			      -2, 2, 0.5, 1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &config.cp.center[1]);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (set_flame_preview),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &config.cp.center[1]);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (set_flame_preview),
+                    NULL);
 
   flame_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   {

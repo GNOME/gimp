@@ -104,15 +104,15 @@ struct piArgs
 
 typedef enum
 {
-  act_lredux = 0,
-  act_sredux = 1,
-  act_flag   = 2
+  ACT_LREDUX,
+  ACT_SREDUX,
+  ACT_FLAG
 } hotAction;
 
 typedef enum
 {
-  mode_ntsc = 0,
-  mode_pal  = 1
+  MODE_NTSC,
+  MODE_PAL
 } hotModes;
 
 #define	CHROMA_LIM      50.0		/* chroma amplitude limit */
@@ -159,18 +159,18 @@ static glong	ichroma_lim2;        /* chroma limit squared (scaled integer) */
 static gint	icompos_lim;         /* composite amplitude limit (scaled integer) */
 
 static void query        (void);
-static void run          (gchar   *name,
-			  gint     nparam,
+static void run          (gchar      *name,
+			  gint        nparam,
 			  GimpParam  *param,
-			  gint    *nretvals,
+			  gint       *nretvals,
 			  GimpParam **retvals);
 
-static gint pluginCore   (struct piArgs *argp);
-static gint pluginCoreIA (struct piArgs *argp);
-static gint hotp         (register guint8 r,
-			  register guint8 g,
-			  register guint8 b);
-static void build_tab    (int m);
+static gint pluginCore   (struct piArgs   *argp);
+static gint pluginCoreIA (struct piArgs   *argp);
+static gint hotp         (register guint8  r,
+			  register guint8  g,
+			  register guint8  b);
+static void build_tab    (gint             m);
 
 /*
  * gc: apply the gamma correction specified for this video standard.
@@ -238,29 +238,29 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparam,
+run (gchar      *name,
+     gint        nparam,
      GimpParam  *param,
-     gint    *nretvals,
+     gint       *nretvals,
      GimpParam **retvals)
 {
   static GimpParam rvals[1];
-
-  struct piArgs args;
+  struct piArgs    args;
 
   *nretvals = 1;
-  *retvals = rvals;
+  *retvals  = rvals;
 
   memset (&args, (int) 0, sizeof (struct piArgs));
   args.mode = -1;
 
   gimp_get_data ("plug_in_hot", &args);
 
-  args.image = param[1].data.d_image;
+  args.image    = param[1].data.d_image;
   args.drawable = param[2].data.d_drawable;
 
-  rvals[0].type = GIMP_PDB_STATUS;
+  rvals[0].type          = GIMP_PDB_STATUS;
   rvals[0].data.d_status = GIMP_PDB_SUCCESS;
+
   switch (param[0].data.d_int32)
     {
     case GIMP_RUN_INTERACTIVE:
@@ -268,8 +268,8 @@ run (gchar   *name,
       /* XXX: add code here for interactive running */
       if (args.mode == -1)
 	{
-	  args.mode       = mode_ntsc;
-	  args.action     = act_lredux;
+	  args.mode       = MODE_NTSC;
+	  args.action     = ACT_LREDUX;
 	  args.new_layerp = 1;
 	}
 
@@ -391,7 +391,7 @@ pluginCore (struct piArgs *argp)
 	{
 	  if (hotp (r = *(s + 0), g = *(s + 1), b = *(s + 2)))
 	    {
-	      if (argp->action == act_flag)
+	      if (argp->action == ACT_FLAG)
 		{
 		  for (i = 0; i < 3; i++)
 		    *d++ = 0;
@@ -455,7 +455,7 @@ pluginCore (struct piArgs *argp)
 		       * pixel with the same luminance (R=G=B=Y), we
 		       * change saturation without affecting luminance.
 		       */
-		      if (argp->action == act_lredux)
+		      if (argp->action == ACT_LREDUX)
 			{
 			  /*
 			   * Calculate a scale factor that will bring the pixel
@@ -480,7 +480,7 @@ pluginCore (struct piArgs *argp)
 			  b = (guint8) pix_encode (scale * pb);
 			}
 		      else
-			{ /* act_sredux hopefully */
+			{ /* ACT_SREDUX hopefully */
 			  /*
 			   * Calculate a scale factor that will bring the
 			   * pixel within both chroma and composite
@@ -593,9 +593,9 @@ pluginCoreIA (struct piArgs *argp)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   hbox = gtk_hbox_new (FALSE, 5);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
@@ -609,33 +609,40 @@ pluginCoreIA (struct piArgs *argp)
   toggle = gtk_check_button_new_with_label (_("Create New Layer"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), argp->new_layerp);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &argp->new_layerp);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &argp->new_layerp);
 
   frame = gimp_radio_group_new2 (TRUE, _("Mode"),
 				 G_CALLBACK (gimp_radio_button_update),
-				 &argp->mode, (gpointer) argp->mode,
+				 &argp->mode,
+                                 GINT_TO_POINTER (argp->mode),
 
-				 "NTSC", (gpointer) mode_ntsc, NULL,
-				 "PAL",  (gpointer) mode_pal, NULL,
+				 "NTSC", GINT_TO_POINTER (MODE_NTSC), NULL,
+				 "PAL",  GINT_TO_POINTER (MODE_PAL), NULL,
 
 				 NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Action"),
-			   G_CALLBACK (gimp_radio_button_update),
-			   &argp->action, (gpointer) argp->action,
+  frame = gimp_radio_group_new2 (TRUE, _("Action"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &argp->action,
+                                 GINT_TO_POINTER (argp->action),
 
-			   _("Reduce Luminance"),  (gpointer) act_lredux, NULL,
-			   _("Reduce Saturation"), (gpointer) act_sredux, NULL,
-			   _("Blacken"),           (gpointer) act_flag, NULL,
+                                 _("Reduce Luminance"),
+                                 GINT_TO_POINTER (ACT_LREDUX), NULL,
 
-			   NULL);
+                                 _("Reduce Saturation"),
+                                 GINT_TO_POINTER (ACT_SREDUX), NULL,
+
+                                 _("Blacken"),
+                                 GINT_TO_POINTER (ACT_FLAG), NULL,
+
+                                 NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

@@ -28,8 +28,6 @@ typedef struct Object_t Object_t;
 typedef struct ObjectClass_t ObjectClass_t;
 typedef struct ObjectList_t ObjectList_t;
 
-#include "gtk/gtk.h"
-
 #include "imap_edit_area_info.h"
 #include "imap_menu_funcs.h"
 

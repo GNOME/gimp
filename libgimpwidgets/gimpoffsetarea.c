@@ -22,6 +22,11 @@
 
 #include <stdio.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include "gimpwidgetstypes.h"
@@ -103,7 +108,7 @@ gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
 		  G_TYPE_INT,
 		  G_TYPE_INT);
 
-  widget_class->event   = gimp_offset_area_event;
+  widget_class->event = gimp_offset_area_event;
 }
 
 static void
@@ -373,9 +378,10 @@ gimp_offset_area_draw (GimpOffsetArea *offset_area)
   w = offset_area->display_ratio_x * offset_area->orig_width;
   h = offset_area->display_ratio_y * offset_area->orig_height;
 
-  gtk_draw_shadow (widget->style, widget->window,
-                   GTK_STATE_NORMAL, GTK_SHADOW_OUT,
-		   x, y, w, h);
+  gtk_paint_shadow (widget->style, widget->window, GTK_STATE_NORMAL,
+                    GTK_SHADOW_OUT,
+                    NULL, widget, NULL,
+                    x, y, w, h);
 
   if (offset_area->orig_width > offset_area->width || 
       offset_area->orig_height > offset_area->height)

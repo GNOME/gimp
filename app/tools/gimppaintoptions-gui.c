@@ -567,7 +567,7 @@ paint_gradient_options_new (GType         tool_type,
       spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (gradient->fade_out_w),
                                         1.0, 0.0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-      gtk_widget_set_usize (spinbutton, 75, 0);
+      gtk_widget_set_size_request (spinbutton, 75, -1);
       g_signal_connect (G_OBJECT (gradient->fade_out_w), "value_changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &gradient->fade_out);
@@ -620,7 +620,7 @@ paint_gradient_options_new (GType         tool_type,
         gtk_spin_button_new (GTK_ADJUSTMENT (gradient->gradient_length_w),
                              1.0, 0.0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-      gtk_widget_set_usize (spinbutton, 75, 0);
+      gtk_widget_set_size_request (spinbutton, 75, -1);
       g_signal_connect (G_OBJECT (gradient->gradient_length_w), "value_changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &gradient->gradient_length);

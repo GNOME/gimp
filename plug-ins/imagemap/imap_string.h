@@ -24,8 +24,6 @@
 #ifndef _IMAP_STRING_H
 #define _IMAP_STRING_H
 
-#include "gtk/gtk.h"
-
 gchar *g_strreplace(gchar **old_str, const gchar *new_str);
 
 #endif /* _IMAP_STRING_H */

@@ -191,7 +191,7 @@ gimp_color_panel_new (const gchar       *title,
 
   gimp_color_button_set_type (GIMP_COLOR_BUTTON (panel), type);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
-  gtk_widget_set_usize (GTK_WIDGET (panel), width, height);
+  gtk_widget_set_size_request (GTK_WIDGET (panel), width, height);
 
   return GTK_WIDGET (panel);
 }

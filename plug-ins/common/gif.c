@@ -270,14 +270,22 @@
 #include <string.h>
 #include <ctype.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#ifdef __GNUC__
+#warning GTK_ENABLE_BROKEN
+#endif
+#define GTK_ENABLE_BROKEN
+#include <gtk/gtktext.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
-/* FIXME: remove usage of the 'broken' GtkText */
-#define GTK_ENABLE_BROKEN
-#include <gtk/gtktext.h>
 
 /* uncomment the line below for a little debugging info */
 /* #define GIFDEBUG yesplease */
@@ -1158,9 +1166,9 @@ badbounds_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  the warning message  */
   frame = gtk_frame_new (NULL);
@@ -1230,9 +1238,9 @@ save_dialog (gint32 image_ID)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -1250,11 +1258,12 @@ save_dialog (gint32 image_ID)
 
   toggle = gtk_check_button_new_with_label (_("Interlace"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &gsvals.interlace);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.interlace);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &gsvals.interlace);
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
@@ -1265,11 +1274,12 @@ save_dialog (gint32 image_ID)
 
   toggle = gtk_check_button_new_with_label (_("GIF Comment:"));
   gtk_container_add (GTK_CONTAINER (align), toggle);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &gsvals.save_comment);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.save_comment);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &gsvals.save_comment);
 
   /* the comment text_view in a gtk_scrolled_window */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -1312,6 +1322,7 @@ save_dialog (gint32 image_ID)
 
   if (globalcomment)
     gtk_text_buffer_set_text (text_buffer, globalcomment, -1);
+
   g_signal_connect (G_OBJECT (text_buffer), "changed",
                     G_CALLBACK (comment_entry_callback),
                     NULL);
@@ -1332,11 +1343,12 @@ save_dialog (gint32 image_ID)
 
   toggle = gtk_check_button_new_with_label (_("Loop forever"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &gsvals.loop);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.loop);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &gsvals.loop);
 
   /* default_delay entry field */
   hbox = gtk_hbox_new (FALSE, 4);
@@ -1349,10 +1361,11 @@ save_dialog (gint32 image_ID)
   spinbutton = gimp_spin_button_new (&adj, gsvals.default_delay,
 				     0, 65000, 10, 100, 0, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-                      &gsvals.default_delay);
   gtk_widget_show (spinbutton);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &gsvals.default_delay);
 
   label = gtk_label_new (_("Milliseconds"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -1371,14 +1384,14 @@ save_dialog (gint32 image_ID)
   disposal_option_menu =
     gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
 			   &gsvals.default_dispose,
-			   (gpointer) gsvals.default_dispose,
+			   GINT_TO_POINTER (gsvals.default_dispose),
 
 			   _("I don't Care"),
-			   (gpointer) DISPOSE_UNSPECIFIED, NULL,
+			   GINT_TO_POINTER (DISPOSE_UNSPECIFIED), NULL,
 			   _("Cumulative Layers (Combine)"),
-			   (gpointer) DISPOSE_COMBINE, NULL,
+			   GINT_TO_POINTER (DISPOSE_COMBINE), NULL,
 			   _("One Frame per Layer (Replace)"),
-			   (gpointer) DISPOSE_REPLACE, NULL,
+			   GINT_TO_POINTER (DISPOSE_REPLACE), NULL,
 
 			   NULL);
   gtk_box_pack_start (GTK_BOX (hbox), disposal_option_menu, FALSE, FALSE, 0);

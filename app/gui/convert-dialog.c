@@ -179,7 +179,7 @@ convert_to_indexed (GimpImage *gimage)
 
   toggle =
     gtk_radio_button_new_with_label (NULL, _("Generate Optimum Palette:"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (toggle), "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
@@ -242,7 +242,7 @@ convert_to_indexed (GimpImage *gimage)
       hbox = gtk_hbox_new (FALSE, 4);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       toggle = gtk_radio_button_new_with_label (group, _("Use Custom Palette:"));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
       g_signal_connect (G_OBJECT (toggle), "toggled",
 			G_CALLBACK (gimp_toggle_button_update),
@@ -279,7 +279,7 @@ convert_to_indexed (GimpImage *gimage)
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       toggle =
 	gtk_radio_button_new_with_label (group, _("Use WWW-Optimized Palette"));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
       g_signal_connect (G_OBJECT (toggle), "toggled",
 			G_CALLBACK (gimp_toggle_button_update),
@@ -295,7 +295,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   toggle =
     gtk_radio_button_new_with_label (group, _("Use Black and White (1-Bit) Palette"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (toggle), "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
@@ -319,7 +319,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       
   toggle = gtk_radio_button_new_with_label (NULL, _("No Color Dithering"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (toggle), "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
@@ -333,7 +333,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   toggle = gtk_radio_button_new_with_label (group, _("Positioned Color Dithering"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (toggle), "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
@@ -347,7 +347,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   toggle = gtk_radio_button_new_with_label (group, _("Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (toggle), "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
@@ -360,7 +360,7 @@ convert_to_indexed (GimpImage *gimage)
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   toggle = gtk_radio_button_new_with_label (group, _("Floyd-Steinberg Color Dithering (Normal)"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (toggle), "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),

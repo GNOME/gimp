@@ -364,7 +364,7 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
 			     GIMP_COLOR_AREA_LARGE_CHECKS :
 			     GIMP_COLOR_AREA_FLAT,
 			     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
-      gtk_widget_set_usize (color_area, 48, 64);
+      gtk_widget_set_size_request (color_area, 48, 64);
       gtk_drag_dest_unset (color_area);
       gtk_container_add (GTK_CONTAINER (frame), color_area);
       gtk_widget_show (color_area);

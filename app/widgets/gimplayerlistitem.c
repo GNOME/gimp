@@ -198,9 +198,9 @@ gimp_layer_list_item_set_viewable (GimpListItem *list_item,
 
       gtk_widget_size_request (layer_item->linked_button, &requisition);
 
-      gtk_widget_set_usize (layer_item->linked_button,
-                            requisition.width,
-                            requisition.height);
+      gtk_widget_set_size_request (layer_item->linked_button,
+                                   requisition.width,
+                                   requisition.height);
       gtk_widget_hide (GTK_BIN (layer_item->linked_button)->child);
     }
 
@@ -369,15 +369,15 @@ gimp_layer_list_item_linked_toggled (GtkWidget *widget,
     {
       if (! linked)
         {
-          gtk_widget_set_usize (GTK_WIDGET (widget),
-                                GTK_WIDGET (widget)->allocation.width,
-                                GTK_WIDGET (widget)->allocation.height);
+          gtk_widget_set_size_request (GTK_WIDGET (widget),
+                                       GTK_WIDGET (widget)->allocation.width,
+                                       GTK_WIDGET (widget)->allocation.height);
           gtk_widget_hide (GTK_BIN (widget)->child);
         }
       else
         {
           gtk_widget_show (GTK_BIN (widget)->child);
-          gtk_widget_set_usize (GTK_WIDGET (widget), -1, -1);
+          gtk_widget_set_size_request (GTK_WIDGET (widget), -1, -1);
         }
 
       g_signal_handlers_block_by_func (G_OBJECT (layer),
@@ -408,15 +408,15 @@ gimp_layer_list_item_linked_changed (GimpLayer *layer,
     {
       if (! linked)
         {
-          gtk_widget_set_usize (GTK_WIDGET (toggle),
-                                GTK_WIDGET (toggle)->allocation.width,
-                                GTK_WIDGET (toggle)->allocation.height);
+          gtk_widget_set_size_request (GTK_WIDGET (toggle),
+                                       GTK_WIDGET (toggle)->allocation.width,
+                                       GTK_WIDGET (toggle)->allocation.height);
           gtk_widget_hide (GTK_BIN (toggle)->child);
         }
       else
         {
           gtk_widget_show (GTK_BIN (toggle)->child);
-          gtk_widget_set_usize (GTK_WIDGET (toggle), -1, -1);
+          gtk_widget_set_size_request (GTK_WIDGET (toggle), -1, -1);
         }
 
       g_signal_handlers_block_by_func (G_OBJECT (toggle),

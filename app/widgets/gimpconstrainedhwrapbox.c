@@ -20,6 +20,13 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include "gimpconstrainedhwrapbox.h"

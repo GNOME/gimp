@@ -180,8 +180,7 @@ about_dialog_create (void)
       gtk_widget_show (aboutframe);
 
       logo_area = gtk_drawing_area_new ();
-      gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area),
-			     logo_width, logo_height);
+      gtk_widget_set_size_request (logo_area, logo_width, logo_height);
       gtk_widget_set_events (logo_area, GDK_EXPOSURE_MASK);
       gtk_container_add (GTK_CONTAINER (aboutframe), logo_area);
       gtk_widget_show (logo_area);
@@ -240,8 +239,7 @@ about_dialog_create (void)
 	  max_width = MAX (max_width, width);
         }
       scroll_area = gtk_drawing_area_new ();
-      gtk_drawing_area_size (GTK_DRAWING_AREA (scroll_area),
-			     max_width + 6, height + 1);
+      gtk_widget_set_size_request (scroll_area, max_width + 6, height + 1);
       gtk_widget_set_events (scroll_area, GDK_BUTTON_PRESS_MASK);
       gtk_container_add (GTK_CONTAINER (aboutframe), scroll_area);
       gtk_widget_show (scroll_area);

@@ -351,7 +351,7 @@ color_balance_dialog_new (void)
   cbd->cyan_red_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (cbd->cyan_red_data, 1.0, 0);
-  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -360,7 +360,7 @@ color_balance_dialog_new (void)
   cbd->magenta_green_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (cbd->magenta_green_data, 1.0, 0);
-  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -369,7 +369,7 @@ color_balance_dialog_new (void)
   cbd->yellow_blue_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (cbd->yellow_blue_data, 1.0, 0);
-  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -467,7 +467,7 @@ color_balance_dialog_new (void)
     {
       radio_button =
 	gtk_radio_button_new_with_label (group, gettext (appl_mode_names[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (hbox), radio_button, TRUE, FALSE, 0);
 
       g_object_set_data (G_OBJECT (radio_button), "transfer_mode", 

@@ -7,6 +7,12 @@
 
 #include "fp.h"
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+#include <gtk/gtkpreview.h>
+
 extern FP_Params Current;
 
 extern GimpDrawable *drawable, *mask;
@@ -241,8 +247,7 @@ fp_render_preview(GtkWidget     *preview,
   }
   
   free(a); 
-  gtk_widget_draw(preview,NULL);
-  gdk_flush();
+  gtk_widget_queue_draw (preview);
 }
 
 void      
@@ -329,8 +334,7 @@ fp_create_smoothness_graph        (GtkWidget *preview)
       }
       gtk_preview_draw_row( GTK_PREVIEW(preview),data,0,i,256);
     }
-  gtk_widget_draw(preview,NULL);
-  gdk_flush();
+  gtk_widget_queue_draw (preview);
 }
 
 void
@@ -375,8 +379,7 @@ fp_range_preview_spill(GtkWidget *preview, int type)
 	}
     gtk_preview_draw_row( GTK_PREVIEW(preview),data,0,i,256);
   }
-  gtk_widget_draw(preview,NULL);
-  gdk_flush();
+  gtk_widget_queue_draw (preview);
 }
 
 

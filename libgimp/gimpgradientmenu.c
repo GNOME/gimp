@@ -124,8 +124,7 @@ gradient_pre_update (GtkWidget *gradient_preview,
   g_free (even);
   g_free (odd);
 
-  /*  Draw the brush preview  */
-  gtk_widget_draw (gradient_preview, NULL);
+  gtk_widget_queue_draw (gradient_preview);
 }
 
 static void

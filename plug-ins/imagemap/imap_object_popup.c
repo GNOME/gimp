@@ -21,6 +21,10 @@
  *
  */
 
+#include "config.h"
+
+#include <gtk/gtk.h>
+
 #include "imap_cmd_copy_object.h"
 #include "imap_cmd_cut_object.h"
 #include "imap_cmd_object_down.h"

@@ -21,15 +21,24 @@
  *
  */
 
+#include "config.h"
+
 #include <math.h>
 
-#include "config.h"
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#include <gtk/gtk.h>
+
 #include "imap_circle.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_object_popup.h"
 #include "imap_table.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 #include "circle.xpm"
 
@@ -260,20 +269,20 @@ circle_create_info_widget(GtkWidget *frame)
    
    create_label_in_table(table, 0, 0, _("Center x:"));
    props->x = create_spin_button_in_table(table, 0, 1, 1, 0, max_width - 1);
-   gtk_signal_connect(GTK_OBJECT(props->x), "changed", 
-		      (GtkSignalFunc) x_changed_cb, (gpointer) props);
+   g_signal_connect(G_OBJECT(props->x), "changed", 
+                    G_CALLBACK (x_changed_cb), (gpointer) props);
    create_label_in_table(table, 0, 2, _("pixels"));
 
    create_label_in_table(table, 1, 0, _("Center y:"));
    props->y = create_spin_button_in_table(table, 1, 1, 1, 0, max_height - 1);
-   gtk_signal_connect(GTK_OBJECT(props->y), "changed", 
-		      (GtkSignalFunc) y_changed_cb, (gpointer) props);
+   g_signal_connect(G_OBJECT(props->y), "changed", 
+                    G_CALLBACK (y_changed_cb), (gpointer) props);
    create_label_in_table(table, 1, 2, _("pixels"));
 
    create_label_in_table(table, 2, 0, _("Radius:"));
    props->r = create_spin_button_in_table(table, 2, 1, 1, 1, G_MAXINT);
-   gtk_signal_connect(GTK_OBJECT(props->r), "changed", 
-		      (GtkSignalFunc) r_changed_cb, (gpointer) props);
+   g_signal_connect(G_OBJECT(props->r), "changed", 
+                    G_CALLBACK (r_changed_cb), (gpointer) props);
    create_label_in_table(table, 2, 2, _("pixels"));
 
    return props;

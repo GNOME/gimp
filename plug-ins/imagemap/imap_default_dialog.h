@@ -24,8 +24,6 @@
 #ifndef _IMAP_DEFAULT_DIALOG_H
 #define _IMAP_DEFAULT_DIALOG_H
 
-#include "gtk/gtk.h"
-
 typedef struct {
    GtkWidget	*dialog;
    GtkWidget	*ok;

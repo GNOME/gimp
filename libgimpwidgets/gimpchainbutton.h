@@ -31,7 +31,18 @@
 #ifndef __GIMP_CHAIN_BUTTON_H__
 #define __GIMP_CHAIN_BUTTON_H__
 
+#include <gtk/gtktable.h>
+
 G_BEGIN_DECLS
+
+
+typedef enum
+{
+  GIMP_CHAIN_TOP,
+  GIMP_CHAIN_LEFT,
+  GIMP_CHAIN_BOTTOM,
+  GIMP_CHAIN_RIGHT
+} GimpChainPosition;
 
 
 #define GIMP_TYPE_CHAIN_BUTTON            (gimp_chain_button_get_type ())
@@ -44,29 +55,17 @@ G_BEGIN_DECLS
 
 typedef struct _GimpChainButtonClass  GimpChainButtonClass;
 
-typedef enum
-{
-  GIMP_CHAIN_TOP,
-  GIMP_CHAIN_LEFT,
-  GIMP_CHAIN_BOTTOM,
-  GIMP_CHAIN_RIGHT
-} GimpChainPosition;
-
-
 struct _GimpChainButton
 {
   GtkTable           parent_instance;
 
   GimpChainPosition  position;
+  gboolean           active;
+
   GtkWidget         *button;
   GtkWidget         *line1;
   GtkWidget         *line2;
-  GtkWidget         *pixmap;
-  GdkPixmap         *broken;
-  GdkBitmap         *broken_mask;
-  GdkPixmap         *chain;
-  GdkBitmap         *chain_mask;
-  gboolean           active;
+  GtkWidget         *image;
 };
 
 struct _GimpChainButtonClass
@@ -82,7 +81,7 @@ GType       gimp_chain_button_get_type   (void) G_GNUC_CONST;
 GtkWidget * gimp_chain_button_new        (GimpChainPosition  position);
 
 void        gimp_chain_button_set_active (GimpChainButton   *gcb,
-					  gboolean           is_active);
+					  gboolean           active);
 gboolean    gimp_chain_button_get_active (GimpChainButton   *gcb);
 
 

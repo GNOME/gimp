@@ -25,8 +25,8 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpchainbutton.h"
+#include "gimpstock.h"
 
-#include "pixmaps/chain.xpm"
 
 enum
 {
@@ -34,10 +34,9 @@ enum
   LAST_SIGNAL
 };
 
+
 static void   gimp_chain_button_class_init       (GimpChainButtonClass *klass);
 static void   gimp_chain_button_init             (GimpChainButton      *gcb);
-static void   gimp_chain_button_destroy          (GtkObject            *object);
-static void   gimp_chain_button_realize          (GtkWidget            *widget);
 
 static void   gimp_chain_button_clicked_callback (GtkWidget            *widget,
 						  GimpChainButton      *gcb);
@@ -46,28 +45,12 @@ static gint   gimp_chain_button_draw_lines       (GtkWidget            *widget,
 						  GimpChainButton      *gcb);
 
 
-static gchar **gimp_chain_xpm[] =
+static const gchar *gimp_chain_stock_items[] =
 {
-  chain_hor_xpm,
-  chain_ver_xpm
-};
-
-static gchar **gimp_chain_broken_xpm[] =
-{
-  chain_broken_hor_xpm,
-  chain_broken_ver_xpm 
-};
-
-static guint gimp_chain_width[] =
-{
-  24,
-  9
-};
-
-static guint gimp_chain_height[] =
-{
-  9,
-  24
+  GIMP_STOCK_HCHAIN,
+  GIMP_STOCK_HCHAIN_BROKEN,
+  GIMP_STOCK_VCHAIN,
+  GIMP_STOCK_VCHAIN_BROKEN
 };
 
 
@@ -107,12 +90,6 @@ gimp_chain_button_get_type (void)
 static void
 gimp_chain_button_class_init (GimpChainButtonClass *klass)
 {
-  GtkObjectClass *object_class;
-  GtkWidgetClass *widget_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
-
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_chain_button_signals[TOGGLED] = 
@@ -124,32 +101,23 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->destroy = gimp_chain_button_destroy;
-
-  widget_class->realize = gimp_chain_button_realize;
-
-  klass->toggled        = NULL;
+  klass->toggled = NULL;
 }
 
 static void
 gimp_chain_button_init (GimpChainButton *gcb)
 {
   gcb->position    = GIMP_CHAIN_TOP;
+  gcb->active      = FALSE;
+
   gcb->line1       = gtk_drawing_area_new ();
   gcb->line2       = gtk_drawing_area_new ();
-  gcb->pixmap      = NULL;
-  gcb->broken      = NULL;
-  gcb->broken_mask = NULL;
-  gcb->chain       = NULL;
-  gcb->chain_mask  = NULL;
-  gcb->active      = FALSE;
+  gcb->image       = gtk_image_new ();
 
   gcb->button = gtk_button_new ();
   gtk_button_set_relief (GTK_BUTTON (gcb->button), GTK_RELIEF_NONE);
-
-  gcb->pixmap = g_object_new (GTK_TYPE_PIXMAP, NULL);
-
-  gtk_pixmap_set_build_insensitive (GTK_PIXMAP (gcb->pixmap), TRUE);
+  gtk_container_add (GTK_CONTAINER (gcb->button), gcb->image);
+  gtk_widget_show (gcb->image);
 
   g_signal_connect (G_OBJECT (gcb->button), "clicked",
                     G_CALLBACK (gimp_chain_button_clicked_callback), 
@@ -162,42 +130,6 @@ gimp_chain_button_init (GimpChainButton *gcb)
                     gcb);
 }
 
-static void
-gimp_chain_button_destroy (GtkObject *object)
-{
-  GimpChainButton *gcb;
-
-  g_return_if_fail (GIMP_IS_CHAIN_BUTTON (object));
-
-  gcb = GIMP_CHAIN_BUTTON (object);
-
-  if (gcb->broken)
-    {
-      g_object_unref (gcb->broken);
-      gcb->broken = NULL;
-    }
-
-  if (gcb->broken_mask)
-    {
-      g_object_unref (gcb->broken_mask);
-      gcb->broken_mask = NULL;
-    }
-
-  if (gcb->chain)
-    {
-      g_object_unref (gcb->chain);
-      gcb->chain = NULL;
-    }
-
-  if (gcb->chain_mask)
-    {
-      g_object_unref (gcb->chain_mask);
-      gcb->chain_mask = NULL;
-    }
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
 
 /**
  * gimp_chain_button_new:
@@ -226,14 +158,10 @@ gimp_chain_button_new (GimpChainPosition position)
 
   gcb->position = position;
 
-  gcb->pixmap->requisition.width = 
-    gimp_chain_width[position % 2] + GTK_MISC (gcb->pixmap)->xpad * 2;
-  gcb->pixmap->requisition.height = 
-    gimp_chain_height[position % 2] + GTK_MISC (gcb->pixmap)->ypad * 2;
-
-  gtk_container_add (GTK_CONTAINER (gcb->button), gcb->pixmap);
-  gtk_widget_show (gcb->pixmap);
-  gtk_widget_show (gcb->button);
+  gtk_image_set_from_stock
+    (GTK_IMAGE (gcb->image),
+     gimp_chain_stock_items[((position & GIMP_CHAIN_LEFT) << 1) + ! gcb->active],
+     GTK_ICON_SIZE_BUTTON);
 
   if (position & GIMP_CHAIN_LEFT) /* are we a vertical chainbutton? */
     {
@@ -252,6 +180,7 @@ gimp_chain_button_new (GimpChainPosition position)
       gtk_table_attach_defaults (GTK_TABLE (gcb), gcb->line2, 2, 3, 0, 1);
     }
 
+  gtk_widget_show (gcb->button);
   gtk_widget_show (gcb->line1);
   gtk_widget_show (gcb->line2);
 
@@ -260,29 +189,26 @@ gimp_chain_button_new (GimpChainPosition position)
 
 /** 
  * gimp_chain_button_set_active:
- * @gcb: Pointer to a #GimpChainButton.
- * @is_active: The new state.
+ * @gcb:    Pointer to a #GimpChainButton.
+ * @active: The new state.
  * 
- * Sets the state of the #GimpChainButton to be either locked (TRUE) or 
- * unlocked (FALSE) and changes the showed pixmap to reflect the new state.
+ * Sets the state of the #GimpChainButton to be either locked (#TRUE) or 
+ * unlocked (#FALSE) and changes the showed pixmap to reflect the new state.
  */
 void       
 gimp_chain_button_set_active (GimpChainButton  *gcb,
-			      gboolean          is_active)
+			      gboolean          active)
 {
   g_return_if_fail (GIMP_IS_CHAIN_BUTTON (gcb));
 
-  if (gcb->active != is_active)
+  if (gcb->active != active)
     {
-      gcb->active = is_active;
+      gcb->active = active ? TRUE : FALSE;
  
-     if (!GTK_WIDGET_REALIZED (GTK_WIDGET (gcb)))
-	return;
-
-     if (gcb->active)
-       gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->chain, gcb->chain_mask);
-     else
-       gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->broken, gcb->broken_mask);
+      gtk_image_set_from_stock
+        (GTK_IMAGE (gcb->image),
+         gimp_chain_stock_items[((gcb->position & GIMP_CHAIN_LEFT) << 1) + ! gcb->active],
+         GTK_ICON_SIZE_BUTTON);
     }
 }
 
@@ -302,57 +228,13 @@ gimp_chain_button_get_active (GimpChainButton *gcb)
   return gcb->active;
 }
 
-
-static void
-gimp_chain_button_realize (GtkWidget *widget)
-{
-  GimpChainButton *gcb;
-  GtkStyle *style;
-
-  gcb = GIMP_CHAIN_BUTTON (widget);
-
-  if (GTK_WIDGET_CLASS (parent_class)->realize)
-    (* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
-
-  style = gtk_widget_get_style (widget);
-  gcb->chain = gdk_pixmap_create_from_xpm_d (widget->window,
-					     &gcb->chain_mask,
-					     &style->bg[GTK_STATE_NORMAL],
-					     gimp_chain_xpm[gcb->position % 2]);
-  gcb->broken = gdk_pixmap_create_from_xpm_d (widget->window,
-					      &gcb->broken_mask,
-					      &style->bg[GTK_STATE_NORMAL],
-					      gimp_chain_broken_xpm[gcb->position % 2]);
-
-  if (gcb->active) 
-    gtk_pixmap_set (GTK_PIXMAP (gcb->pixmap), gcb->chain, gcb->chain_mask);
-  else
-    gtk_pixmap_set (GTK_PIXMAP (gcb->pixmap), gcb->broken, gcb->broken_mask);
-
-  gtk_widget_realize (gcb->line1);
-  gtk_style_set_background (widget->style, gcb->line1->window, GTK_STATE_NORMAL);
-  gdk_window_set_back_pixmap (gcb->line1->window, NULL, TRUE);
-
-  gtk_widget_realize (gcb->line2);
-  gtk_style_set_background (widget->style, gcb->line2->window, GTK_STATE_NORMAL);
-  gdk_window_set_back_pixmap (gcb->line2->window, NULL, TRUE);
-}
-
 static void
 gimp_chain_button_clicked_callback (GtkWidget       *widget,
 				    GimpChainButton *gcb)
 {
   g_return_if_fail (GIMP_IS_CHAIN_BUTTON (gcb));
 
-  gcb->active = !(gcb->active);
-
-  if (!GTK_WIDGET_REALIZED (GTK_WIDGET (gcb)))
-    return;
-
-  if (gcb->active)
-    gtk_pixmap_set (GTK_PIXMAP (gcb->pixmap), gcb->chain, gcb->chain_mask);
-  else
-    gtk_pixmap_set (GTK_PIXMAP (gcb->pixmap), gcb->broken, gcb->broken_mask);
+  gimp_chain_button_set_active (gcb, ! gcb->active);
 
   g_signal_emit (G_OBJECT (gcb), gimp_chain_button_signals[TOGGLED], 0);
 }

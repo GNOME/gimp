@@ -50,6 +50,15 @@ STOCK_VARIABLES = @STRIP_BEGIN@ \
 	stock_button_selection_intersect			\
 	$(srcdir)/images/stock-button-selection-intersect.png	\
 	\
+	stock_button_hchain					\
+	$(srcdir)/images/stock-button-hchain.png		\
+	stock_button_hchain_broken				\
+	$(srcdir)/images/stock-button-hchain-broken.png		\
+	stock_button_vchain					\
+	$(srcdir)/images/stock-button-vchain.png		\
+	stock_button_vchain_broken				\
+	$(srcdir)/images/stock-button-vchain-broken.png		\
+	\
 	stock_menu_navigation					\
 	$(srcdir)/images/stock-menu-navigation.png		\
 	stock_menu_qmask_off 					\

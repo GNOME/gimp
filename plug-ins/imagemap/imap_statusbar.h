@@ -24,8 +24,6 @@
 #ifndef _IMAP_STATUSBAR_H
 #define _IMAP_STATUSBAR_H
 
-#include "gtk/gtk.h"
-
 typedef struct {
    GtkWidget *status;
    GtkWidget *xy;

@@ -22,7 +22,12 @@
 #ifndef __GIMP_PREVIEW_H__
 #define __GIMP_PREVIEW_H__
 
+
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtkpreview.h>
+
+#define GTK_DISABLE_DEPRECATED
 
 
 #define GIMP_TYPE_PREVIEW            (gimp_preview_get_type ())

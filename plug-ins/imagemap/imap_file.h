@@ -24,8 +24,6 @@
 #ifndef _IMAP_FILE_H
 #define _IMAP_FILE_H
 
-#include "gtk/gtk.h"
-
 void do_file_open_dialog(void);
 void do_file_save_as_dialog(void);
 void do_file_error_dialog(const char *error, const char *filename);

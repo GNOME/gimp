@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
 #include "imap_rectangle.h"
 #include "imap_cmd_select.h"
 #include "imap_cmd_select_region.h"
@@ -104,10 +106,10 @@ select_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
    gpointer id;
    gint count;
 
-   gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
-				 (GtkSignalFunc) select_motion, data);
-   gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
-				 (GtkSignalFunc) select_release, data);
+   g_signal_handlers_disconnect_by_func(G_OBJECT(widget), 
+                                        select_motion, data);
+   g_signal_handlers_disconnect_by_func(G_OBJECT(widget), 
+                                        select_release, data);
 
    object_draw(obj, widget->window);
    object_normalize(obj);
@@ -134,10 +136,10 @@ select_region_command_execute(Command_t *parent)
    SelectRegionCommand_t *command = (SelectRegionCommand_t*) parent;
 
    command->obj = create_rectangle(command->x, command->y, 0, 0);
-   gtk_signal_connect(GTK_OBJECT(command->widget), "button_release_event", 
-		      (GtkSignalFunc) select_release, command);   
-   gtk_signal_connect(GTK_OBJECT(command->widget), "motion_notify_event", 
-		      (GtkSignalFunc) select_motion, command);   
+   g_signal_connect(G_OBJECT(command->widget), "button_release_event", 
+                    G_CALLBACK (select_release), command);   
+   g_signal_connect(G_OBJECT(command->widget), "motion_notify_event", 
+                    G_CALLBACK (select_motion), command);   
 
    gdk_gc_set_function(get_preferences()->normal_gc, GDK_EQUIV);
 

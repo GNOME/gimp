@@ -29,9 +29,9 @@
 static void       query      (void);
 static void       run        (gchar      *name, 
 			      gint        nparams, 
-			      GimpParam     *param, 
+			      GimpParam  *param, 
 			      gint       *nreturn_vals, 
-			      GimpParam    **return_vals);
+			      GimpParam **return_vals);
 static gboolean   aa_savable (gint32      drawable_ID);
 static gboolean   save_aa    (gint        output_type, 
 			      gchar      *filename, 
@@ -348,9 +348,9 @@ type_dialog (int selected)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  file save type  */
   frame = gtk_frame_new (_("Data Formatting"));
@@ -370,15 +370,17 @@ type_dialog (int selected)
     while (*p != NULL) 
       {
 	toggle = gtk_radio_button_new_with_label (group, (*p)->formatname);
-	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+	group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
 	gtk_box_pack_start (GTK_BOX  (toggle_vbox), toggle, FALSE, FALSE, 0);
-	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			    GTK_SIGNAL_FUNC (type_dialog_toggle_update),
-			    (gpointer) (*p)->formatname);
+	gtk_widget_show (toggle);
+
+	g_signal_connect (G_OBJECT (toggle), "toggled",
+                          G_CALLBACK (type_dialog_toggle_update),
+                          (gpointer) (*p)->formatname);
+
 	if (current == selected)
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
 	
-	gtk_widget_show (toggle);
 	p++;
 	current++;
       }

@@ -21,7 +21,12 @@
  *
  */
 
+#include "config.h"
+
 #include <stdio.h>
+
+#include <glib.h>
+
 #include "imap_string.h"
 #include "imap_taglist.h"
 

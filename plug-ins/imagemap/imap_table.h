@@ -24,8 +24,6 @@
 #ifndef _IMAP_TABLE_H
 #define _IMAP_TABLE_H
 
-#include "gtk/gtk.h"
-
 GtkWidget *create_spin_button_in_table(GtkWidget *table, int row, int col,
 				       int value, int min, int max);
 GtkWidget *create_check_button_in_table(GtkWidget *table, int row, int col,

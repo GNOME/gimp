@@ -36,6 +36,10 @@
 #include "libgimp/libgimp-intl.h"
 
 
+#define TODOUBLE(i) (i / 65535.0)
+#define TOUINT16(d) ((guint16) (d * 65535 + 0.5))
+
+
 typedef enum
 {
   GIMP_COLOR_BUTTON_COLOR_FG,
@@ -351,7 +355,8 @@ gimp_color_button_clicked (GtkButton *button)
 {
   GimpColorButton *gcb;
   GimpRGB          color;
-  gdouble          dcolor[4];
+  GdkColor         gdk_color;
+  guint16          alpha;
 
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (button));
 
@@ -359,36 +364,36 @@ gimp_color_button_clicked (GtkButton *button)
 
   gimp_color_button_get_color (gcb, &color);
 
-  dcolor[0] = color.r;
-  dcolor[1] = color.g;
-  dcolor[2] = color.b;
-  dcolor[3] = color.a;
+  gdk_color.red   = TOUINT16 (color.r);
+  gdk_color.green = TOUINT16 (color.g);
+  gdk_color.blue  = TOUINT16 (color.b);
+  alpha           = TOUINT16 (color.a);
 
   if (!gcb->dialog)
     {
       gcb->dialog = gtk_color_selection_dialog_new (gcb->title);
 
-      gtk_color_selection_set_current_alpha (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), gimp_color_button_has_alpha (gcb));
-      gtk_color_selection_set_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), dcolor);
+      gtk_color_selection_set_has_opacity_control (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), TRUE);
 
       gtk_widget_destroy (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->help_button);
       gtk_container_set_border_width (GTK_CONTAINER (gcb->dialog), 2);
 
       g_signal_connect (G_OBJECT (gcb->dialog), "destroy",
-			  G_CALLBACK (gtk_widget_destroyed), 
+			  G_CALLBACK (gtk_widget_destroyed),
 			  &gcb->dialog);
       g_signal_connect (G_OBJECT (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->ok_button), 
-			  "clicked",
-			  G_CALLBACK (gimp_color_button_dialog_ok), 
-			  gcb);
+                        "clicked",
+                        G_CALLBACK (gimp_color_button_dialog_ok), 
+                        gcb);
       g_signal_connect (G_OBJECT (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->cancel_button), 
-			  "clicked",
-			  G_CALLBACK (gimp_color_button_dialog_cancel), 
-			  gcb);
+                        "clicked",
+                        G_CALLBACK (gimp_color_button_dialog_cancel), 
+                        gcb);
       gtk_window_set_position (GTK_WINDOW (gcb->dialog), GTK_WIN_POS_MOUSE);  
     }
 
-  gtk_color_selection_set_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), dcolor);
+  gtk_color_selection_set_current_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), &gdk_color);
+  gtk_color_selection_set_current_alpha (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), alpha);
 
   gtk_widget_show (gcb->dialog);
 }
@@ -399,15 +404,21 @@ gimp_color_button_dialog_ok (GtkWidget *widget,
 {
   GimpColorButton *gcb;
   GimpRGB          color;
-  gdouble          dcolor[4];
+  GdkColor         gdk_color;
+  guint16          alpha;
 
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (data));
 
   gcb = GIMP_COLOR_BUTTON (data);
 
-  gtk_color_selection_get_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), dcolor);
+  gtk_color_selection_get_current_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), &gdk_color);
+  alpha = gtk_color_selection_get_current_alpha (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel));
 
-  gimp_rgba_set (&color, dcolor[0], dcolor[1], dcolor[2], dcolor[3]);
+  color.r = TODOUBLE (gdk_color.red);
+  color.g = TODOUBLE (gdk_color.green);
+  color.b = TODOUBLE (gdk_color.blue);
+  color.a = TODOUBLE (alpha);
+
   gimp_color_button_set_color (gcb, &color);
 
   gtk_widget_hide (gcb->dialog);  
@@ -463,16 +474,18 @@ gimp_color_button_color_changed (GtkObject *object,
   if (gcb->dialog)
     {
       GimpRGB  color;
-      gdouble  dcolor[4];
+      GdkColor gdk_color;
+      guint16  alpha;
 
       gimp_color_button_get_color (GIMP_COLOR_BUTTON (data), &color);
       
-      dcolor[0] = color.r;
-      dcolor[1] = color.g;
-      dcolor[2] = color.b;
-      dcolor[3] = color.a;
-      
-      gtk_color_selection_set_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), dcolor);
+      gdk_color.red   = TOUINT16 (color.r);
+      gdk_color.green = TOUINT16 (color.g);
+      gdk_color.blue  = TOUINT16 (color.b);
+      alpha           = TOUINT16 (color.a);
+
+      gtk_color_selection_set_current_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), &gdk_color);
+      gtk_color_selection_set_current_alpha (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), alpha);
     }
 
   g_signal_emit (G_OBJECT (gcb), 

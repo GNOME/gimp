@@ -140,7 +140,7 @@ gimp_dock_init (GimpDock *dock)
   gtk_window_set_wmclass (GTK_WINDOW (dock), "dock", "Gimp");
   gtk_window_set_policy (GTK_WINDOW (dock), FALSE, TRUE, TRUE);
 
-  gtk_widget_set_usize (GTK_WIDGET (dock), GIMP_DOCK_MINIMAL_WIDTH, -1);
+  gtk_widget_set_size_request (GTK_WIDGET (dock), GIMP_DOCK_MINIMAL_WIDTH, -1);
  
   dock->main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (dock), dock->main_vbox);
@@ -200,7 +200,7 @@ gimp_dock_style_set (GtkWidget *widget,
 
       if (GTK_IS_EVENT_BOX (child))
         {
-          gtk_widget_set_usize (child, -1, separator_height);
+          gtk_widget_set_size_request (child, -1, separator_height);
        }
     }
 
@@ -214,7 +214,7 @@ gimp_dock_separator_new (GimpDock *dock)
   GtkWidget *frame;
 
   event_box = gtk_event_box_new ();
-  gtk_widget_set_usize (event_box, -1, 6);
+  gtk_widget_set_size_request (event_box, -1, 6);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
@@ -484,8 +484,9 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 	  g_object_set_data (G_OBJECT (src_dockable),
                              "gimp-dock-drag-widget", NULL);
 
-	  children = gtk_container_children (GTK_CONTAINER (widget->parent));
-	  index    = g_list_index (children, widget) / 2;
+	  children = gtk_container_get_children (GTK_CONTAINER (widget->parent));
+	  index = g_list_index (children, widget) / 2;
+          g_list_free (children);
 
 	  dockbook = gimp_dockbook_new ();
 

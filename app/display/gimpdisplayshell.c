@@ -594,7 +594,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   /*  the canvas  */
   shell->canvas = gtk_drawing_area_new ();
   gtk_widget_set_name (shell->canvas, "gimp-canvas");
-  gtk_drawing_area_size (GTK_DRAWING_AREA (shell->canvas), n_width, n_height);
+  gtk_widget_set_size_request (shell->canvas, n_width, n_height);
   gtk_widget_set_events (shell->canvas, GIMP_DISPLAY_SHELL_CANVAS_EVENT_MASK);
   gtk_widget_set_extension_events (shell->canvas, GDK_EXTENSION_EVENTS_ALL);
   GTK_WIDGET_SET_FLAGS (shell->canvas, GTK_CAN_FOCUS);
@@ -643,7 +643,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   /*  the qmask button  */
   shell->qmask = gtk_check_button_new ();
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->qmask), FALSE);
-  gtk_widget_set_usize (GTK_WIDGET (shell->qmask), 16, 16);
+  gtk_widget_set_size_request (GTK_WIDGET (shell->qmask), 16, 16);
   GTK_WIDGET_UNSET_FLAGS (shell->qmask, GTK_CAN_FOCUS);
 
   if (gdisp->gimage->qmask_state)
@@ -705,7 +705,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   /*  the statusbar  */
   shell->statusbar = gtk_statusbar_new ();
   gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar), FALSE);
-  gtk_widget_set_usize (shell->statusbar, 1, -1);
+  gtk_widget_set_size_request (shell->statusbar, 1, -1);
   gtk_container_set_resize_mode (GTK_CONTAINER (shell->statusbar),
 				 GTK_RESIZE_QUEUE);
 
@@ -717,7 +717,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 
   /*  the progress bar  */
   shell->progressbar = gtk_progress_bar_new ();
-  gtk_widget_set_usize (shell->progressbar, 80, -1);
+  gtk_widget_set_size_request (shell->progressbar, 80, -1);
 
   /*  the cancel button  */
   shell->cancelbutton = gtk_button_new_with_label (_("Cancel"));
@@ -1635,12 +1635,14 @@ gimp_display_shell_resize_cursor_label (GimpDisplayShell *shell)
     shell->cursor_label->parent->allocation.width -
     shell->cursor_label->allocation.width;
 
-  gtk_widget_set_usize (shell->cursor_label, cursor_label_width, -1);
+  gtk_widget_set_size_request (shell->cursor_label, cursor_label_width, -1);
       
   /* don't resize if this is a new display */
   if (label_frame_size_difference)
-    gtk_widget_set_usize (shell->cursor_label->parent,
-                          cursor_label_width + label_frame_size_difference, -1);
+    gtk_widget_set_size_request (shell->cursor_label->parent,
+                                 cursor_label_width +
+                                 label_frame_size_difference,
+                                 -1);
 
   gimp_display_shell_update_cursor (shell,
                                     shell->cursor_x,

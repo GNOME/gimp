@@ -53,10 +53,10 @@ typedef struct
 } EngraveInterface;
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
 static gint engrave_dialog      (void);
@@ -65,16 +65,16 @@ static void engrave_ok_callback (GtkWidget *widget,
 
 static void engrave       (GimpDrawable *drawable);
 static void engrave_large (GimpDrawable *drawable,
-			   gint       height,
-			   gint       limit);
+			   gint          height,
+			   gint          limit);
 static void engrave_small (GimpDrawable *drawable,
-			   gint       height,
-			   gint       limit,
-			   gint       tile_width);
-static void engrave_sub   (gint       height,
-			   gint       limit,
-			   gint       bpp,
-			   gint       color_n);
+			   gint          height,
+			   gint          limit,
+			   gint          tile_width);
+static void engrave_sub   (gint          height,
+			   gint          limit,
+			   gint          bpp,
+			   gint          color_n);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -91,7 +91,7 @@ static EngraveValues pvals =
 
 static EngraveInterface pint =
 {
-  FALSE			/* run */
+  FALSE  /* run */
 };
 
 
@@ -123,23 +123,23 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -227,9 +227,9 @@ engrave_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -245,20 +245,21 @@ engrave_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Limit Line Width"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &pvals.limit);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pvals.limit);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pvals.limit);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Height:"), SCALE_WIDTH, 0,
 			      pvals.height, 2.0, 16.0, 1.0, 4.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &pvals.height);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &pvals.height);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);

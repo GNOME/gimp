@@ -25,6 +25,13 @@
 
 #include <stdlib.h> /* abs */
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#include <gtk/gtk.h>
+
 #include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_misc.h"

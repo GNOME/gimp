@@ -27,6 +27,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#include <gtk/gtk.h>
+
+#include "libgimp/gimp.h"
+
 #include "imap_command.h"
 #include "imap_file.h"
 #include "imap_main.h"
@@ -36,7 +45,6 @@
 #include "imap_preferences.h"
 #include "imap_table.h"
 
-#include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
 
 static gint

@@ -322,7 +322,7 @@ info_dialog_add_entry (InfoDialog    *idialog,
   g_return_val_if_fail (idialog != NULL, NULL);
 
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 50, 0);
+  gtk_widget_set_size_request (entry, 50, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), text_ptr ? text_ptr : "");
 
   if (callback)
@@ -403,7 +403,7 @@ info_dialog_add_spinbutton (InfoDialog    *idialog,
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
 				    climb_rate, MAX (MIN (digits, 6), 0));
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
 
   if (callback)
     g_signal_connect (G_OBJECT (adjustment), "value_changed",

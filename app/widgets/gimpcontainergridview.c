@@ -193,9 +193,9 @@ gimp_container_grid_view_new (GimpContainer *container,
     GTK_SCROLLED_WINDOW_GET_CLASS (grid_view->scrolled_win)->scrollbar_spacing +
     grid_view->scrolled_win->style->xthickness * 4;
 
-  gtk_widget_set_usize (grid_view->scrolled_win,
-			(preview_size + 2) * min_items_x + window_border,
-			(preview_size + 2) * min_items_y + window_border);
+  gtk_widget_set_size_request (grid_view->scrolled_win,
+                               (preview_size + 2) * min_items_x + window_border,
+                               (preview_size + 2) * min_items_y + window_border);
 
   if (container)
     gimp_container_view_set_container (view, container);

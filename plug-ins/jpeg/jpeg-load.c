@@ -222,7 +222,7 @@ static void     run                       (gchar            *name,
 					   gint             *nreturn_vals,
 					   GimpParam       **return_vals);
 static gint32   load_image                (gchar            *filename, 
-					   GimpRunMode   runmode, 
+					   GimpRunMode       runmode, 
 					   gboolean          preview);
 static gboolean save_image                (gchar            *filename,
 					   gint32            image_ID,
@@ -356,7 +356,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam      values[2];
-  GimpRunMode       run_mode;
+  GimpRunMode           run_mode;
   GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
   gint32                image_ID;
   gint32                drawable_ID;
@@ -1507,10 +1507,9 @@ make_preview (void)
   else 
     {
       gtk_label_set_text (GTK_LABEL (preview_size), _("Size: unknown"));
-      gtk_widget_draw (preview_size, NULL);
-      
+      gtk_widget_queue_draw (preview_size);
+
       gimp_displays_flush ();
-      gdk_flush();
     }
 }
 
@@ -1582,9 +1581,9 @@ save_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (save_close_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (save_close_callback),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -1604,14 +1603,16 @@ save_dialog (void)
 
   preview = gtk_check_button_new_with_label (_("Preview (in image window)"));
   gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (preview), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &jsvals.preview);
-  gtk_signal_connect (GTK_OBJECT (preview), "toggled",
-		      GTK_SIGNAL_FUNC (make_preview),
-		      NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview), jsvals.preview);
   gtk_widget_show (preview);
+
+  g_signal_connect (G_OBJECT (preview), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.preview);
+  g_signal_connect (G_OBJECT (preview), "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview), jsvals.preview);
 
   preview_size = gtk_label_new (_("Size: unknown"));
   gtk_misc_set_alignment (GTK_MISC (preview_size), 0.0, 0.5);
@@ -1647,13 +1648,14 @@ save_dialog (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &jsvals.quality);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (make_preview),
-		      NULL);
   gtk_widget_show (scale);
+
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &jsvals.quality);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (make_preview),
+                    NULL);
 
   label = gtk_label_new (_("Smoothing:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
@@ -1669,13 +1671,14 @@ save_dialog (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &jsvals.smoothing);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (make_preview),
-		      NULL);
   gtk_widget_show (scale);
+
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &jsvals.smoothing);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (make_preview),
+                    NULL);
 
   /* sg - have to init scale here */
   scale_data = gtk_adjustment_new ((jsvals.restart == 0) ? 1 : jsvals.restart,
@@ -1685,10 +1688,11 @@ save_dialog (void)
   restart = gtk_check_button_new_with_label (_("Restart markers"));
   gtk_table_attach (GTK_TABLE (table), restart, 0, 1, 2, 3,
 		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (restart), "toggled",
-		      GTK_SIGNAL_FUNC (save_restart_toggle_update),
-		      scale_data);
   gtk_widget_show (restart);
+
+  g_signal_connect (G_OBJECT (restart), "toggled",
+                    G_CALLBACK (save_restart_toggle_update),
+                    scale_data);
 
   restart_markers_label = gtk_label_new (_("Restart frequency (rows):"));
   gtk_misc_set_alignment (GTK_MISC (restart_markers_label), 1.0, 1.0);
@@ -1708,9 +1712,9 @@ save_dialog (void)
   gtk_range_set_update_policy (GTK_RANGE (restart_markers_scale),
 			       GTK_UPDATE_DELAYED);
 
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-                      GTK_SIGNAL_FUNC (save_restart_update),
-                      restart);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (save_restart_update),
+                    restart);
 
   gtk_widget_set_sensitive (restart_markers_label, 
 			    (jsvals.restart ? TRUE : FALSE));
@@ -1722,27 +1726,31 @@ save_dialog (void)
   toggle = gtk_check_button_new_with_label (_("Optimize"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 4, 5,
 		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &jsvals.optimize);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (make_preview),
-		      NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.optimize);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
 
   progressive = gtk_check_button_new_with_label (_("Progressive"));
   gtk_table_attach (GTK_TABLE (table), progressive, 0, 3, 5, 6,
 		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (progressive), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &jsvals.progressive);
-  gtk_signal_connect (GTK_OBJECT (progressive), "toggled",
-		      GTK_SIGNAL_FUNC (make_preview),
-		      NULL);
+  gtk_widget_show (progressive);
+
+  g_signal_connect (G_OBJECT (progressive), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.progressive);
+  g_signal_connect (G_OBJECT (progressive), "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (progressive),
 				jsvals.progressive);
-  gtk_widget_show (progressive);
 
 #ifndef HAVE_PROGRESSIVE_JPEG
   gtk_widget_set_sensitive (progressive, FALSE);
@@ -1751,15 +1759,17 @@ save_dialog (void)
   baseline = gtk_check_button_new_with_label (_("Force baseline JPEG (Readable by all decoders)"));
   gtk_table_attach (GTK_TABLE (table), baseline, 0, 3, 6, 7,
 		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (baseline), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &jsvals.baseline);
-  gtk_signal_connect (GTK_OBJECT (baseline), "toggled",
-		      GTK_SIGNAL_FUNC (make_preview),
-		      NULL);
+  gtk_widget_show (baseline);
+
+  g_signal_connect (G_OBJECT (baseline), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.baseline);
+  g_signal_connect (G_OBJECT (baseline), "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (baseline),
 				jsvals.baseline);
-  gtk_widget_show (baseline);
 
   /* Subsampling */
   menu = 
@@ -1828,7 +1838,7 @@ save_dialog (void)
    * [DindinX 2001-09-04]: this comment is still true with the text_buffer...
    */
   
-  gtk_object_set_data (GTK_OBJECT (dlg), "text_buffer", text_buffer); 
+  g_object_set_data (G_OBJECT (dlg), "text_buffer", text_buffer); 
   
   gtk_widget_show (com_frame);
 
@@ -1864,7 +1874,7 @@ save_ok_callback (GtkWidget *widget,
   jsint.run = TRUE;
 
   /* pw - get the comment text_buffer object and grab it's data */
-  text_buffer = gtk_object_get_data (GTK_OBJECT (data), "text_buffer");
+  text_buffer = g_object_get_data (G_OBJECT (data), "text_buffer");
 
   gtk_text_buffer_get_bounds (text_buffer, &start_iter, &end_iter);
   image_comment = gtk_text_buffer_get_text (text_buffer, 

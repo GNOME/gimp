@@ -616,9 +616,9 @@ blur_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   gimp_help_init ();
 
@@ -655,9 +655,9 @@ blur_dialog (void)
 			      pivals.blur_pct, 1.0, 100.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      _("Percentage of pixels to be filtered"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &pivals.blur_pct);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pivals.blur_pct);
 
   /*
    *  Repeat count label & scale (1 to 100)
@@ -667,9 +667,9 @@ blur_dialog (void)
 			      pivals.blur_rcount, 1.0, 100.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      _("Number of times to apply filter"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &pivals.blur_rcount);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pivals.blur_rcount);
 
   gtk_widget_show (frame);
 

@@ -176,17 +176,17 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam   values[1];
-  GimpRunMode    run_mode;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status;
 
   status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
   *nreturn_vals = 1;
   *return_vals  = values;
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
 
   /* Get the active drawable info */
 
@@ -766,25 +766,31 @@ mblur_dialog (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Blur Type"),
-			   G_CALLBACK (gimp_radio_button_update),
-			   &mbvals.mblur_type, (gpointer) mbvals.mblur_type,
+  frame = gimp_radio_group_new2 (TRUE, _("Blur Type"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &mbvals.mblur_type,
+                                 GINT_TO_POINTER (mbvals.mblur_type),
 
-			   _("Linear"), (gpointer) MBLUR_LINEAR, NULL,
-			   _("Radial"), (gpointer) MBLUR_RADIAL, NULL,
-			   _("Zoom"),   (gpointer) MBLUR_ZOOM, NULL,
+                                 _("Linear"),
+                                 GINT_TO_POINTER (MBLUR_LINEAR), NULL,
 
-			   NULL);
+                                 _("Radial"),
+                                 GINT_TO_POINTER (MBLUR_RADIAL), NULL,
+
+                                 _("Zoom"),
+                                 GINT_TO_POINTER (MBLUR_ZOOM), NULL,
+
+                                 NULL);
+
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -804,18 +810,18 @@ mblur_dialog (void)
 				     mbvals.length, 0.0, 256.0, 1.0, 8.0, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (adjustment, "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &mbvals.length);
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &mbvals.length);
 
   adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				     _("Angle:"), 150, 0,
 				     mbvals.angle, 0.0, 360.0, 1.0, 15.0, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (adjustment, "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &mbvals.angle);
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &mbvals.angle);
 
   gtk_widget_show (dialog);
 

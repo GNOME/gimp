@@ -726,9 +726,9 @@ curves_dialog_new (void)
 		    GTK_SHRINK | GTK_FILL, 0, 0);
 
   cd->graph = gtk_drawing_area_new ();
-  gtk_drawing_area_size (GTK_DRAWING_AREA (cd->graph),
-			 GRAPH_WIDTH + RADIUS * 2,
-			 GRAPH_HEIGHT + RADIUS * 2);
+  gtk_widget_set_size_request (cd->graph,
+                               GRAPH_WIDTH + RADIUS * 2,
+                               GRAPH_HEIGHT + RADIUS * 2);
   gtk_widget_set_events (cd->graph, GRAPH_MASK);
   gtk_container_add (GTK_CONTAINER (frame), cd->graph);
 
@@ -793,7 +793,7 @@ curves_dialog_new (void)
 
   /*  Horizontal button box for load / save  */
   hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_set_spacing (GTK_BOX (hbbox), 4);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbbox), GTK_BUTTONBOX_SPREAD);
   gtk_box_pack_end (GTK_BOX (vbox), hbbox, FALSE, FALSE, 0);
 
@@ -876,12 +876,11 @@ static void
 curves_update (CurvesDialog *cd,
 	       gint          update)
 {
-  GdkRectangle area;
-  gint   i, j;
-  gchar  buf[32];
-  gint   offset;
-  gint   height;
-  gint   sel_channel;
+  gint  i, j;
+  gchar buf[32];
+  gint  offset;
+  gint  height;
+  gint  sel_channel;
   
   if(cd->color) {
     sel_channel = cd->channel;
@@ -939,11 +938,9 @@ curves_update (CurvesDialog *cd,
 
       if (update & DRAW)
 	{
-	  area.x = 0;
-	  area.y = 0;
-	  area.width = XRANGE_WIDTH;
-	  area.height = XRANGE_HEIGHT / 2;
-	  gtk_widget_draw (cd->xrange, &area);
+	  gtk_widget_queue_draw_area (cd->xrange,
+                                      0, 0,
+                                      XRANGE_WIDTH, XRANGE_HEIGHT / 2);
 	}
     }
   if (update & XRANGE_BOTTOM)
@@ -962,11 +959,9 @@ curves_update (CurvesDialog *cd,
 
       if (update & DRAW)
 	{
-	  area.x = 0;
-	  area.y = XRANGE_HEIGHT / 2;
-	  area.width = XRANGE_WIDTH;
-	  area.height = XRANGE_HEIGHT / 2;
-	  gtk_widget_draw (cd->xrange, &area);
+	  gtk_widget_queue_draw_area (cd->xrange,
+                                      0, XRANGE_HEIGHT / 2,
+                                      XRANGE_WIDTH, XRANGE_HEIGHT / 2);
 	}
     }
   if (update & YRANGE)
@@ -1004,7 +999,7 @@ curves_update (CurvesDialog *cd,
 	}
 
       if (update & DRAW)
-	gtk_widget_draw (cd->yrange, NULL);
+	gtk_widget_queue_draw (cd->yrange);
     }
   if ((update & GRAPH) && (update & DRAW) && cd->pixmap != NULL)
     {

@@ -27,8 +27,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
 #include <pango/pangoft2.h>
+
+#include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -36,6 +37,12 @@
 
 #include "gimpfontselection.h"
 #include "gimpfontselection-dialog.h"
+
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+#include <gtk/gtkclist.h>
 
 #include "libgimp/gimpintl.h"
 
@@ -144,7 +151,7 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
   gtk_widget_show (frame);
  
   dialog->preview = gtk_drawing_area_new ();
-  gtk_widget_set_usize (dialog->preview, -1, 30);
+  gtk_widget_set_size_request (dialog->preview, -1, 30);
   gtk_container_add (GTK_CONTAINER (frame), dialog->preview);
   gtk_widget_show (dialog->preview);
   g_signal_connect (G_OBJECT (dialog->preview), "size_allocate",
@@ -165,7 +172,7 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
   gtk_clist_set_column_auto_resize (GTK_CLIST (dialog->font_clist), 0, TRUE);
   GTK_WIDGET_SET_FLAGS (dialog->font_clist, GTK_CAN_FOCUS);
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_usize (scrolled_win, FONT_LIST_WIDTH, FONT_LIST_HEIGHT);
+  gtk_widget_set_size_request (scrolled_win, FONT_LIST_WIDTH, FONT_LIST_HEIGHT);
   gtk_container_add (GTK_CONTAINER (scrolled_win), dialog->font_clist);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
@@ -182,7 +189,7 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
 				    0, TRUE);
   GTK_WIDGET_SET_FLAGS (dialog->font_style_clist, GTK_CAN_FOCUS);
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_usize (scrolled_win, FONT_STYLE_LIST_WIDTH, -1);
+  gtk_widget_set_size_request (scrolled_win, FONT_STYLE_LIST_WIDTH, -1);
   gtk_container_add (GTK_CONTAINER (scrolled_win), dialog->font_style_clist);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
@@ -562,7 +569,7 @@ gimp_font_selection_dialog_preview (GimpFontSelectionDialog *dialog)
       pango_layout_get_pixel_extents (dialog->layout, NULL, &rect);
 
       if (rect.height + 4 > dialog->preview->allocation.height)
-        gtk_widget_set_usize (dialog->preview, -1, rect.height + 4);
+        gtk_widget_set_size_request (dialog->preview, -1, rect.height + 4);
 
       /* FIXME: align on baseline */
       

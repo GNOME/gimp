@@ -58,23 +58,23 @@ static char ident[] = "@(#) GIMP Compose plug-in v1.03 17-Mar-99";
 /* Declare local functions
  */
 static void      query  (void);
-static void      run    (gchar     *name,
-			 gint       nparams,
-			 GimpParam    *param,
-			 gint      *nreturn_vals,
-			 GimpParam   **return_vals);
+static void      run    (gchar       *name,
+			 gint         nparams,
+			 GimpParam   *param,
+			 gint        *nreturn_vals,
+			 GimpParam  **return_vals);
 
-static gint32    compose (gchar *compose_type,
+static gint32    compose (gchar  *compose_type,
                           gint32 *compose_ID,
-                          gint compose_by_drawable);
+                          gint    compose_by_drawable);
 
 static gint32    create_new_image (gchar          *filename,
 				   guint           width,
 				   guint           height,
 				   GimpImageType   gdtype,
 				   gint32         *layer_ID,
-				   GimpDrawable     **drawable,
-				   GimpPixelRgn      *pixel_rgn);
+				   GimpDrawable  **drawable,
+				   GimpPixelRgn   *pixel_rgn);
 
 static void  compose_rgb  (guchar **src, gint *incr, gint numpix, guchar *dst);
 static void  compose_rgba (guchar **src, gint *incr, gint numpix, guchar *dst);
@@ -82,12 +82,12 @@ static void  compose_hsv  (guchar **src, gint *incr, gint numpix, guchar *dst);
 static void  compose_cmy  (guchar **src, gint *incr, gint numpix, guchar *dst);
 static void  compose_cmyk (guchar **src, gint *incr, gint numpix, guchar *dst);
 
-static gint      compose_dialog (gchar  *compose_type,
-                                 gint32  drawable_ID);
+static gint      compose_dialog (gchar    *compose_type,
+                                 gint32    drawable_ID);
 
-static gint      check_gray     (gint32 image_id,
-				 gint32 drawable_id,
-				 gpointer data);
+static gint      check_gray     (gint32    image_id,
+				 gint32    drawable_id,
+				 gpointer  data);
 
 static void      image_menu_callback (gint32     id,
                                       gpointer   data);
@@ -121,22 +121,22 @@ static COMPOSE_DSC compose_dsc[] =
 		    N_("Green:"),
 		    N_("Blue:"),
 		    CHNL_NA }, N_("rgb-compose"),  compose_rgb },
- { N_("RGBA"), 4, { N_("Red:"),
-		    N_("Green:"),
-		    N_("Blue:"),
-		    N_("Alpha:") }, N_("rgba-compose"),  compose_rgba },
- { N_("HSV"),  3, { N_("Hue:"),
-		    N_("Saturation:"),
-		    N_("Value:"),
-		    CHNL_NA }, N_("hsv-compose"),  compose_hsv },
- { N_("CMY"),  3, { N_("Cyan:"),
-		    N_("Magenta:"),
-		    N_("Yellow:"),
-		    CHNL_NA }, N_("cmy-compose"),  compose_cmy },
- { N_("CMYK"), 4, { N_("Cyan:"),
-		    N_("Magenta:"),
-		    N_("Yellow:"),
-		    N_("Black:") }, N_("cmyk-compose"), compose_cmyk }
+  { N_("RGBA"), 4, { N_("Red:"),
+                     N_("Green:"),
+                     N_("Blue:"),
+                     N_("Alpha:") }, N_("rgba-compose"),  compose_rgba },
+  { N_("HSV"),  3, { N_("Hue:"),
+                     N_("Saturation:"),
+                     N_("Value:"),
+                     CHNL_NA }, N_("hsv-compose"),  compose_hsv },
+  { N_("CMY"),  3, { N_("Cyan:"),
+                     N_("Magenta:"),
+                     N_("Yellow:"),
+                     CHNL_NA }, N_("cmy-compose"),  compose_cmy },
+  { N_("CMYK"), 4, { N_("Cyan:"),
+                     N_("Magenta:"),
+                     N_("Yellow:"),
+                     N_("Black:") }, N_("cmyk-compose"), compose_cmyk }
 };
 
 #define MAX_COMPOSE_TYPES (G_N_ELEMENTS (compose_dsc))
@@ -254,16 +254,16 @@ query (void)
 
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
+  static GimpParam  values[2];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32 image_ID, drawable_ID;
-  gint compose_by_drawable;
+  gint32            image_ID, drawable_ID;
+  gint              compose_by_drawable;
 
   INIT_I18N_UI ();
 
@@ -271,12 +271,12 @@ run (gchar   *name,
   compose_by_drawable = (strcmp (name, "plug_in_drawable_compose") == 0);
 
   *nreturn_vals = 2;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  values[1].type = GIMP_PDB_IMAGE;
-  values[1].data.d_int32 = -1;
+  values[1].type          = GIMP_PDB_IMAGE;
+  values[1].data.d_int32  = -1;
 
   switch (run_mode)
     {
@@ -286,21 +286,24 @@ run (gchar   *name,
 
       /* The dialog is now drawable based. Get a drawable-ID of the image */
       if (strcmp (name, "plug_in_compose") == 0)
-      {gint32 *layer_list;
-       gint nlayers;
-
-        layer_list = gimp_image_get_layers (param[1].data.d_int32, &nlayers);
-        if ((layer_list == NULL) || (nlayers <= 0))
         {
-	  g_message (_("compose: Could not get layers for image %d"),
-		     (gint) param[1].data.d_int32);
-          return;
+          gint32 *layer_list;
+          gint nlayers;
+
+          layer_list = gimp_image_get_layers (param[1].data.d_int32, &nlayers);
+          if ((layer_list == NULL) || (nlayers <= 0))
+            {
+              g_message (_("compose: Could not get layers for image %d"),
+                         (gint) param[1].data.d_int32);
+              return;
+            }
+          drawable_ID = layer_list[0];
+          g_free (layer_list);
         }
-        drawable_ID = layer_list[0];
-        g_free (layer_list);
-      }
       else
-        drawable_ID = param[2].data.d_int32;
+        {
+          drawable_ID = param[2].data.d_int32;
+        }
 
       compose_by_drawable = 1;
 
@@ -778,9 +781,9 @@ compose_dialog (gchar  *compose_type,
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -853,15 +856,17 @@ compose_dialog (gchar  *compose_type,
     {
       toggle = gtk_radio_button_new_with_label (group,
 						gettext(compose_dsc[j].compose_type));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (left_vbox), toggle, TRUE, TRUE, 0);
       composeint.compose_flag[j] = (j == compose_idx);
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  (GtkSignalFunc) compose_type_toggle_update,
-			  &(composeint.compose_flag[j]));
+      gtk_widget_show (toggle);
+
+      g_signal_connect (G_OBJECT (toggle), "toggled",
+                        GTK_SIGNAL_FUNC (compose_type_toggle_update),
+                        &(composeint.compose_flag[j]));
+
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    composeint.compose_flag[j]);
-      gtk_widget_show (toggle);
     }
 
   gtk_widget_show (left_vbox);

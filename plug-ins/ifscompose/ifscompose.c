@@ -39,14 +39,20 @@
 #include <string.h>
 #include <ctype.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "ifscompose.h"
+
 #include "libgimp/stdplugins-intl.h"
 
-#include "ifscompose.h"
 
 #define SCALE_WIDTH            150
 #define ENTRY_WIDTH             60

@@ -315,9 +315,9 @@ colorify_dialog (GimpRGB *color)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   frame = gtk_frame_new (_("Color"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -341,9 +341,9 @@ colorify_dialog (GimpRGB *color)
 					       COLOR_SIZE, COLOR_SIZE,
 					       color,
 					       GIMP_COLOR_AREA_FLAT);
-  gtk_signal_connect (GTK_OBJECT (custum_color_button), "color_changed",
-		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
-		      color);
+  g_signal_connect (G_OBJECT (custum_color_button), "color_changed",
+                    G_CALLBACK (gimp_color_button_get_color),
+                    color);
   
   gtk_table_attach (GTK_TABLE (table), custum_color_button, 6, 7, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -358,7 +358,7 @@ colorify_dialog (GimpRGB *color)
       gtk_widget_set_size_request (GTK_WIDGET (color_area),
 				   COLOR_SIZE, COLOR_SIZE);
       gtk_container_add (GTK_CONTAINER (button), color_area);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
+      g_signal_connect (G_OBJECT (button), "clicked",
 			  (GtkSignalFunc) predefined_color_callback,
 			  color_area);
       gtk_widget_show (color_area);

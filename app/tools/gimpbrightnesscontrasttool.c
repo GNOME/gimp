@@ -293,7 +293,7 @@ brightness_contrast_dialog_new (void)
   data = gtk_adjustment_new (0, -127, 127.0, 1.0, 10.0, 0.0);
   bcd->brightness_data = GTK_ADJUSTMENT (data);
   slider = gtk_hscale_new (GTK_ADJUSTMENT (data));
-  gtk_widget_set_usize (slider, SLIDER_WIDTH, -1);
+  gtk_widget_set_size_request (slider, SLIDER_WIDTH, -1);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
@@ -301,7 +301,7 @@ brightness_contrast_dialog_new (void)
 
   abox = gtk_vbox_new (FALSE, 0);
   spinbutton = gtk_spin_button_new (bcd->brightness_data, 1.0, 0);
-  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_end (GTK_BOX (abox), spinbutton, FALSE, FALSE, 0);
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -324,7 +324,7 @@ brightness_contrast_dialog_new (void)
   data = gtk_adjustment_new (0, -127.0, 127.0, 1.0, 10.0, 0.0);
   bcd->contrast_data = GTK_ADJUSTMENT (data);
   slider = gtk_hscale_new (GTK_ADJUSTMENT (data));
-  gtk_widget_set_usize (slider, SLIDER_WIDTH, -1);
+  gtk_widget_set_size_request (slider, SLIDER_WIDTH, -1);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
@@ -332,7 +332,7 @@ brightness_contrast_dialog_new (void)
 
   abox = gtk_vbox_new (FALSE, 0);
   spinbutton = gtk_spin_button_new (bcd->contrast_data, 1.0, 0);
-  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_end (GTK_BOX (abox), spinbutton, FALSE, FALSE, 0);
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

@@ -54,7 +54,7 @@ sized_with_same_fallback_icon_set_from_inline (const guchar *inline_data,
 
   gtk_icon_source_set_pixbuf (source, pixbuf);
 
-  gdk_pixbuf_unref (pixbuf);
+  g_object_unref (G_OBJECT (pixbuf));
 
   set = gtk_icon_set_new ();
 
@@ -103,14 +103,19 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TO_SELECTION, N_("To Sleection"),      0, 0, "gimp-libgimp" },
   { GIMP_STOCK_VISIBLE,      N_("Visible"),           0, 0, "gimp-libgimp" },
 
-  { GIMP_STOCK_NAVIGATION,   NULL,                    0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_QMASK_OFF,    NULL,                    0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_QMASK_ON,     NULL,                    0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_NAVIGATION,               NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_QMASK_OFF,                NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_QMASK_ON,                 NULL,        0, 0, "gimp-libgimp" },
 
-  { GIMP_STOCK_SELECTION_REPLACE,   NULL,             0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_SELECTION_ADD,       NULL,             0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_SELECTION_SUBTRACT,  NULL,             0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_SELECTION_INTERSECT, NULL,             0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_HCHAIN,                   NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_HCHAIN_BROKEN,            NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_VCHAIN,                   NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_VCHAIN_BROKEN,            NULL,        0, 0, "gimp-libgimp" },
+
+  { GIMP_STOCK_SELECTION_REPLACE,        NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_SELECTION_ADD,            NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_SELECTION_SUBTRACT,       NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_SELECTION_INTERSECT,      NULL,        0, 0, "gimp-libgimp" },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            NULL,        0, 0, "gimp-libgimp" },
   { GIMP_STOCK_TOOL_BEZIER_SELECT,       NULL,        0, 0, "gimp-libgimp" },
@@ -176,6 +181,11 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TO_PATH,                  stock_button_to_path                  },
   { GIMP_STOCK_TO_SELECTION,             stock_button_to_selection             },
   { GIMP_STOCK_VISIBLE,                  stock_button_eye                      },
+
+  { GIMP_STOCK_HCHAIN,                   stock_button_hchain                   },
+  { GIMP_STOCK_HCHAIN_BROKEN,            stock_button_hchain_broken            },
+  { GIMP_STOCK_VCHAIN,                   stock_button_vchain                   },
+  { GIMP_STOCK_VCHAIN_BROKEN,            stock_button_vchain_broken            },
 
   { GIMP_STOCK_SELECTION_REPLACE,        stock_button_selection_replace        },
   { GIMP_STOCK_SELECTION_ADD,            stock_button_selection_add            },

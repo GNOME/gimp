@@ -42,10 +42,9 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "libgimp/stdplugins-intl.h"
-
 #include "sgi.h"		/* SGI image library definitions */
 
+#include "libgimp/stdplugins-intl.h"
 
 
 /*
@@ -60,16 +59,16 @@
  */
 
 static void	query       (void);
-static void	run         (gchar   *name,
-			     gint     nparams,
+static void	run         (gchar      *name,
+			     gint        nparams,
 			     GimpParam  *param,
-			     gint    *nreturn_vals,
+			     gint       *nreturn_vals,
 			     GimpParam **return_vals);
 
-static gint32	load_image  (gchar   *filename);
-static gint	save_image  (gchar   *filename,
-			     gint32   image_ID,
-			     gint32   drawable_ID);
+static gint32	load_image  (gchar      *filename);
+static gint	save_image  (gchar      *filename,
+			     gint32      image_ID,
+			     gint32      drawable_ID);
 
 static gint	save_dialog (void);
 
@@ -155,17 +154,17 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;       
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32	image_ID;	
-  gint32        drawable_ID;
+  static GimpParam     values[2];
+  GimpRunMode          run_mode;       
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32	       image_ID;	
+  gint32               drawable_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
@@ -204,9 +203,9 @@ run (gchar   *name,
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("sgi", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "SGI", 
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
+				      (GIMP_EXPORT_CAN_HANDLE_RGB  |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_ALPHA ));
+				       GIMP_EXPORT_CAN_HANDLE_ALPHA));
 	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -508,7 +507,7 @@ save_image (gchar  *filename,
 		       drawable->height, FALSE, FALSE);
 
   zsize = 0;
-  switch (gimp_drawable_type(drawable_ID))
+  switch (gimp_drawable_type (drawable_ID))
     {
     case GIMP_GRAY_IMAGE :
       zsize = 1;
@@ -633,31 +632,33 @@ save_dialog (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, FALSE, FALSE,
 
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
+			 GTK_STOCK_OK, save_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   frame = gimp_radio_group_new2 (TRUE, _("Compression Type"),
 				 G_CALLBACK (gimp_radio_button_update),
-				 &compression, (gpointer) compression,
+				 &compression,
+                                 GINT_TO_POINTER (compression),
 
 				 _("No Compression"),
-				 (gpointer) SGI_COMP_NONE, NULL,
+				 GINT_TO_POINTER (SGI_COMP_NONE), NULL,
 				 _("RLE Compression"),
-				 (gpointer) SGI_COMP_RLE, NULL,
+				 GINT_TO_POINTER (SGI_COMP_RLE), NULL,
 				 _("Aggressive RLE\n(Not Supported by SGI)"),
-				 (gpointer) SGI_COMP_ARLE, NULL,
+				 GINT_TO_POINTER (SGI_COMP_ARLE), NULL,
 
 				 NULL);
 
-  gtk_container_set_border_width (GTK_CONTAINER(frame), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 

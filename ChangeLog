@@ -1,3 +1,137 @@
+2001-12-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpprogress.c
+	* app/nav_window.c
+	* app/ops_buttons.c
+	* app/undo_history.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/about-dialog.c
+	* app/gui/brush-editor.c
+	* app/gui/channels-commands.c
+	* app/gui/color-area.c
+	* app/gui/color-notebook.c
+	* app/gui/color-select.c
+	* app/gui/colormap-dialog.c
+	* app/gui/convert-dialog.c
+	* app/gui/device-status-dialog.c
+	* app/gui/file-new-dialog.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/info-dialog.c
+	* app/gui/layers-commands.c
+	* app/gui/module-browser.c
+	* app/gui/offset-dialog.c
+	* app/gui/palette-editor.c
+	* app/gui/palettes-commands.c
+	* app/gui/paths-dialog.c
+	* app/gui/qmask-commands.c
+	* app/gui/resize-dialog.c
+	* app/gui/resolution-calibrate-dialog.c
+	* app/gui/splash.c
+	* app/gui/tips-dialog.c
+	* app/gui/toolbox.c
+	* app/gui/user-install-dialog.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/paint_options.c
+	* app/tools/selection_options.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpcolorpanel.c
+	* app/widgets/gimpcomponentlistitem.c
+	* app/widgets/gimpconstrainedhwrapbox.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainerlistview.c
+	* app/widgets/gimpcontainermenuimpl.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimpdrawablelistitem.c
+	* app/widgets/gimpdrawablelistview.c
+	* app/widgets/gimpfontselection-dialog.c
+	* app/widgets/gimphistogramview.c
+	* app/widgets/gimpitemfactory.c
+	* app/widgets/gimplayerlistitem.c
+	* app/widgets/gimplistitem.[ch]
+	* app/widgets/gimpmenuitem.c
+	* app/widgets/gimppreview.[ch]
+	* app/widgets/gtkhwrapbox.c
+	* app/widgets/gtkvwrapbox.c
+	* app/widgets/gtkwrapbox.c
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpexport.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimpmenu.c
+	* libgimp/gimppatternmenu.c
+	* libgimpwidgets/gimpbutton.c
+	* libgimpwidgets/gimpchainbutton.[ch]
+	* libgimpwidgets/gimpcolorarea.h
+	* libgimpwidgets/gimpcolorbutton.c
+	* libgimpwidgets/gimpfileselection.c
+	* libgimpwidgets/gimphelpui.c
+	* libgimpwidgets/gimpoffsetarea.c
+	* libgimpwidgets/gimppatheditor.c
+	* libgimpwidgets/gimppixmap.h
+	* libgimpwidgets/gimpquerybox.c
+	* libgimpwidgets/gimpstock.[ch]
+	* libgimpwidgets/gimpwidgets.h
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/Events.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/bmp/bmpwrite.c
+	* plug-ins/dbbrowser/dbbrowser_utils.c
+	* plug-ins/fits/fits.c
+	* plug-ins/flame/flame.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/fp/fp_misc.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/gimpressionist/*.c
+	* plug-ins/imagemap/*.[ch]
+	* plug-ins/maze/maze_face.c
+	* plug-ins/mosaic/mosaic.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/print/print_gimp.h
+	* plug-ins/rcm/rcm_callback.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/rcm/rcm_misc.c
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-server.c
+	* plug-ins/sel2path/sel2path.c
+	* plug-ins/sel2path/sel2path_adv_dialog.c
+	* plug-ins/sgi/sgi.c
+	* plug-ins/webbrowser/webbrowser.c
+	* plug-ins/xjt/xjt.c
+	* plug-ins/common/[A-n]*.c: compile with GTK_DISABLE_DEPRECATED
+	defined. Not everything is fully ported yet, had to #undef
+	GTK_DISABLE_DEPRECATED in many places and added #warnings when
+	doing so.
+
+	* pixmaps/Makefile.am
+	* pixmaps/chain.xpm: removed.
+
+	* themes/Default/Makefile.am
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-button-hchain-broken.png
+	* themes/Default/images/stock-button-hchain.png
+	* themes/Default/images/stock-button-vchain-broken.png
+	* themes/Default/images/stock-button-vchain.png: new stock icons.
+
 2001-12-28  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc.c: write comment to top of gimprc.

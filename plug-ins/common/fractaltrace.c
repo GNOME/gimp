@@ -41,10 +41,10 @@
 /******************************************************************************/
 
 static void query  (void);
-static void run    (gchar   *name,
-		    gint     nparams,
+static void run    (gchar      *name,
+		    gint        nparams,
 		    GimpParam  *param,
-		    gint    *nreturn_vals,
+		    gint       *nreturn_vals,
 		    GimpParam **return_vals);
 
 static void filter      (GimpDrawable *drawable);
@@ -113,7 +113,7 @@ query (void)
     { GIMP_PDB_FLOAT,    "ymax",         "ymax fractal image delimiter"     },
     { GIMP_PDB_INT32,    "depth",        "trace depth"                      },
     { GIMP_PDB_INT32,    "outside_type", "outside type"
-                                      "(0=WRAP/1=TRANS/2=BLACK/3=WHITE)" }
+                                         "(0=WRAP/1=TRANS/2=BLACK/3=WHITE)" }
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -157,16 +157,16 @@ static image_t     image;
 /******************************************************************************/
 
 static void
-run (gchar   *name,
-     gint     argc,
+run (gchar      *name,
+     gint        argc,
      GimpParam  *args,
-     gint    *retc,
+     gint       *retc,
      GimpParam **rets)
 {
-  GimpDrawable     *drawable;
-  GimpRunMode   run_mode;
-  GimpPDBStatusType    status;
-  static GimpParam  returns[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status;
+  static GimpParam   returns[1];
 
   run_mode = args[0].data.d_int32;
   status   = GIMP_PDB_SUCCESS;
@@ -549,8 +549,8 @@ dialog_preview_store (void)
       gtk_preview_draw_row (GTK_PREVIEW (preview.preview),
 			    preview.pixels[y], 0, y, preview.width);
     }
-  gtk_widget_draw (preview.preview, NULL);
-  gdk_flush ();
+
+  gtk_widget_queue_draw (preview.preview);
 }
 
 static void
@@ -728,9 +728,9 @@ dialog_show (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   mainbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (mainbox), 6);
@@ -795,45 +795,45 @@ dialog_show (void)
 			      parameters.x1, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_double_adjustment_update),
-		      &parameters.x1);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_double_adjustment_update),
+                    &parameters.x1);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("X2:"), 0, 0,
 			      parameters.x2, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_double_adjustment_update),
-		      &parameters.x2);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_double_adjustment_update),
+                    &parameters.x2);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Y1:"), 0, 0,
 			      parameters.y1, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_double_adjustment_update),
-		      &parameters.y1);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_double_adjustment_update),
+                    &parameters.y1);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 			      _("Y2:"), 0, 0,
 			      parameters.y2, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_double_adjustment_update),
-		      &parameters.y2);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_double_adjustment_update),
+                    &parameters.y2);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
 			      _("Depth:"), 0, 0,
 			      parameters.depth, 1, 50, 1, 5, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_int_adjustment_update),
-		      &parameters.depth);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_int_adjustment_update),
+                    &parameters.depth);
 
   gtk_widget_show (dialog);
   dialog_preview_draw ();

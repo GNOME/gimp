@@ -420,7 +420,6 @@ gimp_list_item_check_drag (GimpListItem   *list_item,
                            GimpDropType   *drop_type)
 {
   GtkWidget     *src_widget;
-  GimpListItem  *src_list_item;
   GimpViewable  *my_src_viewable  = NULL;
   GimpViewable  *my_dest_viewable = NULL;
   gint           my_src_index     = -1;
@@ -436,18 +435,28 @@ gimp_list_item_check_drag (GimpListItem   *list_item,
       src_widget             &&
       src_widget != GTK_WIDGET (list_item))
     {
-      src_list_item = GIMP_LIST_ITEM (src_widget);
+      GimpListItem *src_list_item = NULL;
+
+      if (GIMP_IS_LIST_ITEM (src_widget))
+        src_list_item = GIMP_LIST_ITEM (src_widget);
 
       my_src_viewable  = gimp_dnd_get_drag_data (src_widget);
       my_dest_viewable = GIMP_PREVIEW (list_item->preview)->viewable;
 
       if (my_src_viewable          &&
           my_dest_viewable         &&
-          src_list_item->container &&
           list_item->container)
         {
+          GimpContainer *src_container = NULL;
+
+          if (src_list_item)
+            src_container = src_list_item->container;
+
+          if (! src_container)
+            src_container = list_item->container;
+
           my_src_index =
-            gimp_container_get_child_index (src_list_item->container,
+            gimp_container_get_child_index (src_container,
                                             GIMP_OBJECT (my_src_viewable));
           my_dest_index =
             gimp_container_get_child_index (list_item->container,
@@ -456,7 +465,7 @@ gimp_list_item_check_drag (GimpListItem   *list_item,
           if (my_src_viewable  && my_src_index  != -1 &&
               my_dest_viewable && my_dest_index != -1)
             {
-              if (src_list_item->container == list_item->container)
+              if (src_container == list_item->container)
                 {
                   gint difference;
 
@@ -486,8 +495,10 @@ gimp_list_item_check_drag (GimpListItem   *list_item,
                       my_drop_type = GIMP_DROP_NONE;
                     }
                 }
-              else if (src_list_item->convertable &&
-                       src_list_item->container->children_type ==
+              else if (src_list_item &&
+                       src_list_item->convertable &&
+                       src_container &&
+                       src_container->children_type ==
                        list_item->container->children_type)
                 {
                   if (y < GTK_WIDGET (list_item)->allocation.height / 2)

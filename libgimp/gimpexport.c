@@ -364,9 +364,9 @@ confirm_save_dialog (const gchar *saving_what,
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (export_cancel_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (export_cancel_callback),
+                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);

@@ -66,10 +66,10 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar   *name,
-                          gint     nparams,
+static void   run        (gchar      *name,
+                          gint        nparams,
                           GimpParam  *param,
-                          gint    *nreturn_vals,
+                          gint       *nreturn_vals,
                           GimpParam **return_vals);
 
 static gint32 load_image (gchar  *filename);
@@ -981,16 +981,17 @@ load_dialog (void)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, FALSE, FALSE,
 
-			    GTK_STOCK_OK, load_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
 			    GTK_STOCK_CANCEL, gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
+			    GTK_STOCK_OK, load_ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_main_quit),
-                      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);

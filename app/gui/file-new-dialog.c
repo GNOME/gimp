@@ -200,7 +200,7 @@ file_new_dialog_create (Gimp      *gimp,
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   /*  add the "height in units" spinbutton to the sizeentry  */
   gtk_table_attach_defaults (GTK_TABLE (info->size_se), spinbutton,
 			     0, 1, 2, 3);
@@ -211,7 +211,7 @@ file_new_dialog_create (Gimp      *gimp,
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton2 = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton2), TRUE);
-  gtk_widget_set_usize (spinbutton2, 75, 0);
+  gtk_widget_set_size_request (spinbutton2, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton2, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton2);
 
@@ -232,7 +232,7 @@ file_new_dialog_create (Gimp      *gimp,
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   /*  add the "width in units" spinbutton to the sizeentry  */
   gtk_table_attach_defaults (GTK_TABLE (info->size_se), spinbutton,
 			     0, 1, 1, 2);
@@ -244,7 +244,7 @@ file_new_dialog_create (Gimp      *gimp,
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton2 = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton2), TRUE);
-  gtk_widget_set_usize (spinbutton2, 75, 0);
+  gtk_widget_set_size_request (spinbutton2, 75, -1);
   /*  add the "width in pixels" spinbutton to the main table  */
   gtk_container_add (GTK_CONTAINER (abox), spinbutton2);
   gtk_widget_show (spinbutton2);
@@ -300,7 +300,7 @@ file_new_dialog_create (Gimp      *gimp,
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
 
   info->resolution_se =
     gimp_size_entry_new (1, gimp->config->default_resolution_units,
@@ -371,7 +371,7 @@ file_new_dialog_create (Gimp      *gimp,
       name_info = (GimpImageBaseTypeName*) list->data;
 
       button = gtk_radio_button_new_with_label (group, name_info->name);
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, TRUE, 0);
       g_object_set_data (G_OBJECT (button), "gimp-item-data",
 			 (gpointer) name_info->type);
@@ -412,7 +412,7 @@ file_new_dialog_create (Gimp      *gimp,
 
       button =
 	gtk_radio_button_new_with_label (group, name_info->name);
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
       g_object_set_data (G_OBJECT (button), "gimp-item-data",
 			 (gpointer) name_info->type);
@@ -488,7 +488,9 @@ file_new_reset_callback (GtkWidget *widget,
 
   info = (NewImageInfo *) data;
 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (info->resolution_se), info);
+  g_signal_handlers_block_by_func (G_OBJECT (info->resolution_se),
+                                   file_new_resolution_callback,
+                                   info);
 
   gimp_chain_button_set_active
     (GIMP_CHAIN_BUTTON (info->couple_resolutions),
@@ -502,7 +504,9 @@ file_new_reset_callback (GtkWidget *widget,
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->resolution_se),
 			    info->gimp->config->default_resolution_units);
 
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (info->resolution_se), info);
+  g_signal_handlers_unblock_by_func (G_OBJECT (info->resolution_se),
+                                     file_new_resolution_callback,
+                                     info);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 0,
 				  info->gimp->config->default_xresolution, TRUE);
@@ -623,8 +627,9 @@ file_new_resolution_callback (GtkWidget *widget,
   if (gimp_chain_button_get_active
       (GIMP_CHAIN_BUTTON (info->couple_resolutions)))
     {
-      gtk_signal_handler_block_by_data
-	(GTK_OBJECT (info->resolution_se), info);
+      g_signal_handlers_block_by_func (G_OBJECT (info->resolution_se),
+                                       file_new_resolution_callback,
+                                       info);
 
       if (new_xres != xres)
 	{
@@ -638,8 +643,9 @@ file_new_resolution_callback (GtkWidget *widget,
 	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, xres);
 	}
 
-      gtk_signal_handler_unblock_by_data
-	(GTK_OBJECT (info->resolution_se), info);
+      g_signal_handlers_unblock_by_func (G_OBJECT (info->resolution_se),
+                                         file_new_resolution_callback,
+                                         info);
     }
   else
     {

@@ -38,6 +38,12 @@
 #include "palette-import-dialog.h"
 #include "palettes-commands.h"
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+#include <gtk/gtklist.h>
+
 #include "libgimp/gimpintl.h"
 
 

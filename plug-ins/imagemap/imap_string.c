@@ -21,6 +21,10 @@
  *
  */
 
+#include "config.h"
+
+#include <glib.h>
+
 #include "imap_string.h"
 
 gchar*

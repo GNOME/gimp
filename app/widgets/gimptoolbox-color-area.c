@@ -135,7 +135,7 @@ color_area_create (GimpContext *context,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   color_area = gtk_drawing_area_new ();
-  gtk_drawing_area_size (GTK_DRAWING_AREA (color_area), width, height);
+  gtk_widget_set_size_request (color_area, width, height);
   gtk_widget_set_events (color_area,
 			 GDK_EXPOSURE_MASK |
 			 GDK_BUTTON_PRESS_MASK |
@@ -331,13 +331,17 @@ color_area_draw (GimpContext *context)
 		      (width - rect_w), (height - rect_h), rect_w, rect_h);
 
   if (active_color == FOREGROUND)
-    gtk_draw_shadow (color_area->style, color_area_pixmap,
-		     GTK_STATE_NORMAL, GTK_SHADOW_OUT,
-		     (width - rect_w), (height - rect_h), rect_w, rect_h);
+    gtk_paint_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL,
+                      GTK_SHADOW_OUT,
+                      NULL, color_area, NULL,
+                      (width - rect_w), (height - rect_h),
+                      rect_w, rect_h);
   else
-    gtk_draw_shadow (color_area->style, color_area_pixmap,
-		     GTK_STATE_NORMAL, GTK_SHADOW_IN,
-		     (width - rect_w), (height - rect_h), rect_w, rect_h);
+    gtk_paint_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL,
+                      GTK_SHADOW_IN,
+                      NULL, color_area, NULL,
+                      (width - rect_w), (height - rect_h),
+                      rect_w, rect_h);
 
   /*  draw the foreground area  */
   gimp_context_get_foreground (context, &color);
@@ -349,13 +353,17 @@ color_area_draw (GimpContext *context)
 		      0, 0, rect_w, rect_h);
 
   if (active_color == FOREGROUND)
-    gtk_draw_shadow (color_area->style, color_area_pixmap,
-		     GTK_STATE_NORMAL, GTK_SHADOW_IN,
-		     0, 0, rect_w, rect_h);
+    gtk_paint_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL,
+                      GTK_SHADOW_IN,
+                      NULL, color_area, NULL,
+                      0, 0,
+                      rect_w, rect_h);
   else
-    gtk_draw_shadow (color_area->style, color_area_pixmap,
-		     GTK_STATE_NORMAL, GTK_SHADOW_OUT,
-		     0, 0, rect_w, rect_h);
+    gtk_paint_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL,
+                      GTK_SHADOW_OUT,
+                      NULL, color_area, NULL,
+                      0, 0,
+                      rect_w, rect_h);
 
   /*  draw the default pixmap  */
   gdk_drawable_get_size (default_pixmap, &def_width, &def_height);

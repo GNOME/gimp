@@ -22,7 +22,12 @@
 #ifndef __GIMP_LIST_ITEM_H__
 #define __GIMP_LIST_ITEM_H__
 
+
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtklistitem.h>
+
+#define GTK_DISABLE_DEPRECATED
 
 
 #define GIMP_TYPE_LIST_ITEM              (gimp_list_item_get_type ())

@@ -23,10 +23,13 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
 #include "imap_cmd_create.h"
-#include "libgimp/stdplugins-intl.h"
 
 #include "imap_main.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t create_command_execute(Command_t *parent);
 static void create_command_destruct(Command_t *parent);

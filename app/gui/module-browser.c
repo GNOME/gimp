@@ -126,7 +126,7 @@ module_browser_new (Gimp *gimp)
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (vbox), listbox, TRUE, TRUE, 0);
-  gtk_widget_set_usize (listbox, 125, 100);
+  gtk_widget_set_size_request (listbox, 125, 100);
   gtk_widget_show (listbox);
 
   st = g_new0 (BrowserState, 1);

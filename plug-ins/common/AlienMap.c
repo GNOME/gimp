@@ -1404,9 +1404,9 @@ alienmap_dialog (void)
 
 		     NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   top_table = gtk_table_new (2, 4, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (top_table), 6);
@@ -1442,27 +1442,27 @@ alienmap_dialog (void)
 			      wvals.redstretch, 0, 128, 1, 8, 2,
 			      TRUE, 0, 0,
 			      _("Change intensity of the red channel"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &wvals.redstretch);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &wvals.redstretch);
 			      
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Green:"), SCALE_WIDTH, 0,
 			      wvals.greenstretch, 0, 128, 1, 8, 2,
 			      TRUE, 0, 0,
 			      _("Change intensity of the green channel"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &wvals.greenstretch);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &wvals.greenstretch);
 			      
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Blue:"), SCALE_WIDTH, 0,
 			      wvals.bluestretch, 0, 128, 1, 8, 2,
 			      TRUE, 0, 0,
 			      _("Change intensity of the blue channel"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &wvals.bluestretch);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &wvals.bluestretch);
 
   /*  Redmode toggle box  */
   frame = gimp_radio_group_new2 (TRUE, _("Red"),
@@ -1609,7 +1609,7 @@ dialog_update_preview (void)
       gtk_preview_draw_row(GTK_PREVIEW(wint.preview), p, 0, y, preview_width);
       p += preview_width * 3;
     }
-  gtk_widget_draw(wint.preview, NULL);
+  gtk_widget_queue_draw(wint.preview);
   gdk_flush();
 }
 
@@ -1666,9 +1666,9 @@ alienmap_logo_dialog (void)
 
 				 NULL);
 
-      gtk_signal_connect (GTK_OBJECT (logodlg), "destroy",
-			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-			  &logodlg);
+      g_signal_connect (G_OBJECT (logodlg), "destroy",
+                        G_CALLBACK (gtk_widget_destroyed),
+                        &logodlg);
       gtk_quit_add_destroy (1, GTK_OBJECT (logodlg));
 
       xframe = gtk_frame_new (NULL);

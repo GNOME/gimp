@@ -18,6 +18,11 @@
 #include "gimpressionist.h"
 #include "ppmtool.h"
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+#include <gtk/gtklist.h>
 
 GtkWidget *brushlist = NULL;
 GtkWidget *brushprev = NULL;
@@ -192,15 +197,19 @@ void savebrush(GtkWidget *wg, gpointer data)
 
   gtk_file_selection_set_filename(GTK_FILE_SELECTION(window), path);
 
-  gtk_signal_connect (GTK_OBJECT(window), "destroy",
-                      (GtkSignalFunc) destroy_window, &window);
+  g_signal_connect (G_OBJECT(window), "destroy",
+                    G_CALLBACK (destroy_window),
+                    &window);
   
-  gtk_signal_connect (GTK_OBJECT(GTK_FILE_SELECTION(window)->ok_button),
-                      "clicked", (GtkSignalFunc)savebrush_ok,(gpointer)window);
+  g_signal_connect (G_OBJECT(GTK_FILE_SELECTION(window)->ok_button),
+                    "clicked",
+                    G_CALLBACK (savebrush_ok),
+                    window);
 
-  gtk_signal_connect_object(GTK_OBJECT(GTK_FILE_SELECTION(window)->cancel_button),
-                            "clicked", (GtkSignalFunc) gtk_widget_destroy,
-			    GTK_OBJECT(window));
+  g_signal_connect_swapped (G_OBJECT(GTK_FILE_SELECTION(window)->cancel_button),
+                            "clicked",
+                            G_CALLBACK (gtk_widget_destroy),
+			    window);
   gtk_widget_show(window);
 
   return;
@@ -284,7 +293,7 @@ void updatebrushprev(char *fn)
     }
     killppm(&p);
   }
-  gtk_widget_draw (brushprev, NULL);
+  gtk_widget_queue_draw (brushprev);
 }
 
 int brushdontupdate = 0;
@@ -317,7 +326,7 @@ void selectbrush(GtkWidget *wg, GtkWidget *p)
   if(!h) return;
   tmpw = h->data;
   if(!tmpw) return;
-  gtk_label_get(GTK_LABEL(GTK_BIN(tmpw)->child), &l);
+  l = (gchar *) gtk_label_get_text(GTK_LABEL(GTK_BIN(tmpw)->child));
 
   if(oldl) if(strcmp(oldl, l)) {
     brushdontupdate = 1;
@@ -373,7 +382,7 @@ void create_brushpage(GtkNotebook *notebook)
 				  GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (box1), scrolled_win, FALSE, FALSE, 0);
   gtk_widget_show (scrolled_win);
-  gtk_widget_set_usize(scrolled_win, 150,-1);
+  gtk_widget_set_size_request(scrolled_win, 150,-1);
 
   brushlist = list = gtk_list_new ();
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
@@ -406,13 +415,14 @@ void create_brushpage(GtkNotebook *notebook)
 
   brushgammaadjust = gtk_adjustment_new(pcvals.brushgamma, 0.5, 3.0, 0.1, 0.1, 1.0);
   tmpw = gtk_hscale_new(GTK_ADJUSTMENT(brushgammaadjust));
-  gtk_widget_set_usize (GTK_WIDGET(tmpw), 100, 30);
+  gtk_widget_set_size_request (GTK_WIDGET(tmpw), 100, 30);
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
   gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  gtk_signal_connect(GTK_OBJECT(brushgammaadjust), "value_changed",
-		     (GtkSignalFunc)selectbrush, list);
+  g_signal_connect(G_OBJECT(brushgammaadjust), "value_changed",
+                   G_CALLBACK(selectbrush),
+                   list);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Changes the gamma (brightness) of the selected brush"), NULL);
 
   box1 = gtk_hbox_new (FALSE, 0);
@@ -450,8 +460,9 @@ void create_brushpage(GtkNotebook *notebook)
     gtk_widget_show(box3);
 
     brushemptyitem = emptyitem = gtk_menu_item_new_with_label( _("(None)"));
-    gtk_signal_connect (GTK_OBJECT(emptyitem), "activate",
-			(GtkSignalFunc)dummybrushdmenuselect, NULL);
+    g_signal_connect (G_OBJECT(emptyitem), "activate",
+                      G_CALLBACK(dummybrushdmenuselect),
+                      NULL);
     gtk_widget_show(emptyitem);
 
     tmpw = gtk_option_menu_new();
@@ -459,39 +470,41 @@ void create_brushpage(GtkNotebook *notebook)
     gtk_widget_show(tmpw);
 
     brushdrawablemenu = dmenu = gimp_drawable_menu_new(validdrawable, brushdmenuselect, NULL, -1);
-    gtk_menu_prepend(GTK_MENU(dmenu), emptyitem);
+    gtk_menu_shell_prepend (GTK_MENU_SHELL (dmenu), emptyitem);
     gtk_option_menu_set_menu(GTK_OPTION_MENU(tmpw), dmenu);
 
     tmpw = gtk_button_new_with_label( _("Save..."));
     gtk_box_pack_start(GTK_BOX(box3),tmpw, FALSE, FALSE, 0);
-    gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-			GTK_SIGNAL_FUNC(savebrush), NULL);
+    g_signal_connect (G_OBJECT(tmpw), "clicked",
+                      G_CALLBACK(savebrush),
+                      NULL);
     gtk_widget_show(tmpw);
   }
 
   brushaspectadjust = gtk_adjustment_new(pcvals.brushaspect, -1.0, 2.0, 0.1, 0.1, 1.0);
   tmpw = gtk_hscale_new(GTK_ADJUSTMENT(brushaspectadjust));
-  gtk_widget_set_usize (GTK_WIDGET(tmpw), 150, 30);
+  gtk_widget_set_size_request (GTK_WIDGET(tmpw), 150, 30);
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
   gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Specifies the aspect ratio of the brush"), NULL);
-  gtk_signal_connect(GTK_OBJECT(brushaspectadjust), "value_changed",
-		     (GtkSignalFunc)selectbrush, list);
+  g_signal_connect(G_OBJECT(brushaspectadjust), "value_changed",
+                   G_CALLBACK (selectbrush),
+                   list);
 
   brushreliefadjust = gtk_adjustment_new(pcvals.brushrelief, 0.0, 101.0, 1.0, 1.0, 1.0);
   tmpw = gtk_hscale_new(GTK_ADJUSTMENT(brushreliefadjust));
-  gtk_widget_set_usize (GTK_WIDGET(tmpw), 150, 30);
+  gtk_widget_set_size_request (GTK_WIDGET(tmpw), 150, 30);
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
   gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Specifies the amount of embossing to apply to each brush stroke"), NULL);
 
-  gtk_signal_connect (GTK_OBJECT(list), "selection_changed",
-		      GTK_SIGNAL_FUNC(selectbrushfile),
-		      list);
+  g_signal_connect (G_OBJECT(list), "selection_changed",
+                    G_CALLBACK(selectbrushfile),
+                    list);
   if(!GTK_LIST(list)->selection)
     gtk_list_select_item(GTK_LIST(list), 0);
   selectbrush(NULL, list);

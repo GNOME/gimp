@@ -75,7 +75,8 @@ gimp_menu_item_create (GimpItemFactoryEntry *entry,
 
   if (!item_factory)
     {
-      g_warning ("entry refers to unknown item factory: \"%s\"", path);
+      g_warning ("%s: Could not find item factory for path \"%s\"",
+                 G_STRLOC, path);
       return;
     }
 
@@ -96,9 +97,21 @@ gimp_menu_item_create (GimpItemFactoryEntry *entry,
 void
 gimp_menu_item_destroy (gchar *path)
 {
+  GtkItemFactory *factory;
+
   g_return_if_fail (path != NULL);
 
-  gtk_item_factories_path_delete (NULL, path);
+  factory = gtk_item_factory_from_path (path);
+
+  if (factory)
+    {
+      gtk_item_factory_delete_item (factory, path);
+    }
+  else
+    {
+      g_warning ("%s: Could not find item factory for path \"%s\"",
+                 G_STRLOC, path);
+    }
 }
 
 void

@@ -209,7 +209,7 @@ script_fu_console_interface (void)
   g_object_unref (G_OBJECT (cint.console));
 
   gtk_text_view_set_editable (GTK_TEXT_VIEW (cint.text_view), FALSE);
-  gtk_widget_set_usize (cint.text_view, TEXT_WIDTH, TEXT_HEIGHT);
+  gtk_widget_set_size_request (cint.text_view, TEXT_WIDTH, TEXT_HEIGHT);
   gtk_container_add (GTK_CONTAINER (scrolled_window), cint.text_view);
   gtk_widget_show (cint.text_view);
 
@@ -242,7 +242,7 @@ script_fu_console_interface (void)
       "weak",     "You should have received a copy of the GNU General Public License\n",
       "weak",     "along with this program; if not, write to the Free Software\n",
       "weak",     "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n\n\n",
-      "strong",   "Script-Fu Console - FIXME(\\n)\n",
+      "strong",   "Script-Fu Console - ",
       "emphasis", "Interactive Scheme Development\n\n",
       NULL
     };
@@ -268,7 +268,7 @@ script_fu_console_interface (void)
   gtk_widget_show (label);
 
   hbox = gtk_hbox_new (FALSE, 2);
-  gtk_widget_set_usize (hbox, ENTRY_WIDTH, 0);
+  gtk_widget_set_size_request (hbox, ENTRY_WIDTH, -1);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -450,8 +450,6 @@ script_fu_cc_key_function (GtkWidget   *widget,
   switch (event->keyval)
     {
     case GDK_Return:
-      gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
-
       if (script_fu_cc_is_empty ())
 	return TRUE;
 
@@ -463,29 +461,19 @@ script_fu_cc_key_function (GtkWidget   *widget,
       gtk_text_buffer_get_end_iter (cint.console, &cursor);
 
       gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
-						"=> FIXME(\\n)\n", -1,
+						"=> ", -1,
 						"strong",
 						NULL);
-      {
-	gchar *eek;
 
-	eek = g_strdup_printf ("%s\n\n",
-			       gtk_entry_get_text (GTK_ENTRY (cint.cc)));
+      gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
+                                                gtk_entry_get_text (GTK_ENTRY (cint.cc)), -1,
+                                                "weak",
+                                                NULL);
 
-	gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
-						  eek, -1,
-						  "weak",
-						  NULL);
-
-	g_free (eek);
-      }
-
-      /*
       gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
 						"\n\n", -1,
 						"weak",
 						NULL);
-      */
 
       script_fu_console_scroll_end ();
 
@@ -510,32 +498,24 @@ script_fu_cc_key_function (GtkWidget   *widget,
 
     case GDK_KP_Up:
     case GDK_Up:
-      gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
       direction = -1;
       break;
 
     case GDK_KP_Down:
     case GDK_Down:
-      gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
       direction = 1;
       break;
 
     case GDK_P:
     case GDK_p:
       if (event->state & GDK_CONTROL_MASK)
-	{
-	  gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
-	  direction = -1;
-	}
+        direction = -1;
       break;
 
     case GDK_N:
     case GDK_n:
       if (event->state & GDK_CONTROL_MASK)
-	{
-	  gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
-	  direction = 1;
-	}
+        direction = 1;
       break;
 
     default:

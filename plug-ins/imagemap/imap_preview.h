@@ -24,9 +24,6 @@
 #ifndef _IMAP_PREVIEW_H
 #define _IMAP_PREVIEW_H
 
-#include "libgimp/gimp.h"
-#include "gtk/gtk.h"
-
 typedef struct {
    GimpDrawable 	*drawable;
    GtkWidget	*window;

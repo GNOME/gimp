@@ -560,8 +560,7 @@ double_query_box_ok_callback (GtkWidget *widget,
   query_box = query_box_disconnect (data);
 
   /*  Get the spinbutton data  */
-  value =
-    gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (query_box->entry));
+  value = gtk_spin_button_get_value (GTK_SPIN_BUTTON (query_box->entry));
 
   /*  Call the user defined callback  */
   (* (GimpQueryDoubleCallback) query_box->callback) (query_box->qbox,

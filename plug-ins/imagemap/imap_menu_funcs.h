@@ -24,8 +24,6 @@
 #ifndef _IMAP_MENU_FUNCS_H
 #define _IMAP_MENU_FUNCS_H
 
-#include "gtk/gtk.h"
-
 typedef void (*MenuCallback)(GtkWidget *widget, gpointer data);
 
 void init_accel_group(GtkWidget *window);

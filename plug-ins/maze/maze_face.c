@@ -197,9 +197,9 @@ maze_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -253,41 +253,41 @@ maze_dialog (void)
 #ifdef SHOW_PRNG_PRIVATES
   /* Multiple input box */
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
+  gtk_widget_set_size_request (entry, ENTRY_WIDTH, -1);
   g_snprintf (buffer, BUFSIZE, "%d", mvals.multiple);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer );
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow, 
 			     _("Multiple (57):"), 1.0, 0.5,
 			     entry, 1, FALSE);
   trow++;
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) maze_entry_callback,
-		      &mvals.multiple);
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (maze_entry_callback),
+                    &mvals.multiple);
 
   /* Offset input box */
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
+  gtk_widget_set_size_request (entry, ENTRY_WIDTH, -1);
   g_snprintf (buffer, BUFSIZE, "%d", mvals.offset);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer );
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow, 
 			     _("Offset (1):"), 1.0, 0.5,
 			     entry, 1, FALSE);
   trow++;
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) maze_entry_callback,
-		      &mvals.offset);
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (maze_entry_callback),
+                    &mvals.offset);
 #endif
 
   /* Tileable checkbox */
   tilecheck = gtk_check_button_new_with_label (_("Tileable"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tilecheck), mvals.tile);
-  gtk_signal_connect (GTK_OBJECT (tilecheck), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update), 
-		      &mvals.tile);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow, 
 			     NULL, 1.0, 0.5,
 			     tilecheck, 1, FALSE);
   trow++;
+  g_signal_connect (G_OBJECT (tilecheck), "clicked",
+                    G_CALLBACK (gimp_toggle_button_update), 
+                    &mvals.tile);
 
   /* Seed input box */
   seed_hbox = gimp_random_seed_new (&mvals.seed,
@@ -370,18 +370,18 @@ divbox_new (guint      *max,
   buttonl = gtk_button_new ();
   buttonr = gtk_button_new ();
      
-  gtk_object_set_data (GTK_OBJECT (buttonl), "direction", GINT_TO_POINTER (LESS));
-  gtk_object_set_data (GTK_OBJECT (buttonr), "direction", GINT_TO_POINTER (MORE));
+  g_object_set_data (G_OBJECT (buttonl), "direction", GINT_TO_POINTER (LESS));
+  g_object_set_data (G_OBJECT (buttonr), "direction", GINT_TO_POINTER (MORE));
 
   *div_entry = gtk_entry_new ();
 
-  gtk_object_set_data (GTK_OBJECT (*div_entry), "max", max);
-  gtk_object_set_data (GTK_OBJECT (*div_entry), "friend", friend);
+  g_object_set_data (G_OBJECT (*div_entry), "max", max);
+  g_object_set_data (G_OBJECT (*div_entry), "friend", friend);
 
   gtk_container_add (GTK_CONTAINER (buttonl), arrowl);
   gtk_container_add (GTK_CONTAINER (buttonr), arrowr);
 
-  gtk_widget_set_usize (*div_entry, ENTRY_WIDTH, 0);
+  gtk_widget_set_size_request (*div_entry, ENTRY_WIDTH, -1);
 
 #if DIVBOX_LOOKS_LIKE_SPINBUTTON
   buttonbox = gtk_vbox_new (FALSE, 0);
@@ -403,15 +403,15 @@ divbox_new (guint      *max,
 
   gtk_widget_show_all (hbox);
 
-  gtk_signal_connect (GTK_OBJECT (buttonl), "clicked",
-		      (GtkSignalFunc) div_button_callback, 
-		      *div_entry);
-  gtk_signal_connect (GTK_OBJECT (buttonr), "clicked",
-		      (GtkSignalFunc) div_button_callback, 
-		      *div_entry);
-  gtk_signal_connect (GTK_OBJECT (*div_entry), "changed",
-		      (GtkSignalFunc) div_entry_callback,
-		      friend);
+  g_signal_connect (GTK_OBJECT (buttonl), "clicked",
+                    G_CALLBACK (div_button_callback), 
+                    *div_entry);
+  g_signal_connect (GTK_OBJECT (buttonr), "clicked",
+                    G_CALLBACK (div_button_callback), 
+                    *div_entry);
+  g_signal_connect (GTK_OBJECT (*div_entry), "changed",
+                    G_CALLBACK (div_entry_callback),
+                    friend);
 
   return align;
 }
@@ -424,8 +424,8 @@ div_button_callback (GtkWidget *button,
   guint        max, divs;
   gint         direction;
 
-  direction = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (button), "direction"));
-  max = *((guint*) gtk_object_get_data (GTK_OBJECT (entry), "max"));
+  direction = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "direction"));
+  max = *((guint*) g_object_get_data (G_OBJECT (entry), "max"));
 
   /* Tileable mazes shall have only an even number of divisions.
      Other mazes have odd. */
@@ -531,7 +531,7 @@ div_entry_callback (GtkWidget *entry,
   if (divs < 4) /* If this is under 4 (e.g. 0), something's weird.      */
     return;     /* But it'll probably be ok, so just return and ignore. */
 
-  max = *((guint*) gtk_object_get_data (GTK_OBJECT (entry), "max"));     
+  max = *((guint*) g_object_get_data (G_OBJECT (entry), "max"));     
 
   /* I say "width" here, but it could be height.*/
 
@@ -539,7 +539,7 @@ div_entry_callback (GtkWidget *entry,
   g_snprintf (buffer, BUFSIZE, "%d", width);
 
   /* No tagbacks from our friend... */
-  userdata = gtk_object_get_user_data (GTK_OBJECT (friend));
+  userdata = g_object_get_data (G_OBJECT (friend), "userdata");
   friend_callback = userdata->callback;
   userdata->callback = NULL;
 
@@ -555,17 +555,22 @@ height_width_callback (gint        width,
   guint divs, max;
   gpointer data;
 
-  max = *((guint*) gtk_object_get_data(GTK_OBJECT(*div_entry), "max"));
+  max = *((guint*) g_object_get_data(G_OBJECT(*div_entry), "max"));
   divs = max / width;
 
   g_snprintf (buffer, BUFSIZE, "%d", divs );
 
-  data = gtk_object_get_data (GTK_OBJECT(*div_entry), "friend");
-  gtk_signal_handler_block_by_data (GTK_OBJECT (*div_entry), data );
-     
+  data = g_object_get_data (G_OBJECT(*div_entry), "friend");
+
+  g_signal_handlers_block_by_func (G_OBJECT (*div_entry),
+                                   entscale_int_entry_update,
+                                   data);
+
   gtk_entry_set_text (GTK_ENTRY (*div_entry), buffer);
 
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT(*div_entry), data );
+  g_signal_handlers_unblock_by_func (G_OBJECT (*div_entry),
+                                     entscale_int_entry_update,
+                                     data);
 }
 
 static void
@@ -709,11 +714,11 @@ entscale_int_new (GtkWidget *table,
   userdata->adjustment = adjustment = 
     gtk_adjustment_new (constraint_val, min, max, 1.0, 1.0, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, ENTSCALE_INT_SCALE_WIDTH, 0);
+  gtk_widget_set_size_request (scale, ENTSCALE_INT_SCALE_WIDTH, -1);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
 
   userdata->entry = entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTSCALE_INT_ENTRY_WIDTH, 0);
+  gtk_widget_set_size_request (entry, ENTSCALE_INT_ENTRY_WIDTH, -1);
   g_snprintf (buffer, BUFSIZE, "%d", *intvar);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
 
@@ -721,19 +726,19 @@ entscale_int_new (GtkWidget *table,
   userdata->call_data = call_data;
 
   /* userdata is done */
-  gtk_object_set_user_data (GTK_OBJECT (adjustment), userdata);
-  gtk_object_set_user_data (GTK_OBJECT (entry), userdata);
+  g_object_set_data (G_OBJECT (adjustment), "userdata", userdata);
+  g_object_set_data (G_OBJECT (entry), "userdata", userdata);
 
   /* now ready for signals */
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entscale_int_entry_update,
-		      intvar);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) entscale_int_scale_update,
-		      intvar);
-  gtk_signal_connect (GTK_OBJECT (entry), "destroy",
-		      (GtkSignalFunc) entscale_int_destroy_callback,
-		      userdata );
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (entscale_int_entry_update),
+                    intvar);
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+                    G_CALLBACK (entscale_int_scale_update),
+                    intvar);
+  g_signal_connect (G_OBJECT (entry), "destroy",
+                    G_CALLBACK (entscale_int_destroy_callback),
+                    userdata );
 
   /* start packing */
   hbox = gtk_hbox_new (FALSE, 5);
@@ -774,7 +779,7 @@ entscale_int_scale_update (GtkAdjustment *adjustment,
   gint     *intvar = data;
   gint      new_val;
 
-  userdata = gtk_object_get_user_data (GTK_OBJECT (adjustment));
+  userdata = g_object_get_data (G_OBJECT (adjustment), "userdata");
 
   new_val = (gint) adjustment->value;
 
@@ -784,9 +789,15 @@ entscale_int_scale_update (GtkAdjustment *adjustment,
   g_snprintf (buffer, BUFSIZE, "%d", (int) new_val);
   
   /* avoid infinite loop (scale, entry, scale, entry ...) */
-  gtk_signal_handler_block_by_data (GTK_OBJECT (entry), data);
+  g_signal_handlers_block_by_func (G_OBJECT (entry),
+                                   entscale_int_entry_update,
+                                   data);
+
   gtk_entry_set_text (entry, buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), data);
+
+  g_signal_handlers_unblock_by_func (G_OBJECT (entry),
+                                     entscale_int_entry_update,
+                                     data);
 
   if (userdata->callback)
     (*userdata->callback) (*intvar, userdata->call_data);
@@ -801,7 +812,7 @@ entscale_int_entry_update (GtkWidget *widget,
   gint		   new_val, constraint_val;
   gint		  *intvar = data;
 
-  userdata = gtk_object_get_user_data (GTK_OBJECT (widget));
+  userdata = g_object_get_data (G_OBJECT (widget), "userdata");
   adjustment = GTK_ADJUSTMENT (userdata->adjustment);
 
   new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
@@ -817,9 +828,16 @@ entscale_int_entry_update (GtkWidget *widget,
     *intvar = new_val;
 
   adjustment->value = constraint_val;
-  gtk_signal_handler_block_by_data (GTK_OBJECT (adjustment), data);
-  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (adjustment), data);
+
+  g_signal_handlers_block_by_func (G_OBJECT (adjustment),
+                                   entscale_int_scale_update,
+                                   data);
+
+  gtk_adjustment_value_changed (adjustment);
+
+  g_signal_handlers_unblock_by_func (G_OBJECT (adjustment),
+                                     entscale_int_scale_update,
+                                     data);
   
   if (userdata->callback)
     (*userdata->callback) (*intvar, userdata->call_data);

@@ -470,7 +470,7 @@ levels_dialog_new (void)
   ld->low_input_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (ld->low_input_data, 0.5, 0);
-  gtk_widget_set_usize (spinbutton, 50, -1);
+  gtk_widget_set_size_request (spinbutton, 50, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
@@ -485,7 +485,7 @@ levels_dialog_new (void)
   ld->gamma_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (ld->gamma_data, 0.5, 2);
-  gtk_widget_set_usize (spinbutton, 50, -1);
+  gtk_widget_set_size_request (spinbutton, 50, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
@@ -500,7 +500,7 @@ levels_dialog_new (void)
   ld->high_input_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (ld->high_input_data, 0.5, 0);
-  gtk_widget_set_usize (spinbutton, 50, -1);
+  gtk_widget_set_size_request (spinbutton, 50, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
@@ -551,8 +551,8 @@ levels_dialog_new (void)
                     ld);
 
   ld->input_levels_da[1] = gtk_drawing_area_new ();
-  gtk_drawing_area_size (GTK_DRAWING_AREA (ld->input_levels_da[1]),
-			 DA_WIDTH, CONTROL_HEIGHT);
+  gtk_widget_set_size_request (ld->input_levels_da[1],
+                               DA_WIDTH, CONTROL_HEIGHT);
   gtk_widget_set_events (ld->input_levels_da[1], LEVELS_DA_MASK);
   gtk_box_pack_start (GTK_BOX (vbox2), ld->input_levels_da[1], FALSE, TRUE, 0);
 
@@ -579,7 +579,7 @@ levels_dialog_new (void)
   ld->low_output_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (ld->low_output_data, 0.5, 0);
-  gtk_widget_set_usize (spinbutton, 50, -1);
+  gtk_widget_set_size_request (spinbutton, 50, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
@@ -594,7 +594,7 @@ levels_dialog_new (void)
   ld->high_output_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (ld->high_output_data, 0.5, 0);
-  gtk_widget_set_usize (spinbutton, 50, -1);
+  gtk_widget_set_size_request (spinbutton, 50, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
@@ -660,7 +660,7 @@ levels_dialog_new (void)
 
   /*  Horizontal button box for auto / load / save  */
   hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_set_spacing (GTK_BOX (hbbox), 4);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbbox), GTK_BUTTONBOX_SPREAD);
   gtk_box_pack_end (GTK_BOX (main_vbox), hbbox, FALSE, FALSE, 0);
 
@@ -864,7 +864,7 @@ levels_update (LevelsDialog *ld,
 			      buf, 0, i, DA_WIDTH);
 
       if (update & DRAW)
-	gtk_widget_draw (ld->input_levels_da[0], NULL);
+	gtk_widget_queue_draw (ld->input_levels_da[0]);
     }
   if (update & OUTPUT_LEVELS)
     {
@@ -896,7 +896,7 @@ levels_update (LevelsDialog *ld,
 			      buf, 0, i, DA_WIDTH);
 
       if (update & DRAW)
-	gtk_widget_draw (ld->output_levels_da[0], NULL);
+	gtk_widget_queue_draw (ld->output_levels_da[0]);
     }
   if (update & INPUT_SLIDERS)
     {

@@ -211,7 +211,7 @@ gimp_button_button_release (GtkWidget      *widget,
       button->in_button = TRUE;
 
       gtk_widget_set_state (widget, GTK_STATE_PRELIGHT);
-      gtk_widget_draw (widget, NULL);
+      gtk_widget_queue_draw (widget);
    }
 
   return TRUE;

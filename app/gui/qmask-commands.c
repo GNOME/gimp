@@ -211,7 +211,7 @@ qmask_channel_query (GimpDisplayShell *shell)
     gtk_adjustment_new (options->gimage->qmask_color.a * 100.0, 
 			0.0, 100.0, 1.0, 1.0, 0.0);
   opacity_scale = gtk_hscale_new (GTK_ADJUSTMENT (opacity_scale_data));
-  gtk_widget_set_usize (opacity_scale, 100, -1);
+  gtk_widget_set_size_request (opacity_scale, 100, -1);
   gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_TOP);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,

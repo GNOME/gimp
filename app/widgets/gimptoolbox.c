@@ -263,7 +263,7 @@ toolbox_create_tools (GtkWidget   *wbox,
       tool_info = (GimpToolInfo *) list->data;
 
       button = gtk_radio_button_new (group);
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
       gtk_wrap_box_pack (GTK_WRAP_BOX (wbox), button,
 			 FALSE, FALSE, FALSE, FALSE);

@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
 #include "imap_cmd_move_up.h"
 #include "imap_cmd_object_up.h"
 #include "imap_main.h"

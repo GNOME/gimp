@@ -26,8 +26,6 @@
 
 #include <stdio.h>
 
-#include "gtk/gtk.h"
-
 #define DEFAULT_MRU_SIZE 4
 
 typedef struct {

@@ -22,6 +22,7 @@
  *        Copyright (C) 1996  Spencer Kimball
  *        Speedups by Elliot Lee
  */
+
 #include "config.h"
 
 #include <stdlib.h>
@@ -553,9 +554,9 @@ mosaic_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  The main hbox -- splits the scripts and the info vbox  */
   main_hbox = gtk_hbox_new (FALSE, 6);
@@ -602,47 +603,52 @@ mosaic_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Antialiasing"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &mvals.antialiasing);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mvals.antialiasing);
   gtk_widget_show (toggle);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mvals.antialiasing);
+
   toggle = gtk_check_button_new_with_label ( _("Color Averaging"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &mvals.color_averaging);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mvals.color_averaging);
   gtk_widget_show (toggle);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mvals.color_averaging);
+
   toggle = gtk_check_button_new_with_label ( _("Allow Tile splitting"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &mvals.tile_allow_split);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mvals.tile_allow_split);
   gtk_widget_show (toggle);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mvals.tile_allow_split);
+
   toggle = gtk_check_button_new_with_label ( _("Pitted Surfaces"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &mvals.tile_surface);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				(mvals.tile_surface == ROUGH));
   gtk_widget_show (toggle);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mvals.tile_surface);
+
   toggle = gtk_check_button_new_with_label ( _("FG/BG Lighting"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &mvals.grout_color);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				(mvals.grout_color == FG_BG));
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mvals.grout_color);
 
   gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
@@ -682,27 +688,27 @@ mosaic_dialog (void)
 				     mvals.tile_size, 5.0, 100.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &mvals.tile_size);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &mvals.tile_size);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				     _("Tile Height:"), SCALE_WIDTH, 0,
 				     mvals.tile_height, 1.0, 50.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &mvals.tile_height);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &mvals.tile_height);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 				     _("Tile Spacing:"), SCALE_WIDTH, 0,
 				     mvals.tile_spacing, 1.0, 50.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &mvals.tile_spacing);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &mvals.tile_spacing);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 				     _("Tile Neatness:"), SCALE_WIDTH, 0,
@@ -710,18 +716,18 @@ mosaic_dialog (void)
 				     0.0, 1.0, 0.10, 0.1, 2,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &mvals.tile_neatness);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &mvals.tile_neatness);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
 				     _("Light Direction:"), SCALE_WIDTH, 0,
 				     mvals.light_dir, 0.0, 360.0, 1.0, 15.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &mvals.light_dir);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &mvals.light_dir);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
 				     _("Color Variation:"), SCALE_WIDTH, 0,
@@ -729,9 +735,9 @@ mosaic_dialog (void)
 				     0.0, 1.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &mvals.color_variation);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &mvals.color_variation);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);

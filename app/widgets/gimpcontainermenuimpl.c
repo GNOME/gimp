@@ -134,10 +134,10 @@ gimp_container_menu_new (GimpContainer *container,
   menu->preview_size = preview_size;
 
   menu_impl->empty_item = gtk_menu_item_new_with_label ("(none)");
-  gtk_widget_set_usize (menu_impl->empty_item,
-			-1,
-			preview_size +
-			2 * menu_impl->empty_item->style->ythickness);
+  gtk_widget_set_size_request (menu_impl->empty_item,
+                               -1,
+                               preview_size +
+                               2 * menu_impl->empty_item->style->ythickness);
   gtk_widget_set_sensitive (menu_impl->empty_item, FALSE);
   gtk_widget_show (menu_impl->empty_item);
 

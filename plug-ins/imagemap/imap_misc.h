@@ -24,8 +24,6 @@
 #ifndef _IMAP_MISC_H
 #define _IMAP_MISC_H
 
-#include "gtk/gtk.h"
-
 GtkWidget *make_toolbar_icon(GtkWidget *toolbar, GtkWidget *window, 
 			     char **data, const char *identifier, 
 			     const char *tooltip,

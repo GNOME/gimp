@@ -257,7 +257,7 @@ gimp_histogram_view_new (gint width,
 
   view = g_object_new (GIMP_TYPE_HISTOGRAM_VIEW, NULL);
 
-  gtk_drawing_area_size (GTK_DRAWING_AREA (view), width + 2, height + 2);
+  gtk_widget_set_size_request (GTK_WIDGET (view), width + 2, height + 2);
   gtk_widget_set_events (GTK_WIDGET (view), HISTOGRAM_MASK);
 
   g_signal_connect (G_OBJECT (view), "event",
@@ -279,7 +279,7 @@ gimp_histogram_view_update (GimpHistogramView *view,
   if (view->channel >= gimp_histogram_nchannels (histogram))
     gimp_histogram_view_channel (view, 0);
 
-  gtk_widget_draw (GTK_WIDGET (view), NULL);
+  gtk_widget_queue_draw (GTK_WIDGET (view));
 
   g_signal_emit (G_OBJECT (view),
                  histogram_view_signals[RANGE_CHANGED], 0,

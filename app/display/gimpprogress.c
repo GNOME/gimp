@@ -151,7 +151,7 @@ progress_start (GimpDisplay *gdisp,
       gtk_widget_show (progress->dialog_label);
 
       progress->progressbar = gtk_progress_bar_new ();
-      gtk_widget_set_usize (progress->progressbar, 150, 20);
+      gtk_widget_set_size_request (progress->progressbar, 150, 20);
       gtk_box_pack_start (GTK_BOX (vbox), progress->progressbar, TRUE, TRUE, 0);
       gtk_widget_show (progress->progressbar);
 
@@ -203,7 +203,7 @@ progress_restart (GimpProgress *progress,
     }
 
   /* reset the progress bar */
-  gtk_progress_bar_update (GTK_PROGRESS_BAR (bar), 0.0);
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
 
   /* do we need to change the callbacks? */
   progress_signal_setup (progress, cancel_callback, cancel_data);
@@ -233,7 +233,7 @@ progress_update (GimpProgress *progress,
       bar = progress->progressbar;
     }
 
-  gtk_progress_bar_update (GTK_PROGRESS_BAR (bar), percentage);
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), percentage);
 }
 
 
@@ -258,7 +258,7 @@ void
 progress_step (GimpProgress *progress)
 {
   GtkWidget *bar;
-  float      val;
+  gdouble    val;
 
   g_return_if_fail (progress != NULL);
 
@@ -271,7 +271,7 @@ progress_step (GimpProgress *progress)
       bar = progress->progressbar;
     }
 
-  val = gtk_progress_get_current_percentage (GTK_PROGRESS (bar)) + 0.01;
+  val = gtk_progress_bar_get_fraction (GTK_PROGRESS_BAR (bar)) + 0.01;
   if (val > 1.0)
     val = 0.0;
 
@@ -302,7 +302,7 @@ progress_end (GimpProgress *progress)
 					  "progress");
       gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), cid);
 
-      gtk_progress_bar_update (GTK_PROGRESS_BAR (shell->progressbar), 0.0);
+      gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (shell->progressbar), 0.0);
 
       if (shell->progressid > 0)
         shell->progressid--;

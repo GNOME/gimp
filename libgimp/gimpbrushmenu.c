@@ -110,9 +110,10 @@ brush_popup_open (gint      x,
   y = (y < 0) ? 0 : y;
   x = (x + bsel->width > scr_w) ? scr_w - bsel->width : x;
   y = (y + bsel->height > scr_h) ? scr_h - bsel->height : y;
-  gtk_preview_size (GTK_PREVIEW (bsel->device_brushpreview), bsel->width, bsel->height);
+  gtk_preview_size (GTK_PREVIEW (bsel->device_brushpreview),
+                    bsel->width, bsel->height);
 
-  gtk_widget_set_uposition (bsel->device_brushpopup, x, y);
+  gtk_window_move (GTK_WINDOW (bsel->device_brushpopup), x, y);
   gtk_widget_show (bsel->device_brushpopup);
   
   /*  Draw the brush  */
@@ -135,9 +136,8 @@ brush_popup_open (gint      x,
       src += bsel->width;
     }
   g_free (buf);
-  
-  /*  Draw the brush preview  */
-  gtk_widget_draw (bsel->device_brushpreview, NULL);
+
+  gtk_widget_queue_draw (bsel->device_brushpreview);
 }
 
 static void
@@ -246,8 +246,7 @@ brush_pre_update (GtkWidget *brush_preview,
     }
   g_free (buf);
 
-  /*  Draw the brush preview  */
-  gtk_widget_draw (brush_preview, NULL);
+  gtk_widget_queue_draw (brush_preview);
 }
 
 static void

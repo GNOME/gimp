@@ -21,13 +21,22 @@
  *
  */
 
+#include "config.h"
+
 #include <stdarg.h>
 #include <stdio.h>
 
-#include "coord.xpm"
-#include "dimension.xpm"
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#include <gtk/gtk.h>
 
 #include "imap_statusbar.h"
+
+#include "coord.xpm"
+#include "dimension.xpm"
 
 StatusBar_t*
 make_statusbar(GtkWidget *main_vbox, GtkWidget *window)

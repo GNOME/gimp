@@ -277,16 +277,18 @@ open_url_dialog (void)
 
 			 _("About"), about_callback,
 			 NULL, NULL, NULL, FALSE, FALSE,
-			 GTK_STOCK_OK, ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
+			 GTK_STOCK_OK, ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* table */
   table = gtk_table_new (2, 2, FALSE);
@@ -298,15 +300,15 @@ open_url_dialog (void)
 
   /* URL */
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 200, 0);
+  gtk_widget_set_size_request (entry, 200, 0);
   g_snprintf (buffer, sizeof (buffer), "%s", url_info.url);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("URL:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (url_callback),
-		      &url_info.url);
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (url_callback),
+                    &url_info.url);
   gtk_widget_show (entry);
 
   /* Window */
@@ -316,24 +318,26 @@ open_url_dialog (void)
 			     hbox, 1, FALSE);
 
   button = gtk_radio_button_new_with_label (NULL, _("New"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   if (url_info.new_window == OPEN_URL_NEW_WINDOW)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (new_window_callback),
-		      (gpointer) OPEN_URL_NEW_WINDOW);
   gtk_widget_show (button);
 
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (new_window_callback),
+                    (gpointer) OPEN_URL_NEW_WINDOW);
+
   button = gtk_radio_button_new_with_label (group, _("Current"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   if (url_info.new_window == OPEN_URL_CURRENT_WINDOW)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (new_window_callback),
-		      (gpointer) OPEN_URL_CURRENT_WINDOW);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (new_window_callback),
+                    (gpointer) OPEN_URL_CURRENT_WINDOW);
 
   gtk_widget_show (dlg);
 

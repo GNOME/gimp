@@ -26,6 +26,13 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#include <gtk/gtk.h>
+
 #include "imap_circle.h"
 #include "imap_file.h"
 #include "imap_grid.h"
@@ -447,7 +454,7 @@ menu_build_mru_items(MRU_t *mru)
    int i;
 
    if (_menu.nr_off_mru_items) {
-      GList *children = gtk_container_children(GTK_CONTAINER(_menu.file_menu));
+      GList *children = gtk_container_get_children(GTK_CONTAINER(_menu.file_menu));
       
       p = g_list_nth(children, position);
       for (i = 0; i < _menu.nr_off_mru_items; i++, p = p->next) {

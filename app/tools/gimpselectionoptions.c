@@ -403,7 +403,7 @@ selection_options_init (SelectionOptions *options,
       width_spinbutton =
 	gtk_spin_button_new (GTK_ADJUSTMENT (options->fixed_width_w), 1.0, 0.0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width_spinbutton), TRUE);
-      gtk_widget_set_usize (width_spinbutton, 75, 0);
+      gtk_widget_set_size_request (width_spinbutton, 75, -1);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 _("Width:"), 1.0, 0.5,
 				 width_spinbutton, 1, FALSE);
@@ -417,8 +417,8 @@ selection_options_init (SelectionOptions *options,
 			    1.0, 50.0, 0.0);
       height_spinbutton =
 	gtk_spin_button_new (GTK_ADJUSTMENT (options->fixed_height_w), 1.0, 0.0);
-      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(height_spinbutton), TRUE);
-      gtk_widget_set_usize (height_spinbutton, 75, 0);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height_spinbutton), TRUE);
+      gtk_widget_set_size_request (height_spinbutton, 75, -1);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Height:"), 1.0, 0.5,
 				 height_spinbutton, 1, FALSE);

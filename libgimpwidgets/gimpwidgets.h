@@ -174,8 +174,8 @@ GtkWidget * gimp_random_seed_new   (gint               *seed,
 				    gint                time_false);
 
 #define GIMP_COORDINATES_CHAINBUTTON(sizeentry) \
-        GIMP_CHAIN_BUTTON (gtk_object_get_data (GTK_OBJECT (sizeentry), \
-                                                "chainbutton"))
+        GIMP_CHAIN_BUTTON (g_object_get_data (G_OBJECT (sizeentry), \
+                                              "chainbutton"))
 
 GtkWidget * gimp_coordinates_new   (GimpUnit            unit,
 				    const gchar        *unit_format,

@@ -66,7 +66,7 @@ ops_button_box_new (OpsButton     *ops_button,
 
 	case OPS_BUTTON_RADIO:
 	  button = gtk_radio_button_new (group);
-	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+	  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
 	  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
 	  break;
 

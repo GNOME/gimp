@@ -21,6 +21,13 @@
  *
  */
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#include <gtk/gtk.h>
+
 #include "imap_browse.h"
 
 #include "open.xpm"

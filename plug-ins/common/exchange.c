@@ -325,9 +325,9 @@ exchange_dialog (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* do some boxes here */
   mainbox = gtk_vbox_new (FALSE, 4);
@@ -355,22 +355,25 @@ exchange_dialog (void)
   gtk_container_add (GTK_CONTAINER (pframe), preview);
   gtk_widget_set_events (GTK_WIDGET(preview),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON1_MOTION_MASK);
-  gtk_signal_connect (GTK_OBJECT (preview), "event", 
-		      GTK_SIGNAL_FUNC (preview_event_handler), 
-		      NULL);
-  update_preview ();
   gtk_widget_show (preview);
+
+  g_signal_connect (G_OBJECT (preview), "event", 
+                    G_CALLBACK (preview_event_handler), 
+                    NULL);
+
+  update_preview ();
 
   /*  a hidden color_button to handle the threshold more easily  */
   threshold = gimp_color_button_new (NULL, 1, 1, 
 				     &xargs.threshold, 
 				     GIMP_COLOR_AREA_FLAT);
-  gtk_signal_connect (GTK_OBJECT (threshold), "color_changed",
-		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
-		      &xargs.threshold);
-  gtk_signal_connect (GTK_OBJECT (threshold), "color_changed",
-		      GTK_SIGNAL_FUNC (color_button_callback),
-		      &xargs.threshold);
+
+  g_signal_connect (G_OBJECT (threshold), "color_changed",
+                    G_CALLBACK (gimp_color_button_get_color),
+                    &xargs.threshold);
+  g_signal_connect (G_OBJECT (threshold), "color_changed",
+                    G_CALLBACK (color_button_callback),
+                    &xargs.threshold);
 
   /* and our scales */
   for (framenumber = 0; framenumber < 2; framenumber++)
@@ -393,15 +396,16 @@ exchange_dialog (void)
 					   SCALE_WIDTH / 2, 16,
 					   framenumber ? &xargs.to : &xargs.from, 
 					   GIMP_COLOR_AREA_FLAT);
-      gtk_signal_connect (GTK_OBJECT (colorbutton), "color_changed",
-			  GTK_SIGNAL_FUNC (gimp_color_button_get_color),
-			  framenumber ? &xargs.to : &xargs.from);
-      gtk_signal_connect (GTK_OBJECT (colorbutton), "color_changed",
-			  GTK_SIGNAL_FUNC (color_button_callback),
-			  framenumber ? &xargs.to : &xargs.from);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 NULL, 0.0, 0.0,
 				 colorbutton, 1, TRUE);
+
+      g_signal_connect (G_OBJECT (colorbutton), "color_changed",
+                        G_CALLBACK (gimp_color_button_get_color),
+                        framenumber ? &xargs.to : &xargs.from);
+      g_signal_connect (G_OBJECT (colorbutton), "color_changed",
+                        G_CALLBACK (color_button_callback),
+                        framenumber ? &xargs.to : &xargs.from);
       
       if (!framenumber)
 	from_colorbutton = colorbutton;
@@ -414,15 +418,15 @@ exchange_dialog (void)
 				  TRUE, 0, 0,
 				  NULL, NULL);
 
-      gtk_object_set_user_data (GTK_OBJECT (adj), colorbutton);
-      gtk_object_set_data (GTK_OBJECT (colorbutton), "red", adj);
+      g_object_set_data (G_OBJECT (adj), "colorbutton", colorbutton);
+      g_object_set_data (G_OBJECT (colorbutton), "red", adj);
 
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			       GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-			       framenumber ? &xargs.to.r : &xargs.from.r);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (scale_callback),
-			  framenumber ? &xargs.to : &xargs.from);
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (gimp_double_adjustment_update),
+                        framenumber ? &xargs.to.r : &xargs.from.r);
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (scale_callback),
+                        framenumber ? &xargs.to : &xargs.from);
 
       scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -436,14 +440,15 @@ exchange_dialog (void)
 				      TRUE, 0, 0,
 				      NULL, NULL);
 
-	  gtk_object_set_user_data (GTK_OBJECT (adj), threshold);
-	  gtk_object_set_data (GTK_OBJECT (threshold), "red", adj);
-	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-			      &xargs.threshold.r);
-	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			      GTK_SIGNAL_FUNC (scale_callback),
-			      &xargs.threshold);
+	  g_object_set_data (G_OBJECT (adj), "colorbutton", threshold);
+	  g_object_set_data (G_OBJECT (threshold), "red", adj);
+
+	  g_signal_connect (G_OBJECT (adj), "value_changed",
+                            G_CALLBACK (gimp_double_adjustment_update),
+                            &xargs.threshold.r);
+	  g_signal_connect (G_OBJECT (adj), "value_changed",
+                            G_CALLBACK (scale_callback),
+                            &xargs.threshold);
 
 	  scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
 	  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -457,15 +462,15 @@ exchange_dialog (void)
 				  TRUE, 0, 0,
 				  NULL, NULL);
 
-      gtk_object_set_user_data (GTK_OBJECT (adj), colorbutton);
-      gtk_object_set_data (GTK_OBJECT (colorbutton), "green", adj);
+      g_object_set_data (G_OBJECT (adj), "colorbutton", colorbutton);
+      g_object_set_data (G_OBJECT (colorbutton), "green", adj);
 
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			       GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-			       framenumber ? &xargs.to.g : &xargs.from.g);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (scale_callback),
-			  framenumber ? &xargs.to : &xargs.from);
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (gimp_double_adjustment_update),
+                        framenumber ? &xargs.to.g : &xargs.from.g);
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (scale_callback),
+                        framenumber ? &xargs.to : &xargs.from);
 
       scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -479,15 +484,15 @@ exchange_dialog (void)
 				      TRUE, 0, 0,
 				      NULL, NULL);
 	  
-	  gtk_object_set_user_data (GTK_OBJECT (adj), threshold);
-	  gtk_object_set_data (GTK_OBJECT (threshold), "green", adj);
+	  g_object_set_data (G_OBJECT (adj), "colorbutton", threshold);
+	  g_object_set_data (G_OBJECT (threshold), "green", adj);
 
-	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-			      &xargs.threshold.g);
-	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			      GTK_SIGNAL_FUNC (scale_callback),
-			      &xargs.threshold);
+	  g_signal_connect (G_OBJECT (adj), "value_changed",
+                            G_CALLBACK (gimp_double_adjustment_update),
+                            &xargs.threshold.g);
+	  g_signal_connect (G_OBJECT (adj), "value_changed",
+                            G_CALLBACK (scale_callback),
+                            &xargs.threshold);
 
 	  scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
 	  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -501,15 +506,15 @@ exchange_dialog (void)
 				  TRUE, 0, 0,
 				  NULL, NULL);
 
-      gtk_object_set_user_data (GTK_OBJECT (adj), colorbutton);
-      gtk_object_set_data (GTK_OBJECT (colorbutton), "blue", adj);
+      g_object_set_data (G_OBJECT (adj), "colorbutton", colorbutton);
+      g_object_set_data (G_OBJECT (colorbutton), "blue", adj);
 
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			       GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-			       framenumber ? &xargs.to.b : &xargs.from.b);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			  GTK_SIGNAL_FUNC (scale_callback),
-			  framenumber ? &xargs.to : &xargs.from);
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (gimp_double_adjustment_update),
+                        framenumber ? &xargs.to.b : &xargs.from.b);
+      g_signal_connect (G_OBJECT (adj), "value_changed",
+                        G_CALLBACK (scale_callback),
+                        framenumber ? &xargs.to : &xargs.from);
 
       scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -523,15 +528,15 @@ exchange_dialog (void)
 				      TRUE, 0, 0,
 				      NULL, NULL);
 
-	  gtk_object_set_user_data (GTK_OBJECT (adj), threshold);
-	  gtk_object_set_data (GTK_OBJECT (threshold), "blue", adj);
+	  g_object_set_data (G_OBJECT (adj), "colorbutton", threshold);
+	  g_object_set_data (G_OBJECT (threshold), "blue", adj);
 
-	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-			      &xargs.threshold.b);
-	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			      GTK_SIGNAL_FUNC (scale_callback),
-			      &xargs.threshold);
+	  g_signal_connect (G_OBJECT (adj), "value_changed",
+                            G_CALLBACK (gimp_double_adjustment_update),
+                            &xargs.threshold.b);
+	  g_signal_connect (G_OBJECT (adj), "value_changed",
+                            G_CALLBACK (scale_callback),
+                            &xargs.threshold);
 
 	  scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
 	  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -546,10 +551,11 @@ exchange_dialog (void)
 			    GTK_FILL, 0, 0, 0);
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
 					lock_threshold);
-	  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			      &lock_threshold);
 	  gtk_widget_show (button);
+
+	  g_signal_connect (G_OBJECT (button), "clicked",
+                            G_CALLBACK (gimp_toggle_button_update),
+                            &lock_threshold);
 	}
     }
 
@@ -583,9 +589,9 @@ color_button_callback (GtkWidget *widget,
 
   color = (GimpRGB *) data;
 
-  red_adj   = (GtkObject *) gtk_object_get_data (GTK_OBJECT (widget), "red");
-  green_adj = (GtkObject *) gtk_object_get_data (GTK_OBJECT (widget), "green");
-  blue_adj  = (GtkObject *) gtk_object_get_data (GTK_OBJECT (widget), "blue");
+  red_adj   = (GtkObject *) g_object_get_data (G_OBJECT (widget), "red");
+  green_adj = (GtkObject *) g_object_get_data (G_OBJECT (widget), "green");
+  blue_adj  = (GtkObject *) g_object_get_data (G_OBJECT (widget), "blue");
 
   if (red_adj)
     gtk_adjustment_set_value (GTK_ADJUSTMENT (red_adj),   color->r);
@@ -606,9 +612,9 @@ scale_callback (GtkAdjustment *adj,
 
   color = (GimpRGB *) data;
 
-  object = gtk_object_get_user_data (GTK_OBJECT (adj));
+  object = g_object_get_data (G_OBJECT (adj), "colorbutton");
 
-  if (object && GIMP_IS_COLOR_BUTTON (object))
+  if (GIMP_IS_COLOR_BUTTON (object))
     {
       if (color == &xargs.threshold && lock_threshold == TRUE)
 	gimp_rgb_set (color, adj->value, adj->value, adj->value);

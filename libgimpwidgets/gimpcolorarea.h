@@ -28,7 +28,17 @@
 #ifndef __GIMP_COLOR_AREA_H__
 #define __GIMP_COLOR_AREA_H__
 
+#ifdef GTK_DISABLE_DEPRECATED
+#undef GTK_DISABLE_DEPRECATED
+#define GIMP_IGNORE_ME_PLEASE_FOOBAR
+#endif
+
 #include <gtk/gtkpreview.h>
+
+#ifdef GIMP_IGNORE_ME_PLEASE_FOOBAR
+#undef GIMP_IGNORE_ME_PLEASE_FOOBAR
+#define GTK_DISABLE_DEPRECATED
+#endif 
 
 G_BEGIN_DECLS
 

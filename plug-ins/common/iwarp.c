@@ -927,16 +927,17 @@ iwarp_animate_dialog (GtkWidget *dlg,
   button = gtk_check_button_new_with_label (_("Animate"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_animate);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &do_animate);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &do_animate);
 
   frame = gtk_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  gtk_object_set_data (GTK_OBJECT (button), "set_sensitive", frame);
+  g_object_set_data (G_OBJECT (button), "set_sensitive", frame);
   gtk_widget_set_sensitive (frame, do_animate);
 
   table = gtk_table_new (3, 3, FALSE);
@@ -952,25 +953,27 @@ iwarp_animate_dialog (GtkWidget *dlg,
 				     2, MAX_NUM_FRAMES, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &animate_num_frames);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &animate_num_frames);
 
   button = gtk_check_button_new_with_label (_("Reverse"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 3, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &do_animate_reverse);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &do_animate_reverse);
  
   button = gtk_check_button_new_with_label (_("Ping Pong"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 3, 2, 3,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &do_animate_ping_pong);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &do_animate_ping_pong);
 
   gtk_widget_show (vbox);
 
@@ -1009,9 +1012,9 @@ iwarp_settings_dialog (GtkWidget *dlg,
 				     5.0, MAX_DEFORM_AREA_RADIUS, 1.0, 10.0, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &iwarp_vals.deform_area_radius);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &iwarp_vals.deform_area_radius);
  
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				     _("Deform Amount:"), SCALE_WIDTH, 0,
@@ -1019,9 +1022,9 @@ iwarp_settings_dialog (GtkWidget *dlg,
 				     0.0, 1.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &iwarp_vals.deform_amount);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &iwarp_vals.deform_amount);
 
   frame = gtk_frame_new (_("Deform Mode"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -1035,16 +1038,28 @@ iwarp_settings_dialog (GtkWidget *dlg,
   vbox2 = gimp_radio_group_new2 (FALSE, NULL,
 				 G_CALLBACK (gimp_radio_button_update),
 				 &iwarp_vals.deform_mode,
-				 (gpointer) iwarp_vals.deform_mode,
+				 GINT_TO_POINTER (iwarp_vals.deform_mode),
 
-				 _("Move"),      (gpointer) MOVE, NULL,
-				 _("Grow"),      (gpointer) GROW, NULL,
-				 _("Swirl CCW"), (gpointer) SWIRL_CCW, NULL,
-				 _("Remove"),    (gpointer) REMOVE, &widget[0],
-				 _("Shrink"),    (gpointer) SHRINK, &widget[1],
-				 _("Swirl CW"),  (gpointer) SWIRL_CW, &widget[2],
+				 _("Move"),
+                                 GINT_TO_POINTER (MOVE), NULL,
+
+				 _("Grow"),
+                                 GINT_TO_POINTER (GROW), NULL,
+
+				 _("Swirl CCW"),
+                                 GINT_TO_POINTER (SWIRL_CCW), NULL,
+
+				 _("Remove"),
+                                 GINT_TO_POINTER (REMOVE), &widget[0],
+
+				 _("Shrink"),
+                                 GINT_TO_POINTER (SHRINK), &widget[1],
+
+				 _("Swirl CW"),
+                                 GINT_TO_POINTER (SWIRL_CW), &widget[2],
 
 				 NULL);
+
   gtk_container_add (GTK_CONTAINER (hbox), vbox2);
   gtk_widget_show (vbox2);
 
@@ -1054,23 +1069,24 @@ iwarp_settings_dialog (GtkWidget *dlg,
 
   for (i = 0; i < 3; i++)
     {
-      gtk_object_ref (GTK_OBJECT (widget[i]));
+      g_object_ref (G_OBJECT (widget[i]));
       gtk_widget_hide (widget[i]);
       gtk_container_remove (GTK_CONTAINER (vbox2), widget[i]);
       gtk_box_pack_start (GTK_BOX (vbox3), widget[i],
                           FALSE, FALSE, 0);
       gtk_widget_show (widget[i]);
-      gtk_object_unref (GTK_OBJECT (widget[i]));
+      g_object_unref (G_OBJECT (widget[i]));
     }
 
   button = gtk_check_button_new_with_label (_("Bilinear"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				iwarp_vals.do_bilinear);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &iwarp_vals.do_bilinear);
-  gtk_widget_show(button);
+  gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &iwarp_vals.do_bilinear);
 
   frame = gtk_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -1085,10 +1101,11 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				iwarp_vals.do_supersample);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &iwarp_vals.do_supersample);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &iwarp_vals.do_supersample);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
@@ -1096,7 +1113,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  gtk_object_set_data (GTK_OBJECT (button), "set_sensitive", table);
+  g_object_set_data (G_OBJECT (button), "set_sensitive", table);
   gtk_widget_set_sensitive (table, iwarp_vals.do_supersample);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -1105,9 +1122,9 @@ iwarp_settings_dialog (GtkWidget *dlg,
 				     1.0, 5.0, 1.1, 1.0, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &iwarp_vals.max_supersample_depth);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &iwarp_vals.max_supersample_depth);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				     _("Threshold:"), SCALE_WIDTH, 0,
@@ -1115,9 +1132,9 @@ iwarp_settings_dialog (GtkWidget *dlg,
 				     1.0, 10.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &iwarp_vals.supersample_threshold);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &iwarp_vals.supersample_threshold);
 
   gtk_widget_show (vbox);
 
@@ -1154,9 +1171,9 @@ iwarp_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
@@ -1191,9 +1208,9 @@ iwarp_dialog (void)
 			 GDK_BUTTON_RELEASE_MASK |
 			 GDK_BUTTON1_MOTION_MASK | 
 			 GDK_POINTER_MOTION_HINT_MASK);
-  gtk_signal_connect (GTK_OBJECT(preview), "event",
-		      GTK_SIGNAL_FUNC (iwarp_motion_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT(preview), "event",
+                    G_CALLBACK (iwarp_motion_callback),
+                    NULL);
 
   notebook = gtk_notebook_new ();
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
@@ -1220,23 +1237,18 @@ iwarp_update_preview (gint x0,
 		      gint y1)
 {
   gint i;
-  GdkRectangle rect;
  
-  x0 = MAX(x0, 0);
-  y0 = MAX(y0, 0);
-  x1 = MIN(x1, preview_width);
-  y1 = MIN(y1, preview_height);
+  x0 = MAX (x0, 0);
+  y0 = MAX (y0, 0);
+  x1 = MIN (x1, preview_width);
+  y1 = MIN (y1, preview_height);
   
   for (i = y0; i < y1; i++)
     gtk_preview_draw_row (GTK_PREVIEW (preview),
 			  dstimage + (i * preview_width + x0) * preview_bpp,
 			  x0, i,x1-x0);
-  rect.x = x0;
-  rect.y = y0;
-  rect.width = x1 - x0;
-  rect.height = y1 - y0;  
-  gtk_widget_draw (preview, &rect);
-  gdk_flush ();
+
+  gtk_widget_queue_draw_area (preview, x0, y0, x1 - x0, y1 - y0);
 }
 
 static void

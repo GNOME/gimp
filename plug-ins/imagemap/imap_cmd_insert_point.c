@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
 #include "imap_cmd_insert_point.h"
 #include "imap_main.h"
 #include "imap_polygon.h"

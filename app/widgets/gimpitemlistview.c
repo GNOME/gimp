@@ -178,7 +178,7 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
   container_view = GIMP_CONTAINER_VIEW (view);
 
   view->gimage        = NULL;
-  view->drawable_type = GTK_TYPE_NONE;
+  view->drawable_type = G_TYPE_NONE;
   view->signal_name   = NULL;
 
   view->new_button =
@@ -720,12 +720,14 @@ gimp_drawable_list_view_floating_selection_changed (GimpImage            *gimage
 {
   GimpViewable *floating_sel;
   GList        *list;
+  GList        *free_list;
 
   floating_sel = (GimpViewable *) gimp_image_floating_sel (gimage);
 
-  for (list = GTK_LIST (GIMP_CONTAINER_LIST_VIEW (view)->gtk_list)->children;
-       list;
-       list = g_list_next (list))
+  list = free_list = gtk_container_get_children
+    (GTK_CONTAINER (GIMP_CONTAINER_LIST_VIEW (view)->gtk_list));
+
+  for (; list; list = g_list_next (list))
     {
       if (! (GIMP_PREVIEW (GIMP_LIST_ITEM (list->data)->preview)->viewable ==
 	     floating_sel))
@@ -734,6 +736,8 @@ gimp_drawable_list_view_floating_selection_changed (GimpImage            *gimage
 				    floating_sel == NULL);
 	}
     }
+
+  g_list_free (free_list);
 
   /*  update button states  */
   gimp_drawable_list_view_drawable_changed (gimage, view);

@@ -1058,7 +1058,7 @@ crop_info_create (GimpTool *tool)
   /* Create the area selection buttons */
   bbox = gtk_hbutton_box_new ();
   gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_SPREAD);
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 4);
+  gtk_box_set_spacing (GTK_BOX (bbox), 4);
 
   button = gtk_button_new_with_label (_("From Selection"));
   gtk_container_add (GTK_CONTAINER(bbox), button);

@@ -557,16 +557,17 @@ save_dialog (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
+			 GTK_STOCK_OK, save_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_main_quit),
-                      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Save Options"));
@@ -579,11 +580,12 @@ save_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("RLE encoded"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                      &encoded);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), encoded);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &encoded);
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);

@@ -167,7 +167,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam     values[2];
-  GimpRunMode      run_mode;
+  GimpRunMode          run_mode;
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   gint32               image_ID;
   gint32               drawable_ID;
@@ -176,7 +176,8 @@ run (gchar      *name,
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -569,9 +570,9 @@ save_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT(dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT(dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* The main table */
   table = gtk_table_new (2, 2, FALSE);
@@ -586,19 +587,21 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Spacing:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &info.spacing);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &info.spacing);
 
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
+  gtk_entry_set_text (GTK_ENTRY (entry), info.description);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Description:"), 1.0, 0.5,
 			     entry, 1, FALSE);
-  gtk_entry_set_text (GTK_ENTRY (entry), info.description);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (entry_callback),
-		      info.description);
+
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (entry_callback),
+                    info.description);
   
   gtk_widget_show (dlg);
   

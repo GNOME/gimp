@@ -24,8 +24,6 @@
 #ifndef _IMAP_BROWSE_H
 #define _IMAP_BROWSE_H
 
-#include "gtk/gtk.h"
-
 typedef gchar* (*BrowseFilter_t)(const gchar*, gpointer data);
 
 typedef struct {

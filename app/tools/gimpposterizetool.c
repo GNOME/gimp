@@ -272,7 +272,7 @@ posterize_dialog_new (void)
   pd->levels_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (pd->levels_data, 1.0, 0);
-  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
   g_signal_connect (G_OBJECT (pd->levels_data), "value_changed",

@@ -23,6 +23,19 @@
 #ifndef __GIMP_PIXMAP_H__
 #define __GIMP_PIXMAP_H__
 
+#ifdef GTK_DISABLE_DEPRECATED
+#undef GTK_DISABLE_DEPRECATED
+#define GIMP_IGNORE_ME_PLEASE_FOOBAR
+#endif
+
+#include <gtk/gtkpixmap.h>
+
+#ifdef GIMP_IGNORE_ME_PLEASE_FOOBAR
+#undef GIMP_IGNORE_ME_PLEASE_FOOBAR
+#define GTK_DISABLE_DEPRECATED
+#endif 
+
+
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */

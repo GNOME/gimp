@@ -109,6 +109,11 @@
 #include <unistd.h>
 #endif
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -860,9 +865,9 @@ bumpmap_dialog (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   top_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (top_vbox), 6);
@@ -925,15 +930,16 @@ bumpmap_dialog (void)
 			 GDK_BUTTON_RELEASE_MASK | 
 			 GDK_BUTTON_MOTION_MASK |
 			 GDK_POINTER_MOTION_HINT_MASK);
-  gtk_signal_connect (GTK_OBJECT (bmint.preview), "event",
-		      (GtkSignalFunc) dialog_preview_events,
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (bmint.preview_adj_x), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal), 
-		      &bmint.preview_xofs);
-  gtk_signal_connect (GTK_OBJECT (bmint.preview_adj_y), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal), 
-		      &bmint.preview_yofs);
+
+  g_signal_connect (G_OBJECT (bmint.preview), "event",
+                    G_CALLBACK (dialog_preview_events),
+                    NULL);
+  g_signal_connect (G_OBJECT (bmint.preview_adj_x), "value_changed",
+                    G_CALLBACK (dialog_iscale_update_normal), 
+                    &bmint.preview_xofs);
+  g_signal_connect (G_OBJECT (bmint.preview_adj_y), "value_changed",
+                    G_CALLBACK (dialog_iscale_update_normal), 
+                    &bmint.preview_yofs);
 
   dialog_init_preview ();
 
@@ -962,30 +968,33 @@ bumpmap_dialog (void)
   gtk_box_pack_start (GTK_BOX (right_vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				bmvals.compensate ? TRUE : FALSE);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (dialog_compensate_callback),
-		      NULL);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (dialog_compensate_callback),
+                    NULL);
 
   /* Invert bumpmap */
   button = gtk_check_button_new_with_label (_("Invert Bumpmap"));
   gtk_box_pack_start (GTK_BOX (right_vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				bmvals.invert ? TRUE : FALSE);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (dialog_invert_callback),
-		      NULL);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (dialog_invert_callback),
+                    NULL);
 
   /* Tile bumpmap */
   button = gtk_check_button_new_with_label (_("Tile Bumpmap"));
   gtk_box_pack_start (GTK_BOX (right_vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				bmvals.tiled ? TRUE : FALSE);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (dialog_tiled_callback),
-		      NULL);
   gtk_widget_show (button);  
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (dialog_tiled_callback),
+                    NULL);
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_box_pack_start (GTK_BOX (top_vbox), frame, FALSE, FALSE, 0);
@@ -1032,27 +1041,27 @@ bumpmap_dialog (void)
 			      bmvals.azimuth, 0.0, 360.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_dscale_update),
-		      &bmvals.azimuth);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_dscale_update),
+                    &bmvals.azimuth);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Elevation:"), SCALE_WIDTH, 0,
 			      bmvals.elevation, 0.5, 90.0, 1.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_dscale_update),
-		      &bmvals.elevation);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_dscale_update),
+                    &bmvals.elevation);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row,
 			      _("Depth:"), SCALE_WIDTH, 0,
 			      bmvals.depth, 1.0, 65.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
-		      &bmvals.depth);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_iscale_update_normal),
+                    &bmvals.depth);
   gtk_table_set_row_spacing (GTK_TABLE (table), row++, 8);
 
   bmint.offset_adj_x = adj = 
@@ -1061,9 +1070,9 @@ bumpmap_dialog (void)
 			  bmvals.xofs, -1000.0, 1001.0, 1.0, 10.0, 0,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
-		      &bmvals.xofs);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_iscale_update_normal),
+                    &bmvals.xofs);
 
   bmint.offset_adj_y = adj = 
     gimp_scale_entry_new (GTK_TABLE (table), 0, row,
@@ -1071,9 +1080,9 @@ bumpmap_dialog (void)
 			  bmvals.yofs, -1000.0, 1001.0, 1.0, 10.0, 0,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
-		      &bmvals.yofs);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_iscale_update_normal),
+                    &bmvals.yofs);
   gtk_table_set_row_spacing (GTK_TABLE (table), row++, 8);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -1081,18 +1090,18 @@ bumpmap_dialog (void)
 			      bmvals.waterlevel, 0.0, 255.0, 1.0, 8.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_iscale_update_full),
-		      &bmvals.waterlevel);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_iscale_update_full),
+                    &bmvals.waterlevel);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Ambient:"), SCALE_WIDTH, 0,
 			      bmvals.ambient, 0.0, 255.0, 1.0, 8.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
-		      &bmvals.ambient);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_iscale_update_normal),
+                    &bmvals.ambient);
 
   /* Done */
 
@@ -1431,7 +1440,7 @@ dialog_update_preview (void)
 			    preview_row, 0, y, bmint.preview_width);
     }
 
-  gtk_widget_draw (bmint.preview, NULL);
+  gtk_widget_queue_draw (bmint.preview);
   gdk_flush ();
 }
 

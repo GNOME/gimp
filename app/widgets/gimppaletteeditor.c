@@ -274,7 +274,7 @@ palette_editor_new (Gimp *gimp)
 
   palette_editor->scrolled_window = scrolledwindow =
     gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_usize (scrolledwindow, -1, PREVIEW_HEIGHT);
+  gtk_widget_set_size_request (scrolledwindow, -1, PREVIEW_HEIGHT);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
@@ -959,7 +959,7 @@ palette_editor_draw_entries (PaletteEditor *palette_editor,
 	  if (y >= height || row_start >= 0)
 	    {
 	      /* This row only */
-	      gtk_widget_draw (palette_editor->color_area, NULL);
+	      gtk_widget_queue_draw (palette_editor->color_area);
 	      g_free (buffer);
 	      g_free (colors);
 	      return;
@@ -980,7 +980,7 @@ palette_editor_draw_entries (PaletteEditor *palette_editor,
   g_free (colors);
 
   if (! palette_editor->freeze_update)
-    gtk_widget_draw (palette_editor->color_area, NULL);
+    gtk_widget_queue_draw (palette_editor->color_area);
 }
 
 static void

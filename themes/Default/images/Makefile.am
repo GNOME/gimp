@@ -25,6 +25,10 @@ STOCK_IMAGES = @STRIP_BEGIN@ \
 	stock-button-selection-add.png		\
 	stock-button-selection-subtract.png	\
 	stock-button-selection-intersect.png	\
+	stock-button-hchain.png			\
+	stock-button-hchain-broken.png		\
+	stock-button-vchain.png			\
+	stock-button-vchain-broken.png		\
 	stock-menu-navigation.png		\
 	stock-menu-qmask-off.png		\
 	stock-menu-qmask-on.png			\

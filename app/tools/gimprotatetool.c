@@ -192,7 +192,7 @@ gimp_rotate_tool_transform (GimpTransformTool *transform_tool,
 					  -180, 181, 0.01, 0.1, 1, -1,
 					  G_CALLBACK (rotate_angle_changed),
 					  transform_tool);
-	  gtk_widget_set_usize (widget, 180, 0);
+	  gtk_widget_set_size_request (widget, 180, -1);
 
 	  spinbutton2 =
 	    info_dialog_add_spinbutton (transform_tool->info_dialog,

@@ -61,6 +61,12 @@
 
 #include "undo.h"
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+#include <gtk/gtkclist.h>
+
 #include "libgimp/gimpintl.h"
 
 
@@ -218,12 +224,12 @@ file_open_dialog_create (Gimp *gimp)
 		     "open/dialogs/file_open.html");
 
   {
-    GtkWidget *frame;
-    GtkWidget *vbox;
-    GtkWidget *hbox;
-    GtkWidget *option_menu;
-    GtkWidget *load_menu;
-    GtkWidget *open_options_genbutton;
+    GtkItemFactory *item_factory;
+    GtkWidget      *frame;
+    GtkWidget      *vbox;
+    GtkWidget      *hbox;
+    GtkWidget      *option_menu;
+    GtkWidget      *open_options_genbutton;
 
     open_options = gtk_hbox_new (TRUE, 1);
 
@@ -244,8 +250,9 @@ file_open_dialog_create (Gimp *gimp)
     gtk_box_pack_start (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
     gtk_widget_show (option_menu);
 
-    load_menu = gtk_item_factory_from_path ("<Load>")->widget;
-    gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), load_menu);
+    item_factory = gtk_item_factory_from_path ("<Load>");
+    gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
+                              item_factory->widget);
 
     gtk_widget_show (vbox);
     gtk_widget_show (frame);
@@ -273,7 +280,7 @@ file_open_dialog_create (Gimp *gimp)
 		      fileload);
 
     open_options_fixed = gtk_fixed_new ();
-    gtk_widget_set_usize (open_options_fixed, 80, 60);
+    gtk_widget_set_size_request (open_options_fixed, 80, 60);
     gtk_container_add (GTK_CONTAINER (GTK_BIN (open_options_genbutton)),
 		       open_options_fixed);
     gtk_widget_show (open_options_fixed);
@@ -288,7 +295,7 @@ file_open_dialog_create (Gimp *gimp)
       gtk_widget_show (sbox);
 
       align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-      gtk_widget_set_usize (align, 80, 60);
+      gtk_widget_set_size_request (align, 80, 60);
       gtk_box_pack_start (GTK_BOX (sbox), align, FALSE, TRUE, 0);
       gtk_widget_show (align);
 

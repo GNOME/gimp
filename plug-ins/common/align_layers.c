@@ -78,8 +78,8 @@ static void	run	(gchar      *name,
 
 static GimpPDBStatusType align_layers                   (gint32  image_id);
 static void              align_layers_get_align_offsets (gint32  drawable_id,
-                                                         gint	  *x,
-                                                         gint	  *y);
+                                                         gint	*x,
+                                                         gint	*y);
 
 static gint align_layers_dialog      (void);
 static void align_layers_ok_callback (GtkWidget *widget,
@@ -162,18 +162,18 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
+  static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
-  GimpRunMode   run_mode;
+  GimpRunMode       run_mode;
   gint              image_id, layer_num;
-  
+
   run_mode = param[0].data.d_int32;
   image_id = param[1].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
   
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch ( run_mode )
@@ -429,9 +429,9 @@ align_layers_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
@@ -516,10 +516,11 @@ align_layers_dialog (void)
     (_("Ignore the Bottom Layer even if Visible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), VALS.ignore_bottom);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 4, 5);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &VALS.ignore_bottom);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &VALS.ignore_bottom);
 
   toggle =
     gtk_check_button_new_with_label
@@ -527,19 +528,20 @@ align_layers_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				VALS.base_is_bottom_layer);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 5, 6);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &VALS.base_is_bottom_layer);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &VALS.base_is_bottom_layer);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
 			      _("Grid Size:"), SCALE_WIDTH, 0,
 			      VALS.grid_size, 0, 200, 1, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &VALS.grid_size);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &VALS.grid_size);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);

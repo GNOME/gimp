@@ -1382,18 +1382,20 @@ bender_new_dialog (GimpDrawable *drawable)
   /*  The Load button  */
   button = gtk_button_new_with_label (_("LoadCurve"));
   gtk_box_pack_start (GTK_BOX (outline_hbox), button, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (bender_load_callback),
-		      cd);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (bender_load_callback),
+                    cd);
 
   /*  The Save button  */
   button = gtk_button_new_with_label (_("SaveCurve"));
   gtk_box_pack_start (GTK_BOX (outline_hbox), button, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (bender_save_callback),
-		      cd);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (bender_save_callback),
+                    cd);
 
   /*  Rotate label & spinbutton  */
   label = gtk_label_new (_("Rotate: "));
@@ -1406,13 +1408,11 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_widget_set_size_request (spinbutton, ENTRY_WIDTH, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (outline_hbox), spinbutton, FALSE, FALSE, 2);
-
-  gtk_signal_connect (GTK_OBJECT (cd->rotate_data), "value_changed",
-                      GTK_SIGNAL_FUNC (bender_rotate_adj_callback),
-                      cd);
-
   gtk_widget_show (spinbutton);
 
+  g_signal_connect (G_OBJECT (cd->rotate_data), "value_changed",
+                      G_CALLBACK (bender_rotate_adj_callback),
+                      cd);
 
   label = gtk_label_new (_("Curve for Border: "));
   gtk_box_pack_start (GTK_BOX (outline_hbox), label, FALSE, FALSE, 0);
@@ -1450,16 +1450,17 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
 		    GTK_EXPAND, GTK_EXPAND, 0, 0);
+  gtk_widget_show (frame);
 
   cd->pv_widget = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (cd->pv_widget), PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
   gtk_widget_set_events (cd->pv_widget, RANGE_MASK);
-  gtk_signal_connect (GTK_OBJECT (cd->pv_widget), "event",
-		      (GtkSignalFunc) bender_pv_widget_events,
-		      cd);
   gtk_container_add (GTK_CONTAINER (frame), cd->pv_widget);
   gtk_widget_show (cd->pv_widget);
-  gtk_widget_show (frame);
+
+  g_signal_connect (G_OBJECT (cd->pv_widget), "event",
+                    G_CALLBACK (bender_pv_widget_events),
+                    cd);
 
   /*  The curves graph  */
   frame = gtk_frame_new (NULL);
@@ -1467,18 +1468,19 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    GTK_FILL, 0, 0);
+  gtk_widget_show (frame);
 
   cd->graph = gtk_drawing_area_new ();
-  gtk_drawing_area_size (GTK_DRAWING_AREA (cd->graph),
-			 GRAPH_WIDTH + RADIUS * 2,
-			 GRAPH_HEIGHT + RADIUS * 2);
+  gtk_widget_set_size_request (cd->graph,
+                               GRAPH_WIDTH + RADIUS * 2,
+                               GRAPH_HEIGHT + RADIUS * 2);
   gtk_widget_set_events (cd->graph, GRAPH_MASK);
-  gtk_signal_connect (GTK_OBJECT (cd->graph), "event",
-		      (GtkSignalFunc) bender_graph_events,
-		      cd);
   gtk_container_add (GTK_CONTAINER (frame), cd->graph);
   gtk_widget_show (cd->graph);
-  gtk_widget_show (frame);
+
+  g_signal_connect (G_OBJECT (cd->graph), "event",
+                    G_CALLBACK (bender_graph_events),
+                    cd);
 
   gtk_widget_show (table);
 
@@ -1490,51 +1492,51 @@ bender_new_dialog (GimpDrawable *drawable)
   /*  The preview button  */
   button = gtk_button_new_with_label (_("PreviewOnce"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    (GtkSignalFunc) bender_preview_update_once,
-			    cd);
   gtk_widget_show (button);
 
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (bender_preview_update_once),
+                    cd);
 
   /*  The preview toggle  */
   toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->preview);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) bender_preview_update,
-		      cd);
-
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (bender_preview_update),
+                    cd);
 
   /*  The smoothing toggle  */
   toggle = gtk_check_button_new_with_label (_("Smoothing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->smoothing);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) bender_smoothing_callback,
-		      cd);
-
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (bender_smoothing_callback),
+                    cd);
 
   /*  The antialiasing toggle  */
   toggle = gtk_check_button_new_with_label (_("Antialiasing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->antialias);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) bender_antialias_callback,
-		      cd);
-
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (bender_antialias_callback),
+                    cd);
 
   /*  The wor_on_copy toggle  */
   toggle = gtk_check_button_new_with_label (_("Work on Copy"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->work_on_copy);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) bender_work_on_copy_callback,
-		      cd);
-
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (bender_work_on_copy_callback),
+                    cd);
 
   gtk_widget_show (hbox);
 
@@ -1559,7 +1561,7 @@ bender_update (BenderDialog *cd,
       p_render_preview(cd, cd->preview_layer_id2);
       
       if (update & UP_DRAW)
-	gtk_widget_draw (cd->pv_widget, NULL);
+	gtk_widget_queue_draw (cd->pv_widget);
     }
   if (update & UP_PREVIEW_EXPOSE)
     {
@@ -1571,7 +1573,7 @@ bender_update (BenderDialog *cd,
       p_render_preview(cd, cd->preview_layer_id2);
       
       if (update & UP_DRAW)
-	gtk_widget_draw (cd->pv_widget, NULL);
+	gtk_widget_queue_draw (cd->pv_widget);
     }
   if ((update & UP_GRAPH) && (update & UP_DRAW) && cd->pixmap != NULL)
     {
@@ -2162,15 +2164,18 @@ bender_load_callback (GtkWidget *w,
   cd->filesel = filesel;
   
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
-		      "clicked", (GtkSignalFunc) p_points_load_from_file,
-		      cd);
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
-		      "clicked", (GtkSignalFunc) p_filesel_close_cb,
-		      cd);
-  gtk_signal_connect (GTK_OBJECT (filesel), "destroy",
-		      (GtkSignalFunc) p_filesel_close_cb,
-		      cd);
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
+                    "clicked",
+                    G_CALLBACK (p_points_load_from_file),
+                    cd);
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
+                    "clicked",
+                    G_CALLBACK (p_filesel_close_cb),
+                    cd);
+  g_signal_connect (G_OBJECT (filesel), "destroy",
+                    G_CALLBACK (p_filesel_close_cb),
+                    cd);
+
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				   "curve_bend.points");
   gtk_widget_show (filesel);
@@ -2192,15 +2197,18 @@ bender_save_callback (GtkWidget *w,
   cd->filesel = filesel;
   
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
-		      "clicked", (GtkSignalFunc) p_points_save_to_file,
-		      cd);
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
-		      "clicked", (GtkSignalFunc) p_filesel_close_cb,
-		      cd);
-  gtk_signal_connect (GTK_OBJECT (filesel), "destroy",
-		      (GtkSignalFunc) p_filesel_close_cb,
-		      cd);
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
+                    "clicked",
+                    G_CALLBACK (p_points_save_to_file),
+                    cd);
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
+                    "clicked",
+                    G_CALLBACK (p_filesel_close_cb),
+                    cd);
+  g_signal_connect (G_OBJECT (filesel), "destroy",
+		      G_CALLBACK (p_filesel_close_cb),
+                    cd);
+
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				   "curve_bend.points");
   gtk_widget_show (filesel);
@@ -2491,20 +2499,20 @@ p_buildmenu (MenuItem *items)
   menu = gtk_menu_new ();
 
   while (items->label)
-  {
+    {
       menu_item = gtk_menu_item_new_with_label ( gettext(items->label));
       gtk_container_add (GTK_CONTAINER (menu), menu_item);
 
       if (items->callback)
-	gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
-			    (GtkSignalFunc) items->callback,
-			    items->user_data);
+	g_signal_connect (G_OBJECT (menu_item), "activate",
+                          G_CALLBACK (items->callback),
+                          items->user_data);
 
       gtk_widget_show (menu_item);
       items->widget = menu_item;
 
       items++;
-  }
+    }
 
   return menu;
 }	/* end p_buildmenu */

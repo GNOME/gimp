@@ -324,9 +324,9 @@ cubism_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -344,21 +344,23 @@ cubism_dialog (void)
   toggle = gtk_check_button_new_with_label (_("Use Background Color"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &cvals.bg_color);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &cvals.bg_color);
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				(cvals.bg_color == BG));
-  gtk_widget_show (toggle);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				     _("Tile Size:"), SCALE_WIDTH, 0,
 				     cvals.tile_size, 0.0, 100.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &cvals.tile_size);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &cvals.tile_size);
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
@@ -366,9 +368,9 @@ cubism_dialog (void)
 			  cvals.tile_saturation, 0.0, 10.0, 0.1, 1, 1,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &cvals.tile_saturation);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &cvals.tile_saturation);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);

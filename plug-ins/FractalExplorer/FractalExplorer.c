@@ -73,6 +73,12 @@
 #include "Events.h"
 #include "Dialogs.h"
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+#include <gtk/gtklist.h>
+
 #ifdef G_OS_WIN32
 #include <io.h>
 
@@ -662,7 +668,7 @@ delete_dialog_callback (GtkWidget *widget,
       /* g_print ("list: %i\n", g_list_length (sellist)); */
       
       sel_obj = (fractalexplorerOBJ *)
-	gtk_object_get_user_data (GTK_OBJECT(sellist->data));
+	g_object_get_data (G_OBJECT (sellist->data), "fractalexplorer");
 
       pos = gtk_list_child_position (GTK_LIST (fractalexplorer_gtk_list),
 				     sellist->data);
@@ -727,7 +733,7 @@ delete_fractal_callback (GtkWidget *widget,
   sellist = GTK_LIST(list)->selection; 
 
   sel_obj = (fractalexplorerOBJ *)
-    gtk_object_get_user_data (GTK_OBJECT ((GtkWidget *) (sellist->data)));
+    g_object_get_data (G_OBJECT (sellist->data), "fractalexplorer");
 
   str = g_strdup_printf (_("Are you sure you want to delete\n"
 			   "\"%s\" from the list and from disk?"), 
@@ -845,17 +851,17 @@ fractalexplorer_dialog_edit_list (GtkWidget          *lwidget,
   gtk_widget_show (hbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_OK);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc)fractalexplorer_list_ok_callback,
-                      options);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (fractalexplorer_list_ok_callback),
+                    options);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
   button = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc)fractalexplorer_list_cancel_callback,
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (fractalexplorer_list_cancel_callback),
                       options);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->action_area), button, TRUE, TRUE, 0);
@@ -1019,7 +1025,8 @@ fractalexplorer_list_add (fractalexplorerOBJ *obj)
 							 obj->draw_name,
 							 list_pix);      
 
-  gtk_object_set_user_data (GTK_OBJECT (list_item), (gpointer)obj);
+  g_object_set_data (G_OBJECT (list_item), "fractalexplorer",
+                     obj);
 
   pos = fractalexplorer_list_insert (obj);
 
@@ -1028,9 +1035,9 @@ fractalexplorer_list_add (fractalexplorerOBJ *obj)
   gtk_widget_show (list_item);
   gtk_list_select_item (GTK_LIST (fractalexplorer_gtk_list), pos);  
 
-  gtk_signal_connect (GTK_OBJECT (list_item), "button_press_event",
-		      GTK_SIGNAL_FUNC (list_button_press),
-		      obj);
+  g_signal_connect (G_OBJECT (list_item), "button_press_event",
+                    G_CALLBACK (list_button_press),
+                    obj);
 
   return list_item;
 }
@@ -1072,12 +1079,13 @@ build_list_items (GtkWidget *list)
       list_item =
 	fractalexplorer_list_item_new_with_label_and_pixmap
 	(g, g->draw_name,list_pix);      
-      gtk_object_set_user_data (GTK_OBJECT (list_item), (gpointer) g);
+      g_object_set_data (G_OBJECT (list_item), "factralexplorer",
+                         g);
       gtk_list_append_items (GTK_LIST (list), g_list_append(NULL,list_item));
 
-      gtk_signal_connect (GTK_OBJECT (list_item), "button_press_event",
-			  GTK_SIGNAL_FUNC (list_button_press),
-			  (gpointer) g);
+      g_signal_connect (G_OBJECT (list_item), "button_press_event",
+                        G_CALLBACK (list_button_press),
+                        g);
       gtk_widget_show (list_item);
 
       tmp = tmp->next;
@@ -1388,9 +1396,9 @@ add_objects_list (void)
   button = gtk_button_new_with_label (_("Rescan"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (fractalexplorer_rescan_list),
-		      NULL);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (fractalexplorer_rescan_list),
+                    NULL);
   gimp_help_set_help_data (button,
 			   _("Select directory and rescan collection"), NULL); 
   gtk_widget_show (button);
@@ -1398,9 +1406,9 @@ add_objects_list (void)
   button = gtk_button_new_with_label (_("Delete"));
   gtk_table_attach (GTK_TABLE (table), button, 1, 2, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (delete_fractal_callback),
-		      (gpointer) list);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (delete_fractal_callback),
+                    list);
   gtk_widget_show (button);
   gimp_help_set_help_data (button,
 			   _("Delete currently selected fractal"), NULL); 
@@ -1420,8 +1428,8 @@ fractalexplorer_rescan_ok_callback (GtkWidget *widget,
   gimp_path_free (fractalexplorer_path_list);
   fractalexplorer_path_list = NULL;
 
-  patheditor = GTK_WIDGET (gtk_object_get_data (GTK_OBJECT (data),
-                                                "patheditor"));
+  patheditor = GTK_WIDGET (g_object_get_data (G_OBJECT (data),
+                                              "patheditor"));
 
   raw_path = gimp_path_editor_get_path (GIMP_PATH_EDITOR (patheditor));
 
@@ -1467,9 +1475,9 @@ fractalexplorer_rescan_list (void)
 
                          NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-                      &dlg);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &dlg);
 
   path = gimp_path_to_str (fractalexplorer_path_list);
 
@@ -1481,7 +1489,7 @@ fractalexplorer_rescan_list (void)
 
   g_free (path);
 
-  gtk_object_set_data (GTK_OBJECT (dlg), "patheditor", patheditor);
+  g_object_set_data (G_OBJECT (dlg), "patheditor", patheditor);
 
   gtk_widget_show (dlg);
 }

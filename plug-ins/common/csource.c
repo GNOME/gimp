@@ -49,16 +49,16 @@ typedef struct
 
 /* --- prototypes --- */
 static void	query		(void);
-static void	run		(gchar   *name,
-				 gint     nparams,
+static void	run		(gchar      *name,
+				 gint        nparams,
 				 GimpParam  *param,
-				 gint    *nreturn_vals,
-				 GimpParam	**return_vals);
+				 gint       *nreturn_vals,
+				 GimpParam **return_vals);
 
-static gint	save_image	(Config  *config,
-				 gint32   image_ID,
-				 gint32   drawable_ID);
-static gboolean	run_save_dialog	(Config  *config);
+static gint	save_image	(Config     *config,
+				 gint32      image_ID,
+				 gint32      drawable_ID);
+static gboolean	run_save_dialog	(Config     *config);
 
 
 /* --- variables --- */
@@ -117,32 +117,33 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
+  static GimpParam     values[2];
+  GimpRunMode          run_mode;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
   
   run_mode = param[0].data.d_int32;
   
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (run_mode == GIMP_RUN_INTERACTIVE &&
       strcmp (name, "file_csource_save") == 0)
     {
-      gint32 image_ID    = param[1].data.d_int32;
-      gint32 drawable_ID = param[2].data.d_int32;
-      GimpParasite *parasite;
-      gchar *x;
-      GimpImageType drawable_type = gimp_drawable_type (drawable_ID);
+      gint32         image_ID    = param[1].data.d_int32;
+      gint32         drawable_ID = param[2].data.d_int32;
+      GimpParasite  *parasite;
+      gchar         *x;
+      GimpImageType  drawable_type = gimp_drawable_type (drawable_ID);
 
       gimp_get_data ("file_csource_save", &config);
       config.prefixed_name = "gimp_image";
@@ -659,9 +660,9 @@ run_save_dialog	(Config *config)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
 
   vbox = gtk_vbox_new (FALSE, 2);
@@ -699,10 +700,11 @@ run_save_dialog	(Config *config)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->use_comment);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &config->use_comment);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &config->use_comment);
 
   /* GLib types
    */
@@ -710,10 +712,11 @@ run_save_dialog	(Config *config)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->glib_types);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &config->glib_types);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &config->glib_types);
 
   /* Use Macros
    */
@@ -721,10 +724,11 @@ run_save_dialog	(Config *config)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->use_macros);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &config->use_macros);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &config->use_macros);
 
   /* Use RLE
    */
@@ -732,10 +736,11 @@ run_save_dialog	(Config *config)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->use_rle);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &config->use_rle);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &config->use_rle);
 
   /* Alpha
    */
@@ -743,10 +748,11 @@ run_save_dialog	(Config *config)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->alpha);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &config->alpha);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &config->alpha);
 
   /* Max Alpha Value
    */
@@ -760,9 +766,9 @@ run_save_dialog	(Config *config)
 			      config->opacity, 0, 100, 1, 10, 1,
 			      TRUE, 0, 0,
 			      FALSE, FALSE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &config->opacity);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &config->opacity);
 
   gtk_widget_show (dialog);
   

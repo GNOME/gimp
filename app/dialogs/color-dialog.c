@@ -312,7 +312,6 @@ color_notebook_new (const gchar           *title,
   if (selector_info->next)
     {
       cnp->notebook = gtk_notebook_new ();
-      gtk_notebook_set_tab_border (GTK_NOTEBOOK (cnp->notebook), 0);
       gtk_box_pack_start (GTK_BOX (left_vbox), cnp->notebook,
 			  TRUE, TRUE, 0);
       gtk_widget_show (cnp->notebook);
@@ -381,7 +380,7 @@ color_notebook_new (const gchar           *title,
   /*  The new color area  */
   color_frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (color_frame), GTK_SHADOW_IN);
-  gtk_widget_set_usize (color_frame, -1, COLOR_AREA_SIZE);
+  gtk_widget_set_size_request (color_frame, -1, COLOR_AREA_SIZE);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Current:"), 1.0, 0.5,
@@ -402,7 +401,7 @@ color_notebook_new (const gchar           *title,
   /*  The old color area  */
   color_frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (color_frame), GTK_SHADOW_IN);
-  gtk_widget_set_usize (color_frame, -1, COLOR_AREA_SIZE);
+  gtk_widget_set_size_request (color_frame, -1, COLOR_AREA_SIZE);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Old:"), 1.0, 0.5,
@@ -445,7 +444,7 @@ color_notebook_new (const gchar           *title,
 				    GIMP_COLOR_AREA_FLAT,
 				    GDK_BUTTON2_MASK);
   gtk_drag_dest_unset (color_area);
-  gtk_widget_set_usize (button, 16, COLOR_AREA_SIZE);
+  gtk_widget_set_size_request (button, 16, COLOR_AREA_SIZE);
   gtk_container_add (GTK_CONTAINER (button), color_area);
   gtk_widget_show (color_area);
 
@@ -464,7 +463,7 @@ color_notebook_new (const gchar           *title,
 				    GIMP_COLOR_AREA_FLAT,
 				    GDK_BUTTON2_MASK);
   gtk_drag_dest_unset (color_area);
-  gtk_widget_set_usize (button, 16, COLOR_AREA_SIZE);
+  gtk_widget_set_size_request (button, 16, COLOR_AREA_SIZE);
   gtk_container_add (GTK_CONTAINER (button), color_area);
   gtk_widget_show (color_area);
 
@@ -493,7 +492,7 @@ color_notebook_new (const gchar           *title,
 
 	  gimp_help_set_help_data (cnp->toggles[i],
 				   gettext (slider_tips[i]), NULL);
-	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (cnp->toggles[i]));
+	  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (cnp->toggles[i]));
 	  gtk_table_attach (GTK_TABLE (table), cnp->toggles[i],
 			    0, 1, i, i + 1,
 			    GTK_SHRINK, GTK_EXPAND, 0, 0);
@@ -528,7 +527,7 @@ color_notebook_new (const gchar           *title,
   gtk_widget_show (table);
 
   button = gtk_button_new ();
-  gtk_widget_set_usize (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
+  gtk_widget_set_size_request (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 0, 1);
   gimp_help_set_help_data (button,
 			   _("Add the current color to the color history"),
@@ -546,7 +545,7 @@ color_notebook_new (const gchar           *title,
   for (i = 0; i < COLOR_HISTORY_SIZE; i++)
     {
       button = gtk_button_new ();
-      gtk_widget_set_usize (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
+      gtk_widget_set_size_request (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
       gtk_table_attach_defaults (GTK_TABLE (table), button,
 				 (i > 7 ? i - 8 : i) + 1,
 				 (i > 7 ? i - 8 : i) + 2,
@@ -574,11 +573,12 @@ color_notebook_new (const gchar           *title,
   gtk_box_pack_end (GTK_BOX (right_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  cnp->hex_entry = gtk_entry_new_with_max_length (7);
+  cnp->hex_entry = gtk_entry_new ();
+  gtk_entry_set_max_length (GTK_ENTRY (cnp->hex_entry), 7);
   gimp_rgb_get_uchar (&cnp->rgb, &r, &g, &b);
   g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x", r, g, b);
   gtk_entry_set_text (GTK_ENTRY (cnp->hex_entry), buffer);
-  gtk_widget_set_usize (GTK_WIDGET (cnp->hex_entry), 60, 0);
+  gtk_widget_set_size_request (GTK_WIDGET (cnp->hex_entry), 60, -1);
   gtk_box_pack_end (GTK_BOX (hbox), cnp->hex_entry, TRUE, TRUE, 0);
   gtk_widget_show (cnp->hex_entry);
 

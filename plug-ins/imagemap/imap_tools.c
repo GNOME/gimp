@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
 #include "imap_circle.h"
 #include "imap_edit_area_info.h"
 #include "imap_main.h"

@@ -627,9 +627,9 @@ despeckle_dialog (void)
 
   g_free (plugin_name);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -666,9 +666,9 @@ despeckle_dialog (void)
 				     MIN (preview_width, sel_width),
 				     MIN (preview_width, sel_width));
 
-  gtk_signal_connect (hscroll_data, "value_changed",
-		      GTK_SIGNAL_FUNC (preview_scroll_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (hscroll_data), "value_changed",
+                    G_CALLBACK (preview_scroll_callback),
+                    NULL);
 
   scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT(hscroll_data));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
@@ -679,9 +679,9 @@ despeckle_dialog (void)
 				     MIN (preview_height, sel_height),
 				     MIN (preview_height, sel_height));
 
-  gtk_signal_connect (vscroll_data, "value_changed",
-		      GTK_SIGNAL_FUNC (preview_scroll_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (vscroll_data), "value_changed",
+                    G_CALLBACK (preview_scroll_callback),
+                    NULL);
 
   scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (vscroll_data));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
@@ -713,19 +713,21 @@ despeckle_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				(filter_type & FILTER_ADAPTIVE) ? TRUE : FALSE);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (dialog_adaptive_callback),
-		      NULL);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (dialog_adaptive_callback),
+                    NULL);
 
   button = gtk_check_button_new_with_label (_("Recursive"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				(filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (dialog_recursive_callback),
-		      NULL);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (dialog_recursive_callback),
+                    NULL);
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -747,9 +749,9 @@ despeckle_dialog (void)
 			      despeckle_radius, 1, MAX_RADIUS, 1, 5, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_iscale_update),
-		      &despeckle_radius);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_iscale_update),
+                    &despeckle_radius);
 
   /*
    * Black level control...
@@ -760,9 +762,9 @@ despeckle_dialog (void)
 			      black_level, -1, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_iscale_update),
-		      &black_level);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_iscale_update),
+                    &black_level);
 
   /*
    * White level control...
@@ -773,9 +775,9 @@ despeckle_dialog (void)
 			      white_level, 0, 256, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_iscale_update),
-		      &white_level);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_iscale_update),
+                    &white_level);
 
   /*
    * Show it and wait for the user to do something...
@@ -1073,8 +1075,7 @@ preview_update (void)
        y ++, rgb_ptr += preview_width * 3)
     gtk_preview_draw_row (GTK_PREVIEW (preview), rgb_ptr, 0, y, preview_width);
 
-  gtk_widget_draw (preview, NULL);
-  gdk_flush ();
+  gtk_widget_queue_draw (preview);
 }
 
 static void

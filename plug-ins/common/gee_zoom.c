@@ -57,20 +57,20 @@ static void run   (gchar      *name,
 		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
-static void do_fun            (void);
+static void       do_fun                 (void);
 
-static gint window_delete_callback (GtkWidget *widget,
-				    GdkEvent  *event,
-				    gpointer   data);
-static void window_close_callback  (GtkWidget *widget,
-				    gpointer   data);
-static gint iteration_callback          (gpointer   data);
-static void toggle_feedbacktype    (GtkWidget *widget,
-				    gpointer   data);
+static gboolean   window_delete_callback (GtkWidget *widget,
+                                          GdkEvent  *event,
+                                          gpointer   data);
+static void       window_close_callback  (GtkWidget *widget,
+                                          gpointer   data);
+static gboolean   iteration_callback     (gpointer   data);
+static void       toggle_feedbacktype    (GtkWidget *widget,
+                                          gpointer   data);
 
-static void render_frame           (void);
-static void show_frame             (void);
-static void init_preview_misc      (void);
+static void       render_frame           (void);
+static void       show_frame             (void);
+static void       init_preview_misc      (void);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -200,11 +200,11 @@ build_dialog (GimpImageBaseType  basetype,
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg),
 			_("GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""));
-
   gtk_window_set_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dlg), "delete_event",
-		      (GtkSignalFunc) window_delete_callback,
-		      NULL);
+
+  g_signal_connect (G_OBJECT (dlg), "delete_event",
+                    G_CALLBACK (window_delete_callback),
+                    NULL);
 
   gimp_help_connect (dlg, gimp_standard_help_func, "filters/gee.html");
 
@@ -212,17 +212,18 @@ build_dialog (GimpImageBaseType  basetype,
 
   button = gtk_button_new_with_label (_("** Thank you for choosing GIMP **"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) window_close_callback,
-			     GTK_OBJECT (dlg));
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area),
 		      button, TRUE, TRUE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  tooltips = gtk_tooltips_new();
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), button,
-		       _("An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / 1998-2000"),
+  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+                            G_CALLBACK (window_close_callback),
+                            dlg);
+
+  tooltips = gtk_tooltips_new ();
+  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), button,
+                        _("An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / 1998-2000"),
 		       NULL);
   gtk_tooltips_enable (tooltips);
 
@@ -284,13 +285,14 @@ build_dialog (GimpImageBaseType  basetype,
 
   gtk_widget_show (dlg);
 	    
-  idle_tag = gtk_idle_add_priority (GTK_PRIORITY_LOW,
-				    (GtkFunction) iteration_callback,
-				    NULL);
+  idle_tag = g_idle_add_full (G_PRIORITY_LOW,
+                              (GSourceFunc) iteration_callback,
+                              NULL,
+                              NULL);
   
-  gtk_signal_connect (GTK_OBJECT (eventbox), "button_release_event",
-		      GTK_SIGNAL_FUNC (toggle_feedbacktype),
-		      NULL);
+  g_signal_connect (G_OBJECT (eventbox), "button_release_event",
+                    G_CALLBACK (toggle_feedbacktype),
+                    NULL);
 }
 
 
@@ -836,12 +838,13 @@ do_iteration (void)
 
 /*  Callbacks  */
 
-static gint
+static gboolean
 window_delete_callback (GtkWidget *widget,
 		        GdkEvent  *event,
 		        gpointer   data)
 {
-  gtk_idle_remove (idle_tag);
+  g_source_remove (idle_tag);
+  idle_tag = 0;
 
   gdk_flush ();
   gtk_main_quit ();
@@ -854,7 +857,7 @@ window_close_callback (GtkWidget *widget,
                        gpointer   data)
 {
   if (data)
-    gtk_widget_destroy(GTK_WIDGET(data));
+    gtk_widget_destroy (GTK_WIDGET (data));
 
   window_delete_callback (NULL, NULL, NULL);
 }
@@ -893,12 +896,11 @@ toggle_feedbacktype (GtkWidget *widget,
     }
 }
 
-
-static gint
-iteration_callback (gpointer   data)
+static gboolean
+iteration_callback (gpointer data)
 {
-  do_iteration();
-  show_frame();
+  do_iteration ();
+  show_frame ();
 
   return TRUE;
 }

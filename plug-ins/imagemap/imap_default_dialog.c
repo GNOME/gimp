@@ -40,10 +40,12 @@ dialog_cancel(GtkWidget *widget, gpointer data)
       dialog->cancel_cb(dialog->cancel_cb_data);
 }
 
-static void
+static gboolean
 dialog_destroy(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
    dialog_cancel(widget, data);
+
+   return TRUE;
 }
 
 static void
@@ -103,38 +105,38 @@ make_default_dialog(const gchar *title)
    data->dialog = dialog = gtk_dialog_new();
    gtk_window_set_title(GTK_WINDOW(dialog), title);
 
-   gtk_signal_connect(GTK_OBJECT(dialog), "delete_event",
-		      GTK_SIGNAL_FUNC(dialog_destroy), (gpointer) data);
+   g_signal_connect(G_OBJECT(dialog), "delete_event",
+                    G_CALLBACK(dialog_destroy), (gpointer) data);
 
    /*  Action area  */
    gtk_container_set_border_width(GTK_CONTAINER(
       GTK_DIALOG(dialog)->action_area), 2);
    gtk_box_set_homogeneous(GTK_BOX(GTK_DIALOG(dialog)->action_area), FALSE);
    hbbox = gtk_hbutton_box_new();
-   gtk_button_box_set_spacing(GTK_BUTTON_BOX(hbbox), 4);
+   gtk_box_set_spacing(GTK_BOX(hbbox), 4);
    gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), hbbox, FALSE, 
 		    FALSE, 0);
    gtk_widget_show (hbbox);
 
    data->ok = gtk_button_new_from_stock(GTK_STOCK_OK);
    GTK_WIDGET_SET_FLAGS(data->ok, GTK_CAN_DEFAULT);
-   gtk_signal_connect(GTK_OBJECT(data->ok), "clicked",
-		      GTK_SIGNAL_FUNC(dialog_ok), (gpointer) data);
+   g_signal_connect(G_OBJECT(data->ok), "clicked",
+                    G_CALLBACK(dialog_ok), (gpointer) data);
    gtk_box_pack_start(GTK_BOX(hbbox), data->ok, FALSE, FALSE, 0);
    gtk_widget_grab_default(data->ok);
    gtk_widget_show(data->ok);
 
    data->apply = gtk_button_new_with_label(_("Apply"));
    GTK_WIDGET_SET_FLAGS(data->apply, GTK_CAN_DEFAULT);
-   gtk_signal_connect(GTK_OBJECT(data->apply), "clicked",
-		      GTK_SIGNAL_FUNC(dialog_apply), (gpointer) data);
+   g_signal_connect(G_OBJECT(data->apply), "clicked",
+                    G_CALLBACK(dialog_apply), (gpointer) data);
    gtk_box_pack_start(GTK_BOX(hbbox), data->apply, FALSE, FALSE, 0);
    gtk_widget_show(data->apply);
 
    data->cancel = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
    GTK_WIDGET_SET_FLAGS(data->cancel, GTK_CAN_DEFAULT);
-   gtk_signal_connect(GTK_OBJECT(data->cancel), "clicked",
-		      GTK_SIGNAL_FUNC(dialog_cancel), (gpointer) data);
+   g_signal_connect(G_OBJECT(data->cancel), "clicked",
+                    G_CALLBACK(dialog_cancel), (gpointer) data);
    gtk_box_pack_start(GTK_BOX(hbbox), data->cancel, FALSE, FALSE, 0);
    gtk_widget_show(data->cancel);
 

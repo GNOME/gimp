@@ -1,12 +1,22 @@
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
+
 #include "gimpressionist.h"
 #include "ppmtool.h"
-#include "config.h"
-#include <libgimp/stdplugins-intl.h>
+
+#include "libgimp/stdplugins-intl.h"
+
 
 #define MAPFILE "data.out"
 

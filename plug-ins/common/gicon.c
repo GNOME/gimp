@@ -54,23 +54,23 @@ typedef struct
 
 /* Declare some local functions.
  */
-static void   query         (void);
-static void   run           (gchar   *name,
-			     gint     nparams,
-			     GimpParam  *param,
-			     gint    *nreturn_vals,
-			     GimpParam **return_vals);
-static gint32 load_image    (gchar   *filename);
-static gint   save_image    (gchar   *filename,
-			     gint32   image_ID,
-			     gint32   drawable_ID);
+static void   query          (void);
+static void   run            (gchar      *name,
+                              gint        nparams,
+                              GimpParam  *param,
+                              gint       *nreturn_vals,
+                              GimpParam **return_vals);
+static gint32 load_image     (gchar      *filename);
+static gint   save_image     (gchar      *filename,
+                              gint32      image_ID,
+                              gint32      drawable_ID);
 
 static gint   save_dialog    (void);
 
-static void   ok_callback    (GtkWidget *widget,
-			      gpointer   data);
-static void   entry_callback (GtkWidget *widget,
-			      gpointer   data);
+static void   ok_callback    (GtkWidget  *widget,
+			      gpointer    data);
+static void   entry_callback (GtkWidget  *widget,
+			      gpointer    data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -152,23 +152,24 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam      values[2];
+  GimpRunMode           run_mode;
+  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
+  gint32                image_ID;
+  gint32                drawable_ID;
+  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -437,14 +438,15 @@ save_dialog (void)
 
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
 			 GTK_STOCK_OK, ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* The main table */
   table = gtk_table_new (1, 2, FALSE);
@@ -454,17 +456,17 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Icon Name:"), 1.0, 0.5,
 			     entry, 1, FALSE);
   gtk_entry_set_text (GTK_ENTRY (entry), givals.icon_name);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      GTK_SIGNAL_FUNC (entry_callback),
-		      givals.icon_name);
   gtk_widget_show (entry);
+
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (entry_callback),
+                    givals.icon_name);
 
   gtk_widget_show (dlg);
 

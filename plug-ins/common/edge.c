@@ -84,11 +84,11 @@ typedef struct
 typedef struct
 {
   GimpTile     *tile;
-  gint	     row, col;	/* tile's row, col */
-  gint       bpp;
-  gint       tile_width, tile_height;
+  gint	        row, col;  /* tile's row, col */
+  gint          bpp;
+  gint          tile_width, tile_height;
   GimpDrawable *drawable;
-  gint       drawable_width, drawable_height;
+  gint          drawable_width, drawable_height;
 } TileBuf;
 
 /*
@@ -96,25 +96,25 @@ typedef struct
  */
 
 static void      query  (void);
-static void      run    (gchar    *name,
-			 gint      nparams,
-			 GimpParam   *param,
-			 gint     *nreturn_vals,
-			 GimpParam  **return_vals);
+static void      run    (gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
 static void      edge        (GimpDrawable *drawable);
 static gint      edge_dialog (GimpDrawable *drawable);
 
 static long      long_sqrt   (long n);
 
-static void   init_tile_buf  (TileBuf   *buf,
+static void   init_tile_buf  (TileBuf      *buf,
 			      GimpDrawable *drawable);
-static void   get_tile_pixel (TileBuf   *buf,
-			      gint       x,
-			      gint       y, 
-			      guchar    *pixel,
-			      gint       wrapmode);
-static void   end_tile_buf   (TileBuf   *buf);
+static void   get_tile_pixel (TileBuf      *buf,
+			      gint          x,
+			      gint          y, 
+			      guchar       *pixel,
+			      gint          wrapmode);
+static void   end_tile_buf   (TileBuf      *buf);
 
 /***** Local vars *****/
 
@@ -172,16 +172,16 @@ query (void)
 }
 
 static void
-run (gchar  *name,
-     gint    nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint   *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -189,9 +189,9 @@ run (gchar  *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
@@ -266,7 +266,7 @@ run (gchar  *name,
  **********************************************************************/
 
 static void
-init_tile_buf (TileBuf   *buf,
+init_tile_buf (TileBuf      *buf,
 	       GimpDrawable *drawable)
 {
   buf->tile = NULL;
@@ -653,9 +653,9 @@ edge_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -676,43 +676,46 @@ edge_dialog (GimpDrawable *drawable)
 				     TRUE, 0, 0,
 				     NULL, NULL);
 
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &evals.amount);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &evals.amount);
 
   /*  Radio buttons WRAP, SMEAR, BLACK  */
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 3, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (hbox);
 
   toggle = gtk_radio_button_new_with_label (group, _("Wrap"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &use_wrap);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_wrap);
   gtk_widget_show (toggle);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &use_wrap);
+
   toggle = gtk_radio_button_new_with_label (group, _("Smear"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &use_smear);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_smear);
   gtk_widget_show (toggle);
 
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &use_smear);
+
   toggle = gtk_radio_button_new_with_label (group, _("Black"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &use_black);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_black);
   gtk_widget_show (toggle);
-  gtk_widget_show (hbox);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &use_black);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);

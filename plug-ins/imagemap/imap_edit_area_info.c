@@ -21,17 +21,26 @@
  *
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <string.h>
 
-#include "config.h"
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#include <gtk/gtk.h>
+
 #include "imap_browse.h"
 #include "imap_cmd_edit_object.h"
 #include "imap_default_dialog.h"
 #include "imap_edit_area_info.h"
 #include "imap_main.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_table.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static gint callback_lock;
 
@@ -175,50 +184,50 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 
    dialog->web_site = create_radio_button_in_table(subtable, NULL, 0, 0, 
 						   _("Web Site"));
-   gtk_signal_connect(GTK_OBJECT(dialog->web_site), "toggled", 
-		      (GtkSignalFunc) select_web_cb, (gpointer) dialog);
-   group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->web_site));
+   g_signal_connect(G_OBJECT(dialog->web_site), "toggled", 
+                    G_CALLBACK (select_web_cb), (gpointer) dialog);
+   group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->web_site));
 
    dialog->ftp_site = create_radio_button_in_table(subtable, group, 0, 1, 
 						   _("Ftp Site"));
-   gtk_signal_connect(GTK_OBJECT(dialog->ftp_site), "toggled", 
-		      (GtkSignalFunc) select_ftp_cb, (gpointer) dialog);
-   group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->ftp_site));
+   g_signal_connect(G_OBJECT(dialog->ftp_site), "toggled", 
+                    G_CALLBACK (select_ftp_cb), (gpointer) dialog);
+   group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->ftp_site));
 
    dialog->gopher = create_radio_button_in_table(subtable, group, 0, 2, 
 						 _("Gopher"));
-   gtk_signal_connect(GTK_OBJECT(dialog->gopher), "toggled", 
-		      (GtkSignalFunc) select_gopher_cb, (gpointer) dialog);
-   group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->gopher));
+   g_signal_connect(G_OBJECT(dialog->gopher), "toggled", 
+                    G_CALLBACK (select_gopher_cb), (gpointer) dialog);
+   group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->gopher));
 
    dialog->other = create_radio_button_in_table(subtable, group, 0, 3, 
 						_("Other"));
-   gtk_signal_connect(GTK_OBJECT(dialog->other), "toggled", 
-		      (GtkSignalFunc) select_other_cb, (gpointer) dialog);
-   group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->other));
+   g_signal_connect(G_OBJECT(dialog->other), "toggled", 
+                    G_CALLBACK (select_other_cb), (gpointer) dialog);
+   group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->other));
 
    dialog->file = create_radio_button_in_table(subtable, group, 1, 0, 
 					       _("File"));
-   gtk_signal_connect(GTK_OBJECT(dialog->file), "toggled", 
-		      (GtkSignalFunc) select_file_cb, (gpointer) dialog);
-   group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->file));
+   g_signal_connect(G_OBJECT(dialog->file), "toggled", 
+                    G_CALLBACK (select_file_cb), (gpointer) dialog);
+   group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->file));
 
    dialog->wais = create_radio_button_in_table(subtable, group, 1, 1, 
 					       _("WAIS"));
-   gtk_signal_connect(GTK_OBJECT(dialog->wais), "toggled", 
-		      (GtkSignalFunc) select_wais_cb, (gpointer) dialog);
-   group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->wais));
+   g_signal_connect(G_OBJECT(dialog->wais), "toggled", 
+                    G_CALLBACK (select_wais_cb), (gpointer) dialog);
+   group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->wais));
 
    dialog->telnet = create_radio_button_in_table(subtable, group, 1, 2, 
 						 _("Telnet"));
-   gtk_signal_connect(GTK_OBJECT(dialog->telnet), "toggled", 
-		      (GtkSignalFunc) select_telnet_cb, (gpointer) dialog);
-   group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->telnet));
+   g_signal_connect(G_OBJECT(dialog->telnet), "toggled", 
+                    G_CALLBACK (select_telnet_cb), (gpointer) dialog);
+   group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->telnet));
 
    dialog->email = create_radio_button_in_table(subtable, group, 1, 3, 
 						_("e-mail"));
-   gtk_signal_connect(GTK_OBJECT(dialog->email), "toggled", 
-		      (GtkSignalFunc) select_email_cb, (gpointer) dialog);
+   g_signal_connect(G_OBJECT(dialog->email), "toggled", 
+                    G_CALLBACK (select_email_cb), (gpointer) dialog);
 
    create_label_in_table(
       table, 2, 0,
@@ -228,8 +237,8 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    browse_widget_set_filter(browse, relative_filter, (gpointer) dialog);
    gtk_table_attach_defaults(GTK_TABLE(table), browse->hbox, 0, 1, 3, 4);
    dialog->url = browse->file;
-   gtk_signal_connect(GTK_OBJECT(dialog->url), "changed", 
-		      GTK_SIGNAL_FUNC(url_changed), dialog);
+   g_signal_connect(G_OBJECT(dialog->url), "changed", 
+                    G_CALLBACK(url_changed), dialog);
 
    dialog->relative_link = create_check_button_in_table(table, 4, 0, 
 							_("Relative link"));
@@ -285,8 +294,8 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_widget_show(frame);
 
    preview = gtk_check_button_new_with_label(_("Preview"));
-   gtk_signal_connect(GTK_OBJECT(preview), "toggled", 
-		      (GtkSignalFunc) toggle_preview_cb, (gpointer) dialog);
+   g_signal_connect(G_OBJECT(preview), "toggled", 
+                    G_CALLBACK (toggle_preview_cb), (gpointer) dialog);
    gtk_box_pack_start(GTK_BOX(vbox), preview, FALSE, FALSE, 0);
    gtk_widget_show(preview);
 
@@ -429,8 +438,8 @@ create_edit_area_info_dialog(Object_t *obj)
 
    data->notebook = notebook = gtk_notebook_new();
    gtk_container_set_border_width(GTK_CONTAINER(notebook), 10);
-   gtk_signal_connect_after(GTK_OBJECT(notebook), "switch_page", 
-		      GTK_SIGNAL_FUNC(switch_page), (gpointer) data);
+   g_signal_connect_after(G_OBJECT(notebook), "switch_page", 
+                          G_CALLBACK(switch_page), (gpointer) data);
 
    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(data->dialog->dialog)->vbox), 
 		      notebook, TRUE, TRUE, 10);

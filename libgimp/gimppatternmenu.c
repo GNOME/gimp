@@ -108,7 +108,7 @@ pattern_popup_open (gint     x,
   gtk_preview_size (GTK_PREVIEW (psel->device_patpreview), 
 		    psel->width, psel->height);
 
-  gtk_widget_set_uposition (psel->device_patpopup, x, y);
+  gtk_window_move (GTK_WINDOW (psel->device_patpopup), x, y);
   gtk_widget_show (psel->device_patpopup);
   
   /*  Draw the pattern  */
@@ -135,9 +135,8 @@ pattern_popup_open (gint     x,
       src += psel->width * psel->bytes;
     }
   g_free (buf);
-  
-  /*  Draw the brush preview  */
-  gtk_widget_draw (psel->device_patpreview, NULL);
+
+  gtk_widget_queue_draw (psel->device_patpreview);
 }
 
 static void
@@ -229,8 +228,7 @@ pattern_pre_update (GtkWidget *pattern_preview,
     }
   g_free (buf);
 
-  /*  Draw the brush preview  */
-  gtk_widget_draw (pattern_preview, NULL);
+  gtk_widget_queue_draw (pattern_preview);
 }
 
 static void

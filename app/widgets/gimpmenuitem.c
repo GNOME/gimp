@@ -134,7 +134,7 @@ gimp_menu_item_real_set_viewable (GimpMenuItem *menu_item,
 {
   menu_item->preview = gimp_preview_new (viewable, menu_item->preview_size,
                                          1, FALSE);
-  gtk_widget_set_usize (menu_item->preview, menu_item->preview_size, -1);
+  gtk_widget_set_size_request (menu_item->preview, menu_item->preview_size, -1);
   gtk_box_pack_start (GTK_BOX (menu_item->hbox), menu_item->preview,
                       FALSE, FALSE, 0);
   gtk_widget_show (menu_item->preview);

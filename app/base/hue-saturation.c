@@ -455,7 +455,7 @@ hue_saturation_dialog_new (void)
   for (i = 0; i < 7; i++)
     {
       radio_button = gtk_radio_button_new_with_label (group, gettext (hue_partition_names[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio_button));
       g_object_set_data (G_OBJECT (radio_button), "hue_partition",
 			   (gpointer) i);
 
@@ -521,7 +521,7 @@ hue_saturation_dialog_new (void)
   hsd->hue_data = GTK_ADJUSTMENT (data);
 
   slider = gtk_hscale_new (hsd->hue_data);
-  gtk_widget_set_usize (slider, SLIDER_WIDTH, -1);
+  gtk_widget_set_size_request (slider, SLIDER_WIDTH, -1);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
@@ -531,7 +531,7 @@ hue_saturation_dialog_new (void)
 
   abox = gtk_vbox_new (FALSE, 0);
   spinbutton = gtk_spin_button_new (hsd->hue_data, 1.0, 0);
-  gtk_widget_set_usize (spinbutton, 74, -1);
+  gtk_widget_set_size_request (spinbutton, 74, -1);
   gtk_box_pack_end (GTK_BOX (abox), spinbutton, FALSE, FALSE, 0);
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -555,7 +555,7 @@ hue_saturation_dialog_new (void)
   hsd->lightness_data = GTK_ADJUSTMENT (data);
 
   slider = gtk_hscale_new (hsd->lightness_data);
-  gtk_widget_set_usize (slider, SLIDER_WIDTH, -1);
+  gtk_widget_set_size_request (slider, SLIDER_WIDTH, -1);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
@@ -565,7 +565,7 @@ hue_saturation_dialog_new (void)
 
   abox = gtk_vbox_new (FALSE, 0);
   spinbutton = gtk_spin_button_new (hsd->lightness_data, 1.0, 0);
-  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_end (GTK_BOX (abox), spinbutton, FALSE, FALSE, 0);
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -589,7 +589,7 @@ hue_saturation_dialog_new (void)
   hsd->saturation_data = GTK_ADJUSTMENT (data);
 
   slider = gtk_hscale_new (hsd->saturation_data);
-  gtk_widget_set_usize (slider, SLIDER_WIDTH, -1);
+  gtk_widget_set_size_request (slider, SLIDER_WIDTH, -1);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
@@ -599,7 +599,7 @@ hue_saturation_dialog_new (void)
 
   abox = gtk_vbox_new (FALSE, 0);
   spinbutton = gtk_spin_button_new (hsd->saturation_data, 1.0, 0);
-  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_end (GTK_BOX (abox), spinbutton, FALSE, FALSE, 0);
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -695,7 +695,7 @@ hue_saturation_update (HueSaturationDialog *hsd,
 			      buf, 0, j, DA_WIDTH);
 
       if (update & DRAW)
-	gtk_widget_draw (hsd->hue_partition_da[i], NULL);
+	gtk_widget_queue_draw (hsd->hue_partition_da[i]);
     }
 }
 

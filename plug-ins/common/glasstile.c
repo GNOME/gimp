@@ -67,21 +67,21 @@ typedef struct
 
 /* --- Declare local functions --- */
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
-static gint glass_dialog               (GimpDrawable     *drawable);
+static gint glass_dialog               (GimpDrawable  *drawable);
 static void glass_ok_callback          (GtkWidget     *widget,
 					gpointer       data);
 
 static void fill_preview_with_thumb    (GtkWidget     *preview_widget, 
 					gint32         drawable_ID);
-static GtkWidget *preview_widget       (GimpDrawable     *drawable);
+static GtkWidget *preview_widget       (GimpDrawable  *drawable);
 
-static void glasstile                  (GimpDrawable     *drawable, 
+static void glasstile                  (GimpDrawable  *drawable, 
 					gboolean       preview_mode);
 
 /* --- Variables --- */
@@ -142,23 +142,23 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   
   run_mode = param[0].data.d_int32;
   
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
   
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -263,9 +263,9 @@ glass_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 3);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 0);
@@ -307,12 +307,13 @@ glass_dialog (GimpDrawable *drawable)
 			      gtvals.xblock, 10, 50, 2, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &gtvals.xblock);
-  gtk_signal_connect_object (GTK_OBJECT (adj), "value_changed",
-			     GTK_SIGNAL_FUNC (glasstile),
-			     (gpointer)drawable);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &gtvals.xblock);
+  g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
+                            G_CALLBACK (glasstile),
+                            drawable);
 
   /* Horizontal scale - Height */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -320,13 +321,15 @@ glass_dialog (GimpDrawable *drawable)
 			      gtvals.yblock, 10, 50, 2, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_object_set_data (GTK_OBJECT (adj), "drawable", drawable);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &gtvals.yblock);
-  gtk_signal_connect_object (GTK_OBJECT (adj), "value_changed",
-			     GTK_SIGNAL_FUNC (glasstile),
-			     (gpointer)drawable);
+
+  g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &gtvals.yblock);
+  g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
+                            G_CALLBACK (glasstile),
+                            drawable);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);

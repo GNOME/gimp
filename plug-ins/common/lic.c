@@ -40,7 +40,6 @@
 #include <stdlib.h>
 #include <signal.h>
 
-#include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -1129,45 +1128,45 @@ create_main_dialog (void)
 				     licvals.filtlen, 0, 64, 1.0, 8.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT(scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &licvals.filtlen);
+  g_signal_connect (G_OBJECT(scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &licvals.filtlen);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 				     _("Noise Magnitude:"), 0, 0,
 				     licvals.noisemag, 1, 5, 0.1, 1.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT(scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &licvals.noisemag);
+  g_signal_connect (G_OBJECT(scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &licvals.noisemag);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 				     _("Integration Steps:"), 0, 0,
 				     licvals.intsteps, 1, 40, 1.0, 5.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT(scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &licvals.intsteps);
+  g_signal_connect (G_OBJECT(scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &licvals.intsteps);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 				     _("Minimum Value:"), 0, 0,
 				     licvals.minv, -100, 0, 1, 10, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT(scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &licvals.minv);
+  g_signal_connect (G_OBJECT(scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &licvals.minv);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 				     _("Maximum Value:"), 0, 0,
 				     licvals.maxv, 0, 100, 1, 10, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT(scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &licvals.maxv);
+  g_signal_connect (G_OBJECT(scale_data), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &licvals.maxv);
 
   gtk_widget_show (dialog);
 }
@@ -1224,16 +1223,16 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -1247,9 +1246,9 @@ run (gchar   *name,
     }
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /* Set default values */

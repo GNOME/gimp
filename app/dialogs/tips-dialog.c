@@ -171,7 +171,7 @@ tips_dialog_create (void)
 
   bbox = gtk_hbutton_box_new ();
   gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_END);
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 5);
+  gtk_box_set_spacing (GTK_BOX (bbox), 5);
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 

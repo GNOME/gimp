@@ -400,9 +400,9 @@ lens_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -415,13 +415,14 @@ lens_dialog (GimpDrawable *drawable)
 
   toggle = gtk_radio_button_new_with_label (group,
 					    _("Keep Original Surroundings"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &lvals.keep_surr);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.keep_surr);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &lvals.keep_surr);
 
   toggle =
     gtk_radio_button_new_with_label (group,
@@ -429,13 +430,14 @@ lens_dialog (GimpDrawable *drawable)
 				     drawtype == GIMP_INDEXED_IMAGE ?
 				     _("Set Surroundings to Index 0") :
 				     _("Set Surroundings to Background Color"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start(GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &lvals.use_bkgr);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.use_bkgr);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &lvals.use_bkgr);
 
   if ((drawtype == GIMP_INDEXEDA_IMAGE) ||
       (drawtype == GIMP_GRAYA_IMAGE) ||
@@ -444,14 +446,15 @@ lens_dialog (GimpDrawable *drawable)
       toggle =
 	gtk_radio_button_new_with_label (group,
 					 _("Make Surroundings Transparent"));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &lvals.set_transparent);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    lvals.set_transparent);
       gtk_widget_show (toggle);
+
+      g_signal_connect (G_OBJECT (toggle), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &lvals.set_transparent);
   }
 
   sep = gtk_hseparator_new ();
@@ -468,10 +471,11 @@ lens_dialog (GimpDrawable *drawable)
   spinbutton = gimp_spin_button_new (&adj, lvals.refraction,
 				     1.0, 100.0, 0.1, 1.0, 0, 1, 2);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &lvals.refraction);
   gtk_widget_show (spinbutton);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &lvals.refraction);
 
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);

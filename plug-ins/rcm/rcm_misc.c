@@ -36,12 +36,21 @@
  *
  *-----------------------------------------------------------------------------------*/
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
 #include <gtk/gtk.h>
-#include <libgimp/gimp.h>
+
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+#include <gtk/gtkpreview.h>
+
+#include "libgimp/gimp.h"
 
 #include "rcm.h"
 #include "rcm_misc.h"
@@ -444,8 +453,7 @@ rcm_render_preview (GtkWidget *preview,
   }
 
   g_free (a); 
-  gtk_widget_draw(preview, NULL);
-  gdk_flush();
+  gtk_widget_queue_draw (preview);
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -487,6 +495,5 @@ rcm_render_circle (GtkWidget *preview,
   }
   
   g_free (a); 
-  gtk_widget_draw (preview, NULL);
-  gdk_flush ();
+  gtk_widget_queue_draw (preview);
 }
