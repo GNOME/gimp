@@ -136,6 +136,8 @@ libappwidgets_a_sources = \
 	gimpnavigationpreview.h		\
 	gimppaletteeditor.c		\
 	gimppaletteeditor.h		\
+	gimppatternfactoryview.c	\
+	gimppatternfactoryview.h	\
 	gimppreview.c			\
 	gimppreview.h			\
 	gimppreview-popup.c		\

@@ -42,6 +42,8 @@
 
 GimpItemFactoryEntry patterns_menu_entries[] =
 {
+#if 0
+  /*  disabled because they are useless now  */
   { { N_("/_Edit Pattern..."), NULL,
       data_edit_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
@@ -60,6 +62,7 @@ GimpItemFactoryEntry patterns_menu_entries[] =
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
     GIMP_HELP_PATTERN_DUPLICATE, NULL },
+#endif
   { { N_("/_Delete Pattern..."), "",
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
@@ -96,10 +99,12 @@ patterns_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
+#if 0
   SET_SENSITIVE ("/Edit Pattern...",
 		 pattern && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
   SET_SENSITIVE ("/Duplicate Pattern",
 		 pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
+#endif
   SET_SENSITIVE ("/Delete Pattern...",
 		 pattern && data->deletable);
 

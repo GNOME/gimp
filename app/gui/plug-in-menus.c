@@ -123,7 +123,7 @@ plug_in_menus_create (GimpItemFactory *item_factory,
   g_return_if_fail (proc_defs != NULL);
 
   menu_entries = g_tree_new_full ((GCompareDataFunc) g_utf8_collate, NULL,
-                                  NULL, g_free);
+                                  g_free, g_free);
 
   for (procs = proc_defs; procs; procs = procs->next)
     {
@@ -139,6 +139,7 @@ plug_in_menus_create (GimpItemFactory *item_factory,
           const gchar     *progname;
           const gchar     *locale_domain;
           const gchar     *help_domain;
+          gchar           *key;
 
           progname = plug_in_proc_def_get_progname (proc_def);
 
@@ -153,9 +154,9 @@ plug_in_menus_create (GimpItemFactory *item_factory,
           menu_entry->locale_domain = locale_domain;
           menu_entry->help_domain   = help_domain;
 
-          g_tree_insert (menu_entries,
-                         dgettext (locale_domain, proc_def->menu_path),
-                         menu_entry);
+          key = gimp_strip_uline (dgettext (locale_domain,
+                                            proc_def->menu_path));
+          g_tree_insert (menu_entries, key, menu_entry);
         }
     }
 

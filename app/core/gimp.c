@@ -609,7 +609,7 @@ gimp_real_initialize (Gimp               *gimp,
 			   "pattern-path", "pattern-path-writable",
 			   pattern_loader_entries,
 			   G_N_ELEMENTS (pattern_loader_entries),
-			   gimp_pattern_new,
+			   NULL,
 			   gimp_pattern_get_standard);
   gimp_object_set_name (GIMP_OBJECT (gimp->pattern_factory), "pattern factory");
 

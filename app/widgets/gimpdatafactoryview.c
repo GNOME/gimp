@@ -210,7 +210,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                         factory_view);
     }
 
-  if (edit_func != NULL)
+  if (edit_func)
     {
       factory_view->edit_button =
         gimp_editor_add_button (GIMP_EDITOR (editor->view),
@@ -221,13 +221,16 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                 editor);
     }
 
-  factory_view->new_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_NEW,
-                            _("New"), NULL,
-                            G_CALLBACK (gimp_data_factory_view_new_clicked),
-                            NULL,
-                            editor);
+  if (factory_view->factory->data_new_func)
+    {
+      factory_view->new_button =
+        gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                                GTK_STOCK_NEW,
+                                _("New"), NULL,
+                                G_CALLBACK (gimp_data_factory_view_new_clicked),
+                                NULL,
+                                editor);
+    }
 
   factory_view->duplicate_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),

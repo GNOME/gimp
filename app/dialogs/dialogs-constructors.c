@@ -57,6 +57,7 @@
 #include "widgets/gimpimageview.h"
 #include "widgets/gimpitemtreeview.h"
 #include "widgets/gimppaletteeditor.h"
+#include "widgets/gimppatternfactoryview.h"
 #include "widgets/gimpselectioneditor.h"
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimptoolbox.h"
@@ -287,12 +288,12 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-				     context->gimp->pattern_factory,
-				     NULL,
-				     context,
-				     preview_size, 1,
-				     factory->menu_factory, "<Patterns>");
+  view = gimp_pattern_factory_view_new (GIMP_VIEW_TYPE_LIST,
+                                        context->gimp->pattern_factory,
+                                        NULL,
+                                        context,
+                                        preview_size, 1,
+                                        factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Patterns"), NULL,
@@ -494,12 +495,12 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				     context->gimp->pattern_factory,
-				     NULL,
-				     context,
-				     preview_size, 1,
-				     factory->menu_factory, "<Patterns>");
+  view = gimp_pattern_factory_view_new (GIMP_VIEW_TYPE_GRID,
+                                        context->gimp->pattern_factory,
+                                        NULL,
+                                        context,
+                                        preview_size, 1,
+                                        factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Patterns"), NULL,

@@ -345,9 +345,10 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
                             view);
 
   str = g_strdup_printf (_("%s\n"
-                           "%s  use defaults"),
+                           "%s  %s Dialog"),
                          view_class->new_desc,
-                         gimp_get_mod_name_shift ());
+                         gimp_get_mod_name_shift (),
+                         view_class->new_desc);
 
   view->new_button =
     gimp_editor_add_button (editor,
@@ -1009,7 +1010,7 @@ static void
 gimp_item_tree_view_new_clicked (GtkWidget        *widget,
                                  GimpItemTreeView *view)
 {
-  view->new_item_func (view->gimage, NULL, TRUE, GTK_WIDGET (view));
+  view->new_item_func (view->gimage, NULL, FALSE, GTK_WIDGET (view));
 }
 
 static void
@@ -1017,7 +1018,7 @@ gimp_item_tree_view_new_extended_clicked (GtkWidget        *widget,
                                           guint             state,
                                           GimpItemTreeView *view)
 {
-  view->new_item_func (view->gimage, NULL, FALSE, GTK_WIDGET (view));
+  view->new_item_func (view->gimage, NULL, TRUE, GTK_WIDGET (view));
 }
 
 static void

@@ -1,3 +1,31 @@
+2004-03-17  Simon Budig  <simon@gimp.org>
+
+	* app/gui/plug-in-menus.c: Sort the plugin menu entries with
+	the mnemonics stripped. Avoids weird ordering in the "C" and
+	"POSIX" locales.
+
+	* app/widgets/gimpitemtreeview.c: make a simple click on the
+	"New" Button use defaults and use shift-click for the new-dialog
+	invocation.
+
+	Some more useless button cleanup:
+
+	* app/widgets/gimpdatafactoryview.c: only create an Edit button
+	when the edit_function is set.
+
+	* app/core/gimp.c: don't set an edit func for the patterns.
+
+	* app/gui/patterns-menu.c: Don't create the "New", "Edit" and 
+	"Duplicate" Menu entries for the patterns.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimppatternfactoryview.[ch]: New widget:
+	gimp_pattern_factory_view. Necessary to be able to hide the
+	"duplicate" button...
+
+	* app/gui/dialogs-constructors.c: Use it.
+
 2004-03-17  Sven Neumann  <sven@gimp.org>
 
 	Changes for help i18n in the core, the rest will take place in the
