@@ -19,7 +19,7 @@ use Gimp ('croak','__');
 
 require DynaLoader;
 
-$VERSION = 1.18;
+$VERSION = 1.19;
 
 bootstrap Gimp::Net $VERSION;
 
@@ -45,6 +45,10 @@ sub import {
    *Gimp::GDrawable::DESTROY=sub {
       my $req="DTRY".args2net(0,@_);
       print $server_fh pack("N",length($req)).$req;
+
+      # make this synchronous to avoid deadlock due to using non sys*-type functions
+      my $len;
+      read($server_fh,$len,4) == 4 or die "protocol error (11)";
    };
 }
 
@@ -71,9 +75,9 @@ sub command {
    print $server_fh pack("N",length($req)).$req;
 }
 
+my($len,@args,$trace,$req); # small speedup, these are really local to gimp_call_procedure
+
 sub gimp_call_procedure {
-   my($len,@args,$trace,$req);
-   
    if ($trace_level) {
       $req="TRCE".args2net(0,$trace_level,@_);
       print $server_fh pack("N",length($req)).$req;

@@ -1,6 +1,6 @@
 Revision history for Gimp-Perl extension.
 
-1.18
+1.19  Thu Jan  6 00:21:58 CET 2000
         - used N_ to mark all the menu paths, since gimp now tries to
           do the translation.
         - patch by Frank Loemker <floemker@TechFak.Uni-Bielefeld.DE> to fix
@@ -41,6 +41,8 @@ Revision history for Gimp-Perl extension.
         - Net.xs didn't compile without PDL.
         - applied (but did not test) UI patch by Sven.
         - fixed stupid non-ansi errors in Gimp/Lib.xs.
+        - make raw pixel data functions accessible over the network by
+          fixing the remaining bugs in Gimp::Net. PDL's still don't work.
 
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.

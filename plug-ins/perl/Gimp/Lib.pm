@@ -4,7 +4,7 @@ use strict;
 use vars qw($VERSION @ISA);
 
 BEGIN {
-   $VERSION = 1.18;
+   $VERSION = 1.19;
    eval {
       require XSLoader;
       XSLoader::load Gimp::Lib $VERSION;

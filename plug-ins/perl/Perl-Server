@@ -70,15 +70,15 @@ sub handle_request($) {
    my($length,$req,$data,@args,$trace_level);
    
    eval {
-      local $SIG{ALRM}=sub { die "\n" };
+      local $SIG{ALRM}=sub { die "1\n" };
       #alarm(6) unless $ps_flags & &Gimp::_PS_FLAG_BATCH;
-      read($fh,$length,4) == 4 or die "\n";
+      read($fh,$length,4) == 4 or die "2\n";
       $length=unpack("N",$length);
-      $length>0 && $length<$max_pkt or die "\n";
+      $length>0 && $length<$max_pkt or die "3\n";
       #alarm(6) unless $ps_flags & &Gimp::_PS_FLAG_BATCH;
-      read($fh,$req,4) == 4 or die "\n";
+      read($fh,$req,4) == 4 or die "4\n";
       #alarm(20) unless $ps_flags & &Gimp::_PS_FLAG_BATCH;
-      read($fh,$data,$length-4) == $length-4 or die "\n";
+      read($fh,$data,$length-4) == $length-4 or die "5\n";
       #alarm(0);
    };
    return 0 if $@;
@@ -95,6 +95,7 @@ sub handle_request($) {
          print $fh (defined(*{"Gimp::Lib::$data"}{CODE}) || Gimp::_gimp_procedure_available($data)) ? "1" : "0";
       } elsif ($req eq "DTRY") {
          Gimp::Net::destroy_objects Gimp::Net::net2args 0,$data;
+         print $fh pack("N",0); # fix to work around using non-sysread/write functions
       } elsif($req eq "TRCE") {
          no strict 'refs';
          ($trace_level,$req,@args)=Gimp::Net::net2args 1,$data;
@@ -305,7 +306,7 @@ Gimp::on_query {
    Gimp->install_procedure("extension_perl_server", "Start the Gimp-Perl Server",
                            "This is the server for plug-ins written using the Gimp::Net module",
                            "Marc Lehmann <pcg\@goof.com>", "Marc Lehmann", "1999-12-02",
-                           N_"<Toolbox>/Xtns/Perl/Server", "*",&Gimp::PROC_EXTENSION,
+                           N_"<Toolbox>/Xtns/Perl/Server", "*", &Gimp::PROC_EXTENSION,
                            [
                             [&Gimp::PARAM_INT32, "run_mode", "Interactive, [non-interactive]"],
                             [&Gimp::PARAM_INT32, "flags", "internal flags (must be 0)"],
@@ -316,7 +317,7 @@ Gimp::on_query {
                            "Plug-ins should register their custom constants using this function, so".
                            "other plug-ins (notably script-languages) can access these using symbolic names",
                            "Marc Lehmann <pcg\@goof.com>", "Marc Lehmann", "1999-07-07",
-                           undef, "*",&Gimp::PROC_EXTENSION,
+                           undef, "*" ,&Gimp::PROC_EXTENSION,
                            [
                             [&Gimp::PARAM_STRING, "procedure", "The name of the function that uses this constant"],
                             [&Gimp::PARAM_STRING, "arg_num", "The name of the argument that this constant is used for"],
@@ -326,7 +327,7 @@ Gimp::on_query {
    Gimp->install_procedure("gimp_procedural_db_set_default", "Set the default value for a plug-in argument",
                            "Plug-ins should register default values for their arguments",
                            "Marc Lehmann <pcg\@goof.com>", "Marc Lehmann", "1999-07-07",
-                           undef, "*",&Gimp::PROC_EXTENSION,
+                           undef, "*" ,&Gimp::PROC_EXTENSION,
                            [
                             [&Gimp::PARAM_STRING, "procedure", "The name of the function that uses this constant"],
                             [&Gimp::PARAM_STRING, "arg_num", "The name of the argument that this constant is used for"],
