@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2000-08-30 00:31-0700\n"
+"POT-Creation-Date: 2000-10-04 16:46+0300\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -592,11 +592,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Утил╕ти/ASCII у зображення..."
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Утил╕ти/Користувацький град╕╓нт..."
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
@@ -604,67 +604,67 @@ msgstr "<Toolbox>/Розш./Скрипт-Фу/Утил╕ти/Мапа шрифту..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Чуже сяйво/Стр╕лка..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Чуже сяйво/Маркер..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Чуже сяйво/Кнопка..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Чуже сяйво/Горизонтальна л╕н╕йка..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Стр╕лка..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Маркер..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Кнопка..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Заголовок..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий шаблон/Горизонтальна л╕н╕йка..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Gimp.Org/Великий заголовок..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Gimp.Org/Позначки головно╖ труби..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Gimp.Org/Малий заголовок..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Gimp.Org/Позначка кнопки труби..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Gimp.Org/Позначка п╕дкнопки труби..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Gimp.Org/Позначка п╕дп╕дкнопки труби..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
@@ -840,15 +840,15 @@ msgstr "Основний кол╕р"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Base Radius (pixel)"
-msgstr ""
+msgstr "Основний рад╕ус (п╕ксел╕)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Behaviour"
-msgstr ""
+msgstr "Повед╕нка"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
-msgstr ""
+msgstr "Висота фаски (р╕зк╕сть)"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
@@ -858,28 +858,28 @@ msgstr "Ширина фаски"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Outline)"
-msgstr ""
+msgstr "Град╕╓нт (контур)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Text)"
-msgstr ""
+msgstr "Град╕╓нт (текст)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Blend Mode"
-msgstr ""
+msgstr "Режим зм╕шування"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Block Size"
-msgstr ""
+msgstr "Розм╕р блоку"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Blur Amount"
-msgstr ""
+msgstr "Степ╕нь розмивання"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Blur Border"
-msgstr ""
+msgstr "Розмивання рамки"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Horizontally"
@@ -899,15 +899,15 @@ msgstr "Тип розмивання"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Vertically"
-msgstr "Вертикальне розмавання"
+msgstr "Вертикальне розмивання"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "Blur X"
-msgstr ""
+msgstr "Розмивання по X"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "Blur Y"
-msgstr ""
+msgstr "Розмивання по Y"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border Color"
@@ -926,36 +926,36 @@ msgstr "Розм╕р облям╕вки"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border X Size"
-msgstr ""
+msgstr "Розм╕р рамки по X"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border Y Size"
-msgstr ""
+msgstr "Розм╕р рамки по Y"
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Border"
-msgstr ""
+msgstr "Рамка"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "Buffer Amount (% Height of Text)"
-msgstr ""
+msgstr "Розм╕р буферу (% висоти тексту)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr ""
+msgstr "Рад╕ус розмивання рель╓фу (альфа-канал)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "Burst Color"
-msgstr ""
+msgstr "Кол╕р вибуху"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Carve Raised Text"
-msgstr ""
+msgstr "Вир╕зати п╕днятий текст"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "Carve White Areas"
-msgstr ""
+msgstr "Вир╕зати б╕л╕ д╕лянки"
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 msgid "Cell Size (pixels)"
@@ -967,40 +967,40 @@ msgstr "Кол╕р крейди"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Chip Amount"
-msgstr ""
+msgstr "К╕льк╕сть уламк╕в"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Balance"
-msgstr ""
+msgstr "Баланс хрому"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Factor"
-msgstr ""
+msgstr "Фактор хрому"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Lightness"
-msgstr ""
+msgstr "Св╕тл╕сть хрому"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Saturation"
-msgstr ""
+msgstr "Насичен╕сть хрому"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 msgid "Chrome White Areas"
-msgstr ""
+msgstr "Б╕л╕ д╕лянки хрому"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Circuit Seed"
-msgstr ""
+msgstr "Гн╕здо кола"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Clear Unselected Maskarea"
-msgstr ""
+msgstr "Очистити невибран╕ д╕лянки маски"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 1"
@@ -1185,7 +1185,7 @@ msgstr "В╕дображення середовища"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Erase before Draw"
-msgstr ""
+msgstr "Очистити перед малюванням"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
@@ -1230,7 +1230,7 @@ msgstr "Назва файлу"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Fill Angle"
-msgstr "Заповнити кут"
+msgstr "Кут заповнення"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Fill BG with Pattern"
@@ -1419,24 +1419,24 @@ msgstr "Висота"
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
-msgstr ""
+msgstr "Баланс виблиск╕в"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Color"
-msgstr ""
+msgstr "Кол╕р виблиск╕в"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Opacity"
-msgstr ""
+msgstr "Щ╕льн╕сть виблиск╕в"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight X Offset"
-msgstr ""
+msgstr "Зм╕щення блик╕в по X"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Y Offset"
-msgstr ""
+msgstr "Зм╕щення блик╕в по Y"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Hit Rate"
@@ -1476,7 +1476,7 @@ msgstr "╤ндексоване зображення"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Index to n Colors (0 = Remain RGB)"
-msgstr ""
+msgstr "╤ндексувати до N кольор╕в (0 - залишити RGB)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Insert Layer Names"
@@ -1525,7 +1525,7 @@ msgstr "Л╕воруч"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Lighting (degrees)"
-msgstr "Осв╕тлення (в градусах)"
+msgstr "Осв╕тлення (в ╜радусах)"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Looped"
@@ -1557,15 +1557,15 @@ msgstr "Розм╕р маски"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Max. Blur Radius"
-msgstr ""
+msgstr "Максимальний рад╕ус розмивання"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Mosaic Tile Type"
-msgstr ""
+msgstr "Тип елементу моза╖ки"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Mottle"
-msgstr ""
+msgstr "Накраплення"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "No Background (only for separate layer)"
@@ -1581,7 +1581,7 @@ msgstr "Не натиснута"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Number of Bands"
-msgstr ""
+msgstr "К╕льк╕сть зв'язк╕в"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1608,12 +1608,12 @@ msgstr "К╕льк╕сть повтор╕в для виру"
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Number of X Tiles"
-msgstr ""
+msgstr "К╕льк╕сть розр╕з╕в по X"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Number of Y Tiles"
-msgstr ""
+msgstr "К╕льк╕сть розр╕з╕в по Y"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
@@ -1893,7 +1893,7 @@ msgstr "Т╕нь"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Sharpness (degrees)"
-msgstr "Р╕зк╕сть (в градусах)"
+msgstr "Р╕зк╕сть (в ╜радусах)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Shear Length"
