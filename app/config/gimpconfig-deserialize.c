@@ -140,7 +140,7 @@ gimp_config_deserialize_properties (GObject  *object,
     {
       g_scanner_get_next_token (scanner);
       g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
-                             "parse error", TRUE);
+                             "Fatal parse error; I'm giving up.", TRUE);
     }
 
   if (property_specs)
@@ -204,13 +204,18 @@ gimp_config_deserialize_property (GObject    *object,
       token = gimp_config_deserialize_any (&value, prop_spec, scanner);
     }
 
-  if (token == G_TOKEN_RIGHT_PAREN)
-    g_object_set_property (object, prop_spec->name, &value);
+  if (token == G_TOKEN_RIGHT_PAREN &&
+      g_scanner_peek_next_token (scanner) == token)
+    {
+      g_object_set_property (object, prop_spec->name, &value);
+    }
   else
-    g_warning ("Couldn't deserialize property %s::%s of type %s.",
-               g_type_name (G_TYPE_FROM_INSTANCE (object)),
-               prop_spec->name, 
-               g_type_name (prop_spec->value_type));
+    {
+      g_warning ("Couldn't deserialize property %s::%s of type %s.",
+                 g_type_name (G_TYPE_FROM_INSTANCE (object)),
+                 prop_spec->name, 
+                 g_type_name (prop_spec->value_type));
+    }
 
   g_value_unset (&value);
   

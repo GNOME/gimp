@@ -144,8 +144,8 @@ gimp_config_deserialize (GObject     *object,
 
   scanner = g_scanner_new (NULL);
 
-  scanner->config->cset_identifier_first = ( G_CSET_a_2_z "-" G_CSET_A_2_Z );
-  scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z "-" G_CSET_A_2_Z );
+  scanner->config->cset_identifier_first = ( G_CSET_a_2_z );
+  scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z "-_" );
 
   g_scanner_input_file (scanner, fd);
   scanner->input_name = filename;

@@ -28,8 +28,11 @@
 
 #define FILENAME "foorc"
 
-static void  notify_callback (GObject     *object,
-                              GParamSpec  *pspec);
+static void  notify_callback      (GObject     *object,
+                                   GParamSpec  *pspec);
+static void  output_unknown_token (const gchar *key,
+                                   const gchar *value,
+                                   gpointer     data);
 
 
 int
@@ -37,6 +40,7 @@ main (int   argc,
       char *argv[])
 {
   GimpBaseConfig *config;
+  gboolean        header = TRUE;
 
   g_type_init ();
 
@@ -54,8 +58,11 @@ main (int   argc,
   g_signal_connect (G_OBJECT (config), "notify",
                     G_CALLBACK (notify_callback),
                     NULL);
-  gimp_config_deserialize (G_OBJECT (config), "foorc", TRUE);
+  gimp_config_deserialize (G_OBJECT (config), FILENAME, TRUE);
   
+  gimp_config_foreach_unknown_token (G_OBJECT (config), 
+                                     output_unknown_token, &header);
+
   g_object_unref (config);
   
   g_print ("Done.\n");
@@ -94,4 +101,22 @@ notify_callback (GObject    *object,
       g_print ("  %s::%s changed\n", 
                g_type_name (G_TYPE_FROM_INSTANCE (object)), pspec->name);
     }
+}
+
+static void
+output_unknown_token (const gchar *key,
+                      const gchar *value,
+                      gpointer     data)
+{
+  gboolean *header  = (gboolean *) data;
+  gchar    *escaped = g_strescape (value, NULL);
+
+  if (*header)
+    {
+      g_print ("  Unknown string tokens:\n");
+      *header = FALSE;
+    }
+
+  g_print ("   %s \"%s\"\n", key, value);
+  g_free (escaped);
 }
