@@ -9,7 +9,8 @@
 	* Makefile.am (SUBDIRS): Remove build subdir here, too.
 
 	* libgimpcolor/Makefile.am (EXTRA_DIST)
-	* libgimpmath/Makefile.am (EXTRA_DIST): Drop makefile.mingw{,.in}.
+	* libgimpmath/Makefile.am (EXTRA_DIST)
+	* libgimpbase/Makefile.am (EXTRA_DIST): Drop makefile.mingw{,.in}.
 
 2002-12-21  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 

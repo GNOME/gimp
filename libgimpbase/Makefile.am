@@ -54,8 +54,6 @@ INCLUDES = \
 
 EXTRA_DIST = \
 	gimpversion.h.in	\
-	makefile.mingw		\
-	makefile.mingw.in	\
 	makefile.msc		\
 	gimpbase.def
 
