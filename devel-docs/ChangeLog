@@ -1,3 +1,14 @@
+2005-02-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimpconfig/libgimpconfig-docs.sgml
+	* libgimpconfig/libgimpconfig-sections.txt: updated.
+
+	* libgimpconfig/tmpl/gimpcolorconfig.sgml: added this new file.
+
+	* libgimpconfig/tmpl/gimpconfig-iface.sgml
+	* libgimpconfig/tmpl/gimpconfig-params.sgml
+	* libgimpconfig/tmpl/gimpconfigwriter.sgml: regenerated.
+
 2005-02-05  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt: updated.

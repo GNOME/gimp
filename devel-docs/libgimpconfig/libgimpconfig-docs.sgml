@@ -13,7 +13,6 @@
 
   <part id="libgimpconfig">
     <title>GIMP Config Library</title>
-    <xi:include href="xml/gimpconfigtypes.xml" />
     <xi:include href="xml/gimpconfig-iface.xml" />
     <xi:include href="xml/gimpconfig-deserialize.xml" />
     <xi:include href="xml/gimpconfig-serialize.xml" />
@@ -23,6 +22,7 @@
     <xi:include href="xml/gimpconfig-utils.xml" />
     <xi:include href="xml/gimpconfigwriter.xml" />
     <xi:include href="xml/gimpscanner.xml" />
+    <xi:include href="xml/gimpcolorconfig.xml" />
   </part>
 
 </book>

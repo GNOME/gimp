@@ -15,6 +15,12 @@ Functions for writing config info to a file for libgimpconfig.
 
 </para>
 
+<!-- ##### STRUCT GimpConfigWriter ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### FUNCTION gimp_config_writer_new_file ##### -->
 <para>
 

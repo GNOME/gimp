@@ -1,0 +1,59 @@
+<!-- ##### SECTION Title ##### -->
+GimpColorConfig
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpColorConfig ##### -->
+<para>
+
+</para>
+
+@parent_instance: 
+@mode: 
+@profile_path: 
+@rgb_profile: 
+@cmyk_profile: 
+@display_profile: 
+@printer_profile: 
+@display_intent: 
+@simulation_intent: 
+
+<!-- ##### ENUM GimpColorManagementMode ##### -->
+<para>
+
+</para>
+
+@GIMP_COLOR_MANAGEMENT_OFF: 
+@GIMP_COLOR_MANAGEMENT_DISPLAY: 
+@GIMP_COLOR_MANAGEMENT_SOFTPROOF: 
+
+<!-- ##### ENUM GimpColorRenderingIntent ##### -->
+<para>
+
+</para>
+
+@GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL: 
+@GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC: 
+@GIMP_COLOR_RENDERING_INTENT_SATURATION: 
+@GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC: 
+
+<!-- ##### ENUM GimpColorFileOpenBehaviour ##### -->
+<para>
+
+</para>
+
+@GIMP_COLOR_FILE_OPEN_ASK: 
+@GIMP_COLOR_FILE_OPEN_LEAVE: 
+@GIMP_COLOR_FILE_OPEN_CONVERT_RGB: 
+

@@ -1,5 +1,7 @@
 <SECTION>
 <FILE>gimpconfig-iface</FILE>
+<TITLE>GimpConfig</TITLE>
+GimpConfig
 GimpConfigInterface
 gimp_config_serialize_to_file
 gimp_config_serialize_to_fd
@@ -26,6 +28,7 @@ gimp_config_deserialize_property
 
 <SECTION>
 <FILE>gimpconfig-error</FILE>
+<TITLE>GimpConfigError</TITLE>
 GimpConfigError
 GIMP_CONFIG_ERROR
 gimp_config_error_quark
@@ -92,6 +95,8 @@ gimp_config_string_append_escaped
 
 <SECTION>
 <FILE>gimpconfigwriter</FILE>
+<TITLE>GimpConfigWriter</TITLE>
+GimpConfigWriter
 gimp_config_writer_new_file
 gimp_config_writer_new_fd
 gimp_config_writer_new_string
@@ -111,6 +116,7 @@ gimp_config_writer_finish
 
 <SECTION>
 <FILE>gimpscanner</FILE>
+<TITLE>GimpScanner</TITLE>
 gimp_scanner_new_file
 gimp_scanner_new_string
 gimp_scanner_destroy
@@ -126,8 +132,24 @@ gimp_scanner_parse_matrix2
 </SECTION>
 
 <SECTION>
-<FILE>gimpconfigtypes</FILE>
-GimpConfig
-GimpConfigWriter
+<FILE>gimpcolorconfig</FILE>
+<TITLE>GimpColorConfig</TITLE>
+GimpColorConfig
+GimpColorManagementMode
+GimpColorRenderingIntent
+GimpColorFileOpenBehaviour
+<SUBSECTION Standard>
+GimpColorConfigClass
+GIMP_COLOR_CONFIG
+GIMP_IS_COLOR_CONFIG
+GIMP_TYPE_COLOR_CONFIG
+gimp_color_config_get_type
+GIMP_COLOR_CONFIG_CLASS
+GIMP_IS_COLOR_CONFIG_CLASS
+GIMP_TYPE_COLOR_MANAGEMENT_MODE
+gimp_color_management_mode_get_type
+GIMP_TYPE_COLOR_RENDERING_INTENT
+gimp_color_rendering_intent_get_type
+GIMP_TYPE_COLOR_FILE_OPEN_BEHAVIOUR
+gimp_color_file_open_behaviour_get_type
 </SECTION>
-
