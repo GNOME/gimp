@@ -1,4 +1,4 @@
-# Swedish messages for GIMP perl plugin.
+# Swedish messages for the GIMP perl plugin.
 # Copyright (C) 2001 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2001.
 #
@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl\n"
-"POT-Creation-Date: Mon Jul 23 12:28:39 2001\n"
-"PO-Revision-Date: 2001-08-30 01:35+0200\n"
+"POT-Creation-Date: 2001-08-23 12:28\n"
+"PO-Revision-Date: 2001-10-10 22:01+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgid " (press Tab to complete)"
 msgstr " (tryck Tabb för att färdigställa)"
 
 msgid " = [argument error]\n"
-msgstr " = [argumentfel\n"
+msgstr " = [argumentfel]\n"
 
 msgid " matching functions"
 msgstr " matchande funktioner"
@@ -30,6 +30,10 @@ msgid ""
 "           -i | --interact            let the user edit the values first\n"
 "       script-arguments are\n"
 msgstr ""
+"       gränssnittsargument är\n"
+"           -o | --output <filspec>    skriv fil till disk, visa inte\n"
+"           -i | --interact            låt användaren redigera värdet först\n"
+"       skriptargument är\n"
 
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
@@ -40,6 +44,13 @@ msgid ""
 "           --host|--tcp HOST[:PORT]   connect to HOST (optionally using PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
+"Användning: $0 [gimp-arg..] [gränssnittsarg..] [skriptarg..]\n"
+"       gimp-argument är\n"
+"           -gimp <vadsomhelst>        används endast internt\n"
+"           -h | -help | --help | -?   skriv ut hjälp\n"
+"           -v | --verbose             var mer utförlig i det du gör\n"
+"           --host|--tcp VÄRD[:PORT]   anslut till VÄRD (eventuellt med PORT)\n"
+"                                      (se Gimp::Net(3) för mer information)\n"
 
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr "$_ är ingen giltig importtagg för paketet $pkg"
@@ -47,21 +58,27 @@ msgstr "$_ är ingen giltig importtagg för paketet $pkg"
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr "$_: ogiltig växel, prova $0 --help\n"
 
-#, fuzzy
 msgid "$_: unknown/illegal file-save option"
-msgstr " Okänd filoperation"
+msgstr "$_: okänd/otillåten filsparningsoperation"
 
 msgid "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z and _ allowed"
 msgstr ""
+"$function: argumentnamnet \"$p->[1]\" innehåller otillåtna tecken, endast "
+"0-9, a-z och _ är tillåtna"
 
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr ""
+"$function: argument-/returvärdet \"$p->[1]\" har ogiltig typ \"$p->[0]\""
 
 msgid "$function: calling $AUTOLOAD without specifying the :auto import tag is deprecated!\n"
 msgstr ""
+"$function: att anropa $AUTOLOAD utan att ange importtaggen :auto är "
+"föråldrat!\n"
 
 msgid "$function: function name contains unusual characters, good style is to use only 0-9, a-z and _"
 msgstr ""
+"$function: funktionsnamnet innehåller ovanliga tecken, en bra regel är att "
+"bara använda 0-9, a-z och _"
 
 msgid "$s: not an integer\n"
 msgstr "$s: inte ett heltal\n"
@@ -71,10 +88,10 @@ msgstr "%s argument för funktionen \"%s\""
 
 msgid "%s: procedural database execution failed on invalid input arguments"
 msgstr ""
+"%s: procedurdatabaskörning misslyckades på grund av ogiltiga indataargument"
 
-#, fuzzy
 msgid "%s: procedural database execution failed"
-msgstr "%s: val av databas misslyckades"
+msgstr "%s: procedurdatabaskörning misslyckades"
 
 msgid "(UNINITIALIZED)"
 msgstr "(OINITIERAD)"
@@ -88,336 +105,281 @@ msgstr ", %d byte data]"
 msgid ", authorization required"
 msgstr ", auktorisering krävs"
 
-#, fuzzy
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
-msgstr "-bitstream-courier-medium-r-normal-*-9-*-*-*-*-*-*-*"
+msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 
-#, fuzzy
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
-msgstr "-*-helvetica-medium-r-normal-*-8-*-*-*-*-*-*-*"
+msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
 
-#, fuzzy
 msgid "/Filters/Logulator"
-msgstr "/Filter/Färger"
+msgstr "/Filter/Logulator"
 
-#, fuzzy
 msgid "/Xtns/Perl"
-msgstr "/_Xtns"
+msgstr "/Utökningar/Perl"
 
-#, fuzzy
 msgid "/Xtns/Render"
-msgstr "/Filter/Rendera"
+msgstr "/Utökningar/Rendera"
 
-#, fuzzy
 msgid "/Xtns/Render/Logos"
-msgstr "/Filter/Rendera"
+msgstr "/Utökningar/Rendera/Logotyper"
 
 msgid "/Xtns/Render/Povray"
-msgstr ""
+msgstr "/Utökningar/Rendera/Povray"
 
 msgid "9x15bold"
-msgstr ""
+msgstr "9×15fet"
 
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr ""
+msgstr "<Image> insticksmodul anropades utan både bild och ritbara argument!\n"
 
-#, fuzzy
 msgid "<Image>/Edit/Repeat & Duplicate..."
-msgstr "/Bild/Duplicera"
+msgstr "<Image>/Redigera/Upprepa och duplicera..."
 
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr "/Filter/Animation"
+msgstr "<Image>/Filter/Animation/Animera celler..."
 
-#, fuzzy
 msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr "/Filter/Animation"
+msgstr "<Image>/Filter/Animation/BlåsInUt..."
 
 msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr ""
+msgstr "<Image>/Filter/Tillämpa Perl-uttryck..."
 
-#, fuzzy
 msgid "<Image>/Filters/Blur/2x2 Blur"
-msgstr "/Filter/Suddigare"
+msgstr "<Image>/Filter/Smeta ut/Smeta ut 2×2"
 
-#, fuzzy
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "/Bild/Färger/Färgbalans..."
+msgstr "<Image>/Filter/Färger/Färg till alfa..."
 
-#, fuzzy
 msgid "<Image>/Filters/Colors/Fire..."
-msgstr "/Bild/Färger/Kurvor..."
+msgstr "<Image>/Filter/Färger/Eld..."
 
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr "/Arkiv/Fönster/Färgskalor..."
+msgstr "<Image>/Filter/Färger/Mappa till toning..."
 
-#, fuzzy
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr "/Filter/Störningar"
+msgstr "<Image>/Filter/Störningar/Spegeldelning..."
 
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr "/Filter/Störningar"
+msgstr "<Image>/Filter/Störningar/Repor..."
 
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Windify..."
-msgstr "/Filter/Störningar"
+msgstr "<Image>/Filter/Störningar/Vind..."
 
-#, fuzzy
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
-msgstr "/Filter/Leta kanter"
+msgstr "<Image>/Filter/Hörndetektering/Hörndetektering 2×2"
 
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr ""
+msgstr "<Image>/Filter/Förbättra/Förbättra kontrast 2×2"
 
-#, fuzzy
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "/Filter/Förbättra"
+msgstr "<Image>/Filter/Förbättra/Warp-skärpa..."
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Blended II..."
-msgstr "/Bild/Färger/Färgbalans..."
+msgstr "<Image>/Filter/Logulator/Tonad II..."
 
 msgid "<Image>/Filters/Logulator/Carved"
-msgstr ""
+msgstr "<Image>/Filter/Logulator/Karvad"
 
 msgid "<Image>/Filters/Logulator/Crystal"
-msgstr ""
+msgstr "<Image>/Filter/Logulator/Kristall"
 
 msgid "<Image>/Filters/Logulator/Imigre-26"
-msgstr ""
+msgstr "<Image>/Filter/Logulator/Imigre-26"
 
 msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr ""
+msgstr "<Image>/Filter/Logulator/Nyhetstext"
 
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
-msgstr ""
+msgstr "<Image>/Filter/Logulator/SOTA-krom"
 
 msgid "<Image>/Filters/Logulator/Speed text"
-msgstr ""
+msgstr "<Image>/Filter/Logulator/Snabb text"
 
 msgid "<Image>/Filters/Logulator/Transparent Logo..."
-msgstr ""
+msgstr "<Image>/Filter/Logulator/Transparent logotyp..."
 
 msgid "<Image>/Filters/Logulator/Web title header"
-msgstr ""
+msgstr "<Image>/Filter/Logulator/Webbtitelrubrik"
 
 msgid "<Image>/Filters/Map/Image Tile..."
-msgstr ""
+msgstr "<Image>/Filter/Karta/Bildbricka..."
 
 msgid "<Image>/Filters/Map/Pixelmap..."
-msgstr ""
+msgstr "<Image>/Filter/Karta/Bildpunktskarta..."
 
 msgid "<Image>/Filters/Map/Xach Blocks..."
-msgstr ""
+msgstr "<Image>/Filter/Karta/Xach-block..."
 
 msgid "<Image>/Filters/Map/Xach Shadows..."
-msgstr ""
+msgstr "<Image>/Filter/Karta/Xach-skuggor..."
 
 msgid "<Image>/Filters/Misc/Border Average..."
-msgstr ""
+msgstr "<Image>/Filter/Diverse/Kantmedel..."
 
 msgid "<Image>/Filters/Misc/Magick..."
-msgstr ""
+msgstr "<Image>/Filter/Diverse/Magi..."
 
-#, fuzzy
 msgid "<Image>/Filters/Noise/Ditherize..."
-msgstr "/Bild/Färger/Posterisering..."
+msgstr "<Image>/Filter/Störningar/Färgutjämna..."
 
 msgid "<Image>/Filters/Noise/Feedback..."
-msgstr ""
+msgstr "<Image>/Filter/Störningar/Återkoppling..."
 
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr ""
+msgstr "<Image>/Filter/Störningar/Xach-syn..."
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Add Dust..."
-msgstr "/Filter/Rendera"
+msgstr "<Image>/Filter/Rendera/Lägg till damm..."
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Add Glow"
-msgstr "/Filter/Rendera"
+msgstr "<Image>/Filter/Rendera/Lägg till glöd"
 
 msgid "<Image>/Filters/Render/Brushed Metal..."
-msgstr ""
+msgstr "<Image>/Filter/Rendera/Polerad metall..."
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Burst..."
-msgstr "/Filter/Rendera"
+msgstr "<Image>/Filter/Rendera/Utbrott..."
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Fit Text..."
-msgstr "/Filter/Rendera"
+msgstr "<Image>/Filter/Rendera/Passa in text..."
 
 msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr ""
+msgstr "<Image>/Filter/Rendera/Markera hörn..."
 
 msgid "<Image>/Filters/Render/Random Blends..."
-msgstr ""
+msgstr "<Image>/Filter/Rendera/Slumpmässiga färgtoningar..."
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Stampify..."
-msgstr "/Filter/Rendera"
+msgstr "<Image>/Filter/Rendera/Stämpla..."
 
 msgid "<Image>/Filters/Render/TeX String..."
-msgstr ""
+msgstr "<Image>/Filter/Rendera/TeX-sträng..."
 
 msgid "<Image>/Filters/Render/Terral Text..."
-msgstr ""
+msgstr "<Image>/Filter/Rendera/Jordtext..."
 
-#, fuzzy
 msgid "<Image>/Filters/Web/Perl-o-tine..."
-msgstr "/Bild/Färger/Posterisering..."
+msgstr "<Image>/Filter/Webb/Perlotinering..."
 
 msgid "<Image>/Filters/Web/Prepare for GIF..."
-msgstr ""
+msgstr "<Image>/Filter/Webb/Förbered för GIF..."
 
 msgid "<Image>/Filters/Web/Webify..."
-msgstr ""
+msgstr "<Image>/Filter/Webb/Webbifiera..."
 
 msgid "<Image>/Guides/Center Guide..."
-msgstr ""
+msgstr "<Image>/Guider/Centreringsguide..."
 
-#, fuzzy
 msgid "<Image>/Guides/Guide Grid..."
-msgstr "/Bild/Format/Indexerad..."
+msgstr "<Image>/Guider/Guiderutnät..."
 
 msgid "<Image>/Guides/Remove Guides"
-msgstr ""
+msgstr "<Image>/Guider/Ta bort guide"
 
-#, fuzzy
 msgid "<Image>/Guides/To Selection..."
-msgstr "Val av bild"
+msgstr "<Image>/Guider/Till markering..."
 
-#, fuzzy
 msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr "/Bild/Alfa/Lägg till alfakanal"
+msgstr "<Image>/Bild/Alfa/Alfa till färg..."
 
 msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr ""
+msgstr "<Image>/Bild/Alfa/Töm alfa..."
 
-#, fuzzy
 msgid "<Image>/Layers/Center Layer"
-msgstr "/Lager/Ankra lager"
+msgstr "<Image>/Lager/Centrera lager"
 
-#, fuzzy
 msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr "/Lager/Stack/Sänk lager"
+msgstr "<Image>/Lager/Stack/Arrangera om lager..."
 
-#, fuzzy
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "Rektangulär markering"
+msgstr "<Image>/Markera/Runda rektangulär markering..."
 
-#, fuzzy
 msgid "<Image>/Select/Round..."
-msgstr "/Markera/Kant..."
+msgstr "<Image>/Markera/Runda..."
 
-#, fuzzy
 msgid "<Image>/Select/Triangle..."
-msgstr "/Markera/Minska..."
+msgstr "<Image>/Markera/Triangel..."
 
 msgid "<Image>/Video/VCR Console..."
-msgstr ""
+msgstr "<Image>/Video/VCR-konsoll..."
 
-#, fuzzy
 msgid "<Image>/View/3D Surface..."
-msgstr "Visa källa..."
+msgstr "<Image>/Visa/3D-yta..."
 
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr ""
+msgstr "<Load> insticksmodulen anropades utan de 3 standardargumenten!\n"
 
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr ""
+msgstr "<Spara> insticksmodulen anropades utan de 5 standardargumenten!\n"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utökningar/Animation/Affischtavla..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Utökningar/Animation/Seth-spinn..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/Xtns/Script-Fu/Uppdatera"
+msgstr "<Toolbox>/Utökningar/Skapa_bilder"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utökningar/Gimp::Fu-exempel..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utökningar/Hemsideslogotyp"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/PDB Explorer..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Utökningar/PDB-bläddrare..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Parasite Editor..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Utökningar/Parasitredigerare..."
 
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr ""
+msgstr "<Toolbox>/Utökningar/Perl-exempelinsticksmodul"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utökningar/Perl/Kontrollcenter..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Utökningar/Perl/Server"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Utökningar/Rendera/Brickor..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utökningar/Rendera/Typsnittstabell..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utökningar/Rendera/Gyllene medel..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utökningar/Rendera/Logotyp/Brandtext..."
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr ""
+msgstr "<Toolbox>/utökningar/Rendera/Logotyp/Glödande stål"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Utökningar/Rendera/Logotyper/Inre avfasning..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Utökningar/Rendera/Bildpunktsgenerator..."
 
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr ""
+msgstr "<Toolbox>/Utökningar/Rendera/Povray/Inställningar..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Utökningar/Rendera/Povray/Textur..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utökningar/Rendera/Slumpmässig konst nr 1..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Utökningar/Rendera/Stämplar..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utökningar/Rendera/Yin-Yang..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Utökningar/Visuella skript..."
 
 msgid "Accelerator"
 msgstr "Snabbtangent"
@@ -426,6 +388,8 @@ msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
+"Ett jämnt antal ramar behövs för tillbakaspinning.\n"
+"Justerade upp antalet ramar till $frames"
 
 msgid "Author"
 msgstr "Författare"
@@ -442,6 +406,13 @@ msgid ""
 "\n"
 "$help"
 msgstr ""
+"BLURB:\n"
+"\n"
+"$blurb\n"
+"\n"
+"HJÄLP:\n"
+"\n"
+"$help"
 
 msgid "Background"
 msgstr "Bakgrund"
@@ -449,25 +420,23 @@ msgstr "Bakgrund"
 msgid "Browse"
 msgstr "Bläddra"
 
-#, fuzzy
 msgid "Brush Selection Dialog"
-msgstr "Penselmarkering"
+msgstr "Penselmarkeringsdialog"
 
-#, fuzzy
 msgid "Bumpmap"
-msgstr "Bitmappsbild"
+msgstr "Bumpmapp"
 
 msgid "Cancel"
 msgstr "Avbryt"
 
 msgid "Cannot call '$AUTOLOAD' at this time"
-msgstr ""
+msgstr "Kan inte anropa \"$AUTOLOAD\" just nu"
 
 msgid "Close"
 msgstr "Stäng"
 
 msgid "Color"
-msgstr "Färger"
+msgstr "Färg"
 
 msgid "Command"
 msgstr "Kommando"
@@ -478,9 +447,8 @@ msgstr "Copyright"
 msgid "DESCRIPTION"
 msgstr "BESKRIVNING"
 
-#, fuzzy
 msgid "Date/Version"
-msgstr "Version"
+msgstr "Datum/Version"
 
 msgid "Defaults"
 msgstr "Standardvärden"
@@ -493,55 +461,52 @@ msgstr "Redigera"
 
 msgid "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
 msgstr ""
+"INT32 förväntades men fick \"%s\". Lägg till \"*1\" om du verkligen vill "
+"skicka en sträng"
 
 msgid "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use strict'"
 msgstr ""
+"INT32 förväntades men fick \"%s\". Du menade kanske \"%s\" istället och "
+"glömde att använda \"use strict\""
 
 msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr ""
+msgstr "ÖDESDIGERT: canonicalize_colour returnerade inte ett värde!"
 
-#, fuzzy
 msgid "FATAL: unable to create $tmp: $!\n"
-msgstr "Kunde inte skapa fil: %s\n"
+msgstr "ÖDESDIGERT: kunde inte skapa $tmp: $!\n"
 
 msgid "FG"
 msgstr "FG"
 
-#, fuzzy
 msgid "Fileselector for $name"
-msgstr "Var vänlig och ange ditt namn."
+msgstr "Filväljare för $name"
 
-#, fuzzy
 msgid "Font Selection Dialog ($desc)"
-msgstr "Typsnittsval"
+msgstr "Typsnittsväljardialog ($desc)"
 
 msgid "Function Info"
-msgstr "Funktionsinfo"
+msgstr "Funktionsinformation"
 
-#, fuzzy
 msgid "Gradient Selection Dialog"
-msgstr "Färgskalemarkering"
+msgstr "Färgtoningsmarkeringsdialog"
 
-#, fuzzy
 msgid "Help for "
-msgstr "Hjälp om %s"
+msgstr "Hjälp om "
 
 msgid "Help"
 msgstr "Hjälp"
 
 msgid "Illegal default font description for $function: $val\n"
-msgstr ""
+msgstr "Ogiltig standardtypsnittsbeskrivning för $function: $val\n"
 
-#, fuzzy
 msgid "Image Types"
-msgstr "Bildtyper:"
+msgstr "Bildtyper"
 
 msgid "Last Modified"
 msgstr "Senast ändrad"
 
-#, fuzzy
 msgid "Load $name"
-msgstr "Läs in bild"
+msgstr "Läs in $name"
 
 msgid "Load"
 msgstr "Läs in"
@@ -556,66 +521,58 @@ msgid "NAME"
 msgstr "NAMN"
 
 msgid "No horizontal or vertical guides found. Aborted."
-msgstr ""
+msgstr "Inga horisontella eller vertikala guider hittades. Avbröt."
 
 msgid "OK"
 msgstr "OK"
 
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr ""
+msgstr "PDB-bläddrare - olof-versionen (fortfarande en alfaversion)"
 
-#, fuzzy
 msgid "Pattern Selection Dialog"
-msgstr "Mönsterval"
+msgstr "Mönstervalsdialog"
 
-#, fuzzy
 msgid "Plug-In Path"
-msgstr "Insticksmoduler"
+msgstr "Sökväg till insticksmodul"
 
 msgid "Previous"
 msgstr "Föregående"
 
-#, fuzzy
 msgid "Reset all values to their default"
-msgstr "Markera alla filer i listan"
+msgstr "Återställ alla värden till deras standardvärden"
 
-#, fuzzy
 msgid "Restore values to the previous ones"
-msgstr "Flytta till det föregående meddelandet"
+msgstr "Återställa värden till de föregående"
 
-#, fuzzy
 msgid "Save $name"
-msgstr "Stegnamn"
+msgstr "Spara $name"
 
 msgid "Save"
 msgstr "Spara"
 
 msgid "Saving '$filename' as COLORHTML..."
-msgstr ""
+msgstr "Sparas \"$filename\" som FÄRGHTML..."
 
 msgid "Saving '$filename' as DATAURL..."
-msgstr ""
+msgstr "Sparar \"$filename\" som DATAURL..."
 
-#, fuzzy
 msgid "Seth Spin..."
-msgstr "Inställningar..."
+msgstr "Seth-spinn..."
 
-#, fuzzy
 msgid "Shortcuts"
-msgstr "Genväg"
+msgstr "Genvägar"
 
 msgid "Spin Layer DEST (250ms)"
-msgstr ""
+msgstr "Spinnlager-DEST (250 ms)"
 
 msgid "Spin Layer SRC (250ms)"
-msgstr ""
+msgstr "Spinnlager-KÄLLA (250 ms)"
 
 msgid "Status"
 msgstr "Status"
 
-#, fuzzy
 msgid "Synopsis"
-msgstr "Synthpop"
+msgstr "Sammanfattning"
 
 msgid "TYPE"
 msgstr "TYP"
@@ -624,63 +581,57 @@ msgid "Text"
 msgstr "Text"
 
 msgid "This module was built without support for PDL."
-msgstr ""
+msgstr "Denna modul byggdes utan stöd för PDL."
 
-#, fuzzy
 msgid "Unable to convert a reference to type '%s'"
-msgstr "Kan inte skapa objekt av typen \"%s\""
+msgstr "Kan inte konvertera en referens till typen \"%s\""
 
 msgid "Unable to grok '%s' as colour specifier"
-msgstr ""
+msgstr "Kan inte förstå \"%s\" som färgspecifierare"
 
-#, fuzzy
 msgid "Unable to open '$filename' for writing: $!\n"
-msgstr "Kan inte öppna filen för skrivning!"
+msgstr "Kan inte öppna \"$filename\" för skrivning: $!\n"
 
-#, fuzzy
 msgid "Unable to read temporary image tile $tmp: $!"
-msgstr "Kan inte öppna temporär fil!"
+msgstr "Kan inte läsa temporär bildbricka $tmp: $!"
 
-#, fuzzy
 msgid "Unsupported argumenttype $type"
-msgstr "Argumenttypen som sattes stöds inte"
+msgstr "Argumenttypen 4type stöds inte"
 
-#, fuzzy
 msgid "Visual Scriptor"
-msgstr "Visuellt djup:"
+msgstr "Visuella skript"
 
-#, fuzzy
 msgid "WARNING"
-msgstr "VARNING: "
+msgstr "VARNING"
 
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
 msgstr ""
+"VARNING: $function returnerade någonting som inte är en bild: \"$img\"\n"
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr ""
+"VARNING: klienten kopplades från samtidigt som den hade ett aktivt lås\n"
 
 msgid "WARNING: client tried to unlock without holding a lock"
-msgstr ""
+msgstr "VARNING: klienten försökte låsa upp utan att ha ett lås"
 
 msgid "WARNING: shared locking requested but not implemented"
-msgstr ""
+msgstr "VARNING: delad låsning begärt men inte implementerat"
 
 msgid "You can't run this script with an INDEXED image!!"
-msgstr ""
+msgstr "Du kan inte köra detta skript med en INDEXERAD bild!!"
 
 msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr ""
+msgstr "Du kan inte köra detta skript utan en ALFAKANAL!!"
 
 msgid "You need at least 2 layers to perform prep4gif"
-msgstr ""
+msgstr "Du behöver minst 2 lager för att utföra prep4gif"
 
-#, fuzzy
 msgid "[undefined]"
-msgstr "Odefinierad"
+msgstr "[odefinierad]"
 
-#, fuzzy
 msgid "[unfinished]\n"
-msgstr "Inte klar"
+msgstr "[inte klar]\n"
 
 msgid ""
 "\n"
@@ -688,317 +639,300 @@ msgid ""
 "EMBEDDED POD DOCUMENTATION:\n"
 "\n"
 msgstr ""
+"\n"
+"\n"
+"INBYGGD POD-DOKUMENTATION:\n"
+"\n"
 
 msgid "a color must have three components (array elements)"
-msgstr ""
+msgstr "en färg måste ha tre komponenter (vektorelement)"
 
-#, fuzzy
 msgid "accepted tcp connection from "
-msgstr "Neka alla anslutningar från"
+msgstr "accepterade tcp-anslutning från "
 
-#, fuzzy
 msgid "accepted unix connection"
-msgstr "försöker att återansluta"
+msgstr "accepterade unix-anslutning"
 
-#, fuzzy
 msgid "accepting connections in $host"
-msgstr "försöker att återansluta"
+msgstr "accepterar anslutningar i $host"
 
-#, fuzzy
 msgid "accepting connections on $unix_path"
-msgstr "försöker att återansluta"
+msgstr "accepterar anslutningar i $unix_path"
 
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr ""
+msgstr "accepterar anslutningar på port $Gimp::Net::default_tcp_port"
 
-#, fuzzy
 msgid "accepting connections on port $port"
-msgstr "Kan inte ta emot anslutningar på \"%s\": %s"
+msgstr "accepterar anslutningar på port $port"
 
 msgid "argument incompatible with type IMAGE"
-msgstr ""
+msgstr "argumentet är inte kompatibelt med typen BILD"
 
-#, fuzzy
 msgid "argument is not of type %s"
-msgstr "Filen är av typ: %s"
+msgstr "argumentet är inte av typen %s"
 
 msgid "argument type %s expected (not %s)"
-msgstr ""
+msgstr "argumenttypen %s förväntades (inte %s)"
 
-#, fuzzy
 msgid "arguments to main not yet supported!"
-msgstr "Sparande av index stöds inte än"
+msgstr "argument till main stöds inte än!"
 
-#, fuzzy
 msgid "authorization failed: $r[1]\n"
-msgstr "Auktorisering misslyckades.\n"
+msgstr "auktorisering misslyckades: $r[1]\n"
 
-#, fuzzy
 msgid "authorization ok, but: $r[1]\n"
-msgstr "Behörighetsförfrågan"
+msgstr "auktorisering ok, men: $r[1]\n"
 
-#, fuzzy
 msgid "authorization required for tcp connections"
-msgstr "Autentisering krävs för %s på %s \"%s\":\n"
+msgstr "auktorisering krävs för tcp-anslutningar"
 
-#, fuzzy
 msgid "authorization unnecessary"
-msgstr "Behörighetsförfrågan"
+msgstr "auktorisering behövs inte"
 
 msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr ""
+msgstr "anropas som \"%s\", men \"%s\" är inte registrerad i pdb"
 
-#, fuzzy
 msgid "closing connection %d (%d requests in %g seconds)"
-msgstr "Stänger anslutningen %p efter %d sekunder i tomgång"
+msgstr "stänger anslutning %d (%d begäran under %g sekunder)"
 
-#, fuzzy
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
-msgstr "Ledsen, den här funktionen finns inte (än)."
+msgstr ""
+"konvertering till typen $pf_type2string{$type} är inte implementerad än\n"
 
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
 msgstr ""
+"kunde inte ansluta till gimp-servern (försäkra dig om att Perl-Server kör)"
 
 msgid "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
 msgstr ""
+"dimensionerna stämmer inte överens, pdl har dimensionen %d men minst %d "
+"dimensioner krävs"
 
 msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
+"dimensionerna stämmer inte överens, pdl har dimensionen %d men minst %d "
+"dimensioner är tillåtna"
 
 msgid "dunno how to pass arg type %d"
-msgstr ""
+msgstr "vet inte hur argumenttyp %d ska skickas"
 
 msgid "dunno how to return param type %d"
-msgstr ""
+msgstr "vet inte hur parametertyp %d ska returneras"
 
 msgid "expected perl-server at other end of socket, got @r\n"
-msgstr ""
+msgstr "perl-server förväntades på andra sidan av uttaget, fick @r\n"
 
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
 msgstr ""
+"protokollversion $Gimp::_PROT_VERSION förväntades, men servern använder "
+"$r[0]\n"
 
-#, fuzzy
 msgid "export failed"
-msgstr "Exportera fil"
+msgstr "export misslyckades"
 
 msgid "function '$exe' not found in this script (must be one of "
-msgstr ""
+msgstr "funktionen \"$exe\" hittades inte detta skript (måste vara en av "
 
 msgid "function name contains dashes instead of underscores"
-msgstr ""
+msgstr "funktionsnamnet innehåller bindestreck istället för understreck"
 
 msgid "function/macro \"$name\" not found in $class"
-msgstr ""
+msgstr "funktionen/makrot \"$name\" hittades inte i $class"
 
-#, fuzzy
 msgid "get current background colour from the gimp"
-msgstr "Bakgrundsfärgen i tabellen"
+msgstr "få tag i aktuell bakgrundsfärg från gimp"
 
-#, fuzzy
 msgid "get current foreground colour from the gimp"
-msgstr "Bakgrundsfärgen i tabellen"
+msgstr "få tag i aktuell förgrundsfärg från gimp"
 
-#, fuzzy
 msgid "gimp procedure '%s' not found"
-msgstr "Datakällan %s kunde inte hittas"
+msgstr "gimp-proceduren \"%s\" kunde inte hittas"
 
 msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr ""
+msgstr "gimp-perl-pixel-funktioner kräver modulen PDL::Core"
 
 msgid "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 and report this error"
 msgstr ""
+"gimp_pixel_rgns_register stöder endast 1, 2 eller 3 argument, uppgradera till gimp-1.1 och rapportera detta fel"
 
-#, fuzzy
 msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr "%s är ännu inte implementerat"
+msgstr "gimp_tile_get_data är ännu inte implementerat\n"
 
-#, fuzzy
 msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr "%s är ännu inte implementerat"
+msgstr "gimp_tile_set_data är ännu inte implementerat\n"
 
-#, fuzzy
 msgid "illegal command received, aborting connection"
-msgstr "ogiltig typ upptäckt, avbryter"
+msgstr "ogiltigt kommando upptäckt, avbryter anslutning"
 
 msgid "illegal parasite specification, arrayref expected"
-msgstr ""
+msgstr "ogiltig parasitspecifikation, vektorreferens förväntades"
 
 msgid "illegal parasite specification, expected three array members"
-msgstr ""
+msgstr "ogiltig parasitspecifikation, tre vektormedlemmar förväntades"
 
 msgid "illegal parasite specification, reference expected"
-msgstr ""
+msgstr "ogiltig parasitspecifikation, referens förväntades"
 
-#, fuzzy
 msgid "illegal type for colour specification"
-msgstr "Specifikation på jokerteckengrupp:"
+msgstr "ogiltig typ för färgspecifikation"
 
 msgid "interface '$interface_type' unsupported."
-msgstr ""
+msgstr "gränssnittet \"$interface_type\" stöds inte."
 
 msgid "interface=... tag is no longer supported\n"
-msgstr ""
+msgstr "taggen interface=... stöds inte längre\n"
 
 msgid "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
 msgstr ""
+"ogiltig GIMPVÄRD: \"spawn\" är inte en giltig anslutningsmetod för servern"
 
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
+"sista argumentet till gimp_pattern_select_widget måste vara skalärreferens"
 
 msgid "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
 msgstr ""
+"felaktig parameterdefinition, [PARAMETERTYP,\"NAMN\",\"BESKRIVNING\"] eller "
+"PARAMETERTYP förväntades"
 
 msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
+"menysökvägen _måste_ starta med <Image>, <Toolbox>, <Load>, <Save> eller "
+"<None>!"
 
-#, fuzzy
 msgid "no additional information available, use --help\n"
-msgstr "Ingen information tillgänglig."
+msgstr "ingen ytterligare information tillgänglig, använd --help\n"
 
-#, fuzzy
 msgid "no font specified, using default"
-msgstr "Inget typsnitt angivet! Använder standardtypsnittet"
+msgstr "inget typsnitt angivet, använder standardtypsnittet"
 
-#, fuzzy
 msgid "not enough"
-msgstr " för lite minne "
+msgstr "för lite"
 
 msgid "only blessed scalars accepted here"
-msgstr ""
+msgstr "endast godkända skalärer accepteras här"
 
 msgid "parameter '$entry->[1]' is not optional\n"
-msgstr ""
+msgstr "parametern \"$entry->[1]\" är inte valfri\n"
 
 msgid "params and return_vals must be array refs (even if empty)!"
-msgstr ""
+msgstr "parametrar och returvärden måste vara vektorreferens (även om tom)!"
 
 msgid "pdl height != region height"
-msgstr ""
+msgstr "pdl-höjd != områdeshöjd"
 
 msgid "perl-arrayref required as datatype for a gimp-array"
-msgstr ""
+msgstr "perl-vektorreferens krävs som datatyp för en gimp-vektor"
 
 msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
+"bildpunktsstorlek stämmer inte överens, pdl har %d kanalbildpunkter men %d "
+"kanaler kräver"
 
 msgid "plug-in returned %d more values than expected"
-msgstr ""
+msgstr "insticksmodul returnerade %d fler värden än som förväntades"
 
-#, fuzzy
 msgid "received QUIT request"
-msgstr "Chattförfrågan mottagen"
+msgstr "mottog AVSLUTA-begäran"
 
 msgid "register called with too many or wrong arguments\n"
-msgstr ""
+msgstr "register anropades med för många eller felaktiga argument\n"
 
 msgid "required callback 'net' not found\n"
-msgstr ""
+msgstr "nödvändig callback \"net\" kunde inte hittas\n"
 
 msgid "required callback 'query' not found\n"
-msgstr ""
+msgstr "nödvändig callback \"query\" kunde inte hittas\n"
 
 msgid "required callback 'run' not found\n"
-msgstr ""
+msgstr "nödvändig utbildning \"run\" kunde inte hittas\n"
 
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
+"run_mode måste vara INTERACTIVE, NONINTERACTIVE eller RUN_WITH_LAST_VALS\n"
 
-#, fuzzy
 msgid "server going down..."
-msgstr "Nytt serverfönster..."
+msgstr "servern går ner..."
 
-#, fuzzy
 msgid "server requests authorization, but no authorization available\n"
-msgstr "Serversvaret innehöll inte autentiseringsdata\n"
+msgstr "servern begär auktorisering, men ingen auktorisering är tillgänglig\n"
 
 msgid "server version $Gimp::VERSION started"
-msgstr ""
+msgstr "server version $Gimp::VERSION startades"
 
-#, fuzzy
 msgid "text string is empty"
-msgstr "Användarnamnet är tomt."
+msgstr "textsträngen är tom"
 
 msgid ""
 "the gtk perl module is required to open a dialog\n"
 "window, running with default values"
 msgstr ""
+"modulen gtk-perl krävs för att öppna ett dialogfönster\n"
+"som kör med standardvärden"
 
 msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
 msgstr ""
+"modulen gtk-perl krävs för att köra denna\n"
+"insticksmodul i interaktivt läge\n"
 
-#, fuzzy
 msgid "too many arguments"
-msgstr "för många filnamnsargument"
+msgstr "för många argument"
 
-#, fuzzy
 msgid "too many"
-msgstr "verktygsmeny"
+msgstr "för många"
 
 msgid "trying to start gimp with options \"$opt\"\n"
-msgstr ""
+msgstr "försöker starta gimp med flaggorna \"$opt\"\n"
 
-#, fuzzy
 msgid "unable to accept tcp connection: $!\n"
-msgstr "Kan inte göra anslutning icke-blockerande"
+msgstr "kan inte acceptera tcp-anslutning: $!\n"
 
-#, fuzzy
 msgid "unable to accept unix connection: $!\n"
-msgstr "kunde inte skapa användarkatalog: %s\n"
+msgstr "kan inte acceptera unix-anslutning: $!\n"
 
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
-msgstr ""
+msgstr "kan inte konvertera Gimp::Drawable till Gimp::GimpDrawable (id %d)"
 
-#, fuzzy
 msgid "unable to create '$fn': $!"
-msgstr "Kunde inte skapa fil: %s\n"
+msgstr "kan inte skapa \"$fn\": $!"
 
-#, fuzzy
 msgid "unable to create listening tcp socket: $!\n"
-msgstr "kunde inte skapa användarkatalog: %s\n"
+msgstr "kan inte skapa lyssnande tcp-uttag: $!\n"
 
-#, fuzzy
 msgid "unable to create listening unix socket: $!\n"
-msgstr "kunde inte skapa användarkatalog: %s\n"
+msgstr "kan inte skapa lyssnande unix-uttag: $!\n"
 
 msgid "unable to create socketpair for gimp communications: $!"
-msgstr ""
+msgstr "kan inte skapa uttagspar för gimp-komunikation: $!"
 
-#, fuzzy
 msgid "unable to fork: $!"
-msgstr "Kan inte öppna: %s\n"
+msgstr "kan inte grena: $!"
 
-#, fuzzy
 msgid "unable to grok colour specification"
-msgstr "Ogiltig portspecifikation"
+msgstr "kan inte förstå färgspecifikation"
 
-#, fuzzy
 msgid "unable to open $rgb_db_path"
-msgstr "Kunde inte öppna rör"
+msgstr "kan inte öppna $rgb_db_path"
 
-#, fuzzy
 msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr "Misslyckades med att öppna det interna kommunikationsröret: "
+msgstr "kan inte öppna Gimp::Net-kommunikationsuttag: $!\n"
 
-#, fuzzy
 msgid "unable to read '$fn': $!"
-msgstr "Kan inte läsa ikon: %s"
+msgstr "kan inte läsa \"$fn\": $!"
 
-#, fuzzy
 msgid "unable to read temporary file $tmp: $!"
-msgstr "Kan inte öppna temporär fil!"
+msgstr "kan inte läsa temporär fil $tmp: $!"
 
 msgid "unauthorized command received, aborting connection"
-msgstr ""
+msgstr "ickeauktoriserat kommando mottogs, avbryter anslutning"
 
-#, fuzzy
 msgid "url size is too large ($max > 1024)\n"
-msgstr " Filen är för stor: "
+msgstr "url-storleken är för stor ($max > 1024)\n"
 
-#, fuzzy
 msgid "wrong authorization, aborting connection"
-msgstr "Bekräfta anslutning"
+msgstr "felaktig auktorisering, avbryter anslutning"
 
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
-msgstr ""
+msgstr "xldf_unpack: omatchat XLFD \"$fontname\"\n"
