@@ -958,7 +958,13 @@ load_image (const gchar *filename,
             gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin,
                                      drawable->width, num);
 
-          png_read_rows (pp, pixels, NULL, num);
+          if (num_passes == 1)
+            {
+              for (i = 0; i < num; i++)
+                png_read_row (pp, pixels[i], NULL);
+            }
+          else
+            png_read_rows (pp, pixels, NULL, num);
 
           gimp_pixel_rgn_set_rect (&pixel_rgn, pixel, 0, begin,
                                    drawable->width, num);
