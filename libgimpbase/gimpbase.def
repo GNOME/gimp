@@ -1,6 +1,7 @@
 EXPORTS
 	_gp_params_destroy
 	gimp_any_to_utf8
+	gimp_base_init
 	gimp_data_directory
 	gimp_datafiles_check_extension
 	gimp_datafiles_read_directories
@@ -32,6 +33,18 @@ EXPORTS
 	gimp_signal_private
 	gimp_strip_uline
 	gimp_sysconf_directory
+	gimp_unit_get_abbreviation
+	gimp_unit_get_deletion_flag
+	gimp_unit_get_digits
+	gimp_unit_get_factor
+	gimp_unit_get_identifier
+	gimp_unit_get_number_of_built_in_units
+	gimp_unit_get_number_of_units
+	gimp_unit_get_plural
+	gimp_unit_get_singular
+	gimp_unit_get_symbol
+	gimp_unit_new
+	gimp_unit_set_deletion_flag
 	gimp_utf8_strtrim
 	gp_config_write
 	gp_extension_ack_write

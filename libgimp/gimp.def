@@ -409,18 +409,6 @@ EXPORTS
 	gimp_undo_push_group_end
 	gimp_undo_push_group_start
 	gimp_uninstall_temp_proc
-	gimp_unit_get_abbreviation
-	gimp_unit_get_deletion_flag
-	gimp_unit_get_digits
-	gimp_unit_get_factor
-	gimp_unit_get_identifier
-	gimp_unit_get_number_of_built_in_units
-	gimp_unit_get_number_of_units
-	gimp_unit_get_plural
-	gimp_unit_get_singular
-	gimp_unit_get_symbol
-	gimp_unit_new
-	gimp_unit_set_deletion_flag
 	gimp_version
 	gimp_wm_class
 	gimp_wm_name

@@ -1,5 +1,10 @@
 2003-11-15  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimp.def
+	* libgimpbase/gimpbase.def: updated for unit changes.
+
+2003-11-15  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpbase/Makefile.am
 	* libgimpbase/gimpbase-private.[ch]
 	* libgimpbase/gimpunit.c: new files implementing GimpUnitVTable
