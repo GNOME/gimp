@@ -1,6 +1,6 @@
 /* max_rgb.c -- This is a plug-in for the GIMP (1.0's API)
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
- * Time-stamp: <1997/10/23 23:40:20 narazaki@InetQ.or.jp>
+ * Time-stamp: <2000-01-01 00:24:57 yasuhiro>
  * Version: 0.35
  *
  * Copyright (C) 1997 Shuji Narazaki <narazaki@InetQ.or.jp>
@@ -20,8 +20,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,8 +32,6 @@
 /* Replace them with the right ones */
 #define	PLUG_IN_NAME	"plug_in_max_rgb"
 #define SHORT_NAME	"max_rgb"
-#define PROGRESS_NAME	"max_rgb: scanning..."
-#define MENU_POSITION	"<Image>/Filters/Colors/Max RGB..."
 #define	MAIN_FUNCTION	max_rgb
 /* you need not change the following names */
 #define INTERFACE	max_rgb_interface
@@ -125,14 +125,16 @@ query ()
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
+
+  INIT_I18N();
   
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Return an image in which each pixel holds only the channel that has the maximum value in three (red, green, blue) channels, and other channels are zero-cleared",
+			  _("Return an image in which each pixel holds only the channel that has the maximum value in three (red, green, blue) channels, and other channels are zero-cleared"),
 			  "the help is not yet written for this plug-in",
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1997",
-			  MENU_POSITION,
+                          N_("<Image>/Filters/Colors/Max RGB..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -163,22 +165,25 @@ run (char	*name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       hold_max = VALS.max_p;
       hold_min = VALS.max_p ? 0 : 1;
       /* Since a channel might be selected, we must check wheter RGB or not. */
       if (!gimp_drawable_is_rgb(drawable_id))
 	{
-	  ERROR_DIALOG (1, "RGB drawable is not selected.");
+	  ERROR_DIALOG (1, _("RGB drawable is not selected."));
 	  return;
 	}
       if (! DIALOG ())
 	return;
       break;
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /* You must copy the values of parameters to VALS or dialog variables. */
       break;
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       break;
     }
@@ -218,7 +223,7 @@ MAIN_FUNCTION (gint32 drawable_id)
   gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
   pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-  gimp_progress_init (PROGRESS_NAME);
+  gimp_progress_init ( _("max_rgb: scanning..."));
   for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
     {
       for (y = 0; y < src_rgn.h; y++)
@@ -282,7 +287,7 @@ DIALOG ()
 			 (GtkSignalFunc) gtkW_close_callback);
   
   hbox = gtkW_hbox_new ((GTK_DIALOG (dlg)->vbox));
-  frame = gtkW_frame_new (hbox, "Parameter Settings");
+  frame = gtkW_frame_new (hbox, _("Parameter Settings"));
   /*
   table = gtkW_table_new (frame, 2, 2);
   gtkW_table_add_toggle (table, "Hold the maximal channel", 0, 2, 1,
@@ -290,10 +295,10 @@ DIALOG ()
   gtk_widget_show (table);
   */
   vbox = gtkW_vbox_new (frame);
-  group = gtkW_vbox_add_radio_button (vbox, "Hold the maximal channels", group,
+  group = gtkW_vbox_add_radio_button (vbox, _("Hold the maximal channels"), group,
 				      (GtkSignalFunc) gtkW_toggle_update,
 				      &hold_max);
-  group = gtkW_vbox_add_radio_button (vbox, "Hold the minimal channels", group,
+  group = gtkW_vbox_add_radio_button (vbox, _("Hold the minimal channels"), group,
 				      (GtkSignalFunc) gtkW_toggle_update,
 				      &hold_min);
 
@@ -386,7 +391,7 @@ gtkW_dialog_new (char * name,
 		      (GtkSignalFunc) gtkW_close_callback, NULL);
 
   /* Action Area */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback, dlg);
@@ -395,7 +400,7 @@ gtkW_dialog_new (char * name,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -420,7 +425,7 @@ gtkW_error_dialog_new (char * name)
 		      (GtkSignalFunc) gtkW_close_callback, NULL);
 
   /* Action Area */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) gtkW_close_callback, dlg);

@@ -30,8 +30,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #define ENTRY_WIDTH  60
 #define SCALE_WIDTH 125
@@ -118,13 +120,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_noisify",
-			  "Adds random noise to a drawable's channels",
+			  _("Adds random noise to a drawable's channels"),
 			  "More here later",
 			  "Torsten Martinsen",
 			  "Torsten Martinsen",
 			  "1996",
-			  "<Image>/Filters/Noise/Noisify...",
+			  N_("<Image>/Filters/Noise/Noisify..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -157,6 +161,7 @@ run (char    *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_noisify", &nvals);
 
@@ -169,6 +174,7 @@ run (char    *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 8)
 	status = STATUS_CALLING_ERROR;
@@ -183,6 +189,7 @@ run (char    *name,
       break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_noisify", &nvals);
       break;
@@ -194,7 +201,7 @@ run (char    *name,
   /*  Make sure that the drawable is gray or RGB color  */
   if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
     {
-      gimp_progress_init ("Adding Noise...");
+      gimp_progress_init ( _("Adding Noise..."));
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
       /*  seed the random number generator  */
@@ -303,7 +310,7 @@ noisify_dialog (gint channels)
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *table;
-  gchar buffer[32];
+  gchar *buffer;
   gchar **argv;
   gint argc;
   int i;
@@ -316,7 +323,7 @@ noisify_dialog (gint channels)
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Noisify");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Noisify"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) noisify_close_callback,
@@ -330,7 +337,7 @@ noisify_dialog (gint channels)
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) noisify_ok_callback,
@@ -339,7 +346,7 @@ noisify_dialog (gint channels)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -348,7 +355,7 @@ noisify_dialog (gint channels)
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -356,7 +363,7 @@ noisify_dialog (gint channels)
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label ("Independent");
+  toggle = gtk_check_button_new_with_label ( _("Independent"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) noisify_toggle_update,
@@ -373,46 +380,57 @@ noisify_dialog (gint channels)
   
   if (channels == 1) 
     {
-      sprintf (buffer, "Gray");
+      buffer = g_strdup_printf( _("Gray"));
       dialog_create_value(buffer, GTK_TABLE(table), 1, &nvals.noise[0], 0.0, 1.0);
+      g_free(buffer);
     }
 
   else if (channels == 2)
     {
-      sprintf (buffer, "Gray");
+      buffer = g_strdup_printf( _("Gray"));
       dialog_create_value(buffer, GTK_TABLE(table), 1, &nvals.noise[0], 0.0, 1.0);
-      sprintf (buffer, "Alpha");
+      g_free(buffer);
+      buffer  = g_strdup_printf( _("Alpha"));
       dialog_create_value(buffer, GTK_TABLE(table), 2, &nvals.noise[1], 0.0, 1.0);
+      g_free(buffer);
     }
   
   else if (channels == 3)
     {
-      sprintf (buffer, "Red");
+      buffer = g_strdup_printf( _("Red"));
       dialog_create_value(buffer, GTK_TABLE(table), 1, &nvals.noise[0], 0.0, 1.0);
-      sprintf (buffer, "Green");
+      g_free(buffer);
+      buffer = g_strdup_printf( _("Green"));
       dialog_create_value(buffer, GTK_TABLE(table), 2, &nvals.noise[1], 0.0, 1.0);
-      sprintf (buffer, "Blue");
+      g_free(buffer);
+      buffer = g_strdup_printf( _("Blue"));
       dialog_create_value(buffer, GTK_TABLE(table), 3, &nvals.noise[2], 0.0, 1.0);
+      g_free(buffer);
     }
 
   else if (channels == 4)
     {
-      sprintf (buffer, "Red");
+      buffer = g_strdup_printf( _("Red"));
       dialog_create_value(buffer, GTK_TABLE(table), 1, &nvals.noise[0], 0.0, 1.0);
-      sprintf (buffer, "Green");
+      g_free(buffer);
+      buffer = g_strdup_printf( _("Green"));
       dialog_create_value(buffer, GTK_TABLE(table), 2, &nvals.noise[1], 0.0, 1.0);
-      sprintf (buffer, "Blue");
+      g_free(buffer);
+      buffer = g_strdup_printf( _("Blue"));
       dialog_create_value(buffer, GTK_TABLE(table), 3, &nvals.noise[2], 0.0, 1.0);
-      sprintf (buffer, "Alpha");
+      g_free(buffer);
+      buffer = g_strdup_printf( _("Alpha"));
       dialog_create_value(buffer, GTK_TABLE(table), 4, &nvals.noise[3], 0.0, 1.0);
+      g_free(buffer);
     }
   
   else
     {
       for (i = 0; i < channels; i++)
 	{
-	  sprintf (buffer, "Channel #%d", i);
+	  buffer = g_strdup_printf( _("Channel #%d"), i);
 	  dialog_create_value(buffer, GTK_TABLE(table), i+1, &nvals.noise[i], 0.0, 1.0);
+      g_free(buffer);
 	}
     }
   

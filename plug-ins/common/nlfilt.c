@@ -33,13 +33,14 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include <libgimp/gimp.h>
-#include <gtk/gtk.h>
-#include <plug-ins/megawidget/megawidget.h>
-
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+
+#include <libgimp/gimp.h>
+#include <gtk/gtk.h>
+#include "libgimp/stdplugins-intl.h"
+#include <plug-ins/megawidget/megawidget.h>
 
 static mw_preview_t nlfilt_do_preview;
 
@@ -112,13 +113,15 @@ query(void){
   static GParamDef *rets = NULL;
   static gint nrets = 0;
 
+  INIT_I18N();
+  
   gimp_install_procedure("plug_in_nlfilt",
-                         "Nonlinear swiss army knife filter",
-                         "This is the pnmnlfilt, in gimp's clothing.  See the pnmnlfilt manpage for details.",
+                         _("Nonlinear swiss army knife filter"),
+                         _("This is the pnmnlfilt, in gimp's clothing.  See the pnmnlfilt manpage for details."),
                          "Graeme W. Gill, gimp 0.99 plugin by Eric L. Hernes",
                          "Graeme W. Gill, Eric L. Hernes",
                          "1997",
-                         "<Image>/Filters/Enhance/NL Filter...",
+                         N_("<Image>/Filters/Enhance/NL Filter..."),
                          "RGB,GRAY",
                          PROC_PLUG_IN,
                          nargs, nrets,
@@ -147,6 +150,7 @@ run(char *name, gint nparam, GParam *param,
   switch (param[0].data.d_int32) {
      GDrawable *drw;
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /* XXX: add code here for interactive running */
       if (args.radius == -1) {
          args.alpha = (gdouble)0.3;
@@ -165,6 +169,7 @@ run(char *name, gint nparam, GParam *param,
     break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /* XXX: add code here for non-interactive running */
       if (nparam != 6) {
         rvals[0].data.d_status = STATUS_CALLING_ERROR;
@@ -181,6 +186,7 @@ run(char *name, gint nparam, GParam *param,
     break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /* XXX: add code here for last-values running */
       if (pluginCore(&args)==-1) {
         rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
@@ -216,7 +222,7 @@ gint pluginCore(struct piArgs *argp) {
   memset(dstbuf,(int)0,(size_t)rowsize);
 
   filtno=nlfiltInit(argp->alpha, argp->radius, argp->filter);
-  gimp_progress_init("NL Filter");
+  gimp_progress_init( _("NL Filter"));
 
       /* first row */
   gimp_pixel_rgn_get_rect(&srcPr, srcbuf, 0, 0, width, 3);
@@ -256,10 +262,11 @@ gint pluginCoreIA(struct piArgs *argp) {
   GtkWidget *table;
   GtkWidget *preview;
   gint runp;
+  gint i;
   struct mwRadioGroup filter[] = {
-     { "Alpha Trimmed Mean", 0 },
-     { "Optimal Estimation", 0 },
-     { "Edge Enhancement", 0 },
+     { N_("Alpha Trimmed Mean"), 0 },
+     { N_("Optimal Estimation"), 0 },
+     { N_("Edge Enhancement"), 0 },
      { NULL, 0 }
   };
   gchar **argv;
@@ -273,7 +280,10 @@ gint pluginCoreIA(struct piArgs *argp) {
   gtk_rc_parse(gimp_gtkrc());
   filter[argp->filter].var = 1;
 
-  dlg = mw_app_new("plug_in_nlfilt", "NL Filter", &runp);
+  for (i = 0; filter[i].name != NULL; i++)
+    filter[i].name = gettext(filter[i].name);
+
+  dlg = mw_app_new("plug_in_nlfilt", _("NL Filter"), &runp);
 
   hbox = gtk_hbox_new(FALSE, 5);
   gtk_container_border_width(GTK_CONTAINER(hbox), 5);
@@ -285,9 +295,9 @@ gint pluginCoreIA(struct piArgs *argp) {
   gtk_object_set_data(GTK_OBJECT(preview), "mwRadioGroup", &filter);
   nlfilt_do_preview(preview);
 
-  mw_radio_group_new(hbox, "Filter", filter);
+  mw_radio_group_new(hbox, _("Filter"), filter);
 
-  frame = gtk_frame_new("Parameters");
+  frame = gtk_frame_new( _("Parameters"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width(GTK_CONTAINER(frame), 5);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, FALSE, FALSE, 0);
@@ -297,9 +307,9 @@ gint pluginCoreIA(struct piArgs *argp) {
   gtk_container_border_width(GTK_CONTAINER (table), 5);
   gtk_container_add(GTK_CONTAINER(frame), table);
 
-  mw_fscale_entry_new(table, "Alpha", 0.0, 1.0, 0.05, 0.1, 0.0,
+  mw_fscale_entry_new(table, _("Alpha"), 0.0, 1.0, 0.05, 0.1, 0.0,
                       0, 1, 1, 2, &argp->alpha);
-  mw_fscale_entry_new(table, "Radius", 0.3333333, 1.0, 0.05, 0.1, 0.0,
+  mw_fscale_entry_new(table, _("Radius"), 0.3333333, 1.0, 0.05, 0.1, 0.0,
                       0, 1, 2, 3, &argp->radius);
   gtk_widget_show(table);
 

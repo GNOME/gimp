@@ -74,8 +74,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+#include "config.h"
 #include <gtk/gtk.h>
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 #include "mpeg.h"
 
 
@@ -115,8 +117,11 @@ query ()
   };
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
+
+  INIT_I18N();
+
   gimp_install_procedure ("file_mpeg_load",
-                          "Loads MPEG movies",
+                          _("Loads MPEG movies"),
                           "FIXME: write help for mpeg_load",
                           "Adam D. Moss",
                           "Adam D. Moss",
@@ -147,6 +152,8 @@ run (char    *name,
 
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
+
+  INIT_I18N();
 
   if (strcmp (name, "file_mpeg_load") == 0)
     {
@@ -206,7 +213,7 @@ load_image (char *filename)
   /* mpeg structure */
   ImageDesc img;
 
-  gchar layername[200];  /* FIXME? */
+  gchar *layername;  /* FIXME? */
 
 
   temp = g_malloc (strlen (filename) + 16);
@@ -215,7 +222,7 @@ load_image (char *filename)
 
 
   
-  gimp_progress_init ("Loading MPEG movie...");
+  gimp_progress_init ( _("Loading MPEG movie..."));
 
   fp = fopen(filename,"rb");
   if (fp == NULL)
@@ -285,16 +292,17 @@ load_image (char *filename)
       if (!moreframes) break;
 
       if (delay > 0)
-	sprintf(layername, "Frame %d (%dms)",
+	layername = g_strdup_printf( _("Frame %d (%dms)"),
 		framenumber, delay);
       else
-	sprintf(layername, "Frame %d",
+	layername = g_strdup_printf( _("Frame %d"),
 		framenumber);
 
       layer_ID = gimp_layer_new (image_ID, layername,
 				 wwidth,
 				 wheight,
 				 RGBA_IMAGE, 100, NORMAL_MODE);
+      g_free(layername);
       gimp_image_add_layer (image_ID, layer_ID, 0);
       drawable = gimp_drawable_get (layer_ID);
 

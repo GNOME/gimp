@@ -51,6 +51,7 @@
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
+#include "libgimp/stdplugins-intl.h"
 
 #ifdef RCSID
 static char rcsid[] = "$Id$";
@@ -161,35 +162,35 @@ typedef struct {
  * by their index into this array. */
 static spot_info_t spotfn_list[] = {
 #define SPOTFN_DOT 0
-    {"round",
+    { N_("round"),
      spot_round,
      NULL,
      {.22, .50, .90},
      NULL,
      FALSE},
 
-    {"line",
+    { N_("line"),
      spot_line,
      NULL,
      {.15, .50, .80},
      NULL,
      FALSE},
 
-    {"diamond",
+    { N_("diamond"),
      spot_diamond,
      NULL,
      {.15, .50, .80},
      NULL,
      TRUE},
 
-    {"PS square (Euclidean dot)",
+    { N_("PS square (Euclidean dot)"),
      spot_PSsquare,
      NULL,
      {.15, .50, .90},
      NULL,
      FALSE},
 
-    {"PS diamond",
+    { N_("PS diamond"),
      spot_PSdiamond,
      NULL,
      {.15, .50, .90},
@@ -375,7 +376,7 @@ typedef struct {
 } chan_tmpl;
 
 static const chan_tmpl grey_tmpl[] = {
-    {"Grey",
+    { N_("Grey"),
      &pvals.gry_ang,
      &pvals.gry_spotfn,
      &factory_defaults.gry_ang,
@@ -385,19 +386,19 @@ static const chan_tmpl grey_tmpl[] = {
 };
 
 static const chan_tmpl rgb_tmpl[] = {
-    {"Red",
+    { N_("Red"),
      &pvals.red_ang,
      &pvals.red_spotfn,
      &factory_defaults.red_ang,
      &factory_defaults.red_spotfn},
 
-    {"Green",
+    { N_("Green"),
      &pvals.grn_ang,
      &pvals.grn_spotfn,
      &factory_defaults.grn_ang,
      &factory_defaults.grn_spotfn},
 
-    {"Blue",
+    { N_("Blue"),
      &pvals.blu_ang,
      &pvals.blu_spotfn,
      &factory_defaults.blu_ang,
@@ -407,26 +408,26 @@ static const chan_tmpl rgb_tmpl[] = {
 };
 
 static const chan_tmpl cmyk_tmpl[] = {
-    {"Cyan",
+    { N_("Cyan"),
      &pvals.red_ang,
      &pvals.red_spotfn,
      &factory_defaults.red_ang,
      &factory_defaults.red_spotfn},
 
 
-    {"Magenta",
+    { N_("Magenta"),
      &pvals.grn_ang,
      &pvals.grn_spotfn,
      &factory_defaults.grn_ang,
      &factory_defaults.grn_spotfn},
 
-    {"Yellow",
+    { N_("Yellow"),
      &pvals.blu_ang,
      &pvals.blu_spotfn,
      &factory_defaults.blu_ang,
      &factory_defaults.blu_spotfn},
 
-    {"Black",
+    { N_("Black"),
      &pvals.gry_ang,
      &pvals.gry_spotfn,
      &factory_defaults.gry_ang,
@@ -436,7 +437,7 @@ static const chan_tmpl cmyk_tmpl[] = {
 };
 
 static const chan_tmpl intensity_tmpl[] = {
-    {"Intensity",
+    { N_("Intensity"),
      &pvals.gry_ang,
      &pvals.gry_spotfn,
      &factory_defaults.gry_ang,
@@ -552,18 +553,15 @@ query()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_newsprint",
-			  "Re-sample the image to give a newspaper-like "
-			  "effect",
-			  "Halftone the image, trading off "
-			  "resolution to represent colours or grey levels "
-			  "using the process described both in the PostScript "
-			  "language definition, and also by Robert Ulichney, "
-			  "\"Digital halftoning\", MIT Press, 1987.",
+			  _("Re-sample the image to give a newspaper-like effect"),
+			  _("Halftone the image, trading off resolution to represent colours or grey levels using the process described both in the PostScript language definition, and also by Robert Ulichney, \"Digital halftoning\", MIT Press, 1987."),
 			  "Austin Donnelly",
 			  "Austin Donnelly",
 			  "1998 (" VERSION ")",
-			  "<Image>/Filters/Distorts/Newsprint...",
+			  N_("<Image>/Filters/Distorts/Newsprint..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -600,6 +598,7 @@ run (gchar   *name,
   switch (run_mode)
   {
   case RUN_INTERACTIVE:
+    INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_newsprint", &pvals);
       gimp_get_data ("plug_in_newsprint_ui", &pvals_ui);
@@ -613,6 +612,7 @@ run (gchar   *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
 	/*  Make sure all the arguments are there!  */
 	if (nparams != 15)
 	{
@@ -645,6 +645,7 @@ run (gchar   *name,
 	break;
 
   case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_newsprint", &pvals);
       break;
@@ -659,7 +660,7 @@ run (gchar   *name,
       if (gimp_drawable_is_rgb (drawable->id) ||
 	  gimp_drawable_is_gray (drawable->id))
       {
-	  gimp_progress_init("Newsprintifing...");
+	  gimp_progress_init( _("Newsprintifing..."));
 
 	  /*  set the tile cache size  */
 	  gimp_tile_cache_ntiles(TILE_CACHE_SIZE);
@@ -1032,13 +1033,13 @@ new_channel(const chan_tmpl *ct)
     gtk_container_add (GTK_CONTAINER (chst->frame), table);
 
     /* angle slider */
-    chst->entscale = entscale_new(table, 0, 0, "angle",
+    chst->entscale = entscale_new(table, 0, 0, _("angle"),
 				  ENTSCALE_DOUBLE, ct->angle,
 				  -90.0, 90.0, 1.0, TRUE/*constrain*/,
 				  angle_callback, chst);
 
     /* spot function popup */
-    label = gtk_label_new("spot function");
+    label = gtk_label_new( _("spot function"));
     gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
 		     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
     gtk_widget_show(label);
@@ -1054,7 +1055,7 @@ new_channel(const chan_tmpl *ct)
     i = 0;
     while(sf->name)
     {
-	chst->menuitem[i] = gtk_menu_item_new_with_label(sf->name);
+	chst->menuitem[i] = gtk_menu_item_new_with_label( gettext(sf->name));
 	gtk_signal_connect(GTK_OBJECT(chst->menuitem[i]), "activate",
 			   (GtkSignalFunc) newsprint_menu_callback,
 			   chst);
@@ -1108,7 +1109,7 @@ new_channel(const chan_tmpl *ct)
     gtk_widget_show(table);
 
     /* create the menuitem used to select this channel for editing */
-    chst->ch_menuitem = gtk_menu_item_new_with_label(ct->name);
+    chst->ch_menuitem = gtk_menu_item_new_with_label( gettext(ct->name));
     gtk_object_set_user_data(GTK_OBJECT(chst->ch_menuitem), chst);
     /* signal attachment and showing left to caller */
 
@@ -1233,7 +1234,7 @@ newsprint_dialog (GDrawable *drawable)
     }
 
     st.dlg = gtk_dialog_new ();
-    gtk_window_set_title (GTK_WINDOW (st.dlg), "Newsprint");
+    gtk_window_set_title (GTK_WINDOW (st.dlg), _("Newsprint"));
     gtk_window_position (GTK_WINDOW (st.dlg), GTK_WIN_POS_MOUSE);
     gtk_signal_connect (GTK_OBJECT (st.dlg), "destroy",
 			(GtkSignalFunc) newsprint_close_callback,
@@ -1247,7 +1248,7 @@ newsprint_dialog (GDrawable *drawable)
     gtk_box_pack_end (GTK_BOX (GTK_DIALOG (st.dlg)->action_area), hbbox, FALSE, FALSE, 0);
     gtk_widget_show (hbbox);
     
-    button = gtk_button_new_with_label ("OK");
+    button = gtk_button_new_with_label ( _("OK"));
     GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
     gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			(GtkSignalFunc) newsprint_ok_callback,
@@ -1256,7 +1257,7 @@ newsprint_dialog (GDrawable *drawable)
     gtk_widget_grab_default (button);
     gtk_widget_show (button);
     
-    button = gtk_button_new_with_label ("Cancel");
+    button = gtk_button_new_with_label ( _("Cancel"));
     GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
     gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			       (GtkSignalFunc) gtk_widget_destroy,
@@ -1265,7 +1266,7 @@ newsprint_dialog (GDrawable *drawable)
     gtk_widget_show (button);
     
     /* resolution settings  */
-    frame = gtk_frame_new ("Resolution");
+    frame = gtk_frame_new ( _("Resolution"));
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_border_width (GTK_CONTAINER (frame), 10);
     gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), frame,
@@ -1291,17 +1292,17 @@ newsprint_dialog (GDrawable *drawable)
     st.output_lpi = NULL;
     st.cellsize   = NULL;
 
-    st.input_spi = entscale_new(table, 0, 0, "Input SPI ",
+    st.input_spi = entscale_new(table, 0, 0, _("Input SPI "),
 				ENTSCALE_INT, &pvals_ui.input_spi,
 				1.0, 1200.0, 5.0, FALSE/*constrain*/,
 				spi_callback, &st);
 
-    st.output_lpi = entscale_new(table, 0, 1, "Output LPI ",
+    st.output_lpi = entscale_new(table, 0, 1, _("Output LPI "),
 				 ENTSCALE_DOUBLE, &pvals_ui.output_lpi,
 				 1.0, 1200.0, 5.0, FALSE/*constrain*/,
 				 lpi_callback, &st);
 
-    st.cellsize = entscale_new(table, 0, 2, "Cell size ",
+    st.cellsize = entscale_new(table, 0, 2, _("Cell size "),
 			       ENTSCALE_INT, &pvals.cell_width,
 			       3.0, 100.0, 1.0, FALSE/*constrain*/,
 			       cellsize_callback, &st);
@@ -1311,7 +1312,7 @@ newsprint_dialog (GDrawable *drawable)
 
 
     /* screen settings */
-    frame = gtk_frame_new ("Screen");
+    frame = gtk_frame_new ( _("Screen"));
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_border_width (GTK_CONTAINER (frame), 10);
     gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), frame,
@@ -1333,21 +1334,21 @@ newsprint_dialog (GDrawable *drawable)
 	gtk_box_pack_start (GTK_BOX (st.vbox), table, TRUE, TRUE, 0);
 
 	/* black pullout */
-	st.pull = entscale_new(table, 0, 1, "Black pullout (%)",
+	st.pull = entscale_new(table, 0, 1, _("Black pullout (%)"),
 			       ENTSCALE_INT, &pvals.k_pullout,
 			       0.0, 100.0, 1.0, TRUE/*constrain*/,
 			       NULL, NULL);
 	entscale_set_sensitive(st.pull, (pvals.colourspace == CS_CMYK));
 
 	/* RGB / CMYK / Intensity select */
-	label = gtk_label_new("Separate to");
+	label = gtk_label_new( _("Separate to"));
 	gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
 			 GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
 	gtk_widget_show(label);
 
 	hbox = gtk_hbox_new(FALSE, 5);
 
-	toggle = gtk_radio_button_new_with_label(group, "RGB");
+	toggle = gtk_radio_button_new_with_label(group, _("RGB"));
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
 	gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
@@ -1358,7 +1359,7 @@ newsprint_dialog (GDrawable *drawable)
 			    GINT_TO_POINTER(CS_RGB));
 	gtk_widget_show (toggle);
 
-	toggle = gtk_radio_button_new_with_label (group, "CMYK");
+	toggle = gtk_radio_button_new_with_label (group, _("CMYK"));
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
 	gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
@@ -1369,7 +1370,7 @@ newsprint_dialog (GDrawable *drawable)
 			    GINT_TO_POINTER(CS_CMYK));
 	gtk_widget_show (toggle);
 
-	toggle = gtk_radio_button_new_with_label (group, "Intensity");
+	toggle = gtk_radio_button_new_with_label (group, _("Intensity"));
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
 	gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
@@ -1401,7 +1402,7 @@ newsprint_dialog (GDrawable *drawable)
 	gtk_widget_show(align);
 	gtk_widget_show(hbox);
 
-	toggle = gtk_check_button_new_with_label("Lock channels");
+	toggle = gtk_check_button_new_with_label( _("Lock channels"));
 	gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
 			   (GtkSignalFunc) newsprint_toggle_update,
 			   &pvals_ui.lock_channels);
@@ -1418,7 +1419,7 @@ newsprint_dialog (GDrawable *drawable)
 	gtk_widget_show(st.channel_option);
 	gtk_box_pack_start(GTK_BOX(hbox), st.channel_option, TRUE, TRUE, 0);
 
-	button = gtk_button_new_with_label("Factory defaults");
+	button = gtk_button_new_with_label( _("Factory defaults"));
 	gtk_signal_connect(GTK_OBJECT(button), "clicked",
 			   (GtkSignalFunc) newsprint_defaults_callback,
 			   &st);
@@ -1455,7 +1456,7 @@ newsprint_dialog (GDrawable *drawable)
 
 
     /* anti-alias control */
-    frame = gtk_frame_new ("Anti-alias");
+    frame = gtk_frame_new ( _("Anti-alias"));
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_border_width (GTK_CONTAINER (frame), 10);
     gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), frame,
@@ -1465,7 +1466,7 @@ newsprint_dialog (GDrawable *drawable)
     gtk_container_border_width (GTK_CONTAINER (table), 10);
     gtk_container_add (GTK_CONTAINER (frame), table);
 
-    entscale_new(table, 1, 0, "oversample ",
+    entscale_new(table, 1, 0, _("oversample "),
 		 ENTSCALE_INT, &pvals.oversample,
 		 1.0, 15.0, 1.0, TRUE/*constrain*/,
 		 NULL, NULL);

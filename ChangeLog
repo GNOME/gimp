@@ -1,3 +1,14 @@
+2000-01-01  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/mpeg.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/noisify.c
+	* po-plug-ins/POTFILES.in: Added gettext support and replace
+	sprintf with g_strdup_printf().
+
 Fri Dec 31 14:30:10 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/gif.c: small i18n fix

@@ -54,6 +54,7 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
+#include "libgimp/stdplugins-intl.h"
 
 #define PLUG_IN_NAME 	"plug_in_mblur"
 #define PLUG_IN_VERSION	"Sep 1997, 1.2"
@@ -154,15 +155,15 @@ query(void)
   static int        nargs        = sizeof(args) / sizeof(args[0]);
   static int        nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure(PLUG_IN_NAME,
-			 "Motion blur of image",
-			 "This plug-in simulates the effect seen when photographing a"
-			 "moving object at a slow shutter speed."
-			 "Done by adding multiple displaced copies.",
+			 _("Motion blur of image"),
+			 _("This plug-in simulates the effect seen when photographing a moving object at a slow shutter speed. Done by adding multiple displaced copies."),
 			 "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",
 			 "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",			       
 			 PLUG_IN_VERSION,
-			 "<Image>/Filters/Blur/Motion Blur...",
+			 N_("<Image>/Filters/Blur/Motion Blur..."),
 			 "RGB*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs,
@@ -220,6 +221,7 @@ run(char 	*name,
 
   switch (run_mode) {
   case RUN_INTERACTIVE:
+    INIT_I18N_UI();
     /* Possibly retrieve data */
 
     gimp_get_data(PLUG_IN_NAME, &mbvals);
@@ -231,6 +233,7 @@ run(char 	*name,
     break;
 
   case RUN_NONINTERACTIVE:
+    INIT_I18N();
     /* Make sure all the arguments are present */
 
     if (nparams != 6)
@@ -247,6 +250,7 @@ run(char 	*name,
     break;
 
   case RUN_WITH_LAST_VALS:
+    INIT_I18N();
     /* Possibly retrieve data */
 
     gimp_get_data(PLUG_IN_NAME, &mbvals);
@@ -592,7 +596,7 @@ mblur_zoom(void)
 static void
 mblur(void)
 {
-  gimp_progress_init("Blurring...");
+  gimp_progress_init( _("Blurring..."));
 
   switch (mbvals.mblur_type)
     {
@@ -746,7 +750,7 @@ mblur_dialog(void)
   gdk_set_use_xshm(gimp_use_xshm());
 
   dialog= gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dialog), "Motion blur");
+  gtk_window_set_title(GTK_WINDOW(dialog), _("Motion blur"));
   gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(dialog), 0);
   gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
@@ -761,7 +765,7 @@ mblur_dialog(void)
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) dialog_ok_callback,
@@ -770,7 +774,7 @@ mblur_dialog(void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) dialog_cancel_callback,
@@ -785,7 +789,7 @@ mblur_dialog(void)
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),
 		      evbox, FALSE,FALSE,0);
 
-  oframe= gtk_frame_new("Options");
+  oframe= gtk_frame_new( _("Options"));
   gtk_frame_set_shadow_type(GTK_FRAME(oframe), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start(GTK_BOX(evbox),
 		     oframe, TRUE, TRUE, 0);
@@ -794,7 +798,7 @@ mblur_dialog(void)
   gtk_container_border_width (GTK_CONTAINER (ovbox), 5);
   gtk_container_add(GTK_CONTAINER(oframe), ovbox);
 
-  label=gtk_label_new("Length");
+  label=gtk_label_new( _("Length"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_box_pack_start(GTK_BOX(ovbox), label, FALSE, FALSE, 0);
   gtk_widget_show(label);
@@ -815,7 +819,7 @@ mblur_dialog(void)
 
   /*****/
 
-  iframe= gtk_frame_new("Blur type");
+  iframe= gtk_frame_new( _("Blur type"));
   gtk_frame_set_shadow_type(GTK_FRAME(iframe), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start(GTK_BOX(ovbox),
 		     iframe, FALSE, FALSE, 0);
@@ -826,7 +830,7 @@ mblur_dialog(void)
   
   {
     int   i;
-    char * name[3]= {"Linear", "Radial", "Zoom"};
+    char * name[3]= { N_("Linear"), N_("Radial"), N_("Zoom")};
 
     button= NULL;
     for (i=0; i < 3; i++)
@@ -834,7 +838,7 @@ mblur_dialog(void)
 	button= gtk_radio_button_new_with_label(
            (button==NULL)? NULL :
 	      gtk_radio_button_group(GTK_RADIO_BUTTON(button)), 
-	   name[i]);
+	   gettext(name[i]));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), 
 				    (mbvals.mblur_type==i));
 
@@ -852,7 +856,7 @@ mblur_dialog(void)
 
   /*****/
 
-  label=gtk_label_new("Angle");
+  label=gtk_label_new( _("Angle"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_box_pack_start(GTK_BOX(ovbox), label, FALSE, FALSE, 0);
   gtk_widget_show(label);

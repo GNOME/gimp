@@ -70,6 +70,12 @@ plug-ins/common/laplace.c
 plug-ins/common/lic.c
 plug-ins/common/mail.c
 plug-ins/common/mapcolor.c
+plug-ins/common/max_rgb.c
+plug-ins/common/mblur.c
+plug-ins/common/mpeg.c
+plug-ins/common/newsprint.c
+plug-ins/common/nlfilt.c
+plug-ins/common/noisify.c
 plug-ins/common/normalize.c
 plug-ins/common/nova.c
 plug-ins/common/oilify.c
