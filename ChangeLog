@@ -1,3 +1,7 @@
+Wed Feb 23 23:31:07 CET 2000  Sven Neumann <sven@gimp.org>
+	
+	* app/plug_in.c: plugged memleaks
+
 2000-02-24  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.h (Win32): Include <stdlib.h> for __argc and__argv.

@@ -404,13 +404,9 @@ plug_in_init (void)
       plug_in_def = tmp->data;
       tmp = tmp->next;
 
-      g_slist_free (plug_in_def->proc_defs);
-      g_free (plug_in_def->prog);
-      g_free (plug_in_def);
+      plug_in_def_free (plug_in_def, FALSE);
     }
   g_slist_free (plug_in_defs);
-
-
 }
 
 
@@ -654,13 +650,14 @@ plug_in_def_free (PlugInDef *plug_in_def,
   if (plug_in_def->locale_domain)  g_free (plug_in_def->locale_domain);
   if (plug_in_def->locale_path)    g_free (plug_in_def->locale_path);
 
-  if (free_proc_defs && plug_in_def->proc_defs)
+  if (free_proc_defs)
     {
       for (list = plug_in_def->proc_defs; list; list = list->next)
-	g_free (list->data);
-
-      g_slist_free (plug_in_def->proc_defs);
+	plug_in_proc_def_destroy ((PlugInProcDef *)(list->data), FALSE);
     }
+
+  if (plug_in_def->proc_defs)
+    g_slist_free (plug_in_def->proc_defs);
 
   g_free (plug_in_def);
 }
@@ -716,11 +713,11 @@ plug_in_def_add (PlugInDef *plug_in_def)
 	    {
 	      /* Use cached plug-in entry */
 	      tmp->data = plug_in_def;
-	      plug_in_def_free (tplug_in_def, FALSE);
+	      plug_in_def_free (tplug_in_def, TRUE);
 	    }
 	  else
 	    {
-	      plug_in_def_free (plug_in_def, FALSE);    
+	      plug_in_def_free (plug_in_def, TRUE);    
 	    }
 	  
 	  return;
