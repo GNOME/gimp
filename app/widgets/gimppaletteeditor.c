@@ -150,6 +150,7 @@ palette_create ()
   GtkWidget *arrow;
   GtkWidget *menu_bar;
   GtkWidget *menu_bar_item;
+  int i;
 
   if (!palette)
     {
@@ -182,13 +183,9 @@ palette_create ()
       gtk_box_pack_start (GTK_BOX (vbox), options_box, FALSE, FALSE, 0);
 
       /*  The popup menu -- palette_ops  */
-      palette_ops[0].user_data = palette;
-      palette_ops[1].user_data = palette;
-      palette_ops[2].user_data = palette;
-      palette_ops[3].user_data = palette;
-      palette_ops[4].user_data = palette;
-      palette_ops[5].user_data = palette;
-      palette_ops[6].user_data = palette;
+      for (i = 0; palette_ops[i].label; i++)
+	  palette_ops[i].user_data = palette;
+
       palette->palette_ops = build_menu (palette_ops, NULL);
 
       /*  The palette commands pulldown menu  */
