@@ -1,5 +1,10 @@
 2004-06-10  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcolorarea.c: replaced destroy() by
+	finalize(), converted tabs to spaces, cleanup.
+
+2004-06-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpthumbbox.c (gimp_thumb_box_new): line-wrap the
 	filename label if it's too long instead of cutting it off.
 
