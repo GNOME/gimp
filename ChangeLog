@@ -1,5 +1,10 @@
 2002-01-24  Nick Lamb  <njl195@zepler.org.uk>
 
+	* plug-ins/common/tiff.c: Fix flipped images for the RGBA
+	fallback case (bug #69129).
+
+2002-01-24  Nick Lamb  <njl195@zepler.org.uk>
+
 	* plug-ins/common/tga.c: variant of Russell Valentine's patch
 	for optionally saving image rows in reverse order (bug #53278).
 
