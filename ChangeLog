@@ -1,3 +1,9 @@
+2003-08-24  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs-generic.h (blend_pixels): removed
+	some debugging output that I accidentally committed a while ago.
+	Fixes bug #120576 (slowness of smudge on alpha layers).
+
 2003-08-23  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpwidgetstypes.h: changed GimpHelpFunc typedef:

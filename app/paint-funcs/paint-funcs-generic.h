@@ -193,11 +193,8 @@ blend_pixels (const guchar *src1,
           else
             {
               for (b = 0; b < c; b++)
-                {
-                  g_print ("%5d %5d %5d  ", src1[b] * a1, src2[b] + a2, a);
-                  dest[b] = (src1[b] * a1 + src2[b] * a2) / a;
-                  g_print ("%3d\n", dest[b]);
-                }
+                dest[b] = (src1[b] * a1 + src2[b] * a2) / a;
+
               dest[c] = a >> 8;
             }
 
