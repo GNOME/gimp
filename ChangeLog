@@ -1,3 +1,9 @@
+2001-06-19  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/print/escputil.c
+	* plug-ins/print/print-escp2.c: one more gimp-print update.
+	(relocated the tag in the gimp-print CVS).
+
 2001-06-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/flame/flame.c: do not use a drawable_ID from the last run
