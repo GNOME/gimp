@@ -1,4 +1,8 @@
-2003-03-14  Zbigniew Chyla  <cyba@gnome.pl>
+22003-04-09  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.in.in: respect $(DESTDIR) in install target.
+
+003-03-14  Zbigniew Chyla  <cyba@gnome.pl>
 
 	* pl.po: Updated Polish translation by
 	GNOME PL Team <translators@gnome.pl>.
