@@ -1,5 +1,11 @@
 2003-09-19  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpstroke.c: made "closed" a construct_only property
+	and make sure that notify is emitted correctly when it is changed.
+
+2003-09-19  Sven Neumann  <sven@gimp.org>
+
 	* app/vectors/gimpvectors-import.c (parse_svg_viewbox): revert to
 	the old implementation that is ugly but should work more reliably
 	in locales that use ',' as the decimal separator. Disable rendering

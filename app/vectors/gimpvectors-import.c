@@ -544,12 +544,15 @@ parse_svg_length (const gchar *value,
       *length = len * reference / 100.0;
       break;
 
-    default:
-      len = len / gimp_unit_get_factor (unit) * resolution;
     case GIMP_UNIT_PIXEL:
       *scale  = 1.0;
       *length = len;
       break;
+
+    default:
+      len = len / gimp_unit_get_factor (unit) * resolution;
+      *scale  = len / reference;
+      *length = len;
     }
 
   return TRUE;

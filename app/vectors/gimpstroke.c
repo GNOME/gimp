@@ -270,7 +270,8 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
                                            "this flag indicates, if the "
                                            "stroke is closed or not",
                                            FALSE,
-                                           G_PARAM_READWRITE);
+                                           G_PARAM_READWRITE |
+                                           G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_property (object_class,
                                    PROP_CONTROL_POINTS,
@@ -284,8 +285,8 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
 static void
 gimp_stroke_init (GimpStroke *stroke)
 {
-  stroke->anchors     = NULL;
-  stroke->closed      = FALSE;
+  stroke->anchors = NULL;
+  stroke->closed  = FALSE;
 }
 
 static void
@@ -681,6 +682,7 @@ static void
 gimp_stroke_real_close (GimpStroke *stroke)
 {
   stroke->closed = TRUE;
+  g_object_notify (G_OBJECT (stroke), "closed");
 }
 
 
