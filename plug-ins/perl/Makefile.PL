@@ -171,7 +171,7 @@ WARNING: version 0.3 of Gtk is _required_ for this module to
 EOF
 }
 
-# wo do no longer do these dirty things
+# we do no longer do these dirty things
 #for(@shebang) {
 #   system ($Config{perlpath},"-pi","-e","\$. == 1 and \$_ = '#!$Config{perlpath}\n'",$_);
 #}
@@ -200,6 +200,7 @@ install ::
 	   fi \
 	done ; \
 	$(MAKE) UNINST=1 really-install install-plugins
+	cd ./embed && $(MAKE) modinstall
 
 '.$install;
 }
@@ -220,6 +221,9 @@ clean ::
 	test -f Makefile || mv -f Makefile.old Makefile
 	\$(RM_RF) inst-temp
 
+all ::
+	cd ./embed && \$(MAKE)
+
 install-plugins ::
 	\$(RM_RF) inst-temp
 	\$(MKPATH) inst-temp
@@ -235,6 +239,41 @@ install-plugins ::
 ";
 }
 
+print "writing Gimp/Config.pm...";
+
+open C,">Gimp/Config.pm" or die "Gimp/Config.pm: $!\n";
+print C <<'EOF';
+package Gimp::Config;
+
+sub TIEHASH {
+   my $pkg = shift;
+   my $self;
+
+   bless \$self, $pkg;
+}
+
+sub FETCH {
+   $cfg{$_[1]};
+}
+
+tie %Gimp::Config, 'Gimp::Config';
+
+%cfg = (
+EOF
+for $k (keys(%cfg)) {
+   $v = $cfg{$k};
+   print C "   $k	=> \"",quotemeta(expand($v)),"\",\n";
+}
+print C ");\n\n1;\n";
+close C;
+
+print "ok\n";
+
+print "configuring in ./embed...\n";
+chdir "./embed" or die "unable to cd to 'embed'\n";
+system($Config{perlpath},"Makefile.PL");
+chdir ".." or die "unable to cd to '..'\n";
+
 WriteMakefile(
     'dist'	=> {
 	            PREOP	=> 'chmod -R u=rwX,go=rX . ;',
@@ -247,7 +286,7 @@ WriteMakefile(
     		    Data::Dumper	=> 2,
                     Parse::RecDescent	=> 1.6,
 		   },
-    'DIR'	=> ['Gimp'],
+    'DIR'	=> ['Gimp','nolib'],
     'NAME'	=> 'Gimp',
     'VERSION_FROM' => 'Gimp.pm',
     'PM'	=> {
@@ -260,6 +299,8 @@ WriteMakefile(
     		    'Gimp/PDL.pm'	=> '$(INST_LIBDIR)/Gimp/PDL.pm',
     		    'Gimp/Util.pm'	=> '$(INST_LIBDIR)/Gimp/Util.pm',
     		    'Gimp/Feature.pm'	=> '$(INST_LIBDIR)/Gimp/Feature.pm',
+    		    'Gimp/Module.pm'	=> '$(INST_LIBDIR)/Gimp/Module.pm',
+    		    'Gimp/Config.pm'	=> '$(INST_LIBDIR)/Gimp/Config.pm',
     		   },
     'LIBS'	=> [''],
     'INC'	=> "$CPPFLAGS $CFLAGS $GIMP_INC_NOUI",

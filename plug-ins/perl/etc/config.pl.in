@@ -30,7 +30,8 @@
 
 sub expand {
    my $cfg = shift;
-   while($cfg=~/\$\{/) {
+   my $count = 5;
+   while($cfg=~/\$\{/ and $count--) {
       while(($k,$v)=each %cfg) {
          $cfg=~s/\$\{$k\}/$v/g;
       }
@@ -45,7 +46,7 @@ while (($k,$v)=each(%cfg)) {
 
 $GIMP = $bindir."/gimp" if $IN_GIMP;
 
-$GIMP = expand($GIMP);
+$GIMP     = expand($GIMP);
 $GIMPTOOL = expand($GIMPTOOL);
 
 if (defined $topdir) {
@@ -62,5 +63,13 @@ if ($IN_GIMP) {
    chomp $GIMP_PREFIX;
 }
 
-$DEFS = ' -DGIMP_PREFIX=\"'.$GIMP_PREFIX.'\" -DGIMP_PATH=\"'.$GIMP.'\"';
+$cfg{GIMP_PREFIX}=$GIMP_PREFIX;
+
+if (!$IN_GIMP) {
+   $cfg{gimpplugindir} = `$GIMPTOOL -n --install-admin-bin /bin/sh`;
+   $cfg{gimpplugindir} =~ s{^.*\s(.*?)(?:/+bin/sh)\r?\n?$}{$1} &&
+   $cfg{gimpplugindir} =~ s{/plug-ins$}{} or die "\nFATAL: unable to deduce plugindir from gimptool script\n\n";
+}
+
+$cfg{_DEFS} = $DEFS = ' -DGIMP_PREFIX=\"'.$GIMP_PREFIX.'\" -DGIMP_PATH=\"'.$GIMP.'\"';
 

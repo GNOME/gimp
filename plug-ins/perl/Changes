@@ -1,6 +1,9 @@
 Revision history for Gimp-Perl extension.
 
 	- added "oneliners".
+	- startet implementing Gimp::Module, for embedding perl directly into
+	  the gimp.
+	- added generic Gimp::Config module.
 
 1.08  Fri Apr  9 03:20:54 CEST 1999
 	- added guidegrid, git-text, roundrectsel, repdup, centerguide,

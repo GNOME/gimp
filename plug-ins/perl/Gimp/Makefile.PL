@@ -29,4 +29,5 @@ WriteMakefile(
     'macro'	=> { libdir => $libdir, exec_prefix => $exec_prefix, prefix => $prefix },
     'LDLOADLIBS'=> "$LDFLAGS $LIBS $GIMP_LIBS_NOUI",
     'DEFINE'	=> '',
+    dynamic_lib	=> { OTHERLDFLAGS => "$LDFLAGS $LIBS $GIMP_LIBS_NOUI" },
 );
