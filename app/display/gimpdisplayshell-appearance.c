@@ -47,6 +47,8 @@ gimp_display_shell_set_padding (GimpDisplayShell       *shell,
                                 GimpDisplayPaddingMode  padding_mode,
                                 GimpRGB                *padding_color)
 {
+  guchar  r, g, b;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (padding_color != NULL);
 
@@ -55,19 +57,15 @@ gimp_display_shell_set_padding (GimpDisplayShell       *shell,
   switch (shell->padding_mode)
     {
     case GIMP_DISPLAY_PADDING_MODE_DEFAULT:
-      if (shell->padding_gc)
+      if (shell->canvas)
         {
-          guchar r, g, b;
-
+          gtk_widget_ensure_style (shell->canvas);
+          
           r = shell->canvas->style->bg[GTK_STATE_NORMAL].red   >> 8;
           g = shell->canvas->style->bg[GTK_STATE_NORMAL].green >> 8;
           b = shell->canvas->style->bg[GTK_STATE_NORMAL].blue  >> 8;
-
+         
           gimp_rgb_set_uchar (&shell->padding_color, r, g, b);
-        }
-      else
-        {
-          shell->padding_color = *padding_color;
         }
       break;
 
@@ -90,18 +88,22 @@ gimp_display_shell_set_padding (GimpDisplayShell       *shell,
       break;
     }
 
-  if (shell->padding_gc)
+  if (GTK_WIDGET_REALIZED (shell->canvas))
     {
-      GdkColor gdk_color;
-      guchar   r, g, b;
+      GdkColormap *colormap;
+      GdkColor     color;
 
       gimp_rgb_get_uchar (&shell->padding_color, &r, &g, &b);
 
-      gdk_color.red   = r + r * 256;
-      gdk_color.green = g + g * 256;
-      gdk_color.blue  = b + b * 256;
+      color.red   = r + r * 256;
+      color.green = g + g * 256;
+      color.blue  = b + b * 256;
 
-      gdk_gc_set_rgb_fg_color (shell->padding_gc, &gdk_color);
+      colormap = gdk_drawable_get_colormap (shell->canvas->window);
+      g_return_if_fail (colormap != NULL);
+      gdk_colormap_alloc_color (colormap, &color, FALSE, TRUE);
+
+      gdk_window_set_background (shell->canvas->window, &color);
     }
 
   if (shell->padding_button)

@@ -252,13 +252,9 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
   gtk_widget_grab_focus (shell->canvas);
 
-  shell->padding_gc = gdk_gc_new (canvas->window);
-
   gimp_display_shell_set_padding (shell,
                                   shell->padding_mode,
                                   &shell->padding_color);
-
-  gdk_window_set_back_pixmap (shell->canvas->window, NULL, FALSE);
 
   gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 

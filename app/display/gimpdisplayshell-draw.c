@@ -245,7 +245,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->padding_mode          = GIMP_DISPLAY_PADDING_MODE_DEFAULT;
   shell->padding_mode_set      = FALSE;
   gimp_rgba_set (&shell->padding_color, 1.0, 1.0, 1.0, 1.0);
-  shell->padding_gc            = NULL;
 
   shell->warning_dialog        = NULL;
   shell->info_dialog           = NULL;
@@ -373,12 +372,6 @@ gimp_display_shell_destroy (GtkObject *object)
     {
       g_object_unref (shell->render_gc);
       shell->render_gc = NULL;
-    }
-
-  if (shell->padding_gc)
-    {
-      g_object_unref (shell->padding_gc);
-      shell->padding_gc = NULL;
     }
 
   if (shell->title_idle_id)
@@ -1322,67 +1315,16 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
   sx = SCALEX (shell, shell->gdisp->gimage->width);
   sy = SCALEY (shell, shell->gdisp->gimage->height);
 
-  /*  Bounds check  */
+  /*  Bounds checks  */
   x1 = CLAMP (x,     0, shell->disp_width);
   y1 = CLAMP (y,     0, shell->disp_height);
   x2 = CLAMP (x + w, 0, shell->disp_width);
   y2 = CLAMP (y + h, 0, shell->disp_height);
 
-  if (y1 < shell->disp_yoffset)
-    {
-      gdk_draw_rectangle (shell->canvas->window,
-			  shell->padding_gc,
-                          TRUE,
-			  x, y,
-                          w, shell->disp_yoffset - y);
-      /* X X X
-         . # .
-         . . . */
-
-      y1 = shell->disp_yoffset;
-    }
-
-  if (x1 < shell->disp_xoffset)
-    {
-      gdk_draw_rectangle (shell->canvas->window,
-			  shell->padding_gc,
-                          TRUE,
-			  x, y1,
-                          shell->disp_xoffset - x, h);
-      /* . . .
-         X # .
-         X . . */
-
-      x1 = shell->disp_xoffset;
-    }
-
-  if (x2 > (shell->disp_xoffset + sx))
-    {
-      gdk_draw_rectangle (shell->canvas->window,
-			  shell->padding_gc,
-                          TRUE,
-			  shell->disp_xoffset + sx, y1,
-			  x2 - (shell->disp_xoffset + sx), h - (y1 - y));
-      /* . . .
-         . # X
-         . . X */
-
-      x2 = shell->disp_xoffset + sx;
-    }
-
-  if (y2 > (shell->disp_yoffset + sy))
-    {
-      gdk_draw_rectangle (shell->canvas->window,
-			  shell->padding_gc,
-                          TRUE,
-			  x1, shell->disp_yoffset + sy,
-			  x2 - x1, y2 - (shell->disp_yoffset + sy));
-      /* . . .
-         . # .
-         . X . */
-
-      y2 = shell->disp_yoffset + sy;
-    }
+  x1 = MAX (x1, shell->disp_xoffset);
+  y1 = MAX (y1, shell->disp_yoffset);
+  x2 = MIN (x2, shell->disp_xoffset + sx);
+  y2 = MIN (y2, shell->disp_yoffset + sy);
 
   /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT sized chunks */
   for (i = y1; i < y2; i += GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT)

@@ -1,5 +1,15 @@
 2003-05-20  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.[ch]
+	* app/display/gimpdisplayshell-callbacks.c: removed padding_gc from
+	the GimpDisplayShell struct. Don't draw the padding color manually.
+
+	* app/display/gimpdisplayshell-appearance.c
+	(gimp_display_shell_set_padding): set the canvas background color
+	using gdk_window_set_background().
+
+2003-05-20  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-rotate.c (gimp_image_rotate): fixed a harmless
 	compiler warning.
 

@@ -148,7 +148,6 @@ struct _GimpDisplayShell
   GimpDisplayPaddingMode padding_mode;
   gboolean          padding_mode_set;
   GimpRGB           padding_color;     /* color of the empty around the image */
-  GdkGC            *padding_gc;        /* GC with padding_color as BG         */
 
   GtkWidget        *nav_ebox;          /* GtkEventBox on the SE corner        */
 
