@@ -1,11 +1,11 @@
 # Mensagens em português do Brazil pt_BR para o  GIMP.
-# Marcia Norie Nakaza <norie@conectiva.com.br>, 2000.
+# Marcia Norie Nakaza <norie@conectiva.com.br>, 2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-perl 1.1.21\n"
+"Project-Id-Version: gimp-perl\n"
 "POT-Creation-Date: Wed Dec 20 08:22:38 2000\n"
-"PO-Revision-Date: 2000-04-03 15:39-03:00\n"
+"PO-Revision-Date: 2001-01-04 15:39-03:00\n"
 "Last-Translator: Marcia Norie Nakaza <norie@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -171,269 +171,236 @@ msgid "<Image> plug-in called without both image and drawable arguments!\n"
 msgstr "<Image> plugin chamado sem parâmetros de imagem e de desenho!\n"
 
 #: examples/repdup:0
-#, fuzzy
 msgid "<Image>/Edit/Repeat & Duplicate..."
-msgstr "<Image>/Edit/Repeat & Duplicate"
+msgstr "<Image>/Editar/Repetir & duplicar..."
 
 #: examples/animate_cells:0
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr "<Image>/Filters/Animation/Animate Cells"
+msgstr "<Image>/Filtros/Animação/Células animadas"
 
 #: examples/blowinout:0
-#, fuzzy
 msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr "<Image>/Filters/Animation/BlowInOut"
+msgstr "<Image>/Filtros/Animação/BlowInOut"
 
 #: examples/frame_filter:0
 msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr "<Image>/Filters/Apply Perl Expression..."
+msgstr "<Image>/Filtros/Aplicar expressão Perl..."
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Blur/2x2 Blur"
-msgstr "<Image>/Filters/Blur/2x2 Blur"
+msgstr "<Image>/Filtros/Desfocar/Desfocar 2x2"
 
 #: examples/colourtoalpha:0
-#, fuzzy
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "<Image>/Filters/Colors/Colour To Alpha"
+msgstr "<Image>/Filtros/Cores/Colorir para alfa..."
 
 #: examples/fire:0
-#, fuzzy
 msgid "<Image>/Filters/Colors/Fire..."
-msgstr "<Image>/Filters/Colors/Fire"
+msgstr "<Image>/Filtros/Cores/Fogo"
 
 #: examples/map_to_gradient:0
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr "<Image>/Filters/Colors/Map To Gradient"
+msgstr "<Image>/Filtros/Cores/Mapa para gradiente..."
 
 #: examples/mirrorsplit:0
-#, fuzzy
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr "<Image>/Filters/Distorts/MirrorSplit"
+msgstr "<Image>/Filtros/Distorções/Divisão de espelho"
 
 #: examples/scratches:0
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr "<Image>/Filters/Distorts/Scratches"
+msgstr "<Image>/Filtros/Distorções/Rascunhos..."
 
 #: examples/windify:0
 msgid "<Image>/Filters/Distorts/Windify..."
-msgstr "<Image>/Filters/Distorts/Windify..."
+msgstr "<Image>/Filtros/Distorções/Curvar..."
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
-msgstr "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
+msgstr "<Image>/Filtros/Detecção de borda/Detecção de borda 2x2"
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr "<Image>/Filters/Enhance/2x2 Contrast Enhance"
+msgstr "<Image>/Filtros/Realçar/Realçar contraste 2x2"
 
 #: examples/warp-sharp:0
-#, fuzzy
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "<Image>/Filters/Map/Xach Shadows..."
+msgstr "<Image>/Filtros/Realçar/Forma torcida..."
 
 #: examples/blended2:0
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Blended II..."
-msgstr "<Image>/Filters/Logulator/Blended II"
+msgstr "<Image>/Filtros/Logulator/Blended II"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Carved"
-msgstr "<Image>/Filters/Logulator/Carved"
+msgstr "<Image>/Filtros/Logulator/Entalhado"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Crystal"
-msgstr "<Image>/Filters/Logulator/Crystal"
+msgstr "<Image>/Filtros/Logulator/Cristal"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Imigre-26"
-msgstr "<Image>/Filters/Logulator/Imigre-26"
+msgstr "<Image>/Filtros/Logulator/Imigre-26"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr "<Image>/Filters/Logulator/Newsprint text"
+msgstr "<Image>/Filtros/Logulator/Newsprint text"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
-msgstr "<Image>/Filters/Logulator/SOTA Chrome"
+msgstr "<Image>/Filtros/Logulator/SOTA Chrome"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Speed text"
-msgstr "<Image>/Filters/Logulator/Speed text"
+msgstr "<Image>/Filtros/Logulator/Texto rápido"
 
 #: examples/translogo:0
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Transparent Logo..."
-msgstr "<Image>/Filters/Logulator/Transparent Logo"
+msgstr "<Image>/Filtros/Logulator/Logo transparente"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Web title header"
-msgstr "<Image>/Filters/Logulator/Web title header"
+msgstr "<Image>/Filtros/Logulator/Cabeçalho da web"
 
 #: examples/image_tile:0
-#, fuzzy
 msgid "<Image>/Filters/Map/Image Tile..."
-msgstr "<Image>/Filters/Map/Image Tile"
+msgstr "<Image>/Filtros/Mapa/Cobertura de imagem..."
 
 #: examples/pixelmap:0
-#, fuzzy
 msgid "<Image>/Filters/Map/Pixelmap..."
-msgstr "<Image>/Filters/Map/Pixelmap"
+msgstr "<Image>/Filtros/Mapa/Mapa de pixel..."
 
 #: examples/xachlego:0
-#, fuzzy
 msgid "<Image>/Filters/Map/Xach Blocks..."
-msgstr "<Image>/Filters/Map/Xach Blocks"
+msgstr "<Image>/Filtros/Mapa/Blocos Xach..."
 
 #: examples/xachshadow:0
 msgid "<Image>/Filters/Map/Xach Shadows..."
-msgstr "<Image>/Filters/Map/Xach Shadows..."
+msgstr "<Image>/Filtros/Mapa/Sombras Xach..."
 
 #: examples/border:0
-#, fuzzy
 msgid "<Image>/Filters/Misc/Border Average..."
-msgstr "<Image>/Filters/Misc/Border Average"
+msgstr "<Image>/Filtros/Misc/Média de borda..."
 
 #: examples/gimpmagick:0
-#, fuzzy
 msgid "<Image>/Filters/Misc/Magick..."
-msgstr "<Image>/Filters/Misc/Magick"
+msgstr "<Image>/Filtros/Misc/Magick"
 
 #: examples/ditherize:0
-#, fuzzy
 msgid "<Image>/Filters/Noise/Ditherize..."
-msgstr "<Image>/Filters/Noise/Ditherize"
+msgstr "<Image>/Filtros/Ruído/Misturar..."
 
 #: examples/feedback:0
-#, fuzzy
 msgid "<Image>/Filters/Noise/Feedback..."
-msgstr "<Image>/Filters/Noise/Feedback"
+msgstr "<Image>/Filtros/Ruído/Feedback..."
 
 #: examples/xachvision:0
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Filters/Noise/Xach Vision..."
+msgstr "<Image>/Filtros/Ruído/Xach Vision..."
 
 #: examples/dust:0
-#, fuzzy
 msgid "<Image>/Filters/Render/Add Dust..."
-msgstr "<Image>/Filters/Render/Burst..."
+msgstr "<Image>/Filtros/Renderizar/Adicionar pó..."
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Add Glow"
-msgstr "<Image>/Filters/Render/Add Glow"
+msgstr "<Image>/Filtros/Renderizar/Adicionar brilho"
 
 #: examples/glowing_steel:0
-#, fuzzy
 msgid "<Image>/Filters/Render/Brushed Metal..."
-msgstr "<Image>/Filters/Render/Brushed Metal"
+msgstr "<Image>/Filtros/Render/Metal escovado..."
 
 #: examples/burst:0
 msgid "<Image>/Filters/Render/Burst..."
-msgstr "<Image>/Filters/Render/Burst..."
+msgstr "<Image>/Filtros/Renderizar/Explodir..."
 
 #: examples/fit-text:0
 msgid "<Image>/Filters/Render/Fit Text..."
-msgstr "<Image>/Filters/Render/Fit Text..."
+msgstr "<Image>/Filtros/Renderizar/Ajustar texto..."
 
 #: examples/glowing_steel:0
-#, fuzzy
 msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr "<Image>/Filters/Render/Highlight Edges"
+msgstr "<Image>/Filtros/Renderizar/Bordas destacadas..."
 
 #: examples/randomblends:0
-#, fuzzy
 msgid "<Image>/Filters/Render/Random Blends..."
-msgstr "<Image>/Filters/Render/Random Blends"
+msgstr "<Image>/Filtros/Renderizar/Misturas aleatórias..."
 
 #: examples/stampify:0
-#, fuzzy
 msgid "<Image>/Filters/Render/Stampify..."
-msgstr "<Image>/Filters/Render/Stampify"
+msgstr "<Image>/Filtros/Renderizar/Transformar em carimbo..."
 
 #: examples/tex-to-float:0
-#, fuzzy
 msgid "<Image>/Filters/Render/TeX String..."
-msgstr "<Image>/Filters/Render/TeX String"
+msgstr "<Image>/Filtros/Renderizar/Cadeia TeX..."
 
 #: examples/terral_text:0
-#, fuzzy
 msgid "<Image>/Filters/Render/Terral Text..."
-msgstr "<Image>/Filters/Render/Terral Text"
+msgstr "<Image>/Filtros/Renderizar/Texto terral..."
 
 #: examples/perlotine:0
 msgid "<Image>/Filters/Web/Perl-o-tine..."
-msgstr "<Image>/Filters/Web/Perl-o-tine..."
+msgstr "<Image>/Filtros/Web/Perl-o-tine..."
 
 #: examples/prep4gif:0
 msgid "<Image>/Filters/Web/Prepare for GIF..."
-msgstr "<Image>/Filters/Web/Prepare for GIF..."
+msgstr "<Image>/Filtros/Web/Preparar para GIF..."
 
 #: examples/webify:0
-#, fuzzy
 msgid "<Image>/Filters/Web/Webify..."
-msgstr "<Image>/Filters/Web/Webify"
+msgstr "<Image>/Filtros/Web/Webify..."
 
 #: examples/centerguide:0
-#, fuzzy
 msgid "<Image>/Guides/Center Guide..."
-msgstr "<Image>/Guides/Center Guide"
+msgstr "<Image>/Guias/Centralizar guia..."
 
 #: examples/guidegrid:0
-#, fuzzy
 msgid "<Image>/Guides/Guide Grid..."
-msgstr "<Image>/Guides/Guide Grid"
+msgstr "<Image>/Guias/Grade de guia..."
 
 #: examples/guide_remove:0
 msgid "<Image>/Guides/Remove Guides"
-msgstr "<Image>/Guides/Remove Guides"
+msgstr "<Image>/Guias/Remover guias"
 
 #: examples/guides_to_selection:0
-#, fuzzy
 msgid "<Image>/Guides/To Selection..."
-msgstr "<Image>/Guides/To Selection"
+msgstr "<Image>/Guias/Para seleção"
 
 #: examples/alpha2color:0
 msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr "<Image>/Image/Alpha/Alpha2Color..."
+msgstr "<Image>/Imagem/Alfa/Cor alfa2..."
 
 #: examples/clear_alpha:0
-#, fuzzy
 msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr "<Image>/Image/Alpha/Alpha2Color..."
+msgstr "<Image>/Imagem/Alfa/Cor alfa2..."
 
 #: examples/layerfuncs:0
 msgid "<Image>/Layers/Center Layer"
-msgstr "<Image>/Layers/Center Layer"
+msgstr "<Image>/Camadas/Centralizar camada"
 
 #: examples/frame_reshuffle:0
 msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr "<Image>/Layers/Stack/Reorder Layers..."
+msgstr "<Image>/Camadas/Pilha/Reorganizar camadas..."
 
 #: examples/roundrectsel:0
-#, fuzzy
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/Select/Round Rectangular Selection"
+msgstr "<Image>/Selecionar/Arredondar seleção retangular..."
 
 #: examples/roundsel:0
 msgid "<Image>/Select/Round..."
-msgstr "<Image>/Select/Round..."
+msgstr "<Image>/Selecionar/Arredondar..."
 
 #: examples/triangle:0
-#, fuzzy
 msgid "<Image>/Select/Triangle..."
-msgstr "<Image>/Select/Triangle"
+msgstr "<Image>/Selecionar/Triângulo..."
 
 #: examples/gap-vcr:0
 msgid "<Image>/Video/VCR Console..."
-msgstr "<Image>/Video/VCR Console..."
+msgstr "<Image>/Vídeo/Console VCR..."
 
 #: examples/view3d:0
-#, fuzzy
 msgid "<Image>/View/3D Surface..."
-msgstr "<Image>/View/3D Surface"
+msgstr "<Image>/Visualizar/Superfície 3D..."
 
 #: Gimp/Fu.pm:0
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
@@ -444,114 +411,96 @@ msgid "<Save> plug-in called without the 5 standard arguments!\n"
 msgstr "<Save> plugin chamado sem os 5 parâmetros padrões!\n"
 
 #: examples/billboard:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr "<Toolbox>/Xtns/Animation/Billboard"
+msgstr "<Toolbox>/Xtns/Animação/Billboard..."
 
 #: examples/sethspin:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Xtns/Animation/Seth Spin"
+msgstr "<Toolbox>/Xtns/Animação/Seth Spin..."
 
 #: examples/Create_Images:0
 msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/Xtns/Create_Images"
+msgstr "<Toolbox>/Xtns/Criar_Imagens"
 
 #: examples/example-fu:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr "<Toolbox>/Xtns/Gimp::Fu Example"
+msgstr "<Toolbox>/Xtns/Gimp::Fu Exemplo..."
 
 #: examples/homepage-logo:0
 msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr "<Toolbox>/Xtns/Homepage-Logo"
+msgstr "<Toolbox>/Xtns/Logo de Homepage"
 
 #: examples/PDB:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/PDB Explorer..."
-msgstr "<Toolbox>/Xtns/PDB Explorer"
+msgstr "<Toolbox>/Xtns/Explorer PDB..."
 
 #: examples/parasite-editor:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Parasite Editor..."
-msgstr "<Toolbox>/Xtns/Parasite Editor"
+msgstr "<Toolbox>/Xtns/Editor anexo..."
 
 #: examples/example-oo:0
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "<Toolbox>/Xtns/Perl Example Plug-in"
+msgstr "<Toolbox>/Xtns/Plug-in de exemplo do Perl"
 
 #: examples/perlcc:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr "<Toolbox>/Xtns/Perl/Control Center"
+msgstr "<Toolbox>/Xtns/Perl/Centro de controle..."
 
 #: Perl-Server:0
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr "<Toolbox>/Xtns/Perl/Server"
+msgstr "<Toolbox>/Xtns/Perl/Servidor"
 
 #: examples/bricks:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr "<Toolbox>/Xtns/Render/Bricks"
+msgstr "<Toolbox>/Xtns/Renderizar/Tijolos..."
 
 #: examples/font_table:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr "<Toolbox>/Xtns/Render/Font Table"
+msgstr "<Toolbox>/Xtns/Renderizar/Tabela de fontes..."
 
 #: examples/goldenmean:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/Xtns/Render/Golden Mean"
+msgstr "<Toolbox>/Xtns/Renderizar/Golden Mean..."
 
 #: examples/fire:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr "<Toolbox>/Xtns/Render/Logos/Firetext"
+msgstr "<Toolbox>/Xtns/Renderizar/Logos/Firetext..."
 
 #: examples/glowing_steel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
+msgstr "<Toolbox>/Xtns/Renderizar/Logos/Glowing Steel"
 
 #: examples/innerbevel:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+msgstr "<Toolbox>/Xtns/Renderizar/Logos/Inner Bevel..."
 
 #: examples/pixelmap:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/Xtns/Render/Pixelgenerator"
+msgstr "<Toolbox>/Xtns/Renderizar/Pixelgenerator..."
 
 #: examples/povray:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr "<Toolbox>/Xtns/Render/Povray/Preferences"
+msgstr "<Toolbox>/Xtns/Renderizar/Povray/Preferências..."
 
 #: examples/povray:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
-msgstr "<Toolbox>/Xtns/Render/Povray/Texture"
+msgstr "<Toolbox>/Xtns/Renderizar/Povray/Textura..."
 
 #: examples/randomart1:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr "<Toolbox>/Xtns/Render/Random Art #1"
+msgstr "<Toolbox>/Xtns/Renderizar/Arte aleatória #1..."
 
 #: examples/stamps:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr "<Toolbox>/Xtns/Render/Stamps"
+msgstr "<Toolbox>/Xtns/Renderizar/Carimbos..."
 
 #: examples/yinyang:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr "<Toolbox>/Xtns/Render/Yin-Yang"
+msgstr "<Toolbox>/Xtns/Renderizar/Yin-Yang..."
 
 #: examples/visual:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
-msgstr "<Toolbox>/Xtns/Visual Scriptor"
+msgstr "<Toolbox>/Xtns/Visual Scriptor..."
 
 #: examples/PDB:0
 msgid "Accelerator"
@@ -593,7 +542,7 @@ msgstr ""
 
 #: examples/example-fu:0
 msgid "Background"
-msgstr ""
+msgstr "Fundo"
 
 #: UI/UI.pm:0
 msgid "Browse"
@@ -737,7 +686,7 @@ msgstr "NOME"
 
 #: examples/perlotine:0
 msgid "No horizontal or vertical guides found. Aborted."
-msgstr "Nenhum guia horizontal ou vertical encontrada. Abortado."
+msgstr "Nenhum guia horizontal ou vertical encontrado. Abortado."
 
 #: UI/UI.pm:0
 msgid "OK"
@@ -833,7 +782,7 @@ msgstr "Não é possível abrir '$filename' para gravação: $!\n"
 
 #: examples/dataurl:0
 msgid "Unable to read temporary image tile $tmp: $!"
-msgstr "Impossibilidade de leitura do título da imagem temporária $tmp: $!"
+msgstr "Não é possível ler o título da imagem temporária $tmp: $!"
 
 #: UI/UI.pm:0
 msgid "Unsupported argumenttype $type"
@@ -1015,7 +964,7 @@ msgstr "função '$exe' não encontrado neste script (deve ser uma das"
 
 #: Gimp/Fu.pm:0
 msgid "function name contains dashes instead of underscores"
-msgstr "o nome da função contém traços em vez de subinhados"
+msgstr "o nome da função contém traços em vez de sublinhados"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "function/macro \"$name\" not found in $class"
@@ -1205,7 +1154,7 @@ msgid ""
 "this plug-in in interactive mode\n"
 msgstr ""
 "o módulo gtk perl é necessário para executar\n"
-"este plugin no modo interativa\n"
+"este plugin no modo interativo\n"
 
 #: examples/PDB:0
 msgid "too many arguments"
@@ -1228,9 +1177,9 @@ msgid "unable to accept unix connection: $!\n"
 msgstr "não é possível aceitar conexão unix: $!\n"
 
 #: Gimp/Lib.xs:0
-#, fuzzy
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
-msgstr "não é possível converter Gimp::Drawable em Gimp::GDrawable (id %d)"
+msgstr ""
+"não é possível converter Gimp::Desenhável em Gimp::GimpDrawable (id %d)"
 
 #: UI/UI.pm:0
 msgid "unable to create '$fn': $!"
@@ -1261,17 +1210,16 @@ msgid "unable to open $rgb_db_path"
 msgstr "não é possível abrir $rgb_db_path"
 
 #: Perl-Server:0
-#, fuzzy
 msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr "não se pode abrir o Gimp::soquete de comunicações de Rede\n"
+msgstr "não se pode abrir o Gimp::soquete de comunicações de Rede: $!\n"
 
 #: UI/UI.pm:0
 msgid "unable to read '$fn': $!"
-msgstr "impossibilidade de leitura de '$fn': $!"
+msgstr "impossível ler '$fn': $!"
 
 #: UI/UI.pm:0
 msgid "unable to read temporary file $tmp: $!"
-msgstr "não é possível ler o arquivo temporário $tmp: $!"
+msgstr "impossível ler o arquivo temporário $tmp: $!"
 
 #: Perl-Server:0
 msgid "unauthorized command received, aborting connection"
@@ -1289,71 +1237,71 @@ msgstr "autorização errada, abortando a conexão"
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr "xlfd_unpack: XLFD '$fontname' diferente\n"
 
-#~ msgid "<Image>/Filters/Logulator/Starburst"
-#~ msgstr "<Image>/Filters/Logulator/Starburst"
+msgid "<Image>/Filters/Logulator/Starburst"
+msgstr "<Image>/Filtros/Logulator/Starburst"
 
-#~ msgid "<Image>/Filters/Logulator/Blended"
-#~ msgstr "<Image>/Filters/Logulator/Blended"
+msgid "<Image>/Filters/Logulator/Blended"
+msgstr "<Image>/Filtros/Logulator/Blended"
 
-#~ msgid "<Image>/Filters/Logulator/Cool Metal"
-#~ msgstr "<Image>/Filters/Logulator/Cool Metal"
+msgid "<Image>/Filters/Logulator/Cool Metal"
+msgstr "<Image>/Filtros/Logulator/Cool Metal"
 
-#~ msgid "<Image>/Filters/Logulator/Alien Glow"
-#~ msgstr "<Image>/Filters/Logulator/Alien Glow"
+msgid "<Image>/Filters/Logulator/Alien Glow"
+msgstr "<Image>/Filtros/Logulator/Alien Glow"
 
-#~ msgid "<Image>/Filters/Logulator/Chip Away"
-#~ msgstr "<Image>/Filters/Logulator/Chip Away"
+msgid "<Image>/Filters/Logulator/Chip Away"
+msgstr "<Image>/Filtros/Logulator/Chip Away"
 
-#~ msgid "<Image>/Filters/Logulator/Bovination"
-#~ msgstr "<Image>/Filters/Logulator/Bovination"
+msgid "<Image>/Filters/Logulator/Bovination"
+msgstr "<Image>/Filtros/Logulator/Bovination"
 
-#~ msgid "<Image>/Filters/Logulator/Particle Trace"
-#~ msgstr "<Image>/Filters/Logulator/Particle Trace"
+msgid "<Image>/Filters/Logulator/Particle Trace"
+msgstr "<Image>/Filtros/Logulator/Particle Trace"
 
-#~ msgid "<Image>/Filters/Logulator/Basic I"
-#~ msgstr "<Image>/Filters/Logulator/Basic I"
+msgid "<Image>/Filters/Logulator/Basic I"
+msgstr "<Image>/Filtros/Logulator/Basic I"
 
-#~ msgid "<Image>/Filters/Logulator/3D Outline"
-#~ msgstr "<Image>/Filters/Logulator/3D Outline"
+msgid "<Image>/Filters/Logulator/3D Outline"
+msgstr "<Image>/Filtros/Logulator/3D Outline"
 
-#~ msgid "<Image>/Filters/"
-#~ msgstr "<Image>/Filters/"
+msgid "<Image>/Filters/"
+msgstr "<Image>/Filtros/"
 
-#~ msgid "<Image>/Filters/Logulator/Starscape"
-#~ msgstr "<Image>/Filters/Logulator/Starscape"
+msgid "<Image>/Filters/Logulator/Starscape"
+msgstr "<Image>/Filtros/Logulator/Starscape"
 
-#~ msgid "<Image>/Filters/Logulator/Frosty"
-#~ msgstr "<Image>/Filters/Logulator/Frosty"
+msgid "<Image>/Filters/Logulator/Frosty"
+msgstr "<Image>/Filtros/Logulator/Frosty"
 
-#~ msgid "<Image>/Filters/Logulator/Basic II"
-#~ msgstr "<Image>/Filters/Logulator/Basic II"
+msgid "<Image>/Filters/Logulator/Basic II"
+msgstr "<Image>/Filtros/Logulator/Basic II"
 
-#~ msgid "<Image>/Filters/Logulator/Glowing Hot"
-#~ msgstr "<Image>/Filters/Logulator/Glowing Hot"
+msgid "<Image>/Filters/Logulator/Glowing Hot"
+msgstr "<Image>/Filtros/Logulator/Glowing Hot"
 
-#~ msgid "<Image>/Layers/Layer to Image Size"
-#~ msgstr "<Image>/Layers/Layer to Image Size"
+msgid "<Image>/Layers/Layer to Image Size"
+msgstr "<Image>/Camadas/Camada para tamanho de imagem"
 
-#~ msgid "<Image>/Filters/Logulator/Neon"
-#~ msgstr "<Image>/Filters/Logulator/Neon"
+msgid "<Image>/Filters/Logulator/Neon"
+msgstr "<Image>/Filtros/Logulator/Neon"
 
-#~ msgid "<Image>/Filters/Logulator/Textured"
-#~ msgstr "<Image>/Filters/Logulator/Textured"
+msgid "<Image>/Filters/Logulator/Textured"
+msgstr "<Image>/Filtros/Logulator/Textured"
 
-#~ msgid "<Image>/Filters/Logulator/Glossy"
-#~ msgstr "<Image>/Filters/Logulator/Glossy"
+msgid "<Image>/Filters/Logulator/Glossy"
+msgstr "<Image>/Filtros/Logulator/Glossy"
 
-#~ msgid "<Image>/Filters/Logulator/Chalk"
-#~ msgstr "<Image>/Filters/Logulator/Chalk"
+msgid "<Image>/Filters/Logulator/Chalk"
+msgstr "<Image>/Filtros/Logulator/Chalk"
 
-#~ msgid "<Image>/Filters/Logulator/Comic Book"
-#~ msgstr "<Image>/Filters/Logulator/Comic Book"
+msgid "<Image>/Filters/Logulator/Comic Book"
+msgstr "<Image>/Filtros/Logulator/Comic Book"
 
-#~ msgid "<Image>/Filters/Logulator/Gradient Bevel"
-#~ msgstr "<Image>/Filters/Logulator/Gradient Bevel"
+msgid "<Image>/Filters/Logulator/Gradient Bevel"
+msgstr "<Image>/Filtros/Logulator/Gradient Bevel"
 
-#~ msgid "<Image>/Filters/Logulator/Chrome"
-#~ msgstr "<Image>/Filters/Logulator/Chrome"
+msgid "<Image>/Filters/Logulator/Chrome"
+msgstr "<Image>/Filtros/Logulator/Chrome"
 
-#~ msgid "<Toolbox>/Xtns/"
-#~ msgstr "<Toolbox>/Xtns/"
+msgid "<Toolbox>/Xtns/"
+msgstr "<Toolbox>/Xtns/"
