@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-07-01 22:38+0200\n"
-"PO-Revision-Date: 2004-07-01 22:38+0200\n"
+"PO-Revision-Date: 2004-07-04 17:41+0200\n"
 "Last-Translator: Roman Joost <roman@bromeco.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -846,7 +846,7 @@ msgstr "Fleckendichte Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "<Image>/Script-Fu/Animators/B_urn-In..."
-msgstr "<Image>/Skript-Fu/Animationen/_Überblenden..."
+msgstr "<Image>/Skript-Fu/Animationen/_Einbrennen..."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "Add Glowing"
@@ -858,11 +858,11 @@ msgstr "Nach dem Glühen"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Burn-In: Need two layers in total!"
-msgstr ""
+msgstr "»Einbrennen« benötigt mindestens zwei Ebenen."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
-msgstr ""
+msgstr "Einbrenneffekt zwischen Vorder- und Hintergrundebene."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -1071,7 +1071,7 @@ msgstr "Auf eigener Ebene"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/_Clothify..."
-msgstr "<Image>/Skript-Fu/Alchimie/_Stoffmalerei..."
+msgstr "<Image>/Skript-Fu/Alchemie/_Stoffmalerei..."
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:2
 #: plug-ins/script-fu/scripts/swirltile.scm.h:2
@@ -1216,7 +1216,7 @@ msgstr "Deckkraft"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/_Erase every other Row..."
-msgstr "<Image>/Skript-Fu/Alchimie/_Jede zweite Zeile löschen..."
+msgstr "<Image>/Skript-Fu/Alchemie/_Jede zweite Zeile löschen..."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:2
 msgid "Columns"
@@ -1350,7 +1350,7 @@ msgstr "_Farbe 3"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Filter (regexp)"
-msgstr ""
+msgstr "_Filter (regexp)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:9
 msgid "_Labels"
@@ -1820,7 +1820,7 @@ msgstr "Relative Länge des Schattens"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/_Predator..."
-msgstr "<Image>/Skript-Fu/Alchimie/_Predator..."
+msgstr "<Image>/Skript-Fu/Alchemie/_Predator..."
 
 #: plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge Amount"
@@ -2035,7 +2035,7 @@ msgstr "Von links nach rechts drehen"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
-msgstr "<Image>/Skript-Fu/Render/_Gitter..."
+msgstr "<Image>/Skript-Fu/Render/_Spyrogimp..."
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2057,7 +2057,8 @@ msgstr "Färbung"
 msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
 "netword.com/*spyrogimp"
-msgstr ""
+msgstr "Zeichnet Spirografen, Epitrochide und Lissajous Kurven."
+"Weitere Informationen unter http://netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
@@ -2069,11 +2070,11 @@ msgstr "Rahmen"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Gradient: Loop Sawtooth"
-msgstr ""
+msgstr "Gradient: Wiederholung mit Sägezahnwelle"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Gradient: Loop Triangle"
-msgstr ""
+msgstr "Gradient: Wiederholung durch Dreieckswelle"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hexagon"
@@ -2318,7 +2319,7 @@ msgstr "Vordergrundfarbe"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
-msgstr "<Image>/Skript-Fu/Alchimie/_Unscharf maskieren..."
+msgstr "<Image>/Skript-Fu/Alchemie/_Unscharf maskieren..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask Opacity"
@@ -2346,7 +2347,7 @@ msgstr "Wellenlänge"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/_Weave..."
-msgstr "<Image>/Skript-Fu/Alchimie/_Weben..."
+msgstr "<Image>/Skript-Fu/Alchemie/_Weben..."
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon Spacing"
