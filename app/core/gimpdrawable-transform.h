@@ -34,7 +34,7 @@ typedef enum
 
 
 TileManager * gimp_drawable_transform_tiles_affine (GimpDrawable *drawable,
-                                                    TileManager  *float_tiles,
+                                                    TileManager  *orig_tiles,
                                                     GimpMatrix3   matrix,
                                                     GimpTransformDirection direction,
                                                     GimpInterpolationType  interpolation_type,
@@ -42,7 +42,7 @@ TileManager * gimp_drawable_transform_tiles_affine (GimpDrawable *drawable,
                                                     GimpProgressFunc progress_callback,
                                                     gpointer      progress_data);
 TileManager * gimp_drawable_transform_tiles_flip   (GimpDrawable *drawable,
-                                                    TileManager  *orig,
+                                                    TileManager  *orig_tiles,
                                                     GimpOrientationType flip_type,
                                                     gdouble       axis,
                                                     gboolean      clip_result);

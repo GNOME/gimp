@@ -1,5 +1,13 @@
 2003-05-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable-transform.[ch]: changed the TileManager
+	variable names to "orig_tiles" and "new_tiles" in the whole file.
+
+	(gimp_drawable_transform_tiles_flip): implement "clip_result".
+	Enables flipping of linked channels.
+
+2003-05-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpimagedock.c (gimp_image_dock_book_removed):
 	chain up to parent_class->book_removed(), not book_added().  Fixes
 	dock destruction on last book removal.
