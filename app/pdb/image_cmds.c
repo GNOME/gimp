@@ -350,7 +350,6 @@ image_resize_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimp_set_busy_until_idle (gimp);
       gimp_image_resize (gimage, new_width, new_height, offx, offy);
     }
 
@@ -425,8 +424,7 @@ image_scale_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimp_set_busy_until_idle (gimp);
-      gimp_image_scale (gimage, new_width, new_height);
+      gimp_image_scale (gimage, new_width, new_height, NULL, NULL);
     }
 
   return procedural_db_return_args (&image_scale_proc, success);

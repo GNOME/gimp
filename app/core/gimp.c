@@ -125,7 +125,7 @@ gimp_init (Gimp *gimp)
   gimp->gui_set_busy_func   = NULL;
   gimp->gui_unset_busy_func = NULL;
 
-  gimp->busy                = FALSE;
+  gimp->busy                = 0;
   gimp->busy_idle_id        = 0;
 
   gimp_units_init (gimp);
@@ -480,10 +480,13 @@ gimp_set_busy (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   /* FIXME: gimp_busy HACK */
-  gimp->busy = TRUE;
+  gimp->busy++;
 
-  if (gimp->gui_set_busy_func)
-    gimp->gui_set_busy_func (gimp);
+  if (gimp->busy == 1)
+    {
+      if (gimp->gui_set_busy_func)
+        gimp->gui_set_busy_func (gimp);
+    }
 }
 
 static gboolean
@@ -519,12 +522,16 @@ void
 gimp_unset_busy (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  if (gimp->gui_unset_busy_func)
-    gimp->gui_unset_busy_func (gimp);
+  g_return_if_fail (gimp->busy > 0);
 
   /* FIXME: gimp_busy HACK */
-  gimp->busy = FALSE;
+  gimp->busy--;
+
+  if (gimp->busy == 0)
+    {
+      if (gimp->gui_unset_busy_func)
+        gimp->gui_unset_busy_func (gimp);
+    }
 }
 
 GimpImage *
@@ -573,7 +580,7 @@ gimp_create_display (Gimp      *gimp,
   return NULL;
 }
 
-/*
+#if 0
 void
 gimp_open_file (Gimp        *gimp,
 		const gchar *filename,
@@ -597,10 +604,10 @@ gimp_open_file (Gimp        *gimp,
     {
       gchar *absolute;
 
-      * enable & clear all undo steps *
+      /* enable & clear all undo steps */
       gimp_image_undo_enable (gimage);
 
-      * set the image to clean  *
+      /* set the image to clean  */
       gimp_image_clean_all (gimage);
 
       if (with_display)
@@ -614,7 +621,7 @@ gimp_open_file (Gimp        *gimp,
       g_free (absolute);
     }
 }
-*/
+#endif
 
 GimpContext *
 gimp_create_context (Gimp        *gimp,
@@ -624,7 +631,7 @@ gimp_create_context (Gimp        *gimp,
   GimpContext *context;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (!template || GIMP_IS_CONTEXT (template), NULL);
+  g_return_val_if_fail (! template || GIMP_IS_CONTEXT (template), NULL);
 
   /*  FIXME: need unique names here  */
   if (! name)

@@ -1020,9 +1020,11 @@ gimp_image_resize (GimpImage *gimage,
 }
 
 void
-gimp_image_scale (GimpImage *gimage, 
-		  gint       new_width, 
-		  gint       new_height)
+gimp_image_scale (GimpImage        *gimage, 
+		  gint              new_width, 
+		  gint              new_height,
+                  GimpProgressFunc  progress_func,
+                  gpointer          progress_data)
 {
   GimpChannel *channel;
   GimpLayer   *layer;
@@ -1035,11 +1037,17 @@ gimp_image_scale (GimpImage *gimage,
   gint         old_height;
   gdouble      img_scale_w = 1.0;
   gdouble      img_scale_h = 1.0;
+  gint         num_channels;
+  gint         num_layers;
+  gint         progress_current = 1;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (new_width > 0 && new_height > 0);
 
   gimp_set_busy (gimage->gimp);
+
+  num_channels = gimage->channels->num_children;
+  num_layers   = gimage->layers->num_children;
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -1070,6 +1078,13 @@ gimp_image_scale (GimpImage *gimage,
       channel = (GimpChannel *) list->data;
 
       gimp_channel_scale (channel, new_width, new_height);
+
+      if (progress_func)
+        {
+          (* progress_func) (0, num_channels + num_layers,
+                             progress_current++,
+                             progress_data);
+        }
     }
 
   /*  Don't forget the selection mask!  */
@@ -1096,6 +1111,13 @@ gimp_image_scale (GimpImage *gimage,
 	   * [resize.c line 1295], which offers the user the chance to bail out.
 	   */
           remove = g_slist_append (remove, layer);
+        }
+
+      if (progress_func)
+        {
+          (* progress_func) (0, num_channels + num_layers,
+                             progress_current++,
+                             progress_data);
         }
     }
 

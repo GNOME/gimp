@@ -56,12 +56,6 @@ struct _Resize
   gint         offset_y;
 };
 
-typedef struct
-{
-  Resize    *resize;
-  GimpImage *gimage;
-} ImageResize;
-
 
 /*  If resolution_x is zero, then don't show resolution modification
  *  parts of the dialog.

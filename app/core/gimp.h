@@ -53,7 +53,7 @@ struct _Gimp
   GimpSetBusyFunc        gui_set_busy_func;
   GimpUnsetBusyFunc      gui_unset_busy_func;
 
-  gboolean               busy;
+  gint                   busy;
   guint                  busy_idle_id;
 
   GList                 *user_units;

@@ -207,7 +207,9 @@ void            gimp_image_resize             (GimpImage            *gimage,
 					       gint                  offset_y);
 void            gimp_image_scale              (GimpImage            *gimage,
 					       gint                  new_width,
-					       gint                  new_height);
+					       gint                  new_height,
+                                               GimpProgressFunc      progress_func,
+                                               gpointer              progress_data);
 gboolean        gimp_image_check_scaling      (const GimpImage      *gimage,
 					       gint                  new_width,
 					       gint                  new_height);

@@ -41,9 +41,18 @@
 #include "offset-dialog.h"
 #include "resize-dialog.h"
 
+#include "gimpprogress.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
+
+
+typedef struct
+{
+  Resize      *resize;
+  GimpDisplay *gdisp;
+  GimpImage   *gimage;
+} ImageResize;
 
 
 #define return_if_no_display(gdisp,data) \
@@ -199,11 +208,12 @@ image_resize_cmd_callback (GtkWidget *widget,
 
   image_resize = g_new0 (ImageResize, 1);
 
+  image_resize->gdisp  = gdisp;
   image_resize->gimage = gimage;
   image_resize->resize = resize_widget_new (gimage,
                                             ResizeWidget,
 					    ResizeImage,
-					    G_OBJECT (gimage),
+					    G_OBJECT (gdisp),
 					    "disconnect",
 					    gimage->width,
 					    gimage->height,
@@ -235,11 +245,12 @@ image_scale_cmd_callback (GtkWidget *widget,
 
   image_scale = g_new0 (ImageResize, 1);
 
+  image_scale->gdisp  = gdisp;
   image_scale->gimage = gimage;
   image_scale->resize = resize_widget_new (gimage,
                                            ScaleWidget,
 					   ResizeImage,
-					   G_OBJECT (gimage),
+					   G_OBJECT (gdisp),
 					   "disconnect",
 					   gimage->width,
 					   gimage->height,
@@ -415,12 +426,21 @@ image_scale_implement (ImageResize *image_scale)
       if (image_scale->resize->width > 0 &&
 	  image_scale->resize->height > 0) 
 	{
+          GimpProgress *progress;
+
 	  if (! display_flush)
 	    undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
 
+          progress = progress_start (image_scale->gdisp,
+                                     _("Scaling..."),
+                                     TRUE, NULL, NULL);
+
 	  gimp_image_scale (gimage,
 			    image_scale->resize->width,
-			    image_scale->resize->height);
+			    image_scale->resize->height,
+                            progress_update_and_flush, progress);
+
+          progress_end (progress);
 
 	  display_flush = TRUE;
 	}

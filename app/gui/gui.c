@@ -389,6 +389,8 @@ gui_set_busy (Gimp *gimp)
 {
   gdisplays_set_busy ();
   gimp_dialog_factories_idle ();
+
+  gdk_flush ();
 }
 
 static void
@@ -396,6 +398,8 @@ gui_unset_busy (Gimp *gimp)
 {
   gdisplays_unset_busy ();
   gimp_dialog_factories_unidle ();
+
+  gdk_flush ();
 }
 
 static gint
