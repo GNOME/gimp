@@ -985,11 +985,6 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 
           gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles);
           tile_manager_unref (new_tiles);
-
-          gimp_drawable_update (GIMP_DRAWABLE (active_item),
-                                0, 0,
-                                gimp_item_width  (active_item),
-                                gimp_item_height (active_item));
         }
 
       tile_manager_unref (tr_tool->original);

@@ -1,5 +1,22 @@
 2004-03-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.c (gimp_drawable_set_tiles_full): emit
+	"update" signals from the drawable before and after setting tiles
+	and offsets.
+
+	* app/core/gimpdrawable-offset.c (gimp_drawable_offset)
+	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_paste)
+	* app/core/gimpimage-undo-push.c (undo_pop_layer_mod, _channel_mod)
+	* app/text/gimptextlayer.c (gimp_text_layer_render)
+	* app/tools/gimptransformtool.c (gimp_transform_tool_doit):
+	removed calls to gimp_drawable_update().
+
+	* app/core/gimpdrawable-offset.c (gimp_drawable_offset): don't
+	push an undo step before calling gimp_drawable_set_tiles()
+	but simply pass push_undo == TRUE and the undo_desc.
+
+2004-03-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.[ch]: added "offset_x" and "offset_y"
 	parameters to GimpDrawable::set_tiles().
 

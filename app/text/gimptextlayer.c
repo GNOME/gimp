@@ -481,33 +481,15 @@ gimp_text_layer_render (GimpTextLayer *layer)
 
   layout = gimp_text_layout_new (layer->text, image);
 
-  if (gimp_text_layout_get_size (layout, &width, &height))
+  if (gimp_text_layout_get_size (layout, &width, &height) &&
+      (width  != gimp_item_width (item) ||
+       height != gimp_item_height (item)))
     {
-      if (width  != gimp_item_width (item) ||
-          height != gimp_item_height (item))
-        {
-          TileManager *new_tiles;
+      TileManager *new_tiles = tile_manager_new (width, height,
+                                                 drawable->bytes);
 
-          gimp_drawable_update (drawable,
-                                0, 0,
-                                gimp_item_width (item),
-                                gimp_item_height (item));
-
-          GIMP_ITEM (drawable)->width  = width;
-          GIMP_ITEM (drawable)->height = height;
-
-          new_tiles = tile_manager_new (width, height, drawable->bytes);
-
-          gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles);
-          tile_manager_unref (new_tiles);
-
-          gimp_drawable_update (drawable,
-                                0, 0,
-                                gimp_item_width (item),
-                                gimp_item_height (item));
-
-          gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
-        }
+      gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles);
+      tile_manager_unref (new_tiles);
     }
 
   if (layer->auto_rename)

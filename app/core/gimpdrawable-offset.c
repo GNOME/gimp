@@ -313,21 +313,6 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 	}
     }
 
-  /*  push an undo  */
-  gimp_drawable_push_undo (drawable, _("Offset Drawable"),
-                           0, 0,
-                           gimp_item_width (item),
-                           gimp_item_height (item),
-                           gimp_drawable_data (drawable),
-                           FALSE);
-
-  /*  set the tiles  */
-  gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles);
+  gimp_drawable_set_tiles (drawable, TRUE, _("Offset Drawable"), new_tiles);
   tile_manager_unref (new_tiles);
-
-  /*  update the drawable  */
-  gimp_drawable_update (drawable,
-			0, 0,
-			gimp_item_width (item),
-			gimp_item_height (item));
 }

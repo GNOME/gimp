@@ -350,28 +350,17 @@ gimp_drawable_scale (GimpItem              *item,
                      GimpProgressFunc       progress_callback,
                      gpointer               progress_data)
 {
-  GimpDrawable *drawable;
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
   PixelRegion   srcPR, destPR;
   TileManager  *new_tiles;
 
-  drawable = GIMP_DRAWABLE (item);
-
-  /*  Update the old position  */
-  gimp_drawable_update (drawable, 0, 0, item->width, item->height);
-
-  /*  Allocate the new channel  */
   new_tiles = tile_manager_new (new_width, new_height, drawable->bytes);
 
-  /*  Configure the pixel regions  */
   pixel_region_init (&srcPR, drawable->tiles,
-		     0, 0,
-		     item->width,
-		     item->height,
+		     0, 0, item->width, item->height,
                      FALSE);
-
   pixel_region_init (&destPR, new_tiles,
-                     0, 0,
-                     new_width, new_height,
+                     0, 0, new_width, new_height,
                      TRUE);
 
   /*  Scale the drawable -
@@ -388,9 +377,6 @@ gimp_drawable_scale (GimpItem              *item,
                                 new_tiles, gimp_drawable_type (drawable),
                                 new_offset_x, new_offset_y);
   tile_manager_unref (new_tiles);
-
-  /*  Update the new position  */
-  gimp_drawable_update (drawable, 0, 0, item->width, item->height);
 }
 
 static void
@@ -400,7 +386,7 @@ gimp_drawable_resize (GimpItem *item,
                       gint      offset_x,
                       gint      offset_y)
 {
-  GimpDrawable *drawable;
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
   PixelRegion   srcPR, destPR;
   TileManager  *new_tiles;
   gint          new_offset_x;
@@ -420,12 +406,7 @@ gimp_drawable_resize (GimpItem *item,
                             &copy_x, &copy_y,
                             &copy_width, &copy_height);
 
-  /*  Update the old position  */
-  gimp_drawable_update (drawable, 0, 0, item->width, item->height);
-
-  /*  Allocate the new tile manager, configure dest region  */
-  new_tiles = tile_manager_new (new_width, new_height,
-				drawable->bytes);
+  new_tiles = tile_manager_new (new_width, new_height, drawable->bytes);
 
   /*  Determine whether the new tiles need to be initially cleared  */
   if (copy_width  != new_width ||
@@ -462,12 +443,8 @@ gimp_drawable_resize (GimpItem *item,
 
   gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
                                 new_tiles, gimp_drawable_type (drawable),
-                                item->offset_x - offset_x,
-                                item->offset_y - offset_y);
+                                new_offset_x, new_offset_y);
   tile_manager_unref (new_tiles);
-
-  /*  update the new area  */
-  gimp_drawable_update (drawable, 0, 0, item->width, item->height);
 }
 
 static void
@@ -841,13 +818,27 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
                               gint                offset_x,
                               gint                offset_y)
 {
+  GimpItem *item;
+
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (tiles != NULL);
+
+  item = GIMP_ITEM (drawable);
+
+  if (item->width    != tile_manager_width (tiles)  ||
+      item->height   != tile_manager_height (tiles) ||
+      item->offset_x != offset_x                    ||
+      item->offset_y != offset_y)
+    {
+      gimp_drawable_update (drawable, 0, 0, item->width, item->height);
+    }
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->set_tiles (drawable,
                                                  push_undo, undo_desc,
                                                  tiles, type,
                                                  offset_x, offset_y);
+
+  gimp_drawable_update (drawable, 0, 0, item->width, item->height);
 }
 
 void

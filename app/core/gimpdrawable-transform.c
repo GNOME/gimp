@@ -1098,12 +1098,6 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
       if (floating_layer)
         floating_sel_relax (floating_layer, TRUE);
 
-      gimp_image_update (gimage,
-                         GIMP_ITEM (drawable)->offset_x,
-                         GIMP_ITEM (drawable)->offset_y,
-                         GIMP_ITEM (drawable)->width,
-                         GIMP_ITEM (drawable)->height);
-
       tile_manager_get_offsets (tiles, &offset_x, &offset_y);
 
       gimp_drawable_set_tiles_full (drawable, TRUE, undo_desc,
@@ -1112,11 +1106,6 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
 
       if (floating_layer)
         floating_sel_rigor (floating_layer, TRUE);
-
-      gimp_drawable_update (drawable,
-                            0, 0,
-                            gimp_item_width  (GIMP_ITEM (drawable)),
-                            gimp_item_height (GIMP_ITEM (drawable)));
     }
 
   return TRUE;

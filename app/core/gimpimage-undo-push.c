@@ -1391,12 +1391,6 @@ undo_pop_layer_mod (GimpUndo            *undo,
   gint           offset_x, offset_y;
   TileManager   *tiles;
 
-  /*  Issue the first update  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer),
-                        0, 0,
-                        GIMP_ITEM (layer)->width,
-                        GIMP_ITEM (layer)->height);
-
   tiles      = lmu->tiles;
   layer_type = lmu->type;
   offset_x   = lmu->offset_x;
@@ -1410,12 +1404,6 @@ undo_pop_layer_mod (GimpUndo            *undo,
   gimp_drawable_set_tiles_full (GIMP_DRAWABLE (layer), FALSE, NULL,
                                 tiles, layer_type, offset_x, offset_y);
   tile_manager_unref (tiles);
-
-  /*  Issue the second update  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer),
-			0, 0,
-			GIMP_ITEM (layer)->width,
-			GIMP_ITEM (layer)->height);
 
   return TRUE;
 }
@@ -2045,24 +2033,12 @@ undo_pop_channel_mod (GimpUndo            *undo,
   GimpChannel    *channel = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
   TileManager    *tiles;
 
-  /*  Issue the first update  */
-  gimp_drawable_update (GIMP_DRAWABLE (channel),
-                        0, 0,
-                        GIMP_ITEM (channel)->width,
-                        GIMP_ITEM (channel)->height);
-
   tiles = cmu->tiles;
 
   cmu->tiles = tile_manager_ref (GIMP_DRAWABLE (channel)->tiles);
 
   gimp_drawable_set_tiles (GIMP_DRAWABLE (channel), FALSE, NULL, tiles);
   tile_manager_unref (tiles);
-
-  /*  Issue the second update  */
-  gimp_drawable_update (GIMP_DRAWABLE (channel),
-                        0, 0,
-                        GIMP_ITEM (channel)->width,
-                        GIMP_ITEM (channel)->height);
 
   return TRUE;
 }
