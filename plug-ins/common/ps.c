@@ -1295,11 +1295,7 @@ ps_open (gchar            *filename,
   is_pdf = 0;
   /* Check if it is a EPS-file */
   *is_epsf = 0;
-#ifndef __EMX__
-  fd_popen = fopen (filename, "r");
-#else
   fd_popen = fopen (filename, "rb");
-#endif
   if (fd_popen != NULL)
     {
       char hdr[512];
@@ -1432,11 +1428,7 @@ ps_open (gchar            *filename,
     }
 #endif
   system (cmd);
-#ifndef __EMX__
-  fd_popen = fopen (pnmfile, "r");
-#else
   fd_popen = fopen (pnmfile, "rb");
-#endif
 #endif
   g_free (cmd);
 

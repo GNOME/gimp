@@ -1,3 +1,13 @@
+2000-09-07  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/ps.c: Use fopen (xxx, "rb") on all systems. It
+	is standard C, does no harm on systems where it isn't needed
+	(Unix).
+
+	* libgimp/gimp.c (gimp_extension_process): Use
+	g_io_channel_win32_poll() instead of
+	g_io_channel_win32_wait_for_condition().
+
 Wed Aug 30 19:01:28 BST 2000  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/common/animoptimize.c: Same again.

@@ -820,12 +820,17 @@ gimp_extension_process (guint timeout)
     }
 #else
   /* Zero means infinite wait for us, but g_poll and
-   * g_io_channel_win32_wait_for_condition use -1 to indicate
+   * g_io_channel_win32_poll use -1 to indicate
    * infinite wait.
    */
+  GPollFD pollfd;
+
   if (timeout == 0)
     timeout = -1;
-  if (g_io_channel_win32_wait_for_condition (_readchannel, G_IO_IN, timeout) == 1)
+
+  g_io_channel_win32_make_pollfd (_readchannel, G_IO_IN, &pollfd);
+
+  if (g_io_channel_win32_poll (&pollfd, 1, timeout) == 1)
     gimp_single_message ();
 #endif
 }
