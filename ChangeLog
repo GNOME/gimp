@@ -1,5 +1,9 @@
 2004-06-12  Philip Lafleur  <plafleur@cvs.gnome.org>
 
+	* app/core/gimpdrawable-blend.c: added missing semicolon.
+
+2004-06-12  Philip Lafleur  <plafleur@cvs.gnome.org>
+
 	* app/display/gimpdisplayshell-callbacks.c: Fixed incorrect logic that
 	caused perfect-but-slow pointer tracking to be used in tools that
 	don't request exact mode.

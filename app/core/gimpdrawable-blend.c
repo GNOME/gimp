@@ -55,7 +55,7 @@ typedef struct
   GimpRGB           fg, bg;
   gdouble           dist;
   gdouble           vec[2];
-  GimpRepeatMode    repeat
+  GimpRepeatMode    repeat;
 } RenderBlendData;
 
 typedef struct
