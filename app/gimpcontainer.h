@@ -61,6 +61,9 @@ struct _GimpContainerClass
 				       GimpObject    *object);
   void         (* remove)             (GimpContainer *container,
 				       GimpObject    *object);
+  void         (* reorder)            (GimpContainer *container,
+				       GimpObject    *object,
+				       gint           new_index);
   gboolean     (* have)               (GimpContainer *container,
 				       GimpObject    *object);
   void         (* foreach)            (GimpContainer *container,
@@ -87,6 +90,9 @@ gboolean     gimp_container_add                (GimpContainer       *container,
 						GimpObject          *object);
 gboolean     gimp_container_remove             (GimpContainer       *container,
 						GimpObject          *object);
+gboolean     gimp_container_reorder            (GimpContainer       *container,
+						GimpObject          *object,
+						gint                 new_index);
 
 gboolean     gimp_container_have               (GimpContainer       *container,
 						GimpObject          *object);

@@ -24,30 +24,12 @@
 
 typedef struct _BrushEditGeneratedWindow BrushEditGeneratedWindow;
 
-struct _BrushEditGeneratedWindow
-{
-  GtkWidget     *shell;
-  GtkWidget     *frame;
-  GtkWidget     *preview;
-  GtkWidget     *scale_label;
-  GtkWidget     *options_box;
-  GtkWidget     *name;
-  GtkAdjustment *radius_data;
-  GtkAdjustment *hardness_data;
-  GtkAdjustment *angle_data;
-  GtkAdjustment *aspect_ratio_data;
-
-  /*  Brush preview  */
-  GtkWidget          *brush_preview;
-  GimpBrushGenerated *brush;
-  gint                scale;
-};
-
 
 BrushEditGeneratedWindow * brush_edit_generated_new (void);
 
 void   brush_edit_generated_set_brush (BrushEditGeneratedWindow *begw,
 				       GimpBrush                *brush);
+void   brush_edit_generated_free      (BrushEditGeneratedWindow *begw);
 
 
 #endif  /*  __BRUSH_EDIT_H__  */

@@ -165,13 +165,9 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
 void
 gimp_data_factory_data_save (GimpDataFactory *factory)
 {
-  g_return_if_fail (factory != NULL);
-  g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
-}
+  GimpList *gimp_list;
+  GList    *list;
 
-void
-gimp_data_factory_data_free (GimpDataFactory *factory)
-{
   g_return_if_fail (factory != NULL);
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
@@ -181,8 +177,52 @@ gimp_data_factory_data_free (GimpDataFactory *factory)
   if (! (factory->data_path && *factory->data_path))
     return;
 
-  gimp_data_list_save_and_clear (GIMP_DATA_LIST (factory->container),
-				 *factory->data_path);
+  gimp_list = GIMP_LIST (factory->container);
+
+  gimp_container_freeze (factory->container);
+
+  for (list = gimp_list->list; list; list = g_list_next (list))
+    {
+      GimpData *data;
+
+      data = GIMP_DATA (list->data);
+
+      if (! data->filename)
+	gimp_data_create_filename (data,
+				   GIMP_OBJECT (data)->name,
+				   *factory->data_path);
+
+      if (data->dirty)
+	gimp_data_save (data);
+    }
+
+  gimp_container_thaw (factory->container);
+}
+
+void
+gimp_data_factory_data_free (GimpDataFactory *factory)
+{
+  GimpList *list;
+
+  g_return_if_fail (factory != NULL);
+  g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
+
+  if (gimp_container_num_children (factory->container) == 0)
+    return;
+
+  list = GIMP_LIST (factory->container);
+
+  gimp_container_freeze (factory->container);
+
+  gimp_data_factory_data_save (factory);
+
+  while (list->list)
+    {
+      gimp_container_remove (factory->container,
+			     GIMP_OBJECT (list->list->data));
+    }
+
+  gimp_container_thaw (factory->container);
 }
 
 GimpData *
@@ -203,20 +243,6 @@ gimp_data_factory_data_new (GimpDataFactory *factory,
 
       return data;
     }
-
-  return NULL;
-}
-
-GimpData *
-gimp_data_factory_data_duplicate (GimpDataFactory *factory,
-				  GimpData        *data,
-				  const gchar     *name)
-{
-  g_return_val_if_fail (factory != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
-  g_return_val_if_fail (data != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
 
   return NULL;
 }

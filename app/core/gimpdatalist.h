@@ -44,16 +44,7 @@ struct _GimpDataListClass
 
 
 GtkType        gimp_data_list_get_type (void);
-GimpDataList * gimp_data_list_new      (GtkType                   children_type);
-
-void           gimp_data_list_load     (GimpDataList             *data_list,
-					const gchar              *data_path,
-					GimpDataObjectLoaderFunc  loader_func,
-					const gchar              *extension,
-					...);
-
-void     gimp_data_list_save_and_clear (GimpDataList             *data_list,
-					const gchar              *data_path);
+GimpDataList * gimp_data_list_new      (GtkType children_type);
 
 
 #endif  /*  __GIMP_DATA_LIST_H__  */

@@ -33,6 +33,7 @@ enum
 {
   INSERT_ITEM,
   REMOVE_ITEM,
+  REORDER_ITEM,
   SELECT_ITEM,
   CLEAR_ITEMS,
   SET_PREVIEW_SIZE,
@@ -54,6 +55,10 @@ static void   gimp_container_view_add         (GimpContainerView      *view,
 					       GimpContainer          *container);
 static void   gimp_container_view_remove      (GimpContainerView      *view,
 					       GimpViewable           *viewable,
+					       GimpContainer          *container);
+static void   gimp_container_view_reorder     (GimpContainerView      *view,
+					       GimpViewable           *viewable,
+					       gint                    new_index,
 					       GimpContainer          *container);
 
 static void   gimp_container_view_context_changed (GimpContext        *context,
@@ -122,6 +127,18 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
                     GIMP_TYPE_OBJECT,
 		    GTK_TYPE_POINTER);
 
+  view_signals[REORDER_ITEM] =
+    gtk_signal_new ("reorder_item",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerViewClass,
+                                       reorder_item),
+                    gtk_marshal_NONE__POINTER_INT_POINTER,
+                    GTK_TYPE_NONE, 3,
+                    GIMP_TYPE_OBJECT,
+		    GTK_TYPE_INT,
+		    GTK_TYPE_POINTER);
+
   view_signals[SELECT_ITEM] =
     gtk_signal_new ("select_item",
                     GTK_RUN_FIRST,
@@ -157,6 +174,7 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
 
   klass->insert_item      = NULL;
   klass->remove_item      = NULL;
+  klass->reorder_item     = NULL;
   klass->select_item      = NULL;
   klass->clear_items      = gimp_container_view_real_clear_items;
   klass->set_preview_size = NULL;
@@ -165,12 +183,12 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
 static void
 gimp_container_view_init (GimpContainerView *view)
 {
-  view->container      = NULL;
-  view->context        = NULL;
+  view->container    = NULL;
+  view->context      = NULL;
 
-  view->hash_table     = g_hash_table_new (g_direct_hash, g_direct_equal);
+  view->hash_table   = g_hash_table_new (g_direct_hash, g_direct_equal);
 
-  view->preview_size   = 0;
+  view->preview_size = 0;
 }
 
 static void
@@ -213,6 +231,9 @@ gimp_container_view_set_container (GimpContainerView *view,
       gtk_signal_disconnect_by_func (GTK_OBJECT (view->container),
 				     gimp_container_view_remove,
 				     view);
+      gtk_signal_disconnect_by_func (GTK_OBJECT (view->container),
+				     gimp_container_view_reorder,
+				     view);
 
       g_hash_table_destroy (view->hash_table);
 
@@ -240,6 +261,10 @@ gimp_container_view_set_container (GimpContainerView *view,
 
       gtk_signal_connect_object (GTK_OBJECT (view->container), "remove",
 				 GTK_SIGNAL_FUNC (gimp_container_view_remove),
+				 GTK_OBJECT (view));
+
+      gtk_signal_connect_object (GTK_OBJECT (view->container), "reorder",
+				 GTK_SIGNAL_FUNC (gimp_container_view_reorder),
 				 GTK_OBJECT (view));
 
       if (view->context)
@@ -408,6 +433,23 @@ gimp_container_view_remove (GimpContainerView *view,
 
       gtk_signal_emit (GTK_OBJECT (view), view_signals[REMOVE_ITEM],
 		       viewable, insert_data);
+    }
+}
+
+static void
+gimp_container_view_reorder (GimpContainerView *view,
+			     GimpViewable      *viewable,
+			     gint               new_index,
+			     GimpContainer     *container)
+{
+  gpointer insert_data;
+
+  insert_data = g_hash_table_lookup (view->hash_table, viewable);
+
+  if (insert_data)
+    {
+      gtk_signal_emit (GTK_OBJECT (view), view_signals[REORDER_ITEM],
+		       viewable, new_index, insert_data);
     }
 }
 

@@ -33,6 +33,9 @@ static void         gimp_list_add                (GimpContainer *container,
 						  GimpObject    *object);
 static void         gimp_list_remove             (GimpContainer *container,
 						  GimpObject    *object);
+static void         gimp_list_reorder            (GimpContainer *container,
+						  GimpObject    *object,
+						  gint           new_index);
 static gboolean     gimp_list_have               (GimpContainer *container,
 						  GimpObject    *object);
 static void         gimp_list_foreach            (GimpContainer *container,
@@ -89,6 +92,7 @@ gimp_list_class_init (GimpListClass *klass)
 
   container_class->add                = gimp_list_add;
   container_class->remove             = gimp_list_remove;
+  container_class->reorder            = gimp_list_reorder;
   container_class->have               = gimp_list_have;
   container_class->foreach            = gimp_list_foreach;
   container_class->get_child_by_name  = gimp_list_get_child_by_name;
@@ -139,6 +143,23 @@ gimp_list_remove (GimpContainer *container,
   list = GIMP_LIST (container);
 
   list->list = g_list_remove (list->list, object);
+}
+
+static void
+gimp_list_reorder (GimpContainer *container,
+		   GimpObject    *object,
+		   gint           new_index)
+{
+  GimpList *list;
+
+  list = GIMP_LIST (container);
+
+  list->list = g_list_remove (list->list, object);
+
+  if (new_index == -1 || new_index == container->num_children - 1)
+    list->list = g_list_append (list->list, object);
+  else
+    list->list = g_list_insert (list->list, object, new_index);
 }
 
 static gboolean

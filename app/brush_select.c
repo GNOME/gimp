@@ -87,15 +87,17 @@ static void     brush_select_close_callback         (GtkWidget       *widget,
 static void     brush_select_edit_brush             (GimpData        *data);
 
 
-/*  The main brush selection dialog  */
-BrushSelect *brush_select_dialog = NULL;
-
-/*  List of active dialogs  */
+/*  list of active dialogs  */
 GSList *brush_active_dialogs = NULL;
+
+/*  the main brush selection dialog  */
+BrushSelect *brush_select_dialog = NULL;
 
 /*  Brush editor dialog  */
 static BrushEditGeneratedWindow *brush_edit_generated_dialog;
 
+
+/*  public functions  */
 
 void
 brush_dialog_create (void)
@@ -697,16 +699,9 @@ brush_select_edit_brush (GimpData *data)
       if (! brush_edit_generated_dialog)
 	{
 	  brush_edit_generated_dialog = brush_edit_generated_new ();
+	}
 
-	  brush_edit_generated_set_brush (brush_edit_generated_dialog, brush);
-	}
-      else
-	{
-	  if (! GTK_WIDGET_VISIBLE (brush_edit_generated_dialog->shell))
-	    gtk_widget_show (brush_edit_generated_dialog->shell);
-	  else
-	    gdk_window_raise (brush_edit_generated_dialog->shell->window);
-	}
+      brush_edit_generated_set_brush (brush_edit_generated_dialog, brush);
     }
   else
     {

@@ -1,3 +1,35 @@
+2001-02-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpcontainer.[ch]
+	* app/gimpcontainergridview.c
+	* app/gimpcontainerlistview.c
+	* app/gimpcontainerview.[ch]
+	* app/gimplist.c
+	* app/gimpmarshal.[ch]: the GimpContainer has a new virtual "reorder"
+	method which is much more eficient then the current remove/add
+	braindeadness when renaming data objects.
+	Changed the views to connect to "reorder" and call the
+	GimpContainerView's new "reorder_item" method which then does
+	the right thing in the view subclasses.
+
+	* app/gimpdatafactory.c
+	* app/gimpdatafactoryview.c
+	* app/gimpdatalist.[ch]: removed the data list loading and saving
+	stuff from GimpDataList because that's the job of the
+	GimpDataFactory.
+
+	* app/brush_edit.[ch]
+	* app/brush_select.c: cleanup.
+
+	* app/gradient_editor.[ch]: changed it to work like the brush
+	editor: return a GradientEditor pointer in the constructor
+	and statically store this pointer in the gradient selection file.
+	Removed the global "g_editor" variable and added tons of
+	GradientEditor* variables to function calls so they know their
+	context without the global variable.
+
+	* app/gradient_select.c: changed accordingly.
+
 2001-02-17  Seth Burgess <sjburges@gimp.org>
 	
 	* app/tools/Makefile.am 

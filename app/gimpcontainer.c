@@ -40,6 +40,7 @@ enum
 {
   ADD,
   REMOVE,
+  REORDER,
   HAVE,
   FOREACH,
   GET_CHILD_BY_NAME,
@@ -130,6 +131,17 @@ gimp_container_class_init (GimpContainerClass* klass)
                     GTK_TYPE_NONE, 1,
                     GIMP_TYPE_OBJECT);
 
+  container_signals[REORDER] =
+    gtk_signal_new ("reorder",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerClass,
+                                       reorder),
+                    gimp_marshal_NONE__OBJECT_INT,
+                    GTK_TYPE_NONE, 2,
+                    GIMP_TYPE_OBJECT,
+		    GTK_TYPE_INT);
+
   container_signals[HAVE] =
     gtk_signal_new ("have",
                     GTK_RUN_LAST,
@@ -205,6 +217,7 @@ gimp_container_class_init (GimpContainerClass* klass)
 
   klass->add                = NULL;
   klass->remove             = NULL;
+  klass->reorder            = NULL;
   klass->have               = NULL;
   klass->foreach            = NULL;
   klass->get_child_by_name  = NULL;
@@ -376,6 +389,34 @@ gimp_container_remove (GimpContainer *container,
 		   object);
 
   gtk_object_unref (GTK_OBJECT (object));
+
+  return TRUE;
+}
+
+gboolean
+gimp_container_reorder (GimpContainer *container,
+			GimpObject    *object,
+			gint           new_index)
+{
+  g_return_val_if_fail (container, FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (GTK_CHECK_TYPE (object, container->children_type),
+			FALSE);
+
+  g_return_val_if_fail (new_index >= -1 &&
+			new_index < container->num_children, FALSE);
+
+  if (! gimp_container_have (container, object))
+    {
+      g_warning ("%s(): container does not contains object %p",
+		 G_GNUC_FUNCTION, object);
+      return FALSE;
+    }
+
+  gtk_signal_emit (GTK_OBJECT (container), container_signals[REORDER],
+		   object, new_index);
 
   return TRUE;
 }

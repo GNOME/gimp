@@ -54,6 +54,10 @@ struct _GimpContainerViewClass
   void     (* remove_item)      (GimpContainerView *view,
 				 GimpViewable      *object,
 				 gpointer           insert_data);
+  void     (* reorder_item)     (GimpContainerView *view,
+				 GimpViewable      *object,
+				 gint               new_index,
+				 gpointer           insert_data);
   void     (* select_item)      (GimpContainerView *view,
 				 GimpViewable      *object,
 				 gpointer           insert_data);

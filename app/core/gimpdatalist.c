@@ -28,7 +28,6 @@
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "datafiles.h"
 #include "gimpdata.h"
 #include "gimpdatalist.h"
 
@@ -44,7 +43,7 @@ static void   gimp_data_list_remove             (GimpContainer     *container,
 
 static void   gimp_data_list_uniquefy_data_name (GimpDataList      *data_list,
 						 GimpObject        *object);
-static void   gimp_data_list_object_renamed_callabck (GimpObject   *object,
+static void   gimp_data_list_object_renamed_callback (GimpObject   *object,
 						      GimpDataList *data_list);
 static gint   gimp_data_list_data_compare_func  (gconstpointer      first,
 						 gconstpointer      second);
@@ -110,7 +109,7 @@ gimp_data_list_add (GimpContainer *container,
 				     gimp_data_list_data_compare_func);
 
   gtk_signal_connect (GTK_OBJECT (object), "name_changed",
-		      GTK_SIGNAL_FUNC (gimp_data_list_object_renamed_callabck),
+		      GTK_SIGNAL_FUNC (gimp_data_list_object_renamed_callback),
 		      container);
 }
 
@@ -123,7 +122,7 @@ gimp_data_list_remove (GimpContainer *container,
   list = GIMP_LIST (container);
 
   gtk_signal_disconnect_by_func (GTK_OBJECT (object),
-				 gimp_data_list_object_renamed_callabck,
+				 gimp_data_list_object_renamed_callback,
 				 container);
 
   list->list = g_list_remove (list->list, object);
@@ -145,157 +144,6 @@ gimp_data_list_new (GtkType  children_type)
   return list;
 }
 
-typedef struct _GimpDataListLoaderData GimpDataListLoaderData;
-
-struct _GimpDataListLoaderData
-{
-  GimpDataList *data_list;
-  GSList       *loader_funcs;
-  GSList       *extensions;
-};
-
-void
-gimp_data_list_load_callback (const gchar *filename,
-			      gpointer     callback_data)
-{
-  GimpDataListLoaderData   *loader_data;
-  GSList                   *func_list;
-  GSList                   *ext_list;
-  GimpDataObjectLoaderFunc  loader_func;
-  const gchar              *extension;
-
-  loader_data = (GimpDataListLoaderData *) callback_data;
-
-  for (func_list = loader_data->loader_funcs, ext_list = loader_data->extensions;
-       func_list && ext_list;
-       func_list = func_list->next, ext_list = ext_list->next)
-    {
-      loader_func = (GimpDataObjectLoaderFunc) func_list->data;
-      extension   = (const gchar *) ext_list->data;
-
-      if (extension)
-	{
-	  if (datafiles_check_extension (filename, extension))
-	    {
-	      goto insert;
-	    }
-	}
-      else
-	{
-	  g_warning ("%s(): trying legacy loader on file with unknown "
-		     "extension: %s",
-		     G_GNUC_FUNCTION, filename);
-	  goto insert;
-	}
-    }
-
-  return;
-
- insert:
-  {
-    GimpData *data;
-
-    data = (GimpData *) (* loader_func) (filename);
-
-    if (! data)
-      g_message (_("Warning: Failed to load data from\n\"%s\""), filename);
-    else
-      gimp_container_add (GIMP_CONTAINER (loader_data->data_list),
-			  GIMP_OBJECT (data));
-  }
-}
-
-void
-gimp_data_list_load (GimpDataList             *data_list,
-		     const gchar              *data_path,
-		     GimpDataObjectLoaderFunc  loader_func,
-		     const gchar              *extension,
-		     ...)
-{
-  GimpDataListLoaderData *loader_data;
-  va_list                 args;
-
-  g_return_if_fail (data_list != NULL);
-  g_return_if_fail (GIMP_IS_DATA_LIST (data_list));
-  g_return_if_fail (data_path != NULL);
-  g_return_if_fail (loader_func != NULL);
-
-  loader_data = g_new0 (GimpDataListLoaderData, 1);
-
-  loader_data->data_list    = data_list;
-  loader_data->loader_funcs = g_slist_append (loader_data->loader_funcs,
-					      loader_func);
-  loader_data->extensions   = g_slist_append (loader_data->extensions,
-					      (gpointer) extension);
-
-  va_start (args, extension);
-
-  while (extension)
-    {
-      loader_func = va_arg (args, GimpDataObjectLoaderFunc);
-
-      if (loader_func)
-	{
-	  extension = va_arg (args, const gchar *);
-
-	  loader_data->loader_funcs = g_slist_append (loader_data->loader_funcs,
-						      loader_func);
-	  loader_data->extensions   = g_slist_append (loader_data->extensions,
-						      (gpointer) extension);
-	}
-      else
-	{
-	  extension = NULL;
-	}
-    }
-
-  va_end (args);
-
-  gimp_container_freeze (GIMP_CONTAINER (data_list));
-
-  datafiles_read_directories (data_path, 0,
-			      gimp_data_list_load_callback, loader_data);
-
-  gimp_container_thaw (GIMP_CONTAINER (data_list));
-
-  g_slist_free (loader_data->loader_funcs);
-  g_slist_free (loader_data->extensions);
-  g_free (loader_data);
-}
-
-void
-gimp_data_list_save_and_clear (GimpDataList *data_list,
-			       const gchar  *data_path)
-{
-  GimpList *list;
-
-  g_return_if_fail (data_list != NULL);
-  g_return_if_fail (GIMP_IS_DATA_LIST (data_list));
-
-  list = GIMP_LIST (data_list);
-
-  gimp_container_freeze (GIMP_CONTAINER (data_list));
-
-  while (list->list)
-    {
-      GimpData *data;
-
-      data = GIMP_DATA (list->list->data);
-
-      if (! data->filename)
-	gimp_data_create_filename (data,
-				   GIMP_OBJECT (data)->name,
-				   data_path);
-
-      if (data->dirty)
-	gimp_data_save (data);
-
-      gimp_container_remove (GIMP_CONTAINER (data_list), GIMP_OBJECT (data));
-    }
-
-  gimp_container_thaw (GIMP_CONTAINER (data_list));
-}
-
 static void
 gimp_data_list_uniquefy_data_name (GimpDataList *data_list,
 				   GimpObject   *object)
@@ -307,11 +155,14 @@ gimp_data_list_uniquefy_data_name (GimpDataList *data_list,
   gint        unique_ext = 0;
   gchar      *new_name   = NULL;
   gchar      *ext;
+  gboolean    have;
 
   g_return_if_fail (GIMP_IS_DATA_LIST (data_list));
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
   base_list = GIMP_LIST (data_list)->list;
+
+  have = gimp_container_have (GIMP_CONTAINER (data_list), object);
 
   for (list = base_list; list; list = g_list_next (list))
     {
@@ -321,7 +172,7 @@ gimp_data_list_uniquefy_data_name (GimpDataList *data_list,
 	  strcmp (gimp_object_get_name (GIMP_OBJECT (object)),
 		  gimp_object_get_name (GIMP_OBJECT (object2))) == 0)
 	{
-          ext = strrchr (GIMP_OBJECT (object)->name, '#');
+          ext = strrchr (object->name, '#');
 
           if (ext)
             {
@@ -354,9 +205,7 @@ gimp_data_list_uniquefy_data_name (GimpDataList *data_list,
 
               g_free (new_name);
 
-              new_name = g_strdup_printf ("%s#%d",
-                                          GIMP_OBJECT (object)->name,
-                                          unique_ext);
+              new_name = g_strdup_printf ("%s#%d", object->name, unique_ext);
 
               for (list2 = base_list; list2; list2 = g_list_next (list2))
                 {
@@ -365,32 +214,62 @@ gimp_data_list_uniquefy_data_name (GimpDataList *data_list,
                   if (object == object2)
                     continue;
 
-                  if (! strcmp (GIMP_OBJECT (object2)->name, new_name))
-                    {
-                      break;
-                    }
+                  if (! strcmp (object2->name, new_name))
+		    break;
                 }
             }
           while (list2);
 
-	  gimp_object_set_name (GIMP_OBJECT (object), new_name);
+	  if (have)
+	    gtk_signal_handler_block_by_func
+	      (GTK_OBJECT (object),
+	       gimp_data_list_object_renamed_callback,
+	       data_list);
+
+	  gimp_object_set_name (object, new_name);
+
+	  if (have)
+	    gtk_signal_handler_unblock_by_func
+	      (GTK_OBJECT (object),
+	       gimp_data_list_object_renamed_callback,
+	       data_list);
+
 	  g_free (new_name);
 
-	  if (gimp_container_have (GIMP_CONTAINER (data_list), object))
-	    {
-	      gtk_object_ref (GTK_OBJECT (object));
-	      gimp_container_remove (GIMP_CONTAINER (data_list), object);
-	      gimp_container_add (GIMP_CONTAINER (data_list), object);
-	      gtk_object_unref (GTK_OBJECT (object));
-	    }
-
 	  break;
+	}
+    }
+
+  if (have)
+    {
+      gint old_index;
+      gint new_index = 0;
+
+      old_index = g_list_index (base_list, object);
+
+      for (list2 = base_list; list2; list2 = g_list_next (list2))
+	{
+	  object2 = GIMP_OBJECT (list2->data);
+
+	  if (object == object2)
+	    continue;
+
+	  if (strcmp (object->name, object2->name) > 0)
+	    new_index++;
+	  else
+	    break;
+	}
+
+      if (new_index != old_index)
+	{
+	  gimp_container_reorder (GIMP_CONTAINER (data_list),
+				  object, new_index);
 	}
     }
 }
 
 static void
-gimp_data_list_object_renamed_callabck (GimpObject   *object,
+gimp_data_list_object_renamed_callback (GimpObject   *object,
 					GimpDataList *data_list)
 {
   gimp_data_list_uniquefy_data_name (data_list, object);

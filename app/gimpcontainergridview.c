@@ -43,6 +43,10 @@ static gpointer gimp_container_grid_view_insert_item  (GimpContainerView      *v
 static void     gimp_container_grid_view_remove_item  (GimpContainerView      *view,
 						       GimpViewable           *viewable,
 						       gpointer                insert_data);
+static void     gimp_container_grid_view_reorder_item (GimpContainerView      *view,
+						       GimpViewable           *viewable,
+						       gint                    new_index,
+						       gpointer                insert_data);
 static void     gimp_container_grid_view_select_item  (GimpContainerView      *view,
                                                        GimpViewable           *viewable,
                                                        gpointer                insert_data);
@@ -99,6 +103,7 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
 
   container_view_class->insert_item      = gimp_container_grid_view_insert_item;
   container_view_class->remove_item      = gimp_container_grid_view_remove_item;
+  container_view_class->reorder_item     = gimp_container_grid_view_reorder_item;
   container_view_class->select_item      = gimp_container_grid_view_select_item;
   container_view_class->clear_items      = gimp_container_grid_view_clear_items;
   container_view_class->set_preview_size = gimp_container_grid_view_set_preview_size;
@@ -256,6 +261,22 @@ gimp_container_grid_view_remove_item (GimpContainerView *view,
 
       gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box), preview);
     }
+}
+
+static void
+gimp_container_grid_view_reorder_item (GimpContainerView *view,
+				       GimpViewable      *viewable,
+				       gint               new_index,
+				       gpointer           insert_data)
+{
+  GimpContainerGridView *grid_view;
+  GtkWidget             *preview;
+
+  grid_view = GIMP_CONTAINER_GRID_VIEW (view);
+  preview   = GTK_WIDGET (insert_data);
+
+  gtk_wrap_box_reorder_child (GTK_WRAP_BOX (grid_view->wrap_box),
+			      preview, new_index);
 }
 
 static void

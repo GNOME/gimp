@@ -85,6 +85,24 @@ gimp_marshal_NONE__INT_POINTER_POINTER (GtkObject     *object,
 }
 
 
+typedef void (* GimpSignal_NONE__OBJECT_INT) (GtkObject *object,
+					      GtkObject *arg1,
+					      gint       arg2,
+					      gpointer   user_data);
+
+void
+gimp_marshal_NONE__OBJECT_INT (GtkObject     *object,
+			       GtkSignalFunc  func,
+			       gpointer       func_data,
+			       GtkArg        *args)
+{
+  (* (GimpSignal_NONE__OBJECT_INT) func) (object,
+					  GTK_VALUE_OBJECT (args[0]),
+					  GTK_VALUE_INT (args[1]),
+					  func_data);
+}
+
+
 typedef void (* GimpSignal_NONE__DOUBLE) (GtkObject *object,
 					  gdouble    arg1,
 					  gpointer   user_data);

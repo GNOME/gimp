@@ -42,6 +42,10 @@ static gpointer gimp_container_list_view_insert_item  (GimpContainerView      *v
 static void     gimp_container_list_view_remove_item  (GimpContainerView      *view,
 						       GimpViewable           *viewable,
 						       gpointer                insert_data);
+static void     gimp_container_list_view_reorder_item (GimpContainerView      *view,
+						       GimpViewable           *viewable,
+						       gint                    new_index,
+						       gpointer                insert_data);
 static void     gimp_container_list_view_select_item  (GimpContainerView      *view,
 						       GimpViewable           *viewable,
 						       gpointer                insert_data);
@@ -99,6 +103,7 @@ gimp_container_list_view_class_init (GimpContainerListViewClass *klass)
 
   container_view_class->insert_item      = gimp_container_list_view_insert_item;
   container_view_class->remove_item      = gimp_container_list_view_remove_item;
+  container_view_class->reorder_item     = gimp_container_list_view_reorder_item;
   container_view_class->select_item      = gimp_container_list_view_select_item;
   container_view_class->clear_items      = gimp_container_list_view_clear_items;
   container_view_class->set_preview_size = gimp_container_list_view_set_preview_size;
@@ -265,6 +270,47 @@ gimp_container_list_view_remove_item (GimpContainerView *view,
       list = g_list_prepend (NULL, list_item);
 
       gtk_list_remove_items (GTK_LIST (list_view->gtk_list), list);
+    }
+}
+
+static void
+gimp_container_list_view_reorder_item (GimpContainerView *view,
+				       GimpViewable      *viewable,
+				       gint               new_index,
+				       gpointer           insert_data)
+{
+  GimpContainerListView *list_view;
+  GtkWidget             *list_item;
+  gboolean               selected;
+
+  list_view = GIMP_CONTAINER_LIST_VIEW (view);
+
+  if (insert_data)
+    list_item = GTK_WIDGET (insert_data);
+  else
+    list_item = NULL;
+
+  if (list_item)
+    {
+      GList *list;
+
+      list = g_list_prepend (NULL, list_item);
+
+      selected = GTK_WIDGET_STATE (list_item) == GTK_STATE_SELECTED;
+
+      gtk_object_ref (GTK_OBJECT (list_item));
+
+      gtk_list_remove_items (GTK_LIST (list_view->gtk_list), list);
+
+      if (new_index == -1 || new_index == view->container->num_children - 1)
+	gtk_list_append_items (GTK_LIST (list_view->gtk_list), list);
+      else
+	gtk_list_insert_items (GTK_LIST (list_view->gtk_list), list, new_index);
+
+      if (selected)
+	gtk_list_select_child (GTK_LIST (list_view->gtk_list), list_item);
+
+      gtk_object_unref (GTK_OBJECT (list_item));
     }
 }
 

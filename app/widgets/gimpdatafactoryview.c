@@ -340,6 +340,8 @@ gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
 	  gimp_context_set_by_type (view->view->context,
 				    view->factory->container->children_type,
 				    GIMP_OBJECT (new_data));
+
+	  gimp_data_factory_view_edit_clicked (NULL, view);
 	}
     }
 }
@@ -363,6 +365,38 @@ gimp_data_factory_view_edit_clicked (GtkWidget           *widget,
     }
 }
 
+
+typedef struct _GimpDataDeleteData GimpDataDeleteData;
+
+struct _GimpDataDeleteData
+{
+  GimpDataFactory *factory;
+  GimpData        *data;
+};
+
+static void
+gimp_data_factory_view_delete_callback (GtkWidget *widget,
+					gboolean   delete,
+					gpointer   data)
+{
+  GimpDataDeleteData *delete_data;
+
+  delete_data = (GimpDataDeleteData *) data;
+
+  if (! delete)
+    return;
+
+  if (gimp_container_have (delete_data->factory->container,
+			   GIMP_OBJECT (delete_data->data)))
+    {
+      if (delete_data->data->filename)
+	gimp_data_delete_from_disk (delete_data->data);
+
+      gimp_container_remove (delete_data->factory->container,
+			     GIMP_OBJECT (delete_data->data));
+    }
+}
+
 static void
 gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
 				       GimpDataFactoryView *view)
@@ -376,10 +410,37 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
   if (data && gimp_container_have (view->factory->container,
 				   GIMP_OBJECT (data)))
     {
-      if (data->filename)
-	gimp_data_delete_from_disk (data);
+      GimpDataDeleteData *delete_data;
+      GtkWidget          *dialog;
+      gchar              *str;
 
-      gimp_container_remove (view->factory->container, GIMP_OBJECT (data));
+      delete_data = g_new0 (GimpDataDeleteData, 1);
+
+      delete_data->factory = view->factory;
+      delete_data->data    = data;
+
+      str = g_strdup_printf (_("Are you sure you want to delete\n"
+			       "\"%s\" from the list and from disk?"),
+			     GIMP_OBJECT (data)->name);
+
+      dialog =
+	gimp_query_boolean_box (_("Delete Data Object"),
+				gimp_standard_help_func, NULL,
+				FALSE,
+				str,
+				_("Delete"), _("Cancel"),
+				GTK_OBJECT (data),
+				"destroy",
+				gimp_data_factory_view_delete_callback,
+				delete_data);
+
+      gtk_signal_connect_object (GTK_OBJECT (dialog), "destroy",
+				 GTK_SIGNAL_FUNC (g_free),
+				 (GtkObject *) delete_data);
+
+      g_free (str);
+
+      gtk_widget_show (dialog);
     }
 }
 
