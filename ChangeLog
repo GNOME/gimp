@@ -1,5 +1,12 @@
 2001-01-15  Michael Natterer  <mitch@gimp.org>
 
+	* modules/colorsel_water.c: the bottom position of the scale
+	represents the minimal pressure now. Also removed the pressure
+	value display because it's rather a matter of "more" or "less"
+	than of an exact value.
+
+2001-01-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/color_notebook.c
 	* modules/colorsel_gtk.c
 	* modules/colorsel_triangle.c: tweaked dialog layout a bit.

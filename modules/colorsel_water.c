@@ -387,7 +387,7 @@ pressure_adjust_update (GtkAdjustment *adj,
 
   colorsel = (ColorselWater *) data;
 
-  colorsel->pressure_adjust = adj->value / 100;
+  colorsel->pressure_adjust = (adj->upper - adj->value) / 100.0;
 }
 
 
@@ -470,12 +470,14 @@ colorsel_water_new (const GimpHSV             *hsv,
   gtk_widget_set_extension_events (event_box, GDK_EXTENSION_EVENTS_ALL);
   gtk_widget_grab_focus (event_box);
 
-  adj = gtk_adjustment_new (100.0, 0.0, 200.0, 1.0, 1.0, 0.0);
+  adj = gtk_adjustment_new (200.0 - coldata->pressure_adjust * 100.0,
+			    0.0, 200.0, 1.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (pressure_adjust_update),
 		      coldata);
   scale = gtk_vscale_new (GTK_ADJUSTMENT (adj));
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gimp_help_set_help_data (scale, _("Pressure"), NULL);
   gtk_box_pack_start (GTK_BOX (hbox), scale, FALSE, FALSE, 0);
 
