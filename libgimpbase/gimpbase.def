@@ -32,6 +32,13 @@ EXPORTS
 	gimp_memsize_serialize
 	gimp_memsize_to_string
 	gimp_message_handler_type_get_type
+	gimp_param_memsize_get_type
+	gimp_param_spec_memsize
+	gimp_param_path_get_type
+	gimp_param_spec_path
+	gimp_param_spec_path_type
+	gimp_param_unit_get_type
+	gimp_param_spec_unit
 	gimp_parasite_compare
 	gimp_parasite_copy
 	gimp_parasite_data
@@ -45,6 +52,7 @@ EXPORTS
 	gimp_parasite_name
 	gimp_parasite_new
 	gimp_path_free
+	gimp_path_get_type
 	gimp_path_get_user_writable_dir
 	gimp_path_parse
 	gimp_path_to_str

@@ -1,4 +1,5 @@
 EXPORTS
+	gimp_matrix2_get_type
 	gimp_matrix2_identity
 	gimp_matrix2_mult
 	gimp_matrix3_affine
@@ -17,6 +18,7 @@ EXPORTS
 	gimp_matrix3_yshear
 	gimp_matrix4_to_deg
 	gimp_md5_get_digest
+	gimp_param_matrix2_get_type
 	gimp_vector2_add
 	gimp_vector2_add_val
 	gimp_vector2_cross_product

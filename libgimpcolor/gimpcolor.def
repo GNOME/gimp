@@ -24,6 +24,8 @@ EXPORTS
 	gimp_hsv_to_rgb_int
 	gimp_hsva_set
 	gimp_hwb_to_rgb
+	gimp_param_rgb_get_type
+	gimp_param_spec_rgb
 	gimp_rgb_add
 	gimp_rgb_clamp
 	gimp_rgb_composite

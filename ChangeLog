@@ -1,5 +1,11 @@
 2005-01-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpbase.def
+	* libgimpcolor/gimpcolor.def
+	* libgimpmath/gimpmath.def: added new symbols.
+
+2005-01-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimputils.c (gimp_enum_value_get_help): same fix here.
 
 2005-01-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
