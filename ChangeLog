@@ -1,3 +1,10 @@
+Sat Feb 19 17:27:07 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/interface.c: Use geometry hints (minimum size and size
+	increments) for the toolbox. This works quite nice here at my
+	box, but your mileage may vary, so please test this and report
+	back...
+
 2000-02-19  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimppixmap.c: gimp_pixmap_new(): set the widget's
@@ -35,7 +42,7 @@ Sat Feb 19 13:53:34 CET 2000  Sven Neumann <sven@gimp.org>
 	control.
 
 	* app/nav_window.c: as a workaround for bug #5955 move the
-	navigation popup on screen if used to close to the screen borders.
+	navigation popup on screen if used too close to the screen borders.
 	Moving the cursor will make the image scroll by a large amount
 	eventually, but IMHO this is better than having a nonfunctional
 	navigation popup. 

@@ -510,6 +510,7 @@ create_toolbox (void)
   GtkWidget *menubar;
   GList *list;
   GtkAccelGroup *table;
+  GdkGeometry geometry;
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
@@ -519,7 +520,18 @@ create_toolbox (void)
   gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), _("The GIMP"));
   gtk_window_set_policy (GTK_WINDOW (window), TRUE, TRUE, FALSE);
+
+  geometry.min_width  = 30;
+  geometry.min_height = 102;
+  geometry.width_inc  = 28;
+  geometry.height_inc = 28;
+  gtk_window_set_geometry_hints (GTK_WINDOW (window), 
+				 NULL,
+				 &geometry, 
+				 GDK_HINT_MIN_SIZE | GDK_HINT_RESIZE_INC);
+
   session_set_window_geometry (window, &toolbox_session_info, TRUE);
+
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
 		      GTK_SIGNAL_FUNC (toolbox_delete),
 		      NULL);
