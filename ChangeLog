@@ -1,3 +1,18 @@
+2004-07-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpselectiondata.[ch]: added a "const gchar *format"
+	parameter to gimp_selection_data_set_pixbuf() which selects the
+	format in which to encode the pixbuf (was defaulting to "png"
+	before).
+
+	* app/widgets/gimpclipboard.c: when copying, offer all formats which
+	are savable with GdkPixbuf. Added a GimpClipboard struct which is
+	attached to the Gimp and which stores all the persistent data
+	needed by the clipboard. Renamed some private functions.
+
+	(unfortunately this change breaks pasting to AbiWord:
+	 http://bugzilla.abisource.com/show_bug.cgi?id=7068)
+
 2004-07-08  Sven Neumann  <sven@gimp.org>
 	
 	* app/config/gimpconfig-deserialize.c

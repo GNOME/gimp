@@ -411,7 +411,8 @@ gimp_selection_data_get_stream (GtkSelectionData *selection,
 void
 gimp_selection_data_set_pixbuf (GtkSelectionData *selection,
                                 GdkAtom           atom,
-                                GdkPixbuf        *pixbuf)
+                                GdkPixbuf        *pixbuf,
+                                const gchar      *format)
 {
   gchar  *buffer;
   gsize   buffer_size;
@@ -420,9 +421,10 @@ gimp_selection_data_set_pixbuf (GtkSelectionData *selection,
   g_return_if_fail (selection != NULL);
   g_return_if_fail (atom != GDK_NONE);
   g_return_if_fail (GDK_IS_PIXBUF (pixbuf));
+  g_return_if_fail (format != NULL);
 
   if (gdk_pixbuf_save_to_buffer (pixbuf,
-                                 &buffer, &buffer_size, "png",
+                                 &buffer, &buffer_size, format,
                                  &error, NULL))
     {
       gtk_selection_data_set (selection, atom,

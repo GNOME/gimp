@@ -38,16 +38,29 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_PIXBUF_FORMATS_KEY "gimp-pixbuf-formats"
+#define GIMP_CLIPBOARD_KEY "gimp-clipboard"
 
-static  const GtkTargetEntry  target_entry = GIMP_TARGET_PNG;
 
+typedef struct _GimpClipboard GimpClipboard;
+
+struct _GimpClipboard
+{
+  GSList          *pixbuf_formats;
+
+  GtkTargetEntry  *target_entries;
+  gint             n_target_entries;
+  gchar          **savers;
+};
+
+
+static GimpClipboard * gimp_clipboard_get        (Gimp             *gimp);
+static void            gimp_clipboard_free       (GimpClipboard    *gimp_clip);
 
 static void      gimp_clipboard_buffer_changed   (Gimp             *gimp);
-static void      gimp_clipboard_set              (Gimp             *gimp,
+static void      gimp_clipboard_set_buffer       (Gimp             *gimp,
                                                   GimpBuffer       *buffer);
 
-static void      gimp_clipboard_get              (GtkClipboard     *clipboard,
+static void      gimp_clipboard_send_buffer      (GtkClipboard     *clipboard,
                                                   GtkSelectionData *selection_data,
                                                   guint             info,
                                                   Gimp             *gimp);
@@ -62,21 +75,90 @@ static gint      gimp_clipboard_format_compare   (GdkPixbufFormat  *a,
 void
 gimp_clipboard_init (Gimp *gimp)
 {
-  GSList *pixbuf_formats;
+  GimpClipboard *gimp_clip;
+  GSList        *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp_clipboard_set (gimp, gimp->global_buffer);
+  gimp_clip = gimp_clipboard_get (gimp);
+
+  g_return_if_fail (gimp_clip == NULL);
+
+  gimp_clip = g_new0 (GimpClipboard, 1);
+
+  g_object_set_data_full (G_OBJECT (gimp), GIMP_CLIPBOARD_KEY,
+                          gimp_clip, (GDestroyNotify) gimp_clipboard_free);
+
+  gimp_clipboard_set_buffer (gimp, gimp->global_buffer);
 
   g_signal_connect_object (gimp, "buffer_changed",
                            G_CALLBACK (gimp_clipboard_buffer_changed),
                            NULL, 0);
 
-  pixbuf_formats = g_slist_sort (gdk_pixbuf_get_formats (),
-                                 (GCompareFunc) gimp_clipboard_format_compare);
+  gimp_clip->pixbuf_formats =
+    g_slist_sort (gdk_pixbuf_get_formats (),
+                  (GCompareFunc) gimp_clipboard_format_compare);
 
-  g_object_set_data_full (G_OBJECT (gimp), GIMP_PIXBUF_FORMATS_KEY,
-                          pixbuf_formats, (GDestroyNotify) g_slist_free);
+  for (list = gimp_clip->pixbuf_formats; list; list = g_slist_next (list))
+    {
+      GdkPixbufFormat *format = list->data;
+
+      if (gdk_pixbuf_format_is_writable (format))
+        {
+          gchar **mime_types;
+          gchar **type;
+
+          mime_types = gdk_pixbuf_format_get_mime_types (format);
+
+          for (type = mime_types; *type; type++)
+            gimp_clip->n_target_entries++;
+
+          g_strfreev (mime_types);
+        }
+    }
+
+  if (gimp_clip->n_target_entries > 0)
+    {
+      gint i = 0;
+
+      gimp_clip->target_entries = g_new0 (GtkTargetEntry,
+                                          gimp_clip->n_target_entries);
+      gimp_clip->savers         = g_new0 (gchar *,
+                                          gimp_clip->n_target_entries + 1);
+
+      for (list = gimp_clip->pixbuf_formats; list; list = g_slist_next (list))
+        {
+          GdkPixbufFormat *format = list->data;
+
+          if (gdk_pixbuf_format_is_writable (format))
+            {
+              gchar  *format_name;
+              gchar **mime_types;
+              gchar **type;
+
+              format_name = gdk_pixbuf_format_get_name (format);
+              mime_types  = gdk_pixbuf_format_get_mime_types (format);
+
+              for (type = mime_types; *type; type++)
+                {
+                  gchar *mime_type = *type;
+
+                  g_print ("writable pixbuf format: %s\n", mime_type);
+
+                  gimp_clip->target_entries[i].target = g_strdup (mime_type);
+                  gimp_clip->target_entries[i].flags  = 0;
+                  gimp_clip->target_entries[i].info   = i;
+
+                  gimp_clip->savers[i]                = g_strdup (format_name);
+
+                  i++;
+                }
+
+              g_strfreev (mime_types);
+              g_free (format_name);
+            }
+        }
+    }
 }
 
 void
@@ -87,9 +169,9 @@ gimp_clipboard_exit (Gimp *gimp)
   g_signal_handlers_disconnect_by_func (gimp,
                                         G_CALLBACK (gimp_clipboard_buffer_changed),
                                         NULL);
-  gimp_clipboard_set (gimp, NULL);
+  gimp_clipboard_set_buffer (gimp, NULL);
 
-  g_object_set_data (G_OBJECT (gimp), GIMP_PIXBUF_FORMATS_KEY, NULL);
+  g_object_set_data (G_OBJECT (gimp), GIMP_CLIPBOARD_KEY, NULL);
 }
 
 /**
@@ -209,17 +291,36 @@ gimp_clipboard_get_buffer (Gimp *gimp)
   return buffer;
 }
 
-static void
-gimp_clipboard_buffer_changed (Gimp *gimp)
+
+/*  private functions  */
+
+static GimpClipboard *
+gimp_clipboard_get (Gimp *gimp)
 {
-  gimp_clipboard_set (gimp, gimp->global_buffer);
+  return g_object_get_data (G_OBJECT (gimp), GIMP_CLIPBOARD_KEY);
 }
 
 static void
-gimp_clipboard_set (Gimp       *gimp,
-                    GimpBuffer *buffer)
+gimp_clipboard_free (GimpClipboard *gimp_clip)
 {
-  GtkClipboard *clipboard;
+  g_slist_free (gimp_clip->pixbuf_formats);
+  g_free (gimp_clip->target_entries);
+  g_strfreev (gimp_clip->savers);
+  g_free (gimp_clip);
+}
+
+static void
+gimp_clipboard_buffer_changed (Gimp *gimp)
+{
+  gimp_clipboard_set_buffer (gimp, gimp->global_buffer);
+}
+
+static void
+gimp_clipboard_set_buffer (Gimp       *gimp,
+                           GimpBuffer *buffer)
+{
+  GimpClipboard *gimp_clip = gimp_clipboard_get (gimp);
+  GtkClipboard  *clipboard;
 
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
@@ -229,8 +330,9 @@ gimp_clipboard_set (Gimp       *gimp,
   if (buffer)
     {
       gtk_clipboard_set_with_owner (clipboard,
-                                    &target_entry, 1,
-                                    (GtkClipboardGetFunc)   gimp_clipboard_get,
+                                    gimp_clip->target_entries,
+                                    gimp_clip->n_target_entries,
+                                    (GtkClipboardGetFunc)   gimp_clipboard_send_buffer,
                                     (GtkClipboardClearFunc) NULL,
                                     G_OBJECT (gimp));
     }
@@ -284,13 +386,10 @@ gimp_clipboard_wait_for_targets (gint *n_targets)
 static GdkAtom
 gimp_clipboard_wait_for_buffer (Gimp *gimp)
 {
-  GdkAtom *targets;
-  gint     n_targets;
-  GSList  *pixbuf_formats;
-  GdkAtom  result = GDK_NONE;
-
-  pixbuf_formats = g_object_get_data (G_OBJECT (gimp),
-                                      GIMP_PIXBUF_FORMATS_KEY);
+  GimpClipboard *gimp_clip = gimp_clipboard_get (gimp);
+  GdkAtom       *targets;
+  gint           n_targets;
+  GdkAtom        result    = GDK_NONE;
 
   targets = gimp_clipboard_wait_for_targets (&n_targets);
 
@@ -298,7 +397,7 @@ gimp_clipboard_wait_for_buffer (Gimp *gimp)
     {
       GSList *list;
 
-      for (list = pixbuf_formats; list; list = g_slist_next (list))
+      for (list = gimp_clip->pixbuf_formats; list; list = g_slist_next (list))
         {
           GdkPixbufFormat  *format = list->data;
           gchar           **mime_types;
@@ -343,13 +442,14 @@ gimp_clipboard_wait_for_buffer (Gimp *gimp)
 }
 
 static void
-gimp_clipboard_get (GtkClipboard     *clipboard,
-                    GtkSelectionData *selection_data,
-                    guint             info,
-                    Gimp             *gimp)
+gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
+                            GtkSelectionData *selection_data,
+                            guint             info,
+                            Gimp             *gimp)
 {
-  GimpBuffer *buffer = gimp->global_buffer;
-  GdkPixbuf  *pixbuf;
+  GimpClipboard *gimp_clip = gimp_clipboard_get (gimp);
+  GimpBuffer    *buffer    = gimp->global_buffer;
+  GdkPixbuf     *pixbuf;
 
   gimp_set_busy (gimp);
 
@@ -359,9 +459,15 @@ gimp_clipboard_get (GtkClipboard     *clipboard,
 
   if (pixbuf)
     {
-      GdkAtom  atom = gdk_atom_intern (target_entry.target, FALSE);
+      GdkAtom atom = gdk_atom_intern (gimp_clip->target_entries[info].target,
+                                      FALSE);
 
-      gimp_selection_data_set_pixbuf (selection_data, atom, pixbuf);
+      g_print ("sending pixbuf data as '%s' (%s)\n",
+               gimp_clip->target_entries[info].target,
+               gimp_clip->savers[info]);
+
+      gimp_selection_data_set_pixbuf (selection_data, atom, pixbuf,
+                                      gimp_clip->savers[info]);
     }
   else
     {
