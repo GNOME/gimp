@@ -1,5 +1,10 @@
 2003-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcolorselection.c: added API docs for all
+	public functions.
+
+2003-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/Makefile.am
 	* libgimpwidgets/gimpwidgets.h
 	* libgimpwidgets/gimpwidgetstypes.h
