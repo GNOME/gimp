@@ -25,7 +25,6 @@
 
 #include "display-types.h"
 #include "tools/tools-types.h"
-#include "widgets/widgets-types.h"
 
 #ifdef __GNUC__
 #warning FIXME #include "gui/gui-types.h"
@@ -60,7 +59,6 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
-#include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gui/info-window.h"
