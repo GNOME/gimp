@@ -14,7 +14,7 @@ to the constructor, and has a get_value() method for retrieving the result.
 import pygtk
 pygtk.require('2.0')
 
-import gtk, gimp
+import gtk, gobject, gimp
 
 def _callbackWrapper(menu_item, callback, data):
     callback(menu_item.get_data("Gimp-ID"), data)
@@ -153,6 +153,7 @@ class ColourSelector(gtk.Button):
 	self.update_colour()
 
 	self.connect("clicked", self.show_dialog)
+
     def update_colour(self):
 	style = self.get_style().copy()
 	style.bg[gtk.STATE_NORMAL] = self.colour
@@ -195,21 +196,36 @@ class _Selector(gtk.HBox):
 	swin.show()
 		
 	items = map(None, self.get_list())
-	list = gtk.List()
-	list.set_selection_mode(gtk.SELECTION_BROWSE)
+
+	store = gtk.ListStore(gobject.TYPE_STRING)
+	treeview = gtk.TreeView(store)
+
+	treeview.set_headers_visible(gtk.FALSE)
+	column = gtk.TreeViewColumn('Items', gtk.CellRendererText(), text=0)
+	treeview.append_column(column)
+
+	self.tv_selection = treeview.get_selection()
+
 	self.selected = self.get_default()
 	self.entry.set_text(self.selected)
-	items.sort()
-	for s in items:
-	    item = gtk.ListItem(s)
-	    list.add(item)
-	    if s == self.selected:
-		list.select_child(item)
-	    item.show()
-	swin.add_with_viewport(list)
-	list.show()
 
-	self.dialog.set_size_request(300, 225)
+	sel_path = None
+	items.sort()
+
+	for s in items:
+	    iter = store.append()
+	    store.set(iter, 0, s)
+
+	    if s == self.selected:
+		sel_path = store.get_path(iter)
+
+	if sel_path:
+	    self.tv_selection.select_path(sel_path)
+
+	swin.add(treeview)
+	treeview.show()
+
+	self.dialog.set_default_size(300, 225)
 
     def show_dialog(self, button):
 	self.dialog.show()
@@ -217,10 +233,12 @@ class _Selector(gtk.HBox):
 	self.dialog.hide()
 
 	if response == gtk.RESPONSE_OK:
-	    sel = list.get_selection()
-	    if not sel: return
-	    self.selected = sel[0].children()[0].get()
+	    self.selected = self.get_selection()
 	    self.entry.set_text(self.selected)
+
+    def get_selection(self):
+	store, iter = self.tv_selection.get_selected()
+	return store.get_value(iter, 0)
 
     def get_value(self):
 	return self.selected
@@ -234,7 +252,7 @@ class PatternSelector(_Selector):
     def get_title(self):
 	return "Patterns"
     def get_list(self):
-	num, patterns = gimp.pdb.gimp_patterns_get_list()
+	num, patterns = gimp.pdb.gimp_patterns_get_list(None)
 	return patterns
 
 class BrushSelector(_Selector):
@@ -246,7 +264,7 @@ class BrushSelector(_Selector):
     def get_title(self):
 	return "Brushes"
     def get_list(self):
-	num, brushes = gimp.pdb.gimp_brushes_get_list()
+	num, brushes = gimp.pdb.gimp_brushes_get_list(None)
 	return brushes
 
 class GradientSelector(_Selector):
@@ -258,7 +276,7 @@ class GradientSelector(_Selector):
     def get_title(self):
 	return "Gradients"
     def get_list(self):
-	num, gradients = gimp.pdb.gimp_gradients_get_list()
+	num, gradients = gimp.pdb.gimp_gradients_get_list(None)
 	return gradients
 
 class FontSelector(gtk.HBox):

@@ -368,6 +368,10 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    Py_DECREF(x);
 	    break;
 	case GIMP_PDB_STRING:
+	    if (item == Py_None) {
+		ret[i].data.d_string = NULL;
+		break;
+	    }
 	    check((x = PyObject_Str(item)) == NULL);
 	    ret[i].data.d_string = g_strdup(PyString_AsString(x));
 	    Py_DECREF(x);
@@ -430,6 +434,10 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    sa = g_new(gchar *, len);
 	    for (j = 0; j < len; j++) {
 		x = PySequence_GetItem(item, j);
+		if (x == Py_None) {
+		    sa[j] = NULL;
+		    continue;
+		}
 		arraycheck((y=PyObject_Str(x))==NULL,
 			   sa);
 		sa[j] = g_strdup(PyString_AsString(y));
