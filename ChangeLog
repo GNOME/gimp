@@ -1,6 +1,11 @@
+2004-09-08  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreviewarea.c: factored out common code.
+	Reduced indentation level by closing a switch earlier.
+
 2004-09-08  DindinX  <david@dindinx.org>
 
-	*  libgimpwidgets/gimppreviewarea.c: (gimp_preview_area_blend)
+	* libgimpwidgets/gimppreviewarea.c: (gimp_preview_area_blend)
 	use gimp_preview_area_draw when the opacity is 0 or 255, instead of
 	duplicating code.
 

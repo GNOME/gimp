@@ -199,11 +199,12 @@ test_run (GtkWidget *area,
   gdk_flush ();
   total_time = g_timer_elapsed (timer, NULL) - start_time;
   g_print ("%-16s "
-           "fill:  %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
+           "fill  :  %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
            "Color fill",
            total_time,
            num_iters / total_time,
            num_iters * (WIDTH * HEIGHT * 1e-6) / total_time);
+  g_print ("\n");
 
   g_free (buf);
 }
