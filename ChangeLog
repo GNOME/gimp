@@ -1,3 +1,8 @@
+Mon Dec 11 20:29:55 GMT 2000  Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/common/gee.c: v1.05: Sub-pixel jitter is
+	now less severe and less coarse.
+
 2000-12-11  Sven Neumann  <sven@gimp.org>
 
 	* app/paint_core.c: clamp scale factor between 0.0 and 1.0 to avoid

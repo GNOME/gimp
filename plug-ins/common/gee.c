@@ -1,12 +1,15 @@
 /*
- * Adam D. Moss : 1998/1999 : adam@gimp.org : adam@foxbox.org
+ * Adam D. Moss : 1998-2000 : adam@gimp.org : adam@foxbox.org
  *
  * This is part of the GIMP package and is released under the GNU
  * Public License.
  */
 
 /*
- * Version 1.04 : 99.03.29
+ * Version 1.05 : 2000-12-11
+ *
+ * 1.05:
+ * Sub-pixel jitter is now less severe and less coarse.
  *
  * 1.04:
  * Wigglyness and button-click fun.
@@ -354,8 +357,8 @@ domap1 (unsigned char *src, unsigned char *dest,
     bycxmcybx = 1;
 
   /* A little sub-pixel jitter to liven things up. */
-  basesx = (((RAND_FUNC ()%89)<<19)/bycxmcybx) + ((-128-((128*256)/(cx+bx)))<<11);
-  basesy = (((RAND_FUNC ()%89)<<19)/bycxmcybx) + ((-128-((128*256)/(cy+by)))<<11);
+  basesx = (((RAND_FUNC ()%(29<<19))/bycxmcybx)) + ((-128-((128*256)/(cx+bx)))<<11);
+  basesy = (((RAND_FUNC ()%(29<<19))/bycxmcybx)) + ((-128-((128*256)/(cy+by)))<<11);
 
   bx2 = ((bx)<<19)/bycxmcybx;
   cx2 = ((cx)<<19)/bycxmcybx;
