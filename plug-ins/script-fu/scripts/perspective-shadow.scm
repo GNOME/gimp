@@ -57,7 +57,7 @@
 
     
   (if (= rel-distance 0) (set! rel-distance 999999))
-  (gimp-image-undo-disable image)
+  (gimp-undo-push-group-start image)
   
   (gimp-layer-add-alpha drawable)
   (if (= (car (gimp-selection-is-empty image)) TRUE)
@@ -174,7 +174,7 @@
 
   (gimp-image-set-active-layer image drawable)
   (gimp-palette-set-background old-bg)
-  (gimp-image-undo-enable image)
+  (gimp-undo-push-group-end image)
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-perspective-shadow"

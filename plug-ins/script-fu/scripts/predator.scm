@@ -36,7 +36,7 @@
 	 (image-width (car (gimp-image-width image)))
 	 (image-height (car (gimp-image-height image))))
     
-    (gimp-image-undo-disable image)
+    (gimp-undo-push-group-start image)
     (gimp-layer-add-alpha drawable)
     
     (if (= (car (gimp-selection-is-empty image)) TRUE)
@@ -90,7 +90,7 @@
     (if (= keep-selection FALSE)
 	(gimp-selection-none image))
     
-    (gimp-image-undo-enable image)
+    (gimp-undo-push-group-end image)
     (gimp-image-set-active-layer image drawable)
     (gimp-image-remove-channel image active-selection)
     (gimp-displays-flush)))

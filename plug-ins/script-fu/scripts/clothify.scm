@@ -41,7 +41,7 @@
 
 (script-fu-register "script-fu-clothify"
 		    _"<Image>/Script-Fu/Alchemy/Clothify..."
-		    "Render the specified text along the perimeter of a circle"
+		    "Gives the current layer a cloth-like texture"
 		    "Tim Newsome <drz@froody.bloke.com>"
 		    "Tim Newsome"
 		    "4/11/97"
