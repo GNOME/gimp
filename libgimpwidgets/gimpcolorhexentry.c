@@ -73,14 +73,14 @@ gimp_color_hex_entry_get_type (void)
       static const GTypeInfo entry_info =
       {
         sizeof (GimpColorHexEntryClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_color_hex_entry_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColorHexEntry),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_color_hex_entry_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_color_hex_entry_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpColorHexEntry),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_color_hex_entry_init,
       };
 
       entry_type = g_type_register_static (GTK_TYPE_ENTRY,
@@ -156,11 +156,11 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
   gtk_entry_set_text (GTK_ENTRY (entry), "000000");
 
   g_signal_connect (entry, "focus_out_event",
-		    G_CALLBACK (gimp_color_hex_entry_events),
-		    NULL);
+                    G_CALLBACK (gimp_color_hex_entry_events),
+                    NULL);
   g_signal_connect (entry, "key_press_event",
-		    G_CALLBACK (gimp_color_hex_entry_events),
-		    NULL);
+                    G_CALLBACK (gimp_color_hex_entry_events),
+                    NULL);
 
   g_signal_connect (completion, "match_selected",
                     G_CALLBACK (gimp_color_hex_entry_matched),
@@ -264,12 +264,12 @@ gimp_color_hex_entry_events (GtkWidget *widget,
           GimpRGB  color;
           gsize    len = strlen (text);
 
-          if (len > 0&&
-              ((len % 3 == 0 && gimp_rgb_parse_hex (&color, text, len)) ||
-               (gimp_rgb_parse_name (&color, text, -1))))
-	    {
+          if (len > 0 &&
+              (gimp_rgb_parse_hex (&color, text, len) ||
+               gimp_rgb_parse_name (&color, text, -1)))
+            {
               gimp_color_hex_entry_set_color (entry, &color);
-	    }
+            }
           else
             {
               gtk_entry_set_text (GTK_ENTRY (entry), buffer);
