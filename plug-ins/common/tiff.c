@@ -610,7 +610,7 @@ load_image (char *filename)
     load_lines (tif, channel, bps, photomet, alpha, extra);
   }
 
-  for (i= 0; i < extra; ++i) {
+  for (i= 0; !worst_case && i < extra; ++i) {
     gimp_drawable_flush (channel[i].drawable);
     gimp_drawable_detach (channel[i].drawable);
   }
@@ -638,7 +638,6 @@ load_rgba (TIFF *tif, channel_data *channel)
 
   gimp_pixel_rgn_set_rect(&(channel[0].pixel_rgn), channel[0].pixels,
                               0, 0, imageWidth, imageLength);
-  g_message("TIFF Fell back to RGBA, image may be inverted\n");
 }
 
 static void
