@@ -241,14 +241,18 @@ noisify_func (guchar *src, guchar *dest, gint bpp, GRand *gr)
     {
       if (nvals.noise[b] > 0.0)
 	{
-	  if (nvals.independent)
+	  gint p;
+
+          if (nvals.independent)
 	    noise = (gint) (nvals.noise[b] * gauss (gr) * 127);
 
-	  gint p = src[b] + noise;
-	  dest[b] = CLAMP0255(p);
+	  p = src[b] + noise;
+	  dest[b] = CLAMP0255 (p);
 	}
       else
-	dest[b] = src[b];
+        {
+          dest[b] = src[b];
+        }
     }
 }
 

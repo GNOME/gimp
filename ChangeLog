@@ -1,5 +1,10 @@
 2002-12-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/noisify.c (noisify_func): sorry, you can only
+	declare a variable at the beginning of a block.
+
+2002-12-16  Sven Neumann  <sven@gimp.org>
+
 	* docs/Wilber_Construction_Kit.xcf.gz: more Wilber gadgets added by
 	Guillermo S. Romero.
 
