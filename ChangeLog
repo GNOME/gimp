@@ -1,3 +1,9 @@
+2004-08-29  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfigwriter.c: don't emit critical warnings
+	about a messed up state of GimpConfigWriter if the writer is
+	disabled because of a write error that occured earlier.
+
 2004-08-29  DindinX  <david@dindinx.org>
 
 	* app/core/core-enums.h: Renamed GimpPreviewSize to GimpViewSize.
@@ -40,7 +46,7 @@
 
 	* app/composite/gimp-composite-sse.c
 	* app/composite/gimp-composite-sse2.c: More updates to accomodate
-	  the clobber registers. Additional progress against bug #147013.
+	the clobber registers. Additional progress against bug #147013.
 
 	* app/composite/gimp-composite-sse.h: Fixed a bug where the wrong
 	manifest constant definition caused sse2 instructions to never be
