@@ -53,56 +53,101 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_channel_class_init  (GimpChannelClass *klass);
-static void       gimp_channel_init        (GimpChannel      *channel);
+static void       gimp_channel_class_init    (GimpChannelClass *klass);
+static void       gimp_channel_init          (GimpChannel      *channel);
 
-static void       gimp_channel_finalize    (GObject          *object);
+static void       gimp_channel_finalize      (GObject          *object);
 
-static gsize      gimp_channel_get_memsize (GimpObject       *object,
-                                            gsize            *gui_size);
+static gsize      gimp_channel_get_memsize   (GimpObject       *object,
+                                              gsize            *gui_size);
 
-static GimpItem * gimp_channel_duplicate   (GimpItem         *item,
-                                            GType             new_type,
-                                            gboolean          add_alpha);
-static void       gimp_channel_translate   (GimpItem         *item,
-                                            gint              off_x,
-                                            gint              off_y,
-                                            gboolean          push_undo);
-static void       gimp_channel_scale       (GimpItem         *item,
-                                            gint              new_width,
-                                            gint              new_height,
-                                            gint              new_offset_x,
-                                            gint              new_offset_y,
-                                            GimpInterpolationType interp_type);
-static void       gimp_channel_resize      (GimpItem         *item,
-                                            gint              new_width,
-                                            gint              new_height,
-                                            gint              offx,
-                                            gint              offy);
-static void       gimp_channel_flip        (GimpItem         *item,
-                                            GimpOrientationType flip_type,
-                                            gdouble           axis,
-                                            gboolean          flip_result);
-static void       gimp_channel_rotate      (GimpItem         *item,
-                                            GimpRotationType  flip_type,
-                                            gdouble           center_x,
-                                            gdouble           center_y,
-                                            gboolean          flip_result);
-static void       gimp_channel_transform   (GimpItem         *item,
-                                            const GimpMatrix3 *matrix,
-                                            GimpTransformDirection direction,
-                                            GimpInterpolationType interpolation_type,
-                                            gboolean          clip_result,
-                                            GimpProgressFunc  progress_callback,
-                                            gpointer          progress_data);
-static gboolean   gimp_channel_stroke      (GimpItem         *item,
-                                            GimpDrawable     *drawable,
-                                            GimpPaintInfo    *paint_info);
+static GimpItem * gimp_channel_duplicate     (GimpItem         *item,
+                                              GType             new_type,
+                                              gboolean          add_alpha);
+static void       gimp_channel_translate     (GimpItem         *item,
+                                              gint              off_x,
+                                              gint              off_y,
+                                              gboolean          push_undo);
+static void       gimp_channel_scale         (GimpItem         *item,
+                                              gint              new_width,
+                                              gint              new_height,
+                                              gint              new_offset_x,
+                                              gint              new_offset_y,
+                                              GimpInterpolationType interp_type);
+static void       gimp_channel_resize        (GimpItem         *item,
+                                              gint              new_width,
+                                              gint              new_height,
+                                              gint              offx,
+                                              gint              offy);
+static void       gimp_channel_flip          (GimpItem         *item,
+                                              GimpOrientationType flip_type,
+                                              gdouble           axis,
+                                              gboolean          flip_result);
+static void       gimp_channel_rotate        (GimpItem         *item,
+                                              GimpRotationType  flip_type,
+                                              gdouble           center_x,
+                                              gdouble           center_y,
+                                              gboolean          flip_result);
+static void       gimp_channel_transform     (GimpItem         *item,
+                                              const GimpMatrix3 *matrix,
+                                              GimpTransformDirection direction,
+                                              GimpInterpolationType interpolation_type,
+                                              gboolean          clip_result,
+                                              GimpProgressFunc  progress_callback,
+                                              gpointer          progress_data);
+static gboolean   gimp_channel_stroke        (GimpItem         *item,
+                                              GimpDrawable     *drawable,
+                                              GimpPaintInfo    *paint_info);
 
-static void       gimp_channel_push_undo   (GimpChannel      *mask,
-                                            const gchar      *undo_desc);
-static void       gimp_channel_validate    (TileManager      *tm,
-                                            Tile             *tile);
+static gboolean   gimp_channel_real_boundary (GimpChannel      *channel,
+                                              const BoundSeg  **segs_in,
+                                              const BoundSeg  **segs_out,
+                                              gint             *num_segs_in,
+                                              gint             *num_segs_out,
+                                              gint              x1,
+                                              gint              y1,
+                                              gint              x2,
+                                              gint              y2);
+static gboolean   gimp_channel_real_bounds   (GimpChannel      *channel,
+                                              gint             *x1,
+                                              gint             *y1,
+                                              gint             *x2,
+                                              gint             *y2);
+static gint       gimp_channel_real_value    (GimpChannel      *channel,
+                                              gint              x,
+                                              gint              y);
+static gboolean   gimp_channel_real_is_empty (GimpChannel      *channel);
+static void       gimp_channel_real_feather  (GimpChannel      *channel,
+                                              gdouble           radius_x,
+                                              gdouble           radius_y,
+                                              gboolean          push_undo);
+static void       gimp_channel_real_sharpen  (GimpChannel      *channel,
+                                              gboolean          push_undo);
+static void       gimp_channel_real_clear    (GimpChannel      *channel,
+                                              const gchar      *undo_desc,
+                                              gboolean          push_undo);
+static void       gimp_channel_real_all      (GimpChannel      *channel,
+                                              gboolean          push_undo);
+static void       gimp_channel_real_invert   (GimpChannel      *channel,
+                                              gboolean          push_undo);
+static void       gimp_channel_real_border   (GimpChannel      *channel,
+                                              gint              radius_x,
+                                              gint              radius_y,
+                                              gboolean          push_undo);
+static void       gimp_channel_real_grow     (GimpChannel      *channel,
+                                              gint              radius_x,
+                                              gint              radius_y,
+                                              gboolean          push_undo);
+static void       gimp_channel_real_shrink   (GimpChannel      *channel,
+                                              gint              radius_x,
+                                              gint              radius_y,
+                                              gboolean          edge_lock,
+                                              gboolean          push_undo);
+
+static void       gimp_channel_push_undo     (GimpChannel      *mask,
+                                              const gchar      *undo_desc);
+static void       gimp_channel_validate      (TileManager      *tm,
+                                              Tile             *tile);
 
 
 static GimpDrawableClass * parent_class = NULL;
@@ -167,6 +212,19 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->stroke               = gimp_channel_stroke;
   item_class->default_name         = _("Channel");
   item_class->rename_desc          = _("Rename Channel");
+
+  klass->boundary                  = gimp_channel_real_boundary;
+  klass->bounds                    = gimp_channel_real_bounds;
+  klass->value                     = gimp_channel_real_value;
+  klass->is_empty                  = gimp_channel_real_is_empty;
+  klass->feather                   = gimp_channel_real_feather;
+  klass->sharpen                   = gimp_channel_real_sharpen;
+  klass->clear                     = gimp_channel_real_clear;
+  klass->all                       = gimp_channel_real_all;
+  klass->invert                    = gimp_channel_real_invert;
+  klass->border                    = gimp_channel_real_border;
+  klass->grow                      = gimp_channel_real_grow;
+  klass->shrink                    = gimp_channel_real_shrink;
 }
 
 static void
@@ -551,6 +609,582 @@ gimp_channel_stroke (GimpItem         *item,
   return retval;
 }
 
+static gboolean
+gimp_channel_real_boundary (GimpChannel     *channel,
+                            const BoundSeg **segs_in,
+                            const BoundSeg **segs_out,
+                            gint            *num_segs_in,
+                            gint            *num_segs_out,
+                            gint             x1,
+                            gint             y1,
+                            gint             x2,
+                            gint             y2)
+{
+  gint        x3, y3, x4, y4;
+  PixelRegion bPR;
+
+  if (! channel->boundary_known)
+    {
+      /* free the out of date boundary segments */
+      if (channel->segs_in)
+	g_free (channel->segs_in);
+      if (channel->segs_out)
+	g_free (channel->segs_out);
+
+      if (gimp_channel_bounds (channel, &x3, &y3, &x4, &y4))
+	{
+	  pixel_region_init (&bPR, GIMP_DRAWABLE (channel)->tiles,
+			     x3, y3, (x4 - x3), (y4 - y3), FALSE);
+	  channel->segs_out = find_mask_boundary (&bPR, &channel->num_segs_out,
+                                                  IgnoreBounds,
+                                                  x1, y1,
+                                                  x2, y2,
+                                                  HALF_WAY);
+	  x1 = MAX (x1, x3);
+	  y1 = MAX (y1, y3);
+	  x2 = MIN (x2, x4);
+	  y2 = MIN (y2, y4);
+
+	  if (x2 > x1 && y2 > y1)
+	    {
+	      pixel_region_init (&bPR, GIMP_DRAWABLE (channel)->tiles,
+				 0, 0,
+				 GIMP_ITEM (channel)->width,
+				 GIMP_ITEM (channel)->height, FALSE);
+	      channel->segs_in = find_mask_boundary (&bPR, &channel->num_segs_in,
+                                                     WithinBounds,
+                                                     x1, y1,
+                                                     x2, y2,
+                                                     HALF_WAY);
+	    }
+	  else
+	    {
+	      channel->segs_in     = NULL;
+	      channel->num_segs_in = 0;
+	    }
+	}
+      else
+	{
+	  channel->segs_in      = NULL;
+	  channel->segs_out     = NULL;
+	  channel->num_segs_in  = 0;
+	  channel->num_segs_out = 0;
+	}
+
+      channel->boundary_known = TRUE;
+    }
+
+  *segs_in      = channel->segs_in;
+  *segs_out     = channel->segs_out;
+  *num_segs_in  = channel->num_segs_in;
+  *num_segs_out = channel->num_segs_out;
+
+  return TRUE;
+}
+
+static gboolean
+gimp_channel_real_bounds (GimpChannel *channel,
+                          gint        *x1,
+                          gint        *y1,
+                          gint        *x2,
+                          gint        *y2)
+{
+  PixelRegion  maskPR;
+  guchar      *data, *data1;
+  gint         x, y;
+  gint         ex, ey;
+  gint         tx1, tx2, ty1, ty2;
+  gint         minx, maxx;
+  gpointer     pr;
+
+  /*  if the channel's bounds have already been reliably calculated...  */
+  if (channel->bounds_known)
+    {
+      *x1 = channel->x1;
+      *y1 = channel->y1;
+      *x2 = channel->x2;
+      *y2 = channel->y2;
+
+      return ! channel->empty;
+    }
+
+  /*  go through and calculate the bounds  */
+  tx1 = GIMP_ITEM (channel)->width;
+  ty1 = GIMP_ITEM (channel)->height;
+  tx2 = 0;
+  ty2 = 0;
+
+  pixel_region_init (&maskPR, GIMP_DRAWABLE (channel)->tiles,
+		     0, 0,
+		     GIMP_ITEM (channel)->width,
+		     GIMP_ITEM (channel)->height, FALSE);
+
+  for (pr = pixel_regions_register (1, &maskPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      data1 = data = maskPR.data;
+      ex = maskPR.x + maskPR.w;
+      ey = maskPR.y + maskPR.h;
+      /* only check the pixels if this tile is not fully within the currently
+	 computed bounds */
+      if (maskPR.x < tx1 || ex > tx2 ||
+	  maskPR.y < ty1 || ey > ty2)
+        {
+	  /* Check upper left and lower right corners to see if we can
+	     avoid checking the rest of the pixels in this tile */
+	  if (data[0] && data[maskPR.rowstride*(maskPR.h - 1) + maskPR.w - 1])
+            {
+              if (maskPR.x < tx1)
+                tx1 = maskPR.x;
+              if (ex > tx2)
+                tx2 = ex;
+              if (maskPR.y < ty1)
+                ty1 = maskPR.y;
+              if (ey > ty2)
+                ty2 = ey;
+            }
+	  else
+            {
+              for (y = maskPR.y; y < ey; y++, data1 += maskPR.rowstride)
+                {
+                  for (x = maskPR.x, data = data1; x < ex; x++, data++)
+                    {
+                      if (*data)
+                        {
+                          minx = x;
+                          maxx = x;
+
+                          for (; x < ex; x++, data++)
+                            if (*data)
+                              maxx = x;
+
+                          if (minx < tx1)
+                            tx1 = minx;
+                          if (maxx > tx2)
+                            tx2 = maxx;
+                          if (y < ty1)
+                            ty1 = y;
+                          if (y > ty2)
+                            ty2 = y;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+  tx2 = CLAMP (tx2 + 1, 0, GIMP_ITEM (channel)->width);
+  ty2 = CLAMP (ty2 + 1, 0, GIMP_ITEM (channel)->height);
+
+  if (tx1 == GIMP_ITEM (channel)->width && ty1 == GIMP_ITEM (channel)->height)
+    {
+      channel->empty = TRUE;
+      channel->x1    = 0;
+      channel->y1    = 0;
+      channel->x2    = GIMP_ITEM (channel)->width;
+      channel->y2    = GIMP_ITEM (channel)->height;
+    }
+  else
+    {
+      channel->empty = FALSE;
+      channel->x1    = tx1;
+      channel->y1    = ty1;
+      channel->x2    = tx2;
+      channel->y2    = ty2;
+    }
+
+  channel->bounds_known = TRUE;
+
+  *x1 = channel->x1;
+  *x2 = channel->x2;
+  *y1 = channel->y1;
+  *y2 = channel->y2;
+
+  return ! channel->empty;
+}
+
+static gint
+gimp_channel_real_value (GimpChannel *channel,
+                         gint         x,
+                         gint         y)
+{
+  Tile *tile;
+  gint  val;
+
+  /*  Some checks to cut back on unnecessary work  */
+  if (channel->bounds_known)
+    {
+      if (channel->empty)
+	return 0;
+      else if (x < channel->x1 || x >= channel->x2 ||
+               y < channel->y1 || y >= channel->y2)
+	return 0;
+    }
+  else
+    {
+      if (x < 0 || x >= GIMP_ITEM (channel)->width ||
+	  y < 0 || y >= GIMP_ITEM (channel)->height)
+	return 0;
+    }
+
+  tile = tile_manager_get_tile (GIMP_DRAWABLE (channel)->tiles, x, y,
+                                TRUE, FALSE);
+  val = *(guchar *) (tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT));
+  tile_release (tile, FALSE);
+
+  return val;
+}
+
+static gboolean
+gimp_channel_real_is_empty (GimpChannel *channel)
+{
+  PixelRegion  maskPR;
+  guchar      *data;
+  gint         x, y;
+  gpointer     pr;
+
+  if (channel->bounds_known)
+    return channel->empty;
+
+  pixel_region_init (&maskPR, GIMP_DRAWABLE (channel)->tiles,
+		     0, 0,
+		     GIMP_ITEM (channel)->width,
+		     GIMP_ITEM (channel)->height, FALSE);
+
+  for (pr = pixel_regions_register (1, &maskPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      /*  check if any pixel in the channel is non-zero  */
+      data = maskPR.data;
+
+      for (y = 0; y < maskPR.h; y++)
+	for (x = 0; x < maskPR.w; x++)
+	  if (*data++)
+	    {
+	      pixel_regions_process_stop (pr);
+	      return FALSE;
+	    }
+    }
+
+  /*  The mask is empty, meaning we can set the bounds as known  */
+  if (channel->segs_in)
+    g_free (channel->segs_in);
+  if (channel->segs_out)
+    g_free (channel->segs_out);
+
+  channel->empty          = TRUE;
+  channel->segs_in        = NULL;
+  channel->segs_out       = NULL;
+  channel->num_segs_in    = 0;
+  channel->num_segs_out   = 0;
+  channel->bounds_known   = TRUE;
+  channel->boundary_known = TRUE;
+  channel->x1             = 0;
+  channel->y1             = 0;
+  channel->x2             = GIMP_ITEM (channel)->width;
+  channel->y2             = GIMP_ITEM (channel)->height;
+
+  return TRUE;
+}
+
+static void
+gimp_channel_real_feather (GimpChannel *channel,
+                           gdouble      radius_x,
+                           gdouble      radius_y,
+                           gboolean     push_undo)
+{
+  PixelRegion srcPR;
+
+  if (push_undo)
+    gimp_channel_push_undo (channel, _("Feather Channel"));
+
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
+		     0, 0,
+                     gimp_item_width  (GIMP_ITEM (channel)),
+                     gimp_item_height (GIMP_ITEM (channel)),
+                     FALSE);
+  gaussian_blur_region (&srcPR, radius_x, radius_y);
+
+  channel->bounds_known = FALSE;
+}
+
+static void
+gimp_channel_real_sharpen (GimpChannel *channel,
+                           gboolean     push_undo)
+{
+  PixelRegion  maskPR;
+  GimpLut     *lut;
+
+  if (push_undo)
+    gimp_channel_push_undo (channel, _("Sharpen Channel"));
+
+  pixel_region_init (&maskPR, GIMP_DRAWABLE (channel)->tiles,
+		     0, 0,
+                     gimp_item_width  (GIMP_ITEM (channel)),
+                     gimp_item_height (GIMP_ITEM (channel)),
+		     TRUE);
+  lut = threshold_lut_new (0.5, 1);
+
+  pixel_regions_process_parallel ((p_func) gimp_lut_process_inline,
+				  lut, 1, &maskPR);
+  gimp_lut_free (lut);
+
+  channel->bounds_known = FALSE;
+}
+
+static void
+gimp_channel_real_clear (GimpChannel *channel,
+                         const gchar *undo_desc,
+                         gboolean     push_undo)
+{
+  PixelRegion maskPR;
+  guchar      bg = TRANSPARENT_OPACITY;
+
+  if (push_undo)
+    {
+      if (! undo_desc)
+        undo_desc = _("Clear Channel");
+
+      gimp_channel_push_undo (channel, undo_desc);
+    }
+
+  if (channel->bounds_known && !channel->empty)
+    {
+      pixel_region_init (&maskPR, GIMP_DRAWABLE (channel)->tiles,
+			 channel->x1, channel->y1,
+			 (channel->x2 - channel->x1), (channel->y2 - channel->y1), TRUE);
+      color_region (&maskPR, &bg);
+    }
+  else
+    {
+      /*  clear the mask  */
+      pixel_region_init (&maskPR, GIMP_DRAWABLE (channel)->tiles,
+			 0, 0,
+			 GIMP_ITEM (channel)->width,
+			 GIMP_ITEM (channel)->height, TRUE);
+      color_region (&maskPR, &bg);
+    }
+
+  /*  we know the bounds  */
+  channel->bounds_known = TRUE;
+  channel->empty        = TRUE;
+  channel->x1           = 0;
+  channel->y1           = 0;
+  channel->x2           = GIMP_ITEM (channel)->width;
+  channel->y2           = GIMP_ITEM (channel)->height;
+}
+
+static void
+gimp_channel_real_all (GimpChannel *channel,
+                       gboolean     push_undo)
+{
+  PixelRegion maskPR;
+  guchar      bg = OPAQUE_OPACITY;
+
+  if (push_undo)
+    gimp_channel_push_undo (channel, _("Fill Channel"));
+
+  /*  clear the channel  */
+  pixel_region_init (&maskPR, GIMP_DRAWABLE (channel)->tiles,
+		     0, 0,
+		     GIMP_ITEM (channel)->width,
+		     GIMP_ITEM (channel)->height, TRUE);
+  color_region (&maskPR, &bg);
+
+  /*  we know the bounds  */
+  channel->bounds_known = TRUE;
+  channel->empty        = FALSE;
+  channel->x1           = 0;
+  channel->y1           = 0;
+  channel->x2           = GIMP_ITEM (channel)->width;
+  channel->y2           = GIMP_ITEM (channel)->height;
+}
+
+static void
+gimp_channel_real_invert (GimpChannel *channel,
+                          gboolean     push_undo)
+{
+  if (push_undo)
+    gimp_channel_push_undo (channel, _("Invert Channel"));
+
+  if (channel->bounds_known && channel->empty)
+    {
+      gimp_channel_all (channel, FALSE);
+    }
+  else
+    {
+      PixelRegion  maskPR;
+      GimpLut     *lut;
+
+      pixel_region_init (&maskPR, GIMP_DRAWABLE (channel)->tiles,
+                         0, 0,
+                         GIMP_ITEM (channel)->width,
+                         GIMP_ITEM (channel)->height, TRUE);
+
+      lut = invert_lut_new (1);
+
+      pixel_regions_process_parallel ((p_func) gimp_lut_process_inline, lut,
+                                      1, &maskPR);
+
+      gimp_lut_free (lut);
+
+      channel->bounds_known = FALSE;
+    }
+}
+
+static void
+gimp_channel_real_border (GimpChannel *channel,
+                          gint         radius_x,
+                          gint         radius_y,
+                          gboolean     push_undo)
+{
+  PixelRegion bPR;
+  gint        x1, y1, x2, y2;
+
+  if (radius_x < 0 || radius_y < 0)
+    return;
+
+  if (! gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
+    return;
+
+  if (gimp_channel_is_empty (channel))
+    return;
+
+  if (x1 - radius_x < 0)
+    x1 = 0;
+  else
+    x1 -= radius_x;
+  if (x2 + radius_x > GIMP_ITEM (channel)->width)
+    x2 = GIMP_ITEM (channel)->width;
+  else
+    x2 += radius_x;
+
+  if (y1 - radius_y < 0)
+    y1 = 0;
+  else
+    y1 -= radius_y;
+  if (y2 + radius_y > GIMP_ITEM (channel)->height)
+    y2 = GIMP_ITEM (channel)->height;
+  else
+    y2 += radius_y;
+
+  if (push_undo)
+    gimp_channel_push_undo (channel, _("Border Channel"));
+
+  pixel_region_init (&bPR, GIMP_DRAWABLE (channel)->tiles, x1, y1,
+		     (x2-x1), (y2-y1), TRUE);
+
+  border_region (&bPR, radius_x, radius_y);
+
+  channel->bounds_known = FALSE;
+}
+
+static void
+gimp_channel_real_grow (GimpChannel *channel,
+                        gint         radius_x,
+                        gint         radius_y,
+                        gboolean     push_undo)
+{
+  PixelRegion bPR;
+  gint        x1, y1, x2, y2;
+
+  if (radius_x == 0 && radius_y == 0)
+    return;
+
+  if (radius_x <= 0 && radius_y <= 0)
+    {
+      gimp_channel_shrink (channel, -radius_x, -radius_y, FALSE, push_undo);
+      return;
+    }
+
+  if (radius_x < 0 || radius_y < 0)
+    return;
+
+  if (! gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
+    return;
+
+  if (gimp_channel_is_empty (channel))
+    return;
+
+  if (x1 - radius_x > 0)
+    x1 = x1 - radius_x;
+  else
+    x1 = 0;
+  if (y1 - radius_y > 0)
+    y1 = y1 - radius_y;
+  else
+    y1 = 0;
+  if (x2 + radius_x < GIMP_ITEM (channel)->width)
+    x2 = x2 + radius_x;
+  else
+    x2 = GIMP_ITEM (channel)->width;
+  if (y2 + radius_y < GIMP_ITEM (channel)->height)
+    y2 = y2 + radius_y;
+  else
+    y2 = GIMP_ITEM (channel)->height;
+
+  if (push_undo)
+    gimp_channel_push_undo (channel, _("Grow Channel"));
+
+  /*  need full extents for grow, not! */
+  pixel_region_init (&bPR, GIMP_DRAWABLE (channel)->tiles, x1, y1, (x2 - x1),
+		     (y2 - y1), TRUE);
+
+  fatten_region (&bPR, radius_x, radius_y);
+
+  channel->bounds_known = FALSE;
+}
+
+static void
+gimp_channel_real_shrink (GimpChannel *channel,
+                          gint         radius_x,
+                          gint         radius_y,
+                          gboolean     edge_lock,
+                          gboolean     push_undo)
+{
+  PixelRegion bPR;
+  gint        x1, y1, x2, y2;
+
+  if (radius_x == 0 && radius_y == 0)
+    return;
+
+  if (radius_x <= 0 && radius_y <= 0)
+    {
+      gimp_channel_grow (channel, -radius_x, -radius_y, push_undo);
+      return;
+    }
+
+  if (radius_x < 0 || radius_y < 0)
+    return;
+
+  if (! gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
+    return;
+
+  if (gimp_channel_is_empty (channel))
+    return;
+
+  if (x1 > 0)
+    x1--;
+  if (y1 > 0)
+    y1--;
+  if (x2 < GIMP_ITEM (channel)->width)
+    x2++;
+  if (y2 < GIMP_ITEM (channel)->height)
+    y2++;
+
+  if (push_undo)
+    gimp_channel_push_undo (channel, _("Shrink Channel"));
+
+  pixel_region_init (&bPR, GIMP_DRAWABLE (channel)->tiles, x1, y1, (x2 - x1),
+		     (y2 - y1), TRUE);
+
+  thin_region (&bPR, radius_x, radius_y, edge_lock);
+
+  channel->bounds_known = FALSE;
+}
+
 static void
 gimp_channel_push_undo (GimpChannel *mask,
                         const gchar *undo_desc)
@@ -633,7 +1267,7 @@ gimp_channel_new_from_alpha (GimpImage     *gimage,
 
   channel = gimp_channel_new (gimage, width, height, name, color);
 
-  gimp_channel_clear (channel, FALSE);
+  gimp_channel_clear (channel, NULL, FALSE);
 
   if (gimp_rectangle_intersect (0, 0, width, height,
                                 GIMP_ITEM (layer)->offset_x,
@@ -827,7 +1461,7 @@ gimp_channel_new_mask (GimpImage *gimage,
 }
 
 gboolean
-gimp_channel_boundary (GimpChannel     *mask,
+gimp_channel_boundary (GimpChannel     *channel,
 		       const BoundSeg **segs_in,
 		       const BoundSeg **segs_out,
 		       gint            *num_segs_in,
@@ -837,287 +1471,51 @@ gimp_channel_boundary (GimpChannel     *mask,
 		       gint             x2,
 		       gint             y2)
 {
-  gint        x3, y3, x4, y4;
-  PixelRegion bPR;
-
-  g_return_val_if_fail (GIMP_IS_CHANNEL (mask), FALSE);
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
   g_return_val_if_fail (segs_in != NULL, FALSE);
   g_return_val_if_fail (segs_out != NULL, FALSE);
   g_return_val_if_fail (num_segs_in != NULL, FALSE);
   g_return_val_if_fail (num_segs_out != NULL, FALSE);
 
-  if (! mask->boundary_known)
-    {
-      /* free the out of date boundary segments */
-      if (mask->segs_in)
-	g_free (mask->segs_in);
-      if (mask->segs_out)
-	g_free (mask->segs_out);
-
-      if (gimp_channel_bounds (mask, &x3, &y3, &x4, &y4))
-	{
-	  pixel_region_init (&bPR, GIMP_DRAWABLE (mask)->tiles,
-			     x3, y3, (x4 - x3), (y4 - y3), FALSE);
-	  mask->segs_out = find_mask_boundary (&bPR, &mask->num_segs_out,
-					       IgnoreBounds,
-					       x1, y1,
-					       x2, y2,
-                                               HALF_WAY);
-	  x1 = MAX (x1, x3);
-	  y1 = MAX (y1, y3);
-	  x2 = MIN (x2, x4);
-	  y2 = MIN (y2, y4);
-
-	  if (x2 > x1 && y2 > y1)
-	    {
-	      pixel_region_init (&bPR, GIMP_DRAWABLE (mask)->tiles,
-				 0, 0,
-				 GIMP_ITEM (mask)->width,
-				 GIMP_ITEM (mask)->height, FALSE);
-	      mask->segs_in =  find_mask_boundary (&bPR, &mask->num_segs_in,
-						   WithinBounds,
-						   x1, y1,
-						   x2, y2,
-                                                   HALF_WAY);
-	    }
-	  else
-	    {
-	      mask->segs_in     = NULL;
-	      mask->num_segs_in = 0;
-	    }
-	}
-      else
-	{
-	  mask->segs_in      = NULL;
-	  mask->segs_out     = NULL;
-	  mask->num_segs_in  = 0;
-	  mask->num_segs_out = 0;
-	}
-
-      mask->boundary_known = TRUE;
-    }
-
-  *segs_in      = mask->segs_in;
-  *segs_out     = mask->segs_out;
-  *num_segs_in  = mask->num_segs_in;
-  *num_segs_out = mask->num_segs_out;
-
-  return TRUE;
-}
-
-gint
-gimp_channel_value (GimpChannel *mask,
-		    gint         x,
-		    gint         y)
-{
-  Tile *tile;
-  gint  val;
-
-  g_return_val_if_fail (GIMP_IS_CHANNEL (mask), 0);
-
-  /*  Some checks to cut back on unnecessary work  */
-  if (mask->bounds_known)
-    {
-      if (mask->empty)
-	return 0;
-      else if (x < mask->x1 || x >= mask->x2 || y < mask->y1 || y >= mask->y2)
-	return 0;
-    }
-  else
-    {
-      if (x < 0 || x >= GIMP_ITEM (mask)->width ||
-	  y < 0 || y >= GIMP_ITEM (mask)->height)
-	return 0;
-    }
-
-  tile = tile_manager_get_tile (GIMP_DRAWABLE (mask)->tiles, x, y, TRUE, FALSE);
-  val = *(guchar *) (tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT));
-  tile_release (tile, FALSE);
-
-  return val;
+  return GIMP_CHANNEL_GET_CLASS (channel)->boundary (channel,
+                                                     segs_in, segs_out,
+                                                     num_segs_in, num_segs_out,
+                                                     x1, y1,
+                                                     x2, y2);
 }
 
 gboolean
-gimp_channel_bounds (GimpChannel *mask,
+gimp_channel_bounds (GimpChannel *channel,
 		     gint        *x1,
 		     gint        *y1,
 		     gint        *x2,
 		     gint        *y2)
 {
-  PixelRegion  maskPR;
-  guchar      *data, *data1;
-  gint         x, y;
-  gint         ex, ey;
-  gint         tx1, tx2, ty1, ty2;
-  gint         minx, maxx;
-  gpointer     pr;
-
-  g_return_val_if_fail (GIMP_IS_CHANNEL (mask), FALSE);
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
   g_return_val_if_fail (x1 != NULL, FALSE);
   g_return_val_if_fail (y1 != NULL, FALSE);
   g_return_val_if_fail (x2 != NULL, FALSE);
   g_return_val_if_fail (y2 != NULL, FALSE);
 
-  /*  if the mask's bounds have already been reliably calculated...  */
-  if (mask->bounds_known)
-    {
-      *x1 = mask->x1;
-      *y1 = mask->y1;
-      *x2 = mask->x2;
-      *y2 = mask->y2;
+  return GIMP_CHANNEL_GET_CLASS (channel)->bounds (channel, x1, y1, x2, y2);
+}
 
-      return ! mask->empty;
-    }
+gint
+gimp_channel_value (GimpChannel *channel,
+		    gint         x,
+		    gint         y)
+{
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), 0);
 
-  /*  go through and calculate the bounds  */
-  tx1 = GIMP_ITEM (mask)->width;
-  ty1 = GIMP_ITEM (mask)->height;
-  tx2 = 0;
-  ty2 = 0;
-
-  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
-		     0, 0,
-		     GIMP_ITEM (mask)->width,
-		     GIMP_ITEM (mask)->height, FALSE);
-
-  for (pr = pixel_regions_register (1, &maskPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      data1 = data = maskPR.data;
-      ex = maskPR.x + maskPR.w;
-      ey = maskPR.y + maskPR.h;
-      /* only check the pixels if this tile is not fully within the currently
-	 computed bounds */
-      if (maskPR.x < tx1 || ex > tx2 ||
-	  maskPR.y < ty1 || ey > ty2)
-        {
-	  /* Check upper left and lower right corners to see if we can
-	     avoid checking the rest of the pixels in this tile */
-	  if (data[0] && data[maskPR.rowstride*(maskPR.h - 1) + maskPR.w - 1])
-            {
-              if (maskPR.x < tx1)
-                tx1 = maskPR.x;
-              if (ex > tx2)
-                tx2 = ex;
-              if (maskPR.y < ty1)
-                ty1 = maskPR.y;
-              if (ey > ty2)
-                ty2 = ey;
-            }
-	  else
-            {
-              for (y = maskPR.y; y < ey; y++, data1 += maskPR.rowstride)
-                {
-                  for (x = maskPR.x, data = data1; x < ex; x++, data++)
-                    {
-                      if (*data)
-                        {
-                          minx = x;
-                          maxx = x;
-
-                          for (; x < ex; x++, data++)
-                            if (*data)
-                              maxx = x;
-
-                          if (minx < tx1)
-                            tx1 = minx;
-                          if (maxx > tx2)
-                            tx2 = maxx;
-                          if (y < ty1)
-                            ty1 = y;
-                          if (y > ty2)
-                            ty2 = y;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-  tx2 = CLAMP (tx2 + 1, 0, GIMP_ITEM (mask)->width);
-  ty2 = CLAMP (ty2 + 1, 0, GIMP_ITEM (mask)->height);
-
-  if (tx1 == GIMP_ITEM (mask)->width && ty1 == GIMP_ITEM (mask)->height)
-    {
-      mask->empty = TRUE;
-      mask->x1    = 0;
-      mask->y1    = 0;
-      mask->x2    = GIMP_ITEM (mask)->width;
-      mask->y2    = GIMP_ITEM (mask)->height;
-    }
-  else
-    {
-      mask->empty = FALSE;
-      mask->x1    = tx1;
-      mask->y1    = ty1;
-      mask->x2    = tx2;
-      mask->y2    = ty2;
-    }
-
-  mask->bounds_known = TRUE;
-
-  *x1 = mask->x1;
-  *x2 = mask->x2;
-  *y1 = mask->y1;
-  *y2 = mask->y2;
-
-  return !mask->empty;
+  return GIMP_CHANNEL_GET_CLASS (channel)->value (channel, x, y);
 }
 
 gboolean
-gimp_channel_is_empty (GimpChannel *mask)
+gimp_channel_is_empty (GimpChannel *channel)
 {
-  PixelRegion  maskPR;
-  guchar      *data;
-  gint         x, y;
-  gpointer     pr;
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
-  g_return_val_if_fail (GIMP_IS_CHANNEL (mask), FALSE);
-
-  if (mask->bounds_known)
-    return mask->empty;
-
-  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
-		     0, 0,
-		     GIMP_ITEM (mask)->width,
-		     GIMP_ITEM (mask)->height, FALSE);
-
-  for (pr = pixel_regions_register (1, &maskPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      /*  check if any pixel in the mask is non-zero  */
-      data = maskPR.data;
-
-      for (y = 0; y < maskPR.h; y++)
-	for (x = 0; x < maskPR.w; x++)
-	  if (*data++)
-	    {
-	      pixel_regions_process_stop (pr);
-	      return FALSE;
-	    }
-    }
-
-  /*  The mask is empty, meaning we can set the bounds as known  */
-  if (mask->segs_in)
-    g_free (mask->segs_in);
-  if (mask->segs_out)
-    g_free (mask->segs_out);
-
-  mask->empty          = TRUE;
-  mask->segs_in        = NULL;
-  mask->segs_out       = NULL;
-  mask->num_segs_in    = 0;
-  mask->num_segs_out   = 0;
-  mask->bounds_known   = TRUE;
-  mask->boundary_known = TRUE;
-  mask->x1             = 0;
-  mask->y1             = 0;
-  mask->x2             = GIMP_ITEM (mask)->width;
-  mask->y2             = GIMP_ITEM (mask)->height;
-
-  return TRUE;
+  return GIMP_CHANNEL_GET_CLASS (channel)->is_empty (channel);
 }
 
 void
@@ -1578,309 +1976,89 @@ gimp_channel_combine_mask (GimpChannel    *mask,
 }
 
 void
-gimp_channel_feather (GimpChannel *mask,
+gimp_channel_feather (GimpChannel *channel,
 		      gdouble      radius_x,
 		      gdouble      radius_y,
                       gboolean     push_undo)
 {
-  PixelRegion srcPR;
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-
-  if (push_undo)
-    gimp_channel_push_undo (mask, _("Feather Channel"));
-
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (mask)->tiles,
-		     0, 0,
-                     gimp_item_width  (GIMP_ITEM (mask)),
-                     gimp_item_height (GIMP_ITEM (mask)),
-                     FALSE);
-  gaussian_blur_region (&srcPR, radius_x, radius_y);
-
-  mask->bounds_known = FALSE;
+  GIMP_CHANNEL_GET_CLASS (channel)->feather (channel, radius_x, radius_y,
+                                             push_undo);
 }
 
 void
-gimp_channel_sharpen (GimpChannel *mask,
+gimp_channel_sharpen (GimpChannel *channel,
                       gboolean     push_undo)
 {
-  PixelRegion  maskPR;
-  GimpLut     *lut;
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-
-  if (push_undo)
-    gimp_channel_push_undo (mask, _("Sharpen Channel"));
-
-  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
-		     0, 0,
-                     gimp_item_width  (GIMP_ITEM (mask)),
-                     gimp_item_height (GIMP_ITEM (mask)),
-		     TRUE);
-  lut = threshold_lut_new (0.5, 1);
-
-  pixel_regions_process_parallel ((p_func) gimp_lut_process_inline,
-				  lut, 1, &maskPR);
-  gimp_lut_free (lut);
-
-  mask->bounds_known = FALSE;
+  GIMP_CHANNEL_GET_CLASS (channel)->sharpen (channel, push_undo);
 }
 
 void
-gimp_channel_clear (GimpChannel *mask,
+gimp_channel_clear (GimpChannel *channel,
+                    const gchar *undo_desc,
                     gboolean     push_undo)
 {
-  PixelRegion maskPR;
-  guchar      bg = TRANSPARENT_OPACITY;
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-
-  if (push_undo)
-    gimp_channel_push_undo (mask, _("Clear Channel"));
-
-  if (mask->bounds_known && !mask->empty)
-    {
-      pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
-			 mask->x1, mask->y1,
-			 (mask->x2 - mask->x1), (mask->y2 - mask->y1), TRUE);
-      color_region (&maskPR, &bg);
-    }
-  else
-    {
-      /*  clear the mask  */
-      pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
-			 0, 0,
-			 GIMP_ITEM (mask)->width,
-			 GIMP_ITEM (mask)->height, TRUE);
-      color_region (&maskPR, &bg);
-    }
-
-  /*  we know the bounds  */
-  mask->bounds_known = TRUE;
-  mask->empty        = TRUE;
-  mask->x1           = 0;
-  mask->y1           = 0;
-  mask->x2           = GIMP_ITEM (mask)->width;
-  mask->y2           = GIMP_ITEM (mask)->height;
+  GIMP_CHANNEL_GET_CLASS (channel)->clear (channel, undo_desc, push_undo);
 }
 
 void
-gimp_channel_all (GimpChannel *mask,
+gimp_channel_all (GimpChannel *channel,
                   gboolean     push_undo)
 {
-  PixelRegion maskPR;
-  guchar      bg = OPAQUE_OPACITY;
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-
-  if (push_undo)
-    gimp_channel_push_undo (mask, _("Fill Channel"));
-
-  /*  clear the mask  */
-  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
-		     0, 0,
-		     GIMP_ITEM (mask)->width,
-		     GIMP_ITEM (mask)->height, TRUE);
-  color_region (&maskPR, &bg);
-
-  /*  we know the bounds  */
-  mask->bounds_known = TRUE;
-  mask->empty        = FALSE;
-  mask->x1           = 0;
-  mask->y1           = 0;
-  mask->x2           = GIMP_ITEM (mask)->width;
-  mask->y2           = GIMP_ITEM (mask)->height;
+  GIMP_CHANNEL_GET_CLASS (channel)->all (channel, push_undo);
 }
 
 void
-gimp_channel_invert (GimpChannel *mask,
+gimp_channel_invert (GimpChannel *channel,
                      gboolean     push_undo)
 {
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  if (push_undo)
-    gimp_channel_push_undo (mask, _("Invert Channel"));
-
-  if (mask->bounds_known && mask->empty)
-    {
-      gimp_channel_all (mask, FALSE);
-    }
-  else
-    {
-      PixelRegion  maskPR;
-      GimpLut     *lut;
-
-      pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
-                         0, 0,
-                         GIMP_ITEM (mask)->width,
-                         GIMP_ITEM (mask)->height, TRUE);
-
-      lut = invert_lut_new (1);
-
-      pixel_regions_process_parallel ((p_func) gimp_lut_process_inline, lut,
-                                      1, &maskPR);
-
-      gimp_lut_free (lut);
-
-      mask->bounds_known = FALSE;
-    }
+  GIMP_CHANNEL_GET_CLASS (channel)->invert (channel, push_undo);
 }
 
 void
-gimp_channel_border (GimpChannel *mask,
+gimp_channel_border (GimpChannel *channel,
 		     gint         radius_x,
 		     gint         radius_y,
                      gboolean     push_undo)
 {
-  PixelRegion bPR;
-  gint        x1, y1, x2, y2;
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-
-  if (radius_x < 0 || radius_y < 0)
-    return;
-
-  if (! gimp_channel_bounds (mask, &x1, &y1, &x2, &y2))
-    return;
-
-  if (gimp_channel_is_empty (mask))
-    return;
-
-  if (x1 - radius_x < 0)
-    x1 = 0;
-  else
-    x1 -= radius_x;
-  if (x2 + radius_x > GIMP_ITEM (mask)->width)
-    x2 = GIMP_ITEM (mask)->width;
-  else
-    x2 += radius_x;
-
-  if (y1 - radius_y < 0)
-    y1 = 0;
-  else
-    y1 -= radius_y;
-  if (y2 + radius_y > GIMP_ITEM (mask)->height)
-    y2 = GIMP_ITEM (mask)->height;
-  else
-    y2 += radius_y;
-
-  if (push_undo)
-    gimp_channel_push_undo (mask, _("Border Channel"));
-
-  pixel_region_init (&bPR, GIMP_DRAWABLE (mask)->tiles, x1, y1,
-		     (x2-x1), (y2-y1), TRUE);
-
-  border_region (&bPR, radius_x, radius_y);
-
-  mask->bounds_known = FALSE;
+  GIMP_CHANNEL_GET_CLASS (channel)->border (channel, radius_x, radius_y,
+                                            push_undo);
 }
 
 void
-gimp_channel_grow (GimpChannel *mask,
+gimp_channel_grow (GimpChannel *channel,
 		   gint         radius_x,
 		   gint         radius_y,
                    gboolean     push_undo)
 {
-  PixelRegion bPR;
-  gint        x1, y1, x2, y2;
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-
-  if (radius_x == 0 && radius_y == 0)
-    return;
-
-  if (radius_x <= 0 && radius_y <= 0)
-    {
-      gimp_channel_shrink (mask, -radius_x, -radius_y, FALSE, push_undo);
-      return;
-    }
-
-  if (radius_x < 0 || radius_y < 0)
-    return;
-
-  if (! gimp_channel_bounds (mask, &x1, &y1, &x2, &y2))
-    return;
-
-  if (gimp_channel_is_empty (mask))
-    return;
-
-  if (x1 - radius_x > 0)
-    x1 = x1 - radius_x;
-  else
-    x1 = 0;
-  if (y1 - radius_y > 0)
-    y1 = y1 - radius_y;
-  else
-    y1 = 0;
-  if (x2 + radius_x < GIMP_ITEM (mask)->width)
-    x2 = x2 + radius_x;
-  else
-    x2 = GIMP_ITEM (mask)->width;
-  if (y2 + radius_y < GIMP_ITEM (mask)->height)
-    y2 = y2 + radius_y;
-  else
-    y2 = GIMP_ITEM (mask)->height;
-
-  if (push_undo)
-    gimp_channel_push_undo (mask, _("Grow Channel"));
-
-  /*  need full extents for grow, not! */
-  pixel_region_init (&bPR, GIMP_DRAWABLE (mask)->tiles, x1, y1, (x2 - x1),
-		     (y2 - y1), TRUE);
-
-  fatten_region (&bPR, radius_x, radius_y);
-
-  mask->bounds_known = FALSE;
+  GIMP_CHANNEL_GET_CLASS (channel)->grow (channel, radius_x, radius_y,
+                                          push_undo);
 }
 
 void
-gimp_channel_shrink (GimpChannel  *mask,
+gimp_channel_shrink (GimpChannel  *channel,
 		     gint          radius_x,
 		     gint          radius_y,
 		     gboolean      edge_lock,
                      gboolean      push_undo)
 {
-  PixelRegion bPR;
-  gint        x1, y1, x2, y2;
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-
-  if (radius_x == 0 && radius_y == 0)
-    return;
-
-  if (radius_x <= 0 && radius_y <= 0)
-    {
-      gimp_channel_grow (mask, -radius_x, -radius_y, push_undo);
-      return;
-    }
-
-  if (radius_x < 0 || radius_y < 0)
-    return;
-
-  if (! gimp_channel_bounds (mask, &x1, &y1, &x2, &y2))
-    return;
-
-  if (gimp_channel_is_empty (mask))
-    return;
-
-  if (x1 > 0)
-    x1--;
-  if (y1 > 0)
-    y1--;
-  if (x2 < GIMP_ITEM (mask)->width)
-    x2++;
-  if (y2 < GIMP_ITEM (mask)->height)
-    y2++;
-
-  if (push_undo)
-    gimp_channel_push_undo (mask, _("Shrink Channel"));
-
-  pixel_region_init (&bPR, GIMP_DRAWABLE (mask)->tiles, x1, y1, (x2 - x1),
-		     (y2 - y1), TRUE);
-
-  thin_region (&bPR, radius_x, radius_y, edge_lock);
-
-  mask->bounds_known = FALSE;
+  GIMP_CHANNEL_GET_CLASS (channel)->shrink (channel, radius_x, radius_y,
+                                            edge_lock, push_undo);
 }
 
 void
@@ -1908,12 +2086,4 @@ gimp_channel_load (GimpChannel *mask,
   copy_region (&srcPR, &destPR);
 
   mask->bounds_known = FALSE;
-}
-
-void
-gimp_channel_invalidate_bounds (GimpChannel *channel)
-{
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
-
-  channel->bounds_known = FALSE;
 }

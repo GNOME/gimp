@@ -35,7 +35,6 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -45,6 +44,7 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasitelist.h"
+#include "core/gimpselection.h"
 #include "core/gimpunit.h"
 
 #include "text/gimptextlayer.h"
@@ -61,46 +61,46 @@
 #include "gimp-intl.h"
 
 
-static gboolean        xcf_load_image_props   (XcfInfo     *info,
-                                               GimpImage   *gimage);
-static gboolean        xcf_load_layer_props   (XcfInfo     *info,
-                                               GimpImage   *gimage,
-                                               GimpLayer   *layer,
-                                               gboolean    *apply_mask,
-                                               gboolean    *edit_mask,
-                                               gboolean    *show_mask);
-static gboolean        xcf_load_channel_props (XcfInfo     *info,
-                                               GimpImage   *gimage,
-                                               GimpChannel *channel);
-static gboolean        xcf_load_prop          (XcfInfo     *info,
-                                               PropType    *prop_type,
-                                               guint32     *prop_size);
-static GimpLayer     * xcf_load_layer         (XcfInfo     *info,
-                                               GimpImage   *gimage);
-static GimpChannel   * xcf_load_channel       (XcfInfo     *info,
-                                               GimpImage   *gimage);
-static GimpLayerMask * xcf_load_layer_mask    (XcfInfo     *info,
-                                               GimpImage   *gimage);
-static gboolean        xcf_load_hierarchy     (XcfInfo     *info,
-                                               TileManager *tiles);
-static gboolean        xcf_load_level         (XcfInfo     *info,
-                                               TileManager *tiles);
-static gboolean        xcf_load_tile          (XcfInfo     *info,
-                                               Tile        *tile);
-static gboolean        xcf_load_tile_rle      (XcfInfo     *info,
-                                               Tile        *tile,
-                                               gint         data_length);
-static GimpParasite  * xcf_load_parasite      (XcfInfo     *info);
-static gboolean        xcf_load_old_paths     (XcfInfo     *info,
-                                               GimpImage   *gimage);
-static gboolean        xcf_load_old_path      (XcfInfo     *info,
-                                               GimpImage   *gimage);
+static gboolean        xcf_load_image_props   (XcfInfo      *info,
+                                               GimpImage    *gimage);
+static gboolean        xcf_load_layer_props   (XcfInfo      *info,
+                                               GimpImage    *gimage,
+                                               GimpLayer    *layer,
+                                               gboolean     *apply_mask,
+                                               gboolean     *edit_mask,
+                                               gboolean     *show_mask);
+static gboolean        xcf_load_channel_props (XcfInfo      *info,
+                                               GimpImage    *gimage,
+                                               GimpChannel **channel);
+static gboolean        xcf_load_prop          (XcfInfo      *info,
+                                               PropType     *prop_type,
+                                               guint32      *prop_size);
+static GimpLayer     * xcf_load_layer         (XcfInfo      *info,
+                                               GimpImage    *gimage);
+static GimpChannel   * xcf_load_channel       (XcfInfo      *info,
+                                               GimpImage    *gimage);
+static GimpLayerMask * xcf_load_layer_mask    (XcfInfo      *info,
+                                               GimpImage    *gimage);
+static gboolean        xcf_load_hierarchy     (XcfInfo      *info,
+                                               TileManager  *tiles);
+static gboolean        xcf_load_level         (XcfInfo      *info,
+                                               TileManager  *tiles);
+static gboolean        xcf_load_tile          (XcfInfo      *info,
+                                               Tile         *tile);
+static gboolean        xcf_load_tile_rle      (XcfInfo      *info,
+                                               Tile         *tile,
+                                               gint          data_length);
+static GimpParasite  * xcf_load_parasite      (XcfInfo      *info);
+static gboolean        xcf_load_old_paths     (XcfInfo      *info,
+                                               GimpImage    *gimage);
+static gboolean        xcf_load_old_path      (XcfInfo      *info,
+                                               GimpImage    *gimage);
 
 #ifdef SWAP_FROM_FILE
-static gboolean        xcf_swap_func          (gint         fd,
-					       Tile        *tile,
-					       gint         cmd,
-					       gpointer     user_data);
+static gboolean        xcf_swap_func          (gint          fd,
+					       Tile         *tile,
+					       gint          cmd,
+					       gpointer      user_data);
 #endif
 
 
@@ -624,9 +624,9 @@ xcf_load_layer_props (XcfInfo   *info,
 }
 
 static gboolean
-xcf_load_channel_props (XcfInfo     *info,
-			GimpImage   *gimage,
-			GimpChannel *channel)
+xcf_load_channel_props (XcfInfo      *info,
+			GimpImage    *gimage,
+			GimpChannel **channel)
 {
   PropType prop_type;
   guint32  prop_size;
@@ -641,20 +641,29 @@ xcf_load_channel_props (XcfInfo     *info,
 	case PROP_END:
 	  return TRUE;
 	case PROP_ACTIVE_CHANNEL:
-	  info->active_channel = channel;
+	  info->active_channel = *channel;
 	  break;
 	case PROP_SELECTION:
 	  g_object_unref (gimage->selection_mask);
-	  gimage->selection_mask = channel;
-	  channel->boundary_known = FALSE;
-	  channel->bounds_known   = FALSE;
+	  gimage->selection_mask =
+            gimp_selection_new (gimage,
+                                gimp_item_width (GIMP_ITEM (*channel)),
+                                gimp_item_height (GIMP_ITEM (*channel)));
+          tile_manager_unref (GIMP_DRAWABLE (gimage->selection_mask)->tiles);
+          GIMP_DRAWABLE (gimage->selection_mask)->tiles =
+            GIMP_DRAWABLE (*channel)->tiles;
+          GIMP_DRAWABLE (*channel)->tiles = NULL;
+          g_object_unref (*channel);
+          *channel = gimage->selection_mask;
+	  (*channel)->boundary_known = FALSE;
+	  (*channel)->bounds_known   = FALSE;
 	  break;
 	case PROP_OPACITY:
 	  {
 	    guint32 opacity;
 
 	    info->cp += xcf_read_int32 (info->fp, &opacity, 1);
-	    channel->color.a = opacity / 255.0;
+	    (*channel)->color.a = opacity / 255.0;
 	  }
 	  break;
 	case PROP_VISIBLE:
@@ -662,7 +671,7 @@ xcf_load_channel_props (XcfInfo     *info,
 	    gboolean visible;
 
 	    info->cp += xcf_read_int32 (info->fp, (guint32 *) &visible, 1);
-	    gimp_drawable_set_visible (GIMP_DRAWABLE (channel),
+	    gimp_drawable_set_visible (GIMP_DRAWABLE (*channel),
 				       visible ? TRUE : FALSE, FALSE);
 	  }
 	  break;
@@ -671,13 +680,17 @@ xcf_load_channel_props (XcfInfo     *info,
             gboolean linked;
 
             info->cp += xcf_read_int32 (info->fp, (guint32 *) &linked, 1);
-            gimp_item_set_linked (GIMP_ITEM (channel),
+            gimp_item_set_linked (GIMP_ITEM (*channel),
                                   linked ? TRUE : FALSE, FALSE);
           }
 	  break;
 	case PROP_SHOW_MASKED:
-	  info->cp +=
-            xcf_read_int32 (info->fp, (guint32 *) &channel->show_masked, 1);
+          {
+            gboolean show_masked;
+
+            info->cp += xcf_read_int32 (info->fp, (guint32 *) &show_masked, 1);
+            gimp_channel_set_show_masked (*channel, show_masked);
+          }
 	  break;
 	case PROP_COLOR:
 	  {
@@ -685,13 +698,12 @@ xcf_load_channel_props (XcfInfo     *info,
 
 	    info->cp += xcf_read_int8 (info->fp, (guint8 *) col, 3);
 
-	    gimp_rgb_set_uchar (&channel->color, col[0], col[1], col[2]);
-
+	    gimp_rgb_set_uchar (&(*channel)->color, col[0], col[1], col[2]);
 	  }
 	  break;
 	case PROP_TATTOO:
 	  info->cp +=
-            xcf_read_int32 (info->fp, &GIMP_ITEM (channel)->tattoo, 1);
+            xcf_read_int32 (info->fp, &GIMP_ITEM (*channel)->tattoo, 1);
 	  break;
 	 case PROP_PARASITES:
            {
@@ -701,7 +713,7 @@ xcf_load_channel_props (XcfInfo     *info,
              while ((info->cp - base) < prop_size)
                {
                  p = xcf_load_parasite (info);
-                 gimp_item_parasite_attach (GIMP_ITEM (channel), p);
+                 gimp_item_parasite_attach (GIMP_ITEM (*channel), p);
                  gimp_parasite_free (p);
                }
              if (info->cp - base != prop_size)
@@ -896,7 +908,7 @@ xcf_load_channel (XcfInfo   *info,
     return NULL;
 
   /* read in the channel properties */
-  if (!xcf_load_channel_props (info, gimage, channel))
+  if (!xcf_load_channel_props (info, gimage, &channel))
     goto error;
 
   /* read the hierarchy and layer mask offsets */
@@ -958,7 +970,7 @@ xcf_load_layer_mask (XcfInfo   *info,
     return NULL;
 
   /* read in the layer_mask properties */
-  if (!xcf_load_channel_props (info, gimage, GIMP_CHANNEL (layer_mask)))
+  if (!xcf_load_channel_props (info, gimage, (GimpChannel **) &layer_mask))
     goto error;
 
   /* read the hierarchy and layer mask offsets */

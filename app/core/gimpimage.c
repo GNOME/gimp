@@ -54,6 +54,7 @@
 #include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
+#include "gimpselection.h"
 #include "gimpundostack.h"
 
 #include "file/file-utils.h"
@@ -483,7 +484,6 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->floating_sel          = NULL;
   gimage->selection_mask        = NULL;
-  gimage->mask_stroking         = FALSE;
 
   gimage->parasites             = gimp_parasite_list_new ();
 
@@ -851,9 +851,9 @@ gimp_image_new (Gimp              *gimp,
     }
 
   /* create the selection mask */
-  gimage->selection_mask = gimp_channel_new_mask (gimage,
-						  gimage->width,
-						  gimage->height);
+  gimage->selection_mask = gimp_selection_new (gimage,
+                                               gimage->width,
+                                               gimage->height);
 
   g_signal_connect_object (gimp->config, "notify::transparency-type",
                            G_CALLBACK (gimp_image_invalidate_layer_previews),

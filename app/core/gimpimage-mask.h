@@ -20,25 +20,62 @@
 #define __GIMP_IMAGE_MASK_H__
 
 
+/*  pure wrappers around the resp. GimpChannel::foo() functions:  */
+
 gboolean      gimp_image_mask_boundary    (GimpImage       *gimage,
                                            const BoundSeg **segs_in,
                                            const BoundSeg **segs_out,
                                            gint            *num_segs_in,
                                            gint            *num_segs_out);
-
 gboolean      gimp_image_mask_bounds      (GimpImage       *gimage,
                                            gint            *x1,
                                            gint            *y1,
                                            gint            *x2,
                                            gint            *y2);
-
-void          gimp_image_mask_invalidate  (GimpImage       *gimage);
-
 gint          gimp_image_mask_value       (GimpImage       *gimage,
                                            gint             x,
                                            gint             y);
-
 gboolean      gimp_image_mask_is_empty    (GimpImage       *gimage);
+
+void          gimp_image_mask_feather     (GimpImage       *gimage,
+                                           gdouble          feather_radius_x,
+                                           gdouble          feather_radius_y);
+void          gimp_image_mask_sharpen     (GimpImage       *gimage);
+void          gimp_image_mask_clear       (GimpImage       *gimage,
+                                           const gchar     *undo_name);
+void          gimp_image_mask_all         (GimpImage       *gimage);
+void          gimp_image_mask_invert      (GimpImage       *gimage);
+void          gimp_image_mask_border      (GimpImage       *gimage,
+                                           gint             border_radius_x,
+                                           gint             border_radius_y);
+void          gimp_image_mask_grow        (GimpImage       *gimage,
+                                           gint             grow_pixels_x,
+                                           gint             grow_pixels_y);
+void          gimp_image_mask_shrink      (GimpImage       *gimage,
+                                           gint             shrink_pixels_x,
+                                           gint             shrink_pixels_y,
+                                           gboolean         edge_lock);
+
+
+/*  pure wrappers around the resp. GimpItem::foo() functions:  */
+
+void          gimp_image_mask_translate   (GimpImage       *gimage,
+                                           gint             off_x,
+                                           gint             off_y,
+                                           gboolean         push_undo);
+gboolean      gimp_image_mask_stroke      (GimpImage       *gimage,
+                                           GimpDrawable    *drawable,
+                                           GimpPaintInfo   *paint_info);
+
+
+/*  pure wrappers around the resp. GimpSelection functions:  */
+
+void          gimp_image_mask_push_undo   (GimpImage       *gimage,
+                                           const gchar     *undo_desc);
+void          gimp_image_mask_invalidate  (GimpImage       *gimage);
+
+
+/*  really implemented here:  */
 
 TileManager * gimp_image_mask_extract     (GimpImage       *gimage,
                                            GimpDrawable    *drawable,
@@ -52,44 +89,9 @@ GimpLayer   * gimp_image_mask_float       (GimpImage       *gimage,
                                            gint             off_x,
                                            gint             off_y);
 
-void          gimp_image_mask_push_undo   (GimpImage       *gimage,
-                                           const gchar     *undo_desc);
-
-void          gimp_image_mask_feather     (GimpImage       *gimage,
-                                           gdouble          feather_radius_x,
-                                           gdouble          feather_radius_y);
-void          gimp_image_mask_sharpen     (GimpImage       *gimage);
-
-void          gimp_image_mask_clear       (GimpImage       *gimage,
-                                           const gchar     *undo_name);
-void          gimp_image_mask_all         (GimpImage       *gimage);
-void          gimp_image_mask_invert      (GimpImage       *gimage);
-
-void          gimp_image_mask_border      (GimpImage       *gimage,
-                                           gint             border_radius_x,
-                                           gint             border_radius_y);
-
-void          gimp_image_mask_grow        (GimpImage       *gimage,
-                                           gint             grow_pixels_x,
-                                           gint             grow_pixels_y);
-
-void          gimp_image_mask_shrink      (GimpImage       *gimage,
-                                           gint             shrink_pixels_x,
-                                           gint             shrink_pixels_y,
-                                           gboolean         edge_lock);
-
-void          gimp_image_mask_translate   (GimpImage       *gimage,
-                                           gint             off_x,
-                                           gint             off_y,
-                                           gboolean         push_undo);
-
 void          gimp_image_mask_load        (GimpImage       *gimage,
                                            GimpChannel     *channel);
 GimpChannel * gimp_image_mask_save        (GimpImage       *gimage);
-
-gboolean      gimp_image_mask_stroke      (GimpImage       *gimage,
-                                           GimpDrawable    *drawable,
-                                           GimpPaintInfo   *paint_info);
 
 
 #endif  /*  __GIMP_IMAGE_MASK_H__  */

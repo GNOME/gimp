@@ -28,8 +28,6 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "paint/gimppaintcore-stroke.h"
-
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpcontainer.h"
@@ -41,7 +39,7 @@
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
-#include "gimppaintinfo.h"
+#include "gimpselection.h"
 
 #include "gimp-intl.h"
 
@@ -55,82 +53,13 @@ gimp_image_mask_boundary (GimpImage       *gimage,
                           gint            *num_segs_in,
                           gint            *num_segs_out)
 {
-  GimpDrawable *drawable;
-  GimpLayer    *layer;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (segs_in != NULL, FALSE);
-  g_return_val_if_fail (segs_out != NULL, FALSE);
-  g_return_val_if_fail (num_segs_in != NULL, FALSE);
-  g_return_val_if_fail (num_segs_out != NULL, FALSE);
 
-  if ((layer = gimp_image_floating_sel (gimage)))
-    {
-      /*  If there is a floating selection, then
-       *  we need to do some slightly different boundaries.
-       *  Instead of inside and outside boundaries being defined
-       *  by the extents of the layer, the inside boundary (the one
-       *  that actually marches and is black/white) is the boundary of
-       *  the floating selection.  The outside boundary (doesn't move,
-       *  is black/gray) is defined as the normal selection mask
-       */
-
-      /*  Find the selection mask boundary  */
-      gimp_channel_boundary (gimp_image_get_mask (gimage),
-			     segs_in, segs_out,
-			     num_segs_in, num_segs_out,
-			     0, 0, 0, 0);
-
-      /*  Find the floating selection boundary  */
-      *segs_in = floating_sel_boundary (layer, num_segs_in);
-
-      return TRUE;
-    }
-  else if ((drawable = gimp_image_active_drawable (gimage)) &&
-	   GIMP_IS_CHANNEL (drawable))
-    {
-      /*  Otherwise, return the boundary...if a channel is active  */
-
-      return gimp_channel_boundary (gimp_image_get_mask (gimage),
-				    segs_in, segs_out,
-				    num_segs_in, num_segs_out,
-				    0, 0, gimage->width, gimage->height);
-    }
-  else if ((layer = gimp_image_get_active_layer (gimage)))
-    {
-      /*  If a layer is active, we return multiple boundaries based
-       *  on the extents
-       */
-
-      gint x1, y1;
-      gint x2, y2;
-      gint off_x, off_y;
-
-      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
-
-      x1 = CLAMP (off_x, 0, gimage->width);
-      y1 = CLAMP (off_y, 0, gimage->height);
-      x2 = CLAMP (off_x + gimp_item_width (GIMP_ITEM (layer)), 0,
-		  gimage->width);
-      y2 = CLAMP (off_y + gimp_item_height (GIMP_ITEM (layer)), 0,
-		  gimage->height);
-
-      return gimp_channel_boundary (gimp_image_get_mask (gimage),
-				    segs_in, segs_out,
-				    num_segs_in, num_segs_out,
-				    x1, y1, x2, y2);
-    }
-  else
-    {
-      *segs_in      = NULL;
-      *segs_out     = NULL;
-      *num_segs_in  = 0;
-      *num_segs_out = 0;
-
-      return FALSE;
-    }
+  return gimp_channel_boundary (gimp_image_get_mask (gimage),
+                                segs_in, segs_out,
+                                num_segs_in, num_segs_out,
+                                0, 0, 0, 0);
 }
-
 
 gboolean
 gimp_image_mask_bounds (GimpImage *gimage,
@@ -139,60 +68,159 @@ gimp_image_mask_bounds (GimpImage *gimage,
                         gint      *x2,
                         gint      *y2)
 {
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+
   return gimp_channel_bounds (gimp_image_get_mask (gimage), x1, y1, x2, y2);
 }
-
-
-void
-gimp_image_mask_invalidate (GimpImage *gimage)
-{
-  GimpLayer   *layer;
-  GimpChannel *mask;
-
-  /*  Turn the current selection off  */
-  gimp_image_selection_control (gimage, GIMP_SELECTION_OFF);
-
-  mask = gimp_image_get_mask (gimage);
-  mask->boundary_known = FALSE;
-
-  /*  If there is a floating selection, update it's area...
-   *  we need to do this since this selection mask can act as an additional
-   *  mask in the composition of the floating selection
-   */
-  layer = gimp_image_get_active_layer (gimage);
-
-  if (layer && gimp_layer_is_floating_sel (layer))
-    gimp_drawable_update (GIMP_DRAWABLE (layer),
-			  0, 0,
-			  GIMP_ITEM (layer)->width,
-			  GIMP_ITEM (layer)->height);
-
-  /*  invalidate the preview  */
-  GIMP_DRAWABLE (mask)->preview_valid = FALSE;
-}
-
 
 gint
 gimp_image_mask_value (GimpImage *gimage,
                        gint       x,
                        gint       y)
 {
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), 0);
+
   return gimp_channel_value (gimp_image_get_mask (gimage), x, y);
 }
-
 
 gboolean
 gimp_image_mask_is_empty (GimpImage *gimage)
 {
-  /*  in order to allow stroking of selections, we need to pretend here
-   *  that the selection mask is empty so that it doesn't mask the paint
-   *  during the stroke operation.
-   */
-  if (gimage->mask_stroking)
-    return TRUE;
-  else
-    return gimp_channel_is_empty (gimp_image_get_mask (gimage));
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+
+  return gimp_channel_is_empty (gimp_image_get_mask (gimage));
 }
+
+void
+gimp_image_mask_feather (GimpImage *gimage,
+                         gdouble    feather_radius_x,
+                         gdouble    feather_radius_y)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gimp_channel_feather (gimp_image_get_mask (gimage),
+			feather_radius_x,
+			feather_radius_y,
+                        TRUE);
+}
+
+void
+gimp_image_mask_sharpen (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gimp_channel_sharpen (gimp_image_get_mask (gimage), TRUE);
+}
+
+void
+gimp_image_mask_clear (GimpImage   *gimage,
+                       const gchar *undo_desc)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gimp_channel_clear (gimp_image_get_mask (gimage), undo_desc, TRUE);
+}
+
+void
+gimp_image_mask_all (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gimp_channel_all (gimp_image_get_mask (gimage), TRUE);
+}
+
+void
+gimp_image_mask_invert (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gimp_channel_invert (gimp_image_get_mask (gimage), TRUE);
+}
+
+void
+gimp_image_mask_border (GimpImage *gimage,
+                        gint       border_radius_x,
+                        gint       border_radius_y)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gimp_channel_border (gimp_image_get_mask (gimage),
+		       border_radius_x,
+		       border_radius_y,
+                       TRUE);
+}
+
+void
+gimp_image_mask_grow (GimpImage *gimage,
+                      gint       grow_pixels_x,
+                      gint       grow_pixels_y)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gimp_channel_grow (gimp_image_get_mask (gimage),
+		     grow_pixels_x,
+		     grow_pixels_y,
+                     TRUE);
+}
+
+void
+gimp_image_mask_shrink (GimpImage *gimage,
+                        gint       shrink_pixels_x,
+                        gint       shrink_pixels_y,
+                        gboolean   edge_lock)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gimp_channel_shrink (gimp_image_get_mask (gimage),
+		       shrink_pixels_x,
+		       shrink_pixels_y,
+		       edge_lock,
+                       TRUE);
+}
+
+void
+gimp_image_mask_translate (GimpImage *gimage,
+                           gint       off_x,
+                           gint       off_y,
+                           gboolean   push_undo)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (gimage)),
+                       off_x, off_y, TRUE);
+}
+
+gboolean
+gimp_image_mask_stroke (GimpImage     *gimage,
+                        GimpDrawable  *drawable,
+                        GimpPaintInfo *paint_info)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+
+  return gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
+                           drawable, paint_info);
+}
+
+void
+gimp_image_mask_push_undo (GimpImage   *gimage,
+                           const gchar *undo_desc)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gimp_selection_push_undo (GIMP_SELECTION (gimp_image_get_mask (gimage)),
+                            undo_desc);
+}
+
+void
+gimp_image_mask_invalidate (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gimp_selection_invalidate (GIMP_SELECTION (gimp_image_get_mask (gimage)));
+}
+
+
+
 
 
 TileManager *
@@ -421,163 +449,6 @@ gimp_image_mask_float (GimpImage    *gimage,
   return layer;
 }
 
-
-void
-gimp_image_mask_push_undo (GimpImage   *gimage,
-                           const gchar *undo_desc)
-{
-  GimpChannel *mask;
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  mask = gimp_image_get_mask (gimage);
-
-  gimp_image_undo_push_mask (gimage, undo_desc, mask);
-
-  gimp_image_mask_invalidate (gimage);
-}
-
-void
-gimp_image_mask_feather (GimpImage *gimage,
-                         gdouble    feather_radius_x,
-                         gdouble    feather_radius_y)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_image_mask_push_undo (gimage, _("Feather Selection"));
-
-  gimp_channel_feather (gimp_image_get_mask (gimage),
-			feather_radius_x,
-			feather_radius_y,
-                        FALSE);
-
-  gimp_image_mask_changed (gimage);
-}
-
-void
-gimp_image_mask_sharpen (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_image_mask_push_undo (gimage, _("Sharpen Selection"));
-
-  gimp_channel_sharpen (gimp_image_get_mask (gimage), FALSE);
-
-  gimp_image_mask_changed (gimage);
-}
-
-void
-gimp_image_mask_clear (GimpImage   *gimage,
-                       const gchar *undo_desc)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  if (! undo_desc)
-    undo_desc = _("Select None");
-
-  gimp_image_mask_push_undo (gimage, undo_desc);
-
-  gimp_channel_clear (gimp_image_get_mask (gimage), FALSE);
-
-  gimp_image_mask_changed (gimage);
-}
-
-void
-gimp_image_mask_all (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_image_mask_push_undo (gimage, _("Select All"));
-
-  gimp_channel_all (gimp_image_get_mask (gimage), FALSE);
-
-  gimp_image_mask_changed (gimage);
-}
-
-void
-gimp_image_mask_invert (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_image_mask_push_undo (gimage, _("Invert Selection"));
-
-  gimp_channel_invert (gimp_image_get_mask (gimage), FALSE);
-
-  gimp_image_mask_changed (gimage);
-}
-
-void
-gimp_image_mask_border (GimpImage *gimage,
-                        gint       border_radius_x,
-                        gint       border_radius_y)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_image_mask_push_undo (gimage, _("Border Selection"));
-
-  gimp_channel_border (gimp_image_get_mask (gimage),
-		       border_radius_x,
-		       border_radius_y,
-                       FALSE);
-
-  gimp_image_mask_changed (gimage);
-}
-
-void
-gimp_image_mask_grow (GimpImage *gimage,
-                      gint       grow_pixels_x,
-                      gint       grow_pixels_y)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_image_mask_push_undo (gimage, _("Grow Selection"));
-
-  gimp_channel_grow (gimp_image_get_mask (gimage),
-		     grow_pixels_x,
-		     grow_pixels_y,
-                     FALSE);
-
-  gimp_image_mask_changed (gimage);
-}
-
-void
-gimp_image_mask_shrink (GimpImage *gimage,
-                        gint       shrink_pixels_x,
-                        gint       shrink_pixels_y,
-                        gboolean   edge_lock)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_image_mask_push_undo (gimage, _("Shrink Selection"));
-
-  gimp_channel_shrink (gimp_image_get_mask (gimage),
-		       shrink_pixels_x,
-		       shrink_pixels_y,
-		       edge_lock,
-                       FALSE);
-
-  gimp_image_mask_changed (gimage);
-}
-
-void
-gimp_image_mask_translate (GimpImage *gimage,
-                           gint       off_x,
-                           gint       off_y,
-                           gboolean   push_undo)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  if (push_undo)
-    gimp_image_mask_push_undo (gimage, _("Move Selection"));
-  else
-    gimp_image_mask_invalidate (gimage);
-
-  gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                       off_x, off_y, FALSE);
-
-  gimp_image_mask_changed (gimage);
-}
-
 void
 gimp_image_mask_load (GimpImage   *gimage,
                       GimpChannel *channel)
@@ -604,7 +475,7 @@ gimp_image_mask_save (GimpImage *gimage)
   mask = gimp_image_get_mask (gimage);
 
   new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (mask),
-                                                   G_TYPE_FROM_INSTANCE (mask),
+                                                   GIMP_TYPE_CHANNEL,
                                                    FALSE));
 
   /*  saved selections are not visible by default  */
@@ -613,48 +484,4 @@ gimp_image_mask_save (GimpImage *gimage)
   gimp_image_add_channel (gimage, new_channel, -1);
 
   return new_channel;
-}
-
-gboolean
-gimp_image_mask_stroke (GimpImage     *gimage,
-                        GimpDrawable  *drawable,
-                        GimpPaintInfo *paint_info)
-{
-  const BoundSeg *bs_in;
-  const BoundSeg *bs_out;
-  gint            num_segs_in;
-  gint            num_segs_out;
-  GimpPaintCore  *core;
-  gboolean        retval;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (GIMP_IS_PAINT_INFO (paint_info), FALSE);
-
-  if (! gimp_image_mask_boundary (gimage, &bs_in, &bs_out,
-                                  &num_segs_in, &num_segs_out))
-    {
-      g_message (_("No selection to stroke."));
-      return FALSE;
-    }
-
-  gimage->mask_stroking = TRUE;
-
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
-                               _("Stroke Selection"));
-
-  core = g_object_new (paint_info->paint_type, NULL);
-
-  retval = gimp_paint_core_stroke_boundary (core, drawable,
-                                            paint_info->paint_options,
-                                            bs_in, num_segs_in,
-                                            0, 0);
-
-  g_object_unref (core);
-
-  gimp_image_undo_group_end (gimage);
-
-  gimage->mask_stroking = FALSE;
-
-  return retval;
 }

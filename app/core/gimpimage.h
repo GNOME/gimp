@@ -138,7 +138,6 @@ struct _GimpImage
 
   GimpLayer         *floating_sel;          /*  the FS layer                 */
   GimpChannel       *selection_mask;        /*  the selection mask channel   */
-  gboolean           mask_stroking;         /*  is a stroke being done       */
 
   GimpParasiteList  *parasites;             /*  Plug-in parasite data        */
 

@@ -1,3 +1,40 @@
+2003-09-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.[ch]: made all functions which push an
+	undo step virtual and added them all as default implementations.
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpselection.[ch]: new object which is a GimpChannel
+	subclass and implements all of its virtual functions, pushes
+	an image_mask undo and chains up with "push_undo = FALSE".
+
+	* app/core/gimpimage-mask.[ch]: made most functions simple
+	wrappers like gimp_channel_invert(gimp_image_get_mask(gimage));
+	so the API stays the same for now.
+
+	* app/core/gimpimage.[ch]: create a GimpSelection object
+	as gimage->selection_mask. Removed "gboolean mask_stroking"
+	since it is in GimpSelection now.
+
+	* app/xcf/xcf-load.c (xcf_load_channel_props): added an evil hack
+	which turns a GimpChannel into a GimpSelection once we figured the
+	loaded channel is the selection.
+
+	* app/core/gimplayer.c (gimp_layer_create_mask):
+	gimp_channel_clear() takes an additional "const gchar *undo_desc"
+	parameter now.
+
+	* app/core/gimpscanconvert.c (gimp_scan_convert_to_channel): set
+	mask->bounds_known to FALSE before returning the new channel
+
+	* app/tools/gimpiscissorstool.c (iscissors_convert): no need to
+	call gimp_channel_invalidate_boundary() on the channel returned by
+	the above function.
+
+	* app/core/gimpchannel.[ch]: removed
+	gimp_channel_invalidate_boundary() since it is no longer needed.
+
 2003-09-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimpcolorspace.[ch] (gimp_rgb_to_cmyk_int): made

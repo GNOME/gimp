@@ -568,8 +568,6 @@ iscissors_convert (GimpIscissorsTool *iscissors,
 
   iscissors->mask = gimp_scan_convert_to_channel (sc, gdisp->gimage);
   gimp_scan_convert_free (sc);
-
-  gimp_channel_invalidate_bounds (iscissors->mask);
 }
 
 static void

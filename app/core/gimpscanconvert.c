@@ -255,5 +255,7 @@ gimp_scan_convert_to_channel (GimpScanConvert *sc,
   art_free (svp);
   art_free (pert_vpath);
 
+  mask->bounds_known = FALSE;
+
   return mask;
 }

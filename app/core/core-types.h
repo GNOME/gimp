@@ -80,6 +80,7 @@ typedef struct _GimpGrid            GimpGrid;
 typedef struct _GimpDrawable        GimpDrawable;
 
 typedef struct _GimpChannel         GimpChannel;
+typedef struct _GimpSelection       GimpSelection;
 
 typedef struct _GimpLayer           GimpLayer;
 typedef struct _GimpLayerMask       GimpLayerMask;

@@ -925,7 +925,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
       return mask;
 
     case GIMP_ADD_BLACK_MASK:
-      gimp_channel_clear (GIMP_CHANNEL (mask), FALSE);
+      gimp_channel_clear (GIMP_CHANNEL (mask), NULL, FALSE);
       return mask;
 
     default:
@@ -973,7 +973,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
         if (copy_width < item->width || copy_height < item->height ||
             selection_empty)
-          gimp_channel_clear (GIMP_CHANNEL (mask), FALSE);
+          gimp_channel_clear (GIMP_CHANNEL (mask), NULL, FALSE);
 
         if ((copy_width || copy_height) && ! selection_empty)
           {
