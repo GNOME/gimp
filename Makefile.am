@@ -81,6 +81,7 @@ EXTRA_DIST = \
 	pixmaps/topath.xpm	\
 	pixmaps/toselection.xpm	\
 	pixmaps/update.xpm      \
+	pixmaps/wilber.xpm	\
 	pixmaps/yes.xpm         \
 	pixmaps/zoom_in.xpm	\
 	pixmaps/zoom_out.xpm	\

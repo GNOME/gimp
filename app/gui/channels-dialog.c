@@ -100,67 +100,98 @@ struct _ChannelWidget
 /*  channels dialog widget routines  */
 static void channels_dialog_preview_extents      (void);
 static void channels_dialog_set_menu_sensitivity (void);
-static void channels_dialog_scroll_index         (gint index);
-static void channels_dialog_set_channel          (ChannelWidget *);
-static void channels_dialog_unset_channel        (ChannelWidget *);
-static void channels_dialog_position_channel     (Channel *, gint);
-static void channels_dialog_add_channel          (Channel *);
-static void channels_dialog_remove_channel       (ChannelWidget *);
+static void channels_dialog_set_channel          (ChannelWidget  *cw);
+static void channels_dialog_unset_channel        (ChannelWidget  *cw);
+static void channels_dialog_position_channel     (Channel        *channel,
+						  gint            position);
+static void channels_dialog_add_channel          (Channel        *channel);
+static void channels_dialog_remove_channel       (ChannelWidget  *cw);
 
-static gint channel_list_events                  (GtkWidget *, GdkEvent *);
+static gint channel_list_events                  (GtkWidget      *widget,
+						  GdkEvent       *event);
 
 /*  for (un)installing the menu accelarators  */
-static void channels_dialog_map_callback   (GtkWidget *, gpointer);
-static void channels_dialog_unmap_callback (GtkWidget *, gpointer);
+static void channels_dialog_map_callback         (GtkWidget      *widget,
+						  gpointer        data);
+static void channels_dialog_unmap_callback       (GtkWidget      *widget,
+						  gpointer        data);
 
 /*  ops buttons dnd callbacks  */
-static gboolean channels_dialog_drag_new_channel_callback (GtkWidget *,
-							   GdkDragContext *,
-							   gint, gint, guint);
-static gboolean channels_dialog_drag_duplicate_channel_callback (GtkWidget *,
-								 GdkDragContext *,
-								 gint, gint, guint);
-static gboolean channels_dialog_drag_channel_to_sel_callback (GtkWidget *,
-							      GdkDragContext *,
-							      gint, gint, guint);
-static gboolean channels_dialog_drag_delete_channel_callback (GtkWidget *,
-							      GdkDragContext *,
-							      gint, gint, guint);
+static gboolean channels_dialog_drag_new_channel_callback
+                                                 (GtkWidget      *widget,
+						  GdkDragContext *context,
+						  gint            x,
+						  gint            y,
+						  guint           time);
+static gboolean channels_dialog_drag_duplicate_channel_callback
+                                                 (GtkWidget      *widget,
+						  GdkDragContext *context,
+						  gint            x,
+						  gint            y,
+						  guint           time);
+static gboolean channels_dialog_drag_channel_to_sel_callback
+                                                 (GtkWidget      *widget,
+						  GdkDragContext *context,
+						  gint            x,
+						  gint            y,
+						  guint           time);
+static gboolean channels_dialog_drag_delete_channel_callback
+                                                 (GtkWidget      *widget,
+						  GdkDragContext *context,
+						  gint            x,
+						  gint            y,
+						  guint           time);
 
 /*  channel widget function prototypes  */
-static ChannelWidget *channel_widget_get_ID (Channel *);
-static ChannelWidget *channel_widget_create (GImage *, Channel *, ChannelType);
+static ChannelWidget * channel_widget_get_ID     (Channel        *channel);
+static ChannelWidget * channel_widget_create     (GImage         *gimage,
+						  Channel        *channel,
+						  ChannelType     channel_type);
 
-static gboolean channel_widget_drag_motion_callback (GtkWidget *,
-						     GdkDragContext *,
-						     gint, gint, guint);
-static gboolean channel_widget_drag_drop_callback   (GtkWidget *,
-						     GdkDragContext *,
-						     gint, gint, guint);
-static void channel_widget_drag_begin_callback     (GtkWidget *,
-						    GdkDragContext *);
-static void channel_widget_drag_leave_callback     (GtkWidget *,
-						    GdkDragContext *,
-						    guint);
-static void channel_widget_drag_indicator_callback (GtkWidget *, gpointer);
+static gboolean channel_widget_drag_motion_callback
+                                                 (GtkWidget      *widget,
+						  GdkDragContext *context,
+						  gint            x,
+						  gint            y,
+						  guint           time);
+static gboolean channel_widget_drag_drop_callback(GtkWidget      *widget,
+						  GdkDragContext *context,
+						  gint            x,
+						  gint            y,
+						  guint           time);
+static void channel_widget_drag_begin_callback   (GtkWidget      *widget,
+						  GdkDragContext *context);
+static void channel_widget_drag_leave_callback   (GtkWidget      *widget,
+						  GdkDragContext *context,
+						  guint           time);
+static void channel_widget_drag_indicator_callback
+                                                 (GtkWidget      *widget,
+						  gpointer        data);
 
-static void channel_widget_drop_color          (GtkWidget *,
-						guchar, guchar, guchar,
-						gpointer);
-static void channel_widget_draw_drop_indicator (ChannelWidget *, GimpDropType);
-static void channel_widget_delete              (ChannelWidget *);
-static void channel_widget_select_update       (GtkWidget *, gpointer);
-static gint channel_widget_button_events       (GtkWidget *, GdkEvent *);
-static gint channel_widget_preview_events      (GtkWidget *, GdkEvent *);
-static void channel_widget_preview_redraw      (ChannelWidget *);
-static void channel_widget_no_preview_redraw   (ChannelWidget *);
-static void channel_widget_eye_redraw          (ChannelWidget *);
-static void channel_widget_exclusive_visible   (ChannelWidget *);
-static void channel_widget_channel_flush       (GtkWidget *, gpointer);
+static void channel_widget_drop_color            (GtkWidget      *widget,
+						  guchar          r,
+						  guchar          g,
+						  guchar          b,
+						  gpointer        data);
+static void channel_widget_draw_drop_indicator   (ChannelWidget  *cw,
+						  GimpDropType    drop_type);
+static void channel_widget_delete                (ChannelWidget  *cw);
+static void channel_widget_select_update         (GtkWidget      *widget,
+						  gpointer        data);
+static gint channel_widget_button_events         (GtkWidget      *widget,
+						  GdkEvent       *event);
+static gint channel_widget_preview_events        (GtkWidget      *widget,
+						  GdkEvent       *event);
+static void channel_widget_preview_redraw        (ChannelWidget  *cw);
+static void channel_widget_no_preview_redraw     (ChannelWidget  *cw);
+static void channel_widget_eye_redraw            (ChannelWidget  *cw);
+static void channel_widget_exclusive_visible     (ChannelWidget  *cw);
+static void channel_widget_channel_flush         (GtkWidget      *widget,
+						  gpointer        data);
 
 /*  assorted query dialogs  */
-static void channels_dialog_new_channel_query  (GimpImage *);
-static void channels_dialog_edit_channel_query (ChannelWidget *);
+static void channels_dialog_new_channel_query    (GimpImage     *gimage);
+static void channels_dialog_edit_channel_query   (ChannelWidget *cw);
 
 /****************/
 /*  Local data  */

@@ -362,6 +362,8 @@ make_initialization_status_window (void)
       gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
       gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, FALSE, FALSE);
 
+      gimp_dialog_set_icon (GTK_WINDOW (win_initstatus));
+
       if (no_splash_image == FALSE &&
 	  splash_logo_load_size (win_initstatus))
 	{

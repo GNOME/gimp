@@ -21,9 +21,7 @@
  */
 #include "libgimp/gimpdialog.h"
 
-/*
 #include "pixmaps/wilber.xpm"
-*/
 
 /*  local callbacks of gimp_dialog_new ()  */
 static gint
@@ -52,9 +50,6 @@ static void
 gimp_dialog_realize_callback (GtkWidget *widget,
 			      gpointer   data) 
 {
-  return;
-
-  /*
   static GdkPixmap *wilber_pixmap = NULL;
   static GdkBitmap *wilber_mask   = NULL;
   GtkStyle         *style;
@@ -66,11 +61,10 @@ gimp_dialog_realize_callback (GtkWidget *widget,
       gdk_pixmap_create_from_xpm_d (widget->window,
 				    &wilber_mask,
 				    &style->bg[GTK_STATE_NORMAL],
-				    gimp_xpm);
+				    wilber_xpm);
 
   gdk_window_set_icon (widget->window, NULL,
 		       wilber_pixmap, wilber_mask);
-  */
 }
 
 GtkWidget *
@@ -149,13 +143,13 @@ gimp_dialog_newv (const gchar       *title,
 }
 
 void
-gimp_dialog_set_icon (GtkWidget *dialog)
+gimp_dialog_set_icon (GtkWindow *dialog)
 {
   g_return_if_fail (dialog);
   g_return_if_fail (GTK_IS_WINDOW (dialog));
 
-  if (GTK_WIDGET_REALIZED (dialog))
-    gimp_dialog_realize_callback (dialog, NULL);
+  if (GTK_WIDGET_REALIZED (GTK_WIDGET (dialog)))
+    gimp_dialog_realize_callback (GTK_WIDGET (dialog), NULL);
   else
     gtk_signal_connect (GTK_OBJECT (dialog), "realize",
 			GTK_SIGNAL_FUNC (gimp_dialog_realize_callback),

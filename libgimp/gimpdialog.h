@@ -24,8 +24,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimphelpui.h"
-#include "libgimp/gimpunit.h"
+#include "gimphelpui.h"
+#include "gimpunit.h"
 
 GtkWidget * gimp_dialog_new                 (const gchar        *title,
 					     const gchar        *wmclass_name,
@@ -59,7 +59,7 @@ GtkWidget * gimp_dialog_newv                (const gchar        *title,
 					     gint                auto_shrink,
 					     va_list             args);
 
-void        gimp_dialog_set_icon            (GtkWidget          *dialog);
+void        gimp_dialog_set_icon            (GtkWindow          *dialog);
 
 void        gimp_dialog_create_action_area  (GtkDialog          *dialog,
 

@@ -26,6 +26,7 @@
 #include "dialog_handler.h"
 #include "fileops.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "interface.h"
 #include "layers_dialog.h"
 #include "menus.h"
@@ -1826,6 +1827,8 @@ tearoff_cmd_callback (GtkWidget *widget,
 
 	      gtk_object_set_data (GTK_OBJECT (widget), "tearoff_menu_top",
 				   top);
+
+	      gimp_dialog_set_icon (GTK_WINDOW (top));
 	    }
 	}
       else
