@@ -140,16 +140,26 @@ create_file_error_dialog()
 {
    FileErrorDialog_t *file_dialog = g_new(FileErrorDialog_t, 1);
    DefaultDialog_t *dialog;
-   GtkWidget *table;
+   GtkWidget *table, *hbox;
+   GtkWidget *image;
 
    file_dialog->dialog = dialog = make_default_dialog(_("Error"));
    default_dialog_hide_apply_button(dialog);
    default_dialog_hide_cancel_button(dialog);
 
+   hbox = gtk_hbox_new(FALSE, 10);
+   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), hbox, 
+		      TRUE, TRUE, 10);
+   gtk_widget_show(hbox);
+
+   image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, 
+				     GTK_ICON_SIZE_DIALOG);
+   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+   gtk_widget_show (image);
+
    table = gtk_table_new(2, 1, FALSE);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), table, 
-		      TRUE, TRUE, 10);
+   gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
    gtk_widget_show(table);
 
    file_dialog->error = create_label_in_table(table, 0, 0, "");

@@ -1,3 +1,14 @@
+2002-06-18  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/align_layers.c (align_layers_dialog): enable 
+	mnemonics, minor code cleanup.
+
+	* plug-ins/imagemap/imap_file.c (create_file_error_dialog): added stock
+	warning icon to error dialog.
+
+	* plug-ins/imagemap/ChangeLog: removed since it wasn't up-to-date and
+	changes to the plug-in are logged in _this_ ChangeLog.
+	
 2002-06-17  Sven Neumann  <sven@gimp.org>
 
 	Obviously I disagree with Tim about the symbol_name parameter in

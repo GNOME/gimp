@@ -248,11 +248,10 @@ align_layers (gint32 image_id)
 
   if (0 < visible_layer_num)
     {
-      gboolean	uninitialized = TRUE;
-      gint	min_x = 0;
-      gint	min_y = 0;
-      gint	max_x = 0;
-      gint	max_y = 0;
+      gint	min_x = G_MAXINT;
+      gint	min_y = G_MAXINT;
+      gint	max_x = G_MININT;
+      gint	max_y = G_MININT;
       
       /* 0 is the top layer */
       for (index = 0; index < layer_num; index++)
@@ -260,31 +259,23 @@ align_layers (gint32 image_id)
 	  if (gimp_layer_get_visible (layers[index]))
 	    {
 	      gimp_drawable_offsets (layers[index], &orig_x, &orig_y);
-	      align_layers_get_align_offsets (layers[index], &offset_x, &offset_y);
+	      align_layers_get_align_offsets (layers[index], &offset_x, 
+					      &offset_y);
 	      orig_x += offset_x;
 	      orig_y += offset_y;
 	      
-	      if (uninitialized)
-		{
-		  base_x = min_x = max_x = orig_x;
-		  base_y = min_y = max_y = orig_y;
-
-		  uninitialized = FALSE;
-		}
-	      else
-		{
-		  if ( orig_x < min_x ) min_x = orig_x;
-		  if ( max_x < orig_x ) max_x = orig_x;
-		  if ( orig_y < min_y ) min_y = orig_y;
-		  if ( max_y < orig_y ) max_y = orig_y;
-		}
+	      if ( orig_x < min_x ) min_x = orig_x;
+	      if ( max_x < orig_x ) max_x = orig_x;
+	      if ( orig_y < min_y ) min_y = orig_y;
+	      if ( max_y < orig_y ) max_y = orig_y;
 	    }
 	}
 
       if (VALS.base_is_bottom_layer)
 	{
 	  gimp_drawable_offsets (layers[bg_index], &orig_x, &orig_y);
-	  align_layers_get_align_offsets (layers[bg_index], &offset_x, &offset_y);
+	  align_layers_get_align_offsets (layers[bg_index], &offset_x, 
+					  &offset_y);
 	  orig_x += offset_x;
 	  orig_y += offset_y;
 	  base_x = min_x = orig_x;
@@ -462,7 +453,7 @@ align_layers_dialog (void)
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Horizontal Style:"), 1.0, 0.5,
+			     _("_Horizontal Style:"), 1.0, 0.5,
 			     optionmenu, 1, FALSE);
 
   optionmenu =
@@ -475,7 +466,7 @@ align_layers_dialog (void)
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Horizontal Base:"), 1.0, 0.5,
+			     _("Ho_rizontal Base:"), 1.0, 0.5,
 			     optionmenu, 1, FALSE);
 
   optionmenu =
@@ -495,7 +486,7 @@ align_layers_dialog (void)
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Vertical Style:"), 1.0, 0.5,
+			     _("_Vertical Style:"), 1.0, 0.5,
 			     optionmenu, 1, FALSE);
 
   optionmenu =
@@ -508,12 +499,12 @@ align_layers_dialog (void)
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Vertical Base:"), 1.0, 0.5,
+			     _("Ver_tical Base:"), 1.0, 0.5,
 			     optionmenu, 1, FALSE);
 
   toggle =
-    gtk_check_button_new_with_label
-    (_("Ignore the Bottom Layer even if Visible"));
+    gtk_check_button_new_with_mnemonic
+    (_("_Ignore the Bottom Layer even if Visible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), VALS.ignore_bottom);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 4, 5);
   gtk_widget_show (toggle);
@@ -523,8 +514,8 @@ align_layers_dialog (void)
                     &VALS.ignore_bottom);
 
   toggle =
-    gtk_check_button_new_with_label
-    (_("Use the (Invisible) Bottom Layer as the Base"));
+    gtk_check_button_new_with_mnemonic
+    (_("_Use the (Invisible) Bottom Layer as the Base"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				VALS.base_is_bottom_layer);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 5, 6);
@@ -535,7 +526,7 @@ align_layers_dialog (void)
                     &VALS.base_is_bottom_layer);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
-			      _("Grid Size:"), SCALE_WIDTH, 0,
+			      _("_Grid Size:"), SCALE_WIDTH, 0,
 			      VALS.grid_size, 0, 200, 1, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
