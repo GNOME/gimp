@@ -4,7 +4,7 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 
 scriptdatadir = $(gimpdatadir)/scripts
 
-SUBDIRS = gimp_1.0.2_src iter_ALT
+SUBDIRS = iter_ALT
 
 scriptdata_DATA = sel-to-anim-img.scm
 

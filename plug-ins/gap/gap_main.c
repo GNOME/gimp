@@ -622,7 +622,7 @@ run (char    *name,
   l_rc = 0;
 
 
-  l_env = getenv("GAP_DEBUG");
+  l_env = g_getenv("GAP_DEBUG");
   if(l_env != NULL)
   {
     if((*l_env != 'n') && (*l_env != 'N')) gap_debug = 1;

@@ -256,7 +256,7 @@ p_pitstop_dialog(gint text_flag, char *filter_procname)
   l_argc = 0;
  
   /* optional dialog between both calls (to see the effect of 1.call) */
-  l_env = getenv("GAP_FILTER_PITSTOP");
+  l_env = g_getenv("GAP_FILTER_PITSTOP");
   if(l_env != NULL)
   {
      if((*l_env == 'N') || (*l_env == 'n'))
@@ -331,7 +331,7 @@ p_alloc_layli(gint32 image_id, gint32 *l_sel_cnt, gint *nlayers,
     return(NULL);
   }
   
-  l_layli_ptr = calloc((*nlayers), sizeof(t_LayliElem));
+  l_layli_ptr = g_new0(t_LayliElem, (*nlayers));
   if(l_layli_ptr == NULL)
   {
      g_free (l_layers_list);
@@ -812,7 +812,7 @@ p_do_2nd_filter_dialogs(char *filter_procname,
 cleanup:
   if(l_dpy_id >= 0)        gimp_display_delete(l_dpy_id);
   if(l_last_image_id >= 0) gimp_image_delete(l_last_image_id);
-  if(l_layli_ptr != NULL)  free(l_layli_ptr);
+  if(l_layli_ptr != NULL)  g_free(l_layli_ptr);
 
   return (l_rc);
 
@@ -922,7 +922,7 @@ p_frames_modify(t_anim_info *ainfo_ptr,
     if(gap_debug) fprintf(stderr, "p_frames_modify While l_cur_frame_nr = %d\n", (int)l_cur_frame_nr);
 
     /* build the frame name */
-    if(ainfo_ptr->new_filename != NULL) free(ainfo_ptr->new_filename);
+    if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
     ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
                                         l_cur_frame_nr,
                                         ainfo_ptr->extension);
@@ -987,7 +987,7 @@ p_frames_modify(t_anim_info *ainfo_ptr,
 				  );
         }
 
-        free(l_last_frame_filename);
+        g_free(l_last_frame_filename);
         l_last_frame_filename = NULL;
       }
 
@@ -1032,7 +1032,7 @@ p_frames_modify(t_anim_info *ainfo_ptr,
     /* free layli info table for the current frame */ 
     if(l_layli_ptr != NULL)
     {
-      free(l_layli_ptr);
+      g_free(l_layli_ptr);
       l_layli_ptr = NULL;
     }
 
@@ -1116,8 +1116,8 @@ error:
       l_dpy_id = -1;
   }
   if(l_tmp_image_id >= 0) gimp_image_delete(l_tmp_image_id);
-  if(l_layli_ptr != NULL) free(l_layli_ptr);
-  if(l_plugin_iterator != NULL)  free(l_plugin_iterator);
+  if(l_layli_ptr != NULL) g_free(l_layli_ptr);
+  if(l_plugin_iterator != NULL)  g_free(l_plugin_iterator);
   return -1;
   
 }		/* end p_frames_modify */
@@ -1200,4 +1200,5 @@ gint gap_mod_layer(GRunModeType run_mode, gint32 image_id,
 
   return(l_rc);   
 }
+
 

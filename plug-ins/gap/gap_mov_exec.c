@@ -70,7 +70,7 @@ int p_mov_call_render(t_mov_data *mov_ptr, t_mov_current *cur_ptr)
   ainfo_ptr = mov_ptr->dst_ainfo_ptr;
   
 
-  if(ainfo_ptr->new_filename != NULL) free(ainfo_ptr->new_filename);
+  if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
   ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
                                       cur_ptr->dst_frame_nr,
                                       ainfo_ptr->extension);
@@ -409,7 +409,7 @@ int gap_move(GRunModeType run_mode, gint32 image_id)
   ainfo_ptr = p_alloc_ainfo(image_id, run_mode);
   if(ainfo_ptr != NULL)
   {
-    l_mov_data.val_ptr = malloc(sizeof(t_mov_values));
+    l_mov_data.val_ptr = g_malloc(sizeof(t_mov_values));
     if(NULL != l_mov_data.val_ptr)
     {
       if (0 == p_dir_ainfo(ainfo_ptr))
@@ -442,7 +442,7 @@ int gap_move(GRunModeType run_mode, gint32 image_id)
            }
         }
       }
-      free(l_mov_data.val_ptr);
+      g_free(l_mov_data.val_ptr);
     }
 
     p_free_ainfo(&ainfo_ptr);

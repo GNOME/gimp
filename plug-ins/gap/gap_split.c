@@ -173,7 +173,7 @@ p_split_image(t_anim_info *ainfo_ptr,
           /* prepare return value */
           l_rc = l_new_image_id;
 
-          free(l_sav_name);
+          g_free(l_sav_name);
        }
        
        /* save as frame */

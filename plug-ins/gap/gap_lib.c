@@ -165,7 +165,7 @@ int p_file_copy(char *fname, char *fname_copy)
   l_len = (long)l_stat_buf.st_size;
 
   /* Buffer allocate */
-  l_buffer=(char *)calloc(1, (size_t)l_len+1);
+  l_buffer=(char *)g_malloc0((size_t)l_len+1);
   if(l_buffer == NULL)
   {
     fprintf(stderr, "file_copy: calloc error (%ld Bytes not available)\n", l_len);
@@ -177,7 +177,7 @@ int p_file_copy(char *fname, char *fname_copy)
   if(l_fp == NULL)
   {
     fprintf (stderr, "open(read) error on '%s'\n", fname);
-    free(l_buffer);
+    g_free(l_buffer);
     return -1;
   }
   fread(l_buffer, 1, (size_t)l_len, l_fp);
@@ -187,7 +187,7 @@ int p_file_copy(char *fname, char *fname_copy)
   if(l_fp == NULL)
   {
     fprintf (stderr, "file_copy: open(write) error on '%s' \n", fname_copy);
-    free(l_buffer);
+    g_free(l_buffer);
     return -1;
   }
 
@@ -197,7 +197,7 @@ int p_file_copy(char *fname, char *fname_copy)
   }
 
   fclose(l_fp);
-  free(l_buffer);
+  g_free(l_buffer);
   return 0;           /* all done OK */
 }	/* end p_file_copy */
 
@@ -217,7 +217,7 @@ int p_delete_frame(t_anim_info *ainfo_ptr, long nr)
    if(gap_debug) fprintf(stderr, "\nDEBUG p_delete_frame: %s\n", l_fname);
    l_rc = remove(l_fname);
    
-   free(l_fname);
+   g_free(l_fname);
    
    return(l_rc);
    
@@ -237,14 +237,14 @@ int p_rename_frame(t_anim_info *ainfo_ptr, long from_nr, long to_nr)
    if(l_from_fname == NULL) { return(1); }
    
    l_to_fname = p_alloc_fname(ainfo_ptr->basename, to_nr, ainfo_ptr->extension);
-   if(l_to_fname == NULL) { free(l_from_fname); return(1); }
+   if(l_to_fname == NULL) { g_free(l_from_fname); return(1); }
    
      
    if(gap_debug) fprintf(stderr, "\nDEBUG p_rename_frame: %s ..to.. %s\n", l_from_fname, l_to_fname);
    l_rc = rename(l_from_fname, l_to_fname);
    
-   free(l_from_fname);
-   free(l_to_fname);
+   g_free(l_from_fname);
+   g_free(l_to_fname);
    
    return(l_rc);
    
@@ -269,7 +269,7 @@ char*  p_alloc_basename(char *imagename, long *number)
 
   *number = 0;
   if(imagename == NULL) return (NULL);
-  l_fname = (char *)malloc(strlen(imagename) + 1);
+  l_fname = (char *)g_malloc(strlen(imagename) + 1);
   if(l_fname == NULL)   return (NULL);
 
   /* copy from imagename */
@@ -342,7 +342,7 @@ char*  p_alloc_extension(char *imagename)
     l_ptr--;
   }
   
-  l_ext = calloc(1, (size_t)(l_exlen + 1));
+  l_ext = g_malloc0((size_t)(l_exlen + 1));
   if(l_ext == NULL)
       return (NULL);
   
@@ -366,7 +366,7 @@ char*  p_alloc_fname(char *basename, long nr, char *extension)
   char *l_fname;
   
   if(basename == NULL) return (NULL);
-  l_fname = (char *)malloc(strlen(basename)  + strlen(extension) + 8);
+  l_fname = (char *)g_malloc(strlen(basename)  + strlen(extension) + 8);
   if(l_fname != NULL)
   {
     sprintf(l_fname, "%s_%04ld%s", basename, nr, extension);
@@ -387,7 +387,7 @@ t_anim_info *p_alloc_ainfo(gint32 image_id, GRunModeType run_mode)
 {
    t_anim_info   *l_ainfo_ptr;
 
-   l_ainfo_ptr = (t_anim_info*)malloc(sizeof(t_anim_info));
+   l_ainfo_ptr = (t_anim_info*)g_malloc(sizeof(t_anim_info));
    if(l_ainfo_ptr == NULL) return(NULL);
    
    l_ainfo_ptr->basename = NULL;
@@ -399,7 +399,7 @@ t_anim_info *p_alloc_ainfo(gint32 image_id, GRunModeType run_mode)
    l_ainfo_ptr->old_filename = gimp_image_get_filename(image_id);
    if(l_ainfo_ptr->old_filename == NULL)
    {
-     l_ainfo_ptr->old_filename = malloc(30);
+     l_ainfo_ptr->old_filename = g_malloc(30);
      sprintf(l_ainfo_ptr->old_filename, "frame_0001.xcf");    /* assign a defaultname */
      gimp_image_set_filename (image_id, l_ainfo_ptr->old_filename);
    }
@@ -452,7 +452,7 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
    short          l_dirflag;
    char           dirname_buff[1024];
 
-   l_dirname = malloc(strlen(ainfo_ptr->basename) +1);
+   l_dirname = g_malloc(strlen(ainfo_ptr->basename) +1);
    if(l_dirname == NULL)
      return -1;
 
@@ -546,7 +546,7 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
                     l_minnr = l_nr;
                }
 
-               free(l_dummy);
+               g_free(l_dummy);
            }
          }
        }
@@ -554,7 +554,7 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
      closedir( l_dirp );
    }
 
-  free(l_dirname);
+  g_free(l_dirname);
 
   /* set first_frame_nr and last_frame_nr (found as "_0099" in diskfile namepart) */
   ainfo_ptr->last_frame_nr = l_maxnr;
@@ -579,18 +579,18 @@ void p_free_ainfo(t_anim_info **ainfo)
      return;
   
   if(aptr->basename)
-     free(aptr->basename);
+     g_free(aptr->basename);
   
   if(aptr->extension)
-     free(aptr->extension);
+     g_free(aptr->extension);
    
   if(aptr->new_filename)
-     free(aptr->new_filename);
+     g_free(aptr->new_filename);
 
   if(aptr->old_filename)
-     free(aptr->old_filename);
+     g_free(aptr->old_filename);
      
-  free(aptr);
+  g_free(aptr);
 }
 
 
@@ -668,7 +668,7 @@ char * p_gzip (char *orig_name, char *new_name, char *zip)
   l_cmd = NULL;
   l_tmpname = new_name;
   
-  l_cmd = calloc(1, (strlen(l_tmpname) + strlen(orig_name) + 20));
+  l_cmd = g_malloc((strlen(l_tmpname) + strlen(orig_name) + 20));
   if(l_cmd == NULL)
   {
     return NULL;
@@ -702,7 +702,7 @@ char * p_gzip (char *orig_name, char *new_name, char *zip)
      fprintf(stderr, "ERROR system: %s\nreturncodes %d %d", l_cmd, l_rc, l_rc2);
      l_tmpname = NULL;
   }
-  free(l_cmd);
+  g_free(l_cmd);
   return l_tmpname;
   
 }	/* end p_gzip */
@@ -873,7 +873,7 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
    * that resides on the same filesystem as sav_name
    * and has the same extension as the original sav_name 
    */
-  l_tmpname = (char *)malloc(strlen(sav_name) + strlen(".gtmp") + strlen(l_ext) +2);
+  l_tmpname = (char *)g_malloc(strlen(sav_name) + strlen(".gtmp") + strlen(l_ext) +2);
   if(l_tmpname == NULL)
   {
     return -1;
@@ -895,16 +895,16 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
       g_free(l_params);
   }
 
-  free(l_ext);
+  g_free(l_ext);
 
 
    if(gap_debug)
    {
-     l_ext = getenv("GAP_NO_SAVE");
+     l_ext = g_getenv("GAP_NO_SAVE");
      if(l_ext != NULL)
      {
        fprintf(stderr, "DEBUG: GAP_NO_SAVE is set: save is skipped: '%s'\n", l_tmpname);
-       free(l_tmpname);  /* free if it was a temporary name */
+       g_free(l_tmpname);  /* free if it was a temporary name */
        return 0;
      }
    }
@@ -953,7 +953,7 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
   if(l_rc < 0)
   {
      remove(l_tmpname);
-     free(l_tmpname);  /* free temporary name */
+     g_free(l_tmpname);  /* free temporary name */
      return l_rc;
   }
 
@@ -989,7 +989,7 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
     }
   }
 
-  free(l_tmpname);  /* free temporary name */
+  g_free(l_tmpname);  /* free temporary name */
 
   return l_rc;
    
@@ -1057,7 +1057,7 @@ gint32 p_load_image (char *lod_name)
       g_free(l_params);
     }
     else l_tmpname = lod_name;
-    free(l_ext);
+    g_free(l_ext);
   }
 
   if(l_tmpname == NULL)
@@ -1143,7 +1143,7 @@ int p_load_named_frame (gint32 image_id, char *lod_name)
  */
 int p_replace_image(t_anim_info *ainfo_ptr)
 {
-  if(ainfo_ptr->new_filename != NULL) free(ainfo_ptr->new_filename);
+  if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
   ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
                                       ainfo_ptr->frame_nr,
                                       ainfo_ptr->extension);
@@ -1235,7 +1235,7 @@ int p_del(t_anim_info *ainfo_ptr, long cnt)
    }
 
    /* make filename, then load the new current frame */
-   if(ainfo_ptr->new_filename != NULL) free(ainfo_ptr->new_filename);
+   if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
    ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
                                       ainfo_ptr->frame_nr,
                                       ainfo_ptr->extension);
@@ -1275,7 +1275,7 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
 
    /* use a new name (_0001.xcf Konvention) */ 
    gimp_image_set_filename (ainfo_ptr->image_id, l_curr_name);
-   free(l_curr_name);
+   g_free(l_curr_name);
 
 
    if((range_from <0 ) && (range_to < 0 ))
@@ -1352,8 +1352,8 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
       if((l_dup_name != NULL) && (l_curr_name != NULL))
       {
          p_file_copy(l_curr_name, l_dup_name);
-         free(l_dup_name);
-         free(l_curr_name);
+         g_free(l_dup_name);
+         g_free(l_curr_name);
       }
       if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
       { 
@@ -1374,7 +1374,7 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    ainfo_ptr->last_frame_nr = ainfo_ptr->first_frame_nr + ainfo_ptr->frame_cnt -1;
 
    /* load from the "new" current frame */   
-   if(ainfo_ptr->new_filename != NULL) free(ainfo_ptr->new_filename);
+   if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
    ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
                                       ainfo_ptr->curr_frame_nr,
                                       ainfo_ptr->extension);
@@ -1422,7 +1422,7 @@ int p_exchg(t_anim_info *ainfo_ptr, long dest)
    }
 
    /* load from the "new" current frame */   
-   if(ainfo_ptr->new_filename != NULL) free(ainfo_ptr->new_filename);
+   if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
    ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
                                       ainfo_ptr->curr_frame_nr,
                                       ainfo_ptr->extension);
@@ -1479,7 +1479,7 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    l_curr_name = p_alloc_fname(ainfo_ptr->basename, ainfo_ptr->curr_frame_nr, ainfo_ptr->extension);
    /* save current frame  */   
    p_save_named_frame(ainfo_ptr->image_id, l_curr_name);
-   free(l_curr_name);
+   g_free(l_curr_name);
 
    l_percentage = 0.0;  
    if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
@@ -1532,7 +1532,7 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
 
 
    /* load from the "new" current frame */   
-   if(ainfo_ptr->new_filename != NULL) free(ainfo_ptr->new_filename);
+   if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
    ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
                                       ainfo_ptr->curr_frame_nr,
                                       ainfo_ptr->extension);

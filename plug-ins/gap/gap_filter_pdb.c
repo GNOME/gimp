@@ -376,7 +376,7 @@ char * p_get_iterator_proc(char *plugin_name)
   char      *l_plugin_iterator;
 
   /* check for matching Iterator PluginProcedures */
-  l_plugin_iterator = malloc(strlen(plugin_name) + strlen("_Iterator_ALT") +2);
+  l_plugin_iterator = g_malloc(strlen(plugin_name) + strlen("_Iterator_ALT") +2);
   if(l_plugin_iterator != NULL)
   {
      sprintf(l_plugin_iterator, "%s_Iterator", plugin_name);
@@ -395,7 +395,7 @@ char * p_get_iterator_proc(char *plugin_name)
         if(p_procedure_available(l_plugin_iterator, PTYP_ITERATOR) < 0)
         {
            /* both iterator names are not available */
-           free(l_plugin_iterator);
+           g_free(l_plugin_iterator);
            l_plugin_iterator = NULL;
         }
      }
@@ -452,7 +452,7 @@ int p_constraint_proc_sel2(gchar *proc_name)
     l_plugin_iterator =  p_get_iterator_proc(proc_name);
     if(l_plugin_iterator != NULL)
     {
-       free(l_plugin_iterator);
+       g_free(l_plugin_iterator);
        return 1;    /* 1 .. set "Apply Varying" Button sensitive */
     }
   }

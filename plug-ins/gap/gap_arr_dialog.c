@@ -447,7 +447,7 @@ radio_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
 
   for(l_idy=0; l_idy < arr_ptr->radio_argc; l_idy++)
   {
-     radio_ptr          = calloc(1, sizeof(t_radio_arg));
+     radio_ptr          = g_malloc0(sizeof(t_radio_arg));
      radio_ptr->arr_ptr = arr_ptr;
      radio_ptr->radio_index = l_idy;
      
@@ -553,7 +553,7 @@ optionmenu_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_pt
              if (arr_ptr->radio_argv[l_idy] != NULL)
                  l_radio_txt = arr_ptr->radio_argv[l_idy];
           }
-          l_menu_ptr   = calloc(1, sizeof(t_radio_arg));
+          l_menu_ptr   = g_malloc0(sizeof(t_radio_arg));
           l_menu_ptr->radio_index  = l_idy;
           l_menu_ptr->arr_ptr  = arr_ptr;
 

@@ -614,7 +614,7 @@ p_frames_to_multilayer(t_anim_info *ainfo_ptr,
   while(1)
   {
     /* build the frame name */
-    if(ainfo_ptr->new_filename != NULL) free(ainfo_ptr->new_filename);
+    if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
     ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
                                         l_cur_frame_nr,
                                         ainfo_ptr->extension);
@@ -651,7 +651,7 @@ p_frames_to_multilayer(t_anim_info *ainfo_ptr,
       }
     }
 
-    free(l_layli_ptr);
+    g_free(l_layli_ptr);
 
     if((flatten_mode >= FLAM_MERG_EXPAND) && (flatten_mode <= FLAM_MERG_CLIP_BG))
     {
@@ -950,7 +950,7 @@ p_frames_convert(t_anim_info *ainfo_ptr,
   while(l_rc >= 0)
   {
     /* build the frame name */
-    if(ainfo_ptr->new_filename != NULL) free(ainfo_ptr->new_filename);
+    if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
     ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
                                         l_cur_frame_nr,
                                         ainfo_ptr->extension);
@@ -1029,7 +1029,7 @@ p_frames_convert(t_anim_info *ainfo_ptr,
        
           l_run_mode  = RUN_NONINTERACTIVE;  /* for all further calls */
 
-          free(l_sav_name);
+          g_free(l_sav_name);
        }
     }
 
@@ -1157,7 +1157,7 @@ gint32 p_anim_sizechange(t_anim_info *ainfo_ptr,
   while(1)
   {
     /* build the frame name */
-    if(ainfo_ptr->new_filename != NULL) free(ainfo_ptr->new_filename);
+    if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
     ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
                                         l_cur_frame_nr,
                                         ainfo_ptr->extension);
@@ -1315,7 +1315,7 @@ p_frames_layer_del(t_anim_info *ainfo_ptr,
   while(1)
   {
     /* build the frame name */
-    if(ainfo_ptr->new_filename != NULL) free(ainfo_ptr->new_filename);
+    if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
     ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
                                         l_cur_frame_nr,
                                         ainfo_ptr->extension);
@@ -1513,7 +1513,7 @@ gint32 gap_range_conv(GRunModeType run_mode, gint32 image_id,
                                     l_dest_type,
                                     l_dest_colors,
                                     l_dest_dither);
-            free(l_basename_ptr);
+            g_free(l_basename_ptr);
          }
       }
     }

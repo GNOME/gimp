@@ -693,7 +693,7 @@ mov_upvw_callback (GtkWidget *widget,
      {
         /* replace the temporary image */        
         l_new_tmp_image_id = p_load_image(l_filename);
-        free(l_filename);
+        g_free(l_filename);
         if (l_new_tmp_image_id >= 0)
         {
            /* use the new loaded temporary image */

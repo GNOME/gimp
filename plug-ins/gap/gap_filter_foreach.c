@@ -515,7 +515,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
   }
 
 
-  if(l_plugin_iterator != NULL)      free(l_plugin_iterator);
+  if(l_plugin_iterator != NULL)      g_free(l_plugin_iterator);
 
   return l_rc;  
 }	/* end p_foreach_multilayer */

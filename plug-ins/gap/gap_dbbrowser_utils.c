@@ -68,7 +68,7 @@ gap_db_browser_dialog(char *title_txt,
     gtk_init (&l_argsc, &l_argsv);
   }
 
-  dbbrowser = (gpointer)malloc(sizeof(dbbrowser_t));
+  dbbrowser = (gpointer)g_malloc(sizeof(dbbrowser_t));
 
   /* store pointers to gap constraint procedures */  
   dbbrowser->constraint_func      = constraint_func;
