@@ -19,7 +19,7 @@ Actually this one is maintained by me, that is Daniel Egger
  GNU provides a very nice package called gettext. This one offers
  the possibility to translate chosen messages from the native language
  of the program into that one of the users if a necessary catalog is
- provided. Gettext therefor provides some easy tools to create and maintain
+ provided. Gettext therefore provides some easy tools to create and maintain
  such catalogs and a few functions which can be called by the program to
  enable automatic translation at runtime. The program gets linked to the 
  gettext library or glibc2 which already provides that functionality
@@ -34,7 +34,7 @@ Actually this one is maintained by me, that is Daniel Egger
  libgimp directory which check whether gettext is available on the system 
  which GIMP is compiled on and will deactivate language support if it's not.
  You CAN use such a compiled GIMP even without the catalogs or on a system
- which dosen't have language support.
+ which doesen't have language support.
 
  If the gettext system is there it will declare 3 functions which will be 
  described below.
@@ -85,7 +85,7 @@ Actually this one is maintained by me, that is Daniel Egger
  
 3.3 gettext()
 
- This function is the same as that mcaro in 3.1. But there is one big
+ This function is the same as that macro in 3.1. But there is one big
  difference: The _()'s and N_()'s are the only expressions which get parsed
  by the template generator. 
  If you have strings that should be translated but are unfortunately in a
@@ -130,7 +130,7 @@ Actually this one is maintained by me, that is Daniel Egger
 
 5. Tools and how to use them...
 
- As mentioned the to get translated string are extracted directly from the
+ As mentioned the to be translated strings are extracted directly from the
  source and written to the template. 
  I guess many of you will now ask if it is necessary to add new strings
  directly to the template or if there's a tool to achieve that. 
@@ -139,7 +139,7 @@ Actually this one is maintained by me, that is Daniel Egger
  add all strings that are in the template but not in the uncompiled catalog 
  to it. Msgmerge does this job very nicely and also tries to use some kind
  of fuzzy logic method for already translated strings for possible reduction
- of translators work: If a original string seems similar to a new one 
+ of translators work: If an original string seems similar to a new one 
  and it already has a translation, it will be taken over to the new catalog
  together with a remark that this one may not necessarily fit.
  

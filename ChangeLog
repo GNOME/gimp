@@ -1,8 +1,12 @@
+2001-06-27  Sven Neumann  <sven@gimp.org>
+
+	* README.i18n: merged changes from stable branch.
+
 2001-06-26  Sven Neumann  <sven@gimp.org>
 
 	* gimptool.1.in
 	* app/pdb/image_cmds.c
-	* tools/pdbgen/pdb/image.pdb: ported changes from stable branch
+	* tools/pdbgen/pdb/image.pdb: ported changes from stable branch.
 
 2001-06-26  Michael Natterer  <mitch@gimp.org>
 
