@@ -41,6 +41,7 @@ struct _GimpStrokeOptions
   GimpContext    parent_instance;
 
   gdouble        width;
+  GimpUnit       width_unit;
 
   GimpCapStyle   cap_style;
   GimpJoinStyle  join_style;
@@ -49,6 +50,7 @@ struct _GimpStrokeOptions
 
   gboolean       antialias;
 
+  GimpUnit       dash_unit;
   gdouble        dash_offset;
   GArray        *dash_info;
 };

@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -108,7 +109,9 @@ gimp_stroke_editor_new (GimpStrokeOptions *options)
   GimpStrokeEditor *editor;
   GtkWidget        *table;
   GtkWidget        *menu;
+  GtkWidget        *spinbutton;
   GtkWidget        *button;
+  gint              digits;
   gint              row = 0;
 
   g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), NULL);
@@ -124,33 +127,41 @@ gimp_stroke_editor_new (GimpStrokeOptions *options)
   gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  gimp_prop_scale_entry_new (G_OBJECT (options), "width",
-                             GTK_TABLE (table), 0, row++,
-                             _("Stroke Width:"),
-                             1.0, 1.0, 1,
-                             FALSE, 0.0, 0.0);
+  digits = gimp_unit_get_digits (options->width_unit);
+  spinbutton = gimp_prop_spin_button_new (G_OBJECT (options), "width",
+                                          1.0, 10.0, digits);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
+                             _("Stroke _Width:"), 1.0, 0.5,
+                             spinbutton, 1, FALSE);
+
+  menu = gimp_prop_unit_menu_new (G_OBJECT (options), "width-unit", "%a");
+  g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
+  gtk_table_attach (GTK_TABLE (table), menu, 2, 3, row, row + 1,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (menu);
+  row++;
 
   menu = gimp_prop_enum_option_menu_new (G_OBJECT (options), "cap-style",
                                          0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Cap Style:"), 1.0, 0.5,
+                             _("_Cap Style:"), 1.0, 0.5,
                              menu, 2, TRUE);
 
   menu = gimp_prop_enum_option_menu_new (G_OBJECT (options), "join-style",
                                          0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Join Style:"), 1.0, 0.5,
+                             _("_Join Style:"), 1.0, 0.5,
                              menu, 2, TRUE);
 
   gimp_prop_scale_entry_new (G_OBJECT (options), "miter",
                              GTK_TABLE (table), 0, row++,
-                             _("Miter:"),
+                             _("_Miter Limit:"),
                              1.0, 1.0, 1,
                              FALSE, 0.0, 0.0);
 
   button = gimp_prop_check_button_new (G_OBJECT (options), "antialias",
                                        _("Antialiasing"));
-  gtk_table_attach (GTK_TABLE (table), button, 1, 3, row, row + 1,
+  gtk_table_attach (GTK_TABLE (table), button, 0, 2, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
   row++;

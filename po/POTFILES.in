@@ -138,6 +138,7 @@ app/gui/resolution-calibrate-dialog.c
 app/gui/select-commands.c
 app/gui/session.c
 app/gui/splash.c
+app/gui/stroke-dialog.c
 app/gui/templates-commands.c
 app/gui/templates-menu.c
 app/gui/themes.c
@@ -280,6 +281,7 @@ app/widgets/gimplayertreeview.c
 app/widgets/gimppaletteeditor.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimpselectioneditor.c
+app/widgets/gimpstrokeeditor.c
 app/widgets/gimptemplateeditor.c
 app/widgets/gimptemplateview.c
 app/widgets/gimptexteditor.c

@@ -1,3 +1,14 @@
+2003-09-27  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpstrokeoptions.[ch]: added unit properties for
+	stroke width and dashes. Use convenience macros from GimpConfig to
+	register the properties. Removed init function since all values
+	are construct properties.
+
+	* app/vectors/gimpvectors.c: respect the stroke width unit.
+
+	* app/widgets/gimpstrokeeditor.c: added a unit menu here.
+
 2003-09-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/stroke-dialog.[ch]: made it a view on the GimpItem to

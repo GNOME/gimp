@@ -27,7 +27,7 @@
 
 #include "core-types.h"
 
-#include "config/gimpconfig.h"
+#include "config/gimpconfig-params.h"
 
 #include "gimpstrokeoptions.h"
 
@@ -35,16 +35,17 @@ enum
 {
   PROP_0,
   PROP_WIDTH,
+  PROP_WIDTH_UNIT,
   PROP_CAP_STYLE,
   PROP_JOIN_STYLE,
   PROP_MITER,
   PROP_ANTIALIAS,
+  PROP_DASH_UNIT,
   PROP_DASH_OFFSET,
   PROP_DASH_INFO
 };
 
 
-static void   gimp_stroke_options_init       (GimpStrokeOptions      *options);
 static void   gimp_stroke_options_class_init (GimpStrokeOptionsClass *options_class);
 
 static void   gimp_stroke_options_set_property (GObject         *object,
@@ -77,7 +78,7 @@ gimp_stroke_options_get_type (void)
 	NULL,           /* class_data     */
 	sizeof (GimpStrokeOptions),
 	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_stroke_options_init,
+	NULL            /* instance_init  */
       };
 
       type = g_type_register_static (GIMP_TYPE_CONTEXT,
@@ -101,68 +102,47 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
   object_class->set_property = gimp_stroke_options_set_property;
   object_class->get_property = gimp_stroke_options_get_property;
 
-  g_object_class_install_property (object_class, PROP_WIDTH,
-                                   g_param_spec_double ("width",
-                                                        NULL, NULL,
-                                                        0.0, 2000.0,
-                                                        5.0,
-                                                        G_PARAM_READWRITE));
-
-  g_object_class_install_property (object_class, PROP_CAP_STYLE,
-                                   g_param_spec_enum ("cap-style",
-                                                      NULL, NULL,
-                                                      GIMP_TYPE_CAP_STYLE,
-                                                      GIMP_CAP_BUTT,
-                                                      G_PARAM_READWRITE));
-
-  g_object_class_install_property (object_class, PROP_JOIN_STYLE,
-                                   g_param_spec_enum ("join-style",
-                                                      NULL, NULL,
-                                                      GIMP_TYPE_JOIN_STYLE,
-                                                      GIMP_JOIN_MITER,
-                                                      G_PARAM_READWRITE));
-
-  g_object_class_install_property (object_class, PROP_MITER,
-                                   g_param_spec_double ("miter",
-                                                        NULL, NULL,
-                                                        0.0, 100.0,
-                                                        10.0,
-                                                        G_PARAM_READWRITE));
-
-  g_object_class_install_property (object_class, PROP_ANTIALIAS,
-                                   g_param_spec_boolean ("antialias",
-                                                         NULL, NULL,
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
-
-  g_object_class_install_property (object_class, PROP_DASH_OFFSET,
-                                   g_param_spec_double ("dash-offset",
-                                                        NULL, NULL,
-                                                        0.0, 2000.0,
-                                                        0.0,
-                                                        G_PARAM_READWRITE));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_WIDTH,
+                                   "width", NULL,
+                                   0.0, 2000.0, 5.0,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_WIDTH_UNIT,
+				 "width-unit", NULL,
+				 TRUE, FALSE, GIMP_UNIT_PIXEL,
+				 0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CAP_STYLE,
+                                 "cap-style", NULL,
+                                 GIMP_TYPE_CAP_STYLE, GIMP_CAP_BUTT,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JOIN_STYLE,
+                                 "join-style", NULL,
+                                 GIMP_TYPE_JOIN_STYLE, GIMP_JOIN_MITER,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MITER,
+                                   "miter", NULL,
+                                   0.0, 100.0, 10.0,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+                                    "antialias", NULL,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_DASH_UNIT,
+				 "dash-unit", NULL,
+				 TRUE, FALSE, GIMP_UNIT_PIXEL,
+				 0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DASH_OFFSET,
+                                   "dash-offset", NULL,
+                                   0.0, 2000.0, 10.0,
+                                   0);
 
   array_spec = g_param_spec_double ("dash-length", NULL, NULL,
                                     0.0, 2000.0, 1.0, G_PARAM_READWRITE);
-
   g_object_class_install_property (object_class, PROP_DASH_INFO,
                                    g_param_spec_value_array ("dash-info",
                                                              NULL, NULL,
                                                              array_spec,
-                                                             G_PARAM_READWRITE));
+                                                             GIMP_CONFIG_PARAM_FLAGS));
 
-}
-
-static void
-gimp_stroke_options_init (GimpStrokeOptions *options)
-{
-  options->width       = 5.0;
-  options->cap_style   = GIMP_CAP_BUTT;
-  options->join_style  = GIMP_JOIN_MITER;
-  options->miter       = 10.0;
-  options->antialias   = TRUE;
-  options->dash_offset = 0.0;
-  options->dash_info   = NULL;
 }
 
 static void
@@ -184,6 +164,9 @@ gimp_stroke_options_set_property (GObject      *object,
     case PROP_WIDTH:
       options->width = g_value_get_double (value);
       break;
+    case PROP_WIDTH_UNIT:
+      options->width_unit = g_value_get_int (value);
+      break;
     case PROP_CAP_STYLE:
       options->cap_style = g_value_get_enum (value);
       break;
@@ -195,6 +178,9 @@ gimp_stroke_options_set_property (GObject      *object,
       break;
     case PROP_ANTIALIAS:
       options->antialias = g_value_get_boolean (value);
+      break;
+    case PROP_DASH_UNIT:
+      options->dash_unit = g_value_get_int (value);
       break;
     case PROP_DASH_OFFSET:
       options->dash_offset = g_value_get_double (value);
@@ -252,6 +238,9 @@ gimp_stroke_options_get_property (GObject    *object,
     case PROP_WIDTH:
       g_value_set_double (value, options->width);
       break;
+    case PROP_WIDTH_UNIT:
+      g_value_set_int (value, options->width_unit);
+      break;
     case PROP_CAP_STYLE:
       g_value_set_enum (value, options->cap_style);
       break;
@@ -263,6 +252,9 @@ gimp_stroke_options_get_property (GObject    *object,
       break;
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, options->antialias);
+      break;
+    case PROP_DASH_UNIT:
+      g_value_set_int (value, options->dash_unit);
       break;
     case PROP_DASH_OFFSET:
       g_value_set_double (value, options->dash_offset);

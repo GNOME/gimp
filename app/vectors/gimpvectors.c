@@ -34,6 +34,7 @@
 #include "core/gimpmarshal.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpstrokeoptions.h"
+#include "core/gimpunit.h"
 
 #include "libgimpcolor/gimpcolor.h"
 #include "paint/gimppaintcore-stroke.h"
@@ -558,50 +559,41 @@ gimp_vectors_stroke (GimpItem      *item,
 
   if (GIMP_IS_STROKE_OPTIONS (stroke_desc))
     {
-      GimpContext *context;
-      GimpRGB  color;
-      gdouble  width;
-      gboolean antialias;
-      GimpCapStyle cap_style;
-      GimpJoinStyle join_style; 
-      GValue value = { 0, };
+      GimpContext  *context;
+      GimpRGB       color;
+      gdouble       width;
 
       stroke_options = GIMP_STROKE_OPTIONS (stroke_desc);
 
       context = GIMP_CONTEXT (stroke_options);
       gimp_context_get_foreground (context, &color);
 
-      g_value_init (&value, G_TYPE_DOUBLE);
-      g_object_get_property (G_OBJECT (stroke_options), "width", &value);
-      width = g_value_get_double (&value);
-      g_value_unset (&value);
+      width = stroke_options->width;
 
-      g_value_init (&value, GIMP_TYPE_CAP_STYLE);
-      g_object_get_property (G_OBJECT (stroke_options), "cap-style", &value);
-      cap_style = g_value_get_enum (&value);
-      g_value_unset (&value);
+      if (stroke_options->width_unit != GIMP_UNIT_PIXEL)
+        {
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-      g_value_init (&value, GIMP_TYPE_JOIN_STYLE);
-      g_object_get_property (G_OBJECT (stroke_options), "join-style", &value);
-      join_style = g_value_get_enum (&value);
-      g_value_unset (&value);
-
-      g_value_init (&value, G_TYPE_BOOLEAN);
-      g_object_get_property (G_OBJECT (stroke_options), "antialias", &value);
-      antialias = g_value_get_boolean (&value);
-      g_value_unset (&value);
+          width = (width *
+                   _gimp_unit_get_factor (gimage->gimp,
+                                          stroke_options->width_unit) *
+                   (gimage->xresolution + gimage->yresolution) / 2);
+        }
 
       gimp_drawable_stroke_vectors (drawable, vectors,
                                     gimp_context_get_opacity (context),
                                     &color,
                                     gimp_context_get_paint_mode (context),
-                                    width, join_style, cap_style, antialias);
+                                    width,
+                                    stroke_options->join_style,
+                                    stroke_options->cap_style,
+                                    stroke_options->antialias);
       retval = TRUE;
     }
   else
     {
       GimpPaintCore *core;
-      
+
       paint_info = GIMP_PAINT_INFO (stroke_desc);
       core = g_object_new (paint_info->paint_type, NULL);
 
