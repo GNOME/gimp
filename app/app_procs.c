@@ -75,35 +75,20 @@ static gboolean   app_exit_after_callback (Gimp        *gimp,
 
 /*  public functions  */
 
-gboolean
-app_libs_init (gboolean   *no_interface,
-               gint       *argc,
-               gchar    ***argv)
+void
+app_libs_init (GOptionContext *context,
+               gboolean        no_interface)
 {
-#ifdef GIMP_CONSOLE_COMPILATION
-  *no_interface = TRUE;
-#endif
-
-  if (*no_interface)
+  if (no_interface)
     {
-      gchar *basename;
-
-      basename = g_path_get_basename ((*argv)[0]);
-      g_set_prgname (basename);
-      g_free (basename);
-
       g_type_init ();
-
-      return TRUE;
     }
 #ifndef GIMP_CONSOLE_COMPILATION
   else
     {
-      return gui_libs_init (argc, argv);
+      gui_libs_init (context);
     }
 #endif
-
-  return FALSE;
 }
 
 void

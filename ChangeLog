@@ -1,3 +1,10 @@
+2005-02-08  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.[ch]
+	* app/gui/gui.[ch]
+	* app/main.c: simplified initialization by passing GOptionContext
+	to app_libs_init() and gui_libs_init().
+
 2005-02-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/main.c: removed SIGCHLD handler which used to call

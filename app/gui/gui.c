@@ -124,30 +124,12 @@ static GimpUIManager *image_ui_manager            = NULL;
 
 /*  public functions  */
 
-gboolean
-gui_libs_init (gint    *argc,
-	       gchar ***argv)
+void
+gui_libs_init (GOptionContext *context)
 {
-  gchar *abort_message;
+  g_return_if_fail (context != NULL);
 
-  g_return_val_if_fail (argc != NULL, FALSE);
-  g_return_val_if_fail (argv != NULL, FALSE);
-
-  if (! gtk_init_check (argc, argv))
-    return FALSE;
-
-  abort_message = gui_sanity_check ();
-  if (abort_message)
-    gui_abort (abort_message);
-
-  gimp_widgets_init (gui_help_func,
-                     gui_get_foreground_func,
-                     gui_get_background_func,
-                     NULL);
-
-  g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
-
-  return TRUE;
+  g_option_context_add_group (context, gtk_get_option_group (TRUE));
 }
 
 void
@@ -186,9 +168,21 @@ gui_init (Gimp     *gimp,
 {
   GimpInitStatusFunc  status_callback = NULL;
   GdkScreen          *screen;
+  gchar              *abort_message;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (the_gui_gimp == NULL, NULL);
+
+  abort_message = gui_sanity_check ();
+  if (abort_message)
+    gui_abort (abort_message);
+
+  gimp_widgets_init (gui_help_func,
+                     gui_get_foreground_func,
+                     gui_get_background_func,
+                     NULL);
+
+  g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
 
   the_gui_gimp = gimp;
 

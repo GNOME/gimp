@@ -20,13 +20,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
 #include <string.h>
-#include <sys/types.h>
-
-#ifdef HAVE_SYS_WAIT_H
-#include <sys/wait.h>
-#endif
+#include <signal.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -34,10 +29,6 @@
 
 #ifdef __GLIBC__
 #include <malloc.h>
-#endif
-
-#ifndef  WAIT_ANY
-#define  WAIT_ANY -1
 #endif
 
 #include <locale.h>
@@ -63,28 +54,31 @@
 #include "gimp-intl.h"
 
 
-static gboolean gimp_option_stack_trace_mode (const gchar  *option_name,
-                                              const gchar  *value,
-                                              gpointer      data,
-                                              GError      **error);
-static gboolean gimp_option_pdb_compat_mode  (const gchar  *option_name,
-                                              const gchar  *value,
-                                              gpointer      data,
-                                              GError      **error);
-static gboolean gimp_option_dump_gimprc      (const gchar  *option_name,
-                                              const gchar  *value,
-                                              gpointer      data,
-                                              GError      **error);
+static gboolean  gimp_option_fatal_warnings   (const gchar  *option_name,
+                                               const gchar  *value,
+                                               gpointer      data,
+                                               GError      **error);
+static gboolean  gimp_option_stack_trace_mode (const gchar  *option_name,
+                                               const gchar  *value,
+                                               gpointer      data,
+                                               GError      **error);
+static gboolean  gimp_option_pdb_compat_mode  (const gchar  *option_name,
+                                               const gchar  *value,
+                                               gpointer      data,
+                                               GError      **error);
+static gboolean  gimp_option_dump_gimprc      (const gchar  *option_name,
+                                               const gchar  *value,
+                                               gpointer      data,
+                                               GError      **error);
 
-static void     gimp_init_i18n               (void);
-static void     gimp_init_malloc             (void);
-static void     gimp_init_signal_handlers    (void);
-static void     gimp_init_log_handlers       (void);
+static void      gimp_show_version            (void) G_GNUC_NORETURN;
 
-static void     gimp_show_version            (void) G_GNUC_NORETURN;
+static void      gimp_init_i18n               (void);
+static void      gimp_init_malloc             (void);
+static void      gimp_init_signal_handlers    (void);
 
 #ifndef G_OS_WIN32
-static void     gimp_sigfatal_handler        (gint sig_num) G_GNUC_NORETURN;
+static void      gimp_sigfatal_handler        (gint sig_num) G_GNUC_NORETURN;
 #endif
 
 
@@ -94,7 +88,6 @@ static const gchar        *session_name       = NULL;
 static const gchar        *batch_interpreter  = NULL;
 static const gchar       **batch_commands     = NULL;
 static const gchar       **filenames          = NULL;
-static gboolean            fatal_warnings     = FALSE;
 static gboolean            no_interface       = FALSE;
 static gboolean            no_data            = FALSE;
 static gboolean            no_fonts           = FALSE;
@@ -187,13 +180,12 @@ static const GOptionEntry main_entries[] =
   {
     "console-messages", 0, 0,
     G_OPTION_ARG_NONE, &console_messages,
-    N_("Send messages to console instead of using a dialog box"), NULL
+    N_("Send messages to console instead of using a dialog"), NULL
   },
   {
     "pdb-compat-mode", 0, 0,
     G_OPTION_ARG_CALLBACK, gimp_option_pdb_compat_mode,
-    N_("Procedural Database compatibility mode"),
-    "<never | query | always>"
+    N_("PDB compatibility mode"), "<never|query|always>"
   },
   {
     "stack-trace-mode", 0, 0,
@@ -205,13 +197,10 @@ static const GOptionEntry main_entries[] =
     G_OPTION_ARG_NONE, &use_debug_handler,
     N_("Enable non-fatal debugging signal handlers"), NULL
   },
-  /*  GTK+ also looks for --g-fatal-warnings, but we want it for
-   *  non-interactive use also.
-   */
   {
-    "g-fatal-warnings", 0, G_OPTION_FLAG_HIDDEN,
-    G_OPTION_ARG_NONE, &fatal_warnings,
-    NULL, NULL
+    "g-fatal-warnings", 0, 0,
+    G_OPTION_ARG_CALLBACK, gimp_option_fatal_warnings,
+    N_("Make all warnings fatal"), NULL
   },
   {
     "dump-gimprc", 0, 0,
@@ -244,14 +233,18 @@ main (int    argc,
   GOptionContext *context;
   GError         *error = NULL;
   const gchar    *abort_message;
+  gchar          *basename;
   gint            i;
 
   gimp_init_malloc ();
 
   gimp_init_i18n ();
 
-  /* set the application name */
   g_set_application_name (_("The GIMP"));
+
+  basename = g_path_get_basename (argv[0]);
+  g_set_prgname (basename);
+  g_free (basename);
 
   /* Check argv[] for "--no-interface" before trying to initialize gtk+. */
   for (i = 1; i < argc; i++)
@@ -272,44 +265,38 @@ main (int    argc,
 	}
     }
 
-  /* initialize some libraries (depending on the --no-interface option) */
-  if (! app_libs_init (&no_interface, &argc, &argv))
-    {
-      const gchar *msg;
+#ifdef GIMP_CONSOLE_COMPILATION
+  no_interface = TRUE;
+#endif
 
-      msg = _("GIMP could not initialize the graphical user interface.\n"
-              "Make sure a proper setup for your display environment exists.");
-      g_print ("%s\n\n", msg);
+  context = g_option_context_new ("[FILE|URI...]");
+  g_option_context_add_main_entries (context, main_entries, GETTEXT_PACKAGE);
+
+  app_libs_init (context, no_interface);
+
+  if (! g_option_context_parse (context, &argc, &argv, &error))
+    {
+      if (error)
+        {
+          g_print ("%s\n", error->message);
+          g_error_free (error);
+        }
+      else
+        {
+          g_print ("%s\n",
+                   _("GIMP could not initialize the graphical user interface.\n"
+                     "Make sure a proper setup for your display environment "
+                     "exists."));
+        }
 
       app_exit (EXIT_FAILURE);
     }
 
-  /* do some sanity checks */
   abort_message = sanity_check ();
   if (abort_message)
     app_abort (no_interface, abort_message);
 
-  /* parse the command-line options */
-  context = g_option_context_new ("[FILE|URI...]");
-  g_option_context_add_main_entries (context, main_entries, GETTEXT_PACKAGE);
-
-#ifdef __GNUC__
-#warning FIXME: add this code as soon as we depend on gtk+-2.6
-#endif
-  /* g_option_context_add_group (context, gtk_get_option_group (TRUE));
-   */
-
-  if (! g_option_context_parse (context, &argc, &argv, &error))
-    {
-      g_printerr ("%s\n", error->message);
-      g_error_free (error);
-
-      app_exit (EXIT_FAILURE);
-    }
-
   gimp_init_signal_handlers ();
-
-  gimp_init_log_handlers ();
 
   gimp_errors_init (argv[0], use_debug_handler, stack_trace_mode);
 
@@ -336,88 +323,43 @@ main (int    argc,
   return EXIT_SUCCESS;
 }
 
-static void
-gimp_init_malloc (void)
-{
-#if 0
-  g_mem_set_vtable (glib_mem_profiler_table);
-  g_atexit (g_mem_profile);
+
+#ifdef G_OS_WIN32
+
+/* In case we build this as a windowed application */
+
+#ifdef __GNUC__
+#  ifndef _stdcall
+#    define _stdcall  __attribute__((stdcall))
+#  endif
 #endif
 
-#ifdef __GLIBC__
-  /* Tweak memory allocation so that memory allocated in chunks >= 4k
-   * (64x64 pixel 1bpp tile) gets returned to the system when free'd ().
-   */
-  mallopt (M_MMAP_THRESHOLD, 64 * 64 - 1);
-#endif
+int _stdcall
+WinMain (struct HINSTANCE__ *hInstance,
+	 struct HINSTANCE__ *hPrevInstance,
+	 char               *lpszCmdLine,
+	 int                 nCmdShow)
+{
+  return main (__argc, __argv);
 }
-
-static void
-gimp_init_i18n (void)
-{
-  setlocale (LC_ALL, "");
-
-  bindtextdomain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
-#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
-  bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");
-#endif
-
-  bindtextdomain (GETTEXT_PACKAGE, gimp_locale_directory ());
-#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-#endif
-
-  textdomain (GETTEXT_PACKAGE);
-}
-
-static void
-gimp_init_signal_handlers (void)
-{
-#ifndef G_OS_WIN32
-  /* No use catching these on Win32, the user won't get any
-   * stack trace from glib anyhow. It's better to let Windows inform
-   * about the program error, and offer debugging (if the user
-   * has installed MSVC or some other compiler that knows how to
-   * install itself as a handler for program errors).
-   */
-
-  /* Handle fatal signals */
-
-  /* these are handled by gimp_terminate() */
-  gimp_signal_private (SIGHUP,  gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGINT,  gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGQUIT, gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGABRT, gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGTERM, gimp_sigfatal_handler, 0);
-
-  if (stack_trace_mode != GIMP_STACK_TRACE_NEVER)
-    {
-      /* these are handled by gimp_fatal_error() */
-      gimp_signal_private (SIGBUS,  gimp_sigfatal_handler, 0);
-      gimp_signal_private (SIGSEGV, gimp_sigfatal_handler, 0);
-      gimp_signal_private (SIGFPE,  gimp_sigfatal_handler, 0);
-    }
-
-  /* Ignore SIGPIPE because plug_in.c handles broken pipes */
-  gimp_signal_private (SIGPIPE, SIG_IGN, 0);
-
-  /* Restart syscalls on SIGCHLD */
-  gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
 
 #endif /* G_OS_WIN32 */
-}
 
-static void
-gimp_init_log_handlers (void)
+
+static gboolean
+gimp_option_fatal_warnings (const gchar  *option_name,
+                            const gchar  *value,
+                            gpointer      data,
+                            GError      **error)
 {
-  if (fatal_warnings)
-    {
-      GLogLevelFlags fatal_mask;
+  GLogLevelFlags fatal_mask;
 
-      fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
-      fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
-      g_log_set_always_fatal (fatal_mask);
-    }
+  fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
+  fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
+
+  g_log_set_always_fatal (fatal_mask);
+
+  return TRUE;
 }
 
 static gboolean
@@ -500,26 +442,76 @@ gimp_show_version (void)
 }
 
 
-#ifdef G_OS_WIN32
-
-/* In case we build this as a windowed application */
-
-#ifdef __GNUC__
-#  ifndef _stdcall
-#    define _stdcall  __attribute__((stdcall))
-#  endif
+static void
+gimp_init_malloc (void)
+{
+#if 0
+  g_mem_set_vtable (glib_mem_profiler_table);
+  g_atexit (g_mem_profile);
 #endif
 
-int _stdcall
-WinMain (struct HINSTANCE__ *hInstance,
-	 struct HINSTANCE__ *hPrevInstance,
-	 char               *lpszCmdLine,
-	 int                 nCmdShow)
-{
-  return main (__argc, __argv);
+#ifdef __GLIBC__
+  /* Tweak memory allocation so that memory allocated in chunks >= 4k
+   * (64x64 pixel 1bpp tile) gets returned to the system when free'd ().
+   */
+  mallopt (M_MMAP_THRESHOLD, 64 * 64 - 1);
+#endif
 }
 
+static void
+gimp_init_i18n (void)
+{
+  setlocale (LC_ALL, "");
+
+  bindtextdomain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
+  bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");
+#endif
+
+  bindtextdomain (GETTEXT_PACKAGE, gimp_locale_directory ());
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
+  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+#endif
+
+  textdomain (GETTEXT_PACKAGE);
+}
+
+static void
+gimp_init_signal_handlers (void)
+{
+#ifndef G_OS_WIN32
+  /* No use catching these on Win32, the user won't get any
+   * stack trace from glib anyhow. It's better to let Windows inform
+   * about the program error, and offer debugging (if the user
+   * has installed MSVC or some other compiler that knows how to
+   * install itself as a handler for program errors).
+   */
+
+  /* Handle fatal signals */
+
+  /* these are handled by gimp_terminate() */
+  gimp_signal_private (SIGHUP,  gimp_sigfatal_handler, 0);
+  gimp_signal_private (SIGINT,  gimp_sigfatal_handler, 0);
+  gimp_signal_private (SIGQUIT, gimp_sigfatal_handler, 0);
+  gimp_signal_private (SIGABRT, gimp_sigfatal_handler, 0);
+  gimp_signal_private (SIGTERM, gimp_sigfatal_handler, 0);
+
+  if (stack_trace_mode != GIMP_STACK_TRACE_NEVER)
+    {
+      /* these are handled by gimp_fatal_error() */
+      gimp_signal_private (SIGBUS,  gimp_sigfatal_handler, 0);
+      gimp_signal_private (SIGSEGV, gimp_sigfatal_handler, 0);
+      gimp_signal_private (SIGFPE,  gimp_sigfatal_handler, 0);
+    }
+
+  /* Ignore SIGPIPE because plug_in.c handles broken pipes */
+  gimp_signal_private (SIGPIPE, SIG_IGN, 0);
+
+  /* Restart syscalls on SIGCHLD */
+  gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
+
 #endif /* G_OS_WIN32 */
+}
 
 
 #ifndef G_OS_WIN32

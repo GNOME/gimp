@@ -20,13 +20,12 @@
 #define __GUI_H__
 
 
-gboolean           gui_libs_init (gint          *argc,
-                                  gchar       ***argv);
-void               gui_abort     (const gchar   *abort_message);
+void               gui_libs_init (GOptionContext *context);
+void               gui_abort     (const gchar    *abort_message);
 
-GimpInitStatusFunc gui_init      (Gimp          *gimp,
-                                  gboolean       no_spash);
-void               gui_post_init (Gimp          *gimp);
+GimpInitStatusFunc gui_init      (Gimp           *gimp,
+                                  gboolean        no_spash);
+void               gui_post_init (Gimp           *gimp);
 
 
 #endif /* __GUI_H__ */
