@@ -3691,6 +3691,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   GtkObject    *adj;
   gchar         buf[256];
   gint          row;
+  gboolean      randomize = FALSE;
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -3846,7 +3847,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (seed_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  seed = gimp_random_seed_new (&gflare->sflare_seed, FALSE);
+  seed = gimp_random_seed_new (&gflare->sflare_seed, &randomize);
 
   entry = GTK_WIDGET (GIMP_RANDOM_SEED_SPINBUTTON (seed));
 

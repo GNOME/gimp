@@ -487,6 +487,7 @@ solid_noise_dialog (void)
   GtkWidget *spinbutton;
   GtkObject *adj;
   gboolean   run;
+  gboolean   randomize = FALSE;
 
   gimp_ui_init ("snoise", FALSE);
 
@@ -514,7 +515,7 @@ solid_noise_dialog (void)
   gtk_widget_show (table);
 
   /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&snvals.seed, FALSE);
+  seed_hbox = gimp_random_seed_new (&snvals.seed, &randomize);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,
 				     seed_hbox, 1, TRUE);

@@ -177,8 +177,9 @@ maze_dialog (void)
   GtkWidget *div_x_hbox, *div_y_hbox;
   GtkWidget *div_x_entry, *div_y_entry;
 
-  gint    trow = 0;
-  gchar  *message;
+  gint      trow = 0;
+  gchar    *message;
+  gboolean  randomize = FALSE;
 
   gimp_ui_init ("maze", FALSE);
 
@@ -287,7 +288,7 @@ maze_dialog (void)
                     &mvals.tile);
 
   /* Seed input box */
-  seed_hbox = gimp_random_seed_new (&mvals.seed, FALSE);
+  seed_hbox = gimp_random_seed_new (&mvals.seed, &randomize);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
 			     _("Seed:"), 1.0, 0.5,
 			     seed_hbox, 1, TRUE);

@@ -1,5 +1,18 @@
 2003-12-17  Dave Neary  <bolsh@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.[ch]: Change randomize boolean to 
+	boolean *.
+
+	* plug-ins/gflare/gflare.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/snoise.c:
+	* plug-ins/common/blur.c
+	* plug-ins/common/randomize.c: Modify appropriately.
+
+2003-12-17  Dave Neary  <bolsh@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.[ch]: Change signature of 
 	gimp_random_seed_new() to allow caller to specify that he wants to 
 	use a random seed rather than the specified seed. Previously it was
@@ -7,7 +20,6 @@
 
 	* plug-ins/gflare/gflare.c
 	* plug-ins/maze/maze_face.c
-	* plug-ins/common/
 	* plug-ins/common/plasma.c
 	* plug-ins/common/sinus.c
 	* plug-ins/common/snoise.c: Trivial modifications of call to 

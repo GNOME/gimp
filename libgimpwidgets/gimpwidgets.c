@@ -1223,8 +1223,8 @@ gimp_random_seed_update (GtkWidget *widget,
 /**
  * gimp_random_seed_new:
  * @seed:        A pointer to the variable which stores the random seed.
- * @random_seed: A boolean indicating whether seed should be initialised 
- *               randomly or not.
+ * @random_seed: A pointer to a boolean indicating whether seed should be 
+ *               initialised randomly or not.
  *
  * Creates a widget that allows the user to control how the random number
  * generator is initialized.
@@ -1233,7 +1233,7 @@ gimp_random_seed_update (GtkWidget *widget,
  *          a #GtkButton for setting a random seed.
  **/
 GtkWidget *
-gimp_random_seed_new (guint *seed, gboolean random_seed)
+gimp_random_seed_new (guint *seed, gboolean *random_seed)
 {
   GtkWidget *hbox;
   GtkWidget *spinbutton;
@@ -1242,10 +1242,11 @@ gimp_random_seed_new (guint *seed, gboolean random_seed)
 
   hbox = gtk_hbox_new (FALSE, 4);
 
-  if (random_seed)
+  if (*random_seed)
     {
       *seed = g_random_int ();
     }
+
   spinbutton = gimp_spin_button_new (&adj, *seed,
                                      0, (guint32) -1 , 1, 10, 0, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);

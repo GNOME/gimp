@@ -609,7 +609,7 @@ blur_dialog (void)
   gtk_widget_show (table);
 
   /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&pivals.blur_seed, pivals.blur_randomize);
+  seed_hbox = gimp_random_seed_new (&pivals.blur_seed, &pivals.blur_randomize);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,
 				     seed_hbox, 1, TRUE);

@@ -294,6 +294,7 @@ plasma_dialog (GimpDrawable  *drawable,
   GtkWidget *seed;
   GtkObject *adj;
   gboolean   run;
+  gboolean   randomize = FALSE;
 
   gimp_ui_init ("plasma", TRUE);
 
@@ -331,7 +332,7 @@ plasma_dialog (GimpDrawable  *drawable,
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  seed = gimp_random_seed_new (&pvals.seed, FALSE);
+  seed = gimp_random_seed_new (&pvals.seed, &randomize);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("Random _Seed:"), 1.0, 0.5,
 				     seed, 1, TRUE);
