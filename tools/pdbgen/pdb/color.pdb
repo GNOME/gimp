@@ -574,7 +574,7 @@ HELP
 	{ name => 'std_dev', init => 1,
 	  desc => 'Standard deviation of intensity values' },
 	{ name => 'median', init => 1,
-	  desc => 'Median itensity value' },
+	  desc => 'Median intensity value' },
 	{ name => 'pixels', init => 1,
 	  desc => 'Alpha-weighted pixel count for entire image' },
 	{ name => 'count', init => 1,

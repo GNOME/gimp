@@ -1074,7 +1074,7 @@ sub image_$_ {
     \$blurb = 'Return the $_ of the image';
 
     \$help = <<'HELP';
-This procedure returns the image's width. This value is independent of any of
+This procedure returns the image's $_. This value is independent of any of
 the layers in this image. This is the "canvas" $_.
 HELP
 
