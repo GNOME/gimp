@@ -1,5 +1,9 @@
 2005-02-15  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs.[ch]: formatting.
+
+2005-02-15  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimagemap.[ch]: changed GimpImageMapApplyFunc to
 	be compatible with PixelProcessorFunc.
 

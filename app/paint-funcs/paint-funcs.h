@@ -174,10 +174,10 @@ void  combine_indexed_and_indexed_a_pixels (const guchar *src1,
                                             const guchar *src2,
                                             guchar       *dest,
                                             const guchar *mask,
-                                            guint          opacity,
+                                            guint         opacity,
                                             const gint   *affect,
-                                            guint          length,
-                                            guint          bytes);
+                                            guint         length,
+                                            guint         bytes);
 
 /*  combine indexed-alpha images with indexed-alpha images
  *  result is an indexed-alpha image.  use this for painting
@@ -187,10 +187,10 @@ void  combine_indexed_a_and_indexed_a_pixels(const guchar   *src1,
                                              const guchar   *src2,
                                              guchar         *dest,
                                              const guchar   *mask,
-                                             guint              opacity,
+                                             guint           opacity,
                                              const gboolean *affect,
-                                             guint             length,
-                                             guint             bytes);
+                                             guint           length,
+                                             guint           bytes);
 
 /*  combine intensity with indexed, destination is
  *  intensity-alpha...use this for an indexed floating sel
@@ -200,9 +200,9 @@ void  combine_inten_a_and_indexed_a_pixels (const guchar *src1,
                                             guchar       *dest,
                                             const guchar *mask,
                                             const guchar *cmap,
-                                            guint          opacity,
-                                            guint          length,
-                                            guint          bytes);
+                                            guint         opacity,
+                                            guint         length,
+                                            guint         bytes);
 
 /*  combine RGB image with RGB or GRAY with GRAY
  *  destination is intensity-only...
@@ -211,9 +211,9 @@ void  combine_inten_and_inten_pixels       (const guchar   *src1,
                                             const guchar   *src2,
                                             guchar         *dest,
                                             const guchar   *mask,
-                                            guint            opacity,
+                                            guint           opacity,
                                             const gboolean *affect,
-                                            guint            length,
+                                            guint           length,
                                             guint           bytes);
 
 /*  combine an RGBA or GRAYA image with an RGB or GRAY image
@@ -248,11 +248,11 @@ void  combine_inten_a_and_inten_a_pixels   (const guchar   *src1,
                                             const guchar   *src2,
                                             guchar         *dest,
                                             const guchar   *mask,
-                                            guint            opacity,
+                                            guint           opacity,
                                             const gboolean *affect,
                                             gboolean        mode_affect,
-                                            guint            length,
-                                            guint            bytes);
+                                            guint           length,
+                                            guint           bytes);
 
 /*  combine a channel with intensity-alpha pixels based
  *  on some opacity, and a channel color...
@@ -262,9 +262,9 @@ void  combine_inten_a_and_channel_mask_pixels(const guchar *src,
                                               const guchar *channel,
                                               guchar       *dest,
                                               const guchar *col,
-                                              guint            opacity,
-                                              guint            length,
-                                              guint            bytes);
+                                              guint         opacity,
+                                              guint         length,
+                                              guint         bytes);
 
 void  combine_inten_a_and_channel_selection_pixels(const guchar *src,
                                                    const guchar *channel,
@@ -373,10 +373,10 @@ void  subsample_region                    (PixelRegion *srcPR,
                                            PixelRegion *destPR,
                                            gint         subsample);
 
-gfloat shapeburst_region                  (PixelRegion           *srcPR,
-                                           PixelRegion           *distPR,
-                                           GimpProgressFunc       progress_callback,
-                                           gpointer               progress_data);
+gfloat shapeburst_region                  (PixelRegion      *srcPR,
+                                           PixelRegion      *distPR,
+                                           GimpProgressFunc  progress_callback,
+                                           gpointer          progress_data);
 
 void  thin_region                         (PixelRegion *src,
                                            gint16       xradius,

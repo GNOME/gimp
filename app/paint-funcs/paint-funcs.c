@@ -2188,7 +2188,8 @@ copy_region (PixelRegion *src,
 #ifdef COWSHOW
           fputc('!',stderr);
 #endif
-          tile_manager_map_over_tile (dest->tiles, dest->curtile, src->curtile);
+          tile_manager_map_over_tile (dest->tiles,
+                                      dest->curtile, src->curtile);
         }
       else
         {
@@ -2305,7 +2306,9 @@ extract_alpha_region (PixelRegion *src,
   guchar * s, * m, * d;
   void * pr;
 
-  for (pr = pixel_regions_register (3, src, mask, dest); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (3, src, mask, dest);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       s = src->data;
       d = dest->data;
