@@ -55,6 +55,8 @@ struct _GimpToolInfo
   gboolean             in_toolbox;
   GimpToolOptions     *tool_options;
   GimpPaintInfo       *paint_info;
+
+  GimpContainer       *options_presets;
 };
 
 struct _GimpToolInfoClass

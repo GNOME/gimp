@@ -124,8 +124,15 @@ gimp_tool_options_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TOOL_INFO:
-      g_return_if_fail (options->tool_info == NULL);
-      options->tool_info = GIMP_TOOL_INFO (g_value_dup_object (value));
+      {
+        GimpToolInfo *tool_info = GIMP_TOOL_INFO (g_value_get_object (value));
+
+        g_return_if_fail (options->tool_info == NULL ||
+                          options->tool_info == tool_info);
+
+        if (! options->tool_info)
+          options->tool_info = GIMP_TOOL_INFO (g_value_dup_object (value));
+      }
       break;
 
     default:
@@ -170,15 +177,18 @@ gimp_tool_options_reset (GimpToolOptions *tool_options)
   GIMP_TOOL_OPTIONS_GET_CLASS (tool_options)->reset (tool_options);
 }
 
-static gchar *
+gchar *
 gimp_tool_options_build_filename (GimpToolOptions *tool_options,
                                   const gchar     *extension)
 {
-  gchar *basename;
   gchar *filename;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), NULL);
 
   if (extension)
     {
+      gchar *basename;
+
       basename = g_strconcat (GIMP_OBJECT (tool_options->tool_info)->name,
                               ".", extension, NULL);
 

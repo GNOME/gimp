@@ -59,8 +59,6 @@ dialogs_sources = \
 	tips-dialog.h			\
 	tips-parser.c			\
 	tips-parser.h			\
-	tool-options-dialog.c		\
-	tool-options-dialog.h		\
 	user-install-dialog.c		\
 	user-install-dialog.h
 
@@ -149,6 +147,10 @@ menus_sources = \
 	qmask-menu.h			\
 	select-commands.c		\
 	select-commands.h		\
+	tool-options-menu.c		\
+	tool-options-menu.h		\
+	tool-options-commands.c		\
+	tool-options-commands.h		\
 	toolbox-menu.c			\
 	toolbox-menu.h			\
 	tools-commands.c		\

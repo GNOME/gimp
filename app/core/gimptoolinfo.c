@@ -29,16 +29,18 @@
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimplist.h"
 #include "gimppaintinfo.h"
 #include "gimptoolinfo.h"
+#include "gimptooloptions.h"
 
 
-static void      gimp_tool_info_class_init      (GimpToolInfoClass *klass);
-static void      gimp_tool_info_init            (GimpToolInfo      *tool_info);
+static void    gimp_tool_info_class_init      (GimpToolInfoClass *klass);
+static void    gimp_tool_info_init            (GimpToolInfo      *tool_info);
 
-static void      gimp_tool_info_finalize        (GObject           *object);
-static gchar *   gimp_tool_info_get_description (GimpViewable      *viewable,
-                                                 gchar            **tooltip);
+static void    gimp_tool_info_finalize        (GObject           *object);
+static gchar * gimp_tool_info_get_description (GimpViewable      *viewable,
+                                               gchar            **tooltip);
 
 
 static GimpDataClass *parent_class = NULL;
@@ -157,6 +159,12 @@ gimp_tool_info_finalize (GObject *object)
       tool_info->tool_options = NULL;
     }
 
+  if (tool_info->options_presets)
+    {
+      g_object_unref (tool_info->options_presets);
+      tool_info->options_presets = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -241,6 +249,12 @@ gimp_tool_info_new (Gimp                *gimp,
     }
 
   g_object_set (tool_info->tool_options, "tool-info", tool_info, NULL);
+
+  if (tool_info->tool_options_type != GIMP_TYPE_TOOL_OPTIONS)
+    {
+      tool_info->options_presets = gimp_list_new (tool_info->tool_options_type,
+                                                  GIMP_CONTAINER_POLICY_STRONG);
+    }
 
   return tool_info;
 }

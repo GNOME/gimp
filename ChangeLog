@@ -1,5 +1,40 @@
 2003-09-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimptoolinfo.[ch]: added a GimpContainer of tool
+	options presets.
+
+	* app/core/gimptooloptions.[ch] (gimp_tool_options_set_property):
+	silently accept setting the *same* tool_info again.
+
+	(gimp_tool_options_build_filename): is public now.
+
+	* app/tools/gimp-tools.c (gimp_tools_restore,save): load and save
+	the presets container.
+
+	* app/gui/tool-options-dialog.[ch]: removed.
+
+	* app/gui/tool-options-commands.[ch]
+	* app/gui/tool-options-menu.[ch]: new files implementing a menu
+	for the new GimpToolOptionsEditor widget. Has submenus for saving,
+	loading, and deleting tool options to/from the
+	tool_info->options_presets container.
+
+	* app/gui/Makefile.am
+	* app/gui/dialogs-constructors.c
+	* app/gui/menus.c: changed accordingly.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimptooloptionseditor.[ch]: the tool options dialog
+	as proper widget. The "Load" and "Save" buttons still do the same
+	stuff as before. Will make them use the new presets since making
+	them do something useful was the reason for this whole change.
+
+	* app/widgets/gimphelp-ids.h: added missing help IDs for the tool
+	options dialog.
+
+2003-09-29  Michael Natterer  <mitch@gimp.org>
+
 	Fixed handling of G_PARAM_CONSTRUCT_ONLY properties:
 
 	* app/config/gimpconfig.c (gimp_config_iface_duplicate): build

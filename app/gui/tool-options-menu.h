@@ -16,11 +16,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TOOL_OPTIONS_DIALOG_H__
-#define __TOOL_OPTIONS_DIALOG_H__
+#ifndef __TOOL_OPTIONS_MENU_H__
+#define __TOOL_OPTIONS_MENU_H__
 
 
-GtkWidget * tool_options_dialog_create (Gimp *gimp);
+extern GimpItemFactoryEntry tool_options_menu_entries[];
+extern gint                 n_tool_options_menu_entries;
 
 
-#endif  /*  __TOOL_OPTIONS_DIALOG_H__  */
+void   tool_options_menu_update (GtkItemFactory *factory,
+                                 gpointer        data);
+
+
+#endif /* __TOOL_OPTIONS_MENU_H__ */

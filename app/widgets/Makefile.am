@@ -162,6 +162,8 @@ libappwidgets_a_sources = \
 	gimptoolbox-dnd.h		\
 	gimptoolbox-indicator-area.c	\
 	gimptoolbox-indicator-area.h	\
+	gimptooloptionseditor.c		\
+	gimptooloptionseditor.h		\
 	gimpundoeditor.c		\
 	gimpundoeditor.h		\
 	gimpvectorstreeview.c		\

@@ -66,6 +66,7 @@
 #include "widgets/gimpselectioneditor.h"
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimptoolbox.h"
+#include "widgets/gimptooloptionseditor.h"
 #include "widgets/gimpundoeditor.h"
 #include "widgets/gimpvectorstreeview.h"
 
@@ -85,7 +86,6 @@
 #include "preferences-dialog.h"
 #include "templates-commands.h"
 #include "tips-dialog.h"
-#include "tool-options-dialog.h"
 #include "vectors-commands.h"
 
 #include "gimp-intl.h"
@@ -251,7 +251,7 @@ dialogs_tool_options_get (GimpDialogFactory *factory,
   if (view)
     return NULL;
 
-  view = tool_options_dialog_create (context->gimp);
+  view = gimp_tool_options_editor_new (context->gimp, factory->menu_factory);
 
   g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
 
@@ -260,7 +260,8 @@ dialogs_tool_options_get (GimpDialogFactory *factory,
                                GIMP_STOCK_TOOL_OPTIONS,
                                GIMP_HELP_TOOL_OPTIONS_DIALOG,
                                dialogs_tool_options_preview_func, NULL,
-                               NULL, NULL);
+                               NULL,
+                               dialogs_get_view_menu_func);
 }
 
 GtkWidget *

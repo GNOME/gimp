@@ -24,6 +24,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
@@ -182,7 +184,6 @@ gimp_tools_exit (Gimp *gimp)
 void
 gimp_tools_restore (Gimp *gimp)
 {
-  GimpToolInfo *tool_info;
   GList        *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -191,6 +192,7 @@ gimp_tools_restore (Gimp *gimp)
        list;
        list = g_list_next (list))
     {
+      GimpToolInfo           *tool_info;
       GimpToolOptionsGUIFunc  options_gui_func;
       GtkWidget              *options_gui;
 
@@ -218,13 +220,34 @@ gimp_tools_restore (Gimp *gimp)
 
       g_object_set_data (G_OBJECT (tool_info->tool_options),
                          "gimp-tool-options-gui", options_gui);
+
+      if (tool_info->options_presets)
+        {
+          gchar *filename;
+          GList *list;
+
+          filename = gimp_tool_options_build_filename (tool_info->tool_options,
+                                                       "presets");
+          gimp_config_deserialize_file (G_OBJECT (tool_info->options_presets),
+                                        filename,
+                                        gimp, NULL);
+          g_free (filename);
+
+          gimp_list_reverse (GIMP_LIST (tool_info->options_presets));
+
+          for (list = GIMP_LIST (tool_info->options_presets)->list;
+               list;
+               list = g_list_next (list))
+            {
+              g_object_set (list->data, "tool-info", tool_info, NULL);
+            }
+        }
     }
 }
 
 void
 gimp_tools_save (Gimp *gimp)
 {
-  GimpToolInfo *tool_info;
   GList        *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -233,9 +256,32 @@ gimp_tools_save (Gimp *gimp)
        list;
        list = g_list_next (list))
     {
-      tool_info = GIMP_TOOL_INFO (list->data);
+      GimpToolInfo *tool_info = GIMP_TOOL_INFO (list->data);
 
       gimp_tool_options_serialize (tool_info->tool_options, NULL, NULL);
+
+      if (tool_info->options_presets)
+        {
+          gchar *filename;
+          gchar *header;
+          gchar *footer;
+
+          filename = gimp_tool_options_build_filename (tool_info->tool_options,
+                                                       "presets");
+
+          header = g_strdup_printf ("GIMP %s options presets",
+                                    GIMP_OBJECT (tool_info)->name);
+          footer = g_strdup_printf ("end of %s options presets",
+                                    GIMP_OBJECT (tool_info)->name);
+
+          gimp_config_serialize_to_file (G_OBJECT (tool_info->options_presets),
+                                         filename, header, footer,
+                                         NULL, NULL);
+
+          g_free (filename);
+          g_free (header);
+          g_free (footer);
+        }
     }
 }
 

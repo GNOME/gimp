@@ -325,6 +325,8 @@
 #define GIMP_HELP_TEMPLATE_DELETE                 "gimp-template-delete"
 
 #define GIMP_HELP_TOOL_OPTIONS_DIALOG             "gimp-tool-options-dialog"
+#define GIMP_HELP_TOOL_OPTIONS_SAVE               "gimp-tool-options-save"
+#define GIMP_HELP_TOOL_OPTIONS_RESTORE            "gimp-tool-options-restore"
 #define GIMP_HELP_TOOL_OPTIONS_RESET              "gimp-tool-options-reset"
 
 #define GIMP_HELP_ERRORS_DIALOG                   "gimp-errors-dialog"
