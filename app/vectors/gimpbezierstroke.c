@@ -448,7 +448,7 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
                                         const GimpCoords      *deltacoord,
                                         GimpAnchorFeatureType  feature)
 {
-  GimpCoords beziercoords[4];
+  GimpCoords offsetcoords[2];
   GList      *segment_start, *list;
   gint        i;
   gdouble feel_good;
@@ -459,39 +459,28 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
 
   g_return_if_fail (segment_start != NULL);
 
-  list = segment_start;
-
-  for (i=0; i <= 3; i++)
-    {
-      beziercoords[i] = ((GimpAnchor *) list->data)->position;
-      list = g_list_next (list);
-      if (!list)
-        list = stroke->anchors;
-    }
-
-
   if (position <= 0.5)
     feel_good = (pow(2 * position, 3)) / 2;
   else
     feel_good = (1 - pow((1-position)*2, 3)) / 2 + 0.5;
 
-  gimp_bezier_coords_mix (1.0, &(beziercoords[1]),
-                          (1-feel_good)/(3*position*(1-position)*(1-position)),
-                          deltacoord,
-                          &(beziercoords[1]));
-  gimp_bezier_coords_mix (1.0, &(beziercoords[2]),
-                          feel_good/(3*position*position*(1-position)),
-                          deltacoord,
-                          &(beziercoords[2]));
+  gimp_bezier_coords_scale ((1-feel_good)/(3*position*
+                                           (1-position)*(1-position)),
+                            deltacoord,
+                            &(offsetcoords[0]));
+  gimp_bezier_coords_scale (feel_good/(3*position*position*(1-position)),
+                            deltacoord,
+                            &(offsetcoords[1]));
 
   list = segment_start;
   list = g_list_next (list);
   if (!list)
     list = stroke->anchors;
 
-  for (i=1; i <= 2; i++)
+  for (i=0; i <= 1; i++)
     {
-      ((GimpAnchor *) list->data)->position = beziercoords[i];
+      gimp_stroke_anchor_move_relative (stroke, ((GimpAnchor *) list->data),
+                                        &(offsetcoords[i]), feature);
       list = g_list_next (list);
       if (!list)
         list = stroke->anchors;

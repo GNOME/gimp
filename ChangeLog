@@ -1,3 +1,8 @@
+2003-08-26  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpbezierstroke.c: Minor code cleanup that
+	automagically makes SHIFT while curve-dragging work...
+
 2003-08-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/grid-dialog.c: use GIMP_HELP_IMAGE_GRID.
