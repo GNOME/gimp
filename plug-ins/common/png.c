@@ -59,7 +59,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION  "1.2.3 - 21 April 2000"
+#define PLUG_IN_VERSION  "1.3.0 - 25 April 2000"
 #define SCALE_WIDTH      125
 
 #define DEFAULT_GAMMA    2.20
@@ -185,7 +185,7 @@ query (void)
 			   "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
 			   PLUG_IN_VERSION,
 			   "<Save>/PNG",
-			   "RGB*,GRAY*,INDEXED",
+			   "RGB*,GRAY*,INDEXED*",
 			   PROC_PLUG_IN,
 			   nsave_args, 0,
 			   save_args, NULL);
@@ -374,21 +374,14 @@ load_image (gchar *filename)	/* I - File to load */
   		*alpha_ptr;	/* Temporary pointer */
 
  /*
-  * Setup the PNG data structures...
+  * PNG 0.89 and newer have a sane, forwards compatible constructor.
+  * Some SGI IRIX users will not have a new enough version though
   */
 
 #if PNG_LIBPNG_VER > 88
- /*
-  * Use the "new" calling convention...
-  */
-
   pp   = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   info = png_create_info_struct(pp);
 #else
- /*
-  * SGI (and others) supply libpng-88 and not -89c...
-  */
-
   pp = (png_structp)calloc(sizeof(png_struct), 1);
   png_read_init(pp);
 
@@ -401,7 +394,7 @@ load_image (gchar *filename)	/* I - File to load */
     return image;
   }
 
-  /* initialise variables here, thus avoiding compiler warnings */
+  /* initialise image here, thus avoiding compiler warnings */
 
   image= -1;
 
@@ -434,34 +427,34 @@ load_image (gchar *filename)	/* I - File to load */
   png_read_info(pp, info);
 
  /*
-  * This is a new version with support for tRNS (alpha + colourmaps)
-  * Mail me if you have trouble -- njl195@zepler.org.uk
+  * Latest attempt, this should be my best yet :)
   */
 
-  if (info->bit_depth < 8) 
-  {
-    png_set_packing(pp);
-    if (info->color_type != PNG_COLOR_TYPE_PALETTE) {
-      png_set_expand(pp);
-    }
+  if (info->color_type == PNG_COLOR_TYPE_GRAY && info->bit_depth < 8) {
+    png_set_expand(pp);
   }
-  else if (info->bit_depth == 16)
+
+  if (info->color_type == PNG_COLOR_TYPE_PALETTE && info->bit_depth < 8) {
+    png_set_packing(pp);
+  }
+
+  if (info->bit_depth == 16) {
     png_set_strip_16(pp);
+  }
 
  /*
-  * Turn on interlace handling...
+  * Turn on interlace handling... libpng returns just 1 (ie single pass)
+  * if the image is not interlaced
   */
 
-  if (info->interlace_type)
-    num_passes = png_set_interlace_handling(pp);
-  else
-    num_passes = 1;
+  num_passes = png_set_interlace_handling(pp);
 
  /*
   * Special handling for INDEXED + tRNS (transparency palette)
   */
 
-  if (info->valid & PNG_INFO_tRNS &&
+#if PNG_LIBPNG_VER > 99
+  if (png_get_valid(pp, info, PNG_INFO_tRNS) &&
       info->color_type == PNG_COLOR_TYPE_PALETTE)
   {
     png_get_tRNS(pp, info, &alpha_ptr, &num, NULL);
@@ -475,6 +468,9 @@ load_image (gchar *filename)	/* I - File to load */
   } else {
     trns= 0;
   }
+#else
+    trns= 0;
+#endif /* PNG_LIBPNG_VER > 99 */
 
  /*
   * Update the info structures after the transformations take effect
@@ -527,21 +523,17 @@ load_image (gchar *filename)	/* I - File to load */
 
   /*
    * Find out everything we can about the image resolution
+   * This is only practical with the new 1.0 APIs, I'm afraid
+   * due to a bug in libpng-1.0.6, see png-implement for details
    */
 
-#ifdef GIMP_HAVE_RESOLUTION_INFO
-  if (info->valid & PNG_INFO_pHYs)
-    {
-      if (info->phys_unit_type == PNG_RESOLUTION_METER)
-	gimp_image_set_resolution(image,
-				  ((double) info->x_pixels_per_unit) * 0.0254,
-				  ((double) info->y_pixels_per_unit) * 0.0254);
-      else  /*  set aspect ratio as resolution  */
-	gimp_image_set_resolution(image,
-				  ((double) info->x_pixels_per_unit) * 72.0,
-				  ((double) info->y_pixels_per_unit) * 72.0);
-    }
-#endif /* GIMP_HAVE_RESOLUTION_INFO */
+#if PNG_LIBPNG_VER > 99
+  if (png_get_valid(pp, info, PNG_INFO_pHYs)) {
+    gimp_image_set_resolution(image,
+         ((double) png_get_x_pixels_per_meter(pp, info)) * 0.0254,
+         ((double) png_get_y_pixels_per_meter(pp, info)) * 0.0254);
+  }
+#endif /* PNG_LIBPNG_VER > 99 */
 
   gimp_image_set_filename(image, filename);
 
@@ -706,41 +698,45 @@ save_image (gchar  *filename,	        /* I - File to save to */
 		*pixel;		/* Pixel data */
   gchar		*progress;	/* Title for progress display... */
   gdouble       xres, yres;	/* GIMP resolution (dpi) */
-  gdouble	gamma;
-  guchar	red, green, blue; /* For palette background */
+  gdouble	gamma;          /* GIMP gamma e.g. 2.20 */
+  png_color_8   sig_bit;        /* # of significant bits */
+  png_color_16  background;     /* Background color */
+  png_time      mod_time;       /* Modification time (ie NOW) */
+  guchar	red, green,
+                blue;           /* Used for palette background */
   time_t	cutime;         /* Time since epoch */
   struct tm	*gmt;		/* GMT broken down */
 
  /*
-  * Setup the PNG data structures...
+  * PNG 0.89 and newer have a sane, forwards compatible constructor.
+  * Some SGI IRIX users will not have a new enough version though
   */
 
 #if PNG_LIBPNG_VER > 88
- /*
-  * Use the "new" calling convention...
-  */
-
-  pp   = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-  info = png_create_info_struct (pp);
+  pp   = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+  info = png_create_info_struct(pp);
 #else
- /*
-  * SGI (and others) supply libpng-88 and not -89c...
-  */
-
   pp = (png_structp)calloc(sizeof(png_struct), 1);
-  png_write_init(pp);
+  png_read_init(pp);
 
   info = (png_infop)calloc(sizeof(png_info), 1);
-  png_info_init(info);
 #endif /* PNG_LIBPNG_VER > 88 */
+
+  if (setjmp (pp->jmpbuf))
+  {
+    g_message (_("%s\nPNG error. File corrupted?"), filename);
+    return 0;
+  }
 
  /*
   * Open the file and initialize the PNG write "engine"...
   */
 
   fp = fopen(filename, "wb");
-  if (fp == NULL)
-    return (0);
+  if (fp == NULL) {
+    g_message (_("%s\nCouldn't create file"), filename);
+    return 0;
+  }
 
   png_init_io(pp, fp);
 
@@ -773,58 +769,54 @@ save_image (gchar  *filename,	        /* I - File to save to */
   info->width          = drawable->width;
   info->height         = drawable->height;
   info->bit_depth      = 8;
-  info->gamma          = 1.0 / (gamma != 1.00 ? gamma : DEFAULT_GAMMA);
-  info->sig_bit.red    = 8;
-  info->sig_bit.green  = 8;
-  info->sig_bit.blue   = 8;
-  info->sig_bit.gray   = 8;
-  info->sig_bit.alpha  = 8;
   info->interlace_type = pngvals.interlaced;
 
   /* All this stuff is optional extras, if the user is aiming for smallest
      possible file size she can turn them all off */
 
+#if PNG_LIBPNG_VER > 99
   if (!pngvals.noextras) {
-    info->valid          |= PNG_INFO_gAMA;
+
+    png_set_gAMA(pp, info, 1.0 / (gamma != 1.00 ? gamma : DEFAULT_GAMMA));
+
+    sig_bit.red    = sig_bit.green  = sig_bit.blue   = 8;
+    sig_bit.gray   = 8;
+    sig_bit.alpha  = 8;
+    png_set_sBIT(pp, info, &sig_bit);
 
     if (type == RGBA_IMAGE || type == GRAYA_IMAGE
                            || type == INDEXEDA_IMAGE) {
       gimp_palette_get_background(&red, &green, &blue);
+      
       info->valid |= PNG_INFO_bKGD;
-      info->background.index = 0;
-      info->background.red = red;
-      info->background.green = green;
-      info->background.blue = blue;
-      info->background.gray = (red + green + blue) / 3;
+      background.index = 0;
+      background.red = red;
+      background.green = green;
+      background.blue = blue;
+      background.gray = (red + green + blue) / 3;
+      png_set_bKGD(pp, info, &background);
     }
 
     gimp_drawable_offsets(drawable_ID, &offx, &offy);
     if (offx != 0 || offy != 0) {
-      info->valid |= PNG_INFO_oFFs;
-      info->x_offset = offx;
-      info->y_offset = offy;
-      info->offset_unit_type= PNG_OFFSET_PIXEL;
+      png_set_oFFs(pp, info, offx, offy, PNG_OFFSET_PIXEL);
     }
 
     cutime= time(NULL); /* time right NOW */
     gmt = gmtime(&cutime);
-    info->valid |= PNG_INFO_tIME;
-    info->mod_time.year = gmt->tm_year + 1900;
-    info->mod_time.month = gmt->tm_mon + 1;
-    info->mod_time.day = gmt->tm_mday;
-    info->mod_time.hour = gmt->tm_hour;
-    info->mod_time.minute = gmt->tm_min;
-    info->mod_time.second = gmt->tm_sec;
 
-#ifdef GIMP_HAVE_RESOLUTION_INFO
-    info->valid |= PNG_INFO_pHYs;
+    mod_time.year = gmt->tm_year + 1900;
+    mod_time.month = gmt->tm_mon + 1;
+    mod_time.day = gmt->tm_mday;
+    mod_time.hour = gmt->tm_hour;
+    mod_time.minute = gmt->tm_min;
+    mod_time.second = gmt->tm_sec;
+    png_set_tIME(pp, info, &mod_time);
+
     gimp_image_get_resolution (orig_image_ID, &xres, &yres);
-    info->phys_unit_type = PNG_RESOLUTION_METER;
-    info->x_pixels_per_unit = (int) (xres * 39.37);
-    info->y_pixels_per_unit = (int) (yres * 39.37);
-#endif /* GIMP_HAVE_RESOLUTION_INFO */
-
+    png_set_pHYs(pp, info, xres * 39.37, yres * 39.37, PNG_RESOLUTION_METER);
   }
+#endif /* PNG_LIBPNG_VER > 99 */
  
   switch (type)
   {

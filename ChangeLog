@@ -1,3 +1,9 @@
+2000-04-25  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/png.c: Sidestep potential problems when a
+	user builds Gimp against libpng 1.0.5, then installs 1.0.6.
+	This should still (just about) work for 0.88 and 0.89 users too.
+
 2000-04-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/commands.c: fixed the "Resize Canvas" segfault.
