@@ -397,20 +397,11 @@ gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
 }
 
 static gboolean
-gimp_histogram_editor_item_visible (GtkTreeModel *model,
-                                    GtkTreeIter  *iter,
-                                    gpointer      data)
+gimp_histogram_editor_channel_valid (GimpHistogramEditor  *editor,
+                                     GimpHistogramChannel  channel)
 {
-  GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (data);
-
   if (editor->drawable)
     {
-      GimpHistogramChannel  channel;
-
-      gtk_tree_model_get (model, iter,
-                          GIMP_INT_STORE_VALUE, &channel,
-                          -1);
-
       switch (channel)
         {
         case GIMP_HISTOGRAM_VALUE:
@@ -425,22 +416,39 @@ gimp_histogram_editor_item_visible (GtkTreeModel *model,
         case GIMP_HISTOGRAM_ALPHA:
           return gimp_drawable_has_alpha (editor->drawable);
         }
+    }
 
-      return FALSE;
-    }
-  else
-    {
-      /*  allow all channels, the menu is insensitive anyway  */
-      return TRUE;
-    }
+  return TRUE;
+}
+
+static gboolean
+gimp_histogram_editor_item_visible (GtkTreeModel *model,
+                                    GtkTreeIter  *iter,
+                                    gpointer      data)
+{
+  GimpHistogramEditor  *editor = GIMP_HISTOGRAM_EDITOR (data);
+  GimpHistogramChannel  channel;
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_INT_STORE_VALUE, &channel,
+                      -1);
+
+  return gimp_histogram_editor_channel_valid (editor, channel);
 }
 
 static void
 gimp_histogram_editor_menu_update (GimpHistogramEditor *editor)
 {
-  GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (editor->menu));
+  GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
+  GtkTreeModel      *model;
 
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (editor->menu));
   gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (model));
+
+  if (! gimp_histogram_editor_channel_valid (editor, view->channel))
+    {
+      gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
+    }
 }
 
 static void
