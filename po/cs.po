@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.13\n"
 "POT-Creation-Date: 1999-12-03 14:12+0100\n"
-"PO-Revision-Date: 1999-12-03 14:56+01:00\n"
+"PO-Revision-Date: 1999-12-07 13:42+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -182,7 +182,7 @@ msgstr "Spirála (proti smìru hodinových ruèièek)"
 
 #: app/blend.c:297 app/preferences_dialog.c:1528
 msgid "None"
-msgstr "Není"
+msgstr "Nic"
 
 #: app/blend.c:299
 msgid "Sawtooth wave"
@@ -728,7 +728,7 @@ msgstr "Operace"
 
 #: app/colormap_dialog.i.c:903 app/lc_dialog.c:621
 msgid "none"
-msgstr "není"
+msgstr "nic"
 
 #: app/commands.c:329
 msgid "Feather Selection"
@@ -3442,7 +3442,7 @@ msgstr "/Filtry/Výpoèty/Pøíroda"
 
 #: app/menus.c:92
 msgid "/Filters/Render/Pattern"
-msgstr "/Filtry/Výpoèty/Vzorek"
+msgstr "/Filtry/Výpoèty/Vzorky"
 
 #: app/menus.c:93
 msgid "/Filters/Misc"
@@ -4981,7 +4981,7 @@ msgstr "Navigaèní okno na obrazovku"
 
 #: app/preferences_dialog.c:1578
 msgid "Info Window Follows Mouse"
-msgstr "Sledovat informaèním oknem my¹"
+msgstr "Informaèní okno sleduje my¹"
 
 #: app/preferences_dialog.c:1589
 msgid "Help System Settings"
@@ -5594,11 +5594,11 @@ msgstr "nepodaøilo se zapsat data dla¾dice na disk: zapsáno %d (%d) bytù"
 
 #: app/tips_dialog.c:58
 msgid "gimp_tips.txt"
-msgstr "gimp_tips.txt"
+msgstr "gimp_tips.cs.txt"
 
 #: app/tips_dialog.c:70
 msgid "GIMP Tip of the day"
-msgstr "GIMP: tip dne"
+msgstr "GIMP: Tip dne"
 
 #: app/tips_dialog.c:131
 msgid "Previous Tip"
