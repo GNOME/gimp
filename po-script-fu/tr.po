@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.5\n"
-"POT-Creation-Date: 2003-02-18 01:09+0100\n"
+"POT-Creation-Date: 2003-03-23 16:34+0100\n"
 "PO-Revision-Date: 2002-04-28 04:07+0200\n"
 "Last-Translator: Ömer Fadıl USTA <omer_fad@hotmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -104,17 +104,17 @@ msgstr ""
 "Seçtiğiniz yazıtiplerinden en az biri geçersiz.\n"
 "Lütfen ayarlarını kontrol edin.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:482
+#: plug-ins/dbbrowser/dbbrowser_utils.c:499
 #: plug-ins/script-fu/script-fu-scripts.c:1960
 msgid "Author:"
 msgstr "Yazar:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:498
+#: plug-ins/dbbrowser/dbbrowser_utils.c:515
 #: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Copyright:"
 msgstr "Telif Hakkı:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:490
+#: plug-ins/dbbrowser/dbbrowser_utils.c:507
 #: plug-ins/script-fu/script-fu-scripts.c:1972
 msgid "Date:"
 msgstr "Tarih:"
@@ -165,63 +165,63 @@ msgstr "Tüm programları tekrar oku"
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Script-Fu/Tazele..."
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:125
-#: plug-ins/dbbrowser/dbbrowser_utils.c:144
+#: plug-ins/dbbrowser/dbbrowser_utils.c:129
+#: plug-ins/dbbrowser/dbbrowser_utils.c:148
 msgid "DB Browser"
 msgstr "Veri Tabanı Tarayıcısı"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:130
-#: plug-ins/dbbrowser/dbbrowser_utils.c:149
+#: plug-ins/dbbrowser/dbbrowser_utils.c:134
+#: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #, fuzzy
 msgid "Search by _Name"
 msgstr "İsme Göre Ara"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:132
-#: plug-ins/dbbrowser/dbbrowser_utils.c:151
+#: plug-ins/dbbrowser/dbbrowser_utils.c:136
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
 #, fuzzy
 msgid "Search by _Blurb"
 msgstr "Tanıtıcıya göre Ara"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:208
+#: plug-ins/dbbrowser/dbbrowser_utils.c:216
 #, fuzzy
 msgid "_Search:"
 msgstr "Ara:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:341
+#: plug-ins/dbbrowser/dbbrowser_utils.c:358
 msgid "Name:"
 msgstr "İsim:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:350
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "Blurb:"
 msgstr "Tanımlayıcı Yazı:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:362
+#: plug-ins/dbbrowser/dbbrowser_utils.c:379
 msgid "In:"
 msgstr "içinde:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:410
+#: plug-ins/dbbrowser/dbbrowser_utils.c:427
 msgid "Out:"
 msgstr "Dışında:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:464
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
 msgid "Help:"
 msgstr "Yardım:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:600
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 #, fuzzy
 msgid "Searching by name - please wait"
 msgstr "Veri Tabanı Tarayıcısı (isme göre - Lütfen bekleyin)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:623
+#: plug-ins/dbbrowser/dbbrowser_utils.c:629
 #, fuzzy
 msgid "Searching by blurb - please wait"
 msgstr "Veri Tabanı Tarayıcısı (tanımlayıcıya göre - Lütfen bekleyin)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:633
+#: plug-ins/dbbrowser/dbbrowser_utils.c:639
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:672
+#: plug-ins/dbbrowser/dbbrowser_utils.c:675
 msgid "No matches"
 msgstr ""
 

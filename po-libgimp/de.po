@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.10\n"
-"POT-Creation-Date: 2003-02-18 00:43+0100\n"
+"POT-Creation-Date: 2003-03-23 16:33+0100\n"
 "PO-Revision-Date: 2002-12-19 18:47+0100\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -323,69 +323,69 @@ msgstr ""
 "Klicken Sie die Pipette und dann einen beliebigen Punkt auf dem Schirm um "
 "dessen Farbe auszuwählen."
 
-#: libgimpwidgets/gimpstock.c:91
+#: libgimpwidgets/gimpstock.c:100
 msgid "Anchor"
 msgstr "Verankern"
 
-#: libgimpwidgets/gimpstock.c:92
+#: libgimpwidgets/gimpstock.c:101
 #, fuzzy
 msgid "_Duplicate"
 msgstr "Duplizieren"
 
-#: libgimpwidgets/gimpstock.c:93
+#: libgimpwidgets/gimpstock.c:102
 #, fuzzy
 msgid "_Edit"
 msgstr "Bearbeiten"
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:103
 msgid "Linked"
 msgstr "Verknüpft"
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:104
 msgid "Paste as New"
 msgstr "Einfügen als Neu"
 
-#: libgimpwidgets/gimpstock.c:96
+#: libgimpwidgets/gimpstock.c:105
 msgid "Paste Into"
 msgstr "Einfügen in Auswahl"
 
-#: libgimpwidgets/gimpstock.c:97
+#: libgimpwidgets/gimpstock.c:106
 msgid "_Reset"
 msgstr "_Rücksetzen"
 
-#: libgimpwidgets/gimpstock.c:98
+#: libgimpwidgets/gimpstock.c:107
 msgid "Visible"
 msgstr "Sichtbar"
 
-#: libgimpwidgets/gimpstock.c:140
-msgid "_Resize"
-msgstr "_Größe ändern"
-
-#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
-msgid "_Scale"
-msgstr "_Skalieren"
-
-#: libgimpwidgets/gimpstock.c:149
+#: libgimpwidgets/gimpstock.c:142
 msgid "L_etter Spacing"
 msgstr "L_aufweite"
 
-#: libgimpwidgets/gimpstock.c:150
+#: libgimpwidgets/gimpstock.c:143
 msgid "L_ine Spacing"
 msgstr "Z_eilenabstand"
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:156
+msgid "_Resize"
+msgstr "_Größe ändern"
+
+#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:217
+msgid "_Scale"
+msgstr "_Skalieren"
+
+#: libgimpwidgets/gimpstock.c:195
 msgid "Crop"
 msgstr "Zuschneiden"
 
-#: libgimpwidgets/gimpstock.c:189
+#: libgimpwidgets/gimpstock.c:213
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: libgimpwidgets/gimpstock.c:192
+#: libgimpwidgets/gimpstock.c:216
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: libgimpwidgets/gimpstock.c:194
+#: libgimpwidgets/gimpstock.c:218
 msgid "_Shear"
 msgstr "_Scheren"
 
@@ -405,7 +405,7 @@ msgstr "Einheit"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:984
+#: libgimpwidgets/gimpwidgets.c:977
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -413,11 +413,11 @@ msgstr ""
 "Benutze diesen Wert für den Zufallsgenerator - dies ermgöglicht es "
 "\"zufällige\" Funktionen zu wiederholen"
 
-#: libgimpwidgets/gimpwidgets.c:988
+#: libgimpwidgets/gimpwidgets.c:981
 msgid "_Randomize"
 msgstr "_Würfeln"
 
-#: libgimpwidgets/gimpwidgets.c:999
+#: libgimpwidgets/gimpwidgets.c:992
 msgid "Seed random number generator with a generated random number"
 msgstr "Initialisiere den Zufallsgenerator mit einer Zufallszahl"
 

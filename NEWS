@@ -11,6 +11,7 @@ dubbed GIMP 1.4.
 Overview of Changes in GIMP 1.3.13
 ==================================
 
+- New tree-view based popup to select brushes, gradients and such [Mitch]
 - Added color pickers to levels tool for easier color correction [Sven]
 - Allow to create channels from an image's color component [Sven, Mitch]
 - Added a full-screen mode for the image window [Sven, Mitch]

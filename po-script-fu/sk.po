@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2003-02-18 01:09+0100\n"
+"POT-Creation-Date: 2003-03-23 16:34+0100\n"
 "PO-Revision-Date: 2002-03-15 12:59+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -105,17 +105,17 @@ msgstr ""
 "Minimálne jedno písmo, ktoré ste zvolili, nie je platné.\n"
 "Skontrolujte si prosím svoje nastavenia.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:482
+#: plug-ins/dbbrowser/dbbrowser_utils.c:499
 #: plug-ins/script-fu/script-fu-scripts.c:1960
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:498
+#: plug-ins/dbbrowser/dbbrowser_utils.c:515
 #: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:490
+#: plug-ins/dbbrowser/dbbrowser_utils.c:507
 #: plug-ins/script-fu/script-fu-scripts.c:1972
 msgid "Date:"
 msgstr "Dátum:"
@@ -167,63 +167,63 @@ msgstr "Znovu preèíta» v¹etky dostupné skripty"
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Roz¹./Script-Fu/Obnovi»"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:125
-#: plug-ins/dbbrowser/dbbrowser_utils.c:144
+#: plug-ins/dbbrowser/dbbrowser_utils.c:129
+#: plug-ins/dbbrowser/dbbrowser_utils.c:148
 msgid "DB Browser"
 msgstr "DB Prehliadaè"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:130
-#: plug-ins/dbbrowser/dbbrowser_utils.c:149
+#: plug-ins/dbbrowser/dbbrowser_utils.c:134
+#: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #, fuzzy
 msgid "Search by _Name"
 msgstr "Hµada» podµa názvu"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:132
-#: plug-ins/dbbrowser/dbbrowser_utils.c:151
+#: plug-ins/dbbrowser/dbbrowser_utils.c:136
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
 #, fuzzy
 msgid "Search by _Blurb"
 msgstr "Hµadanie podµa popisu"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:208
+#: plug-ins/dbbrowser/dbbrowser_utils.c:216
 #, fuzzy
 msgid "_Search:"
 msgstr "Hµada»"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:341
+#: plug-ins/dbbrowser/dbbrowser_utils.c:358
 msgid "Name:"
 msgstr "Názov:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:350
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "Blurb:"
 msgstr "Popis:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:362
+#: plug-ins/dbbrowser/dbbrowser_utils.c:379
 msgid "In:"
 msgstr "Dnu:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:410
+#: plug-ins/dbbrowser/dbbrowser_utils.c:427
 msgid "Out:"
 msgstr "Von:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:464
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
 msgid "Help:"
 msgstr "Pomocník:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:600
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 #, fuzzy
 msgid "Searching by name - please wait"
 msgstr "DB Prehliadaè (podµa názvu - èakajte prosím)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:623
+#: plug-ins/dbbrowser/dbbrowser_utils.c:629
 #, fuzzy
 msgid "Searching by blurb - please wait"
 msgstr "DB Prehliadaè (podµa popis - èakajte prosím)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:633
+#: plug-ins/dbbrowser/dbbrowser_utils.c:639
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:672
+#: plug-ins/dbbrowser/dbbrowser_utils.c:675
 msgid "No matches"
 msgstr ""
 

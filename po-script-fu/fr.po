@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.3.11\n"
-"POT-Creation-Date: 2003-02-18 01:09+0100\n"
+"POT-Creation-Date: 2003-03-23 16:34+0100\n"
 "PO-Revision-Date: 2002-12-19 20:42+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -106,17 +106,17 @@ msgstr ""
 "Au moins une fonte que vous avez choisie est invalide.\n"
 "Veuillez vérifier vos paramètres.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:482
+#: plug-ins/dbbrowser/dbbrowser_utils.c:499
 #: plug-ins/script-fu/script-fu-scripts.c:1960
 msgid "Author:"
 msgstr "Auteur :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:498
+#: plug-ins/dbbrowser/dbbrowser_utils.c:515
 #: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Copyright:"
 msgstr "Copyright :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:490
+#: plug-ins/dbbrowser/dbbrowser_utils.c:507
 #: plug-ins/script-fu/script-fu-scripts.c:1972
 msgid "Date:"
 msgstr "Date :"
@@ -168,58 +168,58 @@ msgstr "Relire la liste des scripts disponibles"
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Exts/Script-Fu/Rafraîchir"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:125
-#: plug-ins/dbbrowser/dbbrowser_utils.c:144
+#: plug-ins/dbbrowser/dbbrowser_utils.c:129
+#: plug-ins/dbbrowser/dbbrowser_utils.c:148
 msgid "DB Browser"
 msgstr "Navigateur BD"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:130
-#: plug-ins/dbbrowser/dbbrowser_utils.c:149
+#: plug-ins/dbbrowser/dbbrowser_utils.c:134
+#: plug-ins/dbbrowser/dbbrowser_utils.c:153
 msgid "Search by _Name"
 msgstr "Rechercher par _nom"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:132
-#: plug-ins/dbbrowser/dbbrowser_utils.c:151
+#: plug-ins/dbbrowser/dbbrowser_utils.c:136
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
 msgid "Search by _Blurb"
 msgstr "Rechercher par _blurb"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:208
+#: plug-ins/dbbrowser/dbbrowser_utils.c:216
 msgid "_Search:"
 msgstr "_Rechercher :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:341
+#: plug-ins/dbbrowser/dbbrowser_utils.c:358
 msgid "Name:"
 msgstr "Nom :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:350
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "Blurb:"
 msgstr "Flou :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:362
+#: plug-ins/dbbrowser/dbbrowser_utils.c:379
 msgid "In:"
 msgstr "Entrée :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:410
+#: plug-ins/dbbrowser/dbbrowser_utils.c:427
 msgid "Out:"
 msgstr "Sortie :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:464
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
 msgid "Help:"
 msgstr "Aide :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:600
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "Searching by name - please wait"
 msgstr "Recherche par nom - veuillez patienter"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:623
+#: plug-ins/dbbrowser/dbbrowser_utils.c:629
 msgid "Searching by blurb - please wait"
 msgstr "Recherche par blurb - veuillez patienter"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:633
+#: plug-ins/dbbrowser/dbbrowser_utils.c:639
 msgid "Searching - please wait"
 msgstr "Recherche - veuillez patienter"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:672
+#: plug-ins/dbbrowser/dbbrowser_utils.c:675
 msgid "No matches"
 msgstr "Aucunes correspondances"
 

@@ -286,9 +286,9 @@ msgid ""
 "You can drag a layer from the \"Layers, Channels and Paths\" dialog and drop "
 "it onto the toolbox. This will create a new image containing only that layer."
 msgstr ""
-"Pode arrastar uma camada do diálogo \"Camadas, Canais e Caminhos\" e "
-"larga-la na caixa de ferramentas. Isto irá criar uma nova imagem contendo "
-"apenas aquela camada."
+"Pode arrastar uma camada do diálogo \"Camadas, Canais e Caminhos\" e larga-"
+"la na caixa de ferramentas. Isto irá criar uma nova imagem contendo apenas "
+"aquela camada."
 
 #: tips/gimp-tips.xml.in.h:29
 msgid ""

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.3\n"
-"POT-Creation-Date: 2003-02-18 01:09+0100\n"
+"POT-Creation-Date: 2003-03-23 16:34+0100\n"
 "PO-Revision-Date: 2001-09-17 00:00+2\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -105,17 +105,17 @@ msgstr ""
 "Minstens een van de door u gekozen fonts is ongeldig.\n"
 "Controleer a.u.b. uw instellingen.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:482
+#: plug-ins/dbbrowser/dbbrowser_utils.c:499
 #: plug-ins/script-fu/script-fu-scripts.c:1960
 msgid "Author:"
 msgstr "Auteur:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:498
+#: plug-ins/dbbrowser/dbbrowser_utils.c:515
 #: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:490
+#: plug-ins/dbbrowser/dbbrowser_utils.c:507
 #: plug-ins/script-fu/script-fu-scripts.c:1972
 msgid "Date:"
 msgstr "Datum:"
@@ -167,63 +167,63 @@ msgstr "Alle beschikbare scripts opnieuw inlezen"
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Script-Fu/Vernieuwen"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:125
-#: plug-ins/dbbrowser/dbbrowser_utils.c:144
+#: plug-ins/dbbrowser/dbbrowser_utils.c:129
+#: plug-ins/dbbrowser/dbbrowser_utils.c:148
 msgid "DB Browser"
 msgstr "DB-browser"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:130
-#: plug-ins/dbbrowser/dbbrowser_utils.c:149
+#: plug-ins/dbbrowser/dbbrowser_utils.c:134
+#: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #, fuzzy
 msgid "Search by _Name"
 msgstr "Op naam zoeken"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:132
-#: plug-ins/dbbrowser/dbbrowser_utils.c:151
+#: plug-ins/dbbrowser/dbbrowser_utils.c:136
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
 #, fuzzy
 msgid "Search by _Blurb"
 msgstr "Op omschrijving zoeken"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:208
+#: plug-ins/dbbrowser/dbbrowser_utils.c:216
 #, fuzzy
 msgid "_Search:"
 msgstr "Zoek:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:341
+#: plug-ins/dbbrowser/dbbrowser_utils.c:358
 msgid "Name:"
 msgstr "Naam:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:350
+#: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "Blurb:"
 msgstr "Omschrijving:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:362
+#: plug-ins/dbbrowser/dbbrowser_utils.c:379
 msgid "In:"
 msgstr "In:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:410
+#: plug-ins/dbbrowser/dbbrowser_utils.c:427
 msgid "Out:"
 msgstr "Uit:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:464
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
 msgid "Help:"
 msgstr "Help:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:600
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 #, fuzzy
 msgid "Searching by name - please wait"
 msgstr "DB-browser (op naam - wacht a.u.b.)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:623
+#: plug-ins/dbbrowser/dbbrowser_utils.c:629
 #, fuzzy
 msgid "Searching by blurb - please wait"
 msgstr "DB-browser (op omschrijving - wacht a.u.b.)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:633
+#: plug-ins/dbbrowser/dbbrowser_utils.c:639
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:672
+#: plug-ins/dbbrowser/dbbrowser_utils.c:675
 msgid "No matches"
 msgstr ""
 

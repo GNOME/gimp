@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-02-28 04:58+0100\n"
+"POT-Creation-Date: 2003-03-23 16:33+0100\n"
 "PO-Revision-Date: 2003-02-28 03:15-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -326,67 +326,67 @@ msgstr ""
 "Clique no conta-gotas, depois clique em uma cor em qualquer lugar da tela "
 "para selecioná-la."
 
-#: libgimpwidgets/gimpstock.c:91
+#: libgimpwidgets/gimpstock.c:100
 msgid "Anchor"
 msgstr "Âncora"
 
-#: libgimpwidgets/gimpstock.c:92
+#: libgimpwidgets/gimpstock.c:101
 msgid "_Duplicate"
 msgstr "_Duplicar"
 
-#: libgimpwidgets/gimpstock.c:93
+#: libgimpwidgets/gimpstock.c:102
 msgid "_Edit"
 msgstr "_Editar"
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:103
 msgid "Linked"
 msgstr "Conectado"
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:104
 msgid "Paste as New"
 msgstr "Colar como Novo"
 
-#: libgimpwidgets/gimpstock.c:96
+#: libgimpwidgets/gimpstock.c:105
 msgid "Paste Into"
 msgstr "Colar Em"
 
-#: libgimpwidgets/gimpstock.c:97
+#: libgimpwidgets/gimpstock.c:106
 msgid "_Reset"
 msgstr "_Restaurar"
 
-#: libgimpwidgets/gimpstock.c:98
+#: libgimpwidgets/gimpstock.c:107
 msgid "Visible"
 msgstr "Visível"
 
-#: libgimpwidgets/gimpstock.c:140
-msgid "_Resize"
-msgstr "_Redimensionar"
-
-#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
-msgid "_Scale"
-msgstr "E_scalar"
-
-#: libgimpwidgets/gimpstock.c:149
+#: libgimpwidgets/gimpstock.c:142
 msgid "L_etter Spacing"
 msgstr "Espaçamento das L_etras"
 
-#: libgimpwidgets/gimpstock.c:150
+#: libgimpwidgets/gimpstock.c:143
 msgid "L_ine Spacing"
 msgstr "Espaçamento das L_inhas"
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:156
+msgid "_Resize"
+msgstr "_Redimensionar"
+
+#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:217
+msgid "_Scale"
+msgstr "E_scalar"
+
+#: libgimpwidgets/gimpstock.c:195
 msgid "Crop"
 msgstr "Aparar"
 
-#: libgimpwidgets/gimpstock.c:189
+#: libgimpwidgets/gimpstock.c:213
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: libgimpwidgets/gimpstock.c:192
+#: libgimpwidgets/gimpstock.c:216
 msgid "_Rotate"
 msgstr "_Rotacionar"
 
-#: libgimpwidgets/gimpstock.c:194
+#: libgimpwidgets/gimpstock.c:218
 msgid "_Shear"
 msgstr "_Inclinar"
 
@@ -406,7 +406,7 @@ msgstr "Unidade"
 msgid "Factor"
 msgstr "Fator"
 
-#: libgimpwidgets/gimpwidgets.c:984
+#: libgimpwidgets/gimpwidgets.c:977
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -414,11 +414,11 @@ msgstr ""
 "Usar este valor para a semente do gerador de números randômicos - isso "
 "permite que qualquer operação \"randômica\" possa ser repetida"
 
-#: libgimpwidgets/gimpwidgets.c:988
+#: libgimpwidgets/gimpwidgets.c:981
 msgid "_Randomize"
 msgstr "_Randomizar"
 
-#: libgimpwidgets/gimpwidgets.c:999
+#: libgimpwidgets/gimpwidgets.c:992
 msgid "Seed random number generator with a generated random number"
 msgstr "Semear o gerador de números randômicos com o número randômico gerado"
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2003-02-18 00:43+0100\n"
+"POT-Creation-Date: 2003-03-23 16:33+0100\n"
 "PO-Revision-Date: 2001-07-16 06:51+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -317,69 +317,69 @@ msgid ""
 "that color."
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:91
+#: libgimpwidgets/gimpstock.c:100
 #, fuzzy
 msgid "Anchor"
 msgstr "inç"
 
-#: libgimpwidgets/gimpstock.c:92
+#: libgimpwidgets/gimpstock.c:101
 #, fuzzy
 msgid "_Duplicate"
 msgstr "pika"
 
-#: libgimpwidgets/gimpstock.c:93
+#: libgimpwidgets/gimpstock.c:102
 msgid "_Edit"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:103
 msgid "Linked"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:104
 msgid "Paste as New"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:96
+#: libgimpwidgets/gimpstock.c:105
 msgid "Paste Into"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:97
+#: libgimpwidgets/gimpstock.c:106
 msgid "_Reset"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:98
+#: libgimpwidgets/gimpstock.c:107
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:140
-msgid "_Resize"
-msgstr ""
-
-#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
-msgid "_Scale"
-msgstr ""
-
-#: libgimpwidgets/gimpstock.c:149
+#: libgimpwidgets/gimpstock.c:142
 msgid "L_etter Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:150
+#: libgimpwidgets/gimpstock.c:143
 msgid "L_ine Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:156
+msgid "_Resize"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:217
+msgid "_Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:195
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:189
+#: libgimpwidgets/gimpstock.c:213
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:192
+#: libgimpwidgets/gimpstock.c:216
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:194
+#: libgimpwidgets/gimpstock.c:218
 msgid "_Shear"
 msgstr ""
 
@@ -399,7 +399,7 @@ msgstr "Birim"
 msgid "Factor"
 msgstr "Etken"
 
-#: libgimpwidgets/gimpwidgets.c:984
+#: libgimpwidgets/gimpwidgets.c:977
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -408,11 +408,11 @@ msgstr ""
 "Eðer \"Zaman\" düðmesi basýlý deðilse, bu deðeri raslantýsal sayý üreticinin "
 "tohumu olarak kullan - bu \"raslantýsal\" bir iþlemi tekrarlamanýzý saðlar"
 
-#: libgimpwidgets/gimpwidgets.c:988
+#: libgimpwidgets/gimpwidgets.c:981
 msgid "_Randomize"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:999
+#: libgimpwidgets/gimpwidgets.c:992
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""

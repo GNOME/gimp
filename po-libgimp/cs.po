@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
-"POT-Creation-Date: 2003-02-18 00:43+0100\n"
+"POT-Creation-Date: 2003-03-23 16:33+0100\n"
 "PO-Revision-Date: 2003-02-07 17:51+0100\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -323,67 +323,67 @@ msgstr ""
 "Klikněte na zaměřovač oka, a poté vyberte barvu kliknutím na tuto barvu "
 "kdekoli na vaší obrazovce"
 
-#: libgimpwidgets/gimpstock.c:91
+#: libgimpwidgets/gimpstock.c:100
 msgid "Anchor"
 msgstr "Ukotvit"
 
-#: libgimpwidgets/gimpstock.c:92
+#: libgimpwidgets/gimpstock.c:101
 msgid "_Duplicate"
 msgstr "_Duplikovat"
 
-#: libgimpwidgets/gimpstock.c:93
+#: libgimpwidgets/gimpstock.c:102
 msgid "_Edit"
 msgstr "_Úpravy"
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:103
 msgid "Linked"
 msgstr "Spojený"
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:104
 msgid "Paste as New"
 msgstr "Vložit jako nové"
 
-#: libgimpwidgets/gimpstock.c:96
+#: libgimpwidgets/gimpstock.c:105
 msgid "Paste Into"
 msgstr "Vložit do"
 
-#: libgimpwidgets/gimpstock.c:97
+#: libgimpwidgets/gimpstock.c:106
 msgid "_Reset"
 msgstr "_Obnovit"
 
-#: libgimpwidgets/gimpstock.c:98
+#: libgimpwidgets/gimpstock.c:107
 msgid "Visible"
 msgstr "Viditelný"
 
-#: libgimpwidgets/gimpstock.c:140
-msgid "_Resize"
-msgstr "Změnit _velikost"
-
-#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
-msgid "_Scale"
-msgstr "Š_kálovat"
-
-#: libgimpwidgets/gimpstock.c:149
+#: libgimpwidgets/gimpstock.c:142
 msgid "L_etter Spacing"
 msgstr "Roz_estup písmen"
 
-#: libgimpwidgets/gimpstock.c:150
+#: libgimpwidgets/gimpstock.c:143
 msgid "L_ine Spacing"
 msgstr "Řá_dkování"
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:156
+msgid "_Resize"
+msgstr "Změnit _velikost"
+
+#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:217
+msgid "_Scale"
+msgstr "Š_kálovat"
+
+#: libgimpwidgets/gimpstock.c:195
 msgid "Crop"
 msgstr "Ořezat"
 
-#: libgimpwidgets/gimpstock.c:189
+#: libgimpwidgets/gimpstock.c:213
 msgid "_Transform"
 msgstr "_Transformace"
 
-#: libgimpwidgets/gimpstock.c:192
+#: libgimpwidgets/gimpstock.c:216
 msgid "_Rotate"
 msgstr "_Rotovat"
 
-#: libgimpwidgets/gimpstock.c:194
+#: libgimpwidgets/gimpstock.c:218
 msgid "_Shear"
 msgstr "Na_klonění"
 
@@ -403,7 +403,7 @@ msgstr "Jednotka"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:984
+#: libgimpwidgets/gimpwidgets.c:977
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -411,11 +411,11 @@ msgstr ""
 "Tato hodnota se použije pro hnízdo náhodného generátoru - umožňuje to "
 "zopakovat zadanou \"náhodnou\" operaci"
 
-#: libgimpwidgets/gimpwidgets.c:988
+#: libgimpwidgets/gimpwidgets.c:981
 msgid "_Randomize"
 msgstr "Gene_rovat náhodná čísla"
 
-#: libgimpwidgets/gimpwidgets.c:999
+#: libgimpwidgets/gimpwidgets.c:992
 msgid "Seed random number generator with a generated random number"
 msgstr "Hnízdo generátoru náhodného čísla z generovaného náhodného čísla"
 

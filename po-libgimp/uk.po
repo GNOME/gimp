@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2003-03-01 20:27+0200\n"
+"POT-Creation-Date: 2003-03-23 16:33+0100\n"
 "PO-Revision-Date: 2003-03-01 09:52--500\n"
 "Last-Translator: Yuriy Syrota <yuri@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -13,15 +13,12 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpexport.c:170
-#: libgimp/gimpexport.c:206
+#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
 #, fuzzy, c-format
 msgid "%s can't handle layers"
 msgstr "неможливо обробити шари"
 
-#: libgimp/gimpexport.c:171
-#: libgimp/gimpexport.c:180
-#: libgimp/gimpexport.c:189
+#: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
 msgstr "Об'єднати видимі шари"
 
@@ -30,20 +27,16 @@ msgstr "Об'єднати видимі шари"
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "неможливо обробити шари"
 
-#: libgimp/gimpexport.c:188
-#: libgimp/gimpexport.c:197
+#: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 #, fuzzy, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "можна обробити шари лише як анімовані кадри"
 
-#: libgimp/gimpexport.c:189
-#: libgimp/gimpexport.c:198
+#: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
 msgid "Save as Animation"
 msgstr "Зберегти як анімацію"
 
-#: libgimp/gimpexport.c:198
-#: libgimp/gimpexport.c:207
-#: libgimp/gimpexport.c:216
+#: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
 msgid "Flatten Image"
 msgstr "Звести зображення"
 
@@ -57,9 +50,7 @@ msgstr "неможливо обробити прозорість"
 msgid "%s can only handle RGB images"
 msgstr "можна обробити лише RGB-зображення"
 
-#: libgimp/gimpexport.c:225
-#: libgimp/gimpexport.c:253
-#: libgimp/gimpexport.c:262
+#: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
 msgid "Convert to RGB"
 msgstr "Перетворити у RGB"
 
@@ -68,9 +59,7 @@ msgstr "Перетворити у RGB"
 msgid "%s can only handle grayscale images"
 msgstr "можни обробити лише зображення у градація сірого"
 
-#: libgimp/gimpexport.c:234
-#: libgimp/gimpexport.c:253
-#: libgimp/gimpexport.c:274
+#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 msgid "Convert to Grayscale"
 msgstr "Перетворити у градації сірого"
 
@@ -79,12 +68,12 @@ msgstr "Перетворити у градації сірого"
 msgid "%s can only handle indexed images"
 msgstr "можна обробити лише індексовані зображення"
 
-#: libgimp/gimpexport.c:243
-#: libgimp/gimpexport.c:262
-#: libgimp/gimpexport.c:272
-msgid "Convert to Indexed using default settings\n"
+#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
+msgid ""
+"Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
-msgstr "Перетворити в індексоване використовуючи типові налаштування\n"
+msgstr ""
+"Перетворити в індексоване використовуючи типові налаштування\n"
 "(Результат можна налагодити вручну)"
 
 #: libgimp/gimpexport.c:252
@@ -146,8 +135,12 @@ msgid "Export"
 msgstr "Експорт"
 
 #: libgimp/gimpexport.c:453
-msgid "Your image should be exported before it can be saved for the following reasons:"
-msgstr "Ваше зображення має бути експортоване до того як воно може бути збережено з таких причин:"
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+"Ваше зображення має бути експортоване до того як воно може бути збережено з "
+"таких причин:"
 
 #. the footline
 #: libgimp/gimpexport.c:526
@@ -156,19 +149,19 @@ msgstr "Експортне перетворення не змінить ваше
 
 #: libgimp/gimpexport.c:595
 #, c-format
-msgid "You are about to save a layer mask as %s.\n"
+msgid ""
+"You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
 
 #: libgimp/gimpexport.c:600
 #, c-format
-msgid "You are about to save a channel (saved selection) as %s.\n"
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpmenu.c:163
-#: libgimp/gimpmenu.c:283
-#: libgimp/gimpmenu.c:398
+#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
 #: libgimp/gimpmenu.c:580
 msgid "None"
 msgstr "Немає"
@@ -182,15 +175,15 @@ msgstr "відсоток"
 msgid "Loading module: '%s'\n"
 msgstr "Завантаження модуля: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:189
-#: libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:312
-#: libgimpmodule/gimpmodule.c:339
+#: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
+#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
 #: libgimpmodule/gimpmodule.c:432
 #, c-format
-msgid "Module '%s' load error:\n"
+msgid ""
+"Module '%s' load error:\n"
 "%s"
-msgstr "Помилка завантаження модуля \"%s\":\n"
+msgstr ""
+"Помилка завантаження модуля \"%s\":\n"
 "%s"
 
 #: libgimpmodule/gimpmodule.c:270
@@ -234,33 +227,27 @@ msgstr "/Білий"
 msgid "Scales"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:163
-#: libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:164
-#: libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
 msgid "_S"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:165
-#: libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
 msgid "_V"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:166
-#: libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
 msgid "_R"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:167
-#: libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
 msgid "_G"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:168
-#: libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
 msgstr ""
 
@@ -268,38 +255,31 @@ msgstr ""
 msgid "_A"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:173
-#: libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
 msgstr "Відтінок"
 
-#: libgimpwidgets/gimpcolorscales.c:174
-#: libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Saturation"
 msgstr "Насиченість"
 
-#: libgimpwidgets/gimpcolorscales.c:175
-#: libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
 msgstr "Значення"
 
-#: libgimpwidgets/gimpcolorscales.c:176
-#: libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
 msgstr "Червоний"
 
-#: libgimpwidgets/gimpcolorscales.c:177
-#: libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
 msgstr "Зелений"
 
-#: libgimpwidgets/gimpcolorscales.c:178
-#: libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
 msgstr "Синій"
 
-#: libgimpwidgets/gimpcolorscales.c:179
-#: libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
 msgstr "Альфа"
 
@@ -332,73 +312,74 @@ msgid "GigaBytes"
 msgstr "Гігабайти"
 
 #: libgimpwidgets/gimppickbutton.c:141
-msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:91
+#: libgimpwidgets/gimpstock.c:100
 #, fuzzy
 msgid "Anchor"
 msgstr "дюйм"
 
-#: libgimpwidgets/gimpstock.c:92
+#: libgimpwidgets/gimpstock.c:101
 #, fuzzy
 msgid "_Duplicate"
 msgstr "піка"
 
-#: libgimpwidgets/gimpstock.c:93
+#: libgimpwidgets/gimpstock.c:102
 msgid "_Edit"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:103
 msgid "Linked"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:104
 msgid "Paste as New"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:96
+#: libgimpwidgets/gimpstock.c:105
 msgid "Paste Into"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:97
+#: libgimpwidgets/gimpstock.c:106
 msgid "_Reset"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:98
+#: libgimpwidgets/gimpstock.c:107
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:140
-msgid "_Resize"
-msgstr ""
-
-#: libgimpwidgets/gimpstock.c:141
-#: libgimpwidgets/gimpstock.c:193
-msgid "_Scale"
-msgstr ""
-
-#: libgimpwidgets/gimpstock.c:149
+#: libgimpwidgets/gimpstock.c:142
 msgid "L_etter Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:150
+#: libgimpwidgets/gimpstock.c:143
 msgid "L_ine Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:156
+msgid "_Resize"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:217
+msgid "_Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:195
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:189
+#: libgimpwidgets/gimpstock.c:213
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:192
+#: libgimpwidgets/gimpstock.c:216
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:194
+#: libgimpwidgets/gimpstock.c:218
 msgid "_Shear"
 msgstr ""
 
@@ -418,19 +399,26 @@ msgstr "Одиниці"
 msgid "Factor"
 msgstr "Множник"
 
-#: libgimpwidgets/gimpwidgets.c:984
+#: libgimpwidgets/gimpwidgets.c:977
 #, fuzzy
-msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
-msgstr "Якщо кнопку \"Час\" не натиснуто, це значення використовується для ініціалізації генератора випадкових чисел, то це дозволяє вам повторити дану \"випадкову\" операцію"
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"Якщо кнопку \"Час\" не натиснуто, це значення використовується для "
+"ініціалізації генератора випадкових чисел, то це дозволяє вам повторити дану "
+"\"випадкову\" операцію"
 
-#: libgimpwidgets/gimpwidgets.c:988
+#: libgimpwidgets/gimpwidgets.c:981
 msgid "_Randomize"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:999
+#: libgimpwidgets/gimpwidgets.c:992
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
-msgstr "Ініціалізувати генератор випадкових чисел поточним часом - це гарантує надійну \"випадковість\""
+msgstr ""
+"Ініціалізувати генератор випадкових чисел поточним часом - це гарантує "
+"надійну \"випадковість\""
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
@@ -503,4 +491,3 @@ msgstr ""
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr ""
-

@@ -1,16 +1,16 @@
-# This is the system-wide gimprc file.  Any change made in this file
-# will affect all users of this system, provided that they are not
-# overriding the default values in their personal gimprc file.
-#
+# This is the system-wide gimprc file.  Any change made in this file will
+# affect all users of this system, provided that they are not overriding the
+# default values in their personal gimprc file.
+# 
 # Lines that start with a '#' are comments. Blank lines are ignored.
-#
-# By default everything in this file is commented out. The file then
+# 
+# By default everything in this file is commented out.  The file then
 # documents the default values and shows what changes are possible.
-
-# The variable ${gimp_dir} is set to the value of the environment
-# variable GIMP_DIRECTORY or, if that is not set, the compiled-in
-# default value is used. If GIMP_DIRECTORY is not an absolute path,
-# it is interpreted relative to your home directory.
+# 
+# The variable ${gimp_dir} is set to the value of the environment variable
+# GIMP_DIRECTORY or, if that is not set, the compiled-in default value is
+# used.  If GIMP_DIRECTORY is not an absolute path, it is interpreted
+# relative to your home directory.
 
 # Sets the temporary storage directory. Files will appear here during the
 # course of running the GIMP.  Most files will disappear when the GIMP exits,
@@ -121,56 +121,57 @@
 #
 # (default-comment "Created with The GIMP")
 
-# Sets the default image type in the File/New dialog.  Possible values are
+# Sets the default image type in the "File/New" dialog.  Possible values are
 # rgb, gray and indexed.
 #
 # (default-image-type rgb)
 
-# Sets the default image width in the File/New dialog.  This is an integer
+# Sets the default image width in the "File/New" dialog.  This is an integer
 # value.
 #
 # (default-image-width 256)
 
-# Sets the default image height in the File/New dialog.  This is an integer
+# Sets the default image height in the "File/New" dialog.  This is an integer
 # value.
 #
 # (default-image-height 256)
 
-# Sets the default unit for new images and for the File/New dialog. This
+# Sets the default unit for new images and for the "File/New" dialog. This
 # units will be used for coordinate display when not in dot-for-dot mode. 
 # The unit can be one inches, millimeters, points or picas plus those in your
 # user units database.
 #
 # (default-unit inches)
 
-# Sets the default horizontal resolution for new images and for the File/New
-# dialog. This value is always in dpi (dots per inch).  This is a float
-# value.
+# Sets the default horizontal resolution for new images and for the
+# "File/New" dialog. This value is always in dpi (dots per inch).  This is a
+# float value.
 #
 # (default-xresolution 72.000000)
 
-# Sets the default vertical resolution for new images and for the File/New
+# Sets the default vertical resolution for new images and for the "File/New"
 # dialog. This value is always in dpi (dots per inch).  This is a float
 # value.
 #
 # (default-yresolution 72.000000)
 
-# Sets the units for the display of the default resolution in the File/New
+# Sets the units for the display of the default resolution in the "File/New"
 # dialog.  The unit can be one inches, millimeters, points or picas plus
 # those in your user units database.
 #
 # (default-resolution-unit inches)
 
-# Sets the number of operations kept on the undo stack.  This is an integer
-# value.
+# Sets the minimal number of operations that can be undone. More undo levels
+# are kept available until the undo-size limit is reached.  This is an
+# integer value.
 #
 # (undo-levels 5)
 
-# Sets the maximum memory used by operations kept on the undo stack.  The
-# integer size can contain a suffix of 'B', 'K', 'M' or 'G' which makes GIMP
-# interpret the size as being specified in bytes, kilobytes, megabytes or
-# gigabytes. If no suffix is specified the size defaults to being specified
-# in kilobytes.
+# Sets an upper limit to the memory that is used per image to keep operations
+# on the undo stack.  The integer size can contain a suffix of 'B', 'K', 'M'
+# or 'G' which makes GIMP interpret the size as being specified in bytes,
+# kilobytes, megabytes or gigabytes. If no suffix is specified the size
+# defaults to being specified in kilobytes.
 #
 # (undo-size 1024k)
 
@@ -182,13 +183,20 @@
 #
 # (module-load-inhibit "foo")
 
-# Sets the default preview size.  Possible values are none, tiny,
-# extra-small, small, medium, large, extra-large, huge, enormous and
+# Sets whether GIMP should create previews of layers and channels. Previews
+# in the layers and channels dialog are nice to have but they can slow things
+# down when working with large images.  Possible values are yes and no.
+#
+# (layer-previews yes)
+
+# Sets the default preview size for layers and channels.  Possible values are
+# tiny, extra-small, small, medium, large, extra-large, huge, enormous and
 # gigantic.
 #
-# (preview-size small)
+# (layer-preview-size medium)
 
-# Sets the size of the thumbnail saved with each image.  Possible values are
+# Sets the size of the thumbnail saved with each image. Note that GIMP can
+# not save thumbnails if layer previews are disabled.  Possible values are
 # none, normal and large.
 #
 # (thumbnail-size normal)
@@ -219,25 +227,31 @@
 #
 # (colormap-cycling no)
 
-# When zooming into and out of images, setting this option to yes enables the
-# automatic resizing of windows.  Possible values are yes and no.
+# When enabled, the image window will automatically resize itself, when
+# zooming into and out of images.  Possible values are yes and no.
 #
 # (resize-windows-on-zoom no)
 
-# When the physical image size changes, setting this option to yes enables
-# the automatic resizing of windows.  Possible values are yes and no.
+# When enabled, the image window will automatically resize itself, whenever
+# the physical image size changes.  Possible values are yes and no.
 #
 # (resize-windows-on-resize no)
 
-# When set to yes, this will ensure that each pixel of an image gets mapped
-# to a pixel on the screen.  Possible values are yes and no.
+# When enabled, this will ensure that each pixel of an image gets mapped to a
+# pixel on the screen.  Possible values are yes and no.
 #
 # (default-dot-for-dot yes)
 
-# When set to yes, the X server is queried for the mouse's current position
-# on each motion event, rather than relying on the position hint.  This means
+# When enabled, this will ensure that the full image is visible after a file
+# is opened, otherwise it will be displayed with a scale of 1:1.  Possible
+# values are yes and no.
+#
+# (initial-zoom-to-fit yes)
+
+# When enabled, the X server is queried for the mouse's current position on
+# each motion event, rather than relying on the position hint.  This means
 # painting with large brushes should be more accurate, but it may be slower. 
-# Perversely, on some X servers turning on this option results in faster
+# Perversely, on some X servers enabling this option results in faster
 # painting.  Possible values are yes and no.
 #
 # (perfect-mouse no)
@@ -309,18 +323,17 @@
 # (image-status-format "%f-%p.%i (%t)")
 
 # Sets the default menubar visibility. This can also be toggled with the
-# View->Toggle Menubar command.  Possible values are yes and no.
+# "View->Toggle" Menubar command.  Possible values are yes and no.
 #
 # (show-menubar no)
 
 # Sets the default ruler visibility. This can also be toggled with the
-# View->Toggle Rulers command.  Possible values are yes and no.
+# "View->Toggle Rulers" command.  Possible values are yes and no.
 #
 # (show-rulers yes)
 
-# Set to yes to make the statusbar visible by default. This can also be
-# toggled with the View->Toggle Statusbar command.  Possible values are yes
-# and no.
+# When enabled, the statusbar is visible by default. This can also be toggled
+# with the "View->Toggle Statusbar" command.  Possible values are yes and no.
 #
 # (show-statusbar yes)
 
@@ -341,14 +354,14 @@
 #
 # (monitor-yresolution 72.000000)
 
-# Set to yes if the GIMP should use the monitor resolution from the windowing
+# When enabled, the GIMP will use the monitor resolution from the windowing
 # system.  Possible values are yes and no.
 #
 # (monitor-resolution-from-windowing-system yes)
 
 # Sets the size of the navigation preview available in the lower right corner
-# of the image window.  Possible values are none, tiny, extra-small, small,
-# medium, large, extra-large, huge, enormous and gigantic.
+# of the image window.  Possible values are tiny, extra-small, small, medium,
+# large, extra-large, huge, enormous and gigantic.
 #
 # (navigation-preview-size medium)
 
@@ -382,12 +395,12 @@
 #
 # (default-threshold 15)
 
-# When set to yes, the GIMP will use a different info window per image view. 
+# When enabled, the GIMP will use a different info window per image view. 
 # Possible values are yes and no.
 #
 # (info-window-per-display no)
 
-# When set to yes, the GIMP will not save if the image is unchanged since
+# When enabled, the GIMP will not save if the image is unchanged since
 # opening it.  Possible values are yes and no.
 #
 # (trust-dirty-flag no)
@@ -407,16 +420,16 @@
 #
 # (restore-session yes)
 
-# To display a handy GIMP tip on startup, set to yes.  Possible values are
-# yes and no.
+# Enable to display a handy GIMP tip on startup.  Possible values are yes and
+# no.
 #
 # (show-tips yes)
 
-# To display tooltips, set to yes.  Possible values are yes and no.
+# Enable to display tooltips.  Possible values are yes and no.
 #
 # (show-tool-tips yes)
 
-# When set to yes, enables tear off menus.  Possible values are yes and no.
+# When enabled, menus can be torn off.  Possible values are yes and no.
 #
 # (tearoff-menus yes)
 
@@ -442,7 +455,7 @@
 #
 # (theme "Default")
 
-# When set to no the F1 help binding will be disabled.  Possible values are
+# When enabled, pressing F1 will open the help browser.  Possible values are
 # yes and no.
 #
 # (use-help yes)

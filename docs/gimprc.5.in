@@ -165,25 +165,25 @@ Sets the default comment.  This is a string value.
 .TP
 (default-image-type rgb)
 
-Sets the default image type in the File/New dialog.  Possible values are rgb,
-gray and indexed.
+Sets the default image type in the "File/New" dialog.  Possible values are
+rgb, gray and indexed.
 
 .TP
 (default-image-width 256)
 
-Sets the default image width in the File/New dialog.  This is an integer
+Sets the default image width in the "File/New" dialog.  This is an integer
 value.
 
 .TP
 (default-image-height 256)
 
-Sets the default image height in the File/New dialog.  This is an integer
+Sets the default image height in the "File/New" dialog.  This is an integer
 value.
 
 .TP
 (default-unit inches)
 
-Sets the default unit for new images and for the File/New dialog. This units
+Sets the default unit for new images and for the "File/New" dialog. This units
 will be used for coordinate display when not in dot-for-dot mode.  The unit
 can be one inches, millimeters, points or picas plus those in your user units
 database.
@@ -191,36 +191,37 @@ database.
 .TP
 (default-xresolution 72.000000)
 
-Sets the default horizontal resolution for new images and for the File/New
+Sets the default horizontal resolution for new images and for the "File/New"
 dialog. This value is always in dpi (dots per inch).  This is a float value.
 
 .TP
 (default-yresolution 72.000000)
 
-Sets the default vertical resolution for new images and for the File/New
+Sets the default vertical resolution for new images and for the "File/New"
 dialog. This value is always in dpi (dots per inch).  This is a float value.
 
 .TP
 (default-resolution-unit inches)
 
-Sets the units for the display of the default resolution in the File/New
+Sets the units for the display of the default resolution in the "File/New"
 dialog.  The unit can be one inches, millimeters, points or picas plus those
 in your user units database.
 
 .TP
 (undo-levels 5)
 
-Sets the number of operations kept on the undo stack.  This is an integer
+Sets the minimal number of operations that can be undone. More undo levels are
+kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
 (undo-size 1024k)
 
-Sets the maximum memory used by operations kept on the undo stack.  The
-integer size can contain a suffix of 'B', 'K', 'M' or 'G' which makes GIMP
-interpret the size as being specified in bytes, kilobytes, megabytes or
-gigabytes. If no suffix is specified the size defaults to being specified in
-kilobytes.
+Sets an upper limit to the memory that is used per image to keep operations on
+the undo stack.  The integer size can contain a suffix of 'B', 'K', 'M' or 'G'
+which makes GIMP interpret the size as being specified in bytes, kilobytes,
+megabytes or gigabytes. If no suffix is specified the size defaults to being
+specified in kilobytes.
 
 .TP
 (pluginrc-path "${gimp_dir}/pluginrc")
@@ -233,16 +234,25 @@ Sets the pluginrc search path.  This is a single filename.
 To inhibit loading of a module, add its name here.  This is a string value.
 
 .TP
-(preview-size small)
+(layer-previews yes)
 
-Sets the default preview size.  Possible values are none, tiny, extra-small,
-small, medium, large, extra-large, huge, enormous and gigantic.
+Sets whether GIMP should create previews of layers and channels. Previews in
+the layers and channels dialog are nice to have but they can slow things down
+when working with large images.  Possible values are yes and no.
+
+.TP
+(layer-preview-size medium)
+
+Sets the default preview size for layers and channels.  Possible values are
+tiny, extra-small, small, medium, large, extra-large, huge, enormous and
+gigantic.
 
 .TP
 (thumbnail-size normal)
 
-Sets the size of the thumbnail saved with each image.  Possible values are
-none, normal and large.
+Sets the size of the thumbnail saved with each image. Note that GIMP can not
+save thumbnails if layer previews are disabled.  Possible values are none,
+normal and large.
 
 .TP
 (gamma-correction 1.000000)
@@ -277,29 +287,36 @@ works only with 8-bit displays.  Possible values are yes and no.
 .TP
 (resize-windows-on-zoom no)
 
-When zooming into and out of images, setting this option to yes enables the
-automatic resizing of windows.  Possible values are yes and no.
+When enabled, the image window will automatically resize itself, when zooming
+into and out of images.  Possible values are yes and no.
 
 .TP
 (resize-windows-on-resize no)
 
-When the physical image size changes, setting this option to yes enables the
-automatic resizing of windows.  Possible values are yes and no.
+When enabled, the image window will automatically resize itself, whenever the
+physical image size changes.  Possible values are yes and no.
 
 .TP
 (default-dot-for-dot yes)
 
-When set to yes, this will ensure that each pixel of an image gets mapped to a
+When enabled, this will ensure that each pixel of an image gets mapped to a
 pixel on the screen.  Possible values are yes and no.
+
+.TP
+(initial-zoom-to-fit yes)
+
+When enabled, this will ensure that the full image is visible after a file is
+opened, otherwise it will be displayed with a scale of 1:1.  Possible values
+are yes and no.
 
 .TP
 (perfect-mouse no)
 
-When set to yes, the X server is queried for the mouse's current position on
-each motion event, rather than relying on the position hint.  This means
-painting with large brushes should be more accurate, but it may be slower. 
-Perversely, on some X servers turning on this option results in faster
-painting.  Possible values are yes and no.
+When enabled, the X server is queried for the mouse's current position on each
+motion event, rather than relying on the position hint.  This means painting
+with large brushes should be more accurate, but it may be slower.  Perversely,
+on some X servers enabling this option results in faster painting.  Possible
+values are yes and no.
 
 .TP
 (cursor-mode tool-icon)
@@ -420,19 +437,19 @@ certain % character sequences are recognised and expanded as follows:
 (show-menubar no)
 
 Sets the default menubar visibility. This can also be toggled with the
-View->Toggle Menubar command.  Possible values are yes and no.
+"View->Toggle" Menubar command.  Possible values are yes and no.
 
 .TP
 (show-rulers yes)
 
 Sets the default ruler visibility. This can also be toggled with the
-View->Toggle Rulers command.  Possible values are yes and no.
+"View->Toggle Rulers" command.  Possible values are yes and no.
 
 .TP
 (show-statusbar yes)
 
-Set to yes to make the statusbar visible by default. This can also be toggled
-with the View->Toggle Statusbar command.  Possible values are yes and no.
+When enabled, the statusbar is visible by default. This can also be toggled
+with the "View->Toggle Statusbar" command.  Possible values are yes and no.
 
 .TP
 (confirm-on-close yes)
@@ -457,14 +474,14 @@ information.  This is a float value.
 .TP
 (monitor-resolution-from-windowing-system yes)
 
-Set to yes if the GIMP should use the monitor resolution from the windowing
+When enabled, the GIMP will use the monitor resolution from the windowing
 system.  Possible values are yes and no.
 
 .TP
 (navigation-preview-size medium)
 
 Sets the size of the navigation preview available in the lower right corner of
-the image window.  Possible values are none, tiny, extra-small, small, medium,
+the image window.  Possible values are tiny, extra-small, small, medium,
 large, extra-large, huge, enormous and gigantic.
 
 .TP
@@ -505,14 +522,14 @@ threshold.  This is an integer value.
 .TP
 (info-window-per-display no)
 
-When set to yes, the GIMP will use a different info window per image view. 
+When enabled, the GIMP will use a different info window per image view. 
 Possible values are yes and no.
 
 .TP
 (trust-dirty-flag no)
 
-When set to yes, the GIMP will not save if the image is unchanged since
-opening it.  Possible values are yes and no.
+When enabled, the GIMP will not save if the image is unchanged since opening
+it.  Possible values are yes and no.
 
 .TP
 (save-device-status no)
@@ -535,18 +552,18 @@ values are yes and no.
 .TP
 (show-tips yes)
 
-To display a handy GIMP tip on startup, set to yes.  Possible values are yes
-and no.
+Enable to display a handy GIMP tip on startup.  Possible values are yes and
+no.
 
 .TP
 (show-tool-tips yes)
 
-To display tooltips, set to yes.  Possible values are yes and no.
+Enable to display tooltips.  Possible values are yes and no.
 
 .TP
 (tearoff-menus yes)
 
-When set to yes, enables tear off menus.  Possible values are yes and no.
+When enabled, menus can be torn off.  Possible values are yes and no.
 
 .TP
 (last-opened-size 4)
@@ -577,7 +594,7 @@ The name of the theme to use.  This is a string value.
 .TP
 (use-help yes)
 
-When set to no the F1 help binding will be disabled.  Possible values are yes
+When enabled, pressing F1 will open the help browser.  Possible values are yes
 and no.
 
 .TP
