@@ -41,6 +41,7 @@
 #include <libgimpwidgets/gimphelpui.h>
 #include <libgimpwidgets/gimpoffsetarea.h>
 #include <libgimpwidgets/gimppatheditor.h>
+#include <libgimpwidgets/gimppickbutton.h>
 #include <libgimpwidgets/gimppixmap.h>
 #include <libgimpwidgets/gimpquerybox.h>
 #include <libgimpwidgets/gimpsizeentry.h>
