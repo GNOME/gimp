@@ -3065,7 +3065,7 @@ msgstr "/Fichier/Dialogues/Palette Indexée..."
 
 #: app/menus.c:137
 msgid "/File/Dialogs/Input Devices..."
-msgstr "/Fichier/Dialogues/Périphériques d'Acquisition..."
+msgstr "/Fichier/Dialogues/Périphériques d'entrée..."
 
 #: app/menus.c:139
 msgid "/File/Dialogs/Device Status..."
