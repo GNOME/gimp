@@ -26,6 +26,7 @@
 #include "vectors-types.h"
 
 #include "core/gimp-utils.h"
+#include "core/gimpcoords.h"
 
 #include "gimpanchor.h"
 #include "gimpstroke.h"
@@ -126,7 +127,8 @@ gboolean     gimp_stroke_real_connect_stroke (GimpStroke          *stroke,
 
 static gboolean     gimp_stroke_real_is_empty        (const GimpStroke *stroke);
 
-static gdouble      gimp_stroke_real_get_length      (const GimpStroke *stroke);
+static gdouble      gimp_stroke_real_get_length      (const GimpStroke *stroke,
+                                                      const gdouble     precision);
 static gdouble      gimp_stroke_real_get_distance    (const GimpStroke *stroke,
                                                       const GimpCoords *coord);
 static GArray *     gimp_stroke_real_interpolate     (const GimpStroke *stroke,
@@ -149,6 +151,11 @@ static GList    * gimp_stroke_real_get_draw_controls (const GimpStroke *stroke);
 static GArray   * gimp_stroke_real_get_draw_lines    (const GimpStroke *stroke);
 static GArray *  gimp_stroke_real_control_points_get (const GimpStroke *stroke,
                                                       gboolean         *ret_closed);
+static gboolean   gimp_stroke_real_get_point_at_dist (const GimpStroke *stroke,
+                                                      const gdouble     dist,
+                                                      const gdouble     precision,
+                                                      GimpCoords       *position,
+                                                      gdouble          *gradient);
 
 /*  private variables  */
 
@@ -230,6 +237,7 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->is_empty                = gimp_stroke_real_is_empty;
   klass->get_length              = gimp_stroke_real_get_length;
   klass->get_distance            = gimp_stroke_real_get_distance;
+  klass->get_point_at_dist       = gimp_stroke_real_get_point_at_dist;
   klass->interpolate             = gimp_stroke_real_interpolate;
 
   klass->duplicate               = gimp_stroke_real_duplicate;
@@ -849,19 +857,45 @@ gimp_stroke_real_is_empty (const GimpStroke *stroke)
 
 
 gdouble
-gimp_stroke_get_length (const GimpStroke *stroke)
+gimp_stroke_get_length (const GimpStroke *stroke,
+                        const gdouble     precision)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), 0.0);
 
-  return GIMP_STROKE_GET_CLASS (stroke)->get_length (stroke);
+  return GIMP_STROKE_GET_CLASS (stroke)->get_length (stroke, precision);
 }
 
 static gdouble
-gimp_stroke_real_get_length (const GimpStroke *stroke)
+gimp_stroke_real_get_length (const GimpStroke *stroke,
+                             const gdouble     precision)
 {
-  g_printerr ("gimp_stroke_get_length: default implementation\n");
+  GArray     *points;
+  gint        i;
+  gdouble     length;
+  GimpCoords  difference; 
 
-  return 0.0;
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), -1);
+
+  if (!stroke->anchors)
+    return -1;
+    
+  points = gimp_stroke_interpolate (stroke, precision, NULL);
+  if (points == NULL)
+    return -1;
+
+  length = 0;
+
+  for (i = 0; i < points->len - 1; i++ )
+    {
+       gimp_coords_difference (&(g_array_index (points, GimpCoords, i)), 
+                               &(g_array_index (points, GimpCoords, i+1)),
+                               &difference);
+       length += gimp_coords_length (&difference);
+    }
+
+  g_array_free(points, TRUE);
+
+  return length;
 }
 
 
@@ -1189,4 +1223,79 @@ gimp_stroke_real_control_points_get (const GimpStroke *stroke,
     *ret_closed = stroke->closed;
 
   return ret_array;
+}
+
+gboolean
+gimp_stroke_get_point_at_dist (const GimpStroke *stroke,
+                               const gdouble     dist,
+                               const gdouble     precision,
+                               GimpCoords       *position,
+                               gdouble          *gradient)
+{
+   g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
+
+   return GIMP_STROKE_GET_CLASS (stroke)->get_point_at_dist (stroke,
+                                                             dist,
+                                                             precision,
+                                                             position,
+                                                             gradient);
+}
+
+
+static gboolean
+gimp_stroke_real_get_point_at_dist (const GimpStroke *stroke,
+                                    const gdouble     dist,
+                                    const gdouble     precision,
+                                    GimpCoords       *position,
+                                    gdouble          *gradient)
+{
+  GArray     *points;
+  gint        i;
+  gdouble     length;
+  gdouble     segment_length;
+  gboolean    ret = FALSE;
+  GimpCoords  difference;
+
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
+
+  points = gimp_stroke_interpolate (stroke, precision, NULL);
+  if (points == NULL)
+    return ret;
+
+  length = 0;
+  for (i=0; i < points->len - 1; i++)
+    {
+      gimp_coords_difference (&(g_array_index (points, GimpCoords , i)),
+                              &(g_array_index (points, GimpCoords , i+1)),
+                              &difference);
+      segment_length = gimp_coords_length (&difference);
+
+      if (segment_length == 0 || length + segment_length < dist )
+        {
+          length += segment_length;
+        }
+      else
+        {
+          /* x = x1 + (x2 - x1 ) u  */
+          /* x   = x1 (1-u) + u x2  */
+
+          gdouble u = (dist - length) / segment_length;
+
+          gimp_coords_mix (1 - u, &(g_array_index (points, GimpCoords , i)),
+                               u, &(g_array_index (points, GimpCoords , i+1)),
+                           position);
+
+          if (difference.y == 0)
+            *gradient = G_MAXDOUBLE;
+          else 
+            *gradient = difference.x / difference.y;
+
+          ret = TRUE;
+          break;
+        }
+    }
+  
+  g_array_free (points, TRUE);
+
+  return ret;
 }

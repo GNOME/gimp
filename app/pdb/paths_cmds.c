@@ -655,6 +655,11 @@ path_get_point_at_dist_invoker (Gimp        *gimp,
   gint32 y_point = 0;
   gdouble gradient = 0;
   GimpVectors *vectors;
+  GimpStroke *stroke;
+  gdouble distance_along;
+  gdouble stroke_length;
+  gdouble stroke_distance;
+  GimpCoords position;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -668,11 +673,44 @@ path_get_point_at_dist_invoker (Gimp        *gimp,
 
       if (vectors)
         {
-          g_warning ("FIXME: path_get_point_at_dist() is unimplemented");
-          success = FALSE;
+          distance_along = 0.0;
+          stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+
+          while (stroke != NULL ) 
+            {
+              stroke_length = gimp_stroke_get_length (stroke, 0.5);
+
+              if (distance_along + stroke_length < distance) 
+                {
+                  distance_along += stroke_length;
+                }
+              else
+                {
+                  stroke_distance = distance - distance_along;
+                  stroke_distance = stroke_distance < 0 ? 0: stroke_distance;
+
+                  if (!gimp_stroke_get_point_at_dist (stroke, stroke_distance, 0.5,
+                                                      &position, &gradient))
+                    {
+                      success = FALSE;
+                      break;
+                    }
+                  else
+                    {
+                      success = TRUE;
+                      x_point = ROUND (position.x);
+                      y_point = ROUND (position.y);
+                      break;
+                    }
+                }
+
+              stroke = gimp_vectors_stroke_get_next (vectors, stroke);
+            }
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return_args = procedural_db_return_args (&path_get_point_at_dist_proc, success);

@@ -353,18 +353,53 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors' ],
+	vars => [ 'GimpVectors *vectors', 'GimpStroke *stroke',
+	          'gdouble distance_along', 'gdouble stroke_length',
+		  'gdouble stroke_distance', 'GimpCoords position' ],
 	code => <<'CODE'
 {
   vectors = gimp_image_get_active_vectors (gimage);
 
   if (vectors)
     {
-      g_warning ("FIXME: path_get_point_at_dist() is unimplemented");
-      success = FALSE;
+      distance_along = 0.0;
+      stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+
+      while (stroke != NULL ) 
+        {
+          stroke_length = gimp_stroke_get_length (stroke, 0.5);
+
+          if (distance_along + stroke_length < distance) 
+            {
+              distance_along += stroke_length;
+            }
+          else
+            {
+              stroke_distance = distance - distance_along;
+              stroke_distance = stroke_distance < 0 ? 0: stroke_distance;
+
+              if (!gimp_stroke_get_point_at_dist (stroke, stroke_distance, 0.5,
+	                                          &position, &gradient))
+                {
+                  success = FALSE;
+                  break;
+                }
+              else
+                {
+                  success = TRUE;
+                  x_point = ROUND (position.x);
+                  y_point = ROUND (position.y);
+                  break;
+                }
+            }
+
+          stroke = gimp_vectors_stroke_get_next (vectors, stroke);
+        }
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );

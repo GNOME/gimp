@@ -1,3 +1,12 @@
+2004-06-30  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpstroke.[ch]
+	* tools/pdbgen/pdb/paths.pdb: Applied a modified patch from
+	Geert Jordaens that implements the gimp-path-get-point-at-dist
+	PDB function (fixes bug #138754).
+
+	* app/pdb/paths_cmds.c: regenerated
+
 2004-06-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptoolbox.c (gimp_toolbox_button_accel_changed):
