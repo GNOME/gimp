@@ -376,8 +376,16 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
                                   &selector->rgb, &selector->hsv);
     }
 
+  g_signal_handlers_block_by_func (scales->hex_entry,
+                                   gimp_color_scales_entry_changed,
+                                   scales);
+
   gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (scales->hex_entry),
                                                         &selector->rgb);
+
+  g_signal_handlers_unblock_by_func (scales->hex_entry,
+                                     gimp_color_scales_entry_changed,
+                                     scales);
 }
 
 static void

@@ -1,5 +1,12 @@
 2005-03-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Merged from HEAD branch:
+
+	* libgimpwidgets/gimpcolorscales.c (gimp_color_scales_update_scales):
+	Block callback when updating hex entry, fixes bug #169882.
+	
+2005-03-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/core/gimpimage-convert.c: applied patch from Adam
 	Moss converning gray->indexed conversion,
 	fixes bug #170825.
