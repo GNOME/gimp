@@ -1,3 +1,9 @@
+Tue Jan 25 20:08:35 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/colorify.c: use gimp_tile_cache_ntiles ()
+	* plug-ins/common/lic.c: when creating a new image, disable undo, enable
+	it later when the new image is completed
+
 2000-01-25  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in

@@ -891,16 +891,17 @@ compute_image (void)
       /* Create a new image */
       /* ================== */
 
-      new_image_id=gimp_image_new(width,height,RGB);
-
+      new_image_id = gimp_image_new (width, height, RGB);
+      gimp_image_undo_disable (new_image_id);
+      
       /* Create a "normal" layer */
       /* ======================= */
 
-       new_layer_id=gimp_layer_new(new_image_id, _("Background"),
-         width,height,RGB_IMAGE,100.0,NORMAL_MODE);
+      new_layer_id = gimp_layer_new (new_image_id, _("Background"),
+				     width, height, RGB_IMAGE, 100.0, NORMAL_MODE);
 
-      gimp_image_add_layer(new_image_id,new_layer_id,0);
-      output_drawable=gimp_drawable_get(new_layer_id);
+      gimp_image_add_layer (new_image_id, new_layer_id, 0);
+      output_drawable = gimp_drawable_get (new_layer_id);
     }
 
   gimp_pixel_rgn_init (&dest_region, output_drawable, 0,0, width,height, TRUE,TRUE);
@@ -951,11 +952,12 @@ compute_image (void)
   gimp_drawable_merge_shadow(output_drawable->id, TRUE);
   gimp_drawable_update(output_drawable->id, 0,0, width,height);
 
-  if (new_image_id!=-1)
+  if (new_image_id != -1)
     {
-      gimp_display_new(new_image_id);
-      gimp_displays_flush();
-      gimp_drawable_detach(output_drawable);
+      gimp_display_new (new_image_id);
+      gimp_displays_flush ();
+      gimp_drawable_detach (output_drawable);
+      gimp_image_undo_enable (new_image_id);
     }
 }
 

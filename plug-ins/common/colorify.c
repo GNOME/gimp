@@ -259,6 +259,8 @@ colorify (GDrawable *drawable)
   bpp = gimp_drawable_bpp (drawable->id);
   row = g_new (guchar, sel_width * bpp);
 
+  gimp_tile_cache_ntiles (2 * (sel_width / gimp_tile_width()) + 1);
+
   gimp_pixel_rgn_init (&source_region, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest_region, drawable,
@@ -271,7 +273,7 @@ colorify (GDrawable *drawable)
       colorify_row (row, sel_width, bpp);
 
       gimp_pixel_rgn_set_row (&dest_region, row, sel_x1, y, sel_width);
-      gimp_progress_update ((double) ++progress / sel_height);	
+      gimp_progress_update ((double) ++progress / (double) sel_height);
     }
 
   g_free (row);
