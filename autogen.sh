@@ -6,7 +6,7 @@ test -z "$srcdir" && srcdir=.
 
 ORIGDIR=`pwd`
 cd $srcdir
-PROJECT=GIMP
+PROJECT="The GIMP"
 TEST_TYPE=-d
 FILE=plug-ins
 
@@ -47,6 +47,10 @@ DIE=0
         echo "ftp://ftp.gnome.org/pub/GNOME/stable/sources/intltool/"
 	DIE=1
 }
+
+if test "$DIE" -eq 1; then
+	exit 1
+fi
 
 echo "I am testing that you have the required versions of libtool, autoconf," 
 echo "automake, glib-gettextize and intltoolize. This test is not foolproof,"
