@@ -1,5 +1,5 @@
 /* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcolorbutton.c
  * Copyright (C) 1999-2001 Sven Neumann
@@ -36,6 +36,14 @@
 #include "libgimp/libgimp-intl.h"
 
 
+typedef enum
+{
+  GIMP_COLOR_BUTTON_COLOR_FG,
+  GIMP_COLOR_BUTTON_COLOR_BG,
+  GIMP_COLOR_BUTTON_COLOR_BLACK,
+  GIMP_COLOR_BUTTON_COLOR_WHITE,
+} GimpColorButtonColor;
+
 enum
 {
   COLOR_CHANGED,
@@ -56,13 +64,9 @@ static void    gimp_color_button_dialog_ok      (GtkWidget    *widget,
 static void    gimp_color_button_dialog_cancel  (GtkWidget    *widget,
 						 gpointer      data);
 
-static void    gimp_color_button_use_fg         (gpointer      callback_data,
+static void    gimp_color_button_use_color      (gpointer      callback_data,
 						 guint         callback_action, 
 						 GtkWidget    *widget);
-static void    gimp_color_button_use_bg         (gpointer      callback_data,
-						 guint         callback_action, 
-						 GtkWidget    *widget);
-
 static gint    gimp_color_button_menu_popup     (GtkWidget    *widget,
 						 GdkEvent     *event,
 						 gpointer      data);
@@ -75,8 +79,15 @@ static void    gimp_color_button_color_changed  (GtkObject    *object,
 
 static GtkItemFactoryEntry menu_items[] =
 {
-  { N_("/Use Foreground Color"), NULL, gimp_color_button_use_fg, 2, NULL },
-  { N_("/Use Background Color"), NULL, gimp_color_button_use_bg, 2, NULL }
+  { N_("/Foreground Color"), NULL, 
+    gimp_color_button_use_color, GIMP_COLOR_BUTTON_COLOR_FG, NULL },
+  { N_("/Background Color"), NULL, 
+    gimp_color_button_use_color, GIMP_COLOR_BUTTON_COLOR_BG, NULL },
+  { "/---", NULL, NULL, 0, "<Separator>"},
+  { N_("/Black"), NULL, 
+    gimp_color_button_use_color, GIMP_COLOR_BUTTON_COLOR_BLACK, NULL },
+  { N_("/White"), NULL, 
+    gimp_color_button_use_color, GIMP_COLOR_BUTTON_COLOR_WHITE, NULL },
 };
 
 static guint   gimp_color_button_signals[LAST_SIGNAL] = { 0 };
@@ -321,7 +332,7 @@ gimp_color_button_menu_popup (GtkWidget *widget,
 			      gpointer   data)
 {
   GimpColorButton *gcb;
-  GdkEventButton *bevent;
+  GdkEventButton  *bevent;
   gint x;
   gint y;
 
@@ -338,8 +349,11 @@ gimp_color_button_menu_popup (GtkWidget *widget,
     return FALSE;
  
   gdk_window_get_origin (GTK_WIDGET (widget)->window, &x, &y);
-  gtk_item_factory_popup (gcb->item_factory, 
-			  x + bevent->x, y + bevent->y, 
+  x += widget->allocation.x;
+  y += widget->allocation.y;
+
+  gtk_item_factory_popup (gcb->item_factory,
+			  x + bevent->x, y + bevent->y,
 			  bevent->button, bevent->time);
 
   return (TRUE);  
@@ -423,30 +437,33 @@ gimp_color_button_dialog_cancel (GtkWidget *widget,
 
 
 static void  
-gimp_color_button_use_fg (gpointer   callback_data, 
-			  guint      callback_action, 
-			  GtkWidget *widget)
+gimp_color_button_use_color (gpointer   callback_data, 
+                             guint      callback_action, 
+                             GtkWidget *widget)
 {
-  GimpRGB  color;
+  GimpRGB              color;
+  GimpColorButtonColor type;
 
-  g_return_if_fail (GIMP_IS_COLOR_BUTTON (callback_data));
+  type = (GimpColorButtonColor) callback_action;
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (callback_data), &color);
-  gimp_palette_get_foreground (&color);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (callback_data), &color);
-}
 
-static void  
-gimp_color_button_use_bg (gpointer   callback_data, 
-			  guint      callback_action, 
-			  GtkWidget *widget)
-{
-  GimpRGB  color;
+  switch (type)
+    {
+    case GIMP_COLOR_BUTTON_COLOR_FG:
+      gimp_palette_get_foreground (&color);
+      break;
+    case GIMP_COLOR_BUTTON_COLOR_BG:
+      gimp_palette_get_background (&color);
+      break;
+    case GIMP_COLOR_BUTTON_COLOR_BLACK:
+      gimp_rgb_set (&color, 0.0, 0.0, 0.0);
+      break;
+    case GIMP_COLOR_BUTTON_COLOR_WHITE:
+      gimp_rgb_set (&color, 1.0, 1.0, 1.0);
+      break;
+    }
 
-  g_return_if_fail (GIMP_IS_COLOR_BUTTON (callback_data));
-
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (callback_data), &color);
-  gimp_palette_get_background (&color);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (callback_data), &color);
 }
 

@@ -1,5 +1,11 @@
 2001-11-16  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorbutton.[ch]: added Black and White to popup
+	menu. Take widget->allocation into account when calculation popup 
+	position since GtkButton is a NO_WINDOW widget now.
+
+2001-11-16  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage.c: s/G_GNUC_PRETTY_FUNC/G_GNUC_PRETTY_FUNCTION/
 
 2001-11-16  Rebecca Walter  <rjp@mail.tele.dk>

@@ -1,5 +1,5 @@
 /* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcolorbutton.h
  * Copyright (C) 1999-2001 Sven Neumann
@@ -81,7 +81,7 @@ void        gimp_color_button_get_color  (GimpColorButton   *gcb,
 					  GimpRGB           *color);
 gboolean    gimp_color_button_has_alpha  (GimpColorButton   *gcb);
 void        gimp_color_button_set_type   (GimpColorButton   *gcb,
-					  GimpColorAreaType  alpha);
+					  GimpColorAreaType  type);
 
 
 #ifdef __cplusplus
