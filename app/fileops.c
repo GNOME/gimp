@@ -620,7 +620,7 @@ file_revert_callback (GtkWidget *widget,
 
       text = g_strdup_printf (_("Reverting %s to\n"
 				"%s\n\n"
-				"(You will loose all your changes\n"
+				"(You will lose all your changes\n"
 				"including all undo information)"),
 			      g_basename (gimage_filename (gimage)),
 			      gimage_filename (gimage));

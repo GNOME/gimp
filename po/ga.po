@@ -1244,7 +1244,7 @@ msgid ""
 "Reverting %s to\n"
 "%s\n"
 "\n"
-"(You will loose all your changes\n"
+"(You will lose all your changes\n"
 "including all undo information)"
 msgstr ""
 
