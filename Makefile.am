@@ -13,7 +13,9 @@ gimpdata_SCRIPTS = user_install
 man_MANS=gimp.1 gimptool.1
 
 m4datadir = $(datadir)/aclocal
-scriptdata = gimp.m4
+m4data_DATA = gimp.m4
+
+scriptdata =
 
 .PHONY: files populate checkin release
 

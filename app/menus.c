@@ -96,8 +96,8 @@ static GtkItemFactoryEntry image_entries[] =
   { "/Select/Save To Channel", NULL, select_save_cmd_callback, 0 },
   { "/Select/By Color...", NULL, select_by_color_cmd_callback, 0 },
   
-  { "/View/Zoom In", "=", view_zoomin_cmd_callback, 0 },
-  { "/View/Zoom Out", "-", view_zoomout_cmd_callback, 0 },
+  { "/View/Zoom In", "equal", view_zoomin_cmd_callback, 0 },
+  { "/View/Zoom Out", "minus", view_zoomout_cmd_callback, 0 },
   { "/View/Zoom/16:1", NULL, view_zoom_16_1_callback, 0 },
   { "/View/Zoom/8:1", NULL, view_zoom_8_1_callback, 0 },
   { "/View/Zoom/4:1", NULL, view_zoom_4_1_callback, 0 },

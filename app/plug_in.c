@@ -719,6 +719,7 @@ plug_in_new (char *name)
   plug_in->progress = NULL;
   plug_in->progress_label = NULL;
   plug_in->progress_bar = NULL;
+  plug_in->progress_gdisp_ID = -1;
   plug_in->user_data = NULL;
 
   return plug_in;

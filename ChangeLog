@@ -1,3 +1,13 @@
+Mon Jun 15 12:42:43 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/plug_in.c: initialize progress_gdisp_ID field in
+	plug_in_new so things don't crash
+
+	* app/menus.c: use proper keycodes (?) for zoom accelerator
+	defaults
+
+	* plug-ins/apply_lens/apply_lens.c: fixed a warning
+
 Mon Jun 15 14:39:43 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/preferences_dialog.c: Added units (B,KB,MB) to the 
