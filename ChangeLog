@@ -1,5 +1,10 @@
 2004-08-01  Michael Schumacher <schumaml@cvs.gnome.org>
 
+	* configure.in: modified the checks. hopefully it works on all
+	platforms this time.
+
+2004-08-01  Michael Schumacher <schumaml@cvs.gnome.org>
+
 	* configure.in: move an AM_CONDITIONAL out of an if block
 
 2004-08-01  Michael Schumacher <schumaml@cvs.gnome.org>
