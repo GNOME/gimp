@@ -1,3 +1,10 @@
+2003-01-06  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gfig/gfig.c: made it a lot less deprecated. Removed
+	gazillions of unneeded casts and changed others to the more
+	portable GINT_TO_POINTER() / GPOINTER_TO_INT() macros. Still more
+	work to be done ...
+
 2003-01-06  Michael Natterer  <mitch@gimp.org>
 
 	* libgimptool/gimptoolenums.[ch]: added enum GimpRectSelectMode
