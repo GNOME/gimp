@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * The GIMP Help Browser
- * Copyright (C) 1999-2002 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 1999-2004 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
  *
  * dialog.c
@@ -52,65 +52,62 @@ enum
   BUTTON_FORWARD
 };
 
-typedef struct
+enum
 {
-  const gchar *title;
-  const gchar *ref;
-  gint         count;
-} HistoryItem;
-
+  HISTORY_TITLE,
+  HISTORY_REF
+};
 
 /*  local function prototypes  */
 
-static void       button_callback        (GtkWidget        *widget,
-                                          gpointer          data);
-static void       update_toolbar         (void);
-static void       entry_changed_callback (GtkWidget        *widget,
-                                          gpointer          data);
-static void       drag_begin             (GtkWidget        *widget,
-                                          GdkDragContext   *context,
-                                          gpointer          data);
-static void       drag_data_get          (GtkWidget        *widget,
-                                          GdkDragContext   *context,
-                                          GtkSelectionData *selection_data,
-                                          guint             info,
-                                          guint             time,
-                                          gpointer          data);
+static void       button_callback  (GtkWidget        *widget,
+                                    gpointer          data);
+static void       update_toolbar   (void);
+static void       combo_changed    (GtkWidget        *widget,
+                                    gpointer          data);
+static void       drag_begin       (GtkWidget        *widget,
+                                    GdkDragContext   *context,
+                                    gpointer          data);
+static void       drag_data_get    (GtkWidget        *widget,
+                                    GdkDragContext   *context,
+                                    GtkSelectionData *selection_data,
+                                    guint             info,
+                                    guint             time,
+                                    gpointer          data);
 
-static void       title_changed          (HtmlDocument     *doc,
-                                          const gchar      *new_title,
-                                          gpointer          data);
-static void       link_clicked           (HtmlDocument     *doc,
-                                          const gchar      *url,
-                                          gpointer          data);
-static void       request_url            (HtmlDocument     *doc,
-                                          const gchar      *url,
-                                          HtmlStream       *stream,
-                                          gpointer          data);
-static gboolean   io_handler             (GIOChannel       *io,
-                                          GIOCondition      condition,
-                                          gpointer          data);
-static void       load_remote_page       (const gchar      *ref);
+static void       title_changed    (HtmlDocument     *doc,
+                                    const gchar      *new_title,
+                                    gpointer          data);
+static void       link_clicked     (HtmlDocument     *doc,
+                                    const gchar      *url,
+                                    gpointer          data);
+static void       request_url      (HtmlDocument     *doc,
+                                    const gchar      *url,
+                                    HtmlStream       *stream,
+                                    gpointer          data);
+static gboolean   io_handler       (GIOChannel       *io,
+                                    GIOCondition      condition,
+                                    gpointer          data);
+static void       load_remote_page (const gchar      *ref);
 
-static void       history_add            (const gchar      *ref,
-                                          const gchar      *title);
+static void       history_add      (GtkComboBox      *combo,
+                                    const gchar      *ref,
+                                    const gchar      *title);
 
-static gboolean   has_case_prefix        (const gchar      *haystack,
-                                          const gchar      *needle);
+static gboolean   has_case_prefix  (const gchar      *haystack,
+                                    const gchar      *needle);
 
 
 /*  private variables  */
 
-static const gchar *eek_png_tag    = "<h1>Eeek!</h1>";
+static const gchar  *eek_png_tag    = "<h1>Eeek!</h1>";
 
-static GList       *history        = NULL;
-static Queue       *queue          = NULL;
-static gchar       *current_ref    = NULL;
+static Queue        *queue          = NULL;
+static gchar        *current_ref    = NULL;
 
-static GtkWidget   *back_button    = NULL;
-static GtkWidget   *forward_button = NULL;
-static GtkWidget   *combo          = NULL;
-static GtkWidget   *html           = NULL;
+static GtkWidget    *back_button    = NULL;
+static GtkWidget    *forward_button = NULL;
+static GtkWidget    *html           = NULL;
 
 static GtkTargetEntry help_dnd_target_table[] =
 {
@@ -123,15 +120,18 @@ static GtkTargetEntry help_dnd_target_table[] =
 void
 browser_dialog_open (void)
 {
-  GtkWidget *window;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *bbox;
-  GtkWidget *scroll;
-  GtkWidget *button;
-  GtkWidget *drag_source;
-  GtkWidget *image;
-  gchar     *eek_png_path;
+  GtkWidget       *window;
+  GtkWidget       *vbox;
+  GtkWidget       *hbox;
+  GtkWidget       *bbox;
+  GtkWidget       *scroll;
+  GtkWidget       *button;
+  GtkWidget       *drag_source;
+  GtkWidget       *image;
+  GtkWidget       *combo;
+  GtkListStore    *history;
+  GtkCellRenderer *cell;
+  gchar           *eek_png_path;
 
   gimp_ui_init ("helpbrowser", TRUE);
 
@@ -229,16 +229,23 @@ browser_dialog_open (void)
   gtk_widget_show (image);
 
   /*  the title combo  */
-  combo = gtk_combo_new ();
-  gtk_widget_set_size_request (GTK_WIDGET (combo), 360, -1);
-  gtk_combo_set_use_arrows (GTK_COMBO (combo), TRUE);
-  g_object_set (GTK_COMBO (combo)->entry, "editable", FALSE, NULL);
+  history = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+  combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (history));
+  g_object_unref (history);
+
+  cell = gtk_cell_renderer_text_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, TRUE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo), cell,
+                                  "text", HISTORY_TITLE,
+                                  NULL);
+
+  gtk_widget_set_size_request (GTK_WIDGET (combo), 320, -1);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
-  g_signal_connect (GTK_COMBO (combo)->entry, "changed",
-                    G_CALLBACK (entry_changed_callback),
-                    combo);
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (combo_changed),
+                    NULL);
 
   /*  HTML view  */
   html  = html_view_new ();
@@ -262,7 +269,7 @@ browser_dialog_open (void)
 
   g_signal_connect (HTML_VIEW (html)->document, "title_changed",
                     G_CALLBACK (title_changed),
-                    NULL);
+                    combo);
   g_signal_connect (HTML_VIEW (html)->document, "link_clicked",
                     G_CALLBACK (link_clicked),
                     NULL);
@@ -392,39 +399,22 @@ update_toolbar (void)
 }
 
 static void
-entry_changed_callback (GtkWidget *widget,
-			gpointer   data)
+combo_changed (GtkWidget *widget,
+               gpointer   data)
 {
-  GList       *list;
-  HistoryItem *item;
-  const gchar *entry_text;
-  gchar       *compare_text;
-  gboolean     found = FALSE;
+  GtkComboBox *combo = GTK_COMBO_BOX (widget);
+  GtkTreeIter  iter;
 
-  entry_text = gtk_entry_get_text (GTK_ENTRY (widget));
-
-  for (list = history; list && !found; list = list->next)
+  if (gtk_combo_box_get_active_iter (combo, &iter))
     {
-      item = (HistoryItem *) list->data;
+      GValue  value = { 0, };
 
-      if (item->count)
-        {
-          compare_text = g_strdup_printf ("%s <%i>",
-                                          item->title, item->count + 1);
-        }
-      else
-        {
-          compare_text = (gchar *) item->title;
-        }
+      gtk_tree_model_get_value (gtk_combo_box_get_model (combo),
+                                &iter, HISTORY_REF, &value);
 
-      if (strcmp (compare_text, entry_text) == 0)
-	{
-	  browser_dialog_load (item->ref, TRUE);
-	  found = TRUE;
-	}
+      browser_dialog_load (g_value_get_string (&value), TRUE);
 
-      if (item->count)
-        g_free (compare_text);
+      g_value_unset (&value);
     }
 }
 
@@ -459,22 +449,18 @@ title_changed (HtmlDocument *doc,
                const gchar  *new_title,
                gpointer      data)
 {
-  gchar *title;
+  if (new_title)
+    {
+      gchar *title = g_strstrip (g_strdup (new_title));
 
-  if (!new_title)
-    new_title = (_("<Untitled>"));
+      history_add (GTK_COMBO_BOX (data), current_ref, title);
 
-  title = g_strstrip (g_strdup (new_title));
-
-  history_add (current_ref, title);
-
-  g_signal_handlers_block_by_func (GTK_COMBO (combo)->entry,
-                                   entry_changed_callback, combo);
-  gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (combo)->entry), title);
-  g_signal_handlers_unblock_by_func (GTK_COMBO (combo)->entry,
-                                     entry_changed_callback, combo);
-
-  g_free (title);
+      g_free (title);
+    }
+  else
+    {
+      history_add (GTK_COMBO_BOX (data), current_ref, _("Untitled"));
+    }
 }
 
 static void
@@ -626,70 +612,43 @@ load_remote_page (const gchar *ref)
 }
 
 static void
-history_add (const gchar *ref,
+history_add (GtkComboBox *combo,
+             const gchar *ref,
 	     const gchar *title)
 {
-  GList       *list;
-  HistoryItem *item;
-  GList       *combo_list        = NULL;
-  gint         title_found_count = 0;
+  GtkTreeModel *model = gtk_combo_box_get_model (combo);
+  GtkTreeIter   iter;
+  gboolean      iter_valid;
+  GValue        value = { 0, };
 
-  for (list = history; list; list = g_list_next (list))
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
     {
-      item = (HistoryItem *) list->data;
+      gtk_tree_model_get_value (model, &iter, HISTORY_REF, &value);
 
-      if (! strcmp (item->title, title))
-	{
-	  if (! strcmp (item->ref, ref))
-            break;
-
-          title_found_count++;
+      if (strcmp (g_value_get_string (&value), ref) == 0)
+        {
+          gtk_list_store_move_after (GTK_LIST_STORE (model), &iter, NULL);
+          g_value_unset (&value);
+          break;
         }
+
+      g_value_unset (&value);
     }
 
-  if (list)
+  if (! iter_valid)
     {
-      item = (HistoryItem *) list->data;
-
-      history = g_list_remove_link (history, list);
-    }
-  else
-    {
-      item = g_new (HistoryItem, 1);
-
-      item->ref   = g_strdup (ref);
-      item->title = g_strdup (title);
-      item->count = title_found_count;
+      gtk_list_store_prepend (GTK_LIST_STORE (model), &iter);
+      gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                          HISTORY_TITLE, title,
+                          HISTORY_REF,   ref,
+                          -1);
     }
 
-  history = g_list_prepend (history, item);
-
-  for (list = history; list; list = g_list_next (list))
-    {
-      gchar *combo_title;
-
-      item = (HistoryItem *) list->data;
-
-      if (item->count)
-	combo_title = g_strdup_printf ("%s <%i>", item->title, item->count + 1);
-      else
-	combo_title = g_strdup (item->title);
-
-      combo_list = g_list_prepend (combo_list, combo_title);
-    }
-
-  combo_list = g_list_reverse (combo_list);
-
-  g_signal_handlers_block_by_func (GTK_COMBO (combo)->entry,
-                                   entry_changed_callback, combo);
-  gtk_combo_set_popdown_strings (GTK_COMBO (combo), combo_list);
-  g_signal_handlers_unblock_by_func (GTK_COMBO (combo)->entry,
-                                     entry_changed_callback, combo);
-
-  for (list = combo_list; list; list = list->next)
-    g_free (list->data);
-
-  g_list_free (combo_list);
+  g_signal_handlers_block_by_func (combo, combo_changed, NULL);
+  gtk_combo_box_set_active_iter (combo, &iter);
+  g_signal_handlers_unblock_by_func (combo, combo_changed, NULL);
 }
 
 /* Taken from glib/gconvert.c:
