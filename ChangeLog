@@ -1,3 +1,7 @@
+Thu Jun 17 20:05:00 CST 1999 Seth Burgess <sjburges@gimp.org>
+
+	* app/devices.c : unbroke the devices previews.
+
 1999-06-18  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/Makefile.am

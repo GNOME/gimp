@@ -1352,13 +1352,13 @@ device_status_update (guint32 deviceid)
 
 
 	  device_update_brush(device_info->brush,i);
-/*	  gtk_widget_draw (deviceD->brushes[i],NULL);
- *	  gtk_widget_show (deviceD->brushes[i]);
- */
+	  gtk_widget_draw (deviceD->brushes[i],NULL);
+ 	  gtk_widget_show (deviceD->brushes[i]);
+ 
 	  device_update_pattern(device_info->pattern,i);
-/*	  gtk_widget_draw (deviceD->patterns[i],NULL);
- *	  gtk_widget_show (deviceD->patterns[i]);
- */
+	  gtk_widget_draw (deviceD->patterns[i],NULL);
+ 	  gtk_widget_show (deviceD->patterns[i]);
+ 
 	}
     }
   if (show_indicators) {
