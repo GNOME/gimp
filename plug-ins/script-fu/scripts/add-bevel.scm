@@ -1,8 +1,8 @@
 ; The GIMP -- an image manipulation program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
-; add-bevel.scm version 1.03
-; Time-stamp: <1997-12-16 09:17:24 ard>
+; add-bevel.scm version 1.04
+; Time-stamp: <2004-02-09 17:07:06 simon>
 ;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -42,77 +42,63 @@
 ;       Nutscrape.
 ;       Changed path (removed "filters/").
 ; 1.03: adds one-pixel border before bumpmapping, and removes it after.
-;	Got rid of the crop-pixel-border option (no longer reqd).
+;       Got rid of the crop-pixel-border option (no longer reqd).
+; 1.04: Fixed undo handling, ensure that bumpmap is big enough,
+;       (instead of resizing the image). Removed references to outdated
+;       bumpmap plugin.     (Simon)
 ;
-
-;
-; BUMPMAP NOTES:
-;
-; Bumpmap changed arguments from version 2.02 to 2.03.  If you use the
-; wrong bumpmap.c this script will either bomb (good) or produce a
-; naff image (bad).
-;
-; As distributed this script expects bumpmap 2.03 (shipped with Gimp 0.99.11)
-; or later.
-
-;
-; BUGS
-;
-; Doesn't allow undoing the operation.  Why not?
-;
-; Sometimes (and that's the scary bit) gives bogloads of GTK warnings.
-;
-
 
 (define (script-fu-add-bevel img
-			     drawable
-			     thickness
-			     work-on-copy
-			     keep-bump-layer)
+                             drawable
+                             thickness
+                             work-on-copy
+                             keep-bump-layer)
 
   (let* ((index 0)
-	 (bevelling-whole-image FALSE)
-	 (greyness 0)
-	 (thickness (abs thickness))
-	 (type (car (gimp-drawable-type-with-alpha drawable)))
-	 (image (if (= work-on-copy TRUE) (car (gimp-image-duplicate img)) img))
-	 (pic-layer (car (gimp-image-get-active-drawable image)))
-	 (width (car (gimp-drawable-width pic-layer)))
-	 (height (car (gimp-drawable-height pic-layer)))
-	 (old-bg (car (gimp-palette-get-background)))
-	 (bump-layer (car (gimp-layer-new image
-					  width
-					  height
-					  GRAY
-					  "Bumpmap"
-					  100
-					  NORMAL-MODE)))
-	 )
-    ;
+         (bevelling-whole-image FALSE)
+         (greyness 0)
+         (thickness (abs thickness))
+         (type (car (gimp-drawable-type-with-alpha drawable)))
+         (image (if (= work-on-copy TRUE) (car (gimp-image-duplicate img)) img))
+         (pic-layer (car (gimp-image-get-active-drawable image)))
+         (offsets (gimp-drawable-offsets pic-layer))
+         (width (car (gimp-drawable-width pic-layer)))
+         (height (car (gimp-drawable-height pic-layer)))
+         (old-bg (car (gimp-palette-get-background)))
+         ; Bumpmap has a one pixel border on each side
+         (bump-layer (car (gimp-layer-new image
+                                          (+ width 2)
+                                          (+ height 2)
+                                          GRAY
+                                          "Bumpmap"
+                                          100
+                                          NORMAL-MODE)))
+         )
+    
     ; If the layer we're bevelling is offset from the image's origin, we
     ; have to do the same to the bumpmap
-    (let ((offsets (gimp-drawable-offsets pic-layer)))
-      (gimp-layer-set-offsets bump-layer (car offsets) (cadr offsets))
-      )
+    (gimp-layer-set-offsets bump-layer (- (car offsets) 1)
+                                       (- (cadr offsets) 1))
 
-    (gimp-image-undo-disable image)
+    ; disable undo on copy, start group otherwise
+    (if (= work-on-copy TRUE)
+      (gimp-image-undo-disable image)
+      (gimp-image-undo-group-start image)
+    )
 
     ;------------------------------------------------------------
     ;
     ; Set the selection to the area we want to bevel.
     ;
     (if (eq? 0 (car (gimp-selection-bounds image)))
-	(begin
-	  (set! bevelling-whole-image TRUE) ; ...so we can restore things properly, and crop.
-	  (gimp-image-resize image (+ width 2) (+ height 2) 1 1)
-	  (if (not (eq? 0 (car (gimp-drawable-has-alpha pic-layer))))	; Wish I knew Scheme
-	      (gimp-selection-layer-alpha pic-layer)
-	      (begin
-		(gimp-selection-all image)
-		)
-	      )
-	  )
-	)
+        (begin
+          (set! bevelling-whole-image TRUE) ; ...so we can restore things properly, and crop.
+          (if (car (gimp-drawable-has-alpha pic-layer))
+              (gimp-selection-layer-alpha pic-layer)
+              (gimp-selection-all image)
+          )
+        )
+     )
 
     ; Store it for later.
     (set! select (car (gimp-selection-save image)))
@@ -128,17 +114,18 @@
 
     (set! index 1)
     (while (< index thickness)
-	   (set! greyness (/ (* index 255) thickness))
-	   (gimp-palette-set-background (list greyness greyness greyness))
-	   ;(gimp-selection-feather image 1) ;Stop the slopey jaggies?
-	   (gimp-edit-bucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE
-				  100 0 FALSE 0 0)
-	   (gimp-selection-shrink image 1)
-	   (set! index (+ index 1))
-	   )
+           (set! greyness (/ (* index 255) thickness))
+           (gimp-palette-set-background (list greyness greyness greyness))
+           ;(gimp-selection-feather image 1) ;Stop the slopey jaggies?
+           (gimp-edit-bucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE
+                                  100 0 FALSE 0 0)
+           (gimp-selection-shrink image 1)
+           (set! index (+ index 1))
+    )
     ; Now the white interior
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-bucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE
+                           100 0 FALSE 0 0)
 
     ;------------------------------------------------------------
     ;
@@ -150,26 +137,10 @@
     ;(plug-in-gauss-rle 1 image bump-layer thickness TRUE TRUE)
 
 
-    ; If they're working on the original, let them undo the filter's effects.
-    ; This doesn't work - ideas why not?
-    (if (= work-on-copy FALSE) (gimp-image-undo-enable image))
-
     ;
     ; BUMPMAP INVOCATION:
     ;
-    ; Use the former with version 2.02 or earlier of bumpmap:
-    ; Use the latter with version 2.03 or later (ambient and waterlevel params)
-;   (plug-in-bump-map 1 image pic-layer bump-layer 125 45 3 0 0     TRUE FALSE 1)
     (plug-in-bump-map 1 image pic-layer bump-layer 125 45 3 0 0 0 0 TRUE FALSE 1)
-
-    ;
-    ; Shave one pixel off each edge
-    ;
-    (if (= bevelling-whole-image TRUE)
-	  (gimp-image-crop image width height 1 1)
-	  )
-
-    (if (= work-on-copy FALSE) (gimp-image-undo-disable image))
 
     ;------------------------------------------------------------
     ;
@@ -177,41 +148,46 @@
     ;
     (gimp-palette-set-background old-bg)
     (if (= bevelling-whole-image TRUE)
-	(gimp-selection-none image)	; No selection to start with
-	(gimp-selection-load select)
-	)
+        (gimp-selection-none image)        ; No selection to start with
+        (gimp-selection-load select)
+    )
     ; If they started with a selection, they can Select->Invert then
     ; Edit->Clear for a cutout.
 
     ; clean up
     (gimp-image-remove-channel image select)
     (if (= keep-bump-layer TRUE)
-	(begin
-	  (gimp-image-add-layer image bump-layer 1)
-	  (gimp-drawable-set-visible bump-layer 0))
-	(gimp-drawable-delete bump-layer)
-	)
+        (begin
+          (gimp-image-add-layer image bump-layer 1)
+          (gimp-drawable-set-visible bump-layer 0))
+        (gimp-drawable-delete bump-layer)
+    )
 
     (gimp-image-set-active-layer image pic-layer)
 
-    (if (= work-on-copy TRUE) (gimp-display-new image))
-
-    (gimp-image-undo-enable image)
+    ; enable undo / end undo group
+    (if (= work-on-copy TRUE) 
+      (begin
+        (gimp-display-new image)
+        (gimp-image-undo-enable image)
+      )
+      (gimp-image-undo-group-end image)
+    )
     (gimp-displays-flush)
 
     )
   )
 
 (script-fu-register "script-fu-add-bevel"
-		    _"<Image>/Script-Fu/Decor/Add B_evel..."
-		    "Add a bevel to an image"
-		    "Andrew Donkin <ard@cs.waikato.ac.nz>"
-		    "Andrew Donkin"
-		    "1997/11/06"
-		    "RGB* GRAY*"
-		    SF-IMAGE "Image" 0
-		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT _"Thickness"       '(5 0 30 1 2 0 0)
-		    SF-TOGGLE     _"Work on Copy"    TRUE
-		    SF-TOGGLE     _"Keep Bump Layer" FALSE
-		    )
+                    _"<Image>/Script-Fu/Decor/Add B_evel..."
+                    "Add a bevel to an image"
+                    "Andrew Donkin <ard@cs.waikato.ac.nz>"
+                    "Andrew Donkin"
+                    "1997/11/06"
+                    "RGB* GRAY*"
+                    SF-IMAGE "Image" 0
+                    SF-DRAWABLE "Drawable" 0
+                    SF-ADJUSTMENT _"Thickness"       '(5 0 30 1 2 0 0)
+                    SF-TOGGLE     _"Work on Copy"    TRUE
+                    SF-TOGGLE     _"Keep Bump Layer" FALSE
+                    )

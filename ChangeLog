@@ -1,3 +1,11 @@
+2004-02-09  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/script-fu/scripts/add-bevel.scm: Fixed Undo
+	handling, make sure that the bumpmap is big enough to
+	avoid artefacts.
+
+	Fixes bug #130636.
+
 2004-02-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/gui.c (gui_libs_init): added runtime check for
