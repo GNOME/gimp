@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-12-11 16:39+0100\n"
-"PO-Revision-Date: 2002-12-11 16:40+0100\n"
+"POT-Creation-Date: 2002-12-13 11:25+0100\n"
+"PO-Revision-Date: 2002-12-13 11:25+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2429,8 +2429,8 @@ msgstr "Kolorera"
 
 #: plug-ins/common/colorify.c:271 plug-ins/common/colortoalpha.c:333
 #: plug-ins/common/ps.c:2721 plug-ins/common/xpm.c:431
-#: plug-ins/gimpressionist/general.c:131 plug-ins/imagemap/imap_menu.c:310
-#: plug-ins/print/gimp_main_window.c:1412
+#: plug-ins/gimpressionist/color.c:47 plug-ins/gimpressionist/general.c:106
+#: plug-ins/imagemap/imap_menu.c:310 plug-ins/print/gimp_main_window.c:1412
 msgid "Color"
 msgstr "Färg"
 
@@ -3461,7 +3461,6 @@ msgid "Select Film Color"
 msgstr "Välj filmfärg"
 
 #: plug-ins/common/film.c:1259 plug-ins/common/film.c:1309
-#: plug-ins/gimpressionist/color.c:50
 msgid "Color:"
 msgstr "Färg:"
 
@@ -3675,7 +3674,7 @@ msgid "Spacing:"
 msgstr "Mellanrum:"
 
 #: plug-ins/common/gbr.c:599 plug-ins/common/gih.c:891
-#: plug-ins/common/pat.c:475 plug-ins/gimpressionist/presets.c:391
+#: plug-ins/common/pat.c:475 plug-ins/gimpressionist/presets.c:377
 msgid "Description:"
 msgstr "Beskrivning:"
 
@@ -7921,7 +7920,7 @@ msgstr ""
 msgid "Using:"
 msgstr "Använder:"
 
-#: plug-ins/gfig/gfig.c:2831 plug-ins/gimpressionist/general.c:144
+#: plug-ins/gfig/gfig.c:2831 plug-ins/gimpressionist/general.c:119
 msgid "Transparent"
 msgstr "Genomskinlig"
 
@@ -8677,31 +8676,31 @@ msgstr "Relief:"
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Specifierar mängden ciselering att applicera på bilden (i procent)"
 
-#: plug-ins/gimpressionist/color.c:36
+#: plug-ins/gimpressionist/color.c:33
 msgid "Co_lor"
 msgstr "F_ärg"
 
-#: plug-ins/gimpressionist/color.c:58
-msgid "Average under brush"
-msgstr "Medelvärde under penseln"
+#: plug-ins/gimpressionist/color.c:51
+msgid "A_verage under brush"
+msgstr "M_edelvärde under penseln"
 
-#: plug-ins/gimpressionist/color.c:63
+#: plug-ins/gimpressionist/color.c:52
+msgid "C_enter of brush"
+msgstr "Penselns _mittpunkt"
+
+#: plug-ins/gimpressionist/color.c:56
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Färgen är beräknad som medelvärdet av alla bildpunkter under penseln"
 
-#: plug-ins/gimpressionist/color.c:65
-msgid "Center of brush"
-msgstr "Penselns mittpunkt"
-
-#: plug-ins/gimpressionist/color.c:70
+#: plug-ins/gimpressionist/color.c:58
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Samplar färgen på bildpunkten i penselns mittpunkt"
 
-#: plug-ins/gimpressionist/color.c:82
-msgid "Color noise:"
-msgstr "Färgbrus:"
+#: plug-ins/gimpressionist/color.c:76
+msgid "Color _noise:"
+msgstr "Färg_brus:"
 
-#: plug-ins/gimpressionist/color.c:86
+#: plug-ins/gimpressionist/color.c:80
 msgid "Adds random noise to the color"
 msgstr "Lägger till slumpmässigt brus till färgen"
 
@@ -8710,97 +8709,101 @@ msgstr "Lägger till slumpmässigt brus till färgen"
 msgid "_General"
 msgstr "_Allmänt"
 
-#: plug-ins/gimpressionist/general.c:71
-msgid "Edge darken:"
-msgstr "Mörka kanten:"
-
-#: plug-ins/gimpressionist/general.c:86
-msgid "How much to \"darken\" the edges of each brush stroke"
-msgstr "Hur mycket kanten på penseldragen ska \"mörkna\""
-
-#: plug-ins/gimpressionist/general.c:93
+#: plug-ins/gimpressionist/general.c:63
 msgid "Background:"
 msgstr "Bakgrund:"
 
-#: plug-ins/gimpressionist/general.c:101
+#: plug-ins/gimpressionist/general.c:75
 msgid "Keep original"
 msgstr "Behåll orginalet"
 
-#: plug-ins/gimpressionist/general.c:106
+#: plug-ins/gimpressionist/general.c:81
 msgid "Preserve the original image as a background"
 msgstr "Bevara den ursprungliga bilden som bakgrund"
 
-#: plug-ins/gimpressionist/general.c:108
+#: plug-ins/gimpressionist/general.c:83
 msgid "From paper"
 msgstr "Från papper"
 
-#: plug-ins/gimpressionist/general.c:113
+#: plug-ins/gimpressionist/general.c:89
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Kopiera det valda papperets textur som bakgrund"
 
-#: plug-ins/gimpressionist/general.c:124
+#: plug-ins/gimpressionist/general.c:99
 msgid "Solid"
 msgstr "Heldragen"
 
-#: plug-ins/gimpressionist/general.c:129
+#: plug-ins/gimpressionist/general.c:104
 msgid "Solid colored background"
 msgstr "Helfärgad bakgrund"
 
-#: plug-ins/gimpressionist/general.c:149
+#: plug-ins/gimpressionist/general.c:124
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Använd en genomskinlig bakgrund; endast penseldragen blir synliga"
 
-#: plug-ins/gimpressionist/general.c:164
+#: plug-ins/gimpressionist/general.c:139
 msgid "Paint edges"
 msgstr "Måla kanter"
 
-#: plug-ins/gimpressionist/general.c:167
+#: plug-ins/gimpressionist/general.c:143
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Bestämmer om penseldrag skall placeras hela vägen ut till bildkanten"
 
 #. Tileable checkbox
-#: plug-ins/gimpressionist/general.c:171 plug-ins/maze/maze_face.c:284
+#: plug-ins/gimpressionist/general.c:147 plug-ins/maze/maze_face.c:284
 msgid "Tileable"
 msgstr "Upprepningsbar"
 
-#: plug-ins/gimpressionist/general.c:174
+#: plug-ins/gimpressionist/general.c:150
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Bestämmer om bilden skall kunna upprepas utan synliga kanter"
 
-#: plug-ins/gimpressionist/general.c:182
+#: plug-ins/gimpressionist/general.c:154
 msgid "Drop Shadow"
 msgstr "Skuggkastning"
 
-#: plug-ins/gimpressionist/general.c:185
+#: plug-ins/gimpressionist/general.c:158
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Lägger till en skuggeffekt till varje penseldrag"
 
-#: plug-ins/gimpressionist/general.c:196
+#: plug-ins/gimpressionist/general.c:169
+msgid "Edge darken:"
+msgstr "Mörka kanten:"
+
+#: plug-ins/gimpressionist/general.c:173
+msgid "How much to \"darken\" the edges of each brush stroke"
+msgstr "Hur mycket kanten på penseldragen ska \"mörkna\""
+
+#: plug-ins/gimpressionist/general.c:178
+msgid "Shadow darken:"
+msgstr "Skuggmörkning:"
+
+#: plug-ins/gimpressionist/general.c:182
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Hur mörk den kastade skuggan skall vara"
 
-#: plug-ins/gimpressionist/general.c:202
+#: plug-ins/gimpressionist/general.c:187
 msgid "Shadow depth:"
 msgstr "Skuggdjup:"
 
-#: plug-ins/gimpressionist/general.c:213
+#: plug-ins/gimpressionist/general.c:191
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Skuggans djup, alltså hur långt från objektet den skall vara"
 
-#: plug-ins/gimpressionist/general.c:219
+#: plug-ins/gimpressionist/general.c:196
 msgid "Shadow blur:"
 msgstr "Skuggoskärpa:"
 
-#: plug-ins/gimpressionist/general.c:230
+#: plug-ins/gimpressionist/general.c:200
 msgid "How much to blur the drop shadow"
 msgstr "Hur oskarp skuggan skall vara"
 
-#: plug-ins/gimpressionist/general.c:236
-msgid "Deviation threshold:"
+#: plug-ins/gimpressionist/general.c:205
+msgid "Deviation treshold:"
 msgstr "Avvikelsegräns:"
 
-#: plug-ins/gimpressionist/general.c:247
+#: plug-ins/gimpressionist/general.c:209
 msgid "A bailout-value for adaptive selections"
 msgstr "Ett avbrottsvärde för adaptiva markeringar"
 
@@ -9065,43 +9068,43 @@ msgstr "Skala:"
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Bestämmer texturens skala (i procent av ofginalfilen)"
 
-#: plug-ins/gimpressionist/placement.c:39
+#: plug-ins/gimpressionist/placement.c:35
 msgid "Pl_acement"
 msgstr "Pl_acering"
 
-#: plug-ins/gimpressionist/placement.c:53
-msgid "Placement:"
-msgstr "Placement:"
+#: plug-ins/gimpressionist/placement.c:49
+msgid "Placement"
+msgstr "Placering"
 
-#: plug-ins/gimpressionist/placement.c:61
+#: plug-ins/gimpressionist/placement.c:53
 msgid "Randomly"
 msgstr "Slumpmässigt"
 
-#: plug-ins/gimpressionist/placement.c:66
-msgid "Place strokes randomly around the image"
-msgstr "Placerar penseldragen slumpässigt runt bilden"
-
-#: plug-ins/gimpressionist/placement.c:68
+#: plug-ins/gimpressionist/placement.c:54
 msgid "Evenly distributed"
 msgstr "Jämnt fördelat"
 
-#: plug-ins/gimpressionist/placement.c:73
+#: plug-ins/gimpressionist/placement.c:58
+msgid "Place strokes randomly around the image"
+msgstr "Placerar penseldragen slumpässigt runt bilden"
+
+#: plug-ins/gimpressionist/placement.c:60
 msgid "The strokes are evenly distributed across the image"
 msgstr "Penseldragen är jämnt fördelade över bilden"
 
-#: plug-ins/gimpressionist/placement.c:85
+#: plug-ins/gimpressionist/placement.c:79
 msgid "Stroke _density:"
 msgstr "Penseldrags_täthet:"
 
-#: plug-ins/gimpressionist/placement.c:89
+#: plug-ins/gimpressionist/placement.c:83
 msgid "The relative density of the brush strokes"
 msgstr "Relativ täthet av penseldragen"
 
-#: plug-ins/gimpressionist/placement.c:95
+#: plug-ins/gimpressionist/placement.c:89
 msgid "Centerize"
 msgstr "Centrera"
 
-#: plug-ins/gimpressionist/placement.c:99
+#: plug-ins/gimpressionist/placement.c:92
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Samla penseldragen runt bildens mittpunkt"
 
@@ -9116,39 +9119,39 @@ msgstr ""
 "Kunde inte spara PPM-fil '%s':\n"
 "%s"
 
-#: plug-ins/gimpressionist/presets.c:369
+#: plug-ins/gimpressionist/presets.c:355
 msgid "Save Current"
 msgstr "Spara nuvarande"
 
-#: plug-ins/gimpressionist/presets.c:596
+#: plug-ins/gimpressionist/presets.c:582
 msgid "_Presets"
 msgstr "_Förhandsinställningar"
 
-#: plug-ins/gimpressionist/presets.c:613
+#: plug-ins/gimpressionist/presets.c:599
 msgid "Save current"
 msgstr "Spara nuvarande"
 
-#: plug-ins/gimpressionist/presets.c:619
+#: plug-ins/gimpressionist/presets.c:605
 msgid "Save the current settings to the specified file"
 msgstr "Spara nuvarande inställningar till den specifierade filen"
 
-#: plug-ins/gimpressionist/presets.c:659
+#: plug-ins/gimpressionist/presets.c:652
 msgid "Reads the selected Preset into memory"
 msgstr "Läser in vald inställning"
 
-#: plug-ins/gimpressionist/presets.c:666
+#: plug-ins/gimpressionist/presets.c:659
 msgid "Deletes the selected Preset"
 msgstr "Tar bort vald inställning"
 
-#: plug-ins/gimpressionist/presets.c:674
+#: plug-ins/gimpressionist/presets.c:667
 msgid "Reread the folder of Presets"
 msgstr "Läs om inställningskatalogen"
 
-#: plug-ins/gimpressionist/presets.c:676
+#: plug-ins/gimpressionist/presets.c:673
 msgid "(Desc)"
 msgstr "(Beskr)"
 
-#: plug-ins/gimpressionist/presets.c:680
+#: plug-ins/gimpressionist/presets.c:678
 msgid ""
 "\n"
 "If you come up with some nice Presets,\n"
@@ -11244,6 +11247,9 @@ msgstr "Fel: Kan ej läsa XJT egenskapsfil %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fel: XJT egenskapsfil %s är tom"
+
+#~ msgid "Placement:"
+#~ msgstr "Placement:"
 
 #~ msgid "_About..."
 #~ msgstr "_Om..."
