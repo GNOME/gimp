@@ -2942,7 +2942,7 @@ select_brush_callback (GtkWidget *widget,
  
   gimp_interactive_selection_brush (_("Gfig brush selection"),
 				    mygimp_brush_get (),
-				    1.0, /* Opacity */
+				    100.0, /* Opacity */
 				    -1,  /* spacing (default)*/
 				    1,   /* Paint mode */
 				    gfig_brush_invoker,

@@ -23,9 +23,11 @@ sub pdb_misc {
 }
 
 sub brush_args {(
-    { name => 'opacity', type => 'float',
+    { name => 'opacity',
+      type => '0 <= float <= 100',
       desc => 'The initial opacity of the brush' },
-    { name => 'spacing', type => 'int32',
+    { name => 'spacing',
+      type => '0 <= int32 <= 1000',
       desc => 'The initial spacing of the brush (if < 0 then use brush default
 	       spacing)' },
     { name => 'paint_mode', type => 'enum LayerModeEffects',
@@ -58,7 +60,9 @@ sub brushes_popup {
   if ((prec = procedural_db_lookup (gimp, name)))
     {
       if (brush && strlen (brush))
-	newdialog = brush_select_new (gimp, title, brush, opacity, spacing,
+	newdialog = brush_select_new (gimp, title, brush,
+                                      opacity / 100.0,
+                                      spacing,
 				      paint_mode, name);
       else
 	newdialog = brush_select_new (gimp, title, NULL, 0.0, 0, 0, name);
@@ -141,7 +145,7 @@ sub brushes_set_popup {
 	  /* Updating the context updates the widgets as well */
 
 	  gimp_context_set_brush (bsp->context, active);
-	  gimp_context_set_opacity (bsp->context, opacity);
+	  gimp_context_set_opacity (bsp->context, opacity / 100.0);
 	  gimp_context_set_paint_mode (bsp->context, paint_mode);
 
 	  gtk_adjustment_set_value (spacing_adj, spacing);

@@ -1,3 +1,20 @@
+2001-11-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplay-foreach.c: fixed a comment.
+
+	* app/gui/file-open-dialog.c: no need to declare
+	"extern GSList *display_list;".
+
+	* app/gui/brush-select.c
+	* tools/pdbgen/pdb/brush_select.pdb: pass opacity as [0.0..100.0]
+	through the PDB and as [0.0..1.0] to the app.
+
+	* app/pdb/brush_select_cmds.c: regenerated.
+
+	* plug-ins/gfig/gfig.c: full opacity is 100.0, not 1.0.
+
+	(GFig and script-fu may still be broken after this change).
+
 2001-11-17  Michael Natterer  <mitch@gimp.org>
 
 	Made --no-interface not calling gtk_init() (and thus not

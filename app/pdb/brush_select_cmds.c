@@ -76,8 +76,12 @@ brushes_popup_invoker (Gimp     *gimp,
   brush = (gchar *) args[2].value.pdb_pointer;
 
   opacity = args[3].value.pdb_float;
+  if (opacity < 0.0 || opacity > 100.0)
+    success = FALSE;
 
   spacing = args[4].value.pdb_int;
+  if (spacing < 0 || spacing > 1000)
+    success = FALSE;
 
   paint_mode = args[5].value.pdb_int;
   if (paint_mode < NORMAL_MODE || paint_mode > HARDLIGHT_MODE)
@@ -88,7 +92,9 @@ brushes_popup_invoker (Gimp     *gimp,
       if ((prec = procedural_db_lookup (gimp, name)))
 	{
 	  if (brush && strlen (brush))
-	    newdialog = brush_select_new (gimp, title, brush, opacity, spacing,
+	    newdialog = brush_select_new (gimp, title, brush,
+					  opacity / 100.0,
+					  spacing,
 					  paint_mode, name);
 	  else
 	    newdialog = brush_select_new (gimp, title, NULL, 0.0, 0, 0, name);
@@ -228,8 +234,12 @@ brushes_set_popup_invoker (Gimp     *gimp,
     success = FALSE;
 
   opacity = args[2].value.pdb_float;
+  if (opacity < 0.0 || opacity > 100.0)
+    success = FALSE;
 
   spacing = args[3].value.pdb_int;
+  if (spacing < 0 || spacing > 1000)
+    success = FALSE;
 
   paint_mode = args[4].value.pdb_int;
   if (paint_mode < NORMAL_MODE || paint_mode > HARDLIGHT_MODE)
@@ -254,7 +264,7 @@ brushes_set_popup_invoker (Gimp     *gimp,
 	      /* Updating the context updates the widgets as well */
     
 	      gimp_context_set_brush (bsp->context, active);
-	      gimp_context_set_opacity (bsp->context, opacity);
+	      gimp_context_set_opacity (bsp->context, opacity / 100.0);
 	      gimp_context_set_paint_mode (bsp->context, paint_mode);
     
 	      gtk_adjustment_set_value (spacing_adj, spacing);

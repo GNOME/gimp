@@ -93,8 +93,6 @@ static gchar *preview_fullname = NULL;
 
 static PlugInProcDef *load_file_proc = NULL;
 
-extern GSList *display_list; /* from gdisplay.c */
-
 
 /*  public functions  */
 
