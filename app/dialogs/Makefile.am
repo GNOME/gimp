@@ -48,6 +48,8 @@ libappdialogs_a_SOURCES = \
 	scale-dialog.h			\
 	stroke-dialog.c			\
 	stroke-dialog.h			\
+	template-options-dialog.c	\
+	template-options-dialog.h	\
 	tips-dialog.c			\
 	tips-dialog.h			\
 	tips-parser.c			\

@@ -40,19 +40,19 @@
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimptemplateview.h"
-#include "widgets/gimpviewabledialog.h"
 
 #include "dialogs/dialogs.h"
 #include "dialogs/image-new-dialog.h"
+#include "dialogs/template-options-dialog.h"
 
 #include "templates-commands.h"
 
 #include "gimp-intl.h"
 
 
-typedef struct _GimpTemplateDeleteData GimpTemplateDeleteData;
+typedef struct _TemplateDeleteData TemplateDeleteData;
 
-struct _GimpTemplateDeleteData
+struct _TemplateDeleteData
 {
   GimpContainer *container;
   GimpTemplate  *template;
@@ -61,20 +61,15 @@ struct _GimpTemplateDeleteData
 
 /*  local function prototypes  */
 
-static void   templates_new_template_dialog     (Gimp         *gimp,
-                                                 GtkWidget    *parent);
-static void   templates_new_template_response   (GtkWidget    *widget,
-                                                 gint          response_id,
-                                                 GtkWidget    *dialog);
-static void   templates_edit_template_dialog    (Gimp         *gimp,
-                                                 GimpTemplate *template,
-                                                 GtkWidget    *parent);
-static void   templates_edit_template_response  (GtkWidget    *widget,
-                                                 gint          response_id,
-                                                 GtkWidget    *dialog);
-static void   templates_delete_confirm_response (GtkWidget    *dialog,
-                                                 gint          response_id,
-                                                 GimpTemplateDeleteData *delete_data);
+static void templates_new_template_response   (GtkWidget             *dialog,
+                                               gint                   response_id,
+                                               TemplateOptionsDialog *options);
+static void templates_edit_template_response  (GtkWidget             *widget,
+                                               gint                   response_id,
+                                               TemplateOptionsDialog *options);
+static void templates_delete_template_response (GtkWidget            *dialog,
+                                                gint                  response_id,
+                                                TemplateDeleteData   *delete_data);
 
 
 /*  public functions */
@@ -117,21 +112,25 @@ void
 templates_new_template_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpTemplate        *template;
+  GimpContainerEditor   *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContext           *context;
+  TemplateOptionsDialog *options;
 
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
+  context = gimp_container_view_get_context (editor->view);
 
-  template = gimp_context_get_template (context);
+  options = template_options_dialog_new (context->gimp, NULL,
+                                         GTK_WIDGET (editor),
+                                         _("New Template"),
+                                         "gimp-template-new",
+                                         GIMP_STOCK_TEMPLATE,
+                                         _("Create a New Template"),
+                                         GIMP_HELP_TEMPLATE_NEW);
 
-  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
-    {
-    }
+  g_signal_connect (options->dialog, "response",
+                    G_CALLBACK (templates_new_template_response),
+                    options);
 
-  templates_new_template_dialog (context->gimp, GTK_WIDGET (editor));
+  gtk_widget_show (options->dialog);
 }
 
 void
@@ -155,14 +154,11 @@ templates_duplicate_template_cmd_callback (GtkAction *action,
       new_template = gimp_config_duplicate (GIMP_CONFIG (template));
 
       gimp_container_add (container, GIMP_OBJECT (new_template));
-
       gimp_context_set_by_type (context, container->children_type,
                                 GIMP_OBJECT (new_template));
-
-      templates_edit_template_dialog (context->gimp, new_template,
-                                      GTK_WIDGET (editor));
-
       g_object_unref (new_template);
+
+      templates_edit_template_cmd_callback (action, data);
     }
 }
 
@@ -182,8 +178,21 @@ templates_edit_template_cmd_callback (GtkAction *action,
 
   if (template && gimp_container_have (container, GIMP_OBJECT (template)))
     {
-      templates_edit_template_dialog (context->gimp, template,
-                                      GTK_WIDGET (editor));
+      TemplateOptionsDialog *options;
+
+      options = template_options_dialog_new (context->gimp, template,
+                                             GTK_WIDGET (editor),
+                                             _("Edit Template"),
+                                             "gimp-template-edit",
+                                             GIMP_STOCK_EDIT,
+                                             _("Edit Template"),
+                                             GIMP_HELP_TEMPLATE_EDIT);
+
+      g_signal_connect (options->dialog, "response",
+                        G_CALLBACK (templates_edit_template_response),
+                        options);
+
+      gtk_widget_show (options->dialog);
     }
 }
 
@@ -203,10 +212,10 @@ templates_delete_template_cmd_callback (GtkAction *action,
 
   if (template && gimp_container_have (container, GIMP_OBJECT (template)))
     {
-      GimpTemplateDeleteData *delete_data;
-      GtkWidget              *dialog;
+      TemplateDeleteData *delete_data;
+      GtkWidget           *dialog;
 
-      delete_data = g_new0 (GimpTemplateDeleteData, 1);
+      delete_data = g_new0 (TemplateDeleteData, 1);
 
       delete_data->container = container;
       delete_data->template  = template;
@@ -221,12 +230,13 @@ templates_delete_template_cmd_callback (GtkAction *action,
 
                                  NULL);
 
+      g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, delete_data);
       g_signal_connect_object (template, "disconnect",
                                G_CALLBACK (gtk_widget_destroy),
                                dialog, G_CONNECT_SWAPPED);
 
       g_signal_connect (dialog, "response",
-                        G_CALLBACK (templates_delete_confirm_response),
+                        G_CALLBACK (templates_delete_template_response),
                         delete_data);
 
       gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
@@ -238,154 +248,48 @@ templates_delete_template_cmd_callback (GtkAction *action,
     }
 }
 
+
 /*  private functions  */
 
 static void
-templates_new_template_dialog (Gimp         *gimp,
-                               GtkWidget    *parent)
-{
-  GimpTemplate *template;
-  GtkWidget    *dialog;
-  GtkWidget    *main_vbox;
-  GtkWidget    *editor;
-
-  dialog = gimp_viewable_dialog_new (NULL,
-                                     _("New Template"), "gimp-template-new",
-                                     GIMP_STOCK_TEMPLATE,
-                                     _("Create a New Template"),
-                                     parent,
-                                     gimp_standard_help_func,
-                                     GIMP_HELP_TEMPLATE_NEW,
-
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                                     NULL);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (templates_new_template_response),
-                    dialog);
-
-  main_vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
-  template = gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
-  gimp_object_set_name (GIMP_OBJECT (template), _("Unnamed"));
-
-  editor = gimp_template_editor_new (template, gimp, TRUE);
-
-  g_object_unref (template);
-
-  g_object_set_data (G_OBJECT (dialog), "gimp",          gimp);
-  g_object_set_data (G_OBJECT (dialog), "gimp-template", template);
-
-  gtk_box_pack_start (GTK_BOX (main_vbox), editor, FALSE, FALSE, 0);
-  gtk_widget_show (editor);
-
-  gtk_widget_show (dialog);
-}
-
-static void
-templates_new_template_response (GtkWidget *widget,
-                                 gint       response_id,
-                                 GtkWidget *dialog)
+templates_new_template_response (GtkWidget             *dialog,
+                                 gint                   response_id,
+                                 TemplateOptionsDialog *options)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpTemplate *template;
-      Gimp         *gimp;
+      GimpTemplateEditor *editor   = GIMP_TEMPLATE_EDITOR (options->editor);
+      GimpTemplate       *template = editor->template;
 
-      template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
-      gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
-
-      gimp_container_add (gimp->templates, GIMP_OBJECT (template));
-      gimp_context_set_template (gimp_get_user_context (gimp), template);
+      gimp_container_add (options->gimp->templates, GIMP_OBJECT (template));
+      gimp_context_set_template (gimp_get_user_context (options->gimp),
+                                 template);
     }
 
   gtk_widget_destroy (dialog);
 }
 
 static void
-templates_edit_template_dialog (Gimp         *gimp,
-                                GimpTemplate *template,
-                                GtkWidget    *parent)
-{
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *editor;
-
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (template),
-                                     _("Edit Template"), "gimp-template-edit",
-                                     GIMP_STOCK_EDIT,
-                                     _("Edit Template"),
-                                     parent,
-                                     gimp_standard_help_func,
-                                     GIMP_HELP_TEMPLATE_EDIT,
-
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                                     NULL);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (templates_edit_template_response),
-                    dialog);
-
-  main_vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
-  g_object_set_data (G_OBJECT (dialog), "gimp",          gimp);
-  g_object_set_data (G_OBJECT (dialog), "gimp-template", template);
-
-  template = gimp_config_duplicate (GIMP_CONFIG (template));
-
-  editor = gimp_template_editor_new (template, gimp, TRUE);
-
-  g_object_unref (template);
-
-  gtk_box_pack_start (GTK_BOX (main_vbox), editor, FALSE, FALSE, 0);
-  gtk_widget_show (editor);
-
-  g_object_set_data (G_OBJECT (dialog), "gimp-template-editor", editor);
-
-  gtk_widget_show (dialog);
-}
-
-static void
-templates_edit_template_response (GtkWidget *widget,
-                                  gint       response_id,
-                                  GtkWidget *dialog)
+templates_edit_template_response (GtkWidget             *dialog,
+                                  gint                   response_id,
+                                  TemplateOptionsDialog *options)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpTemplateEditor *editor;
-      GimpTemplate       *template;
-      Gimp               *gimp;
-
-      editor   = g_object_get_data (G_OBJECT (dialog), "gimp-template-editor");
-      template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
-      gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
+      GimpTemplateEditor *editor = GIMP_TEMPLATE_EDITOR (options->editor);
 
       gimp_config_sync (GIMP_CONFIG (editor->template),
-                        GIMP_CONFIG (template), 0);
+                        GIMP_CONFIG (options->template), 0);
     }
 
   gtk_widget_destroy (dialog);
 }
 
 static void
-templates_delete_confirm_response (GtkWidget              *dialog,
-                                   gint                    response_id,
-                                   GimpTemplateDeleteData *delete_data)
+templates_delete_template_response (GtkWidget          *dialog,
+                                    gint                response_id,
+                                    TemplateDeleteData *delete_data)
 {
-  gtk_widget_destroy (dialog);
-
   if (response_id == GTK_RESPONSE_OK)
     {
       if (gimp_container_have (delete_data->container,
@@ -395,4 +299,6 @@ templates_delete_confirm_response (GtkWidget              *dialog,
                                  GIMP_OBJECT (delete_data->template));
         }
     }
+
+  gtk_widget_destroy (dialog);
 }

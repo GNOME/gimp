@@ -1,5 +1,15 @@
 2004-10-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/Makefile.am
+	* app/dialogs/template-options-dialog.[ch]: the new/edit template
+	dialog.
+
+	* app/actions/templates-commands.c: removed the code here and use
+	template_options_dialog_new(). Removed utility functions. Some
+	cleanup.
+
+2004-10-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpeditor.c (gimp_editor_ensure_button_box): make
 	sure the button_box is always interted at the very bottom of the
 	editor.
