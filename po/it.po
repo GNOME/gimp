@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-10-06 00:16+0200\n"
-"PO-Revision-Date: 2003-10-13 16:46+0200\n"
+"PO-Revision-Date: 2003-10-15 19:10+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1669,7 +1669,6 @@ msgid "Offset Drawable"
 msgstr "Offset disegnabile"
 
 #: app/core/gimpdrawable-stroke.c:324
-#, fuzzy
 msgid "Render Stroke"
 msgstr "Disegna tratto"
 
@@ -4007,14 +4006,12 @@ msgid "/Edit/Fill with P_attern"
 msgstr "/Modifica/Riempi con colore primo piano"
 
 #: app/gui/image-menu.c:245
-#, fuzzy
 msgid "/Edit/_Stroke Selection..."
-msgstr "Riduci selezione"
+msgstr "/Modifica/_Selezione da disegnare..."
 
 #: app/gui/image-menu.c:250
-#, fuzzy
 msgid "/Edit/St_roke Active Path..."
-msgstr "/Modifica/Disegna tracciato attivo"
+msgstr "/Modifica/Disegna t_racciato attivo..."
 
 #. <Image>/Select
 #: app/gui/image-menu.c:260
@@ -6389,24 +6386,20 @@ msgid "The GIMP"
 msgstr "The GIMP"
 
 #: app/gui/stroke-dialog.c:96
-#, fuzzy
 msgid "Stroke Options"
-msgstr "Opzioni di tratto"
+msgstr "Opzioni di disegno"
 
 #: app/gui/stroke-dialog.c:98
-#, fuzzy
 msgid "Choose Stroke Style"
-msgstr "Scegli stile di tratto"
+msgstr "Scegli stile di disegno"
 
 #: app/gui/stroke-dialog.c:128
-#, fuzzy
 msgid "Stroke"
-msgstr "Tratto"
+msgstr "Disegno"
 
 #: app/gui/stroke-dialog.c:158
-#, fuzzy
 msgid "Stroke Using a Paint Tool"
-msgstr "Tratto con uno strumento di disegno"
+msgstr "Disegno con uno strumento"
 
 #: app/gui/stroke-dialog.c:184
 msgid "Paint Tool:"
@@ -7837,7 +7830,7 @@ msgstr "Spaziatura della griglia"
 
 #: app/tools/gimp-tools.c:216
 msgid "This tool has no options."
-msgstr ""
+msgstr "Questo strumento non ha opzioni."
 
 #: app/tools/gimpairbrushtool.c:57
 msgid "Airbrush with variable pressure"
@@ -8012,17 +8005,15 @@ msgstr "Allineamento"
 
 #: app/tools/gimpcolorbalancetool.c:96
 msgid "Adjust color balance"
-msgstr "Aggiusta bilanciamento colore"
+msgstr "Imposta bilanciamento colore"
 
 #: app/tools/gimpcolorbalancetool.c:97
-#, fuzzy
 msgid "/Tools/Color Tools/Color _Balance..."
-msgstr "/Immagine/Colori/Bilanciamento colore..."
+msgstr "/Strumenti/Strumenti di colore/_Bilanciamento colore..."
 
 #: app/tools/gimpcolorbalancetool.c:161
-#, fuzzy
 msgid "Adjust Color Balance"
-msgstr "Aggiusta bilanciamento colore"
+msgstr "Imposta bilanciamento del colore"
 
 #: app/tools/gimpcolorbalancetool.c:195
 msgid "Color balance operates only on RGB color drawables."
@@ -8051,57 +8042,52 @@ msgstr "Giallo"
 #: app/tools/gimpcolorbalancetool.c:331
 #, fuzzy
 msgid "R_eset Range"
-msgstr "Salva immagine"
+msgstr "R_eimposta campo"
 
 #: app/tools/gimpcolorbalancetool.c:340
-#, fuzzy
 msgid "Preserve _Luminosity"
-msgstr "Preserva luminosità"
+msgstr "Preserva _luminosità"
 
 #: app/tools/gimpcolorizetool.c:95
 #, fuzzy
 msgid "Colorize"
-msgstr "Colore"
+msgstr "Posterizza"
 
 #: app/tools/gimpcolorizetool.c:96
 #, fuzzy
 msgid "Colorize the image"
-msgstr "Ridimensiona all'immagine"
+msgstr "Posterizza l'immagine"
 
 #: app/tools/gimpcolorizetool.c:97
 #, fuzzy
 msgid "/Tools/Color Tools/Colori_ze..."
-msgstr "/Immagine/Colori/Posterizzazione..."
+msgstr "/Strumenti/Strumenti di colore/Posteriz_zazione..."
 
 #: app/tools/gimpcolorizetool.c:164
 #, fuzzy
 msgid "Colorize the Image"
-msgstr "Ridimensiona all'immagine"
+msgstr "Posterizza l'immagine"
 
 #: app/tools/gimpcolorizetool.c:197
 #, fuzzy
 msgid "Colorize operates only on RGB color drawables."
-msgstr "Il bilanciamento del colore opera solo su figure con colore RGB."
+msgstr "Posterizza opera solo su figure con colore RGB."
 
 #: app/tools/gimpcolorizetool.c:239
-#, fuzzy
 msgid "Select Color"
-msgstr "/Selezione/Per colore..."
+msgstr "Selezione colore"
 
 #: app/tools/gimpcolorizetool.c:258 app/tools/gimphuesaturationtool.c:367
-#, fuzzy
 msgid "_Hue:"
-msgstr "Tonalità:"
+msgstr "_Tonalità:"
 
 #: app/tools/gimpcolorizetool.c:272 app/tools/gimphuesaturationtool.c:381
-#, fuzzy
 msgid "_Lightness:"
-msgstr "Luminosità:"
+msgstr "_Luminosità:"
 
 #: app/tools/gimpcolorizetool.c:286 app/tools/gimphuesaturationtool.c:395
-#, fuzzy
 msgid "_Saturation:"
-msgstr "Saturazione:"
+msgstr "_Saturazione:"
 
 #: app/tools/gimpcoloroptions.c:201
 msgid "Sample Average"
@@ -8121,25 +8107,23 @@ msgstr "Aggiorna colore attivo"
 #: app/tools/gimpcolorpickeroptions.c:193
 #, c-format
 msgid "Pick Mode  %s"
-msgstr ""
+msgstr "Modalità di prelievo  %s"
 
 #: app/tools/gimpcolorpickertool.c:113 app/tools/gimpcolorpickertool.c:329
 msgid "Color Picker"
-msgstr "Selettore colore"
+msgstr "Prelievo colore"
 
 #: app/tools/gimpcolorpickertool.c:114
 msgid "Pick colors from the image"
-msgstr "Selettore di colore"
+msgstr "Prelievo di colore dall'immagine"
 
 #: app/tools/gimpcolorpickertool.c:115
-#, fuzzy
 msgid "/Tools/C_olor Picker"
-msgstr "/Strumenti/Selezione colore"
+msgstr "/Strumenti/Prelievo c_olore"
 
 #: app/tools/gimpcolorpickertool.c:331
-#, fuzzy
 msgid "Color Picker Information"
-msgstr "Opzioni Selettore Colore"
+msgstr "Informazioni sul prelievo colore"
 
 #: app/tools/gimpcolorpickertool.c:347 app/tools/gimpcolorpickertool.c:358
 msgid "Red:"
@@ -8698,63 +8682,48 @@ msgid "Move Current Layer / Path"
 msgstr "Solo livello corrente"
 
 #: app/tools/gimpmoveoptions.c:197
-#, fuzzy
 msgid "Pick a Layer / Path to Move"
-msgstr "/Pila/Livello in alto"
+msgstr "Prendere un livello / tracciato da spostare"
 
 #: app/tools/gimpmovetool.c:106
 msgid "Move layers & selections"
-msgstr "Muovi livelli e selezioni"
+msgstr "Spostamento livelli e selezioni"
 
 #: app/tools/gimpmovetool.c:107
-#, fuzzy
 msgid "/Tools/Transform Tools/_Move"
-msgstr "/Strumenti/Strumenti trasformazione/Muovi"
+msgstr "/Strumenti/Strumenti trasformazione/Spostamento"
 
 #: app/tools/gimppaintbrushtool.c:54
 msgid "Paint fuzzy brush strokes"
 msgstr "Dipingi con pennello fuzzy"
 
 #: app/tools/gimppaintbrushtool.c:55
-#, fuzzy
 msgid "/Tools/Paint Tools/_Paintbrush"
-msgstr "/Strumenti/Strumenti di disegno/Pennello"
+msgstr "/Strumenti/Strumenti di disegno/_Pennello"
 
 #: app/tools/gimppaintoptions-gui.c:145
-#, fuzzy
 msgid "Open the brush selection dialog"
-msgstr ""
-"Pattern attivo.\n"
-"Cliccare per la finestra di dialogo."
+msgstr "Aprire la finestra di selezione pennello"
 
 #: app/tools/gimppaintoptions-gui.c:148
-#, fuzzy
 msgid "Brush:"
-msgstr "Pennelli"
+msgstr "Pennello:"
 
 #: app/tools/gimppaintoptions-gui.c:162
-#, fuzzy
 msgid "Open the pattern selection dialog"
-msgstr ""
-"Pattern attivo.\n"
-"Cliccare per la finestra di dialogo."
+msgstr "Aprire la finestra di selezione pattern"
 
 #: app/tools/gimppaintoptions-gui.c:165
-#, fuzzy
 msgid "Pattern:"
-msgstr "Pattern"
+msgstr "Pattern:"
 
 #: app/tools/gimppaintoptions-gui.c:186
-#, fuzzy
 msgid "Open the gradient selection dialog"
-msgstr ""
-"Pattern attivo.\n"
-"Cliccare per la finestra di dialogo."
+msgstr "Aprire la finestra di selezione gradiente"
 
 #: app/tools/gimppaintoptions-gui.c:196
-#, fuzzy
 msgid "Reverse"
-msgstr "Inverti"
+msgstr "Invertire"
 
 #: app/tools/gimppaintoptions-gui.c:201
 msgid "Gradient:"
@@ -8789,33 +8758,28 @@ msgid "Length:"
 msgstr "Lunghezza:"
 
 #: app/tools/gimppaintoptions-gui.c:448
-#, fuzzy
 msgid "Use Color from Gradient"
-msgstr "Gradiente Personalizzato"
+msgstr "Usa colore dal gradiente"
 
 #: app/tools/gimppenciltool.c:53
 msgid "Paint hard edged pixels"
 msgstr "Disegna punti con spigoli vivi"
 
 #: app/tools/gimppenciltool.c:54
-#, fuzzy
 msgid "/Tools/Paint Tools/Pe_ncil"
 msgstr "/Strumenti/Strumenti di disegno/Matita"
 
 #: app/tools/gimpperspectivetool.c:83
-#, fuzzy
 msgid "Perspective"
-msgstr "Prospettiva..."
+msgstr "Prospettiva"
 
 #: app/tools/gimpperspectivetool.c:84
-#, fuzzy
 msgid "Change perspective of the layer or selection"
-msgstr "Trasforma"
+msgstr "Cambia la prospettiva del livello o della selezione"
 
 #: app/tools/gimpperspectivetool.c:85
-#, fuzzy
 msgid "/Tools/Transform Tools/_Perspective"
-msgstr "/Strumenti/Strumenti trasformazione/Muovi"
+msgstr "/Strumenti/Strumenti trasformazione/_Prospettiva"
 
 #: app/tools/gimpperspectivetool.c:147
 msgid "Perspective Transform Information"
@@ -8830,37 +8794,32 @@ msgid "Matrix:"
 msgstr "Matrice:"
 
 #: app/tools/gimpposterizetool.c:78
-#, fuzzy
 msgid "Reduce image to a fixed number of colors"
 msgstr "Riduci immagine ad un numero fissato di colori"
 
 #: app/tools/gimpposterizetool.c:79
-#, fuzzy
 msgid "/Tools/Color Tools/_Posterize..."
-msgstr "/Immagine/Colori/Posterizzazione..."
+msgstr "/Immagine/Colori/_Posterizzazione..."
 
 #: app/tools/gimpposterizetool.c:143
-#, fuzzy
 msgid "Posterize (Reduce Number of Colors)"
-msgstr "Minimo numero di colori:"
+msgstr "Posterizzazione (riduzione numero di colori)"
 
 #: app/tools/gimpposterizetool.c:175
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Posterizzazione non possibile su una immagine in Scala di Colore"
 
 #: app/tools/gimpposterizetool.c:229
-#, fuzzy
 msgid "Posterize _Levels:"
-msgstr "Livello di posterizzazione"
+msgstr "_Livelli di posterizzazione:"
 
 #: app/tools/gimprectselecttool.c:98
 msgid "Select rectangular regions"
 msgstr "Selezione rettangolare"
 
 #: app/tools/gimprectselecttool.c:99
-#, fuzzy
 msgid "/Tools/Selection Tools/_Rect Select"
-msgstr "/Strumenti/Strumenti di selezione/Selezione rettangolare"
+msgstr "/Strumenti/Strumenti di selezione/Selezione _rettangolare"
 
 #: app/tools/gimprectselecttool.c:243
 msgid "Selection: ADD"
@@ -8883,14 +8842,12 @@ msgid "Selection: "
 msgstr "Selezione: "
 
 #: app/tools/gimprotatetool.c:104
-#, fuzzy
 msgid "Rotate the layer or selection"
-msgstr "Rifletti il livello o la selezione"
+msgstr "Rotazione del livello o della selezione"
 
 #: app/tools/gimprotatetool.c:105
-#, fuzzy
 msgid "/Tools/Transform Tools/_Rotate"
-msgstr "/Strumenti/Strumenti trasformazione/Muovi"
+msgstr "/Strumenti/Strumenti trasformazione/_Rotazione"
 
 #: app/tools/gimprotatetool.c:169
 msgid "Rotation Information"
@@ -8905,14 +8862,12 @@ msgid "Scale"
 msgstr "Scala"
 
 #: app/tools/gimpscaletool.c:100
-#, fuzzy
 msgid "Scale the layer or selection"
-msgstr "Rifletti il livello o la selezione"
+msgstr "Scala del livello o della selezione"
 
 #: app/tools/gimpscaletool.c:101
-#, fuzzy
 msgid "/Tools/Transform Tools/_Scale"
-msgstr "/Strumenti/Strumenti trasformazione"
+msgstr "/Strumenti/Strumenti trasformazione/_Scala"
 
 #: app/tools/gimpscaletool.c:165
 msgid "Scaling Information"
@@ -8927,18 +8882,16 @@ msgid "Scale Ratio X:"
 msgstr "Dimensione scala X:"
 
 #: app/tools/gimpselectionoptions.c:139
-#, fuzzy
 msgid "Smooth edges"
-msgstr "Ammorbidito"
+msgstr "Spigoli morbidi"
 
 #: app/tools/gimpselectionoptions.c:153
 msgid "Allow completely transparent regions to be selected"
 msgstr "Permetti la selezione di aree completamente trasparenti"
 
 #: app/tools/gimpselectionoptions.c:159
-#, fuzzy
 msgid "Base selection on all visible layers"
-msgstr "Incolla livelli visibili"
+msgstr "Selezione di base su tutti i livelli visibili"
 
 #: app/tools/gimpselectionoptions.c:174
 msgid "Use all visible layers when shrinking the selection"
@@ -8958,33 +8911,28 @@ msgid "Show Interactive Boundary"
 msgstr "Mostra bordo interattivo"
 
 #: app/tools/gimpselectionoptions.c:485
-#, fuzzy
 msgid "Select Transparent Areas"
-msgstr "Selezione rettangolare"
+msgstr "Selezione aree trasparenti"
 
 #: app/tools/gimpselectionoptions.c:529
-#, fuzzy
 msgid "Auto Shrink Selection"
-msgstr "Riduci selezione"
+msgstr "Auto riduzione della selezione"
 
 #: app/tools/gimpsheartool.c:100
 msgid "Shear"
-msgstr "Torsione"
+msgstr "Cesoie"
 
 #: app/tools/gimpsheartool.c:101
-#, fuzzy
 msgid "Shear the layer or selection"
-msgstr "Rifletti il livello o la selezione"
+msgstr "Ritaglia il livello o la selezione"
 
 #: app/tools/gimpsheartool.c:102
-#, fuzzy
 msgid "/Tools/Transform Tools/S_hear"
-msgstr "/Strumenti/Strumenti trasformazione"
+msgstr "/Strumenti/Strumenti trasformazione/Ce_soie"
 
 #: app/tools/gimpsheartool.c:164
-#, fuzzy
 msgid "Shearing Information"
-msgstr "Informazioni cesoia"
+msgstr "Informazioni sulle cesoie"
 
 #: app/tools/gimpsheartool.c:165
 msgid "Shearing..."
@@ -8997,7 +8945,7 @@ msgstr "Cesoia Magnitude X:"
 #: app/tools/gimpsmudgetool.c:57
 #, fuzzy
 msgid "Smudge image"
-msgstr "gimage"
+msgstr "Sfuma immagine"
 
 #: app/tools/gimpsmudgetool.c:58
 #, fuzzy
@@ -9005,26 +8953,20 @@ msgid "/Tools/Paint Tools/_Smudge"
 msgstr "/Strumenti/Strumenti di disegno/Sfumino"
 
 #: app/tools/gimptextoptions.c:268
-#, fuzzy
 msgid "Open the font selection dialog"
-msgstr ""
-"Pattern attivo.\n"
-"Cliccare per la finestra di dialogo."
+msgstr "Aprire la finestra della selezione caratteri"
 
 #: app/tools/gimptextoptions.c:271
-#, fuzzy
 msgid "_Font:"
-msgstr "Conteggio:"
+msgstr "_Caratteri:"
 
 #: app/tools/gimptextoptions.c:276
-#, fuzzy
 msgid "Font:"
-msgstr "Conteggio:"
+msgstr "Caratteri:"
 
 #: app/tools/gimptextoptions.c:283
-#, fuzzy
 msgid "_Size:"
-msgstr "Dimensione:"
+msgstr "Dimen_sione:"
 
 #: app/tools/gimptextoptions.c:292
 msgid "_Hinting"
@@ -9035,9 +8977,8 @@ msgid "Force Auto-Hinter"
 msgstr "Forza l'auto suggeritore"
 
 #: app/tools/gimptextoptions.c:312
-#, fuzzy
 msgid "Text Color"
-msgstr "True color"
+msgstr "Color del testo"
 
 #: app/tools/gimptextoptions.c:317
 msgid "Color:"
