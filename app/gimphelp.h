@@ -21,6 +21,8 @@
 #ifndef __GIMP_HELP_H__
 #define __GIMP_HELP_H__
 
+#include <gtk/gtk.h>
+
 enum
 {
   HELP_BROWSER_GIMP,
