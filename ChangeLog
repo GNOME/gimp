@@ -1,5 +1,6 @@
 2003-11-05  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpbrush.c
 	* plug-ins/common/gbr.c: added support for loading cinepaint
 	brushes (GIMP brush version 3).
 

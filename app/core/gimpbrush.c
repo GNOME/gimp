@@ -539,6 +539,10 @@ gimp_brush_load_brush (gint          fd,
   gint         bn_size;
   BrushHeader  header;
   gchar       *name = NULL;
+  guchar      *pixmap;
+  guchar      *mask;
+  gssize       size;
+  gboolean     success = TRUE;
   gint         i;
 
   g_return_val_if_fail (filename != NULL, NULL);
@@ -564,10 +568,37 @@ gimp_brush_load_brush (gint          fd,
   header.spacing      = g_ntohl (header.spacing);
 
   /*  Check for correct file format */
-  /*  It looks as if version 1 did not have the same magic number.  (neo)  */
-  if (header.version != 1 &&
-      (header.magic_number != GBRUSH_MAGIC || header.version != 2))
+
+  switch (header.version)
     {
+    case 1:
+      /*  If this is a version 1 brush, set the fp back 8 bytes  */
+      lseek (fd, -8, SEEK_CUR);
+      header.header_size += 8;
+      /*  spacing is not defined in version 1  */
+      header.spacing = 25;
+      break;
+
+    case 3:  /*  cinepaint brush  */
+      if (header.bytes == 18  /* FLOAT16_GRAY_GIMAGE */)
+        {
+          header.bytes = 2;
+        }
+      else
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Fatal parsing error (unknown depth %d):\n"
+                         "Brush file '%s'"),
+                       header.bytes, filename);
+          return NULL;
+        }
+      /*  fallthrough  */
+
+    case 2:
+      if (header.magic_number == GBRUSH_MAGIC)
+        break;
+
+    default:
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parsing error (unknown version %d):\n"
                      "Brush file '%s'"),
@@ -575,16 +606,7 @@ gimp_brush_load_brush (gint          fd,
       return NULL;
     }
 
-  if (header.version == 1)
-    {
-      /*  If this is a version 1 brush, set the fp back 8 bytes  */
-      lseek (fd, -8, SEEK_CUR);
-      header.header_size += 8;
-      /*  spacing is not defined in version 1  */
-      header.spacing = 25;
-    }
-
-   /*  Read in the brush name  */
+  /*  Read in the brush name  */
   if ((bn_size = (header.header_size - sizeof (header))))
     {
       gchar *utf8;
@@ -611,54 +633,81 @@ gimp_brush_load_brush (gint          fd,
   if (!name)
     name = g_strdup (_("Unnamed"));
 
+  brush = g_object_new (GIMP_TYPE_BRUSH, NULL);
+  brush->mask = temp_buf_new (header.width, header.height, 1, 0, 0, NULL);
+
+
   switch (header.bytes)
     {
     case 1:
-      brush = g_object_new (GIMP_TYPE_BRUSH, NULL);
-      brush->mask = temp_buf_new (header.width, header.height, 1,
-				  0, 0, NULL);
-      if (read (fd,
-		temp_buf_data (brush->mask), header.width * header.height) <
-	  header.width * header.height)
-	{
-	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parsing error:\n"
-                         "Brush file '%s' appears truncated."),
-                       filename);
-	  g_free (name);
-	  g_object_unref (brush);
-	  return NULL;
-	}
+      size = header.width * header.height;
+      success = (read (fd, temp_buf_data (brush->mask), size) == size);
+      break;
+
+    case 2:  /*  cinepaint brush, 16 bit floats  */
+      size = 2 * header.width * header.height;
+      mask = g_new (guchar, size);
+      success = (read (fd, mask, size) == size);
+
+      if (success)
+        {
+          guchar  *data = temp_buf_data (brush->mask);
+          guint16 *buf  = (guint16 *) mask;
+
+          for (i = 0; i < header.width * header.height; i++, data++, buf++)
+            {
+              union
+              {
+                guint16 u[2];
+                gfloat  f;
+              } short_float;
+
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+              short_float.u[0] = 0;
+              short_float.u[1] = GUINT16_FROM_BE (*buf);
+#else
+              short_float.u[0] = GUINT16_FROM_BE (*buf);
+              short_float.u[1] = 0;
+#endif
+
+              *data = (guchar) (short_float.f *= 255.9999);
+            }
+        }
+
+      g_free (mask);
       break;
 
     case 4:
-      brush = g_object_new (GIMP_TYPE_BRUSH, NULL);
-      brush->mask   = temp_buf_new (header.width, header.height, 1, 0, 0, NULL);
+      size = header.width * header.height;
       brush->pixmap = temp_buf_new (header.width, header.height, 3, 0, 0, NULL);
+      pixmap = temp_buf_data (brush->pixmap);
+      mask   = temp_buf_data (brush->mask);
 
-      for (i = 0; i < header.width * header.height; i++)
+      for (i = 0; success && i < size; i++)
 	{
-	  if (read (fd, temp_buf_data (brush->pixmap)
-		    + i * 3, 3) != 3 ||
-	      read (fd, temp_buf_data (brush->mask) + i, 1) != 1)
-	    {
-	      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                           _("Fatal parsing error:\n"
-                             "Brush file '%s' appears truncated."),
-                           filename);
-	      g_free (name);
-	      g_object_unref (brush);
-	      return NULL;
-	    }
+          success = (read (fd, pixmap + i * 3, 3) == 3 &&
+                     read (fd, mask + i, 1)       == 1);
 	}
       break;
 
     default:
+      g_object_unref (brush);
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Unsupported brush depth %d\n"
                      "in file '%s'.\n"
                      "GIMP brushes must be GRAY or RGBA."),
                    header.bytes, filename);
+      g_free (name);
+      return NULL;
+    }
+
+  if (! success)
+    {
+      g_object_unref (brush);
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parsing error:\n"
+                     "Brush file '%s' appears truncated."),
+                   filename);
       g_free (name);
       return NULL;
     }

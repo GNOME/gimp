@@ -344,13 +344,13 @@ load_image (const gchar *filename)
       /*  fallthrough  */
 
     case 2:
-      if (bh.magic_number != GBRUSH_MAGIC || bh.header_size <= sizeof (bh))
-        {
-          close (fd);
-          return -1;
-        }
-      break;
+      if (bh.magic_number == GBRUSH_MAGIC && bh.header_size > sizeof (bh))
+        break;
 
+    default:
+      g_message (_("Unsupported brush format"));
+      close (fd);
+      return -1;
     }
 
   if ((bn_size = (bh.header_size - sizeof (bh))) > 0)
@@ -434,7 +434,7 @@ load_image (const gchar *filename)
       }
       break;
 
-    case 2:  /*  cinepaint brush (16 bit floats) -- convert to 8bit  */
+    case 2:
       {
         guint16 *buf = (guint16 *) brush_buf;
         gint     i;
