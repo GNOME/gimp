@@ -393,6 +393,7 @@ internal_procs_init ()
 			 pcount/total_pcount);
   /*  Gimprc procedures  */
   procedural_db_register (&gimprc_query_proc); pcount++;
+  procedural_db_register (&gimprc_set_proc); pcount++;
 
   app_init_update_status(NULL, _("parasites"),
 			 pcount/total_pcount);

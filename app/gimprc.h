@@ -86,5 +86,6 @@ void    save_gimprc (GList **updated_options, GList **conflicting_options);
 
 /*  procedural database procs  */
 extern ProcRecord gimprc_query_proc;
+extern ProcRecord gimprc_set_proc;
 
 #endif  /*  __GIMPRC_H__  */

@@ -94,6 +94,7 @@ struct _UnknownToken
   char *value;
 };
 
+
 /*  global gimprc variables  */
 char *    plug_in_path = NULL;
 char *    temp_path = NULL;
@@ -410,6 +411,142 @@ g_list_findstr (GList *list,
     }
 
   return list;
+}
+
+void
+save_gimprc_strings (gchar *token,
+	     gchar *value)
+{
+  gchar timestamp[40];  /* variables for parsing and updating gimprc */
+  gchar *name;
+  FILE *fp_new;
+  FILE *fp_old;
+  gchar *cur_line;
+  gchar *prev_line;
+  gchar *error_msg;
+  gboolean found = FALSE;
+  
+  UnknownToken *ut;    /* variables to modify unknown_tokens */
+  UnknownToken *tmp;
+  GList *list;
+
+  
+  g_assert(token != NULL);
+  g_assert(value != NULL);
+  
+  /* get the name of the backup file, and the file pointers.  'name'
+     is reused in another context later, disregard it here */
+  error_msg = open_backup_file (gimp_personal_rc_file ("gimprc"),
+				gimp_system_rc_file (),
+				&name, &fp_new, &fp_old);
+
+  if (error_msg != NULL)
+    {
+      g_message (error_msg);
+      return;
+    }
+
+  strcpy (timestamp, "by GIMP on ");
+  iso_8601_date_format (timestamp + strlen (timestamp), FALSE);
+
+  /* copy the old .gimprc into the new one, modifying it as needed */
+  prev_line = NULL;
+  cur_line = g_new (char, 1024);
+  while (!feof (fp_old))
+    {
+      if (!fgets (cur_line, 1024, fp_old))
+	continue;
+      
+      /* special case: save lines starting with '#-' (added by GIMP) */
+      if ((cur_line[0] == '#') && (cur_line[1] == '-'))
+	    {
+	      if (prev_line != NULL)
+	        {
+	          fputs (prev_line, fp_new);
+	          g_free (prev_line);
+	        }
+	      prev_line = g_strdup (cur_line);
+	      continue;
+	    }
+
+      /* see if the line contains something that we can use 
+         and place that into 'name' if its found */
+      if (find_token (cur_line, name, 50))
+	    {
+	  /* check if that entry should be updated */
+	      if (!g_strcasecmp(token, name)) /* if they match */
+	        {
+	          if (prev_line == NULL)
+		        {
+		          fprintf (fp_new, "#- Next line commented out %s\n",
+			           timestamp);
+		          fprintf (fp_new, "# %s\n", cur_line);
+		          fprintf (fp_new, "#- Next line added %s\n",
+			           timestamp);
+		        }
+	          else
+		        {
+	    	      g_free (prev_line);
+		          prev_line = NULL;
+		          fprintf (fp_new, "#- Next line modified %s\n",
+			           timestamp);
+		        }
+              if (!found)
+                {
+	              fprintf (fp_new, "(%s \"%s\")\n", token, value);
+				}
+              else 
+	            fprintf (fp_new, "#- (%s \"%s\")\n", token, value);
+	          found = TRUE;
+	          continue;
+	        } /* end if token and name match */
+	    } /* end if token is found */
+    
+      /* all lines that did not match the tests above are simply copied */
+      if (prev_line != NULL)
+	    {
+	      fputs (prev_line, fp_new);
+	      g_free (prev_line);
+	      prev_line = NULL;
+	    }
+      fputs (cur_line, fp_new);
+    } /* end of while(!feof) */
+
+  g_free (cur_line);
+  if (prev_line != NULL)
+    g_free (prev_line);
+  fclose (fp_old);
+
+  /* append the options that were not in the old .gimprc */
+  if (!found) 
+    {
+      fprintf (fp_new, "#- Next line added %s\n",
+	       timestamp);
+      fprintf (fp_new, "(%s \"%s\")\n\n", token, value);
+    }
+
+  /* update unknown_tokens to reflect new token value */
+  ut = g_new(UnknownToken, 1);
+  ut->token = g_strdup(token);
+  ut->value = g_strdup(value);
+
+  list = unknown_tokens;
+  while (list)
+    {
+      tmp = (UnknownToken *) list->data;
+      list = list->next;
+
+      if (strcmp (tmp->token, ut->token) == 0)
+	{
+	  unknown_tokens = g_list_remove (unknown_tokens, tmp);
+	  g_free (tmp->token);
+	  g_free (tmp->value);
+	  g_free (tmp);
+	}
+    }
+  unknown_tokens = g_list_append (unknown_tokens, ut);
+
+  fclose (fp_new);
 }
 
 void
@@ -2479,3 +2616,67 @@ ProcRecord gimprc_query_proc =
   /*  Exec method  */
   { { gimprc_query } },
 };
+
+
+static Argument *
+gimprc_set_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  gchar *token;
+  gchar *value;
+
+  token = (gchar *) args[0].value.pdb_pointer;
+  if (token == NULL)
+    success = FALSE;
+
+  value = (gchar *) args[1].value.pdb_pointer;
+  if (value == NULL)
+    success = FALSE;
+
+  if (success)
+    {
+    save_gimprc_strings(token, value);
+    success = TRUE;
+    }        
+
+  return procedural_db_return_args (&gimprc_set_proc, success);
+}
+
+static ProcArg gimprc_set_inargs[] =
+{
+  {
+    PDB_STRING,
+    "token",
+    "The token to modify"
+  },
+  {
+    PDB_STRING,
+    "value",
+    "The value to set the token to"
+  }
+};
+
+
+ProcRecord gimprc_set_proc =
+{
+  "gimp_gimprc_set",
+  "Sets a gimprc token to a value and saves it in the gimprc.",
+  "This procedure is used to add or change additional information in the gimprc file
+ that is considered extraneous to the operation of the GIMP. Plug-ins that need conf
+iguration information can use this function to store it, and gimp_gimprc_query to re
+trieve it. This will accept _only_ parameters in the format of (<token> <value>), wh
+ere <token> and <value> must be strings. Entrys not corresponding to this format wil
+l be eaten and no action will be performed. If the gimprc can not be written for wha
+tever reason, gimp will complain loudly and the old gimprc will be saved in gimprc.o
+ld.",
+  "Seth Burgess",
+  "Seth Burgess",
+  "1999",
+  PDB_INTERNAL,
+  2,
+  gimprc_set_inargs,
+  0,
+  NULL,
+  { { gimprc_set_invoker } }
+};
+
