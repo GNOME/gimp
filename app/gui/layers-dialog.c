@@ -3060,17 +3060,17 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   char size[12];
   char *button_names[4] =
   {
+    "Foreground",
     "Background",
     "White",
-    "Transparent",
-    "Foreground"
+    "Transparent"
   };
   ActionCallback button_callbacks[4] =
   {
+    new_layer_foreground_callback,
     new_layer_background_callback,
     new_layer_white_callback,
-    new_layer_transparent_callback,
-    new_layer_foreground_callback
+    new_layer_transparent_callback
   };
 
   /*  the new options structure  */

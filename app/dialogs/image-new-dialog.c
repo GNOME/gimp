@@ -709,7 +709,18 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_container_add (GTK_CONTAINER (frame), radio_box);
   gtk_widget_show (radio_box);
 
-  button = gtk_radio_button_new_with_label (NULL, "Background");
+  button = gtk_radio_button_new_with_label (NULL, "Foreground");
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) FOREGROUND_FILL);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_new_toggle_callback,
+		      &vals->fill_type);
+  if (vals->fill_type == FOREGROUND_FILL)
+    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+  gtk_widget_show (button);
+
+  button = gtk_radio_button_new_with_label (group, "Background");
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
   gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) BACKGROUND_FILL);
@@ -741,19 +752,6 @@ file_new_cmd_callback (GtkWidget           *widget,
   if (vals->fill_type == TRANSPARENT_FILL)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
-
-  button = gtk_radio_button_new_with_label (group, "Foreground");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-  gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
-  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) FOREGROUND_FILL);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      (GtkSignalFunc) file_new_toggle_callback,
-		      &vals->fill_type);
-  if (vals->fill_type == FOREGROUND_FILL)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
-  gtk_widget_show (button);
-
-
 
   gtk_widget_show (vals->dlg);
 }
