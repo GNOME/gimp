@@ -6,6 +6,23 @@ here. New features are being added in the HEAD branch that is supposed
 to be released as GIMP version 2.2 in a not too distant future.
 
 
+Bugs fixed in GIMP 2.0.4
+========================
+- several build fixes (#147799, #148813)
+- fixed bug in Polarize plug-in (#147799)
+- fixed out-of-bounds access in Ink tool code (#144856)
+- improved antialiasing of elliptical selections (#147836)
+- fixed typo in gradient editor (#148300)
+- really remove all associated items from the ID hash table when an
+  image is being closed (#148614)
+- work around integer overflows when transforming large drawables (#128594)
+- fixed wrong EXIF handling in JPEG plug-in, a bug that has been
+  introduced in 2.0.3 (#148632)
+- fixed bug in Script-Fu extension (bug #148729)
+- fixed crash in container grid views (bug #148955)
+- handle changes to URI handling in newer glib releases (bug #148140)
+
+
 Bugs fixed in GIMP 2.0.3
 ========================
 - several build fixes (#144632, #144780)
