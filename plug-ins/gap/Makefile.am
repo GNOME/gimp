@@ -6,7 +6,8 @@ endif
 
 LDFLAGS = $(mwindows)
 
-if !OS_WIN32
+if OS_WIN32
+else
 GAP_FRONTENDS = gap_frontends
 GAP_NAVIGATOR_DIALOG = gap_navigator_dialog
 endif
