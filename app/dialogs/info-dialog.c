@@ -110,10 +110,7 @@ info_dialog_show (InfoDialog *idialog)
 {
   g_return_if_fail (idialog != NULL);
 
-  if (GTK_WIDGET_VISIBLE (idialog->shell))
-    gdk_window_show (idialog->shell->window);
-  else
-    gtk_widget_show (idialog->shell);
+  gtk_widget_show (idialog->shell);
 }
 
 void

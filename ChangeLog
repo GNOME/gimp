@@ -1,5 +1,14 @@
 2004-10-01  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/stock-frame-64.png: replaced the obtrusive
+	drop-shadow by a thin white frame with a subtle shadow. Taken from
+	a mockup done by Jimmac.
+
+	* app/widgets/gimpviewrenderer-frame.c: changed the hardcoded
+	offsets for the new frame image :(
+
+2004-10-01  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c: no need to include
 	gimpdisplayshell-render.h here.
 
