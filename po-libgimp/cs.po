@@ -7,8 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
-"POT-Creation-Date: 2003-06-09 16:03+0200\n"
-"PO-Revision-Date: 2003-04-15 13:58+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-06-14 12:44+0200\n"
+"PO-Revision-Date: 2003-06-14 16:11+0200\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -168,7 +169,7 @@ msgstr "Nic"
 
 #: libgimp/gimpmiscui.c:50
 msgid "Preview"
-msgstr ""
+msgstr "Náhled"
 
 #: libgimp/gimpmiscui.c:529
 #, c-format
@@ -178,6 +179,10 @@ msgid ""
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
+"V gimprc chybí %1$s:\n"
+"Do svého souboru %4$s\n"
+"musíte přidat položku jako\n"
+"(%2$s \"%3$s\")."
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -266,71 +271,71 @@ msgstr "/Černá"
 msgid "/White"
 msgstr "/Bílá"
 
-#: libgimpwidgets/gimpcolorscales.c:141
+#: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
 msgstr "Stupnice"
 
-#: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
 msgstr "_O"
 
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "_V"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
 msgid "_B"
 msgstr "_B"
 
-#: libgimpwidgets/gimpcolorscales.c:169
+#: libgimpwidgets/gimpcolorscales.c:170
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
 msgstr "Odstín"
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Saturation"
 msgstr "Sytost"
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Value"
 msgstr "Hodnota"
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
 msgstr "Červená (Red)"
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
 msgstr "Zelená (Green)"
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
 msgstr "Modrá (Blue)"
 
-#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpwidgets/gimpcolorscales.c:253
+#: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
 msgstr "Hexadecimální barevná notace jako v HTML"
 
-#: libgimpwidgets/gimpcolorscales.c:267
+#: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
 msgstr "Trojice he_x:"
 
@@ -529,39 +534,3 @@ msgstr "_Vodová barva"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Tlak"
-
-#~ msgid "Cancel"
-#~ msgstr "Zrušit"
-
-#~ msgid "Colorblind display filter"
-#~ msgstr "Barvoslepý zobrazovací filtr"
-
-#~ msgid "a layer mask"
-#~ msgstr "masku vrstvy"
-
-#~ msgid "a channel (saved selection)"
-#~ msgstr "kanál (uložený výběr)"
-
-#~ msgid "_Time"
-#~ msgstr "Ča_s"
-
-#~ msgid "Unloaded OK"
-#~ msgstr "Uvolněno úspěšně"
-
-#~ msgid "pixels"
-#~ msgstr "pixelů"
-
-#~ msgid "inches"
-#~ msgstr "palců"
-
-#~ msgid "millimeter"
-#~ msgstr "milimetr"
-
-#~ msgid "millimeters"
-#~ msgstr "milimetrů"
-
-#~ msgid "point"
-#~ msgstr "bod"
-
-#~ msgid "points"
-#~ msgstr "bodů"
