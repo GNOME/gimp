@@ -60,7 +60,7 @@ register "pixelmap",
          N_"<Image>/Filters/Map/Pixelmap...",
          "*",	
          [
-           [PF_TEXT,		"expression"	, "The perl expression to use",	"(\$x*0.1*\$y*0.2)\n->slice(\"*\$bpp\")"]
+           [PF_TEXT,		"expression"	, "The perl expression to use",	"(\$x*\$y*0.01)\n->slice(\"*\$bpp\")"]
          ],
          \&pixelmap;
 
@@ -78,7 +78,7 @@ register "pixelgen",
            [PF_RADIO,		"type"		, "The type of the layer to create (same as gimp_layer_new.type)",
            			RGB_IMAGE	, [RGB => RGB_IMAGE, RGBA => RGBA_IMAGE, GRAY => GRAY_IMAGE,
                                 		   GRAYA => GRAYA_IMAGE, INDEXED => INDEXED_IMAGE, INDEXEDA => INDEXEDA_IMAGE]],
-           [PF_TEXT,		"expression"	, "The perl expression to use",	"outer(\$x*0.1,\$y*0.2)\n->slice(\"*\$bpp\")"]
+           [PF_TEXT,		"expression"	, "The perl expression to use",	"(\$x*\$y*0.01)\n->slice(\"*\$bpp\")"]
          ],
          [PF_IMAGE],
          sub {
