@@ -1,3 +1,23 @@
+2003-10-26  Henrik Brix Andersen  <brix@gimp.org>
+
+	* gimp/app/widgets/gimphelp-ids.h
+	* gimp/app/gui/preferences-dialog.c:
+	- moved all session related settings to a new Session Management page
+	- moved Web Browser setting to Help System page
+	- changed Configure Input Devices to Configure Extended Input Devices
+
+	* gimp/themes/Default/images/preferences/Makefile.am
+	* gimp/themes/Default/images/preferences/session.png: re-added
+	session.png
+
+	* gimp/app/widgets/gimpdevices.h
+	* gimp/app/widgets/gimpdevices.c (gimp_devices_clear): function
+	added to be consistent with the rest of the session management
+	routines. This function needs to be filled in.
+
+	* gimp/app/widgets/gimptemplateeditor.c
+	* gimp/app/widgets/gimpgrideditor.c: fixed spacing between widgets
+
 2003-10-26  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptext.[ch]

@@ -211,6 +211,8 @@ gimp_template_editor_constructor (GType                  type,
 
   g_assert (editor->template != NULL);
 
+  gtk_box_set_spacing (GTK_BOX (editor), 4);
+
   /*  Image size frame  */
   frame = gtk_frame_new (_("Image Size"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);

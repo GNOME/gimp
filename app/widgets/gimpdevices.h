@@ -29,6 +29,7 @@ void        gimp_devices_exit          (Gimp                   *gimp);
 
 void        gimp_devices_restore       (Gimp                   *gimp);
 void        gimp_devices_save          (Gimp                   *gimp);
+void        gimp_devices_clear         (Gimp                   *gimp);
 
 GdkDevice * gimp_devices_get_current   (Gimp                   *gimp);
 

@@ -351,6 +351,7 @@
 #define GIMP_HELP_PREFS_DISPLAY                   "gimp-prefs-display"
 #define GIMP_HELP_PREFS_MONITOR                   "gimp-prefs-monitor"
 #define GIMP_HELP_PREFS_ENVIRONMENT               "gimp-prefs-environment"
+#define GIMP_HELP_PREFS_SESSION                   "gimp-prefs-session"
 #define GIMP_HELP_PREFS_FOLDERS                   "gimp-prefs-folders"
 #define GIMP_HELP_PREFS_FOLDERS_BRUSHES           "gimp-prefs-folders-brushes"
 #define GIMP_HELP_PREFS_FOLDERS_PATTERNS          "gimp-prefs-folders-patterns"

@@ -185,6 +185,14 @@ gimp_devices_save (Gimp *gimp)
   g_free (filename);
 }
 
+void
+gimp_devices_clear (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  g_print ("TODO: implement gimp_devices_clear()\n");
+}
+
 GdkDevice *
 gimp_devices_get_current (Gimp *gimp)
 {

@@ -1182,70 +1182,8 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Keyboard Shortcuts"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (object, "can-change-accels",
-                          _("Dynamic _Keyboard Shortcuts"),
+                          _("Use Dynamic _Keyboard Shortcuts"),
                           GTK_BOX (vbox2));
-  prefs_check_button_add (object, "save-accels",
-                          _("Save Keyboard Shortcuts on Exit"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "restore-accels",
-                          _("Restore Saved Keyboard Shortcuts on Start-up"),
-                          GTK_BOX (vbox2));
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_with_label (_("Save Keyboard Shortcuts Now"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (menus_save),
-                            gimp);
-
-  button = gtk_button_new_with_label (_("Clear Saved Keyboard Shortcuts Now"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (menus_clear),
-                            gimp);
-
-  /* Window Positions */
-  vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox), FALSE);
-
-  prefs_check_button_add (object, "save-session-info",
-                          _("_Save Window Positions on Exit"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "restore-session",
-                          _("R_estore Saved Window Positions on Start-up"),
-                          GTK_BOX (vbox2));
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_with_label (_("Save Window Positions Now"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (session_save),
-                            gimp);
-
-  button = gtk_button_new_with_label (_("Clear Saved Window Positions Now"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (session_clear),
-                            gimp);
 
 
   /*****************************/
@@ -1282,6 +1220,18 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_enum_option_menu_add (object, "help-browser", 0, 0,
                               _("Help _Browser to Use:"),
                               GTK_TABLE (table), 0);
+
+  /*  Web Browser  */
+  vbox2 = prefs_frame_new (_("Web Browser"), GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+
+  fileselection = gimp_prop_file_entry_new (object, "web-browser",
+                                            _("Select Web Browser"),
+                                            FALSE, FALSE);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Web Browser to Use:"), 1.0, 0.5,
+                             fileselection, 1, TRUE);
 
 
   /******************************/
@@ -1331,12 +1281,14 @@ prefs_dialog_new (Gimp       *gimp,
 				     page_index++);
 
   /*  Input Device Settings  */
-  hbox = gtk_hbox_new (FALSE, 2);
+  vbox2 = prefs_frame_new (_("Extended Input Devices"), GTK_CONTAINER (vbox), FALSE);
+
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_label (_("Configure Input Devices"));
+  button = gtk_button_new_with_label (_("Configure Extended Input Devices"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -1344,24 +1296,6 @@ prefs_dialog_new (Gimp       *gimp,
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_input_devices_dialog),
                     NULL);
-
-  prefs_check_button_add (object, "save-device-status",
-                          _("Save Input Device Settings on Exit"),
-                          GTK_BOX (vbox));
-
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_with_label (_("Save Input Device Settings Now"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_devices_save),
-                            gimp);
 
 
   /*******************************/
@@ -1799,17 +1733,116 @@ prefs_dialog_new (Gimp       *gimp,
                               _("Size of Thumbnail Files:"),
                               GTK_TABLE (table), 1);
 
-  /*  External Browser  */
-  vbox2 = prefs_frame_new (_("Web Browser"), GTK_CONTAINER (vbox), FALSE);
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
-  fileselection = gimp_prop_file_entry_new (object, "web-browser",
-                                            _("Select Web Browser"),
-                                            FALSE, FALSE);
+  /************************/
+  /*  Session Management  */
+  /************************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Session Management"),
+                                     "session.png",
+				     GTK_TREE_STORE (tree),
+				     _("Session"),
+				     GIMP_HELP_PREFS_SESSION,
+				     NULL,
+				     &top_iter,
+				     page_index++);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Web Browser to Use:"), 1.0, 0.5,
-                             fileselection, 1, TRUE);
+  /* Window Positions */
+  vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (object, "save-session-info",
+                          _("_Save Window Positions on Exit"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (object, "restore-session",
+                          _("R_estore Saved Window Positions on Start-up"),
+                          GTK_BOX (vbox2));
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new_with_label (_("Save Window Positions Now"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (session_save),
+                            gimp);
+
+  button = gtk_button_new_with_label (_("Clear Saved Window Positions Now"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (session_clear),
+                            gimp);
+
+  /* Keyboard Shortcuts */
+  vbox2 = prefs_frame_new (_("Keyboard Shortcuts"), GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (object, "save-accels",
+                          _("Save Keyboard Shortcuts on Exit"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (object, "restore-accels",
+                          _("Restore Saved Keyboard Shortcuts on Start-up"),
+                          GTK_BOX (vbox2));
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new_with_label (_("Save Keyboard Shortcuts Now"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (menus_save),
+                            gimp);
+
+  button = gtk_button_new_with_label (_("Clear Saved Keyboard Shortcuts Now"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (menus_clear),
+                            gimp);
+
+  /* Input Devices */
+  vbox2 = prefs_frame_new (_("Input Devices"), GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (object, "save-device-status",
+                          _("Save Input Device Settings on Exit"),
+                          GTK_BOX (vbox2));
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new_with_label (_("Save Input Device Settings Now"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gimp_devices_save),
+                            gimp);
+
+  button = gtk_button_new_with_label (_("Clear Saved Input Device Settings Now"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gimp_devices_clear),
+                            gimp);
 
 
   /*************/
