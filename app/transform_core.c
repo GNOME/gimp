@@ -505,11 +505,13 @@ transform_core_doit (Tool     *tool,
    *  selection to the transform tool's private selection pointer, so
    *  that the original source can be repeatedly modified.
    */
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
+
   transform_core->original = transform_core_cut (gdisp->gimage,
-						 gimage_active_drawable (gdisp->gimage),
+						 tool->drawable,
 						 &new_layer);
 
-  pundo = paths_transform_start_undo(gdisp->gimage);
+  pundo = paths_transform_start_undo (gdisp->gimage);
 
   /*  Send the request for the transformation to the tool...
    */
@@ -524,7 +526,8 @@ transform_core_doit (Tool     *tool,
       /*  paste the new transformed image to the gimage...also implement
        *  undo...
        */
-      transform_core_paste (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
+      /*  FIXME: we should check if the drawable is still valid  */
+      transform_core_paste (gdisp->gimage, tool->drawable,
 			    new_tiles, new_layer);
 
       /*  create and initialize the transform_undo structure  */
