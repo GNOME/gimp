@@ -1,3 +1,8 @@
+2002-03-16  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am: added zh_CN.po (although it should really be called
+	zh-CN instead).
+
 2002-03-16  Wang Jian  <lark@linux.net.cn>
 
 	* gimp_tips.zh_CN.txt: Removed.

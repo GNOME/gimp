@@ -12,7 +12,8 @@ tips_POFILES = \
 	ja.po	\
 	pt.po	\
 	sk.po	\
-	sv.po
+	sv.po	\
+	zh_CN.po
 
 EXTRA_DIST = \
 	ChangeLog			\
