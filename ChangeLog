@@ -1,5 +1,7 @@
 2004-09-07  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.def: added new entries.
+
 	* libgimpwidgets/test-preview-area.c: fit output into 80 columns.
 
 	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw): some

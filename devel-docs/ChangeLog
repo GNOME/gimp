@@ -1,3 +1,9 @@
+2004-09-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* devel-docs/libgimpwidgets/tmpl/gimppreviewarea.sgml: added new
+	GimpPreviewArea functions.
+
 2004-09-05  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt

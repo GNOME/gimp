@@ -70,6 +70,43 @@ GimpPreviewArea
 @blue: 
 
 
+<!-- ##### FUNCTION gimp_preview_area_blend ##### -->
+<para>
+
+</para>
+
+@area: 
+@x: 
+@y: 
+@width: 
+@height: 
+@type: 
+@buf1: 
+@rowstride1: 
+@buf2: 
+@rowstride2: 
+@opacity: 
+
+
+<!-- ##### FUNCTION gimp_preview_area_mask ##### -->
+<para>
+
+</para>
+
+@area: 
+@x: 
+@y: 
+@width: 
+@height: 
+@type: 
+@buf1: 
+@rowstride1: 
+@buf2: 
+@rowstride2: 
+@mask: 
+@rowstride_mask: 
+
+
 <!-- ##### FUNCTION gimp_preview_area_set_offsets ##### -->
 <para>
 
