@@ -802,9 +802,7 @@
 
     <chapter id="app-widgets-constructors">
       <title>Convenience Constructors</title>
-      <xi:include href="xml/gimpenumstore.xml" />
       <xi:include href="xml/gimpunitstore.xml" />
-      <xi:include href="xml/gimpenumcombobox.xml" />
       <xi:include href="xml/gimpunitcombobox.xml" />
       <xi:include href="xml/gimpscalecombobox.xml" />
       <xi:include href="xml/gimpenumwidgets.xml" />

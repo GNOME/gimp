@@ -1,3 +1,16 @@
+2005-01-22  Sven Neumann  <sven@gimp.org>
+
+	* app/app-docs.sgml
+	* app/app-sections.txt
+	* app/app.types
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types: GimpEnumStore and
+	GimpEnumComboBox moved to libgimpwidgets.
+
+	* libgimpwidgets/tmpl/gimpenumcombobox.sgml
+	* libgimpwidgets/tmpl/gimpenumstore.sgml: new files.
+
 2005-01-07  Sven Neumann  <neumann@jpk.com>
 
 	* app/app-docs.sgml

@@ -97,8 +97,6 @@ gimp_drawable_tree_view_get_type
 gimp_editor_get_type
 gimp_ellipse_select_tool_get_type
 gimp_enum_action_get_type
-gimp_enum_combo_box_get_type
-gimp_enum_store_get_type
 gimp_environ_table_get_type
 gimp_eraser_get_type
 gimp_eraser_options_get_type

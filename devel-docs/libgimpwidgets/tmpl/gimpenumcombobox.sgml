@@ -1,0 +1,52 @@
+<!-- ##### SECTION Title ##### -->
+GimpEnumComboBox
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GimpEnumComboBox ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_enum_combo_box_new ##### -->
+<para>
+
+</para>
+
+@enum_type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_enum_combo_box_set_stock_prefix ##### -->
+<para>
+
+</para>
+
+@combo_box: 
+@stock_prefix: 
+
+
+<!-- ##### FUNCTION gimp_enum_combo_box_set_visible ##### -->
+<para>
+
+</para>
+
+@combo_box: 
+@func: 
+@data: 
+
+

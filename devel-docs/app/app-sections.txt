@@ -3732,44 +3732,6 @@ GIMP_STRING_ACTION_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpenumstore</FILE>
-<TITLE>GimpEnumStore</TITLE>
-GimpEnumStore
-gimp_enum_store_new
-gimp_enum_store_new_with_range
-gimp_enum_store_new_with_values
-gimp_enum_store_new_with_values_valist
-gimp_enum_store_set_stock_prefix
-<SUBSECTION Standard>
-GimpEnumStoreClass
-GIMP_ENUM_STORE
-GIMP_IS_ENUM_STORE
-GIMP_TYPE_ENUM_STORE
-gimp_enum_store_get_type
-GIMP_ENUM_STORE_CLASS
-GIMP_IS_ENUM_STORE_CLASS
-GIMP_ENUM_STORE_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimpenumcombobox</FILE>
-<TITLE>GimpEnumComboBox</TITLE>
-GimpEnumComboBox
-gimp_enum_combo_box_new
-gimp_enum_combo_box_set_stock_prefix
-gimp_enum_combo_box_set_visible
-<SUBSECTION Standard>
-GimpEnumComboBoxClass
-GIMP_ENUM_COMBO_BOX
-GIMP_IS_ENUM_COMBO_BOX
-GIMP_TYPE_ENUM_COMBO_BOX
-gimp_enum_combo_box_get_type
-GIMP_ENUM_COMBO_BOX_CLASS
-GIMP_IS_ENUM_COMBO_BOX_CLASS
-GIMP_ENUM_COMBO_BOX_GET_CLASS
-</SECTION>
-
-<SECTION>
 <FILE>gimpblobeditor</FILE>
 <TITLE>GimpBlobEditor</TITLE>
 GimpBlobEditor

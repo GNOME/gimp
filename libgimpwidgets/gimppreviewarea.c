@@ -333,6 +333,8 @@ gimp_preview_area_image_type_bytes (GimpImageType type)
 /**
  * gimp_preview_area_new:
  *
+ * Creates a new #GimpPreviewArea widget.
+ *
  * Return value: a new #GimpPreviewArea widget.
  *
  * Since GIMP 2.2
