@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
-"PO-Revision-Date: 2000-02-19 21:07+01:00\n"
+"POT-Creation-Date: 2000-03-30 01:08+0200\n"
+"PO-Revision-Date: 2000-03-30 01:12+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -222,8 +222,14 @@ msgstr ""
 "Startverdi til generator av tilfeldige tall fra tiden nå - dette garanterer "
 "en noen lunde tilfeldig verdi"
 
-#~ msgid "Select"
-#~ msgstr "Velg"
+#: libgimp/gimpwidgets.c:1030
+msgid "Bytes"
+msgstr "Bytes"
 
-#~ msgid "Close"
-#~ msgstr "Lukk"
+#: libgimp/gimpwidgets.c:1031
+msgid "KiloBytes"
+msgstr "KiloBytes"
+
+#: libgimp/gimpwidgets.c:1032
+msgid "MegaBytes"
+msgstr "MegaBytes"
