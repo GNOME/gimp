@@ -98,6 +98,8 @@ static void       gimp_channel_transform     (GimpItem         *item,
                                               const GimpMatrix3 *matrix,
                                               GimpTransformDirection direction,
                                               GimpInterpolationType interpolation_type,
+                                              gboolean          supersample,
+                                              gint              recursion_level,
                                               gboolean          clip_result,
                                               GimpProgressFunc  progress_callback,
                                               gpointer          progress_data);
@@ -589,6 +591,8 @@ gimp_channel_transform (GimpItem               *item,
                         const GimpMatrix3      *matrix,
                         GimpTransformDirection  direction,
                         GimpInterpolationType   interpolation_type,
+                        gboolean                supersample,
+                        gint                    recursion_level,
                         gboolean                clip_result,
                         GimpProgressFunc        progress_callback,
                         gpointer                progress_data)
@@ -606,7 +610,9 @@ gimp_channel_transform (GimpItem               *item,
     clip_result = TRUE;
 
   GIMP_ITEM_CLASS (parent_class)->transform (item, matrix, direction,
-                                             interpolation_type, clip_result,
+                                             interpolation_type,
+                                             supersample, recursion_level,
+                                             clip_result,
                                              progress_callback, progress_data);
 
   gimp_image_undo_group_end (gimage);

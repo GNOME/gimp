@@ -823,6 +823,8 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                 &tr_tool->transform,
                                 options->direction,
                                 options->interpolation,
+                                options->supersample,
+                                options->recursion_level,
                                 options->clip,
                                 progress ?
                                 gimp_progress_update_and_flush : NULL,
@@ -849,6 +851,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                 options->direction,
                                                 options->interpolation,
                                                 options->supersample,
+                                                options->recursion_level,
                                                 clip_result,
                                                 progress ?
                                                 gimp_progress_update_and_flush :
@@ -862,6 +865,8 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                            &tr_tool->transform,
                            options->direction,
                            options->interpolation,
+                           options->supersample,
+                           options->recursion_level,
                            options->clip,
                            progress ?
                            gimp_progress_update_and_flush :

@@ -152,7 +152,7 @@ HELP
       /* Perspective the selection */
       success = gimp_drawable_transform_affine (drawable,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, TRUE,
+                                                interpolation_type, TRUE, 3,
                                                 FALSE);
     }
 }
@@ -212,7 +212,7 @@ HELP
       /* Rotate the selection */
       success = gimp_drawable_transform_affine (drawable,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, FALSE,
+                                                interpolation_type, FALSE, 3,
                                                 FALSE);
     }
 }
@@ -286,7 +286,7 @@ HELP
       /* Scale the selection */
       success = gimp_drawable_transform_affine (drawable,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, TRUE,
+                                                interpolation_type, TRUE, 3,
                                                 FALSE);
     }
 }
@@ -353,7 +353,7 @@ HELP
       /* Shear the selection */
       success = gimp_drawable_transform_affine (drawable,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, FALSE,
+                                                interpolation_type, FALSE, 3,
                                                 FALSE);
     }
 }
@@ -429,7 +429,7 @@ HELP
       /* Transform the selection */
       success = gimp_drawable_transform_affine (drawable,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, TRUE,
+                                                interpolation_type, TRUE, 3,
                                                 FALSE);
     }
 }

@@ -125,6 +125,8 @@ gimp_item_linked_transform (GimpItem               *item,
                             const GimpMatrix3      *matrix,
                             GimpTransformDirection  direction,
                             GimpInterpolationType   interpolation_type,
+                            gboolean                supersample,
+                            gint                    recursion_level,
                             gboolean                clip_result,
                             GimpProgressFunc        progress_callback,
                             gpointer                progress_data)
@@ -145,7 +147,9 @@ gimp_item_linked_transform (GimpItem               *item,
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_transform (GIMP_ITEM (list->data),
                          matrix, direction,
-                         interpolation_type, clip_result,
+                         interpolation_type,
+                         supersample, recursion_level,
+                         clip_result,
                          progress_callback, progress_data);
 
   g_list_free (linked_list);

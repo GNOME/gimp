@@ -53,11 +53,6 @@
 #define MAX4(a,b,c,d) MAX(MAX(a,b),MAX(c,d))
 
 
-/* recursion level should be a usersettable parameter,
-   3 seems to be a reasonable default */
-#define RECURSION_LEVEL 3
-
-
 /*  forward function prototypes  */
 
 static gboolean supersample_dtest (gdouble u0, gdouble v0,
@@ -65,34 +60,31 @@ static gboolean supersample_dtest (gdouble u0, gdouble v0,
                                    gdouble u2, gdouble v2,
                                    gdouble u3, gdouble v3);
 
-static void     sample_adapt      (TileManager *tm,
-                                   gdouble      uc,     gdouble     vc,
-                                   gdouble      u0,     gdouble     v0,
-                                   gdouble      u1,     gdouble     v1,
-                                   gdouble      u2,     gdouble     v2,
-                                   gdouble      u3,     gdouble     v3,
-                                   gint         level,
-                                   guchar      *color,
-                                   guchar      *bg_color,
-                                   gint         bpp,
-                                   gint         alpha);
+static void     sample_adapt      (TileManager   *tm,
+                                   gdouble        uc,     gdouble     vc,
+                                   gdouble        u0,     gdouble     v0,
+                                   gdouble        u1,     gdouble     v1,
+                                   gdouble        u2,     gdouble     v2,
+                                   gdouble        u3,     gdouble     v3,
+                                   gint           level,
+                                   guchar        *color,
+                                   guchar        *bg_color,
+                                   gint           bpp,
+                                   gint           alpha);
 
+static void     sample_cubic      (PixelSurround *surround,
+                                   gdouble        u,
+                                   gdouble        v,
+                                   guchar        *color,
+                                   gint           bytes,
+                                   gint           alpha);
 
-static void
-sample_cubic (PixelSurround *surround,
-              gdouble        u,
-              gdouble        v,
-              guchar        *color,
-              gint           bytes,
-              gint           alpha);
-
-static void
-sample_linear(PixelSurround *surround,
-              gdouble        u,
-              gdouble        v,
-              guchar        *color,
-              gint           bytes,
-              gint           alpha);
+static void     sample_linear     (PixelSurround *surround,
+                                   gdouble        u,
+                                   gdouble        v,
+                                   guchar        *color,
+                                   gint           bytes,
+                                   gint           alpha);
 
 
 /*  public functions  */
@@ -104,6 +96,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                       GimpTransformDirection  direction,
                                       GimpInterpolationType   interpolation_type,
                                       gboolean                supersample,
+                                      gint                    recursion_level,
                                       gboolean                clip_result,
                                       GimpProgressFunc        progress_callback,
                                       gpointer                progress_data)
@@ -111,8 +104,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   GimpImage     *gimage;
   PixelRegion    destPR;
   TileManager   *new_tiles;
-  GimpMatrix3    m   = *matrix;
-  GimpMatrix3    inv = *matrix;
+  GimpMatrix3    m;
+  GimpMatrix3    inv;
   PixelSurround  surround;
 
   gint         x1, y1, x2, y2;        /* target bounding box */
@@ -146,6 +139,9 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  m   = *matrix;
+  inv = *matrix;
 
   alpha = 0;
 
@@ -383,7 +379,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                     u[2]-u1, v[2]-v1,
                                     u[3]-u1, v[3]-v1,
                                     u[4]-u1, v[4]-v1,
-                                    RECURSION_LEVEL,
+                                    recursion_level,
                                     color, bg_color, bytes, alpha);
                     }
                   else
@@ -808,6 +804,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                 GimpTransformDirection  direction,
                                 GimpInterpolationType   interpolation_type,
                                 gboolean                supersample,
+                                gint                    recursion_level,
                                 gboolean                clip_result)
 {
   GimpImage   *gimage;
@@ -843,6 +840,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                                         GIMP_TRANSFORM_FORWARD,
                                                         interpolation_type,
                                                         supersample,
+                                                        recursion_level,
                                                         FALSE,
                                                         NULL, NULL);
 

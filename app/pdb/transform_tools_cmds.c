@@ -187,7 +187,7 @@ perspective_invoker (Gimp     *gimp,
 	  /* Perspective the selection */
 	  success = gimp_drawable_transform_affine (drawable,
 						    &matrix, GIMP_TRANSFORM_FORWARD,
-						    interpolation_type, TRUE,
+						    interpolation_type, TRUE, 3,
 						    FALSE);
 	}
     }
@@ -321,7 +321,7 @@ rotate_invoker (Gimp     *gimp,
 	  /* Rotate the selection */
 	  success = gimp_drawable_transform_affine (drawable,
 						    &matrix, GIMP_TRANSFORM_FORWARD,
-						    interpolation_type, FALSE,
+						    interpolation_type, FALSE, 3,
 						    FALSE);
 	}
     }
@@ -430,7 +430,7 @@ scale_invoker (Gimp     *gimp,
 	  /* Scale the selection */
 	  success = gimp_drawable_transform_affine (drawable,
 						    &matrix, GIMP_TRANSFORM_FORWARD,
-						    interpolation_type, TRUE,
+						    interpolation_type, TRUE, 3,
 						    FALSE);
 	}
     }
@@ -550,7 +550,7 @@ shear_invoker (Gimp     *gimp,
 	  /* Shear the selection */
 	  success = gimp_drawable_transform_affine (drawable,
 						    &matrix, GIMP_TRANSFORM_FORWARD,
-						    interpolation_type, FALSE,
+						    interpolation_type, FALSE, 3,
 						    FALSE);
 	}
     }
@@ -672,7 +672,7 @@ transform_2d_invoker (Gimp     *gimp,
 	  /* Transform the selection */
 	  success = gimp_drawable_transform_affine (drawable,
 						    &matrix, GIMP_TRANSFORM_FORWARD,
-						    interpolation_type, TRUE,
+						    interpolation_type, TRUE, 3,
 						    FALSE);
 	}
     }

@@ -803,6 +803,8 @@ gimp_item_transform (GimpItem               *item,
                      const GimpMatrix3      *matrix,
                      GimpTransformDirection  direction,
                      GimpInterpolationType   interpolation,
+                     gboolean                supersample,
+                     gint                    recursion_level,
                      gboolean                clip_result,
                      GimpProgressFunc        progress_callback,
                      gpointer                progress_data)
@@ -814,6 +816,7 @@ gimp_item_transform (GimpItem               *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
 
   item_class->transform (item, matrix, direction, interpolation,
+                         supersample, recursion_level,
                          clip_result,
                          progress_callback, progress_data);
 }

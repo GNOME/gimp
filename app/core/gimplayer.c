@@ -113,6 +113,8 @@ static void       gimp_layer_transform          (GimpItem           *item,
                                                  const GimpMatrix3  *matrix,
                                                  GimpTransformDirection direction,
                                                  GimpInterpolationType  interpolation_type,
+                                                 gboolean            supersample,
+                                                 gint                recursion_level,
                                                  gboolean            clip_result,
                                                  GimpProgressFunc    progress_callback,
                                                  gpointer            progress_data);
@@ -761,6 +763,8 @@ gimp_layer_transform (GimpItem               *item,
                       const GimpMatrix3      *matrix,
                       GimpTransformDirection  direction,
                       GimpInterpolationType   interpolation_type,
+                      gboolean                supersample,
+                      gint                    recursion_level,
                       gboolean                clip_result,
                       GimpProgressFunc        progress_callback,
                       gpointer                progress_data)
@@ -774,14 +778,18 @@ gimp_layer_transform (GimpItem               *item,
                                _("Transform Layer"));
 
   GIMP_ITEM_CLASS (parent_class)->transform (item, matrix, direction,
-                                             interpolation_type, clip_result,
+                                             interpolation_type,
+                                             supersample, recursion_level,
+                                             clip_result,
                                              progress_callback, progress_data);
 
   /*  If there is a layer mask, make sure it gets flipped also  */
   if (layer->mask)
     gimp_item_transform (GIMP_ITEM (layer->mask),
                          matrix, direction,
-                         interpolation_type, clip_result,
+                         interpolation_type,
+                         supersample, recursion_level,
+                         clip_result,
                          progress_callback, progress_data);
 
   gimp_image_undo_group_end (gimage);

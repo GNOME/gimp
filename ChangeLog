@@ -1,3 +1,32 @@
+2004-03-13  Michael Natterer  <mitch@gimp.org>
+
+	Completed the fix for bug #136702:
+
+	* app/core/gimpitem.[ch]: added "gboolean supersample" and
+	"gint recursion_level" to GimpItem::transform().
+
+	* app/core/gimpitem-linked.[ch]	(gimp_item_linked_transform): ditto.
+
+	* app/core/gimpdrawable-transform.[ch]: added "recursion_level"
+	parameters and removed the RECURSION_LEVEL #define.
+
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable.c
+	* app/core/gimplayer.c
+	* app/vectors/gimpvectors.c: changed accordingly.
+
+	* app/tools/gimptransformoptions.[ch]: added new property
+	"recursion_level" which is not serializable and has no GUI. Pretty
+	useless, but it's IMHO better to hardcode the default value here
+	than in gimpdrawable-transform.c
+
+	* app/tools/gimptransformtool.c: changed accordingly.
+
+	* tools/pdbgen/pdb/transform_tools.pdb: hardcode "recursion_level"
+	to 3.
+
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
 2004-03-13  Simon Budig  <simon@gimp.org>
 
 	* app/widgets/widgets-enums.h

@@ -49,6 +49,7 @@ enum
   PROP_DIRECTION,
   PROP_INTERPOLATION,
   PROP_SUPERSAMPLE,
+  PROP_RECURSION_LEVEL,
   PROP_CLIP,
   PROP_GRID_TYPE,
   PROP_GRID_SIZE,
@@ -142,6 +143,21 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                     "supersample", NULL,
                                     FALSE,
                                     0);
+
+#if 0
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_RECURSION_LEVEL,
+                                "recursion-level", NULL,
+                                1, 5, 3,
+                                0);
+#endif
+
+  g_object_class_install_property (object_class, PROP_RECURSION_LEVEL,
+                                   g_param_spec_int ("recursion-level",
+                                                     NULL, NULL,
+                                                     1, 5, 3,
+                                                     G_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT));
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CLIP,
                                     "clip", NULL,
                                     FALSE,
@@ -194,6 +210,9 @@ gimp_transform_options_set_property (GObject      *object,
     case PROP_SUPERSAMPLE:
       options->supersample = g_value_get_boolean (value);
       break;
+    case PROP_RECURSION_LEVEL:
+      options->recursion_level = g_value_get_int (value);
+      break;
     case PROP_CLIP:
       options->clip = g_value_get_boolean (value);
       break;
@@ -238,6 +257,9 @@ gimp_transform_options_get_property (GObject    *object,
       break;
     case PROP_SUPERSAMPLE:
       g_value_set_boolean (value, options->supersample);
+      break;
+    case PROP_RECURSION_LEVEL:
+      g_value_set_int (value, options->recursion_level);
       break;
     case PROP_CLIP:
       g_value_set_boolean (value, options->clip);

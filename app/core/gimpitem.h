@@ -104,6 +104,8 @@ struct _GimpItemClass
                               const GimpMatrix3      *matrix,
                               GimpTransformDirection  direction,
                               GimpInterpolationType   interpolation_type,
+                              gboolean                supersample,
+                              gint                    recursion_level,
                               gboolean                clip_result,
                               GimpProgressFunc        progress_callback,
                               gpointer                progress_data);
@@ -199,6 +201,8 @@ void            gimp_item_transform        (GimpItem       *item,
                                             const GimpMatrix3 *matrix,
                                             GimpTransformDirection direction,
                                             GimpInterpolationType interpolation_type,
+                                            gboolean        supersample,
+                                            gint            recursion_level,
                                             gboolean        clip_result,
                                             GimpProgressFunc progress_callback,
                                             gpointer        progress_data);
