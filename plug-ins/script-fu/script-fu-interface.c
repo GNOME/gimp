@@ -39,7 +39,6 @@
 #define RESPONSE_ABOUT         2
 
 #define TEXT_WIDTH           100
-#define COLOR_SAMPLE_WIDTH   100
 #define COLOR_SAMPLE_HEIGHT   15
 #define SLIDER_WIDTH          80
 
@@ -153,16 +152,16 @@ script_fu_interface_report_cc (gchar *command)
 void
 script_fu_interface (SFScript *script)
 {
-  GtkWidget *dlg;
-  GtkWidget *frame;
-  GtkWidget *menu;
-  GtkWidget *vbox;
-  GtkWidget *vbox2;
-  GSList    *list;
-  gchar     *title;
-  gchar     *buf;
-  gint       start_args;
-  gint       i;
+  GtkWidget    *dlg;
+  GtkWidget    *frame;
+  GtkWidget    *menu;
+  GtkWidget    *vbox;
+  GtkWidget    *vbox2;
+  GtkSizeGroup *group;
+  GSList       *list;
+  gchar        *title;
+  gchar        *buf;
+  gint          i;
 
   static gboolean gtk_initted = FALSE;
 
@@ -248,16 +247,18 @@ script_fu_interface (SFScript *script)
   gtk_container_add (GTK_CONTAINER (frame), sf_interface->args_table);
   gtk_widget_show (sf_interface->args_table);
 
-  start_args = (script->image_based) ? 2 : 0;
+  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-  for (i = start_args; i < script->num_args; i++)
+  i = (script->image_based) ? 2 : 0;
+
+  for ( ; i < script->num_args; i++)
     {
       GtkWidget *widget       = NULL;
       gchar     *label_text;
       gfloat     label_yalign = 0.5;
-      gboolean   leftalign    = FALSE;
       gint      *ID_ptr       = NULL;
       gint       row          = i;
+      gboolean   left_align     = FALSE;
 
       if (script->image_based)
         row -= 2;
@@ -308,8 +309,9 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_COLOR:
+          left_align = TRUE;
 	  widget = gimp_color_button_new (_("Script-Fu Color Selection"),
-                                          COLOR_SAMPLE_WIDTH,
+                                          -1,
                                           COLOR_SAMPLE_HEIGHT,
                                           &script->arg_values[i].sfa_color,
                                           GIMP_COLOR_AREA_FLAT);
@@ -389,7 +391,7 @@ script_fu_interface (SFScript *script)
 	      break;
 
 	    case SF_SPINNER:
-              leftalign = TRUE;
+              left_align = TRUE;
 	      script->arg_values[i].sfa_adjustment.adj = (GtkAdjustment *)
 		gtk_adjustment_new (script->arg_values[i].sfa_adjustment.value,
 				    script->arg_defaults[i].sfa_adjustment.lower,
@@ -444,14 +446,14 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_PATTERN:
-          leftalign = TRUE;
+          left_align = TRUE;
 	  widget = gimp_pattern_select_widget_new (_("Script-fu Pattern Selection"),
                                                    script->arg_values[i].sfa_pattern,
                                                    script_fu_pattern_callback,
                                                    &script->arg_values[i].sfa_pattern);
 	  break;
 	case SF_GRADIENT:
-          leftalign = TRUE;
+          left_align = TRUE;
 	  widget = gimp_gradient_select_widget_new (_("Script-Fu Gradient Selection"),
                                                     script->arg_values[i].sfa_gradient,
                                                     script_fu_gradient_callback,
@@ -459,7 +461,7 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_BRUSH:
-          leftalign = TRUE;
+          left_align = TRUE;
 	  widget = gimp_brush_select_widget_new (_("Script-Fu Brush Selection"),
                                                  script->arg_values[i].sfa_brush.name,
                                                  script->arg_values[i].sfa_brush.opacity,
@@ -498,7 +500,7 @@ script_fu_interface (SFScript *script)
               gimp_table_attach_aligned (GTK_TABLE (sf_interface->args_table),
                                          0, row,
                                          label_text, 0.0, label_yalign,
-                                         widget, 2, leftalign);
+                                         widget, 2, left_align);
               g_free (label_text);
             }
           else
@@ -508,10 +510,15 @@ script_fu_interface (SFScript *script)
                                 GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
               gtk_widget_show (widget);
             }
+
+          if (left_align)
+            gtk_size_group_add_widget (group, widget);
         }
 
       sf_interface->args_widgets[i] = widget;
     }
+
+  g_object_unref (group);
 
   /* the script progress frame */
   frame = gimp_frame_new (_("Script Progress"));
