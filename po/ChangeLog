@@ -1,3 +1,7 @@
+2004-10-23  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added app/dialogs/image-merge-layers-dialog.c
+
 2004-10-23  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
 	* es.po: Updated Spanish translation.
