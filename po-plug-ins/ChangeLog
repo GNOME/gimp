@@ -1,3 +1,7 @@
+2003-09-27  Danilo Šegan  <dsegan@gmx.net>
+
+	* sr.po, sr@Latn.po: Updated Serbian translation.
+
 2003-09-26  Abel Cheung  <maddog@linux.org.hk>
 
 	* POTFILES.in: Removed plug-ins/webbrowser/webbrowser.c

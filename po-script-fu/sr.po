@@ -1,8 +1,8 @@
 # Serbian translation of gimp
 # Courtesy of Prevod.org team (http://www.prevod.org/) -- 2003.
-# 
+#
 # This file is distributed under the same license as the gimp package.
-# 
+#
 # Maintainer: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>
 #
 #
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-13 05:57+0200\n"
-"PO-Revision-Date: 2003-09-13 05:57+0200\n"
+"POT-Creation-Date: 2003-09-27 11:59+0200\n"
+"PO-Revision-Date: 2003-09-27 11:48+0200\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
@@ -29,12 +29,12 @@ msgstr "Скрипт-Фу Конзола"
 
 #: plug-ins/script-fu/script-fu-console.c:194
 msgid "SIOD Output"
-msgstr "SIOD Излаз"
+msgstr "SIOD излаз"
 
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:267
 msgid "Current Command"
-msgstr "Тренутна Наредба"
+msgstr "Тренутна наредба"
 
 #: plug-ins/script-fu/script-fu-console.c:286
 msgid "Browse..."
@@ -153,11 +153,11 @@ msgstr "Дневник сервера:"
 
 #: plug-ins/script-fu/script-fu.c:120
 msgid "<Toolbox>/Xtns/Script-Fu/_Console..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Конзола..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Конзола..."
 
 #: plug-ins/script-fu/script-fu.c:145
 msgid "<Toolbox>/Xtns/Script-Fu/_Server..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Сервер..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Сервер..."
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
 msgid "Re-read all available scripts"
@@ -165,7 +165,7 @@ msgstr "Поново учитај све доступне скрипте"
 
 #: plug-ins/script-fu/script-fu.c:274
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh"
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Освежи"
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Освежи"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
 #: plug-ins/dbbrowser/dbbrowser_utils.c:138
@@ -228,7 +228,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у Лого/3D _Outline..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/3D _Outline..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/3D _Outline..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Bumpmap (Alpha Layer) Blur Radius"
@@ -394,7 +394,7 @@ msgstr "Текст"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Узорци/3Д Кривине..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Исечци/3Д Кривине..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
@@ -504,7 +504,7 @@ msgstr "Делта Вредност Боје"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Ванземаљско светло/Стрелица..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Ванземаљско светло/Стрелица..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -560,7 +560,7 @@ msgstr "Горе"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Ванземаљско светло/Хор. Црта..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Ванземаљско светло/Хор. Црта..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -572,7 +572,7 @@ msgstr "Дужина Линије"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Ванземаљско светло/Метак..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Ванземаљско светло/Метак..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -591,7 +591,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Ванземаљско светло/Дугме..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Ванземаљско светло/Дугме..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -633,7 +633,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Ванземаљско С
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Ванземаљско Светло..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Ванземаљско Светло..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
 msgid "Glow Size (pixels * 4)"
@@ -645,7 +645,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Ванземаљска Н
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Ванземаљска Неонка..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Ванземаљска Неонка..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Fade Away"
@@ -669,7 +669,7 @@ msgstr "<Image>/Скрипт-Фу/Услужни/ASCII у слој слике...
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Услужни/ASCII у Слику..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Услужни/ASCII у Слику..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
@@ -694,7 +694,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у лого/Основни 1..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Основни 1..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Основни 1..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
 msgid "<Image>/Script-Fu/Alpha to Logo/B_asic II..."
@@ -702,11 +702,11 @@ msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Основни 2..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Основни 2..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Основни 2..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple _Beveled Button..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Дугмад/Једноставно испупчено дугме..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Дугмад/Једноставно испупчено дугме..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
@@ -730,11 +730,11 @@ msgstr "Боја Горе-Лијево"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Испупчени одсечак/Стрелица..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Испупчени одсечак/Стрелица..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Испупчени одсечак/Метак..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Испупчени одсечак/Метак..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -742,15 +742,15 @@ msgstr "Промјер"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Испупчени одсечак/Дугме..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Испупчени одсечак/Дугме..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Испупчени одсечак/Заглавље..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Испупчени одсечак/Заглавље..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Испупчени одсечак/Хор. Црта..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Испупчени одсечак/Хор. Црта..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -789,7 +789,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Стапање..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Стапање..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Стапање..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend Mode"
@@ -840,7 +840,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у лого/Bovination..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Bovination..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Bovination..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 msgid "Spots density X"
@@ -884,7 +884,7 @@ msgstr "Брзина (тачака/слици)"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
-msgstr "<toolbox>/Xtns/Скрипт-Фу/Одсечци/Камуфлажа..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Исечци/Камуфлажа..."
 
 #: plug-ins/script-fu/scripts/camo.scm.h:2
 msgid "Color 1"
@@ -927,7 +927,7 @@ msgstr "Слика за резбарење"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Стапање..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Стапање..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:2
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
@@ -948,7 +948,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у лого/Креда..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Креда..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Креда..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Chalk Color"
@@ -960,7 +960,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у лого/Chip Away..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Chip Away..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Chip Away..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Blur Amount"
@@ -988,7 +988,7 @@ msgstr "Задржи позадину"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
 msgid "<Image>/Script-Fu/Stencil Ops/C_hrome-It..."
-msgstr "<image>/Скрипт-Фу/Матрица/_Хромирај..."
+msgstr "<Image>/Скрипт-Фу/Матрица/_Хромирај..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
@@ -1032,7 +1032,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у Лого/_Хромирај..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/_Хромирај..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/_Хромирај..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 msgid "Offsets (pixels * 2)"
@@ -1040,7 +1040,7 @@ msgstr "Одступања (тачке * 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:1
 msgid "<Image>/Script-Fu/Render/_Circuit..."
-msgstr "<image>/Скрипт-Фу/Рендер/Круг..."
+msgstr "<Image>/Скрипт-Фу/Исцртавање/Круг..."
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid "Circuit Seed"
@@ -1116,7 +1116,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у лого/Стрип..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Стрип..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Стрип..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:8
 msgid "Outline Color"
@@ -1133,7 +1133,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Хладни метал..
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Хладни метал..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Хладни метал..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
@@ -1146,7 +1146,7 @@ msgstr "<Image>/Уреди/Умножи видљиво"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr "<toolbox>/xtns/Скрипт-Фу/Логотип/Кристал..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Кристал..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
@@ -1286,7 +1286,7 @@ msgstr "Користи растућу селекцију"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Одсечци/Равница..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Исечци/Равница..."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
@@ -1320,7 +1320,7 @@ msgstr "Размера x"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Услужни/Мапа писама..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Услужни/Мапа писама..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 msgid "Border (pixels)"
@@ -1344,7 +1344,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у лого/Ледени..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Ледени..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Ледени..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
@@ -1365,11 +1365,11 @@ msgstr "Тежина сенке (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Вeb теме/Gimp.оrg/Велико заглавље..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Gimp.оrg/Велико заглавље..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Вeb теме/Gimp.оrg/Мало заглавље..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Gimp.оrg/Мало заглавље..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1412,22 +1412,26 @@ msgstr "Боја сенке"
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Вeb теме/Gimp.оrg/Ознака другог дугмета...."
+msgstr ""
+"<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Gimp.оrg/Ознака другог дугмета...."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
 "Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Вeb Теме/Gimp.Org/Ознака трећег дугмета..."
+msgstr ""
+"<Toolbox>/Проширења/Скрипт-Фу/Вeb Теме/Gimp.Org/Ознака трећег дугмета..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Вeb теме/Gimp.оrg/Опште ознаке за ваљке..."
+msgstr ""
+"<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Gimp.оrg/Опште ознаке за ваљке..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
-msgstr "<toolbox>/Xtns/Скрипт-Фу/Web теме/Gimp.оrg/Ознака ваљк. дугмета..."
+msgstr ""
+"<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Gimp.оrg/Ознака ваљк. дугмета..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -1435,7 +1439,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у лого/Glo_ssy..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Glo_ssy..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Glo_ssy..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend Gradient (Outline)"
@@ -1488,7 +1492,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у лого/Сјајно вруће..
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Сјајно вруће..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Сјајно вруће..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
 msgid "Effect Size (pixels * 3)"
@@ -1500,7 +1504,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у лого/Постепено уле
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
-msgstr "<Tolbox>/xtns/Скрипт-Фу/Логотип/Постепено улегнуће..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Постепено улегнуће..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Bevel Height (Sharpness)"
@@ -1514,11 +1518,11 @@ msgstr "Величина ивице (тачака)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Услужни/Посебни прелив..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Услужни/Посебни прелив..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
 msgid "<Image>/Script-Fu/Render/_Grid..."
-msgstr "<Image>/Скрипт-Фу/Рендер/Мрежа..."
+msgstr "<Image>/Скрипт-Фу/Исцртавање/Мрежа..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X Divisions"
@@ -1566,7 +1570,7 @@ msgstr "Користи ограничења селекције..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Имигре-26..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Имигре-26..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame Color"
@@ -1622,7 +1626,7 @@ msgstr "Размак међу слојевима"
 
 #: plug-ins/script-fu/scripts/land.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Land..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Одсечци/Земља..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Исечци/Земља..."
 
 #: plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land Height"
@@ -1634,7 +1638,7 @@ msgstr "Дубина мора"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:1
 msgid "<Image>/Script-Fu/Render/_Lava..."
-msgstr "<Image>/Скрипт-Фу/Рендер/Лава..."
+msgstr "<Image>/Скрипт-Фу/Исцртавање/Лава..."
 
 #: plug-ins/script-fu/scripts/lava.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:8
@@ -1651,7 +1655,7 @@ msgstr "Користи текући прелив"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid "<Image>/Script-Fu/Render/Line _Nova..."
-msgstr "<Image>/Скрипт-Фу/Рендер/Line Nova..."
+msgstr "<Image>/Скрипт-Фу/Исцртавање/Line Nova..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Number of Lines"
@@ -1701,19 +1705,19 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:10
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Направи четку/Елиптична, испуњена..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Направи четку/Елиптична, испуњена..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:11
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Направи четку/Правоугаона, испуњена..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Направи четку/Правоугаона, испуњена..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:12
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Направи четку/Елиптична..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Направи четку/Елиптична..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:13
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Направи четку/Правоугаона..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Направи четку/Правоугаона..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:14
 msgid "Description"
@@ -1734,7 +1738,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Неонка..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Неонка..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Неонка..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create Shadow"
@@ -1746,7 +1750,7 @@ msgstr "Ефективна величина (тачака * 5)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Новински текст..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Новински текст..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Cell Size (pixels)"
@@ -1812,7 +1816,7 @@ msgstr "Истачкај"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
-msgstr "<Image>/Xtns/Скрипт-Фу/Дугмад/Округло дугме..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Дугмад/Округло дугме..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:5
 msgid "Lower Color"
@@ -1856,7 +1860,7 @@ msgstr "Горња боја (текућа)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Одсечци/Рендеруј мапу..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Исечци/Исцртај мапу..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
@@ -1959,15 +1963,15 @@ msgstr "Број"
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/SOTA хромирање..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/SOTA хромирање..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Брзи Текст..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Брзи Текст..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Разно/Кугла..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Разно/Кугла..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
@@ -2116,7 +2120,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у лого/Експлозија зв
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Експлозија звезде..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Експлозија звезде..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Burst Color"
@@ -2132,7 +2136,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у лого/Starscape..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Starscape..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Starscape..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 msgid "Effect Size (pixels * 4)"
@@ -2140,7 +2144,7 @@ msgstr "Ефективна величина (тачака * 4)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Одсечци/Завијутак..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Исечци/Завијутак..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Whirl Amount"
@@ -2148,7 +2152,7 @@ msgstr "Вредност завијања"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Одсечци/Увојци (растављиво)..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Исечци/Увојци (растављиво)..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2168,7 +2172,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у лого/Праћење делов
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Праћење делова..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Праћење делова..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 msgid "Base Color"
@@ -2188,7 +2192,7 @@ msgstr "Вредност поготка"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Кружни текст..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Кружни текст..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Antialias"
@@ -2204,7 +2208,7 @@ msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Текстурисано.
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Текстурисано..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Текстурисано..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending Blend"
@@ -2260,11 +2264,11 @@ msgstr "RLE"
 
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Заглавље wеб наслова..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Заглавље wеб наслова..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Одсечци/Truchet..."
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Исечци/Truchet..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground Color"
@@ -2330,6 +2334,18 @@ msgstr "Интезитет нити"
 msgid "Thread Length"
 msgstr "Дужина нити"
 
+#: plug-ins/script-fu/scripts/web-browser.scm.h:1
+msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
+msgstr "<Toolbox>/Помоћ/Гимп на мрежи/_Регистар за додатке"
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
+msgstr "<Toolbox>/Помоћ/Гимп на мрежи/Веб страница за _програмере"
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "<Toolbox>/Help/The GIMP Online/_Main Web Site"
+msgstr "<Toolbox>/Помоћ/Гимп на мрежи/Главна _веб страница"
+
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
 msgstr "<Image>/Скрипт-Фу/Сенка/xach-effect..."
@@ -2366,74 +2382,54 @@ msgstr "X одступање осветљености"
 msgid "Highlight Y Offset"
 msgstr "Y одступање осветљености"
 
-#: plug-ins/webbrowser/web-browser.scm.h:1
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Xtns/Web Browser/Честа питања програмера"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/Честа питања програмера"
 
-#: plug-ins/webbrowser/web-browser.scm.h:2
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Xtns/Web Browser/ГИМП бубице"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/ГИМП бубице"
 
-#: plug-ins/webbrowser/web-browser.scm.h:3
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Xtns/Web Browser/ГИМП приручник"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/ГИМП приручник"
 
-#: plug-ins/webbrowser/web-browser.scm.h:4
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Xtns/Web Browser/ГИМП новости"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/ГИМП новости"
 
-#: plug-ins/webbrowser/web-browser.scm.h:5
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Xtns/Web Browser/ГИМП учитељи"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/ГИМП учитељи"
 
-#: plug-ins/webbrowser/web-browser.scm.h:6
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/Xtns/Web Browser/gimp.org/Документација"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/gimp.org/Документација"
 
-#: plug-ins/webbrowser/web-browser.scm.h:7
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/Xtns/Web Browser/gimp.org/Преузимање"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/gimp.org/Преузимање"
 
-#: plug-ins/webbrowser/web-browser.scm.h:8
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Xtns/Web Browser/gimp.org/ГИМП уметност"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/gimp.org/ГИМП уметност"
 
-#: plug-ins/webbrowser/web-browser.scm.h:9
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/Xtns/Web Browser/gimp.org/ГТК"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/gimp.org/ГТК"
 
-#: plug-ins/webbrowser/web-browser.scm.h:10
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/Xtns/Web Browser/gimp.org/Везе"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/gimp.org/Везе"
 
-#: plug-ins/webbrowser/web-browser.scm.h:11
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/Xtns/Web Browser/gimp.org/Дописне листе"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/gimp.org/Дописне листе"
 
-#: plug-ins/webbrowser/web-browser.scm.h:12
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/Xtns/Web Browser/gimp.org/Извори података"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/gimp.org/Извори података"
 
-#: plug-ins/webbrowser/web-browser.scm.h:13
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/Xtns/Web Browser/гимп.орг/ГИМП"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/гимп.орг/ГИМП"
 
-#: plug-ins/webbrowser/web-browser.scm.h:14
-msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/Gimp-Savvy.com"
 
 # Бранко: овако се зове једна књига која се може бесплатно преузети — значи, баш нас брига шта значи ;-)
-#: plug-ins/webbrowser/web-browser.scm.h:15
-msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/Grokking the GIMP"
 
-#: plug-ins/webbrowser/web-browser.scm.h:16
-msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Toolbox>/Xtns/Web Browser/Регистар за додатке"
-
-#: plug-ins/webbrowser/web-browser.scm.h:17
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Xtns/Web Browser/Често постављана питања корисника"
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr "<Toolbox>/Проширења/Читач веба/Често постављана питања корисника"
 
 #~ msgid "Border"
 #~ msgstr "Граница"
