@@ -1,8 +1,18 @@
+2003-11-11  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-selection.[ch]: removed
+	non-functional colormap-cycling and simplified the selection code.
+
+	* app/config/gimpdisplayconfig.[ch]
+	* app/config/gimprc-blurbs.h
+	* app/gui/preferences-dialog.c: removed "colormap-cycling" from
+	the preferences.
+
 2003-11-11  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/dicom.c: removed doubly pasted code. Changed
-	error/progress messages to use the "standard" string many plug-ins
-	use. Added error message if opening for wriring fails. Minor
+	error/progress messages to use the "standard" strings many plug-ins
+	use. Added error message if opening for writing fails. Minor
 	cleanups.
 
 2003-11-11  Sven Neumann  <sven@gimp.org>

@@ -38,15 +38,12 @@ struct _Selection
   gint              num_segs_out;     /*  number of segments in segs2       */
   gint              num_segs_layer;   /*  number of segments in segs3       */
   gint              index_in;         /*  index of current stipple pattern  */
-  gint              index_out;        /*  index of current stipple pattern  */
-  gint              index_layer;      /*  index of current stipple pattern  */
   gint              state;            /*  internal drawing state            */
   gint              paused;           /*  count of pause requests           */
   gboolean          recalc;           /*  flag to recalculate the selection */
   gboolean          hidden;           /*  is the selection hidden?          */
   gboolean          layer_hidden;     /*  is the layer boundary hidden?     */
   guint             timeout_id;       /*  timer for successive draws        */
-  gint              cycle;            /*  color cycling turned on           */
   GdkPixmap        *cycle_pix;        /*  cycling pixmap                    */
 
   /* These are used only if USE_XDRAWPOINTS is defined.                     */

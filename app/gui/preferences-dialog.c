@@ -1552,9 +1552,6 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "install-colormap",
                           _("Install Colormap"),
                           GTK_BOX (vbox2));
-  prefs_check_button_add (object, "colormap-cycling",
-                          _("Colormap Cycling"),
-                          GTK_BOX (vbox2));
 
 
   /*************************/

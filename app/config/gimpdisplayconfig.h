@@ -41,7 +41,6 @@ struct _GimpDisplayConfig
   GimpCoreConfig      parent_instance;
 
   gint                marching_ants_speed;
-  gboolean            colormap_cycling;
   gboolean            resize_windows_on_zoom;
   gboolean            resize_windows_on_resize;
   gboolean            default_dot_for_dot;

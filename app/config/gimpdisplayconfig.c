@@ -70,7 +70,6 @@ enum
 {
   PROP_0,
   PROP_MARCHING_ANTS_SPEED,
-  PROP_COLORMAP_CYCLING,
   PROP_RESIZE_WINDOWS_ON_ZOOM,
   PROP_RESIZE_WINDOWS_ON_RESIZE,
   PROP_DEFAULT_DOT_FOR_DOT,
@@ -144,10 +143,6 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                 MARCHING_ANTS_SPEED_BLURB,
                                 50, G_MAXINT, 300,
                                 0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_COLORMAP_CYCLING,
-                                    "colormap-cycling", COLORMAP_CYCLING_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_ZOOM,
                                     "resize-windows-on-zoom",
                                     RESIZE_WINDOWS_ON_ZOOM_BLURB,
@@ -282,9 +277,6 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_MARCHING_ANTS_SPEED:
       display_config->marching_ants_speed = g_value_get_int (value);
       break;
-    case PROP_COLORMAP_CYCLING:
-      display_config->colormap_cycling = g_value_get_boolean (value);
-      break;
     case PROP_RESIZE_WINDOWS_ON_ZOOM:
       display_config->resize_windows_on_zoom = g_value_get_boolean (value);
       break;
@@ -361,9 +353,6 @@ gimp_display_config_get_property (GObject    *object,
     {
     case PROP_MARCHING_ANTS_SPEED:
       g_value_set_int (value, display_config->marching_ants_speed);
-      break;
-    case PROP_COLORMAP_CYCLING:
-      g_value_set_boolean (value, display_config->colormap_cycling);
       break;
     case PROP_RESIZE_WINDOWS_ON_ZOOM:
       g_value_set_boolean (value, display_config->resize_windows_on_zoom);

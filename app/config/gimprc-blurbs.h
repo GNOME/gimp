@@ -19,11 +19,6 @@ N_("Specifies how the area around the image should be drawn.")
 N_("Sets the canvas padding color used if the padding mode is set to " \
    "custom color.")
 
-#define COLORMAP_CYCLING_BLURB \
-N_("Specify that marching ants for selected regions will be drawn with " \
-   "colormap cycling as opposed to be drawn as animated lines.  This color " \
-   "cycling option works only with 8-bit displays.")
-
 #define CONFIRM_ON_CLOSE_BLURB \
 N_("Ask for confirmation before closing an image without saving.")
 

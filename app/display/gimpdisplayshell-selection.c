@@ -50,30 +50,23 @@
 
 /*  local function prototypes  */
 
-static GdkPixmap * create_cycled_ants_pixmap (GdkWindow      *window,
-					      gint            depth);
-static void        cycle_ant_colors          (Selection      *select);
-static void        selection_add_point       (GdkPoint       *points[8],
-					      gint            max_npoints[8],
-					      gint            npoints[8],
-					      gint            x,
-					      gint            y);
-static void        selection_render_points   (Selection      *select);
-static void        selection_draw            (Selection      *select);
-static void        selection_transform_segs  (Selection      *select,
-					      const BoundSeg *src_segs,
-					      GdkSegment     *dest_segs,
-					      gint            num_segs);
-static void        selection_generate_segs   (Selection      *select);
-static void        selection_free_segs       (Selection      *select);
-static gboolean    selection_start_marching  (gpointer        data);
-static gboolean    selection_march_ants      (gpointer        data);
+static void       selection_add_point       (GdkPoint       *points[8],
+                                             gint            max_npoints[8],
+                                             gint            npoints[8],
+                                             gint            x,
+                                             gint            y);
+static void       selection_render_points   (Selection      *select);
+static void       selection_draw            (Selection      *select);
+static void       selection_transform_segs  (Selection      *select,
+                                             const BoundSeg *src_segs,
+                                             GdkSegment     *dest_segs,
+                                             gint            num_segs);
+static void       selection_generate_segs   (Selection      *select);
+static void       selection_free_segs       (Selection      *select);
+static gboolean   selection_start_marching  (gpointer        data);
+static gboolean   selection_march_ants      (gpointer        data);
 
-
-static GdkColor   marching_ants_colors[8];
-
-static GdkPixmap *marching_ants[9]   = { NULL };
-static GdkPixmap *cycled_ants_pixmap = NULL;
+static GdkPixmap *marching_ants[9] = { NULL };
 
 
 /*  public functions  */
@@ -97,31 +90,11 @@ gimp_display_shell_selection_create (GdkWindow        *win,
   gimage    = shell->gdisp->gimage;
   base_type = gimp_image_base_type (gimage);
 
-  if (GIMP_DISPLAY_CONFIG (gimage->gimp->config)->colormap_cycling)
-    {
-      new->cycle = TRUE;
-
-      if (! cycled_ants_pixmap)
-        {
-          GdkVisual *visual;
-
-          visual = gdk_screen_get_rgb_visual (gdk_drawable_get_screen (win));
-
-          cycled_ants_pixmap = create_cycled_ants_pixmap (win, visual->depth);
-        }
-
-      new->cycle_pix = cycled_ants_pixmap;
-    }
-  else
-    {
-      new->cycle = FALSE;
-
-      if (! marching_ants[0])
-	for (i = 0; i < 8; i++)
-	  marching_ants[i] = gdk_bitmap_create_from_data (win,
-                                                          (gchar *) ant_data[i],
-                                                          8, 8);
-    }
+  if (! marching_ants[0])
+    for (i = 0; i < 8; i++)
+      marching_ants[i] = gdk_bitmap_create_from_data (win,
+                                                      (gchar *) ant_data[i],
+                                                      8, 8);
 
   new->win            = win;
   new->shell          = shell;
@@ -132,8 +105,6 @@ gimp_display_shell_selection_create (GdkWindow        *win,
   new->num_segs_out   = 0;
   new->num_segs_layer = 0;
   new->index_in       = 0;
-  new->index_out      = 0;
-  new->index_layer    = 0;
   new->state          = INVISIBLE;
   new->paused         = 0;
   new->recalc         = TRUE;
@@ -146,30 +117,20 @@ gimp_display_shell_selection_create (GdkWindow        *win,
   /*  create a new graphics context  */
   new->gc_in = gdk_gc_new (new->win);
 
-  if (new->cycle)
-    {
-      gdk_gc_set_fill (new->gc_in, GDK_TILED);
-      gdk_gc_set_tile (new->gc_in, new->cycle_pix);
-      gdk_gc_set_line_attributes (new->gc_in, 1,
-                                  GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
-    }
-  else
-    {
-      /*  get black and white pixels for this gdisplay  */
-      fg.red   = 0x0;
-      fg.green = 0x0;
-      fg.blue  = 0x0;
+  /*  get black and white pixels for this gdisplay  */
+  fg.red   = 0x0;
+  fg.green = 0x0;
+  fg.blue  = 0x0;
 
-      bg.red   = 0xffff;
-      bg.green = 0xffff;
-      bg.blue  = 0xffff;
+  bg.red   = 0xffff;
+  bg.green = 0xffff;
+  bg.blue  = 0xffff;
 
-      gdk_gc_set_rgb_fg_color (new->gc_in, &fg);
-      gdk_gc_set_rgb_bg_color (new->gc_in, &bg);
-      gdk_gc_set_fill (new->gc_in, GDK_OPAQUE_STIPPLED);
-      gdk_gc_set_line_attributes (new->gc_in, 1,
-                                  GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
-    }
+  gdk_gc_set_rgb_fg_color (new->gc_in, &fg);
+  gdk_gc_set_rgb_bg_color (new->gc_in, &bg);
+  gdk_gc_set_fill (new->gc_in, GDK_OPAQUE_STIPPLED);
+  gdk_gc_set_line_attributes (new->gc_in,
+                              1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
 
   new->gc_white = gdk_gc_new (new->win);
   gdk_gc_set_rgb_fg_color (new->gc_white, &bg);
@@ -191,6 +152,7 @@ gimp_display_shell_selection_create (GdkWindow        *win,
   gdk_gc_set_rgb_fg_color (new->gc_out, &fg);
   gdk_gc_set_rgb_bg_color (new->gc_out, &bg);
   gdk_gc_set_fill (new->gc_out, GDK_OPAQUE_STIPPLED);
+  gdk_gc_set_stipple (new->gc_out,   marching_ants[0]);
   gdk_gc_set_line_attributes (new->gc_out, 1,
                               GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
 
@@ -208,6 +170,7 @@ gimp_display_shell_selection_create (GdkWindow        *win,
   gdk_gc_set_rgb_fg_color (new->gc_layer, &fg);
   gdk_gc_set_rgb_bg_color (new->gc_layer, &bg);
   gdk_gc_set_fill (new->gc_layer, GDK_OPAQUE_STIPPLED);
+  gdk_gc_set_stipple (new->gc_layer, marching_ants[0]);
   gdk_gc_set_line_attributes (new->gc_layer, 1,
                               GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
 
@@ -401,57 +364,6 @@ gimp_display_shell_selection_layer_set_hidden (Selection *select,
 
 /*  private functions  */
 
-static GdkPixmap *
-create_cycled_ants_pixmap (GdkWindow *window,
-			   gint       depth)
-{
-  GdkPixmap *pixmap;
-  GdkGC     *gc;
-  gint       i, j;
-
-  pixmap = gdk_pixmap_new (window, 8, 8, depth);
-  gc = gdk_gc_new (window);
-
-  for (i = 0; i < 8; i++)
-    for (j = 0; j < 8; j++)
-      {
-	gdk_gc_set_rgb_fg_color (gc, &marching_ants_colors[((i + j) % 8)]);
-
-	gdk_draw_line (pixmap, gc, i, j, i, j);
-      }
-
-  g_object_unref (gc);
-
-  return pixmap;
-}
-
-
-static void
-cycle_ant_colors (Selection *select)
-{
-  gint i;
-  gint index;
-
-  for (i = 0; i < 8; i++)
-    {
-      index = (i + (8 - select->index_in)) % 8;
-
-      if (index < 4)
-        {
-          marching_ants_colors[i].red   = 0x0;
-          marching_ants_colors[i].green = 0x0;
-          marching_ants_colors[i].blue  = 0x0;
-        }
-      else
-        {
-          marching_ants_colors[i].red   = 0xffff;
-          marching_ants_colors[i].green = 0xffff;
-          marching_ants_colors[i].blue  = 0xffff;
-        }
-    }
-}
-
-
 #define MAX_POINTS_INC 2048
 
 static void
@@ -572,13 +484,6 @@ selection_render_points (Selection *select)
 static void
 selection_draw (Selection *select)
 {
-  if (! select->layer_hidden)
-    {
-      if (select->segs_layer && select->index_layer == 0)
-        gdk_draw_segments (select->win, select->gc_layer,
-                           select->segs_layer, select->num_segs_layer);
-    }
-
   if (select->hidden)
     return;
 
@@ -618,12 +523,6 @@ selection_draw (Selection *select)
 	    gdk_draw_points (select->win, select->gc_black,
 			     select->points_in[i], select->num_points_in[i]);
 	}
-    }
-
-  if (select->segs_out && select->index_out == 0)
-    {
-      gdk_draw_segments (select->win, select->gc_out,
-                         select->segs_out, select->num_segs_out);
     }
 }
 
@@ -792,26 +691,23 @@ selection_start_marching (gpointer data)
       select->recalc = FALSE;
     }
 
-  select->index_in    = 0;
-  select->index_out   = 0;
-  select->index_layer = 0;
+  select->index_in = 0;
 
   /*  Make sure the state is set to marching  */
   select->state = MARCHING;
 
   /*  Draw the ants  */
-  if (select->cycle)
-    {
-      cycle_ant_colors (select);
-    }
-  else
-    {
-      gdk_gc_set_stipple (select->gc_in, marching_ants[select->index_in]);
-      gdk_gc_set_stipple (select->gc_out, marching_ants[select->index_out]);
-      gdk_gc_set_stipple (select->gc_layer, marching_ants[select->index_layer]);
-    }
+  gdk_gc_set_stipple (select->gc_in,    marching_ants[0]);
+
+  if (! select->layer_hidden && select->segs_layer)
+    gdk_draw_segments (select->win, select->gc_layer,
+                       select->segs_layer, select->num_segs_layer);
 
   selection_draw (select);
+
+  if (select->segs_out)
+    gdk_draw_segments (select->win, select->gc_out,
+                       select->segs_out, select->num_segs_out);
 
   /*  Reset the timer  */
   select->timeout_id = g_timeout_add (config->marching_ants_speed,
@@ -825,9 +721,7 @@ selection_start_marching (gpointer data)
 static gboolean
 selection_march_ants (gpointer data)
 {
-  Selection *select;
-
-  select = (Selection *) data;
+  Selection *select = (Selection *) data;
 
   /*  increment stipple index  */
   select->index_in++;
@@ -835,23 +729,10 @@ selection_march_ants (gpointer data)
   if (select->index_in > 7)
     select->index_in = 0;
 
-  /*  outside segments do not march, so index does not cycle  */
-  select->index_out++;
-
-  /*  layer doesn't march   */
-  select->index_layer++;
-
   /*  Draw the ants  */
-  if (select->cycle)
-    {
-      cycle_ant_colors (select);
-    }
-  else
-    {
-      gdk_gc_set_stipple (select->gc_in, marching_ants[select->index_in]);
+  gdk_gc_set_stipple (select->gc_in, marching_ants[select->index_in]);
 
-      selection_draw (select);
-    }
+  selection_draw (select);
 
   return TRUE;
 }
