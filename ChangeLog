@@ -2,7 +2,7 @@
 
 	* plug-ins/print/gimp_color_window.c (gimp_dither_algo_callback):
 	set the default dither algorithm as a fallback in case no
-	algorithm matched. Seems to fix bug #102457.
+	algorithm matched (fix suggested by Ari Pollak). Fixes bug #102457.
 
 	* plug-ins/print/gimp_main_window.c: fixed wrong display of paper
 	border that was introduced by my latest changes to the preview code.
