@@ -473,14 +473,30 @@ gimp_text_layer_get_text (GimpTextLayer *layer)
   return layer->text;
 }
 
-gboolean
-gimp_drawable_is_text_layer (GimpDrawable *drawable)
+void
+gimp_text_layer_set (GimpTextLayer *layer,
+                     const gchar   *undo_desc,
+                     const gchar   *first_property_name,
+                     ...)
 {
-  return (GIMP_IS_TEXT_LAYER (drawable)    &&
-          GIMP_TEXT_LAYER (drawable)->text &&
-          GIMP_TEXT_LAYER (drawable)->modified == FALSE);
-}
+  GimpText *text;
+  va_list   var_args;
 
+  g_return_if_fail (gimp_drawable_is_text_layer ((GimpDrawable *) layer));
+
+  text = gimp_text_layer_get_text (layer);
+  if (! text)
+    return;
+
+  gimp_image_undo_push_text_layer (gimp_item_get_image (GIMP_ITEM (layer)),
+                                   undo_desc, layer);
+
+  va_start (var_args, first_property_name);
+
+  g_object_set_valist (G_OBJECT (text), first_property_name, var_args);
+
+  va_end (var_args);
+}
 
 /**
  * gimp_text_layer_discard:
@@ -503,6 +519,15 @@ gimp_text_layer_discard (GimpTextLayer *layer)
 
   gimp_text_layer_set_text (layer, NULL);
 }
+
+gboolean
+gimp_drawable_is_text_layer (GimpDrawable *drawable)
+{
+  return (GIMP_IS_TEXT_LAYER (drawable)    &&
+          GIMP_TEXT_LAYER (drawable)->text &&
+          GIMP_TEXT_LAYER (drawable)->modified == FALSE);
+}
+
 
 static void
 gimp_text_layer_text_notify (GimpTextLayer *layer)
