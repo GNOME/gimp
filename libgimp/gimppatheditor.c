@@ -24,7 +24,7 @@
 #include "gimppatheditor.h"
 
 #include "libgimp/gimpfileselection.h"
-#include "libgimp/gimpintl.h"
+#include "libgimp/gimpwidgets.h"
 
 #include "pixmaps/new.xpm"
 #include "pixmaps/delete.xpm"

@@ -1,3 +1,11 @@
+Fri Feb 18 16:20:25 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimppatheditor.c
+	* libgimp/gimpquerybox.c: removed warnings about undeclared functions
+	by including the appropriate header files, don't include gimpintl.h
+
+	* plug-ins/Lighting/lighting_ui.c: use g_new instead of malloc
+
 2000-02-18  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/Makefile.am

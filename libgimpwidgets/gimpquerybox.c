@@ -20,6 +20,7 @@
 #include "gimpquerybox.h"
 
 #include "gimpdialog.h"
+#include "gimppixmap.h"
 #include "gimpsizeentry.h"
 #include "gimpwidgets.h"
 

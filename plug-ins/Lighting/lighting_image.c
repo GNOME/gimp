@@ -373,12 +373,7 @@ image_setup (GDrawable *drawable,
         return FALSE;
 
       numbytes = (glong) PREVIEW_WIDTH * (glong) PREVIEW_HEIGHT * 3;
-      preview_rgb_data = (guchar *) malloc ((size_t) numbytes);
-
-      if (preview_rgb_data == NULL)
-        return FALSE;
-
-      memset (preview_rgb_data, 0, numbytes);
+      preview_rgb_data = g_new0 (guchar, numbytes);
 
       /* Convert from raw RGB to GdkImage */
       /* ================================ */
