@@ -3,12 +3,11 @@
 # David Monniaux <monniaux@arbouse.ens.fr>, 2000.
 # Christophe Merlet (RedFox) <christophe@merlet.net>, 2000.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.1.26\n"
 "POT-Creation-Date: 2000-10-04 16:01:46 2000\n"
-"PO-Revision-Date: 2000-10-09 11:21+0200\n"
+"PO-Revision-Date: 2000-10-09 12:40+02:00\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +20,7 @@ msgstr " (pressez Tab pour terminer)"
 
 #: Gimp/Lib.xs:0
 msgid " = [argument error]\n"
-msgstr " = [erreur d'argument]n"
+msgstr " = [erreur d'argument]\n"
 
 #: examples/PDB:0
 msgid " matching functions"
