@@ -33,31 +33,32 @@ static GimpToolClass *parent_class = NULL;
 static void   gimp_image_map_tool_class_init (GimpImageMapToolClass *klass);
 static void   gimp_image_map_tool_init       (GimpImageMapTool      *image_map_tool);
 
-static void   gimp_image_map_tool_destroy    (GtkObject             *object);
-
 
 /*  functions  */
 
-GtkType
+GType
 gimp_image_map_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpImageMapTool",
-        sizeof (GimpImageMapTool),
         sizeof (GimpImageMapToolClass),
-        (GtkClassInitFunc) gimp_image_map_tool_class_init,
-        (GtkObjectInitFunc) gimp_image_map_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_image_map_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpImageMapTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_image_map_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
+					  "GimpImageMapTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -66,15 +67,7 @@ gimp_image_map_tool_get_type (void)
 static void
 gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
 {
-  GtkObjectClass *object_class;
-  GimpToolClass  *tool_class;
-
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
-
-  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
-
-  object_class->destroy = gimp_image_map_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 }
 
 static void
@@ -86,11 +79,4 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
-}
-
-static void
-gimp_image_map_tool_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }

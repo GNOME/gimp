@@ -117,7 +117,7 @@ struct _InkOptions
 static void        gimp_ink_tool_class_init      (GimpInkToolClass *klass);
 static void        gimp_ink_tool_init            (GimpInkTool      *tool);
 
-static void        gimp_ink_tool_destroy         (GtkObject        *object);
+static void        gimp_ink_tool_finalize        (GObject          *object);
 
 static InkOptions * ink_options_new     (void);
 static void         ink_options_reset   (GimpToolOptions *tool_options);
@@ -242,26 +242,29 @@ gimp_ink_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_INK);
 }
 
-GtkType
+GType
 gimp_ink_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-	"GimpInkTool",
+        sizeof (GimpInkToolClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_ink_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpInkTool),
-	sizeof (GimpInkToolClass),
-	(GtkClassInitFunc) gimp_ink_tool_class_init,
-	(GtkObjectInitFunc) gimp_ink_tool_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL,
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_ink_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
+					  "GimpInkTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -270,15 +273,15 @@ gimp_ink_tool_get_type (void)
 static void
 gimp_ink_tool_class_init (GimpInkToolClass *klass)
 {
-  GtkObjectClass *object_class;
+  GObjectClass   *object_class;
   GimpToolClass  *tool_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
+  tool_class   = GIMP_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_ink_tool_destroy;
+  object_class->finalize     = gimp_ink_tool_finalize;
 
   tool_class->control        = ink_control;
   tool_class->button_press   = ink_button_press;
@@ -307,19 +310,21 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
 }
 
 static void
-gimp_ink_tool_destroy (GtkObject *object)
+gimp_ink_tool_finalize (GObject *object)
 {
   GimpInkTool *ink_tool;
 
   ink_tool = GIMP_INK_TOOL (object);
 
   if (ink_tool->last_blob)
-    g_free (ink_tool->last_blob);
+    {
+      g_free (ink_tool->last_blob);
+      ink_tool->last_blob = NULL;
+    }
 
   ink_cleanup ();
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void 

@@ -60,8 +60,6 @@ struct _MagnifyOptions
 static void   gimp_magnify_tool_class_init      (GimpMagnifyToolClass *klass);
 static void   gimp_magnify_tool_init            (GimpMagnifyTool      *tool);
 
-static void   gimp_magnify_tool_destroy         (GtkObject      *object);
-
 static void   gimp_magnify_tool_button_press    (GimpTool       *tool,
 						 GdkEventButton *bevent,
 						 GDisplay       *gdisp);
@@ -111,26 +109,29 @@ gimp_magnify_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_ZOOM);
 }
 
-GtkType
+GType
 gimp_magnify_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-	"GimpMagnifyTool",
+        sizeof (GimpMagnifyToolClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_magnify_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpMagnifyTool),
-	sizeof (GimpMagnifyToolClass),
-	(GtkClassInitFunc) gimp_magnify_tool_class_init,
-	(GtkObjectInitFunc) gimp_magnify_tool_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL,
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_magnify_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+					  "GimpMagnifyTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -139,17 +140,13 @@ gimp_magnify_tool_get_type (void)
 static void
 gimp_magnify_tool_class_init (GimpMagnifyToolClass *klass)
 {
-  GtkObjectClass    *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  tool_class      = (GimpToolClass *) klass;
-  draw_tool_class = (GimpDrawToolClass *) klass;
+  tool_class      = GIMP_TOOL_CLASS (klass);
+  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
-
-  object_class->destroy      = gimp_magnify_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->button_press   = gimp_magnify_tool_button_press;
   tool_class->button_release = gimp_magnify_tool_button_release;
@@ -182,13 +179,6 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
   magnify_tool->y = 0;
   magnify_tool->w = 0;
   magnify_tool->h = 0;
-}
-
-static void
-gimp_magnify_tool_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 

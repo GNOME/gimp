@@ -80,8 +80,6 @@ struct _BrightnessContrastDialog
 static void   gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass);
 static void   gimp_brightness_contrast_tool_init       (GimpBrightnessContrastTool      *bc_tool);
 
-static void   gimp_brightness_contrast_tool_destroy    (GtkObject  *object);
-
 static void   gimp_brightness_contrast_tool_initialize (GimpTool   *tool,
 							GDisplay   *gdisp);
 static void   gimp_brightness_contrast_tool_control    (GimpTool   *tool,
@@ -132,26 +130,29 @@ gimp_brightness_contrast_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST);
 }
 
-GtkType
+GType
 gimp_brightness_contrast_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpBrightnessContrastTool",
-        sizeof (GimpBrightnessContrastTool),
         sizeof (GimpBrightnessContrastToolClass),
-        (GtkClassInitFunc) gimp_brightness_contrast_tool_class_init,
-        (GtkObjectInitFunc) gimp_brightness_contrast_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_brightness_contrast_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpBrightnessContrastTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_brightness_contrast_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_IMAGE_MAP_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
+					  "GimpBrightnessContrastTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -160,15 +161,11 @@ gimp_brightness_contrast_tool_get_type (void)
 static void
 gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass)
 {
-  GtkObjectClass    *object_class;
-  GimpToolClass     *tool_class;
+  GimpToolClass *tool_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
+  tool_class = GIMP_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_IMAGE_MAP_TOOL);
-
-  object_class->destroy      = gimp_brightness_contrast_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->initialize = gimp_brightness_contrast_tool_initialize;
   tool_class->control    = gimp_brightness_contrast_tool_control;
@@ -188,15 +185,6 @@ gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
       tool_manager_register_tool_options (GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
 					  (GimpToolOptions *) brightness_contrast_options);
     }
-}
-
-static void
-gimp_brightness_contrast_tool_destroy (GtkObject *object)
-{
-  brightness_contrast_dialog_hide ();
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

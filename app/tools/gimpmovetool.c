@@ -46,8 +46,6 @@
 static void   gimp_move_tool_class_init (GimpMoveToolClass *klass);
 static void   gimp_move_tool_init       (GimpMoveTool      *move_tool);
 
-static void   gimp_move_tool_destroy    (GtkObject         *object);
-
 static void   move_tool_button_press    (GimpTool          *tool,
 					 GdkEventButton    *bevent,
 					 GDisplay          *gdisp);
@@ -90,26 +88,29 @@ gimp_move_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_MOVE);
 }
 
-GtkType
+GType
 gimp_move_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpMoveTool",
-        sizeof (GimpMoveTool),
         sizeof (GimpMoveToolClass),
-        (GtkClassInitFunc) gimp_move_tool_class_init,
-        (GtkObjectInitFunc) gimp_move_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_move_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpMoveTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_move_tool_init,
       };
-      
-      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+
+      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
+					  "GimpMoveTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -118,15 +119,11 @@ gimp_move_tool_get_type (void)
 static void
 gimp_move_tool_class_init (GimpMoveToolClass *klass)
 {
-  GtkObjectClass *object_class;
-  GimpToolClass  *tool_class;
+  GimpToolClass *tool_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
+  tool_class = GIMP_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
-
-  object_class->destroy = gimp_move_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->control        = move_tool_control;
   tool_class->button_press   = move_tool_button_press;
@@ -160,25 +157,36 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
 }
 
 static void
-gimp_move_tool_destroy (GtkObject *object)
+move_tool_control (GimpTool   *tool,
+		   ToolAction  action,
+		   GDisplay   *gdisp)
 {
   GimpMoveTool *move_tool;
-  GimpTool     *tool;
 
-  move_tool = GIMP_MOVE_TOOL (object);
-  tool      = GIMP_TOOL (move_tool);
+  move_tool = GIMP_MOVE_TOOL (tool);
 
-  if (tool->gdisp)
+  switch (action)
     {
+    case PAUSE:
+      break;
+
+    case RESUME:
       if (move_tool->guide)
-	gdisplay_draw_guide (tool->gdisp, move_tool->guide, FALSE);
+	gdisplay_draw_guide (gdisp, move_tool->guide, TRUE);
+      break;
+
+    case HALT:
+      if (move_tool->guide)
+        gdisplay_draw_guide (gdisp, move_tool->guide, FALSE);
+      break;
+
+    default:
+      break;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
-
-/*  move action functions  */
 
 static void
 move_tool_button_press (GimpTool       *tool,
@@ -505,33 +513,6 @@ move_tool_cursor_update (GimpTool       *tool,
 					GIMP_MOVE_TOOL_CURSOR,
 					GIMP_CURSOR_MODIFIER_NONE);
 	}
-    }
-}
-
-static void
-move_tool_control (GimpTool   *tool,
-		   ToolAction  action,
-		   GDisplay   *gdisp)
-{
-  GimpMoveTool *move;
-
-  move = GIMP_MOVE_TOOL (tool);
-
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      if (move->guide)
-	gdisplay_draw_guide (gdisp, move->guide, TRUE);
-      break;
-
-    case HALT:
-      break;
-
-    default:
-      break;
     }
 }
 

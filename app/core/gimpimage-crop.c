@@ -20,7 +20,7 @@
 
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "core-types.h"
 

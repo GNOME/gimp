@@ -125,7 +125,7 @@ struct _IScissorsOptions
 static void   gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass);
 static void   gimp_iscissors_tool_init       (GimpIscissorsTool      *iscissors);
 
-static void   gimp_iscissors_tool_destroy        (GtkObject         *object);
+static void   gimp_iscissors_tool_finalize       (GObject           *object);
 
 static void   gimp_iscissors_tool_control        (GimpTool          *tool,
                                                   ToolAction         tool_action,
@@ -291,19 +291,22 @@ gimp_iscissors_tool_get_type (void)
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-	"GimpIscissorsTool",
+        sizeof (GimpIscissorsToolClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_iscissors_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpIscissorsTool),
-	sizeof (GimpIscissorsToolClass),
-	(GtkClassInitFunc) gimp_iscissors_tool_class_init,
-	(GtkObjectInitFunc) gimp_iscissors_tool_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL,
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_iscissors_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+					  "GimpIscissorsTool",
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -312,17 +315,17 @@ gimp_iscissors_tool_get_type (void)
 static void
 gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  tool_class      = (GimpToolClass *) klass;
-  draw_tool_class = (GimpDrawToolClass *) klass;
+  object_class    = G_OBJECT_CLASS (klass);
+  tool_class      = GIMP_TOOL_CLASS (klass);
+  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy      = gimp_iscissors_tool_destroy;
+  object_class->finalize     = gimp_iscissors_tool_finalize;
 
   tool_class->control        = gimp_iscissors_tool_control;
   tool_class->button_press   = gimp_iscissors_tool_button_press;
@@ -364,7 +367,7 @@ gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
 }
 
 static void
-gimp_iscissors_tool_destroy (GtkObject *object)
+gimp_iscissors_tool_finalize (GObject *object)
 {
   GimpIscissorsTool *iscissors;
 
@@ -372,8 +375,7 @@ gimp_iscissors_tool_destroy (GtkObject *object)
 
   gimp_iscissors_tool_reset (iscissors);
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static IScissorsOptions *

@@ -285,7 +285,7 @@ tool_manager_initialize_tool (Gimp     *gimp,
 {
   GimpToolManager *tool_manager;
   GimpToolInfo    *tool_info;
-  GtkType          tool_type;
+  GType            tool_type;
 
   tool_manager = tool_manager_get (gimp);
 
@@ -393,7 +393,7 @@ tool_manager_control_active (Gimp       *gimp,
 
 void
 tool_manager_register_tool (Gimp         *gimp,
-			    GtkType       tool_type,
+			    GType         tool_type,
 			    gboolean      tool_context,
 			    const gchar  *identifier,
 			    const gchar  *blurb,
@@ -482,7 +482,7 @@ tool_manager_register_tool (Gimp         *gimp,
 }
 
 void
-tool_manager_register_tool_options (GtkType          tool_type,
+tool_manager_register_tool_options (GType            tool_type,
 				    GimpToolOptions *tool_options)
 {
   GimpToolInfo *tool_info;
@@ -492,7 +492,7 @@ tool_manager_register_tool_options (GtkType          tool_type,
   if (! tool_info)
     {
       g_warning ("%s(): no tool info registered for %s",
-		 G_GNUC_FUNCTION, gtk_type_name (tool_type));
+		 G_GNUC_FUNCTION, g_type_name (tool_type));
       return;
     }
 
@@ -501,7 +501,7 @@ tool_manager_register_tool_options (GtkType          tool_type,
 
 GimpToolInfo *
 tool_manager_get_info_by_type (Gimp    *gimp,
-			       GtkType  tool_type)
+			       GType    tool_type)
 {
   GimpToolInfo *tool_info;
   GList        *list;
@@ -664,13 +664,13 @@ tool_manager_tool_changed (GimpContext  *user_context,
       return;
     }
 
-  if (tool_info->tool_type != GTK_TYPE_NONE)
+  if (tool_info->tool_type != G_TYPE_NONE)
     {
       new_tool = g_object_new (tool_info->tool_type, NULL);
     }
   else
     {
-      g_warning ("%s(): tool_info contains no valid GtkType",
+      g_warning ("%s(): tool_info contains no valid GType",
 		 G_GNUC_FUNCTION);
       return;
     }

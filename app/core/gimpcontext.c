@@ -21,7 +21,7 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -43,8 +43,6 @@
 #include "gimppalette.h"
 #include "gimppattern.h"
 #include "gimptoolinfo.h"
-
-#include "gdisplay.h"
 
 
 typedef void (* GimpContextCopyPropFunc) (GimpContext *src,
@@ -83,7 +81,7 @@ static void gimp_context_copy_image          (GimpContext      *src,
 
 /*  display  */
 static void gimp_context_real_set_display    (GimpContext      *context,
-					      GDisplay         *display);
+					      gpointer          display);
 static void gimp_context_copy_display        (GimpContext      *src,
 					      GimpContext      *dest);
 
@@ -949,11 +947,18 @@ gimp_context_set_parent (GimpContext *context,
 void
 gimp_context_unset_parent (GimpContext *context)
 {
+  GimpContextPropType prop;
+
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (GIMP_IS_CONTEXT (context->parent));
 
-  if (context->defined_props != GIMP_CONTEXT_ALL_PROPS_MASK)
-    gtk_signal_disconnect_by_data (GTK_OBJECT (context->parent), context);
+  for (prop = 0; prop < GIMP_CONTEXT_NUM_PROPS; prop++)
+    if (! ((1 << prop) & context->defined_props))
+      {
+	g_signal_handlers_disconnect_by_func (G_OBJECT (context->parent),
+					      gimp_context_signal_handlers[prop],
+					      context);
+      }
 
   context->parent = NULL;
 }
@@ -1099,7 +1104,7 @@ gimp_context_get_by_type (GimpContext *context,
   g_return_val_if_fail ((prop = gimp_context_type_to_property (type)) != -1,
 			NULL);
 
-  g_object_get (GTK_OBJECT (context),
+  g_object_get (G_OBJECT (context),
 		gimp_context_prop_names[prop], &object,
 		NULL);
 
@@ -1116,7 +1121,7 @@ gimp_context_set_by_type (GimpContext *context,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail ((prop = gimp_context_type_to_property (type)) != -1);
 
-  g_object_set (GTK_OBJECT (context),
+  g_object_set (G_OBJECT (context),
 		gimp_context_prop_names[prop], object,
 		NULL);
 }
@@ -1201,7 +1206,7 @@ gimp_context_copy_image (GimpContext *src,
 /*****************************************************************************/
 /*  display  *****************************************************************/
 
-GDisplay *
+gpointer
 gimp_context_get_display (GimpContext *context)
 {
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -1211,7 +1216,7 @@ gimp_context_get_display (GimpContext *context)
 
 void
 gimp_context_set_display (GimpContext *context,
-			  GDisplay    *display)
+			  gpointer     display)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   context_find_defined (context, GIMP_CONTEXT_DISPLAY_MASK);
@@ -1231,7 +1236,7 @@ gimp_context_display_changed (GimpContext *context)
 
 /*  handle dissapearing displays  */
 static void
-gimp_context_display_destroy (GtkWidget   *disp_shell,
+gimp_context_display_destroy (GObject     *disp_shell,
 			      GimpContext *context)
 {
   context->display = NULL;
@@ -1240,26 +1245,48 @@ gimp_context_display_destroy (GtkWidget   *disp_shell,
 
 static void
 gimp_context_real_set_display (GimpContext *context,
-			       GDisplay    *display)
+			       gpointer     display)
 {
+  typedef struct
+  {
+    GObject   *shell;
+    GimpImage *gimage;
+  } EEKWrapper;
+
+  EEKWrapper *eek_wrapper;
+
   if (context->display == display)
     return;
 
-  if (context->display && GTK_IS_OBJECT (context->display->shell))
-    gtk_signal_disconnect_by_data (GTK_OBJECT (context->display->shell),
-				   context);
+  if (context->display)
+    {
+      eek_wrapper = (EEKWrapper *) context->display;
+
+      if (G_IS_OBJECT (eek_wrapper->shell))
+	g_signal_handlers_disconnect_by_func (eek_wrapper->shell,
+					      gimp_context_display_destroy,
+					      context);
+    }
 
   if (display)
-    g_signal_connect_object (G_OBJECT (display->shell), "destroy",
-			     G_CALLBACK (gimp_context_display_destroy),
-			     G_OBJECT (context),
-			     0);
+    {
+      eek_wrapper = (EEKWrapper *) display;
+
+      g_signal_connect_object (G_OBJECT (eek_wrapper->shell), "destroy",
+			       G_CALLBACK (gimp_context_display_destroy),
+			       G_OBJECT (context),
+			       0);
+    }
 
   context->display = display;
 
   /*  set the image _before_ emitting the display_changed signal  */
   if (display)
-    gimp_context_real_set_image (context, display->gimage);
+    {
+      eek_wrapper = (EEKWrapper *) display;
+
+      gimp_context_real_set_image (context, eek_wrapper->gimage);
+    }
 
   gimp_context_display_changed (context);
 }

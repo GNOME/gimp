@@ -129,7 +129,7 @@ typedef struct
 static void    gimp_blend_tool_class_init        (GimpBlendToolClass *klass);
 static void    gimp_blend_tool_init              (GimpBlendTool      *blend_tool);
 
-static void    gimp_blend_tool_destroy           (GtkObject       *object);
+static void    gimp_blend_tool_finalize          (GObject         *object);
 
 static void    gradient_type_callback            (GtkWidget       *widget,
 						  gpointer         data);
@@ -282,26 +282,29 @@ gimp_blend_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_BLEND);
 }
 
-GtkType
+GType
 gimp_blend_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-	"GimpBlendTool",
+        sizeof (GimpBlendToolClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_blend_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpBlendTool),
-	sizeof (GimpBlendToolClass),
-	(GtkClassInitFunc) gimp_blend_tool_class_init,
-	(GtkObjectInitFunc) gimp_blend_tool_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL,
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_blend_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+					  "GimpBlendTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -310,17 +313,17 @@ gimp_blend_tool_get_type (void)
 static void
 gimp_blend_tool_class_init (GimpBlendToolClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  tool_class      = (GimpToolClass *) klass;
-  draw_tool_class = (GimpDrawToolClass *) klass;
+  object_class    = G_OBJECT_CLASS (klass);
+  tool_class      = GIMP_TOOL_CLASS (klass);
+  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy      = gimp_blend_tool_destroy;
+  object_class->finalize     = gimp_blend_tool_finalize;
 
   tool_class->button_press   = gimp_blend_tool_button_press;
   tool_class->button_release = gimp_blend_tool_button_release;
@@ -350,15 +353,16 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
 }
 
 static void
-gimp_blend_tool_destroy (GtkObject *object)
+gimp_blend_tool_finalize (GObject *object)
 {
-  /*  free the distance map data if it exists  */
+  /*  free the distance map data  */
   if (distR.tiles)
-    tile_manager_destroy (distR.tiles);
-  distR.tiles = NULL;
+    {
+      tile_manager_destroy (distR.tiles);
+      distR.tiles = NULL;
+    }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

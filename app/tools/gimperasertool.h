@@ -25,9 +25,10 @@
 
 #define GIMP_TYPE_ERASER_TOOL            (gimp_eraser_tool_get_type ())
 #define GIMP_ERASER_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ERASER_TOOL, GimpEraserTool))
-#define GIMP_IS_ERASER_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ERASER_TOOL))
 #define GIMP_ERASER_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ERASER_TOOL, GimpEraserToolClass))
+#define GIMP_IS_ERASER_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ERASER_TOOL))
 #define GIMP_IS_ERASER_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ERASER_TOOL))
+#define GIMP_ERASER_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ERASER_TOOL, GimpEraserToolClass))
 
 
 typedef struct _GimpEraserTool      GimpEraserTool;
@@ -44,9 +45,10 @@ struct _GimpEraserToolClass
 };
 
 
-void       gimp_eraser_tool_register (Gimp         *gimp);
+void    gimp_eraser_tool_register (Gimp *gimp);
 
-GtkType    gimp_eraser_tool_get_type (void);
+GType   gimp_eraser_tool_get_type (void);
+
 
 gboolean   eraser_non_gui            (GimpDrawable *drawable,
                                       gint          num_strokes,

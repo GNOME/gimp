@@ -33,9 +33,10 @@ typedef enum
 
 #define GIMP_TYPE_BUCKET_FILL_TOOL            (gimp_bucket_fill_tool_get_type ())
 #define GIMP_BUCKET_FILL_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUCKET_FILL_TOOL, GimpBucketFillTool))
-#define GIMP_IS_BUCKET_FILL_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUCKET_FILL_TOOL))
 #define GIMP_BUCKET_FILL_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUCKET_FILL_TOOL, GimpBucketFillToolClass))
+#define GIMP_IS_BUCKET_FILL_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUCKET_FILL_TOOL))
 #define GIMP_IS_BUCKET_FILL_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUCKET_FILL_TOOL))
+#define GIMP_BUCKET_FILL_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUCKET_FILL_TOOL, GimpBucketFillToolClass))
 
 
 typedef struct _GimpBucketFillTool      GimpBucketFillTool;
@@ -57,7 +58,7 @@ struct _GimpBucketFillToolClass
 
 void       gimp_bucket_fill_tool_register (Gimp           *gimp);
 
-GtkType    gimp_bucket_fill_tool_get_type (void);
+GType      gimp_bucket_fill_tool_get_type (void);
 
 
 void       bucket_fill                    (GimpImage      *gimage,

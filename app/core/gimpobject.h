@@ -20,7 +20,7 @@
 #define __GIMP_OBJECT_H__
 
 
-#include <gtk/gtkobject.h>
+#include <gobject/gobject.h>
 
 
 #define GIMP_TYPE_OBJECT            (gimp_object_get_type ())
@@ -35,14 +35,14 @@ typedef struct _GimpObjectClass GimpObjectClass;
 
 struct _GimpObject
 {
-  GtkObject  parent_instance;
+  GObject  parent_instance;
 
-  gchar     *name;
+  gchar   *name;
 };
 
 struct _GimpObjectClass
 {
-  GtkObjectClass  parent_class;
+  GObjectClass  parent_class;
 
   void (* disconnect)   (GimpObject *object);
   void (* name_changed) (GimpObject *object);

@@ -19,7 +19,7 @@
 
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -106,7 +106,7 @@ gimp_parasite_list_class_init (GimpParasiteListClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__POINTER,
 		  G_TYPE_NONE, 1,
-		  GTK_TYPE_POINTER);
+		  G_TYPE_POINTER);
 
   object_class->finalize = gimp_parasite_list_finalize;
 

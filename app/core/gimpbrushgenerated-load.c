@@ -28,7 +28,7 @@
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
 
@@ -38,9 +38,6 @@
 #include "base/temp-buf.h"
 
 #include "gimpbrushgenerated.h"
-
-/*  this needs to go away  */
-#include "tools/gimppainttool.h"
 
 
 #define OVERSAMPLING 5

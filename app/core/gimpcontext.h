@@ -217,9 +217,9 @@ void               gimp_context_image_changed      (GimpContext     *context);
 
 
 /*  display  */
-GDisplay         * gimp_context_get_display        (GimpContext     *context);
+gpointer           gimp_context_get_display        (GimpContext     *context);
 void               gimp_context_set_display        (GimpContext     *context,
-						    GDisplay        *display);
+						    gpointer         display);
 void               gimp_context_display_changed    (GimpContext     *context);
 
 

@@ -72,8 +72,6 @@ struct _MeasureOptions
 static void   gimp_measure_tool_class_init      (GimpMeasureToolClass *klass);
 static void   gimp_measure_tool_init            (GimpMeasureTool      *tool);
 
-static void   gimp_measure_tool_destroy         (GtkObject      *object);
-
 static void   gimp_measure_tool_control         (GimpTool       *tool,
                                                  ToolAction      action,
                                                  GDisplay       *gdisp);
@@ -129,26 +127,29 @@ gimp_measure_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_MEASURE);
 }
 
-GtkType
+GType
 gimp_measure_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-	"GimpMeasureTool",
+        sizeof (GimpMeasureToolClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_measure_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpMeasureTool),
-	sizeof (GimpMeasureToolClass),
-	(GtkClassInitFunc) gimp_measure_tool_class_init,
-	(GtkObjectInitFunc) gimp_measure_tool_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL,
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_measure_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+					  "GimpMeasureTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -157,17 +158,13 @@ gimp_measure_tool_get_type (void)
 static void
 gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
 {
-  GtkObjectClass    *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  tool_class      = (GimpToolClass *) klass;
-  draw_tool_class = (GimpDrawToolClass *) klass;
+  tool_class      = GIMP_TOOL_CLASS (klass);
+  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
-
-  object_class->destroy      = gimp_measure_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->control        = gimp_measure_tool_control;
   tool_class->button_press   = gimp_measure_tool_button_press;
@@ -195,13 +192,6 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
     }
 
   tool->preserve = TRUE;  /*  Preserve on drawable change  */
-}
-
-static void
-gimp_measure_tool_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

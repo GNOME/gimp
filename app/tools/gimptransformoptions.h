@@ -53,11 +53,11 @@ struct _TransformOptions
 };
 
 
-TransformOptions * transform_options_new   (GtkType               tool_type,
+TransformOptions * transform_options_new   (GType                 tool_type,
 					    ToolOptionsResetFunc  reset_func);
 
 void               transform_options_init  (TransformOptions     *options,
-					    GtkType               tool_type,
+					    GType                 tool_type,
 					    ToolOptionsResetFunc  reset_func);
 void               transform_options_reset (GimpToolOptions      *tool_options);
 

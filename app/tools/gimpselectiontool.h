@@ -25,9 +25,10 @@
 
 #define GIMP_TYPE_SELECTION_TOOL            (gimp_selection_tool_get_type ())
 #define GIMP_SELECTION_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SELECTION_TOOL, GimpSelectionTool))
-#define GIMP_IS_SELECTION_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SELECTION_TOOL))
 #define GIMP_SELECTION_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SELECTION_TOOL, GimpSelectionToolClass))
+#define GIMP_IS_SELECTION_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SELECTION_TOOL))
 #define GIMP_IS_SELECTION_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SELECTION_TOOL))
+#define GIMP_SELECTION_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SELECTION_TOOL, GimpSelectionToolClass))
 
 
 typedef struct _GimpSelectionTool      GimpSelectionTool;
@@ -35,22 +36,23 @@ typedef struct _GimpSelectionToolClass GimpSelectionToolClass;
 
 struct _GimpSelectionTool
 {
-  GimpDrawTool parent_instance;
+  GimpDrawTool  parent_instance;
   
-  SelectOps    op;         /*  selection operation (SELECTION_ADD etc.)  */
+  SelectOps     op;        /*  selection operation (SELECTION_ADD etc.)  */
   
-  gint         current_x;  /*  these values are updated on every motion event  */
-  gint         current_y;  /*  (enables immediate cursor updating on modifier
-                            *   key events).  */
+  gint          current_x; /*  these values are updated on every motion event  */
+  gint          current_y; /*  (enables immediate cursor updating on modifier
+			    *   key events).
+			    */
 };
 
 struct _GimpSelectionToolClass
 {
-  GimpDrawToolClass parent_class;
+  GimpDrawToolClass  parent_class;
 };
 
 
-GtkType   gimp_selection_tool_get_type (void);
+GType   gimp_selection_tool_get_type (void);
 
 
 #endif  /* __GIMP_SELECTION_TOOL_H__ */

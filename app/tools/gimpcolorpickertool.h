@@ -25,9 +25,10 @@
 
 #define GIMP_TYPE_COLOR_PICKER_TOOL            (gimp_color_picker_tool_get_type ())
 #define GIMP_COLOR_PICKER_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_PICKER_TOOL, GimpColorPickerTool))
-#define GIMP_IS_COLOR_PICKER_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_PICKER_TOOL))
 #define GIMP_COLOR_PICKER_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PICKER_TOOL, GimpColorPickerToolClass))
+#define GIMP_IS_COLOR_PICKER_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_PICKER_TOOL))
 #define GIMP_IS_COLOR_PICKER_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PICKER_TOOL))
+#define GIMP_COLOR_PICKER_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_PICKER_TOOL, GimpColorPickerToolClass))
 
 
 typedef struct _GimpColorPickerTool      GimpColorPickerTool;
@@ -50,9 +51,10 @@ struct _GimpColorPickerToolClass
 /* FIXME: Whats this doing here? */
 extern gint col_value[5];
 
-void       gimp_color_picker_tool_register (Gimp         *gimp);
+void    gimp_color_picker_tool_register (Gimp *gimp);
 
-GtkType    gimp_color_picker_tool_get_type (void);
+GType   gimp_color_picker_tool_get_type (void);
+
 
 gboolean   pick_color                      (GimpImage    *gimage,
 					    GimpDrawable *drawable,

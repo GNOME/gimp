@@ -82,7 +82,6 @@ struct _ByColorDialog
 /* Local functions */
 static void   gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass);
 static void   gimp_by_color_select_tool_init       (GimpByColorSelectTool      *by_color_select);
-static void   gimp_by_color_select_tool_destroy    (GtkObject      *object);
 
 static void   gimp_by_color_select_tool_initialize_by_image (GimpImage    *gimage);
 
@@ -183,29 +182,32 @@ gimp_by_color_select_tool_register (Gimp *gimp)
                               GIMP_STOCK_TOOL_BY_COLOR_SELECT);
 }
 
-GtkType
+GType
 gimp_by_color_select_tool_get_type (void)
 {
-  static GtkType by_color_select_type = 0;
+  static GType tool_type = 0;
 
-  if (! by_color_select_type)
+  if (! tool_type)
     {
-      GtkTypeInfo by_color_select_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpByColorSelectTool",
-        sizeof (GimpByColorSelectTool),
         sizeof (GimpByColorSelectToolClass),
-        (GtkClassInitFunc) gimp_by_color_select_tool_class_init,
-        (GtkObjectInitFunc) gimp_by_color_select_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_by_color_select_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpByColorSelectTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_by_color_select_tool_init,
       };
 
-      by_color_select_type = gtk_type_unique (GIMP_TYPE_SELECTION_TOOL,
-					      &by_color_select_info);
+      tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
+					  "GimpByColorSelectTool",
+                                          &tool_info, 0);
     }
 
-  return by_color_select_type;
+  return tool_type;
 }
 
 void
@@ -273,17 +275,11 @@ gimp_by_color_select_tool_initialize_by_image (GimpImage *gimage)
 static void
 gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass)
 {
-  GtkObjectClass    *object_class;
-  GimpToolClass     *tool_class;
-  GimpDrawToolClass *draw_tool_class;
+  GimpToolClass *tool_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  tool_class      = (GimpToolClass *) klass;
-  draw_tool_class = (GimpDrawToolClass *) klass;
+  tool_class = GIMP_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_SELECTION_TOOL);
-
-  object_class->destroy      = gimp_by_color_select_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->initialize     = by_color_select_initialize;
   tool_class->button_press   = by_color_select_button_press;
@@ -292,8 +288,6 @@ gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass)
   tool_class->modifier_key   = by_color_select_modifier_update;
   tool_class->oper_update    = by_color_select_oper_update;
   tool_class->control        = by_color_select_control;
-
-
 }
 
 static void
@@ -318,16 +312,6 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
 
   by_color_select->x = by_color_select->y = 0;
-}
-
-static void
-gimp_by_color_select_tool_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
-
-  if (by_color_dialog)
-    by_color_select_close_callback(NULL, (gpointer) by_color_dialog);
 }
 
 /*  by_color selection machinery  */

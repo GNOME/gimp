@@ -33,6 +33,7 @@ typedef enum
 
 #define GIMP_TYPE_CROP_TOOL            (gimp_crop_tool_get_type ())
 #define GIMP_CROP_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CROP_TOOL, GimpCropTool))
+#define GIMP_CROP_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CROP_TOOL, GimpCropToolClass))
 #define GIMP_IS_CROP_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CROP_TOOL))
 #define GIMP_CROP_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CROP_TOOL, GimpCropToolClass))
 
@@ -68,9 +69,9 @@ struct _GimpCropToolClass
 };
 
 
-void      gimp_crop_tool_register (Gimp      *gimp);
+void    gimp_crop_tool_register (Gimp *gimp);
 
-GtkType   gimp_crop_tool_get_type (void);
+GType   gimp_crop_tool_get_type (void);
 
 
 #endif  /*  __GIMP_CROP_TOOL_H__  */

@@ -25,9 +25,10 @@
 
 #define GIMP_TYPE_ROTATE_TOOL            (gimp_rotate_tool_get_type ())
 #define GIMP_ROTATE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ROTATE_TOOL, GimpRotateTool))
-#define GIMP_IS_ROTATE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ROTATE_TOOL))
 #define GIMP_ROTATE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ROTATE_TOOL, GimpRotateToolClass))
+#define GIMP_IS_ROTATE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ROTATE_TOOL))
 #define GIMP_IS_ROTATE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ROTATE_TOOL))
+#define GIMP_ROTATE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ROTATE_TOOL, GimpRotateToolClass))
 
 
 typedef struct _GimpRotateTool      GimpRotateTool;
@@ -46,7 +47,7 @@ struct _GimpRotateToolClass
 
 void          gimp_rotate_tool_register (Gimp           *gimp);
 
-GtkType       gimp_rotate_tool_get_type (void);
+GType         gimp_rotate_tool_get_type (void);
 
 
 TileManager * gimp_rotate_tool_rotate   (GimpImage      *gimage,

@@ -112,26 +112,29 @@ gimp_eraser_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_ERASER);
 }
 
-GtkType
+GType
 gimp_eraser_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpEraserTool",
-        sizeof (GimpEraserTool),
         sizeof (GimpEraserToolClass),
-        (GtkClassInitFunc) gimp_eraser_tool_class_init,
-        (GtkObjectInitFunc) gimp_eraser_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_eraser_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpEraserTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_eraser_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_PAINT_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
+					  "GimpEraserTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -143,10 +146,10 @@ gimp_eraser_tool_class_init (GimpEraserToolClass *klass)
   GimpToolClass      *tool_class;
   GimpPaintToolClass *paint_tool_class;
 
-  tool_class       = (GimpToolClass *) klass;
-  paint_tool_class = (GimpPaintToolClass *) klass;
+  tool_class       = GIMP_TOOL_CLASS (klass);
+  paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_PAINT_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->modifier_key = gimp_eraser_tool_modifier_key;
 

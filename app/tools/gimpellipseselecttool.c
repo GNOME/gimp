@@ -44,7 +44,6 @@
 
 static void   gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass);
 static void   gimp_ellipse_select_tool_init       (GimpEllipseSelectTool      *ellipse_select);
-static void   gimp_ellipse_select_tool_destroy     (GtkObject          *object);
 
 static void   gimp_ellipse_select_tool_draw        (GimpDrawTool       *draw_tool);
 
@@ -76,29 +75,32 @@ gimp_ellipse_select_tool_register (Gimp *gimp)
                               GIMP_STOCK_TOOL_ELLIPSE_SELECT);
 }
 
-GtkType
+GType
 gimp_ellipse_select_tool_get_type (void)
 {
-  static GtkType ellipse_select_type = 0;
+  static GType tool_type = 0;
 
-  if (! ellipse_select_type)
+  if (! tool_type)
     {
-      GtkTypeInfo ellipse_select_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpEllipseSelectTool",
-        sizeof (GimpEllipseSelectTool),
         sizeof (GimpEllipseSelectToolClass),
-        (GtkClassInitFunc) gimp_ellipse_select_tool_class_init,
-        (GtkObjectInitFunc) gimp_ellipse_select_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_ellipse_select_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpEllipseSelectTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_ellipse_select_tool_init,
       };
 
-      ellipse_select_type = gtk_type_unique (GIMP_TYPE_RECT_SELECT_TOOL,
-                                             &ellipse_select_info);
+      tool_type = g_type_register_static (GIMP_TYPE_RECT_SELECT_TOOL,
+					  "GimpEllipseSelectTool", 
+                                          &tool_info, 0);
     }
 
-  return ellipse_select_type;
+  return tool_type;
 }
 
 void
@@ -156,19 +158,13 @@ ellipse_select (GimpImage *gimage,
 static void
 gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass)
 {
-  GtkObjectClass          *object_class;
-  GimpToolClass           *tool_class;
   GimpDrawToolClass       *draw_tool_class;
   GimpRectSelectToolClass *rect_tool_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  tool_class      = (GimpToolClass *) klass;
-  draw_tool_class = (GimpDrawToolClass *) klass;
-  rect_tool_class = (GimpRectSelectToolClass *) klass;
+  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  rect_tool_class = GIMP_RECT_SELECT_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_RECT_SELECT_TOOL);
-
-  object_class->destroy        = gimp_ellipse_select_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   draw_tool_class->draw        = gimp_ellipse_select_tool_draw;
 
@@ -195,13 +191,6 @@ gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
 
   tool->tool_cursor = GIMP_ELLIPSE_SELECT_TOOL_CURSOR;
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
-}
-
-static void
-gimp_ellipse_select_tool_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

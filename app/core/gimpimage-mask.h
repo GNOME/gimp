@@ -91,7 +91,8 @@ void            gimage_mask_load          (GimpImage    *gimage,
 GimpChannel   * gimage_mask_save          (GimpImage    *gimage);
 
 gboolean        gimage_mask_stroke        (GimpImage    *gimage,
-					   GimpDrawable *drawable);
+					   GimpDrawable *drawable,
+					   GimpContext  *context);
 
 
 #endif  /*  __GIMAGE_MASK_H__  */

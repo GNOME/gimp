@@ -78,7 +78,7 @@ struct _SelectionOptions
 
 /*  selection tool options functions
  */
-SelectionOptions * selection_options_new   (GtkType               tool_type,
+SelectionOptions * selection_options_new   (GType                 tool_type,
 					    ToolOptionsResetFunc  reset_func);
 
 void               selection_options_reset (GimpToolOptions      *tool_options);
@@ -87,7 +87,7 @@ void               selection_options_reset (GimpToolOptions      *tool_options);
 /*  to be used by "derived" selection options only
  */
 void               selection_options_init  (SelectionOptions     *options,
-					    GtkType               tool_type,
+					    GType                 tool_type,
 					    ToolOptionsResetFunc  reset_func);
 
 

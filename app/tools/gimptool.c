@@ -54,8 +54,6 @@ enum
 static void   gimp_tool_class_init          (GimpToolClass  *klass);
 static void   gimp_tool_init                (GimpTool       *tool);
 
-static void   gimp_tool_destroy             (GtkObject      *destroy);
-
 static void   gimp_tool_real_initialize     (GimpTool       *tool,
 					     GDisplay       *gdisp);
 static void   gimp_tool_real_control        (GimpTool       *tool,
@@ -91,26 +89,29 @@ static GimpObjectClass *parent_class = NULL;
 static gint global_tool_ID = 0;
 
 
-GtkType
+GType
 gimp_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpTool",
-        sizeof (GimpTool),
         sizeof (GimpToolClass),
-        (GtkClassInitFunc) gimp_tool_class_init,
-        (GtkObjectInitFunc) gimp_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_OBJECT, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_OBJECT,
+					  "GimpTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -119,10 +120,6 @@ gimp_tool_get_type (void)
 static void
 gimp_tool_class_init (GimpToolClass *klass)
 {
-  GtkObjectClass *object_class;
-  
-  object_class = (GtkObjectClass *) klass;
-
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_tool_signals[INITIALIZE] =
@@ -223,8 +220,6 @@ gimp_tool_class_init (GimpToolClass *klass)
 		  G_TYPE_POINTER,
 		  G_TYPE_POINTER); 
 
-  object_class->destroy = gimp_tool_destroy;
-
   klass->initialize     = gimp_tool_real_initialize;
   klass->control        = gimp_tool_real_control;
   klass->button_press   = gimp_tool_real_button_press;
@@ -253,13 +248,6 @@ gimp_tool_init (GimpTool *tool)
   tool->tool_cursor   = GIMP_TOOL_CURSOR_NONE;
   tool->toggle_cursor = GIMP_TOOL_CURSOR_NONE;
   tool->toggled       = FALSE;
-}
-
-static void
-gimp_tool_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 void
@@ -373,17 +361,13 @@ gimp_tool_oper_update (GimpTool       *tool,
 const gchar *
 gimp_tool_get_PDB_string (GimpTool *tool)
 {
-  GtkObject     *object;
-  GimpToolClass *klass;
+  GimpToolClass *tool_class;
 
-  g_return_val_if_fail (tool, NULL);
   g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
   
-  object = GTK_OBJECT (tool);
+  tool_class = GIMP_TOOL_GET_CLASS (tool);
 
-  klass = GIMP_TOOL_GET_CLASS (object);
-
-  return klass->pdb_string;
+  return tool_class->pdb_string;
 }
 
 

@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <glib-object.h>
+
 #include <gtk/gtk.h>
 
 #include "core-types.h"
@@ -28,18 +30,16 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-/* FIXME: move the "stroke" stuff into the core entirely */
-#include "tools/tools-types.h"
-#include "tools/tool_manager.h"
-
 #include "gimpchannel.h"
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
+#include "gimptoolinfo.h"
 
 #include "floating_sel.h"
-#include "gdisplay.h"
+#include "gdisplay.h" /* EEK */
 #include "undo.h"
 
 #include "pdb/procedural_db.h"
@@ -48,7 +48,8 @@
 
 
 /*  local variables  */
-static int gimage_mask_stroking = FALSE;
+static gboolean   gimage_mask_stroking = FALSE;
+
 
 /*  functions  */
 gboolean
@@ -301,9 +302,9 @@ gimage_mask_extract (GimpImage    *gimage,
 	  gimp_channel_clear (gimp_image_get_mask (gimage));
 
 	  /*  Update the region  */
-	  gdisplays_update_area (gimage, 
-				 x1 + off_x, y1 + off_y,
-				 (x2 - x1), (y2 - y1));
+	  gimp_image_update (gimage, 
+			     x1 + off_x, y1 + off_y,
+			     (x2 - x1), (y2 - y1));
 
 	  /*  Invalidate the preview  */
 	  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
@@ -574,21 +575,27 @@ gimage_mask_save (GimpImage *gimage)
 
 gboolean
 gimage_mask_stroke (GimpImage    *gimage,
-		    GimpDrawable *drawable)
+		    GimpDrawable *drawable,
+		    GimpContext  *context)
 {
-  BoundSeg  *bs_in;
-  BoundSeg  *bs_out;
-  gint       num_segs_in;
-  gint       num_segs_out;
-  BoundSeg  *stroke_segs;
-  gint       num_strokes;
-  gint       seg;
-  gint       offx, offy;
-  gint       i;
-  gdouble   *stroke_points;
-  gint       cpnt;
-  Argument  *return_vals;
-  gint       nreturn_vals;
+  BoundSeg    *bs_in;
+  BoundSeg    *bs_out;
+  gint         num_segs_in;
+  gint         num_segs_out;
+  BoundSeg    *stroke_segs;
+  gint         num_strokes;
+  gint         seg;
+  gint         offx, offy;
+  gint         i;
+  gdouble     *stroke_points;
+  gint         cpnt;
+  Argument    *return_vals;
+  gint         nreturn_vals;
+  const gchar *pdb_string;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
   if (! gimage_mask_boundary (gimage, &bs_in, &bs_out,
 			      &num_segs_in, &num_segs_out))
@@ -600,6 +607,8 @@ gimage_mask_stroke (GimpImage    *gimage,
   stroke_segs = sort_boundary (bs_in, num_segs_in, &num_strokes);
   if (num_strokes == 0)
     return TRUE;
+
+  pdb_string = gimp_context_get_tool (context)->pdb_string;
 
   /*  find the drawable offsets  */
   gimp_drawable_offsets (drawable, &offx, &offy);
@@ -637,7 +646,7 @@ gimage_mask_stroke (GimpImage    *gimage,
       /* Stroke with the correct tool */
       return_vals =
 	procedural_db_run_proc (gimage->gimp,
-				tool_manager_active_get_PDB_string (gimage->gimp),
+				pdb_string,
 				&nreturn_vals,
 				GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
 				GIMP_PDB_INT32, (gint32) cpnt,

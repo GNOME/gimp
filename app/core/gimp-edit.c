@@ -20,9 +20,7 @@
 
 #include <stdlib.h>
 
-#include <gtk/gtk.h>
-
-#include "libgimpwidgets/gimpwidgets.h"
+#include <glib-object.h>
 
 #include "core-types.h"
 
@@ -58,9 +56,7 @@ gimp_edit_cut (GimpImage    *gimage,
   TileManager *cropped_cut;
   gboolean     empty;
 
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (drawable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   /*  Start a group undo  */
@@ -115,9 +111,7 @@ gimp_edit_copy (GimpImage    *gimage,
   TileManager *cropped_copy;
   gboolean     empty;
 
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (drawable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   /*  See if the gimage mask is empty  */
@@ -168,7 +162,6 @@ gimp_edit_paste (GimpImage    *gimage,
   gint       x1, y1, x2, y2;
   gint       cx, cy;
 
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable), NULL);
 
@@ -290,9 +283,7 @@ gimp_edit_clear (GimpImage    *gimage,
   gint         x1, y1, x2, y2;
   guchar       col[MAX_CHANNELS];
 
-  g_return_val_if_fail (gimage != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (drawable != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
   gimp_image_get_background (gimage, drawable, col);
@@ -334,9 +325,7 @@ gimp_edit_fill (GimpImage    *gimage,
   gint         x1, y1, x2, y2;
   guchar       col[MAX_CHANNELS];
 
-  g_return_val_if_fail (gimage != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (drawable != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
   if (gimp_drawable_has_alpha (drawable))

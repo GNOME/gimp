@@ -44,7 +44,7 @@
 static void   gimp_path_tool_class_init      (GimpPathToolClass *klass);
 static void   gimp_path_tool_init            (GimpPathTool      *tool);
 
-static void   gimp_path_tool_destroy         (GtkObject      *object);
+static void   gimp_path_tool_finalize        (GObject        *object);
 
 static void   gimp_path_tool_control         (GimpTool       *tool,
                                               ToolAction      action,
@@ -111,26 +111,29 @@ gimp_path_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_PATH);
 }
 
-GtkType
+GType
 gimp_path_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-	"GimpPathTool",
+        sizeof (GimpPathToolClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_path_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpPathTool),
-	sizeof (GimpPathToolClass),
-	(GtkClassInitFunc) gimp_path_tool_class_init,
-	(GtkObjectInitFunc) gimp_path_tool_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL,
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_path_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+					  "GimpPathTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -139,17 +142,17 @@ gimp_path_tool_get_type (void)
 static void
 gimp_path_tool_class_init (GimpPathToolClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  tool_class      = (GimpToolClass *) klass;
-  draw_tool_class = (GimpDrawToolClass *) klass;
+  object_class    = G_OBJECT_CLASS (klass);
+  tool_class      = GIMP_TOOL_CLASS (klass);
+  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy      = gimp_path_tool_destroy;
+  object_class->finalize     = gimp_path_tool_finalize;
 
   tool_class->control        = gimp_path_tool_control;
   tool_class->button_press   = gimp_path_tool_button_press;
@@ -208,18 +211,23 @@ gimp_path_tool_init (GimpPathTool *path_tool)
 }
 
 static void
-gimp_path_tool_destroy (GtkObject *object)
+gimp_path_tool_finalize (GObject *object)
 {
-  GimpPathTool *path_tool = GIMP_PATH_TOOL (object);
+  GimpPathTool *path_tool;
+
+  path_tool = GIMP_PATH_TOOL (object);
 
 #ifdef PATH_TOOL_DEBUG
   fprintf (stderr, "gimp_path_tool_free start\n");
 #endif PATH_TOOL_DEBUG
 
-  path_free_path (path_tool->cur_path);
+  if (path_tool->cur_path)
+    {
+      path_free_path (path_tool->cur_path);
+      path_tool->cur_path = NULL;
+    }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

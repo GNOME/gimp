@@ -32,9 +32,10 @@ typedef enum
 
 #define GIMP_TYPE_SMUDGE_TOOL            (gimp_smudge_tool_get_type ())
 #define GIMP_SMUDGE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SMUDGE_TOOL, GimpSmudgeTool))
-#define GIMP_IS_SMUDGE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SMUDGE_TOOL))
 #define GIMP_SMUDGE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SMUDGE_TOOL, GimpSmudgeToolClass))
+#define GIMP_IS_SMUDGE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SMUDGE_TOOL))
 #define GIMP_IS_SMUDGE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SMUDGE_TOOL))
+#define GIMP_SMUDGE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SMUDGE_TOOL, GimpSmudgeToolClass))
 
 
 typedef struct _GimpSmudgeTool      GimpSmudgeTool;
@@ -53,7 +54,7 @@ struct _GimpSmudgeToolClass
 
 void       gimp_smudge_tool_register (Gimp *gimp);
 
-GtkType    gimp_smudge_tool_get_type (void);
+GType      gimp_smudge_tool_get_type (void);
 
 
 /* FIXME: this antique code doesn't follow the coding style */

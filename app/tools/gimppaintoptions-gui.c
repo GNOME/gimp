@@ -64,12 +64,12 @@
 #define DEFAULT_GRADIENT_TYPE   LOOP_TRIANGLE
 
 
-static PaintPressureOptions * paint_pressure_options_new (GtkType       tool_type,
+static PaintPressureOptions * paint_pressure_options_new (GType         tool_type,
                                                           PaintOptions *paint_options);
 static void   paint_pressure_options_reset (PaintPressureOptions *pressure_options,
                                             PaintOptions         *paint_options);
 
-static PaintGradientOptions * paint_gradient_options_new (GtkType       tool_type,
+static PaintGradientOptions * paint_gradient_options_new (GType         tool_type,
                                                           PaintOptions *paint_options);
 static void   paint_gradient_options_reset (PaintGradientOptions *gradient_options,
                                             PaintOptions         *paint_options);
@@ -119,7 +119,7 @@ static GSList *paint_options_list = NULL;
 
 void
 paint_options_init (PaintOptions         *options,
-		    GtkType               tool_type,
+		    GType                 tool_type,
 		    ToolOptionsResetFunc  reset_func)
 {
   GimpToolInfo *tool_info;
@@ -133,7 +133,7 @@ paint_options_init (PaintOptions         *options,
   if (! tool_info)
     {
       g_warning ("%s(): no tool info registered for %s",
-                 G_GNUC_FUNCTION, gtk_type_name (tool_type));
+                 G_GNUC_FUNCTION, g_type_name (tool_type));
     }
 
   /*  initialize the tool options structure  */
@@ -262,7 +262,7 @@ paint_options_init (PaintOptions         *options,
 }
 
 PaintOptions *
-paint_options_new (GtkType               tool_type,
+paint_options_new (GType                 tool_type,
 		   ToolOptionsResetFunc  reset_func)
 {
   PaintOptions *options;
@@ -345,7 +345,7 @@ paint_options_set_global (gboolean global)
 /*  private functions  */
 
 static PaintPressureOptions *
-paint_pressure_options_new (GtkType       tool_type,
+paint_pressure_options_new (GType         tool_type,
                             PaintOptions *paint_options)
 {
   PaintPressureOptions *pressure = NULL;
@@ -507,7 +507,7 @@ paint_pressure_options_reset (PaintPressureOptions *pressure,
 }
 
 static PaintGradientOptions *
-paint_gradient_options_new (GtkType       tool_type,
+paint_gradient_options_new (GType         tool_type,
                             PaintOptions *paint_options)
 {
   PaintGradientOptions *gradient   = NULL;

@@ -27,6 +27,7 @@
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "core/core-types.h"
+#include "widgets/widgets-types.h"
 #include "procedural_db.h"
 
 #include "base/base-types.h"

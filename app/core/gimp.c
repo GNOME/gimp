@@ -20,7 +20,7 @@
 
 #include <string.h> /* strlen */
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -528,7 +528,11 @@ gimp_create_display (Gimp      *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (gimp->create_display_func)
-    gimp->create_display_func (gimage);
+    {
+      gimp->create_display_func (gimage);
+
+      g_object_unref (G_OBJECT (gimage));
+    }
 }
 
 /*

@@ -59,8 +59,6 @@
 static void          gimp_shear_tool_class_init (GimpShearToolClass *klass);
 static void          gimp_shear_tool_init      (GimpShearTool       *shear_tool);
 
-static void          gimp_shear_tool_destroy   (GtkObject      *object);
-
 static TileManager * gimp_shear_tool_transform (GimpTransformTool *transform_tool,
 						GDisplay       *gdisp,
 						TransformState  state);
@@ -102,72 +100,44 @@ gimp_shear_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_SHEAR);
 }
 
-GtkType
+GType
 gimp_shear_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpShearTool",
-        sizeof (GimpShearTool),
         sizeof (GimpShearToolClass),
-        (GtkClassInitFunc) gimp_shear_tool_class_init,
-        (GtkObjectInitFunc) gimp_shear_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_shear_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpShearTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_shear_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_TRANSFORM_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
+					  "GimpShearTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
 }
 
-TileManager *
-gimp_shear_tool_shear (GimpImage    *gimage,
-		       GimpDrawable *drawable,
-		       GDisplay     *gdisp,
-		       TileManager  *float_tiles,
-		       gboolean      interpolation,
-		       GimpMatrix3   matrix)
-{
-  GimpProgress *progress;
-  TileManager  *ret;
-
-  progress = progress_start (gdisp, _("Shearing..."), FALSE, NULL, NULL);
-
-  ret = gimp_transform_tool_do (gimage, drawable, float_tiles,
-				interpolation, matrix,
-				progress ? progress_update_and_flush :
-				(GimpProgressFunc) NULL,
-				progress);
-
-  if (progress)
-    progress_end (progress);
-
-  return ret;
-}
-
-/* private functions */
-
 static void
 gimp_shear_tool_class_init (GimpShearToolClass *klass)
 {
-  GtkObjectClass         *object_class;
   GimpTransformToolClass *trans_class;
 
-  object_class = (GtkObjectClass *) klass;
-  trans_class  = (GimpTransformToolClass *) klass;
+  trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_TRANSFORM_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy     = gimp_shear_tool_destroy;
-
-  trans_class->transform    = gimp_shear_tool_transform;
+  trans_class->transform = gimp_shear_tool_transform;
 }
 
 static void
@@ -195,11 +165,29 @@ gimp_shear_tool_init (GimpShearTool *shear_tool)
 
 }
 
-static void
-gimp_shear_tool_destroy (GtkObject *object)
+TileManager *
+gimp_shear_tool_shear (GimpImage    *gimage,
+		       GimpDrawable *drawable,
+		       GDisplay     *gdisp,
+		       TileManager  *float_tiles,
+		       gboolean      interpolation,
+		       GimpMatrix3   matrix)
 {
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GimpProgress *progress;
+  TileManager  *ret;
+
+  progress = progress_start (gdisp, _("Shearing..."), FALSE, NULL, NULL);
+
+  ret = gimp_transform_tool_do (gimage, drawable, float_tiles,
+				interpolation, matrix,
+				progress ? progress_update_and_flush :
+				(GimpProgressFunc) NULL,
+				progress);
+
+  if (progress)
+    progress_end (progress);
+
+  return ret;
 }
 
 static TileManager *

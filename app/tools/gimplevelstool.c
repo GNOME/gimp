@@ -126,8 +126,6 @@ struct _LevelsDialog
 static void   gimp_levels_tool_class_init (GimpLevelsToolClass *klass);
 static void   gimp_levels_tool_init       (GimpLevelsTool      *bc_tool);
 
-static void   gimp_levels_tool_destroy    (GtkObject  *object);
-
 static void   gimp_levels_tool_initialize (GimpTool   *tool,
 					   GDisplay   *gdisp);
 static void   gimp_levels_tool_control    (GimpTool   *tool,
@@ -214,26 +212,29 @@ gimp_levels_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_LEVELS);
 }
 
-GtkType
+GType
 gimp_levels_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpLevelsTool",
-        sizeof (GimpLevelsTool),
         sizeof (GimpLevelsToolClass),
-        (GtkClassInitFunc) gimp_levels_tool_class_init,
-        (GtkObjectInitFunc) gimp_levels_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_levels_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpLevelsTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_levels_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_IMAGE_MAP_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
+					  "GimpLevelsTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -242,15 +243,11 @@ gimp_levels_tool_get_type (void)
 static void
 gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 {
-  GtkObjectClass    *object_class;
-  GimpToolClass     *tool_class;
+  GimpToolClass *tool_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
+  tool_class = GIMP_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_IMAGE_MAP_TOOL);
-
-  object_class->destroy  = gimp_levels_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->initialize = gimp_levels_tool_initialize;
   tool_class->control    = gimp_levels_tool_control;
@@ -270,15 +267,6 @@ gimp_levels_tool_init (GimpLevelsTool *bc_tool)
       tool_manager_register_tool_options (GIMP_TYPE_LEVELS_TOOL,
 					  (GimpToolOptions *) levels_options);
     }
-}
-
-static void
-gimp_levels_tool_destroy (GtkObject *object)
-{
-  levels_dialog_hide ();
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -396,6 +384,7 @@ levels_free (void)
 
 	  levels_dialog->image_map = NULL;
 	}
+
       gtk_widget_destroy (levels_dialog->shell);
     }
 }

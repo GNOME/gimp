@@ -33,9 +33,10 @@
 
 #define GIMP_TYPE_HISTOGRAM_TOOL            (gimp_histogram_tool_get_type ())
 #define GIMP_HISTOGRAM_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HISTOGRAM_TOOL, GimpHistogramTool))
-#define GIMP_IS_HISTOGRAM_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HISTOGRAM_TOOL))
 #define GIMP_HISTOGRAM_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HISTOGRAM_TOOL, GimpHistogramToolClass))
+#define GIMP_IS_HISTOGRAM_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HISTOGRAM_TOOL))
 #define GIMP_IS_HISTOGRAM_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HISTOGRAM_TOOL))
+#define GIMP_HISTOGRAM_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HISTOGRAM_TOOL, GimpHistogramToolClass))
 
 
 typedef struct _GimpHistogramTool      GimpHistogramTool;
@@ -80,7 +81,7 @@ struct _HistogramToolDialog
 
 void       gimp_histogram_tool_register (Gimp *gimp);
 
-GtkType    gimp_histogram_tool_get_type (void);
+GType      gimp_histogram_tool_get_type (void);
 
 
 void   histogram_dialog_hide          (void);

@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "core-types.h"
 
@@ -127,8 +127,7 @@ gimp_undo_stack_new (GimpImage *gimage)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  stack = GIMP_UNDO_STACK (gtk_object_new (GIMP_TYPE_UNDO_STACK, 
-                                           NULL));
+  stack = GIMP_UNDO_STACK (g_object_new (GIMP_TYPE_UNDO_STACK, NULL));
 
   stack->gimage = gimage;
 

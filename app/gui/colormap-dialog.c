@@ -225,13 +225,13 @@ gimp_colormap_dialog_new (GimpImage *gimage)
   gtk_container_add (GTK_CONTAINER (frame), ipal->palette);
   gtk_widget_show (ipal->palette);
 
-  gtk_signal_connect_after (GTK_OBJECT (ipal->palette), "size_allocate",
-			    GTK_SIGNAL_FUNC (ipal_area_size_allocate),
-			    ipal);
+  g_signal_connect_after (G_OBJECT (ipal->palette), "size_allocate",
+			  G_CALLBACK (ipal_area_size_allocate),
+			  ipal);
 
-  gtk_signal_connect (GTK_OBJECT (ipal->palette), "button_press_event",
-		      GTK_SIGNAL_FUNC (ipal_area_button_press),
-		      ipal);
+  g_signal_connect (G_OBJECT (ipal->palette), "button_press_event",
+		    G_CALLBACK (ipal_area_button_press),
+		    ipal);
 
   /*  dnd stuff  */
   gtk_drag_source_set (ipal->palette,
@@ -263,18 +263,18 @@ gimp_colormap_dialog_new (GimpImage *gimage)
 			     _("Index:"), 1.0, 0.5,
 			     ipal->index_spinbutton, 1, TRUE);
 
-  gtk_signal_connect (GTK_OBJECT (ipal->index_adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (index_adjustment_change_cb),
-		      ipal);
+  g_signal_connect (G_OBJECT (ipal->index_adjustment), "value_changed",
+		    G_CALLBACK (index_adjustment_change_cb),
+		    ipal);
 
   ipal->color_entry = gtk_entry_new_with_max_length (7);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Hex Triplet:"), 1.0, 0.5,
 			     ipal->color_entry, 1, TRUE);
 
-  gtk_signal_connect (GTK_OBJECT (ipal->color_entry), "activate",
-		      GTK_SIGNAL_FUNC (hex_entry_change_cb),
-		      ipal);
+  g_signal_connect (G_OBJECT (ipal->color_entry), "activate",
+		    G_CALLBACK (hex_entry_change_cb),
+		    ipal);
 
   gimp_colormap_dialog_set_image (ipal, gimage);
 
@@ -284,29 +284,27 @@ gimp_colormap_dialog_new (GimpImage *gimage)
 void
 gimp_colormap_dialog_selected (GimpColormapDialog *colormap_dialog)
 {
-  g_return_if_fail (colormap_dialog);
-  g_return_if_fail (GIMP_IS_COLORMAP_DIALOG(colormap_dialog));
+  g_return_if_fail (GIMP_IS_COLORMAP_DIALOG (colormap_dialog));
 
-  gtk_signal_emit (GTK_OBJECT (colormap_dialog),
-		   gimp_colormap_dialog_signals[SELECTED]);
+  g_signal_emit (G_OBJECT (colormap_dialog),
+		 gimp_colormap_dialog_signals[SELECTED] ,0);
 }
 
 void
 gimp_colormap_dialog_set_image (GimpColormapDialog *ipal,
 				GimpImage          *gimage)
 {
-  g_return_if_fail (ipal != NULL);
   g_return_if_fail (GIMP_IS_COLORMAP_DIALOG (ipal));
   g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
 
   if (ipal->image)
     {
-      gtk_signal_disconnect_by_func (GTK_OBJECT (ipal->image),
-				     GTK_SIGNAL_FUNC (image_mode_changed_cb),
-				     ipal);
-      gtk_signal_disconnect_by_func (GTK_OBJECT (ipal->image),
-				     GTK_SIGNAL_FUNC (image_colormap_changed_cb),
-				     ipal);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (ipal->image),
+					    image_mode_changed_cb,
+					    ipal);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (ipal->image),
+					    image_colormap_changed_cb,
+					    ipal);
 
       if (! gimage || (gimp_image_base_type (gimage) != INDEXED))
 	{
@@ -327,12 +325,12 @@ gimp_colormap_dialog_set_image (GimpColormapDialog *ipal,
 
   if (gimage)
     {
-      gtk_signal_connect (GTK_OBJECT (gimage), "mode_changed",
-			  GTK_SIGNAL_FUNC (image_mode_changed_cb),
-			  ipal);
-      gtk_signal_connect (GTK_OBJECT (gimage), "colormap_changed",
-			  GTK_SIGNAL_FUNC (image_colormap_changed_cb),
-			  ipal);
+      g_signal_connect (G_OBJECT (gimage), "mode_changed",
+			G_CALLBACK (image_mode_changed_cb),
+			ipal);
+      g_signal_connect (G_OBJECT (gimage), "colormap_changed",
+			G_CALLBACK (image_colormap_changed_cb),
+			ipal);
 
       if (gimp_image_base_type (gimage) == INDEXED)
 	{
@@ -354,7 +352,6 @@ gimp_colormap_dialog_set_image (GimpColormapDialog *ipal,
 GimpImage *
 gimp_colormap_dialog_get_image (GimpColormapDialog *colormap_dialog)
 {
-  g_return_val_if_fail (colormap_dialog != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_COLORMAP_DIALOG (colormap_dialog), NULL);
 
   return colormap_dialog->image;
@@ -363,8 +360,7 @@ gimp_colormap_dialog_get_image (GimpColormapDialog *colormap_dialog)
 gint
 gimp_colormap_dialog_col_index (GimpColormapDialog *colormap_dialog)
 {
-  g_return_val_if_fail (colormap_dialog != NULL, 0);
-  g_return_val_if_fail (GIMP_IS_COLORMAP_DIALOG(colormap_dialog), 0);
+  g_return_val_if_fail (GIMP_IS_COLORMAP_DIALOG (colormap_dialog), 0);
 
   return colormap_dialog->col_index;
 }
@@ -384,9 +380,9 @@ ipal_create_popup_menu (GimpColormapDialog *ipal)
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
   gtk_widget_show (menu_item);
 
-  gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
-                      GTK_SIGNAL_FUNC (ipal_add_callback),
-                      (gpointer) ipal);
+  g_signal_connect (G_OBJECT (menu_item), "activate", 
+		    G_CALLBACK (ipal_add_callback),
+		    ipal);
 
   ipal->add_item = menu_item;
 
@@ -394,9 +390,9 @@ ipal_create_popup_menu (GimpColormapDialog *ipal)
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
   gtk_widget_show (menu_item);
 
-  gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
-                      GTK_SIGNAL_FUNC (ipal_edit_callback),
-                      (gpointer) ipal);
+  g_signal_connect (G_OBJECT (menu_item), "activate", 
+		    G_CALLBACK (ipal_edit_callback),
+		    ipal);
 }
 
 static void

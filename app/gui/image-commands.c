@@ -24,6 +24,7 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
@@ -257,10 +258,14 @@ void
 image_duplicate_cmd_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  GDisplay *gdisp;
+  GDisplay  *gdisp;
+  GimpImage *gimage;
+
   return_if_no_display (gdisp);
 
-  gdisplay_new (gimp_image_duplicate (gdisp->gimage), 0x0101);
+  gimage = gimp_image_duplicate (gdisp->gimage);
+
+  gimp_create_display (gimage->gimp, gimage);
 }
 
 

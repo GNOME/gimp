@@ -20,7 +20,7 @@
 
 #include <string.h> /* memcpy */
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -51,7 +51,6 @@ gimp_palette_import_from_gradient (GimpGradient *gradient,
   GimpRGB      color;
   gint         loop;
 
-  g_return_val_if_fail (gradient != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (n_colors > 0, NULL);
@@ -197,8 +196,8 @@ gimp_palette_import_create_image_palette (gpointer data,
   palette   = (GimpPalette *) user_data;
   color_tab = (ImgColors *) data;
 
-  n_colors = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (palette),
-						   "import_n_colors"));
+  n_colors = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (palette),
+						 "import_n_colors"));
 
   if (palette->n_colors >= n_colors)
     return;
@@ -232,13 +231,13 @@ gimp_palette_import_image_make_palette (GHashTable  *h_array,
 
   palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
-  gtk_object_set_data (GTK_OBJECT (palette), "import_n_colors",
-		       GINT_TO_POINTER (n_colors));
+  g_object_set_data (G_OBJECT (palette), "import_n_colors",
+		     GINT_TO_POINTER (n_colors));
 
   g_slist_foreach (sorted_list, gimp_palette_import_create_image_palette,
 		   palette);
 
-  gtk_object_set_data (GTK_OBJECT (palette), "import_n_colors", NULL);
+  g_object_set_data (G_OBJECT (palette), "import_n_colors", NULL);
 
   /*  Free up used memory
    *  Note the same structure is on both the hash list and the sorted
@@ -272,7 +271,6 @@ gimp_palette_import_from_image (GimpImage   *gimage,
   gint         d_type;
   GHashTable  *store_array = NULL;
 
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (n_colors > 0, NULL);
@@ -338,7 +336,6 @@ gimp_palette_import_from_indexed_image (GimpImage   *gimage,
   gint         count;
   GimpRGB      color;
 
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (gimp_image_base_type (gimage) == INDEXED, NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);

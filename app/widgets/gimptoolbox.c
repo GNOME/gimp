@@ -252,7 +252,7 @@ toolbox_tool_changed (GimpContext  *context,
       GtkWidget *toolbox_button;
 
       toolbox_button =
-	gtk_object_get_data (GTK_OBJECT (tool_info), "toolbox_button");
+	g_object_get_data (G_OBJECT (tool_info), "toolbox_button");
 
       if (toolbox_button && ! GTK_TOGGLE_BUTTON (toolbox_button)->active)
 	{

@@ -23,7 +23,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
+
+#include <gtk/gtk.h> /* EEK */
 
 #include "libgimpmath/gimpmath.h"
 
@@ -43,7 +45,7 @@
 #include "gimpparasitelist.h"
 
 #include "floating_sel.h"
-#include "gdisplay.h"
+#include "gdisplay.h" /* EEK */
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

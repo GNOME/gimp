@@ -59,7 +59,6 @@ enum
 
 static void   gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass);
 static void   gimp_rect_select_tool_init       (GimpRectSelectTool      *rect_select);
-static void   gimp_rect_select_tool_destroy          (GtkObject      *object);
 
 static void   gimp_rect_select_tool_button_press     (GimpTool       *tool,
                                                       GdkEventButton *bevent,
@@ -103,29 +102,32 @@ gimp_rect_select_tool_register (Gimp *gimp)
                               GIMP_STOCK_TOOL_RECT_SELECT);
 }
 
-GtkType
+GType
 gimp_rect_select_tool_get_type (void)
 {
-  static GtkType rect_select_type = 0;
+  static GtkType tool_type = 0;
 
-  if (! rect_select_type)
+  if (! tool_type)
     {
-      GtkTypeInfo rect_select_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpRectSelectTool",
-        sizeof (GimpRectSelectTool),
         sizeof (GimpRectSelectToolClass),
-        (GtkClassInitFunc) gimp_rect_select_tool_class_init,
-        (GtkObjectInitFunc) gimp_rect_select_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_rect_select_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpRectSelectTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_rect_select_tool_init,
       };
 
-      rect_select_type = gtk_type_unique (GIMP_TYPE_SELECTION_TOOL,
-                                          &rect_select_info);
+      tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
+					  "GimpRectSelectTool", 
+                                          &tool_info, 0);
     }
 
-  return rect_select_type;
+  return tool_type;
 }
 
 void
@@ -179,13 +181,11 @@ rect_select (GimpImage *gimage,
 static void
 gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass)
 {
-  GtkObjectClass    *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  tool_class      = (GimpToolClass *) klass;
-  draw_tool_class = (GimpDrawToolClass *) klass;
+  tool_class      = GIMP_TOOL_CLASS (klass);
+  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -201,8 +201,6 @@ gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass)
 		  G_TYPE_INT,
 		  G_TYPE_INT,
 		  G_TYPE_INT);
-
-  object_class->destroy      = gimp_rect_select_tool_destroy;
 
   tool_class->button_press   = gimp_rect_select_tool_button_press;
   tool_class->button_release = gimp_rect_select_tool_button_release;
@@ -236,13 +234,6 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
 
   rect_select->x = rect_select->y = 0;
   rect_select->w = rect_select->h = 0;
-}
-
-static void
-gimp_rect_select_tool_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

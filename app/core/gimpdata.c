@@ -29,7 +29,7 @@
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 

@@ -20,7 +20,7 @@
 
 #include <string.h> /* memcpy */
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 

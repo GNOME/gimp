@@ -104,7 +104,7 @@ struct _GimpToolClass
 };
 
 
-GtkType       gimp_tool_get_type        (void);
+GType         gimp_tool_get_type        (void);
 
 void          gimp_tool_initialize      (GimpTool       *tool,
 					 GDisplay       *gdisplay);

@@ -29,7 +29,7 @@
 #endif
 #include <fcntl.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #ifdef G_OS_WIN32 /* gets defined by glib.h */
 #include <io.h>
@@ -51,10 +51,6 @@
 #include "gimpbrush-header.h"
 #include "gimpbrushgenerated.h"
 
-/*  this needs to go away  */
-#include "tools/tools-types.h"
-#include "tools/gimppainttool.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -75,8 +71,10 @@ static TempBuf   * gimp_brush_get_new_preview  (GimpViewable   *viewable,
 						gint            height);
 static gchar     * gimp_brush_get_extension    (GimpData       *data);
 
+#if 0
 static GimpBrush * gimp_brush_select_brush     (GimpPaintTool  *paint_tool);
 static gboolean    gimp_brush_want_null_motion (GimpPaintTool  *paint_tool);
+#endif
 
 
 static guint brush_signals[LAST_SIGNAL] = { 0 };
@@ -140,8 +138,10 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   data_class->get_extension       = gimp_brush_get_extension;
 
+#if 0
   klass->select_brush             = gimp_brush_select_brush;
   klass->want_null_motion         = gimp_brush_want_null_motion;
+#endif
 }
 
 static void
@@ -360,6 +360,7 @@ gimp_brush_load (const gchar *filename)
   return GIMP_DATA (brush);
 }
 
+#if 0
 static GimpBrush *
 gimp_brush_select_brush (GimpPaintTool *paint_core)
 {
@@ -371,6 +372,7 @@ gimp_brush_want_null_motion (GimpPaintTool *paint_core)
 {
   return TRUE;
 }
+#endif
 
 TempBuf *
 gimp_brush_get_mask (const GimpBrush *brush)

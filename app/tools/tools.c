@@ -71,7 +71,6 @@ tools_init (Gimp *gimp)
   /*  register tools in reverse order  */
 
   /*  color tools  */
-
   gimp_posterize_tool_register (gimp);
   gimp_curves_tool_register (gimp);
   gimp_levels_tool_register (gimp);

@@ -53,8 +53,6 @@
 static void   gimp_histogram_tool_class_init (GimpHistogramToolClass *klass);
 static void   gimp_histogram_tool_init       (GimpHistogramTool      *bc_tool);
 
-static void   gimp_histogram_tool_destroy    (GtkObject  *object);
-
 static void   gimp_histogram_tool_initialize (GimpTool   *tool,
 					      GDisplay   *gdisp);
 static void   gimp_histogram_tool_control    (GimpTool   *tool,
@@ -100,26 +98,29 @@ gimp_histogram_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_HISTOGRAM);
 }
 
-GtkType
+GType
 gimp_histogram_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpHistogramTool",
-        sizeof (GimpHistogramTool),
         sizeof (GimpHistogramToolClass),
-        (GtkClassInitFunc) gimp_histogram_tool_class_init,
-        (GtkObjectInitFunc) gimp_histogram_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_histogram_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpHistogramTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_histogram_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
+					  "GimpHistogramTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -128,15 +129,11 @@ gimp_histogram_tool_get_type (void)
 static void
 gimp_histogram_tool_class_init (GimpHistogramToolClass *klass)
 {
-  GtkObjectClass    *object_class;
-  GimpToolClass     *tool_class;
+  GimpToolClass *tool_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
+  tool_class = GIMP_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
-
-  object_class->destroy  = gimp_histogram_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->initialize = gimp_histogram_tool_initialize;
   tool_class->control    = gimp_histogram_tool_control;
@@ -159,15 +156,6 @@ gimp_histogram_tool_init (GimpHistogramTool *bc_tool)
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
-}
-
-static void
-gimp_histogram_tool_destroy (GtkObject *object)
-{
-  histogram_dialog_hide ();
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

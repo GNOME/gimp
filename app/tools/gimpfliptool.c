@@ -72,8 +72,6 @@ struct _FlipOptions
 static void          gimp_flip_tool_class_init    (GimpFlipToolClass *klass);
 static void          gimp_flip_tool_init          (GimpFlipTool      *flip_tool);
 
-static void          gimp_flip_tool_destroy       (GtkObject         *object);
-
 static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
 						   GdkEventMotion    *mevent,
 						   GDisplay          *gdisp);
@@ -110,26 +108,29 @@ gimp_flip_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_FLIP);
 }
 
-GtkType
+GType
 gimp_flip_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpFlipTool",
-        sizeof (GimpFlipTool),
         sizeof (GimpFlipToolClass),
-        (GtkClassInitFunc) gimp_flip_tool_class_init,
-        (GtkObjectInitFunc) gimp_flip_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_flip_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpFlipTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_flip_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_TRANSFORM_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
+					  "GimpFlipTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -210,19 +211,15 @@ flip_tool_flip (GimpImage               *gimage,
 static void
 gimp_flip_tool_class_init (GimpFlipToolClass *klass)
 {
-  GtkObjectClass         *object_class;
   GimpToolClass          *tool_class;
   GimpDrawToolClass      *draw_class;
   GimpTransformToolClass *trans_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
-  draw_class   = (GimpDrawToolClass *) klass;
-  trans_class  = (GimpTransformToolClass *) klass;
+  tool_class   = GIMP_TOOL_CLASS (klass);
+  draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
+  trans_class  = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_TRANSFORM_TOOL);
-
-  object_class->destroy     = gimp_flip_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->cursor_update = gimp_flip_tool_cursor_update;
   tool_class->modifier_key  = gimp_flip_tool_modifier_key;
@@ -256,19 +253,6 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
   tool->auto_snap_to = FALSE;  /*  Don't snap to guides  */
 
   tr_tool->trans_info[FLIP_INFO] = -1.0;
-}
-
-static void
-gimp_flip_tool_destroy (GtkObject *object)
-{
-  GimpFlipTool *flip_tool;
-  GimpTool     *tool;
-
-  flip_tool = GIMP_FLIP_TOOL (object);
-  tool      = GIMP_TOOL (flip_tool);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

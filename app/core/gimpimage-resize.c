@@ -20,7 +20,7 @@
 
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
@@ -51,7 +51,6 @@
 #include "gimpundostack.h"
 
 #include "floating_sel.h"
-#include "gdisplay.h"
 #include "path.h"
 #include "undo.h"
 
@@ -768,8 +767,7 @@ gimp_image_set_resolution (GimpImage *gimage,
   gimage->xresolution = xresolution;
   gimage->yresolution = yresolution;
 
-  /* really just want to recalc size and repaint */
-  gdisplays_shrink_wrap (gimage);
+  gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 }
 
 void
@@ -2449,7 +2447,6 @@ gimp_image_validate (TileManager *tm,
 void
 gimp_image_invalidate_layer_previews (GimpImage *gimage)
 {
-  g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   gimp_container_foreach (gimage->layers, 
@@ -2460,7 +2457,6 @@ gimp_image_invalidate_layer_previews (GimpImage *gimage)
 void
 gimp_image_invalidate_channel_previews (GimpImage *gimage)
 {
-  g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   gimp_container_foreach (gimage->channels, 
@@ -2471,7 +2467,6 @@ gimp_image_invalidate_channel_previews (GimpImage *gimage)
 GimpContainer *
 gimp_image_get_layers (const GimpImage *gimage)
 {
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   return gimage->layers;
@@ -2480,7 +2475,6 @@ gimp_image_get_layers (const GimpImage *gimage)
 GimpContainer *
 gimp_image_get_channels (const GimpImage *gimage)
 {
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   return gimage->channels;
@@ -2490,10 +2484,7 @@ gint
 gimp_image_get_layer_index (const GimpImage   *gimage,
 			    const GimpLayer   *layer)
 {
-  g_return_val_if_fail (gimage != NULL, -1);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
-
-  g_return_val_if_fail (layer != NULL, -1);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), -1);
 
   return gimp_container_get_child_index (gimage->layers, 
@@ -2504,10 +2495,7 @@ gint
 gimp_image_get_channel_index (const GimpImage   *gimage,
 			      const GimpChannel *channel)
 {
-  g_return_val_if_fail (gimage != NULL, -1);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
-
-  g_return_val_if_fail (channel != NULL, -1);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), -1);
 
   return gimp_container_get_child_index (gimage->channels, 
@@ -2517,7 +2505,6 @@ gimp_image_get_channel_index (const GimpImage   *gimage,
 GimpLayer *
 gimp_image_get_active_layer (const GimpImage *gimage)
 {
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   return gimage->active_layer;
@@ -2611,7 +2598,6 @@ gimp_image_set_component_active (GimpImage   *gimage,
 {
   gint pixel = -1;
 
-  g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   switch (type)
@@ -2684,7 +2670,6 @@ gimp_image_set_component_visible (GimpImage   *gimage,
 {
   gint pixel = -1;
 
-  g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   switch (type)
@@ -2911,10 +2896,7 @@ gimp_image_raise_layer (GimpImage *gimage,
 {
   gint curpos;
   
-  g_return_val_if_fail (gimage != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  
-  g_return_val_if_fail (layer != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   curpos = gimp_container_get_child_index (gimage->layers, 
@@ -2937,11 +2919,8 @@ gimp_image_lower_layer (GimpImage *gimage,
 {
   gint curpos;
   gint length;
-  
-  g_return_val_if_fail (gimage != NULL, FALSE);
+
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  
-  g_return_val_if_fail (layer != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   curpos = gimp_container_get_child_index (gimage->layers, 
@@ -2964,11 +2943,8 @@ gimp_image_raise_layer_to_top (GimpImage *gimage,
 			       GimpLayer *layer)
 {
   gint curpos;
-  
-  g_return_val_if_fail (gimage != NULL, FALSE);
+
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  
-  g_return_val_if_fail (layer != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   curpos = gimp_container_get_child_index (gimage->layers, 
@@ -2996,11 +2972,8 @@ gimp_image_lower_layer_to_bottom (GimpImage *gimage,
 {
   gint curpos;
   gint length;
-  
-  g_return_val_if_fail (gimage != NULL, FALSE);
+
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  
-  g_return_val_if_fail (layer != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   curpos = gimp_container_get_child_index (gimage->layers, 
@@ -3027,10 +3000,7 @@ gimp_image_position_layer (GimpImage *gimage,
   gint index;
   gint num_layers;
 
-  g_return_val_if_fail (gimage != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  
-  g_return_val_if_fail (layer != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   index = gimp_container_get_child_index (gimage->layers, 
@@ -3077,7 +3047,6 @@ gimp_image_position_layer (GimpImage *gimage,
 		     gimp_drawable_width (GIMP_DRAWABLE (layer)),
 		     gimp_drawable_height (GIMP_DRAWABLE (layer)));
 
-  /*  invalidate the composite preview  */
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 
   return TRUE;
@@ -3537,10 +3506,7 @@ gimp_image_add_layer (GimpImage *gimage,
 {
   LayerUndo *lu;
 
-  g_return_val_if_fail (gimage != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  
-  g_return_val_if_fail (layer != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   if (GIMP_DRAWABLE (layer)->gimage != NULL && 
@@ -3624,11 +3590,9 @@ gimp_image_remove_layer (GimpImage *gimage,
 			 GimpLayer *layer)
 {
   LayerUndo *lu;
+  gint       x, y, w, h;
 
-  g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  
-  g_return_if_fail (layer != NULL);
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
   g_return_if_fail (gimp_container_have (gimage->layers, 
@@ -3674,11 +3638,15 @@ gimp_image_remove_layer (GimpImage *gimage,
   /* Send out REMOVED signal from layer */
   gimp_drawable_removed (GIMP_DRAWABLE (layer));
 
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x, &y);
+  w = gimp_drawable_width (GIMP_DRAWABLE (layer));
+  h = gimp_drawable_height (GIMP_DRAWABLE (layer));
+
   g_object_unref (G_OBJECT (layer));
 
-  /*  invalidate the composite preview  */
+  gimp_image_update (gimage, x, y, w, h);
+
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
-  gdisplays_update_full (gimage);
 }
 
 gboolean
@@ -3687,10 +3655,7 @@ gimp_image_raise_channel (GimpImage   *gimage,
 {
   gint index;
 
-  g_return_val_if_fail (gimage != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-
-  g_return_val_if_fail (channel != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);  
 
   index = gimp_container_get_child_index (gimage->channels, 
@@ -3710,10 +3675,7 @@ gimp_image_lower_channel (GimpImage   *gimage,
 {
   gint index;
 
-  g_return_val_if_fail (gimage != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-
-  g_return_val_if_fail (channel != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);  
   
   index = gimp_container_get_child_index (gimage->channels, 
@@ -3736,10 +3698,7 @@ gimp_image_position_channel (GimpImage   *gimage,
   gint index;
   gint num_channels;
 
-  g_return_val_if_fail (gimage != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-
-  g_return_val_if_fail (channel != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);  
 
   index = gimp_container_get_child_index (gimage->channels, 
@@ -3772,10 +3731,7 @@ gimp_image_add_channel (GimpImage   *gimage,
 {
   ChannelUndo *cu;
 
-  g_return_val_if_fail (gimage != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  
-  g_return_val_if_fail (channel != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
   if (GIMP_DRAWABLE (channel)->gimage != NULL &&
@@ -3823,10 +3779,7 @@ gimp_image_remove_channel (GimpImage   *gimage,
 {
   ChannelUndo *cu;
 
-  g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  
-  g_return_if_fail (channel != NULL);
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
   g_return_if_fail (gimp_container_have (gimage->channels, 
@@ -3864,9 +3817,9 @@ gimp_image_remove_channel (GimpImage   *gimage,
 
   g_object_unref (G_OBJECT (channel));
 
-  /*  invalidate the composite preview  */
+  gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
+
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
-  gdisplays_update_full (gimage);
 }
 
 /************************************************************/
@@ -3876,7 +3829,6 @@ gimp_image_remove_channel (GimpImage   *gimage,
 gboolean
 gimp_image_is_empty (const GimpImage *gimage)
 {
-  g_return_val_if_fail (gimage != NULL, TRUE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), TRUE);
 
   return (gimp_container_num_children (gimage->layers) == 0);
@@ -3885,7 +3837,6 @@ gimp_image_is_empty (const GimpImage *gimage)
 GimpDrawable *
 gimp_image_active_drawable (const GimpImage *gimage)
 {
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   /*  If there is an active channel (a saved selection, etc.),
@@ -3913,7 +3864,6 @@ gimp_image_active_drawable (const GimpImage *gimage)
 GimpImageBaseType
 gimp_image_base_type (const GimpImage *gimage)
 {
-  g_return_val_if_fail (gimage != NULL, -1);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
 
   return gimage->base_type;
@@ -3922,7 +3872,6 @@ gimp_image_base_type (const GimpImage *gimage)
 GimpImageType
 gimp_image_base_type_with_alpha (const GimpImage *gimage)
 {
-  g_return_val_if_fail (gimage != NULL, -1);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
 
   switch (gimage->base_type)
@@ -3942,7 +3891,6 @@ gimp_image_filename (const GimpImage *gimage)
 {
   const gchar *filename;
 
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   filename = gimp_object_get_name (GIMP_OBJECT (gimage));

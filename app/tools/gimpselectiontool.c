@@ -35,8 +35,6 @@
 static void   gimp_selection_tool_class_init    (GimpSelectionToolClass *klass);
 static void   gimp_selection_tool_init          (GimpSelectionTool      *selection_tool);
 
-static void   gimp_selection_tool_destroy         (GtkObject         *object);
-
 static void   gimp_selection_tool_cursor_update   (GimpTool          *tool,
                                                    GdkEventMotion    *mevent,
                                                    GDisplay          *gdisp);
@@ -57,43 +55,42 @@ static void   gimp_selection_tool_update_op_state (GimpSelectionTool *selection_
 static GimpDrawToolClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_selection_tool_get_type (void)
 {
-  static GtkType selection_tool_type = 0;
+  static GType tool_type = 0;
 
-  if (! selection_tool_type)
+  if (! tool_type)
     {
-      GtkTypeInfo selection_tool_info =
+      static const GTypeInfo tool_info =
       {
-	"GimpSelectionTool",
+        sizeof (GimpSelectionToolClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_selection_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpSelectionTool),
-	sizeof (GimpSelectionToolClass),
-	(GtkClassInitFunc) gimp_selection_tool_class_init,
-	(GtkObjectInitFunc) gimp_selection_tool_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_selection_tool_init,
       };
 
-      selection_tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL,
-                                             &selection_tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+					  "GimpSelectionTool", 
+                                          &tool_info, 0);
     }
 
-  return selection_tool_type;
+  return tool_type;
 }
 
 static void
 gimp_selection_tool_class_init (GimpSelectionToolClass *klass)
 {
-  GtkObjectClass *object_class;
-  GimpToolClass  *tool_class;
+  GimpToolClass *tool_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
+  tool_class = GIMP_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
-
-  object_class->destroy = gimp_selection_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->cursor_update = gimp_selection_tool_cursor_update;
   tool_class->oper_update   = gimp_selection_tool_oper_update;
@@ -112,13 +109,6 @@ gimp_selection_tool_init (GimpSelectionTool *selection_tool)
   selection_tool->op        = SELECTION_REPLACE;
 
   tool->preserve = FALSE;  /*  Don't preserve on drawable change  */
-}
-
-static void
-gimp_selection_tool_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

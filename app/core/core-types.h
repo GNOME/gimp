@@ -20,6 +20,9 @@
 #define __CORE_TYPES_H__
 
 
+/* EEK */
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include "apptypes.h"
 
 

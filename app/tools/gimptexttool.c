@@ -145,14 +145,15 @@ gimp_text_tool_get_type (void)
 	(GBaseInitFunc) NULL,
 	(GBaseFinalizeFunc) NULL,
 	(GClassInitFunc) gimp_text_tool_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpTextTool),
 	0,              /* n_preallocs    */
 	(GInstanceInitFunc) gimp_text_tool_init,
       };
 
-      tool_type = g_type_register_static (GIMP_TYPE_TOOL, "GimpTextTool", 
+      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
+					  "GimpTextTool", 
                                           &tool_info, 0);
     }
 
@@ -168,11 +169,9 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
   object_class = G_OBJECT_CLASS (klass);
   tool_class   = GIMP_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
-
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_text_tool_finalize;
+  object_class->finalize     = gimp_text_tool_finalize;
 
   tool_class->control        = text_tool_control;
   tool_class->button_press   = text_tool_button_press;

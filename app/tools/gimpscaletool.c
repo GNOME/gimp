@@ -97,19 +97,22 @@ gimp_scale_tool_get_type (void)
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpScaleTool",
-        sizeof (GimpScaleTool),
         sizeof (GimpScaleToolClass),
-        (GtkClassInitFunc) gimp_scale_tool_class_init,
-        (GtkObjectInitFunc) gimp_scale_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_scale_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpScaleTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_scale_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_TRANSFORM_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
+					  "GimpScaleTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;

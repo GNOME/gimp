@@ -218,7 +218,7 @@ path_list_new (GimpImage *gimage,
   pip->last_selected_row = last_selected_row;
   
   /* add connector to image delete/destroy */
-  pip->sig_id = g_signal_connect (G_OBJECT (gimage), "destroy",
+  pip->sig_id = g_signal_connect (G_OBJECT (gimage), "disconnect",
                                   G_CALLBACK (paths_dialog_destroy_cb),
                                   pip);
   

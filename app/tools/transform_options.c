@@ -185,7 +185,7 @@ transform_options_reset (GimpToolOptions *tool_options)
 
 void
 transform_options_init (TransformOptions     *options,
-			GtkType               tool_type,
+			GType                 tool_type,
 			ToolOptionsResetFunc  reset_func)
 {
 
@@ -315,7 +315,7 @@ transform_options_init (TransformOptions     *options,
 }
 
 TransformOptions *
-transform_options_new (GtkType               tool_type,
+transform_options_new (GType                 tool_type,
 		       ToolOptionsResetFunc  reset_func)
 {
   TransformOptions *options;

@@ -25,9 +25,10 @@
 
 #define GIMP_TYPE_BEZIER_SELECT_TOOL            (gimp_bezier_select_tool_get_type ())
 #define GIMP_BEZIER_SELECT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BEZIER_SELECT_TOOL, GimpBezierSelectTool))
-#define GIMP_IS_BEZIER_SELECT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BEZIER_SELECT_TOOL))
 #define GIMP_BEZIER_SELECT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BEZIER_SELECT_TOOL, GimpBezierSelectToolClass))
+#define GIMP_IS_BEZIER_SELECT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BEZIER_SELECT_TOOL))
 #define GIMP_IS_BEZIER_SELECT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BEZIER_SELECT_TOOL))
+#define GIMP_BEZIER_SELECT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BEZIER_SELECT_TOOL, GimpBezierSelectToolClass))
 
 
 #define BEZIER_START     1
@@ -112,7 +113,7 @@ typedef struct
 
 void       gimp_bezier_select_tool_register    (Gimp *gimp);
 
-GtkType    gimp_bezier_select_tool_get_type    (void);
+GType      gimp_bezier_select_tool_get_type    (void);
 
 gboolean   bezier_tool_selected      (void);
 

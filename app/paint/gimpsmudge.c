@@ -123,26 +123,29 @@ gimp_smudge_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_SMUDGE);
 }
 
-GtkType
+GType
 gimp_smudge_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpSmudgeTool",
-        sizeof (GimpSmudgeTool),
         sizeof (GimpSmudgeToolClass),
-        (GtkClassInitFunc) gimp_smudge_tool_class_init,
-        (GtkObjectInitFunc) gimp_smudge_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_smudge_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpSmudgeTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_smudge_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_PAINT_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
+					  "GimpSmudgeTool",
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -153,9 +156,9 @@ gimp_smudge_tool_class_init (GimpSmudgeToolClass *klass)
 {
   GimpPaintToolClass *paint_tool_class;
 
-  paint_tool_class = (GimpPaintToolClass *) klass;
+  paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_PAINT_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
   paint_tool_class->paint = gimp_smudge_tool_paint;
 }

@@ -96,7 +96,7 @@ static GtkWidget   *size_sizeentry;
 static void   gimp_crop_tool_class_init     (GimpCropToolClass *klass);
 static void   gimp_crop_tool_init           (GimpCropTool      *crop_tool);
 
-static void   gimp_crop_tool_destroy        (GtkObject       *object);
+static void   gimp_crop_tool_finalize       (GObject         *object);
 
 static void   gimp_crop_tool_button_press   (GimpTool        *tool,
 					     GdkEventButton  *bevent,
@@ -179,44 +179,48 @@ gimp_crop_tool_register (Gimp *gimp)
                               GIMP_STOCK_TOOL_CROP);
 }
 
-GtkType
+GType
 gimp_crop_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
-        {
-          "GimpCropTool",
-          sizeof (GimpCropTool),
-          sizeof (GimpCropToolClass),
-          (GtkClassInitFunc) gimp_crop_tool_class_init,
-          (GtkObjectInitFunc) gimp_crop_tool_init,
-          /* reserved_1 */ NULL,
-          /* reserved_2 */ NULL,
-          (GtkClassInitFunc) NULL,
-        };
+      static const GTypeInfo tool_info =
+      {
+        sizeof (GimpCropToolClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_crop_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpCropTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_crop_tool_init,
+      };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+					  "GimpCropTool", 
+                                          &tool_info, 0);
     }
+
   return tool_type;
 }
 
 static void
 gimp_crop_tool_class_init (GimpCropToolClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  tool_class      = (GimpToolClass *) klass;
-  draw_tool_class = (GimpDrawToolClass *) klass;
+  object_class    = G_OBJECT_CLASS (klass);
+  tool_class      = GIMP_TOOL_CLASS (klass);
+  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy      = gimp_crop_tool_destroy;
+  object_class->finalize     = gimp_crop_tool_finalize;
 
   tool_class->control        = gimp_crop_tool_control;
   tool_class->button_press   = gimp_crop_tool_button_press;
@@ -248,28 +252,45 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
 }
 
 static void
-gimp_crop_tool_destroy (GtkObject *object)
+gimp_crop_tool_finalize (GObject *object)
 {
-  GimpTool     *tool;
-  GimpCropTool *crop_tool;
-  GimpDrawTool *draw;
-
-  tool      = GIMP_TOOL (object);
-  crop_tool = GIMP_CROP_TOOL (object);
-  draw = GIMP_DRAW_TOOL(tool);
-
-  if (tool->state == ACTIVE)
-    gimp_draw_tool_stop (draw);
-
   if (crop_info)
     {
       info_dialog_free (crop_info);
       crop_info = NULL;
-
     }
 
- if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_crop_tool_control (GimpTool   *tool,
+			ToolAction  action,
+			GDisplay   *gdisp)
+{
+  GimpCropTool *crop_tool;
+
+  crop_tool = GIMP_CROP_TOOL (tool);
+  
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      crop_recalc (tool, crop_tool);
+      break;
+
+    case HALT:
+      crop_close_callback (NULL, NULL);
+      break;
+
+    default:
+      break;
+    }
+
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 static void
@@ -687,38 +708,6 @@ gimp_crop_tool_modifier_key (GimpTool    *tool,
 	  (GTK_TOGGLE_BUTTON (crop_options->type_w[CROP_CROP]), TRUE);
       break;
     }
-}
-
-static void
-gimp_crop_tool_control (GimpTool   *tool,
-			ToolAction  action,
-			GDisplay   *gdisp)
-{
-  GimpCropTool *crop;
-  GimpDrawTool *draw;
-
-  crop = GIMP_CROP_TOOL (tool);
-  draw = GIMP_DRAW_TOOL (tool);
-  
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      crop_recalc (tool, crop);
-      break;
-
-    case HALT:
-      crop_close_callback (NULL, NULL);
-      break;
-
-    default:
-      break;
-    }
-
-  if (GIMP_TOOL_CLASS (parent_class)->control)
-    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 void

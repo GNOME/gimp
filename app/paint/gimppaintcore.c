@@ -82,7 +82,6 @@ enum
 /*  local function prototypes  */
 static void   gimp_paint_tool_class_init      (GimpPaintToolClass  *klass);
 static void   gimp_paint_tool_init            (GimpPaintTool       *paint_tool);
-static void   gimp_paint_tool_destroy         (GtkObject           *object);
 
 static void   gimp_paint_tool_control         (GimpTool	           *tool,
 					       ToolAction           action,
@@ -209,26 +208,29 @@ static guint gimp_paint_tool_signals[LAST_SIGNAL] = { 0 };
 static GimpDrawToolClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_paint_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpPaintTool",
-        sizeof (GimpPaintTool),
         sizeof (GimpPaintToolClass),
-        (GtkClassInitFunc) gimp_paint_tool_class_init,
-        (GtkObjectInitFunc) gimp_paint_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_paint_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpPaintTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_paint_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+					  "GimpPaintTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -237,13 +239,11 @@ gimp_paint_tool_get_type (void)
 static void
 gimp_paint_tool_class_init (GimpPaintToolClass *klass)
 {
-  GtkObjectClass    *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  tool_class      = (GimpToolClass *) klass;
-  draw_tool_class = (GimpDrawToolClass *) klass;
+  tool_class      = GIMP_TOOL_CLASS (klass);
+  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -257,8 +257,6 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
 		  G_TYPE_NONE, 2,
 		  G_TYPE_POINTER,
 		  G_TYPE_INT);
-
-  object_class->destroy      = gimp_paint_tool_destroy;
 
   tool_class->button_press   = gimp_paint_tool_button_press;
   tool_class->button_release = gimp_paint_tool_button_release;
@@ -277,20 +275,6 @@ gimp_paint_tool_init (GimpPaintTool *tool)
   tool->pick_colors = FALSE;
   tool->flags       = 0;
   tool->context_id  = 0;
-}
-
-static void
-gimp_paint_tool_destroy (GtkObject *object)
-{
-  GimpPaintTool *paint_tool;
-
-  paint_tool = GIMP_PAINT_TOOL (object);
-
-  /*  Cleanup memory  */
-  gimp_paint_tool_cleanup ();
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -475,11 +459,24 @@ gimp_paint_tool_button_press (GimpTool       *tool,
        */
       if (paint_tool->lastx != paint_tool->curx
 	  || paint_tool->lasty != paint_tool->cury
-	  || GIMP_BRUSH_GET_CLASS (paint_tool->brush)->want_null_motion (paint_tool))
+#ifdef __GNUC__
+#warning FIXME: GIMP_BRUSH_GET_CLASS (paint_tool->brush)->want_null_motion
+#endif
+#if 0
+	  || GIMP_BRUSH_GET_CLASS (paint_tool->brush)->want_null_motion (paint_tool)
+#endif
+	  )
 	{
 	  if (paint_tool->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
-	    paint_tool->brush =
-	      GIMP_BRUSH_GET_CLASS (paint_tool->brush)->select_brush (paint_tool);
+	    {
+#ifdef __GNUC__
+#warning FIXME: GIMP_BRUSH_GET_CLASS (paint_tool->brush)->select_brush
+#endif
+#if 0
+	      paint_tool->brush =
+		GIMP_BRUSH_GET_CLASS (paint_tool->brush)->select_brush (paint_tool);
+#endif
+	    }
 
 	  gimp_paint_tool_paint (paint_tool, drawable, MOTION_PAINT);
 	}
@@ -621,7 +618,7 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
   /* Set toggle cursors for various paint tools */
   if (tool->toggled)
     {
-      GtkType type;
+      GType type;
 
       type = G_TYPE_FROM_CLASS (G_OBJECT_GET_CLASS (tool));
 
@@ -1019,8 +1016,15 @@ gimp_paint_tool_interpolate (GimpPaintTool *paint_tool,
 	  current_brush = paint_tool->brush;
 
 	  if (paint_tool->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
-	    paint_tool->brush =
-	      GIMP_BRUSH_GET_CLASS (paint_tool->brush)->select_brush (paint_tool);
+	    {
+#ifdef __GNUC__
+#warning FIXME: GIMP_BRUSH_GET_CLASS (paint_tool->brush)->select_brush
+#endif
+#if 0
+	      paint_tool->brush =
+		GIMP_BRUSH_GET_CLASS (paint_tool->brush)->select_brush (paint_tool);
+#endif
+	    }
 	  gimp_paint_tool_paint(paint_tool, drawable, MOTION_PAINT);
 
 	  /*  restore the current brush pointer  */

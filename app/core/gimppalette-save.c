@@ -25,7 +25,7 @@
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -214,9 +214,9 @@ gimp_palette_new (const gchar *name)
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (*name != '\0', NULL);
 
-  palette = GIMP_PALETTE (gtk_object_new (GIMP_TYPE_PALETTE,
-					  "name", name,
-					  NULL));
+  palette = GIMP_PALETTE (g_object_new (GIMP_TYPE_PALETTE,
+					"name", name,
+					NULL));
 
   gimp_data_dirty (GIMP_DATA (palette));
 

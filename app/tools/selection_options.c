@@ -43,7 +43,7 @@
 
 void
 selection_options_init (SelectionOptions     *options,
-			GtkType               tool_type,
+			GType                 tool_type,
 			ToolOptionsResetFunc  reset_func)
 {
   GtkWidget *vbox;
@@ -289,7 +289,7 @@ selection_options_init (SelectionOptions     *options,
 }
 
 SelectionOptions *
-selection_options_new (GtkType               tool_type,
+selection_options_new (GType                 tool_type,
 		       ToolOptionsResetFunc  reset_func)
 {
   SelectionOptions *options;

@@ -20,7 +20,7 @@
 
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "core-types.h"
 
@@ -59,7 +59,7 @@ static void   gimp_object_get_property (GObject         *object,
 
 static guint   object_signals[LAST_SIGNAL] = { 0 };
 
-static GtkObjectClass *parent_class = NULL;
+static GObjectClass *parent_class = NULL;
 
 
 GType 
@@ -82,7 +82,7 @@ gimp_object_get_type (void)
 	(GInstanceInitFunc) gimp_object_init,
       };
 
-      object_type = g_type_register_static (GTK_TYPE_OBJECT,
+      object_type = g_type_register_static (G_TYPE_OBJECT,
 					    "GimpObject", 
 					    &object_info, 0);
     }

@@ -59,8 +59,6 @@
 static void          gimp_rotate_tool_class_init  (GimpRotateToolClass *klass);
 static void          gimp_rotate_tool_init        (GimpRotateTool      *rotate_tool);
 
-static void          gimp_rotate_tool_destroy     (GtkObject         *object);
-
 static TileManager * gimp_rotate_tool_transform (GimpTransformTool *transform_tool,
 						 GDisplay          *gdisp,
 						 TransformState     state);
@@ -105,29 +103,73 @@ gimp_rotate_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_ROTATE);
 }
 
-GtkType
+GType
 gimp_rotate_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpRotateTool",
-        sizeof (GimpRotateTool),
         sizeof (GimpRotateToolClass),
-        (GtkClassInitFunc) gimp_rotate_tool_class_init,
-        (GtkObjectInitFunc) gimp_rotate_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_rotate_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpRotateTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_rotate_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_TRANSFORM_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
+					  "GimpRotateTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
+}
+
+static void
+gimp_rotate_tool_class_init (GimpRotateToolClass *klass)
+{
+  GimpTransformToolClass *trans_class;
+
+  trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  trans_class->transform = gimp_rotate_tool_transform;
+}
+
+static void
+gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
+{
+  GimpTool          *tool;
+  GimpTransformTool *tr_tool;
+
+  tool    = GIMP_TOOL (rotate_tool);
+  tr_tool = GIMP_TRANSFORM_TOOL (rotate_tool);
+
+  if (! rotate_options)
+    {
+      rotate_options = transform_options_new (GIMP_TYPE_ROTATE_TOOL,
+					      transform_options_reset);
+
+      tool_manager_register_tool_options (GIMP_TYPE_ROTATE_TOOL,
+                                          (GimpToolOptions *) rotate_options);
+    }
+
+  tool->tool_cursor   = GIMP_ROTATE_TOOL_CURSOR;
+
+  tr_tool->trans_info[ANGLE]      = 0.0;
+  tr_tool->trans_info[REAL_ANGLE] = 0.0;
+  tr_tool->trans_info[CENTER_X]   = 0.0;
+  tr_tool->trans_info[CENTER_Y]   = 0.0;
+
+  /*  assemble the transformation matrix  */
+  gimp_matrix3_identity (tr_tool->transform);
 }
 
 TileManager *
@@ -154,60 +196,6 @@ gimp_rotate_tool_rotate (GimpImage    *gimage,
     progress_end (progress);
 
   return ret;
-}
-
-/* private function definitions */
-
-static void
-gimp_rotate_tool_class_init (GimpRotateToolClass *klass)
-{
-  GtkObjectClass         *object_class;
-  GimpTransformToolClass *trans_class;
-
-  object_class = (GtkObjectClass *) klass;
-  trans_class  = (GimpTransformToolClass *) klass;
-
-  parent_class = gtk_type_class (GIMP_TYPE_TRANSFORM_TOOL);
-
-  object_class->destroy     = gimp_rotate_tool_destroy;
-
-  trans_class->transform    = gimp_rotate_tool_transform;
-}
-
-static void
-gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
-{
-  GimpTool          *tool;
-  GimpTransformTool *tr_tool;
-
-  tool    = GIMP_TOOL (rotate_tool);
-  tr_tool = GIMP_TRANSFORM_TOOL (rotate_tool);
-
-  if (! rotate_options)
-    {
-      rotate_options = transform_options_new (GIMP_TYPE_ROTATE_TOOL,
-                                            transform_options_reset);
-
-      tool_manager_register_tool_options (GIMP_TYPE_ROTATE_TOOL,
-                                          (GimpToolOptions *) rotate_options);
-    }
-
-  tool->tool_cursor   = GIMP_ROTATE_TOOL_CURSOR;
-
-  tr_tool->trans_info[ANGLE]      = 0.0;
-  tr_tool->trans_info[REAL_ANGLE] = 0.0;
-  tr_tool->trans_info[CENTER_X]   = 0.0;
-  tr_tool->trans_info[CENTER_Y]   = 0.0;
-
-  /*  assemble the transformation matrix  */
-  gimp_matrix3_identity (tr_tool->transform);
-}
-
-static void
-gimp_rotate_tool_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static TileManager *

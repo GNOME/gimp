@@ -25,9 +25,10 @@
 
 #define GIMP_TYPE_MAGNIFY_TOOL            (gimp_magnify_tool_get_type ())
 #define GIMP_MAGNIFY_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MAGNIFY_TOOL, GimpMagnifyTool))
-#define GIMP_IS_MAGNIFY_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MAGNIFY_TOOL))
 #define GIMP_MAGNIFY_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MAGNIFY_TOOL, GimpMagnifyToolClass))
+#define GIMP_IS_MAGNIFY_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MAGNIFY_TOOL))
 #define GIMP_IS_MAGNIFY_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MAGNIFY_TOOL))
+#define GIMP_MAGNIFY_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MAGNIFY_TOOL, GimpMagnifyToolClass))
 
 
 typedef struct _GimpMagnifyTool      GimpMagnifyTool;
@@ -49,9 +50,9 @@ struct _GimpMagnifyToolClass
 };
 
 
-void       gimp_magnify_tool_register (Gimp *gimp);
+void    gimp_magnify_tool_register (Gimp *gimp);
 
-GtkType    gimp_magnify_tool_get_type (void);
+GType   gimp_magnify_tool_get_type (void);
 
 
 #endif  /*  __GIMP_MAGNIFY_TOOL_H__  */

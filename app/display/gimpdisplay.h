@@ -94,11 +94,18 @@ struct _IdleRenderStruct
 
 struct _GDisplay
 {
+  GtkWidget  *shell;              /*  shell widget for this gdisplay          */
+  GimpImage  *gimage;	          /*  pointer to the associated gimage struct */
+				  /*
+  				   *  these need to be first in the sturuct
+				   *  because of an ugly hack in
+				   *  core/gimpcontext.c
+				   */
+
   gint ID;                        /*  unique identifier for this gdisplay     */
 
   GtkItemFactory *ifactory;       /*  factory for popup menu                  */
 
-  GtkWidget  *shell;              /*  shell widget for this gdisplay          */
   GtkWidget  *canvas;             /*  canvas widget for this gdisplay         */
   GtkWidget  *hsb;                /*  widgets for scroll bars                 */
   GtkWidget  *vsb;
@@ -134,7 +141,6 @@ struct _GDisplay
   guint      icon_timeout_id;     /*  The ID of the timeout-function          */
   guint      icon_idle_id;        /*  The ID of the idle-function             */
 
-  GimpImage *gimage;	          /*  pointer to the associated gimage struct */
   gint       instance;            /*  the instance # of this gdisplay as      */
                                   /*  taken from the gimage at creation       */
 

@@ -107,7 +107,7 @@ static void    gimp_transform_tool_grid_recalc (GimpTransformTool      *gimp_tra
 static void    gimp_transform_tool_init        (GimpTransformTool      *tool);
 static void    gimp_transform_tool_class_init  (GimpTransformToolClass *tool);
 
-static void    gimp_transform_tool_destroy     (GtkObject              *object);
+static void    gimp_transform_tool_finalize    (GObject                *object);
 
 static void   gimp_transform_tool_button_press (GimpTool               *tool,
                                                 GdkEventButton         *bevent,
@@ -149,19 +149,22 @@ gimp_transform_tool_get_type (void)
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpTransformTool",
-        sizeof (GimpTransformTool),
         sizeof (GimpTransformToolClass),
-        (GtkClassInitFunc) gimp_transform_tool_class_init,
-        (GtkObjectInitFunc) gimp_transform_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        NULL /* (GtkClassInitFunc) gimp_tool_class_init, */
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_transform_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpTransformTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_transform_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+					  "GimpTransformTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -170,13 +173,13 @@ gimp_transform_tool_get_type (void)
 static void
 gimp_transform_tool_class_init (GimpTransformToolClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
-  draw_class   = (GimpDrawToolClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
+  tool_class   = GIMP_TOOL_CLASS (klass);
+  draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -191,7 +194,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
 		  G_TYPE_POINTER,
 		  G_TYPE_INT);
 
-  object_class->destroy      = gimp_transform_tool_destroy;
+  object_class->finalize     = gimp_transform_tool_finalize;
 
   tool_class->button_press   = gimp_transform_tool_button_press;
   tool_class->button_release = gimp_transform_tool_button_release;
@@ -278,34 +281,70 @@ transform_reset_callback (GtkWidget *widget,
 }
 
 static void
-gimp_transform_tool_destroy (GtkObject *object)
+gimp_transform_tool_finalize (GObject *object)
 {
   GimpTransformTool *tr_tool;
-  GimpTool          *tool;
 
   tr_tool = GIMP_TRANSFORM_TOOL (object);
-  tool    = GIMP_TOOL           (tr_tool);
 
-  /*  Free up the original selection if it exists  */
   if (tr_tool->original)
-    tile_manager_destroy (tr_tool->original);
+    {
+      tile_manager_destroy (tr_tool->original);
+      tr_tool->original = NULL;
+    }
 
-  /*  If there is an information dialog, free it up  */
   if (transform_info)
-    info_dialog_free (transform_info);
+    {
+      info_dialog_free (transform_info);
+      transform_info        = NULL;
+      transform_info_inited = FALSE;
+    }
 
-  transform_info        = NULL;
-  transform_info_inited = FALSE;
+  if (tr_tool->grid_coords)
+    {
+      g_free (tr_tool->grid_coords);
+      tr_tool->grid_coords = NULL;
+    }
 
-  /*  Free the grid line endpoint arrays if they exist */
-  if (tr_tool->grid_coords != NULL)
-    g_free (tr_tool->grid_coords);
+  if (tr_tool->tgrid_coords)
+    {
+      g_free (tr_tool->tgrid_coords);
+      tr_tool->tgrid_coords = NULL;
+    }
 
-  if (tr_tool->tgrid_coords != NULL)
-    g_free (tr_tool->tgrid_coords);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+static void
+gimp_transform_tool_control (GimpTool   *tool,
+			     ToolAction  action,
+			     GDisplay   *gdisp)
+{
+  GimpDrawTool      *dr_tool;
+  GimpTransformTool *tr_tool;
+
+  dr_tool = GIMP_DRAW_TOOL (tool);
+  tr_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      gimp_transform_tool_recalc (tr_tool, gdisp);
+      break;
+
+    case HALT:
+      gimp_transform_tool_reset (tr_tool, gdisp);
+      break;
+
+    default:
+      break;
+    }
+
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 static void
@@ -741,38 +780,6 @@ gimp_transform_tool_cursor_update (GimpTool           *tool,
 				ctype,
 				tool->tool_cursor,
 				GIMP_CURSOR_MODIFIER_NONE);
-}
-
-static void
-gimp_transform_tool_control (GimpTool   *tool,
-			     ToolAction  action,
-			     GDisplay   *gdisp)
-{
-  GimpDrawTool      *dr_tool;
-  GimpTransformTool *tr_tool;
-
-  dr_tool = GIMP_DRAW_TOOL (tool);
-  tr_tool = GIMP_TRANSFORM_TOOL (tool);
-
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      gimp_transform_tool_recalc (tr_tool, gdisp);
-      break;
-
-    case HALT:
-      gimp_transform_tool_reset (tr_tool, gdisp);
-      break;
-
-    default:
-      break;
-    }
-
-  if (GIMP_TOOL_CLASS (parent_class)->control)
-    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 static void

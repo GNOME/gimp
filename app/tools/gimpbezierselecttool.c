@@ -155,21 +155,19 @@ static guint bezier_select_signals[LAST_SIGNAL] = { 0 };
 static void  gimp_bezier_select_tool_class_init (GimpBezierSelectToolClass *klass);
 static void  gimp_bezier_select_tool_init       (GimpBezierSelectTool      *bezier_select);
 
-static void  gimp_bezier_select_tool_destroy    (GtkObject      *object);
-
-static void  gimp_bezier_select_tool_button_press (GimpTool             *tool,
+static void  gimp_bezier_select_tool_button_press (GimpTool         *tool,
 						   GdkEventButton   *bevent,
 						   GDisplay         *gdisp);
-static void  gimp_bezier_select_tool_button_release (GimpTool             *tool,
+static void  gimp_bezier_select_tool_button_release (GimpTool          *tool,
 						      GdkEventButton   *bevent,
 						      GDisplay         *gdisp);
-static void  gimp_bezier_select_tool_motion        (GimpTool             *tool,
+static void  gimp_bezier_select_tool_motion        (GimpTool           *tool,
 						    GdkEventMotion   *mevent,
 						    GDisplay         *gdisp);
-static void  gimp_bezier_select_tool_control       (GimpTool             *tool,
+static void  gimp_bezier_select_tool_control       (GimpTool         *tool,
 						    ToolAction        action,
 						    GDisplay         *gdisp);
-static void  gimp_bezier_select_tool_cursor_update (GimpTool             *tool,
+static void  gimp_bezier_select_tool_cursor_update (GimpTool         *tool,
 						    GdkEventMotion   *mevent,
 						    GDisplay         *gdisp);
 static void       bezier_select_draw            (GimpDrawTool     *draw_tool);
@@ -283,29 +281,32 @@ gimp_bezier_select_tool_register (Gimp *gimp)
                               GIMP_STOCK_TOOL_BEZIER_SELECT);
 }
 
-GtkType
+GType
 gimp_bezier_select_tool_get_type (void)
 {
-  static GtkType bezier_select_type = 0;
+  static GType tool_type = 0;
 
-  if (! bezier_select_type)
+  if (! tool_type)
     {
-      GtkTypeInfo bezier_select_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpBezierSelectTool",
-        sizeof (GimpBezierSelectTool),
         sizeof (GimpBezierSelectToolClass),
-        (GtkClassInitFunc) gimp_bezier_select_tool_class_init,
-        (GtkObjectInitFunc) gimp_bezier_select_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_bezier_select_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpBezierSelectTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_bezier_select_tool_init,
       };
 
-      bezier_select_type = gtk_type_unique (GIMP_TYPE_SELECTION_TOOL,
-                                          &bezier_select_info);
+      tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
+					  "GimpBezierSelectTool", 
+                                          &tool_info, 0);
     }
 
-  return bezier_select_type;
+  return tool_type;
 }
 
 
@@ -314,13 +315,13 @@ gimp_bezier_select_tool_get_type (void)
 static void
 gimp_bezier_select_tool_class_init (GimpBezierSelectToolClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  tool_class      = (GimpToolClass *) klass;
-  draw_tool_class = (GimpDrawToolClass *) klass;
+  object_class    = G_OBJECT_CLASS (klass);
+  tool_class      = GIMP_TOOL_CLASS (klass);
+  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -336,8 +337,6 @@ gimp_bezier_select_tool_class_init (GimpBezierSelectToolClass *klass)
 		  G_TYPE_INT,
 		  G_TYPE_INT,
 		  G_TYPE_INT);
-
-  object_class->destroy      = gimp_bezier_select_tool_destroy;
 
   tool_class->button_press   = gimp_bezier_select_tool_button_press;
   tool_class->button_release = gimp_bezier_select_tool_button_release;
@@ -383,13 +382,6 @@ gimp_bezier_select_tool_init (GimpBezierSelectTool *bezier_select)
   bezier_select_reset (bezier_select);
 
   paths_new_bezier_select_tool ();
-}
-
-static void
-gimp_bezier_select_tool_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

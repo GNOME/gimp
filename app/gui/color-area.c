@@ -495,14 +495,14 @@ color_area_create (gint       width,
 			 GDK_LEAVE_NOTIFY_MASK);
 
 #ifndef GDK_WINDOWING_DIRECTFB
-  gtk_signal_connect (GTK_OBJECT (color_area), "event",
-		      GTK_SIGNAL_FUNC (color_area_events),
-		      NULL);
+  g_signal_connect (G_OBJECT (color_area), "event",
+		    G_CALLBACK (color_area_events),
+		    NULL);
 #endif
 
-  gtk_signal_connect (GTK_OBJECT (color_area), "realize",
-		      GTK_SIGNAL_FUNC (color_area_realize),
-		      NULL);
+  g_signal_connect (G_OBJECT (color_area), "realize",
+		    G_CALLBACK (color_area_realize),
+		    NULL);
 
   default_pixmap = default_pmap;
   default_mask   = default_msk;
@@ -525,14 +525,14 @@ color_area_create (gint       width,
 		     GDK_ACTION_COPY);
   gimp_dnd_color_dest_set (color_area, color_area_drop_color, NULL);
 
-  gtk_signal_connect (GTK_OBJECT (gimp_get_user_context (the_gimp)),
-		      "foreground_changed",
-		      GTK_SIGNAL_FUNC (color_area_color_changed),
-		      color_area);
-  gtk_signal_connect (GTK_OBJECT (gimp_get_user_context (the_gimp)),
-		      "background_changed",
-		      GTK_SIGNAL_FUNC (color_area_color_changed),
-		      color_area);
+  g_signal_connect (G_OBJECT (gimp_get_user_context (the_gimp)),
+		    "foreground_changed",
+		    G_CALLBACK (color_area_color_changed),
+		    color_area);
+  g_signal_connect (G_OBJECT (gimp_get_user_context (the_gimp)),
+		    "background_changed",
+		    G_CALLBACK (color_area_color_changed),
+		    color_area);
 
 #ifdef DISPLAY_FILTERS
   /* display filter dummy gdisplay */

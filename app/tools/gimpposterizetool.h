@@ -25,9 +25,10 @@
 
 #define GIMP_TYPE_POSTERIZE_TOOL            (gimp_posterize_tool_get_type ())
 #define GIMP_POSTERIZE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_POSTERIZE_TOOL, GimpPosterizeTool))
-#define GIMP_IS_POSTERIZE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_POSTERIZE_TOOL))
 #define GIMP_POSTERIZE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_POSTERIZE_TOOL, GimpPosterizeToolClass))
+#define GIMP_IS_POSTERIZE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_POSTERIZE_TOOL))
 #define GIMP_IS_POSTERIZE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_POSTERIZE_TOOL))
+#define GIMP_POSTERIZE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_POSTERIZE_TOOL, GimpPosterizeToolClass))
 
 
 typedef struct _GimpPosterizeTool      GimpPosterizeTool;
@@ -44,12 +45,12 @@ struct _GimpPosterizeToolClass
 };
 
 
-void       gimp_posterize_tool_register (Gimp *gimp);
+void    gimp_posterize_tool_register (Gimp *gimp);
 
-GtkType    gimp_posterize_tool_get_type (void);
+GType   gimp_posterize_tool_get_type (void);
 
 
-void   posterize_dialog_hide (void);
+void    posterize_dialog_hide (void);
 
 
 #endif  /*  __GIMP_POSTERIZE_TOOL_H__  */

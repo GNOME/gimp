@@ -25,9 +25,10 @@
 
 #define GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL            (gimp_brightness_contrast_tool_get_type ())
 #define GIMP_BRIGHTNESS_CONTRAST_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL, GimpBrightnessContrastTool))
-#define GIMP_IS_BRIGHTNESS_CONTRAST_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL))
 #define GIMP_BRIGHTNESS_CONTRAST_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL, GimpBrightnessContrastToolClass))
+#define GIMP_IS_BRIGHTNESS_CONTRAST_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL))
 #define GIMP_IS_BRIGHTNESS_CONTRAST_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL))
+#define GIMP_BRIGHTNESS_CONTRAST_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL, GimpBrightnessContrastToolClass))
 
 
 typedef struct _GimpBrightnessContrastTool      GimpBrightnessContrastTool;
@@ -44,9 +45,9 @@ struct _GimpBrightnessContrastToolClass
 };
 
 
-void       gimp_brightness_contrast_tool_register (Gimp *gimp);
+void    gimp_brightness_contrast_tool_register (Gimp *gimp);
 
-GtkType    gimp_brightness_contrast_tool_get_type (void);
+GType   gimp_brightness_contrast_tool_get_type (void);
 
 
 void   brightness_contrast_dialog_hide (void);

@@ -37,9 +37,10 @@ typedef gdouble TranInfo[TRAN_INFO_SIZE];
 
 #define GIMP_TYPE_TRANSFORM_TOOL            (gimp_transform_tool_get_type ())
 #define GIMP_TRANSFORM_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TRANSFORM_TOOL, GimpTransformTool))
-#define GIMP_IS_TRANSFORM_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TRANSFORM_TOOL))
 #define GIMP_TRANSFORM_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TRANSFORM_TOOL, GimpTransformToolClass))
+#define GIMP_IS_TRANSFORM_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TRANSFORM_TOOL))
 #define GIMP_IS_TRANSFORM_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TRANSFORM_TOOL))
+#define GIMP_TRANSFORM_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TRANSFORM_TOOL, GimpTransformToolClass))
 
 
 typedef struct _GimpTransformToolClass GimpTransformToolClass;
@@ -113,7 +114,7 @@ typedef struct _TransformUndo TransformUndo;
 struct _TransformUndo
 {
   gint         tool_ID;
-  GtkType      tool_type;
+  GType        tool_type;
 
   TranInfo     trans_info;
   TileManager *original;
@@ -135,7 +136,7 @@ Tool        * gimp_transform_tool_new                    (GimpTransformToolType 
 						     gboolean        interactive);
 */
 
-GtkType       gimp_transform_tool_get_type               (void);
+GType         gimp_transform_tool_get_type               (void);
 
 void          gimp_transform_tool_transform_bounding_box (GimpTransformTool    *tool);
 void          gimp_transform_tool_reset                  (GimpTransformTool    *tool,

@@ -25,9 +25,10 @@
 
 #define GIMP_TYPE_SHEAR_TOOL            (gimp_shear_tool_get_type ())
 #define GIMP_SHEAR_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SHEAR_TOOL, GimpShearTool))
-#define GIMP_IS_SHEAR_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SHEAR_TOOL))
 #define GIMP_SHEAR_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SHEAR_TOOL, GimpShearToolClass))
+#define GIMP_IS_SHEAR_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SHEAR_TOOL))
 #define GIMP_IS_SHEAR_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SHEAR_TOOL))
+#define GIMP_SHEAR_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SHEAR_TOOL, GimpShearToolClass))
 
 
 typedef struct _GimpShearTool      GimpShearTool;
@@ -46,7 +47,7 @@ struct _GimpShearToolClass
 
 void          gimp_shear_tool_register (Gimp           *gimp);
 
-GtkType       gimp_shear_tool_get_type (void);
+GType         gimp_shear_tool_get_type (void);
 
 
 TileManager * gimp_shear_tool_shear    (GimpImage      *gimage,

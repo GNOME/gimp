@@ -17,7 +17,7 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include <stdio.h>
 #ifdef HAVE_UNISTD_H

@@ -54,7 +54,7 @@
 
 static void   gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass);
 static void   gimp_free_select_tool_init       (GimpFreeSelectTool      *free_select);
-static void   gimp_free_select_tool_destroy        (GtkObject      *object);
+static void   gimp_free_select_tool_finalize       (GObject        *object);
 
 static void   gimp_free_select_tool_button_press   (GimpTool       *tool,
                                                     GdkEventButton *bevent,
@@ -101,29 +101,32 @@ gimp_free_select_tool_register (Gimp *gimp)
                               GIMP_STOCK_TOOL_FREE_SELECT);
 }
 
-GtkType
+GType
 gimp_free_select_tool_get_type (void)
 {
-  static GtkType free_select_type = 0;
+  static GType tool_type = 0;
 
-  if (! free_select_type)
+  if (! tool_type)
     {
-      GtkTypeInfo free_select_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpFreeSelectTool",
-        sizeof (GimpFreeSelectTool),
         sizeof (GimpFreeSelectToolClass),
-        (GtkClassInitFunc) gimp_free_select_tool_class_init,
-        (GtkObjectInitFunc) gimp_free_select_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_free_select_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpFreeSelectTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_free_select_tool_init,
       };
 
-      free_select_type = gtk_type_unique (GIMP_TYPE_SELECTION_TOOL,
-                                          &free_select_info);
+      tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
+					  "GimpFreeSelectTool", 
+                                          &tool_info, 0);
     }
 
-  return free_select_type;
+  return tool_type;
 }
 
 void
@@ -168,17 +171,17 @@ free_select (GimpImage   *gimage,
 static void
 gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  tool_class      = (GimpToolClass *) klass;
-  draw_tool_class = (GimpDrawToolClass *) klass;
+  object_class    = G_OBJECT_CLASS (klass);
+  tool_class      = GIMP_TOOL_CLASS (klass);
+  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_SELECTION_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy      = gimp_free_select_tool_destroy;
+  object_class->finalize     = gimp_free_select_tool_finalize;
 
   tool_class->button_press   = gimp_free_select_tool_button_press;
   tool_class->button_release = gimp_free_select_tool_button_release;
@@ -214,16 +217,19 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
 }
 
 static void
-gimp_free_select_tool_destroy (GtkObject *object)
+gimp_free_select_tool_finalize (GObject *object)
 {
   GimpFreeSelectTool *free_sel;
 
   free_sel = GIMP_FREE_SELECT_TOOL (object);
 
-  g_free (free_sel->points);
+  if (free_sel->points)
+    {
+      g_free (free_sel->points);
+      free_sel->points = NULL;
+    }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

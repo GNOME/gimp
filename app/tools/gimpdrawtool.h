@@ -30,28 +30,29 @@
 
 #define GIMP_TYPE_DRAW_TOOL            (gimp_draw_tool_get_type ())
 #define GIMP_DRAW_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAW_TOOL, GimpDrawTool))
-#define GIMP_IS_DRAW_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAW_TOOL))
 #define GIMP_DRAW_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAW_TOOL, GimpDrawToolClass))
+#define GIMP_IS_DRAW_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAW_TOOL))
 #define GIMP_IS_DRAW_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAW_TOOL))
+#define GIMP_DRAW_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAW_TOOL, GimpDrawToolClass))
 
 
 typedef struct _GimpDrawToolClass GimpDrawToolClass;
 
 struct _GimpDrawTool
 {
-  GimpTool 	parent_instance;
+  GimpTool    parent_instance;
 
-  GdkGC       * gc;           /*  Graphics context for draw functions  */
-  GdkWindow   * win;          /*  Window to draw draw operation to      */
+  GdkGC      *gc;           /*  Graphics context for draw functions  */
+  GdkWindow  *win;          /*  Window to draw draw operation to      */
 
-  gint          draw_state;   /*  Current state in the draw process    */
+  gint        draw_state;   /*  Current state in the draw process    */
 
-  gint          line_width;   /**/
-  gint          line_style;   /**/
-  gint          cap_style;    /*  line attributes                         */
-  gint          join_style;   /**/
+  gint        line_width;   /**/
+  gint        line_style;   /**/
+  gint        cap_style;    /*  line attributes                         */
+  gint        join_style;   /**/
 
-  gint          paused_count; /*  count to keep track of multiple pauses  */
+  gint        paused_count; /*  count to keep track of multiple pauses  */
 };
 
 struct _GimpDrawToolClass
@@ -62,24 +63,24 @@ struct _GimpDrawToolClass
 };
 
 
-GtkType		  gimp_draw_tool_get_type (void);
+GType   gimp_draw_tool_get_type    (void);
 
-void              gimp_draw_tool_start    (GimpDrawTool *draw_tool,
-					   GdkWindow    *window);
-void       	  gimp_draw_tool_stop     (GimpDrawTool *draw_tool);
-void       	  gimp_draw_tool_pause    (GimpDrawTool *draw_tool);
-void       	  gimp_draw_tool_resume   (GimpDrawTool *draw_tool);
+void    gimp_draw_tool_start       (GimpDrawTool *draw_tool,
+				    GdkWindow    *window);
+void    gimp_draw_tool_stop        (GimpDrawTool *draw_tool);
+void    gimp_draw_tool_pause       (GimpDrawTool *draw_tool);
+void    gimp_draw_tool_resume      (GimpDrawTool *draw_tool);
 
-void              gimp_draw_tool_draw_handle (GimpDrawTool *draw_tool, 
-		                              gdouble x,
-			                      gdouble y,
-			                      gint size,
-			                      gint type);
+void    gimp_draw_tool_draw_handle (GimpDrawTool *draw_tool, 
+				    gdouble       x,
+				    gdouble       y,
+				    gint          size,
+				    gint          type);
 
-void              gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool, 
-		                             gdouble *points,
-			                     gint npoints,
-			                     gint filled);
+void   gimp_draw_tool_draw_lines   (GimpDrawTool *draw_tool, 
+				    gdouble      *points,
+				    gint          npoints,
+				    gint          filled);
 
 
 #endif  /*  __GIMP_DRAW_TOOL_H__  */

@@ -2458,7 +2458,8 @@ menus_create_item (GtkItemFactory       *item_factory,
 				GTK_SIGNAL_FUNC (menus_item_realize),
 				(gpointer) item_factory);
 
-      g_object_set_data (G_OBJECT (menu_item), "help_page", entry->help_page);
+      g_object_set_data (G_OBJECT (menu_item), "help_page",
+			 (gpointer) entry->help_page);
     }
 }
 
@@ -2502,7 +2503,8 @@ menus_item_factory_new (GtkType               container_type,
 				       (gpointer) path,
 				       NULL);
 
-  g_object_set_data (G_OBJECT (item_factory), "factory_path", factory_path);
+  g_object_set_data (G_OBJECT (item_factory), "factory_path",
+		     (gpointer) factory_path);
 
   menus_create_items (item_factory,
 		      n_entries,

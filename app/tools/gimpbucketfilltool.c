@@ -85,8 +85,6 @@ static GimpToolClass *parent_class   = NULL;
 static void   gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass);
 static void   gimp_bucket_fill_tool_init       (GimpBucketFillTool      *bucket_fill_tool);
 
-static void   gimp_bucket_fill_tool_destroy    (GtkObject      *object);
-
 static BucketOptions * bucket_options_new           (void);
 static void            bucket_options_reset         (GimpToolOptions *tool_options);
 
@@ -135,26 +133,29 @@ gimp_bucket_fill_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_BUCKET_FILL);
 }
 
-GtkType
+GType
 gimp_bucket_fill_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpBucketFillTool",
-        sizeof (GimpBucketFillTool),
         sizeof (GimpBucketFillToolClass),
-        (GtkClassInitFunc) gimp_bucket_fill_tool_class_init,
-        (GtkObjectInitFunc) gimp_bucket_fill_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_bucket_fill_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpBucketFillTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_bucket_fill_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
+					  "GimpBucketFillTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -163,15 +164,11 @@ gimp_bucket_fill_tool_get_type (void)
 static void
 gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass)
 {
-  GtkObjectClass    *object_class;
-  GimpToolClass     *tool_class;
+  GimpToolClass *tool_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
+  tool_class = GIMP_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
-
-  object_class->destroy      = gimp_bucket_fill_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->button_press   = gimp_bucket_fill_tool_button_press;
   tool_class->button_release = gimp_bucket_fill_tool_button_release;
@@ -199,13 +196,6 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
   tool->tool_cursor = GIMP_BUCKET_FILL_TOOL_CURSOR;
 
   tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
-}
-
-static void
-gimp_bucket_fill_tool_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

@@ -33,6 +33,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpedit.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
 static ProcRecord edit_cut_proc;
@@ -333,7 +334,7 @@ edit_stroke_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-      success = gimage_mask_stroke (gimage, drawable);
+      success = gimage_mask_stroke (gimage, drawable, gimp_get_current_context (gimage->gimp));
     }
 
   return procedural_db_return_args (&edit_stroke_proc, success);

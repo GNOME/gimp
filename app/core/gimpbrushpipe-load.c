@@ -35,7 +35,7 @@
 #define _O_BINARY 0
 #endif
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>
@@ -51,9 +51,6 @@
 #include "gimpbrushpipe.h"
 #include "gimppattern-header.h"
 
-/*  this needs to go away  */
-#include "tools/gimppainttool.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -62,8 +59,10 @@ static void        gimp_brush_pipe_init             (GimpBrushPipe      *pipe);
 
 static void        gimp_brush_pipe_finalize         (GObject       *object);
 
+#if 0
 static GimpBrush * gimp_brush_pipe_select_brush     (GimpPaintTool *paint_tool);
 static gboolean    gimp_brush_pipe_want_null_motion (GimpPaintTool *paint_tool);
+#endif
 
 
 static GimpBrushClass *parent_class = NULL;
@@ -110,8 +109,13 @@ gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
 
   object_class->finalize        = gimp_brush_pipe_finalize;
 
+#ifdef __GNUC__
+#warning: FIXME brush_class->select_brush etc.
+#endif
+#if 0
   brush_class->select_brush     = gimp_brush_pipe_select_brush;
   brush_class->want_null_motion = gimp_brush_pipe_want_null_motion;
+#endif
 }
 
 static void
@@ -176,6 +180,7 @@ gimp_brush_pipe_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+#if 0
 static GimpBrush *
 gimp_brush_pipe_select_brush (GimpPaintTool *paint_tool)
 {
@@ -261,6 +266,7 @@ gimp_brush_pipe_want_null_motion (GimpPaintTool *paint_tool)
 
   return TRUE;
 }
+#endif
 
 GimpData *
 gimp_brush_pipe_load (const gchar *filename)

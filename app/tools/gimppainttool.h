@@ -53,9 +53,10 @@ typedef enum /*< skip >*/
 
 #define GIMP_TYPE_PAINT_TOOL            (gimp_paint_tool_get_type ())
 #define GIMP_PAINT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINT_TOOL, GimpPaintTool))
-#define GIMP_IS_PAINT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PAINT_TOOL))
 #define GIMP_PAINT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINT_TOOL, GimpPaintToolClass))
+#define GIMP_IS_PAINT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PAINT_TOOL))
 #define GIMP_IS_PAINT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINT_TOOL))
+#define GIMP_PAINT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINT_TOOL, GimpPaintToolClass))
 
 
 typedef struct _GimpPaintToolClass GimpPaintToolClass;
@@ -116,7 +117,7 @@ typedef struct _PaintUndo PaintUndo;
 struct _PaintUndo
 {
   gint     tool_ID;
-  GtkType  tool_type;
+  GType    tool_type;
 
   gdouble  lastx;
   gdouble  lasty;
@@ -126,28 +127,28 @@ struct _PaintUndo
 };
 
 
-GtkType	gimp_paint_tool_get_type (void);
+GType   gimp_paint_tool_get_type        (void);
 
-void  gimp_paint_tool_paint           (GimpPaintTool       *tool,
-				       GimpDrawable        *drawable,
-				       PaintState	    state);
+void    gimp_paint_tool_paint           (GimpPaintTool       *tool,
+					 GimpDrawable        *drawable,
+					 PaintState	    state);
 
-void  gimp_paint_tool_no_draw         (GimpPaintTool       *tool);
+void    gimp_paint_tool_no_draw         (GimpPaintTool       *tool);
 
-int   gimp_paint_tool_start           (GimpPaintTool    *tool,
-				       GimpDrawable        *drawable,
-				       gdouble              x,
-				       gdouble              y);
-void  gimp_paint_tool_interpolate     (GimpPaintTool    *tool,
-				       GimpDrawable        *drawable);
-void  gimp_paint_tool_finish          (GimpPaintTool    *tool,
-				       GimpDrawable        *drawable);
-void  gimp_paint_tool_cleanup         (void);
+int     gimp_paint_tool_start           (GimpPaintTool    *tool,
+					 GimpDrawable        *drawable,
+					 gdouble              x,
+					 gdouble              y);
+void    gimp_paint_tool_interpolate     (GimpPaintTool    *tool,
+					 GimpDrawable        *drawable);
+void    gimp_paint_tool_finish          (GimpPaintTool    *tool,
+					 GimpDrawable        *drawable);
+void    gimp_paint_tool_cleanup         (void);
 
-void  gimp_paint_tool_get_color_from_gradient (GimpPaintTool         *tool,
-					       gdouble               gradient_length,
-					       GimpRGB              *color,
-					       GradientPaintMode     mode);
+void    gimp_paint_tool_get_color_from_gradient (GimpPaintTool         *tool,
+						 gdouble               gradient_length,
+						 GimpRGB              *color,
+						 GradientPaintMode     mode);
 
 /*  paint tool painting functions  */
 TempBuf * gimp_paint_tool_get_paint_area  (GimpPaintTool     *tool,

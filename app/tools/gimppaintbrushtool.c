@@ -92,26 +92,29 @@ gimp_paintbrush_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_PAINTBRUSH);
 }
 
-GtkType
+GType
 gimp_paintbrush_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpPaintbrushTool",
-        sizeof (GimpPaintbrushTool),
         sizeof (GimpPaintbrushToolClass),
-        (GtkClassInitFunc) gimp_paintbrush_tool_class_init,
-        (GtkObjectInitFunc) gimp_paintbrush_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_paintbrush_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpPaintbrushTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_paintbrush_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_PAINT_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
+					  "GimpPaintbrushTool",
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -122,9 +125,9 @@ gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass)
 {
   GimpPaintToolClass *paint_tool_class;
 
-  paint_tool_class = (GimpPaintToolClass *) klass;
+  paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_PAINT_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
   paint_tool_class->paint = gimp_paintbrush_tool_paint;
 }
@@ -417,7 +420,7 @@ gimp_paintbrush_tool_non_gui (GimpDrawable *drawable,
 
   if (! non_gui_paintbrush)
     {
-      non_gui_paintbrush = gtk_type_new (GIMP_TYPE_PAINTBRUSH_TOOL);
+      non_gui_paintbrush = g_object_new (GIMP_TYPE_PAINTBRUSH_TOOL, NULL);
     }
 
   paint_tool = GIMP_PAINT_TOOL (non_gui_paintbrush);

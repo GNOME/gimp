@@ -1,3 +1,73 @@
+2001-08-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/gdisplay.h: an evil temp_hack which lets GimpContext managing
+	the active display withoug including "gdisplay.h". Will go away as
+	soon ad context properties are registered dynamically.
+
+	* app/module_db.c: cleaned up the object code in preparation of
+	moving it to core/.
+
+	* app/path.c: connect to GimpImage's 
+
+	* app/core/gimpobject.[ch]: derive it from GObject, not from
+	GtkObject any more (yeah :-)
+
+	* app/core/*.c: #include <glib-object.h> instead of <gtk/gtk.h>,
+	removed some remaining GtkObject-isms.
+
+	(left in a few #include <gtk/gtk.h> where bigger changes are needed
+	to get rid of the UI dependency).
+
+	* app/core/core-types.h: #include <gdk-pixbuf/gdk-pixbuf.h> here
+	temporarily.
+
+	* app/core/gimp.c (gimp_create_display): unref the image after
+	creating it's first display.
+
+	* app/core/gimpbrush.[ch]: disabled the parts of the code which
+	depend on GimpPaintTool.
+
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpbrushpipe.c: changed accordingly.
+
+	* app/core/gimpcontext.[ch]: evil hack (see above) to manage the
+	active display without including "gdisplay.h"
+
+	* app/core/gimpimage-mask.[ch]: pass a context to
+	gimage_mask_stroke() and get the current tool's PDB string from
+	there.
+
+	* app/core/gimpedit.c: changed accordingly.
+
+	* app/core/gimpimage.c: use gimp_image_update() instead of
+	gdisplays_update_full().
+
+	* app/gui/color-area.c
+	* app/gui/colormap-dialog.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/edit-commands.c
+	* app/gui/image-commands.c
+	* app/gui/toolbox.c: changed accordingly (don't use Gtk methods on
+	GObjects).
+
+	* app/gui/menus.c: fix some const warnings by explicit casting.
+
+	* app/tools/*.[ch]: ported all tools to GObject, some minor
+	cleanup while i was on it.
+
+	* app/widgets/gimpdialogfactory.[ch]: ported to GObject.
+
+	* app/widgets/gimplayerlistview.h: added FOO_GET_CLASS() macro.
+
+	* tools/pdbgen/app.pl: added a "widgets_eek" hack like "tools_eek"
+	which inserts #include "widgets/widgets-types.h" before ordinary
+	includes.
+
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/edit_cmds.c: changed according to the stuff above.
+
 2001-08-14  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c: take image resolution and choosen unit 

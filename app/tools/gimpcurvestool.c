@@ -89,8 +89,6 @@ typedef gdouble CRMatrix[4][4];
 static void   gimp_curves_tool_class_init     (GimpCurvesToolClass *klass);
 static void   gimp_curves_tool_init           (GimpCurvesTool      *bc_tool);
 
-static void   gimp_curves_tool_destroy        (GtkObject      *object);
-
 static void   gimp_curves_tool_initialize     (GimpTool       *tool,
 					       GDisplay       *gdisp);
 static void   gimp_curves_tool_control        (GimpTool       *tool,
@@ -210,26 +208,29 @@ gimp_curves_tool_register (Gimp *gimp)
 			      GIMP_STOCK_TOOL_CURVES);
 }
 
-GtkType
+GType
 gimp_curves_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpCurvesTool",
-        sizeof (GimpCurvesTool),
         sizeof (GimpCurvesToolClass),
-        (GtkClassInitFunc) gimp_curves_tool_class_init,
-        (GtkObjectInitFunc) gimp_curves_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_curves_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpCurvesTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_curves_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_IMAGE_MAP_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
+					  "GimpCurvesTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -238,15 +239,11 @@ gimp_curves_tool_get_type (void)
 static void
 gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 {
-  GtkObjectClass    *object_class;
-  GimpToolClass     *tool_class;
+  GimpToolClass *tool_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
+  tool_class = GIMP_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_IMAGE_MAP_TOOL);
-
-  object_class->destroy  = gimp_curves_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->initialize     = gimp_curves_tool_initialize;
   tool_class->control        = gimp_curves_tool_control;
@@ -269,15 +266,6 @@ gimp_curves_tool_init (GimpCurvesTool *bc_tool)
       tool_manager_register_tool_options (GIMP_TYPE_CURVES_TOOL,
 					  (GimpToolOptions *) curves_options);
     }
-}
-
-static void
-gimp_curves_tool_destroy (GtkObject *object)
-{
-  curves_dialog_hide ();
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

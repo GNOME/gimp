@@ -58,8 +58,8 @@
 
 #define GIMP_TYPE_EDIT_SELECTION_TOOL            (gimp_edit_selection_tool_get_type ())
 #define GIMP_EDIT_SELECTION_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_EDIT_SELECTION_TOOL, GimpEditSelectionTool))
-#define GIMP_IS_EDIT_SELECTION_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_EDIT_SELECTION_TOOL))
 #define GIMP_EDIT_SELECTION_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_EDIT_SELECTION_TOOL, GimpEditSelectionToolClass))
+#define GIMP_IS_EDIT_SELECTION_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_EDIT_SELECTION_TOOL))
 #define GIMP_IS_EDIT_SELECTION_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_EDIT_SELECTION_TOOL))
 
 
@@ -94,11 +94,10 @@ struct _GimpEditSelectionToolClass
 };
 
 
-static GtkType   gimp_edit_selection_tool_get_type   (void);
+static GType     gimp_edit_selection_tool_get_type   (void);
+
 static void 	 gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass);
 static void      gimp_edit_selection_tool_init       (GimpEditSelectionTool *edit_selection_tool);
-
-static void      gimp_edit_selection_tool_destroy        (GtkObject      *object);
 
 static void      gimp_edit_selection_tool_button_release (GimpTool       *tool,
 							  GdkEventButton *bevent,
@@ -122,26 +121,29 @@ static void      gimp_edit_selection_tool_draw           (GimpDrawTool   *tool);
 static GimpDrawToolClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_edit_selection_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpEditSelectionTool",
-        sizeof (GimpEditSelectionTool),
         sizeof (GimpEditSelectionToolClass),
-        (GtkClassInitFunc) gimp_edit_selection_tool_class_init,
-        (GtkObjectInitFunc) gimp_edit_selection_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_edit_selection_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpEditSelectionTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_edit_selection_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+					  "GimpEditSelectionTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -150,17 +152,13 @@ gimp_edit_selection_tool_get_type (void)
 static void
 gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass)
 {
-  GtkObjectClass    *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
-  draw_class   = (GimpDrawToolClass *) klass;
+  tool_class   = GIMP_TOOL_CLASS (klass);
+  draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
-
-  object_class->destroy      = gimp_edit_selection_tool_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   tool_class->control        = gimp_edit_selection_tool_control;
   tool_class->button_release = gimp_edit_selection_tool_button_release;
@@ -187,13 +185,6 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
   edit_selection_tool->cumly      = 0;
 
   edit_selection_tool->first_move = TRUE;
-}
-
-static void
-gimp_edit_selection_tool_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

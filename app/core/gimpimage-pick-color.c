@@ -77,7 +77,7 @@ struct _GimpColorPickerToolOptions
 static void 	  gimp_color_picker_tool_class_init     (GimpColorPickerToolClass *klass);
 static void       gimp_color_picker_tool_init           (GimpColorPickerTool *color_picker_tool);
 
-static void       gimp_color_picker_tool_destroy        (GtkObject      *object);
+static void       gimp_color_picker_tool_finalize       (GObject        *object);
 
 static void       gimp_color_picker_tool_button_press   (GimpTool       *tool,
 							 GdkEventButton *bevent,
@@ -167,19 +167,22 @@ gimp_color_picker_tool_get_type (void)
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpColorPickerTool",
-        sizeof (GimpColorPickerTool),
         sizeof (GimpColorPickerToolClass),
-        (GtkClassInitFunc) gimp_color_picker_tool_class_init,
-        (GtkObjectInitFunc) gimp_color_picker_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_color_picker_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpColorPickerTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_color_picker_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+					  "GimpColorPickerTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -188,17 +191,17 @@ gimp_color_picker_tool_get_type (void)
 static void
 gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
-  draw_class   = (GimpDrawToolClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
+  tool_class   = GIMP_TOOL_CLASS (klass);
+  draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_color_picker_tool_destroy;
+  object_class->finalize     = gimp_color_picker_tool_finalize;
 
   tool_class->control        = gimp_color_picker_tool_control;
   tool_class->button_press   = gimp_color_picker_tool_button_press;
@@ -228,18 +231,8 @@ gimp_color_picker_tool_init (GimpColorPickerTool *color_picker_tool)
 }
 
 static void
-gimp_color_picker_tool_destroy (GtkObject *object)
+gimp_color_picker_tool_finalize (GObject *object)
 {
-  GimpTool        	*tool;
-  GimpDrawTool          *draw_tool;
-
-  tool              = GIMP_TOOL (object);
-  draw_tool         = GIMP_DRAW_TOOL (object);
-
-
-  if (tool->state == ACTIVE)
-    gimp_draw_tool_stop (draw_tool);
-
   if (gimp_color_picker_tool_info)
     {
       info_dialog_free (gimp_color_picker_tool_info);
@@ -248,120 +241,32 @@ gimp_color_picker_tool_destroy (GtkObject *object)
       color_area = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_color_picker_tool_options_reset (GimpToolOptions *tool_options)
+gimp_color_picker_tool_control (GimpTool    *tool,
+				ToolAction  action,
+		      		GDisplay   *gdisp)
 {
-  GimpColorPickerToolOptions *options;
+  switch (action)
+    {
+    case PAUSE :
+      break;
 
-  options = (GimpColorPickerToolOptions *) tool_options;
+    case RESUME :
+      break;
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				options->sample_merged_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
-				options->sample_average_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->average_radius_w),
-			    options->average_radius_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->update_active_w),
-				options->update_active_d);
-}
+    case HALT :
+      info_dialog_popdown (gimp_color_picker_tool_info);
+      break;
 
-static GimpColorPickerToolOptions *
-gimp_color_picker_tool_options_new (void)
-{
-  GimpColorPickerToolOptions *options;
+    default:
+      break;
+    }
 
-  GtkWidget *vbox;
-  GtkWidget *abox;
-  GtkWidget *table;
-  GtkWidget *label;
-  GtkWidget *scale;
-
-  options = g_new0 (GimpColorPickerToolOptions, 1);
-  tool_options_init ((GimpToolOptions *) options,
-		     gimp_color_picker_tool_options_reset);
-
-  options->sample_merged  = options->sample_merged_d  = FALSE;
-  options->sample_average = options->sample_average_d = FALSE;
-  options->average_radius = options->average_radius_d = 1.0;
-  options->update_active  = options->update_active_d  = TRUE;
-
-  /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
-  /*  the sample merged toggle button  */
-  options->sample_merged_w =
-    gtk_check_button_new_with_label (_("Sample Merged"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				options->sample_merged_d);
-  gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (options->sample_merged_w), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->sample_merged);
-  gtk_widget_show (options->sample_merged_w);
-
-  /*  the sample average options  */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-
-  options->sample_average_w =
-    gtk_check_button_new_with_label (_("Sample Average"));
-  gtk_table_attach (GTK_TABLE (table), options->sample_average_w, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
-				options->sample_average_d);
-  g_signal_connect (G_OBJECT (options->sample_average_w), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->sample_average);
-  gtk_widget_show (options->sample_average_w);
-
-  label = gtk_label_new (_("Radius:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /*  the feather radius scale  */
-  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
-  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 0, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (abox);
-
-  options->average_radius_w =
-    gtk_adjustment_new (options->average_radius_d, 1.0, 15.0, 2.0, 2.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->average_radius_w));
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_container_add (GTK_CONTAINER (abox), scale);
-  gtk_widget_set_sensitive (scale, options->sample_average_d);
-  g_object_set_data (G_OBJECT (options->sample_average_w), "set_sensitive",
-		       scale);
-  gtk_widget_set_sensitive (label, options->sample_average_d);
-  g_object_set_data (G_OBJECT (scale), "set_sensitive",
-		       label);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  g_signal_connect (G_OBJECT (options->average_radius_w), "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->average_radius);
-  gtk_widget_show (scale);
-  gtk_widget_show (table);
-
-  /*  the update active color toggle button  */
-  options->update_active_w =
-    gtk_check_button_new_with_label (_("Update Active Color"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->update_active_w),
-				options->update_active_d);
-  gtk_box_pack_start (GTK_BOX (vbox), options->update_active_w, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (options->update_active_w), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->update_active);
-  gtk_widget_show (options->update_active_w);
-
-  return options;
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 static void
@@ -588,31 +493,6 @@ gimp_color_picker_tool_cursor_update (GimpTool       *tool,
 				    GIMP_COLOR_PICKER_TOOL_CURSOR,
 				    GIMP_CURSOR_MODIFIER_NONE);
     }
-}
-
-static void
-gimp_color_picker_tool_control (GimpTool    *tool,
-				ToolAction  action,
-		      		GDisplay   *gdisp)
-{
-  switch (action)
-    {
-    case PAUSE :
-      break;
-
-    case RESUME :
-      break;
-
-    case HALT :
-      info_dialog_popdown (gimp_color_picker_tool_info);
-      break;
-
-    default:
-      break;
-    }
-
-  if (GIMP_TOOL_CLASS (parent_class)->control)
-    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 typedef guchar * (*GetColorFunc) (GimpObject *object,
@@ -881,4 +761,119 @@ gimp_color_picker_tool_info_window_close_callback (GtkWidget *widget,
 						   gpointer   client_data)
 {
   info_dialog_popdown ((InfoDialog *) client_data);
+}
+
+
+/*  tool options stuff  */
+
+static GimpColorPickerToolOptions *
+gimp_color_picker_tool_options_new (void)
+{
+  GimpColorPickerToolOptions *options;
+
+  GtkWidget *vbox;
+  GtkWidget *abox;
+  GtkWidget *table;
+  GtkWidget *label;
+  GtkWidget *scale;
+
+  options = g_new0 (GimpColorPickerToolOptions, 1);
+  tool_options_init ((GimpToolOptions *) options,
+		     gimp_color_picker_tool_options_reset);
+
+  options->sample_merged  = options->sample_merged_d  = FALSE;
+  options->sample_average = options->sample_average_d = FALSE;
+  options->average_radius = options->average_radius_d = 1.0;
+  options->update_active  = options->update_active_d  = TRUE;
+
+  /*  the main vbox  */
+  vbox = options->tool_options.main_vbox;
+
+  /*  the sample merged toggle button  */
+  options->sample_merged_w =
+    gtk_check_button_new_with_label (_("Sample Merged"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
+				options->sample_merged_d);
+  gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
+  g_signal_connect (G_OBJECT (options->sample_merged_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->sample_merged);
+  gtk_widget_show (options->sample_merged_w);
+
+  /*  the sample average options  */
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+
+  options->sample_average_w =
+    gtk_check_button_new_with_label (_("Sample Average"));
+  gtk_table_attach (GTK_TABLE (table), options->sample_average_w, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
+				options->sample_average_d);
+  g_signal_connect (G_OBJECT (options->sample_average_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->sample_average);
+  gtk_widget_show (options->sample_average_w);
+
+  label = gtk_label_new (_("Radius:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  /*  the feather radius scale  */
+  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 0, 2,
+		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (abox);
+
+  options->average_radius_w =
+    gtk_adjustment_new (options->average_radius_d, 1.0, 15.0, 2.0, 2.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->average_radius_w));
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_container_add (GTK_CONTAINER (abox), scale);
+  gtk_widget_set_sensitive (scale, options->sample_average_d);
+  g_object_set_data (G_OBJECT (options->sample_average_w), "set_sensitive",
+		       scale);
+  gtk_widget_set_sensitive (label, options->sample_average_d);
+  g_object_set_data (G_OBJECT (scale), "set_sensitive",
+		       label);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  g_signal_connect (G_OBJECT (options->average_radius_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->average_radius);
+  gtk_widget_show (scale);
+  gtk_widget_show (table);
+
+  /*  the update active color toggle button  */
+  options->update_active_w =
+    gtk_check_button_new_with_label (_("Update Active Color"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->update_active_w),
+				options->update_active_d);
+  gtk_box_pack_start (GTK_BOX (vbox), options->update_active_w, FALSE, FALSE, 0);
+  g_signal_connect (G_OBJECT (options->update_active_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->update_active);
+  gtk_widget_show (options->update_active_w);
+
+  return options;
+}
+
+static void
+gimp_color_picker_tool_options_reset (GimpToolOptions *tool_options)
+{
+  GimpColorPickerToolOptions *options;
+
+  options = (GimpColorPickerToolOptions *) tool_options;
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
+				options->sample_merged_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
+				options->sample_average_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->average_radius_w),
+			    options->average_radius_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->update_active_w),
+				options->update_active_d);
 }

@@ -76,8 +76,5 @@ GimpPaletteEntry * gimp_palette_add_entry      (GimpPalette      *palette,
 void               gimp_palette_delete_entry   (GimpPalette      *palette,
 					        GimpPaletteEntry *entry);
 
-void               gimp_palette_update_preview (GimpPalette      *palette,
-						GdkGC            *gc);
-
 
 #endif /* __GIMP_PALETTE_H__ */

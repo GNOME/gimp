@@ -38,7 +38,7 @@ enum
 static void   gimp_draw_tool_class_init (GimpDrawToolClass *klass);
 static void   gimp_draw_tool_init       (GimpDrawTool      *draw_tool);
 
-static void   gimp_draw_tool_destroy    (GtkObject         *object);
+static void   gimp_draw_tool_finalize   (GObject           *object);
 
 static void   gimp_draw_tool_control    (GimpTool          *tool,
 					 ToolAction         action,
@@ -51,26 +51,29 @@ static GimpToolClass *parent_class = NULL;
 
 
 
-GtkType
+GType
 gimp_draw_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
-      GtkTypeInfo tool_info =
+      static const GTypeInfo tool_info =
       {
-        "GimpDrawTool",
-        sizeof (GimpDrawTool),
         sizeof (GimpDrawToolClass),
-        (GtkClassInitFunc) gimp_draw_tool_class_init,
-        (GtkObjectInitFunc) gimp_draw_tool_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        NULL /* (GtkClassInitFunc) gimp_tool_class_init, */
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_draw_tool_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpDrawTool),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_draw_tool_init,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
+					  "GimpDrawTool", 
+                                          &tool_info, 0);
     }
 
   return tool_type;
@@ -79,11 +82,11 @@ gimp_draw_tool_get_type (void)
 static void
 gimp_draw_tool_class_init (GimpDrawToolClass *klass)
 {
-  GtkObjectClass *object_class;
-  GimpToolClass  *tool_class;
+  GObjectClass  *object_class;
+  GimpToolClass *tool_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
+  tool_class   = GIMP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -96,9 +99,9 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->destroy = gimp_draw_tool_destroy;
+  object_class->finalize = gimp_draw_tool_finalize;
 
-  tool_class->control   = gimp_draw_tool_control;
+  tool_class->control    = gimp_draw_tool_control;
 }
 
 static void
@@ -114,20 +117,19 @@ gimp_draw_tool_init (GimpDrawTool *tool)
 }
 
 static void
-gimp_draw_tool_destroy (GtkObject *object)
+gimp_draw_tool_finalize (GObject *object)
 {
   GimpDrawTool *draw_tool;
 
   draw_tool = GIMP_DRAW_TOOL (object);
 
-  if (draw_tool->draw_state == VISIBLE)
-    gimp_draw_tool_stop (draw_tool);
-
   if (draw_tool->gc)
-    gdk_gc_destroy (draw_tool->gc);
+    {
+      gdk_gc_destroy (draw_tool->gc);
+      draw_tool->gc = NULL;
+    }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -156,6 +158,9 @@ gimp_draw_tool_control (GimpTool   *tool,
     default:
       break;
     }
+
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 void

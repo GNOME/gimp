@@ -22,9 +22,6 @@
 
 #include "gimpdata.h"
 
-/* FIXME: remove the GimpPaintTool dependency  */
-#include "tools/tools-types.h"
-
 
 #define GIMP_BRUSH_FILE_EXTENSION        ".gbr"
 #define GIMP_BRUSH_PIXMAP_FILE_EXTENSION ".gpb"
@@ -58,9 +55,17 @@ struct _GimpBrushClass
 
   void (* spacing_changed) (GimpBrush *brush);
 
+#if 0
   /* FIXME: these are no virtual function pointers but bad hacks: */
   GimpBrush * (* select_brush)     (GimpPaintTool *paint_tool);
   gboolean    (* want_null_motion) (GimpPaintTool *paint_tool);
+
+  maybe:
+
+  GimpBrush * (* select_brush)     (GimpBrush      *brush,
+				    GimpValuators  *current,
+				    GimpValuators  *new);
+#endif
 };
 
 
