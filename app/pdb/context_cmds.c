@@ -97,7 +97,9 @@ context_push_invoker (Gimp         *gimp,
       success = plug_in_context_push (gimp->current_plug_in);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
   return procedural_db_return_args (&context_push_proc, success);
 }
 
@@ -126,10 +128,12 @@ context_pop_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
-      success = plug_in_context_push (gimp->current_plug_in);
+      success = plug_in_context_pop (gimp->current_plug_in);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
   return procedural_db_return_args (&context_pop_proc, success);
 }
 

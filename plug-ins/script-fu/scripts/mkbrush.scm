@@ -22,7 +22,7 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-(define (script-fu-make-brush-rectangular description width height spacing )
+(define (script-fu-make-brush-rectangular name width height spacing )
   (let* ((img (car (gimp-image-new width height GRAY)))
 	 (drawable (car (gimp-layer-new img
 					width height GRAY-IMAGE
@@ -33,11 +33,7 @@
 				  (number->string width)
 				  "x"
 				  (number->string height)
-				  ".gbr"))
-	 (desc (string-append description " "
-			      (number->string width)
-			      "x"
-			      (number->string height))))
+				  ".gbr")))
 
     (gimp-context-push)
 
@@ -52,29 +48,28 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill drawable BACKGROUND-FILL)
 
-    (file-gbr-save 1 img drawable filename "" spacing desc)
+    (file-gbr-save 1 img drawable filename "" spacing name)
     (gimp-image-delete img)
 
     (gimp-context-pop)
 
     (gimp-brushes-refresh)
-    (gimp-brushes-set-brush desc)))
+    (gimp-brushes-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-rectangular"
-            _"<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
-            "Create size of brush"
-            "Seth Burgess <sjburges@ou.edu>"
-            "Seth Burgess"
-            "1997"
-            ""
-            SF-STRING     _"Description" "Rectangle"
-            SF-ADJUSTMENT _"Width" '(20 1 200 1 10 0 1)
-            SF-ADJUSTMENT _"Height" '(20 1 200 1 10 0 1)
-            SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
+		    _"<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
+		    "Create size of brush"
+		    "Seth Burgess <sjburges@ou.edu>"
+		    "Seth Burgess"
+		    "1997"
+		    ""
+		    SF-STRING     _"Name"    _"Rectangle"
+		    SF-ADJUSTMENT _"Width"   '(20 1 200 1 10 0 1)
+		    SF-ADJUSTMENT _"Height"  '(20 1 200 1 10 0 1)
+		    SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
 
 
-(define (script-fu-make-brush-rectangular-feathered description
-						    width height
+(define (script-fu-make-brush-rectangular-feathered name width height
 						    feathering spacing)
   (let* ((widthplus (+ width feathering))
 	 (heightplus (+ height feathering))
@@ -90,13 +85,7 @@
 				  (number->string height)
 				  "f"
 				  (number->string feathering)
-				  ".gbr"))
-	 (desc (string-append description " "
-			      (number->string width)
-			      "x"
-			      (number->string height)
-			      ","
-			      (number->string feathering))))
+				  ".gbr")))
 
     (gimp-context-push)
 
@@ -116,13 +105,13 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill drawable BACKGROUND-FILL)
 
-    (file-gbr-save 1 img drawable filename "" spacing desc)
+    (file-gbr-save 1 img drawable filename "" spacing name)
     (gimp-image-delete img)
 
     (gimp-context-pop)
 
     (gimp-brushes-refresh)
-    (gimp-brushes-set-brush desc)))
+    (gimp-brushes-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-rectangular-feathered"
             _"<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
@@ -131,14 +120,14 @@
             "Seth Burgess"
             "1997"
             ""
-            SF-STRING     _"Description" "Rectangle"
-            SF-ADJUSTMENT _"Width" '(20 1 200 1 10 0 1)
-            SF-ADJUSTMENT _"Height" '(20 1 200 1 10 0 1)
+            SF-STRING     _"Name"       _"Rectangle"
+            SF-ADJUSTMENT _"Width"      '(20 1 200 1 10 0 1)
+            SF-ADJUSTMENT _"Height"     '(20 1 200 1 10 0 1)
             SF-ADJUSTMENT _"Feathering" '(4 1 100 1 10 0 1)
-            SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
+            SF-ADJUSTMENT _"Spacing"    '(25 1 100 1 10 1 0))
 
 
-(define (script-fu-make-brush-elliptical description width height spacing)
+(define (script-fu-make-brush-elliptical name width height spacing)
   (let* ((img (car (gimp-image-new width height GRAY)))
 	 (drawable (car (gimp-layer-new img
 					width height GRAY-IMAGE
@@ -149,11 +138,8 @@
 				  (number->string width)
 				  "x"
 				  (number->string height)
-				  ".gbr"))
-	 (desc (string-append description " "
-			      (number->string width)
-			      "x"
-			      (number->string height))))
+				  ".gbr")))
+
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
@@ -166,29 +152,28 @@
     
     (gimp-edit-fill drawable BACKGROUND-FILL)
 
-    (file-gbr-save 1 img drawable filename "" spacing desc)
+    (file-gbr-save 1 img drawable filename "" spacing name)
     (gimp-image-delete img)
 
     (gimp-context-pop)
 
     (gimp-brushes-refresh)
-    (gimp-brushes-set-brush desc)))
+    (gimp-brushes-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-elliptical"
-            _"<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
-            "Create size of brush"
-            "Seth Burgess <sjburges@ou.edu>"
-            "Seth Burgess"
-            "1997"
-            ""
-            SF-STRING _"Description" "Ellipse"
-            SF-ADJUSTMENT _"Width" '(20 1 200 1 10 0 1)
-            SF-ADJUSTMENT _"Height" '(20 1 200 1 10 0 1)
-            SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
+		    _"<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
+		    "Create size of brush"
+		    "Seth Burgess <sjburges@ou.edu>"
+		    "Seth Burgess"
+		    "1997"
+		    ""
+		    SF-STRING     _"Name"    _"Ellipse"
+		    SF-ADJUSTMENT _"Width"   '(20 1 200 1 10 0 1)
+		    SF-ADJUSTMENT _"Height"  '(20 1 200 1 10 0 1)
+		    SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
 
 
-(define (script-fu-make-brush-elliptical-feathered description
-						   width height
+(define (script-fu-make-brush-elliptical-feathered name width height
 						   feathering spacing)
   (let* ((widthplus (+ feathering width)) ; add 3 for blurring
 	 (heightplus (+ feathering height))
@@ -204,13 +189,7 @@
 				  (number->string height)
 				  "f"
 				  (number->string feathering)
-				  ".gbr"))
-	 (desc (string-append description " "
-			      (number->string width)
-			      "x"
-			      (number->string height)
-			      " f"
-			      (number->string feathering))))
+				  ".gbr")))
 
     (gimp-context-push)
 
@@ -232,23 +211,23 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill drawable BACKGROUND-FILL)
 
-    (file-gbr-save 1 img drawable filename "" spacing desc)
+    (file-gbr-save 1 img drawable filename "" spacing name)
     (gimp-image-delete img)
 
     (gimp-context-pop)
     
     (gimp-brushes-refresh)
-    (gimp-brushes-set-brush desc)))
+    (gimp-brushes-set-brush name)))
 
 (script-fu-register "script-fu-make-brush-elliptical-feathered"
-            _"<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
-            "Makes a feathered elliptical brush of specified size"
-            "Seth Burgess <sjburges@ou.edu>"
-            "Seth Burgess"
-            "1997"
-            ""
-            SF-STRING _"Description" "Ellipse"
-            SF-ADJUSTMENT _"Width" '(20 1 200 1 10 0 1)
-            SF-ADJUSTMENT _"Height" '(20 1 200 1 10 0 1)
-            SF-ADJUSTMENT _"Feathering" '(4 1 100 1 10 0 1)
-            SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
+		    _"<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
+		    "Makes a feathered elliptical brush of specified size"
+		    "Seth Burgess <sjburges@ou.edu>"
+		    "Seth Burgess"
+		    "1997"
+		    ""
+		    SF-STRING     _"Name"       _"Ellipse"
+		    SF-ADJUSTMENT _"Width"      '(20 1 200 1 10 0 1)
+		    SF-ADJUSTMENT _"Height"     '(20 1 200 1 10 0 1)
+		    SF-ADJUSTMENT _"Feathering" '(4 1 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Spacing"    '(25 1 100 1 10 1 0))
