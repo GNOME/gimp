@@ -1072,31 +1072,18 @@ gfig_save_callbk (void)
 }
 
 static void
-file_selection_response (GtkFileSelection *fs,
-                         gint              response_id,
-                         GFigObj          *obj)
+file_chooser_response (GtkFileChooser *chooser,
+                       gint            response_id,
+                       GFigObj        *obj)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filenamebuf;
-      GFigObj     *real_current;
+      gchar   *filename;
+      GFigObj *real_current;
 
-      filenamebuf = gtk_file_selection_get_filename (fs);
+      filename = gtk_file_chooser_get_filename (chooser);
 
-      /* Get the name */
-      if (strlen (filenamebuf) == 0)
-        {
-          g_message ("Save: No filename given");
-          return;
-        }
-
-      if (g_file_test (filenamebuf, G_FILE_TEST_IS_DIR))
-        {
-          g_message (_("Cannot save to a folder."));
-          return;
-        }
-
-      obj->filename = g_strdup (filenamebuf);
+      obj->filename = filename;
 
       real_current = current_obj;
       current_obj = obj;
@@ -1104,34 +1091,39 @@ file_selection_response (GtkFileSelection *fs,
       current_obj = current_obj;
     }
 
-  gtk_widget_destroy (GTK_WIDGET (fs));
+  gtk_widget_destroy (GTK_WIDGET (chooser));
 }
 
 static void
-create_file_selection (GFigObj   *obj,
-                       gchar     *tpath,
-                       GtkWidget *parent)
+create_save_file_chooser (GFigObj   *obj,
+                          gchar     *tpath,
+                          GtkWidget *parent)
 {
   static GtkWidget *window = NULL;
 
-  if (!window)
+  if (! window)
     {
-      window = gtk_file_selection_new (_("Save Gfig Drawing"));
+      window =
+        gtk_file_chooser_dialog_new (_("Save Gfig Drawing"),
+                                     GTK_WINDOW (parent),
+                                     GTK_FILE_CHOOSER_ACTION_SAVE,
 
-      gtk_window_set_transient_for (GTK_WINDOW (window), GTK_WINDOW (parent));
-      gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+
+                                     NULL);
 
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
       g_signal_connect (window, "response",
-                        G_CALLBACK (file_selection_response),
+                        G_CALLBACK (file_chooser_response),
                         obj);
     }
 
   if (tpath)
     {
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), tpath);
+      gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (window), tpath);
     }
   else if (gfig_path)
     {
@@ -1145,7 +1137,7 @@ create_file_selection (GFigObj   *obj,
       if (! dir)
         dir = g_strdup (gimp_directory ());
 
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), dir);
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), dir);
 
       g_free (dir);
     }
@@ -1153,7 +1145,7 @@ create_file_selection (GFigObj   *obj,
     {
       const gchar *tmp = g_get_tmp_dir ();
 
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), tmp);
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), tmp);
     }
 
   gtk_window_present (GTK_WINDOW (window));
@@ -1165,7 +1157,7 @@ gfig_save (GtkWidget *parent)
   /* Save the current object */
   if (!current_obj->filename)
    {
-     create_file_selection (current_obj, NULL, parent);
+     create_save_file_chooser (current_obj, NULL, parent);
      return;
    }
   gfig_save_callbk ();
@@ -3386,17 +3378,17 @@ list_button_update (GFigObj *obj)
 
 
 static void
-gfig_load_file_selection_response (GtkFileSelection *fs,
-                                   gint              response_id,
-                                   gpointer          data)
+gfig_load_file_chooser_response (GtkFileChooser *chooser,
+                                 gint            response_id,
+                                 gpointer        data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filename;
-      GFigObj     *gfig;
-      GFigObj     *current_saved;
+      gchar   *filename;
+      GFigObj *gfig;
+      GFigObj *current_saved;
 
-      filename = gtk_file_selection_get_filename (fs);
+      filename = gtk_file_chooser_get_filename (chooser);
 
       if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
         {
@@ -3418,9 +3410,11 @@ gfig_load_file_selection_response (GtkFileSelection *fs,
               new_obj_2edit (gfig);
             }
         }
+
+      g_free (filename);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (fs));
+  gtk_widget_destroy (GTK_WIDGET (chooser));
 }
 
 static void
@@ -3430,17 +3424,22 @@ load_button_callback (GtkWidget *widget,
   static GtkWidget *window = NULL;
 
   /* Load a single object */
-  window = gtk_file_selection_new (_("Load Gfig object collection"));
+  window = gtk_file_chooser_dialog_new (_("Load Gfig object collection"),
+                                        GTK_WINDOW (gtk_widget_get_toplevel (widget)),
+                                        GTK_FILE_CHOOSER_ACTION_OPEN,
 
-  gtk_window_set_transient_for (GTK_WINDOW (window),
-                                GTK_WINDOW (gtk_widget_get_toplevel (widget)));
-  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+
+                                        NULL);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
 
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &window);
   g_signal_connect (window, "response",
-                    G_CALLBACK (gfig_load_file_selection_response),
+                    G_CALLBACK (gfig_load_file_chooser_response),
                     window);
 
   gtk_widget_show (window);
@@ -3970,8 +3969,8 @@ static void
 gfig_rename_menu_callback (GtkWidget *widget,
                            gpointer   data)
 {
-  create_file_selection (gfig_obj_for_menu, gfig_obj_for_menu->filename,
-                         gtk_widget_get_toplevel (widget));
+  create_save_file_chooser (gfig_obj_for_menu, gfig_obj_for_menu->filename,
+                            gtk_widget_get_toplevel (widget));
 }
 
 static void

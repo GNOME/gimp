@@ -72,18 +72,18 @@ static explorer_vals_t standardvals =
  FORWARD DECLARATIONS
  *********************************************************************/
 
-static void load_file_selection_response (GtkFileSelection *fs,
-                                          gint              response_id,
-                                          gpointer          data);
-static void file_selection_response      (GtkFileSelection *fs,
-                                          gint              response_id,
-                                          gpointer          data);
-static void create_load_file_selection   (GtkWidget        *widget,
-                                          GtkWidget        *dialog);
-static void create_file_selection        (GtkWidget        *widget,
-                                          GtkWidget        *dialog);
+static void load_file_chooser_response (GtkFileChooser *chooser,
+                                        gint            response_id,
+                                        gpointer        data);
+static void save_file_chooser_response (GtkFileChooser *chooser,
+                                        gint            response_id,
+                                        gpointer        data);
+static void create_load_file_chooser   (GtkWidget      *widget,
+                                        GtkWidget      *dialog);
+static void create_save_file_chooser   (GtkWidget      *widget,
+                                        GtkWidget      *dialog);
 
-static void explorer_logo_dialog         (GtkWidget        *parent);
+static void explorer_logo_dialog       (GtkWidget      *parent);
 
 /**********************************************************************
  CALLBACKS
@@ -796,7 +796,7 @@ explorer_dialog (void)
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (create_load_file_selection),
+                    G_CALLBACK (create_load_file_chooser),
                     dialog);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Load a fractal from file"), NULL);
@@ -813,7 +813,7 @@ explorer_dialog (void)
   button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (create_file_selection),
+                    G_CALLBACK (create_save_file_chooser),
                     dialog);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Save active fractal to file"), NULL);
@@ -1845,45 +1845,28 @@ save_callback (void)
 }
 
 static void
-file_selection_response (GtkFileSelection *fs,
-                         gint              response_id,
-                         gpointer          data)
+save_file_chooser_response (GtkFileChooser *chooser,
+                            gint            response_id,
+                            gpointer        data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filenamebuf;
+      filename = gtk_file_chooser_get_filename (chooser);
 
-      filenamebuf = gtk_file_selection_get_filename (fs);
-
-      /* Get the name */
-      if (!filenamebuf || strlen (filenamebuf) == 0)
-        {
-          g_message (_("Save: No filename given"));
-          return;
-        }
-
-      if (g_file_test (filenamebuf, G_FILE_TEST_IS_DIR))
-        {
-          /* Can't save to directory */
-          g_message (_("Cannot save to a folder."));
-          return;
-        }
-
-      filename = g_strdup (filenamebuf);
       save_callback ();
     }
 
-  gtk_widget_destroy (GTK_WIDGET (fs));
+  gtk_widget_destroy (GTK_WIDGET (chooser));
 }
 
 static void
-load_file_selection_response (GtkFileSelection *fs,
-                              gint              response_id,
-                              gpointer          data)
+load_file_chooser_response (GtkFileChooser *chooser,
+                            gint            response_id,
+                            gpointer        data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      filename = g_strdup (gtk_file_selection_get_filename (fs));
+      filename = gtk_file_chooser_get_filename (chooser);
 
       if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
         {
@@ -1896,27 +1879,34 @@ load_file_selection_response (GtkFileSelection *fs,
       dialog_update_preview ();
     }
 
-  gtk_widget_destroy (GTK_WIDGET (fs));
+  gtk_widget_destroy (GTK_WIDGET (chooser));
 }
 
 static void
-create_load_file_selection (GtkWidget *widget,
-                            GtkWidget *dialog)
+create_load_file_chooser (GtkWidget *widget,
+                          GtkWidget *dialog)
 {
   static GtkWidget *window = NULL;
 
   if (!window)
     {
-      window = gtk_file_selection_new (_("Load Fractal Parameters"));
-      gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_NONE);
+      window =
+        gtk_file_chooser_dialog_new (_("Load Fractal Parameters"),
+                                     GTK_WINDOW (dialog),
+                                     GTK_FILE_CHOOSER_ACTION_OPEN,
 
-      gtk_window_set_transient_for (GTK_WINDOW (window), GTK_WINDOW (dialog));
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+
+                                     NULL);
+
+      gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
 
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
       g_signal_connect (window, "response",
-                        G_CALLBACK (load_file_selection_response),
+                        G_CALLBACK (load_file_chooser_response),
                         window);
     }
 
@@ -1924,29 +1914,36 @@ create_load_file_selection (GtkWidget *widget,
 }
 
 static void
-create_file_selection (GtkWidget *widget,
-                       GtkWidget *dialog)
+create_save_file_chooser (GtkWidget *widget,
+                          GtkWidget *dialog)
 {
   static GtkWidget *window = NULL;
 
-  if (!window)
+  if (! window)
     {
-      window = gtk_file_selection_new (_("Save Fractal Parameters"));
-      gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_NONE);
+      window =
+        gtk_file_chooser_dialog_new (_("Save Fractal Parameters"),
+                                     GTK_WINDOW (dialog),
+                                     GTK_FILE_CHOOSER_ACTION_SAVE,
 
-      gtk_window_set_transient_for (GTK_WINDOW (window), GTK_WINDOW (dialog));
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+
+                                     NULL);
+
+      gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
 
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
       g_signal_connect (window, "response",
-                        G_CALLBACK (file_selection_response),
+                        G_CALLBACK (save_file_chooser_response),
                         window);
     }
 
   if (tpath)
     {
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), tpath);
+      gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (window), tpath);
     }
   else if (fractalexplorer_path)
     {
@@ -1960,14 +1957,14 @@ create_file_selection (GtkWidget *widget,
       if (!dir)
         dir = g_strdup (gimp_directory ());
 
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), dir);
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), dir);
 
       g_free (dir);
       gimp_path_free (path_list);
     }
   else
     {
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), "/tmp");
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), "/tmp");
     }
 
   gtk_window_present (GTK_WINDOW (window));

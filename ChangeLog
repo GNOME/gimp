@@ -1,5 +1,11 @@
 2004-04-15  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gfig/gfig.c: first plug-ins ported to GtkFileChooser.
+
+2004-04-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	* app/display/gimpdisplayshell.c
 	* app/widgets/gimpcontainertreeview.c: removed runtime version

@@ -374,15 +374,13 @@ doit (GimpDrawable *drawable)
 }
 
 static void
-file_response_callback (GtkFileSelection *fs,
-                        gint              response_id,
-                        gpointer          data)
+file_response_callback (GtkFileChooser *chooser,
+                        gint            response_id,
+                        gpointer        data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filename;
-
-      filename = gtk_file_selection_get_filename (fs);
+      gchar *filename = gtk_file_chooser_get_filename (chooser);
 
       if (load_save)
         {
@@ -394,6 +392,7 @@ file_response_callback (GtkFileSelection *fs,
             {
               g_message (_("'%s' is not a regular file"),
                          gimp_filename_to_utf8 (filename));
+              g_free (filename);
               return;
             }
 
@@ -403,6 +402,7 @@ file_response_callback (GtkFileSelection *fs,
             {
               g_message (_("Could not open '%s' for reading: %s"),
                          gimp_filename_to_utf8 (filename), g_strerror (errno));
+              g_free (filename);
               return;
             }
 
@@ -433,15 +433,18 @@ file_response_callback (GtkFileSelection *fs,
             {
               g_message (_("Could not open '%s' for writing: %s"),
                          gimp_filename_to_utf8 (filename), g_strerror (errno));
+              g_free (filename);
               return;
             }
 
           print_control_point (f, &config.cp, 0);
           fclose (f);
         }
+
+      g_free (filename);
     }
 
-  gtk_widget_hide (GTK_WIDGET (fs));
+  gtk_widget_destroy (GTK_WIDGET (chooser));
 
   if (! GTK_WIDGET_SENSITIVE (load_button))
     gtk_widget_set_sensitive (load_button, TRUE);
@@ -451,14 +454,25 @@ file_response_callback (GtkFileSelection *fs,
 }
 
 static void
-make_file_dlg (GtkWidget *parent)
+make_file_dlg (const gchar *title,
+               GtkWidget   *parent)
 {
-  file_dlg = gtk_file_selection_new (NULL);
+  file_dlg = gtk_file_chooser_dialog_new (title, GTK_WINDOW (parent),
+                                          load_save ?
+                                          GTK_FILE_CHOOSER_ACTION_OPEN :
+                                          GTK_FILE_CHOOSER_ACTION_SAVE,
 
-  gtk_window_set_transient_for (GTK_WINDOW (file_dlg), GTK_WINDOW (parent));
+                                          GTK_STOCK_CANCEL, GTK_STOCK_CANCEL,
+                                          load_save ?
+                                          GTK_STOCK_OPEN : GTK_STOCK_SAVE,
+                                          GTK_RESPONSE_OK,
+
+                                          NULL);
+
+  g_object_add_weak_pointer (G_OBJECT (file_dlg), (gpointer *) &file_dlg);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (file_dlg), GTK_RESPONSE_OK);
   gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
-
-  gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
 
   g_signal_connect (file_dlg, "delete_event",
                     G_CALLBACK (gtk_true),
@@ -736,42 +750,28 @@ load_callback (GtkWidget *widget,
 {
   if (! file_dlg)
     {
-      make_file_dlg (gtk_widget_get_toplevel (widget));
+      load_save = 1;
+      make_file_dlg (_("Load Flame"), gtk_widget_get_toplevel (widget));
+
+      gtk_widget_set_sensitive (save_button, FALSE);
     }
-  else
-    {
-      if (GTK_WIDGET_VISIBLE (file_dlg))
-	{
-	  gtk_window_present (GTK_WINDOW (file_dlg));
-	  return;
-	}
-    }
-  gtk_window_set_title (GTK_WINDOW (file_dlg), _("Load Flame"));
-  load_save = 1;
-  gtk_widget_set_sensitive (save_button, FALSE);
-  gtk_widget_show (file_dlg);
+
+  gtk_window_present (GTK_WINDOW (file_dlg));
 }
 
 static void
 save_callback (GtkWidget *widget,
 	       gpointer   data)
 {
-  if (!file_dlg)
+  if (! file_dlg)
     {
-      make_file_dlg (gtk_widget_get_toplevel (widget));
+      load_save = 0;
+      make_file_dlg (_("Save Flame"), gtk_widget_get_toplevel (widget));
+
+      gtk_widget_set_sensitive (load_button, FALSE);
     }
-  else
-    {
-      if (GTK_WIDGET_VISIBLE (file_dlg))
-	{
-	  gtk_window_present (GTK_WINDOW (file_dlg));
-	  return;
-	}
-    }
-  gtk_window_set_title (GTK_WINDOW (file_dlg), _("Save Flame"));
-  load_save = 0;
-  gtk_widget_set_sensitive (load_button, FALSE);
-  gtk_widget_show (file_dlg);
+
+  gtk_window_present (GTK_WINDOW (file_dlg));
 }
 
 static void
