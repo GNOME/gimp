@@ -12,7 +12,7 @@
   (let* ((drawable-width (car (gimp-drawable-width drw)))
 	 (drawable-height (car (gimp-drawable-height drw)))
 	 (new-image (car (gimp-image-new drawable-width drawable-height RGB)))
-	 (original-layer (car (gimp-layer-new new-image 
+	 (original-layer (car (gimp-layer-new new-image
 					      drawable-width drawable-height
 					      RGB "Original" 100 NORMAL)))
 	 (original-layer-for-darker #f)
@@ -22,10 +22,10 @@
 	 (darker-layer #f)
 	 (lighter-layer #f))
     (gimp-selection-all img)
-    (gimp-edit-copy img drw)
+    (gimp-edit-copy drw)
     (gimp-image-disable-undo new-image)
     (gimp-floating-sel-anchor
-     (car (gimp-edit-paste new-image original-layer FALSE)))
+     (car (gimp-edit-paste original-layer FALSE)))
     (gimp-image-add-layer new-image original-layer 0)
     (set! original-layer-for-darker (car (gimp-layer-copy original-layer TRUE)))
     (set! original-layer-for-lighter (car (gimp-layer-copy original-layer TRUE)))

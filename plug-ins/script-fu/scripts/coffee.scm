@@ -27,25 +27,25 @@
    (set! theNumber inNumber)
    (set! theSize (min theWidth theHeight) )
 
-   (while (> theNumber 0) 
+   (while (> theNumber 0)
        (set! theNumber (- theNumber 1))
-       (set! theStain (car (gimp-layer-new theImage theSize theSize RGBA_IMAGE "Stain" 100 
+       (set! theStain (car (gimp-layer-new theImage theSize theSize RGBA_IMAGE "Stain" 100
              (if (= inDark TRUE) DARKEN-ONLY NORMAL)          )))
 
   
                               
        (gimp-image-add-layer theImage theStain 0)
        (gimp-selection-all theImage)
-       (gimp-edit-clear theImage theStain)
+       (gimp-edit-clear theStain)
        (let ((blobSize (/ (rand (- theSize 40)) (+ (rand 3) 1)  ) ) )
-            (gimp-ellipse-select theImage 
+            (gimp-ellipse-select theImage
                  (/ (- theSize blobSize) 2)
                  (/ (- theSize blobSize) 2)
 		 blobSize blobSize REPLACE TRUE 0 FALSE)
        )
        (script-fu-distress-selection theImage theStain (* (+ (rand 15) 1) (+ (rand 15) 1)) (/ theSize 25) 4 2 TRUE TRUE   )
        (gimp-gradients-set-active "Coffee")
-       (gimp-blend theImage theStain CUSTOM NORMAL SHAPEBURST-DIMPLED 100 0 REPEAT-NONE FALSE 0 0 0 0 0 0)
+       (gimp-blend theStain CUSTOM NORMAL SHAPEBURST-DIMPLED 100 0 REPEAT-NONE FALSE 0 0 0 0 0 0)
        (gimp-layer-set-offsets theStain (- (rand theWidth) (/ theSize 2)) (- (rand theHeight) (/ theSize 2)) theSize)
     )
    (gimp-selection-none theImage)

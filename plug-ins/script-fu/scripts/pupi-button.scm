@@ -34,7 +34,7 @@
 (define (round-select img x y width height ratio)
   (let* ((diameter (* ratio height)))
     (gimp-ellipse-select img x y diameter height ADD FALSE 0 0)
-    (gimp-ellipse-select img (+ x (- width diameter)) y 
+    (gimp-ellipse-select img (+ x (- width diameter)) y
 			 diameter height ADD FALSE 0 0)
     (gimp-rect-select img (+ x (/ diameter 2)) y
 		      (- width diameter) height ADD FALSE 0)))
@@ -62,15 +62,15 @@
 			    pressed)
 
   (cond ((eqv? notpressed TRUE)
-	 (do-pupibutton text size foundry family weight slant 
-			set-width spacing ul-color lr-color 
+	 (do-pupibutton text size foundry family weight slant
+			set-width spacing ul-color lr-color
 			text-color xpadding ypadding bevel ratio 0)))
   (cond ((eqv? notpressed-active TRUE)
-	 (do-pupibutton text size foundry family weight slant 
+	 (do-pupibutton text size foundry family weight slant
 			set-width spacing ul-color-high lr-color-high
 			hlight-color xpadding ypadding bevel ratio 0)))
   (cond ((eqv? pressed TRUE)
-	 (do-pupibutton text size foundry family weight slant 
+	 (do-pupibutton text size foundry family weight slant
 			set-width spacing ul-color-high lr-color-high
 			hlight-color xpadding ypadding bevel ratio 1))))
   
@@ -125,9 +125,9 @@
 							     
 	 (img (car (gimp-image-new width height RGB)))
 
-	 (bumpmap (car (gimp-layer-new img width height 
+	 (bumpmap (car (gimp-layer-new img width height
 				       RGBA_IMAGE "Bumpmap" 100 NORMAL)))
-	 (gradient (car (gimp-layer-new img width height 
+	 (gradient (car (gimp-layer-new img width height
 					RGBA_IMAGE "Button" 100 NORMAL))))
     (gimp-image-disable-undo img)
 
@@ -136,12 +136,12 @@
     (gimp-image-add-layer img bumpmap -1)
     (gimp-selection-none img)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill img bumpmap)
+    (gimp-edit-fill bumpmap)
 
-    (round-select img (/ bevel 2) (/ bevel 2) 
+    (round-select img (/ bevel 2) (/ bevel 2)
 		  (- width bevel) (- height bevel) ratio)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill img bumpmap)
+    (gimp-edit-fill bumpmap)
 
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img bumpmap bevel 1 1)
@@ -149,13 +149,12 @@
     ; Create gradient layer
 
     (gimp-image-add-layer img gradient -1)
-    (gimp-edit-clear img gradient)
+    (gimp-edit-clear gradient)
     (round-select img 0 0 width height ratio)
     (gimp-palette-set-foreground ul-color)
     (gimp-palette-set-background lr-color)
 
-    (gimp-blend img
-		gradient
+    (gimp-blend gradient
 		FG-BG-RGB
 		NORMAL
 		LINEAR
@@ -172,7 +171,7 @@
 
     (gimp-selection-none img)
 
-    (plug-in-bump-map 1 img gradient bumpmap 
+    (plug-in-bump-map 1 img gradient bumpmap
 		      135 45 bevel 0 0 0 0 TRUE pressed 0)
 
 ;     Create text layer
@@ -181,7 +180,7 @@
 
     (gimp-palette-set-foreground text-color)
     (let ((textl (car (gimp-text
-		       img -1 0 0 text 0 TRUE size PIXELS 
+		       img -1 0 0 text 0 TRUE size PIXELS
 		       foundry family weight slant set-width spacing))))
       (gimp-layer-set-offsets textl
 			      (+ xpadding radius bevel)
@@ -192,7 +191,7 @@
     (gimp-selection-none img)
     (round-select img 1 1 (- width 1) (- height 1) ratio)
     (gimp-selection-invert img)
-    (gimp-edit-clear img gradient)
+    (gimp-edit-clear gradient)
 
 ;     Done
 

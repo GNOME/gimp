@@ -86,7 +86,7 @@
 	 (index 0))
     (gimp-image-disable-undo img)
     (gimp-image-add-layer img BG-layer 0)
-    (gimp-edit-fill img BG-layer)
+    (gimp-edit-fill BG-layer)
     ;; change units
     (set! start-angle-rad (* (/ (modulo start-angle 360) 360) 2 *pi*))
     (set! fill-angle-rad (* (/ fill-angle 360) 2 *pi*))
@@ -127,7 +127,7 @@
       (set! angle-list (nreverse temp-list))
       (set! temp 0)
       (set! angle-list
-	    (mapcar (lambda (angle) 
+	    (mapcar (lambda (angle)
 		      (let ((tmp temp))
 			(set! temp (+ angle temp))
 			(+ tmp (/ angle 2))))
@@ -167,19 +167,19 @@
 					(+ center-y
 					   (* radius (sin angle))
 					   (* rotate-radius
-					      (sin (if (< 0 fill-angle-rad) 
+					      (sin (if (< 0 fill-angle-rad)
 						       angle
 						       (+ angle *pi*))))
 					   (- (/ height 2))))
-		  (gimp-rotate img new-layer 1 
+		  (gimp-rotate new-layer 1
 			       ((if (< 0 fill-angle-rad) + -) angle rad-90))))))
       (set! index (+ index 1)))
     (gimp-layer-set-visible BG-layer 0)
     (if (not script-fu-text-circle-debug?)
 	(begin
-	  (set! merged-layer 
+	  (set! merged-layer
 		(car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
-	  (gimp-layer-set-name merged-layer 
+	  (gimp-layer-set-name merged-layer
 			       (if (< (length text) 16)
 				   (wrap-string text)
 				   "Text Circle"))))
@@ -202,7 +202,7 @@
     (set! script-fu-text-circle-font-spacing (wrap-string spacing))
     (gimp-displays-flush)))
 
-(script-fu-register 
+(script-fu-register
  "script-fu-text-circle"
  "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle"
  "Render the specified text along the perimeter of a circle"

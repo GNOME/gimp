@@ -30,8 +30,8 @@
   (gimp-ellipse-select img (- cx rx) (- cy ry) (+ rx rx ) (+ ry ry ) op aa feather frad))
 
 (define (use-tiles img drawable height width img2 drawable2 xoffset yoffset)
-  (gimp-edit-copy img2 drawable2)
-  (let ((floating-sel (car (gimp-edit-paste img drawable FALSE))))
+  (gimp-edit-copy drawable2)
+  (let ((floating-sel (car (gimp-edit-paste drawable FALSE))))
     (gimp-layer-set-offsets floating-sel xoffset yoffset)
     (gimp-floating-sel-anchor floating-sel)
     )
@@ -47,17 +47,17 @@
 
     (gimp-selection-all img)
     (gimp-palette-set-background backcolor)
-    (gimp-edit-fill img drawable1)
+    (gimp-edit-fill drawable1)
 
     (let* (
 	   (tempSize (* size 3))
-	   (temp-img (car (gimp-image-new tempSize tempSize RGB))) 
+	   (temp-img (car (gimp-image-new tempSize tempSize RGB)))
 	   (temp-draw (car (gimp-layer-new temp-img tempSize tempSize RGB_IMAGE "Jabar" 100 NORMAL)))
 	  )
       (gimp-image-disable-undo temp-img)
       (gimp-image-add-layer temp-img temp-draw 0)
       (gimp-palette-set-background backcolor)
-      (gimp-edit-fill temp-img temp-draw)
+      (gimp-edit-fill temp-draw)
       
       
       (center-ellipse temp-img size size outer-radius outer-radius REPLACE TRUE FALSE 0)
@@ -66,7 +66,7 @@
       (center-ellipse temp-img (* size 2) (*  size 2)  outer-radius outer-radius ADD TRUE FALSE 0)
       (center-ellipse temp-img (* size 2) (*  size 2)  inner-radius inner-radius SUB TRUE FALSE 0)
       (gimp-palette-set-background forecolor)
-      (gimp-edit-fill temp-img temp-draw)
+      (gimp-edit-fill temp-draw)
       
       (gimp-selection-none temp-img)
 
@@ -75,26 +75,26 @@
 
 
       (gimp-selection-all temp-img)
-      (gimp-edit-copy temp-img temp-draw)
-      (let ((floating-sel (car (gimp-edit-paste img drawable2 FALSE))))
+      (gimp-edit-copy temp-draw)
+      (let ((floating-sel (car (gimp-edit-paste drawable2 FALSE))))
 	(gimp-floating-sel-anchor floating-sel))
 
       
-      (let ((floating-sel (car (gimp-edit-paste img drawable1 FALSE))))
+      (let ((floating-sel (car (gimp-edit-paste drawable1 FALSE))))
 	(gimp-floating-sel-anchor floating-sel))
 
-      (let ((drawble (car (gimp-flip img drawable1 0)))))
+      (let ((drawble (car (gimp-flip drawable1 0)))))
 	
 
       ;(gimp-display-new temp-img)
       (gimp-image-delete temp-img)
       )
     )
-)  
+)
 
 
 (define (script-fu-truchet size thickness backcolor forecolor xtiles ytiles)
-  (let* (	 
+  (let* (
 	 (width (* size xtiles))
 	 (height (* size ytiles))
 	 (img (car (gimp-image-new width height RGB)))
@@ -103,7 +103,7 @@
 	 (tiledraw1 (car (gimp-layer-new tile size size RGB "Johnson" 100 NORMAL)))
 	 (tiledraw2 (car (gimp-layer-new tile size size RGB "Cooper" 100 NORMAL)))
 	 (Xindex 0)
-	 (Yindex 0) 
+	 (Yindex 0)
 	 )
 
     (gimp-image-disable-undo img)
@@ -116,8 +116,8 @@
  
     ;just to look a little better
     (gimp-selection-all img)
-    (gimp-palette-set-background backcolor) 
-    (gimp-edit-fill img layer-one)
+    (gimp-palette-set-background backcolor)
+    (gimp-edit-fill layer-one)
     (gimp-selection-none img)
 
     (create-tiles tile tiledraw1 tiledraw2 size thickness backcolor forecolor)

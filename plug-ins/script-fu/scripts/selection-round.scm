@@ -31,7 +31,7 @@
 ; in relation to the selections width or height (depends on which of these 
 ; is smaller) 
 
-(define (script-fu-selection-round image 
+(define (script-fu-selection-round image
 	 		           drawable
                                    radius)
 
@@ -57,52 +57,36 @@
       (begin
 	(set! cut-radius (* radius (/ select-width 2)))
 	(set! ellipse-radius (* radius select-width))))
-  (gimp-rect-select image 
-		    select-x1 
-		    select-y1 
-		    (+ cut-radius 1)
-		    (+ cut-radius 1)
-		    SUB
-		    FALSE 0)
-  (gimp-rect-select image 
-		    select-x1 
-		    (- select-y2 cut-radius) 
-		    (+ cut-radius 1)
-		    (+ cut-radius 1)
-		    SUB
-		    FALSE 0)
   (gimp-rect-select image
-		    (- select-x2 cut-radius) 
+		    select-x1
 		    select-y1
 		    (+ cut-radius 1)
 		    (+ cut-radius 1)
 		    SUB
 		    FALSE 0)
   (gimp-rect-select image
-		    (- select-x2 cut-radius) 
+		    select-x1
+		    (- select-y2 cut-radius)
+		    (+ cut-radius 1)
+		    (+ cut-radius 1)
+		    SUB
+		    FALSE 0)
+  (gimp-rect-select image
+		    (- select-x2 cut-radius)
+		    select-y1
+		    (+ cut-radius 1)
+		    (+ cut-radius 1)
+		    SUB
+		    FALSE 0)
+  (gimp-rect-select image
+		    (- select-x2 cut-radius)
 		    (- select-y2 cut-radius)
 		    (+ cut-radius 1)
 		    (+ cut-radius 1)
 		    SUB
 		    FALSE 0)
   (gimp-ellipse-select image
-		       select-x1 
-		       select-y1 
-		       ellipse-radius
-		       ellipse-radius
-		       ADD
-		       TRUE
-		       FALSE 0)
-  (gimp-ellipse-select image
-		       select-x1 
-		       (- select-y2 ellipse-radius)  
-		       ellipse-radius
-		       ellipse-radius
-		       ADD
-		       TRUE
-		       FALSE 0)
-  (gimp-ellipse-select image
-		       (- select-x2 ellipse-radius) 
+		       select-x1
 		       select-y1
 		       ellipse-radius
 		       ellipse-radius
@@ -110,19 +94,35 @@
 		       TRUE
 		       FALSE 0)
   (gimp-ellipse-select image
-		       (- select-x2 ellipse-radius) 
+		       select-x1
 		       (- select-y2 ellipse-radius)
 		       ellipse-radius
 		       ellipse-radius
 		       ADD
 		       TRUE
-		       FALSE 0) 
+		       FALSE 0)
+  (gimp-ellipse-select image
+		       (- select-x2 ellipse-radius)
+		       select-y1
+		       ellipse-radius
+		       ellipse-radius
+		       ADD
+		       TRUE
+		       FALSE 0)
+  (gimp-ellipse-select image
+		       (- select-x2 ellipse-radius)
+		       (- select-y2 ellipse-radius)
+		       ellipse-radius
+		       ellipse-radius
+		       ADD
+		       TRUE
+		       FALSE 0)
 
   (gimp-undo-push-group-end image)
   (gimp-displays-flush)))
 
 
-(script-fu-register "script-fu-selection-round" 
+(script-fu-register "script-fu-selection-round"
 		    "<Image>/Script-Fu/Selection/Round"
 		    "Rounds the active selection. The selection should be 
                      rectangular."

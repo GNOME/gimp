@@ -109,8 +109,8 @@
 ;Add this for debugging    (verbose 4)
     (gimp-image-disable-undo img)
     (gimp-drawable-fill layer TRANS-IMAGE-FILL)
-    (gimp-image-resize img 
-		       width 
+    (gimp-image-resize img
+		       width
     		       height
     		       xsize
     		       ysize)
@@ -122,7 +122,7 @@
 		      0
 		      0
 		      0.0)
-    (gimp-edit-fill img layer)
+    (gimp-edit-fill layer)
     (gimp-palette-set-background (adjcolour colour (/ dvalue 2)))
     (gimp-free-select img
 		      10
@@ -131,7 +131,7 @@
 		      0
 		      0
 		      0.0)
-    (gimp-edit-fill img layer)
+    (gimp-edit-fill layer)
     (gimp-palette-set-background (adjcolour colour (- 0 (/ dvalue 2))))
     (gimp-free-select img
 		      10
@@ -141,7 +141,7 @@
 		      0
 		      0.0)
 
-    (gimp-edit-fill img layer)
+    (gimp-edit-fill layer)
     (gimp-palette-set-background (adjcolour colour (- 0 dvalue)))
     (gimp-free-select img
 		      10
@@ -151,7 +151,7 @@
 		      0
 		      0.0)
 
-    (gimp-edit-fill img layer)
+    (gimp-edit-fill layer)
     (gimp-selection-none img)
     (gimp-image-add-layer img layer 0)
     (gimp-image-enable-undo img)

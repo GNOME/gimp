@@ -16,7 +16,7 @@
 	 (old-bg (car (gimp-palette-get-background))))
     (gimp-image-disable-undo img)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill img layer-one)
+    (gimp-edit-fill layer-one)
     (gimp-image-add-layer img layer-one 0)
     (plug-in-noisify 1 img layer-one FALSE noise-level noise-level noise-level 1.0)
 
@@ -24,7 +24,7 @@
     (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)
     (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)
 
-    (gimp-channel-ops-offset img layer-one TRUE 0 cx cy)
+    (gimp-channel-ops-offset layer-one TRUE 0 cx cy)
 
     (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)
     (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)

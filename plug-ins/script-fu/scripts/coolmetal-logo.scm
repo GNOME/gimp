@@ -34,15 +34,15 @@
     (gimp-layer-set-preserve-trans text-layer TRUE)
 
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill img bg-layer)
-    (gimp-edit-clear img reflect-layer)
+    (gimp-edit-fill bg-layer)
+    (gimp-edit-clear reflect-layer)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill img shadow-layer)
+    (gimp-edit-fill shadow-layer)
 
     (if (= seascape 1)
 	(gimp-gradients-set-active "Horizon_2")
 	(gimp-gradients-set-active "Horizon_1"))
-    (gimp-blend img text-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 0 (+ height 5))
+    (gimp-blend text-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 0 (+ height 5))
     (gimp-rect-select img 0 (- (/ height 2) feather) img-width (* 2 feather) REPLACE 0 0)
     (plug-in-gauss-iir 1 img text-layer smear TRUE TRUE)
     (gimp-selection-none img)
@@ -50,23 +50,23 @@
     (gimp-layer-translate text-layer 5 5)
     (gimp-layer-resize text-layer img-width img-height 5 5)
 
-    (gimp-selection-layer-alpha img text-layer)
+    (gimp-selection-layer-alpha text-layer)
     (set! channel (car (gimp-selection-save img)))
     (gimp-selection-shrink img shrink)
     (gimp-selection-invert img)
     (plug-in-gauss-rle 1 img channel feather TRUE TRUE)
-    (gimp-selection-layer-alpha img text-layer)
+    (gimp-selection-layer-alpha text-layer)
     (gimp-selection-invert img)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill img channel)
+    (gimp-edit-fill channel)
     (gimp-selection-none img)
 
     (plug-in-bump-map 1 img text-layer channel 135 45 depth 0 0 0 0 FALSE FALSE 0)
 
-    (gimp-selection-layer-alpha img text-layer)
-    (set! fs (car (gimp-selection-float img shadow-layer 0 0)))
-    (gimp-edit-clear img shadow-layer)
-    (gimp-perspective img fs FALSE
+    (gimp-selection-layer-alpha text-layer)
+    (set! fs (car (gimp-selection-float shadow-layer 0 0)))
+    (gimp-edit-clear shadow-layer)
+    (gimp-perspective fs FALSE
 		      (+ 5 (* 0.15 height)) (- height (* 0.15 height))
 		      (+ 5 width (* 0.15 height)) (- height (* 0.15 height))
 		      5 height
@@ -75,18 +75,18 @@
     (plug-in-gauss-rle 1 img shadow-layer smear TRUE TRUE)
 
     (gimp-rect-select img 5 5 width height REPLACE FALSE 0)
-    (gimp-edit-copy img text-layer)
-    (set! fs (car (gimp-edit-paste img reflect-layer FALSE)))
+    (gimp-edit-copy text-layer)
+    (set! fs (car (gimp-edit-paste reflect-layer FALSE)))
     (gimp-floating-sel-anchor fs)
-    (gimp-scale img reflect-layer FALSE 0 0 width (* 0.85 height))
-    (gimp-flip img reflect-layer 1)
+    (gimp-scale reflect-layer FALSE 0 0 width (* 0.85 height))
+    (gimp-flip reflect-layer 1)
     (gimp-layer-set-offsets reflect-layer 5 (+ 3 height))
 
     (set! layer-mask (car (gimp-layer-create-mask reflect-layer WHITE-MASK)))
     (gimp-image-add-layer-mask img reflect-layer layer-mask)
     (gimp-palette-set-foreground '(255 255 255))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend img layer-mask FG-BG-RGB NORMAL LINEAR 100 0 REPEAT-NONE
+    (gimp-blend layer-mask FG-BG-RGB NORMAL LINEAR 100 0 REPEAT-NONE
 		FALSE 0 0 0 (- (/ height 2)) 0 height)
 
     (gimp-image-remove-channel img channel)

@@ -43,10 +43,10 @@
     
     (if (= (car (gimp-selection-is-empty image)) TRUE)
 	(begin
-	  (gimp-selection-layer-alpha image drawable)
+	  (gimp-selection-layer-alpha drawable)
 	  (set! active-selection (car (gimp-selection-save image)))
 	  (set! from-selection FALSE))
-	(begin 
+	(begin
 	  
 	  (set! from-selection TRUE)
 	  (set! active-selection (car (gimp-selection-save image)))))
@@ -59,22 +59,22 @@
     
     (if (= seperate-layer TRUE)
 	(begin
-	  (set! effect-layer (car (gimp-layer-new image 
-						select-width 
-						select-height 
-						type 
-						"glow layer" 
-						100 
+	  (set! effect-layer (car (gimp-layer-new image
+						select-width
+						select-height
+						type
+						"glow layer"
+						100
 						NORMAL)))
     
 	  (gimp-layer-set-offsets effect-layer select-offset-x select-offset-y)
 	  (gimp-image-add-layer image effect-layer -1)
 	  (gimp-selection-none image)
-	  (gimp-edit-clear image effect-layer)
+	  (gimp-edit-clear effect-layer)
     
-	  (gimp-selection-load image active-selection)
-	  (gimp-edit-copy image drawable)
-	  (let ((floating-sel (car (gimp-edit-paste image effect-layer FALSE))))
+	  (gimp-selection-load active-selection)
+	  (gimp-edit-copy drawable)
+	  (let ((floating-sel (car (gimp-edit-paste effect-layer FALSE))))
 	    (gimp-floating-sel-anchor floating-sel)
 	    )
 	  (gimp-image-set-active-layer image effect-layer )))
@@ -87,7 +87,7 @@
     (plug-in-edge 1 image active-layer edge-amount 1)
     
     ; clean up the selection copy
-    (gimp-selection-load image active-selection)
+    (gimp-selection-load active-selection)
     (gimp-gradients-set-active old-gradient)
     (gimp-palette-set-background old-bg)
     

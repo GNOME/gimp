@@ -24,8 +24,8 @@
 
 (define (copy-rectangle img drawable x1 y1 width height dest-x dest-y)
   (gimp-rect-select img x1 y1 width height REPLACE FALSE 0)
-  (gimp-edit-copy img drawable)
-  (let ((floating-sel (car (gimp-edit-paste img drawable FALSE))))
+  (gimp-edit-copy drawable)
+  (let ((floating-sel (car (gimp-edit-paste drawable FALSE))))
     (gimp-layer-set-offsets floating-sel dest-x dest-y)
     (gimp-floating-sel-anchor floating-sel))
   (gimp-selection-none img))
@@ -41,7 +41,7 @@
     (gimp-image-add-layer img drawable 0)
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill img drawable)
+    (gimp-edit-fill drawable)
 
     ; Create main horizontal ribbon
 
@@ -56,8 +56,7 @@
 		      REPLACE
 		      FALSE
 		      0)
-    (gimp-blend img
-		drawable
+    (gimp-blend drawable
 		FG-BG-RGB
 		NORMAL
 		BILINEAR
@@ -82,8 +81,7 @@
 		      REPLACE
 		      FALSE
 		      0)
-    (gimp-blend img
-		drawable
+    (gimp-blend drawable
 		FG-BG-RGB
 		NORMAL
 		BILINEAR
@@ -167,14 +165,14 @@
     (gimp-image-add-layer img drawable 0)
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill img drawable)
+    (gimp-edit-fill drawable)
 
     (gimp-rect-select img r1-x1 r1-y1 r1-width r1-height REPLACE FALSE 0)
     (gimp-rect-select img r2-x1 r2-y1 r2-width r2-height ADD FALSE 0)
     (gimp-rect-select img r3-x1 r3-y1 r3-width r3-height ADD FALSE 0)
 
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill img drawable)
+    (gimp-edit-fill drawable)
     (gimp-selection-none img)
 
     (gimp-image-enable-undo img)
@@ -245,7 +243,7 @@
 	 (dense (/ density 100.0)))
     (gimp-image-add-layer img drawable -1)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill img drawable)
+    (gimp-edit-fill drawable)
     (plug-in-noisify 1 img drawable FALSE dense dense dense dense)
     (plug-in-c-astretch 1 img drawable)
     (cond ((eq? orientation 'horizontal)
@@ -284,17 +282,17 @@
 
     (gimp-image-add-layer-mask w-img h-layer h-mask)
     (gimp-selection-all hm-img)
-    (gimp-edit-copy hm-img hm-layer)
+    (gimp-edit-copy hm-layer)
     (gimp-image-delete hm-img)
-    (gimp-floating-sel-anchor (car (gimp-edit-paste w-img h-mask FALSE)))
+    (gimp-floating-sel-anchor (car (gimp-edit-paste h-mask FALSE)))
     (gimp-layer-set-opacity h-layer thread-intensity)
     (gimp-layer-set-mode h-layer MULTIPLY)
 
     (gimp-image-add-layer-mask w-img v-layer v-mask)
     (gimp-selection-all vm-img)
-    (gimp-edit-copy vm-img vm-layer)
+    (gimp-edit-copy vm-layer)
     (gimp-image-delete vm-img)
-    (gimp-floating-sel-anchor (car (gimp-edit-paste w-img v-mask FALSE)))
+    (gimp-floating-sel-anchor (car (gimp-edit-paste v-mask FALSE)))
     (gimp-layer-set-opacity v-layer thread-intensity)
     (gimp-layer-set-mode v-layer MULTIPLY)
 
@@ -336,9 +334,9 @@
 	 (w-layer (cadr weaving)))
 
     (gimp-selection-all w-img)
-    (gimp-edit-copy w-img w-layer)
+    (gimp-edit-copy w-layer)
     (gimp-image-delete w-img)
-    (let ((floating-sel (car (gimp-edit-paste d-img drawable FALSE))))
+    (let ((floating-sel (car (gimp-edit-paste drawable FALSE))))
       (gimp-layer-set-offsets floating-sel
 			      (car d-offsets)
 			      (cadr d-offsets))
@@ -363,7 +361,7 @@
 		    SF-ADJUSTMENT "Ribbon width"     '(30  0 256 1 10 1 1)
 		    SF-ADJUSTMENT "Ribbon spacing"   '(10  0 256 1 10 1 1)
 		    SF-ADJUSTMENT "Shadow darkness"  '(75  0 100 1 10 1 1)
-		    SF-ADJUSTMENT "Shadow depth"     '(75  0 100 1 10 1 1) 
+		    SF-ADJUSTMENT "Shadow depth"     '(75  0 100 1 10 1 1)
 		    SF-ADJUSTMENT "Thread length"    '(200 0 256 1 10 1 1)
 		    SF-ADJUSTMENT "Thread density"   '(50  0 100 1 10 1 1)
 		    SF-ADJUSTMENT "Thread intensity" '(100 0 512 1 10 1 1))

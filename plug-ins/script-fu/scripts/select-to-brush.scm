@@ -40,20 +40,20 @@
     (set! select-offset-x (cadr selection-bounds))
     (set! select-offset-y (caddr selection-bounds))
     (set! selection-width (- (cadr (cddr selection-bounds)) select-offset-x))
-    (set! selection-height (- (caddr (cddr selection-bounds)) select-offset-y)) 
+    (set! selection-height (- (caddr (cddr selection-bounds)) select-offset-y))
 
     (gimp-image-disable-undo image)
     
     (if (= (car (gimp-selection-is-empty image)) TRUE)
 	(begin
-	  (gimp-selection-layer-alpha image drawable)
+	  (gimp-selection-layer-alpha drawable)
 	  (set! active-selection (car (gimp-selection-save image)))
 	  (set! from-selection FALSE))
-	(begin 
+	(begin
 	  (set! from-selection TRUE)
 	  (set! active-selection (car (gimp-selection-save image)))))
 
-    (gimp-edit-copy image drawable)
+    (gimp-edit-copy drawable)
 
     (set! brush-image (car (gimp-image-new selection-width selection-height 1)))
     (set! brush-draw (car (gimp-layer-new brush-image selection-width selection-height GRAY_IMAGE "Sloth" 100 NORMAL)))
@@ -63,18 +63,18 @@
     (gimp-palette-set-background '(255 255 255))
     (gimp-drawable-fill brush-draw BG-IMAGE-FILL)
 
-    (let ((floating-sel (car (gimp-edit-paste brush-image brush-draw FALSE))))
+    (let ((floating-sel (car (gimp-edit-paste brush-draw FALSE))))
       (gimp-floating-sel-anchor floating-sel)
       )
 
     (set! data-dir (car (gimp-gimprc-query "gimp_dir")))
     (set! filename2 (string-append data-dir
-					 "/brushes/" 
-					 filename 
+					 "/brushes/"
+					 filename
 					 (number->string image)
 					 ".gbr"))
 
-    (gimp-invert brush-image brush-draw)
+    (gimp-invert brush-draw)
     (file-gbr-save 1 brush-image brush-draw filename2 "" spacing desc)
     (gimp-brushes-refresh) ; My own modification!  You'll need my diff.
     (gimp-brushes-set-brush desc)

@@ -44,11 +44,11 @@
 
     (gimp-palette-set-background bg-color)
     (gimp-selection-all img)
-    (gimp-bucket-fill img bg-layer BG-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
-    (gimp-selection-none img)                
+    (gimp-bucket-fill bg-layer BG-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-selection-none img)
     (gimp-palette-set-background old-bg)
 
-    (gimp-selection-layer-alpha img text-layer)
+    (gimp-selection-layer-alpha text-layer)
 
 ; if we are going to use transparent gradients for text, we will (maybe) need to uncomment this
 ; this clears black letters first so you don't end up with black where the transparent should be
@@ -57,17 +57,17 @@
     (if (= use-pattern-text TRUE)
       (begin
         (gimp-patterns-set-pattern pattern-text)
-        (gimp-bucket-fill img text-layer PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+        (gimp-bucket-fill text-layer PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
         (gimp-patterns-set-pattern old-patterns)))
 
     (if (= use-pattern-text FALSE)
       (begin
         (gimp-gradients-set-active blend-gradient-text)
-        (gimp-blend img text-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 0 (+ height 5))))
+        (gimp-blend text-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 0 (+ height 5))))
 
     (gimp-selection-none img)
 
-    (gimp-selection-layer-alpha img grow-me)
+    (gimp-selection-layer-alpha grow-me)
     (gimp-selection-grow img grow-size)
 
 ; if we are going to use transparent gradients for outline, we will (maybe) need to uncomment this
@@ -78,13 +78,13 @@
     (if (= use-pattern-outline TRUE)
       (begin
         (gimp-patterns-set-pattern pattern-outline)
-        (gimp-bucket-fill img grow-me PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+        (gimp-bucket-fill grow-me PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
         (gimp-patterns-set-pattern old-patterns)))
 
     (if (= use-pattern-outline FALSE)
       (begin
         (gimp-gradients-set-active blend-gradient-outline)
-        (gimp-blend img grow-me CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 0 (+ height 5))))
+        (gimp-blend grow-me CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 0 (+ height 5))))
 
     (gimp-selection-none img)
 
@@ -93,15 +93,15 @@
 
     (if (= use-pattern-overlay TRUE)
       (begin
-        (gimp-selection-layer-alpha img grow-me)    
+        (gimp-selection-layer-alpha grow-me)
         (gimp-patterns-set-pattern pattern-overlay)
-        (gimp-bucket-fill img grow-me PATTERN-BUCKET-FILL OVERLAY 100 0 FALSE 0 0)
+        (gimp-bucket-fill grow-me PATTERN-BUCKET-FILL OVERLAY 100 0 FALSE 0 0)
         (gimp-patterns-set-pattern old-patterns)
         (gimp-selection-none img)))
    
   (if (= shadow-toggle TRUE)
       (begin
-        (gimp-selection-layer-alpha img text-layer)
+        (gimp-selection-layer-alpha text-layer)
         (set! dont-drop-me (car (script-fu-drop-shadow img text-layer s-offset-x s-offset-y 15 '(0 0 0) 80 TRUE)))
         (set! width (car (gimp-image-width img)))
         (set! height (car (gimp-image-height img)))

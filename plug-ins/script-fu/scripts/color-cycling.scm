@@ -49,8 +49,8 @@
 ; 
 ;  
 
-(define (script-fu-colorcycling-anim img 
-			       drawable 
+(define (script-fu-colorcycling-anim img
+			       drawable
 		 num-frames
 		 startredstretch
 		 startgreenstretch
@@ -142,14 +142,14 @@
          (set! alienmap-layer (car (gimp-layer-copy source-layer TRUE)))
          (gimp-layer-set-preserve-trans alienmap-layer FALSE)
 	 (gimp-image-add-layer image alienmap-layer -1)
-	 (set! layer-name (string-append "Frame " 
+	 (set! layer-name (string-append "Frame "
 					 (number->string
-					  (- (+ num-frames 2) 
+					  (- (+ num-frames 2)
 					     remaining-frames) 10)))
 	 (gimp-layer-set-name alienmap-layer layer-name)
 	 
 	 (plug-in-alienmap 1
-		 image 
+		 image
 		 alienmap-layer
 		 redstretch
 		 greenstretch
@@ -184,8 +184,8 @@
   )
 
   (gimp-layer-set-name source-layer "Frame 1")
-  (plug-in-alienmap 1 
-		 image 
+  (plug-in-alienmap 1
+		 image
 		 source-layer
 		 redstretch
 		 greenstretch
@@ -209,7 +209,7 @@
   (gimp-image-enable-undo image)
   (gimp-display-new image)))
 
-(script-fu-register "script-fu-colorcycling-anim" 
+(script-fu-register "script-fu-colorcycling-anim"
 		    "<Image>/Script-Fu/Animators/Color Cycling"
 		    "Creates an animation with the help of the alienmap plug-in"
 		    "Daniel Cotting (cotting@mygale.org)"

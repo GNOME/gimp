@@ -11,7 +11,7 @@
 			    erase-before-draw brush-details)
   (if 'not-guile (define modulo fmod))
   (define (floor x) (- x (fmod x 1)))
-  (define *prime-table* 
+  (define *prime-table*
     '(2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97))
 
   (define (LCM x y)			; Least Common Multiple
@@ -42,7 +42,7 @@
 			    (set! prime? #f)
 			    (set! table (cdr table))))
 		 (if prime?
-		     (set! *prime-table* 
+		     (set! *prime-table*
 			   (nreverse (cons index (nreverse *prime-table*))))))
 	       (set! index (+ index 1)))))
     (define (aux l1 l2 result)
@@ -114,7 +114,7 @@
 	  (let ((f 0)
 		(p 0)
 		(q 0)
-		(t 0)) 
+		(t 0))
 	    (set! hue (/ (* 6 h) 255))
 	    (if (= hue 6.0)
 		(set! hue 0.0))
@@ -229,14 +229,14 @@
 	      (begin
 		(gimp-brushes-set-paint-mode NORMAL)
 		(gimp-palette-set-foreground background-color)
-		(gimp-airbrush img drawable-to-erase 100
+		(gimp-airbrush drawable-to-erase 100
 			       (* 2 limit) (segment-strokes segment))
 		(gimp-brushes-set-paint-mode paint-mode))
-	      (gimp-eraser img drawable-to-erase (* 2 limit)
+	      (gimp-eraser drawable-to-erase (* 2 limit)
 			   (segment-strokes segment)))
 	  (if (< keep-opacity 100) (gimp-brushes-set-opacity keep-opacity))))
     (gimp-palette-set-foreground rgb)
-    (gimp-airbrush img drawable 100 (* 2 limit) (segment-strokes segment)))
+    (gimp-airbrush drawable 100 (* 2 limit) (segment-strokes segment)))
 
   (define (set-brush-color! index max-index hue-rate rgb hsv)
     (if (= 0 hue-rate)
@@ -272,7 +272,7 @@
 	   (iindex 0)
 	   (center2wheel (+ base-radius wheel-radius))
 	   (wheel2pen (* (abs wheel-radius) pen-pos))
-	   (segment (make-segment 
+	   (segment (make-segment
 		     (if (= 0 hue-rate)
 			 32
 			 (max 4 (floor (/ (/ total-step (abs hue-rate)) 255.0))))
@@ -292,7 +292,7 @@
 		   (gimp-layer-set-name drawable
 					(string-append "cricle "
 						       (number->string loop-num)))
-		   (gimp-edit-clear img drawable)))
+		   (gimp-edit-clear drawable)))
 	     (while (< iindex steps-for-a-loop) ; draw a circle
 		    (set! rad-of-wheel (* rad-of-step index))
 		    (if (update-segment! center-x center-y
@@ -353,7 +353,7 @@
 	 (old-rgb (car (gimp-palette-get-foreground))))
     (gimp-image-disable-undo img)
     (gimp-image-add-layer img BG-layer 0)
-    (gimp-edit-fill img BG-layer)
+    (gimp-edit-fill BG-layer)
     (if (<= 0 erase-before-draw)	; HDDN FTR (2SLW)
 	(begin
 	  (set! the-layer (car (gimp-layer-new img drawable-size drawable-size
@@ -361,8 +361,8 @@
 					       100 NORMAL)))
 	  (gimp-image-add-layer img the-layer 0)
 	  (if (= NORMAL old-paint-mode)
-	      (gimp-edit-clear img the-layer)
-	      (gimp-edit-fill img the-layer)))
+	      (gimp-edit-clear the-layer)
+	      (gimp-edit-fill the-layer)))
 	(begin
 	  (set! layer-paint-mode (- 1 erase-before-draw))
 	  (gimp-image-set-active-layer img BG-layer)))
@@ -381,7 +381,7 @@
     (gimp-image-enable-undo img)
     (gimp-displays-flush)))
 
-(script-fu-register "script-fu-trochoid" 
+(script-fu-register "script-fu-trochoid"
 		    "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid"
 		    "Draw Trochoid Curve"
 		    "Shuji Narazaki <narazaki@InetQ.or.jp>"

@@ -36,7 +36,7 @@
 ; Define the main function:
 
 (define (script-fu-fade-outline   inImage
-                                  inLayer 
+                                  inLayer
                                   inBorderSize
                                   inApplyMask
                                   inClearUnselected
@@ -46,7 +46,7 @@
                (l-step (/ 25500 (+ inBorderSize 1)))
                (l-gray l-step)
                (l-old-bg-color (car (gimp-palette-get-background)))
-               (l-has-selection TRUE)            
+               (l-has-selection TRUE)
 
               )
 
@@ -75,7 +75,7 @@
               (if (= (car (gimp-selection-is-empty inImage)) TRUE)
                   (begin
                      (set! l-has-selection FALSE)
-                     (gimp-selection-layer-alpha inImage inLayer)
+                     (gimp-selection-layer-alpha inLayer)
                   )
                )
 
@@ -100,7 +100,7 @@
                       )
                   )
                   (gimp-palette-set-background (list (/ l-gray 100) (/ l-gray 100) (/ l-gray 100)))
-                  (gimp-edit-fill inImage l-mask)
+                  (gimp-edit-fill l-mask)
                   (set! l-idx (+ l-idx 1))
                   (set! l-gray (+ l-gray l-step))
                   (gimp-selection-shrink inImage 1)
@@ -127,7 +127,7 @@
              (gimp-undo-push-group-end inImage)
              (gimp-displays-flush)
              )
-        ))  
+        ))
 )
 
 

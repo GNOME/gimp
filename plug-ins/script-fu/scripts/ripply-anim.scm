@@ -8,12 +8,12 @@
 
 (define (copy-layer-ripple dest-image dest-drawable source-image source-drawable)
   (gimp-selection-all dest-image)
-  (gimp-edit-clear dest-image dest-drawable)
+  (gimp-edit-clear dest-drawable)
   (gimp-selection-none dest-image)
   (gimp-selection-all source-image)
-  (gimp-edit-copy source-image source-drawable)
+  (gimp-edit-copy source-drawable)
   (gimp-selection-none source-image)
-      (let ((floating-sel (car (gimp-edit-paste dest-image dest-drawable FALSE))))
+      (let ((floating-sel (car (gimp-edit-paste dest-drawable FALSE))))
 	(gimp-floating-sel-anchor floating-sel)))
 
 (define (script-fu-ripply-anim img drawable displacement num-frames)
@@ -27,7 +27,7 @@
     (gimp-image-disable-undo ripple-image)
     (gimp-palette-set-background '(127 127 127) )
     (gimp-image-add-layer ripple-image ripple-layer 0)
-    (gimp-edit-fill ripple-image ripple-layer)
+    (gimp-edit-fill ripple-layer)
     (plug-in-noisify 1 ripple-image ripple-layer FALSE 1.0 1.0 1.0 0.0)
     ; tile noise
     (set! rippletiled-ret (plug-in-tile 1 ripple-image ripple-layer (* width 3) (* height 3) TRUE))
@@ -40,9 +40,9 @@
 
     ; process tiled noise into usable displacement map
     (plug-in-gauss-iir 1 rippletiled-image rippletiled-layer 35 TRUE TRUE)
-    (gimp-equalize rippletiled-image rippletiled-layer TRUE)
+    (gimp-equalize rippletiled-layer TRUE)
     (plug-in-gauss-rle 1 rippletiled-image rippletiled-layer 5 TRUE TRUE)
-    (gimp-equalize rippletiled-image rippletiled-layer TRUE)
+    (gimp-equalize rippletiled-layer TRUE)
 
     ; displacement map is now in rippletiled-layer of rippletiled-image
 
@@ -63,18 +63,18 @@
 	     (gimp-image-disable-undo dup-image)
 	     (gimp-crop dup-image width height xpos ypos)
 	     
-	     (set! layer-name (string-append "Frame " 
-			(number->string (- num-frames remaining-frames) 10)))     
-	     (set! this-layer (car (gimp-layer-new out-imagestack 
-						   width height RGB 
+	     (set! layer-name (string-append "Frame "
+			(number->string (- num-frames remaining-frames) 10)))
+	     (set! this-layer (car (gimp-layer-new out-imagestack
+						   width height RGB
 						   layer-name 100 NORMAL)))
 	     (gimp-image-add-layer out-imagestack this-layer 0)
 	     
 	     (copy-layer-ripple out-imagestack this-layer img drawable)
 	     
 	     (set! dup-layer (car (gimp-image-get-active-layer dup-image)))
-	     (plug-in-displace 1 out-imagestack this-layer 
-			       displacement displacement 
+	     (plug-in-displace 1 out-imagestack this-layer
+			       displacement displacement
 			       TRUE TRUE dup-layer dup-layer 2)
 	     
 	     (gimp-image-enable-undo dup-image)

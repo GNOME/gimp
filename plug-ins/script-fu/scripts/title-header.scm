@@ -97,24 +97,24 @@
     ; Create bumpmap layer
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill img bumpmap-layer)
-    (gimp-selection-layer-alpha img text-layer)
+    (gimp-edit-fill bumpmap-layer)
+    (gimp-selection-layer-alpha text-layer)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill img bumpmap-layer)
+    (gimp-edit-fill bumpmap-layer)
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img bumpmap-layer 4.0 TRUE TRUE)
 
     ; Fore layer, bumpmap
 
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill img fore-layer)
+    (gimp-edit-fill fore-layer)
     (plug-in-bump-map 1 img fore-layer bumpmap-layer 135.0 45.0 4 0 0 0 0 FALSE FALSE 0)
 
     ; Text layer
 
     (gimp-layer-set-visible text-layer TRUE)
     (gimp-layer-set-preserve-trans text-layer TRUE)
-    (gimp-blend img text-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0.2 3
+    (gimp-blend text-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0.2 3
 		padding
 		padding
 		(- text-width padding 1)
@@ -123,19 +123,18 @@
     ; Semicircle at the left
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill img bg-layer)
+    (gimp-edit-fill bg-layer)
     
     (gimp-ellipse-select img 0 0 text-height text-height REPLACE TRUE FALSE 0)
-    (gimp-palette-set-background (car (gimp-color-picker img -1 text-layers-offset 0 TRUE FALSE)))
-    (gimp-edit-fill img bg-layer)
+    (gimp-palette-set-background (car (gimp-color-picker -1 text-layers-offset 0 TRUE FALSE)))
+    (gimp-edit-fill bg-layer)
 
     ; Fade-out gradient at the right
 
     (gimp-rect-select img (- img-width fade-width) 0 fade-width text-height REPLACE FALSE 0)
     (gimp-palette-set-foreground (car (gimp-palette-get-background)))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend img
-		bg-layer
+    (gimp-blend bg-layer
 		FG-BG-RGB
 		NORMAL
 		LINEAR

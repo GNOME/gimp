@@ -51,7 +51,7 @@
 
     (gimp-rect-select img 0 0 hsize hsize REPLACE 0 0)
     (whirl-it img drawable angle times)
-    (gimp-invert img drawable)
+    (gimp-invert drawable)
 
     ; Whirl upper right
 
@@ -67,7 +67,7 @@
 
     (gimp-rect-select img hsize hsize hsize hsize REPLACE 0 0)
     (whirl-it img drawable angle times)
-    (gimp-invert img drawable)
+    (gimp-invert drawable)
 
     ; Terminate
 

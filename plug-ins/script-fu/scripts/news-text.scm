@@ -34,17 +34,17 @@
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img text-layer -1)
 
-    (gimp-edit-clear img bg-layer)
-    (gimp-edit-clear img text-layer)
+    (gimp-edit-clear bg-layer)
+    (gimp-edit-clear text-layer)
 
     (gimp-floating-sel-anchor (car (gimp-text-fontname img text-layer 10 10 string 0 TRUE font-size PIXELS font)))
 
     (set! text-mask (car (gimp-layer-create-mask text-layer ALPHA-MASK)))
     (gimp-image-add-layer-mask img text-layer text-mask)
 
-    (gimp-selection-layer-alpha img text-layer)
+    (gimp-selection-layer-alpha text-layer)
     (gimp-palette-set-background (list grey grey grey))
-    (gimp-edit-fill img text-mask)
+    (gimp-edit-fill text-mask)
 
     (plug-in-newsprint 1 img text-mask cell-size 0 0 45.0 3 45.0 0 45.0 0 45.0 0 3)
 

@@ -36,18 +36,18 @@
      
    ; (gimp-layer-set-preserve-trans ruler-layer TRUE)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill img bg-layer)
-    (gimp-edit-clear img glow-layer)
-    (gimp-edit-clear img ruler-layer)
+    (gimp-edit-fill bg-layer)
+    (gimp-edit-clear glow-layer)
+    (gimp-edit-clear ruler-layer)
     
     (gimp-rect-select img (/ height 2) (/ height 2) length height REPLACE FALSE 0)
     (gimp-palette-set-foreground '(79 79 79))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend img ruler-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 0 0 height height)
+    (gimp-blend ruler-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 0 0 height height)
 
     (gimp-palette-set-background glow-color)
     (gimp-selection-grow img border)
-    (gimp-edit-fill img glow-layer)
+    (gimp-edit-fill glow-layer)
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img glow-layer 25 TRUE TRUE)
 

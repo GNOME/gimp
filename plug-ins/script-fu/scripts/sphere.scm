@@ -26,7 +26,7 @@
     (gimp-image-add-layer img drawable 0)
     (gimp-palette-set-foreground sphere-color)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill img drawable)
+    (gimp-edit-fill drawable)
     (gimp-palette-set-background '(20 20 20))
     (if (and
 	 (or (and (>= light 45) (<= light 75)) (and (<= light 135) (>= light 105)))
@@ -39,9 +39,9 @@
 	      (prog1 (set! shadow-x (+ cx shadow-w))
 		     (set! shadow-w (- shadow-w))))
 	  (gimp-ellipse-select img shadow-x shadow-y shadow-w shadow-h REPLACE TRUE TRUE 7.5)
-	 (gimp-bucket-fill img drawable BG-BUCKET-FILL MULTIPLY 100 0 FALSE 0 0)))
+	 (gimp-bucket-fill drawable BG-BUCKET-FILL MULTIPLY 100 0 FALSE 0 0)))
     (gimp-ellipse-select img (- cx radius) (- cy radius) (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
-    (gimp-blend img drawable FG-BG-RGB NORMAL RADIAL 100 offset REPEAT-NONE
+    (gimp-blend drawable FG-BG-RGB NORMAL RADIAL 100 offset REPEAT-NONE
 		FALSE 0 0 light-x light-y light-end-x light-end-y)
     (gimp-selection-none img)
     (gimp-palette-set-background old-bg)

@@ -8,7 +8,7 @@
 			   (if (eq? orientation 'rows)
 			       (gimp-rect-select img 0 i width 1 REPLACE FALSE 0)
 			       (gimp-rect-select img i 0 1 height REPLACE FALSE 0))
-			   (gimp-edit-fill img drawable)
+			   (gimp-edit-fill drawable)
 			   (loop (+ i 2) max))))))
       (loop (if (eq? which 'even)
 		0

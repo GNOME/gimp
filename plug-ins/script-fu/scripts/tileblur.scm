@@ -30,7 +30,7 @@
    (gimp-layer-resize theLayer (* 3 theWidth) (* 3 theHeight) 0 0)
 
    (gimp-rect-select theImage 0 0 theWidth theHeight REPLACE 0 0)
-   (gimp-edit-cut theImage theLayer)
+   (gimp-edit-cut theLayer)
 
    (gimp-selection-none theImage)
    (gimp-layer-set-offsets theLayer theWidth theHeight)
@@ -40,7 +40,7 @@
    (cjg-pasteat 3 1) (cjg-pasteat 3 2) (cjg-pasteat 3 3)
 
    (gimp-selection-none theImage)
-   (if (= inType FALSE) 
+   (if (= inType FALSE)
        (plug-in-gauss-iir TRUE theImage theLayer inRadius inHoriz inVert)
        (plug-in-gauss-rle TRUE theImage theLayer inRadius inHoriz inVert)
    )
@@ -51,8 +51,8 @@
    (gimp-displays-flush)
 )
 
-(define (cjg-pasteat xoff yoff) 
-   (let 	((theFloat (car(gimp-edit-paste theImage theLayer 0)))) 
+(define (cjg-pasteat xoff yoff)
+   (let 	((theFloat (car(gimp-edit-paste theLayer 0))))
 		(gimp-layer-set-offsets theFloat (* xoff theWidth) (* yoff theHeight) )
 		(gimp-floating-sel-anchor theFloat)
    )

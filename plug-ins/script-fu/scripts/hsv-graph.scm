@@ -31,7 +31,7 @@
     fvec)
 
   (define (plot-dot img drawable x y)
-    (gimp-pencil img drawable 1 (set-point! *pos* 0 x y)))
+    (gimp-pencil drawable 1 (set-point! *pos* 0 x y)))
 
   (define (rgb-to-hsv rgb hsv)
     (let* ((red (floor (nth 0 rgb)))
@@ -96,7 +96,7 @@
 	       (aset vec (+ (* 2 base) 1)
 		     (aref vec (+ (* 2 (- size (- offset base))) 1)))
 	       (set! base (+ base 1)))
-	(set-car! segment base)))  
+	(set-car! segment base)))
     (let ((base (car segment))
 	  (size (cadr segment))
 	  (vec (caddr segment)))
@@ -121,7 +121,7 @@
 
   (define (draw-segment img drawable segment limit rgb)
     (gimp-palette-set-foreground rgb)
-    (gimp-airbrush img drawable 100 (* 2 limit) (segment-strokes segment)))
+    (gimp-airbrush drawable 100 (* 2 limit) (segment-strokes segment)))
 
   (define red-color '(255 10 10))
   (define green-color '(10 255 10))
@@ -137,7 +137,7 @@
   (define (fill-dot img drawable x y segment color)
     (if (fill-segment! segment x y)
 	(begin
-	  (gimp-palette-set-foreground color)	
+	  (gimp-palette-set-foreground color)
 	  (draw-segment img drawable segment (segment-max-size segment) color)
 	  #t)
 	#f))
@@ -145,7 +145,7 @@
   (define (fill-color-band img drawable x scale x-base y-base color)
     (gimp-palette-set-foreground color)
     (gimp-rect-select img (+ x-base (* scale x)) 0 scale y-base REPLACE FALSE 0)
-    (gimp-bucket-fill img drawable FG-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-bucket-fill drawable FG-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
     (gimp-selection-none img))
 
   (define (plot-hsv img drawable x scale x-base y-base hsv)
@@ -208,10 +208,10 @@
 	(set! beg-x (clamp-value beg-x 0
 				 (+ (nth 0 offsets)
 				    (gimp-drawable-width drawable))))
-	(set! end-x (clamp-value end-x 0 
+	(set! end-x (clamp-value end-x 0
 				 (+ (nth 0 offsets)
 				    (gimp-drawable-width drawable))))
-	(set! beg-y (clamp-value beg-y 0 
+	(set! beg-y (clamp-value beg-y 0
 				 (+ (nth 1 offsets)
 				    (gimp-drawable-height drawable))))
 	(set! end-y (clamp-value beg-y 0
@@ -253,14 +253,14 @@
     (gimp-image-add-layer gimg bglayer -1)
     (gimp-selection-all gimg)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill gimg bglayer)
+    (gimp-edit-fill bglayer)
     (gimp-image-add-layer gimg hsv-layer -1)
-    (gimp-edit-clear gimg hsv-layer)
+    (gimp-edit-clear hsv-layer)
     (gimp-image-add-layer gimg rgb-layer -1)
     (gimp-layer-set-visible rgb-layer FALSE)
-    (gimp-edit-clear gimg rgb-layer)
+    (gimp-edit-clear rgb-layer)
     (gimp-image-add-layer gimg clayer -1)
-    (gimp-edit-clear gimg clayer)
+    (gimp-edit-clear clayer)
     (gimp-layer-translate clayer border-size 0)
     (gimp-selection-none gimg)
     (set! red-segment (make-segment 64 x-base y-base))
@@ -274,7 +274,7 @@
     (gimp-brushes-set-opacity 70)
     (gimp-display-new gimg)
     (while (< index limit)
-      (set! rgb (car (gimp-color-picker img drawable
+      (set! rgb (car (gimp-color-picker drawable
 					(+ beg-x (* x-len (/ index limit)))
 					(+ beg-y (* y-len (/ index limit)))
 					TRUE FALSE)))
@@ -286,7 +286,7 @@
     (mapcar
      (lambda (segment color)
        (if (< 1 (segment-filled-size segment))
-	(begin 
+	(begin
 	  (gimp-palette-set-foreground color)
 	  (draw-segment gimg hsv-layer segment (segment-filled-size segment)
 			color))))
@@ -295,16 +295,16 @@
     (mapcar
      (lambda (segment color)
        (if (< 1 (segment-filled-size segment))
-	(begin 
+	(begin
 	  (gimp-palette-set-foreground color)
 	  (draw-segment gimg rgb-layer segment (segment-filled-size segment)
 			color))))
      (list red-segment green-segment blue-segment)
      (list red-color green-color blue-color))
     (gimp-palette-set-foreground '(255 255 255))
-    (let ((text-layer (car (gimp-text gimg -1 0 0 
+    (let ((text-layer (car (gimp-text gimg -1 0 0
 				      "Red: Hue, Green: Sat, Blue: Val"
-				      1 1 12 PIXELS "*" 
+				      1 1 12 PIXELS "*"
 				      "helvetica" "*" "*" "*" "*")))
 	  (offset-y (- y-base (car (gimp-drawable-height clayer)))))
       (gimp-layer-set-mode text-layer DIFFERENCE)

@@ -90,19 +90,19 @@
     (gimp-image-add-layer img glow-layer -1)
     (gimp-image-add-layer img ruler-layer -1)
     
-    (gimp-edit-clear img glow-layer)
-    (gimp-edit-clear img ruler-layer)
+    (gimp-edit-clear glow-layer)
+    (gimp-edit-clear ruler-layer)
 
 
     (gimp-free-select img 6 big-arrow REPLACE TRUE FALSE 0)
 
     (gimp-palette-set-foreground '(103 103 103))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend img ruler-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 0 0 size size)
+    (gimp-blend ruler-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 0 0 size size)
     
     (gimp-selection-grow img grow-amount)
     (gimp-palette-set-background glow-color)
-    (gimp-edit-fill img glow-layer)
+    (gimp-edit-fill glow-layer)
 
     (gimp-selection-none img)
 
@@ -110,7 +110,7 @@
     (plug-in-gauss-rle 1 img glow-layer blur-radius TRUE TRUE)
 
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill img bg-layer)
+    (gimp-edit-fill bg-layer)
     
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)

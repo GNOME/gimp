@@ -36,8 +36,7 @@
   (cadr (cddr extents)))
 
 (define (blend-bumpmap img drawable x1 y1 x2 y2)
-  (gimp-blend img
-	      drawable
+  (gimp-blend drawable
 	      FG-BG-RGB
 	      DARKEN-ONLY
 	      LINEAR
@@ -109,7 +108,7 @@
     (gimp-image-add-layer img bg-layer -1)
     (gimp-palette-set-foreground '(0 0 0))
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill img bg-layer)
+    (gimp-edit-fill bg-layer)
     (gimp-image-add-layer img glow-layer -1)
 
     ; Create text layer
@@ -120,11 +119,11 @@
     (gimp-rect-select img 0 0 img-width img-height REPLACE FALSE 0)
     (gimp-palette-set-foreground '(100 100 100))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend img button-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 0 0 img-height img-width)
-    (gimp-edit-clear img glow-layer)
+    (gimp-blend button-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 0 0 img-height img-width)
+    (gimp-edit-clear glow-layer)
     (gimp-rect-select img (/ glow-radius 4) (/ glow-radius 4) (- img-width (/ glow-radius 2)) (- img-height (/ glow-radius 2)) REPLACE FALSE 0 )
     (gimp-palette-set-background glow-color)
-    (gimp-edit-fill img glow-layer)
+    (gimp-edit-fill glow-layer)
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img glow-layer glow-radius TRUE TRUE)
     (gimp-palette-set-foreground text-color)

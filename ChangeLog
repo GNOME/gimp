@@ -1,3 +1,8 @@
+Sat Nov 14 20:15:46 CET 1998 Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/script-fu/scripts/*: removed the image
+	argument from functions that no longer need it.
+
 Sat Nov 14 20:02:31 GMT 1998  Austin Donnelly  <austin@greenend.org.uk>
 
 	* app/rect_select.c: deal with zero-size selections correctly (ie,
@@ -29,7 +34,7 @@ Fri Nov 13 16:48:10 CET 1998 Marc Lehmann <pcg@goof.com>
 	app/pencil.c app/paintbrush.c, app/perspective_tool.c,
 	app/posterize.c, rotate_tool.c app/scale_tool.c, app/shear_tool.c,
 	app/text_tool.c, app/threshold.c:
-	
+
 	API-mega-break-it-all patch part one: removed the unnecessary
 	PDB_IMAGE argument from many functions.
 
@@ -39,7 +44,7 @@ Fri Nov 13 16:48:10 CET 1998 Marc Lehmann <pcg@goof.com>
 	* app/parasite_cmds.c, libgimp/parasite.[ch],
 	* libgimp/gimp.c, libgimp/gimpprotocol.c
 	* tiff.c, gif.c, script-fu.c: removed all references to
- 	parasite_error() and parasite_is_error().  Enable the 
+ 	parasite_error() and parasite_is_error().  Enable the
 	passing of null parasites in the pdb.  Return a copy of the
 	parasite instead of the orginal in all pdb functions.
 
@@ -60,7 +65,7 @@ Wed Nov 11 02:27:46 CET 1998 Marc Lehmann <pcg@goof.com>
 Tue Nov 10 23:44:07 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpmatrix.[ch]
-	* app/transform_core.c: minimal speedup 
+	* app/transform_core.c: minimal speedup
 
 	* app/scale_tool.c: Use transform_core_do() for scaling too.
 	This gives a consistent behaviour regarding the corrective transform
@@ -72,8 +77,8 @@ Mon Nov  9 16:20:33 MET 1998 Sven Neumann <sven@gimp.org>
 	position
 
 	* plug-ins/script-fu/script-fu-scripts.c
-	* plug-ins/script-fu/scripts/test-sphere.scm: small cosmetic fixes  
-	
+	* plug-ins/script-fu/scripts/test-sphere.scm: small cosmetic fixes
+
 Sun Nov  8 17:51:52 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am
@@ -92,20 +97,20 @@ Sun Nov  8 17:51:52 PST 1998 Manish Singh <yosh@gimp.org>
 1998-11-08  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* configure.in (sendmail_path): Prefer /usr/sbin/sendmail to
-	/usr/lib/sendmail. 
+	/usr/lib/sendmail.
 
 1998-11-07  Jay Cox  <jaycox@earthlink.net>
 
 	* libgimp/{gimp.h, gimpchannel.c, gimpdrawable.c, gimplayer.c}:
 	export the tattoo functions to the plug-ins
-	
-	* libgimp/gserialize.c, libgimp/gserialize.h: new files for 
+
+	* libgimp/gserialize.c, libgimp/gserialize.h: new files for
 	serializing structures
-	
+
 	* main.c: test the gserialize functions
-	
+
 	* gimpsignal.h: declare gimp_sigtype_* as extern
-	
+
 Thu Nov  5 16:42:21 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am: added MAINTAINERS to EXTRA_DIST
@@ -142,12 +147,12 @@ Thu Nov  5 16:42:21 PST 1998 Manish Singh <yosh@gimp.org>
 
 Thu Nov  5 21:55:46 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
-	* app/gradient.c 
+	* app/gradient.c
 	* app/gradient_select.c
 
 	Changes due to gtk+ updates. Clist have been changed recently
-	in gtk which required changes to source code. These changes 
-	have only been tested with the gtk version that introduced these 
+	in gtk which required changes to source code. These changes
+	have only been tested with the gtk version that introduced these
 	changes. (so lets get all those updates going...)
 
 Wed Nov  4 11:24:55 EST 1998   Adrian Likins <adrian@gimp.org>
@@ -157,7 +162,7 @@ Wed Nov  4 11:24:55 EST 1998   Adrian Likins <adrian@gimp.org>
 
 Wed Nov  4 22:23:18 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
-	* app/gradient.c 
+	* app/gradient.c
 	* app/Makefile.am
 
 	New files
@@ -200,7 +205,7 @@ Sun Nov  1 21:20:04 1998  Austin Donnelly  <austin@greenend.org.uk>
 Sat Oct 31 21:47:14 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
 	* app/gradient.c
-	
+
 	Fixed for problems with renaming + fix for interactions between editor
 	and gradient selection popups.
 
@@ -226,14 +231,14 @@ Sat Oct 31 14:57:40 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
 	* libgimp/gimpgradientmenu.c
 
 	New gradient selector widget (smaller than the editor). This can now
-	be controlled via the PDB. 
+	be controlled via the PDB.
 
 	New widget which gives easy way to do gradient selections. This
 	new widget is used by script-fu (see the test->sphere script).
 
 	gradient.c needs to be split up (source is almost already split
 	I will complete this RSN).
-	
+
 Sat Oct 31 01:37:23 CET 1998 Marc Lehmann <pcg@goof.com>
 
         * configure.in: make perl use the GLIB_CFLAGS/LIBS vars properly.
@@ -241,7 +246,7 @@ Sat Oct 31 01:37:23 CET 1998 Marc Lehmann <pcg@goof.com>
 Tue Oct  6 11:07:56 CEST 1998 Marc Lehmann <pcg@goof.com>
 
         * app/drawable_cmds.c: corrected documentation for gimp_drawable_fill.
-        
+
 Fri Oct 30 01:53:56 1998  Jay Cox  (jaycox@earthlink.net)
 
 	* app/parasitelist.c
@@ -313,17 +318,17 @@ Fri Oct 23 00:58:37 CEST 1998 Marc Lehmann <pcg@goof.com>
 Thu Oct 22 20:28:18 CEST 1998 Marc Lehmann <pcg@goof.com>
 
 	New directory tree plug-ins/perl/*
-	
+
 	The gimp-perl extension: many, many new files and directories (see
 	plug-ins/perl/MANIFEST for a list).
-	
+
 	It uses a private ChangeLog in plug-ins/perl/Changes.
-	
+
 	* configure.in, plug-ins/Makefile.am, INSTALL: changed to accomodate
 	the new extension.
-	
+
 	* config.h.in: added HAVE_VSNPRINTF, removed duplicate HAVE_VPRINTF.
-	
+
 Thu Oct 22 04:35:43 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/checkerboard/checkerboard.c: fixed a buglet that
@@ -352,7 +357,7 @@ Thu Oct 22 02:30:38 PDT 1998 Manish Singh <yosh@gimp.org>
 
 Wed Oct 21 23:37:01 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
-	Fixed a problem in gradient.c where if a gradient was selected 
+	Fixed a problem in gradient.c where if a gradient was selected
 	via the PDB and the editor has not been displayed on the screen
 	gimp would crash.
 
@@ -368,12 +373,12 @@ Wed Oct 21 22:38:07 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
 	* plug-ins/script-fu/scripts/glossy.scm
 	* plug-ins/script-fu/scripts/test-sphere.scm
 	* plug-ins/script-fu/scripts/textured-logo.scm
-	
+
 	These scripts use new script-fu type
 
 	* plug-ins/gfig/gfig.c
 
-	Redid yosh fix since I broke backwards compat. in 	
+	Redid yosh fix since I broke backwards compat. in
 	gimp_interactive_selection_brush().
 
 Wed Oct 21 20:15:14 CEST 1998 Marc Lehmann <pcg@goof.com>
@@ -389,7 +394,7 @@ Tue Oct 20 18:34:38 PDT 1998 Manish Singh <yosh@gimp.org>
 	Mr. Tootums knows!
 
 Tue Oct 20 23:20:40 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
-	
+
 	* app/brush_select.h
 	* app/brush_select.c
 	* app/internal_procs.c
@@ -406,8 +411,8 @@ Tue Oct 20 23:20:40 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
 	New file libgimp/gimpbrushmneu.c.
 
-	Brush dialog can now be fully controlled via the PDB. New widget (not 
-	true widget) type added to libgimpui (gimp_brush_select_widget()). 
+	Brush dialog can now be fully controlled via the PDB. New widget (not
+	true widget) type added to libgimpui (gimp_brush_select_widget()).
 	Plugins should easily be able to control & select brushes. Script-fu
 	updated to use new widget. See the test script for example.
 
@@ -446,9 +451,9 @@ Wed Oct 14 17:46:15 EDT 1998 Adrian Likins <adrian@gimp.org>
 	* app/*, po/de.po, de/POTFILES.in, libgimp/gimpintl.h:
 	Lots of ii8n stuff here and some additions to the de.po.
 	Applied gimp-egger-981005-1 ,gimp-egger-981006-1,
-	gimp-egger-981007-1, gimp-egger-981008-1, 
+	gimp-egger-981007-1, gimp-egger-981008-1,
  	gimp-egger-981009-1.patch, gimp-egger-981010-1.patch.
-	Patches provided by Daniel Egger <Daniel.Egger@t-online.de>     
+	Patches provided by Daniel Egger <Daniel.Egger@t-online.de>
 
 	* plug-in/guillotine/guillotine.c: added the coordinates
 	of the split images from the original image to the title.
@@ -457,7 +462,7 @@ Wed Oct 14 17:46:15 EDT 1998 Adrian Likins <adrian@gimp.org>
 	* plug-in/script-fu/scripts/neon-logo.scm,
 	perspective-shadow.scm, predator.scm,rendermap.scm,
 	ripply-anim.scm, select_to_image.scm,swirltile.scm,
-	xach-effect.scm: updated scripts to use new script-fu stuff     
+	xach-effect.scm: updated scripts to use new script-fu stuff
 
 Wed Oct 14 22:58:04 BST 1998  Austin Donnelly  <austin@greenend.org.uk>
 
@@ -533,7 +538,7 @@ Tue Oct 13 00:27:21 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
 Mon Oct 12 10:25:05 EEST 1998 Tuomas Kuosmanen <tigert@gimp.org>
 
-	* plug-ins/MapObject/mapobject_main.c: changed the 
+	* plug-ins/MapObject/mapobject_main.c: changed the
 	location in the menus - appears now under Filters->Map
 	instead of Filters->Distort
 
@@ -636,7 +641,7 @@ Mon Oct  6 21:51:00 CST 1998 Seth Burgess <sjburges@gimp.org>
 	type to sensible ones, gave second paramter a .type
 
 Mon Oct  5 01:08:11 CST 1998 Seth Burgess <sjburges@gimp.org>
-	
+
 	*  app/layer_cmds.c: Changed "is_floating_sel" from PDB_CHANNEL
 	to PDB_INT32
 
@@ -646,14 +651,14 @@ Mon Oct  5 01:08:11 CST 1998 Seth Burgess <sjburges@gimp.org>
 	* plug-ins/script-fu/scripts/gradient-bevel-logo.scm
 	* plug-ins/script-fu/scripts/pupi-button.scm:
 	removed extra paramters from some function calls that
-	didn't break script-fu but were wrong anyway.	
+	didn't break script-fu but were wrong anyway.
 
 	Many thanks to Marc Lehman for reporting these.  More to come.
-	
+
 Mon Oct  5 23:56:09 EEST 1998 Lauri Alanko <nether@gimp.org>
 
 	* po/fr.po: fixed a compile-halting typo
-	
+
 Mon Oct  5 16:18:08 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	 * app/channels_dialog.c: fixed assignment in g_return_if_fail

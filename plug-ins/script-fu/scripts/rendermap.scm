@@ -19,7 +19,7 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-(define (script-fu-render-map inSize inGrain inGrad inWiden) 
+(define (script-fu-render-map inSize inGrain inGrad inWiden)
 
 
         (set! theWidth inSize)
@@ -42,7 +42,7 @@
 		(gimp-palette-set-foreground '(0 0 0))
 		(let 	((theMask (car(gimp-layer-create-mask thinLayer 0))))
 			(gimp-image-add-layer-mask theImage thinLayer theMask)
-			(gimp-blend theImage theMask FG-BG-RGB NORMAL LINEAR 100 
+			(gimp-blend theMask FG-BG-RGB NORMAL LINEAR 100
 				0 REPEAT-TRIANGULAR FALSE 0 0 0 0 0 (/ theHeight 2) )
 		)
 		(set! theLayer (car(gimp-image-flatten theImage)))
@@ -66,7 +66,7 @@
  "28th April 1998"
  "Chris Gutteridge / ECS @ University of Southampton, England"
  ""
- SF-ADJUSTMENT "Image Size" '(256 0 2048 1 10 0 0) 
+ SF-ADJUSTMENT "Image Size" '(256 0 2048 1 10 0 0)
  SF-ADJUSTMENT "Granularity (0 - 15)" '(4 0 15 1 1 0 0)
  SF-GRADIENT "Gradient" "Land_and_Sea"
  SF-TOGGLE "TRUE = Detail in middle, FALSE = tile" FALSE

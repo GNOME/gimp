@@ -44,10 +44,10 @@
     
     (if (= (car (gimp-selection-is-empty image)) TRUE)
 	(begin
-	  (gimp-selection-layer-alpha image drawable)
+	  (gimp-selection-layer-alpha drawable)
 	  (set! active-selection (car (gimp-selection-save image)))
 	  (set! from-selection FALSE))
-	(begin 
+	(begin
 	  (set! from-selection TRUE)
 	  (set! active-selection (car (gimp-selection-save image)))))
     
@@ -59,21 +59,21 @@
     
     (if (= seperate-layer TRUE)
 	(begin
-	  (set! lava-layer (car (gimp-layer-new image 
-						select-width 
-						select-height 
-						type 
-						"Lava Layer" 
-						100 
+	  (set! lava-layer (car (gimp-layer-new image
+						select-width
+						select-height
+						type
+						"Lava Layer"
+						100
 						NORMAL)))
 	  
 	  (gimp-layer-set-offsets lava-layer select-offset-x select-offset-y)
 	  (gimp-image-add-layer image lava-layer -1)
 	  (gimp-selection-none image)
-	  (gimp-edit-clear image lava-layer)
+	  (gimp-edit-clear lava-layer)
 	  
-	  (gimp-selection-load image active-selection)
-	  (gimp-image-set-active-layer image lava-layer))) 
+	  (gimp-selection-load active-selection)
+	  (gimp-image-set-active-layer image lava-layer)))
     
     (set! active-layer (car (gimp-image-get-active-layer image)))
     

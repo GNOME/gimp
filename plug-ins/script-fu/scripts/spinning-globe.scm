@@ -38,13 +38,13 @@
         (set! theFrame (car (gimp-layer-copy theLayer FALSE)))
 	(gimp-image-add-layer theImage theFrame 0)
         (gimp-layer-set-name theFrame (string-append "Anim Frame: " (number->string (- inFrames n) 10)))
-	(plug-in-map-object TRUE theImage theFrame 1 
+	(plug-in-map-object TRUE theImage theFrame 1
 ;viewpoint
 0.5 0.5 2.0
 ;obj pos?
 0.5 0.5 0
 ;first axis
-1.0 0 0 
+1.0 0 0
 ;2nd axis
 0.0 1.0 0.0
 ; axis rotation

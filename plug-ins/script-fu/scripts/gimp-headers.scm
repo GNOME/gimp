@@ -46,10 +46,10 @@
     (gimp-image-add-layer img bg-layer 1)
     (gimp-layer-set-preserve-trans text-layer TRUE)
     (gimp-palette-set-background text-color)
-    (gimp-edit-fill img text-layer)
+    (gimp-edit-fill text-layer)
 
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill img bg-layer)
+    (gimp-edit-fill bg-layer)
 
     (let* ((highlight-layer (car (gimp-layer-copy text-layer TRUE)))
 	   (side-layer (car (gimp-layer-copy text-layer TRUE)))
@@ -65,15 +65,15 @@
       (gimp-layer-set-preserve-trans shadow-layer TRUE)
       
       (gimp-palette-set-background high-color)
-      (gimp-edit-fill img highlight-layer)
+      (gimp-edit-fill highlight-layer)
       (gimp-layer-translate highlight-layer -1 -1)
       
       (gimp-palette-set-background side-color)
-      (gimp-edit-fill img side-layer)
+      (gimp-edit-fill side-layer)
       (gimp-layer-translate side-layer 1 1)
 
       (gimp-palette-set-background shadow-color)
-      (gimp-edit-fill img shadow-layer)
+      (gimp-edit-fill shadow-layer)
       (gimp-layer-translate shadow-layer 5 5)
       
       (gimp-layer-set-preserve-trans shadow-layer FALSE)
@@ -84,14 +84,14 @@
   
 
     (set! text-layer (car (gimp-image-flatten img)))
-    (gimp-layer-add-alpha text-layer)	   
+    (gimp-layer-add-alpha text-layer)
 	  
 
     (if (= rm-bg TRUE)
-	(begin   
-	  (gimp-by-color-select img text-layer '(255 255 255)
+	(begin
+	  (gimp-by-color-select text-layer '(255 255 255)
 				1 REPLACE TRUE FALSE 0 FALSE)
-	  (gimp-edit-clear img text-layer)
+	  (gimp-edit-clear text-layer)
 	  (gimp-selection-clear img)))
         
     (if (= crop TRUE)
@@ -115,7 +115,7 @@
   (script-fu-headers-gimp-org (string-append " " text)
 			      font "bold" "i" "normal" font-size
 			      text-color high-color side-color shadow-color
-			      crop rm-bg index num-colors))  
+			      crop rm-bg index num-colors))
 
 
 (define (script-fu-small-header-gimp-org text font font-size text-color
@@ -124,7 +124,7 @@
   (script-fu-headers-gimp-org text font "medium" "r" "normal"
 			      font-size text-color high-color
 			      side-color shadow-color
-			      crop rm-bg index num-colors))  
+			      crop rm-bg index num-colors))
 
 
 (script-fu-register "script-fu-big-header-gimp-org"

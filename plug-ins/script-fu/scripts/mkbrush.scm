@@ -32,17 +32,17 @@
 
      ; construct variables 
 
-     (data-dir (car (gimp-gimprc-query "gimp_dir"))) 
+     (data-dir (car (gimp-gimprc-query "gimp_dir")))
      (filename (string-append data-dir
-               "/brushes/r" 
-               (number->string width) 
-               "x" 
-               (number->string height) 
+               "/brushes/r"
+               (number->string width)
+               "x"
+               (number->string height)
                ".gbr")
                )
-     (desc (string-append description " " 
-                  (number->string width) 
-                  "x" 
+     (desc (string-append description " "
+                  (number->string width)
+                  "x"
                   (number->string height)
                   )
       )
@@ -57,10 +57,10 @@
     (gimp-palette-set-background '(255 255 255))
     (gimp-rect-select img 0 0 width height REPLACE FALSE 0)
     
-    (gimp-edit-fill    img drawable) 
+    (gimp-edit-fill    drawable)
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
-    (gimp-brushes-refresh) 
+    (gimp-brushes-refresh)
     (gimp-brushes-set-brush desc)
 
 ; Terminate, restoring old bg.
@@ -72,7 +72,7 @@
     (gimp-image-delete img)
     )
   )
-) 
+)
 
 ; Register with the PDB
 
@@ -103,19 +103,19 @@
      (old-fg-color (car (gimp-palette-get-foreground)))
      (old-bg-color (car (gimp-palette-get-background)))
      
-    (data-dir (car (gimp-gimprc-query "gimp_dir"))) 
+    (data-dir (car (gimp-gimprc-query "gimp_dir")))
     (filename (string-append data-dir
-               "/brushes/r" 
-               (number->string width) 
-               "x" 
-               (number->string height) 
+               "/brushes/r"
+               (number->string width)
+               "x"
+               (number->string height)
                "f"
                (number->string feathering)
                ".gbr")
                )
-     (desc (string-append description " " 
-                  (number->string width) 
-                  "x" 
+     (desc (string-append description " "
+                  (number->string width)
+                  "x"
                   (number->string height)
                   ","
                   (number->string feathering)
@@ -130,15 +130,15 @@
     (gimp-palette-set-background '(0 0 0))
     (gimp-drawable-fill drawable BG-IMAGE-FILL)
     (gimp-palette-set-background '(255 255 255))
-    (cond ((< 0 feathering) 
+    (cond ((< 0 feathering)
            (gimp-rect-select img (/ feathering 2) (/ feathering 2) width height REPLACE TRUE feathering))
           ((>= 0 feathering)
            (gimp-rect-select img 0 0 width height REPLACE FALSE 0))
           )
-    (gimp-edit-fill    img drawable) 
+    (gimp-edit-fill    drawable)
     (file-gbr-save 1 img drawable filename "" 25 desc)
     
-    (gimp-brushes-refresh) 
+    (gimp-brushes-refresh)
     (gimp-brushes-set-brush desc)
 
 ; Terminate, restoring old bg.
@@ -150,7 +150,7 @@
     (gimp-image-delete img)
     )
   )
-) 
+)
 
 ; Register with the PDB
 
@@ -165,7 +165,7 @@
             SF-VALUE "Width" "20"
             SF-VALUE "Height" "20"
             SF-VALUE "Feathering" "4"
-            SF-VALUE "Spacing" "25" 
+            SF-VALUE "Spacing" "25"
             )
 
 (define (script-fu-make-brush-elliptical description width height spacing)
@@ -183,14 +183,14 @@
 
      (data-dir (car (gimp-gimprc-query "gimp_dir")))
      (filename (string-append data-dir
-			      "/brushes/e" 
-			      (number->string width) 
-			      "x" 
-			      (number->string height) 
+			      "/brushes/e"
+			      (number->string width)
+			      "x"
+			      (number->string height)
 			      ".gbr"))
-     (desc (string-append description " " 
-			  (number->string width) 
-			  "x" 
+     (desc (string-append description " "
+			  (number->string width)
+			  "x"
 			  (number->string height)
 			  )
 	   )
@@ -206,10 +206,10 @@
     (gimp-palette-set-background '(255 255 255))
     (gimp-ellipse-select img 0 0 width height REPLACE TRUE FALSE 0)
     
-    (gimp-edit-fill    img drawable) 
+    (gimp-edit-fill    drawable)
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
-    (gimp-brushes-refresh) 
+    (gimp-brushes-refresh)
     (gimp-brushes-set-brush desc)
 
 ; Terminate, restoring old bg.
@@ -221,7 +221,7 @@
     (gimp-image-delete img)
     )
   )
-) 
+)
 
 ; Register with the PDB
 
@@ -255,16 +255,16 @@
      ; Construct variables...
      (data-dir (car (gimp-gimprc-query "gimp_dir")))
      (filename (string-append data-dir
-			      "/brushes/e" 
-			      (number->string width) 
-			      "x" 
-			      (number->string height) 
+			      "/brushes/e"
+			      (number->string width)
+			      "x"
+			      (number->string height)
 			      "f"
 			      (number->string feathering)
 			      ".gbr"))
-     (desc (string-append description " " 
-			  (number->string width) 
-			  "x" 
+     (desc (string-append description " "
+			  (number->string width)
+			  "x"
 			  (number->string height)
 			  " f"
 			  (number->string feathering)
@@ -283,13 +283,13 @@
     (gimp-palette-set-background '(255 255 255))
     (cond ((> feathering 0)   ; keep from taking out gimp with stupid entry. 
         (gimp-ellipse-select img (/ feathering 2) (/ feathering 2) width height REPLACE TRUE TRUE feathering))
-          ((<= feathering 0) 
-        (gimp-ellipse-select img 0 0 width height REPLACE TRUE FALSE 0)) 
+          ((<= feathering 0)
+        (gimp-ellipse-select img 0 0 width height REPLACE TRUE FALSE 0))
 	)
-    (gimp-edit-fill    img drawable) 
+    (gimp-edit-fill    drawable)
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
-    (gimp-brushes-refresh) 
+    (gimp-brushes-refresh)
     (gimp-brushes-set-brush desc)
 
 ; Terminate, restoring old bg.
@@ -301,7 +301,7 @@
     (gimp-image-delete img)
     )
   )
-) 
+)
 
 ; Register with the PDB
 

@@ -47,7 +47,7 @@
     (set! total-step-y (apply + y-divides))
     ;(gimp-undo-push-group-start img)
     (set! grid-layer (car (gimp-layer-copy drw TRUE)))
-    (gimp-edit-clear img grid-layer)
+    (gimp-edit-clear grid-layer)
     (gimp-layer-set-name grid-layer "grid layer")
     (while (not (null? (cdr x-divides)))
       (set! stepped-x (+ stepped-x (car x-divides)))
@@ -56,7 +56,7 @@
       (update-segment! segment
 		       (+ drw-offset-x temp) drw-offset-y
 		       (+ drw-offset-x temp) (+ drw-offset-y drw-height))
-      (gimp-pencil img grid-layer 4 segment))
+      (gimp-pencil grid-layer 4 segment))
     (while (not (null? (cdr y-divides)))
       (set! stepped-y (+ stepped-y (car y-divides)))
       (set! temp (* drw-height (/ stepped-y total-step-y)))
@@ -64,14 +64,14 @@
       (update-segment! segment
 		       drw-offset-x (+ drw-offset-y temp)
 		       (+ drw-offset-x drw-width) (+ drw-offset-y temp))
-      (gimp-pencil img grid-layer 4 segment))
+      (gimp-pencil grid-layer 4 segment))
     (gimp-image-add-layer img grid-layer 0)
     ;(gimp-undo-push-group-end img)
     (set! script-fu-grid-system-x-divides (wrap-list x-divides-orig))
     (set! script-fu-grid-system-y-divides (wrap-list y-divides-orig))
     (gimp-displays-flush)))
 
-(script-fu-register "script-fu-grid-system" 
+(script-fu-register "script-fu-grid-system"
 		    "<Image>/Script-Fu/Render/Make Grid System"
 		    "Draw grid as specified by X-DIVIDES (list of propotions relative to the drawable) and Y-DIVIDES. The color and width of grid is detemined by the current settings of brush."
 		    "Shuji Narazaki <narazaki@InetQ.or.jp>"

@@ -33,33 +33,33 @@
     (gimp-image-add-layer img dist-frame-layer -1)
     (gimp-image-add-layer distortion-img distortion-layer -1)
     (gimp-selection-none img)
-    (gimp-edit-clear img dist-text-layer)
-    (gimp-edit-clear img dist-frame-layer)
+    (gimp-edit-clear dist-text-layer)
+    (gimp-edit-clear dist-frame-layer)
     ;; get the text shape
-    (gimp-selection-layer-alpha img text-layer)
+    (gimp-selection-layer-alpha text-layer)
     ;; fill it with the specified color
     (gimp-palette-set-background text-color)
-    (gimp-edit-fill img dist-text-layer)
+    (gimp-edit-fill dist-text-layer)
     ;; get the border shape
     (gimp-selection-border img frame-size)
     (gimp-palette-set-background frame-color)
-    (gimp-edit-fill img dist-frame-layer)
+    (gimp-edit-fill dist-frame-layer)
     (gimp-selection-none img)
     ;; now make the distortion data
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill distortion-img distortion-layer)
+    (gimp-edit-fill distortion-layer)
     (plug-in-noisify 1 distortion-img distortion-layer FALSE prob prob prob 0.0)
     (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
-    (plug-in-c-astretch 1 distortion-img distortion-layer) 
+    (plug-in-c-astretch 1 distortion-img distortion-layer)
     (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
     ;; OK, apply it to dist-text-layer
     (plug-in-displace 1 img dist-text-layer radius radius 1 1
 		      distortion-layer distortion-layer 0)
     ;; make the distortion data once again fro the frame
-    (gimp-edit-fill distortion-img distortion-layer)
+    (gimp-edit-fill distortion-layer)
     (plug-in-noisify 1 distortion-img distortion-layer FALSE prob prob prob 0.0)
     (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
-    (plug-in-c-astretch 1 distortion-img distortion-layer) 
+    (plug-in-c-astretch 1 distortion-img distortion-layer)
     (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
     ;; then, apply it to dist-frame-layer
     (plug-in-displace 1 img dist-frame-layer radius radius 1 1
@@ -67,7 +67,7 @@
     ;; Finally, clear the bottom layer (text-layer)
     (gimp-selection-all img)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill img text-layer)
+    (gimp-edit-fill text-layer)
     ;; post processing
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)

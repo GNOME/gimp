@@ -34,10 +34,10 @@
 ; idea to add alpha-support to add-shadow.
 
   
-(define (script-fu-drop-shadow image 
-			       drawable 
-			       shadow-transl-x 
-			       shadow-transl-y 
+(define (script-fu-drop-shadow image
+			       drawable
+			       shadow-transl-x
+			       shadow-transl-y
 			       shadow-blur
 			       shadow-color
 			       shadow-opacity
@@ -58,9 +58,9 @@
   (gimp-layer-add-alpha drawable)
   (if (= (car (gimp-selection-is-empty image)) TRUE)
       (begin
-	(gimp-selection-layer-alpha image drawable)
+	(gimp-selection-layer-alpha drawable)
 	(set! from-selection FALSE))
-      (begin 
+      (begin
 	(set! from-selection TRUE)
 	(set! active-selection (car (gimp-selection-save image)))))
   
@@ -84,67 +84,67 @@
 
 	  (if (< (+ shadow-offset-x shadow-transl-x) 0)
 	      (begin
-		(set! image-offset-x (- 0 (+ shadow-offset-x 
+		(set! image-offset-x (- 0 (+ shadow-offset-x
 					     shadow-transl-x)))
 		(set! shadow-offset-x (- 0 shadow-transl-x))
 		(set! new-image-width (- new-image-width image-offset-x))))
 
 	  (if (< (+ shadow-offset-y shadow-transl-y) 0)
 	      (begin
-		(set! image-offset-y (- 0 (+ shadow-offset-y 
+		(set! image-offset-y (- 0 (+ shadow-offset-y
 					     shadow-transl-y)))
 		(set! shadow-offset-y (- 0 shadow-transl-y))
 		(set! new-image-height (- new-image-height image-offset-y))))
 
-	  (if (> (+ (+ shadow-width shadow-offset-x) shadow-transl-x) 
+	  (if (> (+ (+ shadow-width shadow-offset-x) shadow-transl-x)
 		 new-image-width)
-	      (set! new-image-width 
+	      (set! new-image-width
 		    (+ (+ shadow-width shadow-offset-x) shadow-transl-x)))
 
-	  (if (> (+ (+ shadow-height shadow-offset-y) shadow-transl-y) 
+	  (if (> (+ (+ shadow-height shadow-offset-y) shadow-transl-y)
 		 new-image-height)
 	      (set! new-image-height
 		    (+ (+ shadow-height shadow-offset-y) shadow-transl-y)))
 
 	  (gimp-image-resize image
-			     new-image-width 
-			     new-image-height 
-			     image-offset-x 
+			     new-image-width
+			     new-image-height
+			     image-offset-x
 			     image-offset-y)))
 
 
-    (set! shadow-layer (car (gimp-layer-new image 
-					    shadow-width 
-					    shadow-height 
+    (set! shadow-layer (car (gimp-layer-new image
+					    shadow-width
+					    shadow-height
 					    type
-					    "Drop-Shadow" 
+					    "Drop-Shadow"
 					    shadow-opacity
 					    NORMAL)))
-    (gimp-layer-set-offsets shadow-layer 
+    (gimp-layer-set-offsets shadow-layer
 			    shadow-offset-x
 			    shadow-offset-y))
 
   (gimp-drawable-fill shadow-layer TRANS-IMAGE-FILL)
   (gimp-palette-set-background shadow-color)
-  (gimp-edit-fill image shadow-layer)
+  (gimp-edit-fill shadow-layer)
   (gimp-selection-none image)
   (gimp-layer-set-preserve-trans shadow-layer FALSE)
-  (if (> shadow-blur 0) (plug-in-gauss-rle 1 
-					   image 
-					   shadow-layer 
-					   shadow-blur 
-					   TRUE 
+  (if (> shadow-blur 0) (plug-in-gauss-rle 1
+					   image
+					   shadow-layer
+					   shadow-blur
+					   TRUE
 					   TRUE))
   (gimp-image-add-layer image shadow-layer -1)
   (gimp-layer-translate shadow-layer shadow-transl-x shadow-transl-y)
 
   (if (= from-selection TRUE)
       (begin
-	(gimp-selection-load image active-selection)
-	(gimp-edit-clear image shadow-layer)
+	(gimp-selection-load active-selection)
+	(gimp-edit-clear shadow-layer)
 	(gimp-image-remove-channel image active-selection)))
 
-  (if (and 
+  (if (and
        (= (car (gimp-layer-is-floating-sel drawable)) 0)
        (= from-selection FALSE))
       (gimp-image-raise-layer image drawable))
@@ -154,7 +154,7 @@
   (gimp-image-enable-undo image)
   (gimp-displays-flush)))
 
-(script-fu-register "script-fu-drop-shadow" 
+(script-fu-register "script-fu-drop-shadow"
 		    "<Image>/Script-Fu/Shadow/Drop-Shadow"
 		    "Add a drop-shadow of the current selection or 
                      alpha-channel"
@@ -169,7 +169,7 @@
 		    SF-VALUE "Blur Radius" "15"
 		    SF-COLOR "Color" '(0 0 0)
 		    SF-VALUE "Opacity" "80"
-		    SF-TOGGLE "Allow Resizing" TRUE) 
+		    SF-TOGGLE "Allow Resizing" TRUE)
 
 
 

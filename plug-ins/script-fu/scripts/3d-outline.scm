@@ -34,8 +34,8 @@
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img pattern 1)
     (gimp-image-add-layer img bg-layer 2)
-    (gimp-edit-fill img bg-layer)
-    (gimp-edit-clear img pattern)                     
+    (gimp-edit-fill bg-layer)
+    (gimp-edit-clear pattern)
     (gimp-layer-set-preserve-trans text-layer FALSE)
     (plug-in-gauss-iir 1 img text-layer outline-blur-radius TRUE TRUE)
 
@@ -48,22 +48,22 @@
 
     (gimp-selection-all img)
     (gimp-patterns-set-pattern text-pattern)
-    (gimp-bucket-fill img pattern PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-bucket-fill pattern PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
     (plug-in-bump-map noninteractive img pattern layer2 110.0 45.0 4 0 0 0 0 TRUE FALSE 0)
 
     (set! pattern-mask (car (gimp-layer-create-mask pattern ALPHA-MASK)))
     (gimp-image-add-layer-mask img pattern pattern-mask)
 
     (gimp-selection-all img)
-    (gimp-edit-copy img layer3)
-    (set! floating_sel (car (gimp-edit-paste img pattern-mask 0)))
+    (gimp-edit-copy layer3)
+    (set! floating_sel (car (gimp-edit-paste pattern-mask 0)))
     (gimp-floating-sel-anchor floating_sel)
 
     (gimp-image-remove-layer-mask img pattern APPLY)
-    (gimp-invert img layer3)
+    (gimp-invert layer3)
     (plug-in-gauss-iir 1 img layer3 shadow-blur-radius TRUE TRUE)
 
-    (gimp-channel-ops-offset img layer3 0 1 s-offset-x s-offset-y)
+    (gimp-channel-ops-offset layer3 0 1 s-offset-x s-offset-y)
 
     (gimp-layer-set-visible layer2 FALSE)
     (gimp-layer-set-visible pattern TRUE)
@@ -72,7 +72,7 @@
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)
     (gimp-image-enable-undo img)
-    (gimp-display-new img)))    
+    (gimp-display-new img)))
 
 (script-fu-register "script-fu-3d-outline-logo"
                     "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline"

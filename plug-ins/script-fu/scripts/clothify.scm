@@ -13,7 +13,7 @@
 		(layer-one (car (gimp-layer-new img width height RGB "X Dots" 100 NORMAL))))
 
 	(gimp-image-disable-undo img)
-	(gimp-edit-fill img layer-one)
+	(gimp-edit-fill layer-one)
 ;	(gimp-edit-fill img layer-two)
 	(gimp-image-add-layer img layer-one 0)
 

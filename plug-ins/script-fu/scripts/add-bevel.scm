@@ -64,8 +64,8 @@
 ;
 
   
-(define (script-fu-add-bevel img 
-			     drawable 
+(define (script-fu-add-bevel img
+			     drawable
 			     thickness
 			     work-on-copy
 			     keep-bump-layer)
@@ -80,11 +80,11 @@
 	 (width (car (gimp-drawable-width pic-layer)))
 	 (height (car (gimp-drawable-height pic-layer)))
 	 (old-bg (car (gimp-palette-get-background)))
-	 (bump-layer (car (gimp-layer-new image 
-					  width 
-					  height 
+	 (bump-layer (car (gimp-layer-new image
+					  width
+					  height
 					  GRAY
-					  "Bumpmap" 
+					  "Bumpmap"
 					  100
 					  NORMAL)))
 	 )
@@ -106,7 +106,7 @@
 	  (set! bevelling-whole-image TRUE) ; ...so we can restore things properly, and crop.
 	  (gimp-image-resize image (+ width 2) (+ height 2) 1 1)
 	  (if (not (eq? 0 (car (gimp-drawable-has-alpha pic-layer))))	; Wish I knew Scheme
-	      (gimp-selection-layer-alpha image pic-layer)
+	      (gimp-selection-layer-alpha pic-layer)
 	      (begin
 		(gimp-selection-all image)
 		)
@@ -131,13 +131,13 @@
 	   (set! greyness (/ (* index 255) thickness))
 	   (gimp-palette-set-background (list greyness greyness greyness))
 	   ;(gimp-selection-feather image 1) ;Stop the slopey jaggies?
-	   (gimp-bucket-fill image bump-layer BG-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+	   (gimp-bucket-fill bump-layer BG-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
 	   (gimp-selection-shrink image 1)
 	   (set! index (+ index 1))
 	   )
     ; Now the white interior
     (gimp-palette-set-background '(255 255 255))
-    (gimp-bucket-fill image bump-layer BG-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-bucket-fill bump-layer BG-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
 
     ;------------------------------------------------------------
     ;
@@ -177,7 +177,7 @@
     (gimp-palette-set-background old-bg)
     (if (= bevelling-whole-image TRUE)
 	(gimp-selection-none image)	; No selection to start with
-	(gimp-selection-load image select)
+	(gimp-selection-load select)
 	)
     ; If they started with a selection, they can Select->Invert then
     ; Edit->Clear for a cutout.
@@ -213,4 +213,4 @@
 		    SF-ADJUSTMENT "Thickness" "5"
 		    SF-TOGGLE "Work on copy" TRUE
 		    SF-TOGGLE "Keep bump layer" FALSE
-		    ) 
+		    )

@@ -43,21 +43,21 @@
      
    ; (gimp-layer-set-preserve-trans ruler-layer TRUE)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill img bg-layer)
-    (gimp-edit-clear img glow-layer)
-    (gimp-edit-clear img bullet-layer)
+    (gimp-edit-fill bg-layer)
+    (gimp-edit-clear glow-layer)
+    (gimp-edit-clear bullet-layer)
 
     (center-ellipse img radius radius half-radius half-radius REPLACE TRUE FALSE 0)
     
 ;    (gimp-rect-select img (/ height 2) (/ height 2) length height REPLACE FALSE 0)
     (gimp-palette-set-foreground '(90 90 90))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend img bullet-layer FG-BG-RGB NORMAL RADIAL 100 0 REPEAT-NONE FALSE 0 0 blend-start blend-start (+ half-radius radius)(+ half-radius radius ))
+    (gimp-blend bullet-layer FG-BG-RGB NORMAL RADIAL 100 0 REPEAT-NONE FALSE 0 0 blend-start blend-start (+ half-radius radius)(+ half-radius radius ))
 
-    (gimp-palette-set-background glow-color) 
+    (gimp-palette-set-background glow-color)
     (gimp-selection-grow img border)
     (gimp-selection-feather img  border)
-    (gimp-edit-fill img glow-layer)
+    (gimp-edit-fill glow-layer)
     (gimp-selection-none img)
     (if (>= radius 16)
 	(plug-in-gauss-rle 1 img glow-layer 25 TRUE TRUE)

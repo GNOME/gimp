@@ -50,23 +50,23 @@
     (gimp-layer-set-preserve-trans shadow-layer TRUE)
     
     (gimp-palette-set-background text-color)
-    (gimp-edit-fill img text-layer)
+    (gimp-edit-fill text-layer)
 
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill img bg-layer)
+    (gimp-edit-fill bg-layer)
 
     (gimp-palette-set-background shadow-color)
-    (gimp-edit-fill img shadow-layer)
+    (gimp-edit-fill shadow-layer)
     (gimp-layer-translate shadow-layer 1 1)
 
     (set! text-layer (car (gimp-image-flatten img)))
-    (gimp-layer-add-alpha text-layer)	   
+    (gimp-layer-add-alpha text-layer)
 
     (if (= rm-bg TRUE)
 	(begin
-	  (gimp-by-color-select img text-layer bg-color
+	  (gimp-by-color-select text-layer bg-color
 				color-thresh REPLACE TRUE FALSE 0 FALSE)
-	  (gimp-edit-clear img text-layer)
+	  (gimp-edit-clear text-layer)
 	  (gimp-selection-clear img)))
     
     (if (= index TRUE)

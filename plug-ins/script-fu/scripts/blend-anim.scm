@@ -63,7 +63,7 @@
 
 	(if (= looped TRUE)
 	    ; add a copy of the lowest blend layer on top 
-	    (let* ((copy (car (gimp-layer-copy 
+	    (let* ((copy (car (gimp-layer-copy
 			       (aref layer-array (- num-layers 2)) TRUE))))
 	      (gimp-image-add-layer image copy 0)
 	      (set! layers (gimp-image-get-layers image))
@@ -75,7 +75,7 @@
 	; make all layers invisible and check for sizes
 	(let* ((min-offset-x width)
 	       (min-offset-y height)
-	       (layer-count slots)) 
+	       (layer-count slots))
 	  (gimp-layer-set-visible bg-layer FALSE)
 	  (while (> layer-count -1)
              (let* ((layer (aref layer-array layer-count))
@@ -90,11 +90,11 @@
 	       (set! max-width (max max-width layer-width))
 	       (set! max-height (max max-height layer-height))
 	       (set! min-offset-x (min min-offset-x layer-offset-x))
-	       (set! min-offset-y (min min-offset-y layer-offset-y))    	       
+	       (set! min-offset-y (min min-offset-y layer-offset-y))
 	       (set! layer-count (- layer-count 1))))
-	  (set! offset-x (- (car (gimp-drawable-offsets bg-layer)) 
+	  (set! offset-x (- (car (gimp-drawable-offsets bg-layer))
 			    min-offset-x))
-	  (set! offset-y (- (cadr (gimp-drawable-offsets bg-layer)) 
+	  (set! offset-y (- (cadr (gimp-drawable-offsets bg-layer))
 			    min-offset-y)))
 	
 	; create intermediate frames by merging copies of adjascent layers 
@@ -128,33 +128,33 @@
 					     (+ layer-height (* blur 2))
 					     blur
 					     blur)
-			  (plug-in-gauss-rle 1 
-					     image 
-					     upper-copy 
-					     blur 
+			  (plug-in-gauss-rle 1
+					     image
+					     upper-copy
+					     blur
 					     TRUE TRUE)
 			  (set! blur (- max-blur blur))
 			  (gimp-layer-set-preserve-trans lower-copy FALSE)
-			  (set! layer-width (car (gimp-drawable-width 
+			  (set! layer-width (car (gimp-drawable-width
 						  lower-copy)))
-			  (set! layer-height (car (gimp-drawable-height 
+			  (set! layer-height (car (gimp-drawable-height
 						   lower-copy)))
 			  (gimp-layer-resize lower-copy
 					     (+ layer-width (* blur 2))
 					     (+ layer-height (* blur 2))
 					     blur
 					     blur)
-			  (plug-in-gauss-rle 1 
-					     image 
-					     lower-copy 
-					     blur 
+			  (plug-in-gauss-rle 1
+					     image
+					     lower-copy
+					     blur
 					     TRUE TRUE)))
-		    (gimp-layer-resize bg-copy 
+		    (gimp-layer-resize bg-copy
 				       max-width
 				       max-height
 				       offset-x
 				       offset-y)
-		    (let* ((merged-layer (car (gimp-image-merge-visible-layers 
+		    (let* ((merged-layer (car (gimp-image-merge-visible-layers
 					     image CLIP-TO-IMAGE))))
 		      (gimp-layer-set-visible merged-layer FALSE))
 		    (set! frame-count (- frame-count 1))))
@@ -164,22 +164,22 @@
         ; with copies of the background layer 
 	(let* ((layer-count 0))
 	  (while (< layer-count slots)
-             (let* ((orig-layer (aref layer-array layer-count))    
+             (let* ((orig-layer (aref layer-array layer-count))
 		    (bg-copy (car (gimp-layer-copy bg-layer TRUE))))
-	       (gimp-image-add-layer image 
-				     bg-copy 
+	       (gimp-image-add-layer image
+				     bg-copy
 				     (* layer-count (+ frames 1)))
-	       (multi-raise-layer image 
-				  orig-layer 
+	       (multi-raise-layer image
+				  orig-layer
 				  (+ (* (- slots layer-count) frames) 1))
 	       (gimp-layer-set-visible orig-layer TRUE)
 	       (gimp-layer-set-visible bg-copy TRUE)
-	       (gimp-layer-resize bg-copy 
+	       (gimp-layer-resize bg-copy
 				  max-width
 				  max-height
 				  offset-x
 				  offset-y)
-	       (let* ((merged-layer (car (gimp-image-merge-visible-layers 
+	       (let* ((merged-layer (car (gimp-image-merge-visible-layers
 					image CLIP-TO-IMAGE))))
 		 (gimp-layer-set-visible merged-layer FALSE))
 	       (set! layer-count (+ layer-count 1)))))
@@ -197,8 +197,8 @@
 	       (layer-count (- num-result-layers 1)))
 	  (while (> layer-count -1)
 	     (let* ((layer (aref result-layer-array layer-count))
-		    (name (string-append "Frame " 
-					 (number->string 
+		    (name (string-append "Frame "
+					 (number->string
 					  (- num-result-layers layer-count) 10))))
 	       (gimp-layer-set-visible layer TRUE)
 	       (gimp-layer-set-name layer name)
@@ -213,7 +213,7 @@
 	(gimp-displays-flush))
   (gimp-message "Blend Animation needs at least three source layers"))))
 
-(script-fu-register "script-fu-blend-anim" 
+(script-fu-register "script-fu-blend-anim"
 		    "<Image>/Script-Fu/Animators/Blend"
 		    "Blend two or more layers over a background, so that an 
                      animation can be saved"

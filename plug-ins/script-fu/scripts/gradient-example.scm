@@ -44,7 +44,7 @@
 
     ; Render gradient
 
-    (gimp-blend img drawable CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 (- width 1) 0)
+    (gimp-blend drawable CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 (- width 1) 0)
 
     ; Terminate
 

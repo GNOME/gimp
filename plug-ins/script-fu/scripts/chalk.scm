@@ -36,8 +36,8 @@
 
     (gimp-image-add-layer img bg-layer 1)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill img bg-layer)
-    (gimp-edit-clear img text-layer)
+    (gimp-edit-fill bg-layer)
+    (gimp-edit-clear text-layer)
 
     ; is there any other way to do this?
     ; the sobel edge detect won't work with the methods in other scripts
@@ -51,12 +51,12 @@
     (plug-in-ripple 1 img text-layer 27 2 0 0 0 TRUE TRUE)
     (plug-in-ripple 1 img text-layer 27 2 1 0 0 TRUE TRUE)
     (plug-in-sobel 1 img text-layer TRUE TRUE TRUE)
-    (gimp-levels img text-layer 0 0 120 3.5 0 255)
+    (gimp-levels text-layer 0 0 120 3.5 0 255)
 
     ; work-around for sobel edge detect screw-up (why does this happen?)
     ; the top line of the image has some garbage instead of the bgcolor
     (gimp-rect-select img 0 0 width 1 ADD FALSE 0)
-    (gimp-edit-clear img text-layer)
+    (gimp-edit-clear text-layer)
     (gimp-selection-none img)
 
     (gimp-layer-set-preserve-trans text-layer TRUE)

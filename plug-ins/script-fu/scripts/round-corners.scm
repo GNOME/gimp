@@ -39,12 +39,12 @@
 
 
 (define (script-fu-round-corners img
-				 drawable 
+				 drawable
 				 radius
 				 shadow-toggle
-				 shadow-x 
-				 shadow-y 
-				 shadow-blur 
+				 shadow-x
+				 shadow-y
+				 shadow-blur
 				 background-toggle
 				 work-on-copy)
   (let* ((shadow-blur (abs shadow-blur))
@@ -53,9 +53,9 @@
 	 (width (car (gimp-image-width img)))
 	 (height (car (gimp-image-height img)))
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
-	 (image (cond ((= work-on-copy TRUE) 
+	 (image (cond ((= work-on-copy TRUE)
 		       (car (gimp-channel-ops-duplicate img)))
-		      ((= work-on-copy FALSE) 
+		      ((= work-on-copy FALSE)
 		       img)))
 	 (pic-layer (car (gimp-image-active-drawable image))))
 
@@ -72,36 +72,36 @@
   (gimp-ellipse-select image (- width diam) 0 diam diam SUB TRUE 0 0)
   (gimp-rect-select image 0 (- height radius) radius radius ADD 0 0)
   (gimp-ellipse-select image 0 (- height diam) diam diam SUB TRUE 0 0)
-  (gimp-rect-select image (- width radius) (- height radius) 
+  (gimp-rect-select image (- width radius) (- height radius)
 		    radius radius ADD 0 0)
-  (gimp-ellipse-select image (- width diam) (- height diam) 
+  (gimp-ellipse-select image (- width diam) (- height diam)
 		       diam diam SUB TRUE 0 0)
-  (gimp-edit-clear image pic-layer)
+  (gimp-edit-clear pic-layer)
   (gimp-selection-none image)
   
   ; optionally add a shadow
   (if (= shadow-toggle TRUE)
       (begin
-	(script-fu-drop-shadow image 
-			       pic-layer 
-			       shadow-x 
+	(script-fu-drop-shadow image
+			       pic-layer
+			       shadow-x
 			       shadow-y
 			       shadow-blur
 			       '(0 0 0)
 			       80
-			       TRUE)	
+			       TRUE)
 	(set! width (car (gimp-image-width image)))
 	(set! height (car (gimp-image-height image)))))
       
   ; optionally add a background
   (if (= background-toggle TRUE)
-      (let* ((bg-layer (car (gimp-layer-new image 
-					    width 
-					    height 
-					    type 
-					    "Background" 
-					    100 
-					    NORMAL))))  
+      (let* ((bg-layer (car (gimp-layer-new image
+					    width
+					    height
+					    type
+					    "Background"
+					    100
+					    NORMAL))))
 	(gimp-drawable-fill bg-layer BG-IMAGE-FILL)
 	(gimp-image-add-layer image bg-layer -1)
 	(gimp-image-raise-layer image pic-layer)
@@ -110,8 +110,8 @@
 
 ; clean up after the script
   (gimp-image-enable-undo image)
-  (if (= work-on-copy TRUE) 
-      (gimp-display-new image))  
+  (if (= work-on-copy TRUE)
+      (gimp-display-new image))
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-round-corners"
@@ -129,7 +129,7 @@
 		    SF-VALUE "Shadow y" "8"
 		    SF-VALUE "Blur Radius" "15"
 		    SF-TOGGLE "Add background" TRUE
-		    SF-TOGGLE "Work on copy" TRUE) 
+		    SF-TOGGLE "Work on copy" TRUE)
 
 
 

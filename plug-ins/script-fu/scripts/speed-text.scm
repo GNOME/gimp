@@ -37,13 +37,13 @@
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img text-layer -1)
 
-    (gimp-edit-clear img bg-layer)
-    (gimp-edit-clear img text-layer)
+    (gimp-edit-clear bg-layer)
+    (gimp-edit-clear text-layer)
 
     (gimp-floating-sel-anchor (car (gimp-text-fontname img text-layer 10 10 string 0 TRUE font-size PIXELS font)))
 
     ; save the selection for later
-    (gimp-selection-layer-alpha img text-layer)
+    (gimp-selection-layer-alpha text-layer)
     (set! saved-sel (car (gimp-selection-save img)))
 
     ; add layer mask
@@ -54,16 +54,16 @@
     (gimp-layer-set-edit-mask text-layer FALSE)
     (gimp-selection-grow img 10)
     (gimp-palette-set-background old-fg)
-    (gimp-edit-fill img text-layer)
+    (gimp-edit-fill text-layer)
 
     ; feather the mask
     (gimp-layer-set-edit-mask text-layer TRUE)
-    (gimp-selection-load img saved-sel)
+    (gimp-selection-load saved-sel)
     (gimp-selection-feather img 10)
     (gimp-palette-set-background (list grey grey grey))
-    (gimp-edit-fill img text-mask)
-    (gimp-edit-fill img text-mask)
-    (gimp-edit-fill img text-mask)
+    (gimp-edit-fill text-mask)
+    (gimp-edit-fill text-mask)
+    (gimp-edit-fill text-mask)
     (gimp-selection-clear img)
 
     (plug-in-newsprint 1 img text-mask cell-size 0 0 0.0 1 45.0 0 45.0 0 45.0 0 5)

@@ -31,7 +31,7 @@
 ; as a layer below the active layer
 ;
   
-(define (script-fu-perspective-shadow image 
+(define (script-fu-perspective-shadow image
 				      drawable
 				      alpha
 				      rel-distance
@@ -55,15 +55,15 @@
 	 (shadow-layer 0))
 
     
-  (if (= rel-distance 0) (set! rel-distance 999999)) 
+  (if (= rel-distance 0) (set! rel-distance 999999))
   (gimp-image-disable-undo image)
   
   (gimp-layer-add-alpha drawable)
   (if (= (car (gimp-selection-is-empty image)) TRUE)
       (begin
-	(gimp-selection-layer-alpha image drawable)
+	(gimp-selection-layer-alpha drawable)
 	(set! from-selection FALSE))
-      (begin 
+      (begin
 	(set! from-selection TRUE)
 	(set! active-selection (car (gimp-selection-save image)))))
   
@@ -75,8 +75,8 @@
  
 	 (abs-length (* rel-length select-height))
 	 (abs-distance (* rel-distance select-height))
-	 (half-bottom-width (/ select-width 2)) 
-	 (half-top-width (* half-bottom-width 
+	 (half-bottom-width (/ select-width 2))
+	 (half-top-width (* half-bottom-width
 			  (/ (- rel-distance rel-length) rel-distance)))
   
 	 (x0 (+ select-offset-x (+ (- half-bottom-width half-top-width)
@@ -96,17 +96,17 @@
 	 (shadow-offset-y (- (min y0 y2) shadow-blur)))
 	 
   
-    (set! shadow-layer (car (gimp-layer-new image 
-					    select-width 
-					    select-height 
+    (set! shadow-layer (car (gimp-layer-new image
+					    select-width
+					    select-height
 					    type
-					    "Perspective Shadow" 
+					    "Perspective Shadow"
 					    shadow-opacity
 					    NORMAL)))
     (gimp-layer-set-offsets shadow-layer select-offset-x select-offset-y)
     (gimp-drawable-fill shadow-layer TRANS-IMAGE-FILL)
     (gimp-palette-set-background shadow-color)
-    (gimp-edit-fill image shadow-layer)
+    (gimp-edit-fill shadow-layer)
     (gimp-selection-none image)
 
     (if (= allow-resize TRUE)
@@ -131,43 +131,42 @@
 	  (if (> (+ shadow-height shadow-offset-y) new-image-height)
 	      (set! new-image-height (+ shadow-height shadow-offset-y)))
 	  (gimp-image-resize image
-			     new-image-width 
-			     new-image-height 
-			     image-offset-x 
+			     new-image-width
+			     new-image-height
+			     image-offset-x
 			     image-offset-y)))
 
     (gimp-image-add-layer image shadow-layer -1)
   
-    (gimp-perspective image
-		      shadow-layer
+    (gimp-perspective shadow-layer
 		      interpolate
 		      x0 y0
 		      x1 y1
 		      x2 y2
 		      x3 y3)
 
-    (if (> shadow-blur 0) 
+    (if (> shadow-blur 0)
 	(begin
 	  (gimp-layer-set-preserve-trans shadow-layer FALSE)
-	  (gimp-layer-resize shadow-layer 
+	  (gimp-layer-resize shadow-layer
 			     shadow-width
 			     shadow-height
 			     shadow-blur
 			     shadow-blur)
-	  (plug-in-gauss-rle 1 
-			     image 
-			     shadow-layer 
-			     shadow-blur 
-			     TRUE 
+	  (plug-in-gauss-rle 1
+			     image
+			     shadow-layer
+			     shadow-blur
+			     TRUE
 			     TRUE))))
 
   (if (= from-selection TRUE)
       (begin
-	(gimp-selection-load image active-selection)
-	(gimp-edit-clear image shadow-layer)
+	(gimp-selection-load active-selection)
+	(gimp-edit-clear shadow-layer)
 	(gimp-image-remove-channel image active-selection)))
 
-  (if (and 
+  (if (and
        (= (car (gimp-layer-is-floating-sel drawable)) 0)
        (= from-selection FALSE))
       (gimp-image-raise-layer image drawable))
@@ -177,7 +176,7 @@
   (gimp-image-enable-undo image)
   (gimp-displays-flush)))
 
-(script-fu-register "script-fu-perspective-shadow" 
+(script-fu-register "script-fu-perspective-shadow"
 		    "<Image>/Script-Fu/Shadow/Perspective"
 		    "Add a perspective shadow"
 		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
@@ -193,4 +192,4 @@
 		    SF-COLOR "Color" '(0 0 0)
 		    SF-ADJUSTMENT "Opacity" '(80 0 100 1 10 0 0)
 		    SF-TOGGLE "Interpolate?" TRUE
-		    SF-TOGGLE "Allow Resizing?" FALSE) 
+		    SF-TOGGLE "Allow Resizing?" FALSE)

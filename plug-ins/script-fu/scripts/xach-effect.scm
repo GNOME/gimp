@@ -43,7 +43,7 @@
   (let* ((ds-blur (max ds-blur 0))
 	 (ds-opacity (min ds-opacity 100))
 	 (ds-opacity (max ds-opacity 0))
-	 (new-color (list (red green blue))) 
+	 (new-color (list (red green blue)))
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
 	 (hl-opacity (list hl-opacity-comp hl-opacity-comp hl-opacity-comp))
@@ -57,10 +57,10 @@
     
     (if (= (car (gimp-selection-is-empty image)) TRUE)
 	(begin
-	  (gimp-selection-layer-alpha image drawable)
+	  (gimp-selection-layer-alpha drawable)
 	  (set! active-selection (car (gimp-selection-save image)))
 	  (set! from-selection FALSE))
-	(begin 
+	(begin
 	  (set! from-selection TRUE)
 	  (set! active-selection (car (gimp-selection-save image)))))
     
@@ -69,21 +69,21 @@
     
 
     (gimp-selection-none image)
-    (gimp-edit-clear image hl-layer)
-    (gimp-selection-load image active-selection)
+    (gimp-edit-clear hl-layer)
+    (gimp-selection-load active-selection)
     
     (gimp-palette-set-background hl-color)
-    (gimp-edit-fill image hl-layer)
+    (gimp-edit-fill hl-layer)
     (gimp-selection-translate image hl-offset-x hl-offset-y)
-    (gimp-edit-fill image hl-layer)
+    (gimp-edit-fill hl-layer)
     (gimp-selection-none image)
-    (gimp-selection-load image active-selection)
+    (gimp-selection-load active-selection)
     
     (set! mask (car (gimp-layer-create-mask hl-layer WHITE-MASK)))
     (gimp-image-add-layer-mask image hl-layer mask)
     
     (gimp-palette-set-background hl-opacity)
-    (gimp-edit-fill image mask)
+    (gimp-edit-fill mask)
 
     (set! shadow-layer (car (gimp-layer-new image
 					    image-width
@@ -94,15 +94,15 @@
 					    NORMAL)))
     (gimp-image-add-layer image shadow-layer -1)
     (gimp-selection-none image)
-    (gimp-edit-clear image shadow-layer)
-    (gimp-selection-load image active-selection)
+    (gimp-edit-clear shadow-layer)
+    (gimp-selection-load active-selection)
     (gimp-selection-translate image ds-offset-x ds-offset-y)
     (gimp-palette-set-background ds-color)
-    (gimp-edit-fill image shadow-layer)
+    (gimp-edit-fill shadow-layer)
     (gimp-selection-none image)
     (plug-in-gauss-rle 1 image shadow-layer ds-blur TRUE TRUE)
-    (gimp-selection-load image active-selection)
-    (gimp-edit-clear image shadow-layer)
+    (gimp-selection-load active-selection)
+    (gimp-edit-clear shadow-layer)
     (gimp-image-lower-layer image shadow-layer)
 
 

@@ -41,14 +41,14 @@
 	(let ((dir1 (deg->rad (+ direction corn-deg)))
 	      (dir2 (deg->rad (- direction corn-deg))))
 	  (define (aux dir index)
-	    (set-point! index 
+	    (set-point! index
 			(+ beg-x (* (cos dir) radius))
 			(+ beg-y (* (sin dir) radius))))
 	  (aux dir1 1)
 	  (aux dir2 2)))
       (let ((dir0 (deg->rad direction))
 	    (of (+ offset (- (modulo (rand) variation) variation/2))))
-	(set-point! 0 
+	(set-point! 0
 		    (+ beg-x (* of (cos dir0)))
 		    (+ beg-y (* of (sin dir0))))
 	(set-marginal-point beg-x beg-y direction)
@@ -66,8 +66,8 @@
 		   (+ (nth 1 drw-offsets) (/ drw-height 2))
 		   (* index dir-deg/line))
       (set! index (+ index 1)))
-    (gimp-bucket-fill img drw FG-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
-    (gimp-selection-load img old-selection)
+    (gimp-bucket-fill drw FG-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-selection-load old-selection)
     ;; (gimp-image-set-active-layer img drw)
     ;; delete extra channel by Sven Neumann <neumanns@uni-duesseldorf.de>
     (gimp-image-remove-channel img old-selection)

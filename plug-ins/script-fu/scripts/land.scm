@@ -35,7 +35,7 @@
 	 (img (car (gimp-image-new width height RGB)))
 	 (layer-one (car (gimp-layer-new img width height RGB "bottom" 100 NORMAL)))
 	)
-  (gimp-gradients-set-active gradient)    
+  (gimp-gradients-set-active gradient)
   (gimp-image-disable-undo img)
   (gimp-image-add-layer img layer-one 0)
 
@@ -49,7 +49,7 @@
 
 
 
-  (gimp-by-color-select img layer-one '(190 190 190) 55 REPLACE FALSE FALSE 0 FALSE)
+  (gimp-by-color-select layer-one '(190 190 190) 55 REPLACE FALSE FALSE 0 FALSE)
   (plug-in-bump-map 1 img layer-two layer-one 135.0 35 landheight 0 0 0 0 TRUE FALSE 0)
 
   ;(plug-in-c-astretch 1 img layer-two)

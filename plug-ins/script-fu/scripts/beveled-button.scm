@@ -33,8 +33,7 @@
   (cadr (cddr extents)))
 
 (define (blend-bumpmap img drawable x1 y1 x2 y2)
-  (gimp-blend img
-	      drawable
+  (gimp-blend drawable
 	      FG-BG-RGB
 	      DARKEN-ONLY
 	      LINEAR
@@ -104,7 +103,7 @@
     (gimp-image-add-layer img bumpmap -1)
     (gimp-palette-set-foreground '(0 0 0))
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill img bumpmap)
+    (gimp-edit-fill bumpmap)
 
     (gimp-rect-select img 0 0 bevel-width img-height REPLACE FALSE 0)
     (blend-bumpmap img bumpmap 0 0 (- bevel-width 1) 0)
@@ -125,8 +124,7 @@
     (gimp-image-add-layer img gradient -1)
     (gimp-palette-set-foreground ul-color)
     (gimp-palette-set-background lr-color)
-    (gimp-blend img
-		gradient
+    (gimp-blend gradient
 		FG-BG-RGB
 		NORMAL
 		LINEAR

@@ -45,7 +45,7 @@
 	((< width (* ratio height))   width)))
 
 
-(define (script-fu-slide img 
+(define (script-fu-slide img
 			 drawable
 			 text
 			 number
@@ -53,15 +53,15 @@
 			 font-color
 			 work-on-copy)
   (let* ((type (car (gimp-drawable-type-with-alpha drawable)))
-	 (image (cond ((= work-on-copy TRUE) 
+	 (image (cond ((= work-on-copy TRUE)
 		       (car (gimp-channel-ops-duplicate img)))
-		      ((= work-on-copy FALSE) 
+		      ((= work-on-copy FALSE)
 		       img)))
 	 (owidth (car (gimp-image-width image)))
 	 (oheight (car (gimp-image-height image)))
-	 (ratio (if (>= owidth oheight) (/ 3 2) 
+	 (ratio (if (>= owidth oheight) (/ 3 2)
 		                        (/ 2 3)))
-	 (crop-width (crop owidth oheight ratio)) 
+	 (crop-width (crop owidth oheight ratio))
 	 (crop-height (/ crop-width ratio))
 	 (width (* (max crop-width crop-height) 1.05))
 	 (height (* (min crop-width crop-height) 1.5))
@@ -72,19 +72,19 @@
 	 (hole-start (- (/ (rand 1000) 1000) 0.5))
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-fg (car (gimp-palette-get-foreground)))
-	 (film-layer (car (gimp-layer-new image 
-					  width 
-					  height 
-					  type 
-					  "Film" 
-					  100 
+	 (film-layer (car (gimp-layer-new image
+					  width
+					  height
+					  type
+					  "Film"
+					  100
 					  NORMAL)))
-	 (bg-layer (car (gimp-layer-new image 
-					width 
-					height 
-					type 
-					"Background" 
-					100 
+	 (bg-layer (car (gimp-layer-new image
+					width
+					height
+					type
+					"Background"
+					100
 					NORMAL)))
 	 (pic-layer (car (gimp-image-active-drawable image)))
 	 (numbera (string-append number "A")))
@@ -96,21 +96,21 @@
   (gimp-layer-add-alpha pic-layer)
 
 ; crop, resize and eventually rotate the image 
-  (gimp-crop image 
-	     crop-width 
-	     crop-height 
+  (gimp-crop image
+	     crop-width
+	     crop-height
 	     (/ (- owidth crop-width) 2)
 	     (/ (- oheight crop-height) 2))
-  (gimp-image-resize image 
-		     width 
-		     height 
+  (gimp-image-resize image
+		     width
+		     height
 		     (/ (- width crop-width) 2)
 		     (/ (- height crop-height) 2))
   (if (< ratio 1) (plug-in-rotate 1
-				  image 
+				  image
 				  pic-layer
 				  1
-				  FALSE)) 
+				  FALSE))
 
 ; add the background layer
   (gimp-drawable-fill bg-layer BG-IMAGE-FILL)
@@ -140,7 +140,7 @@
 					    (* 0.040 height) PIXELS
 					    fontname )))
   (gimp-floating-sel-anchor (car (gimp-text-fontname image
-					    film-layer		  
+					    film-layer
 					    (+ hole-start (* 0.35 width))
 					    (* 0.01 height)
 					    number
@@ -149,7 +149,7 @@
 					    (* 0.050 height) PIXELS
 					    fontname )))
   (gimp-floating-sel-anchor (car (gimp-text-fontname image
-					    film-layer		  
+					    film-layer
 					    (+ hole-start (* 0.35 width))
 					    (* 0.95 height)
 					    number
@@ -158,7 +158,7 @@
 					    (* 0.050 height) PIXELS
 					    fontname )))
   (gimp-floating-sel-anchor (car (gimp-text-fontname image
-					      film-layer		  
+					      film-layer
 					      (+ hole-start (* 0.85 width))
 					      (* 0.95 height)
 					      numbera
@@ -171,18 +171,18 @@
   (let* ((film-mask (car (gimp-layer-create-mask film-layer WHITE-MASK)))
 	 (hole hole-start)
 	 (top-y (* height 0.06))
-	 (bottom-y(* height 0.855))) 
+	 (bottom-y(* height 0.855)))
     (gimp-selection-none image)
     (while (< hole 8)
-	   (gimp-rect-select image 
+	   (gimp-rect-select image
 			     (* hole-space hole)
 			     top-y
 			     hole-width
 			     hole-height
 			     ADD
 			     FALSE
-			     0)	 
-	   (gimp-rect-select image 
+			     0)
+	   (gimp-rect-select image
 			     (* hole-space hole)
 			     bottom-y
 			     hole-width
@@ -193,10 +193,10 @@
 	   (set! hole (+ hole 1)))
 
     (gimp-palette-set-foreground '(0 0 0))
-    (gimp-edit-fill image film-mask)
+    (gimp-edit-fill film-mask)
     (gimp-selection-none image)
     (plug-in-gauss-rle 1 image film-mask hole-radius TRUE TRUE)
-    (gimp-threshold image film-mask 127 255)
+    (gimp-threshold film-mask 127 255)
 
     (gimp-image-add-layer image film-layer -1)
     (gimp-image-add-layer-mask image film-layer film-mask))
@@ -213,7 +213,7 @@
   (if (= work-on-copy TRUE) (gimp-display-new image))
   (gimp-displays-flush)))
 
-(script-fu-register "script-fu-slide" 
+(script-fu-register "script-fu-slide"
 		    "<Image>/Script-Fu/Decor/Slide"
 		    "Gives the image the look of a slide"
 		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
@@ -226,7 +226,7 @@
 		    SF-STRING "Number" "32"
 		    SF-FONT "Font" "-*-utopia-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Font Color" '(255 180 0)
-		    SF-TOGGLE "Work on copy" TRUE) 
+		    SF-TOGGLE "Work on copy" TRUE)
 
 
 

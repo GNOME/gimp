@@ -33,27 +33,27 @@
     (set! select-offset-x (cadr selection-bounds))
     (set! select-offset-y (caddr selection-bounds))
     (set! selection-width (- (cadr (cddr selection-bounds)) select-offset-x))
-    (set! selection-height (- (caddr (cddr selection-bounds)) select-offset-y)) 
+    (set! selection-height (- (caddr (cddr selection-bounds)) select-offset-y))
 
     (gimp-image-disable-undo image)
     
     (if (= (car (gimp-selection-is-empty image)) TRUE)
 	(begin
-	  (gimp-selection-layer-alpha image drawable)
+	  (gimp-selection-layer-alpha drawable)
 	  (set! active-selection (car (gimp-selection-save image)))
 	  (set! from-selection FALSE))
-	(begin 
+	(begin
 	  (set! from-selection TRUE)
 	  (set! active-selection (car (gimp-selection-save image)))))
 
-    (gimp-edit-copy image drawable)
+    (gimp-edit-copy drawable)
 
     (set! brush-image (car (gimp-image-new selection-width selection-height image-type)))
     (set! brush-draw (car (gimp-layer-new brush-image selection-width selection-height draw-type "Sloth" 100 NORMAL)))
     (gimp-image-add-layer brush-image brush-draw 0)
     (gimp-drawable-fill brush-draw BG-IMAGE-FILL)
 
-    (let ((floating-sel (car (gimp-edit-paste brush-image brush-draw FALSE))))
+    (let ((floating-sel (car (gimp-edit-paste brush-draw FALSE))))
       (gimp-floating-sel-anchor floating-sel)
       )
 

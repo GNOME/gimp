@@ -41,7 +41,7 @@
 (define (script-fu-show-image-structure img drawable new-image? space
 					shear-length border apply-layer-mask?
 					with-layer-name? with-pad? padding-color
-					padding-opacity with-background? 
+					padding-opacity with-background?
 					background-color)
   (if (eq? new-image? TRUE)
       (begin (set! img (car (gimp-channel-ops-duplicate img)))
@@ -61,7 +61,7 @@
     (gimp-image-resize img new-width new-height 0 0)
     (set! layers (cadr layers))
     (gimp-selection-none img)
-    (while (< index num-of-layers) 
+    (while (< index num-of-layers)
       (set! layer (aref layers index))
       (if (equal? "Background" (car (gimp-layer-get-name layer)))
 	  (begin
@@ -69,23 +69,23 @@
 	    (gimp-layer-set-name layer "Original Background")))
       (set! layer-names (cons (car (gimp-layer-get-name layer)) layer-names))
       (if (not (= -1 (car (gimp-layer-mask layer))))
-	  (gimp-image-remove-layer-mask img layer 
+	  (gimp-image-remove-layer-mask img layer
 					(if (= TRUE apply-layer-mask?)
 					    APPLY
 					    DISCARD)))
       (if (= TRUE with-pad?)
 	  (begin
-	    (gimp-selection-layer-alpha img layer)
+	    (gimp-selection-layer-alpha layer)
 	    (gimp-selection-invert img)
 	    (gimp-layer-set-preserve-trans layer FALSE)
 	    (gimp-palette-set-foreground padding-color)
-	    (gimp-bucket-fill img layer FG-BUCKET-FILL NORMAL
+	    (gimp-bucket-fill layer FG-BUCKET-FILL NORMAL
 			      padding-opacity 0 0 0 0)
 	    (gimp-selection-none img)))
       
       (gimp-layer-translate layer
 			    (+ border shear-length) (+ border (* space index)))
-      (gimp-shear img layer TRUE 0 (* (/ (car (gimp-drawable-height layer))
+      (gimp-shear layer TRUE 0 (* (/ (car (gimp-drawable-height layer))
 					 old-height)
 				      (* -2 shear-length)))
       (set! index (+ index 1)))
@@ -96,7 +96,7 @@
 					    "New Background" 100 NORMAL)))
 	  (gimp-image-add-layer img new-bg num-of-layers)
 	  (gimp-palette-set-background background-color)
-	  (gimp-edit-fill img new-bg)))
+	  (gimp-edit-fill new-bg)))
     (gimp-image-set-active-layer img (aref layers 0))
     (if (= TRUE with-layer-name?)
 	(let ((text-layer #f))
@@ -142,7 +142,7 @@
  SF-VALUE "Space between layers" (number->string script-fu-show-image-structure-space)
  SF-VALUE "Shear length (> 0)" (number->string script-fu-show-image-structure-shear-length)
  SF-VALUE "Outer Border (>= 0)" (number->string script-fu-show-image-structure-border)
- SF-TOGGLE "Apply layer mask (or discard)" script-fu-show-image-structure-apply-layer-mask? 
+ SF-TOGGLE "Apply layer mask (or discard)" script-fu-show-image-structure-apply-layer-mask?
  SF-TOGGLE "Insert layer names" script-fu-show-image-structure-with-layer-name?
  SF-TOGGLE "Padding for transparent regions" script-fu-show-image-structure-with-pad?
  SF-COLOR "Pad Color" script-fu-show-image-structure-padding-color

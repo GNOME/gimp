@@ -36,7 +36,7 @@
   (set! visi-array (cons-array num-layers))
   (while (<= layer-count num-layers)
 	 (set! layer (aref layer-array (- num-layers layer-count)))
-	 (aset visi-array (- num-layers layer-count) 
+	 (aset visi-array (- num-layers layer-count)
 	                  (car (gimp-layer-get-visible layer)))
 	 (if (= TRUE (car (gimp-layer-get-visible layer)))
 	     (begin
@@ -50,12 +50,12 @@
   ; merge all visible layers
   (if (> num-visi-layers 1)
       (set! merged-layer (car (gimp-image-merge-visible-layers image EXPAND-AS-NECESSARY)))
-      (if (> num-visi-layers 0) 
+      (if (> num-visi-layers 0)
 	  (set! merged-layer copy)))
 
-  (if (> num-visi-layers 0) 
+  (if (> num-visi-layers 0)
       (begin
-	(gimp-edit-copy image merged-layer)
+	(gimp-edit-copy merged-layer)
 	(gimp-image-remove-layer image merged-layer)))
 
   ; restore the layers visibilty
@@ -70,7 +70,7 @@
   (gimp-undo-push-group-end image)
   (gimp-displays-flush)))
 
-(script-fu-register "script-fu-copy-visible" 
+(script-fu-register "script-fu-copy-visible"
 		    "<Image>/Edit/Copy Visible"
 		    "Copy the visible selction"
 		    "Sven Neumann (neumanns@uni-duesseldorf.de), Adrian Likins <adrian@gimp.org>"
