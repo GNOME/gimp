@@ -137,15 +137,9 @@ sanity_check_freetype (void)
   FT_Int     ft_micro_version;
   FT_Int     ft_version;
 
-#ifdef G_OS_WIN32
 #define FT_REQUIRED_MAJOR 2
 #define FT_REQUIRED_MINOR 1
 #define FT_REQUIRED_MICRO 7
-#else
-#define FT_REQUIRED_MAJOR 2
-#define FT_REQUIRED_MINOR 1
-#define FT_REQUIRED_MICRO 7
-#endif
 
   if (FT_Init_FreeType (&ft_library) != 0)
     g_error ("FT_Init_FreeType() failed");

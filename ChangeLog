@@ -1,5 +1,10 @@
 2004-11-30  Sven Neumann  <sven@gimp.org>
 
+	* app/sanity.c: we check for the same version of freetype on all
+	platforms, no need for an ifdef here.
+
+2004-11-30  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpexport.c: some more HIG-ification tweaks to the
 	Export dialogs.
 
