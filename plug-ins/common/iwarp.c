@@ -898,7 +898,7 @@ iwarp_init (void)
   image_bpp = gimp_drawable_bpp (drawable->drawable_id);
 
   if (gimp_drawable_is_layer (drawable->drawable_id))
-    preserve_trans = gimp_layer_get_preserve_transparency (drawable->drawable_id);
+    preserve_trans = gimp_layer_get_preserve_trans (drawable->drawable_id);
   else
     preserve_trans = FALSE;
 

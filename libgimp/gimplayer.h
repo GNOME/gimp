@@ -26,9 +26,6 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-#define gimp_layer_get_preserve_transparency gimp_layer_get_preserve_trans
-#define gimp_layer_set_preserve_transparency gimp_layer_set_preserve_trans
-
 
 gint32   gimp_layer_new  (gint32                image_ID,
 			  const gchar          *name,

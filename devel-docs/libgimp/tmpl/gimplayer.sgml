@@ -276,18 +276,3 @@ Operations on single layers.
 @Returns: 
 
 
-<!-- ##### MACRO gimp_layer_get_preserve_transparency ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
-<!-- ##### MACRO gimp_layer_set_preserve_transparency ##### -->
-<para>
-
-</para>
-
-
-

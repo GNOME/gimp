@@ -126,7 +126,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /* Since a channel might be selected, we must check wheter RGB or not. */
-      if (gimp_layer_get_preserve_transparency (drawable_id))
+      if (gimp_layer_get_preserve_trans (drawable_id))
 	{
 	  g_message (_("The layer preserves transparency."));
 	  return;

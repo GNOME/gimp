@@ -1442,7 +1442,7 @@ p_write_layer_prp(const gchar *dirname,
   l_param.int_val1 = gimp_drawable_get_linked (layer_id);
   p_write_prop (fp, PROP_LINKED, &l_param, wr_all_prp);
 
-  l_param.int_val1 = gimp_layer_get_preserve_transparency(layer_id);
+  l_param.int_val1 = gimp_layer_get_preserve_trans (layer_id);
   p_write_prop (fp, PROP_PRESERVE_TRANSPARENCY, &l_param, wr_all_prp);
 
   l_param.int_val1 = gimp_layer_get_apply_mask(layer_id);
@@ -3467,7 +3467,7 @@ load_xjt_image (const gchar *filename)
       gimp_layer_set_offsets(l_layer_id, l_layer_prp_ptr->offx, l_layer_prp_ptr->offy);
       gimp_drawable_set_visible (l_layer_id, l_layer_prp_ptr->visible);
       gimp_drawable_set_linked (l_layer_id, l_layer_prp_ptr->linked);
-      gimp_layer_set_preserve_transparency (l_layer_id, l_layer_prp_ptr->preserve_transparency);
+      gimp_layer_set_preserve_trans (l_layer_id, l_layer_prp_ptr->preserve_transparency);
       if (l_layer_prp_ptr->tattoo >= 0)
 	{
 	 gimp_drawable_set_tattoo (l_layer_id, l_layer_prp_ptr->tattoo);

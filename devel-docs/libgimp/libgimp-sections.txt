@@ -401,8 +401,6 @@ gimp_layer_set_opacity
 gimp_layer_get_mode
 gimp_layer_set_mode
 gimp_layer_is_floating_sel
-gimp_layer_get_preserve_transparency
-gimp_layer_set_preserve_transparency
 </SECTION>
 
 <SECTION>

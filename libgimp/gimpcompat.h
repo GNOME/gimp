@@ -67,6 +67,8 @@ G_BEGIN_DECLS
 #define gimp_layer_get_tattoo                   gimp_drawable_get_tattoo
 #define gimp_layer_set_tattoo                   gimp_drawable_set_tattoo
 #define gimp_layer_is_floating_selection        gimp_layer_is_floating_sel
+#define gimp_layer_get_preserve_transparency    gimp_layer_get_preserve_trans
+#define gimp_layer_set_preserve_transparency    gimp_layer_set_preserve_trans
 
 #define gimp_layer_mask                         gimp_layer_get_mask
 #define gimp_layer_get_mask_id                  gimp_layer_get_mask

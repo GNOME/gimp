@@ -1135,7 +1135,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
 				0, 3, 8,
 				G_CALLBACK (gimp_toggle_button_update),
 				&propagate_alpha);
-	if (gimp_layer_get_preserve_transparency (drawable_id))
+	if (gimp_layer_get_preserve_trans (drawable_id))
 	  {
 	    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), 0);
 	    gtk_widget_set_sensitive (toggle, FALSE);

@@ -1984,7 +1984,7 @@ load_image (const gchar *name)
 
 	  gimp_layer_translate (layer_ID, layer->x, layer->y);
 
-	  gimp_layer_set_preserve_transparency (layer_ID, layer->protecttrans);
+	  gimp_layer_set_preserve_trans (layer_ID, layer->protecttrans);
 	  gimp_drawable_set_visible (layer_ID, layer->visible);
 
 	  drawable = gimp_drawable_get (layer_ID);

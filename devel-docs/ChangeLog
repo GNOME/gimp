@@ -1,3 +1,8 @@
+2003-12-12  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimplayer.sgml: follow preserve_transparency removal.
+
 2003-12-09  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt
