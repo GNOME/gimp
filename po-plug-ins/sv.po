@@ -1,22 +1,21 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Swedish translations for GIMP.
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Tomas Ögren <stric@ing.umu.se>, 1999.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 1999-07-17 11:11-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: gimp 1.1.7\n"
+"POT-Creation-Date: 1999-07-22 04:58+0200\n"
+"PO-Revision-Date: 1999-07-22 11:11+0100\n"
+"Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
+"Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=iso8859-1\n"
+"Content-Transfer-Encoding: 8-bit\n"
 
 #: plug-ins/common/CML_explorer.c:226
 msgid "Keep image's values"
-msgstr "Keep image's values"
+msgstr ""
 
 #: plug-ins/common/CML_explorer.c:228
 msgid "Keep the first value"
@@ -215,23 +214,23 @@ msgstr ""
 #: plug-ins/common/CML_explorer.c:1431 plug-ins/common/CML_explorer.c:1755
 #: plug-ins/common/decompose.c:135
 msgid "Hue"
-msgstr ""
+msgstr "Nyans"
 
 #: plug-ins/common/CML_explorer.c:381 plug-ins/common/CML_explorer.c:389
 #: plug-ins/common/CML_explorer.c:1435 plug-ins/common/CML_explorer.c:1755
 #: plug-ins/common/decompose.c:136
 msgid "Saturation"
-msgstr ""
+msgstr "Mättnad"
 
 #: plug-ins/common/CML_explorer.c:382 plug-ins/common/CML_explorer.c:390
 #: plug-ins/common/CML_explorer.c:1439 plug-ins/common/CML_explorer.c:1755
 #: plug-ins/common/decompose.c:137
 msgid "Value"
-msgstr ""
+msgstr "Värde"
 
 #: plug-ins/common/CML_explorer.c:387
 msgid "NULL"
-msgstr ""
+msgstr "NULL"
 
 #: plug-ins/common/CML_explorer.c:494
 msgid "Make an image of Coupled-Map Lattice"
@@ -451,7 +450,7 @@ msgstr ""
 #: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: plug-ins/common/CML_explorer.c:1830
 msgid "The Graph"
@@ -527,7 +526,7 @@ msgstr ""
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
 #: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: plug-ins/Lighting/lighting_main.c:172
 msgid "Apply various lighting effects to an image"
@@ -597,7 +596,7 @@ msgstr ""
 #. (GtkSignalFunc)togglerefraction_update);
 #: plug-ins/Lighting/lighting_ui.c:578
 msgid "Transparent background"
-msgstr ""
+msgstr "Transparent bakgrund"
 
 #: plug-ins/Lighting/lighting_ui.c:580
 msgid "Create new image"
@@ -828,11 +827,11 @@ msgstr ""
 #. ==================================================
 #: plug-ins/Lighting/lighting_ui.c:1061
 msgid "Apply"
-msgstr ""
+msgstr "Verkställ"
 
 #: plug-ins/Lighting/lighting_ui.c:1063
 msgid "Help"
-msgstr ""
+msgstr "Hjälp"
 
 #: plug-ins/Lighting/lighting_ui.c:1072
 msgid "Apply filter with current settings"
@@ -888,7 +887,7 @@ msgstr ""
 #: plug-ins/common/jpeg.c:1018 plug-ins/common/oilify.c:478
 #: plug-ins/common/png.c:847 plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
-msgstr ""
+msgstr "Parameterinställningar"
 
 #: plug-ins/common/apply_lens.c:448
 msgid "Keep original surroundings"
@@ -1030,7 +1029,7 @@ msgstr ""
 #: plug-ins/common/xpm.c:300
 #, c-format
 msgid "Loading %s:"
-msgstr ""
+msgstr "Laddar %s:"
 
 #: plug-ins/bmp/bmpread.c:39
 #, c-format
@@ -1071,7 +1070,7 @@ msgstr ""
 #: plug-ins/common/jpeg.c:611 plug-ins/common/png.c:455
 #: plug-ins/common/xbm.c:612
 msgid "Background"
-msgstr ""
+msgstr "Bakgrund"
 
 #: plug-ins/bmp/bmpwrite.c:83
 msgid "bmp: cannot operate on unknown image types or alpha images"
@@ -1088,7 +1087,7 @@ msgstr ""
 #: plug-ins/common/xpm.c:611 plug-ins/common/xwd.c:507
 #, c-format
 msgid "Saving %s:"
-msgstr ""
+msgstr "Sparar %s:"
 
 #: plug-ins/bmp/bmpwrite.c:421
 msgid "Save as BMP"
@@ -1556,51 +1555,51 @@ msgstr ""
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:130
 msgid "red"
-msgstr ""
+msgstr "röd"
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:131
 msgid "green"
-msgstr ""
+msgstr "grön"
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:132
 msgid "blue"
-msgstr ""
+msgstr "blå"
 
 #: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:135
 msgid "hue"
-msgstr ""
+msgstr "nyans"
 
 #: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:136
 msgid "saturation"
-msgstr ""
+msgstr "mättnad"
 
 #: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:137
 msgid "value"
-msgstr ""
+msgstr "värde"
 
 #: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:140
 msgid "cyan"
-msgstr ""
+msgstr "cyan"
 
 #: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:141
 msgid "magenta"
-msgstr ""
+msgstr "magenta"
 
 #: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:142
 msgid "yellow"
-msgstr ""
+msgstr "gul"
 
 #: plug-ins/common/decompose.c:140
 msgid "Cyan"
-msgstr ""
+msgstr "Cyan"
 
 #: plug-ins/common/decompose.c:141
 msgid "Magenta"
-msgstr ""
+msgstr "Magenta"
 
 #: plug-ins/common/decompose.c:142
 msgid "Yellow"
-msgstr ""
+msgstr "Gul"
 
 #: plug-ins/common/decompose.c:143 plug-ins/common/decompose.c:145
 msgid "cyan_k"
@@ -1773,28 +1772,32 @@ msgstr ""
 
 #: plug-ins/common/gif.c:408
 msgid "saves files in Compuserve GIF file format"
-msgstr ""
+msgstr "sparar filer i Compuserves GIF-format"
 
 #: plug-ins/common/gif.c:682
 msgid "GIF: Couldn't simply reduce colours further.  Saving as opaque.\n"
-msgstr ""
+msgstr "GIF: Kunde ej enkelt minska antalet färger mer.  Sparar som opak.\n"
 
 #: plug-ins/common/gif.c:938
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
 msgstr ""
+"GIF: Tyvärr, kan ej spara RGB-bilder som GIF - konvertera till INDEXERAD\n"
+"eller GRÅ först.\n"
 
 #: plug-ins/common/gif.c:957
 #, c-format
 msgid "GIF: can't open %s\n"
-msgstr ""
+msgstr "GIF: kan ej öppna %s\n"
 
 #: plug-ins/common/gif.c:1064
 msgid ""
 "Transparent colour *might* be incorrect on viewers which don't support "
 "transparency."
 msgstr ""
+"Transparenta färgen *kanske* blir felaktigt i vissa visare som ej stöder "
+"transparenthet."
 
 #: plug-ins/common/gif.c:1196
 msgid ""
@@ -1806,219 +1809,229 @@ msgid ""
 "You may choose whether to crop all of the layers to\n"
 "the image borders, or cancel this save."
 msgstr ""
+"Bilden du försöker spara som GIF innehåller lager\n"
+"som sträcker sig utanför själva kanten på bilden\n"
+"Detta är ej tillåtet i GIF.\n"
+"\n"
+"Du kan välja att antingen beskära alla lager till\n"
+"bildkanterna eller abryta sparningen."
 
 #: plug-ins/common/gif.c:1252
 msgid "Save as GIF"
-msgstr ""
+msgstr "Spara som GIF"
 
 #. regular gif parameter settings
 #: plug-ins/common/gif.c:1286
 msgid "GIF Options"
-msgstr ""
+msgstr "GIF-inställningar"
 
 #: plug-ins/common/gif.c:1294 plug-ins/common/png.c:856
 msgid "Interlace"
-msgstr ""
+msgstr "Interlace"
 
 #: plug-ins/common/gif.c:1306
 msgid "GIF Comment: "
-msgstr ""
+msgstr "GIF-kommentar: "
 
 #: plug-ins/common/gif.c:1339 plug-ins/common/gif.c:1340
 msgid "Made with GIMP"
-msgstr ""
+msgstr "Gjord med GIMP"
 
 #. additional animated gif parameter settings
 #: plug-ins/common/gif.c:1365
 msgid "Animated GIF Options"
-msgstr ""
+msgstr "Animerad GIF - inställningar"
 
 #: plug-ins/common/gif.c:1373
 msgid "Loop forever"
-msgstr ""
+msgstr "Loopa för evigt"
 
 #: plug-ins/common/gif.c:1386
 msgid "Delay between frames where unspecified: "
-msgstr ""
+msgstr "Tidsmellanrum mellan bildrutor när ej specifierat: "
 
 #: plug-ins/common/gif.c:1400
 msgid " milliseconds"
-msgstr ""
+msgstr " millisekunder"
 
 #: plug-ins/common/gif.c:1411
 msgid "Frame disposal where unspecified: "
-msgstr ""
+msgstr "Bildrutehantering där ej specifierat: "
 
 #: plug-ins/common/gif.c:1421
 msgid "I don't care"
-msgstr ""
+msgstr "Jag bryr mig inte"
 
 #: plug-ins/common/gif.c:1427
 msgid "Cumulative layers (combine)"
-msgstr ""
+msgstr "Kumulativa lager (combine)"
 
 #: plug-ins/common/gif.c:1433
 msgid "One frame per layer (replace)"
-msgstr ""
+msgstr "En bildruta per lager (replace)"
 
 #: plug-ins/common/gif.c:1491
 #, c-format
 msgid "GIF: colorstobpp - Eep! too many colours: %d\n"
-msgstr ""
+msgstr "GIF: colorstobpp - Hjälp! för många färger: %d\n"
 
 #: plug-ins/common/gif.c:1507
 #, c-format
 msgid "GIF: bpptocolors - Eep! bpp==%d !\n"
-msgstr ""
+msgstr "GIF: colorstobpp - Hjälp! bpp==%d !\n"
 
 #: plug-ins/common/gifload.c:134
 msgid "loads files of Compuserve GIF file format"
-msgstr ""
+msgstr "laddar filer i Compuserves GIF-format"
 
 #: plug-ins/common/gifload.c:279
 #, c-format
 msgid "GIF: can't open \"%s\"\n"
-msgstr ""
+msgstr "GIF: kan ej öppna \"%s\"\n"
 
 #: plug-ins/common/gifload.c:294
 msgid "GIF: error reading magic number\n"
-msgstr ""
+msgstr "GIF: fel vid läsning av magiska numren\n"
 
 #: plug-ins/common/gifload.c:300
 msgid "GIF: not a GIF file\n"
-msgstr ""
+msgstr "GIF: ej en GIF-fil\n"
 
 #: plug-ins/common/gifload.c:309
 msgid "GIF: bad version number, not '87a' or '89a'\n"
-msgstr ""
+msgstr "GIF: felaktig versionsnummer, ej '87a' eller '89a'\n"
 
 #: plug-ins/common/gifload.c:315
 msgid "GIF: failed to read screen descriptor\n"
-msgstr ""
+msgstr "GIF: kunde ej läsa skärmbeskrivningen\n"
 
 #: plug-ins/common/gifload.c:331
 msgid "GIF: error reading global colormap\n"
-msgstr ""
+msgstr "GIF: fel vid läsning av globala färgkartan\n"
 
 #: plug-ins/common/gifload.c:338
 msgid "GIF: warning - non-square pixels\n"
-msgstr ""
+msgstr "GIF: varning - ej rektangulära pixlar\n"
 
 #: plug-ins/common/gifload.c:349 plug-ins/common/gifload.c:803
 msgid "GIF: EOF / read error on image data\n"
-msgstr ""
+msgstr "GIF: Filslut / läsfel på bilddatan\n"
 
 #: plug-ins/common/gifload.c:364
-msgid "GIF: OF / read error on extension function code\n"
-msgstr ""
+msgid "GIF: EOF / read error on extension function code\n"
+msgstr "GIF: EOF / läsfel på utökad funktionskod\n"
 
 #. Not a valid start character
 #: plug-ins/common/gifload.c:374
 #, c-format
 msgid "GIF: bogus character 0x%02x, ignoring\n"
-msgstr ""
+msgstr "GIF: felaktigt tecken 0x%02x, ignorerar\n"
 
 #: plug-ins/common/gifload.c:382
 msgid "GIF: couldn't read left/top/width/height\n"
-msgstr ""
+msgstr "GIF: kunde ej läsa vänster/topp/bredd/widd/höjd\n"
 
 #: plug-ins/common/gifload.c:394
 msgid "GIF: error reading local colormap\n"
-msgstr ""
+msgstr "GIF: fel vid läsning av lokal färgkarta\n"
 
 #: plug-ins/common/gifload.c:452
 msgid "GIF: bad colormap\n"
-msgstr ""
+msgstr "GIF: trasig färgkarta\n"
 
 #: plug-ins/common/gifload.c:568
 msgid "GIF: error in getting DataBlock size\n"
-msgstr ""
+msgstr "GIF: fel vid hämtning av DataBlock storlek\n"
 
 #: plug-ins/common/gifload.c:576
 msgid "GIF: error in reading DataBlock\n"
-msgstr ""
+msgstr "GIF: fel vid läsning av DataBlock\n"
 
 #: plug-ins/common/gifload.c:607
 msgid "GIF: ran off the end of by bits\n"
-msgstr ""
+msgstr "GIF: åkte utanför slutet på bitarna\n"
 
 #: plug-ins/common/gifload.c:718
 msgid "GIF: missing EOD in data stream (common occurence)"
-msgstr ""
+msgstr "GIF: saknad EOD i dataströmmen (vanligt förekommande)"
 
 #: plug-ins/common/gifload.c:735
 msgid "GIF: circular table entry BIG ERROR\n"
-msgstr ""
+msgstr "GIF: cirkulär tabellpost STORT FEL\n"
 
 #: plug-ins/common/gifload.c:809
 msgid "GIF: error while reading\n"
-msgstr ""
+msgstr "GIF: fel vid läsning\n"
 
 #: plug-ins/common/gifload.c:830
 #, c-format
 msgid "Background (%dms)"
-msgstr ""
+msgstr "Bakgrund (%dms)"
 
 #: plug-ins/common/gifload.c:877
 #, c-format
 msgid "Frame %d"
-msgstr ""
+msgstr "Bildruta %d"
 
 #: plug-ins/common/gifload.c:879
 #, c-format
 msgid "Frame %d (%dms)"
-msgstr ""
+msgstr "Bildruta %d (%dms)"
 
 #. 'don't care'
 #: plug-ins/common/gifload.c:885 plug-ins/common/gifload.c:887
 msgid " (combine)"
-msgstr ""
+msgstr " (combine)"
 
 #: plug-ins/common/gifload.c:886
 msgid " (replace)"
-msgstr ""
+msgstr " (replace)"
 
 #: plug-ins/common/gifload.c:892
 msgid " (unknown disposal)"
-msgstr ""
+msgstr " (unknown disposal)"
 
 #: plug-ins/common/gifload.c:893
 msgid ""
 "GIF: Hmm... please forward this GIF to the GIF plugin author!\n"
 "  (adam@foxbox.org)\n"
 msgstr ""
+"GIF: Hmm... var god skicka vidare denna GIF till författaren!\n"
+"  (adam@foxbox.org)\n"
 
 #: plug-ins/common/gifload.c:896
 msgid "GIF: Something got corrupted.\n"
-msgstr ""
+msgstr "GIF: Nånting blev korrupt.\n"
 
 #: plug-ins/common/gifload.c:925
 #, c-format
 msgid "GIF: reading %d by %d%s GIF image, ncols=%d\n"
-msgstr ""
+msgstr "GIF: läser %d * %d%s GIF-bild, ncols=%d\n"
 
 #: plug-ins/common/gifload.c:926
 msgid " interlaced"
-msgstr ""
+msgstr " interlaced"
 
 #: plug-ins/common/gifload.c:930
 msgid ""
 "GIF: Ouchie!  Can't handle non-alpha RGB frames.\n"
 "     Please mail the plugin author.  (adam@gimp.org)\n"
 msgstr ""
+"GIF: Ajj! Kan ej hantera icke-alfa RGB-bildrutor.\n"
+"     Var god skicka epost till insticksförfattaren.  (adam@gimp.org)\n"
 
 #: plug-ins/common/gifload.c:1022
 msgid "GIF: too much input data, ignoring extra...\n"
-msgstr ""
+msgstr "GIF: för mycket indata, ignorerar extra-skräpet...\n"
 
 #: plug-ins/common/jpeg.c:176
 msgid "loads files of the jpeg file format"
-msgstr ""
+msgstr "laddar filer i jpeg-formatet"
 
 #: plug-ins/common/jpeg.c:487
 #, c-format
 msgid "can't open \"%s\"\n"
-msgstr ""
+msgstr "kan ej öppna \"%s\"\n"
 
 #: plug-ins/common/jpeg.c:603
 #, c-format
@@ -2026,6 +2039,8 @@ msgid ""
 "don't know how to load JPEGs\n"
 "with %d color channels"
 msgstr ""
+"vet inte hur man laddar JPEG:ar\n"
+"med %d färgkanaler"
 
 #: plug-ins/common/jpeg.c:648
 #, c-format
@@ -2033,30 +2048,32 @@ msgid ""
 "unknown density unit %d\n"
 "assuming dots per inch"
 msgstr ""
+"okänd densitetsenhet %d\n"
+"antar punkter per tum"
 
 #: plug-ins/common/jpeg.c:993
 msgid "Save as Jpeg"
-msgstr ""
+msgstr "Spara som Jpeg"
 
 #: plug-ins/common/jpeg.c:1026
 msgid "Quality"
-msgstr ""
+msgstr "Kvalitet"
 
 #: plug-ins/common/jpeg.c:1042
 msgid "Smoothing"
-msgstr ""
+msgstr "Gör mjukare"
 
 #: plug-ins/common/jpeg.c:1058
 msgid "Optimize"
-msgstr ""
+msgstr "Optimera"
 
 #: plug-ins/common/jpeg.c:1066
 msgid "Progressive"
-msgstr ""
+msgstr "Progressiv"
 
 #: plug-ins/common/jpeg.c:1079
 msgid "Image Comments"
-msgstr ""
+msgstr "Bildkommentar"
 
 #: plug-ins/common/mail.c:212
 msgid "pipe files to uuencode then mail them"
@@ -2129,19 +2146,19 @@ msgstr ""
 
 #: plug-ins/common/png.c:149
 msgid "Loads files in PNG file format"
-msgstr ""
+msgstr "Laddar filer i PNG-formatet"
 
 #: plug-ins/common/png.c:150
 msgid "This plug-in loads Portable Network Graphics (PNG) files."
-msgstr ""
+msgstr "Detta insticksprogram laddar Portabel NätverksGrafik (PNG) filer."
 
 #: plug-ins/common/png.c:818
 msgid "PNG Options"
-msgstr ""
+msgstr "PNG inställningar"
 
 #: plug-ins/common/png.c:863
 msgid "Compression level"
-msgstr ""
+msgstr "Kompressionsnivå"
 
 #: plug-ins/print/print-escp2.c:209 plug-ins/print/print-pcl.c:232
 #: plug-ins/print/print-ps.c:345
