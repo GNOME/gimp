@@ -95,6 +95,8 @@ static double  non_gui_fade_out;
 static double  non_gui_gradient_length;
 static int     non_gui_gradient_type;
 static double  non_gui_incremental;
+static GUnit   non_gui_fade_unit;
+static GUnit   non_gui_gradient_unit;
 
 
 /*  forward function declarations  */
@@ -407,7 +409,7 @@ paintbrush_paint_func (PaintCore    *paint_core,
 	    paintbrush_options->gradient_length / 100;
 	  break;
 	default:
-	  unit_factor = gimp_unit_get_factor (paintbrush_options->fade_unit);
+	  unit_factor = gimp_unit_get_factor (paintbrush_options->gradient_unit);
 	  gradient_length = paintbrush_options->gradient_length * 
 	    MAX (gdisp->gimage->xresolution, gdisp->gimage->yresolution) / unit_factor;
 	  break;
@@ -594,11 +596,51 @@ static void *
 paintbrush_non_gui_paint_func (PaintCore    *paint_core,
 			       GimpDrawable *drawable,
 			       int           state)
-{	
+{
+  GImage *gimage;
+  double fade_out;
+  double gradient_length;	
+  double unit_factor;
+
+  if (! (gimage = drawable_gimage (drawable)))
+    return NULL;
+
+  switch (non_gui_fade_unit)
+    {
+    case UNIT_PIXEL:
+      fade_out = non_gui_fade_out;
+      break;
+    case UNIT_PERCENT:
+      fade_out = MAX (gimage->width, gimage->height) * 
+	non_gui_fade_out / 100;
+      break;
+    default:
+      unit_factor = gimp_unit_get_factor (non_gui_fade_unit);
+      fade_out = non_gui_fade_out * 
+	MAX (gimage->xresolution, gimage->yresolution) / unit_factor;
+      break;
+    }
+  
+  switch (non_gui_gradient_unit)
+    {
+    case UNIT_PIXEL:
+      gradient_length = non_gui_gradient_length;
+      break;
+    case UNIT_PERCENT:
+      gradient_length = MAX (gimage->width, gimage->height) * 
+	non_gui_gradient_length / 100;
+      break;
+    default:
+      unit_factor = gimp_unit_get_factor (non_gui_gradient_unit);
+      gradient_length = non_gui_gradient_length * 
+	MAX (gimage->xresolution, gimage->yresolution) / unit_factor;
+      break;
+    }
+
   paintbrush_motion (paint_core,drawable, 
 		     &non_gui_pressure_options,
-		     non_gui_fade_out,
-		     (non_gui_gradient_length) ? exp (non_gui_gradient_length / 10) : 0,
+		     fade_out,
+		     gradient_length,
 		     non_gui_incremental, 
 		     non_gui_gradient_type);
 
@@ -614,8 +656,11 @@ paintbrush_non_gui_default (GimpDrawable *drawable,
   double             fade_out        = PAINTBRUSH_DEFAULT_FADE_OUT;
   gboolean           incremental     = PAINTBRUSH_DEFAULT_INCREMENTAL;
   int                use_gradient    = PAINTBRUSH_DEFAULT_USE_GRADIENT;
+  int                use_fade        = PAINTBRUSH_DEFAULT_USE_FADE;
   double             gradient_length = PAINTBRUSH_DEFAULT_GRADIENT_LENGTH;
   int                gradient_type   = PAINTBRUSH_DEFAULT_GRADIENT_TYPE;
+  GUnit              fade_unit       = PAINTBRUSH_DEFAULT_FADE_UNIT;
+  GUnit              gradient_unit   = PAINTBRUSH_DEFAULT_GRADIENT_UNIT;
   int                i;
 
   if (options)
@@ -625,10 +670,16 @@ paintbrush_non_gui_default (GimpDrawable *drawable,
       use_gradient    = options->use_gradient;
       gradient_length = options->gradient_length;
       gradient_type   = options->gradient_type;
+      use_fade        = options->use_fade;
+      fade_unit       = options->fade_unit;
+      gradient_unit   = options->gradient_unit;
     }
 
   if (use_gradient == 0)
     gradient_length = 0.0;
+
+  if (use_fade == 0)
+    fade_out = 0.0;
 
   /* Hmmm... PDB paintbrush should have gradient type added to it!*/
   /* thats why the code below is duplicated.
@@ -640,6 +691,8 @@ paintbrush_non_gui_default (GimpDrawable *drawable,
       non_gui_gradient_length = gradient_length;
       non_gui_gradient_type   = gradient_type;
       non_gui_incremental     = incremental;
+      non_gui_fade_unit       = fade_unit;
+      non_gui_gradient_unit   = gradient_unit;
 
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
