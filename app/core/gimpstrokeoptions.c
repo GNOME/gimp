@@ -110,7 +110,7 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                  0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_WIDTH,
                                    "width", NULL,
-                                   0.0, 2000.0, 5.0,
+                                   0.0, 2000.0, 6.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
 				 "unit", NULL,

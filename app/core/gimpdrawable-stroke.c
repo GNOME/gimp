@@ -96,10 +96,8 @@ gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
   seg = 0;
   n_points = 0;
 
-  /* we offset all coordinates by 0.5 to align the brush with the path */
-
-  points[n_points].x = (gdouble) (stroke_segs[0].x1 + offset_y + 0.5);
-  points[n_points].y = (gdouble) (stroke_segs[0].y1 + offset_y + 0.5);
+  points[n_points].x = (gdouble) (stroke_segs[0].x1 + offset_y);
+  points[n_points].y = (gdouble) (stroke_segs[0].y1 + offset_y);
 
   n_points++;
 
@@ -110,8 +108,8 @@ gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
              stroke_segs[seg].y1 != -1 ||
              stroke_segs[seg].y2 != -1)
         {
-          points[n_points].x = (gdouble) (stroke_segs[seg].x1 + offset_x + 0.5);
-          points[n_points].y = (gdouble) (stroke_segs[seg].y1 + offset_y + 0.5);
+          points[n_points].x = (gdouble) (stroke_segs[seg].x1 + offset_x);
+          points[n_points].y = (gdouble) (stroke_segs[seg].y1 + offset_y);
 
           n_points++;
           seg++;
@@ -127,8 +125,8 @@ gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
       n_points = 0;
       seg++;
 
-      points[n_points].x = (gdouble) (stroke_segs[seg].x1 + offset_x + 0.5);
-      points[n_points].y = (gdouble) (stroke_segs[seg].y1 + offset_y + 0.5);
+      points[n_points].x = (gdouble) (stroke_segs[seg].x1 + offset_x);
+      points[n_points].y = (gdouble) (stroke_segs[seg].y1 + offset_y);
 
       n_points++;
     }
