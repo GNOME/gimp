@@ -5,17 +5,18 @@
 # and stuff is saved.
 GIMPDIR = _gimp$(GIMP_VER)
 
-TOP = ../..
-
-include $(TOP)/build/win32/make.mingw
-
 ################################################################
 
 # Nothing much configurable below
 
+TOP = ../..
+
 GIMP_VER = 1.1
 
-INCLUDES =  -I .. $(GLIB_CFLAGS) $(GTK_CFLAGS) $(INTL_CFLAGS)
+include ../build/win32/make.mingw
+
+INCLUDES =  -I .. 
+DEPCFLAGS = $(GLIB_CFLAGS) $(GTK_CFLAGS) $(INTL_CFLAGS)
 DEFINES = -DGIMPDIR=\"$(GIMPDIR)\"
 
 all : \

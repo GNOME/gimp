@@ -6,18 +6,19 @@
 # will pick it up.
 GIMP = /install/gimp
 
-TOP = ../..
-
-include $(TOP)/build/win32/make.mingw
-
 ################################################################
 
 # Nothing much configurable below
 
+TOP = ../..
+
 GIMP_VER = 1.1
 
+include ../build/win32/make.mingw
+
 DEFINES = -DMODULE_COMPILATION 
-INCLUDES = -I . -I .. $(GLIB_CFLAGS) $(GTK_CFLAGS) $(INTL_CFLAGS)
+INCLUDES = -I . -I .. 
+DEPCFLAGS = $(GLIB_CFLAGS) $(GTK_CFLAGS) $(INTL_CFLAGS)
 
 LDFLAGS = -s
 

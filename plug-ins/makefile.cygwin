@@ -5,13 +5,19 @@
 # Various parts of this file are used when makeing from the plug-ins directory,
 # and when building individual plug-ins and the three plug-in libraries.
 
-INSTALL = install
-
 # This is what I use as installation target, from where the installer-builder
 # will pick it up.
-GIMP = /install/gimp
+DEST = /install/gimp
 
-BIN = $(GIMP)/plug-ins
+ifndef GIMPTOP
+GIMPTOP = ..
+endif
+
+TOP = ../..
+
+GIMP_VER = 1.1
+
+include $(GIMPTOP)/build/win32/make.mingw
 
 ifndef LIBRARY
 ifndef PLUGIN
@@ -53,7 +59,7 @@ install : libs-install common-plugins-install separate-plugins-install data-inst
 unofficial:
 	for d in $(UNOFFICIAL); do $(MAKE) -f makefile.cygwin sub-one-separate DIR=$$d TARGET=install; done
 
-clean : libs-clean common-plugins-clean separate-plugins-clean
+clean:: libs-clean common-plugins-clean separate-plugins-clean
 
 libs-all :
 	$(MAKE) -f makefile.cygwin sub-libs TARGET=all
@@ -65,7 +71,7 @@ libs-clean :
 	$(MAKE) -f makefile.cygwin sub-libs TARGET=clean
 
 sub-libs:
-	cd libgck/gck; $(MAKE) -f ../../makefile.cygwin TOP=../../.. LIBRARY=gck OBJECTS="gckcolor.o" $(TARGET)
+	cd libgck/gck; $(MAKE) -f ../../makefile.cygwin GIMPTOP=../.. TOP=../$(TOP) LIBRARY=gck OBJECTS="gckcolor.o" $(TARGET)
 
 
 
@@ -84,7 +90,7 @@ sub-common-plugins :
 	for d in $(COMMON1) $(COMMON2) $(COMMON3) $(COMMON4) $(COMMON5); do $(MAKE) -f makefile.cygwin sub-one-common DIR=$$d TARGET=$(TARGET); done
 
 sub-one-common :
-	cd common; $(MAKE) -f ../makefile.cygwin TOP=../.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
+	cd common; $(MAKE) -f ../makefile.cygwin GIMPTOP=../.. TOP=../$(TOP) PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
 
 
 
@@ -102,45 +108,45 @@ sub-separate-plugins : sub-script-fu sub-gap
 
 # We must handle script-fu separately because of the dash, sigh
 sub-script-fu :
-	cd script-fu; $(MAKE) -f ../makefile.cygwin TOP=../.. PLUGIN=script-fu EXTRA_script_fu=1 $(TARGET)
+	cd script-fu; $(MAKE) -f ../makefile.cygwin GIMPTOP=../.. TOP=../$(TOP) PLUGIN=script-fu EXTRA_script_fu=1 $(TARGET)
 
 # Also GAP is special
 sub-gap :
-	cd gap; $(MAKE) -f ../makefile.cygwin TOP=../.. PLUGIN=gap_filter EXTRA_gap_filter=1 $(TARGET)
-	cd gap; $(MAKE) -f ../makefile.cygwin TOP=../.. PLUGIN=gap_plugins EXTRA_gap_plugins=1 $(TARGET)
+	cd gap; $(MAKE) -f ../makefile.cygwin GIMPTOP=../.. TOP=../$(TOP) PLUGIN=gap_filter EXTRA_gap_filter=1 $(TARGET)
+	cd gap; $(MAKE) -f ../makefile.cygwin GIMPTOP=../.. TOP=../$(TOP) PLUGIN=gap_plugins EXTRA_gap_plugins=1 $(TARGET)
 
 
 sub-one-separate :
-	cd $(DIR); $(MAKE) -f ../makefile.cygwin TOP=../.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
+	cd $(DIR); $(MAKE) -f ../makefile.cygwin GIMPTOP=../.. TOP=../$(TOP) PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
 
 
 data-install : gap-data-install gflare-data-install gimpressionist-data-install guash-data-install script-fu-data-install
 
 gap-data-install:
-	-mkdir $(GIMP)/scripts
-	$(INSTALL) gap/*.scm $(GIMP)/scripts
+	-mkdir $(DEST)/scripts
+	$(INSTALL) gap/*.scm $(DEST)/scripts
 	
 gflare-data-install:
-	-mkdir $(GIMP)/gflare
-	-$(INSTALL) gflare/gflares/* $(GIMP)/gflare
-	-rm $(GIMP)/gflare/Makefile.am
+	-mkdir $(DEST)/gflare
+	-$(INSTALL) gflare/gflares/* $(DEST)/gflare
+	-rm $(DEST)/gflare/Makefile.am
 
 gimpressionist-data-install :
-	-mkdir $(GIMP)/gimpressionist $(GIMP)/gimpressionist/Brushes $(GIMP)/gimpressionist/Paper $(GIMP)/gimpressionist/Presets
-	$(INSTALL) gimpressionist/Brushes/*.p?m $(GIMP)/gimpressionist/Brushes
-	$(INSTALL) gimpressionist/Paper/*.p?m $(GIMP)/gimpressionist/Paper
-	-$(INSTALL) gimpressionist/Presets/* $(GIMP)/gimpressionist/Presets
-	-rm $(GIMP)/gimpressionist/Presets/Makefile.am
+	-mkdir $(DEST)/gimpressionist $(DEST)/gimpressionist/Brushes $(DEST)/gimpressionist/Paper $(DEST)/gimpressionist/Presets
+	$(INSTALL) gimpressionist/Brushes/*.p?m $(DEST)/gimpressionist/Brushes
+	$(INSTALL) gimpressionist/Paper/*.p?m $(DEST)/gimpressionist/Paper
+	-$(INSTALL) gimpressionist/Presets/* $(DEST)/gimpressionist/Presets
+	-rm $(DEST)/gimpressionist/Presets/Makefile.am
 
 guash-data-install:
 
 script-fu-data-install:
-	-mkdir $(GIMP)/scripts
-	$(INSTALL) script-fu/scripts/*.scm $(GIMP)/scripts
-	rm $(GIMP)/scripts/test-sphere.scm
-	$(INSTALL) script-fu/scripts/*.jpg $(GIMP)/scripts
-	for d in FractalExplorer/fractalexplorer-examples/*; do if [ -f $$d ]; then $(INSTALL) $$d $(GIMP)/fractalexplorer; fi; done
-	rm $(GIMP)/fractalexplorer/Makefile.am
+	-mkdir $(DEST)/scripts
+	$(INSTALL) script-fu/scripts/*.scm $(DEST)/scripts
+	rm $(DEST)/scripts/test-sphere.scm
+	$(INSTALL) script-fu/scripts/*.jpg $(DEST)/scripts
+	for d in FractalExplorer/fractalexplorer-examples/*; do if [ -f $$d ]; then $(INSTALL) $$d $(DEST)/fractalexplorer; fi; done
+	rm $(DEST)/fractalexplorer/Makefile.am
 
 endif # ifndef MODULE
 endif # ifndef PLUGIN
@@ -563,32 +569,11 @@ ifdef EXTRA_winsnap
 HAVE_RESOURCE = YES
 endif
 
-GIMP_VER = 1.1
-GTK_VER = 1.3
-GLIB_VER = 1.3
+PLUGINDIR = $(GIMPTOP)/plug-ins
 
-GTK = $(TOP)/../gtk+
-GLIB = $(TOP)/../glib
-INTL = $(TOP)/../intl
-
-# Location of libpng sources
-PNG = $(TOP)/../libpng-1.0.3
-# Location of tiff-3.4 sources
-TIFF = $(TOP)/../tiff-v3.4/libtiff
-# Location of jpeg-6b sources
-JPEG = $(TOP)/../jpeg-6b
-# and zlib
-ZLIB = $(TOP)/../zlib-1.1.3
-# and libmpeg
-MPEG = $(TOP)/../mpeg_lib-1.3.0
-
-PLUGINDIR = $(TOP)/plug-ins
-
-OPTIMIZE = -O
-
-CC = gcc $(OPTIMIZE) -mno-cygwin -mpentium -fnative-struct
-
-CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)/libgck -I$(GLIB) -I$(GTK)/gdk -I$(GTK) -I$(INTL)
+DEFINES = -DHAVE_CONFIG_H $(EXTRACFLAGS) 
+INCLUDES = -I . -I $(GIMPTOP) -I $(PLUGINDIR) -I $(PLUGINDIR)/libgck 
+DEPCFLAGS = $(GLIB_CFLAGS) $(GTK_CFLAGS) $(INTL_CFLAGS)
 
 ifdef PLUGIN
 
@@ -597,7 +582,7 @@ ifdef PLUGIN
 all : $(PLUGIN).exe
 
 install : all
-	$(INSTALL) $(PLUGIN).exe $(BIN)
+	$(INSTALL) $(PLUGIN).exe $(DEST)/plug-ins
 
 ifndef OBJECTS
 OBJECTS = $(PLUGIN).o
@@ -662,13 +647,7 @@ OBJECTS = $(MODULE).o
 endif
 
 $(MODULE).$(MODULE_EXT) : $(OBJECTS) $(MODULE).def
-	$(CC) $(CFLAGS) -mwindows -s -o $@ $(OBJECTS) $(LDFLAGS) $(EXTRALIBS) -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) -L $(GTK)\gtk -lgtk-$(GTK_VER) -L $(GLIB) -lgmodule-$(GLIB_VER) -lglib-$(GLIB_VER)
+	$(CC) $(CFLAGS) -mwindows -s -o $@ $(OBJECTS) $(LDFLAGS) $(EXTRALIBS) -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) $(GTK_LIBS) $(GLIB_LIBS)
 endif
-
-.c.o :
-	$(CC) $(CFLAGS) -c $<
-
-clean :
-	-rm *.o *.a *.exe
 
 endif # ifndef FROMPLUGINSDIR
