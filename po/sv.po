@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.21\n"
-"POT-Creation-Date: 2000-09-27 12:25-0700\n"
-"PO-Revision-Date: 2000-09-08 17:50+0200\n"
+"POT-Creation-Date: 2000-09-27 22:26+0200\n"
+"PO-Revision-Date: 2000-09-27 22:22+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 #: app/about_dialog.c:207
 #, c-format
 msgid "Version %s brought to you by"
-msgstr "Version %s presenterat av"
+msgstr "Version %s presenteras av"
 
 #: app/about_dialog.c:257
 msgid "Please visit http://www.gimp.org/ for more info"
@@ -56,7 +56,7 @@ msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
 #: app/app_procs.c:302 app/app_procs.c:304
 msgid "brought to you by"
-msgstr "presenterat av"
+msgstr "presenteras av"
 
 #: app/app_procs.c:373
 msgid "GIMP Startup"
@@ -133,7 +133,7 @@ msgstr "Avbryt"
 
 #: app/bezier_select.c:476
 msgid "Bezier path already closed."
-msgstr "Bezier-slinga redan stängd."
+msgstr "Bezierslinga redan stängd."
 
 #: app/bezier_select.c:497
 msgid "Corrupt curve"
@@ -581,7 +581,7 @@ msgstr "Indexerad"
 
 #: app/channels_dialog.c:2494
 msgid "New Channel Options"
-msgstr "Ny kanal - inställningar"
+msgstr "Inställningar för nya kanaler"
 
 #. The name entry hbox, label and entry
 #: app/channels_dialog.c:2527 app/channels_dialog.c:2690
@@ -870,11 +870,11 @@ msgstr "Använd svart/vit (1-bit) palett"
 
 #: app/convert.c:658
 msgid "Dither Options"
-msgstr "Dither-alternativ"
+msgstr "Ditheralternativ"
 
 #: app/convert.c:671
 msgid "No Color Dithering"
-msgstr "Ingen färg-dithering"
+msgstr "Ingen färgdithering"
 
 #: app/convert.c:685
 msgid "Positioned Color Dithering"
@@ -882,11 +882,11 @@ msgstr "Dithering per färgposition"
 
 #: app/convert.c:699
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
-msgstr "Floyd-Steinberg färg-dithering (minskad färgblödning)"
+msgstr "Floyd-Steinberg färgdithering (minskad färgblödning)"
 
 #: app/convert.c:712
 msgid "Floyd-Steinberg Color Dithering (Normal)"
-msgstr "Floyd-Steinberg färg-dithering (normal)"
+msgstr "Floyd-Steinberg färgdithering (normal)"
 
 #: app/convert.c:726
 msgid "Enable Dithering of Transparency"
@@ -913,7 +913,7 @@ msgstr "Välj egen palett"
 
 #: app/convolve.c:171
 msgid "Convolve Type"
-msgstr "Convolve-typ"
+msgstr "Convolvetyp"
 
 #: app/convolve.c:175
 msgid "Blur"
@@ -960,7 +960,7 @@ msgstr "Beskär: 0 × 0"
 #. create the info dialog
 #: app/crop.c:1058
 msgid "Crop & Resize Information"
-msgstr "Beskär och ändra storlek - information"
+msgstr "Information om Beskär och ändra storlek"
 
 #. add the information fields
 #: app/crop.c:1074
@@ -985,7 +985,7 @@ msgstr "Från markering"
 
 #: app/crop.c:1121
 msgid "Auto Shrink"
-msgstr "Auto-krymp"
+msgstr "Autokrymp"
 
 #. The shell and main vbox
 #: app/curves.c:393 app/curves.c:553 app/tools.c:1161
@@ -1132,7 +1132,7 @@ msgstr "Hård kant"
 #. the anti_erase toggle
 #: app/eraser.c:118 app/paint_funcs.c:102
 msgid "Anti Erase"
-msgstr "Anti-sudda"
+msgstr "Antisudda"
 
 #: app/errorconsole.c:170
 #, c-format
@@ -1145,11 +1145,11 @@ msgstr "Kan inte spara, inget markerat!"
 
 #: app/errorconsole.c:191
 msgid "Save error log to file..."
-msgstr "Spara fel-logg till fil..."
+msgstr "Spara fellogg till fil..."
 
 #: app/errorconsole.c:273
 msgid "GIMP Error Console"
-msgstr "GIMP fel-konsoll"
+msgstr "GIMP felkonsoll"
 
 #: app/errorconsole.c:279
 msgid "Clear"
@@ -1257,7 +1257,7 @@ msgstr "Spara bild"
 
 #: app/fileops.c:527
 msgid "Save Options"
-msgstr "Spara - inställningar"
+msgstr "Sparainställningar"
 
 #: app/fileops.c:536
 msgid "Determine File Type:"
@@ -1352,7 +1352,7 @@ msgstr "(ingen information)"
 
 #: app/fileops.c:1400
 msgid "(Thumbnail saving is disabled)"
-msgstr "(tumnagels-sparning är avslaget)"
+msgstr "(tumnagelssparning är avslaget)"
 
 #: app/fileops.c:1404
 msgid "(Could not write thumbnail file)"
@@ -1527,7 +1527,7 @@ msgstr "Ingen markering att stryka!"
 
 #: app/gimpbrush.c:273
 msgid "Error in GIMP brush file...aborting."
-msgstr "Fel i GIMP pensel-fil...avbryter."
+msgstr "Fel i GIMP-penselfil...avbryter."
 
 #: app/gimpbrush.c:280 app/patterns.c:212
 msgid "Unnamed"
@@ -1535,12 +1535,12 @@ msgstr "Namnlös"
 
 #: app/gimpbrush.c:298
 msgid "GIMP brush file appears to be truncated."
-msgstr "GIMP pensel-filen verkar vara trunkerad."
+msgstr "GIMP-penselfilen verkar vara trunkerad."
 
 #: app/gimpbrush.c:301
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"\n"
-msgstr "Okänd pensel-format version #%d i \"%s\"\n"
+msgstr "Okänt penselformat version #%d i \"%s\"\n"
 
 #: app/gimpbrushlist.c:188 app/gimpbrushlist.c:197
 #, c-format
@@ -1557,7 +1557,7 @@ msgid ""
 "Warning: Failed to load pixmap brush\n"
 "\"%s\""
 msgstr ""
-"Varning: Misslyckades med att ladda pixmap-pensel\n"
+"Varning: Misslyckades med att ladda pixmappensel\n"
 "\"%s\""
 
 #: app/gimpbrushlist.c:215
@@ -1566,7 +1566,7 @@ msgid ""
 "Warning: Failed to load pixmap pipe\n"
 "\"%s\""
 msgstr ""
-"Varning: Misslyckades med att ladda pixmap-rör\n"
+"Varning: Misslyckades med att ladda pixmaprör\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:309
@@ -1583,7 +1583,7 @@ msgstr ""
 
 #: app/gimpbrushpipe.c:466
 msgid "Failed to load pixmap brush."
-msgstr "Misslyckades med att ladda pixmap-pensel."
+msgstr "Misslyckades med att ladda pixmappensel."
 
 #: app/gimpdrawable.c:171
 msgid "Can't fill unknown image type."
@@ -1767,7 +1767,7 @@ msgid ""
 "Messages are redirected to stderr."
 msgstr ""
 "VARNING:\n"
-"För många öppna fel-dialoger.\n"
+"För många öppna meddelandedialoger.\n"
 "Meddelanden dirigeras om till stderr."
 
 #: app/gimpui.c:117
@@ -1883,7 +1883,7 @@ msgstr "HSV (medurs nyans)"
 
 #: app/gradient.c:792
 msgid "Gradient Editor"
-msgstr "Färgskale-editor"
+msgstr "Färgskaleeditor"
 
 #: app/gradient.c:823 app/gradient_select.c:207 app/paintbrush.c:266
 #: app/palette.c:3154
@@ -1898,7 +1898,7 @@ msgstr "Namn"
 #. Frame & vbox for gradient functions
 #: app/gradient.c:869
 msgid "Gradient Ops"
-msgstr "Färgskale-op"
+msgstr "Färgskaleop"
 
 #. Buttons for gradient functions
 #: app/gradient.c:877
@@ -2257,7 +2257,7 @@ msgstr "M"
 
 #: app/hue_saturation.c:442
 msgid "Hue / Lightness / Saturation Adjustments"
-msgstr "Nyans- / Ljusstyrka- / Mättnad-justeringar"
+msgstr "Nyans- / Ljusstyrka- / Mättnadsjusteringar"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:454
@@ -2409,7 +2409,7 @@ msgstr "Skalningsratio:"
 
 #: app/info_window.c:282
 msgid "Display Type:"
-msgstr "Display-typ:"
+msgstr "Displaytyp:"
 
 #: app/info_window.c:284
 msgid "Visual Class:"
@@ -2490,7 +2490,7 @@ msgstr "Interna procedurer"
 
 #: app/internal_procs.c:68
 msgid "Brush UI"
-msgstr "Pensel UI"
+msgstr "Penselanvändargränssnitt"
 
 #: app/internal_procs.c:74
 msgid "Channel"
@@ -2515,7 +2515,7 @@ msgstr "GDisplay-procedurer"
 
 #: app/internal_procs.c:89
 msgid "Drawable procedures"
-msgstr "Rityte-procedurer"
+msgstr "Rityteprocedurer"
 
 #: app/internal_procs.c:92
 msgid "Edit procedures"
@@ -2535,11 +2535,11 @@ msgstr "Gimprc-procedurer"
 
 #: app/internal_procs.c:107
 msgid "Gradient UI"
-msgstr "Färgskale UI"
+msgstr "Färgskaleanvändargränssnitt"
 
 #: app/internal_procs.c:110
 msgid "Guide procedures"
-msgstr "Hjälplinje-procedurer"
+msgstr "Hjälplinjeprocedurer"
 
 #: app/internal_procs.c:113
 msgid "Help procedures"
@@ -2570,7 +2570,7 @@ msgstr "Palett"
 
 #: app/internal_procs.c:131
 msgid "Parasite procedures"
-msgstr "Parasit-procedurer"
+msgstr "Parasitprocedurer"
 
 #: app/internal_procs.c:134 app/lc_dialog.c:179
 msgid "Paths"
@@ -2578,7 +2578,7 @@ msgstr "Slingor"
 
 #: app/internal_procs.c:137
 msgid "Pattern UI"
-msgstr "Mönster UI"
+msgstr "Mönsteranvändargränssnitt"
 
 #: app/internal_procs.c:143
 msgid "Plug-in"
@@ -2614,7 +2614,7 @@ msgstr "Kan inte använda invert på indexerade bilder."
 
 #: app/invert.c:51
 msgid "Invert operation failed."
-msgstr "Invertera-operation misslyckades."
+msgstr "Inverteringsoperation misslyckades."
 
 #: app/layer.c:259
 msgid "Zero width or height layers not allowed."
@@ -2719,7 +2719,7 @@ msgstr "Flytande markering"
 
 #: app/layers_dialog.c:3476
 msgid "New Layer Options"
-msgstr "Nytt lager - inställningar"
+msgstr "Inställningar för nytt lager"
 
 #. The name label and entry
 #: app/layers_dialog.c:3505
@@ -2745,7 +2745,7 @@ msgstr "Lagernamn:"
 
 #: app/layers_dialog.c:3753
 msgid "Add Mask Options"
-msgstr "Addera mask - inställningar"
+msgstr "Inställningar för addera mask"
 
 #. The radio frame and box
 #: app/layers_dialog.c:3771
@@ -2769,20 +2769,20 @@ msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
 msgstr ""
-"Ej giltig bredd eller höjd.\n"
+"Inte giltig bredd eller höjd.\n"
 "Båda måste vara positiva."
 
 #: app/layers_dialog.c:4013
 msgid "Layer Merge Options"
-msgstr "Lagersammanfogning - inställningar"
+msgstr "Inställningar för lagersammanfogning"
 
 #: app/layers_dialog.c:4038
 msgid "Final, Merged Layer should be:"
-msgstr "Det slutgiltiga, sammanfogade lagret skall vara:"
+msgstr "Det slutgiltiga, sammanfogade lagret ska vara:"
 
 #: app/layers_dialog.c:4039
 msgid "Final, Anchored Layer should be:"
-msgstr "Det slutgiltiga, ankrade lagret skall vara:"
+msgstr "Det slutgiltiga, ankrade lagret ska vara:"
 
 #: app/layers_dialog.c:4044
 msgid "Expanded as necessary"
@@ -4010,7 +4010,7 @@ msgstr "Nfärger"
 
 #: app/palette.c:2210
 msgid "Palette Ops"
-msgstr "Palett-operationer"
+msgstr "Palettoperationer"
 
 #. The "Import" frame
 #: app/palette.c:2241 app/palette.c:3096 app/palette.c:3110
@@ -4138,7 +4138,7 @@ msgstr "öppnande av %s misslyckades: %s\n"
 
 #: app/paths_dialog.c:2047
 msgid "Load/Store Bezier Curves"
-msgstr "Ladda/Spara Bezier-kurvor"
+msgstr "Ladda/Spara Bezierkurvor"
 
 #: app/paths_dialog.c:2087
 msgid "Load Path"
@@ -4188,7 +4188,7 @@ msgstr "Perspektiv..."
 
 #: app/plug_in.c:330
 msgid "Resource configuration"
-msgstr "Resurs-konfiguration"
+msgstr "Resurskonfiguration"
 
 #: app/plug_in.c:337
 msgid "Plug-ins"
@@ -4331,7 +4331,7 @@ msgstr "Ny fil"
 
 #: app/preferences_dialog.c:1515
 msgid "Default Image Size and Unit"
-msgstr "Standardbildstorlek och mått"
+msgstr "Standardbildstorlek och -mått"
 
 #: app/preferences_dialog.c:1529
 msgid "Width"
@@ -4343,7 +4343,7 @@ msgstr "Höjd"
 
 #: app/preferences_dialog.c:1561
 msgid "Default Image Resolution and Resolution Unit"
-msgstr "Standardbildstorlek och måttenhet"
+msgstr "Standardbildstorlek och -måttenhet"
 
 #: app/preferences_dialog.c:1588 app/preferences_dialog.c:2382
 msgid "dpi"
@@ -4375,15 +4375,15 @@ msgstr "Transparens"
 
 #: app/preferences_dialog.c:1711
 msgid "Light Checks"
-msgstr "Ljusa kontroller"
+msgstr "Ljusa rutor"
 
 #: app/preferences_dialog.c:1712
 msgid "Mid-Tone Checks"
-msgstr "Mid-ton kontroller"
+msgstr "Mellanmörka rutor"
 
 #: app/preferences_dialog.c:1713
 msgid "Dark Checks"
-msgstr "Mörka kontroller"
+msgstr "Mörka rutor"
 
 #: app/preferences_dialog.c:1714
 msgid "White Only"
@@ -4409,7 +4409,7 @@ msgstr "Liten"
 #: app/preferences_dialog.c:1728 app/preferences_dialog.c:1820
 #: app/preferences_dialog.c:1834
 msgid "Medium"
-msgstr "Medium"
+msgstr "Mellan"
 
 #: app/preferences_dialog.c:1729 app/preferences_dialog.c:1821
 #: app/preferences_dialog.c:1835
@@ -4418,7 +4418,7 @@ msgstr "Stor"
 
 #: app/preferences_dialog.c:1733
 msgid "Check Size:"
-msgstr "Kontrollstorlek:"
+msgstr "Rutstorlek:"
 
 #: app/preferences_dialog.c:1736
 msgid "8-Bit Displays"
@@ -4426,7 +4426,7 @@ msgstr "8-bitars skärmar"
 
 #: app/preferences_dialog.c:1757
 msgid "Minimum Number of Colors:"
-msgstr "Minst antal färger"
+msgstr "Minsta antal färger:"
 
 #: app/preferences_dialog.c:1760
 msgid "Install Colormap"
@@ -4438,7 +4438,7 @@ msgstr "Rotera färgkarta"
 
 #: app/preferences_dialog.c:1818
 msgid "Tiny"
-msgstr "Mini"
+msgstr "Jätteliten"
 
 #: app/preferences_dialog.c:1822
 msgid "Huge"
@@ -4446,11 +4446,11 @@ msgstr "Jättestor"
 
 #: app/preferences_dialog.c:1826
 msgid "Preview Size:"
-msgstr "Förvisningsstorlek:"
+msgstr "Förhandsvisningsstorlek:"
 
 #: app/preferences_dialog.c:1839
 msgid "Nav Preview Size:"
-msgstr "Förvisningsstorlek navigering:"
+msgstr "Förhandsvisningsstorlek för navigering:"
 
 #: app/preferences_dialog.c:1849
 msgid "Recent Documents List Size:"
@@ -4545,15 +4545,15 @@ msgstr "Standard"
 
 #: app/preferences_dialog.c:2022
 msgid "Show zoom percentage"
-msgstr "Visa zoom-procent"
+msgstr "Visa zoomprocent"
 
 #: app/preferences_dialog.c:2027
 msgid "Show zoom ratio"
-msgstr "Visa zoom-ratio"
+msgstr "Visa zoomratio"
 
 #: app/preferences_dialog.c:2032
 msgid "Show reversed zoom ratio"
-msgstr "Visa omvänd zoom-ratio"
+msgstr "Visa omvänd zoomratio"
 
 #: app/preferences_dialog.c:2043
 msgid "Image Title Format:"
@@ -4595,7 +4595,7 @@ msgstr "Verktygsinställningar"
 
 #: app/preferences_dialog.c:2103
 msgid "Paint Options"
-msgstr "Pensel - inställningar"
+msgstr "Penselinställningar"
 
 #: app/preferences_dialog.c:2106
 msgid "Use Global Paint Options"
@@ -4607,7 +4607,7 @@ msgstr "Hitta kontinuerliga ytor"
 
 #: app/preferences_dialog.c:2134
 msgid "Default Threshold:"
-msgstr "Standard tröskelvärde:"
+msgstr "Standardtröskelvärde:"
 
 #: app/preferences_dialog.c:2143 app/preferences_dialog.c:2145
 msgid "Environment"
@@ -4627,7 +4627,7 @@ msgstr "Ångrasteg:"
 
 #: app/preferences_dialog.c:2195 app/user_install.c:1106
 msgid "Tile Cache Size:"
-msgstr "Bildblock-cachestorlek:"
+msgstr "Bildblockscachestorlek:"
 
 #: app/preferences_dialog.c:2206
 msgid "Number of Processors to Use:"
@@ -4703,7 +4703,7 @@ msgstr "Enheter"
 
 #: app/preferences_dialog.c:2325
 msgid "Save Device Status on Exit"
-msgstr "Spara enhets-status vid avslutning"
+msgstr "Spara enhetsstatus vid avslutning"
 
 #: app/preferences_dialog.c:2336 app/preferences_dialog.c:2338
 msgid "Monitor"
@@ -4732,31 +4732,31 @@ msgstr "Manuellt:"
 
 #: app/preferences_dialog.c:2456 app/preferences_dialog.c:2458
 msgid "Directories"
-msgstr "Bibliotek"
+msgstr "Kataloger"
 
 #: app/preferences_dialog.c:2475
 msgid "Temp Dir:"
-msgstr "Temporärt:"
+msgstr "Tempkatalog:"
 
 #: app/preferences_dialog.c:2475
 msgid "Select Temp Dir"
-msgstr "Välj temp-bibliotek"
+msgstr "Välj tempkatalog"
 
 #: app/preferences_dialog.c:2476
 msgid "Swap Dir:"
-msgstr "Swap:"
+msgstr "Swapkatalog:"
 
 #: app/preferences_dialog.c:2476 app/user_install.c:1126
 msgid "Select Swap Dir"
-msgstr "Välj swap-bibliotek"
+msgstr "Välj swapkatalog"
 
 #: app/preferences_dialog.c:2512
 msgid "Brushes Directories"
-msgstr "Penselbibliotek"
+msgstr "Penselkataloger"
 
 #: app/preferences_dialog.c:2514
 msgid "Select Brushes Dir"
-msgstr "Välj pensel-bibliotek"
+msgstr "Välj penselkatalog"
 
 #: app/preferences_dialog.c:2516
 msgid "Generated Brushes"
@@ -4764,35 +4764,35 @@ msgstr "Genererade penslar"
 
 #: app/preferences_dialog.c:2516
 msgid "Generated Brushes Directories"
-msgstr "Genererade penslar - bibliotek"
+msgstr "Genererade penselkataloger"
 
 #: app/preferences_dialog.c:2518
 msgid "Select Generated Brushes Dir"
-msgstr "Välj bibliotek för genererade penslar"
+msgstr "Välj katalog för genererade penslar"
 
 #: app/preferences_dialog.c:2520
 msgid "Patterns Directories"
-msgstr "Mönsterbibliotek"
+msgstr "Mönsterkataloger"
 
 #: app/preferences_dialog.c:2522
 msgid "Select Patterns Dir"
-msgstr "Välj mönster-bibliotek"
+msgstr "Välj mönsterkatalog"
 
 #: app/preferences_dialog.c:2524
 msgid "Palettes Directories"
-msgstr "Palettbibliotek"
+msgstr "Palettkataloger"
 
 #: app/preferences_dialog.c:2526
 msgid "Select Palettes Dir"
-msgstr "Välj palett-bibliotek"
+msgstr "Välj palettkatalog"
 
 #: app/preferences_dialog.c:2528
 msgid "Gradients Directories"
-msgstr "Färgskalebibliotek"
+msgstr "Färgskalekataloger"
 
 #: app/preferences_dialog.c:2530
 msgid "Select Gradients Dir"
-msgstr "Välj färgskale-bibliotek"
+msgstr "Välj färgskalekatalog"
 
 #: app/preferences_dialog.c:2532
 msgid "Plug-Ins"
@@ -4800,11 +4800,11 @@ msgstr "Insticksprogram"
 
 #: app/preferences_dialog.c:2532
 msgid "Plug-Ins Directories"
-msgstr "Insticksprogram-bibliotek"
+msgstr "Insticksprogramkataloger"
 
 #: app/preferences_dialog.c:2534
 msgid "Select Plug-Ins Dir"
-msgstr "Välj insticksprograms-bibliotek"
+msgstr "Välj insticksprogramkatalog"
 
 #: app/preferences_dialog.c:2536
 msgid "Modules"
@@ -4812,11 +4812,11 @@ msgstr "Moduler"
 
 #: app/preferences_dialog.c:2536
 msgid "Modules Directories"
-msgstr "Modulbibliotek"
+msgstr "Modulkataloger"
 
 #: app/preferences_dialog.c:2538
 msgid "Select Modules Dir"
-msgstr "Välj modul-bibliotek"
+msgstr "Välj modulkatalog"
 
 #: app/procedural_db.c:43
 msgid "Procedural Database"
@@ -4825,12 +4825,12 @@ msgstr "Procedurell databas"
 #: app/procedural_db.c:137 app/procedural_db.c:149
 #, c-format
 msgid "PDB calling error %s not found"
-msgstr "PDB anropsfel, hittade inte %s"
+msgstr "PDB-anropsfel, hittade inte %s"
 
 #: app/procedural_db.c:167
 #, c-format
 msgid "PDB calling error %s"
-msgstr "PDB anropsfel %s"
+msgstr "PDB-anropsfel %s"
 
 #: app/procedural_db.c:243
 #, c-format
@@ -4859,7 +4859,7 @@ msgstr "Temporär procedur"
 
 #: app/qmask.c:270
 msgid "Edit Qmask Attributes"
-msgstr "Ändra Snabbmask-attribut"
+msgstr "Ändra Snabbmaskattribut"
 
 #. The opacity scale
 #: app/qmask.c:298
@@ -5002,7 +5002,7 @@ msgstr "Luta - information"
 
 #: app/shear_tool.c:76
 msgid "Shear Magnitude X:"
-msgstr "Luta-magnitud X:"
+msgstr "Lutamagnitud X:"
 
 #: app/shear_tool.c:344
 msgid "Shearing..."
@@ -5028,7 +5028,7 @@ msgstr "Använd Dynamisk Text"
 #: app/text_tool.c:609
 #, c-format
 msgid "Font '%s' not found."
-msgstr "Hittade inte typsnittet \"%s\""
+msgstr "Hittade inte typsnittet \"%s\"."
 
 #: app/text_tool.c:628
 #, c-format
@@ -5115,7 +5115,7 @@ msgstr "Luddig markering"
 
 #: app/tool_options.c:153
 msgid "Bezier Selection"
-msgstr "Bezier-markering"
+msgstr "Beziermarkering"
 
 #: app/tool_options.c:155 app/tools.c:288
 msgid "Intelligent Scissors"
@@ -5179,7 +5179,7 @@ msgstr "Bleka eller bränna"
 
 #: app/tool_options.c:489
 msgid "Smudge Tool"
-msgstr "Smeta-verktyget"
+msgstr "Smetaverktyget"
 
 #: app/tool_options.c:604
 msgid "Incremental"
@@ -5251,15 +5251,15 @@ msgstr "Markerar kontinuerliga ytor"
 
 #: app/tools.c:260
 msgid "Bezier Select"
-msgstr "Bezier-markering"
+msgstr "Beziermarkering"
 
 #: app/tools.c:261
 msgid "/Tools/Select Tools/Bezier Select"
-msgstr "/Verktyg/Markeringsverktyg/Bezier-markering"
+msgstr "/Verktyg/Markeringsverktyg/Beziermarkering"
 
 #: app/tools.c:266
 msgid "Select regions using Bezier curves"
-msgstr "Markera med Bezier-kurvor"
+msgstr "Markera med Bezierkurvor"
 
 #: app/tools.c:289
 msgid "/Tools/Select Tools/Intelligent Scissors"
@@ -5405,7 +5405,7 @@ msgstr "Klona"
 
 #: app/tools.c:765
 msgid "/Tools/Paint Tools/Clone"
-msgstr "/Verktyg/Måla-verktyg/Klona"
+msgstr "/Verktyg/Målaverktyg/Klona"
 
 #: app/tools.c:770
 msgid "Paint using patterns or image regions"
@@ -5553,7 +5553,7 @@ msgid ""
 "layers that contain layer masks."
 msgstr ""
 "Transformationer fungerar inte på\n"
-"lager som innehåller lager-masker."
+"lager som innehåller lagermasker."
 
 #: app/transform_core.c:1604
 msgid "Transformation"
@@ -5803,7 +5803,7 @@ msgstr "div"
 #: app/undo_history.c:427 app/undo_history.c:751
 #, c-format
 msgid "Undo History: %s"
-msgstr "Ångre-historia: %s"
+msgstr "Ångringshistorik: %s"
 
 #: app/undo_history.c:483
 msgid "[ base image ]"
@@ -5868,7 +5868,7 @@ msgstr ""
 "Dessa program söks efter under körning och informationen\n"
 "om dess funktionalitet och modifieringstider lagras\n"
 "i denna fil.  Denna fil är endast avsedd för GIMP och bör\n"
-"ej modifieras."
+"inte modifieras."
 
 #: app/user_install.c:174
 msgid ""
@@ -5918,9 +5918,9 @@ msgid ""
 "wide GIMP brushes installation when searching for\n"
 "brushes."
 msgstr ""
-"Detta är ett bibliotek som kan användas för att spara\n"
-"dina egna penslar.  Standard gimprc kontrollerar detta\n"
-"bibliotek utöver systemets pensel-bibliotek när den\n"
+"Detta är en underkatalog som kan användas för att spara\n"
+"dina egna penslar. Standard gimprc kontrollerar denna\n"
+"underkatalog utöver systemets penselkataloger när den\n"
 "söker efter penslar."
 
 #: app/user_install.c:205
@@ -5930,10 +5930,9 @@ msgid ""
 "gimprc file checks this subdirectory when searching\n"
 "for generated brushes."
 msgstr ""
-"Detta är ett bibliotek som kan användas för att spara\n"
-"penslar som är skapade med pensel-editorn.  Standard gimprc\n"
-"kontrollerar detta bibliotek utöver systemets pensel-bibliotek\n"
-"när den söker efter penslar."
+"Detta är en underkatalog som kan användas för att spara\n"
+"penslar som är skapade med penseleditorn.  Standard gimprc\n"
+"kontrollerar denna underkatalog när den söker efter penslar."
 
 #: app/user_install.c:212
 msgid ""
@@ -5943,10 +5942,10 @@ msgid ""
 "wide GIMP gradients installation when searching\n"
 "for gradients."
 msgstr ""
-"Detta är ett bibliotek som kan användas för att lagra\n"
-"användar-definerade färgskalor.  Standard gimprc-filen\n"
-"söker i detta bibliotek utöver systemets färgskale-\n"
-"bibliotek när den söker efter färgskalor."
+"Detta är en underkatalog som kan användas för att lagra\n"
+"användardefinerade färgskalor.  Standard-gimprc-filen\n"
+"söker i denna underkatalog utöver systemets färgskale-\n"
+"katalog när den söker efter färgskalor."
 
 #: app/user_install.c:220
 msgid ""
@@ -5959,9 +5958,9 @@ msgid ""
 "palettes during GIMP execution to persist across\n"
 "sessions."
 msgstr ""
-"Detta är ett bibliotek som kan användas för att lagra\n"
-"användar-definerade paletter. Standard gimprc-filen\n"
-"söker endast i detta bibliotek (ej systemets installation)\n"
+"Detta är en underkatalog som kan användas för att lagra\n"
+"användardefinerade paletter. Standard-gimprc-filen\n"
+"söker endast i denna underkatalog (inte systemets installation)\n"
 "när den söker efter paletter.  Systemets paletter kopieras\n"
 "hit vid installation för att kunna modifieras vid senare\n"
 "tillfälle. Detta gör att du kan spara paletter mellan sessioner."
@@ -5974,10 +5973,10 @@ msgid ""
 "wide GIMP patterns installation when searching for\n"
 "patterns."
 msgstr ""
-"Detta är ett bibliotek som kan användas för att lagra\n"
-"användar-definerade mönster.  Standard gimprc-filen\n"
-"söker i detta bibliotek utöver systemets mönster-\n"
-"bibliotek när den söker efter mönster."
+"Detta är en underkatalog som kan användas för att lagra\n"
+"användardefinerade mönster.  Standard-gimprc-filen\n"
+"söker i denna underkatalog utöver systemets mönster-\n"
+"katalog när den söker efter mönster."
 
 #: app/user_install.c:239
 msgid ""
@@ -5987,11 +5986,11 @@ msgid ""
 "this subdirectory in addition to the systemwide\n"
 "GIMP plug-in directories when searching for plug-ins."
 msgstr ""
-"Detta är ett bibliotek som kan användas för att lagra\n"
-"användar-skapade, temporära eller på annat sätt icke-\n"
-"system-stödda insticksprogram.  Standard gimprc-filen\n"
-"söker i detta bibliotek utöver systemets insticksprogram-\n"
-"bibliotek när den söker efter insticksprogram."
+"Detta är en underkatalog som kan användas för att lagra\n"
+"användarskapade, temporära eller på annat sätt icke-\n"
+"systemstödda insticksprogram.  Standard-gimprc-filen\n"
+"söker i denna underkatalog utöver systemets insticksprogram-\n"
+"katalog när den söker efter insticksprogram."
 
 #: app/user_install.c:247
 msgid ""
@@ -6001,11 +6000,11 @@ msgid ""
 "in addition to the system-wide GIMP module directory\n"
 "when searching for modules to load when initializing."
 msgstr ""
-"Detta är ett bibliotek som kan användas för att lagra\n"
-"användar-skapade, temporära eller på annat sätt icke-\n"
-"system-stödda DLL-moduler. Standard gimprc-filen\n"
-"söker i detta bibliotek utöver systemets modul-\n"
-"bibliotek när den söker efter moduler att ladda vid start."
+"Detta är en underkatalog som kan användas för att lagra\n"
+"användarskapade, temporära eller på annat sätt icke-\n"
+"systemstödda DLL-moduler. Standard-gimprc-filen\n"
+"söker i denna underkatalog utöver systemets modul-\n"
+"katalog när den söker efter moduler att ladda vid start."
 
 #: app/user_install.c:255
 msgid ""
@@ -6014,10 +6013,10 @@ msgid ""
 "checks this subdirectory in addition to the systemwide\n"
 "GIMP scripts subdirectory when searching for scripts"
 msgstr ""
-"Detta är ett bibliotek som kan användas för att lagra\n"
-"användar-skapade och installerade script.  Standard \n"
-"gimprc-filen söker i detta bibliotek utöver systemets\n"
-"script-bibliotek när den söker efter script."
+"Detta är en underkatalog som kan användas för att lagra\n"
+"användarskapade och installerade skript.  Standard \n"
+"gimprc-filen söker i denna underkatalog utöver systemets\n"
+"skriptkatalog när den söker efter skript."
 
 #: app/user_install.c:262
 msgid ""
@@ -6027,10 +6026,10 @@ msgid ""
 "of the form: gimp<#>.<#>.  These files are useless across\n"
 "GIMP sessions and can be destroyed with impunity."
 msgstr ""
-"Detta är ett bibliotek som används av GIMP för att\n"
-"temporärt lagra ångra-buffertar för att minska minnesanvändningen.\n"
-"Om GIMP avslutas onormalt kan filer lämnas kvar i detta\n"
-"bibliotek i formen: gimp<#>.<#>. Dessa filer är värdelösa mellan\n"
+"Detta är en underkatalog som används av GIMP för att\n"
+"temporärt lagra ångrabuffertar för att minska minnesanvändningen.\n"
+"Om GIMP avslutas onormalt kan filer lämnas kvar i denna\n"
+"katalog i formen: gimp<#>.<#>. Dessa filer är värdelösa mellan\n"
 "olika GIMP-sessioner och kan tas bort."
 
 #: app/user_install.c:270
@@ -6038,16 +6037,16 @@ msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
 msgstr ""
-"Detta är ett bibliotek som används för att lagra parameter-\n"
-"filer för kurv-verktyget."
+"Detta är en underkatalog som används för att lagra parameter-\n"
+"filer för kurvverktyget."
 
 #: app/user_install.c:275
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
-"Detta är ett bibliotek som används för att lagra parameter-\n"
-"filer för nivå-verktyget."
+"Detta är en underkatalog som används för att lagra parameter-\n"
+"filer för nivåverktyget."
 
 #: app/user_install.c:280
 msgid ""
@@ -6057,10 +6056,10 @@ msgid ""
 "in addition to the systemwide GIMP FractalExplorer\n"
 "installation when searching for fractals."
 msgstr ""
-"Detta är ett bibliotek som kan användas för att lagra\n"
-"användar-definerade fraktaler för att användas med\n"
+"Detta är en underkatalog som kan användas för att lagra\n"
+"användardefinerade fraktaler för att användas med\n"
 "FractalExplorer-insticksprogrammet. Standard gimprc-\n"
-"filen söker i detta bibliotek utöver systemets\n"
+"filen söker i denna underkatalog utöver systemets\n"
 "FractalExplorer-installation när den söker efter fraktaler."
 
 #: app/user_install.c:288
@@ -6071,10 +6070,10 @@ msgid ""
 "addition to the systemwide GIMP GFig installation\n"
 "when searching for gfig figures."
 msgstr ""
-"Detta är ett bibliotek som kan användas för att lagra\n"
-"användar-definerade figurer för att användas med gfig-\n"
-"insticksprogrammet.  Standard gimprc-filen söker i\n"
-"detta bibliotek utöver systemets gfig-installation\n"
+"Detta är en underkatalog som kan användas för att lagra\n"
+"användardefinerade figurer för att användas med gfig-\n"
+"insticksprogrammet.  Standard-gimprc-filen söker i\n"
+"denna underkatalog utöver systemets gfig-installation\n"
 "när den söker efter figurer."
 
 #: app/user_install.c:296
@@ -6085,10 +6084,10 @@ msgid ""
 "addition to the systemwide GIMP GFlares installation\n"
 "when searching for gflares."
 msgstr ""
-"Detta är ett bibliotek som kan användas för att lagra\n"
-"användar-definerade gflares för att användas med gflare-\n"
-"insticksprogrammet.  Standard gimprc-filen söker i\n"
-"detta bibliotek utöver systemets gflare-installation\n"
+"Detta är en underkatalog som kan användas för att lagra\n"
+"användardefinerade gflares för att användas med gflare-\n"
+"insticksprogrammet.  Standard-gimprc-filen söker i\n"
+"denna underkatalog utöver systemets gflare-installation\n"
 "när den söker efter gflares."
 
 #: app/user_install.c:304
@@ -6099,10 +6098,10 @@ msgid ""
 "in addition to the systemwide GIMP Gimpressionist\n"
 "installation when searching for data."
 msgstr ""
-"Detta är ett bibliotek som kan användas för att lagra\n"
-"användar-definerade gflares för att användas med gflare-\n"
-"insticksprogrammet.  Standard gimprc-filen söker i\n"
-"detta bibliotek utöver systemets gflare-installation\n"
+"Detta är en underkatalog som kan användas för att lagra\n"
+"användardefinerade gflares för att användas med gflare-\n"
+"insticksprogrammet.  Standard-gimprc-filen söker i\n"
+"denna underkatalog utöver systemets gflare-installation\n"
 "när den söker efter gflares."
 
 #: app/user_install.c:361
@@ -6185,11 +6184,11 @@ msgstr ""
 
 #: app/user_install.c:736
 msgid "Personal GIMP Directory"
-msgstr "Personligt GIMP-bibliotek"
+msgstr "Personlig GIMP-katalog"
 
 #: app/user_install.c:737
 msgid "Click \"Continue\" to create your personal GIMP directory."
-msgstr "Tryck på \"Fortsätt\" för att skapa ditt personliga GIMP-bibliotek."
+msgstr "Tryck på \"Fortsätt\" för att skapa din personliga GIMP-katalog."
 
 #: app/user_install.c:756
 #, c-format
@@ -6197,7 +6196,7 @@ msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
 "%s needs to be created."
 msgstr ""
-"För att korrekt installera GIMP måste underbiblioteket\n"
+"För att kunna installera GIMP korrekt måste underkatalogen\n"
 "%s skapas."
 
 #: app/user_install.c:762
@@ -6206,8 +6205,8 @@ msgid ""
 "Click on one of the files or subdirectories in the tree\n"
 "to get more information about the selected item."
 msgstr ""
-"Detta bibliotek kommer att innehålla ett antal viktiga filer.\n"
-"Klicka på någon av filerna eller underbiblioteken i trädet för\n"
+"Denna underkatalog kommer att innehålla ett antal viktiga filer.\n"
+"Klicka på någon av filerna eller underkatalogerna i trädet för\n"
 "att få mer information om den valda posten."
 
 #: app/user_install.c:846
@@ -6288,8 +6287,8 @@ msgid ""
 "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP använder en begränsad mängd minne för att lagra bild-data, så kallad\n"
-"\"bildblock-cache\". Du bör justera det så det får plats i minnet. Tänk\n"
+"GIMP använder en begränsad mängd minne för att lagra bilddata, så kallad\n"
+"\"bildblockscache\". Du bör justera det så det får plats i minnet. Tänk\n"
 "på mängden minne som används av andra körande program."
 
 #: app/user_install.c:1117
@@ -6299,14 +6298,14 @@ msgid ""
 "with enough free space (several hundred MB). On a UNIX system, you\n"
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
-"All bild- och ångra-data som inte ryms i bildblock-cachen kommer att\n"
-"skrivas till en swap-fil. Denna fil bör ligga på ett lokalt filsystem med\n"
+"All bild- och ångradata som inte ryms i bildblockscachen kommer att\n"
+"skrivas till en swapfil. Denna fil bör ligga på ett lokalt filsystem med\n"
 "tillräckligt mycket ledigt utrymme (flera 100 MB). På ett UNIX-system så\n"
-"kan du vilja sätta systemets temp-katalog (\"/tmp\" eller \"/var/tmp\")."
+"kan du vilja sätta systemets tempkatalog (\"/tmp\" eller \"/var/tmp\")."
 
 #: app/user_install.c:1131
 msgid "Swap Directory:"
-msgstr "Swap-bibliotek:"
+msgstr "Swapkatalog:"
 
 #: app/user_install.c:1166
 msgid ""
@@ -6340,7 +6339,7 @@ msgstr ""
 #: app/xcf.c:382
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "XCF-fel: ej stödd XCF-filversion %d påträffad"
+msgstr "XCF-fel: inte stödd XCF-filversion %d påträffad"
 
 #: app/xcf.c:1814
 msgid ""
@@ -6390,7 +6389,7 @@ msgstr "Triangel"
 
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
-msgstr "Färgväljare i vattenfärg-stil som insticksbar färgväljare"
+msgstr "Färgväljare i vattenfärgsstil som insticksbar färgväljare"
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
 msgid "Watercolor"
@@ -6398,56 +6397,4 @@ msgstr "Vattenfärg"
 
 #: modules/colorsel_water.c:640
 msgid "Color History"
-msgstr "Färghistoria"
-
-#~ msgid "attach parasite to image"
-#~ msgstr "koppla parasit till bild"
-
-#~ msgid "detach parasite from image"
-#~ msgstr "koppla loss parasit från bilden"
-
-#~ msgid "From X Server"
-#~ msgstr "från X-servern"
-
-#~ msgid ""
-#~ "Plug-In crashed: %s\n"
-#~ "(%s)"
-#~ msgstr ""
-#~ "Insticksprogram krashade: %s\n"
-#~ "(%s)"
-
-#~ msgid "/Tools/Magnify"
-#~ msgstr "/Verktyg/Förstora"
-
-#~ msgid "This file cannot be moved up."
-#~ msgstr "Den här filen kan inte flyttas ner."
-
-#~ msgid "There's no selection to move up."
-#~ msgstr "Finns inget markerat att flytta upp."
-
-#~ msgid "This file cannot be moved down."
-#~ msgstr "Den här filen kan inte flyttas upp."
-
-#~ msgid "There's no selection to move down."
-#~ msgstr "Finns inget markerat att flytta ner."
-
-#~ msgid "There's no selection to remove."
-#~ msgstr "Det finns ingen markering att ta bort."
-
-#~ msgid "Open a file"
-#~ msgstr "Öppna en fil"
-
-#~ msgid "Close the Document Index"
-#~ msgstr "Stäng dokumentindex"
-
-#~ msgid "GTK successfully started"
-#~ msgstr "GTK startade lyckartat"
-
-#~ msgid "Angle"
-#~ msgstr "Vinkel"
-
-#~ msgid "Pressure"
-#~ msgstr "Tryck"
-
-#~ msgid "/Edit/Fill"
-#~ msgstr "/Redigera/Fyll"
+msgstr "Färghistorik"
