@@ -599,13 +599,8 @@ unit_editor_dialog (void)
 
       col = gtk_tree_view_column_new_with_attributes (gettext (columns[i].title),
                                                       gtk_cell_renderer_text_new (),
-                                                      
-                                                      "text", i,
-
-                                                      (GTK_CHECK_VERSION (2,2,0) ?
-                                                       "cell-background-gdk" : NULL),
-                                                      BG_COLOR,
-
+                                                      "text",                i,
+                                                      "cell-background-gdk", BG_COLOR,
                                                       NULL);
 
       gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
