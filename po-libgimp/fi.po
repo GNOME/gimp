@@ -2,46 +2,45 @@
 # Copyright (C) 1999-2000 Free Software Foundation, Inc.
 # Ville Hautamäki <villeh@cs.joensuu.fi>, 2000
 # Tor Lillqvist <tml@iki.fi>, 2000
-#
+# Mikko Paananen <mikko at ipi.fi>, 2004
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1\n"
+"Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
-"PO-Revision-Date: 2000-04-08 00:26+0300\n"
-"Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
+"POT-Creation-Date: 2004-03-19 02:28+0200\n"
+"PO-Revision-Date: 2004-03-18 02:16+0200\n"
+"Last-Translator: Mikko Paananen <mikko at ipi.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpbrushmenu.c:132
-#, fuzzy
 msgid "Brush Selection"
-msgstr "Mittayksikön valinta"
+msgstr "Siveltimen valinta"
 
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
-msgstr ""
+msgstr "Selaa..."
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layers"
-msgstr "ei pysty käsittelemään tasoja"
+msgstr "%s ei pysty käsittelemään tasoja"
 
 #: libgimp/gimpexport.c:216 libgimp/gimpexport.c:225 libgimp/gimpexport.c:234
 msgid "Merge Visible Layers"
 msgstr "Yhdistä näkyvät tasot"
 
 #: libgimp/gimpexport.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "ei pysty käsittelemään tasoja"
+msgstr "%s ei pysty käsittelemään tason siirtymää, kokoa tai läpinäkyvyyttä"
 
 #: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "pystyy käyttämään tasoja ainoastaan animaation ruutuina"
+msgstr "%s pystyy käyttämään tasoja ainoastaan animaation ruutuina"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Save as Animation"
@@ -52,41 +51,41 @@ msgid "Flatten Image"
 msgstr "Yhdistä kuva"
 
 #: libgimp/gimpexport.c:260
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle transparency"
-msgstr "ei pysty käsittelemään läpinäkyvyyttä"
+msgstr "%s ei pysty käsittelemään läpinäkyvyyttä"
 
 #: libgimp/gimpexport.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer masks"
-msgstr "ei pysty käsittelemään tasoja"
+msgstr "%s ei pysty käsittelemään tasos maskeja"
 
 #: libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
-msgstr ""
+msgstr "Sovella tason maskeja"
 
 #: libgimp/gimpexport.c:278
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB images"
-msgstr "käsittelee ainoastaan täysvärikuvia"
+msgstr "%s käsittelee ainoastaan täysvärikuvia"
 
 #: libgimp/gimpexport.c:279 libgimp/gimpexport.c:317 libgimp/gimpexport.c:326
 msgid "Convert to RGB"
 msgstr "Muunna täysvärikuvaksi"
 
 #: libgimp/gimpexport.c:287
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale images"
-msgstr "käsittelee ainoastaan harmaasävykuvia"
+msgstr "%s käsittelee ainoastaan harmaasävykuvia"
 
 #: libgimp/gimpexport.c:288 libgimp/gimpexport.c:317 libgimp/gimpexport.c:338
 msgid "Convert to Grayscale"
-msgstr "Muunna harmaasävyksi"
+msgstr "Muunna harmaasävyihin"
 
 #: libgimp/gimpexport.c:296
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle indexed images"
-msgstr "käsittelee ainoastaan indeksoituja kuvia"
+msgstr "%s käsittelee ainoastaan indeksoituja kuvia"
 
 #: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
 msgid ""
@@ -94,41 +93,40 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Muunna indeksoiduksi käyttäen oletusasetuksia\n"
-"(Tee se käsin jos haluat käyttää muita kuin oletuksia)"
+"(Tee käsin jos haluat käyttää muita kuin oletuksia)"
 
 #: libgimp/gimpexport.c:306
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "käsittelee ainoastaan täysväri- tai indeksoituja kuvia"
+msgstr "%s käsittelee ainoastaan mustavalkokuvia"
 
 #: libgimp/gimpexport.c:307
-#, fuzzy
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
 "Muunna indeksoiduksi käyttäen oletusasetuksia\n"
-"(Tee se käsin jos haluat käyttää muita kuin oletuksia)"
+"(Tee käsin jos haluat säätää tulosta)"
 
 #: libgimp/gimpexport.c:316
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "käsittelee ainoastaan täysväri- tai harmaasävykuvia"
+msgstr "%s käsittelee ainoastaan täysväri- tai harmaasävykuvia"
 
 #: libgimp/gimpexport.c:325
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "käsittelee ainoastaan täysväri- tai indeksoituja kuvia"
+msgstr "%s käsittelee ainoastaan täysväri- tai indeksoituja kuvia"
 
 #: libgimp/gimpexport.c:335
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "käsittelee ainoastaan harmaasävy- tai indeksoituja kuvia"
+msgstr "%s käsittelee ainoastaan harmaasävy- tai indeksoituja kuvia"
 
 #: libgimp/gimpexport.c:346
-#, fuzzy, c-format
+#, c-format
 msgid "%s needs an alpha channel"
-msgstr "vaatii että kuvassa on alfakanava"
+msgstr "%s vaatii että kuvassa on alfakanava"
 
 #: libgimp/gimpexport.c:347
 msgid "Add Alpha Channel"
@@ -136,33 +134,32 @@ msgstr "Lisää alfakanava"
 
 #: libgimp/gimpexport.c:382
 msgid "Confirm Save"
-msgstr ""
+msgstr "Vahvista tallennus"
 
 #: libgimp/gimpexport.c:388
 msgid "Confirm"
-msgstr ""
+msgstr "Vahvista"
 
 #: libgimp/gimpexport.c:457
 msgid "Export File"
-msgstr "Tiedoston ulosvienti"
+msgstr "Tiedoston vienti"
 
 #: libgimp/gimpexport.c:461
-#, fuzzy
 msgid "_Ignore"
 msgstr "Ohita"
 
 #: libgimp/gimpexport.c:463
-#, fuzzy
 msgid "_Export"
 msgstr "Vie"
 
 #. the headline
 #: libgimp/gimpexport.c:485
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "Kuvaasi pitää ennen tallennusta muokata ulosvientiä varten koska:"
+msgstr ""
+"Kuvasi pitää viedä tallennusta %s:ksi muokata ulosvientiä varten koska:"
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
@@ -174,6 +171,8 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Olet tallentamassa tason maskia nimellä %s\n"
+"Tämä ei tallenna näkyviä tasoja."
 
 #: libgimp/gimpexport.c:671
 #, c-format
@@ -181,25 +180,24 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Olet tallentamassa kanavaa (tallennettu valintana) nimellä %s\n"
+"Tämä ei tallenna näkyviä tasoja."
 
 #: libgimp/gimpfontmenu.c:89
-#, fuzzy
 msgid "Font Selection"
-msgstr "Mittayksikön valinta"
+msgstr "Kirjasimen valinta"
 
 #: libgimp/gimpgradientmenu.c:103
-#, fuzzy
 msgid "Gradient Selection"
-msgstr "Mittayksikön valinta"
+msgstr "Väriliu'un valinta"
 
 #: libgimp/gimpmenu.c:407
 msgid "None"
-msgstr ""
+msgstr "Ei mitään"
 
 #: libgimp/gimppatternmenu.c:115
-#, fuzzy
 msgid "Pattern Selection"
-msgstr "Mittayksikön valinta"
+msgstr "Kuvion valinta"
 
 #: libgimp/gimpunitcache.c:57
 msgid "percent"
@@ -207,195 +205,192 @@ msgstr "prosenttia"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(Kelpaamaton unicode merkkijono)"
 
 #: libgimpbase/gimputils.c:244
-#, fuzzy, c-format
+#, c-format
 msgid "%d Bytes"
-msgstr "tavuja"
+msgstr "%d tavua"
 
 #: libgimpbase/gimputils.c:249
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: libgimpbase/gimputils.c:253
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: libgimpbase/gimputils.c:257
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: libgimpbase/gimputils.c:264
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: libgimpbase/gimputils.c:268
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: libgimpbase/gimputils.c:272
-#, fuzzy, c-format
+#, c-format
 msgid "%d MB"
-msgstr "tavuja"
+msgstr "%d MB"
 
 #: libgimpbase/gimputils.c:279
 #, c-format
 msgid "%.2f GB"
-msgstr ""
+msgstr "%.2f GB"
 
 #: libgimpbase/gimputils.c:283
 #, c-format
 msgid "%.1f GB"
-msgstr ""
+msgstr "%.1f GB"
 
 #: libgimpbase/gimputils.c:287
-#, fuzzy, c-format
+#, c-format
 msgid "%d GB"
-msgstr "tavuja"
+msgstr "%d GB"
 
 #: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr ""
+msgstr "Ladataan moduli: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
 #: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
 #: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr ""
+msgstr "Modulin '%s' latausvirhe: %s"
 
 #: libgimpmodule/gimpmodule.c:283
 #, c-format
 msgid "Skipping module: '%s'\n"
-msgstr ""
+msgstr "Ohitetaan moduli '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
-msgstr ""
+msgstr "Modulivirhe"
 
 #: libgimpmodule/gimpmodule.c:425
 msgid "Loaded"
-msgstr ""
+msgstr "Ladattu"
 
 #: libgimpmodule/gimpmodule.c:426
 msgid "Load failed"
-msgstr ""
+msgstr "Lataus epäonnistui"
 
 #: libgimpmodule/gimpmodule.c:427
 msgid "Not loaded"
-msgstr ""
+msgstr "Ei ladattu"
 
 #: libgimpthumb/gimpthumb-utils.c:196
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr ""
+msgstr "Ei voinut luoda esikatselukuville kansiota '%s'."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
-#, fuzzy
 msgid "/_Foreground Color"
-msgstr "/Käytä edustaväriä"
+msgstr "/Edustaväri"
 
 #: libgimpwidgets/gimpcolorbutton.c:95
-#, fuzzy
 msgid "/_Background Color"
-msgstr "/Käytä taustaväriä"
+msgstr "/Taustaväri"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
 msgid "/Blac_k"
-msgstr ""
+msgstr "/Musta"
 
 #: libgimpwidgets/gimpcolorbutton.c:100
 msgid "/_White"
-msgstr ""
+msgstr "/Valkoinen"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
-msgstr ""
+msgstr "Asteikot"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
-msgstr ""
+msgstr "_H"
 
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
 msgid "_S"
-msgstr ""
+msgstr "_S"
 
 #: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
 msgid "_V"
-msgstr ""
+msgstr "_V"
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
 msgid "_R"
-msgstr ""
+msgstr "_R"
 
 #: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
 msgid "_G"
-msgstr ""
+msgstr "_G"
 
 #: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: libgimpwidgets/gimpcolorscales.c:170
 msgid "_A"
-msgstr ""
+msgstr "_A"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
-msgstr ""
+msgstr "Sävy"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
 #: modules/cdisplay_proof.c:323
 msgid "Saturation"
-msgstr ""
+msgstr "Kylläisyys"
 
 #: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
-msgstr ""
+msgstr "Arvo"
 
 #: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
-msgstr ""
+msgstr "Punainen"
 
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
-msgstr ""
+msgstr "Vihreä"
 
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
-msgstr ""
+msgstr "Sininen"
 
 #: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
-msgstr ""
+msgstr "HTML-kielen heksadesimaaliarvo"
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
-msgstr ""
+msgstr "Heksana:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
-msgstr ""
+msgstr "Nykyinen:"
 
 #: libgimpwidgets/gimpcolorselection.c:225
 msgid "Old:"
-msgstr ""
+msgstr "Vanha:"
 
 #: libgimpwidgets/gimpfileentry.c:350
-#, fuzzy
 msgid "Select Folder"
-msgstr "Valitse tiedosto"
+msgstr "Valitse kansio"
 
 #: libgimpwidgets/gimpfileentry.c:364
 msgid "Select File"
@@ -403,88 +398,95 @@ msgstr "Valitse tiedosto"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
-msgstr "kitotavuja"
+msgstr "kilotavua"
 
 #: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
-msgstr "megatavuja"
+msgstr "megatavua"
 
 #: libgimpwidgets/gimpmemsizeentry.c:236
-#, fuzzy
 msgid "GigaBytes"
-msgstr "megatavuja"
+msgstr "gigatavua"
+
+#: libgimpwidgets/gimppatheditor.c:243
+msgid "Writable"
+msgstr "Kirjoitettavissa"
+
+#: libgimpwidgets/gimppatheditor.c:252
+msgid "Folder"
+msgstr "Kansio"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
+"Napsauta värivalitsinta, sen jälkeen napsauta missä tahansa näytöllä "
+"valitaksesi värin."
 
 #: libgimpwidgets/gimpstock.c:113
-#, fuzzy
 msgid "Anchor"
-msgstr "tuuma"
+msgstr "Ankkuri"
 
 #: libgimpwidgets/gimpstock.c:114
-#, fuzzy
 msgid "_Duplicate"
-msgstr "pica"
+msgstr "Kahdenna"
 
 #: libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
-msgstr ""
+msgstr "Muokkaa"
 
 #: libgimpwidgets/gimpstock.c:116
 msgid "Linked"
-msgstr ""
+msgstr "Linkitetty"
 
 #: libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
-msgstr ""
+msgstr "Liitä uutena"
 
 #: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
-msgstr ""
+msgstr "Liitä johonkin"
 
 #: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
-msgstr ""
+msgstr "_Nollaa"
 
 #: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
-msgstr ""
+msgstr "Näkyvä"
 
 #: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "Kirjainvälistys"
 
 #: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "Riviväli"
 
 #: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
-msgstr ""
+msgstr "Muuta _kokoa"
 
 #: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
-msgstr ""
+msgstr "_Skaalaa"
 
 #: libgimpwidgets/gimpstock.c:263
 msgid "Crop"
-msgstr ""
+msgstr "R_ajaa"
 
 #: libgimpwidgets/gimpstock.c:280
 msgid "_Transform"
-msgstr ""
+msgstr "Muunna"
 
 #: libgimpwidgets/gimpstock.c:283
 msgid "_Rotate"
-msgstr ""
+msgstr "_Pyöritä"
 
 #: libgimpwidgets/gimpstock.c:285
 msgid "_Shear"
-msgstr ""
+msgstr "_Väännä"
 
 #: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
@@ -503,178 +505,172 @@ msgid "Factor"
 msgstr "Kerroin"
 
 #: libgimpwidgets/gimpwidgets.c:1271
-#, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Jos \"Aika\"-näppäin ei ole valittu, käytetään tätä arvoa satunnaislukujen "
-"siemenenä. Tämä mahdollistaa näennäisesti satunnaisen toiminnon toiston "
-"samanlaisena"
+"Käytetään tätä arvoa satunnaislukujen siemenenä. Tämä mahdollistaa "
+"näennäisesti satunnaisen toiminnon toiston samanlaisena."
 
 #: libgimpwidgets/gimpwidgets.c:1275
 msgid "_New Seed"
-msgstr ""
+msgstr "_Siemenluku"
 
 #: libgimpwidgets/gimpwidgets.c:1288
-#, fuzzy
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Käytä kellonaikaa satunnaislukujen siemenenä. Tämä takaa yleensä riittävän "
-"satunnaisen tuloksen"
+msgstr "Alusta satunnaisluvut luodulla satunnaisluvulla."
 
 #: libgimpwidgets/gimpwidgets.c:1292
-msgid "Randomize"
-msgstr ""
+msgid "_Randomize"
+msgstr "S_atunnaista"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
+msgstr "Värisokeus simulaatio -suodatin (Brettel-Vienot-Mollon algoritmi)"
 
 #: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "Värisokeus"
 
 #: modules/cdisplay_colorblind.c:464
 msgid "Color _Deficiency Type:"
-msgstr ""
+msgstr "Värisokeuden tyyppi"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
-msgstr ""
+msgstr "Protanopia (punasokeus)"
 
 #: modules/cdisplay_colorblind.c:476
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "Deuteranopia (vihersokeus)"
 
 #: modules/cdisplay_colorblind.c:479
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "Tritanopia (sinisokeus)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "Gammasuodatin"
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
-msgstr ""
+msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:311
 msgid "_Gamma:"
-msgstr ""
+msgstr "_Gamma:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "Suurikontrastinen suodatin"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
-msgstr ""
+msgstr "Kontrasti"
 
 #: modules/cdisplay_highcontrast.c:308
 msgid "Contrast C_ycles:"
-msgstr ""
+msgstr "Kontrasti:"
 
 #: modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
-msgstr ""
+msgstr "Värikorjaussuodatin ICC profiileille"
 
 #: modules/cdisplay_proof.c:166
 msgid "Color Proof"
-msgstr ""
+msgstr "Värikorjaus"
 
 #: modules/cdisplay_proof.c:319
 msgid "Perceptual"
-msgstr ""
+msgstr "Havaittu"
 
 #: modules/cdisplay_proof.c:321
 msgid "Relative Colorimetric"
-msgstr ""
+msgstr "Suhteellinen"
 
 #: modules/cdisplay_proof.c:325
 msgid "Absolute Colorimetric"
-msgstr ""
+msgstr "Absoluuttinen"
 
 #: modules/cdisplay_proof.c:331
 msgid "_Intent:"
-msgstr ""
+msgstr "_Aiottu:"
 
 #: modules/cdisplay_proof.c:334
 msgid "Choose an ICC Color Profile"
-msgstr ""
+msgstr "Valitse ICC-väriprofiili"
 
 #: modules/cdisplay_proof.c:337
 msgid "_Profile:"
-msgstr ""
+msgstr "_Profiili:"
 
 #: modules/cdisplay_proof.c:345
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "_Mustan pisteen kompensaatio"
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
-msgstr ""
+msgstr "CMYK värivalitsin"
 
 #: modules/colorsel_cmyk.c:132
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: modules/colorsel_cmyk.c:149
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: modules/colorsel_cmyk.c:150
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
 #: modules/colorsel_cmyk.c:151
 msgid "_Y"
-msgstr ""
+msgstr "_Y"
 
 #: modules/colorsel_cmyk.c:152
 msgid "_K"
-msgstr ""
+msgstr "_K"
 
 #: modules/colorsel_cmyk.c:156
-#, fuzzy
 msgid "Cyan"
-msgstr "Peru"
+msgstr "Syaani"
 
 #: modules/colorsel_cmyk.c:157
 msgid "Magenta"
-msgstr ""
+msgstr "Magenta"
 
 #: modules/colorsel_cmyk.c:158
 msgid "Yellow"
-msgstr ""
+msgstr "Keltainen"
 
 #: modules/colorsel_cmyk.c:159
 msgid "Black"
-msgstr ""
+msgstr "Musta"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Mustan poisto (%):"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
-msgstr ""
+msgstr "Kolmiomainen värivalitsin"
 
 #: modules/colorsel_triangle.c:182
 msgid "Triangle"
-msgstr ""
+msgstr "Kolmio"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
-msgstr ""
+msgstr "Vesiväri -värivalitsin"
 
 #: modules/colorsel_water.c:176
 msgid "Watercolor"
-msgstr ""
+msgstr "Vesiväri"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
-msgstr ""
+msgstr "Paine"
 
 #, fuzzy
 #~ msgid "Parameter Settings"
