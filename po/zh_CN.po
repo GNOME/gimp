@@ -6,14 +6,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 16:10+0100\n"
+"POT-Creation-Date: 2004-03-27 11:55+0800\n"
 "PO-Revision-Date: 2004-03-12 19:00+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 
 #: app/app_procs.c:183
@@ -33,6 +33,8 @@ msgid ""
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
 msgstr ""
+"无法打开测试交换文件。为了避免数据丢失，请检查您在首选项中"
+"定义的交换目录的位置以及权限(当前为“%s”)。"
 
 #: app/app_procs.c:275
 #, c-format
@@ -45,7 +47,7 @@ msgid ""
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 "GIMP 无法初始化图形用户界面。\n"
-"请确定你的显示环境已经正确安装。"
+"请确定您的显示环境已经正确安装。"
 
 #: app/main.c:223 app/widgets/gimptoolbox.c:439
 #: data/misc/gimp.desktop.in.in.h:2
@@ -346,7 +348,7 @@ msgstr "读取“%s”时出错：%s"
 msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
-msgstr "解析你的“%s”文件时出错。默认值将被使用。你的配置文件已被备份在“%s”。"
+msgstr "解析您的“%s”文件时出错。默认值将被使用。您的配置文件已被备份在“%s”。"
 
 #: app/config/gimpconfigwriter.c:107
 #, c-format
@@ -427,7 +429,7 @@ msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
 msgstr ""
-"环境相关的光标很好。它们默认是启用的。但是，它们也需要一定的负荷，这点可能你"
+"环境相关的光标很好。它们默认是启用的。但是，它们也需要一定的负荷，这点可能您"
 "并不想要。"
 
 #: app/config/gimprc-blurbs.h:44
@@ -438,7 +440,7 @@ msgstr "如果启用，将确保图像的每个点都对应屏幕上的一个像
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr ""
+msgstr "这是参考线和网格产生吸附作用的像素距离。"
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -457,20 +459,20 @@ msgid ""
 "The window type hint that is set on dock windows. This may affect the way "
 "your window manager decorates and handles dock windows."
 msgstr ""
-"停靠式窗口的窗口类型提示设置。这将影响你的窗口管理器装饰和处理停靠式窗口的行"
+"停靠式窗口的窗口类型提示设置。这将影响您的窗口管理器装饰和处理停靠式窗口的行"
 "为。"
 
 #: app/config/gimprc-blurbs.h:118
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr ""
+msgstr "如果启用，所有的工具都将使用选中的画笔。"
 
 #: app/config/gimprc-blurbs.h:124
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr ""
+msgstr "如果启用，所有的工具都将使用选中的渐变。"
 
 #: app/config/gimprc-blurbs.h:127
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr ""
+msgstr "如果启用，所有的工具都将使用选中的图案。"
 
 #: app/config/gimprc-blurbs.h:143
 msgid "Sets the browser used by the help system."
@@ -496,7 +498,7 @@ msgstr "如果启用，将确保打开文件以后图像完整可见，否则将
 
 #: app/config/gimprc-blurbs.h:164
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
-msgstr ""
+msgstr "安装私用颜色表；对伪彩色显示可能有用。"
 
 #: app/config/gimprc-blurbs.h:167
 msgid ""
@@ -579,7 +581,7 @@ msgstr "如果启用，当放大或缩小查看图像时，图像窗口大小将
 
 #: app/config/gimprc-blurbs.h:250
 msgid "Let GIMP try to restore your last saved session on each startup."
-msgstr "每次启动时让 GIMP 尝试恢复你上次保存的会话。"
+msgstr "每次启动时让 GIMP 尝试恢复您上次保存的会话。"
 
 #: app/config/gimprc-blurbs.h:253
 msgid ""
@@ -684,7 +686,7 @@ msgstr "如果启用，菜单可以撕下。"
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
-msgstr "如果启用，你只要按一个键盘组合就可以即时改变突出显示的菜单项的快捷键。"
+msgstr "如果启用，您只要按一个键盘组合就可以即时改变突出显示的菜单项的快捷键。"
 
 #: app/config/gimprc-blurbs.h:326
 msgid "Save changed keyboard shortcuts when the GIMP exits."
@@ -726,7 +728,7 @@ msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
 msgstr ""
-"工具箱的窗口类型提示设置。这将影响你的窗口管理器装饰和处理工具箱的行为。"
+"工具箱的窗口类型提示设置。这将影响您的窗口管理器装饰和处理工具箱的行为。"
 
 #: app/config/gimprc-blurbs.h:359
 msgid "Sets the manner in which transparency is displayed in images."
@@ -760,9 +762,8 @@ msgstr ""
 "以达到指定的撤销次数。"
 
 #: app/config/gimprc-blurbs.h:378
-#, fuzzy
 msgid "Sets the size of the previews in the Undo History."
-msgstr "设置用于表示透明的棋盘格子的大小。"
+msgstr "设置撤销历史的预览大小。"
 
 #: app/config/gimprc-blurbs.h:381
 msgid "When enabled, pressing F1 will open the help browser."
@@ -967,22 +968,20 @@ msgid "Solid"
 msgstr "实线"
 
 #: app/core/core-enums.c:280
-#, fuzzy
 msgid "Miter"
-msgstr "主值(_M)"
+msgstr "斜接"
 
 #: app/core/core-enums.c:281 app/core/core-enums.c:301
 msgid "Round"
-msgstr ""
+msgstr "圆角"
 
 #: app/core/core-enums.c:282
-#, fuzzy
 msgid "Bevel"
-msgstr "色阶"
+msgstr "斜面"
 
 #: app/core/core-enums.c:300
 msgid "Butt"
-msgstr ""
+msgstr "对接"
 
 #: app/core/core-enums.c:320 app/gui/preferences-dialog.c:1588
 msgid "Custom"
@@ -1128,7 +1127,7 @@ msgstr "缩放图像"
 #: app/core/core-enums.c:584 app/core/gimpimage-crop.c:144
 #: app/core/gimpimage-resize.c:66
 msgid "Resize Image"
-msgstr "图像重置大小"
+msgstr "图像改变大小"
 
 #: app/core/core-enums.c:585
 msgid "Flip Image"
@@ -1198,7 +1197,7 @@ msgstr "缩放图层"
 #: app/core/gimplayer.c:254 app/core/gimplayer.c:676
 #: app/gui/layers-commands.c:1286 app/pdb/layer_cmds.c:548
 msgid "Resize Layer"
-msgstr "图层重置大小"
+msgstr "图层改变大小"
 
 #: app/core/core-enums.c:601 app/core/core-enums.c:630
 #: app/core/gimplayer.c:1023 app/gui/layers-commands.c:1055
@@ -1294,9 +1293,8 @@ msgid "Rename Item"
 msgstr "重命名项目"
 
 #: app/core/core-enums.c:627
-#, fuzzy
 msgid "Set Item Linked"
-msgstr "缩放图层选项"
+msgstr "设置项目链接"
 
 #: app/core/core-enums.c:628 app/gui/layers-commands.c:717
 #: app/gui/layers-commands.c:745 app/gui/layers-commands.c:779
@@ -1326,7 +1324,7 @@ msgstr "设置图层不透明度"
 
 #: app/core/core-enums.c:635
 msgid "Set Preserve Trans"
-msgstr "设置预留变换"
+msgstr "设置保持透明"
 
 #: app/core/core-enums.c:637 app/gui/channels-commands.c:318
 #: app/gui/channels-commands.c:348 app/gui/channels-commands.c:387
@@ -1379,7 +1377,7 @@ msgstr "EEK：无法撤销"
 
 #: app/core/gimp-edit.c:118 app/core/gimp-edit.c:227
 msgid "Pasted Layer"
-msgstr "已粘贴的图层"
+msgstr "被粘贴的图层"
 
 #: app/core/gimp-edit.c:256
 msgid "Clear"
@@ -1515,7 +1513,7 @@ msgstr "画笔文件“%s”中含有无效的 UTF-8 字符串。"
 #: app/core/gimpitem.c:446 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
-msgstr "Unnamed"
+msgstr "未命名"
 
 #: app/core/gimpbrush.c:707
 #, c-format
@@ -1556,7 +1554,7 @@ msgstr "缩放通道"
 
 #: app/core/gimpchannel.c:262
 msgid "Resize Channel"
-msgstr "通道重置大小"
+msgstr "通道改变大小"
 
 #: app/core/gimpchannel.c:277 app/tools/gimpeditselectiontool.c:251
 #: app/tools/gimpeditselectiontool.c:1218
@@ -2393,26 +2391,24 @@ msgstr "关闭 %s 吗？"
 
 #: app/display/gimpdisplayshell.c:1414
 msgid "_Discard changes"
-msgstr ""
+msgstr "放弃修改(_D)"
 
 #: app/display/gimpdisplayshell.c:1454
-#, fuzzy, c-format
+#, c-format
 msgid "Changes were made to '%s'."
-msgstr "“%s”已修改。仍然要关闭吗？"
+msgstr "“%s”已修改。"
 
 #: app/display/gimpdisplayshell.c:1468
 msgid "Unsaved changes will be lost."
-msgstr ""
+msgstr "未保存的修改将会丢失。"
 
 #: app/display/gimpdisplayshell-dnd.c:87
-#, fuzzy
 msgid "Drop New Layer"
-msgstr "新建图层"
+msgstr "拖放入新图层"
 
 #: app/display/gimpdisplayshell-dnd.c:129
-#, fuzzy
 msgid "Drop New Path"
-msgstr "新建路径"
+msgstr "拖放入新路径"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:73
 msgid "Color Display Filters"
@@ -2614,9 +2610,8 @@ msgid "%s Channel Copy"
 msgstr "%s 通道副本"
 
 #: app/gui/channels-commands.c:322
-#, fuzzy
 msgid "Empty Channel"
-msgstr "清空通道副本"
+msgstr "空白通道"
 
 #: app/gui/channels-commands.c:338
 msgid "New Channel Color"
@@ -2628,7 +2623,7 @@ msgstr "新建通道选项"
 
 #: app/gui/channels-commands.c:389 app/gui/channels-commands.c:552
 msgid "Channel Name:"
-msgstr "通道名："
+msgstr "通道名字："
 
 #: app/gui/channels-commands.c:394 app/gui/channels-commands.c:557
 msgid "Fill Opacity:"
@@ -2758,13 +2753,13 @@ msgid ""
 "Do not generate a palette of more than 255 colors if you intend to create a "
 "transparent or animated GIF file."
 msgstr ""
-"你正试图将一幅带有 alpha 通道的图像从 RGB 或灰度转换到索引。\n"
-"如果你准备从这幅图像创建透明或动画的 GIF 文件，你就不能生成一个多于 255 种颜"
+"您正试图将一幅带有 alpha 通道的图像从 RGB 或灰度转换到索引。\n"
+"如果您准备从这幅图像创建透明或动画的 GIF 文件，您就不能生成一个多于 255 种颜"
 "色的色板。"
 
 #: app/gui/convert-dialog.c:498
 msgid "Cannot convert to a palette with more than 256 colors."
-msgstr ""
+msgstr "无法转换到多于 256 种颜色的色板。"
 
 #: app/gui/convert-dialog.c:517
 msgid "Select Custom Palette"
@@ -3196,7 +3191,7 @@ msgstr ""
 "将“%s”恢复到\n"
 "“%s”吗？\n"
 "\n"
-"你将会丢失你所作的所有改变，包括所有的撤销信息。"
+"您将会丢失您所作的所有改变，包括所有的撤销信息。"
 
 #: app/gui/file-commands.c:322
 msgid "Revert Image"
@@ -3241,12 +3236,12 @@ msgid ""
 "To prevent this dialog from appearing, increase the \"Maximum Image Size\" "
 "setting (currently %s) in the Preferences dialog."
 msgstr ""
-"你正试图创建一幅初始化大小为 %s 的图像。\n"
+"您正试图创建一幅初始化大小为 %s 的图像。\n"
 "\n"
 "选“确认”继续创建此图像。\n"
-"选“取消”如果你并不想创建这么大幅的图像。\n"
+"选“取消”如果您并不想创建这么大幅的图像。\n"
 "\n"
-"如果你不想再看到这个提示，请在首选项对话框中升高“最大图像大小”的设定值(当前"
+"如果您不想再看到这个提示，请在首选项对话框中升高“最大图像大小”的设定值(当前"
 "为 %s)。"
 
 #: app/gui/file-new-dialog.c:285
@@ -3653,11 +3648,11 @@ msgstr "剪贴板到底部图层"
 
 #: app/gui/image-commands.c:470
 msgid "Resizing..."
-msgstr "正在重置大小..."
+msgstr "正在改变大小..."
 
 #: app/gui/image-commands.c:486
 msgid "Resize Error: Both width and height must be greater than zero."
-msgstr "重置大小错误：宽度和高度都必须大于零。"
+msgstr "改变大小错误：宽度和高度都必须大于零。"
 
 #: app/gui/image-commands.c:523
 #, c-format
@@ -3670,12 +3665,12 @@ msgid ""
 "To prevent this dialog from appearing, increase the \"Maximum Image Size\" "
 "setting (currently %s) in the Preferences dialog."
 msgstr ""
-"你正试图创建一幅大小为 %s 的图像。\n"
+"您正试图创建一幅大小为 %s 的图像。\n"
 "\n"
 "选“确认”继续创建此图像。\n"
-"选“取消”如果你并不想创建这么大幅的图像。\n"
+"选“取消”如果您并不想创建这么大幅的图像。\n"
 "\n"
-"如果你不想再看到这个提示，请在首选项对话框中升高“最大图像大小”的设定值(当前"
+"如果您不想再看到这个提示，请在首选项对话框中升高“最大图像大小”的设定值(当前"
 "为 %s)。"
 
 #: app/gui/image-commands.c:535
@@ -3686,7 +3681,7 @@ msgstr "图像超出最大图像大小"
 msgid ""
 "The chosen image size will shrink some layers completely away. Is this what "
 "you want?"
-msgstr "你选择的图像大小会让一些图层收缩至完全消失。这是你所希望的吗？"
+msgstr "您选择的图像大小会让一些图层收缩至完全消失。这是您所希望的吗？"
 
 #: app/gui/image-commands.c:547
 msgid "Layer Too Small"
@@ -3702,7 +3697,6 @@ msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "缩放错误：宽度和高度都必须大于零。"
 
 #. <Image>/File
-#. <Toolbox>/File
 #: app/gui/image-menu.c:101 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/文件(_F)"
@@ -3716,7 +3710,6 @@ msgid "/File/_Open..."
 msgstr "/文件(F)/打开(_O)..."
 
 #. <Image>/File/Open Recent
-#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:116 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/文件(F)/最近打开(_R)"
@@ -3853,9 +3846,8 @@ msgid "/Select/_Invert"
 msgstr "/选择(S)/反转(_I)"
 
 #: app/gui/image-menu.c:292
-#, fuzzy
 msgid "/Select/Fr_om Path"
-msgstr "/选择(S)/到路径(_P)"
+msgstr "/选择(S)/从路径(_O)"
 
 #: app/gui/image-menu.c:297
 msgid "/Select/_Float"
@@ -4616,11 +4608,11 @@ msgstr "常规"
 
 #: app/gui/info-window.c:84
 msgid "Static Gray"
-msgstr ""
+msgstr "静态灰度"
 
 #: app/gui/info-window.c:86
 msgid "Static Color"
-msgstr ""
+msgstr "静态彩色"
 
 #: app/gui/info-window.c:87
 msgid "Pseudo Color"
@@ -4749,9 +4741,8 @@ msgid "Layer Mask to Selection"
 msgstr "图层蒙板到选区"
 
 #: app/gui/layers-commands.c:723
-#, fuzzy
 msgid "Empty Layer"
-msgstr "空白文字图层"
+msgstr "空白图层"
 
 #: app/gui/layers-commands.c:747
 msgid "Create a New Layer"
@@ -4791,9 +4782,8 @@ msgid "Layer _Name"
 msgstr "图层名字(_N)"
 
 #: app/gui/layers-commands.c:1009
-#, fuzzy
 msgid "Set Name from _Text"
-msgstr "从文字创建路径"
+msgstr "以文字定名字(_T)"
 
 #: app/gui/layers-commands.c:1096
 msgid "Add a Mask to the Layer"
@@ -5288,7 +5278,7 @@ msgstr "调出上次"
 
 #: app/gui/preferences-dialog.c:275
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr "你需要重新启动 GIMP 以使下列改变生效："
+msgstr "您需要重新启动 GIMP 以使下列改变生效："
 
 #: app/gui/preferences-dialog.c:895
 msgid "Show _Menubar"
@@ -5376,9 +5366,8 @@ msgid "_Navigation Preview Size:"
 msgstr "导航预览大小(_N)："
 
 #: app/gui/preferences-dialog.c:1218
-#, fuzzy
 msgid "_Undo History Preview Size:"
-msgstr "导航预览大小(_N)："
+msgstr "撤销历史预览大小(_U)："
 
 #. Dialog Bahavior
 #: app/gui/preferences-dialog.c:1222
@@ -5464,12 +5453,11 @@ msgstr "要使用的 Web 浏览器："
 #. Snapping Distance
 #: app/gui/preferences-dialog.c:1396
 msgid "Guide and Grid Snapping"
-msgstr ""
+msgstr "参考线和网格吸附"
 
 #: app/gui/preferences-dialog.c:1401
-#, fuzzy
 msgid "_Snap Distance:"
-msgstr "距离："
+msgstr "吸附距离(_S)："
 
 #. Contiguous Regions
 #: app/gui/preferences-dialog.c:1405
@@ -5492,17 +5480,15 @@ msgstr "默认插值(_I)："
 #. Global Brush, Pattern, ...
 #: app/gui/preferences-dialog.c:1422
 msgid "Paint Options Shared Between Tools"
-msgstr ""
+msgstr "工具之间共享的涂画选项"
 
 #: app/gui/preferences-dialog.c:1426
-#, fuzzy
 msgid "_Brush"
-msgstr "画笔："
+msgstr "画笔(_B)"
 
 #: app/gui/preferences-dialog.c:1429
-#, fuzzy
 msgid "_Pattern"
-msgstr "图案"
+msgstr "图案(_P)"
 
 #. Input Devices
 #: app/gui/preferences-dialog.c:1441 app/gui/preferences-dialog.c:1444
@@ -5534,7 +5520,7 @@ msgstr "蚂蚁线速度(_A)："
 #. Zoom & Resize Behavior
 #: app/gui/preferences-dialog.c:1497
 msgid "Zoom & Resize Behavior"
-msgstr "缩放和重置大小行为"
+msgstr "缩放和改变大小行为"
 
 #: app/gui/preferences-dialog.c:1501
 msgid "Resize Window on _Zoom"
@@ -6002,7 +5988,6 @@ msgid "Original Width:"
 msgstr "原始宽度："
 
 #. the new size labels
-#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "新宽度："
@@ -6047,6 +6032,7 @@ msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect scaling channels and masks only."
 msgstr ""
+"索引颜色图层缩放时总不插值。所选的插值类型将只对通道和蒙板缩放有效。"
 
 #: app/gui/resolution-calibrate-dialog.c:85
 msgid "Calibrate Monitor Resolution"
@@ -6065,7 +6051,7 @@ msgid "_Vertical:"
 msgstr "垂直(_V)："
 
 #: app/gui/select-commands.c:149 app/gui/vectors-commands.c:181
-#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1818
+#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1819
 #: app/widgets/gimpvectorstreeview.c:289
 msgid "Path to Selection"
 msgstr "路径到选区"
@@ -6158,12 +6144,12 @@ msgstr "添加主题“%s”(%s)\n"
 
 #: app/gui/tips-dialog.c:88
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
-msgstr "<b>你的 GIMP 提示文件似乎丢了！</b>"
+msgstr "<b>您的 GIMP 提示文件似乎丢了！</b>"
 
 #: app/gui/tips-dialog.c:90
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr "应该存在一个叫“%s”的文件。请检查你的安装。"
+msgstr "应该存在一个叫“%s”的文件。请检查您的安装。"
 
 #: app/gui/tips-dialog.c:96
 msgid "<b>The GIMP tips file could not be parsed!</b>"
@@ -6216,44 +6202,36 @@ msgid "Enter a new name for the saved options"
 msgstr "给已保存的选项输入一个新名字"
 
 #: app/gui/tool-options-menu.c:58
-#, fuzzy
 msgid "/_Save Options to"
-msgstr "已保存的选项"
+msgstr "/选项保存到(_S)"
 
 #: app/gui/tool-options-menu.c:60
-#, fuzzy
 msgid "/Save Options to/_New Entry..."
-msgstr "/选项保存到(_S)/新项(_N)..."
+msgstr "/选项保存到(S)/新项(_N)..."
 
 #: app/gui/tool-options-menu.c:71
-#, fuzzy
 msgid "/_Restore Options from"
-msgstr "/选项恢复自(_R)/(无)"
+msgstr "/选项恢复自(_R)"
 
 #: app/gui/tool-options-menu.c:73
-#, fuzzy
 msgid "/Restore Options from/(None)"
-msgstr "/选项恢复自(_R)/(无)"
+msgstr "/选项恢复自(R)/(无)"
 
 #: app/gui/tool-options-menu.c:79
-#, fuzzy
 msgid "/Re_name Saved Options"
-msgstr "/重命名已保存的选项(_N)/(无)"
+msgstr "/重命名已保存的选项(_N)"
 
 #: app/gui/tool-options-menu.c:81
-#, fuzzy
 msgid "/Rename Saved Options/(None)"
-msgstr "/重命名已保存的选项(_N)/(无)"
+msgstr "/重命名已保存的选项(N)/(无)"
 
 #: app/gui/tool-options-menu.c:87
-#, fuzzy
 msgid "/_Delete Saved Options"
-msgstr "/删除已保存的选项(_D)/(无)"
+msgstr "/删除已保存的选项(_D)"
 
 #: app/gui/tool-options-menu.c:89
-#, fuzzy
 msgid "/Delete Saved Options/(None)"
-msgstr "/删除已保存的选项(_D)/(无)"
+msgstr "/删除已保存的选项(D)/(无)"
 
 #: app/gui/tool-options-menu.c:98
 msgid "/R_eset Tool Options"
@@ -6429,7 +6407,7 @@ msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
 msgstr ""
-"GIMP 使用附加的 gtkrc 文件，你可以通过配置使它看起来跟别的 GTK 应用程序不一"
+"GIMP 使用附加的 gtkrc 文件，您可以通过配置使它看起来跟别的 GTK 应用程序不一"
 "样。"
 
 #: app/gui/user-install-dialog.c:147
@@ -6441,7 +6419,7 @@ msgid ""
 msgstr ""
 "插件和扩展是一些被 GIMP 调用并提供附加功能的外部程序。这些程序在运行时被搜"
 "索，它们的功能以及修改时间等信息将被暂时保存在这个文件里。这个文件只应由 "
-"GIMP 来读取，请你不要编辑它。"
+"GIMP 来读取，请您不要编辑它。"
 
 #: app/gui/user-install-dialog.c:157
 msgid ""
@@ -6450,8 +6428,8 @@ msgid ""
 "may edit this file if you wish, but it is much easier to define the keys "
 "from within The GIMP.  Deleting this file will restore the default shortcuts."
 msgstr ""
-"GIMP 中的快捷键可以动态重定义。menurc 是你的当前设置的导出，以便下次会话时恢"
-"复。如果你愿意你也可以编辑这个文件，不过在 GIMP 中定义快捷键会更容易。删除这"
+"GIMP 中的快捷键可以动态重定义。menurc 是您的当前设置的导出，以便下次会话时恢"
+"复。如果您愿意您也可以编辑这个文件，不过在 GIMP 中定义快捷键会更容易。删除这"
 "个文件将恢复默认的快捷键设置。"
 
 #: app/gui/user-install-dialog.c:167
@@ -6460,7 +6438,7 @@ msgid ""
 "you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
 "the saved position."
 msgstr ""
-"sessionrc 用于记录上一次你退出 GIMP 时所打开的对话框。你可以设置 GIMP ，让它"
+"sessionrc 用于记录上一次您退出 GIMP 时所打开的对话框。您可以设置 GIMP ，让它"
 "在保存的位置上重新打开这些对话框。"
 
 #: app/gui/user-install-dialog.c:174
@@ -6476,7 +6454,7 @@ msgid ""
 "millimeters, points and picas.  This file is overwritten each time you quit "
 "the GIMP."
 msgstr ""
-"unitrc 用于储存你的用户单位数据库。你可以定义附加的单位然后就像使用内置的单位"
+"unitrc 用于储存您的用户单位数据库。您可以定义附加的单位然后就像使用内置的单位"
 "英寸、毫米、点、派卡那样使用它们。这个文件在每次退出 GIMP 时都会被重写。"
 
 #: app/gui/user-install-dialog.c:189
@@ -6495,8 +6473,8 @@ msgid ""
 "installation when searching for fonts. Use this only if you really want to "
 "have GIMP-only fonts, otherwise put things in your global font directory."
 msgstr ""
-"这个文件夹用于储存你希望只在 GIMP 中使用的字体。GIMP 在搜索字体时除了检查系统"
-"的 GIMP 字体安装以外还将搜索这个文件夹。只有当你真的打算只在 GIMP 中使用这些"
+"这个文件夹用于储存您希望只在 GIMP 中使用的字体。GIMP 在搜索字体时除了检查系统"
+"的 GIMP 字体安装以外还将搜索这个文件夹。只有当您真的打算只在 GIMP 中使用这些"
 "字体时才使用该项，否则最好将它们放在全局字体目录中。"
 
 #: app/gui/user-install-dialog.c:207
@@ -6642,7 +6620,7 @@ msgid ""
 "Software Foundation; either version 2 of the License, or (at your option) "
 "any later version."
 msgstr ""
-"该程序是自由软件；你可以在自由软件基金会 GNU 通用公共许可证版本 2 (或其后继版"
+"该程序是自由软件；您可以在自由软件基金会 GNU 通用公共许可证版本 2 (或其后继版"
 "本)的条款下重新分发或修改它。"
 
 #: app/gui/user-install-dialog.c:771
@@ -6662,7 +6640,7 @@ msgid ""
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
-"你应该已经跟本程序一起收到一份 GNU 通用公共许可证；如果没有，请写信至：Free "
+"您应该已经跟本程序一起收到一份 GNU 通用公共许可证；如果没有，请写信至：Free "
 "Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-"
 "1307, USA."
 
@@ -6672,7 +6650,7 @@ msgstr "个人 GIMP 文件夹"
 
 #: app/gui/user-install-dialog.c:803
 msgid "Click \"Continue\" to create your personal GIMP folder."
-msgstr "点击“继续”创建你的个人 GIMP 文件夹。"
+msgstr "点击“继续”创建您的个人 GIMP 文件夹。"
 
 #: app/gui/user-install-dialog.c:847
 #, c-format
@@ -6695,7 +6673,7 @@ msgstr "用户安装日志"
 
 #: app/gui/user-install-dialog.c:943
 msgid "Please wait while your personal GIMP folder is being created..."
-msgstr "请等待，你的个人 GIMP 文件夹正在创建中……"
+msgstr "请等待，您的个人 GIMP 文件夹正在创建中……"
 
 #: app/gui/user-install-dialog.c:950
 msgid "GIMP Performance Tuning"
@@ -6718,7 +6696,7 @@ msgstr "点击“继续”启动 GIMP。"
 msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
-msgstr "<b>要使图像以原来的大小显示，GIMP 需要知道你的监视器分辨率。</b>"
+msgstr "<b>要使图像以原来的大小显示，GIMP 需要知道您的监视器分辨率。</b>"
 
 #: app/gui/user-install-dialog.c:973
 msgid "Aborting Installation..."
@@ -6745,7 +6723,7 @@ msgid ""
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP 使用有限的内存空间来储存图像数据，称为“平铺缓存”。你可以调整它的大小使内"
+"GIMP 使用有限的内存空间来储存图像数据，称为“平铺缓存”。您可以调整它的大小使内"
 "存能够容纳。请考虑其它执行进程的内存占用情况。"
 
 #: app/gui/user-install-dialog.c:1188
@@ -6756,7 +6734,7 @@ msgid ""
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
 "所有平铺缓存无法容纳的图像和撤销的数据将被写到交换文件。这个文件应该位于一个"
-"有足够剩余空间(几百兆字节)的本地文件系统。在 UNIX 系统中你也许会使用系统临时"
+"有足够剩余空间(几百兆字节)的本地文件系统。在 UNIX 系统中您也许会使用系统临时"
 "目录(“/tmp”或“/var/tmp”)。"
 
 #: app/gui/user-install-dialog.c:1204
@@ -6776,22 +6754,21 @@ msgstr "从窗口系统获取分辨率(当前为 %d x %d dpi)"
 
 #: app/gui/user-install-dialog.c:1282
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr "另外，你也可以手工设置监视器的分辨率。"
+msgstr "另外，您也可以手工设置监视器的分辨率。"
 
 #: app/gui/user-install-dialog.c:1331
 msgid ""
 "You can also press the \"Calibrate\" button to open a window which lets you "
 "determine your monitor resolution interactively."
-msgstr "你也可以按“定调”按钮打开一个窗口通过交互的方式来确定你的监视器分辨率。"
+msgstr "您也可以按“定调”按钮打开一个窗口通过交互的方式来确定您的监视器分辨率。"
 
 #: app/gui/user-install-dialog.c:1335
 msgid "Calibrate"
 msgstr "定调"
 
 #: app/gui/vectors-commands.c:444
-#, fuzzy
 msgid "Empty Path"
-msgstr "导入路径"
+msgstr "空白路径"
 
 #: app/gui/vectors-commands.c:458 app/gui/vectors-commands.c:506
 msgid "New Path"
@@ -6802,7 +6779,6 @@ msgid "New Path Options"
 msgstr "新建路径选项"
 
 #. The name entry hbox, label and entry
-#. The name entry
 #: app/gui/vectors-commands.c:495 app/gui/vectors-commands.c:613
 msgid "Path name:"
 msgstr "路径名字："
@@ -7129,6 +7105,8 @@ msgid ""
 "PDB calling error for procedure '%s':\n"
 "Argument #%d type mismatch (expected %s, got %s)"
 msgstr ""
+"PDB 调用过程“%s”错误：\n"
+"参数 #%d 类型不匹配(期望 %s，得到 %s)"
 
 #: app/pdb/procedural_db_cmds.c:83
 msgid "Internal GIMP procedure"
@@ -7163,7 +7141,7 @@ msgstr ""
 "插件崩溃：“%s”\n"
 "(%s)\n"
 "\n"
-"已崩溃的插件可能已经破坏 GIMP 的内部状态。你可能需要保存你的图片然后重新启动 "
+"已崩溃的插件可能已经破坏 GIMP 的内部状态。您可能需要保存您的图片然后重新启动 "
 "GIMP 以确保稳妥。"
 
 #: app/plug-in/plug-in-rc.c:155
@@ -7180,31 +7158,31 @@ msgstr "资源配置"
 #.
 #: app/plug-in/plug-ins.c:145
 msgid "Querying new Plug-ins"
-msgstr "查询新的插件"
+msgstr "正在查询新的插件"
 
 #: app/plug-in/plug-ins.c:164
 #, c-format
 msgid "Querying plug-in: '%s'\n"
-msgstr "查询插件：“%s”\n"
+msgstr "正在查询插件：“%s”\n"
 
 #. initial the plug-ins
 #: app/plug-in/plug-ins.c:300
 msgid "Initializing Plug-ins"
-msgstr "初始化插件"
+msgstr "正在初始化插件"
 
 #: app/plug-in/plug-ins.c:316
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
-msgstr "初始化插件：“%s”\n"
+msgstr "正在初始化插件：“%s”\n"
 
 #: app/plug-in/plug-ins.c:348
 msgid "Starting Extensions"
-msgstr "启动扩展"
+msgstr "正在启动扩展"
 
 #: app/plug-in/plug-ins.c:357
 #, c-format
 msgid "Starting extension: '%s'\n"
-msgstr "启动扩展：“%s”\n"
+msgstr "正在启动扩展：“%s”\n"
 
 #: app/text/text-enums.c:32
 msgid "From Left to Right"
@@ -7237,6 +7215,8 @@ msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 msgstr ""
+"Pack my box with\n"
+"five dozen liquor jugs."
 
 #: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:687
 msgid "Add Text Layer"
@@ -7298,7 +7278,7 @@ msgstr "剪裁"
 
 #: app/tools/tools-enums.c:35
 msgid "Resize"
-msgstr "重置大小"
+msgstr "改变大小"
 
 #: app/tools/tools-enums.c:54
 msgid "Fixed Size"
@@ -7662,15 +7642,15 @@ msgstr "允许放大 %s"
 
 #: app/tools/gimpcroptool.c:159
 msgid "Crop & Resize"
-msgstr "剪裁和重置大小"
+msgstr "剪裁和改变大小"
 
 #: app/tools/gimpcroptool.c:160
 msgid "Crop or Resize an image"
-msgstr "剪裁图像或重置大小"
+msgstr "剪裁图像或改变大小"
 
 #: app/tools/gimpcroptool.c:161
 msgid "/Tools/Transform Tools/_Crop & Resize"
-msgstr "/工具(T)/变换工具(T)/剪裁和重置大小(_C)"
+msgstr "/工具(T)/变换工具(T)/剪裁和改变大小(_C)"
 
 #. initialize the statusbar display
 #: app/tools/gimpcroptool.c:499 app/tools/gimpcroptool.c:932
@@ -7679,7 +7659,7 @@ msgstr "剪裁："
 
 #: app/tools/gimpcroptool.c:964
 msgid "Crop & Resize Information"
-msgstr "剪裁和重置大小信息"
+msgstr "剪裁和改变大小信息"
 
 #. add the information fields
 #: app/tools/gimpcroptool.c:982
@@ -7687,7 +7667,6 @@ msgid "Origin X:"
 msgstr "原始 X："
 
 #. the pixel size labels
-#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
@@ -8004,15 +7983,15 @@ msgstr "索引图层不能调整色阶。"
 
 #: app/tools/gimplevelstool.c:351
 msgid "Pick Black Point"
-msgstr ""
+msgstr "拾取黑点"
 
 #: app/tools/gimplevelstool.c:355
 msgid "Pick Gray Point"
-msgstr ""
+msgstr "拾取灰点"
 
 #: app/tools/gimplevelstool.c:359
 msgid "Pick White Point"
-msgstr ""
+msgstr "拾取白点"
 
 #. Input levels frame
 #: app/tools/gimplevelstool.c:440
@@ -8450,7 +8429,7 @@ msgstr "GIMP 文本编辑器"
 
 #: app/tools/gimptexttool.c:828 app/tools/gimptexttool.c:831
 msgid "Confirm Text Editing"
-msgstr ""
+msgstr "确认编辑文字"
 
 #: app/tools/gimptexttool.c:852
 msgid ""
@@ -8460,6 +8439,10 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
+"您所选的图层是一个文字图层，但是它已被其它工具修改过。"
+"使用文字工具编辑此图层将放弃这些修改。\n"
+"\n"
+"您可以编辑此图层或者从它的文字属性创建新的文字图层。"
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
@@ -8486,9 +8469,8 @@ msgid "Transform Direction"
 msgstr "变换方向"
 
 #: app/tools/gimptransformoptions.c:353
-#, fuzzy
 msgid "Supersampling"
-msgstr "自适应超级采样"
+msgstr "超级采样"
 
 #. the clip resulting image toggle button
 #: app/tools/gimptransformoptions.c:358
@@ -8626,71 +8608,71 @@ msgstr "删除锚点"
 msgid "Delete Segment"
 msgstr "删除段"
 
-#: app/tools/gimpvectortool.c:811
+#: app/tools/gimpvectortool.c:812
 msgid "Move Anchors"
 msgstr "移动多个锚点"
 
-#: app/tools/gimpvectortool.c:1157
+#: app/tools/gimpvectortool.c:1158
 msgid "Click to pick path to edit."
 msgstr "点击可拾取路径并编辑。"
 
-#: app/tools/gimpvectortool.c:1160
+#: app/tools/gimpvectortool.c:1161
 msgid "Click to create a new path."
 msgstr "点击可创建新的路径。"
 
-#: app/tools/gimpvectortool.c:1163
+#: app/tools/gimpvectortool.c:1164
 msgid "Click to create a new component of the path."
 msgstr "点击可创建新的路径组件。"
 
-#: app/tools/gimpvectortool.c:1166
+#: app/tools/gimpvectortool.c:1167
 msgid "Click to create a new anchor. (try SHIFT)"
 msgstr "点击可创建新的锚点。(尝试 SHIFT)"
 
-#: app/tools/gimpvectortool.c:1169
+#: app/tools/gimpvectortool.c:1170
 msgid "Click-Drag to move the anchor around."
 msgstr "点击并拖动可移动锚点。"
 
-#: app/tools/gimpvectortool.c:1172
+#: app/tools/gimpvectortool.c:1173
 msgid "Click-Drag to move the anchors around."
 msgstr "点击并拖动可移动多个锚点。"
 
-#: app/tools/gimpvectortool.c:1175
+#: app/tools/gimpvectortool.c:1176
 msgid "Click-Drag to move the handle around. (try SHIFT)"
 msgstr "点击并拖动可移动臂点。(尝试 SHIFT)"
 
-#: app/tools/gimpvectortool.c:1178
+#: app/tools/gimpvectortool.c:1179
 msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
 msgstr "点击并拖动可改变曲线的形状。(SHIFT：对称)"
 
-#: app/tools/gimpvectortool.c:1182
+#: app/tools/gimpvectortool.c:1183
 msgid "Click-Drag to move the component around. (try SHIFT)"
 msgstr "点击并拖动可移动组件。(尝试 SHIFT)"
 
-#: app/tools/gimpvectortool.c:1186
+#: app/tools/gimpvectortool.c:1187
 msgid "Click-Drag to move the path around."
 msgstr "点击并拖动可移动路径。"
 
-#: app/tools/gimpvectortool.c:1189
+#: app/tools/gimpvectortool.c:1190
 msgid "Click to insert an anchor on the path. (try SHIFT)"
 msgstr "点击可在路径中插入新的锚点。(尝试 SHIFT)"
 
-#: app/tools/gimpvectortool.c:1192
+#: app/tools/gimpvectortool.c:1193
 msgid "Click to delete this anchor."
 msgstr "点击可删除此锚点。"
 
-#: app/tools/gimpvectortool.c:1195
+#: app/tools/gimpvectortool.c:1196
 msgid "Click to connect this anchor with the selected endpoint."
 msgstr "点击可连接此锚点与选中的端点。"
 
-#: app/tools/gimpvectortool.c:1199
+#: app/tools/gimpvectortool.c:1200
 msgid "Click to open up the path."
 msgstr "点击可断开路径。"
 
-#: app/tools/gimpvectortool.c:1202
+#: app/tools/gimpvectortool.c:1203
 msgid "Click to make this node angular."
 msgstr "点击可使此节点成为角点。"
 
-#: app/tools/gimpvectortool.c:1843
+#: app/tools/gimpvectortool.c:1844
 msgid "There is no active layer or channel to stroke to"
 msgstr "没有活动图层或通道可以勾画"
 
@@ -8708,7 +8690,7 @@ msgstr "缩放路径"
 
 #: app/vectors/gimpvectors.c:427
 msgid "Resize Path"
-msgstr "路径重置大小"
+msgstr "路径改变大小"
 
 #: app/vectors/gimpvectors.c:457
 msgid "Flip Path"
@@ -8769,11 +8751,13 @@ msgid "Delete"
 msgstr "删除"
 
 #: app/widgets/gimpchanneltreeview.c:121
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "New Channel\n"
 "%s New Channel Dialog"
-msgstr "新建通道颜色"
+msgstr ""
+"新建通道\n"
+"%s 新建通道对话框"
 
 #: app/widgets/gimpchanneltreeview.c:123
 msgid "Duplicate Channel"
@@ -8867,15 +8851,15 @@ msgstr "索引："
 
 #: app/widgets/gimpcolorframe.c:245 app/widgets/gimpcolorframe.c:266
 msgid "Red:"
-msgstr "红："
+msgstr "红色："
 
 #: app/widgets/gimpcolorframe.c:246 app/widgets/gimpcolorframe.c:267
 msgid "Green:"
-msgstr "绿："
+msgstr "绿色："
 
 #: app/widgets/gimpcolorframe.c:247 app/widgets/gimpcolorframe.c:268
 msgid "Blue:"
-msgstr "蓝："
+msgstr "蓝色："
 
 #: app/widgets/gimpcolorframe.c:257 app/widgets/gimpcolorframe.c:288
 msgid "Value:"
@@ -8895,11 +8879,11 @@ msgstr "饱和度："
 
 #: app/widgets/gimpcolorframe.c:304
 msgid "Cyan:"
-msgstr "青："
+msgstr "青色："
 
 #: app/widgets/gimpcolorframe.c:305
 msgid "Yellow:"
-msgstr "黄："
+msgstr "黄色："
 
 #: app/widgets/gimpcolorframe.c:306
 msgid "Magenta:"
@@ -8980,7 +8964,7 @@ msgstr "刷新"
 #: app/widgets/gimpdatafactoryview.c:408
 #, c-format
 msgid "Are you sure you want to delete '%s' from the list and from disk?"
-msgstr "你确认要从列表以及磁盘中删除“%s”吗？"
+msgstr "您确认要从列表以及磁盘中删除“%s”吗？"
 
 #: app/widgets/gimpdatafactoryview.c:412
 msgid "Delete Data Object"
@@ -9229,7 +9213,7 @@ msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
 msgstr ""
-"找不到 GIMP 帮助浏览器过程。可能由于你没有安装 GtkHtml2 因而它没有被编译。"
+"找不到 GIMP 帮助浏览器过程。可能由于您没有安装 GtkHtml2 因而它没有被编译。"
 
 #: app/widgets/gimphelp.c:203 app/widgets/gimphelp.c:236
 msgid "Use web browser instead"
@@ -9278,7 +9262,7 @@ msgstr "自动"
 #: app/widgets/gimpimagedock.c:222
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
-msgstr "如果启用，对话框将自动跟随你工作的图像。"
+msgstr "如果启用，对话框将自动跟随您工作的图像。"
 
 #: app/widgets/gimpimageview.c:139
 msgid "Raise this image's displays"
@@ -9317,12 +9301,11 @@ msgstr ""
 
 #: app/widgets/gimpitemtreeview.c:1394
 msgid "Set Item Exclusive Visible"
-msgstr ""
+msgstr "设置项目唯一可见"
 
 #: app/widgets/gimpitemtreeview.c:1402
-#, fuzzy
 msgid "Set Item Exclusive Linked"
-msgstr "缩放图层选项"
+msgstr "设置项目唯一链接"
 
 #: app/widgets/gimplayertreeview.c:207
 #, c-format
@@ -9330,6 +9313,8 @@ msgid ""
 "New Layer\n"
 "%s  New Layer Dialog"
 msgstr ""
+"新建图层\n"
+"%s 新建图层对话框"
 
 #: app/widgets/gimplayertreeview.c:209
 msgid "Duplicate Layer"
@@ -9408,7 +9393,7 @@ msgstr "接合风格(_J)："
 
 #: app/widgets/gimpstrokeeditor.c:219
 msgid "_Miter Limit:"
-msgstr ""
+msgstr "斜接限制(_M)："
 
 #: app/widgets/gimpstrokeeditor.c:261
 msgid "Dash Pattern:"
@@ -9463,7 +9448,7 @@ msgstr "删除选中的模板"
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr "你确认要从列表以及磁盘中删除模板“%s”吗？"
+msgstr "您确认要从列表以及磁盘中删除模板“%s”吗？"
 
 #: app/widgets/gimptemplateview.c:392
 msgid "Delete Template"
@@ -9492,16 +9477,17 @@ msgid ""
 "Click to update preview\n"
 "%s  Click to force update even if preview is up-to-date"
 msgstr ""
+"点击更新预览\n"
+"%s 点击强制更新预览，即使预览已更新"
 
 #: app/widgets/gimpthumbbox.c:250 app/widgets/gimpthumbbox.c:296
-#, fuzzy
 msgid "No Selection"
-msgstr "选区"
+msgstr "未选择"
 
 #: app/widgets/gimpthumbbox.c:382 app/widgets/gimpthumbbox.c:402
 #, c-format
 msgid "Thumbnail %d of %d"
-msgstr ""
+msgstr "缩略图 %d / %d"
 
 #: app/widgets/gimptoolbox-color-area.c:360
 msgid "Change Foreground Color"
@@ -9575,7 +9561,7 @@ msgstr "重置工具选项"
 
 #: app/widgets/gimptooloptionseditor.c:416
 msgid "Do you really want to reset all tool options to default values?"
-msgstr "你真的要将所有工具选项重置到默认值吗？"
+msgstr "您真的要将所有工具选项重置到默认值吗？"
 
 #: app/widgets/gimpundoeditor.c:152
 msgid "Redo"
@@ -9591,6 +9577,8 @@ msgid ""
 "New Path\n"
 "%s New Path Dialog"
 msgstr ""
+"新建路径\n"
+"%s 新建路径对话框"
 
 #: app/widgets/gimpvectorstreeview.c:133
 msgid "Duplicate Path"
@@ -9674,7 +9662,7 @@ msgstr ""
 #: app/widgets/gimpwidgets-constructors.c:62
 #: app/widgets/gimpwidgets-constructors.c:95
 msgid "Difference"
-msgstr "差别"
+msgstr "差值"
 
 #: app/widgets/gimpwidgets-constructors.c:63
 #: app/widgets/gimpwidgets-constructors.c:96

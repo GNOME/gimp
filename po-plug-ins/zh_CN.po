@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 16:11+0100\n"
+"POT-Creation-Date: 2004-03-27 11:55+0800\n"
 "PO-Revision-Date: 2004-03-12 10:00+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:533 plug-ins/gfig/gfig.c:2903
@@ -25,9 +25,9 @@ msgid ""
 "to your %s file."
 msgstr ""
 "gimprc 中没有 %s ：\n"
-"你需要增加一项比如\n"
+"您需要增加一项比如\n"
 "(%s \"%s\")\n"
-"到你的 %s 文件。"
+"到您的 %s 文件。"
 
 #: plug-ins/FractalExplorer/Dialogs.c:553
 #: plug-ins/FractalExplorer/Dialogs.c:1637 plug-ins/common/AlienMap.c:1149
@@ -37,27 +37,6 @@ msgid "About"
 msgstr "关于"
 
 #. Preview
-#. Create the Preview
-#. ==================
-#. Create the Preview
-#. Preview area, top of column
-#.
-#. * Preview window...
-#.
-#. Preview
-#. hbox created and packed into the dialog
-#. make a nice frame
-#. Preview
-#.
-#. * Preview window...
-#.
-#. Preview
-#.
-#. *	Preview
-#.
-#. Previews: frame
-#. * Misc: Preview settings *
-#. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1126
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
 #: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
@@ -84,7 +63,7 @@ msgstr "实时预览"
 
 #: plug-ins/FractalExplorer/Dialogs.c:630
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr "如果你启用这个选项，预览将会自动重画"
+msgstr "如果您启用这个选项，预览将会自动重画"
 
 #: plug-ins/FractalExplorer/Dialogs.c:633
 msgid "Redraw"
@@ -301,7 +280,6 @@ msgid "Color Function"
 msgstr "颜色函数"
 
 #. Redmode radio frame
-#. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
 #: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
 msgid "Red"
@@ -361,17 +339,15 @@ msgstr "反转"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr "如果你启用这个选项，高的颜色值与低的颜色值将被对应互换"
+msgstr "如果您启用这个选项，高的颜色值与低的颜色值将被对应互换"
 
 #. Greenmode radio frame
-#. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
 #: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "绿色"
 
 #. Bluemode radio frame
-#. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
 #: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
 msgid "Blue"
@@ -454,7 +430,6 @@ msgid "Save Fractal Parameters"
 msgstr "保存分形参数"
 
 #. Do not rely on librsvg setting GError on failure!
-#. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
 #: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
@@ -499,7 +474,7 @@ msgstr "正在绘制分形..."
 #: plug-ins/gflare/gflare.c:3109
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr "你确认要从列表和磁盘中删除“%s”吗？"
+msgstr "您确认要从列表和磁盘中删除“%s”吗？"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:767
 msgid "Delete Fractal"
@@ -1170,11 +1145,6 @@ msgid "Bad colormap"
 msgstr "错误的颜色表"
 
 #. Set up progress display
-#. put up a progress bar
-#. max. rows allocated
-#. column, highest column ever used
-#. -1  assume fsel is not available (and not attached to any drawable)
-#. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
@@ -1241,8 +1211,6 @@ msgid "Cannot operate on unknown image types."
 msgstr "无法对未知的图像类型操作。"
 
 #. And let's begin the progress
-#. init the progress meter
-#. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1002
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
@@ -1961,35 +1929,6 @@ msgstr "对齐可见图层"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
-#. parameter settings
-#.
-#. * Filter type controls...
-#.
-#. parameter settings
-#. filter routine, initial pass
-#. Parameter settings
-#. left side of the UI is done
-#. right side
-#. parameter settings
-#. preview noisify
-#. parameter settings
-#. Controls
-#.
-#. *  Parameter settings
-#. *
-#. *  First set up the basic containers, label them, etc.
-#.
-#. Parameter Settings
-#. parameter settings
-#.
-#. * Sharpness control...
-#.
-#. parameter settings
-#. Parameter settings
-#. main parameter frame
-#. Parameter settings
-#. Controls
-#. parameter settings
 #: plug-ins/common/align_layers.c:410 plug-ins/common/apply_lens.c:378
 #: plug-ins/common/blinds.c:337 plug-ins/common/blur.c:604
 #: plug-ins/common/bumpmap.c:1011 plug-ins/common/checkerboard.c:326
@@ -2912,8 +2851,6 @@ msgid "Automatic Pre_view"
 msgstr "自动更新预览(_V)"
 
 #. Options area, bottom of column
-#. the vertical box and its toggle buttons
-#. Options section
 #: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:527
 #: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 msgid "Options"
@@ -3579,7 +3516,7 @@ msgstr "正在组合图像..."
 
 #: plug-ins/common/film.c:444 plug-ins/common/guillotine.c:176
 msgid "Untitled"
-msgstr "Untitled"
+msgstr "无标题"
 
 #. ** Get a RGB copy of the source region **
 #: plug-ins/common/film.c:712
@@ -3756,7 +3693,7 @@ msgstr "<Image>/滤镜(R)/模糊(B)/高斯模糊(IIR)(_I)..."
 
 #: plug-ins/common/gauss_iir.c:236 plug-ins/common/gauss_rle.c:229
 msgid "You must specify either horizontal or vertical (or both)"
-msgstr "你必须指定水平或垂直的值(或者都指定)"
+msgstr "您必须指定水平或垂直的值(或者都指定)"
 
 #: plug-ins/common/gauss_iir.c:285 plug-ins/common/gauss_iir.c:343
 #: plug-ins/common/gauss_iir.c:423
@@ -3815,14 +3752,14 @@ msgid "Error in GIMP brush file '%s'"
 msgstr "GIMP 画笔文件“%s”有错"
 
 #: plug-ins/common/gbr.c:395
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "PSD 文件中存在无效的 UTF-8 字符串"
+msgstr "画笔文件“%s”中存在无效的 UTF-8 字符串。"
 
 #: plug-ins/common/gbr.c:401 plug-ins/common/gih.c:478
 #: plug-ins/common/gih.c:1118 plug-ins/gflare/gflare.c:2985
 msgid "Unnamed"
-msgstr "Unnamed"
+msgstr "未命名"
 
 #: plug-ins/common/gbr.c:573
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
@@ -3852,7 +3789,7 @@ msgstr "GEE-SLIME"
 
 #: plug-ins/common/gee.c:172 plug-ins/common/gee_zoom.c:206
 msgid "** Thank you for choosing GIMP **"
-msgstr "** 感谢你选择 GIMP **"
+msgstr "** 感谢您选择 GIMP **"
 
 #: plug-ins/common/gee.c:180
 msgid ""
@@ -3927,12 +3864,12 @@ msgid ""
 "You may choose whether to crop all of the layers to\n"
 "the image borders, or cancel this save."
 msgstr ""
-"你试图保存为 GIF 的图像含有超出\n"
+"您试图保存为 GIF 的图像含有超出\n"
 "图像实际边界的图层。这在 GIF 中\n"
 "是不允许的，我担心。\n"
 "\n"
 "\n"
-"你可以选择裁掉所有图层中超出图像\n"
+"您可以选择裁掉所有图层中超出图像\n"
 "边界的部分，或者放弃保存。"
 
 #: plug-ins/common/gif.c:1261
@@ -4202,8 +4139,8 @@ msgid ""
 "HTML file which will most likely\n"
 "crash your browser."
 msgstr ""
-"你正试图创建一个很可能让\n"
-"你的浏览器崩溃的巨大的\n"
+"您正试图创建一个很可能让\n"
+"您的浏览器崩溃的巨大的\n"
 "HTML 文件。"
 
 #. HTML Page Options
@@ -4259,7 +4196,7 @@ msgstr "标题(_A)"
 
 #: plug-ins/common/gtm.c:514
 msgid "Check if you would like to have the table captioned."
-msgstr "如果你希望让表格带有标题，请选中该项。"
+msgstr "如果您希望让表格带有标题，请选中该项。"
 
 #: plug-ins/common/gtm.c:529
 msgid "The text for the table caption."
@@ -5157,7 +5094,6 @@ msgid "_Factory Defaults"
 msgstr "工厂默认值(_F)"
 
 #. anti-alias control
-#. 2
 #: plug-ins/common/newsprint.c:1390 plug-ins/gfig/gfig.c:2406
 msgid "Antialiasing"
 msgstr "边缘平滑"
@@ -5947,11 +5883,11 @@ msgstr "幅度(_M)："
 
 #: plug-ins/common/rotate.c:421
 msgid "You can not rotate the whole image if there's a selection."
-msgstr "如果存在选区，你将不能旋转整个图像。"
+msgstr "如果存在选区，您将不能旋转整个图像。"
 
 #: plug-ins/common/rotate.c:428
 msgid "You can not rotate the whole image if there's a floating selection."
-msgstr "如果存在浮动选区，你将不能旋转整个图像。"
+msgstr "如果存在浮动选区，您将不能旋转整个图像。"
 
 #: plug-ins/common/rotate.c:439
 msgid "Sorry, channels and masks can not be rotated."
@@ -6102,7 +6038,6 @@ msgid "Error obtaining Screen Shot"
 msgstr "获取屏幕抓图出错"
 
 #. single window
-#. Action area
 #: plug-ins/common/screenshot.c:525 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "抓取"
@@ -7579,7 +7514,6 @@ msgstr "风"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#. Algorithm Choice
 #: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:297
 msgid "Style"
 msgstr "风格"
@@ -7751,7 +7685,7 @@ msgid ""
 "\n"
 "Please convert it to a black and white (1-bit) indexed image and try again."
 msgstr ""
-"你正试图保存为 XBM 的图像含有两种以上的颜色。\n"
+"您正试图保存为 XBM 的图像含有两种以上的颜色。\n"
 "\n"
 "请将它转换为黑白(1 位)索引图像并重试。"
 
@@ -7760,7 +7694,7 @@ msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
 msgstr ""
-"你不能对一幅没有 alpha 通道的\n"
+"您不能对一幅没有 alpha 通道的\n"
 "图像保存光标掩码。"
 
 #: plug-ins/common/xbm.c:1147
@@ -8722,7 +8656,7 @@ msgstr "删除几何图形"
 
 #: plug-ins/gfig/gfig.c:3883
 msgid "Editing read-only object - you will not be able to save it"
-msgstr "编辑只读对象 - 你将不能对它进行保存"
+msgstr "编辑只读对象 - 您将不能对它进行保存"
 
 #. Create new entry with name + copy at end & copy object into it
 #: plug-ins/gfig/gfig.c:3982
@@ -8783,7 +8717,6 @@ msgid "(none)"
 msgstr "(没有)"
 
 #: plug-ins/gfig/gfig-preview.c:581 plug-ins/gfig/gfig-preview.c:612
-#, c-format
 msgid "<NONE>"
 msgstr "<没有>"
 
@@ -8866,9 +8799,6 @@ msgstr "默认"
 #.
 #. *  Scales
 #.
-#.
-#. *	Scales
-#.
 #: plug-ins/gflare/gflare.c:2671 plug-ins/gflare/gflare.c:3482
 #: plug-ins/gflare/gflare.c:3589 plug-ins/gflare/gflare.c:3728
 msgid "Parameters"
@@ -8892,7 +8822,7 @@ msgstr "矢量长度(_L)："
 
 #: plug-ins/gflare/gflare.c:2755
 msgid "A_daptive Supersampling"
-msgstr ""
+msgstr "自适应超级采样(_D)"
 
 #: plug-ins/gflare/gflare.c:2775
 msgid "_Max Depth:"
@@ -9604,7 +9534,7 @@ msgid ""
 "for inclusion into the next release!\n"
 msgstr ""
 "\n"
-"如果你有一些好的预设值，\n"
+"如果您有一些好的预设值，\n"
 "(或者这方面的画笔和画纸)\n"
 "欢迎把它们发给我 <vidar@prosalg.no>\n"
 "以添加到下一次发布当中！\n"
@@ -9743,7 +9673,7 @@ msgstr ""
 
 #: plug-ins/help/domain.c:168
 msgid "Please check your installation."
-msgstr "请检查你的安装。"
+msgstr "请检查您的安装。"
 
 #: plug-ins/help/domain.c:174
 #, c-format
@@ -9885,49 +9815,40 @@ msgid "Relative Probability:"
 msgstr "相对概率："
 
 #: plug-ins/ifscompose/ifscompose.c:1191
-#, fuzzy
 msgid "/Move"
-msgstr "移动"
+msgstr "/移动"
 
 #: plug-ins/ifscompose/ifscompose.c:1193
-#, fuzzy
 msgid "/Rotate\\/Scale"
-msgstr "旋转/缩放"
+msgstr "/旋转\\/缩放"
 
 #: plug-ins/ifscompose/ifscompose.c:1195
-#, fuzzy
 msgid "/Stretch"
-msgstr "拉伸"
+msgstr "/拉伸"
 
 #: plug-ins/ifscompose/ifscompose.c:1198
-#, fuzzy
 msgid "/New"
-msgstr "新建"
+msgstr "/新建"
 
 #: plug-ins/ifscompose/ifscompose.c:1200
-#, fuzzy
 msgid "/Delete"
-msgstr "删除"
+msgstr "/删除"
 
 #: plug-ins/ifscompose/ifscompose.c:1202
-#, fuzzy
 msgid "/Undo"
-msgstr "撤销"
+msgstr "/撤销"
 
 #: plug-ins/ifscompose/ifscompose.c:1204
-#, fuzzy
 msgid "/Redo"
-msgstr "重做"
+msgstr "/重做"
 
 #: plug-ins/ifscompose/ifscompose.c:1206
-#, fuzzy
 msgid "/Select All"
-msgstr "全部选择"
+msgstr "/全部选择"
 
 #: plug-ins/ifscompose/ifscompose.c:1208
-#, fuzzy
 msgid "/Recompute Center"
-msgstr "重新计算中心(_C)"
+msgstr "/重新计算中心"
 
 #: plug-ins/ifscompose/ifscompose.c:1258
 msgid "IfsCompose Options"
@@ -10103,8 +10024,8 @@ msgid ""
 "image collection of \"thumbnails\", suitable for navigation bars."
 msgstr ""
 "参考线(Guides)是图像上一些预定义的矩形区域。\n"
-"你通过给出宽度、高度和之间的距离来定义它们。\n"
-"这使你得以快速创建最通常的图像映像类型――\n"
+"您通过给出宽度、高度和之间的距离来定义它们。\n"
+"这使您得以快速创建最通常的图像映像类型――\n"
 "图像缩略图集，适用于导航条。"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:170
@@ -10141,7 +10062,7 @@ msgstr "结果参考线范围：0,0 到 0,0 (0 个区域)"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:268
 msgid "Guides"
-msgstr ""
+msgstr "参考线"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:62
 #: plug-ins/imagemap/imap_polygon.c:739
@@ -10307,7 +10228,7 @@ msgid ""
 "  Do you really want to overwrite?  "
 msgstr ""
 "文件已经存在。\n"
-"  你真的要覆盖它吗？"
+"  您真的要覆盖它吗？"
 
 #: plug-ins/imagemap/imap_file.c:134
 msgid "Save Imagemap"
@@ -10371,7 +10292,7 @@ msgstr "一些数据已改变！"
 
 #: plug-ins/imagemap/imap_main.c:739
 msgid "Do you really want to discard your changes?"
-msgstr "你真的要放弃你的修改吗？"
+msgstr "您真的要放弃您的修改吗？"
 
 #: plug-ins/imagemap/imap_main.c:947
 #, c-format
@@ -10486,9 +10407,8 @@ msgid "About ImageMap..."
 msgstr "关于图像映像..."
 
 #: plug-ins/imagemap/imap_object_popup.c:105
-#, fuzzy
 msgid "Delete Area"
-msgstr "删除渐变闪光"
+msgstr "删除区域"
 
 #: plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
@@ -11077,7 +10997,7 @@ msgstr "打印机模块："
 
 #: plug-ins/print/gimp_main_window.c:692
 msgid "Select your printer model"
-msgstr "选择你的打印机模块"
+msgstr "选择您的打印机模块"
 
 #.
 #. * PPD file.
@@ -11088,7 +11008,7 @@ msgstr "PPD 文件："
 
 #: plug-ins/print/gimp_main_window.c:747
 msgid "Enter the correct PPD filename for your printer"
-msgstr "输入你的打印机的正确的 PPD 文件名"
+msgstr "输入您的打印机的正确的 PPD 文件名"
 
 #: plug-ins/print/gimp_main_window.c:750
 msgid "Browse"
@@ -11096,7 +11016,7 @@ msgstr "浏览"
 
 #: plug-ins/print/gimp_main_window.c:756
 msgid "Choose the correct PPD filename for your printer"
-msgstr "选择你的打印机的正确的 PPD 文件名"
+msgstr "选择您的打印机的正确的 PPD 文件名"
 
 #.
 #. * Print command.
@@ -11111,7 +11031,7 @@ msgid ""
 "remove the `-l' or `-oraw' from the command string, or printing will "
 "probably fail!"
 msgstr ""
-"输入打印到你的打印机的正确的命令。注意：请不要去掉命令字符串中的“-l”或“-"
+"输入打印到您的打印机的正确的命令。注意：请不要去掉命令字符串中的“-l”或“-"
 "oraw”，否则打印很可能会失败！"
 
 #.
@@ -11138,7 +11058,7 @@ msgstr "打印机名字："
 
 #: plug-ins/print/gimp_main_window.c:846
 msgid "Enter the name you wish to give this logical printer"
-msgstr "输入你的逻辑打印机的名字"
+msgstr "输入您的逻辑打印机的名字"
 
 #: plug-ins/print/gimp_main_window.c:859
 msgid "About Gimp-Print "

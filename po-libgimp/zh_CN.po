@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
+"POT-Creation-Date: 2004-03-27 11:56+0800\n"
 "PO-Revision-Date: 2004-03-12 19:09+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 
 #: libgimp/gimpbrushmenu.c:132
@@ -158,11 +158,11 @@ msgstr "导出(_E)"
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "你的图像在保存为 %s 之前应该先进行导出，因为："
+msgstr "您的图像在保存为 %s 之前应该先进行导出，因为："
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
-msgstr "导出转换不会改变你原来的图像。"
+msgstr "导出转换不会改变您原来的图像。"
 
 #: libgimp/gimpexport.c:665
 #, c-format
@@ -170,7 +170,7 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"你将要把图层蒙板保存为 %s。\n"
+"您将要把图层蒙板保存为 %s。\n"
 "这将不会保存可见的图层。"
 
 #: libgimp/gimpexport.c:671
@@ -179,7 +179,7 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"你将要把通道(已保存的选区)保存为 %s。\n"
+"您将要把通道(已保存的选区)保存为 %s。\n"
 "这将不会保存可见的图层。"
 
 #: libgimp/gimpfontmenu.c:89
@@ -408,20 +408,18 @@ msgid "GigaBytes"
 msgstr "G 字节"
 
 #: libgimpwidgets/gimppatheditor.c:243
-#, fuzzy
 msgid "Writable"
-msgstr "三角"
+msgstr "可写"
 
 #: libgimpwidgets/gimppatheditor.c:252
-#, fuzzy
 msgid "Folder"
-msgstr "选择文件夹"
+msgstr "文件夹"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "点击滴管，然后点击你的屏幕上任何位置的颜色即可选取该颜色。"
+msgstr "点击滴管，然后点击您的屏幕上任何位置的颜色即可选取该颜色。"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -465,7 +463,7 @@ msgstr "行距(_I)"
 
 #: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
-msgstr "更改大小(_R)"
+msgstr "改变大小(_R)"
 
 #: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
@@ -507,7 +505,7 @@ msgstr "因子"
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr "使用这个值作为随机数生成种子 - 这将允许你重复一个指定的“随机”操作"
+msgstr "使用这个值作为随机数生成种子 - 这将允许您重复一个指定的“随机”操作"
 
 #: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
@@ -518,9 +516,8 @@ msgid "Seed random number generator with a generated random number"
 msgstr "以生成的随机数作为随机数生成器的种子"
 
 #: libgimpwidgets/gimpwidgets.c:1312
-#, fuzzy
 msgid "_Randomize"
-msgstr "随机"
+msgstr "随机(_R)"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
