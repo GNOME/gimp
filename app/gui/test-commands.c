@@ -311,7 +311,7 @@ test_serialize_context_cmd_callback (GtkWidget *widget,
                                &error))
     {
       g_message ("Serializing Context failed:\n%s", error->message);
-      g_clear_error (&error);
+      g_error_free (error);
     }
 
   g_free (filename);
@@ -335,7 +335,7 @@ test_deserialize_context_cmd_callback (GtkWidget *widget,
                                  &error))
     {
       g_message ("Deserializing Context failed:\n%s", error->message);
-      g_clear_error (&error);
+      g_error_free (error);
     }
 
   g_free (filename);

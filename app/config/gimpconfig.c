@@ -416,7 +416,7 @@ gimp_config_scanner_message (GScanner *scanner,
 
   g_set_error (error,
                GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-               _("Error while parsing '%s' in line %d:\n %s"), 
+               _("Error while parsing '%s' in line %d:\n%s"), 
                scanner->input_name, scanner->line, message);
 }
 

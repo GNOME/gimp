@@ -1975,7 +1975,7 @@ preferences_dialog_create (Gimp *gimp)
 
   /*  The maximum size of a new image  */  
   adjustment = gtk_adjustment_new (gimprc.max_new_image_size, 
-				   0, (4069.0 * 1024 * 1024 - 1), 
+				   0, G_MAXULONG, 
 				   1.0, 1.0, 0.0);
   hbox = gimp_mem_size_entry_new (GTK_ADJUSTMENT (adjustment));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -2632,7 +2632,7 @@ preferences_dialog_create (Gimp *gimp)
 
   /*  The tile cache size  */
   adjustment = gtk_adjustment_new (edit_tile_cache_size, 
-				   0, (4069.0 * 1024 * 1024 - 1), 
+				   0, G_MAXULONG, 
 				   1.0, 1.0, 0.0);
   hbox = gimp_mem_size_entry_new (GTK_ADJUSTMENT (adjustment));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,

@@ -1,5 +1,19 @@
 2002-05-28  Sven Neumann  <sven@gimp.org>
 
+	* app/config/test-config.c
+	* app/gui/test-commands.c: use g_error_free() so we crash if our
+	GimpConfig functions return FALSE and don't set an error.
+
+	* app/widgets/gimpdevices.c: don't warn if devicerc was not found.
+
+	* app/gui/preferences-dialog.c: use G_MAXULONG as upper limit for
+	the mem_size entries.
+
+	* libgimpwidgets/gimpwidgets.c (gimp_mem_size_entry): use gulong
+	and set the range of the spinbutton's adjustment properly.
+
+2002-05-28  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-types.c: derive GIMP_TYPE_MEMSIZE from
 	G_TYPE_ULONG. Should probably be even G_TYPE_UINT64 but we use
 	strtol which can only handle unsigned long int.

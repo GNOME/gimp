@@ -159,7 +159,7 @@ main (int   argc,
                                  "gimpconfig.c", NULL, &error))
     {
       g_print (" OK, failed. The error was:\n %s\n", error->message);
-      g_clear_error (&error);
+      g_error_free (error);
     }
   else
     {

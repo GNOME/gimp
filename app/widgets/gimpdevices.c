@@ -18,10 +18,6 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <stdio.h>
-#include <string.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -92,10 +88,9 @@ gimp_devices_init (Gimp                   *gimp,
     {
       device = (GdkDevice *) list->data;
 
-      g_print ("############# adding %s\n", device->name);
-
       device_info = gimp_device_info_new (gimp, device->name);
-      gimp_container_add (manager->device_info_list, GIMP_OBJECT (device_info));
+      gimp_container_add (manager->device_info_list,
+                          GIMP_OBJECT (device_info));
       g_object_unref (G_OBJECT (device_info));
 
       gimp_device_info_set_from_device (device_info, device);
@@ -139,9 +134,10 @@ gimp_devices_restore (Gimp *gimp)
                                  gimp,
                                  &error))
     {
-      g_message ("Could not read devicerc: %s", error->message);
-      g_clear_error (&error);
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+        g_message (error->message);
 
+      g_error_free (error);
       /* don't bail out here */
     }
 
@@ -183,8 +179,8 @@ gimp_devices_save (Gimp *gimp)
                                NULL,
                                &error))
     {
-      g_message ("Could not write devicerc: %s", error->message);
-      g_clear_error (&error);
+      g_message (error->message);
+      g_error_free (error);
     }
 
   g_free (filename);
