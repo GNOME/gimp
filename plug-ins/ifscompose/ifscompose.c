@@ -41,11 +41,6 @@
 #include <string.h>
 #include <errno.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -129,21 +124,21 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget *area;
-  GtkWidget *op_menu;
-  GdkPixmap *pixmap;
+  GtkWidget    *area;
+  GtkUIManager *ui_manager;
+  GdkPixmap    *pixmap;
 
-  DesignOp   op;
-  gdouble    op_x;
-  gdouble    op_y;
-  gdouble    op_xcenter;
-  gdouble    op_ycenter;
-  gdouble    op_center_x;
-  gdouble    op_center_y;
-  guint      button_state;
-  gint       num_selected;
+  DesignOp      op;
+  gdouble       op_x;
+  gdouble       op_y;
+  gdouble       op_xcenter;
+  gdouble       op_ycenter;
+  gdouble       op_center_x;
+  gdouble       op_center_y;
+  guint         button_state;
+  gint          num_selected;
 
-  GdkGC     *selected_gc;
+  GdkGC        *selected_gc;
 } IfsDesignArea;
 
 typedef struct
@@ -167,20 +162,6 @@ typedef struct
   GtkWidget *simple_button;
   GtkWidget *full_button;
   GtkWidget *current_frame;
-
-  GtkWidget *move_button;
-  gint       move_handler;
-  GtkWidget *rotate_button;
-  gint       rotate_handler;
-  GtkWidget *stretch_button;
-  gint       stretch_handler;
-
-  GtkWidget *undo_button;
-  GtkWidget *undo_menu_item;
-  GtkWidget *redo_button;
-  GtkWidget *redo_menu_item;
-  GtkWidget *delete_button;
-  GtkWidget *delete_menu_item;
 
   GtkWidget *preview;
   guchar    *preview_data;
@@ -216,29 +197,35 @@ static void      run    (const gchar      *name,
                          GimpParam       **return_vals);
 
 /*  user interface functions  */
-static gint       ifs_compose_dialog     (GimpDrawable *drawable);
-static void       ifs_options_dialog     (GtkWidget    *parent);
-static GtkWidget *ifs_compose_trans_page (void);
-static GtkWidget *ifs_compose_color_page (void);
-static void       design_op_menu_create  (GtkWidget *window);
-static void       design_area_create     (GtkWidget *window, gint design_width,
-                                          gint design_height);
+static gint           ifs_compose_dialog          (GimpDrawable *drawable);
+static void           ifs_options_dialog          (GtkWidget    *parent);
+static GtkWidget    * ifs_compose_trans_page      (void);
+static GtkWidget    * ifs_compose_color_page      (void);
+static GtkUIManager * design_op_menu_create       (GtkWidget   *window);
+static void           design_op_actions_update    (void);
+static GtkWidget    * design_op_action_button_new (const gchar *path,
+                                                   const gchar *stock_id);
+static GtkWidget    * design_op_action_toggle_new (const gchar *path);
+static void           design_area_create          (GtkWidget   *window,
+                                                   gint         design_width,
+                                                   gint         design_height);
 
 /* functions for drawing design window */
 static void update_values                   (void);
-static void set_current_element             (gint index);
-static void design_area_realize             (GtkWidget *widget);
-static gint design_area_expose              (GtkWidget *widget,
-                                             GdkEventExpose *event);
-static gint design_area_button_press        (GtkWidget *widget,
-                                             GdkEventButton *event);
-static gint design_area_button_release      (GtkWidget *widget,
-                                             GdkEventButton *event);
-static void design_area_select_all_callback (GtkWidget *w, gpointer data);
-static gint design_area_configure           (GtkWidget *widget,
+static void set_current_element             (gint               index);
+static void design_area_realize             (GtkWidget         *widget);
+static gint design_area_expose              (GtkWidget         *widget,
+                                             GdkEventExpose    *event);
+static gint design_area_button_press        (GtkWidget         *widget,
+                                             GdkEventButton    *event);
+static gint design_area_button_release      (GtkWidget         *widget,
+                                             GdkEventButton    *event);
+static void design_area_select_all_callback (GtkWidget         *widget,
+                                             gpointer           data);
+static gint design_area_configure           (GtkWidget         *widget,
                                              GdkEventConfigure *event);
-static gint design_area_motion              (GtkWidget *widget,
-                                             GdkEventMotion *event);
+static gint design_area_motion              (GtkWidget         *widget,
+                                             GdkEventMotion    *event);
 static void design_area_redraw              (void);
 
 /* Undo ring functions */
@@ -278,8 +265,9 @@ static void value_pair_scale_callback     (GtkAdjustment *adjustment,
                                            ValuePair *value_pair);
 
 static void auto_preview_callback         (GtkWidget *widget, gpointer data);
-static void design_op_callback            (GtkWidget *widget, gpointer data);
-static void design_op_update_callback     (GtkWidget *widget, gpointer data);
+static void design_op_update_callback     (GtkRadioAction *action,
+                                           GtkRadioAction *current,
+                                           gpointer        data);
 static void flip_check_button_callback    (GtkWidget *widget, gpointer data);
 static gint preview_idle_render           (gpointer   data);
 
@@ -769,12 +757,8 @@ ifs_compose_dialog (GimpDrawable *drawable)
   GtkWidget *aspect_frame;
   GtkWidget *notebook;
   GtkWidget *page;
-
-  gint design_width;
-  gint design_height;
-
-  design_width  = drawable->width;
-  design_height = drawable->height;
+  gint       design_width  = drawable->width;
+  gint       design_height = drawable->height;
 
   if (design_width > design_height)
     {
@@ -793,19 +777,13 @@ ifs_compose_dialog (GimpDrawable *drawable)
         }
     }
 
-  ifsD = g_new (IfsDialog, 1);
-  ifsD->auto_preview  = TRUE;
-  ifsD->drawable_width = drawable->width;
+  ifsD = g_new0 (IfsDialog, 1);
+
+  ifsD->auto_preview    = TRUE;
+  ifsD->drawable_width  = drawable->width;
   ifsD->drawable_height = drawable->height;
-  ifsD->preview_width = design_width;
-  ifsD->preview_height = design_height;
-
-  ifsD->selected_orig = NULL;
-
-  ifsD->preview_data = NULL;
-  ifsD->preview_iterations = 0;
-
-  ifsD->in_update = 0;
+  ifsD->preview_width   = design_width;
+  ifsD->preview_height  = design_height;
 
   gimp_ui_init ("ifscompose", TRUE);
 
@@ -876,43 +854,26 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   /* Iterations and preview options */
 
-  hbox = gtk_hbox_new (TRUE, 4);
+  hbox = gtk_hbox_new (TRUE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 
   alignment = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), alignment, TRUE, TRUE, 0);
 
-  util_hbox = gtk_hbox_new (FALSE, 4);
+  util_hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (alignment), util_hbox);
 
-  ifsD->move_button = gtk_toggle_button_new_with_label (_("Move"));
-  gtk_box_pack_start (GTK_BOX (util_hbox), ifsD->move_button,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (ifsD->move_button);
-  ifsD->move_handler =
-    g_signal_connect (ifsD->move_button, "toggled",
-                      G_CALLBACK (design_op_callback),
-                      GINT_TO_POINTER (OP_TRANSLATE));
+  button = design_op_action_toggle_new ("/ui/ifs-compose/move");
+  gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-  ifsD->rotate_button = gtk_toggle_button_new_with_label (_("Rotate/scale"));
-  gtk_box_pack_start (GTK_BOX (util_hbox), ifsD->rotate_button,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (ifsD->rotate_button);
-  ifsD->rotate_handler =
-    g_signal_connect (ifsD->rotate_button, "toggled",
-                      G_CALLBACK (design_op_callback),
-                      GINT_TO_POINTER (OP_ROTATE));
+  button = design_op_action_toggle_new ("/ui/ifs-compose/rotate");
+  gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-  ifsD->stretch_button = gtk_toggle_button_new_with_label (_("Stretch"));
-  gtk_box_pack_start (GTK_BOX (util_hbox), ifsD->stretch_button,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (ifsD->stretch_button);
-  ifsD->stretch_handler =
-    g_signal_connect (ifsD->stretch_button, "toggled",
-                      G_CALLBACK (design_op_callback),
-                      GINT_TO_POINTER (OP_STRETCH));
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ifsD->move_button), TRUE);
+  button = design_op_action_toggle_new ("/ui/ifs-compose/stretch");
+  gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
   gtk_widget_show (alignment);
   gtk_widget_show (util_hbox);
@@ -920,7 +881,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
   alignment = gtk_alignment_new (1.0, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), alignment, TRUE, TRUE, 0);
 
-  util_hbox = gtk_hbox_new (FALSE, 4);
+  util_hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (alignment), util_hbox);
 
   button = gtk_button_new_with_label (_("Render options"));
@@ -951,55 +912,38 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gtk_widget_show (hbox);
 
   /* second util row */
-  hbox = gtk_hbox_new (TRUE, 4);
+  hbox = gtk_hbox_new (TRUE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 
   alignment = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), alignment, TRUE, TRUE, 0);
 
-  util_hbox = gtk_hbox_new (FALSE, 4);
+  util_hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (alignment), util_hbox);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_NEW);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (ifs_compose_new_callback), NULL);
+  button = design_op_action_button_new ("/ui/ifs-compose/new", GTK_STOCK_NEW);
   gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  ifsD->delete_button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
-  g_signal_connect (ifsD->delete_button, "clicked",
-                    G_CALLBACK (ifs_compose_delete_callback), NULL);
-  gtk_box_pack_start (GTK_BOX (util_hbox), ifsD->delete_button, TRUE, TRUE, 0);
-  gtk_widget_set_sensitive (ifsD->delete_button, ifsvals.num_elements > 2);
-  gtk_widget_show (ifsD->delete_button);
-
-  ifsD->undo_button = gtk_button_new_from_stock (GTK_STOCK_UNDO);
-  gtk_box_pack_start (GTK_BOX (util_hbox), ifsD->undo_button,
-                      TRUE, TRUE, 0);
-  g_signal_connect (ifsD->undo_button, "clicked",
-                    G_CALLBACK (undo), NULL);
-  gtk_widget_set_sensitive (ifsD->undo_button, FALSE);
-  gtk_widget_show (ifsD->undo_button);
-
-  ifsD->redo_button = gtk_button_new_from_stock (GTK_STOCK_REDO);
-  gtk_box_pack_start (GTK_BOX (util_hbox), ifsD->redo_button,
-                      TRUE, TRUE, 0);
-  g_signal_connect (ifsD->redo_button, "clicked",
-                    G_CALLBACK (redo), NULL);
-  gtk_widget_set_sensitive (ifsD->redo_button, FALSE);
-  gtk_widget_show (ifsD->redo_button);
-
-  button = gtk_button_new_with_mnemonic (_("Select _all"));
-  gtk_box_pack_start (GTK_BOX (util_hbox), button,
-                      TRUE, TRUE, 0);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (design_area_select_all_callback), NULL);
+  button = design_op_action_button_new ("/ui/ifs-compose/delete",
+                                        GTK_STOCK_DELETE);
+  gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_mnemonic (_("Recompute _center"));
+  button = design_op_action_button_new ("/ui/ifs-compose/undo", GTK_STOCK_UNDO);
   gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (recompute_center_cb), NULL);
+  gtk_widget_show (button);
+
+  button = design_op_action_button_new ("/ui/ifs-compose/redo", GTK_STOCK_REDO);
+  gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  button = design_op_action_button_new ("/ui/ifs-compose/select-all", NULL);
+  gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  button = design_op_action_button_new ("/ui/ifs-compose/center", NULL);
+  gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   gtk_widget_show (util_hbox);
@@ -1036,7 +980,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   /* The probability entry */
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   label = gtk_label_new (_("Relative probability:"));
@@ -1133,7 +1077,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   gtk_main ();
 
-  g_object_unref (ifsDesign->op_menu);
+  g_object_unref (ifsDesign->ui_manager);
 
   if (dialog)
     gtk_widget_destroy (dialog);
@@ -1155,12 +1099,9 @@ design_area_create (GtkWidget *window,
                     gint       design_width,
                     gint       design_height)
 {
-  ifsDesign = g_new (IfsDesignArea, 1);
+  ifsDesign = g_new0 (IfsDesignArea, 1);
 
-  ifsDesign->op           = OP_TRANSLATE;
-  ifsDesign->button_state = 0;
-  ifsDesign->pixmap       = NULL;
-  ifsDesign->selected_gc  = NULL;
+  ifsDesign->op = OP_TRANSLATE;
 
   ifsDesign->area = gtk_drawing_area_new ();
   gtk_widget_set_size_request (ifsDesign->area, design_width, design_height);
@@ -1190,75 +1131,141 @@ design_area_create (GtkWidget *window,
                          GDK_POINTER_MOTION_MASK |
                          GDK_POINTER_MOTION_HINT_MASK);
 
-  design_op_menu_create (window);
+  ifsDesign->ui_manager = design_op_menu_create (window);
+  design_op_actions_update ();
+}
+
+static GtkUIManager *
+design_op_menu_create (GtkWidget *window)
+{
+  static GtkActionEntry actions[] =
+  {
+    { "new",        GTK_STOCK_NEW,    NULL,                "<control>N", NULL,
+      G_CALLBACK (ifs_compose_new_callback)
+    },
+    { "delete",     GTK_STOCK_DELETE, NULL,                "<control>D", NULL,
+      G_CALLBACK (ifs_compose_delete_callback)
+    },
+    { "undo",       GTK_STOCK_UNDO,   NULL,                "<control>Z", NULL,
+      G_CALLBACK (undo)
+    },
+    { "redo",       GTK_STOCK_REDO,   NULL,                "<control>Y", NULL,
+      G_CALLBACK (redo)
+    },
+    { "select-all", NULL,             "Select _All",       "<control>A", NULL,
+      G_CALLBACK (design_area_select_all_callback)
+    },
+    { "center",     NULL,             "Recompute _Center", "<control>C", NULL,
+      G_CALLBACK (recompute_center_cb)
+    }
+  };
+  static GtkRadioActionEntry radio_actions[] =
+  {
+    { "move",    NULL, N_("Move"),           "M", NULL, OP_TRANSLATE },
+    { "rotate",  NULL, N_("Rotate / Scale"), "R", NULL, OP_ROTATE    },
+    { "stretch", NULL, N_("Stretch"),        "S", NULL, OP_STRETCH   }
+  };
+
+  GtkUIManager   *ui_manager = gtk_ui_manager_new ();
+  GtkActionGroup *group      = gtk_action_group_new ("Actions");
+
+  gtk_action_group_add_actions (group,
+                                actions,
+                                G_N_ELEMENTS (actions),
+                                NULL);
+  gtk_action_group_add_radio_actions (group,
+                                      radio_actions,
+                                      G_N_ELEMENTS (radio_actions),
+                                      ifsDesign->op,
+                                      G_CALLBACK (design_op_update_callback),
+                                      NULL);
+
+  gtk_window_add_accel_group (GTK_WINDOW (window),
+                              gtk_ui_manager_get_accel_group (ui_manager));
+
+  gtk_ui_manager_insert_action_group (ui_manager, group, -1);
+  g_object_unref (group);
+
+  gtk_ui_manager_add_ui_from_string (ui_manager,
+                                     "<ui>"
+                                     "  <popup name=\"ifs-compose\">"
+                                     "    <menuitem action=\"move\" />"
+                                     "    <menuitem action=\"rotate\" />"
+                                     "    <menuitem action=\"stretch\" />"
+                                     "    <separator />"
+                                     "    <menuitem action=\"new\" />"
+                                     "    <menuitem action=\"delete\" />"
+                                     "    <menuitem action=\"undo\" />"
+                                     "    <menuitem action=\"redo\" />"
+                                     "    <menuitem action=\"select-all\" />"
+                                     "    <menuitem action=\"center\" />"
+                                     "  </popup>"
+                                     "</ui>",
+                                     -1, NULL);
+
+  return ui_manager;
 }
 
 static void
-design_op_menu_create (GtkWidget *window)
+design_op_actions_update (void)
 {
-  static GtkItemFactoryEntry menu_items[] = {
-    { N_("/Move"),             "M",          design_op_update_callback,
-      OP_TRANSLATE, "<RadioItem>", NULL },
-    { N_("/Rotate\\/Scale"),   "R",          design_op_update_callback,
-      OP_ROTATE,    "/Move",       NULL },
-    { N_("/Stretch"),          "S",          design_op_update_callback,
-      OP_STRETCH,   "/Move",       NULL },
-    { "/sep1", NULL, NULL, 0, "<Separator>", NULL },
-    { N_("/New"),              "<control>N", ifs_compose_new_callback,
-      0,            "<StockItem>", GTK_STOCK_NEW },
-    { N_("/Delete"),           "<control>D", ifs_compose_delete_callback,
-      0,            "<StockItem>", GTK_STOCK_DELETE },
-    { N_("/Undo"),             "<control>Z", undo,
-      0,            "<StockItem>", GTK_STOCK_UNDO },
-    { N_("/Redo"),             "<control>R", redo,
-      0,            "<StockItem>", GTK_STOCK_REDO },
-    { N_("/Select All"),       "<control>A", design_area_select_all_callback,
-      0,            NULL,          NULL },
-    { N_("/Recompute Center"), "<control>C", recompute_center_cb,
-      0,            NULL,          NULL },
-  };
+  g_object_set (gtk_ui_manager_get_action (ifsDesign->ui_manager,
+                                           "/ui/ifs-compose/undo"),
+                "sensitive", undo_cur >= 0,
+                NULL);
+  g_object_set (gtk_ui_manager_get_action (ifsDesign->ui_manager,
+                                           "/ui/ifs-compose/redo"),
+                "sensitive", undo_cur != undo_num - 1,
+                NULL);
+  g_object_set (gtk_ui_manager_get_action (ifsDesign->ui_manager,
+                                           "/ui/ifs-compose/delete"),
+                "sensitive", ifsvals.num_elements > 2,
+                NULL);
+}
 
-  GtkAccelGroup  *accel_group;
-  GtkItemFactory *item_factory;
+static GtkWidget *
+design_op_action_toggle_new (const gchar *path)
+{
+  GtkWidget *button = gtk_toggle_button_new ();
+  GtkAction *action = gtk_ui_manager_get_action (ifsDesign->ui_manager, path);
 
-  accel_group = gtk_accel_group_new ();
-  gtk_window_add_accel_group (GTK_WINDOW (window), accel_group);
+  gtk_action_connect_proxy (action, button);
 
-  item_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<main>", accel_group);
-  gtk_item_factory_set_translate_func (item_factory,
-                                       (GtkTranslateFunc) gettext, NULL, NULL);
-  gtk_item_factory_create_items (item_factory,
-                                 G_N_ELEMENTS (menu_items), menu_items, NULL);
+  return button;
+}
 
-  ifsDesign->op_menu = gtk_item_factory_get_widget (item_factory, "<main>");
-  g_object_ref (ifsDesign->op_menu);
-  gtk_object_sink (GTK_OBJECT (ifsDesign->op_menu));
-  gtk_accel_group_lock (accel_group);
+static GtkWidget *
+design_op_action_button_new (const gchar *path,
+                             const gchar *stock_id)
+{
+  GtkWidget *button = gtk_button_new ();
+  GtkAction *action = gtk_ui_manager_get_action (ifsDesign->ui_manager, path);
 
-  ifsD->undo_menu_item = gtk_item_factory_get_widget (item_factory, "/Undo");
-  gtk_widget_set_sensitive (ifsD->undo_menu_item, FALSE);
+  gtk_action_connect_proxy (action, button);
 
-  ifsD->redo_menu_item = gtk_item_factory_get_widget (item_factory, "/Redo");
-  gtk_widget_set_sensitive (ifsD->redo_menu_item, FALSE);
+  if (stock_id)
+    g_object_set (button,
+                  "label",         stock_id,
+                  "use_stock",     TRUE,
+                  "use_underline", TRUE,
+                  NULL);
 
-  ifsD->delete_menu_item = gtk_item_factory_get_widget (item_factory, "/Delete");
-  gtk_widget_set_sensitive (ifsD->delete_menu_item, ifsvals.num_elements > 2);
+  return button;
 }
 
 static void
 ifs_options_dialog (GtkWidget *parent)
 {
-  GtkWidget *table;
-  GtkWidget *label;
-
   if (!ifsOptD)
     {
+      GtkWidget *table;
+      GtkWidget *label;
+
       ifsOptD = g_new0 (IfsOptionsDialog, 1);
 
       ifsOptD->dialog =
         gimp_dialog_new (_("IfsCompose Options"), "ifscompose",
-                         parent, 0,
-                         gimp_standard_help_func, HELP_ID,
+                         parent, 0, NULL, NULL,
 
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
@@ -1343,25 +1350,24 @@ ifs_options_dialog (GtkWidget *parent)
     }
   else
     {
-      if (!GTK_WIDGET_VISIBLE (ifsOptD->dialog))
-        gtk_widget_show (ifsOptD->dialog);
+      gtk_window_present (GTK_WINDOW (ifsOptD->dialog));
     }
 }
 
 static void
 ifs_compose (GimpDrawable *drawable)
 {
-  GimpImageType type = gimp_drawable_type (drawable->drawable_id);
-  gchar   *buffer;
-  gint     width  = drawable->width;
-  gint     height = drawable->height;
-  gint     num_bands, band_height, band_y, band_no;
-  gint     i, j;
-  guchar  *data;
-  guchar  *mask = NULL;
-  guchar  *nhits;
-  guchar   rc, gc, bc;
-  GimpRGB  color;
+  GimpImageType  type   = gimp_drawable_type (drawable->drawable_id);
+  gint           width  = drawable->width;
+  gint           height = drawable->height;
+  gint           num_bands, band_height, band_y, band_no;
+  gint           i, j;
+  gchar         *buffer;
+  guchar        *data;
+  guchar        *mask = NULL;
+  guchar        *nhits;
+  guchar         rc, gc, bc;
+  GimpRGB        color;
 
   num_bands = ceil((gdouble)(width*height*SQR(ifsvals.subdivide)*5)
                    / (1024 * ifsvals.max_memory));
@@ -1404,8 +1410,9 @@ ifs_compose (GimpDrawable *drawable)
       memset(mask, 0, width*band_height*SQR(ifsvals.subdivide));
       memset(nhits, 0, width*band_height*SQR(ifsvals.subdivide));
 
-      ifs_render (elements, ifsvals.num_elements, width, height, ifsvals.iterations,
-                 &ifsvals, band_y, band_height, data, mask, nhits, FALSE);
+      ifs_render (elements,
+                  ifsvals.num_elements, width, height, ifsvals.iterations,
+                  &ifsvals, band_y, band_height, data, mask, nhits, FALSE);
 
       /* transfer the image to the drawable */
 
@@ -1421,7 +1428,9 @@ ifs_compose (GimpDrawable *drawable)
       gimp_pixel_rgn_init (&dest_rgn, drawable, 0, band_y,
                            width, band_height, TRUE, TRUE);
 
-      for (pr = gimp_pixel_rgns_register (1, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+      for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
+           pr != NULL;
+           pr = gimp_pixel_rgns_process (pr))
         {
           destrow = dest_rgn.data;
 
@@ -1441,11 +1450,13 @@ ifs_compose (GimpDrawable *drawable)
                   for (jj = 0; jj < ifsvals.subdivide; jj++)
                     {
                       ptr = data + 3 *
-                        (((j-band_y)*ifsvals.subdivide+jj)*ifsvals.subdivide*width +
+                        (((j-band_y)*ifsvals.subdivide+jj) *
+                         ifsvals.subdivide*width +
                          i*ifsvals.subdivide);
 
                       maskptr = mask +
-                        ((j-band_y)*ifsvals.subdivide+jj)*ifsvals.subdivide*width +
+                        ((j-band_y)*ifsvals.subdivide+jj) *
+                        ifsvals.subdivide*width +
                         i*ifsvals.subdivide;
                       for (ii = 0; ii < ifsvals.subdivide; ii++)
                         {
@@ -1660,20 +1671,27 @@ static gint
 design_area_button_press (GtkWidget      *widget,
                           GdkEventButton *event)
 {
-  gint i;
   gdouble width = ifsDesign->area->allocation.width;
-  gint old_current;
+  gint    i;
+  gint    old_current;
 
   gtk_widget_grab_focus (widget);
 
-  if (event->button != 1 ||
-      (ifsDesign->button_state & GDK_BUTTON1_MASK))
+  if (event->button != 1 || (ifsDesign->button_state & GDK_BUTTON1_MASK))
     {
       if (event->button == 3)
-        gtk_menu_popup (GTK_MENU (ifsDesign->op_menu),
-                        NULL, NULL, NULL, NULL,
-                        event->button, event->time);
-      return FALSE;
+        {
+          GtkWidget *menu = gtk_ui_manager_get_widget (ifsDesign->ui_manager,
+                                                       "/ifs-compose");
+
+          gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
+
+          gtk_menu_popup (GTK_MENU (menu),
+                          NULL, NULL, NULL, NULL,
+                          event->button, event->time);
+
+          return FALSE;
+        }
     }
 
   old_current = ifsD->current_element;
@@ -1910,10 +1928,7 @@ undo_begin (void)
       undo_ring[new_index].element_selected[i] = element_selected[i];
     }
 
-  gtk_widget_set_sensitive (ifsD->undo_button,    undo_cur >= 0);
-  gtk_widget_set_sensitive (ifsD->undo_menu_item, undo_cur >= 0);
-  gtk_widget_set_sensitive (ifsD->redo_button,    undo_cur != undo_num-1);
-  gtk_widget_set_sensitive (ifsD->redo_menu_item, undo_cur != undo_num-1);
+  design_op_actions_update ();
 }
 
 static void
@@ -1989,12 +2004,7 @@ undo (void)
       undo_cur--;
     }
 
-  gtk_widget_set_sensitive (ifsD->undo_button,    undo_cur >= 0);
-  gtk_widget_set_sensitive (ifsD->undo_menu_item, undo_cur >= 0);
-  gtk_widget_set_sensitive (ifsD->redo_button,    undo_cur != undo_num-1);
-  gtk_widget_set_sensitive (ifsD->redo_menu_item, undo_cur != undo_num-1);
-  gtk_widget_set_sensitive (ifsD->delete_button,    ifsvals.num_elements > 2);
-  gtk_widget_set_sensitive (ifsD->delete_menu_item, ifsvals.num_elements > 2);
+  design_op_actions_update ();
 }
 
 static void
@@ -2006,16 +2016,11 @@ redo (void)
       undo_exchange ((undo_start + undo_cur) % UNDO_LEVELS);
     }
 
-  gtk_widget_set_sensitive (ifsD->undo_button,    undo_cur >= 0);
-  gtk_widget_set_sensitive (ifsD->undo_menu_item, undo_cur >= 0);
-  gtk_widget_set_sensitive (ifsD->redo_button,    undo_cur != undo_num-1);
-  gtk_widget_set_sensitive (ifsD->redo_menu_item, undo_cur != undo_num-1);
-  gtk_widget_set_sensitive (ifsD->delete_button,    ifsvals.num_elements > 2);
-  gtk_widget_set_sensitive (ifsD->delete_menu_item, ifsvals.num_elements > 2);
+  design_op_actions_update ();
 }
 
 static void
-design_area_select_all_callback (GtkWidget *w,
+design_area_select_all_callback (GtkWidget *widget,
                                  gpointer   data)
 {
   gint i;
@@ -2031,9 +2036,9 @@ design_area_select_all_callback (GtkWidget *w,
 static void
 val_changed_update (void)
 {
-  gdouble width;
-  gdouble height;
   AffElement *cur;
+  gdouble     width;
+  gdouble     height;
 
   if (ifsD->in_update)
     return;
@@ -2069,8 +2074,7 @@ color_map_create (gchar    *name,
 {
   GtkWidget *frame;
   GtkWidget *arrow;
-
-  ColorMap *color_map = g_new (ColorMap, 1);
+  ColorMap  *color_map = g_new (ColorMap, 1);
 
   gimp_rgb_set_alpha (data, 1.0);
   color_map->color       = data;
@@ -2190,8 +2194,9 @@ value_pair_create (gpointer      data,
 {
 
   ValuePair *value_pair = g_new (ValuePair, 1);
+
   value_pair->data.d = data;
-  value_pair->type = type;
+  value_pair->type   = type;
 
   value_pair->adjustment =
     gtk_adjustment_new (1.0, lower, upper,
@@ -2288,72 +2293,11 @@ value_pair_destroy_callback (GtkWidget *widget,
 }
 
 static void
-design_op_callback (GtkWidget *widget,
-                    gpointer   data)
+design_op_update_callback (GtkRadioAction *action,
+                           GtkRadioAction *current,
+                           gpointer        data)
 {
-  DesignOp op = GPOINTER_TO_INT (data);
-
-  if (op != ifsDesign->op)
-    {
-      switch (ifsDesign->op)
-        {
-        case OP_TRANSLATE:
-          g_signal_handler_block (ifsD->move_button,
-                                  ifsD->move_handler);
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ifsD->move_button),
-                                        FALSE);
-          g_signal_handler_unblock (ifsD->move_button,
-                                    ifsD->move_handler);
-          break;
-        case OP_ROTATE:
-          g_signal_handler_block (ifsD->rotate_button,
-                                  ifsD->rotate_handler);
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ifsD->rotate_button),
-                                        FALSE);
-          g_signal_handler_unblock (ifsD->rotate_button,
-                                    ifsD->rotate_handler);
-          break;
-        case OP_STRETCH:
-          g_signal_handler_block (ifsD->stretch_button,
-                                  ifsD->stretch_handler);
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ifsD->stretch_button),
-                                        FALSE);
-          g_signal_handler_unblock (ifsD->stretch_button,
-                                    ifsD->stretch_handler);
-          break;
-        }
-      ifsDesign->op = op;
-    }
-  else
-    {
-      GTK_TOGGLE_BUTTON (widget)->active = TRUE;
-    }
-}
-
-static void
-design_op_update_callback (GtkWidget *widget,
-                           gpointer   data)
-{
-  DesignOp op = GPOINTER_TO_INT (data);
-
-  if (op == ifsDesign->op)
-    return;
-
-  switch (op)
-    {
-    case OP_TRANSLATE:
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ifsD->move_button),
-                                    TRUE);
-      break;
-    case OP_ROTATE:
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ifsD->rotate_button),
-                                    TRUE);
-      break;
-    case OP_STRETCH:
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ifsD->stretch_button),
-                                    TRUE);
-      break;
-    }
+  ifsDesign->op = gtk_radio_action_get_current_value (action);
 }
 
 static void
@@ -2370,9 +2314,8 @@ recompute_center (gboolean save_undo)
   gdouble x, y;
   gdouble center_x = 0.0;
   gdouble center_y = 0.0;
-
-  gdouble width = ifsDesign->area->allocation.width;
-  gdouble height = ifsDesign->area->allocation.height;
+  gdouble width    = ifsDesign->area->allocation.width;
+  gdouble height   = ifsDesign->area->allocation.height;
 
   if (save_undo)
     undo_begin ();
@@ -2429,7 +2372,7 @@ flip_check_button_callback (GtkWidget *widget,
                             gpointer   data)
 {
   guint    i;
-  gdouble  width = ifsDesign->area->allocation.width;
+  gdouble  width  = ifsDesign->area->allocation.width;
   gdouble  height = ifsDesign->area->allocation.height;
   gboolean active;
 
@@ -2578,7 +2521,7 @@ static void
 ifsfile_replace_ifsvals (IfsComposeVals  *new_ifsvals,
                          AffElement     **new_elements)
 {
-  gdouble width = ifsDesign->area->allocation.width;
+  gdouble width  = ifsDesign->area->allocation.width;
   gdouble height = ifsDesign->area->allocation.height;
   guint i;
 
@@ -2667,10 +2610,8 @@ ifsfile_load_response (GtkWidget *dialog,
         undo_update (i);
 
       ifsfile_replace_ifsvals (&new_ifsvals, new_elements);
-      gtk_widget_set_sensitive (ifsD->delete_button,
-                                ifsvals.num_elements > 2);
-      gtk_widget_set_sensitive (ifsD->delete_menu_item,
-                                ifsvals.num_elements > 2);
+
+      design_op_actions_update ();
 
       if (ifsD->auto_preview)
         ifs_compose_preview ();
@@ -2780,11 +2721,7 @@ ifs_compose_new_callback (GtkWidget *widget,
   if (ifsD->auto_preview)
     ifs_compose_preview ();
 
-  if (ifsvals.num_elements > 2)
-    {
-      gtk_widget_set_sensitive (ifsD->delete_button, TRUE);
-      gtk_widget_set_sensitive (ifsD->delete_menu_item, TRUE);
-    }
+  design_op_actions_update ();
 }
 
 static void
@@ -2825,11 +2762,7 @@ ifs_compose_delete_callback (GtkWidget *widget,
   if (ifsD->auto_preview)
     ifs_compose_preview ();
 
-  if (ifsvals.num_elements == 2)
-    {
-      gtk_widget_set_sensitive (ifsD->delete_button, FALSE);
-      gtk_widget_set_sensitive (ifsD->delete_menu_item, FALSE);
-    }
+  design_op_actions_update ();
 }
 
 static gint
@@ -2928,8 +2861,7 @@ ifs_compose_response (GtkWidget *widget,
                                      ifsvals.center_x, ifsvals.center_y);
 
         design_area_redraw ();
-        gtk_widget_set_sensitive (ifsD->delete_button,    TRUE);
-        gtk_widget_set_sensitive (ifsD->delete_menu_item, TRUE);
+        design_op_actions_update ();
       }
       break;
 
