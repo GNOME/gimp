@@ -27,6 +27,26 @@
 #include "gdisplay.h"
 #include "fileops.h"
 
+/* Random header files in case they might be needed */
+#include "appenv.h"
+#include "actionarea.h"
+#include "file_new_dialog.h"
+#include "gimage.h"
+#include "gimpcontext.h"
+#include "gimprc.h"
+#include "global_edit.h"
+#include "interface.h"
+#include "lc_dialog.h"
+#include "plug_in.h"
+#include "tile_manager_pvt.h"
+#include "gdisplay.h"
+
+#include "libgimp/gimpchainbutton.h"
+#include "libgimp/gimplimits.h"
+#include "libgimp/gimpsizeentry.h"
+#include "libgimp/gimpintl.h"
+
+
 #include <stdlib.h>
 #include <time.h>
 
@@ -76,6 +96,7 @@ gimp_object_factory (GnomeEmbeddableFactory *this, void *data)
   GnomeEmbeddable *bonobo_object;
   GnomePersistStream *stream;
   bonobo_object_data_t *bonobo_object_data;
+  GimpImage *gimage;
 
   bonobo_object_data = g_new0 (bonobo_object_data_t, 1);
 
@@ -93,6 +114,25 @@ gimp_object_factory (GnomeEmbeddableFactory *this, void *data)
 
   gnome_object_add_interface (GNOME_OBJECT (bonobo_object),
 			      GNOME_OBJECT (stream));
+
+  /* Make a basic blank image */
+  bonobo_object_data->gimp_image = gimage = gimp_image_new(320, 200, RGB);
+  gimp_image_set_resolution (gimage, 72.0, 72.0);
+  gimp_image_set_unit (gimage, UNIT_INCH);
+  gimage_disable_undo(bonobo_object_data->gimp_image);
+  {
+    Layer *layer;
+
+    layer = layer_new (gimage, gimage->width, gimage->height,
+		       RGBA_GIMAGE, _("Background"), OPAQUE_OPACITY, NORMAL);
+    if (layer) {
+      gimage_add_layer(gimage, layer, 0);
+      drawable_fill(GIMP_DRAWABLE(layer), WHITE_FILL);
+    }
+  }
+  gimage_enable_undo(bonobo_object_data->gimp_image);
+  gimage_clean_all(bonobo_object_data->gimp_image);
+
   return (GnomeObject *) bonobo_object;
 
  out:
@@ -114,14 +154,14 @@ gimp_view_factory (GnomeEmbeddable *bonobo_object,
 
   view_data = g_new0 (bonobo_view_t, 1);
   view_data->parent = bonobo_object_data;
-  view_data->gdisplay = gdisplay_new (bonobo_object_data->gimp_image, 0x0101);
+  view_data->gdisplay = gdisplay_new_with_info (bonobo_object_data->gimp_image, 0x0101, TRUE);
 
   view = gnome_view_new(view_data->gdisplay->shell);
   gtk_signal_connect (GTK_OBJECT (view), "destroy",
 		      GTK_SIGNAL_FUNC(gimp_view_destroy), view_data);
 
   bonobo_object_data->views = g_list_prepend (bonobo_object_data->views,
-					     view_data);
+					      view_data);
 
   return view;
 }

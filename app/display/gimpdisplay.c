@@ -78,10 +78,10 @@ static guint      gdisplay_hash             (GDisplay *);
 
 static GHashTable *display_ht = NULL;
 
-
 GDisplay*
-gdisplay_new (GimpImage    *gimage,
-	      unsigned int  scale)
+gdisplay_new_with_info (GimpImage *gimage,
+			unsigned int scale,
+			gboolean embeddable)
 {
   GDisplay *gdisp;
   char title [MAX_TITLE_BUF];
@@ -116,7 +116,7 @@ gdisplay_new (GimpImage    *gimage,
   gdisp->proximity = FALSE;
   gdisp->have_cursor = FALSE;
   gdisp->using_override_cursor = FALSE;
-
+  gdisp->is_embeddable = embeddable?1:0;
   gdisp->progressid = FALSE;
 
   gdisp->idle_render.idleid = -1;
@@ -159,6 +159,13 @@ gdisplay_new (GimpImage    *gimage,
   lc_dialog_preview_update(gimage);
 
   return gdisp;
+}
+
+GDisplay*
+gdisplay_new (GimpImage    *gimage,
+	      unsigned int  scale)
+{
+  return gdisplay_new_with_info (gimage, scale, FALSE);
 }
 
 
@@ -1103,8 +1110,9 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
 		  (gdouble) gdisp->gimage->height * unit_factor /
 		  gdisp->gimage->yresolution);
     }
+
   cursor_label_width = 
-    gdk_string_width (gtk_widget_get_style (gdisp->cursor_label)->font, buffer);
+    gdk_string_width (gtk_widget_get_style(gdisp->cursor_label)->font, buffer);
   
   /* find out how many pixels the label's parent frame is bigger than
    * the label itself */

@@ -642,6 +642,49 @@ toolbox_raise_callback (GtkWidget *widget,
   gdk_window_raise(toolbox_shell->window);
 }
 
+static void
+do_gdisplay_resize_cursor_label (GtkWidget *widget, GDisplay *display)
+{
+  gdisplay_resize_cursor_label (display);
+}
+
+static void
+do_qmaskon_pixmap_creation (GtkWidget *widget, GDisplay *gdisp)
+{
+  GdkPixmap *pxmp;
+  GdkBitmap *mask;
+  GtkStyle *style;
+  GtkWidget *pixmap;
+
+  style = gtk_widget_get_style(gdisp->shell);
+
+  pxmp = gdk_pixmap_create_from_xpm_d(gdisp->shell->window, &mask,
+				      &style->bg[GTK_STATE_NORMAL],
+				      qmasksel_xpm);
+
+  pixmap = gtk_pixmap_new (pxmp, mask);
+  gtk_container_add (GTK_CONTAINER (gdisp->qmaskon), pixmap);
+  gtk_widget_show(pixmap);
+}
+
+static void
+do_qmaskoff_pixmap_creation (GtkWidget *widget, GDisplay *gdisp)
+{
+  GdkPixmap *pxmp;
+  GdkBitmap *mask;
+  GtkStyle *style;
+  GtkWidget *pixmap;
+
+  style = gtk_widget_get_style(gdisp->shell);
+
+  pxmp = gdk_pixmap_create_from_xpm_d(gdisp->shell->window, &mask,
+				      &style->bg[GTK_STATE_NORMAL],
+				      qmasknosel_xpm);   
+  pixmap = gtk_pixmap_new (pxmp, mask);
+  gtk_container_add (GTK_CONTAINER (gdisp->qmaskoff), pixmap);
+  gtk_widget_show(pixmap);
+}
+
 void
 create_display_shell (GDisplay* gdisp,
 		      int   width,
@@ -658,7 +701,6 @@ create_display_shell (GDisplay* gdisp,
   GtkWidget *table_lower;
   GtkWidget *frame;
   GtkWidget *arrow;
-  GtkWidget *pixmap;
 
   GSList *group = NULL;
 
@@ -699,16 +741,26 @@ create_display_shell (GDisplay* gdisp,
   gdisp->vsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, height, 1, 1, height));
 
   /*  The toplevel shell */
-  gdisp->shell = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_widget_ref  (gdisp->shell);
-  gtk_window_set_title (GTK_WINDOW (gdisp->shell), title);
-  gtk_window_set_wmclass (GTK_WINDOW (gdisp->shell), "image_window", "Gimp");
-  gtk_window_set_policy (GTK_WINDOW (gdisp->shell), TRUE, TRUE, TRUE);
+  if(gdisp->is_embeddable) {
+    gdisp->shell = gtk_vbox_new(FALSE, 0);
+  } else {
+    gdisp->shell = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title (GTK_WINDOW (gdisp->shell), title);
+    gtk_window_set_wmclass (GTK_WINDOW (gdisp->shell), "image_window", "Gimp");
+    gtk_window_set_policy (GTK_WINDOW (gdisp->shell), TRUE, TRUE, TRUE);
+    gtk_signal_connect (GTK_OBJECT (gdisp->shell), "delete_event",
+			GTK_SIGNAL_FUNC (gdisplay_delete),
+			gdisp);
+  }
+
+  gtk_widget_set_events (gdisp->shell,
+			 GDK_POINTER_MOTION_MASK
+			 | GDK_POINTER_MOTION_HINT_MASK
+			 | GDK_BUTTON_PRESS_MASK
+			 | GDK_KEY_PRESS_MASK
+			 | GDK_KEY_RELEASE_MASK);
   gtk_object_set_user_data (GTK_OBJECT (gdisp->shell), (gpointer) gdisp);
-  gtk_widget_set_events (gdisp->shell, GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
-  gtk_signal_connect (GTK_OBJECT (gdisp->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (gdisplay_delete),
-		      gdisp);
+  gtk_widget_ref (gdisp->shell);
 
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "destroy",
 		      (GtkSignalFunc) gdisplay_destroy,
@@ -804,32 +856,12 @@ create_display_shell (GDisplay* gdisp,
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gdisp->qmaskoff), TRUE);
   gtk_widget_set_usize(GTK_WIDGET(gdisp->qmaskon), 15, 15);
   gtk_widget_set_usize(GTK_WIDGET(gdisp->qmaskoff), 15, 15);
-  /* Draw pixmaps - note: you must realize the parent prior to doing the
-     rest! */  
-    {
-    GdkPixmap *pxmp;
-    GdkBitmap *mask;
-    GtkStyle *style;
 
-    style = gtk_widget_get_style(gdisp->shell);
-    gtk_widget_realize(gdisp->shell);
-   
-    pxmp = gdk_pixmap_create_from_xpm_d(gdisp->shell->window, &mask,
-                                        &style->bg[GTK_STATE_NORMAL],
-                                        qmasksel_xpm);   
+  gtk_signal_connect (GTK_OBJECT(gdisp->qmaskon), "realize",
+		      GTK_SIGNAL_FUNC(do_qmaskon_pixmap_creation), gdisp);
+  gtk_signal_connect (GTK_OBJECT(gdisp->qmaskoff), "realize",
+		      GTK_SIGNAL_FUNC(do_qmaskoff_pixmap_creation), gdisp);
 
-    pixmap = gtk_pixmap_new (pxmp, mask);
-    gtk_container_add (GTK_CONTAINER (gdisp->qmaskon), pixmap);
-    gtk_widget_show(pixmap);
-  
-    pxmp = gdk_pixmap_create_from_xpm_d(gdisp->shell->window, &mask,
-                                        &style->bg[GTK_STATE_NORMAL],
-                                        qmasknosel_xpm);   
-    pixmap = gtk_pixmap_new (pxmp, mask);
-    gtk_container_add (GTK_CONTAINER (gdisp->qmaskoff), pixmap);
-    gtk_widget_show(pixmap);
-    }
- 
   gdisp->canvas = gtk_drawing_area_new ();
   gtk_drawing_area_size (GTK_DRAWING_AREA (gdisp->canvas), n_width, n_height);
   gtk_widget_set_events (gdisp->canvas, CANVAS_EVENT_MASK);
@@ -892,8 +924,8 @@ create_display_shell (GDisplay* gdisp,
 
   /* we need to realize the cursor_label widget here, so the size gets
      computed correctly */
-  gtk_widget_realize (gdisp->cursor_label);
-  gdisplay_resize_cursor_label (gdisp);
+  gtk_signal_connect (GTK_OBJECT(gdisp->cursor_label), "realize",
+		      GTK_SIGNAL_FUNC(do_gdisplay_resize_cursor_label), gdisp);
 
   gdisp->statusbar = gtk_statusbar_new ();
   gtk_widget_set_usize (gdisp->statusbar, 1, -1);
@@ -918,7 +950,10 @@ create_display_shell (GDisplay* gdisp,
   gdisp->popup = image_popup_menu;
 
   /*  the accelerator table for images  */
-  gtk_window_add_accel_group (GTK_WINDOW (gdisp->shell), image_accel_group);
+  if( !gdisp->is_embeddable)
+    gtk_window_add_accel_group (GTK_WINDOW (gdisp->shell), image_accel_group);
+  else
+    /* XXX FIXME: Dunno how to handle accel groups here */;
 
   gtk_widget_show (arrow);
   gtk_widget_show (gdisp->qmaskon);
@@ -952,11 +987,15 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_show (vbox);
 
   gtk_widget_show (gdisp->shell);
+#if 0
 #ifdef __GNUC__
 #warning DODGY?
 #endif /*__GNUC__ */
+
   gtk_widget_realize (gdisp->canvas);
+
   gdk_window_set_back_pixmap(gdisp->canvas->window, NULL, 0);
+#endif
 
   /*  set the focus to the canvas area  */
   gtk_widget_grab_focus (gdisp->canvas);

@@ -150,6 +150,8 @@ struct _GDisplay
   short have_cursor;		  /* is cursor currently drawn ?              */
   
   IdleRenderStruct idle_render;   /* state of this gdisplay's render thread   */
+
+  guint8 is_embeddable : 1;       /* Is this display not in a toplevel window? */
 };
 
 
@@ -157,6 +159,7 @@ struct _GDisplay
 /* member function declarations */
 
 GDisplay * gdisplay_new                    (GimpImage *, unsigned int);
+GDisplay * gdisplay_new_with_info          (GimpImage *, unsigned int, gboolean embeddable);
 void       gdisplay_reconnect              (GDisplay *, GimpImage *);
 void       gdisplay_remove_and_delete      (GDisplay *);
 int        gdisplay_mask_value             (GDisplay *, int, int);
