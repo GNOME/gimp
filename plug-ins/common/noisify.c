@@ -29,6 +29,7 @@
  * May 2000 tim copperfield [timecop@japan.co.jp]
  * Added dynamic preview.
  *
+ * alt@gimp.org. Fixed previews so they handle alpha channels correctly.
  */
 
 #include "config.h"
@@ -106,8 +107,11 @@ static NoisifyInterface noise_int =
   FALSE     /* run */
 };
 
-static guchar *preview_bits;
 static GtkWidget *preview;
+static guchar    *preview_cache;
+static gint       preview_cache_rowstride;
+static gint       preview_cache_bpp;
+
 
 MAIN ()
 
@@ -224,7 +228,7 @@ run (gchar   *name,
       /*  Store data  */
       if (run_mode == RUN_INTERACTIVE) {
 	gimp_set_data ("plug_in_noisify", &nvals, sizeof (NoisifyVals));
-	g_free(preview_bits);
+	g_free(preview_cache);
       }
     }
   else
@@ -239,18 +243,92 @@ run (gchar   *name,
 }
 
 static void
+preview_do_row(gint    row,
+	       gint    width,
+	       guchar *even,
+	       guchar *odd,
+	       guchar *src)
+{
+  gint    x;
+  
+  guchar *p0 = even;
+  guchar *p1 = odd;
+  
+  gdouble    r, g, b, a;
+  gdouble    c0, c1;
+  
+  for (x = 0; x < width; x++) 
+    {
+      if (preview_cache_bpp == 4)
+	{
+	  r = ((gdouble)src[x*4+0]) / 255.0;
+	  g = ((gdouble)src[x*4+1]) / 255.0;
+	  b = ((gdouble)src[x*4+2]) / 255.0;
+	  a = ((gdouble)src[x*4+3]) / 255.0;
+	}
+      else if (preview_cache_bpp == 3)
+	{
+	  r = ((gdouble)src[x*3+0]) / 255.0;
+	  g = ((gdouble)src[x*3+1]) / 255.0;
+	  b = ((gdouble)src[x*3+2]) / 255.0;
+	  a = 1.0;
+	}
+      else
+	{
+	  r = ((gdouble)src[x*preview_cache_bpp+0]) / 255.0;
+	  g = b = r;
+	  if (preview_cache_bpp == 2)
+		    a = ((gdouble)src[x*preview_cache_bpp+1]) / 255.0;
+	  else
+	    a = 1.0;
+	}
+      
+      if ((x / GIMP_CHECK_SIZE) & 1) 
+	{
+	  c0 = GIMP_CHECK_LIGHT;
+	  c1 = GIMP_CHECK_DARK;
+	} 
+      else 
+	{
+	  c0 = GIMP_CHECK_DARK;
+	  c1 = GIMP_CHECK_LIGHT;
+	}
+      
+      *p0++ = (c0 + (r - c0) * a) * 255.0;
+      *p0++ = (c0 + (g - c0) * a) * 255.0;
+      *p0++ = (c0 + (b - c0) * a) * 255.0;
+      
+      *p1++ = (c1 + (r - c1) * a) * 255.0;
+      *p1++ = (c1 + (g - c1) * a) * 255.0;
+      *p1++ = (c1 + (b - c1) * a) * 255.0;
+      
+    } /* for */
+  
+  if ((row / GIMP_CHECK_SIZE) & 1)
+    {
+      gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar *)odd,  0, row, width); 
+    }
+  else
+    {
+      gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar *)even, 0, row, width); 
+    }
+}
+
+static void
 noisify (GDrawable *drawable, 
 	 gboolean   preview_mode)
 {
   GPixelRgn src_rgn, dest_rgn;
   guchar *src_row, *dest_row;
-  guchar *src, *dest, *src_data, *dest_data, *save_dest;
+  guchar *src, *dest, *dest_data;
   gint row, col, b;
   gint x1, y1, x2, y2, p, bpp = 3;
   gint noise;
   gint progress = 0, max_progress = 0;
   gpointer pr;
-
+  gint row_stride = 0;
+  guchar *odd = NULL;
+  guchar *even = NULL;
   /* initialize */
 
   noise = 0;
@@ -260,7 +338,10 @@ noisify (GDrawable *drawable,
       x1 = y1 = 0;
       x2 = GTK_PREVIEW (preview)->buffer_width;
       y2 = GTK_PREVIEW (preview)->buffer_height;
-      bpp = GTK_PREVIEW (preview)->bpp;
+      bpp = preview_cache_bpp;
+      row_stride = preview_cache_rowstride;
+      even = g_malloc (x2 * 3);
+      odd  = g_malloc (x2 * 3);
     } 
   else 
     {
@@ -276,15 +357,12 @@ noisify (GDrawable *drawable,
 
   if (preview_mode) 
     {
-      src_data  = g_malloc (GTK_PREVIEW (preview)->rowstride * y2);
-      memcpy (src_data, preview_bits, GTK_PREVIEW (preview)->rowstride * y2);
-      dest_data = g_malloc (GTK_PREVIEW (preview)->rowstride * y2);
-      save_dest = dest_data;
+      dest_data = g_malloc (row_stride * y2);
 
       for (row = 0; row < y2; row++)
 	{
-	  src  = src_data  + row * GTK_PREVIEW (preview)->rowstride;
-	  dest = dest_data + row * GTK_PREVIEW (preview)->rowstride;
+	  src  = preview_cache + row * row_stride;
+	  dest = dest_data + row * row_stride;
 	  
 	  for (col = 0; col < x2; col++)
 	    {
@@ -314,10 +392,19 @@ noisify (GDrawable *drawable,
 	    }
 	}
 
-      memcpy (GTK_PREVIEW (preview)->buffer, 
-	      save_dest, 
-	      GTK_PREVIEW (preview)->rowstride * y2);
+      for (row = 0; row < y2; row++)
+	{
+	  preview_do_row(row,x2,even,odd,dest_data + row * row_stride);
+	}
+
       gtk_widget_queue_draw (preview);
+
+      if(even)
+	g_free(even);
+      
+      if(odd)
+	g_free(odd);
+
     } 
   else 
     {
@@ -662,14 +749,10 @@ static GtkWidget *
 preview_widget (GDrawable *drawable)
 {
   gint       size;
-  GtkWidget *preview;
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   fill_preview (preview, drawable);
   size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
-  preview_bits = g_malloc (size);
-  memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
-
   return preview;
 }
 
@@ -682,11 +765,8 @@ fill_preview (GtkWidget *widget,
   gint       height;
   gint       x1, x2, y1, y2;
   gint       bpp;
-  gint       x, y;
+  gint       y;
   guchar    *src;
-  gdouble    r, g, b, a;
-  gdouble    c0, c1;
-  guchar    *p0, *p1;
   guchar    *even, *odd;
   
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
@@ -711,64 +791,20 @@ fill_preview (GtkWidget *widget,
   even = g_malloc (width * 3);
   odd  = g_malloc (width * 3);
   src  = g_malloc (width * bpp);
+  preview_cache = g_malloc(width * bpp * height);
+  preview_cache_rowstride = width * bpp;
+  preview_cache_bpp = bpp;
+
 
   for (y = 0; y < height; y++)
     {
       gimp_pixel_rgn_get_row (&srcPR, src, x1, y + y1, width);
-      p0 = even;
-      p1 = odd;
-      
-      for (x = 0; x < width; x++) 
-	{
-	  if (bpp == 4)
-	    {
-	      r = ((gdouble)src[x*4+0]) / 255.0;
-	      g = ((gdouble)src[x*4+1]) / 255.0;
-	      b = ((gdouble)src[x*4+2]) / 255.0;
-	      a = ((gdouble)src[x*4+3]) / 255.0;
-	    }
-	  else if (bpp == 3)
-	    {
-	      r = ((gdouble)src[x*3+0]) / 255.0;
-	      g = ((gdouble)src[x*3+1]) / 255.0;
-	      b = ((gdouble)src[x*3+2]) / 255.0;
-	      a = 1.0;
-	    }
-	  else
-	    {
-	      r = ((gdouble)src[x*bpp+0]) / 255.0;
-	      g = b = r;
-	      if (bpp == 2)
-		a = ((gdouble)src[x*bpp+1]) / 255.0;
-	      else
-		a = 1.0;
-	    }
-	
-	if ((x / GIMP_CHECK_SIZE) & 1) 
-	  {
-	    c0 = GIMP_CHECK_LIGHT;
-	    c1 = GIMP_CHECK_DARK;
-	  } 
-	else 
-	  {
-	    c0 = GIMP_CHECK_DARK;
-	    c1 = GIMP_CHECK_LIGHT;
-	  }
-	
-	*p0++ = (c0 + (r - c0) * a) * 255.0;
-	*p0++ = (c0 + (g - c0) * a) * 255.0;
-	*p0++ = (c0 + (b - c0) * a) * 255.0;
-	
-	*p1++ = (c1 + (r - c1) * a) * 255.0;
-	*p1++ = (c1 + (g - c1) * a) * 255.0;
-	*p1++ = (c1 + (b - c1) * a) * 255.0;
-	
-      } /* for */
-      
-      if ((y / GIMP_CHECK_SIZE) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd,  0, y, width);
-      else
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)even, 0, y, width);
+      memcpy(preview_cache + (y*width*bpp),src,width*bpp);
+    }
+
+  for (y = 0; y < height; y++)
+    {
+      preview_do_row(y,width,even,odd,preview_cache + (y*width*bpp));
     }
 
   g_free (even);
