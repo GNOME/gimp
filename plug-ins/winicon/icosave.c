@@ -51,6 +51,13 @@ static void     ico_set_nibble_in_data (guint8 *data, gint line_width,
 static void     ico_set_byte_in_data   (guint8 *data, gint line_width,
                                         gint byte_num, gint byte_val);
 
+static gint     ico_get_layer_num_colors  (gint32    layer,
+					   gboolean *uses_alpha_levels);
+static void     ico_image_get_reduced_buf (guint32   layer,
+					   gint      bpp,
+					   gint     *num_colors,
+					   guchar  **cmap_out,
+					   guchar  **buf_out);
 
 
 static gint
@@ -729,6 +736,192 @@ ico_layers_too_big (gint32 image)
   return FALSE;
 }
 
+
+static void
+ico_free_color_item (gpointer data1,
+                     gpointer data2,
+                     gpointer data3)
+{
+  g_free (data1);
+
+  /* Shut up warnings: */
+  data2 = NULL;
+  data3 = NULL;
+}
+
+static gint
+ico_get_layer_num_colors (gint32    layer,
+                          gboolean *uses_alpha_levels)
+{
+  GimpPixelRgn    pixel_rgn;
+  gint            x, y, w, h, alpha, num_colors = 0;
+  guint32        *buffer = NULL, *color;
+  GHashTable     *hash;
+  GimpDrawable   *drawable = gimp_drawable_get (layer);
+
+  w = gimp_drawable_width (layer);
+  h = gimp_drawable_height (layer);
+  buffer = g_new (gint32, w * h);
+
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
+  gimp_pixel_rgn_get_rect (&pixel_rgn, (guchar*) buffer, 0, 0, w, h);
+
+  gimp_drawable_detach (drawable);
+
+  hash = g_hash_table_new (g_int_hash, g_int_equal);
+  *uses_alpha_levels = FALSE;
+
+  for (y = 0; y < h; y++)
+    for (x = 0; x < w; x++)
+      {
+        color = g_new0 (guint32, 1);
+        *color = buffer[y * w + x];
+        alpha = ((guint8*) color)[3];
+
+        if (alpha != 0 && alpha != 255)
+          *uses_alpha_levels = TRUE;
+
+        g_hash_table_insert (hash, color, color);
+      }
+
+  num_colors = g_hash_table_size (hash);
+
+  g_hash_table_foreach (hash, ico_free_color_item, NULL);
+  g_hash_table_destroy (hash);
+
+  g_free (buffer);
+
+  return num_colors;
+}
+
+static gboolean
+ico_cmap_contains_black (guchar *cmap,
+                         gint    num_colors)
+{
+  gint i;
+
+  for (i = 0; i < num_colors; i++)
+    {
+      if ((cmap[3*i] == 0)   &&
+          (cmap[3*i+1] == 0) &&
+          (cmap[3*i+2] == 0))
+        {
+          return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
+static void
+ico_image_get_reduced_buf (guint32   layer,
+                           gint      bpp,
+                           gint     *num_colors,
+                           guchar  **cmap_out,
+                           guchar  **buf_out)
+{
+  GimpPixelRgn    src_pixel_rgn, dst_pixel_rgn;
+  gint32          tmp_image;
+  gint32          tmp_layer;
+  gint            w, h;
+  guchar         *buffer;
+  guchar         *cmap;
+  GimpDrawable   *drawable = gimp_drawable_get (layer);
+
+  w = gimp_drawable_width (layer);
+  h = gimp_drawable_height (layer);
+  *cmap_out = NULL;
+  *num_colors = 0;
+
+  buffer = g_new (guchar, w * h * 4);
+
+  if (bpp <= 8 || drawable->bpp != 4)
+    {
+      gint32        image = gimp_drawable_get_image (layer);
+      GimpDrawable *tmp;
+
+      tmp_image = gimp_image_new (gimp_drawable_width (layer),
+                                  gimp_drawable_height (layer),
+                                  gimp_image_base_type (image));
+      gimp_image_undo_disable (tmp_image);
+
+      tmp_layer = gimp_layer_new (tmp_image, "tmp", w, h,
+                                  gimp_drawable_type (layer),
+                                  100, GIMP_NORMAL_MODE);
+      gimp_image_add_layer (tmp_image, tmp_layer, 0);
+
+      tmp = gimp_drawable_get (tmp_layer);
+
+      gimp_pixel_rgn_init (&src_pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
+      gimp_pixel_rgn_init (&dst_pixel_rgn, tmp,      0, 0, w, h, TRUE, FALSE);
+      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
+      gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
+      gimp_drawable_detach (tmp);
+
+      if (! gimp_drawable_is_rgb (tmp_layer))
+        gimp_image_convert_rgb (tmp_image);
+
+      if (bpp <= 8)
+        {
+          gimp_image_convert_indexed (tmp_image,
+                                      GIMP_FS_DITHER,
+                                      GIMP_MAKE_PALETTE,
+                                      1 << bpp,
+                                      TRUE,
+                                      FALSE,
+                                      "dummy");
+
+          cmap = gimp_image_get_colormap (tmp_image, num_colors);
+
+          if (*num_colors == (1 << bpp) &&
+              !ico_cmap_contains_black(cmap, *num_colors))
+            {
+              /* Windows icons with color maps need the color black.
+               * We need to eliminate one more color to make room for black.
+               */
+
+              gimp_image_convert_rgb (tmp_image);
+
+              tmp = gimp_drawable_get (tmp_layer);
+              gimp_pixel_rgn_init (&dst_pixel_rgn,
+                                   tmp, 0, 0, w, h, TRUE, FALSE);
+              gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
+              gimp_drawable_detach (tmp);
+
+              gimp_image_convert_indexed (tmp_image,
+                                          GIMP_FS_DITHER,
+                                          GIMP_MAKE_PALETTE,
+                                          (1 << bpp) - 1,
+                                          TRUE,
+                                          FALSE,
+                                          "dummy");
+
+              cmap = gimp_image_get_colormap (tmp_image, num_colors);
+              *cmap_out = g_memdup (cmap, *num_colors * 3);
+            }
+
+          gimp_image_convert_rgb (tmp_image);
+        }
+
+      gimp_layer_add_alpha (tmp_layer);
+
+      tmp = gimp_drawable_get (tmp_layer);
+      gimp_pixel_rgn_init (&src_pixel_rgn, tmp, 0, 0, w, h, FALSE, FALSE);
+      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
+      gimp_drawable_detach (tmp);
+
+      gimp_image_delete (tmp_image);
+    }
+  else
+    {
+      gimp_pixel_rgn_init (&src_pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
+      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
+    }
+
+  gimp_drawable_detach (drawable);
+
+  *buf_out = buffer;
+}
 
 GimpPDBStatusType
 SaveICO (const gchar *filename,

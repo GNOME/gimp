@@ -92,18 +92,12 @@ typedef struct _MsIcon
 /* Allocates a 32-bit padded bitmap for various color depths.
    Returns the allocated array directly, and the length of the
    array in the len pointer */
-guint8 * ico_alloc_map              (gint       width,
-                                     gint       height,
-                                     gint       bpp,
-                                     gint      *len);
-void     ico_image_get_reduced_buf  (guint32    layer,
-                                     gint       bpp,
-                                     gint      *num_colors,
-                                     guchar   **cmap,
-                                     guchar   **buffer);
-gint     ico_get_layer_num_colors   (gint32     layer,
-                                     gboolean  *uses_alpha_levels);
-void     ico_cleanup                (MsIcon    *ico);
+guint8 * ico_alloc_map  (gint     width,
+			 gint     height,
+			 gint     bpp,
+			 gint    *len);
+
+void     ico_cleanup    (MsIcon  *ico);
 
 
 #endif /* __MAIN_H__ */
