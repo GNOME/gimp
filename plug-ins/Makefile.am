@@ -123,7 +123,6 @@ SUBDIRS = 			\
 	sinus			\
 	smooth_palette		\
 	snoise			\
-	snp			\
 	sobel			\
 	sparkle			\
 	spread			\

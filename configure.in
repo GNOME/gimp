@@ -795,7 +795,6 @@ plug-ins/shift/Makefile
 plug-ins/sinus/Makefile
 plug-ins/smooth_palette/Makefile
 plug-ins/snoise/Makefile
-plug-ins/snp/Makefile
 plug-ins/sobel/Makefile
 plug-ins/sparkle/Makefile
 plug-ins/spread/Makefile
