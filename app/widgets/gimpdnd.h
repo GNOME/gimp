@@ -100,49 +100,61 @@ typedef enum
 
 /*  color dnd functions  */
 
-typedef void (* GimpDndDropColorFunc) (GtkWidget *, guchar, guchar, guchar,
-				       gpointer); 
-typedef void (* GimpDndDragColorFunc) (GtkWidget *, guchar *, guchar *, guchar *,
-				       gpointer); 
+typedef void (* GimpDndDropColorFunc) (GtkWidget *widget,
+				       guchar     r,
+				       guchar     g,
+				       guchar     b,
+				       gpointer   data);
+typedef void (* GimpDndDragColorFunc) (GtkWidget *widget,
+				       guchar    *r,
+				       guchar    *g,
+				       guchar    *b,
+				       gpointer   data);
 
-void  gimp_dnd_color_source_set    (GtkWidget               *widget,
-				    GimpDndDragColorFunc     get_color_func,
-				    gpointer                 data);
-void  gimp_dnd_color_dest_set      (GtkWidget               *widget,
-				    GimpDndDropColorFunc     set_color_func,
-				    gpointer                 data);
+void  gimp_dnd_color_source_set    (GtkWidget            *widget,
+				    GimpDndDragColorFunc  get_color_func,
+				    gpointer              data);
+void  gimp_dnd_color_dest_set      (GtkWidget            *widget,
+				    GimpDndDropColorFunc  set_color_func,
+				    gpointer              data);
 
 /*  brush dnd functions  */
 
-typedef void        (* GimpDndDropBrushFunc) (GtkWidget *, GimpBrush *,
-					      gpointer); 
-typedef GimpBrush * (* GimpDndDragBrushFunc) (GtkWidget *, gpointer); 
+typedef void        (* GimpDndDropBrushFunc) (GtkWidget *widget,
+					      GimpBrush *brush,
+					      gpointer   data);
+typedef GimpBrush * (* GimpDndDragBrushFunc) (GtkWidget *widget,
+					      gpointer   data);
 
-void  gimp_dnd_brush_source_set    (GtkWidget               *widget,
-				    GimpDndDragBrushFunc     get_brush_func,
-				    gpointer                 data);
-void  gimp_dnd_brush_dest_set      (GtkWidget               *widget,
-				    GimpDndDropBrushFunc     set_brush_func,
-				    gpointer                 data);
+void  gimp_dnd_brush_source_set    (GtkWidget            *widget,
+				    GimpDndDragBrushFunc  get_brush_func,
+				    gpointer              data);
+void  gimp_dnd_brush_dest_set      (GtkWidget            *widget,
+				    GimpDndDropBrushFunc  set_brush_func,
+				    gpointer              data);
 
 /*  pattern dnd functions  */
 
-typedef void       (* GimpDndDropPatternFunc) (GtkWidget *, GPattern *,
-					       gpointer); 
-typedef GPattern * (* GimpDndDragPatternFunc) (GtkWidget *, gpointer); 
+typedef void       (* GimpDndDropPatternFunc) (GtkWidget *widget,
+					       GPattern  *pattern,
+					       gpointer   data);
+typedef GPattern * (* GimpDndDragPatternFunc) (GtkWidget *widget,
+					       gpointer   data);
 
-void  gimp_dnd_pattern_source_set  (GtkWidget               *widget,
-				    GimpDndDragPatternFunc   get_pattern_func,
-				    gpointer                 data);
-void  gimp_dnd_pattern_dest_set    (GtkWidget               *widget,
-				    GimpDndDropPatternFunc   set_pattern_func,
-				    gpointer                 data);
+void  gimp_dnd_pattern_source_set  (GtkWidget              *widget,
+				    GimpDndDragPatternFunc  get_pattern_func,
+				    gpointer                data);
+void  gimp_dnd_pattern_dest_set    (GtkWidget              *widget,
+				    GimpDndDropPatternFunc  set_pattern_func,
+				    gpointer                data);
 
 /*  gradient dnd functions  */
 
-typedef void         (* GimpDndDropGradientFunc) (GtkWidget *, gradient_t *,
-						  gpointer); 
-typedef gradient_t * (* GimpDndDragGradientFunc) (GtkWidget *, gpointer); 
+typedef void         (* GimpDndDropGradientFunc) (GtkWidget  *widget,
+						  gradient_t *gradient,
+						  gpointer    data);
+typedef gradient_t * (* GimpDndDragGradientFunc) (GtkWidget  *widget,
+						  gpointer    data);
 
 void  gimp_dnd_gradient_source_set (GtkWidget               *widget,
 				    GimpDndDragGradientFunc  get_gradient_func,
@@ -153,29 +165,33 @@ void  gimp_dnd_gradient_dest_set   (GtkWidget               *widget,
 
 /*  palette dnd functions  */
 
-typedef void             (* GimpDndDropPaletteFunc) (GtkWidget *,
-						     PaletteEntries *,
-						     gpointer); 
-typedef PaletteEntries * (* GimpDndDragPaletteFunc) (GtkWidget *, gpointer); 
+typedef void             (* GimpDndDropPaletteFunc) (GtkWidget      *widget,
+						     PaletteEntries *palette,
+						     gpointer        data);
+typedef PaletteEntries * (* GimpDndDragPaletteFunc) (GtkWidget      *widget,
+						     gpointer        data);
 
-void  gimp_dnd_palette_source_set  (GtkWidget               *widget,
-				    GimpDndDragPaletteFunc   get_palette_func,
-				    gpointer                 data);
-void  gimp_dnd_palette_dest_set    (GtkWidget               *widget,
-				    GimpDndDropPaletteFunc   set_palette_func,
-				    gpointer                 data);
+void  gimp_dnd_palette_source_set  (GtkWidget              *widget,
+				    GimpDndDragPaletteFunc  get_palette_func,
+				    gpointer                data);
+void  gimp_dnd_palette_dest_set    (GtkWidget              *widget,
+				    GimpDndDropPaletteFunc  set_palette_func,
+				    gpointer                data);
 
 /*  tool dnd functions  */
 
-typedef void     (* GimpDndDropToolFunc) (GtkWidget *, ToolType, gpointer); 
-typedef ToolType (* GimpDndDragToolFunc) (GtkWidget *, gpointer); 
+typedef void     (* GimpDndDropToolFunc) (GtkWidget *widget,
+					  ToolType   tool,
+					  gpointer   data);
+typedef ToolType (* GimpDndDragToolFunc) (GtkWidget *widget,
+					  gpointer   data); 
 
-void  gimp_dnd_tool_source_set     (GtkWidget               *widget,
-				    GimpDndDragToolFunc      get_tool_func,
-				    gpointer                 data);
-void  gimp_dnd_tool_dest_set       (GtkWidget               *widget,
-				    GimpDndDropToolFunc   set_tool_func,
-				    gpointer                 data);
+void  gimp_dnd_tool_source_set     (GtkWidget           *widget,
+				    GimpDndDragToolFunc  get_tool_func,
+				    gpointer             data);
+void  gimp_dnd_tool_dest_set       (GtkWidget           *widget,
+				    GimpDndDropToolFunc  set_tool_func,
+				    gpointer             data);
 
 /*  drawable dnd functions  */
 

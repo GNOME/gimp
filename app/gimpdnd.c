@@ -167,6 +167,7 @@ static GimpDndDataDef dnd_data_defs[] =
 
     NULL,
     NULL,
+    NULL
   },
 
   {

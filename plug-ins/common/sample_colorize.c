@@ -1340,6 +1340,7 @@ p_smp_dialog (void)
   GtkWidget  *menu;
   GtkWidget  *menu_item;
   GtkWidget *spinbutton;
+  GtkWidget *sep;
   GtkObject *data;
   guchar *color_cube;
   gint    l_ty;
@@ -1403,12 +1404,17 @@ p_smp_dialog (void)
                       frame, TRUE, TRUE, 0);
 
   /* table for values */
-  table = gtk_table_new (7, 4, FALSE);
+  table = gtk_table_new (7, 5, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
-  
+
+  /* separator */
+  sep = gtk_vseparator_new ();
+  gtk_table_attach_defaults (GTK_TABLE (table), sep, 2, 3, 0, 7);
+  gtk_widget_show (sep);
+
   l_ty = 0;
   /* layer optionmenu (Dst) */
   label = gtk_label_new (_("Destination:"));
@@ -1432,12 +1438,12 @@ p_smp_dialog (void)
   /* layer optionmenu (Sample) */
   label = gtk_label_new (_("Sample:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, l_ty, l_ty+1,
+  gtk_table_attach (GTK_TABLE (table), label, 3, 4, l_ty, l_ty+1,
 		    GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show (label);
 
   option_menu = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (table), option_menu, 3, 4, l_ty, l_ty+1,
+  gtk_table_attach (GTK_TABLE (table), option_menu, 4, 5, l_ty, l_ty+1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (option_menu);
 
@@ -1492,7 +1498,7 @@ p_smp_dialog (void)
   gtk_widget_show (check_button);
 
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_table_attach (GTK_TABLE (table), hbox, 2, 4, l_ty, l_ty+1,
+  gtk_table_attach (GTK_TABLE (table), hbox, 3, 5, l_ty, l_ty+1,
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (hbox);
 
@@ -1535,7 +1541,7 @@ p_smp_dialog (void)
 
   pframe = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table), pframe, 2, 4, l_ty, l_ty+1, 0, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), pframe, 3, 5, l_ty, l_ty+1, 0, 0, 0, 0);
   gtk_widget_show (pframe);
 
   g_di.sample_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -1584,7 +1590,7 @@ p_smp_dialog (void)
 
   vbox2 = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (pframe), vbox2);
-  gtk_table_attach (GTK_TABLE (table), pframe, 2, 4, l_ty, l_ty+1, 0, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), pframe, 3, 5, l_ty, l_ty+1, 0, 0, 0, 0);
 
   g_di.sample_colortab_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (g_di.sample_colortab_preview),
@@ -1663,7 +1669,7 @@ p_smp_dialog (void)
 
   /*  Horizontal box for OUTPUT levels text widget  */
   hbox = gtk_hbox_new (TRUE, 4);
-  gtk_table_attach (GTK_TABLE (table), hbox, 2, 4, l_ty, l_ty+1,
+  gtk_table_attach (GTK_TABLE (table), hbox, 3, 5, l_ty, l_ty+1,
 		    GTK_FILL, 0, 0, 0);
 
   label = gtk_label_new (_("Out Level:"));
@@ -1729,7 +1735,7 @@ p_smp_dialog (void)
   gtk_widget_show (check_button);
   
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_table_attach (GTK_TABLE (table), hbox, 2, 4, l_ty, l_ty+1,
+  gtk_table_attach (GTK_TABLE (table), hbox, 3, 5, l_ty, l_ty+1,
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (hbox);
 

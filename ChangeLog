@@ -1,3 +1,18 @@
+2000-03-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpdnd.[ch]: minor cleanups.
+
+	* libgimp/gimpwidgets.c: don't set a border width for the
+	radio_group's vbox if no frame around it was requested.
+
+	* plug-ins/common/sample_colorize.c: add a separator between
+	image and sample.
+
+	* plug-ins/common/iwarp.c: use the libgimp ui functions, removed
+	callbacks, a global s/gfloat/gdouble/, replaced the booleans
+	toggling the transform mode with a single variable containing an
+	enum value, indentation.
+
 2000-03-31  Sven Neumann  <neo@wintermute.ochsenblut.de>
 
 	* plug-ins/script-fu/scripts/beveled-pattern-heading.scm
