@@ -1,5 +1,10 @@
 2004-11-26  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui): only
+	show the Incremental toggle for tools that use it (bug #159306).
+
+2004-11-26  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdocumentlist.c (gimp_document_list_deserialize):
 	don't add documents w/o a name to the list. Fixes bug #159510.
 

@@ -153,8 +153,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     }
 
   /*  the "incremental" toggle  */
-  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-      tool_options->tool_info->tool_type == GIMP_TYPE_ERASER_TOOL)
+  if (tool_type == GIMP_TYPE_PENCIL_TOOL     ||
+      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_ERASER_TOOL)
     {
       incremental_toggle =
         gimp_prop_enum_check_button_new (config,
@@ -379,9 +380,13 @@ gradient_options_gui (GimpGradientOptions *gradient,
                                G_CALLBACK (gimp_toggle_button_set_visible),
                                table, 0);
 
-      gtk_widget_set_sensitive (incremental_toggle, ! gradient->use_gradient);
-      g_object_set_data (G_OBJECT (button), "inverse_sensitive",
-                         incremental_toggle);
+      if (incremental_toggle)
+        {
+          gtk_widget_set_sensitive (incremental_toggle,
+                                    ! gradient->use_gradient);
+          g_object_set_data (G_OBJECT (button), "inverse_sensitive",
+                             incremental_toggle);
+        }
 
       /*  the gradient view  */
       button = gimp_gradient_box_new (NULL, GIMP_CONTEXT (config),
