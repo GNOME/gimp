@@ -1,3 +1,9 @@
+Sun Mar 14 13:26:11 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* app/app_procs.c: reverted Michaels change as it is defintely
+	wrong. The current behaviour is probably not perfect and I'll try
+	to fix that.
+
 1999-03-14  Jay Cox  <jaycox@earthlink.net>
 
 	* app/xcf.c:
