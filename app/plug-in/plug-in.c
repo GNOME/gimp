@@ -479,11 +479,16 @@ plug_in_open (PlugIn *plug_in)
 
   if (! plug_in->synchronous)
     {
-      plug_in->input_id = g_io_add_watch (plug_in->my_read,
-                                          G_IO_IN  | G_IO_PRI |
-                                          G_IO_ERR | G_IO_HUP,
-                                          plug_in_recv_message,
-                                          plug_in);
+      GSource *source;
+
+      source = g_io_create_watch (plug_in->my_read,
+                                  G_IO_IN  | G_IO_PRI | G_IO_ERR | G_IO_HUP);
+
+      g_source_set_callback (source, plug_in_recv_message, plug_in, NULL);
+      g_source_set_can_recurse (source, TRUE);
+
+      plug_in->input_id = g_source_attach (source, NULL);
+      g_source_unref (source);
 
       gimp->open_plug_ins = g_slist_prepend (gimp->open_plug_ins, plug_in);
     }
