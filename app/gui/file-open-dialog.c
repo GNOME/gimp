@@ -105,8 +105,7 @@ static PlugInProcDef  *load_file_proc         = NULL;
 void
 file_open_dialog_set_type (PlugInProcDef *proc)
 {
-  if (proc)
-    file_dialog_update_name (proc, GTK_FILE_SELECTION (fileload));
+  /* Don't call file_dialog_update_name() here, see bug #112273.  */
 
   load_file_proc = proc;
 }

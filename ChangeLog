@@ -1,3 +1,8 @@
+2003-06-16  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/file-open-dialog.c (file_open_dialog_set_type): don't
+	call file_dialog_update_name() here. Fixes bug #112273.
+
 2003-06-16  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/dbbrowser/dbbrowser_utils.c: minor cleanups.
