@@ -1,3 +1,15 @@
+2004-09-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-server.c: enabled build of the
+	Script-Fu server for the Win32 platform using the winsock API.
+
+	* plug-ins/script-fu/Makefile.am: link with -lwsock32 on Win32.
+
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/siod-wrapper.c: removed Win32 specific code
+	that isn't needed any longer.
+
 2004-09-21  Michael Natterer  <mitch@gimp.org>
 
 	For the sake of completeness, added a GUI for the hidden

@@ -20,8 +20,6 @@
 
 #include <glib.h>		/* For G_OS_WIN32 */
 
-#ifndef G_OS_WIN32
-
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -31,10 +29,15 @@
 #include <errno.h>
 #include <sys/time.h>
 #include <sys/types.h>
+
+#ifdef G_OS_WIN32
+#include <winsock2.h>
+#else
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#endif
 
 #ifdef HAVE_SYS_SELECT_H
 #include <sys/select.h>
@@ -120,19 +123,19 @@ typedef struct
  *  Local Functions
  */
 
-static void      server_start       (gint       port,
-				     gchar     *logfile);
-static gboolean  execute_command    (SFCommand *cmd);
-static gint      read_from_client   (gint       filedes);
-static gint      make_socket        (guint      port);
-static void      server_log         (gchar     *format,
-				     ...);
+static void      server_start       (gint         port,
+				     const gchar *logfile);
+static gboolean  execute_command    (SFCommand   *cmd);
+static gint      read_from_client   (gint         filedes);
+static gint      make_socket        (guint        port);
+static void      server_log         (const gchar *format,
+				     ...) G_GNUC_PRINTF (1, 2);
 static void      server_quit        (void);
 
 static gboolean  server_interface   (void);
-static void      response_callback  (GtkWidget *widget,
-                                     gint       response_id,
-				     gpointer   data);
+static void      response_callback  (GtkWidget   *widget,
+                                     gint         response_id,
+				     gpointer     data);
 
 
 /*
@@ -151,13 +154,13 @@ static gboolean     server_mode     = FALSE;
 
 static ServerInterface sint =
 {
-  NULL,  /*  port entry widget  */
-  NULL,  /*  log entry widget  */
+  NULL,  /*  port entry widget    */
+  NULL,  /*  log entry widget     */
 
   10008, /*  default port number  */
-  NULL,  /*  use stdout  */
+  NULL,  /*  use stdout           */
 
-  FALSE  /*  run  */
+  FALSE  /*  run                  */
 };
 
 /*
@@ -184,9 +187,9 @@ script_fu_server_run (const gchar      *name,
 		      gint             *nreturn_vals,
 		      GimpParam       **return_vals)
 {
-  static GimpParam  values[1];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunMode       run_mode;
+  static GimpParam   values[1];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
 
   run_mode = params[0].data.d_int32;
 
@@ -230,19 +233,17 @@ script_fu_server_listen (gint timeout)
 {
   struct sockaddr_in  clientname;
   struct timeval      tv;
-  struct timeval     *tvp;
-  gint  i;
-  guint size;
+  struct timeval     *tvp = NULL;
+  gint                i;
+  guint               size;
 
   /*  Set time struct  */
   if (timeout)
     {
-      tv.tv_sec = timeout / 1000;
+      tv.tv_sec  = timeout / 1000;
       tv.tv_usec = timeout % 1000;
       tvp = &tv;
     }
-  else
-    tvp = NULL;
 
   /* Block until input arrives on one or more active sockets
      or timeout occurs. */
@@ -313,12 +314,13 @@ script_fu_server_listen (gint timeout)
 }
 
 static void
-server_start (gint   port,
-	      gchar *logfile)
+server_start (gint         port,
+	      const gchar *logfile)
 {
   /* First of all, create the socket and set it up to accept connections. */
   /* This may fail if there's a server running on this port already.      */
   server_sock = make_socket (port);
+
   if (listen (server_sock, 5) < 0)
     {
       perror ("listen");
@@ -339,7 +341,7 @@ server_start (gint   port,
                                          NULL,
                                          (GDestroyNotify) g_free);
 
-  server_log ("Script-fu initialized and listening...\n");
+  server_log ("Script-fu server initialized and listening...\n");
 
   /* Initialize the set of active sockets. */
   FD_ZERO (&server_active);
@@ -516,8 +518,29 @@ static gint
 make_socket (guint port)
 {
   struct sockaddr_in name;
-  gint sock;
-  gint v = 1;
+  gint               sock;
+  gint               v = 1;
+
+  /*  Win32 needs the winsock library initialized.  */
+#ifdef G_OS_WIN32
+  static gboolean    winsock_initialized = FALSE;
+
+  if (! winsock_initialized)
+    {
+      WORD    wVersionRequested = MAKEWORD (2, 2);
+      WSADATA wsaData;
+
+      if (WSAStartup (wVersionRequested, &wsaData) == 0)
+        {
+          winsock_initialized = TRUE;
+        }
+      else
+        {
+          perror ("Can't initialize the Winsock DLL");
+          gimp_quit ();
+        }
+    }
+#endif
 
   /* Create the socket. */
   sock = socket (PF_INET, SOCK_STREAM, 0);
@@ -526,6 +549,7 @@ make_socket (guint port)
       perror ("socket");
       gimp_quit ();
     }
+
   setsockopt (sock, SOL_SOCKET, SO_REUSEADDR, &v, sizeof(v));
 
   /* Give the socket a name. */
@@ -543,7 +567,8 @@ make_socket (guint port)
 }
 
 static void
-server_log (gchar *format, ...)
+server_log (const gchar *format,
+            ...)
 {
   va_list  args;
   gchar   *buf;
@@ -554,6 +579,7 @@ server_log (gchar *format, ...)
 
   fputs (buf, server_log_file);
   g_free (buf);
+
   if (server_log_file != stdout)
     fflush (server_log_file);
 }
@@ -658,7 +684,5 @@ response_callback (GtkWidget *widget,
       sint.run     = TRUE;
     }
 
-  gtk_widget_destroy (GTK_WIDGET (widget));
+  gtk_widget_destroy (widget);
 }
-
-#endif /* G_OS_WIN32 */

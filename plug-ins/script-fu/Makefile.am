@@ -8,6 +8,7 @@ libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
 if OS_WIN32
 mwindows = -mwindows
+WINSOCK_LIBS = -lwsock32
 endif
 
 AM_LDFLAGS = $(mwindows)
@@ -60,5 +61,6 @@ LDADD = \
 	$(REGEXREPL)						\
 	$(GTK_LIBS)						\
 	$(SOCKET_LIBS)						\
+	$(WINSOCK_LIBS)						\
 	$(RT_LIBS)						\
 	$(INTLLIBS)

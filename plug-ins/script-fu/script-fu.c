@@ -143,7 +143,6 @@ script_fu_query (void)
                           G_N_ELEMENTS (textconsole_args), 0,
                           textconsole_args, NULL);
 
-#ifndef G_OS_WIN32
   gimp_install_procedure ("plug_in_script_fu_server",
 			  "Provides a server for remote script-fu operation",
 			  "Provides a server for remote script-fu operation",
@@ -158,7 +157,6 @@ script_fu_query (void)
 
   gimp_plugin_menu_register ("plug_in_script_fu_server",
                              N_("<Toolbox>/Xtns/Script-Fu"));
-#endif
 
   gimp_install_procedure ("plug_in_script_fu_eval",
 			  "Evaluate scheme code",
@@ -247,7 +245,6 @@ script_fu_run (const gchar      *name,
       script_fu_console_run (name, nparams, param,
 			     nreturn_vals, return_vals);
     }
-#ifndef G_OS_WIN32
   else if (strcmp (name, "plug_in_script_fu_server") == 0)
     {
       /*
@@ -257,7 +254,6 @@ script_fu_run (const gchar      *name,
       script_fu_server_run (name, nparams, param,
 			    nreturn_vals, return_vals);
     }
-#endif
   else if (strcmp (name, "plug_in_script_fu_eval") == 0)
     {
       /*

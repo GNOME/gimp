@@ -40,11 +40,6 @@
 
 #include <plug-ins/dbbrowser/dbbrowser_utils.h>
 
-#ifdef G_OS_WIN32
-#include <fcntl.h>
-#include <io.h>
-#endif
-
 
 #define TEXT_WIDTH  480
 #define TEXT_HEIGHT 400
