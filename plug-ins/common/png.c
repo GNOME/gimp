@@ -28,6 +28,7 @@
  *   query()                     - Respond to a plug-in query...
  *   run()                       - Run the plug-in...
  *   load_image()                - Load a PNG image into a new image window.
+ *   respin_cmap()               - Re-order a Gimp colormap for PNG tRNS
  *   save_image()                - Save the specified image to a PNG file.
  *   save_ok_callback()          - Destroy the save dialog and save the image.
  *   save_compression_callback() - Update the image compression level.
@@ -58,7 +59,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION  "1.1.11 - 29 Jan 2000"
+#define PLUG_IN_VERSION  "1.2 - 2 April 2000"
 #define SCALE_WIDTH      125
 
 #define DEFAULT_GAMMA    2.20
@@ -91,6 +92,9 @@ static gint	save_image                (gchar   *filename,
 					   gint32   image_ID,
 					   gint32   drawable_ID,
 					   gint32   orig_image_ID);
+
+static guchar 	*respin_cmap		  (gint32   image_ID,
+					   gint	    *colors);
 
 static void     init_gtk                  (void);
 static gint	save_dialog               (void);
@@ -349,6 +353,7 @@ load_image (gchar *filename)	/* I - File to load */
 		bpp = 0,	/* Bytes per pixel */
 		image_type = 0,	/* Type of image */
 		layer_type = 0,	/* Type of drawable/layer */
+		empty = 0,	/* Number of fully transparent indices */
 		num_passes,	/* Number of interlace passes in file */
 		pass,		/* Current pass in file */
 		tile_height,	/* Height of tile in GIMP */
@@ -535,8 +540,18 @@ load_image (gchar *filename)	/* I - File to load */
   * Load the colormap as necessary...
   */
 
-  if (info->color_type & PNG_COLOR_MASK_PALETTE)
-    gimp_image_set_cmap(image, (guchar *)info->palette, info->num_palette);
+  if (info->color_type & PNG_COLOR_MASK_PALETTE) {
+
+    if (info->valid & PNG_INFO_tRNS) {
+      for (empty= 0; empty < 256 && alpha[empty] == 0; ++empty);
+        /* Calculates number of fully transparent "empty" entries */
+
+      gimp_image_set_cmap(image, (guchar *) (info->palette + empty),
+                          info->num_palette - empty);
+    } else {
+      gimp_image_set_cmap(image, (guchar *)info->palette, info->num_palette);
+    }
+  }
 
  /*
   * Create the "background" layer to hold the image...
@@ -609,7 +624,6 @@ load_image (gchar *filename)	/* I - File to load */
 
   fclose(fp);
 
-
   if (trns) {
     gimp_layer_add_alpha(layer);
     drawable = gimp_drawable_get(layer);
@@ -630,6 +644,7 @@ load_image (gchar *filename)	/* I - File to load */
 
       for (i= 0; i < tile_height * drawable->width; ++i) {
         pixel[i*2+1]= alpha [ pixel[i*2] ];
+        pixel[i*2]-= empty;
       }
 
       gimp_pixel_rgn_set_rect(&pixel_rgn, pixel, 0, begin,
@@ -659,7 +674,7 @@ save_image (gchar  *filename,	        /* I - File to save to */
 	    gint32  drawable_ID,	/* I - Current drawable */
 	    gint32  orig_image_ID)      /* I - Original image before export */
 {
-  int		i,		/* Looping var */
+  int		i, k,		/* Looping vars */
 		bpp = 0,	/* Bytes per pixel */
 		type,		/* Type of drawable/layer */
 		num_passes,	/* Number of interlace passes in file */
@@ -676,6 +691,7 @@ save_image (gchar  *filename,	        /* I - File to save to */
   gint		num_colors;	/* Number of colors in colormap */
   gint		offx, offy;	/* Drawable offsets from origin */
   guchar	**pixels,	/* Pixel rows */
+		*fixed,		/* Fixed-up pixel data */
 		*pixel;		/* Pixel data */
   gchar		*progress;	/* Title for progress display... */
   gdouble       xres, yres;	/* GIMP resolution (dpi) */
@@ -753,6 +769,10 @@ save_image (gchar  *filename,	        /* I - File to save to */
   info->sig_bit.gray   = 8;
   info->sig_bit.alpha  = 8;
   info->interlace_type = pngvals.interlaced;
+
+  /* All this stuff is optional extras, if the user is aiming for smallest
+     possible file size she can turn them all off */
+
   if (!pngvals.noextras) {
     info->valid          |= PNG_INFO_gAMA;
 
@@ -821,13 +841,27 @@ save_image (gchar  *filename,	        /* I - File to save to */
         info->num_palette= num_colors;
         break;
     case INDEXEDA_IMAGE :
-	g_message (_("Can't save image with alpha\n"));
-	return 0;
+	bpp		 = 2;
+	info->valid	 |= PNG_INFO_PLTE;
+	info->color_type = PNG_COLOR_TYPE_PALETTE;
+	info->palette	 = (png_colorp) respin_cmap (image_ID, &num_colors);
+        if (num_colors < 256) {
+ 	  info->valid	 |= PNG_INFO_tRNS;
+          info->num_palette= num_colors + 1;
+        } else {
+          info->num_palette= num_colors;
+        }
 	break;
-
     default:
-        abort ();
+        g_message ("%s\nImage type can't be saved as PNG", filename);
+        return 0;
   };
+
+
+  if (info->valid | PNG_INFO_tRNS) {
+    /* It's not really a VERY evil hack, right? -- ruth */
+    png_set_tRNS(pp, info, (png_bytep) "\0", 1, NULL);
+  }
 
   png_write_info (pp, info);
 
@@ -867,6 +901,14 @@ save_image (gchar  *filename,	        /* I - File to save to */
 	num = end - begin;
 	
 	gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin, drawable->width, num);
+        if (info->valid | PNG_INFO_tRNS) {
+          for (i = 0; i < num; ++i) {
+	    fixed= pixels[i];
+            for (k = 0; k < drawable->width; ++k) {
+              fixed[k] = (fixed[k*2+1] > 127) ? fixed[k*2] + 1 : 0;
+            }
+          }
+        }
 	
 	png_write_rows (pp, pixels, num);
 	
@@ -900,6 +942,25 @@ save_ok_callback (GtkWidget *widget,
   runme = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
+}
+
+/* respin_cmap actually reverse fills the colormap, so that empty entries
+   are left at the FRONT, this is only needed to reduce the size of the
+   tRNS chunk when saving GIF-like transparent images with colormaps */
+
+static guchar* respin_cmap (gint32 image_ID, gint *colors) {
+  static guchar after[3 * 256]= { 0xff, 0, 0xff } ;
+  guchar *before;
+
+  before= gimp_image_get_cmap(image_ID, colors);
+
+  if (*colors != 256) { /* spare space in palette :) */
+    memcpy(after + 3, before, *colors * 3);
+  } else {
+    memcpy(after, before, *colors * 3);
+  }
+
+  return after;
 }
 
 static void 

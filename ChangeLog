@@ -1,3 +1,8 @@
+2000-04-02  Nick Lamb  <njl195@zepler.org.uk>
+	* plug-ins/common/png.c
+	The Gimp now does as good a job of saving indexed+a PNGs as it
+	does of displaying them. Did I mention that INDEXED + A sucks?
+
 2000-04-01  Garry R. Osgood   <gosgood@idt.net>
 	* app/bezier_select.c
 	When user deletion of anchor points decimates a curve
