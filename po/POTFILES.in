@@ -135,6 +135,7 @@ app/dialogs/grid-dialog.c
 app/dialogs/image-new-dialog.c
 app/dialogs/info-dialog.c
 app/dialogs/info-window.c
+app/dialogs/layer-options-dialog.c
 app/dialogs/module-dialog.c
 app/dialogs/offset-dialog.c
 app/dialogs/palette-import-dialog.c
