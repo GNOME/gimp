@@ -587,7 +587,7 @@ nova_center_preview_realize (GtkWidget  *widget,
                              NovaCenter *center)
 {
   GdkDisplay *display = gtk_widget_get_display (widget);
-  GdkCursor  *cursor  = gdk_cursor_new_for_display (display, GDK_HAND2);
+  GdkCursor  *cursor  = gdk_cursor_new_for_display (display, GDK_CROSSHAIR);
 
   gimp_preview_set_default_cursor (center->preview, cursor);
   gdk_cursor_unref (cursor);

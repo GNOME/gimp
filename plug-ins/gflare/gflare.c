@@ -659,6 +659,7 @@ static void calc_overlay                (guchar       *dest,
 					 guchar       *src2);
 
 static void dlg_setup_gflare            (void);
+static void dlg_preview_realize         (GtkWidget    *widget);
 static gboolean dlg_preview_handle_event (GtkWidget    *widget,
 					  GdkEvent     *event);
 static void dlg_preview_update          (void);
@@ -2340,9 +2341,14 @@ dlg_run (void)
 			      dlg_preview_deinit_func, NULL);
   gtk_widget_set_events (GTK_WIDGET (dlg->preview->widget), DLG_PREVIEW_MASK);
   gtk_container_add (GTK_CONTAINER (frame), dlg->preview->widget);
+
+  g_signal_connect (dlg->preview->widget, "realize",
+                    G_CALLBACK (dlg_preview_realize),
+                    NULL);
   g_signal_connect (dlg->preview->widget, "event",
                     G_CALLBACK (dlg_preview_handle_event),
                     NULL);
+
   dlg_preview_calc_window ();
 
   button = gtk_check_button_new_with_mnemonic (_("A_uto update preview"));
@@ -2468,6 +2474,16 @@ ed_preview_calc_window (void)
       dlg->pwin.y0 = 0;
       dlg->pwin.y1 = drawable->height;
     }
+}
+
+static void
+dlg_preview_realize (GtkWidget *widget)
+{
+  GdkDisplay *display = gtk_widget_get_display (widget);
+  GdkCursor  *cursor  = gdk_cursor_new_for_display (display, GDK_CROSSHAIR);
+
+  gdk_window_set_cursor (widget->window, cursor);
+  gdk_cursor_unref (cursor);
 }
 
 static gboolean

@@ -111,6 +111,8 @@ static void      iwarp_response          (GtkWidget *widget,
                                           gint       response_id,
                                           gpointer   data);
 
+static void      iwarp_realize_callback  (GtkWidget *widget);
+
 static gint      iwarp_motion_callback   (GtkWidget *widget,
                                           GdkEvent  *event);
 
@@ -1185,6 +1187,10 @@ iwarp_dialog (void)
                          GDK_BUTTON_RELEASE_MASK |
                          GDK_BUTTON1_MOTION_MASK |
                          GDK_POINTER_MOTION_HINT_MASK);
+
+  g_signal_connect (preview, "realize",
+                    G_CALLBACK (iwarp_realize_callback),
+                    NULL);
   g_signal_connect (preview, "event",
                     G_CALLBACK (iwarp_motion_callback),
                     NULL);
@@ -1514,6 +1520,16 @@ iwarp_response (GtkWidget *widget,
       gtk_widget_destroy (widget);
       break;
     }
+}
+
+static void
+iwarp_realize_callback (GtkWidget *widget)
+{
+  GdkDisplay *display = gtk_widget_get_display (widget);
+  GdkCursor  *cursor  = gdk_cursor_new_for_display (display, GDK_CROSSHAIR);
+
+  gdk_window_set_cursor (widget->window, cursor);
+  gdk_cursor_unref (cursor);
 }
 
 static gint

@@ -1,3 +1,15 @@
+2004-10-29  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/nova.c: changed preview cursors to GDK_CROSSHAIR.
+
+	* plug-ins/common/iwarp.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/ifscompose/ifscompose.c: added GDK_CROSSHAIR preview
+	cursors. Not quite perfect for IfsCompose (actually needs tool-
+	and constext-sensitive cursors) but definitely better than
+	before. Fixes bug #90519.
+
 2004-10-29  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/edit.pdb: mention gimp_drawable_fill() in the

@@ -223,6 +223,7 @@ static void       design_area_create     (GtkWidget *window, gint design_width,
 /* functions for drawing design window */
 static void update_values                   (void);
 static void set_current_element             (gint index);
+static void design_area_realize             (GtkWidget *widget);
 static gint design_area_expose              (GtkWidget *widget,
                                              GdkEventExpose *event);
 static gint design_area_button_press        (GtkWidget *widget,
@@ -1158,6 +1159,9 @@ design_area_create (GtkWidget *window,
   ifsDesign->area = gtk_drawing_area_new ();
   gtk_widget_set_size_request (ifsDesign->area, design_width, design_height);
 
+  g_signal_connect (ifsDesign->area, "realize",
+                    G_CALLBACK (design_area_realize),
+                    NULL);
   g_signal_connect (ifsDesign->area, "expose_event",
                     G_CALLBACK (design_area_expose),
                     NULL);
@@ -1556,6 +1560,16 @@ set_current_element (gint index)
   g_free (frame_name);
 
   update_values ();
+}
+
+static void
+design_area_realize (GtkWidget *widget)
+{
+  GdkDisplay *display = gtk_widget_get_display (widget);
+  GdkCursor  *cursor  = gdk_cursor_new_for_display (display, GDK_CROSSHAIR);
+
+  gdk_window_set_cursor (widget->window, cursor);
+  gdk_cursor_unref (cursor);
 }
 
 static gboolean
