@@ -41,7 +41,9 @@
 #endif
 #include "display/display-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
 
@@ -51,6 +53,7 @@
 #include "gimpdnd.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
+#include "gimptoolbox-color-area.h"
 
 #include "gui/color-notebook.h"
 
@@ -82,6 +85,7 @@ static void   gimp_colormap_editor_unmap           (GtkWidget          *widget);
 static void   gimp_colormap_editor_set_image       (GimpImageEditor    *editor,
                                                     GimpImage          *gimage);
 
+static void   gimp_colormap_editor_real_selected   (GimpColormapEditor *editor);
 static void   gimp_colormap_editor_draw            (GimpColormapEditor *editor);
 static void   gimp_colormap_editor_draw_cell       (GimpColormapEditor *editor,
                                                     gint                col);
@@ -186,7 +190,7 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
 
   image_editor_class->set_image = gimp_colormap_editor_set_image;
 
-  klass->selected               = NULL;
+  klass->selected               = gimp_colormap_editor_real_selected;
 }
 
 static void
@@ -406,6 +410,36 @@ gimp_colormap_editor_col_index (GimpColormapEditor *editor)
 
 
 /*  private functions  */
+
+static void
+gimp_colormap_editor_real_selected (GimpColormapEditor *editor)
+{
+  GimpContext *user_context;
+  GimpImage   *gimage;
+  GimpRGB      color;
+  gint         index;
+
+  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+
+  if (!gimage)
+    return;
+
+  user_context = gimp_get_user_context (gimage->gimp);
+
+  index = editor->col_index;
+
+  gimp_rgba_set_uchar (&color,
+		       gimage->cmap[index * 3 + 0],
+		       gimage->cmap[index * 3 + 1],
+		       gimage->cmap[index * 3 + 2],
+		       OPAQUE_OPACITY);
+
+  if (active_color == FOREGROUND)
+    gimp_context_set_foreground (user_context, &color);
+  else if (active_color == BACKGROUND)
+    gimp_context_set_background (user_context, &color);
+}
+
 
 #define MIN_CELL_SIZE 4
 

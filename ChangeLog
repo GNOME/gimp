@@ -1,3 +1,9 @@
+2003-03-04  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcolormapeditor.[ch]: set the active color from
+	GimpColormapEditor::selected so you can pick colors from an
+	indexed palette again.
+
 2003-03-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/file/file-save.[ch]: added new function file_save_as() which

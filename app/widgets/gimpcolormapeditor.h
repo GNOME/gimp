@@ -57,7 +57,7 @@ struct _GimpColormapEditorClass
 {
   GimpImageEditorClass  parent_class;
 
-  void (* selected) (GimpColormapEditor *gcd);
+  void (* selected) (GimpColormapEditor *editor);
 };
 
 
