@@ -27,6 +27,9 @@
    */
 
 /*
+ * 98/07/25 - Convert-to-indexed now remembers the last invocation's
+ *  settings.  Also, GRAY->INDEXED more flexible.  [Adam]
+ *
  * 98/07/05 - Sucked the warning about quantizing to too many colours into
  *  a text widget embedded in the dialog, improved intelligence of dialog
  *  to default 'custom palette' selection to 'Web' if available, and
@@ -60,6 +63,7 @@
 
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <math.h>
 
@@ -244,6 +248,17 @@ static void palette_entries_callback(GtkWidget *w, gpointer client_data);
 static PaletteEntriesP theCustomPalette = NULL;
 static gboolean UserHasWebPal = FALSE;
 
+
+/* Defaults */
+static int      snum_cols       = 256;
+static gboolean sdither         = TRUE;
+static gboolean smakepal_flag   = TRUE;
+static gboolean swebpal_flag    = FALSE;
+static gboolean scustompal_flag = FALSE;
+static gboolean smonopal_flag   = FALSE;
+static gboolean sreusepal_flag  = FALSE;
+
+
 void
 convert_to_rgb (GimpImage *gimage)
 {
@@ -293,14 +308,15 @@ convert_to_indexed (GimpImage *gimage)
 
   dialog = g_new(IndexedDialog, 1);
   dialog->gimage = gimage;
-  dialog->num_cols = 256;
-  dialog->dither = TRUE;
 
-  dialog->makepal_flag = TRUE;
-  dialog->webpal_flag = FALSE;
-  dialog->custompal_flag = FALSE;
-  dialog->monopal_flag = FALSE;
-  dialog->reusepal_flag = FALSE;
+  dialog->num_cols = snum_cols;
+  dialog->dither = sdither;
+  dialog->makepal_flag = smakepal_flag;
+  dialog->webpal_flag = swebpal_flag;
+  dialog->custompal_flag = scustompal_flag;
+  dialog->monopal_flag = smonopal_flag;
+  dialog->reusepal_flag = sreusepal_flag;
+
   dialog->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (dialog->shell), "indexed_color_conversion", "Gimp");
   gtk_window_set_title (GTK_WINDOW (dialog->shell), "Indexed Color Conversion");
@@ -340,21 +356,30 @@ convert_to_indexed (GimpImage *gimage)
 
   text = gtk_entry_new ();
   {
-    if ((!gimage_is_empty (gimage))
-	&&
-	(
-	 gimage->layers->next
-	 ||
-	 layer_has_alpha((Layer *) gimage->layers->data)
-	 )
-	)
+    if (dialog->num_cols == 256)
       {
-	gtk_entry_set_text (GTK_ENTRY (text), "255");
-	dialog->num_cols = 255;
-      }      
+	if ((!gimage_is_empty (gimage))
+	    &&
+	    (
+	     gimage->layers->next
+	     ||
+	     layer_has_alpha((Layer *) gimage->layers->data)
+	     )
+	    )
+	  {
+	    gtk_entry_set_text (GTK_ENTRY (text), "255");
+	    dialog->num_cols = 255;
+	  }      
+	else
+	  {
+	    gtk_entry_set_text (GTK_ENTRY (text), "256");
+	  }
+      }
     else
       {
-	gtk_entry_set_text (GTK_ENTRY (text), "256");
+	gchar tempstr[50];
+	sprintf(tempstr, "%d", dialog->num_cols);
+	gtk_entry_set_text (GTK_ENTRY (text), tempstr);
       }
     gtk_widget_set_usize (text, 50, 25);
     gtk_box_pack_start (GTK_BOX (hbox), text, FALSE, FALSE, 0);
@@ -365,7 +390,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_widget_show (text);
   gtk_widget_show (hbox);
 
-  if (gimage->base_type == RGB)
+  if (TRUE /* gimage->base_type == RGB */ )
     {
       GtkWidget *menu;
       GtkWidget *palette_option_menu;
@@ -396,6 +421,7 @@ convert_to_indexed (GimpImage *gimage)
           gtk_widget_show (hbox);
       }
     }
+
 
   if (!UserHasWebPal)
     {
@@ -609,6 +635,17 @@ indexed_ok_callback (GtkWidget *widget,
   convert_image (dialog->gimage, INDEXED, dialog->num_cols,
 		 dialog->dither, palette_type);
   gdisplays_flush ();
+
+
+  /* Save defaults for next time */
+  snum_cols = dialog->num_cols;
+  sdither = dialog->dither;
+  smakepal_flag = dialog->makepal_flag;
+  swebpal_flag = dialog->webpal_flag;
+  scustompal_flag = dialog->custompal_flag;
+  smonopal_flag = dialog->monopal_flag;
+  sreusepal_flag = dialog->reusepal_flag;
+
 
   gtk_widget_destroy (dialog->shell);
   g_free (dialog);
