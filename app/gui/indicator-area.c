@@ -19,27 +19,28 @@
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
+#include "brush_scale.h"
 #include "indicator_area.h"
 #include "gimpbrushlist.h"
 
 #define CELL_SIZE 23 /* The size of the previews */
 #define CELL_PADDING 2 /* How much between brush and pattern cells */
 #define PREVIEW_EVENT_MASK  GDK_EXPOSURE_MASK | \
-                          GDK_BUTTON_PRESS_MASK | \
-                          GDK_BUTTON_RELEASE_MASK | \
-                          GDK_BUTTON1_MOTION_MASK | \
-                          GDK_ENTER_NOTIFY_MASK | \
-                          GDK_LEAVE_NOTIFY_MASK
+                            GDK_BUTTON_PRESS_MASK | \
+                            GDK_BUTTON_RELEASE_MASK | \
+                            GDK_BUTTON1_MOTION_MASK | \
+                            GDK_ENTER_NOTIFY_MASK | \
+                            GDK_LEAVE_NOTIFY_MASK
 
 /*  Global variables  */
 static void
 brush_popup_open (GimpBrushP brush, int x, int y);
 
 /*  Prototypes */
-static void brush_popup_open (GimpBrushP brush, int x, int y);
-static gint brush_area_events (GtkWidget  *widget, GdkEvent  *event);
-static void pattern_popup_open (GPatternP brush, int x, int y);
-static gint pattern_area_events (GtkWidget  *widget, GdkEvent  *event);
+static void brush_popup_open    (GimpBrushP brush, int x, int y);
+static gint brush_area_events   (GtkWidget *widget, GdkEvent  *event);
+static void pattern_popup_open  (GPatternP brush, int x, int y);
+static gint pattern_area_events (GtkWidget *widget, GdkEvent  *event);
 
 /*  Static variables  */
 static GtkWidget *indicator_table;
@@ -52,8 +53,8 @@ static GtkWidget *device_patpreview = NULL;
 
 static void
 brush_popup_open (GimpBrushP brush,
-		  int          x,
-                  int          y)
+		  int        x,
+                  int        y)
 {
   gint x_org, y_org;
   gint scr_w, scr_h;
@@ -111,10 +112,11 @@ void
 brush_area_update ()
 {
   guchar buffer[CELL_SIZE];
-  TempBuf * brush_buf;
+  MaskBuf *brush_buf;
   GimpBrushP brush;
   unsigned char * src, *s = NULL;
   unsigned char *b;
+  gboolean scale = FALSE;
   int width,height;
   int offset_x, offset_y;
   int yend;
@@ -126,11 +128,27 @@ brush_area_update ()
   brush = get_active_brush();
   if (!brush) 
     {
-    g_warning("No gimp brush found\n");
-    return;
+      g_warning("No gimp brush found\n");
+      return;
     }
 	
   brush_buf = brush->mask;
+
+  if (brush_buf->width > CELL_SIZE || brush_buf->height > CELL_SIZE)
+    {
+      double ratio_x = (double)brush_buf->width / CELL_SIZE;
+      double ratio_y = (double)brush_buf->height / CELL_SIZE;
+
+      if (ratio_x >= ratio_y)
+	brush_buf = brush_scale_mask (brush_buf, 
+				      (double)(brush_buf->width) / ratio_x, 
+				      (double)(brush_buf->height) / ratio_x);
+      else
+	brush_buf = brush_scale_mask (brush_buf, 
+				      (double)(brush_buf->width) / ratio_y,
+				      (double)(brush_buf->height) / ratio_y);
+      scale = TRUE;
+    }
 
   /*  Get the pointer into the brush mask data  */
   src = mask_buf_data (brush_buf);
@@ -140,9 +158,9 @@ brush_area_update ()
   height = (brush_buf->height > CELL_SIZE) ? CELL_SIZE: brush_buf->height;
 
   /* Set buffer to white */
-  memset(buffer, 255, sizeof(buffer));
+  memset (buffer, 255, sizeof (buffer));
   for (i = 0; i < CELL_SIZE; i++)
-    gtk_preview_draw_row (GTK_PREVIEW(brush_preview), buffer, 0, i, CELL_SIZE);
+    gtk_preview_draw_row (GTK_PREVIEW (brush_preview), buffer, 0, i, CELL_SIZE);
 
   offset_x = ((CELL_SIZE - width) >> 1);
   offset_y = ((CELL_SIZE - height) >> 1);
@@ -161,13 +179,27 @@ brush_area_update ()
       for (j = 0; j < width ; j++)
         *b++ = 255 - *s++;
 
-      gtk_preview_draw_row (GTK_PREVIEW(brush_preview),
-                            buffer,
-                            offset_x, i, width);
+      gtk_preview_draw_row (GTK_PREVIEW (brush_preview), 
+			    buffer, offset_x, i, width);
       src += brush_buf->width;
     }
-  gtk_widget_draw(brush_preview, NULL);
-  gtk_widget_show(brush_preview);
+
+  if (scale)
+    {
+      offset_y = CELL_SIZE - brush_scale_indicator_height - 1;
+      for (i = 0; i < brush_scale_indicator_height; i++)
+	{
+	  offset_x = CELL_SIZE - brush_scale_indicator_width - 1;
+	  gtk_preview_draw_row (GTK_PREVIEW (brush_preview),
+				brush_scale_indicator_bits[i],
+				offset_x, offset_y + i, 
+				brush_scale_indicator_width);
+	}
+      mask_buf_free (brush_buf);
+    }
+
+  gtk_widget_draw (brush_preview, NULL);
+  gtk_widget_show (brush_preview);
 }
 
 static gint
@@ -207,7 +239,7 @@ brush_area_events (GtkWidget *widget,
                          (GDK_POINTER_MOTION_HINT_MASK |
                           GDK_BUTTON1_MOTION_MASK |
                           GDK_BUTTON_RELEASE_MASK),
-                        NULL, NULL, bevent->time);
+			  NULL, NULL, bevent->time);
 
 	/*  Show the brush popup window if the brush is too large  */
         if (brush->mask->width > CELL_SIZE ||
@@ -226,10 +258,8 @@ brush_area_events (GtkWidget *widget,
   return FALSE;
 }
 
-
-
 void
-pattern_area_update()
+pattern_area_update ()
 {
   guchar *buffer = NULL;
   TempBuf * pattern_buf;
@@ -257,7 +287,7 @@ pattern_area_update()
   /* Set buffer to white */
   memset(buffer, 255, sizeof(buffer));
   for (i = 0; i < CELL_SIZE; i++)
-    gtk_preview_draw_row (GTK_PREVIEW(pattern_preview), buffer, 0, i, CELL_SIZE);
+    gtk_preview_draw_row (GTK_PREVIEW (pattern_preview), buffer, 0, i, CELL_SIZE);
 
   offset_x = ((CELL_SIZE - width) >> 1);
   offset_y = ((CELL_SIZE - height) >> 1);
@@ -300,9 +330,9 @@ pattern_area_update()
 }
 
 static void
-pattern_popup_open ( GPatternP pattern,
-		     int          x, 
-		     int          y )
+pattern_popup_open (GPatternP pattern,
+		    int       x, 
+		    int       y)
 {
   gint x_org, y_org;
   gint scr_w, scr_h;
@@ -372,8 +402,8 @@ pattern_popup_open ( GPatternP pattern,
 }
 
 static gint
-pattern_area_events (GtkWidget    *widget,
-                       GdkEvent     *event)
+pattern_area_events (GtkWidget *widget,
+		     GdkEvent  *event)
 {
   GdkEventButton *bevent;
   GPatternP pattern;
@@ -425,11 +455,9 @@ pattern_area_events (GtkWidget    *widget,
   return FALSE;
 }
 
-
-
 GtkWidget *
-indicator_area_create (int        width,
-		   int        height)
+indicator_area_create (int width,
+		       int height)
 {
 /* Put the brush in the table */
   indicator_table = gtk_table_new (1,3, FALSE);
@@ -451,7 +479,7 @@ indicator_area_create (int        width,
                      NULL);
  
   gtk_table_attach_defaults (GTK_TABLE(indicator_table), pattern_preview,
-                           1, 2, 0, 1);
+			     1, 2, 0, 1);
 
   brush_area_update();
   pattern_area_update();

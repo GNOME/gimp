@@ -15,9 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include <string.h>
 #include "appenv.h"
 #include "actionarea.h"
+#include "brush_scale.h"
 #include "gimpbrushlist.h"
 #include "gimpcontext.h"
 #include "gimplist.h"
@@ -54,37 +56,37 @@
 			  GDK_ENTER_NOTIFY_MASK
 
 /*  local function prototypes  */
-static void brush_popup_open             (BrushSelectP, int, int, GimpBrushP);
-static void brush_popup_close            (BrushSelectP);
-static void display_brush                (BrushSelectP, GimpBrushP, int, int);
-static void display_brushes              (BrushSelectP);
-static void display_setup                (BrushSelectP);
-static void preview_calc_scrollbar       (BrushSelectP);
-static void brush_select_show_selected   (BrushSelectP, int, int);
-static void update_active_brush_field    (BrushSelectP);
-static void edit_active_brush            ();
-static gint edit_brush_callback		(GtkWidget *w, GdkEvent *e,
-					 gpointer data);
-static gint new_brush_callback		(GtkWidget *w, GdkEvent *e,
-					 gpointer data);
-static gint brush_select_brush_dirty_callback(GimpBrushP brush,
-					      BrushSelectP bsp);
-static void connect_signals_to_brush    (GimpBrushP brush, 
-					 BrushSelectP bsp);
-static void disconnect_signals_from_brush(GimpBrushP brush,
-					  BrushSelectP bsp);
-static void brush_added_callback     (GimpBrushList *list,
-				      GimpBrushP brush,
-				      BrushSelectP bsp);
-static void brush_removed_callback   (GimpBrushList *list,
-				      GimpBrushP brush,
-				      BrushSelectP bsp);
+static void brush_popup_open              (BrushSelectP, int, int, GimpBrushP);
+static void brush_popup_close             (BrushSelectP);
+static void display_brush                 (BrushSelectP, GimpBrushP, int, int);
+static void display_brushes               (BrushSelectP);
+static void display_setup                 (BrushSelectP);
+static void preview_calc_scrollbar        (BrushSelectP);
+static void brush_select_show_selected    (BrushSelectP, int, int);
+static void update_active_brush_field     (BrushSelectP);
+static void edit_active_brush             ();
+static gint edit_brush_callback		  (GtkWidget *w, GdkEvent *e,
+					   gpointer data);
+static gint new_brush_callback		  (GtkWidget *w, GdkEvent *e,
+					   gpointer data);
+static gint brush_select_brush_dirty_callback (GimpBrushP brush,
+					       BrushSelectP bsp);
+static void connect_signals_to_brush      (GimpBrushP brush, 
+					   BrushSelectP bsp);
+static void disconnect_signals_from_brush (GimpBrushP brush,
+					   BrushSelectP bsp);
+static void brush_added_callback          (GimpBrushList *list,
+					   GimpBrushP brush,
+					   BrushSelectP bsp);
+static void brush_removed_callback        (GimpBrushList *list,
+					   GimpBrushP brush,
+					   BrushSelectP bsp);
 /* static void brush_select_map_callback    (GtkWidget *, BrushSelectP); */
-static void brush_select_close_callback  (GtkWidget *, gpointer);
-static void brush_select_refresh_callback(GtkWidget *, gpointer);
-static void paint_mode_menu_callback     (GtkWidget *, gpointer);
-static gint brush_select_events          (GtkWidget *, GdkEvent *, BrushSelectP);
-static gint brush_select_resize		 (GtkWidget *, GdkEvent *, BrushSelectP);
+static void brush_select_close_callback   (GtkWidget *, gpointer);
+static void brush_select_refresh_callback (GtkWidget *, gpointer);
+static void paint_mode_menu_callback      (GtkWidget *, gpointer);
+static gint brush_select_events           (GtkWidget *, GdkEvent *, BrushSelectP);
+static gint brush_select_resize		  (GtkWidget *, GdkEvent *, BrushSelectP);
 
 static gint brush_select_delete_callback  (GtkWidget *, GdkEvent *, gpointer);
 static void preview_scroll_update         (GtkAdjustment *, gpointer);
@@ -790,9 +792,10 @@ display_brush (BrushSelectP bsp,
 	       int          col,
 	       int          row)
 {
-  TempBuf * brush_buf;
+  MaskBuf * brush_buf;
   unsigned char * src, *s;
   unsigned char * buf, *b;
+  gboolean scale = FALSE;
   int width, height;
   int offset_x, offset_y;
   int yend;
@@ -802,6 +805,23 @@ display_brush (BrushSelectP bsp,
   buf = (unsigned char *) g_malloc (sizeof (char) * bsp->cell_width);
 
   brush_buf = brush->mask;
+
+  if (brush_buf->width > bsp->cell_width || 
+      brush_buf->height > bsp->cell_height)
+    {
+      double ratio_x = (double)brush_buf->width / bsp->cell_width;
+      double ratio_y = (double)brush_buf->height / bsp->cell_height;
+   
+      if (ratio_x >= ratio_y)
+	brush_buf = brush_scale_mask (brush_buf, 
+				      (double)(brush_buf->width) / ratio_x, 
+				      (double)(brush_buf->height) / ratio_x);
+      else
+	brush_buf = brush_scale_mask (brush_buf, 
+				      (double)(brush_buf->width) / ratio_y,
+				      (double)(brush_buf->height) / ratio_y);
+      scale = TRUE;
+    }
 
   /*  calculate the offset into the image  */
   width = (brush_buf->width > bsp->cell_width) ? bsp->cell_width :
@@ -835,8 +855,25 @@ display_brush (BrushSelectP bsp,
 
       src += brush_buf->width;
     }
-
   g_free (buf);
+
+  if (scale)
+    {
+      offset_x = (col + 1) * bsp->cell_width  - 
+	brush_scale_indicator_width;
+      offset_y = (row + 1) * bsp->cell_height - 
+	brush_scale_indicator_height - bsp->scroll_offset;;
+
+      for (i = 0; i < brush_scale_indicator_height; i++, offset_y++)
+	{ 
+	  if (offset_y > 0 && offset_y < bsp->preview->allocation.height)
+	    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview),
+				  brush_scale_indicator_bits[i],
+				  offset_x, offset_y, 
+				  brush_scale_indicator_width);
+	}
+      mask_buf_free (brush_buf);
+    }
 }
 
 

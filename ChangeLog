@@ -1,3 +1,13 @@
+Thu Aug 12 19:53:19 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/Makefile.am
+	* app/brush_scale.[ch]: new files that add brush-scaling
+	* app/brush_select.c
+	* app/devices.c
+	* app/indicator_area.c: Scale brushes in the preview so they fit
+	into the preview area. We will use this code for pressure-sensitive
+	brush-scaling too, but I have to create a GUI for that first.
+
 Thu Aug 12 18:54:38 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* tools/pdbgen/pdb/gimprc.pdb: made the monitor resolution 

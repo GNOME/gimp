@@ -23,6 +23,7 @@
 
 #include "appenv.h"
 #include "actionarea.h"
+#include "brush_scale.h"
 #include "gimpbrushlist.h"
 #include "devices.h"
 #include "interface.h"
@@ -39,11 +40,11 @@
 
 #define CELL_SIZE 20 /* The size of the preview cells */
 #define PREVIEW_EVENT_MASK  GDK_EXPOSURE_MASK | \
-                          GDK_BUTTON_PRESS_MASK | \
-			  GDK_BUTTON_RELEASE_MASK | \
-                          GDK_BUTTON1_MOTION_MASK | \
-			  GDK_ENTER_NOTIFY_MASK | \
-                          GDK_LEAVE_NOTIFY_MASK
+                            GDK_BUTTON_PRESS_MASK | \
+			    GDK_BUTTON_RELEASE_MASK | \
+                            GDK_BUTTON1_MOTION_MASK | \
+			    GDK_ENTER_NOTIFY_MASK | \
+                            GDK_LEAVE_NOTIFY_MASK
 
 #define BRUSH_PREVIEW 1
 #define PATTERN_PREVIEW 2
@@ -87,7 +88,6 @@ struct _DeviceInfoDialog {
   GtkWidget **brushes;
   GtkWidget **patterns;
   GtkWidget **eventboxes;
-
 };
 
 /* Local Data */
@@ -182,14 +182,16 @@ create_input_dialog (void)
 }
 
 void
-input_dialog_able_callback (GtkWidget *w, guint32 deviceid, gpointer data)
+input_dialog_able_callback (GtkWidget *w, 
+			    guint32    deviceid, 
+			    gpointer   data)
 {
   device_status_update (deviceid);
 }
 
 static void
 input_dialog_destroy_callback (GtkWidget *w, 
-			       gpointer call_data)
+			       gpointer   call_data)
 {
   *((GtkWidget **)call_data) = NULL;
 }
@@ -232,7 +234,7 @@ devices_init (void)
 }
 
 void
-devices_restore()
+devices_restore (void)
 {  
   char *filename;
   GList *tmp_list;
@@ -281,7 +283,7 @@ devices_rc_update (gchar *name, DeviceValues values,
 		   GdkInputMode mode, gint num_axes,
 		   GdkAxisUse *axes, gint num_keys, GdkDeviceKey *keys,
 		   gchar *brush_name, ToolType tool,
-		   guchar foreground[],gchar *pattern_name)
+		   guchar foreground[], gchar *pattern_name)
 {
   GList *tmp_list;
   DeviceInfo *device_info;
@@ -386,12 +388,12 @@ devices_rc_update (gchar *name, DeviceValues values,
 
   if (values & DEVICE_BRUSH)
     {
-      device_info->brush = gimp_brush_list_get_brush(brush_list, brush_name);
+      device_info->brush = gimp_brush_list_get_brush (brush_list, brush_name);
     }
 
   if (values & DEVICE_PATTERN)
     {
-      device_info->pattern = pattern_list_get_pattern(pattern_list,pattern_name);
+      device_info->pattern = pattern_list_get_pattern (pattern_list,pattern_name);
     }
 
   if (values & DEVICE_TOOL)
@@ -512,7 +514,8 @@ devices_save_current_info (void)
 }
 
 static void
-devices_write_rc_device (DeviceInfo *device_info, FILE *fp)
+devices_write_rc_device (DeviceInfo *device_info, 
+			 FILE       *fp)
 {
   GdkDeviceInfo *gdk_info;
   GList *tmp_list;
@@ -822,7 +825,7 @@ device_status_destroy_callback (void)
 
 static void
 devices_close_callback (GtkWidget *w,
-			gpointer data)
+			gpointer   data)
 {
   gtk_widget_hide (GTK_WIDGET(data));
 }
@@ -928,10 +931,10 @@ brush_popup_open (int preview_id,
 }
 
 static void
-pattern_popup_open (int preview_id,
-		  int          x,
-		  int          y,
-		  GPatternP   pattern)
+pattern_popup_open (int       preview_id,
+		    int       x,
+		    int       y,
+		    GPatternP pattern)
 {
   gint x_org, y_org;
   gint scr_w, scr_h;
@@ -1016,10 +1019,10 @@ device_popup_close (int type)
 }
 
 static gint 
-device_preview_events (GtkWidget    *widget,
-		       GdkEvent     *event,
-		       int deviceid,
-		       int type)
+device_preview_events (GtkWidget *widget,
+		       GdkEvent  *event,
+		       int        deviceid,
+		       int        type)
 {
   GList *tmp_list;
   DeviceInfo *device_info;
@@ -1061,7 +1064,7 @@ device_preview_events (GtkWidget    *widget,
 			     GDK_BUTTON_RELEASE_MASK),
 			    NULL, NULL, bevent->time);
 
-	  if(type == BRUSH_PREVIEW)
+	  if (type == BRUSH_PREVIEW)
 	    {
 	      brush = device_info->brush;
 	      
@@ -1070,7 +1073,7 @@ device_preview_events (GtkWidget    *widget,
 		  brush->mask->height > CELL_SIZE)
 		brush_popup_open (deviceid, bevent->x, bevent->y, brush);
 	    }
-	  else if(type == PATTERN_PREVIEW)
+	  else if (type == PATTERN_PREVIEW)
 	    {
 	      pattern = device_info->pattern;
 	      
@@ -1105,38 +1108,57 @@ device_preview_events (GtkWidget    *widget,
 }
 
 static gint
-brush_preview_events (GtkWidget    *widget,
-		     GdkEvent     *event,
-		     int deviceid)
+brush_preview_events (GtkWidget *widget,
+		      GdkEvent  *event,
+		      int        deviceid)
 {
-  return(device_preview_events(widget,event,deviceid,BRUSH_PREVIEW));
+  return (device_preview_events (widget, event, deviceid, BRUSH_PREVIEW));
 }
 
 static gint
-pattern_preview_events (GtkWidget    *widget,
-		     GdkEvent     *event,
-		     int deviceid)
+pattern_preview_events (GtkWidget *widget,
+			GdkEvent  *event,
+			int        deviceid)
 {
-  return(device_preview_events(widget,event,deviceid,PATTERN_PREVIEW));
+  return (device_preview_events (widget, event, deviceid, PATTERN_PREVIEW));
 }
 
 static void
-device_update_brush(GimpBrushP brush,int preview_id)
+device_update_brush (GimpBrushP brush, 
+		     int        preview_id)
 {
   guchar buffer[CELL_SIZE]; 
-  TempBuf * brush_buf;
+  MaskBuf * brush_buf;
   unsigned char * src, *s = NULL;
   unsigned char *b;
+  gboolean scale = FALSE;
   int width,height;
   int offset_x, offset_y;
   int yend;
   int ystart;
   int i, j;
+
   if (no_data || no_interface) return;
   /* Set the tip to be the name of the brush */
-  gtk_tooltips_set_tip(tool_tips,deviceD->brushes[preview_id],brush->name,NULL);
+  gtk_tooltips_set_tip (tool_tips, deviceD->brushes[preview_id], brush->name, NULL);
 
   brush_buf = brush->mask;
+
+  if (brush_buf->width > CELL_SIZE || brush_buf->height > CELL_SIZE)
+    {
+      double ratio_x = (double)brush_buf->width / CELL_SIZE;
+      double ratio_y = (double)brush_buf->height / CELL_SIZE;
+   
+      if (ratio_x >= ratio_y)
+	brush_buf = brush_scale_mask (brush_buf, 
+				      (double)(brush_buf->width) / ratio_x, 
+				      (double)(brush_buf->height) / ratio_x);
+      else
+	brush_buf = brush_scale_mask (brush_buf, 
+				      (double)(brush_buf->width) / ratio_y,
+				      (double)(brush_buf->height) / ratio_y);
+      scale = TRUE;
+    }
 
   /*  Get the pointer into the brush mask data  */
   src = mask_buf_data (brush_buf);
@@ -1148,7 +1170,8 @@ device_update_brush(GimpBrushP brush,int preview_id)
   /* Set buffer to white */  
   memset(buffer, 255, sizeof(buffer));
   for (i = 0; i < CELL_SIZE; i++)
-    gtk_preview_draw_row (GTK_PREVIEW(deviceD->brushes[preview_id]), buffer, 0, i, CELL_SIZE);
+    gtk_preview_draw_row (GTK_PREVIEW (deviceD->brushes[preview_id]), 
+			  buffer, 0, i, CELL_SIZE);
 
   offset_x = ((CELL_SIZE - width) >> 1);
   offset_y = ((CELL_SIZE - height) >> 1);
@@ -1168,16 +1191,31 @@ device_update_brush(GimpBrushP brush,int preview_id)
       for (j = 0; j < width ; j++)
 	*b++ = 255 - *s++;
 
-      gtk_preview_draw_row (GTK_PREVIEW(deviceD->brushes[preview_id]), 
+      gtk_preview_draw_row (GTK_PREVIEW (deviceD->brushes[preview_id]), 
 			    buffer, 
 			    offset_x, i, width);
 
       src += brush_buf->width;
     }
+
+  if (scale)
+    {
+      offset_y = CELL_SIZE - brush_scale_indicator_height - 1;
+      for (i = 0; i < brush_scale_indicator_height; i++)
+	{
+	  offset_x = CELL_SIZE - brush_scale_indicator_width - 1;
+	  gtk_preview_draw_row (GTK_PREVIEW (deviceD->brushes[preview_id]),
+				brush_scale_indicator_bits[i],
+				offset_x, offset_y + i, 
+				brush_scale_indicator_width);
+	}
+      mask_buf_free (brush_buf);
+    }
 }
 
 static void
-device_update_pattern(GPatternP pattern,int preview_id)
+device_update_pattern (GPatternP pattern,
+		       int       preview_id)
 {
   guchar *buffer = NULL; 
   TempBuf * pattern_buf;
@@ -1361,8 +1399,10 @@ device_status_update (guint32 deviceid)
  
 	}
     }
-  if (show_indicators) {
-  	brush_area_update();
-  	pattern_area_update();
-	}
+
+  if (show_indicators) 
+    {
+      brush_area_update();
+      pattern_area_update();
+    }
 }

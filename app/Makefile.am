@@ -56,6 +56,8 @@ gimp_SOURCES = \
 	brush_edit.c		\
 	brush_edit.h		\
 	brush_header.h		\
+	brush_scale.c		\
+	brush_scale.h		\
 	brush_select.c		\
 	brush_select.h		\
 	brush_select_cmds.c	\
