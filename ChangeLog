@@ -1,5 +1,12 @@
 2005-01-09  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite-mmx-installer.c
+	* app/composite/gimp-composite-mmx-test.c
+	* app/composite/gimp-composite-mmx.[ch]: workaround bug #162778 by
+	disabling MMX acceleration for grayscale addition mode.
+
+2005-01-09  Sven Neumann  <sven@gimp.org>
+
 	Merged from HEAD branch:
 
 	* libgimp/gimpgradientmenu.c: fixed out-of-bounds access in

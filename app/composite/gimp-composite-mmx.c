@@ -1289,7 +1289,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 }
 
 
-
+#if 0
 void
 gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
 {
@@ -1379,6 +1379,7 @@ gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
   
   asm("emms");
 }
+#endif
 
 #if 0
 void
