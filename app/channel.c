@@ -1465,6 +1465,8 @@ channel_sharpen (Channel *mask)
   pixel_regions_process_parallel ((p_func) gimp_lut_process_inline,
 				  lut, 1, &maskPR);
   gimp_lut_free (lut);
+
+  mask->bounds_known = FALSE;
 }
 
 void

@@ -1,3 +1,7 @@
+2002-09-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/channel.c (channel_sharpen): ported fix for #93853 from HEAD.
+
 2002-09-18  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/dbbrowser/dbbrowser_utils.c: Allow activation of the
