@@ -333,7 +333,8 @@ gimp_viewable_get_new_preview_pixbuf (GimpViewable *viewable,
                                          width,
                                          height,
                                          width * bytes,
-                                         NULL, NULL);
+                                         (GdkPixbufDestroyNotify) g_free,
+                                         NULL);
 
       if (color_buf)
         temp_buf_free (color_buf);

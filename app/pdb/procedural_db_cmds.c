@@ -383,13 +383,13 @@ procedural_db_query_invoker (Gimp     *gimp,
       g_hash_table_foreach (gimp->procedural_ht,
 			    procedural_db_query_entry, &pdb_query);
     
-      free (pdb_query.name_regex.buffer);
-      free (pdb_query.blurb_regex.buffer);
-      free (pdb_query.help_regex.buffer);
-      free (pdb_query.author_regex.buffer);
-      free (pdb_query.copyright_regex.buffer);
-      free (pdb_query.date_regex.buffer);
-      free (pdb_query.proc_type_regex.buffer);
+      regfree (&pdb_query.name_regex);
+      regfree (&pdb_query.blurb_regex);
+      regfree (&pdb_query.help_regex);
+      regfree (&pdb_query.author_regex);
+      regfree (&pdb_query.copyright_regex);
+      regfree (&pdb_query.date_regex);
+      regfree (&pdb_query.proc_type_regex);
     }
 
   return_args = procedural_db_return_args (&procedural_db_query_proc, success);

@@ -160,7 +160,7 @@ HELP
 	$regcomp .= "regcomp (&pdb_query.${_}_regex, $_, 0);\n";
 
 	$free .= ' ' x 2 if $once++;
-	$free .= "free (pdb_query.${_}_regex.buffer);\n";
+	$free .= "regfree (&pdb_query.${_}_regex);\n";
     }
     chop $free;
 

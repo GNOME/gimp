@@ -597,7 +597,10 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
         *first_button = button;
 
       stock_id = g_strconcat (stock_prefix, "-", value->value_nick, NULL);
+
       image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
+
+      g_free (stock_id);
 
       if (image)
         {

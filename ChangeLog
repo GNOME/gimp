@@ -1,5 +1,27 @@
 2003-02-18  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/procedural_db.pdb
+	* app/pdb/procedural_db_cmds.c: use regfree() to free the regex
+	pattern buffer.
+
+	* app/widgets/gimpdnd.c (gimp_dnd_data_dest_add): unref the
+	GtkTargetList after adding it to the widget.
+
+	* app/core/gimpimage.c (gimp_image_get_new_preview): initialize
+	all fields of the mask pixel_region.
+
+	* app/core/gimpviewable.c (gimp_viewable_get_new_preview_pixbuf):
+	pass a destroy notifier to gdk_pixbuf_new_from_data() so that the
+	pixel data is freed with the pixbuf.
+
+	* libgimptool/gimptool.c (gimp_tool_class_init): register a
+	finalizer that unrefs the GimpToolControl object.
+
+	* app/widgets/gimpenummenu.c (gimp_enum_stock_box_new_with_range):
+	free the generated stock_id.
+
+2003-02-18  Sven Neumann  <sven@gimp.org>
+
 	* data/images/gimp_splash.png: flattened the splash image.
 
 2003-02-18  Michael Natterer  <mitch@gimp.org>

@@ -824,10 +824,10 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       g_assert (layer_buf->bytes <= comp->bytes);
 
       src2PR.bytes     = layer_buf->bytes;
-      src2PR.w         = src1PR.w;  
-      src2PR.h         = src1PR.h;
       src2PR.x         = src1PR.x; 
       src2PR.y         = src1PR.y;
+      src2PR.w         = src1PR.w;  
+      src2PR.h         = src1PR.h;
       src2PR.rowstride = layer_buf->width * src2PR.bytes;
       src2PR.data      = (temp_buf_data (layer_buf) + 
                           (y1 - y) * src2PR.rowstride +
@@ -838,7 +838,11 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 	  mask_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer->mask),
 						w, h);
 	  maskPR.bytes     = mask_buf->bytes;
-	  maskPR.rowstride = mask_buf->width;
+          maskPR.x         = src1PR.x; 
+          maskPR.y         = src1PR.y;
+          maskPR.w         = src1PR.w;  
+          maskPR.h         = src1PR.h;
+	  maskPR.rowstride = mask_buf->width * mask_buf->bytes;
 	  maskPR.data      = (mask_buf_data (mask_buf) +
                               (y1 - y) * maskPR.rowstride +
                               (x1 - x) * maskPR.bytes);

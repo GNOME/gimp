@@ -40,6 +40,7 @@
 
 static void   gimp_tool_class_init          (GimpToolClass   *klass);
 static void   gimp_tool_init                (GimpTool        *tool);
+static void   gimp_tool_finalize            (GObject         *object);
 
 static void   gimp_tool_real_initialize     (GimpTool        *tool,
 					     GimpDisplay     *gdisp);
@@ -115,7 +116,13 @@ gimp_tool_get_type (void)
 static void
 gimp_tool_class_init (GimpToolClass *klass)
 {
+  GObjectClass *object_class;
+
+  object_class = G_OBJECT_CLASS (klass);
+
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize = gimp_tool_finalize;
 
   klass->initialize     = gimp_tool_real_initialize;
   klass->control        = gimp_tool_real_control;
@@ -136,6 +143,20 @@ gimp_tool_init (GimpTool *tool)
                                                     NULL)); 
   tool->gdisp    = NULL;
   tool->drawable = NULL;
+}
+
+static void
+gimp_tool_finalize (GObject *object)
+{
+  GimpTool *tool = GIMP_TOOL (object);
+  
+  if (tool->control)
+    {
+      g_object_unref (tool->control);
+      tool->control = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 void

@@ -655,13 +655,18 @@ gimp_dnd_data_dest_add (GimpDndType  data_type,
   target_list = gtk_drag_dest_get_target_list (widget);
 
   if (target_list)
-    gtk_target_list_add_table (target_list,
-                               &dnd_data_defs[data_type].target_entry, 1);
+    {
+      gtk_target_list_add_table (target_list,
+                                 &dnd_data_defs[data_type].target_entry, 1);
+    }
   else
-    target_list = gtk_target_list_new (&dnd_data_defs[data_type].target_entry,
-                                       1);
-
-  gtk_drag_dest_set_target_list (widget, target_list);
+    {
+      target_list = gtk_target_list_new (&dnd_data_defs[data_type].target_entry,
+                                         1);
+      
+      gtk_drag_dest_set_target_list (widget, target_list);  
+      gtk_target_list_unref (target_list);
+    }
 }
 
 static void
@@ -695,11 +700,7 @@ gimp_dnd_data_dest_remove (GimpDndType  data_type,
                               TRUE);
 
       if (atom != GDK_NONE)
-        {
-          gtk_target_list_remove (target_list, atom);
-
-          gtk_drag_dest_set_target_list (widget, target_list);
-        }
+        gtk_target_list_remove (target_list, atom);
     }
 }
 
