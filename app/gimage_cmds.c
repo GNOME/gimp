@@ -50,6 +50,9 @@ static Argument *gimp_image_find_parasite_invoker (Argument *);
 static Argument *gimp_image_attach_parasite_invoker (Argument *);
 static Argument *gimp_image_detach_parasite_invoker (Argument *);
 
+/* The Tattoo procs prototypes */
+static Argument *gimp_image_get_layer_by_tattoo_invoker (Argument *);
+static Argument *gimp_image_get_channel_by_tattoo_invoker (Argument *);
 
 static GImage * duplicate  (GImage *gimage);
 
@@ -4545,4 +4548,186 @@ gimp_image_detach_parasite_invoker (Argument *args)
 
   return return_args;
 }
+
+
+/******************************/
+/*****  Tattoo functions  *****/
+
+/*** gimp_image_get_layer_by_tattoo ***/
+
+ProcArg gimp_image_get_layer_by_tattoo_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the input image"
+  },
+  { PDB_INT32,
+    "tattoo",
+    "The tattoo of the layer to find"
+  }
+};
+
+ProcArg gimp_image_get_layer_by_tattoo_out_args[] =
+{
+  { PDB_LAYER,
+    "layer",
+    "the layer with the specified tattoo"
+  },
+};
+
+ProcRecord gimp_image_get_layer_by_tattoo_proc =
+{
+  "gimp_image_get_layer_by_tattoo",
+  "Find a layer with a given tattoo in an image",
+  "This procedure returns the layer with the given tattoo in the specified image.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  gimp_image_get_layer_by_tattoo_args,
+
+  /*  Output arguments  */
+  1,
+  gimp_image_get_layer_by_tattoo_out_args,
+
+  /*  Exec method  */
+  { { gimp_image_get_layer_by_tattoo_invoker } },
+};
+
+
+static Argument *
+gimp_image_get_layer_by_tattoo_invoker (Argument *args)
+{
+  int success = TRUE;
+  int int_value;
+  GImage *gimage;
+  Tattoo tattoo;
+  Argument *return_args;
+  Layer *layer;
+
+  /*  the gimage  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gimage = gimage_get_ID (int_value)))
+        success = FALSE;
+    }
+
+  if (success)
+    {
+      tattoo = args[1].value.pdb_int;
+      if (tattoo == 0)
+	success = FALSE;
+    }
+
+  if (success)
+    {
+      layer = gimp_image_get_layer_by_tattoo (gimage, tattoo);
+      if (layer == NULL)
+	success = FALSE;
+    }
+
+  return_args = 
+    procedural_db_return_args (&gimp_image_get_layer_by_tattoo_proc,
+			       success);
+  if (success)
+    {
+      return_args[1].value.pdb_int = drawable_ID(GIMP_DRAWABLE(layer));
+    }
+
+  return return_args;
+}
+
+
+/*** gimp_image_get_channel_by_tattoo ***/
+
+ProcArg gimp_image_get_channel_by_tattoo_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the input image"
+  },
+  { PDB_INT32,
+    "tattoo",
+    "The tattoo of the channel to find"
+  }
+};
+
+ProcArg gimp_image_get_channel_by_tattoo_out_args[] =
+{
+  { PDB_CHANNEL,
+    "channel",
+    "the channel with the specified tattoo"
+  },
+};
+
+ProcRecord gimp_image_get_channel_by_tattoo_proc =
+{
+  "gimp_image_get_channel_by_tattoo",
+  "Find a channel with a given tattoo in an image",
+  "This procedure returns the channel with the given tattoo in the specified image.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  gimp_image_get_channel_by_tattoo_args,
+
+  /*  Output arguments  */
+  1,
+  gimp_image_get_channel_by_tattoo_out_args,
+
+  /*  Exec method  */
+  { { gimp_image_get_channel_by_tattoo_invoker } },
+};
+
+
+static Argument *
+gimp_image_get_channel_by_tattoo_invoker (Argument *args)
+{
+  int success = TRUE;
+  int int_value;
+  GImage *gimage;
+  Tattoo tattoo;
+  Argument *return_args;
+  Channel *channel;
+
+  /*  the gimage  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gimage = gimage_get_ID (int_value)))
+        success = FALSE;
+    }
+
+  if (success)
+    {
+      tattoo = args[1].value.pdb_int;
+      if (tattoo == 0)
+	success = FALSE;
+    }
+
+  if (success)
+    {
+      channel = gimp_image_get_channel_by_tattoo (gimage, tattoo);
+      if (channel == NULL)
+	success = FALSE;
+    }
+
+  return_args = 
+    procedural_db_return_args (&gimp_image_get_channel_by_tattoo_proc,
+			       success);
+  if (success)
+    {
+      return_args[1].value.pdb_int = drawable_ID(GIMP_DRAWABLE(channel));
+    }
+
+  return return_args;
+}
+
 

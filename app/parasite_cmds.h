@@ -21,5 +21,8 @@
 #define __PARASITE_CMDS_H__
 
 extern ProcRecord parasite_new_proc;
+extern ProcRecord gimp_find_parasite_proc;
+extern ProcRecord gimp_attach_parasite_proc;
+extern ProcRecord gimp_detach_parasite_proc;
 
 #endif __PARASITE_CMDS_H__

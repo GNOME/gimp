@@ -22,6 +22,24 @@
 #include <string.h>
 #include <glib.h>
 
+static void parasite_print(Parasite *p)
+{
+  if (p == NULL)
+  {
+    printf("(pid %d)attempt to print a null parasite\n", getpid());
+    return;
+  }
+  printf("(pid %d), parasite: %X\n", getpid(), p);
+  if (p->name)
+    printf("\tname: %s\n", p->name);
+  else
+    printf("\tname: NULL\n");
+  printf("\tflags: %d\n", p->flags);
+  printf("\tsize: %d\n", p->size);
+  if (p->size > 0)
+    printf("\tdata: %X\n", p->data);
+}
+
 Parasite *
 parasite_new (const char *name, guint32 flags,
 	      guint32 size, const void *data)
@@ -41,6 +59,7 @@ parasite_new (const char *name, guint32 flags,
   return p;
 }
 
+
 void
 parasite_free (Parasite *parasite)
 {
@@ -55,7 +74,7 @@ parasite_free (Parasite *parasite)
 int
 parasite_is_type (const Parasite *parasite, const char *name)
 {
-  if (!parasite)
+  if (!parasite || !parasite->name)
     return FALSE;
   return (strcmp(parasite->name, name) == 0);
 }
@@ -92,54 +111,4 @@ parasite_is_persistant(const Parasite *p)
   if (p == NULL)
     return FALSE;
   return (p->flags & PARASITE_PERSISTANT);
-}
-
-/* parasite list functions */
-
-Parasite *
-parasite_find_in_gslist (const GSList *list, const char *name)
-{
-  while (list)
-  {
-    if (parasite_is_type((Parasite *)(list->data), name))
-      return (Parasite *)(list->data);
-    list = list->next;
-  }
-  return NULL;
-}
-
-GSList*
-parasite_add_to_gslist (const Parasite *parasite, GSList *list)
-{
-  Parasite *p;
-  if (parasite_is_error(parasite))
-    return list;
-  if ((p = parasite_find_in_gslist(list, parasite->name)))
-  {
-    list = g_slist_remove(list, p);
-    parasite_free(p);
-  }
-  return g_slist_prepend (list, parasite_copy(parasite));
-}
-
-GSList*
-parasite_gslist_copy (const GSList *list)
-{
-  GSList *copy = NULL;
-  while (list)
-  {
-    copy = g_slist_append (copy, parasite_copy((Parasite *)list->data));
-    list = list->next;
-  }
-  return copy;
-}
-
-void
-parasite_gslist_destroy (GSList *list)
-{
-  while (list)
-  {
-    parasite_free((Parasite *)list->data);
-    list = g_slist_remove (list, list->data);
-  }
 }

@@ -31,6 +31,7 @@ extern "C" {
 #define GIMP_VERSION					"@GIMP_VERSION@"
 
 #define GIMP_HAVE_GET_DATA_SIZE				1-1-0
+#define GIMP_HAVE_PARASITES				1-1-0
 
 #ifdef __cplusplus
 }

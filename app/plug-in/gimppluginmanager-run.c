@@ -2991,8 +2991,8 @@ plug_in_args_destroy (Argument *args,
 	case PDB_PARASITE:
 	  if (full_destroy)
 	  {
-/*	    parasite_free ((Parasite *)(args[i].value.pdb_pointer));
-	    args[i].value.pdb_pointer = NULL;*/
+	    parasite_free ((Parasite *)(args[i].value.pdb_pointer));
+	    args[i].value.pdb_pointer = NULL;
 	  }
 	  break;
 	case PDB_STATUS:

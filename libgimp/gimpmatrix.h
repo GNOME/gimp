@@ -20,6 +20,10 @@
 #ifndef __GIMPMATRIX_H__
 #define __GIMPMATRIX_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 typedef double GimpMatrix[3][3];
 
 void          gimp_matrix_transform_point (GimpMatrix, double, double,
@@ -34,5 +38,8 @@ void          gimp_matrix_yshear          (GimpMatrix, double);
 double        gimp_matrix_determinant     (GimpMatrix);
 void          gimp_matrix_invert          (GimpMatrix m, GimpMatrix m_inv);
 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif  /*  __GIMPMATRIX_H__  */

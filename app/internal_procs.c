@@ -80,7 +80,7 @@ internal_procs_init ()
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
-  gfloat total_pcount = 240;
+  gfloat total_pcount = 245;
 
   app_init_update_status("Internal Procedures", "Tool procedures",
 			 pcount/total_pcount);
@@ -193,6 +193,8 @@ internal_procs_init ()
   procedural_db_register (&gimp_image_find_parasite_proc); pcount++;
   procedural_db_register (&gimp_image_attach_parasite_proc); pcount++;
   procedural_db_register (&gimp_image_detach_parasite_proc); pcount++;
+  procedural_db_register (&gimp_image_get_layer_by_tattoo_proc); pcount++;
+  procedural_db_register (&gimp_image_get_channel_by_tattoo_proc); pcount++;
 
   app_init_update_status(NULL, "GImage mask procedures",
 			 pcount/total_pcount);
@@ -392,9 +394,11 @@ internal_procs_init ()
 
   app_init_update_status(NULL, "parasites",
 			 pcount/total_pcount);
-
   /*  parasite procedures  */
   procedural_db_register (&parasite_new_proc); pcount++;
+  procedural_db_register (&gimp_find_parasite_proc); pcount++;
+  procedural_db_register (&gimp_attach_parasite_proc); pcount++;
+  procedural_db_register (&gimp_detach_parasite_proc); pcount++;
 
   app_init_update_status(NULL, "Procedural database",
 			 pcount/total_pcount);

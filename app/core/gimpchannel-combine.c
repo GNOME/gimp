@@ -27,7 +27,7 @@
 #include "gimage_mask.h"
 #include "layer.h"
 #include "paint_funcs.h"
-#include "libgimp/parasite.h"
+#include "parasitelist.h"
 #include "temp_buf.h"
 #include "undo.h"
 
@@ -209,7 +209,7 @@ channel_copy (Channel *channel)
 
   /* copy the parasites */
   GIMP_DRAWABLE(new_channel)->parasites 
-    = parasite_gslist_copy(GIMP_DRAWABLE(channel)->parasites);
+    = parasite_list_copy(GIMP_DRAWABLE(channel)->parasites);
 
   /*  free up the channel_name memory  */
   g_free (channel_name);
@@ -477,7 +477,7 @@ channel_invalidate_previews (GimpImage* gimage)
     }
 }
 
-guint32
+Tattoo
 channel_get_tattoo(const Channel *channel)
 {
   return (gimp_drawable_get_tattoo(GIMP_DRAWABLE(channel)));

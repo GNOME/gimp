@@ -37,6 +37,7 @@ libgimp_la_SOURCES = \
 	gimpmatrix.c	\
 	gimpmatrix.h	\
 	gimppalette.c	\
+	gimpparasite.c	\
 	gimppixelrgn.c	\
 	gimpprotocol.c	\
 	gimpprotocol.h	\

@@ -24,7 +24,7 @@
 #include "gimpsignal.h"
 #include "gimage.h"
 #include "gimage_mask.h"
-#include "libgimp/parasite.h"
+#include "parasitelist.h"
 
 
 enum {
@@ -375,25 +375,22 @@ gimp_drawable_set_name (GimpDrawable *drawable, char *name)
 Parasite *
 gimp_drawable_find_parasite (const GimpDrawable *drawable, const char *name)
 {
-  return parasite_find_in_gslist(drawable->parasites, name);
+  return parasite_list_find(drawable->parasites, name);
 }
 
 void
-gimp_drawable_attach_parasite (GimpDrawable *drawable, const Parasite *parasite)
+gimp_drawable_attach_parasite (GimpDrawable *drawable, Parasite *parasite)
 {
-  drawable->parasites = parasite_add_to_gslist(parasite, drawable->parasites);
+  parasite_list_add(drawable->parasites, parasite);
 }
 
 void
 gimp_drawable_detach_parasite (GimpDrawable *drawable, const char *parasite)
 {
-  Parasite *p;
-  if ((p = parasite_find_in_gslist(drawable->parasites, parasite)))
-    drawable->parasites = g_slist_remove (drawable->parasites, p);
-  parasite_free(p);
+  parasite_list_remove(drawable->parasites, parasite);
 }
 
-guint32
+Tattoo
 gimp_drawable_get_tattoo(const GimpDrawable *drawable)
 {
   return drawable->tattoo;
@@ -556,7 +553,7 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->has_alpha = FALSE;
   drawable->preview = NULL;
   drawable->preview_valid = FALSE;
-  drawable->parasites = FALSE;
+  drawable->parasites = parasite_list_new();
   drawable->tattoo = 0;
   gimp_matrix_identity(drawable->transform);
 
@@ -588,7 +585,7 @@ gimp_drawable_destroy (GtkObject *object)
     temp_buf_free (drawable->preview);
 
   if (drawable->parasites)
-    parasite_gslist_destroy(drawable->parasites);
+    gtk_object_unref(GTK_OBJECT(drawable->parasites));
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     (*GTK_OBJECT_CLASS (parent_class)->destroy) (object);

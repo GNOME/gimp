@@ -38,6 +38,7 @@
 #include "errorconsole.h"
 #include "fileops.h"
 #include "gimprc.h"
+#include "gimpparasite.h"
 #include "gimpset.h"
 #include "global_edit.h"
 #include "gradient.h"
@@ -500,6 +501,7 @@ app_init (void)
   file_ops_pre_init ();    /*  pre-initialize the file types  */
   RESET_BAR();
   xcf_init ();             /*  initialize the xcf file format routines */
+  gimp_init_parasites ();  /*  initialize the parasite table */
 
   app_init_update_status (_("Looking for data files"), _("Brushes"), 0.00);
   brushes_init (no_data);         /*  initialize the list of gimp brushes  */

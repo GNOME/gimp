@@ -6,7 +6,6 @@
 #include "commands.h"
 #include "general.h"
 #include "gimage.h"
-#include "gimage_cmds.h"
 #include "gimprc.h"
 #include "global_edit.h"
 #include "interface.h"

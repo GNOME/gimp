@@ -100,6 +100,8 @@ extern char  siod_err_msg[];
 extern FILE *siod_output;
 
 
+#define message(string) printf("(%s): %d ::: %s\n", __PRETTY_FUNCTION__, __LINE__, string)
+
 /*
  *  Function definitions
  */
@@ -380,12 +382,26 @@ script_fu_siod_read (gpointer          data,
 		     GdkInputCondition cond)
 {
   int count;
+  static int hack = 0;
 
   if ((count = read (id, read_buffer, BUFSIZE - 1)) != 0)
     {
+      if (!hack) /* this is a stupid hack, but as of 10/27/98
+		 * the script-fu-console will hang on my system without it.
+		 * the real cause of this needs to be tracked down.
+		 * posibly a problem with the text widget, or the
+		 * signal handlers not getting fully initialized or...
+		 * no reports of hangs on other platforms, could just be a
+		 * problem with my system.
+		 */
+      {
+	hack = 1;
+	return;
+      }
       read_buffer[count] = '\0';
       gtk_text_freeze (GTK_TEXT (cint.console));
-      gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL, read_buffer, -1);
+      gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
+		       read_buffer, -1);
       gtk_text_thaw (GTK_TEXT (cint.console));
 
       script_fu_console_scroll_end (NULL);

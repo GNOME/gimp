@@ -8,6 +8,7 @@
 #include "temp_buf.h"
 #include "channel.h"
 #include "layer.h"
+#include "parasitelistF.h"
 #include "libgimp/gimpmatrix.h"
 
 
@@ -33,7 +34,7 @@ struct _GimpImage
   int instance_count;                 /*  number of instances          */
   int ref_count;                      /*  number of references         */
 
-  guint32 tattoo_state;               /*  the next unique tattoo to use*/
+  Tattoo tattoo_state;                /*  the next unique tattoo to use*/
 
   TileManager *shadow;                /*  shadow buffer tiles          */
 
@@ -57,7 +58,7 @@ struct _GimpImage
   Layer * floating_sel;               /*  ID of fs layer               */
   Channel * selection_mask;           /*  selection mask channel       */
 
-  GSList *parasites;                  /*  Plug-in parasite data        */
+  ParasiteList *parasites;            /*  Plug-in parasite data        */
 
   GimpMatrix transform;               /* a matrix describing all of the
 					 transformations this image

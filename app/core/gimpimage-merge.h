@@ -114,16 +114,23 @@ GimpImage *        gimp_image_get_named              (char *);
 GimpImage *        gimp_image_get_ID                 (int);
 TileManager *   gimp_image_shadow                 (GimpImage *, int, int, int);
 void            gimp_image_free_shadow            (GimpImage *);
-void            gimp_image_apply_image            (GimpImage *, GimpDrawable *, PixelRegion *, int, int, int,
-					       TileManager *, int, int);
-void            gimp_image_replace_image          (GimpImage *, GimpDrawable *, PixelRegion *, int, int,
-					       PixelRegion *, int, int);
-void            gimp_image_get_foreground         (GimpImage *, GimpDrawable *, unsigned char *);
-void            gimp_image_get_background         (GimpImage *, GimpDrawable *, unsigned char *);
-void            gimp_image_get_color              (GimpImage *, int, unsigned char *,
-					       unsigned char *);
-void            gimp_image_transform_color        (GimpImage *, GimpDrawable *, unsigned char *,
-					       unsigned char *, int);
+void            gimp_image_apply_image            (GimpImage *, GimpDrawable *,
+						   PixelRegion *, int,
+						   int, int,
+						   TileManager *, int, int);
+void            gimp_image_replace_image          (GimpImage *, GimpDrawable *,
+						   PixelRegion *, int, int,
+						   PixelRegion *, int, int);
+void            gimp_image_get_foreground         (GimpImage *, GimpDrawable *,
+						   unsigned char *);
+void            gimp_image_get_background         (GimpImage *, GimpDrawable *,
+						   unsigned char *);
+void            gimp_image_get_color              (GimpImage *, int,
+						   unsigned char *,
+						   unsigned char *);
+void            gimp_image_transform_color        (GimpImage *, GimpDrawable *,
+						   unsigned char *,
+						   unsigned char *, int);
 Guide*          gimp_image_add_hguide             (GimpImage *);
 Guide*          gimp_image_add_vguide             (GimpImage *);
 void            gimp_image_add_guide              (GimpImage *, Guide *);
@@ -132,10 +139,10 @@ void            gimp_image_delete_guide           (GimpImage *, Guide *);
 
 Parasite *      gimp_image_find_parasite          (const GimpImage *,
 						   const char *name);
-void            gimp_image_attach_parasite        (GimpImage *, const Parasite *);
+void            gimp_image_attach_parasite        (GimpImage *, Parasite *);
 void            gimp_image_detach_parasite        (GimpImage *, const char *);
 
-guint32         gimp_image_get_new_tattoo         (GimpImage *);
+Tattoo          gimp_image_get_new_tattoo         (GimpImage *);
 
 
 /*  layer/channel functions  */
@@ -144,8 +151,8 @@ int             gimp_image_get_layer_index        (GimpImage *, Layer *);
 int             gimp_image_get_channel_index      (GimpImage *, Channel *);
 Layer *         gimp_image_get_active_layer       (GimpImage *);
 Channel *       gimp_image_get_active_channel     (GimpImage *);
-Layer *         gimp_image_get_layer_by_tattoo    (GimpImage *, guint32);
-Channel *       gimp_image_get_channel_by_tattoo  (GimpImage *, guint32);
+Layer *         gimp_image_get_layer_by_tattoo    (GimpImage *, Tattoo);
+Channel *       gimp_image_get_channel_by_tattoo  (GimpImage *, Tattoo);
 Channel *       gimp_image_get_mask               (GimpImage *);
 int             gimp_image_get_component_active   (GimpImage *, ChannelType);
 int             gimp_image_get_component_visible  (GimpImage *, ChannelType);

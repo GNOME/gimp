@@ -160,6 +160,8 @@ gimp_SOURCES = \
 	gimplist.h		\
 	gimplistF.h		\
 	gimplistP.h		\
+	gimpparasite.c		\
+	gimpparasite.h		\
 	gimprc.c		\
 	gimprc.h		\
 	global_edit.c		\
@@ -229,6 +231,10 @@ gimp_SOURCES = \
 	paintbrush.h		\
 	parasite_cmds.c		\
 	parasite_cmds.h		\
+	parasitelist.c		\
+	parasitelist.h		\
+	parasitelistF.h		\
+	parasitelistP.h		\
 	pattern_header.h	\
 	pattern_select.c	\
 	pattern_select.h	\

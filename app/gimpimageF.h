@@ -3,7 +3,8 @@
 
 typedef struct _GimpImage GimpImage;
 
-/* Move this someplace else */
+/* Move these someplace else */
 typedef struct _Guide Guide;
+typedef guint32 Tattoo;
 
 #endif

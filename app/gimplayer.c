@@ -30,9 +30,8 @@
 #include "layer.h"
 #include "paint_funcs.h"
 #include "temp_buf.h"
+#include "parasitelist.h"
 #include "undo.h"
-
-#include "libgimp/parasite.h"
 
 #include "layer_pvt.h"
 #include "tile_manager_pvt.h"
@@ -375,7 +374,7 @@ layer_copy (layer, add_alpha)
 
   /* copy the parasites */
   GIMP_DRAWABLE(new_layer)->parasites 
-    = parasite_gslist_copy(GIMP_DRAWABLE(layer)->parasites);
+    = parasite_list_copy(GIMP_DRAWABLE(layer)->parasites);
 
  cleanup:
   /*  free up the layer_name memory  */
@@ -1172,7 +1171,7 @@ layer_mask_preview (layer, w, h)
     }
 }
 
-guint32
+Tattoo
 layer_get_tattoo(const Layer *layer)
 {
   return (gimp_drawable_get_tattoo(GIMP_DRAWABLE(layer)));

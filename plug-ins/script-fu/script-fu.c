@@ -775,15 +775,14 @@ marshall_proc_db_call (LISP a)
 	  if (success)
 	    {
 	      args[i].type = PARAM_PARASITE;
-
 	      /* parasite->name */
 	      intermediate_val = car (a);
 	      args[i].data.d_parasite.name = 
 		get_c_string (car (intermediate_val));
-
+	      
 	      /* parasite->flags */
 	      intermediate_val = cdr (intermediate_val);
-	      args[i].data.d_parasite.flags = get_c_long ( (intermediate_val));
+	      args[i].data.d_parasite.flags = get_c_long (car(intermediate_val));
 
 	      /* parasite->size */
 	      intermediate_val = cdr (intermediate_val);
@@ -791,6 +790,7 @@ marshall_proc_db_call (LISP a)
 
 	      /* parasite->data */
 	      args[i].data.d_parasite.data = (void*) (car (intermediate_val))->storage_as.string.data;
+	      printf("e\n");
 
 	    }
 	  break;

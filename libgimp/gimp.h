@@ -432,12 +432,18 @@ Parasite  *gimp_image_find_parasite         (gint32     image_ID,
 					     const char *name);
 void       gimp_image_attach_parasite       (gint32      image_ID,
 					     const Parasite *p);
+void       gimp_image_attach_new_parasite   (gint32      image_ID,
+					     const char *name, int flags,
+					     int size, const void *data);
 void       gimp_image_detach_parasite       (gint32      image_ID,
 					     const char *name);
 void       gimp_image_set_resolution        (gint32     image_ID,
 					     float      resolution);
 float      gimp_image_get_resolution        (gint32     image_ID);
-
+gint32     gimp_image_get_layer_by_tattoo   (gint32  image_ID,
+					     gint32 tattoo);
+gint32     gimp_image_get_channel_by_tattoo (gint32  image_ID,
+					     gint32 tattoo);
 
 
 /****************************************
@@ -529,12 +535,6 @@ void          gimp_layer_set_show_mask             (gint32        layer_ID,
 						    gint          show_mask);
 void          gimp_layer_set_visible               (gint32        layer_ID,
 						    gint          visible);
-Parasite     *gimp_layer_find_parasite             (gint32        image_ID,
-						    const char   *name);
-void          gimp_layer_attach_parasite           (gint32        layer_ID,
-						    const Parasite *p);
-void          gimp_layer_detach_parasite           (gint32        layer_ID,
-						    const char   *name);
 
 
 /****************************************
@@ -630,6 +630,9 @@ Parasite  *gimp_drawable_find_parasite   (gint32      drawable,
 					  const char *name);
 void       gimp_drawable_attach_parasite (gint32      drawable,
 					  const Parasite *p);
+void       gimp_layer_attach_new_parasite(gint32      drawable,
+					  const char *name, int flags,
+					  int size, const void *data);
 void       gimp_drawable_detach_parasite (gint32      drawable,
 					  const char *name);
 
@@ -738,6 +741,15 @@ gdouble* gimp_gradients_sample_uniform (gint     num_samples);
 gdouble* gimp_gradients_sample_custom  (gint     num_samples,
 					gdouble *positions);
 
+/****************************************
+ *            Parasites                 *
+ ****************************************/
+
+Parasite *gimp_find_parasite       (const char *name);
+void      gimp_attach_parasite     (const Parasite *p);
+void      gimp_attach_new_parasite (const char *name, int flags,
+				    int size, const void *data);
+void      gimp_detach_parasite     (const char *name);
 
 #ifdef __cplusplus
 }

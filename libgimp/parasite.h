@@ -23,6 +23,10 @@
 #include <glib.h>
 #include <libgimp/parasiteF.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 #define PARASITE_PERSISTANT 1
 
 Parasite *parasite_new      (const char *name, guint32 flags,
@@ -38,12 +42,8 @@ int       parasite_is_error      (const Parasite *p);
 
 int       parasite_is_persistant (const Parasite *p);
 
-/* parasite list functions */
-
-GSList   *parasite_add_to_gslist  (const Parasite *parasite, GSList *list);
-Parasite *parasite_find_in_gslist (const GSList *list, const char *name);
-
-GSList   *parasite_gslist_copy    (const GSList *list);
-void      parasite_gslist_destroy (GSList *list);
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif _PARASITE_H_

@@ -950,6 +950,24 @@ gimp_image_attach_parasite (gint32 image_ID, const Parasite *p)
 }
 
 void
+gimp_image_attach_new_parasite (gint32 image_ID, const char *name, int flags,
+				int size, const void *data)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  Parasite *p = parasite_new(name, flags, size, data);
+
+  return_vals = gimp_run_procedure ("gimp_image_attach_parasite",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_PARASITE, p,
+				    PARAM_END);
+
+  parasite_free(p);
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+void
 gimp_image_detach_parasite (gint32 image_ID, const char *name)
 {
   GParam *return_vals;
@@ -999,5 +1017,49 @@ gimp_image_set_resolution (gint32  image_ID,
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+gint32
+gimp_image_get_layer_by_tattoo (gint32  image_ID, gint32 tattoo)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  gint32 layer = 0;
+
+  return_vals = gimp_run_procedure ("gimp_image_get_layer_by_tattoo",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_INT32, tattoo,
+				    PARAM_END);
+
+  layer = 0;
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    layer = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return layer;
+}
+
+gint32
+gimp_image_get_channel_by_tattoo (gint32  image_ID, gint32 tattoo)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  gint32 channel = 0;
+
+  return_vals = gimp_run_procedure ("gimp_image_get_channel_by_tattoo",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_INT32, tattoo,
+				    PARAM_END);
+
+  channel = 0;
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    channel = return_vals[1].data.d_channel;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return channel;
 }
 

@@ -619,6 +619,25 @@ gimp_drawable_attach_parasite (gint32 drawable_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
+
+void
+gimp_drawable_attach_new_parasite (gint32 drawable, const char *name, int flags,
+				int size, const void *data)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  Parasite *p = parasite_new(name, flags, size, data);
+
+  return_vals = gimp_run_procedure ("gimp_drawable_attach_parasite",
+				    &nreturn_vals,
+				    PARAM_DRAWABLE, drawable,
+				    PARAM_PARASITE, p,
+				    PARAM_END);
+
+  parasite_free(p);
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
 void
 gimp_drawable_detach_parasite (gint32 drawable_ID,
 			       const char *name)

@@ -81,4 +81,7 @@ extern ProcRecord gimp_image_find_parasite_proc;
 extern ProcRecord gimp_image_attach_parasite_proc;
 extern ProcRecord gimp_image_detach_parasite_proc;
 
+extern ProcRecord gimp_image_get_layer_by_tattoo_proc;
+extern ProcRecord gimp_image_get_channel_by_tattoo_proc;
+
 #endif  /*  __GIMAGE_CMDS_H__  */
