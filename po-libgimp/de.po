@@ -17,11 +17,11 @@ msgstr ""
 
 #: libgimp/gimpcolorbutton.c:105
 msgid "/Use Foreground Color"
-msgstr "/Benutze Vordergrundfarbe"
+msgstr "/Vordergrundfarbe verwenden"
 
 #: libgimp/gimpcolorbutton.c:106
 msgid "/Use Background Color"
-msgstr "/Benutze Hintergrundfarbe"
+msgstr "/Hintergrundfarbe verwenden"
 
 #: libgimp/gimpexport.c:155
 msgid "can't Handle Layers"
@@ -37,7 +37,7 @@ msgstr "kann Ebenen nur als Animation abspeichern"
 
 #: libgimp/gimpexport.c:165
 msgid "Save as Animation"
-msgstr "Speichere als Animation"
+msgstr "Als Animation speichern"
 
 #: libgimp/gimpexport.c:173
 msgid "can't Handle Transparency"
@@ -179,7 +179,7 @@ msgstr "Punkt"
 
 #: libgimp/gimpunit.c:54
 msgid "points"
-msgstr "Punkte"
+msgstr "Punkt"
 
 #: libgimp/gimpunit.c:55
 msgid "pica"
@@ -187,7 +187,7 @@ msgstr "Pica"
 
 #: libgimp/gimpunit.c:55
 msgid "picas"
-msgstr "Picas"
+msgstr "Pica"
 
 #: libgimp/gimpunit.c:62
 msgid "percent"

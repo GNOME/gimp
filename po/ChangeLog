@@ -1,3 +1,8 @@
+2000-03-02  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: removed app/gimpparasite.c
+	* de.po: consistency fixes.
+
 Wed Mar  1 21:52:31 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.

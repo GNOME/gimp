@@ -421,7 +421,7 @@ msgstr "Musterfüllung"
 
 #: app/bucket_fill.c:245
 msgid "Bucket Fill operation failed."
-msgstr "Fülleimer schlug fehl."
+msgstr "Füllen schlug fehl."
 
 #: app/bucket_fill.c:348
 msgid "No available patterns for this operation."
@@ -451,7 +451,7 @@ msgstr "Hinzufügen"
 
 #: app/by_color_select.c:695 app/layers_dialog.c:341 app/tool_options.c:903
 msgid "Subtract"
-msgstr "Subtraktion"
+msgstr "Subtrahieren"
 
 #: app/by_color_select.c:697
 msgid "Intersect"
@@ -519,7 +519,7 @@ msgstr "Neuer Kanal"
 
 #: app/channels_dialog.c:223
 msgid "Raise Channel"
-msgstr "Kanal erhöhen"
+msgstr "Kanal anheben"
 
 #: app/channels_dialog.c:227
 msgid "Lower Channel"
@@ -527,7 +527,7 @@ msgstr "Kanal absenken"
 
 #: app/channels_dialog.c:231
 msgid "Duplicate Channel"
-msgstr "Dupliziere Kanal"
+msgstr "Kanal duplizieren"
 
 #: app/channels_dialog.c:236
 msgid ""
@@ -539,11 +539,11 @@ msgstr ""
 
 #: app/channels_dialog.c:243
 msgid "Delete Channel"
-msgstr "Lösche Kanal"
+msgstr "Kanal löschen"
 
 #: app/channels_dialog.c:1180
 msgid "Empty Channel Copy"
-msgstr "Leere Kanal Kopie"
+msgstr "Leerer Kanal Kopie"
 
 #: app/channels_dialog.c:1412 app/color_balance.c:343 app/curves.c:580
 #: app/histogram_tool.c:304 app/levels.c:370
@@ -584,7 +584,7 @@ msgstr "Deckkraft:"
 
 #: app/channels_dialog.c:2629
 msgid "Edit Channel Attributes"
-msgstr "Verändere Kanalmerkmale"
+msgstr "Kanaleigenschaften ändern"
 
 #: app/clone.c:135
 msgid "Source"
@@ -625,7 +625,7 @@ msgstr "Farbausgleich"
 
 #: app/color_balance.c:206
 msgid "Color balance operates only on RGB color drawables."
-msgstr "Farbausgleich funktioniert nur bei Echtfarbbildern."
+msgstr "Farbausgleich funktioniert nur bei RGB Bildern."
 
 #: app/color_balance.c:255 app/dodgeburn.c:185
 msgid "Shadows"
@@ -1133,7 +1133,7 @@ msgstr "Kann nicht sichern, da nichts ausgewählt wurde!"
 
 #: app/errorconsole.c:191
 msgid "Save error log to file..."
-msgstr "Sichere Fehlerprotokoll in Datei..."
+msgstr "Fehlerprotokoll in Datei sichern..."
 
 #: app/errorconsole.c:273
 msgid "GIMP Error Console"
@@ -1145,11 +1145,11 @@ msgstr "Löschen"
 
 #: app/errorconsole.c:302
 msgid "Write all errors to file..."
-msgstr "Schreibe alle Fehler in Datei..."
+msgstr "Alle Fehler in Datei schreiben..."
 
 #: app/errorconsole.c:309
 msgid "Write selection to file..."
-msgstr "Schreibe Auswahl in Datei..."
+msgstr "Auswahl in Datei schreiben..."
 
 #: app/file_new_dialog.c:190
 #, no-c-format
@@ -1313,7 +1313,7 @@ msgstr "Nein"
 
 #: app/flip_tool.c:82
 msgid "Flip Tool"
-msgstr "Spiegel"
+msgstr "Spiegeln"
 
 #: app/flip_tool.c:95 app/preferences_dialog.c:1591
 #: app/preferences_dialog.c:2355
@@ -1608,16 +1608,6 @@ msgstr "Kanal kann nicht weiter abgesenkt werden"
 msgid "Untitled"
 msgstr "Unbenannt"
 
-#: app/gimpparasite.c:136
-msgid ""
-"# GIMP parasiterc\n"
-"# This file will be entirely rewritten every time you quit the gimp.\n"
-"\n"
-msgstr ""
-"# GIMP parasiterc\n"
-"# Diese Datei wird jedesmal neu geschrieben, wenn Sie GIMP beenden.\n"
-"\n"
-
 #: app/gimpprogress.c:107
 msgid "Progress"
 msgstr "Fortschritt"
@@ -1725,7 +1715,7 @@ msgstr "Punkt"
 
 #: app/gimpunit.c:66
 msgid "points"
-msgstr "Punkte"
+msgstr "Punkt"
 
 #: app/gimpunit.c:67
 msgid "pica"
@@ -1733,7 +1723,7 @@ msgstr "Pica"
 
 #: app/gimpunit.c:67
 msgid "picas"
-msgstr "Picas"
+msgstr "Pica"
 
 #: app/gimpunit.c:74
 msgid "percent"
@@ -1753,7 +1743,7 @@ msgstr "Einfügen als Neu"
 
 #: app/global_edit.c:731
 msgid "Paste Named Buffer"
-msgstr "Einfügen aus Ablage"
+msgstr "Aus Ablage einfügen"
 
 #: app/global_edit.c:749
 msgid "Select a buffer to paste:"
@@ -1761,15 +1751,15 @@ msgstr "Ablage zum Einfügen auswählen:"
 
 #: app/global_edit.c:830
 msgid "Cut Named"
-msgstr "Ausschneiden in Ablage"
+msgstr "In Ablage ausschneiden"
 
 #: app/global_edit.c:833 app/global_edit.c:865
 msgid "Enter a name for this buffer"
-msgstr "Geben sie dieser Ablage einen Namen"
+msgstr "Geben Sie dieser Ablage einen Namen"
 
 #: app/global_edit.c:862
 msgid "Copy Named"
-msgstr "Kopieren in Ablage"
+msgstr "In Ablage kopieren"
 
 #: app/gradient.c:534
 msgid "Curved"
@@ -1821,23 +1811,23 @@ msgstr "Farbverlaufsfunktionen"
 #. Buttons for gradient functions
 #: app/gradient.c:878
 msgid "New Gradient"
-msgstr "Farbverlauf anlegen"
+msgstr "Neuer Farbverlauf"
 
 #: app/gradient.c:886
 msgid "Copy Gradient"
-msgstr "Kopiere Farbverlauf"
+msgstr "Farbverlauf kopieren"
 
 #: app/gradient.c:894 app/gradient.c:1764
 msgid "Delete Gradient"
-msgstr "Lösche Farbverlauf"
+msgstr "Farbverlauf löschen"
 
 #: app/gradient.c:902
 msgid "Rename Gradient"
-msgstr "Benenne Farbverlauf um"
+msgstr "Farbverlauf umbenennen"
 
 #: app/gradient.c:910 app/gradient.c:1849
 msgid "Save as POV-Ray"
-msgstr "Sichere als POV-Ray Datei"
+msgstr "Als POV-Ray Datei sichern"
 
 #. Zoom all button
 #: app/gradient.c:928
@@ -1854,7 +1844,7 @@ msgstr "Standard"
 
 #: app/gradient.c:1542
 msgid "New gradient"
-msgstr "Farbverlauf anlegen"
+msgstr "Neuer Farbverlauf"
 
 #: app/gradient.c:1545
 msgid "Enter a name for the new gradient"
@@ -1949,7 +1939,7 @@ msgstr "Farbe des linken Endpunktes"
 
 #: app/gradient.c:3398 app/gradient.c:3440
 msgid "Load from"
-msgstr "Hole aus"
+msgstr "Holen aus"
 
 #: app/gradient.c:3402
 msgid "Left neighbor's right endpoint"
@@ -2422,7 +2412,7 @@ msgstr ""
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
-"Um die Benutzerinstallation auszuführen starten sie GIMP ohne "
+"Um die Benutzerinstallation auszuführen, starten sie GIMP ohne "
 "'--nointerface'\n"
 
 #: app/install.c:113
@@ -4832,7 +4822,7 @@ msgstr "Schachbrett Größe:"
 
 #: app/preferences_dialog.c:1746
 msgid "8-Bit Displays"
-msgstr "8-bit Anzeigen"
+msgstr "8-Bit Anzeigen"
 
 #: app/preferences_dialog.c:1751
 msgid "Install Colormap"
@@ -5069,11 +5059,11 @@ msgstr "Fensterpositionen"
 
 #: app/preferences_dialog.c:2271
 msgid "Save Window Positions on Exit"
-msgstr "Sichere Fensterpositionen beim Beenden"
+msgstr "Fensterpositionen beim Beenden sichern"
 
 #: app/preferences_dialog.c:2285
 msgid "Clear Saved Window Positions Now"
-msgstr "Lösche gesicherte Fensterpositionen jetzt"
+msgstr "Gesicherte Fensterpositionen jetzt löschen"
 
 #: app/preferences_dialog.c:2293
 msgid "Always Try to Restore Session"
@@ -5085,7 +5075,7 @@ msgstr "Geräte"
 
 #: app/preferences_dialog.c:2304
 msgid "Save Device Status on Exit"
-msgstr "Sichere Gerätestatus beim Beenden"
+msgstr "Gerätestatus beim Beenden sichern"
 
 #: app/preferences_dialog.c:2315 app/preferences_dialog.c:2317
 msgid "Monitor"
@@ -5146,7 +5136,7 @@ msgstr "Erzeugte Pinsel Verzeichnisse"
 
 #: app/preferences_dialog.c:2474
 msgid "Select Generated Brushes Dir"
-msgstr "Wähle Verzeichnis für erzeugte Pinsel auswählen"
+msgstr "Verzeichnis für erzeugte Pinsel auswählen"
 
 #: app/preferences_dialog.c:2476
 msgid "Patterns Directories"
@@ -5443,7 +5433,7 @@ msgstr "Nächster Tip"
 
 #: app/tips_dialog.c:184
 msgid "Show tip next time"
-msgstr "Zeige Tips das nächste Mal"
+msgstr "Tips das nächste Mal anzeigen"
 
 #: app/tips_dialog.c:299
 msgid ""
@@ -5682,7 +5672,7 @@ msgstr "Drehen, Skalieren, Scheren, perspektivisch Verzerren."
 
 #: app/tools.c:322
 msgid "Flip"
-msgstr "Spiegelung"
+msgstr "Spiegeln"
 
 #: app/tools.c:323
 msgid "/Tools/Transform Tools/Flip"
@@ -5970,7 +5960,7 @@ msgstr "Glätten"
 #. the showpath toggle button
 #: app/transform_tool.c:304
 msgid "Show Path"
-msgstr "Zeige Pfad"
+msgstr "Pfad zeigen"
 
 #. the clip resulting image toggle button
 #: app/transform_tool.c:315
@@ -6228,85 +6218,3 @@ msgstr "Wasserfarbe"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Farbliste"
-
-#~ msgid "gimp_image_scale: Scaling to zero width or height has been rejected."
-#~ msgstr ""
-#~ "gimp_image_scale: Skalierung auf Breite oder Höhe Null wurde abgelehnt."
-
-#~ msgid "/Xtns/Animation"
-#~ msgstr "/Xtns/Animation"
-
-#~ msgid "/Xtns/Script-Fu"
-#~ msgstr "/Xtns/Script-Fu"
-
-#~ msgid "/Xtns/Script-Fu/Logos"
-#~ msgstr "/Xtns/Script-Fu/Logos"
-
-#~ msgid "/Xtns/Script-Fu/Patterns"
-#~ msgstr "/Xtns/Script-Fu/Muster"
-
-#~ msgid "/Xtns/Script-Fu/Web Page Themes"
-#~ msgstr "/Xtns/Script-Fu/Webseiten Themen"
-
-#~ msgid "/Xtns/Script-Fu/Utils"
-#~ msgstr "/Xtns/Script-Fu/Werkzeuge"
-
-#~ msgid "/Xtns/Script-Fu/Buttons"
-#~ msgstr "/Xtns/Script-Fu/Knöpfe"
-
-#~ msgid "/Xtns/Script-Fu/Make Brush"
-#~ msgstr "/Xtns/Script-Fu/Erzeuge Pinsel"
-
-#~ msgid "/Xtns/Script-Fu/Misc"
-#~ msgstr "/Xtns/Script-Fu/Verschiedenes"
-
-#~ msgid "/Xtns/Script-Fu/Test"
-#~ msgstr "/Xtns/Script-Fu/Test"
-
-#~ msgid "/Xtns/Web Browser"
-#~ msgstr "/Xtns/Web Browser"
-
-#~ msgid "/Filters/Colors/Map"
-#~ msgstr "/Filter/Farben/Abbilden"
-
-#~ msgid "/Filters/Render/Clouds"
-#~ msgstr "/Filter/Render/Wolken"
-
-#~ msgid "/Filters/Render/Nature"
-#~ msgstr "/Filter/Render/Natur"
-
-#~ msgid "/Filters/Render/Pattern"
-#~ msgstr "/Filter/Render/Muster"
-
-#~ msgid "/Filters/Misc"
-#~ msgstr "/Filter/Verschiedenes"
-
-#~ msgid "/Script-Fu/Decor"
-#~ msgstr "/Script-Fu/Dekor"
-
-#~ msgid "/Script-Fu/Utils"
-#~ msgstr "/Script-Fu/Werkzeuge"
-
-#~ msgid "/Script-Fu/Animators"
-#~ msgstr "/Script-Fu/Animateure"
-
-#~ msgid "/Script-Fu/Alchemy"
-#~ msgstr "/Script-Fu/Alchemie"
-
-#~ msgid "/Script-Fu/Selection"
-#~ msgstr "/Script-Fu/Selektion"
-
-#~ msgid "/Script-Fu/Shadow"
-#~ msgstr "/Script-Fu/Schatten"
-
-#~ msgid "/Script-Fu/Render"
-#~ msgstr "/Script-Fu/Render"
-
-#~ msgid "/Guides"
-#~ msgstr "/Hilfslinien"
-
-#~ msgid "/Video"
-#~ msgstr "/Video"
-
-#~ msgid "/Video/Encode"
-#~ msgstr "/Video/Komprimieren"

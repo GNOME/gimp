@@ -167,7 +167,7 @@ channel_ops_offset (GimpImage* gimage)
 
   /*  The fill options  */
   frame =
-    gimp_radio_group_new2 (TRUE, _("Fill Options"),
+    gimp_radio_group_new2 (TRUE, _("Fill Type"),
 			   gimp_radio_button_update,
 			   &off_d->fill_type, (gpointer) off_d->fill_type,
 

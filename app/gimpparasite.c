@@ -27,9 +27,9 @@
 #include "parasitelist.h"
 #include "gimpparasite.h"
 #include "gimprc.h"
+
 #include "libgimp/parasite.h"
 #include "libgimp/gimpenv.h"
-#include "libgimp/gimpintl.h"
 
 static ParasiteList *parasites = NULL;
 
@@ -133,8 +133,10 @@ gimp_parasiterc_save (void)
   if (!fp)
     return;
 
-  fprintf (fp, _("# GIMP parasiterc\n"
-		"# This file will be entirely rewritten every time you quit the gimp.\n\n"));
+  fprintf (fp,
+	   "# GIMP parasiterc\n"
+	   "# This file will be entirely rewritten every time you "
+	   "quit the gimp.\n\n");
   
   parasite_list_foreach (parasites, (GHFunc)save_func, fp);
 

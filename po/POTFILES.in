@@ -50,7 +50,6 @@ app/gimpbrushpipe.c
 app/gimpdrawable.c
 app/gimphelp.c
 app/gimpimage.c
-app/gimpparasite.c
 app/gimpprogress.c
 app/gimprc.c
 app/gimpui.c
