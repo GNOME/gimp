@@ -1,3 +1,8 @@
+2000-09-13  Christian Meyer  <linux@chrisime.de>
+
+	* update.pl: Added perl script from kanikus.
+	* README.tools: Added text file.
+
 2000-09-10  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* ja.po: updated japanese translation.

@@ -1,0 +1,58 @@
+The po/ directory includes two perlscripts, which is done to help 
+making the translations fully uptodate.
+
+The first script is called update.pl and is supposed to be run like this:
+
+	./update.pl [OPTIONS] ...LANGCODE
+
+This will updates the pot file (the po template, generated from the source code) 
+and merge them with the translations po files.
+
+For instance to do this for Danish, type the following
+
+	./update.pl da
+
+
+The update.pl script also supports other options, they are:
+
+  -V, --version                shows the version
+  -H, --help                   shows this help page
+  -P, --pot                    only generates the potfile
+  -M, --maintain               search for missing files in POTFILES.in
+
+Especially the --maintain option is very handy for package maintainer, to check
+if you included all the files that have marked strings in the POTFILES.in, so
+they will be in the generated po template, the socalled pot file.
+
+There is though one thing to take notice of with this option, please check the 
+configure.in file to make sure that the files you add to POTFILES.in are being
+build, otherwise this can leed to "make dist" throuble.
+
+
+The other utility is the desk.pl script, which will check the cvs module for
+missing translation in files like *.desktop, *.directory, *.soundlist and so on.
+
+Run the script like this:
+
+	./desk.pl [OPTIONS] ...LANGCODE ENTRY
+
+An example use could be.
+
+	./desk.pl da
+
+which will check all the files for missing Name[da] entries, or 
+
+	./desk.pl no Comment
+
+which will check all the files for missing Comment[no] entries. "Comment" can
+here be replaced with whatever you like
+
+All scripts support the --help option for further help, though it's not very
+extensive for the moment.
+
+Kenneth Christiansen
+
+kenneth@gnu.org  
+kenneth@gnome.org
+
+Both scripts are copyright 2000 The Free Software Foundation and me.
