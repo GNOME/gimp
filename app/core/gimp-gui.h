@@ -58,7 +58,8 @@ struct _GimpGui
                                          GSList        *plug_in_defs,
                                          const gchar   *std_domain);
   void           (* menus_create)       (Gimp          *gimp,
-                                         PlugInProcDef *proc_def);
+                                         PlugInProcDef *proc_def,
+                                         const gchar   *menu_path);
   void           (* menus_delete)       (Gimp          *gimp,
                                          PlugInProcDef *proc_def);
 
@@ -120,7 +121,8 @@ void           gimp_menus_init           (Gimp               *gimp,
                                           GSList             *plug_in_defs,
                                           const gchar        *std_plugins_domain);
 void           gimp_menus_create_entry   (Gimp               *gimp,
-                                          PlugInProcDef      *proc_def);
+                                          PlugInProcDef      *proc_def,
+                                          const gchar        *menu_path);
 void           gimp_menus_delete_entry   (Gimp               *gimp,
                                           PlugInProcDef      *proc_def);
 

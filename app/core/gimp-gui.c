@@ -286,13 +286,14 @@ gimp_menus_init (Gimp        *gimp,
 
 void
 gimp_menus_create_entry (Gimp          *gimp,
-                         PlugInProcDef *proc_def)
+                         PlugInProcDef *proc_def,
+                         const gchar   *menu_path)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (proc_def != NULL);
 
   if (gimp->gui.menus_create)
-    gimp->gui.menus_create (gimp, proc_def);
+    gimp->gui.menus_create (gimp, proc_def, menu_path);
 }
 
 void

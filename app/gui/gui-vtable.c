@@ -104,7 +104,8 @@ static void           gui_menus_init           (Gimp          *gimp,
                                                 GSList        *plug_in_defs,
                                                 const gchar   *plugins_domain);
 static void           gui_menus_create_entry   (Gimp          *gimp,
-                                                PlugInProcDef *proc_def);
+                                                PlugInProcDef *proc_def,
+                                                const gchar   *menu_path);
 static void           gui_menus_delete_entry   (Gimp          *gimp,
                                                 PlugInProcDef *proc_def);
 static GimpProgress * gui_new_progress         (Gimp          *gimp,
@@ -369,36 +370,58 @@ gui_menus_init (Gimp        *gimp,
 
 static void
 gui_menus_create_entry (Gimp          *gimp,
-                        PlugInProcDef *proc_def)
+                        PlugInProcDef *proc_def,
+                        const gchar   *menu_path)
 {
   GList *list;
 
-  for (list = gimp_action_groups_from_name ("plug-in");
-       list;
-       list = g_list_next (list))
+  if (menu_path == NULL)
     {
-      plug_in_actions_add_proc (list->data, proc_def);
+      for (list = gimp_action_groups_from_name ("plug-in");
+           list;
+           list = g_list_next (list))
+        {
+          plug_in_actions_add_proc (list->data, proc_def);
+        }
     }
 
   for (list = gimp_ui_managers_from_name ("<Image>");
        list;
        list = g_list_next (list))
     {
-      GList *path;
-
-      for (path = proc_def->menu_paths; path; path = g_list_next (path))
+      if (menu_path == NULL)
         {
-          if (! strncmp (path->data, "<Toolbox>", 9))
+          GList *path;
+
+          for (path = proc_def->menu_paths; path; path = g_list_next (path))
+            {
+              if (! strncmp (path->data, "<Toolbox>", 9))
+                {
+                  plug_in_menus_add_proc (list->data, "/toolbox-menubar",
+                                          proc_def, path->data);
+                }
+              else if (! strncmp (path->data, "<Image>", 7))
+                {
+                  plug_in_menus_add_proc (list->data, "/image-menubar",
+                                          proc_def, path->data);
+                  plug_in_menus_add_proc (list->data, "/dummy-menubar/image-popup",
+                                          proc_def, path->data);
+                }
+            }
+        }
+      else
+        {
+          if (! strncmp (menu_path, "<Toolbox>", 9))
             {
               plug_in_menus_add_proc (list->data, "/toolbox-menubar",
-                                      proc_def, path->data);
+                                      proc_def, menu_path);
             }
-          else if (! strncmp (path->data, "<Image>", 7))
+          else if (! strncmp (menu_path, "<Image>", 7))
             {
               plug_in_menus_add_proc (list->data, "/image-menubar",
-                                      proc_def, path->data);
+                                      proc_def, menu_path);
               plug_in_menus_add_proc (list->data, "/dummy-menubar/image-popup",
-                                      proc_def, path->data);
+                                      proc_def, menu_path);
             }
         }
     }

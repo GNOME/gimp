@@ -641,8 +641,8 @@ plug_ins_temp_proc_def_add (Gimp          *gimp,
 
   if (! gimp->no_interface)
     {
-      if (proc_def->menu_paths)
-        gimp_menus_create_entry (gimp, proc_def);
+      if (proc_def->menu_label || proc_def->menu_paths)
+        gimp_menus_create_entry (gimp, proc_def, NULL);
     }
 
   /*  Register the procedural database entry  */
@@ -661,7 +661,7 @@ plug_ins_temp_proc_def_remove (Gimp          *gimp,
 
   if (! gimp->no_interface)
     {
-      if (proc_def->menu_paths)
+      if (proc_def->menu_label || proc_def->menu_paths)
         gimp_menus_delete_entry (gimp, proc_def);
     }
 

@@ -1,5 +1,32 @@
 2004-11-17  Michael Natterer  <mitch@gimp.org>
 
+	Made plug-in menu registration work the same way for ordinary and
+	temporary procedures. Addresses bug #158117.
+
+	* app/core/gimp-gui.[ch]: added "const gchar *menu_path" to
+	gimp_menus_create_entry().
+
+	* app/gui/gui-vtable.c (gui_menus_create_entry): if menu_path is
+	NULL, behave as before and create an action and its menu entries
+	for all the procedure's menu_paths. If it is non-NULL, skip action
+	creation and create a menu entry just for that path.
+
+	* app/plug-in/plug-ins.c (plug_ins_temp_proc_def_add): call
+	gimp_menus_create_entry() with a NULL menu path and call it if
+	proc_def->menu_paths *or* proc_def->menu_label is non-NULL, so
+	it creates at least the procedure's action, even if it has
+	no menu_path (yet).
+
+	* tools/pdbgen/pdb/plug_in.pdb (plugin_menu_register): check both
+	the list of procs and temp_procs when trying to register the
+	entry.  Allow ordinary procedures and extensions to install stuff
+	at query() and init() time and allow temp_procs to install stuff
+	at any time.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+2004-11-17  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/dbbrowser/gimpprocbox.c
 	* plug-ins/dbbrowser/gimpprocbrowser.[ch]
 	* plug-ins/dbbrowser/gimpprocview.c: some cleanup in preparation
