@@ -345,6 +345,17 @@ gimp_text_get_pango_context (GimpText *text,
   context = pango_ft2_font_map_create_context (fontmap);
   g_object_unref (fontmap);
 
+  /*  Workaround for bug #143542 (PangoFT2Fontmap leak),
+   *  see also bug #148997 (Text layer rendering leaks font file descriptor):
+   *
+   *  Calling pango_ft2_font_map_substitute_changed() causes the
+   *  font_map cache to be flushed, thereby removing the circular
+   *  reference that causes the leak.
+   */
+  g_object_weak_ref (G_OBJECT (context),
+                     (GWeakNotify) pango_ft2_font_map_substitute_changed,
+                     fontmap);
+
   if (text->language)
     pango_context_set_language (context,
                                 pango_language_from_string (text->language));

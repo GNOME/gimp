@@ -1,5 +1,11 @@
 2004-09-22  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayout.c (gimp_text_get_pango_context):
+	workaround Pango bug #143542 (PangoFT2Fontmap leak, see also bug
+	#148997). Based on a patch by Robert Ögren.
+
+2004-09-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpviewabledialog.c: removed the prelit event box
 	from the header frame, use a smaller font for the subtitle,
 	removed the separator.
