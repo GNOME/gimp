@@ -74,7 +74,7 @@ static void      run   (const gchar      *name,
 			gint             *nreturn_vals,
 			GimpParam       **return_vals);
 
-static GdkNativeWindow select_window  (const GdkScreen *screen);
+static GdkNativeWindow select_window  (GdkScreen       *screen);
 static gint32          create_image   (const GdkPixbuf *pixbuf);
 
 static void      shoot                (void);
@@ -95,15 +95,14 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 /* the image that will be returned */
-gint32     image_ID = -1;
-
-gboolean   run_flag = FALSE;
+static gint32           image_ID   = -1;
+static gboolean         run_flag   = FALSE;
 
 /* the screen on which we are running */
-GdkScreen *cur_screen = NULL;
+static GdkScreen       *cur_screen = NULL;
 
 /* the window the user selected */
-GdkNativeWindow selected_native;
+static GdkNativeWindow  selected_native;
 
 /* Functions */
 
@@ -235,7 +234,7 @@ run (const gchar      *name,
 /* Allow the user to select a window with the mouse */
 
 static GdkNativeWindow
-select_window (const GdkScreen *screen)
+select_window (GdkScreen *screen)
 {
 #if defined(GDK_WINDOWING_X11)
   /* X11 specific code */
@@ -251,8 +250,8 @@ select_window (const GdkScreen *screen)
   gint        status;
   gint        buttons;
 
-  x_dpy = GDK_SCREEN_XDISPLAY (GDK_SCREEN (screen));
-  x_scr = GDK_SCREEN_XNUMBER (GDK_SCREEN (screen));
+  x_dpy = GDK_SCREEN_XDISPLAY (screen);
+  x_scr = GDK_SCREEN_XNUMBER (screen);
 
   x_win    = None;
   x_root   = RootWindow (x_dpy, x_scr);
@@ -337,8 +336,8 @@ create_image (const GdkPixbuf *pixbuf)
   gchar        *buf;
   gint          i;
 
-  width  = gdk_pixbuf_get_width (GDK_PIXBUF (pixbuf));
-  height = gdk_pixbuf_get_height (GDK_PIXBUF (pixbuf));
+  width  = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
 
   image = gimp_image_new (width, height, GIMP_RGB);
   layer = gimp_layer_new (image, _("Screen Shot"),
@@ -356,8 +355,8 @@ create_image (const GdkPixbuf *pixbuf)
                        TRUE, FALSE);
 
   /* copy the contents of the GdkPixbuf to the GimpDrawable */
-  rowstride = gdk_pixbuf_get_rowstride (GDK_PIXBUF (pixbuf));
-  buf       = gdk_pixbuf_get_pixels (GDK_PIXBUF (pixbuf));
+  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+  buf       = gdk_pixbuf_get_pixels (pixbuf);
   status    = gimp_progress_init (_("Loading Screen Shot..."));
 
   for (i = 0; i < height; i++)
@@ -410,15 +409,15 @@ shoot (void)
   if (cur_screen == NULL)
     cur_screen = gdk_screen_get_default ();
 
-  screen_w = gdk_screen_get_width (GDK_SCREEN (cur_screen));
-  screen_h = gdk_screen_get_height (GDK_SCREEN (cur_screen));
+  screen_w = gdk_screen_get_width (cur_screen);
+  screen_h = gdk_screen_get_height (cur_screen);
   clip.x   = 0;
   clip.y   = 0;
 
   if (shootvals.root)
     {
       /* entire screen */
-      window = gdk_screen_get_root_window (GDK_SCREEN (cur_screen));
+      window = gdk_screen_get_root_window (cur_screen);
     }
   else
     {
@@ -439,8 +438,8 @@ shoot (void)
       return;
     }
 
-  gdk_drawable_get_size (GDK_WINDOW (window), &clip.width, &clip.height);
-  gdk_window_get_origin (GDK_WINDOW (window), &origin.x, &origin.y);
+  gdk_drawable_get_size (GDK_DRAWABLE (window), &clip.width, &clip.height);
+  gdk_window_get_origin (window, &origin.x, &origin.y);
 
   /* do clipping */
   if (origin.x < 0)
@@ -458,11 +457,11 @@ shoot (void)
   if (origin.y + clip.height > screen_h)
     clip.height -= origin.y + clip.height - screen_h;
 
-  screenshot = gdk_pixbuf_get_from_drawable (NULL, GDK_WINDOW (window),
+  screenshot = gdk_pixbuf_get_from_drawable (NULL, window,
                                              NULL, clip.x, clip.y, 0, 0,
                                              clip.width, clip.height);
 
-  gdk_display_beep (gdk_screen_get_display (GDK_SCREEN (cur_screen)));
+  gdk_display_beep (gdk_screen_get_display (cur_screen));
   gdk_flush ();
 
   if (!screenshot)
@@ -471,7 +470,7 @@ shoot (void)
       return;
     }
 
-  image_ID = create_image (GDK_PIXBUF (screenshot));
+  image_ID = create_image (screenshot);
 }
 
 /*  ScreenShot dialog  */
@@ -483,12 +482,12 @@ shoot_ok_callback (GtkWidget *widget,
   run_flag = TRUE;
 
   /* get the screen on which we are running */
-  cur_screen = gtk_widget_get_screen (GTK_WIDGET (widget));
+  cur_screen = gtk_widget_get_screen (widget);
 
   gtk_widget_destroy (GTK_WIDGET (data));
 
   if (!shootvals.root && !shootvals.window_id)
-    selected_native = select_window (GDK_SCREEN (cur_screen));
+    selected_native = select_window (cur_screen);
 }
 
 static gboolean
