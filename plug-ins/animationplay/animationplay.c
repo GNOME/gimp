@@ -1,5 +1,5 @@
 /*
- * Animation Playback plug-in version 0.94.0
+ * Animation Playback plug-in version 0.94.2
  *
  * Adam D. Moss : 1997-98 : adam@gimp.org : adam@foxbox.org
  *
@@ -10,6 +10,9 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 98.04.28 : version 0.94.2
+ *            Fixed a time-parsing bug.
  *
  * 98.04.05 : version 0.94.0
  *            Improved performance and removed flicker when shaped.
@@ -246,6 +249,8 @@ parse_ms_tag (char *str)
 
   length = strlen(str);
 
+find_another_bra:
+
   while ((offset<length) && (str[offset]!='('))
     offset++;
   
@@ -253,7 +258,7 @@ parse_ms_tag (char *str)
     return(-1);
 
   if (!isdigit(str[++offset]))
-    return(-2);
+    goto find_another_bra;
 
   do
     {

@@ -1,3 +1,9 @@
+Wed Apr 29 03:46:44 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/animationplay/animationplay.c
+	* plug-ins/gif/gif.c
+	* plug-ins/psd/psd.c: updates from Adam
+
 Wed Apr 29 01:43:30 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/text_tool.c: don't die on corrupted fonts. Give some

@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 2.0.1 - 98/03/16
+ * Version 2.0.2 - 98/04/28
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -22,6 +22,10 @@
 
 /*
  * REVISION HISTORY
+ *
+ *
+ * 98/04/28
+ * 2.00.02 - Fixed a bug with (ms) tag parsing.
  *
  * 98/03/16
  * 2.00.01 - Fixed a long-standing bug when loading GIFs which layer
@@ -1492,6 +1496,8 @@ parse_ms_tag (char *str)
 
   length = strlen(str);
 
+find_another_bra:
+
   while ((offset<length) && (str[offset]!='('))
     offset++;
   
@@ -1499,7 +1505,7 @@ parse_ms_tag (char *str)
     return(-1);
 
   if (!isdigit(str[++offset]))
-    return(-2);
+    goto find_another_bra;
 
   do
     {

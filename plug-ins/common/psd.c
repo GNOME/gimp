@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 1.9.9.8 (BETA)
+ * PSD Plugin version 1.9.9.9 (BETA)
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -25,7 +25,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
 /*
@@ -35,6 +35,11 @@
 
 /*
  * Revision history:
+ *
+ *  98.04.28 / v1.9.9.9 / Adam D. Moss
+ *       Fixed the correct channel interlacing of 'raw' flat images.
+ *       Thanks to Christian Kirsch and Jay Cox for spotting this.
+ *       Changed some of the I/O routines.
  *
  *  98.04.26 / v1.9.9.8 / Adam D. Moss
  *       Implemented Aux-channels for layered files.  Got rid
@@ -173,7 +178,7 @@ typedef struct PsdLayer
   gboolean protecttrans;
   gboolean visible;
 
-  gchar* name;
+  guchar* name;
 
   gint32 lm_x;
   gint32 lm_y;
@@ -212,7 +217,7 @@ static PSDimage psd_image;
 
 
 static struct {
-    gchar signature[4];
+    guchar signature[4];
     gushort version;
     guchar reserved[6];
     gushort channels;
@@ -248,9 +253,9 @@ static const gchar *prog_name = "PSD";
 
 static void unpack_pb_channel(FILE *fd, guchar *dst, gint32 unpackedlen,
 				  guint32 *offset);
-static void decode(long clen, long uclen, gchar *src, guchar *dst, int step);
+static void decode(long clen, long uclen, gchar *src, gchar *dst, int step);
 static void packbitsdecode(long *clenp, long uclen,
-			   gchar *src, guchar *dst, int step);
+			   gchar *src, gchar *dst, int step);
 static void cmyk2rgb(guchar *src, guchar *destp,
 		     long width, long height, int alpha);
 static void cmykp2rgb(guchar *src, guchar *destp,
@@ -260,12 +265,14 @@ static guchar getguchar(FILE *fd, gchar *why);
 static gshort getgshort(FILE *fd, gchar *why);
 static glong getglong(FILE *fd, gchar *why);
 static void xfread(FILE *fd, void *buf, long len, gchar *why);
+static void xfread_interlaced(FILE *fd, guchar *buf, long len, gchar *why,
+			      gint step);
 static void *xmalloc(size_t n);
 static void read_whole_file(FILE *fd);
 static void reshuffle_cmap(guchar *map256);
-static gchar *getpascalstring(FILE *fd, gchar *why);
-void throwchunk(size_t n, FILE * fd, gchar *why);
-void dumpchunk(size_t n, FILE * fd, gchar *why);
+static guchar *getpascalstring(FILE *fd, guchar *why);
+void throwchunk(size_t n, FILE * fd, guchar *why);
+void dumpchunk(size_t n, FILE * fd, guchar *why);
 
 
 MAIN()
@@ -1383,11 +1390,9 @@ load_image(char *name)
 {
   FILE *fd;
   gboolean want_aux;
-  char *name_buf;
-  unsigned char *cmykbuf;
+  char *name_buf, *cmykbuf;
   static int number = 1;
-  char *temp;
-  guchar *dest;
+  unsigned char *dest, *temp;
   long channels, nguchars;
   psd_imagetype imagetype;
   int cmyk = 0, step = 1;
@@ -1787,13 +1792,16 @@ load_image(char *name)
 	  if (!cmyk)
 	    {
 	      gimp_progress_update ((double)0.50);
-	      xfread(fd, dest, PSDheader.imgdatalen, "image data");
+	      xfread_interlaced(fd, dest, PSDheader.imgdatalen,
+				"raw image data", step);
 	    }
 	  else
 	    {	  
 	      gimp_progress_update ((double)0.25);
 	      cmykbuf = xmalloc(PSDheader.imgdatalen);
-	      xfread(fd, cmykbuf, PSDheader.imgdatalen, "image data");
+	      xfread_interlaced(fd, cmykbuf, PSDheader.imgdatalen,
+				"raw cmyk image data", step);
+
 	      gimp_progress_update ((double)0.50);
 	      cmykp2rgb(cmykbuf, dest,
 			PSDheader.columns, PSDheader.rows, step > 4);
@@ -1807,7 +1815,8 @@ load_image(char *name)
 	  extract_channels(dest, channels, step,
 			   image_ID,
 			   PSDheader.columns, PSDheader.rows);
-	  goto finish_up;
+
+	  goto finish_up; /* Haha!  Look!  A goto! */
 	}
       else
 	{
@@ -1818,7 +1827,7 @@ load_image(char *name)
 
 	      if (psd_type_to_gimp_type(imagetype)==INDEXEDA_IMAGE)
 		{
-		  printf("@@@@ Didn't know about this.\n");
+		  printf("@@@@ Didn't know that this could happen...\n");
 		  for (iter=0; iter<drawable->width*drawable->height; iter++)
 		    {
 		      dest[iter*2+1] = 255;
@@ -1867,7 +1876,7 @@ load_image(char *name)
 
 
 static void
-decode(long clen, long uclen, char * src, guchar * dst, int step)
+decode(long clen, long uclen, char * src, char * dst, int step)
 {
     gint i, j;
     gint32 l;
@@ -1896,7 +1905,7 @@ decode(long clen, long uclen, char * src, guchar * dst, int step)
  * Decode a PackBits data stream.
  */
 static void
-packbitsdecode(long * clenp, long uclen, char * src, guchar * dst, int step)
+packbitsdecode(long * clenp, long uclen, char * src, char * dst, int step)
 {
     gint n, b;
     gint32 clen = *clenp;
@@ -2026,7 +2035,7 @@ cmykp2rgb(unsigned char * src, unsigned char * dst,
     int r, g, b, k;
     int i, j;
     long n;
-    guchar *rp, *gp, *bp, *kp, *ap;
+    char *rp, *gp, *bp, *kp, *ap;
 
     n = width * height;
     rp = src;
@@ -2084,7 +2093,7 @@ cmyk_to_rgb(gint *c, gint *m, gint *y, gint *k)
 
 
 void
-dumpchunk(size_t n, FILE * fd, gchar *why)
+dumpchunk(size_t n, FILE * fd, guchar *why)
 {
   guint32 i;
 
@@ -2100,9 +2109,9 @@ dumpchunk(size_t n, FILE * fd, gchar *why)
 
 
 void
-throwchunk(size_t n, FILE * fd, gchar *why)
+throwchunk(size_t n, FILE * fd, guchar *why)
 {
-  gchar *tmpchunk;
+  guchar *tmpchunk;
 
   if (n==0)
     {
@@ -2128,10 +2137,10 @@ getchunk(size_t n, FILE * fd, char *why)
 #endif
 
 
-static gchar *
-getpascalstring(FILE *fd, gchar *why)
+static guchar *
+getpascalstring(FILE *fd, guchar *why)
 {
-  gchar *tmpchunk;
+  guchar *tmpchunk;
   guchar len;
 
   xfread(fd, &len, 1, why);
@@ -2154,9 +2163,16 @@ getpascalstring(FILE *fd, gchar *why)
 static guchar
 getguchar(FILE *fd, char *why)
 {
-  guchar tmp;
+  gint tmp;
 
-  xfread(fd, &tmp, 1, why);
+  tmp = fgetc(fd);
+
+  if (tmp == EOF)
+    {
+      printf("%s: unexpected EOF while reading '%s' chunk\n",
+	     prog_name, why);
+      gimp_quit();
+    }
 
   return(tmp);
 }
@@ -2168,8 +2184,8 @@ getgshort(FILE *fd, char *why)
   gushort w;
   guchar b1, b2;
   
-  xfread(fd, &b1, 1, why);
-  xfread(fd, &b2, 1, why);
+  b1 = getguchar(fd, why);
+  b2 = getguchar(fd, why);
   
   w = (b1*256) + b2;
   
@@ -2180,27 +2196,54 @@ getgshort(FILE *fd, char *why)
 static glong
 getglong(FILE *fd, char * why)
 {
-    unsigned char s1, s2, s3, s4;
-    gulong w;
+  unsigned char s1, s2, s3, s4;
+  gulong w;
 
-    xfread(fd, &s1, 1, why);
-    xfread(fd, &s2, 1, why);
-    xfread(fd, &s3, 1, why);
-    xfread(fd, &s4, 1, why);
-
-    w = (s1*256*256*256) + (s2*256*256) + (s3*256) + s4;
-
-    return (glong) w;
+  s1 = getguchar(fd, why);
+  s2 = getguchar(fd, why);
+  s3 = getguchar(fd, why);
+  s4 = getguchar(fd, why);
+  
+  w = (s1*256*256*256) + (s2*256*256) + (s3*256) + s4;
+  
+  return (glong) w;
 }
 
 
 static void
-xfread(FILE * fd, void * buf, long len, char * why)
+xfread(FILE * fd, void * buf, long len, char* why)
 {
-    if (fread(buf, len, 1, fd) == 0) {
-	printf("%s: unexpected EOF while reading '%s' chunk\n",
-	       prog_name, why);
-	gimp_quit();
+  if (fread(buf, len, 1, fd) == 0)
+    {
+      printf("%s: unexpected EOF while reading '%s' chunk\n",
+	     prog_name, why);
+      gimp_quit();
+    }
+}
+
+	      
+static void
+xfread_interlaced(FILE* fd, guchar* buf, long len, gchar* why, gint step)
+{
+  guchar* dest;
+  gint pix, pos, bpplane;
+
+  bpplane = len/step;
+
+  if (len%step != 0)
+    {
+      printf("PSD: Stern warning: data size is not a factor of step size.\n");
+    }
+
+  for (pix=0; pix<step; pix++)
+    {
+      dest = buf + pix;
+
+      for (pos=0; pos<bpplane; pos++)
+	{
+	  *dest = getguchar(fd, why);
+	  dest += step;
+	}
     }
 }
 
