@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2002-10-31 05:33+0100\n"
-"PO-Revision-Date: 2002-12-27 22:19+EDT\n"
+"PO-Revision-Date: 2002-12-29 19:37+EDT\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
 "MIME-Version: 1.0\n"
@@ -1411,11 +1411,11 @@ msgstr "ከቅርበት እይታ"
 
 #: app/display/gimpnavigationview.c:388
 msgid "Zoom 1:1"
-msgstr "በቅርበት አሳይ 1:1"
+msgstr "ቅርበት ርቀት 1:1"
 
 #: app/display/gimpnavigationview.c:396
 msgid "Zoom to fit window"
-msgstr ""
+msgstr "በመስኮቱ _ልክ አጉላ"
 
 #: app/display/gimpnavigationview.c:404
 msgid "Shrink Wrap"
@@ -5773,11 +5773,11 @@ msgstr ""
 #. initialize the statusbar display
 #: app/tools/gimpeditselectiontool.c:303
 msgid "Move: 0, 0"
-msgstr "ምንቀሳቅስ፦ 0, 0"
+msgstr "መንቀሳቅስ፦ 0, 0"
 
 #: app/tools/gimpeditselectiontool.c:553
 msgid "Move: "
-msgstr "ምንቀሳቅስ፦ "
+msgstr "መንቀሳቅስ፦ "
 
 #: app/tools/gimpellipseselecttool.c:68
 msgid "Ellipse Select"
@@ -6725,7 +6725,7 @@ msgstr "አስተካክል"
 
 #: app/widgets/gimpdatafactoryview.c:227
 msgid "Refresh"
-msgstr "አድስ"
+msgstr "በድጋሚ ጀምር"
 
 #: app/widgets/gimpdatafactoryview.c:410
 #, c-format
