@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
-"POT-Creation-Date: 2003-03-23 16:32+0100\n"
-"PO-Revision-Date: 2003-03-18 12:53-0300\n"
+"POT-Creation-Date: 2003-03-25 12:09+0100\n"
+"PO-Revision-Date: 2003-03-25 16:20-0300\n"
 "Last-Translator: Pablo Gonzalo del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,8 +31,8 @@ msgstr ""
 "«--no-interface»."
 
 #: app/app_procs.c:244 app/gui/file-commands.c:173
-#: app/gui/file-open-dialog.c:701 app/widgets/gimpdnd.c:968
-#: app/widgets/gimpdocumentview.c:455
+#: app/gui/file-open-dialog.c:701 app/widgets/gimpdocumentview.c:455
+#: app/widgets/gimpdnd.c:968
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -123,8 +123,7 @@ msgstr "  -s, --no-splash          No mostrar la ventana de inicio.\n"
 
 #: app/main.c:467
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr ""
-"  -S, --no-splash-image    No poner una imagen en la ventana de inicio.\n"
+msgstr "  -S, --no-splash-image    No poner una imagen en la ventana de inicio.\n"
 
 #: app/main.c:468
 msgid "  -v, --version            Output version information.\n"
@@ -149,8 +148,7 @@ msgstr "  --no-xshm                No utilizar las rutinas MMX.\n"
 # //R Posiblemente estará mal
 # Creo que ahora está un poco mejor. FVD
 #: app/main.c:472
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Activar los manejadores de señales no fatales de "
 "depuración.\n"
@@ -161,8 +159,7 @@ msgstr "  --display <display>      Usar la pantalla X designada.\n"
 
 #: app/main.c:474
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr ""
-"  --system-gimprc <gimprc> Usar un archivo de sistema «gimprc» alternativo.\n"
+msgstr "  --system-gimprc <gimprc> Usar un archivo de sistema «gimprc» alternativo.\n"
 
 #: app/main.c:475
 msgid ""
@@ -437,8 +434,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:130
 msgid "Sets the text to appear in image window titles."
-msgstr ""
-"Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
+msgstr "Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
 
 #: app/config/gimprc-blurbs.h:133
 msgid "When enabled, the GIMP will use a different info window per image view."
@@ -461,8 +457,7 @@ msgstr ""
 "pseudo-color."
 
 #: app/config/gimprc-blurbs.h:143
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Establece el nivel de interpolación utilizado para el redimensionado y otras "
 "transformaciones."
@@ -569,8 +564,7 @@ msgstr ""
 "inicio."
 
 #: app/config/gimprc-blurbs.h:228
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Recordar la herramienta, el patrón, el color y las brochas actuales entre "
 "distintas sesiones de El GIMP."
@@ -690,8 +684,7 @@ msgstr "Establece la forma en que se muestra la transparencia en las imágenes."
 
 #: app/config/gimprc-blurbs.h:302
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr ""
-"Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
+msgstr "Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
 
 #: app/config/gimprc-blurbs.h:305
 msgid ""
@@ -726,8 +719,8 @@ msgstr ""
 "navegador de la ayuda."
 
 #: app/config/gimpscanner.c:76 app/gui/paths-dialog.c:1962
-#: app/gui/paths-dialog.c:2087 app/tools/gimpcurvestool.c:1405
-#: app/tools/gimplevelstool.c:1541
+#: app/gui/paths-dialog.c:2087 app/tools/gimpcurvestool.c:1410
+#: app/tools/gimplevelstool.c:1544
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Ha fallado la apertura del archivo «%s»: %s"
@@ -1033,20 +1026,20 @@ msgstr "Propiedades del elemento"
 msgid "Drawable Visilibity"
 msgstr "Visibilidad del dibujable"
 
-#: app/core/core-enums.c:441 app/core/gimplayer.c:1029
+#: app/core/core-enums.c:441 app/core/gimplayer.c:1018
 #: app/gui/layers-commands.c:939 app/gui/resize-dialog.c:193
 #: app/pdb/layer_cmds.c:406
 msgid "Scale Layer"
 msgstr "Escalar la capa"
 
 #: app/core/core-enums.c:442 app/core/gimpimage-crop.c:128
-#: app/core/gimplayer.c:1322 app/gui/layers-commands.c:1029
+#: app/core/gimplayer.c:1311 app/gui/layers-commands.c:1029
 #: app/pdb/layer_cmds.c:501
 msgid "Resize Layer"
 msgstr "Redimensionar la capa"
 
 #: app/core/core-enums.c:443 app/core/core-enums.c:475
-#: app/core/gimplayer.c:895 app/pdb/layer_cmds.c:641 app/pdb/layer_cmds.c:773
+#: app/core/gimplayer.c:884 app/pdb/layer_cmds.c:641 app/pdb/layer_cmds.c:773
 #: app/tools/gimpeditselectiontool.c:271 app/tools/gimpeditselectiontool.c:999
 msgid "Move Layer"
 msgstr "Mover la capa"
@@ -1055,7 +1048,7 @@ msgstr "Mover la capa"
 msgid "Linked Layer"
 msgstr "Capa enlazada"
 
-#: app/core/core-enums.c:445 app/core/gimplayer.c:823
+#: app/core/core-enums.c:445 app/core/gimplayer.c:814
 msgid "Apply Layer Mask"
 msgstr "Aplicar máscara de capa"
 
@@ -1134,9 +1127,8 @@ msgid "Resolution Change"
 msgstr "Cambio de resolución"
 
 #: app/core/core-enums.c:465
-#, fuzzy
 msgid "Change Indexed Palette"
-msgstr "Paleta indexada"
+msgstr "Cambiar la paleta indexada"
 
 #: app/core/core-enums.c:467
 msgid "Rename Item"
@@ -1161,7 +1153,7 @@ msgstr "Borrar la capa"
 msgid "Layer Mod"
 msgstr "Modif. capa"
 
-#: app/core/core-enums.c:472 app/core/gimplayer.c:643
+#: app/core/core-enums.c:472 app/core/gimplayer.c:636
 #: app/gui/layers-commands.c:859
 msgid "Add Layer Mask"
 msgstr "Añadir máscara de capa"
@@ -1373,8 +1365,7 @@ msgstr "Error fatal de análisis: «%s» no es un archivo de brocha de El GIMP"
 #: app/core/gimpbrushgenerated.c:411
 #, c-format
 msgid "Fatal Parse Error: '%s': unknown GIMP Brush version"
-msgstr ""
-"Error fatal de análisis: «%s»: versión de brocha de El GIMP desconocida"
+msgstr "Error fatal de análisis: «%s»: versión de brocha de El GIMP desconocida"
 
 #: app/core/gimpbrushpipe.c:382 app/core/gimpbrushpipe.c:402
 #: app/core/gimpbrushpipe.c:492
@@ -1588,8 +1579,7 @@ msgstr "Nombre de variable ilegal en el archivo de ambiente %s: %s"
 #: app/core/gimpgradient.c:363
 #, c-format
 msgid "Fatal Parse Error: '%s' is not a GIMP Gradient file"
-msgstr ""
-"Error fatal de análisis: «%s» no es un archivo de gradientes de El GIMP"
+msgstr "Error fatal de análisis: «%s» no es un archivo de gradientes de El GIMP"
 
 #: app/core/gimpgradient.c:383
 #, c-format
@@ -1611,19 +1601,16 @@ msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Segmento corrupto %d en el archivo de gradiente «%s»."
 
 #: app/core/gimpimage-colormap.c:67
-#, fuzzy
 msgid "Set Indexed Palette"
-msgstr "Paleta indexada"
+msgstr "Definir la paleta indexada"
 
 #: app/core/gimpimage-colormap.c:107
-#, fuzzy
 msgid "Change Indexed Palette Entry"
-msgstr "Paleta indexada"
+msgstr "Cambiar la entrada de la paleta indexada"
 
 #: app/core/gimpimage-colormap.c:127
-#, fuzzy
 msgid "Add Color to Indexed Palette"
-msgstr "Paleta indexada"
+msgstr "Añadir un color a la paleta indexada"
 
 #: app/core/gimpimage-convert.c:754
 msgid "Convert Image to RGB"
@@ -1810,88 +1797,86 @@ msgstr "%.2f Mb"
 msgid "%.1f MB"
 msgstr "%.1f Mb"
 
-#: app/core/gimpimage-qmask.c:71
+#: app/core/gimpimage-qmask.c:72
 msgid "Enable QuickMask"
 msgstr "Activar la máscara rápida"
 
-#: app/core/gimpimage-qmask.c:128
+#: app/core/gimpimage-qmask.c:126
 msgid "Disable QuickMask"
 msgstr "Desactivar la máscara rápida"
 
-#: app/core/gimpimage-undo-push.c:3160
+#: app/core/gimpimage-undo-push.c:3184
 #, c-format
 msgid "Can't undo %s"
 msgstr "No se puede deshacer %s"
 
-#: app/core/gimpimage.c:1223 app/core/gimppalette-import.c:204
+#: app/core/gimpimage.c:884 app/core/gimppalette-import.c:204
 #: app/core/gimppalette.c:633 app/gui/palette-import-dialog.c:589
 #: app/pdb/image_cmds.c:3695 app/widgets/gimpdatafactoryview.c:287
 msgid "Untitled"
 msgstr "Sinnombre"
 
-#: app/core/gimpimage.c:1297
+#: app/core/gimpimage.c:958
 msgid "Change Image Reolution"
 msgstr "Cambiar la resolución de la imagen"
 
-#: app/core/gimpimage.c:1336
+#: app/core/gimpimage.c:997
 msgid "Change Image Unit"
 msgstr "Cambiar la unidad de medida"
 
-#: app/core/gimpimage.c:2235
+#: app/core/gimpimage.c:1896
 msgid "Attach Paraite to Image"
 msgstr "Adjuntar parásito a la imagen"
 
-#: app/core/gimpimage.c:2268
+#: app/core/gimpimage.c:1929
 msgid "Remove Parasite from Image"
 msgstr "Quitar el parásito de la imagen"
 
-#: app/core/gimpimage.c:2780
-#, fuzzy
+#: app/core/gimpimage.c:2465
 msgid "Add Layer"
-msgstr "Añadir máscara de capa"
+msgstr "Añadir una capa"
 
-#: app/core/gimpimage.c:2862 app/core/gimpimage.c:3155
-#, fuzzy
+#: app/core/gimpimage.c:2547 app/core/gimpimage.c:2839
 msgid "Remove Layer"
-msgstr "Renombrar la capa"
+msgstr "Quitar una capa"
 
-#: app/core/gimpimage.c:2930
+#: app/core/gimpimage.c:2614
 msgid "Layer cannot be raised higher."
 msgstr "La capa no puede ser elevada más alto."
 
-#: app/core/gimpimage.c:2935 app/widgets/gimplayertreeview.c:202
+#: app/core/gimpimage.c:2619 app/widgets/gimplayertreeview.c:202
 msgid "Raise Layer"
 msgstr "Elevar la capa"
 
-#: app/core/gimpimage.c:2955
+#: app/core/gimpimage.c:2639
 msgid "Layer cannot be lowered more."
 msgstr "La capa no puede bajarse más."
 
-#: app/core/gimpimage.c:2960 app/widgets/gimplayertreeview.c:204
+#: app/core/gimpimage.c:2644 app/widgets/gimplayertreeview.c:204
 msgid "Lower Layer"
 msgstr "Bajar la capa"
 
-#: app/core/gimpimage.c:2977
+#: app/core/gimpimage.c:2661
 msgid "Layer is already on top."
 msgstr "La capa ya se encuentra en lo más alto."
 
-#: app/core/gimpimage.c:2983
+#: app/core/gimpimage.c:2667
 msgid "Cannot raise a layer without alpha."
 msgstr "No se puede elevar una capa sin alfa."
 
-#: app/core/gimpimage.c:2988 app/widgets/gimplayertreeview.c:203
+#: app/core/gimpimage.c:2672 app/widgets/gimplayertreeview.c:203
 msgid "Raise Layer to Top"
 msgstr "Elevar la capa hasta lo más alto"
 
-#: app/core/gimpimage.c:3008
+#: app/core/gimpimage.c:2692
 msgid "Layer is already on the bottom."
 msgstr "La capa ya se encuentra en la parte más baja."
 
-#: app/core/gimpimage.c:3013 app/widgets/gimplayertreeview.c:205
+#: app/core/gimpimage.c:2697 app/widgets/gimplayertreeview.c:205
 msgid "Lower Layer to Bottom"
 msgstr "Bajar la capa hasta la parte más baja"
 
-#: app/core/gimpimage.c:3057
+#: app/core/gimpimage.c:2741
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -1900,50 +1885,47 @@ msgstr ""
 "La capa «%s» no tiene alfa.\n"
 "La capa fue colocada encima de ésta."
 
-#: app/core/gimpimage.c:3103
-#, fuzzy
+#: app/core/gimpimage.c:2787
 msgid "Add Channel"
-msgstr "Añadir un canal alfa"
+msgstr "Añadir un canal"
 
-#: app/core/gimpimage.c:3203
+#: app/core/gimpimage.c:2887
 msgid "Channel cannot be raised higher."
 msgstr "El canal no puede ser elevado más alto."
 
-#: app/core/gimpimage.c:3208 app/widgets/gimpchanneltreeview.c:122
+#: app/core/gimpimage.c:2892 app/widgets/gimpchanneltreeview.c:122
 msgid "Raise Channel"
 msgstr "Elevar el canal"
 
-#: app/core/gimpimage.c:3224
+#: app/core/gimpimage.c:2908
 msgid "Channel cannot be lowered more."
 msgstr "El canal no puede descender más."
 
-#: app/core/gimpimage.c:3229 app/widgets/gimpchanneltreeview.c:124
+#: app/core/gimpimage.c:2913 app/widgets/gimpchanneltreeview.c:124
 msgid "Lower Channel"
 msgstr "Bajar el canal"
 
-#: app/core/gimpimage.c:3294
-#, fuzzy
+#: app/core/gimpimage.c:2978
 msgid "Add Path"
-msgstr "Rutas anteriores"
+msgstr "Añadir una ruta"
 
-#: app/core/gimpimage.c:3341
-#, fuzzy
+#: app/core/gimpimage.c:3025
 msgid "Remove Path"
-msgstr "Renombrar la ruta"
+msgstr "Quitar la ruta"
 
-#: app/core/gimpimage.c:3389
+#: app/core/gimpimage.c:3072
 msgid "Path cannot be raised higher."
 msgstr "La ruta no puede ser elevada más alto."
 
-#: app/core/gimpimage.c:3394 app/widgets/gimpvectorstreeview.c:118
+#: app/core/gimpimage.c:3077 app/widgets/gimpvectorstreeview.c:118
 msgid "Raise Path"
 msgstr "Elevar la ruta"
 
-#: app/core/gimpimage.c:3410
+#: app/core/gimpimage.c:3093
 msgid "Path cannot be lowered more."
 msgstr "La ruta no puede descender más."
 
-#: app/core/gimpimage.c:3415 app/widgets/gimpvectorstreeview.c:120
+#: app/core/gimpimage.c:3098 app/widgets/gimpvectorstreeview.c:120
 msgid "Lower Path"
 msgstr "Bajar la ruta"
 
@@ -2040,55 +2022,31 @@ msgid "Rename Layer"
 msgstr "Renombrar la capa"
 
 #: app/core/gimplayer.c:596
-msgid ""
-"Cannot add layer mask to layer\n"
-"which is not part of an image."
-msgstr ""
-"No se puede añadir una máscara de capa \n"
-"que no es parte de una imagen."
+msgid "Cannot add layer mask to layer which is not part of an image."
+msgstr "No se puede añadir una máscara a la capa dado que no es parte de una imagen."
 
 #: app/core/gimplayer.c:603
-msgid ""
-"Unable to add a layer mask since\n"
-"the layer already has one."
-msgstr ""
-"No se puede añadir una máscara de capa\n"
-"debido a que la capa ya tiene una."
+msgid "Unable to add a layer mask since the layer already has one."
+msgstr "No se puede añadir una máscara de capa dado que la capa ya posee una."
 
 #: app/core/gimplayer.c:610
-msgid ""
-"Unable to add a layer mask to a\n"
-"layer in an indexed image."
-msgstr ""
-"No se puede añadir una máscara de capa\n"
-"a una capa en una imagen indexada."
+msgid "Cannot add layer mask to a layer with no alpha channel."
+msgstr "No se puede añadir una máscara de capa a una capa sin canal alfa."
 
-#: app/core/gimplayer.c:617
-msgid ""
-"Cannot add layer mask to a layer\n"
-"with no alpha channel."
-msgstr ""
-"No se puede añadir una máscara de capa a \n"
-"una capa sin canal alfa."
+#: app/core/gimplayer.c:620
+msgid "Cannot add layer mask of different dimensions than specified layer."
+msgstr "No se puede añadir una máscara de capa de dimensiones distintas a la capa especificada."
 
-#: app/core/gimplayer.c:627
-msgid ""
-"Cannot add layer mask of different\n"
-"dimensions than specified layer."
-msgstr ""
-"No se puede añadir una máscara de capa\n"
-"de dimensiones distintas a la capa especificada."
-
-#: app/core/gimplayer.c:666
+#: app/core/gimplayer.c:659
 #, c-format
 msgid "%s mask"
 msgstr "máscara %s"
 
-#: app/core/gimplayer.c:964
+#: app/core/gimplayer.c:953
 msgid "Add Alpha Channel"
 msgstr "Añadir un canal alfa"
 
-#: app/core/gimplayer.c:1366
+#: app/core/gimplayer.c:1355
 msgid "Layer to Image Size"
 msgstr "Capa a tamaño de imagen"
 
@@ -2206,8 +2164,7 @@ msgstr "Cadena UTF-8 inválida en el archivo de patrón «%s»"
 #: app/core/gimppattern.c:401
 #, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
-msgstr ""
-"Error fatal de análisis: El archivo de patrón  «%s» parece estar truncado."
+msgstr "Error fatal de análisis: El archivo de patrón  «%s» parece estar truncado."
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
@@ -3138,7 +3095,7 @@ msgstr ""
 "No hay un nombre de archivo asociado a esta imagen."
 
 #: app/gui/file-commands.c:297
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Revert '%s' to\n"
 "'%s'?\n"
@@ -3148,8 +3105,7 @@ msgstr ""
 "¿Recuperar «%s» sobre\n"
 "«%s»?\n"
 "\n"
-"(Perderá todos sus cambios, incluyendo \n"
-"toda la información de deshacer)"
+"Perderá todos sus cambios, incluyendo toda la información de deshacer."
 
 #: app/gui/file-commands.c:305
 msgid "Revert Image"
@@ -3212,6 +3168,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #: app/gui/file-new-dialog.c:323 app/gui/resize-dialog.c:639
+#, c-format
 msgid "pixels/%a"
 msgstr "píxeles/%a"
 
@@ -5566,7 +5523,7 @@ msgid "Scale Layer Options"
 msgstr "Opciones del escalado de capas"
 
 #: app/gui/resize-dialog.c:196 app/gui/resize-dialog.c:228
-#: app/tools/paint_options.c:276 app/tools/paint_options.c:287
+#: app/tools/paint_options.c:279 app/tools/paint_options.c:290
 msgid "Size"
 msgstr "Tamaño"
 
@@ -6309,13 +6266,11 @@ msgstr ""
 #: app/gui/user-install-dialog.c:1243
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr ""
-"Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
+msgstr "Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
 
 #: app/gui/user-install-dialog.c:1261
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr ""
-"Alternativamente usted puede definir la resolución del monitor manualmente."
+msgstr "Alternativamente usted puede definir la resolución del monitor manualmente."
 
 #: app/gui/user-install-dialog.c:1307
 msgid ""
@@ -6457,6 +6412,14 @@ msgstr "Desenfoque"
 #: app/paint/paint-enums.c:93
 msgid "Sharpen"
 msgstr "Enfoque"
+
+#: app/paint/paint-enums.c:131
+msgid "Constant"
+msgstr "Constante"
+
+#: app/paint/paint-enums.c:132 app/tools/paint_options.c:161
+msgid "Incremental"
+msgstr "Incremental"
 
 #: app/pdb/color_cmds.c:131 app/tools/gimpbrightnesscontrasttool.c:83
 msgid "Brightness-Contrast"
@@ -7125,37 +7088,37 @@ msgstr "Ajustar las curvas de color"
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "No se pueden ajustar curvas para dibujables indexados."
 
-#: app/tools/gimpcurvestool.c:607 app/tools/gimplevelstool.c:485
+#: app/tools/gimpcurvestool.c:612 app/tools/gimplevelstool.c:488
 msgid "R_eset Channel"
 msgstr "R_einiciar el canal"
 
-#: app/tools/gimpcurvestool.c:616
+#: app/tools/gimpcurvestool.c:621
 msgid "Modify Curves for Channel:"
 msgstr "Modificar las curvas para el canal:"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:680 app/tools/gimplevelstool.c:706
+#: app/tools/gimpcurvestool.c:685 app/tools/gimplevelstool.c:709
 msgid "All Channels"
 msgstr "Todos los canales"
 
-#: app/tools/gimpcurvestool.c:694
+#: app/tools/gimpcurvestool.c:699
 msgid "Read curves settings from file"
 msgstr "Leer configuración de las curvas desde un archivo"
 
-#: app/tools/gimpcurvestool.c:704
+#: app/tools/gimpcurvestool.c:709
 msgid "Save curves settings to file"
 msgstr "Guardar la configuración de curvas en un archivo"
 
 #. The radio box for selecting the curve type
-#: app/tools/gimpcurvestool.c:712
+#: app/tools/gimpcurvestool.c:717
 msgid "Curve Type"
 msgstr "Tipo de curva"
 
-#: app/tools/gimpcurvestool.c:1336
+#: app/tools/gimpcurvestool.c:1341
 msgid "Load Curves"
 msgstr "Cargar curvas"
 
-#: app/tools/gimpcurvestool.c:1351
+#: app/tools/gimpcurvestool.c:1356
 msgid "Save Curves"
 msgstr "Guardar curvas"
 
@@ -7184,15 +7147,13 @@ msgid "Exposure:"
 msgstr "Exposición:"
 
 #: app/tools/gimpeditselectiontool.c:269
-#, fuzzy
 msgid "Move Selection Mask"
-msgstr "Máscara de selección"
+msgstr "Mover la máscara de selección"
 
 # era un verbo. FVD
 #: app/tools/gimpeditselectiontool.c:273 app/tools/gimpeditselectiontool.c:997
-#, fuzzy
 msgid "Move Floating Layer"
-msgstr "Anclar capa flotante"
+msgstr "Mover la capa flotante"
 
 #. initialize the statusbar display
 #: app/tools/gimpeditselectiontool.c:320
@@ -7204,9 +7165,8 @@ msgid "Move: "
 msgstr "Mover: "
 
 #: app/tools/gimpeditselectiontool.c:995
-#, fuzzy
 msgid "Move Selection"
-msgstr "No hay selección"
+msgstr "Mover la selección"
 
 #: app/tools/gimpellipseselecttool.c:70
 msgid "Select elliptical regions"
@@ -7311,7 +7271,7 @@ msgstr "Rango de intensidad:"
 msgid "Information on Channel:"
 msgstr "Información sobre el canal:"
 
-#: app/tools/gimphistogramtool.c:395
+#: app/tools/gimphistogramtool.c:397
 msgid "Histogram Scale:"
 msgstr "Escala del histograma:"
 
@@ -7476,45 +7436,45 @@ msgstr "Seleccione un punto gris"
 msgid "Pick White Point"
 msgstr "Seleccione un punto blanco"
 
-#: app/tools/gimplevelstool.c:473
+#: app/tools/gimplevelstool.c:474
 msgid "Modify Levels for Channel:"
 msgstr "Modificar niveles para el canal:"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:495
+#: app/tools/gimplevelstool.c:498
 msgid "Input Levels"
 msgstr "Niveles de entrada"
 
-#: app/tools/gimplevelstool.c:598
+#: app/tools/gimplevelstool.c:601
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:628
+#: app/tools/gimplevelstool.c:631
 msgid "Output Levels"
 msgstr "Niveles de salida"
 
-#: app/tools/gimplevelstool.c:724
+#: app/tools/gimplevelstool.c:727
 msgid "Read levels settings from file"
 msgstr "Leer las configuración de los niveles desde un archivo"
 
-#: app/tools/gimplevelstool.c:734
+#: app/tools/gimplevelstool.c:737
 msgid "Save levels settings to file"
 msgstr "Guardar la configuración de niveles en un archivo"
 
-#: app/tools/gimplevelstool.c:746
+#: app/tools/gimplevelstool.c:749
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:748
+#: app/tools/gimplevelstool.c:751
 msgid "Adjust levels automatically"
 msgstr "Ajustar los niveles automáticamente"
 
-#: app/tools/gimplevelstool.c:1472
+#: app/tools/gimplevelstool.c:1475
 msgid "Load Levels"
 msgstr "Cargar niveles"
 
-#: app/tools/gimplevelstool.c:1487
+#: app/tools/gimplevelstool.c:1490
 msgid "Save Levels"
 msgstr "Guardar niveles"
 
@@ -7750,8 +7710,7 @@ msgstr "Bordes suavizados"
 
 #: app/tools/gimpselectionoptions.c:152
 msgid "Allow completely transparent regions to be selected"
-msgstr ""
-"Permitir que las regiones completamente transparentes sean seleccionadas"
+msgstr "Permitir que las regiones completamente transparentes sean seleccionadas"
 
 #: app/tools/gimpselectionoptions.c:158
 msgid "Base selection on all visible layers"
@@ -7759,8 +7718,7 @@ msgstr "Selección base en todas las capas visibles"
 
 #: app/tools/gimpselectionoptions.c:173
 msgid "Use all visible layers when shrinking the selection"
-msgstr ""
-"Utilizar todas las capas visibles cuando se está achicando la selección"
+msgstr "Utilizar todas las capas visibles cuando se está achicando la selección"
 
 #: app/tools/gimpselectionoptions.c:406
 msgid "Antialiasing"
@@ -7956,39 +7914,35 @@ msgstr "/Herramientas/Vectores"
 msgid "Brush:"
 msgstr "Brochas:"
 
-#: app/tools/paint_options.c:160
-msgid "Incremental"
-msgstr "Incremental"
-
-#: app/tools/paint_options.c:220
+#: app/tools/paint_options.c:223
 msgid "Pressure Sensitivity"
 msgstr "Sensibilidad de presión"
 
-#: app/tools/paint_options.c:236
+#: app/tools/paint_options.c:239
 msgid "Opacity"
 msgstr "Opacidad"
 
-#: app/tools/paint_options.c:250
+#: app/tools/paint_options.c:253
 msgid "Hardness"
 msgstr "Dureza"
 
-#: app/tools/paint_options.c:261
+#: app/tools/paint_options.c:264
 msgid "Rate"
 msgstr "Tasa"
 
-#: app/tools/paint_options.c:320
+#: app/tools/paint_options.c:323
 msgid "Fade Out"
 msgstr "Desvanecimiento"
 
-#: app/tools/paint_options.c:333 app/tools/paint_options.c:391
+#: app/tools/paint_options.c:336 app/tools/paint_options.c:394
 msgid "Length:"
 msgstr "Largo:"
 
-#: app/tools/paint_options.c:376
+#: app/tools/paint_options.c:379
 msgid "Use Color from Gradient"
 msgstr "Utilizar color desde el gradiente"
 
-#: app/tools/paint_options.c:406
+#: app/tools/paint_options.c:409
 msgid "Type:"
 msgstr "Tipo:"
 
@@ -8162,9 +8116,8 @@ msgstr ""
 "%s  Quitar las entradas colgantes"
 
 #: app/widgets/gimpdrawabletreeview.c:494
-#, fuzzy
 msgid "Set Drawable Exclusive Visible"
-msgstr "Visibilidad del dibujable"
+msgstr "Define al dibujable como exclusivo visible"
 
 #: app/widgets/gimpfontselection.c:171
 msgid "Click to open the Font Selection Dialog"
@@ -8371,7 +8324,7 @@ msgstr "Indefinido"
 msgid "Columns:"
 msgstr "Columnas:"
 
-#: app/widgets/gimppropwidgets.c:1150
+#: app/widgets/gimppropwidgets.c:1271
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Este campo de entrada de texto está limitado a %d caracteres"
@@ -8629,8 +8582,7 @@ msgstr "No se ha podido buscar dentro del archivo XCF: %s"
 #: app/xcf/xcf.c:261
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr ""
-"Error XCF: Se encontró una versión %d de archivo de tipo XCF no soportada"
+msgstr "Error XCF: Se encontró una versión %d de archivo de tipo XCF no soportada"
 
 #: app/xcf/xcf.c:325
 #, c-format
@@ -8673,6 +8625,13 @@ msgstr "Cantidad de líneas de la rejilla"
 #: libgimptool/gimptoolenums.c:138
 msgid "Grid Line Spacing"
 msgstr "Espaciado de las líneas de la rejilla"
+
+#~ msgid ""
+#~ "Unable to add a layer mask to a\n"
+#~ "layer in an indexed image."
+#~ msgstr ""
+#~ "No se puede añadir una máscara de capa\n"
+#~ "a una capa en una imagen indexada."
 
 #~ msgid "Add Layer to Image"
 #~ msgstr "Añadir una capa a la imagen"
@@ -8893,3 +8852,4 @@ msgstr "Espaciado de las líneas de la rejilla"
 
 #~ msgid "Reset"
 #~ msgstr "Restaurar"
+
