@@ -1,3 +1,8 @@
+2003-12-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/spyrogimp.scm: added missing parameter
+	to gimp-gradients-get-gradient-data call.
+
 2003-12-09  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb (image_list): iterate gimp->images
