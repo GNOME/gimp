@@ -630,6 +630,13 @@ grad_get_color_at(double pos, double *r, double *g, double *b, double *a)
 	double          h0, s0, v0;
 	double          h1, s1, v1;
 
+	/* if there is no gradient return a totally transparent black */
+	if (curr_gradient == NULL) 
+	  {
+	    r = 0; g = 0; b = 0; a = 0;
+	    return;
+	  }
+
 	if (pos < 0.0)
 		pos = 0.0;
 	else if (pos > 1.0)
@@ -933,11 +940,20 @@ grad_create_gradient_editor(void)
 
 	frame = gtk_frame_new(NULL);
 	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-	gtk_box_pack_start(GTK_BOX(vbox), frame, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), frame, FALSE, FALSE, 0);
 	gtk_widget_show(frame);
 
+	/* hbox for gradient preview and gradient control; this is only because
+	   resizing the preview doesn't work (and is disabled) to keep the 
+	   preview and controls together in the middle of the frame. */
+	
+	hbox = gtk_hbox_new(FALSE, 0);
+	gtk_container_add(GTK_CONTAINER(frame), hbox);
+	gtk_widget_show(hbox);
+
 	gvbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_add(GTK_CONTAINER(frame), gvbox);
+	/* gtk_container_add(GTK_CONTAINER(frame), gvbox); */
+	gtk_box_pack_start(GTK_BOX(hbox), gvbox, TRUE, FALSE, 0);
 	gtk_widget_show(gvbox);
 
 	/* Gradient preview */
@@ -1926,9 +1942,10 @@ prev_update(int recalculate)
 	 *  A full Bugfix should change the preview size according to the users     
 	 *  window resize actions.   
 	 */
-		width   = GRAD_PREVIEW_WIDTH;
-		height  = GRAD_PREVIEW_HEIGHT;
 
+	       width   = GRAD_PREVIEW_WIDTH;
+	       height  = GRAD_PREVIEW_HEIGHT;
+	
 	pwidth  = GTK_PREVIEW(g_editor->preview)->buffer_width;
 	pheight = GTK_PREVIEW(g_editor->preview)->buffer_height;
 
@@ -2646,6 +2663,12 @@ control_update(int recalculate)
 	/* See whether we have to re-create the control pixmap */
 
 	gdk_window_get_size(g_editor->control->window, &cwidth, &cheight);
+
+	/* as long as we have that ugly workaround in prev_update() don't
+	   change the size of the controls either when the window is resized */
+
+        	cwidth   = GRAD_PREVIEW_WIDTH;
+		cheight  = GRAD_PREVIEW_HEIGHT;
 
 	if (g_editor->control_pixmap)
 		gdk_window_get_size(g_editor->control_pixmap, &pwidth, &pheight);

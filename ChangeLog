@@ -1,3 +1,8 @@
+Thu Mar 26 18:38:54 MET 1998 Sven Neumann <sven@gimp.org>
+
+	app/gradient.c: fixed another --no-data problem; also the 
+	editor now behaves better when it is resized  
+
 Wed Mar 25 22:46:36 MST 1998 Nathan Summers <rock@gimp.org>
 
 	* iscissors.c: fixed a problem with unintialized variables
