@@ -1,3 +1,8 @@
+1998-12-16  Jay Cox  <jaycox@earthlink.net>
+
+	* app/xcf.c: fixed bug in the resolution saving code and
+	added a sanity check to the resolution loading.
+
 Wed Dec 16 13:27:23 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/gfig/gfig.c: removed my_gtk_label_set, since the underlying

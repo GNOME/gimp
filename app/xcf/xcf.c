@@ -904,8 +904,9 @@ xcf_save_prop (XcfInfo  *info,
       {
 	float xresolution, yresolution;
 
-	xresolution =  va_arg (args, gfloat);
-	yresolution =  va_arg (args, gfloat);
+	/* we pass in floats, but they are promoted to double by the compiler */
+	xresolution =  va_arg (args, double);
+	yresolution =  va_arg (args, double);
 	
 	size = 4*2;
 
@@ -1552,6 +1553,14 @@ xcf_load_image_props (XcfInfo *info,
 	 {
 	   info->cp += xcf_read_float (info->fp, &gimage->xresolution, 1);
 	   info->cp += xcf_read_float (info->fp, &gimage->yresolution, 1);
+	   if (gimage->xresolution < 1e-5 || gimage->xresolution > 1e+5 ||
+	       gimage->yresolution < 1e-5 || gimage->yresolution > 1e+5)
+	   {
+	     g_message(_("Warning, resolution out of range in XCF file"));
+	     gimage->xresolution = 72.0;
+	     gimage->yresolution = 72.0;
+	   }
+	     
 	 }
 	 break;
 	 case PROP_TATTOO:
@@ -1570,7 +1579,7 @@ xcf_load_image_props (XcfInfo *info,
 	     parasite_free(p);
 	   }
 	   if (info->cp - base != prop_size)
-	     g_message("Error detected while loading an image's parasites");
+	     g_message(_("Error detected while loading an image's parasites"));
 	 }
 	 break;
 	default:
