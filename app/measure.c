@@ -27,6 +27,7 @@
 #include "info_dialog.h"
 #include "measure.h"
 #include "tool_options_ui.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
@@ -212,6 +213,7 @@ measure_tool_button_press (Tool           *tool,
 		      (measure_tool->y[i] == BOUNDS (measure_tool->y[i], 0, gdisp->gimage->height)))
 		    {
 		      guide = gimp_image_add_hguide (gdisp->gimage);
+		      undo_push_guide (gdisp->gimage, guide);
 		      guide->position = measure_tool->y[i];
 		      gdisplays_expose_guide (gdisp->gimage, guide);
 		    }  
@@ -219,6 +221,7 @@ measure_tool_button_press (Tool           *tool,
 		      (measure_tool->x[i] == BOUNDS (measure_tool->x[i], 0, gdisp->gimage->width)))
 		    {
 		      guide = gimp_image_add_vguide (gdisp->gimage);
+		      undo_push_guide (gdisp->gimage, guide);
 		      guide->position = measure_tool->x[i];
 		      gdisplays_expose_guide (gdisp->gimage, guide);
 		    }
