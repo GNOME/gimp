@@ -23,7 +23,7 @@ static gchar *authors[] =
   "Robert Brady",
   "Hans Breuer",
   "Simon Budig",
-  "Joao S. O. Bueno",
+  "João S. O. Bueno Calligaris",
   "Carey Bunks",
   "Seth Burgess",
   "Brent Burton",

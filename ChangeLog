@@ -1,3 +1,11 @@
+2004-10-14  Michael Natterer  <mitch@gimp.org>
+
+	* tools/authorsgen/contributors: correct UTF-8 spelling of
+	João S. O. Bueno Calligaris.
+
+	* AUTHORS
+	* app/dialogs/authors.h: regenerated.
+
 2004-10-14  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/circuit.scm: Fixed to allow use of
