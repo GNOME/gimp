@@ -1,6 +1,11 @@
 2004-01-12  Sven Neumann  <sven@gimp.org>
 
-	* gimptool-2.0.in: build the version number from just like it is done
+	* plug-ins/common/CML_explorer.c: render a grayscale preview when
+	the plug-in is run on a grayscale drawable (fixes bug #82465).
+
+2004-01-12  Sven Neumann  <sven@gimp.org>
+
+	* gimptool-2.0.in: build the version number just like it is done
 	for the pkg-config files.
 
 2004-01-11  Manish Singh  <yosh@gimp.org>

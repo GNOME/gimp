@@ -309,7 +309,7 @@ static void run   (const gchar      *name,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
-static GimpPDBStatusType CML_main_function     (gint       preview_p);
+static GimpPDBStatusType CML_main_function     (gboolean   preview_p);
 static void              CML_compute_next_step (gint       size,
 						gdouble  **h,
 						gdouble  **s,
@@ -523,7 +523,7 @@ run (const gchar      *name,
 }
 
 static GimpPDBStatusType
-CML_main_function (gint preview_p)
+CML_main_function (gboolean preview_p)
 {
   GimpDrawable *drawable = NULL;
   GimpPixelRgn  dest_rgn, src_rgn;
@@ -555,8 +555,7 @@ CML_main_function (gint preview_p)
   if (preview_p)
     {
       dest_has_alpha = FALSE;
-      dest_is_gray = FALSE;
-      dest_bpp = 3;
+      dest_bpp       = 3;
 
       if (PREVIEW_WIDTH < x2 - x1)	/* preview < drawable (selection) */
 	x2 = x1 + PREVIEW_WIDTH;
@@ -638,7 +637,8 @@ CML_main_function (gint preview_p)
 	  haux [index] = g_rand_double_range (gr, 0, 2);
 	  break;
 	case RAND_AND_P:
-	  haux [index] = (index % (2 * VALS.hue.diffusion_dist) == 0) ? g_rand_double (gr) : VALS.hue.power;
+	  haux [index] = ((index % (2 * VALS.hue.diffusion_dist) == 0) ?
+                          g_rand_double (gr) : VALS.hue.power);
 	  break;
 	default:
 	  haux [index] = VALS.hue.power;
@@ -661,7 +661,8 @@ CML_main_function (gint preview_p)
 	  saux [index] = g_rand_double_range (gr, 0, 2);
 	  break;
 	case RAND_AND_P:
-	  saux [index] = (index % (2 * VALS.sat.diffusion_dist) == 0) ? g_rand_double (gr) : VALS.sat.power;
+	  saux [index] = ((index % (2 * VALS.sat.diffusion_dist) == 0) ?
+                          g_rand_double (gr) : VALS.sat.power);
 	  break;
 	default:
 	  saux [index] = VALS.sat.power;
@@ -684,7 +685,8 @@ CML_main_function (gint preview_p)
 	  vaux [index] = g_rand_double_range (gr, 0, 2);
 	  break;
 	case RAND_AND_P:
-	  vaux [index] = (index % (2 * VALS.val.diffusion_dist) == 0) ? g_rand_double (gr) : VALS.val.power;
+	  vaux [index] = ((index % (2 * VALS.val.diffusion_dist) == 0) ?
+                          g_rand_double (gr) : VALS.val.power);
 	  break;
 	default:
 	  vaux [index] = VALS.val.power;
@@ -724,7 +726,9 @@ CML_main_function (gint preview_p)
     {
       int	index;
 
-      for (index = 0; index < MIN (cell_num, width_by_pixel / VALS.scale); index++)
+      for (index = 0;
+           index < MIN (cell_num, width_by_pixel / VALS.scale);
+           index++)
 	{
 	  guchar buffer[4];
 	  int	rgbi[3];
@@ -739,7 +743,9 @@ CML_main_function (gint preview_p)
 	  vals[index] = (gdouble) rgbi[2] / (gdouble) 255;
 	}
     }
-  if (! preview_p) gimp_progress_init (_("CML_explorer: evoluting..."));
+
+  if (! preview_p)
+    gimp_progress_init (_("CML_explorer: evoluting..."));
 
   /* rolling start */
   for (index = 0; index < VALS.start_offset; index++)
@@ -749,9 +755,9 @@ CML_main_function (gint preview_p)
   /* rendering */
   for (dy = 0; dy < height_by_pixel; dy += VALS.scale)
     {
-      gint	i = 0;
-      gint	r, g, b, h, s, v;
-      gint	offset_x, offset_y, dest_offset;
+      gint i = 0;
+      gint r, g, b, h, s, v;
+      gint offset_x, offset_y, dest_offset;
 
       if (height_by_pixel < dy + keep_height)
 	keep_height = height_by_pixel - dy;
@@ -762,7 +768,9 @@ CML_main_function (gint preview_p)
 	gimp_pixel_rgn_get_rect (&src_rgn, src_buffer,
 				 x1, y1 + dy, width_by_pixel, keep_height);
 
-      CML_compute_next_step (cell_num, &hues, &sats, &vals, &newh, &news, &newv,
+      CML_compute_next_step (cell_num,
+                             &hues, &sats, &vals,
+                             &newh, &news, &newv,
 			     &haux, &saux, &vaux);
 
       for (dx = 0; dx < cell_num; dx++)
@@ -773,6 +781,7 @@ CML_main_function (gint preview_p)
 
 	  if (! dest_is_gray)
 	    gimp_hsv_to_rgb_int (&r, &g, &b);
+
 	  /* render destination */
 	  for (offset_y = 0;
 	       (offset_y < VALS.scale) && (dy + offset_y < height_by_pixel);
@@ -792,7 +801,9 @@ CML_main_function (gint preview_p)
 		      rgbi[i] = src_buffer[offset_y * src_bpl
 					  + (dx * VALS.scale + offset_x) * src_bpp + i];
 		    if (src_is_gray && (VALS.val.function == CML_KEEP_VALUES))
-		      b = rgbi[0];
+                      {
+                        b = rgbi[0];
+                      }
 		    else
 		      {
 			gimp_rgb_to_hsv_int (rgbi, rgbi + 1, rgbi + 2);
@@ -805,7 +816,14 @@ CML_main_function (gint preview_p)
 		  }
 		dest_offset = offset_y * dest_bpl + (dx * VALS.scale + offset_x) * dest_bpp;
 		if (dest_is_gray)
-		  dest_buffer[dest_offset++] = b;
+                  {
+                    dest_buffer[dest_offset++] = b;
+                    if (preview_p)
+                      {
+                        dest_buffer[dest_offset++] = b;
+                        dest_buffer[dest_offset++] = b;
+                      }
+                  }
 		else
 		  {
 		    dest_buffer[dest_offset++] = r;
@@ -814,10 +832,13 @@ CML_main_function (gint preview_p)
 		  }
 		if (dest_has_alpha)
 		  dest_buffer[dest_offset] = 255;
-		if ((!preview_p) && (++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
+
+		if ((!preview_p) &&
+                    (++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
 		  gimp_progress_update ((gdouble) processed / (gdouble) total);
 	      }
 	}
+
       if (preview_p)
 	for (i = 0; i < keep_height; i++)
 	  gtk_preview_draw_row (GTK_PREVIEW (preview),
@@ -830,14 +851,14 @@ CML_main_function (gint preview_p)
   if (preview_p)
     {
       gtk_widget_queue_draw (preview);
-      gdk_flush ();
     }
   else
     {
       gimp_progress_update (1.0);
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+      gimp_drawable_update (drawable->drawable_id,
+                            x1, y1, (x2 - x1), (y2 - y1));
       gimp_drawable_detach (drawable);
     }
 
@@ -1976,7 +1997,6 @@ CML_set_or_randomize_seed_callback (GtkWidget *widget,
     (widget_pointers[3][0].updater) (widget_pointers[3]);
 
   CML_initial_value_sensitives_update ();
-  gdk_flush ();
 
   CML_preview_defer = FALSE;
 }
@@ -1991,7 +2011,6 @@ CML_copy_parameters_callback (GtkWidget *widget,
   if (copy_source == copy_destination)
     {
       g_message (_("Warning: the source and the destination are the same channel."));
-      gdk_flush ();
       return;
     }
   *channel_params[copy_destination] = *channel_params[copy_source];
@@ -2001,7 +2020,6 @@ CML_copy_parameters_callback (GtkWidget *widget,
     if (widgets[index].widget && widgets[index].updater)
       (widgets[index].updater) (widgets + index);
 
-  gdk_flush ();
   CML_preview_defer = FALSE;
   preview_update ();
 }
