@@ -27,11 +27,6 @@
 
 #include "tools-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
-#endif
-#include "gui/gui-types.h"
-
 #include "base/tile-manager.h"
 
 #include "core/gimp.h"
@@ -46,12 +41,19 @@
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 
+#include "vectors/gimpvectors.h"
+#include "vectors/gimpstroke.h"
+
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpprogress.h"
 
+#ifdef __GNUC__
+#warning FIXME #include "gui/gui-types.h"
+#endif
+#include "gui/gui-types.h"
 #include "gui/info-dialog.h"
 
 #include "gimptoolcontrol.h"
@@ -113,7 +115,7 @@ static TileManager *
                                                     GimpItem          *item,
                                                     GimpDisplay       *gdisp);
 
-static void   gimp_transform_tool_reset            (GimpTransformTool *tr_tool);
+static void   gimp_transform_tool_halt             (GimpTransformTool *tr_tool);
 static void   gimp_transform_tool_bounds           (GimpTransformTool *tr_tool,
                                                     GimpDisplay       *gdisp);
 static void   gimp_transform_tool_dialog           (GimpTransformTool *tr_tool);
@@ -164,7 +166,7 @@ gimp_transform_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpTransformTool", 
+					  "GimpTransformTool",
                                           &tool_info, 0);
     }
 
@@ -235,6 +237,7 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 
   tr_tool->notify_connected = FALSE;
   tr_tool->type             = GIMP_TRANSFORM_TYPE_LAYER;
+  tr_tool->direction        = GIMP_TRANSFORM_FORWARD;
 
   tr_tool->shell_desc       = NULL;
   tr_tool->progress_text    = _("Transforming...");
@@ -284,6 +287,7 @@ gimp_transform_tool_initialize (GimpTool    *tool,
   if (gdisp != tool->gdisp)
     {
       GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
+      gint          i;
 
       if (GIMP_IS_LAYER (drawable) &&
           gimp_layer_get_mask (GIMP_LAYER (drawable)))
@@ -296,9 +300,6 @@ gimp_transform_tool_initialize (GimpTool    *tool,
       /*  Set the pointer to the active display  */
       tool->gdisp    = gdisp;
       tool->drawable = drawable;
-
-      if (! gimp_tool_control_is_active (tool->control))
-        gimp_tool_control_activate (tool->control);
 
       /*  Initialize the transform tool dialog */
       if (! tr_tool->info_dialog)
@@ -315,22 +316,42 @@ gimp_transform_tool_initialize (GimpTool    *tool,
       /*  Recalculate the transform tool  */
       gimp_transform_tool_recalc (tr_tool, gdisp);
 
+      if (tr_tool->use_grid && ! tr_tool->notify_connected)
+        {
+          tr_tool->type =
+            GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options)->type;
+          tr_tool->direction =
+            GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options)->direction;
+
+          g_signal_connect_object (tool->tool_info->tool_options,
+                                   "notify::type",
+                                   G_CALLBACK (gimp_transform_tool_notify_type),
+                                   tr_tool, 0);
+          g_signal_connect_object (tool->tool_info->tool_options,
+                                   "notify::direction",
+                                   G_CALLBACK (gimp_transform_tool_notify_type),
+                                   tr_tool, 0);
+          g_signal_connect_object (tool->tool_info->tool_options,
+                                   "notify::grid-type",
+                                   G_CALLBACK (gimp_transform_tool_notify_grid),
+                                   tr_tool, 0);
+          g_signal_connect_object (tool->tool_info->tool_options,
+                                   "notify::grid-size",
+                                   G_CALLBACK (gimp_transform_tool_notify_grid),
+                                   tr_tool, 0);
+
+          tr_tool->notify_connected = TRUE;
+        }
+
       /*  start drawing the bounding box and handles...  */
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 
       tr_tool->function = TRANSFORM_CREATING;
-    }
-
-  if (tr_tool->function == TRANSFORM_CREATING &&
-      gimp_tool_control_is_active (tool->control))
-    {
-      gint i;
 
       /*  Save the current transformation info  */
       for (i = 0; i < TRAN_INFO_SIZE; i++)
 	tr_tool->old_trans_info[i] = tr_tool->trans_info[i];
     }
-
 }
 
 static void
@@ -352,7 +373,7 @@ gimp_transform_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
-      gimp_transform_tool_reset (tr_tool);
+      gimp_transform_tool_halt (tr_tool);
       return; /* don't upchain */
       break;
 
@@ -374,40 +395,13 @@ gimp_transform_tool_button_press (GimpTool        *tool,
 
   tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  if (tr_tool->use_grid && ! tr_tool->notify_connected)
-    {
-      tr_tool->type =
-        GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options)->type;
+  if (tr_tool->function == TRANSFORM_CREATING && tr_tool->use_grid)
+    gimp_transform_tool_oper_update (tool, coords, state, gdisp);
 
-      g_signal_connect_object (tool->tool_info->tool_options,
-                               "notify::type",
-                               G_CALLBACK (gimp_transform_tool_notify_type),
-                               tr_tool, 0);
-      g_signal_connect_object (tool->tool_info->tool_options,
-                               "notify::grid-type",
-                               G_CALLBACK (gimp_transform_tool_notify_grid),
-                               tr_tool, 0);
-      g_signal_connect_object (tool->tool_info->tool_options,
-                               "notify::grid-size",
-                               G_CALLBACK (gimp_transform_tool_notify_grid),
-                               tr_tool, 0);
+  tr_tool->lastx = tr_tool->startx = coords->x;
+  tr_tool->lasty = tr_tool->starty = coords->y;
 
-      tr_tool->notify_connected = TRUE;
-    }
-
-  /*  if we have already displayed the bounding box and handles,
-   *  check to make sure that the display which currently owns the
-   *  tool is the one which just received the button pressed event
-   */
-  if (gdisp == tool->gdisp)
-    {
-      /*  Save the current pointer position  */
-      tr_tool->lastx = tr_tool->startx = coords->x;
-      tr_tool->lasty = tr_tool->starty = coords->y;
-
-      if (! gimp_tool_control_is_active (tool->control))
-        gimp_tool_control_activate (tool->control);
-    }
+  gimp_tool_control_activate (tool->control);
 }
 
 static void
@@ -434,14 +428,6 @@ gimp_transform_tool_button_release (GimpTool        *tool,
 	{
 	  gimp_transform_tool_doit (tr_tool, gdisp);
 	}
-      else
-	{
-#if 0
-	  /*  Only update the paths preview */
-	  path_transform_current_path (gdisp->gimage,
-				       tr_tool->transform, TRUE);
-#endif
-	}
     }
   else
     {
@@ -455,13 +441,9 @@ gimp_transform_tool_button_release (GimpTool        *tool,
       gimp_transform_tool_recalc (tr_tool, gdisp);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-
-#if 0
-      /* Update the paths preview */
-      path_transform_current_path (gdisp->gimage,
-				   tr_tool->transform, TRUE);
-#endif
     }
+
+  gimp_tool_control_halt (tool->control);
 }
 
 static void
@@ -599,31 +581,59 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 			           GdkModifierType  state,
 			           GimpDisplay     *gdisp)
 {
-  GimpTransformTool  *tr_tool;
-  GimpDrawable       *drawable;
+  GimpTransformTool    *tr_tool;
+  GimpTransformOptions *options;
 
   tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
   if (tr_tool->use_grid)
     {
       GdkCursorType      ctype     = GDK_TOP_LEFT_ARROW;
       GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
-     if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
+      switch (options->type)
         {
-          if (GIMP_IS_LAYER (drawable) &&
-              gimp_layer_get_mask (GIMP_LAYER (drawable)))
+        case GIMP_TRANSFORM_TYPE_LAYER:
+          {
+            GimpDrawable *drawable;
+
+            drawable = gimp_image_active_drawable (gdisp->gimage);
+
+            if (drawable)
+              {
+                if (GIMP_IS_LAYER (drawable) &&
+                    gimp_layer_get_mask (GIMP_LAYER (drawable)))
+                  {
+                    ctype = GIMP_BAD_CURSOR;
+                  }
+                else if (gimp_display_coords_in_active_drawable (gdisp, coords))
+                  {
+                    if (gimp_image_mask_is_empty (gdisp->gimage) ||
+                        gimp_image_mask_value (gdisp->gimage,
+                                               coords->x, coords->y))
+                      {
+                        ctype = GIMP_MOUSE_CURSOR;
+                      }
+                  }
+              }
+          }
+          break;
+
+        case GIMP_TRANSFORM_TYPE_SELECTION:
+          if (gimp_image_mask_is_empty (gdisp->gimage) ||
+              gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
             {
-              ctype = GIMP_BAD_CURSOR;
+              ctype = GIMP_MOUSE_CURSOR;
             }
-          else if (gimp_display_coords_in_active_drawable (gdisp, coords))
-            {
-              if (gimp_image_mask_is_empty (gdisp->gimage) ||
-                  gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
-                {
-                  ctype = GIMP_MOUSE_CURSOR;
-                }
-            }
+          break;
+
+        case GIMP_TRANSFORM_TYPE_PATH:
+          if (gimp_image_get_active_vectors (gdisp->gimage))
+            ctype = GIMP_MOUSE_CURSOR;
+          else
+            ctype = GIMP_BAD_CURSOR;
+          break;
         }
 
       if (tr_tool->use_center && tr_tool->function == TRANSFORM_HANDLE_CENTER)
@@ -650,7 +660,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   if (! tr_tool->use_grid)
     return;
 
-  tool = GIMP_TOOL (draw_tool);
+  tool    = GIMP_TOOL (draw_tool);
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
   /*  draw the bounding box  */
@@ -671,13 +681,14 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                             tr_tool->tx1, tr_tool->ty1,
                             FALSE);
 
-  /*  Draw the grid */
+  /*  Draw the grid (not for path transform since it looks ugly)  */
 
-  if (tr_tool->grid_coords                   &&
-      tr_tool->tgrid_coords                  &&
-      tr_tool->transform.coeff[0][0] >=  0.0 &&
-      tr_tool->transform.coeff[1][1] >=  0.0 &&
-      tr_tool->transform.coeff[1][0] >= -1.0 &&
+  if (tr_tool->type != GIMP_TRANSFORM_TYPE_PATH &&
+      tr_tool->grid_coords                      &&
+      tr_tool->tgrid_coords                     &&
+      tr_tool->transform.coeff[0][0] >=  0.0    &&
+      tr_tool->transform.coeff[1][1] >=  0.0    &&
+      tr_tool->transform.coeff[1][0] >= -1.0    &&
       tr_tool->transform.coeff[0][1] >= -1.0)
     {
       gint gci, i, k;
@@ -732,24 +743,46 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                   FALSE);
     }
 
-#if 0
   if (tr_tool->type == GIMP_TRANSFORM_TYPE_PATH)
     {
-      if (options->direction == GIMP_TRANSFORM_BACKWARD)
-	{
-          GimpMatrix3  inv_matrix = tr_tool->transform;
+      GimpVectors *vectors;
+      GimpStroke  *stroke = NULL;
+      GimpMatrix3  matrix = tr_tool->transform;
 
-          gimp_matrix3_invert (&inv_matrix);
-          path_transform_draw_current (tool->gdisp,
-                                       draw_tool, inv_matrix);
-	}
-      else
+      vectors = gimp_image_get_active_vectors (tool->gdisp->gimage);
+
+      if (vectors)
         {
-          path_transform_draw_current (tool->gdisp,
-                                       draw_tool, tr_tool->transform);
+          if (tr_tool->direction == GIMP_TRANSFORM_BACKWARD)
+            gimp_matrix3_invert (&matrix);
+
+          while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+            {
+              GArray   *coords;
+              gboolean  closed;
+              gint      i;
+
+              coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
+
+              for (i = 0; i < coords->len; i++)
+                {
+                  GimpCoords *curr = &g_array_index (coords, GimpCoords, i);
+
+                  gimp_matrix3_transform_point (&matrix,
+                                                curr->x, curr->y,
+                                                &curr->x, &curr->y);
+                }
+
+              if (coords->len)
+                gimp_draw_tool_draw_strokes (draw_tool,
+                                             &g_array_index (coords,
+                                                             GimpCoords, 0),
+                                             coords->len, FALSE, FALSE);
+
+              g_array_free (coords, TRUE);
+            }
         }
     }
-#endif
 }
 
 static TileManager *
@@ -801,14 +834,22 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                 options->interpolation,
                                                 clip_result,
                                                 progress ?
-                                                gimp_progress_update_and_flush : 
+                                                gimp_progress_update_and_flush :
                                                 NULL,
                                                 progress);
       }
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      /* TODO */
+      gimp_item_transform (active_item,
+                           &tr_tool->transform,
+                           options->direction,
+                           options->interpolation,
+                           options->clip,
+                           progress ?
+                           gimp_progress_update_and_flush :
+                           NULL,
+                           progress);
       break;
     }
 
@@ -828,17 +869,33 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   TileManager          *new_tiles;
   gboolean              new_layer;
 
-  gimp_set_busy (gdisp->gimage->gimp);
-
   tool    = GIMP_TOOL (tr_tool);
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
-  /* undraw the tool before we muck around with the transform matrix */
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
+  switch (options->type)
+    {
+    case GIMP_TRANSFORM_TYPE_LAYER:
+      active_item = (GimpItem *) gimp_image_active_drawable (gdisp->gimage);
+      break;
 
-  /*  We're going to dirty this image, but we want to keep the tool
-   *  around
-   */
+    case GIMP_TRANSFORM_TYPE_SELECTION:
+      active_item = (GimpItem *) gimp_image_get_mask (gdisp->gimage);
+      break;
+
+    case GIMP_TRANSFORM_TYPE_PATH:
+      active_item = (GimpItem *) gimp_image_get_active_vectors (gdisp->gimage);
+      break;
+    }
+
+  if (! active_item)
+    return;
+
+  gimp_set_busy (gdisp->gimage->gimp);
+
+  /* undraw the tool before we muck around with the transform matrix */
+  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
+
+  /*  We're going to dirty this image, but we want to keep the tool around  */
   gimp_tool_control_set_preserve (tool->control, TRUE);
 
   /*  Start a transform undo group  */
@@ -859,22 +916,16 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      active_item = (GimpItem *) gimp_image_active_drawable (gdisp->gimage);
-
       tr_tool->original = gimp_drawable_transform_cut (tool->drawable,
                                                        &new_layer);
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      active_item = (GimpItem *) gimp_image_get_mask (gdisp->gimage);
-
-      tr_tool->original = gimp_drawable_data (GIMP_DRAWABLE (active_item));
+      tr_tool->original = tile_manager_ref (GIMP_DRAWABLE (active_item)->tiles);
       tile_manager_set_offsets (tr_tool->original, 0, 0);
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      active_item = (GimpItem *) gimp_image_get_active_vectors (gdisp->gimage);
-
       tr_tool->original = NULL;
       break;
     }
@@ -909,19 +960,20 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
         {
           gimp_image_mask_push_undo (gdisp->gimage, NULL);
 
+          tile_manager_unref (GIMP_DRAWABLE (active_item)->tiles);
           GIMP_DRAWABLE (active_item)->tiles = new_tiles;
-
-          tile_manager_unref (tr_tool->original);
-          tr_tool->original = NULL;
 
           GIMP_CHANNEL (active_item)->bounds_known = FALSE;
 
           gimp_image_mask_changed (gdisp->gimage);
         }
+
+      tile_manager_unref (tr_tool->original);
+      tr_tool->original = NULL;
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      /* TODO */
+      /*  Nothing to be done  */
       break;
     }
 
@@ -948,7 +1000,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 
   gimp_image_flush (gdisp->gimage);
 
-  gimp_transform_tool_reset (tr_tool);
+  gimp_transform_tool_halt (tr_tool);
 }
 
 void
@@ -994,11 +1046,9 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_transform_tool_reset (GimpTransformTool *tr_tool)
+gimp_transform_tool_halt (GimpTransformTool *tr_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (tr_tool);
+  GimpTool *tool = GIMP_TOOL (tr_tool);
 
   if (tr_tool->original)
     {
@@ -1009,12 +1059,12 @@ gimp_transform_tool_reset (GimpTransformTool *tr_tool)
   /*  inactivate the tool  */
   tr_tool->function = TRANSFORM_CREATING;
 
-  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
 
   if (tr_tool->info_dialog)
     info_dialog_popdown (tr_tool->info_dialog);
 
-  gimp_tool_control_halt (tool->control);
   tool->gdisp    = NULL;
   tool->drawable = NULL;
 }
@@ -1270,7 +1320,7 @@ static void
 transform_cancel_callback (GtkWidget         *widget,
                            GimpTransformTool *tr_tool)
 {
-  gimp_transform_tool_reset (tr_tool);
+  gimp_transform_tool_halt (tr_tool);
 }
 
 static void
@@ -1290,7 +1340,8 @@ gimp_transform_tool_notify_type (GimpTransformOptions *options,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 
-  tr_tool->type = options->type;
+  tr_tool->type      = options->type;
+  tr_tool->direction = options->direction;
 
   /*  recalculate the tool's transformation matrix  */
   gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
