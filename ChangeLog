@@ -1,3 +1,25 @@
+2004-11-12  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/images/stock-show-all.png
+	* plug-ins/gfig/images/stock-select-object.png: added these two stock
+	icons. Jimmac, these two are screaming to be redone, please.
+
+	* plug-ins/gfig/images/Makefile.am: added these icons.
+
+	* plug-ins/gfig/gfig-bezier.c
+	* plug-ins/gfig/gfig-bezier.h
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-poly.c
+	* plug-ins/gfig/gfig-poly.h
+	* plug-ins/gfig/gfig-spiral.c
+	* plug-ins/gfig/gfig-spiral.h
+	* plug-ins/gfig/gfig-star.c
+	* plug-ins/gfig/gfig-star.h
+	* plug-ins/gfig/gfig-stock.c
+	* plug-ins/gfig/gfig-stock.h
+	* plug-ins/gfig/gfig.h: moved all the buttons to a GtkUIManager
+	toolbar, which makes the code simpler and easier to read.
+
 2004-11-12  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/tips-dialog.c: added icons to the Previous/Next

@@ -434,22 +434,15 @@ d_bezier_end (GdkPoint *pnt, gint shift_down)
 }
 
 void
-tool_options_bezier (GtkWidget *notebook,
-                     GtkWidget *button)
+tool_options_bezier (GtkWidget *notebook)
 {
   GtkWidget *vbox;
   GtkWidget *toggle;
-  gint       page;
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  page = gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, NULL);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, NULL);
   gtk_widget_show (vbox);
-
-  g_object_set_data (G_OBJECT (button), "page", GINT_TO_POINTER (page));
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (tool_option_page_update),
-                    notebook);
 
   toggle = gtk_check_button_new_with_label (_("Closed"));
   g_signal_connect (toggle, "toggled",

@@ -49,22 +49,14 @@ static gint spiral_num_turns = 4; /* Default to 4 turns */
 static gint spiral_toggle    = 0; /* 0 = clockwise -1 = anti-clockwise */
 
 void
-tool_options_spiral (GtkWidget *notebook,
-                     GtkWidget *button)
+tool_options_spiral (GtkWidget *notebook)
 {
   GtkWidget *sides;
-  gint       page;
 
   sides = num_sides_widget (_("Spiral Number of Turns"),
                             &spiral_num_turns, &spiral_toggle, 1, 20);
-  page = gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sides, NULL);
-
-  g_object_set_data (G_OBJECT (button), "page", GINT_TO_POINTER (page));
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (tool_option_page_update),
-                    notebook);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sides, NULL);
 }
-
 
 static void
 d_draw_spiral (Dobject *obj)

@@ -26,8 +26,7 @@
 #ifndef __GFIG_POLY_H__
 #define __GFIG_POLY_H__
 
-void tool_options_poly       (GtkWidget *notebook,
-                              GtkWidget *button);
+void tool_options_poly       (GtkWidget *notebook);
 
 void d_update_poly            (GdkPoint *pnt);
 void d_poly_start             (GdkPoint *pnt,

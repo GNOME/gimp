@@ -37,6 +37,8 @@
 #define GFIG_STOCK_MOVE_OBJECT    "gfig-move-object"
 #define GFIG_STOCK_MOVE_POINT     "gfig-move-point"
 #define GFIG_STOCK_POLYGON        "gfig-polygon"
+#define GFIG_STOCK_SELECT_OBJECT  "gfig-select-object"
+#define GFIG_STOCK_SHOW_ALL       "gfig-show-all"
 #define GFIG_STOCK_SPIRAL         "gfig-spiral"
 #define GFIG_STOCK_STAR           "gfig-star"
 

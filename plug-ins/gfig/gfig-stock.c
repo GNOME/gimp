@@ -31,23 +31,27 @@
 
 #include "images/gfig-stock-pixbufs.h"
 
+#include "libgimp/stdplugins-intl.h"
+
 
 static GtkIconFactory *gfig_icon_factory = NULL;
 
 static GtkStockItem gfig_stock_items[] =
 {
-  { GFIG_STOCK_BEZIER,        NULL, 0, 0, NULL },
-  { GFIG_STOCK_CIRCLE,        NULL, 0, 0, NULL },
-  { GFIG_STOCK_COPY_OBJECT,   NULL, 0, 0, NULL },
-  { GFIG_STOCK_CURVE,         NULL, 0, 0, NULL },
-  { GFIG_STOCK_DELETE_OBJECT, NULL, 0, 0, NULL },
-  { GFIG_STOCK_ELLIPSE,       NULL, 0, 0, NULL },
-  { GFIG_STOCK_LINE,          NULL, 0, 0, NULL },
-  { GFIG_STOCK_MOVE_OBJECT,   NULL, 0, 0, NULL },
-  { GFIG_STOCK_MOVE_POINT,    NULL, 0, 0, NULL },
-  { GFIG_STOCK_POLYGON,       NULL, 0, 0, NULL },
-  { GFIG_STOCK_SPIRAL,        NULL, 0, 0, NULL },
-  { GFIG_STOCK_STAR,          NULL, 0, 0, NULL }
+  { GFIG_STOCK_BEZIER,        N_("Create bezier curve"), 0, 0, NULL },
+  { GFIG_STOCK_CIRCLE,        N_("Create circle"),       0, 0, NULL },
+  { GFIG_STOCK_COPY_OBJECT,   N_("Copy an object"),      0, 0, NULL },
+  { GFIG_STOCK_CURVE,         N_("Create arc"),          0, 0, NULL },
+  { GFIG_STOCK_DELETE_OBJECT, N_("Delete an object"),    0, 0, NULL },
+  { GFIG_STOCK_ELLIPSE,       N_("Create ellipse"),      0, 0, NULL },
+  { GFIG_STOCK_LINE,          N_("Create line"),         0, 0, NULL },
+  { GFIG_STOCK_MOVE_OBJECT,   N_("Move an object"),      0, 0, NULL },
+  { GFIG_STOCK_MOVE_POINT,    N_("Move a single point"), 0, 0, NULL },
+  { GFIG_STOCK_POLYGON,       N_("Create reg polygon"),  0, 0, NULL },
+  { GFIG_STOCK_SELECT_OBJECT, N_("Select an object"),    0, 0, NULL },
+  { GFIG_STOCK_SHOW_ALL,      N_("Show all objects"),    0, 0, NULL },
+  { GFIG_STOCK_SPIRAL,        N_("Create spiral"),       0, 0, NULL },
+  { GFIG_STOCK_STAR,          N_("Create star"),         0, 0, NULL }
 };
 
 
@@ -63,7 +67,7 @@ add_stock_icon (const gchar  *stock_id,
   source = gtk_icon_source_new ();
 
   gtk_icon_source_set_size (source, size);
-  gtk_icon_source_set_size_wildcarded (source, FALSE);
+  gtk_icon_source_set_size_wildcarded (source, TRUE);
 
   pixbuf = gdk_pixbuf_new_from_inline (-1, inline_data, FALSE, NULL);
 
@@ -100,6 +104,8 @@ gfig_stock_init (void)
   add_stock_icon (GFIG_STOCK_MOVE_OBJECT,   GTK_ICON_SIZE_BUTTON, stock_move_object);
   add_stock_icon (GFIG_STOCK_MOVE_POINT,    GTK_ICON_SIZE_BUTTON, stock_move_point);
   add_stock_icon (GFIG_STOCK_POLYGON,       GTK_ICON_SIZE_BUTTON, stock_polygon);
+  add_stock_icon (GFIG_STOCK_SELECT_OBJECT, GTK_ICON_SIZE_BUTTON, stock_select_object);
+  add_stock_icon (GFIG_STOCK_SHOW_ALL,      GTK_ICON_SIZE_BUTTON, stock_show_all);
   add_stock_icon (GFIG_STOCK_SPIRAL,        GTK_ICON_SIZE_BUTTON, stock_spiral);
   add_stock_icon (GFIG_STOCK_STAR,          GTK_ICON_SIZE_BUTTON, stock_star);
 

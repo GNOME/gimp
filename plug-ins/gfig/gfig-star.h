@@ -26,8 +26,7 @@
 #ifndef __GFIG_STAR_H__
 #define __GFIG_STAR_H__
 
-void tool_options_star        (GtkWidget *notebook,
-                               GtkWidget *button);
+void tool_options_star        (GtkWidget *notebook);
 
 void d_update_star            (GdkPoint  *pnt);
 void d_star_start             (GdkPoint  *pnt,

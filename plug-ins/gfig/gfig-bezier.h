@@ -37,7 +37,6 @@ void d_bezier_end               (GdkPoint  *pnt,
                                  gint       shift_down);
 void d_bezier_object_class_init (void);
 
-void tool_options_bezier        (GtkWidget *notebook,
-                                 GtkWidget *button);
+void tool_options_bezier        (GtkWidget *notebook);
 
 #endif /* __GFIG_BEZIER_H__ */

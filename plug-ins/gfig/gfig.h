@@ -184,8 +184,6 @@ GtkWidget *num_sides_widget     (gchar *d_title,
                                  gint  *which_way,
                                  gint   adj_min,
                                  gint   adj_max);
-void    toggle_obj_type         (GtkWidget *widget,
-                                 gpointer   data);
 
 void    setup_undo              (void);
 void    draw_grid_clear         (void);

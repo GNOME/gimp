@@ -47,20 +47,13 @@ static void      d_draw_poly (Dobject *obj);
 static Dobject  *d_copy_poly (Dobject *obj);
 
 void
-tool_options_poly (GtkWidget *notebook,
-                   GtkWidget *button)
+tool_options_poly (GtkWidget *notebook)
 {
   GtkWidget *sides;
-  gint       page;
 
   sides = num_sides_widget (_("Regular Polygon Number of Sides"),
                             &poly_num_sides, NULL, 3, 200);
-  page = gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sides, NULL);
-
-  g_object_set_data (G_OBJECT (button), "page", GINT_TO_POINTER (page));
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (tool_option_page_update),
-                    notebook);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), sides, NULL);
 }
 
 static void
