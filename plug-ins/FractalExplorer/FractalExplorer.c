@@ -130,7 +130,7 @@ run(char *name,
     int *nreturn_vals,
     GParam ** return_vals)
 {
-    GParam             *values;
+    static GParam       values[1];
     gint32              image_ID;
     GRunModeType        run_mode;
     double              xhsiz,
@@ -141,8 +141,6 @@ run(char *name,
     FILE * fp;
     gchar * filname=NULL;
     gchar load_buf[MAX_LOAD_LINE];
-
-    values = g_new(GParam, 1);
 
     run_mode = param[0].data.d_int32;
 

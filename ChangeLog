@@ -1,3 +1,14 @@
+Tue Jan  6 14:17:02 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: make it *really* check for gtk >= 0.99.1 this
+	time
+
+	* plug-ins/gbr/gbr.c: check image type before save to prevent
+	image corruption. Only allow saves to non-alpha grayscale images
+
+	* app/install.c: reduce the size of the install info dialog so it
+	fits better on 640x480 screen
+
 Mon Jan  5 19:30:38 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/by_color_select.c: fix for indexed images

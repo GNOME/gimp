@@ -104,7 +104,7 @@ install_help (InstallCallback callback)
   vsb = gtk_vscrollbar_new (vadj);
   text = gtk_text_new (NULL, vadj);
   gtk_text_set_editable (GTK_TEXT (text), FALSE);
-  gtk_widget_set_usize (text, 450, 512);
+  gtk_widget_set_usize (text, 450, 475);
 
   table  = gtk_table_new (1, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);

@@ -111,7 +111,7 @@ query ()
                           "Tim Newsome",
                           "1997",
                           "<Save>/GBR",
-                          "RGB*, GRAY*",
+                          "GRAY",
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -270,6 +270,9 @@ static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
 	gint line;
 	GPixelRgn pixel_rgn;
 	char *temp;
+
+	if (gimp_drawable_type(drawable_ID) != GRAY_IMAGE)
+		return FALSE;
 
 	temp = g_malloc(strlen (filename) + 10);
 	sprintf(temp, "Saving %s:", filename);
