@@ -1,3 +1,8 @@
+2005-01-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimpconfig/Makefile.am
+	* libgimpconfig/gimpconfig.h: setting up for libgimpconfig
+	
 2005-01-24  Sven Neumann  <sven@gimp.org>
 
 	* app/config/Makefile.am
