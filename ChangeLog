@@ -1,5 +1,20 @@
 2004-09-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/convert-dialog.[ch] (convert_dialog_new): changed
+	GimpDisplay* parameter to GimpProgress* because that's what it's
+	used for.
+
+	* app/actions/image-commands.c (image_convert_cmd_callback):
+	changed accordingly.
+
+	* app/gui/convert-dialog.c: massively cleaned up internals. Use a
+	GimpViewableButton + GimpContainerEntry combo as in text options
+	for selecting the custom palette. Use a filtered container which
+	contains only palettes with a maximum of 256 colors.
+	Fixes bug #136574
+
+2004-09-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/file-open-location-dialog.[ch]: changed
 	file_open_location_dialog_show() to
 	file_open_location_dialog_new() and return the dialog.

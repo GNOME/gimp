@@ -25,6 +25,8 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer-filter.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-convert.h"
@@ -32,64 +34,62 @@
 #include "core/gimppalette.h"
 #include "core/gimpprogress.h"
 
-#include "widgets/gimpenumwidgets.h"
+#include "widgets/gimpcontainerentry.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimppaletteselect.h"
+#include "widgets/gimpviewablebutton.h"
 #include "widgets/gimpviewabledialog.h"
-
-#include "menus/menus.h"
 
 #include "gimp-intl.h"
 
 
 typedef struct
 {
-  GtkWidget              *shell;
-  GtkWidget              *custom_palette_button;
   GimpImage              *gimage;
-  GimpPdbDialog          *palette_select;
+  GimpProgress           *progress;
+
+  GtkWidget              *shell;
+
+  GimpContext            *context;
+  GimpContainer          *container;
+  GimpPalette            *custom_palette;
+  gboolean                have_web_palette;
+
   GimpConvertDitherType   dither_type;
   gboolean                alpha_dither;
   gboolean                remove_dups;
   gint                    num_colors;
-  gint                    palette;
   GimpConvertPaletteType  palette_type;
-  GimpDisplay            *gdisp;
 } IndexedDialog;
 
 
-static void indexed_response                       (GtkWidget     *widget,
-                                                    gint           response_id,
-                                                    IndexedDialog *dialog);
-static void indexed_destroy                        (GtkWidget     *widget,
-                                                    IndexedDialog *dialog);
-
-static void indexed_custom_palette_button_callback (GtkWidget     *widget,
-                                                    IndexedDialog *dialog);
-static void indexed_palette_select_destroy         (GtkWidget     *widget,
-                                                    IndexedDialog *dialog);
-static void indexed_palette_select_changed         (GimpContext   *context,
-                                                    GimpPalette   *palette,
-                                                    IndexedDialog *dialog);
-
-static GtkWidget * build_palette_button            (Gimp          *gimp);
+static void        convert_dialog_response        (GtkWidget        *widget,
+                                                   gint              response_id,
+                                                   IndexedDialog    *dialog);
+static GtkWidget * convert_dialog_palette_box     (IndexedDialog    *dialog);
+static gboolean    convert_dialog_palette_filter  (const GimpObject *object,
+                                                   gpointer          user_data);
+static void        convert_dialog_palette_changed (GimpContext      *context,
+                                                   GimpPalette      *palette,
+                                                   IndexedDialog    *dialog);
 
 
-static gboolean     UserHasWebPal    = FALSE;
-static GimpPalette *theCustomPalette = NULL;
+/*  defaults  */
 
-/* Defaults */
 static GimpConvertDitherType   saved_dither_type  = GIMP_FS_DITHER;
 static gboolean                saved_alpha_dither = FALSE;
 static gboolean                saved_remove_dups  = TRUE;
 static gint                    saved_num_colors   = 256;
 static GimpConvertPaletteType  saved_palette_type = GIMP_MAKE_PALETTE;
+static GimpPalette            *saved_palette      = NULL;
 
+
+/*  public functions  */
 
 GtkWidget *
-convert_dialog_new (GimpImage   *gimage,
-                    GtkWidget   *parent,
-                    GimpDisplay *gdisp)
+convert_dialog_new (GimpImage    *gimage,
+                    GtkWidget    *parent,
+                    GimpProgress *progress)
 {
   IndexedDialog *dialog;
   GtkWidget     *main_vbox;
@@ -100,17 +100,18 @@ convert_dialog_new (GimpImage   *gimage,
   GtkWidget     *spinbutton;
   GtkWidget     *frame;
   GtkWidget     *toggle;
+  GtkWidget     *palette_box;
   GSList        *group = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
   dialog = g_new0 (IndexedDialog, 1);
 
-  dialog->gimage = gimage;
-  dialog->gdisp  = gdisp;
+  dialog->gimage   = gimage;
+  dialog->progress = progress;
 
-  dialog->custom_palette_button = build_palette_button (gimage->gimp);
   dialog->dither_type           = saved_dither_type;
   dialog->alpha_dither          = saved_alpha_dither;
   dialog->remove_dups           = saved_remove_dups;
@@ -133,12 +134,24 @@ convert_dialog_new (GimpImage   *gimage,
                               NULL);
 
   g_signal_connect (dialog->shell, "response",
-                    G_CALLBACK (indexed_response),
+                    G_CALLBACK (convert_dialog_response),
                     dialog);
 
-  g_signal_connect (dialog->shell, "destroy",
-                    G_CALLBACK (indexed_destroy),
-                    dialog);
+  g_object_weak_ref (G_OBJECT (dialog->shell),
+                     (GWeakNotify) g_free,
+                     dialog);
+
+  palette_box = convert_dialog_palette_box (dialog);
+
+  if (dialog->context)
+    g_object_weak_ref (G_OBJECT (dialog->shell),
+                       (GWeakNotify) g_object_unref,
+                       dialog->context);
+
+  if (dialog->container)
+    g_object_weak_ref (G_OBJECT (dialog->shell),
+                       (GWeakNotify) g_object_unref,
+                       dialog->container);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -171,9 +184,7 @@ convert_dialog_new (GimpImage   *gimage,
 		    &dialog->palette_type);
 
   if (dialog->num_colors == 256 && gimp_image_has_alpha (gimage))
-    {
-      dialog->num_colors = 255;
-    }
+    dialog->num_colors = 255;
 
   spinbutton = gimp_spin_button_new (&adjustment, dialog->num_colors,
 				     2, 256, 1, 8, 0, 1, 0);
@@ -195,7 +206,7 @@ convert_dialog_new (GimpImage   *gimage,
 
   gtk_widget_show (hbox);
 
-  if (! UserHasWebPal)
+  if (! dialog->have_web_palette)
     {
       /*  'web palette'
        * Only presented as an option to the user if they do not
@@ -216,8 +227,8 @@ convert_dialog_new (GimpImage   *gimage,
     }
 
   /*  'mono palette'  */
-  toggle = gtk_radio_button_new_with_label (group,
-                                            _("Use black and white (1-bit) palette"));
+  toggle = gtk_radio_button_new_with_label (group, _("Use black and "
+                                                     "white (1-bit) palette"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -229,11 +240,12 @@ convert_dialog_new (GimpImage   *gimage,
 		    &dialog->palette_type);
 
   /* 'custom' palette from dialog */
-  if (dialog->custom_palette_button)
+  if (palette_box)
     {
       GtkWidget *remove_toggle;
 
-      remove_toggle = gtk_check_button_new_with_label (_("Remove unused colors from final palette"));
+      remove_toggle = gtk_check_button_new_with_label (_("Remove unused colors "
+                                                         "from final palette"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (remove_toggle),
                                     dialog->remove_dups);
       g_signal_connect (remove_toggle, "toggled",
@@ -258,20 +270,16 @@ convert_dialog_new (GimpImage   *gimage,
 			&dialog->palette_type);
       g_object_set_data (G_OBJECT (toggle), "set_sensitive", remove_toggle);
 
-      g_signal_connect (dialog->custom_palette_button, "clicked",
-			G_CALLBACK (indexed_custom_palette_button_callback),
-			dialog);
-      gtk_box_pack_end (GTK_BOX (hbox),
-                        dialog->custom_palette_button, TRUE, TRUE, 0);
-      gtk_widget_show (dialog->custom_palette_button);
+      gtk_box_pack_end (GTK_BOX (hbox), palette_box, TRUE, TRUE, 0);
+      gtk_widget_show (palette_box);
 
       gtk_widget_set_sensitive (remove_toggle,
 				dialog->palette_type == GIMP_CUSTOM_PALETTE);
-      gtk_widget_set_sensitive (dialog->custom_palette_button,
+      gtk_widget_set_sensitive (palette_box,
                                 dialog->palette_type == GIMP_CUSTOM_PALETTE);
       g_object_set_data (G_OBJECT (toggle), "set_sensitive", remove_toggle);
       g_object_set_data (G_OBJECT (remove_toggle), "set_sensitive",
-			 dialog->custom_palette_button);
+			 palette_box);
 
       /*  add the remove-duplicates toggle  */
       hbox = gtk_hbox_new (FALSE, 6);
@@ -307,6 +315,7 @@ convert_dialog_new (GimpImage   *gimage,
 				dialog->alpha_dither);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
+
   g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
 		    &dialog->alpha_dither);
@@ -335,91 +344,18 @@ convert_dialog_new (GimpImage   *gimage,
 }
 
 
-static GtkWidget *
-build_palette_button (Gimp *gimp)
-{
-  GList       *list;
-  GimpPalette *palette;
-  GimpPalette *theWebPalette = NULL;
-  gint         i;
-  gint         default_palette;
-
-  UserHasWebPal = FALSE;
-
-  list = GIMP_LIST (gimp->palette_factory->container)->list;
-
-  if (! list)
-    {
-      return NULL;
-    }
-
-  for (i = 0, default_palette = -1;
-       list;
-       i++, list = g_list_next (list))
-    {
-      palette = (GimpPalette *) list->data;
-
-      /* Preferentially, the initial default is 'Web' if available */
-      if (theWebPalette == NULL &&
-	  g_ascii_strcasecmp (GIMP_OBJECT (palette)->name, "Web") == 0)
-	{
-	  theWebPalette = palette;
-	  UserHasWebPal = TRUE;
-	}
-
-      /* We can't dither to > 256 colors */
-      if (palette->n_colors <= 256)
-	{
-	  if (theCustomPalette == palette)
-	    {
-	      default_palette = i;
-	    }
-	}
-    }
-
-  /* default to first one with <= 256 colors
-   * (only used if 'web' palette not available)
-   */
-   if (default_palette == -1)
-     {
-       if (theWebPalette)
-	 {
-	   theCustomPalette = theWebPalette;
-	   default_palette = 1;  /*  dummy value  */
-	 }
-       else
-	 {
-	   for (i = 0, list = GIMP_LIST (gimp->palette_factory->container)->list;
-		list && default_palette == -1;
-		i++, list = g_list_next (list))
-	     {
-	       palette = (GimpPalette *) list->data;
-
-	       if (palette->n_colors <= 256)
-		 {
-		   theCustomPalette = palette;
-		   default_palette = i;
-		 }
-	     }
-	 }
-     }
-
-   if (default_palette == -1)
-     return NULL;
-   else
-     return gtk_button_new_with_label (GIMP_OBJECT (theCustomPalette)->name);
-}
+/*  private functions  */
 
 static void
-indexed_response (GtkWidget     *widget,
-                  gint           response_id,
-                  IndexedDialog *dialog)
+convert_dialog_response (GtkWidget     *widget,
+                         gint           response_id,
+                         IndexedDialog *dialog)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
       GimpProgress *progress;
 
-      progress = gimp_progress_start (GIMP_PROGRESS (dialog->gdisp),
+      progress = gimp_progress_start (dialog->progress,
                                       _("Converting to indexed..."), FALSE);
 
       /*  Convert the image to indexed color  */
@@ -430,7 +366,7 @@ indexed_response (GtkWidget     *widget,
                           dialog->alpha_dither,
                           dialog->remove_dups,
                           dialog->palette_type,
-                          theCustomPalette,
+                          dialog->custom_palette,
                           progress);
 
       if (progress)
@@ -444,59 +380,109 @@ indexed_response (GtkWidget     *widget,
       saved_remove_dups  = dialog->remove_dups;
       saved_num_colors   = dialog->num_colors;
       saved_palette_type = dialog->palette_type;
+      saved_palette      = dialog->custom_palette;
     }
 
   gtk_widget_destroy (dialog->shell);
 }
 
-static void
-indexed_destroy (GtkWidget     *widget,
-                 IndexedDialog *dialog)
+static GtkWidget *
+convert_dialog_palette_box (IndexedDialog *dialog)
 {
-  if (dialog->palette_select)
-    gtk_widget_destroy (GTK_WIDGET (dialog->palette_select));
+  Gimp        *gimp;
+  GList       *list;
+  GimpPalette *palette;
+  GimpPalette *web_palette   = NULL;
+  gboolean     default_found = FALSE;
 
-  g_free (dialog);
-}
+  gimp = dialog->gimage->gimp;
 
-static void
-indexed_custom_palette_button_callback (GtkWidget     *widget,
-                                        IndexedDialog *dialog)
-{
-  if (! dialog->palette_select)
+  dialog->have_web_palette = FALSE;
+
+  /* We can't dither to > 256 colors */
+  dialog->container = gimp_container_filter (gimp->palette_factory->container,
+                                             convert_dialog_palette_filter,
+                                             NULL);
+
+  if (! gimp_container_num_children (dialog->container))
     {
-      dialog->palette_select =
-        g_object_new (GIMP_TYPE_PALETTE_SELECT,
-                      "title",          _("Select Custom Palette"),
-                      "role",           "gimp-pelette-selection",
-                      "help-func",      gimp_standard_help_func,
-                      "help_id",        GIMP_HELP_PALETTE_DIALOG,
-                      "context",        gimp_get_user_context (dialog->gimage->gimp),
-                      "select-type",    GIMP_TYPE_PALETTE,
-                      "initial-object", theCustomPalette,
-                      "menu-factory",   global_menu_factory,
-                      NULL);
-
-      g_signal_connect (dialog->palette_select, "destroy",
-			G_CALLBACK (indexed_palette_select_destroy),
-			dialog);
-      g_signal_connect (dialog->palette_select->context, "palette_changed",
-			G_CALLBACK (indexed_palette_select_changed),
-			dialog);
+      g_object_unref (dialog->container);
+      return NULL;
     }
 
-  gtk_window_present (GTK_WINDOW (dialog->palette_select));
+  dialog->context = gimp_context_new (gimp, "convert-dialog", NULL);
+
+  for (list = GIMP_LIST (dialog->container)->list;
+       list;
+       list = g_list_next (list))
+    {
+      palette = (GimpPalette *) list->data;
+
+      /* Preferentially, the initial default is 'Web' if available */
+      if (web_palette == NULL &&
+	  g_ascii_strcasecmp (GIMP_OBJECT (palette)->name, "Web") == 0)
+	{
+	  web_palette = palette;
+	  dialog->have_web_palette = TRUE;
+	}
+
+      if (saved_palette == palette)
+        {
+          dialog->custom_palette = saved_palette;
+          default_found = TRUE;
+        }
+    }
+
+  if (! default_found)
+    {
+      if (web_palette)
+        dialog->custom_palette = web_palette;
+      else
+        dialog->custom_palette = GIMP_LIST (dialog->container)->list->data;
+    }
+
+  gimp_context_set_palette (dialog->context, dialog->custom_palette);
+
+  g_signal_connect (dialog->context, "palette-changed",
+                    G_CALLBACK (convert_dialog_palette_changed),
+                    dialog);
+
+  {
+    GtkWidget *hbox;
+    GtkWidget *button;
+    GtkWidget *entry;
+
+    hbox = gtk_hbox_new (FALSE, 4);
+
+    button = gimp_viewable_button_new (dialog->container,
+                                       dialog->context,
+                                       GIMP_VIEW_SIZE_MEDIUM, 1,
+                                       gimp_dialog_factory_from_name ("dock"),
+                                       "gimp-palette-list|gimp-palette-grid",
+                                       GIMP_STOCK_PALETTE,
+                                       _("Open the palette selection dialog"));
+    gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+    gtk_widget_show (button);
+
+    entry = gimp_container_entry_new (dialog->container,
+                                      dialog->context,
+                                      GIMP_VIEW_SIZE_MEDIUM, 1);
+    gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+    gtk_widget_show (entry);
+
+    return hbox;
+  }
 }
 
-static void
-indexed_palette_select_destroy (GtkWidget     *widget,
-                                IndexedDialog *dialog)
+static gboolean
+convert_dialog_palette_filter (const GimpObject *object,
+                               gpointer          user_data)
 {
-  dialog->palette_select = NULL;
+  return GIMP_PALETTE (object)->n_colors <= 256;
 }
 
 static void
-indexed_palette_select_changed (GimpContext   *context,
+convert_dialog_palette_changed (GimpContext   *context,
 				GimpPalette   *palette,
                                 IndexedDialog *dialog)
 {
@@ -509,9 +495,6 @@ indexed_palette_select_changed (GimpContext   *context,
     }
   else
     {
-      theCustomPalette = palette;
-
-      gtk_label_set_text (GTK_LABEL (GTK_BIN (dialog->custom_palette_button)->child),
-                          gimp_object_get_name (GIMP_OBJECT (palette)));
+      dialog->custom_palette = palette;
     }
 }

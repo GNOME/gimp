@@ -172,7 +172,8 @@ image_convert_cmd_callback (GtkAction *action,
       break;
 
     case GIMP_INDEXED:
-      gtk_widget_show (convert_dialog_new (gimage, widget, gdisp));
+      gtk_widget_show (convert_dialog_new (gimage, widget,
+                                           GIMP_PROGRESS (gdisp)));
       break;
     }
 }
