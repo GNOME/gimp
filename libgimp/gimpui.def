@@ -38,8 +38,10 @@ EXPORTS
 	gimp_image_menu_new
 	gimp_int_adjustment_update
 	gimp_interactive_selection_brush
+	gimp_interactive_selection_gradient
 	gimp_interactive_selection_pattern
 	gimp_layer_menu_new
+	gimp_mem_size_entry_new
 	gimp_menu_item_update
 	gimp_option_menu_new
 	gimp_option_menu_new2
@@ -86,4 +88,8 @@ EXPORTS
 	gimp_toggle_button_update
 	gimp_ui_init
 	gimp_uint_adjustment_update
+	gimp_unit_menu_get_type
+	gimp_unit_menu_get_unit
+	gimp_unit_menu_new
+	gimp_unit_menu_set_unit
 	gimp_unit_menu_update

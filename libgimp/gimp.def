@@ -1,6 +1,6 @@
 EXPORTS
-	_readchannel
 	_gimp_layer_copy ; used by iwarp
+	_readchannel
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_new_parasite
@@ -8,6 +8,7 @@ EXPORTS
 	gimp_brightness_contrast
 	gimp_brushes_close_popup
 	gimp_brushes_get_brush_data
+	gimp_brushes_popup
 	gimp_brushes_set_popup
 	gimp_bucket_fill
 	gimp_by_color_select
@@ -21,11 +22,13 @@ EXPORTS
 	gimp_channel_get_visible
 	gimp_channel_new
 	gimp_channel_ops_duplicate
+	gimp_channel_ops_offset
 	gimp_channel_set_color
 	gimp_channel_set_name
 	gimp_channel_set_opacity
 	gimp_channel_set_show_masked
 	gimp_channel_set_visible
+	gimp_channel_set_tattoo
 	gimp_clone
 	gimp_clone_default
 	gimp_color_balance
@@ -76,6 +79,7 @@ EXPORTS
 	gimp_drawable_parasite_attach
 	gimp_drawable_parasite_detach
 	gimp_drawable_parasite_find
+	gimp_drawable_parasite_list
 	gimp_drawable_set_name
 	gimp_drawable_set_visible
 	gimp_drawable_type
@@ -116,6 +120,7 @@ EXPORTS
 	gimp_gradients_get_active
 	gimp_gradients_get_gradient_data
 	gimp_gradients_get_list
+	gimp_gradients_popup
 	gimp_gradients_sample_custom
 	gimp_gradients_sample_uniform
 	gimp_gradients_set_active
@@ -125,8 +130,8 @@ EXPORTS
 	gimp_histogram
 	gimp_hls_to_rgb
 	gimp_hsv_to_rgb
-	gimp_hsv_to_rgb4
 	gimp_hsv_to_rgb_double
+	gimp_hsv_to_rgb4
 	gimp_hue_saturation
 	gimp_image_active_drawable
 	gimp_image_add_channel
@@ -158,6 +163,7 @@ EXPORTS
 	gimp_image_get_layers
 	gimp_image_get_resolution
 	gimp_image_get_selection
+	gimp_image_get_tattoo_state
 	gimp_image_get_thumbnail_data
 	gimp_image_get_unit
 	gimp_image_height
@@ -171,6 +177,7 @@ EXPORTS
 	gimp_image_parasite_attach
 	gimp_image_parasite_detach
 	gimp_image_parasite_find
+	gimp_image_parasite_list
 	gimp_image_pick_correlate_layer
 	gimp_image_raise_channel
 	gimp_image_raise_layer
@@ -187,6 +194,7 @@ EXPORTS
 	gimp_image_set_component_visible
 	gimp_image_set_filename
 	gimp_image_set_resolution
+	gimp_image_set_tattoo_state
 	gimp_image_set_unit
 	gimp_image_undo_disable
 	gimp_image_undo_enable
@@ -205,6 +213,7 @@ EXPORTS
 	gimp_layer_delete
 	gimp_layer_get_apply_mask
 	gimp_layer_get_edit_mask
+	gimp_layer_get_linked
 	gimp_layer_get_mode
 	gimp_layer_get_name
 	gimp_layer_get_opacity
@@ -219,12 +228,14 @@ EXPORTS
 	gimp_layer_scale
 	gimp_layer_set_apply_mask
 	gimp_layer_set_edit_mask
+	gimp_layer_set_linked
 	gimp_layer_set_mode
 	gimp_layer_set_name
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity
 	gimp_layer_set_preserve_trans
 	gimp_layer_set_show_mask
+	gimp_layer_set_tattoo
 	gimp_layer_set_visible
 	gimp_layer_translate
 	gimp_levels
@@ -255,8 +266,11 @@ EXPORTS
 	gimp_paintbrush_default
 	gimp_palette_get_background
 	gimp_palette_get_foreground
+	gimp_palette_refresh
 	gimp_palette_set_background
+	gimp_palette_set_default_colors
 	gimp_palette_set_foreground
+	gimp_palette_swap_colors
 	gimp_parasite_attach
 	gimp_parasite_compare
 	gimp_parasite_copy
@@ -270,6 +284,7 @@ EXPORTS
 	gimp_parasite_is_persistent
 	gimp_parasite_is_type
 	gimp_parasite_is_undoable
+	gimp_parasite_list
 	gimp_parasite_name
 	gimp_parasite_new
 	gimp_path_delete
@@ -291,6 +306,7 @@ EXPORTS
 	gimp_path_to_str
 	gimp_patterns_close_popup
 	gimp_patterns_get_pattern_data
+	gimp_patterns_popup
 	gimp_patterns_set_popup
 	gimp_pencil
 	gimp_personal_rc_file
@@ -314,40 +330,54 @@ EXPORTS
 	gimp_plugin_domain_register
 	gimp_plugin_help_register
 	gimp_posterize
+	gimp_procedural_db_dump
 	gimp_procedural_db_get_data
 	gimp_procedural_db_get_data_size
+	gimp_procedural_db_proc_arg
 	gimp_procedural_db_proc_info
+	gimp_procedural_db_proc_val
 	gimp_procedural_db_query
 	gimp_procedural_db_set_data
 	gimp_progress_init
 	gimp_progress_update
 	gimp_quit
+	gimp_read_expect_msg
 	gimp_rect_select
 	gimp_register_load_handler
 	gimp_register_magic_load_handler
 	gimp_register_save_handler
 	gimp_rgb_to_hls
 	gimp_rgb_to_hsv
-	gimp_rgb_to_hsv4
 	gimp_rgb_to_hsv_double
+	gimp_rgb_to_hsv4
 	gimp_rgb_to_l
 	gimp_rotate
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_run_temp
 	gimp_scale
+	gimp_selection_all
+	gimp_selection_border
 	gimp_selection_bounds
 	gimp_selection_clear
+	gimp_selection_feather
 	gimp_selection_float
+	gimp_selection_grow
 	gimp_selection_invert
 	gimp_selection_is_empty
+	gimp_selection_layer_alpha
 	gimp_selection_load
 	gimp_selection_none
 	gimp_selection_save
+	gimp_selection_sharpen
+	gimp_selection_shrink
+	gimp_selection_translate
+	gimp_selection_value
 	gimp_shear
 	gimp_smudge
 	gimp_smudge_default
 	gimp_standard_help_func
+	gimp_sysconf_directory
 	gimp_temp_name
 	gimp_text
 	gimp_text_fontname
@@ -379,6 +409,8 @@ EXPORTS
 	gimp_unit_new
 	gimp_unit_set_deletion_flag
 	gimp_use_xshm
+	gimp_vector_2d_to_3d
+	gimp_vector_3d_to_2d
 	gimp_vector2_add
 	gimp_vector2_cross_product
 	gimp_vector2_inner_product
@@ -399,8 +431,6 @@ EXPORTS
 	gimp_vector3_rotate
 	gimp_vector3_set
 	gimp_vector3_sub
-	gimp_vector_2d_to_3d
-	gimp_vector_3d_to_2d
 	gimp_version
 	gp_config_write
 	gp_extension_ack_write

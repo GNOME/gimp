@@ -1,5 +1,3 @@
-## WARNING: Outdated.
-
 ## Makefile for building gimp.exe with Microsoft C
 ## Use: nmake -f makefile.msc
 
@@ -8,36 +6,25 @@
 # will pick it up.
 BIN = C:\install\gimp\bin
 
+TOP = ..\..
+
 ################################################################
 
 # Nothing much configurable below
-
-!IFNDEF DEBUG
-# Full optimization:
-OPTIMIZE = -Ox -MD
-LINKDEBUG = 
-!ELSE
-# Debugging:
-OPTIMIZE = -Zi -MDd
-LINKDEBUG = /debug
-!ENDIF
+!INCLUDE $(TOP)\glib\build\win32\make.msc
 
 # cl -? describes the options
-CC = cl -GA -G5 -GF $(OPTIMIZE) -W3 -nologo
+CC = cl -GA -G5 -GF $(OPTIMIZE) $(CRUNTIME) -W3 -nologo
 
 LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 INSTALL = copy
 
 GIMP_VER = 1.2
-GTK_VER = 1.3
-GLIB_VER = 1.3
 
-GTK = ..\..\gtk+
-GLIB = ..\..\glib
-GMODULE = $(GLIB)\gmodule
-INTL = ..\..\intl
-
-CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -DG_LOG_DOMAIN=\"Gimp\" -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk -I$(GTK)\gdk -I$(GTK) -I$(INTL)
+CFLAGS = \
+	-FImsvc_recommended_pragmas.h \
+	-DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. $(GLIB_CFLAGS) $(GTK_CFLAGS) $(INTL_CFLAGS) \
+	$(DIRENT_CFLAGS)
 
 all : \
 	..\config.h	\
@@ -132,6 +119,8 @@ gimp_OBJECTS = \
 	free_select.obj		\
 	fuzzy_select.obj	\
 	gdisplay.obj		\
+#	gdisplay_color.obj	\
+#	gdisplay_color_ui.obj	\
 	gdisplay_ops.obj	\
 	general.obj		\
 	gimage.obj		\
@@ -164,11 +153,11 @@ gimp_OBJECTS = \
 	gtkhwrapbox.obj		\
 	gtkvwrapbox.obj		\
 	gximage.obj		\
-	help_cmds.obj		\
+	help_cmds.obj \
 	histogramwidget.obj 	\
 	histogram_tool.obj	\
 	hue_saturation.obj	\
-	image_cmds.obj		\
+	image_cmds.obj \
 	image_map.obj		\
 	image_new.obj		\
 	image_render.obj	\
@@ -223,6 +212,7 @@ gimp_OBJECTS = \
 	procedural_db.obj	\
 	procedural_db_cmds.obj	\
 	qmask.obj		\
+	recorder.obj	\
 	rect_select.obj		\
 	regex.obj		\
 	resize.obj		\
@@ -266,7 +256,7 @@ gimp.def: gimp.sym
 	copy /y $@+gimp.sym $@
 
 gimp.exe : ..\config.h $(gimp_OBJECTS) gimpim.lib gimp.def gimp.res ..\libgimp\gimpi.lib
-	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib shell32.lib /def:gimp.def
+	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK_LIBS) $(GLIB_LIBS) $(INTL_LIBS) $(DIRENT_LIBS) $(LDFLAGS) gimp.res gdi32.lib user32.lib shell32.lib /def:gimp.def
 
 # General rule for building $(gimp_OBJECTS)
 .c.obj:
@@ -275,7 +265,7 @@ gimp.exe : ..\config.h $(gimp_OBJECTS) gimpim.lib gimp.def gimp.res ..\libgimp\g
 .c.i :
 	$(CC) $(CFLAGS) -E $< >$@
 
-clean:
+clean::
 	del *.exe
 	del *.lib
 	del *.obj

@@ -1,4 +1,5 @@
-## WARNING: Outdated.
+TOP = ..\..
+!INCLUDE $(TOP)\glib\build\win32\make.msc 
 
 ## Makefile for building the GIMP DLLs and LIBs with Microsoft C.
 ## Use: nmake -f makefile.msc
@@ -12,31 +13,12 @@ GIMPDIR = _gimp$(GIMP_VER)
 ################################################################
 
 # Nothing much configurable below
-
-!IFNDEF DEBUG
-# Full optimization:
-OPTIMIZE = -Ox -MD
-LINKDEBUG =
-!ELSE
-# Debugging:
-OPTIMIZE = -Zi -MDd
-LINKDEBUG = /debug
-!ENDIF
-
-# cl -? describes the options
-CC = cl -G5 -GF $(OPTIMIZE) -W3 -nologo
-
-LDFLAGS = /link $(LINKDEBUG)
 INSTALL = copy
 
-GTK_VER = 1.3
-GLIB_VER = 1.3
+CFLAGS = \
+	-FImsvc_recommended_pragmas.h \
+	-I.. $(GLIB_CFLAGS) $(GTK_CFLAGS) $(INTL_CFLAGS) -DGIMPDIR=\"$(GIMPDIR)\"
 
-GTK = ..\..\gtk+
-GLIB = ..\..\glib
-INTL = ..\..\intl
-
-CFLAGS = -I.. -I$(GLIB) -I$(GTK)\gdk -I$(GTK)\gdk -I$(GTK) -I$(INTL) -DGIMPDIR=\"$(GIMPDIR)\" -DG_LOG_DOMAIN=\"LibGimp\"
 
 all : \
 	..\config.h \
@@ -134,7 +116,7 @@ gimp_OBJECTS = \
 	gimpwire.obj
 
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
-	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(INTL)\intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) user32.lib /def:gimp.def
+	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(INTL_LIBS) $(GLIB_LIBS) $(LDFLAGS) user32.lib /def:gimp.def
 
 # Pass -DLIBGIMP_COMPILATION when compiling gimp.c
 
@@ -161,7 +143,7 @@ gimpui_OBJECTS = \
 	gimpwidgets.obj
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
-	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) /def:gimpui.def
+	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) $(LDFLAGS) /def:gimpui.def
 
 gimpmenu.obj : gimpmenu.c
 	$(CC) $(CFLAGS) -GD -c gimpmenu.c
@@ -179,7 +161,8 @@ gimppatternmenu.obj : gimppatternmenu.c
 # gimp-$(GIMP_VER).dll. 
 .c.obj:
 	$(CC) $(CFLAGS) -c $<
-clean:
+
+clean::
 	del *.exe
 	del *.obj
 	del *.exp

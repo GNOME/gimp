@@ -32,6 +32,14 @@
 #endif
 #include <dirent.h>
 
+#ifdef G_OS_WIN32
+#include <direct.h>
+#  ifndef S_ISDIR
+#  define S_ISDIR(m) (m & _S_IFDIR)
+#  define S_ISREG(m) (m & _S_IFREG)
+#  endif
+#endif
+
 #include "apptypes.h"
 
 #include "appenv.h"

@@ -1,3 +1,22 @@
+2002-09-16  Hans Breuer  <hans@breuer.org>
+
+	* app/makefile.msc libgimp/makefile.msc
+	  plug-ins/makefile.msc modules/makefile.msc :
+	Updated to allow building Gimp 1.2.x with msvc using
+	the same libraries as the mingw build does.
+
+	* app/user_install.c : #ifdef G_OS_WIN32 get the
+	definitions of S_ISDIR and S_ISREG
+
+	* libgimp/gimp.def libgimp/gimpui.def : exported more 
+	non underscored functions (shoud be almost complete now)
+
+	* plug-ins/gflare/gflare.c : include <gtk/gtk.h> before
+	relying on G_OS_* being defined
+
+	* plug-ins/twain/twain.c : implement main() to allow to 
+	build as console app as well.
+
 2002-09-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gz.c (load_image): don't call gimp_temp_name()
