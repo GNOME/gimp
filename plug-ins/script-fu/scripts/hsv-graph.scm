@@ -1,16 +1,33 @@
 ;;; hsv-graph.scm -*-scheme-*-
 ;;; Author: Shuji Narazaki <narazaki@InetQ.or.jp>
-;;; Time-stamp: <1997/07/31 21:10:53 narazaki@InetQ.or.jp>
-;;; Version: 0.7
+;;; Time-stamp: <1998/01/18 05:25:03 narazaki@InetQ.or.jp>
+;;; Version: 1.2
 ;;; Code:
+
+(if (not (symbol-bound? 'script-fu-hsv-graph-scale (the-environment)))
+    (define script-fu-hsv-graph-scale 1))
+(if (not (symbol-bound? 'script-fu-hsv-graph-opacity (the-environment)))
+    (define script-fu-hsv-graph-opacity 100))
+(if (not (symbol-bound? 'script-fu-hsv-graph-bounds? (the-environment)))
+    (define script-fu-hsv-graph-bounds? TRUE))
+(if (not (symbol-bound? 'script-fu-hsv-graph-left2right? (the-environment)))
+    (define script-fu-hsv-graph-left2right? FALSE))
+(if (not (symbol-bound? 'script-fu-hsv-graph-beg-x (the-environment)))
+    (define script-fu-hsv-graph-beg-x 0))
+(if (not (symbol-bound? 'script-fu-hsv-graph-beg-y (the-environment)))
+    (define script-fu-hsv-graph-beg-y 0))
+(if (not (symbol-bound? 'script-fu-hsv-graph-end-x (the-environment)))
+    (define script-fu-hsv-graph-end-x 1))
+(if (not (symbol-bound? 'script-fu-hsv-graph-end-y (the-environment)))
+    (define script-fu-hsv-graph-end-y 1))
 
 (define (script-fu-hsv-graph img drawable scale opacity bounds?
 			     left2right? beg-x beg-y end-x end-y)
   (define (floor x) (- x (fmod x 1)))
   (define *pos* #f)
-  (define (set-point fvec index x y)
-    (aset! fvec (* 2 index) x)
-    (aset! fvec (+ (* 2 index) 1) y)
+  (define (set-point! fvec index x y)
+    (aset fvec (* 2 index) x)
+    (aset fvec (+ (* 2 index) 1) y)
     fvec)
 
   (define (plot-dot img drawable x y)
@@ -172,20 +189,34 @@
 	    (set! beg-y (nth 2 results))
 	    (set! end-x (nth (if (= TRUE left2right?) 3 1) results))
 	    (set! end-y (nth 4 results)))
-	  (begin 
+	  (let ((offsets (gimp-drawable-offsets drawable)))
 	    (set! beg-x (if (= TRUE left2right?)
-			    0
-			    (- (car (gimp-drawable-width drawable)) 1)))
-	    (set! beg-y 0)
+			    (nth 0 offsets)
+			    (- (+ (nth 0 offsets)
+				  (car (gimp-drawable-width drawable)))
+			       1)))
+	    (set! beg-y (nth 1 offsets))
 	    (set! end-x (if (= TRUE left2right?)
-			    (- (car (gimp-drawable-width drawable)) 1)
-			    0))
-	    (set! end-y (- (car (gimp-drawable-height drawable)) 1))))
-      (begin
-	(set! beg-x (clamp-value beg-x 0 (gimp-drawable-width drawable)))
-	(set! end-x (clamp-value end-x 0 (gimp-drawable-width drawable)))
-	(set! beg-y (clamp-value beg-y 0 (gimp-drawable-height drawable)))
-	(set! end-y (clamp-value beg-y 0 (gimp-drawable-heigth drawable)))))
+			    (- (+ (nth 0 offsets)
+				  (car (gimp-drawable-width drawable)))
+			       1)
+			    (nth 0 offsets)))
+	    (set! end-y (- (+ (nth 1 offsets)
+			      (car (gimp-drawable-height drawable)))
+			   1))))
+      (let ((offsets (gimp-drawable-offsets drawable)))
+	(set! beg-x (clamp-value beg-x 0
+				 (+ (nth 0 offsets)
+				    (gimp-drawable-width drawable))))
+	(set! end-x (clamp-value end-x 0 
+				 (+ (nth 0 offsets)
+				    (gimp-drawable-width drawable))))
+	(set! beg-y (clamp-value beg-y 0 
+				 (+ (nth 1 offsets)
+				    (gimp-drawable-height drawable))))
+	(set! end-y (clamp-value beg-y 0
+				 (+ (nth 1 offsets)
+				    (gimp-drawable-height drawable))))))
   (set! opacity (clamp-value opacity 0 100))
   (let* ((x-len (- end-x beg-x))
 	 (y-len (- end-y beg-y))
@@ -197,7 +228,7 @@
 	 (bglayer (car (gimp-layer-new gimg
 				       (+ (* 2 border-size) gimg-width)
 				       (+ (* 2 border-size) gimg-height)
-				       RGB_IMAGE "Background" 100 NORMAL)))
+				       1 "Background" 100 NORMAL)))
 	 (hsv-layer (car (gimp-layer-new gimg
 				       (+ (* 2 border-size) gimg-width)
 				       (+ (* 2 border-size) gimg-height)
@@ -280,6 +311,7 @@
       (gimp-layer-translate clayer 0 offset-y)
       (gimp-layer-translate text-layer border-size (+ offset-y 15)))
     (gimp-image-set-active-layer gimg bglayer)
+    (gimp-image-clean-all gimg)
     ;; return back the state
     (gimp-palette-set-foreground old-foreground)
     (gimp-palette-set-foreground old-background)
@@ -287,25 +319,34 @@
     (gimp-brushes-set-paint-mode old-paint-mode)
     (gimp-brushes-set-opacity old-opacity)
     (gimp-image-enable-undo gimg)
+    (set! script-fu-hsv-graph-scale scale)
+    (set! script-fu-hsv-graph-opacity opacity)
+    (set! script-fu-hsv-graph-bounds? bounds?)
+    (set! script-fu-hsv-graph-left2right? left2right?)
+    (set! script-fu-hsv-graph-beg-x beg-x)
+    (set! script-fu-hsv-graph-beg-y beg-y)
+    (set! script-fu-hsv-graph-end-x end-x)
+    (set! script-fu-hsv-graph-end-y end-y)
     (gimp-displays-flush)))
 
-(script-fu-register "script-fu-hsv-graph"
-		    "<Image>/Script-Fu/Utils/Draw HSV Graph"
-		    "Draph the graph of H/S/V values on the drawable"
-		    "Shuji Narazaki (narazaki@InetQ.or.jp)"
-		    "Shuji Narazaki"
-		    "1997"
-		    "RGB*"
-		    SF-IMAGE "Image to analyze" 0
-		    SF-DRAWABLE "Drawable to analyze" 0
-		    SF-VALUE "Graph Scale" "1"
-		    SF-VALUE "BG Opacity" "50"
-		    SF-TOGGLE "Use Selection Bounds instead of belows" TRUE
-		    SF-TOGGLE "from Top-Left to Bottom-Right" TRUE
-		    SF-VALUE "Start X" "0"
-		    SF-VALUE "Start Y" "0"
-		    SF-VALUE "End X" "100"
-		    SF-VALUE "End Y" "100"
+(script-fu-register
+ "script-fu-hsv-graph"
+ "<Image>/Script-Fu/Utils/Draw HSV Graph"
+ "Draph the graph of H/S/V values on the drawable"
+ "Shuji Narazaki <narazaki@InetQ.or.jp>"
+ "Shuji Narazaki"
+ "1997"
+ "RGB*"
+ SF-IMAGE "Image to analyze" 0
+ SF-DRAWABLE "Drawable to analyze" 0
+ SF-VALUE "Graph Scale" (number->string script-fu-hsv-graph-scale)
+ SF-VALUE "BG Opacity" (number->string script-fu-hsv-graph-opacity)
+ SF-TOGGLE "Use Selection Bounds instead of belows" script-fu-hsv-graph-bounds?
+ SF-TOGGLE "from Top-Left to Bottom-Right" script-fu-hsv-graph-left2right?
+ SF-VALUE "Start X" (number->string script-fu-hsv-graph-beg-x)
+ SF-VALUE "Start Y" (number->string script-fu-hsv-graph-beg-y)
+ SF-VALUE "End X" (number->string script-fu-hsv-graph-end-x)
+ SF-VALUE "End Y" (number->string script-fu-hsv-graph-end-y)
 )
 
 ;;; hsv-graph.scm ends here

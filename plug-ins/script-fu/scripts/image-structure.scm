@@ -1,13 +1,51 @@
 ;;; image-structure.scm -*-scheme-*-
-;;; Time-stamp: <1997/06/30 00:21:41 narazaki@InetQ.or.jp>
+;;; Time-stamp: <1998/03/28 02:46:26 narazaki@InetQ.or.jp>
 ;;; Author: Shuji Narazaki <narazaki@InetQ.or.jp>
-;;; Version 0.3
+;;; Version 0.7
 ;;; Code:
 
-(define (script-fu-show-image-structure img drawable space shear-length border
-					apply-layer-mask? with-layer-name?
-					with-pad? padding-color padding-opacity
-					with-background? background-color)
+(if (not (symbol-bound? 'script-fu-show-image-structure-new-image?
+			(the-environment)))
+    (define script-fu-show-image-structure-new-image? TRUE))
+(if (not (symbol-bound? 'script-fu-show-image-structure-space 
+			(the-environment)))
+    (define script-fu-show-image-structure-space 50))
+(if (not (symbol-bound? 'script-fu-show-image-structure-shear-length
+			(the-environment)))
+    (define script-fu-show-image-structure-shear-length 50))
+(if (not (symbol-bound? 'script-fu-show-image-structure-border
+			(the-environment)))
+    (define script-fu-show-image-structure-border 10))
+(if (not (symbol-bound? 'script-fu-show-image-structure-apply-layer-mask?
+			(the-environment)))
+    (define script-fu-show-image-structure-apply-layer-mask? TRUE))
+(if (not (symbol-bound? 'script-fu-show-image-structure-with-layer-name?
+			(the-environment)))
+    (define script-fu-show-image-structure-with-layer-name? TRUE))
+(if (not (symbol-bound? 'script-fu-show-image-structure-with-pad?
+			(the-environment)))
+    (define script-fu-show-image-structure-with-pad? TRUE))
+(if (not (symbol-bound? 'script-fu-show-image-structure-padding-color
+			(the-environment)))
+    (define script-fu-show-image-structure-padding-color '(255 255 255)))
+(if (not (symbol-bound? 'script-fu-show-image-structure-padding-opacity
+			(the-environment)))
+    (define script-fu-show-image-structure-padding-opacity 25))
+(if (not (symbol-bound? 'script-fu-show-image-structure-with-background?
+			(the-environment)))
+    (define script-fu-show-image-structure-with-background? TRUE))
+(if (not (symbol-bound? 'script-fu-show-image-structure-background-color
+			(the-environment)))
+    (define script-fu-show-image-structure-background-color '(0 0 0)))
+
+(define (script-fu-show-image-structure img drawable new-image? space
+					shear-length border apply-layer-mask?
+					with-layer-name? with-pad? padding-color
+					padding-opacity with-background? 
+					background-color)
+  (if (eq? new-image? TRUE)
+      (begin (set! img (car (gimp-channel-ops-duplicate img)))
+	     (gimp-display-new img)))
   (let* ((layers (gimp-image-get-layers img))
 	 (num-of-layers (car layers))
 	 (old-width (car (gimp-image-width img)))
@@ -67,7 +105,7 @@
 	  (set! layer-names (nreverse layer-names))
 	  (while (< index num-of-layers)
 	    (set! text-layer (car (gimp-text img -1 (/ border 2)
-					     (+ (* space index) old-width)
+					     (+ (* space index) old-height)
 					     (car layer-names)
 					     0 TRUE 14 PIXELS "*" "helvetica"
 					     "*" "*" "*" "*")))
@@ -77,27 +115,40 @@
     (gimp-image-set-active-layer img new-bg)
     (gimp-palette-set-background old-background)
     (gimp-palette-set-foreground old-foreground)
+    (set! script-fu-show-image-structure-new-image? new-image?)
+    (set! script-fu-show-image-structure-space space)
+    (set! script-fu-show-image-structure-shear-length shear-length)
+    (set! script-fu-show-image-structure-border border)
+    (set! script-fu-show-image-structure-apply-layer-mask? apply-layer-mask?)
+    (set! script-fu-show-image-structure-with-layer-name? with-layer-name?)
+    (set! script-fu-show-image-structure-with-pad? with-pad?)
+    (set! script-fu-show-image-structure-padding-color padding-color)
+    (set! script-fu-show-image-structure-padding-opacity padding-opacity)
+    (set! script-fu-show-image-structure-with-background? with-background?)
+    (set! script-fu-show-image-structure-background-color background-color)
     (gimp-displays-flush)))
 
-(script-fu-register "script-fu-show-image-structure"
-		    "<Image>/Script-Fu/Utils/Show Image Structure Destructively"
-		    "Show the layer structure of the image DESTRACTIVELY(the original image was modified)"
-		    "Shuji Narazaki (narazaki@InetQ.or.jp)"
-		    "Shuji Narazaki"
-		    "1997"
-		    "RGB*, GRAY*"
-		    SF-IMAGE "image" 0
-		    SF-DRAWABLE "Drawable (unused)" 0
-		    SF-VALUE "Space between layers" "50"
-		    SF-VALUE "Shear length (> 0)" "50"
-		    SF-VALUE "Outer Border (>= 0)" "10"
-		    SF-TOGGLE "Apply layer mask (otherwise discard)" TRUE 
-		    SF-TOGGLE "Insert layer names" TRUE
-		    SF-TOGGLE "Padding for transparent regions" TRUE
-		    SF-COLOR "Pad Color" '(255 255 255)
-		    SF-VALUE "Pad Opacity [0:100]" "25"
-		    SF-TOGGLE "Make New Background" TRUE
-		    SF-COLOR "Background Color" '(0 0 0)
+(script-fu-register
+ "script-fu-show-image-structure"
+ "<Image>/Script-Fu/Utils/Show Image Structure"
+ "Show the layer structure of the image"
+ "Shuji Narazaki <narazaki@InetQ.or.jp>"
+ "Shuji Narazaki"
+ "1997"
+ "RGB*, GRAY*"
+ SF-IMAGE "image" 0
+ SF-DRAWABLE "Drawable (unused)" 0
+ SF-TOGGLE "Make new image" script-fu-show-image-structure-new-image?
+ SF-VALUE "Space between layers" (number->string script-fu-show-image-structure-space)
+ SF-VALUE "Shear length (> 0)" (number->string script-fu-show-image-structure-shear-length)
+ SF-VALUE "Outer Border (>= 0)" (number->string script-fu-show-image-structure-border)
+ SF-TOGGLE "Apply layer mask (or discard)" script-fu-show-image-structure-apply-layer-mask? 
+ SF-TOGGLE "Insert layer names" script-fu-show-image-structure-with-layer-name?
+ SF-TOGGLE "Padding for transparent regions" script-fu-show-image-structure-with-pad?
+ SF-COLOR "Pad Color" script-fu-show-image-structure-padding-color
+ SF-VALUE "Pad Opacity [0:100]" (number->string script-fu-show-image-structure-padding-opacity)
+ SF-TOGGLE "Make New Background" script-fu-show-image-structure-with-background?
+ SF-COLOR "Background Color" script-fu-show-image-structure-background-color
 )
 
 ;;; image-structure.scm ends here

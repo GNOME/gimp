@@ -28,7 +28,6 @@ scriptdata_DATA = \
 	chip-away.scm				\
 	chrome-it.scm				\
 	chrome-logo.scm				\
-	circle-logo.scm				\
 	circuit.scm				\
 	clothify.scm				\
 	color-cycling.scm			\
@@ -77,6 +76,7 @@ scriptdata_DATA = \
 	title-header.scm			\
 	trochoid.scm				\
 	truchet.scm				\
+	unsharp-mask.scm			\
 	waves-anim.scm				\
 	weave.scm				\
 	xach-effect.scm
