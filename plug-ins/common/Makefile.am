@@ -11,6 +11,7 @@ EXTRA_DIST = \
 INCLUDES = \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
+	$(X_CFLAGS)		\
 	-I$(includedir)
 
 libexec_PROGRAMS = \

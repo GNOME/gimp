@@ -747,6 +747,8 @@ AC_SUBST(GAP_DECODE_MPEG)
 # Check for libxpm
 ##################
 
+gimp_save_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS $X_CFLAGS"
 gimp_save_LDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS $X_LIBS"
 if test "$gdk_target" = x11; then
@@ -759,6 +761,7 @@ if test -z "$LIBXPM"; then
       [AC_MSG_WARN(*** XPM plug-in will not be built (XPM header file not found) ***)])],
     [AC_MSG_WARN(*** XPM plug-in will not be built (XPM library not found) ***)], $X_PRE_LIBS $lib_X11)
 fi
+CFLAGS="$gimp_save_CFLAGS"
 LDFLAGS="$gimp_save_LDFLAGS"
 
 AC_SUBST(XPM)

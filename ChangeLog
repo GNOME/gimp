@@ -1,3 +1,13 @@
+2002-09-18  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: use X_CFLAGS when checking for xpm.h.
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/mkgen.pl: added X_CFLAGS here as well so that
+	xpm compiles even if GTK_CFLAGS doesn't pull in the X11 include
+	path for us. Should fix #93518 and hopefully won't break it for
+	other people.
+
 2002-09-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/convmatrix.c
