@@ -39,10 +39,15 @@
 typedef struct _FreeSelect FreeSelect;
 struct _FreeSelect
 {
-  DrawCore * core;       /*  Core select object                      */
+  DrawCore *core;       /*  Core select object                      */
 
-  int        op;         /*  selection operation (ADD, SUB, etc)     */
-  int        num_pts;    /*  Number of points in the polygon         */
+  gint      op;         /*  selection operation (ADD, SUB, etc)     */
+
+  gint      current_x;  /*  these values are updated on every motion event  */
+  gint      current_y;  /*  (enables immediate cursor updating on modifier
+			 *   key events).  */
+
+  gint      num_pts;    /*  Number of points in the polygon         */
 };
 
 
@@ -224,11 +229,15 @@ free_select_motion (Tool           *tool,
   FreeSelect *free_sel;
   GDisplay *gdisp;
 
-  if (tool->state != ACTIVE)
-    return;
-
   gdisp = (GDisplay *) gdisp_ptr;
   free_sel = (FreeSelect *) tool->private;
+
+  /*  needed for immediate cursor update on modifier event  */
+  free_sel->current_x = mevent->x;
+  free_sel->current_y = mevent->y;
+
+  if (tool->state != ACTIVE)
+    return;
 
   if (add_point (free_sel->num_pts, mevent->x, mevent->y))
     {
@@ -318,6 +327,7 @@ tools_new_free_select (void)
   tool->button_press_func   = free_select_button_press;
   tool->button_release_func = free_select_button_release;
   tool->motion_func         = free_select_motion;
+  tool->modifier_key_func   = rect_select_modifier_update;
   tool->cursor_update_func  = rect_select_cursor_update;
   tool->oper_update_func    = rect_select_oper_update;
   tool->control_func        = free_select_control;

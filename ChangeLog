@@ -1,3 +1,18 @@
+2000-03-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/rect_select.[ch]: added a modifier_key_func which gives
+	immediate cursor_update feedback on modifier key events.
+
+	* app/ellipse_select.c
+	* app/free_select.c
+	* app/fuzzy_select.c
+	* app/rect_selectP.h: call the new function.
+	Added current_[x|y] fields to the tools' structures which get
+	updated from the "motion" functions. They have to appear in the
+	same order in all structures because the modifier_key_func treats
+	them all as rectangular selection tools.
+	This is ugly and cries for a object hierarchy of tools.
+
 2000-03-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdrawable.c: gimp_drawable_get_color_at(): put the check

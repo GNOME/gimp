@@ -40,14 +40,18 @@
 typedef struct _FuzzySelect FuzzySelect;
 struct _FuzzySelect
 {
-  DrawCore * core;         /*  Core select object                      */
+  DrawCore *core;       /*  Core select object                      */
 
-  int        op;           /*  selection operation (ADD, SUB, etc)     */
+  gint      op;         /*  selection operation (ADD, SUB, etc)     */
 
-  int        x, y;         /*  Point from which to execute seed fill  */
-  int        first_x;      /*                                         */
-  int        first_y;      /*  variables to keep track of sensitivity */
-  double     first_threshold;  /* initial value of threshold slider   */
+  gint      current_x;  /*  these values are updated on every motion event  */
+  gint      current_y;  /*  (enables immediate cursor updating on modifier
+			 *   key events).  */
+
+  gint      x, y;             /*  Point from which to execute seed fill  */
+  gint      first_x;          /*                                         */
+  gint      first_y;          /*  variables to keep track of sensitivity */
+  gdouble   first_threshold;  /* initial value of threshold slider   */
 };
 
 
@@ -472,6 +476,12 @@ fuzzy_select_motion (Tool           *tool,
 
   static guint last_time = 0;
 
+  fuzzy_sel = (FuzzySelect *) tool->private;
+
+  /*  needed for immediate cursor update on modifier event  */
+  fuzzy_sel->current_x = mevent->x;
+  fuzzy_sel->current_y = mevent->y;
+
   if (tool->state != ACTIVE)
     return;
 
@@ -480,8 +490,6 @@ fuzzy_select_motion (Tool           *tool,
     return;
   
   last_time = mevent->time;
-
-  fuzzy_sel = (FuzzySelect *) tool->private;
 
   diff_x = mevent->x - fuzzy_sel->first_x;
   diff_y = mevent->y - fuzzy_sel->first_y;
@@ -692,6 +700,7 @@ tools_new_fuzzy_select ()
   tool->button_press_func   = fuzzy_select_button_press;
   tool->button_release_func = fuzzy_select_button_release;
   tool->motion_func         = fuzzy_select_motion;
+  tool->modifier_key_func   = rect_select_modifier_update;
   tool->cursor_update_func  = rect_select_cursor_update;
   tool->oper_update_func    = rect_select_oper_update;
   tool->control_func        = fuzzy_select_control;

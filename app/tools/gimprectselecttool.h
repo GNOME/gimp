@@ -22,12 +22,13 @@
 #include "tools.h"
 
 /*  rect select action functions  */
-void   rect_select_button_press   (Tool *, GdkEventButton *, gpointer);
-void   rect_select_button_release (Tool *, GdkEventButton *, gpointer);
-void   rect_select_motion         (Tool *, GdkEventMotion *, gpointer);
-void   rect_select_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-void   rect_select_oper_update    (Tool *, GdkEventMotion *, gpointer);
-void   rect_select_control        (Tool *, ToolAction,       gpointer);
+void   rect_select_button_press    (Tool *, GdkEventButton *, gpointer);
+void   rect_select_button_release  (Tool *, GdkEventButton *, gpointer);
+void   rect_select_motion          (Tool *, GdkEventMotion *, gpointer);
+void   rect_select_modifier_update (Tool *, GdkEventKey *   , gpointer);
+void   rect_select_cursor_update   (Tool *, GdkEventMotion *, gpointer);
+void   rect_select_oper_update     (Tool *, GdkEventMotion *, gpointer);
+void   rect_select_control         (Tool *, ToolAction,       gpointer);
 
 /*  rect select functions  */
 void   rect_select_draw           (Tool *);

@@ -41,8 +41,11 @@ static SelectionOptions *rect_options = NULL;
 extern SelectionOptions *ellipse_options;
 extern void ellipse_select (GImage *, int, int, int, int, int, int, int, double);
 
-static void selection_tool_update_op_state(RectSelect *rect_sel, int x, int y,
-					   int state,  GDisplay *gdisp);
+static void selection_tool_update_op_state (RectSelect *rect_sel,
+					    gint        x,
+					    gint        y,
+					    gint        state, 
+					    GDisplay   *gdisp);
 
 /*************************************/
 /*  Rectangular selection apparatus  */
@@ -285,11 +288,15 @@ rect_select_motion (Tool           *tool,
   int tw, th;
   double ratio;
 
-  if (tool->state != ACTIVE)
-    return;
-
   gdisp = (GDisplay *) gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
+
+  /*  needed for immediate cursor update on modifier event  */
+  rect_sel->current_x = mevent->x;
+  rect_sel->current_y = mevent->y;
+
+  if (tool->state != ACTIVE)
+    return;
 
   draw_core_pause (rect_sel->core, tool);
 
@@ -456,9 +463,9 @@ rect_select_draw (Tool *tool)
 
 static void
 selection_tool_update_op_state (RectSelect *rect_sel,
-				int         x,
-				int         y,
-				int         state,  
+				gint        x,
+				gint        y,
+				gint        state,  
 				GDisplay   *gdisp)
 {
   if (active_tool->state == ACTIVE)
@@ -491,9 +498,49 @@ rect_select_oper_update  (Tool           *tool,
 {
   RectSelect *rect_sel;
 
-  rect_sel = (RectSelect*)tool->private;
+  rect_sel = (RectSelect *) tool->private;
   selection_tool_update_op_state (rect_sel, mevent->x, mevent->y,
 				  mevent->state, gdisp_ptr);
+}
+
+void
+rect_select_modifier_update (Tool        *tool,
+			     GdkEventKey *kevent,
+			     gpointer     gdisp_ptr)
+{
+  RectSelect *rect_sel;
+  gint state;
+
+  state = kevent->state;
+
+  switch (kevent->keyval)
+    {
+    case GDK_Alt_L: case GDK_Alt_R:
+      if (state & GDK_MOD1_MASK)
+	state &= ~GDK_MOD1_MASK;
+      else
+	state |= GDK_MOD1_MASK;
+      break;
+
+    case GDK_Shift_L: case GDK_Shift_R:
+      if (state & GDK_SHIFT_MASK)
+	state &= ~GDK_SHIFT_MASK;
+      else
+	state |= GDK_SHIFT_MASK;
+      break;
+
+    case GDK_Control_L: case GDK_Control_R:
+      if (state & GDK_CONTROL_MASK)
+	state &= ~GDK_CONTROL_MASK;
+      else
+	state |= GDK_CONTROL_MASK;
+      break;
+    }
+
+  rect_sel = (RectSelect *) tool->private;
+  selection_tool_update_op_state (rect_sel,
+				  rect_sel->current_x, rect_sel->current_y,
+				  state, gdisp_ptr);
 }
 
 void
@@ -591,6 +638,7 @@ tools_new_rect_select ()
   tool->button_press_func   = rect_select_button_press;
   tool->button_release_func = rect_select_button_release;
   tool->motion_func         = rect_select_motion;
+  tool->modifier_key_func   = rect_select_modifier_update;
   tool->cursor_update_func  = rect_select_cursor_update;
   tool->oper_update_func    = rect_select_oper_update;
   tool->control_func        = rect_select_control;
