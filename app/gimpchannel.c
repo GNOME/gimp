@@ -602,7 +602,7 @@ int
 channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
 {
   PixelRegion maskPR;
-  unsigned char * data;
+  unsigned char *data, *data1;
   int x, y;
   int ex, ey;
   void *pr;
@@ -628,7 +628,7 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
   pixel_region_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, 0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, FALSE);
   for (pr = pixel_regions_register (1, &maskPR); pr != NULL; pr = pixel_regions_process (pr))
     {
-      data = maskPR.data;
+      data1 = data = maskPR.data;
       ex = maskPR.x + maskPR.w;
       ey = maskPR.y + maskPR.h;
       /* only check the pixels if this tile is not fully within the currently
@@ -650,9 +650,9 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
 	      ty2 = ey;
 	  }
 	  else
-	    for (y = maskPR.y; y < ey; y++)
+	    for (y = maskPR.y; y < ey; y++, data1 += maskPR.rowstride)
 	    {
-	      for (x = maskPR.x; x < ex; x++, data++)
+	      for (x = maskPR.x, data = data1; x < ex; x++, data++)
 		if (*data)
 		{
 		  minx = x;

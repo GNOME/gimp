@@ -1,3 +1,8 @@
+Thu May 27 22:04:49 1999  Jay Cox  (jaycox@earthlink.net)
+
+	* app/channel.c: applied fix for the channel_bounds bug from
+	Didier Gautheron <dgautheron@magic.fr>. (slightly modified)
+
 Thu May 27 22:00:58 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/transform_core.c
