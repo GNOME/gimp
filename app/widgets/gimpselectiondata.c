@@ -376,36 +376,36 @@ gimp_selection_data_get_color (GtkSelectionData *selection,
 }
 
 void
-gimp_selection_data_set_svg (GtkSelectionData *selection,
-                             GdkAtom           atom,
-                             const gchar      *svg_data,
-                             gint              svg_data_length)
+gimp_selection_data_set_stream (GtkSelectionData *selection,
+                                GdkAtom           atom,
+                                const guchar     *stream,
+                                gsize             stream_length)
 {
   g_return_if_fail (selection != NULL);
   g_return_if_fail (atom != GDK_NONE);
-  g_return_if_fail (svg_data != NULL);
-  g_return_if_fail (svg_data_length > 0);
+  g_return_if_fail (stream != NULL);
+  g_return_if_fail (stream_length > 0);
 
   gtk_selection_data_set (selection, atom,
-                          8, (guchar *) svg_data, svg_data_length);
+                          8, (guchar *) stream, stream_length);
 }
 
-const gchar *
-gimp_selection_data_get_svg (GtkSelectionData *selection,
-                             gint             *svg_data_length)
+const guchar *
+gimp_selection_data_get_stream (GtkSelectionData *selection,
+                                gsize            *stream_length)
 {
   g_return_val_if_fail (selection != NULL, NULL);
-  g_return_val_if_fail (svg_data_length != NULL, NULL);
+  g_return_val_if_fail (stream_length != NULL, NULL);
 
   if ((selection->format != 8) || (selection->length < 1))
     {
-      g_warning ("Received invalid SVG data!");
+      g_warning ("Received invalid data stream!");
       return NULL;
     }
 
-  *svg_data_length = selection->length;
+  *stream_length = selection->length;
 
-  return (const gchar *) selection->data;
+  return (const guchar *) selection->data;
 }
 
 void

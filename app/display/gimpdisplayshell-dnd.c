@@ -152,7 +152,7 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
 void
 gimp_display_shell_drop_svg (GtkWidget     *widget,
                              const gchar   *svg_data,
-                             gint           svg_data_len,
+                             gsize          svg_data_len,
                              gpointer       data)
 {
   GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (data);

@@ -37,14 +37,14 @@ gboolean        gimp_selection_data_get_color     (GtkSelectionData *selection,
                                                    GimpRGB          *color);
 
 
-/*  svg  */
+/*  stream (svg/png)  */
 
-void            gimp_selection_data_set_svg       (GtkSelectionData *selection,
+void            gimp_selection_data_set_stream    (GtkSelectionData *selection,
                                                    GdkAtom           atom,
-                                                   const gchar      *svg_data,
-                                                   gint              svg_data_length);
-const gchar   * gimp_selection_data_get_svg       (GtkSelectionData *selection,
-                                                   gint             *svg_data_length);
+                                                   const guchar     *stream,
+                                                   gsize             stream_length);
+const guchar  * gimp_selection_data_get_stream    (GtkSelectionData *selection,
+                                                   gsize            *stream_length);
 
 
 /*  image  */

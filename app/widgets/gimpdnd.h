@@ -32,6 +32,9 @@
 #define GIMP_TARGET_COLOR \
         { "application/x-color", 0, GIMP_DND_TYPE_COLOR }
 
+#define GIMP_TARGET_PNG \
+        { "image/png", 0, GIMP_DND_TYPE_PNG }
+
 #define GIMP_TARGET_SVG \
         { "image/svg", 0, GIMP_DND_TYPE_SVG }
 
@@ -131,25 +134,25 @@ void  gimp_dnd_color_dest_add      (GtkWidget            *widget,
 void  gimp_dnd_color_dest_remove   (GtkWidget            *widget);
 
 
-/*  svg dnd functions  */
+/*  stream dnd functions  */
 
-typedef gchar * (* GimpDndDragSvgFunc) (GtkWidget   *widget,
-                                        gint        *svg_data_len,
-                                        gpointer     data);
-typedef void    (* GimpDndDropSvgFunc) (GtkWidget   *widget,
-                                        const gchar *svg_data,
-                                        gint         svg_data_len,
-                                        gpointer     data);
+typedef guchar * (* GimpDndDragStreamFunc) (GtkWidget    *widget,
+                                            gsize        *stream_len,
+                                            gpointer      data);
+typedef void     (* GimpDndDropStreamFunc) (GtkWidget    *widget,
+                                            const guchar *stream,
+                                            gsize         stream_len,
+                                            gpointer      data);
 
-void  gimp_dnd_svg_source_add    (GtkWidget          *widget,
-                                  GimpDndDragSvgFunc  get_svg_func,
-                                  gpointer            data);
-void  gimp_dnd_svg_source_remove (GtkWidget          *widget);
+void  gimp_dnd_svg_source_add    (GtkWidget              *widget,
+                                  GimpDndDragStreamFunc   get_svg_func,
+                                  gpointer                data);
+void  gimp_dnd_svg_source_remove (GtkWidget              *widget);
 
-void  gimp_dnd_svg_dest_add      (GtkWidget          *widget,
-                                  GimpDndDropSvgFunc  set_svg_func,
-                                  gpointer            data);
-void  gimp_dnd_svg_dest_remove   (GtkWidget          *widget);
+void  gimp_dnd_svg_dest_add      (GtkWidget              *widget,
+                                  GimpDndDropStreamFunc   set_svg_func,
+                                  gpointer                data);
+void  gimp_dnd_svg_dest_remove   (GtkWidget              *widget);
 
 
 /*  GimpViewable (by GType) dnd functions  */

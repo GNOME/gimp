@@ -386,16 +386,17 @@ gimp_container_tree_view_drag_data_received (GtkWidget             *widget,
         case GIMP_DND_TYPE_SVG_XML:
           if (tree_view_class->drop_svg)
             {
-              const gchar *svg_data;
-              gint         svg_data_length;
+              const guchar *stream;
+              gsize         stream_length;
 
-              svg_data = gimp_selection_data_get_svg (selection_data,
-                                                      &svg_data_length);
+              stream = gimp_selection_data_get_stream (selection_data,
+                                                       &stream_length);
 
-              if (svg_data)
+              if (stream)
                 {
                   tree_view_class->drop_svg (tree_view,
-                                             svg_data, svg_data_length,
+                                             (const gchar *) stream,
+                                             stream_length,
                                              dest_viewable, drop_pos);
 
                   success = TRUE;

@@ -1,3 +1,22 @@
+2004-06-30  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpselectiondata.[ch]: renamed the SVG related
+	functions so that they deal with an anonymous data stream that
+	could as well be a PNG image.
+
+	* app/widgets/gimpdnd.[ch]
+	* app/widgets/gimpcontainertreeview-dnd.c: changed accordingly.
+
+	* app/display/gimpdisplayshell-dnd.[ch]
+	* app/vectors/gimpvectors-import.[ch]
+	* app/widgets/gimpcontainertreeview-dnd.c
+	* app/widgets/gimpvectorstreeview.c: use gsize for the length of
+	the buffer.
+
+	* app/widgets/gimpdnd.[ch]
+	* app/widgets/widgets-enums.[ch]: added GIMP_DND_TYPE_PNG which isn't
+	used yet.
+
 2004-06-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimppalette.[ch] (gimp_palette_add_entry): take

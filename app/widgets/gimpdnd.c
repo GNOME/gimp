@@ -123,14 +123,14 @@ static gboolean    gimp_dnd_set_color_data     (GtkWidget        *widget,
                                                 gpointer          set_color_data,
                                                 GtkSelectionData *selection);
 
-static void        gimp_dnd_get_svg_data       (GtkWidget        *widget,
-                                                GCallback         get_svg_func,
-                                                gpointer          get_svg_data,
+static void        gimp_dnd_get_stream_data    (GtkWidget        *widget,
+                                                GCallback         get_stream_func,
+                                                gpointer          get_stream_data,
                                                 GtkSelectionData *selection,
                                                 GdkAtom           atom);
-static gboolean    gimp_dnd_set_svg_data       (GtkWidget        *widget,
-                                                GCallback         set_svg_func,
-                                                gpointer          set_svg_data,
+static gboolean    gimp_dnd_set_stream_data    (GtkWidget        *widget,
+                                                GCallback         set_stream_func,
+                                                gpointer          set_stream_data,
                                                 GtkSelectionData *selection);
 
 static void        gimp_dnd_get_image_data     (GtkWidget        *widget,
@@ -268,6 +268,20 @@ static GimpDndDataDef dnd_data_defs[] =
   },
 
   {
+    GIMP_TARGET_PNG,
+
+    "gimp-dnd-get-png-func",
+    "gimp-dnd-get-png-data",
+
+    "gimp-dnd-set-png-func",
+    "gimp-dnd-set-png-data",
+
+    gimp_dnd_get_viewable_icon,
+    gimp_dnd_get_stream_data,
+    gimp_dnd_set_stream_data
+  },
+
+  {
     GIMP_TARGET_SVG,
 
     "gimp-dnd-get-svg-func",
@@ -277,8 +291,8 @@ static GimpDndDataDef dnd_data_defs[] =
     "gimp-dnd-set-svg-data",
 
     gimp_dnd_get_viewable_icon,
-    gimp_dnd_get_svg_data,
-    gimp_dnd_set_svg_data
+    gimp_dnd_get_stream_data,
+    gimp_dnd_set_stream_data
   },
 
   {
@@ -291,8 +305,8 @@ static GimpDndDataDef dnd_data_defs[] =
     "gimp-dnd-set-svg-xml-data",
 
     gimp_dnd_get_viewable_icon,
-    gimp_dnd_get_svg_data,
-    gimp_dnd_set_svg_data
+    gimp_dnd_get_stream_data,
+    gimp_dnd_set_stream_data
   },
 
   {
@@ -1088,56 +1102,55 @@ gimp_dnd_color_dest_remove (GtkWidget *widget)
 }
 
 
-/***********************/
-/*  svg dnd functions  */
-/***********************/
+/**************************/
+/*  stream dnd functions  */
+/**************************/
 
 static void
-gimp_dnd_get_svg_data (GtkWidget        *widget,
-                       GCallback         get_svg_func,
-                       gpointer          get_svg_data,
-                       GtkSelectionData *selection,
-                       GdkAtom           atom)
+gimp_dnd_get_stream_data (GtkWidget        *widget,
+                          GCallback         get_stream_func,
+                          gpointer          get_stream_data,
+                          GtkSelectionData *selection,
+                          GdkAtom           atom)
 {
-  gchar *svg_data;
-  gint   svg_data_length;
+  guchar *stream;
+  gsize   stream_length;
 
-  svg_data = (* (GimpDndDragSvgFunc) get_svg_func) (widget, &svg_data_length,
-                                                    get_svg_data);
+  stream = (* (GimpDndDragStreamFunc) get_stream_func) (widget, &stream_length,
+                                                        get_stream_data);
 
-  if (svg_data)
+  if (stream)
     {
-      gimp_selection_data_set_svg (selection, atom,
-                                   svg_data, svg_data_length);
-      g_free (svg_data);
+      gimp_selection_data_set_stream (selection, atom, stream, stream_length);
+      g_free (stream);
     }
 }
 
 static gboolean
-gimp_dnd_set_svg_data (GtkWidget        *widget,
-                       GCallback         set_svg_func,
-                       gpointer          set_svg_data,
-                       GtkSelectionData *selection)
+gimp_dnd_set_stream_data (GtkWidget        *widget,
+                          GCallback         set_stream_func,
+                          gpointer          set_stream_data,
+                          GtkSelectionData *selection)
 {
-  const gchar *svg_data;
-  gint         svg_data_length;
+  const guchar *stream;
+  gsize         stream_length;
 
-  svg_data = gimp_selection_data_get_svg (selection, &svg_data_length);
+  stream = gimp_selection_data_get_stream (selection, &stream_length);
 
-  if (! svg_data)
+  if (! stream)
     return FALSE;
 
-  (* (GimpDndDropSvgFunc) set_svg_func) (widget, svg_data,
-                                         svg_data_length,
-                                         set_svg_data);
+  (* (GimpDndDropStreamFunc) set_stream_func) (widget,
+                                               stream, stream_length,
+                                               set_stream_data);
 
   return TRUE;
 }
 
 void
-gimp_dnd_svg_source_add (GtkWidget          *widget,
-                         GimpDndDragSvgFunc  get_svg_func,
-                         gpointer            data)
+gimp_dnd_svg_source_add (GtkWidget             *widget,
+                         GimpDndDragStreamFunc  get_svg_func,
+                         gpointer               data)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
@@ -1159,9 +1172,9 @@ gimp_dnd_svg_source_remove (GtkWidget *widget)
 }
 
 void
-gimp_dnd_svg_dest_add (GtkWidget          *widget,
-                       GimpDndDropSvgFunc  set_svg_func,
-                       gpointer            data)
+gimp_dnd_svg_dest_add (GtkWidget             *widget,
+                       GimpDndDropStreamFunc  set_svg_func,
+                       gpointer               data)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 

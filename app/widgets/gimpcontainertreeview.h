@@ -93,7 +93,7 @@ struct _GimpContainerTreeViewClass
                               GtkTreeViewDropPosition  drop_pos);
   void     (* drop_svg)      (GimpContainerTreeView   *tree_view,
                               const gchar             *svg_data,
-                              gint                     svg_data_length,
+                              gsize                    svg_data_length,
                               GimpViewable            *dest_viewable,
                               GtkTreeViewDropPosition  drop_pos);
 };

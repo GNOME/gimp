@@ -59,11 +59,11 @@ static void    gimp_vectors_tree_view_set_container (GimpContainerView *view,
                                                      GimpContainer     *container);
 static void    gimp_vectors_tree_view_drop_svg      (GimpContainerTreeView *tree_view,
                                                      const gchar           *svg_data,
-                                                     gint                   svg_data_len,
+                                                     gsize                  svg_data_len,
                                                      GimpViewable          *dest_viewable,
                                                      GtkTreeViewDropPosition  drop_pos);
 static gchar * gimp_vectors_tree_view_drag_svg      (GtkWidget           *widget,
-                                                     gint                *svg_data_len,
+                                                     gsize               *svg_data_len,
                                                      gpointer             data);
 
 
@@ -277,7 +277,7 @@ gimp_vectors_tree_view_set_container (GimpContainerView *view,
 static void
 gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
                                  const gchar             *svg_data,
-                                 gint                     svg_data_len,
+                                 gsize                    svg_data_len,
                                  GimpViewable            *dest_viewable,
                                  GtkTreeViewDropPosition  drop_pos)
 {
@@ -307,7 +307,7 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
 
 static gchar *
 gimp_vectors_tree_view_drag_svg (GtkWidget *widget,
-                                 gint      *svg_data_len,
+                                 gsize     *svg_data_len,
                                  gpointer   data)
 {
   GimpItemTreeView *view   = GIMP_ITEM_TREE_VIEW (data);
