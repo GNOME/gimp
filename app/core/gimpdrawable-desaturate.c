@@ -41,18 +41,20 @@ gimp_drawable_desaturate (GimpDrawable *drawable)
   gint         lightness, min, max;
   gboolean     has_alpha;
   gpointer     pr;
-  gint         x1, y1, x2, y2;
+  gint         x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_drawable_is_rgb (drawable));
 
   has_alpha = gimp_drawable_has_alpha (drawable);
-  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+    return;
 
   pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+		     x, y, width, height, FALSE);
   pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+		     x, y, width, height, TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
@@ -94,5 +96,5 @@ gimp_drawable_desaturate (GimpDrawable *drawable)
 
   gimp_drawable_merge_shadow (drawable, TRUE, _("Desaturate"));
 
-  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable, x, y, width, height);
 }

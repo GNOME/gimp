@@ -38,13 +38,16 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
   PixelRegion region;
   PixelRegion mask;
   gint        x1, y1, x2, y2;
-  gint        off_x, off_y;
   gboolean    have_mask;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (histogram != NULL);
 
   have_mask = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+  if ((x1 == x2) || (y1 == y2))
+    return;
+
   pixel_region_init (&region, gimp_drawable_data (drawable),
                      x1, y1, (x2 - x1), (y2 - y1), FALSE);
 
@@ -52,6 +55,7 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
     {
       GimpChannel *sel_mask;
       GimpImage   *gimage;
+      gint         off_x, off_y;
 
       gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
       sel_mask = gimp_image_get_mask (gimage);

@@ -1065,8 +1065,7 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
                             const gchar  *undo_desc)
 {
   GimpImage   *gimage;
-  PixelRegion  shadowPR;
-  gint         x1, y1, x2, y2;
+  gint         x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
@@ -1079,13 +1078,17 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
    *  extents of the selection mask, as it cannot extend beyond
    *  them.
    */
-  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  pixel_region_init (&shadowPR, gimage->shadow,
-                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  gimp_drawable_apply_region (drawable, &shadowPR,
-                              push_undo, undo_desc,
-                              GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
-                              NULL, x1, y1);
+  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+    {
+      PixelRegion shadowPR;
+
+      pixel_region_init (&shadowPR, gimage->shadow,
+                         x, y, width, height, FALSE);
+      gimp_drawable_apply_region (drawable, &shadowPR,
+                                  push_undo, undo_desc,
+                                  GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
+                                  NULL, x, y);
+    }
 }
 
 void
@@ -1214,10 +1217,10 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
   g_return_val_if_fail (y2 != NULL, FALSE);
 
   item   = GIMP_ITEM (drawable);
-  gimage = gimp_item_get_image (item);
 
-  g_return_val_if_fail (gimage != NULL, FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
 
+  gimage    = gimp_item_get_image (item);
   selection = gimp_image_get_mask (gimage);
 
   if (GIMP_DRAWABLE (selection) != drawable &&
@@ -1241,6 +1244,54 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
   *y2 = gimp_item_height (item);
 
   return FALSE;
+}
+
+gboolean
+gimp_drawable_mask_intersect (GimpDrawable *drawable,
+                              gint         *x,
+                              gint         *y,
+                              gint         *width,
+                              gint         *height)
+{
+  GimpItem    *item;
+  GimpImage   *gimage;
+  GimpChannel *selection;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (x != NULL, FALSE);
+  g_return_val_if_fail (y != NULL, FALSE);
+  g_return_val_if_fail (width  != NULL, FALSE);
+  g_return_val_if_fail (height != NULL, FALSE);
+
+  item = GIMP_ITEM (drawable);
+
+  g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
+
+  gimage    = gimp_item_get_image (item);
+  selection = gimp_image_get_mask (gimage);
+
+  if (GIMP_DRAWABLE (selection) != drawable &&
+      gimp_channel_bounds (selection, x, y, width, height))
+    {
+      gint off_x, off_y;
+
+      gimp_item_offsets (item, &off_x, &off_y);
+
+      return gimp_rectangle_intersect (*x - off_x, *y - off_y,
+                                       *width - *x, *height - *y,
+                                       0, 0,
+                                       gimp_item_width (item),
+                                       gimp_item_height (item),
+                                       x, y,
+                                       width, height);
+    }
+
+  *x      = 0;
+  *y      = 0;
+  *width  = gimp_item_width  (item);
+  *height = gimp_item_height (item);
+
+  return TRUE;
 }
 
 gboolean

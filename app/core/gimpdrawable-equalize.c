@@ -44,20 +44,19 @@ gimp_drawable_equalize (GimpDrawable *drawable,
                         gboolean      mask_only)
 {
   PixelRegion    srcPR, destPR;
-  guchar        *mask;
   gint           bytes;
-  gint           x1, y1, x2, y2;
+  gint           x, y, width, height;
   GimpHistogram *hist;
   GimpLut       *lut;
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  mask = NULL;
-
-  bytes     = gimp_drawable_bytes (drawable);
-
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  bytes  = gimp_drawable_bytes (drawable);
+
+  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+    return;
 
   hist = gimp_histogram_new (GIMP_BASE_CONFIG (gimage->gimp->config));
   gimp_drawable_calculate_histogram (drawable, hist);
@@ -66,14 +65,12 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   lut = eq_histogram_lut_new (hist, bytes);
 
   /*  Apply the histogram  */
-  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
   pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+		     x, y, width, height, FALSE);
   pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+		     x, y, width, height, TRUE);
 
-  pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 
+  pixel_regions_process_parallel ((p_func) gimp_lut_process, lut,
 				  2, &srcPR, &destPR);
 
   gimp_lut_free (lut);
@@ -81,5 +78,5 @@ gimp_drawable_equalize (GimpDrawable *drawable,
 
   gimp_drawable_merge_shadow (drawable, TRUE, _("Equalize"));
 
-  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable, x, y, width, height);
 }

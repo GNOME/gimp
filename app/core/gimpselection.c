@@ -652,8 +652,8 @@ gimp_selection_extract (GimpChannel  *selection,
   GimpImageBaseType  base_type = GIMP_RGB;
   gint               bytes     = 0;
   gint               x1, y1, x2, y2;
-  gint               off_x, off_y;
   gboolean           non_empty;
+  gint               off_x, off_y;
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -668,7 +668,7 @@ gimp_selection_extract (GimpChannel  *selection,
    *  actual selection mask
    */
   non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  if (non_empty && (!(x2 - x1) || !(y2 - y1)))
+  if (non_empty && ((x1 == x2) || (y1 == y2)))
     {
       g_message (_("Unable to cut or copy because the "
 		   "selected region is empty."));
@@ -803,9 +803,8 @@ gimp_selection_float (GimpChannel  *selection,
   GimpImage   *gimage;
   GimpLayer   *layer;
   TileManager *tiles;
+  gint         x1, y1, x2, y2;
   gboolean     non_empty;
-  gint         x1, y1;
-  gint         x2, y2;
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -816,7 +815,7 @@ gimp_selection_float (GimpChannel  *selection,
 
   /*  Make sure there is a region to float...  */
   non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  if (! non_empty || (x2 - x1) == 0 || (y2 - y1) == 0)
+  if (! non_empty || (x1 == x2) || (y1 == y2))
     {
       g_message (_("Cannot float selection because the "
 		   "selected region is empty."));

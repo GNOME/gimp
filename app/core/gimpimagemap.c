@@ -275,10 +275,10 @@ gimp_image_map_apply (GimpImageMap          *image_map,
                       GimpImageMapApplyFunc  apply_func,
                       gpointer               apply_data)
 {
-  gint x1, y1;
-  gint x2, y2;
-  gint offset_x, offset_y;
+  gint x, y;
   gint width, height;
+  gint undo_offset_x, undo_offset_y;
+  gint undo_width, undo_height;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
   g_return_if_fail (apply_func != NULL);
@@ -301,33 +301,38 @@ gimp_image_map_apply (GimpImageMap          *image_map,
     return;
 
   /*  The application should occur only within selection bounds  */
-  gimp_drawable_mask_bounds (image_map->drawable, &x1, &y1, &x2, &y2);
-
-  if ((x2 - x1 < 1) || (y2 - y1 < 1))
+  if (! gimp_drawable_mask_intersect (image_map->drawable,
+                                      &x, &y, &width, &height))
     return;
 
   /*  If undo tiles don't exist, or change size, (re)allocate  */
   if (image_map->undo_tiles)
     {
-      offset_x = image_map->undo_offset_x;
-      offset_y = image_map->undo_offset_y;
-      width  = tile_manager_width (image_map->undo_tiles);
-      height = tile_manager_height (image_map->undo_tiles);
+      undo_offset_x = image_map->undo_offset_x;
+      undo_offset_y = image_map->undo_offset_y;
+      undo_width    = tile_manager_width (image_map->undo_tiles);
+      undo_height   = tile_manager_height (image_map->undo_tiles);
     }
   else
     {
-      offset_x = offset_y = width = height = 0;
+      undo_offset_x = 0;
+      undo_offset_y = 0;
+      undo_width    = 0;
+      undo_height   = 0;
     }
 
   if (! image_map->undo_tiles ||
-      offset_x != x1 || offset_y != y1 ||
-      width != (x2 - x1) || height != (y2 - y1))
+      undo_offset_x != x      ||
+      undo_offset_y != y      ||
+      undo_width    != width  ||
+      undo_height   != height)
     {
       /* If either the extents changed or the tiles don't exist,
        * allocate new
        */
       if (! image_map->undo_tiles ||
-          width != (x2 - x1) || height != (y2 - y1))
+          undo_width  != width    ||
+          undo_height != height)
         {
           /*  Destroy old tiles  */
           if (image_map->undo_tiles)
@@ -335,44 +340,45 @@ gimp_image_map_apply (GimpImageMap          *image_map,
 
           /*  Allocate new tiles  */
           image_map->undo_tiles =
-            tile_manager_new ((x2 - x1), (y2 - y1),
+            tile_manager_new (width, height,
                               gimp_drawable_bytes (image_map->drawable));
         }
 
       /*  Copy from the image to the new tiles  */
       pixel_region_init (&image_map->srcPR,
                          gimp_drawable_data (image_map->drawable),
-                         x1, y1, (x2 - x1), (y2 - y1), FALSE);
+                         x, y, width, height, FALSE);
       pixel_region_init (&image_map->destPR, image_map->undo_tiles,
-                         0, 0, (x2 - x1), (y2 - y1), TRUE);
+                         0, 0, width, height, TRUE);
 
       copy_region (&image_map->srcPR, &image_map->destPR);
 
       /*  Set the offsets  */
-      image_map->undo_offset_x = x1;
-      image_map->undo_offset_y = y1;
+      image_map->undo_offset_x = x;
+      image_map->undo_offset_y = y;
     }
   else /* image_map->undo_tiles exist AND drawable dimensions have not changed... */
     {
       /* Reset to initial drawable conditions.            */
       /* Copy from the backup undo tiles to the drawable  */
       pixel_region_init (&image_map->srcPR, image_map->undo_tiles,
-                         0, 0, width, height, FALSE);
+                         0, 0, undo_width, undo_height, FALSE);
       pixel_region_init (&image_map->destPR,
                          gimp_drawable_data (image_map->drawable),
-                         offset_x, offset_y, width, height, TRUE);
+                         undo_offset_x, undo_offset_y,
+                         undo_width, undo_height, TRUE);
 
       copy_region (&image_map->srcPR, &image_map->destPR);
     }
 
   /*  Configure the src from the drawable data  */
   pixel_region_init (&image_map->srcPR, image_map->undo_tiles,
-                     0, 0, (x2 - x1), (y2 - y1), FALSE);
+                     0, 0, width, height, FALSE);
 
   /*  Configure the dest as the shadow buffer  */
   pixel_region_init (&image_map->destPR,
                      gimp_drawable_shadow (image_map->drawable),
-                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+                     x, y, width, height, TRUE);
 
   /*  Apply the image transformation to the pixels  */
   image_map->PRI = pixel_regions_register (2,

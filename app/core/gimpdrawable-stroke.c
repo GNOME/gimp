@@ -205,7 +205,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
                                    GimpStrokeOptions *options,
                                    GimpScanConvert   *scan_convert)
 {
-  /* Stroke options */
+  GimpContext *context = GIMP_CONTEXT (options);
+  GimpImage   *gimage;
   gdouble      width;
   TileManager *base;
   TileManager *mask;
@@ -214,28 +215,11 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
   gint         off_x, off_y;
   guchar       bg[1] = { 0, };
   PixelRegion  maskPR, basePR;
-  GimpContext *context;
-  GimpImage   *gimage;
-
-  context = GIMP_CONTEXT (options);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  /* what area do we operate on? */
-  if (! gimp_channel_is_empty (gimp_image_get_mask (gimage)))
-    {
-      gint x2, y2;
-
-      gimp_drawable_mask_bounds (drawable, &x, &y, &x2, &y2);
-      w = x2 - x;
-      h = y2 - y;
-    }
-  else
-    {
-      x = y = 0;
-      w = gimp_item_width (GIMP_ITEM (drawable));
-      h = gimp_item_height (GIMP_ITEM (drawable));
-    }
+  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
+    return;
 
   gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 

@@ -189,10 +189,15 @@ void            gimp_drawable_fill_by_type       (GimpDrawable       *drawable,
 						  GimpFillType        fill_type);
 
 gboolean        gimp_drawable_mask_bounds        (GimpDrawable       *drawable,
-						  gint               *x1,
-						  gint               *y1,
-						  gint               *x2,
-						  gint               *y2);
+                                                  gint               *x1,
+                                                  gint               *y1,
+                                                  gint               *x2,
+                                                  gint               *y2);
+gboolean        gimp_drawable_mask_intersect     (GimpDrawable       *drawable,
+                                                  gint               *x,
+                                                  gint               *y,
+                                                  gint               *width,
+                                                  gint               *height);
 
 gboolean        gimp_drawable_has_alpha          (const GimpDrawable *drawable);
 GimpImageType   gimp_drawable_type               (const GimpDrawable *drawable);

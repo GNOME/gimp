@@ -1,3 +1,32 @@
+2004-10-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable.[ch]: added gimp_drawable_mask_intersect()
+	which returns the same bounding box as gimp_drawable_mask_bounds(),
+	but returns TRUE only if there is a non-empty intersection between
+	the drawable and the selection, or no selection at all. It also
+	returns the intersection as x,y,width,height instead of the
+	eeky x1,y1,x2,y2.
+
+	* app/core/gimp-edit.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-desaturate.c
+	* app/core/gimpdrawable-equalize.c
+	* app/core/gimpdrawable-histogram.c
+	* app/core/gimpdrawable-invert.c
+	* app/core/gimpdrawable-stroke.c
+	* app/core/gimpimagemap.c
+	* app/core/gimpselection.c
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: either switch from
+	gimp_drawable_mask_bounds() to _intersect() or check the return
+	values of _mask_bounds() manually to avoid operations on empty
+	areas. Return successfully because it's a nop, not a failure.
+	Fixes bug #155733 for the core.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
 2004-10-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptextoptions.c (gimp_text_options_gui): removed

@@ -138,6 +138,12 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
+  bytes     = gimp_drawable_bytes (drawable);
+  selection = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+  if ((x1 == x2) || (y1 == y2))
+    return;
+
   if (fill_mode == GIMP_FG_BUCKET_FILL ||
       fill_mode == GIMP_BG_BUCKET_FILL)
     {
@@ -163,9 +169,6 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
     }
 
   gimp_set_busy (gimage->gimp);
-
-  bytes     = gimp_drawable_bytes (drawable);
-  selection = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   /*  Do a seed bucket fill...To do this, calculate a new
    *  contiguous region. If there is a selection, calculate the

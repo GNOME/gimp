@@ -130,10 +130,6 @@ gimp_edit_paste (GimpImage    *gimage,
   if (! layer)
     return NULL;
 
-  /*  Start a group undo  */
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
-                               _("Paste"));
-
   if (drawable)
     {
       /*  if pasting to a drawable  */
@@ -197,6 +193,10 @@ gimp_edit_paste (GimpImage    *gimage,
 
   GIMP_ITEM (layer)->offset_x = offset_x;
   GIMP_ITEM (layer)->offset_y = offset_y;
+
+  /*  Start a group undo  */
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                               _("Paste"));
 
   /*  If there is a selection mask clear it--
    *  this might not always be desired, but in general,
@@ -388,15 +388,13 @@ gimp_edit_fill_internal (GimpImage    *gimage,
 {
   TileManager *buf_tiles;
   PixelRegion  bufPR;
-  gint         x1, y1, x2, y2;
+  gint         x, y, width, height;
   gint         tiles_bytes;
   guchar       col[MAX_CHANNELS];
   TempBuf     *pat_buf = NULL;
   gboolean     new_buf;
 
-  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-  if (x1 == x2 || y1 == y2)
+  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     return TRUE;  /*  nothing to do, but the fill succeded  */
 
   tiles_bytes = gimp_drawable_bytes (drawable);
@@ -440,9 +438,9 @@ gimp_edit_fill_internal (GimpImage    *gimage,
       return TRUE;  /*  nothing to do, but the fill succeded  */
     }
 
-  buf_tiles = tile_manager_new (x2 - x1, y2 - y1, tiles_bytes);
+  buf_tiles = tile_manager_new (width, height, tiles_bytes);
 
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, x2 - x1, y2 - y1, TRUE);
+  pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, TRUE);
 
   if (pat_buf)
     {
@@ -459,17 +457,17 @@ gimp_edit_fill_internal (GimpImage    *gimage,
       color_region (&bufPR, col);
     }
 
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, x2 - x1, y2 - y1, FALSE);
+  pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, FALSE);
   gimp_drawable_apply_region (drawable, &bufPR,
                               TRUE, undo_desc,
                               GIMP_OPACITY_OPAQUE,
                               (fill_type == GIMP_TRANSPARENT_FILL) ?
                               GIMP_ERASE_MODE : GIMP_NORMAL_MODE,
-                              NULL, x1, y1);
+                              NULL, x, y);
 
   tile_manager_unref (buf_tiles);
 
-  gimp_drawable_update (drawable, x1, y1, x2 - x1, y2 - y1);
+  gimp_drawable_update (drawable, x, y, width, height);
 
   return TRUE;
 }

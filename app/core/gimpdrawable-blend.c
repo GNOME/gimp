@@ -191,7 +191,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   TileManager *buf_tiles;
   PixelRegion  bufPR;
   gint         bytes;
-  gint         x1, y1, x2, y2;
+  gint         x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
@@ -201,9 +201,10 @@ gimp_drawable_blend (GimpDrawable         *drawable,
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_set_busy (gimage->gimp);
+  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+    return;
 
-  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  gimp_set_busy (gimage->gimp);
 
   bytes = gimp_drawable_bytes (drawable);
 
@@ -213,15 +214,15 @@ gimp_drawable_blend (GimpDrawable         *drawable,
       bytes += 1;
     }
 
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
+  buf_tiles = tile_manager_new (width, height, bytes);
+  pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, TRUE);
 
   gradient_fill_region (gimage, drawable, context,
-			&bufPR, (x2 - x1), (y2 - y1),
+			&bufPR, width, height,
 			blend_mode, gradient_type, offset, repeat, reverse,
 			supersample, max_depth, threshold, dither,
-			(startx - x1), (starty - y1),
-			(endx - x1), (endy - y1),
+			(startx - x), (starty - y),
+			(endx - x), (endy - y),
 			progress);
 
   if (distR.tiles)
@@ -230,14 +231,14 @@ gimp_drawable_blend (GimpDrawable         *drawable,
       distR.tiles = NULL;
     }
 
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, FALSE);
   gimp_drawable_apply_region (drawable, &bufPR,
                               TRUE, _("Blend"),
                               opacity, paint_mode,
-                              NULL, x1, y1);
+                              NULL, x, y);
 
   /*  update the image  */
-  gimp_drawable_update (drawable, x1, y1, x2 - x1, y2 - y1);
+  gimp_drawable_update (drawable, x, y, width, height);
 
   /*  free the temporary buffer  */
   tile_manager_unref (buf_tiles);

@@ -91,10 +91,6 @@ brightness_contrast_invoker (Gimp         *gimp,
   GimpDrawable *drawable;
   gint32 brightness;
   gint32 contrast;
-  GimpImage *gimage;
-  GimpLut *lut;
-  PixelRegion srcPR, destPR;
-  int x1, y1, x2, y2;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -115,27 +111,31 @@ brightness_contrast_invoker (Gimp         *gimp,
 
       if (success)
         {
-          gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-          lut = brightness_contrast_lut_new (brightness / 255.0,
-                                             contrast / 127.0,
-                                             gimp_drawable_bytes (drawable));
+          gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
-          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+            {
+              GimpLut     *lut;
+              PixelRegion  srcPR, destPR;
 
-          pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), FALSE);
-          pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), TRUE);
+              lut = brightness_contrast_lut_new (brightness / 255.0,
+                                                 contrast / 127.0,
+                                                 gimp_drawable_bytes (drawable));
 
-          pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-                                          &srcPR, &destPR);
+              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                                 x, y, width, height, FALSE);
+              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+                                 x, y, width, height, TRUE);
 
-          gimp_lut_free (lut);
+              pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
+                                              &srcPR, &destPR);
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Brightness-Contrast"));
-          gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+              gimp_lut_free (lut);
+
+              gimp_drawable_merge_shadow (drawable, TRUE, _("Brightness-Contrast"));
+              gimp_drawable_update (drawable, x, y, width, height);
+            }
         }
     }
 
@@ -192,10 +192,6 @@ levels_invoker (Gimp         *gimp,
   gdouble gamma;
   gint32 low_output;
   gint32 high_output;
-  PixelRegion srcPR, destPR;
-  Levels l;
-  gint x1, y1, x2, y2;
-  GimpLut *lut;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -236,41 +232,49 @@ levels_invoker (Gimp         *gimp,
 
       if (success)
         {
-          /* FIXME: hack */
-          if (gimp_drawable_is_gray (drawable) && channel == GIMP_HISTOGRAM_ALPHA)
-            channel = 1;
-
-          lut = gimp_lut_new ();
-
-          levels_init (&l);
-
-          l.low_input[channel]   = low_input;
-          l.high_input[channel]  = high_input;
-          l.gamma[channel]       = gamma;
-          l.low_output[channel]  = low_output;
-          l.high_output[channel] = high_output;
-
-          /* setup the lut */
-          gimp_lut_setup (lut,
-                          (GimpLutFunc) levels_lut_func,
-                          &l,
-                          gimp_drawable_bytes (drawable));
+          gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
-          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+            {
+              PixelRegion  srcPR, destPR;
+              Levels       l;
+              GimpLut     *lut;
 
-          pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), FALSE);
-          pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), TRUE);
+              /* FIXME: hack */
+              if (gimp_drawable_is_gray (drawable) &&
+                  channel == GIMP_HISTOGRAM_ALPHA)
+                channel = 1;
 
-          pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-                                          &srcPR, &destPR);
+              lut = gimp_lut_new ();
 
-          gimp_lut_free (lut);
+              levels_init (&l);
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
-          gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+              l.low_input[channel]   = low_input;
+              l.high_input[channel]  = high_input;
+              l.gamma[channel]       = gamma;
+              l.low_output[channel]  = low_output;
+              l.high_output[channel] = high_output;
+
+              /* setup the lut */
+              gimp_lut_setup (lut,
+                              (GimpLutFunc) levels_lut_func,
+                              &l,
+                              gimp_drawable_bytes (drawable));
+
+              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                                 x, y, width, height, FALSE);
+              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+                                 x, y, width, height, TRUE);
+
+              pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
+                                              &srcPR, &destPR);
+
+              gimp_lut_free (lut);
+
+              gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
+              gimp_drawable_update (drawable, x, y, width, height);
+            }
         }
     }
 
@@ -341,12 +345,6 @@ levels_auto_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  PixelRegion srcPR, destPR;
-  Levels levels;
-  gint x1, y1, x2, y2;
-  GimpLut *lut;
-  GimpImage *image;
-  GimpHistogram *hist;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -359,39 +357,46 @@ levels_auto_invoker (Gimp         *gimp,
 
       if (success)
         {
-          /* Build the histogram */
-          image = gimp_item_get_image (GIMP_ITEM (drawable));
-          hist  = gimp_histogram_new (GIMP_BASE_CONFIG (image->gimp->config));
-
-          gimp_drawable_calculate_histogram (drawable, hist);
-
-          /* Calculate the levels */
-          levels_init (&levels);
-          levels_auto (&levels, hist, ! gimp_drawable_is_gray (drawable));
-
-          /* Set up the lut */
-          lut  = gimp_lut_new ();
-          gimp_lut_setup (lut,
-                          (GimpLutFunc) levels_lut_func,
-                          &levels,
-                          gimp_drawable_bytes (drawable));
+          gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
-          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+            {
+              PixelRegion    srcPR, destPR;
+              Levels         levels;
+              GimpLut       *lut;
+              GimpHistogram *hist;
 
-          pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), FALSE);
-          pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), TRUE);
+              /* Build the histogram */
+              hist = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
 
-          pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-                                          &srcPR, &destPR);
+              gimp_drawable_calculate_histogram (drawable, hist);
 
-          gimp_lut_free (lut);
-          gimp_histogram_free (hist);
+              /* Calculate the levels */
+              levels_init (&levels);
+              levels_auto (&levels, hist, ! gimp_drawable_is_gray (drawable));
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
-          gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+              /* Set up the lut */
+              lut  = gimp_lut_new ();
+              gimp_lut_setup (lut,
+                              (GimpLutFunc) levels_lut_func,
+                              &levels,
+                              gimp_drawable_bytes (drawable));
+
+              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                                 x, y, width, height, FALSE);
+              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+                                 x, y, width, height, TRUE);
+
+              pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
+                                              &srcPR, &destPR);
+
+              gimp_lut_free (lut);
+              gimp_histogram_free (hist);
+
+              gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
+              gimp_drawable_update (drawable, x, y, width, height);
+            }
         }
     }
 
@@ -433,10 +438,6 @@ posterize_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 levels;
-  GimpImage *gimage;
-  GimpLut *lut;
-  PixelRegion srcPR, destPR;
-  int x1, y1, x2, y2;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -453,25 +454,29 @@ posterize_invoker (Gimp         *gimp,
 
       if (success)
         {
-          gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-          lut = posterize_lut_new (levels, gimp_drawable_bytes (drawable)); 
+          gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
-          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+            {
+              GimpLut     *lut;
+              PixelRegion  srcPR, destPR;
 
-          pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), FALSE);
-          pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), TRUE);
+              lut = posterize_lut_new (levels, gimp_drawable_bytes (drawable)); 
 
-          pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-                                          &srcPR, &destPR);
+              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                                 x, y, width, height, FALSE);
+              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+                                 x, y, width, height, TRUE);
 
-          gimp_lut_free (lut);
+              pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
+                                              &srcPR, &destPR);
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Posterize"));
-          gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+              gimp_lut_free (lut);
+
+              gimp_drawable_merge_shadow (drawable, TRUE, _("Posterize"));
+              gimp_drawable_update (drawable, x, y, width, height);
+            }
         }
     }
 
@@ -678,11 +683,6 @@ curves_spline_invoker (Gimp         *gimp,
   gint32 channel;
   gint32 num_points;
   guint8 *control_pts;
-  Curves c;
-  gint x1, y1, x2, y2;
-  gint j;
-  PixelRegion srcPR, destPR;
-  GimpLut *lut;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -709,46 +709,55 @@ curves_spline_invoker (Gimp         *gimp,
 
       if (success)
         {
-          /* FIXME: hack */
-          if (gimp_drawable_is_gray (drawable) && channel == GIMP_HISTOGRAM_ALPHA)
-            channel = 1;
-
-          lut = gimp_lut_new ();
-
-          curves_init (&c);
-
-          /*  unset the last point  */
-          c.points[channel][CURVES_NUM_POINTS - 1][0] = -1;
-          c.points[channel][CURVES_NUM_POINTS - 1][1] = -1;
-
-          for (j = 0; j < num_points / 2; j++)
-            {
-              c.points[channel][j][0] = control_pts[j * 2];
-              c.points[channel][j][1] = control_pts[j * 2 + 1];
-            }
-
-          curves_calculate_curve (&c, channel);
-
-          gimp_lut_setup (lut,
-                          (GimpLutFunc) curves_lut_func,
-                          &c,
-                          gimp_drawable_bytes (drawable));
+          gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
-          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+            {
+              Curves       c;
+              gint         j;
+              PixelRegion  srcPR, destPR;
+              GimpLut     *lut;
 
-          pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), FALSE);
-          pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), TRUE);
+              /* FIXME: hack */
+              if (gimp_drawable_is_gray (drawable) &&
+                  channel == GIMP_HISTOGRAM_ALPHA)
+                channel = 1;
 
-          pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-                                          &srcPR, &destPR);
+              lut = gimp_lut_new ();
 
-          gimp_lut_free (lut);
+              curves_init (&c);
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
-          gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+              /*  unset the last point  */
+              c.points[channel][CURVES_NUM_POINTS - 1][0] = -1;
+              c.points[channel][CURVES_NUM_POINTS - 1][1] = -1;
+
+              for (j = 0; j < num_points / 2; j++)
+                {
+                  c.points[channel][j][0] = control_pts[j * 2];
+                  c.points[channel][j][1] = control_pts[j * 2 + 1];
+                }
+
+              curves_calculate_curve (&c, channel);
+
+              gimp_lut_setup (lut,
+                              (GimpLutFunc) curves_lut_func,
+                              &c,
+                              gimp_drawable_bytes (drawable));
+
+              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                                 x, y, width, height, FALSE);
+              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+                                 x, y, width, height, TRUE);
+
+              pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
+                                              &srcPR, &destPR);
+
+              gimp_lut_free (lut);
+
+              gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
+              gimp_drawable_update (drawable, x, y, width, height);
+            }
         }
     }
 
@@ -807,11 +816,6 @@ curves_explicit_invoker (Gimp         *gimp,
   gint32 channel;
   gint32 num_bytes;
   guint8 *curve;
-  Curves c;
-  gint x1, y1, x2, y2;
-  gint j;
-  PixelRegion srcPR, destPR;
-  GimpLut *lut;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -838,37 +842,46 @@ curves_explicit_invoker (Gimp         *gimp,
 
       if (success)
         {
-          /* FIXME: hack */
-          if (gimp_drawable_is_gray (drawable) && channel == GIMP_HISTOGRAM_ALPHA)
-            channel = 1;
-
-          lut = gimp_lut_new ();
-
-          curves_init (&c);
-
-          for (j = 0; j < 256; j++)
-            c.curve[channel][j] = curve[j];
-
-          gimp_lut_setup (lut,
-                          (GimpLutFunc) curves_lut_func,
-                          &c,
-                          gimp_drawable_bytes (drawable));
+          gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
-          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+            {
+              Curves       c;
+              gint         j;
+              PixelRegion  srcPR, destPR;
+              GimpLut     *lut;
 
-          pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), FALSE);
-          pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), TRUE);
+              /* FIXME: hack */
+              if (gimp_drawable_is_gray (drawable) &&
+                  channel == GIMP_HISTOGRAM_ALPHA)
+                channel = 1;
 
-          pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-                                          &srcPR, &destPR);
+              lut = gimp_lut_new ();
 
-          gimp_lut_free (lut);
+              curves_init (&c);
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
-          gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+              for (j = 0; j < 256; j++)
+                c.curve[channel][j] = curve[j];
+
+              gimp_lut_setup (lut,
+                              (GimpLutFunc) curves_lut_func,
+                              &c,
+                              gimp_drawable_bytes (drawable));
+
+              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                                 x, y, width, height, FALSE);
+              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+                                 x, y, width, height, TRUE);
+
+              pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
+                                              &srcPR, &destPR);
+
+              gimp_lut_free (lut);
+
+              gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
+              gimp_drawable_update (drawable, x, y, width, height);
+            }
         }
     }
 
@@ -929,10 +942,6 @@ color_balance_invoker (Gimp         *gimp,
   gdouble cyan_red;
   gdouble magenta_green;
   gdouble yellow_blue;
-  ColorBalance cb;
-  PixelRegionIterator *pr;
-  PixelRegion srcPR, destPR;
-  gint x1, y1, x2, y2;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -963,33 +972,40 @@ color_balance_invoker (Gimp         *gimp,
 
       if (success)
         {
-          color_balance_init (&cb);
-
-          cb.preserve_luminosity = preserve_lum;
-
-          cb.cyan_red[transfer_mode]      = cyan_red;
-          cb.magenta_green[transfer_mode] = magenta_green;
-          cb.yellow_blue[transfer_mode]   = yellow_blue;
-
-          color_balance_create_lookup_tables (&cb);
+          gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
-          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-          pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), FALSE);
-          pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-          for (pr = pixel_regions_register (2, &srcPR, &destPR);
-               pr;
-               pr = pixel_regions_process (pr))
+          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
             {
-              color_balance (&srcPR, &destPR, &cb);
-            }
+              ColorBalance         cb;
+              PixelRegionIterator *pr;
+              PixelRegion          srcPR, destPR;
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Color Balance"));
-          gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+              color_balance_init (&cb);
+
+              cb.preserve_luminosity = preserve_lum;
+
+              cb.cyan_red[transfer_mode]      = cyan_red;
+              cb.magenta_green[transfer_mode] = magenta_green;
+              cb.yellow_blue[transfer_mode]   = yellow_blue;
+
+              color_balance_create_lookup_tables (&cb);
+
+              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                                 x, y, width, height, FALSE);
+              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+                                 x, y, width, height, TRUE);
+
+              for (pr = pixel_regions_register (2, &srcPR, &destPR);
+                   pr;
+                   pr = pixel_regions_process (pr))
+                {
+                  color_balance (&srcPR, &destPR, &cb);
+                }
+
+              gimp_drawable_merge_shadow (drawable, TRUE, _("Color Balance"));
+              gimp_drawable_update (drawable, x, y, width, height);
+            }
         }
     }
 
@@ -1058,10 +1074,6 @@ colorize_invoker (Gimp         *gimp,
   gdouble hue;
   gdouble saturation;
   gdouble lightness;
-  Colorize colors;
-  PixelRegionIterator *pr;
-  PixelRegion srcPR, destPR;
-  gint x1, y1, x2, y2;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -1086,31 +1098,38 @@ colorize_invoker (Gimp         *gimp,
 
       if (success)
         {
-          colorize_init (&colors);
-
-          colors.hue        = hue;
-          colors.saturation = saturation;
-          colors.lightness  = lightness;
-
-          colorize_calculate (&colors);
+          gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
-          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-          pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), FALSE);
-          pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-          for (pr = pixel_regions_register (2, &srcPR, &destPR);
-               pr;
-               pr = pixel_regions_process (pr))
+          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
             {
-              colorize (&srcPR, &destPR, &colors);
-            }
+              Colorize             colors;
+              PixelRegionIterator *pr;
+              PixelRegion          srcPR, destPR;
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Colorize"));
-          gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+              colorize_init (&colors);
+
+              colors.hue        = hue;
+              colors.saturation = saturation;
+              colors.lightness  = lightness;
+
+              colorize_calculate (&colors);
+
+              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                                 x, y, width, height, FALSE);
+              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+                                 x, y, width, height, TRUE);
+
+              for (pr = pixel_regions_register (2, &srcPR, &destPR);
+                   pr;
+                   pr = pixel_regions_process (pr))
+                {
+                  colorize (&srcPR, &destPR, &colors);
+                }
+
+              gimp_drawable_merge_shadow (drawable, TRUE, _("Colorize"));
+              gimp_drawable_update (drawable, x, y, width, height);
+            }
         }
     }
 
@@ -1327,10 +1346,6 @@ hue_saturation_invoker (Gimp         *gimp,
   gdouble hue_offset;
   gdouble lightness;
   gdouble saturation;
-  HueSaturation hs;
-  PixelRegionIterator *pr;
-  PixelRegion srcPR, destPR;
-  gint x1, y1, x2, y2;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -1359,32 +1374,39 @@ hue_saturation_invoker (Gimp         *gimp,
 
       if (success)
         {
-          hue_saturation_init (&hs);
-
-          hs.hue[hue_range]        = hue_offset;
-          hs.lightness[hue_range]  = lightness;
-          hs.saturation[hue_range] = saturation;
-
-          /* Calculate the transfer arrays */
-          hue_saturation_calculate_transfers (&hs);
+          gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
-          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-          pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), FALSE);
-          pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-          for (pr = pixel_regions_register (2, &srcPR, &destPR);
-               pr;
-               pr = pixel_regions_process (pr))
+          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
             {
-              hue_saturation (&srcPR, &destPR, &hs);
-            }
+              HueSaturation        hs;
+              PixelRegionIterator *pr;
+              PixelRegion          srcPR, destPR;
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Hue-Saturation"));
-          gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+              hue_saturation_init (&hs);
+
+              hs.hue[hue_range]        = hue_offset;
+              hs.lightness[hue_range]  = lightness;
+              hs.saturation[hue_range] = saturation;
+
+              /* Calculate the transfer arrays */
+              hue_saturation_calculate_transfers (&hs);
+
+              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                                 x, y, width, height, FALSE);
+              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+                                 x, y, width, height, TRUE);
+
+              for (pr = pixel_regions_register (2, &srcPR, &destPR);
+                   pr;
+                   pr = pixel_regions_process (pr))
+                {
+                  hue_saturation (&srcPR, &destPR, &hs);
+                }
+
+              gimp_drawable_merge_shadow (drawable, TRUE, _("Hue-Saturation"));
+              gimp_drawable_update (drawable, x, y, width, height);
+            }
         }
     }
 
@@ -1447,9 +1469,6 @@ threshold_invoker (Gimp         *gimp,
   GimpDrawable *drawable;
   gint32 low_threshold;
   gint32 high_threshold;
-  Threshold tr;
-  gint x1, y1, x2, y2;
-  PixelRegion srcPR, destPR;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -1470,23 +1489,29 @@ threshold_invoker (Gimp         *gimp,
 
       if (success)
         {
-          tr.color          = gimp_drawable_is_rgb (drawable);
-          tr.low_threshold  = low_threshold;
-          tr.high_threshold = high_threshold;
+          gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
-          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+            {
+              Threshold   tr;
+              PixelRegion srcPR, destPR;
 
-          pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), FALSE);
-          pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-                             x1, y1, (x2 - x1), (y2 - y1), TRUE);
+              tr.color          = gimp_drawable_is_rgb (drawable);
+              tr.low_threshold  = low_threshold;
+              tr.high_threshold = high_threshold;
 
-          pixel_regions_process_parallel ((p_func) threshold_2, &tr, 2,
-                                          &srcPR, &destPR);
+              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                                 x, y, width, height, FALSE);
+              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+                                 x, y, width, height, TRUE);
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Threshold"));
-          gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+              pixel_regions_process_parallel ((p_func) threshold_2, &tr, 2,
+                                              &srcPR, &destPR);
+
+              gimp_drawable_merge_shadow (drawable, TRUE, _("Threshold"));
+              gimp_drawable_update (drawable, x, y, width, height);
+            }
         }
     }
 

@@ -37,25 +37,25 @@ void
 gimp_drawable_invert (GimpDrawable *drawable)
 {
   PixelRegion  srcPR, destPR;
-  gint         x1, y1, x2, y2;
+  gint         x, y, width, height;
   GimpLut     *lut;
+
+  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+    return;
 
   lut = invert_lut_new (gimp_drawable_bytes (drawable));
 
-  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+		     x, y, width, height, FALSE);
   pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+		     x, y, width, height, TRUE);
 
-  pixel_regions_process_parallel ((p_func)gimp_lut_process, lut, 
+  pixel_regions_process_parallel ((p_func)gimp_lut_process, lut,
 				  2, &srcPR, &destPR);
 
   gimp_lut_free (lut);
 
   gimp_drawable_merge_shadow (drawable, TRUE, _("Invert"));
 
-  gimp_drawable_update (drawable,
-			x1, y1,
-			(x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable, x, y, width, height);
 }
