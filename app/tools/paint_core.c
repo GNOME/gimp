@@ -340,7 +340,7 @@ paint_core_cursor_update (tool, mevent, gdisp_ptr)
   draw_core_pause (paint_core->core, tool);
 
   gdisplay_untransform_coords (gdisp, (double) mevent->x, (double) mevent->y,
-			       &x, &y, TRUE, TRUE);
+			       &x, &y, TRUE, FALSE);
  
   if ((layer = gimage_get_active_layer (gdisp->gimage))) 
     {
