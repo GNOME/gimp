@@ -41,7 +41,7 @@ sub import {
    *Gimp::Tile::DESTROY=
    *Gimp::PixelRgn::DESTROY=
    *Gimp::GDrawable::DESTROY=sub {
-      my $req="DTRY".args2net(@_);
+      my $req="DTRY".args2net(0,@_);
       print $server_fh pack("N",length($req)).$req;
    };
 }
@@ -59,13 +59,13 @@ sub response {
    read($server_fh,$len,4) == 4 or die "protocol error (1)";
    $len=unpack("N",$len);
    read($server_fh,$req,$len) == $len or die "protocol error (2)";
-   net2args($req);
+   net2args(0,$req);
 }
 
 # this is hardcoded into gimp_call_procedure!
 sub command {
    my $req=shift;
-   $req.=args2net(@_);
+   $req.=args2net(0,@_);
    print $server_fh pack("N",length($req)).$req;
 }
 
@@ -73,18 +73,18 @@ sub gimp_call_procedure {
    my($len,@args,$trace,$req);
    
    if ($trace_level) {
-      $req="TRCE".args2net($trace_level,@_);
+      $req="TRCE".args2net(0,$trace_level,@_);
       print $server_fh pack("N",length($req)).$req;
       do {
          read($server_fh,$len,4) == 4 or die "protocol error";
          $len=unpack("N",$len);
          read($server_fh,$req,abs($len)) == $len or die "protocol error";
          if ($len<0) {
-            ($req,@args)=net2args($req);
+            ($req,@args)=net2args(0,$req);
             print "ignoring callback $req\n";
             redo;
          }
-         ($trace,$req,@args)=net2args($req);
+         ($trace,$req,@args)=net2args(0,$req);
          if (ref $trace_res eq "SCALAR") {
             $$trace_res = $trace;
          } else {
@@ -92,18 +92,18 @@ sub gimp_call_procedure {
          }
       } while 0;
    } else {
-      $req="EXEC".args2net(@_);
+      $req="EXEC".args2net(0,@_);
       print $server_fh pack("N",length($req)).$req;
       do {
          read($server_fh,$len,4) == 4 or die "protocol error";
          $len=unpack("N",$len);
          read($server_fh,$req,abs($len)) == $len or die "protocol error";
          if ($len<0) {
-            ($req,@args)=net2args($req);
+            ($req,@args)=net2args(0,$req);
             print "ignoring callback $req\n";
             redo;
          }
-         ($req,@args)=net2args($req);
+         ($req,@args)=net2args(0,$req);
       } while 0;
    }
    croak $req if $req;

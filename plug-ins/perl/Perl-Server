@@ -95,7 +95,7 @@ sub destroy_objects {
 # this is hardcoded into handle_request!
 sub reply {
   my $fh=shift;
-  my $data=Gimp::Net::args2net(@_);
+  my $data=Gimp::Net::args2net(0,@_);
   print $fh pack("N",length($data)).$data;
 }
 
@@ -120,29 +120,29 @@ sub handle_request($) {
    if(!$auth or $authorized[fileno($fh)]) {
       if($req eq "EXEC") {
          no strict 'refs';
-         ($req,@args)=Gimp::Net::net2args($data);
+         ($req,@args)=Gimp::Net::net2args(1,$data);
          @args=deobjectify(eval { Gimp->$req(objectify(@args)) });
-         $data=Gimp::Net::args2net($@,@args);
+         $data=Gimp::Net::args2net(1,$@,@args);
          print $fh pack("N",length($data)).$data;
       } elsif ($req eq "TEST") {
          no strict 'refs';
          print $fh (defined(*{"Gimp::Lib::$data"}{CODE}) || Gimp::_gimp_procedure_available($data)) ? "1" : "0";
       } elsif ($req eq "DTRY") {
-         destroy_objects Gimp::Net::net2args($data);
+         destroy_objects Gimp::Net::net2args(0,$data);
       } elsif($req eq "TRCE") {
          no strict 'refs';
-         ($trace_level,$req,@args)=Gimp::Net::net2args($data);
+         ($trace_level,$req,@args)=Gimp::Net::net2args(1,$data);
          Gimp::set_trace($trace_level);
          $trace_res="";
          @args=deobjectify(eval { Gimp->$req(objectify(@args)) });
-         $data=Gimp::Net::args2net($trace_res,$@,@args);
+         $data=Gimp::Net::args2net(1,$trace_res,$@,@args);
          print $fh pack("N",length($data)).$data;
          Gimp::set_trace(0);
       } elsif ($req eq "QUIT") {
          slog "received QUIT request";
          $server_quit = 1;
       } elsif($req eq "AUTH") {
-         $data=Gimp::Net::args2net(1,"authorization unnecessary");
+         $data=Gimp::Net::args2net(0,1,"authorization unnecessary");
          print $fh pack("N",length($data)).$data;
       } elsif($req eq "LOCK") {
          my($lock,$shared)=unpack("N*",$data);
@@ -178,7 +178,7 @@ sub handle_request($) {
             slog $msg;
             sleep 5; # safety measure
          }
-         $data=Gimp::Net::args2net($ok,$msg);
+         $data=Gimp::Net::args2net(0,$ok,$msg);
          print $fh pack("N",length($data)).$data;
          return $ok;
       } else {

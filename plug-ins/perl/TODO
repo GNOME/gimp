@@ -11,6 +11,7 @@ make test TEST_VERBOSE=1
 bugs
 
   * KILL :auto from default(!)
+  * auto-flush of gdrawable when merge_shadow(?)
   * gimp-piddle must be written back automatically on destroy, if changed
   * possibly rename "Brush Selection" to "Paint Settings"
   * gimp-tile set dirty automatically(!)

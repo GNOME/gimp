@@ -1902,13 +1902,13 @@ GPixelRgnIterator
 gimp_pixel_rgns_register(...)
 	CODE:
         if (items == 1)
-	   RETVAL = gimp_pixel_rgns_register (1, old_pixelrgn (ST (0)));
+	  RETVAL = gimp_pixel_rgns_register (1, old_pixelrgn (ST (0)));
         else if (items == 2)
-	   RETVAL = gimp_pixel_rgns_register (2, old_pixelrgn (ST (0)), old_pixelrgn (ST (1)));
+	  RETVAL = gimp_pixel_rgns_register (2, old_pixelrgn (ST (0)), old_pixelrgn (ST (1)));
         else if (items == 3)
-	   RETVAL = gimp_pixel_rgns_register (3, old_pixelrgn (ST (0)), old_pixelrgn (ST (1)), old_pixelrgn (ST (2)));
+	  RETVAL = gimp_pixel_rgns_register (3, old_pixelrgn (ST (0)), old_pixelrgn (ST (1)), old_pixelrgn (ST (2)));
         else
-           croak ("gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 and report this error");
+          croak ("gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 and report this error");
         OUTPUT:
         RETVAL
 
