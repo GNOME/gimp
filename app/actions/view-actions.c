@@ -275,6 +275,70 @@ static GimpEnumActionEntry view_padding_color_actions[] =
     GIMP_HELP_VIEW_PADDING_COLOR }
 };
 
+static GimpEnumActionEntry view_scroll_horizontal_actions[] =
+{
+  { "view-scroll-horizontal", NULL,
+    "Set horizontal scroll offset", NULL, NULL,
+    GIMP_ACTION_SELECT_SET,
+    NULL },
+  { "view-scroll-left-border", NULL,
+    "Scroll to left border", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST,
+    NULL },
+  { "view-scroll-right-border", NULL,
+    "Scroll to right border", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST,
+    NULL },
+  { "view-scroll-left", NULL,
+    "Scroll left", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS,
+    NULL },
+  { "view-scroll-right", NULL,
+    "Scroll right", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT,
+    NULL },
+  { "view-scroll-page-left", NULL,
+    "Scroll page left", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "view-scroll-page-right", NULL,
+    "Scroll page right", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry view_scroll_vertical_actions[] =
+{
+  { "view-scroll-vertical", NULL,
+    "Set vertical scroll offset", NULL, NULL,
+    GIMP_ACTION_SELECT_SET,
+    NULL },
+  { "view-scroll-top-border", NULL,
+    "Scroll to top border", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST,
+    NULL },
+  { "view-scroll-bottom-border", NULL,
+    "Scroll to bottom border", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST,
+    NULL },
+  { "view-scroll-up", NULL,
+    "Scroll up", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS,
+    NULL },
+  { "view-scroll-down", NULL,
+    "Scroll down", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT,
+    NULL },
+  { "view-scroll-page-up", NULL,
+    "Scroll page up", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "view-scroll-page-down", NULL,
+    "Scroll page down", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT,
+    NULL }
+};
+
 
 void
 view_actions_setup (GimpActionGroup *group)
@@ -299,6 +363,16 @@ view_actions_setup (GimpActionGroup *group)
                                       view_padding_color_actions,
                                       G_N_ELEMENTS (view_padding_color_actions),
                                       G_CALLBACK (view_padding_color_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      view_scroll_horizontal_actions,
+                                      G_N_ELEMENTS (view_scroll_horizontal_actions),
+                                      G_CALLBACK (view_scroll_horizontal_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      view_scroll_vertical_actions,
+                                      G_N_ELEMENTS (view_scroll_vertical_actions),
+                                      G_CALLBACK (view_scroll_vertical_cmd_callback));
 
   /*  connect "activate" of view-zoom-other manually so it can be
    *  selected even if it's the active item of the radio group

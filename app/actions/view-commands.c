@@ -201,6 +201,52 @@ view_dot_for_dot_cmd_callback (GtkAction *action,
 }
 
 void
+view_scroll_horizontal_cmd_callback (GtkAction *action,
+                                     gint       value,
+                                     gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  gdouble           offset;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  offset = action_select_value ((GimpActionSelectType) value,
+                                shell->hsbdata->value,
+                                shell->hsbdata->lower,
+                                shell->hsbdata->upper -
+                                shell->hsbdata->page_size,
+                                shell->hsbdata->step_increment,
+                                shell->hsbdata->page_increment,
+                                FALSE);
+  gtk_adjustment_set_value (shell->hsbdata, offset);
+}
+
+void
+view_scroll_vertical_cmd_callback (GtkAction *action,
+                                   gint       value,
+                                   gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  gdouble           offset;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  offset = action_select_value ((GimpActionSelectType) value,
+                                shell->vsbdata->value,
+                                shell->vsbdata->lower,
+                                shell->vsbdata->upper -
+                                shell->vsbdata->page_size,
+                                shell->vsbdata->step_increment,
+                                shell->vsbdata->page_increment,
+                                FALSE);
+  gtk_adjustment_set_value (shell->vsbdata, offset);
+}
+
+void
 view_info_window_cmd_callback (GtkAction *action,
 			       gpointer   data)
 {

@@ -1,3 +1,9 @@
+2004-07-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/view-actions.c
+	* app/actions/view-commands.[ch]: added actions and callbacks for
+	scrolling the view. Not used in menus but useful for controllers.
+
 2004-07-07  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpeditselectiontool.c
