@@ -82,6 +82,7 @@ SUBDIRS = 			\
 	normalize		\
 	nova			\
 	oilify			\
+	pagecurl		\
 	palette			\
 	papertile		\
 	pat			\

@@ -1,3 +1,10 @@
+Wed Apr  8 00:04:31 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/batch.c: fixup for script-fu in batch mode from
+	Christian Maegaard <cc@chaos.dk>
+
+	* added pagecurl plug-in
+
 Wed Apr  8 01:40:45 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/by_color_select.c: Don't destroy tool.

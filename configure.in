@@ -484,6 +484,7 @@ plug-ins/pnm/Makefile
 plug-ins/plasma/Makefile
 plug-ins/pixelize/Makefile
 plug-ins/pcx/Makefile
+plug-ins/pagecurl/Makefile
 plug-ins/pat/Makefile
 plug-ins/blinds/Makefile
 plug-ins/autostretch_hsv/Makefile

@@ -84,24 +84,111 @@ batch_is_cmd (char *cmd)
   return (paren_level == 0);
 }
 
+char *
+get_tok(char **rest)
+{
+  char *tok_start, *tok;
+  int i,j,len,escapes;
+
+  /* Skip delimiters */
+  while((**rest != 0) && 
+	(**rest == ' ' || **rest == '\t'))
+    (*rest)++;
+
+  /* token starts here */
+  tok_start = *rest;
+
+  if(**rest == '"'){
+    /* Handle string */
+
+    /* Skip quote */
+    (*rest)++;
+    tok_start++;
+    len = 0;
+    escapes = 0;
+
+    /* Scan to end while skipping escaped quotes */
+    while((**rest != 0) && 
+	  (**rest != '"')){
+      if(**rest == '\\'){
+	(*rest)++;
+	escapes++;
+      }
+      (*rest)++;
+      len++;
+    }
+    if(**rest == '"'){
+      (*rest)++;
+      tok = g_malloc(len+1);
+    }
+    else{
+      g_print("String not properly terminated.");
+      return NULL;
+    }
+
+    /* Copy the string while converting the escaped characters. */
+    /* Only double quote and backspace is accepted other escapes are ignored. */
+    j = 0;
+    for (i=0;i < len + escapes;i++){
+      if(tok_start[i] != '\\')
+	tok[j++] = tok_start[i];
+      else{
+	i++;
+	if(tok_start[i] == '"' || tok_start[i] == '\\')
+	  tok[j++] = tok_start[i];
+      }
+    }
+    tok[j] = 0;
+  }
+  else{
+    /* Handle number or identifier */
+    while((**rest != 0) && 
+	  ((**rest >= 'a' && **rest <= 'z') || 
+	   (**rest >= 'A' && **rest <= 'Z') || 
+	   (**rest >= '0' && **rest <= '9') ||
+	   (**rest == '-') ||
+	   (**rest == '_')))
+      (*rest)++;
+    if (*rest != tok_start){
+      len = *rest - tok_start;
+      tok = g_malloc(len+1);
+      strncpy(tok,tok_start,len);
+      tok[len]=0;
+    }
+    else{
+      if(**rest == 0){
+	g_print("Unexpected end of command argument.");
+        return NULL;
+      }
+      /* One character token - normally "(" or ")" */
+      tok = g_malloc(2);
+      tok[0] = *rest[0];
+      tok[1] = 0;
+      (*rest)++;
+    }
+  }
+  return tok;
+}
+
 static void
 batch_run_cmd (char *cmd)
 {
   ProcRecord *proc;
   Argument *args;
   Argument *vals;
+  char *rest;
   char *cmdname;
   char *t;
   int i;
 
-  cmd = strchr (cmd, '(');
-  if (!cmd)
+  rest = cmd;
+  t = get_tok(&rest);
+  if (!t || t[0] != '(')
     return;
-  cmd += 1;
+  g_free(t);
 
-  cmdname = cmd;
-  cmd = strtok (cmd, " )");
-  if (!cmd)
+  cmdname = get_tok (&rest);
+  if (!cmdname)
     return;
 
   t = cmdname;
@@ -131,25 +218,28 @@ batch_run_cmd (char *cmd)
 	case PDB_INT32:
 	case PDB_INT16:
 	case PDB_INT8:
-	  cmd = strtok (NULL, " \t)");
-	  if (!cmd)
+	  t = get_tok (&rest);
+	  if (!t)
 	    goto error;
 
-	  args[i].value.pdb_int = atoi (cmd);
+	  args[i].value.pdb_int = atoi (t);
+	  g_free(t);
 	  break;
 	case PDB_FLOAT:
-	  cmd = strtok (NULL, " \t)");
-	  if (!cmd)
+	  t = get_tok (&rest);
+	  if (!t)
 	    goto error;
 
-	  args[i].value.pdb_float = atof (cmd);
+	  args[i].value.pdb_float = atof (t);
+	  g_free(t);
 	  break;
 	case PDB_STRING:
-	  cmd = strtok (NULL, "\"");
-	  if (!cmd)
+	  t = get_tok (&rest);
+	  if (!t)
 	    goto error;
 
-	  args[i].value.pdb_pointer = g_strdup (cmd);
+	  args[i].value.pdb_pointer = g_strdup (t);
+	  g_free(t);
 	  break;
 	case PDB_INT32ARRAY:
 	case PDB_INT16ARRAY:
@@ -221,10 +311,12 @@ batch_run_cmd (char *cmd)
       break;
     }
 
+  g_free(cmdname);
   return;
 
 error:
   g_print ("Unable to run batch command: %s because of bad arguments.\n", cmdname);
+  g_free(cmdname);
 }
 
 static void
