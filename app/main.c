@@ -36,6 +36,8 @@
 #include "errors.h"
 #include "install.h"
 
+#include "libgimp/gimpintl.h"
+
 static RETSIGTYPE on_signal (int);
 static RETSIGTYPE on_sig_child (int);
 static void       init (void);
@@ -97,6 +99,14 @@ main (int argc, char **argv)
   /* Initialize Gtk toolkit */
   gtk_set_locale ();
   setlocale(LC_NUMERIC, "C");  /* must use dot, not comma, as decimal separator */
+  /* Initialize i18n support */
+
+#ifdef HAVE_LC_MESSAGES
+  setlocale(LC_MESSAGES, "");
+#endif
+  bindtextdomain("gimp", LOCALEDIR);
+  textdomain("gimp");
+
   gtk_init (&argc, &argv);
 
 #ifdef HAVE_LIBGLE
@@ -224,28 +234,28 @@ main (int argc, char **argv)
     }
 
   if (show_version)
-    g_print ("GIMP version " GIMP_VERSION "\n");
+    g_print ( "%s %s\n", _("GIMP version"), GIMP_VERSION);
 
   if (show_help)
     {
-      g_print ("\007Usage: %s [option ...] [files ...]\n", argv[0]);
-      g_print ("Valid options are:\n");
-      g_print ("  -h --help                Output this help.\n");
-      g_print ("  -v --version             Output version info.\n");
-      g_print ("  -b --batch <commands>    Run in batch mode.\n");
-      g_print ("  -g --gimprc <gimprc>     Use an alternate gimprc file.\n");
-      g_print ("  -n --no-interface        Run without a user interface.\n");
-      g_print ("  -r --restore-session     Try to restore saved session.\n");
-      g_print ("  --no-data                Do not load patterns, gradients, palettes, brushes.\n");
-      g_print ("  --verbose                Show startup messages.\n");
-      g_print ("  --no-splash              Do not show the startup window.\n");
-      g_print ("  --no-splash-image        Do not add an image to the startup window.\n");
-      g_print ("  --no-shm                 Do not use shared memory between GIMP and its plugins.\n");
-      g_print ("  --no-xshm                Do not use the X Shared Memory extension.\n");
-      g_print ("  --console-messages       Display warnings to console instead of a dialog box.\n");
-      g_print ("  --debug-handlers         Enable debugging signal handlers.\n");
-      g_print ("  --display <display>      Use the designated X display.\n\n");
-      g_print ("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n");
+      g_print (_("\007Usage: %s [option ...] [files ...]\n"), argv[0]);
+      g_print (_("Valid options are:\n"));
+      g_print (_("  -h --help                Output this help.\n"));
+      g_print (_("  -v --version             Output version info.\n"));
+      g_print (_("  -b --batch <commands>    Run in batch mode.\n"));
+      g_print (_("  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"));
+      g_print (_("  -n --no-interface        Run without a user interface.\n"));
+      g_print (_("  -r --restore-session     Try to restore saved session.\n"));
+      g_print (_("  --no-data                Do not load patterns, gradients, palettes, brushes.\n"));
+      g_print (_("  --verbose                Show startup messages.\n"));
+      g_print (_("  --no-splash              Do not show the startup window.\n"));
+      g_print (_("  --no-splash-image        Do not add an image to the startup window.\n"));
+      g_print (_("  --no-shm                 Do not use shared memory between GIMP and its plugins.\n"));
+      g_print (_("  --no-xshm                Do not use the X Shared Memory extension.\n"));
+      g_print (_("  --console-messages       Display warnings to console instead of a dialog box.\n"));
+      g_print (_("  --debug-handlers         Enable debugging signal handlers.\n"));
+      g_print (_("  --display <display>      Use the designated X display.\n\n"));
+      g_print (_("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"));
     }
 
   if (show_version || show_help)
@@ -301,34 +311,34 @@ on_signal (int sig_num)
   switch (sig_num)
     {
     case SIGHUP:
-      terminate ("sighup caught");
+      terminate (_("sighup caught"));
       break;
     case SIGINT:
-      terminate ("sigint caught");
+      terminate (_("sigint caught"));
       break;
     case SIGQUIT:
-      terminate ("sigquit caught");
+      terminate (_("sigquit caught"));
       break;
     case SIGABRT:
-      terminate ("sigabrt caught");
+      terminate (_("sigabrt caught"));
       break;
     case SIGBUS:
-      fatal_error ("sigbus caught");
+      fatal_error (_("sigbus caught"));
       break;
     case SIGSEGV:
-      fatal_error ("sigsegv caught");
+      fatal_error (_("sigsegv caught"));
       break;
     case SIGPIPE:
-      terminate ("sigpipe caught");
+      terminate (_("sigpipe caught"));
       break;
     case SIGTERM:
-      terminate ("sigterm caught");
+      terminate (_("sigterm caught"));
       break;
     case SIGFPE:
-      fatal_error ("sigfpe caught");
+      fatal_error (_("sigfpe caught"));
       break;
     default:
-      fatal_error ("unknown signal");
+      fatal_error (_("unknown signal"));
       break;
     }
 }

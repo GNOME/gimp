@@ -14,9 +14,13 @@
    Leave the following blank line there!!  Autoheader needs it.  */
 
 
+#undef ENABLE_NLS
+#undef HAVE_CATGETS
 #undef HAVE_DIRENT_H
 #undef HAVE_DOPRNT
+#undef HAVE_GETTEXT
 #undef HAVE_IPC_H
+#undef HAVE_LC_MESSAGES
 #undef HAVE_NDIR_H
 #undef HAVE_SHM_H
 #undef HAVE_SYS_DIR_H

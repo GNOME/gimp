@@ -42,7 +42,8 @@ gimpinclude_HEADERS = \
 	gimpenums.h	\
 	gimpfeatures.h	\
 	gimpmenu.h	\
-	gimpui.h
+	gimpui.h	\
+	gimpintl.h
 
 libgimp_1_1_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 libgimpui_1_1_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
@@ -52,11 +53,14 @@ CPPFLAGS = \
 
 INCLUDES = \
 	-I$(top_srcdir)		\
+	-I$(top_srcdir)/intl	\
+	-I../intl		\
 	$(GTK_CFLAGS)		\
 	-I$(includedir)
 
 libgimpui_1_1_la_INCLUDES = \
 	-I$(top_srcdir)		\
+	-I$(top_srcdir)/intl	\
 	$(GTK_CFLAGS)		\
 	-I$(includedir)
 

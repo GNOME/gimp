@@ -1,3 +1,9 @@
+Wed Aug  5 16:29:05 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* initial merge of the internationalization stuff. It's still
+	broken in a couple places, so you're probably better off running
+	configure with --disable-nls (gimp-mgomulin-980727-0)
+
 Wed Aug  5 23:31:54 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/*.scm (well, almost): Changed all

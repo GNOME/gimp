@@ -54,11 +54,17 @@ fi
 
 dnl Checks for programs.
 AC_PROG_CC
+AC_ISC_POSIX
 AM_PROG_CC_STDC
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_CPP
+
+dnl i18n stuff
+ALL_LINGUAS=""
+AM_GNU_GETTEXT
+AC_LINK_FILES($nls_cv_header_libgt, $nls_cv_header_intl)
 
 dnl Check for GTK+
 AM_PATH_GTK(1.1.0,,
@@ -450,12 +456,14 @@ AC_SUBST(THREAD_LIBS)
 
 dnl Output the Makefiles
 
-AC_OUTPUT(
-Makefile
+AC_OUTPUT([
 gimprc
 gimprc_user
 gimptool
 libgimp/gimpfeatures.h
+Makefile
+po/Makefile.in
+intl/Makefile
 libgimp/Makefile
 plug-ins/Makefile
 plug-ins/libgck/Makefile
@@ -597,6 +605,7 @@ data/Makefile
 data/brushes/Makefile
 data/gradients/Makefile
 data/palettes/Makefile
-data/patterns/Makefile,
-chmod +x gimptool
+data/patterns/Makefile],
+[chmod +x gimptool
+sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile]
 )

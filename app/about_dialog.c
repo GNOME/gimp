@@ -23,6 +23,8 @@
 
 #include "libgimp/gimpfeatures.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "about_dialog.h"
 #include "interface.h"
 
@@ -139,12 +141,13 @@ about_dialog_create (int timeout)
   GtkWidget *alignment;
   gint max_width;
   gint i;
+  gchar *label_text;
 
   if (!about_dialog)
     {
       about_dialog = gtk_window_new (GTK_WINDOW_DIALOG);
       gtk_window_set_wmclass (GTK_WINDOW (about_dialog), "about_dialog", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (about_dialog), "About the GIMP");
+      gtk_window_set_title (GTK_WINDOW (about_dialog), _("About the GIMP"));
       gtk_window_set_policy (GTK_WINDOW (about_dialog), FALSE, FALSE, FALSE);
       gtk_window_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);
       gtk_signal_connect (GTK_OBJECT (about_dialog), "destroy",
@@ -187,14 +190,18 @@ about_dialog_create (int timeout)
 
       style = gtk_style_new ();
       gdk_font_unref (style->font);
-      style->font = gdk_font_load ("-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*");
+      style->font = gdk_font_load (_("-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"));
       gtk_widget_push_style (style);
 
-      label = gtk_label_new ("Version " GIMP_VERSION " brought to you by");
+      label_text=g_malloc(strlen(_("Version ")) + strlen(GIMP_VERSION) + 
+			  strlen(_(" brought to you by")) * sizeof(gchar));
+      sprintf(label_text, "%s%s%s", _("Version "), GIMP_VERSION, _(" brought to you by"));
+      label = gtk_label_new (label_text);
+      g_free(label_text); label_text=NULL;
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
-      label = gtk_label_new ("Spencer Kimball and Peter Mattis");
+      label = gtk_label_new (_("Spencer Kimball and Peter Mattis"));
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
@@ -227,7 +234,7 @@ about_dialog_create (int timeout)
       gtk_container_add (GTK_CONTAINER (aboutframe), scroll_area);
       gtk_widget_show (scroll_area);
 
-      label = gtk_label_new ("Please visit http://www.gimp.org/ for more info");
+      label = gtk_label_new (_("Please visit http://www.gimp.org/ for more info"));
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
