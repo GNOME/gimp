@@ -1,5 +1,8 @@
 Revision history for Gimp-Perl extension.
 
+	- updated configure to require 1.0.2
+	- added some more scripts to the dist
+
 1.048 Fri Nov 13 20:39:52 CET 1998
 	- Gimp::Fu::save_image now correctly respects the quality setting
 	- allow layers/channels as drawables in typemap

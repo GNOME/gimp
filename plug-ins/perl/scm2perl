@@ -14,8 +14,6 @@
 
 =cut
 
-Watch out for these:
-
 =head1 NAME
 
 scm2perl - convert script-fu to perl

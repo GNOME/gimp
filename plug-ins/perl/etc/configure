@@ -674,7 +674,7 @@ else
   echo "$ac_t""no" 1>&6
 fi
 
-  min_gimp_version=1.0.0
+  min_gimp_version=1.0.2
   echo $ac_n "checking for GIMP - version >= $min_gimp_version""... $ac_c" 1>&6
 echo "configure:680: checking for GIMP - version >= $min_gimp_version" >&5
   no_gimp=""
@@ -971,13 +971,25 @@ if eval "test \"`echo '$ac_cv_func_'$ac_func`\" = yes"; then
   cat >> confdefs.h <<EOF
 #define $ac_tr_func 1
 EOF
- 
+ cat >> confdefs.h <<\EOF
+#define HAVE_VSNPRINTF 1
+EOF
+
 else
   echo "$ac_t""no" 1>&6
 echo "configure: warning: vsnprintf not found.. I hope you are using gcc..." 1>&2
 
 fi
 done
+
+
+if test "x$GCC" = xyes; then
+   nowarn="-Wno-parentheses -Wno-unused -Wno-uninitialized"
+   GIMP_CFLAGS="$GIMP_CFLAGS $nowarn"
+   GIMP_CFLAGS_NOUI="$GIMP_CFLAGS"
+fi
+
+
 
 
 
@@ -1138,7 +1150,6 @@ s%@GIMP_LIBS_NOUI@%$GIMP_LIBS_NOUI%g
 s%@CPP@%$CPP%g
 s%@EXTENSIVE_TESTS@%$EXTENSIVE_TESTS%g
 s%@IN_GIMP@%$IN_GIMP%g
-s%@CONFIG_H@%$CONFIG_H%g
 s%@PERL@%$PERL%g
 
 CEOF

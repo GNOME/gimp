@@ -13,6 +13,7 @@ typemap
 Gimp.pm
 Gimp.xs
 t/load.t
+t/loadlib.t
 t/run.t
 extradefs.h
 Perl-Server
@@ -31,6 +32,9 @@ Gimp/Fu.pm
 Gimp/PDL.pm
 Gimp/Pixel.pod
 Gimp/UI.pm
+examples/PDB
+examples/alpha2color.pl
+examples/tex-to-float
 examples/README
 examples/webify.pl
 examples/border.pl
@@ -43,4 +47,5 @@ examples/gimp-make-img-map
 examples/homepage-logo.pl
 examples/windy.pl
 examples/prep4gif.pl
+examples/ditherize.pl
 
