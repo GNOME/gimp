@@ -487,13 +487,17 @@ static void
 dump_with_linebreaks (gint         fd,
 		      const gchar *text)
 {
-  const gchar *t;
-  gint         i, len, space;
-
-  len = strlen (text);
+  gint len = strlen (text);
 
   while (len > 0)
     {
+      const gchar *t;
+      gint         i, space;
+
+      /*  groff doesn't like lines to start with a single quote  */
+      if (*text == '\'')
+        write (fd, "\\", 1);
+
       for (t = text, i = 0, space = 0;
            *t != '\n' && (i <= LINE_LENGTH || space == 0) && i < len;
            t++, i++)

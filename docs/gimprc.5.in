@@ -258,7 +258,7 @@ value.
 Sets an upper limit to the memory that is used per image to keep operations on
 the undo stack. Regardless of this setting, at least as many undo-levels as
 configured can be undone.  The integer size can contain a suffix of 'B', 'K',
-'M' or 'G' which makes GIMP interpret the size as being specified in bytes,
+\'M' or 'G' which makes GIMP interpret the size as being specified in bytes,
 kilobytes, megabytes or gigabytes. If no suffix is specified the size defaults
 to being specified in kilobytes.
 
