@@ -1,3 +1,10 @@
+Sun Jan 31 18:02:46 1999  Owen Taylor  <otaylor@gtk.org>
+
+	* app/blob.c: Merged in changes from gsumi. This
+	revision replaces the unstable conic-tracing code
+	with old-fashioned floating point trig calls to
+	compute the ellipses.
+
 Sun Jan 31 19:42:26 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/tile.c app/tile_manager.c:
