@@ -1,3 +1,12 @@
+2000-12-21  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* pdb/Makefile.am: do not include built texinfo into the distribution.
+	The build process is broken and obsoleted anyway by the SGML docs we
+	have in libgimp. If you want to generate the info, try to use the
+	"pdb_dump.texi" target. This change makes 'make dist' work again 
+	(despite the fact that it fails later in plug-ins/perl ...).
+
 2000-11-19  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/Makefile.am

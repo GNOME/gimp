@@ -1,12 +1,8 @@
-SUBDIRS = libgimp
+SUBDIRS = libgimp pdb
 
 EXTRA_DIST = \
 	README			\
 	README.gtkdoc		\
-	pdb/pdb_self_doc.el 	\
-	pdb/pdb_dump		\
-	pdb/pdb_dump.texi	\
-	pdb/texinfo.tex 	\
 	gih.txt  		\
 	gpb.txt  		\
 	parasites.txt		\
