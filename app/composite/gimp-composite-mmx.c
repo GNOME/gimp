@@ -159,20 +159,19 @@ debug_display_mmx(void)
   printf("--------------------------------------------\n");
 }
 
+const static guint32 rgba8_alpha_mask[2] = { 0xFF000000, 0xFF000000 };
+const static guint32 rgba8_b1[2] =         { 0x01010101, 0x01010101 };
+const static guint32 rgba8_b255[2] =       { 0xFFFFFFFF, 0xFFFFFFFF };
+const static guint32 rgba8_w1[2] =         { 0x00010001, 0x00010001 };
+const static guint32 rgba8_w2[2] =         { 0x00020002, 0x00020002 };
+const static guint32 rgba8_w128[2] =       { 0x00800080, 0x00800080 };
+const static guint32 rgba8_w256[2] =       { 0x01000100, 0x01000100 };
+const static guint32 rgba8_w255[2] =       { 0X00FF00FF, 0X00FF00FF };
 
-const static unsigned long rgba8_alpha_mask[2] = { 0xFF000000, 0xFF000000 };
-const static unsigned long rgba8_b1[2] =         { 0x01010101, 0x01010101 };
-const static unsigned long rgba8_b255[2] =       { 0xFFFFFFFF, 0xFFFFFFFF };
-const static unsigned long rgba8_w1[2] =         { 0x00010001, 0x00010001 };
-const static unsigned long rgba8_w2[2] =         { 0x00020002, 0x00020002 };
-const static unsigned long rgba8_w128[2] =       { 0x00800080, 0x00800080 };
-const static unsigned long rgba8_w256[2] =       { 0x01000100, 0x01000100 };
-const static unsigned long rgba8_w255[2] =       { 0X00FF00FF, 0X00FF00FF };
-
-const static unsigned long va8_alpha_mask[2] =   { 0xFF00FF00, 0xFF00FF00 };
-const static unsigned long va8_b255[2] =         { 0xFFFFFFFF, 0xFFFFFFFF };
-const static unsigned long va8_w1[2] =           { 0x00010001, 0x00010001 };
-const static unsigned long va8_w255[2] =         { 0x00FF00FF, 0x00FF00FF };
+const static guint32 va8_alpha_mask[2] =   { 0xFF00FF00, 0xFF00FF00 };
+const static guint32 va8_b255[2] =         { 0xFFFFFFFF, 0xFFFFFFFF };
+const static guint32 va8_w1[2] =           { 0x00010001, 0x00010001 };
+const static guint32 va8_w255[2] =         { 0x00FF00FF, 0x00FF00FF };
 
 /*
  *
@@ -1327,8 +1326,8 @@ gimp_composite_swap_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 
 
 #if 0
-const static unsigned long v8_alpha_mask[2] = { 0xFF00FF00, 0xFF00FF00};
-const static unsigned long v8_mul_shift[2] = { 0x00800080, 0x00800080 };
+const static guint32 v8_alpha_mask[2] = { 0xFF00FF00, 0xFF00FF00};
+const static guint32 v8_mul_shift[2] = { 0x00800080, 0x00800080 };
 
 void
 gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)

@@ -1,3 +1,11 @@
+2003-09-06  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-mmx.c
+	  app/composite/gimp-composite-sse.c
+	  app/composite/gimp-composite-sse2.c:
+	  Convert "unsigned long" to guint32 in preparation for 64bit
+	  machinery.
+
 2003-09-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppreviewrenderertextlayer.[ch]: removed.
