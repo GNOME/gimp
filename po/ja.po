@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2\n"
-"POT-Creation-Date: 2001-01-21 19:10-0800\n"
-"PO-Revision-Date: 2000-12-25 20:45+09:00\n"
+"POT-Creation-Date: 2001-04-01 22:01+0900\n"
+"PO-Revision-Date: 2001-04-01 22:09+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -282,7 +282,7 @@ msgstr "インデックス画像に対しては明るさ-コントラストを操作できません."
 #: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
 #: app/gimpui.c:126 app/hue_saturation.c:379 app/layers_dialog.c:3559
 #: app/layers_dialog.c:3743 app/layers_dialog.c:3838 app/layers_dialog.c:4099
-#: app/levels.c:346 app/module_db.c:319 app/posterize.c:208
+#: app/levels.c:346 app/module_db.c:315 app/posterize.c:208
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
 #: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
@@ -352,7 +352,7 @@ msgstr "角度:"
 msgid "Brush Selection"
 msgstr "ブラシ選択"
 
-#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:359
+#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:355
 #: app/palette.c:2056 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "再読み込み"
@@ -1015,7 +1015,7 @@ msgstr "滑らか"
 msgid "Free"
 msgstr "自由曲線"
 
-#: app/curves.c:708 app/levels.c:607 app/module_db.c:878
+#: app/curves.c:708 app/levels.c:607 app/module_db.c:874
 msgid "Load"
 msgstr "読み込み"
 
@@ -1405,7 +1405,7 @@ msgstr "ファイルは存在します!"
 msgid "Revert"
 msgstr "復帰"
 
-#: app/fileops.c:1967
+#: app/fileops.c:1970
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1416,7 +1416,7 @@ msgstr ""
 
 #: app/flip_tool.c:83
 msgid "Flip Tool"
-msgstr "反転ツール"
+msgstr "鏡像反転ツール"
 
 #: app/flip_tool.c:96 app/preferences_dialog.c:1607
 #: app/preferences_dialog.c:2401
@@ -1512,27 +1512,27 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "ストローク描画する領域が選択されていません."
 
-#: app/gimpbrush.c:294
+#: app/gimpbrush.c:295
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
 msgstr ""
 "不明なブラシファイルのフォーマットバージョン #%d が \"%s\" 中にあります."
 
-#: app/gimpbrush.c:314
+#: app/gimpbrush.c:315
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "GIMP ブラシファイル \"%s\" 中に問題があります."
 
-#: app/gimpbrush.c:321 app/patterns.c:235
+#: app/gimpbrush.c:322 app/patterns.c:236
 msgid "Unnamed"
 msgstr "名前なし"
 
-#: app/gimpbrush.c:334 app/gimpbrush.c:379
+#: app/gimpbrush.c:335 app/gimpbrush.c:380
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "GIMP ブラシファイルが切り縮められているようです: \"%s\""
 
-#: app/gimpbrush.c:359
+#: app/gimpbrush.c:360
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr "GIMP ブラシファイルが破損しているようです: \"%s\"."
@@ -1555,7 +1555,7 @@ msgstr ""
 "警告: ブラシパイプ読み込み失敗\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:292
+#: app/gimpbrushpipe.c:293
 #, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
@@ -1564,7 +1564,7 @@ msgstr ""
 "ブラシパイプは一つ以上のブラシを持たなければなりません:\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:383
+#: app/gimpbrushpipe.c:384
 #, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
@@ -3333,7 +3333,7 @@ msgstr "/画像/変換/回転"
 
 #: app/menus.c:408
 msgid "/Image/Canvas Size..."
-msgstr "/画像/サイズ変更..."
+msgstr "/画像/キャンバスサイズ..."
 
 #: app/menus.c:410
 msgid "/Image/Scale Image..."
@@ -3747,74 +3747,74 @@ msgstr "アンロード要求中"
 msgid "Unloaded OK"
 msgstr "アンロード完了"
 
-#: app/module_db.c:313
+#: app/module_db.c:309
 msgid "Module DB"
 msgstr "モジュール DB"
 
-#: app/module_db.c:606
+#: app/module_db.c:602
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "モジュール読み込み: \"%s\"\n"
 
-#: app/module_db.c:613
+#: app/module_db.c:609
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "モジュールをスキップ: \"%s\"\n"
 
-#: app/module_db.c:639
+#: app/module_db.c:635
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "モジュール読み込みエラー: %s: %s"
 
-#: app/module_db.c:826
+#: app/module_db.c:822
 msgid "<No modules>"
 msgstr "<モジュール 無し>"
 
-#: app/module_db.c:839 app/module_db.c:848
+#: app/module_db.c:835 app/module_db.c:844
 msgid "on disk"
 msgstr "ディスク上"
 
-#: app/module_db.c:839
+#: app/module_db.c:835
 msgid "only in memory"
 msgstr "メモリー中のみ"
 
-#: app/module_db.c:848
+#: app/module_db.c:844
 msgid "nowhere (click 'refresh')"
 msgstr "非存在 ('再読み込み' をクリック)"
 
-#: app/module_db.c:887
+#: app/module_db.c:883
 msgid "Unload"
 msgstr "アンロード"
 
-#: app/module_db.c:903
+#: app/module_db.c:899
 msgid "Purpose:"
 msgstr "目的:"
 
-#: app/module_db.c:904
+#: app/module_db.c:900
 msgid "Author:"
 msgstr "作者:"
 
-#: app/module_db.c:905
+#: app/module_db.c:901
 msgid "Version:"
 msgstr "バージョン:"
 
-#: app/module_db.c:906
+#: app/module_db.c:902
 msgid "Copyright:"
 msgstr "著作権表示:"
 
-#: app/module_db.c:907
+#: app/module_db.c:903
 msgid "Date:"
 msgstr "日付:"
 
-#: app/module_db.c:908
+#: app/module_db.c:904
 msgid "Location:"
 msgstr "場所:"
 
-#: app/module_db.c:909
+#: app/module_db.c:905
 msgid "State:"
 msgstr "状態:"
 
-#: app/module_db.c:928
+#: app/module_db.c:924
 msgid "Autoload during startup"
 msgstr "起動時に自動読み込み"
 
@@ -4139,18 +4139,18 @@ msgstr "パターン選択"
 msgid "No Patterns available"
 msgstr "利用可能なパターンがありません"
 
-#: app/patterns.c:209
+#: app/patterns.c:210
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
 msgstr ""
 "不明なパターンファイルのフォーマットバージョン #%d が \"%s\" 中にあります."
 
-#: app/patterns.c:228
+#: app/patterns.c:229
 #, c-format
 msgid "Error in GIMP pattern file \"%s\"."
 msgstr "GIMP パターンファイル \"%s\" 中に問題があります."
 
-#: app/patterns.c:244
+#: app/patterns.c:245
 #, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
 msgstr "GIMP パターンファイルが切り詰められています: \"%s\"."
@@ -4891,7 +4891,7 @@ msgstr "レイヤー境界の大きさ設定"
 
 #: app/resize.c:205
 msgid "Set Canvas Size"
-msgstr "画像の大きさ設定"
+msgstr "キャンバスの大きさ設定"
 
 #. the original width & height labels
 #: app/resize.c:278 app/scale_tool.c:85
@@ -5301,15 +5301,15 @@ msgstr "回転, 拡大縮小, 剪断, 遠近法"
 
 #: app/tools.c:517
 msgid "Flip"
-msgstr "反転"
+msgstr "鏡像反転"
 
 #: app/tools.c:518
 msgid "/Tools/Transform Tools/Flip"
-msgstr "/道具/変換ツール/反転"
+msgstr "/道具/変換ツール/鏡像反転"
 
 #: app/tools.c:523
 msgid "Flip the layer or selection"
-msgstr "レイヤーや選択領域を反転させる"
+msgstr "レイヤーや選択領域を鏡像反転させる"
 
 #: app/tools.c:545
 msgid "Text"

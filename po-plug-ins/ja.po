@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2001-01-15 14:06-0800\n"
-"PO-Revision-Date: 2000-12-07 00:41+09:00\n"
+"POT-Creation-Date: 2001-04-01 22:11+0900\n"
+"PO-Revision-Date: 2001-04-01 23:04+09:00\n"
 "Last-Translator: Çòºê ÂÙ¹° <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -1386,7 +1386,7 @@ msgstr "%s: ÉÔÀµ¤Ê¥«¥é¡¼¥Þ¥Ã¥×¤Ç¤¹"
 #: plug-ins/common/pnm.c:499 plug-ins/common/psd.c:2114
 #: plug-ins/common/smooth_palette.c:241 plug-ins/common/sunras.c:932
 #: plug-ins/common/tga.c:923 plug-ins/common/tiff.c:680
-#: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:515
+#: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:557
 #: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:872
 #: plug-ins/faxg3/faxg3.c:448 plug-ins/fits/fits.c:521
 #: plug-ins/gfig/gfig.c:2832 plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:378
@@ -2765,6 +2765,8 @@ msgid ""
 "Convolution Matrix does not work\n"
 "on layers smaller than 3 pixels."
 msgstr ""
+"¥³¥ó¥Ü¥ê¥å¡¼¥·¥ç¥ó¹ÔÎó¤Ï3¥Ô¥¯¥»¥ë¤è¤ê\n"
+"¾®¤µ¤Ê¥ì¥¤¥ä¡¼¤Ë¤Ä¤¤¤Æ¤ÏÅ¬ÍÑ¤Ç¤­¤Þ¤»¤ó."
 
 #: plug-ins/common/convmatrix.c:292
 msgid "Applying convolution"
@@ -3396,7 +3398,7 @@ msgstr "¿§¸ò´¹"
 
 #: plug-ins/common/exchange.c:369
 msgid "Preview: Click Inside to Pick \"From Color\""
-msgstr ""
+msgstr "¥×¥ì¥Ó¥å¡¼: \"¸µ¿§\"·èÄê¤Î¤¿¤á¤Ë¤³¤ÎÃæ¤ò¥¯¥ê¥Ã¥¯"
 
 #: plug-ins/common/exchange.c:400
 msgid "To Color"
@@ -3656,17 +3658,16 @@ msgstr "RLE ¥¬¥¦¥·¥¢¥ó¤Ü¤«¤·"
 #: plug-ins/common/gbr.c:347
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr ""
+msgstr "GIMP ¥Ö¥é¥·¥Õ¥¡¥¤¥ë \"%s\" Ãæ¤Ç¥¨¥é¡¼È¯À¸."
 
 #: plug-ins/common/gbr.c:355 plug-ins/common/gih.c:488
 #: plug-ins/common/gih.c:1122
-#, fuzzy
 msgid "Unnamed"
-msgstr "Ì¾Á°¤Ê¤·¥Á¥ã¥ó¥Í¥ë"
+msgstr "Ì¾¾ÎÌ¤ÀßÄê"
 
 #: plug-ins/common/gbr.c:485
 msgid "GIMP brushes are either GRAYSCALE or RGBA\n"
-msgstr ""
+msgstr "GIMP ¥Ö¥é¥·¥Õ¥¡¥¤¥ë¤Ï¥°¥ì¡¼¥¹¥±¡¼¥ë¤« RGBA ¤Î¤¤¤º¤ì¤«¤Ç¤¹\n"
 
 #: plug-ins/common/gbr.c:502 plug-ins/common/gih.c:1226
 #, c-format
@@ -3688,13 +3689,12 @@ msgid "Description:"
 msgstr "ÀâÌÀ:"
 
 #: plug-ins/common/gee.c:112
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-Slime"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¤ª¤â¤Á¤ã/Íñ..."
+msgstr "<Image>/¥Õ¥£¥ë¥¿/¤ª¤â¤Á¤ã/Gee-¥¹¥é¥¤¥à"
 
 #: plug-ins/common/gee.c:186
 msgid "GEE-SLIME"
-msgstr ""
+msgstr "GEE-¥¹¥é¥¤¥à"
 
 #. Action area - 'close' button only.
 #: plug-ins/common/gee.c:197 plug-ins/common/gee_zoom.c:214
@@ -3705,22 +3705,21 @@ msgstr "*** GIMP ¤òÁª¤ó¤Ç¤¯¤ì¤Æ¤¢¤ê¤¬¤È¤¦ **"
 msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
-msgstr ""
+msgstr "¤Á¤ç¤Ã¤È¸Å¤¤ Adam D. Moss ¤ÎºîÉÊ / adam@gimp.org / adam@foxbox.org / 1998-2000"
 
 #: plug-ins/common/gee_zoom.c:139
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-Zoom"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¤ª¤â¤Á¤ã/Íñ..."
+msgstr "<Image>/¥Õ¥£¥ë¥¿/¤ª¤â¤Á¤ã/Gee-Ëü²Ú¶À"
 
 #: plug-ins/common/gee_zoom.c:203
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
-msgstr ""
+msgstr "GEE-Ëü²Ú¶À: °ÊÁ°¤Ï \"The GIMP E'er Egg\" ¤À¤Ã¤¿¥×¥é¥°¥¤¥ó"
 
 #: plug-ins/common/gee_zoom.c:226
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
-msgstr ""
+msgstr "Adam D. Moss ¤ÎÀÎ¤ÎºîÉÊ / adam@gimp.org / adam@foxbox.org / 1998-2000"
 
 #: plug-ins/common/gicon.c:436
 msgid "Save as GIcon"
@@ -3835,20 +3834,19 @@ msgstr "%s ¥ì¥¤¥ä¡¼¤Ë¤Ï¥¢¥ë¥Õ¥¡¥Á¥ã¥ó¥Í¥ë¤¬¤¢¤ê¤Þ¤»¤ó. Èô¤Ð¤·¤Þ¤¹"
 
 #: plug-ins/common/gih.c:481
 msgid "Error in GIMP brush pipe file."
-msgstr ""
+msgstr "GIMP ¥Ö¥é¥·¥Ñ¥¤¥×¥Õ¥¡¥¤¥ëÃæ¤Ë¥¨¥é¡¼È¯À¸."
 
 #: plug-ins/common/gih.c:547
 msgid "GIMP brush file appears to be corrupted."
-msgstr ""
+msgstr "GIMP ¥Ö¥é¥·¥Õ¥¡¥¤¥ë¤ÏÇËÂ»¤·¤Æ¤¤¤ë¤è¤¦¤Ç¤¹."
 
 #: plug-ins/common/gih.c:689
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr ""
+msgstr "¥Ñ¥¤¥×Ãæ¤Î¥Ö¥é¥·¤¬ÆÉ¤ß¹þ¤á¤Þ¤»¤ó¤Ç¤·¤¿."
 
 #: plug-ins/common/gih.c:849
-#, fuzzy
 msgid "Save as Brush Pipe"
-msgstr "¥Ö¥é¥··Á¼°¤ÇÊÝÂ¸"
+msgstr "¥Ö¥é¥·¥Ñ¥¤¥×·Á¼°¤ÇÊÝÂ¸"
 
 #: plug-ins/common/gih.c:879
 msgid "Spacing (Percent):"
@@ -3856,7 +3854,7 @@ msgstr "´Ö³Ö (¥Ñ¡¼¥»¥ó¥È):"
 
 #: plug-ins/common/gih.c:941
 msgid "Pixels"
-msgstr " ¥Ô¥¯¥»¥ë"
+msgstr "¥Ô¥¯¥»¥ë"
 
 #: plug-ins/common/gih.c:946 plug-ins/common/newsprint.c:1274
 msgid "Cell Size:"
@@ -5366,10 +5364,7 @@ msgstr "¥¢¥¹¥Ú¥¯¥ÈÈæ¤òÊÝ¤Ä"
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
-msgstr ""
-"¥Á¥§¥Ã¥¯¤òÆþ¤ì¤ë¤È, "
-"²èÁü¤Ï¥¢¥¹¥Ú¥¯¥È¥ëÈæ¤òÊÑ¹¹¤»¤º¤ËÍ¿¤¨¤é¤ì¤¿¥µ¥¤¥º¤Ë¹ç¤¦¤è¤¦¤ËÄ´À°¤µ¤ì¤Æ½ÐÎÏ¤µ¤"
-"ì¤Þ¤¹."
+msgstr "¥Á¥§¥Ã¥¯¤òÆþ¤ì¤ë¤È, ²èÁü¤Ï¥¢¥¹¥Ú¥¯¥È¥ëÈæ¤òÊÑ¹¹¤»¤º¤ËÍ¿¤¨¤é¤ì¤¿¥µ¥¤¥º¤Ë¹ç¤¦¤è¤¦¤ËÄ´À°¤µ¤ì¤Æ½ÐÎÏ¤µ¤ì¤Þ¤¹."
 
 #. Unit
 #: plug-ins/common/ps.c:2883
@@ -6762,13 +6757,13 @@ msgstr "<Toolbox>/¥Õ¥¡¥¤¥ë/¼è¤ê¹þ¤ß/¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤«¤é..."
 msgid "Copying ..."
 msgstr "¥³¥Ô¡¼¤·¤Æ¤¤¤Þ¤¹..."
 
-#. ??? gimp_convert_rgb(image_ID);
+#. ??? gimp_convert_rgb (image_ID);
 #.
-#: plug-ins/common/winclipboard.c:523
+#: plug-ins/common/winclipboard.c:565
 msgid "Pasted"
 msgstr "¥Ú¡¼¥¹¥È·ë²Ì"
 
-#: plug-ins/common/winclipboard.c:536
+#: plug-ins/common/winclipboard.c:578
 msgid "Pasting..."
 msgstr "¥Ú¡¼¥¹¥È¤·¤Æ¤¤¤Þ¤¹..."
 
@@ -8043,6 +8038,9 @@ msgid ""
 "on the same AnimFrame Image at the same time\n"
 "LOCK ID:%s\n"
 msgstr ""
+"Æ±°ì¤ÎÆ°²è¥Õ¥ì¡¼¥à²èÁü¤Ë¤Ä¤¤¤ÆÆ±»þ¤ËÂ¿¿ô¤Î\n"
+"Æ°²èµ¡Ç½¤ò¤¢¤Æ¤Ï¤á¤ë¤³¤È¤Ï½ÐÍè¤Þ¤»¤ó\n"
+"LOCK ID:%s\n"
 
 #: plug-ins/gap/gap_main.c:482
 msgid "<Image>/Video/Goto/Next Frame"
@@ -8434,34 +8432,28 @@ msgid "PingPong"
 msgstr "ÁÐÊý¸þ"
 
 #: plug-ins/gap/gap_mov_dialog.c:300
-#, fuzzy
 msgid "Frame Loop"
-msgstr "¥Õ¥ì¡¼¥à %d"
+msgstr "¥Õ¥ì¡¼¥à¥ë¡¼¥×"
 
 #: plug-ins/gap/gap_mov_dialog.c:301
-#, fuzzy
 msgid "Frame Loop Reverse"
-msgstr "µÕ¥ë¡¼¥×"
+msgstr "µÕ¥Õ¥ì¡¼¥à¥ë¡¼¥×"
 
 #: plug-ins/gap/gap_mov_dialog.c:302
-#, fuzzy
 msgid "Frame Once"
-msgstr "¥Õ¥ì¡¼¥à %d"
+msgstr "°ì¥Õ¥ì¡¼¥à"
 
 #: plug-ins/gap/gap_mov_dialog.c:303
-#, fuzzy
 msgid "Frame OnceReverse"
-msgstr "µÕ°ì²ó"
+msgstr "¥Õ¥ì¡¼¥à¤òµÕ¤Ë°ì²ó"
 
 #: plug-ins/gap/gap_mov_dialog.c:304
-#, fuzzy
 msgid "Frame PingPong"
-msgstr "ÁÐÊý¸þ"
+msgstr "¥Õ¥ì¡¼¥à¥Ô¥ó¥Ý¥ó"
 
 #: plug-ins/gap/gap_mov_dialog.c:305
-#, fuzzy
 msgid "Frame None"
-msgstr "¥Õ¥ì¡¼¥à %d"
+msgstr "¥Õ¥ì¡¼¥àÌµ¤·"
 
 #: plug-ins/gap/gap_mov_dialog.c:480
 msgid "Move Path"
@@ -8563,26 +8555,28 @@ msgstr ""
 #. toggle force visibility
 #: plug-ins/gap/gap_mov_dialog.c:637
 msgid "Force visibility"
-msgstr ""
+msgstr "¶¯À©Åª¤ËÉ½¼¨¤¹¤ë"
 
 #: plug-ins/gap/gap_mov_dialog.c:644
 msgid "Force visibility for all copied Src-Layers"
-msgstr ""
+msgstr "¥³¥Ô¡¼¤µ¤ì¤¿¸µ¥ì¥¤¥ä¡¼¤òÁ´¤Æ¶¯À©Åª¤ËÉ½¼¨¤¹¤ë"
 
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:650
 msgid "Clip To Frame"
-msgstr ""
+msgstr "¥Õ¥ì¡¼¥à¤Ë¥¯¥ê¥Ã¥×"
 
 #: plug-ins/gap/gap_mov_dialog.c:657
 msgid "Clip all copied Src-Layers at Frame Boundaries"
-msgstr ""
+msgstr "¥³¥Ô¡¼¤µ¤ì¤¿¸µ¥ì¥¤¥ä¡¼Á´¤Æ¤ò¥Õ¥ì¡¼¥à¶­³¦¤Ë¥¯¥ê¥Ã¥×"
 
 #: plug-ins/gap/gap_mov_dialog.c:705
 msgid ""
 "No Source Image was selected\n"
 "(Please open a 2nd Image of the same type before opening Move Path)"
 msgstr ""
+"¸µ²èÁü¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Þ¤»¤ó\n"
+"(¥Ñ¥¹°ÜÆ°¤ò³«¤¯Á°¤ËÆ±¤¸¼ïÎà¤Î²èÁü¤ò¤â¤¦°ì¤Ä³«¤¤¤Æ¤¯¤À¤µ¤¤)"
 
 #: plug-ins/gap/gap_mov_dialog.c:801
 msgid "Object on empty frames"
@@ -8630,7 +8624,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:871
 msgid "Move Path Animated Preview"
-msgstr "°ÜÆ°¥Ñ¥¹Æ°²è¥×¥ì¥Ó¥å¡¼"
+msgstr "¥Ñ¥¹°ÜÆ°Æ°²è¥×¥ì¥Ó¥å¡¼"
 
 #: plug-ins/gap/gap_mov_dialog.c:917
 msgid "Generate Animated Preview failed\n"
@@ -8695,7 +8689,7 @@ msgstr "¸µ¥ì¥¤¥ä¡¼¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥ÈºÂÉ¸¤ÎÇÛÃÖÊýË¡"
 #. the frame
 #: plug-ins/gap/gap_mov_dialog.c:1814
 msgid "Move Path Preview"
-msgstr "°ÜÆ°¥Ñ¥¹¥×¥ì¥Ó¥å¡¼"
+msgstr "¥Ñ¥¹°ÜÆ°¥×¥ì¥Ó¥å¡¼"
 
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1846
@@ -8885,13 +8879,15 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2160
 msgid "Rotate Follow"
-msgstr ""
+msgstr "²óÅ¾ÄÉÀ×"
 
 #: plug-ins/gap/gap_mov_dialog.c:2171
 msgid ""
 "Set Rotation for all Controlpoints to follow the shape of the path.\n"
 "(Shift: use Rotation of contolpoint 1 as offset)"
 msgstr ""
+"Á´¤Æ¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤¬¥Ñ¥¹¤Î·Á¾õ¤ËÅº¤¦¤è¤¦¤Ë¤·¤Þ¤¹.\n"
+"(Shift: ¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È 1 ¤Î²óÅ¾¤ò¥ª¥Õ¥»¥Ã¥È¤È¤·¤Æ»È¤¤¤Þ¤¹)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2178
 msgid "Delete All Points"
@@ -8931,7 +8927,7 @@ msgstr "¥­¡¼¥Õ¥ì¡¼¥à¥ê¥»¥Ã¥È"
 
 #: plug-ins/gap/gap_mov_dialog.c:2683
 msgid "Move Path Controlpointcheck"
-msgstr ""
+msgstr "¥Ñ¥¹°ÜÆ°¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¥Á¥§¥Ã¥¯"
 
 #: plug-ins/gap/gap_mov_dialog.c:2684
 msgid "Errors:"
@@ -9328,12 +9324,16 @@ msgid ""
 "Goto prev Frame\n"
 "<Shift> use timezoom stepsize"
 msgstr ""
+"Á°¤Î¥Õ¥ì¡¼¥à¤Ë°ÜÆ°\n"
+"<Shift> »þ´Ö³ÈÂç¥¹¥Æ¥Ã¥×¥µ¥¤¥º¤ò»ÈÍÑ"
 
 #: plug-ins/gap/gap_navigator_dialog.c:400
 msgid ""
 "Goto next Frame\n"
 "<Shift> use timezoom stepsize"
 msgstr ""
+"¼¡¤Î¥Õ¥ì¡¼¥à¤Ë°ÜÆ°\n"
+"<Shift> »þ´Ö³ÈÂç¥¹¥Æ¥Ã¥×¥µ¥¤¥º¤ò»ÈÍÑ<"
 
 #: plug-ins/gap/gap_navigator_dialog.c:405
 msgid "Goto last Frame"
@@ -10072,7 +10072,7 @@ msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:863
 msgid "GDynText: CharMap"
-msgstr ""
+msgstr "GDynText: ¥­¥ã¥é¥¯¥¿¥Þ¥Ã¥×"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:930
 msgid "GDynText: Load text"
@@ -10129,7 +10129,7 @@ msgstr "gfig-path ¤ÏÌ¤ÀßÄê¤Ç¤¹ - ¼¡¤Î¥Ç¥£¥ì¥¯¥È¥ê¤¬¸«ÉÕ¤«¤ê¤Þ¤»¤ó¤Ç¤·¤¿"
 
 #: plug-ins/gfig/gfig.c:1058
 msgid "First Gfig"
-msgstr ""
+msgstr "First Gfig"
 
 #: plug-ins/gfig/gfig.c:1885
 msgid "Prev"
@@ -10274,7 +10274,7 @@ msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to "
 "circles/ellipses if Approx. Circles/Ellipses toggle is set."
-msgstr ""
+msgstr "³¨É®¤ä¥¨¥¢¥Ö¥é¥·Åù¤Ç²èÁü¤ËÂÐ¤·¤ÆÉÁ²è¤·¤Þ¤¹. ¥Ñ¥¿¡¼¥ó¤òÁªÂò¤¹¤ë¤È¸½ºßÁªÂò¤µ¤ì¤Æ¤¤¤ë¥Ö¥é¥·¤È¥Ñ¥¿¡¼¥ó¤ÇÉÁ²è¤·¤Þ¤¹. ±ß/ÂÊ±ß¤ò¶á»÷¤¹¤ë¥È¥°¥ë¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë»þ¤À¤±±ß/ÂÊ±ß¤Ë¤âÅ¬ÍÑ¤µ¤ì¤Þ¤¹."
 
 #: plug-ins/gfig/gfig.c:2770 plug-ins/rcm/rcm_dialog.c:125
 msgid "Original"
@@ -10354,13 +10354,13 @@ msgstr "²èÁü¥µ¥¤¥º¤ò³ÈÂç½Ì¾®¤·¤ÆÉÁ¤¯"
 
 #: plug-ins/gfig/gfig.c:2892
 msgid "Approx. Circles/Ellipses"
-msgstr ""
+msgstr "±ß/ÂÊ±ß¤ò¶á»÷¤¹¤ë"
 
 #: plug-ins/gfig/gfig.c:2899
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
-msgstr ""
+msgstr "±ß¤ÈÂÊ±ß¤òÄ¾Àþ¤Ç¶á»÷¤·¤Þ¤¹. ¤³¤ì¤é¤Î¥ª¥Ö¥¸¥§¥¯¥È¤ËÂÐ¤·¤Æ¥Ö¥é¥·¤ÇÉÁ²è¤¹¤ë¤è¤¦¤Ë¤Ê¤ê¤Þ¤¹."
 
 #: plug-ins/gfig/gfig.c:2975
 msgid "Fade out:"
@@ -10595,7 +10595,7 @@ msgstr "Gfig ¥ª¥Ö¥¸¥§¥¯¥ÈÆÉ¤ß¹þ¤ß"
 
 #: plug-ins/gfig/gfig.c:4624
 msgid "Error in copy layer for onlayers"
-msgstr ""
+msgstr "¥ª¥ó¥ì¥¤¥ä¡¼¤Î¥ì¥¤¥ä¡¼¥³¥Ô¡¼Ãæ¤Ë¥¨¥é¡¼È¯À¸"
 
 #. RGBA or GRAYA type
 #. opacity
@@ -11334,13 +11334,13 @@ msgstr "Á´¤Æ¤Î¥Ù¥¯¥È¥ë¤Ë³ÑÅÙ¤òÍ¿¤¨¤Æ¥ª¥Õ¥»¥Ã¥È¤¹¤ë"
 #: plug-ins/gimpressionist/orientmap.c:681
 #: plug-ins/gimpressionist/sizemap.c:527
 msgid "Voronoi"
-msgstr ""
+msgstr "¥Ü¥í¥Î¥¤"
 
 #: plug-ins/gimpressionist/orientmap.c:689
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr ""
+msgstr "¥Ü¥í¥Î¥¤-¥â¡¼¥É¤Ç¤Ï»ØÄê¤·¤¿ÅÀ¤Ë¤Ä¤¤¤ÆºÇ¶áÀÜ¥Ù¥¯¥È¥ë¤Î¤ß¤¬±Æ¶Á¤òÍ¿¤¨¤Þ¤¹"
 
 #: plug-ins/gimpressionist/paper.c:89 plug-ins/gimpressionist/paper.c:94
 msgid "Paper"
@@ -11443,7 +11443,7 @@ msgstr "¥×¥ê¥»¥Ã¥È¤Î¥Ç¥£¥ì¥¯¥È¥ê¤òºÆÆÉ¤ß¹þ¤ß¤·¤Þ¤¹"
 
 #: plug-ins/gimpressionist/presets.c:664
 msgid "(Desc)"
-msgstr ""
+msgstr "(ÀâÌÀ)"
 
 #: plug-ins/gimpressionist/presets.c:669
 msgid ""
@@ -11532,15 +11532,13 @@ msgstr "¥µ¥¤¥º¥Þ¥Ã¥×¥¨¥Ç¥£¥¿"
 
 #: plug-ins/gimpressionist/sizemap.c:369
 msgid "Smvectors"
-msgstr ""
+msgstr "¥µ¥¤¥º¥Þ¥Ã¥×¥Ù¥¯¥È¥ë"
 
 #: plug-ins/gimpressionist/sizemap.c:379
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
-msgstr ""
-"smvector Íó.º¸¥¯¥ê¥Ã¥¯¤ÇÁªÂò¤·¤¿ smvector ¤ò°ÜÆ°, "
-"±¦¥¯¥ê¥Ã¥¯¤Ç¥Ý¥¤¥ó¥È¤ò¥Þ¥¦¥¹¤ÎÊý¤Ø, Ãæ¥¯¥ê¥Ã¥¯¤Ç¿·µ¬ smvector ¤òÄÉ²Ã."
+msgstr "¥µ¥¤¥º¥Þ¥Ã¥×¥Ù¥¯¥È¥ëÍó.º¸¥¯¥ê¥Ã¥¯¤ÇÁªÂò¤·¤¿ smvector ¤ò°ÜÆ°, ±¦¥¯¥ê¥Ã¥¯¤Ç¥Ý¥¤¥ó¥È¤ò¥Þ¥¦¥¹¤ÎÊý¤Ø, Ãæ¥¯¥ê¥Ã¥¯¤Ç¿·µ¬ smvector ¤òÄÉ²Ã."
 
 #: plug-ins/gimpressionist/sizemap.c:422
 msgid "Select previous smvector"
@@ -11570,7 +11568,7 @@ msgstr "ÁªÂò¤·¤¿ smvector ¤Î¶¯¤µ¤òÊÑ¤¨¤ë"
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
-msgstr ""
+msgstr "¥Ü¥í¥Î¥¤-¥â¡¼¥É¤Ç¤Ï»ØÄê¤·¤¿ÅÀ¤«¤éºÇ¶áÀÜ¤Î¥µ¥¤¥º¥Þ¥Ã¥×¥Ù¥¯¥È¥ë¤Î¤ß¤¬±Æ¶Á¤ò»ý¤Á¤Þ¤¹"
 
 #: plug-ins/helpbrowser/helpbrowser.c:95
 #, c-format
@@ -11598,13 +11596,7 @@ msgid ""
 "this topic has not been written yet or that something is wrong with your "
 "installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
-msgstr ""
-"<html><head><title>¥Ç¥£¥ì¥¯¥È¥ê¤¬¸«ÉÕ¤«¤ê¤Þ¤»¤ó</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>¥Ç¥£¥ì¥¯¥È¥ê</h3><tt>%s</tt><h3>¤ËÊÑ¤¨¤é"
-"¤ì¤Þ¤»¤ó.</h3><h3>¤³¤ì¤Ï¥Õ¥¡¥¤¥ë</h3><tt>%s</tt><h3>¤Ë¥¢¥¯¥»¥¹¤·¤è¤¦¤È¤·¤ÆÈ¯À"
-"¸¤·¤Þ¤·¤¿</h3></center><p><small>¤³¤ÎÏÃÂê¤Î¤¿¤á¤Î¥Ø¥ë¥×¤¬¤Þ¤À½ñ¤«¤ì¤Æ¤¤¤Ê¤¤¤«"
-"¤¢¤Ê¤¿¤Î¥¤¥ó¥¹¥È¡¼¥ë¤Î¤É¤³¤«¤¬´Ö°ã¤Ã¤Æ¤¤¤Þ¤¹. "
-"¤¢¤Ê¤¿¤¬¤³¤ì¤ò¥Ð¥°¤È¤·¤ÆÊó¹ð¤¹¤ëÁ°¤Ë¿µ½Å¤ËÄ´¤Ù¤Æ²¼¤µ¤¤</small></body></html>"
+msgstr "<html><head><title>¥Ç¥£¥ì¥¯¥È¥ê¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó</title></head><body bgcolor=\"#ffffff\"><center><p>%s<h3>¥Ç¥£¥ì¥¯¥È¥ê</h3><tt>%s</tt><h3>¤ËÊÑ¹¹¤Ç¤­¤Þ¤»¤ó.</h3><h3>¤³¤ì¤Ï¥Õ¥¡¥¤¥ë</h3><tt>%s</tt><h3>¤Ë¥¢¥¯¥»¥¹¤·¤è¤¦¤È¤·¤Æ¤¤¤ëºÇÃæ¤ËÈ¯À¸¤·¤Þ¤·¤¿</h3></center><p><small>¤³¤ÎÏÃÂê¤Î¤¿¤á¤Î¥Ø¥ë¥×¤¬¤Þ¤À½ñ¤«¤ì¤Æ¤¤¤Ê¤¤¤«¤¢¤Ê¤¿¤Î¥¤¥ó¥¹¥È¡¼¥ë¤Î¤É¤³¤«¤¬´Ö°ã¤Ã¤Æ¤¤¤Þ¤¹. ¤¢¤Ê¤¿¤¬¤³¤ì¤ò¥Ð¥°¤È¤·¤ÆÊó¹ð¤¹¤ëÁ°¤Ë¿µ½Å¤ËÄ´¤Ù¤Æ²¼¤µ¤¤</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:137
 msgid "Contents"
@@ -11646,7 +11638,7 @@ msgid "Forward"
 msgstr "¿Ê¤à"
 
 #: plug-ins/helpbrowser/helpbrowser.c:1212
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
 "\n"
@@ -11655,7 +11647,7 @@ msgid ""
 msgstr ""
 "GIMP ¥Ø¥ë¥×¥Ö¥é¥¦¥¶¥¨¥é¡¼.\n"
 "\n"
-"¥ë¡¼¥È HTML ¥Ç¥£¥ì¥¯¥È¥ê¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó.\n"
+"GIMP_HELP_ROOT HTML ¥Ç¥£¥ì¥¯¥È¥ê¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó.\n"
 "(%s)"
 
 #: plug-ins/ifscompose/ifscompose.c:365
@@ -13088,238 +13080,3 @@ msgstr "¥¨¥é¡¼: XJT ¥×¥í¥Ñ¥Æ¥£¥Õ¥¡¥¤¥ë %s ¤¬ÆÉ¤á¤Þ¤»¤ó"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "¥¨¥é¡¼: XJT ¥×¥í¥Ñ¥Æ¥£¥Õ¥¡¥¤¥ë %s ¤¬¶õ¤Ç¤¹"
-
-#~ msgid "Enable/disable jagged edges removal(antialiasing)"
-#~ msgstr "¥®¥¶¥®¥¶¤·¤¿±ï¤ò³ê¤é¤«¤Ë¤¹¤ë/¤·¤Ê¤¤ (¥¢¥ó¥Á¥¨¥¤¥ê¥¢¥·¥ó¥°)"
-
-#~ msgid "Treshold:"
-#~ msgstr "ïçÃÍ:"
-
-#~ msgid "Checker"
-#~ msgstr "³Ê»ÒÌÏÍÍ"
-
-#~ msgid "Marble"
-#~ msgstr "¥Þ¡¼¥Ö¥ëÌÏÍÍ"
-
-#~ msgid "Lizard"
-#~ msgstr "¤¦¤í¤³ÌÏÍÍ"
-
-#~ msgid "Phong"
-#~ msgstr "¥Õ¥©¥ó"
-
-#~ msgid "Noise"
-#~ msgstr "¥Î¥¤¥º"
-
-#~ msgid "Wood"
-#~ msgstr "ÌÚÌÜ"
-
-#~ msgid "Spiral"
-#~ msgstr "±²´¬"
-
-#~ msgid "Spots"
-#~ msgstr "ÈÃÌÏÍÍ"
-
-#~ msgid "Texture"
-#~ msgstr "¥Æ¥¯¥¹¥Á¥ã"
-
-#~ msgid "(unknown!?)"
-#~ msgstr "(ÉÔÌÀ!?)"
-
-#~ msgid "Open file"
-#~ msgstr "¥Õ¥¡¥¤¥ë¤ò³«¤¯"
-
-#~ msgid "Save file"
-#~ msgstr "¥Õ¥¡¥¤¥ë¤ËÊÝÂ¸"
-
-#~ msgid "Sphere Designer"
-#~ msgstr "µåÌÌ¥Ç¥¶¥¤¥Ê¡¼"
-
-#~ msgid "Textures"
-#~ msgstr "¥Æ¥¯¥¹¥Á¥ã"
-
-#~ msgid "Dup"
-#~ msgstr "Ê£À½"
-
-#~ msgid "Del"
-#~ msgstr "ºï½ü"
-
-#~ msgid "Texture Properties"
-#~ msgstr "¥Æ¥¯¥¹¥Á¥ãÀßÄê"
-
-#~ msgid "Texture:"
-#~ msgstr "¥Æ¥¯¥¹¥Á¥ã"
-
-#~ msgid "Colors:"
-#~ msgstr "¿§:"
-
-#~ msgid "Scale Y:"
-#~ msgstr "³ÈÂç½Ì¾® Y:"
-
-#~ msgid "Scale Z:"
-#~ msgstr "³ÈÂç½Ì¾® Z:"
-
-#~ msgid "Rotate X:"
-#~ msgstr "²óÅ¾ X:"
-
-#~ msgid "Rotate Y:"
-#~ msgstr "²óÅ¾ Y:"
-
-#~ msgid "Rotate Z:"
-#~ msgstr "²óÅ¾ Z:"
-
-#~ msgid "Pos X:"
-#~ msgstr "°ÌÃÖ X:"
-
-#~ msgid "Pos Y:"
-#~ msgstr "°ÌÃÖ Y:"
-
-#~ msgid "Pos Z:"
-#~ msgstr "°ÌÃÖ Z:"
-
-#~ msgid "Bump"
-#~ msgstr "¥Ð¥ó¥×"
-
-#~ msgid "Exp:"
-#~ msgstr "»Ø¿ô:"
-
-#~ msgid ""
-#~ "by Vidar Madsen\n"
-#~ "September 1999"
-#~ msgstr ""
-#~ "Vidar Madsen\n"
-#~ "1999 Ç¯ 9·î ºî"
-
-#~ msgid "Rendering..."
-#~ msgstr "¥ì¥ó¥À¥ê¥ó¥°¤·¤Æ¤¤¤Þ¤¹..."
-
-#~ msgid "<Image>/Filters/Render/Sphere Designer..."
-#~ msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/µåÌÌ¥Ç¥¶¥¤¥Ê¡¼..."
-
-#~ msgid "GEE!  The GIMP E'er Egg!"
-#~ msgstr "GEE! The GIMP E'er Egg!"
-
-#~ msgid "Save as Pixmap Brush"
-#~ msgstr "Pixmap ¥Ö¥é¥··Á¼°¤ÇÊÝÂ¸"
-
-#~ msgid "Save as Pixmap Brush Pipe"
-#~ msgstr "Pixmap ¥Ö¥é¥·¥Ñ¥¤¥×·Á¼°¤ÇÊÝÂ¸"
-
-#~ msgid "PNM: %s is not a valid file."
-#~ msgstr "PNM: %s ¤ÏÉÔÀµ¤Ê¥Õ¥¡¥¤¥ë¤Ç¤¹."
-
-#~ msgid "to"
-#~ msgstr "¤«¤é"
-
-#~ msgid "Output Level:"
-#~ msgstr "½ÐÎÏ¥ì¥Ù¥ë:"
-
-#~ msgid "Normal Scale"
-#~ msgstr "ÄÌ¾ï³ÈÂç½Ì¾®"
-
-#~ msgid "Experimental Linear Scale"
-#~ msgstr "¼Â¸³Ãæ¤ÎÀþ·Á³ÈÂç½Ì¾®"
-
-#~ msgid "Scaling and Color Settings"
-#~ msgstr "³ÈÂç½Ì¾®¤È¿§¤ÎÀßÄê"
-
-#~ msgid "Driver:"
-#~ msgstr "¥É¥é¥¤¥Ð:"
-
-#~ msgid "Env"
-#~ msgstr "´Ä¶­"
-
-#~ msgid "High Preview Quality"
-#~ msgstr "¹âÉÊ°Ì¥×¥ì¥Ó¥å¡¼"
-
-#~ msgid "Spot Light"
-#~ msgstr "¥¹¥Ý¥Ã¥È¸÷¸»"
-
-#~ msgid "GDynText Layer "
-#~ msgstr "GDynText ¥ì¥¤¥ä¡¼ "
-
-#~ msgid "Set line spacing"
-#~ msgstr "¹Ô´ÖÀßÄê"
-
-#~ msgid "PostScript Level 1"
-#~ msgstr "¥Ý¥¹¥È¥¹¥¯¥ê¥×¥È ¥ì¥Ù¥ë1"
-
-#~ msgid "HP DeskJet 500, 520"
-#~ msgstr "HP DeskJet 500, 520"
-
-#~ msgid "HP DeskJet 500C, 540C"
-#~ msgstr "HP DeskJet 500C, 540C"
-
-#~ msgid "HP DeskJet 550C, 560C"
-#~ msgstr "HP DeskJet 550C, 560C"
-
-#~ msgid "HP DeskJet 600 series"
-#~ msgstr "HP DeskJet 600 ¥·¥ê¡¼¥º"
-
-#~ msgid "HP DeskJet 800 series"
-#~ msgstr "HP DeskJet 800 ¥·¥ê¡¼¥º"
-
-#~ msgid "HP DeskJet 1100C, 1120C"
-#~ msgstr "HP DeskJet 1100C, 1120C"
-
-#~ msgid "HP DeskJet 1200C, 1600C"
-#~ msgstr "HP DeskJet 1200C, 1600C"
-
-#~ msgid "HP LaserJet II series"
-#~ msgstr "HP LaserJet II ¥·¥ê¡¼¥º"
-
-#~ msgid "HP LaserJet III series"
-#~ msgstr "HP LaserJet III ¥·¥ê¡¼¥º"
-
-#~ msgid "HP LaserJet 4 series"
-#~ msgstr "HP LaserJet 4 ¥·¥ê¡¼¥º"
-
-#~ msgid "HP LaserJet 4V, 4Si"
-#~ msgstr "HP LaserJet 4V, 4Si"
-
-#~ msgid "HP LaserJet 5 series"
-#~ msgstr "HP LaserJet 5 ¥·¥ê¡¼¥º"
-
-#~ msgid "HP LaserJet 5Si"
-#~ msgstr "HP LaserJet 5Si"
-
-#~ msgid "HP LaserJet 6 series"
-#~ msgstr "HP LaserJet 6 ¥·¥ê¡¼¥º"
-
-#~ msgid "EPSON Stylus Color"
-#~ msgstr "EPSON Stylus Color"
-
-#~ msgid "EPSON Stylus Color Pro"
-#~ msgstr "EPSON Stylus Color Pro"
-
-#~ msgid "EPSON Stylus Color Pro XL"
-#~ msgstr "EPSON Stylus Color Pro XL"
-
-#~ msgid "EPSON Stylus Color 1500"
-#~ msgstr "EPSON Stylus Color 1500"
-
-#~ msgid "EPSON Stylus Color 400"
-#~ msgstr "EPSON MJ-400"
-
-#~ msgid "EPSON Stylus Color 500"
-#~ msgstr "EPSON MJ-500C"
-
-#~ msgid "EPSON Stylus Color 600"
-#~ msgstr "EPSON PM-600C"
-
-#~ msgid "EPSON Stylus Color 800"
-#~ msgstr "EPSON MJ-800C"
-
-#~ msgid "EPSON Stylus Color 1520"
-#~ msgstr "EPSON Stylus Color 1520"
-
-#~ msgid "EPSON Stylus Color 3000"
-#~ msgstr "EPSON MJ-3000C"
-
-#~ msgid "EPSON Stylus Photo 700"
-#~ msgstr "EPSON PM-700C"
-
-#~ msgid "EPSON Stylus Photo EX"
-#~ msgstr "EPSON Stylus Photo EX"
-
-#~ msgid "EPSON Stylus Photo"
-#~ msgstr "EPSON Stylus Photo"
