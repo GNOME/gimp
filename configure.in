@@ -540,6 +540,7 @@ plug-ins/gqbist/Makefile
 plug-ins/gradmap/Makefile
 plug-ins/grid/Makefile
 plug-ins/gtm/Makefile
+plug-ins/guillotine/Makefile
 plug-ins/gz/Makefile
 plug-ins/header/Makefile
 plug-ins/hot/Makefile

@@ -67,6 +67,7 @@ SUBDIRS = 			\
 	gradmap			\
 	grid			\
 	gtm			\
+	guillotine		\
 	gz			\
 	header			\
 	hot			\

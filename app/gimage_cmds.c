@@ -3851,7 +3851,7 @@ gimp_image_findnext_guide_invoker (Argument *args)
   int success = TRUE;
   int int_value;
   int guide_id;
-  int rtn_guide_id;
+  int rtn_guide_id = 0;
   GImage *gimage;
   GList *guides;
   Argument *return_args;
@@ -3884,7 +3884,7 @@ gimp_image_findnext_guide_invoker (Argument *args)
 		     ((Guide*)guides->data)->position < 0)
 		guides = g_list_next(guides);
 
-	      if (guides)
+	      if (guides) /* didn't just come to end of list */
 		rtn_guide_id = ((Guide*)guides->data)->guide_ID;
 	    }
 	  else
@@ -3896,6 +3896,8 @@ gimp_image_findnext_guide_invoker (Argument *args)
 		  if ((((Guide*)guides->data)->guide_ID == guide_id) &&
 		      (((Guide*)guides->data)->position>=0) )
 		    {
+		      GList* tmplist;
+
 		      /*printf("Gotcha at %p: %d, %d, %d\n",
 			     ((Guide*)guides->data),
 			     ((Guide*)guides->data)->position,
@@ -3904,20 +3906,23 @@ gimp_image_findnext_guide_invoker (Argument *args)
 			     );*/
 
 		      success = TRUE;
-		      if (g_list_next(guides) == NULL)
-			{
-			  rtn_guide_id = 0;
-			}
-		      else
-			{
-			  GList* tmplist;
-			  tmplist = g_list_next(guides);
 
-			  rtn_guide_id = ((Guide*)tmplist->data)->guide_ID;
-			  goto got_it;
+		      tmplist = g_list_next(guides);
+		      
+		      rtn_guide_id = 0;
+
+		      while ((tmplist != NULL) &&
+			     (((Guide*)tmplist->data)->position < 0) )
+			{
+			  tmplist = g_list_next(tmplist);
 			}
+
+		      if (tmplist != NULL)
+			rtn_guide_id = ((Guide*)tmplist->data)->guide_ID;
+
+		      goto got_it;
 		    }
-
+		  
 		  guides = g_list_next(guides);
 		}
 	    }
@@ -3993,7 +3998,7 @@ gimp_image_get_guide_orientation_invoker (Argument *args)
   int success = TRUE;
   int int_value;
   int guide_id;
-  int rtn_orientation;
+  int rtn_orientation = 0;
   GImage *gimage;
   GList *guides;
   Argument *return_args;
@@ -4110,7 +4115,7 @@ gimp_image_get_guide_position_invoker (Argument *args)
   int success = TRUE;
   int int_value;
   int guide_id;
-  int rtn_position;
+  int rtn_position = -1;
   GImage *gimage;
   GList *guides;
   Argument *return_args;
