@@ -1641,6 +1641,7 @@ xcf_load_image (XcfInfo *info)
   int width;
   int height;
   int image_type;
+  int num_successful_elements = 0;
 
   /* read in the image width, height and type */
   info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
@@ -1654,7 +1655,7 @@ xcf_load_image (XcfInfo *info)
 
   /* read the image properties */
   if (!xcf_load_image_props (info, gimage))
-    goto error;
+    goto hard_error;
 
   while (1)
     {
@@ -1679,6 +1680,8 @@ xcf_load_image (XcfInfo *info)
       layer = xcf_load_layer (info, gimage);
       if (!layer)
 	goto error;
+
+      num_successful_elements++;
 
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
@@ -1714,6 +1717,8 @@ xcf_load_image (XcfInfo *info)
       if (!channel)
 	goto error;
 
+      num_successful_elements++;
+
       /* add the channel to the image if its not the selection */
       if (channel != gimage->selection_mask)
 	gimage_add_channel (gimage, channel, -1);
@@ -1734,7 +1739,16 @@ xcf_load_image (XcfInfo *info)
 
   return gimage;
 
-error:
+ error:
+  if (num_successful_elements == 0)
+    goto hard_error;
+  
+  g_message("XCF: This file is corrupt!  I have loaded as much\nof it as I can, but it is incomplete.");
+  
+  return gimage;
+  
+ hard_error:  
+  g_message("XCF: This file is corrupt!  I could not even\nsalvage any partial image data from it.");
   gimage_delete (gimage);
   return NULL;
 }
@@ -2557,7 +2571,8 @@ xcf_load_tile_rle (XcfInfo *info,
   int length;
   int bpp;
   int i, j;
-  guchar *xcfdata, *xcfodata;
+  int nmemb_read_successfully;
+  guchar *xcfdata, *xcfodata, *xcfdatalimit;
   
   data = tile_data_pointer (tile, 0, 0);
   bpp = tile_bpp (tile);
@@ -2566,8 +2581,12 @@ xcf_load_tile_rle (XcfInfo *info,
 
   /* we have to use fread instead of xcf_read_* because we may be
      reading past the end of the file here */
-  info->cp += fread ((char*) xcfdata, sizeof (char), data_length, info->fp);  
+  nmemb_read_successfully = fread ((char*) xcfdata, sizeof (char),
+				   data_length, info->fp);
+  info->cp += nmemb_read_successfully;
 
+  xcfdatalimit = &xcfodata[nmemb_read_successfully - 1];
+  
   for (i = 0; i < bpp; i++)
     {
       data = (guchar*)tile_data_pointer (tile, 0, 0) + i;
@@ -2576,6 +2595,11 @@ xcf_load_tile_rle (XcfInfo *info,
 
       while (size > 0)
 	{
+	  if (xcfdata > xcfdatalimit)
+	    {
+	      goto bogus_rle;
+	    }
+
 	  val = *xcfdata++;
 
 	  length = val;
@@ -2584,12 +2608,27 @@ xcf_load_tile_rle (XcfInfo *info,
 	      length = 255 - (length - 1);
 	      if (length == 128)
 		{
+		  if (xcfdata >= xcfdatalimit)
+		    {
+		      goto bogus_rle;
+		    }
+
 		  length = (*xcfdata << 8) + xcfdata[1];
 		  xcfdata += 2;
 		}
 
 	      count += length;
 	      size -= length;
+
+	      if (size < 0)
+		{
+		  goto bogus_rle;
+		}
+
+	      if (&xcfdata[length-1] > xcfdatalimit)
+		{
+		  goto bogus_rle;
+		}
 
 	      while (length-- > 0)
 		{
@@ -2602,6 +2641,11 @@ xcf_load_tile_rle (XcfInfo *info,
 	      length += 1;
 	      if (length == 128)
 		{
+		  if (xcfdata >= xcfdatalimit)
+		    {
+		      goto bogus_rle;
+		    }
+
 		  length = (*xcfdata << 8) + xcfdata[1];
 		  xcfdata += 2;
 		}
@@ -2610,7 +2654,14 @@ xcf_load_tile_rle (XcfInfo *info,
 	      size -= length;
 
               if (size < 0)
-                g_message (_("xcf: uh oh! xcf rle tile loading error: %d"), count);
+		{
+		  goto bogus_rle;
+		}
+
+	      if (xcfdata > xcfdatalimit)
+		{
+		  goto bogus_rle;
+		}
 
 	      val = *xcfdata++;
 
@@ -2624,6 +2675,11 @@ xcf_load_tile_rle (XcfInfo *info,
     }
   g_free(xcfodata);
   return TRUE;
+
+ bogus_rle:
+  if (xcfodata)
+    g_free(xcfodata);
+  return FALSE;
 }
 
 

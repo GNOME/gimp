@@ -1,3 +1,10 @@
+Wed Nov 17 22:45:35 GMT 1999  Adam D. Moss <adam@gimp.org>
+
+	* app/xcf.c: When greeted with a cheerfully corrupt poli^M^M^M^MXCF
+	file, GIMP will 1) live a long and fruitful life rather than crash
+	and burn, and 2) read as much as is reasonable and issue a
+	warning about only being able to partially load the file.
+
 Wed Nov 17 17:48:50 CET 1999  Marc Lehmann <pcg@goof.com>
 
         * libgimp/*: Updated header comment from LGPL2.0 to LGPL2.1, where
