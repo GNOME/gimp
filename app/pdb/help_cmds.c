@@ -20,7 +20,6 @@
 
 #include "config.h"
 
-#include <sys/types.h>
 
 #include <glib-object.h>
 
@@ -29,6 +28,8 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
+#include "core/gimp.h"
+#include "plug-in/plug-in.h"
 #include "plug-in/plug-ins.h"
 #include "widgets/gimphelp.h"
 
@@ -45,11 +46,11 @@ help_invoker (Gimp     *gimp,
               Argument *args)
 {
   gboolean success = TRUE;
-  gchar *prog_name;
+  gchar *help_domain;
   gchar *help_id;
 
-  prog_name = (gchar *) args[0].value.pdb_pointer;
-  if (prog_name == NULL)
+  help_domain = (gchar *) args[0].value.pdb_pointer;
+  if (help_domain && !g_utf8_validate (help_domain, -1, NULL))
     success = FALSE;
 
   help_id = (gchar *) args[1].value.pdb_pointer;
@@ -57,7 +58,13 @@ help_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_help (gimp, plug_ins_help_domain (gimp, prog_name, NULL), help_id);
+    {
+      if (! help_domain && gimp->current_plug_in)
+	help_domain = (gchar *)
+	  plug_ins_help_domain (gimp, gimp->current_plug_in->prog, NULL);
+    
+      gimp_help (gimp, help_domain, help_id);
+    }
 
   return procedural_db_return_args (&help_proc, success);
 }
@@ -66,8 +73,8 @@ static ProcArg help_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "prog_name",
-    "The plug-in's executable name or an empty string"
+    "help_domain",
+    "The help domain in which help_id is registered"
   },
   {
     GIMP_PDB_STRING,
@@ -80,7 +87,7 @@ static ProcRecord help_proc =
 {
   "gimp_help",
   "Load a help page.",
-  "This procedure loads the specified help page into the helpbrowser or what ever is configured as help viewer. The location of the help page is given relative to the help rootdir. The help rootdir is determined from the prog_name: if prog_name is NULL, we use the help rootdir of the main GIMP installation, if the plug-in's full executable name is passed as prog_name, the GIMP will use this information to look up the help path the plug-in has registered before with gimp-plugin-help-register.",
+  "This procedure loads the specified help page into the helpbrowser or what ever is configured as help viewer. The help page is identified by its domain and ID: if help_domain is NULL, we use the help_domain which was registered using the gimp-plugin-help-register procedure. If help_domain is NULL and no help domain was registered, the help domain of the main GIMP installation is used.",
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer <mitch@gimp.org>",
   "2000",

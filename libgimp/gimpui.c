@@ -125,7 +125,7 @@ static void
 gimp_ui_help_func (const gchar *help_id,
                    gpointer     help_data)
 {
-  gimp_help (gimp_get_progname (), help_id);
+  gimp_help (NULL, help_id);
 }
 
 static void

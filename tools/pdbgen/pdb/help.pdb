@@ -17,40 +17,43 @@
 
 # "Perlized" from C source by Sven Neumann <sven@gimp.org>
 
-sub pdb_misc {
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date = '2000';
-}
-
 sub help {
     $blurb = "Load a help page.";
 
     $help = <<HELP;
-This procedure loads the specified help page into the helpbrowser or what ever
-is configured as help viewer. The location of the help page is given relative 
-to the help rootdir. The help rootdir is determined from the prog_name: if
-prog_name is NULL, we use the help rootdir of the main GIMP installation,
-if the plug-in's full executable name is passed as prog_name, the GIMP
-will use this information to look up the help path the plug-in has registered
-before with gimp-plugin-help-register.
+This procedure loads the specified help page into the helpbrowser or
+what ever is configured as help viewer. The help page is identified by
+its domain and ID: if help_domain is NULL, we use the help_domain
+which was registered using the gimp-plugin-help-register procedure. If
+help_domain is NULL and no help domain was registered, the help domain
+of the main GIMP installation is used.
 HELP
 
-    &pdb_misc;
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date = '2000';
 
     @inargs = (
-	{ name => 'prog_name', type => 'string', no_validate => 1,
-	  desc => "The plug-in's executable name or an empty string" },
+	{ name => 'help_domain', type => 'string', null_ok => 1,
+	  desc => "The help domain in which help_id is registered" },
 	{ name => 'help_id', type => 'string',
 	  desc => 'The help page\'s ID' }
     );
 
     %invoke = (
-        success => 'TRUE',
-	code => 'gimp_help (gimp, plug_ins_help_domain (gimp, prog_name, NULL), help_id);'
+	code => <<CODE
+{
+  if (! help_domain && gimp->current_plug_in)
+    help_domain = (gchar *)
+      plug_ins_help_domain (gimp, gimp->current_plug_in->prog, NULL);
+
+  gimp_help (gimp, help_domain, help_id);
+}
+CODE
     );
 }
 
-@headers = qw(<sys/types.h> "plug-in/plug-ins.h" "widgets/gimphelp.h");
+@headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-ins.h"
+              "widgets/gimphelp.h");
 
 @procs = qw(help);
 %exports = (app => [@procs], lib => [@procs]);

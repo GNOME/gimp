@@ -29,7 +29,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_help (const gchar *prog_name,
+gboolean gimp_help (const gchar *help_domain,
 		    const gchar *help_id);
 
 

@@ -1,3 +1,18 @@
+2004-01-20  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/help.pdb: changed "prog_name" parameter of
+	gimp_help() to "help_domain". It's useless to pass the plug-in's
+	executable name to the core because the core already knows it.
+	Instead, enabled accessing arbitrary help domains via the
+	PDB. Passing NULL as help_domain will use the domain the plug-in
+	registered, or the GIMP main help domain if it didn't register a
+	domain.
+
+	* app/pdb/help_cmds.c
+	* libgimp/gimphelp_pdb.[ch]: regenerated.
+
+	* libgimp/gimpui.c (gimp_ui_help_func): pass NULL as help_domain.
+
 2004-01-20  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimp-remote.c: made --new the default behaviour and allow
