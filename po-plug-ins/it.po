@@ -6128,12 +6128,12 @@ msgstr "/Esporta Tracciato"
 
 #: plug-ins/common/tileit.c:534
 msgid "Row:"
-msgstr ""
+msgstr "Riga:"
 
 #: plug-ins/common/tileit.c:556
 #, fuzzy
 msgid "Column:"
-msgstr "Comando:"
+msgstr "Colonna:"
 
 #. Lower frame saying howmany segments
 #: plug-ins/common/tileit.c:617
@@ -6153,44 +6153,44 @@ msgstr ""
 #: plug-ins/common/uniteditor.c:71
 #, fuzzy
 msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr "Console Script-Fu"
+msgstr "<Toolbox>/Xns/Editor Unità..."
 
 #: plug-ins/common/uniteditor.c:165 plug-ins/common/uniteditor.c:629
 #, fuzzy
 msgid "New Unit"
-msgstr "Unità"
+msgstr "Nuova Unità"
 
 #: plug-ins/common/uniteditor.c:193
 msgid "ID:"
-msgstr ""
+msgstr "ID"
 
 #: plug-ins/common/uniteditor.c:205
 #, fuzzy
 msgid "Factor:"
-msgstr "P(proprio fattore)"
+msgstr "Fattore:"
 
 #: plug-ins/common/uniteditor.c:216
 #, fuzzy
 msgid "Digits:"
-msgstr "Divisore"
+msgstr ""
 
 #: plug-ins/common/uniteditor.c:229
 msgid "Symbol:"
-msgstr ""
+msgstr "Simbolo:"
 
 #: plug-ins/common/uniteditor.c:242
 #, fuzzy
 msgid "Abbreviation:"
-msgstr "Elevazione"
+msgstr "Abbreviazione:"
 
 #: plug-ins/common/uniteditor.c:255
 #, fuzzy
 msgid "Singular:"
-msgstr "Specularità:"
+msgstr "Singolare:"
 
 #: plug-ins/common/uniteditor.c:268
 msgid "Plural:"
-msgstr ""
+msgstr "Plurale:"
 
 #: plug-ins/common/uniteditor.c:305
 msgid "Unit factor must not be 0."
@@ -6198,15 +6198,15 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:315
 msgid "All text fields must contain a value."
-msgstr ""
+msgstr "Tutti i campi devono contenere un valore."
 
 #: plug-ins/common/uniteditor.c:524
 msgid "Unit Editor"
-msgstr ""
+msgstr "Editor Unità"
 
 #: plug-ins/common/uniteditor.c:529 plug-ins/gimpressionist/presets.c:656
 msgid "Refresh"
-msgstr ""
+msgstr "Aggiorna"
 
 #: plug-ins/common/uniteditor.c:542
 msgid ""
@@ -6255,69 +6255,69 @@ msgstr "Salva"
 
 #: plug-ins/common/uniteditor.c:576
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: plug-ins/common/uniteditor.c:577
 msgid "Factor"
-msgstr ""
+msgstr "Fattore"
 
 #: plug-ins/common/uniteditor.c:578
 #, fuzzy
 msgid "Digits"
-msgstr "Luminosità:"
+msgstr ""
 
 #: plug-ins/common/uniteditor.c:579
 msgid "Symbol"
-msgstr ""
+msgstr "Simbolo"
 
 #: plug-ins/common/uniteditor.c:580
 msgid "Abbr."
-msgstr ""
+msgstr "Abbr."
 
 #: plug-ins/common/uniteditor.c:581
 #, fuzzy
 msgid "Singular"
-msgstr "Dimensione"
+msgstr "Singolare"
 
 #: plug-ins/common/uniteditor.c:582
 msgid "Plural"
-msgstr ""
+msgstr "Plurale"
 
 #: plug-ins/common/uniteditor.c:636
 msgid "Create a new unit from scratch."
-msgstr ""
+msgstr "Crea una nuova unità di misura."
 
 #: plug-ins/common/uniteditor.c:638
 msgid "Duplicate Unit"
-msgstr ""
+msgstr "Duplica Unità"
 
 #: plug-ins/common/uniteditor.c:645
 msgid "Create a new unit with the currently seleted unit as template."
-msgstr ""
+msgstr "Crea una nuova unità di misura basata su quella selezionata."
 
 #: plug-ins/common/uniteditor.c:648
 msgid "Don't Save Unit"
-msgstr ""
+msgstr "Non Salvare Unità"
 
 #: plug-ins/common/uniteditor.c:655
 #, fuzzy
 msgid "Don't save the currently selected unit before GIMP exits."
-msgstr "Utilizza tutti i livelli non selezionati"
+msgstr ""
 
 #: plug-ins/common/uniteditor.c:660
 #, fuzzy
 msgid "Save Unit"
-msgstr "Salva Punti"
+msgstr "Salva Unità"
 
 #: plug-ins/common/uniteditor.c:667
 #, fuzzy
 msgid "Save the currently selected unit before GIMP exits."
-msgstr "Utilizza tutti i livelli non selezionati"
+msgstr ""
 
 #: plug-ins/common/unsharp.c:184
 #, fuzzy
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
-msgstr "<Image>/Filters/Enhance/Destripe"
+msgstr "<Image>/Filtri/Avanzati/Maschera Sfocata..."
 
 #: plug-ins/common/unsharp.c:394
 #, fuzzy
@@ -6326,7 +6326,7 @@ msgstr "Destripe..."
 
 #: plug-ins/common/unsharp.c:789
 msgid "Unsharp Mask"
-msgstr ""
+msgstr "Maschera Sfocata"
 
 #: plug-ins/common/video.c:42
 #, fuzzy
@@ -6405,45 +6405,45 @@ msgstr "<Image>/Filters/Colors/Media Bordi"
 
 #: plug-ins/common/vpropagate.c:158
 msgid "More White (Larger Value)"
-msgstr ""
+msgstr "Più Bianco (valori più grandi)"
 
 #: plug-ins/common/vpropagate.c:161
 msgid "More Black (Smaller Value)"
-msgstr ""
+msgstr "Più Nero (valori più piccoli)"
 
 #: plug-ins/common/vpropagate.c:164
 msgid "Middle Value to Peaks"
-msgstr ""
+msgstr "Dal Valore Medio al Picco"
 
 #: plug-ins/common/vpropagate.c:167
 #, fuzzy
 msgid "Foreground to Peaks"
-msgstr "Utilizza Colore di Sfondo"
+msgstr "Dal Colore di Primo Piano al Picco"
 
 #: plug-ins/common/vpropagate.c:170
 #, fuzzy
 msgid "Only Foreground"
-msgstr "Sfondo"
+msgstr "Colore di Primo Piano"
 
 #: plug-ins/common/vpropagate.c:173
 #, fuzzy
 msgid "Only Background"
-msgstr "Sfondo"
+msgstr "Colore di Sfondo"
 
 #: plug-ins/common/vpropagate.c:176
 #, fuzzy
 msgid "More Opaque"
-msgstr "Muovi Tracciato"
+msgstr "Più Opaco"
 
 #: plug-ins/common/vpropagate.c:179
 #, fuzzy
 msgid "More Transparent"
-msgstr "Trasparenza"
+msgstr "Più Trasparente"
 
 #: plug-ins/common/vpropagate.c:218
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Value Propagate..."
-msgstr "<Image>/Filters/Colors/Media Bordi"
+msgstr "<Image>/Filtri/Distorsioni/Value Propagate..."
 
 #: plug-ins/common/vpropagate.c:365
 #, fuzzy
@@ -6457,47 +6457,47 @@ msgstr ""
 #. Propagate Mode
 #: plug-ins/common/vpropagate.c:958
 msgid "Propagate Mode"
-msgstr ""
+msgstr "Metodo"
 
 #: plug-ins/common/vpropagate.c:994
 #, fuzzy
 msgid "Lower Threshold:"
-msgstr "Soglia"
+msgstr "Soglia Inferiore:"
 
 #: plug-ins/common/vpropagate.c:1003
 #, fuzzy
 msgid "Upper Threshold:"
-msgstr "Soglia"
+msgstr "Soglia Superiore:"
 
 #: plug-ins/common/vpropagate.c:1012
 #, fuzzy
 msgid "Propagating Rate:"
-msgstr "/Aggiungi Canale Alpha"
+msgstr "Intensità:"
 
 #: plug-ins/common/vpropagate.c:1024
 #, fuzzy
 msgid "To Left"
-msgstr "Sinistra Alto"
+msgstr "A Sinistra"
 
 #: plug-ins/common/vpropagate.c:1027
 #, fuzzy
 msgid "To Right"
-msgstr "Nessuna Luce"
+msgstr "A Destra"
 
 #: plug-ins/common/vpropagate.c:1030
 #, fuzzy
 msgid "To Top"
-msgstr "Sinistra Alto"
+msgstr "In Alto"
 
 #: plug-ins/common/vpropagate.c:1033
 #, fuzzy
 msgid "To Bottom"
-msgstr "Sinistra Basso"
+msgstr "In Basso"
 
 #: plug-ins/common/vpropagate.c:1046
 #, fuzzy
 msgid "Propagating Alpha Channel"
-msgstr "/Aggiungi Canale Alpha"
+msgstr "Diffondi Canale Alpha"
 
 #: plug-ins/common/vpropagate.c:1056
 msgid "Propagating Value Channel"
@@ -6506,7 +6506,7 @@ msgstr ""
 #: plug-ins/common/warp.c:277
 #, fuzzy
 msgid "<Image>/Filters/Map/Warp..."
-msgstr "<Image>/Filters/Map/Bump Map"
+msgstr "<Image>/Filtri/Mappatura/Warp..."
 
 #: plug-ins/common/warp.c:461
 msgid "Main Options"
@@ -6515,12 +6515,12 @@ msgstr "Opzioni Principali"
 #: plug-ins/common/warp.c:476
 #, fuzzy
 msgid "Step Size:"
-msgstr "Dimensione area"
+msgstr "Incremento:"
 
 #: plug-ins/common/warp.c:485 plug-ins/ifscompose/ifscompose.c:1277
 #, fuzzy
 msgid "Iterations:"
-msgstr "Saturazione"
+msgstr "Iterazioni:"
 
 #. Displacement map menu
 #: plug-ins/common/warp.c:492
@@ -6536,7 +6536,7 @@ msgstr "Colore Primo Piano"
 #: plug-ins/common/warp.c:570
 #, fuzzy
 msgid "Secondary Options"
-msgstr "Opzioni Salvataggio"
+msgstr "Opzioni Secondarie"
 
 #: plug-ins/common/warp.c:583
 #, fuzzy
@@ -6546,7 +6546,7 @@ msgstr "Dimensione area"
 #: plug-ins/common/warp.c:592
 #, fuzzy
 msgid "Rotation Angle:"
-msgstr "Rotazione"
+msgstr "Angolo Rotazione:"
 
 #: plug-ins/common/warp.c:601
 #, fuzzy
@@ -6556,11 +6556,11 @@ msgstr "Step"
 #. Magnitude map menu
 #: plug-ins/common/warp.c:608
 msgid "Magnitude Map:"
-msgstr ""
+msgstr "Mappa d'Intensità"
 
 #: plug-ins/common/warp.c:627
 msgid "Use Mag Map"
-msgstr ""
+msgstr "Usa Mappa"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
@@ -6571,15 +6571,15 @@ msgstr "Opzioni Ulteriori"
 #: plug-ins/common/warp.c:657
 #, fuzzy
 msgid "Gradient Scale:"
-msgstr "Scala Gradiente"
+msgstr "Scala Gradiente:"
 
 #: plug-ins/common/warp.c:672
 msgid "Gradient map selection menu"
-msgstr ""
+msgstr "Menù di selezione scala"
 
 #: plug-ins/common/warp.c:682
 msgid "Vector Mag:"
-msgstr ""
+msgstr "Intensità Vettore:"
 
 #: plug-ins/common/warp.c:708
 msgid "Fixed-direction-vector map selection menu"
@@ -6594,12 +6594,12 @@ msgstr ""
 #: plug-ins/common/warp.c:1169
 #, fuzzy
 msgid "Smoothing X gradient..."
-msgstr "Gradiente continuo"
+msgstr "Gradiente continuo X..."
 
 #: plug-ins/common/warp.c:1171
 #, fuzzy
 msgid "Smoothing Y gradient..."
-msgstr "Gradiente continuo"
+msgstr "Gradiente continuo Y..."
 
 #. calculate new X,Y Displacement image maps
 #: plug-ins/common/warp.c:1226
@@ -6628,12 +6628,12 @@ msgstr "Riflesso"
 #: plug-ins/common/waves.c:427
 #, fuzzy
 msgid "Phase:"
-msgstr "Pattern:"
+msgstr "Fase:"
 
 #: plug-ins/common/waves.c:436
 #, fuzzy
 msgid "Wavelength:"
-msgstr "Definizione:"
+msgstr "Lunghezza d'onda:"
 
 #: plug-ins/common/waves.c:668
 #, fuzzy
