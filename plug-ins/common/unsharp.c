@@ -103,7 +103,10 @@ static void      unsharp_mask            (GimpDrawable  *drawable,
 
 static gboolean  unsharp_mask_dialog     (void);
 static void      preview_update          (void);
+static void      preview_move            (void);
+static void      preview_update_real     (gboolean   apply_effect);
 static void      preview_toggle_callback (GtkWidget *toggle);
+static gboolean  preview_button_release  (void);
 
 
 /* create a few globals, set default values */
@@ -690,14 +693,16 @@ unsharp_preview_new (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &delta_x);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (preview_update),
+                    G_CALLBACK (preview_move),
                     NULL);
   scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (adj));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar),
-                               GTK_UPDATE_DISCONTINUOUS);
+                               GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (GTK_TABLE (table), scrollbar, 0, 1, 1, 2,
                     GTK_FILL, 0, 0, 0);
   gtk_widget_show (scrollbar);
+  g_signal_connect (scrollbar, "button_release_event",
+                    G_CALLBACK (preview_button_release), NULL);
 
   adj = gtk_adjustment_new (0, 0, sel_height - 1, 1.0,
                             MIN (preview_height, sel_height),
@@ -707,15 +712,17 @@ unsharp_preview_new (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &delta_y);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (preview_update),
+                    G_CALLBACK (preview_move),
                     NULL);
 
   scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (adj));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar),
-                               GTK_UPDATE_DISCONTINUOUS);
+                               GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (GTK_TABLE (table), scrollbar, 1, 2, 0, 1,
                     0, GTK_FILL, 0, 0);
   gtk_widget_show (scrollbar);
+  g_signal_connect (scrollbar, "button_release_event",
+                    G_CALLBACK (preview_button_release), NULL);
 
   preview_toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview_toggle),
@@ -846,7 +853,7 @@ preview_toggle_callback (GtkWidget *toggle)
 }
 
 static void
-preview_update (void)
+preview_update_real (gboolean apply_effect)
 {
   /* drawable */
   glong width, height;
@@ -908,20 +915,29 @@ preview_update (void)
   gimp_pixel_rgn_init (&srcPR, drawable,
                        preview_buf_x1,preview_buf_y1,
                        preview_buf_width, preview_buf_height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable,
-                       preview_buf_x1,preview_buf_y1,
-                       preview_buf_width, preview_buf_height,  TRUE, TRUE);
-
-  /* render image */
-  unsharp_region (srcPR, destPR, preview_buf_width, preview_buf_height, bytes,
-                  unsharp_params.radius, unsharp_params.amount,
-                  preview_buf_x1, preview_buf_x2, preview_buf_y1, preview_buf_y2);
-
   render_buffer = g_new (guchar, preview_buf_width * preview_buf_height * bytes);
+  
+  if (apply_effect)
+    {
+      /* render image */
+      gimp_pixel_rgn_init (&destPR, drawable,
+                           preview_buf_x1,preview_buf_y1,
+                           preview_buf_width, preview_buf_height,  TRUE, TRUE);
 
-  gimp_pixel_rgn_get_rect(&destPR, render_buffer,
-                          preview_buf_x1, preview_buf_y1,
-                          preview_buf_width, preview_buf_height);
+      unsharp_region (srcPR, destPR, preview_buf_width, preview_buf_height, bytes,
+                      unsharp_params.radius, unsharp_params.amount,
+                      preview_buf_x1, preview_buf_x2, preview_buf_y1, preview_buf_y2);
+
+      gimp_pixel_rgn_get_rect(&destPR, render_buffer,
+                              preview_buf_x1, preview_buf_y1,
+                              preview_buf_width, preview_buf_height);
+    }
+  else
+    {
+      gimp_pixel_rgn_get_rect(&srcPR, render_buffer,
+                              preview_buf_x1, preview_buf_y1,
+                              preview_buf_width, preview_buf_height);
+    }
 
   /*
    * Draw the preview image on the screen...
@@ -940,5 +956,25 @@ preview_update (void)
                           preview_buf_width * bytes);
 
   g_free (render_buffer);
+}
+
+
+static void
+preview_update (void)
+{
+  preview_update_real (TRUE);
+}
+
+static void
+preview_move (void)
+{
+  preview_update_real (FALSE);
+}
+
+static gboolean
+preview_button_release (void)
+{
+  preview_update_real (TRUE);
+  return FALSE;
 }
 

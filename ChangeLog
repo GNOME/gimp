@@ -1,3 +1,8 @@
+2004-08-09  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/unsharp.c: continuously show the (original) image
+	during a scrollbar movement.  This makes it easier to navigate.
+
 2004-08-09  Michael Natterer  <mitch@gimp.org>
 
 	Applied (slightly modified) patch from Shlomi Fish which adds a
