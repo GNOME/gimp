@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
-"POT-Creation-Date: 1999-01-17 04:30+0100\n"
+"POT-Creation-Date: 1999-01-17 08:11+0100\n"
 "PO-Revision-Date: 1998-11-07 18:15+0100\n"
 "Last-Translator: Vincent Renardias <vincent@ldsol.com>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"
@@ -134,7 +134,9 @@ msgstr "commande batch: exécution réussie.\n"
 
 #: app/bezier_select.c:440
 msgid "tried to edit on open bezier curve in edit selection"
-msgstr "tentative d'edition sur une courbe de Bézier ouverte dans la sélection d'édition"
+msgstr ""
+"tentative d'edition sur une courbe de Bézier ouverte dans la sélection "
+"d'édition"
 
 #: app/bezier_select.c:780
 msgid "Encountered orphaned bezier control point"
@@ -576,7 +578,7 @@ msgstr "Valeur"
 
 #: app/brush_select.c:118 app/pattern_select.c:77
 msgid "Refresh"
-msgstr "Rafraichissement"
+msgstr "Rafraichir"
 
 #: app/brush_select.c:190
 msgid "Brush Selection"
@@ -995,11 +997,15 @@ msgstr "Echelle de l'image"
 
 #: app/commands.c:1140
 msgid "Resize Error: Both width and height must be greater than zero."
-msgstr "Erreur de redimensionnement: Les hauteurs et largeurs doivent être supérieures à zéro."
+msgstr ""
+"Erreur de redimensionnement: Les hauteurs et largeurs doivent être "
+"supérieures à zéro."
 
 #: app/commands.c:1170
 msgid "Scale Error: Both width and height must be greater than zero."
-msgstr "Erreur de redimensionnement: Les hauteurs et largeurs doivent être supérieures à zéro."
+msgstr ""
+"Erreur de redimensionnement: Les hauteurs et largeurs doivent être "
+"supérieures à zéro."
 
 #: app/convert.c:326
 msgid "Indexed Color Conversion"
@@ -1460,7 +1466,8 @@ msgstr ""
 msgid ""
 "Cannot anchor this layer because\n"
 "it is not a floating selection."
-msgstr "Impossible d'ancrer ce calque\n"
+msgstr ""
+"Impossible d'ancrer ce calque\n"
 "car ce n'est pas une sélection flotante."
 
 #: app/floating_sel.c:174
@@ -1545,11 +1552,11 @@ msgstr "<Image>/Calques/Mask To Selection"
 
 #: app/gdisplay.c:1400
 msgid "<Image>/Layers/Add Alpha Channel"
-msgstr "<Image/Calques/Ajouter un Canal Alpha"
+msgstr "<Image/Calques/Ajouter Canal Alpha"
 
 #: app/gdisplay.c:1402
 msgid "<Image>/Image/RGB"
-msgstr "<Image>/Image/RGB"
+msgstr "<Image>/Image/RVB"
 
 #: app/gdisplay.c:1403
 msgid "<Image>/Image/Grayscale"
@@ -1561,7 +1568,7 @@ msgstr "<Image>/Image/Indéxée"
 
 #: app/gdisplay.c:1406
 msgid "<Image>/Image/Colors/Threshold"
-msgstr ""
+msgstr "<Image>/Image/Couleurs/Threshold"
 
 #: app/gdisplay.c:1407
 msgid "<Image>/Image/Colors/Posterize"
@@ -1601,7 +1608,7 @@ msgstr "<Image>/Image/Couleurs/Désaturer"
 
 #: app/gdisplay.c:1419
 msgid "<Image>/Image/Alpha/Add Alpha Channel"
-msgstr "<Image>/Image/Alpha/Ajouter un canal Alpha"
+msgstr "<Image>/Image/Alpha/Ajouter Canal Alpha"
 
 #: app/gdisplay.c:1421
 msgid "<Image>/Select"
@@ -1653,7 +1660,7 @@ msgstr "<Image>/Image/Couleurs"
 
 #: app/gdisplay.c:1433
 msgid "<Image>/Image/Channel Ops/Offset"
-msgstr ""
+msgstr "<Image>/Image/Channel Ops/Décalage"
 
 #: app/gdisplay.c:1434
 msgid "<Image>/Image/Histogram"
@@ -1666,27 +1673,27 @@ msgstr "<Image>/Filtres"
 #. save selection to channel
 #: app/gdisplay.c:1438
 msgid "<Image>/Select/Save To Channel"
-msgstr ""
+msgstr "<Image>/Sélection/Enregistrer dans le canal"
 
 #: app/gdisplay.c:1440
 msgid "<Image>/View/Toggle Rulers"
-msgstr ""
+msgstr "<Image>/Vue/Toggle Rulers"
 
 #: app/gdisplay.c:1441
 msgid "<Image>/View/Toggle Guides"
-msgstr ""
+msgstr "<Image>/Vue/Toggle Guides"
 
 #: app/gdisplay.c:1442
 msgid "<Image>/View/Snap To Guides"
-msgstr ""
+msgstr "<Image>/Vue/Snap To Guides"
 
 #: app/gdisplay.c:1443
 msgid "<Image>/View/Toggle Statusbar"
-msgstr ""
+msgstr "<Image>/Vue/Toggle Statusbar"
 
 #: app/gdisplay.c:1444
 msgid "<Image>/View/Dot for dot"
-msgstr ""
+msgstr "<Image>/Vue/Point par point"
 
 #: app/gdisplay.c:1850
 msgid "gdisplays_flush() called recursively."
@@ -1721,14 +1728,16 @@ msgstr ""
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
-msgstr "Le calque actif n'a pas de canal alpha\n"
+msgstr ""
+"Le calque actif n'a pas de canal alpha\n"
 "à convertir en sélection."
 
 #: app/gimage_mask.c:510
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
-msgstr "Le calque actif n'a pas de masque\n"
+msgstr ""
+"Le calque actif n'a pas de masque\n"
 "à convertir en sélection."
 
 #: app/gimage_mask.c:559
@@ -1811,7 +1820,8 @@ msgstr "Fond sans alpha, calque placé par dessus"
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
-msgstr "Il n'y a pas assez de calques visibles pour une\n"
+msgstr ""
+"Il n'y a pas assez de calques visibles pour une\n"
 "fusion. Il en faut au moins deux."
 
 #: app/gimpimage.c:2096
@@ -1824,40 +1834,48 @@ msgstr "gimp_image_merge_layers: impossible d'alouer le calque pour la fusion"
 
 #: app/gimpimage.c:2279
 msgid "gimp_image_merge_layers attempting to merge incompatible layers\n"
-msgstr "gimp_image_merge_layers a tenté de fusionner des calques incompatibles\n"
+msgstr ""
+"gimp_image_merge_layers a tenté de fusionner des calques incompatibles\n"
 
 #: app/gimpimage.c:2359
 msgid "gimp_image_add_layer: attempt to add layer to wrong image"
-msgstr "gimp_image_add_layer: tentative d'ajouter un calque à la mauvaise image"
+msgstr ""
+"gimp_image_add_layer: tentative d'ajouter un calque à la mauvaise image"
 
 #: app/gimpimage.c:2369
 msgid "gimp_image_add_layer: trying to add layer to image twice"
-msgstr "gimp_image_add_layer: tentative d'ajouter un calque deux fois à la même image"
+msgstr ""
+"gimp_image_add_layer: tentative d'ajouter un calque deux fois à la même image"
 
 #: app/gimpimage.c:2482
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
-msgstr "Impossible d'ajouter un masque au\n"
+msgstr ""
+"Impossible d'ajouter un masque au\n"
 "calque car il en a déjà un."
 
 #: app/gimpimage.c:2486
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
-msgstr "Impossible d'ajouter un masque\n"
+msgstr ""
+"Impossible d'ajouter un masque\n"
 "au calque dans une image indexée."
 
 #: app/gimpimage.c:2490
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
-msgstr "Impossible d'ajouter un masque\n"
+msgstr ""
+"Impossible d'ajouter un masque\n"
 "dans un calque sans canal alpha."
 
 #: app/gimpimage.c:2494
 msgid "Cannot add layer mask of different dimensions than specified layer."
-msgstr "Impossible d'ajouter un masque de calque de dimensions différente que le calque spécifié."
+msgstr ""
+"Impossible d'ajouter un masque de calque de dimensions différente que le "
+"calque spécifié."
 
 #: app/gimpimage.c:2598
 msgid "Channel cannot be raised any further"
@@ -1869,11 +1887,13 @@ msgstr "Le canal ne peux pas être abaissé plus"
 
 #: app/gimpimage.c:2665
 msgid "gimp_image_add_channel: attempt to add channel to wrong image"
-msgstr "gimp_image_add_channel: tentative d'ajouter un canal à la mauvaise image"
+msgstr ""
+"gimp_image_add_channel: tentative d'ajouter un canal à la mauvaise image"
 
 #: app/gimpimage.c:2675
 msgid "gimp_image_add_channel: trying to add channel to image twice"
-msgstr "gimp_image_add_channel: tentative d'ajouter un canal à l'image deux fois"
+msgstr ""
+"gimp_image_add_channel: tentative d'ajouter un canal à l'image deux fois"
 
 #: app/gimpimage.c:2801 app/palette.c:514 app/palette.c:539 app/palette.c:1197
 #: app/palette.c:1201 app/palette.c:2568 app/palette.c:3246
@@ -1934,7 +1954,8 @@ msgstr "Impossible de renommer gimprc en gimprc.old; problème de permission"
 
 #: app/gimprc.c:2193
 msgid "Can't rename gimprc to gimprc.old; gimprc.old is a directory"
-msgstr "Impossible de renommer gimprc en gimprc.old; gimprc.old est un répertoire"
+msgstr ""
+"Impossible de renommer gimprc en gimprc.old; gimprc.old est un répertoire"
 
 #: app/gimprc.c:2194
 msgid "Can't rename gimprc to gimprc.old, reason unknown"
@@ -1967,11 +1988,11 @@ msgstr "Remplace la sélection courante"
 
 #: app/global_edit.c:699
 msgid "Cut Named"
-msgstr ""
+msgstr "Couper Nommé"
 
 #: app/global_edit.c:730
 msgid "Copy Named"
-msgstr ""
+msgstr "Copie Nommé"
 
 #: app/gradient.c:402
 msgid "Curved"
@@ -2097,7 +2118,9 @@ msgstr "ed_do_rename_gradient_callback(): oops, NULL reçu dans call_data"
 
 #: app/gradient.c:1333
 msgid "ed_do_rename_gradient_callback(): oops, can't find gradient to rename"
-msgstr "ed_do_rename_gradient_callback(): oops, impossible de trouver le dégradé a renommer"
+msgstr ""
+"ed_do_rename_gradient_callback(): oops, impossible de trouver le dégradé a "
+"renommer"
 
 #: app/gradient.c:1367
 msgid "Enter a name for the copied gradient"
@@ -2120,7 +2143,9 @@ msgstr "\"%s\" de la liste et du disque?"
 #: app/gradient.c:1539
 msgid ""
 "ed_do_delete_gradient_callback(): aieee, could not find gradient to delete!"
-msgstr "ed_do_delete_gradient_callback(): aïe, impossible de trouver le dégradé a effacer!"
+msgstr ""
+"ed_do_delete_gradient_callback(): aïe, impossible de trouver le dégradé a "
+"effacer!"
 
 #: app/gradient.c:1595
 msgid "Rename gradient"
@@ -2145,7 +2170,8 @@ msgstr "Facteur de Zoom: %d:1    Affichage [%0.6f, %0.6f]"
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Opacity: %0.3f"
-msgstr "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
+msgstr ""
+"Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Opacité: %0.3f"
 
 #: app/gradient.c:1958
@@ -2381,7 +2407,9 @@ msgstr ""
 
 #: app/gradient.c:5483
 msgid "grad_save_gradient(): can not save gradient with NULL filename"
-msgstr "grad_save_gradient(): impossible d'enregistrer le dégradé avec un nom de fichier NUL"
+msgstr ""
+"grad_save_gradient(): impossible d'enregistrer le dégradé avec un nom de "
+"fichier NUL"
 
 #: app/gradient.c:5489
 #, c-format
@@ -2391,7 +2419,9 @@ msgstr "grad_save_gradient(): impossible d'ouvrir \"%s\""
 #: app/gradient.c:5691
 #, c-format
 msgid "seg_get_segment_at(): aieee, no matching segment for position %0.15f"
-msgstr "seg_get_segment_at(): aïe, pas de segment correspondant pour la position %0.15f"
+msgstr ""
+"seg_get_segment_at(): aïe, pas de segment correspondant pour la position "
+"%0.15f"
 
 #: app/gradient_select.c:407
 msgid "failed to run gradient callback function"
@@ -2584,7 +2614,8 @@ msgstr "Forme:"
 
 #: app/install.c:53
 msgid "No home directory--skipping GIMP user installation."
-msgstr "Pas de répertoire personnel--installation personnelle de GIMP non effectuée"
+msgstr ""
+"Pas de répertoire personnel--installation personnelle de GIMP non effectuée"
 
 #: app/install.c:68
 msgid "The GIMP is not properly installed for the current user\n"
@@ -2594,13 +2625,15 @@ msgstr "The GIMP n'est pas installé correctement pour l'utilisateur courant\n"
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
-msgstr "Installation personnelle non effectuée car le paramétre '--nointerface'"
-"a été détecté\n"
+msgstr ""
+"Installation personnelle non effectuée car le paramétre '--nointerface'a été "
+"détecté\n"
 
 #: app/install.c:70
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
-msgstr "Pour effectuer l'installation, lancer GIMP avec le paramtre '--nointerface'\n"
+msgstr ""
+"Pour effectuer l'installation, lancer GIMP avec le paramtre '--nointerface'\n"
 
 #: app/install.c:89
 msgid "Install"
@@ -2612,7 +2645,7 @@ msgstr "Ignorer"
 
 #: app/install.c:91 app/install.c:367
 msgid "Quit"
-msgstr "Quiter"
+msgstr "Quitter"
 
 #: app/install.c:106
 msgid "GIMP Installation"
@@ -2632,7 +2665,9 @@ msgstr "Copyright (C) 1995 Spencer Kimball et Peter Mattis\n"
 
 #: app/install.c:148
 msgid "This program is free software; you can redistribute it and/or modify\n"
-msgstr "Ce programme est un logiciel libre; vous pouvez le redistribuer et/ou le modifier\n"
+msgstr ""
+"Ce programme est un logiciel libre; vous pouvez le redistribuer et/ou le "
+"modifier\n"
 
 #: app/install.c:150
 msgid "it under the terms of the GNU General Public License as published by\n"
@@ -2707,7 +2742,9 @@ msgstr "\t\t gimprc est utilisé pour stocker les préférences personnelles\n"
 
 #: app/install.c:191
 msgid "\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n"
-msgstr "\t\ttelles que les comportements par défaut et les raccourcis clavier pour les modules.\n"
+msgstr ""
+"\t\ttelles que les comportements par défaut et les raccourcis clavier pour "
+"les modules.\n"
 
 #: app/install.c:193
 msgid "\t\tPaths to search for brushes, palettes, gradients\n"
@@ -2735,7 +2772,8 @@ msgstr "\t\tCes programmes sont recherchés lors de l'exécution et\n"
 
 #: app/install.c:205
 msgid "\t\tinformation about their functionality and mod-times\n"
-msgstr "\t\tles informations sur leurs fonctionnalités et dates de modifications\n"
+msgstr ""
+"\t\tles informations sur leurs fonctionnalités et dates de modifications\n"
 
 #: app/install.c:207
 msgid "\t\tis cached in this file.  This file is intended to\n"
@@ -2756,7 +2794,8 @@ msgstr "\t\tRépertoire qui peux être utilisé pour stocker\n"
 
 #: app/install.c:215
 msgid "\t\tuser defined brushes.  The default gimprc file\n"
-msgstr "\t\tles brosses définies par l'utilisateur. Le fichier gimprc par défaut\n"
+msgstr ""
+"\t\tles brosses définies par l'utilisateur. Le fichier gimprc par défaut\n"
 
 #: app/install.c:217 app/install.c:229 app/install.c:283 app/install.c:297
 msgid "\t\tchecks this subdirectory in addition to the system-\n"
@@ -3145,20 +3184,17 @@ msgid "%s mask"
 msgstr "masque %s"
 
 #: app/layer_select.c:101
-#, fuzzy
 msgid "Layer Select"
-msgstr "<Image>/Sélection"
+msgstr "Sélection de Calque"
 
 #. the layer name label
 #: app/layer_select.c:137
-#, fuzzy
 msgid "Layer"
-msgstr "Nouvelle Image"
+msgstr "Calque"
 
 #: app/layers_dialog.c:224 app/layers_dialog.c:287 app/layers_dialog.c:3198
-#, fuzzy
 msgid "New Layer"
-msgstr "Nouvelle Image"
+msgstr "Nouveau Calque"
 
 #: app/layers_dialog.c:226 app/layers_dialog.c:288
 msgid "Raise Layer"
@@ -3223,7 +3259,7 @@ msgstr "Sélection"
 
 #: app/layers_dialog.c:254
 msgid "Add Alpha Channel"
-msgstr "Ajouter un canal Alpha"
+msgstr "Ajouter Canal Alpha"
 
 #: app/layers_dialog.c:256
 msgid "Layer to Top"
@@ -3234,18 +3270,16 @@ msgid "Layer to Bottom"
 msgstr ""
 
 #: app/layers_dialog.c:318
-#, fuzzy
 msgid "Layers & Channels"
-msgstr "/Dialogues/Calques & Canaux..."
+msgstr "Calques & Canaux"
 
 #: app/layers_dialog.c:362
 msgid "Layers"
 msgstr "Calques"
 
 #: app/layers_dialog.c:368
-#, fuzzy
 msgid "Channels"
-msgstr "Annuler"
+msgstr "Canaux"
 
 #: app/layers_dialog.c:696
 msgid "Keep Trans."
@@ -3309,14 +3343,12 @@ msgid "Black (Full Transparency)"
 msgstr "Noir (Transparence Totale)"
 
 #: app/layers_dialog.c:3489
-#, fuzzy
 msgid "Layer's Alpha Channel"
-msgstr "/Dialogues/Calques & Canaux..."
+msgstr "Canal Alpha du Calque"
 
 #: app/layers_dialog.c:3506
-#, fuzzy
 msgid "Add Mask Options"
-msgstr "Options d'enregistrement"
+msgstr "Options d'Ajout de masque"
 
 #. the name entry hbox, label and entry
 #: app/layers_dialog.c:3520
@@ -3448,13 +3480,16 @@ msgstr "  -n -no-interface         Lancer sans interface utilisateur.\n"
 
 #: app/main.c:284
 msgid "  -r --restore-session     Try to restore saved session.\n"
-msgstr "  -r --restore-session     Tenter de restorer une session enregistrée.\n"
+msgstr ""
+"  -r --restore-session     Tenter de restorer une session enregistrée.\n"
 
 #: app/main.c:285
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
-msgstr "  --no-data                Ne charge pas les motifs, dégradés, palettes, brosses.\n"
+msgstr ""
+"  --no-data                Ne charge pas les motifs, dégradés, palettes, "
+"brosses.\n"
 
 #: app/main.c:286
 msgid "  --verbose                Show startup messages.\n"
@@ -3533,7 +3568,7 @@ msgstr "sigsegv reçu"
 
 #: app/main.c:384
 msgid "sigpipe caught"
-msgstr "sigpipo reçu"
+msgstr "sigpipe reçu"
 
 #: app/main.c:387
 msgid "sigterm caught"
@@ -3577,7 +3612,7 @@ msgstr "/Fichier/Dialogues/Brosses..."
 
 #: app/menus.c:56
 msgid "/File/Dialogs/Patterns..."
-msgstr "/File/Dialogues/Motifs..."
+msgstr "/Fichier/Dialogues/Motifs..."
 
 #: app/menus.c:57
 msgid "/File/Dialogs/Palette..."
@@ -3674,7 +3709,7 @@ msgstr "/Edit/---"
 
 #: app/menus.c:97
 msgid "/Edit/Cut Named"
-msgstr "Edition/Cut Named"
+msgstr "/Edition/Cut Named"
 
 #: app/menus.c:98
 msgid "/Edit/Copy Named"
@@ -3686,47 +3721,47 @@ msgstr "/Edition/Paste Named"
 
 #: app/menus.c:102
 msgid "/Select/Toggle"
-msgstr ""
+msgstr "Sélection/Toggle"
 
 #: app/menus.c:103
 msgid "/Select/Invert"
-msgstr ""
+msgstr "/Sélection/Inverser"
 
 #: app/menus.c:104
 msgid "/Select/All"
-msgstr ""
+msgstr "/Sélection/Tout sélectionner"
 
 #: app/menus.c:105
 msgid "/Select/None"
-msgstr ""
+msgstr "/Sélection/Aucune"
 
 #: app/menus.c:106
 msgid "/Select/Float"
-msgstr ""
+msgstr "/Sélection/Flottante"
 
 #: app/menus.c:107
 msgid "/Select/Sharpen"
-msgstr ""
+msgstr "/Sélection/Shapen"
 
 #: app/menus.c:108
 msgid "/Select/Border"
-msgstr ""
+msgstr "/Sélection/Bordure"
 
 #: app/menus.c:109
 msgid "/Select/Feather"
-msgstr ""
+msgstr "/Sélection/Feather"
 
 #: app/menus.c:110
 msgid "/Select/Grow"
-msgstr ""
+msgstr "/Sélection/Agrandir"
 
 #: app/menus.c:111
 msgid "/Select/Shrink"
-msgstr ""
+msgstr "/Sélection/Rapetisser"
 
 #: app/menus.c:112
 msgid "/Select/Save To Channel"
-msgstr ""
+msgstr "/Sélection/Enregistrer dans le canal"
 
 #: app/menus.c:114
 msgid "/View/Zoom In"
@@ -3826,15 +3861,15 @@ msgstr "/Image/Couleurs/Désaturer"
 
 #: app/menus.c:139
 msgid "/Image/Channel Ops/Duplicate"
-msgstr ""
+msgstr "/Image/Channel Ops/Duplicate"
 
 #: app/menus.c:140
 msgid "/Image/Channel Ops/Offset"
-msgstr ""
+msgstr "/Image/Channel Ops/Décalage"
 
 #: app/menus.c:141
 msgid "/Image/Alpha/Add Alpha Channel"
-msgstr ""
+msgstr "/Image/Alpha/Ajouter Canal Alpha"
 
 #: app/menus.c:143 app/menus.c:147 app/menus.c:150 app/menus.c:151
 msgid "/Image/---"
@@ -3878,7 +3913,7 @@ msgstr "/Calques/Ancrer Calque"
 
 #: app/menus.c:157
 msgid "/Layers/Merge Visible Layers"
-msgstr "/Calques/Elever Calque"
+msgstr "/Calques/Fusionner les Calques Visibles"
 
 #: app/menus.c:158
 msgid "/Layers/Flatten Image"
@@ -4507,9 +4542,8 @@ msgid "Default image type"
 msgstr "Type d'imgae par défaut"
 
 #: app/preferences_dialog.c:999
-#, fuzzy
 msgid "Preview size: "
-msgstr "Prévisualisation"
+msgstr "Taille de la prévisualisation: "
 
 #: app/preferences_dialog.c:1021
 msgid "Cubic interpolation"
@@ -5005,7 +5039,9 @@ msgstr ""
 
 #: app/tile_swap.c:358
 msgid "unable to open swap file...BAD THINGS WILL HAPPEN SOON"
-msgstr "impossible d'ouvrir le fichier d'échange... DES TRUCS BIZARRES VONT BIENTOT ARRIVER"
+msgstr ""
+"impossible d'ouvrir le fichier d'échange... DES TRUCS BIZARRES VONT BIENTOT "
+"ARRIVER"
 
 #: app/tile_swap.c:400
 msgid "tile_swap_default: SWAP_COMPRESS: UNFINISHED"
@@ -5046,7 +5082,8 @@ msgstr "Afficher un conseil la prochaine fois"
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called "
-msgstr "Votre fichier de conseils GIMP manque!\n"
+msgstr ""
+"Votre fichier de conseils GIMP manque!\n"
 "Il devrait y avoir un fichier nommé "
 
 #: app/tools.c:83
@@ -5333,11 +5370,11 @@ msgstr "/Image/Couleurs/Postériser"
 
 #: app/tools.c:551
 msgid "/Image/Colors/Threshold"
-msgstr ""
+msgstr "/Image/Couleurs/Threshold"
 
 #: app/tools.c:566
 msgid "/Image/Colors/Curves"
-msgstr "/Images/Couleurs/Courbes"
+msgstr "/Image/Couleurs/Courbes"
 
 #: app/tools.c:581
 msgid "/Image/Colors/Levels"
@@ -5372,7 +5409,8 @@ msgstr ""
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
-msgstr "Les transformations ne marchent pas\n"
+msgstr ""
+"Les transformations ne marchent pas\n"
 "sur les calques qui contiennent des masques."
 
 #: app/transform_core.c:1107
@@ -5469,7 +5507,8 @@ msgstr "type de compression inconnu: %d"
 
 #: app/xcf.c:1568
 msgid "Warning, resolution out of range in XCF file"
-msgstr "Avertissement: résolution en dehors de l'intervalle dans le fichier XCF"
+msgstr ""
+"Avertissement: résolution en dehors de l'intervalle dans le fichier XCF"
 
 #: app/xcf.c:1591
 msgid "Error detected while loading an image's parasites"
