@@ -243,6 +243,9 @@ xcf_load_image (Gimp    *gimp,
 
   gimp_image_set_filename (gimage, info->filename);
 
+  if (info->tattoo_state > 0)
+    gimp_image_set_tattoo_state (gimage, info->tattoo_state);
+
   return gimage;
 
  error:
@@ -391,7 +394,7 @@ xcf_load_image_props (XcfInfo   *info,
 
 	case PROP_TATTOO:
 	  {
-	    info->cp += xcf_read_int32 (info->fp, &gimage->tattoo_state, 1);
+	    info->cp += xcf_read_int32 (info->fp, &info->tattoo_state, 1);
 	  }
 	  break;
 

@@ -217,6 +217,7 @@ xcf_load_invoker (Gimp     *gimp,
     {
       info.cp                    = 0;
       info.filename              = filename;
+      info.tattoo_state          = 0;
       info.active_layer          = NULL;
       info.active_channel        = NULL;
       info.floating_sel_drawable = NULL;

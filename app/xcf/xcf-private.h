@@ -77,6 +77,7 @@ struct _XcfInfo
   FILE               *fp;
   guint               cp;
   gchar              *filename;
+  GimpTattoo          tattoo_state;
   GimpLayer          *active_layer;
   GimpChannel        *active_channel;
   GimpDrawable       *floating_sel_drawable;
