@@ -30,7 +30,6 @@ endif
 SUBDIRS = 			\
 	libgck			\
 	megawidget		\
-	gpc			\
 	dbbrowser		\
 	script-fu		\
 	$(GIMP_PERL)		\

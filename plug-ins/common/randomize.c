@@ -81,8 +81,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include <plug-ins/gpc/gpc.h>
-
 #include "libgimp/stdplugins-intl.h"
 
 /*********************************
@@ -91,18 +89,20 @@
  *
  ********************************/
 
-
 /*
  *  progress meter update frequency
  */
 #define PROG_UPDATE_TIME ((row % 10) == 0)
 
-char *PLUG_IN_NAME[] = {
-    "plug_in_randomize_hurl",
-    "plug_in_randomize_pick",
-    "plug_in_randomize_slur",
+gchar *PLUG_IN_NAME[] =
+{
+  "plug_in_randomize_hurl",
+  "plug_in_randomize_pick",
+  "plug_in_randomize_slur",
 };
-char *RNDM_VERSION[] = {
+
+gchar *RNDM_VERSION[] =
+{
   N_("Random Hurl 1.7"),
   N_("Random Pick 1.7"),
   N_("Random Slur 1.7"),
@@ -126,26 +126,30 @@ gint rndm_type = RNDM_HURL;  /* hurl, pick, etc. */
  *
  ********************************/
 
-typedef struct {
-    gdouble rndm_pct;     /* likelihood of randomization (as %age) */
-    gdouble rndm_rcount;  /* repeat count */
-    gint seed_type;       /* seed init. type - current time or user value */
-    gint rndm_seed;       /* seed value for rand() function */
+typedef struct
+{
+  gdouble rndm_pct;     /* likelihood of randomization (as %age) */
+  gdouble rndm_rcount;  /* repeat count */
+  gint seed_type;       /* seed init. type - current time or user value */
+  gint rndm_seed;       /* seed value for rand() function */
 } RandomizeVals;
 
-static RandomizeVals pivals = {
-    50.0,
-    1.0,
-    SEED_TIME,
-    0,
+static RandomizeVals pivals =
+{
+  50.0,
+  1.0,
+  SEED_TIME,
+  0,
 };
 
-typedef struct {
-    gint run;
+typedef struct
+{
+  gint run;
 } RandomizeInterface;
 
-static RandomizeInterface rndm_int = {
-    FALSE     /*  have we run? */
+static RandomizeInterface rndm_int =
+{
+  FALSE     /*  have we run? */
 };
 
 
@@ -156,17 +160,18 @@ static RandomizeInterface rndm_int = {
  ********************************/
 
 static void query (void);
-static void run   (char *name,
-		   int nparams,
-		   GParam *param,
-		   int *nreturn_vals,
+static void run   (gchar   *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
 		   GParam **return_vals);
 
-GPlugInInfo PLUG_IN_INFO = {
-    NULL,    /* init_proc */
-    NULL,    /* quit_proc */
-    query,   /* query_proc */
-    run,     /* run_proc */
+GPlugInInfo PLUG_IN_INFO =
+{
+  NULL,    /* init_proc */
+  NULL,    /* quit_proc */
+  query,   /* query_proc */
+  run,     /* run_proc */
 };
 
 static void randomize (GDrawable *drawable);
@@ -177,11 +182,16 @@ static inline void randomize_prepare_row (GPixelRgn *pixel_rgn,
 					  int y,
 					  int w);
 
-static gint randomize_dialog (void);
+static gint randomize_dialog        (void);
 
-static void randomize_ok_callback (GtkWidget *widget,
-				   gpointer   data);
-
+static void randomize_ok_callback   (GtkWidget     *widget,
+				     gpointer       data);
+static void randomize_text_update   (GtkWidget     *widget,
+				     gpointer       data);
+static void randomize_toggle_update (GtkWidget     *widget,
+				     gpointer       data);
+static void randomize_scale_update  (GtkAdjustment *adjustment,
+				     gdouble       *scale_val);
 
 /************************************ Guts ***********************************/
 
@@ -209,35 +219,35 @@ query (void)
     { PARAM_INT32, "rndm_seed", "Seed value (used only if seed type is 11)" },
   };
   static GParamDef *return_vals = NULL;
-  static int nargs = sizeof(args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof(args) / sizeof (args[0]);
+  static gint nreturn_vals = 0;
 
-  const char *hurl_blurb =
+  const gchar *hurl_blurb =
     _("Add a random factor to the image by hurling random data at it.");
-  const char *pick_blurb =
+  const gchar *pick_blurb =
     _("Add a random factor to the image by picking a random adjacent pixel.");
-  const char *slur_blurb =
+  const gchar *slur_blurb =
     _("Add a random factor to the image by slurring (similar to melting).");
 
-  const char *hurl_help =
+  const gchar *hurl_help =
     _("This plug-in ``hurls'' randomly-valued pixels onto the selection or image.  You may select the percentage of pixels to modify and the number of times to repeat the process.");
-  const char *pick_help =
+  const gchar *pick_help =
     _("This plug-in replaces a pixel with a random adjacent pixel.  You may select the percentage of pixels to modify and the number of times to repeat the process.");
-  const char *slur_help =
+  const gchar *slur_help =
     _("This plug-in slurs (melts like a bunch of icicles) an image.  You may select the percentage of pixels to modify and the number of times to repeat the process.");
 
-  const char *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
-  const char *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
-  const char *copyright_date = "1995-1998";
+  const gchar *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
+  const gchar *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
+  const gchar *copyright_date = "1995-1998";
 
   INIT_I18N();
 
   gimp_install_procedure (PLUG_IN_NAME[0],
-			  (char *) hurl_blurb,
-			  (char *) hurl_help,
-			  (char *) author,
-			  (char *) copyrights,
-			  (char *) copyright_date,
+			  (gchar *) hurl_blurb,
+			  (gchar *) hurl_help,
+			  (gchar *) author,
+			  (gchar *) copyrights,
+			  (gchar *) copyright_date,
 			  N_("<Image>/Filters/Noise/Hurl..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
@@ -245,11 +255,11 @@ query (void)
 			  args, return_vals);
 
   gimp_install_procedure (PLUG_IN_NAME[1],
-			  (char *) pick_blurb,
-			  (char *) pick_help,
-			  (char *) author,
-			  (char *) copyrights,
-			  (char *) copyright_date,
+			  (gchar *) pick_blurb,
+			  (gchar *) pick_help,
+			  (gchar *) author,
+			  (gchar *) copyrights,
+			  (gchar *) copyright_date,
 			  N_("<Image>/Filters/Noise/Pick..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
@@ -257,18 +267,17 @@ query (void)
 			  args, return_vals);
 
   gimp_install_procedure (PLUG_IN_NAME[2],
-			  (char *) slur_blurb,
-			  (char *) slur_help,
-			  (char *) author,
-			  (char *) copyrights,
-			  (char *) copyright_date,
+			  (gchar *) slur_blurb,
+			  (gchar *) slur_help,
+			  (gchar *) author,
+			  (gchar *) copyrights,
+			  (gchar *) copyright_date,
 			  N_("<Image>/Filters/Noise/Slur..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
 }
-
 
 /*********************************
  *
@@ -280,17 +289,17 @@ query (void)
  ********************************/
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   GDrawable *drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;        /* assume the best! */
-  char *rndm_type_str = '\0';
-  char prog_label[32];
+  gchar *rndm_type_str = '\0';
+  gchar prog_label[32];
   static GParam values[1];
   /*
    *  Get the specified drawable, do standard initialization.
@@ -509,10 +518,10 @@ randomize (GDrawable *drawable)
   /*
    *  allocate row buffers
    */
-  prev_row = (guchar *) malloc((x2 - x1 + 2) * bytes);
-  cur_row = (guchar *) malloc((x2 - x1 + 2) * bytes);
-  next_row = (guchar *) malloc((x2 - x1 + 2) * bytes);
-  dest = (guchar *) malloc((x2 - x1) * bytes);
+  prev_row = g_new (guchar, (x2 - x1 + 2) * bytes);
+  cur_row = g_new (guchar, (x2 - x1 + 2) * bytes);
+  next_row = g_new (guchar, (x2 - x1 + 2) * bytes);
+  dest = g_new (guchar, (x2 - x1) * bytes);
 
   /*
    *  initialize the pixel regions
@@ -668,10 +677,10 @@ randomize (GDrawable *drawable)
   /*
    *  clean up after ourselves.
    */
-  free(prev_row);
-  free(cur_row);
-  free(next_row);
-  free(dest);
+  g_free (prev_row);
+  g_free (cur_row);
+  g_free (next_row);
+  g_free (dest);
 }
 
 /*********************************
@@ -697,7 +706,10 @@ randomize_dialog (void)
   GtkWidget *seed_vbox;
   GtkWidget *table;
   GtkWidget *label;
-  GSList *seed_group = NULL;
+  GtkWidget *scale;
+  GtkObject *scale_data;
+  GtkWidget *radio_button;
+  GSList *group = NULL;
   gchar **argv;
   gint    argc;
   gchar   buffer[10];
@@ -747,7 +759,8 @@ randomize_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show(table);
-  gpc_setup_tooltips (table);
+
+  gimp_help_init ();
 
   /*
    *  Randomization seed initialization controls
@@ -762,24 +775,43 @@ randomize_dialog (void)
   seed_vbox = gtk_vbox_new (FALSE, 2);
   gtk_table_attach (GTK_TABLE (table), seed_vbox, 1, 2, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
+  gtk_widget_show (seed_vbox);
   /*
    *  Time button
    */
-  gpc_add_radio_button (&seed_group, _("Current Time"), seed_vbox, &do_time,
-			_("Seed random number generator from the current time "
-			  "- this guarantees a reasonable randomization"));
+  radio_button = gtk_radio_button_new_with_label (NULL, _("Current Time"));
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
+  gtk_box_pack_start (GTK_BOX (seed_vbox), radio_button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+		      GTK_SIGNAL_FUNC (randomize_toggle_update),
+		      &do_time);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), do_time);
+  gtk_widget_show (radio_button);
+  gimp_help_set_help_data (radio_button,
+			   _("Seed random number generator from the current "
+			     "time - this guarantees a reasonable "
+			     "randomization"), NULL);
   /*
    *  Box to hold seed user initialization controls
    */
   seed_hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (seed_vbox), seed_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (seed_hbox);
   /*
    *  User button
    */
-  gpc_add_radio_button (&seed_group, _("Other Value"), seed_hbox, &do_user,
-			_("Enable user-entered value for random number "
-			  "generator seed - this allows you to repeat a "
-			  "given \"random\" operation"));
+  radio_button = gtk_radio_button_new_with_label (group, _("Other Value"));
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
+  gtk_box_pack_start (GTK_BOX (seed_hbox), radio_button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+		      GTK_SIGNAL_FUNC (randomize_toggle_update),
+		      &do_user);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), do_user);
+  gtk_widget_show (radio_button);
+  gimp_help_set_help_data (radio_button,
+			   _("Enable user-entered value for random number "
+			     "generator seed - this allows you to repeat a "
+			     "given \"random\" operation"), NULL);
   /*
    *  Randomization seed number (text)
    */
@@ -789,10 +821,12 @@ randomize_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%d", pivals.rndm_seed);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) gpc_text_update,
+		      GTK_SIGNAL_FUNC (randomize_text_update),
 		      &pivals.rndm_seed);
   gtk_widget_show (entry);
-  gpc_set_tooltip (entry, _("Value for seeding the random number generator"));
+  gimp_help_set_help_data (entry,
+			   _("Value for seeding the random number generator"),
+			   NULL);
   gtk_widget_show (seed_hbox);
   /*
    *  Randomization percentage label & scale (1 to 100)
@@ -802,10 +836,20 @@ randomize_dialog (void)
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 2, 3);
   gtk_widget_show (label);
 
-  gpc_add_hscale (table, SCALE_WIDTH,
-		  1.0, 100.0, &pivals.rndm_pct, 1, 2, 2, 3,
-		  _("Percentage of pixels to be filtered"));
-
+  scale_data = gtk_adjustment_new (pivals.rndm_pct, 1.0, 100.0, 1.0, 1.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  gtk_widget_set_usize (scale, SCALE_WIDTH, -1);
+  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 2, 3,
+                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
+                      GTK_SIGNAL_FUNC (randomize_scale_update),
+                      &pivals.rndm_pct);
+  gtk_widget_show (scale);
+  gimp_help_set_help_data (scale,
+                           _("Percentage of pixels to be filtered"), NULL);
   /*
    *  Repeat count label & scale (1 to 100)
    */
@@ -814,10 +858,20 @@ randomize_dialog (void)
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 3, 4);
   gtk_widget_show (label);
 
-  gpc_add_hscale (table, SCALE_WIDTH,
-		  1.0, 100.0, &pivals.rndm_rcount, 1, 2, 3, 4,
-		  _("Number of times to apply filter"));
-
+  scale_data = gtk_adjustment_new (pivals.rndm_rcount, 1.0, 100.0,
+                                   1.0, 1.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  gtk_widget_set_usize (scale, SCALE_WIDTH, -1);
+  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 3, 4,
+                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
+                      GTK_SIGNAL_FUNC (randomize_scale_update),
+                      &pivals.rndm_rcount);
+  gtk_widget_show (scale);
+  gimp_help_set_help_data (scale, _("Number of times to apply filter"), NULL);
   /*
    *  Display everything.
    */
@@ -825,6 +879,7 @@ randomize_dialog (void)
   gtk_widget_show (dlg);
 
   gtk_main ();
+  gimp_help_free ();
   gdk_flush ();
   /*
    *  Figure out which type of seed initialization to apply.
@@ -848,4 +903,36 @@ randomize_ok_callback (GtkWidget *widget,
   rndm_int.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
+}
+
+void
+randomize_text_update (GtkWidget *widget,
+		       gpointer   data)
+{
+  gint *text_val;
+
+  text_val = (gint *) data;
+
+  *text_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
+}
+
+static void
+randomize_toggle_update (GtkWidget *widget,
+			 gpointer   data)
+{
+  gint *toggle_val;
+
+  toggle_val = (gint *) data;
+
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    *toggle_val = TRUE;
+  else
+    *toggle_val = FALSE;
+}
+
+static void
+randomize_scale_update (GtkAdjustment *adjustment,
+			gdouble       *scale_val)
+{
+  *scale_val = adjustment->value;
 }

@@ -50,12 +50,13 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #ifdef RCSID
-static char rcsid[] = "$Id$";
+static gchar rcsid[] = "$Id$";
 #endif
 
 /* Some useful macros */
@@ -619,24 +620,23 @@ edge_dialog (GDrawable *drawable)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *hbox;
-  GtkWidget *hbbox;  
-  GtkWidget *button;
   GtkWidget *toggle;
   GtkWidget *label;
   GtkWidget *scale;
   GtkObject *scale_data;
   GtkWidget *entry;
-  gchar	    buffer[256];
-  GSList    *group = NULL;
-  gchar	    **argv;
-  gint	    argc;
-  gint	    use_wrap = (evals.wrapmode == WRAP);
-  gint	    use_smear = (evals.wrapmode == SMEAR);
-  gint	    use_black = (evals.wrapmode == BLACK);
-  gdouble   init_val;
+  gchar	   buffer[256];
+  GSList  *group = NULL;
+  gchar	 **argv;
+  gint	   argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  gint	  use_wrap  = (evals.wrapmode == WRAP);
+  gint	  use_smear = (evals.wrapmode == SMEAR);
+  gint	  use_black = (evals.wrapmode == BLACK);
+  gdouble init_val;
+
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("edge");
 
   gtk_init (&argc, &argv);
@@ -659,21 +659,21 @@ edge_dialog (GDrawable *drawable)
 		      NULL);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ( _("Edge Detection Options"));
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 5);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  /*
-    Label, scale, entry for	evals.amount
-   */
+  /*  Label, scale, entry for evals.amount  */
 
-  label = gtk_label_new ( _("Amount:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new (_("Amount:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_widget_show (label);
 
   /* This prevents annoying change of adjustment */
@@ -697,16 +697,16 @@ edge_dialog (GDrawable *drawable)
   gtk_widget_show (entry);
 
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL, 0, 5, 0);
+		    GTK_FILL, 0, 0, 0);
   gtk_table_attach (GTK_TABLE (table), scale, 2, 3, 0, 1,
-		    GTK_EXPAND | GTK_FILL, 0, 5, 0);
+		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
   gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
 		    GTK_FILL, 0, 0, 0);
 
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
 		      (GtkSignalFunc) edge_scale_update,
 		      &evals.amount);
-  sprintf (buffer, "%0.1f", evals.amount);
+  g_snprintf (buffer, sizeof (buffer), "%0.1f", evals.amount);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) edge_entry_update,
@@ -714,14 +714,10 @@ edge_dialog (GDrawable *drawable)
 
   gtk_object_set_user_data (GTK_OBJECT (entry), scale_data);
   gtk_object_set_user_data (scale_data, entry);
-  
 
-  /*
-    Radio buttons WRAP, SMEAR, BLACK ...
-   */
+  /*  Radio buttons WRAP, SMEAR, BLACK  */
 
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 5);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 3, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
 
