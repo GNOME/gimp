@@ -1,5 +1,10 @@
 2004-06-30  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/actions/file-commands.c: revert previous change that was
+	intended to fix bug #141971.
+	
+2004-06-30  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/*/*-enums.h: did HIG-compliant capitalization in the right
 	place, instead of the auto-generated *-enums.c files.
 	

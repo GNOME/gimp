@@ -64,15 +64,15 @@ static void   file_new_template_callback   (GtkWidget   *widget,
                                             const gchar *name,
                                             gpointer     data);
 static void   file_revert_confirm_callback (GtkWidget   *widget,
-					    gboolean     revert,
-					    gpointer     data);
+                                            gboolean     revert,
+                                            gpointer     data);
 
 
 /*  public functions  */
 
 void
 file_open_cmd_callback (GtkAction *action,
-			gpointer   data)
+                        gpointer   data)
 {
   Gimp      *gimp;
   GtkWidget *widget;
@@ -110,7 +110,7 @@ file_open_location_cmd_callback (GtkAction *action,
 void
 file_last_opened_cmd_callback (GtkAction *action,
                                gint       value,
-			       gpointer   data)
+                               gpointer   data)
 {
   Gimp          *gimp;
   GimpImagefile *imagefile;
@@ -153,7 +153,7 @@ file_last_opened_cmd_callback (GtkAction *action,
 
 void
 file_save_cmd_callback (GtkAction *action,
-			gpointer   data)
+                        gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -169,37 +169,37 @@ file_save_cmd_callback (GtkAction *action,
       uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
 
       if (! uri)
-	{
-	  file_save_as_cmd_callback (action, data);
-	}
+        {
+          file_save_as_cmd_callback (action, data);
+        }
       else
-	{
-	  GimpPDBStatusType  status;
+        {
+          GimpPDBStatusType  status;
           GError            *error = NULL;
 
-	  status = file_save (gdisp->gimage, action_data_get_context (data),
+          status = file_save (gdisp->gimage, action_data_get_context (data),
                               GIMP_RUN_WITH_LAST_VALS, &error);
 
-	  if (status != GIMP_PDB_SUCCESS &&
-	      status != GIMP_PDB_CANCEL)
-	    {
+          if (status != GIMP_PDB_SUCCESS &&
+              status != GIMP_PDB_CANCEL)
+            {
               gchar *filename;
 
               filename = file_utils_uri_to_utf8_filename (uri);
 
-	      g_message (_("Saving '%s' failed:\n\n%s"),
+              g_message (_("Saving '%s' failed:\n\n%s"),
                          filename, error->message);
               g_clear_error (&error);
 
               g_free (filename);
-	    }
-	}
+            }
+        }
     }
 }
 
 void
 file_save_as_cmd_callback (GtkAction *action,
-			   gpointer   data)
+                           gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -228,18 +228,18 @@ file_save_template_cmd_callback (GtkAction *action,
 
   qbox = gimp_query_string_box (_("Create New Template"),
                                 gdisp->shell,
-				gimp_standard_help_func,
-				GIMP_HELP_FILE_SAVE_AS_TEMPLATE,
-				_("Enter a name for this template"),
-				NULL,
-				G_OBJECT (gdisp->gimage), "disconnect",
-				file_new_template_callback, gdisp->gimage);
+                                gimp_standard_help_func,
+                                GIMP_HELP_FILE_SAVE_AS_TEMPLATE,
+                                _("Enter a name for this template"),
+                                NULL,
+                                G_OBJECT (gdisp->gimage), "disconnect",
+                                file_new_template_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }
 
 void
 file_revert_cmd_callback (GtkAction *action,
-			  gpointer   data)
+                          gpointer   data)
 {
   GimpDisplay *gdisp;
   GtkWidget   *query_box;
@@ -266,45 +266,40 @@ file_revert_cmd_callback (GtkAction *action,
       basename = g_path_get_basename (uri);
 
       text = g_strdup_printf (_("Revert '%s' to\n"
-				"'%s'?\n\n"
-				"You will lose all your changes, "
-				"including all undo information."),
-			      basename, uri);
+                                "'%s'?\n\n"
+                                "You will lose all your changes, "
+                                "including all undo information."),
+                              basename, uri);
 
       g_free (basename);
 
-      if (gdisp->gimage->dirty)
-	{
-	  query_box = gimp_query_boolean_box (_("Revert Image"),
-					      gdisp->shell,
-					      gimp_standard_help_func,
-					      GIMP_HELP_FILE_REVERT,
-					      GIMP_STOCK_QUESTION,
-					      text,
-					      GTK_STOCK_YES, GTK_STOCK_NO,
-					      G_OBJECT (gdisp->gimage),
-					      "disconnect",
-					      file_revert_confirm_callback,
-					      gdisp->gimage);
-
-	  g_object_set_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY,
-			     query_box);
-	  
-	  gtk_window_set_transient_for (GTK_WINDOW (query_box),
-					GTK_WINDOW (gdisp->shell));
-	  
-	  gtk_widget_show (query_box);
-	}
-      else
-	file_revert_confirm_callback (NULL, TRUE, (gpointer)(gdisp->gimage));
-
+      query_box = gimp_query_boolean_box (_("Revert Image"),
+                                          gdisp->shell,
+                                          gimp_standard_help_func,
+                                          GIMP_HELP_FILE_REVERT,
+                                          GIMP_STOCK_QUESTION,
+                                          text,
+                                          GTK_STOCK_YES, GTK_STOCK_NO,
+                                          G_OBJECT (gdisp->gimage),
+                                          "disconnect",
+                                          file_revert_confirm_callback,
+                                          gdisp->gimage);
+      
       g_free (text);
+
+      g_object_set_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY,
+                         query_box);
+      
+      gtk_window_set_transient_for (GTK_WINDOW (query_box),
+                                    GTK_WINDOW (gdisp->shell));
+      
+      gtk_widget_show (query_box);
     }
 }
 
 void
 file_quit_cmd_callback (GtkAction *action,
-			gpointer   data)
+                        gpointer   data)
 {
   Gimp *gimp;
   return_if_no_gimp (gimp, data);
@@ -344,8 +339,8 @@ file_new_template_callback (GtkWidget   *widget,
 
 static void
 file_revert_confirm_callback (GtkWidget *widget,
-			      gboolean   revert,
-			      gpointer   data)
+                              gboolean   revert,
+                              gpointer   data)
 {
   GimpImage *old_gimage = GIMP_IMAGE (data);
 
@@ -365,11 +360,11 @@ file_revert_confirm_callback (GtkWidget *widget,
 
       new_gimage = file_open_image (gimp, gimp_get_user_context (gimp),
                                     uri, uri, NULL,
-				    GIMP_RUN_INTERACTIVE,
-				    &status, NULL, &error);
+                                    GIMP_RUN_INTERACTIVE,
+                                    &status, NULL, &error);
 
       if (new_gimage)
-	{
+        {
           GList *contexts = NULL;
           GList *list;
 
@@ -382,7 +377,7 @@ file_revert_confirm_callback (GtkWidget *widget,
                 contexts = g_list_prepend (contexts, list->data);
             }
 
-	  gimp_displays_reconnect (gimp, old_gimage, new_gimage);
+          gimp_displays_reconnect (gimp, old_gimage, new_gimage);
           gimp_image_flush (new_gimage);
 
           /*  set the new_gimage on the remembered contexts (in reverse
@@ -394,18 +389,18 @@ file_revert_confirm_callback (GtkWidget *widget,
 
           /*  the displays own the image now  */
           g_object_unref (new_gimage);
-	}
+        }
       else if (status != GIMP_PDB_CANCEL)
-	{
+        {
           gchar *filename;
 
           filename = file_utils_uri_to_utf8_filename (uri);
 
-	  g_message (_("Reverting to '%s' failed:\n\n%s"),
+          g_message (_("Reverting to '%s' failed:\n\n%s"),
                      filename, error->message);
           g_clear_error (&error);
 
           g_free (filename);
-	}
+        }
     }
 }
