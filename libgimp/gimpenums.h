@@ -29,7 +29,9 @@ typedef enum
   U16_GRAY    = 4,
   U16_INDEXED = 5,
   FLOAT_RGB   = 6,
-  FLOAT_GRAY  = 7
+  FLOAT_GRAY  = 7,
+  FLOAT16_RGB   = 8,
+  FLOAT16_GRAY  = 9 
 } GImageType;
 
 typedef enum
@@ -49,7 +51,11 @@ typedef enum
   FLOAT_RGB_IMAGE    = 12,
   FLOAT_RGBA_IMAGE   = 13,
   FLOAT_GRAY_IMAGE   = 14,
-  FLOAT_GRAYA_IMAGE  = 15
+  FLOAT_GRAYA_IMAGE  = 15,
+  FLOAT16_RGB_IMAGE    = 16,
+  FLOAT16_RGBA_IMAGE   = 17,
+  FLOAT16_GRAY_IMAGE   = 18,
+  FLOAT16_GRAYA_IMAGE  = 19 
 } GDrawableType;
 
 typedef enum
