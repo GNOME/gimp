@@ -2169,13 +2169,16 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
       gdk_window_get_origin (GTK_WIDGET (shell)->window, &shell_x, &shell_y);
 
       /*  if the window is offscreen, center it...  */
-      if (shell_x > s_width || shell_y > s_height ||
-	  (shell_x + width +  border_x) < 0 || (shell_y + height + border_y) < 0)
+      if (shell_x > s_width                 ||
+          shell_y > s_height                ||
+	  (shell_x + width +  border_x) < 0 ||
+          (shell_y + height + border_y) < 0)
 	{
-	  shell_x = (s_width  - width  - border_x) >> 1;
-	  shell_y = (s_height - height - border_y) >> 1;
+	  shell_x = (s_width  - width  - border_x) / 2;
+	  shell_y = (s_height - height - border_y) / 2;
 
-	  gdk_window_move (GTK_WIDGET (shell)->window, shell_x, shell_y);
+	  gdk_window_move (GTK_WIDGET (shell)->window,
+                           MAX (0, shell_x), MAX (0, shell_y));
 	}
 
       g_signal_handlers_unblock_by_func (G_OBJECT (shell->canvas),
@@ -2189,7 +2192,7 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
   if (disp_width  != shell->disp_width ||
       disp_height != shell->disp_height)
     {
-      shell->offset_x += (disp_width  - shell->disp_width) / 2;
+      shell->offset_x += (disp_width  - shell->disp_width)  / 2;
       shell->offset_y += (disp_height - shell->disp_height) / 2;
     }
 }

@@ -1,5 +1,10 @@
 2002-12-13  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_shrink_wrap):
+	merged fix for #79486 from stable branch.
+
+2002-12-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpintl.h
 	* libgimp/libgimp-intl.h
 	* plug-ins/script-fu/script-fu-scripts.c: removed remaining usage
