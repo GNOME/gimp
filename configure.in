@@ -617,6 +617,7 @@ if test "x$enable_perl" != xno; then
       GIMP_LIBS="$GIMP_LIBS_NOUI -lgimpui"
       GIMPTOOL="../../gimptool"
       IN_GIMP=1
+      PERL_COMPAT_CRUFT="-DGIMP_ENABLE_COMPAT_CRUFT"
       EXTENSIVE_TESTS=0
 
       dnl include the autoconf fragment from there

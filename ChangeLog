@@ -1,3 +1,9 @@
+Wed Aug 23 17:31:35 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* configure.in: perl support for COMPAT_CRUFT
+
+	* plug-ins/gap/gap_decode_mpeg_main.c: removed COMPAT_CRUFT
+
 2000-08-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gap/iter_ALT/*/*.inc: removed COMPAT_CRUFT

@@ -24,6 +24,7 @@
 #include <time.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "about_dialog.h"
 #include "appenv.h"
@@ -55,6 +56,9 @@ static gint      about_dialog_logo_expose (GtkWidget      *widget,
 static gint      about_dialog_button      (GtkWidget      *widget,
 					   GdkEventButton *event,
 					   gpointer        data);
+static gint      about_dialog_key         (GtkWidget      *widget,
+					   GdkEventKey    *event,
+					   gpointer        data);
 static void      about_dialog_tool_drop   (GtkWidget      *widget,
 					   ToolType        tool,
 					   gpointer        data);
@@ -77,6 +81,7 @@ static gint       scroll_state     = 0;
 static gint       frame            = 0;
 static gint       offset           = 0;
 static gint       timer            = 0;
+static gint       hadja_state      = 0;
 static gchar    **scroll_text      = authors;
 static gint       nscroll_texts    = sizeof (authors) / sizeof (authors[0]);
 static gint       scroll_text_widths[sizeof (authors) / sizeof (authors[0])];
@@ -99,6 +104,12 @@ static gchar *drop_text[] =
   "Resistance is futile."
 };
 
+static gchar *hadja_text[] =
+{
+  "Hadjaha!",
+  "Nej!",
+  "Tvärtom!"
+};
 
 void
 about_dialog_create (void)
@@ -133,7 +144,10 @@ about_dialog_create (void)
       gtk_signal_connect (GTK_OBJECT (about_dialog), "button_press_event",
 			  GTK_SIGNAL_FUNC (about_dialog_button),
 			  NULL);
-
+      gtk_signal_connect (GTK_OBJECT (about_dialog), "key_press_event",
+			  GTK_SIGNAL_FUNC (about_dialog_key),
+			  NULL);
+      
       /*  dnd stuff  */
       gtk_drag_dest_set (about_dialog,
 			 GTK_DEST_DEFAULT_MOTION |
@@ -222,6 +236,11 @@ about_dialog_create (void)
 	  max_width = MAX (max_width, 
 			   gdk_string_width (aboutframe->style->font, drop_text[i]));
 	}
+      for (i = 0; i < (sizeof (hadja_text) / sizeof (hadja_text[0])); i++)
+	{
+	  max_width = MAX (max_width,
+			   gdk_string_width (aboutframe->style->font, hadja_text[i]));
+	}
       scroll_area = gtk_drawing_area_new ();
       gtk_drawing_area_size (GTK_DRAWING_AREA (scroll_area),
 			     max_width + 10,
@@ -280,7 +299,6 @@ about_dialog_create (void)
       gdk_window_raise (about_dialog->window);
     }
 }
-
 
 static gboolean
 about_dialog_load_logo (GtkWidget *window)
@@ -439,6 +457,70 @@ about_dialog_button (GtkWidget      *widget,
 
   gtk_widget_hide (about_dialog);
 
+  return FALSE;
+}
+
+static gint
+about_dialog_key (GtkWidget      *widget,
+		  GdkEventKey    *event,
+		  gpointer        data)
+{
+  gint i;
+  
+  switch (event->keyval)
+    {
+    case GDK_h:
+    case GDK_H:
+      if (hadja_state == 0 || hadja_state == 5)
+	hadja_state++;
+      else
+	hadja_state = 1;
+      break;
+    case GDK_a:
+    case GDK_A:
+      if (hadja_state == 1 || hadja_state == 4 || hadja_state == 6)
+	hadja_state++;
+      else
+	hadja_state = 0;
+      break;
+    case GDK_d:
+    case GDK_D:
+      if (hadja_state == 2)
+	hadja_state++;
+      else
+	hadja_state = 0;
+      break;
+    case GDK_j:
+    case GDK_J:
+      if (hadja_state == 3)
+	hadja_state++;
+      else
+	hadja_state = 0;
+      break;
+    default:
+      hadja_state = 0;
+    }
+
+  if (hadja_state == 7)
+    {
+      scroll_text = hadja_text;
+      nscroll_texts = sizeof (hadja_text) / sizeof (hadja_text[0]);
+      
+      for (i = 0; i < nscroll_texts; i++)
+	{
+	  shuffle_array[i] = i;
+	  scroll_text_widths[i] = gdk_string_width (scroll_area->style->font,
+						  scroll_text[i]);
+	}
+      
+      scroll_state = 0;
+      cur_scroll_index = 0;
+      cur_scroll_text = 0;
+      offset = 0;
+      
+      double_speed = TRUE;    
+    }
+  
   return FALSE;
 }
 

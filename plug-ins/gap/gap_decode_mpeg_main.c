@@ -520,7 +520,7 @@ load_image (char   *filename,
     /* ignore frames before first_frame */    
     if (framenumber >= first_frame )
     {
-       image_ID = gimp_image_new (wwidth, wheight, RGB);
+       image_ID = gimp_image_new (wwidth, wheight, GIMP_RGB);
        gimp_image_set_filename (image_ID, framename);
 
        if(framenumber == first_frame)

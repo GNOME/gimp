@@ -47,6 +47,8 @@ if test $gimptool_major_version -lt 2 && test $gimptool_minor_version -lt 1 ; th
    echo '** released 1.0.x versions of the gimp, many scripts will not, since they'
    echo '** already use the new API.'
    echo
+else
+   PERL_COMPAT_CRUFT="-DGIMP_ENABLE_COMPAT_CRUFT"
 fi
 
 
