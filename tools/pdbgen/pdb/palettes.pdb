@@ -97,6 +97,12 @@ HELP
 
     &rock_pdb_misc;
 
+    @inargs = (
+	{ name => 'filter',
+          type => 'string', null_ok => 1,
+          desc => 'An optional regular expression used to filter the list' }
+    );
+
     @outargs = (
         { name => 'palette_list', type => 'stringarray',
           desc => 'The list of palette names',
@@ -105,7 +111,8 @@ HELP
     );
 
     %invoke = (
-        code => 'palette_list = gimp_container_get_name_array (gimp->palette_factory->container, &num_palettes);'
+        headers => [ qw("core/gimpcontainer-filter.h") ],
+        code => 'palette_list = gimp_container_get_filtered_name_array (gimp->palette_factory->container, filter, &num_palettes);'
     );
 }
 

@@ -31,6 +31,7 @@
 
 #include "base/temp-buf.h"
 #include "core/gimp.h"
+#include "core/gimpcontainer-filter.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
@@ -81,19 +82,38 @@ static Argument *
 patterns_get_list_invoker (Gimp     *gimp,
                            Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
+  gchar *filter;
   gint32 num_patterns;
   gchar **pattern_list;
 
-  pattern_list = gimp_container_get_name_array (gimp->pattern_factory->container, &num_patterns);
+  filter = (gchar *) args[0].value.pdb_pointer;
+  if (filter && !g_utf8_validate (filter, -1, NULL))
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&patterns_get_list_proc, TRUE);
+  if (success)
+    pattern_list = gimp_container_get_filtered_name_array (gimp->pattern_factory->container, filter, &num_patterns);
 
-  return_args[1].value.pdb_int = num_patterns;
-  return_args[2].value.pdb_pointer = pattern_list;
+  return_args = procedural_db_return_args (&patterns_get_list_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = num_patterns;
+      return_args[2].value.pdb_pointer = pattern_list;
+    }
 
   return return_args;
 }
+
+static ProcArg patterns_get_list_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "filter",
+    "An optional regular expression used to filter the list"
+  }
+};
 
 static ProcArg patterns_get_list_outargs[] =
 {
@@ -118,8 +138,8 @@ static ProcRecord patterns_get_list_proc =
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   GIMP_INTERNAL,
-  0,
-  NULL,
+  1,
+  patterns_get_list_inargs,
   2,
   patterns_get_list_outargs,
   { { patterns_get_list_invoker } }

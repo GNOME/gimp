@@ -1,5 +1,39 @@
 2003-09-04  Sven Neumann  <sven@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpcontainer-filter.[ch]: added filter functionality
+	for GimpContainers.
+
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/fonts.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/patterns.pdb: made the gimp_foo_get_list()
+	PDB function somewhat useful by adding a filter parameter that
+	allows to specify a regular expression to be used on the list.
+
+	* app/pdb/Makefile.am: had to uglify the ugly hack even more :(
+
+	* app/pdb/brushes_cmds.c
+	* app/pdb/fonts_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/palettes_cmds.c
+	* app/pdb/patterns_cmds.c
+	* libgimp/gimpbrushes_pdb.[ch]
+	* libgimp/gimpfonts_pdb.[ch]
+	* libgimp/gimpgradients_pdb.[ch]
+	* libgimp/gimppalettes_pdb.[ch]
+	* libgimp/gimppatterns_pdb.[ch]: regenerated.
+
+	* plug-ins/gflare/gflare.c
+	* plug-ins/pygimp/gimpmodule.c: changed accordingly.
+
+	* plug-ins/script-fu/scripts/font-map.scm: replaced the font list
+	parameter with a more useful regexp filter on the available fonts.
+
+2003-09-04  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpcontainer.[ch] (gimp_container_get_name_array):
 	fixed a bug in the implementation.
 	Changed gimp_container_foreach() to take a const container.

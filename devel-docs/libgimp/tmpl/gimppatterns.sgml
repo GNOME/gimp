@@ -28,6 +28,7 @@ Functions relating to patterns.
 
 </para>
 
+@filter: 
 @num_patterns: 
 @Returns: 
 

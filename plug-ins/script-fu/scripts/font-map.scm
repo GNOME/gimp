@@ -35,10 +35,11 @@
     maxheight))
 
 
-(define (script-fu-font-map font-list font-size border)
+(define (script-fu-font-map font-filter font-size border)
   (let* ((font "")
 	 (count 0)
 	 (text-fs 0)
+         (font-list (cadr (gimp-fonts-get-list font-filter)))
 	 (num-fonts (length font-list))
 	 (maxheight (max-font-height font-list font-size))
 	 (maxwidth (max-font-width font-list font-size))
@@ -68,12 +69,12 @@
 
 (script-fu-register "script-fu-font-map"
 		    _"<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
-		    "Generate a listing of the specified fonts"
+		    "Generate a listing of fonts matching a filter"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-VALUE _"Fonts" "'(\"Agate\" \"AlfredDrake\" \"Becker\" \"Blippo\" \"Bodoni\" \"Dragonwick\" \"Engraver\" \"Futura_Poster\" \"RoostHeavy\")"
+		    SF-STRING     _"Filter (regexp)"    "Sans"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(32 2 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Border" '(10 0 150 1 10 0 1)
+		    SF-ADJUSTMENT _"Border"             '(10 0  150 1 10 0 1)
 )

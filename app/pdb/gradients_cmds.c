@@ -30,6 +30,7 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer-filter.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -85,19 +86,38 @@ static Argument *
 gradients_get_list_invoker (Gimp     *gimp,
                             Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
+  gchar *filter;
   gint32 num_gradients;
   gchar **gradient_list;
 
-  gradient_list = gimp_container_get_name_array (gimp->gradient_factory->container, &num_gradients);
+  filter = (gchar *) args[0].value.pdb_pointer;
+  if (filter && !g_utf8_validate (filter, -1, NULL))
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&gradients_get_list_proc, TRUE);
+  if (success)
+    gradient_list = gimp_container_get_filtered_name_array (gimp->gradient_factory->container, filter, &num_gradients);
 
-  return_args[1].value.pdb_int = num_gradients;
-  return_args[2].value.pdb_pointer = gradient_list;
+  return_args = procedural_db_return_args (&gradients_get_list_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = num_gradients;
+      return_args[2].value.pdb_pointer = gradient_list;
+    }
 
   return return_args;
 }
+
+static ProcArg gradients_get_list_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "filter",
+    "An optional regular expression used to filter the list"
+  }
+};
 
 static ProcArg gradients_get_list_outargs[] =
 {
@@ -122,8 +142,8 @@ static ProcRecord gradients_get_list_proc =
   "Federico Mena Quintero",
   "1997",
   GIMP_INTERNAL,
-  0,
-  NULL,
+  1,
+  gradients_get_list_inargs,
   2,
   gradients_get_list_outargs,
   { { gradients_get_list_invoker } }

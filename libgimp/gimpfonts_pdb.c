@@ -55,6 +55,7 @@ gimp_fonts_refresh (void)
 
 /**
  * gimp_fonts_get_list:
+ * @filter: An optional regular expression used to filter the list.
  * @num_fonts: The number of available fonts.
  *
  * Retrieve the list of loaded fonts.
@@ -65,7 +66,8 @@ gimp_fonts_refresh (void)
  * Returns: The list of font names.
  */
 gchar **
-gimp_fonts_get_list (gint *num_fonts)
+gimp_fonts_get_list (const gchar *filter,
+		     gint        *num_fonts)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -74,6 +76,7 @@ gimp_fonts_get_list (gint *num_fonts)
 
   return_vals = gimp_run_procedure ("gimp_fonts_get_list",
 				    &nreturn_vals,
+				    GIMP_PDB_STRING, filter,
 				    GIMP_PDB_END);
 
   *num_fonts = 0;

@@ -32,6 +32,7 @@
 #include "base/temp-buf.h"
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
+#include "core/gimpcontainer-filter.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
@@ -102,19 +103,38 @@ static Argument *
 brushes_get_list_invoker (Gimp     *gimp,
                           Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
+  gchar *filter;
   gint32 num_brushes;
   gchar **brush_list;
 
-  brush_list = gimp_container_get_name_array (gimp->brush_factory->container, &num_brushes);
+  filter = (gchar *) args[0].value.pdb_pointer;
+  if (filter && !g_utf8_validate (filter, -1, NULL))
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&brushes_get_list_proc, TRUE);
+  if (success)
+    brush_list = gimp_container_get_filtered_name_array (gimp->brush_factory->container, filter, &num_brushes);
 
-  return_args[1].value.pdb_int = num_brushes;
-  return_args[2].value.pdb_pointer = brush_list;
+  return_args = procedural_db_return_args (&brushes_get_list_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = num_brushes;
+      return_args[2].value.pdb_pointer = brush_list;
+    }
 
   return return_args;
 }
+
+static ProcArg brushes_get_list_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "filter",
+    "An optional regular expression used to filter the list"
+  }
+};
 
 static ProcArg brushes_get_list_outargs[] =
 {
@@ -139,8 +159,8 @@ static ProcRecord brushes_get_list_proc =
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   GIMP_INTERNAL,
-  0,
-  NULL,
+  1,
+  brushes_get_list_inargs,
   2,
   brushes_get_list_outargs,
   { { brushes_get_list_invoker } }

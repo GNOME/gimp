@@ -143,6 +143,9 @@ typedef void       (* GimpInitStatusFunc)       (const gchar         *text1,
 
 typedef GimpData * (* GimpDataObjectLoaderFunc) (const gchar         *filename);
 
+typedef gboolean   (* GimpObjectFilterFunc)     (const GimpObject    *object,
+                                                 gpointer             user_data);
+
 typedef gboolean   (* GimpUndoPopFunc)          (GimpUndo            *undo,
                                                  GimpUndoMode         undo_mode,
                                                  GimpUndoAccumulator *accum);

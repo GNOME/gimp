@@ -55,6 +55,7 @@ gimp_palettes_refresh (void)
 
 /**
  * gimp_palettes_get_list:
+ * @filter: An optional regular expression used to filter the list.
  * @num_palettes: The number of palettes in the list.
  *
  * Retrieves a list of all of the available palettes
@@ -66,7 +67,8 @@ gimp_palettes_refresh (void)
  * Returns: The list of palette names.
  */
 gchar **
-gimp_palettes_get_list (gint *num_palettes)
+gimp_palettes_get_list (const gchar *filter,
+			gint        *num_palettes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -75,6 +77,7 @@ gimp_palettes_get_list (gint *num_palettes)
 
   return_vals = gimp_run_procedure ("gimp_palettes_get_list",
 				    &nreturn_vals,
+				    GIMP_PDB_STRING, filter,
 				    GIMP_PDB_END);
 
   *num_palettes = 0;

@@ -30,7 +30,8 @@ G_BEGIN_DECLS
 
 
 gboolean             gimp_brushes_refresh        (void);
-gchar**              gimp_brushes_get_list       (gint                  *num_brushes);
+gchar**              gimp_brushes_get_list       (const gchar           *filter,
+						  gint                  *num_brushes);
 gchar*               gimp_brushes_get_brush      (gint                  *width,
 						  gint                  *height,
 						  gint                  *spacing);

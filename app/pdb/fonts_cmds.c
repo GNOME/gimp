@@ -29,6 +29,7 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer-filter.h"
 #include "core/gimpcontainer.h"
 #include "text/gimpfonts.h"
 
@@ -70,19 +71,38 @@ static Argument *
 fonts_get_list_invoker (Gimp     *gimp,
                         Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
+  gchar *filter;
   gint32 num_fonts;
   gchar **font_list;
 
-  font_list = gimp_container_get_name_array (gimp->fonts, &num_fonts);
+  filter = (gchar *) args[0].value.pdb_pointer;
+  if (filter && !g_utf8_validate (filter, -1, NULL))
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&fonts_get_list_proc, TRUE);
+  if (success)
+    font_list = gimp_container_get_filtered_name_array (gimp->fonts, filter, &num_fonts);
 
-  return_args[1].value.pdb_int = num_fonts;
-  return_args[2].value.pdb_pointer = font_list;
+  return_args = procedural_db_return_args (&fonts_get_list_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = num_fonts;
+      return_args[2].value.pdb_pointer = font_list;
+    }
 
   return return_args;
 }
+
+static ProcArg fonts_get_list_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "filter",
+    "An optional regular expression used to filter the list"
+  }
+};
 
 static ProcArg fonts_get_list_outargs[] =
 {
@@ -107,8 +127,8 @@ static ProcRecord fonts_get_list_proc =
   "Sven Neumann",
   "2003",
   GIMP_INTERNAL,
-  0,
-  NULL,
+  1,
+  fonts_get_list_inargs,
   2,
   fonts_get_list_outargs,
   { { fonts_get_list_invoker } }

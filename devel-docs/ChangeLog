@@ -1,5 +1,13 @@
 2003-09-04  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/tmpl/gimpbrushes.sgml
+	* libgimp/tmpl/gimpfonts.sgml
+	* libgimp/tmpl/gimpgradients.sgml
+	* libgimp/tmpl/gimppalettes.sgml
+	* libgimp/tmpl/gimppatterns.sgml: updated after API change.
+
+2003-09-04  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/libgimp-docs.sgml
 	* libgimp/libgimp-sections.txt
 	* libgimp/tmpl/gimpfonts.sgml: added docs for new fonts API.

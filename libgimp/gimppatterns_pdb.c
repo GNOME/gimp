@@ -57,6 +57,7 @@ gimp_patterns_refresh (void)
 
 /**
  * gimp_patterns_get_list:
+ * @filter: An optional regular expression used to filter the list.
  * @num_patterns: The number of patterns in the pattern list.
  *
  * Retrieve a complete listing of the available patterns.
@@ -68,7 +69,8 @@ gimp_patterns_refresh (void)
  * Returns: The list of pattern names.
  */
 gchar **
-gimp_patterns_get_list (gint *num_patterns)
+gimp_patterns_get_list (const gchar *filter,
+			gint        *num_patterns)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -77,6 +79,7 @@ gimp_patterns_get_list (gint *num_patterns)
 
   return_vals = gimp_run_procedure ("gimp_patterns_get_list",
 				    &nreturn_vals,
+				    GIMP_PDB_STRING, filter,
 				    GIMP_PDB_END);
 
   *num_patterns = 0;

@@ -530,7 +530,7 @@ pygimp_gradients_get_list(PyObject *self)
     int num, i;
     PyObject *ret;
 
-    list = gimp_gradients_get_list(&num);
+    list = gimp_gradients_get_list(NULL, &num);
     ret = PyList_New(num);
     for (i = 0; i < num; i++)
 	PyList_SetItem(ret, i, PyString_FromString(list[i]));

@@ -79,6 +79,12 @@ HELP
 
     &std_pdb_misc;
 
+    @inargs = (
+	{ name => 'filter',
+          type => 'string', null_ok => 1,
+          desc => 'An optional regular expression used to filter the list' }
+    );
+
     @outargs = (
 	{ name => 'pattern_list', type => 'stringarray',
 	  desc => 'The list of pattern names',
@@ -87,7 +93,8 @@ HELP
     );
 
     %invoke = (
-	code => 'pattern_list = gimp_container_get_name_array (gimp->pattern_factory->container, &num_patterns);'
+        headers => [ qw("core/gimpcontainer-filter.h") ],
+	code => 'pattern_list = gimp_container_get_filtered_name_array (gimp->pattern_factory->container, filter, &num_patterns);'
     );
 }
 

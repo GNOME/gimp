@@ -56,6 +56,12 @@ HELP
 
     &pdb_misc;
 
+    @inargs = (
+	{ name => 'filter',
+          type => 'string', null_ok => 1,
+          desc => 'An optional regular expression used to filter the list' }
+    );
+
     @outargs = (
 	{ name => 'gradient_list', type => 'stringarray',
 	  desc => 'The list of gradient names',
@@ -64,7 +70,8 @@ HELP
     );
 
     %invoke = (
-	code => 'gradient_list = gimp_container_get_name_array (gimp->gradient_factory->container, &num_gradients);'
+        headers => [ qw("core/gimpcontainer-filter.h") ],
+	code => 'gradient_list = gimp_container_get_filtered_name_array (gimp->gradient_factory->container, filter, &num_gradients);'
     );
 }
 

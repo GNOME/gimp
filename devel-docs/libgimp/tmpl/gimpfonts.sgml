@@ -27,6 +27,7 @@ Operations related to fonts.
 
 </para>
 
+@filter: 
 @num_fonts: 
 @Returns: 
 

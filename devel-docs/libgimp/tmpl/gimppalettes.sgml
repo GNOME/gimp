@@ -27,6 +27,7 @@ gimppalettes
 
 </para>
 
+@filter: 
 @num_palettes: 
 @Returns: 
 

@@ -30,7 +30,8 @@ G_BEGIN_DECLS
 
 
 gboolean gimp_gradients_refresh           (void);
-gchar**  gimp_gradients_get_list          (gint           *num_gradients);
+gchar**  gimp_gradients_get_list          (const gchar    *filter,
+					   gint           *num_gradients);
 gchar*   gimp_gradients_get_gradient      (void);
 gboolean gimp_gradients_set_gradient      (const gchar    *name);
 gdouble* gimp_gradients_sample_uniform    (gint            num_samples,

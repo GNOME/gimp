@@ -30,6 +30,7 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer-filter.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
@@ -91,19 +92,38 @@ static Argument *
 palettes_get_list_invoker (Gimp     *gimp,
                            Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
+  gchar *filter;
   gint32 num_palettes;
   gchar **palette_list;
 
-  palette_list = gimp_container_get_name_array (gimp->palette_factory->container, &num_palettes);
+  filter = (gchar *) args[0].value.pdb_pointer;
+  if (filter && !g_utf8_validate (filter, -1, NULL))
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&palettes_get_list_proc, TRUE);
+  if (success)
+    palette_list = gimp_container_get_filtered_name_array (gimp->palette_factory->container, filter, &num_palettes);
 
-  return_args[1].value.pdb_int = num_palettes;
-  return_args[2].value.pdb_pointer = palette_list;
+  return_args = procedural_db_return_args (&palettes_get_list_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = num_palettes;
+      return_args[2].value.pdb_pointer = palette_list;
+    }
 
   return return_args;
 }
+
+static ProcArg palettes_get_list_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "filter",
+    "An optional regular expression used to filter the list"
+  }
+};
 
 static ProcArg palettes_get_list_outargs[] =
 {
@@ -128,8 +148,8 @@ static ProcRecord palettes_get_list_proc =
   "Nathan Summers",
   "2001",
   GIMP_INTERNAL,
-  0,
-  NULL,
+  1,
+  palettes_get_list_inargs,
   2,
   palettes_get_list_outargs,
   { { palettes_get_list_invoker } }

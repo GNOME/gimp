@@ -28,6 +28,7 @@ Operations related to gradients.
 
 </para>
 
+@filter: 
 @num_gradients: 
 @Returns: 
 

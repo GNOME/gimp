@@ -49,7 +49,7 @@ libapppdb_a_SOURCES = \
 	unit_cmds.c
 
 ## This is a truly ugly hack
-libapppdb_a_LIBADD = ../gui/pattern-select.o ../gui/brush-select.o ../gui/font-select.o
+libapppdb_a_LIBADD = ../core/gimpcontainer-filter.o ../gui/pattern-select.o ../gui/brush-select.o ../gui/font-select.o
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-PDB\"	\

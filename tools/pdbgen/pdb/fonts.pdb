@@ -48,6 +48,12 @@ HELP
 
     &pdb_misc;
 
+    @inargs = (
+	{ name => 'filter',
+          type => 'string', null_ok => 1,
+          desc => 'An optional regular expression used to filter the list' }
+    );
+
     @outargs = (
 	{ name => 'font_list', type => 'stringarray',
 	  desc => 'The list of font names',
@@ -56,7 +62,8 @@ HELP
     );
 
     %invoke = (
-	code => 'font_list = gimp_container_get_name_array (gimp->fonts, &num_fonts);'
+        headers => [ qw("core/gimpcontainer-filter.h") ],
+	code => 'font_list = gimp_container_get_filtered_name_array (gimp->fonts, filter, &num_fonts);'
     );
 }
 

@@ -101,6 +101,12 @@ HELP
 
     &std_pdb_misc;
 
+    @inargs = (
+	{ name => 'filter',
+          type => 'string', null_ok => 1,
+          desc => 'An optional regular expression used to filter the list' }
+    );
+
     @outargs = (
 	{ name => 'brush_list', type => 'stringarray',
 	  desc => 'The list of brush names',
@@ -109,7 +115,8 @@ HELP
     );
 
     %invoke = (
-	code => 'brush_list = gimp_container_get_name_array (gimp->brush_factory->container, &num_brushes);'
+        headers => [ qw("core/gimpcontainer-filter.h") ],
+	code => 'brush_list = gimp_container_get_filtered_name_array (gimp->brush_factory->container, filter, &num_brushes);'
     );
 }
 
