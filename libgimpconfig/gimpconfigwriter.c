@@ -321,8 +321,8 @@ gimp_config_writer_string (GimpConfigWriter *writer,
 
 /**
  * gimp_config_writer_identifier:
- * @writer: a #GimpConfigWriter
- * @string: a NUL-terminated string
+ * @writer:     a #GimpConfigWriter
+ * @identifier: a NUL-terminated string
  *
  * Writes an identifier to @writer. The @string is *not* quoted and special
  * characters are *not* escaped.

@@ -1,3 +1,16 @@
+2004-05-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfigwriter.c
+	* app/core/gimpstrokeoptions.c
+	* app/widgets/gimpactiongroup.c
+	* app/widgets/gimpcolorframe.h
+	* app/widgets/gimpcolorpanel.h
+	* app/widgets/gimpcontainerview.[ch]
+	* app/widgets/gimptooldialog.h
+	* app/widgets/gimpuimanager.c
+	* app/widgets/widgets-types.h: fixed various small issues I
+	stumbled across when updating the API reference for app/.
+
 2004-05-24  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpscalecombobox.c

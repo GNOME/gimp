@@ -40,8 +40,6 @@ enum
 #define GIMP_IS_CONTAINER_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_VIEW))
 #define GIMP_CONTAINER_VIEW_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CONTAINER_VIEW, GimpContainerViewInterface))
 
-#define GIMP_CONTAINER_VIEW_GET_PRIVATE(obj)   (gimp_container_view_get_private ((GimpContainerView *) (obj)))
-
 
 typedef struct _GimpContainerViewInterface GimpContainerViewInterface;
 

@@ -225,8 +225,11 @@ gimp_action_group_get_property (GObject    *object,
 
 /**
  * gimp_action_group_new:
- * @gimp: the @Gimp instance this action group belongs to
- * @name: the name of the action group.
+ * @gimp:        the @Gimp instance this action group belongs to
+ * @name:        the name of the action group.
+ * @user_data:   the user_data for #GtkAction callbacks.
+ * @update_func: the function that will be called on
+ *               gimp_action_group_update().
  *
  * Creates a new #GimpActionGroup object. The name of the action group
  * is used when associating <link linkend="Action-Accel">keybindings</link>

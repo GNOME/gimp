@@ -31,8 +31,7 @@
 #define GIMP_COLOR_PANEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_PANEL, GimpColorPanelClass))
 
 
-typedef struct _GimpColorPanel       GimpColorPanel;
-typedef struct _GimpColorPanelClass  GimpColorPanelClass;
+typedef struct _GimpColorPanelClass GimpColorPanelClass;
 
 struct _GimpColorPanelClass
 {

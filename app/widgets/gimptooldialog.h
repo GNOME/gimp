@@ -33,8 +33,7 @@
 #define GIMP_TOOL_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_DIALOG, GimpToolDialogClass))
 
 
-typedef struct _GimpViewableDialogClass  GimpToolDialogClass;
-typedef struct _GimpViewableDialog       GimpToolDialog;
+typedef struct _GimpViewableDialogClass GimpToolDialogClass;
 
 
 GType       gimp_tool_dialog_get_type (void) G_GNUC_CONST;

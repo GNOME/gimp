@@ -34,8 +34,7 @@
 #define GIMP_COLOR_FRAME_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_FRAME, GimpColorFrameClass))
 
 
-typedef struct _GimpColorFrame       GimpColorFrame;
-typedef struct _GimpColorFrameClass  GimpColorFrameClass;
+typedef struct _GimpColorFrameClass GimpColorFrameClass;
 
 struct _GimpColorFrame
 {

@@ -32,6 +32,7 @@
 #include "gimpmarshal.h"
 #include "gimpstrokeoptions.h"
 
+
 enum
 {
   PROP_0,
@@ -52,6 +53,7 @@ enum
   DASH_INFO_CHANGED,
   LAST_SIGNAL
 };
+
 
 static void   gimp_stroke_options_class_init   (GimpStrokeOptionsClass *klass);
 
@@ -100,27 +102,25 @@ gimp_stroke_options_get_type (void)
 static void
 gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GParamSpec   *array_spec;
-
-  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  stroke_options_signals[DASH_INFO_CHANGED] = 
-      g_signal_new ("dash_info_changed",
-                    G_TYPE_FROM_CLASS (klass),
-                    G_SIGNAL_RUN_FIRST,
-                    G_STRUCT_OFFSET (GimpStrokeOptionsClass, dash_info_changed),
-                    NULL, NULL,
-                    gimp_marshal_VOID__ENUM,
-                    G_TYPE_NONE, 1,
-                    GIMP_TYPE_DASH_PRESET);
+  object_class->set_property = gimp_stroke_options_set_property;
+  object_class->get_property = gimp_stroke_options_get_property;
 
   klass->dash_info_changed = NULL;
 
-  object_class->set_property = gimp_stroke_options_set_property;
-  object_class->get_property = gimp_stroke_options_get_property;
+  stroke_options_signals[DASH_INFO_CHANGED] =
+    g_signal_new ("dash_info_changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpStrokeOptionsClass, dash_info_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__ENUM,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_DASH_PRESET);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_STYLE,
                                  "style", NULL,

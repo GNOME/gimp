@@ -365,6 +365,7 @@ gimp_ui_manager_real_update (GimpUIManager *manager,
 /**
  * gimp_ui_manager_new:
  * @gimp: the @Gimp instance this ui manager belongs to
+ * @name: the UI manager's name.
  *
  * Creates a new #GimpUIManager object.
  *

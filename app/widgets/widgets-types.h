@@ -116,6 +116,7 @@ typedef struct _GimpDocked              GimpDocked; /* dummy typedef */
 
 typedef struct _GimpFileDialog          GimpFileDialog;
 typedef struct _GimpTextEditor          GimpTextEditor;
+typedef struct _GimpViewableDialog      GimpToolDialog;
 typedef struct _GimpViewableDialog      GimpViewableDialog;
 
 typedef struct _GimpContainerPopup      GimpContainerPopup;
@@ -123,6 +124,8 @@ typedef struct _GimpViewableButton      GimpViewableButton;
 
 typedef struct _GimpColorBar            GimpColorBar;
 typedef struct _GimpColorDisplayEditor  GimpColorDisplayEditor;
+typedef struct _GimpColorFrame          GimpColorFrame;
+typedef struct _GimpColorPanel          GimpColorPanel;
 typedef struct _GimpDashEditor          GimpDashEditor;
 typedef struct _GimpGridEditor          GimpGridEditor;
 typedef struct _GimpHistogramBox        GimpHistogramBox;

@@ -48,6 +48,9 @@ enum
 };
 
 
+#define GIMP_CONTAINER_VIEW_GET_PRIVATE(obj) (gimp_container_view_get_private ((GimpContainerView *) (obj)))
+
+
 typedef struct _GimpContainerViewPrivate GimpContainerViewPrivate;
 
 struct _GimpContainerViewPrivate
