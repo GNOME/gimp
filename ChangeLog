@@ -1,5 +1,9 @@
 2002-10-28  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/unsharp.c: reordered action buttons.
+
+2002-10-28  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpcolornotebook.[ch]: the notebook as known
 	from the main color selection as new widget.
 
