@@ -1,3 +1,21 @@
+2004-03-13  Simon Budig  <simon@gimp.org>
+
+	* app/widgets/widgets-enums.h
+	* app/widgets/gimppreviewrenderer.[ch]: New function 
+	gimp_preview_renderer_set_border_type that takes an enum instead
+	of an color to set the color of the border.
+
+	* app/widgets/gimpcellrendererviewable.c: check for the
+	current border_type and change it to black when it is white and
+	the cell is unselected. This should be solved in a better way
+	later.
+
+	Fixes bug #135023. 
+
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpcontainergridview.c: changed to use the new
+	function.
+
 2004-03-13  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* plug-ins/script-fu/scripts/carve-it.scm

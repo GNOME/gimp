@@ -403,8 +403,8 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 				   view->preview_size,
 				   1,
 				   FALSE, TRUE, TRUE);
-  gimp_preview_renderer_set_border_color (GIMP_PREVIEW (preview)->renderer,
-                                          &white_color);
+  gimp_preview_renderer_set_border_type (GIMP_PREVIEW (preview)->renderer,
+                                         GIMP_PREVIEW_BORDER_WHITE);
   gimp_preview_renderer_remove_idle (GIMP_PREVIEW (preview)->renderer);
 
   gtk_wrap_box_pack (GTK_WRAP_BOX (grid_view->wrap_box), preview,
@@ -568,8 +568,8 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
 
   if (grid_view->selected_item && grid_view->selected_item != preview)
     {
-      gimp_preview_renderer_set_border_color (grid_view->selected_item->renderer,
-                                              &white_color);
+      gimp_preview_renderer_set_border_type (grid_view->selected_item->renderer,
+                                             GIMP_PREVIEW_BORDER_WHITE);
       gimp_preview_renderer_update (grid_view->selected_item->renderer);
     }
 
@@ -604,7 +604,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
                                     (row + 1) * item_height - adj->page_size);
         }
 
-      gimp_preview_renderer_set_border_color (preview->renderer, &black_color);
+      gimp_preview_renderer_set_border_type (preview->renderer, GIMP_PREVIEW_BORDER_BLACK);
       gimp_preview_renderer_update (preview->renderer);
 
       name = gimp_viewable_get_description (preview->renderer->viewable, NULL);

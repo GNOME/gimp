@@ -134,6 +134,14 @@ typedef enum  /*< skip >*/
 
 typedef enum  /*< skip >*/
 {
+  GIMP_PREVIEW_BORDER_BLACK,
+  GIMP_PREVIEW_BORDER_WHITE,
+  GIMP_PREVIEW_BORDER_RED,
+  GIMP_PREVIEW_BORDER_GREEN,
+} GimpPreviewBorderType;
+
+typedef enum  /*< skip >*/
+{
   GIMP_DROP_NONE,
   GIMP_DROP_ABOVE,
   GIMP_DROP_BELOW

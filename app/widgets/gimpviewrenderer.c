@@ -81,6 +81,11 @@ static guint renderer_signals[LAST_SIGNAL] = { 0 };
 
 static GObjectClass *parent_class = NULL;
 
+static GimpRGB  black_color;
+static GimpRGB  white_color;
+static GimpRGB  green_color;
+static GimpRGB  red_color;
+
 
 GType
 gimp_preview_renderer_get_type (void)
@@ -132,6 +137,11 @@ gimp_preview_renderer_class_init (GimpPreviewRendererClass *klass)
 
   klass->draw            = gimp_preview_renderer_real_draw;
   klass->render          = gimp_preview_renderer_real_render;
+
+  gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+  gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+  gimp_rgba_set (&green_color, 0.0, 0.94, 0.0, GIMP_OPACITY_OPAQUE);
+  gimp_rgba_set (&red_color,   1.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 }
 
 static void
@@ -145,7 +155,8 @@ gimp_preview_renderer_init (GimpPreviewRenderer *renderer)
   renderer->dot_for_dot       = TRUE;
   renderer->is_popup          = FALSE;
 
-  gimp_rgba_set (&renderer->border_color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+  renderer->border_type       = GIMP_PREVIEW_BORDER_BLACK;
+  renderer->border_color      = black_color;
   renderer->gc                = NULL;
 
   renderer->buffer            = NULL;
@@ -417,6 +428,35 @@ gimp_preview_renderer_set_dot_for_dot (GimpPreviewRenderer *renderer,
 
       gimp_preview_renderer_invalidate (renderer);
     }
+}
+
+void
+gimp_preview_renderer_set_border_type (GimpPreviewRenderer   *renderer,
+                                       GimpPreviewBorderType  border_type)
+{
+  GimpRGB *border_color = &black_color;
+
+  g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
+
+  renderer->border_type = border_type;
+
+  switch (border_type)
+    {
+      case GIMP_PREVIEW_BORDER_BLACK:
+          border_color = &black_color;
+          break;
+      case GIMP_PREVIEW_BORDER_WHITE:
+          border_color = &white_color;
+          break;
+      case GIMP_PREVIEW_BORDER_GREEN:
+          border_color = &green_color;
+          break;
+      case GIMP_PREVIEW_BORDER_RED:
+          border_color = &red_color;
+          break;
+    }
+
+  gimp_preview_renderer_set_border_color (renderer, border_color);
 }
 
 void

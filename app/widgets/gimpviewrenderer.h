@@ -38,31 +38,32 @@ typedef struct _GimpPreviewRendererClass  GimpPreviewRendererClass;
 
 struct _GimpPreviewRenderer
 {
-  GObject       parent_instance;
+  GObject                parent_instance;
+                       
+  GType                  viewable_type;
+  GimpViewable          *viewable;
+                       
+  gint                   width;
+  gint                   height;
+  gint                   border_width;
+  gboolean               dot_for_dot;
+  gboolean               is_popup;
 
-  GType         viewable_type;
-  GimpViewable *viewable;
-
-  gint          width;
-  gint          height;
-  gint          border_width;
-  gboolean      dot_for_dot;
-  gboolean      is_popup;
-
-  GimpRGB       border_color;
-  GdkGC        *gc;
+  GimpPreviewBorderType  border_type;
+  GimpRGB                border_color;
+  GdkGC                 *gc;
 
   /*< private >*/
-  guchar       *buffer;
-  gint          rowstride;
-  gint          bytes;
-
-  GdkPixbuf    *no_preview_pixbuf;
-  gchar        *bg_stock_id;
-
-  gint          size;
-  gboolean      needs_render;
-  guint         idle_id;
+  guchar                *buffer;
+  gint                   rowstride;
+  gint                   bytes;
+                      
+  GdkPixbuf             *no_preview_pixbuf;
+  gchar                 *bg_stock_id;
+                      
+  gint                   size;
+  gboolean               needs_render;
+  guint                  idle_id;
 };
 
 struct _GimpPreviewRendererClass
@@ -106,6 +107,8 @@ void   gimp_preview_renderer_set_size_full    (GimpPreviewRenderer *renderer,
                                                gint                 border_width);
 void   gimp_preview_renderer_set_dot_for_dot  (GimpPreviewRenderer *renderer,
                                                gboolean             dot_for_dot);
+void   gimp_preview_renderer_set_border_type  (GimpPreviewRenderer *renderer,
+                                               GimpPreviewBorderType border_type);
 void   gimp_preview_renderer_set_border_color (GimpPreviewRenderer *renderer,
                                                const GimpRGB       *border_color);
 void   gimp_preview_renderer_set_background   (GimpPreviewRenderer *renderer,

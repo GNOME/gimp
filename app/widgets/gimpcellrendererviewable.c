@@ -287,10 +287,13 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
     {
       if (! (flags & GTK_CELL_RENDERER_SELECTED))
         {
-          GimpRGB black = { 0.0, 0.0, 0.0, 1.0 };
+          /* this is an ugly hack. The cell state should be passed to
+           * the preview renderer, so that it can adjust its border.
+           * (or something like this) */
+          if (cellviewable->renderer->border_type == GIMP_PREVIEW_BORDER_WHITE)
+            gimp_preview_renderer_set_border_type (cellviewable->renderer,
+                                                   GIMP_PREVIEW_BORDER_BLACK);
 
-          gimp_preview_renderer_set_border_color (cellviewable->renderer,
-                                                  &black);
           gimp_preview_renderer_remove_idle (cellviewable->renderer);
         }
 

@@ -135,11 +135,6 @@ static void   gimp_layer_tree_view_alpha_changed  (GimpLayer           *layer,
 
 static GimpDrawableTreeViewClass *parent_class = NULL;
 
-static GimpRGB  black_color;
-static GimpRGB  white_color;
-static GimpRGB  green_color;
-static GimpRGB  red_color;
-
 
 GType
 gimp_layer_tree_view_get_type (void)
@@ -224,11 +219,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->lower_to_bottom_desc    = _("Lower Layer to Bottom");
   item_view_class->lower_to_bottom_help_id = GIMP_HELP_LAYER_LOWER_TO_BOTTOM;
   item_view_class->reorder_desc            = _("Reorder Layer");
-
-  gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-  gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
-  gimp_rgba_set (&green_color, 0.0, 1.0, 0.0, GIMP_OPACITY_OPAQUE);
-  gimp_rgba_set (&red_color,   1.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 }
 
 static void
@@ -1067,8 +1057,7 @@ gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
   GimpPreviewRenderer   *layer_renderer;
   GimpPreviewRenderer   *mask_renderer;
   GimpLayerMask         *mask        = NULL;
-  GimpRGB               *layer_color = &black_color;
-  GimpRGB               *mask_color  = &black_color;
+  GimpPreviewBorderType  layer_type = GIMP_PREVIEW_BORDER_BLACK;
 
   tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
 
@@ -1081,28 +1070,29 @@ gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
     mask = GIMP_LAYER_MASK (mask_renderer->viewable);
 
   if (! mask || (mask && ! gimp_layer_mask_get_edit (mask)))
-    layer_color = &white_color;
+    layer_type = GIMP_PREVIEW_BORDER_WHITE;
+
+  gimp_preview_renderer_set_border_type (layer_renderer, layer_type);
 
   if (mask)
     {
+      GimpPreviewBorderType mask_color = GIMP_PREVIEW_BORDER_BLACK;
+
       if (gimp_layer_mask_get_show (mask))
 	{
-	  mask_color = &green_color;
+	  mask_color = GIMP_PREVIEW_BORDER_GREEN;
 	}
       else if (! gimp_layer_mask_get_apply (mask))
 	{
-	  mask_color = &red_color;
+	  mask_color = GIMP_PREVIEW_BORDER_RED;
 	}
       else if (gimp_layer_mask_get_edit (mask))
 	{
-          mask_color = &white_color;
+          mask_color = GIMP_PREVIEW_BORDER_WHITE;
 	}
+
+      gimp_preview_renderer_set_border_type (mask_renderer, mask_color);
     }
-
-  gimp_preview_renderer_set_border_color (layer_renderer, layer_color);
-
-  if (mask)
-    gimp_preview_renderer_set_border_color (mask_renderer, mask_color);
 
   if (layer_renderer)
     g_object_unref (layer_renderer);
