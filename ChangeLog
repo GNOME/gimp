@@ -1,3 +1,12 @@
+Tue Nov 10 23:44:07 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpmatrix.[ch]
+	* app/transform_core.c: minimal speedup 
+
+	* app/scale_tool.c: Use transform_core_do() for scaling too.
+	This gives a consistent behaviour regarding the corrective transform
+	and seems to be faster anyway...
+
 Mon Nov  9 16:20:33 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/session.c: use gdk_window_get_root_origin to get the window

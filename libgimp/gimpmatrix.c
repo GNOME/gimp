@@ -169,3 +169,13 @@ gimp_matrix_invert (GimpMatrix m, GimpMatrix m_inv)
   m_inv[1][2] = - ( m[0][0] * m[1][2] - m[0][2] * m[1][0] ) * det_1;
   m_inv[2][2] =   ( m[0][0] * m[1][1] - m[0][1] * m[1][0] ) * det_1;
 }
+
+void
+gimp_matrix_duplicate (GimpMatrix src, GimpMatrix target)
+{
+  int i,j;
+
+  for (i=0; i<3; i++)
+    for (j=0; j<3; j++)
+      target[i][j] = src[i][j];
+}

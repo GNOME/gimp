@@ -35,7 +35,6 @@
 #include "temp_buf.h"
 #include "tools.h"
 #include "undo.h"
-
 #include "layer_pvt.h"
 #include "drawable_pvt.h"
 #include "tile_manager_pvt.h"
@@ -996,12 +995,17 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
 
   if (transform_tool_direction () == TRANSFORM_CORRECTIVE)
     {
+      /*  keep the original matrix here, so we dont need to recalculate 
+	  the inverse later  */   
+      gimp_matrix_duplicate (matrix, m);
       gimp_matrix_invert (matrix, im);
       matrix = im;
     }
-
-  /*  Find the inverse of the transformation matrix  */
-  gimp_matrix_invert (matrix, m);
+  else
+    {
+      /*  Find the inverse of the transformation matrix  */
+      gimp_matrix_invert (matrix, m);
+    }
 
   x1 = float_tiles->x;
   y1 = float_tiles->y;

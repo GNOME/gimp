@@ -37,6 +37,7 @@ void          gimp_matrix_xshear          (GimpMatrix, double);
 void          gimp_matrix_yshear          (GimpMatrix, double);
 double        gimp_matrix_determinant     (GimpMatrix);
 void          gimp_matrix_invert          (GimpMatrix m, GimpMatrix m_inv);
+void          gimp_matrix_duplicate       (GimpMatrix src, GimpMatrix target);
 
 #ifdef __cplusplus
 }

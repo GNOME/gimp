@@ -335,8 +335,7 @@ scale_tool_motion (tool, gdisp_ptr)
       if (*y1 <= *y2) *y1 = *y2 + 1;
     }
 
-  /*  if both the control key & shift keys are down, keep the aspect ratio intac
-t  */
+  /*  if both the control key & shift keys are down, keep the aspect ratio intact  */
   if (transform_core->state & GDK_CONTROL_MASK && transform_core->state & GDK_SHIFT_MASK)
     {
       ratio = (double) (transform_core->x2 - transform_core->x1) /
@@ -432,35 +431,7 @@ scale_tool_scale (gimage, drawable, trans_info, float_tiles, interpolation, matr
      int interpolation;
      GimpMatrix matrix;
 {
-  TileManager *new_tiles;
-  int x1, y1, x2, y2;
-  PixelRegion srcPR, destPR;
-
-  x1 = trans_info[X1];
-  y1 = trans_info[Y1];
-  x2 = trans_info[X2];
-  y2 = trans_info[Y2];
-
-  pixel_region_init (&srcPR, float_tiles, 0, 0,
-                     float_tiles->width,
-                     float_tiles->height, FALSE);
-
-  /*  Create the new tile manager  */
-  new_tiles = tile_manager_new ((x2 - x1), (y2 - y1), float_tiles->bpp);
-  pixel_region_init (&destPR, new_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
-
-
-  if (drawable_type (drawable) == INDEXED_GIMAGE ||
-      drawable_type (drawable) == INDEXEDA_GIMAGE ||
-      !interpolation)
-    scale_region_no_resample (&srcPR, &destPR);
-  else
-    scale_region (&srcPR, &destPR);
-
-  new_tiles->x = x1;
-  new_tiles->y = y1;
-
-  return (void *) new_tiles;
+  return transform_core_do (gimage, drawable, float_tiles, interpolation, matrix);
 }
 
 
