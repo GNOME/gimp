@@ -4,6 +4,7 @@
 
 use Gimp 1.14;
 use Gimp::Fu;
+use Gimp::UI;
 use Fcntl;
 
 # Gimp::set_trace(TRACE_ALL);
@@ -28,7 +29,7 @@ register "file_avi_save",
          "Saves images in the 24 bit uncompressed AVI format used by windows software",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "1999-09-18",
+         "1999-10-26",
          "<Save>/AVI",
          "RGB",
          [
@@ -38,19 +39,23 @@ register "file_avi_save",
          ],
          sub {
    my($img,$drawable,$filename,$raw_filename,$depth,$compression,$index) = @_;
+   my($new_img,$new_drawable);
+   my $export = Gimp::UI::export_image($new_img=$img, $new_drawable=$drawable, "AVI",
+                                       CAN_HANDLE_RGB|CAN_HANDLE_LAYERS_AS_ANIMATION|CAN_HANDLE_ALPHA);
+   die "export failed" if $export == EXPORT_CANCEL;
    sysopen FILE,$filename,O_CREAT|O_TRUNC|O_WRONLY or die "Unable to open '$filename' for writing: $!\n";
-   my $us_frame = eval { $img->find_parasite("gimp-interframe-delay")->data } || 100000;
+   my $us_frame = eval { $img->parasite_find("gimp-interframe-delay")->data } || 100000;
    #Gimp->tile_cache_ntiles($img->width / Gimp->tile_width + 3); coredumps!
 
    my ($width, $height) = ($img->width, $img->height);
-   my @layers = $img->get_layers;
+   my @layers = $new_img->get_layers;
    for (@layers) {
       die "all layers must have the same size as the image\n" if $width != $_->width or $height != $_->height;
    }
 
    $depth = 16 if $depth == 15;
 
-   $img->selection_all;
+   $new_img->selection_all;
    my $framesize = ($width*$height*$depth) >> 3;
 
    my $idx1;
@@ -136,6 +141,7 @@ register "file_avi_save",
       }
    pop_hunk;
    close FILE;
+   $new_img->delete if $export == EXPORT_EXPORT;
    ();
 };
 
@@ -230,9 +236,9 @@ register "file_avi_load",
             $image = new Image($width,$height,RGB);
             $image->undo_disable;
             $image->set_filename($filename);
-            $image->attach_parasite(new Parasite "gimp-interframe-delay", PARASITE_PERSISTENT, $us_frame);
-            $image->attach_parasite(new Parasite "gimp-avi-depth", PARASITE_PERSISTENT, $depth == 16 ? 15 : $depth);
-            $image->attach_parasite(new Parasite "gimp-avi-compression", PARASITE_PERSISTENT, $compression);
+            $image->parasite_attach(new Parasite "gimp-interframe-delay", PARASITE_PERSISTENT, $us_frame);
+            $image->parasite_attach(new Parasite "gimp-avi-depth", PARASITE_PERSISTENT, $depth == 16 ? 15 : $depth);
+            $image->parasite_attach(new Parasite "gimp-avi-compression", PARASITE_PERSISTENT, $compression);
          }
       },
       "00db" => sub {

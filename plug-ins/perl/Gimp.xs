@@ -2,6 +2,9 @@
 #include "perl-intl.h"
 
 #include <libgimp/gimp.h>
+#ifdef GIMP_HAVE_EXPORT
+#include <libgimp/gimpexport.h>
+#endif
 
 #include <locale.h>
 
@@ -147,6 +150,19 @@ BOOT:
    /**/
 #if HAVE_DIVIDE_MODE || IN_GIMP
    /*newCONSTSUB(stash,"DIVIDE_MODE",newSViv(DIVIDE_MODE));*/
+#endif
+#ifdef GIMP_HAVE_EXPORT
+   newCONSTSUB(stash,"CAN_HANDLE_RGB", newSViv(CAN_HANDLE_RGB));
+   newCONSTSUB(stash,"CAN_HANDLE_GRAY", newSViv(CAN_HANDLE_GRAY));
+   newCONSTSUB(stash,"CAN_HANDLE_INDEXED", newSViv(CAN_HANDLE_INDEXED));
+   newCONSTSUB(stash,"CAN_HANDLE_ALPHA", newSViv(CAN_HANDLE_ALPHA));
+   newCONSTSUB(stash,"CAN_HANDLE_LAYERS", newSViv(CAN_HANDLE_LAYERS));
+   newCONSTSUB(stash,"CAN_HANDLE_LAYERS_AS_ANIMATION", newSViv(CAN_HANDLE_LAYERS_AS_ANIMATION));
+   newCONSTSUB(stash,"NEEDS_ALPHA", newSViv(NEEDS_ALPHA));
+
+   newCONSTSUB(stash,"EXPORT_CANCEL", newSViv(EXPORT_CANCEL));
+   newCONSTSUB(stash,"EXPORT_IGNORE", newSViv(EXPORT_CANCEL));
+   newCONSTSUB(stash,"EXPORT_EXPORT", newSViv(EXPORT_EXPORT));
 #endif
 }
 

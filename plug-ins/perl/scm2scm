@@ -52,6 +52,7 @@ specify a translation id, can be one of (run scm2scm without arguments
 to see the full list)
 
 I<api1>	api-mega-break-patch #1
+I<api2> api-mega-rename-patch #1 (NYI)
 
 I<1.1>	1.0 -> 1.1 (not fully implemented)
 
@@ -100,6 +101,8 @@ sub plug_in_constant {
         "gimp-rotate|gimp-scale|gimp-selection-float|gimp-selection-layer-alpha|".
         "gimp-selection-load|gimp-shear|gimp-threshold)\$",
         \&drop_1st
+      ]],
+   'api2' => [[
       ]],
    '1.1' => ['nice','api1'],
    '1.2' => ['nice','api1'],

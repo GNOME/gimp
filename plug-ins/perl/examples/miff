@@ -4,6 +4,7 @@
 
 use Gimp;
 use Gimp::Fu;
+use Gimp::UI;
 use Fcntl;
 
 # Gimp::set_trace(TRACE_ALL);
@@ -26,15 +27,20 @@ register "file_miff_save",
          "Saves images in the miff (Magick Interchange File Format) format used by the ImageMagick package",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "1999-07-29",
+         "1999-10-26",
          "<Save>/MIFF",
          "RGB, RGBA, GRAY",	# weird, but no matte for !DirectColour
          [],
          sub {
    my($img,$drawable,$filename) = @_;
-   my @layers = $img->get_layers;
+   my($new_img,$new_drawable);
+   my $export = Gimp::UI::export_image ($new_img=$img, $new_drawable=$drawable, "MIFF",
+                                        CAN_HANDLE_GRAY|CAN_HANDLE_RGB|CAN_HANDLE_ALPHA|CAN_HANDLE_LAYERS|CAN_HANDLE_LAYERS_AS_ANIMATION);
+   die "export failed" if $export == EXPORT_CANCEL;
+   my @layers = $new_img->get_layers;
+
    sysopen FILE,$filename,O_CREAT|O_TRUNC|O_WRONLY or die "Unable to open '$filename' for writing: $!\n";
-   my $hdr = eval { $img->find_parasite("gimp-comment")->data };
+   my $hdr = eval { $img->parasite_find("gimp-comment")->data };
    $hdr = "   COMMENT: $hdr\n" if $hdr;
    $hdr = <<EOF;
 id=ImageMagick
@@ -50,7 +56,7 @@ EOF
    for (@layers) {
       print FILE $hdr,
             "scene=$scene\n",
-            "class=", $_->color ? "DirectClass" : "PseudoClass", "\n";
+            "class=", $_->is_rgb ? "DirectClass" : "PseudoClass", "\n";
             #"gamma=", Gimp->gamma, "\n";
       # resolution etc..
       write_layer(*FILE,$_);
@@ -58,6 +64,7 @@ EOF
       update Progress $scene/@layers;
    }
    close FILE;
+   $new_img->delete if $export == EXPORT_EXPORT;
    ();
 };
 
@@ -155,7 +162,7 @@ register "file_miff_load",
    if ($comment) {
       $comment =~ s/^\s+//s;
       $comment =~ s/\s+$//s;
-      $img->attach_parasite (new Parasite "gimp-comment", PARASITE_PERSISTENT, $comment);
+      $img->parasite_attach (new Parasite "gimp-comment", PARASITE_PERSISTENT, $comment);
    }
    # resolution etc..
 

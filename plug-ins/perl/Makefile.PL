@@ -229,7 +229,7 @@ setver:
 }
 
 $GIMP_INC_NOUI = "-I../../ $GIMP_INC_NOUI" if $IN_GIMP;
-@DIRS= qw/Gimp Net/;
+@DIRS= qw/Gimp Net UI/;
 
 $build_module = $IN_GIMP || $ENV{GIMP_PERL_MODULE_INC};
 # temporarily disabled because of politics
@@ -285,8 +285,8 @@ WriteMakefile(
     		    'Gimp/Data.pm'	=> '$(INST_LIBDIR)/Gimp/Data.pm',
     		    'Gimp/Fu.pm'	=> '$(INST_LIBDIR)/Gimp/Fu.pm',
     		    'Gimp/Lib.pm'	=> '$(INST_LIBDIR)/Gimp/Lib.pm',
-    		    'Gimp/UI.pm'	=> '$(INST_LIBDIR)/Gimp/UI.pm',
-    		    'Gimp/Net.pm'	=> '$(INST_LIBDIR)/Gimp/Net.pm',
+    		    'UI/UI.pm'		=> '$(INST_LIBDIR)/Gimp/UI.pm',
+    		    'Net/Net.pm'	=> '$(INST_LIBDIR)/Gimp/Net.pm',
     		    'Gimp/PDL.pm'	=> '$(INST_LIBDIR)/Gimp/PDL.pm',
     		    'Gimp/Util.pm'	=> '$(INST_LIBDIR)/Gimp/Util.pm',
     		    'Gimp/Feature.pm'	=> '$(INST_LIBDIR)/Gimp/Feature.pm',

@@ -30,6 +30,7 @@
 static Core* PDL; /* Structure hold core C functions */
 
 /* get pointer to PDL structure. */
+#if 0
 static void need_pdl (void)
 {
   SV *CoreSV;
@@ -43,6 +44,7 @@ static void need_pdl (void)
       PDL = (Core*) SvIV(CoreSV);
     }
 }
+#endif
 
 #endif
 

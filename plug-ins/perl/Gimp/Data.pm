@@ -24,7 +24,7 @@ sub TIEHASH {
 }
 
 sub FETCH {
-   my $data = eval { Gimp->find_parasite ($_[1])->data }
+   my $data = eval { Gimp->parasite_find ($_[1])->data }
                 || ($@ ? Gimp->get_data ($_[1]) : ());
    if ($data =~ /^\$VAR1 = \[/) {
       thaw $data;
@@ -38,7 +38,7 @@ sub STORE {
    if (ref $data) {
       $data = freeze $data or return;
    }
-   eval { Gimp->attach_parasite ([$_[1], Gimp::PARASITE_PERSISTENT, $data]) };
+   eval { Gimp->parasite_attach ([$_[1], Gimp::PARASITE_PERSISTENT, $data]) };
    Gimp->set_data ($_[1], $data) if $@;
 }
 

@@ -5,6 +5,7 @@ Revision history for Gimp-Perl extension.
           larger (& more correct) fonts.
         - small api changes for 1.2.
         - (some) changes for the gimp api renaming.
+        - added export capabilities to miff/avi.
 
 1.14  Mon Oct 11 03:23:13 CEST 1999
 	- set the version of all modules explicitly (for the benefit of CPAN).

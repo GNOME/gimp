@@ -5,9 +5,6 @@
 #include <stdio.h>
 
 #include <libgimp/gimp.h>
-#if UI
-# include <libgimp/gimpui.h>
-#endif
 
 #if GIMP_MAJOR_VERSION>1 || (GIMP_MAJOR_VERSION==1 && GIMP_MINOR_VERSION>=1)
 # define GIMP11 1
@@ -1256,15 +1253,6 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
 
 GPlugInInfo PLUG_IN_INFO = { pii_init, pii_quit, pii_query, pii_run };
 
-#if UI
-static void gimp_pattern_select_widget_callback (gchar *name, gint width,
-	gint height, gint bpp, gchar *mask, gint closing, gpointer nameref)
-{
-  SV *sv = (SV *)nameref;
-  sv_setpv (sv, name);
-}
-#endif#
-
 MODULE = Gimp::Lib	PACKAGE = Gimp::Lib
 
 PROTOTYPES: ENABLE
@@ -2304,31 +2292,3 @@ gimp_default_display()
 #gimp_query_images(nimages)
 #	int *	nimages
 
-MODULE = Gimp::Lib	PACKAGE = Gimp::UI
-
-#if 0
-#if UI
-#if GIMP11
-
-GtkWidget *
-_new_pattern_select(dname, ipattern, nameref)
-	gchar *	dname
-	gchar *	ipattern
-	SV *	nameref
-	CODE:
-	{
-		if (!SvROK (nameref))
-		  croak (__("last argument to gimp_pattern_select_widget must be scalar ref"));
-		
-		nameref = SvRV (nameref);
-		SvUPGRADE (nameref, SVt_PV);
-		
-		RETVAL = gimp_pattern_select_widget (dname, ipattern,
-				gimp_pattern_select_widget_callback, (gpointer) nameref);
-	}
-	OUTPUT:
-	RETVAL
-
-#endif
-#endif
-#endif

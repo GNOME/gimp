@@ -3,8 +3,13 @@ package Gimp::UI;
 use Gimp ('__');
 use Gimp::Fu;
 use Gtk;
+use base 'DynaLoader';
 
-$VERSION = 1.15;
+BEGIN {
+   require DynaLoader;
+   $VERSION = 1.15;
+   bootstrap Gimp::UI $VERSION;
+}
 
 =head1 NAME
 
