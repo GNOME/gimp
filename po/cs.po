@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.19\n"
-"POT-Creation-Date: 2000-04-03 22:04+0200\n"
-"PO-Revision-Date: 2000-04-03 22:08+02:00\n"
+"POT-Creation-Date: 2000-04-06 21:32+0200\n"
+"PO-Revision-Date: 2000-04-06 21:37+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,12 +22,12 @@ msgstr "O programu GIMP"
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:252
+#: app/about_dialog.c:253
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Verzi %s pro vás napsali"
 
-#: app/about_dialog.c:292
+#: app/about_dialog.c:293
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Více se dozvíte, nav¹tívíte-li http://www.gimp.org/"
 
@@ -44,62 +44,62 @@ msgstr "Tlak:"
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/app_procs.c:273 app/app_procs.c:275 app/interface.c:531
+#: app/app_procs.c:278 app/app_procs.c:280 app/interface.c:531
 msgid "The GIMP"
 msgstr "GIMP"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/app_procs.c:279
+#: app/app_procs.c:285
 msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
-#: app/app_procs.c:289 app/app_procs.c:291
+#: app/app_procs.c:302 app/app_procs.c:304
 msgid "brought to you by"
 msgstr "pro vás napsali"
 
-#: app/app_procs.c:360
+#: app/app_procs.c:373
 msgid "GIMP Startup"
 msgstr "Spou¹tí se program GIMP"
 
-#: app/app_procs.c:479 app/gimprc.c:448
+#: app/app_procs.c:492 app/gimprc.c:448
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "analyzuje se \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:541
+#: app/app_procs.c:554
 msgid "Looking for data files"
 msgstr "Hledají se datové soubory"
 
-#: app/app_procs.c:541
+#: app/app_procs.c:554
 msgid "Parasites"
 msgstr "Cizopasníci"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:543 app/internal_procs.c:71 app/preferences_dialog.c:2397
+#: app/app_procs.c:556 app/internal_procs.c:71 app/preferences_dialog.c:2397
 msgid "Brushes"
 msgstr "Stopy"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:545 app/internal_procs.c:143 app/preferences_dialog.c:2405
+#: app/app_procs.c:558 app/internal_procs.c:143 app/preferences_dialog.c:2405
 msgid "Patterns"
 msgstr "Vzorky"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:547 app/preferences_dialog.c:2409
+#: app/app_procs.c:560 app/preferences_dialog.c:2409
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:549 app/internal_procs.c:113 app/preferences_dialog.c:2413
+#: app/app_procs.c:562 app/internal_procs.c:113 app/preferences_dialog.c:2413
 msgid "Gradients"
 msgstr "Pøechody"
 
-#: app/app_procs.c:739
+#: app/app_procs.c:752
 msgid "Really Quit?"
 msgstr "Opravdu skonèit?"
 
-#: app/app_procs.c:743
+#: app/app_procs.c:756
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -109,23 +109,23 @@ msgstr ""
 "\n"
 "Opravdu opustit GIMP?"
 
-#: app/app_procs.c:744
+#: app/app_procs.c:757
 msgid "Quit"
 msgstr "Konec"
 
 #. the cancel button
-#: app/app_procs.c:744 app/brightness_contrast.c:218 app/channel_ops.c:93
+#: app/app_procs.c:757 app/brightness_contrast.c:218 app/channel_ops.c:93
 #: app/channels_dialog.c:2504 app/channels_dialog.c:2667
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:559 app/file_new_dialog.c:207 app/file_new_dialog.c:357
 #: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:345 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1769 app/gradient.c:4841
 #: app/gradient.c:5402 app/hue_saturation.c:377 app/install.c:533
-#: app/install.c:1167 app/interface.c:1022 app/layers_dialog.c:3434
-#: app/layers_dialog.c:3616 app/layers_dialog.c:3708 app/layers_dialog.c:3972
+#: app/install.c:1173 app/interface.c:1022 app/layers_dialog.c:3438
+#: app/layers_dialog.c:3620 app/layers_dialog.c:3712 app/layers_dialog.c:3964
 #: app/levels.c:341 app/palette.c:1826 app/posterize.c:201
 #: app/preferences_dialog.c:1434 app/qmask.c:281 app/resize.c:195
-#: app/resize.c:1345 app/threshold.c:275 modules/cdisplay_gamma.c:358
+#: app/resize.c:1341 app/threshold.c:275 modules/cdisplay_gamma.c:358
 msgid "Cancel"
 msgstr "Zru¹it"
 
@@ -278,10 +278,10 @@ msgstr "Jas-kontrast nefunguje na indexovaných obrazovkách."
 #: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:555 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:127 app/gimpui.c:122 app/hue_saturation.c:373
-#: app/install.c:1165 app/layers_dialog.c:3432 app/layers_dialog.c:3614
-#: app/layers_dialog.c:3706 app/layers_dialog.c:3970 app/levels.c:337
+#: app/install.c:1171 app/layers_dialog.c:3436 app/layers_dialog.c:3618
+#: app/layers_dialog.c:3710 app/layers_dialog.c:3962 app/levels.c:337
 #: app/module_db.c:281 app/posterize.c:197 app/preferences_dialog.c:1430
-#: app/qmask.c:279 app/resize.c:193 app/resize.c:1345 app/threshold.c:271
+#: app/qmask.c:279 app/resize.c:193 app/resize.c:1341 app/threshold.c:271
 #: modules/cdisplay_gamma.c:351
 msgid "OK"
 msgstr "OK"
@@ -324,7 +324,7 @@ msgstr "Editor stop"
 #: app/lc_dialog.c:195 app/measure.c:286 app/nav_window.c:1345
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
 #: app/palette_select.c:66 app/pattern_select.c:172
-#: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1088
+#: app/preferences_dialog.c:359 app/tips_dialog.c:153 app/tools.c:1088
 #: app/undo_history.c:752
 msgid "Close"
 msgstr "Zavøít"
@@ -475,7 +475,7 @@ msgstr "%s kopie"
 msgid "Selection Mask"
 msgstr "Maska výbìru"
 
-#: app/channel_ops.c:85 app/resize.c:394
+#: app/channel_ops.c:85 app/resize.c:406
 msgid "Offset"
 msgstr "Posun:"
 
@@ -485,7 +485,7 @@ msgid "Offset X:"
 msgstr "Posun X:"
 
 #: app/channel_ops.c:115 app/crop.c:1063 app/file_new_dialog.c:530
-#: app/install.c:1368 app/resize.c:332 app/resize.c:417 app/resize.c:575
+#: app/install.c:1374 app/resize.c:344 app/resize.c:429 app/resize.c:587
 #: app/rotate_tool.c:106 app/scale_tool.c:100 app/shear_tool.c:82
 msgid "Y:"
 msgstr "Y:"
@@ -496,11 +496,11 @@ msgid "Wrap Around"
 msgstr "Oøíznout kolem"
 
 #: app/channel_ops.c:174 app/image_new.c:70 app/image_new.c:234
-#: app/layers_dialog.c:3534
+#: app/layers_dialog.c:3538
 msgid "Background"
 msgstr "Pozadí"
 
-#: app/channel_ops.c:175 app/image_new.c:80 app/layers_dialog.c:3536
+#: app/channel_ops.c:175 app/image_new.c:80 app/layers_dialog.c:3540
 msgid "Transparent"
 msgstr "Prùhledný"
 
@@ -735,43 +735,43 @@ msgstr "Obrázek:"
 msgid "none"
 msgstr "nic"
 
-#: app/commands.c:333
+#: app/commands.c:332
 msgid "Feather Selection"
 msgstr "Zaoblit výbìr"
 
-#: app/commands.c:336
+#: app/commands.c:335
 msgid "Feather Selection by:"
 msgstr "Zaoblit výbìr o:"
 
-#: app/commands.c:369
+#: app/commands.c:368
 msgid "Shrink Selection"
 msgstr "Zmen¹it výbìr"
 
-#: app/commands.c:372
+#: app/commands.c:371
 msgid "Shrink Selection by:"
 msgstr "Zmen¹it výbìr o:"
 
-#: app/commands.c:381
+#: app/commands.c:380
 msgid "Shrink from image border"
 msgstr "Zmen¹it dle hranic obrázku"
 
-#: app/commands.c:403
+#: app/commands.c:402
 msgid "Grow Selection"
 msgstr "Zvìt¹it výbìr"
 
-#: app/commands.c:406
+#: app/commands.c:405
 msgid "Grow Selection by:"
 msgstr "Zvìt¹it výbìr o:"
 
-#: app/commands.c:426
+#: app/commands.c:425
 msgid "Border Selection"
 msgstr "Vybrat obvod"
 
-#: app/commands.c:429
+#: app/commands.c:428
 msgid "Border Selection by:"
 msgstr "Vybrat obvod:"
 
-#: app/commands.c:1304
+#: app/commands.c:1315
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Chyba rozmìrù plátna: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
 
@@ -919,7 +919,7 @@ msgid "Width:"
 msgstr "©íøka:"
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3475 app/resize.c:242 app/resize.c:267 app/resize.c:512
+#: app/layers_dialog.c:3479 app/resize.c:254 app/resize.c:279 app/resize.c:524
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:349
 msgid "Height:"
 msgstr "Vý¹ka:"
@@ -1183,17 +1183,17 @@ msgstr "Velikost obrázku: %s"
 msgid "New Image"
 msgstr "Nový obrázek"
 
-#: app/file_new_dialog.c:453 app/install.c:1355 app/preferences_dialog.c:1505
+#: app/file_new_dialog.c:453 app/install.c:1361 app/preferences_dialog.c:1505
 #: app/preferences_dialog.c:1542
 msgid "Pixels"
 msgstr "pixelù"
 
 #. the resolution labels
-#: app/file_new_dialog.c:524 app/resize.c:569
+#: app/file_new_dialog.c:524 app/resize.c:581
 msgid "Resolution X:"
 msgstr "Rozli¹ení X:"
 
-#: app/file_new_dialog.c:545 app/resize.c:590
+#: app/file_new_dialog.c:545 app/resize.c:602
 msgid "pixels/%a"
 msgstr "pixelù/%a"
 
@@ -1223,7 +1223,7 @@ msgstr ""
 msgid "No Selection."
 msgstr "Bez výbìru."
 
-#: app/fileops.c:418 app/fileops.c:1629 app/fileops.c:1736
+#: app/fileops.c:418 app/fileops.c:1630 app/fileops.c:1737
 #, c-format
 msgid "Save failed: %s"
 msgstr "Zápis selhal: %s"
@@ -1248,58 +1248,58 @@ msgstr "Nelze navrátit. S tímto obrázkem není spojeno jméno souboru"
 msgid "Revert failed."
 msgstr "Navrácení selhalo."
 
-#: app/fileops.c:1245
+#: app/fileops.c:1246
 msgid "(This thumbnail may be out of date)"
 msgstr "(Tato miniatura mù¾e být neaktuální)"
 
-#: app/fileops.c:1246
+#: app/fileops.c:1247
 msgid "(No Information)"
 msgstr "(Není informace)"
 
-#: app/fileops.c:1256
+#: app/fileops.c:1257
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Zapisování miniatur je zakázáno)"
 
-#: app/fileops.c:1260
+#: app/fileops.c:1261
 msgid "(Could not write thumbnail file)"
 msgstr "(Nelze zapsat soubor s miniaturou)"
 
-#: app/fileops.c:1264
+#: app/fileops.c:1265
 msgid "(Thumbnail file not written)"
 msgstr "(Soubor s miniaturou není zapsán)"
 
-#: app/fileops.c:1281
+#: app/fileops.c:1282
 msgid "No preview available"
 msgstr "Náhled není k dispozici"
 
-#: app/fileops.c:1399
+#: app/fileops.c:1400
 msgid "(could not make preview)"
 msgstr "(nelze vytvoøit náhled)"
 
-#: app/fileops.c:1472 app/fileops.c:1551
+#: app/fileops.c:1473 app/fileops.c:1552
 #, c-format
 msgid "Open failed: %s"
 msgstr "Otevøení selhalo: %s"
 
-#: app/fileops.c:1607
+#: app/fileops.c:1608
 #, c-format
 msgid "%s is an irregular file (%s)"
 msgstr "%s je nestandardní soubor (%s)"
 
-#: app/fileops.c:1675
+#: app/fileops.c:1676
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s existuje, pøepsat?"
 
-#: app/fileops.c:1679
+#: app/fileops.c:1680
 msgid "File Exists!"
 msgstr "Soubor existuje!"
 
-#: app/fileops.c:1685
+#: app/fileops.c:1686
 msgid "Yes"
 msgstr "Ano"
 
-#: app/fileops.c:1687
+#: app/fileops.c:1688
 msgid "No"
 msgstr "Ne"
 
@@ -1382,6 +1382,14 @@ msgid ""
 msgstr ""
 "V %s byly provedeny zmìny.\n"
 "Pøesto zavøít?"
+
+#: app/gimage_cmds.c:3463
+msgid ""
+"Image resolution is out of bounds,\n"
+"using the default resolution instead."
+msgstr ""
+"Rozli¹ení obrázku je mimo rozsah,\n"
+"tak¾e bude pou¾ito implicitní rozli¹ení."
 
 #: app/gimage_mask.c:211
 msgid ""
@@ -2189,11 +2197,11 @@ msgstr "Sytost"
 msgid "Grayscale"
 msgstr "Odstíny ¹edi"
 
-#: app/image_new.c:65 app/layers_dialog.c:3533
+#: app/image_new.c:65 app/layers_dialog.c:3537
 msgid "Foreground"
 msgstr "Popøedí"
 
-#: app/image_new.c:75 app/layers_dialog.c:3535
+#: app/image_new.c:75 app/layers_dialog.c:3539
 msgid "White"
 msgstr "Bílá"
 
@@ -2402,7 +2410,7 @@ msgstr ""
 "Abyste provedli u¾ivatelskou instalaci, spus»te GIMP bez volby "
 "'--nointerface'\n"
 
-#: app/install.c:151
+#: app/install.c:150
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -2415,7 +2423,7 @@ msgstr ""
 "Lze zde té¾ nakonfigurovat cesty pro hledání stop,\n"
 "palety, pøechody, vzorky, zásuvné moduly a moduly."
 
-#: app/install.c:159
+#: app/install.c:158
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
@@ -2423,7 +2431,7 @@ msgstr ""
 "GIMP pou¾ívá doplòujícího souboru gtkrc, kde lze\n"
 "nakonfigurovat vzhled odli¹ný od ostatních GTK aplikací."
 
-#: app/install.c:164
+#: app/install.c:163
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -2439,7 +2447,7 @@ msgstr ""
 "souboru. Tento soubor je navr¾en pro ètení\n"
 "pouze programem GIMP a nemìl by být editován."
 
-#: app/install.c:173
+#: app/install.c:172
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
@@ -2454,7 +2462,7 @@ msgstr ""
 "ale je mnohem jednodu¹¹í definovat klávesy za bìhu programu\n"
 "GIMP. Smazání souboru navrátí implicitní zkratky."
 
-#: app/install.c:182
+#: app/install.c:181
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
@@ -2464,7 +2472,7 @@ msgstr ""
 "otevøena pøi posledním ukonèení programu GIMP. Programu GIMP\n"
 "lze nastavit polohu dialogových oken pøi otvírání."
 
-#: app/install.c:188
+#: app/install.c:187
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -2478,7 +2486,7 @@ msgstr ""
 "a piky. Tento soubor je pøepsán poka¾dé, kdy¾\n"
 "opou¹títe GIMP."
 
-#: app/install.c:196
+#: app/install.c:195
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined brushes.  The default gimprc file\n"
@@ -2492,7 +2500,7 @@ msgstr ""
 "stop kontroluje tento podadresáø spolu\n"
 "se systémovou instalací GIMP stop."
 
-#: app/install.c:204
+#: app/install.c:203
 msgid ""
 "This is a subdirectory which is used to store brushes\n"
 "that are created with the brush editor.  The default\n"
@@ -2504,7 +2512,7 @@ msgstr ""
 "Dle implicitního gimprc souboru se pøi hledání\n"
 "generovaných stop kontroluje tento podadresáø."
 
-#: app/install.c:211
+#: app/install.c:210
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gradients.  The default gimprc file\n"
@@ -2518,7 +2526,7 @@ msgstr ""
 "pøechodù kontroluje tento podadresáø spolu\n"
 "se systémovou instalací GIMP pøechodù."
 
-#: app/install.c:219
+#: app/install.c:218
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined palettes.  The default gimprc file\n"
@@ -2538,7 +2546,7 @@ msgstr ""
 "aby bylo mo¾né bìhem práce programu GIMP zmìnìné\n"
 "palety uchovat mezi sezeními."
 
-#: app/install.c:230
+#: app/install.c:229
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined patterns.  The default gimprc file\n"
@@ -2552,7 +2560,7 @@ msgstr ""
 "vzorkù kontroluje tento podadresáø spolu\n"
 "se systémovou instalací GIMP vzorkù."
 
-#: app/install.c:238
+#: app/install.c:237
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user created, temporary, or otherwise non-system-\n"
@@ -2567,7 +2575,7 @@ msgstr ""
 "zásuvných modulù kontroluje tento podadresáø spolu\n"
 "se systémovou instalací gimp zásuvných modulù."
 
-#: app/install.c:246
+#: app/install.c:245
 msgid ""
 "This subdirectory can be used to store user created,\n"
 "temporary, or otherwise non-system-supported DLL\n"
@@ -2582,7 +2590,7 @@ msgstr ""
 "modulù kontroluje tento podadresáø spolu se systémovou\n"
 "instalací GIMP modulù bìhem inicializace."
 
-#: app/install.c:254
+#: app/install.c:253
 msgid ""
 "This subdirectory is used by the GIMP to store user\n"
 "created and installed scripts.  The default gimprc file\n"
@@ -2594,7 +2602,7 @@ msgstr ""
 "implicitního gimprc souboru se pøi hledání skriptù kontroluje\n"
 "tento podadresáø spolu se systémovou instalací gimp skriptù."
 
-#: app/install.c:261
+#: app/install.c:260
 msgid ""
 "This subdirectory is used by the GIMP to temporarily\n"
 "store undo buffers to reduce memory usage.  If GIMP is\n"
@@ -2608,7 +2616,7 @@ msgstr ""
 "soubory ve formì: gimp<#>.<#>. Ty jsou mezi GIMP sezeními\n"
 "zbyteèné a mohou být odstranìny jako smetí."
 
-#: app/install.c:269
+#: app/install.c:268
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
@@ -2616,7 +2624,7 @@ msgstr ""
 "Tento podadresáø je pou¾íván pro ukládání parametrických\n"
 "souborù pro nástroj Køivky."
 
-#: app/install.c:274
+#: app/install.c:273
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
@@ -2624,7 +2632,7 @@ msgstr ""
 "Tento podadresáø je pou¾íván pro ukládání parametrických\n"
 "souborù pro nástroj Úrovnì."
 
-#: app/install.c:279
+#: app/install.c:278
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined fractals to be used by the FractalExplorer\n"
@@ -2639,7 +2647,7 @@ msgstr ""
 "fraktálù kontroluje tento podadresáø spolu\n"
 "se systémovou instalací GIMP Badatele fraktálù."
 
-#: app/install.c:287
+#: app/install.c:286
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined figures to be used by the GFig plug-in.\n"
@@ -2653,7 +2661,7 @@ msgstr ""
 "gfig kreseb kontroluje tento podadresáø spolu\n"
 "se systémovou instalací GIMP GFig kreseb."
 
-#: app/install.c:295
+#: app/install.c:294
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gflares to be used by the GFlare plug-in.\n"
@@ -2667,7 +2675,7 @@ msgstr ""
 "p-záøí kontroluje tento podadresáø spolu\n"
 "se systémovou instalací GIMP P-záøí."
 
-#: app/install.c:303
+#: app/install.c:302
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined data to be used by the Gimpressionist\n"
@@ -2690,11 +2698,11 @@ msgid "Continue"
 msgstr "Pokraèovat"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/install.c:571
+#: app/install.c:572
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 
-#: app/install.c:663
+#: app/install.c:669
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -2702,12 +2710,12 @@ msgstr ""
 "Vítejte\n"
 "v u¾ivatelské instalaci programu GIMP"
 
-#: app/install.c:665
+#: app/install.c:671
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
 "Klepnutím na \"Pokraèovat\" zapoène u¾ivatelská instalace programu GIMP."
 
-#: app/install.c:668
+#: app/install.c:674
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2000\n"
@@ -2718,7 +2726,7 @@ msgstr ""
 "Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis a vývojový tým GIMP."
 
-#: app/install.c:677
+#: app/install.c:683
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -2730,7 +2738,7 @@ msgstr ""
 "Free Software Foundation; buï licencí verze 2 nebo\n"
 "(dle va¹i volby) jakoukoliv novìj¹í."
 
-#: app/install.c:682
+#: app/install.c:688
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -2742,7 +2750,7 @@ msgstr ""
 "PRODEJNOSTI anebo VHODNOSTI PRO URÈITÝ ÚÈEL.\n"
 "Dal¹í podrobnosti hledejte v Obecné veøejné licenci GNU."
 
-#: app/install.c:687
+#: app/install.c:693
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -2754,15 +2762,15 @@ msgstr ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA."
 
-#: app/install.c:713
+#: app/install.c:719
 msgid "Personal GIMP Directory"
 msgstr "U¾ivatelský GIMP adresáø"
 
-#: app/install.c:714
+#: app/install.c:720
 msgid "Click \"Continue\" to create your personal GIMP directory."
 msgstr "Klepnutím na \"Pokraèovat\" vytvoøíte u¾ivatelský adresáø."
 
-#: app/install.c:731
+#: app/install.c:737
 #, c-format
 msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
@@ -2771,7 +2779,7 @@ msgstr ""
 "Pøi øádné instalaci programu GIMP je tøeba vytvoøit\n"
 "podadresáø se jménem %s."
 
-#: app/install.c:737
+#: app/install.c:743
 msgid ""
 "This subdirectory will contain a number of important files.\n"
 "Click on one of the files or subdirectories in the tree\n"
@@ -2781,31 +2789,31 @@ msgstr ""
 "Klepnutím na jeden ze souborù nebo podadresáøù ve stromu\n"
 "získáte více informací o zvolené polo¾ce."
 
-#: app/install.c:821
+#: app/install.c:827
 msgid "User Installation Log"
 msgstr "Protokol o u¾ivatelské instalaci"
 
-#: app/install.c:827
+#: app/install.c:833
 msgid "GIMP Performance Tuning"
 msgstr "GIMP: vyladìní výkonu"
 
-#: app/install.c:828
+#: app/install.c:834
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Klepnutím na \"Pokraèovat\" pøijmete vý¹e uvedená nastavení."
 
-#: app/install.c:831
+#: app/install.c:837
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr "K optimálnímu výkonu programu GIMP je nutné provést nìkterá nastavení."
 
-#: app/install.c:840
+#: app/install.c:846
 msgid "Monitor Resolution"
 msgstr "Rozli¹ení monitoru"
 
-#: app/install.c:841
+#: app/install.c:847
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "Klepnutím na \"Pokraèovat\" spustíte program GIMP."
 
-#: app/install.c:844
+#: app/install.c:850
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
@@ -2813,19 +2821,19 @@ msgstr ""
 "Aby byly obrázky zobrazeny ve své skuteèné velikosti, je nutné, aby GIMP "
 "znal rozli¹ení monitoru."
 
-#: app/install.c:853
+#: app/install.c:859
 msgid "Aborting Installation..."
 msgstr "Instalace se ru¹í..."
 
-#: app/install.c:923
+#: app/install.c:929
 msgid "does not exist.  Cannot install."
 msgstr "neexistuje. Nelze instalovat."
 
-#: app/install.c:935
+#: app/install.c:941
 msgid "has invalid permissions.  Cannot install."
 msgstr "má neplatná práva. Nelze instalovat."
 
-#: app/install.c:973
+#: app/install.c:979
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -2835,7 +2843,7 @@ msgstr ""
 "Pokud ne, instalace byla úspì¹ná!\n"
 "Jinak skonèete a odhalte mo¾ný dùvod..."
 
-#: app/install.c:1029
+#: app/install.c:1035
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -2845,15 +2853,15 @@ msgstr ""
 "Pokud ne, instalace byla úspì¹ná!\n"
 "Jinak skonèete a odhalte mo¾ný dùvod..."
 
-#: app/install.c:1041
+#: app/install.c:1047
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "Klepnutím na \"Pokraèovat\" dokonèíte instalaci programu GIMP."
 
-#: app/install.c:1046
+#: app/install.c:1052
 msgid "Installation failed.  Contact system administrator."
 msgstr "Instalace selhala. Spojte se se systémovým administrátorem."
 
-#: app/install.c:1067
+#: app/install.c:1073
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
@@ -2865,11 +2873,11 @@ msgstr ""
 "pamìti.\n"
 "Je tøeba té¾ poèítat s pamìtí pro ostatní bì¾ící procesy."
 
-#: app/install.c:1081 app/preferences_dialog.c:2102
+#: app/install.c:1087 app/preferences_dialog.c:2102
 msgid "Tile Cache Size:"
 msgstr "Velikost vyrovnávací pamìti dla¾dic:"
 
-#: app/install.c:1092
+#: app/install.c:1098
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -2884,31 +2892,31 @@ msgstr ""
 "bì¾né\n"
 "pou¾ívat systémového doèasného adresáøe (\"/tmp\" nebo \"/var/tmp\")."
 
-#: app/install.c:1101 app/preferences_dialog.c:2361
+#: app/install.c:1107 app/preferences_dialog.c:2361
 msgid "Select Swap Dir"
 msgstr "Zvolte odkládací adresáø"
 
-#: app/install.c:1106
+#: app/install.c:1112
 msgid "Swap Directory:"
 msgstr "Odkládací adresáø:"
 
-#: app/install.c:1159
+#: app/install.c:1165
 msgid "Calibrate Monitor Resolution"
 msgstr "Kalibrovace rozli¹ení monitoru"
 
-#: app/install.c:1267
+#: app/install.c:1273
 msgid "Measure the rulers and enter their lengths below."
 msgstr "Zmìøte èáry a ní¾e zadejte jejich délky."
 
-#: app/install.c:1282
+#: app/install.c:1288
 msgid "Horizontal:"
 msgstr "Vodorovnì:"
 
-#: app/install.c:1287
+#: app/install.c:1293
 msgid "Vertical:"
 msgstr "Svisle:"
 
-#: app/install.c:1328
+#: app/install.c:1334
 msgid ""
 "GIMP can obtain this information from your X-server.\n"
 "However, most X-servers do not return useful values."
@@ -2916,20 +2924,20 @@ msgstr ""
 "GIMP mù¾e získat tyto informace z X serveru.\n"
 "Ov¹em vìt¹ina X serverù nevrací pou¾itelné hodnoty."
 
-#: app/install.c:1335
+#: app/install.c:1341
 #, c-format
 msgid "Get Resolution from X-server (Currently %d x %d dpi)"
 msgstr "Získat rozli¹ení monitoru z X serveru (nyní %d × %d dpi)"
 
-#: app/install.c:1349
+#: app/install.c:1355
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Alternativnì lze nastavit rozli¹ení monitoru ruènì."
 
-#: app/install.c:1362
+#: app/install.c:1368
 msgid "Monitor Resolution X:"
 msgstr "Rozli¹ení X monitoru:"
 
-#: app/install.c:1398
+#: app/install.c:1404
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
@@ -2937,7 +2945,7 @@ msgstr ""
 "Klepnutím na \"Kalibrovat\" lze té¾ otevøít okno,\n"
 "které umo¾ní interaktivnì urèit rozli¹ení monitoru."
 
-#: app/install.c:1405
+#: app/install.c:1411
 msgid "Calibrate"
 msgstr "Kalibrovat"
 
@@ -3094,7 +3102,7 @@ msgstr "%s maska"
 msgid "Layer Select"
 msgstr "Vrstva výbìru"
 
-#: app/layers_dialog.c:263 app/layers_dialog.c:3465
+#: app/layers_dialog.c:263 app/layers_dialog.c:3469
 msgid "New Layer"
 msgstr "Nová vrstva"
 
@@ -3174,58 +3182,58 @@ msgstr "Zachovat krytí"
 msgid "Empty Layer Copy"
 msgstr "Kopie prázdné vrstvy"
 
-#: app/layers_dialog.c:2146 app/layers_dialog.c:3276 app/layers_dialog.c:3643
+#: app/layers_dialog.c:2146 app/layers_dialog.c:3280 app/layers_dialog.c:3647
 msgid "Floating Selection"
 msgstr "Plovoucí výbìr"
 
-#: app/layers_dialog.c:3426
+#: app/layers_dialog.c:3430
 msgid "New Layer Options"
 msgstr "Volby nové vrstvy"
 
 #. The name label and entry
-#: app/layers_dialog.c:3455
+#: app/layers_dialog.c:3459
 msgid "Layer Name:"
 msgstr "Jméno vrstvy:"
 
 #. The size labels
-#: app/layers_dialog.c:3469
+#: app/layers_dialog.c:3473
 msgid "Layer Width:"
 msgstr "©íøka vrstvy:"
 
-#: app/layers_dialog.c:3529
+#: app/layers_dialog.c:3533
 msgid "Layer Fill Type"
 msgstr "Typ vyplòování vrstvy"
 
-#: app/layers_dialog.c:3608
+#: app/layers_dialog.c:3612
 msgid "Edit Layer Attributes"
 msgstr "Úpravy vlastností vrstvy"
 
-#: app/layers_dialog.c:3635
+#: app/layers_dialog.c:3639
 msgid "Layer name:"
 msgstr "Jméno vrstvy:"
 
-#: app/layers_dialog.c:3700
+#: app/layers_dialog.c:3704
 msgid "Add Mask Options"
 msgstr "Volby pøidání masky"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3718
+#: app/layers_dialog.c:3722
 msgid "Initialize Layer Mask to:"
 msgstr "Výchozí stav masky vrstvy:"
 
-#: app/layers_dialog.c:3723
+#: app/layers_dialog.c:3727
 msgid "White (Full Opacity)"
 msgstr "Bílá (úplné krytí)"
 
-#: app/layers_dialog.c:3725
+#: app/layers_dialog.c:3729
 msgid "Black (Full Transparency)"
 msgstr "Èerná (úplná prùhlednost)"
 
-#: app/layers_dialog.c:3727
+#: app/layers_dialog.c:3731
 msgid "Layer's Alpha Channel"
 msgstr "Alfa kanál vrstvy"
 
-#: app/layers_dialog.c:3786 app/layers_dialog.c:3874
+#: app/layers_dialog.c:3789 app/layers_dialog.c:3871
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -3233,27 +3241,27 @@ msgstr ""
 "Neplatný ¹íøka nebo vý¹ka.\n"
 "Obì musí být kladné."
 
-#: app/layers_dialog.c:3964
+#: app/layers_dialog.c:3956
 msgid "Layer Merge Options"
 msgstr "Volby slouèení vrstvy"
 
-#: app/layers_dialog.c:3989
+#: app/layers_dialog.c:3981
 msgid "Final, Merged Layer should be:"
 msgstr "Koneèná, slouèená vrstva:"
 
-#: app/layers_dialog.c:3990
+#: app/layers_dialog.c:3982
 msgid "Final, Anchored Layer should be:"
 msgstr "Koneèná, pohlcená vrstva:"
 
-#: app/layers_dialog.c:3995
+#: app/layers_dialog.c:3987
 msgid "Expanded as necessary"
 msgstr "Zvìt¹it dle potøeby"
 
-#: app/layers_dialog.c:3997
+#: app/layers_dialog.c:3989
 msgid "Clipped to image"
 msgstr "Oøíznout dle obrázku"
 
-#: app/layers_dialog.c:3999
+#: app/layers_dialog.c:3991
 msgid "Clipped to bottom layer"
 msgstr "Oøíznout dle spodní vrstvy"
 
@@ -5286,34 +5294,38 @@ msgid "Set Canvas Size"
 msgstr "Nastavení velikosti plátna"
 
 #. the original width & height labels
-#: app/resize.c:236 app/scale_tool.c:77
+#: app/resize.c:248 app/scale_tool.c:77
 msgid "Original Width:"
 msgstr "Pùvodní ¹íøka:"
 
 #. the new size labels
-#: app/resize.c:261 app/resize.c:506
+#: app/resize.c:273 app/resize.c:518
 msgid "New Width:"
 msgstr "Nová ¹íøka:"
 
 #. the scale ratio labels
-#: app/resize.c:326
+#: app/resize.c:338
 msgid "Ratio X:"
 msgstr "Pomìr X:"
 
 #. the x and y offset labels
-#: app/resize.c:411
+#: app/resize.c:423
 msgid "X:"
 msgstr "X:"
 
-#: app/resize.c:492
+#: app/resize.c:504
 msgid "Print Size & Display Unit"
 msgstr "Tisková velikost a jednotky zobrazování"
 
-#: app/resize.c:1254
+#: app/resize.c:1253
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Chyba velikosti: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
 
-#: app/resize.c:1336
+#: app/resize.c:1334
+msgid "Layer Too Small"
+msgstr "Vrstva je pøíli¹ malá"
+
+#: app/resize.c:1338
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -5322,10 +5334,6 @@ msgstr ""
 "Zvolená velikost obrázku zmen¹í\n"
 "nìkteré vrstvy natolik, ¾e zmizí.\n"
 "Je to zámìrné?"
-
-#: app/resize.c:1340
-msgid "Layer Too Small"
-msgstr "Vrstva je pøíli¹ malá"
 
 #: app/rotate_tool.c:83
 msgid "Rotation Information"
@@ -5384,17 +5392,17 @@ msgstr "Obvod:"
 msgid "Use Dynamic Text"
 msgstr "Pou¾ít dynamického textu"
 
-#: app/text_tool.c:601
+#: app/text_tool.c:602
 #, c-format
 msgid "Font '%s' not found."
 msgstr "Znaková sada '%s' nebyla nalezena."
 
-#: app/text_tool.c:620
+#: app/text_tool.c:621
 #, c-format
 msgid "Font '%s' not found.%s"
 msgstr "Znaková sada '%s' nebyla nalezena.%s"
 
-#: app/text_tool.c:623
+#: app/text_tool.c:624
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5403,7 +5411,7 @@ msgstr ""
 "\n"
 "Nemáte-li vektorová písma, zkuste vypnout vyhlazování ve volbách nástroje."
 
-#: app/text_tool.c:734
+#: app/text_tool.c:735
 msgid "Text Layer"
 msgstr "Textová vrstva"
 
@@ -5419,27 +5427,27 @@ msgstr "Práh nefunguje na indexovaných obrazovkách."
 msgid "Threshold Range:"
 msgstr "Rozsah prahu:"
 
-#: app/tips_dialog.c:78
+#: app/tips_dialog.c:69
 msgid "gimp_tips.txt"
 msgstr "gimp_tips.cs.txt"
 
-#: app/tips_dialog.c:90
+#: app/tips_dialog.c:81
 msgid "GIMP Tip of the Day"
 msgstr "GIMP: Tip dne"
 
-#: app/tips_dialog.c:155
-msgid "Previous Tip"
-msgstr "Pøedchozí tip"
-
-#: app/tips_dialog.c:163
-msgid "Next Tip"
-msgstr "Dal¹í tip"
-
-#: app/tips_dialog.c:184
+#: app/tips_dialog.c:138
 msgid "Show tip next time"
 msgstr "Zobrazit tip i pøí¹tì"
 
-#: app/tips_dialog.c:299
+#: app/tips_dialog.c:168
+msgid "Previous Tip"
+msgstr "Pøedchozí tip"
+
+#: app/tips_dialog.c:176
+msgid "Next Tip"
+msgstr "Dal¹í tip"
+
+#: app/tips_dialog.c:278
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in the\n"
