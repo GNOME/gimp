@@ -1,3 +1,9 @@
+1999-05-17  Raja R Harinath  <harinath@cs.umn.edu>
+
+	* libgimp/Makefile.am (../libgimp/gimpfeatures.h): Dummy rule,
+	redirected to `gimpfeatures.h'.  This should prevent building
+	stuff twice when `gimpfeatures.h' changes.
+
 Mon May 17 14:25:11 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/mail/mail.c (save_image): Add OS/2 patches. popen(),spawnl,,

@@ -56,6 +56,11 @@ if STATICLIBS
 libgimpi_a_DEPENDENCIES = libgimp.la
 endif
 
+# help `make' along by giving another name for the file, which it knows
+# how to build
+../libgimp/gimpfeatures.h: gimpfeatures.h
+	@:
+
 libgimp_la_SOURCES = \
 	gimp.c		\
 	gimpchannel.c	\
