@@ -472,6 +472,7 @@ static const GEnumValue gimp_undo_type_enum_values[] =
   { GIMP_UNDO_CHANNEL_REMOVE, N_("Delete Channel"), "channel-remove" },
   { GIMP_UNDO_CHANNEL_MOD, N_("Channel Mod"), "channel-mod" },
   { GIMP_UNDO_CHANNEL_REPOSITION, N_("Channel Reposition"), "channel-reposition" },
+  { GIMP_UNDO_CHANNEL_COLOR, N_("Channel Color"), "channel-color" },
   { GIMP_UNDO_VECTORS_ADD, N_("New Vectors"), "vectors-add" },
   { GIMP_UNDO_VECTORS_REMOVE, N_("Delete Vectors"), "vectors-remove" },
   { GIMP_UNDO_VECTORS_MOD, N_("Vectors Mod"), "vectors-mod" },

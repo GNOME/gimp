@@ -226,7 +226,7 @@ qmask_query_ok_callback (GtkWidget *widget,
 
       if (gimp_rgba_distance (&color, &channel->color) > 0.0001)
 	{
-	  gimp_channel_set_color (channel, &color);
+	  gimp_channel_set_color (channel, &color, TRUE);
 
 	  gimp_image_flush (options->gimage);
 	}

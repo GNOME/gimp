@@ -1993,6 +1993,80 @@ undo_free_channel_reposition (GimpUndo     *undo,
 }
 
 
+/************************/
+/*  Channel color Undo  */
+/************************/
+
+typedef struct _ChannelColorUndo ChannelColorUndo;
+
+struct _ChannelColorUndo
+{
+  GimpChannel *channel;
+  GimpRGB      old_color;
+};
+
+static gboolean undo_pop_channel_color  (GimpUndo            *undo,
+                                         GimpUndoMode         undo_mode,
+                                         GimpUndoAccumulator *accum);
+static void     undo_free_channel_color (GimpUndo            *undo,
+                                         GimpUndoMode         undo_mode);
+
+gboolean
+gimp_image_undo_push_channel_color (GimpImage   *gimage, 
+                                    const gchar *undo_desc,
+                                    GimpChannel *channel)
+{
+  GimpUndo *new;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
+
+  if ((new = gimp_image_undo_push (gimage,
+                                   sizeof (ChannelColorUndo),
+                                   sizeof (ChannelColorUndo),
+                                   GIMP_UNDO_CHANNEL_COLOR, undo_desc,
+                                   TRUE,
+                                   undo_pop_channel_color,
+                                   undo_free_channel_color)))
+    {
+      ChannelColorUndo *ccu;
+
+      ccu = new->data;
+
+      ccu->channel = channel;
+      gimp_channel_get_color (channel , &ccu->old_color);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_channel_color (GimpUndo            *undo,
+                        GimpUndoMode         undo_mode,
+                        GimpUndoAccumulator *accum)
+{
+  ChannelColorUndo *ccu;
+  GimpRGB           color;
+
+  ccu = (ChannelColorUndo *) undo->data;
+
+  gimp_channel_get_color (ccu->channel, &color);
+  gimp_channel_set_color (ccu->channel, &ccu->old_color, FALSE);
+  ccu->old_color = color;
+
+  return TRUE;
+}
+
+static void
+undo_free_channel_color (GimpUndo     *undo,
+                         GimpUndoMode  undo_mode)
+{
+  g_free (undo->data);
+}
+
+
 /*****************************/
 /*  Add/Remove Vectors Undo  */
 /*****************************/

@@ -90,7 +90,8 @@ void            gimp_channel_set_opacity        (GimpChannel       *channel,
 void            gimp_channel_get_color          (const GimpChannel *channel,
                                                  GimpRGB           *color);
 void 		gimp_channel_set_color          (GimpChannel       *channel, 
-                                                 const GimpRGB     *color);
+                                                 const GimpRGB     *color,
+                                                 gboolean           push_undo);
 
 gboolean        gimp_channel_get_show_masked    (GimpChannel       *channel);
 void            gimp_channel_set_show_masked    (GimpChannel       *channel,

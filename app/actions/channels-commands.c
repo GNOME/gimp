@@ -33,7 +33,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimpimage-undo-push.h"
 #include "core/gimpimage-mask-select.h"
 
 #include "widgets/gimpcolorpanel.h"
@@ -478,27 +477,36 @@ edit_channel_query_ok_callback (GtkWidget *widget,
     {
       const gchar *new_name;
       GimpRGB      color;
+      gboolean     name_changed  = FALSE;
+      gboolean     color_changed = FALSE;
 
       new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
-
-      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (channel))))
-        {
-          gimp_image_undo_push_item_rename (options->gimage,
-                                            _("Rename Channel"),
-                                            GIMP_ITEM (channel));
-
-          gimp_object_set_name (GIMP_OBJECT (channel), new_name);
-        }
 
       gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
 				   &color);
 
-      if (gimp_rgba_distance (&color, &channel->color) > 0.0001)
-	{
-	  gimp_channel_set_color (channel, &color);
+      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (channel))))
+        name_changed = TRUE;
 
-          gimp_image_flush (options->gimage);
-	}
+      if (gimp_rgba_distance (&color, &channel->color) > 0.0001)
+        color_changed = TRUE;
+
+      if (name_changed && color_changed)
+        gimp_image_undo_group_start (options->gimage,
+                                     GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                                     _("Channel Attributes"));
+
+      if (name_changed)
+        gimp_item_rename (GIMP_ITEM (channel), new_name);
+
+      if (color_changed)
+        gimp_channel_set_color (channel, &color, TRUE);
+
+      if (name_changed && color_changed)
+        gimp_image_undo_group_end (options->gimage);
+
+      if (name_changed || color_changed)
+        gimp_image_flush (options->gimage);
     }
 
   gtk_widget_destroy (options->query_box);

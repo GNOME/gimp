@@ -34,7 +34,6 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
@@ -730,8 +729,9 @@ edit_layer_query_ok_callback (GtkWidget *widget,
   GimpLayer        *layer;
 
   options = (EditLayerOptions *) data;
+  layer   = options->layer;
 
-  if ((layer = options->layer))
+  if (options->gimage)
     {
       const gchar *new_name;
 
@@ -739,28 +739,10 @@ edit_layer_query_ok_callback (GtkWidget *widget,
 
       if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (layer))))
         {
-          gimp_image_undo_group_start (options->gimage,
-                                       GIMP_UNDO_GROUP_ITEM_PROPERTIES,
-                                       _("Rename Layer"));
-
-          if (gimp_layer_is_floating_sel (layer))
-            {
-              /*  If the layer is a floating selection, make it a layer  */
-
-              floating_sel_to_layer (layer);
-            }
-
-          gimp_image_undo_push_item_rename (options->gimage,
-                                            _("Rename Layer"),
-                                            GIMP_ITEM (layer));
-
-          gimp_object_set_name (GIMP_OBJECT (layer), new_name);
-
-          gimp_image_undo_group_end (options->gimage);
+          gimp_item_rename (GIMP_ITEM (layer), new_name);
+          gimp_image_flush (options->gimage);
         }
     }
-
-  gimp_image_flush (options->gimage);
 
   gtk_widget_destroy (options->query_box); 
 }

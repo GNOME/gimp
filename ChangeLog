@@ -1,3 +1,24 @@
+2003-03-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.[ch]: added GIMP_UNDO_CHANNEL_COLOR.
+
+	* app/core/gimpchannel.[ch]: added "gboolean push_undo" to
+	gimp_channel_set_color().
+
+	* app/core/gimpimage-undo-push.[ch]: added
+	gimp_image_undo_push_channel_color().
+
+	* app/core/gimpimage-qmask.c
+	* app/gui/qmask-commands.c
+	* app/widgets/gimpchannellistitem.c
+	* tools/pdbgen/pdb/channel.pdb: changed accordingly.
+
+	* app/gui/channels-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/vectors-commands.c: ditto. Use gimp_item_rename().
+
+	* app/pdb/channel_cmds.c: regenerated.
+
 2003-03-17  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/channel.pdb

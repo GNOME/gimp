@@ -870,7 +870,7 @@ channel_set_color_invoker (Gimp     *gimp,
       GimpRGB rgb_color = color;
     
       rgb_color.a = channel->color.a;
-      gimp_channel_set_color(channel, &rgb_color);
+      gimp_channel_set_color (channel, &rgb_color, TRUE);
     }
 
   return procedural_db_return_args (&channel_set_color_proc, success);

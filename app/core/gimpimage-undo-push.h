@@ -114,6 +114,9 @@ gboolean gimp_image_undo_push_channel_mod           (GimpImage     *gimage,
 gboolean gimp_image_undo_push_channel_reposition    (GimpImage     *gimage, 
                                                      const gchar   *undo_desc,
                                                      GimpChannel   *channel);
+gboolean gimp_image_undo_push_channel_color         (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpChannel   *channel);
 
 
 /*  vectors undos  */

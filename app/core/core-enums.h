@@ -371,6 +371,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_CHANNEL_REMOVE,           /*< desc="Delete Channel"            >*/
   GIMP_UNDO_CHANNEL_MOD,              /*< desc="Channel Mod"               >*/
   GIMP_UNDO_CHANNEL_REPOSITION,       /*< desc="Channel Reposition"        >*/
+  GIMP_UNDO_CHANNEL_COLOR,            /*< desc="Channel Color"             >*/
   GIMP_UNDO_VECTORS_ADD,              /*< desc="New Vectors"               >*/
   GIMP_UNDO_VECTORS_REMOVE,           /*< desc="Delete Vectors"            >*/
   GIMP_UNDO_VECTORS_MOD,              /*< desc="Vectors Mod"               >*/

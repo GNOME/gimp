@@ -329,13 +329,25 @@ gimp_channel_new_from_component (GimpImage       *gimage,
 
 void 
 gimp_channel_set_color (GimpChannel   *channel,
-			const GimpRGB *color)
+			const GimpRGB *color,
+                        gboolean       push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (color != NULL);
 
   if (gimp_rgba_distance (&channel->color, color) > 0.0001)
     {
+      if (push_undo)
+        {
+          GimpImage *gimage;
+
+          gimage = gimp_item_get_image (GIMP_ITEM (channel));
+
+          if (gimage)
+            gimp_image_undo_push_channel_color (gimage, _("Set Channel Color"),
+                                                channel);
+        }
+
       channel->color = *color;
 
       gimp_drawable_update (GIMP_DRAWABLE (channel),

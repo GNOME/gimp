@@ -93,7 +93,7 @@ gimp_channel_list_item_drop_color (GtkWidget     *widget,
   channel =
     GIMP_CHANNEL (GIMP_PREVIEW (GIMP_LIST_ITEM (widget)->preview)->viewable);
 
-  gimp_channel_set_color (channel, color);
+  gimp_channel_set_color (channel, color, TRUE);
 
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (channel)));
 }

@@ -99,9 +99,10 @@ gimp_image_set_qmask_state (GimpImage *gimage,
                                                             FALSE));
                   gimp_image_mask_clear (gimage, NULL);  /* Clear the selection */
 
+                  gimp_channel_set_color (mask, &color, FALSE);
+                  gimp_item_rename (GIMP_ITEM (mask), "Qmask");
+
                   gimp_image_add_channel (gimage, mask, 0);
-                  gimp_channel_set_color (mask, &color);
-                  gimp_object_set_name (GIMP_OBJECT (mask), "Qmask");
                 }
 
               if (gimage->qmask_inverted)

@@ -32,7 +32,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
-#include "core/gimpimage-undo-push.h"
 #include "core/gimplist.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimptoolinfo.h"
@@ -524,11 +523,8 @@ edit_vectors_query_ok_callback (GtkWidget *widget,
 
       if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (vectors))))
         {
-          gimp_image_undo_push_item_rename (options->gimage,
-                                            _("Rename Path"),
-                                            GIMP_ITEM (vectors));
-
-          gimp_object_set_name (GIMP_OBJECT (vectors), new_name);
+          gimp_item_rename (GIMP_ITEM (vectors), new_name);
+          gimp_image_flush (options->gimage);
         }
     }
 
