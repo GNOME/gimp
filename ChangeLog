@@ -1,7 +1,7 @@
 2004-05-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/Lighting/lighting_ui.c
-	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/MapObject/mapobject_ui.c: HIG-ified.
 
 2004-05-20  Sven Neumann  <sven@gimp.org>
 
