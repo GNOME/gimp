@@ -1,5 +1,12 @@
 2003-11-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolordisplay.[ch]
+	* libgimpwidgets/gimpcolordisplaystack.[ch]
+	* libgimpwidgets/gimpcolorselection.[ch]
+	* libgimpwidgets/gimpcolorselector.[ch]: use proper LibGIMP headers.
+
+2003-11-23  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolordisplay.[ch]: made "enabled" an object
 	property and removed the "enabled_changed" signal.
 
