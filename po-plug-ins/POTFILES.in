@@ -18,6 +18,7 @@ plug-ins/common/animoptimize.c
 plug-ins/common/apply_lens.c
 plug-ins/common/autocrop.c
 plug-ins/common/autostretch_hsv.c
+plug-ins/common/blinds.c
 plug-ins/common/blur.c
 plug-ins/common/bumpmap.c
 plug-ins/common/bz2.c
@@ -29,8 +30,11 @@ plug-ins/common/colortoalpha.c
 plug-ins/common/compose.c
 plug-ins/common/convmatrix.c
 plug-ins/common/cubism.c
+plug-ins/common/curve_bend.c
 plug-ins/common/decompose.c
+plug-ins/common/deinterlace.c
 plug-ins/common/depthmerge.c
+plug-ins/common/despeckle.c
 plug-ins/common/destripe.c
 plug-ins/common/displace.c
 plug-ins/common/film.c
