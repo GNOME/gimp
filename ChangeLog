@@ -1,3 +1,16 @@
+Sun Apr  2 16:55:47 BST 2000
+	
+	* app/bezier_select.c
+
+	Fixed propblem with deleting points. You can now delete the first
+	and last point on any open curve (as well as mid-points).
+
+	Also fixed some problems where some poins would leave the markers 
+	on screen after they had been deleted.
+
+	Note you have always been able to delete whole curves by pressing 
+	the "shift" key when over a point to be deleted in "remove mode".
+
 2000-04-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/interface.c: completely overworked the widget packing of the
