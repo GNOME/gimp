@@ -395,7 +395,7 @@ msgstr ""
 #. fill type
 #: app/bucket_fill.c:158 app/file_new_dialog.c:650
 msgid "Fill Type"
-msgstr ""
+msgstr "Тип заповнення"
 
 #: app/bucket_fill.c:238
 msgid "Bucket Fill operation failed."
@@ -1288,7 +1288,7 @@ msgstr ""
 
 #: app/gdisplay.c:217 app/image_new.c:54 app/preferences_dialog.c:1522
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: app/gdisplay.c:220
 msgid "grayscale-empty"
@@ -1296,7 +1296,7 @@ msgstr ""
 
 #: app/gdisplay.c:220
 msgid "grayscale"
-msgstr ""
+msgstr "п╕втони"
 
 #: app/gdisplay.c:223
 msgid "indexed-empty"
@@ -2609,12 +2609,12 @@ msgstr ""
 
 #: app/internal_procs.c:122 app/preferences_dialog.c:1621
 msgid "Interface"
-msgstr ""
+msgstr "╤нтерфейс"
 
 #. the layer name label
 #: app/internal_procs.c:125 app/layer_select.c:137
 msgid "Layer"
-msgstr ""
+msgstr "Шар"
 
 #: app/internal_procs.c:128
 msgid "Miscellaneous"
@@ -2639,7 +2639,7 @@ msgstr ""
 
 #: app/internal_procs.c:146
 msgid "Plug-in"
-msgstr ""
+msgstr "Доповнення"
 
 #: app/internal_procs.c:149
 msgid "Procedural database"
@@ -2779,15 +2779,15 @@ msgstr "Ширина шару:"
 #. The radio frame and box
 #: app/layers_dialog.c:3441
 msgid "Layer Fill Type"
-msgstr ""
+msgstr "Тип заповнення шару"
 
 #: app/layers_dialog.c:3549
 msgid "Edit Layer Attributes"
-msgstr ""
+msgstr "Зм╕на атрибут╕в шару"
 
 #: app/layers_dialog.c:3572
 msgid "Layer name:"
-msgstr ""
+msgstr "Назва шару:"
 
 #: app/layers_dialog.c:3661
 msgid "White (Full Opacity)"
@@ -3515,20 +3515,20 @@ msgstr "/Зображення/Режим"
 
 #: app/menus.c:412
 msgid "/Image/Mode/RGB"
-msgstr ""
+msgstr "/Зображення/Режим/RGB"
 
 #: app/menus.c:414
 msgid "/Image/Mode/Grayscale"
-msgstr ""
+msgstr "/Зображення/Режим/П╕втони"
 
 #: app/menus.c:416
 msgid "/Image/Mode/Indexed..."
-msgstr ""
+msgstr "/Зображення/Режим/╤ндексований..."
 
 #. <Image>/Image/Colors
 #: app/menus.c:424
 msgid "/Image/Colors"
-msgstr ""
+msgstr "/Зображення/Кольори"
 
 #: app/menus.c:429
 msgid "/Image/Colors/Desaturate"
@@ -3536,7 +3536,7 @@ msgstr ""
 
 #: app/menus.c:431
 msgid "/Image/Colors/Invert"
-msgstr ""
+msgstr "/Зображення/Кольори/╤нвертувати"
 
 #. <Image>/Image/Colors/Auto
 #: app/menus.c:439
@@ -3559,7 +3559,7 @@ msgstr ""
 #. <Image>/Image/Transforms
 #: app/menus.c:456
 msgid "/Image/Transforms"
-msgstr ""
+msgstr "/Зображення/Перетворення"
 
 #: app/menus.c:458
 msgid "/Image/Transforms/Offset..."
@@ -3571,15 +3571,15 @@ msgstr ""
 
 #: app/menus.c:467
 msgid "/Image/Canvas Size..."
-msgstr ""
+msgstr "/Зображення/Розм╕р полотна..."
 
 #: app/menus.c:469
 msgid "/Image/Scale Image..."
-msgstr ""
+msgstr "/Зображення/Масштабувати зображення..."
 
 #: app/menus.c:471
 msgid "/Image/Duplicate"
-msgstr ""
+msgstr "/Зображення/Дублювати"
 
 #. <Image>/Layers
 #: app/menus.c:479
@@ -4413,7 +4413,7 @@ msgstr ""
 
 #: app/plug_in.c:312
 msgid "Plug-ins"
-msgstr ""
+msgstr "Доповнення"
 
 #: app/plug_in.c:324
 #, c-format
@@ -4613,7 +4613,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:1589 app/transform_tool.c:214
 msgid "Scaling"
-msgstr ""
+msgstr "Масштабування"
 
 #: app/preferences_dialog.c:1606
 msgid "Nearest Neighbor (Fast)"
@@ -4629,7 +4629,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:1619
 msgid "Interface Settings"
-msgstr ""
+msgstr "Установки ╕нтерфейсу"
 
 #: app/preferences_dialog.c:1655
 msgid "Tiny"
@@ -4669,11 +4669,11 @@ msgstr ""
 
 #: app/preferences_dialog.c:1715
 msgid "Help System Settings"
-msgstr ""
+msgstr "Установки системи дов╕дки"
 
 #: app/preferences_dialog.c:1717
 msgid "Help System"
-msgstr ""
+msgstr "Система дов╕дки"
 
 #: app/preferences_dialog.c:1727
 msgid "Show Tool Tips"
@@ -4697,15 +4697,15 @@ msgstr "Netscape"
 
 #: app/preferences_dialog.c:1763
 msgid "Help Browser to Use:"
-msgstr ""
+msgstr "Переглядач дов╕дки:"
 
 #: app/preferences_dialog.c:1768
 msgid "Image Windows Settings"
-msgstr ""
+msgstr "Установки в╕кна зображення"
 
 #: app/preferences_dialog.c:1770
 msgid "Image Windows"
-msgstr ""
+msgstr "В╕кно зображення"
 
 #: app/preferences_dialog.c:1778
 msgid "Appearance"
@@ -4925,7 +4925,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:2277
 msgid "Directories Settings"
-msgstr ""
+msgstr "Установки каталог╕в"
 
 #: app/preferences_dialog.c:2279
 msgid "Directories"
@@ -4933,19 +4933,19 @@ msgstr "Каталоги"
 
 #: app/preferences_dialog.c:2296
 msgid "Temp Dir:"
-msgstr ""
+msgstr "Каталог тимчасових файл╕в:"
 
 #: app/preferences_dialog.c:2296
 msgid "Select Temp Dir"
-msgstr ""
+msgstr "Вибер╕ть каталог тимчасових файл╕в"
 
 #: app/preferences_dialog.c:2297
 msgid "Swap Dir:"
-msgstr ""
+msgstr "Каталог своп╕нгу:"
 
 #: app/preferences_dialog.c:2297
 msgid "Select Swap Dir"
-msgstr ""
+msgstr "Вибер╕ть каталог своп╕нгу"
 
 #: app/preferences_dialog.c:2333
 msgid "Brushes Directories"
@@ -4981,7 +4981,7 @@ msgstr "Каталог пал╕тр"
 
 #: app/preferences_dialog.c:2347
 msgid "Select Palettes Dir"
-msgstr ""
+msgstr "Вибер╕ть каталог пал╕тр"
 
 #: app/preferences_dialog.c:2349
 msgid "Gradients Directories"
@@ -4989,19 +4989,19 @@ msgstr "Каталог град╕╓нт╕в"
 
 #: app/preferences_dialog.c:2351
 msgid "Select Gradients Dir"
-msgstr ""
+msgstr "Вибер╕ть каталог град╕╓нт╕в"
 
 #: app/preferences_dialog.c:2353
 msgid "Plug-Ins"
-msgstr ""
+msgstr "Доповнення"
 
 #: app/preferences_dialog.c:2353
 msgid "Plug-Ins Directories"
-msgstr ""
+msgstr "Каталог доповнень"
 
 #: app/preferences_dialog.c:2355
 msgid "Select Plug-Ins Dir"
-msgstr ""
+msgstr "Вибер╕ть каталог доповнень"
 
 #: app/preferences_dialog.c:2357
 msgid "Modules"
@@ -5083,7 +5083,7 @@ msgstr "Вид╕лення: "
 
 #: app/resize.c:154
 msgid "Scale Layer"
-msgstr ""
+msgstr "Масштабувати шар"
 
 #: app/resize.c:156 app/resize.c:181 app/tool_options.c:880
 msgid "Size"
@@ -5091,7 +5091,7 @@ msgstr "Розм╕р"
 
 #: app/resize.c:160
 msgid "Scale Image"
-msgstr ""
+msgstr "Масштабувати зображення"
 
 #: app/resize.c:162
 msgid "Pixel Dimensions"
@@ -5103,12 +5103,12 @@ msgstr ""
 
 #: app/resize.c:177
 msgid "Set Canvas Size"
-msgstr ""
+msgstr "Встановлення розм╕ру полотна"
 
 #. the original width & height labels
 #: app/resize.c:234 app/scale_tool.c:76
 msgid "Original Width:"
-msgstr ""
+msgstr "Ориг╕нальна ширина:"
 
 #. the new size labels
 #: app/resize.c:259 app/resize.c:503
@@ -5155,7 +5155,7 @@ msgstr ""
 
 #: app/scale_tool.c:501
 msgid "Scaling..."
-msgstr ""
+msgstr "Масштабування..."
 
 #: app/shear_tool.c:70
 msgid "Shear Information"
@@ -5175,7 +5175,7 @@ msgstr ""
 
 #: app/text_tool.c:157 app/tool_options.c:334
 msgid "Antialiasing"
-msgstr ""
+msgstr "Згладжування"
 
 #: app/text_tool.c:171
 msgid "Border:"
@@ -5204,7 +5204,7 @@ msgstr ""
 
 #: app/text_tool.c:708
 msgid "Text Layer"
-msgstr ""
+msgstr "Текстовий шар"
 
 #: app/threshold.c:170
 msgid "Threshold Options"
@@ -5228,19 +5228,19 @@ msgstr ""
 
 #: app/tips_dialog.c:90
 msgid "GIMP Tip of the Day"
-msgstr ""
+msgstr "П╕дказка дня GIMP"
 
 #: app/tips_dialog.c:155
 msgid "Previous Tip"
-msgstr ""
+msgstr "Попередня п╕дказка"
 
 #: app/tips_dialog.c:163
 msgid "Next Tip"
-msgstr ""
+msgstr "Наступна п╕дказка"
 
 #: app/tips_dialog.c:184
 msgid "Show tip next time"
-msgstr ""
+msgstr "Показувати п╕дказку наступного разу"
 
 #: app/tips_dialog.c:299
 msgid ""
@@ -5251,7 +5251,7 @@ msgstr ""
 
 #: app/tool_options.c:223
 msgid "This tool has no options."
-msgstr ""
+msgstr "Цей ╕нструмент не ма╓ параметр╕в"
 
 #: app/tool_options.c:247
 msgid "Rectangular Select Options"
@@ -5469,27 +5469,27 @@ msgstr ""
 #: app/tools.c:229 app/tools.c:245 app/tools.c:261 app/tools.c:277
 #: app/transform_core.c:260 app/transform_tool.c:210
 msgid "Transform"
-msgstr "Трансформувати"
+msgstr "Перетворення"
 
 #: app/tools.c:230
 msgid "/Tools/Transform"
-msgstr "/╤нструменти/Трансформувати"
+msgstr "/╤нструменти/Перетворення"
 
 #: app/tools.c:233 app/tools.c:249 app/tools.c:265 app/tools.c:281
 msgid "Transform the layer or selection"
-msgstr ""
+msgstr "Перетворити шар чи вид╕лення"
 
 #: app/tools.c:293
 msgid "Flip"
-msgstr ""
+msgstr "В╕дзеркалення"
 
 #: app/tools.c:294
 msgid "/Tools/Flip"
-msgstr ""
+msgstr "/╤нстументи/В╕дзеркалення"
 
 #: app/tools.c:297
 msgid "Flip the layer or selection"
-msgstr ""
+msgstr "В╕дзеркалити шар чи вид╕лення"
 
 #: app/tools.c:309
 msgid "Text"
@@ -5673,15 +5673,15 @@ msgstr ""
 
 #: app/tools.c:567
 msgid "By Color Select"
-msgstr ""
+msgstr "Виб╕р за кольором"
 
 #: app/tools.c:568
 msgid "/Select/By Color..."
-msgstr ""
+msgstr "/Вид╕лення/За кольором..."
 
 #: app/tools.c:571
 msgid "Select regions by color"
-msgstr ""
+msgstr "Вид╕лення д╕лянок за кольором"
 
 #: app/tools.c:584
 msgid "/Image/Colors/Color Balance..."
@@ -5749,11 +5749,11 @@ msgstr ""
 
 #: app/transform_core.c:257
 msgid "Rotate"
-msgstr ""
+msgstr "Обертання"
 
 #: app/transform_core.c:258
 msgid "Scale"
-msgstr ""
+msgstr "Масштибування"
 
 #: app/transform_core.c:259
 msgid "Shear"
@@ -5767,15 +5767,15 @@ msgstr ""
 
 #: app/transform_core.c:1582
 msgid "Transformation"
-msgstr "Трансформац╕я"
+msgstr "Перетворення"
 
 #: app/transform_tool.c:189
 msgid "Transform Tool Options"
-msgstr ""
+msgstr "Параметри ╕нструменту перетворення"
 
 #: app/transform_tool.c:212
 msgid "Rotation"
-msgstr ""
+msgstr "Обертання"
 
 #: app/transform_tool.c:216
 msgid "Shearing"
@@ -5801,7 +5801,7 @@ msgstr ""
 #. the show grid toggle button
 #: app/transform_tool.c:256
 msgid "Show Grid"
-msgstr ""
+msgstr "Показати с╕тку"
 
 #: app/transform_tool.c:267
 msgid "Density:"
