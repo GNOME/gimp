@@ -3,10 +3,10 @@
 # Dongsu Jang <iolo@hellocity.net>, 2004
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.12\n"
+"Project-Id-Version: gimp 1.3.26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
-"PO-Revision-Date: 2004-01-12 00:26+0900\n"
+"POT-Creation-Date: 2004-01-20 14:23+0900\n"
+"PO-Revision-Date: 2004-01-20 19:30+0900\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -160,7 +160,6 @@ msgstr ""
 "                           치명적인 신호를 위한 디버깅 모드.\n"
 
 #: app/main.c:527
-#, fuzzy
 msgid ""
 "  --pdb-compat-mode <off | on | warn>\n"
 "                           Procedural Database compatibility mode.\n"
@@ -1789,7 +1788,7 @@ msgstr "그라디언트 파일 '%s'에 치명적인 해석 오류: 파일이 손
 #: app/core/gimpgradient.c:467
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
-msgstr "그라디언트 파일 '%s'의 %d번째 조각이 손상되었습니다."
+msgstr "그라디언트 파일 '%2$s'의 %1$d번째 조각이 손상되었습니다."
 
 #: app/core/gimpgrid.c:128
 msgid "Line style used for the grid."
@@ -1917,7 +1916,6 @@ msgid "Change Image Unit"
 msgstr "이미지 단위 바꾸기"
 
 #: app/core/gimpimage.c:1940
-#, fuzzy
 msgid "Attach Parasite to Image"
 msgstr "이미지에 기생 덧붙이기"
 
@@ -2552,7 +2550,6 @@ msgstr "번역"
 msgid "translator-credits"
 msgstr ""
 "장동수 <iolo@hellocity.net>, 2003, 2004\n"
-"류창우 <cwryu@debian.org>, 2003\n"
 "남성현 <namsh@kldp.org>, 1988, 1999"
 
 #: app/gui/about-dialog.c:61
@@ -4820,9 +4817,8 @@ msgid "Invalid width or height. Both must be positive."
 msgstr "너비나 높이가 잘못되었습니다. 둘 다 양수여야 합니다."
 
 #: app/gui/layers-menu.c:46
-#, fuzzy
 msgid "/Te_xt Tool"
-msgstr "글자 색상"
+msgstr "/글자 도구(_X)"
 
 #: app/gui/layers-menu.c:51
 msgid "/_Edit Layer Attributes..."
@@ -4905,14 +4901,12 @@ msgid "/Al_pha to Selection"
 msgstr "/알파를 선택으로(_P)"
 
 #: app/gui/layers-menu.c:166
-#, fuzzy
 msgid "/Merge _Visible Layers..."
-msgstr "/보이는 레이어 합치기..."
+msgstr "/보이는 레이어 합치기(_V)..."
 
 #: app/gui/layers-menu.c:171
-#, fuzzy
 msgid "/_Flatten Image"
-msgstr "/배경으로 이미지 합치기"
+msgstr "/배경으로 이미지 합치기(_F)"
 
 #: app/gui/menus.c:113
 msgid "Toolbox Menu"
@@ -4975,7 +4969,6 @@ msgid "Documents Menu"
 msgstr "문서 메뉴"
 
 #: app/gui/menus.c:219
-#, fuzzy
 msgid "Templates Menu"
 msgstr "템플릿 메뉴"
 
@@ -5261,29 +5254,24 @@ msgid ""
 msgstr "무늬 콜백을 실행할 수 없습니다. 해당 플러그인이 비정상 종료 했습니다."
 
 #: app/gui/patterns-menu.c:45
-#, fuzzy
 msgid "/_Edit Pattern..."
-msgstr "/무늬 편집..."
+msgstr "/무늬 편집(_E)..."
 
 #: app/gui/patterns-menu.c:53
-#, fuzzy
 msgid "/_New Pattern"
-msgstr "/새 무늬"
+msgstr "/새 무늬(_N)"
 
 #: app/gui/patterns-menu.c:58
-#, fuzzy
 msgid "/D_uplicate Pattern"
-msgstr "/무늬 복제"
+msgstr "/무늬 복제(_U)"
 
 #: app/gui/patterns-menu.c:63
-#, fuzzy
 msgid "/_Delete Pattern..."
-msgstr "/무늬 지우기..."
+msgstr "/무늬 지우기(_D)..."
 
 #: app/gui/patterns-menu.c:71
-#, fuzzy
 msgid "/_Refresh Patterns"
-msgstr "/무늬 새로 고치기"
+msgstr "/무늬 새로 고치기(_R)"
 
 #: app/gui/plug-in-menus.c:343
 #, c-format
@@ -6038,6 +6026,8 @@ msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect scaling channels and masks only."
 msgstr ""
+"인덱스된 색상 레이어는 보간없이 크기를 조정합니다.  선택한 보간법은 채널과 마"
+"스크의 크기 조절에만 적용됩니다."
 
 #: app/gui/resolution-calibrate-dialog.c:85
 msgid "Calibrate Monitor Resolution"
@@ -6201,34 +6191,28 @@ msgid "Enter a new name for the saved options"
 msgstr "저장된 선택사항의 새 이름을 입력하십시오"
 
 #: app/gui/tool-options-menu.c:57
-#, fuzzy
 msgid "/_Save Options to/_New Entry..."
-msgstr "/선택사항 저장/새 항목..."
+msgstr "/선택사항 저장(_S)/새 항목(_N)..."
 
 #: app/gui/tool-options-menu.c:68
-#, fuzzy
 msgid "/_Restore Options from/(None)"
-msgstr "/선택사항 복원/(없음)"
+msgstr "/선택사항 복원(_R)/(없음)"
 
 #: app/gui/tool-options-menu.c:74
-#, fuzzy
 msgid "/Re_name Saved Options/(None)"
-msgstr "/선택사항 이름 바꾸기/(없음)"
+msgstr "/선택사항 이름 바꾸기(_N)/(없음)"
 
 #: app/gui/tool-options-menu.c:80
-#, fuzzy
 msgid "/_Delete Saved Options/(None)"
-msgstr "/선택사항 지우기/(없음)"
+msgstr "/선택사항 지우기(_D)/(없음)"
 
 #: app/gui/tool-options-menu.c:89
-#, fuzzy
 msgid "/R_eset Tool Options"
-msgstr "/도구 선택사항 초기화"
+msgstr "/도구 선택사항 초기화(_E)"
 
 #: app/gui/tool-options-menu.c:94
-#, fuzzy
 msgid "/Reset _all Tool Options..."
-msgstr "/모든 도구 선택사항 초기화..."
+msgstr "/모든 도구 선택사항 초기화(_A)..."
 
 #. <Toolbox>/File/Acquire
 #: app/gui/toolbox-menu.c:79
@@ -6383,28 +6367,24 @@ msgid "/Help/_About"
 msgstr "/도움말/정보(_A)"
 
 #: app/gui/user-install-dialog.c:132
-#, fuzzy
 msgid ""
 "The gimprc is used to store personal preferences that affect GIMP's default "
 "behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
 "ins and modules can also configured here."
 msgstr ""
 "gimprc는 김프의 기본 동작에 영향을 미치는 기본 설정을 저장하기 위해 사용됩니"
-"다.\n"
-"이 파일에 브러시, 색상표, 그라디언트, 무늬, 플러그인, 모듈의 찾기 경로를 설정"
-"할 수 있습니다"
+"다.  이 파일에 브러시, 색상표, 그라디언트, 무늬, 플러그인, 모듈의 찾기 경로"
+"를 설정할 수 있습니다"
 
 #: app/gui/user-install-dialog.c:141
-#, fuzzy
 msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
 msgstr ""
-"김프는 부가적인 gtkrc 파일을 사용하므로\n"
-"다른 GTK 어플리케이션과 다르게 보이도록 설정 할 수 있습니다."
+"김프는 부가적인 gtkrc 파일을 사용하므로 다른 GTK 어플리케이션과 다르게 보이도"
+"록 설정 할 수 있습니다."
 
 #: app/gui/user-install-dialog.c:147
-#, fuzzy
 msgid ""
 "Plug-ins and extensions are external programs run by the GIMP which provide "
 "additional functionality.  These programs are searched for at run-time and "
@@ -6412,127 +6392,105 @@ msgid ""
 "This file is intended to be GIMP-readable only, and should not be edited."
 msgstr ""
 "플러그인과 확장은 김프가 부가적인 기능을 제공하기 위해 실행하는 외부 프로그램"
-"입니다.\n"
-"이 프로그램들은 실행 중에 기능에 대한 정보와 수정 시각을 파일에 캐싱합니다.\n"
-"이 파일은 김프가 읽기 위한 것이며, 편집하면 안됩니다."
+"입니다.  이 프로그램들은 실행 중에 기능에 대한 정보와 수정 시각을 파일에 캐싱"
+"합니다.  이 파일은 김프가 읽기 위한 것이며, 편집하면 안됩니다."
 
 #: app/gui/user-install-dialog.c:157
-#, fuzzy
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP. The menurc is a dump "
 "of your configuration so it can. be remembered for the next session.  You "
 "may edit this file if you wish, but it is much easier to define the keys "
 "from within The GIMP.  Deleting this file will restore the default shortcuts."
 msgstr ""
-"김프는 단축키를 동적으로 재정의할 수 있습니다.\n"
-"사용자가 설정한 것을 다음 세션에도 쓸 수 있도록 menurc에 저장합니다.\n"
-"이 파일을 직접 편집해도 되지만, 김프를 사용하는 것이 더 쉽습니다.\n"
-"이 파일을 지우면 기본 단축키로 복원됩니다."
+"김프는 단축키를 동적으로 재정의할 수 있습니다.  사용자가 설정한 것을 다음 세"
+"션에도 쓸 수 있도록 menurc에 저장합니다.  이 파일을 직접 편집해도 되지만, 김"
+"프를 사용하는 것이 더 쉽습니다.  이 파일을 지우면 기본 단축키로 복원됩니다."
 
 #: app/gui/user-install-dialog.c:167
-#, fuzzy
 msgid ""
 "The sessionrc is used to store what dialog windows were open the last time "
 "you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
 "the saved position."
 msgstr ""
-"김프를 마칠 때 열려 있었던 대화상자 창을 sessionrc에 저장합니다.\n"
-"김프가 이 대화상자들을 저장된 위치에 다시 열도록 설정할 수 있습니다."
+"김프를 마칠 때 열려 있었던 대화상자 창을 sessionrc에 저장합니다.  김프가 이 "
+"대화상자들을 저장된 위치에 다시 열도록 설정할 수 있습니다."
 
 #: app/gui/user-install-dialog.c:174
-#, fuzzy
 msgid ""
 "This file holds a collection of standard media sizes that serve as image "
 "templates."
 msgstr ""
-"이 파일은 이미지 템플릿이 사용할\n"
-"표준 매체 크기에 대한 정보를 갖고 있습니다."
+"이 파일은 이미지 템플릿이 사용할  표준 매체 크기에 대한 정보를 갖고 있습니다."
 
 #: app/gui/user-install-dialog.c:180
-#, fuzzy
 msgid ""
 "The unitrc is used to store your user units database.  You can define "
 "additional units and use them just like you use the built-in units inches, "
 "millimeters, points and picas.  This file is overwritten each time you quit "
 "the GIMP."
 msgstr ""
-"unitrc에 사용자 단위 데이터베이스를 저장합니다.\n"
-"부가적인 단위를 정의해서 인치, 밀리미터, 포인트, 파이카\n"
-"같은 내장 단위처럼 사용할 수 있습니다.\n"
-"김프를 마칠 때마다 이 파일을 덮어 씁니다."
+"unitrc에 사용자 단위 데이터베이스를 저장합니다.  부가적인 단위를 정의해서 인"
+"치, 밀리미터, 포인트, 파이카  같은 내장 단위처럼 사용할 수 있습니다.  김프를 "
+"마칠 때마다 이 파일을 덮어 씁니다."
 
 #: app/gui/user-install-dialog.c:189
-#, fuzzy
 msgid ""
 "This folder is used to store user defined brushes. The GIMP checks this "
 "folder in addition to the system-wide GIMP brushes installation when "
 "searching for brushes."
 msgstr ""
-"이 폴더에 사용자 정의 브러시를 저장합니다.\n"
-"브러시를 찾을 때 시스템 공용으로 설치된 김프 브러시 외에 부가적으로 이 폴더"
-"를 확인합니다."
+"이 폴더에 사용자 정의 브러시를 저장합니다.  브러시를 찾을 때 시스템 공용으로 "
+"설치된 김프 브러시 외에 부가적으로 이 폴더를 확인합니다."
 
 #: app/gui/user-install-dialog.c:197
-#, fuzzy
 msgid ""
 "This folder is used to store fonts you only want visible in the GIMP. The "
 "GIMP checks this folder in addition to the system-wide GIMP fonts "
 "installation when searching for fonts. Use this only if you really want to "
 "have GIMP-only fonts, otherwise put things in your global font directory."
 msgstr ""
-"이 폴더에 김프 전용 글꼴을 저장합니다.\n"
-"글꼴를 찾을 때 시스템 공용으로 설치된 김프 글꼴 외에 부가적으로 이 폴더를 확"
-"인합니다.\n"
-"김프 전용 글꼴이 필요할 때만 사용하며, 그렇지 않을 경우 공용 글꼴 디렉토리에 "
-"넣으십시오."
+"이 폴더에 김프 전용 글꼴을 저장합니다.  글꼴를 찾을 때 시스템 공용으로 설치"
+"된 김프 글꼴 외에 부가적으로 이 폴더를 확인합니다.  김프 전용 글꼴이 필요할 "
+"때만 사용하며, 그렇지 않을 경우 공용 글꼴 디렉토리에 넣으십시오."
 
 #: app/gui/user-install-dialog.c:207
-#, fuzzy
 msgid ""
 "This folder is used to store user defined gradients.  The GIMP checks this "
 "folder in addition to the system-wide GIMP gradients installation when "
 "searching for gradients."
 msgstr ""
-"이 폴더에 사용자 정의 그라디언트를 저장합니다.\n"
-"그라디언트를 찾을 때 시스템 공용으로 설치된 김프 그라디언트 외에 부가적으로 "
-"이 폴더를 확인합니다."
+"이 폴더에 사용자 정의 그라디언트를 저장합니다.  그라디언트를 찾을 때 시스템 "
+"공용으로 설치된 김프 그라디언트 외에 부가적으로 이 폴더를 확인합니다."
 
 #: app/gui/user-install-dialog.c:214
-#, fuzzy
 msgid ""
 "This folder is used to store user defined palettes.  The GIMP checks this "
 "folder in addition to the system-wide GIMP palettes installation when "
 "searching for palettes."
 msgstr ""
-"이 폴더에 사용자 정의 색상표를 저장합니다.\n"
-"색상표를 찾을 때 시스템 공용으로 설치된\n"
-"김프 색상표 외에 부가적으로 이 폴더를 확인합니다."
+"이 폴더에 사용자 정의 색상표를 저장합니다.  색상표를 찾을 때 시스템 공용으로 "
+"설치된 김프 색상표 외에 부가적으로 이 폴더를 확인합니다."
 
 #: app/gui/user-install-dialog.c:221
-#, fuzzy
 msgid ""
 "This folder is used to store user defined patterns.  The GIMP checks this "
 "folder in addition to the system-wide GIMP patterns installation when "
 "searching for patterns."
 msgstr ""
-"이 폴더에 사용자 정의 무늬를 저장합니다.\n"
-"무늬를 찾을 때 시스템 공용으로 설치된 김프 무늬 외에 부가적으로 이 폴더를 확"
-"인합니다."
+"이 폴더에 사용자 정의 무늬를 저장합니다.  무늬를 찾을 때 시스템 공용으로 설치"
+"된 김프 무늬 외에 부가적으로 이 폴더를 확인합니다."
 
 #: app/gui/user-install-dialog.c:228
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported plug-ins.  The GIMP checks this folder in addition to the "
 "system-wide GIMP plug-in folder when searching for plug-ins."
 msgstr ""
 "이 폴더에 사용자가 만들었거나, 임시 및 시스템이 지원하지 않는 플러그인을 저장"
-"합니다.\n"
-"플러그인을 찾을 때 시스템 공용으로 설치된 김프 플러그인 외에 부가적으로 이 폴"
-"더를 확인합니다."
+"합니다.  플러그인을 찾을 때 시스템 공용으로 설치된 김프 플러그인 외에 부가적"
+"으로 이 폴더를 확인합니다."
 
 #: app/gui/user-install-dialog.c:236
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported DLL modules.  The GIMP checks this folder in addition to "
@@ -6540,12 +6498,10 @@ msgid ""
 "initialization."
 msgstr ""
 "이 폴더에 사용자가 만들었거나, 임시 및 시스템이 지원하지 않는 DLL을 저장합니"
-"다.\n"
-"플러그인을 찾을 때 시스템 공용으로 설치된 김프  DLL 외에 부가적으로 이 폴더"
-"를 확인합니다."
+"다.  플러그인을 찾을 때 시스템 공용으로 설치된 김프  DLL 외에 부가적으로 이 "
+"폴더를 확인합니다."
 
 #: app/gui/user-install-dialog.c:245
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported additions to the plug-in environment.  The GIMP checks this "
@@ -6553,21 +6509,18 @@ msgid ""
 "for plug-in environment modification files."
 msgstr ""
 "이 폴더에 사용자가 만들었거나, 임시 및 시스템이 지원하지 않는 플러그인 환경"
-"을 저장합니다.\n"
-"바뀐 플러그인 환경 파일을 찾을 때 시스템 공용으로 설치된 김프  플러그인 환경 "
-"외에 부가적으로 이 폴더를 확인합니다."
+"을 저장합니다.  바뀐 플러그인 환경 파일을 찾을 때 시스템 공용으로 설치된 김"
+"프  플러그인 환경 외에 부가적으로 이 폴더를 확인합니다."
 
 #: app/gui/user-install-dialog.c:255
-#, fuzzy
 msgid ""
 "This folder is used to store user created and installed scripts.  The GIMP "
 "checks this folder in addition to the systemwide GIMP scripts folder when "
 "searching for scripts."
 msgstr ""
 "이 폴더에 사용자가 만들었거나, 임시 및 시스템이 지원하지 않는 스크립트를 저장"
-"합니다.\n"
-"스크립트를 찾을 때 시스템 공용으로 설치된 김프 스크립트 외에 부가적으로 이 폴"
-"더를 확인합니다."
+"합니다.  스크립트를 찾을 때 시스템 공용으로 설치된 김프 스크립트 외에 부가적"
+"으로 이 폴더를 확인합니다."
 
 #: app/gui/user-install-dialog.c:263
 msgid "This folder is searched for image templates."
@@ -6578,7 +6531,6 @@ msgid "This folder is searched for user-installed themes."
 msgstr "이 폴더에서 사용자 설치 테마를 찾습니다."
 
 #: app/gui/user-install-dialog.c:273
-#, fuzzy
 msgid ""
 "This folder is used to temporarily store undo buffers to reduce memory "
 "usage.  If The GIMP is unceremoniously killed, files of the form: gimp<#>."
@@ -6586,38 +6538,28 @@ msgid ""
 "sessions and can be destroyed with impunity."
 msgstr ""
 "메모리 사용량을 줄이기 위해 실행 취소 버퍼를 저장할 때 이 폴더를 사용합니"
-"다.\n"
-"김프가 예상치않게 종료되었을때 gimp<#>.<#>형식의 파일이 남아 있을 수 있습니"
-"다.\n"
-"이 파일은 김프 세션 간에는 쓸모가 없으며, 지워도 무관합니다."
+"다.  김프가 예상치않게 종료되었을때 gimp<#>.<#>형식의 파일이 남아 있을 수 있"
+"습니다.  이 파일은 김프 세션 간에는 쓸모가 없으며, 지워도 무관합니다."
 
 #: app/gui/user-install-dialog.c:282
 msgid "This folder is used to store tool options."
 msgstr "이 폴더에 도구 선택사항을 저장합니다."
 
 #: app/gui/user-install-dialog.c:287
-#, fuzzy
 msgid "This folder is used to store parameter files for the Curves tool."
 msgstr "이 폴더에 곡선 도구용 파라메터 파일을 저장합니다."
 
 #: app/gui/user-install-dialog.c:292
-#, fuzzy
 msgid "This folder is used to store parameter files for the Levels tool."
 msgstr "이 폴더에 레벨 도구용 파라메터 파일을 저장합니다."
 
 #: app/gui/user-install-dialog.c:392
-#, fuzzy
 msgid "Installation successful.  Click \"Continue\" to proceed."
-msgstr ""
-"설치 성공.\n"
-"계속하려면 \"계속\"을 누르십시오."
+msgstr "설치 성공.  계속하려면 \"계속\"을 누르십시오."
 
 #: app/gui/user-install-dialog.c:398
-#, fuzzy
 msgid "Installation failed.  Contact system administrator."
-msgstr ""
-"설치 실패.\n"
-"시스템 관리자에게 문의하십시오."
+msgstr "설치 실패.  시스템 관리자에게 문의하십시오."
 
 #: app/gui/user-install-dialog.c:591
 msgid "GIMP User Installation"
@@ -6663,15 +6605,14 @@ msgid ""
 msgstr ""
 
 #: app/gui/user-install-dialog.c:777
-#, fuzzy
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
-"당신은 이 프로그램과 함께 GNU GPL의 사본을 받았어야 합니다;\n"
-"그렇지 않았다면, the Free Software Foundation, Inc.,\n"
-"59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. 에 알려주십시오."
+"당신은 이 프로그램과 함께 GNU GPL의 사본을 받았어야 합니다;  그렇지 않았다"
+"면, the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, "
+"MA 02111-1307, USA. 에 알려주십시오."
 
 #: app/gui/user-install-dialog.c:802
 msgid "Personal GIMP Folder"
@@ -6682,32 +6623,27 @@ msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "사용자 김프 폴더를 만들려면 \"계속\"을 누르십시오."
 
 #: app/gui/user-install-dialog.c:847
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
 "created."
-msgstr "김프를 제대로 설치하기 위해 '<b>%s</b>'라는 폴더를 만들어야 합니다."
+msgstr "김프를 제대로 설치하려면, '<b>%s</b>'라는 폴더를 만들어야 합니다."
 
 #: app/gui/user-install-dialog.c:854
-#, fuzzy
 msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
 msgstr ""
-"이 폴더에는 여러 개의 중요한 파일이 위치하게 됩니다.\n"
-"선택한 항목에 대한 자세한 정보를 보려면\n"
-"파일이나 폴더 중의 하나를 클릭하십시오."
+"이 폴더에는 여러 개의 중요한 파일이 위치하게 됩니다.  선택한 항목에 대한 자세"
+"한 정보를 보려면  파일이나 폴더 중의 하나를 클릭하십시오."
 
 #: app/gui/user-install-dialog.c:942
 msgid "User Installation Log"
 msgstr "사용자 설치 로그"
 
 #: app/gui/user-install-dialog.c:943
-#, fuzzy
 msgid "Please wait while your personal GIMP folder is being created..."
-msgstr ""
-"사용자 김프 폴더를 만드는 중입니다.\n"
-"잠시만 기다려 주십시오..."
+msgstr "사용자 김프 폴더를 만드는 중입니다.  잠시만 기다려 주십시오..."
 
 #: app/gui/user-install-dialog.c:950
 msgid "GIMP Performance Tuning"
@@ -6759,25 +6695,23 @@ msgid "Copying file '%s' from '%s'..."
 msgstr "파일 '%s'을(를) '%s'(으)로부터 복사하고 있습니다..."
 
 #: app/gui/user-install-dialog.c:1163
-#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
 msgstr ""
-"김프는 이미지 데이터를 저장하기 위해 \"타일 캐시\"를 사용하\n"
-"제한된 양의 메모리만 사용합니다. 메모리에 맞게 이 크기를 조절해 주십시오.\n"
-"실행하고 있는 다른 프로그램이 쓸 메모리도 고려하십시오."
+"김프는 이미지 데이터를 저장하기 위해 \"타일 캐시\"를 통해 제한된 양의 메모리"
+"만 사용합니다. 메모리에 맞게 이 크기를 조절해 주십시오.  실행하고 있는 다른 "
+"프로그램이 쓸 메모리도 고려하십시오."
 
 #: app/gui/user-install-dialog.c:1188
-#, fuzzy
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be "
 "written to a swap file.  This file should be located on a local filesystem "
 "with enough free space (several hundred MB). On a UNIX system, you may want "
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
-"타일 캐시에 맞지 않는 모든 이미지와 취소 데이터는 스왑 파일에 기록합니다.\n"
+"타일 캐시에 맞지 않는 모든 이미지와 취소 데이터는 스왑 파일에 기록합니다.  "
 "이 파일은 공간이 충분한(수 백 MB) 로컬 유닉스 파일시스템에 위치해야하며, 보통"
 "은 시스템 전역 임시 디렉토리(\"/tmp\"나 \"/var/tmp\")를 사용하면 됩니다."
 
@@ -6786,7 +6720,6 @@ msgid "Swap Folder:"
 msgstr "스왑 폴더:"
 
 #: app/gui/user-install-dialog.c:1255
-#, fuzzy
 msgid ""
 "GIMP can obtain this information from the windowing system.  However, "
 "usually this does not give useful values."
@@ -6799,20 +6732,16 @@ msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "윈도 시스템의 해상도 얻기(현재 %d x %d dpi)"
 
 #: app/gui/user-install-dialog.c:1282
-#, fuzzy
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr ""
-"그 대신, 모니터 해상도를\n"
-"직접 지정할 수 있습니다."
+msgstr "그 대신, 모니터 해상도를 직접 지정할 수 있습니다."
 
 #: app/gui/user-install-dialog.c:1331
-#, fuzzy
 msgid ""
 "You can also press the \"Calibrate\" button to open a window which lets you "
 "determine your monitor resolution interactively."
 msgstr ""
-"\"측정\" 단추를 창이 열리고, 거기에서\n"
-"모니터 해상도를 정확하게 결정할 수 있습니다."
+"\"측정\" 단추를 창이 열리고, 거기에서 모니터 해상도를 정확하게 결정할 수 있습"
+"니다."
 
 #: app/gui/user-install-dialog.c:1335
 msgid "Calibrate"
@@ -7829,9 +7758,8 @@ msgstr "경로 이동"
 
 #: app/tools/gimpeditselectiontool.c:255
 #: app/tools/gimpeditselectiontool.c:1210
-#, fuzzy
 msgid "Move Layer Mask"
-msgstr "레이어 이동"
+msgstr "레이어 마스크 이동"
 
 #: app/tools/gimpeditselectiontool.c:267
 #: app/tools/gimpeditselectiontool.c:1220
@@ -9766,14 +9694,12 @@ msgid "View as Grid"
 msgstr "모눈으로 표시"
 
 #: app/widgets/widgets-enums.c:136
-#, fuzzy
 msgid "Normal Window"
-msgstr "이미지 창"
+msgstr "보통 창"
 
 #: app/widgets/widgets-enums.c:137
-#, fuzzy
 msgid "Utility Window"
-msgstr "유틸리티"
+msgstr "유틸리티 창"
 
 #: app/xcf/xcf-load.c:291
 msgid ""
