@@ -341,7 +341,7 @@ typedef enum
 
 /* This is for backwards compatibility. Don't use these for new plug-ins. */
 
-#ifndef GIMP_DISABLE_COMPAT_CRUFT
+#ifdef GIMP_ENABLE_COMPAT_CRUFT
 
 typedef GimpFillType GFillType;
 typedef GimpImageBaseType GImageType;
@@ -430,7 +430,7 @@ typedef GimpPDBStatusType GStatusType;
 #define RUN_NONINTERACTIVE GIMP_RUN_NONINTERACTIVE
 #define RUN_WITH_LAST_VALS GIMP_RUN_WITH_LAST_VALS
 
-#endif /* GIMP_DISABLE_COMPAT_CRUFT */
+#endif /* GIMP_ENABLE_COMPAT_CRUFT */
 
 #ifdef __cplusplus
 }

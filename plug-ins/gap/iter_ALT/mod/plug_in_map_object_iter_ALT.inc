@@ -2,7 +2,7 @@
  * p_plug_in_map_object_iter 
  * ----------------------------------------------------------------------
  */
-gint p_plug_in_map_object_iter_ALT(GRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) 
+gint p_plug_in_map_object_iter_ALT(GimpRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) 
 {
     typedef struct 
     {

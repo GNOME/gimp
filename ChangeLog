@@ -1,5 +1,19 @@
 2000-08-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gap/iter_ALT/*/*.inc: removed COMPAT_CRUFT
+
+	* libgimp/gimpcompat.h
+	* libgimp/gimpenums.h
+	* tools/pdbgen/enumcode.pl: reversed the COMPAT_CRUFT logic: 
+	Default is not to include compatibility definitions. Define
+	GIMP_ENABLE_COMPAT_CRUFT to make old plug-ins compile against
+	the 1.2 API.
+	
+	* plug-ins/print/print_gimp.h: define GIMP_ENABLE_COMPAT_CRUFT
+	here since we will update gimp-print in a few days anyway.
+
+2000-08-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/rcm/rcm.[ch]
 	* plug-ins/rcm/rcm_misc.[ch]
 	* plug-ins/sel2path/sel2path.c

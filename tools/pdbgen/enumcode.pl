@@ -146,7 +146,7 @@ foreach (sort keys %enums) {
 print ENUMFILE <<'CRUFT';
 /* This is for backwards compatibility. Don't use these for new plug-ins. */
 
-#ifndef GIMP_DISABLE_COMPAT_CRUFT
+#ifdef GIMP_ENABLE_COMPAT_CRUFT
 
 typedef GimpFillType GFillType;
 typedef GimpImageBaseType GImageType;
@@ -186,7 +186,7 @@ foreach $xform (@xforms) {
 } 
 
 print ENUMFILE <<HEADER;
-#endif /* GIMP_DISABLE_COMPAT_CRUFT */
+#endif /* GIMP_ENABLE_COMPAT_CRUFT */
 
 #ifdef __cplusplus
 }
@@ -197,3 +197,5 @@ HEADER
 
 close ENUMFILE;
 &write_file($enumfile);
+
+

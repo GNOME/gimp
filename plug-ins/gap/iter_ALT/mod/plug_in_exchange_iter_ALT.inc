@@ -2,7 +2,7 @@
  * p_plug_in_exchange_iter_ALT 
  * ----------------------------------------------------------------------
  */
-gint p_plug_in_exchange_iter_ALT(GRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) 
+gint p_plug_in_exchange_iter_ALT(GimpRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) 
 {
     typedef struct t_plug_in_exchange_Vals 
     {
@@ -45,7 +45,7 @@ gint p_plug_in_exchange_iter_ALT(GRunModeType run_mode, gint32 total_steps, gdou
     p_delta_guchar(&buf.green_threshold, buf_from->green_threshold, buf_to->green_threshold, total_steps, current_step);
     p_delta_guchar(&buf.blue_threshold, buf_from->blue_threshold, buf_to->blue_threshold, total_steps, current_step);
 
-    /* exchange takes FROM colors from foreground when called in mode RUN_WITH_LAST_VALS */
+    /* exchange takes FROM colors from foreground when called in mode GIMP_RUN_WITH_LAST_VALS */
     gimp_palette_set_foreground(buf.fromred, buf.fromgreen, buf.fromblue);
     gimp_set_data("plug_in_exchange", &buf, sizeof(buf)); 
 

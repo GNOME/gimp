@@ -31,6 +31,8 @@
 
 #include <gtk/gtk.h>
 
+#define GIMP_ENABLE_COMPAT_CRUFT  /*  should go away soon  */
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 

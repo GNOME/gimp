@@ -26,7 +26,7 @@ extern "C" {
 
 /* some compatibility defines for older plug-ins */
 
-#ifndef GIMP_DISABLE_COMPAT_H
+#ifdef GIMP_ENABLE_COMPAT_CRUFT
 
 #define gimp_attach_parasite		gimp_parasite_attach
 #define gimp_detach_parasite		gimp_parasite_detach
@@ -106,7 +106,7 @@ extern "C" {
 #define GParamDef    GimpParamDef
 #define GParam       GimpParam
 
-#endif /* GIMP_DISABLE_COMPAT_H */
+#endif /* GIMP_ENABLE_COMPAT_CRUFT */
 
 
 #ifdef __cplusplus

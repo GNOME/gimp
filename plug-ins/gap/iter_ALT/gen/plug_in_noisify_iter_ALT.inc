@@ -2,7 +2,7 @@
  * p_plug_in_noisify_iter_ALT 
  * ----------------------------------------------------------------------
  */
-gint p_plug_in_noisify_iter_ALT(GRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) 
+gint p_plug_in_noisify_iter_ALT(GimpRunModeType run_mode, gint32 total_steps, gdouble current_step, gint32 len_struct) 
 {
     typedef struct t_plug_in_noisify_Vals 
     {
