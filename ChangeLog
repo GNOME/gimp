@@ -1,3 +1,11 @@
+Mon Nov  8 23:06:06 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	* app/gimprc.c
+
+	Fixed problem (crash/corruption) when saving preferences.
+	Seems like the mem-leaks fixing in this area was a little 
+	over zealous.
+
 Sun Nov  7 18:59:22 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/gimpcontextpreview.c: delay the showing of the full-size

@@ -480,6 +480,7 @@ save_gimprc_strings (gchar *token,
 {
   gchar timestamp[40];  /* variables for parsing and updating gimprc */
   gchar *name;
+  gchar tokname[51];
   FILE *fp_new;
   FILE *fp_old;
   gchar *cur_line;
@@ -536,10 +537,10 @@ save_gimprc_strings (gchar *token,
 
       /* see if the line contains something that we can use 
          and place that into 'name' if its found */
-      if (find_token (cur_line, name, 50))
+      if (find_token (cur_line, tokname, 50))
 	{
 	  /* check if that entry should be updated */
-	  if (!g_strcasecmp(token, name)) /* if they match */
+	  if (!g_strcasecmp(token, tokname)) /* if they match */
 	    {
 	      if (prev_line == NULL)
 		{
@@ -620,6 +621,7 @@ save_gimprc (GList **updated_options,
 {
   char timestamp[40];
   char *name;
+  char tokname[51];
   FILE *fp_new;
   FILE *fp_old;
   GList *option;
@@ -669,10 +671,10 @@ save_gimprc (GList **updated_options,
 	}
 
       /* see if the line contains something that we can use */
-      if (find_token (cur_line, name, 50))
+      if (find_token (cur_line, tokname, 50))
 	{
 	  /* check if that entry should be updated */
-	  option = g_list_findstr (*updated_options, name);
+	  option = g_list_findstr (*updated_options, tokname);
 	  if (option != NULL)
 	    {
 	      if (prev_line == NULL)
@@ -690,8 +692,8 @@ save_gimprc (GList **updated_options,
 		  fprintf (fp_new, "#- Next line modified %s\n",
 			   timestamp);
 		}
-	      str = value_to_str (name);
-	      fprintf (fp_new, "(%s %s)\n", name, str);
+	      str = value_to_str (tokname);
+	      fprintf (fp_new, "(%s %s)\n", tokname, str);
 	      g_free (str);
 
 	      *updated_options = g_list_remove_link (*updated_options, option);
@@ -702,7 +704,7 @@ save_gimprc (GList **updated_options,
 	    }
 
 	  /* check if that entry should be commented out */
-	  option = g_list_findstr (*conflicting_options, name);
+	  option = g_list_findstr (*conflicting_options, tokname);
 	  if (option != NULL)
 	    {
 	      if (prev_line != NULL)
