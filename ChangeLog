@@ -1,3 +1,7 @@
+2004-05-11  Sven Neumann  <sven@gimp.org>
+
+	* docs/gimptool.1.in: fixed spelling, merge from HEAD.
+
 2004-05-10  Sven Neumann  <sven@gimp.org>
 
 	* app/xcf/xcf-save.c (xcf_save_prop): fixed size of colormap
