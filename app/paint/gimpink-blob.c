@@ -678,7 +678,7 @@ blob_make_convex (Blob     *b,
 	{
 	  present[i2] &= ~EDGE_LEFT;
 	  i2 = i1;
-	  while (! (present[--i1] & EDGE_LEFT) && i1 >= start);
+	  while ((--i1) >= start && (! (present[i1] & EDGE_LEFT)));
 
 	  if (i1 < start)
 	    {
@@ -719,8 +719,7 @@ blob_make_convex (Blob     *b,
 	{
 	  present[i2] &= ~EDGE_RIGHT;
 	  i2 = i1;
-	  while (! (present[--i1] & EDGE_RIGHT) && i1 >= start)
-            ;
+	  while ((--i1) >= start && (! (present[i1] & EDGE_RIGHT)));
 
 	  if (i1 < start)
 	    {

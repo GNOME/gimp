@@ -1,3 +1,9 @@
+2004-07-18  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/paint/gimpink-blob.c (blob_make_convex): Check if the
+	array index is legal before using it, not the other way around.
+	Fixes bug #144856.
+
 2004-07-17  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* plug-ins/common/polar.c (dialog_update_preview): Fixed a
