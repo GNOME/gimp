@@ -1,3 +1,10 @@
+2003-07-30  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/ccanalyze.c: new plug-in, Colorcube Analysis
+	(counts colors in an image, an often requested feature)
+
 2003-07-30  Tor Lillqvist  <tml@iki.fi>
 
 	* app/plug-in/plug-in.c (plug_in_close): [Win32] Plug handle leak,

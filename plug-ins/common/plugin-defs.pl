@@ -16,6 +16,7 @@
     'bumpmap' => { libdep => 'gtk', ui => 1 },
     'bz2' => { libdep => 'glib', optional => 1 },
     'c_astretch' => { libdep => 'glib' },
+    'ccanalyze' => { libdep => 'gtk', ui => 1 },
     'checkerboard' => { libdep => 'gtk', ui => 1 },
     'color_enhance' => { libdep => 'gtk', ui => 1 },
     'colortoalpha' => { libdep => 'gtk', ui => 1 },

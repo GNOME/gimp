@@ -37,6 +37,7 @@ libexec_PROGRAMS = \
 	bumpmap \
 	$(BZ2) \
 	c_astretch \
+	ccanalyze \
 	checkerboard \
 	color_enhance \
 	colorify \
@@ -370,6 +371,18 @@ c_astretch_LDADD = \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	@GLIB_LIBS@							\
+	@INTLLIBS@
+
+ccanalyze_SOURCES = \
+	ccanalyze.c
+
+ccanalyze_LDADD = \
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	@GTK_LIBS@							\
 	@INTLLIBS@
 
 checkerboard_SOURCES = \
