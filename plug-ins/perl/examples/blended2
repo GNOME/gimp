@@ -77,7 +77,7 @@ register "make_bevel_logos",
          "(c) 2000 M. Gherlone",
          "20000130",
          N_"<Image>/Filters/Logulator/Blended II...",
-         "RGBA, GRAYA",
+         "*",
          [
            [PF_COLOUR	, 'choose_bg_colour', "Choose the background colour", [255, 255, 255]],
            [PF_COLOUR	, 'blend_start',  "Choose the 1st blend colour", [247, 231, 9]],

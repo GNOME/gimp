@@ -83,7 +83,7 @@ register "make_trans_logos",
          "(c) 2000 M. Gherlone",
          "20000123",
          N_"<Image>/Filters/Logulator/Transparent Logo...",
-         "RGBA, GRAYA",
+         "*",
          [
            [PF_RADIO	, 'use_a_colour_or_a_pattern_for_text', "The user's choice", 0, [Colour => 0, Pattern => 1]],
            [PF_PATTERN	, 'choose_a_pattern', "Choose the text Pattern", "Wood #1"],

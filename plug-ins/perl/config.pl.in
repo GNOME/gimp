@@ -150,10 +150,20 @@ for(keys %cfg) {
 }
 
 sub MY::makefile {
-   package MY;
-   my $t = shift->SUPER::makefile(@_);
-   $t =~ s/^	false$/	true/m;
-   $t;
+   my $self = shift;
+   if ($IN_GIMP) {
+      return q{
+}.$self->{MAKEFILE}.q{ : Makefile.PL $(CONFIGDEP)
+	}.$self->{NOECHO}.q{echo "rebuilding Makefile (is out-of-date with respect to $?)"
+	-}.$self->{NOECHO}.q{$(RM_F) }."$self->{MAKEFILE}.old".q{
+	-}.$self->{NOECHO}.q{$(MV) }."$self->{MAKEFILE} $self->{MAKEFILE}.old".q{
+	-$(MAKE) -f }.$self->{MAKEFILE}.q{.old clean $(DEV_NULL) || $(NOOP)
+	$(PERL) "-I$(PERL_ARCHLIB)" "-I$(PERL_LIB)" Makefile.PL --writemakefile }.join(" ",map(qq["$_"],@ARGV)).q{
+
+};
+   } else {
+      return $self->MM::makefile(@_);
+   }
 }
 
 

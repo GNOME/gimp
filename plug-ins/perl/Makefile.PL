@@ -10,15 +10,17 @@ if ($ARGV[0] ne "--writemakefile") {
    }
    
    do './config.pl';
-   $EXTENSIVE_TESTS = 1;
-   
-   $ENV{'EXTENSIVE_TESTS'} = $EXTENSIVE_TESTS;
-   $ENV{CC}=$Config{cc};
-   $ENV{LD}=$Config{ld};
-   $ENV{prefix}=$Config{prefix};
-   $ENV{PERL}=$Config{perlpath};
-   $ENV{MAKEFILE_PL}=$0;
-   $ENV{IN_GIMP}=0;
+   unless ($ENV{IN_GIMP}) { # for the release, take the medium conservative approach
+      $EXTENSIVE_TESTS = 1;
+      
+      $ENV{'EXTENSIVE_TESTS'} = $EXTENSIVE_TESTS;
+      $ENV{CC}=$Config{cc};
+      $ENV{LD}=$Config{ld};
+      $ENV{prefix}=$Config{prefix};
+      $ENV{PERL}=$Config{perlpath};
+      $ENV{MAKEFILE_PL}=$0;
+      $ENV{IN_GIMP}=0;
+   }
    exit system("./configure",@ARGV)>>8;
 } else {
    shift;
@@ -32,7 +34,7 @@ if ($ARGV[0] ne "--writemakefile") {
 @gtk_pins =
    qw(
      dataurl colorhtml avi PDB parasite-editor fade-alpha
-   ); # miff should be in @pins(!) but detection of non-default arguments is broken
+   );
 @pins =
    qw(
       windify prep4gif webify tex-to-float ditherize
@@ -350,7 +352,7 @@ EOF
 __END__
 # write an empty makefile (the last chance to stop)
 # and warn the user.
-sub not_halt {
+sub emergency_stop {
    print STDERR "WARNING: *** perl extension will not be built ($_[0]) ***\n\n";
    open MAKEFILE,">Makefile" or die "unable to create Makefile: $!";
    print MAKEFILE <<EOF;
