@@ -48,6 +48,7 @@ struct _GimpFileDialog
   gboolean          set_image_clean;
 
   GtkWidget        *thumb_box;
+  GtkWidget        *option_menu;
 };
 
 struct _GimpFileDialogClass

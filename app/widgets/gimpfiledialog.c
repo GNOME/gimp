@@ -54,6 +54,7 @@ static void       gimp_file_dialog_destroy      (GtkObject           *object);
 static gboolean   gimp_file_dialog_delete_event (GtkWidget           *widget,
                                                  GdkEventAny         *event);
 
+static void  gimp_file_dialog_reset_file_type   (GimpFileDialog      *dialog);
 static void  gimp_file_dialog_selection_changed (GtkTreeSelection    *sel,
                                                  GimpFileDialog      *dialog);
 
@@ -149,7 +150,6 @@ gimp_file_dialog_new (Gimp            *gimp,
 {
   GimpFileDialog *dialog;
   GtkWidget      *hbox;
-  GtkWidget      *option_menu;
   GtkWidget      *label;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -182,14 +182,14 @@ gimp_file_dialog_new (Gimp            *gimp,
                     FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  option_menu = gtk_option_menu_new ();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
+  dialog->option_menu = gtk_option_menu_new ();
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (dialog->option_menu),
                             GTK_ITEM_FACTORY (dialog->item_factory)->widget);
-  gtk_box_pack_end (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
-  gtk_widget_show (option_menu);
+  gtk_box_pack_end (GTK_BOX (hbox), dialog->option_menu, FALSE, FALSE, 0);
+  gtk_widget_show (dialog->option_menu);
 
   label = gtk_label_new_with_mnemonic (_("Determine File _Type:"));
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), option_menu);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->option_menu);
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -290,6 +290,8 @@ gimp_file_dialog_set_uri (GimpFileDialog  *dialog,
 				   filename : "." G_DIR_SEPARATOR_S);
 
   g_free (filename);
+
+  gimp_file_dialog_reset_file_type (dialog);
 }
 
 void
@@ -318,10 +320,26 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
 
   gimp_item_factory_update (dialog->item_factory,
                             gimp_image_active_drawable (gimage));
+
+  gimp_file_dialog_reset_file_type (dialog);
 }
 
 
 /*  private functions  */
+
+static void
+gimp_file_dialog_reset_file_type (GimpFileDialog *dialog)
+{
+  GtkWidget *menu;
+  GtkWidget *item;
+
+  gtk_option_menu_set_history (GTK_OPTION_MENU (dialog->option_menu), 0);
+
+  menu = gtk_option_menu_get_menu (GTK_OPTION_MENU (dialog->option_menu));
+  item = gtk_menu_get_active (GTK_MENU (menu));
+
+  gtk_menu_item_activate (GTK_MENU_ITEM (item));
+}
 
 static void
 selchanged_foreach (GtkTreeModel *model,

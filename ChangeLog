@@ -1,5 +1,10 @@
 2004-05-29  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpfiledialog.[ch]: reset the file type menu to "By
+	Extension". Based on a patch from Philip Lafleur (bug #141535).
+
+2004-05-29  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/layer.pdb
 	* app/pdb/layer_cmds.c
 	* libgimp/gimplayer_pdb.c: fixed documentation for gimp_resize_layer.
