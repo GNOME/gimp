@@ -1,5 +1,10 @@
 2003-12-08  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcroptool.c (gimp_crop_tool_draw): an XOR line was
+	being drawn twice; spotted by Marco Munari.
+
+2003-12-08  Sven Neumann  <sven@gimp.org>
+
 	* Makefile.am (SUBDIRS): added libgimpthumb.
 
 	* libgimpthumb/gimpthumb-utils.c

@@ -784,9 +784,6 @@ gimp_crop_tool_draw (GimpDrawTool *draw)
                          shell->disp_width, crop->dy1);
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
                          crop->dx1, crop->dy1,
-                         shell->disp_width, crop->dy1);
-  gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                         crop->dx1, crop->dy1,
                          crop->dx1, shell->disp_height);
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
                          crop->dx2, crop->dy2,
