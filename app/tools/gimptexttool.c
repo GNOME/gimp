@@ -233,8 +233,7 @@ text_tool_button_press (GimpTool        *tool,
 
   gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), text);
 
-  if (!text || text == text_tool->text)
-    text_tool_editor (text_tool);
+  text_tool_editor (text_tool);
 }
 
 static void
@@ -312,6 +311,10 @@ gimp_text_tool_connect (GimpTextTool *tool,
 
       g_object_unref (tool->text);
       tool->text = NULL;
+
+      g_object_set (G_OBJECT (options->text),
+                    "text", NULL,
+                    NULL);
     }
 
   if (text)
@@ -330,7 +333,6 @@ static void
 text_tool_editor (GimpTextTool *text_tool)
 {
   GimpTextOptions *options;
-  GClosure        *closure;
 
   if (text_tool->editor)
     {
@@ -346,12 +348,17 @@ text_tool_editor (GimpTextTool *text_tool)
   g_object_add_weak_pointer (G_OBJECT (text_tool->editor),
 			     (gpointer *) &text_tool->editor);
 
-  closure = g_cclosure_new (G_CALLBACK (text_tool_buffer_changed),
-                            text_tool, NULL);
-  g_object_watch_closure (G_OBJECT (text_tool->editor), closure);
-  g_signal_connect_closure (options->buffer, "changed", closure, FALSE);
-
   gtk_widget_show (text_tool->editor);
+
+  if (! text_tool->text)
+    {
+      GClosure *closure;
+      
+      closure = g_cclosure_new (G_CALLBACK (text_tool_buffer_changed),
+                                text_tool, NULL);
+      g_object_watch_closure (G_OBJECT (text_tool->editor), closure);
+      g_signal_connect_closure (options->buffer, "changed", closure, FALSE);
+    }
 }
 
 static void

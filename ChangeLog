@@ -1,5 +1,9 @@
 2003-02-20  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c: always start with an empty text.
+
+2003-02-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimputils.c (gimp_utf8_strtrim): trim the string
 	only if necessary.
 
