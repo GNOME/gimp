@@ -20,6 +20,9 @@
 #define __GIMP_IMAGE_QMASK_H__
 
 
+/*  don't change this string, it's used to identify the Quick Mask
+ *  when opening files.
+ */
 #define GIMP_IMAGE_QMASK_NAME "Qmask"
 
 

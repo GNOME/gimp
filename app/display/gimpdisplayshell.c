@@ -884,7 +884,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   gtk_widget_show (image);
 
   gimp_help_set_help_data (shell->qmask_button,
-                           _("Toggle QuickMask"),
+                           _("Toggle Quick Mask"),
                            GIMP_HELP_IMAGE_WINDOW_QMASK_BUTTON);
 
   g_signal_connect (shell->qmask_button, "toggled",

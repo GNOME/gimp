@@ -38,7 +38,7 @@
 
 static GimpActionEntry qmask_actions[] =
 {
-  { "qmask-popup", NULL, N_("QuickMask Menu"), NULL, NULL, NULL,
+  { "qmask-popup", NULL, N_("Quick Mask Menu"), NULL, NULL, NULL,
     GIMP_HELP_QMASK },
 
   { "qmask-configure", NULL,
@@ -50,13 +50,13 @@ static GimpActionEntry qmask_actions[] =
 static GimpToggleActionEntry qmask_toggle_actions[] =
 {
   { "qmask-active", NULL,
-    N_("_QuickMask Active"), NULL, NULL,
+    N_("_Quick Mask Active"), NULL, NULL,
     G_CALLBACK (qmask_toggle_cmd_callback),
     FALSE,
     GIMP_HELP_QMASK_TOGGLE },
 
   { "qmask-toggle", GIMP_STOCK_QMASK_ON,
-    N_("Toggle _QuickMask"), "<shift>Q", NULL,
+    N_("Toggle _Quick Mask"), "<shift>Q", NULL,
     G_CALLBACK (qmask_toggle_cmd_callback),
     FALSE,
     GIMP_HELP_QMASK_TOGGLE }

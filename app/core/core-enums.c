@@ -561,7 +561,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_GROUP_IMAGE_CONVERT, N_("Convert image"), "group-image-convert" },
     { GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, N_("Merge layers"), "group-image-layers-merge" },
     { GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE, N_("Merge vectors"), "group-image-vectors-merge" },
-    { GIMP_UNDO_GROUP_IMAGE_QMASK, N_("QuickMask"), "group-image-qmask" },
+    { GIMP_UNDO_GROUP_IMAGE_QMASK, N_("Quick Mask"), "group-image-qmask" },
     { GIMP_UNDO_GROUP_IMAGE_GRID, N_("Grid"), "group-image-grid" },
     { GIMP_UNDO_GROUP_IMAGE_GUIDE, N_("Guide"), "group-image-guide" },
     { GIMP_UNDO_GROUP_DRAWABLE, N_("Drawable"), "group-drawable" },

@@ -43,6 +43,7 @@
 #include "gimp-utils.h"
 #include "gimpcontainer.h"
 #include "gimpimage.h"
+#include "gimpimage-qmask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
@@ -70,6 +71,9 @@ static void       gimp_channel_finalize      (GObject          *object);
 
 static gint64     gimp_channel_get_memsize   (GimpObject       *object,
                                               gint64           *gui_size);
+
+static gchar  * gimp_channel_get_description (GimpViewable     *viewable,
+                                              gchar           **tooltip);
 
 static gboolean   gimp_channel_is_attached   (GimpItem         *item);
 static GimpItem * gimp_channel_duplicate     (GimpItem         *item,
@@ -261,6 +265,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   gimp_object_class->get_memsize   = gimp_channel_get_memsize;
 
+  viewable_class->get_description  = gimp_channel_get_description;
   viewable_class->default_stock_id = "gimp-channel";
 
   item_class->is_attached    = gimp_channel_is_attached;
@@ -363,6 +368,23 @@ gimp_channel_get_memsize (GimpObject *object,
   *gui_size += channel->num_segs_out * sizeof (BoundSeg);
 
   return GIMP_OBJECT_CLASS (parent_class)->get_memsize (object, gui_size);
+}
+
+static gchar *
+gimp_channel_get_description (GimpViewable  *viewable,
+                              gchar        **tooltip)
+{
+  if (! strcmp (GIMP_IMAGE_QMASK_NAME,
+                gimp_object_get_name (GIMP_OBJECT (viewable))))
+    {
+      if (tooltip)
+        *tooltip = NULL;
+
+      return g_strdup (_("Quick Mask"));
+    }
+
+  return GIMP_VIEWABLE_CLASS (parent_class)->get_description (viewable,
+                                                              tooltip);
 }
 
 static gboolean

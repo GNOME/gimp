@@ -64,7 +64,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
       if (! mask)
         {
           gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_QMASK,
-                                       _("Enable QuickMask"));
+                                       _("Enable Quick Mask"));
 
           if (gimp_channel_is_empty (selection))
             {
@@ -114,7 +114,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
           GimpLayer *floating_sel = gimp_image_floating_sel (gimage);
 
           gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_QMASK,
-                                       _("Disable QuickMask"));
+                                       _("Disable Quick Mask"));
 
           if (gimage->qmask_inverted)
             gimp_channel_invert (mask, TRUE);
