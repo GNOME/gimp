@@ -2,6 +2,7 @@
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 
@@ -39,9 +40,12 @@ lib_LTLIBRARIES = \
 	$(controller_linux_input_module)
 
 
-colorsel_libadd = $(libgimpcolor) $(libgimpmodule) $(libgimpwidgets) $(GTK_LIBS)
-cdisplay_libadd = $(libgimpbase) $(libgimpmodule) $(libgimpwidgets) $(GTK_LIBS)
-controller_libadd = $(libgimpmodule) $(libgimpwidgets) $(GTK_LIBS)
+
+modules_libadd = $(libgimpmodule) $(libgimpwidgets) $(GTK_LIBS)
+
+colorsel_libadd = $(libgimpcolor) $(modules_libadd)
+cdisplay_libadd = $(libgimpbase) $(libgimpconfig) $(modules_libadd)
+controller_libadd = $(modules_libadd)
 
 libcolorsel_cmyk_la_SOURCES = colorsel_cmyk.c
 libcolorsel_cmyk_la_LDFLAGS = -avoid-version -module $(no_undefined)

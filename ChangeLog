@@ -1,5 +1,12 @@
 2005-02-05  Sven Neumann  <sven@gimp.org>
 
+	* modules/Makefile.am: link ColorDisplay modules with libgimpconfig.
+
+	* modules/cdisplay_colorblind.c: added the GimpConfig interface
+	and use it.
+
+2005-02-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppropwidgets.[ch]: documentation fixes.
 
 2005-02-05  Dave Neary  <bolsh@gimp.org>
