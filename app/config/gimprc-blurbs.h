@@ -115,19 +115,19 @@ N_("The window type hint that is set on dock windows. This may affect " \
 "Where to search for data used by the Gimpressionist plug-in."
 
 #define GLOBAL_BRUSH_BLURB \
-"When enabled, the selected brush will be used for all tools."
-
-#define GLOBAL_PATTERN_BLURB \
-"When enabled, the selected pattern will be used for all tools."
-
-#define GLOBAL_PALETTE_BLURB \
-"When enabled, the selected palette will be used for all tools."
-
-#define GLOBAL_GRADIENT_BLURB \
-"When enabled, the selected gradient will be used for all tools."
+N_("When enabled, the selected brush will be used for all tools.")
 
 #define GLOBAL_FONT_BLURB \
 "When enabled, the selected font will be used for all tools."
+
+#define GLOBAL_GRADIENT_BLURB \
+N_("When enabled, the selected gradient will be used for all tools.")
+
+#define GLOBAL_PATTERN_BLURB \
+N_("When enabled, the selected pattern will be used for all tools.")
+
+#define GLOBAL_PALETTE_BLURB \
+"When enabled, the selected palette will be used for all tools."
 
 #define GRADIENT_PATH_BLURB \
 "Sets the gradient search path."

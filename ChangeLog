@@ -1,3 +1,23 @@
+2004-03-04  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc-blurbs.h: marked new strings for translation.
+
+	* libgimpwidgets/gimpstock.h: added #defines for missing icons.
+	This allows us to replace them later without changing the API.
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/dialogs-menu.c
+	* app/gui/gradient-editor-commands.c
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimptextoptions.c
+	* app/widgets/gimppaletteeditor.c: use the new stock icon names
+	instead of abusing GTK+ and GIMP tool stock icons.
+
+	* app/gui/preferences-dialog.c (prefs_dialog_new): added icons
+	to the new check buttons.
+
 2004-03-04  Simon Budig  <simon@gimp.org>
 
 	* app/gui/preferences-dialog.c: remove the widgets for
