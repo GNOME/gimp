@@ -10,7 +10,7 @@ msgstr ""
 "Last-Translator: Emese Kovacs <emese@gnome.hu>\n"
 "Language-Team: hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO 8859-2\n"
+"Content-Type: text/plain; charset=iso-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: examples/PDB:0
