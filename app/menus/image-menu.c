@@ -277,7 +277,8 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL,
     GIMP_HELP_SELECTION_INVERT, NULL },
   { { N_("/Select/_Float"), "<control><shift>L",
-      select_float_cmd_callback, 0 },
+      select_float_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_FLOATING_SELECTION },
     NULL,
     GIMP_HELP_SELECTION_FLOAT, NULL },
   { { N_("/Select/_By Color"), "<shift>O",
@@ -1557,7 +1558,7 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/New Layer...",      gdisp);
   SET_SENSITIVE ("/Layer/Duplicate Layer",   lp && !fs && !aux);
   SET_SENSITIVE ("/Layer/Anchor Layer",      lp &&  fs && !aux);
-  SET_SENSITIVE ("/Layer/Merge Down",        lp && !fs && !aux);
+  SET_SENSITIVE ("/Layer/Merge Down",        lp && !fs && !aux && lind < (lnum - 1));
   SET_SENSITIVE ("/Layer/Delete Layer",      lp && !aux);
   SET_VISIBLE   ("/Layer/Discard Text Information", text_layer && !aux);
 
