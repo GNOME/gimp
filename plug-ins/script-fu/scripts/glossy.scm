@@ -133,11 +133,11 @@
                     SF-VALUE "How big outline?" "5"
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-TOGGLE "Use pattern for text instead of gradient" FALSE
-		    SF-STRING "Pattern (text)" "Electric Blue"
+		    SF-PATTERN "Pattern (text)" "Electric Blue"
 		    SF-TOGGLE "Use pattern for outline instead of gradient" FALSE
-		    SF-STRING "Pattern (outline)" "Electric Blue"
+		    SF-PATTERN "Pattern (outline)" "Electric Blue"
 		    SF-TOGGLE "Use pattern overlay" FALSE
-		    SF-STRING "Pattern (overlay)" "Parque #1"
+		    SF-PATTERN "Pattern (overlay)" "Parque #1"
 		    SF-TOGGLE "Default bump-map settings" TRUE
 		    SF-TOGGLE "Shadow?" TRUE
 		    SF-VALUE "Shadow X offset" "8"

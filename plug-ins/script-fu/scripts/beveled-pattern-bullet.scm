@@ -81,5 +81,5 @@
 		    "July 1997"
 		    ""
 		    SF-VALUE  "Diameter"               "16"
-		    SF-STRING  "Pattern"                "Wood"
+		    SF-PATTERN  "Pattern"                "Wood"
 		    SF-TOGGLE "Transparent background" FALSE)

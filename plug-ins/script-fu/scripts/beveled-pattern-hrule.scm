@@ -71,4 +71,4 @@
 		    ""
 		    SF-VALUE "Width"   "480"
 		    SF-VALUE "Height"  "16"
-		    SF-STRING "Pattern" "Wood")
+		    SF-PATTERN "Pattern" "Wood")

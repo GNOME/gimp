@@ -102,5 +102,5 @@
 		    SF-STRING  "Slant"                  "r"
 		    SF-STRING  "Set width"              "normal"
 		    SF-STRING  "Spacing"                "p"
-		    SF-STRING  "Pattern"                "Wood"
+		    SF-PATTERN "Pattern"                "Wood"
 		    SF-TOGGLE "Transparent background" FALSE)

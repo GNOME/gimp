@@ -129,6 +129,6 @@
 		    SF-TOGGLE "Keep Bump layer?" FALSE
 		    SF-TOGGLE "Fill bg with pattern?" TRUE
 		    SF-TOGGLE "Keep Background?" TRUE
-		    SF-STRING "Pattern" "Burlwood")
+		    SF-PATTERN "Pattern" "Burlwood")
 
 

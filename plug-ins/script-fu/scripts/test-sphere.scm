@@ -27,6 +27,42 @@
 ; Usage:
 ; SF-FONT "label" "fontname"		
 ; ----------------------------------------------------------------------
+;
+; SF-BRUSH 
+; is only useful in interactive mode. It will create a widget in the control
+; dialog. The widget consists of a preview area (which when pressed will 
+; produce a popup preview ) and a button with the "..." label. The button will
+; popup a dialog where brushes can be selected and each of the 
+; characteristics of the brush can be modified.
+; 
+; The actual value returned when the script is invoked is a list 
+; consisting of Brush name, opacity, spacing and brush mode in the same 
+; units as passed in as the default value.
+;
+; Usage:-
+; SF_BRUSH "Brush" '("Circle (03)" 1.0 44 0)
+;
+; Here the brush dialog will be popped up with a default brush of Circle (03)
+; opacity 1.0, spacing 44 and paint mode of Normal (value 0).
+; If this selection was unchanged the value passed to the function as a 
+; paramater would be '("Circle (03)" 1.0 44 0). BTW the widget used
+; is generally available in the libgimpui library for any plugin that
+; wishes to select a brush.
+; ----------------------------------------------------------------------
+;
+; SF-PATTERN
+; Only useful in interactive mode. It will create a widget in the control
+; dialog. The widget consists of a preview area (which when pressed will 
+; produce a popup preview ) and a button with the "..." label. The button will
+; popup a dialog where patterns can be selected.
+;
+; Usage:-
+; SF-PATTERN "Pattern" "Maple Leaves"
+;
+; The vaule returned when the script is invoked is a string containing the 
+; pattern name. If the above selection was not altered the string would 
+; contain "Maple Leaves"
+
 
 
 ;
@@ -97,7 +133,7 @@
 		    SF-TOGGLE "Shadow" TRUE
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-COLOR "Sphere Color" '(255 0 0)
-	            SF-BRUSH "Brush" '("Circle (03)" 100.0 44 0)
+	            SF-BRUSH "Brush" '("Circle (03)" 1.0 44 0)
 		    SF-STRING "Text" "Script-Fu rocks!"
 		    SF-PATTERN "Pattern" "Maple Leaves"
 		    SF-FONT "Font" "-freefont-agate-normal-r-normal-*-24-*-*-*-p-*-*-*"

@@ -142,4 +142,4 @@
 		    ""
 		    SF-VALUE "Size"        "32"
 		    SF-VALUE "Orientation" "'right"
-		    SF-STRING "Pattern"     "Wood")
+		    SF-PATTERN "Pattern"     "Wood")

@@ -124,6 +124,6 @@
 		    SF-STRING  "Slant"      "r"
 		    SF-STRING  "Set width"  "normal"
 		    SF-STRING  "Spacing"    "p"
-		    SF-COLOR  "Text color" '(0 0 0)
-		    SF-STRING  "Pattern"    "Wood"
+		    SF-COLOR   "Text color" '(0 0 0)
+		    SF-PATTERN "Pattern"    "Wood"
 		    SF-TOGGLE "Pressed?"   FALSE)
