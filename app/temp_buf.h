@@ -36,43 +36,44 @@ struct _TempBuf
 
 /*  The temp buffer functions  */
 
-TempBuf * temp_buf_new        (gint     ,
-			       gint     ,
-			       gint     ,
-			       gint     ,
-			       gint     ,
-			       guchar  *);
-TempBuf * temp_buf_copy       (TempBuf *,
-			       TempBuf *);
-TempBuf * temp_buf_resize     (TempBuf *,
-			       gint     ,
-			       gint     ,
-			       gint     ,
-			       gint     ,
-			       gint     );
-TempBuf * temp_buf_copy_area  (TempBuf *,
-			       TempBuf *,
-			       gint     ,
-			       gint     ,
-			       gint     ,
-			       gint     ,
-			       gint     );
-void      temp_buf_free       (TempBuf *);
-guchar  * temp_buf_data       (TempBuf *);
-guchar  * temp_buf_data_clear (TempBuf *);
+TempBuf * temp_buf_new        (gint     width,
+			       gint     height,
+			       gint     bytes,
+			       gint     x,
+			       gint     y,
+			       guchar  *col);
+TempBuf * temp_buf_copy       (TempBuf *src,
+			       TempBuf *dest);
+TempBuf * temp_buf_resize     (TempBuf *buf,
+			       gint     bytes,
+			       gint     x,
+			       gint     y,
+			       gint     width,
+			       gint     height);
+TempBuf * temp_buf_copy_area  (TempBuf *src,
+			       TempBuf *dest,
+			       gint     x,
+			       gint     y,
+			       gint     width,
+			       gint     height,
+			       gint     border);
+void      temp_buf_free       (TempBuf *buf);
+guchar  * temp_buf_data       (TempBuf *buf);
+guchar  * temp_buf_data_clear (TempBuf *buf);
 
 /* The mask buffer functions  */
 
-MaskBuf * mask_buf_new        (gint     ,
-			       gint     );
-void      mask_buf_free       (MaskBuf *);
-guchar  * mask_buf_data       (MaskBuf *);
+MaskBuf * mask_buf_new        (gint     width,
+			       gint     height);
+void      mask_buf_free       (MaskBuf *mask_buf);
+guchar  * mask_buf_data       (MaskBuf *mask_buf);
+guchar  * mask_buf_data_clear (MaskBuf *mask_buf);
 
 /*  The disk caching functions  */
 
-void      temp_buf_swap       (TempBuf *);
-void      temp_buf_unswap     (TempBuf *);
-void      temp_buf_swap_free  (TempBuf *);
+void      temp_buf_swap       (TempBuf *buf);
+void      temp_buf_unswap     (TempBuf *buf);
+void      temp_buf_swap_free  (TempBuf *buf);
 
 
 /*  Called by app_procs:exit() to free up the cached undo buffer  */

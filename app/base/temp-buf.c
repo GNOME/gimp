@@ -37,8 +37,6 @@
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "drawable.h"
-#include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimprc.h"
 #include "paint_funcs.h"
@@ -49,10 +47,10 @@
 
 
 static guchar * temp_buf_allocate (guint);
-static void     temp_buf_to_color (TempBuf *,
-				   TempBuf *);
-static void     temp_buf_to_gray  (TempBuf *,
-				   TempBuf *);
+static void     temp_buf_to_color (TempBuf *src_buf,
+				   TempBuf *dest_buf);
+static void     temp_buf_to_gray  (TempBuf *src_buf,
+				   TempBuf *dest_buf);
 
 
 /*  Memory management  */
@@ -76,7 +74,7 @@ temp_buf_to_color (TempBuf *src_buf,
 {
   guchar *src;
   guchar *dest;
-  long num_bytes;
+  glong   num_bytes;
 
   src = temp_buf_data (src_buf);
   dest = temp_buf_data (dest_buf);
@@ -100,8 +98,8 @@ temp_buf_to_gray (TempBuf *src_buf,
 {
   guchar *src;
   guchar *dest;
-  long  num_bytes;
-  float pix;
+  glong   num_bytes;
+  gfloat  pix;
 
   src = temp_buf_data (src_buf);
   dest = temp_buf_data (dest_buf);
@@ -118,7 +116,6 @@ temp_buf_to_gray (TempBuf *src_buf,
     }
 }
 
-
 TempBuf *
 temp_buf_new (gint    width, 
 	      gint    height, 
@@ -127,19 +124,19 @@ temp_buf_new (gint    width,
 	      gint    y, 
 	      guchar *col)
 {
-  long i;
-  int  j;
+  glong    i;
+  gint     j;
   guchar  *data;
   TempBuf *temp;
 
   temp = g_new (TempBuf, 1);
 
-  temp->width  = width;
-  temp->height = height;
-  temp->bytes  = bytes;
-  temp->x      = x;
-  temp->y      = y;
-  temp->swapped = FALSE;
+  temp->width    = width;
+  temp->height   = height;
+  temp->bytes    = bytes;
+  temp->x        = x;
+  temp->y        = y;
+  temp->swapped  = FALSE;
   temp->filename = NULL;
 
   temp->data = data = temp_buf_allocate (width * height * bytes);
@@ -156,26 +153,33 @@ temp_buf_new (gint    width,
         {
           memset (data, *col, width * height * 3);
         }
-      else if ((bytes == 4) && (col[1] == *col) && (*col == col[2]) && (col[2] == col[3]))
+      else if ((bytes == 4) &&
+	       (col[1] == *col) && (*col == col[2]) && (col[2] == col[3]))
         {
           memset (data, *col, (width * height) << 2);
         }
       else
         {
           /* No, we cannot */
-          guchar * dptr;
+          guchar *dptr;
+
           /* Fill the first row */
           dptr = data;
+
           for (i = width - 1; i >= 0; --i)
             {
-              guchar * init;
-              j = bytes;
+              guchar *init;
+
+              j    = bytes;
               init = col;
+
               while (j--)
                 *dptr++ = *init++;
             }
+
           /* Now copy from it (we set bytes to bytesperrow now) */
           bytes *= width;
+
           while (--height)
             {
               memcpy (dptr, data, bytes);
@@ -187,13 +191,12 @@ temp_buf_new (gint    width,
   return temp;
 }
 
-
 TempBuf *
 temp_buf_copy (TempBuf *src, 
 	       TempBuf *dest)
 {
-  TempBuf * new;
-  long length;
+  TempBuf *new;
+  glong    length;
 
   if (!src)
     {
@@ -202,7 +205,9 @@ temp_buf_copy (TempBuf *src,
     }
 
   if (!dest)
-    new = temp_buf_new (src->width, src->height, src->bytes, 0, 0, NULL);
+    {
+      new = temp_buf_new (src->width, src->height, src->bytes, 0, 0, NULL);
+    }
   else
     {
       new = dest;
@@ -218,6 +223,7 @@ temp_buf_copy (TempBuf *src,
 	    temp_buf_to_color (src, new);
           else
 	    g_message ("Cannot convert from indexed color.");
+
 	  return new;
         }
     }
@@ -229,23 +235,24 @@ temp_buf_copy (TempBuf *src,
   return new;
 }
 
-
 TempBuf *
-temp_buf_resize (TempBuf *buf, 
-		 gint     bytes, 
-		 gint     x, 
-		 gint     y, 
-		 gint     w, 
-		 gint     h)
+temp_buf_resize (TempBuf *buf,
+		 gint     bytes,
+		 gint     x,
+		 gint     y,
+		 gint     width,
+		 gint     height)
 {
   gint size;
 
   /*  calculate the requested size  */
-  size = w * h * bytes;
+  size = width * height * bytes;
 
   /*  First, configure the canvas buffer  */
   if (!buf)
-    buf = temp_buf_new (w, h, bytes, x, y, NULL);
+    {
+      buf = temp_buf_new (width, height, bytes, x, y, NULL);
+    }
   else
     {
       if (size != (buf->width * buf->height * buf->bytes))
@@ -258,30 +265,29 @@ temp_buf_resize (TempBuf *buf,
       }
 
       /*  Make sure the temp buf fields are valid  */
-      buf->x = x;
-      buf->y = y;
-      buf->width = w;
-      buf->height = h;
-      buf->bytes = bytes;
+      buf->x      = x;
+      buf->y      = y;
+      buf->width  = width;
+      buf->height = height;
+      buf->bytes  = bytes;
     }
 
   return buf;
 }
 
-
 TempBuf *
-temp_buf_copy_area (TempBuf *src, 
-		    TempBuf *dest, 
-		    gint     x, 
-		    gint     y, 
-		    gint     w, 
-		    gint     h, 
+temp_buf_copy_area (TempBuf *src,
+		    TempBuf *dest,
+		    gint     x,
+		    gint     y,
+		    gint     width,
+		    gint     height,
 		    gint     border)
 {
-  TempBuf * new;
-  PixelRegion srcR, destR;
-  guchar empty[MAX_CHANNELS] = { 0, 0, 0, 0 };
-  gint x1, y1, x2, y2;
+  TempBuf     *new;
+  PixelRegion  srcR, destR;
+  guchar       empty[MAX_CHANNELS] = { 0, 0, 0, 0 };
+  gint         x1, y1, x2, y2;
 
   if (!src)
     {
@@ -292,19 +298,21 @@ temp_buf_copy_area (TempBuf *src,
   /*  some bounds checking  */
   x1 = CLAMP (x, 0, src->width);
   y1 = CLAMP (y, 0, src->height);
-  x2 = CLAMP (x + w, 0, src->width);
-  y2 = CLAMP (y + h, 0, src->height);
+  x2 = CLAMP (x + width, 0, src->width);
+  y2 = CLAMP (y + height, 0, src->height);
 
   if (!(x2 - x1) || !(y2 - y1))
     return dest;
 
-  x = x1 - border;
-  y = y1 - border;
-  w = (x2 - x1) + border * 2;
-  h = (y2 - y1) + border * 2;
+  x      = x1 - border;
+  y      = y1 - border;
+  width  = (x2 - x1) + border * 2;
+  height = (y2 - y1) + border * 2;
 
   if (!dest)
-    new = temp_buf_new (w, h, src->bytes, x, y, empty);
+    {
+      new = temp_buf_new (width, height, src->bytes, x, y, empty);
+    }
   else
     {
       new = dest;
@@ -317,20 +325,19 @@ temp_buf_copy_area (TempBuf *src,
   new->y = src->y + y;
 
   /*  Copy the region  */
-  srcR.bytes = src->bytes;
-  srcR.w = (x2 - x1);
-  srcR.h = (y2 - y1);
+  srcR.bytes     = src->bytes;
+  srcR.w         = (x2 - x1);
+  srcR.h         = (y2 - y1);
   srcR.rowstride = src->bytes * src->width;
-  srcR.data = temp_buf_data (src) + y1 * srcR.rowstride + x1 * srcR.bytes;
+  srcR.data      = temp_buf_data (src) + y1 * srcR.rowstride + x1 * srcR.bytes;
 
   destR.rowstride = new->bytes * new->width;
-  destR.data = temp_buf_data (new) + (y1 - y) * destR.rowstride + (x1 - x) * srcR.bytes;
+  destR.data      = temp_buf_data (new) + (y1 - y) * destR.rowstride + (x1 - x) * srcR.bytes;
 
   copy_region (&srcR, &destR);
 
   return new;
 }
-
 
 void
 temp_buf_free (TempBuf *temp_buf)
@@ -343,7 +350,6 @@ temp_buf_free (TempBuf *temp_buf)
 
   g_free (temp_buf);
 }
-
 
 guchar *
 temp_buf_data (TempBuf *temp_buf)
@@ -360,7 +366,9 @@ temp_buf_data_clear (TempBuf *temp_buf)
   if (temp_buf->swapped)
     temp_buf_unswap (temp_buf);
   
-  memset (temp_buf->data, 0, temp_buf->height * temp_buf->width);
+  memset (temp_buf->data, 0,
+	  temp_buf->height * temp_buf->width * temp_buf->bytes);
+
   return temp_buf->data;
 }
 
@@ -375,9 +383,8 @@ mask_buf_new (gint width,
 {
   static guchar empty = 0;
 
-  return (temp_buf_new (width, height, 1, 0, 0, &empty));
+  return temp_buf_new (width, height, 1, 0, 0, &empty);
 }
-
 
 void
 mask_buf_free (MaskBuf *mask)
@@ -385,14 +392,22 @@ mask_buf_free (MaskBuf *mask)
   temp_buf_free ((TempBuf *) mask);
 }
 
-
 guchar *
 mask_buf_data (MaskBuf *mask_buf)
 {
   if (mask_buf->swapped)
-    temp_buf_unswap (mask_buf);
+    temp_buf_unswap ((TempBuf *) mask_buf);
 
   return mask_buf->data;
+}
+
+guchar *
+mask_buf_data_clear (MaskBuf *mask_buf)
+{
+  if (mask_buf->swapped)
+    temp_buf_unswap ((TempBuf *) mask_buf);
+
+  return temp_buf_data_clear ((TempBuf *) mask_buf);
 }
 
 
@@ -434,20 +449,20 @@ static gchar *
 generate_unique_filename (void)
 {
   pid_t pid;
+
   pid = getpid ();
   return g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimp%d.%d",
 			  temp_path, (int) pid, swap_index++);
 }
 
-
 void
 temp_buf_swap (TempBuf *buf)
 {
-  TempBuf * swap;
-  gchar * filename;
-  struct stat stat_buf;
-  gint err;
-  FILE * fp;
+  TempBuf     *swap;
+  gchar       *filename;
+  struct stat  stat_buf;
+  gint         err;
+  FILE        *fp;
 
   if (!buf || buf->swapped)
     return;
@@ -512,13 +527,12 @@ temp_buf_swap (TempBuf *buf)
   swap->filename = filename;
 }
 
-
 void
 temp_buf_unswap (TempBuf *buf)
 {
-  struct stat stat_buf;
-  FILE * fp;
-  gboolean succ = FALSE;
+  struct stat  stat_buf;
+  FILE        *fp;
+  gboolean     succ = FALSE;
 
   if (!buf || !buf->swapped)
     return;
@@ -563,7 +577,6 @@ temp_buf_unswap (TempBuf *buf)
   buf->filename = NULL;
 }
 
-
 void
 temp_buf_swap_free (TempBuf *buf)
 {
@@ -595,7 +608,6 @@ temp_buf_swap_free (TempBuf *buf)
     g_free (buf->filename);   /*  free filename  */
   buf->filename = NULL;
 }
-
 
 void
 swapping_free (void)

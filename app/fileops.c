@@ -617,8 +617,6 @@ file_save_a_copy_as_callback (GtkWidget *widget,
   if (! gimp_image_active_drawable (gdisplay->gimage))
     return;
 
-  g_print ("Save a Copy\n");
-
   the_gimage = gdisplay->gimage;
 
   set_filename = FALSE;
