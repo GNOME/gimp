@@ -1,5 +1,21 @@
 2003-04-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainergridview.c: connect to "realize" of the
+	scrolled window's viewport and scroll to the correct item
+	(because GtkViewport is too dumb to this by itself).
+
+	* app/widgets/gimpcontainerpopup.[ch]: added a "view_type"
+	parameter.
+
+	* app/widgets/gimpviewablebutton.[ch]: added new function
+	gimp_viewable_button_set_view_type() and pass the view_type
+	to the GimpContainerPopup.
+
+	* app/widgets/gimptemplateeditor.c: default to GIMP_VIEW_TYPE_GRID
+	for the stock icon popup.
+
+2003-04-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable-desaturate.c (gimp_drawable_desaturate):
 	Added g_return_if_fail (gimp_drawable_is_rgb (drawable)), cleanup.
 

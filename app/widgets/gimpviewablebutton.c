@@ -100,6 +100,7 @@ gimp_viewable_button_class_init (GimpViewableButtonClass *klass)
 static void
 gimp_viewable_button_init (GimpViewableButton *button)
 {
+  button->view_type            = GIMP_VIEW_TYPE_LIST;
   button->preview_size         = GIMP_PREVIEW_SIZE_SMALL;
   button->preview_border_width = 1;
 }
@@ -194,6 +195,7 @@ gimp_viewable_button_clicked (GtkButton *button)
 
   popup = gimp_container_popup_new (viewable_button->container,
                                     viewable_button->context,
+                                    viewable_button->view_type,
                                     viewable_button->preview_size,
                                     viewable_button->preview_border_width,
                                     viewable_button->dialog_factory,
@@ -256,4 +258,13 @@ gimp_viewable_button_new (GimpContainer     *container,
   gtk_widget_show (button->preview);
 
   return GTK_WIDGET (button);
+}
+
+void
+gimp_viewable_button_set_view_type (GimpViewableButton *button,
+                                    GimpViewType        view_type)
+{
+  g_return_if_fail (GIMP_IS_VIEWABLE_BUTTON (button));
+
+  button->view_type = view_type;
 }

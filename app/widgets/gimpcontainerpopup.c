@@ -360,6 +360,7 @@ gimp_container_popup_context_changed (GimpContext        *context,
 GtkWidget *
 gimp_container_popup_new (GimpContainer     *container,
                           GimpContext       *context,
+                          GimpViewType       view_type,
                           gint               preview_size,
                           gint               preview_border_width,
                           GimpDialogFactory *dialog_factory,
@@ -410,7 +411,7 @@ gimp_container_popup_new (GimpContainer     *container,
       popup->dialog_tooltip    = g_strdup (dialog_tooltip);
     }
 
-  gimp_container_popup_create_view (popup, GIMP_VIEW_TYPE_LIST);
+  gimp_container_popup_create_view (popup, view_type);
 
   return GTK_WIDGET (popup);
 }

@@ -429,6 +429,8 @@ gimp_template_editor_new (Gimp     *gimp,
                                          editor->stock_id_context,
                                          GIMP_PREVIEW_SIZE_SMALL, 0,
                                          NULL, NULL, NULL, NULL);
+      gimp_viewable_button_set_view_type (GIMP_VIEWABLE_BUTTON (button),
+                                          GIMP_VIEW_TYPE_GRID);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                  _("_Icon:"), 1.0, 0.5,

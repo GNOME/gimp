@@ -88,6 +88,8 @@ static void   gimp_container_grid_view_highlight_item (GimpContainerView      *v
 static void  gimp_container_grid_view_vieport_resized (GtkWidget              *widget,
                                                        GtkAllocation          *allocation,
                                                        GimpContainerGridView  *view);
+static void  gimp_container_grid_view_vieport_realize (GtkWidget              *widget,
+                                                       GimpContainerGridView  *view);
 
 
 static GimpContainerViewClass *parent_class = NULL;
@@ -211,6 +213,9 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 
   g_signal_connect (grid_view->wrap_box->parent, "size_allocate",
                     G_CALLBACK (gimp_container_grid_view_vieport_resized),
+                    grid_view);
+  g_signal_connect (grid_view->wrap_box->parent, "realize",
+                    G_CALLBACK (gimp_container_grid_view_vieport_realize),
                     grid_view);
 
   gtk_container_set_focus_vadjustment
@@ -538,7 +543,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
       adj = gtk_scrolled_window_get_vadjustment
 	(GTK_SCROLLED_WINDOW (view->scrolled_win));
 
-      item_height = GTK_WIDGET (preview)->allocation.height;
+      item_height = GTK_WIDGET (preview)->requisition.height;
 
       index = gimp_container_get_child_index (view->container,
                                               GIMP_OBJECT (viewable));
@@ -619,5 +624,27 @@ gimp_container_grid_view_vieport_resized (GtkWidget             *widget,
           grid_view->visible_rows = (allocation->height /
                                      preview_requisition.height);
         }
+    }
+}
+
+static void
+gimp_container_grid_view_vieport_realize (GtkWidget             *widget,
+                                          GimpContainerGridView *grid_view)
+{
+  GimpContainerView *view;
+
+  view = GIMP_CONTAINER_VIEW (grid_view);
+
+  if (view->container)
+    {
+      GimpPreview *preview;
+
+      preview = g_object_get_data (G_OBJECT (view),
+                                   "last_selected_item");
+
+      if (preview)
+        gimp_container_grid_view_highlight_item (view,
+                                                 preview->viewable,
+                                                 preview);
     }
 }
