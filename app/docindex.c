@@ -14,13 +14,14 @@
  */
 
 #include <string.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
 
 #include "docindexif.h"
 #include "docindex.h"
+#include "gimprc.h"
+#include "menus.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -211,29 +212,59 @@ load_from_list( gpointer data, gpointer data_null )
   idea_add_in_position( (gchar *) data, -1 );
 }
 
-void
-load_idea_manager( idea_manager *ideas )
+FILE *
+idea_manager_parse_init (/* RETURNS: */
+			 int *window_x,
+			 int *window_y,
+			 int *window_width,
+			 int *window_height)
 {
   FILE *fp = NULL;
   gchar *desktopfile;
 
-  if ( ! idea_list )
-    {
-      /* open persistant desktop file. */
-      desktopfile = gimp_personal_rc_file ("ideas");
-      fp = fopen( desktopfile, "r" );
-      g_free( desktopfile );
+  desktopfile = gimp_personal_rc_file ("ideas");
+  fp = fopen( desktopfile, "r" );
+  g_free( desktopfile );
       
-      /* Read in persistant desktop information. */
-      if ( fp )
-	{	  
-	  x = getinteger( fp );
-	  y = getinteger( fp );
-	  width = getinteger( fp );
-	  height = getinteger( fp );
-	}
+  /* Read in persistant desktop information. */
+  if ( fp )
+    {	  
+      *window_x = getinteger( fp );
+      *window_y = getinteger( fp );
+      *window_width = getinteger( fp );
+      *window_height = getinteger( fp );
     }
-  
+
+  return fp;
+}
+
+gchar *
+idea_manager_parse_line (FILE * fp)
+{
+  int length;
+  gchar *filename;
+
+  length = getinteger (fp);
+
+  if (!feof( fp ) && !ferror (fp))
+    {
+      filename = g_malloc0 (length + 1);
+      filename[fread (filename, 1, length, fp)] = 0;
+      clear_white (fp);
+      return filename;
+    }
+
+  return NULL;
+}
+
+void
+load_idea_manager( idea_manager *ideas )
+{
+  FILE *fp = NULL;
+
+  if ( ! idea_list )
+    fp = idea_manager_parse_init (&x, &y, &width, &height);
+
   if ( idea_list || fp )
     {
       gtk_widget_set_usize( ideas->window, width, height );
@@ -246,14 +277,10 @@ load_idea_manager( idea_manager *ideas )
 	  gint length;
 	  clear_white( fp );
 	  
-	  while ( ! feof( fp ) && !ferror( fp ) )
+	  while ((title = idea_manager_parse_line (fp)))
 	    {
-	      length = getinteger( fp );
-	      title = g_malloc0( length + 1 );
-	      title[fread( title, 1, length, fp )] = 0;
 	      idea_add_in_position( title, -1 );
 	      g_free( title );
-	      clear_white( fp );
 	    }
 	  fclose( fp );
 	}
@@ -552,4 +579,3 @@ close_idea_window( void )
 {
   idea_hide_callback( NULL, NULL );
 }
-

@@ -554,6 +554,33 @@ app_init (void)
       devices_init ();
       session_init ();
       create_toolbox ();
+
+      /*  Fill the "last opened" menu items with the first last_opened_size
+       *  elements of the docindex
+       */
+      {
+	FILE *fp;
+	gchar *filenames[last_opened_size];
+	int dummy, i;
+
+	if ((fp = idea_manager_parse_init (&dummy, &dummy, &dummy, &dummy)))
+	  {
+	    /*  read the filenames...  */
+	    for (i = 0; i < last_opened_size; i++)
+	      if ((filenames[i] = idea_manager_parse_line (fp)) == NULL)
+		break;
+	    
+	    /*  ...and add them in reverse order  */
+	    for (--i; i >= 0; i--)
+	      {
+		menus_last_opened_add (filenames[i]);
+		g_free (filenames[i]);
+	      }
+
+	    fclose (fp);
+	  }
+      }
+
       gximage_init ();
       render_setup (transparency_type, transparency_size);
       tools_options_dialog_new ();

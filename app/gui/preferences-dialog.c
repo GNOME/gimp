@@ -1695,8 +1695,8 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     _("Levels of Undo:"), 1.0, 0.5, spinbutton, TRUE);
 
   spinbutton =
-    gimp_spin_button_new (&adjustment,
-			  last_opened_size, 0.0, 256.0, 1.0, 5.0, 0.0, 1.0, 0.0);
+    gimp_spin_button_new (&adjustment, edit_last_opened_size,
+			  0.0, 16.0, 1.0, 5.0, 0.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &edit_last_opened_size);
@@ -1936,7 +1936,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  divided_tile_cache_size,
 			  0.0, (4069.0 * 1024 * 1024), 1.0, 16.0, 0.0,
 			  1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+  gtk_signal_connect (GTK_OBJECT (tile_cache_size_adjustment), "value_changed",
 		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &divided_tile_cache_size);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);

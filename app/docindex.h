@@ -16,6 +16,8 @@
 #ifndef __DOCINDEX_H__
 #define __DOCINDEX_H__
 
+#include <stdio.h>
+
 #include <gtk/gtk.h>
 
 typedef struct idea_manager
@@ -54,7 +56,14 @@ void idea_remove_callback( GtkWidget *widget, gpointer data );
 void save_idea_manager( idea_manager * );
 gboolean idea_window_delete_event_callback( GtkWidget *widget, GdkEvent *event, gpointer data );
 void docindex_configure_drop_on_widget(GtkWidget * widget);
-void load_idea_manager( idea_manager * );
+
+FILE  * idea_manager_parse_init (int  * window_x,
+				 int  * window_y,
+				 int  * window_width,
+				 int  * window_height);
+gchar * idea_manager_parse_line (FILE * fp);
+
+void    load_idea_manager       (idea_manager *);
 
 extern idea_manager *ideas;
 
