@@ -46,6 +46,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpoldpreview.h"
+
 typedef enum
 {
   BEZIER_1,

@@ -1408,6 +1408,7 @@ app/xcf/Makefile
 plug-ins/Makefile
 plug-ins/libgck/Makefile
 plug-ins/libgck/gck/Makefile
+plug-ins/libgimpoldpreview/Makefile
 plug-ins/dbbrowser/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/siod/Makefile

@@ -50,6 +50,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpoldpreview.h"
 
 #define SPIN_BUTTON_WIDTH    8
 #define COLOR_BUTTON_WIDTH  55

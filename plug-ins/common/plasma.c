@@ -67,6 +67,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpoldpreview.h"
 
 /* Some useful macros */
 

@@ -45,6 +45,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpoldpreview.h"
 
 #define SCALE_WIDTH      125
 #define TILE_CACHE_SIZE  16

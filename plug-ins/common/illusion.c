@@ -37,6 +37,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpoldpreview.h"
 
 #define PLUG_IN_NAME    "plug_in_illusion"
 #define PLUG_IN_VERSION "v0.8 (May 14 2000)"

@@ -46,6 +46,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpoldpreview.h"
+
 typedef struct
 {
   gint32  img;

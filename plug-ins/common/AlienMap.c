@@ -47,6 +47,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpoldpreview.h"
 
 #define RESPONSE_ABOUT 1
 

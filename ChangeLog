@@ -1,3 +1,35 @@
+2003-12-11  DindinX  <david@dindinx.org>
+
+	* libgimp/gimpmiscui.c:
+	* libgimp/gimpmiscui.h: removed GimpOld preview...
+
+	* plug-ins/libgimpoldpreview/Makefile.am:
+	* plug-ins/libgimpoldpreview/gimpoldpreview.c:
+	* plug-ins/libgimpoldpreview/gimpoldpreview.h: ... and added it there
+	as a noinst library, so foreign plug-ins won't use it.
+
+	* configure.in:
+	* plug-ins/Makefile.am:
+
+	* plug-ins/common/Makefile.am:
+
+	* plug-ins/common/AlienMap.c:
+	* plug-ins/common/AlienMap2.c:
+	* plug-ins/common/blinds.c:
+	* plug-ins/common/flarefx.c:
+	* plug-ins/common/glasstile.c:
+	* plug-ins/common/grid.c:
+	* plug-ins/common/illusion.c:
+	* plug-ins/common/jigsaw.c:
+	* plug-ins/common/max_rgb.c:
+	* plug-ins/common/nlfilt.c:
+	* plug-ins/common/noisify.c:
+	* plug-ins/common/nova.c:
+	* plug-ins/common/plasma.c:
+	* plug-ins/common/polar.c:
+	* plug-ins/common/waves.c:
+	* plug-ins/common/wind.c: Changed accordingly.
+
 2003-12-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphistogramview.[ch]: added properties "border-width"

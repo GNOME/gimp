@@ -26,74 +26,9 @@
 #ifndef __GIMP_MISCUI_H__
 #define __GIMP_MISCUI_H__
 
-#include <libgimp/gimptypes.h>
-
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
-
-/* Preview stuff. WARNING: don't use this in new code!!!!!!!
- * It's just here to extract some general preview stuff from plug-ins so
- * that it will be easier to change them when we have a real effect preview
- * widget.
- * Don't say I didn't warn you (Maurits).
- */
-
-typedef struct
-{
-  GtkWidget *widget;
-  GtkWidget *frame;
-  guchar    *cache;
-  guchar    *even;
-  guchar    *odd;
-  guchar    *buffer;
-  gint	     width;
-  gint	     height;
-  gint       rowstride;
-  gint       bpp;		/* bpp of the drawable */
-  guchar    *cmap;
-  gint       ncolors;
-  gdouble    scale_x;
-  gdouble    scale_y;
-  gboolean   is_gray;
-} GimpOldPreview;
-
-typedef void (*GimpOldPreviewFunc)  (const guchar *src,
-                                     guchar       *dest,
-                                     gint          bpp,
-                                     gpointer      data);
-
-GimpOldPreview * gimp_old_preview_new    (GimpDrawable       *drawable,
-                                          gboolean            has_frame);
-GimpOldPreview * gimp_old_preview_new2   (GimpImageType       drawable_type,
-                                          gboolean            has_frame);
-void             gimp_old_preview_free   (GimpOldPreview     *preview);
-
-void             gimp_old_preview_update (GimpOldPreview     *preview,
-                                          GimpOldPreviewFunc  func,
-                                          gpointer            data);
-
-
-void gimp_old_preview_fill_with_thumb (GimpOldPreview   *preview,
-                                       gint32            drawable_ID);
-void gimp_old_preview_fill            (GimpOldPreview *preview,
-                                       GimpDrawable     *drawable);
-void gimp_old_preview_fill_scaled     (GimpOldPreview *preview,
-                                       GimpDrawable     *drawable);
-
-void gimp_old_preview_do_row          (GimpOldPreview *preview,
-                                       gint              row,
-                                       gint              width,
-                                       const guchar     *src);
-
-void gimp_old_preview_put_pixel       (GimpOldPreview *preview,
-                                       gint              x,
-                                       gint              y,
-                                       const guchar     *pixel);
-void gimp_old_preview_get_pixel       (GimpOldPreview *preview,
-                                       gint              x,
-                                       gint              y,
-                                       guchar           *pixel);
 
 gchar   * gimp_plug_in_get_path              (const gchar *path_name,
                                               const gchar *dir_name);

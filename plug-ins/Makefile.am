@@ -28,6 +28,7 @@ endif
 
 SUBDIRS = 			\
 	libgck			\
+	libgimpoldpreview	\
 	dbbrowser		\
 	script-fu		\
 	FractalExplorer		\

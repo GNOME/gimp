@@ -40,6 +40,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpoldpreview.h"
 
 #define PLUG_IN_NAME "wind"
 

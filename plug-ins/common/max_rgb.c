@@ -37,6 +37,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpoldpreview.h"
 
 /* Replace them with the right ones */
 #define PLUG_IN_NAME         "plug_in_max_rgb"

@@ -13,12 +13,13 @@ EXTRA_DIST = \
 	plugin-defs.pl
 
 INCLUDES = \
-	-I$(top_srcdir)	\
-	@GTK_CFLAGS@	\
-	@X_CFLAGS@	\
-	@EXIF_CFLAGS@	\
-	@SVG_CFLAGS@	\
-	@WMF_CFLAGS@	\
+	-I$(top_srcdir)					\
+	-I$(top_srcdir)/plug-ins/libgimpoldpreview	\
+	@GTK_CFLAGS@					\
+	@X_CFLAGS@					\
+	@EXIF_CFLAGS@					\
+	@SVG_CFLAGS@					\
+	@WMF_CFLAGS@					\
 	-I$(includedir)
 
 libexec_PROGRAMS = \
@@ -195,6 +196,7 @@ AlienMap_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -207,6 +209,7 @@ AlienMap2_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -322,6 +325,7 @@ blinds_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -679,6 +683,7 @@ flarefx_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -809,6 +814,7 @@ glasstile_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -845,6 +851,7 @@ grid_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -925,6 +932,7 @@ illusion_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -949,6 +957,7 @@ jigsaw_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -1024,6 +1033,7 @@ max_rgb_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -1085,6 +1095,7 @@ nlfilt_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -1097,6 +1108,7 @@ noisify_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -1119,6 +1131,7 @@ nova_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -1203,6 +1216,7 @@ plasma_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -1252,6 +1266,7 @@ polar_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -1701,6 +1716,7 @@ waves_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 
@@ -1748,6 +1764,7 @@ wind_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 

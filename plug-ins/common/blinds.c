@@ -61,6 +61,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpoldpreview.h"
 
 /***** Magic numbers *****/
 

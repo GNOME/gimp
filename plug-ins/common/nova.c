@@ -73,6 +73,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpoldpreview.h"
 
 #ifdef RCSID
 static char rcsid[] = "$Id$";

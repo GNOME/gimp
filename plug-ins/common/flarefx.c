@@ -56,6 +56,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpoldpreview.h"
 
 /* --- Defines --- */
 #define ENTRY_WIDTH  75
