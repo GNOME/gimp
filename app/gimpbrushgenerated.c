@@ -124,10 +124,9 @@ gimp_brush_generated_generate(GimpBrushGenerated *brush)
   {
     temp_buf_free(gbrush->mask);
   }
-#define D_TO_R M_PI/180
   /* compute the range of the brush, should do a better job than this */
-  s = sin(brush->angle*M_PI/180);
-  c = cos(brush->angle*M_PI/180);
+  s = sin(brush->angle*M_PI/180.0);
+  c = cos(brush->angle*M_PI/180.0);
   tx = MAXIMUM(fabs(c*ceil(brush->radius) - s*ceil(brush->radius)
 		    /brush->aspect_ratio), 
 	       fabs(c*ceil(brush->radius) + s*ceil(brush->radius)

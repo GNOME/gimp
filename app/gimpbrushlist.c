@@ -60,9 +60,7 @@ static int          have_default_brush = 0;
 
 /*  static function prototypes  */
 static void   create_default_brush   (void);
-static void   brushes_free_one       (gpointer, gpointer);
-static gint   brush_compare_func     (gconstpointer, 
-					    gconstpointer);
+static gint   brush_compare_func     (gconstpointer, gconstpointer);
 
 static void gimp_brush_list_recalc_indexes(GimpBrushList *brush_list);
 static void gimp_brush_list_uniquefy_names(GimpBrushList *brush_list);
@@ -192,13 +190,6 @@ brushes_init (int no_data)
   gimp_brush_list_uniquefy_names(brush_list);
 }
 
-static void
-brushes_free_one (gpointer data, gpointer dummy)
-{
-  gimp_object_unref (GIMP_OBJECT(data));
-}
-
-
 static gint
 brush_compare_func (gconstpointer first, gconstpointer second)
 {
@@ -211,8 +202,7 @@ void
 brushes_free ()
 {
   if (brush_list) {
-/*    gimp_list_foreach (GIMP_LIST(brush_list), brushes_free_one, NULL);*/
-    gimp_object_destroy(GIMP_OBJECT(brush_list));
+    gimp_object_unref (GIMP_OBJECT(brush_list));
   }
 
   have_default_brush = 0;
@@ -303,6 +293,7 @@ void
 gimp_brush_list_add (GimpBrushList *brush_list, GimpBrush * brush)
 {
   gimp_list_add(GIMP_LIST(brush_list), brush);
+  gtk_object_sink(GTK_OBJECT(brush));
   gimp_brush_list_recalc_indexes(brush_list);
 }
 

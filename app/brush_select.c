@@ -402,7 +402,8 @@ connect_signals_to_brush(GimpBrushP brush, BrushSelectP bsp)
 static void
 disconnect_signals_from_brush(GimpBrushP brush, BrushSelectP bsp)
 {
-  gtk_signal_disconnect_by_data(GTK_OBJECT(brush), bsp);
+  if (!GTK_OBJECT_DESTROYED(brush))
+    gtk_signal_disconnect_by_data(GTK_OBJECT(brush), bsp);
 }
 
 static void
