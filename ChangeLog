@@ -1,3 +1,8 @@
+2004-01-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c: added more optional debug output
+	and did some minor code cleanup.
+
 2004-01-17  DindinX  <david@dindinx.org>
 
 	* plug-ins/pygimp/gimpfu.py: Show the description of params in dialog
@@ -15,7 +20,6 @@
 	* app/config/gimprc-blurbs.h
 	* app/widgets/gimpdock.c
 	* app/widgets/gimptoolbox.c
-	* app/widgets/gimpwidgets-utils.[ch]
 	* app/widgets/gimpwidgets-utils.[ch]
 	* app/widgets/widgets-enums.[ch]: GTK+-2.4 will allow to request
 	windows to be kept above. This change prepares the code so that we
