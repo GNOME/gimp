@@ -1,3 +1,8 @@
+2000-03-07  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/Makefile.am: added missing $(MAILER)
+	to CPPFLAGS for mail plugin.
+
 2000-03-06  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpwidgets.[ch]:

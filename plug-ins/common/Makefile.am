@@ -9,6 +9,7 @@ EXTRA_DIST = \
 	winprint.c
 
 AM_CPPFLAGS = \
+	$(MAILER) \
 	-DLOCALEDIR=\""$(localedir)"\"
 
 INCLUDES = \
