@@ -1,5 +1,36 @@
 2004-02-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-proc.[ch]: added new function
+	plug_in_proc_def_compare_menu_path() which is a GCompareDataFunc.
+	(uses g_utf8_collate() on the translated menu paths).
+
+	* app/plug-in/plug-ins.c (plug_ins_init): sort gimp->load_procs
+	and gimp->save_procs using the new compare function above.
+	Fixes bug #133180.
+
+	(plug_ins_locale_domain)
+	(plug_ins_help_domain): don't g_return_if_fail() on a NULL
+	prog_name but return the default locale and help domains
+	of the GIMP itself.
+
+	(plug_ins_proc_def_insert): removed obsolete and broken (not
+	locale and UTF-8 aware) code which tried to insert new plug-in
+	menu entries in alphabetical order (was unused except for load
+	and save procs).
+
+	Unrelated:
+
+	* app/plug-in/plug-in-proc.[ch]: added const qualifiers.
+
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* tools/pdbgen/pdb/fileops.pdb: changed accordingly (constify
+	local variables).
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+2004-02-03  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/*.scm: applied patch from Kevin
 	Cozens <kcozens@interlog.com> which removes the use of deprecated
 	constants in all scripts. Fixes bug #133270.

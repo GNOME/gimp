@@ -42,13 +42,17 @@ struct _PlugInProcDef
 };
 
 
-PlugInProcDef * plug_in_proc_def_new          (void);
-void            plug_in_proc_def_free         (PlugInProcDef *proc_def);
+PlugInProcDef    * plug_in_proc_def_new          (void);
+void               plug_in_proc_def_free         (PlugInProcDef       *proc_def);
 
-ProcRecord    * plug_in_proc_def_get_proc     (PlugInProcDef *proc_def);
-const gchar   * plug_in_proc_def_get_progname (PlugInProcDef *proc_def);
-gchar         * plug_in_proc_def_get_help_id  (PlugInProcDef *proc_def,
-                                               const gchar   *help_domain);
+const ProcRecord * plug_in_proc_def_get_proc     (const PlugInProcDef *proc_def);
+const gchar      * plug_in_proc_def_get_progname (const PlugInProcDef *proc_def);
+gchar            * plug_in_proc_def_get_help_id  (const PlugInProcDef *proc_def,
+                                                  const gchar         *help_domain);
+
+gint          plug_in_proc_def_compare_menu_path (gconstpointer        a,
+                                                  gconstpointer        b,
+                                                  gpointer             user_data);
 
 
 #endif /* __PLUG_IN_PROC_H__ */

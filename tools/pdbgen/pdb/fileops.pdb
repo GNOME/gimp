@@ -78,8 +78,8 @@ HELP
     %invoke = (
 	proc => [ 'proc->name', 'new_args' ],
 	args => [ 'new_args', 'return_vals' ],
-	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc', 'gchar *uri',
-                  'gint i' ],
+	vars => [ 'PlugInProcDef *file_proc', 'const ProcRecord *proc',
+                  'gchar *uri', 'gint i' ],
 	code => <<'CODE'
 {
   uri = file_utils_filename_to_uri (gimp->load_procs, %%filename%%, NULL);
@@ -148,8 +148,8 @@ HELP
 	headers => [ qw(<string.h>) ],
 	proc => [ 'proc->name', 'new_args' ],
 	args => [ 'new_args', 'return_vals' ],
-	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc', 'gchar *uri',
-                  'gint i' ],
+	vars => [ 'PlugInProcDef *file_proc', 'const ProcRecord *proc',
+                  'gchar *uri', 'gint i' ],
 	code => <<'CODE'
 {
   uri = file_utils_filename_to_uri (gimp->load_procs, %%filename%%, NULL);

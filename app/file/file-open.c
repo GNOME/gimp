@@ -67,12 +67,12 @@ file_open_image (Gimp               *gimp,
 		 GimpPDBStatusType  *status,
                  GError            **error)
 {
-  ProcRecord *proc;
-  Argument   *args;
-  Argument   *return_vals;
-  gint        gimage_id;
-  gint        i;
-  gchar      *filename;
+  const ProcRecord *proc;
+  Argument         *args;
+  Argument         *return_vals;
+  gint              gimage_id;
+  gint              i;
+  gchar            *filename;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (status != NULL, NULL);

@@ -20,10 +20,17 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "plug-in-types.h"
 
+#include "core/gimp.h"
+
 #include "plug-in.h"
+#include "plug-ins.h"
 #include "plug-in-proc.h"
+
+#include "gimp-intl.h"
 
 
 PlugInProcDef *
@@ -76,8 +83,8 @@ plug_in_proc_def_free (PlugInProcDef *proc_def)
   g_free (proc_def);
 }
 
-ProcRecord * 
-plug_in_proc_def_get_proc (PlugInProcDef *proc_def)
+const ProcRecord *
+plug_in_proc_def_get_proc (const PlugInProcDef *proc_def)
 {
   g_return_val_if_fail (proc_def != NULL, NULL);
 
@@ -85,7 +92,7 @@ plug_in_proc_def_get_proc (PlugInProcDef *proc_def)
 }
 
 const gchar *
-plug_in_proc_def_get_progname (PlugInProcDef *proc_def)
+plug_in_proc_def_get_progname (const PlugInProcDef *proc_def)
 {
   g_return_val_if_fail (proc_def != NULL, NULL);
 
@@ -106,8 +113,8 @@ plug_in_proc_def_get_progname (PlugInProcDef *proc_def)
 }
 
 gchar *
-plug_in_proc_def_get_help_id (PlugInProcDef *proc_def,
-                              const gchar   *help_domain)
+plug_in_proc_def_get_help_id (const PlugInProcDef *proc_def,
+                              const gchar         *help_domain)
 {
   gchar *help_id;
   gchar *p;
@@ -131,4 +138,49 @@ plug_in_proc_def_get_help_id (PlugInProcDef *proc_def,
     }
 
   return help_id;
+}
+
+gint
+plug_in_proc_def_compare_menu_path (gconstpointer  a,
+                                    gconstpointer  b,
+                                    gpointer       user_data)
+{
+  Gimp                *gimp       = GIMP (user_data);
+  const PlugInProcDef *proc_def_a = a;
+  const PlugInProcDef *proc_def_b = b;
+
+  if (proc_def_a->menu_path && proc_def_b->menu_path)
+    {
+      const gchar *progname_a;
+      const gchar *progname_b;
+      const gchar *domain_a;
+      const gchar *domain_b;
+      gchar       *menu_path_a;
+      gchar       *menu_path_b;
+      gint         retval;
+
+      progname_a = plug_in_proc_def_get_progname (proc_def_a);
+      progname_b = plug_in_proc_def_get_progname (proc_def_b);
+
+      domain_a = plug_ins_locale_domain (gimp, progname_a, NULL);
+      domain_b = plug_ins_locale_domain (gimp, progname_b, NULL);
+
+      menu_path_a = gimp_strip_uline (dgettext (domain_a,
+                                                proc_def_a->menu_path));
+      menu_path_b = gimp_strip_uline (dgettext (domain_b,
+                                                proc_def_b->menu_path));
+
+      retval = g_utf8_collate (menu_path_a, menu_path_b);
+
+      g_free (menu_path_a);
+      g_free (menu_path_b);
+
+      return retval;
+    }
+  else if (proc_def_a->menu_path)
+    return 1;
+  else if (proc_def_b->menu_path)
+    return -1;
+
+  return 0;
 }

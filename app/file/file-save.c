@@ -93,7 +93,7 @@ file_save_as (GimpImage      *gimage,
               gboolean        set_image_clean,
               GError        **error)
 {
-  ProcRecord        *proc;
+  const ProcRecord  *proc;
   Argument          *args;
   Argument          *return_vals;
   GimpPDBStatusType  status;

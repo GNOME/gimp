@@ -85,7 +85,7 @@ file_load_invoker (Gimp     *gimp,
   Argument *new_args;
   Argument *return_vals;
   PlugInProcDef *file_proc;
-  ProcRecord *proc;
+  const ProcRecord *proc;
   gchar *uri;
   gint i;
 
@@ -170,7 +170,7 @@ file_save_invoker (Gimp     *gimp,
   Argument *new_args;
   Argument *return_vals;
   PlugInProcDef *file_proc;
-  ProcRecord *proc;
+  const ProcRecord *proc;
   gchar *uri;
   gint i;
 

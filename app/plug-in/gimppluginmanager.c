@@ -235,9 +235,13 @@ plug_ins_init (Gimp               *gimp,
   /* add the plug-in procs to the procedure database */
   plug_ins_add_to_db (gimp);
 
-  /* restore file procs order */
-  gimp->load_procs = g_slist_reverse (gimp->load_procs);
-  gimp->save_procs = g_slist_reverse (gimp->save_procs);
+  /* sort file procs */
+  gimp->load_procs = g_slist_sort_with_data (gimp->load_procs,
+                                             plug_in_proc_def_compare_menu_path,
+                                             gimp);
+  gimp->save_procs = g_slist_sort_with_data (gimp->save_procs,
+                                             plug_in_proc_def_compare_menu_path,
+                                             gimp);
 
   /* create help_path and locale_domain lists */
   for (tmp = gimp->plug_in_defs; tmp; tmp = g_slist_next (tmp))
@@ -629,10 +633,13 @@ plug_ins_locale_domain (Gimp         *gimp,
   GSList *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (prog_name != NULL, NULL);
 
   if (domain_path)
     *domain_path = gimp_locale_directory ();
+
+  /*  A NULL prog_name is GIMP itself, return the default domain  */
+  if (! prog_name)
+    return NULL;
 
   for (list = gimp->plug_in_locale_domains; list; list = g_slist_next (list))
     {
@@ -658,10 +665,13 @@ plug_ins_help_domain (Gimp         *gimp,
   GSList *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (prog_name != NULL, NULL);
 
   if (domain_uri)
     *domain_uri = NULL;
+
+  /*  A NULL prog_name is GIMP itself, return the default domain  */
+  if (! prog_name)
+    return NULL;
 
   for (list = gimp->plug_in_help_domains; list; list = g_slist_next (list))
     {
@@ -956,7 +966,6 @@ plug_ins_proc_def_insert (Gimp          *gimp,
                           PlugInProcDef *proc_def)
 {
   GSList *list;
-  GSList *prev = NULL;
 
   for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
     {
@@ -979,28 +988,9 @@ plug_ins_proc_def_insert (Gimp          *gimp,
 
 	  return tmp_proc_def;
 	}
-      else if (! proc_def->menu_path ||
-	       (tmp_proc_def->menu_path &&
-		(strcmp (proc_def->menu_path, tmp_proc_def->menu_path) < 0)))
-	{
-          GSList *new;
-
-	  new = g_slist_alloc ();
-	  new->data = proc_def;
-
-	  new->next = list;
-	  if (prev)
-	    prev->next = new;
-	  else
-	    gimp->plug_in_proc_defs = new;
-
-	  return NULL;
-	}
-
-      prev = list;
     }
 
-  gimp->plug_in_proc_defs = g_slist_append (gimp->plug_in_proc_defs, proc_def);
+  gimp->plug_in_proc_defs = g_slist_prepend (gimp->plug_in_proc_defs, proc_def);
 
   return NULL;
 }
