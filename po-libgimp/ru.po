@@ -4,37 +4,36 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp-1.3+\n"
-"POT-Creation-Date: 2003-06-26 22:14+0200\n"
-"PO-Revision-Date: 2002-03-05 18:17+0300\n"
+"POT-Creation-Date: 2003-07-06 17:30+0400\n"
+"PO-Revision-Date: 2003-07-06 17:42+0400\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: libgimp/gimpbrushmenu.c:321
-#, fuzzy
+#: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
-msgstr "Выбор единиц"
+msgstr "Выбор кисти"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layers"
-msgstr "невозможно обработать слои"
+msgstr "%s неможет обработать слои"
 
 #: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
 msgstr "Объединить видимые слои"
 
 #: libgimp/gimpexport.c:192
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "невозможно обработать смещение, размер или непрозрачность слоя"
+msgstr "%s неможет обработать смещение, размер или непрозрачность слоя"
 
 #: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "можно обработать слои только как анимированные кадры"
+msgstr "%s может обработать слои только как анимированные кадры"
 
 #: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
@@ -45,32 +44,32 @@ msgid "Flatten Image"
 msgstr "Свести изображение"
 
 #: libgimp/gimpexport.c:228
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle transparency"
-msgstr "невозможно обработать прозрачность"
+msgstr "%s неможет обработать прозрачность"
 
 #: libgimp/gimpexport.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB images"
-msgstr "можно обработать только RGB-изображения"
+msgstr "%s может обработать только RGB-изображения"
 
 #: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
 msgstr "Преобразовать в RGB"
 
 #: libgimp/gimpexport.c:246
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale images"
-msgstr "можно обработать только изображения в оттенках серого"
+msgstr "%s может обработать только изображения в оттенках серого"
 
 #: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
 msgstr "Преобразовать в оттенки серого"
 
 #: libgimp/gimpexport.c:255
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle indexed images"
-msgstr "можно обработать только индексированные изображения"
+msgstr "%s может обработать только индексированные изображения"
 
 #: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
@@ -81,25 +80,24 @@ msgstr ""
 "(Результат можно подстроить вручную)"
 
 #: libgimp/gimpexport.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "можно обработать только изображения в оттенках серого или RGB"
+msgstr "%s может обработать только изображения в оттенках серого или RGB"
 
 #: libgimp/gimpexport.c:274
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "можно обработать только RGB или индексированные изображения"
+msgstr "%s может обработать только RGB или индексированные изображения"
 
 #: libgimp/gimpexport.c:284
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr ""
-"можно обработать только изображения в оттенках серого или индексированные"
+msgstr "%s может обработать только изображения в оттенках серого или индексированные"
 
 #: libgimp/gimpexport.c:295
-#, fuzzy, c-format
+#, c-format
 msgid "%s needs an alpha channel"
-msgstr "требуется альфа канал"
+msgstr "%s требуется альфа канал"
 
 #: libgimp/gimpexport.c:296
 msgid "Add Alpha Channel"
@@ -149,43 +147,41 @@ msgid "The export conversion won't modify your original image."
 msgstr "Экспортное преобразование не изменит ваше исходное изображение."
 
 #: libgimp/gimpexport.c:610
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Вы собираетесь сохранить %s как %s.\n"
+"Вы собираетесь сохранить маску слоя как %s.\n"
 "Видимые слои не будут сохранены."
 
 #: libgimp/gimpexport.c:615
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Вы собираетесь сохранить %s как %s.\n"
+"Вы собираетесь сохранить канал (сохранённое выделение) как %s.\n"
 "Видимые слои не будут сохранены."
 
-#: libgimp/gimpfontmenu.c:80
-#, fuzzy
+#: libgimp/gimpfontmenu.c:89
 msgid "Font Selection"
-msgstr "Выбор единиц"
+msgstr "Выбор шрифта"
 
-#: libgimp/gimpgradientmenu.c:172
-#, fuzzy
+#: libgimp/gimpgradientmenu.c:102
 msgid "Gradient Selection"
-msgstr "Выбор единиц"
+msgstr "Выбор градиента"
 
-#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
-#: libgimp/gimpmenu.c:593
+#: libgimp/gimpmenu.c:93 libgimp/gimpmenu.c:217 libgimp/gimpmenu.c:334
+#: libgimp/gimpmenu.c:517
 msgid "None"
-msgstr ""
+msgstr "Без"
 
 #: libgimp/gimpmiscui.c:50
 msgid "Preview"
-msgstr ""
+msgstr "Просмотр"
 
-#: libgimp/gimpmiscui.c:529
+#: libgimp/gimpmiscui.c:537
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -193,80 +189,85 @@ msgid ""
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
+"Отсутствует %s в файле gimprc:\n"
+"Вам надо добавить запись типа\n"
+"(%s \"%s\")\n"
+"к файлу %s."
 
-#: libgimp/gimppatternmenu.c:321
-#, fuzzy
+#: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
-msgstr "Выбор единиц"
+msgstr "Выбор шаблона"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "процент"
 
 #: libgimpbase/gimputils.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "%d Bytes"
-msgstr "Байты"
+msgstr "%d байт"
 
 #: libgimpbase/gimputils.c:122
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f КБ"
 
 #: libgimpbase/gimputils.c:126
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f КБ"
 
 #: libgimpbase/gimputils.c:130
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d КБ"
 
 #: libgimpbase/gimputils.c:135
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f МБ"
 
 #: libgimpbase/gimputils.c:140
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f МБ"
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr ""
+msgstr "Загрузка модуля: \"%s\"\n"
 
-#: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
-#: libgimpmodule/gimpmodule.c:432
+#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:434
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr ""
+"Ошибка загрузки модуля \"%s\":\n"
+"%s"
 
-#: libgimpmodule/gimpmodule.c:270
+#: libgimpmodule/gimpmodule.c:271
 #, c-format
 msgid "Skipping module: '%s'\n"
-msgstr ""
-
-#: libgimpmodule/gimpmodule.c:406
-msgid "Module error"
-msgstr ""
-
-#: libgimpmodule/gimpmodule.c:407
-msgid "Loaded"
-msgstr ""
+msgstr "Пропуск модуля: \"%s\"\n"
 
 #: libgimpmodule/gimpmodule.c:408
-msgid "Load failed"
-msgstr ""
+msgid "Module error"
+msgstr "Ошибка модуля"
 
 #: libgimpmodule/gimpmodule.c:409
+msgid "Loaded"
+msgstr "Загружен"
+
+#: libgimpmodule/gimpmodule.c:410
+msgid "Load failed"
+msgstr "Сбой при загрузке"
+
+#: libgimpmodule/gimpmodule.c:411
 msgid "Not loaded"
-msgstr ""
+msgstr "Не загружен"
 
 #: libgimpwidgets/gimpcolorbutton.c:84
 msgid "/Foreground Color"
@@ -285,73 +286,72 @@ msgid "/White"
 msgstr "/Белый"
 
 #: libgimpwidgets/gimpcolorscales.c:142
-#, fuzzy
 msgid "Scales"
-msgstr "Масштабировать"
+msgstr ""
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
-msgstr ""
+msgstr "_H"
 
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "_S"
-msgstr ""
+msgstr "_S"
 
 #: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "_V"
-msgstr ""
+msgstr "_V"
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
 msgid "_R"
-msgstr ""
+msgstr "_R"
 
 #: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
 msgid "_G"
-msgstr ""
+msgstr "_G"
 
 #: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: libgimpwidgets/gimpcolorscales.c:170
 msgid "_A"
-msgstr ""
+msgstr "_A"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
-msgstr ""
+msgstr "Тон"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Saturation"
-msgstr ""
+msgstr "Насыщенность"
 
 #: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Value"
-msgstr ""
+msgstr "Яркость"
 
 #: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
-msgstr ""
+msgstr "Красный"
 
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
-msgstr ""
+msgstr "Зелёный"
 
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
-msgstr ""
+msgstr "Синий"
 
 #: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
-msgstr ""
+msgstr "Альфа"
 
 #: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
-msgstr ""
+msgstr "Шестнадцатиричная запись цвета используемая в HTML"
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
-msgstr ""
+msgstr "Шестнадцатиричный триплет:"
 
 #: libgimpwidgets/gimpfileselection.c:352
 msgid "Select Folder"
@@ -370,27 +370,24 @@ msgid "MegaBytes"
 msgstr "Мегабайты"
 
 #: libgimpwidgets/gimpmemsizeentry.c:189
-#, fuzzy
 msgid "GigaBytes"
-msgstr "Мегабайты"
+msgstr "Гигабайты"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr ""
+msgstr "Выберите пипетку, затем укажите цвет где-нибудь на экране, чтобы выбрать его."
 
 #: libgimpwidgets/gimpstock.c:101
 msgid "Anchor"
 msgstr "Прицепить"
 
 #: libgimpwidgets/gimpstock.c:102
-#, fuzzy
 msgid "_Duplicate"
 msgstr "Сделать копию"
 
 #: libgimpwidgets/gimpstock.c:103
-#, fuzzy
 msgid "_Edit"
 msgstr "Исправить"
 
@@ -423,31 +420,26 @@ msgid "L_ine Spacing"
 msgstr ""
 
 #: libgimpwidgets/gimpstock.c:172
-#, fuzzy
 msgid "_Resize"
-msgstr "Сбросить"
+msgstr "Изменить размер"
 
 #: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
-#, fuzzy
 msgid "_Scale"
 msgstr "Масштабировать"
 
 #: libgimpwidgets/gimpstock.c:234
 msgid "Crop"
-msgstr ""
+msgstr "Кадрировать"
 
 #: libgimpwidgets/gimpstock.c:252
-#, fuzzy
 msgid "_Transform"
 msgstr "Преобразовать"
 
 #: libgimpwidgets/gimpstock.c:255
-#, fuzzy
 msgid "_Rotate"
 msgstr "Повернуть"
 
 #: libgimpwidgets/gimpstock.c:257
-#, fuzzy
 msgid "_Shear"
 msgstr "Наклонить"
 
@@ -468,53 +460,46 @@ msgid "Factor"
 msgstr "Множитель"
 
 #: libgimpwidgets/gimpwidgets.c:943
-#, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Если кнопка \"Время\" не нажата, это значение используется для инициализации "
-"генератора случайных чисел, что позволяет вам повторить данное \"случайное\" "
-"действие "
 
 #: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
-msgstr ""
+msgstr "Перемешать"
 
 #: libgimpwidgets/gimpwidgets.c:958
-#, fuzzy
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Инициализировать генератор случайных чисел текущим времене - это гарантирует "
-"надежную \"случайность\""
+msgstr "Инициализировать генератор случайных чисел сгенерированным случайным числом"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
+msgstr "Фильтр моделирующий недостаток цвета (алгоритм Бреттеля-Виенота-Моллона)"
 
 #: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "Зрение со сниженным цветовосприятием"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
-msgstr ""
+msgstr "Тип недостаточности цвета:"
 
 #: modules/cdisplay_colorblind.c:483
 msgid "None (normal vision)"
-msgstr ""
+msgstr "Нет (нормальное зрение)"
 
 #: modules/cdisplay_colorblind.c:487
 msgid "Protanopia (insensitivity to red)"
-msgstr ""
+msgstr "Протанопия (нечувствительность к красному)"
 
 #: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "Девтеранопия (нечувствительность к зелёному)"
 
 #: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "Тританопия (нечувствительность к синему)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
@@ -522,11 +507,11 @@ msgstr ""
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
-msgstr ""
+msgstr "Гамма:"
 
 #: modules/cdisplay_gamma.c:320
 msgid "Gamma:"
-msgstr ""
+msgstr "Гамма"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
@@ -534,11 +519,11 @@ msgstr ""
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
-msgstr ""
+msgstr "Контрастность"
 
 #: modules/cdisplay_highcontrast.c:318
 msgid "Contrast Cycles:"
-msgstr ""
+msgstr "Циклы контрастности:"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
@@ -546,7 +531,7 @@ msgstr ""
 
 #: modules/colorsel_triangle.c:182
 msgid "_Triangle"
-msgstr ""
+msgstr "Треугольник"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
@@ -558,20 +543,4 @@ msgstr ""
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
-msgstr ""
-
-#~ msgid "Cancel"
-#~ msgstr "Отмена"
-
-#~ msgid "a layer mask"
-#~ msgstr "маска слоя"
-
-#~ msgid "a channel (saved selection)"
-#~ msgstr "канал (сохранённое выделение)"
-
-#, fuzzy
-#~ msgid "_Time"
-#~ msgstr "Время"
-
-#~ msgid "Paste"
-#~ msgstr "Вставить"
+msgstr "Давление"
