@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-19 03:11+0100\n"
-"PO-Revision-Date: 2004-12-17 14:29-0400\n"
+"POT-Creation-Date: 2004-12-19 05:29-0500\n"
+"PO-Revision-Date: 2004-12-19 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -5360,7 +5360,6 @@ msgstr ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 
-#. maybe we should just abort?
 #: app/core/gimppalette.c:484
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -6799,9 +6798,8 @@ msgid "There are %d images with unsaved changes:"
 msgstr "There are %d images with unsaved changes:"
 
 #: app/dialogs/quit-dialog.c:183
-#, fuzzy
 msgid "_Discard Changes"
-msgstr "_Raise Channel"
+msgstr "_Discard Changes"
 
 #: app/dialogs/resize-dialog.c:115
 msgid "Canvas Size"
@@ -7110,8 +7108,6 @@ msgstr "GIMP User Installation"
 msgid "Continue"
 msgstr "Continue"
 
-#. GPL_PAGE
-#. version number
 #: app/dialogs/user-install-dialog.c:765
 #, c-format
 msgid ""
@@ -9001,9 +8997,8 @@ msgid "Center X:"
 msgstr "Centre X:"
 
 #: app/tools/gimprotatetool.c:190
-#, fuzzy
 msgid "Center Y:"
-msgstr "Centre X:"
+msgstr "Centre Y:"
 
 #: app/tools/gimpscaletool.c:91
 msgid "Scale"
@@ -10757,6 +10752,3 @@ msgstr "Create and edit images or photographs"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Image Editor"
-
-#~ msgid "Y:"
-#~ msgstr "Y:"
