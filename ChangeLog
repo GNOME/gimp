@@ -1,3 +1,11 @@
+2004-06-15  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/text_tool.pdb: deprecate the XLFD-based API
+	gimp_text() and gimp_text_get_extents().
+
+	* app/pdb/text_tool_cmds.c
+	* libgimp/gimptexttool_pdb.[ch]: regenerated.
+
 2004-06-15  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/pdbgen.pl
