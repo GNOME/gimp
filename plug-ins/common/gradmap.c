@@ -73,14 +73,14 @@ static GimpRunMode run_mode;
 /* Declare a local function.
  */
 static void	 query		(void);
-static void	 run		(gchar	 *name,
-				 gint	 nparams,
-				 GimpParam	 *param,
-				 gint	 *nreturn_vals,
+static void	 run		(const gchar	  *name,
+				 gint	           nparams,
+				 const GimpParam  *param,
+				 gint	          *nreturn_vals,
 				 GimpParam	 **return_vals);
 
-static void	 gradmap	(GimpDrawable *drawable);
-static guchar *	 get_samples	(GimpDrawable *drawable );
+static void	 gradmap	(GimpDrawable     *drawable);
+static guchar *	 get_samples	(GimpDrawable     *drawable );
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -126,11 +126,11 @@ query()
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam  **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -179,7 +179,10 @@ typedef struct {
 } GradMapParam_t;
 
 static void 
-gradmap_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+gradmap_func (const guchar *src,
+	      guchar       *dest,
+	      gint          bpp,
+	      gpointer      data)
 {
   GradMapParam_t *param = (GradMapParam_t*) data;
   gint lum;

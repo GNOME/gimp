@@ -94,21 +94,20 @@ typedef struct
 
 /***** Prototypes *****/
 
-static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+static void query                (void);
+static void run                  (const gchar      *name,
+				  gint              nparams,
+				  const GimpParam  *param,
+				  gint             *nreturn_vals,
+				  GimpParam       **return_vals);
+static void set_default_params   (void);
 
-static void set_default_params (void);
-
-static void dialog_ok_callback   (GtkWidget     *widget,
-				  gpointer       data);
-static void dialog_toggle_update (GtkWidget     *widget,
-				  gint32         value);
-static void dialog_scale_update  (GtkAdjustment *adjustment,
-				  gdouble       *value);
+static void dialog_ok_callback   (GtkWidget         *widget,
+				  gpointer           data);
+static void dialog_toggle_update (GtkWidget         *widget,
+				  gint32             value);
+static void dialog_scale_update  (GtkAdjustment     *adjustment,
+				  gdouble           *value);
 
 static gint do_dialog            (void);
 
@@ -117,7 +116,7 @@ static void     init_calculation (void);
 static void     do_curl_effect      (void);
 static void     clear_curled_region (void);
 static void     page_curl           (void);
-static guchar * get_samples         (GimpDrawable *drawable);
+static guchar * get_samples         (GimpDrawable   *drawable);
 
 
 /***** Variables *****/
@@ -224,11 +223,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[2];
   GimpRunMode       run_mode;

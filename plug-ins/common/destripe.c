@@ -71,24 +71,24 @@
  * Local functions...
  */
 
-static void	query (void);
-static void	run   (gchar      *name,
-		       gint        nparams,
-		       GimpParam  *param,
-		       gint       *nreturn_vals,
-		       GimpParam **return_vals);
+static void     query (void);
+static void     run   (const gchar      *name,
+		       gint              nparams,
+		       const GimpParam  *param,
+		       gint             *nreturn_vals,
+		       GimpParam       **return_vals);
 
-static void	destripe (void);
+static void     destripe (void);
 
-static gint	destripe_dialog           (void);
+static gint     destripe_dialog           (void);
 static void     dialog_histogram_callback (GtkWidget *, gpointer);
-static void	dialog_iscale_update      (GtkAdjustment *, gint *);
-static void	dialog_ok_callback        (GtkWidget *, gpointer);
+static void     dialog_iscale_update      (GtkAdjustment *, gint *);
+static void     dialog_ok_callback        (GtkWidget *, gpointer);
 
-static void	preview_init            (void);
-static void	preview_exit            (void);
-static void	preview_update          (void);
-static void	preview_scroll_callback (void);
+static void     preview_init            (void);
+static void     preview_exit            (void);
+static void     preview_update          (void);
+static void     preview_scroll_callback (void);
 
 
 /*
@@ -103,26 +103,26 @@ GimpPlugInInfo PLUG_IN_INFO =
   run    /* run_proc   */
 };
 
-GtkWidget      *preview;		/* Preview widget */
-gint		preview_width,		/* Width of preview widget */
-		preview_height,		/* Height of preview widget */
-		preview_x1,		/* Upper-left X of preview */
-		preview_y1,		/* Upper-left Y of preview */
-		preview_x2,		/* Lower-right X of preview */
-		preview_y2;		/* Lower-right Y of preview */
-GtkObject      *hscroll_data,		/* Horizontal scrollbar data */
-	       *vscroll_data;		/* Vertical scrollbar data */
+GtkWidget      *preview;                /* Preview widget */
+gint            preview_width,          /* Width of preview widget */
+                preview_height,         /* Height of preview widget */
+                preview_x1,             /* Upper-left X of preview */
+                preview_y1,             /* Upper-left Y of preview */
+                preview_x2,             /* Lower-right X of preview */
+                preview_y2;             /* Lower-right Y of preview */
+GtkObject      *hscroll_data,           /* Horizontal scrollbar data */
+               *vscroll_data;           /* Vertical scrollbar data */
 
-GimpDrawable      *drawable = NULL;	/* Current image */
-gint		sel_x1,			/* Selection bounds */
-		sel_y1,
-		sel_x2,
-		sel_y2;
-gint		histogram = FALSE;
-gint		img_bpp;		/* Bytes-per-pixel in image */
-gint		run_filter = FALSE;	/* True if we should run the filter */
+GimpDrawable   *drawable = NULL;        /* Current image */
+gint            sel_x1,                 /* Selection bounds */
+                sel_y1,
+                sel_x2,
+                sel_y2;
+gint            histogram = FALSE;
+gint            img_bpp;                /* Bytes-per-pixel in image */
+gboolean        run_filter = FALSE;     /* True if we should run the filter */
 
-gint		avg_width = 36;
+gint            avg_width = 36;
 
 
 MAIN ()
@@ -130,7 +130,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef	args[] =
+  static GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",     "Input image" },
@@ -139,26 +139,26 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Destripe filter, used to remove vertical stripes "
-			  "caused by cheap scanners.",
-			  "This plug-in tries to remove vertical stripes from "
-			  "an image.",
-			  "Marc Lehmann <pcg@goof.com>",
-			  "Marc Lehmann <pcg@goof.com>",
-			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Enhance/Destripe..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Destripe filter, used to remove vertical stripes "
+                          "caused by cheap scanners.",
+                          "This plug-in tries to remove vertical stripes from "
+                          "an image.",
+                          "Marc Lehmann <pcg@goof.com>",
+                          "Marc Lehmann <pcg@goof.com>",
+                          PLUG_IN_VERSION,
+                          N_("<Image>/Filters/Enhance/Destripe..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   GimpRunMode       run_mode;   /* Current run mode */
   GimpPDBStatusType status;     /* Return status */
@@ -186,7 +186,7 @@ run (gchar      *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
-			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   img_bpp = gimp_drawable_bpp (drawable->drawable_id);
 
@@ -206,7 +206,7 @@ run (gchar      *name,
        * Get information from the dialog...
        */
       if (!destripe_dialog ())
-	return;
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -214,9 +214,9 @@ run (gchar      *name,
        * Make sure all the arguments are present...
        */
       if (nparams != 4)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       else
-	avg_width = param[3].data.d_int32;
+        avg_width = param[3].data.d_int32;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS :
@@ -238,33 +238,33 @@ run (gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       if ((gimp_drawable_is_rgb (drawable->drawable_id) ||
-	   gimp_drawable_is_gray (drawable->drawable_id)))
-	{
-	  /*
-	   * Set the tile cache size...
-	   */
-	  gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
-				  gimp_tile_width ());
+           gimp_drawable_is_gray (drawable->drawable_id)))
+        {
+          /*
+           * Set the tile cache size...
+           */
+          gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
+                                  gimp_tile_width ());
 
-	  /*
-	   * Run!
-	   */
-	  destripe ();
+          /*
+           * Run!
+           */
+          destripe ();
 
-	  /*
-	   * If run mode is interactive, flush displays...
-	   */
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush();
+          /*
+           * If run mode is interactive, flush displays...
+           */
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush();
 
-	  /*
-	   * Store data...
-	   */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data (PLUG_IN_NAME, &avg_width, sizeof(avg_width));
-	}
+          /*
+           * Store data...
+           */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data (PLUG_IN_NAME, &avg_width, sizeof(avg_width));
+        }
       else
-	status = GIMP_PDB_EXECUTION_ERROR;
+        status = GIMP_PDB_EXECUTION_ERROR;
     };
 
   /*
@@ -280,9 +280,9 @@ run (gchar      *name,
 
 static inline void
 preview_draw_row (gint    x,
-		  gint    y,
-		  gint    w,
-		  guchar *row)
+                  gint    y,
+                  gint    w,
+                  guchar *row)
 {
   guchar *rgb = g_new (guchar, w * 3);
   guchar *rgb_ptr;
@@ -293,7 +293,7 @@ preview_draw_row (gint    x,
     case 1:
     case 2:
       for (i = 0, rgb_ptr = rgb; i < w; i++, row += img_bpp, rgb_ptr += 3)
-	rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = *row;
+        rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = *row;
 
       gtk_preview_draw_row (GTK_PREVIEW (preview), rgb, x, y, w);
       break;
@@ -304,11 +304,11 @@ preview_draw_row (gint    x,
 
     case 4:
       for (i = 0, rgb_ptr = rgb; i < w; i++, row += 4, rgb_ptr += 3)
-	{
-	  rgb_ptr[0] = row[0];
+        {
+          rgb_ptr[0] = row[0];
           rgb_ptr[1] = row[1];
           rgb_ptr[2] = row[2];
-	}
+        }
 
       gtk_preview_draw_row (GTK_PREVIEW (preview), rgb, x, y, w);
       break;
@@ -319,18 +319,18 @@ preview_draw_row (gint    x,
 
 static void
 destripe_rect (gint      sel_x1,
-	       gint      sel_y1,
-	       gint      sel_x2,
-	       gint      sel_y2,
-	       gboolean  do_preview)
+               gint      sel_y1,
+               gint      sel_x2,
+               gint      sel_y2,
+               gboolean  do_preview)
 {
-  GimpPixelRgn src_rgn;	/* source image region */
-  GimpPixelRgn dst_rgn;	/* destination image region */
-  guchar *src_rows;	/* image data */
+  GimpPixelRgn src_rgn;        /* source image region */
+  GimpPixelRgn dst_rgn;        /* destination image region */
+  guchar *src_rows;        /* image data */
   double progress, progress_inc;
   int sel_width = sel_x2 - sel_x1;
   int sel_height = sel_y2 - sel_y1;
-  long *hist, *corr;	/* "histogram" data */
+  long *hist, *corr;        /* "histogram" data */
   int tile_width = gimp_tile_width ();
   int i, x, y, ox, cols;
   
@@ -356,9 +356,9 @@ destripe_rect (gint      sel_x1,
    */
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
+                       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dst_rgn, drawable,
-		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
+                       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
   
   hist = g_new (long, sel_width * img_bpp);
   corr = g_new (long, sel_width * img_bpp);
@@ -411,17 +411,17 @@ destripe_rect (gint      sel_x1,
           for (x = -extend; x < sel_width * img_bpp; x += img_bpp)
             {
               if (x + extend < sel_width * img_bpp)
-		{
-		  sum += h[ extend]; cnt++;
-		}
+                {
+                  sum += h[ extend]; cnt++;
+                }
               if (x - extend >= 0)
-		{
-		  sum -= h[-extend]; cnt--;
-		}
+                {
+                  sum -= h[-extend]; cnt--;
+                }
               if (x >= 0)
-		{
-		  *c = ((sum / cnt - *h) << 10) / *h;
-		}
+                {
+                  *c = ((sum / cnt - *h) << 10) / *h;
+                }
 
               h += img_bpp;
               c += img_bpp;
@@ -493,7 +493,7 @@ destripe_rect (gint      sel_x1,
       if (!do_preview)
         {
           gimp_pixel_rgn_set_rect (&dst_rgn, src_rows,
-				   ox, sel_y1, cols, sel_height);
+                                   ox, sel_y1, cols, sel_height);
           gimp_progress_update (progress += progress_inc);
         }
     }
@@ -513,7 +513,7 @@ destripe_rect (gint      sel_x1,
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id,
-			    sel_x1, sel_y1, sel_width, sel_height);
+                            sel_x1, sel_y1, sel_width, sel_height);
     }
   g_free (hist);
   g_free (corr);
@@ -546,16 +546,16 @@ destripe_dialog (void)
   gimp_ui_init ("destripe", TRUE);
 
   dialog = gimp_dialog_new (_("Destripe"), "destripe",
-			    gimp_standard_help_func, "filters/destripe.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
+                            gimp_standard_help_func, "filters/destripe.html",
+                            GTK_WIN_POS_MOUSE,
+                            FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, dialog_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+                            GTK_STOCK_CANCEL, gtk_widget_destroy,
+                            NULL, 1, NULL, FALSE, TRUE,
+                            GTK_STOCK_OK, dialog_ok_callback,
+                            NULL, NULL, NULL, TRUE, FALSE,
 
-			    NULL);
+                            NULL);
 
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
@@ -568,7 +568,7 @@ destripe_dialog (void)
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
-		      FALSE, FALSE, 0);
+                      FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   /*
@@ -591,7 +591,7 @@ destripe_dialog (void)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_table_attach(GTK_TABLE(ptable), frame, 0, 1, 0, 1,
-		   0, 0, 0, 0);
+                   0, 0, 0, 0);
   gtk_widget_show (frame);
 
   preview_width  = MIN (sel_x2 - sel_x1, PREVIEW_SIZE);
@@ -603,8 +603,8 @@ destripe_dialog (void)
   gtk_widget_show (preview);
 
   hscroll_data = gtk_adjustment_new (0, 0, sel_x2 - sel_x1 - 1, 1.0,
-				     MIN (preview_width, sel_x2 - sel_x1),
-				     MIN (preview_width, sel_x2 - sel_x1));
+                                     MIN (preview_width, sel_x2 - sel_x1),
+                                     MIN (preview_width, sel_x2 - sel_x1));
 
   g_signal_connect (hscroll_data, "value_changed",
                     G_CALLBACK (preview_scroll_callback),
@@ -613,12 +613,12 @@ destripe_dialog (void)
   scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (hscroll_data));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (GTK_TABLE (ptable), scrollbar, 0, 1, 1, 2,
-		    GTK_FILL, 0, 0, 0);
+                    GTK_FILL, 0, 0, 0);
   gtk_widget_show (scrollbar);
 
   vscroll_data = gtk_adjustment_new (0, 0, sel_y2 - sel_y1 - 1, 1.0,
-				     MIN (preview_height, sel_y2 - sel_y1),
-				     MIN (preview_height, sel_y2 - sel_y1));
+                                     MIN (preview_height, sel_y2 - sel_y1),
+                                     MIN (preview_height, sel_y2 - sel_y1));
 
   g_signal_connect (vscroll_data, "value_changed",
                     G_CALLBACK (preview_scroll_callback),
@@ -627,7 +627,7 @@ destripe_dialog (void)
   scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (vscroll_data));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (GTK_TABLE (ptable), scrollbar, 1, 2, 0, 1, 0,
-		    GTK_FILL, 0, 0);
+                    GTK_FILL, 0, 0);
   gtk_widget_show (scrollbar);
 
   preview_init ();
@@ -650,7 +650,7 @@ destripe_dialog (void)
   button = gtk_check_button_new_with_mnemonic (_("Create _Histogram"));
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, 0, 1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				histogram ? TRUE : FALSE);
+                                histogram ? TRUE : FALSE);
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
@@ -662,8 +662,8 @@ destripe_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 (filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
   g_signal_connect (button, "toggled",
-	            G_CALLBACK (dialog_recursive_callback),
-		    NULL);
+                    G_CALLBACK (dialog_recursive_callback),
+                    NULL);
   gtk_widget_show (button);*/
 
   /*
@@ -671,10 +671,10 @@ destripe_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Width:"), SCALE_WIDTH, 0,
-			      avg_width, 2, MAX_AVG, 1, 10, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Width:"), SCALE_WIDTH, 0,
+                              avg_width, 2, MAX_AVG, 1, 10, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update),
                     &avg_width);
@@ -735,7 +735,7 @@ preview_exit (void)
 
 static void
 dialog_histogram_callback (GtkWidget *widget,
-			   gpointer  data)
+                           gpointer  data)
 {
   histogram = !histogram;
   preview_update ();
@@ -752,7 +752,7 @@ dialog_iscale_update (GtkAdjustment *adjustment,
 
 static void
 dialog_ok_callback (GtkWidget *widget,
-		    gpointer   data)
+                    gpointer   data)
 {
   run_filter = TRUE;
 

@@ -19,19 +19,15 @@
 #ifndef __SCRIPT_FU_SERVER_H__
 #define __SCRIPT_FU_SERVER_H__
 
-#include <glib.h>
-#include <libgimp/gimp.h>
 
-gint script_fu_server_get_mode (void);
+void  script_fu_server_run      (const gchar      *name,
+				 gint              nparams,
+				 const GimpParam  *params,
+				 gint             *nreturn_vals,
+				 GimpParam       **return_vals);
+void  script_fu_server_listen   (gint              timeout);
+gint  script_fu_server_get_mode (void);
+void  script_fu_server_quit     (void);
 
-void script_fu_server_quit (void);
-
-void  script_fu_server_run    (gchar       *name,
-			       gint         nparams,
-			       GimpParam   *params,
-			       gint        *nreturn_vals,
-			       GimpParam  **return_vals);
-
-void  script_fu_server_listen (gint         timeout);
 
 #endif /*  __SCRIPT_FU_SERVER__  */

@@ -51,11 +51,11 @@ static char ident[] = "@(#) GIMP Decompose plug-in v1.01 19-Mar-99";
 /* Declare local functions
  */
 static void      query  (void);
-static void      run    (gchar      *name,
-			 gint        nparams,
-			 GimpParam  *param,
-			 gint       *nreturn_vals,
-			 GimpParam **return_vals);
+static void      run    (const gchar      *name,
+			 gint              nparams,
+			 const GimpParam  *param,
+			 gint             *nreturn_vals,
+			 GimpParam       **return_vals);
 
 static gint32    decompose (gint32   image_id,
                             gint32   drawable_ID,
@@ -173,8 +173,8 @@ typedef struct
 
 typedef struct
 {
-  gint extract_flag[NUM_EXTRACT_TYPES];
-  gint run;
+  gint      extract_flag[NUM_EXTRACT_TYPES];
+  gboolean  run;
 } DecoInterface;
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -235,11 +235,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[MAX_EXTRACT_IMAGES+1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;

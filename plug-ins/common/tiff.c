@@ -69,13 +69,13 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query   (void);
-static void   run     (gchar      *name,
-		       gint        nparams,
-		       GimpParam  *param,
-		       gint       *nreturn_vals,
-		       GimpParam **return_vals);
+static void   run     (const gchar      *name,
+		       gint              nparams,
+		       const GimpParam  *param,
+		       gint             *nreturn_vals,
+		       GimpParam       **return_vals);
 
-static gint32 load_image    (gchar        *filename);
+static gint32 load_image    (const gchar  *filename);
 
 static void   load_rgba     (TIFF         *tif,
 			     channel_data *channel);
@@ -135,10 +135,10 @@ static void   read_default  (guchar       *source,
 			     gint          extra,
 			     gint          align);
 
-static gint   save_image             (gchar     *filename,
-				      gint32     image,
-				      gint32     drawable,
-				      gint32     orig_image);
+static gint   save_image             (const gchar *filename,
+				      gint32       image,
+				      gint32       drawable,
+				      gint32       orig_image);
 
 static gint   save_dialog            (void);
 
@@ -232,11 +232,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam      values[2];
   GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
@@ -398,7 +398,7 @@ tiff_error(const char* module, const char* fmt, va_list ap)
 }
   
 static gint32
-load_image (gchar *filename) 
+load_image (const gchar *filename) 
 {
   TIFF    *tif;
   gushort  bps, spp, photomet;
@@ -1337,10 +1337,10 @@ read_separate (guchar       *source,
 */
 
 static gint
-save_image (gchar   *filename, 
-	    gint32   image, 
-	    gint32   layer,
-	    gint32   orig_image)  /* the export function might have created a duplicate */  
+save_image (const gchar *filename, 
+	    gint32       image, 
+	    gint32       layer,
+	    gint32       orig_image)  /* the export function might have created a duplicate */  
 {
   TIFF          *tif;
   gushort        red[256];
@@ -1530,17 +1530,17 @@ save_image (gchar   *filename,
 #ifdef TIFFTAG_ICCPROFILE
   {
     GimpParasite *parasite;
-    uint32 profile_size;
-    guchar *icc_profile;
+    uint32        profile_size;
+    const guchar *icc_profile;
 
     parasite = gimp_image_parasite_find (orig_image, "icc-profile");
     if (parasite)
       {
-        profile_size = gimp_parasite_data_size(parasite);
-	icc_profile = gimp_parasite_data(parasite);
+        profile_size = gimp_parasite_data_size (parasite);
+	icc_profile = gimp_parasite_data (parasite);
 
-	TIFFSetField(tif, TIFFTAG_ICCPROFILE, profile_size, icc_profile);
-        gimp_parasite_free(parasite);
+	TIFFSetField (tif, TIFFTAG_ICCPROFILE, profile_size, icc_profile);
+        gimp_parasite_free (parasite);
       }
   }
 #endif

@@ -95,18 +95,18 @@ typedef struct
 
 typedef struct
 {
-  gint       run;
+  gboolean run;
 } MosaicInterface;
 
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar        *name,
-			 gint          nparams,
-			 GimpParam    *param,
-			 gint         *nreturn_vals,
-			 GimpParam   **return_vals);
-static void      mosaic (GimpDrawable *drawable);
+static void      run    (const gchar      *name,
+			 gint              nparams,
+			 const GimpParam  *param,
+			 gint             *nreturn_vals,
+			 GimpParam       **return_vals);
+static void      mosaic (GimpDrawable     *drawable);
 
 /*  user interface functions  */
 static gint      mosaic_dialog      (void);
@@ -330,11 +330,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpRunMode        run_mode;

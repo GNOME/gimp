@@ -14,12 +14,16 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static void query(void);
-static void gimpressionist_main(void);
-static void run(char *, int, GimpParam *, int *, GimpParam **);
-void repaint(ppm_t *p, ppm_t *a);
+static void query               (void);
+static void run                 (const gchar      *name,
+				 gint              nparams,
+				 const GimpParam  *param,
+				 gint             *nreturn_vals,
+				 GimpParam       **return_vals);
+static void gimpressionist_main (void);
 
-int create_gimpressionist(void);
+void repaint               (ppm_t *p, ppm_t *a);
+int  create_gimpressionist (void);
 
 gboolean img_has_alpha = FALSE;
 
@@ -107,18 +111,18 @@ query(void)
 }
 
 static void
-gimpressionist_get_data(char *name, void *ptr)
+gimpressionist_get_data (char *name, gpointer ptr)
 {
   pcvals = defaultpcvals;
-  gimp_get_data(name, ptr);
+  gimp_get_data (name, ptr);
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpRunMode        run_mode;

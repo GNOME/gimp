@@ -59,16 +59,16 @@
  */
 
 static void	query       (void);
-static void	run         (gchar      *name,
-			     gint        nparams,
-			     GimpParam  *param,
-			     gint       *nreturn_vals,
-			     GimpParam **return_vals);
+static void	run         (const gchar      *name,
+			     gint              nparams,
+			     const GimpParam  *param,
+			     gint             *nreturn_vals,
+			     GimpParam       **return_vals);
 
-static gint32	load_image  (gchar      *filename);
-static gint	save_image  (gchar      *filename,
-			     gint32      image_ID,
-			     gint32      drawable_ID);
+static gint32	load_image  (const gchar      *filename);
+static gint	save_image  (const gchar      *filename,
+			     gint32            image_ID,
+			     gint32            drawable_ID);
 
 static gint	save_dialog (void);
 
@@ -152,11 +152,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam     values[2];
   GimpRunMode          run_mode;       
@@ -287,7 +287,7 @@ run (gchar      *name,
  */
 
 static gint32
-load_image (gchar *filename)	/* I - File to load */
+load_image (const gchar *filename)	/* I - File to load */
 {
   int		i,		/* Looping var */
 		x,		/* Current X coordinate */
@@ -312,7 +312,7 @@ load_image (gchar *filename)	/* I - File to load */
   * Open the file for reading...
   */
 
-  sgip = sgiOpen (filename, SGI_READ, 0, 0, 0, 0, 0);
+  sgip = sgiOpen ((char *) filename, SGI_READ, 0, 0, 0, 0, 0);
   if (sgip == NULL)
     {
       g_message ("Can't open '%s'", filename);
@@ -358,7 +358,7 @@ load_image (gchar *filename)	/* I - File to load */
       return -1;
     }
 
-  gimp_image_set_filename(image, filename);
+  gimp_image_set_filename (image, filename);
 
   /*
    * Create the "background" layer to hold the image...
@@ -472,9 +472,9 @@ load_image (gchar *filename)	/* I - File to load */
  */
 
 static gint
-save_image (gchar  *filename,
-	    gint32  image_ID,
-	    gint32  drawable_ID)
+save_image (const gchar *filename,
+	    gint32       image_ID,
+	    gint32       drawable_ID)
 {
   gint        i, j,        /* Looping var */
               x,           /* Current X coordinate */
@@ -524,8 +524,8 @@ save_image (gchar  *filename,
    * Open the file for writing...
    */
 
-  sgip = sgiOpen (filename, SGI_WRITE, compression, 1, drawable->width,
-		  drawable->height, zsize);
+  sgip = sgiOpen ((char *) filename, SGI_WRITE, compression, 1,
+		  drawable->width, drawable->height, zsize);
   if (sgip == NULL)
     {
       g_message (_("Can't open '%s' for writing"), filename);

@@ -68,30 +68,30 @@
 
 
 static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 /* return the image-ID of the new image, or -1 in case of an error */
-static gint32 load_image      (gchar  *filename,
-			       gint32  from_frame,
-			       gint32  to_frame);
-static gint   load_dialog     (gchar  *name);
+static gint32 load_image      (const  gchar *filename,
+			       gint32        from_frame,
+			       gint32         to_frame);
+static gint   load_dialog     (const gchar  *name);
 
 /* return TRUE or FALSE */
-static gint   save_image      (gchar  *filename,
-			       gint32  image_id,
-			       gint32  from_frame,
-			       gint32  to_frame);
-static gint   save_dialog     (gint32  image_id);
+static gint   save_image      (const gchar  *filename,
+			       gint32        image_id,
+			       gint32        from_frame,
+			       gint32        to_frame);
+static gint   save_dialog     (gint32        image_id);
 
 /* return TRUE or FALSE */
-static gint   get_info        (gchar  *filename,
-			       gint32 *width,
-			       gint32 *height,
-			       gint32 *frames);
+static gint   get_info        (const gchar  *filename,
+			       gint32       *width,
+			       gint32       *height,
+			       gint32       *frames);
 
 /*
  * GIMP interface
@@ -208,11 +208,11 @@ query (void)
 GimpParam values[5];
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   GimpRunMode          run_mode;
@@ -408,10 +408,10 @@ run (gchar      *name,
  * Open FLI animation and return header-info
  */
 gint
-get_info (gchar  *filename,
-	  gint32 *width,
-	  gint32 *height,
-	  gint32 *frames)
+get_info (const gchar *filename,
+	  gint32      *width,
+	  gint32      *height,
+	  gint32      *frames)
 {
   FILE *file;
   s_fli_header fli_header;
@@ -438,9 +438,9 @@ get_info (gchar  *filename,
  * load fli animation and store as framestack
  */
 gint32
-load_image (gchar  *filename,
-	    gint32  from_frame,
-	    gint32  to_frame)
+load_image (const gchar *filename,
+	    gint32       from_frame,
+	    gint32       to_frame)
 {
   FILE *file;
   gchar *name_buf;
@@ -573,10 +573,10 @@ load_image (gchar  *filename,
  * (some code was taken from the GIF plugin.)
  */ 
 gint
-save_image (gchar  *filename,
-	    gint32  image_id,
-	    gint32  from_frame,
-	    gint32  to_frame)
+save_image (const gchar *filename,
+	    gint32       image_id,
+	    gint32       from_frame,
+	    gint32       to_frame)
 {
   FILE *file;
   gchar *name_buf;
@@ -800,7 +800,7 @@ cb_ok (GtkWidget *widget,
 }
 
 gint
-load_dialog (gchar *name)
+load_dialog (const gchar *name)
 {
   GtkWidget *dialog;
   GtkWidget *table;
@@ -865,7 +865,6 @@ load_dialog (gchar *name)
   gtk_widget_show (dialog);
 
   gtk_main ();
-  gdk_flush ();
 
   return result;
 }

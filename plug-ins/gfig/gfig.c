@@ -117,11 +117,11 @@ static gint   tile_width, tile_height;
 static gint   img_width, img_height, img_bpp, real_img_bpp;
 
 static void      query  (void);
-static void      run    (gchar       *name,
-			 gint         nparams,
-			 GimpParam   *param,
-			 gint        *nreturn_vals,
-			 GimpParam  **return_vals);
+static void      run    (const gchar      *name,
+			 gint              nparams,
+			 const GimpParam  *param,
+			 gint             *nreturn_vals,
+			 GimpParam       **return_vals);
 
 static gint      gfig_dialog               (void);
 static void      gfig_ok_callback          (GtkWidget *widget,
@@ -502,7 +502,7 @@ typedef struct BrushDesc
   guchar               *pv_buf;  /* Buffer where brush placed */
   gint16                x_off;
   gint16                y_off;
-  gchar                *popup;
+  const gchar          *popup;
 } BrushDesc;
 
 
@@ -662,11 +662,11 @@ query (void)
 }
 
 static void
-run (gchar       *name,
-     gint         nparams,
-     GimpParam   *param,
-     gint        *nreturn_vals,
-     GimpParam  **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   GimpParam         *values = g_new (GimpParam, 1);
   GimpDrawable      *drawable;

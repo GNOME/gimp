@@ -78,18 +78,18 @@ typedef struct
   GtkWidget *progress;
   guchar     preview_row[PREVIEW_WIDTH * 3];
 
-  gint run;
+  gboolean   run;
 } diffraction_interface_t;
 
 
 /***** Prototypes *****/
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
-		   GimpParam  *param,
-		   gint    *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 static void diffraction (GimpDrawable *drawable);
 
@@ -194,17 +194,17 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam values[1];
 
-  GimpDrawable    *active_drawable;
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status;
+  GimpDrawable      *active_drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status;
 
   /* Initialize */
 

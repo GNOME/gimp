@@ -142,17 +142,17 @@ extern long  nlength (LISP obj);
  */
 
 static void       script_fu_load_script      (GimpDatafileData *file_data);
-static gboolean   script_fu_install_script   (gpointer    foo,
-					      SFScript   *script,
-					      gpointer    bar);
-static gboolean   script_fu_remove_script    (gpointer    foo,
-					      SFScript   *script,
-					      gpointer    bar);
-static void       script_fu_script_proc      (gchar      *name,
-					      gint        nparams,
-					      GimpParam  *params,
-					      gint       *nreturn_vals,
-					      GimpParam **return_vals);
+static gboolean   script_fu_install_script   (gpointer           foo,
+					      SFScript          *script,
+					      gpointer           bar);
+static gboolean   script_fu_remove_script    (gpointer           foo,
+					      SFScript          *script,
+					      gpointer           bar);
+static void       script_fu_script_proc      (const gchar       *name,
+					      gint               nparams,
+					      const GimpParam   *params,
+					      gint              *nreturn_vals,
+					      GimpParam        **return_vals);
 
 static SFScript * script_fu_find_script      (gchar      *script_name);
 static void       script_fu_free_script      (SFScript   *script);
@@ -736,11 +736,11 @@ script_fu_remove_script (gpointer  foo,
 }
 
 static void
-script_fu_script_proc (gchar       *name,
-		       gint         nparams,
-		       GimpParam   *params,
-		       gint        *nreturn_vals,
-		       GimpParam  **return_vals)
+script_fu_script_proc (const gchar      *name,
+		       gint              nparams,
+		       const GimpParam  *params,
+		       gint             *nreturn_vals,
+		       GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;

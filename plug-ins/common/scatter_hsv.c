@@ -42,11 +42,11 @@
 #define SHORT_NAME	"scatter_hsv"
 
 static void   query (void);
-static void   run   (gchar      *name,
-		     gint        nparams,
-		     GimpParam  *param,
-		     gint       *nreturn_vals,
-		     GimpParam **return_vals);
+static void   run   (const gchar      *name,
+		     gint              nparams,
+		     const GimpParam  *param,
+		     gint             *nreturn_vals,
+		     GimpParam       **return_vals);
 
 static GimpPDBStatusType scatter_hsv   (gint32  drawable_id);
 static void        scatter_hsv_scatter (guchar *r,
@@ -104,7 +104,7 @@ static ValueType VALS =
 
 typedef struct 
 {
-  gint run;
+  gboolean  run;
 } Interface;
 
 static Interface INTERFACE =
@@ -154,11 +154,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
@@ -211,7 +211,10 @@ run (gchar      *name,
 }
 
 static void 
-scatter_hsv_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+scatter_hsv_func (const guchar *src,
+		  guchar       *dest,
+		  gint          bpp,
+		  gpointer      data)
 {
   guchar h, s, v;
 

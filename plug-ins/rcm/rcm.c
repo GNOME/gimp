@@ -53,8 +53,12 @@
 /* Forward declarations */
 /*-----------------------------------------------------------------------------------*/
 
-void query (void);
-void run   (char *name, int nparams, GimpParam *param, int *nreturn_vals, GimpParam **return_vals);
+static void  query (void);
+static void  run   (const gchar      *name,
+		    gint              nparams,
+		    const GimpParam  *param,
+		    gint             *nreturn_vals,
+		    GimpParam       **return_vals);
 
 /*-----------------------------------------------------------------------------------*/
 /* Global variables */
@@ -91,7 +95,7 @@ MAIN()
 /* Query plug-in */
 /*-----------------------------------------------------------------------------------*/
 
-void 
+static void 
 query (void)
 {
   GimpParamDef args[] =
@@ -238,12 +242,12 @@ rcm (GimpDrawable *drawable)
 /* STANDARD RUN */
 /*-----------------------------------------------------------------------------------*/
 
-void 
-run (char       *name, 
-     int         nparams, 
-     GimpParam  *param, 
-     int        *nreturn_vals, 
-     GimpParam **return_vals)
+static void
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   GimpParam values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;

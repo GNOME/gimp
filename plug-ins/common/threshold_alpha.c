@@ -42,11 +42,11 @@
 
 
 static void              query (void);
-static void              run   (gchar      *name,
-                                gint        nparams,
-                                GimpParam  *param,
-                                gint       *nreturn_vals,
-                                GimpParam **return_vals);
+static void              run   (const gchar      *name,
+                                gint              nparams,
+                                const GimpParam  *param,
+                                gint             *nreturn_vals,
+                                GimpParam       **return_vals);
 
 static GimpPDBStatusType threshold_alpha             (gint32     drawable_id);
 
@@ -77,7 +77,7 @@ static ValueType VALS =
 
 typedef struct 
 {
-  gint run;
+  gboolean  run;
 } Interface;
 
 static Interface INTERFACE =
@@ -112,11 +112,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
@@ -184,7 +184,10 @@ run (gchar      *name,
 }
 
 static void 
-threshold_alpha_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+threshold_alpha_func (const guchar *src,
+		      guchar       *dest,
+		      gint          bpp,
+		      gpointer      data)
 {
   gint gap;
 

@@ -57,46 +57,54 @@
 
 extern gint      maze_dialog (void);
 static void      query  (void);
-static void      run    (gchar    *name,
-			 gint      nparams,
-			 GimpParam   *param,
-			 gint     *nreturn_vals,
-			 GimpParam  **return_vals);
-static void      maze   (GimpDrawable * drawable);
+static void      run    (const gchar      *name,
+			 gint              nparams,
+			 const GimpParam  *param,
+			 gint             *nreturn_vals,
+			 GimpParam       **return_vals);
+static void      maze   (GimpDrawable     *drawable);
 
-static void      mask_maze(gint32 selection_ID, guchar *maz, guint mw, guint mh, 
-			   gint x1, gint x2, gint y1, gint y2, gint deadx, gint deady);
+static void      mask_maze (gint32  selection_ID,
+			    guchar *maz,
+			    guint   mw,
+			    guint   mh, 
+			    gint    x1,
+			    gint    x2,
+			    gint    y1,
+			    gint    y2,
+			    gint    deadx,
+			    gint    deady);
 
 /* In algorithms.c */
-extern void      mazegen(gint     pos,
-			 guchar   *maz,
-			 gint     x,
-                         gint     y,
-			 gint     rnd);
-extern void      mazegen_tileable(gint     pos,
-				  guchar   *maz,
-				  gint     x,
-				  gint     y,
-				  gint     rnd);
-extern void      prim(guint pos,
-		      guchar *maz, 
-		      guint x, 
-		      guint y);
-extern void      prim_tileable(guchar *maz, 
-			       guint x, 
-			       guint y);
+extern void      mazegen          (gint    pos,
+				   guchar *maz,
+				   gint    x,
+				   gint    y,
+				   gint    rnd);
+extern void      mazegen_tileable (gint    pos,
+				   guchar *maz,
+				   gint    x,
+				   gint    y,
+				   gint    rnd);
+extern void      prim             (guint   pos,
+				   guchar *maz, 
+				   guint   x, 
+				   guint   y);
+extern void      prim_tileable    (guchar *maz, 
+				   guint   x, 
+				   guint   y);
 
 /* In handy.c */
-extern void      get_colors (GimpDrawable * drawable,
-			     guint8 *fg,
-			     guint8 *bg);
+extern void      get_colors (GimpDrawable *drawable,
+			     guint8       *fg,
+			     guint8       *bg);
 
-extern void      drawbox (GimpPixelRgn *dest_rgn, 
-			  guint x, 
-			  guint y,
-			  guint w,
-			  guint h, 
-			  guint8 clr[4]);
+extern void      drawbox    (GimpPixelRgn *dest_rgn, 
+			     guint         x, 
+			     guint         y,
+			     guint         w,
+			     guint         h, 
+			     guint8        clr[4]);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -162,11 +170,11 @@ query ()
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam values[1];
   GimpDrawable *drawable;

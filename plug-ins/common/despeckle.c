@@ -85,11 +85,11 @@
  */
 
 static void	query (void);
-static void	run   (gchar   *name,
-		       gint     nparams,
-		       GimpParam  *param,
-		       gint    *nreturn_vals,
-		       GimpParam **return_vals);
+static void	run   (const gchar      *name,
+		       gint              nparams,
+		       const GimpParam  *param,
+		       gint             *nreturn_vals,
+		       GimpParam       **return_vals);
 
 static void	despeckle (void);
 
@@ -140,7 +140,7 @@ gint		sel_width,		/* Selection width */
 		sel_height;		/* Selection height */
 gint		img_bpp;		/* Bytes-per-pixel in image */
 
-gint run_filter = FALSE;	/* True if we should run the filter */
+gboolean        run_filter = FALSE;	/* True if we should run the filter */
 
 gint despeckle_vals[4] =
 {
@@ -196,15 +196,15 @@ query (void)
  */
 
 static void
-run (gchar   *name,		/* I - Name of filter program. */
-     gint     nparams,		/* I - Number of parameters passed in */
-     GimpParam  *param,		/* I - Parameter values */
-     gint    *nreturn_vals,	/* O - Number of return values */
-     GimpParam **return_vals)	/* O - Return values */
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
-  GimpRunMode	run_mode;	/* Current run mode */
-  GimpPDBStatusType	status;		/* Return status */
-  GimpParam	*values;	/* Return values */
+  GimpRunMode	     run_mode;
+  GimpPDBStatusType  status;
+  GimpParam	     *values;
 
   INIT_I18N ();
 

@@ -203,11 +203,11 @@ static gint    g_show_progress = FALSE;
 /* Declare a local function.
  */
 static void	 query		(void);
-static void	 run		(gchar	     *name,
-				 gint	      nparams,
-				 GimpParam   *param,
-				 gint	     *nreturn_vals,
-				 GimpParam  **return_vals);
+static void	 run		(const gchar	  *name,
+				 gint	           nparams,
+				 const GimpParam  *param,
+				 gint	          *nreturn_vals,
+				 GimpParam       **return_vals);
 
 static gint      p_main_colorize(gint);
 static void	 p_get_filevalues (void);
@@ -224,7 +224,9 @@ static void      p_get_pixel(t_GDRW *gdrw, gint32 x, gint32 y, guchar *pixel);
 static void      p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow);
 static void      p_end_gdrw(t_GDRW *gdrw);
 static gint32    p_is_layer_alive(gint32 drawable_id);
-static void      p_remap_pixel(guchar *pixel, guchar *original, gint bpp2);
+static void      p_remap_pixel (guchar       *pixel,
+				const guchar *original,
+				gint          bpp2);
 static void      p_guess_missing_colors(void);
 static void      p_fill_missing_colors(void);
 static void      p_smp_get_colors_callback (GdkWindow *window, gpointer data);
@@ -310,11 +312,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *dst_drawable;
@@ -2850,7 +2852,9 @@ p_rnd_remap(gint32 lum, guchar *mapped_color)
 }	/* end p_rnd_remap */
 
 static void
-p_remap_pixel(guchar *pixel, guchar *original, gint bpp2)
+p_remap_pixel (guchar       *pixel,
+	       const guchar *original,
+	       gint          bpp2)
 {
   guchar      mapped_color[4];
   gint        l_lum;
@@ -3048,7 +3052,10 @@ p_remap_pixel(guchar *pixel, guchar *original, gint bpp2)
 }	/* end p_remap_pixel */
 
 static void
-colorize_func(guchar *src, guchar *dest, gint bpp, gpointer data)
+colorize_func (const guchar *src,
+	       guchar       *dest,
+	       gint          bpp,
+	       gpointer      data)
 {
   gboolean has_alpha = GPOINTER_TO_INT (data);
 
@@ -3057,11 +3064,11 @@ colorize_func(guchar *src, guchar *dest, gint bpp, gpointer data)
       bpp--;
       dest[bpp] = src[bpp];
     }
-  p_remap_pixel(dest, src, bpp);
+  p_remap_pixel (dest, src, bpp);
 }
 
 static void
-p_colorize_drawable(gint32 drawable_id)
+p_colorize_drawable (gint32 drawable_id)
 {
    GimpDrawable *drawable;
    gboolean has_alpha;
@@ -3081,7 +3088,7 @@ p_colorize_drawable(gint32 drawable_id)
 
 /* colorize dst_drawable like sample_drawable */
 static int
-p_main_colorize(gint mc_flags)
+p_main_colorize (gint mc_flags)
 {
    GimpDrawable *dst_drawable;
    GimpDrawable *sample_drawable;

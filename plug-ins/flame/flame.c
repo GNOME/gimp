@@ -57,22 +57,22 @@
 
 /* Declare local functions. */
 static void query             (void);
-static void run               (gchar   *name,
-		               gint     nparams,
-		               GimpParam  *param,
-		               gint    *nreturn_vals,
-			       GimpParam **return_vals);
-static void doit              (GimpDrawable *drawable);
+static void run               (const gchar      *name,
+		               gint              nparams,
+		               const GimpParam  *param,
+		               gint             *nreturn_vals,
+			       GimpParam       **return_vals);
+static void doit              (GimpDrawable     *drawable);
 
 static gint dialog            (void);
 static void set_flame_preview (void);
-static void load_callback     (GtkWidget *widget,
-			       gpointer   data);
-static void save_callback     (GtkWidget *widget,
-			       gpointer   data);
+static void load_callback     (GtkWidget        *widget,
+			       gpointer          data);
+static void save_callback     (GtkWidget        *widget,
+			       gpointer          data);
 static void set_edit_preview  (void);
-static void menu_cb           (GtkWidget *widget,
-			       gpointer   data);
+static void menu_cb           (GtkWidget        *widget,
+			       gpointer          data);
 static void init_mutants      (void);
 
 #define BUFFER_SIZE 10000
@@ -181,11 +181,11 @@ maybe_init_cp (void)
 }
 
 static void 
-run (gchar      *name, 
-     gint        n_params, 
-     GimpParam  *param, 
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name, 
+     gint              n_params, 
+     const GimpParam  *param, 
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpDrawable     *drawable = NULL;

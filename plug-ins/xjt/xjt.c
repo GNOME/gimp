@@ -96,7 +96,7 @@ static gint     global_parasite_id = 0;
 
 typedef struct
 {
-  gint  run;
+  gboolean  run;
 } JpegSaveInterface;
 
 
@@ -388,21 +388,22 @@ t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {
 
 /* Declare local functions.
  */
-static void   query      (void);
-static void   run        (gchar   *name,
-			  gint     nparams,
-			  GimpParam  *param,
-			  gint    *nreturn_vals,
-			  GimpParam **return_vals);
+static void   query            (void);
+static void   run              (const gchar      *name,
+				gint              nparams,
+				const GimpParam  *param,
+				gint             *nreturn_vals,
+				GimpParam       **return_vals);
 
-static gint32 load_xjt_image (gchar  *filename);
-static gint   save_xjt_image (gchar  *filename,
-			      gint32  image_ID,
-			      gint32  drawable_ID);
+static gint32 load_xjt_image   (const gchar      *filename);
+static gint   save_xjt_image   (const gchar      *filename,
+				gint32            image_ID,
+				gint32            drawable_ID);
 
-static gint   save_dialog      (void);
-static void   save_ok_callback (GtkWidget *widget,
-				gpointer   data);
+static gint   save_dialog      (void);    
+static void   save_ok_callback (GtkWidget        *widget,
+				gpointer          data);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -514,11 +515,11 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam values[2];
   GimpRunMode  run_mode;
@@ -1647,9 +1648,9 @@ p_write_image_prp(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
 /* ---------------------- SAVE  -------------------------- */
 
 static gint
-save_xjt_image (gchar   *filename,
-	    gint32  image_id,
-	    gint32  drawable_id)
+save_xjt_image (const gchar *filename,
+		gint32       image_id,
+		gint32       drawable_id)
 {
    int     l_rc;
    int     l_len;
@@ -3288,7 +3289,7 @@ cleanup:
 /* ---------------------- LOAD  -------------------------- */
 
 static gint32
-load_xjt_image (gchar *filename)
+load_xjt_image (const gchar *filename)
 {
    int     l_rc;
    int     l_len;

@@ -133,7 +133,7 @@ typedef struct {
 
 /* User callable functions of the FITS-library */
 
-FITS_FILE     *fits_open (char *filename, char *openmode);
+FITS_FILE     *fits_open (const char *filename, const char *openmode);
 void           fits_close (FITS_FILE *ff);
 FITS_HDU_LIST *fits_add_hdu (FITS_FILE *ff);
 int            fits_add_card (FITS_HDU_LIST *hdulist, char *card);

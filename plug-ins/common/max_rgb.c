@@ -43,11 +43,11 @@
 #define SHORT_NAME	     "max_rgb"
 
 static void	query	(void);
-static void	run	(gchar      *name,
-			 gint        nparams,
-			 GimpParam  *param,
-			 gint       *nreturn_vals,
-			 GimpParam **return_vals);
+static void	run	(const gchar      *name,
+			 gint              nparams,
+			 const GimpParam  *param,
+			 gint             *nreturn_vals,
+			 GimpParam       **return_vals);
 
 static GimpPDBStatusType main_function (GimpDrawable *drawable, 
 			                gboolean      preview_mode);
@@ -75,12 +75,12 @@ enum
 
 typedef struct
 {
-  gint max_p;
+  gint      max_p;
 } ValueType;
 
 typedef struct 
 {
-  gint run;
+  gboolean  run;
 } Interface;
 
 static ValueType pvals = 
@@ -126,11 +126,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   GimpDrawable      *drawable;
   static GimpParam   values[1];
@@ -186,7 +186,10 @@ typedef struct {
 } MaxRgbParam_t;
 
 static void
-max_rgb_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+max_rgb_func (const guchar *src,
+	      guchar       *dest,
+	      gint          bpp,
+	      gpointer      data)
 {
   MaxRgbParam_t *param = (MaxRgbParam_t*) data;
   gint   ch, max_ch = 0;

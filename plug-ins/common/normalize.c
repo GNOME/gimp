@@ -40,14 +40,14 @@
 /* Declare local functions.
  */
 static void   query             (void);
-static void   run               (gchar         *name,
-                                 gint           nparams,
-                                 GimpParam     *param,
-                                 gint          *nreturn_vals,
-                                 GimpParam    **return_vals);
+static void   run               (const gchar      *name,
+                                 gint              nparams,
+                                 const GimpParam  *param,
+                                 gint             *nreturn_vals,
+                                 GimpParam       **return_vals);
 
-static void   normalize         (GimpDrawable  *drawable);
-static void   indexed_normalize (gint32         image_ID);
+static void   normalize         (GimpDrawable     *drawable);
+static void   indexed_normalize (gint32            image_ID);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -95,11 +95,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -195,10 +195,12 @@ typedef struct {
 } NormalizeParam_t;
 
 static void 
-find_min_max (guchar *src, gint bpp, gpointer data)
+find_min_max (const guchar *src,
+	      gint          bpp,
+	      gpointer      data)
 {
   NormalizeParam_t *param = (NormalizeParam_t*) data;
-  gint b;
+  gint              b;
 
   for (b = 0; b < param->alpha; b++)
     {
@@ -213,10 +215,13 @@ find_min_max (guchar *src, gint bpp, gpointer data)
 }
 
 static void 
-normalize_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+normalize_func (const guchar *src,
+		guchar       *dest,
+		gint          bpp,
+		gpointer      data)
 {
   NormalizeParam_t *param = (NormalizeParam_t*) data;
-  gint b;
+  gint              b;
 
   for (b = 0; b < param->alpha; b++)
     dest[b] = param->lut[src[b]];

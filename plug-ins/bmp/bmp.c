@@ -73,11 +73,11 @@ struct Bitmap_Head_Struct Bitmap_Head;
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar   *name,
-                          gint     nparams,
-                          GimpParam  *param,
-                          gint    *nreturn_vals,
-                          GimpParam **return_vals);
+static void   run        (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -147,18 +147,18 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint             nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam      values[2];
+  GimpRunMode           run_mode;
+  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
+  gint32                image_ID;
+  gint32                drawable_ID;
+  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
   
   run_mode = param[0].data.d_int32;
 

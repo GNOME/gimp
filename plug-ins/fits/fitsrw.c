@@ -479,7 +479,7 @@ static void fits_drop_error (void)
 /* #END-PAR                                                                  */
 /*****************************************************************************/
 
-FITS_FILE *fits_open (char *filename, char *openmode)
+FITS_FILE *fits_open (const char *filename, const char *openmode)
 
 {int reading, writing, n_rec, n_hdr;
  long fpos_header, fpos_data;

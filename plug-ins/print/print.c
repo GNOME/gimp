@@ -56,9 +56,13 @@ void		printrc_save (void);
 static int	compare_printers (gp_plist_t *p1, gp_plist_t *p2);
 static void	get_system_printers (void);
 
-static void	query (void);
-static void	run (char *, int, GimpParam *, int *, GimpParam **);
-static int	do_print_dialog (char *proc_name);
+static void	query           (void);
+static void     run             (const gchar      *name,
+				 gint              nparams,
+				 const GimpParam  *param,
+				 gint             *nreturn_vals,
+				 GimpParam       **return_vals);
+static int	do_print_dialog (const gchar      *proc_name);
 
 /*
  * Globals...
@@ -220,11 +224,11 @@ volatile int SDEBUG = 1;
 #endif
 
 static void
-run (gchar      *name,		/* I - Name of print program. */
-     gint        nparams,	/* I - Number of parameters passed in */
-     GimpParam  *param,		/* I - Parameter values */
-     gint       *nreturn_vals,	/* O - Number of return values */
-     GimpParam **return_vals)	/* O - Return values */
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   GimpDrawable	*drawable;	/* Drawable for image */
   GimpRunMode    run_mode;	/* Current run mode */
@@ -586,7 +590,7 @@ run (gchar      *name,		/* I - Name of print program. */
  */
 
 static gint
-do_print_dialog (gchar *proc_name)
+do_print_dialog (const gchar *proc_name)
 {
 
   /*
@@ -600,7 +604,6 @@ do_print_dialog (gchar *proc_name)
   gimp_create_main_window ();
 
   gtk_main ();
-  gdk_flush ();
 
   /*
    * Set printrc options...

@@ -57,11 +57,11 @@ FP_Params Current =
 GimpDrawable *drawable, *mask;
 
 void      query  (void);
-void      run    (gchar     *name,
-		  gint       nparams,
-		  GimpParam    *param,
-		  gint      *nreturn_vals,
-		  GimpParam   **return_vals);
+void      run    (const gchar      *name,
+		  gint              nparams,
+		  const GimpParam  *param,
+		  gint             *nreturn_vals,
+		  GimpParam       **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -99,11 +99,11 @@ query (void)
 /********************************STANDARD RUN*************************/
 
 void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   GimpParam         values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;

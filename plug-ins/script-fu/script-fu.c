@@ -38,23 +38,21 @@
 #include "script-fu-intl.h"
 
 
-/* Declare local functions.
- */
-static void      script_fu_quit   (void);
-static void      script_fu_query  (void);
-static void      script_fu_run    (gchar        *name,
-				   gint          nparams,
-				   GimpParam    *param,
-				   gint         *nreturn_vals,
-				   GimpParam   **return_vals);
+/* Declare local functions. */
 
-
+static void      script_fu_quit           (void);
+static void      script_fu_query          (void);
+static void      script_fu_run            (const gchar      *name,
+					   gint              nparams,
+					   const GimpParam  *params,
+					   gint             *nreturn_vals,
+					   GimpParam       **return_vals);
 static void      script_fu_auxillary_init (void);
-static void      script_fu_refresh_proc   (gchar      *name,
-					   gint        nparams,
-					   GimpParam  *params,
-					   gint       *nreturn_vals,
-					   GimpParam **return_vals);
+static void      script_fu_refresh_proc   (const gchar      *name,
+					   gint              nparams,
+					   const GimpParam  *params,
+					   gint             *nreturn_vals,
+					   GimpParam       **return_vals);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -165,11 +163,11 @@ script_fu_query (void)
 }
 
 static void
-script_fu_run (gchar      *name,
-	       gint        nparams,
-	       GimpParam  *param,
-	       gint       *nreturn_vals,
-	       GimpParam **return_vals)
+script_fu_run (const gchar      *name,
+	       gint              nparams,
+	       const GimpParam  *param,
+	       gint             *nreturn_vals,
+	       GimpParam       **return_vals)
 {
   INIT_I18N();
 
@@ -282,11 +280,11 @@ script_fu_auxillary_init (void)
 }
 
 static void
-script_fu_refresh_proc (gchar       *name,
-			gint         nparams,
-			GimpParam   *params,
-			gint        *nreturn_vals,
-			GimpParam  **return_vals)
+script_fu_refresh_proc (const gchar      *name,
+			gint              nparams,
+			const GimpParam  *params,
+			gint             *nreturn_vals,
+			GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;

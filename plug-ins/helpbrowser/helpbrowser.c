@@ -96,11 +96,11 @@ static GtkTargetEntry help_dnd_target_table[] =
 /*  GIMP plugin stuff  */
 
 static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -722,11 +722,11 @@ idle_load_page (gpointer data)
 }
 
 static void
-run_temp_proc (gchar      *name,
-	       gint        nparams,
-	       GimpParam  *param,
-	       gint       *nreturn_vals,
-	       GimpParam **return_vals)
+run_temp_proc (const gchar      *name,
+	       gint              nparams,
+	       const GimpParam  *param,
+	       gint             *nreturn_vals,
+	       GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
@@ -833,15 +833,15 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType status  = GIMP_PDB_SUCCESS;
   const gchar *env_root_dir = NULL;
   gchar       *help_path    = NULL;
   gchar       *locale       = NULL;

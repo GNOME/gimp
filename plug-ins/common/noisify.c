@@ -59,20 +59,20 @@ typedef struct
 {
   gint       channels;
   GtkObject *channel_adj[4];
-  gint       run;
+  gboolean   run;
 } NoisifyInterface;
 
 /* Declare local functions.
  */
 static void       query  (void);
-static void       run    (gchar      *name,
-			  gint        nparams,
-			  GimpParam  *param,
-			  gint       *nreturn_vals,
-			  GimpParam **return_vals);
+static void       run    (const gchar      *name,
+			  gint              nparams,
+			  const GimpParam  *param,
+			  gint             *nreturn_vals,
+			  GimpParam       **return_vals);
 
-static void       noisify (GimpDrawable *drawable,
-                           gboolean      preview_mode);
+static void       noisify (GimpDrawable    *drawable,
+                           gboolean         preview_mode);
 static gdouble    gauss   (GRand *gr);
 
 static gint       noisify_dialog                   (GimpDrawable *drawable, 
@@ -137,11 +137,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -229,7 +229,10 @@ run (gchar      *name,
 }
 
 static void 
-noisify_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+noisify_func (const guchar *src,
+	      guchar       *dest,
+	      gint          bpp,
+	      gpointer      data)
 {
   GRand *gr = (GRand*) data;
   gint noise = 0, b;
@@ -258,7 +261,7 @@ noisify_func (guchar *src, guchar *dest, gint bpp, gpointer data)
 
 static void
 noisify (GimpDrawable *drawable, 
-	 gboolean   preview_mode)
+	 gboolean      preview_mode)
 {
   GRand *gr;
 

@@ -382,13 +382,10 @@ run (gchar      *name,
 
           if (parasite)
     	    {
-	      gpointer data;
-	      gint     size;
+	      gint size = gimp_parasite_data_size (parasite);
 
-	      data = gimp_parasite_data (parasite);
-	      size = gimp_parasite_data_size (parasite);
-
-	      strncpy (xsvals.comment, data, MIN (size, MAX_COMMENT));
+	      strncpy (xsvals.comment,
+		       gimp_parasite_data (parasite), MIN (size, MAX_COMMENT));
 	      xsvals.comment[MIN (size, MAX_COMMENT) + 1] = 0;
 
 	      gimp_parasite_free (parasite);
@@ -398,12 +395,9 @@ run (gchar      *name,
 
           if (parasite)
 	    {
-	      gpointer data;
-	      gint     x, y;
+	      gint x, y;
 
-	      data = gimp_parasite_data (parasite);
-
-	      if (sscanf (data, "%i %i", &x, &y) == 2)
+	      if (sscanf (gimp_parasite_data (parasite), "%i %i", &x, &y) == 2)
 	       {
 	         xsvals.use_hot = TRUE;
 	         xsvals.x_hot = x;

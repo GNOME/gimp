@@ -89,13 +89,13 @@ static gboolean (*_button_press_func)(GtkWidget*, GdkEventButton*, gpointer);
 static gpointer _button_press_param;
 
 /* Declare local functions. */
-static void query (void);
-static void run (char *name,
-		 int nparams,
-		 GimpParam * param,
-		 int *nreturn_vals,
-		 GimpParam ** return_vals);
-static gint dialog(GimpDrawable *drawable);
+static void  query  (void);
+static void  run    (const gchar      *name,
+		     gint              nparams,
+		     const GimpParam  *param,
+		     gint             *nreturn_vals,
+		     GimpParam       **return_vals);
+static gint  dialog (GimpDrawable     *drawable);
 
 GimpPlugInInfo PLUG_IN_INFO = {
    NULL,			/* init_proc */
@@ -133,11 +133,11 @@ static void query()
 }
 
 static void
-run (gchar      *name,
-     gint        n_params,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              n_params,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
    static GimpParam values[1];
    GimpDrawable *drawable;

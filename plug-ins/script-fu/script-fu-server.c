@@ -177,15 +177,15 @@ script_fu_server_get_mode (void)
 
 
 void
-script_fu_server_run (gchar       *name,
-		      gint         nparams,
-		      GimpParam   *params,
-		      gint        *nreturn_vals,
-		      GimpParam  **return_vals)
+script_fu_server_run (const gchar      *name,
+		      gint              nparams,
+		      const GimpParam  *params,
+		      gint             *nreturn_vals,
+		      GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunMode   run_mode;
+  GimpRunMode       run_mode;
 
   run_mode = params[0].data.d_int32;
 

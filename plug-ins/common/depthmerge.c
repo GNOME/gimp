@@ -75,7 +75,7 @@ typedef struct _DepthMergeInterface
   guchar    *previewDepthMap1;
   guchar    *previewDepthMap2;
 
-  gint       run;
+  gboolean   run;
 } DepthMergeInterface;
 
 typedef struct _DepthMergeParams
@@ -154,11 +154,11 @@ void util_convertColorspace (guchar *dest,
 /* ----- plug-in entry points ----- */
 
 static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -207,11 +207,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        numParams,
-     GimpParam  *param,
-     gint       *numReturnVals,
-     GimpParam **returnVals)
+run (const gchar      *name,
+     gint              numParams,
+     const GimpParam  *param,
+     gint             *numReturnVals,
+     GimpParam       **returnVals)
 {
   static GimpParam  values[1];
   GimpRunMode       runMode;

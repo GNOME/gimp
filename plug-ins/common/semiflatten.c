@@ -32,14 +32,15 @@
 
 /* Declare local functions.
  */
-static void      query  (void);
-static void      run    (gchar   *name,
-			 gint     nparams,
-			 GimpParam  *param,
-			 gint    *nreturn_vals,
-			 GimpParam **return_vals);
+static void   query       (void);
+static void   run         (const gchar      *name,
+			   gint              nparams,
+			   const GimpParam  *param,
+			   gint             *nreturn_vals,
+			   GimpParam       **return_vals);
 
-static void      semiflatten            (GimpDrawable    *drawable);
+static void   semiflatten (GimpDrawable     *drawable);
+
 
 static guchar bgred, bggreen, bgblue;
 
@@ -84,16 +85,16 @@ query (void)
 
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  gint32 image_ID;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  gint32             image_ID;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -132,7 +133,10 @@ run (gchar   *name,
 }
 
 static void 
-semiflatten_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+semiflatten_func (const guchar *src,
+		  guchar       *dest,
+		  gint          bpp,
+		  gpointer      data)
 {
   dest[0] = (src[0] * src[3]) / 255 + (bgred * (255 - src[3])) / 255;
   dest[1] = (src[1] * src[3]) / 255 + (bggreen * (255 - src[3])) / 255;

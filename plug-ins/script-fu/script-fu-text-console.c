@@ -35,11 +35,11 @@ static void script_fu_text_console_interface (void);
 
 
 void
-script_fu_text_console_run (gchar      *name,
-			    gint        nparams,
-			    GimpParam  *params,
-			    gint       *nreturn_vals,
-			    GimpParam **return_vals)
+script_fu_text_console_run (const gchar      *name,
+			    gint              nparams,
+			    const GimpParam  *params,
+			    gint             *nreturn_vals,
+			    GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;

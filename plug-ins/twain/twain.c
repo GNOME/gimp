@@ -126,10 +126,14 @@ int  dataTransferCallback(pTW_IMAGEINFO, pTW_IMAGEMEMXFER, void *);
 int  endTransferCallback(int, int, void *);
 void postTransferCallback(int, void *);
 
-static void init(void);
-static void quit(void);
-static void query(void);
-static void run(char *, int, GimpParam *, int *, GimpParam **);
+static void init  (void);
+static void quit  (void);
+static void query (void);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 /* This plug-in's functions */
 GimpPlugInInfo PLUG_IN_INFO =
@@ -548,11 +552,11 @@ static GimpParam values[3];
  * Capture an image from a TWAIN datasource
  */
 static void 
-run(gchar *name,		/* name of plugin */
-    gint nparams,		/* number of in-paramters */
-    GimpParam *param,		/* in-parameters */
-    gint *nreturn_vals,	        /* number of out-parameters */
-    GimpParam **return_vals)	/* out-parameters */
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   GimpRunMode run_mode;
 

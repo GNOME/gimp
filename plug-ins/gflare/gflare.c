@@ -381,7 +381,7 @@ typedef struct
 
 typedef struct
 {
-  gint  run;
+  gboolean run;
 } PluginInterface;
 
 typedef void (* QueryFunc) (GtkWidget *,
@@ -393,11 +393,11 @@ typedef void (* QueryFunc) (GtkWidget *,
  **/
 
 static void    plugin_query (void);
-static void    plugin_run   (gchar      *name,
-			     gint        nparams,
-			     GimpParam  *param,
-			     gint       *nreturn_vals,
-			     GimpParam **return_vals);
+static void    plugin_run   (const gchar      *name,
+			     gint              nparams,
+			     const GimpParam  *param,
+			     gint             *nreturn_vals,
+			     GimpParam       **return_vals);
 
 static GFlare * gflare_new_with_default (const gchar *new_name);
 static GFlare * gflare_dup              (const GFlare      *src,
@@ -846,11 +846,11 @@ plugin_query (void)
 }
 
 void
-plugin_run (gchar      *name,
-	    gint        nparams,
-	    GimpParam  *param,
-	    gint       *nreturn_vals,
-	    GimpParam **return_vals)
+plugin_run (const gchar      *name,
+	    gint              nparams,
+	    const GimpParam  *param,
+	    gint             *nreturn_vals,
+	    GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpRunMode       run_mode;

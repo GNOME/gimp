@@ -61,23 +61,23 @@ typedef struct
 
 typedef struct
 {
-  gint run;
+  gboolean  run;
 } FITSLoadInterface;
 
 
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar      *name,
-                          gint        nparams,
-                          GimpParam  *param,
-                          gint       *nreturn_vals,
-                          GimpParam **return_vals);
+static void   run        (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
 
-static gint32 load_image (gchar  *filename);
-static gint   save_image (gchar  *filename,
-                          gint32  image_ID,
-                          gint32  drawable_ID);
+static gint32 load_image (const gchar  *filename);
+static gint   save_image (const gchar  *filename,
+                          gint32        image_ID,
+                          gint32        drawable_ID);
 
 static FITS_HDU_LIST *create_fits_header (FITS_FILE *ofp,
 					  guint width, guint height, guint bpp);
@@ -88,22 +88,22 @@ static gint save_direct (FITS_FILE *ofp,
 			 gint32 image_ID,
 			 gint32 drawable_ID);
 
-static gint32 create_new_image (gchar          *filename,
-				guint           pagenum,
-				guint           width,
-				guint           height,
-				GimpImageBaseType      itype,
-				GimpImageType   dtype,
-				gint32         *layer_ID,
-				GimpDrawable     **drawable,
+static gint32 create_new_image (const gchar        *filename,
+				guint               pagenum,
+				guint               width,
+				guint               height,
+				GimpImageBaseType   itype,
+				GimpImageType       dtype,
+				gint32             *layer_ID,
+				GimpDrawable      **drawable,
 				GimpPixelRgn       *pixel_rgn);
 
 static void   check_load_vals (void);
 
-static gint32 load_fits (gchar     *filename,
-			 FITS_FILE *ifp,
-                         guint      picnum,
-			 guint      ncompose);
+static gint32 load_fits (const gchar *filename,
+			 FITS_FILE   *ifp,
+                         guint        picnum,
+			 guint        ncompose);
 
 
 static gint   load_dialog              (void);
@@ -199,11 +199,11 @@ query (void)
 
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[2];
   GimpRunMode        run_mode;
@@ -333,7 +333,7 @@ run (gchar      *name,
 
 
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   gint32 image_ID, *image_list, *nl;
   guint  picnum;
@@ -424,9 +424,9 @@ load_image (gchar *filename)
 
 
 static gint
-save_image (gchar  *filename,
-            gint32  image_ID,
-            gint32  drawable_ID)
+save_image (const gchar *filename,
+            gint32       image_ID,
+            gint32       drawable_ID)
 {
   FITS_FILE* ofp;
   GimpImageType drawable_type;
@@ -491,18 +491,18 @@ check_load_vals (void)
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static gint32
-create_new_image (gchar *filename,
-                  guint pagenum,
-                  guint width,
-                  guint height,
-                  GimpImageBaseType itype,
-                  GimpImageType dtype,
-                  gint32 *layer_ID,
-                  GimpDrawable **drawable,
-                  GimpPixelRgn *pixel_rgn)
+create_new_image (const gchar        *filename,
+                  guint               pagenum,
+                  guint               width,
+                  guint               height,
+                  GimpImageBaseType   itype,
+                  GimpImageType       dtype,
+                  gint32             *layer_ID,
+                  GimpDrawable      **drawable,
+                  GimpPixelRgn       *pixel_rgn)
 {
   gint32 image_ID;
-  char *tmp;
+  char   *tmp;
 
   image_ID = gimp_image_new (width, height, itype);
   if ((tmp = g_malloc (strlen (filename) + 64)) != NULL)
@@ -530,10 +530,10 @@ create_new_image (gchar *filename,
 /* to be composed together. This will result in different GIMP image types: */
 /* 1: GRAY, 2: GRAYA, 3: RGB, 4: RGBA */
 static gint32
-load_fits (gchar     *filename,
-           FITS_FILE *ifp,
-           guint      picnum,
-           guint      ncompose)
+load_fits (const gchar *filename,
+           FITS_FILE   *ifp,
+           guint        picnum,
+           guint        ncompose)
 {
   register guchar *dest, *src;
   guchar *data, *data_end, *linebuf;

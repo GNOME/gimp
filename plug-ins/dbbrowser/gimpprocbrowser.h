@@ -25,18 +25,18 @@
 #define __DBBROWSER_UTILS_H__
 
 
-typedef void (* GimpDBBrowserApplyCallback) (gchar           *proc_name,
-					     gchar           *scheme_proc_name,
-					     gchar           *proc_blurb,
-					     gchar           *proc_help,
-					     gchar           *proc_author,
-					     gchar           *proc_copyright,
-					     gchar           *proc_date,
-					     GimpPDBProcType  proc_type,
-					     gint             nparams,
-					     gint             nreturn_vals,
-					     GimpParamDef    *params,
-					     GimpParamDef    *return_vals);
+typedef void (* GimpDBBrowserApplyCallback) (const gchar        *proc_name,
+					     const gchar        *scheme_proc_name,
+					     const gchar        *proc_blurb,
+					     const gchar        *proc_help,
+					     const gchar        *proc_author,
+					     const gchar        *proc_copyright,
+					     const gchar        *proc_date,
+					     GimpPDBProcType     proc_type,
+					     gint                nparams,
+					     gint                nreturn_vals,
+					     const GimpParamDef *params,
+					     GimpParamDef        *return_vals);
 
 GtkWidget * gimp_db_browser (GimpDBBrowserApplyCallback  apply_callback);
 

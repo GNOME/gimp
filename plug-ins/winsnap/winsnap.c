@@ -85,8 +85,13 @@ static HCURSOR			selectCursor = 0;
 static ICONINFO			iconInfo;
 
 /* Forward declarations */
-static void query(void);
-static void run(char *, int, GimpParam *, int *, GimpParam **);
+static void query (void);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
+
 static void sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect);
 
 BOOL CALLBACK dialogProc(HWND, UINT, WPARAM, LPARAM);
@@ -115,7 +120,7 @@ typedef struct {
   GtkWidget *single_button;
   GtkWidget *root_button;
   GtkWidget *delay_spinner;
-  gint run;
+  gboolean   run;
 } WinSnapInterface;
 
 /* The dialog data */
@@ -1088,11 +1093,11 @@ static GimpParam values[2];
  * Capture an window image.
  */
 static void
-run(gchar *name,		/* name of plugin */
-    gint nparams,		/* number of in-paramters */
-    GimpParam *param,		/* in-parameters */
-    gint *nreturn_vals,	        /* number of out-parameters */
-    GimpParam **return_vals)	/* out-parameters */
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   GimpRunMode run_mode;
   int wait = 1;

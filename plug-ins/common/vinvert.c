@@ -33,18 +33,18 @@
 /* Declare local functions.
  */
 static void   query              (void);
-static void   run                (gchar         *name,
-                                  gint           nparams,
-                                  GimpParam     *param,
-                                  gint          *nreturn_vals,
-                                  GimpParam    **return_vals);
+static void   run                (const gchar      *name,
+                                  gint              nparams,
+                                  const GimpParam  *param,
+                                  gint             *nreturn_vals,
+                                  GimpParam       **return_vals);
 
-static void   vinvert            (GimpDrawable  *drawable);
-static void   indexed_vinvert    (gint32         image_ID);
-static void   vinvert_render_row (guchar        *src,
-                                  guchar        *dest,
-                                  gint           row_width,
-                                  gint           bpp);
+static void   vinvert            (GimpDrawable     *drawable);
+static void   indexed_vinvert    (gint32            image_ID);
+static void   vinvert_render_row (const guchar     *src,
+                                  guchar           *dest,
+                                  gint              row_width,
+                                  gint              bpp);
 
 
 static GimpRunMode run_mode;
@@ -90,11 +90,11 @@ query ()
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -154,19 +154,20 @@ indexed_vinvert (gint32 image_ID)
 
   cmap = gimp_image_get_cmap (image_ID, &ncols);
 
-  if (cmap == NULL)
-    {
-      g_print ("vinvert: cmap was NULL!  Quitting...\n");
-      gimp_quit ();
-    }
+  g_return_if_fail (cmap != NULL);
 
   vinvert_render_row (cmap, cmap, ncols, 3);
 
   gimp_image_set_cmap (image_ID, cmap, ncols);
+
+  g_free (cmap);
 }
 
 static void 
-vinvert_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+vinvert_func (const guchar *src,
+	      guchar       *dest,
+	      gint          bpp,
+	      gpointer      data)
 {
   gint v1, v2, v3;
 
@@ -187,10 +188,10 @@ vinvert_func (guchar *src, guchar *dest, gint bpp, gpointer data)
 }
 
 static void
-vinvert_render_row (guchar *src,
-		    guchar *dest,
-		    gint    row_width, /* in pixels */
-		    gint    bpp)
+vinvert_render_row (const guchar *src,
+		    guchar       *dest,
+		    gint          row_width, /* in pixels */
+		    gint          bpp)
 {
   while (row_width--)
     {
