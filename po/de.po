@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.11\n"
-"POT-Creation-Date: 2002-12-19 18:07+0100\n"
-"PO-Revision-Date: 2002-12-19 18:20+0100\n"
+"POT-Creation-Date: 2002-12-20 13:39+0100\n"
+"PO-Revision-Date: 2002-12-20 13:44+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -168,7 +168,7 @@ msgstr "Kann %s nicht rückgängig machen"
 msgid "<<invalid>>"
 msgstr "<<ungültig>>"
 
-#: app/undo.c:3600 app/gui/resize-dialog.c:201
+#: app/gui/resize-dialog.c:201 app/undo.c:3600
 msgid "Scale Image"
 msgstr "Bild skalieren"
 
@@ -184,7 +184,7 @@ msgstr "Bild konvertieren"
 msgid "Crop Image"
 msgstr "Bild zuschneiden"
 
-#: app/undo.c:3604 app/gui/image-commands.c:308
+#: app/gui/image-commands.c:308 app/undo.c:3604
 msgid "Merge Layers"
 msgstr "Ebenen vereinen"
 
@@ -200,7 +200,7 @@ msgstr "Hilfslinie"
 msgid "Layer Properties"
 msgstr "Ebeneneigenschaften"
 
-#: app/undo.c:3608 app/gui/resize-dialog.c:193
+#: app/gui/resize-dialog.c:193 app/undo.c:3608
 msgid "Scale Layer"
 msgstr "Ebene skalieren"
 
@@ -236,7 +236,7 @@ msgstr "Einfügen"
 msgid "Cut"
 msgstr "Ausschneiden"
 
-#: app/undo.c:3617 app/tools/gimptexttool.c:150
+#: app/tools/gimptexttool.c:150 app/undo.c:3617
 msgid "Text"
 msgstr "Text"
 
@@ -260,7 +260,7 @@ msgstr "Parasit entfernen"
 msgid "Plug-In"
 msgstr "Plugin"
 
-#: app/undo.c:3624 app/pdb/internal_procs.c:124
+#: app/pdb/internal_procs.c:124 app/undo.c:3624
 msgid "Image"
 msgstr "Bild"
 
@@ -268,12 +268,12 @@ msgstr "Bild"
 msgid "Image Mod"
 msgstr "Bildänderung"
 
-#: app/undo.c:3626 app/gui/file-new-dialog.c:373
+#: app/gui/file-new-dialog.c:373 app/undo.c:3626
 msgid "Image Type"
 msgstr "Bildart"
 
 #. Image size frame
-#: app/undo.c:3627 app/gui/file-new-dialog.c:143
+#: app/gui/file-new-dialog.c:143 app/undo.c:3627
 msgid "Image Size"
 msgstr "Bildgröße"
 
@@ -281,7 +281,7 @@ msgstr "Bildgröße"
 msgid "Resolution Change"
 msgstr "Auflösung ändern"
 
-#: app/undo.c:3631 app/core/gimpchannel.c:505
+#: app/core/gimpchannel.c:505 app/undo.c:3631
 msgid "Selection Mask"
 msgstr "Auswahlmaske"
 
@@ -289,7 +289,7 @@ msgstr "Auswahlmaske"
 msgid "Rename Item"
 msgstr "Ding umbenennen"
 
-#: app/undo.c:3633 app/gui/layers-commands.c:607 app/gui/layers-commands.c:639
+#: app/gui/layers-commands.c:607 app/gui/layers-commands.c:639 app/undo.c:3633
 msgid "New Layer"
 msgstr "Ebene anlegen"
 
@@ -301,7 +301,7 @@ msgstr "Ebene löschen"
 msgid "Layer Mod"
 msgstr "Ebenenänderung"
 
-#: app/undo.c:3636 app/gui/layers-commands.c:894
+#: app/gui/layers-commands.c:894 app/undo.c:3636
 msgid "Add Layer Mask"
 msgstr "Ebenenmaske hinzufügen"
 
@@ -317,8 +317,8 @@ msgstr "Ebene repositionieren"
 msgid "Layer Move"
 msgstr "Ebene verschieben"
 
-#: app/undo.c:3640 app/gui/channels-commands.c:322
-#: app/gui/channels-commands.c:359
+#: app/gui/channels-commands.c:322 app/gui/channels-commands.c:359
+#: app/undo.c:3640
 msgid "New Channel"
 msgstr "Neuer Kanal"
 
@@ -463,8 +463,8 @@ msgstr "Mitten"
 msgid "Highlights"
 msgstr "Glanzlichter"
 
-#: app/config/gimpconfig-deserialize.c:193 app/config/gimpconfig.c:348
-#: app/config/gimpconfig.c:361 app/config/gimpscanner.c:307
+#: app/config/gimpconfig-deserialize.c:193 app/config/gimpconfig.c:350
+#: app/config/gimpconfig.c:363 app/config/gimpscanner.c:307
 #: app/config/gimpscanner.c:370 app/core/gimpunits.c:158 app/gui/session.c:169
 #: app/plug-in/plug-in-rc.c:131
 msgid "fatal parse error"
@@ -496,7 +496,7 @@ msgstr "Wert für Symbol %s ist keine gültige UTF-8-Zeichenkette"
 msgid "Failed to create temporary file for '%s': %s"
 msgstr "Kann temporäre Datei für '%s' nicht anlegen: %s"
 
-#: app/config/gimpconfig.c:246
+#: app/config/gimpconfig.c:250
 #, c-format
 msgid ""
 "Error when writing to temporary file for '%s': %s\n"
@@ -505,7 +505,7 @@ msgstr ""
 "Fehler beim Schreiben in temporäre Datei für '%s': %s\n"
 "Die Originaldatei wurde nicht geändert."
 
-#: app/config/gimpconfig.c:252
+#: app/config/gimpconfig.c:256
 #, c-format
 msgid ""
 "Error when writing to temporary file for '%s': %s\n"
@@ -514,7 +514,7 @@ msgstr ""
 "Fehler beim Schreiben in temporäre Datei für '%s': %s\n"
 "Es wurde keine Datei angelegt."
 
-#: app/config/gimpconfig.c:274
+#: app/config/gimpconfig.c:276
 #, c-format
 msgid "Failed to create file '%s': %s"
 msgstr "Kann Datei '%s' nicht anlegen: %s"
@@ -915,12 +915,12 @@ msgstr "Eingefügte Ebene"
 #: app/core/gimpenvirontable.c:283
 #, c-format
 msgid "Empty variable name in environment file %s"
-msgstr ""
+msgstr "Umgebungsdatei %s enthält leeren Variablennamen"
 
 #: app/core/gimpenvirontable.c:301
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
-msgstr ""
+msgstr "Umgebungsdatei %s enthält ungültigen Variablennamen: %s"
 
 #: app/core/gimpgradient.c:347
 #, c-format
@@ -2111,7 +2111,6 @@ msgid "Y:"
 msgstr "Y:"
 
 #: app/gui/file-new-dialog.c:323 app/gui/resize-dialog.c:639
-#, c-format
 msgid "pixels/%a"
 msgstr "Pixel/%a"
 
@@ -4475,7 +4474,7 @@ msgstr "Farbe des Randes um die Leinwand festlegen"
 #. Zoom & Resize Behaviour
 #: app/gui/preferences-dialog.c:1363
 msgid "Zoom & Resize Behaviour"
-msgstr ""
+msgstr "Verhalten bei Zoom und Größenänderungen"
 
 #: app/gui/preferences-dialog.c:1367
 msgid "Resize Window on _Zoom"
@@ -7646,7 +7645,7 @@ msgstr "GIMP Meldung"
 msgid "<%s>"
 msgstr "<%s>"
 
-#: app/xcf/xcf-load.c:392
+#: app/xcf/xcf-load.c:396
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -7660,12 +7659,28 @@ msgstr ""
 msgid "(invalid UTF-8 string)"
 msgstr "(ungültige UTF-8-Zeichenkette)"
 
+#: app/xcf/xcf-save.c:135 app/xcf/xcf-save.c:145 app/xcf/xcf-save.c:155
+#: app/xcf/xcf-save.c:165 app/xcf/xcf-save.c:180 app/xcf/xcf.c:319
+#, c-format
+msgid "Error saving XCF file: %s"
+msgstr "Fehler beim Schreiben der XCF-Datei: %s"
+
+#: app/xcf/xcf-write.c:96
+#, c-format
+msgid "Error writing XCF: %s"
+msgstr "Fehler beim Schreiben der XCF-Datei: %s"
+
+#: app/xcf/xcf-seek.c:44 app/xcf/xcf-seek.c:61 app/xcf/xcf-seek.c:72
+#, c-format
+msgid "Could not seek in XCF file: %s"
+msgstr "Fehler beim Spulen in XCF-Datei: %s"
+
 #: app/xcf/xcf.c:262
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF Fehler: nicht unterstützte XCF-Dateiversion %d aufgetreten"
 
-#: app/xcf/xcf.c:321
+#: app/xcf/xcf.c:326
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "%s konnte nicht geöffnet werden: %s\n"
