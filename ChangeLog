@@ -1,3 +1,8 @@
+Mon Oct  5 16:18:08 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	 * app/channels_dialog.c: fixed assignment in g_return_if_fail
+	 pointed out by Ben Jackson
+
 Mon Oct  5 02:42:47 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/general.c: applied gimp-bjj-980922-0, makes get_token's
@@ -135,14 +140,14 @@ Sat Sep 26 20:46:18 BST 1998  Adam D. Moss <adam@gimp.org>
 
 		* Mixing idlerender and drawable_update() /
 		gdisplays_update_area() calls can lead to a region
-		being rerendered twice.		
+		being rerendered twice.
 
 	Hence, some slogwork is needed before idlerender can be
 	applied in the more general case.
 
 Sat Sep 26 00:54:14 EDT 1998   Adrian Likins <adrian@gimp.org>
 
-	*gimptool.1: minor update to add info about -strip 
+	*gimptool.1: minor update to add info about -strip
         build options.
 
 Fri Sep 25 18:05:39 BST 1998  Adam D. Moss <adam@gimp.org>
@@ -194,7 +199,7 @@ Sun Sep 20 15:52:21 PDT 1998 Manish Singh <yosh@gimp.org>
 	* Upgraded to libtool 1.2b
 
 	* Reversioned libgimp to use gtk-style without a funky soname
- 
+
 	* configure.in: craft GLIB_CFLAGS and GLIB_LIBS
 
 	* Makefile.am (pretty much all of em): changed to use new library
@@ -223,24 +228,24 @@ Sun Sep 20 15:52:21 PDT 1998 Manish Singh <yosh@gimp.org>
 
 Sun Sep 20 12:57:00 CST 1998 Seth Burgess <sjburges@gimp.org>
 
-	* plug-ins/gauss_iir/gauss_iir.c: Fixed segfault if neither 
+	* plug-ins/gauss_iir/gauss_iir.c: Fixed segfault if neither
 	horizontal nor vertical was selected (as reported by Marc Lehman).
 
 Sat Sep 19 01:19:18 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
-	* app/blend.c app/brush_select.c app/brush_select.h app/bucket_fill.c 
-	app/gimpbrushlist.c app/internal_procs.c app/plug_in.c libgimp/gimp.c 
+	* app/blend.c app/brush_select.c app/brush_select.h app/bucket_fill.c
+	app/gimpbrushlist.c app/internal_procs.c app/plug_in.c libgimp/gimp.c
 	libgimp/gimp.h libgimp/gimpmenu.c libgimp/gimptile.c
 	plug-ins/gfig/gfig.c
 
 	Infrastructure to allow gimp dialogs to be controlled from plugins.
-	Brush dialog can now be invoked multiple times. Dialogs invoked 
-	via plugins do not control the active brush (dialog only used for 
+	Brush dialog can now be invoked multiple times. Dialogs invoked
+	via plugins do not control the active brush (dialog only used for
 	selections).
-	New gimp_interactive_selection_brush() function to popup dialog 
-	Example of usage in the gfig plugin. 
+	New gimp_interactive_selection_brush() function to popup dialog
+	Example of usage in the gfig plugin.
 	Other dialogs should be able to use this method of invocation.
- 
+
 Tue Sep 15 21:27:10 BST 1998  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/gif.c:
@@ -291,12 +296,12 @@ Thu Sep 10 12:00:55 PDT 1998 Manish Singh <yosh@gimp.org>
 	* plug-ins/script-fu/script-fu.c
 	* plug-ins/script-fu/script-fu-console.[ch]: added an eval
 	PDB interface for running arbitrary scheme code
-	
+
 	* app/batch.c: redid batch mode to use script-fu-eval
 
 	* app/main.c: fixed command line parsing for batch mode and
 	image loading
-	
+
 Wed Sep  9 03:02:17 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: added -std1 check for DU4
@@ -319,7 +324,7 @@ Tue Sep  8 18:28:44 1998  Jay Cox  (jaycox@earthlink.net)
 	* app/docindexif.c: white_space() was ungetch'ing the eof
 	  marker which can clear the eof flag on some systems.
 	* app/docindex.c: check for ferror()s
-	* app/brush_select[ch]: sensitize the edit button iff the 
+	* app/brush_select[ch]: sensitize the edit button iff the
 	  active brush is a generated brush.
 
 Mon Sep  7 22:30:53 PDT 1998 Manish Singh <yosh@gimp.org>
@@ -370,7 +375,7 @@ Tue Sep  1 01:15:06 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/layers_dialog.c (paint_mode_menu_get_position): added this
 	function to translate layer modes to correct menu positions, this
-	is ugly but important until someone rewrites the layers_dialog. 
+	is ugly but important until someone rewrites the layers_dialog.
 
 Mon Aug 31 23:32:40 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
@@ -405,10 +410,10 @@ Mon Aug 31 16:33:11 CDT 1998  Larry Ewing  <lewing@gimp.org>
 	me any comments on what it actually should do.  It also needs a
 	little testing, especially the pdb call.
 
-	* app/gimpimage.c: cleaned up Seth's merge commit a little. Also 
+	* app/gimpimage.c: cleaned up Seth's merge commit a little. Also
 	changed the mode of a merged layer to normal, as this seems to be
 	the proper thing.  Discussion is welcome here as well.
-	
+
 Mon Aug 31 19:16:36 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* app/gimpimage.c: I'm pleased to say that lewing doesn't
@@ -427,7 +432,7 @@ Mon Aug 31 11:35:00 CST 1998 Seth Burgess <sjburges@gimp.org>
 	* app/gimage.c
 	* app/gimpimage.c: Applied Zach's fix for layer merge opacity.  I
 	still don't really like setting opacity to 100% regardless, but at
-	least it looks like it behaves correctly.  
+	least it looks like it behaves correctly.
 
 Sun Aug 30 19:02:56 PDT 1998 Manish Singh <yosh@gimp.org>
 
@@ -485,7 +490,7 @@ Mon Aug 24 13:41:49 CDT 1998  Larry Ewing  <lewing@gimp.org>
 	these interfaces.
 	* app/gimpimage.c: added a warning about the side effect that
 	caused the above bug.
-	
+
 Mon Aug 24 09:34:37 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/depthmerge.c
@@ -514,8 +519,8 @@ Fri Aug 21 17:25:34 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 1998-08-21  Chris Lahey  <clahey@umich.edu>
 
-	* app/docindexif.c (create_idea_menu): 
-	* app/docindex.c (make_idea_window): 
+	* app/docindexif.c (create_idea_menu):
+	* app/docindex.c (make_idea_window):
 		Got rid of the menu bar in the document index.
 
 1998-08-19  Raph Levien  <raph@gimp.org>
@@ -569,7 +574,7 @@ Sun Aug 16 18:48:17 CDT 1998  Larry Ewing  <lewing@gimp.org>
 	* app/docindexif.c: Fixed up the UI to make the document index
 	look a bit more like a dialog.
 
-	* app/docindex.h: 
+	* app/docindex.h:
 	* app/docindex.c: Just fixed a few small nits.  Might have made
 	the document index a bit more robust during gimp crashes.
 
@@ -580,7 +585,7 @@ Sat Aug 15 22:53:36 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 Sat Aug 15 19:30:42 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
-	* Makefile.am boundary.h boundaryF.h by_color_select.h 
+	* Makefile.am boundary.h boundaryF.h by_color_select.h
 	  file_new_dialog.c fileops.h floating_sel.h gdisplay.h
 	  gdisplayF.h ink.c interface.h layer.h layerF.h paint_core.h
 	  tools.h toolsF.h: header file tweaks.  Now changing tile.h
@@ -670,7 +675,7 @@ Thu Aug 13 22:20:06 MEST 1998 Sven Neumann <sven@gimp.org>
 Thu Aug 13 22:16:42 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	Applied the patch from Tor Lillqvist <tml@iki.fi>:
-	
+
 	* app/transform_core.c app/transform_core.h: Further changes in
 	the look-and-feel. Now we have a info_dialog window for each
 	transformation tool, with an action and cancel button. The use of
@@ -690,17 +695,17 @@ Thu Aug 13 22:16:42 MEST 1998 Sven Neumann <sven@gimp.org>
 	from transform_tool.c when the grid density spinbutton has been
 	changed. The grid is instantaneously redrawn in the new
 	density. Neat, huh?
-	
+
 	* transform_tool.c transform_tool.h: More options: a toggle to
 	clip the result of a perspective transform, and a spinbutton for
 	the rubber-band grid density. The toggle for "new" vs. "old" UI is
 	now for "corrective" vs. "traditional" paradigm.
-	
+
 	* rotate_tool.c: Show also the center point coordinates in the
 	info dialog. If dragging the center point, update TransformCore
 	accordingly. Use the center point coordinates from TransformCore
 	where appropriate.
-		
+
 	* perspective_tool.c: Show the transformation matrix in the info
 	dialog.
 
@@ -710,12 +715,12 @@ Thu Aug 13 22:16:42 MEST 1998 Sven Neumann <sven@gimp.org>
 Thu Aug 13 20:48:48 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/color_area.c: Add event-masks so the tooltip is shown.
-	
+
 	* app/gdisplay.c
-	* app/plug_in.c: Check range of progress-percentage to avoid 
+	* app/plug_in.c: Check range of progress-percentage to avoid
 	warnings.
 
-	* app/gimplist.c: Include stdio.h to fix compiler warning.  
+	* app/gimplist.c: Include stdio.h to fix compiler warning.
 
 Thu Aug 13 11:32:04 MEST 1998 Sven Neumann <sven@gimp.org>
 
@@ -724,27 +729,27 @@ Thu Aug 13 11:32:04 MEST 1998 Sven Neumann <sven@gimp.org>
 	* app/devices.[ch]
 	* app/gimprc.[ch]
 	* app/preferences_dialog.c: applied gimp-alt-980812-0.patch:
-	Device status is now restored on startup. 
+	Device status is now restored on startup.
 	Tooltips added to items in device status dialog box.
 	Fixed problem with multiple input devices & new dialog.
-	Added option to preferences (under session) that allows user to 
-	always store device status on exit from gimp (default off). 
-	Fixed problem in color area of toolbar to do the possibility of GC not 
+	Added option to preferences (under session) that allows user to
+	always store device status on exit from gimp (default off).
+	Fixed problem in color area of toolbar to do the possibility of GC not
 	existing when the dialog is refreshed.
 
-	* app/commands.c: include errorconsole.h 
+	* app/commands.c: include errorconsole.h
 
 Tue Aug 11 23:17:20 CST 1998 Seth Burgess <sjburges@gimp.org>
-	
+
 	* app/transform_core.c: Fixed the flip tool so it would operate
-	properly even if "New Interface" is selected for the transform 
+	properly even if "New Interface" is selected for the transform
  	tools.
 
 Tue Aug 11 22:41:20 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/app_procs.c
-	* app/layers_dialog.c: Fixed the progressbar warnings and the 
-	image id in the layers-n-channels dialog. 
+	* app/layers_dialog.c: Fixed the progressbar warnings and the
+	image id in the layers-n-channels dialog.
 
 Tue Aug 11 21:14:40 MEST 1998 Sven Neumann <sven@gimp.org>
 
@@ -776,16 +781,16 @@ Mon Aug 10 14:48:20 PDT 1998 Manish Singh <yosh@gimp.org>
 	the total proc count
 
 Mon Aug 10 16:20:33 MEST 1998 Sven Neumann <sven@gimp.org>
-	
+
 	* app/internal_procs.c
 	* app/text_tool.[ch]: Wrappers for gimp-text and
 	gimp-text-get-extents.
-	
+
 	* plug-ins/script-fu/script-fu-enums.h
 	* plug-ins/script-fu/script-fu-scripts.c
 	* plug-ins/script-fu/script-fu.c
 	* plug-ins/script-fu/scripts/test-sphere.scm: A font-selector
-	for the script-fu dialog. See documentation in test-sphere.scm.	
+	for the script-fu dialog. See documentation in test-sphere.scm.
 
 Sun Aug  9 14:15:42 MEST 1998 Sven Neumann <sven@gimp.org>
 
@@ -795,7 +800,7 @@ Sun Aug  9 14:15:42 MEST 1998 Sven Neumann <sven@gimp.org>
 
 1998-08-07  Raja R Harinath  <harinath@cs.umn.edu>
 
-	* plug-ins/script-fu/Makefile.am (INCLUDES): 
+	* plug-ins/script-fu/Makefile.am (INCLUDES):
 	List $(top_srcdir) before $(GTK_CFLAGS).
 
 Thu Aug  6 15:12:16 PDT 1998 Manish Singh <yosh@gimp.org>
@@ -834,7 +839,7 @@ Wed Aug  5 21:39:59 MEST 1998 Sven Neumann <sven@gimp.org>
 	* plug-ins/script-fu/script-fu.c
 	* plug-ins/script-fu/script-fu-scripts.c: New ScriptFu argument type
 	SF-STRING: Never have to add those damned quotes again... More types
-	to follow soon.	 
+	to follow soon.
 
 Wed Aug  5 14:32:51 MEST 1998 Sven Neumann <sven@gimp.org>
 
@@ -846,22 +851,22 @@ Wed Aug  5 14:32:51 MEST 1998 Sven Neumann <sven@gimp.org>
 	* app/menus.c
 	* app/plug_in.c
 	* app/preferences_dialog.c: The statusbar can now be switched off
-	like the rulers. Screen estate purists can make this the default 
+	like the rulers. Screen estate purists can make this the default
 	behaviour in their gimprc ;-)
- 
+
 1998-08-03  Federico Mena Quintero  <federico@nuclecu.unam.mx>
 
 	* app/gradient.c: Fixed typo (sinuosidal -> sinusoidal).
 
 Sun Aug  2 22:34:43 MEST 1998 Sven Neumann <sven@gimp.org>
 
-	* app/gdisplay.c: Tweaked and applied a patch from Daniel Egger 
+	* app/gdisplay.c: Tweaked and applied a patch from Daniel Egger
 	(gimp-egger-980704). Update the statusbar when converting the
 	image to another basetype.
 
 Sun Aug  2 21:00:04 MEST 1998 Sven Neumann <sven@gimp.org>
 
-	* plug-ins/script-fu/script-fu-scripts.c: Applied a patch from 
+	* plug-ins/script-fu/script-fu-scripts.c: Applied a patch from
 	Simon.Budig@unix-ag.org (gimp-simon-220598-0).
 	Cosmetic changes to the script-fu dialog.
 
@@ -893,7 +898,7 @@ Fri Jul 31 18:29:44 BST 1998  Adam D. Moss  <adam@gimp.org>
 
 	* app/layers_dialog.c: Removed an ancient kludge that was
 	seriously confusing the layer-mode menu.
-	
+
 	* plug-ins/psd/psd.c: Support OVERLAY_MODE where available
 
 Fri Jul 31 13:42:29 BST 1998  Adam D. Moss  <adam@gimp.org>
@@ -917,14 +922,14 @@ Tue Jul 28 17:07:41 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 Tue Jul 28 15:42:39 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
-	* app/drawable_cmds.c (drawable_fill_invoker): 
+	* app/drawable_cmds.c (drawable_fill_invoker):
 	* libgimp/gimpenums.h: Changed the libgimp GFillType
 	enums to match the core enums in value, the names still
-	differ. 
-	
+	differ.
+
 	* plug-ins/script-fu/script-fu.c: changed the fill setvars to use
-	the GFillType enums. 
-	
+	the GFillType enums.
+
 Tue Jul 28 14:03:57 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/Makefile.am
@@ -948,12 +953,12 @@ Tue Jul 28 14:14:43 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/drawable.c (drawable_fill): added a case for
 	FOREGROUND_FILL.  Fixes the layer new dialog so that it actually
-	works with foreground fill selected. 
+	works with foreground fill selected.
 
 1998-07-28  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* app/file_new_dialog.c
-	* app/layers_dialog.c: change the order of the different 
+	* app/layers_dialog.c: change the order of the different
 	fill-types (Foreground and Background are nicer to sit besides
 	each other)
 
@@ -979,7 +984,7 @@ Sun Jul 26 23:47:33 MEST 1998 Sven Neumann <sven@gimp.org>
 	* app/edit_selection.c
 	* app/rect_select.c: More statusbar stuff (should be finished now,
 	but who knows...)
-	
+
 Sat Jul 25 04:11:31 PDT 1998  Jay Cox <jaycox@earthlink.net>
 
 	* app/pixel_region.c: optimized pixel_region_[gs]et_row,
@@ -1005,7 +1010,7 @@ Fri Jul 24 14:03:13 PDT 1998 Manish Singh <yosh@gimp.org>
 
 Fri Jul 24 14:40:55 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
-	* app/layers_dialog.c (lc_dialog_create): moved 
+	* app/layers_dialog.c (lc_dialog_create): moved
 	gtk_widget_show (lc_shell) so that the layers show up in the
 	dialog again.  I've told Owen about this problem, we'll see what
 	comes up.
@@ -1068,8 +1073,8 @@ Thu Jul 23 01:53:09 MEST 1998 Sven Neumann <sven@gimp.org>
 Wed Jul 22 23:32:50 MEST 1998 Sven Neumann <sven@gimp.org>
 
         * docs/quick_reference.ps
-        * docs/quick_reference.tar.gz: 
-        Updated the Quick Reference Sheet to the much improved version made 
+        * docs/quick_reference.tar.gz:
+        Updated the Quick Reference Sheet to the much improved version made
         by Sven Anders <anderss@fmi.uni-passau.de>.
 
 Tue Jul 21 18:32:19 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
@@ -1081,7 +1086,7 @@ Tue Jul 21 02:11:47 MEST 1998 Sven Neumann <sven@gimp.org>
 	* app/app_procs.c
 	* app/devices.[ch]
 	* app/session.[ch]: added session-managment support to the
-	device-status-dialog. The restore-function is still not working, 
+	device-status-dialog. The restore-function is still not working,
 	will have a look at it tomorrow...
 
 Mon Jul 20 21:35:33 BST 1998 Adam D. Moss <adam@gimp.org>

@@ -233,7 +233,7 @@ channels_dialog_create ()
       gtk_container_set_focus_vadjustment (GTK_CONTAINER (channelsD->channel_list),
 					   gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (listbox)));
       GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (listbox)->vscrollbar, GTK_CAN_FOCUS);
-      
+
       gtk_widget_show (channelsD->channel_list);
       gtk_widget_show (listbox);
 
@@ -370,7 +370,7 @@ channels_dialog_update (GimpImage* gimage)
     return;
 
   channelsD->gimage=gimage;
-  
+
   suspend_gimage_notify++;
   /*  Free all elements in the channels listbox  */
   gtk_list_clear_items (GTK_LIST (channelsD->channel_list), 0, -1);
@@ -503,8 +503,9 @@ channels_dialog_preview_extents ()
   GImage *gimage;
 
   g_return_if_fail(channelsD);
-  g_return_if_fail(gimage = channelsD->gimage);
-  
+  if (! (gimage = channelsD->gimage))
+    return;
+
   channelsD->gimage_width = gimage->width;
   channelsD->gimage_height = gimage->height;
 
@@ -579,7 +580,7 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
   /*  get the list item data  */
   state = channel_widget->list_item->state;
 
-  if (channel_widget->type == Auxillary) 
+  if (channel_widget->type == Auxillary)
     {
       /*  turn on the specified auxillary channel  */
       index = gimage_get_channel_index (channel_widget->gimage, channel_widget->channel);
@@ -589,8 +590,8 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
 	  gtk_list_select_item (GTK_LIST (channelsD->channel_list), index + channelsD->num_components);
 	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item), channel_widget);
 	}
-    } 
-  else 
+    }
+  else
     {
       if (state != GTK_STATE_SELECTED)
 	{
@@ -633,7 +634,7 @@ channels_dialog_unset_channel (ChannelWidget * channel_widget)
   /*  get the list item data  */
   state = channel_widget->list_item->state;
 
-  if (channel_widget->type == Auxillary) 
+  if (channel_widget->type == Auxillary)
     {
       /*  turn off the specified auxillary channel  */
       index = gimage_get_channel_index (channel_widget->gimage, channel_widget->channel);
@@ -668,7 +669,7 @@ channels_dialog_unset_channel (ChannelWidget * channel_widget)
 	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item), channel_widget);
 	}
     }
-  
+
   suspend_gimage_notify--;
 }
 
@@ -689,7 +690,7 @@ channels_dialog_position_channel (ChannelWidget *channel_widget,
   list = g_list_append (list, channel_widget->list_item);
   gtk_list_remove_items (GTK_LIST (channelsD->channel_list), list);
   channelsD->channel_widgets = g_slist_remove (channelsD->channel_widgets, channel_widget);
-  
+
   suspend_gimage_notify--;
 
   /*  Add it back at the proper index  */
@@ -1657,7 +1658,7 @@ channel_widget_channel_flush (GtkWidget *widget,
     {
       /*  select if this is the active channel  */
       if (channelsD->active_channel == (channel_widget->channel))
-	channels_dialog_set_channel (channel_widget); 
+	channels_dialog_set_channel (channel_widget);
       /*  unselect if this is not the active channel  */
       else
 	channels_dialog_unset_channel (channel_widget);
@@ -1886,13 +1887,13 @@ edit_channel_query_ok_callback (GtkWidget *w,
 
 
   if (options->gimage) {
-    
+
     /*  Set the new channel name  */
     channel_set_name(channel,
 		     gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
     gtk_label_set (GTK_LABEL (options->channel_widget->label),
 		   channel_get_name(channel));
-    
+
     if (channel->opacity != opacity)
       {
 	channel->opacity = opacity;
@@ -1904,7 +1905,7 @@ edit_channel_query_ok_callback (GtkWidget *w,
 	  channel->col[i] = options->color_panel->color[i];
 	  update = TRUE;
 	}
-    
+
     if (update)
       {
 	drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
@@ -1961,7 +1962,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   options->channel_widget = channel_widget;
   options->gimage = channel_widget->gimage;
   options->opacity = (double) channel_widget->channel->opacity / 2.55;
-  for (i = 0; i < 3; i++) 
+  for (i = 0; i < 3; i++)
     channel_color[i] =  channel_widget->channel->col[i];
 
   options->color_panel = color_panel_new (channel_color, 48, 64);
@@ -2031,5 +2032,3 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
 }
-
-
