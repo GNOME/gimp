@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 06:20+0900\n"
-"PO-Revision-Date: 2004-03-19 23:25+0100\n"
+"POT-Creation-Date: 2004-03-20 16:56+0900\n"
+"PO-Revision-Date: 2004-03-20 16:58+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1305,7 +1305,7 @@ msgid "Cut"
 msgstr "Klipp ut"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:636
-#: app/tools/gimptexttool.c:125 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:126 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Text"
 
@@ -1946,7 +1946,7 @@ msgstr "Aktivera snabbmask"
 msgid "Disable QuickMask"
 msgstr "Inaktivera snabbmask"
 
-#: app/core/gimpimage-undo-push.c:2915
+#: app/core/gimpimage-undo-push.c:2918
 #, c-format
 msgid "Can't undo %s"
 msgstr "Kan inte ångra %s"
@@ -7348,7 +7348,7 @@ msgstr ""
 "Flygande bäckasiner söka\n"
 "strax hwila på mjuka tuvor."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:568
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:591
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
 
@@ -7356,19 +7356,19 @@ msgstr "Lägg till textlager"
 msgid "(invalid UTF-8 string)"
 msgstr "(ogiltig UTF-8-sträng)"
 
-#: app/text/gimptextlayer.c:175
+#: app/text/gimptextlayer.c:176
 msgid "Text Layer"
 msgstr "Textlager"
 
-#: app/text/gimptextlayer.c:501
+#: app/text/gimptextlayer.c:529
 msgid "Discard Text Information"
 msgstr "Förkasta textinformation"
 
-#: app/text/gimptextlayer.c:542
+#: app/text/gimptextlayer.c:579
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "På grund av brist på typsnitt är textfunktioner inte tillgängliga."
 
-#: app/text/gimptextlayer.c:570
+#: app/text/gimptextlayer.c:607
 msgid "Empty Text Layer"
 msgstr "Tomt textlager"
 
@@ -8554,24 +8554,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Skapa väg från text"
 
-#: app/tools/gimptexttool.c:126
+#: app/tools/gimptexttool.c:127
 msgid "Add text to the image"
 msgstr "Skriv text i bilden"
 
-#: app/tools/gimptexttool.c:127
+#: app/tools/gimptexttool.c:128
 msgid "/Tools/Te_xt"
 msgstr "/Verktyg/Te_xt"
 
-#: app/tools/gimptexttool.c:601
+#: app/tools/gimptexttool.c:624
 msgid "GIMP Text Editor"
 msgstr "GIMP-textredigerare"
 
-#: app/tools/gimptexttool.c:691 app/tools/gimptexttool.c:694
+#: app/tools/gimptexttool.c:714 app/tools/gimptexttool.c:717
 msgid "Confirm Text Editing"
 msgstr "Bekräfta texteditering"
 
-#: app/tools/gimptexttool.c:715
-#, fuzzy
+#: app/tools/gimptexttool.c:738
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -8579,9 +8578,11 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"Lagret du har valt är ett textlager, men har blivit ändrat av andra "
-"verktyg. Om du ändrar lagret med textverktyget så slänger du bort dessa "
+"Lagret du har valt är ett textlager, men har blivit ändrat av andra verktyg. "
+"Om du ändrar lagret med textverktyget så slänger du bort dessa "
 "förändringar.\n"
+"\n"
+"Du kan editera lagret eller skapa ett nytt textlager från dess textattribut."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
