@@ -47,7 +47,6 @@ struct _GimpGuiConfig
   GimpPreviewSize      nav_preview_size;
   gboolean             nav_window_per_display;
   gboolean             info_window_per_display;
-  gboolean             global_paint_options;
   gboolean             trust_dirty_flag;
   gboolean             save_device_status;
   gboolean             save_session_info;

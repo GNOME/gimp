@@ -1,5 +1,9 @@
 2002-03-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpguiconfig.[ch]: removed "global_paint_options".
+
+2002-03-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimprc.[ch]
 	* app/gui/preferences-dialog.c
 	* app/paint/gimppaintoptions.[ch]
@@ -67,9 +71,6 @@
 	* libgimp/gimpgradientselect_pdb.[ch]
 	* libgimp/gimppalette_pdb.[ch]
 	* libgimp/gimppatterns_pdb.c: regenerated.
-
-	* devel-docs/libgimp/tmpl/gimpgradients.sgml
-	* devel-docs/libgimp/tmpl/gimppalette.sgml: regenerated.
 
 2002-03-11  Sven Neumann  <sven@gimp.org>
 

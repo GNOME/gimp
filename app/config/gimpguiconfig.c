@@ -54,7 +54,6 @@ enum
   PROP_NAV_PREVIEW_SIZE,
   PROP_NAV_WINDOW_PER_DISPLAY,
   PROP_INFO_WINDOW_PER_DISPLAY,
-  PROP_GLOBAL_PAINT_OPTIONS,
   PROP_TRUST_DIRTY_FLAG,
   PROP_SAVE_DEVICE_STATUS,
   PROP_SAVE_SESSION_INFO,
@@ -135,9 +134,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     FALSE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
                                     "info-window-per-display",
-                                    FALSE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_PAINT_OPTIONS,
-                                    "global-paint-options",
                                     FALSE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRUST_DIRTY_FLAG,
                                     "trust-dirty-flag",
@@ -223,9 +219,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_INFO_WINDOW_PER_DISPLAY:
       gui_config->info_window_per_display = g_value_get_boolean (value);
       break;      
-    case PROP_GLOBAL_PAINT_OPTIONS:
-      gui_config->global_paint_options = g_value_get_boolean (value);
-      break;
     case PROP_TRUST_DIRTY_FLAG:
       gui_config->trust_dirty_flag = g_value_get_boolean (value);
       break;
@@ -303,9 +296,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_INFO_WINDOW_PER_DISPLAY:
       g_value_set_boolean (value, gui_config->info_window_per_display);
-      break;
-    case PROP_GLOBAL_PAINT_OPTIONS:
-      g_value_set_boolean (value, gui_config->global_paint_options);
       break;
     case PROP_TRUST_DIRTY_FLAG:
       g_value_set_boolean (value, gui_config->trust_dirty_flag);
