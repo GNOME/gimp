@@ -1267,7 +1267,9 @@ gimp_layer_apply_mask (GimpLayer         *layer,
   if (push_undo)
     {
       gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_APPLY_MASK,
-                                   _("Apply Layer Mask"));
+                                   (mode == GIMP_MASK_APPLY) ?
+                                   _("Apply Layer Mask") :
+                                   _("Delete Layer Mask"));
 
       gimp_image_undo_push_layer_mask_remove (gimage, NULL, layer, layer->mask);
     }
