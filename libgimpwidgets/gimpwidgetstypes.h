@@ -41,15 +41,16 @@ typedef enum
 } GimpSizeEntryUpdatePolicy;
 
 
-typedef struct _GimpButton      GimpButton;
-typedef struct _GimpChainButton GimpChainButton;
-typedef struct _GimpColorArea   GimpColorArea;
-typedef struct _GimpColorButton GimpColorButton;
-typedef struct _GimpOffsetArea  GimpOffsetArea;
-typedef struct _GimpPathEditor  GimpPathEditor;
-typedef struct _GimpPixmap      GimpPixmap;
-typedef struct _GimpSizeEntry   GimpSizeEntry;
-typedef struct _GimpUnitMenu    GimpUnitMenu;
+typedef struct _GimpButton        GimpButton;
+typedef struct _GimpChainButton   GimpChainButton;
+typedef struct _GimpColorArea     GimpColorArea;
+typedef struct _GimpColorButton   GimpColorButton;
+typedef struct _GimpFileSelection GimpFileSelection;
+typedef struct _GimpOffsetArea    GimpOffsetArea;
+typedef struct _GimpPathEditor    GimpPathEditor;
+typedef struct _GimpPixmap        GimpPixmap;
+typedef struct _GimpSizeEntry     GimpSizeEntry;
+typedef struct _GimpUnitMenu      GimpUnitMenu;
 
 
 typedef void (* GimpHelpFunc) (const gchar *help_data);

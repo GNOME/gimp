@@ -24,13 +24,13 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "core/core-types.h"
+#include "core-types.h"
 
 #include "base/gimphistogram.h"
 #include "base/pixel-region.h"
 
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
+#include "gimpdrawable.h"
+#include "gimpimage.h"
 
 
 void

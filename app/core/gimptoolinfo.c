@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "core-types.h"
 
 #include "base/temp-buf.h"
 

@@ -76,7 +76,7 @@ static void *
 do_parallel_regions (PixelProcessor *p_s)
 {
   PixelRegion tr[4];
-  gint       n tiles = 0;
+  gint        n_tiles = 0;
   gint        i;
   gint        cont = 1;
 
@@ -104,7 +104,7 @@ do_parallel_regions (PixelProcessor *p_s)
 	  }
 
       pthread_mutex_unlock (&p_s->mutex);
-      ntiles++;
+      n_tiles++;
 
       switch(p_s->n_regions)
 	{

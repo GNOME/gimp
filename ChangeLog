@@ -1,5 +1,19 @@
 2001-05-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/pixel-processor.c: fixing a typo fixes ENABLE_MP.
+
+	* app/core/gimpdrawable-histogram.c
+	* app/core/gimpimage-colorhash.c
+	* app/core/gimptoolinfo.c: fixed some #includes.
+
+	* libgimpwidgets/gimpfileselection.[ch]
+	* libgimpwidgets/gimpwidgetstypes.h: moved the opaque typedef to
+	gimpwidgetstypes.h
+
+	* po/POTFILES.in: reflect app/'s state again.
+
+2001-05-25  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: new directory devel-docs/libgimpbase/
 
 2001-05-25  Michael Natterer  <mitch@gimp.org>

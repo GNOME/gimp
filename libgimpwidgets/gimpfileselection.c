@@ -33,6 +33,8 @@
 
 #include <gtk/gtk.h>
 
+#include "gimpwidgetstypes.h"
+
 #include "gimpfileselection.h"
 
 #include "libgimp/libgimp-intl.h"

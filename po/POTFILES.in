@@ -15,7 +15,6 @@ app/gdisplay_ops.c
 app/gimphelp.c
 app/gimpprogress.c
 app/gimprc.c
-app/gimpui.c
 app/gimpunit.c
 app/global_edit.c
 app/image_new.c
@@ -26,7 +25,6 @@ app/nav_window.c
 app/plug_in.c
 app/qmask.c
 app/resize.c
-app/scan_convert.c
 app/undo.c
 app/undo_history.c
 app/user_install.c
@@ -142,6 +140,8 @@ app/widgets/gimpdatafactoryview.c
 app/widgets/gimpdrawablelistview.c
 app/widgets/gimpimagedock.c
 app/widgets/gimplayerlistview.c
+app/widgets/gimpwidgets-constructors.h
+app/widgets/gimpwidgets-utils.c
 
 modules/colorsel_gtk.c
 modules/colorsel_triangle.c
