@@ -218,7 +218,8 @@ splash_update (const gchar *text1,
                gdouble      percentage)
 {
   GdkRectangle    expose = { 0, 0, 0, 0 };
-  PangoRectangle  rect;
+  PangoRectangle  ink;
+  PangoRectangle  logical;
   gint            width;
   gint            height;
 
@@ -230,30 +231,30 @@ splash_update (const gchar *text1,
 
   if (text1)
     {
-      pango_layout_get_pixel_extents (splash->upper, NULL, &rect);
-      splash_rectangle_union (&expose, &rect, splash->upper_x, splash->upper_y);
+      pango_layout_get_pixel_extents (splash->upper, &ink, NULL);
+      splash_rectangle_union (&expose, &ink, splash->upper_x, splash->upper_y);
 
       pango_layout_set_text (splash->upper, text1, -1);
-      pango_layout_get_pixel_extents (splash->upper, NULL, &rect);
+      pango_layout_get_pixel_extents (splash->upper, &ink, &logical);
 
-      splash->upper_x = (width - rect.width) / 2;
-      splash->upper_y = height - 2 * (rect.height + 6);
+      splash->upper_x = (width - logical.width) / 2;
+      splash->upper_y = height - 2 * (logical.height + 6);
 
-      splash_rectangle_union (&expose, &rect, splash->upper_x, splash->upper_y);
+      splash_rectangle_union (&expose, &ink, splash->upper_x, splash->upper_y);
     }
 
   if (text2)
     {
-      pango_layout_get_pixel_extents (splash->lower, NULL, &rect);
-      splash_rectangle_union (&expose, &rect, splash->lower_x, splash->lower_y);
+      pango_layout_get_pixel_extents (splash->lower, &ink, NULL);
+      splash_rectangle_union (&expose, &ink, splash->lower_x, splash->lower_y);
 
       pango_layout_set_text (splash->lower, text2, -1);
-      pango_layout_get_pixel_extents (splash->lower, NULL, &rect);
+      pango_layout_get_pixel_extents (splash->lower, &ink, &logical);
 
-      splash->lower_x = (width - rect.width) / 2;
-      splash->lower_y = height - (rect.height + 6);
+      splash->lower_x = (width - logical.width) / 2;
+      splash->lower_y = height - (logical.height + 6);
 
-      splash_rectangle_union (&expose, &rect, splash->lower_x, splash->lower_y);
+      splash_rectangle_union (&expose, &ink, splash->lower_x, splash->lower_y);
     }
 
   if (expose.width > 0 && expose.height > 0)
