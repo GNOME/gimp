@@ -2,7 +2,6 @@ package Gimp::UI;
 
 use Gimp ('__');
 use Gimp::Fu;
-use Gtk;
 use base 'DynaLoader';
 
 BEGIN {
@@ -46,6 +45,19 @@ reimplement all of it in perl.
 =back
 
 =cut
+
+if (eval { require Gtk; import Gtk (); 1 }) {
+   local $/;
+   eval <DATA>;
+   die $@ if $@;
+   close DATA;
+}
+
+1;
+
+# All Gtk-dependent functions are put below
+__DATA__
+#line 58
 
 @Gimp::UI::ImageMenu::ISA   =qw(Gimp::UI);
 @Gimp::UI::LayerMenu::ISA   =qw(Gimp::UI);
@@ -101,7 +113,6 @@ sub new($$$$) {
 
 package Gimp::UI::PreviewSelect;
 
-use Gtk;
 use Gimp '__';
 
 sub GTK_CLASS_INIT {
@@ -200,7 +211,6 @@ sub GTK_OBJECT_INIT {
 
 package Gimp::UI::PatternSelect;
 
-use Gtk;
 use Gimp '__';
 use Gimp::basewidget Gtk::Button;
 
@@ -249,7 +259,6 @@ sub set_preview {
 
 package Gimp::UI::BrushSelect;
 
-use Gtk;
 use Gimp '__';
 use Gimp::basewidget Gtk::Button;
 
@@ -293,7 +302,6 @@ sub set_preview {
 
 package Gimp::UI::GradientSelect;
 
-use Gtk;
 use Gimp '__';
 use Gimp::basewidget Gtk::Button;
 
@@ -325,7 +333,6 @@ sub new {
 
 package Gimp::UI::ColorSelectButton;
 
-use Gtk;
 use Gimp '__';
 use Gimp::basewidget Gtk::Button;
 
@@ -520,7 +527,7 @@ sub help_window(\$$$) {
       $b->insert($font,$b->style->fg(-normal),undef,__"BLURB:\n\n$blurb\n\nHELP:\n\n$help");
       $b->set_usize($font->string_width('M')*80,($font->ascent+$font->descent)*26);
 
-      my $button = new Gtk::Button __"OK";
+      my $button = Gtk::Button->new(__"OK");
       signal_connect $button "clicked",sub { hide $$helpwin };
       $$helpwin->action_area->add($button);
       

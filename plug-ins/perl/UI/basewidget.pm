@@ -1,7 +1,7 @@
 package Gimp::basewidget; # pragma
 
-use Gimp;
 use Gtk;
+use Gimp;
 
 $VERSION = 1.19;
 

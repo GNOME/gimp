@@ -24,6 +24,7 @@ API generalization
    gimp_desaturate -> drawable
 
 bugs
+  * .pot file -> add to dist.
   * damnit libintl crazy shit
 [DONE]  * alow gimp_selection_shrink with a zero argument.
   * font_text with negative size? bug report #5523
