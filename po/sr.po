@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-13 05:50+0200\n"
-"PO-Revision-Date: 2003-09-13 05:50+0200\n"
+"POT-Creation-Date: 2003-09-16 01:29+0200\n"
+"PO-Revision-Date: 2003-09-16 01:30+0200\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
@@ -266,8 +266,9 @@ msgstr "Наглашено"
 
 #: app/config/gimpconfig-deserialize.c:209 app/config/gimpconfig.c:375
 #: app/config/gimpconfig.c:388 app/config/gimpscanner.c:391
-#: app/config/gimpscanner.c:462 app/core/gimpmodules.c:134
-#: app/core/gimpunits.c:157 app/gui/session.c:176 app/plug-in/plug-in-rc.c:134
+#: app/config/gimpscanner.c:462 app/core/gimp-modules.c:134
+#: app/core/gimp-units.c:157 app/gui/session.c:176
+#: app/plug-in/plug-in-rc.c:134
 msgid "fatal parse error"
 msgstr "фатална грешка при раздвајању"
 
@@ -768,8 +769,7 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Када је укључено, притискањем на F1 отварате читач за помоћ."
 
 #: app/config/gimpscanner.c:90 app/tools/gimpcurvestool.c:1292
-#: app/tools/gimplevelstool.c:1490 app/vectors/gimpvectors-export.c:74
-#: app/vectors/gimpvectors-import.c:147
+#: app/tools/gimplevelstool.c:1490 app/vectors/gimpvectors-export.c:75
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Нисам успео да отворим датотеку: „'%s“: %s"
@@ -1140,16 +1140,16 @@ msgstr "Плутајућа селекција"
 msgid "Anchor Floating Selection"
 msgstr "Усидри плутајућу селекцију"
 
-#: app/core/core-enums.c:513 app/core/gimpedit.c:197
+#: app/core/core-enums.c:513 app/core/gimp-edit.c:197
 #: app/widgets/gimpbufferview.c:143
 msgid "Paste"
 msgstr "Пренеси"
 
-#: app/core/core-enums.c:514 app/core/gimpedit.c:60
+#: app/core/core-enums.c:514 app/core/gimp-edit.c:60
 msgid "Cut"
 msgstr "Исеци"
 
-#: app/core/core-enums.c:515 app/core/gimpedit.c:117
+#: app/core/core-enums.c:515 app/core/gimp-edit.c:117
 msgid "Copy"
 msgstr "Копирај"
 
@@ -1176,7 +1176,7 @@ msgstr "Прикачи паразита"
 msgid "Remove Parasite"
 msgstr "Одстрани паразита"
 
-#: app/core/core-enums.c:521 app/vectors/gimpvectors-import.c:187
+#: app/core/core-enums.c:521 app/vectors/gimpvectors-import.c:175
 msgid "Import Paths"
 msgstr "Увези путање"
 
@@ -1310,6 +1310,30 @@ msgstr "FS опуштање"
 msgid "EEK: can't undo"
 msgstr "EEK: не могу да поништим"
 
+#: app/core/gimp-edit.c:188 app/core/gimp-edit.c:266
+msgid "Pasted Layer"
+msgstr "Пренесени слој"
+
+#: app/core/gimp-edit.c:314
+msgid "Clear"
+msgstr "Очисти"
+
+#: app/core/gimp-edit.c:352
+msgid "Fill with FG Color"
+msgstr "Попуни текућом бојом четке"
+
+#: app/core/gimp-edit.c:357 app/core/gimp-edit.c:382
+msgid "Fill with BG Color"
+msgstr "Попуни бојом позадине"
+
+#: app/core/gimp-edit.c:364
+msgid "Fill with White"
+msgstr "Попуни белом бојом"
+
+#: app/core/gimp-edit.c:373
+msgid "Fill with Transparency"
+msgstr "Попуни провидношћу"
+
 #: app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "Боја четке у боју позадине (HSV супротно казаљки на сату)"
@@ -1319,65 +1343,65 @@ msgid "FG to BG (HSV clockwise hue)"
 msgstr "Боја четке у боју позадине (HSV смер казаљки на сату)"
 
 #. register all internal procedures
-#: app/core/gimp.c:769
+#: app/core/gimp.c:768
 msgid "Procedural Database"
 msgstr "База процедура"
 
-#: app/core/gimp.c:772
+#: app/core/gimp.c:771
 msgid "Plug-In Environment"
 msgstr "Окружење за додатке"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:788
+#: app/core/gimp.c:787
 msgid "Looking for data files"
 msgstr "Тражим датотеке са подацима"
 
-#: app/core/gimp.c:788
+#: app/core/gimp.c:787
 msgid "Parasites"
 msgstr "Паразити"
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:792 app/gui/dialogs-constructors.c:346
+#: app/core/gimp.c:791 app/gui/dialogs-constructors.c:346
 #: app/gui/dialogs-constructors.c:570 app/gui/preferences-dialog.c:1932
 #: app/pdb/internal_procs.c:84
 msgid "Brushes"
 msgstr "Четке"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:796 app/gui/dialogs-constructors.c:368
+#: app/core/gimp.c:795 app/gui/dialogs-constructors.c:368
 #: app/gui/dialogs-constructors.c:592 app/gui/preferences-dialog.c:1936
 #: app/pdb/internal_procs.c:168
 msgid "Patterns"
 msgstr "Исечци"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:800 app/gui/dialogs-constructors.c:412
+#: app/core/gimp.c:799 app/gui/dialogs-constructors.c:412
 #: app/gui/dialogs-constructors.c:636 app/gui/preferences-dialog.c:1940
 #: app/pdb/internal_procs.c:156
 msgid "Palettes"
 msgstr "Палете"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:804 app/gui/dialogs-constructors.c:390
+#: app/core/gimp.c:803 app/gui/dialogs-constructors.c:390
 #: app/gui/dialogs-constructors.c:614 app/gui/preferences-dialog.c:1944
 #: app/pdb/internal_procs.c:123
 msgid "Gradients"
 msgstr "Преливи"
 
 #. initialize the list of gimp fonts
-#: app/core/gimp.c:808 app/gui/dialogs-constructors.c:432
+#: app/core/gimp.c:807 app/gui/dialogs-constructors.c:432
 #: app/gui/dialogs-constructors.c:656 app/gui/preferences-dialog.c:1858
 #: app/gui/preferences-dialog.c:1948 app/pdb/internal_procs.c:114
 msgid "Fonts"
 msgstr "Писма"
 
 #. initialize the document history
-#: app/core/gimp.c:812
+#: app/core/gimp.c:811
 msgid "Documents"
 msgstr "Документа"
 
 #. initialize the template list
-#: app/core/gimp.c:816 app/gui/dialogs-constructors.c:523
+#: app/core/gimp.c:815 app/gui/dialogs-constructors.c:523
 msgid "Templates"
 msgstr "Мустре"
 
@@ -1420,7 +1444,7 @@ msgstr "Неисправна UTF-8 реч у датотеци са четкам�
 #: app/core/gimpcontext.c:1305 app/core/gimpgradient.c:386
 #: app/core/gimpitem.c:427 app/core/gimppalette.c:441
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:127
-#: app/tools/gimpvectortool.c:317
+#: app/tools/gimpvectortool.c:312
 msgid "Unnamed"
 msgstr "Неименовано"
 
@@ -1635,30 +1659,6 @@ msgstr "Пренеси трансформацију"
 #: app/core/gimpdrawable-transform.c:1102 app/core/gimplayer.c:683
 msgid "Transform Layer"
 msgstr "Трансформиши слој"
-
-#: app/core/gimpedit.c:188 app/core/gimpedit.c:266
-msgid "Pasted Layer"
-msgstr "Пренесени слој"
-
-#: app/core/gimpedit.c:314
-msgid "Clear"
-msgstr "Очисти"
-
-#: app/core/gimpedit.c:352
-msgid "Fill with FG Color"
-msgstr "Попуни текућом бојом четке"
-
-#: app/core/gimpedit.c:357 app/core/gimpedit.c:382
-msgid "Fill with BG Color"
-msgstr "Попуни бојом позадине"
-
-#: app/core/gimpedit.c:364
-msgid "Fill with White"
-msgstr "Попуни белом бојом"
-
-#: app/core/gimpedit.c:373
-msgid "Fill with Transparency"
-msgstr "Попуни провидношћу"
 
 #: app/core/gimpenvirontable.c:285
 #, c-format
@@ -1926,19 +1926,19 @@ msgstr "Додај путању"
 msgid "Remove Path"
 msgstr "Уклони путању"
 
-#: app/core/gimpimage.c:3233
+#: app/core/gimpimage.c:3231
 msgid "Path cannot be raised higher."
 msgstr "Путање се не може подићи више."
 
-#: app/core/gimpimage.c:3238 app/widgets/gimpvectorstreeview.c:134
+#: app/core/gimpimage.c:3236 app/widgets/gimpvectorstreeview.c:134
 msgid "Raise Path"
 msgstr "Подигни путању"
 
-#: app/core/gimpimage.c:3254
+#: app/core/gimpimage.c:3252
 msgid "Path cannot be lowered more."
 msgstr "Путања се не може спустити ниже."
 
-#: app/core/gimpimage.c:3259 app/widgets/gimpvectorstreeview.c:138
+#: app/core/gimpimage.c:3257 app/widgets/gimpvectorstreeview.c:138
 msgid "Lower Path"
 msgstr "Спусти путању"
 
@@ -2887,7 +2887,7 @@ msgid "Channel List"
 msgstr "Листа канала"
 
 #: app/gui/dialogs-constructors.c:831 app/pdb/internal_procs.c:162
-#: app/tools/gimpvectortool.c:127
+#: app/tools/gimpvectortool.c:128
 msgid "Paths"
 msgstr "Путање"
 
@@ -3198,7 +3198,7 @@ msgid "/Save _Selection to File..."
 msgstr "/Сачувај селекцију у датотеку..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:704
-#: app/widgets/gimpdocumentview.c:454 app/widgets/gimpdnd.c:1005
+#: app/widgets/gimpdocumentview.c:453 app/widgets/gimpdnd.c:1005
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -6044,41 +6044,41 @@ msgstr "/Измени мустру..."
 msgid "/_Delete Template..."
 msgstr "/Избриши мустру..."
 
-#: app/gui/tips-dialog.c:91
-msgid "<b>The GIMP tips file could not be parsed correctly!</b>"
-msgstr "<b>Датотека са ГИМП саветима није могла бити обрађена!</b>"
+#: app/gui/tips-dialog.c:94
+msgid "<b>Your GIMP tips file appears to be missing!</b>"
+msgstr "<b>Чини се да недостаје ваша датотека са ГИМП саветима!</b>"
 
-#: app/gui/tips-dialog.c:112
+#: app/gui/tips-dialog.c:96
+#, c-format
+msgid "There should be a file called '%s'. Please check your installation."
+msgstr "Требало би да постоји датотека „%s“. Молим, проверите вашу инсталацију."
+
+#: app/gui/tips-dialog.c:102
+msgid "<b>The GIMP tips file could not be parsed!</b>"
+msgstr "<b>Нисам могао да обрадим датотеку са ГИМП саветима!</b>"
+
+#: app/gui/tips-dialog.c:133
 msgid "GIMP Tip of the Day"
 msgstr "ГИМП савет дана"
 
-#: app/gui/tips-dialog.c:176
+#: app/gui/tips-dialog.c:197
 msgid "Show tip next time GIMP starts"
 msgstr "Покажи савет приследећем подизању ГИМПа"
 
-#: app/gui/tips-dialog.c:200
+#: app/gui/tips-dialog.c:221
 msgid "_Previous Tip"
 msgstr "_Претходни савет"
 
-#: app/gui/tips-dialog.c:210
+#: app/gui/tips-dialog.c:231
 msgid "_Next Tip"
 msgstr "_Следећи савет"
-
-#: app/gui/tips-parser.c:166
-#, c-format
-msgid ""
-"Your GIMP tips file appears to be missing! There should be a file called '%"
-"s'. Please check your installation."
-msgstr ""
-"Недостаје Вам датотека са ГИМП саветима! Требало би да постоји датотека „%"
-"s“. Молим, проверите вашу инсталацију."
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
 #. according to the name of the po file used for gimp-tips.xml.
 #. E.g. for the german translation, that would be "tips-locale:de".
 #.
-#: app/gui/tips-parser.c:181
+#: app/gui/tips-parser.c:165
 msgid "tips-locale:C"
 msgstr "tips-locale:sr"
 
@@ -6776,7 +6776,7 @@ msgstr "Измени својства путање"
 msgid "Import Paths from SVG"
 msgstr "Увези путању из СВГ-а"
 
-#: app/gui/vectors-commands.c:694
+#: app/gui/vectors-commands.c:690
 msgid "Export Path to SVG"
 msgstr "Извези путању у СВГ-а"
 
@@ -8541,11 +8541,11 @@ msgstr "Режим уређивања"
 msgid "Polygonal"
 msgstr "Полигонски"
 
-#: app/tools/gimpvectortool.c:128
+#: app/tools/gimpvectortool.c:129
 msgid "Create and edit paths"
 msgstr "Направи и уреди путање"
 
-#: app/tools/gimpvectortool.c:129
+#: app/tools/gimpvectortool.c:130
 msgid "/Tools/_Paths"
 msgstr "/Алати/Путање"
 
@@ -8577,23 +8577,23 @@ msgstr "Промени величину путање"
 msgid "Flip Path"
 msgstr "Окрени путању"
 
-#: app/vectors/gimpvectors.c:487
+#: app/vectors/gimpvectors.c:486
 msgid "Rotate Path"
 msgstr "Ротирај путању"
 
-#: app/vectors/gimpvectors.c:518
+#: app/vectors/gimpvectors.c:517
 msgid "Transform Path"
 msgstr "Трансформиши путању"
 
-#: app/vectors/gimpvectors.c:549
+#: app/vectors/gimpvectors.c:548
 msgid "Cannot stroke empty path."
 msgstr "Не може да црта по празној путањи."
 
-#: app/vectors/gimpvectors-import.c:189 app/vectors/gimpvectors-import.c:201
+#: app/vectors/gimpvectors-import.c:186
 msgid "Imported Path"
 msgstr "Увезена путања"
 
-#: app/vectors/gimpvectors-import.c:213
+#: app/vectors/gimpvectors-import.c:208
 #, c-format
 msgid "No paths found in '%s'"
 msgstr "Путање нису нађене у „%s“"
@@ -8803,7 +8803,7 @@ msgstr "Позадина: %d, %d, %d"
 msgid "You can drop dockable dialogs here."
 msgstr "Мођете спустити пристанишне прозоре овде."
 
-#: app/widgets/gimpdocumentview.c:166
+#: app/widgets/gimpdocumentview.c:165
 #, c-format
 msgid ""
 "Open the selected entry\n"
@@ -8814,11 +8814,11 @@ msgstr ""
 "%s  Подигни прозор ако је већ отворен\n"
 "%s  Отвори прозор за слике"
 
-#: app/widgets/gimpdocumentview.c:184
+#: app/widgets/gimpdocumentview.c:183
 msgid "Remove selected entry"
 msgstr "Уклони изабран унос"
 
-#: app/widgets/gimpdocumentview.c:190
+#: app/widgets/gimpdocumentview.c:189
 #, c-format
 msgid ""
 "Recreate preview\n"
@@ -9047,7 +9047,7 @@ msgstr ""
 "%s\n"
 "%s  На Дно"
 
-#: app/widgets/gimpitemtreeview.c:1192
+#: app/widgets/gimpitemtreeview.c:1196
 msgid "Set Item Exclusive Visible"
 msgstr "Постави искључиву видљивост ставке"
 
