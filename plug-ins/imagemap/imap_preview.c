@@ -32,6 +32,8 @@
 
 #include "libgimp/gimp.h"
 
+#include <libgimp/gimpui.h>
+
 #include "imap_commands.h"
 #include "imap_grid.h"
 #include "imap_main.h"
@@ -80,56 +82,55 @@ preview_get_height(GtkWidget *preview)
 }
 
 static void
-render_gray_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
+render_gray_image(Preview_t *preview_base, GimpPixelRgn *srcrgn)
 {
-   guchar	 *src_row, *dest_row, *src, *dest;
+   guchar	 *src_row, *dest_buffer, *src, *dest;
    gint		 row, col;
    gint		 bpp, dwidth, dheight, pwidth, pheight;
    gint		 *src_col;
+   GtkWidget     *preview = preview_base->preview;
 
    dwidth  = srcrgn->w;
    dheight = srcrgn->h;
-   if(GTK_PREVIEW(preview)->buffer) {
-      pwidth  = GTK_PREVIEW(preview)->buffer_width;
-      pheight = GTK_PREVIEW(preview)->buffer_height;
-   } else {
-      pwidth  = preview->requisition.width;
-      pheight = preview->requisition.height;
-   }
+   pwidth = preview_base->widget_width;
+   pheight = preview_base->widget_height;
    bpp = srcrgn->bpp;
 
    src_row = g_new(guchar, dwidth * bpp);
-   dest_row = g_new(guchar, pwidth * 3);
+   dest_buffer = g_new(guchar, pwidth * pheight);
    src_col = g_new(gint, pwidth);
 
    for (col = 0; col < pwidth; col++)
       src_col[col] = (col * dwidth / pwidth) * bpp;
 
+   dest = dest_buffer;
+
    for (row = 0; row < pheight; row++) {
       gimp_pixel_rgn_get_row(srcrgn, src_row, 0, row * dheight / pheight,
 			     dwidth);
 
-      dest = dest_row;
       src = src_row;
 
       for (col = 0; col < pwidth; col++) {
 	 src = &src_row[src_col[col]];
 	 *dest++ = *src;
-	 *dest++ = *src;
-	 *dest++ = *src;
       }
-      gtk_preview_draw_row(GTK_PREVIEW(preview), dest_row, 0, row, pwidth);
    }
+   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                           0, 0, pwidth, pheight,
+                           GIMP_GRAY_IMAGE,
+                           dest_buffer,
+                           pwidth);
    g_free(src_col);
    g_free(src_row);
-   g_free(dest_row);
+   g_free(dest_buffer);
 
 }
 
 static void
-render_indexed_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
+render_indexed_image(Preview_t *preview_base, GimpPixelRgn *srcrgn)
 {
-   guchar	 *src_row, *dest_row, *src, *dest;
+   guchar	 *src_row, *dest_buffer, *src, *dest;
    gint		 row, col;
    gint		 dwidth, dheight, pwidth, pheight;
    gint		 *src_col;
@@ -137,16 +138,12 @@ render_indexed_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
    guchar 	 *cmap, *colour;
    gint 	 ncols;
    gboolean	 gray = get_map_info()->show_gray;
+   GtkWidget    *preview = preview_base->preview;
 
    dwidth  = srcrgn->w;
    dheight = srcrgn->h;
-   if(GTK_PREVIEW(preview)->buffer) {
-      pwidth  = GTK_PREVIEW(preview)->buffer_width;
-      pheight = GTK_PREVIEW(preview)->buffer_height;
-   } else {
-      pwidth  = preview->requisition.width;
-      pheight = preview->requisition.height;
-   }
+   pwidth = preview_base->widget_width;
+   pheight = preview_base->widget_height;
    bpp = srcrgn->bpp;
    alpha = bpp;
    has_alpha = gimp_drawable_has_alpha(srcrgn->drawable->drawable_id);
@@ -157,16 +154,17 @@ render_indexed_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
                                &ncols);
 
    src_row = g_new(guchar, dwidth * bpp);
-   dest_row = g_new(guchar, pwidth * 3);
+   dest_buffer = g_new(guchar, pwidth * pheight * 3);
    src_col = g_new(gint, pwidth);
 
    for (col = 0; col < pwidth; col++)
       src_col[col] = (col * dwidth / pwidth) * bpp;
 
+   dest = dest_buffer;
    for (row = 0; row < pheight; row++) {
       gimp_pixel_rgn_get_row(srcrgn, src_row, 0, row * dheight / pheight,
 			     dwidth);
-      dest = dest_row;
+
       for (col = 0; col < pwidth; col++) {
 	 src = &src_row[src_col[col]];
 	 colour = cmap + 3 * (int)(*src);
@@ -183,33 +181,33 @@ render_indexed_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
 	    *dest++ = colour[2];
 	 }
       }
-      gtk_preview_draw_row(GTK_PREVIEW(preview), dest_row, 0, row, pwidth);
    }
+   gimp_preview_area_draw(GIMP_PREVIEW_AREA(preview),
+                          0, 0, pwidth, pheight,
+                          GIMP_RGB_IMAGE,
+                          dest_buffer,
+                          pwidth * 3);
    g_free(src_col);
    g_free(src_row);
-   g_free(dest_row);
+   g_free(dest_buffer);
 }
 
 static void
-render_rgb_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
+render_rgb_image(Preview_t *preview_base, GimpPixelRgn *srcrgn)
 {
-   guchar	 *src_row, *dest_row, *src, *dest;
+   guchar	 *src_row, *dest_buffer, *src, *dest;
    gint		 row, col;
    gint		 dwidth, dheight, pwidth, pheight;
    gint		 *src_col;
    gint		 bpp, alpha, has_alpha, b;
    guchar	 check;
    gboolean	 gray = get_map_info()->show_gray;
+   GtkWidget    *preview = preview_base->preview;
 
    dwidth  = srcrgn->w;
    dheight = srcrgn->h;
-   if(GTK_PREVIEW(preview)->buffer) {
-      pwidth  = GTK_PREVIEW(preview)->buffer_width;
-      pheight = GTK_PREVIEW(preview)->buffer_height;
-   } else {
-      pwidth  = preview->requisition.width;
-      pheight = preview->requisition.height;
-   }
+   pwidth = preview_base->widget_width;
+   pheight = preview_base->widget_height;
    bpp = srcrgn->bpp;
    alpha = bpp;
    has_alpha = gimp_drawable_has_alpha(srcrgn->drawable->drawable_id);
@@ -217,16 +215,16 @@ render_rgb_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
       alpha--;
 
    src_row = g_new(guchar, dwidth * bpp);
-   dest_row = g_new(guchar, pwidth * bpp);
+   dest_buffer = g_new(guchar, pwidth * pheight * bpp);
    src_col = g_new(gint, pwidth);
 
    for (col = 0; col < pwidth; col++)
       src_col[col] = (col * dwidth / pwidth) * bpp;
 
+   dest = dest_buffer;
    for (row = 0; row < pheight; row++) {
       gimp_pixel_rgn_get_row(srcrgn, src_row, 0, row * dheight / pheight,
 			     dwidth);
-      dest = dest_row;
       for (col = 0; col < pwidth; col++) {
 	 src = &src_row[src_col[col]];
 	 if(!has_alpha || src[alpha] == OPAQUE) {
@@ -260,28 +258,32 @@ render_rgb_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
 	 }
 	 dest += alpha;
       }
-      gtk_preview_draw_row(GTK_PREVIEW(preview), dest_row, 0, row, pwidth);
    }
+   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                           0, 0, pwidth, pheight,
+                           gimp_drawable_type (srcrgn->drawable->drawable_id),
+                           dest_buffer,
+                           pwidth * bpp);
    g_free(src_col);
    g_free(src_row);
-   g_free(dest_row);
+   g_free(dest_buffer);
 }
 
 static void
-render_preview(GtkWidget *preview, GimpPixelRgn *srcrgn)
+render_preview(Preview_t *preview_base, GimpPixelRgn *srcrgn)
 {
    switch (gimp_drawable_type(srcrgn->drawable->drawable_id)) {
    case GIMP_RGB_IMAGE:
    case GIMP_RGBA_IMAGE:
-      render_rgb_image(preview, srcrgn);
+      render_rgb_image(preview_base, srcrgn);
       break;
    case GIMP_GRAY_IMAGE:
    case GIMP_GRAYA_IMAGE:
-      render_gray_image(preview, srcrgn);
+      render_gray_image(preview_base, srcrgn);
       break;
    case GIMP_INDEXED_IMAGE:
    case GIMP_INDEXEDA_IMAGE:
-      render_indexed_image(preview, srcrgn);
+      render_indexed_image(preview_base, srcrgn);
       break;
    }
 }
@@ -339,11 +341,12 @@ preview_redraw(Preview_t *preview)
 void
 preview_zoom(Preview_t *preview, gint zoom_factor)
 {
-   gint pwidth = preview->width * zoom_factor;
-   gint pheight = preview->height * zoom_factor;
-   gtk_preview_size(GTK_PREVIEW(preview->preview), pwidth, pheight);
+   preview->widget_width = preview->width * zoom_factor;
+   preview->widget_height = preview->height * zoom_factor;
+   gtk_widget_set_size_request (preview->preview, preview->widget_width, 
+                                preview->widget_height);
    gtk_widget_queue_resize(preview->window);
-   render_preview(preview->preview, &preview->src_rgn);
+   render_preview(preview, &preview->src_rgn);
    preview_redraw(preview);
 }
 
@@ -390,6 +393,18 @@ handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
    gtk_drag_finish(context, success, FALSE, time);
 }
 
+static void
+preview_size_allocate (GtkWidget *widget, 
+                       GtkAllocation *allocation, 
+                       gpointer preview_void)
+{
+  Preview_t * preview;
+
+  preview = (Preview_t *)preview_void;
+
+  render_preview(preview, &preview->src_rgn);
+}
+
 Preview_t*
 make_preview(GimpDrawable *drawable)
 {
@@ -403,12 +418,14 @@ make_preview(GimpDrawable *drawable)
    gint width, height;
 
    data->drawable = drawable;
-   data->preview = preview = gtk_preview_new(GTK_PREVIEW_COLOR);
+   data->preview = preview = gimp_preview_area_new ();
 
    gtk_object_set_user_data(GTK_OBJECT(preview), data);
    gtk_widget_set_events(GTK_WIDGET(preview), PREVIEW_MASK);
    g_signal_connect_after(preview, "expose_event",
 			  G_CALLBACK(preview_expose), data);
+   g_signal_connect (preview, "size-allocate",
+                     G_CALLBACK (preview_size_allocate), (gpointer)data);
 
    /* Handle drop of links in preview widget */
    gtk_drag_dest_set(preview, GTK_DEST_DEFAULT_ALL, target_table,
@@ -416,9 +433,12 @@ make_preview(GimpDrawable *drawable)
    g_signal_connect(preview, "drag_data_received",
 		    G_CALLBACK(handle_drop), NULL);
 
-   data->width  = gimp_drawable_width(drawable->drawable_id);
-   data->height = gimp_drawable_height(drawable->drawable_id);
-   gtk_preview_size(GTK_PREVIEW(preview), data->width, data->height);
+   data->widget_width = data->width = 
+       gimp_drawable_width(drawable->drawable_id);
+   data->widget_height = data->height = 
+       gimp_drawable_height(drawable->drawable_id);
+   gtk_widget_set_size_request (preview, data->widget_width, 
+                                data->widget_height);
 
    data->window = window = gtk_scrolled_window_new(NULL, NULL);
    width = (data->width > 600) ? 600 : data->width;
@@ -476,7 +496,7 @@ make_preview(GimpDrawable *drawable)
 
    gimp_pixel_rgn_init(&data->src_rgn, drawable, 0, 0, data->width,
 		       data->height, FALSE, FALSE);
-   render_preview(preview, &data->src_rgn);
+   render_preview(data, &data->src_rgn);
 
    gtk_widget_show(preview);
 

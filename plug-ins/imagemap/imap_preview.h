@@ -35,6 +35,8 @@ typedef struct {
    GtkWidget	*vruler;
    gint		width;
    gint		height;
+   gint         widget_width;
+   gint         widget_height;
    GimpPixelRgn src_rgn;
 
    GdkCursorType cursor;
