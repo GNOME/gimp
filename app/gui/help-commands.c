@@ -1146,10 +1146,7 @@ void
 dialogs_display_filters_cmd_callback (GtkWidget *widget,
 				   gpointer   client_data)
 {
-  GDisplay * gdisp;
-  gdisp = gdisplay_active ();
-
-  gdisplay_color_ui(gdisp ? gdisp->gimage : NULL);
+  gdisplay_color_ui (gdisplay_active ());
 }
 
 void
