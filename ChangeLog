@@ -1,5 +1,12 @@
 2002-03-07  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/splash.c: back to a still splash image.
+
+	* data/images/gimp_splash.png: blinkenwilber as seen from the
+	berlinerfernsehturm.de.
+
+2002-03-07  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/imagerc: applied patch from Guillermo S. Romero that
 	adds missing icons.
 
