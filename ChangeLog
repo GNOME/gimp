@@ -1,10 +1,16 @@
+2002-09-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/plug-in-menus.c: escape underscores in plug-in menu
+	entries so they don't end up as mnemonics.
+
 2002-09-21  Sven Neumann  <sven@gimp.org>
 
-	* app/config/gimpconfig-params.h: fixed some macros that were never used.
+	* app/config/gimpconfig-params.h: fixed some macros that were
+	never used.
 
-	* data/images/gimp_splash.png: flattened the splash image. The alpha channel
-	crashed servers with buggy XRender extension (#93841) (and should have never
-	been there anyway).
+	* data/images/gimp_splash.png: flattened the splash image. The
+	alpha channel crashed servers with buggy XRender extension
+	(#93841) (and should have never been there anyway).
 
 2002-09-18  Manish Singh  <yosh@gimp.org>
 

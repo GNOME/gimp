@@ -137,6 +137,36 @@ plug_in_make_menu (GSList      *plug_in_defs,
   g_slist_free (domains);
 }
 
+static gchar *
+plug_in_escape_uline (const gchar *menu_path)
+{
+  gchar *uline;
+  gchar *escaped;
+  gchar *tmp;
+
+  escaped = g_strdup (menu_path);
+
+  uline = strchr (escaped, '_');
+
+  while (uline)
+    {
+      tmp = escaped;
+      escaped = g_new (gchar, strlen (tmp) + 2);
+
+      if (uline > tmp)
+        strncpy (escaped, tmp, (uline - tmp));
+
+      escaped[uline - tmp] = '_';
+      strcpy (&escaped[uline - tmp + 1], uline);
+
+      uline = strchr (escaped + (uline - tmp) + 2, '_');
+
+      g_free (tmp);
+    }
+
+  return escaped;
+}
+
 /*  The following function has to be a GTraverseFunction, 
  *  but is also called directly. Please note that it frees the
  *  menu_entry strcuture.                --Sven 
@@ -147,6 +177,7 @@ plug_in_make_menu_entry (gpointer         foo,
 			 gpointer         bar)
 {
   GimpItemFactoryEntry  entry;
+  gchar                *menu_path;
   gchar                *help_page;
   gchar                *basename;
   gchar                *lowercase_page;
@@ -175,7 +206,9 @@ plug_in_make_menu_entry (gpointer         foo,
 
   g_free (help_page);
 
-  entry.entry.path            = strstr (menu_entry->proc_def->menu_path, "/");
+  menu_path = plug_in_escape_uline (strstr (menu_entry->proc_def->menu_path, "/"));
+
+  entry.entry.path            = menu_path;
   entry.entry.accelerator     = menu_entry->proc_def->accelerator;
   entry.entry.callback        = plug_in_run_cmd_callback;
   entry.entry.callback_action = 0;
@@ -199,6 +232,7 @@ plug_in_make_menu_entry (gpointer         foo,
                                    TRUE, FALSE);
   }
 
+  g_free (menu_path);
   g_free (lowercase_page);
 
   g_free (menu_entry);
