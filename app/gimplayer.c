@@ -67,7 +67,7 @@ static GimpDrawableClass *layer_parent_class = NULL;
 static GimpChannelClass  *layer_mask_parent_class = NULL;
 
 GtkType
-gimp_layer_get_type ()
+gimp_layer_get_type (void)
 {
   static GtkType layer_type = 0;
 
@@ -118,7 +118,7 @@ gimp_layer_init (GimpLayer *layer)
 }
 
 GtkType
-gimp_layer_mask_get_type ()
+gimp_layer_mask_get_type (void)
 {
   static GtkType layer_mask_type = 0;
 

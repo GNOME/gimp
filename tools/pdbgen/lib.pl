@@ -1,5 +1,5 @@
 # The GIMP -- an image manipulation program
-# Copyright (C) 1998-1999 Manish Singh <yosh@gimp.org>
+# Copyright (C) 1998-2000 Manish Singh <yosh@gimp.org>
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -380,7 +380,7 @@ CODE
 
     my $lgpl = <<'LGPL';
 /* LIBGIMP - The GIMP Library                                                   
- * Copyright (C) 1995-1999 Peter Mattis and Spencer Kimball                
+ * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball                
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -405,11 +405,10 @@ LGPL
     # We generate two files, a .h file with prototypes for all the functions
     # we make, and a .c file for the actual implementation
     while (my($group, $out) = each %out) {
-	my $hfile = "$destdir/gimp${group}.h$FILE_EXT";
-	my $cfile = "$destdir/gimp${group}.c$FILE_EXT";
+	my $hfile = "$destdir/gimp${group}pdb.h$FILE_EXT";
+	my $cfile = "$destdir/gimp${group}pdb.c$FILE_EXT";
 
-	$hfile =~ s/_//g;
-	$cfile =~ s/_//g;
+	foreach ($hfile $cfile) { s/_//g; s/pdb\./_pdb./ }
 
 	my $extra = {};
 	if (exists $main::grp{$group}->{extra}->{lib}) {

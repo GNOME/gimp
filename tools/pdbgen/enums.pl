@@ -1,5 +1,5 @@
 # The GIMP -- an image manipulation program
-# Copyright (C) 1999 Manish Singh <yosh@gimp.org>
+# Copyright (C) 1999-2000 Manish Singh <yosh@gimp.org>
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

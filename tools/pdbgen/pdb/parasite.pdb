@@ -26,7 +26,6 @@ sub name_arg {{
     name => 'name',
     type => 'string',
     desc => "The name of the parasite to $_[0]",
-    no_success => 1
 }}
 
 sub parasite_outarg {{

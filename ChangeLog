@@ -1,3 +1,21 @@
+Thu Feb 17 03:30:40 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/*.pl: added 2000 to the copyrights
+
+	* tools/pdbgen/lib.pl: it's foo_pdb.[ch] now
+
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/parasite.pdb: reenabled sanity checks for the
+	drawable IDs and the parasite names
+
+	* app/drawable.c
+	* app/gimpdrawable.c: added a bunch of g_return_if_fail's, instead
+	of the silent check and return in many functions. This should also
+	be done in gimpimage.c and the like too.
+
+	* app/gimpdrawable.h
+	* app/layer.c: cosmetic code fix
+
 Thu Feb 17 11:02:27 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap/gap_decode_mpeg_main.c

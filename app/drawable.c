@@ -25,12 +25,10 @@
 gint
 drawable_ID (GimpDrawable *drawable)
 {
-  if (drawable)
-    return drawable->ID;
-  else
-    g_warning ("drawable_ID called on a NULL pointer");
+  g_return_val_if_fail (drawable != NULL, -1);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  return 0;
+  return drawable->ID;
 }
 
 void
@@ -38,6 +36,9 @@ drawable_fill (GimpDrawable *drawable,
 	       GimpFillType  fill_type)
 {
   guchar r, g, b, a;
+
+  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   a = 255;
 
@@ -85,11 +86,11 @@ drawable_update (GimpDrawable *drawable,
   GimpImage *gimage;
   gint offset_x, offset_y;
 
-  if (! drawable)
-    return;
+  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return;
+  gimage = gimp_drawable_gimage (drawable);
+  g_return_if_fail (gimage != NULL);
 
   gimp_drawable_offsets (drawable, &offset_x, &offset_y);
   x += offset_x;
@@ -109,13 +110,13 @@ drawable_apply_image (GimpDrawable *drawable,
 		      TileManager  *tiles,
 		      gint          sparse)
 {
-  if (drawable)
-    {
-      if (! tiles)
-	undo_push_image (drawable->gimage, drawable, 
-			 x1, y1, x2, y2);
-      else
-	undo_push_image_mod (drawable->gimage, drawable, 
-			     x1, y1, x2, y2, tiles, sparse);
-    }
+  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  if (! tiles)
+    undo_push_image (drawable->gimage, drawable, 
+		     x1, y1, x2, y2);
+  else
+    undo_push_image_mod (drawable->gimage, drawable, 
+			 x1, y1, x2, y2, tiles, sparse);
 }

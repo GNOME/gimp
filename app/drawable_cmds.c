@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-2000 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -180,6 +180,7 @@ static ProcRecord drawable_fill_proc =
 static Argument *
 drawable_update_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 x;
   gint32 y;
@@ -187,6 +188,8 @@ drawable_update_invoker (Argument *args)
   gint32 height;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
   x = args[1].value.pdb_int;
 
@@ -196,9 +199,10 @@ drawable_update_invoker (Argument *args)
 
   height = args[4].value.pdb_int;
 
-  drawable_update (drawable, x, y, width, height);
+  if (success)
+    drawable_update (drawable, x, y, width, height);
 
-  return procedural_db_return_args (&drawable_update_proc, TRUE);
+  return procedural_db_return_args (&drawable_update_proc, success);
 }
 
 static ProcArg drawable_update_inargs[] =
@@ -249,25 +253,32 @@ static ProcRecord drawable_update_proc =
 static Argument *
 drawable_mask_bounds_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
-  gboolean non_empty;
+  gboolean non_empty = FALSE;
   gint32 x1;
   gint32 y1;
   gint32 x2;
   gint32 y2;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  non_empty = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  if (success)
+    non_empty = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  return_args = procedural_db_return_args (&drawable_mask_bounds_proc, TRUE);
+  return_args = procedural_db_return_args (&drawable_mask_bounds_proc, success);
 
-  return_args[1].value.pdb_int = non_empty;
-  return_args[2].value.pdb_int = x1;
-  return_args[3].value.pdb_int = y1;
-  return_args[4].value.pdb_int = x2;
-  return_args[5].value.pdb_int = y2;
+  if (success)
+    {
+      return_args[1].value.pdb_int = non_empty;
+      return_args[2].value.pdb_int = x1;
+      return_args[3].value.pdb_int = y1;
+      return_args[4].value.pdb_int = x2;
+      return_args[5].value.pdb_int = y2;
+    }
 
   return return_args;
 }
@@ -439,13 +450,18 @@ static ProcRecord drawable_type_proc =
 static Argument *
 drawable_has_alpha_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_has_alpha_proc, TRUE);
-  return_args[1].value.pdb_int = drawable_has_alpha (drawable);
+  return_args = procedural_db_return_args (&drawable_has_alpha_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_has_alpha (drawable);
 
   return return_args;
 }
@@ -487,13 +503,18 @@ static ProcRecord drawable_has_alpha_proc =
 static Argument *
 drawable_type_with_alpha_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_type_with_alpha_proc, TRUE);
-  return_args[1].value.pdb_int = drawable_type_with_alpha (drawable);
+  return_args = procedural_db_return_args (&drawable_type_with_alpha_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_type_with_alpha (drawable);
 
   return return_args;
 }
@@ -535,13 +556,18 @@ static ProcRecord drawable_type_with_alpha_proc =
 static Argument *
 drawable_is_rgb_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_is_rgb_proc, TRUE);
-  return_args[1].value.pdb_int = drawable_color (drawable);
+  return_args = procedural_db_return_args (&drawable_is_rgb_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_color (drawable);
 
   return return_args;
 }
@@ -583,13 +609,18 @@ static ProcRecord drawable_is_rgb_proc =
 static Argument *
 drawable_is_gray_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_is_gray_proc, TRUE);
-  return_args[1].value.pdb_int = drawable_gray (drawable);
+  return_args = procedural_db_return_args (&drawable_is_gray_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_gray (drawable);
 
   return return_args;
 }
@@ -631,13 +662,18 @@ static ProcRecord drawable_is_gray_proc =
 static Argument *
 drawable_is_indexed_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_is_indexed_proc, TRUE);
-  return_args[1].value.pdb_int = drawable_indexed (drawable);
+  return_args = procedural_db_return_args (&drawable_is_indexed_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_indexed (drawable);
 
   return return_args;
 }
@@ -679,13 +715,18 @@ static ProcRecord drawable_is_indexed_proc =
 static Argument *
 drawable_bytes_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_bytes_proc, TRUE);
-  return_args[1].value.pdb_int = drawable_bytes (drawable);
+  return_args = procedural_db_return_args (&drawable_bytes_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_bytes (drawable);
 
   return return_args;
 }
@@ -727,13 +768,18 @@ static ProcRecord drawable_bytes_proc =
 static Argument *
 drawable_width_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_width_proc, TRUE);
-  return_args[1].value.pdb_int = drawable_width (drawable);
+  return_args = procedural_db_return_args (&drawable_width_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_width (drawable);
 
   return return_args;
 }
@@ -775,13 +821,18 @@ static ProcRecord drawable_width_proc =
 static Argument *
 drawable_height_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_height_proc, TRUE);
-  return_args[1].value.pdb_int = drawable_height (drawable);
+  return_args = procedural_db_return_args (&drawable_height_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_height (drawable);
 
   return return_args;
 }
@@ -823,19 +874,26 @@ static ProcRecord drawable_height_proc =
 static Argument *
 drawable_offsets_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
   gint32 offset_x;
   gint32 offset_y;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  drawable_offsets (drawable, &offset_x, &offset_y);
+  if (success)
+    drawable_offsets (drawable, &offset_x, &offset_y);
 
-  return_args = procedural_db_return_args (&drawable_offsets_proc, TRUE);
+  return_args = procedural_db_return_args (&drawable_offsets_proc, success);
 
-  return_args[1].value.pdb_int = offset_x;
-  return_args[2].value.pdb_int = offset_y;
+  if (success)
+    {
+      return_args[1].value.pdb_int = offset_x;
+      return_args[2].value.pdb_int = offset_y;
+    }
 
   return return_args;
 }
@@ -882,13 +940,18 @@ static ProcRecord drawable_offsets_proc =
 static Argument *
 drawable_is_layer_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_is_layer_proc, TRUE);
-  return_args[1].value.pdb_int = drawable_layer (drawable) ? TRUE : FALSE;
+  return_args = procedural_db_return_args (&drawable_is_layer_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_layer (drawable) ? TRUE : FALSE;
 
   return return_args;
 }
@@ -930,13 +993,18 @@ static ProcRecord drawable_is_layer_proc =
 static Argument *
 drawable_is_layer_mask_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_is_layer_mask_proc, TRUE);
-  return_args[1].value.pdb_int = drawable_layer_mask (drawable) ? TRUE : FALSE;
+  return_args = procedural_db_return_args (&drawable_is_layer_mask_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_layer_mask (drawable) ? TRUE : FALSE;
 
   return return_args;
 }
@@ -978,13 +1046,18 @@ static ProcRecord drawable_is_layer_mask_proc =
 static Argument *
 drawable_is_channel_invoker (Argument *args)
 {
+  gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_is_channel_proc, TRUE);
-  return_args[1].value.pdb_int = drawable_channel (drawable) ? TRUE : FALSE;
+  return_args = procedural_db_return_args (&drawable_is_channel_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_channel (drawable) ? TRUE : FALSE;
 
   return return_args;
 }

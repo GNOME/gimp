@@ -88,7 +88,8 @@ HELP
 	{ name => 'alpha_dither', type => 'boolean',
 	  desc => 'dither transparency to fake partial opacity' },
 	{ name => 'remove_unused', type => 'boolean',
-	  desc => 'remove unused or duplicate colour entries from final palette, ignored if (palette_type == MAKE_PALETTE)' },
+	  desc => 'remove unused or duplicate colour entries from final
+		   palette, ignored if (palette_type == MAKE_PALETTE)' },
 	{ name => 'palette', type => 'string',
 	  desc => 'The name of the custom palette to use, ignored unless
 		   (palette_type == CUSTOM_PALETTE)',

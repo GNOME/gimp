@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-2000 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,6 +71,8 @@ parasite_new_invoker (Argument *args)
   Parasite *parasite = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL)
+    success = FALSE;
 
   flags = args[1].value.pdb_int;
 
@@ -154,9 +156,14 @@ parasite_find_invoker (Argument *args)
   Parasite *parasite = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL)
+    success = FALSE;
 
-  parasite = parasite_copy (gimp_parasite_find (name));
-  success = parasite != NULL;
+  if (success)
+    {
+      parasite = parasite_copy (gimp_parasite_find (name));
+      success = parasite != NULL;
+    }
 
   return_args = procedural_db_return_args (&parasite_find_proc, success);
 
@@ -343,6 +350,8 @@ drawable_parasite_find_invoker (Argument *args)
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
+    success = FALSE;
 
   if (success)
     {
@@ -579,6 +588,8 @@ image_parasite_find_invoker (Argument *args)
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
+    success = FALSE;
 
   if (success)
     {

@@ -17,16 +17,14 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub drawable_arg {{
+sub drawable_arg () {{
     name => 'drawable',
     type => 'drawable',
     desc => 'The drawable',
-    no_success => 1
 }}
 
-sub drawable_coord_args {
+sub drawable_coord_args () {
     @inargs = ( &drawable_arg );
-    delete $inargs[0]->{no_success};
 
     foreach (qw(x y)) {
 	push @inargs, { name => "${_}_coord", type => '0 <= int32',
@@ -34,7 +32,7 @@ sub drawable_coord_args {
     }
 }
 
-sub pixel_arg {{
+sub pixel_arg () {{
     name => 'pixel',
     type => 'int8array',
     desc => 'The pixel value',
@@ -104,7 +102,6 @@ HELP
         { name => 'undo', type => 'boolean',
 	  desc => 'Push merge to undo stack?' }
     );
-    delete $inargs[0]->{no_success};
 
     %invoke = ( code => 'drawable_merge_shadow (drawable, undo);' );
 }
@@ -130,7 +127,6 @@ HELP
 	{ name => 'fill_type', type => 'enum GimpFillType',
 	  desc => 'The type of fill: %%desc%%' }
     );
-    delete $inargs[0]->{no_success};
 
     %invoke = ( code => 'drawable_fill (drawable, (GimpFillType) fill_type);' );
 }
@@ -180,7 +176,7 @@ HELP
     @inargs = ( &drawable_arg );
 
     @outargs = (
-	{ name => 'non_empty', type => 'boolean',
+	{ name => 'non_empty', type => 'boolean', init => 1,
 	  desc => 'TRUE if there is a selection' },
     );
 
@@ -214,8 +210,6 @@ sub drawable_image {
     $outargs[0]->{desc} = "The drawable's image";
     $outargs[0]->{init} = 1;
 
-    delete $inargs[0]->{no_success};
-
     %invoke = (
 	code => 'success = (gimage = drawable_gimage (drawable)) != NULL;'
     );
@@ -226,8 +220,6 @@ sub drawable_type {
 
     &drawable_prop_proc("the drawable's type", 'type', 'enum GimpImageType',
 			'type', "The drawable's type: { %%desc%% }");
-
-    delete $inargs[0]->{no_success};
 }
 
 sub drawable_has_alpha {
@@ -382,8 +374,8 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
-    &drawable_coord_args();
-    push @inargs, &pixel_arg();
+    &drawable_coord_args;
+    push @inargs, &pixel_arg;
 
     %invoke = (
 	vars => [ 'guint8 *p', 'gint b', 'Tile *tile' ],
@@ -425,7 +417,6 @@ HELP
 	&drawable_arg,
 	&std_image_arg
     );
-    delete $inargs[0]->{no_success};
 
     %invoke = ( code => 'gimp_drawable_set_gimage (drawable, gimage);' );
 }
@@ -461,7 +452,6 @@ HELP
 	  desc => 'The thumbnail height',
 	  alias => 'req_height' }
     );
-    delete $inargs[0]->{no_success};
 
     @outargs = (
 	&dim_args,
