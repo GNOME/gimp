@@ -549,8 +549,6 @@ gih_save_dialog ()
       gtk_widget_show (cb);
     }
 
-  g_list_free (cbitems);
-
   gtk_table_attach (GTK_TABLE (table), box, 1, 2,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
 		    GTK_SHRINK, GTK_EXPAND | GTK_FILL, 0, 0);

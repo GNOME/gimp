@@ -129,7 +129,7 @@ static GimpBrush *
 gimp_brush_pixmap_select_brush (PaintCore *paint_core)
 {
   GimpBrushPipe *pipe;
-  int i, brushix, value;
+  int i, brushix, ix;
   double angle;
 
   g_return_val_if_fail (GIMP_IS_BRUSH_PIXMAP (paint_core->brush), NULL);
@@ -145,38 +145,43 @@ gimp_brush_pixmap_select_brush (PaintCore *paint_core)
       switch (pipe->select[i])
 	{
 	case PIPE_SELECT_CONSTANT:
-	  /* What constant? */
-	  value = 0;
+	  ix = pipe->index[i];
 	  break;
 	case PIPE_SELECT_INCREMENTAL:
-	  value = pipe->index[i] = (pipe->index[i] + 1) % pipe->rank[i];
+	  ix = (pipe->index[i] + 1) % pipe->rank[i];
 	  break;
 	case PIPE_SELECT_ANGULAR:
 	  angle = atan2 (paint_core->cury - paint_core->lasty,
 			 paint_core->curx - paint_core->lastx);
+	  /* Offset angle to be compatible with PSP tubes */
+	  angle += G_PI_2;
+	  /* Map it to the [0..2*G_PI) interval */
 	  if (angle < 0)
 	    angle += 2.*G_PI;
-	  value = RINT (angle / (2.*G_PI) * pipe->rank[i]);
+	  else if (angle > 2.*G_PI)
+	    angle -= 2.*G_PI;
+	  ix = RINT (angle / (2.*G_PI) * pipe->rank[i]);
 	  break;
 	case PIPE_SELECT_RANDOM:
 	  /* This probably isn't the right way */
-	  value = rand () % pipe->rank[i];
+	  ix = rand () % pipe->rank[i];
 	  break;
 	case PIPE_SELECT_PRESSURE:
-	  value = RINT (paint_core->curpressure * (pipe->rank[i] - 1));
+	  ix = RINT (paint_core->curpressure * (pipe->rank[i] - 1));
 	  break;
 	case PIPE_SELECT_TILT_X:
-	  value = RINT (paint_core->curxtilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
+	  ix = RINT (paint_core->curxtilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
 	  break;
 	case PIPE_SELECT_TILT_Y:
-	  value = RINT (paint_core->curytilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
+	  ix = RINT (paint_core->curytilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
 	  break;
 	}
-      brushix += pipe->stride[i] * value;
-      /* g_print ("value at %d: %d, brushix: %d\n", i, value, brushix); */
+      pipe->index[i] = BOUNDS (ix, 0, pipe->rank[i]-1);
+      brushix += pipe->stride[i] * pipe->index[i];
+      /* g_print ("ix at %d: %d, brushix: %d\n", i, ix, brushix); */
     }
 
-  /* If out of bounds, just select the first brush... */
+  /* Make sure is inside bounds */
   brushix = BOUNDS (brushix, 0, pipe->nbrushes-1);
 
   pipe->current = pipe->brushes[brushix];
