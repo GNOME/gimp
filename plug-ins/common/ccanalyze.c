@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *
  */
 
 /*
@@ -40,73 +39,6 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
-
-
-/*
- * I found the following implementation of storing a sparse color matrix
- * in Dr. Dobb's Journal #232 (July 1995).
- *
- * The matrix is build as three linked lists, each representing a color-
- * cube axis. Each node in the matrix contains two pointers: one to its
- * neighbour and one to the next color-axis.
- *
- * Each red node contains a pointer to the next red node, and a pointer to
- * the green nodes. Green nodes, in turn, each contain a pointer to the next
- * green node, and a pointer to the blue axis.
- *
- * If we want to find an RGB triplet, we first walk down the red axis, match
- * the red values, from where we start walking down the green axis, etc.
- * If we haven't found our color at the end of the blue axis, it's a new color
- * and we store it in the matrix.
- *
- * For the textual-impaired (number in parentheses are color values):
- *
- *      start of table
- *      |
- *      v
- *         RED(91)  ->  RED(212)  ->  ...
- *      |            |
- *      |            v
- *      |            GREEN(81)  ->  GREEN(128)  ->  ...
- *      |            |              |
- *      |            |              v
- *      |            |              BLUE(93)
- *      |            v
- *      |            BLUE(206)  ->  BLUE(93)  ->  ...
- *      v
- *      GREEN(1)  ->  ...
- *      |
- *      v
- *      BLUE(206)  ->  BLUE(12)  ->  ...
- *
- * So, some colors stored are (in RGB triplets): (91, 1, 206), (91, 1, 12),
- * (212, 128, 93), ...
- *
- */
-typedef enum
-{
-  RED,
-  GREEN,
-  BLUE
-} ColorType;
-
-
-typedef struct _ColorNode ColorNode;
-
-struct _ColorNode
-{
-  ColorNode *next_neighbour;
-  ColorNode *next_axis;
-
-  ColorType  color;
-
-  guchar     r;
-  guchar     g;
-  guchar     b;
-
-  gdouble    count;
-};
-
 
 /* lets prototype */
 static void query (void);
@@ -136,7 +68,6 @@ static void doLabel     (GtkWidget  *table,
 /* some global variables */
 static gchar     *filename = NULL;
 static gint       width, height, bpp;
-static ColorNode *color_table = NULL;
 static gdouble    hist_red[256], hist_green[256], hist_blue[256];
 static gdouble    maxred = 0.0, maxgreen = 0.0, maxblue = 0.0;
 static gint       uniques = 0;
@@ -275,13 +206,6 @@ analyze (GimpDrawable *drawable)
 
   gimp_progress_init (_("Colorcube Analysis..."));
 
-  /*
-   * Get the input area. This is the bounding box of the selection in
-   * the image (or the entire image if there is no selection). Only
-   * operating on the input area is simply an optimization. It doesn't
-   * need to be done for correct operation. (It simply makes it go
-   * faster, since fewer pixels need to be operated on).
-   */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   /*
@@ -291,9 +215,6 @@ analyze (GimpDrawable *drawable)
   width = drawable->width;
   height = drawable->height;
   bpp = drawable->bpp;
-
-  if (x2 <= x1 || y2 <= y1)
-    return;
 
   has_sel = !gimp_selection_is_empty (imageID);
   gimp_drawable_offsets (drawable->drawable_id, &ofsx, &ofsy);
@@ -377,141 +298,29 @@ analyze (GimpDrawable *drawable)
   g_free (sel);
 }
 
-/* here's where we actually store our color-table */
 static void
 insertcolor (guchar  r,
              guchar  g,
              guchar  b,
              gdouble a)
 {
-  ColorNode *node, *next = NULL, *prev = NULL,
-            *newred, *newgreen = NULL, *newblue;
-  ColorType  type = RED;
+  static GHashTable *hash_table;
+  guint key;
+
+  if (!hash_table)
+    hash_table = g_hash_table_new (g_direct_hash, g_direct_equal);
 
   histogram (r, g, b, a);
 
-  /* let's walk the tree, and see if it already contains this color */
-  for (node = color_table; node != NULL; prev = node, node = next)
+  key = r + 256 * (g + 256 * b);
+  if (g_hash_table_lookup (hash_table, GINT_TO_POINTER (key)))
     {
-      if (node->color == RED)
-        {
-          if (node->r == r)
-            {
-              type = GREEN;
-              next = node->next_axis;
-            }
-          else
-            {
-              type = RED;
-              next = node->next_neighbour;
-            }
-        }
-      else if (node->color == GREEN)
-        {
-          if (node->g == g)
-            {
-              type = BLUE;
-              next = node->next_axis;
-            }
-          else
-            {
-              type = GREEN;
-              next = node->next_neighbour;
-            }
-        }
-      else if (node->color == BLUE)
-        {
-          /* found it! */
-          if (node->b == b)
-            break;
-          else
-            {
-              type = BLUE;
-              next = node->next_neighbour;
-            }
-        }
-    }
-
-  /* this color was already stored -> update its count */
-  if (node)
-    {
-      node->count += a;
       return;
     }
 
-  /* New color! */
+  g_hash_table_insert (hash_table, GINT_TO_POINTER (key), 
+		       GINT_TO_POINTER (1));
 
-  /* first, create blue node */
-  newblue = g_new0 (ColorNode, 1);
-  newblue->color = BLUE;
-
-  /* no neighbours or links to another axis */
-  newblue->next_neighbour = NULL;
-  newblue->next_axis = NULL;
-
-  /*
-   * At the end of the list, we store the entire triplet.
-   * For now, there is no reason whatsoever to do this, but perhaps
-   * it might prove useful someday :)
-   */
-  newblue->r = r;
-  newblue->g = g;
-  newblue->b = b;
-  newblue->count = a;
-
-  /* previous was green: create link to axis */
-  if (prev && prev->color == GREEN && type == BLUE)
-    prev->next_axis = newblue;
-
-  /* previous was blue: create link to neighbour */
-  if (prev && prev->color == BLUE && type == BLUE)
-    prev->next_neighbour = newblue;
-
-  /* green node */
-  if (type == GREEN || type == RED)
-    {
-      newgreen = g_new0 (ColorNode, 1);
-      newgreen->color = GREEN;
-
-      newgreen->next_neighbour = NULL;
-      newgreen->next_axis = newblue;
-
-      newgreen->g = g;
-
-      /* count doesn't matter here */
-      /*newgreen->count = -1;*/
-
-      /* previous was red: create link to axis */
-      if (prev && prev->color == RED && type == GREEN)
-        prev->next_axis = newgreen;
-
-      /* previous was green: create link to neighbour */
-      if (prev && prev->color == GREEN && type == GREEN)
-        prev->next_neighbour = newgreen;
-    }
-
-  /* red node */
-  if (type == RED)
-    {
-      newred = g_new0 (ColorNode, 1);
-      newred->color = RED;
-
-      newred->next_neighbour = NULL;
-      newred->next_axis = newgreen;
-
-      newred->r = r;
-
-      /* count doesn't matter here */
-      /*newred->count = -1;*/
-
-      /* previous was red, update its neighbour link */
-      if (prev)
-        prev->next_neighbour = newred;
-      else
-        color_table = newred;
-    }
-
-  /* increase the number of unique colors */
   uniques++;
 }
 
