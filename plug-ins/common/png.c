@@ -68,7 +68,7 @@
 #define RESPONSE_LOAD_DEFAULTS 1
 #define RESPONSE_SAVE_DEFAULTS 2
 
-#define PNG_GIMPRC_TOKEN       "png-save-defaults"
+#define PNG_DEFAULTS_PARASITE  "png-save-defaults"
 
 /*
  * Structures...
@@ -277,7 +277,7 @@ query (void)
 
   gimp_install_procedure ("file_png_save_defaults",
                           "Saves files in PNG file format",
-                          "This plug-in saves Portable Network Graphics (PNG) files, using the default settings stored in the gimprc.",
+                          "This plug-in saves Portable Network Graphics (PNG) files, using the default settings stored as a parasite.",
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
                           PLUG_IN_VERSION,
@@ -289,7 +289,7 @@ query (void)
 
   gimp_install_procedure ("file_png_get_defaults",
                           "Get the current set of defaults used by the PNG file save plug-in",
-                          "This procedure returns the current set of defaults stored in the gimprc for the PNG save plug-in. "
+                          "This procedure returns the current set of defaults stored as a parasite for the PNG save plug-in. "
                           "These defaults are used to seed the UI, by the file_png_save_defaults procedure, and by gimp_file_save when it detects to use PNG.",
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
@@ -302,7 +302,7 @@ query (void)
 
   gimp_install_procedure ("file_png_set_defaults",
                           "Set the current set of defaults used by the PNG file save plug-in",
-                          "This procedure set the current set of defaults stored in the gimprc for the PNG save plug-in. "
+                          "This procedure set the current set of defaults stored as a parasite for the PNG save plug-in. "
                           "These defaults are used to seed the UI, by the file_png_save_defaults procedure, and by gimp_file_save when it detects to use PNG.",
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
@@ -1703,14 +1703,20 @@ save_dialog_response (GtkWidget *widget,
 static gboolean
 load_defaults (void)
 {
-  gchar       *def_str;
-  PngSaveVals  tmpvals;
-  gint         num_fields;
+  GimpParasite *parasite;
+  gchar        *def_str;
+  PngSaveVals   tmpvals;
+  gint          num_fields;
 
-  def_str = gimp_gimprc_query (PNG_GIMPRC_TOKEN);
+  parasite = gimp_parasite_find (PNG_DEFAULTS_PARASITE);
 
-  if (! def_str)
+  if (! parasite)
     return FALSE;
+
+  def_str = g_strndup (gimp_parasite_data (parasite),
+                       gimp_parasite_data_size (parasite));
+
+  gimp_parasite_free (parasite);
 
   num_fields = sscanf (def_str, "%d %d %d %d %d %d %d %d %d",
                        &tmpvals.interlaced,
@@ -1722,7 +1728,7 @@ load_defaults (void)
                        &tmpvals.comment,
                        &tmpvals.save_transp_pixels,
                        &tmpvals.compression_level);
-         
+
   g_free (def_str);
 
   if (num_fields == 9)
@@ -1731,13 +1737,16 @@ load_defaults (void)
       return TRUE;
     }
   else
-    return FALSE;
+    {
+      return FALSE;
+    }
 }
 
 static void
 save_defaults (void)
 {
-  gchar  *def_str;
+  GimpParasite *parasite;
+  gchar        *def_str;
 
   def_str = g_strdup_printf ("%d %d %d %d %d %d %d %d %d",
                              pngvals.interlaced,
@@ -1750,7 +1759,13 @@ save_defaults (void)
                              pngvals.save_transp_pixels,
                              pngvals.compression_level);
 
-  gimp_gimprc_set (PNG_GIMPRC_TOKEN, def_str);
+  parasite = gimp_parasite_new (PNG_DEFAULTS_PARASITE,
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (def_str), def_str);
+
+  gimp_parasite_attach (parasite);
+
+  gimp_parasite_free (parasite);
   g_free (def_str);
 }
 
