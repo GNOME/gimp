@@ -16,18 +16,16 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-GtkWidget *presetnameentry = NULL;
-GtkWidget *presetsavebutton = NULL;
+static GtkWidget *presetnameentry = NULL;
 static GtkWidget *presetlist = NULL;
-GtkWidget *presetdesctext = NULL;
-GtkWidget *presetdesclabel = NULL;
+static GtkWidget *presetdesclabel = NULL;
 static GtkListStore *store;
 
 static char presetdesc[4096] = "";
 
 static char *factory_defaults = "<Factory defaults>";
 
-static void addfactorydefaults(GtkListStore *store)
+static void addfactorydefaults(void)
 {
   GtkTreeIter iter;
 
@@ -38,7 +36,7 @@ static void addfactorydefaults(GtkListStore *store)
 static void presetsrefresh(void)
 {
   gtk_list_store_clear (store);
-  addfactorydefaults (store);
+  addfactorydefaults ();
   readdirintolist ("Presets", presetlist, NULL);
 }
 
@@ -58,12 +56,6 @@ static int loadoldpreset(char *fname)
   fclose(f);
 
   return 0;
-}
-
-static void chop(char *buffer)
-{
-  while(strlen(buffer) && buffer[strlen(buffer)-1] <= ' ')
-    buffer[strlen(buffer)-1] = '\0';
 }
 
 static unsigned int hexval(char c)
@@ -263,19 +255,59 @@ static int loadpreset(char *fn)
     fclose(f);
     return loadoldpreset(fn);
   }
-  pcvals = defaultpcvals;
+  restore_default_values();
   while(!feof(f)) {
     char *tmps;
-    if(!fgets(line,1024,f)) break;
-    chop(line);
+    if(!fgets(line,1024,f)) 
+      break;
+    remove_trailing_whitespace(line);
     tmps = strchr(line, '=');
-    if(!tmps) continue;
+    if(!tmps) 
+      continue;
     *tmps = '\0';
     tmps++;
     setval(line, tmps);
   }
   fclose(f);
   return 0;
+}
+
+int select_preset(char * preset)
+{
+    int ret = SELECT_PRESET_OK;
+    /* I'm copying this behavior as is. As it seems applying the
+     * factory_defaults preset does nothing, which I'm not sure
+     * if that was what the author intended.
+     *              -- Shlomi Fish
+     */
+    if (strcmp (preset, factory_defaults))
+      {
+        gchar *rel = g_build_filename ("Presets", preset, NULL);
+        gchar *abs = findfile (rel);
+
+        g_free (rel);
+
+        if (abs)
+          {
+            if (loadpreset (abs))
+              {
+                ret = SELECT_PRESET_LOAD_FAILED;
+              }
+            g_free (abs);
+          }
+        else
+          {
+            ret = SELECT_PRESET_FILE_NOT_FOUND;
+          }
+      }
+    if (ret == SELECT_PRESET_OK)
+      {
+        /* This is so the colorbrushes param (that is not stored in the
+         * preset will be set correctly upon the preset loading.
+         * */
+        set_colorbrushes (pcvals.selectedbrush);
+      }
+    return ret;
 }
 
 static void applypreset(GtkWidget *w, GtkTreeSelection *selection)
@@ -289,19 +321,7 @@ static void applypreset(GtkWidget *w, GtkTreeSelection *selection)
 
       gtk_tree_model_get (model, &iter, 0, &preset, -1);
 
-      if (strcmp (preset, factory_defaults))
-	{
-          gchar *rel = g_build_filename ("Presets", preset, NULL);
-          gchar *abs = findfile (rel);
-
-          g_free (rel);
-
-          if (abs)
-            {
-              loadpreset (abs);
-              g_free (abs);
-            }
-	}
+      select_preset(preset);
 
       restorevals ();
 
@@ -383,10 +403,10 @@ create_savepreset (void)
   window =
     gimp_dialog_new (_("Save Current"), "gimpressionist",
                      NULL, 0,
-		     gimp_standard_help_func, HELP_ID,
+                     gimp_standard_help_func, HELP_ID,
 
-		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-		     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                      NULL);
 
@@ -394,7 +414,7 @@ create_savepreset (void)
                     G_CALLBACK (savepresetresponse),
                     NULL);
   g_signal_connect (window, "destroy",
-		    G_CALLBACK (gtk_widget_destroyed),
+                    G_CALLBACK (gtk_widget_destroyed),
                     &window);
 
   box = gtk_vbox_new (FALSE, 6);
@@ -409,15 +429,15 @@ create_savepreset (void)
 
   swin = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(swin),
-				       GTK_SHADOW_IN);
+                                       GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(box), swin);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(swin),
-				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_widget_show (swin);
 
   buffer = gtk_text_buffer_new (NULL);
   g_signal_connect (buffer, "changed",
-		    G_CALLBACK (presetdesccallback), NULL);
+                    G_CALLBACK (presetdesccallback), NULL);
   gtk_text_buffer_set_text (buffer, presetdesc, -1);
 
   text = gtk_text_view_new_with_buffer (buffer);
@@ -560,23 +580,22 @@ static void savepreset(void)
 
 static void readdesc(const char *fn)
 {
-  char *tmp;
+  char *rel_fname;
   char *fname;
   FILE *f;
 
-  fname = g_build_filename ("Presets", fn, NULL);
-  tmp   = findfile (fname);
-  g_free (fname);
+  rel_fname = g_build_filename ("Presets", fn, NULL);
+  fname   = findfile (rel_fname);
+  g_free (rel_fname);
 
-  if (!tmp)
+  if (!fname)
     {
       gtk_label_set_text (GTK_LABEL (presetdesclabel), "");
       return;
     }
 
-  fname = tmp;
-
   f = fopen(fname, "rt");
+  g_free(fname);
   if (f)
     {
       char line[4096];
@@ -609,7 +628,7 @@ static void selectpreset(GtkTreeSelection *selection, gpointer data)
 
       gtk_tree_model_get (model, &iter, 0, &preset, -1);
       if(strcmp(preset, factory_defaults))
-	gtk_entry_set_text (GTK_ENTRY(presetnameentry), preset);
+        gtk_entry_set_text (GTK_ENTRY(presetnameentry), preset);
       readdesc (preset);
       g_free (preset);
     }
@@ -652,7 +671,7 @@ void create_presetpage(GtkNotebook *notebook)
   presetlist = view = createonecolumnlist (box1, selectpreset);
   store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
-  addfactorydefaults (store);
+  addfactorydefaults ();
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (box1), vbox, FALSE, FALSE, 0);

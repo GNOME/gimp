@@ -13,6 +13,7 @@
 #include <libgimp/gimpui.h>
 
 #include "gimpressionist.h"
+#include "placement.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -20,12 +21,19 @@
 #define NUMPLACERADIO 2
 
 static GtkWidget *placeradio[NUMPLACERADIO];
-GtkWidget *placecenter = NULL;
-GtkObject *brushdensityadjust = NULL;
+static GtkWidget *placecenter = NULL;
+static GtkObject *brushdensityadjust = NULL;
 
-void placechange(int num)
+void place_restore()
 {
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(placeradio[num]), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(placeradio[pcvals.placetype]), TRUE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(placecenter), pcvals.placecenter);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT(brushdensityadjust), pcvals.brushdensity);
+}
+
+void place_store()
+{
+  pcvals.placecenter = GTK_TOGGLE_BUTTON(placecenter)->active;
 }
 
 void create_placementpage(GtkNotebook *notebook)
@@ -43,15 +51,19 @@ void create_placementpage(GtkNotebook *notebook)
 				    G_CALLBACK (gimp_radio_button_update),
 				    &pcvals.placetype, 0,
 
-				    _("Randomly"),           0, &placeradio[0],
-				    _("Evenly distributed"), 1, &placeradio[1],
+				    _("Randomly"), PLACEMENT_TYPE_RANDOM, 
+                        &placeradio[PLACEMENT_TYPE_RANDOM],
+				    _("Evenly distributed"), PLACEMENT_TYPE_EVEN_DIST, 
+                        &placeradio[PLACEMENT_TYPE_EVEN_DIST],
 
 				    NULL);
 
   gimp_help_set_help_data
-    (placeradio[0], _("Place strokes randomly around the image"), NULL);
+    (placeradio[PLACEMENT_TYPE_RANDOM], 
+     _("Place strokes randomly around the image"), NULL);
   gimp_help_set_help_data
-    (placeradio[1], _("The strokes are evenly distributed across the image"),
+    (placeradio[PLACEMENT_TYPE_EVEN_DIST], 
+     _("The strokes are evenly distributed across the image"),
      NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

@@ -22,7 +22,6 @@
 
 
 static GtkWidget *preview       = NULL;
-GtkWidget        *previewbutton = NULL;
 
 
 static void drawalpha(ppm_t *p, ppm_t *a)
@@ -35,7 +34,8 @@ static void drawalpha(ppm_t *p, ppm_t *a)
   for (y = 0; y < p->height; y++) {
     for (x = 0; x < p->width; x++) {
       int k = y*rowstride + x*3;
-      if (!a->col[k]) continue;
+      if (!a->col[k])
+        continue;
       v = 1.0 - a->col[k] / 255.0;
       g = ((x/gridsize+y/gridsize)%2)*60+100;
       p->col[k+0] *= v;
@@ -49,56 +49,74 @@ static void drawalpha(ppm_t *p, ppm_t *a)
   }
 }
 
+static ppm_t preview_ppm = {0,0,NULL};
+static ppm_t alpha_ppm = {0,0,NULL};
+static ppm_t backup_ppm = {0,0,NULL};
+static ppm_t alpha_backup_ppm = {0,0,NULL};
+
+void preview_free_resources (void)
+{
+  killppm (&preview_ppm);
+  killppm (&alpha_ppm);
+  killppm (&backup_ppm);
+  killppm (&alpha_backup_ppm);
+}
+
 void
 updatepreview (GtkWidget *wg, gpointer d)
 {
   gint   i;
   guchar buf[PREVIEWSIZE*3];
-  static ppm_t p = {0,0,NULL};
-  static ppm_t a = {0,0,NULL};
-  static ppm_t backup = {0,0,NULL};
-  static ppm_t abackup = {0,0,NULL};
 
-  if(!infile.col && d) grabarea();
+  if(!infile.col && d)
+    grabarea();
 
   if(!infile.col && !d) {
-    memset(buf, 0, PREVIEWSIZE*3);
-    for(i = 0; i < PREVIEWSIZE; i++) {
+    memset(buf, 0, sizeof(buf));
+    for(i = 0; i < PREVIEWSIZE; i++) 
+    {
       gtk_preview_draw_row (GTK_PREVIEW(preview), buf, 0, i, PREVIEWSIZE);
     }
-  } else {
-    if(!backup.col) {
-      copyppm(&infile, &backup);
-      if((backup.width != PREVIEWSIZE) || (backup.height != PREVIEWSIZE))
-	resize_fast(&backup, PREVIEWSIZE, PREVIEWSIZE);
-      if(img_has_alpha) {
-	copyppm(&inalpha, &abackup);
-	if((abackup.width != PREVIEWSIZE) || (abackup.height != PREVIEWSIZE))
-	  resize_fast(&abackup, PREVIEWSIZE, PREVIEWSIZE);
+  } 
+  else 
+  {
+    if(!backup_ppm.col)
+    {
+      copyppm(&infile, &backup_ppm);
+      if((backup_ppm.width != PREVIEWSIZE) || (backup_ppm.height != PREVIEWSIZE))
+        resize_fast(&backup_ppm, PREVIEWSIZE, PREVIEWSIZE);
+      if(img_has_alpha) 
+      {
+        copyppm(&inalpha, &alpha_backup_ppm);
+        if((alpha_backup_ppm.width != PREVIEWSIZE) || (alpha_backup_ppm.height != PREVIEWSIZE))
+          resize_fast(&alpha_backup_ppm, PREVIEWSIZE, PREVIEWSIZE);
       }
     }
-    if(!p.col) {
-      copyppm(&backup, &p);
+    if(!preview_ppm.col)
+    {
+      copyppm(&backup_ppm, &preview_ppm);
       if(img_has_alpha)
-	copyppm(&abackup, &a);
+        copyppm(&alpha_backup_ppm, &alpha_ppm);
     }
-    if(d) {
+    if(d)
+    {
       storevals();
 
       if(GPOINTER_TO_INT(d) != 2)
-	repaint(&p, &a);
+        repaint(&preview_ppm, &alpha_ppm);
     }
     if(img_has_alpha)
-      drawalpha(&p, &a);
+      drawalpha(&preview_ppm, &alpha_ppm);
 
-    for(i = 0; i < PREVIEWSIZE; i++) {
+    for(i = 0; i < PREVIEWSIZE; i++)
+    {
       gtk_preview_draw_row(GTK_PREVIEW(preview),
-			   (guchar*) &p.col[i * PREVIEWSIZE * 3], 0, i,
-			   PREVIEWSIZE);
+                           (guchar*) &preview_ppm.col[i * PREVIEWSIZE * 3], 0, i,
+                           PREVIEWSIZE);
     }
-    killppm(&p);
+    killppm(&preview_ppm);
     if(img_has_alpha)
-      killppm(&a);
+      killppm(&alpha_ppm);
   }
 
   gtk_widget_queue_draw (preview);
@@ -130,11 +148,11 @@ create_preview (void)
 
   previewbutton = button = gtk_button_new_with_mnemonic( _("_Update"));
   g_signal_connect (button, "clicked",
-		    G_CALLBACK (updatepreview), (gpointer) 1);
+                    G_CALLBACK (updatepreview), (gpointer) 1);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
   gimp_help_set_help_data (button,
-			   _("Refresh the Preview window"), NULL);
+                           _("Refresh the Preview window"), NULL);
 
   button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
   g_signal_connect (button, "clicked",
@@ -142,7 +160,7 @@ create_preview (void)
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
   gimp_help_set_help_data (button,
-			   _("Revert to the original image"), NULL);
+                           _("Revert to the original image"), NULL);
 
   return vbox;
 }

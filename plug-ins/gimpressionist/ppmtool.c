@@ -20,14 +20,14 @@
 
 int readline(FILE *f, char *buffer, int len)
 {
-again:
-  if(!fgets(buffer, len, f))
-    return -1;
-  if(*buffer == '#') {
-    goto again;
+  do 
+  {
+    if(!fgets(buffer, len, f))
+      return -1;
   }
-  while(strlen(buffer) && buffer[strlen(buffer)-1] <= ' ')
-    buffer[strlen(buffer)-1] = '\0';
+  while (buffer[0] == '#');
+
+  remove_trailing_whitespace(buffer);
   return 0;
 }
 
@@ -73,10 +73,25 @@ void getrgb(ppm_t *s, float xo, float yo, guchar *d)
   int bail = 0;
   int rowstride = s->width * 3;
 
-  if(xo < 0.0) bail=1;
-  else if(xo >= s->width-1) { xo = s->width-1; } /* bail=1; */
-  if(yo < 0.0) bail=1;
-  else if(yo >= s->height-1) { yo= s->height-1; } /* bail=1; */
+  if (xo < 0.0) 
+      bail=1;
+  else if (xo >= s->width-1) 
+    { 
+      xo = s->width-1; 
+#if 0
+      bail=1;
+#endif
+    } 
+  
+  if(yo < 0.0) 
+      bail=1;
+  else if (yo >= s->height-1) 
+  { 
+      yo= s->height-1; 
+#if 0
+      bail=1;
+#endif 
+  }
 
   if(bail) {
     d[0] = d[1] = d[2] = 0;
@@ -86,16 +101,18 @@ void getrgb(ppm_t *s, float xo, float yo, guchar *d)
   ix = (int)xo;
   iy = (int)yo;
 
-  /*
+#if 0
   x1 = wrap(ix, s->width);
   x2 = wrap(ix+1, s->width);
   y1 = wrap(iy, s->height);
   y2 = wrap(iy+1, s->height);
-  */
+#endif
   x1 = ix; x2 = ix + 1;
   y1 = iy; y2 = iy + 1;
 
-  /* printf("x1=%d y1=%d x2=%d y2=%d\n",x1,y1,x2,y2); */
+#if 0
+  printf("x1=%d y1=%d x2=%d y2=%d\n",x1,y1,x2,y2);
+#endif
 
   x1y1 = (1.0-xo+ix)*(1.0-yo+iy);
   x2y1 = (xo-ix)*(1.0-yo+iy);
@@ -188,6 +205,19 @@ void msb2lsb(unsigned int *i)
   c = p[0]; p[0] = p[3]; p[3] = c;
 }
 
+static FILE * fopen_from_search_path(const gchar * fn, const char * mode)
+{
+  FILE * f;
+  gchar * full_filename;
+  f = fopen(fn, mode);
+  if(!f) {
+    full_filename = findfile(fn);
+    f = fopen(full_filename, mode);
+    g_free(full_filename);
+  }
+  return f;
+}
+
 void loadgbr(const gchar *fn, ppm_t *p)
 {
   FILE *f;
@@ -195,12 +225,7 @@ void loadgbr(const gchar *fn, ppm_t *p)
   gchar *ptr;
   int x, y;
 
-  f = fopen(fn, "rb");
-  if(!f) {
-    ptr = findfile(fn);
-    f = fopen(ptr, "rb");
-  }
-
+  f = fopen_from_search_path(fn, "rb");
   if(p->col) killppm(p);
 
   if(!f) {
@@ -240,8 +265,7 @@ void loadppm(const char *fn, ppm_t *p)
     return;
   }
 
-  f = fopen(fn, "rb");
-  if(!f) f = fopen(findfile(fn), "rb");
+  f = fopen_from_search_path(fn, "rb");
 
   if(p->col) killppm(p);
 
@@ -249,7 +273,9 @@ void loadppm(const char *fn, ppm_t *p)
     fprintf(stderr, "loadppm: Unable to open file \"%s\"!\n", fn);
     newppm(p, 10,10);
     return;
-    /* fatal("Aborting!"); */
+#if 0
+    fatal("Aborting!");
+#endif
   }
 
   readline(f, line, 200);
@@ -259,7 +285,9 @@ void loadppm(const char *fn, ppm_t *p)
       printf( "loadppm: File \"%s\" not PPM/PGM? (line=\"%s\")%c\n", fn, line, 7);
       newppm(p, 10,10);
       return;
-      /* fatal("Aborting!"); */
+#if 0
+      fatal("Aborting!");
+#endif
     }
     pgm = 1;
   }
@@ -271,7 +299,9 @@ void loadppm(const char *fn, ppm_t *p)
     printf ("loadppm: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n", fn, line, 7);
     newppm(p, 10,10);
     return;
-    /* fatal("Aborting!"); */
+#if 0
+    fatal("Aborting!");
+#endif
   }
   p->col = g_malloc(p->height * p->width * 3);
 
@@ -315,8 +345,7 @@ void copyppm(ppm_t *s, ppm_t *p)
     killppm(p);
   p->width = s->width;
   p->height = s->height;
-  p->col = g_malloc(p->width * 3 * p->height);
-  memcpy(p->col, s->col, p->width * 3 * p->height);
+  p->col = g_memdup(s->col, p->width * 3 * p->height);
 }
 
 void freerotate(ppm_t *p, double amount)
@@ -390,7 +419,9 @@ void autocrop(ppm_t *p, int room)
     if(n) break;
   }
   if(n) ly = y;
-  /* printf("ly = %d\n", ly); */
+#if 0
+  printf("ly = %d\n", ly);
+#endif
 
   /* lower */
   memcpy(&tc, &p->col[(p->height-1)*rowstride], 3);
@@ -403,7 +434,9 @@ void autocrop(ppm_t *p, int room)
   }
   if(n) hy = y+1;
   if(hy >= p->height) hy = p->height - 1;
-  /* printf("hy = %d\n", hy); */
+#if 0
+  printf("hy = %d\n", hy);
+#endif
 
   /* left */
   memcpy(&tc, &p->col[ly*rowstride], 3);
@@ -415,7 +448,9 @@ void autocrop(ppm_t *p, int room)
     if(n) break;
   }
   if(n) lx = x;
-  /* printf("lx = %d\n", lx); */
+#if 0
+  printf("lx = %d\n", lx);
+#endif
 
   /* right */
   memcpy(&tc, &p->col[ly*rowstride + (p->width-1)*3], 3);
@@ -427,7 +462,9 @@ void autocrop(ppm_t *p, int room)
     if(n) break;
   }
   if(n) hx = x+1;
-  /* printf("hx = %d\n", hx); */
+#if 0
+  printf("hx = %d\n", hx);
+#endif
 
   lx -= room; if(lx<0) lx = 0;
   ly -= room; if(ly<0) ly = 0;
@@ -446,7 +483,7 @@ void autocrop(ppm_t *p, int room)
   p->height = tmp.height;
 }
 
-void pad(ppm_t *p, int left,int right, int top, int bottom, guchar *bg)
+void ppm_pad(ppm_t *p, int left,int right, int top, int bottom, guchar *bg)
 {
   int x, y;
   ppm_t tmp = {0,0,NULL};
@@ -496,6 +533,10 @@ void saveppm(ppm_t *p, const char *fn)
 
   if (!f)
     {
+      /* 
+       * gimp_filename_to_utf8() and g_strerror() return temporary strings
+       * that need not and should not be freed. So this call is OK.
+       * */
       g_message (_("Failed to save PPM file '%s': %s"),
                   gimp_filename_to_utf8 (fn), g_strerror (errno));
       return;

@@ -1,4 +1,12 @@
 
+#ifndef __GIMPRESSIONIST_H
+#define __GIMPRESSIONIST_H
+
+/* Includes necessary for the correct processing of this file. */
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+/* Defines */
+
 #define PLUG_IN_NAME    "plug_in_gimpressionist"
 #define PLUG_IN_VERSION "v1.0, November 2003"
 #define HELP_ID         "plug-in-gimppressionist"
@@ -6,6 +14,9 @@
 #define PREVIEWSIZE     150
 #define MAXORIENTVECT   50
 #define MAXSIZEVECT     50
+
+#define NUMORIENTRADIO 8
+#define NUMSIZERADIO 8
 
 /* Type declaration and definitions */
 
@@ -76,12 +87,33 @@ typedef struct
   double     colornoise;
 } gimpressionist_vals_t;
 
+/* Enumerations */
+
+enum GENERAL_BG_TYPE_ENUM
+{
+    BG_TYPE_SOLID = 0,
+    BG_TYPE_KEEP_ORIGINAL = 1,
+    BG_TYPE_FROM_PAPER = 2,
+    BG_TYPE_TRANSPARENT = 3,
+};
+
+enum ORIENTATION_ENUM
+{
+    ORIENTATION_VALUE = 0,
+    ORIENTATION_RADIUS = 1,
+    ORIENTATION_RANDOM = 2,
+    ORIENTATION_RADIAL = 3,
+    ORIENTATION_FLOWING = 4,
+    ORIENTATION_HUE = 5,
+    ORIENTATION_ADAPTIVE = 6,
+    ORIENTATION_MANUAL = 7,
+};
+
 /* Globals */
 
 extern char *standalone;
 
 extern gimpressionist_vals_t pcvals;
-extern gimpressionist_vals_t defaultpcvals;
 extern char *path;
 extern struct ppm infile;
 extern struct ppm inalpha;
@@ -90,46 +122,10 @@ extern GtkWidget *window;
 extern int brushfile;
 extern struct ppm brushppm;
 
-extern GtkWidget *brushlist;
-extern GtkObject *brushscaleadjust;
-extern GtkObject *brushaspectadjust;
-extern GtkObject *brushreliefadjust;
-extern GtkObject *brushdensityadjust;
-extern GtkObject *brushgammaadjust;
-
-extern GtkWidget *paperlist;
-extern GtkObject *paperscaleadjust;
-extern GtkObject *paperreliefadjust;
-extern GtkWidget *paperinvert;
-extern GtkWidget *paperoverlay;
-
-extern GtkObject *orientnumadjust;
-extern GtkObject *orientfirstadjust;
-extern GtkObject *orientlastadjust;
-extern int orientationtype;
-extern GtkWidget *orientradio[];
-
-extern GtkWidget *sizeradio[];
-
-extern GtkObject *sizenumadjust;
-extern GtkObject *sizefirstadjust;
-extern GtkObject *sizelastadjust;
-
-extern GtkObject *generaldarkedgeadjust;
-extern int generalbgtype;
-extern GtkWidget *generalpaintedges;
-extern GtkWidget *generaltileable;
-extern GtkWidget *generaldropshadow;
-extern GtkWidget *generalcolbutton;
-extern GtkObject *generalshadowadjust;
-extern GtkObject *generalshadowdepth;
-extern GtkObject *generalshadowblur;
 extern GtkObject *devthreshadjust;
 
 extern GtkWidget *colortype;
 extern GtkObject *colornoiseadjust;
-
-extern GtkWidget *placecenter;
 
 extern GtkWidget *previewbutton;
 
@@ -141,19 +137,17 @@ extern GRand *gr;
 
 /* Prototypes */
 
+void remove_trailing_whitespace(char *buffer);
 GList *parsepath(void);
+void free_parsepath_cache(void);
 
 void create_paperpage(GtkNotebook *);
 void create_brushpage(GtkNotebook *);
 void create_orientationpage(GtkNotebook *);
-void create_sizepage(GtkNotebook *);
 void create_generalpage(GtkNotebook *);
 void create_presetpage(GtkNotebook *);
 void create_placementpage(GtkNotebook *);
 void create_colorpage(GtkNotebook *);
-
-GtkWidget* create_preview (void);
-void       updatepreview  (GtkWidget *wg, gpointer d);
 
 void grabarea(void);
 void storevals(void);
@@ -163,11 +157,11 @@ gchar *findfile(const gchar *);
 void unselectall(GtkWidget *list);
 void reselect(GtkWidget *list, char *fname);
 void readdirintolist(char *subdir, GtkWidget *view, char *selected);
-void orientchange(GtkWidget *wg, void *d, int num);
-void sizechange(GtkWidget *wg, void *d, int num);
-void placechange(int num);
-void colorchange(int num);
-void generalbgchange(GtkWidget *wg, void *d, int num);
+void orientation_restore(void);
+void paper_store(void);
+void paper_restore(void);
+void brush_store(void);
+void brush_restore(void);
 
 GtkWidget *createonecolumnlist(GtkWidget *parent,
 			       void (*changed_cb)
@@ -177,8 +171,35 @@ void reloadbrush(const gchar *fn, struct ppm *p);
 
 void create_orientmap_dialog(void);
 void update_orientmap_dialog(void);
-int pixval(double dir);
 double getdir(double x, double y, int from);
 
 void create_sizemap_dialog(void);
-double getsiz(double x, double y, int from);
+double getsiz_proto (double x, double y, int n, smvector_t *vec,
+                     double smstrexp, int voronoi);
+
+enum SELECT_PRESET_RETURN_VALUES
+{
+    SELECT_PRESET_OK = 0,
+    SELECT_PRESET_FILE_NOT_FOUND = -1,
+    SELECT_PRESET_LOAD_FAILED = -2,
+};
+
+int select_preset(char * preset);
+void set_colorbrushes (const gchar *fn);
+int  create_gimpressionist (void);
+
+double degtorad(double d);
+double radtodeg(double d);
+double dist(double x, double y, double dx, double dy);
+
+void restore_default_values(void);
+
+GtkWidget *create_radio_button (GtkWidget *box, int orienttype,
+                                void (*callback)(GtkWidget *wg, void *d),
+                                gchar *label, gchar *help_string,
+                                GSList **radio_group, 
+                                GtkWidget **buttons_array
+                               );
+
+#endif /* #ifndef __GIMPRESSIONIST_H */
+

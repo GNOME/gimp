@@ -11,6 +11,7 @@
 
 #include "ppmtool.h"
 #include "gimpressionist.h"
+#include "preview.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -22,10 +23,6 @@ static void run                 (const gchar      *name,
 				 GimpParam       **return_vals);
 static void gimpressionist_main (void);
 
-void repaint               (ppm_t *p, ppm_t *a);
-int  create_gimpressionist (void);
-
-gboolean img_has_alpha = FALSE;
 
 GimpPlugInInfo PLUG_IN_INFO = {
         NULL,   /* init_proc */
@@ -33,57 +30,6 @@ GimpPlugInInfo PLUG_IN_INFO = {
         query,  /* query_proc */
         run     /* run_proc */
 }; /* PLUG_IN_INFO */
-
-gimpressionist_vals_t pcvals;
-
-gimpressionist_vals_t defaultpcvals = {
-  4,
-  0.0,
-  60.0,
-  0,
-  12.0,
-  20.0,
-  20.0,
-  1.0,
-  1,
-  0.1,
-  0.0,
-  30.0,
-  0,
-  0,
-  "defaultbrush.pgm",
-  "defaultpaper.pgm",
-  {0,0,0,1.0},
-  1,
-  0,
-  { { 0.5, 0.5, 0.0, 0.0, 1.0, 1.0, 0 } },
-  1,
-  0,
-  0.0,
-  0.0,
-  1.0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  20.0,
-  1,
-  10.0,
-  20.0,
-  0,
-  0.1,
-
-  { { 0.5, 0.5, 50.0, 1.0 } },
-  1,
-  1.0,
-  0,
-
-  10,
-  4,
-
-  0, 0.0
-};
 
 static GimpDrawable *drawable;
 
@@ -97,6 +43,7 @@ query(void)
     { GIMP_PDB_INT32,    "run_mode",  "Interactive"    },
     { GIMP_PDB_IMAGE,    "image",     "Input image"    },
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
+    { GIMP_PDB_STRING,   "preset",    "Preset Name"    },
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -116,10 +63,10 @@ query(void)
 }
 
 static void
-gimpressionist_get_data (char *name, gpointer ptr)
+gimpressionist_get_data (void)
 {
-  pcvals = defaultpcvals;
-  gimp_get_data (name, ptr);
+  restore_default_values();
+  gimp_get_data (PLUG_IN_NAME, &pcvals);
 }
 
 static void
@@ -132,9 +79,21 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status;
+  gboolean           with_specified_preset;
+  gchar             *preset_name;
 
   status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
+  with_specified_preset = FALSE;
+
+  if (nparams > 3)
+    {
+      preset_name = param[3].data.d_string;
+      if (strcmp(preset_name, ""))
+        {
+          with_specified_preset = TRUE;
+        }
+    }
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
@@ -153,17 +112,20 @@ run (const gchar      *name,
 
   switch (run_mode)
     {
+        /*
+         * Note: there's a limitation here. Running this plug-in before the
+         * interactive plug-in was run will cause it to crash, because the
+         * data is uninitialized.
+         * */
     case GIMP_RUN_INTERACTIVE:
-      gimpressionist_get_data(PLUG_IN_NAME, &pcvals);
-      if(!create_gimpressionist())
-        return;
-      break;
     case GIMP_RUN_NONINTERACTIVE:
-      g_message ("GIMP_RUN_NONINTERACTIVE not implemented yet!");
-      status = GIMP_PDB_EXECUTION_ERROR;
-      break;
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimpressionist_get_data(PLUG_IN_NAME, &pcvals);
+    case GIMP_RUN_WITH_LAST_VALS:        
+      gimpressionist_get_data();
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        {
+          if(!create_gimpressionist())
+              return;
+        }
       break;
     default:
       status = GIMP_PDB_EXECUTION_ERROR;
@@ -173,18 +135,49 @@ run (const gchar      *name,
       (gimp_drawable_is_rgb(drawable->drawable_id) ||
        gimp_drawable_is_gray(drawable->drawable_id)))
     {
-      gimpressionist_main();
-      gimp_displays_flush ();
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data(PLUG_IN_NAME, &pcvals, sizeof(gimpressionist_vals_t));
+      if (with_specified_preset)
+        {
+          /* If select_preset fails - set to an error */
+          if (select_preset(preset_name))
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
+      /* It seems that the value of the run variable is stored in
+       * the preset. I don't know if it's a bug or a feature, but
+       * I just work here and am anxious to get a working version.
+       * So I'm setting it to the correct value here.
+       *
+       * It also seems that defaultpcvals have this erroneous
+       * value as well, so it gets set to FALSE as well. Thus it
+       * is always set to TRUE upon a non-interactive run.
+       *        -- Shlomi Fish
+       * */
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
+        {
+          pcvals.run = TRUE;
+        }
+
+      if (status == GIMP_PDB_SUCCESS)
+        {
+          gimpressionist_main();
+          gimp_displays_flush ();
+
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data(PLUG_IN_NAME, &pcvals, sizeof(gimpressionist_vals_t));
+        }
     }
   else if (status == GIMP_PDB_SUCCESS)
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
+  /* Resources Cleanup */
   g_rand_free (gr);
+  free_parsepath_cache();
+  reloadbrush(NULL, NULL);
+  preview_free_resources();
 
   values[0].data.d_status = status;
 

@@ -18,6 +18,8 @@
 #include "gimpressionist.h"
 #include "ppmtool.h"
 
+#include "preview.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 #define NUMVECTYPES 4
@@ -30,15 +32,15 @@ static GtkWidget *prev_button;
 static GtkWidget *next_button;
 static GtkWidget *add_button;
 static GtkWidget *kill_button;
+static GtkObject *vectprevbrightadjust = NULL;
 
-GtkObject *vectprevbrightadjust = NULL;
 
 static GtkObject *angadjust = NULL;
-GtkObject *stradjust = NULL;
-GtkObject *strexpadjust = NULL;
-GtkObject *angoffadjust = NULL;
+static GtkObject *stradjust = NULL;
+static GtkObject *orient_map_str_exp_adjust = NULL;
+static GtkObject *angoffadjust = NULL;
 static GtkWidget *vectypes[NUMVECTYPES];
-GtkWidget *orientvoronoi = NULL;
+static GtkWidget *orientvoronoi = NULL;
 
 #define OMWIDTH 150
 #define OMHEIGHT 150
@@ -46,32 +48,6 @@ GtkWidget *orientvoronoi = NULL;
 static vector_t vector[MAXORIENTVECT];
 static gint numvect = 0;
 static gint vector_type;
-
-static double degtorad(double d)
-{
-  return d/180.0*G_PI;
-}
-
-double radtodeg(double d)
-{
-  double v = d/G_PI*180.0;
-  if(v < 0.0) v += 360;
-  return v;
-}
-
-double dist(double x, double y, double dx, double dy)
-{
-  double ax = dx - x;
-  double ay = dy - y;
-  return sqrt(ax * ax + ay * ay);
-}
-
-int pixval(double dir)
-{
-  while(dir < 0.0) dir += 360.0;
-  while(dir >= 360.0) dir -= 360.0;
-  return dir * 255.0 / 360.0;
-}
 
 double getdir(double x, double y, int from)
 {
@@ -87,7 +63,7 @@ double getdir(double x, double y, int from)
     n = numvect;
     vec = vector;
     angoff = GTK_ADJUSTMENT(angoffadjust)->value;
-    strexp = GTK_ADJUSTMENT(strexpadjust)->value;
+    strexp = GTK_ADJUSTMENT(orient_map_str_exp_adjust)->value;
     voronoi = GTK_TOGGLE_BUTTON(orientvoronoi)->active;
   } else {
     n = pcvals.numorientvector;
@@ -383,7 +359,7 @@ omresponse (GtkWidget *widget,
           pcvals.orientvector[i] = vector[i];
 
         pcvals.numorientvector = numvect;
-        pcvals.orientstrexp  = GTK_ADJUSTMENT (strexpadjust)->value;
+        pcvals.orientstrexp  = GTK_ADJUSTMENT (orient_map_str_exp_adjust)->value;
         pcvals.orientangoff  = GTK_ADJUSTMENT (angoffadjust)->value;
         pcvals.orientvoronoi = GTK_TOGGLE_BUTTON (orientvoronoi)->active;
       }
@@ -416,7 +392,7 @@ void update_orientmap_dialog(void)
 
   initvectors();
 
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(strexpadjust), pcvals.orientstrexp);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(orient_map_str_exp_adjust), pcvals.orientstrexp);
   gtk_adjustment_set_value(GTK_ADJUSTMENT(angoffadjust), pcvals.orientangoff);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(orientvoronoi), pcvals.orientvoronoi);
 
@@ -430,8 +406,6 @@ void create_orientmap_dialog(void)
   GtkWidget *table1, *table2;
   GtkWidget *frame;
   GtkWidget *ebox, *hbox, *vbox;
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (orientradio[7]), TRUE);
 
   initvectors();
 
@@ -605,7 +579,7 @@ void create_orientmap_dialog(void)
 			  NULL);
   g_signal_connect (stradjust, "value_changed", G_CALLBACK (stradjmove), NULL);
 
-  strexpadjust = 
+  orient_map_str_exp_adjust = 
     gimp_scale_entry_new (GTK_TABLE(table2), 0, 3, 
 			  _("S_trength exp.:"),
 			  150, 6, 1.0, 
@@ -613,7 +587,7 @@ void create_orientmap_dialog(void)
 			  TRUE, 0, 0,
 			  _("Change the exponent of the strength"),
 			  NULL);
-  g_signal_connect (strexpadjust, "value_changed", 
+  g_signal_connect (orient_map_str_exp_adjust, "value_changed", 
 		    G_CALLBACK (strexpadjmove), NULL);
 
   gtk_widget_show(omwindow);

@@ -17,6 +17,9 @@
 
 #include "gimpressionist.h"
 #include "ppmtool.h"
+#include "size.h"
+
+#include "preview.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -33,12 +36,12 @@ static GtkWidget *next_button;
 static GtkWidget *add_button;
 static GtkWidget *kill_button;
 
-GtkObject *smvectprevbrightadjust = NULL;
+static GtkObject *smvectprevbrightadjust = NULL;
 
-GtkObject *sizadjust = NULL;
-GtkObject *smstradjust = NULL;
-GtkObject *smstrexpadjust = NULL;
-GtkWidget *sizevoronoi = NULL;
+static GtkObject *sizadjust = NULL;
+static GtkObject *smstradjust = NULL;
+static GtkObject *smstrexpadjust = NULL;
+static GtkWidget *sizevoronoi = NULL;
 
 #define OMWIDTH 150
 #define OMHEIGHT 150
@@ -46,74 +49,14 @@ GtkWidget *sizevoronoi = NULL;
 static smvector_t smvector[MAXSIZEVECT];
 static int numsmvect = 0;
 
-double dist(double x, double y, double dx, double dy);
-
-
-double getsiz(double x, double y, int from)
+static double getsiz_from_gui(double x, double y)
 {
-  int i;
-  int n;
-  int voronoi;
-  double sum, ssum, dst;
-  smvector_t *vec;
-  double smstrexp;
-  int first = 0, last;
-
-  if((x < 0.0) || (x > 1.0)) printf("HUH? x = %f\n",x);
-
-  if (from == 0)
-    {
-      n = numsmvect;
-      vec = smvector;
-      smstrexp = GTK_ADJUSTMENT(smstrexpadjust)->value;
-      voronoi = GTK_TOGGLE_BUTTON(sizevoronoi)->active;
-    }
-  else
-    {
-      n = pcvals.numsizevector;
-      vec = pcvals.sizevector;
-      smstrexp = pcvals.sizestrexp;
-      voronoi = pcvals.sizevoronoi;
-    }
-
-  if (voronoi)
-    {
-      gdouble bestdist = -1.0;
-      for (i = 0; i < n; i++)
-	{
-	  dst = dist(x, y, vec[i].x, vec[i].y);
-	  if ((bestdist < 0.0) || (dst < bestdist))
-	    {
-	      bestdist = dst;
-	      first = i;
-	    }
-	}
-      last = first+1;
-    }
-  else
-    {
-      first = 0;
-      last = n;
-    }
-
-  sum = ssum = 0.0;
-  for (i = first; i < last; i++)
-    {
-      gdouble s = vec[i].str;
-
-      dst = dist(x,y,vec[i].x,vec[i].y);
-      dst = pow(dst, smstrexp);
-      if(dst < 0.0001) dst = 0.0001;
-      s = s / dst;
-
-      sum += vec[i].siz * s;
-      ssum += 1.0/dst;
-  }
-  sum = sum / ssum / 100.0;
-  return CLAMP(sum, 0.0, 1.0);
+    return getsiz_proto(x,y, numsmvect, smvector,
+                        GTK_ADJUSTMENT(smstrexpadjust)->value,
+                        GTK_TOGGLE_BUTTON(sizevoronoi)->active);
 }
 
-void updatesmpreviewprev(void)
+static void updatesmpreviewprev(void)
 {
   gint x, y;
   static ppm_t nsbuffer;
@@ -129,13 +72,14 @@ void updatesmpreviewprev(void)
   for (y = 6; y < OMHEIGHT-4; y += 10)
     {
       for (x = 6; x < OMWIDTH-4; x += 10)
-	{
-	  gdouble siz = 5 * getsiz(x/(double)OMWIDTH,y/(double)OMHEIGHT,0);
-	  drawline (&nsbuffer, x-siz, y-siz, x+siz, y-siz, gray);
-	  drawline (&nsbuffer, x+siz, y-siz, x+siz, y+siz, gray);
-	  drawline (&nsbuffer, x+siz, y+siz, x-siz, y+siz, gray);
-	  drawline (&nsbuffer, x-siz, y+siz, x-siz, y-siz, gray);
-	}
+         {
+           gdouble siz = 5 * getsiz_from_gui(x/(double)OMWIDTH,
+                                             y/(double)OMHEIGHT);
+           drawline (&nsbuffer, x-siz, y-siz, x+siz, y-siz, gray);
+           drawline (&nsbuffer, x+siz, y-siz, x+siz, y+siz, gray);
+           drawline (&nsbuffer, x+siz, y+siz, x-siz, y+siz, gray);
+           drawline (&nsbuffer, x-siz, y+siz, x-siz, y-siz, gray);
+         }
     }
 
   for (y = 0; y < OMHEIGHT; y++)
@@ -145,7 +89,7 @@ void updatesmpreviewprev(void)
 
 static gint selectedsmvector = 0;
 
-void updatesmvectorprev(void)
+static void updatesmvectorprev(void)
 {
   static ppm_t backup = {0,0,NULL};
   static ppm_t sbuffer = {0,0,NULL};
@@ -165,11 +109,11 @@ void updatesmvectorprev(void)
   if(!ok || (val != lastval))
     {
       if(!infile.col)
-	updatepreview (NULL, (void *)2); /* Force grabarea() */
+         updatepreview (NULL, (void *)2); /* Force grabarea() */
       copyppm(&infile, &backup);
       ppmbrightness(&backup, val, 1,1,1);
       if (backup.width != OMWIDTH || backup.height != OMHEIGHT)
-	resize_fast(&backup, OMWIDTH, OMHEIGHT);
+         resize_fast(&backup, OMWIDTH, OMHEIGHT);
       ok = 1;
   }
   copyppm(&backup, &sbuffer);
@@ -178,12 +122,15 @@ void updatesmvectorprev(void)
     {
       x = smvector[i].x * OMWIDTH;
       y = smvector[i].y * OMHEIGHT;
-      if (i == selectedsmvector) {
-	drawline (&sbuffer, x-5, y, x+5, y, red);
-	drawline (&sbuffer, x, y-5, x, y+5, red);
-      } else {
-	drawline (&sbuffer, x-5, y, x+5, y, gray);
-	drawline (&sbuffer, x, y-5, x, y+5, gray);
+      if (i == selectedsmvector)
+      {
+         drawline (&sbuffer, x-5, y, x+5, y, red);
+         drawline (&sbuffer, x, y-5, x, y+5, red);
+      }
+      else
+      {
+         drawline (&sbuffer, x-5, y, x+5, y, gray);
+         drawline (&sbuffer, x, y-5, x, y+5, gray);
       }
       putrgb (&sbuffer, x, y, white);
   }
@@ -200,17 +147,17 @@ void updatesmvectorprev(void)
 
 static gboolean smadjignore = FALSE;
 
-void updatesmsliders(void)
+static void updatesmsliders(void)
 {
   smadjignore = TRUE;
   gtk_adjustment_set_value(GTK_ADJUSTMENT(sizadjust),
-			   smvector[selectedsmvector].siz);
+                              smvector[selectedsmvector].siz);
   gtk_adjustment_set_value(GTK_ADJUSTMENT(smstradjust),
-			   smvector[selectedsmvector].str);
+                              smvector[selectedsmvector].str);
   smadjignore = FALSE;
 }
 
-void smprevclick(GtkWidget *w, gpointer data)
+static void smprevclick(GtkWidget *w, gpointer data)
 {
   selectedsmvector--;
   if(selectedsmvector < 0) selectedsmvector = numsmvect-1;
@@ -218,7 +165,7 @@ void smprevclick(GtkWidget *w, gpointer data)
   updatesmvectorprev();
 }
 
-void smnextclick(GtkWidget *w, gpointer data)
+static void smnextclick(GtkWidget *w, gpointer data)
 {
   selectedsmvector++;
   if(selectedsmvector == numsmvect) selectedsmvector = 0;
@@ -269,16 +216,17 @@ static void smmapclick(GtkWidget *w, GdkEventButton *event)
     selectedsmvector = numsmvect;
     numsmvect++;
     updatesmsliders();
-
-    /*
-  } else if(event->button == 3) {
+  }
+#if 0
+  else if(event->button == 3) {
     double d;
     d = atan2(OMWIDTH * smvector[selectedsmvector].x - event->x,
-	      OMHEIGHT * smvector[selectedsmvector].y - event->y);
+               OMHEIGHT * smvector[selectedsmvector].y - event->y);
     smvector[selectedsmvector].dir = radtodeg(d);
     updatesmsliders();
     */
   }
+#endif
   updatesmvectorprev();
   updatesmpreviewprev();
 }
@@ -338,7 +286,7 @@ smresponse (GtkWidget *widget,
     gtk_widget_hide (widget);
 }
 
-void initsmvectors(void)
+static void initsmvectors(void)
 {
   if (pcvals.numsizevector)
     {
@@ -346,9 +294,9 @@ void initsmvectors(void)
 
       numsmvect = pcvals.numsizevector;
       for (i = 0; i < numsmvect; i++)
-	{
-	  smvector[i] = pcvals.sizevector[i];
-	}
+         {
+           smvector[i] = pcvals.sizevector[i];
+         }
     }
   else
     {
@@ -371,9 +319,9 @@ static void update_sizemap_dialog(void)
       initsmvectors();
 
       gtk_adjustment_set_value(GTK_ADJUSTMENT(smstrexpadjust),
-			       pcvals.sizestrexp);
+                                  pcvals.sizestrexp);
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(sizevoronoi),
-				   pcvals.sizevoronoi);
+                                       pcvals.sizevoronoi);
 
       updatesmvectorprev();
       updatesmpreviewprev();
@@ -388,8 +336,6 @@ void create_sizemap_dialog(void)
   GtkWidget *table2;
   GtkWidget *hbox;
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sizeradio[7]), TRUE);
-
   initsmvectors();
 
   if (smwindow)
@@ -403,11 +349,11 @@ void create_sizemap_dialog(void)
   smwindow =
     gimp_dialog_new (_("Size Map Editor"), "gimpressionist",
                      NULL, 0,
-		     gimp_standard_help_func, HELP_ID,
+                       gimp_standard_help_func, HELP_ID,
 
-		     GTK_STOCK_APPLY,  RESPONSE_APPLY,
-		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-		     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                       GTK_STOCK_APPLY,  RESPONSE_APPLY,
+                       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                       GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                      NULL);
 
@@ -415,7 +361,7 @@ void create_sizemap_dialog(void)
                     G_CALLBACK (smresponse),
                     NULL);
   g_signal_connect (smwindow, "destroy",
-		    G_CALLBACK (gtk_widget_destroyed),
+                      G_CALLBACK (gtk_widget_destroyed),
                     &smwindow);
 
   table1 = gtk_table_new(2, 5, FALSE);
@@ -481,21 +427,21 @@ void create_sizemap_dialog(void)
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked",
-		    G_CALLBACK(smnextclick), NULL);
+                      G_CALLBACK(smnextclick), NULL);
   gimp_help_set_help_data (tmpw, _("Select next smvector"), NULL);
 
   add_button = tmpw = gtk_button_new_with_mnemonic( _("A_dd"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked",
-		    G_CALLBACK(smaddclick), NULL);
+                      G_CALLBACK(smaddclick), NULL);
   gimp_help_set_help_data (tmpw, _("Add new smvector"), NULL);
 
   kill_button = tmpw = gtk_button_new_with_mnemonic( _("_Kill"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked",
-		    G_CALLBACK(smdeleteclick), NULL);
+                      G_CALLBACK(smdeleteclick), NULL);
   gimp_help_set_help_data (tmpw, _("Delete selected smvector"), NULL);
 
   table2 = gtk_table_new(3, 4, FALSE);
@@ -505,36 +451,36 @@ void create_sizemap_dialog(void)
 
   sizadjust =
     gimp_scale_entry_new (GTK_TABLE(table2), 0, 0,
-			  _("_Size:"),
-			  150, 6, 50.0,
-			  0.0, 100.0, 1.0, 10.0, 1,
-			  TRUE, 0, 0,
-			  _("Change the angle of the selected smvector"),
-			  NULL);
+                             _("_Size:"),
+                             150, 6, 50.0,
+                             0.0, 100.0, 1.0, 10.0, 1,
+                             TRUE, 0, 0,
+                             _("Change the angle of the selected smvector"),
+                             NULL);
   g_signal_connect (sizadjust, "value_changed", G_CALLBACK(angsmadjmove),
-		    NULL);
+                      NULL);
 
   smstradjust =
     gimp_scale_entry_new (GTK_TABLE(table2), 0, 1,
-			  _("S_trength:"),
-			  150, 6, 1.0,
-			  0.1, 5.0, 0.1, 0.5, 1,
-			  TRUE, 0, 0,
-			  _("Change the strength of the selected smvector"),
-			  NULL);
+                             _("S_trength:"),
+                             150, 6, 1.0,
+                             0.1, 5.0, 0.1, 0.5, 1,
+                             TRUE, 0, 0,
+                             _("Change the strength of the selected smvector"),
+                             NULL);
   g_signal_connect (smstradjust, "value_changed", G_CALLBACK(strsmadjmove),
-		    NULL);
+                      NULL);
 
   smstrexpadjust =
     gimp_scale_entry_new (GTK_TABLE(table2), 0, 2,
-			  _("St_rength exp.:"),
-			  150, 6, 1.0,
-			  0.1, 10.9, 0.1, 0.5, 1,
-			  TRUE, 0, 0,
-			  _("Change the exponent of the strength"),
-			  NULL);
+                             _("St_rength exp.:"),
+                             150, 6, 1.0,
+                             0.1, 10.9, 0.1, 0.5, 1,
+                             TRUE, 0, 0,
+                             _("Change the exponent of the strength"),
+                             NULL);
   g_signal_connect (smstrexpadjust, "value_changed",
-		    G_CALLBACK(smstrexpsmadjmove), NULL);
+                      G_CALLBACK(smstrexpsmadjmove), NULL);
 
   sizevoronoi = tmpw = gtk_check_button_new_with_mnemonic( _("_Voronoi"));
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 3, 4, 0, 1);
@@ -542,7 +488,7 @@ void create_sizemap_dialog(void)
   gtk_widget_show (tmpw);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.sizevoronoi);
   g_signal_connect(tmpw, "clicked",
-		   G_CALLBACK(smstrexpsmadjmove), NULL);
+                     G_CALLBACK(smstrexpsmadjmove), NULL);
   gimp_help_set_help_data (tmpw, _("Voronoi-mode makes only the smvector closest to the given point have any influence"), NULL);
 
   gtk_widget_show(smwindow);

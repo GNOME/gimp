@@ -28,23 +28,29 @@ libexec_PROGRAMS = gimpressionist
 
 gimpressionist_sources = \
 	brush.c			\
+	color.h			\
 	color.c			\
+	general.h		\
 	general.c		\
 	gimp.c			\
 	gimpressionist.c	\
 	gimpressionist.h	\
+	globals.c		\
 	orientation.c		\
 	orientmap.c		\
 	paper.c			\
+	placement.h		\
 	placement.c		\
 	plasma.c		\
 	ppmtool.c		\
 	ppmtool.h		\
 	presets.c		\
+	preview.h		\
 	preview.c		\
 	repaint.c		\
 	size.c			\
-	sizemap.c
+	sizemap.c		\
+	utils.c
 
 gimpressionist_built_sources = logo-pixbuf.h
 gimpressionist.c: logo-pixbuf.h

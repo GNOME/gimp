@@ -1,0 +1,355 @@
+/*
+ * utils.c - various utility routines that don't fit anywhere else. Usually
+ * these routines don't affect the state of the program.
+ * */
+#include <math.h>
+#include <string.h>
+
+#include "gimpressionist.h"
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
+/* Mathematical Utilities */
+
+double degtorad(double d)
+{
+  return d/180.0*G_PI;
+}
+
+double radtodeg(double d)
+{
+  double v = d/G_PI*180.0;
+  if(v < 0.0) v += 360;
+  return v;
+}
+
+double dist(double x, double y, double end_x, double end_y)
+{
+  double dx = end_x - x;
+  double dy = end_y - y;
+  return sqrt(dx * dx + dy * dy);
+}
+
+double getsiz_proto (double x, double y, int n, smvector_t *vec,
+                     double smstrexp, int voronoi)
+{
+  int i;
+  double sum, ssum, dst;
+  int first = 0, last;
+
+  if((x < 0.0) || (x > 1.0)) printf("HUH? x = %f\n",x);
+
+#if 0
+  if (from == 0)
+    {
+      n = numsmvect;
+      vec = smvector;
+      smstrexp = GTK_ADJUSTMENT(smstrexpadjust)->value;
+      voronoi = GTK_TOGGLE_BUTTON(sizevoronoi)->active;
+    }
+  else
+    {
+      n = pcvals.numsizevector;
+      vec = pcvals.sizevector;
+      smstrexp = pcvals.sizestrexp;
+      voronoi = pcvals.sizevoronoi;
+    }
+#endif
+
+  if (voronoi)
+    {
+      gdouble bestdist = -1.0;
+      for (i = 0; i < n; i++)
+         {
+           dst = dist(x, y, vec[i].x, vec[i].y);
+           if ((bestdist < 0.0) || (dst < bestdist))
+             {
+               bestdist = dst;
+               first = i;
+             }
+         }
+      last = first+1;
+    }
+  else
+    {
+      first = 0;
+      last = n;
+    }
+
+  sum = ssum = 0.0;
+  for (i = first; i < last; i++)
+    {
+      gdouble s = vec[i].str;
+
+      dst = dist(x,y,vec[i].x,vec[i].y);
+      dst = pow(dst, smstrexp);
+      if (dst < 0.0001)
+        dst = 0.0001;
+      s = s / dst;
+
+      sum += vec[i].siz * s;
+      ssum += 1.0/dst;
+  }
+  sum = sum / ssum / 100.0;
+  return CLAMP(sum, 0.0, 1.0);
+}
+
+
+/* String and Path Manipulation Routines */
+
+void remove_trailing_whitespace(char *buffer)
+{
+  char * ptr;
+  /*
+   * Note: there is some reliance on the ASCII character code 
+   * characteristics here.
+   * */
+  ptr = buffer + strlen(buffer)-1;
+  while ((ptr > buffer) && ((*ptr) <= ' '))
+      *(ptr--) = '\0';
+}
+
+
+static GList *parsepath_cached_path = NULL;
+
+/* This function is memoized. Once it finds the value it permanently
+ * caches it 
+ * */
+GList * parsepath (void)
+{
+  gchar *gimpdatasubdir, *defaultpath, *tmps;
+
+  
+  if (parsepath_cached_path)
+    return parsepath_cached_path;
+
+  gimpdatasubdir = g_build_filename (gimp_data_directory (),
+                                     "gimpressionist", NULL);
+
+  defaultpath = g_build_filename (gimp_directory (),
+                                  "gimpressionist", gimpdatasubdir, NULL);
+
+  tmps = gimp_gimprc_query ("gimpressionist-path");
+
+  if (!tmps)
+    {
+      if (!g_file_test (gimpdatasubdir, G_FILE_TEST_IS_DIR))
+        {
+          /* No gimpressionist-path parameter,
+             and the default doesn't exist */
+          gchar *path = g_strconcat ("${gimp_dir}",
+                                     G_DIR_SEPARATOR_S,
+                                     "gimpressionist",
+                                     G_SEARCHPATH_SEPARATOR_S,
+                                     "${gimp_data_dir}",
+                                     G_DIR_SEPARATOR_S,
+                                     "gimpressionist",
+                                     NULL);
+
+          /* don't translate the gimprc entry */
+          g_message (_("It is highly recommended to add\n"
+                       " (gimpressionist-path \"%s\")\n"
+                       "(or similar) to your gimprc file."), path);
+          g_free (path);
+        }
+      tmps = g_strdup (defaultpath);
+    }
+
+  parsepath_cached_path = gimp_path_parse (tmps, 16, FALSE, NULL);
+
+  g_free (tmps);
+
+  return parsepath_cached_path;
+}
+
+static void my_g_free (gpointer data, gpointer userdata)
+{
+    g_free(data);
+}
+
+void free_parsepath_cache(void)
+{
+    if (parsepath_cached_path != NULL)
+        return
+    g_list_foreach(parsepath_cached_path, my_g_free, NULL);
+    g_list_free(parsepath_cached_path);
+    parsepath_cached_path = NULL;
+}
+
+
+gchar *
+findfile (const gchar *fn)
+{
+  GList *rcpath;
+  GList        *thispath;
+  gchar        *filename;
+
+  g_return_val_if_fail (fn != NULL, NULL);
+
+  rcpath = parsepath ();
+
+  thispath = rcpath;
+
+  while (thispath)
+    {
+      filename = g_build_filename (thispath->data, fn, NULL);
+      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+        return filename;
+      g_free (filename);
+      thispath = thispath->next;
+    }
+  return NULL;
+}
+
+/* GUI Routines */
+
+void
+reselect (GtkWidget *view,
+          gchar     *fname)
+{
+  GtkTreeModel *model;
+  GtkTreeSelection *selection;
+  GtkTreeIter iter;
+  char *tmpfile;
+
+  tmpfile = strrchr(fname, '/');
+  if (tmpfile)
+    fname = ++tmpfile;
+
+  model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+
+  if (gtk_tree_model_get_iter_first (model, &iter)) {
+    gboolean quit = FALSE;
+    do {
+      gchar *name;
+
+      gtk_tree_model_get (model, &iter, 0, &name, -1);
+      if (!strcmp(name, fname)) {
+        gtk_tree_selection_select_iter (selection, &iter);
+        quit = TRUE;
+      }
+      g_free (name);
+
+    } while ((!quit) && gtk_tree_model_iter_next (model, &iter));
+  }
+}
+
+static void readdirintolist_real(char *subdir, GtkWidget *view,
+    char *selected)
+{
+  gchar *fpath;
+  const gchar *de;
+  GDir *dir;
+  GList *flist = NULL;
+  GtkTreeIter iter;
+  GtkListStore *store;
+  GtkTreeSelection *selection;
+
+  store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
+
+  if (selected) {
+    if (!selected[0])
+      selected = NULL;
+    else {
+      char *nsel;
+      nsel = strrchr(selected, '/');
+      if (nsel) selected = ++nsel;
+    }
+  }
+
+  dir = g_dir_open (subdir, 0, NULL);
+
+  if (!dir)
+    return;
+
+  for(;;)
+    {
+      gboolean file_exists;
+
+      de = g_dir_read_name (dir);
+      if (!de)
+        break;
+
+      fpath = g_build_filename (subdir, de, NULL);
+      file_exists = g_file_test (fpath, G_FILE_TEST_IS_REGULAR);
+      g_free (fpath);
+
+      if (!file_exists)
+        continue;
+
+      flist = g_list_insert_sorted(flist, g_strdup(de),
+				   (GCompareFunc)g_ascii_strcasecmp);
+    }
+  g_dir_close(dir);
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+
+  while (flist)
+    {
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter, 0, flist->data, -1);
+
+      if (selected)
+	{
+	  if (!strcmp(flist->data, selected))
+	    {
+	      gtk_tree_selection_select_iter (selection, &iter);
+	    }
+	}
+      g_free (flist->data);
+      flist = g_list_remove (flist, flist->data);
+    }
+
+  if (!selected)
+    {
+      if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (store), &iter))
+	gtk_tree_selection_select_iter (selection, &iter);
+    }
+}
+
+void readdirintolist(char *subdir, GtkWidget *view, char *selected)
+{
+  char *tmpdir;
+  GList *thispath = parsepath();
+
+  while (thispath)
+    {
+      tmpdir = g_build_filename ((gchar *) thispath->data, subdir, NULL);
+      readdirintolist_real (tmpdir, view, selected);
+      g_free (tmpdir);
+      thispath = thispath->next;
+    }
+}
+
+/*
+ * Creates a radio button.
+ * box - the containing box.
+ * orienttype - The orientation ID
+ * label, help_string - self-describing
+ * radio_group - 
+ *      A pointer to a radio group. The function assigns its value
+ *      as the radio group of the radio button. Afterwards, it assigns it
+ *      a new value of the new radio group of the button.
+ *      This is useful to group buttons. Just reset the variable to NULL,
+ *      to create a new group.
+ * */
+GtkWidget *create_radio_button (GtkWidget *box, int orienttype,
+                                void (*callback)(GtkWidget *wg, void *d),
+                                gchar *label, gchar *help_string,
+                                GSList **radio_group,
+                                GtkWidget **buttons_array
+                               )
+{
+  GtkWidget *tmpw;
+  buttons_array[orienttype] = tmpw = 
+      gtk_radio_button_new_with_label ((*radio_group), label);
+  gtk_box_pack_start (GTK_BOX (box), tmpw, FALSE, FALSE, 0);
+  gtk_widget_show (tmpw);
+  g_signal_connect (tmpw, "clicked",
+		    G_CALLBACK (callback), GINT_TO_POINTER (orienttype));
+  gimp_help_set_help_data (tmpw, help_string, NULL);
+  *radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (tmpw));
+  return tmpw;
+}
+

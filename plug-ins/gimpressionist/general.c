@@ -13,46 +13,82 @@
 #define COLORBUTTONWIDTH  30
 #define COLORBUTTONHEIGHT 20
 
-GtkObject *generaldarkedgeadjust = NULL;
-GtkWidget *generalpaintedges = NULL;
-GtkWidget *generaltileable = NULL;
-GtkWidget *generaldropshadow = NULL;
-GtkWidget *generalcolbutton;
-GtkObject *generalshadowadjust = NULL;
-GtkObject *generalshadowdepth = NULL;
-GtkObject *generalshadowblur = NULL;
-GtkObject *devthreshadjust = NULL;
 
 #define NUMGENERALBGRADIO 4
 
 static GtkWidget *generalbgradio[NUMGENERALBGRADIO];
+static GtkWidget *generalpaintedges = NULL;
+static GtkObject *generaldarkedgeadjust = NULL;
+static GtkWidget *generaltileable;
+static GtkWidget *generaldropshadow = NULL;
+static GtkWidget *generalcolbutton;
+static GtkObject *generalshadowadjust = NULL;
+static GtkObject *generalshadowdepth = NULL;
+static GtkObject *generalshadowblur = NULL;
 
-void generalbgchange(GtkWidget *wg, void *d, int num)
+static int normalize_bg(int n)
 {
-  int n;
+  return (!img_has_alpha && (n == 3)) ? 1 : n;
+}
 
-  if(wg) {
-    n = GPOINTER_TO_INT (d);
-    if(!img_has_alpha && (n == 3))
-      n = 1;
-    pcvals.generalbgtype = n;
-  } else {
-    n = num;
-    if(!img_has_alpha && (n == 3))
-      n = 1;
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(generalbgradio[n]), TRUE);
-  }
+static void general_bg_store(GtkWidget *wg, void *d)
+{
+  pcvals.generalbgtype = normalize_bg (GPOINTER_TO_INT (d));
+}
+
+void general_store(void)
+{
+    pcvals.generalpaintedges = GTK_TOGGLE_BUTTON(generalpaintedges)->active;
+    pcvals.generaldarkedge = GTK_ADJUSTMENT(generaldarkedgeadjust)->value;
+    pcvals.generaltileable = GTK_TOGGLE_BUTTON(generaltileable)->active;
+    pcvals.generaldropshadow = GTK_TOGGLE_BUTTON(generaldropshadow)->active;
+    pcvals.generalshadowdarkness = GTK_ADJUSTMENT(generalshadowadjust)->value;
+    pcvals.generalshadowdepth = GTK_ADJUSTMENT(generalshadowdepth)->value;
+    pcvals.generalshadowblur = GTK_ADJUSTMENT(generalshadowblur)->value;
+}
+
+void general_restore(void)
+{
+    gtk_toggle_button_set_active (
+        GTK_TOGGLE_BUTTON (
+            generalbgradio[normalize_bg (pcvals.generalbgtype)]
+        ),
+        TRUE
+        );
+
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(generalpaintedges), pcvals.generalpaintedges);
+    gtk_adjustment_set_value(GTK_ADJUSTMENT(generaldarkedgeadjust), pcvals.generaldarkedge);
+    gtk_adjustment_set_value(GTK_ADJUSTMENT(generalshadowadjust), pcvals.generalshadowdarkness);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(generaldropshadow), pcvals.generaldropshadow);
+    gtk_adjustment_set_value(GTK_ADJUSTMENT(generalshadowdepth), pcvals.generalshadowdepth);
+    gtk_adjustment_set_value(GTK_ADJUSTMENT(generalshadowblur), pcvals.generalshadowblur);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(generaltileable), pcvals.generaltileable);
+    gimp_color_button_set_color (GIMP_COLOR_BUTTON(generalcolbutton),
+                                 &pcvals.color);
 }
 
 static void selectcolor(GtkWidget *widget, gpointer data)
 {
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(generalbgradio[0]), TRUE);
+  gtk_toggle_button_set_active (
+    GTK_TOGGLE_BUTTON(generalbgradio[BG_TYPE_SOLID]), 
+    TRUE
+    );
+}
+
+static GtkWidget *create_general_button (GtkWidget *box, int idx, 
+                                         gchar *label, gchar *help_string,
+                                         GSList **radio_group
+                                        )
+{
+  return create_radio_button (box, idx, general_bg_store, label, 
+                              help_string, radio_group, generalbgradio);
 }
 
 void create_generalpage(GtkNotebook *notebook)
 {
   GtkWidget *box1, *box2, *box3, *box4, *thispage;
   GtkWidget *label, *tmpw, *frame, *table;
+  GSList * radio_group = NULL;
 
   label = gtk_label_new_with_mnemonic (_("_General"));
 
@@ -68,34 +104,25 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_container_add (GTK_CONTAINER(frame), box3);
   gtk_widget_show (box3);
 
-  generalbgradio[1] = tmpw = gtk_radio_button_new_with_label(NULL,
-                                                             _("Keep original"));
-  gtk_widget_show(tmpw);
-  gtk_box_pack_start(GTK_BOX (box3), tmpw, FALSE, FALSE, 0);
-  g_signal_connect(tmpw, "clicked",
-		   G_CALLBACK (generalbgchange), GINT_TO_POINTER (1));
-  gimp_help_set_help_data
-    (tmpw, _("Preserve the original image as a background"), NULL);
+  create_general_button(box3, BG_TYPE_KEEP_ORIGINAL, _("Keep original"),
+          _("Preserve the original image as a background"),
+          &radio_group
+          );
 
-  generalbgradio[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("From paper"));
-  gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(tmpw, "clicked",
-		   G_CALLBACK (generalbgchange), GINT_TO_POINTER (2));
-  gimp_help_set_help_data
-    (tmpw, _("Copy the texture of the selected paper as a background"), NULL);
+  create_general_button(box3, BG_TYPE_FROM_PAPER, _("From paper"),
+          _("Copy the texture of the selected paper as a background"),
+          &radio_group
+          );
 
   box4 = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start(GTK_BOX(box3), box4, FALSE, FALSE, 0);
   gtk_widget_show(box4);
 
-  generalbgradio[0] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("Solid"));
-  gtk_box_pack_start(GTK_BOX(box4), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(tmpw, "clicked",
-		   G_CALLBACK (generalbgchange), GINT_TO_POINTER (0));
-  gimp_help_set_help_data
-    (tmpw, _("Solid colored background"), NULL);
+  create_general_button(box4, BG_TYPE_SOLID, _("Solid"),
+          _("Solid colored background"),
+          &radio_group
+          );
+  
 
   generalcolbutton = gimp_color_button_new (_("Color"),
 					    COLORBUTTONWIDTH,
@@ -110,13 +137,12 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box4), generalcolbutton, FALSE, FALSE, 0);
   gtk_widget_show (generalcolbutton);
 
-  generalbgradio[3] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(generalbgradio[0])), _("Transparent"));
-  gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(tmpw, "clicked",
-		   G_CALLBACK (generalbgchange), GINT_TO_POINTER (3));
-  gimp_help_set_help_data
-    (tmpw, _("Use a transparent background; Only the strokes painted will be visible"), NULL);
+  tmpw = 
+       create_general_button(box3, BG_TYPE_TRANSPARENT, _("Transparent"),
+           _("Use a transparent background; Only the strokes painted will be visible"),
+           &radio_group
+          );
+
   if(!img_has_alpha)
     gtk_widget_set_sensitive (tmpw, FALSE);
 

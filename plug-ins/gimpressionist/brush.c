@@ -28,22 +28,39 @@
 #include <libgimp/stdplugins-intl.h>
 
 
-GtkWidget *brushlist            = NULL;
-GtkObject *brushreliefadjust    = NULL;
-GtkObject *brushaspectadjust    = NULL;
-GtkObject *brushgammaadjust     = NULL;
 
-gint  brushfile = 2;
-ppm_t brushppm  = {0, 0, NULL};
 
 static GtkWidget    *brushprev  = NULL;
 static GtkListStore *brushstore = NULL;
 
+static GtkWidget *brushlist            = NULL;
+static GtkObject *brushreliefadjust    = NULL;
+static GtkObject *brushaspectadjust    = NULL;
+static GtkObject *brushgammaadjust     = NULL;
+
+void brush_restore(void)
+{
+  reselect (brushlist, pcvals.selectedbrush);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT(brushgammaadjust), pcvals.brushgamma);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT(brushreliefadjust), pcvals.brushrelief);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT(brushaspectadjust), pcvals.brushaspect);
+}
+
+void brush_store(void)
+{
+  pcvals.brushgamma = GTK_ADJUSTMENT(brushgammaadjust)->value;
+}
+
 static void  updatebrushprev (const char *fn);
 
-static gboolean colorfile (const char *fn)
+static gboolean file_is_color (const char *fn)
 {
   return fn && strstr(fn, ".ppm");
+}
+
+void set_colorbrushes (const gchar *fn)
+{
+  pcvals.colorbrushes = file_is_color(fn);
 }
 
 static void
@@ -58,7 +75,7 @@ brushdmenuselect (GtkWidget *widget,
   gint x, y;
   ppm_t *p;
   gint x1, y1, x2, y2;
-  gint row, col;
+  gint row;
   GimpDrawable *drawable;
   gint rowstride;
 
@@ -72,7 +89,9 @@ brushdmenuselect (GtkWidget *widget,
 
   if (brushfile)
     {
-      /* unselectall(brushlist); */
+#if 0
+      unselectall(brushlist);
+#endif
       if (GTK_IS_WIDGET (presetsavebutton))
         gtk_widget_set_sensitive (GTK_WIDGET (presetsavebutton), FALSE);
     }
@@ -105,43 +124,23 @@ brushdmenuselect (GtkWidget *widget,
       gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
       memcpy(p->col + row*rowstride, src_row, bpr);
     }
-  } else if(bpp > 3) { /* RGBA */
+  } else { /* RGBA (bpp > 3) GrayA (bpp == 2) or Gray */
+    gboolean is_gray = ((bpp > 3) ? TRUE : FALSE);
     for(row = 0, y = y1; y < y2; row++, y++) {
       guchar *tmprow = p->col + row * rowstride;
+      guchar *tmprow_ptr;
       gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
       src = src_row;
-      for (col = 0, x = x1; x < x2; col++, x++) {
-	int k = col * 3;
-	tmprow[k+0] = src[0];
-	tmprow[k+1] = src[1];
-	tmprow[k+2] = src[2];
-	src += src_rgn.bpp;
-      }
-    }
-  } else if(bpp == 2) { /* GrayA */
-    for(row = 0, y = y1; y < y2; row++, y++) {
-	guchar *tmprow = p->col + row * rowstride;
-      gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
-      src = src_row;
-      for (col = 0, x = x1; x < x2; col++, x++) {
-	int k = col * 3;
-	tmprow[k+0] = src[0];
-	tmprow[k+1] = src[0];
-	tmprow[k+2] = src[0];
-	src += src_rgn.bpp;
-      }
-    }
-  } else { /* Gray */
-    for(row = 0, y = y1; y < y2; row++, y++) {
-      guchar *tmprow = p->col + row * rowstride;
-      gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
-      src = src_row;
-      for (col = 0, x = x1; x < x2; col++, x++) {
-	int k = col * 3;
-	tmprow[k+0] = src[0];
-	tmprow[k+1] = src[0];
-	tmprow[k+2] = src[0];
-	src += src_rgn.bpp;
+      tmprow_ptr = tmprow;
+      /* Possible micro-optimization here:
+       * src_end = src + src_rgn.bpp * (x2-x1);
+       * for( ; src < src_end ; src += src_rgn.bpp)
+       * */
+      for (x = x1; x < x2; x++) {
+        *(tmprow_ptr++) = src[0];
+        *(tmprow_ptr++) = src[is_gray ? 1 : 0];
+        *(tmprow_ptr++) = src[is_gray ? 2 : 0];
+        src += src_rgn.bpp;
       }
     }
   }
@@ -154,6 +153,7 @@ brushdmenuselect (GtkWidget *widget,
   updatebrushprev(NULL);
 }
 
+#if 0
 void dummybrushdmenuselect(GtkWidget *w, gpointer data)
 {
   if(brushppm.col)
@@ -162,6 +162,7 @@ void dummybrushdmenuselect(GtkWidget *w, gpointer data)
   brushfile = 0;
   updatebrushprev(NULL);
 }
+#endif
 
 static void
 brushlistrefresh (void)
@@ -237,6 +238,10 @@ validdrawable (gint32    imageid,
           gimp_drawable_is_gray (drawableid));
 }
 
+/*
+ * This function caches the last result. Call it with fn as NULL, to
+ * free the arguments.
+ * */
 void
 reloadbrush (const gchar *fn,
              ppm_t       *p)
@@ -244,13 +249,21 @@ reloadbrush (const gchar *fn,
   static char lastfn[256] = "";
   static ppm_t cache = {0,0,NULL};
 
+  if (fn == NULL)
+    {
+      killppm(&cache);
+      lastfn[0] = '\0';
+      return;
+    }
+
   if (strcmp(fn, lastfn))
     {
       g_strlcpy (lastfn, fn, sizeof (lastfn));
+      killppm(&cache);
       loadppm (fn, &cache);
     }
   copyppm(&cache, p);
-  pcvals.colorbrushes = colorfile(fn);
+  set_colorbrushes(fn);
 }
 
 static void
@@ -263,7 +276,7 @@ padbrush (ppm_t *p,
   int right = (width - p->width) - left;
   int top = (height - p->height) / 2;
   int bottom = (height - p->height) - top;
-  pad(p, left, right, top, bottom, black);
+  ppm_pad(p, left, right, top, bottom, black);
 }
 
 static void
@@ -291,7 +304,7 @@ updatebrushprev (const gchar *fn)
     else if(brushppm.col)
       copyppm(&brushppm, &p);
 
-    pcvals.colorbrushes = colorfile(fn);
+    set_colorbrushes(fn);
 
     sc = GTK_ADJUSTMENT(brushgammaadjust)->value;
     if(sc != 1.0)

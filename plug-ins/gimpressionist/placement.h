@@ -1,0 +1,13 @@
+#ifndef __PLACEMENT_H
+#define __PLACEMENT_H
+
+enum PLACEMENT_TYPE_ENUM
+{
+    PLACEMENT_TYPE_RANDOM = 0,
+    PLACEMENT_TYPE_EVEN_DIST = 1,
+};
+
+void place_store(void);
+void place_restore(void);
+
+#endif

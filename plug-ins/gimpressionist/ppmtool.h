@@ -1,3 +1,6 @@
+#ifndef __PPM_TOOL_H
+#define __PPM_TOOL_H
+
 #include <glib.h>
 
 typedef struct ppm {
@@ -18,7 +21,7 @@ void saveppm(ppm_t *p, const char *fn);
 void copyppm(ppm_t *s, ppm_t *p);
 void fill(ppm_t *p, guchar *c);
 void freerotate(ppm_t *p, double amount);
-void pad(ppm_t *p, int left,int right, int top, int bottom, guchar *);
+void ppm_pad(ppm_t *p, int left,int right, int top, int bottom, guchar *);
 void edgepad(ppm_t *p, int left,int right, int top, int bottom);
 void autocrop(ppm_t *p, int room);
 void crop(ppm_t *p, int lx, int ly, int hx, int hy);
@@ -33,3 +36,6 @@ void repaint(ppm_t *p, ppm_t *a);
 void blur(ppm_t *p, int xrad, int yrad);
 
 void mkgrayplasma(ppm_t *p, float turb);
+
+#endif /* #ifndef __PPM_TOOL_H */
+

@@ -14,31 +14,56 @@
 
 #include "gimpressionist.h"
 #include "ppmtool.h"
+#include "size.h"
 
 #include "libgimp/stdplugins-intl.h"
 
+static GtkObject *sizenumadjust = NULL;
+static GtkObject *sizefirstadjust = NULL;
+static GtkObject *sizelastadjust = NULL;
+static GtkWidget *sizeradio[NUMSIZERADIO];
 
-GtkObject *sizenumadjust = NULL;
-GtkObject *sizefirstadjust = NULL;
-GtkObject *sizelastadjust = NULL;
-
-#define NUMSIZERADIO 8
-
-GtkWidget *sizeradio[NUMSIZERADIO];
-
-void sizechange(GtkWidget *wg, void *d, int num)
+static void size_store(GtkWidget *wg, void *d)
 {
-  if(wg) {
-    pcvals.sizetype = GPOINTER_TO_INT (d);
-  } else {
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(sizeradio[num]), TRUE);
-  }
+  pcvals.sizetype = GPOINTER_TO_INT (d);
 }
+
+static void size_type_restore(void)
+{
+  gtk_toggle_button_set_active (
+    GTK_TOGGLE_BUTTON(sizeradio[pcvals.sizetype]), 
+    TRUE
+    );    
+}
+void size_restore(void)
+{
+  size_type_restore();
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(sizenumadjust), pcvals.sizenum);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(sizefirstadjust), pcvals.sizefirst);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(sizelastadjust), pcvals.sizelast);  
+}
+
+static void create_sizemap_dialog_helper(void)
+{
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sizeradio[7]), TRUE);
+    create_sizemap_dialog();
+}
+
+static void create_size_radio_button (GtkWidget *box, int orienttype, 
+                                      gchar *label, gchar *help_string,
+                                      GSList **radio_group
+                                     )
+{
+  create_radio_button (box, orienttype, size_store, label, 
+                       help_string, radio_group, sizeradio);
+}
+
 
 void create_sizepage(GtkNotebook *notebook)
 {
   GtkWidget *box2, *box3, *box4, *thispage;
   GtkWidget *label, *tmpw, *table;
+  GSList * radio_group = NULL;
 
   label = gtk_label_new_with_mnemonic (_("_Size"));
 
@@ -104,81 +129,62 @@ void create_sizepage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box2), box3, FALSE, FALSE, 0);
   gtk_widget_show(box3);
 
-  sizeradio[0] = tmpw = gtk_radio_button_new_with_label(NULL, _("Value"));
-  gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(tmpw, "clicked", G_CALLBACK(sizechange),
-		   GINT_TO_POINTER(0));
-  gimp_help_set_help_data (tmpw, _("Let the value (brightness) of the region determine the size of the stroke"), NULL);
+  create_size_radio_button (box3, SIZE_TYPE_VALUE, _("Value"), 
+    _("Let the value (brightness) of the region determine the size of the stroke"),
+    &radio_group
+    );
+  
+  create_size_radio_button (box3, SIZE_TYPE_RADIUS, _("Radius"),
+     _("The distance from the center of the image determines the size of the stroke"),
+    &radio_group
+    );
+  
+  create_size_radio_button (box3, SIZE_TYPE_RANDOM, _("Random"),
+     _("Selects a random size for each stroke"),
+    &radio_group
+    );
 
-  sizeradio[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("Radius"));
-  gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(tmpw, "clicked", G_CALLBACK(sizechange),
-		   GINT_TO_POINTER(1));
-  gimp_help_set_help_data (tmpw, _("The distance from the center of the image determines the size of the stroke"), NULL);
-
-  sizeradio[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("Random"));
-  gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(tmpw, "clicked", G_CALLBACK(sizechange),
-		   GINT_TO_POINTER(2));
-  gimp_help_set_help_data (tmpw, _("Selects a random size for each stroke"), NULL);
-
-  sizeradio[3] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("Radial"));
-  gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(tmpw, "clicked", G_CALLBACK(sizechange),
-		   GINT_TO_POINTER(3));
-  gimp_help_set_help_data (tmpw, _("Let the direction from the center determine the size of the stroke"), NULL);
-
+  create_size_radio_button (box3, SIZE_TYPE_RADIAL, _("Radial"),
+    _("Let the direction from the center determine the size of the stroke"),
+    &radio_group
+    );
+  
   box3 = gtk_vbox_new(FALSE, 6);
   gtk_box_pack_start(GTK_BOX(box2), box3,FALSE,FALSE, 0);
   gtk_widget_show(box3);
 
-  sizeradio[4] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("Flowing"));
-  gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(tmpw, "clicked", G_CALLBACK(sizechange),
-		   GINT_TO_POINTER(4));
-  gimp_help_set_help_data
-    (tmpw, _("The strokes follow a \"flowing\" pattern"), NULL);
+  create_size_radio_button (box3, SIZE_TYPE_FLOWING, _("Flowing"),
+    _("The strokes follow a \"flowing\" pattern"),
+    &radio_group
+    );
+  
+  create_size_radio_button (box3, SIZE_TYPE_HUE, _("Hue"),
+    _("The hue of the region determines the size of the stroke"),
+    &radio_group
+    );
 
-  sizeradio[5] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("Hue"));
-  gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(tmpw, "clicked", G_CALLBACK(sizechange),
-		   GINT_TO_POINTER(5));
-  gimp_help_set_help_data
-    (tmpw, _("The hue of the region determines the size of the stroke"),
-     NULL);
+  create_size_radio_button (box3, SIZE_TYPE_ADAPTIVE, _("Adaptive"),
+    _("The brush-size that matches the original image the closest is selected"),
+    &radio_group
+    );
 
-  sizeradio[6] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("Adaptive"));
-  gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(tmpw, "clicked", G_CALLBACK(sizechange),
-		   GINT_TO_POINTER(6));
-  gimp_help_set_help_data (tmpw, _("The brush-size that matches the original image the closest is selected"), NULL);
 
   box4 = gtk_hbox_new(FALSE, 6);
   gtk_box_pack_start(GTK_BOX(box3), box4, FALSE, FALSE, 0);
   gtk_widget_show(box4);
 
-  sizeradio[7] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("Manual"));
-  gtk_box_pack_start(GTK_BOX(box4), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(tmpw, "clicked", G_CALLBACK(sizechange),
-		   GINT_TO_POINTER(7));
-  gimp_help_set_help_data (tmpw, _("Manually specify the stroke size"), NULL);
-
-  gtk_toggle_button_set_active
-    (GTK_TOGGLE_BUTTON (sizeradio[pcvals.sizetype]), TRUE);
+  create_size_radio_button (box4, SIZE_TYPE_MANUAL, _("Manual"),
+    _("Manually specify the stroke size"),
+    &radio_group
+    );
+  
+  size_type_restore();
 
   tmpw = gtk_button_new_from_stock (GIMP_STOCK_EDIT);
   gtk_box_pack_start(GTK_BOX(box4), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   g_signal_connect(tmpw, "clicked",
-		   G_CALLBACK(create_sizemap_dialog), NULL);
+		   G_CALLBACK(create_sizemap_dialog_helper), NULL);
   gimp_help_set_help_data (tmpw, _("Opens up the Size Map Editor"), NULL);
 
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);

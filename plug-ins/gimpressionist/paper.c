@@ -23,22 +23,22 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-GtkWidget *paperlist = NULL;
-GtkWidget *paperprev = NULL;
-GtkObject *paperreliefadjust = NULL;
-GtkObject *paperscaleadjust = NULL;
-GtkWidget *paperinvert = NULL;
-GtkWidget *paperoverlay = NULL;
+static GtkWidget *paperprev = NULL;
 static GtkListStore *paperstore;
+static GtkWidget *paperinvert = NULL;
+static GtkWidget *paperlist = NULL;
+static GtkObject *paperreliefadjust = NULL;
+static GtkObject *paperscaleadjust = NULL;
+static GtkWidget *paperoverlay = NULL;
 
-static void updatepaperprev(char *fn)
+static void updatepaperprev(void)
 {
   gint    i, j;
   guchar  buf[100];
   gdouble sc;
   ppm_t   p = {0,0,NULL};
 
-  loadppm(fn, &p);
+  loadppm(pcvals.selectedpaper, &p);
   sc = p.width > p.height ? p.width : p.height;
   sc = 100.0 / sc;
   resize(&p, p.width*sc,p.height*sc);
@@ -47,10 +47,10 @@ static void updatepaperprev(char *fn)
     memset(buf, 0, 100);
     if(i < p.height) {
       for(j = 0; j < p.width; j++)
-	buf[j] = p.col[k + j * 3];
+        buf[j] = p.col[k + j * 3];
       if (GTK_TOGGLE_BUTTON(paperinvert)->active)
-	for (j = 0; j < p.width; j++)
-	  buf[j] = 255 - buf[j];
+        for (j = 0; j < p.width; j++)
+          buf[j] = 255 - buf[j];
     }
     gtk_preview_draw_row (GTK_PREVIEW (paperprev), buf, 0, i, 100);
   }
@@ -77,12 +77,28 @@ static void selectpaper(GtkTreeSelection *selection, gpointer data)
           g_strlcpy (pcvals.selectedpaper,
                      fname, sizeof (pcvals.selectedpaper));
 
-          updatepaperprev (fname);
+          updatepaperprev ();
 
           g_free (fname);
           g_free (paper);
         }
     }
+}
+
+void paper_restore(void)
+{
+  reselect(paperlist, pcvals.selectedpaper);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(paperreliefadjust), pcvals.paperrelief);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(paperscaleadjust), pcvals.paperscale);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(paperinvert), pcvals.paperinvert);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(paperoverlay), pcvals.paperoverlay);
+}
+
+void paper_store(void)
+{
+  pcvals.paperinvert = GTK_TOGGLE_BUTTON(paperinvert)->active;
+  pcvals.paperinvert = GTK_TOGGLE_BUTTON(paperinvert)->active;
+  pcvals.paperoverlay = GTK_TOGGLE_BUTTON(paperoverlay)->active;
 }
 
 void create_paperpage(GtkNotebook *notebook)
