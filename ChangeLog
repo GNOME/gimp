@@ -1,3 +1,7 @@
+Fri Nov 26 19:03:07 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/mail.c: modified the dialog layout a bit
+
 Fri Nov 26 12:25:42 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/gif.c: fixed a (harmless) cut'n'paste error 

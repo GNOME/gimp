@@ -517,29 +517,30 @@ save_dialog ()
   gtk_widget_show (button);
 
   /* table */
-  table = gtk_table_new (7, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  table = gtk_table_new (7, 2, FALSE);
+  gtk_container_border_width (GTK_CONTAINER (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 10);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
 
   /*  To:  Label */
   label = gtk_label_new ("To:");
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label,
 		    0, 1, 0, 1,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
 		    0, 0);
   gtk_widget_show (label);
 
   /* to: dialog */
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry,
-		    1, 3, 0, 1, 
+		    1, 2, 0, 1, 
 		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
 		    0, 0);
   gtk_widget_set_usize (entry, 200, 0);
   sprintf (buffer, "%s", mail_info.receipt);
@@ -549,22 +550,22 @@ save_dialog ()
   gtk_widget_show (entry);
 
 
-
-  /*  From:  Label */
+  /*  From Label */
   label = gtk_label_new ("From:");
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label,
 		    0, 1, 1, 2,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
 		    0, 0);
   gtk_widget_show (label);
 
-  /* from: dialog */
+  /* From entry */
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry,
-		    1, 3, 1, 2, 
+		    1, 2, 1, 2, 
 		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
 		    0, 0);
   gtk_widget_set_usize (entry, 200, 0);
   
@@ -575,23 +576,22 @@ save_dialog ()
   gtk_widget_show (entry);
 
 
-
-
-  /*  subject Label */
+  /* Subject Label */
   label = gtk_label_new ("Subject:");
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label,
 		    0, 1, 2, 3,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
 		    0, 0);
   gtk_widget_show (label);
 
   /* Subject entry */
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry,
-		    1, 3, 2, 3,
+		    1, 2, 2, 3,
 		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
 		    0, 0);
   gtk_widget_set_usize (entry, 200, 0);
   sprintf (buffer, "%s", mail_info.subject);
@@ -603,19 +603,20 @@ save_dialog ()
 
   /* Comment label  */
   label = gtk_label_new ("Comment:");
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 
 		    0, 1, 3, 4, 
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
 		    0, 0);
   gtk_widget_show (label);
 
-  /* Comment dialog */
+  /* Comment entry */
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry, 
-		    1, 3, 3, 4,
+		    1, 2, 3, 4,
 		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
 		    0, 0);
   gtk_widget_set_usize (entry, 200, 0);
   sprintf (buffer, "%s", mail_info.comment);
@@ -625,21 +626,22 @@ save_dialog ()
   gtk_widget_show (entry);
 
 
-  /* filename label  */
+  /* Filename label  */
   label = gtk_label_new (_("Filename:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 
 		    0, 1, 4, 5, 
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
 		    0, 0);
   gtk_widget_show (label);
 
-  /* Filename dialog */
+  /* Filename entry */
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry, 
-		    1, 3, 4, 5,
+		    1, 2, 4, 5,
 		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
 		    0, 0);
   gtk_widget_set_usize (entry, 200, 0);
   sprintf (buffer, "%s", mail_info.filename);
@@ -649,16 +651,16 @@ save_dialog ()
   gtk_widget_show (entry);
 
   /* comment  */
-    table2 = gtk_table_new (2, 2, FALSE);
-   gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 2);
-   gtk_table_set_col_spacing (GTK_TABLE (table2), 0, 2);
-   /*   gtk_box_pack_start (GTK_BOX (box2), table2, TRUE, TRUE, 0);
-	gtk_widget_show (table2); */
-   gtk_table_attach (GTK_TABLE (table), table2, 
-		    0, 3, 5, 6,
+  table2 = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 2);
+  gtk_table_set_col_spacing (GTK_TABLE (table2), 0, 2);
+  /*   gtk_box_pack_start (GTK_BOX (box2), table2, TRUE, TRUE, 0);
+       gtk_widget_show (table2); */
+  gtk_table_attach (GTK_TABLE (table), table2, 
+		    0, 2, 5, 6,
 		    GTK_EXPAND | GTK_FILL,
 		    GTK_EXPAND | GTK_FILL,
-		     0, 0);
+		    0, 0);
 
   text = gtk_text_new (NULL, NULL);
   gtk_text_set_editable (GTK_TEXT (text), TRUE);
@@ -681,12 +683,13 @@ save_dialog ()
 
   /* Encapsulation label */
   label = gtk_label_new (_("Encapsulation:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach( GTK_TABLE (table), label ,
-		    0, 1, 7, 8,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
+		    0, 1, 6, 7,
+		    GTK_SHRINK | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
 		    0, 0);
-  gtk_widget_show(label);
+  gtk_widget_show (label);
 
   /* Encapsulation radiobutton */
   button1 = gtk_radio_button_new_with_label( NULL, _("Uuencode"));
@@ -706,18 +709,17 @@ save_dialog ()
 
   gtk_table_attach( GTK_TABLE (table), button1,
 		    1, 2, 6, 7,
-		    GTK_EXPAND | GTK_FILL, 
-		    GTK_EXPAND | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
 		    0, 0 );
-  gtk_widget_show( button1 );
+  gtk_widget_show  (button1);
 
-  gtk_table_attach( GTK_TABLE (table), button2,
-		    2, 3, 6, 7,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
-		    0, 0 );
-  gtk_widget_show( button2 );
-
+  gtk_table_attach (GTK_TABLE (table), button2,
+		    1, 2, 7, 8,
+		    GTK_SHRINK | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL,
+		    0, 0);
+  gtk_widget_show (button2);
 
   gtk_widget_show (dlg);
   gtk_main ();
