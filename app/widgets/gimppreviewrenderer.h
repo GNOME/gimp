@@ -55,6 +55,7 @@ struct _GimpPreviewRenderer
   /*< private >*/
   guchar       *buffer;
   gint          rowstride;
+  gint          bytes;
 
   GdkPixbuf    *no_preview_pixbuf;
 
@@ -124,7 +125,8 @@ void   gimp_preview_render_to_buffer         (TempBuf            *temp_buf,
                                               guchar             *dest_buffer,
                                               gint                dest_width,
                                               gint                dest_height,
-                                              gint                dest_rowstride);
+                                              gint                dest_rowstride,
+                                              gint                dest_bytes);
 void   gimp_preview_renderer_render_preview (GimpPreviewRenderer *renderer,
                                              TempBuf             *temp_buf,
                                              gint                 channel,

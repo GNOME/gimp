@@ -1,5 +1,31 @@
 2003-03-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimppreviewrenderer.[ch]: added "gint bytes" to the
+	GimpPreviewRenderer struct and pass it to
+	gimp_preview_render_to_buffer().
+
+	* app/widgets/gimppreviewrendererbrush.[ch]: render the indicators
+	to the renderer's buffer, not to the TempBuf so they always appear
+	in the corner again.
+
+	Misc cleanups:
+
+	* app/core/gimpbuffer.c (gimp_buffer_get_new_preview)
+	* app/core/gimppattern.c (gimp_pattern_get_new_preview): no need
+	to center the TempBuf if smaller than requested because
+	GimpPreviewRenderer::render()'s default implementation adjusts the
+	offsets itself.
+
+	* app/widgets/gimppreview.c (gimp_preview_set_viewable): no need
+	to update ourselves after we changed the renderer because the
+	renderer's signal will update us.
+
+	* app/widgets/gimppreviewrenderer.c (gimp_preview_renderer_draw):
+	replaced my stupid buf_rect calculation overkill by something
+	simple that does the same.
+
+2003-03-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpbuffer.c: don't scale the preview up if the
 	buffer is too small.
 

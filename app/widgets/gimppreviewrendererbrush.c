@@ -174,11 +174,17 @@ gimp_preview_renderer_brush_render (GimpPreviewRenderer *renderer,
       return;
     }
 
+  gimp_preview_renderer_render_preview (renderer, temp_buf, -1,
+                                        GIMP_PREVIEW_BG_WHITE,
+                                        GIMP_PREVIEW_BG_WHITE);
+
+  temp_buf_free (temp_buf);
+
 #define INDICATOR_WIDTH  7
 #define INDICATOR_HEIGHT 7
 
-  if (temp_buf->width  >= INDICATOR_WIDTH  &&
-      temp_buf->height >= INDICATOR_HEIGHT &&
+  if (renderer->width  >= INDICATOR_WIDTH  * 2 &&
+      renderer->height >= INDICATOR_HEIGHT * 2&&
       (renderer->width  < brush_width  ||
        renderer->height < brush_height ||
        GIMP_IS_BRUSH_PIPE (brush)))
@@ -225,6 +231,7 @@ gimp_preview_renderer_brush_render (GimpPreviewRenderer *renderer,
 #undef RED
 
       guchar   *buf;
+      guchar   *b;
       gint      x, y;
       gint      offset_x;
       gint      offset_y;
@@ -232,60 +239,55 @@ gimp_preview_renderer_brush_render (GimpPreviewRenderer *renderer,
       gboolean  pipe;
       gboolean  scale;
 
-      buf = temp_buf_data (temp_buf);
+      offset_x = renderer->width  - INDICATOR_WIDTH;
+      offset_y = renderer->height - INDICATOR_HEIGHT;
 
-      offset_x = temp_buf->width  - INDICATOR_WIDTH;
-      offset_y = temp_buf->height - INDICATOR_HEIGHT;
-
-      buf += (offset_y * temp_buf->width + offset_x) * temp_buf->bytes;
+      buf = renderer->buffer + (offset_y * renderer->rowstride +
+                                offset_x * renderer->bytes);
 
       pipe  = GIMP_IS_BRUSH_PIPE (brush);
       scale = (renderer->width  < brush_width ||
                renderer->height < brush_height);
-      alpha = (temp_buf->bytes == 4);
+      alpha = (renderer->bytes == 4);
 
       for (y = 0; y < INDICATOR_HEIGHT; y++)
         {
+          b = buf;
+
           for (x = 0; x < INDICATOR_WIDTH; x++)
             {
               if (scale)
                 {
                   if (pipe)
                     {
-                      *buf++ = scale_pipe_indicator_bits[y][x][0];
-                      *buf++ = scale_pipe_indicator_bits[y][x][1];
-                      *buf++ = scale_pipe_indicator_bits[y][x][2];
+                      *b++ = scale_pipe_indicator_bits[y][x][0];
+                      *b++ = scale_pipe_indicator_bits[y][x][1];
+                      *b++ = scale_pipe_indicator_bits[y][x][2];
                     }
                   else
                     {
-                      *buf++ = scale_indicator_bits[y][x][0];
-                      *buf++ = scale_indicator_bits[y][x][1];
-                      *buf++ = scale_indicator_bits[y][x][2];
+                      *b++ = scale_indicator_bits[y][x][0];
+                      *b++ = scale_indicator_bits[y][x][1];
+                      *b++ = scale_indicator_bits[y][x][2];
                     }
                 }
               else if (pipe)
                 {
-                  *buf++ = pipe_indicator_bits[y][x][0];
-                  *buf++ = pipe_indicator_bits[y][x][1];
-                  *buf++ = pipe_indicator_bits[y][x][2];
+                  *b++ = pipe_indicator_bits[y][x][0];
+                  *b++ = pipe_indicator_bits[y][x][1];
+                  *b++ = pipe_indicator_bits[y][x][2];
                 }
 
               if (alpha)
-                *buf++ = 255;
+                *b++ = 255;
             }
 
-          buf += (temp_buf->width - INDICATOR_WIDTH) * temp_buf->bytes;
+          buf += renderer->rowstride;
         }
     }
 
 #undef INDICATOR_WIDTH
 #undef INDICATOR_HEIGHT
-
-  gimp_preview_renderer_render_preview (renderer, temp_buf, -1,
-                                        GIMP_PREVIEW_BG_WHITE,
-                                        GIMP_PREVIEW_BG_WHITE);
-
-  temp_buf_free (temp_buf);
 }
 
 static gboolean

@@ -269,12 +269,6 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
       copy_region (&srcPR, &destPR);
     }
 
-  if (buffer_width < width)
-    temp_buf->x = (width - buffer_width) / 2;
-
-  if (buffer_height < height)
-    temp_buf->y = (height - buffer_height) / 2;
-
   return temp_buf;
 }
 

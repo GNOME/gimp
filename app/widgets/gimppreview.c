@@ -590,8 +590,6 @@ gimp_preview_set_viewable (GimpPreview  *preview,
     {
       g_object_add_weak_pointer (G_OBJECT (preview->viewable),
 				 (gpointer *) &preview->viewable);
-
-      gimp_preview_update (preview);
     }
 }
 

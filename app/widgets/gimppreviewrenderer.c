@@ -48,9 +48,6 @@
 #include "gimppreviewrenderer-utils.h"
 
 
-#define PREVIEW_BYTES 3
-
-
 enum
 {
   UPDATE,
@@ -143,6 +140,7 @@ gimp_preview_renderer_init (GimpPreviewRenderer *renderer)
 
   renderer->buffer            = NULL;
   renderer->rowstride         = 0;
+  renderer->bytes             = 3;
 
   renderer->no_preview_pixbuf = NULL;
 
@@ -392,7 +390,7 @@ gimp_preview_renderer_set_size_full (GimpPreviewRenderer *renderer,
       renderer->height       = height;
       renderer->border_width = border_width;
 
-      renderer->rowstride = (renderer->width * PREVIEW_BYTES + 3) & ~3;
+      renderer->rowstride = (renderer->width * renderer->bytes + 3) & ~3;
 
       if (renderer->buffer)
         {
@@ -543,17 +541,10 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
     }
   else if (renderer->buffer)
     {
-      if (renderer->border_width > 0)
-        {
-          buf_rect.x      = border_rect.x      + renderer->border_width;
-          buf_rect.y      = border_rect.y      + renderer->border_width;
-          buf_rect.width  = border_rect.width  - 2 * renderer->border_width;
-          buf_rect.height = border_rect.height - 2 * renderer->border_width;
-        }
-      else
-        {
-          buf_rect = border_rect;
-        }
+      buf_rect.x      = border_rect.x + renderer->border_width;
+      buf_rect.y      = border_rect.y + renderer->border_width;
+      buf_rect.width  = renderer->width;
+      buf_rect.height = renderer->height;
 
       if (gdk_rectangle_intersect (&buf_rect, expose_area, &render_rect))
         {
@@ -561,7 +552,7 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
 
           buf = (renderer->buffer +
                  (render_rect.y - buf_rect.y) * renderer->rowstride +
-                 (render_rect.x - buf_rect.x) * PREVIEW_BYTES);
+                 (render_rect.x - buf_rect.x) * renderer->bytes);
 
           gdk_draw_rgb_image_dithalign (window,
                                         widget->style->black_gc,
@@ -762,7 +753,8 @@ gimp_preview_render_to_buffer (TempBuf       *temp_buf,
                                guchar        *dest_buffer,
                                gint           dest_width,
                                gint           dest_height,
-                               gint           dest_rowstride)
+                               gint           dest_rowstride,
+                               gint           dest_bytes)
 {
   guchar   *src, *s;
   guchar   *cb;
@@ -860,8 +852,8 @@ gimp_preview_render_to_buffer (TempBuf       *temp_buf,
 	{
 	  /*  Handle the leading transparency  */
 	  for (j = 0; j < x1; j++)
-	    for (b = 0; b < PREVIEW_BYTES; b++)
-	      render_temp_buf[j * PREVIEW_BYTES + b] = cb[j * 3 + b];
+	    for (b = 0; b < dest_bytes; b++)
+	      render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
 
 	  /*  The stuff in the middle  */
 	  s = src;
@@ -914,21 +906,21 @@ gimp_preview_render_to_buffer (TempBuf       *temp_buf,
 
 	  /*  Handle the trailing transparency  */
 	  for (j = x2; j < dest_width; j++)
-	    for (b = 0; b < PREVIEW_BYTES; b++)
-	      render_temp_buf[j * PREVIEW_BYTES + b] = cb[j * 3 + b];
+	    for (b = 0; b < dest_bytes; b++)
+	      render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
 
 	  src += rowstride;
 	}
       else
 	{
 	  for (j = 0; j < dest_width; j++)
-	    for (b = 0; b < PREVIEW_BYTES; b++)
-	      render_temp_buf[j * PREVIEW_BYTES + b] = cb[j * 3 + b];
+	    for (b = 0; b < dest_bytes; b++)
+	      render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
 	}
 
       memcpy (dest_buffer + i * dest_rowstride,
               render_temp_buf,
-              dest_width * PREVIEW_BYTES);
+              dest_width * dest_bytes);
     }
 }
 
@@ -949,7 +941,8 @@ gimp_preview_renderer_render_preview (GimpPreviewRenderer *renderer,
                                  renderer->buffer,
                                  renderer->width,
                                  renderer->height,
-                                 renderer->rowstride);
+                                 renderer->rowstride,
+                                 renderer->bytes);
 
   renderer->needs_render = FALSE;
 }
