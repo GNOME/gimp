@@ -139,7 +139,7 @@ static void       gimp_layer_transform_color    (GimpImage          *gimage,
                                                  PixelRegion        *layerPR,
                                                  PixelRegion        *bufPR,
                                                  GimpDrawable       *drawable,
-                                                 GimpImageBaseType   type);
+                                                 GimpImageBaseType   src_type);
 
 static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
                                                  gint                x,
@@ -784,7 +784,7 @@ gimp_layer_transform_color (GimpImage         *gimage,
 			    PixelRegion       *layerPR,
 			    PixelRegion       *bufPR,
 			    GimpDrawable      *drawable,
-			    GimpImageBaseType  type)
+			    GimpImageBaseType  src_type)
 {
   gint      i;
   gint      h;
@@ -806,7 +806,7 @@ gimp_layer_transform_color (GimpImage         *gimage,
 	    {
 	      gimp_image_transform_color (gimage, drawable,
 					  dest + (i * layerPR->bytes),
-                                          type,
+                                          src_type,
 					  src  + (i * bufPR->bytes));
 	      /*  copy alpha channel  */
 	      dest[(i + 1) * layerPR->bytes - 1] = src[(i + 1) * bufPR->bytes - 1];
@@ -892,10 +892,12 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
 			   gdouble               opacity,
 			   GimpLayerModeEffects  mode)
 {
-  GimpLayer   *new_layer;
-  PixelRegion  layerPR;
-  PixelRegion  bufPR;
-  gint         width, height;
+  GimpLayer     *new_layer;
+  PixelRegion    layerPR;
+  PixelRegion    bufPR;
+  GimpImageType  src_type;
+  gint           width;
+  ginr           height;
 
   g_return_val_if_fail (tiles != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_gimage), NULL);
@@ -903,6 +905,17 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
 
   width  = tile_manager_width (tiles);
   height = tile_manager_height (tiles);
+
+  switch (tile_manager_bpp (tiles))
+    {
+    case 1: src_type = GIMP_GRAY_IMAGE;  break;
+    case 2: src_type = GIMP_GRAYA_IMAGE; break;
+    case 3: src_type = GIMP_RGB_IMAGE;   break;
+    case 4: src_type = GIMP_RGBA_IMAGE;  break;
+    default:
+      g_return_val_if_reached (NULL);
+      break;
+    }
 
   new_layer = gimp_layer_new (dest_gimage, width, height, type, name,
 			      opacity, mode);
@@ -921,22 +934,90 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
 		     0, 0, width, height,
 		     TRUE);
 
-  if ((tile_manager_bpp (tiles) == 4 &&
-       GIMP_DRAWABLE (new_layer)->type == GIMP_RGBA_IMAGE) ||
-      (tile_manager_bpp (tiles) == 2 &&
-       GIMP_DRAWABLE (new_layer)->type == GIMP_GRAYA_IMAGE))
+  switch (type)
     {
-      /*  If we want a layer the same type as the buffer  */
-      copy_region (&bufPR, &layerPR);
-    }
-  else
-    {
-      /*  Transform the contents of the buf to the new_layer  */
-      gimp_layer_transform_color (dest_gimage,
-                                  &layerPR, &bufPR,
-                                  GIMP_DRAWABLE (new_layer),
-                                  ((tile_manager_bpp (tiles) == 4) ?
-                                   GIMP_RGB : GIMP_GRAY));
+    case GIMP_RGB_IMAGE:
+      switch (src_type)
+        {
+       case GIMP_RGB_IMAGE:
+          copy_region (&bufPR, &layerPR);
+          break;
+        default:
+          g_warning ("%s: unhandled type conversion", G_STRFUNC);
+          break;
+         }
+      break;
+
+    case GIMP_RGBA_IMAGE:
+      switch (src_type)
+        {
+        case GIMP_RGBA_IMAGE:
+          copy_region (&bufPR, &layerPR);
+          break;
+        case GIMP_RGB_IMAGE:
+          add_alpha_region (&bufPR, &layerPR);
+          break;
+        case GIMP_GRAYA_IMAGE:
+          gimp_layer_transform_color (dest_gimage, &layerPR, &bufPR,
+                                      GIMP_DRAWABLE (new_layer), GIMP_GRAY);
+          break;
+        default:
+          g_warning ("%s: unhandled type conversion", G_STRFUNC);
+          break;
+        }
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      switch (src_type)
+        {
+        case GIMP_GRAY_IMAGE:
+          copy_region (&bufPR, &layerPR);
+          break;
+        default:
+          g_warning ("%s: unhandled type conversion", G_STRFUNC);
+          break;
+        }
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      switch (src_type)
+        {
+        case GIMP_RGBA_IMAGE:
+          gimp_layer_transform_color (dest_gimage, &layerPR, &bufPR,
+                                      GIMP_DRAWABLE (new_layer), GIMP_RGB);
+          break;
+        case GIMP_GRAYA_IMAGE:
+          copy_region (&bufPR, &layerPR);
+          break;
+        case GIMP_GRAY_IMAGE:
+          add_alpha_region (&bufPR, &layerPR);
+          break;
+        default:
+          g_warning ("%s: unhandled type conversion", G_STRFUNC);
+          break;
+        }
+      break;
+
+    case GIMP_INDEXED_IMAGE:
+      g_warning ("%s: unhandled type conversion", G_STRFUNC);
+      break;
+
+    case GIMP_INDEXEDA_IMAGE:
+      switch (src_type)
+        {
+        case GIMP_RGBA_IMAGE:
+          gimp_layer_transform_color (dest_gimage, &layerPR, &bufPR,
+                                      GIMP_DRAWABLE (new_layer), GIMP_RGB);
+          break;
+        case GIMP_GRAYA_IMAGE:
+          gimp_layer_transform_color (dest_gimage, &layerPR, &bufPR,
+                                      GIMP_DRAWABLE (new_layer), GIMP_GRAY);
+          break;
+        default:
+          g_warning ("%s: unhandled type conversion", G_STRFUNC);
+          break;
+        }
+      break;
     }
 
   return new_layer;

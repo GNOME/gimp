@@ -94,13 +94,9 @@ gimp_buffer_get_type (void)
 static void
 gimp_buffer_class_init (GimpBufferClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -124,9 +120,7 @@ gimp_buffer_init (GimpBuffer *buffer)
 static void
 gimp_buffer_finalize (GObject *object)
 {
-  GimpBuffer *buffer;
-
-  buffer = GIMP_BUFFER (object);
+  GimpBuffer *buffer = GIMP_BUFFER (object);
 
   if (buffer->tiles)
     {
