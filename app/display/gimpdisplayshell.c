@@ -1580,7 +1580,7 @@ gimp_display_shell_draw_vector (GimpDisplayShell *shell,
 
       coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
 
-      if (coords->len)
+      if (coords && coords->len)
         {
           GimpCoords *coord;
           GdkPoint   *gdk_coords;
@@ -1607,7 +1607,8 @@ gimp_display_shell_draw_vector (GimpDisplayShell *shell,
           g_free (gdk_coords);
         }
 
-      g_array_free (coords, TRUE);
+      if (coords)
+        g_array_free (coords, TRUE);
     }
 }
 

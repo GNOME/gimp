@@ -218,7 +218,7 @@ gimp_draw_tool_real_draw (GimpDrawTool *draw_tool)
 
           coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
 
-          if (coords->len)
+          if (coords && coords->len)
             {
               if (draw_tool->transform)
                 {
@@ -240,7 +240,8 @@ gimp_draw_tool_real_draw (GimpDrawTool *draw_tool)
                                            coords->len, FALSE, FALSE);
             }
 
-          g_array_free (coords, TRUE);
+          if (coords)
+            g_array_free (coords, TRUE);
         }
     }
 }

@@ -239,7 +239,7 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
       coords = gimp_stroke_interpolate (GIMP_STROKE (stroke->data),
                                         1.0, &closed);
 
-      if (coords)
+      if (coords && coords->len)
         {
           GimpVector2 *points;
           gint         i;
@@ -256,9 +256,11 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
           gimp_scan_convert_add_points (scan_convert, coords->len,
                                         points, TRUE);
 
-          g_array_free (coords, TRUE);
           g_free (points);
         }
+
+      if (coords)
+        g_array_free (coords, TRUE);
     }
 
   if (num_coords)

@@ -27,8 +27,9 @@
 
 
 /*  possible vector functions  */
-typedef enum 
+typedef enum
 {
+  VECTORS_SELECT_VECTOR,
   VECTORS_CREATE_VECTOR,
   VECTORS_CREATE_STROKE,
   VECTORS_ADD_ANCHOR,
@@ -67,7 +68,7 @@ struct _GimpVectorTool
   GdkModifierType       saved_state;    /* modifier state at button_press */
   gdouble               last_x;         /* last x coordinate              */
   gdouble               last_y;         /* last y coordinate              */
-                                                                   
+
   GimpAnchor        *cur_anchor;    /*  The current Anchor                */
   GimpStroke        *cur_stroke;    /*  The current Stroke                */
   gdouble            cur_position;  /*  The current Position on a segment */
@@ -77,6 +78,8 @@ struct _GimpVectorTool
   GimpAnchor        *sel_anchor;    /*  currently selected anchor, NULL   */
                                     /*  if multiple anchors are selected  */
   GimpStroke        *sel_stroke;    /*  selected stroke                   */
+
+  GimpVectors       *select_vectors;
 };
 
 struct _GimpVectorToolClass

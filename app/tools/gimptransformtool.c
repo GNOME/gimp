@@ -793,12 +793,13 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
             {
               GArray   *coords;
               gboolean  closed;
-              gint      i;
 
               coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
 
-              if (coords)
+              if (coords && coords->len)
                 {
+                  gint i;
+
                   for (i = 0; i < coords->len; i++)
                     {
                       GimpCoords *curr = &g_array_index (coords, GimpCoords, i);
@@ -808,14 +809,14 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                                     &curr->x, &curr->y);
                     }
 
-                  if (coords->len)
-                    gimp_draw_tool_draw_strokes (draw_tool,
-                                                 &g_array_index (coords,
-                                                                 GimpCoords, 0),
-                                                 coords->len, FALSE, FALSE);
-
-                  g_array_free (coords, TRUE);
+                  gimp_draw_tool_draw_strokes (draw_tool,
+                                               &g_array_index (coords,
+                                                               GimpCoords, 0),
+                                               coords->len, FALSE, FALSE);
                 }
+
+              if (coords)
+                g_array_free (coords, TRUE);
             }
         }
     }

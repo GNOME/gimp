@@ -1,3 +1,35 @@
+2003-09-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-mask-select.c (gimp_image_mask_select_vectors)
+	* app/paint/gimppaintcore-stroke.c (gimp_paint_core_stroke_vectors)
+	* app/display/gimpdisplayshell.c (gimp_display_shell_draw_vector)
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_real_draw)
+	* app/tools/gimptransformtool.c (gimp_transform_tool_draw)
+	* app/tools/gimpvectortool.c (gimp_vector_tool_vectors_visible)
+	(gimp_vector_tool_draw): all callers of gimp_stroke_interpolate():
+	don't leak the returned GimpCoords array and don't crash if it's
+	NULL.
+
+	* app/tools/gimpvectortool.[ch]: added VECTORS_SELECT_VECTOR state
+	which enables activating any visible GimpVectors on any display.
+
+	(gimp_vector_tool_on_handle)
+	(gimp_vector_tool_on_curve): added a GimpVectors parameter so we
+	can check for vectors which are not vector_tool->vectors.
+
+	(gimp_vector_tool_oper_update): iterate gdisp->gimage->vectors
+	to figure if we are hovering any visible vectors and set
+	VECTORS_SELECT_VECTOR.
+
+	(gimp_vector_tool_button_press): catch VECTORS_SELECT_VECTOR and
+	start editing the selected vectors. Also make it the image's
+	active_vectors.
+
+	(gimp_vector_tool_button_release): removed unneeded call to
+	gimp_viewable_invalidate_preview(vectors).
+
+	Random cleanup all over the place.
+
 2003-09-12  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors-export.c: Don't lose the last

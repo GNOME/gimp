@@ -210,35 +210,30 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
       coords = gimp_stroke_interpolate (GIMP_STROKE (stroke->data),
                                         1.0, &closed);
 
-      /*  gimp_stroke_interpolate() may return NULL, so iterate over the
-       *  list of strokes until one returns coords
-       */
-      if (! coords)
-        continue;
-
-      for (i = 0; i < coords->len; i++)
-        {
-          g_array_index (coords, GimpCoords, i).x -= off_x;
-          g_array_index (coords, GimpCoords, i).y -= off_y;
-        }
-
-      if (! initialized)
-        {
-          if (! gimp_paint_core_start (core, drawable, paint_options,
-                                       &(g_array_index (coords, GimpCoords, 0))))
-            {
-              g_array_free (coords, TRUE);
-              return FALSE;
-            }
-
-          initialized = TRUE;
-        }
-
-      gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT);
-
-      do
+      if (coords && coords->len)
         {
           GimpBrush *current_brush;
+
+          for (i = 0; i < coords->len; i++)
+            {
+              g_array_index (coords, GimpCoords, i).x -= off_x;
+              g_array_index (coords, GimpCoords, i).y -= off_y;
+            }
+
+          if (! initialized)
+            {
+              if (! gimp_paint_core_start (core, drawable, paint_options,
+                                           &g_array_index (coords,
+                                                           GimpCoords, 0)))
+                {
+                  g_array_free (coords, TRUE);
+                  return FALSE;
+                }
+
+              initialized = TRUE;
+            }
+
+          gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT);
 
           core->start_coords = g_array_index (coords, GimpCoords, 0);
           core->last_coords  = g_array_index (coords, GimpCoords, 0);
@@ -261,12 +256,11 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
               gimp_paint_core_interpolate (core, drawable, paint_options);
             }
 
-          g_array_free (coords, TRUE);
-          coords = NULL;
+          gimp_paint_core_paint (core, drawable, paint_options, FINISH_PAINT);
         }
-      while (coords);
 
-      gimp_paint_core_paint (core, drawable, paint_options, FINISH_PAINT);
+      if (coords)
+        g_array_free (coords, TRUE);
     }
 
   if (initialized)
