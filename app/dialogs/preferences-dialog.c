@@ -1583,35 +1583,29 @@ file_pref_cmd_callback (GtkWidget *widget,
   gimp_table_attach_aligned (GTK_TABLE (table), 1,
 			     _("Check Size:"), 1.0, 0.5, optionmenu, TRUE);
 
-  frame = gtk_frame_new (_("Scaling")); 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  vbox2 = file_prefs_frame_new (_("8-Bit Displays"), GTK_BOX (vbox));
 
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  if (g_visual->depth != 8)
+    gtk_widget_set_sensitive (GTK_WIDGET (vbox2->parent), FALSE);
 
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  button = gtk_check_button_new_with_label(_("Install Colormap"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				install_cmap);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      &edit_install_cmap);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-  optionmenu =
-    gimp_option_menu_new (file_prefs_toggle_callback,
-			  &interpolation_type, (gpointer) interpolation_type,
+  button = gtk_check_button_new_with_label(_("Colormap Cycling"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				cycled_marching_ants);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      &edit_cycled_marching_ants);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-			  _("Nearest Neighbor (Fast)"),
-			  (gpointer) NEAREST_NEIGHBOR_INTERPOLATION, NULL,
-			  _("Linear"),
-			  (gpointer) LINEAR_INTERPOLATION, NULL,
-			  _("Cubic (Slow)"),
-			  (gpointer) CUBIC_INTERPOLATION, NULL,
-
-			  NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
-			     _("Interpolation Type:"), 1.0, 0.5,
-			     optionmenu, TRUE);
 
   /* Interface */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -1675,15 +1669,6 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     _("Nav Preview Size:"), 1.0, 0.5, optionmenu, TRUE);
 
   spinbutton =
-    gimp_spin_button_new (&adjustment,
-			  levels_of_undo, 0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
-		      &levels_of_undo);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
-			     _("Levels of Undo:"), 1.0, 0.5, spinbutton, TRUE);
-
-  spinbutton =
     gimp_spin_button_new (&adjustment, edit_last_opened_size,
 			  0.0, 16.0, 1.0, 5.0, 0.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
@@ -1692,6 +1677,19 @@ file_pref_cmd_callback (GtkWidget *widget,
   gimp_table_attach_aligned (GTK_TABLE (table), 3,
 			     _("Recent Documents List Size:"), 1.0, 0.5,
 			     spinbutton, TRUE);
+
+  /* Indicators */
+  vbox2 = file_prefs_frame_new (_("Toolbar"), GTK_BOX (vbox));
+
+  button = gtk_check_button_new_with_label
+    (_("Display Brush, Pattern and Gradient Indicators"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				show_indicators);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      &show_indicators);
+  gtk_widget_show (button);
 
   vbox2 = file_prefs_frame_new (_("Dialog Behaviour"), GTK_BOX (vbox));
 
@@ -1779,6 +1777,15 @@ file_pref_cmd_callback (GtkWidget *widget,
   page_index++;
 
   vbox2 = file_prefs_frame_new (_("Appearance"), GTK_BOX (vbox));
+
+  button = gtk_check_button_new_with_label (_("Use \"Dot for Dot\" by default"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				default_dot_for_dot);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      &default_dot_for_dot);
+  gtk_widget_show (button);
 
   button = gtk_check_button_new_with_label(_("Resize Window on Zoom"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
@@ -1868,7 +1875,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   vbox2 = file_prefs_frame_new (_("Pointer Movement Feedback"), GTK_BOX (vbox));
 
   button =
-    gtk_check_button_new_with_label (_("Perfect-but-slow Pointer Tracking"));
+    gtk_check_button_new_with_label (_("Perfect-but-Slow Pointer Tracking"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				perfectmouse);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
@@ -1884,21 +1891,6 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
 		      &no_cursor_updating);
-  gtk_widget_show (button);
-
-  /* Dot for dot */
-  vbox2 = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-  gtk_container_add (GTK_CONTAINER (vbox), vbox2);
-  gtk_widget_show (vbox2);
-
-  button = gtk_check_button_new_with_label (_("Use \"Dot for Dot\" by default"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				default_dot_for_dot);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
-		      &default_dot_for_dot);
   gtk_widget_show (button);
 
   /* Interface / Tool Options */
@@ -1923,22 +1915,6 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
 		      &global_paint_options);
-  gtk_widget_show (button);
-
-  /* Indicators */
-  vbox2 = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-  gtk_container_add (GTK_CONTAINER (vbox), vbox2);
-  gtk_widget_show (vbox2);
-
-  button = gtk_check_button_new_with_label
-    (_("Display brush and pattern indicators on Toolbar"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				show_indicators);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
-		      &show_indicators);
   gtk_widget_show (button);
 
   /* Expand the "Interface" branch */
@@ -1967,15 +1943,25 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (button);
 
 #ifdef ENABLE_MP
-  table = gtk_table_new (3, 2, FALSE);
+  table = gtk_table_new (4, 2, FALSE);
 #else
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (3, 2, FALSE);
 #endif /* ENABLE_MP */
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
+
+  /*  Levels of Undo  */
+  spinbutton =
+    gimp_spin_button_new (&adjustment,
+			  levels_of_undo, 0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
+		      &levels_of_undo);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Levels of Undo:"), 1.0, 0.5, spinbutton, TRUE);
 
   /*  The tile cache size  */
   mem_size_unit = 1;
@@ -2017,7 +2003,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  NULL);
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (optionmenu);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
 			     _("Tile Cache Size:"), 1.0, 0.5, hbox, TRUE);
 
   /*  The maximum size of a new image  */
@@ -2060,7 +2046,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  NULL);
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (optionmenu);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 2,
 			     _("Maximum Image Size:"), 1.0, 0.5, hbox, TRUE);
 
 #ifdef ENABLE_MP
@@ -2070,33 +2056,40 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (file_prefs_int_adjustment_callback),
 		      &num_processors);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 3,
 			     _("Number of Processors to Use:"), 1.0, 0.5,
 			     spinbutton, TRUE);
 #endif /* ENABLE_MP */
 
-  vbox2 = file_prefs_frame_new (_("8-Bit Displays"), GTK_BOX (vbox));
+  frame = gtk_frame_new (_("Scaling")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  if (g_visual->depth != 8)
-    gtk_widget_set_sensitive (GTK_WIDGET (vbox2->parent), FALSE);
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
 
-  button = gtk_check_button_new_with_label(_("Install Colormap"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				install_cmap);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
-		      &edit_install_cmap);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-  button = gtk_check_button_new_with_label(_("Colormap Cycling"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				cycled_marching_ants);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
-		      &edit_cycled_marching_ants);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  optionmenu =
+    gimp_option_menu_new (file_prefs_toggle_callback,
+			  &interpolation_type, (gpointer) interpolation_type,
+
+			  _("Nearest Neighbor (Fast)"),
+			  (gpointer) NEAREST_NEIGHBOR_INTERPOLATION, NULL,
+			  _("Linear"),
+			  (gpointer) LINEAR_INTERPOLATION, NULL,
+			  _("Cubic (Slow)"),
+			  (gpointer) CUBIC_INTERPOLATION, NULL,
+
+			  NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Interpolation Type:"), 1.0, 0.5,
+			     optionmenu, TRUE);
 
   vbox2 = file_prefs_frame_new (_("File Saving"), GTK_BOX (vbox));
 
