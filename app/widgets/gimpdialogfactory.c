@@ -81,13 +81,13 @@ static gboolean gimp_dialog_factory_set_user_pos      (GtkWidget         *dialog
 static gboolean gimp_dialog_factory_dialog_configure  (GtkWidget         *dialog,
                                                        GdkEventConfigure *cevent,
                                                        GimpDialogFactory *factory);
-static void   gimp_dialog_factories_save_foreach      (gchar             *name,
+static void   gimp_dialog_factories_save_foreach      (gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       GimpConfigWriter  *writer);
-static void   gimp_dialog_factories_restore_foreach   (gchar             *name,
+static void   gimp_dialog_factories_restore_foreach   (gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
-static void   gimp_dialog_factories_clear_foreach     (gchar             *name,
+static void   gimp_dialog_factories_clear_foreach     (gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
 static void   gimp_dialog_factory_get_window_info     (GtkWidget         *window, 
@@ -98,16 +98,16 @@ static void   gimp_dialog_factory_get_aux_info        (GtkWidget         *dialog
 						       GimpSessionInfo   *info);
 static void   gimp_dialog_factory_set_aux_info        (GtkWidget         *dialog,
 						       GimpSessionInfo   *info);
-static void   gimp_dialog_factories_hide_foreach      (gchar             *name,
+static void   gimp_dialog_factories_hide_foreach      (gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
-static void   gimp_dialog_factories_show_foreach      (gchar             *name,
+static void   gimp_dialog_factories_show_foreach      (gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
-static void   gimp_dialog_factories_idle_foreach      (gchar             *name,
+static void   gimp_dialog_factories_idle_foreach      (gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
-static void   gimp_dialog_factories_unidle_foreach    (gchar             *name,
+static void   gimp_dialog_factories_unidle_foreach    (gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
 
@@ -246,18 +246,15 @@ gimp_dialog_factory_new (const gchar       *name,
 			 GimpMenuFactory   *menu_factory,
 			 GimpDialogNewFunc  new_dock_func)
 {
-  GimpDialogFactoryClass *factory_class;
-  GimpDialogFactory      *factory;
+  GimpDialogFactory *factory;
+  gpointer           key;
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (! menu_factory || GIMP_IS_MENU_FACTORY (menu_factory),
 			NULL);
 
-  /* EEK */
-  factory_class = g_type_class_ref (GIMP_TYPE_DIALOG_FACTORY);
-
-  if (g_hash_table_lookup (factory_class->factories, name))
+  if (gimp_dialog_factory_from_name (name))
     {
       g_warning ("%s: dialog factory \"%s\" already exists",
 		 G_GNUC_FUNCTION, name);
@@ -268,8 +265,14 @@ gimp_dialog_factory_new (const gchar       *name,
 
   gimp_object_set_name (GIMP_OBJECT (factory), name);
 
-  g_hash_table_insert (factory_class->factories,
-		       GIMP_OBJECT (factory)->name, factory);
+  /*  hack to keep the toolbox on the pool position  */
+  if (strcmp (name, "toolbox") == 0)
+    key = "";
+  else
+    key = GIMP_OBJECT (factory)->name;
+
+  g_hash_table_insert (GIMP_DIALOG_FACTORY_GET_CLASS (factory)->factories,
+		       key, factory);
 
   factory->context       = context;
   factory->menu_factory  = menu_factory;
@@ -287,9 +290,15 @@ gimp_dialog_factory_from_name (const gchar *name)
   g_return_val_if_fail (name != NULL, NULL);
 
   factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
+  if (! factory_class)
+    return NULL;
+  
+  /*  hack to keep the toolbox on the pool position  */
+  if (strcmp (name, "toolbox") == 0)
+    name = "";
 
-  factory = (GimpDialogFactory *)
-    g_hash_table_lookup (factory_class->factories, name);
+  factory =
+    (GimpDialogFactory *) g_hash_table_lookup (factory_class->factories, name);
 
   return factory;
 }
@@ -1142,7 +1151,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
 }
 
 static void
-gimp_dialog_factories_save_foreach (gchar             *name,
+gimp_dialog_factories_save_foreach (gconstpointer      key,
 				    GimpDialogFactory *factory,
 				    GimpConfigWriter  *writer)
 {
@@ -1175,7 +1184,7 @@ gimp_dialog_factories_save_foreach (gchar             *name,
         dialog_name = "dock";
 
       gimp_config_writer_open (writer, "session-info");
-      gimp_config_writer_string (writer, name);
+      gimp_config_writer_string (writer, GIMP_OBJECT (factory)->name);
       gimp_config_writer_string (writer, dialog_name);
 
       gimp_config_writer_open (writer, "position");
@@ -1301,7 +1310,7 @@ gimp_dialog_factories_save_foreach (gchar             *name,
 }
 
 static void
-gimp_dialog_factories_restore_foreach (gchar             *name,
+gimp_dialog_factories_restore_foreach (gconstpointer      key,
 				       GimpDialogFactory *factory,
 				       gpointer           data)
 {
@@ -1436,7 +1445,7 @@ gimp_dialog_factories_restore_foreach (gchar             *name,
 }
 
 static void
-gimp_dialog_factories_clear_foreach (gchar             *name,
+gimp_dialog_factories_clear_foreach (gconstpointer      key,
                                      GimpDialogFactory *factory,
                                      gpointer           data)
 {
@@ -1583,7 +1592,7 @@ gimp_dialog_factory_set_aux_info (GtkWidget       *dialog,
 }
 
 static void
-gimp_dialog_factories_hide_foreach (gchar             *name,
+gimp_dialog_factories_hide_foreach (gconstpointer      key,
 				    GimpDialogFactory *factory,
 				    gpointer           data)
 {
@@ -1614,7 +1623,7 @@ gimp_dialog_factories_hide_foreach (gchar             *name,
 }
 
 static void
-gimp_dialog_factories_show_foreach (gchar             *name,
+gimp_dialog_factories_show_foreach (gconstpointer      key,
 				    GimpDialogFactory *factory,
 				    gpointer           data)
 {
@@ -1640,7 +1649,7 @@ gimp_dialog_factories_show_foreach (gchar             *name,
 }
 
 static void
-gimp_dialog_factories_idle_foreach (gchar             *name,
+gimp_dialog_factories_idle_foreach (gconstpointer      key,
 				    GimpDialogFactory *factory,
 				    gpointer           data)
 {
@@ -1665,7 +1674,7 @@ gimp_dialog_factories_idle_foreach (gchar             *name,
 }
 
 static void
-gimp_dialog_factories_unidle_foreach (gchar             *name,
+gimp_dialog_factories_unidle_foreach (gconstpointer      key,
 				      GimpDialogFactory *factory,
 				      gpointer           data)
 {

@@ -3,25 +3,26 @@
 # This is a sample sessionrc that will be used on first startup after
 # user installation.
 
+(session-info "toolbox" "dock"
+    (position 48 48)
+    (size 192 660)
+    (open-on-exit)
+    (dock
+        (book
+             "gimp-tool-options@icon"
+             "gimp-brush-grid@icon"
+             "gimp-gradient-list@icon"
+             "gimp-pattern-grid@icon")))
 (session-info "dock" "dock"
-    (position 280 28)
+    (position 328 48)
     (size 250 440)
     (open-on-exit)
     (aux-info "menu-shown" "follow-active-image")
     (dock
         (book
-             "gimp-layer-list@32"
-             "gimp-channel-list@32"
-             "gimp-vectors-list@32")))
-(session-info "toolbox" "dock"
-    (position 0 28)
-    (size 192 660)
-    (open-on-exit)
-    (dock
-        (book
-             "gimp-tool-options"
-             "gimp-brush-grid"
-             "gimp-gradient-list"
-             "gimp-pattern-grid")))
+             "gimp-layer-list@name"
+             "gimp-channel-list@name"
+             "gimp-vectors-list@name"
+             "gimp-undo-history@name")))
 
 # end of sessionrc

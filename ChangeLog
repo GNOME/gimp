@@ -1,3 +1,11 @@
+2003-07-08  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdialogfactory.c: added a hack that ensures that
+	the toolbox is always first in all dialog_factories_foreach calls.
+	This way the toolbox appears first in sessionrc and first on screen.
+
+	* etc/sessionrc: updated the sample sessionrc, tweaked it a little.
+
 2003-07-08  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/images/preferences/Makefile.am
