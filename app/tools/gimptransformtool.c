@@ -531,13 +531,13 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
 
   if (key == GDK_CONTROL_MASK)
     {
-      g_object_set (G_OBJECT (options),
+      g_object_set (options,
                     "constrain-1", ! options->constrain_1,
                     NULL);
     }
   else if (key == GDK_MOD1_MASK)
     {
-      g_object_set (G_OBJECT (options),
+      g_object_set (options,
                     "constrain-2", ! options->constrain_2,
                     NULL);
     }

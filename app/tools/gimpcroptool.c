@@ -643,12 +643,12 @@ gimp_crop_tool_modifier_key (GimpTool        *tool,
   if (state & GDK_MOD1_MASK)
     {
       if (! options->allow_enlarge)
-        g_object_set (G_OBJECT (options), "allow-enlarge", TRUE, NULL);
+        g_object_set (options, "allow-enlarge", TRUE, NULL);
     }
   else
     {
       if (options->allow_enlarge)
-        g_object_set (G_OBJECT (options), "allow-enlarge", FALSE, NULL);
+        g_object_set (options, "allow-enlarge", FALSE, NULL);
     }
 
   if (key == GDK_CONTROL_MASK)
@@ -656,15 +656,11 @@ gimp_crop_tool_modifier_key (GimpTool        *tool,
       switch (options->crop_type)
         {
         case GIMP_CROP:
-          g_object_set (G_OBJECT (options),
-                        "crop-type", GIMP_RESIZE,
-                        NULL);
+          g_object_set (options, "crop-type", GIMP_RESIZE, NULL);
           break;
 
         case GIMP_RESIZE:
-          g_object_set (G_OBJECT (options),
-                        "crop-type", GIMP_CROP,
-                        NULL);
+          g_object_set (options, "crop-type", GIMP_CROP, NULL);
           break;
 
         default:

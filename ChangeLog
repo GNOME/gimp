@@ -1,3 +1,26 @@
+2003-02-27  Manish Singh  <yosh@gimp.org>
+
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpinkoptions.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimpcellrendererviewable.c
+	* app/widgets/gimpcontainertreeview.c: remove unecessary G_OBJECT()
+	from g_object_set calls.
+
+	* plug-ins/common/bumpmap.c: use g_signal_handlers_(un)block_by_func
+	instead of gtk_signal_handler_(un)block_by_data.
+
 2003-02-27  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimprgb.c: fixed gimp_rgb_intensity_uchar() which

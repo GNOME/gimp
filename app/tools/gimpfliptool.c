@@ -172,13 +172,13 @@ gimp_flip_tool_modifier_key (GimpTool        *tool,
       switch (options->flip_type)
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          g_object_set (G_OBJECT (options),
+          g_object_set (options,
                         "flip-type", GIMP_ORIENTATION_VERTICAL,
                         NULL);
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          g_object_set (G_OBJECT (options),
+          g_object_set (options,
                         "flip-type", GIMP_ORIENTATION_HORIZONTAL,
                         NULL);
           break;

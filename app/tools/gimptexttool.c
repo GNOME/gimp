@@ -313,9 +313,7 @@ gimp_text_tool_connect (GimpTextTool *tool,
       g_object_unref (tool->text);
       tool->text = NULL;
 
-      g_object_set (G_OBJECT (options->text),
-                    "text", NULL,
-                    NULL);
+      g_object_set (options->text, "text", NULL, NULL);
     }
 
   if (text)

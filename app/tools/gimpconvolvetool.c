@@ -174,15 +174,11 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
       switch (options->type)
         {
         case GIMP_BLUR_CONVOLVE:
-          g_object_set (G_OBJECT (options),
-                        "type", GIMP_SHARPEN_CONVOLVE,
-                        NULL);
+          g_object_set (options, "type", GIMP_SHARPEN_CONVOLVE, NULL);
           break;
 
         case GIMP_SHARPEN_CONVOLVE:
-          g_object_set (G_OBJECT (options),
-                        "type", GIMP_BLUR_CONVOLVE,
-                        NULL);
+          g_object_set (options, "type", GIMP_BLUR_CONVOLVE, NULL);
           break;
 
         default:

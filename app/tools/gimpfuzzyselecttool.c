@@ -351,7 +351,7 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
 
   diff = ((ABS (diff_x) > ABS (diff_y)) ? diff_x : diff_y) / 2.0;
 
-  g_object_set (G_OBJECT (options),
+  g_object_set (options,
                 "threshold", fuzzy_sel->first_threshold + diff,
                 NULL);
 

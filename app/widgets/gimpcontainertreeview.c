@@ -199,7 +199,7 @@ gimp_container_tree_view_set_viewable_func (GtkTreeViewColumn *tree_column,
         }
     }
 
-  g_object_set (G_OBJECT (cell),
+  g_object_set (cell,
                 "viewable",     viewable,
                 "preview-size", preview_size,
                 "pixbuf",       pixbuf,
@@ -233,7 +233,7 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
                                         G_TYPE_STRING);
   tree_view->view = GTK_TREE_VIEW
     (gtk_tree_view_new_with_model (GTK_TREE_MODEL (tree_view->list)));
-  g_object_unref (G_OBJECT (tree_view->list));
+  g_object_unref (tree_view->list);
 
   GIMP_CONTAINER_VIEW (tree_view)->dnd_widget = GTK_WIDGET (tree_view->view);
 

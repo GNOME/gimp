@@ -149,11 +149,11 @@ gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
       switch (options->type)
         {
         case GIMP_DODGE:
-          g_object_set (G_OBJECT (options), "type", GIMP_BURN, NULL);
+          g_object_set (options, "type", GIMP_BURN, NULL);
           break;
 
         case GIMP_BURN:
-          g_object_set (G_OBJECT (options), "type", GIMP_DODGE, NULL);
+          g_object_set (options, "type", GIMP_DODGE, NULL);
           break;
 
         default:

@@ -598,7 +598,7 @@ gimp_rect_select_tool_update_options (GimpRectSelectTool *rect_sel,
       height = (gdouble) abs (rect_sel->h) * unit_factor / gimage->yresolution;
     }
 
-  g_object_set (G_OBJECT (GIMP_TOOL (rect_sel)->tool_info->tool_options),
+  g_object_set (GIMP_TOOL (rect_sel)->tool_info->tool_options,
                 "fixed-width",  width,
                 "fixed-height", height,
                 "fixed-unit",   unit,

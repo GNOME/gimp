@@ -437,13 +437,13 @@ gimp_move_tool_modifier_key (GimpTool        *tool,
 
   if (key == GDK_CONTROL_MASK)
     {
-      g_object_set (G_OBJECT (options),
+      g_object_set (options,
                     "move-current", ! options->move_current,
                     NULL);
     }
   else if (key == GDK_MOD1_MASK)
     {
-      g_object_set (G_OBJECT (options),
+      g_object_set (options,
                     "move-mask", ! options->move_mask,
                     NULL);
     }

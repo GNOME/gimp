@@ -163,9 +163,7 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
 
       if (button_op != options->operation)
         {
-          g_object_set (G_OBJECT (options),
-                        "operation", button_op,
-                        NULL);
+          g_object_set (options, "operation", button_op, NULL);
         }
     }
 }

@@ -632,7 +632,7 @@ brush_widget_motion_notify (GtkWidget      *widget,
 
           aspect = CLAMP (aspect, 1.0, 10.0);
 
-          g_object_set (G_OBJECT (brush_widget->ink_options),
+          g_object_set (brush_widget->ink_options,
                         "blob-angle",  angle,
                         "blob-aspect", aspect,
                         NULL);

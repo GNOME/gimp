@@ -322,15 +322,11 @@ gimp_magnify_tool_modifier_key (GimpTool        *tool,
       switch (options->zoom_type)
         {
         case GIMP_ZOOM_IN:
-          g_object_set (G_OBJECT (options),
-                        "zoom-type", GIMP_ZOOM_OUT,
-                        NULL);
+          g_object_set (options, "zoom-type", GIMP_ZOOM_OUT, NULL);
           break;
 
         case GIMP_ZOOM_OUT:
-          g_object_set (G_OBJECT (options),
-                        "zoom-type", GIMP_ZOOM_IN,
-                        NULL);
+          g_object_set (options, "zoom-type", GIMP_ZOOM_IN, NULL);
           break;
 
         default:

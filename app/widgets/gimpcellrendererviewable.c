@@ -356,7 +356,7 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
               pixbuf = scaled_pixbuf;
             }
 
-          g_object_set (G_OBJECT (cell), "pixbuf", pixbuf, NULL);
+          g_object_set (cell, "pixbuf", pixbuf, NULL);
           g_object_unref (pixbuf);
         }
     }

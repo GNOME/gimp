@@ -1239,40 +1239,48 @@ dialog_preview_events (GtkWidget *widget,
 	  bmint.preview_xofs = CLAMP (bmint.preview_xofs - dx,
 				      0,
 				      sel_width - bmint.preview_width);
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (bmint.preview_adj_x), 
-					    &bmint.preview_xofs);
+	  g_signal_handlers_block_by_func (bmint.preview_adj_x,
+					   dialog_iscale_update_normal,
+					   &bmint.preview_xofs);
 	  gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.preview_adj_x), 
 				    bmint.preview_xofs);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (bmint.preview_adj_x), 
-					      &bmint.preview_xofs);
+	  g_signal_handlers_unblock_by_func (bmint.preview_adj_x,
+					     dialog_iscale_update_normal,
+					     &bmint.preview_xofs);
 	  bmint.preview_yofs = CLAMP (bmint.preview_yofs - dy,
 				      0,
 				      sel_height - bmint.preview_height);
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (bmint.preview_adj_y), 
-					    &bmint.preview_yofs);
+	  g_signal_handlers_block_by_func (bmint.preview_adj_y,
+					   dialog_iscale_update_normal,
+					   &bmint.preview_yofs);
 	  gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.preview_adj_y), 
 				    bmint.preview_yofs);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (bmint.preview_adj_y), 
-					      &bmint.preview_yofs);
+	  g_signal_handlers_unblock_by_func (bmint.preview_adj_y,
+					     dialog_iscale_update_normal,
+					     &bmint.preview_yofs);
 	  
 	  break;
 
 	case DRAG_BUMPMAP:
 	  bmvals.xofs = CLAMP (bmvals.xofs - dx, -1000, 1000);
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (bmint.offset_adj_x), 
-					    &bmvals.xofs);
+	  g_signal_handlers_block_by_func (bmint.offset_adj_x,
+					   dialog_iscale_update_normal,
+					   &bmvals.xofs);
 	  gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.offset_adj_x), 
 				    bmvals.xofs);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (bmint.offset_adj_x), 
-					      &bmvals.xofs);
+	  g_signal_handlers_unblock_by_func (bmint.offset_adj_x,
+					     dialog_iscale_update_normal,
+					     &bmvals.xofs);
 
 	  bmvals.yofs = CLAMP (bmvals.yofs - dy, -1000, 1000);
-	  gtk_signal_handler_block_by_data (GTK_OBJECT (bmint.offset_adj_y), 
-					    &bmvals.yofs);
+	  g_signal_handlers_block_by_func (bmint.offset_adj_y,
+					   dialog_iscale_update_normal,
+					   &bmvals.yofs);
 	  gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.offset_adj_y), 
 				    bmvals.yofs);
-	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (bmint.offset_adj_y), 
-					      &bmvals.yofs);
+	  g_signal_handlers_unblock_by_func (bmint.offset_adj_y,
+					     dialog_iscale_update_normal,
+					     &bmvals.yofs);
 
 	  break;
 
@@ -1335,18 +1343,26 @@ dialog_new_bumpmap (gboolean init_offsets)
   if (adj)
     {
       adj->value = bmvals.xofs;
-      gtk_signal_handler_block_by_data (GTK_OBJECT (adj), &bmvals.xofs);
+      g_signal_handlers_block_by_func (adj,
+				       dialog_iscale_update_normal,
+				       &bmvals.xofs);
       gtk_adjustment_value_changed (adj);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (adj), &bmvals.xofs);
+      g_signal_handlers_unblock_by_func (adj,
+					 dialog_iscale_update_normal,
+					 &bmvals.xofs);
     }
   
   adj = (GtkAdjustment *) bmint.offset_adj_y;
   if (adj)
     {
       adj->value = bmvals.yofs;
-      gtk_signal_handler_block_by_data (GTK_OBJECT (adj), &bmvals.yofs);
+      g_signal_handlers_block_by_func (adj,
+				       dialog_iscale_update_normal,
+				       &bmvals.yofs);
       gtk_adjustment_value_changed (adj);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (adj), &bmvals.yofs);
+      g_signal_handlers_unblock_by_func (adj,
+					 dialog_iscale_update_normal,
+					 &bmvals.yofs);
     }
   
   /* Initialize pixel region */

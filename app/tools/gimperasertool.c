@@ -148,7 +148,7 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
   if ((key == GDK_CONTROL_MASK) &&
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
     {
-      g_object_set (G_OBJECT (options),
+      g_object_set (options,
                     "anti-erase", ! options->anti_erase,
                     NULL);
     }
