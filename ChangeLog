@@ -1,3 +1,8 @@
+2001-07-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gap/gap_lib.c (p_file_copy): open files in binary mode. 
+	A patch from Wolfgang Hofer that possibly fixes bug #52890.
+
 2001-07-03  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am: added ChangeLog.pre-1-2 to EXTRA_DIST (makes a good 
