@@ -468,7 +468,11 @@ def _run(func_name, params):
 
     params = start_params + tuple(extra_params)
     res = apply(func, params)
-    if run_mode != RUN_NONINTERACTIVE: gimp.displays_flush()
+
+    if run_mode != RUN_NONINTERACTIVE:
+        gimp.displays_flush()
+
+    return res
 
 def main():
     '''This should be called after registering the plugin.'''
