@@ -22,7 +22,7 @@
 #include "info_dialog.h"
 
 InfoDialog *nav_window_create (void *);
-void        nav_window_free   (InfoDialog *);
+void        nav_window_free   (GDisplay *,InfoDialog *);
 void        nav_window_update_window_marker(InfoDialog *);
 void        nav_dialog_popup (InfoDialog *idialog);
 void        nav_window_preview_resized (InfoDialog *idialog);

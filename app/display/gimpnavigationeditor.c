@@ -27,6 +27,8 @@
 #include "info_dialog.h"
 #include "info_window.h"
 #include "gdisplay.h"
+#include "gimpcontext.h"
+#include "gimpset.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "gximage.h"
@@ -98,6 +100,7 @@ struct _NavWinData
   gint       nav_preview_width;
   gint       nav_preview_height;
   gboolean   block_adj_sig; 
+  gboolean   frozen;       /* Has the dialog been frozen ? */
 };
 
 
@@ -546,16 +549,21 @@ nav_window_update_preview (NavWinData *iwd)
 static void 
 nav_window_update_preview_blank (NavWinData *iwd)
 {
-  GDisplay     *gdisp;
+
   guchar       *buf, *dest;
   gint          x,y;
-  GimpImage    *gimage;
   gdouble       chk;
+
+#if 0 
+  GimpImage    *gimage;
+  GDisplay     *gdisp;
 
   gdisp = (GDisplay *) iwd->gdisp_ptr;
 
   /* Calculate preview size */
   gimage = ((GDisplay *)(iwd->gdisp_ptr))->gimage;
+
+#endif /* 0 */
   
   buf = g_new (gchar,  iwd->pwidth * 3);
 
@@ -707,7 +715,7 @@ nav_window_preview_events (GtkWidget *widget,
 
   iwd = (NavWinData *)data;
 
-  if(!iwd)
+  if(!iwd || iwd->frozen == TRUE)
     return FALSE;
 
   gdisp = (GDisplay *) iwd->gdisp_ptr;
@@ -919,7 +927,7 @@ nav_window_expose_events (GtkWidget *widget,
 
   iwd = (NavWinData *)data;
 
-  if(!iwd)
+  if(!iwd || iwd->frozen == TRUE)
     return FALSE;
 
   gdisp = (GDisplay *) iwd->gdisp_ptr;
@@ -971,7 +979,10 @@ nav_image_need_update (GtkObject *obj,
 
   iwd = (NavWinData *)client_data;
 
-  if(!iwd || !iwd->showingPreview || iwd->installedDirtyTimer == TRUE)
+  if(!iwd || 
+     !iwd->showingPreview || 
+     iwd->installedDirtyTimer == TRUE ||
+     iwd->frozen == TRUE)
     return;
 
   iwd->installedDirtyTimer = TRUE;
@@ -991,7 +1002,7 @@ navwindow_zoomin (GtkWidget *widget,
 
   iwd = (NavWinData *)data;
 
-  if(!iwd)
+  if(!iwd || iwd->frozen == TRUE)
     return;
 
   gdisp = (GDisplay *) iwd->gdisp_ptr;
@@ -1008,7 +1019,7 @@ navwindow_zoomout (GtkWidget *widget,
 
   iwd = (NavWinData *)data;
 
-  if(!iwd)
+  if(!iwd || iwd->frozen == TRUE)
     return;
 
   gdisp = (GDisplay *) iwd->gdisp_ptr;
@@ -1026,7 +1037,7 @@ zoom_adj_changed (GtkAdjustment *adj,
 
   iwd = (NavWinData *)data;
 
-  if(!iwd)
+  if(!iwd || iwd->frozen == TRUE)
     return;
   
   gdisp = (GDisplay *) iwd->gdisp_ptr;
@@ -1211,9 +1222,111 @@ create_dummy_iwd (void       *gdisp_ptr,
   iwd->nav_preview_height = 
     (nav_preview_size < 0 || nav_preview_size > 256)?NAV_PREVIEW_HEIGHT:nav_preview_size;
   iwd->block_adj_sig = FALSE;
+  iwd->frozen = FALSE;
   
   return(iwd);
 }
+
+/* Create a version of the nav window that follows the active
+ * image.
+ */
+
+static InfoDialog *nav_window_auto = NULL;
+
+static gchar *
+nav_window_title(GDisplay   *gdisp)
+{
+  char       *title;
+  gchar       *title_buf;
+
+  title = g_basename (gimage_filename (gdisp->gimage));
+
+  /*  create the info dialog  */
+  title_buf = g_strdup_printf (_("Window Navigation:%s-%d.%d"), 
+			       title,
+			       pdb_image_to_id (gdisp->gimage),
+			       gdisp->instance);
+
+  return title_buf;
+}
+
+static void
+nav_window_change_display (GimpContext *context, /* NOT USED */
+			   GDisplay    *newdisp,
+			   gpointer     data /* Not used */)
+{
+  GDisplay * gdisp = newdisp;
+  GDisplay * old_gdisp;
+  GimpImage * gimage;
+  NavWinData *iwd;
+  gchar       *title_buf;
+
+  iwd = (NavWinData *)nav_window_auto->user_data;
+  old_gdisp = (GDisplay *) iwd->gdisp_ptr;
+
+  if (!nav_window_auto || gdisp == old_gdisp || !gdisp)
+    {
+      return;
+    }
+
+  gtk_widget_set_sensitive(nav_window_auto->vbox,TRUE);
+  iwd->frozen = FALSE;
+
+  title_buf = nav_window_title(gdisp);
+
+  gtk_window_set_title (GTK_WINDOW (nav_window_auto->shell), title_buf);
+
+  g_free (title_buf);
+
+  gimage = gdisp->gimage;
+
+  if (gimage && gimp_set_have (image_context, gimage))
+    {
+      iwd->gdisp_ptr = gdisp;
+
+      /* Update preview to new display */
+      nav_window_preview_resized (nav_window_auto);
+      /* Tie into the dirty signal so we can update the preview */
+      /* provided we haven't already */
+      if(!gtk_object_get_data(GTK_OBJECT (gdisp->gimage),
+			     "nav_handlers_installed"))
+	{
+	  gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "dirty",
+				    GTK_SIGNAL_FUNC(nav_image_need_update),iwd);
+	  
+	  /* Also clean signal so undos get caught as well..*/
+	  gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "clean",
+				    GTK_SIGNAL_FUNC(nav_image_need_update),iwd);
+	  gtk_object_set_data(GTK_OBJECT (gdisp->gimage),"nav_handlers_installed",iwd);
+	}
+    }
+}
+
+void
+nav_window_follow_auto()
+{
+  GDisplay * gdisp;
+  NavWinData * iwd;
+
+  gdisp = gdisplay_active (); 
+  
+  if (!gdisp) 
+    return;
+
+  if(!nav_window_auto)
+    {
+      nav_window_auto = nav_window_create ((void *) gdisp);
+      gtk_signal_connect (GTK_OBJECT (gimp_context_get_user ()), "display_changed",
+			  GTK_SIGNAL_FUNC (nav_window_change_display), NULL);
+    }
+
+  nav_dialog_popup (nav_window_auto);
+
+  iwd = (NavWinData *)nav_window_auto->user_data;
+  gtk_widget_set_sensitive(nav_window_auto->vbox,TRUE);
+  iwd->frozen = FALSE;
+}
+
 
 InfoDialog *
 nav_window_create (void *gdisp_ptr)
@@ -1222,17 +1335,15 @@ nav_window_create (void *gdisp_ptr)
   GDisplay   *gdisp;
   NavWinData *iwd;
   GtkWidget  *container;
-  char       *title;
   char       *title_buf;
   int type;
 
   gdisp = (GDisplay *) gdisp_ptr;
-
-  title = g_basename (gimage_filename (gdisp->gimage));
+  
   type = gimage_base_type (gdisp->gimage);
 
-  /*  create the info dialog  */
-  title_buf = g_strdup_printf (_("%s: Window Navigation"), title);
+  title_buf = nav_window_title(gdisp);
+
   info_win = info_dialog_new (title_buf,
 			      gimp_standard_help_func,
 			      "dialogs/navigation_window.html");
@@ -1269,6 +1380,11 @@ nav_window_create (void *gdisp_ptr)
   gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "clean",
 			    GTK_SIGNAL_FUNC(nav_image_need_update),iwd);
 
+
+  /* Mark the image as having the handlers installed...
+   */
+  gtk_object_set_data(GTK_OBJECT (gdisp->gimage),"nav_handlers_installed",iwd);
+  
   return info_win;
 }
 
@@ -1276,6 +1392,21 @@ void
 nav_window_update_window_marker (InfoDialog *info_win)
 {
   NavWinData *iwd;
+
+  /* So this functions works both ways..
+   * it will come in here with info_win == null
+   * if the auto mode is on...
+   */
+
+  if(!info_win && nav_window_auto)
+    {
+      iwd = (NavWinData *)nav_window_auto->user_data;
+      if(iwd->frozen)
+	return;
+      nav_window_update_window_marker(nav_window_auto);
+
+      return;
+    }
 
   if(!info_win)
     return;
@@ -1306,7 +1437,6 @@ nav_window_update_window_marker (InfoDialog *info_win)
 		       iwd->dispx,
 		       iwd->dispy,
 		       iwd->dispwidth, iwd->dispheight);
-  
 }
 
 void
@@ -1329,11 +1459,89 @@ nav_dialog_popup (InfoDialog *idialog)
 		       (GtkFunction) nav_preview_update_do_timer,
 		       (gpointer) iwd); 
     }
+
+  gdk_window_raise (GTK_WIDGET (idialog->shell)->window);
 }
 
-void
-nav_window_free (InfoDialog *info_win)
+/* Chose the first image.. */
+static void
+gimlist_cb (gpointer im, 
+	    gpointer data)
 {
+  GSList** l;
+
+  l = (GSList**) data;
+  *l = g_slist_prepend (*l, im);
+}
+
+static GDisplay *
+nav_window_get_gdisp (void)
+{
+  GSList *list=NULL;
+  GSList *listPtr=NULL;
+  GimpImage *gimage  ;
+  GDisplay * gdisp;
+
+  gimage_foreach (gimlist_cb, &list);
+
+  if(!list)
+    return NULL;
+  
+  /* Find first valid image */
+  for (listPtr = list; listPtr; listPtr = g_slist_next (listPtr))
+    {
+      gimage = GIMP_IMAGE (listPtr->data);
+      gdisp = gdisplays_check_valid (NULL,gimage);
+      if(gdisp)
+	break;
+    }
+  
+  g_slist_free(list);
+
+  return (gdisp);
+}
+
+
+void
+nav_window_free (GDisplay *del_gdisp,InfoDialog *info_win)
+{
+  /* So this functions works both ways..
+   * it will come in here with info_win == null
+   * if the auto mode is on...
+   */
+
+  if(!info_win)
+    {
+      if(nav_window_auto != NULL)
+	{
+	  NavWinData *iwd;
+	  GDisplay * gdisp;
+
+	  iwd = (NavWinData *)nav_window_auto->user_data;
+
+	  /* Only freeze if we are displaying the image we have deleted */
+	  if((GDisplay *) iwd->gdisp_ptr != del_gdisp)
+	    return;
+
+	  gdisp = nav_window_get_gdisp();
+
+	  if(gdisp)
+	    nav_window_change_display(NULL,gdisp,NULL);
+	  else
+	    {
+	      /* Clear window and freeze */
+	      iwd->frozen = TRUE;
+	      nav_window_update_preview_blank(iwd); 
+	      gtk_window_set_title (GTK_WINDOW (nav_window_auto->shell), 
+				    _("No image: Window Navigation"));
+
+	      gtk_widget_set_sensitive(nav_window_auto->vbox,FALSE);
+	      iwd->gdisp_ptr = NULL;
+	    }
+	}
+      return;
+    }
+
   g_free (info_win->user_data);
   info_dialog_free (info_win);
 }

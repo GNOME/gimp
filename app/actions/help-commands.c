@@ -581,10 +581,17 @@ view_window_nav_cmd_callback (GtkWidget *widget,
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  if (! gdisp->window_nav_dialog)
-    gdisp->window_nav_dialog = nav_window_create ((void *) gdisp);
+  if(nav_window_per_display) 
+    {
+      if (! gdisp->window_nav_dialog)
+	gdisp->window_nav_dialog = nav_window_create ((void *) gdisp);
 
-  nav_dialog_popup (gdisp->window_nav_dialog);
+      nav_dialog_popup (gdisp->window_nav_dialog);
+    }
+  else
+    {
+      nav_window_follow_auto();
+    }
 }
 
 void

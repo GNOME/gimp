@@ -108,6 +108,7 @@ static int        old_thumbnail_mode;
 static int 	  old_show_indicators;
 static int	  old_trust_dirty_flag;
 static int        old_use_help;
+static int        old_nav_window_per_display;
 
 /*  variables which can't be changed on the fly  */
 static int        edit_stingy_memory_use;
@@ -125,6 +126,7 @@ static char *     edit_brush_vbr_path = NULL;
 static char *     edit_pattern_path = NULL;
 static char *     edit_palette_path = NULL;
 static char *     edit_gradient_path = NULL;
+static int        edit_nav_window_per_display;
 
 static GtkWidget *prefs_dlg = NULL;
 
@@ -149,6 +151,7 @@ static GtkWidget *prefs_dlg = NULL;
    pattern-path
    palette-path
    gradient-path
+   nav-window-per-display
 
    All of these now have variables of the form edit_temp_path, which
    are copied from the actual variables (e.g. temp_path) the first time
@@ -301,6 +304,7 @@ file_prefs_save_callback (GtkWidget *widget,
   int    save_cycled_marching_ants;
   int    save_last_opened_size;
   int    save_num_processors;
+  int    save_nav_window_per_display;
   gchar *save_temp_path;
   gchar *save_swap_path;
   gchar *save_plug_in_path;
@@ -331,6 +335,7 @@ file_prefs_save_callback (GtkWidget *widget,
   save_pattern_path = pattern_path;
   save_palette_path = palette_path;
   save_gradient_path = gradient_path;
+  save_nav_window_per_display = nav_window_per_display;
 
   if (levels_of_undo != old_levels_of_undo)
     update = g_list_append (update, "undo-levels");
@@ -536,6 +541,13 @@ file_prefs_save_callback (GtkWidget *widget,
       update = g_list_append (update, "use-help");
       remove = g_list_append (remove, "dont-use-help");
     }
+  if (edit_nav_window_per_display != old_nav_window_per_display)
+    {
+      update = g_list_append (update, "nav-window-per-display");
+      remove = g_list_append (remove, "nav-window-follows-auto");
+      nav_window_per_display = edit_nav_window_per_display;
+      restart_notification = TRUE;
+    }
 
   save_gimprc (&update, &remove);
 
@@ -558,6 +570,7 @@ file_prefs_save_callback (GtkWidget *widget,
   pattern_path = save_pattern_path;
   palette_path = save_palette_path;
   gradient_path = save_gradient_path;
+  nav_window_per_display = save_nav_window_per_display;
 
   if (restart_notification)
     g_message (_("You will need to restart GIMP for these changes to take "
@@ -603,6 +616,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   show_indicators = old_show_indicators;
   trust_dirty_flag = old_trust_dirty_flag;
   use_help = old_use_help;
+  nav_window_per_display = old_nav_window_per_display;
 
   if (preview_size != old_preview_size)
     {
@@ -634,6 +648,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   edit_install_cmap = old_install_cmap;
   edit_cycled_marching_ants = old_cycled_marching_ants;
   edit_last_opened_size = old_last_opened_size;
+  edit_nav_window_per_display = nav_window_per_display;
 
   file_prefs_strset (&edit_temp_path, old_temp_path);
   file_prefs_strset (&edit_swap_path, old_swap_path);
@@ -711,6 +726,8 @@ file_prefs_toggle_callback (GtkWidget *widget,
     }
   else if (data == &use_help)
     use_help = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data == &edit_nav_window_per_display)
+    edit_nav_window_per_display = GTK_TOGGLE_BUTTON (widget)->active;
   else
     {
       /* Are you a gimp-hacker who is getting this message?  You
@@ -1111,6 +1128,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       edit_plug_in_path = file_prefs_strdup (plug_in_path);
       edit_module_path = file_prefs_strdup (module_path);
       edit_gradient_path = file_prefs_strdup (gradient_path);
+      edit_nav_window_per_display = nav_window_per_display;
     }
   old_perfectmouse = perfectmouse;
   old_transparency_type = transparency_type;
@@ -1152,6 +1170,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_show_indicators = show_indicators;
   old_trust_dirty_flag = trust_dirty_flag;
   old_use_help = use_help;
+  old_nav_window_per_display = nav_window_per_display;
 
   file_prefs_strset (&old_image_title_format, image_title_format);	
   file_prefs_strset (&old_temp_path, edit_temp_path);
@@ -1439,15 +1458,16 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
-
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+ 
   table = gtk_table_new (4, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /* Don't show the Auto-save button until we really 
@@ -1494,6 +1514,15 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      &levels_of_undo);
   gimp_table_attach_aligned (GTK_TABLE (table), 2,
 			     _("Levels of Undo:"), 1.0, 0.5, spinbutton, TRUE);
+
+  button = gtk_check_button_new_with_label (_("Nav window per display"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				edit_nav_window_per_display);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &edit_nav_window_per_display);
+  gtk_widget_show (button);
 
   spinbutton =
     gimp_spin_button_new (&adjustment, edit_last_opened_size,

@@ -159,6 +159,7 @@ int       max_new_image_size = 33554432;  /* 32 MB */
 int       thumbnail_mode = 1;
 int	  trust_dirty_flag = FALSE;
 int       use_help = TRUE;
+int       nav_window_per_display = FALSE;
 
 extern char * module_db_load_inhibit;
 
@@ -311,7 +312,9 @@ static ParseFunc funcs[] =
   { "trust-dirty-flag",		 TT_BOOLEAN,	&trust_dirty_flag, NULL },
   { "dont-trust-dirty-flag",     TT_BOOLEAN,	NULL, &trust_dirty_flag },
   { "use-help",                  TT_BOOLEAN,    &use_help, NULL },
-  { "dont-use-help",             TT_BOOLEAN,    NULL, &use_help }
+  { "dont-use-help",             TT_BOOLEAN,    NULL, &use_help },
+  { "nav-window-per-display",    TT_BOOLEAN,    &nav_window_per_display, NULL },
+  { "nav-window-follows-auto",    TT_BOOLEAN,    NULL, &nav_window_per_display }
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 

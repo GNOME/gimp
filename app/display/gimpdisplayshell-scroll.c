@@ -203,8 +203,7 @@ scroll_display (GDisplay *gdisp,
       if (x_offset || y_offset)
 	gdisplays_flush ();
 
-      if (gdisp->window_nav_dialog) 
- 	nav_window_update_window_marker(gdisp->window_nav_dialog); 
+      nav_window_update_window_marker(gdisp->window_nav_dialog); 
 
       /* Make sure graphics expose events are processed before scrolling
        * again */

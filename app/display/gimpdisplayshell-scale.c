@@ -258,6 +258,5 @@ setup_scale (GDisplay *gdisp)
   gtk_widget_draw (GTK_WIDGET (hruler), NULL);
   gtk_widget_draw (GTK_WIDGET (vruler), NULL);
 
-  if (gdisp->window_nav_dialog)
-    nav_window_update_window_marker(gdisp->window_nav_dialog);
+  nav_window_update_window_marker(gdisp->window_nav_dialog);
 }

@@ -361,9 +361,8 @@ gdisplay_delete (GDisplay *gdisp)
   if (gdisp->window_info_dialog)
     info_window_free (gdisp->window_info_dialog);
 
-  /* Remove navigation dialog if we have one */
-  if (gdisp->window_nav_dialog)
-     nav_window_free(gdisp->window_nav_dialog);
+  /* Remove navigation dialog */
+  nav_window_free(gdisp,gdisp->window_nav_dialog);
 
   /*  free the gimage  */
   gimage_delete (gdisp->gimage);
