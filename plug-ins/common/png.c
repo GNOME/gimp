@@ -398,12 +398,8 @@ load_image (gchar *filename)	/* I - File to load */
   if (setjmp (pp->jmpbuf))
   {
     g_message (_("%s\nPNG error. File corrupted?"), filename);
-    return image;
+    return -1;
   }
-
-  /* initialise variables here, thus avoiding compiler warnings */
-
-  image= -1;
 
  /*
   * Open the file and initialize the PNG read "engine"...

@@ -32,6 +32,7 @@
 /* Version 3.0-pre1-ac2:
  *
  * - waterlevel/ambient restricted to 0-255
+ * - correctly initialize bumpmap_offsets
  */   
 
 /* Version 3.0-pre1-ac1:
@@ -236,7 +237,7 @@ static void bumpmap_convert_row (guchar           *row,
 
 static gint bumpmap_dialog              (void);
 static void dialog_init_preview         (void);
-static void dialog_new_bumpmap          (void);
+static void dialog_new_bumpmap          (gboolean init_offsets);
 static void dialog_update_preview       (void);
 static gint dialog_preview_events       (GtkWidget *widget, GdkEvent *event);
 static void dialog_scroll_src           (void);
@@ -429,7 +430,7 @@ run (gchar   *name,
     case RUN_INTERACTIVE:
       /* Possibly retrieve data */
       gimp_get_data (name, &bmvals);
-
+  
       /* Get information from the dialog */
       if (!bumpmap_dialog ())
 	return;
@@ -691,14 +692,14 @@ bumpmap_row (guchar           *src,
 	     gboolean          row_in_bumpmap,       
 	     bumpmap_params_t *params)
 {
-  gint    xofs1, xofs2, xofs3;
-  gint    shade;
-  gint    ndotl;
-  gint    nx, ny;
-  gint    x, k;
-  gint    pbpp;
-  gint    result;
-  gint    tmp;
+  gint xofs1, xofs2, xofs3;
+  gint shade;
+  gint ndotl;
+  gint nx, ny;
+  gint x, k;
+  gint pbpp;
+  gint result;
+  gint tmp;
 
   if (has_alpha)
     pbpp = bpp - 1;
@@ -1150,13 +1151,13 @@ dialog_init_preview (void)
   for (x = 0; x < bmint.preview_width; x++)
     if ((x / GIMP_CHECK_SIZE) & 1)
       {
-	bmint.check_row_0[x] = GIMP_CHECK_DARK * 255;
+	bmint.check_row_0[x] = GIMP_CHECK_DARK  * 255;
 	bmint.check_row_1[x] = GIMP_CHECK_LIGHT * 255;
       }
     else
       {
 	bmint.check_row_0[x] = GIMP_CHECK_LIGHT * 255;
-	bmint.check_row_1[x] = GIMP_CHECK_DARK * 255;
+	bmint.check_row_1[x] = GIMP_CHECK_DARK  * 255;
       }
 
   /* Initialize source rows */
@@ -1300,9 +1301,8 @@ dialog_preview_events (GtkWidget *widget,
 }
 
 static void
-dialog_new_bumpmap (void)
+dialog_new_bumpmap (gboolean init_offsets)
 {
-  static gboolean  first_call = TRUE;
   GtkAdjustment   *adj;
   gint             i;
   gint             yofs;
@@ -1329,7 +1329,7 @@ dialog_new_bumpmap (void)
   bmint.bm_bpp       = gimp_drawable_bpp (bmint.bm_drawable->id);
   bmint.bm_has_alpha = gimp_drawable_has_alpha (bmint.bm_drawable->id);
 
-  if (!first_call || bmvals.bumpmap_id == -1)
+  if (init_offsets)
     {      
       gimp_drawable_offsets (bmint.bm_drawable->id, &bump_offset_x, &bump_offset_y);
       gimp_drawable_offsets (drawable->id, &draw_offset_x, &draw_offset_y);
@@ -1337,9 +1337,6 @@ dialog_new_bumpmap (void)
       bmvals.xofs = draw_offset_x - bump_offset_x;
       bmvals.yofs = draw_offset_y - bump_offset_y;
     }
-
-  if (first_call)
-    first_call = FALSE;
 
   adj = (GtkAdjustment *) bmint.offset_adj_x;
   if (adj)
@@ -1414,9 +1411,6 @@ dialog_update_preview (void)
     {
       bumpmap_row (bmint.src_rows[y] + 4 * xofs, dest_row,
 		   bmint.preview_width, 4, TRUE,
-/*  		   bmint.bm_rows[(y + sel_y1)     % bmint.bm_height],  */
-/*  		   bmint.bm_rows[(y + sel_y1 + 1) % bmint.bm_height],  */
-/*  		   bmint.bm_rows[(y + sel_y1 + 2) % bmint.bm_height], */
 		   bmint.bm_rows[y], 
 		   bmint.bm_rows[y + 1],
 		   bmint.bm_rows[y + 2],
@@ -1792,8 +1786,15 @@ static void
 dialog_bumpmap_callback (gint32   id, 
 			 gpointer data)
 {
-  bmvals.bumpmap_id = id;
-  dialog_new_bumpmap ();
+  if (bmvals.bumpmap_id == id)
+    {
+      dialog_new_bumpmap (FALSE);
+    }
+  else
+    {
+      bmvals.bumpmap_id = id;
+      dialog_new_bumpmap (TRUE);
+    }
   dialog_update_preview ();
 }
 

@@ -1,3 +1,11 @@
+2000-04-20  Sven Neumann <sven@gimp.org>
+	
+	* plug-ins/common/bumpmap.c: correctly initialize the bumpmap 
+	offsets
+
+	* plug-ins/common/png.c: (load_image) if the PNG cannot be loaded, 
+	return -1 instead of some uninitialized integer
+
 2000-04-20  Michael Natterer  <mitch@gimp.org>
 
 	* gimprc.in
