@@ -1576,9 +1576,9 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
     }
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive_locale ("<Image>", N_(menu), (condition))
+        menus_set_sensitive_locale ("<Image>", N_(menu), (condition) != 0)
 #define SET_STATE(menu,condition) \
-        menus_set_state_locale ("<Image>", N_(menu), (condition))
+        menus_set_state_locale ("<Image>", N_(menu), (condition) != 0)
 
   SET_SENSITIVE ("/File/Save", gdisp);
   SET_SENSITIVE ("/File/Save as", gdisp);

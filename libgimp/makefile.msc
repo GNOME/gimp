@@ -162,6 +162,3 @@ clean:
 	del *.exp
 	del *.err
 	del *.map
-	del *.sym
-	del *.lk1
-	del *.mk1

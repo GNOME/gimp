@@ -95,6 +95,7 @@ gimp_OBJECTS = \
 	colormaps.obj		\
 	colormap_dialog.obj	\
 	commands.obj		\
+	context_manager.obj	\
 	convert.obj		\
 	convert_cmds.obj	\
 	convolve.obj		\
@@ -137,6 +138,7 @@ gimp_OBJECTS = \
 	gimage_mask_cmds.obj	\
 	gimpbrush.obj		\
 	gimpbrushgenerated.obj	\
+	gimpcontext.obj		\
 	gimpbrushlist.obj	\
 	gimphistogram.obj	\
 	gimplist.obj		\

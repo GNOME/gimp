@@ -22,7 +22,7 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 SIMPLE1 = AlienMap CEL CML_explorer FractalExplorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix cubism
 SIMPLE2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
 SIMPLE3 = gauss_iir gauss_rle gbr gee gfig gicon gif gifload glasstile gqbist gradmap grid gtm guillotine header hot hrz gz illusion jigsaw laplace lic
-SIMPLE4 = mapcolor max_rgb mblur mosaic newsprint nlfilt noisify normalize nova oilify pagecurl palette papertile pat pcx pix pixelize plasma plugindetails pnm polar psd randomize ripple rotate rotators
+SIMPLE4 = mapcolor max_rgb mblur mosaic newsprint nlfilt noisify normalize nova oilify pagecurl palette papertile pat pcx pix pixelize plasma plugindetails pnm polar ps psd randomize ripple rotate rotators
 SIMPLE5 = scatter_hsv semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spread struc tga threshold_alpha tile tileit tiler video vinvert vpropagate waves whirlpinch wind wmf xbm zealouscrop
 COMPLEX1 = Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfli ifscompose iwarp jpeg maze png rcm tiff
 

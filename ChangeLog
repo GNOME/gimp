@@ -1,3 +1,27 @@
+1999-06-21  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimpfeatures.h.win32: Update version.
+
+	* app/file_new_dialog.c: Include gimpcontext.h.
+
+	* app/gdisplay.c: Don't pass a pointer as an int parameter,
+	pass the result of an inequality comparison to zero.
+
+	* app/makefile.msc: Add new files.
+
+	* plug-ins/makefile.msc: Build the ps plug-in, too.
+
+	* plug-ins/ps/ps.c: Add code to use a "real" output file, not a
+ 	pipe (needed with Win32 port of ghostscript).
+
+	Use g_strdup_printf() instead of separate g_malloc() and sprintf()
+ 	calls. No need to check failure of g_malloc(), it aborts on
+ 	failure. Open files in binary mode.
+
+	(Win32:) Use indirect command line file to guard for too long
+ 	command line. (Not sure if this is really needed.) Use the
+ 	gswin32c program.
+
 1999-06-21  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/context_manager.c: connect to the user context's

@@ -19,6 +19,7 @@
 #include "actionarea.h"
 #include "commands.h"
 #include "gimage.h"
+#include "gimpcontext.h"
 #include "gimprc.h"
 #include "global_edit.h"
 #include "interface.h"

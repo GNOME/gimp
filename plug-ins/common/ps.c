@@ -55,11 +55,12 @@ static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.06  22-Dec-98";
 #include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
 
+#ifdef NATIVE_WIN32
+#include <process.h>		/* For _getpid() */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
+#define USE_REAL_OUTPUTFILE
 #endif
-
+ 
 #define STR_LENGTH 64
 
 /* Load info */
@@ -534,12 +535,12 @@ load_image (char *filename)
  int  k, n_images, max_images, max_pagenum;
 
 #ifdef PS_DEBUG
- printf ("load_image:\n resolution = %d\n", plvals.resolution);
- printf (" %dx%d pixels\n", plvals.width, plvals.height);
- printf (" BoundingBox: %d\n", plvals.use_bbox);
- printf (" Colouring: %d\n", plvals.pnm_type);
- printf (" TextAlphaBits: %d\n", plvals.textalpha);
- printf (" GraphicsAlphaBits: %d\n", plvals.graphicsalpha);
+ g_print ("load_image:\n resolution = %d\n", plvals.resolution);
+ g_print (" %dx%d pixels\n", plvals.width, plvals.height);
+ g_print (" BoundingBox: %d\n", plvals.use_bbox);
+ g_print (" Colouring: %d\n", plvals.pnm_type);
+ g_print (" TextAlphaBits: %d\n", plvals.textalpha);
+ g_print (" GraphicsAlphaBits: %d\n", plvals.graphicsalpha);
 #endif
 
  /* Try to see if PostScript file is available */
@@ -553,9 +554,7 @@ load_image (char *filename)
 
  if (l_run_mode != RUN_NONINTERACTIVE)
  {
-   format = _("Interpreting and Loading %s:");
-   temp = g_malloc (strlen (format) + strlen (filename) + 5);
-   sprintf (temp, format, filename);
+   temp = g_strdup_printf (_("Interpreting and Loading %s:"), filename);
    gimp_progress_init (temp);
    g_free (temp);
  }
@@ -568,11 +567,6 @@ load_image (char *filename)
  }
 
  image_list = (gint32 *)g_malloc (10 * sizeof (gint32));
- if (image_list == NULL)
- {
-   g_message (_("PS: out of memory"));
-   return (-1);
- }
  n_images = 0;
  max_images = 10;
 
@@ -676,8 +670,7 @@ save_image (char *filename,
 
   if (l_run_mode != RUN_NONINTERACTIVE)
   {
-    temp = g_malloc (strlen (filename) + 11);
-    sprintf (temp, _("Saving %s:"), filename);
+    temp = g_strdup_printf (_("Saving %s:"), filename);
     gimp_progress_init (temp);
     g_free (temp);
   }
@@ -895,6 +888,10 @@ get_bbox (char *filename,
  return (retval);
 }
 
+static char *pnmfile;
+#ifdef NATIVE_WIN32
+static char *indirfile = NULL;
+#endif
 
 /* Open the PostScript file. On failure, NULL is returned. */
 /* The filepointer returned will give a PNM-file generated */
@@ -907,7 +904,7 @@ ps_open (char *filename,
          int *urx,
          int *ury)
 
-{char *cmd, *gs, *gs_opts, *driver, *pnmfile;
+{char *cmd, *gs, *gs_opts, *driver;
  FILE *fd_popen;
  int width, height, resolution;
  int x0, y0, x1, y1;
@@ -923,7 +920,7 @@ ps_open (char *filename,
 
  /* Check if the file is a PDF. For PDF, we cant set geometry */
  is_pdf = 0;
- fd_popen = fopen (filename, "r");
+ fd_popen = fopen (filename, "rb");
  if (fd_popen != NULL)
  {char hdr[4];
 
@@ -949,20 +946,31 @@ ps_open (char *filename,
  else if (loadopt->pnm_type == 5) driver = "pgmraw";
  else if (loadopt->pnm_type == 7) driver = "pnmraw";
  else driver = "ppmraw";
+
+#ifdef USE_REAL_OUTPUTFILE
+ /* For instance, the Win32 port of ghostscript doesn't work correctly when
+  * using standard output as output file.
+  * Thus, use a real output file.
+  */
+ pnmfile = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "p%lx",
+			    g_get_tmp_dir (), getpid ());
+#else
  pnmfile = "-";
+#endif
 
  gs = getenv ("GS_PROG");
+#ifndef NATIVE_WIN32
  if (gs == NULL) gs = "gs";
+#else
+ /* We want the console ghostscript application. It should be in the PATH */
+ if (gs == NULL) gs = "gswin32c";
+#endif
 
  gs_opts = getenv ("GS_OPTIONS");
  if (gs_opts == NULL)
    gs_opts = "-dSAFER";
  else
    gs_opts = "";  /* Ghostscript will add these options */
-
- cmd = g_malloc (strlen (filename) + strlen (gs) + strlen (gs_opts)
-                 + strlen (pnmfile) + 256 );
- if (cmd == NULL) return (NULL);
 
  TextAlphaBits[0] = GraphicsAlphaBits[0] = geometry[0] = '\0';
 
@@ -977,18 +985,41 @@ ps_open (char *filename,
  if (!is_pdf)    /* For PDF, we cant set geometry */
    sprintf (geometry,"-g%dx%d ", width, height);
 
- sprintf (cmd, "%s -sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s \
--sOutputFile=%s %s -c quit", gs, driver, resolution, geometry,
-          TextAlphaBits, GraphicsAlphaBits, gs_opts, pnmfile, filename);
+ cmd = g_strdup_printf ("%s -sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s \
+-sOutputFile=%s %s -c quit",
+			gs, driver, resolution, geometry,
+			TextAlphaBits, GraphicsAlphaBits,
+			gs_opts, pnmfile, filename);
 #ifdef PS_DEBUG
- printf ("Going to start ghostscript with:\n%s\n", cmd);
+ g_print ("Going to start ghostscript with:\n%s\n", cmd);
 #endif
+
+#ifndef USE_REAL_OUTPUTFILE
  /* Start the command and use a pipe for reading the PNM-file. */
+ fd_popen = popen (cmd, "rb");
+#else
  /* If someone does not like the pipe (or it does not work), just start */
  /* ghostscript with a real outputfile. When ghostscript has finished,  */
  /* open the outputfile and return its filepointer. But be sure         */
  /* to close and remove the file within ps_close().                     */
- fd_popen = popen (cmd, "r");
+#ifdef NATIVE_WIN32
+  /* Work around braindead command line length limit.
+   * Hmm, I wonder if this is necessary, but it doesn't harm...
+   */
+ if (strlen (cmd) >= 100)
+ {
+   FILE *indf;
+   indirfile = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "i%lx",
+				g_get_tmp_dir (), getpid ());
+   indf = fopen (indirfile, "w");
+   fprintf (indf, "%s\n", cmd + strlen (gs) + 1);
+   sprintf (cmd, "%s @%s", gs, indirfile);
+   fclose (indf);
+ }
+#endif      
+ system (cmd);
+ fd_popen = fopen (pnmfile, "rb");
+#endif
  g_free (cmd);
 
  return (fd_popen);
@@ -1000,9 +1031,18 @@ static void
 ps_close (FILE *ifp)
 
 {
+#ifndef USE_REAL_OUTPUTFILE
  /* Finish reading from pipe. */
- /* If a real outputfile was used, close the file and remove it. */
  pclose (ifp);
+#else
+ /* If a real outputfile was used, close the file and remove it. */
+ fclose (ifp);
+ unlink (pnmfile);
+#ifdef NATIVE_WIN32
+ if (indirfile != NULL)
+   unlink (indirfile);
+#endif
+#endif
 }
 
 
@@ -1025,7 +1065,7 @@ read_pnmraw_type (FILE *ifp,
  for (;;)
  {
    if (thrd == EOF) return (-1);
-#ifdef __EMX__
+#if defined (__EMX__) || defined (WIN32)
    if (thrd == '\r') thrd = getc (ifp);
 #endif
    if ((thrd == '\n') && (frst == 'P') && (scnd >= '1') && (scnd <= '6'))
@@ -1080,14 +1120,9 @@ create_new_image (char *filename,
  else gdtype = RGB_IMAGE;
 
  image_ID = gimp_image_new (width, height, type);
- if ((tmp = g_malloc (strlen (filename) + 32)) != NULL)
- {
-   sprintf (tmp, "%s-pg%ld", filename, (long)pagenum);
-   gimp_image_set_filename (image_ID, tmp);
-   g_free (tmp);
- }
- else
-   gimp_image_set_filename (image_ID, filename);
+ tmp = g_strdup_printf ("%s-pg%ld", filename, (long)pagenum);
+ gimp_image_set_filename (image_ID, tmp);
+ g_free (tmp);
 
  *layer_ID = gimp_layer_new (image_ID, "Background", width, height,
                             gdtype, 100, NORMAL_MODE);
@@ -1177,9 +1212,7 @@ load_ps (char *filename,
    nread = (width+7)/8;
    bpp = 1;
    bitline = (unsigned char *)g_malloc (nread);
-   if (bitline == NULL) return (-1);
    byteline = (unsigned char *)g_malloc (nread*8);
-   if (byteline == NULL) { g_free (bitline); return (-1); }
 
    /* Get an array for mapping 8 bits in a byte to 8 bytes */
    temp = bit2byte;
@@ -1193,7 +1226,6 @@ load_ps (char *filename,
    nread = width;
    bpp = 1;
    byteline = (unsigned char *)g_malloc (nread);
-   if (byteline == NULL) return (-1);
  }
  else if (pnmtype == 6)  /* Portable Pixmap */
  {
@@ -1201,7 +1233,6 @@ load_ps (char *filename,
    nread = width * 3;
    bpp = 3;
    byteline = (unsigned char *)g_malloc (nread);
-   if (byteline == NULL) return (-1);
  }
  else return (-1);
 
@@ -1444,11 +1475,8 @@ dither_grey (unsigned char *grey,
    if (fs_error) g_free (fs_error-1);
    if (linecount < 0) return;
    fs_error = (int *)g_malloc ((npix+2)*sizeof (int));
-   if (fs_error != NULL)
-   {
-     memset ((char *)fs_error, 0, (npix+2)*sizeof (int));
-     fs_error++;
-   }
+   memset ((char *)fs_error, 0, (npix+2)*sizeof (int));
+   fs_error++;
 
    /* Initialize some arrays that speed up dithering */
    if (do_init_arrays)
@@ -1546,11 +1574,8 @@ save_ps_preview (FILE *ofp,
  nbsl = (width+7)/8;  /* Number of bytes per scanline in bitmap */
 
  grey = (unsigned char *)g_malloc (width);
- if (grey == NULL) return;
  bw = (unsigned char *)g_malloc (nbsl);
- if (bw == NULL) return;
  src_row = (unsigned char *)g_malloc (drawable->width * drawable->bpp);
- if (src_row == NULL) return;
 
  fprintf (ofp, "%%%%BeginPreview: %d %d 1 %d\n", width, height,
           ((nbsl*2+nchar_pl-1)/nchar_pl)*height);
@@ -1685,7 +1710,7 @@ save_gray  (FILE *ofp,
 
   if (ferror (ofp))
   {
-    g_message ("write error occured");
+    g_message (_("write error occured"));
     return (FALSE);
   }
   return (TRUE);
@@ -1782,7 +1807,7 @@ save_bw (FILE *ofp,
 
   if (ferror (ofp))
   {
-    g_message ("write error occured");
+    g_message (_("write error occured"));
     return (FALSE);
   }
   return (TRUE);
@@ -1875,7 +1900,7 @@ save_index (FILE *ofp,
 
   if (ferror (ofp))
   {
-    g_message ("write error occured");
+    g_message (_("write error occured"));
     return (FALSE);
   }
   return (TRUE);

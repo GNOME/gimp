@@ -27,8 +27,8 @@ extern "C" {
 
 #define GIMP_MAJOR_VERSION				(1)
 #define GIMP_MINOR_VERSION				(1)
-#define GIMP_MICRO_VERSION				(5)
-#define GIMP_VERSION					"1.1.5"
+#define GIMP_MICRO_VERSION				(6)
+#define GIMP_VERSION					"1.1.6"
 #define GIMP_CHECK_VERSION(major, minor, micro)	\
     (GIMP_MAJOR_VERSION > (major) || \
      (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION > (minor)) || \
