@@ -26,7 +26,6 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
@@ -45,7 +44,7 @@
 #define COLOR_AREA_EVENT_MASK (GDK_EXPOSURE_MASK       | \
                                GDK_BUTTON_PRESS_MASK   | \
                                GDK_BUTTON_RELEASE_MASK | \
-			       GDK_BUTTON_MOTION_MASK  | \
+                               GDK_BUTTON_MOTION_MASK  | \
                                GDK_ENTER_NOTIFY_MASK)
 
 
@@ -226,14 +225,14 @@ gimp_color_select_get_type (void)
       static const GTypeInfo select_info =
       {
         sizeof (GimpColorSelectClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_color_select_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColorSelect),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_color_select_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_color_select_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpColorSelect),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_color_select_init,
       };
 
       select_type = g_type_register_static (GIMP_TYPE_COLOR_SELECTOR,
@@ -292,14 +291,14 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_widget_show (select->xy_color);
 
   g_signal_connect (select->xy_color, "size_allocate",
-		    G_CALLBACK (gimp_color_select_xy_size_allocate),
-		    select);
+                    G_CALLBACK (gimp_color_select_xy_size_allocate),
+                    select);
   g_signal_connect_after (select->xy_color, "expose_event",
-			  G_CALLBACK (gimp_color_select_xy_expose),
-			  select);
+                          G_CALLBACK (gimp_color_select_xy_expose),
+                          select);
   g_signal_connect (select->xy_color, "event",
-		    G_CALLBACK (gimp_color_select_xy_events),
-		    select);
+                    G_CALLBACK (gimp_color_select_xy_events),
+                    select);
 
 #if 0
   gimp_dnd_color_dest_add (select->xy_color, gimp_color_select_drop_color,
@@ -321,14 +320,14 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_widget_show (select->z_color);
 
   g_signal_connect (select->z_color, "size_allocate",
-		    G_CALLBACK (gimp_color_select_z_size_allocate),
-		    select);
+                    G_CALLBACK (gimp_color_select_z_size_allocate),
+                    select);
   g_signal_connect_after (select->z_color, "expose_event",
-			  G_CALLBACK (gimp_color_select_z_expose),
-			  select);
+                          G_CALLBACK (gimp_color_select_z_expose),
+                          select);
   g_signal_connect (select->z_color, "event",
-		    G_CALLBACK (gimp_color_select_z_events),
-		    select);
+                    G_CALLBACK (gimp_color_select_z_events),
+                    select);
 
   select->toggle_box = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (hbox), select->toggle_box, FALSE, FALSE, 0);
@@ -687,10 +686,10 @@ gimp_color_select_xy_events (GtkWidget       *widget,
       y = bevent->y;
 
       gdk_pointer_grab (select->xy_color->window, FALSE,
-			GDK_POINTER_MOTION_HINT_MASK |
-			GDK_BUTTON_MOTION_MASK       |
-			GDK_BUTTON_RELEASE_MASK,
-			NULL, NULL, bevent->time);
+                        GDK_POINTER_MOTION_HINT_MASK |
+                        GDK_BUTTON_MOTION_MASK       |
+                        GDK_BUTTON_RELEASE_MASK,
+                        NULL, NULL, bevent->time);
       break;
 
     case GDK_BUTTON_RELEASE:
@@ -705,9 +704,9 @@ gimp_color_select_xy_events (GtkWidget       *widget,
     case GDK_MOTION_NOTIFY:
       mevent = (GdkEventMotion *) event;
       if (mevent->is_hint)
-	{
-	  gdk_window_get_pointer (widget->window, &x, &y, NULL);
-	}
+        {
+          gdk_window_get_pointer (widget->window, &x, &y, NULL);
+        }
       else
         {
           x = mevent->x;
@@ -781,10 +780,10 @@ gimp_color_select_z_events (GtkWidget       *widget,
       z = bevent->y;
 
       gdk_pointer_grab (select->z_color->window, FALSE,
-			GDK_POINTER_MOTION_HINT_MASK |
-			GDK_BUTTON_MOTION_MASK       |
-			GDK_BUTTON_RELEASE_MASK,
-			NULL, NULL, bevent->time);
+                        GDK_POINTER_MOTION_HINT_MASK |
+                        GDK_BUTTON_MOTION_MASK       |
+                        GDK_BUTTON_RELEASE_MASK,
+                        NULL, NULL, bevent->time);
       break;
 
     case GDK_BUTTON_RELEASE:
@@ -798,9 +797,9 @@ gimp_color_select_z_events (GtkWidget       *widget,
     case GDK_MOTION_NOTIFY:
       mevent = (GdkEventMotion *) event;
       if (mevent->is_hint)
-	{
-	  gdk_window_get_pointer (widget->window, NULL, &z, NULL);
-	}
+        {
+          gdk_window_get_pointer (widget->window, NULL, &z, NULL);
+        }
       else
         {
           z = mevent->y;
@@ -1245,63 +1244,63 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
     {
     case 0:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * 255;
-	  *p++ = v * (255 - (s * (255 - f)));
-	  *p++ = v * 255 * (1 - s);
+        {
+          *p++ = v * 255;
+          *p++ = v * (255 - (s * (255 - f)));
+          *p++ = v * 255 * (1 - s);
 
-	  s += ds;
-	}
+          s += ds;
+        }
       break;
     case 1:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * (255 - s * f);
-	  *p++ = v * 255;
-	  *p++ = v * 255 * (1 - s);
+        {
+          *p++ = v * (255 - s * f);
+          *p++ = v * 255;
+          *p++ = v * 255 * (1 - s);
 
-	  s += ds;
-	}
+          s += ds;
+        }
       break;
     case 2:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v *255;
-	  *p++ = v * (255 - (s * (255 - f)));
+        {
+          *p++ = v * 255 * (1 - s);
+          *p++ = v *255;
+          *p++ = v * (255 - (s * (255 - f)));
 
-	  s += ds;
-	}
+          s += ds;
+        }
       break;
     case 3:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v * (255 - s * f);
-	  *p++ = v * 255;
+        {
+          *p++ = v * 255 * (1 - s);
+          *p++ = v * (255 - s * f);
+          *p++ = v * 255;
 
-	  s += ds;
-	}
+          s += ds;
+        }
       break;
     case 4:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * (255 - (s * (255 - f)));
-	  *p++ = v * (255 * (1 - s));
-	  *p++ = v * 255;
+        {
+          *p++ = v * (255 - (s * (255 - f)));
+          *p++ = v * (255 * (1 - s));
+          *p++ = v * 255;
 
-	  s += ds;
-	}
+          s += ds;
+        }
       break;
     case 5:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * 255;
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v * (255 - s * f);
+        {
+          *p++ = v * 255;
+          *p++ = v * 255 * (1 - s);
+          *p++ = v * (255 - s * f);
 
-	  s += ds;
-	}
+          s += ds;
+        }
       break;
     }
 }
@@ -1335,63 +1334,63 @@ color_select_update_hue_value (ColorSelectFill *csf)
     {
     case 0:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * 255;
-	  *p++ = v * (255 - (s * (255 - f)));
-	  *p++ = v * 255 * (1 - s);
+        {
+          *p++ = v * 255;
+          *p++ = v * (255 - (s * (255 - f)));
+          *p++ = v * 255 * (1 - s);
 
-	  v += dv;
-	}
+          v += dv;
+        }
       break;
     case 1:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * (255 - s * f);
-	  *p++ = v * 255;
-	  *p++ = v * 255 * (1 - s);
+        {
+          *p++ = v * (255 - s * f);
+          *p++ = v * 255;
+          *p++ = v * 255 * (1 - s);
 
-	  v += dv;
-	}
+          v += dv;
+        }
       break;
     case 2:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v *255;
-	  *p++ = v * (255 - (s * (255 - f)));
+        {
+          *p++ = v * 255 * (1 - s);
+          *p++ = v *255;
+          *p++ = v * (255 - (s * (255 - f)));
 
-	  v += dv;
-	}
+          v += dv;
+        }
       break;
     case 3:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v * (255 - s * f);
-	  *p++ = v * 255;
+        {
+          *p++ = v * 255 * (1 - s);
+          *p++ = v * (255 - s * f);
+          *p++ = v * 255;
 
-	  v += dv;
-	}
+          v += dv;
+        }
       break;
     case 4:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * (255 - (s * (255 - f)));
-	  *p++ = v * (255 * (1 - s));
-	  *p++ = v * 255;
+        {
+          *p++ = v * (255 - (s * (255 - f)));
+          *p++ = v * (255 * (1 - s));
+          *p++ = v * 255;
 
-	  v += dv;
-	}
+          v += dv;
+        }
       break;
     case 5:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * 255;
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v * (255 - s * f);
+        {
+          *p++ = v * 255;
+          *p++ = v * 255 * (1 - s);
+          *p++ = v * (255 - s * f);
 
-	  v += dv;
-	}
+          v += dv;
+        }
       break;
     }
 }
@@ -1428,63 +1427,63 @@ color_select_update_saturation_value (ColorSelectFill *csf)
     {
     case 0:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * 255;
-	  *p++ = v * (255 - (s * (255 - f)));
-	  *p++ = v * 255 * (1 - s);
+        {
+          *p++ = v * 255;
+          *p++ = v * (255 - (s * (255 - f)));
+          *p++ = v * 255 * (1 - s);
 
-	  v += dv;
-	}
+          v += dv;
+        }
       break;
     case 1:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * (255 - s * f);
-	  *p++ = v * 255;
-	  *p++ = v * 255 * (1 - s);
+        {
+          *p++ = v * (255 - s * f);
+          *p++ = v * 255;
+          *p++ = v * 255 * (1 - s);
 
-	  v += dv;
-	}
+          v += dv;
+        }
       break;
     case 2:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v *255;
-	  *p++ = v * (255 - (s * (255 - f)));
+        {
+          *p++ = v * 255 * (1 - s);
+          *p++ = v *255;
+          *p++ = v * (255 - (s * (255 - f)));
 
-	  v += dv;
-	}
+          v += dv;
+        }
       break;
     case 3:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v * (255 - s * f);
-	  *p++ = v * 255;
+        {
+          *p++ = v * 255 * (1 - s);
+          *p++ = v * (255 - s * f);
+          *p++ = v * 255;
 
-	  v += dv;
-	}
+          v += dv;
+        }
       break;
     case 4:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * (255 - (s * (255 - f)));
-	  *p++ = v * (255 * (1 - s));
-	  *p++ = v * 255;
+        {
+          *p++ = v * (255 - (s * (255 - f)));
+          *p++ = v * (255 * (1 - s));
+          *p++ = v * 255;
 
-	  v += dv;
-	}
+          v += dv;
+        }
       break;
     case 5:
       for (i = 0; i < csf->width; i++)
-	{
-	  *p++ = v * 255;
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v * (255 - s * f);
+        {
+          *p++ = v * 255;
+          *p++ = v * 255 * (1 - s);
+          *p++ = v * (255 - s * f);
 
-	  v += dv;
-	}
+          v += dv;
+        }
       break;
     }
 }
