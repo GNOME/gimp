@@ -52,6 +52,7 @@ plug_in_progress_start (PlugIn      *plug_in,
   if (! plug_in->progress)
     {
       plug_in->progress = gimp_new_progress (plug_in->gimp, display_ID);
+      plug_in->progress_cancel_id = 0;
 
       if (plug_in->progress)
         {

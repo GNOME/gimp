@@ -1,5 +1,10 @@
 2004-08-17  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/plug-in-progress.c (plug_in_progress_start): reset
+	the "cancel" signal handler id when a new progress is set.
+
+2004-08-17  Sven Neumann  <sven@gimp.org>
+
 	* modules/colorsel_cmyk.c: minor cleanups.
 
 	* modules/colorsel_water.c: let the widget take the available
