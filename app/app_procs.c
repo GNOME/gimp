@@ -125,16 +125,13 @@ app_init (gint    gimp_argc,
   /*  this needs to be done before gimprc loading  */
   gimp_unitrc_load (the_gimp);
 
-  the_gimp->config = GIMP_CORE_CONFIG (gimp_rc_new ());
+  the_gimp->config = GIMP_CORE_CONFIG (gimp_rc_new (alternate_system_gimprc,
+                                                    alternate_gimprc));
 
   /* solely for debugging */
   g_signal_connect (G_OBJECT (the_gimp->config), "notify",
                     G_CALLBACK (gimprc_notify_callback),
                     NULL);
-
-  /*  parse the local GIMP configuration file  */
-  /* FIXME: add back support for alternate_system_gimprc and alternate_gimprc */
-  gimp_rc_load (GIMP_RC (the_gimp->config));
 
   /*  initialize lowlevel stuff  */
   base_init (GIMP_BASE_CONFIG (the_gimp->config));

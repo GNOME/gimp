@@ -83,10 +83,10 @@ static void     user_install_cancel_callback   (GtkWidget *widget,
 						gpointer   data);
 
 static gboolean user_install_run               (void);
-static void     user_install_tuning            (Gimp       *gimp);
-static void     user_install_tuning_done       (Gimp       *gimp);
-static void     user_install_resolution        (Gimp       *gimp);
-static void     user_install_resolution_done   (Gimp       *gimp);
+static void     user_install_tuning            (GimpRc     *gimprc);
+static void     user_install_tuning_done       (GimpRc     *gimprc);
+static void     user_install_resolution        (GimpRc     *gimprc);
+static void     user_install_resolution_done   (GimpRc     *gimp);
 
 
 /*  private stuff  */
@@ -321,7 +321,8 @@ static void
 user_install_continue_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  static gint notebook_index = 0;
+  static gint    notebook_index = 0;
+  static GimpRc *gimprc         = NULL;
 
   Gimp *gimp = (Gimp *) data;
 
@@ -354,22 +355,24 @@ user_install_continue_callback (GtkWidget *widget,
       FreeConsole ();
 #endif
       gimp_unitrc_load (gimp);
-      gimp->config = GIMP_CORE_CONFIG (gimp_rc_new ());
-      /* FIXME: add back support for alternate_system_gimprc
-                and alternate_gimprc */
-      gimp_rc_load (GIMP_RC (gimp->config));
+      gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc);
 
-      user_install_tuning (gimp);
+      user_install_tuning (gimprc);
       break;
 
     case 3:
-      user_install_tuning_done (gimp);
-      user_install_resolution (gimp);
+      user_install_tuning_done (gimprc);
+      user_install_resolution (gimprc);
       break;
 
     case 4:
-      user_install_resolution_done (gimp);
+      user_install_resolution_done (gimprc);
 
+      gimp_rc_save (gimprc);
+      
+      g_object_unref (G_OBJECT (gimprc));
+      gimprc = NULL;
+      
       g_object_unref (G_OBJECT (title_style));
       g_object_unref (G_OBJECT (page_style));
 
@@ -1120,9 +1123,9 @@ static GtkWidget *xserver_toggle    = NULL;
 static GtkWidget *resolution_entry  = NULL;
 
 static void
-user_install_tuning (Gimp *gimp)
+user_install_tuning (GimpRc *gimprc)
 {
-  GimpBaseConfig *config = GIMP_BASE_CONFIG (gimp->config);
+  GimpBaseConfig *config = GIMP_BASE_CONFIG (gimprc);
   GtkWidget      *hbox;
   GtkWidget      *sep;
   GtkWidget      *label;
@@ -1177,7 +1180,7 @@ user_install_tuning (Gimp *gimp)
 }
 
 static void
-user_install_tuning_done (Gimp *gimp)
+user_install_tuning_done (GimpRc *gimprc)
 {
   gulong    tile_cache_size;
   gchar    *swap_path;
@@ -1185,7 +1188,7 @@ user_install_tuning_done (Gimp *gimp)
   tile_cache_size = GTK_ADJUSTMENT (tile_cache_adj)->value;
   swap_path = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (swap_path_filesel));
 
-  g_object_set (G_OBJECT (gimp->config),
+  g_object_set (G_OBJECT (gimprc),
 		"tile-cache-size", tile_cache_size,
 		"swap-path",       swap_path,
 		NULL);
@@ -1217,9 +1220,9 @@ user_install_resolution_calibrate (GtkWidget *button,
 }
 
 static void
-user_install_resolution (Gimp *gimp)
+user_install_resolution (GimpRc *gimprc)
 {
-  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (gimp->config);
+  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (gimprc);
   GtkWidget         *hbox;
   GtkWidget         *sep;
   GimpChainButton   *chain;
@@ -1331,7 +1334,7 @@ user_install_resolution (Gimp *gimp)
 }
 
 static void
-user_install_resolution_done (Gimp *gimp)
+user_install_resolution_done (GimpRc *gimprc)
 {
   gdouble   xres, yres;
   gboolean  res_from_gdk;
@@ -1348,7 +1351,7 @@ user_install_resolution_done (Gimp *gimp)
       res_from_gdk = FALSE;
     }
 
-  g_object_set (G_OBJECT (gimp->config),
+  g_object_set (G_OBJECT (gimprc),
 		"monitor_xresolution",                      xres,
 		"monitor_yresolution",                      yres,
 		"monitor_resolution_from_windowing-system", res_from_gdk,

@@ -72,7 +72,7 @@ main (int   argc,
   g_print ("\nTesting GimpConfig ...\n\n");
 
   g_print (" Creating a new GimpRc object ...");
-  gimprc = gimp_rc_new ();
+  gimprc = g_object_new (GIMP_TYPE_RC, NULL);
   g_print (" done.\n\n");
   
   g_print (" Adding the unknown token (foobar \"hadjaha\") ..."); 

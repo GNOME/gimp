@@ -1,3 +1,15 @@
+2002-11-20  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc.[ch]: store the gimprc filenames in the
+	GimpRc object; will become properties later.
+
+	* app/app_procs.c: use the new GimpRc API and added the
+	functionality back that allows to specify different gimprc
+	files on the command-line.
+
+	* app/gui/user-install-dialog.c: don't work on the real gimprc
+	object but create one for the install procedure and save it.
+
 2002-11-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpenummenu.[ch]: added *_new_with_values() and
@@ -28,7 +40,7 @@
 
 2002-11-20  Sven Neumann  <sven@gimp.org>
 
-	* app/gui/user_install.c: don't access the global base_config
+	* app/gui/user-install-dialog.c: don't access the global base_config
 	which is not initialized at this point.
 
 2002-11-20  Dave Neary  <bolsh@gimp.org>

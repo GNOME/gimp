@@ -48,17 +48,22 @@
 #include "libgimp/gimpintl.h"
 
 
-static void       gimp_rc_config_iface_init (gpointer  iface,
-                                             gpointer  iface_data);
-static gboolean   gimp_rc_serialize         (GObject  *object,
-                                             gint      fd,
-                                             gint      indent_level,
-                                             gpointer  data);
-static gboolean   gimp_rc_deserialize       (GObject  *object,
-                                             GScanner *scanner,
-                                             gint      nest_level,
-                                             gpointer  data);
-static GObject  * gimp_rc_duplicate         (GObject  *object);
+static void       gimp_rc_class_init        (GimpRcClass *klass);
+static void       gimp_rc_config_iface_init (gpointer     iface,
+                                             gpointer     iface_data);
+static void       gimp_rc_finalize          (GObject     *object);
+static gboolean   gimp_rc_serialize         (GObject     *object,
+                                             gint         fd,
+                                             gint         indent_level,
+                                             gpointer     data);
+static gboolean   gimp_rc_deserialize       (GObject     *object,
+                                             GScanner    *scanner,
+                                             gint         nest_level,
+                                             gpointer     data);
+static GObject  * gimp_rc_duplicate         (GObject     *object);
+static void       gimp_rc_load              (GimpRc      *rc);
+
+static GObjectClass *parent_class = NULL;
 
 
 GType 
@@ -73,7 +78,7 @@ gimp_rc_get_type (void)
         sizeof (GimpRcClass),
 	NULL,           /* base_init      */
         NULL,           /* base_finalize  */
-	NULL,           /* class_init     */
+        (GClassInitFunc) gimp_rc_class_init,
 	NULL,           /* class_finalize */
 	NULL,           /* class_data     */
 	sizeof (GimpRc),
@@ -100,6 +105,37 @@ gimp_rc_get_type (void)
 }
 
 static void
+gimp_rc_class_init (GimpRcClass *klass)
+{
+  GObjectClass *object_class;
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class = G_OBJECT_CLASS (klass);
+
+  object_class->finalize = gimp_rc_finalize;
+}
+
+static void
+gimp_rc_finalize (GObject *object)
+{
+  GimpRc *rc = (GimpRc *) object;
+
+  if (rc->system_gimprc)
+    {
+      g_free (rc->system_gimprc);
+      rc->system_gimprc = NULL;
+    }
+  if (rc->user_gimprc)
+    {
+      g_free (rc->user_gimprc);
+      rc->user_gimprc = NULL;
+    }
+  
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
 gimp_rc_config_iface_init (gpointer  iface,
                            gpointer  iface_data)
 {
@@ -116,23 +152,17 @@ gimp_rc_serialize (GObject *object,
                    gint     indent_level,
                    gpointer data)
 {
-  gboolean success;
+  if (!gimp_config_serialize_unknown_tokens (object, fd, indent_level))
+    return FALSE;
+
+  if (write (fd, "\n", 1) < 0)
+    return FALSE;
 
   if (data && GIMP_IS_RC (data))
-    success = gimp_config_serialize_changed_properties (object,
-                                                        G_OBJECT (data),
-                                                        fd,
-                                                        indent_level);
+    return gimp_config_serialize_changed_properties (object, G_OBJECT (data),
+                                                     fd, indent_level);
   else
-    success = gimp_config_serialize_properties (object, fd, indent_level);
-
-  if (success)
-    success = (write (fd, "\n", 1) != -1);
-      
-  if (success)
-    success = gimp_config_serialize_unknown_tokens (object, fd, indent_level);
-
-  return success;
+    return gimp_config_serialize_properties (object, fd, indent_level);
 }
 
 static gboolean
@@ -166,17 +196,61 @@ gimp_rc_duplicate (GObject *object)
   return dup;
 }
 
-/**
- * gimp_rc_new:
- * 
- * Creates a new #GimpRc object with default configuration values.
- * 
- * Return value: the newly generated #GimpRc object.
- **/
-GimpRc *
-gimp_rc_new (void)
+static void
+gimp_rc_load (GimpRc *rc)
 {
-  return GIMP_RC (g_object_new (GIMP_TYPE_RC, NULL));
+  GError *error = NULL;
+
+  g_return_if_fail (GIMP_IS_RC (rc));
+
+  g_printerr ("parsing '%s' ... \n", rc->system_gimprc);
+
+  if (!gimp_config_deserialize (G_OBJECT (rc), rc->system_gimprc, NULL, &error))
+    {
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+	g_message (error->message);
+      
+      g_clear_error (&error);
+    }
+
+  g_printerr ("parsing '%s' ... \n", rc->user_gimprc);
+
+  if (!gimp_config_deserialize (G_OBJECT (rc), rc->user_gimprc, NULL, &error))
+    {
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+	g_message (error->message);
+      
+      g_clear_error (&error);
+    }
+}
+
+GimpRc *
+gimp_rc_new (const gchar *system_gimprc,
+             const gchar *user_gimprc)
+{
+  GimpRc *rc;
+  
+  g_return_val_if_fail (system_gimprc == NULL ||
+                        g_path_is_absolute (system_gimprc), NULL);
+  g_return_val_if_fail (user_gimprc == NULL || 
+                        g_path_is_absolute (user_gimprc), NULL);
+
+  rc = GIMP_RC (g_object_new (GIMP_TYPE_RC, NULL));
+
+  if (system_gimprc)
+    rc->system_gimprc = g_strdup (system_gimprc);
+  else
+    rc->system_gimprc = g_build_filename (gimp_sysconf_directory (),
+                                          "gimprc", NULL);
+
+  if (user_gimprc)
+    rc->user_gimprc = g_strdup (user_gimprc);
+  else
+    rc->user_gimprc = gimp_personal_rc_file ("gimprc");
+
+  gimp_rc_load (rc);
+  
+  return rc;
 }
 
 /**
@@ -251,52 +325,10 @@ gimp_rc_query (GimpRc      *rc,
 }
 
 void
-gimp_rc_load (GimpRc *gimprc)
+gimp_rc_save (GimpRc *rc)
 {
-  gchar  *filename;
-  GError *error = NULL;
-
-  g_return_if_fail (GIMP_IS_RC (gimprc));
-
-  filename = g_build_filename (gimp_sysconf_directory (), "gimprc", NULL);
-
-  g_printerr ("parsing '%s' ... \n", filename);
-  if (!gimp_config_deserialize (G_OBJECT (gimprc), filename, NULL, &error))
-    {
-      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-	g_message (error->message);
-      
-      g_clear_error (&error);
-    }
-
-  g_free (filename);
-
-  filename = gimp_personal_rc_file ("gimprc");
-
-  g_printerr ("parsing '%s' ... \n", filename);
-  if (!gimp_config_deserialize (G_OBJECT (gimprc), filename, NULL, &error))
-    {
-      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-	g_message (error->message);
-      
-      g_clear_error (&error);
-    }
-
-  g_free (filename);
-}
-
-/**
- * gimp_rc_save:
- * @user_rc: the current #GimpRc.
- * @global_rc: the global #GimpRC.
- *
- * Saves the users gimprc file. If you pass a global GimpRC, only the
- * differences between the global and the users configuration is saved.
- **/
-void
-gimp_rc_save (GimpRc *user_rc,
-              GimpRc *global_rc)
-{
+  GimpRc *global;
+  
   const gchar *top = 
     "# GIMP gimprc\n"
     "#\n"
@@ -311,27 +343,26 @@ gimp_rc_save (GimpRc *user_rc,
     "# end of gimprc\n";
 
   gchar  *header;
-  gchar  *filename;
-  gchar  *system_filename;
   GError *error = NULL;
   
-  g_return_if_fail (GIMP_IS_RC (user_rc));
-  g_return_if_fail (global_rc == NULL || GIMP_IS_RC (global_rc));
+  g_return_if_fail (GIMP_IS_RC (rc));
+ 
+  global = g_object_new (GIMP_TYPE_RC, NULL);
+
+  gimp_config_deserialize (G_OBJECT (global), rc->system_gimprc, NULL, NULL);
   
-  system_filename = g_build_filename (gimp_sysconf_directory (),
-                                      "gimprc", NULL);
-  header = g_strconcat (top, system_filename, bottom, NULL);
-  g_free (system_filename);
+  header = g_strconcat (top, rc->system_gimprc, bottom, NULL);
 
-  filename = gimp_personal_rc_file ("gimprc");
+  g_printerr ("saving '%s' ... \n", rc->user_gimprc);
 
-  if (! gimp_config_serialize (G_OBJECT (user_rc),
-                               filename, header, footer, global_rc, &error))
+  if (! gimp_config_serialize (G_OBJECT (rc),
+                               rc->user_gimprc, header, footer, global,
+			       &error))
     {
       g_message (error->message);
       g_error_free (error);
     }
 
-  g_free (filename);
   g_free (header);
+  g_object_unref (global);
 }

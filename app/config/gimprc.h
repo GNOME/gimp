@@ -37,6 +37,9 @@ typedef struct _GimpRcClass GimpRcClass;
 struct _GimpRc
 {
   GimpGuiConfig       parent_instance;
+
+  gchar              *user_gimprc;
+  gchar              *system_gimprc;
 };
 
 struct _GimpRcClass
@@ -46,13 +49,11 @@ struct _GimpRcClass
 
 
 GType     gimp_rc_get_type  (void) G_GNUC_CONST;
-GimpRc  * gimp_rc_new       (void);
+GimpRc  * gimp_rc_new       (const gchar *system_gimprc, /* NULL for default */
+                             const gchar *user__gimprc); /* NULL for default */
+void      gimp_rc_save      (GimpRc      *gimprc);
 gchar   * gimp_rc_query     (GimpRc      *rc,
                              const gchar *key);
-
-void      gimp_rc_load      (GimpRc      *gimprc);
-void      gimp_rc_save      (GimpRc      *user_rc,
-			     GimpRc      *global_rc);
 
 
 #endif /* GIMP_RC_H__ */
