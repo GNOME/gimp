@@ -1699,7 +1699,7 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (prv_frame), vbox);
   gtk_widget_show (vbox);
 
-  preview = gtk_check_button_new_with_label (_("Preview (in image window, will modify image's undo history!)"));
+  preview = gtk_check_button_new_with_label (_("Preview in image window"));
   gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
 

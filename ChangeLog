@@ -1,3 +1,9 @@
+2004-04-17  Henrik Brix Andersen  <brix@gimp.org>
+
+	* plug-ins/common/jpeg.c (save_dialog): live preview doesn't
+	modify the undo history of the image anymore, label changed
+	accordingly. Fixes bug #140296.
+
 2004-04-16  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* plug-ins/common/tile.c (tile): changed a call to
