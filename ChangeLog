@@ -1,3 +1,13 @@
+2003-07-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/composite/make-gimp-composite-dispatch.py: made generated
+	output compile again and cleaned it up a bit.
+
+	* app/composite/gimp-composite-dispatch.c: regenerated.
+
+	* app/paint-funcs/paint-funcs.c (combine_sub_region): don't use
+	tabs please.
+
 2003-07-18  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite.[ch],
@@ -15,7 +25,6 @@
 	environment variable GIMP_COMPOSITE with a non-zero value.  For
 	example:
 	% GIMP_COMPOSITE=1 gimp-1.3
-	
 
 2003-07-18  Michael Natterer  <mitch@gimp.org>
 

@@ -2497,21 +2497,20 @@ char *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PI
  },
 };
 
-extern void gimp_composite_generic_init();
+extern void gimp_composite_generic_init (void);
 
 void
-gimp_composite_init()
+gimp_composite_init (void)
 {
-  char *p;
+  if (g_getenv ("GIMP_COMPOSITE"))
+    {
+      gimp_composite_options.use = TRUE;
+      g_printerr ("Using new image composite functions\n");
+    }
 
-  if ((p = getenv("GIMP_COMPOSITE"))) {
-    gimp_composite_options.use = atol(p);
-    g_printerr("Using new image composite functions
-");
-  }
-
-  if (!gimp_composite_options.initialised) {
-    gimp_composite_generic_init();
-    gimp_composite_options.initialised = 1;
-  }
+  if (! gimp_composite_options.initialised)
+    {
+      gimp_composite_generic_init ();
+      gimp_composite_options.initialised = TRUE;
+    }
 }

@@ -396,29 +396,29 @@ def gimp_composite_regression(function_tables):
 
 def gimp_composite_init(function_tables):
   for o in function_tables:
-    print 'extern void %s_init();' % (functionnameify(o[0]))
+    print 'extern void %s_init (void);' % (functionnameify(o[0]))
     pass
 
   print ''
   print 'void'
-  print 'gimp_composite_init()'
+  print 'gimp_composite_init (void)'
   print '{'
-  print '  char *p;'
-  print ''
-  print '  if ((p = getenv("GIMP_COMPOSITE"))) {'
-  print '    gimp_composite_options.use = atol(p);'
-  print '    g_printerr("Using new image composite functions\n");'
-  print '  }'
+  print '  if (g_getenv ("GIMP_COMPOSITE"))'
+  print '    {'
+  print '      gimp_composite_options.use = TRUE;'
+  print '      g_printerr ("Using new image composite functions\\n");'
+  print '    }'
   print ''
 
-  print '  if (!gimp_composite_options.initialised) {'
+  print '  if (! gimp_composite_options.initialised)'
+  print '    {'
 
   for o in function_tables:
-    print '    %s_init();' % (functionnameify(o[0]))
+    print '      %s_init ();' % (functionnameify(o[0]))
     pass
   
-  print '    gimp_composite_options.initialised = 1;'
-  print '  }'
+  print '      gimp_composite_options.initialised = TRUE;'
+  print '    }'
   print '}'
   pass
 
