@@ -50,6 +50,7 @@
 #include <zlib.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 #include <libgimp/parasiteio.h>
 #include <libgimp/stdplugins-intl.h>
 
@@ -431,6 +432,20 @@ save_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("psp");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
+
 static gint
 save_dialog ()
 {
@@ -440,18 +455,9 @@ save_dialog ()
   GtkWidget *frame;
   GtkWidget *toggle_vbox;
   GSList *group;
-  gchar **argv;
-  gint argc;
   gint use_none = (psvals.compression == PSP_COMP_NONE);
   gint use_rle = (psvals.compression == PSP_COMP_RLE);
   gint use_lz77 = (psvals.compression == PSP_COMP_LZ77);
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("save");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Save as PSP");
@@ -1749,7 +1755,9 @@ run (char    *name,
   static GParam values[2];
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
+  GimpExportReturnType export = EXPORT_CANCEL;
   gint32 image_ID;
+  gint32 drawable_ID;
 
   tile_height = gimp_tile_height ();
 
@@ -1778,10 +1786,33 @@ run (char    *name,
     }
   else if (strcmp (name, "file_psp_save") == 0)
     {
+      image_ID = orig_image_ID = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
+
+      /*  eventually export the image */ 
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
-      INIT_I18N_UI();
+	case RUN_WITH_LAST_VALS:
+	  INIT_I18N_UI();
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "PSP", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | CAN_HANDLE_ALPHA | CAN_HANDLE_LAYERS));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+	  break;
+	default:
+	  break;
+	}
+      
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	  
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_pnm_save", &psvals);
 
@@ -1811,7 +1842,7 @@ run (char    *name,
 
       if (status == STATUS_SUCCESS)
 	{
-	  if (save_image (param[3].data.d_string, param[1].data.d_int32, param[2].data.d_int32))
+	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
 	      gimp_set_data ("file_psp_save", &psvals, sizeof (PSPSaveVals));
 
@@ -1822,5 +1853,8 @@ run (char    *name,
 	}
 
       values[0].data.d_status = status;
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
     }
 }

@@ -778,8 +778,9 @@ pix_SOURCES = \
 	pix.c
 
 pix_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(GLIB_LIBS)				\
+	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
 pixelize_SOURCES = \
@@ -854,6 +855,7 @@ psp_SOURCES = \
 	psp.c
 
 psp_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(LIBZ)				\
 	$(GTK_LIBS)				\

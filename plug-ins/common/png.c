@@ -299,12 +299,12 @@ run (char    *name,		/* I - Name of filter program. */
 	else
 	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
       };
+
+    if (export == EXPORT_EXPORT)
+      gimp_image_delete (image_ID);
   }
   else
     values[0].data.d_status = STATUS_EXECUTION_ERROR;
-
-  if (export == EXPORT_EXPORT)
-    gimp_image_delete (image_ID);
 }
 
 

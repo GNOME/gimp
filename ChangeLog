@@ -1,3 +1,17 @@
+Wed Oct 20 03:42:08 MEST 1999  Sven Neumann <sven@gimp.org>
+	
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/pix.c
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/png.c
+	* plug-ins/common/psp.c
+	* plug-ins/fits/Makefile.am
+	* plug-ins/fits/fits.c
+	* plug-ins/sgi/Makefile.am
+	* plug-ins/sgi/sgi.c: made more save plug-ins export-aware.
+	Hopefully I have converted them all now. If you find one that I 
+	missed or experience any problems, please drop me a mail.
+
 Tue Oct 19 17:56:29 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/bz2.c

@@ -34,6 +34,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.13  1999/10/20 01:45:41  neo
+ *   the rest of the save plug-ins !?
+ *
+ *
+ *   --Sven
+ *
  *   Revision 1.12  1999/04/23 06:32:41  asbjoer
  *   use MAIN macro
  *
@@ -177,6 +183,7 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 
 /*
@@ -190,14 +197,16 @@
  * Local functions...
  */
 
-static void	query(void);
-static void	run(char *, int, GParam *, int *, GParam **);
-static gint32	load_image(char *);
-static gint	save_image (char *, gint32, gint32);
-static gint	save_dialog(void);
-static void	save_close_callback(GtkWidget *, gpointer);
-static void	save_ok_callback(GtkWidget *, gpointer);
-static void	save_compression_callback(GtkWidget *, gpointer);
+static void	query       (void);
+static void	run         (char *, int, GParam *, int *, GParam **);
+static gint32	load_image  (char *);
+static gint	save_image  (char *, gint32, gint32);
+
+static void     init_gtk                  (void);
+static gint	save_dialog               (void);
+static void	save_close_callback       (GtkWidget *, gpointer);
+static void	save_ok_callback          (GtkWidget *, gpointer);
+static void	save_compression_callback (GtkWidget *, gpointer);
 
 
 /*
@@ -231,13 +240,13 @@ query(void)
 {
   static GParamDef	load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" },
+    { PARAM_INT32,      "run_mode",     "Interactive, non-interactive" },
+    { PARAM_STRING,     "filename",     "The name of the file to load" },
+    { PARAM_STRING,     "raw_filename", "The name of the file to load" },
   };
   static GParamDef	load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE,      "image",        "Output image" },
   };
   static int		nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int		nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
@@ -280,14 +289,17 @@ query(void)
  */
 
 static void
-run(char   *name,		/* I - Name of filter program. */
-    int    nparams,		/* I - Number of parameters passed in */
-    GParam *param,		/* I - Parameter values */
-    int    *nreturn_vals,	/* O - Number of return values */
-    GParam **return_vals)	/* O - Return values */
+run (char    *name,		/* I - Name of filter program. */
+     int      nparams,		/* I - Number of parameters passed in */
+     GParam  *param,		/* I - Parameter values */
+     int     *nreturn_vals,	/* O - Number of return values */
+     GParam **return_vals)	/* O - Return values */
 {
-  gint32	image_ID;	/* ID of loaded image */
-  GParam	*values;	/* Return values */
+  GParam               *values;         /* Return values */
+  GRunModeType          run_mode;       
+  gint32	        image_ID;	
+  gint32                drawable_ID;
+  GimpExportReturnType  export = EXPORT_CANCEL;
 
 
  /*
@@ -322,8 +334,29 @@ run(char   *name,		/* I - Name of filter program. */
   else if (strcmp (name, "file_sgi_save") == 0)
   {
     *nreturn_vals = 1;
+    run_mode    = param[0].data.d_int32;
+    image_ID    = param[1].data.d_int32;
+    drawable_ID = param[2].data.d_int32;
 
-    switch (param[0].data.d_int32)
+    /*  eventually export the image */ 
+    switch (run_mode)
+      {
+      case RUN_INTERACTIVE:
+      case RUN_WITH_LAST_VALS:
+	init_gtk ();
+	export = gimp_export_image (&image_ID, &drawable_ID, "SGI", 
+				    (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_ALPHA));
+	if (export == EXPORT_CANCEL)
+	  {
+	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	    return;
+	  }
+	break;
+      default:
+	break;
+      }
+
+    switch (run_mode)
     {
       case RUN_INTERACTIVE :
          /*
@@ -361,7 +394,7 @@ run(char   *name,		/* I - Name of filter program. */
           * Possibly retrieve data...
           */
 
-          gimp_get_data("file_sgi_save", &compression);
+          gimp_get_data ("file_sgi_save", &compression);
           break;
 
       default :
@@ -370,12 +403,14 @@ run(char   *name,		/* I - Name of filter program. */
 
     if (values[0].data.d_status == STATUS_SUCCESS)
     {
-      if (save_image(param[3].data.d_string, param[1].data.d_int32,
-                     param[2].data.d_int32))
+      if (save_image(param[3].data.d_string, image_ID, drawable_ID))
         gimp_set_data("file_sgi_save", &compression, sizeof(compression));
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
     };
+
+    if (export == EXPORT_EXPORT)
+      gimp_image_delete (image_ID);
   }
   else
     values[0].data.d_status = STATUS_EXECUTION_ERROR;
@@ -387,7 +422,7 @@ run(char   *name,		/* I - Name of filter program. */
  */
 
 static gint32
-load_image(char *filename)	/* I - File to load */
+load_image (char *filename)	/* I - File to load */
 {
   int		i,		/* Looping var */
 		x,		/* Current X coordinate */
@@ -573,26 +608,26 @@ load_image(char *filename)	/* I - File to load */
  */
 
 static gint
-save_image(char   *filename,	/* I - File to save to */
-	   gint32 image_ID,	/* I - Image to save */
-	   gint32 drawable_ID)	/* I - Current drawable */
+save_image (char   *filename,	 /* I - File to save to */
+	    gint32  image_ID,	 /* I - Image to save */
+	    gint32  drawable_ID) /* I - Current drawable */
 {
-  int		i, j,		/* Looping var */
-		x,		/* Current X coordinate */
-		y,		/* Current Y coordinate */
-		image_type,	/* Type of image */
-		layer_type,	/* Type of drawable/layer */
-		tile_height,	/* Height of tile in GIMP */
-		count,		/* Count of rows to put in image */
-		zsize;		/* Number of channels in file */
-  sgi_t		*sgip;		/* File pointer */
-  GDrawable	*drawable;	/* Drawable for layer */
-  GPixelRgn	pixel_rgn;	/* Pixel region for layer */
-  guchar	**pixels,	/* Pixel rows */
-		*pixel,		/* Pixel data */
-		*pptr;		/* Current pixel */
-  unsigned short **rows;	/* SGI image data */
-  char		progress[255];	/* Title for progress display... */
+  int		i, j,		 /* Looping var */
+		x,		 /* Current X coordinate */
+		y,		 /* Current Y coordinate */
+		image_type,	 /* Type of image */
+		layer_type,	 /* Type of drawable/layer */
+		tile_height,	 /* Height of tile in GIMP */
+		count,		 /* Count of rows to put in image */
+		zsize;		 /* Number of channels in file */
+  sgi_t		*sgip;		 /* File pointer */
+  GDrawable	*drawable;	 /* Drawable for layer */
+  GPixelRgn	pixel_rgn;	 /* Pixel region for layer */
+  guchar	**pixels,	 /* Pixel rows */
+		*pixel,		 /* Pixel data */
+		*pptr;		 /* Current pixel */
+  unsigned short **rows;	 /* SGI image data */
+  char		progress[255];	 /* Title for progress display... */
 
 
  /*
@@ -711,8 +746,8 @@ save_image(char   *filename,	/* I - File to save to */
  */
 
 static void
-save_close_callback(GtkWidget *w,	/* I - Close button */
-                    gpointer  data)	/* I - Callback data */
+save_close_callback (GtkWidget *w,	/* I - Close button */
+		     gpointer   data)	/* I - Callback data */
 {
   gtk_main_quit();
 }
@@ -723,8 +758,8 @@ save_close_callback(GtkWidget *w,	/* I - Close button */
  */
 
 static void
-save_ok_callback(GtkWidget *w,		/* I - OK button */
-                 gpointer  data)	/* I - Callback data */
+save_ok_callback (GtkWidget *w,		/* I - OK button */
+                  gpointer   data)	/* I - Callback data */
 {
   runme = TRUE;
 
@@ -737,13 +772,27 @@ save_ok_callback(GtkWidget *w,		/* I - OK button */
  */
 
 static void
-save_compression_callback(GtkWidget *w,		/* I - Compression button */
-                          gpointer  data)	/* I - Callback data */
+save_compression_callback (GtkWidget *w,        /* I - Compression button */
+                           gpointer   data)	/* I - Callback data */
 {
   if (GTK_TOGGLE_BUTTON(w)->active)
     compression = (long)data;
 }
 
+
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint    argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("sgi");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
 
 /*
  * 'save_dialog()' - Pop up the save dialog.
@@ -758,8 +807,6 @@ save_dialog(void)
 		*frame,		/* Frame for dialog */
 		*vbox;		/* Box for compression types */
   GSList	*group;		/* Button grouping for compression */
-  gchar		**argv;		/* Fake command-line args */
-  gint		argc;		/* Number of fake command-line args */
   static char	*types[] =	/* Compression types... */
 		{
 		  "No Compression",
@@ -767,17 +814,6 @@ save_dialog(void)
 		  "Aggressive RLE\n(Not supported by SGI)"
 		};
 
-
- /*
-  * Fake the command-line args and open a window...
-  */
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup("sgi");
-
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
 
  /*
   * Open a dialog window...

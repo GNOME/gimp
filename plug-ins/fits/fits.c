@@ -35,6 +35,7 @@ static char ident[] = "@(#) GIMP FITS file-plugin v1.05  20-Dec-97";
 #include <string.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "fitsrw.h"
 
 /* Load info */
@@ -108,6 +109,7 @@ typedef struct
   int toggle_val[2*LOAD_FITS_TOGGLES];
 } LoadDialogVals;
 
+static void   init_gtk                 (void);
 
 static gint   load_dialog              (void);
 static void   load_close_callback      (GtkWidget *widget,
@@ -150,13 +152,13 @@ query (void)
 {
   static GParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" },
+    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { PARAM_STRING,   "filename",     "The name of the file to load" },
+    { PARAM_STRING,   "raw_filename", "The name of the file to load" },
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE,    "image",        "Output image" },
   };
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals)
@@ -164,12 +166,11 @@ query (void)
 
   static GParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename",
-            "The name of the file to save the image in" },
+    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",        "Input image" },
+    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
+    { PARAM_STRING,   "filename",     "The name of the file to save the image in" },
+    { PARAM_STRING,   "raw_filename", "The name of the file to save the image in" },
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -194,7 +195,7 @@ those with alpha channels.",
                           "Peter Kirchgessner (pkirchg@aol.com)",
                           "1997",
                           "<Save>/FITS",
-                          "RGB*, GRAY*, INDEXED*",
+                          "RGB, GRAY, INDEXED",
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -218,6 +219,8 @@ run (char    *name,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID;
+  gint32 drawable_ID;
+  GimpExportReturnType export = EXPORT_CANCEL;
 
   /* initialize */
 
@@ -235,6 +238,25 @@ run (char    *name,
       *nreturn_vals = 2;
       values[1].type = PARAM_IMAGE;
       values[1].data.d_image = -1;
+
+    /*  eventually export the image */ 
+    switch (run_mode)
+      {
+      case RUN_INTERACTIVE:
+      case RUN_WITH_LAST_VALS:
+	init_gtk ();
+	export = gimp_export_image (&image_ID, &drawable_ID, "FITS", 
+				    (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
+	if (export == EXPORT_CANCEL)
+	  {
+	    *nreturn_vals = 1;
+	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	    return;
+	  }
+	break;
+      default:
+	break;
+      }
 
       switch (run_mode)
       {
@@ -279,6 +301,10 @@ run (char    *name,
     }
   else if (strcmp (name, "file_fits_save") == 0)
     {
+      image_ID = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
+      *nreturn_vals = 1;
+
       switch (run_mode)
         {
         case RUN_INTERACTIVE:
@@ -297,12 +323,13 @@ run (char    *name,
           break;
         }
 
-      *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string, param[1].data.d_int32,
-                      param[2].data.d_int32))
+      if (save_image (param[3].data.d_string, image_ID, drawable_ID))
           values[0].data.d_status = STATUS_SUCCESS;
       else
         values[0].data.d_status = STATUS_EXECUTION_ERROR;
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
     }
 }
 
@@ -941,6 +968,21 @@ save_index (FITS_FILE *ofp,
 }
 
 
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("fits");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
+
+
 /*  Load interface functions  */
 
 static gint
@@ -953,8 +995,7 @@ load_dialog (void)
   GtkWidget *frame;
   GtkWidget *toggle_vbox;
   GSList *group;
-  gchar **argv;
-  gint argc, k, j;
+  gint k, j;
   char **textptr;
   static char *toggle_text[] = {
     "BLANK/NaN pixel replacement", "Black", "White",
@@ -962,13 +1003,8 @@ load_dialog (void)
     "Image composing", "None", "NAXIS=3, NAXIS3=2,...,4"
   };
 
+  init_gtk ();
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("Load");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
   vals = g_malloc (sizeof (*vals));
 
   vals->toggle_val[0] = (plvals.replace == 0);
@@ -1105,12 +1141,8 @@ static void show_fits_errors (void)
 static void show_message (char *message)
 
 {
-#ifdef Simple_Message_Box_Available
- /* If there would be a simple message box like the one */
- /* used in ../app/interface.h, I would like to use it. */
  if (l_run_mode == RUN_INTERACTIVE)
-   gtk_message_box (message);
+   gimp_message (message);
  else
-#endif
    fprintf (stderr, "Fits: %s\n", message);
 }
