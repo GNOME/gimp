@@ -11,13 +11,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-01 17:34+0100\n"
-"PO-Revision-Date: 2004-11-01 17:34+0100\n"
+"POT-Creation-Date: 2004-11-02 15:33+0100\n"
+"PO-Revision-Date: 2004-11-02 15:33+0100\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:129
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -1228,7 +1228,7 @@ msgid "Offset Y"
 msgstr "Versatz Y"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
 msgid "Opacity"
 msgstr "Deckkraft"
 
@@ -1862,14 +1862,26 @@ msgid "Angle"
 msgstr "Winkel"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
-msgid "Interpolate"
-msgstr "Interpolieren"
+msgid "Cubic"
+msgstr "Kubisch"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+msgid "Interpolation"
+msgstr "Interpolation"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Linear"
+msgstr "Linear"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "None"
+msgstr "Keine"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:11
 msgid "Relative distance of horizon"
 msgstr "Relativer Abstand zum Horizont"
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:12
 msgid "Relative length of shadow"
 msgstr "Relative Länge des Schattens"
 
@@ -2471,4 +2483,3 @@ msgstr "Glanzlicht Y-Versatz"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Glanzlicht Deckkraft"
-
