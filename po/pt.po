@@ -3422,7 +3422,7 @@ msgstr "/Camadas/Combinar Camadas Visíveis..."
 
 #: app/menus.c:455
 msgid "/Layers/Flatten Image"
-msgstr "/Camadas/Unifiicar camadas"
+msgstr "/Camadas/Unificar camadas"
 
 #: app/menus.c:460
 msgid "/Layers/Mask to Selection"

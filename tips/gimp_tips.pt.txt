@@ -48,91 +48,93 @@ o formato de ficheiro nativo do GIMP (utilize a extensão de ficheiro
 ".xcf"). Isto preserva as camadas e todos os aspectos do seu trabalho-
 -em-curso. Uma vez completo o projecto, grave-o como JPEG, PNG, GIF, ...
 
-A camada chamada "Fundo" é especial pois não tem transparência.
-The layer named "Background" is special because it lacks transparency.
-This prevents you from adding a layer mask or moving the layer up in
-the stack.  You may add transparency to it by right-clicking in the
-"Layers, Channels and Paths" dialog and selecting "Add Alpha Channel".
+A camada chamada "Fundo" é especial pois não tem transparência. Isto 
+impede-o de adicionar uma camada máscara ou de a mover acima na pilha. 
+Pode adicionar-lhe transparência clicando com o direito no diálogo 
+"Camadas, Canais e Caminhos" e seleccionando "Adicionar Canal Alfa".
 
-Most plug-ins work on the current layer of the current image.  In
-some cases, you will have to merge all layers (Layers->Flatten Image)
-if you want the plug-in to work on the whole image.
+A maioria dos plug-ins funciona na camada actual da imagem actual. Nalguns
+casos, terá de juntar todas as camadas (Camadas->Unificar Camadas) se
+desejar que o plug-in funcione para toda a imagem.
 
-Not all effects can be applied to all kinds of images.  This is
-indicated by a grayed-out menu-entry.  You may need to change
-the image mode to RGB (Image->Mode->RGB), add an alpha-channel
-(Layers->Add Alpha Channel) or flatten it (Layers->Flatten Image).
+Nem todos os efeitos podem ser aplicados a todos os tipos de imagens.
+Isto é indicado por uma opção de menu cinzenta. Poderá ter de modificar
+o modo da imagem para RGB (Imagem->Modo->RGB), adicionar um canal alfa
+(Camadas->Adicionar Canal Alfa) ou unifica-la (Camadas->Unificar Imagem).
 
 # Tips for intermediate users start here
 #
 
-You can drag and drop many things in the GIMP.  For example, dragging
-a color from the toolbox or from a color palette and dropping it into
-an image will fill the current image or selection with that color.
+Pode arrastar e largar muitas coisas no GIMP.  Por exemplo, arrastar
+uma cor da caixa de ferramentas ou de uma paleta de cores e larga-la
+numa imagem irá encher a imagem actual ou a seleccção com essa cor.
 
-When using a drawing tool (Paintbrush, Airbrush, or Pencil),
-Shift-click will draw a straight line from your last drawing
-point to your current cursor position.  If you also press Ctrl,
-the line will be constrained to 15 degree angles.
+Quando se estiver a utilizar uma ferramenta de desenho (Pincel, Spay
+ou Lápis), clique e Shift desenhará uma linha recta desde a sua última
+posição de desenho até à posição actual do cursor. Se também primir o
+Ctrl, a linha será limitada a ângulos de 15 graus.
 
-The file selection dialog box has command-line completion with
-Tab, just like the shell.  Type part of a filename, hit tab, and voila!
-It's completed.
+O diálogo de selecção de ficheiro completa a linha de comando com o Tab,
+tal como numa consola. Escreva parte do nome de um ficheiro, prima tab,
+e voila! Está completo.
 
-You can reassign shortcut keys on any menu by bringing up the menu,
-selecting a menu item, and pressing the new shortcut key combination.
-This is dynamic and is saved when you exit GIMP.
+Pode redefinir teclas de atalho para qualquer menu fazendo-o aparecer,
+seleccionando um item do menu, e primindo a nova combinação de teclas
+de atalho. Isto é dinâmico e será gravado quando sair do GIMP.
 
-You can use the middle mouse button to pan around
-the image, if it's larger than its display window.
+Pode utilizar o botão do meio do rato para se deslocar pela 
+imagem, caso seja maior que a janela de visualização.
 
-Click and drag on a ruler to place a Guide on an image.  All
-dragged selections will snap to the guides.  You can remove
-guides by dragging them off the image with the Move tool.
+Clique e arraste uma régua para colocar um Guia numa imagem. Todas 
+as selecções arrastadas irão para os guias. Pode remover guias 
+arrastando-os para fora da imagem com a ferramenta de Movimento.
 
-You can drag a layer from the "Layers, Channels and Paths" dialog
-and drop it onto the toolbox.  This will create a new image
-containing only that layer.
+Pode arrastar uma camada do diálogo "Camadas, Canais e Caminhos"
+e larga-la na cauxa de ferramentas. Isto irá criar uma nova imagem
+contendo apenas aquela camada.
 
-A Floating Selection must be anchored to a new layer or to the last
-active layer before doing other operations on the image.  Click on the
-New Layer or Anchor Layer buttons in the "Layers, Channels and Paths"
-dialog, or use the menus to do the same.
+Uma Selecção Flutuante tem de estar ancorada a uma nova camada ou à
+última camada activa antes de realizar outras operações com a imagem.
+Clique nos botões Nova Camada ou Ancorar Camada no diálogo "Camadas, 
+Canais e Caminhos", ou utilize os menus para o fazer.
 
-The GIMP supports gzip compression on the fly.  Just add
-".gz" (or ".bz2", if you have bzip2 installed) to the filename
-and your image will be saved compressed.  Of course loading
-compressed images works too.
+O GIMP suporta compressão gzip automaticamente. Basta adicionar
+".gz" (ou ".bz2", se tiver o bzip2 instalado) ao nome do ficheiro
+e a sua imagem será gravada comprimida. Claro que ler imagens
+comprimidas também funciona.
 
-Pressing and holding the Shift key before making a selection allows
-you to add to the current selection instead of replacing it.  Using
-Ctrl before making a selection subtracts from the current one.
+Primir e segurar a tecla Shift antes de fazer uma selecção permite-lhe
+adicionar à selecção actual em vez de a substituir. Utilizar o Ctrl
+antes de fazer uma selecção subtrai à actual.
 
-You can press or release the Shift and Ctrl keys while you are
-making a selection in order to constrain it to a perfect square
-or circle, or to have it centered on its starting point.
+Pode primir ou largar as teclas Shift e Ctrl durante a realização
+de uma selecção por forma a limita-la a um quadrado ou círculo
+perfeito, ou torna-la centrada no ponto de partida.
 
-Using Edit->Stroke allows you to draw simple squares or circles by
-painting the edge of your current selection with the active brush.
-More complex shapes can be drawn with Filters->Render->Gfig.
+Utilizar Editar->Pincelada permite-lhe desenhar quadrados ou círculos
+simples pintando a margem da sua selecção actual com o pincel activo.
+Formas geométricas mais complexas podem ser desenhadas com Filtros->
+->Renderizar->Gfig.
 
-If you stroke a path (Edit->Stroke), the current drawing tool and its
-settings are used.  You can use the Paintbrush in gradient mode, the
-Clone tool with a pattern or even the Eraser or the Smudge tool.
+Se tiver desenhado um caminho (Editar->Pincelar), são utilizadas a
+ferramenta de desenho e as suas definições actuais. Pode utilizar o
+Spray em modo gradiente, a ferramenta de clonagem com um padrão ou
+mesmo a Borracha ou a ferramenta de Esborratar.
 
-You can create and edit complex selections using the Bezier tool.
-The "Paths" tab in the "Layers, Channels and Paths" dialog allows
-you to work on multiple paths and to convert them to selections.
+Pode criar e editar selecções complexas utilizando a ferramenta de
+Bezier. O separador "Caminhos" no diálogo "Camadas, Canais e Caminhos"
+permite-lhe trabalhar em múltiplos caminhos e converte-los em selecções.
 
-You can use the paint tools to change the selection.  Click on the
-Quick Mask button at the bottom left of an image window.  Change your
-selection by painting in the image and click on the button again to
-convert it back to a normal selection.
+Pode utilizar as ferramentas de pintura para alterar a selecção. Clique
+no botão de Máscara Rápida no canto inferior esquerdo de uma janela de
+imagem. Altere a sua selecção pintando na imagem e clique novamente no
+botão para a converter para a selecção normal.
 
-You can save a selection to a channel (Select->Save to Channel) and
-then modify this channel with any paint tools.  Using the buttons in
-the "Channels" tab of the "Layers, Channels and Paths" dialog, you can
-toggle the visibility of this new channel or convert it to a selection.
+Pode gravar uma selecção para um canal (Seleccionar->Gravar para Canal)
+e depois modificar este canal com quaisquer ferramentas de desenho.
+Utilizando os botões no separador "Canais" do diálogo "Camadas, Canais
+e Caminhos", pode slternar a visibilidade deste novo canal ou converte-lo
+novamente numa selecção.
 
 # Tips for advanced users start here
 # (this is mostly for learning shortcut keys)
