@@ -1,3 +1,9 @@
+1999-06-03  Tor Lillqvist  <tml@iki.fi>
+
+	* app/about_dialog.c (about_dialog_load_logo): As we open the ppm
+	file in binary mode, we shouldn't assume that the header lines
+	read with fgets end with just a '\n'.
+
 1999-06-02  Seth Burgess <sjburges@gimp.org>
 
 	* app/Makefile.am : Added new Files, indicator_area.[ch]

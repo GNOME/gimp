@@ -302,7 +302,8 @@ about_dialog_load_logo (GtkWidget *window)
     return 0;
 
   fgets (buf, 1024, fp);
-  if (strcmp (buf, "P6\n") != 0)
+
+  if (strncmp (buf, "P6", 2) != 0)
     {
       fclose (fp);
       return 0;
@@ -313,7 +314,7 @@ about_dialog_load_logo (GtkWidget *window)
   sscanf (buf, "%d %d", &logo_width, &logo_height);
 
   fgets (buf, 1024, fp);
-  if (strcmp (buf, "255\n") != 0)
+  if (strncmp (buf, "255", 3) != 0)
     {
       fclose (fp);
       return 0;
