@@ -31,8 +31,10 @@ Basically this does the following for you:
         the Makefiles.
 
 Before running autogen.sh or configure, make sure you have libtool in
-your path. Also make sure gtk-2.0.m4 is in the same --prefix relative
-to your automake installation.
+your path. Also make sure glib-2.0.m4 glib-gettext.m4 and gtk-2.0.m4 
+are either installed in the same $prefix/share/aclocal relative to 
+your automake/aclocal installation or call autogen.sh with
+'ACLOCAL_FLAGS="-I $prefix/share/aclocal" ./autogen.sh'.
 
 Note that autogen.sh runs configure for you.  If you wish to pass
 options like --prefix=/usr to configure you can give those options to
