@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "POT-Creation-Date: 2001-10-02 22:28+0200\n"
-"PO-Revision-Date: 2001-10-05 10:53+0200\n"
+"PO-Revision-Date: 2001-10-14 23:23+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -221,7 +221,7 @@ msgstr "<Image>/Script-Fu/Alchemia/Splecenie..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
-msgstr "<Image>/Script-Fu/Alfa na logo/Obwódka 3D..."
+msgstr "<Image>/Script-Fu/Alfa na logo/Otoczka 3D..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
@@ -281,7 +281,7 @@ msgstr "<Image>/Script-Fu/Alfa na logo/Roz¿arzone..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
-msgstr "<Image>/Script-Fu/Alfa na logo/Gradient z kantem..."
+msgstr "<Image>/Script-Fu/Alfa na logo/Gradient z faz±..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
@@ -326,7 +326,7 @@ msgstr "<Image>/Script-Fu/Animacja/Fale..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:1
 msgid "<Image>/Script-Fu/Decor/Add Bevel..."
-msgstr "<Image>/Script-Fu/Dekoracje/Dodaj kant..."
+msgstr "<Image>/Script-Fu/Dekoracje/Dodaj fazê..."
 
 #: plug-ins/script-fu/scripts/addborder.scm:1
 msgid "<Image>/Script-Fu/Decor/Add Border..."
@@ -426,7 +426,7 @@ msgstr "<Toolbox>/Dodatki/Script-Fu/Przyciski/Zaokr±glony przycisk..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr "<Toolbox>/Dodatki/Script-Fu/Przyciski/Prosty przycisk z kantem..."
+msgstr "<Toolbox>/Dodatki/Script-Fu/Przyciski/Prosty przycisk z faz±..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
@@ -498,7 +498,7 @@ msgstr "<Toolbox>/Dodatki/Script-Fu/Loga/Roz¿arzone..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr "<Toolbox>/Dodatki/Script-Fu/Loga/Gradient z kantem..."
+msgstr "<Toolbox>/Dodatki/Script-Fu/Loga/Gradient z faz±..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
@@ -637,27 +637,24 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr ""
-"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Deseñ z kantem/Strza³ka..."
+msgstr "<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Deseñ z faz±/Strza³ka..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr "<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Deseñ z kantem/Kropka..."
+msgstr "<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Deseñ z faz±/Kropka..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr ""
-"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Deseñ z kantem/Przycisk..."
+msgstr "<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Deseñ z faz±/Przycisk..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr ""
-"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Deseñ z kantem/nag³ówek..."
+msgstr "<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Deseñ z faz±/Nag³ówek..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
 msgstr ""
-"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Deseñ z kantem/Pozioma linia..."
+"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Deseñ z faz±/Pozioma linia..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
@@ -801,7 +798,7 @@ msgstr "Zastosowanie wygenerowanej maski warstwy"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:1
 msgid "Apply Layer Mask (or discard)"
-msgstr ""
+msgstr "Zastosowanie maski kana³u (lub porzucenie)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:1
 msgid "AutoCrop"
@@ -876,25 +873,25 @@ msgstr "Zachowanie"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:1
 msgid "Bevel Height (Sharpness)"
-msgstr "Wysoko¶æ kantu (ostro¶æ)"
+msgstr "Wysoko¶æ fazy (ostro¶æ)"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:1
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:1
 #: plug-ins/script-fu/scripts/pupi-button.scm:1
 msgid "Bevel Width"
-msgstr "Szeroko¶æ kantu"
+msgstr "Szeroko¶æ fazy"
 
 #: plug-ins/script-fu/scripts/glossy.scm:1
 msgid "Blend Gradient (Outline)"
-msgstr ""
+msgstr "Gradient (otoczka)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:1
 msgid "Blend Gradient (Text)"
-msgstr ""
+msgstr "Gradient (tekst)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:1
 msgid "Blend Mode"
-msgstr ""
+msgstr "Tryb gradientu"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:1
 #: plug-ins/script-fu/scripts/truchet.scm:1
@@ -971,7 +968,7 @@ msgstr "Rozmiar bufora (% wysoko¶ci tekstu)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:1
 msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr ""
+msgstr "Promieñ rozmycia mapy wypuk³o¶ci (warsty alfa)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:1
 msgid "Burst Color"
@@ -2160,7 +2157,7 @@ msgstr "U¿ycie powiêkszaj±cego siê zaznaczenia"
 
 #: plug-ins/script-fu/scripts/glossy.scm:1
 msgid "Use Pattern Overlay"
-msgstr ""
+msgstr "Wykorzystanie desenia jako na³o¿enia"
 
 #: plug-ins/script-fu/scripts/glossy.scm:1
 msgid "Use Pattern for Outline instead of Gradient"
