@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
-#include <stdio.h>
 #include "appenv.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
@@ -378,29 +377,29 @@ rect_select_button_press (Tool           *tool,
 	}
       rect_sel->op = REPLACE;
     }
-  rect_sel->context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR(gdisp->statusbar),
-						      "selection");
+
+  rect_sel->context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "selection");
   select_mode = g_new (gchar, 21); /* strlen("Selection: INTERSECT") */
   switch (rect_sel->op)
     {
     case ADD:
-      sprintf (select_mode, "Selection: ADD");
+      g_snprintf (select_mode, 21, "Selection: ADD");
       break;
     case SUB:
-      sprintf (select_mode, "Selection: SUBTRACT");
+      g_snprintf (select_mode, 21, "Selection: SUBTRACT");
       break;
     case INTERSECT:
-      sprintf (select_mode, "Selection: INTERSECT");
+      g_snprintf (select_mode, 21, "Selection: INTERSECT");
       break;
     case REPLACE:
-      sprintf (select_mode, "Selection: REPLACE");
+      g_snprintf (select_mode, 21, "Selection: REPLACE");
       break;
     default:
       break;
     }
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), 
-		      rect_sel->context_id, select_mode);
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id, select_mode);
   g_free (select_mode);
+
   draw_core_start (rect_sel->core, gdisp->canvas->window, tool);
 }
 
@@ -419,8 +418,8 @@ rect_select_button_release (Tool           *tool,
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
-  gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), 
-		     rect_sel->context_id);
+  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id);
+
   draw_core_stop (rect_sel->core, tool);
   tool->state = INACTIVE;
 
@@ -590,13 +589,13 @@ rect_select_motion (Tool           *tool,
 
       rect_sel->center = FALSE;
     }
-  gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), 
-		     rect_sel->context_id);
+
+  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id);
   size = g_new (gchar, 25); /* strlen("Selection:  x ") + 2*5 */
-  sprintf (size, "Selection: %d x %d", abs(rect_sel->w), abs(rect_sel->h));
-  gtk_statusbar_push (GTK_STATUSBAR(gdisp->statusbar), 
-		      rect_sel->context_id, size);
+  g_snprintf (size, 25, "Selection: %d x %d", abs(rect_sel->w), abs(rect_sel->h));
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id, size);
   g_free (size);
+
   draw_core_resume (rect_sel->core, tool);
 }
 

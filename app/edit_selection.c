@@ -52,6 +52,7 @@ struct _edit_selection
   int                 old_scroll_lock;     /*  old value of scroll lock           */
   int                 old_auto_snap_to;    /*  old value of auto snap to          */
 
+  guint               context_id;          /*  for the statusbar                  */
 };
 
 
@@ -96,6 +97,7 @@ init_edit_selection (Tool           *tool,
 {
   GDisplay *gdisp;
   Layer *layer;
+  gchar *offset;
   int x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -145,6 +147,13 @@ init_edit_selection (Tool           *tool,
   /*  pause the current selection  */
   selection_pause (gdisp->select);
 
+  /* initialize the statusbar display */
+  edit_select.context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar),
+							 "edit_select");
+  offset = g_new (gchar, 11); /* strlen("Move: 0, 0") */
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), edit_select.context_id, "Move: 0, 0");
+  g_free (offset);
+
   /*  Create and start the selection core  */
   edit_select.core = draw_core_new (edit_selection_draw);
   draw_core_start (edit_select.core,
@@ -171,6 +180,8 @@ edit_selection_button_release (Tool           *tool,
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
+
+  gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id);
 
   /*  Stop and free the selection core  */
   draw_core_stop (edit_select.core, tool);
@@ -274,6 +285,7 @@ edit_selection_motion (Tool           *tool,
 		       gpointer        gdisp_ptr)
 {
   GDisplay * gdisp;
+  gchar *offset;
 
   if (tool->state != ACTIVE)
     return;
@@ -283,6 +295,13 @@ edit_selection_motion (Tool           *tool,
   draw_core_pause (edit_select.core, tool);
 
   edit_selection_snap (gdisp, mevent->x, mevent->y);
+
+  gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id);
+  offset = g_new (gchar, 22); /* strlen("Move:  x ") + 2*6 */
+  g_snprintf (offset, 22, "Move: %d, %d", 
+	   (edit_select.x - edit_select.origx), (edit_select.y - edit_select.origy));
+  gtk_statusbar_push (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id, offset);
+  g_free (offset);
 
   draw_core_resume (edit_select.core, tool);
 }
@@ -477,7 +496,7 @@ edit_selection_cursor_update (Tool           *tool,
 }
 
 static int
-process_event_queue_keys(GdkEventKey *kevent, ...)
+process_event_queue_keys (GdkEventKey *kevent, ...)
 /* GdkKeyType, GdkModifierType, value ... 0 
  * could move this function to a more central location so it can be used
  * by other tools? */
