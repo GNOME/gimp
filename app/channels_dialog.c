@@ -94,7 +94,7 @@ struct _ChannelsDialog {
   int gimage_id;
   Channel * active_channel;
   Layer *floating_sel;
-  link_ptr channel_widgets;
+  GSList *channel_widgets;
 };
 
 /*  channels dialog widget routines  */
@@ -230,7 +230,7 @@ channels_dialog_flush ()
   GImage *gimage;
   Channel *channel;
   ChannelWidget *cw;
-  link_ptr list;
+  GSList *list;
   int gimage_pos;
   int pos;
 
@@ -255,7 +255,7 @@ channels_dialog_flush ()
     {
       cw = (ChannelWidget *) list->data;
       cw->visited = FALSE;
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  Add any missing channels  */
@@ -271,7 +271,7 @@ channels_dialog_flush ()
       else
 	cw->visited = TRUE;
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  Remove any extraneous auxillary channels  */
@@ -279,7 +279,7 @@ channels_dialog_flush ()
   while (list)
     {
       cw = (ChannelWidget *) list->data;
-      list = next_item (list);
+      list = g_slist_next (list);
 
       if (cw->visited == FALSE && cw->type == Auxillary)
 	/*  will only be true for auxillary channels  */
@@ -292,7 +292,7 @@ channels_dialog_flush ()
   while (list)
     {
       cw = (ChannelWidget *) list->data;
-      list = next_item (list);
+      list = g_slist_next (list);
 
       if (cw->type == Auxillary)
 	if ((gimage_pos = gimage_get_channel_index (gimage, cw->channel)) != pos)
@@ -326,7 +326,7 @@ channels_dialog_update (int gimage_id)
   ChannelWidget *cw;
   GImage *gimage;
   Channel *channel;
-  link_ptr list;
+  GSList *list;
   GList *item_list;
 
   if (!channelsD)
@@ -345,7 +345,7 @@ channels_dialog_update (int gimage_id)
   while (list)
     {
       cw = (ChannelWidget *) list->data;
-      list = next_item(list);
+      list = g_slist_next (list);
       channel_widget_delete (cw);
     }
   channelsD->channel_widgets = NULL;
@@ -365,17 +365,17 @@ channels_dialog_update (int gimage_id)
     {
     case RGB:
       cw = create_channel_widget (gimage, NULL, Red);
-      channelsD->channel_widgets = append_to_list (channelsD->channel_widgets, cw);
+      channelsD->channel_widgets = g_slist_append (channelsD->channel_widgets, cw);
       item_list = g_list_append (item_list, cw->list_item);
       channelsD->components[0] = Red;
 
       cw = create_channel_widget (gimage, NULL, Green);
-      channelsD->channel_widgets = append_to_list (channelsD->channel_widgets, cw);
+      channelsD->channel_widgets = g_slist_append (channelsD->channel_widgets, cw);
       item_list = g_list_append (item_list, cw->list_item);
       channelsD->components[1] = Green;
 
       cw = create_channel_widget (gimage, NULL, Blue);
-      channelsD->channel_widgets = append_to_list (channelsD->channel_widgets, cw);
+      channelsD->channel_widgets = g_slist_append (channelsD->channel_widgets, cw);
       item_list = g_list_append (item_list, cw->list_item);
       channelsD->components[2] = Blue;
 
@@ -384,7 +384,7 @@ channels_dialog_update (int gimage_id)
 
     case GRAY:
       cw = create_channel_widget (gimage, NULL, Gray);
-      channelsD->channel_widgets = append_to_list (channelsD->channel_widgets, cw);
+      channelsD->channel_widgets = g_slist_append (channelsD->channel_widgets, cw);
       item_list = g_list_append (item_list, cw->list_item);
       channelsD->components[0] = Gray;
 
@@ -393,7 +393,7 @@ channels_dialog_update (int gimage_id)
 
     case INDEXED:
       cw = create_channel_widget (gimage, NULL, Indexed);
-      channelsD->channel_widgets = append_to_list (channelsD->channel_widgets, cw);
+      channelsD->channel_widgets = g_slist_append (channelsD->channel_widgets, cw);
       item_list = g_list_append (item_list, cw->list_item);
       channelsD->components[0] = Indexed;
 
@@ -408,10 +408,10 @@ channels_dialog_update (int gimage_id)
       /*  create a channel list item  */
       channel = (Channel *) list->data;
       cw = create_channel_widget (gimage, channel, Auxillary);
-      channelsD->channel_widgets = append_to_list (channelsD->channel_widgets, cw);
+      channelsD->channel_widgets = g_slist_append (channelsD->channel_widgets, cw);
       item_list = g_list_append (item_list, cw->list_item);
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  get the index of the active channel  */
@@ -431,7 +431,7 @@ channels_dialog_clear ()
 void
 channels_dialog_free ()
 {
-  link_ptr list;
+  GSList *list;
   ChannelWidget *cw;
 
   if (channelsD == NULL)
@@ -446,7 +446,7 @@ channels_dialog_free ()
   while (list)
     {
       cw = (ChannelWidget *) list->data;
-      list = next_item(list);
+      list = g_slist_next (list);
       channel_widget_delete (cw);
     }
   channelsD->channel_widgets = NULL;
@@ -677,7 +677,7 @@ channels_dialog_add_channel (Channel *channel)
   item_list = g_list_append (item_list, channel_widget->list_item);
 
   position = gimage_get_channel_index (gimage, channel);
-  channelsD->channel_widgets = insert_in_list (channelsD->channel_widgets, channel_widget,
+  channelsD->channel_widgets = g_slist_insert (channelsD->channel_widgets, channel_widget,
 					       position + channelsD->num_components);
   gtk_list_insert_items (GTK_LIST (channelsD->channel_list), item_list,
 			 position + channelsD->num_components);
@@ -920,7 +920,7 @@ static ChannelWidget *
 channel_widget_get_ID (Channel *channel)
 {
   ChannelWidget *lw;
-  link_ptr list;
+  GSList *list;
 
   if (!channelsD)
     return NULL;
@@ -933,7 +933,7 @@ channel_widget_get_ID (Channel *channel)
       if (lw->channel == channel)
 	return lw;
 
-      list = next_item(list);
+      list = g_slist_next (list);
     }
 
   return NULL;
@@ -1042,7 +1042,7 @@ channel_widget_delete (ChannelWidget *channel_widget)
     gdk_pixmap_unref (channel_widget->channel_pixmap);
 
   /*  Remove the channel widget from the list  */
-  channelsD->channel_widgets = remove_from_list (channelsD->channel_widgets, channel_widget);
+  channelsD->channel_widgets = g_slist_remove (channelsD->channel_widgets, channel_widget);
 
   /*  Free the widget  */
   g_free (channel_widget);
@@ -1476,7 +1476,7 @@ channel_widget_eye_redraw (ChannelWidget *channel_widget)
 static void
 channel_widget_exclusive_visible (ChannelWidget *channel_widget)
 {
-  link_ptr list;
+  GSList *list;
   ChannelWidget *cw;
   int visible = FALSE;
 
@@ -1501,7 +1501,7 @@ channel_widget_exclusive_visible (ChannelWidget *channel_widget)
 	    }
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  Now, toggle the visibility for all channels except the specified one  */
@@ -1532,7 +1532,7 @@ channel_widget_exclusive_visible (ChannelWidget *channel_widget)
 
       channel_widget_eye_redraw (cw);
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 

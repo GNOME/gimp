@@ -31,7 +31,6 @@
 #include "interface.h"
 #include "layer.h"
 #include "layers_dialog.h"
-#include "linked.h"
 #include "paint_funcs.h"
 #include "temp_buf.h"
 #include "undo.h"
@@ -1119,7 +1118,7 @@ void
 layer_invalidate_previews (gimage_id)
      int gimage_id;
 {
-  link_ptr tmp;
+  GSList * tmp;
   Layer * layer;
   GImage * gimage;
 
@@ -1132,7 +1131,7 @@ layer_invalidate_previews (gimage_id)
     {
       layer = (Layer *) tmp->data;
       drawable_invalidate_preview (GIMP_DRAWABLE(layer));
-      tmp = next_item (tmp);
+      tmp = g_slist_next (tmp);
     }
 }
 

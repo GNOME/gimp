@@ -31,7 +31,6 @@
 #include "gimprc.h"
 #include "general.h"
 #include "interface.h"
-#include "linked.h"
 #include "menus.h"
 #include "tools.h"
 

@@ -32,7 +32,6 @@
 #include "errors.h"
 #include "general.h"
 #include "gimprc.h"
-#include "linked.h"
 #include "interface.h"
 #include "palette.h"
 
@@ -74,7 +73,7 @@ static void palette_delete_entry (PaletteP);
 static void palette_calc_scrollbar (PaletteP);
 
 static void palette_entries_load (char *);
-static link_ptr palette_entries_insert_list (link_ptr, PaletteEntriesP);
+static GSList * palette_entries_insert_list (GSList *, PaletteEntriesP);
 static void palette_entries_delete (char *);
 static void palette_entries_save (PaletteEntriesP, char *);
 static void palette_entries_free (PaletteEntriesP);
@@ -100,7 +99,7 @@ static void palette_draw_entries (PaletteP);
 static void palette_draw_current_entry (PaletteP);
 static void palette_update_current_entry (PaletteP);
 
-link_ptr palette_entries_list = NULL;
+GSList *palette_entries_list = NULL;
 
 static PaletteP         palette = NULL;
 static PaletteEntriesP  default_palette_entries = NULL;
@@ -368,7 +367,7 @@ palette_init_palettes (void)
 void
 palette_free_palettes (void)
 {
-  link_ptr list;
+  GSList *list;
   PaletteEntriesP entries;
 
   list = palette_entries_list;
@@ -383,9 +382,9 @@ palette_free_palettes (void)
 	palette_entries_save (entries, entries->filename);
 
       palette_entries_free (entries);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
-  free_list (palette_entries_list);
+  g_slist_free (palette_entries_list);
 
   if (palette)
     {
@@ -409,7 +408,7 @@ palette_create_palette_menu (PaletteP        palette,
 			     PaletteEntriesP default_entries)
 {
   GtkWidget *menu_item;
-  link_ptr list;
+  GSList *list;
   PaletteEntriesP p_entries = NULL;
   PaletteEntriesP found_entries = NULL;
   int i = 0;
@@ -421,7 +420,7 @@ palette_create_palette_menu (PaletteP        palette,
   while (list)
     {
       p_entries = (PaletteEntriesP) list->data;
-      list = next_item (list);
+      list = g_slist_next (list);
 
       /*  to make sure we get something!  */
       if (p_entries == NULL)
@@ -559,13 +558,13 @@ palette_entries_delete (char *filename)
     unlink (filename);
 }
 
-static link_ptr
-palette_entries_insert_list (link_ptr        list,
+static GSList *
+palette_entries_insert_list (GSList *        list,
 			     PaletteEntriesP entries)
 {
   /*  add it to the list  */
   num_palette_entries++;
-  return append_to_list (list, (void *) entries);
+  return g_slist_append (list, (void *) entries);
 }
 
 static void
@@ -573,7 +572,7 @@ palette_entries_save (PaletteEntriesP  palette,
 		      char            *filename)
 {
   FILE * fp;
-  link_ptr list;
+  GSList * list;
   PaletteEntryP entry;
 
   if (! filename)
@@ -595,7 +594,7 @@ palette_entries_save (PaletteEntriesP  palette,
       entry = (PaletteEntryP) list->data;
       fprintf (fp, "%d %d %d\t%s\n", entry->color[0], entry->color[1],
 	       entry->color[2], entry->name);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  Clean up  */
@@ -606,7 +605,7 @@ static void
 palette_entries_free (PaletteEntriesP entries)
 {
   PaletteEntryP entry;
-  link_ptr list;
+  GSList * list;
 
   list = entries->colors;
   while (list)
@@ -722,7 +721,7 @@ palette_color_area_events (GtkWidget *widget,
 			   PaletteP   palette)
 {
   GdkEventButton *bevent;
-  link_ptr tmp_link;
+  GSList *tmp_link;
   int r, g, b;
   int width, height;
   int entry_width;
@@ -746,7 +745,7 @@ palette_color_area_events (GtkWidget *widget,
 	  row = (palette->scroll_offset + bevent->y - 1) / entry_height;
 	  pos = row * COLUMNS + col;
 
-	  tmp_link = nth_item (palette->entries->colors, pos);
+	  tmp_link = g_slist_nth (palette->entries->colors, pos);
 	  if (tmp_link)
 	    {
 	      palette_draw_current_entry (palette);
@@ -1158,7 +1157,7 @@ palette_draw_entries (PaletteP palette)
   PaletteEntryP entry;
   unsigned char *buffer;
   unsigned char *colors[COLUMNS];
-  link_ptr tmp_link;
+  GSList *tmp_link;
   int width, height;
   int entry_width;
   int entry_height;
@@ -1293,7 +1292,7 @@ palette_add_entry (PaletteEntriesP  entries,
 	entry->name = g_strdup ("Untitled");
       entry->position = entries->n_colors;
 
-      entries->colors = append_to_list (entries->colors, entry);
+      entries->colors = g_slist_append (entries->colors, entry);
       entries->n_colors += 1;
 
       entries->changed = 1;
@@ -1308,20 +1307,20 @@ static void
 palette_delete_entry (PaletteP palette)
 {
   PaletteEntryP entry;
-  link_ptr tmp_link;
+  GSList *tmp_link;
   int pos;
 
   if (palette && palette->entries && palette->color)
     {
       entry = palette->color;
-      palette->entries->colors = remove_from_list (palette->entries->colors, entry);
+      palette->entries->colors = g_slist_remove (palette->entries->colors, entry);
       palette->entries->n_colors--;
       palette->entries->changed = 1;
 
       pos = entry->position;
       palette_entry_free (entry);
 
-      tmp_link = nth_item (palette->entries->colors, pos);
+      tmp_link = g_slist_nth (palette->entries->colors, pos);
 
       if (tmp_link)
 	{
@@ -1336,7 +1335,7 @@ palette_delete_entry (PaletteP palette)
 	}
       else
 	{
-	  tmp_link = nth_item (palette->entries->colors, pos - 1);
+	  tmp_link = g_slist_nth (palette->entries->colors, pos - 1);
 	  if (tmp_link)
 	    palette->color = tmp_link->data;
 	}

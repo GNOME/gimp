@@ -468,7 +468,7 @@ display_setup (BrushSelectP bsp)
 static void
 display_brushes (BrushSelectP bsp)
 {
-  link_ptr list = brush_list;    /*  the global brush list  */
+  GSList * list = brush_list;    /*  the global brush list  */
   int row, col;
   GBrushP brush;
 
@@ -500,7 +500,7 @@ display_brushes (BrushSelectP bsp)
 	  col = 0;
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 

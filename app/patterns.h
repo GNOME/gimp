@@ -18,7 +18,7 @@
 #ifndef __PATTERNS_H__
 #define __PATTERNS_H__
 
-#include "linked.h"
+#include <glib.h>
 #include "temp_buf.h"
 #include "procedural_db.h"
 
@@ -42,7 +42,7 @@ GPatternP           get_active_pattern         (void);
 void                create_pattern_dialog      (void);
 
 /*  global variables  */
-extern link_ptr     pattern_list;
+extern GSList *     pattern_list;
 extern int          num_patterns;
 
 /*  Pattern procedures  */

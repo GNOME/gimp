@@ -26,7 +26,6 @@
 #include "errors.h"
 #include "gimage_mask.h"
 #include "layer.h"
-#include "linked.h"
 #include "paint_funcs.h"
 #include "temp_buf.h"
 #include "undo.h"
@@ -412,7 +411,7 @@ channel_preview (Channel *channel, int width, int height)
 void
 channel_invalidate_previews (int gimage_id)
 {
-  link_ptr tmp;
+  GSList * tmp;
   Channel * channel;
   GImage * gimage;
 
@@ -425,7 +424,7 @@ channel_invalidate_previews (int gimage_id)
     {
       channel = (Channel *) tmp->data;
       drawable_invalidate_preview (GIMP_DRAWABLE(channel));
-      tmp = next_item (tmp);
+      tmp = g_slist_next (tmp);
     }
 }
 

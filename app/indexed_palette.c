@@ -475,14 +475,14 @@ create_image_menu (int              *default_id,
 		   int              *default_index,
 		   MenuItemCallback  callback)
 {
-  extern link_ptr image_list;
+  extern GSList *image_list;
 
   GImage *gimage;
   GtkWidget *menu_item;
   GtkWidget *menu;
   char *menu_item_label;
   char *image_name;
-  link_ptr tmp;
+  GSList *tmp;
   int num_items = 0;
   int id;
 
@@ -495,7 +495,7 @@ create_image_menu (int              *default_id,
   while (tmp)
     {
       gimage = tmp->data;
-      tmp = next_item (tmp);
+      tmp = g_slist_next (tmp);
 
       if (gimage_base_type (gimage) == INDEXED)
 	{

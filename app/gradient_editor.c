@@ -157,7 +157,6 @@
 #include "gimprc.h"
 #include "gradient.h"
 #include "interface.h"
-#include "linked.h"
 #include "palette.h"
 
 
@@ -556,7 +555,7 @@ static Argument *gradients_sample_custom_invoker(Argument *args);
 /***** Local variables *****/
 
 static int         num_gradients         = 0;
-static link_ptr    gradients_list        = NULL; /* The list of gradients */
+static GSList     *gradients_list        = NULL; /* The list of gradients */
 static gradient_t *curr_gradient         = NULL; /* The active gradient */
 static gradient_t *grad_default_gradient = NULL;
 
@@ -1088,7 +1087,7 @@ ed_set_hint(char *str)
 static void
 ed_set_list_of_gradients(void)
 {
-	link_ptr    list;
+	GSList     *list;
 	gradient_t *grad;
 	int         n;
 
@@ -1103,7 +1102,7 @@ ed_set_list_of_gradients(void)
 		else
 			ed_insert_in_gradients_listbox(grad, n, 0);
 
-		list = next_item(list);
+		list = g_slist_next(list);
 		n++;
 	} /* while */
 } /* ed_set_list_of_gradients */
@@ -1436,7 +1435,7 @@ static void
 ed_do_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 {
 	GList      *list;
-	link_ptr    tmp;
+	GSList     *tmp;
 	int         n;
 	gradient_t *g;
 	GtkWidget  *list_item;
@@ -1460,7 +1459,7 @@ ed_do_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 		} /* if */
 
 		n++; /* Next gradient */
-		tmp = next_item(tmp);
+		tmp = g_slist_next(tmp);
 	} /* while */
 
 	if (tmp == NULL)
@@ -1470,7 +1469,7 @@ ed_do_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 
 	list_item = curr_gradient->list_item; /* Remember list item to delete it later */
 
-	gradients_list = remove_from_list(gradients_list, curr_gradient);
+	gradients_list = g_slist_remove(gradients_list, curr_gradient);
 
 	/* Delete file and free gradient */
 
@@ -1484,7 +1483,7 @@ ed_do_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 
 	/* Select new gradient */
 
-	curr_gradient = nth_item(gradients_list, n)->data;
+	curr_gradient = g_slist_nth(gradients_list, n)->data;
 	gtk_list_select_item(GTK_LIST(g_editor->list), n);
 
 	/* Update! */
@@ -1531,13 +1530,13 @@ ed_save_pov_callback(GtkWidget *widget, gpointer client_data)
 static void
 ed_refresh_callback(GtkWidget *widget, gpointer client_data)
 {
-	link_ptr    node;
+	GSList     *node;
 	gradient_t *grad;
 	GList      *list;
 
 	list = NULL;
 
-	for (node = gradients_list; node; node = next_item(node)) {
+	for (node = gradients_list; node; node = g_slist_next(node)) {
 		grad = node->data;
 		list = g_list_append(list, grad->list_item);
 	}
@@ -5054,7 +5053,7 @@ grad_free_gradient(gradient_t *grad)
 static void
 grad_free_gradients(void)
 {
-	link_ptr    node;
+	GSList     *node;
 	gradient_t *grad;
 
 	node = gradients_list;
@@ -5069,10 +5068,10 @@ grad_free_gradients(void)
 
 		grad_free_gradient(grad);
 
-		node = next_item(node);
+		node = g_slist_next(node);
 	} /* while */
 
-	free_list(gradients_list);
+	g_slist_free(gradients_list);
 
 	num_gradients  = 0;
 	gradients_list = NULL;
@@ -5236,7 +5235,7 @@ grad_create_default_gradient(void)
 static int
 grad_insert_in_gradients_list(gradient_t *grad)
 {
-	link_ptr    tmp;
+	GSList     *tmp;
 	gradient_t *g;
 	int         n;
 
@@ -5254,11 +5253,11 @@ grad_insert_in_gradients_list(gradient_t *grad)
 			break; /* We found the one we want */
 
 		n++;
-		tmp = next_item(tmp);
+		tmp = g_slist_next(tmp);
 	} /* while */
 
 	num_gradients++;
-	gradients_list = insert_in_list(gradients_list, grad, n);
+	gradients_list = g_slist_insert(gradients_list, grad, n);
 
 	return n;
 } /* grad_insert_in_gradients_list */
@@ -5731,7 +5730,7 @@ gradients_get_list_invoker(Argument *args)
 {
 	Argument   *return_args;
 	gradient_t *grad;
-	link_ptr    list;
+	GSList     *list;
 	char      **gradients;
 	int         i;
 	int         success;
@@ -5747,7 +5746,7 @@ gradients_get_list_invoker(Argument *args)
 	while (list) {
 		grad           = list->data;
 		gradients[i++] = g_strdup(grad->name);
-		list           = next_item(list);
+		list           = g_slist_next(list);
 	} /* while */
 
 	return_args = procedural_db_return_args(&gradients_get_list_proc, success);
@@ -5857,7 +5856,7 @@ Argument *
 gradients_set_active_invoker(Argument *args)
 {
 	char       *name;
-	link_ptr    list;
+	GSList     *list;
 	gradient_t *grad;
 	int         success;
 
@@ -5890,7 +5889,7 @@ gradients_set_active_invoker(Argument *args)
 				break;
 			} /* if */
 
-			list = next_item(list);
+			list = g_slist_next(list);
 		} /* while */
 	} /* if */
 

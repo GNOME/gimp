@@ -35,7 +35,6 @@
 #include "info_window.h"
 #include "interface.h"
 #include "layers_dialog.h"
-#include "linked.h"
 #include "menus.h"
 #include "plug_in.h"
 #include "scale.h"
@@ -50,7 +49,7 @@
 #define EPSILON           5
 
 /* variable declarations */
-link_ptr               display_list = NULL;
+GSList *               display_list = NULL;
 static int             display_num  = 1;
 static GdkCursorType   default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
 
@@ -72,8 +71,8 @@ static char *image_type_strs[] =
 /*  Local functions  */
 static void       gdisplay_format_title     (GImage *, char *);
 static void       gdisplay_delete           (GDisplay *);
-static link_ptr   gdisplay_free_area_list   (link_ptr);
-static link_ptr   gdisplay_process_area_list(link_ptr, GArea *);
+static GSList *   gdisplay_free_area_list   (GSList *);
+static GSList *   gdisplay_process_area_list(GSList *, GArea *);
 static void       gdisplay_add_update_area  (GDisplay *, int, int, int, int);
 static void       gdisplay_add_display_area (GDisplay *, int, int, int, int);
 static void       gdisplay_paint_area       (GDisplay *, int, int, int, int);
@@ -124,7 +123,7 @@ gdisplay_new (GImage       *gimage,
   gdisp->snap_to_guides = TRUE;
 
   /*  add the new display to the list so that it isn't lost  */
-  display_list = append_to_list (display_list, (void *) gdisp);
+  display_list = g_slist_append (display_list, (void *) gdisp);
 
   /*  create the shell for the image  */
   create_display_shell (gdisp->ID, gimage->width, gimage->height,
@@ -215,10 +214,10 @@ gdisplay_delete (GDisplay *gdisp)
 }
 
 
-static link_ptr
-gdisplay_free_area_list (link_ptr list)
+static GSList *
+gdisplay_free_area_list (GSList *list)
 {
-  link_ptr l = list;
+  GSList *l = list;
   GArea *ga;
 
   while (l)
@@ -227,27 +226,27 @@ gdisplay_free_area_list (link_ptr list)
       ga = (GArea *) l->data;
       g_free (ga);
 
-      l = next_item (l);
+      l = g_slist_next (l);
     }
 
   if (list)
-    free_list (list);
+    g_slist_free (list);
 
   return NULL;
 }
 
 
-static link_ptr
-gdisplay_process_area_list (link_ptr  list,
-			    GArea    *ga1)
+static GSList *
+gdisplay_process_area_list (GSList *list,
+			    GArea  *ga1)
 {
-  link_ptr new_list;
-  link_ptr l = list;
+  GSList *new_list;
+  GSList *l = list;
   int area1, area2, area3;
   GArea *ga2;
 
   /*  start new list off  */
-  new_list = add_to_list (NULL, ga1);
+  new_list = g_slist_prepend (NULL, ga1);
   while (l)
     {
       /*  process the data  */
@@ -258,7 +257,7 @@ gdisplay_process_area_list (link_ptr  list,
 	(MAXIMUM (ga2->y2, ga1->y2) - MINIMUM (ga2->y1, ga1->y1)) + OVERHEAD;
 
       if ((area1 + area2) < area3)
-	new_list = add_to_list (new_list, ga2);
+	new_list = g_slist_prepend (new_list, ga2);
       else
 	{
 	  ga1->x1 = MINIMUM (ga1->x1, ga2->x1);
@@ -269,11 +268,11 @@ gdisplay_process_area_list (link_ptr  list,
 	  g_free (ga2);
 	}
 
-      l = next_item (l);
+      l = g_slist_next (l);
     }
 
   if (list)
-    free_list (list);
+    g_slist_free (list);
 
   return new_list;
 }
@@ -282,8 +281,8 @@ gdisplay_process_area_list (link_ptr  list,
 void
 gdisplay_flush (GDisplay *gdisp)
 {
-  GArea * ga;
-  link_ptr list;
+  GArea  *ga;
+  GSList *list;
 
   /*  Flush the items in the displays and updates lists--
    *  but only if gdisplay has been mapped and exposed
@@ -300,7 +299,7 @@ gdisplay_flush (GDisplay *gdisp)
       gdisplay_paint_area (gdisp, ga->x1, ga->y1,
 			   (ga->x2 - ga->x1), (ga->y2 - ga->y1));
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
   /*  Free the update lists  */
   gdisp->update_areas = gdisplay_free_area_list (gdisp->update_areas);
@@ -320,7 +319,7 @@ gdisplay_flush (GDisplay *gdisp)
 	  gdisplay_display_area (gdisp, ga->x1, ga->y1,
 				 (ga->x2 - ga->x1), (ga->y2 - ga->y1));
 
-	  list = next_item (list);
+	  list = g_slist_next (list);
 	}
       /*  Free the update lists  */
       gdisp->display_areas = gdisplay_free_area_list (gdisp->display_areas);
@@ -614,7 +613,7 @@ void
 gdisplay_remove_and_delete (GDisplay *gdisp)
 {
   /* remove the display from the list */
-  display_list = remove_from_list (display_list, (void *) gdisp);
+  display_list = g_slist_remove (display_list, (void *) gdisp);
   gdisplay_delete (gdisp);
 }
 
@@ -1130,7 +1129,7 @@ GDisplay *
 gdisplay_get_ID (int ID)
 {
   GDisplay *gdisp;
-  link_ptr list = display_list;
+  GSList *list = display_list;
 
   /*  Traverse the list of displays, returning the one that matches the ID  */
   /*  If no display in the list is a match, return NULL.                    */
@@ -1140,7 +1139,7 @@ gdisplay_get_ID (int ID)
       if (gdisp->ID == ID)
 	return gdisp;
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return NULL;
@@ -1151,7 +1150,7 @@ void
 gdisplays_update_title (int ID)
 {
   GDisplay *gdisp;
-  link_ptr list = display_list;
+  GSList *list = display_list;
   char title [MAX_TITLE_BUF];
 
   /*  traverse the linked list of displays, handling each one  */
@@ -1165,7 +1164,7 @@ gdisplays_update_title (int ID)
 	  gdk_window_set_title (gdisp->shell->window, title);
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 
@@ -1178,7 +1177,7 @@ gdisplays_update_area (int ID,
 		       int h)
 {
   GDisplay *gdisp;
-  link_ptr list = display_list;
+  GSList *list = display_list;
   int x1, y1, x2, y2;
   int count = 0;
 
@@ -1202,7 +1201,7 @@ gdisplays_update_area (int ID,
 	  count++;
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 
@@ -1212,7 +1211,7 @@ gdisplays_expose_guides (int ID)
 {
   GDisplay *gdisp;
   GList *tmp_list;
-  link_ptr list;
+  GSList *list;
 
   /*  traverse the linked list of displays, handling each one  */
   list = display_list;
@@ -1229,7 +1228,7 @@ gdisplays_expose_guides (int ID)
 	    }
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 
@@ -1239,7 +1238,7 @@ gdisplays_expose_guide (int    ID,
 			Guide *guide)
 {
   GDisplay *gdisp;
-  link_ptr list;
+  GSList *list;
 
   /*  traverse the linked list of displays, handling each one  */
   list = display_list;
@@ -1249,7 +1248,7 @@ gdisplays_expose_guide (int    ID,
       if (gdisp->gimage->ID == ID)
 	gdisplay_expose_guide (gdisp, guide);
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 
@@ -1258,7 +1257,7 @@ void
 gdisplays_update_full (int ID)
 {
   GDisplay *gdisp;
-  link_ptr list = display_list;
+  GSList *list = display_list;
   int count = 0;
 
   /*  traverse the linked list of displays, handling each one  */
@@ -1279,7 +1278,7 @@ gdisplays_update_full (int ID)
 	  count++;
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 
@@ -1288,7 +1287,7 @@ void
 gdisplays_shrink_wrap (int ID)
 {
   GDisplay *gdisp;
-  link_ptr list = display_list;
+  GSList *list = display_list;
 
   /*  traverse the linked list of displays, handling each one  */
   while (list)
@@ -1297,7 +1296,7 @@ gdisplays_shrink_wrap (int ID)
       if (gdisp->gimage->ID == ID)
 	shrink_wrap_display (gdisp);
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 
@@ -1306,14 +1305,14 @@ void
 gdisplays_expose_full ()
 {
   GDisplay *gdisp;
-  link_ptr list = display_list;
+  GSList *list = display_list;
 
   /*  traverse the linked list of displays, handling each one  */
   while (list)
     {
       gdisp = (GDisplay *) list->data;
       gdisplay_expose_full (gdisp);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 
@@ -1323,7 +1322,7 @@ gdisplays_selection_visibility (int              gimage_ID,
 				SelectionControl function)
 {
   GDisplay *gdisp;
-  link_ptr list = display_list;
+  GSList *list = display_list;
   int count = 0;
 
   /*  traverse the linked list of displays, handling each one  */
@@ -1353,7 +1352,7 @@ gdisplays_selection_visibility (int              gimage_ID,
 	  count++;
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 
@@ -1362,14 +1361,14 @@ int
 gdisplays_dirty ()
 {
   int dirty = 0;
-  link_ptr list = display_list;
+  GSList *list = display_list;
 
   /*  traverse the linked list of displays  */
   while (list)
     {
       if (((GDisplay *) list->data)->gimage->dirty > 0)
 	dirty = 1;
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return dirty;
@@ -1379,17 +1378,17 @@ gdisplays_dirty ()
 void
 gdisplays_delete ()
 {
-  link_ptr list = display_list;
+  GSList *list = display_list;
 
   /*  traverse the linked list of displays  */
   while (list)
     {
       gdisplay_delete ((GDisplay *) list->data);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  free up linked list data  */
-  free_list (display_list);
+  g_slist_free (display_list);
 }
 
 
@@ -1397,7 +1396,7 @@ void
 gdisplays_flush ()
 {
   static int flushing = FALSE;
-  link_ptr list = display_list;
+  GSList *list = display_list;
 
   /*  no flushing necessary without an interface  */
   if (no_interface)
@@ -1413,7 +1412,7 @@ gdisplays_flush ()
   while (list)
     {
       gdisplay_flush ((GDisplay *) list->data);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  for convenience, we call the layers dialog flush here  */

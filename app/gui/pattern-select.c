@@ -373,7 +373,7 @@ display_setup (PatternSelectP psp)
 static void
 display_patterns (PatternSelectP psp)
 {
-  link_ptr list = pattern_list;    /*  the global pattern list  */
+  GSList *list = pattern_list;    /*  the global pattern list  */
   int row, col;
   GPatternP pattern;
 
@@ -405,7 +405,7 @@ display_patterns (PatternSelectP psp)
 	  col = 0;
 	}
 
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 

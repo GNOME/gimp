@@ -24,7 +24,6 @@
 #include "free_select.h"
 #include "gimage_mask.h"
 #include "gdisplay.h"
-#include "linked.h"
 #include "rect_select.h"
 
 typedef struct _free_select FreeSelect;
@@ -80,38 +79,38 @@ add_point (int num_pts, int x, int y)
 
 /*  Routines to scan convert the polygon  */
 
-static link_ptr
-insert_into_sorted_list (link_ptr list, int x)
+static GSList *
+insert_into_sorted_list (GSList *list, int x)
 {
-  link_ptr orig = list;
-  link_ptr rest;
+  GSList *orig = list;
+  GSList *rest;
 
   if (!list)
-    return add_to_list (list, (gpointer) ((long) x));
+    return g_slist_prepend (list, (gpointer) ((long) x));
 
   while (list)
     {
-      rest = next_item (list);
+      rest = g_slist_next (list);
       if (x < (long) list->data)
 	{
-	  rest = add_to_list (rest, list->data);
+	  rest = g_slist_prepend (rest, list->data);
 	  list->next = rest;
 	  list->data = (gpointer) ((long) x);
 	  return orig;
 	}
       else if (!rest)
 	{
-	  append_to_list (list, (gpointer) ((long) x));
+	  g_slist_append (list, (gpointer) ((long) x));
 	  return orig;
 	}
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return orig;
 }
 
 static void
-convert_segment (link_ptr *scanlines, int width, int height,
+convert_segment (GSList **scanlines, int width, int height,
 		 int x1, int y1, int x2, int y2)
 {
   int ydiff, y, tmp;
@@ -141,8 +140,8 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
 {
   PixelRegion maskPR;
   Channel * mask;
-  link_ptr * scanlines;
-  link_ptr list;
+  GSList **scanlines;
+  GSList *list;
   unsigned char *buf, *b;
   int * vals, val;
   int start, end;
@@ -166,7 +165,7 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
       vals = (int *) g_malloc (sizeof (int) * width);
     }
 
-  scanlines = (link_ptr *) g_malloc (sizeof (link_ptr) * height);
+  scanlines = (GSList **) g_malloc (sizeof (GSList *) * height);
   for (i = 0; i < height; i++)
     scanlines[i] = NULL;
 
@@ -211,7 +210,7 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
       while (list)
 	{
 	  x = (long) list->data;
-	  list = next_item(list);
+	  list = g_slist_next(list);
 	  if (!list)
 	      warning ("Cannot properly scanline convert polygon!\n");
 	  else
@@ -230,7 +229,7 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
 		    for (j = 0; j < w; j++)
 		      vals[j + x] += 255;
 		}
-	      list = next_item (list);
+	      list = g_slist_next (list);
 	    }
 	}
 
@@ -252,7 +251,7 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
 				drawable_width (GIMP_DRAWABLE(mask)), buf);
 	}
 
-      free_list (scanlines[i]);
+      g_slist_free (scanlines[i]);
     }
 
   if (antialias)

@@ -179,8 +179,6 @@ gimp_SOURCES = \
 	layers_dialogP.h	\
 	levels.c		\
 	levels.h		\
-	linked.h		\
-	linked.c		\
 	magnify.c		\
 	magnify.h		\
 	main.c			\

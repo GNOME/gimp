@@ -30,7 +30,6 @@
 #include "gimprc.h"
 #include "indexed_palette.h"
 #include "layer.h"
-#include "linked.h"
 #include "paint_core.h"
 #include "paint_funcs.h"
 #include "tools.h"
@@ -135,9 +134,9 @@ channel_size (Channel *channel)
 static void
 undo_free_list (GImage   *gimage,
 		int       state,
-		link_ptr  list)
+		GSList   *list)
 {
-  link_ptr orig;
+  GSList * orig;
   Undo * undo;
 
   orig = list;
@@ -151,17 +150,18 @@ undo_free_list (GImage   *gimage,
 	  gimage->undo_bytes -= undo->bytes;
 	  g_free (undo);
 	}
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
-  free_list (orig);
+  g_slist_free (orig);
 }
 
 
-static link_ptr
+static GSList *
 remove_stack_bottom (GImage *gimage)
 {
-  link_ptr list, last;
+  GSList *list;
+  GSList *last;
   int in_group = 0;
 
   list = gimage->undo_stack;
@@ -193,7 +193,7 @@ remove_stack_bottom (GImage *gimage)
 	      (!list->data && !in_group))
 	  last = list;
 
-	  list = next_item (list);
+	  list = g_slist_next (list);
 	}
     }
 
@@ -258,21 +258,21 @@ undo_push (GImage *gimage,
   else
     new->type = gimage->pushing_undo_group;
 
-  gimage->undo_stack = add_to_list (gimage->undo_stack, (void *) new);
+  gimage->undo_stack = g_slist_prepend (gimage->undo_stack, (void *) new);
 
   return new;
 }
 
 
 static int
-pop_stack (GImage   *gimage,
-	   link_ptr *stack_ptr,
-	   link_ptr *unstack_ptr,
+pop_stack (GImage  *gimage,
+	   GSList **stack_ptr,
+	   GSList **unstack_ptr,
 	   int       state)
 {
   Undo * object;
-  link_ptr stack;
-  link_ptr tmp;
+  GSList *stack;
+  GSList *tmp;
   int status = 0;
   int in_group = 0;
 
@@ -302,12 +302,12 @@ pop_stack (GImage   *gimage,
 	    gimage->undo_levels += (state == UNDO) ? -1 : 1;
 	}
 
-      *unstack_ptr = add_to_list (*unstack_ptr, (void *) object);
+      *unstack_ptr = g_slist_prepend (*unstack_ptr, (void *) object);
 
       tmp = stack;
-      *stack_ptr = next_item (*stack_ptr);
+      *stack_ptr = g_slist_next (*stack_ptr);
       tmp->next = NULL;
-      free_list (tmp);
+      g_slist_free (tmp);
 
       if (status && !in_group)
 	{
@@ -381,7 +381,7 @@ undo_push_group_start (GImage *gimage,
     return FALSE;
 
   gimage->pushing_undo_group = type;
-  gimage->undo_stack = add_to_list (gimage->undo_stack, NULL);
+  gimage->undo_stack = g_slist_prepend (gimage->undo_stack, NULL);
   gimage->undo_levels++;
 
   return TRUE;
@@ -399,7 +399,7 @@ undo_push_group_end (GImage *gimage)
   if (group_count == 0)
     {
       gimage->pushing_undo_group = 0;
-      gimage->undo_stack = add_to_list (gimage->undo_stack, NULL);
+      gimage->undo_stack = g_slist_prepend (gimage->undo_stack, NULL);
     }
 
   return TRUE;
@@ -1072,8 +1072,8 @@ undo_pop_layer (GImage *gimage,
       gimage_set_active_layer (gimage, lu->prev_layer);
 
       /*  remove the layer  */
-      gimage->layers = remove_from_list (gimage->layers, lu->layer);
-      gimage->layer_stack = remove_from_list (gimage->layer_stack, lu->layer);
+      gimage->layers = g_slist_remove (gimage->layers, lu->layer);
+      gimage->layer_stack = g_slist_remove (gimage->layer_stack, lu->layer);
 
       /*  reset the gimage values  */
       if (layer_is_floating_sel (lu->layer))
@@ -1100,8 +1100,8 @@ undo_pop_layer (GImage *gimage,
 	gimage->floating_sel = lu->layer;
 
       /*  add the new layer  */
-      gimage->layers = insert_in_list (gimage->layers, lu->layer, lu->prev_position);
-      gimage->layer_stack = add_to_list (gimage->layer_stack, lu->layer);
+      gimage->layers = g_slist_insert (gimage->layers, lu->layer, lu->prev_position);
+      gimage->layer_stack = g_slist_prepend (gimage->layer_stack, lu->layer);
       gimage->active_layer = lu->layer;
       drawable_update (GIMP_DRAWABLE(lu->layer), 0, 0, GIMP_DRAWABLE(lu->layer)->width, GIMP_DRAWABLE(lu->layer)->height);
     }
@@ -1443,7 +1443,7 @@ undo_pop_channel (GImage *gimage,
       cu->prev_position = gimage_get_channel_index (gimage, cu->channel);
 
       /*  remove the channel  */
-      gimage->channels = remove_from_list (gimage->channels, cu->channel);
+      gimage->channels = g_slist_remove (gimage->channels, cu->channel);
 
       /*  set the previous channel  */
       gimage_set_active_channel (gimage, cu->prev_channel);
@@ -1458,7 +1458,7 @@ undo_pop_channel (GImage *gimage,
       cu->prev_channel = gimage->active_channel;
 
       /*  add the new channel  */
-      gimage->channels = insert_in_list (gimage->channels, cu->channel, cu->prev_position);
+      gimage->channels = g_slist_insert (gimage->channels, cu->channel, cu->prev_position);
 
       /*  set the new channel  */
       gimage_set_active_channel (gimage, cu->channel);

@@ -26,6 +26,8 @@
 #include "appenv.h"
 #include "bezier_selectP.h"
 #include "draw_core.h"
+#include "channel_pvt.h"
+#include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
@@ -229,8 +231,8 @@ static void   make_curve_d              (int *, int *, double, int);
 /*  Catmull-Rom boundary conversion  */
 static void   CR_convert                (Iscissors * , GDisplay *, int);
 static void   CR_convert_points         (GdkPoint *, int);
-static void   CR_convert_line           (link_ptr *, int, int, int, int);
-static link_ptr CR_insert_in_list       (link_ptr, int);
+static void   CR_convert_line           (GSList **, int, int, int, int);
+static GSList * CR_insert_in_list       (GSList *, int);
 
 
 /*******************************************************/
@@ -441,12 +443,12 @@ iscissors_button_press (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
 
-  message_box ("Intelligent Scissors is currently not enabled\nfor use with the tile-based GIMP",
+  /* message_box ("Intelligent Scissors is currently not enabled\nfor use with the tile-based GIMP",
 	       NULL, NULL);
-  return;
+  return;*/
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
-			       &iscissors->x, &iscissors->y, FALSE, 1);
+			       &iscissors->x, &iscissors->y, FALSE, TRUE);
 
   /*  If the tool was being used in another image...reset it  */
   if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr)
@@ -484,11 +486,11 @@ iscissors_button_press (Tool           *tool,
 	  }
 
       /*  If the edge map blocks haven't been allocated, do so now  */
-      /*FIX      if (!edge_map_blocks)
+      if (!edge_map_blocks)
 	allocate_edge_map_blocks (BLOCK_WIDTH, BLOCK_HEIGHT,
-				  gimage_width (gdisp->gimage),
-				  gimage_height (gdisp->gimage));
-				  */
+				  gdisp->gimage->width,
+				  gdisp->gimage->height);
+				  
       iscissors->num_segs = 0;
       add_segment (&(iscissors->num_segs), bevent->x, bevent->y);
 
@@ -497,7 +499,7 @@ iscissors_button_press (Tool           *tool,
 		       tool);
       break;
     case BOUNDARY_MODE:
-      if (channel_value (iscissors->mask, iscissors->x, iscissors->y))
+      if (/*channel_value (iscissors->mask, iscissors->x, iscissors->y)*/ TRUE)
 	{
 	  replace = 0;
 	  if (bevent->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK))
@@ -560,7 +562,7 @@ iscissors_button_release (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
 
-  return;
+  /*return;*/
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
@@ -696,7 +698,7 @@ iscissors_draw_CR (GDisplay  *gdisp,
 	  break;
 	case SCREEN_COORDS:
 	  gdisplay_transform_coords_f (gdisp, (int) pts[indices[i]].dx,
-				       (int) pts[indices[i]].dy, &x, &y, FALSE);
+				       (int) pts[indices[i]].dy, &x, &y, TRUE);
 	  geometry[i][0] = x;
 	  geometry[i][1] = y;
 	  break;
@@ -987,6 +989,7 @@ get_kink (Kink *kinks,
       return kinks + index;
     }
 
+  /* I don't think this ever gets called -- Rockwalrus */
   return NULL;
 }
 
@@ -1311,9 +1314,9 @@ process_kinks (Tool *tool)
     {
       /*  transform from screen to image coordinates  */
       gdisplay_untransform_coords (gdisp, kinks[i].x, kinks[i].y,
-				   &x, &y, FALSE, FALSE);
-      /*FIXkinks[i].x = BOUNDS (x, 0, (gimage_width (gdisp->gimage) - 1));
-      kinks[i].y = BOUNDS (y, 0, (gimage_height (gdisp->gimage) - 1));*/
+				   &x, &y, FALSE, TRUE);
+      kinks[i].x = BOUNDS (x, 0, (gdisp->gimage->width - 1));
+      kinks[i].y = BOUNDS (y, 0, (gdisp->gimage->height - 1));
 
       /*  get local maximums  */
       k_left = get_kink (kinks, i-1, iscissors->num_kinks);
@@ -1398,21 +1401,21 @@ edge_map_from_boundary (Tool *tool)
 
   x = y = w = h = x1 = y1 = x2 = y2 = 0;
   
-  /*FIXx1 = gimage_width (gdisp->gimage);
-  y1 = gimage_height (gdisp->gimage);*/
+  x1 = gdisp->gimage->width;
+  y1 = gdisp->gimage->height;
 
   /*  Find the edge map extents  */
   for (i = 0; i < iscissors->num_pts; i++)
     {
-      /*FIX      x = BOUNDS (pts[i].x - LOCALIZE_RADIUS, 0,
-		  gimage_width (gdisp->gimage));
+      x = BOUNDS (pts[i].x - LOCALIZE_RADIUS, 0,
+		  gdisp->gimage->width);
       y = BOUNDS (pts[i].y - LOCALIZE_RADIUS, 0,
-		  gimage_height (gdisp->gimage));
+		  gdisp->gimage->height);
       w = BOUNDS (pts[i].x + LOCALIZE_RADIUS, 0,
-		  gimage_width (gdisp->gimage));
+		  gdisp->gimage->width);
       h = BOUNDS (pts[i].y + LOCALIZE_RADIUS, 0,
-		  gimage_height (gdisp->gimage));
-		  */
+		  gdisp->gimage->height);
+		  
       w -= x;
       h -= y;
 
@@ -1444,7 +1447,7 @@ orient_boundary (Tool *tool)
   double edge1[EDGE_WIDTH], edge2[EDGE_WIDTH];
   double max;
   double angle;
-  int dir;
+  int dir = 0;
   int i, j;
   int max_dir;
   int max_orient;
@@ -1746,7 +1749,13 @@ calculate_edge_map (GImage *gimage,
   int xx, yy;
   unsigned char *gr, * dh, * dv, * cm;
   int hmax, vmax;
+  int b;
   double prev, next;
+  GimpDrawable *drawable;
+  void *pr;
+  FILE *dump;
+
+  drawable = gimage_active_drawable (gimage);
 
   x1 = y1 = x2 = y2 = 0;
 
@@ -1754,31 +1763,38 @@ calculate_edge_map (GImage *gimage,
   edge_map = temp_buf_new (w, h, EDGE_WIDTH, x, y, NULL);
 
   /*  calculate the extent of the search make a 1 pixel border */
-  /*FIXx1 = BOUNDS (x, 0, gimage_width (gimage));
-  y1 = BOUNDS (y, 0, gimage_height (gimage));
-  x2 = BOUNDS (x + w, 0, gimage_width (gimage));
-  y2 = BOUNDS (y + h, 0, gimage_height (gimage));*/
+  x1 = BOUNDS (x, 0, gimage->width);
+  y1 = BOUNDS (y, 0, gimage->height);
+  x2 = BOUNDS (x + w, 0, gimage->width);
+  y2 = BOUNDS (y + h, 0, gimage->height);
 
   width = x2 - x1;
   height = y2 - y1;
   offx = (x - x1);
   offy = (y - y1);
 
-  /*  Set the gimage up as the source pixel region  */
-  /* FIX srcPR.bytes = gimage_bytes (gimage);*/
+  /*  Set the drawable up as the source pixel region  */
+  /*srcPR.bytes = drawable_bytes (drawable);
   srcPR.w = width;
   srcPR.h = height;
-  /* FIX srcPR.rowstride = gimage_width (gimage) * gimage_bytes (gimage);*/
-  /*FIXsrcPR.data = gimage_data (gimage) + y1 * srcPR.rowstride + x1 * srcPR.bytes;*/
+  srcPR.rowstride = gimage->width * drawable_bytes (drawable);
+  srcPR.data = drawable_data (drawable) + y1 * srcPR.rowstride + x1 * srcPR.bytes;*/
+
+  pixel_region_init(&srcPR, drawable_data(drawable), x1, y1, width, height, 1);
 
   /*  Get the horizontal derivative  */
   destPR.data = conv1 + MAX_CHANNELS * (CONV_WIDTH * offy + offx);
   destPR.rowstride = CONV_WIDTH * MAX_CHANNELS;
-  gaussian_deriv (&srcPR, &destPR, HORIZONTAL, std_dev);
+  destPR.tiles = NULL;
+
+  for (pr =pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+    gaussian_deriv (&srcPR, &destPR, HORIZONTAL, std_dev);
 
   /*  Get the vertical derivative  */
   destPR.data = conv2 + MAX_CHANNELS * (CONV_WIDTH * offy + offx);
-  gaussian_deriv (&srcPR, &destPR, VERTICAL, std_dev);
+
+  for (pr =pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+    gaussian_deriv (&srcPR, &destPR, VERTICAL, std_dev);
 
   /*  fill in the edge map  */
 
@@ -1792,11 +1808,13 @@ calculate_edge_map (GImage *gimage,
 	{
 	  hmax = dh[0] - 128;
 	  vmax = dv[0] - 128;
-	  /*FIX	  for (b = 1; b < gimage_bytes (gimage); b++)
+	  for (b = 1; b < drawable_bytes (drawable); b++)
 	    {
-	      if (abs (dh[b] - 128) > abs (hmax)) hmax = dh[b] - 128;
-	      if (abs (dv[b] - 128) > abs (vmax)) vmax = dv[b] - 128;
-	    }*/
+	      if (abs (dh[b] - 128) > abs (hmax)) 
+		hmax = dh[b] - 128;
+	      if (abs (dv[b] - 128) > abs (vmax)) 
+		vmax = dv[b] - 128;
+	    }
 
 	  /*  store the information in the edge map  */
 	  dh[0] = hmax + 128;
@@ -1819,7 +1837,7 @@ calculate_edge_map (GImage *gimage,
     }
 
   /*  Make the edge gradient map extend one row further  */
-  memcpy (grad, grad + (CONV_WIDTH+2), (CONV_WIDTH+2));
+   memcpy (grad, grad + (CONV_WIDTH+2), (CONV_WIDTH+2));
   memcpy (grad + (CONV_WIDTH+2) * (CONV_HEIGHT+1),
 	  grad + (CONV_WIDTH+2) * (CONV_HEIGHT),
 	  (CONV_WIDTH+2));
@@ -1851,18 +1869,22 @@ calculate_edge_map (GImage *gimage,
 	  else
 	    *cm++ = 0;
 
-	  /*
-	  *cm++ = dh[0];
-	  *cm++ = dv[0];
-	  */
+	  
+	  /*cm++ = dh[0];*/
+	  /*cm++ = dv[0];*/
+	 
 
 	  dh += srcPR.bytes;
 	  dv += srcPR.bytes;
 	  gr ++;
 	}
     }
+ /*  dump=fopen("/ugrad/summersn/dump", "w"); */
+/*   fprintf(dump, "P5\n%d %d\n255\n", edge_map->width, edge_map->height); */
+/*   fwrite(edge_map->data, edge_map->width * edge_map->height, sizeof (guchar), dump); */
+/*   fclose (dump); */
 
-  return edge_map;
+  return edge_map; 
 }
 
 static void
@@ -1877,10 +1899,17 @@ construct_edge_map (Tool    *tool,
   int offx, offy;
   int x2, y2;
   PixelRegion srcPR, destPR;
+  FILE *dump;
 
   /*  init some variables  */
   srcPR.bytes = edge_buf->bytes;
   destPR.rowstride = edge_buf->bytes * edge_buf->width;
+  destPR.x = edge_buf->x;
+  destPR.y = edge_buf->y;
+  destPR.h = edge_buf->height;
+  destPR.w = edge_buf -> width;
+  destPR.bytes = edge_buf->bytes;
+  srcPR.tiles = destPR.tiles = NULL;
 
   y = edge_buf->y;
   endx = edge_buf->x + edge_buf->width;
@@ -1906,7 +1935,7 @@ construct_edge_map (Tool    *tool,
 	/*  If the block exists, patch it into buf  */
 	if (block)
 	  {
-	    /* calculate x offset into the block  */
+ 	    /* calculate x offset into the block  */ 
 	    offx = (x - col * BLOCK_WIDTH);
 	    x2 = (col + 1) * BLOCK_WIDTH;
 	    if (x2 > endx) x2 = endx;
@@ -1929,8 +1958,12 @@ construct_edge_map (Tool    *tool,
       y = row * BLOCK_HEIGHT;
     }
 
-  /*  show the edge buffer  */
-  /*  temp_buf_to_gdisplay (edge_buf);*/
+  /*  dump the edge buffer for debugging*/
+
+   /* dump=fopen("/ugrad/summersn/dump", "w"); 
+   fprintf(dump, "P5\n%d %d\n255\n", edge_buf->width, edge_buf->height); 
+   fwrite(edge_buf->data, edge_buf->width * edge_buf->height, sizeof (guchar), dump); 
+   fclose (dump); */
 }
 
 
@@ -1955,8 +1988,8 @@ set_edge_map_blocks (void *gimage_ptr,
   width = height = 0;
 
   gimage = (GImage *) gimage_ptr;
-  /*FIXwidth = gimage_width (gimage);*/
-  /*FIXheight = gimage_height (gimage);*/
+  width = gimage->width;
+  height = gimage->height;
 
   startx = x;
   endx = x + w;
@@ -2327,7 +2360,7 @@ make_curve_d (int    *curve,
 /*   Functions for Catmull-Rom area conversion */
 /***********************************************/
 
-static link_ptr * CR_scanlines;
+static GSList **CR_scanlines;
 static int start_convert;
 static int width, height;
 static int lastx;
@@ -2339,12 +2372,13 @@ CR_convert (Iscissors *iscissors,
 	    int        antialias)
 {
   int indices[4];
-  link_ptr list;
-  unsigned char *dest;
+  GSList *list;
   int draw_type;
   int * vals, val;
   int x, w;
   int i, j;
+  PixelRegion maskPR;
+  unsigned char *buf, *b;
 
   vals = NULL;
 
@@ -2363,12 +2397,15 @@ CR_convert (Iscissors *iscissors,
       draw_type = AA_IMAGE_COORDS;
       /* allocate value array  */
       vals = (int *) g_malloc (sizeof (int) * width);
+      buf = (unsigned char *) g_malloc  (sizeof(unsigned char *) * width);
     }
   else
     {
       width = gdisp->gimage->width;
       height = gdisp->gimage->height;
       draw_type = IMAGE_COORDS;
+      buf = NULL;
+      vals = NULL;
     }
 
   /* create a new mask */
@@ -2376,7 +2413,7 @@ CR_convert (Iscissors *iscissors,
 				      gdisp->gimage->height);
 
   /* allocate room for the scanlines */
-  CR_scanlines = g_malloc (sizeof (link_ptr) * height);
+  CR_scanlines = g_malloc (sizeof (GSList *) * height);
 
   /* zero out the scanlines */
   for (i = 0; i < height; i++)
@@ -2394,7 +2431,9 @@ CR_convert (Iscissors *iscissors,
       iscissors_draw_CR (gdisp, iscissors, pts, indices, draw_type);
     }
 
-  dest = channel_data (iscissors->mask);
+  pixel_region_init (&maskPR, iscissors->mask->drawable.tiles, 0, 0,
+		     iscissors->mask->drawable.width,
+		     iscissors->mask->drawable.height, TRUE);
 
   for (i = 0; i < height; i++)
     {
@@ -2418,21 +2457,25 @@ CR_convert (Iscissors *iscissors,
 		for (j = 0; j < w; j++)
 		  vals[j + x] += 255;
 
-              list = next_item (list);
+              list = g_slist_next (list);
             }
         }
 
       if (antialias && !((i+1) % SUPERSAMPLE))
-	for (j = 0; j < width; j += SUPERSAMPLE)
-	  {
-	    val = 0;
-	    for (x = 0; x < SUPERSAMPLE; x++)
-	      val += vals[j + x];
+	{
+	  b = buf;
+	  for (j = 0; j < width; j += SUPERSAMPLE)
+	    {
+	      val = 0;
+	      for (x = 0; x < SUPERSAMPLE; x++)
+		val += vals[j + x];
 
-	    *dest++ = val / SUPERSAMPLE2;
-	  }
+	      *b++ = (unsigned char) (val / SUPERSAMPLE2);
+	    }
+	  pixel_region_set_row (&maskPR, 0, (i / SUPERSAMPLE), iscissors->mask->drawable.width, buf);
+	}
 
-      free_list (CR_scanlines[i]);
+      g_slist_free (CR_scanlines[i]);
     }
 
   if (antialias)
@@ -2465,11 +2508,11 @@ CR_convert_points (GdkPoint *points,
 }
 
 static void
-CR_convert_line (link_ptr *scanlines,
-		 int       x1,
-		 int       y1,
-		 int       x2,
-		 int       y2)
+CR_convert_line (GSList **scanlines,
+		 int      x1,
+		 int      y1,
+		 int      x2,
+		 int      y2)
 {
   int dx, dy;
   int error, inc;
@@ -2581,32 +2624,32 @@ CR_convert_line (link_ptr *scanlines,
     }
 }
 
-static link_ptr
-CR_insert_in_list (link_ptr list,
-		   int      x)
+static GSList *
+CR_insert_in_list (GSList *list,
+		   int     x)
 {
-  link_ptr orig = list;
-  link_ptr rest;
+  GSList *orig = list;
+  GSList *rest;
 
   if (!list)
-    return add_to_list (list, (gpointer) ((long) x));
+    return g_slist_prepend (list, (gpointer) ((long) x));
 
   while (list)
     {
-      rest = next_item (list);
+      rest = g_slist_next (list);
       if (x < (long) list->data)
         {
-          rest = add_to_list (rest, list->data);
+          rest = g_slist_prepend (rest, list->data);
           list->next = rest;
           list->data = (gpointer) ((long) x);
           return orig;
         }
       else if (!rest)
         {
-          append_to_list (list, (gpointer) ((long) x));
+          g_slist_append (list, (gpointer) ((long) x));
           return orig;
         }
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   return orig;

@@ -122,7 +122,7 @@ info_dialog_new (char *title)
 void
 info_dialog_free (InfoDialog *idialog)
 {
-  link_ptr list;
+  GSList *list;
 
   if (!idialog)
     return;
@@ -133,11 +133,11 @@ info_dialog_free (InfoDialog *idialog)
   while (list)
     {
       g_free (list->data);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
   /*  Free the actual field linked list  */
-  free_list (idialog->field_list);
+  g_slist_free (idialog->field_list);
 
   /*  Destroy the associated widgets  */
   gtk_widget_destroy (idialog->shell);
@@ -157,7 +157,7 @@ info_dialog_add_field (InfoDialog *idialog,
     return;
 
   new_field = info_field_new (idialog, title, text_ptr);
-  idialog->field_list = add_to_list (idialog->field_list, (void *) new_field);
+  idialog->field_list = g_slist_prepend (idialog->field_list, (void *) new_field);
 }
 
 void
@@ -183,7 +183,7 @@ info_dialog_popdown (InfoDialog *idialog)
 void
 info_dialog_update (InfoDialog *idialog)
 {
-  link_ptr list;
+  GSList *list;
 
   if (!idialog)
     return;
@@ -193,7 +193,7 @@ info_dialog_update (InfoDialog *idialog)
   while (list)
     {
       update_field ((InfoField *) list->data);
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 }
 

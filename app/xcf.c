@@ -418,7 +418,7 @@ xcf_save_image (XcfInfo *info,
   guint32 offset;
   guint nlayers;
   guint nchannels;
-  link_ptr list;
+  GSList *list;
   int have_selection;
   int t1, t2, t3, t4;
   char version_tag[14];
@@ -444,8 +444,8 @@ xcf_save_image (XcfInfo *info,
   info->cp += xcf_write_int32 (info->fp, (guint32*) &gimage->base_type, 1);
 
   /* determine the number of layers and channels in the image */
-  nlayers = (guint) list_length (gimage->layers);
-  nchannels = (guint) list_length (gimage->channels);
+  nlayers = (guint) g_slist_length (gimage->layers);
+  nchannels = (guint) g_slist_length (gimage->channels);
 
   /* check and see if we have to save out the selection */
   have_selection = gimage_mask_bounds (gimage, &t1, &t2, &t3, &t4);
@@ -835,7 +835,7 @@ xcf_save_prop (XcfInfo  *info,
 	int nguides;
 
 	guides = va_arg (args, GList*);
-	nguides = g_list_length (guides);
+	nguides = g_slist_length (guides);
 
 	size = nguides * (4 + 1);
 
@@ -1276,7 +1276,7 @@ xcf_load_image (XcfInfo *info)
 
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
-	gimage_add_layer (gimage, layer, list_length (gimage->layers));
+	gimage_add_layer (gimage, layer, g_slist_length (gimage->layers));
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.

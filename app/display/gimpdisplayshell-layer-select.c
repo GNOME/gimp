@@ -179,8 +179,8 @@ layer_select_advance (LayerSelect *layer_select,
   int index;
   int length;
   int count;
-  link_ptr list;
-  link_ptr nth;
+  GSList *list;
+  GSList *nth;
   Layer *layer;
 
   index = 0;
@@ -197,17 +197,17 @@ layer_select_advance (LayerSelect *layer_select,
       if (layer == layer_select->current_layer)
 	index = count;
       count++;
-      list = next_item (list);
+      list = g_slist_next (list);
     }
 
-  length = list_length (layer_select->gimage->layer_stack);
+  length = g_slist_length (layer_select->gimage->layer_stack);
 
   if (dir == 1)
     index = (index == length - 1) ? 0 : (index + 1);
   else
     index = (index == 0) ? (length - 1) : (index - 1);
 
-  nth = nth_item (layer_select->gimage->layer_stack, index);
+  nth = g_slist_nth (layer_select->gimage->layer_stack, index);
 
   if (nth)
     {
