@@ -50,14 +50,31 @@ struct _Style
   gint          ref_count;
 };
 
+gboolean gfig_load_style                   (Style                *style,
+                                            FILE                 *fp);
+
+gboolean gfig_skip_style                   (Style                *style,
+                                            FILE                 *fp);
+
+gboolean gfig_load_styles                  (GFigObj              *gfig,
+                                            FILE                 *fp);
+
+void     gfig_save_style                   (Style                *style,
+                                            GString              *string);
+
+void     gfig_style_save_as_attributes     (Style                *style,
+                                            GString              *string);
+
+void     gfig_save_styles                  (GString              *string);
+
 void     set_foreground_callback           (GimpColorButton      *button,
                                             gpointer              data);
 
 void     set_background_callback           (GimpColorButton      *button,
                                             gpointer              data);
+
 void     set_paint_type_callback           (GtkToggleButton      *toggle,
                                             gpointer              data);
-
 
 void     gfig_brush_changed_callback       (const gchar          *brush_name,
                                             gdouble               opacity,
@@ -83,18 +100,6 @@ void     gfig_gradient_changed_callback    (const gchar          *gradient_name,
                                             gboolean              dialog_closing,
                                             gpointer              user_data);
 
-void     mygimp_brush_info                 (gint                 *width,
-                                            gint                 *height);
-
-void     gfig_read_gimp_style              (Style                *style,
-                                            const gchar          *name);
-
-void     gfig_style_apply                  (Style                *style);
-
-void     gfig_style_copy                   (Style                *style1,
-                                            Style                *style0,
-                                            const gchar          *name);
-
 void     gfig_rgba_copy                    (GimpRGB              *color1,
                                             GimpRGB              *color2);
 
@@ -102,26 +107,17 @@ void     gfig_style_copy                   (Style                *style1,
                                             Style                *style0,
                                             const gchar          *name);
 
-gboolean gfig_load_style                   (Style                *style,
-                                            FILE                 *fp);
+void     gfig_style_apply                  (Style                *style);
 
-gboolean gfig_skip_style                   (Style                *style,
-                                            FILE                 *fp);
-
-gboolean gfig_load_styles                  (GFigObj              *gfig,
-                                            FILE                 *fp);
-
-void     gfig_save_style                   (Style                *style,
-                                            GString              *string);
-
-void     gfig_style_save_as_attributes     (Style                *style,
-                                            GString              *string);
-
-void     gfig_save_styles                  (GString              *string);
+void     gfig_read_gimp_style              (Style                *style,
+                                            const gchar          *name);
 
 void     gfig_style_set_context_from_style (Style                *style);
 
 void     gfig_style_set_style_from_context (Style                *style);
+
+void     mygimp_brush_info                 (gint                 *width,
+                                            gint                 *height);
 
 Style   *gfig_context_get_current_style    (void);
 

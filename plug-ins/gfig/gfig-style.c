@@ -20,7 +20,7 @@
 static void gfig_read_parameter_string   (gchar **text,
                                           gint    nitems,
                                           gchar  *name,
-                                          gchar  **style_entry);
+                                          gchar **style_entry);
 
 
 static void gfig_read_parameter_int      (gchar **text,
@@ -177,7 +177,7 @@ gfig_read_parameter_gimp_rgb (gchar  **text,
 
 gboolean
 gfig_load_style (Style *style,
-                 FILE    *fp)
+                 FILE  *fp)
 {
   gulong  offset;
   gchar   load_buf2[MAX_LOAD_LINE];
@@ -249,7 +249,7 @@ gfig_load_style (Style *style,
 
 gboolean
 gfig_skip_style (Style *style,
-                 FILE    *fp)
+                 FILE  *fp)
 {
   gulong offset;
   gchar  load_buf2[MAX_LOAD_LINE];
@@ -285,7 +285,7 @@ gfig_skip_style (Style *style,
  */
 gboolean
 gfig_load_styles (GFigObj *gfig,
-                  FILE *fp)
+                  FILE    *fp)
 {
   if (gfig_context->debug_styles)
     g_printerr ("Loading global styles -- ");
@@ -458,15 +458,15 @@ set_paint_type_callback (GtkToggleButton *toggle,
  * gfig_context->enable_repaint is FALSE).
  */
 void
-gfig_brush_changed_callback (const gchar *brush_name,
-                             gdouble opacity,
-                             gint spacing,
-                             GimpLayerModeEffects paint_mode,
-                             gint width,
-                             gint height,
-                             const guchar *mask_data,
-                             gboolean dialog_closing,
-                             gpointer user_data)
+gfig_brush_changed_callback (const gchar          *brush_name,
+                             gdouble               opacity,
+                             gint                  spacing,
+                             GimpLayerModeEffects  paint_mode,
+                             gint                  width,
+                             gint                  height,
+                             const guchar         *mask_data,
+                             gboolean              dialog_closing,
+                             gpointer              user_data)
 {
   Style *current_style;
 
@@ -483,13 +483,13 @@ gfig_brush_changed_callback (const gchar *brush_name,
 }
 
 void
-gfig_pattern_changed_callback (const gchar *pattern_name,
-                               gint width,
-                               gint height,
-                               gint bpp,
+gfig_pattern_changed_callback (const gchar  *pattern_name,
+                               gint          width,
+                               gint          height,
+                               gint          bpp,
                                const guchar *mask_data,
-                               gboolean dialog_closing,
-                               gpointer user_data)
+                               gboolean      dialog_closing,
+                               gpointer      user_data)
 {
   Style *current_style;
 
@@ -500,11 +500,11 @@ gfig_pattern_changed_callback (const gchar *pattern_name,
 }
 
 void
-gfig_gradient_changed_callback (const gchar *gradient_name,
-                                gint width,
+gfig_gradient_changed_callback (const gchar   *gradient_name,
+                                gint           width,
                                 const gdouble *grad_data,
-                                gboolean dialog_closing,
-                                gpointer user_data)
+                                gboolean       dialog_closing,
+                                gpointer       user_data)
 {
   Style *current_style;
 
@@ -525,8 +525,8 @@ gfig_rgba_copy (GimpRGB *color1,
 }
 
 void
-gfig_style_copy (Style *style1,
-                 Style *style0,
+gfig_style_copy (Style       *style1,
+                 Style       *style0,
                  const gchar *name)
 {
   if (name)
@@ -585,7 +585,7 @@ gfig_style_apply (Style *style)
  * a style.  The function does not cause a repaint.
  */
 void
-gfig_read_gimp_style (Style *style,
+gfig_read_gimp_style (Style       *style,
                       const gchar *name)
 {
   gint dummy;

@@ -1,3 +1,7 @@
+2004-11-30  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/*[ch]: code cleanup
+
 2004-11-29  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/display.pdb: make it work as documented (fail

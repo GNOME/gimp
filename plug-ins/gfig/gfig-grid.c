@@ -47,9 +47,13 @@
 static GdkGC *grid_hightlight_drawgc;
 gint          grid_gc_type = GTK_STATE_NORMAL;
 
-static GdkGC *gfig_get_grid_gc       (GtkWidget *widget,
-                                      gint       gctype);
-static gint   get_num_radials        (void);
+static void   draw_grid_polar  (GdkGC     *drawgc);
+static void   draw_grid_sq     (GdkGC     *drawgc);
+static void   draw_grid_iso    (GdkGC     *drawgc);
+
+static GdkGC *gfig_get_grid_gc (GtkWidget *widget,
+                                gint       gctype);
+static gint   get_num_radials  (void);
 
 /* find_grid_pos - Given an x, y point return the grid position of it */
 /* return the new position in the passed point */

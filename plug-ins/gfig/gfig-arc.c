@@ -587,7 +587,6 @@ d_arc_end (GdkPoint *pnt,
       tmp_line->type = ARC;
       tmp_line->class = &dobj_class[ARC];
       d_line_end (pnt, FALSE);
-      /*d_draw_line (newarc);  Should undraw line */
       if (need_to_scale)
         {
           selvals.scaletoimage = 0;

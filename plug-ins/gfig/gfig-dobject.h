@@ -69,11 +69,6 @@ extern GfigObject *obj_creating;
 extern GfigObject *tmp_line;
 
 
-void        d_pnt_add_line           (GfigObject *obj,
-                                      gint        x,
-                                      gint        y,
-                                      gint        pos);
-
 DobjPoints *new_dobjpoint            (gint        x,
                                       gint        y);
 void        do_save_obj              (GfigObject *obj,

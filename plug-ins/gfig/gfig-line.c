@@ -39,7 +39,12 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-GfigObject *
+
+static GfigObject *d_copy_line  (GfigObject *obj);
+static void        d_draw_line  (GfigObject *obj);
+static void        d_paint_line (GfigObject *obj);
+
+static GfigObject *
 d_copy_line (GfigObject *obj)
 {
   GfigObject *nl;
@@ -52,7 +57,7 @@ d_copy_line (GfigObject *obj)
   return nl;
 }
 
-void
+static void
 d_draw_line (GfigObject *obj)
 {
   DobjPoints *spnt;
@@ -76,7 +81,7 @@ d_draw_line (GfigObject *obj)
   draw_sqr (&spnt->pnt, obj == gfig_context->selected_obj);
 }
 
-void
+static void
 d_paint_line (GfigObject *obj)
 {
   DobjPoints *spnt;

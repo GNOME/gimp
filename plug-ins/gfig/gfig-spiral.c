@@ -37,6 +37,7 @@
 
 #include "gfig.h"
 #include "gfig-dobject.h"
+#include "gfig-line.h"
 #include "gfig-dialog.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -329,7 +330,7 @@ d_update_spiral (GdkPoint *pnt)
 
 void
 d_spiral_start (GdkPoint *pnt,
-                gint      shift_down)
+                gboolean  shift_down)
 {
   obj_creating = d_new_object (SPIRAL, pnt->x, pnt->y);
   obj_creating->type_data = spiral_num_turns * ((spiral_toggle == 0) ? 1 : -1);
@@ -337,7 +338,7 @@ d_spiral_start (GdkPoint *pnt,
 
 void
 d_spiral_end (GdkPoint *pnt,
-              gint     shift_down)
+              gboolean  shift_down)
 {
   draw_circle (pnt, TRUE);
   add_to_all_obj (gfig_context->current_obj, obj_creating);

@@ -344,7 +344,7 @@ get_nearest_objs (GFigObj  *obj,
 
 void
 object_operation_start (GdkPoint *pnt,
-                        gint      shift_down)
+                        gboolean  shift_down)
 {
   GfigObject *new_obj;
 
@@ -441,7 +441,7 @@ object_operation_start (GdkPoint *pnt,
 
 void
 object_operation_end (GdkPoint *pnt,
-                      gint      shift_down)
+                      gboolean  shift_down)
 {
   if (selvals.otype != DEL_OBJ && operation_obj &&
       operation_obj->type == BEZIER)
@@ -470,7 +470,7 @@ object_operation_end (GdkPoint *pnt,
 /* Move object around */
 void
 object_operation (GdkPoint *to_pnt,
-                  gint      shift_down)
+                  gboolean  shift_down)
 {
   /* Must do diffent things depending on object type */
   /* but must have object to operate on! */
@@ -835,7 +835,7 @@ object_start (GdkPoint *pnt,
 
 void
 object_end (GdkPoint *pnt,
-            gint      shift_down)
+            gboolean  shift_down)
 {
   /* end for the current object */
   /* Add onto global object list */

@@ -35,6 +35,7 @@
 #include <libgimp/gimpui.h>
 
 #include "gfig.h"
+#include "gfig-line.h"
 #include "gfig-dobject.h"
 #include "gfig-dialog.h"
 
@@ -392,7 +393,7 @@ d_update_star (GdkPoint *pnt)
 
 void
 d_star_start (GdkPoint *pnt,
-              gint      shift_down)
+              gboolean  shift_down)
 {
   obj_creating = d_new_object (STAR, pnt->x, pnt->y);
   obj_creating->type_data = star_num_sides;
@@ -400,7 +401,7 @@ d_star_start (GdkPoint *pnt,
 
 void
 d_star_end (GdkPoint *pnt,
-            gint      shift_down)
+            gboolean  shift_down)
 {
   draw_circle (pnt, TRUE);
   add_to_all_obj (gfig_context->current_obj, obj_creating);

@@ -28,16 +28,17 @@
 
 void tool_options_poly        (GtkWidget  *notebook);
 
+void d_paint_poly             (GfigObject *obj);
+
+void d_poly2lines             (GfigObject *obj);
+void d_star2lines             (GfigObject *obj);
+
+void d_poly_object_class_init (void);
+
 void d_update_poly            (GdkPoint   *pnt);
 void d_poly_start             (GdkPoint   *pnt,
                                gboolean    shift_down);
 void d_poly_end               (GdkPoint   *pnt,
                                gboolean    shift_down);
-
-void d_paint_poly             (GfigObject *obj);
-
-void d_poly2lines             (GfigObject *obj);
-void d_star2lines             (GfigObject *obj);
-void d_poly_object_class_init (void);
 
 #endif /* __GFIG_POLY_H__ */

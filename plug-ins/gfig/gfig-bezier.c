@@ -35,6 +35,7 @@
 #include <libgimp/gimpui.h>
 
 #include "gfig.h"
+#include "gfig-line.h"
 #include "gfig-dobject.h"
 #include "gfig-dialog.h"
 

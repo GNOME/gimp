@@ -202,8 +202,6 @@ void    gfig_draw_line          (gint x0,
                                  gint x1,
                                  gint y1);
 
-gboolean gfig_preview_expose    (GtkWidget *widget,
-                                 GdkEvent  *event);
 void      gfig_paint_callback   (void);
 GFigObj  *gfig_load             (const gchar *filename,
                                  const gchar *name);

@@ -41,6 +41,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+static void        d_draw_ellipse  (GfigObject *obj);
+static void        d_paint_ellipse (GfigObject *obj);
+static GfigObject *d_copy_ellipse  (GfigObject *obj);
+
 static void
 d_draw_ellipse (GfigObject * obj)
 {
@@ -250,13 +254,15 @@ d_update_ellipse (GdkPoint *pnt)
 }
 
 void
-d_ellipse_start (GdkPoint *pnt, gint shift_down)
+d_ellipse_start (GdkPoint *pnt,
+                 gboolean  shift_down)
 {
   obj_creating = d_new_object (ELLIPSE, pnt->x, pnt->y);
 }
 
 void
-d_ellipse_end (GdkPoint *pnt, gint shift_down)
+d_ellipse_end (GdkPoint *pnt,
+               gboolean  shift_down)
 {
   /* Under contrl point */
   if (!obj_creating->points->next)
@@ -272,3 +278,4 @@ d_ellipse_end (GdkPoint *pnt, gint shift_down)
 
   obj_creating = NULL;
 }
+

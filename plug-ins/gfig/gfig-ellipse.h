@@ -26,9 +26,13 @@
 #ifndef __GFIG_ELLIPSE_H__
 #define __GFIG_ELLIPSE_H__
 
-void d_update_ellipse            (GdkPoint *pnt);
-void d_ellipse_start             (GdkPoint *pnt, gint shift_down);
-void d_ellipse_end               (GdkPoint *pnt, gint shift_down);
 void d_ellipse_object_class_init (void);
 
-#endif /* __GFIG_CIRCLE_H__ */
+void d_update_ellipse            (GdkPoint *pnt);
+
+void d_ellipse_start             (GdkPoint *pnt,
+                                  gboolean  shift_down);
+void d_ellipse_end               (GdkPoint *pnt,
+                                  gboolean  shift_down);
+
+#endif /* __GFIG_ELLIPSE_H__ */

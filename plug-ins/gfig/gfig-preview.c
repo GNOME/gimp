@@ -55,17 +55,18 @@ GtkWidget        *status_label_fname;
 static GtkWidget *pos_label;       /* XY pos marker */
 
 
-static void       gfig_preview_realize (GtkWidget *widget);
-static gboolean   gfig_preview_events  (GtkWidget *widget,
-                                        GdkEvent  *event);
+static void       gfig_preview_realize  (GtkWidget *widget);
+static gboolean   gfig_preview_events   (GtkWidget *widget,
+                                         GdkEvent  *event);
 
-static gint       gfig_invscale_x      (gint x);
-static gint       gfig_invscale_y      (gint y);
-static GtkWidget *gfig_pos_labels      (void);
-static GtkWidget *make_pos_info        (void);
+static gint       gfig_invscale_x        (gint      x);
+static gint       gfig_invscale_y        (gint      y);
+static GtkWidget *gfig_pos_labels        (void);
+static GtkWidget *make_pos_info          (void);
 
-static void       gfig_pos_update      (gint x,
-                                        gint y);
+static void       gfig_pos_update        (gint      x,
+                                          gint      y);
+static void       gfig_pos_update_labels (gpointer  data);
 
 GtkWidget *
 make_preview (void)
@@ -181,7 +182,7 @@ gfig_preview_expose (GtkWidget *widget,
   return FALSE;
 }
 
-static gint
+static gboolean
 gfig_preview_events (GtkWidget *widget,
                      GdkEvent  *event)
 {
@@ -322,7 +323,7 @@ gfig_preview_events (GtkWidget *widget,
   return FALSE;
 }
 
-static GtkWidget*
+static GtkWidget *
 make_pos_info (void)
 {
   GtkWidget *frame;
