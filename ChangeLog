@@ -1,3 +1,11 @@
+Tue Feb  8 14:59:43 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpexport.c: Be more intelligent when dealing with invisible
+	layers. Export should now always save what you see. Unless there is no 
+	visible layer at all, then we save the active layer. Export doesn't call 
+	gimp_merge_visible_layers any more if less than two layers are visible.
+	Fixes bug #5701.
+
 Tue Feb  8 13:12:26 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/by_color_select.c: made it behave like the other non-toolbox

@@ -46,14 +46,40 @@ static void
 export_merge (gint32  image_ID,
 	      gint32 *drawable_ID)
 {
-  gint nlayers;
-  gint i;
+  gint32  nlayers;
+  gint32  nvisible = 0;
+  gint32  i;
   gint32 *layers;
+  gint32  visible = *drawable_ID;
+  gint32  merged;
 
-  *drawable_ID = gimp_image_merge_visible_layers (image_ID, GIMP_CLIP_TO_IMAGE);
+  layers = gimp_image_get_layers (image_ID, &nlayers);
+  for (i = 0; i < nlayers; i++)
+    {
+      if (gimp_drawable_visible (layers[i]))
+	{
+	  nvisible++;
+	  visible = layers[i];
+	}
+    }
+
+  if (nvisible == 1 && *drawable_ID != visible)
+    *drawable_ID = visible;    
+
+  if (nvisible > 1)
+    {
+      g_free (layers);
+      merged = gimp_image_merge_visible_layers (image_ID, GIMP_CLIP_TO_IMAGE);
+
+      if (merged != -1)
+	*drawable_ID = merged;
+      else
+	return;  /* shouldn't happen */
+      
+      layers = gimp_image_get_layers (image_ID, &nlayers);
+    }    
   
   /* remove any remaining (invisible) layers */ 
-  layers = gimp_image_get_layers (image_ID, &nlayers);
   for (i = 0; i < nlayers; i++)
     {
       if (layers[i] != *drawable_ID)
@@ -66,7 +92,12 @@ static void
 export_flatten (gint32  image_ID,
 		gint32 *drawable_ID)
 {  
-  *drawable_ID = gimp_image_flatten (image_ID);
+  gint32 flattened;
+  
+  flattened = gimp_image_flatten (image_ID);
+
+  if (flattened != -1)
+    *drawable_ID = flattened;
 }
 
 static void
@@ -87,7 +118,7 @@ static void
 export_convert_indexed (gint32  image_ID,
 			gint32 *drawable_ID)
 {  
-  gint nlayers;
+  gint32 nlayers;
   
   /* check alpha */
   g_free (gimp_image_get_layers (image_ID, &nlayers));
@@ -101,8 +132,8 @@ static void
 export_add_alpha (gint32  image_ID,
 		  gint32 *drawable_ID)
 {  
-  gint nlayers;
-  gint i;
+  gint32  nlayers;
+  gint32  i;
   gint32 *layers;
 
   layers = gimp_image_get_layers (image_ID, &nlayers);
@@ -363,8 +394,7 @@ export_dialog (GSList *actions,
     }
 
   /* the footline */
-  label = gtk_label_new (_("The export conversion won't modify "
-			   "your original image."));
+  label = gtk_label_new (_("The export conversion won't modify your original image."));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -410,8 +440,8 @@ gimp_export_image (gint32                 *image_ID,
   GSList *actions = NULL;
   GSList *list;
   GimpImageBaseType type;
-  gint i;
-  gint nlayers;
+  gint32  i;
+  gint32  nlayers;
   gint32* layers;
   gboolean added_flatten = FALSE;
 
