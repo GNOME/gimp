@@ -19,6 +19,7 @@
 #include <glib.h>
 #include "brush_scale.h"
 
+
 MaskBuf *
 brush_scale_mask (MaskBuf *brush_mask,
 		  int      dest_width, 
@@ -164,3 +165,180 @@ brush_scale_mask (MaskBuf *brush_mask,
 
   return scale_brush;
 }
+
+
+#define ADD_RGB(dest, factor, src) \
+  dest[0] += factor * src[0]; \
+  dest[1] += factor * src[1]; \
+  dest[2] += factor * src[2];
+
+MaskBuf *
+brush_scale_pixmap (MaskBuf *pixmap,
+		    int      dest_width, 
+		    int      dest_height)
+{
+  MaskBuf *scale_brush;
+  int src_width;
+  int src_height;
+  int value[3];
+  int factor;
+  int area;
+  int i, j;
+  int x, x0, y, y0;
+  int dx, dx0, dy, dy0;
+  int fx, fx0, fy, fy0;
+  unsigned char *src, *src_ptr, *dest;
+
+  g_return_val_if_fail (pixmap != NULL && pixmap->bytes == 3 &&
+			dest_width != 0 && dest_height != 0, NULL);
+
+  src_width  = pixmap->width;
+  src_height = pixmap->height;
+
+  scale_brush = temp_buf_new (dest_width, dest_height, 3, 0, 0, NULL);
+  g_return_val_if_fail (scale_brush != NULL, NULL);
+
+  /*  get the data  */
+  dest = mask_buf_data (scale_brush);
+  src  = mask_buf_data (pixmap);
+
+  fx = fx0 = (256.0 * src_width) / dest_width;
+  fy = fy0 = (256.0 * src_height) / dest_height;
+  area = fx0 * fy0;
+
+  x = x0 = 0;
+  y = y0 = 0;
+  dx = dx0 = 0;
+  dy = dy0 = 0;
+
+  for (i=0; i<dest_height; i++)
+    {
+      for (j=0; j<dest_width; j++)
+	{
+	  value[0] = 0;
+	  value[1] = 0;
+	  value[2] = 0;
+
+	  fy = fy0;
+	  y  = y0;
+	  dy = dy0;
+	   
+	  if (dy)
+	    {
+	      fx = fx0;
+	      x  = x0;
+	      dx = dx0;
+	      
+	      if (dx)
+		{
+		  factor = dx * dy;
+		  src_ptr = src + 3 * (x + y * src_width);
+		  ADD_RGB (value, factor, src_ptr);
+		  x++;
+		  fx -= dx;
+		  dx = 0;
+		}
+	      while (fx >= 256)
+		{
+		  factor = 256 * dy;
+		  src_ptr = src + 3 * (x + y * src_width);
+		  ADD_RGB (value, factor, src_ptr);
+		  x++;
+		  fx -= 256;
+		}
+	      if (fx)
+		{
+		  factor = fx * dy;
+		  src_ptr = src + 3 * (x + y * src_width);
+		  ADD_RGB (value, factor, src_ptr);
+		  dx = 256 - fx;
+		}	      
+	      y++;
+	      fy -= dy;
+	      dy = 0;
+	    }  
+	  
+	  while (fy >= 256)
+	    {
+	      fx = fx0;
+	      x  = x0;
+	      dx = dx0;
+	      
+	      if (dx)
+		{
+		  factor = dx * 256;
+		  src_ptr = src + 3 * (x + y * src_width);
+		  ADD_RGB (value, factor, src_ptr);
+		  x++;
+		  fx -= dx;
+		  dx = 0;
+		}
+	      while (fx >= 256)
+		{
+		  factor = 256 * 256;
+		  src_ptr = src + 3 * (x + y * src_width);
+		  ADD_RGB (value, factor, src_ptr);
+		  x++;
+		  fx -= 256;
+		}
+	      if (fx)
+		{
+		  factor = fx * 256;
+		  src_ptr = src + 3 * (x + y * src_width);
+		  ADD_RGB (value, factor, src_ptr);
+		  dx = 256 - fx;
+		}
+	      y++;
+	      fy -= 256;
+	    }
+	  
+	  if (fy)
+	    {
+	      fx = fx0;
+	      x  = x0;
+	      dx = dx0;
+	      
+	      if (dx)
+		{
+		  factor = dx * fy;
+		  src_ptr = src + 3 * (x + y * src_width);
+		  ADD_RGB (value, factor, src_ptr);
+		  x++;
+		  fx -= dx;
+		  dx = 0;
+		}
+	      while (fx >= 256)
+		{
+		  factor = 256 * fy;
+		  src_ptr = src + 3 * (x + y * src_width);
+		  ADD_RGB (value, factor, src_ptr);
+		  x++;
+		  fx -= 256;
+		}
+	      if (fx)
+		{
+		  factor = fx * fy;
+		  src_ptr = src + 3 * (x + y * src_width);
+		  ADD_RGB (value, factor, src_ptr);
+		  dx = 256 - fx;
+		}
+	      dy = 256 - fy;
+	    }  	  
+	  
+	  *dest++ = MIN ((value[0] / area), 255);
+	  *dest++ = MIN ((value[1] / area), 255);
+	  *dest++ = MIN ((value[2] / area), 255);
+	
+	  x0  = x;
+	  dx0 = dx;
+	}
+      x0  = 0;
+      dx0 = 0;
+      y0  = y;
+      dy0 = dy;
+    }
+
+  return scale_brush;
+}
+
+#undef ADD_RGB

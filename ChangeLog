@@ -1,3 +1,9 @@
+Sat Aug 21 22:32:25 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/brush_select.c
+	* app/brush_scale.[ch]: implemented brush_scaling for pixmap brushes.
+	This commit is done only to get some working code in before I start to
+	move all the brush_preview crap into one central place.
 
 Sat Aug 21 20:30:48 BST 1999  Adam D. Moss  <adam@gimp.org>
 

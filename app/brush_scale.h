@@ -43,7 +43,8 @@ static unsigned char brush_scale_indicator_bits[7][7][3] =
 
 /*  functions   */
 
-MaskBuf * brush_scale_mask (MaskBuf *, int, int);
+MaskBuf * brush_scale_mask   (MaskBuf *, int, int);
+MaskBuf * brush_scale_pixmap (MaskBuf *, int, int);
 
 #endif  /*  __BRUSH_SCALE_H__  */
 

@@ -817,23 +817,30 @@ display_brush (BrushSelectP bsp,
   int ystart;
   int i, j;
 
-  brush_buf = brush->mask;
+  brush_buf = GIMP_IS_BRUSH_PIXMAP (brush) ? GIMP_BRUSH_PIXMAP(brush)->pixmap_mask 
+                                           : brush->mask;
 
-  if (!GIMP_IS_BRUSH_PIXMAP(brush) && /* can't scale color brushes yet */
-      (brush_buf->width > bsp->cell_width || 
-       brush_buf->height > bsp->cell_height))
+  if (brush_buf->width > bsp->cell_width || brush_buf->height > bsp->cell_height)
     {
       double ratio_x = (double)brush_buf->width / bsp->cell_width;
       double ratio_y = (double)brush_buf->height / bsp->cell_height;
    
       if (ratio_x >= ratio_y)
-	brush_buf = brush_scale_mask (brush_buf, 
-				      (double)(brush_buf->width) / ratio_x, 
-				      (double)(brush_buf->height) / ratio_x);
+	brush_buf = GIMP_IS_BRUSH_PIXMAP (brush) ?
+	  brush_scale_pixmap (brush_buf, 
+			      (double)(brush_buf->width) / ratio_x, 
+			      (double)(brush_buf->height) / ratio_x) :
+	  brush_scale_mask (brush_buf, 
+			    (double)(brush_buf->width) / ratio_x, 
+			    (double)(brush_buf->height) / ratio_x);
       else
-	brush_buf = brush_scale_mask (brush_buf, 
-				      (double)(brush_buf->width) / ratio_y,
-				      (double)(brush_buf->height) / ratio_y);
+	brush_buf = GIMP_IS_BRUSH_PIXMAP (brush) ?
+	  brush_scale_pixmap (brush_buf, 
+			      (double)(brush_buf->width) / ratio_y, 
+			      (double)(brush_buf->height) / ratio_y) :
+	  brush_scale_mask (brush_buf, 
+			    (double)(brush_buf->width) / ratio_y, 
+			    (double)(brush_buf->height) / ratio_y);
       scale = TRUE;
     }
 
@@ -853,13 +860,12 @@ display_brush (BrushSelectP bsp,
   /*  Get the pointer into the brush mask data  */
   if (GIMP_IS_BRUSH_PIXMAP (brush)) 
     {
-      GimpBrushPixmap *pixmapbrush = GIMP_BRUSH_PIXMAP(brush);
-      src = (gchar *) temp_buf_data (pixmapbrush->pixmap_mask) + (ystart - offset_y) * brush->mask->width * 3;
+      src  = mask_buf_data (brush_buf) + (ystart - offset_y) * brush_buf->width * 3;
       for (i = ystart; i < yend; i++)
 	{
 	  gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), src,
 				offset_x, i, width);
-	  src += brush->mask->width * 3;
+	  src += brush_buf->width * 3;
 	}
     }
   else 
