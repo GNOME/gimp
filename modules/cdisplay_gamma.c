@@ -84,7 +84,7 @@ static void    gamma_configure_adj_callback     (GtkAdjustment    *adj,
                                                  CdisplayGamma    *gamma);
 
 
-static const GimpModuleInfo cdisplay_gamma_info = 
+static const GimpModuleInfo cdisplay_gamma_info =
 {
   GIMP_MODULE_ABI_VERSION,
   N_("Gamma color display filter"),
@@ -178,9 +178,7 @@ cdisplay_gamma_init (CdisplayGamma *gamma)
 static void
 cdisplay_gamma_finalize (GObject *object)
 {
-  CdisplayGamma *gamma;
-
-  gamma = CDISPLAY_GAMMA (object);
+  CdisplayGamma *gamma = CDISPLAY_GAMMA (object);
 
   if (gamma->hbox)
     gtk_widget_destroy (gamma->hbox);
@@ -198,15 +196,13 @@ cdisplay_gamma_finalize (GObject *object)
 static GimpColorDisplay *
 cdisplay_gamma_clone (GimpColorDisplay *display)
 {
-  CdisplayGamma *gamma;
+  CdisplayGamma *gamma = CDISPLAY_GAMMA (display);
   CdisplayGamma *copy;
-
-  gamma = CDISPLAY_GAMMA (display);
 
   copy = CDISPLAY_GAMMA (gimp_color_display_new (G_TYPE_FROM_INSTANCE (gamma)));
 
   copy->gamma = gamma->gamma;
-  
+
   memcpy (copy->lookup, gamma->lookup, sizeof (guchar) * 256);
 
   return GIMP_COLOR_DISPLAY (copy);
@@ -220,12 +216,10 @@ cdisplay_gamma_convert (GimpColorDisplay *display,
                         gint              bpp,
                         gint              bpl)
 {
-  CdisplayGamma *gamma;
-  gint           i, j   = height;
+  CdisplayGamma *gamma = CDISPLAY_GAMMA (display);
+  gint           i, j  = height;
 
-  gamma = CDISPLAY_GAMMA (display);
-
-  /* You will not be using the entire buffer most of the time. 
+  /* You will not be using the entire buffer most of the time.
    * Hence, the simplistic code for this is as follows:
    *
    * for (j = 0; j < height; j++)
@@ -255,9 +249,7 @@ static void
 cdisplay_gamma_load_state (GimpColorDisplay *display,
                            GimpParasite     *state)
 {
-  CdisplayGamma *gamma;
-
-  gamma = CDISPLAY_GAMMA (display);
+  CdisplayGamma *gamma = CDISPLAY_GAMMA (display);
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
   memcpy (&gamma->gamma, gimp_parasite_data (state), sizeof (gdouble));
@@ -281,10 +273,8 @@ cdisplay_gamma_load_state (GimpColorDisplay *display,
 static GimpParasite *
 cdisplay_gamma_save_state (GimpColorDisplay *display)
 {
-  CdisplayGamma *gamma;
+  CdisplayGamma *gamma = CDISPLAY_GAMMA (display);
   guint32        buf[2];
-
-  gamma = CDISPLAY_GAMMA (display);
 
   memcpy (buf, &gamma->gamma, sizeof (double));
 
@@ -305,17 +295,17 @@ cdisplay_gamma_save_state (GimpColorDisplay *display)
 static GtkWidget *
 cdisplay_gamma_configure (GimpColorDisplay *display)
 {
-  CdisplayGamma *gamma;
+  CdisplayGamma *gamma = CDISPLAY_GAMMA (display);
   GtkWidget     *label;
   GtkWidget     *spinbutton;
-
-  gamma = CDISPLAY_GAMMA (display);
 
   if (gamma->hbox)
     gtk_widget_destroy (gamma->hbox);
 
   gamma->hbox = gtk_hbox_new (FALSE, 4);
-  g_object_add_weak_pointer (G_OBJECT (gamma->hbox), (gpointer) &gamma->hbox);
+  g_signal_connect (gamma->hbox, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &gamma->hbox);
 
   label = gtk_label_new ( _("Gamma:"));
   gtk_box_pack_start (GTK_BOX (gamma->hbox), label, FALSE, FALSE, 0);
@@ -337,9 +327,7 @@ cdisplay_gamma_configure (GimpColorDisplay *display)
 static void
 cdisplay_gamma_configure_reset (GimpColorDisplay *display)
 {
-  CdisplayGamma *gamma;
- 
-  gamma = CDISPLAY_GAMMA (display);
+  CdisplayGamma *gamma = CDISPLAY_GAMMA (display);
 
   if (gamma->adjustment)
     gtk_adjustment_set_value (GTK_ADJUSTMENT (gamma->adjustment), DEFAULT_GAMMA);

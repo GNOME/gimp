@@ -255,9 +255,7 @@ cdisplay_colorblind_init (CdisplayColorblind *colorblind)
 static void
 cdisplay_colorblind_finalize (GObject *object)
 {
-  CdisplayColorblind *colorblind;
-
-  colorblind = CDISPLAY_COLORBLIND (object);
+  CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (object);
 
   if (colorblind->hbox)
     gtk_widget_destroy (colorblind->hbox);
@@ -269,10 +267,8 @@ cdisplay_colorblind_finalize (GObject *object)
 static GimpColorDisplay *
 cdisplay_colorblind_clone (GimpColorDisplay *display)
 {
-  CdisplayColorblind *colorblind;
+  CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
   CdisplayColorblind *copy;
-
-  colorblind = CDISPLAY_COLORBLIND (display);
 
   copy = CDISPLAY_COLORBLIND (gimp_color_display_new (G_TYPE_FROM_INSTANCE (colorblind)));
 
@@ -417,10 +413,8 @@ static void
 cdisplay_colorblind_load_state (GimpColorDisplay *display,
                                 GimpParasite     *state)
 {
-  CdisplayColorblind *colorblind;
+  CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
   const gchar        *str;
-
-  colorblind = CDISPLAY_COLORBLIND (display);
 
   str = gimp_parasite_data (state);
 
@@ -444,10 +438,8 @@ cdisplay_colorblind_load_state (GimpColorDisplay *display,
 static GimpParasite *
 cdisplay_colorblind_save_state (GimpColorDisplay *display)
 {
-  CdisplayColorblind *colorblind;
+  CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
   gchar               buf[32];
-
-  colorblind = CDISPLAY_COLORBLIND (display);
 
   g_snprintf (buf, sizeof (buf), "%d", colorblind->deficiency);
 
@@ -458,17 +450,16 @@ cdisplay_colorblind_save_state (GimpColorDisplay *display)
 static GtkWidget *
 cdisplay_colorblind_configure (GimpColorDisplay *display)
 {
-  CdisplayColorblind *colorblind;
+  CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
   GtkWidget          *label;
-
-  colorblind = CDISPLAY_COLORBLIND (display);
 
   if (colorblind->hbox)
     gtk_widget_destroy (colorblind->hbox);
 
   colorblind->hbox = gtk_hbox_new (FALSE, 2);
-  g_object_add_weak_pointer (G_OBJECT (colorblind->hbox),
-                             (gpointer) &colorblind->hbox);
+  g_signal_connect (colorblind->hbox, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &colorblind->hbox);
 
   label = gtk_label_new ( _("Color Deficiency Type:"));
   gtk_box_pack_start (GTK_BOX (colorblind->hbox), label, FALSE, FALSE, 0);
@@ -503,9 +494,7 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
 static void
 cdisplay_colorblind_configure_reset (GimpColorDisplay *display)
 {
-  CdisplayColorblind *colorblind;
-
-  colorblind = CDISPLAY_COLORBLIND (display);
+  CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
 
   if (colorblind->optionmenu)
     {
@@ -520,15 +509,13 @@ cdisplay_colorblind_configure_reset (GimpColorDisplay *display)
 static void
 cdisplay_colorblind_changed (GimpColorDisplay *display)
 {
-  CdisplayColorblind *colorblind;
+  CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
   gfloat              anchor_e[3];
   gfloat              anchor[12];
 
   /*  This function performs initialisations that are dependant
    *  on the type of color defiency.
    */
-
-  colorblind = CDISPLAY_COLORBLIND (display);
 
   /* Performs protan, deutan or tritan color image simulation based on
    * Brettel, Vienot and Mollon JOSA 14/10 1997

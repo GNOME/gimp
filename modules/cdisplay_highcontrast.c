@@ -175,9 +175,7 @@ cdisplay_contrast_init (CdisplayContrast *contrast)
 static void
 cdisplay_contrast_finalize (GObject *object)
 {
-  CdisplayContrast *contrast;
-
-  contrast = CDISPLAY_CONTRAST (object);
+  CdisplayContrast *contrast = CDISPLAY_CONTRAST (object);
 
   if (contrast->hbox)
     gtk_widget_destroy (contrast->hbox);
@@ -195,10 +193,8 @@ cdisplay_contrast_finalize (GObject *object)
 static GimpColorDisplay *
 cdisplay_contrast_clone (GimpColorDisplay *display)
 {
-  CdisplayContrast *contrast;
+  CdisplayContrast *contrast = CDISPLAY_CONTRAST (display);
   CdisplayContrast *copy;
-
-  contrast = CDISPLAY_CONTRAST (display);
 
   copy = CDISPLAY_CONTRAST (gimp_color_display_new (G_TYPE_FROM_INSTANCE (contrast)));
 
@@ -217,10 +213,8 @@ cdisplay_contrast_convert (GimpColorDisplay *display,
                            gint              bpp,
                            gint              bpl)
 {
-  CdisplayContrast *contrast;
-  gint              i, j   = height;
-
-  contrast = CDISPLAY_CONTRAST (display);
+  CdisplayContrast *contrast = CDISPLAY_CONTRAST (display);
+  gint              i, j     = height;
 
   /* You will not be using the entire buffer most of the time.
    * Hence, the simplistic code for this is as follows:
@@ -252,9 +246,7 @@ static void
 cdisplay_contrast_load_state (GimpColorDisplay *display,
                               GimpParasite     *state)
 {
-  CdisplayContrast *contrast;
-
-  contrast = CDISPLAY_CONTRAST (display);
+  CdisplayContrast *contrast = CDISPLAY_CONTRAST (display);
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
   memcpy (&contrast->contrast, gimp_parasite_data (state), sizeof (gdouble));
@@ -278,10 +270,8 @@ cdisplay_contrast_load_state (GimpColorDisplay *display,
 static GimpParasite *
 cdisplay_contrast_save_state (GimpColorDisplay *display)
 {
-  CdisplayContrast *contrast;
+  CdisplayContrast *contrast = CDISPLAY_CONTRAST (display);
   guint32           buf[2];
-
-  contrast = CDISPLAY_CONTRAST (display);
 
   memcpy (buf, &contrast->contrast, sizeof (double));
 
@@ -302,18 +292,17 @@ cdisplay_contrast_save_state (GimpColorDisplay *display)
 static GtkWidget *
 cdisplay_contrast_configure (GimpColorDisplay *display)
 {
-  CdisplayContrast *contrast;
+  CdisplayContrast *contrast = CDISPLAY_CONTRAST (display);
   GtkWidget        *label;
   GtkWidget        *spinbutton;
-
-  contrast = CDISPLAY_CONTRAST (display);
 
   if (contrast->hbox)
     gtk_widget_destroy (contrast->hbox);
 
   contrast->hbox = gtk_hbox_new (FALSE, 2);
-  g_object_add_weak_pointer (G_OBJECT (contrast->hbox),
-                             (gpointer) &contrast->hbox);
+  g_signal_connect (contrast->hbox, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &contrast->hbox);
 
   label = gtk_label_new ( _("Contrast Cycles:"));
   gtk_box_pack_start (GTK_BOX (contrast->hbox), label, FALSE, FALSE, 0);
@@ -348,7 +337,7 @@ cdisplay_contrast_configure_reset (GimpColorDisplay *display)
 static void
 contrast_create_lookup_table (CdisplayContrast *contrast)
 {
-  gint    i;
+  gint i;
 
   if (contrast->contrast == 0.0)
     contrast->contrast = 1.0;
