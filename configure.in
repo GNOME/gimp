@@ -286,7 +286,8 @@ dnl Test for libaa
   fi
 
 dnl Test for libtiff
-  if test -z "$LIBTIFF"; then
+AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
+  if test x$with_libtiff != xno && test -z "$LIBTIFF"; then
     AC_CHECK_LIB(tiff, TIFFReadScanline,
       [AC_CHECK_HEADER(tiffio.h,
 	TIFF='tiff'$EXEEXT; LIBTIFF='-ltiff',
@@ -302,10 +303,15 @@ dnl Test for libtiff
         [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF library not found) ***)], -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
   fi
 
-AC_ARG_ENABLE(jpeg, [  --disable-jpeg          disable JPEG support],,enable_jpeg=yes)
+if test x$with_libtiff != xno && test -z "$LIBTIFF"; then
+  AC_MSG_ERROR([
+*** Checks for TIFF libary failed. You can build without it by passing 
+*** --without-libtiff to configure but you won't be able to use TIFFs then.])
+fi
 
 dnl Test for libjpeg
-  if test -z "$LIBJPEG"; then
+AC_ARG_WITH(libjpeg, [  --without-libjpeg       build without JPEG support])
+  if test x$with_libjpeg != xno && test -z "$LIBJPEG"; then
     AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
       jpeg_ok=yes,
       jpeg_ok=no
@@ -335,8 +341,10 @@ dnl Test for libjpeg
     fi
   fi
 
-if test "x$enable_jpeg" = "xyes" && test -z "$JPEG"; then
-  AC_MSG_ERROR([Test for JPEG support failed. Install or fix your JPEG development environment and rm config.cache to try again. If you are sure you do not need JPEG support, configure with --disable-jpeg.])
+if test x$with_libjpeg != xno && test -z "$LIBJPEG"; then
+  AC_MSG_ERROR([
+*** Checks for JPEG library failed. You can build without it by passing 
+*** --without-libjpeg to configure but you won't be able to use JPEGs then.])
 fi
 
 dnl Test for libz
@@ -348,10 +356,10 @@ dnl Test for libz
       [AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB library not found) ***)])
   fi
 
-AC_ARG_ENABLE(jpeg, [  --disable-png           disable PNG support],,enable_png=yes)
 
 dnl Test for libpng
-  if test -z "$LIBPNG" && test -n "$LIBZ"; then
+AC_ARG_WITH(png, [  --without-libpng        build without PNG support])
+  if test x$with_libpng != xno && test -z "$LIBPNG" && test -n "$LIBZ"; then
     AC_CHECK_LIB(png, png_read_info,
       [AC_CHECK_HEADER(png.h,
 	png_ok=yes,
@@ -374,8 +382,10 @@ dnl Test for libpng
     fi
   fi
 
-if test "x$enable_png" = "xyes" && test -z "$PNG"; then
-  AC_MSG_ERROR([Test for PNG support failed. Install or fix your PNG development environment and rm config.cache to try again. If you are sure you do not need JPEG support, configure with --disable-png.])
+if test x$with_libpng != xno && test -z "$LIBPNG"; then
+  AC_MSG_ERROR([
+*** Checks for PNG library failed. You can build without it by passing 
+*** --without-libpng to configure but you won't be able to use PNGs then.])
 fi
 
 dnl Test for libmpeg
