@@ -1,3 +1,7 @@
+2002-05-21  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (tips_POFILES): added pl.po. Removed gimp_tips.pl.txt.
+
 2002-05-20  Zbigniew Chyla  <cyba@gnome.pl>
 
 	* pl.po: Added Polish translation by

@@ -10,6 +10,7 @@ tips_POFILES = \
 	da.po	\
 	de.po	\
 	ja.po	\
+	pl.po	\
 	pt.po	\
 	sk.po	\
 	sv.po	\
