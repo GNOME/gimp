@@ -1,6 +1,6 @@
 # Greek messages for program gimp-libgimp.
-# Copyright (C) 2001 Free Software Foundation.
-# Simos Xenitellis <simos@hellug.gr>, 2001.
+# Copyright (C) 2001, 2002 Free Software Foundation.
+# Simos Xenitellis <simos@hellug.gr>, 2001, 2002.
 # 
 msgid ""
 msgstr ""
@@ -10,18 +10,18 @@ msgstr ""
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-7\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
 #, fuzzy
 msgid "can't handle layers"
-msgstr "Αδύνατη η Ανάγνωση Καταλόγου"
+msgstr "Ξ‘Ξ΄ΟΞ½Ξ±Ο„Ξ· Ξ· Ξ‘Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ· ΞΞ±Ο„Ξ±Ξ»ΟΞ³ΞΏΟ…"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 #, fuzzy
 msgid "Merge Visible Layers"
-msgstr "Στον Κατάλογο Εμφάνισης"
+msgstr "Ξ£Ο„ΞΏΞ½ ΞΞ±Ο„Ξ¬Ξ»ΞΏΞ³ΞΏ Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ·Ο‚"
 
 #: libgimp/gimpexport.c:179
 msgid "can't handle layer offsets, size or opacity"
@@ -34,17 +34,17 @@ msgstr ""
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
 #, fuzzy
 msgid "Save as Animation"
-msgstr "Επιλογή κινούμενων σχεδίων"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΞΊΞΉΞ½ΞΏΟΞΌΞµΞ½Ο‰Ξ½ ΟƒΟ‡ΞµΞ΄Ξ―Ο‰Ξ½"
 
 #: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
 #, fuzzy
 msgid "Flatten Image"
-msgstr "Νέα Εικόνα"
+msgstr "ΞΞ­Ξ± Ξ•ΞΉΞΊΟΞ½Ξ±"
 
 #: libgimp/gimpexport.c:215
 #, fuzzy
 msgid "can't handle transparency"
-msgstr "Διαφάνεια Χροιάς"
+msgstr "Ξ”ΞΉΞ±Ο†Ξ¬Ξ½ΞµΞΉΞ± Ξ§ΟΞΏΞΉΞ¬Ο‚"
 
 #: libgimp/gimpexport.c:224
 msgid "can only handle RGB images"
@@ -52,7 +52,7 @@ msgstr ""
 
 #: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
 msgid "Convert to RGB"
-msgstr "Μετατροπή σε RGB"
+msgstr "ΞΞµΟ„Ξ±Ο„ΟΞΏΟ€Ξ® ΟƒΞµ RGB"
 
 #: libgimp/gimpexport.c:233
 msgid "can only handle grayscale images"
@@ -62,7 +62,7 @@ msgstr ""
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 #, fuzzy
 msgid "Convert to Grayscale"
-msgstr "Μετατροπή σε αυτό το είδος:"
+msgstr "ΞΞµΟ„Ξ±Ο„ΟΞΏΟ€Ξ® ΟƒΞµ Ξ±Ο…Ο„Ο Ο„ΞΏ ΞµΞ―Ξ΄ΞΏΟ‚:"
 
 #: libgimp/gimpexport.c:242
 msgid "can only handle indexed images"
@@ -88,12 +88,12 @@ msgstr ""
 
 #: libgimp/gimpexport.c:282
 msgid "needs an alpha channel"
-msgstr "απαιτεί κανάλι άλφα"
+msgstr "Ξ±Ο€Ξ±ΞΉΟ„ΞµΞ― ΞΊΞ±Ξ½Ξ¬Ξ»ΞΉ Ξ¬Ξ»Ο†Ξ±"
 
 #: libgimp/gimpexport.c:283
 #, fuzzy
 msgid "Add Alpha Channel"
-msgstr "κανάλι άλφα"
+msgstr "ΞΊΞ±Ξ½Ξ¬Ξ»ΞΉ Ξ¬Ξ»Ο†Ξ±"
 
 #
 #.
@@ -104,17 +104,17 @@ msgstr "κανάλι άλφα"
 #: libgimp/gimpexport.c:356
 #, fuzzy
 msgid "Confirm Save"
-msgstr "Επιβεβαίωση"
+msgstr "Ξ•Ο€ΞΉΞ²ΞµΞ²Ξ±Ξ―Ο‰ΟƒΞ·"
 
 #
 #: libgimp/gimpexport.c:360
 msgid "Confirm"
-msgstr "Επιβεβαίωση"
+msgstr "Ξ•Ο€ΞΉΞ²ΞµΞ²Ξ±Ξ―Ο‰ΟƒΞ·"
 
 #
 #: libgimp/gimpexport.c:362
 msgid "Cancel"
-msgstr "Ακύρωση"
+msgstr "Ξ‘ΞΊΟΟΟ‰ΟƒΞ·"
 
 #: libgimp/gimpexport.c:376
 #, c-format
@@ -130,16 +130,16 @@ msgstr ""
 #. the dialog
 #: libgimp/gimpexport.c:414
 msgid "Export File"
-msgstr "Εξαγωγή Αρχείου"
+msgstr "Ξ•ΞΎΞ±Ξ³Ο‰Ξ³Ξ® Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…"
 
 #
 #: libgimp/gimpexport.c:419
 msgid "Export"
-msgstr "Εξαγωγή"
+msgstr "Ξ•ΞΎΞ±Ξ³Ο‰Ξ³Ξ®"
 
 #: libgimp/gimpexport.c:421
 msgid "Ignore"
-msgstr "Παράβλεψη"
+msgstr "Ξ Ξ±ΟΞ¬Ξ²Ξ»ΞµΟΞ·"
 
 #: libgimp/gimpexport.c:438
 msgid ""
@@ -155,26 +155,26 @@ msgstr ""
 #: libgimp/gimpexport.c:571
 #, fuzzy
 msgid "a layer mask"
-msgstr "Ονόματα Παικτών"
+msgstr "ΞΞ½ΟΞΌΞ±Ο„Ξ± Ξ Ξ±ΞΉΞΊΟ„ΟΞ½"
 
 #: libgimp/gimpexport.c:573
 #, fuzzy
 msgid "a channel (saved selection)"
-msgstr "Αποθήκευση επιλογής"
+msgstr "Ξ‘Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ®Ο‚"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
-msgstr "επί τις εκατό"
+msgstr "ΞµΟ€Ξ― Ο„ΞΉΟ‚ ΞµΞΊΞ±Ο„Ο"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 #, fuzzy
 msgid "/Foreground Color"
-msgstr "Καθορισμός χρώματος κειμένου"
+msgstr "ΞΞ±ΞΈΞΏΟΞΉΟƒΞΌΟΟ‚ Ο‡ΟΟΞΌΞ±Ο„ΞΏΟ‚ ΞΊΞµΞΉΞΌΞ­Ξ½ΞΏΟ…"
 
 #: libgimpwidgets/gimpcolorbutton.c:87
 #, fuzzy
 msgid "/Background Color"
-msgstr "Καθορισμός χρώματος φόντου"
+msgstr "ΞΞ±ΞΈΞΏΟΞΉΟƒΞΌΟΟ‚ Ο‡ΟΟΞΌΞ±Ο„ΞΏΟ‚ Ο†ΟΞ½Ο„ΞΏΟ…"
 
 #: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
@@ -188,31 +188,31 @@ msgstr ""
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
 msgid "Select Directory"
-msgstr "Επιλογή Αρχείου"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…"
 
 #
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
-msgstr "Επιλογή Αρχείου"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…"
 
 #
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
-msgstr "Περισσότερα..."
+msgstr "Ξ ΞµΟΞΉΟƒΟƒΟΟ„ΞµΟΞ±..."
 
 #
 #: libgimpwidgets/gimpunitmenu.c:526
 #, fuzzy
 msgid "Unit Selection"
-msgstr "Επιλογή Γραμματοσειράς"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ“ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΞ¬Ο‚"
 
 #: libgimpwidgets/gimpunitmenu.c:571
 msgid "Unit"
-msgstr "Μονάδα"
+msgstr "ΞΞΏΞ½Ξ¬Ξ΄Ξ±"
 
 #: libgimpwidgets/gimpunitmenu.c:575
 msgid "Factor"
-msgstr "Συντελεστής"
+msgstr "Ξ£Ο…Ξ½Ο„ΞµΞ»ΞµΟƒΟ„Ξ®Ο‚"
 
 #: libgimpwidgets/gimpwidgets.c:801
 msgid ""
@@ -223,7 +223,7 @@ msgstr ""
 #
 #: libgimpwidgets/gimpwidgets.c:806
 msgid "Time"
-msgstr "Χρόνος"
+msgstr "Ξ§ΟΟΞ½ΞΏΟ‚"
 
 #: libgimpwidgets/gimpwidgets.c:815
 msgid ""
@@ -247,35 +247,35 @@ msgstr "Byte"
 
 #
 #~ msgid "OK"
-#~ msgstr "Εντάξει"
+#~ msgstr "Ξ•Ξ½Ο„Ξ¬ΞΎΞµΞΉ"
 
 #~ msgid "pixel"
-#~ msgstr "εικονοστοιχείο"
+#~ msgstr "ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―ΞΏ"
 
 #
 #~ msgid "pixels"
-#~ msgstr "εικονοστοιχεία"
+#~ msgstr "ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±"
 
 #~ msgid "inch"
-#~ msgstr "ίντσα"
+#~ msgstr "Ξ―Ξ½Ο„ΟƒΞ±"
 
 #~ msgid "inches"
-#~ msgstr "ίντσες"
+#~ msgstr "Ξ―Ξ½Ο„ΟƒΞµΟ‚"
 
 #~ msgid "millimeter"
-#~ msgstr "χιλιοστά"
+#~ msgstr "Ο‡ΞΉΞ»ΞΉΞΏΟƒΟ„Ξ¬"
 
 #~ msgid "millimeters"
-#~ msgstr "χιλιοστά"
+#~ msgstr "Ο‡ΞΉΞ»ΞΉΞΏΟƒΟ„Ξ¬"
 
 #~ msgid "point"
-#~ msgstr "σημείο"
+#~ msgstr "ΟƒΞ·ΞΌΞµΞ―ΞΏ"
 
 #~ msgid "points"
-#~ msgstr "σημεία"
+#~ msgstr "ΟƒΞ·ΞΌΞµΞ―Ξ±"
 
 #~ msgid "pica"
-#~ msgstr "πίκα"
+#~ msgstr "Ο€Ξ―ΞΊΞ±"
 
 #~ msgid "picas"
-#~ msgstr "στιγμές"
+#~ msgstr "ΟƒΟ„ΞΉΞ³ΞΌΞ­Ο‚"

@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-7\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
@@ -20,36 +20,36 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-console.c:170
 msgid "Script-Fu Console"
-msgstr "Κονσόλα Script-Fu"
+msgstr "ΞΞΏΞ½ΟƒΟΞ»Ξ± Script-Fu"
 
 #: plug-ins/script-fu/script-fu-console.c:194
 #, fuzzy
 msgid "SIOD Output"
-msgstr "Έξοδος DSP"
+msgstr "ΞΞΎΞΏΞ΄ΞΏΟ‚ DSP"
 
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:265
 #, fuzzy
 msgid "Current Command"
-msgstr "Εντολή Εκτύπωσης"
+msgstr "Ξ•Ξ½Ο„ΞΏΞ»Ξ® Ξ•ΞΊΟ„ΟΟ€Ο‰ΟƒΞ·Ο‚"
 
 #
 #: plug-ins/script-fu/script-fu-console.c:285
 msgid "Browse..."
-msgstr "Εξερεύνηση..."
+msgstr "Ξ•ΞΎΞµΟΞµΟΞ½Ξ·ΟƒΞ·..."
 
 #: plug-ins/script-fu/script-fu-console.c:570
 #, fuzzy
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr ""
-"Δεν είναι δυνατή η δημιουργία του αρχείου εξόδου: %s\n"
+"Ξ”ΞµΞ½ ΞµΞ―Ξ½Ξ±ΞΉ Ξ΄Ο…Ξ½Ξ±Ο„Ξ® Ξ· Ξ΄Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ο„ΞΏΟ… Ξ±ΟΟ‡ΞµΞ―ΞΏΟ… ΞµΞΎΟΞ΄ΞΏΟ…: %s\n"
 " %s"
 
 #
 #: plug-ins/script-fu/script-fu-console.c:576
 #, fuzzy
 msgid "Unable to open the SIOD output pipe"
-msgstr "Αδύνατο το άνοιγμα σωλήνωσης"
+msgstr "Ξ‘Ξ΄ΟΞ½Ξ±Ο„ΞΏ Ο„ΞΏ Ξ¬Ξ½ΞΏΞΉΞ³ΞΌΞ± ΟƒΟ‰Ξ»Ξ®Ξ½Ο‰ΟƒΞ·Ο‚"
 
 #: plug-ins/script-fu/script-fu-console.c:621
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
@@ -60,19 +60,19 @@ msgstr ""
 #: plug-ins/script-fu/script-fu-scripts.c:1192
 #, fuzzy
 msgid "/Script-Fu/"
-msgstr "Πρόγραμμα εντολών:"
+msgstr "Ξ ΟΟΞ³ΟΞ±ΞΌΞΌΞ± ΞµΞ½Ο„ΞΏΞ»ΟΞ½:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1191
 #: plug-ins/script-fu/script-fu-scripts.c:1194
 #, fuzzy, c-format
 msgid "Script-Fu: %s"
-msgstr "Πρόγραμμα εντολών:"
+msgstr "Ξ ΟΟΞ³ΟΞ±ΞΌΞΌΞ± ΞµΞ½Ο„ΞΏΞ»ΟΞ½:"
 
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-scripts.c:1218
 #, fuzzy
 msgid "Script Arguments"
-msgstr "Ορίσματα"
+msgstr "ΞΟΞ―ΟƒΞΌΞ±Ο„Ξ±"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1241
 #, c-format
@@ -83,42 +83,42 @@ msgstr "%s:"
 #: plug-ins/script-fu/script-fu-scripts.c:1288
 #, fuzzy
 msgid "Script-Fu Color Selection"
-msgstr "Επιλογή χρώματος"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ο‡ΟΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1371
 #, fuzzy
 msgid "Script-Fu File Selection"
-msgstr "Κλάδεμα Επιλεγμένου"
+msgstr "ΞΞ»Ξ¬Ξ΄ΞµΞΌΞ± Ξ•Ο€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ…"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1376
 #, fuzzy
 msgid "Script-Fu Directory Selection"
-msgstr "Κλάδεμα Επιλεγμένου"
+msgstr "ΞΞ»Ξ¬Ξ΄ΞµΞΌΞ± Ξ•Ο€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ…"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1411
 #, fuzzy
 msgid "Script-fu Pattern Selection"
-msgstr "Επιλογή Προφύλαξης Οθόνης"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ ΟΞΏΟ†ΟΞ»Ξ±ΞΎΞ·Ο‚ ΞΞΈΟΞ½Ξ·Ο‚"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1418
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
-msgstr "Κλάδεμα της τρέχουσας επιλογής"
+msgstr "ΞΞ»Ξ¬Ξ΄ΞµΞΌΞ± Ο„Ξ·Ο‚ Ο„ΟΞ­Ο‡ΞΏΟ…ΟƒΞ±Ο‚ ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ®Ο‚"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1426
 #, fuzzy
 msgid "Script-Fu Brush Selection"
-msgstr "Κλάδεμα Επιλεγμένου"
+msgstr "ΞΞ»Ξ¬Ξ΄ΞµΞΌΞ± Ξ•Ο€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ…"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1474
 #, fuzzy
 msgid "Reset to Defaults"
-msgstr "Επαναφορά εξ' ορισμού ρυθμίσεων"
+msgstr "Ξ•Ο€Ξ±Ξ½Ξ±Ο†ΞΏΟΞ¬ ΞµΞΎ' ΞΏΟΞΉΟƒΞΌΞΏΟ ΟΟ…ΞΈΞΌΞ―ΟƒΞµΟ‰Ξ½"
 
 #
 #: plug-ins/script-fu/script-fu-scripts.c:1502
 msgid "About"
-msgstr "Περί"
+msgstr "Ξ ΞµΟΞ―"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1698
 msgid ""
@@ -130,30 +130,30 @@ msgstr ""
 #: plug-ins/dbbrowser/dbbrowser_utils.c:485
 #: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
-msgstr "Συγγραφέας:"
+msgstr "Ξ£Ο…Ξ³Ξ³ΟΞ±Ο†Ξ­Ξ±Ο‚:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:501
 #: plug-ins/script-fu/script-fu-scripts.c:2003
 #, fuzzy
 msgid "Copyright:"
-msgstr "Πνευματικά Δικαιώματα"
+msgstr "Ξ Ξ½ΞµΟ…ΞΌΞ±Ο„ΞΉΞΊΞ¬ Ξ”ΞΉΞΊΞ±ΞΉΟΞΌΞ±Ο„Ξ±"
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:493
 #: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
-msgstr "Ημ/νία:"
+msgstr "Ξ—ΞΌ/Ξ½Ξ―Ξ±:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2017
 #, fuzzy
 msgid "Image Types:"
-msgstr "Τύπος Στοιχείου:"
+msgstr "Ξ¤ΟΟ€ΞΏΟ‚ Ξ£Ο„ΞΏΞΉΟ‡ΞµΞ―ΞΏΟ…:"
 
 #
 #: plug-ins/script-fu/script-fu-scripts.c:2162
 #, fuzzy
 msgid "Script-Fu Font Selection"
-msgstr "Επιλογή Γραμματοσειράς"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ξ“ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΞ¬Ο‚"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2232
 #, fuzzy, c-format
@@ -162,24 +162,24 @@ msgid ""
 " %s\n"
 "%s"
 msgstr ""
-"Σφάλμα κατά την ανάγνωση του αρχείου %s:\n"
+"Ξ£Ο†Ξ¬Ξ»ΞΌΞ± ΞΊΞ±Ο„Ξ¬ Ο„Ξ·Ξ½ Ξ±Ξ½Ξ¬Ξ³Ξ½Ο‰ΟƒΞ· Ο„ΞΏΟ… Ξ±ΟΟ‡ΞµΞ―ΞΏΟ… %s:\n"
 "%s"
 
 #: plug-ins/script-fu/script-fu-server.c:551
 #, fuzzy
 msgid "Script-Fu Server Options"
-msgstr "Λιγότερες Επιλογές"
+msgstr "Ξ›ΞΉΞ³ΟΟ„ΞµΟΞµΟ‚ Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚"
 
 #: plug-ins/script-fu/script-fu-server.c:578
 #, fuzzy
 msgid "Server Port:"
-msgstr "Εξυπηρετητής:"
+msgstr "Ξ•ΞΎΟ…Ο€Ξ·ΟΞµΟ„Ξ·Ο„Ξ®Ο‚:"
 
 #
 #: plug-ins/script-fu/script-fu-server.c:584
 #, fuzzy
 msgid "Server Logfile:"
-msgstr "Αποθήκευση Αρχείου Καταγραφών"
+msgstr "Ξ‘Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ… ΞΞ±Ο„Ξ±Ξ³ΟΞ±Ο†ΟΞ½"
 
 #: plug-ins/script-fu/script-fu.c:127
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
@@ -192,7 +192,7 @@ msgstr ""
 #: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
 #, fuzzy
 msgid "Re-read all available scripts"
-msgstr "εμφάνιση λίστας με διαθέσιμους αγωγούς"
+msgstr "ΞµΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ»Ξ―ΟƒΟ„Ξ±Ο‚ ΞΌΞµ Ξ΄ΞΉΞ±ΞΈΞ­ΟƒΞΉΞΌΞΏΟ…Ο‚ Ξ±Ξ³Ο‰Ξ³ΞΏΟΟ‚"
 
 #: plug-ins/script-fu/script-fu.c:281
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
@@ -202,53 +202,53 @@ msgstr ""
 #: plug-ins/dbbrowser/dbbrowser_utils.c:144
 #, fuzzy
 msgid "DB Browser (init...)"
-msgstr " Εξερεύνηση..."
+msgstr " Ξ•ΞΎΞµΟΞµΟΞ½Ξ·ΟƒΞ·..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:130
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
 #, fuzzy
 msgid "Search by Name"
-msgstr "Βάση αναζήτησης:"
+msgstr "Ξ’Ξ¬ΟƒΞ· Ξ±Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ·Ο‚:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
 #, fuzzy
 msgid "Search by Blurb"
-msgstr "Εύρεση στη Μνήμη.."
+msgstr "Ξ•ΟΟΞµΟƒΞ· ΟƒΟ„Ξ· ΞΞ½Ξ®ΞΌΞ·.."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:215
 #, fuzzy
 msgid "Search:"
-msgstr "Αναζήτηση: "
+msgstr "Ξ‘Ξ½Ξ±Ξ¶Ξ®Ο„Ξ·ΟƒΞ·: "
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:344
 msgid "Name:"
-msgstr "Όνομα:"
+msgstr "ΞΞ½ΞΏΞΌΞ±:"
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:353
 #, fuzzy
 msgid "Blurb:"
-msgstr "Μπλέ:"
+msgstr "ΞΟ€Ξ»Ξ­:"
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:365
 #, fuzzy
 msgid "In:"
-msgstr "Μέσα"
+msgstr "ΞΞ­ΟƒΞ±"
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:413
 #, fuzzy
 msgid "Out:"
-msgstr "Έξω"
+msgstr "ΞΞΎΟ‰"
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:467
 #, fuzzy
 msgid "Help:"
-msgstr "Βοήθεια"
+msgstr "Ξ’ΞΏΞ®ΞΈΞµΞΉΞ±"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:570
 msgid "DB Browser (by name - please wait)"
@@ -266,7 +266,7 @@ msgstr ""
 #: plug-ins/dbbrowser/dbbrowser_utils.c:630
 #, fuzzy
 msgid "DB Browser"
-msgstr "Εξερεύνηση"
+msgstr "Ξ•ΞΎΞµΟΞµΟΞ½Ξ·ΟƒΞ·"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid ""
@@ -282,7 +282,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 #, fuzzy
 msgid "<Image>/Filters/Blur/Tileable Blur..."
-msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+msgstr "<Image>/Ξ¦Ξ―Ξ»Ο„ΟΞ±/ΞΞµΞ―ΞΌΞµΞ½ΞΏ/FreeType..."
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Clothify..."
@@ -832,7 +832,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 #, fuzzy
 msgid "Add Background"
-msgstr "Φόντο"
+msgstr "Ξ¦ΟΞ½Ο„ΞΏ"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Drop-Shadow"
@@ -845,7 +845,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #, fuzzy
 msgid "Add Shadow"
-msgstr "Σκιά:"
+msgstr "Ξ£ΞΊΞΉΞ¬:"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "After Glow"
@@ -855,7 +855,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 #, fuzzy
 msgid "Allow Resizing"
-msgstr "Όλες οι ρυθμίσεις"
+msgstr "ΞΞ»ΞµΟ‚ ΞΏΞΉ ΟΟ…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Amplitude"
@@ -864,7 +864,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 #, fuzzy
 msgid "Angle"
-msgstr "_Γωνία"
+msgstr "_Ξ“Ο‰Ξ½Ξ―Ξ±"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Anim-Filter for all Copies"
@@ -872,7 +872,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Antialias"
-msgstr "Εξομάλυνση"
+msgstr "Ξ•ΞΎΞΏΞΌΞ¬Ξ»Ο…Ξ½ΟƒΞ·"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Apply Generated Layermask"
@@ -885,19 +885,19 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #, fuzzy
 msgid "AutoCrop"
-msgstr "Συγγραφέας"
+msgstr "Ξ£Ο…Ξ³Ξ³ΟΞ±Ο†Ξ­Ξ±Ο‚"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 #, fuzzy
 msgid "Azimuth"
-msgstr "Έγκριση:"
+msgstr "ΞΞ³ΞΊΟΞΉΟƒΞ·:"
 
 #
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 #, fuzzy
 msgid "BG Opacity"
-msgstr "Διαφάνεια:"
+msgstr "Ξ”ΞΉΞ±Ο†Ξ¬Ξ½ΞµΞΉΞ±:"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
@@ -930,36 +930,36 @@ msgstr "Διαφάνεια:"
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Background Color"
-msgstr "Χρώμα Φόντου"
+msgstr "Ξ§ΟΟΞΌΞ± Ξ¦ΟΞ½Ο„ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "Background Image"
-msgstr "Εικόνα Παρασκηνίου"
+msgstr "Ξ•ΞΉΞΊΟΞ½Ξ± Ξ Ξ±ΟΞ±ΟƒΞΊΞ·Ξ½Ξ―ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 #, fuzzy
 msgid "Bar Height"
-msgstr "Ύψος"
+msgstr "ΞΟΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 #, fuzzy
 msgid "Bar Length"
-msgstr "Διάρκεια"
+msgstr "Ξ”ΞΉΞ¬ΟΞΊΞµΞΉΞ±"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #, fuzzy
 msgid "Base Color"
-msgstr "Χρώμα βάσης"
+msgstr "Ξ§ΟΟΞΌΞ± Ξ²Ξ¬ΟƒΞ·Ο‚"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 #, fuzzy
 msgid "Base Radius (pixels)"
-msgstr "Γελοίο (128 εικονοστοιχεία)"
+msgstr "Ξ“ΞµΞ»ΞΏΞ―ΞΏ (128 ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Behaviour"
-msgstr "Συμπεριφορά"
+msgstr "Ξ£Ο…ΞΌΟ€ΞµΟΞΉΟ†ΞΏΟΞ¬"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
@@ -970,7 +970,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Bevel Width"
-msgstr "Πλάτος Πλαισίου:"
+msgstr "Ξ Ξ»Ξ¬Ο„ΞΏΟ‚ Ξ Ξ»Ξ±ΞΉΟƒΞ―ΞΏΟ…:"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Outline)"
@@ -979,33 +979,33 @@ msgstr ""
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Blend Gradient (Text)"
-msgstr "Θέμα Διαβάθμισης"
+msgstr "ΞΞ­ΞΌΞ± Ξ”ΞΉΞ±Ξ²Ξ¬ΞΈΞΌΞΉΟƒΞ·Ο‚"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #, fuzzy
 msgid "Blend Mode"
-msgstr "Κατάσταση Αρχείου"
+msgstr "ΞΞ±Ο„Ξ¬ΟƒΟ„Ξ±ΟƒΞ· Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 #, fuzzy
 msgid "Block Size"
-msgstr "Αποστολή Μεγέθους Block:"
+msgstr "Ξ‘Ο€ΞΏΟƒΟ„ΞΏΞ»Ξ® ΞΞµΞ³Ξ­ΞΈΞΏΟ…Ο‚ Block:"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #, fuzzy
 msgid "Blur Amount"
-msgstr "Πηγαίος Λογαριασμός"
+msgstr "Ξ Ξ·Ξ³Ξ±Ξ―ΞΏΟ‚ Ξ›ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΟ‚"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #, fuzzy
 msgid "Blur Border"
-msgstr "Πλαίσιο"
+msgstr "Ξ Ξ»Ξ±Ξ―ΟƒΞΉΞΏ"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 #, fuzzy
 msgid "Blur Horizontally"
-msgstr "_Οριζόντια"
+msgstr "_ΞΟΞΉΞ¶ΟΞ½Ο„ΞΉΞ±"
 
 #
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
@@ -1015,60 +1015,60 @@ msgstr "_Οριζόντια"
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 #, fuzzy
 msgid "Blur Radius"
-msgstr "Μπλούγκρας"
+msgstr "ΞΟ€Ξ»ΞΏΟΞ³ΞΊΟΞ±Ο‚"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 #, fuzzy
 msgid "Blur Type"
-msgstr "Μπλε Τύπος"
+msgstr "ΞΟ€Ξ»Ξµ Ξ¤ΟΟ€ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 #, fuzzy
 msgid "Blur Vertically"
-msgstr "Κατακόρυ_φα"
+msgstr "ΞΞ±Ο„Ξ±ΞΊΟΟΟ…_Ο†Ξ±"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #, fuzzy
 msgid "Blur X"
-msgstr "Μπλε : "
+msgstr "ΞΟ€Ξ»Ξµ : "
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #, fuzzy
 msgid "Blur Y"
-msgstr "Μπλε : "
+msgstr "ΞΟ€Ξ»Ξµ : "
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 #, fuzzy
 msgid "Border Color"
-msgstr "Χρώμα Παλαιοτέρων:"
+msgstr "Ξ§ΟΟΞΌΞ± Ξ Ξ±Ξ»Ξ±ΞΉΞΏΟ„Ξ­ΟΟ‰Ξ½:"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
 msgid "Border Size (pixels)"
-msgstr "Μέγεθος (εικονοστοιχεία)"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ (ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #, fuzzy
 msgid "Border Size"
-msgstr "Μέγεθος άβακα"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ Ξ¬Ξ²Ξ±ΞΊΞ±"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 #, fuzzy
 msgid "Border X Size"
-msgstr "Μέγεθος άβακα"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ Ξ¬Ξ²Ξ±ΞΊΞ±"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 #, fuzzy
 msgid "Border Y Size"
-msgstr "Μέγεθος άβακα"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ Ξ¬Ξ²Ξ±ΞΊΞ±"
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Border"
-msgstr "Πλαίσιο"
+msgstr "Ξ Ξ»Ξ±Ξ―ΟƒΞΉΞΏ"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "Buffer Amount (% Height of Text)"
@@ -1081,29 +1081,29 @@ msgstr ""
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 #, fuzzy
 msgid "Burst Color"
-msgstr "Ειδικό Χρώμα:"
+msgstr "Ξ•ΞΉΞ΄ΞΉΞΊΟ Ξ§ΟΟΞΌΞ±:"
 
 # # NOTE: Translation of "Create" as "New" to
 # #       keep msg length relatively short...
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 #, fuzzy
 msgid "Carve Raised Text"
-msgstr "Νέο Κείμενο"
+msgstr "ΞΞ­ΞΏ ΞΞµΞ―ΞΌΞµΞ½ΞΏ"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 #, fuzzy
 msgid "Carve White Areas"
-msgstr "Αποθήκευση Αρχείου Ως"
+msgstr "Ξ‘Ο€ΞΏΞΈΞ®ΞΊΞµΟ…ΟƒΞ· Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ… Ξ©Ο‚"
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 #, fuzzy
 msgid "Cell Size (pixels)"
-msgstr "Μέγεθος (εικονοστοιχεία)"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ (ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 #, fuzzy
 msgid "Chalk Color"
-msgstr "Χρώμα ρολογιού"
+msgstr "Ξ§ΟΟΞΌΞ± ΟΞΏΞ»ΞΏΞ³ΞΉΞΏΟ"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #, fuzzy
@@ -1114,7 +1114,7 @@ msgstr "Clip Art"
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 #, fuzzy
 msgid "Chrome Balance"
-msgstr "Ισορροπία"
+msgstr "Ξ™ΟƒΞΏΟΟΞΏΟ€Ξ―Ξ±"
 
 #
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
@@ -1122,19 +1122,19 @@ msgstr "Ισορροπία"
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 #, fuzzy
 msgid "Chrome Factor"
-msgstr "Εργοστάσιο φτερουγιστή"
+msgstr "Ξ•ΟΞ³ΞΏΟƒΟ„Ξ¬ΟƒΞΉΞΏ Ο†Ο„ΞµΟΞΏΟ…Ξ³ΞΉΟƒΟ„Ξ®"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 #, fuzzy
 msgid "Chrome Lightness"
-msgstr "Ενδείξεις μόντεμ"
+msgstr "Ξ•Ξ½Ξ΄ΞµΞ―ΞΎΞµΞΉΟ‚ ΞΌΟΞ½Ο„ΞµΞΌ"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 #, fuzzy
 msgid "Chrome Saturation"
-msgstr "Κορεσμός"
+msgstr "ΞΞΏΟΞµΟƒΞΌΟΟ‚"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 msgid "Chrome White Areas"
@@ -1147,57 +1147,57 @@ msgstr ""
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #, fuzzy
 msgid "Clear Unselected Maskarea"
-msgstr "Αποκοπή επιλεγμένης εργασίας"
+msgstr "Ξ‘Ο€ΞΏΞΊΞΏΟ€Ξ® ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ·Ο‚ ΞµΟΞ³Ξ±ΟƒΞ―Ξ±Ο‚"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 1"
-msgstr "Χρώμα 1"
+msgstr "Ξ§ΟΟΞΌΞ± 1"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 2"
-msgstr "Χρώμα 2"
+msgstr "Ξ§ΟΟΞΌΞ± 2"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #, fuzzy
 msgid "Color 3"
-msgstr "Χρώμα 1"
+msgstr "Ξ§ΟΟΞΌΞ± 1"
 
 #
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Color"
-msgstr "Χρώμα"
+msgstr "Ξ§ΟΟΞΌΞ±"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Columns"
-msgstr "Στήλες"
+msgstr "Ξ£Ο„Ξ®Ξ»ΞµΟ‚"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 #, fuzzy
 msgid "Corona Width"
-msgstr "Πλάτος Εικονιδίου:"
+msgstr "Ξ Ξ»Ξ¬Ο„ΞΏΟ‚ Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…:"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
 msgid "Create New Image"
-msgstr "Νέα Εικόνα"
+msgstr "ΞΞ­Ξ± Ξ•ΞΉΞΊΟΞ½Ξ±"
 
 #
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 #, fuzzy
 msgid "Create Shadow"
-msgstr "Δημιουργία βέλους"
+msgstr "Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ξ²Ξ­Ξ»ΞΏΟ…Ο‚"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #, fuzzy
 msgid "Custom Gradient"
-msgstr "Βαθμίδα"
+msgstr "Ξ’Ξ±ΞΈΞΌΞ―Ξ΄Ξ±"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #, fuzzy
 msgid "Dark Color"
-msgstr "Σκοτεινός φελλός"
+msgstr "Ξ£ΞΊΞΏΟ„ΞµΞΉΞ½ΟΟ‚ Ο†ΞµΞ»Ξ»ΟΟ‚"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid ""
@@ -1209,58 +1209,58 @@ msgstr ""
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Default Bumpmap Settings"
-msgstr "Εξ' ορισμού Ρυθμίσεις"
+msgstr "Ξ•ΞΎ' ΞΏΟΞΉΟƒΞΌΞΏΟ Ξ΅Ο…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 #, fuzzy
 msgid "Defocus"
-msgstr "Εξ' ορισμού ρυθμίσεις"
+msgstr "Ξ•ΞΎ' ΞΏΟΞΉΟƒΞΌΞΏΟ ΟΟ…ΞΈΞΌΞ―ΟƒΞµΞΉΟ‚"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 #, fuzzy
 msgid "Delta Value on Color"
-msgstr "Διαγραφή Χρώματος"
+msgstr "Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ§ΟΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 #: plug-ins/script-fu/scripts/speed-text.scm:0
 #, fuzzy
 msgid "Density (%)"
-msgstr "Πυκνότητα"
+msgstr "Ξ Ο…ΞΊΞ½ΟΟ„Ξ·Ο„Ξ±"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 #, fuzzy
 msgid "Depth"
-msgstr "Τμήμ."
+msgstr "Ξ¤ΞΌΞ®ΞΌ."
 
 #
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "Description"
-msgstr "Περιγραφή"
+msgstr "Ξ ΞµΟΞΉΞ³ΟΞ±Ο†Ξ®"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 #, fuzzy
 msgid "Detail Level"
-msgstr "Αναλυτικά"
+msgstr "Ξ‘Ξ½Ξ±Ξ»Ο…Ο„ΞΉΞΊΞ¬"
 
 #
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 #, fuzzy
 msgid "Detail in Middle"
-msgstr "Διάλογος λεπτομερειών"
+msgstr "Ξ”ΞΉΞ¬Ξ»ΞΏΞ³ΞΏΟ‚ Ξ»ΞµΟ€Ο„ΞΏΞΌΞµΟΞµΞΉΟΞ½"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 #, fuzzy
 msgid "Diameter"
-msgstr "Ελάττωση Χρωμάτων"
+msgstr "Ξ•Ξ»Ξ¬Ο„Ο„Ο‰ΟƒΞ· Ξ§ΟΟ‰ΞΌΞ¬Ο„Ο‰Ξ½"
 
 #
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Down"
-msgstr "Κάτω"
+msgstr "ΞΞ¬Ο„Ο‰"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Blur Radius"
@@ -1270,7 +1270,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "Drop Shadow Color"
-msgstr "Χρώματα Γραφήματος"
+msgstr "Ξ§ΟΟΞΌΞ±Ο„Ξ± Ξ“ΟΞ±Ο†Ξ®ΞΌΞ±Ο„ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Opacity"
@@ -1287,17 +1287,17 @@ msgstr ""
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #, fuzzy
 msgid "Drop Shadow"
-msgstr "Σκιά:"
+msgstr "Ξ£ΞΊΞΉΞ¬:"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 #, fuzzy
 msgid "Edge Amount"
-msgstr "Νέος Λογαριασμός"
+msgstr "ΞΞ­ΞΏΟ‚ Ξ›ΞΏΞ³Ξ±ΟΞΉΞ±ΟƒΞΌΟΟ‚"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #, fuzzy
 msgid "Edge Only"
-msgstr "Ακραίο ταμπλώ"
+msgstr "Ξ‘ΞΊΟΞ±Ξ―ΞΏ Ο„Ξ±ΞΌΟ€Ξ»Ο"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Edge Radius"
@@ -1307,60 +1307,60 @@ msgstr ""
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #, fuzzy
 msgid "Edge Width"
-msgstr "Καθορισμός Πλάτους:"
+msgstr "ΞΞ±ΞΈΞΏΟΞΉΟƒΞΌΟΟ‚ Ξ Ξ»Ξ¬Ο„ΞΏΟ…Ο‚:"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 #, fuzzy
 msgid "Effect Size (pixels * 3)"
-msgstr "Μέγεθος (εικονοστοιχεία)"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ (ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 #, fuzzy
 msgid "Effect Size (pixels * 30)"
-msgstr "Μέγεθος (εικονοστοιχεία)"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ (ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 #, fuzzy
 msgid "Effect Size (pixels * 4)"
-msgstr "Μέγεθος (εικονοστοιχεία)"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ (ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 #, fuzzy
 msgid "Effect Size (pixels * 5)"
-msgstr "Μέγεθος (εικονοστοιχεία)"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ (ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
 #, fuzzy
 msgid "Effect Size (pixels)"
-msgstr "Μέγεθος (εικονοστοιχεία)"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ (ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 #, fuzzy
 msgid "Elevation"
-msgstr "τοποθεσία"
+msgstr "Ο„ΞΏΟ€ΞΏΞΈΞµΟƒΞ―Ξ±"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #, fuzzy
 msgid "End Blend"
-msgstr "Λήξη στις"
+msgstr "Ξ›Ξ®ΞΎΞ· ΟƒΟ„ΞΉΟ‚"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 #, fuzzy
 msgid "End X"
-msgstr "Τέλος"
+msgstr "Ξ¤Ξ­Ξ»ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 #, fuzzy
 msgid "End Y"
-msgstr "Τέλος"
+msgstr "Ξ¤Ξ­Ξ»ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
 msgid "Ending Blend"
-msgstr "Ημ/νία λήξης"
+msgstr "Ξ—ΞΌ/Ξ½Ξ―Ξ± Ξ»Ξ®ΞΎΞ·Ο‚"
 
 #
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
@@ -1368,31 +1368,31 @@ msgstr "Ημ/νία λήξης"
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 #, fuzzy
 msgid "Environment Map"
-msgstr "Περιβάλλον"
+msgstr "Ξ ΞµΟΞΉΞ²Ξ¬Ξ»Ξ»ΞΏΞ½"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 #, fuzzy
 msgid "Erase before Draw"
-msgstr "ήταν πριν"
+msgstr "Ξ®Ο„Ξ±Ξ½ Ο€ΟΞΉΞ½"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase"
-msgstr "Διαγραφή"
+msgstr "Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
 msgid "Erase/Fill"
-msgstr "Διαγραφή"
+msgstr "Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
 msgid "Even"
-msgstr "Συμβάν"
+msgstr "Ξ£Ο…ΞΌΞ²Ξ¬Ξ½"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
 msgid "Even/Odd"
-msgstr "Συμβάν"
+msgstr "Ξ£Ο…ΞΌΞ²Ξ¬Ξ½"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-BG-HSV"
@@ -1405,17 +1405,17 @@ msgstr ""
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #, fuzzy
 msgid "FG-Transparent"
-msgstr "Διαφανές"
+msgstr "Ξ”ΞΉΞ±Ο†Ξ±Ξ½Ξ­Ο‚"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 #, fuzzy
 msgid "Fade Away"
-msgstr "Σημειωση Απουσίας"
+msgstr "Ξ£Ξ·ΞΌΞµΞΉΟ‰ΟƒΞ· Ξ‘Ο€ΞΏΟ…ΟƒΞ―Ξ±Ο‚"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #, fuzzy
 msgid "Fade From %"
-msgstr "Εύρος: Από "
+msgstr "Ξ•ΟΟΞΏΟ‚: Ξ‘Ο€Ο "
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Fade To   %"
@@ -1425,7 +1425,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 #, fuzzy
 msgid "Fadeout Width"
-msgstr "Καθορισμός Πλάτους:"
+msgstr "ΞΞ±ΞΈΞΏΟΞΉΟƒΞΌΟΟ‚ Ξ Ξ»Ξ¬Ο„ΞΏΟ…Ο‚:"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Fadeout"
@@ -1434,18 +1434,18 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #, fuzzy
 msgid "Feathering"
-msgstr "Μακρύτερα"
+msgstr "ΞΞ±ΞΊΟΟΟ„ΞµΟΞ±"
 
 #
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "Filename"
-msgstr "Όνομα αρχείου"
+msgstr "ΞΞ½ΞΏΞΌΞ± Ξ±ΟΟ‡ΞµΞ―ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 #, fuzzy
 msgid "Fill Angle"
-msgstr "Γεμισμένο Τρίγωνο"
+msgstr "Ξ“ΞµΞΌΞΉΟƒΞΌΞ­Ξ½ΞΏ Ξ¤ΟΞ―Ξ³Ο‰Ξ½ΞΏ"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Fill BG with Pattern"
@@ -1454,12 +1454,12 @@ msgstr ""
 #: plug-ins/gap/sel-to-anim-img.scm:0
 #, fuzzy
 msgid "Fill with BG Color"
-msgstr "Με Χρώμα"
+msgstr "ΞΞµ Ξ§ΟΟΞΌΞ±"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
 msgid "Fill with BG"
-msgstr "Σταθερό πλάτος"
+msgstr "Ξ£Ο„Ξ±ΞΈΞµΟΟ Ο€Ξ»Ξ¬Ο„ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -1469,12 +1469,12 @@ msgstr "Σταθερό πλάτος"
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #, fuzzy
 msgid "Flatten Image"
-msgstr "Νέα Εικόνα"
+msgstr "ΞΞ­Ξ± Ξ•ΞΉΞΊΟΞ½Ξ±"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 #, fuzzy
 msgid "Font Color"
-msgstr "Χρώμα γραμματοσειράς:"
+msgstr "Ξ§ΟΟΞΌΞ± Ξ³ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΞ¬Ο‚:"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -1516,7 +1516,7 @@ msgstr "Χρώμα γραμματοσειράς:"
 #: plug-ins/script-fu/scripts/title-header.scm:0
 #, fuzzy
 msgid "Font Size (pixels)"
-msgstr "Μέγεθος (εικονοστοιχεία)"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ (ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
@@ -1558,35 +1558,35 @@ msgstr "Μέγεθος (εικονοστοιχεία)"
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "Font"
-msgstr "Γραμματοσειρά"
+msgstr "Ξ“ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΞ¬"
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 msgid "Fonts"
-msgstr "Γραμματοσειρές"
+msgstr "Ξ“ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΞ­Ο‚"
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 #, fuzzy
 msgid "Foreground Color"
-msgstr "Χρώμα Προσκηνίου"
+msgstr "Ξ§ΟΟΞΌΞ± Ξ ΟΞΏΟƒΞΊΞ·Ξ½Ξ―ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 #, fuzzy
 msgid "Frame Color"
-msgstr "Νέο Χρώμα"
+msgstr "ΞΞ­ΞΏ Ξ§ΟΟΞΌΞ±"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 #, fuzzy
 msgid "Frame Size"
-msgstr "Μέγεθος Αρχείου:"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ Ξ‘ΟΟ‡ΞµΞ―ΞΏΟ…:"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Frames"
-msgstr "Πλαίσια"
+msgstr "Ξ Ξ»Ξ±Ξ―ΟƒΞΉΞ±"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 #, fuzzy
 msgid "From Top-Left to Bottom-Right"
-msgstr "Αριστερά προς δεξιά"
+msgstr "Ξ‘ΟΞΉΟƒΟ„ΞµΟΞ¬ Ο€ΟΞΏΟ‚ Ξ΄ΞµΞΎΞΉΞ¬"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -1599,17 +1599,17 @@ msgstr "Αριστερά προς δεξιά"
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 #, fuzzy
 msgid "Glow Color"
-msgstr "Νέο Χρώμα"
+msgstr "ΞΞ­ΞΏ Ξ§ΟΟΞΌΞ±"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #, fuzzy
 msgid "Glow Radius"
-msgstr "Σκόνη με άνεμο"
+msgstr "Ξ£ΞΊΟΞ½Ξ· ΞΌΞµ Ξ¬Ξ½ΞµΞΌΞΏ"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 #, fuzzy
 msgid "Glow Size (pixels * 4)"
-msgstr "Μέγεθος (εικονοστοιχεία)"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ (ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
@@ -1617,7 +1617,7 @@ msgstr "Μέγεθος (εικονοστοιχεία)"
 #: plug-ins/script-fu/scripts/land.scm:0 plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Gradient"
-msgstr "Βαθμίδα"
+msgstr "Ξ’Ξ±ΞΈΞΌΞ―Ξ΄Ξ±"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
@@ -1628,22 +1628,22 @@ msgstr ""
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 #, fuzzy
 msgid "Granularity"
-msgstr "Ιανουάριος"
+msgstr "Ξ™Ξ±Ξ½ΞΏΟ…Ξ¬ΟΞΉΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 #, fuzzy
 msgid "Graph Scale"
-msgstr "Κλίμακα του γκρι"
+msgstr "ΞΞ»Ξ―ΞΌΞ±ΞΊΞ± Ο„ΞΏΟ… Ξ³ΞΊΟΞΉ"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 #, fuzzy
 msgid "Grids X"
-msgstr "Πλέγμα"
+msgstr "Ξ Ξ»Ξ­Ξ³ΞΌΞ±"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 #, fuzzy
 msgid "Grids Y"
-msgstr "Πλέγμα"
+msgstr "Ξ Ξ»Ξ­Ξ³ΞΌΞ±"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1651,83 +1651,83 @@ msgstr "Πλέγμα"
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Height"
-msgstr "Ύψος"
+msgstr "ΞΟΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
 msgid "Hexagons"
-msgstr "Περιοχές"
+msgstr "Ξ ΞµΟΞΉΞΏΟ‡Ξ­Ο‚"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 #, fuzzy
 msgid "Highlight Balance"
-msgstr "Επιλεγμένο"
+msgstr "Ξ•Ο€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏ"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "Highlight Color"
-msgstr "Χρώμα Μαρκαρίσματος"
+msgstr "Ξ§ΟΟΞΌΞ± ΞΞ±ΟΞΊΞ±ΟΞ―ΟƒΞΌΞ±Ο„ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "Highlight Opacity"
-msgstr "Τονισμένη ημέρα:"
+msgstr "Ξ¤ΞΏΞ½ΞΉΟƒΞΌΞ­Ξ½Ξ· Ξ·ΞΌΞ­ΟΞ±:"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "Highlight X Offset"
-msgstr "Επιλεγμένο"
+msgstr "Ξ•Ο€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏ"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "Highlight Y Offset"
-msgstr "Επιλεγμένο"
+msgstr "Ξ•Ο€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏ"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #, fuzzy
 msgid "Hit Rate"
-msgstr "Ρυθμός bit"
+msgstr "Ξ΅Ο…ΞΈΞΌΟΟ‚ bit"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 #, fuzzy
 msgid "Hue Rate"
-msgstr "Ημερομηνία Λήξης"
+msgstr "Ξ—ΞΌΞµΟΞΏΞΌΞ·Ξ½Ξ―Ξ± Ξ›Ξ®ΞΎΞ·Ο‚"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 #, fuzzy
 msgid "IIR"
-msgstr "ΙΙ"
+msgstr "Ξ™Ξ™"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 #, fuzzy
 msgid "Image Height"
-msgstr "Ύψος"
+msgstr "ΞΟΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 #, fuzzy
 msgid "Image Size"
-msgstr "Μέγεθος Εικόνας:"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ Ξ•ΞΉΞΊΟΞ½Ξ±Ο‚:"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 #, fuzzy
 msgid "Image Width"
-msgstr "Παράθυρα Εικόνων"
+msgstr "Ξ Ξ±ΟΞ¬ΞΈΟ…ΟΞ± Ξ•ΞΉΞΊΟΞ½Ο‰Ξ½"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 #, fuzzy
 msgid "Image to Carve"
-msgstr "Όνομα Εικόνας"
+msgstr "ΞΞ½ΞΏΞΌΞ± Ξ•ΞΉΞΊΟΞ½Ξ±Ο‚"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 #, fuzzy
 msgid "Index Image"
-msgstr "Επόμενη Εικόνα"
+msgstr "Ξ•Ο€ΟΞΌΞµΞ½Ξ· Ξ•ΞΉΞΊΟΞ½Ξ±"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Index to n Colors (0 = Remain RGB)"
@@ -1736,31 +1736,31 @@ msgstr ""
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
 msgid "Insert Layer Names"
-msgstr "Ονόματα Παικτών"
+msgstr "ΞΞ½ΟΞΌΞ±Ο„Ξ± Ξ Ξ±ΞΉΞΊΟ„ΟΞ½"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 #, fuzzy
 msgid "Intermediate Frames"
-msgstr "Μέσου επιπέδου"
+msgstr "ΞΞ­ΟƒΞΏΟ… ΞµΟ€ΞΉΟ€Ξ­Ξ΄ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 #, fuzzy
 msgid "Interpolate"
-msgstr "Παρεμβολή"
+msgstr "Ξ Ξ±ΟΞµΞΌΞ²ΞΏΞ»Ξ®"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 #, fuzzy
 msgid "Invert direction"
-msgstr "Αντιστροφή Επιλογής"
+msgstr "Ξ‘Ξ½Ο„ΞΉΟƒΟ„ΟΞΏΟ†Ξ® Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ®Ο‚"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Invert"
-msgstr "Αντιστροφή"
+msgstr "Ξ‘Ξ½Ο„ΞΉΟƒΟ„ΟΞΏΟ†Ξ®"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #, fuzzy
 msgid "Keep Background"
-msgstr "Αρχικοποίηση Παρασκηνίου"
+msgstr "Ξ‘ΟΟ‡ΞΉΞΊΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ξ Ξ±ΟΞ±ΟƒΞΊΞ·Ξ½Ξ―ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
@@ -1773,59 +1773,59 @@ msgstr ""
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "Keep Selection"
-msgstr "Κλάδεμα Επιλεγμένου"
+msgstr "ΞΞ»Ξ¬Ξ΄ΞµΞΌΞ± Ξ•Ο€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/land.scm:0
 #, fuzzy
 msgid "Land Height"
-msgstr "Κα_νονικό Ύψος"
+msgstr "ΞΞ±_Ξ½ΞΏΞ½ΞΉΞΊΟ ΞΟΞΏΟ‚"
 
 #
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Left"
-msgstr "Αριστερά"
+msgstr "Ξ‘ΟΞΉΟƒΟ„ΞµΟΞ¬"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 #, fuzzy
 msgid "Lighting (degrees)"
-msgstr "ανοιχτό πράσινο"
+msgstr "Ξ±Ξ½ΞΏΞΉΟ‡Ο„Ο Ο€ΟΞ¬ΟƒΞΉΞ½ΞΏ"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 #, fuzzy
 msgid "Looped"
-msgstr "Βρόχος"
+msgstr "Ξ’ΟΟΟ‡ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Lower Color (Active)"
-msgstr "Χαμήλωμα σημειώματος"
+msgstr "Ξ§Ξ±ΞΌΞ®Ξ»Ο‰ΞΌΞ± ΟƒΞ·ΞΌΞµΞΉΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Lower Color"
-msgstr "Χρώμα αδύναμης μπαταρίας:"
+msgstr "Ξ§ΟΟΞΌΞ± Ξ±Ξ΄ΟΞ½Ξ±ΞΌΞ·Ο‚ ΞΌΟ€Ξ±Ο„Ξ±ΟΞ―Ξ±Ο‚:"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #, fuzzy
 msgid "Lower-Right color"
-msgstr "Χρώμα Μαρκαρίσματος"
+msgstr "Ξ§ΟΟΞΌΞ± ΞΞ±ΟΞΊΞ±ΟΞ―ΟƒΞΌΞ±Ο„ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
 msgid "Make New Background"
-msgstr "Αρχικοποίηση Παρασκηνίου"
+msgstr "Ξ‘ΟΟ‡ΞΉΞΊΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ξ Ξ±ΟΞ±ΟƒΞΊΞ·Ξ½Ξ―ΞΏΟ…"
 
 #
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 #, fuzzy
 msgid "Mask Opacity"
-msgstr "Διαφάνεια:"
+msgstr "Ξ”ΞΉΞ±Ο†Ξ¬Ξ½ΞµΞΉΞ±:"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 #, fuzzy
 msgid "Mask Size"
-msgstr "Μεγέθος Τετραγωνιδίων"
+msgstr "ΞΞµΞ³Ξ­ΞΈΞΏΟ‚ Ξ¤ΞµΟ„ΟΞ±Ξ³Ο‰Ξ½ΞΉΞ΄Ξ―Ο‰Ξ½"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Max. Blur Radius"
@@ -1834,12 +1834,12 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
 msgid "Mosaic Tile Type"
-msgstr "Είδος MIME"
+msgstr "Ξ•Ξ―Ξ΄ΞΏΟ‚ MIME"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 #, fuzzy
 msgid "Mottle"
-msgstr "Μαγιότ"
+msgstr "ΞΞ±Ξ³ΞΉΟΟ„"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "No Background (only for separate layer)"
@@ -1852,115 +1852,115 @@ msgstr ""
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Not Pressed"
-msgstr "Δεν έχει ξεκινήσει"
+msgstr "Ξ”ΞµΞ½ Ξ­Ο‡ΞµΞΉ ΞΎΞµΞΊΞΉΞ½Ξ®ΟƒΞµΞΉ"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 #, fuzzy
 msgid "Number of Bands"
-msgstr "Αριθμός Σελίδων"
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ξ£ΞµΞ»Ξ―Ξ΄Ο‰Ξ½"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
-msgstr "Αριθμός Χρωμάτων"
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ξ§ΟΟ‰ΞΌΞ¬Ο„Ο‰Ξ½"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 #, fuzzy
 msgid "Number of Copies"
-msgstr "Α_ριθμός αντιγράφων:"
+msgstr "Ξ‘_ΟΞΉΞΈΞΌΟΟ‚ Ξ±Ξ½Ο„ΞΉΞ³ΟΞ¬Ο†Ο‰Ξ½:"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 #, fuzzy
 msgid "Number of Frames"
-msgstr "Αριθμός Σελίδων"
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ξ£ΞµΞ»Ξ―Ξ΄Ο‰Ξ½"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 #, fuzzy
 msgid "Number of Lines"
-msgstr "Αριθμός ναρκών"
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ξ½Ξ±ΟΞΊΟΞ½"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 #, fuzzy
 msgid "Number of Times to Whirl"
-msgstr "Αριθμός εικονοστοιχείων προς χρήση."
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚ ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ο‰Ξ½ Ο€ΟΞΏΟ‚ Ο‡ΟΞ®ΟƒΞ·."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 #, fuzzy
 msgid "Number of X Tiles"
-msgstr "Αριθμός αρχείων"
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 #, fuzzy
 msgid "Number of Y Tiles"
-msgstr "Αριθμός αρχείων"
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
-msgstr "Αριθμός"
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚"
 
 #
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
 msgid "Octagons"
-msgstr "Επιλογές"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚"
 
 #
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
 msgid "Odd"
-msgstr "Προσθήκη"
+msgstr "Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ·"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #, fuzzy
 msgid "Offset (pixels)"
-msgstr "Μέγεθος (εικονοστοιχεία)"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ (ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 #, fuzzy
 msgid "Offset Radius"
-msgstr "Μετατόπιση: %s"
+msgstr "ΞΞµΟ„Ξ±Ο„ΟΟ€ΞΉΟƒΞ·: %s"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 #, fuzzy
 msgid "Offset X"
-msgstr "Μετατόπιση"
+msgstr "ΞΞµΟ„Ξ±Ο„ΟΟ€ΞΉΟƒΞ·"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 #, fuzzy
 msgid "Offset Y"
-msgstr "Μετατόπιση"
+msgstr "ΞΞµΟ„Ξ±Ο„ΟΟ€ΞΉΟƒΞ·"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 #, fuzzy
 msgid "Offsets (pixels * 2)"
-msgstr "Μέγεθος (εικονοστοιχεία)"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ (ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #, fuzzy
 msgid "Oilify Mask Size"
-msgstr "Αρχικό _Μέγεθος"
+msgstr "Ξ‘ΟΟ‡ΞΉΞΊΟ _ΞΞ­Ξ³ΞµΞΈΞΏΟ‚"
 
 #
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 #, fuzzy
 msgid "Opacity"
-msgstr "Διαφάνεια:"
+msgstr "Ξ”ΞΉΞ±Ο†Ξ¬Ξ½ΞµΞΉΞ±:"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Orientation"
-msgstr "Προσανατολισμός"
+msgstr "Ξ ΟΞΏΟƒΞ±Ξ½Ξ±Ο„ΞΏΞ»ΞΉΟƒΞΌΟΟ‚"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
 msgid "Outer Border"
-msgstr "Πλαίσιο"
+msgstr "Ξ Ξ»Ξ±Ξ―ΟƒΞΉΞΏ"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Outline Blur Radius"
@@ -1969,39 +1969,39 @@ msgstr ""
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #, fuzzy
 msgid "Outline Color"
-msgstr "Περίγραμμα"
+msgstr "Ξ ΞµΟΞ―Ξ³ΟΞ±ΞΌΞΌΞ±"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Outline Size"
-msgstr "Περίγραμμα"
+msgstr "Ξ ΞµΟΞ―Ξ³ΟΞ±ΞΌΞΌΞ±"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
 msgid "Pad Color"
-msgstr "Προσθήκη Χρώματος"
+msgstr "Ξ ΟΞΏΟƒΞΈΞ®ΞΊΞ· Ξ§ΟΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
 msgid "Pad Opacity"
-msgstr "Διαφάνεια:"
+msgstr "Ξ”ΞΉΞ±Ο†Ξ¬Ξ½ΞµΞΉΞ±:"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 #, fuzzy
 msgid "Padding Around Text"
-msgstr "Απλό Κείμενο"
+msgstr "Ξ‘Ο€Ξ»Ο ΞΞµΞ―ΞΌΞµΞ½ΞΏ"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Padding X"
-msgstr "Σκίαση"
+msgstr "Ξ£ΞΊΞ―Ξ±ΟƒΞ·"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Padding Y"
-msgstr "Σκίαση"
+msgstr "Ξ£ΞΊΞ―Ξ±ΟƒΞ·"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Padding for Transparent Regions"
@@ -2011,24 +2011,24 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #, fuzzy
 msgid "Padding"
-msgstr "Σκίαση"
+msgstr "Ξ£ΞΊΞ―Ξ±ΟƒΞ·"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Pattern (Outline)"
-msgstr "Δημιουργία Περιγράμματος Μπεζιέρ"
+msgstr "Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± Ξ ΞµΟΞΉΞ³ΟΞ¬ΞΌΞΌΞ±Ο„ΞΏΟ‚ ΞΟ€ΞµΞ¶ΞΉΞ­Ο"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Pattern (Overlay)"
-msgstr "Γερμανικά (Γερμανία)"
+msgstr "Ξ“ΞµΟΞΌΞ±Ξ½ΞΉΞΊΞ¬ (Ξ“ΞµΟΞΌΞ±Ξ½Ξ―Ξ±)"
 
 # # NOTE: Translation of "Create" as "New" to
 # #       keep msg length relatively short...
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Pattern (Text)"
-msgstr "Επικόλληση Κειμένου"
+msgstr "Ξ•Ο€ΞΉΞΊΟΞ»Ξ»Ξ·ΟƒΞ· ΞΞµΞΉΞΌΞ­Ξ½ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -2039,7 +2039,7 @@ msgstr "Επικόλληση Κειμένου"
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Pattern"
-msgstr "Σχέδιο"
+msgstr "Ξ£Ο‡Ξ­Ξ΄ΞΉΞΏ"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
@@ -2048,13 +2048,13 @@ msgstr ""
 #: plug-ins/script-fu/scripts/predator.scm:0
 #, fuzzy
 msgid "Pixel Amount"
-msgstr "Αριθμός Γραμμών"
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ξ“ΟΞ±ΞΌΞΌΟΞ½"
 
 #
 #: plug-ins/script-fu/scripts/predator.scm:0
 #, fuzzy
 msgid "Pixelize"
-msgstr "Μέγεθος σε Εικ/χεία:"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ ΟƒΞµ Ξ•ΞΉΞΊ/Ο‡ΞµΞ―Ξ±:"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Prepare for GIF"
@@ -2066,12 +2066,12 @@ msgstr ""
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Pressed"
-msgstr "Πίεση"
+msgstr "Ξ Ξ―ΞµΟƒΞ·"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 #, fuzzy
 msgid "Quarter Size"
-msgstr "Μέγεθος Σ&ελίδας:"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚ Ξ£&ΞµΞ»Ξ―Ξ΄Ξ±Ο‚:"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 #, fuzzy
@@ -2081,25 +2081,25 @@ msgstr "RE:"
 #: plug-ins/script-fu/scripts/sphere.scm:0
 #, fuzzy
 msgid "Radius (pixels)"
-msgstr "Γελοίο (128 εικονοστοιχεία)"
+msgstr "Ξ“ΞµΞ»ΞΏΞ―ΞΏ (128 ΞµΞΉΞΊΞΏΞ½ΞΏΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―Ξ±)"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 #, fuzzy
 msgid "Radius"
-msgstr "Ράδιο"
+msgstr "Ξ΅Ξ¬Ξ΄ΞΉΞΏ"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 #, fuzzy
 msgid "Random Seed"
-msgstr "Τυχαίο"
+msgstr "Ξ¤Ο…Ο‡Ξ±Ξ―ΞΏ"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 #, fuzzy
 msgid "Randomness"
-msgstr "Τυχαίο"
+msgstr "Ξ¤Ο…Ο‡Ξ±Ξ―ΞΏ"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Relative Distance of Horizon"
@@ -2112,29 +2112,29 @@ msgstr ""
 #: plug-ins/script-fu/scripts/selection-round.scm:0
 #, fuzzy
 msgid "Relative Radius"
-msgstr "Συγγενείς"
+msgstr "Ξ£Ο…Ξ³Ξ³ΞµΞ½ΞµΞ―Ο‚"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 #, fuzzy
 msgid "Remove Background"
-msgstr "Αρχικοποίηση Παρασκηνίου"
+msgstr "Ξ‘ΟΟ‡ΞΉΞΊΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· Ξ Ξ±ΟΞ±ΟƒΞΊΞ·Ξ½Ξ―ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
 msgid "Ribbon Spacing"
-msgstr "Διαστήματα"
+msgstr "Ξ”ΞΉΞ±ΟƒΟ„Ξ®ΞΌΞ±Ο„Ξ±"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
 msgid "Ribbon Width"
-msgstr "Πλάτος Εικονιδίου:"
+msgstr "Ξ Ξ»Ξ¬Ο„ΞΏΟ‚ Ξ•ΞΉΞΊΞΏΞ½ΞΉΞ΄Ξ―ΞΏΟ…:"
 
 #
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Right"
-msgstr "Δεξιά"
+msgstr "Ξ”ΞµΞΎΞΉΞ¬"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "Rippling Strength"
@@ -2144,49 +2144,49 @@ msgstr ""
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 #, fuzzy
 msgid "Roughness"
-msgstr "Σκληρό Χαρτί"
+msgstr "Ξ£ΞΊΞ»Ξ·ΟΟ Ξ§Ξ±ΟΟ„Ξ―"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Round Ratio"
-msgstr "Επιλογές ήχου"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚ Ξ®Ο‡ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows"
-msgstr "Σειρές"
+msgstr "Ξ£ΞµΞΉΟΞ­Ο‚"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
 msgid "Rows/Cols"
-msgstr "Γραμματοσειρές/Χρώματα"
+msgstr "Ξ“ΟΞ±ΞΌΞΌΞ±Ο„ΞΏΟƒΞµΞΉΟΞ­Ο‚/Ξ§ΟΟΞΌΞ±Ο„Ξ±"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 #, fuzzy
 msgid "Scale X"
-msgstr "Κλίμακα Χ:"
+msgstr "ΞΞ»Ξ―ΞΌΞ±ΞΊΞ± Ξ§:"
 
 #
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 #, fuzzy
 msgid "Scale Y"
-msgstr "Κλιμάκωση"
+msgstr "ΞΞ»ΞΉΞΌΞ¬ΞΊΟ‰ΟƒΞ·"
 
 #: plug-ins/script-fu/scripts/land.scm:0
 #, fuzzy
 msgid "Sea Depth"
-msgstr "πραγματική διαδρομή"
+msgstr "Ο€ΟΞ±Ξ³ΞΌΞ±Ο„ΞΉΞΊΞ® Ξ΄ΞΉΞ±Ξ΄ΟΞΏΞΌΞ®"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
-msgstr "Σπόρος"
+msgstr "Ξ£Ο€ΟΟΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 #, fuzzy
 msgid "Select-By-Color Threshold"
-msgstr "Χαρακτήρες επιλογής ανά λέξη:"
+msgstr "Ξ§Ξ±ΟΞ±ΞΊΟ„Ξ®ΟΞµΟ‚ ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ®Ο‚ Ξ±Ξ½Ξ¬ Ξ»Ξ­ΞΎΞ·:"
 
 #
 #: plug-ins/script-fu/scripts/circuit.scm:0
@@ -2194,33 +2194,33 @@ msgstr "Χαρακτήρες επιλογής ανά λέξη:"
 #: plug-ins/script-fu/scripts/predator.scm:0
 #, fuzzy
 msgid "Separate Layer"
-msgstr "Καθορισμός Στρώματος"
+msgstr "ΞΞ±ΞΈΞΏΟΞΉΟƒΞΌΟΟ‚ Ξ£Ο„ΟΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 #, fuzzy
 msgid "Sepia"
-msgstr "Σειριακό"
+msgstr "Ξ£ΞµΞΉΟΞΉΞ±ΞΊΟ"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #, fuzzy
 msgid "Shadow Blur Radius"
-msgstr "Αραιά βροχή"
+msgstr "Ξ‘ΟΞ±ΞΉΞ¬ Ξ²ΟΞΏΟ‡Ξ®"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 #, fuzzy
 msgid "Shadow Color"
-msgstr "Εμφάνιση Προχείρου"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ ΟΞΏΟ‡ΞµΞ―ΟΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
 msgid "Shadow Darkness"
-msgstr "Εμφάνιση λαβής"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ»Ξ±Ξ²Ξ®Ο‚"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
 msgid "Shadow Depth"
-msgstr "Εμφάνιση Λεπτομερειών"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ›ΞµΟ€Ο„ΞΏΞΌΞµΟΞµΞΉΟΞ½"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Shadow Weight (%)"
@@ -2242,7 +2242,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/sphere.scm:0
 #, fuzzy
 msgid "Shadow"
-msgstr "Σκιά:"
+msgstr "Ξ£ΞΊΞΉΞ¬:"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Sharpness (degrees)"
@@ -2251,39 +2251,39 @@ msgstr ""
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
 msgid "Shear Length"
-msgstr "Γωνία στρέβλωσης:"
+msgstr "Ξ“Ο‰Ξ½Ξ―Ξ± ΟƒΟ„ΟΞ­Ξ²Ξ»Ο‰ΟƒΞ·Ο‚:"
 
 #
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Size"
-msgstr "Μέγεθος"
+msgstr "ΞΞ­Ξ³ΞµΞΈΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #, fuzzy
 msgid "Smooth Horizontally"
-msgstr "_Οριζόντια"
+msgstr "_ΞΟΞΉΞ¶ΟΞ½Ο„ΞΉΞ±"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #, fuzzy
 msgid "Smooth Vertically"
-msgstr "Κατακόρυ_φα"
+msgstr "ΞΞ±Ο„Ξ±ΞΊΟΟΟ…_Ο†Ξ±"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth"
-msgstr "Ομαλό"
+msgstr "ΞΞΌΞ±Ξ»Ο"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
 msgid "Space Between Layers"
-msgstr "Διάχυση μεταξύ γραμμών"
+msgstr "Ξ”ΞΉΞ¬Ο‡Ο…ΟƒΞ· ΞΌΞµΟ„Ξ±ΞΎΟ Ξ³ΟΞ±ΞΌΞΌΟΞ½"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "Spacing"
-msgstr "Διαστήματα"
+msgstr "Ξ”ΞΉΞ±ΟƒΟ„Ξ®ΞΌΞ±Ο„Ξ±"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Speed (pixels/frame)"
@@ -2293,7 +2293,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/sphere.scm:0
 #, fuzzy
 msgid "Sphere Color"
-msgstr "Επιλέξτε Χρώμα"
+msgstr "Ξ•Ο€ΞΉΞ»Ξ­ΞΎΟ„Ξµ Ξ§ΟΟΞΌΞ±"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "Spots density X"
@@ -2311,48 +2311,48 @@ msgstr "SC/XSpread"
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
 msgid "Squares"
-msgstr "Τετράγωνο"
+msgstr "Ξ¤ΞµΟ„ΟΞ¬Ξ³Ο‰Ξ½ΞΏ"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 #, fuzzy
 msgid "Stains"
-msgstr "Ισπανία"
+msgstr "Ξ™ΟƒΟ€Ξ±Ξ½Ξ―Ξ±"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 #, fuzzy
 msgid "Start Angle"
-msgstr "Εκκινείται"
+msgstr "Ξ•ΞΊΞΊΞΉΞ½ΞµΞ―Ο„Ξ±ΞΉ"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #, fuzzy
 msgid "Start Blend"
-msgstr "Έναρξη Esound"
+msgstr "ΞΞ½Ξ±ΟΞΎΞ· Esound"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 #, fuzzy
 msgid "Start X"
-msgstr "Εκκίνηση"
+msgstr "Ξ•ΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 #, fuzzy
 msgid "Start Y"
-msgstr "Εκκίνηση"
+msgstr "Ξ•ΞΊΞΊΞ―Ξ½Ξ·ΟƒΞ·"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
 msgid "Starting Blend"
-msgstr "Αρχικό επίπεδο: "
+msgstr "Ξ‘ΟΟ‡ΞΉΞΊΟ ΞµΟ€Ξ―Ο€ΞµΞ΄ΞΏ: "
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #, fuzzy
 msgid "Supersample"
-msgstr "Δείγμα"
+msgstr "Ξ”ΞµΞ―Ξ³ΞΌΞ±"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Text Color (Active)"
-msgstr "Χρώμα Κειμένου"
+msgstr "Ξ§ΟΟΞΌΞ± ΞΞµΞΉΞΌΞ­Ξ½ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/asc2img.scm:0
@@ -2368,12 +2368,12 @@ msgstr "Χρώμα Κειμένου"
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #: plug-ins/script-fu/scripts/speed-text.scm:0
 msgid "Text Color"
-msgstr "Χρώμα Κειμένου"
+msgstr "Ξ§ΟΟΞΌΞ± ΞΞµΞΉΞΌΞ­Ξ½ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
 msgid "Text Pattern"
-msgstr "Σχέδιο"
+msgstr "Ξ£Ο‡Ξ­Ξ΄ΞΉΞΏ"
 
 #
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
@@ -2414,29 +2414,29 @@ msgstr "Σχέδιο"
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "Text"
-msgstr "Κείμενο"
+msgstr "ΞΞµΞ―ΞΌΞµΞ½ΞΏ"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 #, fuzzy
 msgid "Thickness"
-msgstr "Μολυβιές"
+msgstr "ΞΞΏΞ»Ο…Ξ²ΞΉΞ­Ο‚"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
 msgid "Thread Density"
-msgstr "Πυκνότητα"
+msgstr "Ξ Ο…ΞΊΞ½ΟΟ„Ξ·Ο„Ξ±"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
 msgid "Thread Intensity"
-msgstr "Τοπική θύελλα"
+msgstr "Ξ¤ΞΏΟ€ΞΉΞΊΞ® ΞΈΟΞµΞ»Ξ»Ξ±"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
 msgid "Thread Length"
-msgstr "Διάρκεια"
+msgstr "Ξ”ΞΉΞ¬ΟΞΊΞµΞΉΞ±"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Threshold (Bigger 1<-->255 Smaller)"
@@ -2444,25 +2444,25 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Tile"
-msgstr "Παράθεση"
+msgstr "Ξ Ξ±ΟΞ¬ΞΈΞµΟƒΞ·"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Transparent Background"
-msgstr "Διαφανές Παρασκήνιο"
+msgstr "Ξ”ΞΉΞ±Ο†Ξ±Ξ½Ξ­Ο‚ Ξ Ξ±ΟΞ±ΟƒΞΊΞ®Ξ½ΞΉΞΏ"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 #, fuzzy
 msgid "Turn from Left to Right"
-msgstr "Αριστερά προς δεξιά"
+msgstr "Ξ‘ΟΞΉΟƒΟ„ΞµΟΞ¬ Ο€ΟΞΏΟ‚ Ξ΄ΞµΞΎΞΉΞ¬"
 
 #
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Up"
-msgstr "Επάνω"
+msgstr "Ξ•Ο€Ξ¬Ξ½Ο‰"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color (Active)"
@@ -2471,42 +2471,42 @@ msgstr ""
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Upper Color"
-msgstr "Χρώματα Χρήστη"
+msgstr "Ξ§ΟΟΞΌΞ±Ο„Ξ± Ξ§ΟΞ®ΟƒΟ„Ξ·"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #, fuzzy
 msgid "Upper-Left color"
-msgstr "Επιλογή χρώματος"
+msgstr "Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® Ο‡ΟΟΞΌΞ±Ο„ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 #, fuzzy
 msgid "Use Brush"
-msgstr "Χρήστες"
+msgstr "Ξ§ΟΞ®ΟƒΟ„ΞµΟ‚"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 #, fuzzy
 msgid "Use Current Gradient"
-msgstr "Χρήση τρέχοντος"
+msgstr "Ξ§ΟΞ®ΟƒΞ· Ο„ΟΞ­Ο‡ΞΏΞ½Ο„ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #, fuzzy
 msgid "Use Growing Selection"
-msgstr "Κλάδεμα Επιλεγμένου"
+msgstr "ΞΞ»Ξ¬Ξ΄ΞµΞΌΞ± Ξ•Ο€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Use Pattern Overlay"
-msgstr "Υπόδειγμα URL"
+msgstr "Ξ¥Ο€ΟΞ΄ΞµΞΉΞ³ΞΌΞ± URL"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr "Εμφάνιση γνωμικών αντί υποδείξεων"
+msgstr "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ³Ξ½Ο‰ΞΌΞΉΞΊΟΞ½ Ξ±Ξ½Ο„Ξ― Ο…Ο€ΞΏΞ΄ΞµΞ―ΞΎΞµΟ‰Ξ½"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Use Pattern for Text instead of Gradient"
-msgstr "Σελίδες για τα /query αντί ξεχωριστών παραθύρων"
+msgstr "Ξ£ΞµΞ»Ξ―Ξ΄ΞµΟ‚ Ξ³ΞΉΞ± Ο„Ξ± /query Ξ±Ξ½Ο„Ξ― ΞΎΞµΟ‡Ο‰ΟΞΉΟƒΟ„ΟΞ½ Ο€Ξ±ΟΞ±ΞΈΟΟΟ‰Ξ½"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Use Selection Bounds Instead of Belows"
@@ -2515,7 +2515,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 #, fuzzy
 msgid "Wavelength"
-msgstr "ενδέκατο"
+msgstr "ΞµΞ½Ξ΄Ξ­ΞΊΞ±Ο„ΞΏ"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Wheel Radius (hypo < 0 < epi)"
@@ -2524,29 +2524,29 @@ msgstr ""
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 #, fuzzy
 msgid "Whirl Amount"
-msgstr "Αριθμός Λέξεων"
+msgstr "Ξ‘ΟΞΉΞΈΞΌΟΟ‚ Ξ›Ξ­ΞΎΞµΟ‰Ξ½"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 #, fuzzy
 msgid "Whirl Angle"
-msgstr "Γωνία στρέβλωσης:"
+msgstr "Ξ“Ο‰Ξ½Ξ―Ξ± ΟƒΟ„ΟΞ­Ξ²Ξ»Ο‰ΟƒΞ·Ο‚:"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 #, fuzzy
 msgid "Width of Bands"
-msgstr "Πλάτος παραθύρου"
+msgstr "Ξ Ξ»Ξ¬Ο„ΞΏΟ‚ Ο€Ξ±ΟΞ±ΞΈΟΟΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 #, fuzzy
 msgid "Width of Gaps"
-msgstr "Πλάτος ναρκοπεδίου"
+msgstr "Ξ Ξ»Ξ¬Ο„ΞΏΟ‚ Ξ½Ξ±ΟΞΊΞΏΟ€ΞµΞ΄Ξ―ΞΏΟ…"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Width"
-msgstr "Πλάτος"
+msgstr "Ξ Ξ»Ξ¬Ο„ΞΏΟ‚"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
@@ -2556,24 +2556,24 @@ msgstr "Πλάτος"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 #, fuzzy
 msgid "Work on Copy"
-msgstr "Αφύπνηση σε %s"
+msgstr "Ξ‘Ο†ΟΟ€Ξ½Ξ·ΟƒΞ· ΟƒΞµ %s"
 
 #
 #~ msgid "Close"
-#~ msgstr "Κλείσιμο"
+#~ msgstr "ΞΞ»ΞµΞ―ΟƒΞΉΞΌΞΏ"
 
 #
 #~ msgid "OK"
-#~ msgstr "Εντάξει"
+#~ msgstr "Ξ•Ξ½Ο„Ξ¬ΞΎΞµΞΉ"
 
 #
 #~ msgid "Cancel"
-#~ msgstr "Ακύρωση"
+#~ msgstr "Ξ‘ΞΊΟΟΟ‰ΟƒΞ·"
 
 #, fuzzy
 #~ msgid "NOT SET"
-#~ msgstr " ΟΧΙ "
+#~ msgstr " ΞΞ§Ξ™ "
 
 #
 #~ msgid "Apply"
-#~ msgstr "Εφαρμογή"
+#~ msgstr "Ξ•Ο†Ξ±ΟΞΌΞΏΞ³Ξ®"
