@@ -1,4 +1,4 @@
-# Copyright (C) 2001-2004, 2005 Free Software Foundation, Inc.
+# Copyright (C) 2001-2005 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnome.pl
 # (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste hasło)
@@ -14,6 +14,8 @@
 #              - odcinek (ścieżka)
 #  component   - składowa (koloru, ścieżki)
 #  UTF-8       - system kodowania Unikodu.
+#  zoom in     - powiekszenie
+#  zoom out    - zmniejszenie (nie pomniejszenie)
 #
 # TODO:
 # - rozmiar vs wymiary - sprawdzić wszystkie "rozmiary"
@@ -34,8 +36,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-03 09:25+0100\n"
-"PO-Revision-Date: 2005-02-02 23:19+0100\n"
+"POT-Creation-Date: 2005-02-09 23:11+0100\n"
+"PO-Revision-Date: 2005-02-09 02:12+0100\n"
 "Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
 "Language-Team: Polish <translators@gnomepl.org>\n"
 "MIME-Version: 1.0\n"
@@ -1579,7 +1581,7 @@ msgstr "Dalej"
 #: app/actions/palette-editor-actions.c:84 app/actions/view-actions.c:210
 #: app/widgets/widgets-enums.c:354
 msgid "Zoom out"
-msgstr "Pomniejszenie"
+msgstr "Zmniejszenie"
 
 #: app/actions/gradient-editor-actions.c:313
 msgid "Zoom All"
@@ -3576,7 +3578,7 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:174
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
-"Liczba wyświetlanych w menu \"Plik\" nazw plików z ostatnio otwieranymi "
+"Ilość wyświetlanych w menu \"Plik\" nazw plików z ostatnio otwieranymi "
 "obrazami."
 
 #: app/config/gimprc-blurbs.h:177
@@ -5126,7 +5128,7 @@ msgstr "Połączenie widocznych warstw"
 #: app/core/gimpimage-merge.c:107
 msgid "Not enough visible layers for a merge. There must be at least two."
 msgstr ""
-"Niewystarczająca liczba widocznych warstw do połączenia. Potrzebne są "
+"Niewystarczająca ilość widocznych warstw do połączenia. Potrzebne są "
 "przynajmniej dwie."
 
 #: app/core/gimpimage-merge.c:142
@@ -5139,7 +5141,7 @@ msgstr "Połączenie w dół"
 
 #: app/core/gimpimage-merge.c:202
 msgid "There are not enough visible layers for a merge down."
-msgstr "Liczba warstw jest niewystarczająca dla połączenia w dół."
+msgstr "Ilość warstw jest niewystarczająca dla połączenia w dół."
 
 #: app/core/gimpimage-merge.c:543
 msgid "Merge Visible Paths"
@@ -5148,7 +5150,7 @@ msgstr "Połącz widoczne ścieżki"
 #: app/core/gimpimage-merge.c:580
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
-"Niewystarczająca liczba widocznych ścieżek do połączenia. Potrzebne są "
+"Niewystarczająca ilość widocznych ścieżek do połączenia. Potrzebne są "
 "przynajmniej dwie."
 
 #: app/core/gimpimage-qmask.c:67
@@ -5534,7 +5536,7 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"Odczytywanie pliku \"%s\" z paletą: niepoprawna liczba kolumn w wierszu %d, "
+"Odczytywanie pliku \"%s\" z paletą: niepoprawna ilość kolumn w wierszu %d, "
 "użyto wartości domyślnej."
 
 #. maybe we should just abort?
@@ -5756,7 +5758,7 @@ msgstr "Paleta kolorów"
 
 #: app/dialogs/convert-dialog.c:179
 msgid "_Maximum number of colors:"
-msgstr "_Maksymalna liczba kolorów:"
+msgstr "_Maksymalna ilość kolorów:"
 
 #: app/dialogs/convert-dialog.c:206
 msgid "_Remove unused colors from final palette"
@@ -6051,7 +6053,7 @@ msgstr "Współczynnik skalowania:"
 
 #: app/dialogs/info-window.c:302
 msgid "Number of layers:"
-msgstr "Liczba warstw:"
+msgstr "Ilość warstw:"
 
 #: app/dialogs/info-window.c:304
 msgid "Size in memory:"
@@ -6301,7 +6303,7 @@ msgstr "_Nazwa palety:"
 
 #: app/dialogs/palette-import-dialog.c:325
 msgid "N_umber of colors:"
-msgstr "_Liczba kolorów:"
+msgstr "_Ilość kolorów:"
 
 #: app/dialogs/palette-import-dialog.c:338
 msgid "C_olumns:"
@@ -6800,7 +6802,7 @@ msgstr "Wykorzystywanie zasobów"
 
 #: app/dialogs/preferences-dialog.c:2199
 msgid "Minimal number of _undo levels:"
-msgstr "Mi_nimalna liczba poziomów cofnięć:"
+msgstr "Mi_nimalna ilość poziomów cofnięć:"
 
 #: app/dialogs/preferences-dialog.c:2202
 msgid "Maximum undo _memory:"
@@ -6816,7 +6818,7 @@ msgstr "Maksymal_ny rozmiar nowego obrazu:"
 
 #: app/dialogs/preferences-dialog.c:2213
 msgid "Number of _processors to use:"
-msgstr "_Liczba wykorzystywanych procesorów:"
+msgstr "_Ilość wykorzystywanych procesorów:"
 
 #. Image Thumbnails
 #: app/dialogs/preferences-dialog.c:2218
@@ -8170,7 +8172,7 @@ msgstr ""
 "pchnąć w tę łódź jeża\n"
 "lub ośm skrzyń fig"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:697
+#: app/text/gimptext-compat.c:108 app/tools/gimptexttool.c:697
 msgid "Add Text Layer"
 msgstr "Dodanie warstwy tekstowej"
 
@@ -8298,11 +8300,11 @@ msgstr "Obraz + siatka"
 
 #: app/tools/tools-enums.c:204
 msgid "Number of grid lines"
-msgstr "Liczba linii siatki"
+msgstr "Ilość linii siatki"
 
 #: app/tools/tools-enums.c:205
 msgid "Grid line spacing"
-msgstr "Odstępy pomiędzy liniami siatki"
+msgstr "Odstęp między liniami siatki"
 
 #: app/tools/gimp-tools.c:283
 msgid "This tool has no options."
@@ -9016,7 +9018,7 @@ msgstr "Powiększenie"
 
 #: app/tools/gimpmagnifytool.c:96
 msgid "Zoom in & out"
-msgstr "Powiększanie i pomniejszanie"
+msgstr "Powiększanie i zmniejszanie"
 
 #: app/tools/gimpmagnifytool.c:97
 msgid "M_agnify"
@@ -10776,7 +10778,7 @@ msgstr "Otwiera okno wyboru gradientu"
 
 #: app/widgets/gimpviewablebox.c:167
 msgid "Reverse"
-msgstr "Odwrotny"
+msgstr "Odwróć"
 
 #: app/widgets/gimpviewablebox.c:210
 msgid "Open the palette selection dialog"
