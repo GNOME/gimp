@@ -536,6 +536,9 @@ if test $ac_cv_path_SENDMAIL != ":"; then
 fi
 
 dnl This is for the print plug-in
+GIMP_PRINT_VERSION="4.0.0"
+GIMP_PRINT_RELEASE_DATE="28\ Oct\ 2000"
+
 lp_path=":"
 AC_ARG_ENABLE(lp_path, [  --with-lp=DIR           set lp command location],
 if eval "test x$with_lp != x"; then
@@ -736,6 +739,8 @@ AC_SUBST(GAP_DECODE_MPEG)
 AC_SUBST(XPM)
 AC_SUBST(LIBXPM)
 AC_SUBST(LIBUCB)
+AC_SUBST(GIMP_PRINT_VERSION)
+AC_SUBST(GIMP_PRINT_RELEASE_DATE)
 AC_SUBST(LP_DEF)
 AC_SUBST(LPSTAT_DEF)
 AC_SUBST(LPR_DEF)
@@ -816,6 +821,7 @@ plug-ins/maze/Makefile
 plug-ins/mosaic/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
+plug-ins/print/escputil.1
 plug-ins/rcm/Makefile
 plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile

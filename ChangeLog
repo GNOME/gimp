@@ -1,3 +1,14 @@
+2000-10-29  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/escputil.1.in: added framework for a manpage
+	describing our new tool, escputil. Someone needs to fill in 
+	some descriptive words here...
+
+	* gimp.spec.in:
+	* debian/gimp1.1.files: added entries for escputil and escputil.1
+	
 2000-10-29  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/print/escputil.c

@@ -1,5 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+
+## When updating gimp-print, do not forget to update 
+## GIMP_PRINT_VERSION and GIMP_PRINT_RELEASE_DATE 
+## in the toplevel configure.in !!
+
+
 libexecdir = $(gimpplugindir)/plug-ins
 
 EXTRA_DIST = print-printers.c
@@ -28,6 +34,8 @@ print_SOURCES = \
 
 escputil_SOURCES = escputil.c
 
+man_MANS = escputil.1
+
 INCLUDES = \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
@@ -39,8 +47,8 @@ AM_CPPFLAGS = \
 	@LPSTAT_DEF@				\
 	@LPR_DEF@				\
 	@LPC_DEF@				\
-	-DVERSION=\"4.0.0\"			\
-	-DRELEASE_DATE=\"28\ Oct\ 2000\"
+	-DVERSION=\"$(GIMP_PRINT_VERSION)\"	\
+	-DRELEASE_DATE=\"$(GIMP_PRINT_RELEASE_DATE)\"
 
 LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\

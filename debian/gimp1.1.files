@@ -6,4 +6,9 @@ usr/share/locale
 usr/share/gimp/
 etc/
 usr/bin/gimp
+usr/bin/gimp-remote
+usr/bin/escputil
 usr/share/man/man1/gimp.1
+usr/share/man/man1/gimp-remote.1
+usr/share/man/man1/escputil.1
+

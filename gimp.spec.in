@@ -201,13 +201,16 @@ cat gimp-perl gimp-perl-plugin-files > gimp-perl-files
 %{prefix}/bin/gimp
 %{prefix}/bin/gimp-remote
 %{prefix}/bin/embedxpm
+%{prefix}/bin/escputil
 %{prefix}/bin/gimpdoc
 %{prefix}/bin/xcftopnm
 
 %defattr (0444, bin, man)
 %{prefix}/man/man1/gimp.1*
 %{prefix}/man/man1/gimp-remote.1*
+%{prefix}/man/man1/escputil.1.*
 %{prefix}/man/man5/gimprc.5*
+%{prefix}/man/man1/
 
 %files devel
 %defattr (0555, bin, bin, 0555)

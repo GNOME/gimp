@@ -1,0 +1,84 @@
+.TH ESCPUTIL 1 @GIMP_PRINT_RELEASE_DATE@ "Version @GIMP_PRINT_VERSION@" "GIMP Manual Pages"
+.SH NAME
+escputil - tune Epson printers
+.SH SYNOPSIS
+.B escputil [\-P printer \| \-r device] [\-m model] [\-u]
+[\-c \| \-n | \-a \| \-i] [\-q]
+
+.SH DESCRIPTION
+.PP
+\fIescputil\fP is part of the gimp-print package. 
+It does things with your Epson printer.
+.PP
+Please fill in more info here.
+
+.SH OPTIONS
+.l 
+\fIescputil\fP accepts the following options:
+.TP 8
+.B \-P, \-\-printer-name \fI<printer>\fP
+Specify the name of the printer to operate on.
+Default is the default system printer.
+.TP 8
+.B \-r, \-\-raw-device \fI<device>\fP
+Specify the name of the device to write to directly
+rather than going through a printer queue.
+.TP 8
+.B \-c, \-\-clean-head    
+Clean the print head.
+.TP 8
+.B \-n, \-\-nozzle-check
+Print a nozzle test pattern.
+Dirty or clogged nozzles will show as gaps in the
+pattern.  If you see any gaps, you should run a
+head cleaning pass.
+.TP 8
+.B \-a, \-\-align-head
+Align the print head.  CAUTION: Misuse of this
+utility may result in poor print quality and/or
+damage to the printer.
+.TP 8
+.B \-i, \-\-ink-level     
+Obtain the ink level from the printer.  This requires
+read/write access to the raw printer device.
+.TP 8
+.B \-d, \-\-identify
+Query the printer for make and model information.
+This requires read/write access to the raw printer
+device.
+.TP 8
+.B \-u 
+The printer is connected via USB.
+.TP 8
+.B  \-h, \-\-help
+Display a list of all commandline options.
+.TP 8
+.B \-q, \-\-quiet         
+Suppress the banner.
+.TP 8
+.B \-m <model>
+Specify the precise printer model for head alignment.
+
+.SH COPYRIGHT
+Copyright \(co  2000 Robert Krawitz (rlk@alum.mit.edu)
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option)
+any later version.
+
+.SH OTHER INFO
+
+The canonical place to find GIMP info is at http://www.gimp.org/.
+The homepage of the gimp-print project from which this utility was 
+contributed is located at http://gimp-print.sourceforge.net/. 
+
+.SH AUTHORS
+Robert Krawitz.
+
+.SH BUGS
+This manpage sucks. Fix it if you can.
+
+.SH "SEE ALSO"
+.BR gimp (1)
+
