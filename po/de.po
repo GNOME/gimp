@@ -6,9 +6,9 @@
 # Christian Neumair <chris@gnome-de.org>
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.3.15\n"
-"POT-Creation-Date: 2003-06-23 21:53+0200\n"
-"PO-Revision-Date: 2003-06-23 22:16+0200\n"
+"Project-Id-Version: GIMP 1.3.16\n"
+"POT-Creation-Date: 2003-06-24 01:42+0200\n"
+"PO-Revision-Date: 2003-06-24 01:54+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,13 +28,12 @@ msgstr ""
 "Benutzerinstallation durchzuführen."
 
 #: app/app_procs.c:317
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Opening '%s' failed:\n"
 "%s"
 msgstr ""
 "Öffnen von '%s' schlug fehl:\n"
-"\n"
 "%s"
 
 #: app/main.c:174
@@ -264,8 +263,8 @@ msgstr "Mitten"
 msgid "Highlights"
 msgstr "Glanzlichter"
 
-#: app/config/gimpconfig-deserialize.c:205 app/config/gimpconfig.c:280
-#: app/config/gimpconfig.c:293 app/config/gimpscanner.c:327
+#: app/config/gimpconfig-deserialize.c:205 app/config/gimpconfig.c:351
+#: app/config/gimpconfig.c:364 app/config/gimpscanner.c:359
 #: app/core/gimpunits.c:157 app/gui/session.c:176 app/plug-in/plug-in-rc.c:134
 msgid "fatal parse error"
 msgstr "Schwerwiegender Fehler beim Verarbeiten"
@@ -301,17 +300,17 @@ msgstr "Wert für Symbol %s ist keine gültige UTF-8-Zeichenkette"
 msgid "can not expand ${%s}"
 msgstr "${%s} konnte nicht nicht expandiert werden"
 
-#: app/config/gimpconfigwriter.c:77
+#: app/config/gimpconfigwriter.c:89
 #, c-format
 msgid "Failed to create temporary file for '%s': %s"
 msgstr "Temporäre Datei für »%s« konnte nicht angelegt werden: %s"
 
-#: app/config/gimpconfigwriter.c:91
+#: app/config/gimpconfigwriter.c:103
 #, c-format
 msgid "Failed to open '%s' for writing: %s"
 msgstr "»%s« konnte nicht zum Schreiben geöffnet werden: %s"
 
-#: app/config/gimpconfigwriter.c:358
+#: app/config/gimpconfigwriter.c:396
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -320,7 +319,7 @@ msgstr ""
 "Fehler beim Schreiben in temporäre Datei für »%s«: %s\n"
 "Die Originaldatei wurde nicht geändert."
 
-#: app/config/gimpconfigwriter.c:365
+#: app/config/gimpconfigwriter.c:403
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -329,23 +328,23 @@ msgstr ""
 "Fehler beim Schreiben in temporäre Datei für »%s«: %s\n"
 "Es wurde keine Datei angelegt."
 
-#: app/config/gimpconfigwriter.c:375
+#: app/config/gimpconfigwriter.c:413
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Fehler beim Schreiben von »%s«: %s"
 
-#: app/config/gimpconfigwriter.c:393
+#: app/config/gimpconfigwriter.c:431
 #, c-format
 msgid "Failed to create file '%s': %s"
 msgstr "Datei »%s« konnte nicht angelegt werden: %s"
 
-#: app/config/gimprc.c:341 app/config/gimprc.c:353 app/gui/gui.c:210
+#: app/config/gimprc.c:342 app/config/gimprc.c:354 app/gui/gui.c:210
 #: app/gui/gui.c:221
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr "»%s« wird verarbeitet\n"
 
-#: app/config/gimprc.c:575
+#: app/config/gimprc.c:577
 #, c-format
 msgid "Saving '%s'\n"
 msgstr "»%s« wird gespeichert\n"
@@ -628,17 +627,17 @@ msgstr ""
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr ""
 
-#: app/config/gimpscanner.c:76 app/tools/gimpcurvestool.c:1291
+#: app/config/gimpscanner.c:78 app/tools/gimpcurvestool.c:1291
 #: app/tools/gimplevelstool.c:1489
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Datei »%s« konnte nicht geöffnet werden: %s"
 
-#: app/config/gimpscanner.c:149
+#: app/config/gimpscanner.c:181
 msgid "invalid UTF-8 string"
 msgstr "ungültiger UTF-8 Text"
 
-#: app/config/gimpscanner.c:354
+#: app/config/gimpscanner.c:387
 #, c-format
 msgid ""
 "Error while parsing '%s' in line %d:\n"
@@ -798,19 +797,19 @@ msgstr "Spirale (linksdrehend)"
 
 #: app/core/core-enums.c:218
 msgid "Intersections Only"
-msgstr ""
+msgstr "Schnittpunkte"
 
 #: app/core/core-enums.c:219
 msgid "Dashed"
-msgstr ""
+msgstr "Gestrichelt"
 
 #: app/core/core-enums.c:220
 msgid "Double Dashed"
-msgstr ""
+msgstr "Doppelt Gestrichelt"
 
 #: app/core/core-enums.c:221
 msgid "Solid"
-msgstr ""
+msgstr "Durchgezogen"
 
 #: app/core/core-enums.c:239 app/core/core-enums.c:259
 #: app/display/gimpdisplayshell-title.c:163
@@ -939,7 +938,7 @@ msgid "QuickMask"
 msgstr "QuickMask"
 
 #: app/core/core-enums.c:480 app/core/core-enums.c:508
-#: app/core/gimpimage.c:3274
+#: app/core/gimpimage.c:3277
 msgid "Grid"
 msgstr "Gitter"
 
@@ -1749,78 +1748,78 @@ msgstr "QuickMask aktivieren"
 msgid "Disable QuickMask"
 msgstr "QuickMask deaktivieren"
 
-#: app/core/gimpimage-undo-push.c:3362
+#: app/core/gimpimage-undo-push.c:3366
 #, c-format
 msgid "Can't undo %s"
 msgstr "%s konnte nicht rückgängig gemacht werden"
 
-#: app/core/gimpimage.c:932 app/core/gimppalette-import.c:204
+#: app/core/gimpimage.c:933 app/core/gimppalette-import.c:204
 #: app/core/gimppalette.c:652 app/gui/palette-import-dialog.c:589
 #: app/pdb/image_cmds.c:3754 app/widgets/gimpdatafactoryview.c:281
 msgid "Untitled"
 msgstr "Namenlos"
 
-#: app/core/gimpimage.c:1006
+#: app/core/gimpimage.c:1007
 msgid "Change Image Resolution"
 msgstr "Bildauflösung ändern"
 
-#: app/core/gimpimage.c:1045
+#: app/core/gimpimage.c:1046
 msgid "Change Image Unit"
 msgstr "Bildeinheit ändern"
 
-#: app/core/gimpimage.c:1952
+#: app/core/gimpimage.c:1953
 msgid "Attach Paraite to Image"
 msgstr "Parasit zuweisen"
 
-#: app/core/gimpimage.c:1985
+#: app/core/gimpimage.c:1986
 msgid "Remove Parasite from Image"
 msgstr "Parasit entfernen"
 
-#: app/core/gimpimage.c:2504
+#: app/core/gimpimage.c:2505
 msgid "Add Layer"
 msgstr "Ebene hinzufügen"
 
-#: app/core/gimpimage.c:2586
+#: app/core/gimpimage.c:2587
 msgid "Remove Layer"
 msgstr "Ebene entfernen"
 
-#: app/core/gimpimage.c:2653
+#: app/core/gimpimage.c:2654
 msgid "Layer cannot be raised higher."
 msgstr "Diese Ebene kann nicht weiter angehoben werden."
 
-#: app/core/gimpimage.c:2658 app/widgets/gimplayertreeview.c:201
+#: app/core/gimpimage.c:2659 app/widgets/gimplayertreeview.c:201
 msgid "Raise Layer"
 msgstr "Ebene anheben"
 
-#: app/core/gimpimage.c:2678
+#: app/core/gimpimage.c:2679
 msgid "Layer cannot be lowered more."
 msgstr "Diese Ebene kann nicht weiter abgesenkt werden."
 
-#: app/core/gimpimage.c:2683 app/widgets/gimplayertreeview.c:203
+#: app/core/gimpimage.c:2684 app/widgets/gimplayertreeview.c:203
 msgid "Lower Layer"
 msgstr "Ebene absenken"
 
-#: app/core/gimpimage.c:2700
+#: app/core/gimpimage.c:2701
 msgid "Layer is already on top."
 msgstr "Diese Ebene befindet sich bereits ganz oben."
 
-#: app/core/gimpimage.c:2706
+#: app/core/gimpimage.c:2707
 msgid "Cannot raise a layer without alpha."
 msgstr "Ebenen ohne Alphakanal können nicht angehoben werden."
 
-#: app/core/gimpimage.c:2711 app/widgets/gimplayertreeview.c:202
+#: app/core/gimpimage.c:2712 app/widgets/gimplayertreeview.c:202
 msgid "Raise Layer to Top"
 msgstr "Ebene nach ganz oben"
 
-#: app/core/gimpimage.c:2731
+#: app/core/gimpimage.c:2732
 msgid "Layer is already on the bottom."
 msgstr "Diese Ebene befindet sich bereits ganz unten."
 
-#: app/core/gimpimage.c:2736 app/widgets/gimplayertreeview.c:204
+#: app/core/gimpimage.c:2737 app/widgets/gimplayertreeview.c:204
 msgid "Lower Layer to Bottom"
 msgstr "Ebene nach ganz unten"
 
-#: app/core/gimpimage.c:2780
+#: app/core/gimpimage.c:2781
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -1829,51 +1828,51 @@ msgstr ""
 "Ebene »%s« hat keinen Alphakanal.\n"
 "Ebene ist darüber plaziert worden."
 
-#: app/core/gimpimage.c:2826
+#: app/core/gimpimage.c:2827
 msgid "Add Channel"
 msgstr "Kanal hinzufügen"
 
-#: app/core/gimpimage.c:2878
+#: app/core/gimpimage.c:2879
 msgid "Remove Channel"
 msgstr "Kanal entfernen"
 
-#: app/core/gimpimage.c:2926
+#: app/core/gimpimage.c:2927
 msgid "Channel cannot be raised higher."
 msgstr "Dieser Kanal kann nicht weiter angehoben werden."
 
-#: app/core/gimpimage.c:2931 app/widgets/gimpchanneltreeview.c:122
+#: app/core/gimpimage.c:2932 app/widgets/gimpchanneltreeview.c:122
 msgid "Raise Channel"
 msgstr "Kanal anheben"
 
-#: app/core/gimpimage.c:2947
+#: app/core/gimpimage.c:2948
 msgid "Channel cannot be lowered more."
 msgstr "Dieser Kanal kann nicht weiter abgesenkt werden."
 
-#: app/core/gimpimage.c:2952 app/widgets/gimpchanneltreeview.c:124
+#: app/core/gimpimage.c:2953 app/widgets/gimpchanneltreeview.c:124
 msgid "Lower Channel"
 msgstr "Kanal absenken"
 
-#: app/core/gimpimage.c:3017
+#: app/core/gimpimage.c:3018
 msgid "Add Path"
 msgstr "Pfad hinzufügen"
 
-#: app/core/gimpimage.c:3064
+#: app/core/gimpimage.c:3065
 msgid "Remove Path"
 msgstr "Pfad entfernen"
 
-#: app/core/gimpimage.c:3111
+#: app/core/gimpimage.c:3112
 msgid "Path cannot be raised higher."
 msgstr "Dieser Pfad kann nicht weiter angehoben werden."
 
-#: app/core/gimpimage.c:3116 app/widgets/gimpvectorstreeview.c:127
+#: app/core/gimpimage.c:3117 app/widgets/gimpvectorstreeview.c:127
 msgid "Raise Path"
 msgstr "Pfad anheben"
 
-#: app/core/gimpimage.c:3132
+#: app/core/gimpimage.c:3133
 msgid "Path cannot be lowered more."
 msgstr "Dieser Pfad kann nicht weiter abgesenkt werden."
 
-#: app/core/gimpimage.c:3137 app/widgets/gimpvectorstreeview.c:129
+#: app/core/gimpimage.c:3138 app/widgets/gimpvectorstreeview.c:129
 msgid "Lower Path"
 msgstr "Pfad absenken"
 
@@ -2831,7 +2830,7 @@ msgstr "Dokumentenindex (Raster)"
 
 #: app/gui/dialogs-constructors.c:899
 msgid "List of Templates"
-msgstr ""
+msgstr "Vorlagenliste"
 
 #: app/gui/dialogs-constructors.c:920
 msgid "Brush Editor"
@@ -3050,19 +3049,16 @@ msgid "(Unnamed Buffer)"
 msgstr "(Namenlose Ablage)"
 
 #: app/gui/error-console-menu.c:38
-#, fuzzy
 msgid "/Clear Errors"
-msgstr "Fehler"
+msgstr ""
 
 #: app/gui/error-console-menu.c:45
-#, fuzzy
 msgid "/Save all Errors to File..."
-msgstr "Alle Fehler in Datei schreiben..."
+msgstr "/Alle Fehler in Datei sichern..."
 
 #: app/gui/error-console-menu.c:49
-#, fuzzy
 msgid "/Save Selection to File..."
-msgstr "Auswahl in Datei schreiben..."
+msgstr "/Auswahl in Datei sichern..."
 
 #: app/gui/file-commands.c:187 app/gui/file-open-dialog.c:703
 #: app/widgets/gimpdnd.c:1005 app/widgets/gimpdocumentview.c:451
@@ -3547,12 +3543,12 @@ msgid "Configure Image Grid"
 msgstr "Bildgitter konfigurieren"
 
 #: app/gui/grid-dialog.c:132
-msgid "Show Grid"
-msgstr "Gitter anzeigen"
+msgid "S_how Grid"
+msgstr "Gitter _anzeigen"
 
 #: app/gui/grid-dialog.c:140
-msgid "Snap to Grid"
-msgstr "Magnetisches Gitter"
+msgid "S_nap to Grid"
+msgstr "_Magnetisches Gitter"
 
 #. the appearence frame
 #: app/gui/grid-dialog.c:151
@@ -3560,24 +3556,24 @@ msgid "Appearence"
 msgstr "Aussehen"
 
 #: app/gui/grid-dialog.c:165
-msgid "Line Style:"
-msgstr "Linienstil:"
+msgid "Line _Style:"
+msgstr "Linien_stil:"
 
 #: app/gui/grid-dialog.c:169
 msgid "Grid Foreground Color"
 msgstr "Gitter Vordergrundfarbe"
 
 #: app/gui/grid-dialog.c:173
-msgid "Foreground Color:"
-msgstr "Vordergrundfarbe:"
+msgid "_Foreground Color:"
+msgstr "_Vordergrundfarbe:"
 
 #: app/gui/grid-dialog.c:177
 msgid "Grid Background Color"
 msgstr "Gitter Hintergrundfarbe"
 
 #: app/gui/grid-dialog.c:181
-msgid "Background Color:"
-msgstr "Hintergrundfarbe:"
+msgid "_Background Color:"
+msgstr "_Hintergrundfarbe:"
 
 #. the spacing frame
 #: app/gui/grid-dialog.c:187
@@ -3664,9 +3660,8 @@ msgid "Clipped to bottom layer"
 msgstr "Auf oberste Ebene beschnitten"
 
 #: app/gui/image-commands.c:423
-#, fuzzy
 msgid "Resizing..."
-msgstr "Scheren..."
+msgstr ""
 
 #: app/gui/image-commands.c:439
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -3787,9 +3782,8 @@ msgstr "/Bearbeiten/Einfügen als Neu"
 
 #. <Image>/Edit/Buffer
 #: app/gui/image-menu.c:197
-#, fuzzy
 msgid "/Edit/_Buffer"
-msgstr "/Bearbeiten/Löschen"
+msgstr "/Bearbeiten/_Ablage"
 
 #: app/gui/image-menu.c:199
 msgid "/Edit/Buffer/Cut Named..."
@@ -4105,24 +4099,20 @@ msgid "/Layer/_Stack"
 msgstr "/Ebene/_Stapel"
 
 #: app/gui/image-menu.c:599
-#, fuzzy
 msgid "/Layer/Stack/Select Previous Layer"
-msgstr "/Ebene/Stapel/Vorige Ebene"
+msgstr "/Ebene/Stapel/Vorige Ebene auswählen"
 
 #: app/gui/image-menu.c:603
-#, fuzzy
 msgid "/Layer/Stack/Select Next Layer"
-msgstr "/Ebene/Stapel/Nächste Ebene"
+msgstr "/Ebene/Stapel/Nächste Ebene auswählen"
 
 #: app/gui/image-menu.c:607
-#, fuzzy
 msgid "/Layer/Stack/Select Top Layer"
-msgstr "/Ebene/Stapel/Nächste Ebene"
+msgstr "/Ebene/Stapel/Oberste Ebene auswählen"
 
 #: app/gui/image-menu.c:611
-#, fuzzy
 msgid "/Layer/Stack/Select Bottom Layer"
-msgstr "/Ebene/Stapel/Nächste Ebene"
+msgstr "/Ebene/Stapel/Unterste Ebene auswählen"
 
 #: app/gui/image-menu.c:618
 msgid "/Layer/Stack/Raise Layer"
@@ -4200,9 +4190,8 @@ msgstr "/Ebene/Farben/Histogramm..."
 
 #. <Image>/Layer/Mask
 #: app/gui/image-menu.c:716
-#, fuzzy
 msgid "/Layer/_Mask"
-msgstr "Ebenenmaske hinzufügen"
+msgstr "/Ebene/_Maske"
 
 #: app/gui/image-menu.c:718
 msgid "/Layer/Mask/Add Layer Mask..."
@@ -4313,7 +4302,7 @@ msgstr "/Werkzeuge/_Transformationen"
 
 #: app/gui/image-menu.c:847
 msgid "/Tools/_Color Tools"
-msgstr "/Werkzeuge/_Farbwerkzeuge"
+msgstr "/Werkzeuge/_Farben"
 
 #. <Image>/Dialogs
 #: app/gui/image-menu.c:851
@@ -4322,22 +4311,19 @@ msgstr "/_Dialoge"
 
 #: app/gui/image-menu.c:853
 msgid "/Dialogs/_Create New Dock"
-msgstr ""
+msgstr "Dialoge/Neues _Dock"
 
 #: app/gui/image-menu.c:855
-#, fuzzy
 msgid "/Dialogs/Create New Dock/Layers, Channels & Paths..."
-msgstr "/Dialoge/Ebenen, Kanäle und Pfade..."
+msgstr "/Dialoge/Neues Dock/Ebenen, Kanäle und Pfade..."
 
 #: app/gui/image-menu.c:859
-#, fuzzy
 msgid "/Dialogs/Create New Dock/Brushes, Patterns & Gradients..."
-msgstr "/Dialoge/Pinsel, Muster usw. ..."
+msgstr "/Dialoge/Neues Dock/Pinsel, Muster usw. ..."
 
 #: app/gui/image-menu.c:863
-#, fuzzy
 msgid "/Dialogs/Create New Dock/Misc. Stuff..."
-msgstr "/Dialoge/Pinsel, Muster usw. ..."
+msgstr "/Dialoge/Neues Dock/Verschiedenes ..."
 
 #: app/gui/image-menu.c:868
 msgid "/Dialogs/Tool Options..."
@@ -4432,84 +4418,68 @@ msgid "/Filters/Re-Show Last"
 msgstr "/Filter/Letzten Vorgang nochmal anzeigen"
 
 #: app/gui/image-menu.c:997
-#, fuzzy
 msgid "/Filters/_Blur"
-msgstr "/Filter/Weichzeichnen"
+msgstr "/Filter/_Weichzeichnen"
 
 #: app/gui/image-menu.c:998
-#, fuzzy
 msgid "/Filters/_Colors"
-msgstr "/Filter/Farben"
+msgstr "/Filter/_Farben"
 
 #: app/gui/image-menu.c:999
-#, fuzzy
 msgid "/Filters/_Noise"
-msgstr "/Filter/Rauschen"
+msgstr "/Filter/Rau_schen"
 
 #: app/gui/image-menu.c:1000
-#, fuzzy
 msgid "/Filters/_Edge-Detect"
-msgstr "/Filter/Kanten finden"
+msgstr "/Filter/_Kanten finden"
 
 #: app/gui/image-menu.c:1001
-#, fuzzy
 msgid "/Filters/En_hance"
-msgstr "/Filter/Verbessern"
+msgstr "/Filter/_Verbessern"
 
 #: app/gui/image-menu.c:1002
-#, fuzzy
 msgid "/Filters/_Generic"
-msgstr "/Filter/Allgemein"
+msgstr "/Filter/_Allgemein"
 
 #: app/gui/image-menu.c:1006
-#, fuzzy
 msgid "/Filters/Gla_ss Effects"
-msgstr "/Filter/Glas-Effekte"
+msgstr "/Filter/_Glas-Effekte"
 
 #: app/gui/image-menu.c:1007
-#, fuzzy
 msgid "/Filters/_Light Effects"
-msgstr "/Filter/Licht-Effekte"
+msgstr "/Filter/_Licht-Effekte"
 
 #: app/gui/image-menu.c:1008
-#, fuzzy
 msgid "/Filters/_Distorts"
-msgstr "/Filter/Verzerren"
+msgstr "/Filter/Ver_zerren"
 
 #: app/gui/image-menu.c:1009
-#, fuzzy
 msgid "/Filters/_Artistic"
-msgstr "/Filter/Künstlerisch"
+msgstr "/Filter/_Künstlerisch"
 
 #: app/gui/image-menu.c:1010
-#, fuzzy
 msgid "/Filters/_Map"
-msgstr "/Filter/Abbilden"
+msgstr "/Filter/Ab_bilden"
 
 #: app/gui/image-menu.c:1011
-#, fuzzy
 msgid "/Filters/_Render"
-msgstr "/Filter/Render"
+msgstr "/Filter/_Render"
 
 #: app/gui/image-menu.c:1012
-#, fuzzy
 msgid "/Filters/_Web"
-msgstr "/Filter/Web"
+msgstr "/Filter/_Web"
 
 #: app/gui/image-menu.c:1016
-#, fuzzy
 msgid "/Filters/An_imation"
-msgstr "/Filter/Animation"
+msgstr "/Filter/A_nimation"
 
 #: app/gui/image-menu.c:1017
-#, fuzzy
 msgid "/Filters/C_ombine"
-msgstr "/Filter/Kombinieren"
+msgstr "/Filter/K_ombinieren"
 
 #: app/gui/image-menu.c:1021
-#, fuzzy
 msgid "/Filters/_Toys"
-msgstr "/Filter/Viel Spaß"
+msgstr "/Filter/Vi_el Spaß"
 
 #: app/gui/image-menu.c:1342
 #, c-format
@@ -4531,9 +4501,9 @@ msgid "Other (%d:%d) ..."
 msgstr "Anders (%d:%d) ..."
 
 #: app/gui/image-menu.c:1604
-#, fuzzy, c-format
+#, c-format
 msgid "_Zoom (%d:%d)"
-msgstr "Zoom (%d:%d)"
+msgstr "_Zoom (%d:%d)"
 
 #: app/gui/images-menu.c:42
 msgid "/Raise Displays"
@@ -5884,24 +5854,20 @@ msgid "/File/_Dialogs"
 msgstr "/Datei/_Dialoge"
 
 #: app/gui/toolbox-menu.c:92
-#, fuzzy
 msgid "/File/Dialogs/_Create New Dock"
-msgstr "/Datei/Dialoge/Vorlagen..."
+msgstr "/Datei/Dialoge/Neues _Dock"
 
 #: app/gui/toolbox-menu.c:94
-#, fuzzy
 msgid "/File/Dialogs/Create New Dock/Layers, Channels & Paths..."
-msgstr "/Datei/Dialoge/Ebenen, Kanäle und Pfade..."
+msgstr "/Datei/Neues Dock/Ebenen, Kanäle und Pfade..."
 
 #: app/gui/toolbox-menu.c:98
-#, fuzzy
 msgid "/File/Dialogs/Create New Dock/Brushes, Patterns & Gradients..."
-msgstr "/Datei/Dialoge/Pinsel, Muster usw. ..."
+msgstr "/Datei/Dialoge/Neues Dock/Pinsel, Muster usw. ..."
 
 #: app/gui/toolbox-menu.c:102
-#, fuzzy
 msgid "/File/Dialogs/Create New Dock/Misc. Stuff..."
-msgstr "/Datei/Dialoge/Pinsel, Muster usw. ..."
+msgstr "/Datei/Dialoge/Neues Dock/Verschiedenes ..."
 
 #: app/gui/toolbox-menu.c:107
 msgid "/File/Dialogs/Tool Options..."
@@ -6844,11 +6810,13 @@ msgid "Units"
 msgstr "Einheiten"
 
 #: app/pdb/procedural_db.c:177
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "PDB calling error:\n"
 "procedure '%s' not found"
-msgstr "PDB Aufruffehler %s nicht gefunden"
+msgstr ""
+"PDB Aufruffehler:\n"
+"Prozedur '%s' nicht gefunden"
 
 #: app/pdb/procedural_db.c:215 app/pdb/procedural_db.c:314
 #, c-format
@@ -7017,19 +6985,16 @@ msgid "Fixed Aspect Ratio"
 msgstr "Festes Seitenverhältnis"
 
 #: app/tools/tools-enums.c:118
-#, fuzzy
 msgid "Transform Active Layer"
-msgstr "Ebene transformieren"
+msgstr "Aktive Ebene transformieren"
 
 #: app/tools/tools-enums.c:119
-#, fuzzy
 msgid "Transform Selection"
-msgstr "Transformationsrichtung"
+msgstr "Auswahl transformieren"
 
 #: app/tools/tools-enums.c:120
-#, fuzzy
 msgid "Transform Active Path"
-msgstr "Pfad transformieren"
+msgstr "Aktiven Pfad transformieren"
 
 #: app/tools/tools-enums.c:138
 msgid "Don't Show Grid"
@@ -7115,9 +7080,8 @@ msgid "Adjust brightness and contrast"
 msgstr "Helligkeit und Kontrast einstellen"
 
 #: app/tools/gimpbrightnesscontrasttool.c:84
-#, fuzzy
 msgid "/Tools/Color Tools/Brightness-Contrast..."
-msgstr "/Ebene/Farben/Helligkeit-Kontrast..."
+msgstr "/Werkzeuge/Farben/Helligkeit-Kontrast..."
 
 #: app/tools/gimpbrightnesscontrasttool.c:148
 msgid "Adjust Brightness and Contrast"
@@ -7208,9 +7172,8 @@ msgid "Adjust color balance"
 msgstr "Farbausgleich einstellen"
 
 #: app/tools/gimpcolorbalancetool.c:96
-#, fuzzy
 msgid "/Tools/Color Tools/Color Balance..."
-msgstr "/Ebene/Farben/Ausgleichen..."
+msgstr "/Werkzeuge/Farben/Ausgleichen..."
 
 #: app/tools/gimpcolorbalancetool.c:160
 msgid "Adjust Color Balance"
@@ -7257,9 +7220,8 @@ msgid "Colorize the image"
 msgstr "Das Bild einfärben"
 
 #: app/tools/gimpcolorizetool.c:95
-#, fuzzy
 msgid "/Tools/Color Tools/Colorize..."
-msgstr "/Ebene/Farben/Einfärben..."
+msgstr "/Werkzeuge/Farben/Einfärben..."
 
 #: app/tools/gimpcolorizetool.c:162
 msgid "Colorize the Image"
@@ -7428,9 +7390,8 @@ msgid "Adjust color curves"
 msgstr "Farbkurven einstellen"
 
 #: app/tools/gimpcurvestool.c:161
-#, fuzzy
 msgid "/Tools/Color Tools/Curves..."
-msgstr "/Ebene/Farben/Kurven..."
+msgstr "/Werkzeuge/Farben/Kurven..."
 
 #: app/tools/gimpcurvestool.c:234
 msgid "Adjust Color Curves"
@@ -7538,15 +7499,14 @@ msgid "Hard Edge"
 msgstr "Harte Kanten"
 
 #: app/tools/gimpflipoptions.c:174 app/tools/gimptransformoptions.c:293
-#, fuzzy
 msgid "Affect:"
-msgstr "Versatz:"
+msgstr ""
 
 #. tool toggle
 #: app/tools/gimpflipoptions.c:180
-#, fuzzy, c-format
+#, c-format
 msgid "Flip Type  %s"
-msgstr "Füllart  %s"
+msgstr ""
 
 #: app/tools/gimpfliptool.c:85
 msgid "Flip the layer or selection"
@@ -7581,9 +7541,8 @@ msgid "View image histogram"
 msgstr "Das Histogramm zu diesem Bild anzeigen"
 
 #: app/tools/gimphistogramtool.c:123
-#, fuzzy
 msgid "/Tools/Color Tools/Histogram..."
-msgstr "/Ebene/Farben/Histogramm..."
+msgstr "/Werkzeuge/Farben/Histogramm..."
 
 #: app/tools/gimphistogramtool.c:184
 msgid "Histogram does not operate on indexed drawables."
@@ -7634,9 +7593,8 @@ msgid "Adjust hue and saturation"
 msgstr "Farbton und Sättigung einstellen"
 
 #: app/tools/gimphuesaturationtool.c:109
-#, fuzzy
 msgid "/Tools/Color Tools/Hue-Saturation..."
-msgstr "/Ebene/Farben/Farbton-Sättigung..."
+msgstr "/Werkzeuge/Farben/Farbton-Sättigung..."
 
 #: app/tools/gimphuesaturationtool.c:176
 msgid "Adjust Hue / Lightness / Saturation"
@@ -7755,9 +7713,8 @@ msgid "Adjust color levels"
 msgstr "Farbwerte einstellen"
 
 #: app/tools/gimplevelstool.c:164
-#, fuzzy
 msgid "/Tools/Color Tools/Levels..."
-msgstr "/Ebene/Farben/Werte..."
+msgstr "/Werkzeuge/Farben/Werte..."
 
 #: app/tools/gimplevelstool.c:235
 msgid "Adjust Color Levels"
@@ -7949,9 +7906,8 @@ msgid "Reduce image to a fixed number of colors"
 msgstr "Das Bild auf eine bestimmte Anzahl von Farben reduzieren"
 
 #: app/tools/gimpposterizetool.c:77
-#, fuzzy
 msgid "/Tools/Color Tools/Posterize..."
-msgstr "/Ebene/Farben/Posterisieren..."
+msgstr "/Werkzeuge/Farben/Posterisieren..."
 
 #: app/tools/gimpposterizetool.c:141
 msgid "Posterize (Reduce Number of Colors)"
@@ -8166,9 +8122,8 @@ msgid "Reduce image to two colors using a threshold"
 msgstr "Das Bild mittels eines Schwellwerts auf zwei Farben reduzieren"
 
 #: app/tools/gimpthresholdtool.c:90
-#, fuzzy
 msgid "/Tools/Color Tools/Threshold..."
-msgstr "/Ebene/Farben/Schwellwert..."
+msgstr "/Werkzeuge/Farben/Schwellwert..."
 
 #: app/tools/gimpthresholdtool.c:157
 msgid "Apply Threshold"
@@ -8496,7 +8451,7 @@ msgstr "Datenobjekt löschen"
 
 #: app/widgets/gimpdock.c:289
 msgid "You can drop dockable dialogs here."
-msgstr ""
+msgstr "Hier können Dialoge angedockt werden."
 
 #: app/widgets/gimpdocumentview.c:165
 #, c-format
@@ -8529,9 +8484,8 @@ msgid "Set Drawable Exclusive Visible"
 msgstr ""
 
 #: app/widgets/gimperrorconsole.c:173
-#, fuzzy
 msgid "Clear Errors"
-msgstr "Fehler"
+msgstr ""
 
 #: app/widgets/gimperrorconsole.c:178
 #, c-format
@@ -9123,151 +9077,3 @@ msgstr "Bilder und Photos erstellen und bearbeiten"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (instabil)"
-
-#~ msgid "Clear Console"
-#~ msgstr "Konsole löschen"
-
-#~ msgid "Tool Plug-Ins"
-#~ msgstr "Werkzeug-Plugins"
-
-#~ msgid "Tool Plug-In Folders"
-#~ msgstr "Ordner mit Werkzeug-Plugins"
-
-#~ msgid "Select Tool Plug-In Folders"
-#~ msgstr "Wählen Sie die Ordner mit Werkzeug-Plugin"
-
-#~ msgid "PDB calling error %s"
-#~ msgstr "PDB Aufruffehler %s"
-
-#~ msgid ""
-#~ "Incorrect arguments passed to procedural_db_run_proc:\n"
-#~ "Argument %d to '%s' should be a %s, but got passed a %s"
-#~ msgstr ""
-#~ "Falsches Argument an procedural_db_run_proc übergeben:\n"
-#~ "Argument %d von »%s« sollte als %s übergeben werden, es wurde jedoch %s "
-#~ "übergeben"
-
-#~ msgid "/Image/Transform/Rotate Right"
-#~ msgstr "/Bild/Transformationen/Rechts Drehen"
-
-#~ msgid "/Layer/Transform/Rotate Left"
-#~ msgstr "/Ebene/Transformationen/Links Drehen"
-
-#, fuzzy
-#~ msgid "Selection to path procedure lookup failed."
-#~ msgstr "Auswahlwerkzeug Prozeduren"
-
-#~ msgid "Show Path"
-#~ msgstr "Pfad anzeigen"
-
-#~ msgid "Translate Channel"
-#~ msgstr "Kanal verschieben"
-
-#~ msgid "Selection from Path"
-#~ msgstr "Auswahl aus Pfad"
-
-#~ msgid "Translate Selection"
-#~ msgstr "Auswahl verschieben"
-
-#~ msgid "/Add Tab/Old Paths..."
-#~ msgstr "/Reiter hinzufügen/Alte Pfade..."
-
-#~ msgid "/New Path"
-#~ msgstr "/Pfad anlegen"
-
-#~ msgid "Path to Selection"
-#~ msgstr "Auswahl aus Pfad"
-
-#~ msgid "New Point"
-#~ msgstr "Neuer Punkt"
-
-#~ msgid "Add Point"
-#~ msgstr "Punkt hinzufügen"
-
-#~ msgid "Delete Point"
-#~ msgstr "Punkt löschen"
-
-#~ msgid "Edit Point"
-#~ msgstr "Punkt bearbeiten"
-
-#~ msgid "Path %d"
-#~ msgstr "Pfad %d"
-
-#~ msgid "Enter a new name for the path"
-#~ msgstr "Geben sie diesem Pfad einen neuen Namen"
-
-#~ msgid "Failed to read from '%s'."
-#~ msgstr "Aus »%s« konnte nicht gelesen werden."
-
-#~ msgid "Failed to read path from '%s'."
-#~ msgstr "Aus »%s« konnte kein Pfad gelesen werden."
-
-#~ msgid "No points specified in path file '%s'."
-#~ msgstr "Pfaddatei »%s« enthält keine Punkte."
-
-#~ msgid "Failed to read path points from '%s'."
-#~ msgstr "Es konnten keine Pfadpunkte aus »%s« gelesen werden."
-
-#~ msgid "Load and Save Bezier Curves"
-#~ msgstr "Bezierkurven öffnen und speichern"
-
-#~ msgid "Load Path"
-#~ msgstr "Pfad öffnen"
-
-#~ msgid "Bezier Select"
-#~ msgstr "Bezier Auswahl"
-
-#~ msgid "Select regions using Bezier curves"
-#~ msgstr "Einen Bereich mittels Bezierkurven wählen"
-
-#~ msgid "/Tools/Selection Tools/Bezier Select"
-#~ msgstr "/Werkzeuge/Auswahlwerkzeuge/Bezier Auswahl"
-
-#~ msgid "Bezier path already closed."
-#~ msgstr "Bezier Pfad ist bereits geschlossen."
-
-#~ msgid "Corrupt curve"
-#~ msgstr "Fehlerhafte Kurve"
-
-#~ msgid "Curve not closed!"
-#~ msgstr "Kurve ist nicht geschlossen!"
-
-#~ msgid "Paintbrush operation failed."
-#~ msgstr "Pinseloperation schlug fehl."
-
-# CHECK
-#~ msgid "Gimp Dock #%d"
-#~ msgstr "GIMP Dock %d"
-
-#~ msgid "Input Device Settings"
-#~ msgstr "Einstellungen der Eingabegeräte"
-
-#~ msgid "%d Bytes"
-#~ msgstr "%d Byte"
-
-#~ msgid "%.2f KB"
-#~ msgstr "%.2f KB"
-
-#~ msgid "%.1f KB"
-#~ msgstr "%.1f KB"
-
-#~ msgid "%d KB"
-#~ msgstr "%d KB"
-
-#~ msgid "%.2f MB"
-#~ msgstr "%.2f MB"
-
-#~ msgid "%.1f MB"
-#~ msgstr "%.1f MB"
-
-#~ msgid "Other"
-#~ msgstr "Anderer"
-
-#~ msgid "Move Selection Mask"
-#~ msgstr "Auswahlmaske verschieben"
-
-#~ msgid "View as list"
-#~ msgstr "Als Liste anzeigen"
-
-#~ msgid "View as grid"
-#~ msgstr "Als Raster anzeigen"
