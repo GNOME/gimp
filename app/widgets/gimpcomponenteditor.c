@@ -552,13 +552,10 @@ static void
 gimp_component_editor_renderer_update (GimpViewRenderer    *renderer,
                                        GimpComponentEditor *editor)
 {
-  GtkTreeIter iter;
-  gint        index;
+  GimpChannelType channel = GIMP_VIEW_RENDERER_IMAGE (renderer)->channel;
+  GtkTreeIter     iter;
 
-  index = gimp_image_get_component_index (GIMP_IMAGE (renderer->viewable),
-                                          GIMP_VIEW_RENDERER_IMAGE (renderer)->channel);
-
-  if (gtk_tree_model_iter_nth_child (editor->model, &iter, NULL, index))
+  if (gimp_component_editor_get_iter (editor, channel, &iter))
     {
       GtkTreePath *path;
 

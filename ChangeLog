@@ -1,3 +1,9 @@
+2004-09-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcomponenteditor.c
+	(gimp_component_editor_renderer_update): use
+	gimp_component_editor_get_iter() instead of duplicating its code.
+
 2004-09-17  Simon Budig  <simon@gimp.org>
 
 	* app/widgets/gimpbrusheditor.[ch]: Added a slider for the
