@@ -831,6 +831,7 @@ libgimp/Makefile
 libgimp/makefile.mingw
 app/Makefile
 app/makefile.mingw
+app/gimp.rc
 plug-ins/Makefile
 plug-ins/makefile.mingw
 plug-ins/perl/config.pl

@@ -18,12 +18,12 @@ ltmain.sh, config.sub and config.guess files, and rerun libtoolize. Or
 something like that.
 
 2) Use the Microsoft compiler, cl and Make, nmake. Say nmake -f
-makefile.msc in various directories. These makefiles are maintained by
-Hans Breuer. They probably will not generate the same name DLLs and
+makefile.msc in various directories. These makefiles are
+out-of-date. They certainly will not generate the same name DLLs and
 import libraries as the autoconfiscated libtool build does.
 
-3) (Use gcc, and the makefile.mingw makefiles. These are probably not
-up-to-date, as I have switched to autoconfiscation.)
+3) Use gcc, and the makefile.mingw makefiles. These are probably not
+up-to-date, as I have switched to autoconfiscation.
 
 Libintl
 =======

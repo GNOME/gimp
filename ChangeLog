@@ -4,6 +4,8 @@
 	* app/gimp.rc.in: Replace gimp.rc with gimp.rc.in, containing also
 	version information.
 	
+	* configure.in: Expand app/gimp.rc.
+
 	* app/Makefile.am: Link with compiled resource file on Windows.
 
 2001-11-09  Tor Lillqvist  <tml@iki.fi>
