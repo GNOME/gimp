@@ -9,8 +9,8 @@
 	stack_trace_mode is STACK_TRACE_NEVER (fixes bug #71409).
 
 	* plug-ins/common/jpeg.c: applied a patch from Raphael Quinet that
-	suppressed saving of default settings when a JPEG image is loaded
-	(fixes bug #75398).
+	changes the plug-in to not attach a parasite with default settings
+	when a JPEG image is loaded (fixes bug #75398).
 
 2002-12-17  Sven Neumann  <sven@gimp.org>
 
