@@ -69,22 +69,32 @@ GimpPlugInInfo PLUG_IN_INFO =
 MAIN ()
 
 
-static const gchar *help_strings[] =
+typedef struct
 {
-  N_("A unit definition will only be saved before "
-     "GIMP exits if this column is checked."),
-  N_("This string will be used to identify a "
-     "unit in GIMP's configuration files."),
-  N_("How many units make up an inch."),
-  N_("This field is a hint for numerical input fields. "
-     "It specifies how many decimal digits the input field "
-     "should provide to get approximately the same accuracy as an "
-     "\"inch\" input field with two decimal digits."),
-  N_("The unit's symbol if it has one (e.g. \"'\" for inches). "
-     "Use the unit's abbreviation if it doesn't have a symbol."),
-  N_("The unit's abbreviation (e.g. \"cm\" for centimeters)."),
-  N_("The unit's singular form."),
-  N_("The unit's plural form.")
+  const gchar *title;
+  const gchar *help;
+
+} UnitColumn;
+
+static const UnitColumn columns[] =
+{
+  { N_("Saved"),        N_("A unit definition will only be saved before "
+                           "GIMP exits if this column is checked.")         },
+  { N_("ID"),           N_("This string will be used to identify a "
+                           "unit in GIMP's configuration files.")           },
+  { N_("Factor"),       N_("How many units make up an inch.")               },
+  { N_("Digits"),       N_("This field is a hint for numerical input "
+                           "fields. It specifies how many decimal digits "
+                           "the input field should provide to get "
+                           "approximately  the same accuracy as an "
+                           "\"inch\" input field with two decimal digits.") },
+  { N_("Symbol"),       N_("The unit's symbol if it has one (e.g. \"'\" "
+                           "for inches). The unit's abbreviation is used "
+                           "if doesn't have a symbol.")                     },
+  { N_("Abbreviation"), N_("The unit's abbreviation (e.g. \"cm\" for "
+                           "centimeters).")                                 },
+  { N_("Singular"),     N_("The unit's singular form.")                     },
+  { N_("Plural"),       N_("The unit's plural form.")                       }
 };
 
 
@@ -200,7 +210,7 @@ new_unit (GtkWidget *main_dialog,
 			     _("_ID:"), 1.0, 0.5,
 			     entry, 1, FALSE);
 
-  gimp_help_set_help_data (entry, gettext (help_strings[IDENTIFIER]), NULL);
+  gimp_help_set_help_data (entry, gettext (columns[IDENTIFIER].help), NULL);
 
   spinbutton = gimp_spin_button_new (&factor_adj,
 				     (template != GIMP_UNIT_PIXEL) ?
@@ -211,7 +221,7 @@ new_unit (GtkWidget *main_dialog,
 			     _("_Factor:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  gimp_help_set_help_data (spinbutton, gettext (help_strings[FACTOR]), NULL);
+  gimp_help_set_help_data (spinbutton, gettext (columns[FACTOR].help), NULL);
 
   spinbutton = gimp_spin_button_new (&digits_adj,
 				     (template != GIMP_UNIT_PIXEL) ?
@@ -221,7 +231,7 @@ new_unit (GtkWidget *main_dialog,
 			     _("_Digits:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  gimp_help_set_help_data (spinbutton, gettext (help_strings[DIGITS]), NULL);
+  gimp_help_set_help_data (spinbutton, gettext (columns[DIGITS].help), NULL);
 
   entry = symbol_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
@@ -233,7 +243,7 @@ new_unit (GtkWidget *main_dialog,
 			     _("_Symbol:"), 1.0, 0.5,
 			     entry, 1, FALSE);
 
-  gimp_help_set_help_data (entry, gettext (help_strings[SYMBOL]), NULL);
+  gimp_help_set_help_data (entry, gettext (columns[SYMBOL].help), NULL);
 
   entry = abbreviation_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
@@ -245,7 +255,7 @@ new_unit (GtkWidget *main_dialog,
 			     _("_Abbreviation:"), 1.0, 0.5,
 			     entry, 1, FALSE);
 
-  gimp_help_set_help_data (entry, gettext (help_strings[ABBREVIATION]), NULL);
+  gimp_help_set_help_data (entry, gettext (columns[ABBREVIATION].help), NULL);
 
   entry = singular_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
@@ -257,7 +267,7 @@ new_unit (GtkWidget *main_dialog,
 			     _("Si_ngular:"), 1.0, 0.5,
 			     entry, 1, FALSE);
 
-  gimp_help_set_help_data (entry, gettext (help_strings[SINGULAR]), NULL);
+  gimp_help_set_help_data (entry, gettext (columns[SINGULAR].help), NULL);
 
   entry = plural_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
@@ -269,7 +279,7 @@ new_unit (GtkWidget *main_dialog,
 			     _("_Plural:"), 1.0, 0.5,
 			     entry, 1, FALSE);
 
-  gimp_help_set_help_data (entry, gettext (help_strings[PLURAL]), NULL);
+  gimp_help_set_help_data (entry, gettext (columns[PLURAL].help), NULL);
 
   gtk_widget_show (dialog);
 
@@ -357,9 +367,9 @@ list_init (GtkTreeView *tv)
 
   num_units = gimp_unit_get_number_of_units ();
 
-  color.red   = 60000;
-  color.green = 60000;
-  color.blue  = 65535;
+  color.red   = 0xdddd;
+  color.green = 0xdddd;
+  color.blue  = 0xffff;
 
   for (unit = GIMP_UNIT_INCH; unit < num_units; unit++)
     {
@@ -509,6 +519,7 @@ unit_editor_dialog (void)
   GtkWidget         *tv;
   GtkTreeViewColumn *col;
   GtkCellRenderer   *rend;
+  gint               i;
 
   gimp_ui_init ("uniteditor", FALSE);
 
@@ -523,6 +534,7 @@ unit_editor_dialog (void)
                                    G_TYPE_STRING,
                                    G_TYPE_INT,
                                    G_TYPE_BOOLEAN,
+                                   GDK_TYPE_COLOR,
                                    GDK_TYPE_COLOR);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
   g_object_unref (list_store);
@@ -564,100 +576,39 @@ unit_editor_dialog (void)
   gtk_container_add (GTK_CONTAINER (scrolled_win), tv);
   gtk_widget_show (tv);
 
-
   rend = gtk_cell_renderer_toggle_new ();
-  col =
-    gtk_tree_view_column_new_with_attributes (_("Saved"),
-					      rend,
-					      "active",              SAVE,
-					      "activatable",         USER_UNIT,
-					      "cell-background-gdk", BG_COLOR,
-					      NULL);
+  col = gtk_tree_view_column_new_with_attributes (gettext (columns[SAVE].title),
+                                                  rend,
+                                                  "active",              SAVE,
+                                                  "activatable",         USER_UNIT,
+                                                  "cell-background-gdk", BG_COLOR,
+                                                  NULL);
+
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
   gimp_help_set_help_data (col->button,
-			   gettext (help_strings[SAVE]), NULL);
+			   gettext (columns[SAVE].help), NULL);
 
   g_signal_connect (rend, "toggled",
                     G_CALLBACK (saved_toggled_callback),
                     list_store);
 
-  col =
-    gtk_tree_view_column_new_with_attributes (_("ID"),
-					      gtk_cell_renderer_text_new (),
-					      "text",                IDENTIFIER,
-					      "cell-background-gdk", BG_COLOR,
-					      NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
+  for (i = 0; i < G_N_ELEMENTS (columns); i++)
+    {
+      if (i == SAVE)
+        continue;
 
-  gimp_help_set_help_data (col->button,
-			   gettext (help_strings[IDENTIFIER]), NULL);
+      col = gtk_tree_view_column_new_with_attributes (gettext (columns[i].title),
+                                                      gtk_cell_renderer_text_new (),
+                                                      "text",                i,
+                                                      "cell-background-gdk", BG_COLOR,
+                                                      NULL);
 
-  col =
-    gtk_tree_view_column_new_with_attributes (_("Factor"),
-					      gtk_cell_renderer_text_new (),
-					      "text",               FACTOR,
-					      "cell-background-gdk", BG_COLOR,
-					      NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
+      gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-  gimp_help_set_help_data (col->button,
-			   gettext (help_strings[FACTOR]), NULL);
-
-  col =
-    gtk_tree_view_column_new_with_attributes (_("Digits"),
-					      gtk_cell_renderer_text_new (),
-					      "text",                DIGITS,
-					      "cell-background-gdk", BG_COLOR,
-					      NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
-
-  gimp_help_set_help_data (col->button,
-			   gettext (help_strings[DIGITS]), NULL);
-
-  col =
-    gtk_tree_view_column_new_with_attributes (_("Symbol"),
-					      gtk_cell_renderer_text_new (),
-					      "text",                SYMBOL,
-					      "cell-background-gdk", BG_COLOR,
-					      NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
-
-  gimp_help_set_help_data (col->button,
-			   gettext (help_strings[SYMBOL]), NULL);
-
-  col =
-    gtk_tree_view_column_new_with_attributes (_("Abbreviation"),
-					      gtk_cell_renderer_text_new (),
-					      "text",                ABBREVIATION,
-					      "cell-background-gdk", BG_COLOR,
-					      NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
-
-  gimp_help_set_help_data (col->button,
-			   gettext (help_strings[ABBREVIATION]), NULL);
-
-  col =
-    gtk_tree_view_column_new_with_attributes (_("Singular"),
-					      gtk_cell_renderer_text_new (),
-					      "text", SINGULAR,
-					      "cell-background-gdk", BG_COLOR,
-					      NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
-
-  gimp_help_set_help_data (col->button,
-			   gettext (help_strings[SINGULAR]), NULL);
-
-  col =
-    gtk_tree_view_column_new_with_attributes (_("Plural"),
-					      gtk_cell_renderer_text_new (),
-					      "text",                PLURAL,
-					      "cell-background-gdk", BG_COLOR,
-					      NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
-
-  gimp_help_set_help_data (col->button,
-			   gettext (help_strings[PLURAL]), NULL);
+      gimp_help_set_help_data (col->button,
+                               gettext (columns[i].help), NULL);
+    }
 
   list_init (GTK_TREE_VIEW (tv));
 

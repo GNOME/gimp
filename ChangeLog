@@ -1,6 +1,10 @@
+2003-02-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/uniteditor.c: more code cleanup.
+
 2003-02-10  Manish Singh  <yosh@gimp.org>
 
-	* app/plug-in/plug-in-debug.c: remove a couple unused vars
+	* app/plug-in/plug-in-debug.c: remove a couple unused vars.
 
 	* plug-ins/common/spheredesigner.c: G_OBJECT casts not needed
 	for g_signal_connect.
