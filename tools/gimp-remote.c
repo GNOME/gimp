@@ -25,7 +25,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* this file contains code derived from:
+/* This file contains code derived from:
  * 
  * remote.c --- remote control of Netscape Navigator for Unix.
  * version 1.1.3, for Netscape Navigator 1.1 and newer.
@@ -54,8 +54,6 @@
  * We definitely consider this for Gimp 2.0.
  *                                                Simon
  */
-
-
 
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
@@ -103,7 +101,7 @@ gimp_remote_find_window (Display *display)
 #endif
 
     for (i = nchildren - 1; i >= 0; i--)
-    {
+      {
         Atom type;
         gint format;
         gulong nitems, bytesafter;
@@ -123,14 +121,16 @@ gimp_remote_find_window (Display *display)
                                      False, WM_STRING,
                                      &type, &format, &nitems, &bytesafter,
                                      &version);
-        if (status == Success && type != None && nitems > 0) {
-            if (!strcmp (version, "toolbox"))
-                if (!strcmp (version+8, "Gimp")) {
-                    result = window;
-                    break;
-                }
+
+        if (status == Success && type != None && nitems > 0) 
+	  {
+            if (!strcmp (version, "toolbox") && !strcmp (version+8, "Gimp")) 
+	      {
+		result = window;
+		break;
+	      }
             XFree (version);
-        }
+	  }
 
 #else
 
@@ -148,15 +148,15 @@ gimp_remote_find_window (Display *display)
             continue;
 
         if (status == Success && type != None)
-        {
+	  {
             result = window;
             break;
-        }
+	  }
 
         XFree (version);
 #endif
 
-    }
+      }
   
     XFree (children);
   
@@ -166,11 +166,11 @@ gimp_remote_find_window (Display *display)
 
 
 void  
-source_selection_get  (GtkWidget          *widget,
-		       GtkSelectionData   *selection_data,
-		       guint               info,
-		       guint               time,
-		       gpointer            data)
+source_selection_get (GtkWidget          *widget,
+		      GtkSelectionData   *selection_data,
+		      guint               info,
+		      guint               time,
+		      gpointer            data)
 {
     gchar *uri = (gchar *) data;
 
@@ -185,7 +185,7 @@ source_selection_get  (GtkWidget          *widget,
 int
 toolbox_hidden (gpointer data)
 {
-    g_printerr ("Could not connect to the Gimp. "
+    g_printerr ("Could not connect to the Gimp.\n"
                 "Make sure that the Toolbox is visible!\n");
     gtk_main_quit ();
     return 0;
@@ -194,91 +194,95 @@ toolbox_hidden (gpointer data)
 
 
 int 
-main (int argc, char **argv)
+main (int    argc, 
+      char **argv)
 {
     GtkWidget *source;
     GdkWindow *gimp_window;
-    Window gimp_x_window;
+    Window     gimp_x_window;
 
-    GdkDragContext *context;
-    GdkDragProtocol protocol;
+    GdkDragContext  *context;
+    GdkDragProtocol  protocol;
 
-    GdkAtom sel_type;
-    GdkAtom sel_id;
-    GList *targetlist;
-    guint timeout;
+    GdkAtom  sel_type;
+    GdkAtom  sel_id;
+    GList   *targetlist;
+    guint    timeout;
 
     /*  multiple files are separated by "\n"
      *  obviously this should be set from the commandline...
      */
     /* gchar *filename = "file:/tmp/dnd-test.gif"; */
 
-    gchar *cwd = g_get_current_dir();
+    gchar *cwd       = g_get_current_dir();
     gchar *file_list = "";
-    gchar *file_uri = "";
-    gchar *tmp = NULL;
+    gchar *file_uri  = "";
+    gchar *tmp       = NULL;
     guint i;
 
     for (i = 1; i < argc; i++)
-    {
+      {
 	if (strlen (argv[i]) == 0)
-	    continue;
+	  continue;
 
 	/* If not already a valid URI */
         if (g_strncasecmp ("file:", argv[i], 5) &&
-            g_strncasecmp ("ftp:", argv[i], 4)  &&
+            g_strncasecmp ("ftp:",  argv[i], 4) &&
             g_strncasecmp ("http:", argv[i], 5))
-	{
+	  {
 	    if (g_path_is_absolute (argv[i]))
 		file_uri = g_strconcat ("file:", argv[i], NULL);
 	    else
 		file_uri = g_strconcat ("file:", cwd, "/", argv[i], NULL);
-	}
+	  }
 	else
-	    file_uri = g_strdup (argv[i]);
+	  file_uri = g_strdup (argv[i]);
 
 	if (strlen (file_list) > 0)
-	{
+	  {
 	    tmp = g_strconcat (file_list, "\n", file_uri, NULL);
 	    g_free (file_list);
-	}
+	  }
 	else
-	    tmp = g_strdup (file_uri);
+	  tmp = g_strdup (file_uri);
 
 	g_free (file_uri);
 
 	file_list = tmp;
+      }
 
-    }
-
-    if (strlen (file_list) == 0) {
-	g_print (
-	"Usage: gimp-remote [FILE|URI]...\n"
-	"Tell a running Gimp to open a (local or remote) image file\n"
-	"Example:  gimp-remote http://www.gimp.org/icons/frontpage-small.gif\n"
-	"     or:  gimp-remote localfile.png\n"
-	);
+    if (strlen (file_list) == 0) 
+      {
+	g_print ("Usage: gimp-remote [FILE|URI]...\n"
+		 "Tell a running Gimp to open a (local or remote) image file\n"
+		 "Example:  gimp-remote http://www.gimp.org/icons/frontpage-small.gif\n"
+		 "     or:  gimp-remote localfile.png\n");
         exit(0);
-    }
-
-    
-
-    
-
+      }
 
     gtk_init (&argc, &argv); 
 
     /*  locate Gimp window and make it comfortable for us */
     gimp_x_window = gimp_remote_find_window (gdk_display);
     if (gimp_x_window == None)
-        g_error ("no gimp window found on display %s\n", gdk_get_display ());
+      {
+	g_printerr ("No gimp window found on display %s\n", gdk_get_display ());
+	exit (-1);
+      }
+
     gdk_drag_get_protocol (gimp_x_window, &protocol);
     if (protocol != GDK_DRAG_PROTO_XDND)
-        g_error ("Gimp-Window doesnt use Xdnd-Protocol - huh?\n");
+      {
+        g_printerr ("Gimp-Window doesnt use Xdnd-Protocol - huh?\n");
+	exit (-1);
+      }	
+
     gimp_window = gdk_window_foreign_new (gimp_x_window);
     if (!gimp_window)
-        g_error ("Couldn't create gdk_window for gimp_x_window\n");
-
+      {
+	g_printerr ("Couldn't create gdk_window for gimp_x_window\n");
+	exit (-1);
+      }
 
     /*  Problem: If the Toolbox is hidden via Tab (gtk_widget_hide)
      *  it does not accept DnD-Operations and gtk_main() will not be
@@ -326,3 +330,4 @@ main (int argc, char **argv)
     return 0;
 
 }
+

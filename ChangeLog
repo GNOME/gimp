@@ -1,6 +1,18 @@
+2000-07-15  Sven Neumann  <neo@wintermute.ochsenblut.de>
+
+	* tools/Makefile.am: build gimp-remote
+
+	* tools/gimp-remote.c: g_error() should only be used
+	for fatal errors that can never happen.
+
+	* plug-ins/script-fu/po/pt_BR.po
+	* plug-ins/script-fu/po: removed. I guess this was 
+	accidentally added.
+	
 2000-07-13  Simon Budig  <simon@gimp.org>
 
 	* tools/gimp-remote.c: new file
+	
 	This is a first implementation of a remote control for gimp.
 	It synthesizes a drag'n'drop event on the toolbox to make
 	Gimp load a file or an URL. Not yet built automatically since
