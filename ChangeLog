@@ -1,3 +1,7 @@
+2004-07-01  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version number to 2.1.2.
+
 2004-07-01  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/common/align_layers.c: there seems to be no reason why
