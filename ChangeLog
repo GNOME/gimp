@@ -1,3 +1,14 @@
+2000-01-26  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpsizeentry.[ch]: block the sizeentry's signals while
+	updating is's fields after a unit change and emit the
+	"value_changed" signal manually afterwards. This avoids multiple
+	"value_changed" signals which may cause callbacks to change the
+	sizeentry in the middle of a unit update.
+
+	* plug-ins/commion/spread.c: no need to connect to the sizeentry's
+	"unit_changed" signal.
+
 Wed Jan 26 00:10:34 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/colorify.c: use a gimp_color_button

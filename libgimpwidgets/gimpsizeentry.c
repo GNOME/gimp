@@ -879,7 +879,7 @@ gimp_size_entry_get_unit (GimpSizeEntry *gse)
   return gse->unit;
 }
 
-void
+static void
 gimp_size_entry_update_unit (GimpSizeEntry *gse,
 			     GUnit          unit)
 {
@@ -914,9 +914,19 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 	}
 
       gsef->stop_recursion = 0; /* hack !!! */
+
+      gtk_signal_handler_block_by_data (GTK_OBJECT (gsef->value_adjustment),
+					gsef);
+
       gimp_size_entry_set_refval_boundaries (gse, i,
 					     gsef->min_refval, gsef->max_refval);
+
+      gtk_signal_handler_unblock_by_data (GTK_OBJECT (gsef->value_adjustment),
+					  gsef);
     }
+
+  gtk_signal_emit (GTK_OBJECT (gse),
+		   gimp_size_entry_signals[VALUE_CHANGED]);
 }
 
 void

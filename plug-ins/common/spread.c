@@ -401,17 +401,12 @@ spread_dialog (gint32 image_ID)
   unit = gimp_image_get_unit (image_ID);
 
   /* two sizeentries */
-  adj = gtk_adjustment_new (1, 0, 1, 1, 10, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 1, 2);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
-
+  spinbutton = gimp_spin_button_new (&adj, 1, 0, 1, 1, 10, 1, 1, 2);
   size = gimp_size_entry_new (1, unit, "%a", TRUE, FALSE, FALSE, 75, 
 			      GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_table_set_col_spacing (GTK_TABLE (size), 0, 4);  
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (size), GTK_SPIN_BUTTON (spinbutton), NULL);
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (size),
+			     GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_table_attach_defaults (GTK_TABLE (size), spinbutton, 1, 2, 0, 1);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size), UNIT_PIXEL);
@@ -429,15 +424,14 @@ spread_dialog (gint32 image_ID)
 
   /*  put a chain_button to the right  */
   chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  if ( spvals.spread_amount_x ==  spvals.spread_amount_y)
+  if ( spvals.spread_amount_x == spvals.spread_amount_y)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (size), chain, 2, 3, 0, 2);
   gtk_widget_show (chain);
 
   gtk_signal_connect (GTK_OBJECT (size), "value_changed", 
-		      (GtkSignalFunc) spread_entry_callback, chain);
-  gtk_signal_connect (GTK_OBJECT (size), "unit_changed", 
-		      (GtkSignalFunc) spread_entry_callback, chain);
+		      GTK_SIGNAL_FUNC (spread_entry_callback),
+		      chain);
 
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
@@ -535,7 +529,7 @@ spread_entry_callback (GtkWidget *widget,
 	  y = new_y = x = new_x;
 	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, y);
 	}
-      if (new_y != y)
+      else if (new_y != y)
 	{
 	  x = new_x = y = new_y;
 	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, x);
