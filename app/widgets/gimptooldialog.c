@@ -95,13 +95,14 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
   dialog = g_object_new (GIMP_TYPE_TOOL_DIALOG,
-                         "title",       tool_info->blurb,
-                         "role",        GIMP_OBJECT (tool_info)->name,
-                         "help-func",   gimp_standard_help_func,
-                         "help-id",     tool_info->help_id,
-                         "stock-id",    stock_id,
-                         "description", desc ? desc : tool_info->help,
-                         "parent",      parent,
+                         "title",        tool_info->blurb,
+                         "role",         GIMP_OBJECT (tool_info)->name,
+                         "help-func",    gimp_standard_help_func,
+                         "help-id",      tool_info->help_id,
+                         "stock-id",     stock_id,
+                         "description",  desc ? desc : tool_info->help,
+                         "parent",       parent,
+                         "focus-on-map", FALSE,
                          NULL);
 
   va_start (args, desc);
