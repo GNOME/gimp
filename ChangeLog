@@ -1,3 +1,13 @@
+2004-01-11  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/core/gimpdrawable-preview.c (gimp_drawable_preview_scale):
+	Apply threshold to alpha in the same way as it is applied to the
+	image in indexed mode. Fixes bug #115793, at least until the
+	alpha thresholds in indexed images are removed.
+
+	* plug-ins/FractalExplorer/Display.c: Fix zoom undo handling
+	issues. Closes bug #82478.
+
 2004-01-11  Dave Neary  <bolsh@gimp.org>
 
 	* etc/templaterc: Remove unusual "1200x900" template.

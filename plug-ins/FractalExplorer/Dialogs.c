@@ -22,6 +22,7 @@
 
 
 #define RESPONSE_ABOUT 1
+#define ZOOM_UNDO_SIZE 100
 
 
 static gdouble          *gradient_samples = NULL;
@@ -32,9 +33,9 @@ static DialogElements   *elements = NULL;
 static GtkWidget        *cmap_preview;
 static GtkWidget        *maindlg;
 
-static explorer_vals_t  zooms[100];
-static gint             zoomindex = 1;
-static gint             zoommax = 1;
+static explorer_vals_t  zooms[ZOOM_UNDO_SIZE];
+static gint             zoomindex = 0;
+static gint             zoommax = 0;
 
 static gint              oldxpos = -1;
 static gint              oldypos = -1;
@@ -143,7 +144,7 @@ static void
 dialog_undo_zoom_callback (GtkWidget *widget,
                            gpointer   data)
 {
-  if (zoomindex > 1)
+  if (zoomindex > 0)
     {
       zooms[zoomindex] = wvals;
       zoomindex--;
@@ -175,11 +176,12 @@ dialog_step_in_callback (GtkWidget *widget,
   double xdifferenz;
   double ydifferenz;
 
-  if (zoomindex < zoommax)
+  if (zoomindex < ZOOM_UNDO_SIZE - 1)
     {
       zooms[zoomindex]=wvals;
       zoomindex++;
     }
+  zoommax = zoomindex;
 
   xdifferenz =  wvals.xmax - wvals.xmin;
   ydifferenz =  wvals.ymax - wvals.ymin;
@@ -201,11 +203,12 @@ dialog_step_out_callback (GtkWidget *widget,
   gdouble xdifferenz;
   gdouble ydifferenz;
 
-  if (zoomindex < zoommax)
+  if (zoomindex < ZOOM_UNDO_SIZE - 1)
     {
       zooms[zoomindex]=wvals;
       zoomindex++;
     }
+  zoommax = zoomindex;
 
   xdifferenz =  wvals.xmax - wvals.xmin;
   ydifferenz =  wvals.ymax - wvals.ymin;
@@ -459,10 +462,11 @@ preview_button_release_event (GtkWidget      *widget,
           l_ymax = (wvals.ymin +
                     (wvals.ymax - wvals.ymin) * (y_release / preview_height));
 
-          zooms[zoomindex] = wvals;
-          zoomindex++;
-          if (zoomindex > 99)
-            zoomindex = 99;
+          if (zoomindex < ZOOM_UNDO_SIZE - 1)
+            {
+              zooms[zoomindex] = wvals;
+              zoomindex++;
+            }
           zoommax = zoomindex;
           wvals.xmin = l_xmin;
           wvals.xmax = l_xmax;

@@ -312,8 +312,10 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 	      r[GREEN_PIX] += cmap[index++] * tot_frac;
 	      r[BLUE_PIX]  += cmap[index++] * tot_frac;
 
-	      if (bytes == 4)
-		r[ALPHA_PIX] += s[ALPHA_I_PIX] * tot_frac;
+              if (bytes == 4)
+                r[ALPHA_PIX] += ((s[ALPHA_I_PIX] & 0x80 ?
+                                  OPAQUE_OPACITY : TRANSPARENT_OPACITY)
+                                 * tot_frac);
 	    }
 	  else
 	    {
