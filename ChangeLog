@@ -1,3 +1,8 @@
+2004-08-16  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcolorframe.c (gimp_color_frame_update): fixed
+	labels in CMYK mode. Fixes bug #150213.
+
 2004-08-15  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdevicestatus.c: removed non-functional button
