@@ -1436,6 +1436,11 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                           NULL);
   gtk_dialog_set_default_response (GTK_DIALOG (tr_tool->info_dialog->shell),
                                    GTK_RESPONSE_OK);
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (tr_tool->info_dialog->shell),
+                                           RESPONSE_RESET,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   g_signal_connect (tr_tool->info_dialog->shell, "response",
                     G_CALLBACK (gimp_transform_tool_response),
