@@ -315,6 +315,7 @@ typedef struct
   GimpRGB     *fg_color;
   GimpRGB     *bg_color;
   gboolean     enable_repaint;
+  gboolean     using_new_layer;
 } GFigContext;
 
 GFigContext *gfig_context;

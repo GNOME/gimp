@@ -164,7 +164,6 @@ static void      gfig_new_gc               (void);
 static void      gfig_save_menu_callback   (GtkWidget *widget,
                                             gpointer   data);
 static void      gfig_list_load_all        (const gchar *path);
-static void      gfig_save                 (GtkWidget *parent);
 static void      gfig_list_free_all        (void);
 static void      create_save_file_chooser  (GFigObj   *obj,
                                             gchar     *tpath,
@@ -224,6 +223,7 @@ gfig_dialog (void)
   gint       k;
   gint       img_width;
   gint       img_height;
+  GtkWidget *toggle;
 
   gimp_ui_init ("gfig", TRUE);
 
@@ -256,6 +256,7 @@ gfig_dialog (void)
   if (parasite)
     {
       gimp_drawable_fill (gfig_context->drawable_id, GIMP_TRANSPARENT_FILL);
+      gfig_context->using_new_layer = FALSE;
       gimp_parasite_free (parasite);
     }
   else
@@ -265,8 +266,8 @@ gfig_dialog (void)
       gimp_drawable_fill (newlayer, GIMP_TRANSPARENT_FILL);
       gimp_image_add_layer (gfig_context->image_id, newlayer, -1);
       gfig_context->drawable_id = newlayer;
+      gfig_context->using_new_layer = TRUE;
     }
-
 
   gfig_drawable = gimp_drawable_get (gfig_context->drawable_id);
 
@@ -482,6 +483,40 @@ gfig_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
+  /* "show image" checkbutton at bottom of style frame */
+  toggle = gtk_check_button_new_with_label (_("Show image"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                gfig_context->show_background);
+  gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &gfig_context->show_background);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gfig_preview_expose),
+                    NULL);
+  gtk_widget_show (toggle);
+
+  /* "snap to grid" checkbutton at bottom of style frame */
+  toggle = gtk_check_button_new_with_label (_("Snap to grid"));
+  gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &selvals.opts.snap2grid);
+  gtk_widget_show (toggle);
+  gfig_opt_widget.snap2grid = toggle;
+
+  /* "show grid" checkbutton at bottom of style frame */
+  toggle = gtk_check_button_new_with_label (_("Show grid"));
+  gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &selvals.opts.drawgrid);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (draw_grid_clear),
+                    NULL);
+  gtk_widget_show (toggle);
+  gfig_opt_widget.drawgrid = toggle;
+
 
   /* Load saved objects */
   gfig_list_load_all (gfig_path);
@@ -494,7 +529,6 @@ gfig_dialog (void)
 
   gtk_widget_show (top_level_dlg);
 
-  dialog_update_preview (gfig_drawable);
   gfig_new_gc (); /* Need this for drawing */
 
   gfig = gfig_load_from_parasite ();
@@ -521,6 +555,8 @@ gfig_response (GtkWidget *widget,
                gint       response_id,
                gpointer   data)
 {
+  GFigObj *gfig;
+
   switch (response_id)
     {
     case RESPONSE_UNDO:
@@ -559,12 +595,33 @@ gfig_response (GtkWidget *widget,
       gfig_paint_callback ();
       break;
 
-    case RESPONSE_SAVE:
-      gfig_save (widget);  /* Save current object */
+    case GTK_RESPONSE_CANCEL:
+      /* if we created a new layer, delete it */
+      if (gfig_context->using_new_layer)
+        {
+          gimp_image_remove_layer (gfig_context->image_id, 
+                                   gfig_context->drawable_id);
+        }
+      else /* revert back to the original figure */
+        {
+          free_all_objs (gfig_context->current_obj->obj_list);
+          gfig_context->current_obj->obj_list = NULL;
+          gfig = gfig_load_from_parasite ();
+          if (gfig)
+            {
+              gfig_list_insert (gfig);
+              new_obj_2edit (gfig);
+            }
+          gfig_context->enable_repaint = TRUE;
+          gfig_paint_callback ();
+        }
+
+      gtk_widget_destroy (widget);
       break;
 
     case GTK_RESPONSE_OK:  /* Close button */
-      gfig_style_copy (&gfig_context->default_style, gfig_context->current_style, "object");
+      gfig_style_copy (&gfig_context->default_style, 
+                       gfig_context->current_style, "object");
       gfig_save_as_parasite ();
       gtk_widget_destroy (widget);
       break;
@@ -700,12 +757,6 @@ gfig_list_load_all (const gchar *path)
     }
 
   gfig_context->current_obj = gfig_list->data;  /* set to first entry */
-}
-
-static void
-gfig_save (GtkWidget *parent)
-{
-  create_save_file_chooser (gfig_context->current_obj, NULL, parent);
 }
 
 static void
@@ -1184,18 +1235,6 @@ options_dialog_callback (GtkWidget *widget,
 
 
   /* Put buttons in */
-  toggle = gtk_check_button_new_with_label (_("Show image"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                gfig_context->show_background);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 6);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &gfig_context->show_background);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gfig_preview_expose),
-                    NULL);
-  gtk_widget_show (toggle);
-
   toggle = gtk_check_button_new_with_label (_("Show position"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 6);
   g_signal_connect (toggle, "toggled",
@@ -1302,7 +1341,6 @@ adjust_grid_callback (GtkWidget *widget,
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *table;
-  GtkWidget *toggle;
   GtkObject *size_data;
   GtkWidget *combo;
 
@@ -1319,25 +1357,6 @@ adjust_grid_callback (GtkWidget *widget,
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 6);
   gtk_widget_show (hbox);
-
-  toggle = gtk_check_button_new_with_label (_("Show grid"));
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &selvals.opts.drawgrid);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (draw_grid_clear),
-                    NULL);
-  gtk_widget_show (toggle);
-  gfig_opt_widget.drawgrid = toggle;
-
-  toggle = gtk_check_button_new_with_label (_("Snap to grid"));
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &selvals.opts.snap2grid);
-  gtk_widget_show (toggle);
-  gfig_opt_widget.snap2grid = toggle;
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -1902,7 +1921,6 @@ void
 draw_grid_clear ()
 {
   /* wipe slate and start again */
-  dialog_update_preview (gfig_drawable);
   gtk_widget_queue_draw (gfig_context->preview);
 }
 

@@ -1,3 +1,13 @@
+2004-07-13  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-preview.[ch}
+	* plug-ins/gfig/gfig.h: Made Cancel work properly.  Moved "show grid", 
+	"snap to grid", and "show image" checkbuttons back onto main 
+	interface.  Eliminated GtkPreview and removed undef of
+	GTK_DISABLE_DEPRECATED from gfig-preview.c.  Removed some 
+	unused code.
+
 2004-07-13  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gflare/gflare.c (preview_handle_idle): use

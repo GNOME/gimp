@@ -27,11 +27,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -57,14 +52,10 @@ static gint pos_tag = -1;
 GtkWidget *status_label_dname;
 GtkWidget *status_label_fname;
 static GtkWidget *pos_label;       /* XY pos marker */
-static guchar  preview_row[PREVIEW_SIZE * 4];
-static guchar *pv_cache;
-static gint    img_bpp;
 
 static void             gfig_preview_realize    (GtkWidget *widget);
 static gboolean         gfig_preview_events     (GtkWidget *widget,
                                                  GdkEvent  *event);
-static void             cache_preview           (GimpDrawable *drawable);
 
 static gint             gfig_invscale_x         (gint x);
 static gint             gfig_invscale_y         (gint y);
@@ -83,7 +74,7 @@ make_preview (void)
   GtkWidget *table;
   GtkWidget *ruler;
 
-  gfig_context->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gfig_context->preview = gtk_drawing_area_new ();
   gtk_widget_set_events (GTK_WIDGET (gfig_context->preview), PREVIEW_MASK);
 
   g_signal_connect (gfig_context->preview , "realize",
@@ -98,7 +89,7 @@ make_preview (void)
                           G_CALLBACK (gfig_preview_expose),
                           NULL);
 
-  gtk_preview_size (GTK_PREVIEW (gfig_context->preview), preview_width,
+  gtk_drawing_area_size (GTK_DRAWING_AREA (gfig_context->preview), preview_width,
                     preview_height);
 
   frame = gtk_frame_new (NULL);
@@ -143,188 +134,6 @@ make_preview (void)
   gtk_widget_show (hbox);
 
   return vbox;
-}
-
-/* Given a row then srink it down a bit */
-static void
-do_gfig_preview (guchar *dest_row,
-                 guchar *src_row,
-                 gint    width,
-                 gint    dh,
-                 gint    height,
-                 gint    bpp)
-{
-  memcpy (dest_row, src_row, width * bpp);
-}
-
-void
-refill_cache (GimpDrawable *drawable)
-{
-  static GdkCursor *preview_cursor1 = NULL;
-  static GdkCursor *preview_cursor2 = NULL;
-
-  if (!preview_cursor1)
-    {
-      GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (gfig_context->preview));
-
-      preview_cursor1 = gdk_cursor_new_for_display (display, GDK_WATCH);
-      preview_cursor2 = gdk_cursor_new_for_display (display, GDK_TOP_LEFT_ARROW);
-    }
-
-  gdk_window_set_cursor
-    (gtk_widget_get_toplevel (GTK_WIDGET (gfig_context->preview))->window,
-     preview_cursor1);
-
-  gdk_window_set_cursor (gfig_context->preview->window, preview_cursor1);
-
-  gdk_flush ();
-
-  cache_preview (drawable);
-
-  gdk_window_set_cursor
-    (gtk_widget_get_toplevel (GTK_WIDGET (gfig_context->preview))->window,
-     preview_cursor2);
-
-  toggle_obj_type (NULL, GINT_TO_POINTER (selvals.otype));
-}
-
-/* Cache the preview image - updates are a lot faster. */
-/* The preview_cache will contain the small image */
-
-static void
-cache_preview (GimpDrawable *drawable)
-{
-  GimpPixelRgn  src_rgn;
-  gint          y, x;
-  guchar       *src_rows;
-  guchar       *p;
-  gboolean      isgrey, has_alpha;
-  gint          bpp, img_bpp;
-  gint          sel_x1, sel_y1, sel_x2, sel_y2;
-  gint          sel_width, sel_height;
-
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-
-  sel_width  = sel_x2 - sel_x1;
-  sel_height = sel_y2 - sel_y1;
-
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
-
-  src_rows = g_new (guchar , sel_width * 4);
-  p = pv_cache = g_new (guchar , preview_width * preview_height * 4);
-
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
-
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-
-  if (bpp < 3)
-    {
-      img_bpp = 3 + has_alpha;
-    }
-  else
-    {
-      img_bpp = bpp;
-    }
-
-  isgrey = gimp_drawable_is_gray (drawable->drawable_id);
-
-  for (y = 0; y < preview_height; y++)
-    {
-      gimp_pixel_rgn_get_row (&src_rgn,
-                              src_rows,
-                              sel_x1,
-                              sel_y1 + (y*sel_height)/preview_height,
-                              sel_width);
-
-      for (x = 0; x < (preview_width); x ++)
-        {
-          /* Get the pixels of each col */
-          gint i;
-
-          for (i = 0 ; i < 3; i++)
-            p[x*img_bpp+i] =
-              src_rows[((x*sel_width)/preview_width) * src_rgn.bpp +
-                       ((isgrey)?0:i)];
-          if (has_alpha)
-            p[x*img_bpp+3] =
-              src_rows[((x*sel_width)/preview_width) * src_rgn.bpp +
-                       ((isgrey)?1:3)];
-        }
-      p += (preview_width*img_bpp);
-    }
-
-  g_free (src_rows);
-}
-
-void
-dialog_update_preview (GimpDrawable *drawable)
-{
-  gint y;
-  gint check, check_0, check_1;
-
-  if (!selvals.showimage)
-    {
-      memset (preview_row, -1, preview_width*4);
-      for (y = 0; y < preview_height; y++)
-        {
-          gtk_preview_draw_row (GTK_PREVIEW (gfig_context->preview), preview_row,
-                                0, y, preview_width);
-        }
-      return;
-    }
-
-  if (!pv_cache)
-    {
-      refill_cache (drawable);
-    }
-
-  for (y = 0; y < preview_height; y++)
-    {
-      if ((y / GIMP_CHECK_SIZE) & 1)
-        {
-          check_0 = GIMP_CHECK_DARK * 255;
-          check_1 = GIMP_CHECK_LIGHT * 255;
-        }
-      else
-        {
-          check_0 = GIMP_CHECK_LIGHT * 255;
-          check_1 = GIMP_CHECK_DARK * 255;
-        }
-
-      do_gfig_preview (preview_row,
-                       pv_cache + y * preview_width * img_bpp,
-                       preview_width,
-                       y,
-                       preview_height,
-                       img_bpp);
-
-      if (img_bpp > 3)
-        {
-          int i, j;
-          for (i = 0, j = 0 ; i < sizeof (preview_row); i += 4, j += 3)
-            {
-              gint alphaval;
-              if (((i/4) / GIMP_CHECK_SIZE) & 1)
-                check = check_0;
-              else
-                check = check_1;
-
-              alphaval = preview_row[i + 3];
-
-              preview_row[j] =
-                check + (((preview_row[i] - check)*alphaval)/255);
-              preview_row[j + 1] =
-                check + (((preview_row[i + 1] - check)*alphaval)/255);
-              preview_row[j + 2] =
-                check + (((preview_row[i + 2] - check)*alphaval)/255);
-            }
-        }
-
-      gtk_preview_draw_row (GTK_PREVIEW (gfig_context->preview), preview_row,
-                            0, y, preview_width);
-    }
 }
 
 static void
