@@ -65,11 +65,14 @@
 #define PLUG_IN_VERSION	"Sep 1997, 1.2"
 #define HELP_ID         "plug-in-mblur"
 
-#define     MBLUR_LINEAR 0
-#define     MBLUR_RADIAL 1
-#define     MBLUR_ZOOM	 2
+typedef enum
+{
+  MBLUR_LINEAR,
+  MBLUR_RADIAL,
+  MBLUR_ZOOM,
+  MBLUR_MAX = MBLUR_ZOOM
+} MBlurType;
 
-#define	    MBLUR_MAX    MBLUR_ZOOM
 
 typedef struct
 {
@@ -221,7 +224,7 @@ run (const gchar      *name,
 	  mbvals.angle      = param[5].data.d_int32;
 	}
 
-    if ((mbvals.mblur_type < 0) && (mbvals.mblur_type > MBLUR_ZOOM))
+    if ((mbvals.mblur_type < 0) || (mbvals.mblur_type > MBLUR_MAX))
       status= GIMP_PDB_CALLING_ERROR;
     break;
 
