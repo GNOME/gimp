@@ -1,3 +1,17 @@
+2000-07-11  Simon Budig  <simon@gimp.org>
+
+	* tools/gimp-remote.c: new file
+	This is a first implementation of a remote control for gimp.
+	It synthesizes a drag'n'drop event on the toolbox to make
+	Gimp load a file or an URL. Not yet built automatically since
+	I have no idea about automake etc. Simply build it with
+	  gcc -o gimp-remote `gtk-config --cflags --libs` \
+	      -lXmu -Wall gimp-remote.c
+
+	Disclaimer: Faking drag'n'drop for remote controlling an
+	application is a hack. We should include a saner interface
+	for this in Gimp 2.0.
+
 2000-07-11  Jesus Bravo Alvarez  <jba@pobox.com>
 
 	* configure.in: Added 'gl' (Galician) to ALL_LINGUAS.
