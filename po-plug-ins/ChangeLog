@@ -1,3 +1,7 @@
+2000-12-18  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: gbr plug-in is gone, new gih plug-in added
+
 2000-12-15  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* no.po: Updated Norwegian translation.
