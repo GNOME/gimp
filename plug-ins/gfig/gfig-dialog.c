@@ -1192,213 +1192,244 @@ static void
 options_dialog_callback (GtkWidget *widget,
                          gpointer   data)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *table;
-  GtkWidget *toggle;
-  GtkObject *size_data;
-  GtkWidget *scale;
-  GtkObject *scale_data;
+  static GtkWidget *dialog = NULL;
 
-  dialog = gimp_dialog_new (_("Options"), "gfig",
-                              NULL, 0, NULL, NULL,
+  if (!dialog)
+    {
+      GtkWidget *main_vbox;
+      GtkWidget *table;
+      GtkWidget *toggle;
+      GtkObject *size_data;
+      GtkWidget *scale;
+      GtkObject *scale_data;
 
-                              GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,
+      dialog = gimp_dialog_new (_("Options"), "gfig-options",
+                                GTK_WIDGET (data), 0, NULL, NULL,
 
+                                GTK_STOCK_CLOSE,  GTK_RESPONSE_CLOSE,
+
+                                NULL);
+
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
+
+      g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
+
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (gtk_widget_destroy),
+                        NULL);
+
+      main_vbox = gtk_vbox_new (FALSE, 0);
+      gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+      gtk_widget_show (main_vbox);
+
+      /* Put buttons in */
+      toggle = gtk_check_button_new_with_label (_("Show position"));
+      gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                    selvals.showpos);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &selvals.showpos);
+      g_signal_connect_after (toggle, "toggled",
+                              G_CALLBACK (gfig_pos_enable),
                               NULL);
+      gtk_widget_show (toggle);
 
-  main_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
-  gtk_widget_show (main_vbox);
+      toggle = gtk_check_button_new_with_label (_("Show control points"));
+      gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                    selvals.opts.showcontrol);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &selvals.opts.showcontrol);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (toggle_show_image),
+                        NULL);
+      gtk_widget_show (toggle);
+      gfig_opt_widget.showcontrol = toggle;
 
-  /* Put buttons in */
-  toggle = gtk_check_button_new_with_label (_("Show position"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), selvals.showpos);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &selvals.showpos);
-  g_signal_connect_after (toggle, "toggled",
-                          G_CALLBACK (gfig_pos_enable),
-                          NULL);
-  gtk_widget_show (toggle);
+      toggle = gtk_check_button_new_with_label (_("Antialiasing"));
+      gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), selopt.antia);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &selopt.antia);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (gfig_paint_callback),
+                        NULL);
+      gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label (_("Show control points"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), selvals.opts.showcontrol);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &selvals.opts.showcontrol);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (toggle_show_image),
-                    NULL);
-  gtk_widget_show (toggle);
-  gfig_opt_widget.showcontrol = toggle;
+      table = gtk_table_new (4, 4, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+      gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 6);
+      gtk_widget_show (table);
 
-  toggle = gtk_check_button_new_with_label (_("Antialiasing"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), selopt.antia);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &selopt.antia);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gfig_paint_callback),
-                    NULL);
-  gtk_widget_show (toggle);
+      size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                        _("Max undo:"), 100, 50,
+                                        selvals.maxundo,
+                                        MIN_UNDO, MAX_UNDO, 1, 2, 0,
+                                        TRUE, 0, 0,
+                                        NULL, NULL);
+      g_signal_connect (size_data, "value_changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &selvals.maxundo);
 
-  table = gtk_table_new (4, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 6);
-  gtk_widget_show (table);
+      page_menu_bg = gimp_int_combo_box_new (_("Transparent"), LAYER_TRANS_BG,
+                                             _("Background"),  LAYER_BG_BG,
+                                             _("Foreground"),  LAYER_FG_BG,
+                                             _("White"),       LAYER_WHITE_BG,
+                                             _("Copy"),        LAYER_COPY_BG,
+                                             NULL);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (page_menu_bg), 0);
 
-  size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                    _("Max undo:"), 100, 50,
-                                    selvals.maxundo, MIN_UNDO, MAX_UNDO, 1, 2, 0,
-                                    TRUE, 0, 0,
-                                    NULL, NULL);
-  g_signal_connect (size_data, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &selvals.maxundo);
+      g_signal_connect (page_menu_bg, "changed",
+                        G_CALLBACK (paint_combo_callback),
+                        GINT_TO_POINTER (PAINT_BGS_MENU));
 
-  page_menu_bg = gimp_int_combo_box_new (_("Transparent"), LAYER_TRANS_BG,
-                                         _("Background"),  LAYER_BG_BG,
-                                         _("Foreground"),  LAYER_FG_BG,
-                                         _("White"),       LAYER_WHITE_BG,
-                                         _("Copy"),        LAYER_COPY_BG,
-                                         NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (page_menu_bg), 0);
+      gimp_help_set_help_data (page_menu_bg,
+                               _("Layer background type. Copy causes the "
+                                 "previous layer to be copied before the "
+                                 "draw is performed."),
+                               NULL);
 
-  g_signal_connect (page_menu_bg, "changed",
-                    G_CALLBACK (paint_combo_callback),
-                    GINT_TO_POINTER (PAINT_BGS_MENU));
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                 _("Background:"), 0.0, 0.5,
+                                 page_menu_bg, 2, FALSE);
 
-  gimp_help_set_help_data (page_menu_bg,
-                           _("Layer background type. Copy causes the previous "
-                             "layer to be copied before the draw is performed."),
-                           NULL);
+      toggle = gtk_check_button_new_with_label (_("Feather"));
+      gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 2, 3,
+                        GTK_FILL, GTK_FILL, 0, 0);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &selopt.feather);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (gfig_paint_callback),
+                        NULL);
+      gtk_widget_show (toggle);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Background:"), 0.0, 0.5,
-                             page_menu_bg, 2, FALSE);
+      scale_data =
+        gtk_adjustment_new (selopt.feather_radius, 0.0, 100.0, 1.0, 1.0, 0.0);
+      scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+      gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+      gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 
+      g_signal_connect (scale_data, "value_changed",
+                        G_CALLBACK (gimp_double_adjustment_update),
+                        &selopt.feather_radius);
+      g_signal_connect (scale_data, "value_changed",
+                        G_CALLBACK (gfig_paint_callback),
+                        NULL);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                                 _("Radius:"), 0.0, 1.0, scale, 1, FALSE);
 
-  toggle = gtk_check_button_new_with_label (_("Feather"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &selopt.feather);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gfig_paint_callback),
-                    NULL);
-  gtk_widget_show (toggle);
-
-  scale_data =
-    gtk_adjustment_new (selopt.feather_radius, 0.0, 100.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-
-  g_signal_connect (scale_data, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &selopt.feather_radius);
-  g_signal_connect (scale_data, "value_changed",
-                    G_CALLBACK (gfig_paint_callback),
-                    NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Radius:"), 0.0, 1.0, scale, 1, FALSE);
-
-  gimp_dialog_run (GIMP_DIALOG (dialog));
-
-  gtk_widget_destroy (dialog);
+      gtk_widget_show (dialog);
+    }
+  else
+    {
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
 }
 
 static void
 adjust_grid_callback (GtkWidget *widget,
                       gpointer   data)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *hbox;
-  GtkWidget *table;
-  GtkObject *size_data;
-  GtkWidget *combo;
+  static GtkWidget *dialog = NULL;
 
-  dialog = gimp_dialog_new (_("Grid"), "gfig",
-                            NULL, 0, NULL, NULL,
+  if (!dialog)
+    {
+      GtkWidget *main_vbox;
+      GtkWidget *hbox;
+      GtkWidget *table;
+      GtkObject *size_data;
+      GtkWidget *combo;
 
-                            GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,
+      dialog = gimp_dialog_new (_("Grid"), "gfig-grid",
+                                GTK_WIDGET (data), 0, NULL, NULL,
 
-                            NULL);
+                                GTK_STOCK_CLOSE,  GTK_RESPONSE_CLOSE,
 
-  main_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
-  gtk_widget_show (main_vbox);
+                                NULL);
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+      g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
 
-  size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                    _("Grid spacing:"), 100, 50,
-                                    selvals.opts.gridspacing,
-                                    MIN_GRID, MAX_GRID, 1, 10, 0,
-                                    TRUE, 0, 0,
-                                    NULL, NULL);
-  g_signal_connect (size_data, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &selvals.opts.gridspacing);
-  g_signal_connect (size_data, "value_changed",
-                    G_CALLBACK (draw_grid_clear),
-                    NULL);
-  gfig_opt_widget.gridspacing = size_data;
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (gtk_widget_destroy),
+                        NULL);
 
-  combo = gimp_int_combo_box_new (_("Rectangle"), RECT_GRID,
-                                  _("Polar"),     POLAR_GRID,
-                                  _("Isometric"), ISO_GRID,
-                                  NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
+      main_vbox = gtk_vbox_new (FALSE, 0);
+      gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+      gtk_widget_show (main_vbox);
 
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gridtype_combo_callback),
-                    GINT_TO_POINTER (GRID_TYPE_MENU));
+      hbox = gtk_hbox_new (FALSE, 6);
+      gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Grid type:"), 0.0, 0.5,
-                             combo, 2, FALSE);
+      table = gtk_table_new (3, 3, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+      gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+      gtk_widget_show (table);
 
-  gfig_opt_widget.gridtypemenu = combo;
+      size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                        _("Grid spacing:"), 100, 50,
+                                        selvals.opts.gridspacing,
+                                        MIN_GRID, MAX_GRID, 1, 10, 0,
+                                        TRUE, 0, 0,
+                                        NULL, NULL);
+      g_signal_connect (size_data, "value_changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &selvals.opts.gridspacing);
+      g_signal_connect (size_data, "value_changed",
+                        G_CALLBACK (draw_grid_clear),
+                        NULL);
+      gfig_opt_widget.gridspacing = size_data;
 
-  combo = gimp_int_combo_box_new (_("Normal"),    GTK_STATE_NORMAL,
-                                  _("Black"),     GFIG_BLACK_GC,
-                                  _("White"),     GFIG_WHITE_GC,
-                                  _("Grey"),      GFIG_GREY_GC,
-                                  _("Darker"),    GTK_STATE_ACTIVE,
-                                  _("Lighter"),   GTK_STATE_PRELIGHT,
-                                  _("Very dark"), GTK_STATE_SELECTED,
-                                  NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
+      combo = gimp_int_combo_box_new (_("Rectangle"), RECT_GRID,
+                                      _("Polar"),     POLAR_GRID,
+                                      _("Isometric"), ISO_GRID,
+                                      NULL);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
 
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gridtype_combo_callback),
-                    GINT_TO_POINTER (GRID_RENDER_MENU));
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gridtype_combo_callback),
+                        GINT_TO_POINTER (GRID_TYPE_MENU));
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Grid color:"), 0.0, 0.5,
-                             combo, 2, FALSE);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                 _("Grid type:"), 0.0, 0.5,
+                                 combo, 2, FALSE);
 
-  gimp_dialog_run (GIMP_DIALOG (dialog));
+      gfig_opt_widget.gridtypemenu = combo;
 
-  gtk_widget_destroy (dialog);
+      combo = gimp_int_combo_box_new (_("Normal"),    GTK_STATE_NORMAL,
+                                      _("Black"),     GFIG_BLACK_GC,
+                                      _("White"),     GFIG_WHITE_GC,
+                                      _("Grey"),      GFIG_GREY_GC,
+                                      _("Darker"),    GTK_STATE_ACTIVE,
+                                      _("Lighter"),   GTK_STATE_PRELIGHT,
+                                      _("Very dark"), GTK_STATE_SELECTED,
+                                      NULL);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
+
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gridtype_combo_callback),
+                        GINT_TO_POINTER (GRID_RENDER_MENU));
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                                 _("Grid color:"), 0.0, 0.5,
+                                 combo, 2, FALSE);
+
+      gtk_widget_show (dialog);
+    }
+  else
+    {
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
 }
 
 void
