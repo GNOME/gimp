@@ -1,16 +1,17 @@
-Installation instructions for GIMP 2.2
+Installation instructions for GIMP 2.3
 --------------------------------------
 
 There are some basic steps to building and installing The GIMP.
 
-GIMP 2.2 replaces GIMP 2.0. It is advised that you uninstall GIMP 2.0
-before installing GIMP 2.2. If you want to keep GIMP 2.0 installed in
-parallel to GIMP 2.2, you have to choose a separate prefix which is
-not in your default library search path.
+GIMP 2.3 replaces earlier GIMP 2.x versions. It is advised that you
+uninstall them before installing GIMP 2.3. If you want to keep your
+older GIMP 2.x installation in parallel to GIMP 2.4, you have to
+choose a separate prefix which is not in your default library search
+path.
 
-GIMP 2.2 is fully backward compatible to GIMP 2.0. Plug-ins and
+GIMP 2.x is fully backward compatible to GIMP 2.0. Plug-ins and
 scripts written for GIMP 2.0 will continue to work and don't need to
-be changed nor recompiled to be used with GIMP 2.2.
+be changed nor recompiled to be used with GIMP 2.x.
 
 The most important part is to make sure the requirements for a build
 are fulfilled.  We depend on a number of tools and libraries which are
@@ -27,10 +28,10 @@ header files installed.
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
 
-  2. You need to have installed GTK+ version 2.4.4 or better. Do not
+  2. You need to have installed GTK+ version 2.6.0 or newer. Do not
      try to use an older GTK+ version (1.2.x), it will not work.
      GTK+ itself needs recent versions of GLib (>= 2.6.0),
-     Pango (>= 1.4.0) and ATK. Sources for these can be grabbed from
+     Pango (>= 1.8.0) and ATK. Sources for these can be grabbed from
      ftp://ftp.gtk.org/. GTK+-2.x and friends can be installed side
      by side with GTK+-1.2.
 
@@ -59,10 +60,9 @@ header files installed.
      of make, we'd appreciate if you'd send us a patch with the changes.
 
   8. Install the GIMP by running `make install'. In order to avoid clashes
-     with other versions of The GIMP, we install a binary called gimp-2.2.
+     with other versions of The GIMP, we install a binary called gimp-2.3.
      By default there's also a link created so that you can type 'gimp'
-     to start gimp-2.2. If you have the 2.0 version installed, you should
-     still be able to run it using 'gimp-2.0'.
+     to start gimp-2.3.
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries 
 lying around on your system, otherwise configure may fail to find the 
@@ -74,8 +74,8 @@ packages are included below. Here is an illustration of commands that
 might be used to build and install the GIMP. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvfz gimp-2.2.x.tar.gz   # unpack the sources
-  % cd gimp-2.2.x                # change to the toplevel directory
+  % tar xvfz gimp-2.3.x.tar.gz   # unpack the sources
+  % cd gimp-2.3.x                # change to the toplevel directory
   % ./configure                  # run the `configure' script
   % make                         # build the GIMP
   % make install                 # install the GIMP
@@ -105,8 +105,8 @@ These are:
      is intended primarily as a convenience for developers.
 
   --enable-gimpdir=DIR.  This option changes the default directory
-     the gimp uses to search for its configuration files from ~/.gimp-2.2 
-     (the directory .gimp-2.2 in the users home directory) to DIR.
+     the gimp uses to search for its configuration files from ~/.gimp-2.3 
+     (the directory .gimp-2.3 in the users home directory) to DIR.
 
   --without-libtiff, --without-libjpeg, --without-libpng.  configure
      will bail out if libtiff, libjpeg or libpng can not be found. You
@@ -170,8 +170,8 @@ These are:
      --without-desktop-dir.
 
   --disable-default-binary. Use this option if you don't want to make
-     gimp-2.2 the default gimp installation. Otherwise a link called
-     gimp pointing to the gimp-2.2 executable will be installed.
+     gimp-2.3 the default gimp installation. Otherwise a link called
+     gimp pointing to the gimp-2.3 executable will be installed.
 
   --enable-gimp-console.  In addition to the standard gimp binary,
      build a console-only binary which does not link GTK+ at all.
@@ -181,7 +181,7 @@ The `make' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.
  - The plug-in programs in the 'plug-ins' directory.
  - Some modules in the 'modules' subdirectory.
- - The main GIMP program 'gimp-2.2' in `app'.
+ - The main GIMP program 'gimp-2.3' in `app'.
 
 The `make install' commands installs the gimp header files associated 
 with the libgimp libraries, the plug-ins, some data files and the GIMP 
