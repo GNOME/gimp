@@ -24,6 +24,7 @@
 #include <libgimp/gimpintl.h>
 #include <libgimp/gimpmodule.h>
 #include <libgimp/parasite.h>
+#include <libgimp/gimpui.h>
 
 #include <gtk/gtk.h>
 #include "modregister.h"
@@ -63,9 +64,6 @@ static void       gamma_configure_ok_callback     (GtkWidget    *widget,
 						   gpointer      data);
 static void       gamma_configure_cancel_callback (GtkWidget    *widget,
 						   gpointer      data);
-static gint       gamma_configure_delete_callback (GtkWidget    *widget,
-						   GdkEvent     *event,
-						   gpointer      data);
 static void       gamma_configure                 (gpointer      cd_ID,
     						   GFunc         ok_func,
 						   gpointer      ok_data,
@@ -73,7 +71,8 @@ static void       gamma_configure                 (gpointer      cd_ID,
 						   gpointer      cancel_data);
 static void       gamma_configure_cancel          (gpointer      cd_ID);
 
-static GimpColorDisplayMethods methods = {
+static GimpColorDisplayMethods methods = 
+{
   NULL,
   gamma_new,
   gamma_clone,
@@ -86,7 +85,8 @@ static GimpColorDisplayMethods methods = {
   gamma_configure_cancel
 };
 
-static GimpModuleInfo info = {
+static GimpModuleInfo info = 
+{
   NULL,
   N_("Gamma color display filter"),
   "Manish Singh <yosh@gimp.org>",
@@ -291,15 +291,6 @@ gamma_configure_cancel_callback (GtkWidget *widget,
     context->cancel_func (context, context->cancel_data);
 }
 
-static gint
-gamma_configure_delete_callback (GtkWidget *widget,
-				 GdkEvent  *event,
-				 gpointer   data)
-{
-  gamma_configure_cancel_callback (widget, data);
-  return TRUE;
-}
-
 static void
 gamma_configure (gpointer cd_ID,
 		 GFunc    ok_func,
@@ -310,8 +301,6 @@ gamma_configure (gpointer cd_ID,
   GammaContext *context = cd_ID;
   GtkWidget *hbox;
   GtkWidget *label;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkObject *adjustment;
 
   if (!context->shell)
@@ -321,49 +310,35 @@ gamma_configure (gpointer cd_ID,
       context->cancel_func = cancel_func;
       context->cancel_data = cancel_data;
 
-      context->shell = gtk_dialog_new ();
-      gtk_window_set_wmclass (GTK_WINDOW (context->shell), "gamma", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (context->shell), _("Gamma"));
+      context->shell = gimp_dialog_new (_("Gamma"), "gamma",
+					gimp_standard_help_func, "modules/gamma.html",
+					GTK_WIN_POS_MOUSE,
+					FALSE, TRUE, FALSE,
 
-      gtk_signal_connect (GTK_OBJECT (context->shell), "delete_event",
-			  GTK_SIGNAL_FUNC (gamma_configure_delete_callback),
-			  NULL);
+					_("OK"), gamma_configure_ok_callback,
+					cd_ID, NULL, NULL, TRUE, FALSE,
+					_("Cancel"), gamma_configure_cancel_callback,
+					cd_ID, NULL, NULL, FALSE, TRUE,
+					
+					NULL);
 
-      hbox = gtk_hbox_new (TRUE, 2);
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (context->shell)->vbox),
 			  hbox, FALSE, FALSE, 0);
 
       label = gtk_label_new ( _("Gamma:"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
 
       adjustment = gtk_adjustment_new (1.0, 0.01, 10.0, 0.01, 0.1, 0.0);
       context->spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
 					      0.1, 3);
       gtk_widget_set_usize (context->spinner, 100, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), context->spinner, TRUE, FALSE, 0);
- 
-      hbbox = gtk_hbutton_box_new ();
-      gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-      gtk_box_pack_end (GTK_BOX (GTK_DIALOG (context->shell)->action_area),
-			hbbox, FALSE, FALSE, 0);  
-
-      button = gtk_button_new_with_label ( _("OK"));
-      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  GTK_SIGNAL_FUNC (gamma_configure_ok_callback),
-			  cd_ID);
-
-      button = gtk_button_new_with_label ( _("Cancel"));
-      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  GTK_SIGNAL_FUNC (gamma_configure_cancel_callback),
-			  cd_ID);
-
-      gtk_widget_show_all (context->shell);
+      gtk_box_pack_start (GTK_BOX (hbox), context->spinner, FALSE, FALSE, 0);
     }
+
+  gtk_widget_show_all (context->shell);
 }
 
 static void

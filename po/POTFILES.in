@@ -114,9 +114,7 @@ app/undo_history.c
 app/user_install.c
 app/xcf.c
 modules/cdisplay_gamma.c
+modules/cdisplay_highcontrast.c
 modules/colorsel_gtk.c
 modules/colorsel_triangle.c
 modules/colorsel_water.c
-
-
-

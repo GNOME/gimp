@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.21\n"
-"POT-Creation-Date: 2000-05-02 19:52+0200\n"
-"PO-Revision-Date: 2000-05-03 12:37+02:00\n"
+"POT-Creation-Date: 2000-05-04 10:29+0200\n"
+"PO-Revision-Date: 2000-05-04 10:33+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -123,11 +123,12 @@ msgstr "Beenden"
 #: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:305 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
 #: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1035
-#: app/layers_dialog.c:3437 app/layers_dialog.c:3619 app/layers_dialog.c:3711
-#: app/layers_dialog.c:3963 app/levels.c:340 app/palette.c:1826
+#: app/layers_dialog.c:3441 app/layers_dialog.c:3623 app/layers_dialog.c:3715
+#: app/layers_dialog.c:3967 app/levels.c:340 app/palette.c:1826
 #: app/posterize.c:202 app/preferences_dialog.c:1455 app/qmask.c:281
 #: app/resize.c:195 app/resize.c:1341 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1190 modules/cdisplay_gamma.c:358
+#: modules/cdisplay_highcontrast.c:352
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -280,11 +281,12 @@ msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 #: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:558 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:127 app/gimpui.c:122 app/hue_saturation.c:370
-#: app/layers_dialog.c:3435 app/layers_dialog.c:3617 app/layers_dialog.c:3709
-#: app/layers_dialog.c:3961 app/levels.c:336 app/module_db.c:281
+#: app/layers_dialog.c:3439 app/layers_dialog.c:3621 app/layers_dialog.c:3713
+#: app/layers_dialog.c:3965 app/levels.c:336 app/module_db.c:281
 #: app/posterize.c:198 app/preferences_dialog.c:1451 app/qmask.c:279
 #: app/resize.c:193 app/resize.c:1341 app/threshold.c:271
 #: app/user_install.c:1188 modules/cdisplay_gamma.c:351
+#: modules/cdisplay_highcontrast.c:345
 msgid "OK"
 msgstr "OK"
 
@@ -510,11 +512,11 @@ msgid "Wrap Around"
 msgstr "Herumwickeln"
 
 #: app/channel_ops.c:174 app/image_new.c:73 app/image_new.c:287
-#: app/layers_dialog.c:3537
+#: app/layers_dialog.c:3541
 msgid "Background"
 msgstr "Hintergrund"
 
-#: app/channel_ops.c:175 app/image_new.c:83 app/layers_dialog.c:3539
+#: app/channel_ops.c:175 app/image_new.c:83 app/layers_dialog.c:3543
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -936,7 +938,7 @@ msgid "Width:"
 msgstr "Breite:"
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3478 app/resize.c:254 app/resize.c:279 app/resize.c:524
+#: app/layers_dialog.c:3482 app/resize.c:254 app/resize.c:279 app/resize.c:524
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:364
 msgid "Height:"
 msgstr "Höhe:"
@@ -2215,11 +2217,11 @@ msgstr "Sättigung"
 msgid "Grayscale"
 msgstr "Graustufen"
 
-#: app/image_new.c:68 app/layers_dialog.c:3536
+#: app/image_new.c:68 app/layers_dialog.c:3540
 msgid "Foreground"
 msgstr "Vordergrund"
 
-#: app/image_new.c:78 app/layers_dialog.c:3538
+#: app/image_new.c:78 app/layers_dialog.c:3542
 msgid "White"
 msgstr "Weiß"
 
@@ -2557,7 +2559,7 @@ msgstr "%s Maske"
 msgid "Layer Select"
 msgstr "Ebenenauswahl"
 
-#: app/layers_dialog.c:262 app/layers_dialog.c:3468
+#: app/layers_dialog.c:262 app/layers_dialog.c:3472
 msgid "New Layer"
 msgstr "Neue Ebene"
 
@@ -2635,62 +2637,62 @@ msgstr "Nur Aufhellen"
 msgid "Keep Trans."
 msgstr "Erhalte Transp."
 
-#: app/layers_dialog.c:1884
+#: app/layers_dialog.c:1888
 msgid "Empty Layer Copy"
 msgstr "Leere Ebene Kopie"
 
-#: app/layers_dialog.c:2145 app/layers_dialog.c:3279 app/layers_dialog.c:3646
+#: app/layers_dialog.c:2149 app/layers_dialog.c:3283 app/layers_dialog.c:3650
 msgid "Floating Selection"
 msgstr "Schwebende Auswahl"
 
-#: app/layers_dialog.c:3429
+#: app/layers_dialog.c:3433
 msgid "New Layer Options"
 msgstr "Einstellungen für neue Ebene"
 
 #. The name label and entry
-#: app/layers_dialog.c:3458
+#: app/layers_dialog.c:3462
 msgid "Layer Name:"
 msgstr "Ebenenname:"
 
 #. The size labels
-#: app/layers_dialog.c:3472
+#: app/layers_dialog.c:3476
 msgid "Layer Width:"
 msgstr "Ebenenbreite:"
 
-#: app/layers_dialog.c:3532
+#: app/layers_dialog.c:3536
 msgid "Layer Fill Type"
 msgstr "Ebenenfüllung"
 
-#: app/layers_dialog.c:3611
+#: app/layers_dialog.c:3615
 msgid "Edit Layer Attributes"
 msgstr "Ebenenmerkmale verändern"
 
-#: app/layers_dialog.c:3638
+#: app/layers_dialog.c:3642
 msgid "Layer name:"
 msgstr "Ebenenname:"
 
-#: app/layers_dialog.c:3703
+#: app/layers_dialog.c:3707
 msgid "Add Mask Options"
 msgstr "Einstellungen für neue Maske"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3721
+#: app/layers_dialog.c:3725
 msgid "Initialize Layer Mask to:"
 msgstr "Initialisierung Ebenenmaske nach:"
 
-#: app/layers_dialog.c:3726
+#: app/layers_dialog.c:3730
 msgid "White (Full Opacity)"
 msgstr "Weiß (volle Deckkraft)"
 
-#: app/layers_dialog.c:3728
+#: app/layers_dialog.c:3732
 msgid "Black (Full Transparency)"
 msgstr "Schwarz (volle Transparenz)"
 
-#: app/layers_dialog.c:3730
+#: app/layers_dialog.c:3734
 msgid "Layer's Alpha Channel"
 msgstr "Alphakanal der Ebene"
 
-#: app/layers_dialog.c:3788 app/layers_dialog.c:3870
+#: app/layers_dialog.c:3792 app/layers_dialog.c:3874
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2698,27 +2700,27 @@ msgstr ""
 "Ungültige Breite oder Höhe.\n"
 "Beide müssen positiv sein."
 
-#: app/layers_dialog.c:3955
+#: app/layers_dialog.c:3959
 msgid "Layer Merge Options"
 msgstr "Ebenen vereinen"
 
-#: app/layers_dialog.c:3980
+#: app/layers_dialog.c:3984
 msgid "Final, Merged Layer should be:"
 msgstr "Die fertige, vereinte Ebene soll sein:"
 
-#: app/layers_dialog.c:3981
+#: app/layers_dialog.c:3985
 msgid "Final, Anchored Layer should be:"
 msgstr "Die fertige, verankerte Ebene soll sein:"
 
-#: app/layers_dialog.c:3986
+#: app/layers_dialog.c:3990
 msgid "Expanded as necessary"
 msgstr "Nach Bedarf erweitern"
 
-#: app/layers_dialog.c:3988
+#: app/layers_dialog.c:3992
 msgid "Clipped to image"
 msgstr "Auf Bild beschnitten"
 
-#: app/layers_dialog.c:3990
+#: app/layers_dialog.c:3994
 msgid "Clipped to bottom layer"
 msgstr "Auf oberste Ebene beschnitten"
 
@@ -6270,6 +6272,18 @@ msgstr "Gamma"
 #: modules/cdisplay_gamma.c:336
 msgid "Gamma:"
 msgstr "Gamma:"
+
+#: modules/cdisplay_highcontrast.c:91
+msgid "High Contrast color display filter"
+msgstr "Hochkontrast-Anzeigenfarbfilter"
+
+#: modules/cdisplay_highcontrast.c:320
+msgid "High Contrast"
+msgstr "Hochkontrast"
+
+#: modules/cdisplay_highcontrast.c:330
+msgid "Contrast Cycles:"
+msgstr "Kontrastverstärkung:"
 
 #: modules/colorsel_gtk.c:48
 msgid "GTK color selector as a pluggable color selector"

@@ -1,3 +1,9 @@
+2000-05-04  Sven Neumann  <sven@gimp.org>
+
+	* modules/cdisplay_gamma.c: 
+	* modules/cdisplay_highcontrast.c: use gimpui functions to set
+	up the dialogs
+
 Wed May  3 14:49:09 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* gimp.m4: help spacing correction
