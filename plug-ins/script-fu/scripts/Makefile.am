@@ -13,6 +13,7 @@ scriptdata_DATA = \
 	alien-glow-logo.scm			\
 	basic1-logo.scm				\
 	basic2-logo.scm				\
+	beavis.jpg				\
 	beveled-button.scm			\
 	beveled-pattern-arrow.scm		\
 	beveled-pattern-bullet.scm		\
@@ -69,6 +70,10 @@ scriptdata_DATA = \
 	swirly-pattern.scm			\
 	t-o-p-logo.scm				\
 	text-circle.scm				\
+	texture.jpg				\
+	texture1.jpg				\
+	texture2.jpg				\
+	texture3.jpg				\			
 	textured-logo.scm			\
 	title-header.scm			\
 	trochoid.scm				\

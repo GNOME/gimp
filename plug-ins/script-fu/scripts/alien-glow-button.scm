@@ -164,7 +164,7 @@
 		    SF-COLOR "Background Color" '(0 0 0)
 		    SF-VALUE "Padding" "6"
 		    SF-VALUE "Glow Radius" "10"
-		    SF-TOGGLE "Flatten Image?" TRUE))
+		    SF-TOGGLE "Flatten Image?" TRUE)
 
 
 

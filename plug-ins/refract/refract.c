@@ -104,7 +104,8 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h" 
 
-#include "../megawidget.h" /* For entry/scale pairs. */
+#include "../megawidget/megawidget.h" /* For entry/scale pairs. */
+/* changed by adrian likins to reflect the new location of megawidget */
 
 #ifndef REFRACT_DEBUG
 #define REFRACT_TITLE "Refract 0.1.0-Alpha"

@@ -3,7 +3,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 1.99.16 - 97/09/29
+ * Version 1.99.17 - 97/11/30
  *
  *   Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  *
@@ -21,6 +21,11 @@
 
 /*
  * REVISION HISTORY
+ *
+ * 97/11/30
+ * 1.99.17 - No more bogus transparency indices in animated GIFs,
+ *           hopefully.  Saved files are better-behaved, sometimes
+ *           smaller.  [Adam]
  *
  * 97/09/29
  * 1.99.16 - Added a dialog for the user to choose what to do if
@@ -1402,9 +1407,6 @@ special_flatten_indexed_alpha (guchar *pixels,
 {
   guint32 i;
 
-  if ((*colors) < 256)
-    *transparent = *colors;
-
   /* Each transparent pixel in the image is mapped to a uniform value for
      encoding, if image already has <=255 colours */
   
@@ -1713,17 +1715,12 @@ save_image (char   *filename,
       /* sort out whether we need to do transparency jiggery-pokery */
       if ((drawable_type == INDEXEDA_IMAGE)||(drawable_type == GRAYA_IMAGE))
 	{
-	  /* If there appear to be no entries left in the colourmap in
-	     which to put the transparent index, try to find an entry which
-	     isn't actually used in the image. */
+	  /* Try to find an entry which isn't actually used in the
+	     image, for a transparency index. */
 	  
-	  if (colors > 255)
-	    {
-	      transparent =
-		find_unused_ia_colour(pixels,
-				      drawable->width * drawable->height);
-	    }
-	  
+	  transparent =
+	    find_unused_ia_colour(pixels,
+				  drawable->width * drawable->height);
 
 	  special_flatten_indexed_alpha (pixels,
 					 &transparent,

@@ -131,7 +131,7 @@
 		    SF-VALUE "Orientation" "'right"
 		    SF-COLOR "Glow Color" '(63 252 0)
 		    SF-COLOR "Background Color" '(0 0 0)
-		    SF-TOGGLE "Flatten Image" TRUE))
+		    SF-TOGGLE "Flatten Image" TRUE)
 
 
 
