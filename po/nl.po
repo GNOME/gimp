@@ -1,5 +1,5 @@
 # Dutch translation of the Gimp 1.2 (core functions)
-# Copyright (C) 2000-2001 Free Software Foundation, Inc.
+# Copyright (C) 1998-2002 Free Software Foundation, Inc.
 # Wing Tung Leung <tg@skynet.be>, 1998.
 # Gert Dewit <Gert.Dewit@sos.be>, 2000
 # Branko Collin <collin@xs4all.nl>, 2001
@@ -34,7 +34,7 @@ msgstr "Bezoek http://www.gimp.org/ voor meer informatie"
 
 #: app/airbrush.c:145 app/convolve.c:170 app/smudge.c:121
 msgid "Rate:"
-msgstr "Ratio:"
+msgstr "Mate:"
 
 #: app/airbrush.c:158 modules/colorsel_water.c:691
 msgid "Pressure:"
@@ -164,23 +164,23 @@ msgstr "Verspringing:"
 
 #: app/blend.c:310
 msgid "FG to BG (RGB)"
-msgstr "VG naar AG (RGB)"
+msgstr "Voor- naar achtergrond (RGB)"
 
 #: app/blend.c:311
 msgid "FG to BG (HSV)"
-msgstr "VG naar AG (HSV)"
+msgstr "Voor- naar achtergrond (HSV)"
 
 #: app/blend.c:312
 msgid "FG to Transparent"
-msgstr "VG naar Transparant"
+msgstr "Voorgrond naar transparant"
 
 #: app/blend.c:313
 msgid "Custom Gradient"
-msgstr "Aangepast verloop"
+msgstr "Eigen verloop"
 
 #: app/blend.c:317
 msgid "Blend:"
-msgstr "Verloop:"
+msgstr "Overgang:"
 
 #: app/blend.c:325 app/gradient.c:643 app/preferences_dialog.c:2253
 msgid "Linear"
@@ -325,7 +325,9 @@ msgstr "Contrast:"
 msgid "Preview"
 msgstr "Vooruitblik"
 
-# This is the name of the window, as referenced in the tooltip. Maybe it would be handier if the name in the tool tip were referenced through a variable?
+# This is the name of the window, as referenced in the tooltip. Maybe it 
+# would be handier if the name in the tool tip were referenced through a 
+# variable?
 #: app/brush_edit.c:227
 msgid "Brush Editor"
 msgstr "Penseeleditor"
@@ -352,10 +354,10 @@ msgstr "Radius:"
 msgid "Hardness:"
 msgstr "Hardheid:"
 
-# What is the standard Dutch translation for this phrase?
+# This refers to the roundness/flatness of the brush being created
 #: app/brush_edit.c:317
 msgid "Aspect Ratio:"
-msgstr "Verhouding:"
+msgstr "Platheid:"
 
 #: app/brush_edit.c:330 app/ink.c:326 app/measure.c:329 app/rotate_tool.c:93
 msgid "Angle:"
@@ -377,7 +379,7 @@ msgstr "Geen penselen beschikbaar"
 
 #: app/brush_select.c:454 app/layers_dialog.c:422 app/tool_options.c:531
 msgid "Opacity:"
-msgstr "Ondoorzichtigheid"
+msgstr "Dekking:"
 
 #: app/brush_select.c:462 app/layers_dialog.c:373 app/tool_options.c:555
 msgid "Mode:"
@@ -415,24 +417,24 @@ msgstr "Sorry, dit penseel kan niet worden verwijderd."
 
 #: app/bucket_fill.c:128 app/color_picker.c:162 app/tool_options.c:275
 msgid "Sample Merged"
-msgstr "Sample samengevoegd"
+msgstr "Monster alle lagen"
 
 #. frame for Fill Type
 #: app/bucket_fill.c:159 app/channel_ops.c:176 app/file_new_dialog.c:633
 msgid "Fill Type"
-msgstr "Vultype"
+msgstr "Vul met ..."
 
 #: app/bucket_fill.c:163
 msgid "FG Color Fill"
-msgstr "Met VG-kleur vullen"
+msgstr "Voorgrondkleur"
 
 #: app/bucket_fill.c:166
 msgid "BG Color Fill"
-msgstr "Met AG-kleur vullen"
+msgstr "Achtergrondkleur"
 
 #: app/bucket_fill.c:169
 msgid "Pattern Fill"
-msgstr "Met patroon vullen"
+msgstr "Patroon"
 
 #: app/bucket_fill.c:248
 msgid "Bucket Fill operation failed."
@@ -602,7 +604,7 @@ msgstr "Kanaalnaam:"
 #. The opacity scale
 #: app/channels_dialog.c:2581 app/channels_dialog.c:2744
 msgid "Fill Opacity:"
-msgstr "Ondoorzichtigheid van vullen:"
+msgstr "Vuldekking:"
 
 #: app/channels_dialog.c:2696
 msgid "Edit Channel Attributes"
@@ -614,11 +616,11 @@ msgstr "Bron"
 
 #: app/clone.c:142
 msgid "Image Source"
-msgstr "Afbeeldingsbron"
+msgstr "Afbeelding"
 
 #: app/clone.c:144
 msgid "Pattern Source"
-msgstr "Patroonbron"
+msgstr "Patroon"
 
 #: app/clone.c:152
 msgid "Alignment"
@@ -652,7 +654,7 @@ msgstr "Kleurbalans werkt enkel op RGB-tekengebieden."
 
 #: app/color_balance.c:266 app/dodgeburn.c:186
 msgid "Shadows"
-msgstr "Shaduwen"
+msgstr "Schaduwen"
 
 #: app/color_balance.c:267 app/dodgeburn.c:184
 msgid "Midtones"
@@ -701,7 +703,7 @@ msgstr "Kleurkiezer"
 # Sample the average of all colors within a radius of the center point.
 #: app/color_picker.c:177
 msgid "Sample Average"
-msgstr "Sample gemiddelde"
+msgstr "Monster gemiddelde"
 
 #: app/color_picker.c:220
 msgid "Update Active Color"
@@ -750,17 +752,14 @@ msgstr "Intensiteit:"
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
-# What is the Dutch translation of 'Hue'?
 #: app/color_select.c:242
 msgid "H"
 msgstr "H"
 
-# What is the Dutch translation of 'Saturation'?
 #: app/color_select.c:243
 msgid "S"
 msgstr "S"
 
-# What is the Dutch translation of 'Value'?
 #: app/color_select.c:244
 msgid "V"
 msgstr "V"
@@ -777,24 +776,21 @@ msgstr "G"
 msgid "B"
 msgstr "B"
 
-# What is the Dutch translation of 'Hue'?
 #: app/color_select.c:251 app/layers_dialog.c:391 app/paint_funcs.c:99
 #: app/tool_options.c:934
 msgid "Hue"
-msgstr "Hue"
+msgstr "Kleurtoon (H)"
 
-# What is the Dutch translation of 'Saturation'?
 #: app/color_select.c:252 app/layers_dialog.c:392 app/paint_funcs.c:100
 #: app/tool_options.c:935
 msgid "Saturation"
-msgstr "Saturation"
+msgstr "Verzadiging (S)"
 
-# What is the Dutch translation of 'Value'?
 #: app/color_select.c:253 app/curves.c:593 app/histogram_tool.c:321
 #: app/layers_dialog.c:394 app/levels.c:378 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
-msgstr "Value"
+msgstr "Waarde (V)"
 
 #: app/colormap_dialog.i.c:191
 msgid "Indexed Color Palette"
@@ -811,11 +807,11 @@ msgstr "geen"
 
 #: app/commands.c:340
 msgid "Feather Selection"
-msgstr "Straalselectie"
+msgstr "Selectie verzachten"
 
 #: app/commands.c:343
 msgid "Feather Selection by:"
-msgstr "Straalselectie door:"
+msgstr "Selectie verzachten met:"
 
 # Is this the title of the dialog? It does not seem to get translated.
 #: app/commands.c:376
@@ -864,7 +860,6 @@ msgstr "Algemene paletopties"
 msgid "Generate Optimal Palette:"
 msgstr "Genereer optimaal palet:"
 
-# Start with capital?
 #: app/convert.c:574
 msgid "# of Colors:"
 msgstr "aantal kleuren:"
@@ -942,7 +937,7 @@ msgstr "Gebruik aangepast palet"
 # What is the standard Dutch translation of this phrase?
 #: app/convolve.c:187
 msgid "Convolve Type"
-msgstr "Type van curve"
+msgstr "Soort gereedschap"
 
 #: app/convolve.c:191
 msgid "Blur"
@@ -1120,22 +1115,19 @@ msgstr "Verwijder de geselecteerde ingang uit de index"
 msgid "Document Index"
 msgstr "Documentindex"
 
-# What is the Dutch translation of this phrase?
 #: app/dodgeburn.c:142
 msgid "Exposure:"
-msgstr "Blootstelling:"
+msgstr "Belichting:"
 
 #. the type (dodge or burn)
 #: app/dodgeburn.c:162 app/ink.c:390
 msgid "Type"
 msgstr "Type"
 
-# What is the Dutch translation of this phrase?
 #: app/dodgeburn.c:166
 msgid "Dodge"
 msgstr "Tegenhouden"
 
-# What is the Dutch translation of this phrase?
 #: app/dodgeburn.c:168
 msgid "Burn"
 msgstr "Doordrukken"
@@ -1152,7 +1144,6 @@ msgstr "Beweeg: 0, 0"
 msgid "Move: "
 msgstr "Beweeg: "
 
-# What is 'equalize'?
 #: app/equalize.c:42
 msgid "Equalize does not operate on indexed drawables."
 msgstr "'Gelijkmaken' werkt niet op geïndexeerde tekengebieden."
@@ -1254,7 +1245,7 @@ msgstr "pixels/%a"
 #. frame for Image Type
 #: app/file_new_dialog.c:595
 msgid "Image Type"
-msgstr "Afbeeldingstype"
+msgstr "Modus"
 
 #: app/fileops.c:269 app/fileops.c:315
 msgid "Load Image"
@@ -1552,7 +1543,6 @@ msgstr ""
 "De actieve laag heeft geen masker\n"
 "om naar een selectie om te zetten."
 
-# What is meant here with stroke?
 #: app/gimage_mask.c:570
 msgid "No selection to stroke!"
 msgstr "Er is geen selectie om een lijn op te tekenen!"
@@ -1590,7 +1580,7 @@ msgstr ""
 "Waarschuwing: laden van penseel is mislukt\n"
 "\"%s\""
 
-# What is meant with 'pipe'
+# What is meant with 'pipe'?
 #: app/gimpbrushlist.c:218
 #, c-format
 msgid ""
@@ -1624,13 +1614,11 @@ msgid "Can't fill unknown image type."
 msgstr "Kan geen onbekend afbeeldingstype vullen."
 
 # Is 'attach' an infinitive? 
-# What is a 'parasite'?
 #: app/gimpdrawable.c:509
 msgid "parasite attach to drawable"
 msgstr "parasiet vastmaken aan tekengebied"
 
 # Is 'detach' an infinitive? 
-# What is a 'parasite'?
 #: app/gimpdrawable.c:544
 msgid "detach parasite from drawable"
 msgstr "parasiet losmaken van tekengebied"
@@ -1741,7 +1729,6 @@ msgstr "Kanaal kan niet verder naar beneden"
 msgid "Untitled"
 msgstr "Naamloos"
 
-# Is 'progress' a verb in the infinitive?
 #: app/gimpprogress.c:115
 msgid "Progress"
 msgstr "Voortgang"
@@ -2025,7 +2012,7 @@ msgid ""
 "Opacity: %0.3f"
 msgstr ""
 "Positie: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
-"Ondoorzichtigheid: %0.3f"
+"Dekking: %0.3f"
 
 #: app/gradient.c:2383
 #, c-format
@@ -2058,7 +2045,6 @@ msgstr ""
 "Klik: selecteer   Shift+klik: breid selectie uit    Sleep: verplaats    Shift"
 "+sleep: verplaats en comprimeer"
 
-# Is 'handle' a verb or a noun
 #: app/gradient.c:2971 app/gradient.c:2980
 #, c-format
 msgid "Handle position: %0.6f"
@@ -2105,7 +2091,6 @@ msgstr "Linkereindpunt"
 msgid "Selection operations"
 msgstr "Selectieopertaties"
 
-# What is the Dutch translation of this phrase?
 #: app/gradient.c:3831
 msgid "Blending function for segment"
 msgstr "Mengfunctie voor segment"
@@ -2130,7 +2115,6 @@ msgstr "Verwijder segment"
 msgid "Re-center segment's midpoint"
 msgstr "Hercentreer middelpunt van segment"
 
-# What is Dutch translation of 'handle'?
 #: app/gradient.c:3843
 msgid "Re-distribute handles in segment"
 msgstr "Herverdeel handvatten in segment"
@@ -2139,12 +2123,10 @@ msgstr "Herverdeel handvatten in segment"
 msgid "Flip segment"
 msgstr "Spiegel segment"
 
-# What is the Dutch translation of 'replicate'
 #: app/gradient.c:3847 app/gradient.c:5495
 msgid "Replicate segment"
-msgstr "Repliceer segment"
+msgstr "Maak een segmentkopie"
 
-# What is the Dutch translation of this phrase?
 #: app/gradient.c:3852
 msgid "Blending function for selection"
 msgstr "Mengfunctie voor selectie"
@@ -2169,7 +2151,6 @@ msgstr "Verwijder selectie"
 msgid "Re-center midpoints in selection"
 msgstr "Hercentreer middelpunten in selectie"
 
-# What is the Dutch translation of 'handle'?
 #: app/gradient.c:3864
 msgid "Re-distribute handles in selection"
 msgstr "Herverdeel handvatten in de selectie"
@@ -2178,10 +2159,9 @@ msgstr "Herverdeel handvatten in de selectie"
 msgid "Flip selection"
 msgstr "Spiegel selectie"
 
-# What is the Dutch translation of 'replicate'?
 #: app/gradient.c:3868 app/gradient.c:5496
 msgid "Replicate selection"
-msgstr "Repliceer selectie"
+msgstr "Maak kopie van selectie"
 
 #: app/gradient.c:4152
 msgid "FG color"
@@ -2213,37 +2193,34 @@ msgstr "waarin u het geselecteerde segment wilt splitsen"
 msgid "in which you want to split the segments in the selection"
 msgstr "waarin u de segmenten van de selectie wilt splitsen"
 
-# What is the Dutch translation of 'blend'?
 #: app/gradient.c:5323
 msgid "Blend endpoints' colors"
-msgstr "Kleuren van mengeindpunten"
+msgstr "Meng kleuren van eindpunten"
 
-# What is the Dutch translation of 'blend'?
 #: app/gradient.c:5335
 msgid "Blend endpoints' opacity"
-msgstr "Ondoorzichtigheid van mengeindpunten"
+msgstr "Meng dekking van eindpunten"
 
-# What is the Dutch translation of 'replicate'?
 #: app/gradient.c:5503
 msgid "Replicate"
-msgstr "Repliceren"
+msgstr "Kopiëren"
 
 #. Instructions
 #: app/gradient.c:5516
 msgid "Please select the number of times"
 msgstr "Gelieve het aantal keren te selecteren"
 
-# What is the Dutch translation of 'replicate'?
 #: app/gradient.c:5521
 msgid "you want to replicate the selected segment"
 msgstr "dat u het geselecteerde segment wilt repliceren"
 
-# What is the Dutch translation of 'replicate'?
 #: app/gradient.c:5522
 msgid "you want to replicate the selection"
 msgstr "dat u de selectie wilt repliceren"
 
-# This is the name of the window, as referenced in the tooltip. Maybe it would be handier if the name in the tool tip were referenced through a variable?
+# This is the name of the window, as referenced in the tooltip. Maybe it 
+# would be handier if the name in the tool tip were referenced through a 
+# variable?
 #. The shell
 #: app/gradient_select.c:152
 msgid "Gradient Selection"
@@ -2272,34 +2249,29 @@ msgstr "Mediaan:"
 
 #: app/histogram_tool.c:277
 msgid "Pixels:"
-msgstr "Pixels:"
+msgstr "Totaal aantal pixels:"
 
-# 'Tellen:'?
 #: app/histogram_tool.c:279
 msgid "Count:"
-msgstr "Aantal:"
+msgstr "Aantal pixels:"
 
-# Statistical term: what is the Dutch translation?
 #: app/histogram_tool.c:280
 msgid "Percentile:"
-msgstr "Honderdste:"
+msgstr "Percentiel:"
 
 #: app/histogram_tool.c:313
 msgid "Information on Channel:"
 msgstr "Kanaalinformatie"
 
-# What is the Dutch translation of this phrase?
 #. The shell and main vbox
 #: app/hue_saturation.c:248 app/hue_saturation.c:374 app/tools.c:1082
 msgid "Hue-Saturation"
-msgstr "Hue-Saturation (Tint-Verzadiging)"
+msgstr "Kleurtoon-Verzadiging"
 
-# What is the Dutch translation of this phrase?
 #: app/hue_saturation.c:292
 msgid "Hue-Saturation operates only on RGB color drawables."
-msgstr "Hue-saturation werkt enkel op RGB-tekengebieden."
+msgstr "Kleurtoon-verzadiging werkt enkel op RGB-tekengebieden."
 
-# What is the Dutch translation of this phrase?
 #: app/hue_saturation.c:360
 msgid "Master"
 msgstr "Allemaal"
@@ -2317,21 +2289,19 @@ msgid "M"
 msgstr "M"
 
 # What is the Dutch translation of Lightness?
-# Is 'Adjustment' only a modifier of Saturation?
 #: app/hue_saturation.c:451
 msgid "Hue / Lightness / Saturation Adjustments"
-msgstr "Regelingen voor Hue (tint) / Helderheid / Saturation (verzadiging)"
+msgstr "Regelingen voor Kleurtoon / Lichtheid / Verzadiging"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:463
 msgid "Hue:"
 msgstr "Hue (tint):"
 
-# What is the Dutch translation of Lightness?
 #. Create the lightness scale widget
 #: app/hue_saturation.c:497
 msgid "Lightness:"
-msgstr "Helderheid:"
+msgstr "Lichtheid:"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:531
@@ -2546,7 +2516,7 @@ msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
-"Voorgrond- en achtergrondkleuren. The zwarte en witte vlakken herstellen "
+"Voorgrond- en achtergrondkleuren. De zwarte en witte vlakken herstellen "
 "kleuren. De pijlen wisselen kleuren. Dubbelklik om een kleur met een dialoog "
 "te selecteren."
 
@@ -2579,7 +2549,6 @@ msgstr "Converteren"
 msgid "GDisplay procedures"
 msgstr "GDisplay-procedures"
 
-# What is a 'drawable'
 #: app/internal_procs.c:89
 msgid "Drawable procedures"
 msgstr "Tekengebiedprocedures"
@@ -2675,7 +2644,6 @@ msgstr "Ongedaan maken"
 msgid "Units"
 msgstr "Eenheden"
 
-# What is a 'drawable'?
 #: app/invert.c:46
 msgid "Invert does not operate on indexed drawables."
 msgstr "Inverteren werkt niet op geïndexeerde tekengebieden."
@@ -2688,11 +2656,11 @@ msgstr "Inverteren is mislukt."
 msgid "Zero width or height layers not allowed."
 msgstr "Lagen met breedte of hoogte = 0 niet toegelaten"
 
-# Is this supposed to form a compound?
+# This is to form the name of the mask for a certain layer
 #: app/layer.c:532
 #, c-format
 msgid "%s mask"
-msgstr "%s masker"
+msgstr "Masker voor %s"
 
 #: app/layer_select.c:109
 msgid "Layer Select"
@@ -2718,7 +2686,6 @@ msgstr ""
 "Haal laag         \n"
 "<Shift> naar beneden"
 
-# What is the Dutch translation of 'duplicate'?
 #: app/layers_dialog.c:286
 msgid "Duplicate Layer"
 msgstr "Dupliceer laag"
@@ -2741,17 +2708,16 @@ msgstr "Oplossen"
 
 #: app/layers_dialog.c:382 app/paint_funcs.c:91 app/tool_options.c:925
 msgid "Multiply (Burn)"
-msgstr "Vermenigvuldig (Doordrukken)"
+msgstr "Vermenigvuldigen (Doordrukken)"
 
 #: app/layers_dialog.c:383 app/paint_funcs.c:103 app/tool_options.c:926
 msgid "Divide (Dodge)"
-msgstr "Deel (Tegenhouden)"
+msgstr "Delen (Tegenhouden)"
 
 #: app/layers_dialog.c:384 app/paint_funcs.c:92 app/tool_options.c:927
 msgid "Screen"
 msgstr "Scherm"
 
-# What is the Dutch translation of 'Overlay'?
 #: app/layers_dialog.c:385 app/paint_funcs.c:93 app/tool_options.c:928
 msgid "Overlay"
 msgstr "Op elkaar"
@@ -2774,15 +2740,17 @@ msgstr "Enkel lichter maken"
 
 #: app/layers_dialog.c:405
 msgid "Keep Trans."
-msgstr "Behoud transp."
+msgstr "Transp. behouden"
 
 #: app/layers_dialog.c:414
 msgid "Keep Transparency"
 msgstr "Behoud transparantie"
 
+# The name of the resulting layer when an existing layer 
+# has been dragged onto the New Layer button in the LCP dialog
 #: app/layers_dialog.c:1957
 msgid "Empty Layer Copy"
-msgstr "Maak laagkopie leeg"
+msgstr "Lege laagkopie"
 
 #: app/layers_dialog.c:2221 app/layers_dialog.c:3404 app/layers_dialog.c:3774
 msgid "Floating Selection"
@@ -2808,7 +2776,7 @@ msgstr "Vultype laag"
 
 #: app/layers_dialog.c:3739
 msgid "Edit Layer Attributes"
-msgstr "Bewerk laagattributen"
+msgstr "Laagattributen bewerken..."
 
 #: app/layers_dialog.c:3766
 msgid "Layer name:"
@@ -2823,7 +2791,6 @@ msgstr "Voeg maskeropties toe"
 msgid "Initialize Layer Mask to:"
 msgstr "Initieel laagmasker:"
 
-# What is the Dutch translation of 'opaque'?
 #: app/layers_dialog.c:3857
 msgid "White (Full Opacity)"
 msgstr "Wit (volledig ondoorzichtig)"
@@ -2856,10 +2823,10 @@ msgstr "Uiteindelijke, samengevoegde laag moet zijn:"
 msgid "Final, Anchored Layer should be:"
 msgstr "Uiteindelijke, verankerde laag moet zijn:"
 
-# What is the Dutch translation of 'expanded'?
+# This means: 'takes size from largest merged layer'
 #: app/layers_dialog.c:4126
 msgid "Expanded as necessary"
-msgstr "Waar nodig uitgebreid"
+msgstr "Van grootste samengevoegde laag"
 
 #: app/layers_dialog.c:4128
 msgid "Clipped to image"
@@ -2899,15 +2866,13 @@ msgstr "Niveaus voor geïndexeerde tekengebieden kunnen niet aangepast worden."
 msgid "Modify Levels for Channel:"
 msgstr "Verander niveaus voor kanaal: "
 
-# What is the Dutch translation for this phrase?
 #: app/levels.c:394
 msgid "Input Levels:"
-msgstr "Inputniveaus:"
+msgstr "Invoerniveaus:"
 
-# What is the Dutch translation for this phrase?
 #: app/levels.c:503
 msgid "Output Levels:"
-msgstr "Outputniveaus"
+msgstr "Uitvoerniveaus"
 
 #: app/levels.c:1088
 msgid "Load Levels"
@@ -2927,7 +2892,7 @@ msgstr "Vergrootglas"
 
 #: app/magnify.c:127
 msgid "Allow Window Resizing"
-msgstr "Sta venstergrootteveranderingen toe"
+msgstr "Verander venstergrootte"
 
 #: app/magnify.c:142
 msgid "Zoom in"
@@ -3061,7 +3026,7 @@ msgstr "Meetgereedschap"
 
 #: app/measure.c:137
 msgid "Use Info Window"
-msgstr "Gebruik informatievenster"
+msgstr "Gebruik eigen dialoogvenster"
 
 #: app/measure.c:328
 msgid "Distance:"
@@ -3150,11 +3115,11 @@ msgstr "/Bestand/Afsluiten"
 #. the underscore installs an accelerator using the character that follows
 #: app/menus.c:171
 msgid "/_Xtns"
-msgstr "/_Xtns"
+msgstr "/_Xtra"
 
 #: app/menus.c:173
 msgid "/Xtns/Module Browser..."
-msgstr "/Xtns/Modulebrowser..."
+msgstr "/Xtra/Modulebrowser..."
 
 #. <Toolbox>/Help
 #. the underscore installs an accelerator using the character that follows
@@ -3252,7 +3217,6 @@ msgstr "/Bewerken/Vullen met VG-kleur"
 msgid "/Edit/Fill with BG Color"
 msgstr "/Bewerken/Vullen met AG-kleur"
 
-# What does 'Stroke' mean?
 #: app/menus.c:269
 msgid "/Edit/Stroke"
 msgstr "/Bewerken/Lijn tekenen"
@@ -3276,7 +3240,7 @@ msgstr "/Selecteren/Drijvend"
 
 #: app/menus.c:288
 msgid "/Select/Feather..."
-msgstr "/Selecteren/Straal..."
+msgstr "/Selecteren/Verzachten..."
 
 #: app/menus.c:290
 msgid "/Select/Sharpen"
@@ -3380,10 +3344,9 @@ msgstr "/Beeld/Hulplijnen magnetisch"
 msgid "/View/New View"
 msgstr "/Beeld/Nieuw beeld"
 
-# As in 'shrink wrapped package'?
 #: app/menus.c:359
 msgid "/View/Shrink Wrap"
-msgstr "/Beeld/Krimp terugloop"
+msgstr "/Beeld/Naar afbeeldingsgrootte"
 
 #. <Image>/Image/Mode
 #: app/menus.c:364
@@ -3485,7 +3448,6 @@ msgstr "/Lagen/Verankeren"
 msgid "/Layers/Merge Visible Layers..."
 msgstr "/Lagen/Zichtbare samenvoegen..."
 
-# What is the translation of this phrase?
 #: app/menus.c:455
 msgid "/Layers/Flatten Image"
 msgstr "/Lagen/Afbeelding pletten"
@@ -3593,7 +3555,6 @@ msgstr "/Filters/Ruis"
 msgid "/Filters/Edge-Detect"
 msgstr "/Filters/Randen"
 
-# What does this do?
 #: app/menus.c:545
 msgid "/Filters/Enhance"
 msgstr "/Filters/Versterken"
@@ -3791,8 +3752,6 @@ msgstr "/Pad naar selectie"
 msgid "/Selection to Path"
 msgstr "/Selectie naar pad"
 
-# Is 'stroke' a verb here?
-# What is the Dutch translation of 'stroke'?
 #: app/menus.c:731
 msgid "/Stroke Path"
 msgstr "/Pad naar lijn"
@@ -3950,10 +3909,9 @@ msgstr "Aftrekking"
 msgid "Erase"
 msgstr "Wissen"
 
-# What is the Dutch translation of this phrase?
 #: app/paintbrush.c:224
 msgid "Fade Out"
-msgstr "Uitfaden"
+msgstr "Vloei uit"
 
 #. the gradient type
 #: app/paintbrush.c:303
@@ -3976,7 +3934,6 @@ msgstr "Lus zaagtand"
 msgid "Loop Triangle"
 msgstr "Lus driehoek"
 
-# What is the Dutch translation of 'magic header'?
 #: app/palette.c:408
 #, c-format
 msgid ""
@@ -3987,10 +3944,9 @@ msgid ""
 msgstr ""
 "Palet %s wordt geladen\n"
 "Beschadigd palet:\n"
-"Ontbrekende magische header\n"
-"Moet dit bestand vanuit DOS geconverteerd worden?"
+"Incorrecte bestandstypeaanduiding\n"
+"Is dit bestand in een ander besturingssysteem geschreven?"
 
-# What is the Dutch translation of 'magic header'?
 #: app/palette.c:413
 #, c-format
 msgid ""
@@ -3998,7 +3954,7 @@ msgid ""
 "Corrupt palette: missing magic header"
 msgstr ""
 "Palet %s wordt geladen\n"
-"Beschadigd palet: ontbrekende magische header"
+"Beschadigd palet: incorrecte bestandstypeaanduiding"
 
 #: app/palette.c:426
 #, c-format
@@ -4162,8 +4118,6 @@ msgstr "Pad naar selectie"
 msgid "Selection to Path"
 msgstr "Selectie naar pad"
 
-# Is 'stroke' used as a noun or a verb here?
-# What does 'Stroke' mean? 
 #: app/paths_dialog.c:183
 msgid "Stroke Path"
 msgstr "Pad naar lijn"
@@ -4172,7 +4126,6 @@ msgstr "Pad naar lijn"
 msgid "Delete Path"
 msgstr "Pad verwijderen"
 
-# '(a) new point' or '(the) new point'?
 #: app/paths_dialog.c:196
 msgid "New Point"
 msgstr "Nieuwe punt"
@@ -4212,11 +4165,10 @@ msgstr "Lezen uit %s is mislukt"
 msgid "Failed to read path from %s"
 msgstr "Lezen vanaf pad %s is mislukt"
 
-# Is 'path file' one or two words?
 #: app/paths_dialog.c:1945
 #, c-format
 msgid "No points specified in path file %s"
-msgstr "Geen punten aangegeven in pad naar bestand %s"
+msgstr "Geen punten aangegeven in padbestand %s"
 
 #: app/paths_dialog.c:1956
 #, c-format
@@ -4240,7 +4192,9 @@ msgstr "Pad laden"
 msgid "Store Path"
 msgstr "Pad bewaren"
 
-# This is the name of the window, as referenced in the tooltip. Maybe it would be handier if the name in the tool tip were referenced through a variable?
+# This is the name of the window, as referenced in the tooltip. 
+# Maybe it would be handier if the name in the tool tip were 
+# referenced through a variable?
 #. The shell
 #: app/pattern_select.c:169
 msgid "Pattern Selection"
@@ -4285,11 +4239,11 @@ msgstr "Bronconfiguratie"
 msgid "Plug-ins"
 msgstr "Plug-ins"
 
-# '(the) query plug-in' or 'query (the) plug-in'?
+# 'query (the) plug-in', not '(the) query plug-in'
 #: app/plug_in.c:352
 #, c-format
 msgid "query plug-in: \"%s\"\n"
-msgstr "vraag aan plug-in: \"%s\"\n"
+msgstr "vraag plug-in: \"%s\"\n"
 
 #: app/plug_in.c:390
 #, c-format
@@ -4468,17 +4422,20 @@ msgstr "Weergave"
 msgid "Transparency"
 msgstr "Transparantie"
 
-# Checks are the parts that make up the checker board background of transparent images.
+# Checks are the parts that make up the checker board background of 
+# transparent images.
 #: app/preferences_dialog.c:1734
 msgid "Light Checks"
 msgstr "Lichte vakken"
 
-# Checks are the parts that make up the checker board background of transparent images.
+# Checks are the parts that make up the checker board background of 
+# transparent images.
 #: app/preferences_dialog.c:1735
 msgid "Mid-Tone Checks"
 msgstr "Midtoonvakken"
 
-# Checks are the parts that make up the checker board background of transparent images.
+# Checks are the parts that make up the checker board background of 
+# transparent images.
 #: app/preferences_dialog.c:1736
 msgid "Dark Checks"
 msgstr "Donkere vakken"
@@ -4514,7 +4471,8 @@ msgstr "Medium"
 msgid "Large"
 msgstr "Groot"
 
-# Checks are the parts that make up the checker board background of transparent images.
+# Checks are the parts that make up the checker board background of 
+# transparent images.
 #: app/preferences_dialog.c:1756
 msgid "Check Size:"
 msgstr "Vakgrootte :"
@@ -4531,8 +4489,6 @@ msgstr "Minimum aantal kleuren:"
 msgid "Install Colormap"
 msgstr "Dwing kleurenkaart af"
 
-# Marching ants use color cycling for 8-bit displays
-# What is 'Colormap cycling' in Dutch?
 #: app/preferences_dialog.c:1792
 msgid "Colormap Cycling"
 msgstr "Kleurcirculeren"
@@ -4850,12 +4806,12 @@ msgstr "Kies tijdelijke directory"
 # What is the Dutch phrase?
 #: app/preferences_dialog.c:2499
 msgid "Swap Dir:"
-msgstr "Swap-directory:"
+msgstr "Wisselmap:"
 
 # What is the Dutch phrase?
 #: app/preferences_dialog.c:2499 app/user_install.c:1363
 msgid "Select Swap Dir"
-msgstr "Kies swap-directory"
+msgstr "Kies wisselmap"
 
 #: app/preferences_dialog.c:2535
 msgid "Brushes Directories"
@@ -4967,12 +4923,12 @@ msgstr "Tijdelijke procedure"
 
 #: app/qmask.c:274
 msgid "Edit Qmask Attributes"
-msgstr "Bewerk Qmask-attributen"
+msgstr "Bewerk snelmaskerattributen"
 
 #. The opacity scale
 #: app/qmask.c:302
 msgid "Mask Opacity:"
-msgstr "Maskerondoorzichtigheid:"
+msgstr "Maskerdekking:"
 
 #: app/rect_select.c:204
 msgid "Selection: ADD"
@@ -5128,10 +5084,10 @@ msgstr "Anti-aliasing"
 msgid "Border:"
 msgstr "Grens:"
 
-# What is the Dutch translation of dynamic
+# Used as a name instead of a noun
 #: app/text_tool.c:207
 msgid "Use Dynamic Text"
-msgstr "Gebruik dynamische tekst"
+msgstr "Gebruik Dynamische Tekst"
 
 #: app/text_tool.c:613
 #, c-format
@@ -5177,10 +5133,10 @@ msgid ""
 "filenames, exit the Gimp and check the location of the\n"
 "swap directory in your Preferences."
 msgstr ""
-"Niet in staat swapbestand te openen, omdat de GIMP onvoldoende\n"
+"Niet in staat wisselbestand te openen, omdat de GIMP onvoldoende\n"
 "ter beschikking heeft. Sommige delen van uw afbeeldingen kunnen\n"
 "beschadigd zijn. Probeer uw werk onder andere namen op te slaan,\n"
-"sluit de GIMP af en controleer de locatie van de swapmap in uw\n"
+"sluit de GIMP af en controleer de locatie van de wisselmap in uw\n"
 "Voorkeuren."
 
 #: app/tips_dialog.c:75
@@ -5249,24 +5205,20 @@ msgstr "Selectie op kleur"
 # What is the Dutch translation of this phrase?
 #: app/tool_options.c:195
 msgid "Feather"
-msgstr "Straalselectie"
+msgstr "Verzacht selectie"
 
-# What is the Dutch translation of 'Fixed Size'?
-# What is the Dutch translation of 'Aspect Ratio'?
 #: app/tool_options.c:316
 msgid "Fixed Size / Aspect Ratio"
-msgstr "Vaste grootte / Aspectratio"
+msgstr "Vaste grootte / verhouding"
 
 #: app/tool_options.c:382
 msgid "Unit:"
 msgstr "Eenheid:"
 
-# What is the Dutch translation of this phrase?
 #: app/tool_options.c:474 app/tools.c:601
 msgid "Bucket Fill"
-msgstr "Emmervullen"
+msgstr "Vullen"
 
-# What is the Dutch translation of this phrase?
 #: app/tool_options.c:476
 msgid "Blend Tool"
 msgstr "Kleurverloop"
@@ -5286,23 +5238,21 @@ msgstr "Gom"
 # What is the Dutch translation of this phrase?
 #: app/tool_options.c:484 app/tools.c:741
 msgid "Airbrush"
-msgstr "Luchtspuit"
+msgstr "Verfspuit"
 
 #: app/tool_options.c:486
 msgid "Clone Tool"
 msgstr "Kloongereedschap"
 
-# What is the Dutch translation of this phrase?
 #: app/tool_options.c:488
 msgid "Convolver"
-msgstr "Convolver"
+msgstr "Vervagen/verscherpen"
 
 # What is the Dutch translation of this phrase?
 #: app/tool_options.c:490
 msgid "Ink Tool"
 msgstr "Inktgereedschap"
 
-# What is the Dutch translation of this phrase?
 #: app/tool_options.c:492 app/tools.c:853 app/tools.c:859
 msgid "Dodge or Burn"
 msgstr "Tegenhouden of doordrukken"
@@ -5322,44 +5272,41 @@ msgstr "Drukgevoeligheid"
 
 #: app/tool_options.c:734
 msgid "Opacity"
-msgstr "Ondoorzichtigheid:"
+msgstr "Dekking"
 
 #: app/tool_options.c:757
 msgid "Hardness"
 msgstr "Hardheid"
 
-# What does this apply to?
+# This applies to the settings for Airbrush, Convolve
+# and smudge
 #: app/tool_options.c:777
 msgid "Rate"
-msgstr "Ratio"
+msgstr "Snelheid"
 
-# What does this apply to?
 #: app/tools.c:153
 msgid "Rect Select"
 msgstr "Rechth. Select."
 
-# What does this apply to?
 #: app/tools.c:154
 msgid "/Tools/Select Tools/Rect Select"
 msgstr "/Gereedschap/Selectiegereedschappen/Rechth. Select."
 
 #: app/tools.c:159
 msgid "Select rectangular regions"
-msgstr "Selecteer rechthoekige gebieden"
+msgstr "Rechthoekige gebieden selecteren"
 
-# What does this apply to?
 #: app/tools.c:181
 msgid "Ellipse Select"
 msgstr "Elliptische selectie"
 
-# What does this apply to?
 #: app/tools.c:182
 msgid "/Tools/Select Tools/Ellipse Select"
 msgstr "/Gereedschap/Selectiegereedschappen/Elliptische selectie"
 
 #: app/tools.c:187
 msgid "Select elliptical regions"
-msgstr "Selecteer elliptische gebieden"
+msgstr "Elliptische gebieden selecteren"
 
 #: app/tools.c:209
 msgid "Free Select"
@@ -5371,7 +5318,7 @@ msgstr "/Gereedschap/Selectiegereedschappen/Vrije selectie"
 
 #: app/tools.c:215
 msgid "Select hand-drawn regions"
-msgstr "Selecteer gebieden handmatig"
+msgstr "Gebieden handmatig selecteren"
 
 #: app/tools.c:237
 msgid "Fuzzy Select"
@@ -5383,7 +5330,7 @@ msgstr "/Gereedschap/Selectiegereedschappen/Vage selectie"
 
 #: app/tools.c:243
 msgid "Select contiguous regions"
-msgstr "Selecteer aaneengesloten gebieden"
+msgstr "Aaneengesloten gebieden selecteren"
 
 #: app/tools.c:265
 msgid "Bezier Select"
@@ -5395,16 +5342,16 @@ msgstr "/Gereedschap/Selectiegereedschappen/Bezier-selectie"
 
 #: app/tools.c:271
 msgid "Select regions using Bezier curves"
-msgstr "Selecteer gebieden met behulp van Bezier-krommen"
+msgstr "Gebieden met behulp van Bezier-krommen selecteren"
 
 #: app/tools.c:294
 msgid "/Tools/Select Tools/Intelligent Scissors"
 msgstr "/Gereedschap/Selectiegereedschappen/Intelligente scharen"
 
-# 'form (a) image' or 'from (the) image'?
+# 'from (the) image', not 'from (a) image' (tool tip)
 #: app/tools.c:299
 msgid "Select shapes from image"
-msgstr "Selecteer vormen uit de afbeelding"
+msgstr "Vormen in de afbeelding selecteren"
 
 #: app/tools.c:321
 msgid "Move"
@@ -5420,7 +5367,7 @@ msgstr "Lagen en selecties verplaatsen"
 
 #: app/tools.c:349
 msgid "Magnify"
-msgstr "Vergroten"
+msgstr "Vergrootglas"
 
 #: app/tools.c:350
 msgid "/Tools/Transform Tools/Magnify"
@@ -5462,7 +5409,7 @@ msgstr "/Gereedschappen/Transformatiegereedschappen/Spiegelen"
 
 #: app/tools.c:523
 msgid "Flip the layer or selection"
-msgstr "Spiegel de laag of selectie"
+msgstr "De laag of selectie spiegelen"
 
 #: app/tools.c:545
 msgid "Text"
@@ -5474,7 +5421,7 @@ msgstr "/Gereedschappen/Tekst"
 
 #: app/tools.c:551
 msgid "Add text to the image"
-msgstr "Voeg tekst toe aan de afbeelding"
+msgstr "Tekst aan de afbeelding toevoegen "
 
 #: app/tools.c:574
 msgid "/Tools/Color Picker"
@@ -5482,21 +5429,19 @@ msgstr "/Gereedschappen/Kleurkiezer"
 
 #: app/tools.c:579
 msgid "Pick colors from the image"
-msgstr "Kies kleuren uit de afbeelding"
+msgstr "Kleuren uit de afbeelding kiezen"
 
-# What is the translation of 'Bucket Fill' in Dutch?
 #: app/tools.c:602
 msgid "/Tools/Paint Tools/Bucket Fill"
-msgstr "/Gereedschappen/Schildergereedschappen/Emmervul"
+msgstr "/Gereedschappen/Schildergereedschappen/Vullen"
 
 #: app/tools.c:607
 msgid "Fill with a color or pattern"
-msgstr "Vul met een kleur of patroon"
+msgstr "Met een kleur of patroon vullen"
 
-# What is the Dutch translation of this phrase?
 #: app/tools.c:629
 msgid "Blend"
-msgstr "Meng"
+msgstr "Mengen"
 
 #: app/tools.c:630
 msgid "/Tools/Paint Tools/Blend"
@@ -5504,7 +5449,7 @@ msgstr "/Gereedschappen/Schildergereedschappen/Mengen"
 
 #: app/tools.c:635
 msgid "Fill with a color gradient"
-msgstr "Vul met een kleurverloop"
+msgstr "Met een kleurverloop vullen"
 
 #: app/tools.c:658
 msgid "/Tools/Paint Tools/Pencil"
@@ -5512,7 +5457,7 @@ msgstr "/Gereedschappen/Schildergereedschappen/Potlood"
 
 #: app/tools.c:663
 msgid "Draw sharp pencil strokes"
-msgstr "Teken scherpe potloodlijnen"
+msgstr "Scherpe potloodlijnen tekenen"
 
 #: app/tools.c:686
 msgid "/Tools/Paint Tools/Paintbrush"
@@ -5520,7 +5465,7 @@ msgstr "/Gereedschappen/Schildergereedschappen/"
 
 #: app/tools.c:691
 msgid "Paint fuzzy brush strokes"
-msgstr "Schilder vage penseelstreken"
+msgstr "Vage penseelstreken schilderen"
 
 #: app/tools.c:714
 msgid "/Tools/Paint Tools/Eraser"
@@ -5528,16 +5473,15 @@ msgstr "/Gereedschappen/Schildergereedschappen/Gom"
 
 #: app/tools.c:719
 msgid "Erase to background or transparency"
-msgstr "Wis naar achtergrond of transparantie"
+msgstr "Naar achtergrond of transparantie wissen"
 
-# What is the Dutch translation of Airbrush?
 #: app/tools.c:742
 msgid "/Tools/Paint Tools/Airbrush"
-msgstr "/Gereedschappen/Schildergereedschappen/Airbrush"
+msgstr "/Gereedschappen/Schildergereedschappen/Verfspuit"
 
 #: app/tools.c:747
 msgid "Airbrush with variable pressure"
-msgstr "Airbrush met variabele druk"
+msgstr "Verfspuit met variabele druk"
 
 #: app/tools.c:769
 msgid "Clone"
@@ -5549,15 +5493,15 @@ msgstr "/Gereedschappen/Schildergereedschappen/Klonen"
 
 #: app/tools.c:775
 msgid "Paint using patterns or image regions"
-msgstr "Schilder met patronen of stukken uit een afbeelding"
+msgstr "Met patronen of stukken uit een afbeelding schilderen"
 
 #: app/tools.c:797
 msgid "Convolve"
-msgstr "Convolven"
+msgstr "Vervagen/verscherpen"
 
 #: app/tools.c:798
 msgid "/Tools/Paint Tools/Convolve"
-msgstr "/Gereedschappen/Schildergereedschappen/Convolve"
+msgstr "/Gereedschappen/Schildergereedschappen/Convolver"
 
 #: app/tools.c:803
 msgid "Blur or sharpen"
@@ -5576,7 +5520,7 @@ msgstr "/Gereedschappen/Schildergereedschappen/Inkt"
 # What is the Dutch translation of this phrase?
 #: app/tools.c:831
 msgid "Draw in ink"
-msgstr "Teken in inkt"
+msgstr "In inkt tekenen"
 
 #: app/tools.c:854
 msgid "/Tools/Paint Tools/DodgeBurn"
@@ -5584,7 +5528,7 @@ msgstr "/Gereedschappen/Schildergereedschappen/TegenhoudenDoordrukken"
 
 #: app/tools.c:881 app/tools.c:887
 msgid "Smudge"
-msgstr "Vinger"
+msgstr "Kleuren uitsmeren"
 
 #: app/tools.c:882
 msgid "/Tools/Paint Tools/Smudge"
@@ -5600,7 +5544,7 @@ msgstr "/Gereedschappen/Meten"
 
 #: app/tools.c:945
 msgid "Measure distances and angles"
-msgstr "Meet afstanden en hoeken"
+msgstr "Afstanden en hoeken meten"
 
 #: app/tools.c:998
 msgid "By Color Select"
@@ -5719,11 +5663,10 @@ msgstr "Helling"
 msgid "Perspective"
 msgstr "Perspectief"
 
-# What is this for?
 #. the second radio frame and box, for transform direction
 #: app/transform_tool.c:239
 msgid "Tool Paradigm"
-msgstr "Gereedschapsparadigma"
+msgstr "Methode"
 
 #: app/transform_tool.c:241
 msgid "Traditional"
@@ -5745,7 +5688,7 @@ msgstr "Dichtheid:"
 #. the smoothing toggle button
 #: app/transform_tool.c:300
 msgid "Smoothing"
-msgstr "Gladmaken"
+msgstr "Maak glad"
 
 #. the showpath toggle button
 #: app/transform_tool.c:309
@@ -5762,6 +5705,8 @@ msgstr "Snij resultaat"
 msgid "Can't undo %s"
 msgstr "Kan %s niet ongedaan maken"
 
+# From here till line 2949 (in undo.c) contains
+# names for the undo history.
 #: app/undo.c:2906
 msgid "<<invalid>>"
 msgstr "<<ongeldig>>"
@@ -5770,7 +5715,6 @@ msgstr "<<ongeldig>>"
 msgid "image"
 msgstr "afbeelding"
 
-# What is this about?
 #: app/undo.c:2908
 msgid "image mod"
 msgstr "afbeeldingsverandering"
@@ -5779,7 +5723,6 @@ msgstr "afbeeldingsverandering"
 msgid "mask"
 msgstr "masker"
 
-# What is this about?
 #: app/undo.c:2910
 msgid "layer move"
 msgstr "laagverplaatsing"
@@ -5789,10 +5732,9 @@ msgstr "laagverplaatsing"
 msgid "transform"
 msgstr "transformatie"
 
-# Is this a verb in the infinitive, the present, or is it a noun?
 #: app/undo.c:2912
 msgid "paint"
-msgstr "schilder"
+msgstr "schilderachtige operatie"
 
 #: app/undo.c:2913
 msgid "new layer"
@@ -5800,31 +5742,29 @@ msgstr "nieuwe laag"
 
 #: app/undo.c:2914
 msgid "delete layer"
-msgstr "verwijder laag"
+msgstr "laagverwijdering"
 
-# What is this about?
 #: app/undo.c:2915
 msgid "layer mod"
 msgstr "laagverandering"
 
 #: app/undo.c:2916
 msgid "add layer mask"
-msgstr "voeg laagmasker toe"
+msgstr "laagmasker toegevoegd"
 
 #. ok
 #: app/undo.c:2917
 msgid "delete layer mask"
-msgstr "verwijder laagmasker"
+msgstr "laagmasker verwijderd"
 
 #. ok
 #: app/undo.c:2918
 msgid "rename layer"
-msgstr "laag herbenoemen"
+msgstr "laag herbenoemd"
 
-# What is this about?
 #: app/undo.c:2919
 msgid "layer reposition"
-msgstr "laag herpositioneren"
+msgstr "laag hergepositioneerd"
 
 #. ok
 #: app/undo.c:2920
@@ -5833,30 +5773,25 @@ msgstr "nieuw kanaal"
 
 #: app/undo.c:2921
 msgid "delete channel"
-msgstr "verwijder kanaal"
+msgstr "kanaal verwijderd"
 
-# What is this about?
 #: app/undo.c:2922
 msgid "channel mod"
 msgstr "kanaalverandering"
 
-# What is this about?
 #: app/undo.c:2923
 msgid "FS to layer"
 msgstr "drijvende sel. naar laag"
 
-# What is this about?
 #. ok
 #: app/undo.c:2924
 msgid "gimage"
 msgstr "afbeelding"
 
-# What is this about?
 #: app/undo.c:2925
 msgid "FS rigor"
 msgstr "drijvende sel. tonen"
 
-# What is this about?
 #: app/undo.c:2926
 msgid "FS relax"
 msgstr "drijvende sel. verbergen"
@@ -5871,23 +5806,23 @@ msgstr "tekst"
 
 #: app/undo.c:2929
 msgid "float selection"
-msgstr "drijf selectie"
+msgstr "sel. drijvend gemaakt"
 
 #: app/undo.c:2930
 msgid "paste"
-msgstr "plakken"
+msgstr "geplakt"
 
 #: app/undo.c:2931
 msgid "cut"
-msgstr "knippen"
+msgstr "geknipt"
 
 #: app/undo.c:2932
 msgid "transform core"
-msgstr "transformeer kern"
+msgstr "transformatie"
 
 #: app/undo.c:2933
 msgid "paint core"
-msgstr "schilder kern"
+msgstr "geschilderd"
 
 #: app/undo.c:2934
 msgid "floating layer"
@@ -5900,49 +5835,44 @@ msgstr "gekoppelde laag"
 
 #: app/undo.c:2936
 msgid "apply layer mask"
-msgstr "pas laagmasker toe"
+msgstr "laagmasker toegepast"
 
-# What is this about?
 #. ok
 #: app/undo.c:2937
 msgid "layer merge"
-msgstr "laag samenvoegen"
+msgstr "laag samengevoegd"
 
-# What is this about?
 #: app/undo.c:2938
 msgid "FS anchor"
-msgstr "drijvende sel. verankeren"
+msgstr "drijvende sel. verankerd"
 
-# What is this about?
 #: app/undo.c:2939
 msgid "gimage mod"
 msgstr "afbeeldingsverandering"
 
 #: app/undo.c:2940
 msgid "crop"
-msgstr "snij"
+msgstr "gesneden"
 
 #: app/undo.c:2941
 msgid "layer scale"
-msgstr "schaal van de laag"
+msgstr "laag geschaald"
 
 #: app/undo.c:2942
 msgid "layer resize"
-msgstr "laag schalen"
+msgstr "laaginhoud geschaald"
 
-# What is this about?
 #: app/undo.c:2943
 msgid "quickmask"
-msgstr "QMask"
+msgstr "snelmasker"
 
-# What is the Dutch translation of 'parasite'?
 #: app/undo.c:2944
 msgid "attach parasite"
-msgstr "verbind parasiet"
+msgstr "parasiet verbonden"
 
 #: app/undo.c:2945
 msgid "remove parasite"
-msgstr "verwijder parasiet"
+msgstr "parasiet verwijderd"
 
 #: app/undo.c:2946
 msgid "resolution change"
@@ -5950,11 +5880,11 @@ msgstr "resolutiewijziging"
 
 #: app/undo.c:2947
 msgid "image scale"
-msgstr "afbeelding schalen"
+msgstr "afbeelding geschaald"
 
 #: app/undo.c:2948
 msgid "image resize"
-msgstr "afbeelding schalen"
+msgstr "canvas geschaald"
 
 #: app/undo.c:2949
 msgid "misc"
@@ -6200,7 +6130,8 @@ msgstr ""
 "GIMP-scriptsdirectory (voor het hele systeem) bij\n"
 "het zoeken naar scripts."
 
-# The file name format: does a '#' stand for a digit or a number, or for any string?
+# The file name format: does a '#' stand for a digit or a 
+# number, or for any string?
 #: app/user_install.c:291
 msgid ""
 "This subdirectory is used by the GIMP to temporarily\n"
@@ -6540,7 +6471,6 @@ msgstr ""
 "rekening met de hoeveelheid geheugen die andere actieve processen nodig\n"
 "hebben."
 
-# What is the Dutch translation of 'swap file'?
 #: app/user_install.c:1354
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
@@ -6549,7 +6479,7 @@ msgid ""
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
 "Alle afbeeldingsgegevens en 'Ongedaan maken'-gegevens die niet in de\n"
-"\"Tile Cache\" (tegelbuffer) passen zullen naar een swap-bestand worden\n"
+"\"Tile Cache\" (tegelbuffer) passen zullen naar een wisselbestand worden\n"
 "geschreven. Dit bestand moet op een lokaal bestandssysteem aanwezig zijn\n"
 "met genoeg vrije ruimte (meerdere honderden MB's). Op een UNIX-systeem\n"
 "zult u wellicht een tijdelijke directory willen gebruiken die voor het\n"
@@ -6557,7 +6487,7 @@ msgstr ""
 
 #: app/user_install.c:1368
 msgid "Swap Directory:"
-msgstr "Swap-directory:"
+msgstr "Wisselmap:"
 
 #: app/user_install.c:1403
 msgid ""
@@ -6588,14 +6518,15 @@ msgstr ""
 "U kunt ook op de knop \"Kalibreer\" klikken om een dialoogvenster\n"
 "te openen waarmee u uw beeldschermresolutie interactief kunt bepalen."
 
-# What is XCF?
+# XCF is the native GIMP file format, sometimes saved as .xcf.gz
+# (i.e. it is originally uncompressed, but can be compressed from
+# within the GIMP with Gzip)
 #: app/xcf.c:384
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF-fout: niet-ondersteunde XCF-bestandsversie %d tegengekomen"
 
-# What is XCF?
-# What is a map?
+# What is a color map?
 #: app/xcf.c:1817
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
@@ -6603,15 +6534,13 @@ msgid ""
 "Substituting grayscale map."
 msgstr ""
 "XCF-waarschuwing: versie 0 van het XCF-\n"
-"bestandsformaat slaat geïndexeerde colormaps\n"
-"niet correct op. Vervangen door grijswaardenmap. "
+"bestandsformaat slaat geïndexeerde kleurkaarten\n"
+"niet correct op. Vervangen door grijswaardenkaart. "
 
-# What is meant with 'plugable' here?
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
 msgstr "GTK-kleurkiezer als een laadbare module"
 
-# What is meant with 'plugable' here?
 # What is meant with 'Painter' here?
 #: modules/colorsel_triangle.c:79
 msgid "Painter-style color selector as a pluggable color selector"
@@ -6621,7 +6550,6 @@ msgstr "Painterachtige kleurkiezer als een laadbare module"
 msgid "Triangle"
 msgstr "Driehoek"
 
-# What is meant with 'plugable' here?
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
 msgstr "Waterverfachtige kleurkiezer als een laadbare module"

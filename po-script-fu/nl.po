@@ -176,11 +176,11 @@ msgstr "Serverlogbestand:"
 
 #: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Console..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Console..."
 
 #: plug-ins/script-fu/script-fu.c:178
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Server..."
 
 #: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
 msgid "Re-read all available scripts"
@@ -188,7 +188,7 @@ msgstr "Alle beschikbare scripts opnieuw inlezen"
 
 #: plug-ins/script-fu/script-fu.c:1110
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr "<Toolbox>/Xtns/Script-Fu/Vernieuwen"
+msgstr "<Toolbox>/Xtra/Script-Fu/Vernieuwen"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:148
 #: plug-ins/dbbrowser/dbbrowser_utils.c:167
@@ -486,333 +486,333 @@ msgstr "<Image>/Script-Fu/Hulpprogramma's/Afbeeldingsstructuur tonen..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Knoppen/Ronde knop..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Knoppen/Ronde knop..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Knoppen/Simpele afgeschuinde knop..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Knoppen/Simpele afgeschuinde knop..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/3D-omtrek..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/3D-omtrek..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Alien-gloed..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Alien-gloed..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Alien-neon..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Alien-neon..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Basic I..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Basic I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Basic II..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Basic II..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Op verloop..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Op verloop..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Koeioneren..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Koeioneren..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Gekerfd..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Gekerfd..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Kalk..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Kalk..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Hak weg..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Hak weg..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Chroom..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Chroom..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Stripboek"
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Stripboek"
 
 # What does 'cool' mean here?
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Cool metaal..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Cool metaal..."
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Kristal"
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Kristal"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Bevroren..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Bevroren..."
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Glossy..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Glossy..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Gloeiend heet..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Gloeiend heet..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Verloop afschuinen..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Verloop afschuinen..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Imigre-26..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Imigre-26..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Neon..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Neon..."
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Gerasterde tekst..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Gerasterde tekst..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Deeltjesspoor..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Deeltjesspoor..."
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/SOTA-chroom..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/SOTA-chroom..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Snelle tekst..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Snelle tekst..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Starburst..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Starburst..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Starscape..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Starscape..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Tekstcirkel..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Tekstcirkel..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Met tekstuur..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Met tekstuur..."
 
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logo's/Web Title Header..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Logo's/Web Title Header..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Penseel maken/Elliptisch en zacht..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Penseel maken/Elliptisch en zacht..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Penseel maken/Elliptisch en hard..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Penseel maken/Elliptisch en hard..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Penseel maken/Rechthoeking en zacht..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Penseel maken/Rechthoeking en zacht..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Penseel maken/Rechthoeking en hard..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Penseel maken/Rechthoeking en hard..."
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Overige/Bol..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Overige/Bol..."
 
 # Is Truchet a name or a term? If it is a term, what does it mean?
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/3D-Truchet..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/3D-Truchet..."
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Camouflage..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/Camouflage..."
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Platland..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/Platland..."
 
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Land..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/Land..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Kaart renderen..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/Kaart renderen..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Gedraaide tegel..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/Gedraaide tegel..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Kronkel (naadloos)..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/Kronkel (naadloos)..."
 
 # Is Trochoid a name or a term? If it is a term, what does it mean?
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Trochoid..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/Trochoid..."
 
 # Is Truchet a name or a term? If it is a term, what does it mean?
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Truchet..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/Truchet..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Hulpprogramma's/ASCII naar afbeelding..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Hulpprogramma's/ASCII naar afbeelding..."
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Hulpprogramma's/Eigen verloop..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Hulpprogramma's/Eigen verloop..."
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Hulpprogramma's/Fontkaart..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Hulpprogramma's/Fontkaart..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Alien-gloed/Pijl..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Alien-gloed/Pijl..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Alien-gloed/Bullet..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Alien-gloed/Bullet..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Alien-gloed/Knop..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Alien-gloed/Knop..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Alien-gloed/HR..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Alien-gloed/HR..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Afgeschuind patroon/Pijl..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Afgeschuind patroon/Pijl..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Afgeschuind patroon/Bullet..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Afgeschuind patroon/Bullet..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Afgeschuind patroon/Knop..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Afgeschuind patroon/Knop..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Afgeschuind patroon/Kop..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Afgeschuind patroon/Kop..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Afgeschuind patroon/HR..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Afgeschuind patroon/HR..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Gimp.Org/Grote kop..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Grote kop..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Gimp.Org/Algemene buislabels"
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Algemene buislabels"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Gimp.Org/Kleine kop..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Kleine kop..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Websitethema's/Gimp.Org/Buisknoplabel..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Buisknoplabel..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Websitethema's/Gimp.Org/Subknoplabel van buis..."
+"<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Subknoplabel van buis..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Websitethema's/Gimp.Org/Subsubknoplabel van buis..."
+"<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Subsubknoplabel van buis..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Xtns/Webbrowser/Ontwikkelaars-FAQ"
+msgstr "<Toolbox>/Xtra/Webbrowser/Ontwikkelaars-FAQ"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP-bugs"
+msgstr "<Toolbox>/Xtra/Webbrowser/GIMP-bugs"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP-handleiding"
+msgstr "<Toolbox>/Xtra/Webbrowser/GIMP-handleiding"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP-nieuws"
+msgstr "<Toolbox>/Xtra/Webbrowser/GIMP-nieuws"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP-lessen"
+msgstr "<Toolbox>/Xtra/Webbrowser/GIMP-lessen"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Documentatie"
+msgstr "<Toolbox>/Xtra/Webbrowser/GIMP.ORG/Documentatie"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Download"
+msgstr "<Toolbox>/Xtra/Webbrowser/GIMP.ORG/Download"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/GIMP-kunst"
+msgstr "<Toolbox>/Xtra/Webbrowser/GIMP.ORG/GIMP-kunst"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/GTK"
+msgstr "<Toolbox>/Xtra/Webbrowser/GIMP.ORG/GTK"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Links"
+msgstr "<Toolbox>/Xtra/Webbrowser/GIMP.ORG/Links"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Mailinglijsten"
+msgstr "<Toolbox>/Xtra/Webbrowser/GIMP.ORG/Mailinglijsten"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Hulpbronnen"
+msgstr "<Toolbox>/Xtra/Webbrowser/GIMP.ORG/Hulpbronnen"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/The GIMP"
+msgstr "<Toolbox>/Xtra/Webbrowser/GIMP.ORG/The GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Xtns/Webbrowser/Gimp-Savvy.com"
+msgstr "<Toolbox>/Xtra/Webbrowser/Gimp-Savvy.com"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Xtns/Webbrowser/Grokking the GIMP"
+msgstr "<Toolbox>/Xtra/Webbrowser/Grokking the GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Toolbox>/Xtns/Webbrowser/Plug-In Registry"
+msgstr "<Toolbox>/Xtra/Webbrowser/Plug-In Registry"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Xtns/Webbrowser/Gebruikers-FAQ"
+msgstr "<Toolbox>/Xtra/Webbrowser/Gebruikers-FAQ"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"

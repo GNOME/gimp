@@ -5140,7 +5140,7 @@ msgstr "Tijdelijke procedure"
 
 #: plug-ins/common/plugindetails.c:104
 msgid "<Toolbox>/Xtns/Plugin Details..."
-msgstr "<Toolbox>/Xtns/Plug-indetails..."
+msgstr "<Toolbox>/Extra's/Plug-indetails..."
 
 #: plug-ins/common/plugindetails.c:221
 msgid "Details <<"
@@ -6451,7 +6451,7 @@ msgstr "Tegelbaar maken..."
 
 #: plug-ins/common/uniteditor.c:73
 msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr "<Toolbox>/Xtns/Eenhedeneditor..."
+msgstr "<Toolbox>/Extra's/Eenhedeneditor..."
 
 #: plug-ins/common/uniteditor.c:168 plug-ins/common/uniteditor.c:624
 msgid "New Unit"
@@ -7278,7 +7278,7 @@ msgstr "Ijverig snijden: niets te snijden."
 
 #: plug-ins/dbbrowser/dbbrowser.c:90
 msgid "<Toolbox>/Xtns/DB Browser..."
-msgstr "<Toolbox>/Xtns/DB-browser..."
+msgstr "<Toolbox>/Extra's/DB-browser..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:148
 #: plug-ins/dbbrowser/dbbrowser_utils.c:167
@@ -7691,7 +7691,7 @@ msgstr "<Image>/Video/Video in frames opdelen"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:103
 msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr "<Toolbox>/Xtns/Video in frames opdelen"
+msgstr "<Toolbox>/Extra's/Video in frames opdelen"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:179
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
@@ -7699,7 +7699,7 @@ msgstr "<Image>/Video/Video in frames opdelen/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:191
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr "<Toolbox>/Xtns/Video in frames opdelen/MPEG1"
+msgstr "<Toolbox>/Extra's/Video in frames opdelen/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:333 plug-ins/gap/gap_decode_xanim.c:337
 #: plug-ins/gap/gap_range_ops.c:1240
@@ -8082,7 +8082,7 @@ msgstr "<Image>/Video/Video splitsen naar frames/Elke XANIM-readable..."
 
 #: plug-ins/gap/gap_frontends_main.c:140
 msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-msgstr "<Toolbox>/Xtns/Video splitsen naar frames/Elke XANIM-readable..."
+msgstr "<Toolbox>/Extra's/Video splitsen naar frames/Elke XANIM-readable..."
 
 #: plug-ins/gap/gap_frontends_main.c:152
 msgid "<Image>/Video/Encode/MPEG1..."
@@ -11899,7 +11899,7 @@ msgstr ""
 "als een programmeerfout meldt.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:111
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<html><head><title>Directory not found</title></head><body bgcolor=\"#ffffff"
 "\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</tt><h3>while "
@@ -13308,7 +13308,7 @@ msgstr "Bezig met overzetten TWAIN-gegevens"
 
 #: plug-ins/webbrowser/webbrowser.c:141
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr "<Toolbox>/Xtns/Webbrowser/Open URL..."
+msgstr "<Toolbox>/Extra's/Webbrowser/Open URL..."
 
 #: plug-ins/webbrowser/webbrowser.c:274
 msgid "Open URL"
