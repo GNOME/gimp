@@ -1,3 +1,15 @@
+2000-12-11  Sven Neumann  <sven@gimp.org>
+
+	* app/channel.c (channel_invalidate_previews): check for NULL pointer
+	
+	* app/fileops.c: if saving and loading images at the same time, the
+	PDB obviously manages to mangle return values. By checking the 
+	validity of the returned image id we avoid to crash as described in
+	bug #26788.
+	
+	* app/module_db.c: unload modules from the idle_loop as suggested
+	by Austin in #5745.
+
 Mon Dec 11 20:29:55 GMT 2000  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/common/gee.c: v1.05: Sub-pixel jitter is

@@ -163,6 +163,7 @@ static void         mod_load               (ModuleInfo   *mod,
 					    gboolean      verbose);
 static void         mod_unload             (ModuleInfo   *mod,
 					    gboolean      verbose);
+static gboolean     mod_idle_unref         (ModuleInfo   *mod);
 static ModuleInfo * module_find_by_path    (const gchar  *fullpath);
 
 #ifdef DUMP_DB
@@ -722,9 +723,17 @@ mod_unload (ModuleInfo *mod,
    * callback is called before the unload function returns). */
   gimp_module_ref (mod);
   mod->unload (mod->info->shutdown_data, mod_unload_completed_callback, mod);
-  gimp_module_unref (mod);
+
+  gtk_idle_add ((GtkFunction) mod_idle_unref, (gpointer) mod);
 }
 
+static gboolean
+mod_idle_unref (ModuleInfo *mod)
+{
+  gimp_module_unref (mod);
+
+  return FALSE;
+}
 
 #ifdef DUMP_DB
 static void

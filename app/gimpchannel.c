@@ -575,6 +575,8 @@ channel_invalidate_previews (GimpImage* gimage)
   GSList * tmp;
   Channel * channel;
 
+  g_return_if_fail (gimage != NULL);
+
   tmp = gimage->channels;
 
   while (tmp)

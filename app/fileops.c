@@ -800,8 +800,13 @@ file_open_image (gchar       *filename,
 
   if (*status == PDB_SUCCESS && gimage_id != -1)
     {
-      layer_invalidate_previews (gimage_get_ID (gimage_id));
-      channel_invalidate_previews (gimage_get_ID (gimage_id));
+      GimpDrawable *drawable = gimage_get_ID (gimage_id);
+
+      if (drawable)
+	{
+	  layer_invalidate_previews (drawable);
+	  channel_invalidate_previews (drawable);
+	}
 
       return pdb_id_to_image (gimage_id);
     }
