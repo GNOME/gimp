@@ -607,68 +607,67 @@ layers_dialog_flush (void)
     {
       layersD->gimage = NULL;
       layers_dialog_update (gimage);
-
-      return;
     }
-
-  /*  Set all current layer widgets to visited = FALSE  */
-  for (list = layersD->layer_widgets; list; list = g_slist_next (list))
+  else
     {
-      lw = (LayerWidget *) list->data;
-      lw->visited = FALSE;
+      /*  Set all current layer widgets to visited = FALSE  */
+      for (list = layersD->layer_widgets; list; list = g_slist_next (list))
+        {
+          lw = (LayerWidget *) list->data;
+          lw->visited = FALSE;
+        }
+
+      /*  Add any missing layers  */
+      for (list = gimage->layers; list; list = g_slist_next (list))
+        {
+          layer = (Layer *) list->data;
+          lw = layer_widget_get_ID (layer);
+
+          /*  If the layer isn't in the layer widget list, add it  */
+          if (lw == NULL)
+	    {
+	      /*  sets visited = TRUE  */
+	      layers_dialog_add_layer (layer);
+	    }
+          else
+	    lw->visited = TRUE;
+        }
+
+      /*  Remove any extraneous layers  */
+      list = layersD->layer_widgets;
+      while (list)
+        {
+          lw = (LayerWidget *) list->data;
+          list = g_slist_next (list);
+          if (lw->visited == FALSE)
+	    layers_dialog_remove_layer (lw->layer);
+        }
+
+      /*  Switch positions of items if necessary  */
+      pos = 0;
+      for (list = gimage->layers; list; list = g_slist_next (list))
+        {
+          layer = (Layer *) list->data;
+          layers_dialog_position_layer (layer, pos++);
+        }
+
+      /*  Set the active layer  */
+      if (layersD->active_layer != gimage->active_layer)
+        layersD->active_layer = gimage->active_layer;
+
+      /*  Set the active channel  */
+      if (layersD->active_channel != gimage->active_channel)
+        layersD->active_channel = gimage->active_channel;
+
+      /*  set the menus if floating sel status has changed  */
+      if (layersD->floating_sel != gimage->floating_sel)
+        layersD->floating_sel = gimage->floating_sel;
+
+      layers_dialog_set_menu_sensitivity ();
+
+      gtk_container_foreach (GTK_CONTAINER (layersD->layer_list),
+			     layer_widget_layer_flush, NULL);
     }
-
-  /*  Add any missing layers  */
-  for (list = gimage->layers; list; list = g_slist_next (list))
-    {
-      layer = (Layer *) list->data;
-      lw = layer_widget_get_ID (layer);
-
-      /*  If the layer isn't in the layer widget list, add it  */
-      if (lw == NULL)
-	{
-	  /*  sets visited = TRUE  */
-	  layers_dialog_add_layer (layer);
-	}
-      else
-	lw->visited = TRUE;
-    }
-
-  /*  Remove any extraneous layers  */
-  list = layersD->layer_widgets;
-  while (list)
-    {
-      lw = (LayerWidget *) list->data;
-      list = g_slist_next (list);
-      if (lw->visited == FALSE)
-	layers_dialog_remove_layer (lw->layer);
-    }
-
-  /*  Switch positions of items if necessary  */
-  pos = 0;
-  for (list = gimage->layers; list; list = g_slist_next (list))
-    {
-      layer = (Layer *) list->data;
-      layers_dialog_position_layer (layer, pos++);
-    }
-
-  /*  Set the active layer  */
-  if (layersD->active_layer != gimage->active_layer)
-    layersD->active_layer = gimage->active_layer;
-
-  /*  Set the active channel  */
-  if (layersD->active_channel != gimage->active_channel)
-    layersD->active_channel = gimage->active_channel;
-
-  /*  set the menus if floating sel status has changed  */
-  if (layersD->floating_sel != gimage->floating_sel)
-    layersD->floating_sel = gimage->floating_sel;
-
-  layers_dialog_set_menu_sensitivity ();
-
-  gtk_container_foreach (GTK_CONTAINER (layersD->layer_list),
-			 layer_widget_layer_flush, NULL);
-
   suspend_gimage_notify--;
 }
 
@@ -3638,11 +3637,7 @@ layers_dialog_add_mask_query (Layer *layer)
 				 (gpointer) ADD_BLACK_MASK, NULL,
 				 _("Layer's Alpha Channel"),
 				 (gpointer) ADD_ALPHA_MASK, NULL,
-
 				 NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);

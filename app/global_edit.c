@@ -358,16 +358,20 @@ edit_paste_as_new (GImage       *invoke,
   layer = layer_new_from_tiles (gimage, gimp_image_base_type_with_alpha (gimage), paste, 
 				_("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
-  /*  add the new layer to the image  */
-  gimp_drawable_set_gimage (GIMP_DRAWABLE (layer), gimage);
-  gimage_add_layer (gimage, layer, 0);
+  if(layer)
+    {
+      /*  add the new layer to the image  */
+      gimp_drawable_set_gimage (GIMP_DRAWABLE (layer), gimage);
+      gimage_add_layer (gimage, layer, 0);
 
-  gimage_enable_undo (gimage);
+      gimage_enable_undo (gimage);
 
-  gdisp = gdisplay_new (gimage, 0x0101);
-  gimp_context_set_display (gimp_context_get_user (), gdisp);
+      gdisp = gdisplay_new (gimage, 0x0101);
+      gimp_context_set_display (gimp_context_get_user (), gdisp);
 
-  return TRUE;			       
+      return TRUE;
+    }
+  else return FALSE;			       
 }
 
 gboolean

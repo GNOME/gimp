@@ -1,3 +1,18 @@
+2000-01-15 Garry R. Osgood <gosgood@idt.net>
+
+	* app/layers_dialog.c
+	* app/global_edit.c
+        layers_dialog.c:layers_dialog_flush() now has
+        only one entry and exit point, so that 
+        suspend_gimage_notify is properly maintained.
+        Has bearing on (but likely does not fully solve)
+        bugs #4031, #4914, and #4927. (Layers and 
+	Channel Dialog with sticky layers. See 
+        http://idt.net/~gosgood/gimp-patch/patch04.html
+        and bug reports.
+        global_edit.c: edit_paste_as_new() now checks
+        if it has a valid layer from layer_new_from_tiles()
+
 2000-01-15  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpwidgets.[ch]: added a float adjustment callback.
