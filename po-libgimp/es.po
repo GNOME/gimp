@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the gimp package.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
 # Francisco Javier Fernandez <serrador@arrakis.es>, 2003.
-# Pablo G. del Campo <pablodc@bigfoot.com>, 2003.
+# Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:24+0100\n"
-"PO-Revision-Date: 2003-11-24 10:25-0300\n"
+"POT-Creation-Date: 2004-01-07 14:55+0100\n"
+"PO-Revision-Date: 2004-01-07 17:17-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -102,8 +102,7 @@ msgstr ""
 #: libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr ""
-"%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
+msgstr "%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
 
 #: libgimp/gimpexport.c:307
 msgid ""
@@ -299,7 +298,7 @@ msgstr "No cargado"
 #: libgimpthumb/gimpthumb-utils.c:195
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr ""
+msgstr "No se ha podido crear la carpeta de miniaturas «%s»."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
@@ -724,3 +723,4 @@ msgstr "Presión"
 
 #~ msgid "OK"
 #~ msgstr "Aceptar"
+
