@@ -110,6 +110,19 @@ invert_row_u16  (
                  PixelRow * mask_row
                  )
 {
+  gint    b;
+  guint16 *dest         = (guint16*) pixelrow_data (dest_row);
+  guint16 *mask         = (guint16*) pixelrow_data (mask_row);
+  gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint    width        = pixelrow_width (dest_row);  
+
+  while (width--)
+    {
+      for (b = 0; b < num_channels; b++)
+        dest[b] = 65535 - dest[b];
+
+      dest += num_channels;
+    }
 }
 
 

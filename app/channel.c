@@ -514,7 +514,6 @@ channel_boundary (Channel *mask, BoundSeg **segs_in, BoundSeg **segs_out,
 {
   int x3, y3, x4, y4;
   PixelArea b_area;
-
   if (! mask->boundary_known)
     {
       /* free the out of date boundary segments */
@@ -527,6 +526,8 @@ channel_boundary (Channel *mask, BoundSeg **segs_in, BoundSeg **segs_out,
         {
           pixelarea_init (&b_area, GIMP_DRAWABLE(mask)->tiles, 
                           x3, y3, (x4 - x3), (y4 - y3), FALSE);
+	 
+           
 	  mask->segs_out = find_mask_boundary (&b_area, &mask->num_segs_out,
 					       IgnoreBounds,
 					       x1, y1,
@@ -635,7 +636,9 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
   int x, y;
   int ex, ey;
   int found;
+  gint rowstride;
   void *pr;
+
   /*  if the mask's bounds have already been reliably calculated...  */
   if (mask->bounds_known)
     {
@@ -657,75 +660,81 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
                   0, 0, 
                   0, 0,
                   FALSE);
-
+  
   for (pr = pixelarea_register (1, &maskPR); 
 	pr != NULL; 
 	pr = pixelarea_process (pr))
     {
       data = pixelarea_data (&maskPR);
+      rowstride = pixelarea_rowstride (&maskPR);
+	
       ex = pixelarea_x (&maskPR) + pixelarea_width (&maskPR);
       ey = pixelarea_y (&maskPR) + pixelarea_height (&maskPR);
+	  for (y = pixelarea_y (&maskPR); y < ey; y++)
+	    {
+	      switch (tag_precision (pixelarea_tag (&maskPR)))
+		{
+		case PRECISION_U8:
+		  {
+		    guint8 *d = (guint8*)data;
+		    found = FALSE;
+		    for (x = pixelarea_x (&maskPR); x < ex; x++ )
+		      {
+			if (*d++)
+			  {
+			    if (x < *x1)
+			      *x1 = x;
+			    if (x > *x2)
+			      *x2 = x;
+			    found = TRUE;
+			  }
+		      }
+		      
+		      if (found)
+			{
+			  if (y < *y1)
+			    *y1 = y;
+			  if (y > *y2)
+			    *y2 = y;
+			}
+		  }
+		  break;
 
-      switch (tag_precision ( pixelarea_tag (&maskPR)))
-      {
-      case PRECISION_U8:
-	{
-	  guint8 * d = (guint8*)data;
-	  for (y = pixelarea_y (&maskPR); y < ey; y++)
-	    {
-	      found = FALSE;
-	      for (x = pixelarea_x (&maskPR); x < ex; x++, d++)
-		if (*d)
+		case PRECISION_U16:
 		  {
-		    if (x < *x1)
-		      *x1 = x;
-		    if (x > *x2)
-		      *x2 = x;
-		    found = TRUE;
+		    guint16 *d = (guint16*)data;
+		    found = FALSE;
+		    for (x = pixelarea_x (&maskPR); x < ex; x++ )
+		      {
+			if (*d++)
+			  {
+			    if (x < *x1)
+			      *x1 = x;
+			    if (x > *x2)
+			      *x2 = x;
+			    found = TRUE;
+			  }
+		      }
+		      
+		      if (found)
+		      {
+			if (y < *y1)
+			  *y1 = y;
+			if (y > *y2)
+			  *y2 = y;
+		      }
 		  }
-	      if (found)
-		{
-		  if (y < *y1)
-		    *y1 = y;
-		  if (y > *y2)
-		    *y2 = y;
+		  break;
+
+		case PRECISION_FLOAT:
+		default:
+		  g_warning ("channel_bounds: bad precision");
+		  break;
 		}
+	      data += rowstride;
 	    }
-	}
-	break;
-      case PRECISION_U16:
-	{
-	  guint16 * d = (guint16*)data;
-	  for (y = pixelarea_y (&maskPR); y < ey; y++)
-	    {
-	      found = FALSE;
-	      for (x = pixelarea_x (&maskPR); x < ex; x++, d++)
-		if (*d)
-		  {
-		    if (x < *x1)
-		      *x1 = x;
-		    if (x > *x2)
-		      *x2 = x;
-		    found = TRUE;
-		  }
-	      if (found)
-		{
-		  if (y < *y1)
-		    *y1 = y;
-		  if (y > *y2)
-		    *y2 = y;
-		}
-	    }
-	}
-	break;
-      case PRECISION_FLOAT:
-        g_warning ("channel_bounds: bad precision");
-	break;
-      default:
-        g_warning ("channel_bounds: bad precision");
-	break;
-      } 
     }
+    
 
   *x2 = BOUNDS (*x2 + 1, 0, drawable_width (GIMP_DRAWABLE(mask)));
   *y2 = BOUNDS (*y2 + 1, 0, drawable_height (GIMP_DRAWABLE(mask)));
@@ -746,8 +755,8 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
       mask->x2 = *x2;
       mask->y2 = *y2;
     }
-  mask->bounds_known = TRUE;
 
+  mask->bounds_known = TRUE;
   return (mask->empty) ? FALSE : TRUE;
 }
 
@@ -1438,8 +1447,12 @@ channel_invert (Channel *mask)
                   0, 0, 
                   0, 0,
                   TRUE);
-
   invert_area (&maskPR, NULL);
+
+  pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles,
+                  0, 0, 
+                  0, 0,
+                  FALSE);
  
   mask->bounds_known = FALSE;
 }
