@@ -1,5 +1,11 @@
 2004-01-25  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayout.c (gimp_text_layout_position): fixed
+	text positioning for fonts where glyphs extend the logical
+	rectangle.
+
+2004-01-25  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/info-window.c (info_window_create): don't update the fields
 	here...
 

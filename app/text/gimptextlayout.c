@@ -242,7 +242,6 @@ gimp_text_layout_get_size (GimpTextLayout *layout,
 
   if (width)
     *width = layout->extents.width;
-
   if (height)
     *height = layout->extents.height;
 
@@ -292,8 +291,8 @@ gimp_text_layout_position (GimpTextLayout *layout)
   x2 = MAX (ink.x + ink.width,  logical.x + logical.width);
   y2 = MAX (ink.y + ink.height, logical.y + logical.height);
 
-  layout->extents.x      = x1;
-  layout->extents.y      = y1;
+  layout->extents.x      = - x1;
+  layout->extents.y      = - y1;
   layout->extents.width  = x2 - x1;
   layout->extents.height = y2 - y1;
 
