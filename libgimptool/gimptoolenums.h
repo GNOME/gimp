@@ -97,14 +97,5 @@ typedef enum /*< pdb-skip >*/ /*< skip >*/
   TRANSFORM_HANDLE_CENTER
 } TransformAction;
 
-/* the different states that the transformation function can be called with */
-typedef enum /*< pdb-skip >*/ /*< skip >*/
-{
-  TRANSFORM_INIT,
-  TRANSFORM_MOTION,
-  TRANSFORM_RECALC,
-  TRANSFORM_FINISH
-} TransformState;
-
 
 #endif /* __TOOLS_ENUMS_H__ */

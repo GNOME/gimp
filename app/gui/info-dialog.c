@@ -46,9 +46,6 @@ static InfoDialog * info_dialog_new_extended    (GimpViewable  *viewable,
                                                  GimpHelpFunc   help_func,
                                                  gpointer       help_data,
                                                  gboolean       in_notebook);
-static gboolean     info_dialog_delete_callback (GtkWidget     *widget,
-                                                 GdkEvent      *event,
-                                                 gpointer       data);
 static void         info_dialog_field_new       (InfoDialog    *idialog,
                                                  InfoFieldType  field_type,
                                                  gchar         *title,
@@ -337,10 +334,6 @@ info_dialog_new_extended (GimpViewable *viewable,
                                     help_func, help_data,
                                     NULL);
 
-  g_signal_connect (G_OBJECT (shell), "delete_event",
-		    G_CALLBACK (info_dialog_delete_callback),
-		    idialog);
-
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
@@ -374,16 +367,6 @@ info_dialog_new_extended (GimpViewable *viewable,
   gtk_widget_show (idialog->vbox);
 
   return idialog;
-}
-
-static gboolean
-info_dialog_delete_callback (GtkWidget *widget,
-			     GdkEvent  *event,
-			     gpointer   data)
-{
-  info_dialog_popdown ((InfoDialog *) data);
-
-  return TRUE;
 }
 
 static void

@@ -1,5 +1,42 @@
 2002-11-14  Michael Natterer  <mitch@gimp.org>
 
+	Transform tool cleanup:
+
+	* libgimptool/gimptoolenums.[ch]: removed the TransformState enum.
+
+	* app/tools/gimptransformtool.[ch]: don't dispatch everything
+	through the transform() virtual function. Added new vitrual
+	functions dialog(), prepare(), motion() and recalc(). Do only the
+	actual transform in transform(). Moved lots of logic which was
+	duplicated in each subclass' transform() here. Cleanup.
+
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c: changed accordingly: moved code from
+	transform() to the other method imlementations. Removed duplicated
+	logic which is now done by our parent class. Makes everything
+	smaller and more readable.
+
+	InfoDialog cleanup:
+
+	* app/gui/info-dialog.c: removed the "delete_event" callback so
+	InfoDialog users can decide themselves what to do.
+
+	* app/gui/info-window.c
+	* app/tools/gimpmeasuretool.c: changed accordingly.
+
+	* app/tools/gimpcolorpickertool.c: ditto. Moved info_dialog
+	creation to a utility function to improve code readbility.
+
+	* app/tools/gimpcroptool.c: ditto. Added a "Cancel" button which
+	really cancels the tool instead of just hiding the dialog.
+
+	* app/tools/gimptransformtool.c: added a "Cancel" button here too.
+
+2002-11-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/tools-commands.c (tools_select_cmd_callback): removed
 	the old hack which sets tool->gdisp. Fixes bug #98056.
 

@@ -89,19 +89,26 @@ struct _GimpTransformTool
                                    */
   gdouble	 *tgrid_coords;   /*  transformed grid_coords          */
 
-  InfoDialog     *info_dialog;    /*  transform info dialog            */
+  /*  transform info dialog  */
+  const gchar    *shell_desc;
+
+  InfoDialog     *info_dialog;
 };
 
 struct _GimpTransformToolClass
 {
   GimpDrawToolClass parent_class;
 
-  /*  virtual function  */
-
+  /*  virtual functions  */
+  void          (* dialog)    (GimpTransformTool    *tool);
+  void          (* prepare)   (GimpTransformTool    *tool,
+                               GimpDisplay          *gdisp);
+  void          (* motion)    (GimpTransformTool    *tool,
+                               GimpDisplay          *gdisp);
+  void          (* recalc)    (GimpTransformTool    *tool,
+                               GimpDisplay          *gdisp);
   TileManager * (* transform) (GimpTransformTool    *tool,
-		               GimpDisplay          *gdisp,
-		               TransformState        state);
-
+                               GimpDisplay          *gdisp);
 };
 
 
@@ -110,9 +117,6 @@ GType   gimp_transform_tool_get_type               (void) G_GNUC_CONST;
 TileManager * gimp_transform_tool_transform_tiles  (GimpTransformTool *tr_tool,
                                                     const gchar       *progress_text);
 void    gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool);
-
-void    gimp_transform_tool_info_dialog_connect    (GimpTransformTool *tr_tool,
-                                                    const gchar       *ok_button);
 
 void	gimp_transform_tool_grid_density_changed   (GimpTransformTool *tr_tool);
 void	gimp_transform_tool_show_path_changed      (GimpTransformTool *tr_tool,

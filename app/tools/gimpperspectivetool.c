@@ -35,8 +35,6 @@
 #include "core/gimpdrawable-transform-utils.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpviewabledialog.h"
-
 #include "display/gimpdisplay.h"
 
 #include "gui/info-dialog.h"
@@ -49,18 +47,20 @@
 
 /*  local function prototypes  */
 
-static void          gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass);
-static void          gimp_perspective_tool_init       (GimpPerspectiveTool      *perspective_tool);
+static void   gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass);
+static void   gimp_perspective_tool_init       (GimpPerspectiveTool      *tool);
 
-static TileManager * gimp_perspective_tool_transform  (GimpTransformTool *transform_tool,
-                                                       GimpDisplay       *gdisp,
-                                                       TransformState     state);
+static void          gimp_perspective_tool_dialog    (GimpTransformTool *tr_tool);
+static void          gimp_perspective_tool_prepare   (GimpTransformTool *tr_tool,
+                                                      GimpDisplay       *gdisp);
+static void          gimp_perspective_tool_motion    (GimpTransformTool *tr_tool,
+                                                      GimpDisplay       *gdisp);
+static void          gimp_perspective_tool_recalc    (GimpTransformTool *tr_tool,
+                                                      GimpDisplay       *gdisp);
+static TileManager * gimp_perspective_tool_transform (GimpTransformTool *tr_tool,
+                                                      GimpDisplay       *gdisp);
 
-static void          perspective_tool_recalc          (GimpTransformTool *tr_tool,
-                                                       GimpDisplay       *gdisp);
-static void          perspective_tool_motion          (GimpTransformTool *tr_tool,
-                                                       GimpDisplay       *gdisp);
-static void          perspective_info_update          (GimpTransformTool *tr_tool);
+static void          perspective_info_update         (GimpTransformTool *tr_tool);
 
 
 /*  storage for information dialog fields  */
@@ -124,107 +124,56 @@ gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  trans_class->dialog    = gimp_perspective_tool_dialog;
+  trans_class->prepare   = gimp_perspective_tool_prepare;
+  trans_class->motion    = gimp_perspective_tool_motion;
+  trans_class->recalc    = gimp_perspective_tool_recalc;
   trans_class->transform = gimp_perspective_tool_transform;
 }
 
 static void
 gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
 {
-  GimpTool *tool;
+  GimpTool          *tool;
+  GimpTransformTool *tr_tool;
 
-  tool = GIMP_TOOL (perspective_tool);
+  tool    = GIMP_TOOL (perspective_tool);
+  tr_tool = GIMP_TRANSFORM_TOOL (perspective_tool);
 
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_PERSPECTIVE_TOOL_CURSOR);
-}
 
-static TileManager *
-gimp_perspective_tool_transform (GimpTransformTool  *transform_tool,
-				 GimpDisplay        *gdisp,
-				 TransformState      state)
-{
-  switch (state)
-    {
-    case TRANSFORM_INIT:
-      if (! transform_tool->info_dialog)
-	{
-	  transform_tool->info_dialog =
-	    info_dialog_new (NULL,
-                             _("Perspective Transform"), "perspective",
-                             GIMP_STOCK_TOOL_PERSPECTIVE,
-                             _("Perspective Transform Information"),
-			     gimp_standard_help_func,
-			     "tools/transform_perspective.html");
-
-          gimp_transform_tool_info_dialog_connect (transform_tool,
-                                                   GIMP_STOCK_TOOL_PERSPECTIVE);
-
-	  info_dialog_add_label (transform_tool->info_dialog, _("Matrix:"),
-				 matrix_row_buf[0]);
-	  info_dialog_add_label (transform_tool->info_dialog, "",
-                                 matrix_row_buf[1]);
-	  info_dialog_add_label (transform_tool->info_dialog, "",
-                                 matrix_row_buf[2]);
-	}
-
-      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (transform_tool->info_dialog->shell),
-                                         GIMP_VIEWABLE (gimp_image_active_drawable (gdisp->gimage)));
-
-      gtk_widget_set_sensitive (GTK_WIDGET (transform_tool->info_dialog->shell),
-                                TRUE);
-
-      transform_tool->trans_info[X0] = (gdouble) transform_tool->x1;
-      transform_tool->trans_info[Y0] = (gdouble) transform_tool->y1;
-      transform_tool->trans_info[X1] = (gdouble) transform_tool->x2;
-      transform_tool->trans_info[Y1] = (gdouble) transform_tool->y1;
-      transform_tool->trans_info[X2] = (gdouble) transform_tool->x1;
-      transform_tool->trans_info[Y2] = (gdouble) transform_tool->y2;
-      transform_tool->trans_info[X3] = (gdouble) transform_tool->x2;
-      transform_tool->trans_info[Y3] = (gdouble) transform_tool->y2;
-      break;
-
-    case TRANSFORM_MOTION:
-      perspective_tool_motion (transform_tool, gdisp);
-      perspective_tool_recalc (transform_tool, gdisp);
-      break;
-
-    case TRANSFORM_RECALC:
-      perspective_tool_recalc (transform_tool, gdisp);
-      break;
-
-    case TRANSFORM_FINISH:
-      return gimp_transform_tool_transform_tiles (transform_tool,
-                                                  _("Perspective..."));
-      break;
-    }
-
-  return NULL;
+  tr_tool->shell_desc = _("Perspective Transform Information");
 }
 
 static void
-perspective_info_update (GimpTransformTool *transform_tool)
+gimp_perspective_tool_dialog (GimpTransformTool *tr_tool)
 {
-  gint i;
-  
-  for (i = 0; i < 3; i++)
-    {
-      gchar *p = matrix_row_buf[i];
-      gint   j;
-
-      for (j = 0; j < 3; j++)
-	{
-	  p += g_snprintf (p, MAX_INFO_BUF - (p - matrix_row_buf[i]),
-			   "%10.3g", transform_tool->transform[i][j]);
-	}
-    }
-
-  info_dialog_update (transform_tool->info_dialog);
-  info_dialog_popup (transform_tool->info_dialog);
+  info_dialog_add_label (tr_tool->info_dialog, _("Matrix:"),
+                         matrix_row_buf[0]);
+  info_dialog_add_label (tr_tool->info_dialog, "",
+                         matrix_row_buf[1]);
+  info_dialog_add_label (tr_tool->info_dialog, "",
+                         matrix_row_buf[2]);
 }
 
 static void
-perspective_tool_motion (GimpTransformTool *transform_tool,
-			 GimpDisplay       *gdisp)
+gimp_perspective_tool_prepare (GimpTransformTool  *tr_tool,
+                               GimpDisplay        *gdisp)
+{
+  tr_tool->trans_info[X0] = (gdouble) tr_tool->x1;
+  tr_tool->trans_info[Y0] = (gdouble) tr_tool->y1;
+  tr_tool->trans_info[X1] = (gdouble) tr_tool->x2;
+  tr_tool->trans_info[Y1] = (gdouble) tr_tool->y1;
+  tr_tool->trans_info[X2] = (gdouble) tr_tool->x1;
+  tr_tool->trans_info[Y2] = (gdouble) tr_tool->y2;
+  tr_tool->trans_info[X3] = (gdouble) tr_tool->x2;
+  tr_tool->trans_info[Y3] = (gdouble) tr_tool->y2;
+}
+
+static void
+gimp_perspective_tool_motion (GimpTransformTool *transform_tool,
+                              GimpDisplay       *gdisp)
 {
   gdouble diff_x, diff_y;
 
@@ -265,26 +214,55 @@ perspective_tool_motion (GimpTransformTool *transform_tool,
 }
 
 static void
-perspective_tool_recalc (GimpTransformTool *transform_tool,
-			 GimpDisplay       *gdisp)
+gimp_perspective_tool_recalc (GimpTransformTool *tr_tool,
+                              GimpDisplay       *gdisp)
 {
-  gimp_drawable_transform_matrix_perspective (transform_tool->x1,
-                                              transform_tool->y1,
-                                              transform_tool->x2,
-                                              transform_tool->y2,
-                                              transform_tool->trans_info[X0],
-                                              transform_tool->trans_info[Y0],
-                                              transform_tool->trans_info[X1],
-                                              transform_tool->trans_info[Y1],
-                                              transform_tool->trans_info[X2],
-                                              transform_tool->trans_info[Y2],
-                                              transform_tool->trans_info[X3],
-                                              transform_tool->trans_info[Y3],
-                                              transform_tool->transform);
+  gimp_drawable_transform_matrix_perspective (tr_tool->x1,
+                                              tr_tool->y1,
+                                              tr_tool->x2,
+                                              tr_tool->y2,
+                                              tr_tool->trans_info[X0],
+                                              tr_tool->trans_info[Y0],
+                                              tr_tool->trans_info[X1],
+                                              tr_tool->trans_info[Y1],
+                                              tr_tool->trans_info[X2],
+                                              tr_tool->trans_info[Y2],
+                                              tr_tool->trans_info[X3],
+                                              tr_tool->trans_info[Y3],
+                                              tr_tool->transform);
 
   /*  transform the bounding box  */
-  gimp_transform_tool_transform_bounding_box (transform_tool);
+  gimp_transform_tool_transform_bounding_box (tr_tool);
 
   /*  update the information dialog  */
-  perspective_info_update (transform_tool);
+  perspective_info_update (tr_tool);
+}
+
+static TileManager *
+gimp_perspective_tool_transform (GimpTransformTool *tr_tool,
+				 GimpDisplay       *gdisp)
+{
+  return gimp_transform_tool_transform_tiles (tr_tool,
+                                              _("Perspective..."));
+}
+
+static void
+perspective_info_update (GimpTransformTool *tr_tool)
+{
+  gint i;
+  
+  for (i = 0; i < 3; i++)
+    {
+      gchar *p = matrix_row_buf[i];
+      gint   j;
+
+      for (j = 0; j < 3; j++)
+	{
+	  p += g_snprintf (p, MAX_INFO_BUF - (p - matrix_row_buf[i]),
+			   "%10.3g", tr_tool->transform[i][j]);
+	}
+    }
+
+  info_dialog_update (tr_tool->info_dialog);
+  info_dialog_popup (tr_tool->info_dialog);
 }

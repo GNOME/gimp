@@ -134,26 +134,5 @@ transform_action_get_type (void)
 }
 
 
-static const GEnumValue transform_state_enum_values[] =
-{
-  { TRANSFORM_INIT, "TRANSFORM_INIT", "init" },
-  { TRANSFORM_MOTION, "TRANSFORM_MOTION", "motion" },
-  { TRANSFORM_RECALC, "TRANSFORM_RECALC", "recalc" },
-  { TRANSFORM_FINISH, "TRANSFORM_FINISH", "finish" },
-  { 0, NULL, NULL }
-};
-
-GType
-transform_state_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("TransformState", transform_state_enum_values);
-
-  return enum_type;
-}
-
-
 /* Generated data ends here */
 

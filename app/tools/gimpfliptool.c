@@ -71,8 +71,7 @@ static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
 						   GimpDisplay       *gdisp);
 
 static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
-						   GimpDisplay       *gdisp,
-						   TransformState     state);
+						   GimpDisplay       *gdisp);
 
 static GimpToolOptions * flip_options_new         (GimpToolInfo      *tool_info);
 static void              flip_options_reset       (GimpToolOptions   *tool_options);
@@ -249,32 +248,18 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 
 static TileManager *
 gimp_flip_tool_transform (GimpTransformTool *trans_tool,
-			  GimpDisplay       *gdisp,
-			  TransformState     state)
+			  GimpDisplay       *gdisp)
 {
-  FlipOptions *options;
+  FlipOptions  *options;
+  GimpDrawable *drawable;
 
   options = (FlipOptions *) GIMP_TOOL (trans_tool)->tool_info->tool_options;
 
-  switch (state)
-    {
-    case TRANSFORM_INIT:
-      break;
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
-    case TRANSFORM_MOTION:
-      break;
-
-    case TRANSFORM_RECALC:
-      break;
-
-    case TRANSFORM_FINISH:
-      return gimp_drawable_transform_tiles_flip (gimp_image_active_drawable (gdisp->gimage),
-                                                 trans_tool->original, 
-                                                 options->type);
-      break;
-    }
-
-  return NULL;
+  return gimp_drawable_transform_tiles_flip (drawable,
+                                             trans_tool->original, 
+                                             options->type);
 }
 
 

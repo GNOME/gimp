@@ -403,7 +403,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 
 				      GTK_STOCK_CLOSE,
 				      measure_tool_info_window_close_callback,
-				      measure_tool_info, NULL, NULL, TRUE, FALSE,
+				      measure_tool_info, NULL, NULL, TRUE, TRUE,
 
 				      NULL);
     }

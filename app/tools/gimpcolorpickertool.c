@@ -104,10 +104,11 @@ static gboolean   gimp_color_picker_tool_pick_color     (GimpImage            *g
 static GimpToolOptions * gimp_color_picker_tool_options_new   (GimpToolInfo    *tool_info);
 static void              gimp_color_picker_tool_options_reset (GimpToolOptions *tool_options);
 
-static void   gimp_color_picker_tool_info_window_close_callback (GtkWidget *widget,
-                                                                 gpointer   data);
-static void       gimp_color_picker_tool_info_update    	(GimpTool   *tool,
-                                                                 gboolean   valid);
+static InfoDialog * gimp_color_picker_tool_info_create (GimpDrawable *drawable);
+static void         gimp_color_picker_tool_info_close  (GtkWidget    *widget,
+                                                        gpointer      data);
+static void         gimp_color_picker_tool_info_update (GimpTool     *tool,
+                                                        gboolean      valid);
 
 
 static gint                  col_value[5] = { 0, 0, 0, 0, 0 };
@@ -263,105 +264,14 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
   gimp_tool_control_activate (tool->control);
 
-  /*  create the info dialog if it doesn't exist  */
   if (! gimp_color_picker_tool_info)
-    {
-      GtkWidget *hbox;
-      GtkWidget *frame;
-      GimpRGB    color;
-
-      gimp_color_picker_tool_info =
-        info_dialog_new (NULL,
-                         _("Color Picker"), "color_picker",
-                         GIMP_STOCK_TOOL_COLOR_PICKER,
-                         _("Color Picker Information"),
-                         tool_manager_help_func, NULL);
-
-      /*  if the gdisplay is for a color image, the dialog must have RGB  */
-      switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (tool->drawable)))
-	{
-	case GIMP_RGB:
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Red:"), red_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Green:"), green_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Blue:"), blue_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Alpha:"), alpha_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Hex Triplet:"), hex_buf);
-	  break;
-
-	case GIMP_GRAY:
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Intensity:"), gray_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Alpha:"), alpha_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Hex Triplet:"), hex_buf);
-	  break;
-
-	case GIMP_INDEXED:
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Index:"), index_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Red:"), red_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Green:"), green_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Blue:"), blue_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Alpha:"), alpha_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info,
-                                 _("Hex Triplet"), hex_buf);
-	  break;
-
-	default:
-          g_assert_not_reached ();
-	  break;
-	}
-
-      hbox = gtk_hbox_new (FALSE, 4);
-      gtk_box_pack_start (GTK_BOX (gimp_color_picker_tool_info->vbox), hbox,
-			  FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      gtk_widget_reparent (gimp_color_picker_tool_info->info_table, hbox);
-
-      frame = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-      gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-
-      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
-      color_area =
-	gimp_color_area_new (&color,
-			     gimp_drawable_has_alpha (tool->drawable) ?
-			     GIMP_COLOR_AREA_LARGE_CHECKS :
-			     GIMP_COLOR_AREA_FLAT,
-			     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
-      gtk_widget_set_size_request (color_area, 48, 64);
-      gtk_drag_dest_unset (color_area);
-      gtk_container_add (GTK_CONTAINER (frame), color_area);
-      gtk_widget_show (color_area);
-      gtk_widget_show (frame);
-
-      /*  create the action area  */
-      gimp_dialog_create_action_area
-	(GIMP_DIALOG (gimp_color_picker_tool_info->shell),
-
-	 GTK_STOCK_CLOSE, gimp_color_picker_tool_info_window_close_callback,
-	 gimp_color_picker_tool_info, NULL, NULL, TRUE, FALSE,
-
-	 NULL);
-    }
+    gimp_color_picker_tool_info = gimp_color_picker_tool_info_create (tool->drawable);
 
   gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (gimp_color_picker_tool_info->shell),
-                                     GIMP_VIEWABLE (gimp_image_active_drawable (gdisp->gimage)));
+                                     GIMP_VIEWABLE (tool->drawable));
 
   /*  Keep the coordinates of the target  */
-  gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                         &off_x, &off_y);
+  gimp_drawable_offsets (tool->drawable, &off_x, &off_y);
 
   cp_tool->centerx = coords->x - off_x;
   cp_tool->centery = coords->y - off_y;
@@ -402,7 +312,6 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
       update_type = GIMP_UPDATE_COLOR_STATE_UPDATE;
     }
 
-  /*  Start drawing the colorpicker tool  */
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }
 
@@ -583,9 +492,94 @@ gimp_color_picker_tool_pick_color (GimpImage            *gimage,
   return success;
 }
 
+static InfoDialog *
+gimp_color_picker_tool_info_create (GimpDrawable *drawable)
+{
+  InfoDialog *info_dialog;
+  GtkWidget  *hbox;
+  GtkWidget  *frame;
+  GimpRGB     color;
+
+  info_dialog = info_dialog_new (NULL,
+                                 _("Color Picker"), "color_picker",
+                                 GIMP_STOCK_TOOL_COLOR_PICKER,
+                                 _("Color Picker Information"),
+                                 tool_manager_help_func, NULL);
+
+  gimp_dialog_create_action_area (GIMP_DIALOG (info_dialog->shell),
+
+                                  GTK_STOCK_CLOSE,
+                                  gimp_color_picker_tool_info_close,
+                                  info_dialog, NULL, NULL, TRUE, TRUE,
+
+                                  NULL);
+
+  /*  if the gdisplay is for a color image, the dialog must have RGB  */
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
+    {
+    case GIMP_RGB:
+      info_dialog_add_label (info_dialog, _("Red:"),         red_buf);
+      info_dialog_add_label (info_dialog, _("Green:"),       green_buf);
+      info_dialog_add_label (info_dialog, _("Blue:"),        blue_buf);
+      info_dialog_add_label (info_dialog, _("Alpha:"),       alpha_buf);
+      info_dialog_add_label (info_dialog, _("Hex Triplet:"), hex_buf);
+      break;
+
+    case GIMP_GRAY:
+      info_dialog_add_label (info_dialog, _("Intensity:"),   gray_buf);
+      info_dialog_add_label (info_dialog, _("Alpha:"),       alpha_buf);
+      info_dialog_add_label (info_dialog, _("Hex Triplet:"), hex_buf);
+      break;
+
+    case GIMP_INDEXED:
+      info_dialog_add_label (info_dialog, _("Index:"),      index_buf);
+      info_dialog_add_label (info_dialog, _("Red:"),        red_buf);
+      info_dialog_add_label (info_dialog, _("Green:"),      green_buf);
+      info_dialog_add_label (info_dialog, _("Blue:"),       blue_buf);
+      info_dialog_add_label (info_dialog, _("Alpha:"),      alpha_buf);
+      info_dialog_add_label (info_dialog, _("Hex Triplet"), hex_buf);
+      break;
+
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (info_dialog->vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  gtk_widget_reparent (info_dialog->info_table, hbox);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+
+  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+  color_area = gimp_color_area_new (&color,
+                                    gimp_drawable_has_alpha (drawable) ?
+                                    GIMP_COLOR_AREA_LARGE_CHECKS :
+                                    GIMP_COLOR_AREA_FLAT,
+                                    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
+  gtk_widget_set_size_request (color_area, 48, 64);
+  gtk_drag_dest_unset (color_area);
+  gtk_container_add (GTK_CONTAINER (frame), color_area);
+  gtk_widget_show (color_area);
+  gtk_widget_show (frame);
+
+  return info_dialog;
+}
+
+static void
+gimp_color_picker_tool_info_close (GtkWidget *widget,
+                                   gpointer   client_data)
+{
+  info_dialog_popdown ((InfoDialog *) client_data);
+}
+
 static void
 gimp_color_picker_tool_info_update (GimpTool  *tool,
-				    gboolean  valid)
+				    gboolean   valid)
 {
   if (!valid)
     {
@@ -681,13 +675,6 @@ gimp_color_picker_tool_info_update (GimpTool  *tool,
 
   info_dialog_update (gimp_color_picker_tool_info);
   info_dialog_popup (gimp_color_picker_tool_info);
-}
-
-static void
-gimp_color_picker_tool_info_window_close_callback (GtkWidget *widget,
-						   gpointer   client_data)
-{
-  info_dialog_popdown ((InfoDialog *) client_data);
 }
 
 

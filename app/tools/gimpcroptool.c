@@ -143,7 +143,7 @@ static void   crop_crop_callback            (GtkWidget       *widget,
 					     GimpCropTool    *crop);
 static void   crop_resize_callback          (GtkWidget       *widget,
 					     GimpCropTool    *crop);
-static void   crop_close_callback           (GtkWidget       *widget,
+static void   crop_cancel_callback          (GtkWidget       *widget,
 					     GimpCropTool    *crop);
 
 static void   crop_selection_callback       (GtkWidget       *widget,
@@ -281,7 +281,7 @@ gimp_crop_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
-      crop_close_callback (NULL, crop);
+      crop_cancel_callback (NULL, crop);
       break;
 
     default:
@@ -424,7 +424,7 @@ gimp_crop_tool_button_release (GimpTool        *tool,
                                   FALSE);
 
 	  /*  Finish the tool  */
-	  crop_close_callback (NULL, crop);
+	  crop_cancel_callback (NULL, crop);
 	}
       else
         {
@@ -971,7 +971,6 @@ crop_info_create (GimpCropTool *crop)
   gdisp = tool->gdisp;
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  /*  create the info dialog  */
   crop->crop_info = info_dialog_new (NULL,
                                      tool->tool_info->blurb,
                                      GIMP_OBJECT (tool->tool_info)->name,
@@ -979,11 +978,10 @@ crop_info_create (GimpCropTool *crop)
                                      _("Crop & Resize Information"),
                                      tool_manager_help_func, NULL);
 
-  /*  create the action area  */
   gimp_dialog_create_action_area (GIMP_DIALOG (crop->crop_info->shell),
 
-				  GTK_STOCK_CLOSE, crop_close_callback,
-				  crop, NULL, NULL, FALSE, FALSE,
+				  GTK_STOCK_CANCEL, crop_cancel_callback,
+				  crop, NULL, NULL, FALSE, TRUE,
 
 				  GIMP_STOCK_RESIZE, crop_resize_callback,
 				  crop, NULL, NULL, FALSE, FALSE,
@@ -1086,7 +1084,7 @@ crop_crop_callback (GtkWidget    *widget,
                         options->layer_only,
                         TRUE);
 
-  crop_close_callback (NULL, crop);
+  crop_cancel_callback (NULL, crop);
 }
 
 static void
@@ -1106,12 +1104,12 @@ crop_resize_callback (GtkWidget    *widget,
                         options->layer_only,
                         FALSE);
 
-  crop_close_callback (NULL, crop);
+  crop_cancel_callback (NULL, crop);
 }
 
 static void
-crop_close_callback (GtkWidget    *widget,
-		     GimpCropTool *crop)
+crop_cancel_callback (GtkWidget    *widget,
+                      GimpCropTool *crop)
 {
   if (gimp_tool_control_is_active (GIMP_TOOL (crop)->control))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (crop));

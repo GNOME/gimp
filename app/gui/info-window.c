@@ -332,11 +332,10 @@ info_window_create (GimpDisplay *gdisp)
 				       gimp_standard_help_func,
 				       "dialogs/info_window.html");
 
-  /*  create the action area  */
   gimp_dialog_create_action_area (GIMP_DIALOG (info_win->shell),
 
 				  GTK_STOCK_CLOSE, info_window_close_callback,
-				  info_win, NULL, NULL, TRUE, FALSE,
+				  info_win, NULL, NULL, TRUE, TRUE,
 
 				  NULL);
 
