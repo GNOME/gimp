@@ -1,5 +1,7 @@
 %define subver   @GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@
 %define microver @GIMP_MICRO_VERSION@
+%define libage   @LT_CURRENT_MINUS_AGE@.@LT_AGE@.@LT_REVISION@
+%define libver   @LT_CURRENT_MINUS_AGE@
 %define ver      @VERSION@
 %define prefix	 /usr
 %define sysconfdir	/etc
@@ -159,23 +161,23 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 
 %defattr (0555, bin, bin)
 
-%{prefix}/lib/libgimp-%{subver}.so.%{microver}.0.0
-%{prefix}/lib/libgimp-%{subver}.so.%{microver}
-%{prefix}/lib/libgimpui-%{subver}.so.%{microver}.0.0
-%{prefix}/lib/libgimpui-%{subver}.so.%{microver}
+%{prefix}/lib/libgimp-%{subver}.so.%{libage}
+%{prefix}/lib/libgimp-%{subver}.so.%{libver}
+%{prefix}/lib/libgimpui-%{subver}.so.%{libage}
+%{prefix}/lib/libgimpui-%{subver}.so.%{libver}
 
-%{prefix}/lib/libgimpbase-%{subver}.so.%{microver}.0.0
-%{prefix}/lib/libgimpbase-%{subver}.so.%{microver}
-%{prefix}/lib/libgimpcolor-%{subver}.so.%{microver}.0.0
-%{prefix}/lib/libgimpcolor-%{subver}.so.%{microver}
-%{prefix}/lib/libgimpmath-%{subver}.so.%{microver}.0.0
-%{prefix}/lib/libgimpmath-%{subver}.so.%{microver}
-%{prefix}/lib/libgimpmodule-%{subver}.so.%{microver}.0.0
-%{prefix}/lib/libgimpmodule-%{subver}.so.%{microver}
-%{prefix}/lib/libgimpthumb-%{subver}.so.%{microver}.0.0
-%{prefix}/lib/libgimpthumb-%{subver}.so.%{microver}
-%{prefix}/lib/libgimpwidgets-%{subver}.so.%{microver}.0.0
-%{prefix}/lib/libgimpwidgets-%{subver}.so.%{microver}
+%{prefix}/lib/libgimpbase-%{subver}.so.%{libage}
+%{prefix}/lib/libgimpbase-%{subver}.so.%{libver}
+%{prefix}/lib/libgimpcolor-%{subver}.so.%{libage}
+%{prefix}/lib/libgimpcolor-%{subver}.so.%{libver}
+%{prefix}/lib/libgimpmath-%{subver}.so.%{libage}
+%{prefix}/lib/libgimpmath-%{subver}.so.%{libver}
+%{prefix}/lib/libgimpmodule-%{subver}.so.%{libage}
+%{prefix}/lib/libgimpmodule-%{subver}.so.%{libver}
+%{prefix}/lib/libgimpthumb-%{subver}.so.%{libage}
+%{prefix}/lib/libgimpthumb-%{subver}.so.%{libver}
+%{prefix}/lib/libgimpwidgets-%{subver}.so.%{libage}
+%{prefix}/lib/libgimpwidgets-%{subver}.so.%{libver}
 
 %{prefix}/share/gimp/%{subver}/images
 %{prefix}/share/gimp/%{subver}/misc

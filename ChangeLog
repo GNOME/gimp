@@ -1,3 +1,8 @@
+2004-01-20  Ville Pätsi  <drc@gimp.org>
+
+	* gimp.spec.in: Changed library extension to actually use the correct
+	values, and not assume .0.0. 
+
 2004-01-20  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/help.pdb: changed "prog_name" parameter of
