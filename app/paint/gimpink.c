@@ -298,7 +298,7 @@ ink_options_new (void)
   gtk_widget_show (label);
   
   options->size_w =
-    gtk_adjustment_new (options->size_d, 0.0, 20.0, 1.0, 5.0, 0.0);
+    gtk_adjustment_new (options->size_d, 0.0, 20.0, 1.0, 2.0, 0.0);
   slider = gtk_hscale_new (GTK_ADJUSTMENT (options->size_w));
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 0, 1);

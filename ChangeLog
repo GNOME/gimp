@@ -1,3 +1,8 @@
+1999-07-20  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+        * app/ink.c (ink_options_new): Changed the default step-width of
+        the "size"-slider to 2 instead of 5.
+
 Mon Jul 19 20:57:10 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/Makefile.am: added dodgeburn.h for enum parsing
