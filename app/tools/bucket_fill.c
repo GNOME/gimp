@@ -42,8 +42,8 @@
 typedef struct _BucketTool BucketTool;
 struct _BucketTool
 {
-  int  target_x;  /*  starting x coord  */
-  int  target_y;  /*  starting y coord  */
+  gint  target_x;  /*  starting x coord  */
+  gint  target_y;  /*  starting y coord  */
 };
 
 typedef struct _BucketOptions BucketOptions;
@@ -51,12 +51,12 @@ struct _BucketOptions
 {
   PaintOptions    paint_options;
 
-  double          threshold;
-  double          threshold_d;
+  gdouble         threshold;
+  gdouble         threshold_d;
   GtkObject      *threshold_w;
 
-  int             sample_merged;
-  int             sample_merged_d;
+  gboolean        sample_merged;
+  gboolean        sample_merged_d;
   GtkWidget      *sample_merged_w;
 
   BucketFillMode  fill_mode;
@@ -75,13 +75,10 @@ static void  bucket_fill_button_press    (Tool *, GdkEventButton *, gpointer);
 static void  bucket_fill_button_release  (Tool *, GdkEventButton *, gpointer);
 static void  bucket_fill_cursor_update   (Tool *, GdkEventMotion *, gpointer);
 
-static void  bucket_fill_region          (BucketFillMode, PixelRegion *,
-					  PixelRegion *, unsigned char *,
-					  TempBuf *, int, int, int);
-static void  bucket_fill_line_color      (unsigned char *, unsigned char *,
-					  unsigned char *, int, int, int);
-static void  bucket_fill_line_pattern    (unsigned char *, unsigned char *,
-					  TempBuf *, int, int, int, int, int);
+static void  bucket_fill_line_color      (guchar *, guchar *, guchar *,
+					  gboolean, gint, gint);
+static void  bucket_fill_line_pattern    (guchar *, guchar *, TempBuf *,
+					  gboolean, gint, gint, gint, gint);
 
 
 /*  functions  */
@@ -163,10 +160,10 @@ bucket_options_new (void)
   /*  fill type  */
   frame = tool_options_radio_buttons_new (_("Fill Type"), 
 					  &options->fill_mode,
-					   options->fill_mode_w,
-					   fill_mode_label,
-					   fill_mode_value,
-					   3);
+					  options->fill_mode_w,
+					  fill_mode_label,
+					  fill_mode_value,
+					  3);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_mode_w[options->fill_mode_d]), TRUE); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -183,7 +180,7 @@ bucket_fill_button_press (Tool           *tool,
 {
   GDisplay * gdisp;
   BucketTool * bucket_tool;
-  int use_offsets;
+  gboolean use_offsets;
 
   gdisp = (GDisplay *) gdisp_ptr;
   bucket_tool = (BucketTool *) tool->private;
@@ -196,7 +193,9 @@ bucket_fill_button_press (Tool           *tool,
 
   /*  Make the tool active and set the gdisplay which owns it  */
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+		    GDK_POINTER_MOTION_HINT_MASK |
+		    GDK_BUTTON1_MOTION_MASK |
+		    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
 
   /*  Make the tool active and set the gdisplay which owns it  */
@@ -212,7 +211,7 @@ bucket_fill_button_release (Tool           *tool,
   GDisplay * gdisp;
   BucketTool * bucket_tool;
   Argument *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   gdisp = (GDisplay *) gdisp_ptr;
   bucket_tool = (BucketTool *) tool->private;
@@ -255,8 +254,8 @@ bucket_fill_cursor_update (Tool           *tool,
   GDisplay *gdisp;
   Layer *layer;
   GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
-  int x, y;
-  int off_x, off_y;
+  gint x, y;
+  gint off_x, off_y;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -311,23 +310,24 @@ void
 bucket_fill (GimpImage      *gimage,
 	     GimpDrawable   *drawable,
 	     BucketFillMode  fill_mode,
-	     int             paint_mode,
-	     double          opacity,
-	     double          threshold,
-	     int             sample_merged,
-	     double          x,
-	     double          y)
+	     gint            paint_mode,
+	     gdouble         opacity,
+	     gdouble         threshold,
+	     gboolean        sample_merged,
+	     gdouble         x,
+	     gdouble         y)
 {
   TileManager *buf_tiles;
-  PixelRegion bufPR, maskPR;
-  Channel * mask = NULL;
-  int bytes, has_alpha;
-  int x1, y1, x2, y2;
-  unsigned char col [MAX_CHANNELS];
-  unsigned char *d1, *d2;
-  GPatternP pattern;
-  TempBuf * pat_buf;
-  int new_buf = 0;
+  PixelRegion  bufPR, maskPR;
+  Channel     *mask = NULL;
+  gint       bytes;
+  gboolean   has_alpha;
+  gint       x1, y1, x2, y2;
+  guchar     col [MAX_CHANNELS];
+  guchar    *d1, *d2;
+  GPatternP  pattern;
+  TempBuf   *pat_buf;
+  gboolean   new_buf = FALSE;
 
   pat_buf = NULL;
 
@@ -370,7 +370,7 @@ bucket_fill (GimpImage      *gimage,
 	      d2 += pat_buf->bytes;
 	    }
 
-	  new_buf = 1;
+	  new_buf = TRUE;
 	}
       else
 	pat_buf = pattern->mask;
@@ -423,7 +423,7 @@ bucket_fill (GimpImage      *gimage,
       if (! has_alpha)
 	{
 	  bytes ++;
-	  has_alpha = 1;
+	  has_alpha = TRUE;
 	}
     }
 
@@ -455,16 +455,15 @@ bucket_fill (GimpImage      *gimage,
   gimp_remove_busy_cursors (NULL);
 }
 
-
 static void
-bucket_fill_line_color (unsigned char *buf,
-			unsigned char *mask,
-			unsigned char *col,
-			int            has_alpha,
-			int            bytes,
-			int            width)
+bucket_fill_line_color (guchar   *buf,
+			guchar   *mask,
+			guchar   *col,
+			gboolean  has_alpha,
+			gint      bytes,
+			gint      width)
 {
-  int alpha, b;
+  gint alpha, b;
 
   alpha = (has_alpha) ? bytes - 1 : bytes;
   while (width--)
@@ -484,20 +483,19 @@ bucket_fill_line_color (unsigned char *buf,
     }
 }
 
-
 static void
-bucket_fill_line_pattern (unsigned char *buf,
-			  unsigned char *mask,
-			  TempBuf       *pattern,
-			  int            has_alpha,
-			  int            bytes,
-			  int            x,
-			  int            y,
-			  int            width)
+bucket_fill_line_pattern (guchar   *buf,
+			  guchar   *mask,
+			  TempBuf  *pattern,
+			  gboolean  has_alpha,
+			  gint      bytes,
+			  gint      x,
+			  gint      y,
+			  gint      width)
 {
-  unsigned char *pat, *p;
-  int alpha, b;
-  int i;
+  guchar *pat, *p;
+  gint alpha, b;
+  gint i;
 
   /*  Get a pointer to the appropriate scanline of the pattern buffer  */
   pat = temp_buf_data (pattern) +
@@ -523,22 +521,23 @@ bucket_fill_line_pattern (unsigned char *buf,
     }
 }
 
-
-static void
+void
 bucket_fill_region (BucketFillMode  fill_mode,
 		    PixelRegion    *bufPR,
 		    PixelRegion    *maskPR,
-		    unsigned char  *col,
+		    guchar         *col,
 		    TempBuf        *pattern,
-		    int             off_x,
-		    int             off_y,
-		    int             has_alpha)
+		    gint            off_x,
+		    gint            off_y,
+		    gboolean        has_alpha)
 {
-  unsigned char *s, *m;
-  int y;
+  guchar *s, *m;
+  gint y;
   void *pr;
 
-  for (pr = pixel_regions_register (2, bufPR, maskPR); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (2, bufPR, maskPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       s = bufPR->data;
       if (maskPR)

@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
+#include "bucket_fill.h"
 #include "colormaps.h"
 #include "cursorutil.h"
 #include "devices.h"
@@ -750,4 +751,62 @@ gdisplay_drag_drop (GtkWidget      *widget,
     gimp_context_set_display (gimp_context_get_user (), gdisp);
 
   return return_val;
+}
+
+void
+gdisplay_set_color (gpointer  data,
+		    guchar    r,
+		    guchar    g,
+		    guchar    b)
+{
+  GimpImage    *gimage;
+  GimpDrawable *drawable;
+  TileManager  *buf_tiles;
+  PixelRegion   bufPR;
+  GimpContext  *context;
+  gint     x1, x2, y1, y2;
+  gint     bytes;
+  gboolean has_alpha;
+  guchar   col[3];
+
+  gimage = ((GDisplay *) data)->gimage;
+  drawable = gimage_active_drawable (gimage);
+
+  gimp_add_busy_cursors ();
+
+  /*  Get the fill parameters  */
+  if (gimp_context_get_current () == gimp_context_get_user () &&
+      ! global_paint_options)
+    context = tool_info[BUCKET_FILL].tool_context;
+  else
+    context = gimp_context_get_current ();
+
+  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+  bytes = drawable_bytes (drawable);
+  has_alpha = drawable_has_alpha (drawable);
+
+  col[0] = r;
+  col[1] = g;
+  col[2] = b;
+
+  /*  Fill the region  */
+  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
+  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
+  bucket_fill_region (FG_BUCKET_FILL, &bufPR, NULL,
+		      col, NULL, x1, y1, has_alpha);
+
+  /*  Apply it to the image  */
+  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
+  gimage_apply_image (gimage, drawable, &bufPR, TRUE,
+		      gimp_context_get_opacity (context) * 255,
+		      gimp_context_get_paint_mode (context),
+		      NULL, x1, y1);
+  tile_manager_destroy (buf_tiles);
+
+  /*  Update the displays  */
+  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+  gdisplays_flush ();
+
+  gimp_remove_busy_cursors (NULL);
 }

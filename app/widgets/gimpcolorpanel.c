@@ -46,30 +46,18 @@ static gint color_panel_events          (GtkWidget *, GdkEvent *);
 static void color_panel_select_callback (gint, gint, gint,
 					 ColorNotebookState, void *);
 
-static void color_panel_drag_begin  (GtkWidget *, GdkDragContext *, gpointer);
-static void color_panel_drag_end    (GtkWidget *, GdkDragContext *, gpointer);
-static void color_panel_drop_handle (GtkWidget        *widget, 
-				     GdkDragContext   *context,
-				     gint              x,
-				     gint              y,
-				     GtkSelectionData *selection_data,
-				     guint             info,
-				     guint             time,
-				     gpointer          data);
-static void color_panel_drag_handle (GtkWidget        *widget, 
-				     GdkDragContext   *context,
-				     GtkSelectionData *selection_data,
-				     guint             info,
-				     guint             time,
-				     gpointer          data);
+static void color_panel_get_color (gpointer, guchar *, guchar *, guchar *);
+static void color_panel_set_color (gpointer, guchar, guchar, guchar);
 
-/*  dnd structures  */
+/*  dnd stuff  */
 static GtkTargetEntry color_panel_target_table[] =
 {
   GIMP_TARGET_COLOR
 };
 static guint n_color_panel_targets = (sizeof (color_panel_target_table) /
 				      sizeof (color_panel_target_table[0]));
+
+/*  public functions  */
 
 ColorPanel *
 color_panel_new (guchar *initial,
@@ -111,34 +99,21 @@ color_panel_new (guchar *initial,
   gtk_widget_show (private->drawing_area);
 
   /*  dnd stuff  */
+  gtk_drag_source_set (private->drawing_area,
+                       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+                       color_panel_target_table, n_color_panel_targets,
+                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+  gimp_dnd_color_source_set (private->drawing_area,
+			     color_panel_get_color, color_panel);
+
   gtk_drag_dest_set (private->drawing_area,
 		     GTK_DEST_DEFAULT_HIGHLIGHT |
 		     GTK_DEST_DEFAULT_MOTION |
 		     GTK_DEST_DEFAULT_DROP,
 		     color_panel_target_table, n_color_panel_targets,
 		     GDK_ACTION_COPY);
-
-  gtk_drag_source_set (private->drawing_area,
-                       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
-                       color_panel_target_table, n_color_panel_targets,
-                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
-
-  gtk_signal_connect (GTK_OBJECT (private->drawing_area),
-                      "drag_begin",
-                      GTK_SIGNAL_FUNC (color_panel_drag_begin),
-                      color_panel);
-  gtk_signal_connect (GTK_OBJECT (private->drawing_area),
-                      "drag_end",
-                      GTK_SIGNAL_FUNC (color_panel_drag_end),
-                      color_panel);
-  gtk_signal_connect (GTK_OBJECT (private->drawing_area),
-                      "drag_data_get",
-                      GTK_SIGNAL_FUNC (color_panel_drag_handle),
-                      color_panel);
-  gtk_signal_connect (GTK_OBJECT (private->drawing_area),
-                      "drag_data_received",
-                      GTK_SIGNAL_FUNC (color_panel_drop_handle),
-                      color_panel);
+  gimp_dnd_color_dest_set (private->drawing_area,
+			   color_panel_set_color, color_panel);
 
   return color_panel;
 }
@@ -162,6 +137,8 @@ color_panel_free (ColorPanel *color_panel)
   g_free (color_panel->private_part);
   g_free (color_panel);
 }
+
+/*  private functions  */
 
 static void
 color_panel_draw (ColorPanel *color_panel)
@@ -289,99 +266,33 @@ color_panel_select_callback (gint                r,
 }
 
 static void
-color_panel_drag_begin (GtkWidget      *widget,
-			GdkDragContext *context,
-			gpointer        data)
+color_panel_get_color (gpointer  data,
+		       guchar   *r,
+		       guchar   *g,
+		       guchar   *b)
 {
   ColorPanel *color_panel = data;
-  GtkWidget *window;
-  GdkColor bg;
 
-  window = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_widget_set_app_paintable (GTK_WIDGET (window), TRUE);
-  gtk_widget_set_usize (window, 48, 32);
-  gtk_widget_realize (window);
-  gtk_object_set_data_full (GTK_OBJECT (widget),
-                            "gimp-color-panel-drag-window",
-                            window,
-                            (GtkDestroyNotify) gtk_widget_destroy);
-
-  bg.red   = 0xff * color_panel->color[0];
-  bg.green = 0xff * color_panel->color[1];
-  bg.blue  = 0xff * color_panel->color[2];
-
-  gdk_color_alloc (gtk_widget_get_colormap (window), &bg);
-  gdk_window_set_background (window->window, &bg);
-
-  gtk_drag_set_icon_widget (context, window, -2, -2);
+  *r = color_panel->color[0];
+  *g = color_panel->color[1];
+  *b = color_panel->color[2];
 }
 
 static void
-color_panel_drag_end (GtkWidget      *widget,
-		      GdkDragContext *context,
-		      gpointer        data)
-{
-  gtk_object_set_data (GTK_OBJECT (widget),
-		       "gimp-color-panel-drag-window", NULL);
-}
-
-static void
-color_panel_drop_handle (GtkWidget        *widget, 
-			 GdkDragContext   *context,
-			 gint              x,
-			 gint              y,
-			 GtkSelectionData *selection_data,
-			 guint             info,
-			 guint             time,
-			 gpointer          data)
+color_panel_set_color (gpointer  data,
+		       guchar    r,
+		       guchar    g,
+		       guchar    b)
 {
   ColorPanel *color_panel = data;
   ColorPanelPrivate *private = (ColorPanelPrivate *) color_panel->private_part;
-  guint16 *vals;
 
-  if (selection_data->length < 0)
-    return;
-
-  if ((selection_data->format != 16) || 
-      (selection_data->length != 8))
-    {
-      g_warning ("Received invalid color data\n");
-      return;
-    }
-  
-  vals = (guint16 *) selection_data->data;
-
-  color_panel->color[0] = vals[0] / 0xff;
-  color_panel->color[1] = vals[1] / 0xff;
-  color_panel->color[2] = vals[2] / 0xff;
+  color_panel->color[0] = r;
+  color_panel->color[1] = g;
+  color_panel->color[2] = b;
 
   if (private->color_notebook_active)
-    color_notebook_set_color (private->color_notebook,
-			      color_panel->color[0],
-			      color_panel->color[1],
-			      color_panel->color[2],
-			      TRUE);
+    color_notebook_set_color (private->color_notebook, r, g, b, TRUE);
 
   color_panel_draw (color_panel);
-}
-
-static void
-color_panel_drag_handle (GtkWidget        *widget, 
-			 GdkDragContext   *context,
-			 GtkSelectionData *selection_data,
-			 guint             info,
-			 guint             time,
-			 gpointer          data)
-{
-  ColorPanel *color_panel = data;
-  guint16 vals[4];
-
-  vals[0] = color_panel->color[0] * 0xff;
-  vals[1] = color_panel->color[1] * 0xff;
-  vals[2] = color_panel->color[2] * 0xff;
-  vals[3] = 0xffff;
-
-  gtk_selection_data_set (selection_data,
-                          gdk_atom_intern ("application/x-color", FALSE),
-                          16, (guchar *) vals, 8);
 }

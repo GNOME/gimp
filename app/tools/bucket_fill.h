@@ -29,10 +29,26 @@ typedef enum
   PATTERN_BUCKET_FILL
 } BucketFillMode;
 
-void        bucket_fill (GimpImage *, GimpDrawable *, BucketFillMode, int,
-    			 double, double, int, double, double);
+void        bucket_fill        (GimpImage      *gimage,
+				GimpDrawable   *drawable,
+				BucketFillMode  fill_mode,
+				gint            paint_mode,
+				gdouble         opacity,
+				gdouble         threshold,
+				gboolean        sample_merged,
+				gdouble         x,
+				gdouble         y);
+
+void        bucket_fill_region (BucketFillMode  fill_mode,
+				PixelRegion    *bufPR,
+				PixelRegion    *maskPR,
+				guchar         *col,
+				TempBuf        *pattern,
+				gint            off_x,
+				gint            off_y,
+				gboolean        has_alpha);
 
 Tool *      tools_new_bucket_fill   (void);
-void        tools_free_bucket_fill  (Tool *);
+void        tools_free_bucket_fill  (Tool *tool);
 
 #endif  /*  __BUCKET_FILL_H__  */

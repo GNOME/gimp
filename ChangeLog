@@ -1,3 +1,20 @@
+1999-08-23  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/bucket_fill.[ch]: export bucket_fill_region().
+
+	* app/channels_dialog.c: enabled dropping a color to a channel.
+
+	* app/color_area.c
+	* app/color_panel.c
+	* app/gimpdnd.[ch]: the whole color dnd is now done in a generic
+	function in gimpdnd.c (dnd of other types is still hacked in at
+	various places but will go to generic functions and callbacks as
+	well).
+
+	* app/disp_callbacks.[ch]
+	* app/interface.c: drop a color to the display to bucket fill the
+	selected region.
+
 Mon Aug 23 02:19:12 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/paint_funcs.c: fixed a couple of bugs in the scale_region code.

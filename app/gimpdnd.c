@@ -19,6 +19,10 @@
 #include "gimpdnd.h"
 #include "gimprc.h"
 
+/****************************/
+/*  drawable dnd functions  */
+/****************************/
+
 #define GRAD_CHECK_SIZE_SM 4
 
 #define GRAD_CHECK_DARK  (1.0 / 3.0)
@@ -213,4 +217,157 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 			    -8, -8);
 
   gdk_pixmap_unref (drag_pixmap);
+}
+
+/*************************/
+/*  color dnd functions  */
+/*************************/
+
+static void
+gimp_dnd_color_drag_begin (GtkWidget      *widget,
+			   GdkDragContext *context,
+			   gpointer        data)
+{
+  GtkWidget *window;
+  GdkColor bg;
+  guchar r, g, b;
+  GimpDndGetColorFunc get_color_func;
+
+  get_color_func =
+    (GimpDndGetColorFunc) gtk_object_get_data (GTK_OBJECT (widget),
+					       "gimp_dnd_get_color_func");
+
+  if (! get_color_func)
+    return;
+
+  window = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_widget_set_app_paintable (GTK_WIDGET (window), TRUE);
+  gtk_widget_set_usize (window, 48, 32);
+  gtk_widget_realize (window);
+  gtk_object_set_data_full (GTK_OBJECT (widget),
+                            "gimp-color-drag-window",
+                            window,
+                            (GtkDestroyNotify) gtk_widget_destroy);
+
+  (* get_color_func) (data, &r, &g, &b);
+
+  bg.red   = 0xff * r;
+  bg.green = 0xff * g;
+  bg.blue  = 0xff * b;
+
+  gdk_color_alloc (gtk_widget_get_colormap (window), &bg);
+  gdk_window_set_background (window->window, &bg);
+
+  gtk_drag_set_icon_widget (context, window, -2, -2);
+}
+
+static void
+gimp_dnd_color_drag_end (GtkWidget      *widget,
+			 GdkDragContext *context)
+{
+  gtk_object_set_data (GTK_OBJECT (widget),
+		       "gimp-color-drag-window", NULL);
+}
+
+static void
+gimp_dnd_color_drag_handle (GtkWidget        *widget, 
+			    GdkDragContext   *context,
+			    GtkSelectionData *selection_data,
+			    guint             info,
+			    guint             time,
+			    gpointer          data)
+{
+  guint16 vals[4];
+  guchar r, g, b;
+  GimpDndGetColorFunc get_color_func;
+
+  get_color_func =
+    (GimpDndGetColorFunc) gtk_object_get_data (GTK_OBJECT (widget),
+					       "gimp_dnd_get_color_func");
+
+  if (! get_color_func)
+    return;
+
+  (* get_color_func) (data, &r, &g, &b);
+
+  vals[0] = r * 0xff;
+  vals[1] = g * 0xff;
+  vals[2] = b * 0xff;
+  vals[3] = 0xffff;
+
+  gtk_selection_data_set (selection_data,
+                          gdk_atom_intern ("application/x-color", FALSE),
+                          16, (guchar *) vals, 8);
+}
+
+static void
+gimp_dnd_color_drop_handle (GtkWidget        *widget, 
+			    GdkDragContext   *context,
+			    gint              x,
+			    gint              y,
+			    GtkSelectionData *selection_data,
+			    guint             info,
+			    guint             time,
+			    gpointer          data)
+{
+  guint16 *vals;
+  guchar r, g, b;
+  GimpDndSetColorFunc set_color_func;
+
+  set_color_func =
+    (GimpDndSetColorFunc) gtk_object_get_data (GTK_OBJECT (widget),
+					       "gimp_dnd_set_color_func");
+
+  if (! set_color_func)
+    return;
+
+  if (selection_data->length < 0)
+    return;
+
+  if ((selection_data->format != 16) || 
+      (selection_data->length != 8))
+    {
+      g_warning ("Received invalid color data\n");
+      return;
+    }
+  
+  vals = (guint16 *) selection_data->data;
+
+  r = vals[0] / 0xff;
+  g = vals[1] / 0xff;
+  b = vals[2] / 0xff;
+
+  (* set_color_func) (data, r, g, b);
+}
+
+void
+gimp_dnd_color_source_set (GtkWidget           *widget,
+			   GimpDndGetColorFunc  get_color_func,
+			   gpointer             data)
+{
+  gtk_signal_connect (GTK_OBJECT (widget), "drag_begin",
+                      GTK_SIGNAL_FUNC (gimp_dnd_color_drag_begin),
+                      data);
+  gtk_signal_connect (GTK_OBJECT (widget), "drag_end",
+                      GTK_SIGNAL_FUNC (gimp_dnd_color_drag_end),
+                      data);
+  gtk_signal_connect (GTK_OBJECT (widget), "drag_data_get",
+                      GTK_SIGNAL_FUNC (gimp_dnd_color_drag_handle),
+                      data);
+
+  gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_get_color_func",
+		       (gpointer) get_color_func);
+}
+
+void
+gimp_dnd_color_dest_set (GtkWidget           *widget,
+			 GimpDndSetColorFunc  set_color_func,
+			 gpointer             data)
+{
+  gtk_signal_connect (GTK_OBJECT (widget), "drag_data_received",
+                      GTK_SIGNAL_FUNC (gimp_dnd_color_drop_handle),
+                      data);
+
+  gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_set_color_func",
+		       (gpointer) set_color_func);
 }

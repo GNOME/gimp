@@ -35,25 +35,11 @@ typedef enum
 } ColorAreaTarget;
 
 /*  local function prototypes  */
-static void color_area_drag_begin  (GtkWidget *, GdkDragContext *, gpointer);
-static void color_area_drag_end    (GtkWidget *, GdkDragContext *, gpointer);
-static void color_area_drop_handle (GtkWidget        *widget, 
-				    GdkDragContext   *context,
-				    gint              x,
-				    gint              y,
-				    GtkSelectionData *selection_data,
-				    guint             info,
-				    guint             time,
-				    gpointer          data);
-static void color_area_drag_handle (GtkWidget        *widget, 
-				    GdkDragContext   *context,
-				    GtkSelectionData *selection_data,
-				    guint             info,
-				    guint             time,
-				    gpointer          data);
+static void color_area_set_color (gpointer, guchar, guchar, guchar);
+static void color_area_get_color (gpointer, guchar *, guchar *, guchar *);
 
 /*  Global variables  */
-gint active_color = 0;
+gint active_color = FOREGROUND;
 
 /*  Static variables  */
 static GdkGC          *color_area_gc = NULL;
@@ -67,7 +53,7 @@ static gint            edit_color;
 static guchar          revert_fg_r, revert_fg_g, revert_fg_b;
 static guchar          revert_bg_r, revert_bg_g, revert_bg_b;
 
-/*  dnd structures  */
+/*  dnd stuff  */
 static GtkTargetEntry color_area_target_table[] =
 {
   GIMP_TARGET_COLOR
@@ -268,16 +254,13 @@ color_area_edit (void)
       palette_get_foreground (&revert_fg_r, &revert_fg_g, &revert_fg_b);
       palette_get_background (&revert_bg_r, &revert_bg_g, &revert_bg_b);
     }
+
   if (active_color == FOREGROUND)
-    {
-      palette_get_foreground (&r, &g, &b);
-      edit_color = FOREGROUND;
-    }
+    palette_get_foreground (&r, &g, &b);
   else
-    {
-      palette_get_background (&r, &g, &b);
-      edit_color = BACKGROUND;
-    }
+    palette_get_background (&r, &g, &b);
+    
+  edit_color = active_color;
 
   if (! color_notebook)
     {
@@ -333,7 +316,36 @@ color_area_events (GtkWidget *widget,
       bevent = (GdkEventButton *) event;
 
       if (bevent->button == 1)
-	press_target = color_area_target (bevent->x, bevent->y);
+	{
+	  target = color_area_target (bevent->x, bevent->y);
+	  press_target = INVALID_AREA;
+
+	  switch (target)
+	    {
+	    case FORE_AREA:
+	    case BACK_AREA:
+	      if (target != active_color)
+		{
+		  active_color = target;
+		  color_area_draw ();
+		}
+	      else
+		{
+		  press_target = target;
+		}
+	      break;
+	    case SWAP_AREA:
+	      palette_swap_colors ();
+	      color_area_draw ();
+	      break;
+	    case DEF_AREA:
+	      palette_set_default_colors ();
+	      color_area_draw ();
+	      break;
+	    default:
+	      break;
+	    }
+	}
       break;
 
     case GDK_BUTTON_RELEASE:
@@ -349,23 +361,7 @@ color_area_events (GtkWidget *widget,
 		{
 		case FORE_AREA:
 		case BACK_AREA:
-		  if (target == active_color)
-		    {
-		      color_area_edit ();
-		    }
-		  else
-		    {
-		      active_color = target;
-		      color_area_draw ();
-		    }
-		  break;
-		case SWAP_AREA:
-		  palette_swap_colors();
-		  color_area_draw ();
-		  break;
-		case DEF_AREA:
-		  palette_set_default_colors();
-		  color_area_draw ();
+		  color_area_edit ();
 		  break;
 		default:
 		  break;
@@ -405,34 +401,19 @@ color_area_create (gint       width,
   swap_pixmap    = swap_pmap;
 
   /*  dnd stuff  */
+  gtk_drag_source_set (color_area,
+                       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+                       color_area_target_table, n_color_area_targets,
+                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+  gimp_dnd_color_source_set (color_area, color_area_get_color, NULL);
+
   gtk_drag_dest_set (color_area,
 		     GTK_DEST_DEFAULT_HIGHLIGHT |
 		     GTK_DEST_DEFAULT_MOTION |
 		     GTK_DEST_DEFAULT_DROP,
 		     color_area_target_table, n_color_area_targets,
 		     GDK_ACTION_COPY);
-
-  gtk_drag_source_set (color_area,
-                       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
-                       color_area_target_table, n_color_area_targets,
-                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
-
-  gtk_signal_connect (GTK_OBJECT (color_area),
-                      "drag_begin",
-                      GTK_SIGNAL_FUNC (color_area_drag_begin),
-                      color_area);
-  gtk_signal_connect (GTK_OBJECT (color_area),
-                      "drag_end",
-                      GTK_SIGNAL_FUNC (color_area_drag_end),
-                      color_area);
-  gtk_signal_connect (GTK_OBJECT (color_area),
-                      "drag_data_get",
-                      GTK_SIGNAL_FUNC (color_area_drag_handle),
-                      color_area);
-  gtk_signal_connect (GTK_OBJECT (color_area),
-                      "drag_data_received",
-                      GTK_SIGNAL_FUNC (color_area_drop_handle),
-                      color_area);
+  gimp_dnd_color_dest_set (color_area, color_area_set_color, NULL);
 
   return color_area;
 }
@@ -444,76 +425,23 @@ color_area_update ()
 }
 
 static void
-color_area_drag_begin (GtkWidget      *widget,
-		       GdkDragContext *context,
-		       gpointer        data)
+color_area_get_color (gpointer  data,
+		      guchar   *r,
+		      guchar   *g,
+		      guchar   *b)
 {
-  GtkWidget *window;
-  GdkColor bg;
-  guchar r, g, b;
-
-  window = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_widget_set_app_paintable (GTK_WIDGET (window), TRUE);
-  gtk_widget_set_usize (window, 48, 32);
-  gtk_widget_realize (window);
-  gtk_object_set_data_full (GTK_OBJECT (widget),
-                            "gimp-color-area-drag-window",
-                            window,
-                            (GtkDestroyNotify) gtk_widget_destroy);
-
   if (active_color == FOREGROUND)
-    palette_get_foreground (&r, &g, &b);
+    palette_get_foreground (r, g, b);
   else
-    palette_get_background (&r, &g, &b);
-
-  bg.red   = 0xff * r;
-  bg.green = 0xff * g;
-  bg.blue  = 0xff * b;
-
-  gdk_color_alloc (gtk_widget_get_colormap (window), &bg);
-  gdk_window_set_background (window->window, &bg);
-
-  gtk_drag_set_icon_widget (context, window, -2, -2);
+    palette_get_background (r, g, b);
 }
 
 static void
-color_area_drag_end (GtkWidget      *widget,
-		      GdkDragContext *context,
-		      gpointer        data)
+color_area_set_color (gpointer  data,
+		      guchar    r,
+		      guchar    g,
+		      guchar    b)
 {
-  gtk_object_set_data (GTK_OBJECT (widget),
-		       "gimp-color-area-drag-window", NULL);
-}
-
-static void
-color_area_drop_handle (GtkWidget        *widget, 
-			 GdkDragContext   *context,
-			 gint              x,
-			 gint              y,
-			 GtkSelectionData *selection_data,
-			 guint             info,
-			 guint             time,
-			 gpointer          data)
-{
-  guint16 *vals;
-  guchar r, g, b;
-
-  if (selection_data->length < 0)
-    return;
-
-  if ((selection_data->format != 16) || 
-      (selection_data->length != 8))
-    {
-      g_warning ("Received invalid color data\n");
-      return;
-    }
-  
-  vals = (guint16 *) selection_data->data;
-
-  r = vals[0] / 0xff;
-  g = vals[1] / 0xff;
-  b = vals[2] / 0xff;
-
   if (color_notebook_active &&
       active_color == edit_color)
     {
@@ -526,30 +454,4 @@ color_area_drop_handle (GtkWidget        *widget,
       else
 	palette_set_background (r, g, b);
     }
-}
-
-static void
-color_area_drag_handle (GtkWidget        *widget, 
-			 GdkDragContext   *context,
-			 GtkSelectionData *selection_data,
-			 guint             info,
-			 guint             time,
-			 gpointer          data)
-{
-  guint16 vals[4];
-  guchar r, g, b;
-
-  if (active_color == FOREGROUND)
-    palette_get_foreground (&r, &g, &b);
-  else
-    palette_get_background (&r, &g, &b);
-
-  vals[0] = r * 0xff;
-  vals[1] = g * 0xff;
-  vals[2] = b * 0xff;
-  vals[3] = 0xffff;
-
-  gtk_selection_data_set (selection_data,
-                          gdk_atom_intern ("application/x-color", FALSE),
-                          16, (guchar *) vals, 8);
 }

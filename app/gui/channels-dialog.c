@@ -156,6 +156,8 @@ static void channel_widget_drag_leave_callback     (GtkWidget *,
 						    guint);
 static void channel_widget_drag_indicator_callback (GtkWidget *, gpointer);
 
+static void channel_widget_set_color           (gpointer,
+						guchar, guchar, guchar);
 static void channel_widget_draw_drop_indicator (ChannelWidget *, GimpDropType);
 static void channel_widget_delete              (ChannelWidget *);
 static void channel_widget_select_update       (GtkWidget *, gpointer);
@@ -213,6 +215,14 @@ static OpsButton channels_ops_buttons[] =
 };
 
 /*  dnd structures  */
+
+static GtkTargetEntry channel_color_target_table[] =
+{
+  GIMP_TARGET_CHANNEL,
+  GIMP_TARGET_COLOR
+};
+static guint n_channel_color_targets = (sizeof (channel_color_target_table) /
+					sizeof (channel_color_target_table[0]));
 
 static GtkTargetEntry channel_target_table[] =
 {
@@ -829,10 +839,10 @@ static gint
 channel_list_events (GtkWidget *widget,
 		     GdkEvent  *event)
 {
+  ChannelWidget  *channel_widget;
   GdkEventKey    *kevent;
   GdkEventButton *bevent;
   GtkWidget      *event_widget;
-  ChannelWidget  *channel_widget;
 
   event_widget = gtk_get_event_widget (event);
 
@@ -843,9 +853,13 @@ channel_list_events (GtkWidget *widget,
 
       switch (event->type)
 	{
+	case GDK_2BUTTON_PRESS:
+	  if (channel_widget->type == AUXILLARY_CHANNEL)
+	    channels_dialog_edit_channel_query (channel_widget);
+	  return TRUE;
+
 	case GDK_BUTTON_PRESS:
 	  bevent = (GdkEventButton *) event;
-
 	  if (bevent->button == 3 || bevent->button == 2)
 	    {
 	      gtk_menu_popup (GTK_MENU (channelsD->ops_menu),
@@ -854,11 +868,6 @@ channel_list_events (GtkWidget *widget,
 	      return TRUE;
 	    }
 	  break;
-
-	case GDK_2BUTTON_PRESS:
-	  if (channel_widget->type == AUXILLARY_CHANNEL)
-	    channels_dialog_edit_channel_query (channel_widget);
-	  return TRUE;
 
 	case GDK_KEY_PRESS:
 	  kevent = (GdkEventKey *) event;
@@ -1283,7 +1292,7 @@ channel_widget_create (GImage      *gimage,
   channel_widget->channel_pixmap  = NULL;
   channel_widget->type            = type;
   channel_widget->ID              = ((type == AUXILLARY_CHANNEL) ?
-				     GIMP_DRAWABLE(channel)->ID :
+				     GIMP_DRAWABLE (channel)->ID :
 				     (COMPONENT_BASE_ID + type));
   channel_widget->list_item       = list_item;
   channel_widget->width           = -1;
@@ -1375,8 +1384,11 @@ channel_widget_create (GImage      *gimage,
       /*  dnd destination  */
       gtk_drag_dest_set (list_item,
 			 GTK_DEST_DEFAULT_ALL,
-			 channel_target_table, n_channel_targets,
-			 GDK_ACTION_MOVE);
+			 channel_color_target_table, n_channel_color_targets,
+			 GDK_ACTION_MOVE | GDK_ACTION_COPY);
+      gimp_dnd_color_dest_set (list_item,
+			       channel_widget_set_color,
+			       (gpointer) channel_widget);
 
       gtk_signal_connect (GTK_OBJECT (list_item), "drag_leave",
 			  GTK_SIGNAL_FUNC (channel_widget_drag_leave_callback),
@@ -1489,6 +1501,13 @@ channel_widget_drag_motion_callback (GtkWidget      *widget,
               drop_type = GIMP_DROP_NONE;
             }
         }
+      else if (gtk_object_get_data (GTK_OBJECT (src_widget),
+				    "gimp_dnd_get_color_func"))
+	{
+	  drag_action = GDK_ACTION_COPY;
+	  return_val = TRUE;
+	  drop_type = GIMP_DROP_NONE;
+	}
     }
 
   gdk_drag_status (context, drag_action, time);
@@ -1611,6 +1630,30 @@ channel_widget_drag_indicator_callback (GtkWidget *widget,
 }
 
 static void
+channel_widget_set_color (gpointer  data,
+			  guchar    r,
+			  guchar    g,
+			  guchar    b)
+{
+  ChannelWidget *channel_widget = (ChannelWidget *) data;
+  Channel *channel = channel_widget->channel;
+
+  if (r != channel->col[0] ||
+      g != channel->col[1] ||
+      b != channel->col[2])
+    {
+      channel->col[0] = r;
+      channel->col[1] = g;
+      channel->col[2] = b;
+
+      drawable_update (GIMP_DRAWABLE (channel), 0, 0,
+		       GIMP_DRAWABLE (channel)->width,
+		       GIMP_DRAWABLE (channel)->height);
+      gdisplays_flush ();
+    }
+}
+
+static void
 channel_widget_draw_drop_indicator (ChannelWidget *channel_widget,
 				    GimpDropType   drop_type)
 {
@@ -1696,16 +1739,17 @@ static gint
 channel_widget_button_events (GtkWidget *widget,
 			      GdkEvent  *event)
 {
-  static int button_down = 0;
-  static GtkWidget *click_widget = NULL;
-  static int old_state;
-  static int exclusive;
-  ChannelWidget *channel_widget;
-  GtkWidget *event_widget;
+  ChannelWidget  *channel_widget;
+  GtkWidget      *event_widget;
   GdkEventButton *bevent;
   gint return_val;
-  int visible;
-  int width, height;
+  gint visible;
+  gint width, height;
+
+  static gboolean button_down = FALSE;
+  static GtkWidget *click_widget = NULL;
+  static gint old_state;
+  static gint exclusive;
 
   channel_widget = (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
@@ -1745,7 +1789,7 @@ channel_widget_button_events (GtkWidget *widget,
 	  return TRUE;
 	}
 
-      button_down = 1;
+      button_down = TRUE;
       click_widget = widget;
       gtk_grab_add (click_widget);
 
@@ -1763,7 +1807,7 @@ channel_widget_button_events (GtkWidget *widget,
 	    {
 	      exclusive = FALSE;
 	      if (channel_widget->type == AUXILLARY_CHANNEL)
-		GIMP_DRAWABLE(channel_widget->channel)->visible = !visible;
+		GIMP_DRAWABLE (channel_widget->channel)->visible = !visible;
 	      else
 		gimage_set_component_visible (channel_widget->gimage,
 					      channel_widget->type, !visible);
@@ -1775,7 +1819,7 @@ channel_widget_button_events (GtkWidget *widget,
     case GDK_BUTTON_RELEASE:
       return_val = TRUE;
 
-      button_down = 0;
+      button_down = FALSE;
       gtk_grab_remove (click_widget);
 
       if (widget == channel_widget->eye_widget)
@@ -1808,7 +1852,7 @@ channel_widget_button_events (GtkWidget *widget,
 	      else
 		{
 		  if (channel_widget->type == AUXILLARY_CHANNEL)
-		    GIMP_DRAWABLE(channel_widget->channel)->visible = !visible;
+		    GIMP_DRAWABLE (channel_widget->channel)->visible = !visible;
 		  else
 		    gimage_set_component_visible (channel_widget->gimage,
 						  channel_widget->type, !visible);
@@ -1829,10 +1873,10 @@ static gint
 channel_widget_preview_events (GtkWidget *widget,
 			       GdkEvent  *event)
 {
+  ChannelWidget  *channel_widget;
   GdkEventExpose *eevent;
   GdkEventButton *bevent;
-  ChannelWidget *channel_widget;
-  int valid;
+  gboolean valid;
 
   channel_widget = (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
@@ -1858,7 +1902,7 @@ channel_widget_preview_events (GtkWidget *widget,
 	  switch (channel_widget->type)
 	    {
 	    case AUXILLARY_CHANNEL:
-	      valid = GIMP_DRAWABLE(channel_widget->channel)->preview_valid;
+	      valid = GIMP_DRAWABLE (channel_widget->channel)->preview_valid;
 	      break;
 	    default:
 	      valid = gimage_preview_valid (channel_widget->gimage,
@@ -1902,8 +1946,8 @@ static void
 channel_widget_preview_redraw (ChannelWidget *channel_widget)
 {
   TempBuf * preview_buf;
-  int width, height;
-  int channel;
+  gint width, height;
+  gint channel;
 
   /*  allocate the channel widget pixmap  */
   if (! channel_widget->channel_pixmap)
@@ -1917,8 +1961,8 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
   switch (channel_widget->type)
     {
     case AUXILLARY_CHANNEL:
-      width = GIMP_DRAWABLE(channel_widget->channel)->width;
-      height = GIMP_DRAWABLE(channel_widget->channel)->height;
+      width = GIMP_DRAWABLE (channel_widget->channel)->width;
+      height = GIMP_DRAWABLE (channel_widget->channel)->height;
       channel_widget->width = (int) (channelsD->ratio * width);
       channel_widget->height = (int) (channelsD->ratio * height);
       preview_buf = channel_preview (channel_widget->channel,
@@ -2040,7 +2084,7 @@ channel_widget_eye_redraw (ChannelWidget *channel_widget)
   GdkPixmap *pixmap;
   GdkColor *color;
   GtkStateType state;
-  int visible;
+  gboolean visible;
 
   state = channel_widget->list_item->state;
 
@@ -2059,10 +2103,11 @@ channel_widget_eye_redraw (ChannelWidget *channel_widget)
   switch (channel_widget->type)
     {
     case AUXILLARY_CHANNEL:
-      visible = GIMP_DRAWABLE(channel_widget->channel)->visible;
+      visible = GIMP_DRAWABLE (channel_widget->channel)->visible;
       break;
     default:
-      visible = gimage_get_component_visible (channel_widget->gimage, channel_widget->type);
+      visible = gimage_get_component_visible (channel_widget->gimage,
+					      channel_widget->type);
       break;
     }
 
@@ -2112,7 +2157,7 @@ channel_widget_exclusive_visible (ChannelWidget *channel_widget)
 {
   GSList *list;
   ChannelWidget *cw;
-  int visible = FALSE;
+  gboolean visible = FALSE;
 
   if (!channelsD)
     return;
@@ -2127,7 +2172,7 @@ channel_widget_exclusive_visible (ChannelWidget *channel_widget)
 	  switch (cw->type)
 	    {
 	    case AUXILLARY_CHANNEL:
-	      visible |= GIMP_DRAWABLE(cw->channel)->visible;
+	      visible |= GIMP_DRAWABLE (cw->channel)->visible;
 	      break;
 	    default:
 	      visible |= gimage_get_component_visible (cw->gimage, cw->type);
@@ -2147,7 +2192,7 @@ channel_widget_exclusive_visible (ChannelWidget *channel_widget)
 	switch (cw->type)
 	  {
 	  case AUXILLARY_CHANNEL:
-	    GIMP_DRAWABLE(cw->channel)->visible = !visible;
+	    GIMP_DRAWABLE (cw->channel)->visible = !visible;
 	    break;
 	  default:
 	    gimage_set_component_visible (cw->gimage, cw->type, !visible);
@@ -2157,7 +2202,7 @@ channel_widget_exclusive_visible (ChannelWidget *channel_widget)
 	switch (cw->type)
 	  {
 	  case AUXILLARY_CHANNEL:
-	    GIMP_DRAWABLE(cw->channel)->visible = TRUE;
+	    GIMP_DRAWABLE (cw->channel)->visible = TRUE;
 	    break;
 	  default:
 	    gimage_set_component_visible (cw->gimage, cw->type, TRUE);
@@ -2237,7 +2282,7 @@ channel_widget_channel_flush (GtkWidget *widget,
   switch (channel_widget->type)
     {
     case AUXILLARY_CHANNEL:
-      update_preview = !GIMP_DRAWABLE(channel_widget->channel)->preview_valid;
+      update_preview = !GIMP_DRAWABLE (channel_widget->channel)->preview_valid;
       break;
     default:
       update_preview = !gimage_preview_valid (channel_widget->gimage,
@@ -2286,7 +2331,8 @@ new_channel_query_ok_callback (GtkWidget *widget,
   if ((gimage = options->gimage))
     {
       new_channel = channel_new (gimage, gimage->width, gimage->height,
-				 channel_name, (int) (255 * options->opacity) / 100,
+				 channel_name,
+				 (gint) (255 * options->opacity) / 100,
 				 options->color_panel->color);
       drawable_fill (GIMP_DRAWABLE (new_channel), TRANSPARENT_FILL);
 
@@ -2485,9 +2531,9 @@ edit_channel_query_ok_callback (GtkWidget *widget,
 
       if (update)
 	{
-	  drawable_update (GIMP_DRAWABLE(channel), 0, 0,
-			   GIMP_DRAWABLE(channel)->width,
-			   GIMP_DRAWABLE(channel)->height);
+	  drawable_update (GIMP_DRAWABLE (channel), 0, 0,
+			   GIMP_DRAWABLE (channel)->width,
+			   GIMP_DRAWABLE (channel)->height);
 	  gdisplays_flush ();
 	}
     }

@@ -132,7 +132,8 @@ static GtkTargetEntry display_target_table[] =
 {
   GIMP_TARGET_LAYER,
   GIMP_TARGET_CHANNEL,
-  GIMP_TARGET_LAYER_MASK
+  GIMP_TARGET_LAYER_MASK,
+  GIMP_TARGET_COLOR
 };
 static guint display_n_targets = (sizeof (display_target_table) /
 				  sizeof (display_target_table[0]));
@@ -711,6 +712,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "drag_drop",
 		      GTK_SIGNAL_FUNC (gdisplay_drag_drop),
 		      gdisp);
+  gimp_dnd_color_dest_set (gdisp->shell, gdisplay_set_color, gdisp);
 
   /*  the vbox, table containing all widgets  */
   vbox = gtk_vbox_new (FALSE, 2);
