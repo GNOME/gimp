@@ -304,11 +304,11 @@ msgstr "<Image>/Скрипт-Фу/Ан╕матори/Бриж╕..."
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr ""
+msgstr "<Image>/Скрипт-Фу/Ан╕матори/Вид╕лення у ан╕моване зображення..."
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
-msgstr ""
+msgstr "<Image>/Скрипт-Фу/Ан╕матори/Куля, що оберта╓ться..."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Waves..."
@@ -1465,7 +1465,7 @@ msgstr "Ширина зображення"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "Image to Carve"
-msgstr ""
+msgstr "Щображенян в ╜равюру"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1601,7 +1601,7 @@ msgstr "К╕льк╕сть рядк╕в"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Number of Times to Whirl"
-msgstr "К╕льк╕сть повтор╕в для вихору"
+msgstr "К╕льк╕сть повтор╕в для виру"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
@@ -2073,7 +2073,7 @@ msgstr "Прозоре тло"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Turn from Left to Right"
-msgstr "Повернути зл╕ва направо"
+msgstr "Обертати зл╕ва направо"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -2130,11 +2130,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Whirl Amount"
-msgstr "К╕льк╕сть вихор╕в"
+msgstr "К╕льк╕сть вир╕в"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Whirl Angle"
-msgstr "Кут вихору"
+msgstr "Кут виру"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Width of Bands"

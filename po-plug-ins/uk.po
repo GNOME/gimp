@@ -6594,23 +6594,23 @@ msgstr "Створення хвиль..."
 
 #: plug-ins/common/whirlpinch.c:206
 msgid "<Image>/Filters/Distorts/Whirl and Pinch..."
-msgstr "<Image>/Ф╕льтри/Спотворення/Whirl and Pinch..."
+msgstr "<Image>/Ф╕льтри/Спотворення/Вир ╕ щипок..."
 
 #: plug-ins/common/whirlpinch.c:404
 msgid "Whirling and pinching..."
-msgstr ""
+msgstr "Створення виру ╕ щипка..."
 
 #: plug-ins/common/whirlpinch.c:803
 msgid "Whirl and Pinch"
-msgstr ""
+msgstr "Вир ╕ щипок"
 
 #: plug-ins/common/whirlpinch.c:859
 msgid "Whirl Angle:"
-msgstr ""
+msgstr "Кут виру:"
 
 #: plug-ins/common/whirlpinch.c:868
 msgid "Pinch Amount:"
-msgstr ""
+msgstr "К╕льк╕сть щипк╕в:"
 
 #: plug-ins/common/winclipboard.c:110
 msgid "<Image>/Edit/Copy to Clipboard"
