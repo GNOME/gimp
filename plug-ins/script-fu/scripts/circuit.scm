@@ -35,7 +35,7 @@
 			   seed
 			   remove-bg
 			   keep-selection
-			   seperate-layer)
+			   separate-layer)
   (let* (
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
@@ -63,7 +63,7 @@
     (set! select-width (- (cadr (cddr selection-bounds)) select-offset-x))
     (set! select-height (- (caddr (cddr selection-bounds)) select-offset-y))
     
-    (if (= seperate-layer TRUE)
+    (if (= separate-layer TRUE)
 	(begin
 	  (set! effect-layer (car (gimp-layer-new image
 						  select-width
@@ -83,8 +83,10 @@
 	  (let ((floating-sel (car (gimp-edit-paste effect-layer FALSE))))
 	    (gimp-floating-sel-anchor floating-sel)
 	    )
-	  (gimp-image-set-active-layer image effect-layer )))
-    (set! active-layer (car (gimp-image-get-active-layer image)))
+	  (gimp-image-set-active-layer image effect-layer ))
+      (set! effect-layer drawable)
+    )
+    (set! active-layer effect-layer)
 
     (if (= remove-bg TRUE)
 	(gimp-context-set-foreground '(0 0 0))
@@ -98,7 +100,7 @@
     
     (if (and
 	 (= remove-bg TRUE)
-	 (= seperate-layer TRUE))
+	 (= separate-layer TRUE))
 	(begin
 	  (gimp-by-color-select
 	   active-layer
