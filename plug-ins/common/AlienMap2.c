@@ -881,7 +881,7 @@ static void      alienmap2_render_row  (const guchar *src_row,
 					gint row_width,
 					gint bytes);
 static void      alienmap2_get_pixel   (int x, int y, guchar *pixel);
-static void    	 transform             (short int *, short int *, short int *);
+static void    	 transform             (guchar*, guchar*, guchar*);
 
 
 static void      build_preview_source_image (void);
@@ -897,23 +897,7 @@ static void      alienmap2_radio_update  (GtkWidget *widget,
 					  gpointer   data);
 static void      alienmap2_logo_dialog   (void);
 
-static void      rgb_to_hsl (gdouble    r,
-			     gdouble    g,
-			     gdouble    b,
-			     gdouble *  h,
-			     gdouble *  s,
-			     gdouble *  l);
-static void      hsl_to_rgb (gdouble    h,
-			     gdouble    sl,
-			     gdouble    l,
-			     gdouble *  r,
-			     gdouble *  g,
-			     gdouble *  b);
-
 /***** Variables *****/
-
-GtkWidget *maindlg;
-GtkWidget *logodlg;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -996,47 +980,46 @@ query (void)
         		  args, return_vals);
 }
 
-void
-transform (short int *r,
-	   short int *g,
-	   short int *b)
+static void
+transform (guchar *r,
+	   guchar *g,
+	   guchar *b)
 {
-  gint red, green, blue;
-  gdouble r1, g1, b1, h, s, l;
-  red = *r;
-  green = *g;
-  blue = *b;
-  
   if (wvals.colormodel == HSL_MODEL)
     {
-      r1 = (gdouble) red / 255.0;
-      g1 = (gdouble) green / 255.0;
-      b1 = (gdouble) blue / 255.0;
-      rgb_to_hsl (r1, g1, b1, &h, &s, &l);
+      gdouble h, s, l;
+      GimpRGB rgb;
+
+      gimp_rgb_set_uchar (&rgb, *r, *g, *b);
+      gimp_rgb_to_hsl (&rgb, &h, &s, &l);
+      h /= 360.0;
+
       if (wvals.redmode)
-	h = 0.5*(1.0+sin(((2*h-1.0)*wvals.redfrequency+wvals.redangle/180.0)*G_PI));
+	h = 0.5*(1.0+sin(((2*h-1.0)*wvals.redfrequency+
+			  wvals.redangle/180.0)*G_PI));
       if (wvals.greenmode)
-	s = 0.5*(1.0+sin(((2*s-1.0)*wvals.greenfrequency+wvals.greenangle/180.0)*G_PI));
+	s = 0.5*(1.0+sin(((2*s-1.0)*wvals.greenfrequency+
+			  wvals.greenangle/180.0)*G_PI));
       if (wvals.bluemode)
-	l = 0.5*(1.0+sin(((2*l-1.0)*wvals.bluefrequency+wvals.blueangle/180.0)*G_PI));
-      hsl_to_rgb (h, s, l, &r1, &g1, &b1);
-      red = (gint) (255.0 * r1 + 0.5);
-      green = (gint) (255.0 * g1 + 0.5);
-      blue = (gint) (255.0 * b1 + 0.5);
+	l = 0.5*(1.0+sin(((2*l-1.0)*wvals.bluefrequency+
+			  wvals.blueangle/180.0)*G_PI));
+
+      h *= 360.0;
+      gimp_hsl_to_rgb (h, s, l, &rgb);
+      gimp_rgb_get_uchar (&rgb, r, g, b);
     }
   else if (wvals.colormodel == RGB_MODEL)
     {
       if (wvals.redmode)
-	red = (int) (127.5*(1.0+sin(((red/127.5-1.0)*wvals.redfrequency+wvals.redangle/180.0)*G_PI))+0.5);
+	*r = (int) (127.5*(1.0+sin(((*r/127.5-1.0)*wvals.redfrequency+
+				    wvals.redangle/180.0)*G_PI))+0.5);
       if (wvals.greenmode)
-	green = (int) (127.5*(1.0+sin(((green/127.5-1.0)*wvals.greenfrequency+wvals.greenangle/180.0)*G_PI))+0.5);
+	*g = (int) (127.5*(1.0+sin(((*g/127.5-1.0)*wvals.greenfrequency
+				    +wvals.greenangle/180.0)*G_PI))+0.5);
       if (wvals.bluemode)
-	blue = (int) (127.5*(1.0+sin(((blue/127.5-1.0)*wvals.bluefrequency+wvals.blueangle/180.0)*G_PI))+0.5);
+	*b = (int) (127.5*(1.0+sin(((*b/127.5-1.0)*wvals.bluefrequency
+				    +wvals.blueangle/180.0)*G_PI))+0.5);
     }
-   
-  *r = red;
-  *g = green;
-  *b = blue;
 }
 
 static void
@@ -1245,23 +1228,24 @@ alienmap2_render_row (const guchar *src_row,
 
   for (col = 0; col < row_width ; col++)
     {
-      short int v1, v2, v3;
+      guchar v1, v2, v3;
 
-      v1 = (short int)src_row[col*bytes];
-      v2 = (short int)src_row[col*bytes +1];
-      v3 = (short int)src_row[col*bytes +2];
+      v1 = src_row[0];
+      v2 = src_row[1];
+      v3 = src_row[2];
 
       transform(&v1, &v2, &v3);
 
-      dest_row[col*bytes] = (int)v1;
-      dest_row[col*bytes +1] = (int)v2;
-      dest_row[col*bytes +2] = (int)v3;
+      dest_row[0] = v1;
+      dest_row[1] = v2;
+      dest_row[2] = v3;
 
-      if (bytes>3)
-        for (bytenum = 3; bytenum<bytes; bytenum++)
-          {
-            dest_row[col*bytes+bytenum] = src_row[col*bytes+bytenum];
-          }
+      for (bytenum = 3; bytenum < bytes; bytenum++)
+	{
+	  dest_row[bytenum] = src_row[bytenum];
+	}
+      src_row += bytes;
+      dest_row += bytes;
     }
 }
 
@@ -1276,53 +1260,43 @@ alienmap2 (GimpDrawable *drawable)
   gint row;
   gint x1, y1, x2, y2;
 
-  /* Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
-   */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
    */
-  width = drawable->width;
-  height = drawable->height;
+  width = x2 - x1;
+  height = y2 - y1;
   bytes = drawable->bpp;
 
   /*  allocate row buffers  */
-  src_row = (guchar *) malloc ((x2 - x1) * bytes);
-  dest_row = (guchar *) malloc ((x2 - x1) * bytes);
+  src_row = g_new (guchar, width * bytes);
+  dest_row = g_new (guchar, width * bytes);
 
   /*  initialize the pixel regions  */
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, width, height, TRUE, TRUE);
 
   for (row = y1; row < y2; row++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, (x2 - x1));
+      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, width);
 
-      alienmap2_render_row (src_row,
-        		dest_row,
-        		row,
-        		(x2 - x1),
-        		bytes);
+      alienmap2_render_row (src_row, dest_row, row, width, bytes);
 
       /*  store the dest  */
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));
+      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, width);
 
       if ((row % 10) == 0)
-        gimp_progress_update ((double) row / (double) (y2 - y1));
+        gimp_progress_update ((double) row / (double) height);
     }
 
   /*  update the processed region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
 
-  free (src_row);
-  free (dest_row);
+  g_free (src_row);
+  g_free (dest_row);
 }
 
 static void
@@ -1384,7 +1358,7 @@ alienmap2_dialog (void)
 
   build_preview_source_image ();
 
-  dialog = maindlg =
+  dialog =
     gimp_dialog_new (_("AlienMap2"), "alienmap2",
 		     gimp_standard_help_func, "filters/alienmap2.html",
 		     GTK_WIN_POS_MOUSE,
@@ -1436,7 +1410,7 @@ alienmap2_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("R/H-Frequency:"), SCALE_WIDTH, 0,
+			      _("R/H-_Frequency:"), SCALE_WIDTH, 0,
 			      wvals.redfrequency, 0, 5.0, 0.1, 1, 2,
 			      TRUE, 0, 0,
 			      _("Change frequency of the red/hue channel"),
@@ -1446,7 +1420,7 @@ alienmap2_dialog (void)
                     &wvals.redfrequency);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("R/H-Phaseshift:"), SCALE_WIDTH, 0,
+			      _("R/H-_Phaseshift:"), SCALE_WIDTH, 0,
 			      wvals.redangle, 0, 360.0, 1, 15, 2,
 			      TRUE, 0, 0,
 			      _("Change angle of the red/hue channel"),
@@ -1456,7 +1430,7 @@ alienmap2_dialog (void)
                     &wvals.redangle);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("G/S-Frequency:"), SCALE_WIDTH, 0,
+			      _("G/S-Fr_equency:"), SCALE_WIDTH, 0,
 			      wvals.greenfrequency, 0, 5.0, 0.1, 1, 2,
 			      TRUE, 0, 0,
 			      _("Change frequency of the green/saturation "
@@ -1466,7 +1440,7 @@ alienmap2_dialog (void)
                     &wvals.greenfrequency);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("G/S-Phaseshift:"), SCALE_WIDTH, 0,
+			      _("G/S-Ph_aseshift:"), SCALE_WIDTH, 0,
 			      wvals.redangle, 0, 360.0, 1, 15, 2,
 			      TRUE, 0, 0,
 			      _("Change angle of the green/saturation channel"),
@@ -1476,7 +1450,7 @@ alienmap2_dialog (void)
                     &wvals.greenangle);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			      _("B/L-Frequency:"), SCALE_WIDTH, 0,
+			      _("B/L-Freq_uency:"), SCALE_WIDTH, 0,
 			      wvals.bluefrequency, 0, 5.0, 0.1, 1, 2,
 			      TRUE, 0, 0,
 			      _("Change frequency of the blue/luminance "
@@ -1486,7 +1460,7 @@ alienmap2_dialog (void)
                     &wvals.bluefrequency);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			      _("B/L-Phaseshift:"), SCALE_WIDTH, 0,
+			      _("B/L-Pha_seshift:"), SCALE_WIDTH, 0,
 			      wvals.blueangle, 0, 360.0, 1, 15, 2,
 			      TRUE, 0, 0,
 			      _("Change angle of the blue/luminance channel"),
@@ -1501,8 +1475,8 @@ alienmap2_dialog (void)
 			   G_CALLBACK (alienmap2_radio_update),
 			   &wvals.colormodel, (gpointer) wvals.colormodel,
 
-			   _("RGB Color Model"), (gpointer) RGB_MODEL, NULL,
-			   _("HSL Color Model"), (gpointer) HSL_MODEL, NULL,
+			   _("_RGB Color Model"), (gpointer) RGB_MODEL, NULL,
+			   _("_HSL Color Model"), (gpointer) HSL_MODEL, NULL,
 
 			   NULL);
   gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1,
@@ -1514,7 +1488,7 @@ alienmap2_dialog (void)
   gtk_box_pack_start (GTK_BOX (toggle_vbox), sep, FALSE, FALSE, 0);
   gtk_widget_show (sep);
 
-  toggle = gtk_check_button_new_with_label (_("Modify Red/Hue Channel"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Modify Red/Hue Channel"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.redmode);
   gtk_widget_show (toggle);
@@ -1526,7 +1500,7 @@ alienmap2_dialog (void)
                     G_CALLBACK (alienmap2_toggle_update),
                     &wvals.redmode);
 
-  toggle = gtk_check_button_new_with_label (_("Modify Green/Saturation Channel"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Mo_dify Green/Saturation Channel"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.greenmode);
   gtk_widget_show (toggle);
@@ -1539,7 +1513,7 @@ alienmap2_dialog (void)
                     G_CALLBACK (alienmap2_toggle_update),
                     &wvals.greenmode);
 
-  toggle = gtk_check_button_new_with_label (_("Modify Blue/Luminance Channel"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Mod_ify Blue/Luminance Channel"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.bluemode);
   gtk_widget_show (toggle);
@@ -1580,7 +1554,7 @@ dialog_update_preview (void)
   double  dx, dy;
   int  px, py;
   int     x, y;
-  short int r,g,b;
+  guchar r,g,b;
   double  scale_x, scale_y;
   guchar *p_ul, *i, *p;
 
@@ -1665,9 +1639,10 @@ alienmap2_radio_update (GtkWidget *widget,
   dialog_update_preview ();
 }
 
-void
+static void
 alienmap2_logo_dialog (void)
 {
+  static GtkWidget *logodlg = NULL;
   GtkWidget *xlabel;
   GtkWidget *xlogo_box;
   GtkWidget *xpreview;
@@ -1761,104 +1736,5 @@ alienmap2_logo_dialog (void)
     {
       gtk_widget_show (logodlg);
       gdk_window_raise (logodlg->window);
-    }
-}
-
-/*
- * RGB-HSL transforms.
- * Ken Fishkin, Pixar Inc., January 1989.
- */
-
-/*
- * given r,g,b on [0 ... 1],
- * return (h,s,l) on [0 ... 1]
- */
-
-static void
-rgb_to_hsl (gdouble  r,
-	    gdouble  g,
-	    gdouble  b,
-	    gdouble *h,
-	    gdouble *s,
-	    gdouble *l)
-{
-  gdouble v;
-  gdouble m;
-  gdouble vm;
-  gdouble r2, g2, b2;
-
-  v = MAX(r,g);
-  v = MAX(v,b);
-  m = MIN(r,g);
-  m = MIN(m,b);
-
-  if ((*l = (m + v) / 2.0) <= 0.0)
-    return;
-  if ((*s = vm = v - m) > 0.0)
-    {
-      *s /= (*l <= 0.5) ? (v + m ) :
-	(2.0 - v - m) ;
-    }
-  else
-    return;
-
-  r2 = (v - r) / vm;
-  g2 = (v - g) / vm;
-  b2 = (v - b) / vm;
-
-  if (r == v)
-    *h = (g == m ? 5.0 + b2 : 1.0 - g2);
-  else if (g == v)
-    *h = (b == m ? 1.0 + r2 : 3.0 - b2);
-  else
-    *h = (r == m ? 3.0 + g2 : 5.0 - r2);
-
-  *h /= 6;
-}
-
-/*
- * given h,s,l on [0..1],
- * return r,g,b on [0..1]
- */
-
-static void
-hsl_to_rgb (gdouble  h,
-	    gdouble  sl,
-	    gdouble  l,
-	    gdouble *r,
-	    gdouble *g,
-	    gdouble *b)
-{
-  gdouble v;
-
-  v = (l <= 0.5) ? (l * (1.0 + sl)) : (l + sl - l * sl);
-  if (v <= 0)
-    {
-      *r = *g = *b = 0.0;
-    }
-  else
-    {
-      gdouble m;
-      gdouble sv;
-      gint sextant;
-      gdouble fract, vsf, mid1, mid2;
-
-      m = l + l - v;
-      sv = (v - m ) / v;
-      h *= 6.0;
-      sextant = h;
-      fract = h - sextant;
-      vsf = v * sv * fract;
-      mid1 = m + vsf;
-      mid2 = v - vsf;
-      switch (sextant)
-	{
-	case 0: *r = v; *g = mid1; *b = m; break;
-	case 1: *r = mid2; *g = v; *b = m; break;
-	case 2: *r = m; *g = v; *b = mid1; break;
-	case 3: *r = m; *g = mid2; *b = v; break;
-	case 4: *r = mid1; *g = m; *b = v; break;
-	case 5: *r = v; *g = m; *b = mid2; break;
-	}
     }
 }

@@ -1,3 +1,13 @@
+2002-06-21  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/AlienMap2.c: replace plug-ins hsl_to_rgb and 
+	rgb_to_hsl routines by libcompcolor routines (gimp_hsl_to_rgb and 
+	gimp_rgb_to_hsl). Added mnemonics (#80804) to dialog.
+
+	* libgimpcolor/gimpcolorspace.c (gimp_hsl_to_rgb): implemented correct
+	algorithm for this conversion (taken from "Fundamentals of Interactive
+	Computer Graphics by Foley and van Dam).
+
 2002-06-21  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am

@@ -249,9 +249,9 @@ gimp_hsl_to_rgb (gdouble  hue,
   g_return_if_fail (rgb != NULL);
 
   if (lightness <= 0.5)
-    m2 = lightness * (lightness + saturation);
+    m2 = lightness * (1.0 + saturation);
   else
-    m2 = lightness + saturation + lightness * saturation;
+    m2 = lightness + saturation - lightness * saturation;
   m1 = 2.0 * lightness - m2;
 
   if (saturation == 0)
