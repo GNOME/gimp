@@ -1,7 +1,7 @@
-//{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
-// Used by snappy.rc
-//
+/* {{NO_DEPENDENCIES}}
+ Microsoft Developer Studio generated include file.
+ Used by snappy.rc
+*/
 #define IDC_SELECT                      102
 #define IDD_SELECT                      103
 #define IDC_TEXT                        1000
@@ -10,8 +10,8 @@
 #define IDM_HOOK                        40004
 #define IDM_UNHOOK                      40005
 
-// Next default values for new objects
-// 
+/* Next default values for new objects */
+
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1

@@ -2280,9 +2280,9 @@ median_cut_rgb (Histogram histogram,
      * See notes in update_box about scaling distances.
      */
     /*
-    //        R = ((b1->Rmax - b1->Rmin) << R_SHIFT) * R_SCALE;
-	//        G = ((b1->Gmax - b1->Gmin) << G_SHIFT) * G_SCALE;
-        //B = ((b1->Bmax - b1->Bmin) << B_SHIFT) * B_SCALE;
+            R = ((b1->Rmax - b1->Rmin) << R_SHIFT) * R_SCALE;
+	        G = ((b1->Gmax - b1->Gmin) << G_SHIFT) * G_SCALE;
+        B = ((b1->Bmax - b1->Bmin) << B_SHIFT) * B_SCALE;
     */
     R = R_SCALE*b1->rerror;/* * (((b1->Rmax - b1->Rmin) << R_SHIFT)) * R_SCALE; */
     G = G_SCALE*b1->gerror;/* * (((b1->Gmax - b1->Gmin) << G_SHIFT)) * G_SCALE; */

@@ -1,3 +1,9 @@
+Wed Sep 27 19:56:02 CEST 2000  Daniel Egger  <egger@suse.de>
+
+	* app/convert.c:
+	* plug-ins/print/print-weave.c:
+	* plug-ins/winsnap/resource.h: Further C++ comments removals.
+
 Wed Sep 27 19:43:05 CEST 2000  Daniel Egger  <egger@suse.de>
 
 	* gimpbrush.c:
