@@ -429,26 +429,46 @@ gimp_config_deserialize_enum (GValue     *value,
   GEnumClass *enum_class;
   GEnumValue *enum_value;
 
-  if (g_scanner_peek_next_token (scanner) != G_TOKEN_IDENTIFIER)
-    return G_TOKEN_IDENTIFIER;
-
-  g_scanner_get_next_token (scanner);
-
   enum_class = g_type_class_peek (G_VALUE_TYPE (value));
-  enum_value = g_enum_get_value_by_nick (G_ENUM_CLASS (enum_class), 
-                                         scanner->value.v_identifier);
-  if (!enum_value)
-    enum_value = g_enum_get_value_by_name (G_ENUM_CLASS (enum_class), 
-                                           scanner->value.v_identifier);
-      
-  if (!enum_value)
-    {
-      g_scanner_error (scanner, 
-                       _("invalid value '%s' for token %s"), 
-                       scanner->value.v_identifier, prop_spec->name);
-      return G_TOKEN_NONE;
-    }
 
+  switch (g_scanner_peek_next_token (scanner))
+    {
+    case G_TOKEN_IDENTIFIER:
+      g_scanner_get_next_token (scanner);
+
+      enum_value = g_enum_get_value_by_nick (G_ENUM_CLASS (enum_class), 
+					     scanner->value.v_identifier);
+      if (!enum_value)
+	enum_value = g_enum_get_value_by_name (G_ENUM_CLASS (enum_class), 
+					       scanner->value.v_identifier);
+
+      if (!enum_value)
+	{
+	  g_scanner_error (scanner, 
+			   _("invalid value '%s' for token %s"), 
+			   scanner->value.v_identifier, prop_spec->name);
+	  return G_TOKEN_NONE;
+	}
+      break;
+      
+    case G_TOKEN_INT:
+      g_scanner_get_next_token (scanner);
+
+      enum_value = g_enum_get_value (enum_class, scanner->value.v_int);
+
+      if (!enum_value)
+	{
+	  g_scanner_error (scanner, 
+			   _("invalid value '%ld' for token %s"), 
+			   scanner->value.v_int, prop_spec->name);
+	  return G_TOKEN_NONE;
+	}
+      break;
+      
+    default:
+      return G_TOKEN_IDENTIFIER;
+    }
+  
   g_value_set_enum (value, enum_value->value);
 
   return G_TOKEN_RIGHT_PAREN;
