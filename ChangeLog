@@ -1,3 +1,10 @@
+2002-06-04  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/tools/stock-tool-blend-22.png: was too
+	  big
+	* themes/Default/images/stock-linked-20.png: 
+	* themes/Default/images/stock-eye-20.png: prettier IMHO
+
 2002-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintoptions.[ch]: i don't know what i was
