@@ -120,6 +120,7 @@ quit_dialog_new (Gimp *gimp)
   g_free (msg);
 
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
@@ -151,9 +152,10 @@ quit_dialog_new (Gimp *gimp)
                                          view);
   gtk_widget_show (view);
 
-  label = gtk_label_new (_("If you quit GIMP now "
+  label = gtk_label_new (_("If you quit GIMP now, "
                            "these changes will be lost."));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

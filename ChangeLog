@@ -1,9 +1,13 @@
 2004-07-10  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/quit-dialog.c (quit_dialog_new): let the labels line-wrap.
+
+2004-07-10  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplay-foreach.[ch]: added new function
 	gimp_displays_get_dirty_images().
 
-	* app/gui/quit-dialog.c: show a container treview of all dirty
+	* app/gui/quit-dialog.c: show a container treeview of all dirty
 	images in the quit dialog. Still work in progress...
 
 2004-07-09  Bill Skaggs <weskaggs@primate.ucdavis.edu>
