@@ -1,3 +1,10 @@
+2003-09-19  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-mmx.c
+	  (gimp_composite_difference_rgba8_rgba8_rgba8_mmx): Replaced the
+	  improper use of the pminub instruction with the macro which does the
+	  same using only mmx instructions.
+
 2003-09-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/svg.c: added framework for size negotiation. Not
