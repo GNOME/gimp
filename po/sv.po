@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-01-03 22:21+0100\n"
-"PO-Revision-Date: 2003-01-03 22:22+0100\n"
+"POT-Creation-Date: 2003-01-07 20:00+0100\n"
+"PO-Revision-Date: 2003-01-07 20:01+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -541,8 +541,8 @@ msgstr "Tolkar \"%s\"\n"
 msgid "Saving '%s'\n"
 msgstr "Sparar \"%s\"\n"
 
-#: app/config/gimpscanner.c:74 app/gui/paths-dialog.c:1890
-#: app/gui/paths-dialog.c:2015 app/tools/gimpcurvestool.c:1414
+#: app/config/gimpscanner.c:74 app/gui/paths-dialog.c:1891
+#: app/gui/paths-dialog.c:2016 app/tools/gimpcurvestool.c:1414
 #: app/tools/gimplevelstool.c:1373
 #, c-format
 msgid "Failed to open file: '%s': %s"
@@ -667,6 +667,7 @@ msgid "Spiral (anticlockwise)"
 msgstr "Spiral (moturs)"
 
 #: app/core/core-enums.c:148 app/core/core-enums.c:168
+#: app/display/gimpdisplayshell-title.c:128
 msgid "RGB"
 msgstr "RGB"
 
@@ -1053,33 +1054,33 @@ msgstr "%.1f MB"
 msgid "Text Layer"
 msgstr "Textlager"
 
-#: app/core/gimpimage.c:1062 app/core/gimppalette-import.c:203
+#: app/core/gimpimage.c:1062 app/core/gimppalette-import.c:204
 #: app/core/gimppalette.c:543 app/gui/palette-import-dialog.c:591
-#: app/pdb/image_cmds.c:3704 app/widgets/gimpdatafactoryview.c:260
+#: app/pdb/image_cmds.c:3704 app/widgets/gimpdatafactoryview.c:262
 msgid "Untitled"
 msgstr "Namnlös"
 
-#: app/core/gimpimage.c:2844
+#: app/core/gimpimage.c:2833
 msgid "Layer cannot be raised higher."
 msgstr "Lagret kan inte höjas mer."
 
-#: app/core/gimpimage.c:2868
+#: app/core/gimpimage.c:2857
 msgid "Layer cannot be lowered more."
 msgstr "Lagret kan inte sänkas mer."
 
-#: app/core/gimpimage.c:2889
+#: app/core/gimpimage.c:2878
 msgid "Layer is already on top."
 msgstr "Lagret är redan överst."
 
-#: app/core/gimpimage.c:2895
+#: app/core/gimpimage.c:2884
 msgid "Cannot raise a layer without alpha."
 msgstr "Kan inte höja lager utan alfakanal."
 
-#: app/core/gimpimage.c:2919
+#: app/core/gimpimage.c:2908
 msgid "Layer is already on the bottom."
 msgstr "Lagret är redan nederst."
 
-#: app/core/gimpimage.c:2966
+#: app/core/gimpimage.c:2955
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -1088,76 +1089,76 @@ msgstr ""
 "Lagret \"%s\" har ingen alfakanal.\n"
 "Lagret placerades ovanför det."
 
-#: app/core/gimpimage.c:3109
+#: app/core/gimpimage.c:3098
 msgid "Channel cannot be raised higher."
 msgstr "Kanalen kan inte höjas mer."
 
-#: app/core/gimpimage.c:3129
+#: app/core/gimpimage.c:3118
 msgid "Channel cannot be lowered more."
 msgstr "Kanalen kan inte sänkas mer."
 
-#: app/core/gimpimage.c:3290
+#: app/core/gimpimage.c:3278
 msgid "Path cannot be raised higher."
 msgstr "Slingan kan inte höjas mer."
 
-#: app/core/gimpimage.c:3310
+#: app/core/gimpimage.c:3298
 msgid "Path cannot be lowered more."
 msgstr "Slingan kan inte sänkas mer."
 
-#: app/core/gimpimagefile.c:454 app/core/gimpimagefile.c:965
+#: app/core/gimpimagefile.c:454 app/core/gimpimagefile.c:964
 #, c-format
 msgid "Failed to write thumbnail for '%s' as '%s': %s"
 msgstr "Misslyckades med att skriva miniatyrbild för \"%s\" som \"%s\": %s"
 
-#: app/core/gimpimagefile.c:460 app/core/gimpimagefile.c:971
+#: app/core/gimpimagefile.c:460 app/core/gimpimagefile.c:970
 #, c-format
 msgid "Failed to set permissions of thumbnail '%s': %s"
 msgstr "Misslyckades med att ställa in miniatyrbild \"%s\": %s"
 
-#: app/core/gimpimagefile.c:659
+#: app/core/gimpimagefile.c:658
 msgid "Remote image"
 msgstr "Fjärrbild"
 
-#: app/core/gimpimagefile.c:664
+#: app/core/gimpimagefile.c:663
 msgid "Failed to open"
 msgstr "Misslyckades med att öppna"
 
-#: app/core/gimpimagefile.c:689
+#: app/core/gimpimagefile.c:688
 msgid "No preview available"
 msgstr "Ingen förhandsvisning tillgänglig"
 
-#: app/core/gimpimagefile.c:693
+#: app/core/gimpimagefile.c:692
 msgid "Loading preview ..."
 msgstr "Läser in förhandsvisning..."
 
-#: app/core/gimpimagefile.c:697
+#: app/core/gimpimagefile.c:696
 msgid "Preview is out of date"
 msgstr "Förhandsvisningen är för gammal"
 
-#: app/core/gimpimagefile.c:701
+#: app/core/gimpimagefile.c:700
 msgid "Cannot create preview"
 msgstr "Kan inte skapa förhandsvisning"
 
-#: app/core/gimpimagefile.c:711 app/gui/info-window.c:636
+#: app/core/gimpimagefile.c:710 app/gui/info-window.c:636
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d × %d bildpunkter"
 
-#: app/core/gimpimagefile.c:729
+#: app/core/gimpimagefile.c:728
 msgid "1 Layer"
 msgstr "1 lager"
 
-#: app/core/gimpimagefile.c:731
+#: app/core/gimpimagefile.c:730
 #, c-format
 msgid "%d Layers"
 msgstr "%d lager"
 
-#: app/core/gimpimagefile.c:810
+#: app/core/gimpimagefile.c:809
 #, c-format
 msgid "Failed to open thumbnail file '%s': %s"
 msgstr "Misslyckades med att öppna miniatyrbildsfilen \"%s\": %s"
 
-#: app/core/gimpimagefile.c:1059
+#: app/core/gimpimagefile.c:1058
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Misslyckades med att skapa miniatyrbildsmappen \"%s\"."
@@ -1540,6 +1541,26 @@ msgstr "Konfigurera markerat filter"
 msgid "Layer Select"
 msgstr "Lagerval"
 
+#: app/display/gimpdisplayshell-title.c:128
+msgid "RGB-empty"
+msgstr "RGB-tom"
+
+#: app/display/gimpdisplayshell-title.c:131
+msgid "grayscale-empty"
+msgstr "gråskala-tom"
+
+#: app/display/gimpdisplayshell-title.c:131
+msgid "grayscale"
+msgstr "gråskala"
+
+#: app/display/gimpdisplayshell-title.c:134
+msgid "indexed-empty"
+msgstr "indexerad-tom"
+
+#: app/display/gimpdisplayshell-title.c:134
+msgid "indexed"
+msgstr "indexerad"
+
 #: app/display/gimpnavigationview.c:380 app/widgets/widgets-enums.c:33
 msgid "Zoom out"
 msgstr "Zooma ut"
@@ -1638,7 +1659,7 @@ msgid "Opacity:"
 msgstr "Opacitet:"
 
 #: app/gui/brush-select.c:202 app/tools/paint_options.c:145
-#: app/tools/selection_options.c:130 app/widgets/gimplayerlistview.c:172
+#: app/tools/selection_options.c:140 app/widgets/gimplayerlistview.c:172
 msgid "Mode:"
 msgstr "Läge:"
 
@@ -2065,7 +2086,7 @@ msgstr "Skapa en ny bild"
 
 #. the pixel size labels
 #: app/gui/file-new-dialog.c:162 app/gui/file-new-dialog.c:180
-#: app/tools/gimpcroptool.c:1011 app/tools/selection_options.c:402
+#: app/tools/gimpcroptool.c:1011 app/tools/selection_options.c:408
 msgid "Width:"
 msgstr "Bredd:"
 
@@ -2073,7 +2094,7 @@ msgstr "Bredd:"
 #: app/gui/layers-commands.c:651 app/gui/resize-dialog.c:285
 #: app/gui/resize-dialog.c:310 app/gui/resize-dialog.c:559
 #: app/tools/gimpcroptool.c:1014 app/tools/gimpscaletool.c:173
-#: app/tools/gimpscaletool.c:181 app/tools/selection_options.c:415
+#: app/tools/gimpscaletool.c:181 app/tools/selection_options.c:421
 msgid "Height:"
 msgstr "Höjd:"
 
@@ -2220,18 +2241,21 @@ msgstr "Replikera markering av färgskala"
 msgid "Replicate"
 msgstr "Replikera"
 
-#. Instructions
-#: app/gui/gradient-editor-commands.c:583
-msgid "Select the number of times"
-msgstr "Välj antalet gånger"
+#: app/gui/gradient-editor-commands.c:584
+msgid ""
+"Select the number of times\n"
+"to replicate the selected segment."
+msgstr ""
+"Välj antalet gånger det\n"
+"markerade segmentet ska replikeras."
 
-#: app/gui/gradient-editor-commands.c:588
-msgid "to replicate the selected segment"
-msgstr "det markerade segmentet ska replikeras"
-
-#: app/gui/gradient-editor-commands.c:589
-msgid "to replicate the selection"
-msgstr "markeringen ska replikeras"
+#: app/gui/gradient-editor-commands.c:587
+msgid ""
+"Select the number of times\n"
+"to replicate the selection."
+msgstr ""
+"Välj antalet gånger som\n"
+"markeringen ska replikeras."
 
 #: app/gui/gradient-editor-commands.c:665
 msgid "Split Segment Uniformly"
@@ -2253,88 +2277,91 @@ msgstr "Dela färgskalesegmenten uniformt"
 msgid "Split"
 msgstr "Dela"
 
-#. Instructions
-#: app/gui/gradient-editor-commands.c:699
-msgid "Please select the number of uniform parts"
-msgstr "Välj antalet uniforma delar"
+#: app/gui/gradient-editor-commands.c:700
+msgid ""
+"Select the number of uniform parts\n"
+"in which to split the selected segment."
+msgstr ""
+"Välj antalet uniforma delar som du\n"
+"vill dela det markerade segmentet i."
 
-#: app/gui/gradient-editor-commands.c:705
-msgid "in which to split the selected segment"
-msgstr "som du vill dela det markerade segmentet"
+#: app/gui/gradient-editor-commands.c:703
+msgid ""
+"Select the number of uniform parts\n"
+"in which to split the segments in the selection."
+msgstr ""
+"Välj antalet uniforma delar som du\n"
+"vill dela segmenten i markeringen i."
 
-#: app/gui/gradient-editor-commands.c:706
-msgid "in which to split the segments in the selection"
-msgstr "som du vill dela segmenten i markeringen"
-
-#: app/gui/gradient-editor-commands.c:1095
+#: app/gui/gradient-editor-commands.c:1094
 msgid "Blending Function for Segment"
 msgstr "Färgtoningstyp för segment"
 
-#: app/gui/gradient-editor-commands.c:1096
+#: app/gui/gradient-editor-commands.c:1095
 msgid "Coloring Type for Segment"
 msgstr "Färgningstyp för segment"
 
-#: app/gui/gradient-editor-commands.c:1098
+#: app/gui/gradient-editor-commands.c:1097
 msgid "Flip Segment"
 msgstr "Vänd på segment"
 
-#: app/gui/gradient-editor-commands.c:1099
+#: app/gui/gradient-editor-commands.c:1098
 msgid "Replicate Segment..."
 msgstr "Replikera segment..."
 
-#: app/gui/gradient-editor-commands.c:1100
+#: app/gui/gradient-editor-commands.c:1099
 msgid "Split Segment at Midpoint"
 msgstr "Dela segment vid mittpunkt"
 
-#: app/gui/gradient-editor-commands.c:1101
+#: app/gui/gradient-editor-commands.c:1100
 msgid "Split Segment Uniformly..."
 msgstr "Dela segment uniformt..."
 
-#: app/gui/gradient-editor-commands.c:1102
+#: app/gui/gradient-editor-commands.c:1101
 msgid "Delete Segment"
 msgstr "Ta bort segment"
 
-#: app/gui/gradient-editor-commands.c:1103
+#: app/gui/gradient-editor-commands.c:1102
 msgid "Re-center Segment's Midpoint"
 msgstr "Centrera segmentets mittpunkt"
 
-#: app/gui/gradient-editor-commands.c:1104
+#: app/gui/gradient-editor-commands.c:1103
 msgid "Re-distribute Handles in Segment"
 msgstr "Återfördela handtagen i segment"
 
-#: app/gui/gradient-editor-commands.c:1108
+#: app/gui/gradient-editor-commands.c:1107
 msgid "Blending Function for Selection"
 msgstr "Färgtoningsfunktion för markering"
 
-#: app/gui/gradient-editor-commands.c:1109
+#: app/gui/gradient-editor-commands.c:1108
 msgid "Coloring Type for Selection"
 msgstr "Färgningstyp för markering"
 
-#: app/gui/gradient-editor-commands.c:1111
+#: app/gui/gradient-editor-commands.c:1110
 msgid "Flip Selection"
 msgstr "Vänd markering"
 
-#: app/gui/gradient-editor-commands.c:1112
+#: app/gui/gradient-editor-commands.c:1111
 msgid "Replicate Selection..."
 msgstr "Replikera markering..."
 
-#: app/gui/gradient-editor-commands.c:1113
+#: app/gui/gradient-editor-commands.c:1112
 msgid "Split Segments at Midpoints"
 msgstr "Dela segment vid mittpunkter"
 
-#: app/gui/gradient-editor-commands.c:1114
+#: app/gui/gradient-editor-commands.c:1113
 msgid "Split Segments Uniformly..."
 msgstr "Dela segmenten uniformt..."
 
-#: app/gui/gradient-editor-commands.c:1115
+#: app/gui/gradient-editor-commands.c:1114
 msgid "Delete Selection"
 msgstr "Ta bort markering"
 
-#: app/gui/gradient-editor-commands.c:1116
+#: app/gui/gradient-editor-commands.c:1115
 msgid "Re-center Midpoints in Selection"
 msgstr "Centrera mittpunkter i markering"
 
-#: app/gui/gradient-editor-commands.c:1117
+#: app/gui/gradient-editor-commands.c:1116
 msgid "Re-distribute Handles in Selection"
 msgstr "Återfördela handtagen i markering"
 
@@ -2351,16 +2378,16 @@ msgstr ""
 msgid "Save \"%s\" as POV-Ray"
 msgstr "Spara \"%s\" som POV-Ray"
 
-#: app/gui/gui.c:458
+#: app/gui/gui.c:455
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Lägger till temat \"%s\" (%s)\n"
 
-#: app/gui/gui.c:524
+#: app/gui/gui.c:521
 msgid "Quit The GIMP?"
 msgstr "Avsluta GIMP?"
 
-#: app/gui/gui.c:528
+#: app/gui/gui.c:525
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -4176,35 +4203,35 @@ msgstr "Modifiera sökvägsattribut"
 msgid "Enter a new name for the path"
 msgstr "Ange nytt namn för slingan"
 
-#: app/gui/paths-dialog.c:1906
+#: app/gui/paths-dialog.c:1907
 #, c-format
 msgid "Failed to read from '%s'."
 msgstr "Misslyckades med att läsa från \"%s\"."
 
-#: app/gui/paths-dialog.c:1921
+#: app/gui/paths-dialog.c:1922
 #, c-format
 msgid "Failed to read path from '%s'."
 msgstr "Misslyckades med att läsa slinga från \"%s\"."
 
-#: app/gui/paths-dialog.c:1928
+#: app/gui/paths-dialog.c:1929
 #, c-format
 msgid "No points specified in path file '%s'."
 msgstr "Inga punkter specifierade i slingfilen \"%s\"."
 
-#: app/gui/paths-dialog.c:1939
+#: app/gui/paths-dialog.c:1940
 #, c-format
 msgid "Failed to read path points from '%s'."
 msgstr "Misslyckades med att läsa slingpunkter från \"%s\"."
 
-#: app/gui/paths-dialog.c:2038
+#: app/gui/paths-dialog.c:2039
 msgid "Load and Save Bezier Curves"
 msgstr "Läs in och spara Bezierkurvor"
 
-#: app/gui/paths-dialog.c:2078
+#: app/gui/paths-dialog.c:2077
 msgid "Load Path"
 msgstr "Läs in slinga"
 
-#: app/gui/paths-dialog.c:2100
+#: app/gui/paths-dialog.c:2099
 msgid "Save Path"
 msgstr "Spara slinga"
 
@@ -5678,12 +5705,12 @@ msgstr "GIMP-tillägg"
 msgid "Temporary Procedure"
 msgstr "Temporär procedur"
 
-#: app/plug-in/plug-in.c:406
+#: app/plug-in/plug-in.c:407
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Kunde inte hitta insticksmodul: \"%s\""
 
-#: app/plug-in/plug-in.c:951
+#: app/plug-in/plug-in.c:952
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -5844,7 +5871,7 @@ msgid "Max Depth:"
 msgstr "Max djup:"
 
 #: app/tools/gimpblendtool.c:592 app/tools/gimpbucketfilltool.c:421
-#: app/tools/gimpmagnifytool.c:489 app/tools/selection_options.c:315
+#: app/tools/gimpmagnifytool.c:489 app/tools/selection_options.c:325
 msgid "Threshold:"
 msgstr "Tröskelvärde:"
 
@@ -5893,7 +5920,7 @@ msgstr "/Verktyg/Målarverktyg/Fyll"
 msgid "Fill Type  %s"
 msgstr "Fyllnadstyp %s"
 
-#: app/tools/gimpbucketfilltool.c:374 app/tools/selection_options.c:265
+#: app/tools/gimpbucketfilltool.c:374 app/tools/selection_options.c:275
 msgid "Finding Similar Colors"
 msgstr "Söker liknande färger"
 
@@ -5906,7 +5933,7 @@ msgid "Allow completely transparent regions to be filled"
 msgstr "Tillåt att helt transparenta regioner fylls"
 
 #: app/tools/gimpbucketfilltool.c:402 app/tools/gimpcolorpickertool.c:706
-#: app/tools/selection_options.c:293 app/tools/selection_options.c:361
+#: app/tools/selection_options.c:303 app/tools/selection_options.c:371
 msgid "Sample Merged"
 msgstr "Sampla sammanfogade"
 
@@ -5914,7 +5941,7 @@ msgstr "Sampla sammanfogade"
 msgid "Base filled area on all visible layers"
 msgstr "Basera fyllda områden på alla synliga lager"
 
-#: app/tools/gimpbucketfilltool.c:425 app/tools/selection_options.c:319
+#: app/tools/gimpbucketfilltool.c:425 app/tools/selection_options.c:329
 msgid "Maximum color difference"
 msgstr "Maximal färgskillnad"
 
@@ -6052,7 +6079,7 @@ msgstr "Hexadecimal triplett"
 msgid "Sample Average"
 msgstr "Sampelmedel"
 
-#: app/tools/gimpcolorpickertool.c:745 app/tools/selection_options.c:210
+#: app/tools/gimpcolorpickertool.c:745 app/tools/selection_options.c:220
 #: app/widgets/gimpbrusheditor.c:149
 msgid "Radius:"
 msgstr "Radie:"
@@ -6276,7 +6303,7 @@ msgstr "Vänd lagret eller markeringen"
 msgid "/Tools/Transform Tools/Flip"
 msgstr "/Verktyg/Transformeringsverktyg/Vänd"
 
-#: app/tools/gimpfreeselecttool.c:92
+#: app/tools/gimpfreeselecttool.c:92 libgimptool/gimptoolenums.c:116
 msgid "Free Select"
 msgstr "Fri markering"
 
@@ -6866,7 +6893,7 @@ msgstr "_Storlek:"
 msgid "_Border:"
 msgstr "_Kant:"
 
-#: app/tools/gimptexttool.c:471 app/tools/selection_options.c:430
+#: app/tools/gimptexttool.c:471 app/tools/selection_options.c:436
 msgid "Unit:"
 msgstr "Enhet:"
 
@@ -6988,62 +7015,58 @@ msgstr "Typ:"
 msgid "Path Tool"
 msgstr "Slingverktyg"
 
-#: app/tools/selection_options.c:114
+#: app/tools/selection_options.c:124
 msgid "Replace the current selection"
 msgstr "Ersätt aktuell markering"
 
-#: app/tools/selection_options.c:115
+#: app/tools/selection_options.c:125
 msgid "Add to the current selection"
 msgstr "Lägg till aktuell markering"
 
-#: app/tools/selection_options.c:116
+#: app/tools/selection_options.c:126
 msgid "Subtract from the current selection"
 msgstr "Ta bort från aktuell markering"
 
-#: app/tools/selection_options.c:117
+#: app/tools/selection_options.c:127
 msgid "Intersect with the current selection"
 msgstr "Snitt med aktuell markering"
 
 #. the antialias toggle button
-#: app/tools/selection_options.c:164
+#: app/tools/selection_options.c:174
 msgid "Antialiasing"
 msgstr "Kantutjämning"
 
-#: app/tools/selection_options.c:170
+#: app/tools/selection_options.c:180
 msgid "Smooth edges"
 msgstr "Utjämna kanter"
 
-#: app/tools/selection_options.c:192
+#: app/tools/selection_options.c:202
 msgid "Feather Edges"
 msgstr "Fjädra kanter"
 
-#: app/tools/selection_options.c:245
+#: app/tools/selection_options.c:255
 msgid "Show Interactive Boundary"
 msgstr "Visa interaktiv gräns"
 
-#: app/tools/selection_options.c:276
+#: app/tools/selection_options.c:286
 msgid "Select Transparent Areas"
 msgstr "Markera transparenta områden"
 
-#: app/tools/selection_options.c:284
+#: app/tools/selection_options.c:294
 msgid "Allow completely transparent regions to be selected"
 msgstr "Tillåt att helt transparenta regioner kan markeras"
 
-#: app/tools/selection_options.c:301
+#: app/tools/selection_options.c:311
 msgid "Base selection on all visible layers"
 msgstr "Basera markering på alla synliga lager"
 
-#: app/tools/selection_options.c:346
+#: app/tools/selection_options.c:356
 msgid "Auto Shrink Selection"
 msgstr "Krymp markering automatiskt"
 
-#: app/tools/selection_options.c:369
+#: app/tools/selection_options.c:379
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Använd alla synliga lager vid krympning av markeringen"
-
-#: app/tools/selection_options.c:381
-msgid "Fixed Size / Aspect Ratio"
-msgstr "Fix storlek/aspektförhållande"
 
 #: app/tools/tool_options.c:47
 msgid "This tool has no options."
@@ -7125,7 +7148,7 @@ msgstr "Hårdhet:"
 msgid "Aspect Ratio:"
 msgstr "Aspektförhållande:"
 
-#: app/widgets/gimpbrushfactoryview.c:114
+#: app/widgets/gimpbrushfactoryview.c:115
 msgid "Spacing:"
 msgstr "Mellanrum:"
 
@@ -7137,7 +7160,7 @@ msgstr "Klistra in i"
 msgid "Paste as New"
 msgstr "Klistra in som ny"
 
-#: app/widgets/gimpbufferview.c:171 app/widgets/gimpdatafactoryview.c:219
+#: app/widgets/gimpbufferview.c:171 app/widgets/gimpdatafactoryview.c:221
 #: app/widgets/gimpitemlistview.c:237
 msgid "Delete"
 msgstr "Ta bort"
@@ -7180,7 +7203,7 @@ msgid "Gray"
 msgstr "Grå"
 
 #: app/widgets/gimpcontainergridview.c:135
-#: app/widgets/gimpcontainergridview.c:436
+#: app/widgets/gimpcontainergridview.c:437
 msgid "(None)"
 msgstr "(Ingen)"
 
@@ -7192,23 +7215,23 @@ msgstr "Spara"
 msgid "Revert"
 msgstr "Återgå"
 
-#: app/widgets/gimpdatafactoryview.c:195 app/widgets/gimpitemlistview.c:190
+#: app/widgets/gimpdatafactoryview.c:197 app/widgets/gimpitemlistview.c:190
 msgid "New"
 msgstr "Ny"
 
-#: app/widgets/gimpdatafactoryview.c:203 app/widgets/gimpitemlistview.c:223
+#: app/widgets/gimpdatafactoryview.c:205 app/widgets/gimpitemlistview.c:223
 msgid "Duplicate"
 msgstr "Duplicera"
 
-#: app/widgets/gimpdatafactoryview.c:211 app/widgets/gimpitemlistview.c:230
+#: app/widgets/gimpdatafactoryview.c:213 app/widgets/gimpitemlistview.c:230
 msgid "Edit"
 msgstr "Redigera"
 
-#: app/widgets/gimpdatafactoryview.c:227
+#: app/widgets/gimpdatafactoryview.c:229
 msgid "Refresh"
 msgstr "Uppdatera"
 
-#: app/widgets/gimpdatafactoryview.c:380
+#: app/widgets/gimpdatafactoryview.c:382
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -7217,7 +7240,7 @@ msgstr ""
 "Är du säker att du vill ta bort\n"
 "\"%s\" från listan och från disk?"
 
-#: app/widgets/gimpdatafactoryview.c:384
+#: app/widgets/gimpdatafactoryview.c:386
 msgid "Delete Data Object"
 msgstr "Ta bort dataobjekt"
 
@@ -7433,7 +7456,7 @@ msgstr "Odefinerad"
 msgid "Columns:"
 msgstr "Kolumner:"
 
-#: app/widgets/gimppropwidgets.c:772
+#: app/widgets/gimppropwidgets.c:825
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Detta textinmatningsfält är begränsat till %d tecken."
@@ -7688,27 +7711,26 @@ msgstr "Beskär"
 msgid "Resize"
 msgstr "Ändra storlek"
 
+#: libgimptool/gimptoolenums.c:117
+msgid "Fixed Size"
+msgstr "Fix storlek"
+
+#: libgimptool/gimptoolenums.c:118
+msgid "Fixed Aspect Ratio"
+msgstr "Fixt aspektförhållande"
+
+#~ msgid "to replicate the selection"
+#~ msgstr "markeringen ska replikeras"
+
+#~ msgid "Please select the number of uniform parts"
+#~ msgstr "Välj antalet uniforma delar"
+
 #~ msgid ""
 #~ "Installation failed.\n"
 #~ "Contact the system administrator."
 #~ msgstr ""
 #~ "Installationen misslyckades.\n"
 #~ "Kontakta systemadministratören."
-
-#~ msgid "RGB-empty"
-#~ msgstr "RGB-tom"
-
-#~ msgid "grayscale-empty"
-#~ msgstr "gråskala-tom"
-
-#~ msgid "grayscale"
-#~ msgstr "gråskala"
-
-#~ msgid "indexed-empty"
-#~ msgstr "indexerad-tom"
-
-#~ msgid "indexed"
-#~ msgstr "indexerad"
 
 #~ msgid "/View/Toggle Guides"
 #~ msgstr "/Visa/Visa hjälplinjer"
