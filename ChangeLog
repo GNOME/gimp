@@ -1,3 +1,13 @@
+2000-08-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/threshold_alpha.c: avoid floating point exception
+	on small images (reported by Steven Grady)
+
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/scatter_hsv.c: same fix here
+	
 Tue Aug 22 18:42:04 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* configure.in: $srcdir != $builddir fix for GIMP_CONTRIBUTORS

@@ -38,13 +38,13 @@
 #define SHORT_NAME	"scatter_hsv"
 
 static void   query (void);
-static void   run   (gchar   *name,
-		     gint     nparams,
+static void   run   (gchar      *name,
+		     gint        nparams,
 		     GimpParam  *param,
-		     gint    *nreturn_vals,
+		     gint       *nreturn_vals,
 		     GimpParam **return_vals);
 
-static GimpPDBStatusType scatter_hsv         (gint32  drawable_id);
+static GimpPDBStatusType scatter_hsv   (gint32  drawable_id);
 static void        scatter_hsv_scatter (guchar *r,
 					guchar *g,
 					guchar *b);
@@ -218,6 +218,8 @@ scatter_hsv (gint32 drawable_id)
   gap = (gimp_drawable_has_alpha (drawable_id)) ? 1 : 0;
   gimp_drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
   total = (x2 - x1) * (y2 - y1);
+  if (total < 1)
+    return GIMP_PDB_EXECUTION_ERROR;
 
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
   gimp_pixel_rgn_init (&src_rgn, drawable,
@@ -260,7 +262,7 @@ scatter_hsv (gint32 drawable_id)
 		  offset++;
 		}
 	      /* the function */
-	      if ((++processed % (total / PROGRESS_UPDATE_NUM)) == 0)
+	      if ((++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
 		gimp_progress_update ((double) processed /(double) total); 
 	    }
 	}

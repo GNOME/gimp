@@ -45,24 +45,24 @@
 #define PREVIEW_SIZE         128 
 
 static void	query	(void);
-static void	run	(gchar  *name,
-			 gint    nparams,
-			 GimpParam *param,
-			 gint   *nreturn_vals,
+static void	run	(gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
 			 GimpParam **return_vals);
 
-static void        fill_preview_with_thumb (GtkWidget *preview_widget, 
-					    gint32     drawable_id);
+static void        fill_preview_with_thumb (GtkWidget    *preview_widget, 
+					    gint32        drawable_id);
 static GtkWidget  *preview_widget          (GimpDrawable *drawable);
 
-static GimpPDBStatusType main_function  (GimpDrawable *drawable, 
-				   gboolean   preview_mode);
+static GimpPDBStatusType main_function     (GimpDrawable *drawable, 
+					    gboolean      preview_mode);
 
 static gint	   dialog         (GimpDrawable *drawable);
-static void        ok_callback    (GtkWidget *widget,
-				   gpointer   data);
-static void        radio_callback (GtkWidget *widget, 
-				   gpointer   data);
+static void        ok_callback    (GtkWidget    *widget,
+				   gpointer      data);
+static void        radio_callback (GtkWidget    *widget, 
+				   gpointer      data);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -133,10 +133,10 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
   GimpDrawable    *drawable;
@@ -191,7 +191,7 @@ run (gchar   *name,
 
 static GimpPDBStatusType
 main_function (GimpDrawable *drawable, 
-	       gboolean   preview_mode)
+	       gboolean      preview_mode)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   guchar    *src, *dest, *save_dest, *src_data, *dest_data;
@@ -226,101 +226,103 @@ main_function (GimpDrawable *drawable,
     }
   
   total = (x2 - x1) * (y2 - y1);
+  if (total < 1)
+    return GIMP_PDB_EXECUTION_ERROR;
 
- if (preview_mode) 
-   { /* preview mode.  here we go again. see nova.c 
-	I just don't want to write a prev_pixel_rgn_process
-	and then find out someone else coded a much cooler
-	preview widget / functions for GIMP */
-     src_data = g_malloc (GTK_PREVIEW (preview)->rowstride * y2);
-     memcpy (src_data, preview_bits, GTK_PREVIEW (preview)->rowstride * y2);
-     dest_data = g_malloc (GTK_PREVIEW (preview)->rowstride * y2);
-     save_dest = dest_data;
-     
-     for (y = 0; y < y2; y++)
-       {
-	 src  = src_data  + y * GTK_PREVIEW (preview)->rowstride;
-	 dest = dest_data + y * GTK_PREVIEW (preview)->rowstride;
-	 
-	 for (x = 0; x < x2; x++)
-	   {
-	     gint   ch, max_ch = 0;
-	     guchar max, tmp_value;
-	     
-	     max = init_value;
-	     for (ch = 0; ch < 3; ch++)
-	       if (flag * max <= flag * (tmp_value = (*src++)))
-		 {
-		   if (max == tmp_value)
-		     {
-		       max_ch += 1 << ch;
-		     }
-		   else
-		     {
-		       max_ch = 1 << ch; /* clear memories of old channels */
-		       max = tmp_value;
-		     }
-		 }
-
-	     for ( ch = 0; ch < 3; ch++)
-	       *dest++ = (guchar)(((max_ch & (1 << ch)) > 0) ? max : 0);
-
-	     if (gap) 
-	       *dest++ = *src++;
+  if (preview_mode) 
+    { /* preview mode.  here we go again. see nova.c 
+	 I just don't want to write a prev_pixel_rgn_process
+	 and then find out someone else coded a much cooler
+	 preview widget / functions for GIMP */
+      src_data = g_malloc (GTK_PREVIEW (preview)->rowstride * y2);
+      memcpy (src_data, preview_bits, GTK_PREVIEW (preview)->rowstride * y2);
+      dest_data = g_malloc (GTK_PREVIEW (preview)->rowstride * y2);
+      save_dest = dest_data;
+      
+      for (y = 0; y < y2; y++)
+	{
+	  src  = src_data  + y * GTK_PREVIEW (preview)->rowstride;
+	  dest = dest_data + y * GTK_PREVIEW (preview)->rowstride;
+	  
+	  for (x = 0; x < x2; x++)
+	    {
+	      gint   ch, max_ch = 0;
+	      guchar max, tmp_value;
+	      
+	      max = init_value;
+	      for (ch = 0; ch < 3; ch++)
+		if (flag * max <= flag * (tmp_value = (*src++)))
+		  {
+		    if (max == tmp_value)
+		      {
+			max_ch += 1 << ch;
+		      }
+		    else
+		      {
+			max_ch = 1 << ch; /* clear memories of old channels */
+			max = tmp_value;
+		      }
+		  }
+	      
+	      for ( ch = 0; ch < 3; ch++)
+		*dest++ = (guchar)(((max_ch & (1 << ch)) > 0) ? max : 0);
+	      
+	      if (gap) 
+		*dest++ = *src++;
 	    }
 	}
-
-   memcpy (GTK_PREVIEW (preview)->buffer, save_dest, GTK_PREVIEW (preview)->rowstride * y2);
-   gtk_widget_queue_draw (preview);
- } 
- else 
-   { /* normal mode */
-     for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
-       {
-	 for (y = 0; y < src_rgn.h; y++)
-	   {
-	     src = src_rgn.data + y * src_rgn.rowstride;
-	     dest = dest_rgn.data + y * dest_rgn.rowstride;
-	     
-	     for (x = 0; x < src_rgn.w; x++)
-	       {
-		 gint   ch, max_ch = 0;
-		 guchar max, tmp_value;
-		 
-		 max = init_value;
-		 for (ch = 0; ch < 3; ch++)
-		   if (flag * max <= flag * (tmp_value = (*src++)))
-		     {
-		       if (max == tmp_value)
-			 {
-			   max_ch += 1 << ch;
-			 }
-		       else
-			 {
-			   max_ch = 1 << ch; /* clear memories of old channels */
-			   max = tmp_value;
-			 }
-		       
-		     }
-		 for ( ch = 0; ch < 3; ch++)
-		   *dest++ = (guchar)(((max_ch & (1 << ch)) > 0) ? max : 0);
-		 
-		 if (gap) 
-		   *dest++=*src++;
-		 
-		 if ((++processed % (total / PROGRESS_UPDATE_NUM)) == 0)
-		   gimp_progress_update ((gdouble) processed / (gdouble) total); 
-	       }
-	   }
-       }
-     gimp_progress_update (1.0);
-     gimp_drawable_flush (drawable);
-     gimp_drawable_merge_shadow (drawable->id, TRUE);
-     gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
-     gimp_drawable_detach (drawable);
-   }
- 
- return GIMP_PDB_SUCCESS;
+      
+      memcpy (GTK_PREVIEW (preview)->buffer, save_dest, GTK_PREVIEW (preview)->rowstride * y2);
+      gtk_widget_queue_draw (preview);
+    } 
+  else 
+    { /* normal mode */
+      for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
+	{
+	  for (y = 0; y < src_rgn.h; y++)
+	    {
+	      src = src_rgn.data + y * src_rgn.rowstride;
+	      dest = dest_rgn.data + y * dest_rgn.rowstride;
+	      
+	      for (x = 0; x < src_rgn.w; x++)
+		{
+		  gint   ch, max_ch = 0;
+		  guchar max, tmp_value;
+		  
+		  max = init_value;
+		  for (ch = 0; ch < 3; ch++)
+		    if (flag * max <= flag * (tmp_value = (*src++)))
+		      {
+			if (max == tmp_value)
+			  {
+			    max_ch += 1 << ch;
+			  }
+			else
+			  {
+			    max_ch = 1 << ch; /* clear memories of old channels */
+			    max = tmp_value;
+			  }
+			
+		      }
+		  for ( ch = 0; ch < 3; ch++)
+		    *dest++ = (guchar)(((max_ch & (1 << ch)) > 0) ? max : 0);
+		  
+		  if (gap) 
+		    *dest++=*src++;
+		  
+		  if ((++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
+		    gimp_progress_update ((gdouble) processed / (gdouble) total); 
+		}
+	    }
+	}
+      gimp_progress_update (1.0);
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->id, TRUE);
+      gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+      gimp_drawable_detach (drawable);
+    }
+  
+  return GIMP_PDB_SUCCESS;
 }
  
 

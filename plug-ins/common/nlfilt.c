@@ -251,7 +251,7 @@ pluginCore (struct piArgs *argp)
   height = drw->height;
   Bpp = drw->bpp;
   rowsize = width * Bpp;
-  p_update = width / 20;
+  p_update = width / 20 + 1;
 
   gimp_pixel_rgn_init (&srcPr, drw, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dstPr, drw, 0, 0, width, height, TRUE, TRUE);

@@ -41,17 +41,17 @@
 #define SCALE_WIDTH         120
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
-static GimpPDBStatusType threshold_alpha (gint32 drawable_id);
+static GimpPDBStatusType threshold_alpha             (gint32     drawable_id);
 
-static gint threshold_alpha_dialog      (void);
-static void threshold_alpha_ok_callback (GtkWidget *widget,
-					 gpointer   data);
+static gint              threshold_alpha_dialog      (void);
+static void              threshold_alpha_ok_callback (GtkWidget *widget,
+						      gpointer   data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -88,10 +88,10 @@ query (void)
 {
   static GimpParamDef args [] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
-    { GIMP_PDB_IMAGE, "image", "Input image (not used)"},
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "threshold", "Threshold" }
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive"},
+    { GIMP_PDB_IMAGE,    "image",     "Input image (not used)"},
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
+    { GIMP_PDB_INT32,    "threshold", "Threshold" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -109,18 +109,18 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  GimpRunModeType  run_mode;
-  gint          drawable_id;
+  static GimpParam   values[1];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunModeType    run_mode;
+  gint               drawable_id;
   
-  run_mode = param[0].data.d_int32;
+  run_mode    = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
 
   if (run_mode != GIMP_RUN_INTERACTIVE)
@@ -193,10 +193,10 @@ threshold_alpha (gint32 drawable_id)
 {
   GimpDrawable *drawable;
   GimpPixelRgn  src_rgn, dest_rgn;
-  guchar    *src, *dest;
-  gpointer   pr;
-  gint       x, y, x1, x2, y1, y2;
-  gint       gap, total, processed = 0;
+  guchar       *src, *dest;
+  gpointer      pr;
+  gint          x, y, x1, x2, y1, y2;
+  gint          gap, total, processed = 0;
   
   drawable = gimp_drawable_get (drawable_id);
   if (! gimp_drawable_has_alpha (drawable_id))
@@ -209,6 +209,8 @@ threshold_alpha (gint32 drawable_id)
 
   gimp_drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
   total = (x2 - x1) * (y2 - y1);
+  if (total < 1)
+    return GIMP_PDB_EXECUTION_ERROR;
 
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
   gimp_pixel_rgn_init (&src_rgn, drawable,
@@ -218,6 +220,7 @@ threshold_alpha (gint32 drawable_id)
 
   pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
   gimp_progress_init (_("Threshold Alpha: Coloring Transparency..."));
+
   for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
     {
       gint offset, index;
@@ -234,8 +237,8 @@ threshold_alpha (gint32 drawable_id)
 		*dest++ = *src++;
 	      *dest++ = (VALS.threshold < *src++) ? 255 : 0;
 
-	      if ((++processed % (total / PROGRESS_UPDATE_NUM)) == 0)
-		gimp_progress_update ((double) processed /(double) total); 
+	      if ((++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
+		gimp_progress_update ((gdouble) processed /(gdouble) total); 
 	    }
 	}
   }

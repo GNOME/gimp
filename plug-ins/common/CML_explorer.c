@@ -97,7 +97,7 @@
 #define PREVIEW_WIDTH               64
 #define PREVIEW_HEIGHT             220
 
-#define	RANDOM               ((gdouble) ((double) rand ()/((double) G_MAXRAND)))
+#define	RANDOM               ((gdouble) ((gdouble) rand ()/((gdouble) G_MAXRAND)))
 #define CANNONIZE(p, x)      (255*(((p).range_h - (p).range_l)*(x) + (p).range_l))
 #define HCANNONIZE(p, x)     (254*(((p).range_h - (p).range_l)*(x) + (p).range_l))
 #define POS_IN_TORUS(i,size) ((i < 0) ? size + i : ((size <= i) ? i - size : i))
@@ -302,33 +302,33 @@ static gchar *channel_names[] =
 };
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
-static GimpPDBStatusType   CML_main_function     (gint       preview_p);
-static void          CML_compute_next_step (gint       size,
-					    gdouble  **h,
-					    gdouble  **s,
-					    gdouble  **v,
-					    gdouble  **hn,
-					    gdouble  **sn,
-					    gdouble  **vn,
-					    gdouble  **haux,
-					    gdouble  **saux,
-					    gdouble  **vaux);
-static gdouble       CML_next_value        (gdouble   *vec,
-					    gint       pos,
-					    gint       size,
-					    gdouble    c1,
-					    gdouble    c2,
-					    CML_PARAM *param,
-					    gdouble    aux);
-static gdouble       logistic_function     (CML_PARAM *param,
-					    gdouble    x,
-					    gdouble    power);
+static GimpPDBStatusType CML_main_function     (gint       preview_p);
+static void              CML_compute_next_step (gint       size,
+						gdouble  **h,
+						gdouble  **s,
+						gdouble  **v,
+						gdouble  **hn,
+						gdouble  **sn,
+						gdouble  **vn,
+						gdouble  **haux,
+						gdouble  **saux,
+						gdouble  **vaux);
+static gdouble           CML_next_value        (gdouble   *vec,
+						gint       pos,
+						gint       size,
+						gdouble    c1,
+						gdouble    c2,
+						CML_PARAM *param,
+						gdouble    aux);
+static gdouble           logistic_function     (CML_PARAM *param,
+						gdouble    x,
+						gdouble    power);
 
 
 static gint	   CML_explorer_dialog           (void);
@@ -478,17 +478,17 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpPDBStatusType   status = GIMP_PDB_EXECUTION_ERROR;
-  GimpRunModeType  run_mode;
+  static GimpParam  values[1];
+  GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
+  GimpRunModeType   run_mode;
 
-  run_mode = param[0].data.d_int32;
+  run_mode    = param[0].data.d_int32;
   drawable_id = param[2].data.d_drawable;
 
   *nreturn_vals = 1;
@@ -584,6 +584,8 @@ CML_main_function (gint preview_p)
   src_bpl = width_by_pixel * src_bpp;
   cell_num = (width_by_pixel - 1)/ VALS.scale + 1;
   total = height_by_pixel * width_by_pixel;
+  if (total < 1)
+    return GIMP_PDB_EXECUTION_ERROR;
   keep_height = VALS.scale;
 
   /* configure reusable memories */
@@ -837,8 +839,8 @@ CML_main_function (gint preview_p)
 		  }
 		if (dest_has_alpha)
 		  dest_buffer[dest_offset] = 255;
-		if ((!preview_p) && (++processed % (total / PROGRESS_UPDATE_NUM)) == 0)
-		  gimp_progress_update ((double)processed /(double) total);
+		if ((!preview_p) && (++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
+		  gimp_progress_update ((gdouble) processed / (gdouble) total);
 	      }
 	}
       if (preview_p)
