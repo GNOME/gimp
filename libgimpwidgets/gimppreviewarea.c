@@ -29,6 +29,9 @@
 
 #include "gimppreviewarea.h"
 
+#include "libgimp/libgimp-intl.h"
+
+
 enum
 {
   PROP_0,
@@ -107,13 +110,15 @@ gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
   widget_class->expose_event  = gimp_preview_area_expose;
 
   g_object_class_install_property (object_class, PROP_CHECK_SIZE,
-                                   g_param_spec_enum ("check-size", NULL, NULL,
+                                   g_param_spec_enum ("check-size",
+                                                      _("Check Size"), NULL,
                                                       GIMP_TYPE_CHECK_SIZE,
                                                       DEFAULT_CHECK_SIZE,
                                                       G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CHECK_TYPE,
-                                   g_param_spec_enum ("check-type", NULL, NULL,
+                                   g_param_spec_enum ("check-type",
+                                                      _("Check Style"), NULL,
                                                       GIMP_TYPE_CHECK_TYPE,
                                                       DEFAULT_CHECK_TYPE,
                                                       G_PARAM_READWRITE));
@@ -164,11 +169,9 @@ gimp_preview_area_set_property (GObject      *object,
     {
     case PROP_CHECK_SIZE:
       area->check_size = g_value_get_enum (value);
-      gtk_widget_queue_draw (GTK_WIDGET (area));
       break;
     case PROP_CHECK_TYPE:
       area->check_type = g_value_get_enum (value);
-      gtk_widget_queue_draw (GTK_WIDGET (area));
       break;
 
     default:
@@ -677,4 +680,118 @@ gimp_preview_area_set_cmap (GimpPreviewArea *area,
       g_free (area->cmap);
       area->cmap = NULL;
     }
+}
+
+
+/*  popup menu  */
+
+static void
+gimp_preview_area_menu_toggled (GtkWidget       *item,
+                                GimpPreviewArea *area)
+{
+  gboolean active = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (item));
+
+  if (active)
+    {
+      const gchar *name;
+      gint         value;
+
+      name  = g_object_get_data (G_OBJECT (item),
+                                 "gimp-preview-area-prop-name");
+      value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (item),
+                                                  "gimp-preview-area-prop-value"));
+
+      if (name)
+        g_object_set (area,
+                      name, value,
+                      NULL);
+    }
+}
+
+static GtkWidget *
+gimp_preview_area_menu_new (GimpPreviewArea *area,
+                            const gchar     *property)
+{
+  GParamSpec *pspec;
+  GEnumClass *enum_class;
+  GEnumValue *enum_value;
+  GtkWidget  *menu;
+  GtkWidget  *item;
+  GSList     *group = NULL;
+  gint        value;
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (area), property);
+
+  g_return_val_if_fail (G_IS_PARAM_SPEC_ENUM (pspec), NULL);
+
+  g_object_get (area,
+                property, &value,
+                NULL);
+
+  enum_class = G_PARAM_SPEC_ENUM (pspec)->enum_class;
+
+  menu = gtk_menu_new ();
+
+  for (enum_value = enum_class->values; enum_value->value_name; enum_value++)
+    {
+      const gchar *name = gimp_enum_value_get_name (enum_class, enum_value);
+
+      item = gtk_radio_menu_item_new_with_label (group, name);
+
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+      gtk_widget_show (item);
+
+      g_object_set_data (G_OBJECT (item),
+                         "gimp-preview-area-prop-name",
+                         (gpointer) property);
+
+      g_object_set_data (G_OBJECT (item),
+                         "gimp-preview-area-prop-value",
+                         GINT_TO_POINTER (enum_value->value));
+
+      gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+                                      (enum_value->value == value));
+
+      g_signal_connect (item, "toggled",
+                        G_CALLBACK (gimp_preview_area_menu_toggled),
+                        area);
+
+      group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
+    }
+
+  item = gtk_menu_item_new_with_label (g_param_spec_get_nick (pspec));
+
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
+
+  gtk_widget_show (item);
+
+  return item;
+}
+
+void
+gimp_preview_area_menu_popup (GimpPreviewArea *area,
+                              guint            button,
+                              guint32          activate_time)
+{
+  GtkWidget *menu;
+
+  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+
+  menu = gtk_menu_new ();
+  gtk_menu_set_screen (GTK_MENU (menu),
+                       gtk_widget_get_screen (GTK_WIDGET (area)));
+
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu),
+                         gimp_preview_area_menu_new (area, "check-type"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu),
+                         gimp_preview_area_menu_new (area, "check-size"));
+
+  gtk_menu_popup (GTK_MENU (menu),
+                  NULL, NULL, NULL, NULL, button, activate_time);
+
+#if 0
+  g_signal_connect (menu, "deactivate",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
+#endif
 }

@@ -76,6 +76,7 @@ static void      gimp_preview_v_scroll           (GtkAdjustment    *vadj,
                                                   GimpPreview      *preview);
 static void      gimp_preview_toggle_callback    (GtkWidget        *toggle,
                                                   GimpPreview      *preview);
+static void      gimp_preview_notify_checks      (GimpPreview      *preview);
 static gboolean  gimp_preview_invalidate_now     (GimpPreview      *preview);
 
 
@@ -208,6 +209,13 @@ gimp_preview_init (GimpPreview *preview)
   preview->area = gimp_preview_area_new ();
   gtk_container_add (GTK_CONTAINER (frame), preview->area);
   gtk_widget_show (preview->area);
+
+  g_signal_connect_swapped (preview->area, "notify::check-size",
+                            G_CALLBACK (gimp_preview_notify_checks),
+                            preview);
+  g_signal_connect_swapped (preview->area, "notify::check-type",
+                            G_CALLBACK (gimp_preview_notify_checks),
+                            preview);
 
   gtk_widget_add_events (preview->area,
                          GDK_BUTTON_PRESS_MASK        |
@@ -412,8 +420,9 @@ gimp_preview_area_event (GtkWidget   *area,
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      if (button_event->button == 1)
+      switch (button_event->button)
         {
+        case 1:
           gtk_widget_get_pointer (area, &preview->drag_x, &preview->drag_y);
 
           preview->drag_xoff = preview->xoff;
@@ -421,6 +430,16 @@ gimp_preview_area_event (GtkWidget   *area,
 
           preview->in_drag = TRUE;
           gtk_grab_add (area);
+          break;
+
+        case 2:
+          break;
+
+        case 3:
+          gimp_preview_area_menu_popup (GIMP_PREVIEW_AREA (area),
+                                        button_event->button,
+                                        button_event->time);
+          break;
         }
       break;
 
@@ -520,6 +539,13 @@ gimp_preview_toggle_callback (GtkWidget   *toggle,
     }
 
   g_object_notify (G_OBJECT (preview), "update");
+}
+
+static void
+gimp_preview_notify_checks (GimpPreview *preview)
+{
+  gimp_preview_draw (preview);
+  gimp_preview_invalidate (preview);
 }
 
 static gboolean

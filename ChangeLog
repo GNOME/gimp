@@ -1,5 +1,12 @@
 2004-09-03  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreviewarea.[ch]: added
+	gimp_preview_area_menu_popup(). Not completely finished yet...
+
+	* libgimpwidgets/gimppreview.c: use the new function.
+
+2004-09-03  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_set_drawable):
 	take care of setting the colormap for indexed drawables.
 
