@@ -67,7 +67,9 @@ static GtkWidget * gradient_options_gui   (GimpGradientOptions *gradient,
                                            GType                tool_type,
                                            GtkWidget           *incremental_toggle);
 
-static void   paint_options_brush_clicked (GtkWidget           *widget, 
+static void paint_options_brush_clicked   (GtkWidget           *widget, 
+                                           GimpContext         *context);
+static void paint_options_pattern_clicked (GtkWidget           *widget, 
                                            GimpContext         *context);
 
 
@@ -83,6 +85,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *optionmenu;
   GtkWidget        *mode_label;
   GtkWidget        *incremental_toggle = NULL;
+  gint              table_row = 0;
 
   options = GIMP_PAINT_OPTIONS (tool_options);
   context = GIMP_CONTEXT (tool_options);
@@ -101,12 +104,12 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
   /*  the opacity scale  */
   gimp_prop_opacity_entry_new (config, "opacity",
-                               GTK_TABLE (table), 0, 0,
+                               GTK_TABLE (table), 0, table_row++,
                                _("Opacity:"));
 
   /*  the paint mode menu  */
   optionmenu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE);
-  mode_label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+  mode_label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                           _("Mode:"), 1.0, 0.5,
                                           optionmenu, 2, TRUE);
 
@@ -132,12 +135,33 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_container_add (GTK_CONTAINER (button), preview);
       gtk_widget_show (preview);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                  _("Brush:"), 1.0, 0.5,
                                  button, 2, TRUE);
 
       g_signal_connect (button, "clicked",
                         G_CALLBACK (paint_options_brush_clicked),
+                        context);
+    }
+
+  /*  the pattern preview  */
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_BUCKET_FILL_TOOL ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_CLONE_TOOL)
+    {
+      GtkWidget *button;
+      GtkWidget *preview;
+
+      button = gtk_button_new ();
+      preview = gimp_prop_preview_new (config, "pattern", 24);
+      gtk_container_add (GTK_CONTAINER (button), preview);
+      gtk_widget_show (preview);
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
+                                 _("Pattern:"), 1.0, 0.5,
+                                 button, 2, TRUE);
+
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (paint_options_pattern_clicked),
                         context);
     }
 
@@ -422,5 +446,23 @@ paint_options_brush_clicked (GtkWidget   *widget,
                                     "gimp-brush-grid",
                                     GIMP_STOCK_TOOL_PAINTBRUSH,
                                     _("Open the brush selection dialog"));
+  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
+}
+
+static void
+paint_options_pattern_clicked (GtkWidget   *widget, 
+                               GimpContext *context)
+{
+  GtkWidget *toplevel;
+  GtkWidget *popup;
+
+  toplevel = gtk_widget_get_toplevel (widget);
+
+  popup = gimp_container_popup_new (context->gimp->pattern_factory->container,
+                                    context,
+                                    GIMP_DOCK (toplevel)->dialog_factory,
+                                    "gimp-pattern-grid",
+                                    GIMP_STOCK_TOOL_BUCKET_FILL,
+                                    _("Open the pattern selection dialog"));
   gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
 }
