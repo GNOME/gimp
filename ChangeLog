@@ -1,3 +1,7 @@
+Tue Mar 31 03:10:12 EST 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/iscissors.c: Set tool->preserve to TRUE in tools_new_iscissors.
+	
 Tue Mar 31 02:21:15 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/gimage.c
