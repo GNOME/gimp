@@ -1,3 +1,10 @@
+2001-05-20  Michael Natterer  <mitch@gimp.org>
+
+	* hr.po
+	* hu.po
+	* nl.po
+	* sk.po: fixed invalid charset specs.
+
 2001-04-23  Valek Filippov  <frob@df.ru>
 
 	* ru.po: microupdated russian translation.
