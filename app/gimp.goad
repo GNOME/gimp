@@ -1,0 +1,11 @@
+[bonobo-object-factory:gimp-image]
+type=exe
+repo_id=IDL:GNOME/EmbeddableFactory:1.0 IDL:GNOME/GenericFactory:1.0
+description=GIMP bonobo object factory
+location_info=gimp
+
+[bonobo-object:gimp-image]
+type=factory
+repo_id=IDL:BonoboObject/gimp-image:1.0 IDL:GNOME/Embeddable:1.0 
+description=GIMP image bonobo object
+location_info=bonobo-object-factory:gimp-image

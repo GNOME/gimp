@@ -27,7 +27,20 @@ libgimpim_a_SOURCES = \
 	gimpsignal.c	\
 	gimpsignal.h
 
+# XXX TODO: Find a way to conditionally compile these in based on whether
+# we are having GNOME & Bonobo support or not.
+
+gimp_GNOME_SOURCES=\
+	gimp-corba.c \
+	gimp-corba.h
+
+gimp_BONOBO_SOURCES=\
+	gimp-bonobo.c \
+	gimp-bonobo.h
+
 gimp_SOURCES = \
+	$(gimp_GNOME_SOURCES)   \
+	$(gimp_BONOBO_SOURCES)  \
 	about_dialog.c		\
 	about_dialog.h		\
 	actionarea.c		\
@@ -478,3 +491,8 @@ endif # WITH_GNU_MAKE
 endif # ENABLE_GCG_DEPS
 endif # WITH_GCG
 # end GCG stuff
+
+gnorbadir = $(sysconfdir)/CORBA/servers
+gnorba_DATA = gimp.goad
+
+EXTRA_DIST = $(gnorba_DATA)

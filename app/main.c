@@ -48,8 +48,10 @@
 
 #ifdef HAVE_GNOME
 #include <gnome.h>
+#include "gimp-corba.h"
 #ifdef HAVE_BONOBO
 #include <bonobo/gnome-bonobo.h>
+#include "gimp-bonobo.h"
 #endif
 #endif
 
@@ -87,6 +89,8 @@ char **batch_cmds;
 static int gimp_argc;
 static char **gimp_argv;
 
+static int do_batch_cmds = 0;
+
 /*
  *  argv processing: 
  *      Arguments are either switches, their associated
@@ -108,14 +112,47 @@ static char **gimp_argv;
  *      commands.
  */
 
+#ifdef HAVE_GNOME
+static const struct poptOption gimp_options[] = {
+  {"no-interface", 'n', POPT_ARG_NONE, &no_interface, 0,
+   "No user interface", NULL},
+  {"batch", 'b', POPT_ARG_NONE, &do_batch_cmds, 0,
+   "Run batch command", NULL},
+  {"system-gimprc", '\0', POPT_ARG_STRING, &alternate_system_gimprc, 0,
+   "Specify an alternate system gimprc", "FILENAME"},
+  {"gimprc", 'g', POPT_ARG_STRING, &alternate_gimprc, 0,
+   "Specify an alternate user gimprc", "FILENAME"},
+  {"no-data", '\0', POPT_ARG_NONE, &no_data, 0,
+   "No data", NULL},
+  {"no-splash", '\0', POPT_ARG_NONE, &no_splash, 0,
+   "No splash screen", NULL},
+  {"no-splash-image", '\0', POPT_ARG_NONE, &no_splash_image, 0,
+   "No image on splash screen", NULL},
+  {"verbose", '\0', POPT_ARG_NONE, &be_verbose, 0,
+   "Be verbose", NULL},
+  {"shm", '\0', POPT_ARG_INT, &use_shm, 0,
+   "Use shared memory", "0/1"},
+  {"debug-handlers", '\0', POPT_ARG_NONE, &use_debug_handler, 0,
+   "Use debug handler", NULL},
+  {"console-messages", '\0', POPT_ARG_NONE, &console_messages, 0,
+   "Show console messages", NULL},
+  {"restore-session", 'r', POPT_ARG_NONE, &restore_session, 0,
+   "Restore previous session", NULL},
+  {NULL, '\0', POPT_ARG_NONE, NULL, 0, NULL, NULL}
+};
+#endif
 int
 main (int argc, char **argv)
 {
   int show_version;
   int show_help;
-  int i, j;
-#ifdef HAVE_PUTENV
+#if defined(HAVE_PUTENV) && !defined(HAVE_GNOME)
   gchar *display_name, *display_env;
+#endif
+#ifdef HAVE_GNOME
+  poptContext poptctx;
+#else
+  int i, j;
 #endif
 
   g_atexit (g_mem_profile);
@@ -141,37 +178,6 @@ main (int argc, char **argv)
 #endif
   textdomain("gimp");
 
-#ifdef HAVE_GNOME
-  /* XXX cmdline args are broken */
-#ifdef HAVE_BONOBO
-  {
-    CORBA_Environment ev;
-    CORBA_ORB orb;
-    PortableServer_POA poa;
-    PortableServer_POAManager poam;
-
-    CORBA_exception_init(&ev);
-    orb = gnome_CORBA_init ("gimp", "1.1", &argc, argv, GNORBA_INIT_SERVER_FUNC, &ev);
-    poa = CORBA_ORB_resolve_initial_references(orb, "RootPOA", &ev);
-    poam = PortableServer_POA__get_the_POAManager(poa, &ev);
-    bonobo_init(orb, poa, poam);
-    CORBA_exception_free(&ev);
-  }
-#else
-  gnome_init ("gimp", "1.1", argc, argv);
-#endif
-#else
-  gtk_init (&argc, &argv);
-#endif
-
-#ifdef HAVE_PUTENV
-  display_name = gdk_get_display ();
-  display_env = g_new (gchar, strlen (display_name) + 9);
-  *display_env = 0;
-  strcat (display_env, "DISPLAY=");
-  strcat (display_env, display_name);
-  putenv (display_env);
-#endif
 
   no_interface = FALSE;
   no_data = FALSE;
@@ -198,6 +204,65 @@ main (int argc, char **argv)
 
   show_version = FALSE;
   show_help = FALSE;
+
+#ifdef HAVE_GNOME
+#ifdef HAVE_BONOBO
+  {
+    CORBA_Environment ev;
+
+    CORBA_exception_init(&ev);
+    gnome_CORBA_init_with_popt_table ("gimp", GIMP_VERSION, &argc, argv,
+				      gimp_options, 0, &poptctx,
+				      GNORBA_INIT_SERVER_FUNC, &ev);
+    bonobo_init(CORBA_OBJECT_NIL, CORBA_OBJECT_NIL, CORBA_OBJECT_NIL);
+
+    gimp_corba_init();
+
+    CORBA_exception_free(&ev);
+  }
+#else
+  gnome_init_with_popt_table ("gimp", GIMP_VERSION, argc, argv,
+			      gimp_options, 0, &poptctx);
+#endif
+
+  { /* Copy the leftover arguments array from popt */
+    int n;
+    char **ctmp;
+
+    ctmp = poptGetArgs(poptctx);
+    if(ctmp) {
+      for(n = 0; ctmp[n]; n++) /**/ ;
+
+      if(do_batch_cmds) {
+	for(n = 0; ctmp[n]; n++)
+	  batch_cmds[n] = ctmp[n];
+	batch_cmds[n] = NULL;
+      } else {
+	gimp_argc = n;
+	gimp_argv = g_new(char *, n);
+	for(n = 0; ctmp[n]; n++)
+	  gimp_argv[n] = ctmp[n];
+      }
+    } else {
+      static char * dummy[1];
+      dummy[0] = argv[0];
+      gimp_argc = 1;
+      gimp_argv = dummy;
+    }
+  }
+  poptFreeContext(poptctx);
+
+#else /* start !HAVE_GNOME */
+  gtk_init (&argc, &argv);
+
+#ifdef HAVE_PUTENV
+  display_name = gdk_get_display ();
+  display_env = g_new (gchar, strlen (display_name) + 9);
+  *display_env = 0;
+  strcat (display_env, "DISPLAY=");
+  strcat (display_env, display_name);
+  putenv (display_env);
+#endif
 
   test_gserialize ();
 
@@ -310,6 +375,11 @@ main (int argc, char **argv)
 	  show_help = TRUE;
 	}
     }
+  /* Keep the command line arguments--for use in gimp_init */
+  gimp_argc = argc - 1;
+  gimp_argv = argv + 1;
+
+#endif /* end !HAVE_GNOME */
 
   if (show_version)
     g_print ( "%s %s\n", _("GIMP version"), GIMP_VERSION);
@@ -378,10 +448,6 @@ main (int argc, char **argv)
   g_log_set_handler (NULL, G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
 		     on_error, NULL);
   
-  /* Keep the command line arguments--for use in gimp_init */
-  gimp_argc = argc - 1;
-  gimp_argv = argv + 1;
-
   /* Check the installation */
   install_verify (init);
 
