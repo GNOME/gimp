@@ -20,12 +20,12 @@ EXTRA_PROGRAMS = \
 	gimp-remote	\
 	kernelgen
 
-gimp_remote_1_3_SOURCES = gimp-remote.c
-
-gimp_remote_1_3_LDADD = @STRIP_BEGIN@ \
-	$(GTK_LIBS)	\
-	$(LIBXMU)	\
-@STRIP_END@
+## gimp_remote_1_3_SOURCES = gimp-remote.c
+##
+## gimp_remote_1_3_LDADD = @STRIP_BEGIN@ \
+##	$(GTK_LIBS)	\
+##	$(LIBXMU)	\
+## @STRIP_END@
 
 kernelgen_SOURCES = kernelgen.c
 

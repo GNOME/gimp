@@ -1,5 +1,11 @@
 2002-02-03  Sven Neumann  <sven@gimp.org>
 
+	* configure.in
+	* tools/Makefile.am: fixed the build by trying to do the changes
+	Yosh didn't commit.
+
+2002-02-03  Sven Neumann  <sven@gimp.org>
+
         * plug-ins/script-fu/scripts/frosty-logo.scm: don't redefine min.
         Thanks to Jeff Trefftzs <trefftzs@tcsn.net> for spotting this.
 
