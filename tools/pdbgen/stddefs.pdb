@@ -1,0 +1,18 @@
+# Boilerplate PDB stuff
+
+sub std_pdb_misc {
+    $author = 'Spencer Kimball & Peter Mattis';
+    $copyright = $author;
+    $date = '1995-1996';
+}
+
+sub std_image_arg {
+    {
+	name => 'image',	
+	type => 'image',
+	desc => 'The image',
+	alias => 'gimage'
+    }
+}
+
+1;
