@@ -1,3 +1,10 @@
+2001-01-24  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/.cvsignore
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/makefile.mingw.in
+	* libgimpwidgets/makefile.msc: library stub. Please ignore for now :)
+
 2001-01-24  Sven Neumann  <sven@gimp.org>
 
 	* app/paint_funcs.c: brought the array used for optimization back in
