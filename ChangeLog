@@ -19,7 +19,7 @@
 	Reorder the action are buttons: [ "OK" "Reset" "Cancel" ]
 
 	* app/menus.c: Some more cleanups in the menu code. Reorder
-	<Image>/Filters/Misc only if ot exists. Generalized
+	<Image>/Filters/Misc only if it exists. Generalized
 	menu_translate() in preparation for correctly supporting catalogs
 	which only exist sometimes (like gimp-perl).
 
