@@ -76,6 +76,7 @@ STOCK_MENU_IMAGES = @STRIP_BEGIN@ \
 	stock-menu-rotate-90.png		\
 	stock-menu-resize.png			\
 	stock-menu-scale.png			\
+	stock-menu-selection-to-channel.png	\
 	\
 	stock-menu-navigation.png		\
 	stock-menu-qmask-off.png		\

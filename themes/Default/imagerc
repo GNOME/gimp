@@ -158,6 +158,11 @@ style "gimp-icons"
       { "images/stock-menu-scale.png", *, *, "gtk-menu" },
       { "images/stock-menu-scale.png", *, *, * }
     }
+  stock["gimp-selection-to-channel"] =
+    {
+      { "images/stock-menu-selection-to-channel.png", *, *, "gtk-menu" },
+      { "images/stock-menu-selection-to-channel.png", *, *, * }
+    }
 
   # Image window icons
   #

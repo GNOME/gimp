@@ -1,5 +1,16 @@
 2002-03-20  Michael Natterer  <mitch@gimp.org>
 
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-menu-selection-to-channel.png: one
+	more icon from Jimmac.
+
+	* libgimpwidgets/gimpstock.[ch]
+	* themes/Default/imagerc: add it.
+
+	* app/gui/menus.c: use it.
+
+2002-03-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdockbook.c: fixed a bug i introduced when making
 	the tab_height configurable: need to connect the signals of the
 	new tab_widget created in style_set(), otherwise we get the

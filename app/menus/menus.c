@@ -453,7 +453,8 @@ static GimpItemFactoryEntry image_entries[] =
   SEPARATOR ("/Select/---"),
 
   { { N_("/Select/Save to Channel"), NULL,
-      select_save_cmd_callback, 0 },
+      select_save_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_SELECTION_TO_CHANNEL },
     NULL,
     "select/save_to_channel.html", NULL },
 
