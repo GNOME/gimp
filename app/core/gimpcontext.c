@@ -47,6 +47,10 @@
 #include "gimppattern.h"
 #include "gimptoolinfo.h"
 
+#include "config/gimpconfig.h"
+#include "config/gimpconfig-types.h"
+#include "config/gimpconfig-params.h"
+
 #include "libgimp/gimpintl.h" 
 
 
@@ -76,7 +80,6 @@ static void    gimp_context_get_property     (GObject          *object,
 					      GParamSpec       *pspec);
 
 static gsize   gimp_context_get_memsize      (GimpObject       *object);
-
 
 /*  image  */
 static void gimp_context_image_removed       (GimpContainer    *container,
@@ -362,10 +365,20 @@ gimp_context_get_type (void)
 	0,              /* n_preallocs    */
 	(GInstanceInitFunc) gimp_context_init,
       };
+      static const GInterfaceInfo config_iface_info = 
+      {
+        NULL,           /* iface_init     */
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
       context_type = g_type_register_static (GIMP_TYPE_OBJECT,
 					     "GimpContext", 
 					     &context_info, 0);
+
+      g_type_add_interface_static (context_type,
+                                   GIMP_TYPE_CONFIG_INTERFACE,
+                                   &config_iface_info);
     }
 
   return context_type;
@@ -376,6 +389,11 @@ gimp_context_class_init (GimpContextClass *klass)
 {
   GObjectClass    *object_class;
   GimpObjectClass *gimp_object_class;
+  GimpRGB          black;
+  GimpRGB          white;
+
+  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+  gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
 
   object_class      = G_OBJECT_CLASS (klass);
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
@@ -418,9 +436,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, foreground_changed),
 		  NULL, NULL,
-		  gimp_marshal_VOID__POINTER,
+		  gimp_marshal_VOID__BOXED,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_POINTER);
+		  GIMP_TYPE_COLOR);
 
   gimp_context_signals[BACKGROUND_CHANGED] =
     g_signal_new (gimp_context_signal_names[BACKGROUND_CHANGED],
@@ -428,9 +446,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, background_changed),
 		  NULL, NULL,
-		  gimp_marshal_VOID__POINTER,
+		  gimp_marshal_VOID__BOXED,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_POINTER);
+		  GIMP_TYPE_COLOR);
 
   gimp_context_signals[OPACITY_CHANGED] =
     g_signal_new (gimp_context_signal_names[OPACITY_CHANGED],
@@ -448,9 +466,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, paint_mode_changed),
 		  NULL, NULL,
-		  gimp_marshal_VOID__INT,
+		  gimp_marshal_VOID__ENUM,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_INT);
+		  GIMP_TYPE_LAYER_MODE_EFFECTS);
 
   gimp_context_signals[BRUSH_CHANGED] =
     g_signal_new (gimp_context_signal_names[BRUSH_CHANGED],
@@ -573,15 +591,17 @@ gimp_context_class_init (GimpContextClass *klass)
 
   g_object_class_install_property (object_class,
 				   PROP_FOREGROUND,
-				   g_param_spec_pointer (gimp_context_prop_names[FOREGROUND_CHANGED],
-							 NULL, NULL,
-							 G_PARAM_READWRITE));
+				   gimp_param_spec_color (gimp_context_prop_names[FOREGROUND_CHANGED],
+                                                          NULL, NULL,
+                                                          &black,
+                                                          G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
 				   PROP_BACKGROUND,
-				   g_param_spec_pointer (gimp_context_prop_names[BACKGROUND_CHANGED],
-							 NULL, NULL,
-							 G_PARAM_READWRITE));
+				   gimp_param_spec_color (gimp_context_prop_names[BACKGROUND_CHANGED],
+                                                          NULL, NULL,
+                                                          &white,
+                                                          G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
 				   PROP_OPACITY,
@@ -592,15 +612,13 @@ gimp_context_class_init (GimpContextClass *klass)
 							1.0,
 							G_PARAM_READWRITE));
 
-  /* FIXME: convert to enum property */
   g_object_class_install_property (object_class,
 				   PROP_PAINT_MODE,
-				   g_param_spec_int (gimp_context_prop_names[PAINT_MODE_CHANGED],
-						     NULL, NULL,
-						     GIMP_NORMAL_MODE,
-						     GIMP_ANTI_ERASE_MODE,
-						     GIMP_NORMAL_MODE,
-						     G_PARAM_READWRITE));
+				   g_param_spec_enum (gimp_context_prop_names[PAINT_MODE_CHANGED],
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                      GIMP_NORMAL_MODE,
+                                                      G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
 				   PROP_BRUSH,
@@ -809,16 +827,16 @@ gimp_context_set_property (GObject      *object,
       gimp_context_set_tool (context, g_value_get_object (value));
       break;
     case PROP_FOREGROUND:
-      gimp_context_set_foreground (context, g_value_get_pointer (value));
+      gimp_context_set_foreground (context, g_value_get_boxed (value));
       break;
     case PROP_BACKGROUND:
-      gimp_context_set_background (context, g_value_get_pointer (value));
+      gimp_context_set_background (context, g_value_get_boxed (value));
       break;
     case PROP_OPACITY:
       gimp_context_set_opacity (context, g_value_get_double (value));
       break;
     case PROP_PAINT_MODE:
-      gimp_context_set_paint_mode (context, g_value_get_int (value));
+      gimp_context_set_paint_mode (context, g_value_get_enum (value));
       break;
     case PROP_BRUSH:
       gimp_context_set_brush (context, g_value_get_object (value));
@@ -869,16 +887,26 @@ gimp_context_get_property (GObject    *object,
       g_value_set_object (value, gimp_context_get_tool (context));
       break;
     case PROP_FOREGROUND:
-      gimp_context_get_foreground (context, g_value_get_pointer (value));
+      {
+        GimpRGB color;
+
+        gimp_context_get_foreground (context, &color);
+        g_value_set_boxed (value, &color);
+      }
       break;
     case PROP_BACKGROUND:
-      gimp_context_get_background (context, g_value_get_pointer (value));
+      {
+        GimpRGB color;
+
+        gimp_context_get_background (context, &color);
+        g_value_set_boxed (value, &color);
+      }
       break;
     case PROP_OPACITY:
       g_value_set_double (value, gimp_context_get_opacity (context));
       break;
     case PROP_PAINT_MODE:
-      g_value_set_int (value, gimp_context_get_paint_mode (context));
+      g_value_set_enum (value, gimp_context_get_paint_mode (context));
       break;
     case PROP_BRUSH:
       g_value_set_object (value, gimp_context_get_brush (context));

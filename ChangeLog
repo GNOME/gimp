@@ -1,3 +1,25 @@
+2002-05-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig-types.[ch]: added GIMP_TYPE_COLOR as boxed
+	type encapsulating GimpRGB.
+
+	* app/config/gimpconfig-params.[ch]: added GimpParamSpecColor
+	which is derived from GParamSpecBoxed and adds a default value.
+
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-serialize.c: added generic
+	(de)serialization of the new property type.
+
+	* app/core/gimpcontext.c: implement the config interface, changed
+	signal parameters and property types to use the new
+	GIMP_TYPE_COLOR.
+
+	* app/core/gimpmarshal.list: added a VOID__BOXED marshaller.
+
+	* app/gui/menus.c
+	* app/gui/test-commands.[ch]: some test code which (de)serializes
+	the user context.
+
 2002-05-21  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimplayer.[ch] (gimp_layer_new_from_tiles): added a

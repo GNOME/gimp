@@ -23,6 +23,18 @@
 #define __GIMP_CONFIG_PARAMS_H__
 
 
+#define GIMP_TYPE_PARAM_COLOR             (gimp_param_color_get_type ())
+#define GIMP_IS_PARAM_SPEC_COLOR(pspec)   (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_SPEC_COLOR))
+
+GType        gimp_param_color_get_type    (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_color        (const gchar    *name,
+                                           const gchar    *nick,
+                                           const gchar    *blurb,
+                                           const GimpRGB  *default_value,
+                                           GParamFlags     flags);
+
+
 #define GIMP_TYPE_PARAM_MEMSIZE           (gimp_param_memsize_get_type ())
 #define GIMP_IS_PARAM_SPEC_MEMSIZE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_SPEC_MEMSIZE))
 

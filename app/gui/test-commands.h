@@ -25,5 +25,10 @@ void   test_multi_container_list_view_cmd_callback (GtkWidget *widget,
 void   test_multi_container_grid_view_cmd_callback (GtkWidget *widget,
 						    gpointer   data);
 
+void   test_serialize_context_cmd_callback         (GtkWidget *widget,
+						    gpointer   data);
+void   test_deserialize_context_cmd_callback       (GtkWidget *widget,
+						    gpointer   data);
+
 
 #endif /* __TEST_COMMANDS_H__ */

@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -32,6 +33,8 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+
+#include "config/gimpconfig.h"
 
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpcontainergridview.h"
@@ -285,4 +288,54 @@ test_multi_container_grid_view_cmd_callback (GtkWidget *widget,
 			    gimp->brush_factory->container,
 			    gimp_get_user_context (gimp),
 			    32);
+}
+
+void
+test_serialize_context_cmd_callback (GtkWidget *widget,
+                                     gpointer   data)
+{
+  Gimp   *gimp;
+  gchar  *filename;
+  GError *error = NULL;
+
+  gimp = GIMP (data);
+
+  filename = gimp_personal_rc_file ("test-context");
+
+  if (! gimp_config_serialize (G_OBJECT (gimp_get_user_context (gimp)),
+                               filename,
+                               "# foo\n\n",
+                               "\n# bar\n",
+                               NULL,
+                               &error))
+    {
+      g_message ("Serializing Context failed:\n%s", error->message);
+      g_clear_error (&error);
+    }
+
+  g_free (filename);
+}
+
+void
+test_deserialize_context_cmd_callback (GtkWidget *widget,
+                                       gpointer   data)
+{
+  Gimp   *gimp;
+  gchar  *filename;
+  GError *error = NULL;
+
+  gimp = GIMP (data);
+
+  filename = gimp_personal_rc_file ("test-context");
+
+  if (! gimp_config_deserialize (G_OBJECT (gimp_get_user_context (gimp)),
+                                 filename,
+                                 NULL,
+                                 &error))
+    {
+      g_message ("Deserializing Context failed:\n%s", error->message);
+      g_clear_error (&error);
+    }
+
+  g_free (filename);
 }

@@ -24,9 +24,163 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
+
+
+#define GIMP_PARAM_SPEC_COLOR(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_COLOR, GimpParamSpecColor))
+
+static void       gimp_param_color_class_init  (GParamSpecClass *class);
+static void       gimp_param_color_init        (GParamSpec      *pspec);
+static void       gimp_param_color_set_default (GParamSpec      *pspec,
+                                                GValue          *value);
+static gboolean   gimp_param_color_validate    (GParamSpec      *pspec,
+                                                GValue          *value);
+static gint       gimp_param_color_values_cmp  (GParamSpec      *pspec,
+                                                const GValue    *value1,
+                                                const GValue    *value2);
+
+typedef struct _GimpParamSpecColor GimpParamSpecColor;
+
+struct _GimpParamSpecColor
+{
+  GParamSpecBoxed parent_instance;
+
+  GimpRGB default_value;
+};
+
+GType
+gimp_param_color_get_type (void)
+{
+  static GType spec_type = 0;
+
+  if (!spec_type)
+    {
+      static const GTypeInfo type_info = 
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL, 
+        (GClassInitFunc) gimp_param_color_class_init, 
+        NULL, NULL,
+        sizeof (GimpParamSpecColor),
+        0,
+        (GInstanceInitFunc) gimp_param_color_init
+      };
+
+      spec_type = g_type_register_static (G_TYPE_PARAM_BOXED,
+                                          "GimpParamColor", 
+                                          &type_info, 0);
+    }
+  
+  return spec_type;
+}
+
+static void
+gimp_param_color_class_init (GParamSpecClass *class)
+{
+  class->value_type        = GIMP_TYPE_COLOR;
+  class->value_set_default = gimp_param_color_set_default;
+  class->value_validate    = gimp_param_color_validate;
+  class->values_cmp        = gimp_param_color_values_cmp;
+}
+
+static void
+gimp_param_color_init (GParamSpec *pspec)
+{
+  GimpParamSpecColor *cspec = GIMP_PARAM_SPEC_COLOR (pspec);
+
+  gimp_rgba_set (&cspec->default_value, 0.0, 0.0, 0.0, 0.0);
+}
+
+static void
+gimp_param_color_set_default (GParamSpec *pspec,
+                              GValue     *value)
+{
+  GimpParamSpecColor *cspec = GIMP_PARAM_SPEC_COLOR (pspec);
+  GimpRGB            *color;
+
+  color = value->data[0].v_pointer;
+
+  if (color)
+    *color = cspec->default_value;
+}
+
+static gboolean
+gimp_param_color_validate (GParamSpec *pspec,
+                           GValue     *value)
+{
+  GimpRGB *color;
+
+  color = value->data[0].v_pointer;
+
+  if (color)
+    {
+      GimpRGB oval;
+
+      oval = *color;
+
+      gimp_rgb_clamp (color);
+
+      return (oval.r != color->r ||
+              oval.g != color->g ||
+              oval.b != color->b ||
+              oval.a != color->a);
+    }
+
+  return FALSE;
+}
+
+static gint
+gimp_param_color_values_cmp (GParamSpec   *pspec,
+                             const GValue *value1,
+                             const GValue *value2)
+{
+  GimpRGB *color1;
+  GimpRGB *color2;
+
+  color1 = value1->data[0].v_pointer;
+  color2 = value2->data[0].v_pointer;
+
+  /*  try to return at least *something*, it's useless anyway...  */
+
+  if (! color1)
+    return color2 != NULL ? -1 : 0;
+  else if (! color2)
+    return color1 != NULL;
+  else
+    {
+      gdouble intensity1 = gimp_rgb_intensity (color1);
+      gdouble intensity2 = gimp_rgb_intensity (color2);
+
+      if (intensity1 < intensity2)
+        return -1;
+      else
+        return intensity1 > intensity2;
+    }
+}
+
+GParamSpec *
+gimp_param_spec_color (const gchar   *name,
+                       const gchar   *nick,
+                       const gchar   *blurb,
+                       const GimpRGB *default_value,
+                       GParamFlags    flags)
+{
+  GimpParamSpecColor *cspec;
+
+  g_return_val_if_fail (default_value != NULL, NULL);
+
+  cspec = g_param_spec_internal (GIMP_TYPE_PARAM_COLOR,
+                                 name, nick, blurb, flags);
+
+  cspec->default_value = *default_value;
+
+  G_PARAM_SPEC (cspec)->value_type = GIMP_TYPE_COLOR;
+
+  return G_PARAM_SPEC (cspec);
+}
 
 
 static void  gimp_param_memsize_class_init (GParamSpecClass *class);

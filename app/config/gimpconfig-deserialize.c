@@ -31,6 +31,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "gimpconfig.h"
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-substitute.h"
@@ -61,6 +63,9 @@ static GTokenType  gimp_config_deserialize_memsize     (GValue     *value,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_path        (GValue     *value,
                                                         GObject    *object,
+                                                        GParamSpec *prop_spec,
+                                                        GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_color       (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_any         (GValue     *value,
@@ -228,6 +233,10 @@ gimp_config_deserialize_property (GObject    *object,
     {
       token = gimp_config_deserialize_path (&value,
                                             object, prop_spec, scanner);
+    }
+  else if (prop_spec->value_type == GIMP_TYPE_COLOR)
+    {
+      token = gimp_config_deserialize_color (&value, prop_spec, scanner);
     }
   else  /*  This fallback will only work for value_types that  */
     {   /*  can be transformed from a string value.            */
@@ -430,6 +439,125 @@ gimp_config_deserialize_path (GValue     *value,
   g_value_set_string_take_ownership (value, path);
 
   return G_TOKEN_RIGHT_PAREN;
+}
+
+enum
+{
+  COLOR_RGB  = 1,
+  COLOR_RGBA,
+  COLOR_HSV,
+  COLOR_HSVA
+};
+
+static GTokenType
+gimp_config_deserialize_color (GValue     *value,
+                               GParamSpec *prop_spec,
+                               GScanner   *scanner)
+{
+  guint      scope_id;
+  guint      old_scope_id;
+  GTokenType token;
+
+  scope_id = g_quark_from_static_string ("gimp_config_deserialize_color");
+  old_scope_id = g_scanner_set_scope (scanner, scope_id);
+
+  if (! g_scanner_scope_lookup_symbol (scanner, scope_id, "color-rgb"))
+    {
+      g_scanner_scope_add_symbol (scanner, scope_id, 
+                                  "color-rgb", GINT_TO_POINTER (COLOR_RGB));
+      g_scanner_scope_add_symbol (scanner, scope_id, 
+                                  "color-rgba", GINT_TO_POINTER (COLOR_RGBA));
+      g_scanner_scope_add_symbol (scanner, scope_id, 
+                                  "color-hsv", GINT_TO_POINTER (COLOR_HSV));
+      g_scanner_scope_add_symbol (scanner, scope_id, 
+                                  "color-hsva", GINT_TO_POINTER (COLOR_HSVA));
+    }
+
+  token = G_TOKEN_LEFT_PAREN;
+
+  do
+    {
+      if (g_scanner_peek_next_token (scanner) != token)
+        break;
+
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_SYMBOL;
+          break;
+
+        case G_TOKEN_SYMBOL:
+          {
+            gdouble  col[4] = { 0.0, 0.0, 0.0, 1.0 };
+            GimpRGB  color;
+            gint     n_channels = 4;
+            gboolean is_hsv     = FALSE;
+            gint     i;
+
+            switch (GPOINTER_TO_INT (scanner->value.v_symbol))
+              {
+              case COLOR_RGB:
+                n_channels = 3;
+                /* fallthrough */
+              case COLOR_RGBA:
+                break;
+
+              case COLOR_HSV:
+                n_channels = 3;
+                /* fallthrough */
+              case COLOR_HSVA:
+                is_hsv = TRUE;
+                break;
+              }
+
+            token = G_TOKEN_FLOAT;
+
+            for (i = 0; i < n_channels; i++)
+              {
+                if (g_scanner_peek_next_token (scanner) != token)
+                  goto finish;
+
+                token = g_scanner_get_next_token (scanner);
+
+                col[i] = scanner->value.v_float;
+              }
+
+            if (is_hsv)
+              {
+                GimpHSV hsv;
+
+                gimp_hsva_set (&hsv, col[0], col[1], col[2], col[3]);
+                gimp_hsv_clamp (&hsv);
+
+                gimp_hsv_to_rgb (&hsv, &color);
+              }
+            else
+              {
+                gimp_rgba_set (&color, col[0], col[1], col[2], col[3]);
+                gimp_rgb_clamp (&color);
+              }
+
+            g_value_set_boxed (value, &color);
+          }
+          token = G_TOKEN_RIGHT_PAREN;
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          goto finish;
+
+        default: /* do nothing */
+          break;
+        }
+    }
+  while (token != G_TOKEN_EOF);
+
+ finish:
+
+  g_scanner_set_scope (scanner, old_scope_id);
+
+  return token;
 }
 
 static GTokenType

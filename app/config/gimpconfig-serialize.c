@@ -33,6 +33,8 @@
 #include <io.h>
 #endif
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-types.h"
@@ -275,6 +277,19 @@ gimp_config_serialize_value (const GValue *value,
 
       g_ascii_formatd (buf, sizeof (buf), "%f", v_double);
       g_string_append (str, buf);
+      return TRUE;
+    }
+
+  if (GIMP_VALUE_HOLDS_COLOR (value))
+    {
+      GimpRGB *color;
+
+      color = g_value_get_boxed (value);
+      g_string_append_printf (str, "(color-rgba %f %f %f %f)",
+                              color->r,
+                              color->g,
+                              color->b,
+                              color->a);
       return TRUE;
     }
 

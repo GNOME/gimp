@@ -32,16 +32,32 @@
 #include "gimpconfig-types.h"
 
 
-static void  memsize_to_string (const GValue *src_value,
-                                GValue       *dest_value);
-static void  string_to_memsize (const GValue *src_value,
-                                GValue       *dest_value);
+static GimpRGB * color_copy        (const GimpRGB *color);
+static void      color_free        (GimpRGB       *color);
 
-static void  unit_to_string    (const GValue *src_value,
-                                GValue       *dest_value);
-static void  string_to_unit    (const GValue *src_value,
-                                GValue       *dest_value);
+static void      memsize_to_string (const GValue  *src_value,
+                                    GValue        *dest_value);
+static void      string_to_memsize (const GValue  *src_value,
+                                    GValue        *dest_value);
 
+static void      unit_to_string    (const GValue  *src_value,
+                                    GValue        *dest_value);
+static void      string_to_unit    (const GValue  *src_value,
+                                    GValue        *dest_value);
+
+
+GType
+gimp_color_get_type (void)
+{
+  static GType color_type = 0;
+
+  if (!color_type)
+    color_type = g_boxed_type_register_static ("GimpColor",
+                                               (GBoxedCopyFunc) color_copy,
+                                               (GBoxedFreeFunc) color_free);
+
+  return color_type;
+}
 
 GType
 gimp_memsize_get_type (void)
@@ -101,6 +117,20 @@ gimp_unit_get_type (void)
   return unit_type;
 }
 
+
+static GimpRGB *
+color_copy (const GimpRGB *color)
+{
+  return (GimpRGB *) g_memdup (color, sizeof (GimpRGB));
+}
+
+static void
+color_free (GimpRGB *color)
+{
+  g_free (color);
+}
+
+
 static void
 memsize_to_string (const GValue *src_value,
                    GValue       *dest_value)
@@ -121,7 +151,6 @@ memsize_to_string (const GValue *src_value,
 
   g_value_set_string_take_ownership (dest_value, str);
 };
-
 
 static void
 string_to_memsize (const GValue *src_value,
@@ -172,6 +201,7 @@ string_to_memsize (const GValue *src_value,
  error:
   g_warning ("Can't convert string to GimpMemsize.");
 };
+
 
 static void
 unit_to_string (const GValue *src_value,

@@ -234,6 +234,12 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { "/File/Debug/Dump Items", NULL,
       menus_debug_cmd_callback, 0 },
     NULL, NULL, NULL },
+  { { "/File/Debug/Serialize User Context", NULL,
+      test_serialize_context_cmd_callback, 0 },
+    NULL, NULL, NULL },
+  { { "/File/Debug/Deserialize User Context", NULL,
+      test_deserialize_context_cmd_callback, 0 },
+    NULL, NULL, NULL },
 #endif
 
   SEPARATOR ("/File/---"),
