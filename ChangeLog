@@ -1,3 +1,13 @@
+2005-01-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimppropwidgets.[ch]: added gimp_prop_expander_new().
+
+	* app/paint/gimppaintoptions.[ch]: added a property to track the
+	state of the "Pressure sensitivity" expander.
+
+	* app/tools/gimppaintoptions-gui.c: use gimp_prop_expander_new()
+	to create the "Pressure sensitivity" expander.
+
 2005-01-22  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/imagemap/imap_file.c 

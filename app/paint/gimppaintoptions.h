@@ -36,6 +36,7 @@ typedef struct _GimpGradientOptions GimpGradientOptions;
 
 struct _GimpPressureOptions
 {
+  gboolean  expanded;
   gboolean  opacity;
   gboolean  hardness;
   gboolean  rate;

@@ -38,6 +38,7 @@
 #define DEFAULT_APPLICATION_MODE      GIMP_PAINT_CONSTANT
 #define DEFAULT_HARD                  FALSE
 
+#define DEFAULT_PRESSURE_EXPANDED     FALSE
 #define DEFAULT_PRESSURE_OPACITY      TRUE
 #define DEFAULT_PRESSURE_HARDNESS     FALSE
 #define DEFAULT_PRESSURE_RATE         FALSE
@@ -62,6 +63,7 @@ enum
   PROP_PAINT_INFO,
   PROP_APPLICATION_MODE,
   PROP_HARD,
+  PROP_PRESSURE_EXPANDED,
   PROP_PRESSURE_OPACITY,
   PROP_PRESSURE_HARDNESS,
   PROP_PRESSURE_RATE,
@@ -155,6 +157,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     DEFAULT_HARD,
                                     0);
 
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_EXPANDED,
+                                    "pressure-expanded", NULL,
+                                    DEFAULT_PRESSURE_EXPANDED,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_OPACITY,
                                     "pressure-opacity", NULL,
                                     DEFAULT_PRESSURE_OPACITY,
@@ -267,6 +273,9 @@ gimp_paint_options_set_property (GObject      *object,
       options->hard = g_value_get_boolean (value);
       break;
 
+    case PROP_PRESSURE_EXPANDED:
+      pressure_options->expanded = g_value_get_boolean (value);
+      break;
     case PROP_PRESSURE_OPACITY:
       pressure_options->opacity = g_value_get_boolean (value);
       break;
@@ -346,6 +355,9 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->hard);
       break;
 
+    case PROP_PRESSURE_EXPANDED:
+      g_value_set_boolean (value, pressure_options->expanded);
+      break;
     case PROP_PRESSURE_OPACITY:
       g_value_set_boolean (value, pressure_options->opacity);
       break;

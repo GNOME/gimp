@@ -213,8 +213,9 @@ pressure_options_gui (GimpPressureOptions *pressure,
     {
       GtkWidget *inner_frame;
 
-      frame = gtk_expander_new (_("Pressure sensitivity"));
-      gtk_expander_set_expanded (GTK_EXPANDER (frame), FALSE);
+      frame = gimp_prop_expander_new (G_OBJECT (paint_options),
+                                      "pressure-expanded",
+                                      _("Pressure sensitivity"));
 
       inner_frame = gimp_frame_new ("<expander>");
       gtk_container_add (GTK_CONTAINER (frame), inner_frame);

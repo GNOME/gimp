@@ -3074,6 +3074,94 @@ gimp_prop_stock_image_notify (GObject    *config,
 }
 
 
+/**************/
+/*  expander  */
+/**************/
+
+static void   gimp_prop_expanded_notify (GtkExpander *expander,
+                                         GParamSpec  *param_spec,
+                                         GObject     *config);
+static void   gimp_prop_expander_notify (GObject     *config,
+                                         GParamSpec  *param_spec,
+                                         GtkExpander *expander);
+
+
+GtkWidget *
+gimp_prop_expander_new (GObject     *config,
+                        const gchar *property_name,
+                        const gchar *label)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *expander;
+  gboolean    value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  expander = g_object_new (GTK_TYPE_EXPANDER,
+                           "label",    label,
+                           "expanded", value,
+                           NULL);
+
+  set_param_spec (G_OBJECT (expander), expander, param_spec);
+
+  g_signal_connect (expander, "notify::expanded",
+		    G_CALLBACK (gimp_prop_expanded_notify),
+		    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_expander_notify),
+                  expander);
+
+  return expander;
+}
+
+static void
+gimp_prop_expanded_notify (GtkExpander *expander,
+                           GParamSpec  *param_spec,
+                           GObject     *config)
+{
+  param_spec = get_param_spec (G_OBJECT (expander));
+  if (! param_spec)
+    return;
+
+  g_object_set (config,
+                param_spec->name, gtk_expander_get_expanded (expander),
+                NULL);
+}
+
+static void
+gimp_prop_expander_notify (GObject     *config,
+                           GParamSpec  *param_spec,
+                           GtkExpander *expander)
+{
+  gboolean value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  if (gtk_expander_get_expanded (expander) != value)
+    {
+      g_signal_handlers_block_by_func (expander,
+                                       gimp_prop_expanded_notify,
+                                       config);
+
+      gtk_expander_set_expanded (expander, value);
+
+      g_signal_handlers_unblock_by_func (expander,
+                                         gimp_prop_expanded_notify,
+                                         config);
+    }
+}
+
+
 /*******************************/
 /*  private utility functions  */
 /*******************************/

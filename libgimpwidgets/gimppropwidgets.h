@@ -38,6 +38,10 @@ GtkWidget     * gimp_prop_boolean_radio_frame_new (GObject     *config,
                                                    const gchar *true_text,
                                                    const gchar *false_text);
 
+GtkWidget     * gimp_prop_expander_new            (GObject     *config,
+                                                   const gchar *property_name,
+                                                   const gchar *label);
+
 
 /*  GParamInt  */
 
