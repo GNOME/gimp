@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <time.h>
+
 #include <glib-object.h>
 
 #include "core-types.h"
@@ -225,6 +227,8 @@ gimp_undo_constructor (GType                  type,
   undo = GIMP_UNDO (object);
 
   g_assert (GIMP_IS_IMAGE (undo->gimage));
+
+  undo->time = time (NULL);
 
   return object;
 }

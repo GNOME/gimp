@@ -1,5 +1,15 @@
 2004-07-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/text/gimptextundo.[ch]: removed member "guint time"...
+
+	* app/core/gimpundo.[ch]: ...and added it here.
+
+	* app/tools/gimptexttool.c (gimp_text_tool_apply): changed
+	accordingly. Reordered undo compression code to look like other
+	pieces of code which do undo compression.
+
+2004-07-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpundo.[ch]
 	* app/core/gimpitemundo.[ch]
 	* app/text/gimptextundo.[ch]: removed all _new() functions and

@@ -40,7 +40,6 @@ struct _GimpTextUndo
   GimpText         *text;
   const GParamSpec *pspec;
   GValue           *value;
-  guint             time;
 };
 
 struct _GimpTextUndoClass

@@ -543,20 +543,18 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   if (g_list_length (list) == 1)
     pspec = list->data;
 
-  if (pspec)
+  /*  If we are changing a single property, we don't need to push
+   *  an undo if all of the following is true:
+   *   - the redo stack is empty
+   *   - the last item on the undo stack is a text undo
+   *   - the last undo changed the same text property on the same layer
+   *   - the last undo happened less than TEXT_UNDO_TIMEOUT seconds ago
+   */
+  if (pspec && ! gimp_undo_stack_peek (image->redo_stack))
     {
       GimpUndo *undo = gimp_undo_stack_peek (image->undo_stack);
 
-      /*  If we are changing a single property, we don't need to push
-       *  an undo if all of the following is true:
-       *   - the last item on the undo stack is a text undo
-       *   - the redo stack is empty
-       *   - the last undo changed the same text property on the same layer
-       *   - the last undo happened less than TEXT_UNDO_TIMEOUT seconds ago
-       */
-
-      if (undo && GIMP_IS_TEXT_UNDO (undo) &&
-          ! gimp_undo_stack_peek (image->redo_stack))
+      if (GIMP_IS_TEXT_UNDO (undo))
         {
           GimpTextUndo *text_undo = GIMP_TEXT_UNDO (undo);
 
@@ -565,11 +563,11 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
             {
               guint now = time (NULL);
 
-              if (now >= text_undo->time &&
-                  now - text_undo->time < TEXT_UNDO_TIMEOUT)
+              if (now >= undo->time &&
+                  now - undo->time < TEXT_UNDO_TIMEOUT)
                 {
                   push_undo = FALSE;
-                  text_undo->time = now;
+                  undo->time = now;
                   gimp_undo_refresh_preview (undo);
                 }
             }

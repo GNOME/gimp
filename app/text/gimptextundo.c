@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <time.h>
-
 #include <glib-object.h>
 
 #include "text-types.h"
@@ -137,8 +135,6 @@ gimp_text_undo_constructor (GType                  type,
   g_assert (GIMP_IS_TEXT_LAYER (GIMP_ITEM_UNDO (text_undo)->item));
 
   layer = GIMP_TEXT_LAYER (GIMP_ITEM_UNDO (text_undo)->item);
-
-  text_undo->time = time (NULL);
 
   if (text_undo->pspec)
     {
