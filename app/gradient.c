@@ -940,24 +940,23 @@ grad_create_gradient_editor(void)
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
 	gtk_widget_show(button);
 
+	/* hbox for that holds the frame for gradient preview and gradient control; 
+           this is only here, because resizing the preview doesn't work (and is disabled) 
+           to keep the preview and controls together */
+	
+	hbox = gtk_hbox_new(FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	gtk_widget_show(hbox);
+
 	/* Frame for gradient preview and gradient control */
 
 	frame = gtk_frame_new(NULL);
 	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-	gtk_box_pack_start(GTK_BOX(vbox), frame, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), frame, FALSE, FALSE, 0);
 	gtk_widget_show(frame);
 
-	/* hbox for gradient preview and gradient control; this is only because
-	   resizing the preview doesn't work (and is disabled) to keep the 
-	   preview and controls together in the middle of the frame. */
-	
-	hbox = gtk_hbox_new(FALSE, 0);
-	gtk_container_add(GTK_CONTAINER(frame), hbox);
-	gtk_widget_show(hbox);
-
 	gvbox = gtk_vbox_new(FALSE, 0);
-	/* gtk_container_add(GTK_CONTAINER(frame), gvbox); */
-	gtk_box_pack_start(GTK_BOX(hbox), gvbox, TRUE, FALSE, 0);
+	gtk_container_add(GTK_CONTAINER(frame), gvbox); 
 	gtk_widget_show(gvbox);
 
 	/* Gradient preview */
