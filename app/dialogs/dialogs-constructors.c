@@ -766,13 +766,18 @@ dialogs_selection_editor_new (GimpDialogFactory *factory,
                               GimpContext       *context,
                               gint               preview_size)
 {
-  GimpImage *gimage;
-  GtkWidget *view;
-  GtkWidget *dockable;
+  GimpImage           *gimage;
+  GtkWidget           *view;
+  GtkWidget           *dockable;
+  GimpSelectionEditor *selection_editor;
 
   gimage = gimp_context_get_image (context);
 
   view = gimp_selection_editor_new (gimage);
+
+  selection_editor = GIMP_SELECTION_EDITOR (view);
+
+  selection_editor->selection_to_vectors_func = vectors_selection_to_vectors;
 
   dockable = dialogs_dockable_new (view,
 				   _("Selection Editor"), _("Selection"),

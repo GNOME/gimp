@@ -1,3 +1,13 @@
+2003-06-02  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpvectorstreeview.h
+	* app/widgets/widgets-types.h: moved function definitions to the
+	widgets-types header file.
+
+	* app/gui/dialogs-constructors.c
+	* app/widgets/gimpselectioneditor.[ch]: added a "Selection to
+	Path" button as suggested in bug #112448.
+
 2003-06-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpchannel.c (gimp_channel_scale, resize): make sure

@@ -51,6 +51,7 @@
 #include "gimpdnd.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderer.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -68,6 +69,11 @@ static void   gimp_selection_editor_all_clicked    (GtkWidget           *widget,
 static void   gimp_selection_editor_none_clicked   (GtkWidget           *widget,
                                                     GimpImageEditor     *editor);
 static void   gimp_selection_editor_save_clicked   (GtkWidget           *widget,
+                                                    GimpImageEditor     *editor);
+static void   gimp_selection_editor_path_clicked   (GtkWidget           *widget,
+                                                    GimpImageEditor     *editor);
+static void   gimp_selection_editor_path_extended_clicked (GtkWidget    *widget,
+                                                    guint                state,
                                                     GimpImageEditor     *editor);
 static void   gimp_selection_editor_stroke_clicked (GtkWidget           *widget,
                                                     GimpImageEditor     *editor);
@@ -130,11 +136,14 @@ static void
 gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
 {
   GtkWidget *frame;
+  gchar     *str;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (selection_editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
+
+  selection_editor->selection_to_vectors_func = NULL;
 
   selection_editor->preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
                                                          GIMP_TYPE_DRAWABLE,
@@ -186,13 +195,28 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
                             NULL,
                             selection_editor);
 
+  str = g_strdup_printf (_("Selection to Path\n"
+                           "%s  Advanced Options"),
+                         gimp_get_mod_name_shift ());
+
+  selection_editor->path_button =
+    gimp_editor_add_button (GIMP_EDITOR (selection_editor),
+                            GIMP_STOCK_SELECTION_TO_PATH,
+                            str, NULL,
+                            G_CALLBACK (gimp_selection_editor_path_clicked),
+                            G_CALLBACK (gimp_selection_editor_path_extended_clicked),
+                            selection_editor);
+
+  g_free (str);
+
   selection_editor->stroke_button =
     gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-			    GIMP_STOCK_SELECTION_STROKE,
+                            GIMP_STOCK_SELECTION_STROKE,
                             _("Stroke Selection"), NULL,
                             G_CALLBACK (gimp_selection_editor_stroke_clicked),
                             NULL,
                             selection_editor);
+
 
   gtk_widget_set_sensitive (GTK_WIDGET (selection_editor), FALSE);
 }
@@ -293,6 +317,28 @@ gimp_selection_editor_save_clicked (GtkWidget       *widget,
   if (editor->gimage)
     {
       gimp_image_mask_save (editor->gimage);
+    }
+}
+
+static void
+gimp_selection_editor_path_clicked (GtkWidget       *widget,
+                                    GimpImageEditor *editor)
+{
+  gimp_selection_editor_path_extended_clicked (widget, 0, editor);
+}
+
+static void
+gimp_selection_editor_path_extended_clicked (GtkWidget       *widget,
+                                             guint            state,
+                                             GimpImageEditor *editor)
+{
+  if (editor->gimage)
+    {
+      GimpSelectionEditor *sel_editor = GIMP_SELECTION_EDITOR (editor);
+
+      if (sel_editor->selection_to_vectors_func)
+        sel_editor->selection_to_vectors_func (editor->gimage,
+                                               (state & GDK_SHIFT_MASK) != 0);
     }
 }
 

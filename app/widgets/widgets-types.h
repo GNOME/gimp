@@ -116,9 +116,13 @@ typedef struct _GimpItemFactoryEntry    GimpItemFactoryEntry;
 
 /*  function types  */
 
-typedef void (* GimpItemFactorySetupFunc)  (GimpItemFactory *factory);
-typedef void (* GimpItemFactoryUpdateFunc) (GtkItemFactory  *factory,
-                                            gpointer         data);
+typedef void (* GimpItemFactorySetupFunc)   (GimpItemFactory *factory);
+typedef void (* GimpItemFactoryUpdateFunc)  (GtkItemFactory  *factory,
+                                             gpointer         data);
+
+typedef void (* GimpStrokeItemFunc)         (GimpVectors     *vectors);
+typedef void (* GimpSelectionToVectorsFunc) (GimpImage       *gimage,
+                                             gboolean         advanced);
 
 
 #endif /* __WIDGETS_TYPES_H__ */
