@@ -1,3 +1,8 @@
+Mon Aug 16 01:24:42 1999  Jay Cox  (jaycox@earthlink.net)
+
+	* app/transform_core.c: data access optomizations from
+	David Hodson <hodsond@acm.org>
+
 1999-08-16  Tor Lillqvist  <tml@iki.fi>
 
 	* app/appenv.h: Add G_SQRT2.

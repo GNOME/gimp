@@ -60,12 +60,133 @@ static void        transform_core_setup_grid  (Tool *);
 static void        transform_core_grid_recalc (TransformCore *);
 
 /* Hmmm... Should be in a headerfile but which? */
-void               paths_draw_current         (GDisplay *, DrawCore *,
-					       GimpMatrix);
+void          paths_draw_current(GDisplay *,DrawCore *,GimpMatrix);
+
+#define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
+                ((1-dy) * (jk + dx * (j1k - jk)) + \
+		    dy  * (jk1 + dx * (j1k1 - jk1)))
+
+/* access interleaved pixels */
+#define CUBIC_ROW(dx, row, step) \
+  cubic(dx, (row)[0], (row)[step], (row)[step+step], (row)[step+step+step])
+#define CUBIC_SCALED_ROW(dx, row, step, i) \
+  cubic(dx, (row)[0] * (row)[i], \
+            (row)[step] * (row)[step + i], \
+            (row)[step+step]* (row)[step+step + i], \
+            (row)[step+step+step] * (row)[step+step+step + i])
+
 
 #define REF_TILE(i,x,y) \
      tile[i] = tile_manager_get_tile (float_tiles, x, y, TRUE, FALSE); \
      src[i] = tile_data_pointer (tile[i], (x) % TILE_WIDTH, (y) % TILE_HEIGHT);
+
+
+/* This should be migrated to pixel_region or similar... */
+/* PixelSurround describes a (read-only)
+ *  region around a pixel in a tile manager
+ */
+
+typedef struct _PixelSurround {
+  Tile* tile;
+  TileManager* mgr;
+  unsigned char* buff;
+  int buff_size;
+  int bpp;
+  int w;
+  int h;
+  unsigned char bg[MAX_CHANNELS];
+  int row_stride;
+} PixelSurround;
+
+static void pixel_surround_init(PixelSurround * ps, TileManager* t,
+    int w, int h, unsigned char bg[MAX_CHANNELS]) {
+  int i;
+  for (i = 0; i < MAX_CHANNELS; ++i) {
+    ps->bg[i] = bg[i];
+  }
+  ps->tile = 0;
+  ps->mgr = t;
+  ps->bpp = tile_manager_level_bpp(t);
+  ps->w = w;
+  ps->h = h;
+  /* make sure buffer is big enough */
+  ps->buff_size = w * h * ps->bpp;
+  ps->buff = g_malloc(ps->buff_size);
+  ps->row_stride = 0;
+}
+
+/* return a pointer to a buffer which contains all the surrounding pixels */
+/* strategy: if we are in the middle of a tile, use the tile storage */
+/* otherwise just copy into out own malloced buffer and return that */
+
+static unsigned char* pixel_surround_lock(PixelSurround* ps, int x, int y) {
+
+  int i, j;
+  unsigned char* k;
+  unsigned char* ptr;
+
+  ps->tile = tile_manager_get_tile(ps->mgr, x, y, TRUE, FALSE);
+
+  i = x % TILE_WIDTH;
+  j = y % TILE_HEIGHT;
+
+  /* do we have the whole region? */
+  if (ps->tile && (i < (tile_ewidth(ps->tile) - ps->w)) &&
+                  (j < (tile_eheight(ps->tile) - ps->h))) {
+    ps->row_stride = tile_ewidth(ps->tile) * ps->bpp;
+    /* is this really the correct way? */
+    return tile_data_pointer(ps->tile, i, j);
+  }
+
+  /* nope, do this the hard way (for now) */
+  if (ps->tile) {
+    tile_release(ps->tile, FALSE);
+    ps->tile = 0;
+  }
+
+  /* copy pixels, one by one */
+  /* no, this is not the best way, but it's much better than before */
+  ptr = ps->buff;
+  for (j = y; j < y+ps->h; ++j) {
+    for (i = x; i < x+ps->w; ++i) {
+      Tile* tile = tile_manager_get_tile (ps->mgr, i, j, TRUE, FALSE);
+      if (tile) {
+        unsigned char* buff = tile_data_pointer (tile, i % TILE_WIDTH, j % TILE_HEIGHT);
+        for (k = buff; k < buff+ps->bpp; ++k, ++ptr) {
+          *ptr = *k;
+	}
+        tile_release(tile, FALSE);
+      } else {
+	for (k = ps->bg; k < ps->bg+ps->bpp; ++k, ++ptr) {
+          *ptr = *k;
+	}
+      }
+    }
+  }
+  ps->row_stride = ps->w * ps->bpp;
+  return ps->buff;
+}
+
+static int pixel_surround_rowstride(PixelSurround* ps) {
+  return ps->row_stride;
+}
+
+static void pixel_surround_release(PixelSurround* ps) {
+  /* always get new tile (for now), so release the old one */
+  if (ps->tile) {
+    tile_release(ps->tile, FALSE);
+    ps->tile = 0;
+  }
+}
+
+static void pixel_surround_clear(PixelSurround* ps) {
+  if (ps->buff) {
+    g_free(ps->buff);
+    ps->buff = 0;
+    ps->buff_size = 0;
+  }
+}
+
 
 
 static void
@@ -204,6 +325,7 @@ transform_core_button_press (Tool           *tool,
       tool->state = ACTIVE;
       return;
     }
+
 
   /* Initialisation stuff: if the cursor is clicked inside the current
    * selection, show the bounding box and handles...  */
@@ -1006,22 +1128,17 @@ transform_core_do (GImage          *gimage,
   double ttx = 0.0, tty = 0.0;
   unsigned char * dest, * d;
   unsigned char * src[16];
-  double src_a[16][MAX_CHANNELS];
   Tile *tile[16];
-  int a[16];
   unsigned char bg_col[MAX_CHANNELS];
   int i;
-  double a_val, a_mult, a_recip;
+  double a_val, a_recip;
   int newval;
+
+  PixelSurround surround;
 
   alpha = 0;
 
-  /*  turn interpolation off for simple transformations (e.g. rot90)  */
-  if (gimp_matrix_is_simple (matrix))
-    interpolation = FALSE;
-
   /*  Get the background color  */
-  /*  Check - background colour only works for non-interpolated transforms? */
   gimage_get_background (gimage, drawable, bg_col);
 
   switch (drawable_type (drawable))
@@ -1045,7 +1162,7 @@ transform_core_do (GImage          *gimage,
   if (transform_tool_direction () == TRANSFORM_CORRECTIVE)
     {
       /*  keep the original matrix here, so we dont need to recalculate 
-          the inverse later  */   
+	  the inverse later  */   
       gimp_matrix_duplicate (matrix, m);
       gimp_matrix_invert (matrix, im);
       matrix = im;
@@ -1100,6 +1217,18 @@ transform_core_do (GImage          *gimage,
   tiles->x = tx1;
   tiles->y = ty1;
 
+  /* initialise the pixel_surround accessor */
+  if (interpolation) {
+    if (cubic_interpolation) {
+      pixel_surround_init(&surround, float_tiles, 4, 4, bg_col);
+    } else {
+      pixel_surround_init(&surround, float_tiles, 2, 2, bg_col);
+    }
+  } else {
+    /* not actually useful, keeps the code cleaner */
+    pixel_surround_init(&surround, float_tiles, 1, 1, bg_col);
+  }
+
   width = tiles->width;
   height = tiles->height;
   bytes = tiles->bpp;
@@ -1110,213 +1239,119 @@ transform_core_do (GImage          *gimage,
   yinc = m[1][0];
   winc = m[2][0];
 
+  /* these loops could be rearranged, depending on which bit of code
+   * you'd most like to write more than once.
+   */
+
   for (y = ty1; y < ty2; y++)
     {
       if (progress_callback && !(y & 0xf))
-        (*progress_callback)(ty1, ty2, y, progress_data);
+	(*progress_callback)(ty1, ty2, y, progress_data);
 
-      /*  When we calculate the inverse transformation, we should transform
-       *  the center of each destination pixel...
-       */
-
-      /* Actually, no. Relabel them in your head, if you must  */
-
+      /* set up inverse transform steps */
       tx = xinc * tx1 + m[0][1] * y + m[0][2];
       ty = yinc * tx1 + m[1][1] * y + m[1][2];
       tw = winc * tx1 + m[2][1] * y + m[2][2];
+
       d = dest;
       for (x = tx1; x < tx2; x++)
-        {
-          /*  normalize homogeneous coords  */
-          if (tw == 0.0)
-            g_message (_("homogeneous coordinate = 0...\n"));
-          else if (tw != 1.0)
-            {
-              ttx = tx / tw;
-              tty = ty / tw;
-            }
-          else
-            {
-              ttx = tx;
-              tty = ty;
-            }
+	{
+	  /*  normalize homogeneous coords  */
+	  if (tw == 0.0)
+	    g_message (_("homogeneous coordinate = 0...\n"));
+	  else if (tw != 1.0)
+	    {
+	      ttx = tx / tw;
+	      tty = ty / tw;
+	    }
+	  else
+	    {
+	      ttx = tx;
+	      tty = ty;
+	    }
 
           /*  Set the destination pixels  */
 
           if (interpolation)
-            {
-              /*  ttx & tty are the coordinates of the point in the original
-               *  selection's floating buffer.  Make sure they're within bounds
-               */
-              itx = floor(ttx);
-              ity = floor(tty);
+       	    {
 
               if (cubic_interpolation)
-                {
+       	        {
 
-                  /* expand source area to cover interpolation region */
-                  /* (which runs from itx - 1 to itx + 2, same in y) */
+                  /*  ttx & tty are the subpixel coordinates of the point in the original
+                   *  selection's floating buffer.  We need the four integer pixel coords
+	           *  around them: itx to itx + 3, ity to ity + 3
+                   */
+                  itx = floor(ttx);
+                  ity = floor(tty);
+
+		  /* check if any part of our region overlaps the buffer */
+
                   if ((itx + 2) >= x1 && (itx - 1) < x2 &&
                       (ity + 2) >= y1 && (ity - 1) < y2 )
                     {
-                      /*  to hold clipping info */
-                      int use_x[4], use_y[4];
-                      /* to hold index */
-                      int index_x[4], index_y[4];
-                      int xy_i;
-
-                      /*  get the fractional error  */
+                      unsigned char* data;
+                      int row;
                       double dx, dy;
+                      unsigned char* start;
+
+		      /* lock the pixel surround */
+                      data = pixel_surround_lock(&surround, itx - 1 - x1, ity - 1 - y1);
+
+                      row = pixel_surround_rowstride(&surround);
+
+                      /* the fractional error */
                       dx = ttx - itx;
                       dy = tty - ity;
 
-                      /* setup indices and clip flags */
-                      /* now correctly handles very small images (why?) */
-
-                      for (xy_i = 0; xy_i < 4; ++xy_i) 
-                        {
-                          use_x[xy_i] = 1;
-                          use_y[xy_i] = 1;
-                          index_x[xy_i] = (itx - 1) - x1 + xy_i;
-                          index_y[xy_i] = (ity - 1) - y1 + xy_i;
-                        }
-
-                      /* ugly, ugly code */
-
-                      /* clip x to left hand edge */
-                      if ((itx - 1) < x1) {
-                        use_x[0] = 0;
-                        index_x[0] = 0;
-                        if (itx < x1) {
-                          use_x[1] = 0;
-                          index_x[1] = 0;
-                          if ((itx + 1) < x1) {
-                            use_x[2] = 0;
-                            index_x[2] = 0;
-                          }
-                        }
-                      }
-                      /* clip x to right hand edge */
-                      if ((itx + 2) >= x2) {
-                        int xlimit = x2 - 1 - x1;
-                        use_x[3] = 0;
-                        index_x[3] = xlimit;
-                        if ((itx + 1) >= x2) {
-                          use_x[2] = 0;
-                          index_x[2] = xlimit;
-                          if (itx >= x2) {
-                            use_x[1] = 0;
-                            index_x[1] = xlimit;
-                          }
-                        }
-                      }
-                      /* clip y to top edge */
-                      if ((ity - 1) < y1) {
-                        use_y[0] = 0;
-                        index_y[0] = 0;
-                        if (ity < y1) {
-                          use_y[1] = 0;
-                          index_y[1] = 0;
-                          if ((ity + 1) < y1) {
-                            use_y[2] = 0;
-                            index_y[2] = 0;
-                          }
-                        }
-                      }
-                      /* clip y to bottom edge */
-                      if ((ity + 2) >= y2) {
-                        int ylimit = y2 - 1 - y1;
-                        use_y[3] = 0;
-                        index_y[3] = ylimit;
-                        if ((ity + 1) >= y2) {
-                          use_y[2] = 0;
-                          index_y[2] = ylimit;
-                          if (ity >= y2) {
-                            use_y[1] = 0;
-                            index_y[1] = ylimit;
-                          }
-                        }
-                      }
-
-
-                      REF_TILE (0, index_x[0], index_y[0]);
-                      REF_TILE (1, index_x[1], index_y[0]);
-                      REF_TILE (2, index_x[2], index_y[0]);
-                      REF_TILE (3, index_x[3], index_y[0]);
-                      REF_TILE (4, index_x[0], index_y[1]);
-                      REF_TILE (5, index_x[1], index_y[1]);
-                      REF_TILE (6, index_x[2], index_y[1]);
-                      REF_TILE (7, index_x[3], index_y[1]);
-                      REF_TILE (8, index_x[0], index_y[2]);
-                      REF_TILE (9, index_x[1], index_y[2]);
-                      REF_TILE (10, index_x[2], index_y[2]);
-                      REF_TILE (11, index_x[3], index_y[2]);
-                      REF_TILE (12, index_x[0], index_y[3]);
-                      REF_TILE (13, index_x[1], index_y[3]);
-                      REF_TILE (14, index_x[2], index_y[3]);
-                      REF_TILE (15, index_x[3], index_y[3]);
-
-                      a[0] = (use_x[0] && use_y[0]) ? src[0][alpha] : 0;
-                      a[1] = (use_x[1] && use_y[0]) ? src[1][alpha] : 0;
-                      a[2] = (use_x[2] && use_y[0]) ? src[2][alpha] : 0;
-                      a[3] = (use_x[3] && use_y[0]) ? src[3][alpha] : 0;
-
-                      a[4] = (use_x[0] && use_y[1]) ? src[4][alpha] : 0;
-                      a[5] = (use_x[1] && use_y[1]) ? src[5][alpha] : 0;
-                      a[6] = (use_x[2] && use_y[1]) ? src[6][alpha] : 0;
-                      a[7] = (use_x[3] && use_y[1]) ? src[7][alpha] : 0;
-
-                      a[8] = (use_x[0] && use_y[2]) ? src[8][alpha] : 0;
-                      a[9] = (use_x[1] && use_y[2]) ? src[9][alpha] : 0;
-                      a[10] = (use_x[2] && use_y[2]) ? src[10][alpha] : 0;
-                      a[11] = (use_x[3] && use_y[2]) ? src[11][alpha] : 0;
-
-                      a[12] = (use_x[0] && use_y[3]) ? src[12][alpha] : 0;
-                      a[13] = (use_x[1] && use_y[3]) ? src[13][alpha] : 0;
-                      a[14] = (use_x[2] && use_y[3]) ? src[14][alpha] : 0;
-                      a[15] = (use_x[3] && use_y[3]) ? src[15][alpha] : 0;
-
+		      /* calculate alpha of result */
+                      start = &data[alpha];
                       a_val = cubic (dy,
-                                    cubic (dx, a[0], a[1], a[2], a[3]),
-                                    cubic (dx, a[4], a[5], a[6], a[7]),
-                                    cubic (dx, a[8], a[9], a[10], a[11]),
-                                    cubic (dx, a[12], a[13], a[14], a[15]));
+		                     CUBIC_ROW (dx, start, bytes),
+		                     CUBIC_ROW (dx, start + row, bytes),
+				     CUBIC_ROW (dx, start + row + row, bytes),
+				     CUBIC_ROW (dx, start + row + row + row, bytes));
 
-                      if (a_val != 0)
-                        a_recip = 255.0 / a_val;
-                      else
-                        a_recip = 0.0;
+		      if (a_val <= 0.0)
+			{
+			  a_recip = 0.0;
+                          d[alpha] = 0;
+			}
+                      else if (a_val > 255.0)
+			{
+		  	  a_recip = 1.0 / a_val;
+                          d[alpha] = 255;
+			}
+		      else
+			{
+			  a_recip = 1.0 / a_val;
+                          d[alpha] = rint(a_val);
+			}
 
-                      /* premultiply the alpha */
-                      for (i = 0; i < 16; i++)
-                        {
-                          a_mult = a[i] * (1.0 / 255.0);
-                          for (b = 0; b < alpha; b++)
-                            src_a[i][b] = src[i][b] * a_mult;
-                        }
+                      /* for colour channels c, 
+                       * result = bicubic(c * alpha) / bicubic(alpha)
+	               */
+                      for (i = -alpha; i < 0; ++i) {
+                        start = &data[alpha];
+                        newval = rint(a_recip * cubic (dy,
+	                             CUBIC_SCALED_ROW (dx, start, bytes, i),
+		                     CUBIC_SCALED_ROW (dx, start + row, bytes, i),
+		                     CUBIC_SCALED_ROW (dx, start + row + row, bytes, i),
+		     	             CUBIC_SCALED_ROW (dx, start + row + row + row, bytes, i)));
+                        if (newval <= 0) {
+                          *d++ = 0;
+                        } else if (newval > 255) {
+                          *d++ = 255;
+		        } else {
+                          *d++ = newval;
+		        }
+		      }
 
-                      for (b = 0; b < alpha; b++)
-                        {
-                          newval =
-                            a_recip *
-                            cubic (dy,
-                                   cubic (dx, src_a[0][b], src_a[1][b], src_a[2][b], src_a[3][b]),
-                                   cubic (dx, src_a[4][b], src_a[5][b], src_a[6][b], src_a[7][b]),
-                                   cubic (dx, src_a[8][b], src_a[9][b], src_a[10][b], src_a[11][b]),
-                                   cubic (dx, src_a[12][b], src_a[13][b], src_a[14][b], src_a[15][b]));
-                          if ((newval & 0x100) == 0)
-                            *d++ = newval;
-                          else if (newval < 0)
-                            *d++ = 0;
-                          else
-                            *d++ = 255;
-                        }
+		      d++;
 
-                      *d++ = a_val;
+                      pixel_surround_release(&surround);
 
-                      for (b = 0; b < 16; b++)
-                        tile_release (tile[b], FALSE);
-                    }
+		    }
                   else /* not in source range */
                     {
                       /*  increment the destination pointers  */
@@ -1326,90 +1361,81 @@ transform_core_do (GImage          *gimage,
 
                 }
 
-              else  /*  linear  */
+       	      else  /*  linear  */
                 {
 
-                  /* expand source area to cover interpolation region */
-                  /* (which runs from itx to itx + 1, same in y) */
+                  itx = floor(ttx);
+                  ity = floor(tty);
+
+		  /* expand source area to cover interpolation region */
+		  /* (which runs from itx to itx + 1, same in y) */
                   if ((itx + 1) >= x1 && itx < x2 &&
                       (ity + 1) >= y1 && ity < y2 )
                     {
-                      /*  to hold clipping info */
-                      int use_x[2], use_y[2];
-                      /* to hold index */
-                      int index_x[2], index_y[2];
-
-                      /*  get the fractional error  */
+                      unsigned char* data;
+                      int row;
                       double dx, dy;
+                      unsigned char* chan;
+
+		      /* lock the pixel surround */
+                      data = pixel_surround_lock(&surround, itx - x1, ity - y1);
+
+                      row = pixel_surround_rowstride(&surround);
+
+                      /* the fractional error */
                       dx = ttx - itx;
                       dy = tty - ity;
 
-                      /* setup indices and clip flags */
-                      /* now correctly handles very small images (why?) */
-
-                      /*  x, y coordinates into source tiles  */
-                      sx = itx - x1;
-                      sy = ity - y1;
-
-                      use_x[0] = (itx >= x1);
-                      index_x[0] = use_x[0] ? sx : 0;
-
-                      use_x[1] = ((itx + 1) < x2);
-                      index_x[1] = use_x[1] ? sx + 1 : x2 - 1 - x1;
-
-                      use_y[0] = (ity >= y1);
-                      index_y[0] = use_y[0] ? sy : 0;
-
-                      use_y[1] = ((ity + 1) < y2);
-                      index_y[1] = use_y[1] ? sy + 1 : y2 - 1 - y1;
-
-                      REF_TILE (0, index_x[0], index_y[0]);
-                      REF_TILE (1, index_x[1], index_y[0]);
-                      REF_TILE (2, index_x[0], index_y[1]);
-                      REF_TILE (3, index_x[1], index_y[1]);
-
-                      /*  Need special treatment for the alpha channel  */
-                      a[0] = (use_x[0] && use_y[0]) ? src[0][alpha] : 0;
-                      a[1] = (use_x[1] && use_y[0]) ? src[1][alpha] : 0;
-                      a[2] = (use_x[0] && use_y[1]) ? src[2][alpha] : 0;
-                      a[3] = (use_x[1] && use_y[1]) ? src[3][alpha] : 0;
-
-                      /*  The alpha channel  */
-                      a_val = BILINEAR (a[0], a[1], a[2], a[3], dx, dy);
-
-                      if (a_val != 0)
-                        a_recip = 255.0 / a_val;
-                      else
+		      /* calculate alpha value of result pixel */
+                      chan = &data[alpha];
+                      a_val = BILINEAR (chan[0], chan[bytes], chan[row], chan[row+bytes], dx, dy);
+                      if (a_val <= 0.0) {
                         a_recip = 0.0;
+                        d[alpha] = 0.0;
+		      } else if (a_val >= 255.0) {
+                        a_recip = 1.0 / a_val;
+                        d[alpha] = 255;
+		      } else {
+                        a_recip = 1.0 / a_val;
+                        d[alpha] = rint(a_val);
+		      }
 
-                      /* premultiply the alpha */
-                      for (i = 0; i < 4; i++)
-                        {
-                          a_mult = a[i] * (1.0 / 255.0);
-                          for (b = 0; b < alpha; b++)
-                            src_a[i][b] = src[i][b] * a_mult;
-                        }
+		      /* for colour channels c,
+		       * result = bilinear(c * alpha) / bilinear(alpha)
+		       */
+                      for (i = -alpha; i < 0; ++i) {
+                        chan = &data[alpha];
+                        newval = rint(a_recip * 
+                          BILINEAR (chan[0] * chan[i],
+                                    chan[bytes] * chan[bytes+i],
+                                    chan[row] * chan[row+i],
+                                    chan[row+bytes] * chan[row+bytes+i], dx, dy));
+                        if (newval <= 0) {
+                          *d++ = 0;
+			} else if (newval > 255) {
+                          *d++ = 255;
+			} else {
+                          *d++ = newval;
+			}
+		      }
+		      /* already set alpha */
+                      d++;
 
-                      for (b = 0; b < alpha; b++)
-                        *d++ = a_recip * BILINEAR (src_a[0][b], src_a[1][b], src_a[2][b], src_a[3][b], dx, dy);
+                      pixel_surround_release(&surround);
+		    }
 
-                      *d++ = a_val;
-
-                      for (b = 0; b < 4; b++)
-                        tile_release (tile[b], FALSE);
-                    }
                   else /* not in source range */
                     {
                       /*  increment the destination pointers  */
                       for (b = 0; b < bytes; b++)
                         *d++ = bg_col[b];
                     }
-                }
-            }
+		}
+	    }
           else  /*  no interpolation  */
             {
-              itx = RINT(ttx);
-              ity = RINT(tty);
+              itx = rint(ttx);
+              ity = rint(tty);
 
               if (itx >= x1 && itx < x2 &&
                   ity >= y1 && ity < y2 )
@@ -1424,27 +1450,30 @@ transform_core_do (GImage          *gimage,
                     *d++ = src[0][b];
 
                   tile_release (tile[0], FALSE);
-                }
+		}
               else /* not in source range */
                 {
                   /*  increment the destination pointers  */
                   for (b = 0; b < bytes; b++)
                     *d++ = bg_col[b];
                 }
-            }
-          /*  increment the transformed coordinates  */
-          tx += xinc;
-          ty += yinc;
-          tw += winc;
-        }
+	    }
+	  /*  increment the transformed coordinates  */
+	  tx += xinc;
+	  ty += yinc;
+	  tw += winc;
+	}
 
       /*  set the pixel region row  */
       pixel_region_set_row (&destPR, 0, (y - ty1), width, dest);
     }
 
+  pixel_surround_clear(&surround);
+
   g_free (dest);
   return tiles;
 }
+
 
 TileManager *
 transform_core_cut (GImage       *gimage,
@@ -1544,7 +1573,7 @@ transform_core_paste (GImage       *gimage,
     }
 }
 
-
+/* Note: cubic function no longer clips result */
 static double
 cubic (double dx,
        int    jm1,
@@ -1564,15 +1593,15 @@ cubic (double dx,
                ( 15 * jm1 - 36 * j + 27 * jp1 - 6 * jp2 ) ) * dx +
                ( - 9 * jm1 + 9 * jp1 ) ) * dx + (jm1 + 16 * j + jp1) ) / 18.0;
 #else
+
   /* Catmull-Rom - not bad */
   result = ((( ( - jm1 + 3 * j - 3 * jp1 + jp2 ) * dx +
                ( 2 * jm1 - 5 * j + 4 * jp1 - jp2 ) ) * dx +
                ( - jm1 + jp1 ) ) * dx + (j + j) ) / 2.0;
+
 #endif
-  if (result < 0.0)
-    result = 0.0;
-  if (result > 255.0)
-    result = 255.0;
 
   return result;
 }
+
+
