@@ -84,7 +84,6 @@ static int           non_gui_offset_x;
 static int           non_gui_offset_y;
 static CloneType     non_gui_type;
 
-
 /*  forward function declarations  */
 
 static void   clone_draw         (Tool *);
@@ -259,6 +258,9 @@ clone_paint_func (PaintCore    *paint_core,
 
   switch (state)
     {
+    case PRETRACE_PAINT :
+      draw_core_pause (paint_core->core, active_tool);
+      break;
     case MOTION_PAINT :
       x1 = paint_core->curx;
       y1 = paint_core->cury;
@@ -298,7 +300,6 @@ clone_paint_func (PaintCore    *paint_core,
 			clone_options->type, offset_x, offset_y);
 	}
 
-      draw_core_pause (paint_core->core, active_tool);
       break;
 
     case INIT_PAINT :
@@ -343,17 +344,17 @@ clone_paint_func (PaintCore    *paint_core,
       src_gdisp = the_src_gdisp;
     }
 
-  /*  Find the target cursor's location onscreen  */
-  gdisplay_transform_coords (src_gdisp, src_x, src_y, &trans_tx, &trans_ty, 1);
-
   if (state == INIT_PAINT)
     /*  Initialize the tool drawing core  */
     draw_core_start (paint_core->core,
 		     src_gdisp->canvas->window,
 		     active_tool);
-  else if (state == MOTION_PAINT)
+  else if (state == POSTTRACE_PAINT)
+  {
+    /*  Find the target cursor's location onscreen  */
+    gdisplay_transform_coords (src_gdisp, src_x, src_y, &trans_tx, &trans_ty, 1);
     draw_core_resume (paint_core->core, active_tool);      
-
+  }
   return NULL;
 }
 
@@ -427,6 +428,7 @@ tools_new_clone ()
   private = (PaintCore *) tool->private;
   private->paint_func = clone_paint_func;
   private->core->draw_func = clone_draw;
+  private->flags |= TOOL_TRACES_ON_WINDOW;
 
   return tool;
 }

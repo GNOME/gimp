@@ -192,3 +192,12 @@ expertise: GUI, Help System, Context System
 current work: 
 commit access: yes
 
+Name: Garry R. Osgood
+Email: gosgood@idt.net
+url: http://idt.net/~gosgood/
+ircnick:
+expertise: Bug fixing. 
+current work: I fell into this rabbit hole by writing highly verbose patch documentation,
+which just goes to show that succinctness is its own reward. My patch documentation 
+archive is http://idt.net/~gosgood/gimp-patch/
+commit access: yes

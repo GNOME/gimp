@@ -25,18 +25,27 @@
 #include "gimpdrawableF.h"
 
 /* the different states that the painting function can be called with  */
-#define INIT_PAINT      0
-#define MOTION_PAINT    1
-#define PAUSE_PAINT     2
-#define RESUME_PAINT    3
-#define FINISH_PAINT    4
+
+#define INIT_PAINT       0 /* Setup PaintFunc internals */ 
+#define MOTION_PAINT     1 /* PaintFunc performs motion-related rendering */
+#define PAUSE_PAINT      2 /* Unused. Reserved */
+#define RESUME_PAINT     3 /* Unused. Reserved */
+#define FINISH_PAINT     4 /* Cleanup and/or reset PaintFunc operation */
+#define PRETRACE_PAINT   5 /* PaintFunc performs window tracing activity prior to rendering */
+#define POSTTRACE_PAINT  6 /* PaintFunc performs window tracing activity following rendering */
 
 typedef enum /*< skip >*/
 {
-  TOOL_CAN_HANDLE_CHANGING_BRUSH = 0x0001 /* Set for tools that don't mind
-					   * if the brush changes while
-					   * painting.
-					   */
+  TOOL_CAN_HANDLE_CHANGING_BRUSH = 0x0001, /* Set for tools that don't mind
+					    * if the brush changes while
+					    * painting.
+					    */
+
+  TOOL_TRACES_ON_WINDOW                    /* Set for tools that perform temporary
+                                            * rendering directly to the window. These
+                                            * require sequencing with gdisplay_flush()
+                                            * routines. See clone.c for example.
+                                            */
 } ToolFlags;
 
 typedef void * (* PaintFunc)   (PaintCore *, GimpDrawable *, int);
