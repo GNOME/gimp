@@ -127,8 +127,8 @@ Tool        * gimp_transform_tool_new                    (GimpTransformToolType 
 						     gboolean        interactive);
 */
 void          gimp_transform_tool_destroy                (GtkObject            *tool);
-void          gimp_transform_tool_draw                   (GimpTransformTool    *tool);
-void          gimp_transform_tool_no_draw                (GimpTransformTool    *tool);
+void          gimp_transform_tool_draw                   (GimpDrawTool         *tool);
+void          gimp_transform_tool_no_draw                (GimpDrawTool         *tool);
 void          gimp_transform_tool_transform_bounding_box (GimpTransformTool    *tool);
 void          gimp_transform_tool_reset                  (GimpTransformTool    *tool,
                                                           GDisplay             *gdisp);

@@ -16,6 +16,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+/* FIXME */
+#define TRANSFORM_CORRECTIVE 1 
+
+
 #include "config.h"
 
 #include <stdlib.h>
@@ -112,6 +116,25 @@ static void    gimp_transform_tool_grid_recalc (GimpTransformTool      *gimp_tra
 static void    gimp_transform_tool_init        (GimpTransformTool      *tool);
 static void    gimp_transform_tool_class_init  (GimpTransformToolClass *tool);
 
+void          gimp_transform_tool_button_press (GimpTool               *tool,
+                                                GdkEventButton         *bevent,
+			                        GDisplay               *gdisp);
+			          
+void        gimp_transform_tool_button_release (GimpTool               *tool,
+			                        GdkEventButton         *bevent,
+			                        GDisplay               *gdisp);
+			                        
+void           gimp_transform_tool_motion      (GimpTool               *tool,
+		                                GdkEventMotion         *mevent,
+		                                GDisplay               *gdisp);
+		                                
+void         gimp_transform_tool_cursor_update (GimpTool               *tool,
+	                 		        GdkEventMotion         *mevent,
+			                        GDisplay               *gdisp);
+			                        
+void           gimp_transform_tool_control     (GimpTool               *tool,
+			                        ToolAction              action,
+			                        GDisplay               *gdisp);
 
 /*  variables  */
 static TranInfo           old_trans_info;
@@ -377,19 +400,19 @@ static const gchar *action_labels[] =
 };
 
 void
-gimp_transform_tool_button_press (GimpTransformTool  *gt_tool,
+gimp_transform_tool_button_press (GimpTool           *tool,
                                   GdkEventButton     *bevent,
 			          GDisplay           *gdisp)
 {
-  GimpTool      *tool;
-  GimpDrawable  *drawable;
-  gint           dist;
-  gint           closest_dist;
-  gint           x, y;
-  gint           i;
-  gint           off_x, off_y;
+  GimpTransformTool  *gt_tool;
+  GimpDrawable       *drawable;
+  gint                dist;
+  gint                closest_dist;
+  gint                x, y;
+  gint                i;
+  gint                off_x, off_y;
 
-  tool = GIMP_TOOL(gt_tool);
+  gt_tool = GIMP_TRANSFORM_TOOL(tool);
 
   gt_tool->bpressed = TRUE; /* ALT */
 
@@ -517,14 +540,14 @@ gimp_transform_tool_button_press (GimpTransformTool  *gt_tool,
 	  gimp_transform_tool_setup_grid (tool);
 
 	/*  Initialize the transform tool */
-	/*FIXME*/ (* gt_tool->trans_func) (tool, gdisp, TRANSFORM_INIT);
+	gimp_transform_tool_transform (gt_tool, gdisp, TRANSFORM_INIT);
 
 	if (transform_info && !transform_info_inited)
 	  {
 	    gimp_dialog_create_action_area
 	      (GTK_DIALOG (transform_info->shell),
 
-	       gettext (action_labels[tool->type - ROTATE]),
+	       /* FIXME!!! gettext (action_labels[tool->type - ROTATE])*/ "I need to be fixed badly.",
 	       transform_ok_callback,
 	       tool, NULL, NULL, TRUE, FALSE,
 	       _("Reset"), transform_reset_callback,
@@ -539,20 +562,20 @@ gimp_transform_tool_button_press (GimpTransformTool  *gt_tool,
 	gimp_transform_tool_recalc (gt_tool, gdisp);
 
 	/*  recall this function to find which handle we're dragging  */
-	if (gimp_transform_tool->interactive)
+	if (gt_tool->interactive)
 	  gimp_transform_tool_button_press (gt_tool, bevent, gdisp);
       }
 }
 
 void
-gimp_transform_tool_button_release (GimpTransformTool  *gt_tool,
-			            GdkEventButton     *bevent,
-			            GDisplay           *gdisp)
+gimp_transform_tool_button_release (GimpTool         *tool,
+			            GdkEventButton   *bevent,
+			            GDisplay         *gdisp)
 {
-  GimpTool *tool;
-  gint      i;
+  GimpTransformTool *gt_tool;
+  gint               i;
 
-  tool = GIMP_TOOL(tool);
+  gt_tool = GIMP_TRANSFORM_TOOL(tool);
 
   gt_tool->bpressed = FALSE; /* ALT */
 
@@ -569,9 +592,9 @@ gimp_transform_tool_button_release (GimpTransformTool  *gt_tool,
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
       /* Shift-clicking is another way to approve the transform  */
-      if ((bevent->state & GDK_SHIFT_MASK) || (tool->type == FLIP))
+      if ((bevent->state & GDK_SHIFT_MASK) /* FIXME || (tool->type == FLIP) */)
 	{
-	  gimp_transform_tool_doit (tool, gdisp);
+	  gimp_transform_tool_doit (gt_tool, gdisp);
 	}
       else
 	{
@@ -593,7 +616,7 @@ gimp_transform_tool_button_release (GimpTransformTool  *gt_tool,
       gimp_transform_tool_recalc (gt_tool, gdisp);
 
       /*  resume drawing the current tool  */
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL(gt_tool);
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL(gt_tool));
 
       /* Update the paths preview */
       path_transform_current_path (gdisp->gimage,
@@ -618,7 +641,7 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
 
   gimp_add_busy_cursors ();
 
-  gimp_transform_tool = GIMP_TOOL(tool);
+  tool = GIMP_TOOL(gt_tool);
 
   /* undraw the tool before we muck around with the transform matrix */
   gimp_draw_tool_pause (GIMP_DRAW_TOOL(gt_tool));
@@ -649,10 +672,10 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
 
   /*  Send the request for the transformation to the tool...
    */
-  /* FIXME */ new_tiles = (* gimp_transform_tool->trans_func) (gt_tool, gdisp,
+  new_tiles = gimp_transform_tool_transform (gt_tool, gdisp,
 					      TRANSFORM_FINISH);
 
-  /* FIXME TOO */(* gimp_transform_tool->trans_func) (gt_tool, gdisp, TRANSFORM_INIT);
+  gimp_transform_tool_transform (gt_tool, gdisp, TRANSFORM_INIT);
 
   gimp_transform_tool_recalc (gt_tool, gdisp);
 
@@ -667,8 +690,8 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
 
       /*  create and initialize the transform_undo structure  */
       tu = g_new (TransformUndo, 1);
-      tu->tool_ID = tool->ID;
-      tu->tool_type = tool->type;
+      tu->tool = gt_tool;
+
       for (i = 0; i < TRAN_INFO_SIZE; i++)
 	tu->trans_info[i] = old_trans_info[i];
       tu->original = NULL;
@@ -717,19 +740,19 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
   gimp_transform_tool_reset (tool, gdisp);
 
   /*  if this tool is non-interactive, make it inactive after use  */
-  if (!gimp_transform_tool->interactive)
+  if (!gt_tool->interactive)
     tool->state = INACTIVE;
 }
 
 
 void
-gimp_transform_tool_motion (GimpTransformTool  *tr_tool,
-		            GdkEventMotion     *mevent,
-		            GDisplay           *gdisp)
+gimp_transform_tool_motion (GimpTool          *tool,
+		            GdkEventMotion    *mevent,
+		            GDisplay          *gdisp)
 {
-  GimpTool *tool;
+  GimpTransformTool *tr_tool;
 
-  tool = GIMP_TOOL(tr_tool);
+  tr_tool = GIMP_TRANSFORM_TOOL(tool);
 
   if (tr_tool->bpressed == FALSE)
   {
@@ -755,7 +778,7 @@ gimp_transform_tool_motion (GimpTransformTool  *tr_tool,
   tr_tool->state = mevent->state;
 
   /*  recalculate the tool's transformation matrix  */
-  /* FIXME */ (* gimp_transform_tool->trans_func) (tool, gdisp, TRANSFORM_MOTION);
+  gimp_transform_tool_transform (tr_tool, gdisp, TRANSFORM_MOTION);
 
   tr_tool->lastx = tr_tool->curx;
   tr_tool->lasty = tr_tool->cury;
@@ -765,16 +788,16 @@ gimp_transform_tool_motion (GimpTransformTool  *tr_tool,
 }
 
 void
-gimp_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
+gimp_transform_tool_cursor_update (GimpTool           *tool,
 			           GdkEventMotion     *mevent,
 			           GDisplay           *gdisp)
 {
-  GimpTool      *tool;
-  GimpDrawable  *drawable;
-  GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
-  gint           x, y;
+  GimpTransformTool  *tr_tool;
+  GimpDrawable       *drawable;
+  GdkCursorType       ctype = GDK_TOP_LEFT_ARROW;
+  gint                x, y;
 
-  tool = GIMP_TOOL(tool));
+  tool = GIMP_TRANSFORM_TOOL(tool);
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
 			       FALSE, FALSE);
@@ -806,23 +829,25 @@ gimp_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
 }
 
 void
-gimp_transform_tool_control (GimpTransformTool        *tr_tool,
-			     GimpTransformToolAction   action,
-			     GDisplay                 *gdisp)
+gimp_transform_tool_control (GimpTool           *tool,
+			     ToolAction          action,
+			     GDisplay           *gdisp)
 {
-  GimpDrawTool *tool;
+  GimpDrawTool       *dr_tool;
+  GimpTransformTool  *tr_tool;
 
-  tool = GIMP_DRAW_TOOL(tool);
+  dr_tool = GIMP_DRAW_TOOL(tool);
+  tr_tool = GIMP_TRANSFORM_TOOL(tool);
 
   switch (action)
     {
     case PAUSE:
-      gimp_draw_tool_pause (tool);
+      gimp_draw_tool_pause (dr_tool);
       break;
 
     case RESUME:
       gimp_transform_tool_recalc (tr_tool, gdisp);
-      gimp_draw_tool_resume (tool);
+      gimp_draw_tool_resume (dr_tool);
       break;
 
     case HALT:
@@ -835,23 +860,25 @@ gimp_transform_tool_control (GimpTransformTool        *tr_tool,
 }
 
 void
-gimp_transform_tool_no_draw (GimpTransformTool *tool)
+gimp_transform_tool_no_draw (GimpDrawTool *tool)
 {
   return;
 }
 
 void
-gimp_transform_tool_draw (GimpTransformTool *tr_tool)
+gimp_transform_tool_draw (GimpDrawTool *dr_tool)
 {
-  GDisplay      *gdisp;
-  GimpTool      *tool;
-  GimpDrawTool  *dr_tool;
-  gint           x1, y1, x2, y2, x3, y3, x4, y4;
-  gint           srw, srh;
-  gint           i, k, gci;
-  gint           xa, ya, xb, yb;
+  GDisplay           *gdisp;
+  GimpTransformTool  *tr_tool;
+  GimpTool           *tool;
+  gint                x1, y1, x2, y2, x3, y3, x4, y4;
+  gint                srw, srh;
+  gint                i, k, gci;
+  gint                xa, ya, xb, yb;
 
+  tr_tool        = GIMP_TRANSFORM_TOOL(dr_tool);
   tool           = GIMP_TOOL(tool);
+
   gdisp          = tool->gdisp;
 
   gdisplay_transform_coords (gdisp, tr_tool->tx1, tr_tool->ty1,
@@ -885,10 +912,10 @@ gimp_transform_tool_draw (GimpTransformTool *tr_tool)
   /*  Draw the grid */
 
   if ((tr_tool->grid_coords != NULL) &&
-      (tr_tool->tgrid_coords != NULL) &&
-      ((tool->type != PERSPECTIVE) ||
+      (tr_tool->tgrid_coords != NULL) /* FIXME!!! this doesn't belong here &&
+      ((tool->type != PERSPECTIVE)  ||
        ((tr_tool->transform[0][0] >=0.0) &&
-	(tr_tool->transform[1][1] >=0.0))))
+	(tr_tool->transform[1][1] >=0.0)) */ ) 
     {
 
       gci = 0;
@@ -950,7 +977,7 @@ gimp_transform_tool_draw (GimpTransformTool *tr_tool)
 }
 
 void
-gimp_transform_tool_destroy (GtkObject object)
+gimp_transform_tool_destroy (GtkObject *object)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (object);
   GimpDrawTool      *dr_tool = GIMP_DRAW_TOOL      (tr_tool);
@@ -960,8 +987,6 @@ gimp_transform_tool_destroy (GtkObject object)
   if (tool->state == ACTIVE)
     gimp_draw_tool_stop (dr_tool);
 
-  /*  Free the selection core  */
-  gimp_draw_tool_free (dr_tool);
 
   /*  Free up the original selection if it exists  */
   if (tr_tool->original)
@@ -1005,10 +1030,10 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
 				tr_tool->x2, tr_tool->y2,
 				&tr_tool->tx4, &tr_tool->ty4);
 
-  if (tool->type == ROTATE)
+/* FIXME  if (tool->type == ROTATE)
     gimp_matrix3_transform_point (tr_tool->transform,
 				  tr_tool->cx, tr_tool->cy,
-				  &tr_tool->tcx, &tr_tool->tcy);
+				  &tr_tool->tcx, &tr_tool->tcy); */
 
   if (tr_tool->grid_coords != NULL &&
       tr_tool->tgrid_coords != NULL)
@@ -1033,7 +1058,7 @@ gimp_transform_tool_reset (GimpTransformTool   *tr_tool,
 {
   GimpTool *tool;
 
-  tool = GIMP_TOOL(tool);
+  tool = GIMP_TOOL(tr_tool);
 
   if (tr_tool->original)
     tile_manager_destroy (tr_tool->original);
@@ -1114,7 +1139,7 @@ gimp_transform_tool_showpath_changed (gint type /* a truly undescriptive name */
   GimpTransformTool *tr_tool;
 
   /* EEEEEEEK!!! */
-  tr_tool = (GimpTransformTool *) active_tool->private;
+  tr_tool = (GimpTransformTool *) active_tool;
 
   if (tr_tool->function == TRANSFORM_CREATING)
     return;
@@ -1200,12 +1225,12 @@ gimp_transform_tool_recalc (GimpTransformTool   *tr_tool,
 {
   gimp_transform_tool_bounds (tr_tool, gdisp);
 
-  /* FIXME */ (* gimp_transform_tool->trans_func) (tool, gdisp, TRANSFORM_RECALC);
+   gimp_transform_tool_transform (tr_tool, gdisp, TRANSFORM_RECALC);
 }
 
 /*  Actually carry out a transformation  */
 TileManager *
-gimp_transform_tool_do (GImage           *gimage,
+gimp_transform_tool_do (GimpImage           *gimage,
                         GimpDrawable     *drawable,
                         TileManager      *float_tiles,
                         gboolean          interpolation,
@@ -1630,7 +1655,7 @@ gimp_transform_tool_do (GImage           *gimage,
 }
 
 TileManager *
-gimp_transform_tool_cut (GImage       *gimage,
+gimp_transform_tool_cut (GimpImage       *gimage,
 		         GimpDrawable *drawable,
 		         gboolean     *new_layer)
 {
@@ -1662,7 +1687,7 @@ gimp_transform_tool_cut (GImage       *gimage,
 
 /*  Paste a transform to the gdisplay  */
 gboolean
-gimp_transform_tool_paste (GImage       *gimage,
+gimp_transform_tool_paste (GimpImage       *gimage,
 		           GimpDrawable *drawable,
 		           TileManager  *tiles,
 		           gboolean      new_layer)
