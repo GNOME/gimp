@@ -1,5 +1,5 @@
 /*
- * Animation Playback plug-in version 0.98.0
+ * Animation Playback plug-in version 0.98.2
  *
  * Adam D. Moss : 1997-98 : adam@gimp.org : adam@foxbox.org
  *
@@ -10,6 +10,9 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 98.07.19 : version 0.98.2
+ *            Another speedup for some kinds of shaped animations.
  *
  * 98.07.19 : version 0.98.0
  *            Adapted to use GDKRGB (from recent GTK >= 1.1) if
@@ -333,12 +336,23 @@ static void
 reshape_from_bitmap(gchar* bitmap)
 {
   GdkBitmap *shape_mask;
+  static gchar *prev_bitmap = NULL;
 
-  shape_mask = gdk_bitmap_create_from_data(shape_window->window,
-					   bitmap,
-					   width, height);
-  gtk_widget_shape_combine_mask (shape_window, shape_mask, 0, 0);
-  gdk_bitmap_unref (shape_mask);
+  if ((!prev_bitmap) ||
+      (memcmp(prev_bitmap, bitmap, (width*height)/8 +height)))
+    {
+      shape_mask = gdk_bitmap_create_from_data(shape_window->window,
+					       bitmap,
+					       width, height);
+      gtk_widget_shape_combine_mask (shape_window, shape_mask, 0, 0);
+      gdk_bitmap_unref (shape_mask);
+
+      if (!prev_bitmap)
+	{
+	  prev_bitmap = g_malloc ((width*height)/8 +height);
+	}
+      memcpy (prev_bitmap, bitmap, (width*height)/8 +height);
+    }
 }
 
 

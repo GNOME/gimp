@@ -1,4 +1,10 @@
+Sun Jul 19 20:55:36 BST 1998 Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/animationplay/animationplay.c: Another
+	speedup for some types of shaped animation.
+
 Sun Jul 19 10:23:58 PDT 1998  Jay Cox <jaycox@earthlink.net>
+
 	* app/paint_funcs.c
 	new and improved color_pixels now 4-7 times as fast and 8-12
 	times as convoluted as original color_pixels.  
