@@ -489,9 +489,9 @@ marshall_proc_db_call (LISP a)
   /*  Derive the pdb procedure name from the argument
       or first argument of a list  */
   if (TYPEP (a, tc_cons))
-    proc_name = get_c_string (car (a));
+    proc_name = g_strdup (get_c_string (car (a)));
   else
-    proc_name = get_c_string (a);
+    proc_name = g_strdup (get_c_string (a));
 
   /*  report the current command  */
   script_fu_interface_report_cc (proc_name);
@@ -506,12 +506,12 @@ marshall_proc_db_call (LISP a)
                                       &proc_type,
                                       &nparams, &nreturn_vals,
                                       &params, &return_vals))
-  {
-    convert_string (proc_name);
-    g_snprintf (error_str, sizeof (error_str),
-                "Invalid procedure name %s specified", proc_name);
-    return my_err (error_str, NIL);
-  }
+    {
+      convert_string (proc_name);
+      g_snprintf (error_str, sizeof (error_str),
+                  "Invalid procedure name %s specified", proc_name);
+      return my_err (error_str, NIL);
+    }
 
   /* Free the name and the description which are of no use here.  */
   for (i = 0; i < nparams; i++)
@@ -552,7 +552,7 @@ marshall_proc_db_call (LISP a)
             success = FALSE;
           if (success)
             {
-              args[i].type = GIMP_PDB_INT32;
+              args[i].type         = GIMP_PDB_INT32;
               args[i].data.d_int32 = get_c_long (car (a));
             }
           break;
@@ -562,7 +562,7 @@ marshall_proc_db_call (LISP a)
             success = FALSE;
           if (success)
             {
-              args[i].type = GIMP_PDB_INT16;
+              args[i].type         = GIMP_PDB_INT16;
               args[i].data.d_int16 = (gint16) get_c_long (car (a));
             }
           break;
@@ -572,7 +572,7 @@ marshall_proc_db_call (LISP a)
             success = FALSE;
           if (success)
             {
-              args[i].type = GIMP_PDB_INT8;
+              args[i].type        = GIMP_PDB_INT8;
               args[i].data.d_int8 = (gint8) get_c_long (car (a));
             }
           break;
@@ -582,7 +582,7 @@ marshall_proc_db_call (LISP a)
             success = FALSE;
           if (success)
             {
-              args[i].type = GIMP_PDB_FLOAT;
+              args[i].type         = GIMP_PDB_FLOAT;
               args[i].data.d_float = get_c_double (car (a));
             }
           break;
@@ -592,7 +592,7 @@ marshall_proc_db_call (LISP a)
             success = FALSE;
           if (success)
             {
-              args[i].type = GIMP_PDB_STRING;
+              args[i].type          = GIMP_PDB_STRING;
               args[i].data.d_string = get_c_string (car (a));
             }
           break;
@@ -602,9 +602,22 @@ marshall_proc_db_call (LISP a)
             success = FALSE;
           if (success)
             {
-              args[i].type = GIMP_PDB_INT32ARRAY;
-              args[i].data.d_int32array =
-                (gint32*) (car (a))->storage_as.long_array.data;
+              gint n_elements = args[i - 1].data.d_int32;
+              LISP list       = car (a);
+
+              if (n_elements != nlength (list))
+                {
+                  convert_string (proc_name);
+                  g_snprintf (error_str, sizeof (error_str),
+                              "INT32 array (argument %d) for function %s has "
+                              "incorrect length (got %ld, expected %d)",
+                              i + 1, proc_name, nlength (list), n_elements);
+                  return my_err (error_str, NIL);
+                }
+
+              args[i].type              = GIMP_PDB_INT32ARRAY;
+              args[i].data.d_int32array = (gint32 *)
+                list->storage_as.long_array.data;
             }
           break;
 
@@ -613,9 +626,22 @@ marshall_proc_db_call (LISP a)
             success = FALSE;
           if (success)
             {
-              args[i].type = GIMP_PDB_INT16ARRAY;
-              args[i].data.d_int16array =
-                (gint16*) (car (a))->storage_as.long_array.data;
+              gint n_elements = args[i - 1].data.d_int32;
+              LISP list       = car (a);
+
+              if (n_elements != nlength (list))
+                {
+                  convert_string (proc_name);
+                  g_snprintf (error_str, sizeof (error_str),
+                              "INT16 array (argument %d) for function %s has "
+                              "incorrect length (got %ld, expected %d)",
+                              i + 1, proc_name, nlength (list), n_elements);
+                  return my_err (error_str, NIL);
+                }
+
+              args[i].type              = GIMP_PDB_INT16ARRAY;
+              args[i].data.d_int16array = (gint16 *)
+                list->storage_as.long_array.data;
             }
           break;
 
@@ -624,9 +650,21 @@ marshall_proc_db_call (LISP a)
             success = FALSE;
           if (success)
             {
-              args[i].type = GIMP_PDB_INT8ARRAY;
-              args[i].data.d_int8array =
-                (gint8*) (car (a))->storage_as.string.data;
+              gint n_elements = args[i - 1].data.d_int32;
+              LISP list       = car (a);
+
+              if (n_elements != nlength (list))
+                {
+                  convert_string (proc_name);
+                  g_snprintf (error_str, sizeof (error_str),
+                              "INT8 array (argument %d) for function %s has "
+                              "incorrect length (got %ld, expected %d)",
+                              i + 1, proc_name, nlength (list), n_elements);
+                  return my_err (error_str, NIL);
+                }
+
+              args[i].type             = GIMP_PDB_INT8ARRAY;
+              args[i].data.d_int8array = (gint8 *) list->storage_as.string.data;
             }
           break;
 
@@ -635,9 +673,21 @@ marshall_proc_db_call (LISP a)
             success = FALSE;
           if (success)
             {
-              args[i].type = GIMP_PDB_FLOATARRAY;
-              args[i].data.d_floatarray =
-                (car (a))->storage_as.double_array.data;
+              gint n_elements = args[i - 1].data.d_int32;
+              LISP list       = car (a);
+
+              if (n_elements != nlength (list))
+                {
+                  convert_string (proc_name);
+                  g_snprintf (error_str, sizeof (error_str),
+                              "FLOAT array (argument %d) for function %s has "
+                              "incorrect length (got %ld, expected %d)",
+                              i + 1, proc_name, nlength (list), n_elements);
+                  return my_err (error_str, NIL);
+                }
+
+              args[i].type              = GIMP_PDB_FLOATARRAY;
+              args[i].data.d_floatarray = list->storage_as.double_array.data;
             }
           break;
 
@@ -646,30 +696,26 @@ marshall_proc_db_call (LISP a)
             success = FALSE;
           if (success)
             {
-              gint j;
-              gint num_strings;
-              gchar **array;
-              LISP list;
+              gint    n_elements = args[i - 1].data.d_int32;
+              LISP    list       = car (a);
+              gint    j;
 
-              args[i].type = GIMP_PDB_STRINGARRAY;
-
-              list = car (a);
-              num_strings = args[i - 1].data.d_int32;
-              if (nlength (list) != num_strings)
+              if (n_elements != nlength (list))
                 {
                   convert_string (proc_name);
                   g_snprintf (error_str, sizeof (error_str),
                               "String array (argument %d) for function %s has "
                               "incorrect length (got %ld, expected %d)",
-                              i+1, proc_name, nlength(list), num_strings);
+                              i + 1, proc_name, nlength (list), n_elements);
                   return my_err (error_str, NIL);
                 }
 
-              array = args[i].data.d_stringarray = g_new (gchar *,
-                                                          num_strings);
-              for (j = 0; j < num_strings; j++)
+              args[i].type               = GIMP_PDB_STRINGARRAY;
+              args[i].data.d_stringarray = g_new0 (gchar *, n_elements);
+
+              for (j = 0; j < n_elements; j++)
                 {
-                  array[j] = get_c_string (car (list));
+                  args[i].data.d_stringarray[j] = get_c_string (car (list));
                   list = cdr (list);
                 }
             }
@@ -828,7 +874,7 @@ marshall_proc_db_call (LISP a)
           convert_string (proc_name);
           g_snprintf (error_str, sizeof (error_str),
                       "Argument %d for %s is an unknown type",
-                      i+1, proc_name);
+                      i + 1, proc_name);
           return my_err (error_str, NIL);
         }
 
@@ -845,7 +891,7 @@ marshall_proc_db_call (LISP a)
   else
     {
       g_snprintf (error_str, sizeof (error_str),
-                  "Invalid type for argument %d to %s", i+1, proc_name);
+                  "Invalid type for argument %d to %s", i + 1, proc_name);
       return my_err (error_str, NIL);
     }
 
@@ -926,7 +972,18 @@ marshall_proc_db_call (LISP a)
               break;
 
             case GIMP_PDB_INT16ARRAY:
-              return my_err ("Arrays are currently unsupported as return values", NIL);
+              {
+                LISP array;
+                gint j;
+
+                array = arcons (tc_long_array, values[i].data.d_int32, 0);
+                for (j = 0; j < values[i].data.d_int32; j++)
+                  {
+                    array->storage_as.long_array.data[j] =
+                      values[i + 1].data.d_int16array[j];
+                  }
+                return_val = cons (array, return_val);
+              }
               break;
 
             case GIMP_PDB_INT8ARRAY:
@@ -960,30 +1017,26 @@ marshall_proc_db_call (LISP a)
               break;
 
             case GIMP_PDB_STRINGARRAY:
-              /*  string arrays are always implemented such that the previous
-               *  return value contains the number of strings in the array
-               */
               {
-                gint    j;
-                gint    num_strings  = values[i].data.d_int32;
-                LISP    string_array = NIL;
-                gchar **array  = (gchar **) values[i + 1].data.d_stringarray;
+                LISP array = NIL;
+                gint j;
 
-                for (j = 0; j < num_strings; j++)
+                for (j = 0; j < values[i].data.d_int32; j++)
                   {
-                    if (array[j])
+                    string = (values[i + 1].data.d_stringarray)[j];
+
+                    if (string)
                       {
-                        string_len = strlen (array[j]);
-                        string_array = cons (strcons (string_len, array[j]),
-                                             string_array);
+                        string_len = strlen (string);
+                        array = cons (strcons (string_len, string), array);
                       }
                     else
                       {
-                        string_array = cons (strcons (0, ""), string_array);
+                        array = cons (strcons (0, ""), array);
                       }
                   }
 
-                return_val = cons (nreverse (string_array), return_val);
+                return_val = cons (nreverse (array), return_val);
               }
               break;
 
@@ -1059,10 +1112,10 @@ marshall_proc_db_call (LISP a)
 
                     flags   = flocons (values[i + 1].data.d_parasite.flags);
                     data    = arcons (tc_byte_array,
-                                      values[i+1].data.d_parasite.size, 0);
+                                      values[i + 1].data.d_parasite.size, 0);
                     memcpy(data->storage_as.string.data,
-                           values[i+1].data.d_parasite.data,
-                           values[i+1].data.d_parasite.size);
+                           values[i + 1].data.d_parasite.data,
+                           values[i + 1].data.d_parasite.size);
 
                     intermediate_val = cons (name,
                                              cons(flags, cons(data, NIL)));
@@ -1085,6 +1138,9 @@ marshall_proc_db_call (LISP a)
     case GIMP_PDB_CANCEL:   /*  should we do something here?  */
       break;
     }
+
+  /*  free the proc name  */
+  g_free (proc_name);
 
   /*  free up the executed procedure return values  */
   gimp_destroy_params (values, nvalues);

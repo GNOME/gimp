@@ -1,3 +1,15 @@
+2004-10-05  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
+	- check the number of elements of array parameters against
+	  the actually passed array and spit a proper error message
+	  instead of trashing the wire. Fixes bug #154266.
+	- g_strdup()/g_free() the proc_name so it doesn't get mungled
+	  by convert_string().
+	- added missing implementation of INT16ARRAY return values.
+	- cleaned up STRINGARRAY value implementations to work like
+	  all other array values.
+
 2004-10-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-interface.c (script_fu_reset):
