@@ -1,5 +1,10 @@
 2003-11-10  Dave Neary  <bolsh@gimp.org>
 
+	* app/widgets/gimpdataeditor.c: Implement save button. Partially
+	addresses bug #116606.
+
+2003-11-10  Dave Neary  <bolsh@gimp.org>
+
 	* app/tools/gimpimagemaptool.c: Removed some code I'd added 
 	earlier and forgot to take out again.
 

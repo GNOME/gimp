@@ -358,7 +358,45 @@ static void
 gimp_data_editor_save_clicked (GtkWidget      *widget,
                                GimpDataEditor *editor)
 {
-  g_print ("TODO: implement save\n");
+  gchar *path = NULL;
+  GimpData *data;
+
+  g_object_get (editor->data_factory->gimp->config,
+                editor->data_factory->path_property_name, &path,
+                NULL);
+
+  if (path && strlen (path))
+    {
+      gchar    *tmp;
+
+      tmp = gimp_config_path_expand (path, TRUE, NULL);
+      g_free (path);
+      path = tmp;
+
+      data = editor>data;
+
+      if (! data->filename)
+        gimp_data_create_filename (data, GIMP_OBJECT (data)->name, path);
+
+      if (data->dirty)
+        {
+          GError *error = NULL;
+
+          if (! gimp_data_save (data, &error))
+            {
+              /*  check if there actually was an error (no error
+               *  means the data class does not implement save)
+               */
+              if (error)
+                {
+                  g_message (_("Warning: Failed to save data:\n%s"),
+                             error->message);
+                  g_clear_error (&error);
+                }
+            }
+        }
+    }
+  g_free (path);
 }
 
 static void
