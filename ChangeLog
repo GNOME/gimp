@@ -1,5 +1,11 @@
 2005-03-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/screenshot.c: seperated platform specific code into
+	individual functions; should make it easier to contribute the missing
+	platform specific code ...
+
+2005-03-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/alien-glow-logo.scm
 	* plug-ins/script-fu/scripts/alien-neon-logo.scm
 	* plug-ins/script-fu/scripts/basic1-logo.scm

@@ -341,14 +341,13 @@ run (const gchar      *name,
 }
 
 
-/* Allow the user to select a window with the mouse */
+/* Allow the user to select a window or a region with the mouse */
+
+#ifdef GDK_WINDOWING_X11
 
 static GdkNativeWindow
-select_window (GdkScreen *screen)
+select_window_x11 (GdkScreen *screen)
 {
-#if defined(GDK_WINDOWING_X11)
-  /* X11 specific code */
-
   Display    *x_dpy;
   Cursor      x_cursor;
   XEvent      x_event;
@@ -391,9 +390,10 @@ select_window (GdkScreen *screen)
 
       gc = XCreateGC (x_dpy, x_root,
                       GCFunction | GCPlaneMask | GCForeground | GCLineWidth |
-                      GCLineStyle | GCCapStyle | GCJoinStyle | GCGraphicsExposures |
-                      GCBackground | GCFillStyle | GCClipXOrigin | GCClipYOrigin |
-                      GCClipMask | GCSubwindowMode,
+                      GCLineStyle | GCCapStyle | GCJoinStyle |
+                      GCGraphicsExposures | GCBackground | GCFillStyle |
+                      GCClipXOrigin | GCClipYOrigin | GCClipMask |
+                      GCSubwindowMode,
                       &gc_values);
     }
 
@@ -474,7 +474,16 @@ select_window (GdkScreen *screen)
   XFreeCursor (x_dpy, x_cursor);
 
   return x_win;
-#elif defined(GDK_WINDOWING_WIN32)
+}
+
+#endif
+
+
+#ifdef GDK_WINDOWING_WIN32
+
+static GdkNativeWindow
+select_window_x11 (GdkScreen *screen)
+{
   /* MS Windows specific code goes here (yet to be written) */
 
   /* basically the code should grab the pointer using a crosshair
@@ -490,12 +499,26 @@ select_window (GdkScreen *screen)
 #else
 #pragma message "Win32 screenshot window chooser not implemented yet"
 #endif
+
   return 0;
-#else /* GDK_WINDOWING_WIN32 */
+}
+
+#endif
+
+
+static GdkNativeWindow
+select_window (GdkScreen *screen)
+{
+#if defined(GDK_WINDOWING_X11)
+  return select_window_x11 (screen);
+#elif defined(GDK_WINDOWING_WIN32)
+  return select_window_win32 (screen);
+#else
 #warning screenshot window chooser not implemented yet for this GDK backend
   return 0;
 #endif
 }
+
 
 /* Create a GimpImage from a GdkPixbuf */
 
