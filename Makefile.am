@@ -23,7 +23,7 @@ bin_SCRIPTS = gimptool-1.2 @GIMPINSTALL@
 
 EXTRA_SCRIPTS = gimptool-1.2 gimpinstall-1.2
 
-EXTRA_DIST = config.rpath mkinstalldirs  \
+EXTRA_DIST = \
 	cursors/mouse.xbm			\
 	cursors/mouse_mask.xbm			\
 	cursors/crosshair.xbm			\
