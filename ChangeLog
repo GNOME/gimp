@@ -1,3 +1,7 @@
+Sun Jan  3 14:40:27 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/ps/ps.c: new version
+
 Sun Jan  3 22:18:48 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* app/palette.c: applied a patch from Michael Natterer
