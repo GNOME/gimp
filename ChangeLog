@@ -1,3 +1,8 @@
+2002-09-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_init): set the
+	toggle_cursor to GIMP_ZOOM_CURSOR, not the tool_cursor.
+
 2002-09-26  Michael Natterer  <mitch@gimp.org>
 
 	Made F1 help work again:
