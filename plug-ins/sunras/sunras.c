@@ -136,6 +136,9 @@ static void   save_toggle_update       (GtkWidget *widget,
                                         gpointer   data);
 static void   show_message             (char *);
 
+/* Portability kludge */
+static int my_fwrite (void *ptr, int size, int nmemb, FILE *stream);
+
 GPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
@@ -1349,7 +1352,7 @@ save_index (FILE *ofp,
     src = begin; }
 
   if (rle) { write_fun = (WRITE_FUN *)&rle_fwrite; rle_startwrite (ofp); }
-  else write_fun = (WRITE_FUN *)&fwrite;
+  else write_fun = (WRITE_FUN *)&my_fwrite;
 
   if (bw)  /* Two colour image */
   {
@@ -1647,4 +1650,9 @@ static void show_message (char *message)
  else
 #endif
    fprintf (stderr, "sunras: %s\n", message);
+}
+
+static int my_fwrite (void *ptr, int size, int nmemb, FILE *stream)
+{
+    return fwrite(ptr, size, nmemb, stream);
 }
