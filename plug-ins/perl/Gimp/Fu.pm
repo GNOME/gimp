@@ -351,8 +351,9 @@ sub interact($$$@) {
            my $b = new Gtk::HBox 0,5;
            my($r,$prev);
            my $prev_sub = sub { $r = $_[0] };
-           for (@$extra) {
-              my ($label,$value)=@$_;
+           while (@$extra) {
+              my $label = shift @$extra;
+              my $value = shift @$extra;
               my $radio = new Gtk::RadioButton $label;
               $radio->set_group ($prev) if $prev;
               $b->pack_start ($radio,1,0,5);
@@ -822,11 +823,11 @@ The same as PF_SLIDER, except that this one uses a spinbutton instead of a scale
 
 In addition to a default value, an extra argument describing the various
 options I<must> be provided. That extra argument must be a reference
-to an array filled with ["Option-Name", integer-value] pairs. Gimp::Fu
+to an array filled with C<Option-Name => Option-Value> pairs. Gimp::Fu
 will then generate a horizontal frame with radio buttons, one for each
 alternative. For example:
 
- [PF_RADIO, "direction", "the direction to move to", 5, [["Left",5],["Right",7]]]
+ [PF_RADIO, "direction", "the direction to move to", 5, [Left => 5,  Right => 7]]]
 
 draws two buttons, when the first (the default, "Left") is activated, 5
 will be returned. If the second is activated, 7 is returned.

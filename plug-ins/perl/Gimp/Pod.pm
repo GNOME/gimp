@@ -5,13 +5,25 @@ use Config;
 
 $VERSION=$Gimp::VERSION;
 
+sub myqx(&) {
+   local $/;
+   local *MYQX;
+   if (0==open MYQX,"-|") {
+      &{$_[0]};
+      close STDOUT;
+      Gimp::_exit;
+   }
+   <MYQX>;
+}
+
 sub find_converters {
    my $path = $Config{installscript};
 
-   $converter{text} ="$path/pod2text"  if -x "$path/pod2text";
-   $converter{html} ="$path/pod2html"  if -x "$path/pod2html";
-   $converter{man}  ="$path/pod2man"   if -x "$path/pod2man" ;
-   $converter{latex}="$path/pod2latex" if -x "$path/pod2latex" ;
+   $converter{text} = sub { my $pod=shift; require Pod::Text; myqx { Pod::Text::pod2text (-60000,       $pod) } };
+   $converter{texta}= sub { my $pod=shift; require Pod::Text; myqx { Pod::Text::pod2text (-60000, '-a', $pod) } };
+   $converter{html} = sub { my $pod=shift; require Pod::Html; myqx { Pod::Html::pod2html ($pod) } };
+   $converter{man}  = sub { qx($path/pod2man   $pod) } if -x "$path/pod2man" ;
+   $converter{latex}= sub { qx($path/pod2latex $pod) } if -x "$path/pod2latex" ;
 }
 
 sub find {
@@ -25,14 +37,14 @@ sub new {
    bless $self, $pkg;
 }
 
-sub cache_doc {
+sub _cache {
    my $self = shift;
    my $fmt = shift;
    if (!$self->{doc}{$fmt} && $converter{$fmt}) {
-      my $doc = qx($converter{$fmt} $self->{path});
+      my $doc = $converter{$fmt}->($self->{path});
       undef $doc if $?>>8;
       undef $doc if $doc=~/^[ \t\r\n]*$/;
-      $self->{doc}{$fmt}=$doc;
+      $self->{doc}{$fmt}=\$doc;
    }
    $self->{doc}{$fmt};
 }
@@ -40,7 +52,44 @@ sub cache_doc {
 sub format {
    my $self = shift;
    my $fmt = shift || 'text';
-   $self->cache_doc($fmt);
+   ${$self->_cache($fmt)};
+}
+
+sub sections {
+   my $self = shift;
+   my $doc = $self->_cache('text');
+   $$doc =~ /^\S.*$/mg;
+}
+
+sub section {
+   my $self = shift;
+   my $doc = $self->_cache('text');
+   ($doc) = $$doc =~ /^$_[0]$(.*?)^[A-Z]/sm;
+   $doc =~ y/\r//d;
+   $doc =~ s/^\s*\n//;
+   $doc =~ s/[ \t\r\n]+$/\n/;
+   $doc =~ s/^    //mg;
+   $doc;
+}
+
+sub author {
+   my $self = shift;
+   $self->section('AUTHOR');
+}
+
+sub blurb {
+   my $self = shift;
+   $self->section('BLURB') || $self->section('NAME');
+}
+
+sub description {
+   my $self = shift;
+   $self->section('DESCRIPTION');
+}
+
+sub copyright {
+   my $self = shift;
+   $self->section('COPYRIGHT') || $self->section('AUTHOR');
 }
 
 find_converters;
@@ -59,6 +108,9 @@ Gimp::Pod - Evaluate pod documentation embedded in scripts.
   $pod = new Gimp::Pod;
   $text = $pod->format ();
   $html = $pod->format ('html');
+  $synopsis = $pod->section ('SYNOPSIS');
+  $author = $pod->author;
+  @sections = $pod->sections;
 
 =head1 DESCRIPTION
 
@@ -75,11 +127,31 @@ future versions might have more interesting features.
 return a new Gimp::Pod object representing the current script or undef, if
 an error occured.
 
-=item format [format]
+=item format([$format])
 
 Returns the embedded pod documentation in the given format, or undef if no
 documentation can be found.  Format can be one of 'text', 'html', 'man' or
 'latex'. If none is specified, 'text' is assumed.
+
+=item section($header)
+
+Tries to retrieve the section with the header C<$header>. There is no
+trailing newline on the returned string, which may be undef in case the
+section can't be found.
+
+=item author
+
+=item blurb
+
+=item description
+
+=item copyright
+
+Tries to retrieve fields suitable for calls to the register function.
+
+=item sections
+
+Returns a list of paragraphs found in the pod.
 
 =back
 

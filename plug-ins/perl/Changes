@@ -1,5 +1,7 @@
 Revision history for Gimp-Perl extension.
 
+	- changed the definition of PF_RADIO, simplifying it (it ain't no C).
+
 1.07  Mon Mar 15 01:27:05 CET 1999
 	- added examples/yinyang, examples/image_tile, examples/stamps.
         - bangpath is no longer updated inplace. As a result, only plug-ins
@@ -15,7 +17,7 @@ Revision history for Gimp-Perl extension.
         - gimp_progress_init now accepts either one or two arguments.
         - switched to using Devel::PPPort, which hopefulyl solves all my
           problems.
-        - argh! gimptool path was wrong again! the fix version should be much
+        - argh! gimptool path was wrong again! the fixed version should be much
           faster as well.
         - new module Gimp::Pod.
         - embedded pod documentation will now be shown when the Help button

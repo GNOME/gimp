@@ -278,8 +278,10 @@ sub format_msg {
 
 sub _initialized_callback {
    if (@log) {
-      for(@log) {
-         Gimp->message(format_msg($_)) if $_->[3] && $interface_type eq "lib";
+      unless ($in_net || $in_query || $in_quit || $in_init) {
+         for(@log) {
+            Gimp->message(format_msg($_)) if $_->[3];
+         }
       }
       Gimp->_gimp_append_data ('gimp-perl-log', map join("\1",@$_)."\0",@log);
       @log=();
@@ -296,12 +298,31 @@ sub logger {
    $args{function} = ""                   unless defined $args{function};
    $args{fatal}    = 1                    unless defined $args{fatal};
    push(@log,[$basename,@args{'function','message','fatal'}]);
-   print STDERR format_msg($log[-1]),"\n" if ($in_run || $in_net || $verbose);
+   print STDERR format_msg($log[-1]),"\n" if !($in_query || $in_init || $in_quit) || $verbose;
    _initialized_callback if initialized();
 }
 
 sub die_msg {
    logger(message => substr($_[0],0,-1), fatal => 1, function => 'ERROR');
+}
+
+unless ($no_SIG) {
+   $SIG{__DIE__} = sub {
+      unless ($^S || !defined $^S || $in_quit) {
+         die_msg $_[0];
+         initialized() ? die "BE QUIET ABOUT THIS DIE\n" : xs_exit(main());
+      } else {
+        die $_[0];
+      }
+   };
+
+   $SIG{__WARN__} = sub {
+      unless ($in_quit) {
+        warn $_[0];
+      } else {
+        logger(message => substr($_[0],0,-1), fatal => 0, function => 'WARNING');
+      }
+   };
 }
 
 sub call_callback {
@@ -345,25 +366,6 @@ sub main {
 # same as main, but callbacks are ignored
 sub quiet_main {
    main;
-}
-
-unless ($no_SIG) {
-   $SIG{__DIE__} = sub {
-      unless ($^S || !defined $^S || $in_quit) {
-         die_msg $_[0];
-         initialized() ? die "BE QUIET ABOUT THIS DIE\n" : xs_exit(main());
-      } else {
-        die $_[0];
-      }
-   };
-
-   $SIG{__WARN__} = sub {
-      unless ($in_quit) {
-        warn $_[0];
-      } else {
-        logger(message => substr($_[0],0,-1), fatal => 0, function => 'WARNING');
-      }
-   };
 }
 
 ##############################################################################

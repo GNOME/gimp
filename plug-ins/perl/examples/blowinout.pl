@@ -90,7 +90,7 @@ register
 	"Generates an animation thats blows the selected layer in or out",
 	"John Pitney",
 	"John Pitney <pitney\@uiuc.edu>",
-	"1999-02-24",
+	"1999-03-15",
 	"<Image>/Filters/Distorts/BlowInOut",
 	"*",
 	[
@@ -99,8 +99,8 @@ register
 	 [PF_VALUE, "distance", "How far to blow",30],
 # What I really need here are radio buttons!  Maybe they even exist...
 # You wanted them...
-	 [PF_RADIO, "direction", "Blow direction", 0, [["In", 1],["Out", 0]]],
-         [PF_RADIO, "series", "Kind of series", 1, [["Arithmetic",1],["Geometric",0]]]
+	 [PF_RADIO, "direction", "Blow direction", 0, [In => 1, Out => 0]],
+         [PF_RADIO, "series", "Kind of series", 1, [Arithmetic => 1, Geometric => 0]]
 	],
         [],
 	\&blowinout;
