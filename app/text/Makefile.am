@@ -21,6 +21,8 @@ libapptext_a_sources = \
 	gimpfont.h			\
 	gimpfontlist.c			\
 	gimpfontlist.h			\
+	gimpfonts.c			\
+	gimpfonts.h			\
 	gimptext.c			\
 	gimptext.h			\
 	gimptext-bitmap.c		\

@@ -1,3 +1,39 @@
+2003-09-01  Manish Singh  <yosh@gimp.org>
+
+	Font configuration stuff: You can rescan for fonts on the fly now.
+	A couple caveats: the text tool font dialog doesn't get updated, but
+	that's supposed to be going away. The new font dock doesn't resort
+	on update, but mitch is supposed to fix that. :)
+
+	Some nice stuff for advanced font users: GIMP local font directories,
+	and an optional site and user fonts.conf.
+
+	I thought about supporting the auto-resan feature in fontconfig,
+	but it might take too much time to do a scan so I haven't implemented
+	it. Another thing I want to do is create fontconfig caches in the
+	local dirs.
+
+	* text/gimpfonts.[ch]: gimp_fonts_init/load/reset implementation.
+
+	* text/Makefile.am: added gimpfonts.[ch]
+
+	* app/core/gimp.c: use gimp_fonts_init/reset.
+
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/gimprc-blurbs.h: added font-path config setting.
+
+	* app/gui/preferences-dialog.c: Add a Font Folders section for the
+	above. Also added a Rescan Font List button, which goes in the
+	Environment section. Not sure if this is the right place...
+	it also looks kinda ugly all by its lonesome.
+
+	* app/gui/user-install-dialog.c: mention the fonts directory.
+
+	* themes/Default/images/preferences/Makefile.am
+	* themes/Default/images/preferences/folders-fonts.png: dummy icon for
+	font folders pref, probably a folder with a little "T" in the corner
+	would be good.
+
 2003-09-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.[ch]: added new virtual function
@@ -53,7 +89,7 @@
 	actually updates the splash, and one which does nothing, so we
 	don't need global variables in the status callback.
 
-	* app/appenv.h: removed vraiable declarations here. Some are still
+	* app/appenv.h: removed variable declarations here. Some are still
 	left, will get rid of this entire file soon...
 
 	* app/main.c: added them as local variables to main() and

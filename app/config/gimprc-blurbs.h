@@ -132,6 +132,9 @@ N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
 #define GRADIENT_PATH_BLURB \
 "Sets the gradient search path."
 
+#define FONT_PATH_BLURB \
+"Where to look for fonts."
+
 #define HELP_BROWSER_BLURB \
 N_("Sets the browser used by the help system.")
 

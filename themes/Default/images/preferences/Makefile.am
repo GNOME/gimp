@@ -8,6 +8,7 @@ PREFS_IMAGES = \
 	environment.png			\
 	folders.png			\
 	folders-brushes.png		\
+	folders-fonts.png		\
 	folders-gradients.png		\
 	folders-modules.png		\
 	folders-environ.png		\

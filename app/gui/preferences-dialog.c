@@ -35,6 +35,8 @@
 
 #include "core/gimp.h"
 
+#include "text/gimpfonts.h"
+
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
@@ -1856,6 +1858,22 @@ prefs_dialog_new (Gimp    *gimp,
   prefs_enum_option_menu_add (config, "thumbnail-size", 0, 0,
                               _("Size of Thumbnail Files:"),
                               GTK_TABLE (table), 1);
+  
+  vbox2 = prefs_frame_new (_("Fonts"), GTK_CONTAINER (vbox), FALSE);
+
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new_with_label (_("Rescan Font List"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gimp_fonts_load),
+                            gimp);
 
 
   /*************/
@@ -1931,6 +1949,10 @@ prefs_dialog_new (Gimp    *gimp,
 	GIMP_HELP_PREFS_FOLDERS_GRADIENTS,
 	N_("Select Gradient Folders"),
         "gradient-path" },
+      { N_("Fonts"), N_("Font Folders"), "folders-fonts.png",
+	GIMP_HELP_PREFS_FOLDERS_GRADIENTS,
+	N_("Select Font Folders"),
+        "font-path" },
       { N_("Plug-Ins"), N_("Plug-In Folders"), "folders-plug-ins.png",
 	GIMP_HELP_PREFS_FOLDERS_PLUG_INS,
 	N_("Select Plug-In Folders"),

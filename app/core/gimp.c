@@ -37,6 +37,7 @@
 #include "paint/paint.h"
 
 #include "text/gimpfontlist.h"
+#include "text/gimpfonts.h"
 
 #include "xcf/xcf.h"
 
@@ -521,6 +522,7 @@ gimp_real_exit (Gimp     *gimp,
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
+  gimp_fonts_reset (gimp);
   gimp_documents_save (gimp);
   gimp_templates_save (gimp);
   gimp_parasiterc_save (gimp);
@@ -794,9 +796,7 @@ gimp_restore (Gimp               *gimp,
 
   /*  initialize the list of gimp fonts  */
   (* status_callback) (NULL, _("Fonts"), 0.70);
-  gimp_container_freeze (gimp->fonts);
-  gimp_font_list_restore (GIMP_FONT_LIST (gimp->fonts));
-  gimp_container_thaw (gimp->fonts);
+  gimp_fonts_init (gimp);
 
   /*  initialize the document history  */
   (* status_callback) (NULL, _("Documents"), 0.80);

@@ -199,8 +199,18 @@ tree_items[] =
     TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
+    TRUE, "fonts",
+    N_("This folder is used to store fonts you only want\n"
+       "visible in the GIMP. The GIMP checks this folder in\n"
+       "addition to the system-wide GIMP fonts installation\n"
+       "when searching for fonts. Use this only if you really\n"
+       "want to have GIMP-only fonts, otherwise put things\n"
+       "in your global font directory."),
+    TREE_ITEM_MKDIR_ONLY, NULL
+  },
+  {
     TRUE, "gradients",
-    N_("This folder is used to store user defined gradients\n"
+    N_("This folder is used to store user defined gradients.\n"
        "The GIMP checks this folder in addition to the system-\n"
        "wide GIMP gradients installation when searching for\n"
        "gradients."),

@@ -67,6 +67,7 @@ enum
   PROP_PATTERN_PATH,
   PROP_PALETTE_PATH,
   PROP_GRADIENT_PATH,
+  PROP_FONT_PATH,
   PROP_DEFAULT_BRUSH,
   PROP_DEFAULT_PATTERN,
   PROP_DEFAULT_PALETTE,
@@ -177,6 +178,11 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("gradients"),
                                  GIMP_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH,
+                                 "font-path", FONT_PATH_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
+                                 gimp_config_build_data_path ("fonts"),
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
                                    "default-brush", DEFAULT_BRUSH_BLURB,
                                    DEFAULT_BRUSH,
@@ -299,6 +305,7 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->pattern_path);
   g_free (core_config->palette_path);
   g_free (core_config->gradient_path);
+  g_free (core_config->font_path);
   g_free (core_config->default_brush);
   g_free (core_config->default_pattern);
   g_free (core_config->default_palette);
@@ -353,6 +360,10 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_GRADIENT_PATH:
       g_free (core_config->gradient_path);
       core_config->gradient_path = g_value_dup_string (value);
+      break;
+    case PROP_FONT_PATH:
+      g_free (core_config->font_path);
+      core_config->font_path = g_value_dup_string (value);
       break;
     case PROP_DEFAULT_BRUSH:
       g_free (core_config->default_brush);
@@ -473,6 +484,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_GRADIENT_PATH:
       g_value_set_string (value, core_config->gradient_path);
+      break;
+    case PROP_FONT_PATH:
+      g_value_set_string (value, core_config->font_path);
       break;
     case PROP_DEFAULT_BRUSH:
       g_value_set_string (value, core_config->default_brush);

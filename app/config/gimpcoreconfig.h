@@ -48,6 +48,7 @@ struct _GimpCoreConfig
   gchar                 *pattern_path;
   gchar                 *palette_path;
   gchar                 *gradient_path;
+  gchar                 *font_path;
   gchar                 *default_brush;
   gchar                 *default_pattern;
   gchar                 *default_palette;
