@@ -270,8 +270,12 @@ tool_options_dialog_restore_callback (GtkWidget   *widget,
   /*  Need to reset the tool-options since only the changes
    *  from the default values are written to disk.
    */
+  g_object_freeze_notify (G_OBJECT (tool_info->tool_options));
+
   gimp_tool_options_reset (tool_info->tool_options);
   gimp_tool_options_deserialize (tool_info->tool_options, "user", NULL);
+
+  g_object_thaw_notify (G_OBJECT (tool_info->tool_options));
 }
 
 static void
