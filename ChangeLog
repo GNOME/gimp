@@ -6,6 +6,8 @@
 
 2003-07-13  Helvetix Victorinox  <helvetix@gimp.org>
 
+	* app/composite/Makefile.am fixed typo with trailing backslash.
+
 	* app/paint-funcs/Makefile.am include files from app/composite/
 
 	* app/paint-funcs/paint-funcs.c stubbed out code for using
