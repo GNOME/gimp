@@ -1,3 +1,12 @@
+2003-07-29  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/edge.c: Added several new edge detection 
+	algorithms. There are more complicated ways these could be 
+	done (using the rotations of the kernels in the plug-in) but 
+	this is a nice mix between speed and complexity. The 
+	algorithms, heavily modified, come from iccii's thin_line 
+	plug-in.
+
 2003-07-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.c (gimp_image_set_active_layer): moved the

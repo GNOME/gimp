@@ -19,11 +19,11 @@
  *  This plug-in performs edge detection. The code is based on edge.c
  *  for GIMP 0.54 by Peter Mattis.
  *
- *	Eiichi Takamori <taka@ma1.seikyou.ne.jp>
- *	http://ha1.seikyou.ne.jp/home/taka/gimp/
+ *      Eiichi Takamori <taka@ma1.seikyou.ne.jp>
+ *      http://ha1.seikyou.ne.jp/home/taka/gimp/
  *
  *  Tips: you can enter arbitrary value into entry.
- *	(not bounded between 1.0 and 10.0)
+ *      (not bounded between 1.0 and 10.0)
  *
  *  Changes from version 1.06 to version 1.07:
  *  - Added entry
@@ -35,11 +35,17 @@
  *    - It works with the alpha channel.
  */
 
+/*  29 July 2003   Dave Neary  <bolsh@gimp.org>
+ *  Added more edge detection routines, from the thin_line 
+ *  plug-in by iccii
+ */
+
 #include "config.h"
 
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -57,10 +63,21 @@ static gchar rcsid[] = "$Id$";
 
 #define TILE_CACHE_SIZE 48
 
+enum 
+{
+  SOBEL,
+  PREWITT,
+  GRADIENT,
+  ROBERTS,
+  DIFFERENTIAL,
+  LAPLACE,
+};
+
 typedef struct
 {
-  gdouble   amount;
-  gint      wrapmode;
+  gdouble  amount;
+  gint     edgemode;
+  gint     wrapmode;
 } EdgeVals;
 
 typedef struct
@@ -82,6 +99,13 @@ static void      run         (const gchar      *name,
 static void      edge        (GimpDrawable     *drawable);
 static gint      edge_dialog (GimpDrawable     *drawable);
 
+static gint edge_detect  (guchar *data);
+static gint prewitt      (guchar *data);
+static gint gradient     (guchar *data);
+static gint roberts      (guchar *data);
+static gint differential (guchar *data);
+static gint laplace      (guchar *data);
+static gint sobel        (guchar *data);
 
 /***** Local vars *****/
 
@@ -95,7 +119,8 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static EdgeVals evals =
 {
-  2.0,   /* amount   */
+  2.0,         /* amount   */
+  SOBEL,       /* Edge detection algorithm */
   PIXEL_SMEAR  /* wrapmode */
 };
 
@@ -117,25 +142,26 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_FLOAT, "amount", "Edge detection amount" },
+    { GIMP_PDB_INT32, "edgemode", "Edge detection algorithm: { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3),  DIFFERENTIAL (4), LAPLACE (5) }" }, 
     { GIMP_PDB_INT32, "wrapmode", "Edge detection behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
   };
 
   gchar *help_string =
-    "Perform edge detection on the contents of the specified drawable. It "
-    "applies, I think, convolution with 3x3 kernel. AMOUNT is an arbitrary "
-    "constant, WRAPMODE is like displace plug-in (useful for tilable image).";
+    "Perform edge detection on the contents of the specified drawable."
+    "AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in "
+    "(useful for tilable image).";
 
   gimp_install_procedure ("plug_in_edge",
-			  "Perform edge detection on the contents of the specified drawable",
-			  help_string,
-			  "Peter Mattis & (ported to 1.0 by) Eiichi Takamori",
-			  "Peter Mattis",
-			  "1996",
-			  N_("<Image>/Filters/Edge-Detect/_Edge..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Perform edge detection on the contents of the specified drawable",
+                          help_string,
+                          "Peter Mattis & (ported to 1.0 by) Eiichi Takamori",
+                          "Peter Mattis",
+                          "1996",
+                          N_("<Image>/Filters/Edge-Detect/_Edge..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -171,18 +197,19 @@ run (const gchar      *name,
 
       /*  First acquire information with a dialog  */
       if (! edge_dialog (drawable))
-	return;
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
-      if (nparams != 5)
-	status = GIMP_PDB_CALLING_ERROR;
+      if (nparams != 6)
+        status = GIMP_PDB_CALLING_ERROR;
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  evals.amount   = param[3].data.d_float;
-	  evals.wrapmode = param[4].data.d_int32;
-	}
+        {
+          evals.amount   = param[3].data.d_float;
+          evals.edgemode = param[4].data.d_int32;
+          evals.wrapmode = param[5].data.d_int32;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -207,14 +234,14 @@ run (const gchar      *name,
       edge (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data ("plug_in_edge", &evals, sizeof (EdgeVals));
+        gimp_set_data ("plug_in_edge", &evals, sizeof (EdgeVals));
     }
   else
-     {
+    {
       /* gimp_message ("edge: cannot operate on indexed color images"); */
       status = GIMP_PDB_EXECUTION_ERROR;
     }
@@ -241,14 +268,12 @@ edge (GimpDrawable *drawable)
   guchar *srcrow, *src;
   guchar *destrow, *dest;
   guchar pix00[4], pix01[4], pix02[4];
-  guchar pix10[4],/*pix11[4],*/ pix12[4];
+  guchar pix10[4], pix11[4], pix12[4];
   guchar pix20[4], pix21[4], pix22[4];
   glong width, height;
   gint alpha, has_alpha, chan;
   gint x, y;
   gint x1, y1, x2, y2;
-  glong sum1, sum2;
-  glong sum, scale;
   gint maxval;
   gint cur_progress;
   gint max_progress;
@@ -269,7 +294,6 @@ edge (GimpDrawable *drawable)
     alpha--;
 
   maxval = 255;
-  scale = (10 << 16) / evals.amount;
   wrapmode = evals.wrapmode;
 
   cur_progress = 0;
@@ -285,94 +309,74 @@ edge (GimpDrawable *drawable)
       srcrow = src_rgn.data;
       destrow = dest_rgn.data;
       for (y = dest_rgn.y;
-	    y < (dest_rgn.y + dest_rgn.h);
-	    y++, srcrow += src_rgn.rowstride, destrow += dest_rgn.rowstride)
-	{
-	  src = srcrow;
-	  dest = destrow;
-	  for (x = dest_rgn.x;
-	       x < (dest_rgn.x + dest_rgn.w);
-	       x++,  src += src_rgn.bpp, dest += dest_rgn.bpp)
-	    {
-	      if(dest_rgn.x < x &&  x < dest_rgn.x + dest_rgn.w - 1 &&
-		 dest_rgn.y < y &&  y < dest_rgn.y + dest_rgn.h - 1)
-		{
-		  /*
-		  ** 3x3 kernel is inside of the tile -- do fast
-		  ** version
-		  */
-		  for (chan = 0; chan < alpha; chan++)
-		    {
-		      /*
-		       * PIX(1,1) is the current pixel, so
-		       * e.g. PIX(0,0) means 1 above and 1 left pixel.
-		       *
-		       * There were casting to `long' in GIMP 0.54
-		       * edge code, but I think `guchar' should be
-		       * extended to `int' with minus operators, so
-		       * there's no need to cast to `long'. Both sum1
-		       * and sum2 will be between -4*255 to 4*255
-		       *
-		       *    -- taka
-		       */
+            y < (dest_rgn.y + dest_rgn.h);
+            y++, srcrow += src_rgn.rowstride, destrow += dest_rgn.rowstride)
+        {
+          src = srcrow;
+          dest = destrow;
+          for (x = dest_rgn.x;
+               x < (dest_rgn.x + dest_rgn.w);
+               x++,  src += src_rgn.bpp, dest += dest_rgn.bpp)
+            {
+              if(dest_rgn.x < x &&  x < dest_rgn.x + dest_rgn.w - 2 &&
+                 dest_rgn.y < y &&  y < dest_rgn.y + dest_rgn.h - 2)
+                {
+                  /*
+                  ** 3x3 kernel is inside of the tile -- do fast
+                  ** version
+                  */
+                  for (chan = 0; chan < alpha; chan++)
+                    {
+                      /* get the 3x3 kernel into a guchar array, 
+                       * and send it to edge_detect */
+                      guchar kernel[9];
+                      int i,j;
 #define PIX(X,Y)  src[ (Y-1)*(int)src_rgn.rowstride + (X-1)*(int)src_rgn.bpp + chan ]
-		      /* make convolution */
-		      sum1 = (PIX(2,0) - PIX(0,0)) +
-			 2 * (PIX(2,1) - PIX(0,1)) +
-			     (PIX(2,2) - PIX(0,2));
-		      sum2 = (PIX(0,2) - PIX(0,0)) +
-			 2 * (PIX(1,2) - PIX(1,0)) +
-			     (PIX(2,2) - PIX(2,0));
+                      /* make convolution */
+                      for(i = 0; i < 3; i++)
+                        for(j = 0; j < 3; j++)
+                          kernel[3*i + j] = PIX(i,j);
 #undef  PIX
-		      /* common job ... */
-		      sum = (glong) (sqrt((long) sum1 * sum1 + 
-					  (long) sum2 * sum2) + 0.5);
-		      sum = (sum * scale) >> 16;    /* arbitrary scaling factor */
-		      if (sum > maxval)
-			sum = maxval;
-		      dest[chan] = sum;
-		    }
-		}
-	      else
-		{
-		  /*
-		  ** The kernel is not inside of the tile -- do slow
-		  ** version
-		  */
-		  /*
-		   * When the kernel intersects the boundary of the
-		   * image, get_tile_pixel() will (should) do the
-		   * right work with `wrapmode'.
-		   */
-		  gimp_pixel_fetcher_get_pixel2(pft, x-1, y-1, wrapmode, pix00);
-		  gimp_pixel_fetcher_get_pixel2(pft, x  , y-1, wrapmode, pix10);
-		  gimp_pixel_fetcher_get_pixel2(pft, x+1, y-1, wrapmode, pix20);
-		  gimp_pixel_fetcher_get_pixel2(pft, x-1, y  , wrapmode, pix01);
-		  gimp_pixel_fetcher_get_pixel2(pft, x+1, y  , wrapmode, pix21);
-		  gimp_pixel_fetcher_get_pixel2(pft, x-1, y+1, wrapmode, pix02);
-		  gimp_pixel_fetcher_get_pixel2(pft, x  , y+1, wrapmode, pix12);
-		  gimp_pixel_fetcher_get_pixel2(pft, x+1, y+1, wrapmode, pix22);
+                      dest[chan] = edge_detect(kernel);
+                    }
+                }
+              else
+                {
+                  /*
+                  ** The kernel is not inside of the tile -- do slow
+                  ** version
+                  */
+                  
+                  gimp_pixel_fetcher_get_pixel2(pft, x-1, y-1, wrapmode, pix00);
+                  gimp_pixel_fetcher_get_pixel2(pft, x  , y-1, wrapmode, pix10);
+                  gimp_pixel_fetcher_get_pixel2(pft, x+1, y-1, wrapmode, pix20);
+                  gimp_pixel_fetcher_get_pixel2(pft, x-1, y  , wrapmode, pix01);
+                  gimp_pixel_fetcher_get_pixel2(pft, x  , y  , wrapmode, pix11);
+                  gimp_pixel_fetcher_get_pixel2(pft, x+1, y  , wrapmode, pix21);
+                  gimp_pixel_fetcher_get_pixel2(pft, x-1, y+1, wrapmode, pix02);
+                  gimp_pixel_fetcher_get_pixel2(pft, x  , y+1, wrapmode, pix12);
+                  gimp_pixel_fetcher_get_pixel2(pft, x+1, y+1, wrapmode, pix22);
 
-		  for (chan = 0; chan < alpha; chan++)
-		    {
-		      /* make convolution */
-		      sum1 = (pix20[chan] - pix00[chan]) +
-			 2 * (pix21[chan] - pix01[chan]) +
-			     (pix22[chan] - pix20[chan]);
-		      sum2 = (pix02[chan] - pix00[chan]) +
-			 2 * (pix12[chan] - pix10[chan]) +
-			     (pix22[chan] - pix20[chan]);
-		      /* common job ... */
-		      sum = (glong) (sqrt ((long) sum1 * sum1 + 
-					   (long) sum2 * sum2) + 0.5);
-		      sum = (sum * scale) >> 16;  /* arbitrary scaling factor */
-		      if (sum > maxval) sum = maxval;
-		      dest[chan] = sum;
-		    }
-		}
-	      if (has_alpha)
-		dest[alpha] = src[alpha];
-	    }
+                  for (chan = 0; chan < alpha; chan++)
+                    {
+                      guchar kernel[9];
+                      
+                      kernel[0] = pix00[chan];
+                      kernel[1] = pix01[chan];
+                      kernel[2] = pix02[chan];
+                      kernel[3] = pix10[chan];
+                      kernel[4] = pix11[chan];
+                      kernel[5] = pix12[chan];
+                      kernel[6] = pix20[chan];
+                      kernel[7] = pix21[chan];
+                      kernel[8] = pix22[chan];
+
+                      dest[chan] = edge_detect (kernel);
+                    }
+                }
+              if (has_alpha)
+                dest[alpha] = src[alpha];
+            }
         }
       cur_progress += dest_rgn.w * dest_rgn.h;
       gimp_progress_update ((double) cur_progress / (double) max_progress);
@@ -385,13 +389,260 @@ edge (GimpDrawable *drawable)
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
+/* ***********************   Edge Detection   ******************** */
+
+
+/*
+ * Edge detect switcher function
+ */
+
+static gint
+edge_detect (guchar *data)
+{
+  gint ret;
+  switch (evals.edgemode)
+    {
+       case SOBEL:
+         ret = sobel (data);
+         break;
+       case PREWITT:
+         ret = prewitt (data);
+         break;
+       case GRADIENT:
+         ret = gradient (data);
+         break;
+       case ROBERTS:
+         ret = roberts (data);
+         break;
+       case DIFFERENTIAL:
+         ret = differential (data);
+         break;
+       case LAPLACE:
+         ret = laplace (data);
+         break;
+       default:
+         ret = -1;
+         break;
+    }
+  return ret;
+}
+
+
+/*
+ * Sobel Edge detector
+ */
+static gint
+sobel (guchar *data)
+{
+  gint    v_kernel[9] = {-1,  0,  1,
+                         -2,  0,  2,
+                         -1,  0,  1};
+  gint    h_kernel[9] = {-1, -2, -1,
+                          0,  0,  0,
+                          1,  2,  1};
+
+  gint i;
+  gint    v_grad, h_grad;
+  gdouble amp;
+
+  amp = evals.amount;
+
+  v_grad = 0;
+  h_grad = 0;
+  
+  for (i = 0; i < 9; i++)
+    { 
+      v_grad += v_kernel[i] * data[i];
+      h_grad += h_kernel[i] * data[i];
+    }
+  return CLAMP(sqrt (v_grad * v_grad * amp + 
+        h_grad * h_grad * amp), 0, 255);
+}
+
+/*
+ * Edge detector via template matting
+ *   -- Prewitt
+ */
+static gint
+prewitt (guchar *data)
+{
+  gint    k, max;
+  gint    m[8];
+  gdouble amp;
+
+  amp =  evals.amount ;
+
+  m[0] =   data [0] +   data [1] + data [2] 
+         + data [3] - 2*data [4] + data [5] 
+         - data [6] -   data [7] - data [8];
+  m[1] =   data [0] +   data [1] + data [2] 
+         + data [3] - 2*data [4] - data [5] 
+         + data [6] -   data [7] - data [8];
+  m[2] =   data [0] +   data [1] - data [2] 
+         + data [3] - 2*data [4] - data [5] 
+         + data [6] +   data [7] - data [8];
+  m[3] =   data [0] -   data [1] - data [2] 
+         + data [3] - 2*data [4] - data [5] 
+         + data [6] +   data [7] + data [8];
+  m[4] = - data [0] -   data [1] - data [2] 
+         + data [3] - 2*data [4] + data [5] 
+         + data [6] +   data [7] + data [8];
+  m[5] = - data [0] -   data [1] + data [2] 
+         - data [3] - 2*data [4] + data [5] 
+         + data [6] +   data [7] + data [8];
+  m[6] = - data [0] +   data [1] + data [2] 
+         - data [3] - 2*data [4] + data [5] 
+         - data [6] +   data [7] + data [8];
+  m[7] =   data [0] +   data [1] + data [2] 
+         - data [3] - 2*data [4] + data [5] 
+         - data [6] -   data [7] + data [8];
+
+  max = 0;
+  for (k = 0; k < 8; k++)
+    if (max < m[k])
+      max = m[k];
+  
+  return CLAMP(amp * max, 0, 255);
+}
+
+
+/*
+ * Gradient Edge detector
+ */
+static gint
+gradient (guchar *data)
+{
+  gint    v_kernel[9] = { 0,  0,  0,
+                          0,  4, -4,
+                          0,  0,  0};
+  gint    h_kernel[9] = { 0,  0,  0,
+                          0, -4,  0,
+                          0,  4,  0};
+
+  gint i;
+  gint    v_grad, h_grad;
+  gdouble amp;
+
+  amp = evals.amount;
+
+  v_grad = 0;
+  h_grad = 0;
+  
+  for (i = 0; i < 9; i++)
+    { 
+      v_grad += v_kernel[i] * data[i];
+      h_grad += h_kernel[i] * data[i];
+    }
+
+  return  CLAMP(sqrt (v_grad * v_grad * amp +
+                      h_grad * h_grad * amp), 0, 255);
+}
+
+
+
+/*
+ * Roberts Edge detector
+ */
+static gint
+roberts (guchar *data)
+{
+  gint    v_kernel[9] = {0,  0,  0,
+                         0,  4,  0,
+                         0,  0, -4};
+  gint    h_kernel[9] = {0,  0,  0,
+                         0,  0,  4,
+                         0, -4,  0};
+
+  gint i;
+  gint    v_grad, h_grad;
+  gdouble amp;
+
+  amp = evals.amount;
+
+  v_grad = 0;
+  h_grad = 0;
+  
+  for (i = 0; i < 9; i++)
+    { 
+      v_grad += v_kernel[i] * data[i];
+      h_grad += h_kernel[i] * data[i];
+    }
+
+  return  CLAMP(sqrt (v_grad * v_grad * amp +
+                      h_grad * h_grad * amp), 0, 255);
+
+}
+
+
+/*
+ * Differential Edge detector
+ */
+static gint
+differential (guchar *data)
+{
+  gint    v_kernel[9] = { 0,  0,  0,
+                          0,  2, -2,
+                          0,  2, -2};
+  gint    h_kernel[9] = { 0,  0,  0,
+                          0, -2, -2,
+                          0,  2,  2};
+
+
+  gint i;
+  gint    v_grad, h_grad;
+  gdouble amp;
+
+  amp = evals.amount;
+
+  v_grad = 0;
+  h_grad = 0;
+  
+  for (i = 0; i < 9; i++)
+    { 
+      v_grad += v_kernel[i] * data[i];
+      h_grad += h_kernel[i] * data[i];
+    }
+
+  return  CLAMP(sqrt (v_grad * v_grad * amp +
+                      h_grad * h_grad * amp), 0, 255);
+}
+
+
+/*
+ * Laplace Edge detector
+ */
+static gint
+laplace (guchar *data)
+{
+  gint    kernel[9] = { 1,  1,  1,
+                        1, -8,  1,
+                        1,  1,  1};
+
+  gint i;
+  gint    grad;
+  gdouble amp;
+
+  amp = evals.amount;
+
+  grad = 0;
+  
+  for (i = 0; i < 9; i++)
+    { 
+      grad += kernel[i] * data[i];
+    }
+
+  return  CLAMP(grad * amp, 0, 255);
+
+}
+
+
 /*******************************************************/
 /*                    Dialog                           */
 /*******************************************************/
 
 static void
 edge_ok_callback (GtkWidget *widget,
-		  gpointer   data)
+                  gpointer   data)
 {
   eint.run = TRUE;
 
@@ -416,20 +667,49 @@ edge_dialog (GimpDrawable *drawable)
   gimp_ui_init ("edge", FALSE);
 
   dlg = gimp_dialog_new (_("Edge Detection"), "edge",
-			 gimp_standard_help_func, "filters/edge.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
+                         gimp_standard_help_func, "filters/edge.html",
+                         GTK_WIN_POS_MOUSE,
+                         FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, edge_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, gtk_widget_destroy,
+                         NULL, 1, NULL, FALSE, TRUE,
+                         GTK_STOCK_OK, edge_ok_callback,
+                         NULL, NULL, NULL, TRUE, FALSE,
 
-			 NULL);
+                         NULL);
 
   g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
+
+  /*  compression  */
+  frame = gimp_radio_group_new2 (TRUE, _("Algorithm"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &evals.edgemode,
+                                 GINT_TO_POINTER (evals.edgemode),
+
+                                 _("_Sobel"),
+                                 GINT_TO_POINTER (SOBEL), NULL,
+
+                                 _("_Prewitt"),
+                                 GINT_TO_POINTER (PREWITT), NULL,
+
+                                 _("_Gradient"),
+                                 GINT_TO_POINTER (GRADIENT), NULL,
+
+                                 _("_Roberts"),
+                                 GINT_TO_POINTER (ROBERTS), NULL,
+
+                                 _("_Differential"),
+                                 GINT_TO_POINTER (DIFFERENTIAL), NULL,
+
+                                 _("_Laplace"),
+                                 GINT_TO_POINTER (LAPLACE), NULL,
+
+                                 NULL);
+
+  gtk_box_pack_start_defaults (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame);
+  gtk_widget_show (frame);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -445,10 +725,10 @@ edge_dialog (GimpDrawable *drawable)
 
   /*  Label, scale, entry for evals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("_Amount:"), 100, 0,
-				     evals.amount, 1.0, 10.0, 0.1, 1.0, 1,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("_Amount:"), 100, 0,
+                                     evals.amount, 1.0, 10.0, 0.1, 1.0, 1,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
 
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -458,7 +738,7 @@ edge_dialog (GimpDrawable *drawable)
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 3, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
 
   toggle = gtk_radio_button_new_with_mnemonic (group, _("_Wrap"));
