@@ -34,7 +34,6 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
-#include <floatingpoint.h>
 
 #include "megawidget.h"
 
@@ -171,7 +170,6 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
 
-  fpsetmask(0);
   *nreturn_vals = 1;
   *return_vals = values;
 
