@@ -1,3 +1,7 @@
+Mon Jan 15 17:22:30 PST 2001 Manish Singh <yosh@gimp.org>
+
+	* app/fileops.c: correct spelling of "lose" in revert dialog
+
 2001-01-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/color_notebook.c: added a global color history of 16 colors.
