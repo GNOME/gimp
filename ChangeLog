@@ -1,3 +1,11 @@
+2003-08-15  Sven Neumann  <neo@bender>
+
+	* LICENSE: cosmetics.
+	
+	* Makefile.am (EXTRA_DIST): include LICENSE.
+
+	* libgimp/Makefile.am (EXTRA_DIST): include COPYING.
+
 2003-08-14  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/make-installer.py: generate smaller tables and

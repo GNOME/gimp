@@ -40,6 +40,7 @@ EXTRA_DIST = \
 	ChangeLog.pre-1-2	\
 	HACKING			\
 	INSTALL			\
+	LICENSE			\
 	MAINTAINERS		\
 	NEWS			\
 	PLUGIN_MAINTAINERS	\

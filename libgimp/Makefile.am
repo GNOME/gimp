@@ -61,8 +61,9 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
-	makefile.msc		\
-	gimp.def		\
+	COPYING		\
+	makefile.msc	\
+	gimp.def	\
 	gimpui.def
 
 lib_LTLIBRARIES = libgimp-1.3.la libgimpui-1.3.la
