@@ -50,7 +50,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static gboolean      jpeg_query                (const gchar *msg);
+static gboolean   jpeg_query (const gchar *msg,
+                              const gchar *cancel_label,
+                              const gchar *ok_label);
 
 
 void
@@ -87,7 +89,8 @@ jpeg_apply_exif_data_to_image (const gchar   *filename,
       if (load_interactive && orient > 1 && orient <= 8)
         if (jpeg_query (_("According to the EXIF data, this image is rotated. "
                           "Would you like GIMP to rotate it into the standard "
-                          "orientation?")))
+                          "orientation?"),
+                        _("_Keep Orientation"), GIMP_STOCK_TOOL_ROTATE))
           {
             switch (orient)
               {
@@ -222,21 +225,36 @@ jpeg_setup_exif_for_save (ExifData      *exif_data,
 
 
 static gboolean
-jpeg_query (const gchar *msg)
+jpeg_query (const gchar *msg,
+            const gchar *cancel_label,
+            const gchar *ok_label)
 {
   GtkWidget *dialog;
-  gboolean   ret;
+  gint       response;
 
+  /*  FIXME: jpeg_query() needs to know about it's parent window  */
   dialog = gtk_message_dialog_new (NULL, 0,
                                    GTK_MESSAGE_QUESTION,
-                                   GTK_BUTTONS_OK_CANCEL,
+                                   GTK_BUTTONS_NONE,
                                    "%s", msg);
 
-  ret = gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                          cancel_label, GTK_RESPONSE_CANCEL,
+                          ok_label,     GTK_RESPONSE_OK,
+                          NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           NULL);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+  response = gtk_dialog_run (GTK_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
-  return (ret == GTK_RESPONSE_OK);
+  return (response == GTK_RESPONSE_OK);
 }
 
 
