@@ -26,7 +26,6 @@
 
 #include "core/core-types.h"
 
-#include "dialog_handler.h"
 #include "info-dialog.h"
 
 #include "gimprc.h"
@@ -180,8 +179,6 @@ info_dialog_new_extended (gchar        *title,
   gtk_window_set_wmclass (GTK_WINDOW (shell), "info_dialog", "Gimp");
   gtk_window_set_title (GTK_WINDOW (shell), title);
 
-  dialog_register (shell);
-
   gtk_signal_connect (GTK_OBJECT (shell), "delete_event",
 		      GTK_SIGNAL_FUNC (info_dialog_delete_callback),
 		      idialog);
@@ -255,8 +252,6 @@ info_dialog_free (InfoDialog *idialog)
 
   /*  Free the actual field linked list  */
   g_slist_free (idialog->field_list);
-
-  dialog_unregister (idialog->shell);
 
   /*  Destroy the associated widgets  */
   gtk_widget_destroy (idialog->shell);

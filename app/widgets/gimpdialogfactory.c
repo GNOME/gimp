@@ -29,6 +29,7 @@
 
 #include "core/gimpcontext.h"
 
+#include "gimpcursor.h"
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockbook.h"
@@ -36,19 +37,52 @@
 #include "gimpimagedock.h"
 
 
+typedef enum
+{
+  GIMP_DIALOG_VISIBILITY_UNKNOWN = 0,
+  GIMP_DIALOG_VISIBILITY_INVISIBLE,
+  GIMP_DIALOG_VISIBILITY_VISIBLE
+} GimpDialogVisibilityState;
+
+typedef enum
+{
+  GIMP_DIALOG_SHOW_ALL,
+  GIMP_DIALOG_HIDE_ALL,
+  GIMP_DIALOG_SHOW_TOOLBOX
+} GimpDialogShowState;
+
+
 static void   gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass);
 static void   gimp_dialog_factory_init       (GimpDialogFactory      *factory);
 
-static void   gimp_dialog_factory_destroy    (GtkObject              *object);
+static void   gimp_dialog_factory_destroy             (GtkObject         *object);
 
-static void   gimp_dialog_factory_get_window_info     (GtkWidget       *window, 
-						       GimpSessionInfo *info);
-static void   gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
-						       GimpSessionInfo *info);
-static void   gimp_dialog_factory_get_aux_info        (GtkWidget       *dialog,
-						       GimpSessionInfo *info);
-static void   gimp_dialog_factory_set_aux_info        (GtkWidget       *dialog,
-						       GimpSessionInfo *info);
+static void   gimp_dialog_factories_save_foreach      (gchar             *name,
+						       GimpDialogFactory *factory,
+						       FILE              *fp);
+static void   gimp_dialog_factories_restore_foreach   (gchar             *name,
+						       GimpDialogFactory *factory,
+						       gpointer           data);
+static void   gimp_dialog_factory_get_window_info     (GtkWidget         *window, 
+						       GimpSessionInfo   *info);
+static void   gimp_dialog_factory_set_window_geometry (GtkWidget         *window,
+						       GimpSessionInfo   *info);
+static void   gimp_dialog_factory_get_aux_info        (GtkWidget         *dialog,
+						       GimpSessionInfo   *info);
+static void   gimp_dialog_factory_set_aux_info        (GtkWidget         *dialog,
+						       GimpSessionInfo   *info);
+static void   gimp_dialog_factories_hide_foreach      (gchar             *name,
+						       GimpDialogFactory *factory,
+						       gpointer           data);
+static void   gimp_dialog_factories_show_foreach      (gchar             *name,
+						       GimpDialogFactory *factory,
+						       gpointer           data);
+static void   gimp_dialog_factories_idle_foreach      (gchar             *name,
+						       GimpDialogFactory *factory,
+						       gpointer           data);
+static void   gimp_dialog_factories_unidle_foreach    (gchar             *name,
+						       GimpDialogFactory *factory,
+						       gpointer           data);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -760,10 +794,112 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
     }
 }
 
+void
+gimp_dialog_factories_session_save (FILE *file)
+{
+  GimpDialogFactoryClass *factory_class;
+
+  g_return_if_fail (file != NULL);
+
+  factory_class = gtk_type_class (GIMP_TYPE_DIALOG_FACTORY);
+
+  g_hash_table_foreach (factory_class->factories,
+			(GHFunc) gimp_dialog_factories_save_foreach,
+			file);
+}
+
+void
+gimp_dialog_factories_session_restore (void)
+{
+  GimpDialogFactoryClass *factory_class;
+
+  factory_class =
+    GIMP_DIALOG_FACTORY_CLASS (gtk_type_class (GIMP_TYPE_DIALOG_FACTORY));
+
+  g_hash_table_foreach (factory_class->factories,
+			(GHFunc) gimp_dialog_factories_restore_foreach,
+			NULL);
+}
+
+void
+gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory,
+			      const gchar       *toolbox_identifier)
+{
+  static GimpDialogShowState toggle_state = GIMP_DIALOG_SHOW_ALL;
+  static gboolean            doing_update = FALSE;
+
+  GimpDialogFactoryClass *factory_class;
+
+  if (doing_update)
+    return;
+
+  doing_update = TRUE;
+
+  factory_class =
+    GIMP_DIALOG_FACTORY_CLASS (gtk_type_class (GIMP_TYPE_DIALOG_FACTORY));
+
+  switch (toggle_state)
+    {
+    case GIMP_DIALOG_SHOW_ALL:
+      toggle_state = GIMP_DIALOG_HIDE_ALL;
+
+      g_hash_table_foreach (factory_class->factories,
+			    (GHFunc) gimp_dialog_factories_hide_foreach,
+			    NULL);
+      break;
+
+    case GIMP_DIALOG_HIDE_ALL:
+      toggle_state = GIMP_DIALOG_SHOW_TOOLBOX;
+
+      gimp_dialog_factory_dialog_raise (toolbox_factory, toolbox_identifier);
+      break;
+
+    case GIMP_DIALOG_SHOW_TOOLBOX:
+      toggle_state = GIMP_DIALOG_SHOW_ALL;
+
+      g_hash_table_foreach (factory_class->factories,
+			    (GHFunc) gimp_dialog_factories_show_foreach,
+			    NULL);
+    default:
+      break;
+    }
+
+  doing_update = FALSE;
+}
+
+void
+gimp_dialog_factories_idle (void)
+{
+  GimpDialogFactoryClass *factory_class;
+
+  factory_class =
+    GIMP_DIALOG_FACTORY_CLASS (gtk_type_class (GIMP_TYPE_DIALOG_FACTORY));
+
+  g_hash_table_foreach (factory_class->factories,
+			(GHFunc) gimp_dialog_factories_idle_foreach,
+			NULL);
+}
+
+void
+gimp_dialog_factories_unidle (void)
+{
+  GimpDialogFactoryClass *factory_class;
+
+  factory_class =
+    GIMP_DIALOG_FACTORY_CLASS (gtk_type_class (GIMP_TYPE_DIALOG_FACTORY));
+
+  g_hash_table_foreach (factory_class->factories,
+			(GHFunc) gimp_dialog_factories_unidle_foreach,
+			NULL);
+}
+
+
+/*  private functions  */
+
 static void
-gimp_dialog_factories_session_save_foreach (gchar             *name,
-					    GimpDialogFactory *factory,
-					    FILE              *fp)
+gimp_dialog_factories_save_foreach (gchar             *name,
+				    GimpDialogFactory *factory,
+				    FILE              *fp)
 {
   GList *list;
 
@@ -871,24 +1007,10 @@ gimp_dialog_factories_session_save_foreach (gchar             *name,
     }
 }
 
-void
-gimp_dialog_factories_session_save (FILE *file)
-{
-  GimpDialogFactoryClass *factory_class;
-
-  g_return_if_fail (file != NULL);
-
-  factory_class = gtk_type_class (GIMP_TYPE_DIALOG_FACTORY);
-
-  g_hash_table_foreach (factory_class->factories,
-			(GHFunc) gimp_dialog_factories_session_save_foreach,
-			file);
-}
-
 static void
-gimp_dialog_factories_session_restore_foreach (gchar             *name,
-					       GimpDialogFactory *factory,
-					       gpointer           data)
+gimp_dialog_factories_restore_foreach (gchar             *name,
+				       GimpDialogFactory *factory,
+				       gpointer           data)
 {
   GList *list;
 
@@ -964,22 +1086,6 @@ gimp_dialog_factories_session_restore_foreach (gchar             *name,
       info->aux_info = NULL;
     }
 }
-
-void
-gimp_dialog_factories_session_restore (void)
-{
-  GimpDialogFactoryClass *factory_class;
-
-  factory_class =
-    GIMP_DIALOG_FACTORY_CLASS (gtk_type_class (GIMP_TYPE_DIALOG_FACTORY));
-
-  g_hash_table_foreach (factory_class->factories,
-			(GHFunc) gimp_dialog_factories_session_restore_foreach,
-			NULL);
-}
-
-
-/*  private functions  */
 
 static void
 gimp_dialog_factory_get_window_info (GtkWidget       *window,
@@ -1090,5 +1196,105 @@ gimp_dialog_factory_set_aux_info (GtkWidget       *dialog,
 
       gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dialog),
 					   menu_shown);
+    }
+}
+
+static void
+gimp_dialog_factories_hide_foreach (gchar             *name,
+				    GimpDialogFactory *factory,
+				    gpointer           data)
+{
+  GList *list;
+
+  for (list = factory->open_dialogs; list; list = g_list_next (list))
+    {
+      if (GTK_IS_WIDGET (list->data) && GTK_WIDGET_TOPLEVEL (list->data))
+	{
+	  GimpDialogVisibilityState visibility = GIMP_DIALOG_VISIBILITY_UNKNOWN;
+
+	  if (GTK_WIDGET_VISIBLE (list->data))
+	    {
+	      visibility = GIMP_DIALOG_VISIBILITY_VISIBLE;
+
+	      gtk_widget_hide (GTK_WIDGET (list->data));
+	    }
+	  else
+	    {
+	      visibility = GIMP_DIALOG_VISIBILITY_INVISIBLE;
+	    }
+
+	  gtk_object_set_data (GTK_OBJECT (list->data),
+			       "gimp-dialog-visibility",
+			       GINT_TO_POINTER (visibility));
+	}
+    }
+}
+
+static void
+gimp_dialog_factories_show_foreach (gchar             *name,
+				    GimpDialogFactory *factory,
+				    gpointer           data)
+{
+  GList *list;
+
+  for (list = factory->open_dialogs; list; list = g_list_next (list))
+    {
+      if (GTK_IS_WIDGET (list->data) && GTK_WIDGET_TOPLEVEL (list->data))
+	{
+	  GimpDialogVisibilityState visibility;
+
+	  visibility =
+	    GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (list->data),
+						  "gimp-dialog-visibility"));
+
+	  if (! GTK_WIDGET_VISIBLE (list->data) &&
+	      visibility == GIMP_DIALOG_VISIBILITY_VISIBLE)
+	    {
+	      gtk_widget_show (GTK_WIDGET (list->data));
+	    }
+	}
+    }
+}
+
+static void
+gimp_dialog_factories_idle_foreach (gchar             *name,
+				    GimpDialogFactory *factory,
+				    gpointer           data)
+{
+  GdkCursor *cursor;
+  GList     *list;
+
+  cursor = gimp_cursor_new (GDK_WATCH,
+			    GIMP_TOOL_CURSOR_NONE,
+			    GIMP_CURSOR_MODIFIER_NONE);
+
+  for (list = factory->open_dialogs; list; list = g_list_next (list))
+    {
+      if (GTK_IS_WIDGET (list->data)       &&
+	  GTK_WIDGET_TOPLEVEL (list->data) &&
+	  GTK_WIDGET_VISIBLE (list->data))
+	{
+	  gdk_window_set_cursor (GTK_WIDGET (list->data)->window, cursor);
+	}
+    }
+
+  gdk_cursor_destroy (cursor);
+}
+
+static void
+gimp_dialog_factories_unidle_foreach (gchar             *name,
+				      GimpDialogFactory *factory,
+				      gpointer           data)
+{
+  GList *list;
+
+  for (list = factory->open_dialogs; list; list = g_list_next (list))
+    {
+      if (GTK_IS_WIDGET (list->data)       &&
+	  GTK_WIDGET_TOPLEVEL (list->data) &&
+	  GTK_WIDGET_VISIBLE (list->data))
+	{
+	  gdk_window_set_cursor (GTK_WIDGET (list->data)->window, NULL);
+	}
     }
 }

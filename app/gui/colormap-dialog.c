@@ -37,13 +37,12 @@
 #include "widgets/gimpdnd.h"
 
 #include "color-notebook.h"
-#include "image_render.h"
-#include "dialog_handler.h"
 #include "colormap-dialog.h"
 #include "color-area.h"
-#include "gdisplay.h"
 
 #include "colormaps.h"
+#include "image_render.h"
+#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

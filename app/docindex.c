@@ -34,7 +34,6 @@
 #include "gui/file-commands.h"
 #include "gui/file-open-dialog.h"
 
-#include "dialog_handler.h"
 #include "docindex.h"
 #include "gdisplay.h"
 #include "ops_buttons.h"
@@ -732,7 +731,6 @@ idea_hide_callback (GtkWidget *widget,
   if (ideas)
     {
       create_idea_list ();
-      dialog_unregister (ideas->window);
 
       gtk_widget_destroy (ideas->window);
       g_free (ideas);
@@ -795,8 +793,6 @@ open_idea_window (void)
                      GDK_ACTION_COPY);
 
   gimp_dnd_file_dest_set (ideas->window, gimp_dnd_open_files, NULL);
-
-  dialog_register (ideas->window);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);

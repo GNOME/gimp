@@ -57,7 +57,6 @@
 
 #include "appenv.h"
 #include "app_procs.h"
-#include "dialog_handler.h"
 #include "gdisplay.h"     /* for gdisplay_*_override_cursor()  */
 #include "gdisplay_ops.h" /* for gdisplay_xserver_resolution() */
 #include "gimprc.h"
@@ -350,7 +349,7 @@ gui_set_busy (Gimp *gimp)
     }
 
   /* Dialogs */
-  dialog_idle_all ();
+  gimp_dialog_factories_idle ();
 
   gdk_flush ();
 }
@@ -369,7 +368,7 @@ gui_unset_busy (Gimp *gimp)
     }
 
   /* Dialogs */
-  dialog_unidle_all ();
+  gimp_dialog_factories_unidle ();
 }
 
 static gint
@@ -462,7 +461,7 @@ gui_image_destroy (GimpImage *gimage,
   /*  check if this is the last image  */
   if (gimp_container_num_children (gimp->images) == 1)
     {
-      dialog_show_toolbox ();
+      gimp_dialog_factory_dialog_raise (global_dialog_factory, "gimp:toolbox");
     }
 }
 

@@ -45,7 +45,6 @@
 #include "channels-commands.h"
 #include "commands.h"
 #include "data-commands.h"
-#include "dialog_handler.h"
 #include "dialogs-commands.h"
 #include "edit-commands.h"
 #include "file-commands.h"
@@ -97,9 +96,6 @@ static gchar * menus_menu_translate_func  (const gchar          *path,
 static void    menus_tearoff_cmd_callback (GtkWidget            *widget,
 					   gpointer              data,
 					   guint                 action);
-static gint    menus_tearoff_delete_cb    (GtkWidget            *widget, 
-					   GdkEvent             *event,
-					   gpointer              data);
 
 #ifdef ENABLE_DEBUG_ENTRY
 static void    menus_debug_recurse_menu   (GtkWidget            *menu,
@@ -290,7 +286,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "gimp:about-dialog",
     "help/dialogs/about.html", NULL },
 #ifdef ENABLE_DEBUG_ENTRY
-  { { N_("/Help/Dump Items (Debug)"), NULL,
+  { { "/Help/Dump Items (Debug)", NULL,
       menus_debug_cmd_callback, 0 },
     NULL,
     NULL, NULL }
@@ -746,23 +742,6 @@ static GimpItemFactoryEntry image_entries[] =
     "dialogs/tool_options.html", NULL },
 
   SEPARATOR ("/Dialogs/---"),
-
-  { { "/Dialogs/Old/Brushes...", NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:brush-select-dialog",
-    "dialogs/brush_selection.html", NULL },
-  { { "/Dialogs/Old/Patterns...", NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:pattern-select-dialog",
-    "dialogs/pattern_selection.html", NULL },
-  { { "/Dialogs/Old/Gradients...", NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:gradient-select-dialog",
-    "dialogs/gradient_selection.html", NULL },
-  { { "/Dialogs/Old/Palette...", NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:palette-select-dialog",
-    "dialogs/palette_selection.html", NULL },
 
   { { N_("/Dialogs/Brushes..."), "<control><shift>B",
       dialogs_create_dockable_cmd_callback, 0 },
@@ -2668,12 +2647,9 @@ menus_tearoff_cmd_callback (GtkWidget *widget,
 	    }
 	  else
 	    {
-	      dialog_register (toplevel);
-
-	      gtk_signal_connect (GTK_OBJECT (toplevel), "delete_event",
-				  GTK_SIGNAL_FUNC (menus_tearoff_delete_cb),
-				  NULL);
-
+#ifdef __GNUC__
+#warning FIXME: register tearoffs
+#endif
 	      gtk_object_set_data (GTK_OBJECT (widget), "tearoff-menu-toplevel",
 				   toplevel);
 
@@ -2694,21 +2670,12 @@ menus_tearoff_cmd_callback (GtkWidget *widget,
 	    }
 	  else
 	    {
-	      dialog_unregister (toplevel);
+#ifdef __GNUC__
+#warning FIXME: unregister tearoffs
+#endif
 	    }
 	}
     }
-}
-
-static gint
-menus_tearoff_delete_cb (GtkWidget *widget, 
-			 GdkEvent  *event,
-			 gpointer   data)
-{
-  /* Unregister if dialog is deleted as well */
-  dialog_unregister (widget);
-
-  return TRUE; 
 }
 
 #ifdef ENABLE_DEBUG_ENTRY

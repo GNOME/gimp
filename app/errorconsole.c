@@ -53,8 +53,6 @@
 
 #include "apptypes.h"
 
-#include "dialog_handler.h"
-
 #include "appenv.h"
 
 #include "libgimp/gimpintl.h"
@@ -292,8 +290,6 @@ error_console_create (void)
 				   text, NULL, NULL, TRUE, TRUE,
 
 				   NULL);
-  /* register this one only */
-  dialog_register (error_console);
 
   /* The next line should disappear when setting the size works in SM */
   gtk_widget_set_usize (error_console, 250, 300);

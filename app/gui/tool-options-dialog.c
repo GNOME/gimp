@@ -40,7 +40,6 @@
 #include "tool-options-dialog.h"
 
 #include "app_procs.h"
-#include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -112,9 +111,6 @@ tool_options_dialog_create (void)
 
   /*  hide the separator between the dialog's vbox and the action area  */
   gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (options_shell)->child)), 0)));
-
-  /*  Register dialog  */
-  dialog_register (options_shell);
 
   /*  The outer frame  */
   frame = gtk_frame_new (NULL);

@@ -48,13 +48,14 @@
 #include "tools/gimpmovetool.h"
 #include "tools/tool_manager.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "gui/dialogs.h"
 #include "gui/info-window.h"
 #include "gui/layer-select.h"
 
 #include "devices.h"
-#include "dialog_handler.h"
 #include "disp_callbacks.h"
 #include "gdisplay.h"
 #include "gimprc.h"
@@ -585,7 +586,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
 	  /* Hide or show all dialogs */
 	  if (! kevent->state)
-	    dialog_toggle ();
+	    gimp_dialog_factories_toggle (global_dialog_factory,
+					  "gimp:toolbox");
 
 	  return_val = TRUE;
 	  break;

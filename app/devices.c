@@ -44,7 +44,6 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "devices.h"
-#include "dialog_handler.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -219,9 +218,6 @@ input_dialog_create (void)
     return inputd;
 
   inputd = gtk_input_dialog_new ();
-
-  /* register this one only */
-  dialog_register (inputd);
 
   gtk_container_set_border_width
     (GTK_CONTAINER (GTK_DIALOG (inputd)->action_area), 2);
@@ -760,8 +756,6 @@ device_status_create (void)
 				    NULL, NULL, NULL, TRUE, TRUE,
 
 				    NULL);
-
-  dialog_register (deviceD->shell);
 
   deviceD->num_devices = 0;
 

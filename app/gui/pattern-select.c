@@ -39,7 +39,6 @@
 
 #include "widgets/gimpdatafactoryview.h"
 
-#include "dialog_handler.h"
 #include "pattern-select.h"
 
 #include "appenv.h"
@@ -134,8 +133,6 @@ pattern_select_new (gchar *title,
   else
     {
       psp->context = gimp_get_user_context (the_gimp);
-
-      dialog_register (psp->shell);
     }
 
   if (no_data && first_call)

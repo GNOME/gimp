@@ -34,7 +34,7 @@
 #include "gimpdockbook.h"
 
 
-#define GIMP_DOCK_MINIMAL_WIDTH    280
+#define GIMP_DOCK_MINIMAL_WIDTH    250
 #define GIMP_DOCK_SEPARATOR_HEIGHT 8
 
 

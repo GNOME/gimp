@@ -14,8 +14,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	colormaps.h		\
 	devices.c		\
 	devices.h		\
-	dialog_handler.c	\
-	dialog_handler.h	\
 	docindex.c		\
 	docindex.h		\
 	errorconsole.c		\

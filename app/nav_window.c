@@ -39,7 +39,6 @@
 #include "widgets/gimpnavigationpreview.h"
 
 #include "app_procs.h"
-#include "dialog_handler.h"
 #include "gdisplay.h"
 #include "nav_window.h"
 
@@ -211,11 +210,6 @@ nav_dialog_create (GDisplay *gdisp)
 
   gtk_widget_hide (GTK_DIALOG (nav_dialog->shell)->action_area);
 
-  dialog_register (nav_dialog->shell);
-
-  gtk_signal_connect (GTK_OBJECT (nav_dialog->shell), "destroy",
-		      GTK_SIGNAL_FUNC (dialog_unregister),
-		      nav_dialog);
   gtk_signal_connect_object (GTK_OBJECT (nav_dialog->shell), "destroy",
 			     GTK_SIGNAL_FUNC (g_free),
 			     (GtkObject *) nav_dialog);

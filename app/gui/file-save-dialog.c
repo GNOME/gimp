@@ -37,13 +37,12 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "dialog_handler.h"
-#include "docindex.h"
 #include "file-dialog-utils.h"
 #include "file-save-dialog.h"
 #include "menus.h"
 
 #include "app_procs.h"
+#include "docindex.h"
 #include "gimprc.h"
 #include "file-save.h"
 #include "file-utils.h"

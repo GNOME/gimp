@@ -59,7 +59,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
-#include "dialog_handler.h"
 #include "gimprc.h"
 #include "undo.h"
 
@@ -455,7 +454,7 @@ undo_history_gimage_destroy_callback (GimpImage *gimage,
   undo_history_st *st = data;
 
   st->gimage = NULL;  /* not allowed to use this any more */
-  dialog_unregister (st->shell);
+
   gtk_widget_destroy (GTK_WIDGET (st->shell));
   /* which continues in the function below: */
 }
@@ -777,8 +776,6 @@ undo_history_new (GimpImage *gimage)
 				 st, NULL, NULL, TRUE, TRUE,
 
 				 NULL);
-    dialog_register (st->shell);
-
     g_free (title);
   }
 

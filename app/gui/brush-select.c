@@ -44,7 +44,6 @@
 
 #include "appenv.h"
 #include "app_procs.h"
-#include "dialog_handler.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -158,8 +157,6 @@ brush_select_new (gchar   *title,
   else
     {
       bsp->context = gimp_get_user_context (the_gimp);
-
-      dialog_register (bsp->shell);
     }
 
   if (no_data && first_call)

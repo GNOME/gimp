@@ -1,3 +1,43 @@
+2001-07-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/dialog_handler.[ch]: removed.
+
+	* app/widgets/gimpdialogfactory.[ch]: added the missing features
+	from the dialog_handler: idle/unidle all dialogs and the show_all
+	-> hide_all -> show_toolbox -> show_all cycling (a bit ugly
+	currently because the toolbox's factory and it's identifier has to
+	be passed to gimp_dialog_factories_toggle()).
+
+	* app/disp_callbacks.c
+	* app/gui/gui.c: call the new dialog factory class methods.
+
+	* app/devices.c
+	* app/docindex.c
+	* app/errorconsole.c
+	* app/nav_window.c
+	* app/undo_history.c
+	* app/gui/info-dialog.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c: currently "unmanaged" because they
+	are not yet registered with a dialog factory.
+
+	* app/gui/menus.c: ditto for the tearoff menus.
+
+	* app/gui/brush-select.c
+	* app/gui/colormap-dialog.c
+	* app/gui/gradient-select.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c
+	* app/gui/tool-options-dialog.c
+	* app/gui/toolbox.c: these are already factory created so toggling
+	and (un)idling works like before.
+
+	* app/widgets/gimpdock.c: reduced the minimal width from 280 to 250.
+
+	* app/widgets/gimplayerlistview.c: use a toggle button instead of
+	a check button for "Keep transp.".
+
 2001-07-19  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: ran autoupdate on this file

@@ -37,7 +37,6 @@
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdnd.h"
 
-#include "dialog_handler.h"
 #include "dialogs-constructors.h"
 #include "palette-editor.h"
 #include "palette-select.h"
@@ -129,13 +128,6 @@ palette_select_new (const gchar *title,
   else
     {
       psp->context = gimp_get_user_context (the_gimp);
-
-      /*
-      session_set_window_geometry (psp->shell, &palette_select_session_info,
-				   TRUE);
-      */
-
-      dialog_register (psp->shell);
     }
 
   if (no_data && first_call)

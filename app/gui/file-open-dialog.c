@@ -52,7 +52,6 @@
 #include "menus.h"
 
 #include "app_procs.h"
-#include "dialog_handler.h"
 #include "docindex.h"
 #include "file-open.h"
 #include "file-utils.h"
@@ -212,8 +211,6 @@ file_open_dialog_create (void)
   gtk_container_set_border_width (GTK_CONTAINER (fileload), 2);
   gtk_container_set_border_width 
     (GTK_CONTAINER (GTK_FILE_SELECTION (fileload)->button_area), 2);
-
-  dialog_register_fileload (fileload);
 
   gtk_signal_connect_object
     (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->cancel_button), "clicked",

@@ -131,6 +131,7 @@ gimp_layer_list_view_init (GimpLayerListView *view)
 {
   GimpDrawableListView *drawable_view;
   GtkWidget            *hbox;
+  GtkWidget            *abox;
   GtkWidget            *label;
   GtkWidget            *slider;
   GtkWidget            *pixmap;
@@ -142,7 +143,7 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   gtk_box_reorder_child (GTK_BOX (view), view->options_box, 0);
   gtk_widget_show (view->options_box);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (view->options_box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -155,7 +156,7 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   view->paint_mode_menu =
     gimp_paint_mode_menu_new (gimp_layer_list_view_paint_mode_menu_callback,
 			      view, FALSE, NORMAL_MODE);
-  gtk_box_pack_start (GTK_BOX (hbox), view->paint_mode_menu, FALSE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), view->paint_mode_menu, FALSE, FALSE, 0);
   gtk_widget_show (view->paint_mode_menu);
 
   gimp_help_set_help_data (view->paint_mode_menu, 
@@ -163,10 +164,13 @@ gimp_layer_list_view_init (GimpLayerListView *view)
 
   /*  Preserve transparency toggle  */
 
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
+  gtk_widget_show (abox);
+
   view->preserve_trans_toggle =
-    gtk_check_button_new_with_label (_("Keep Trans."));
-  gtk_box_pack_start (GTK_BOX (hbox), view->preserve_trans_toggle,
-		      FALSE, FALSE, 2);
+    gtk_toggle_button_new_with_label (_("Keep Trans."));
+  gtk_container_add (GTK_CONTAINER (abox), view->preserve_trans_toggle);
   gtk_widget_show (view->preserve_trans_toggle);
 
   gtk_signal_connect (GTK_OBJECT (view->preserve_trans_toggle), "toggled",
@@ -176,7 +180,7 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   gimp_help_set_help_data (view->preserve_trans_toggle,
 			   _("Keep Transparency"), "#keep_trans_button");
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (view->options_box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

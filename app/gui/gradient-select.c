@@ -38,7 +38,6 @@
 
 #include "widgets/gimpdatafactoryview.h"
 
-#include "dialog_handler.h"
 #include "dialogs-constructors.h"
 #include "gradient-select.h"
 
@@ -124,8 +123,6 @@ gradient_select_new (gchar *title,
   else
     {
       gsp->context = gimp_get_user_context (the_gimp);
-
-      dialog_register (gsp->shell);
     }
 
   if (no_data && first_call)
