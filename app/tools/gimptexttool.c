@@ -479,7 +479,8 @@ text_render (GimpImage    *gimage,
       g_free (bitmap.buffer);
 
       layer = gimp_layer_new (gimage, width, height, layer_type,
-                              _("Text Layer"), OPAQUE_OPACITY, NORMAL_MODE);
+                              _("Text Layer"), 
+                              OPAQUE_OPACITY, GIMP_NORMAL_MODE);
 
       /*  color the layer buffer  */
       gimp_image_get_foreground (gimage, drawable, color);

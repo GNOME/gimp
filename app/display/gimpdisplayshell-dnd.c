@@ -133,7 +133,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 			       gimp_image_base_type_with_alpha (dest_gimage),
 			       tiles, 
 			       _("Pasted Layer"),
-			       OPAQUE_OPACITY, NORMAL_MODE);
+			       OPAQUE_OPACITY, GIMP_NORMAL_MODE);
 
   tile_manager_destroy (tiles);
 

@@ -431,7 +431,7 @@ gimp_convolve_tool_motion (GimpPaintTool        *paint_tool,
       tempPR.data = temp_data;
 
       convolve_region (&tempPR, &destPR, matrix, matrix_size,
-		       matrix_divisor, NORMAL_CONVOL);
+		       matrix_divisor, GIMP_NORMAL_CONVOL);
 
       /*  Free the allocated temp space  */
       g_free (temp_data);
@@ -505,7 +505,7 @@ gimp_convolve_tool_motion (GimpPaintTool        *paint_tool,
       ovrsz1PR.data = ovrsz1_data;
 
       convolve_region (&ovrsz1PR, &ovrsz2PR, matrix, matrix_size,
-		       matrix_divisor, NORMAL_CONVOL);
+		       matrix_divisor, GIMP_NORMAL_CONVOL);
 
       /* Crop and copy to destination */
 

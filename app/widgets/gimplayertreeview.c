@@ -152,7 +152,7 @@ gimp_layer_list_view_init (GimpLayerListView *view)
     gimp_paint_mode_menu_new (G_CALLBACK (gimp_layer_list_view_paint_mode_menu_callback),
 			      view,
 			      FALSE,
-			      NORMAL_MODE);
+			      GIMP_NORMAL_MODE);
   gtk_box_pack_start (GTK_BOX (hbox), view->paint_mode_menu, FALSE, FALSE, 0);
   gtk_widget_show (view->paint_mode_menu);
 
@@ -380,9 +380,9 @@ gimp_layer_list_view_paint_mode_menu_callback (GtkWidget         *widget,
 
   if (layer)
     {
-      LayerModeEffects mode;
+      GimpLayerModeEffects mode;
 
-      mode = (LayerModeEffects)
+      mode = (GimpLayerModeEffects)
 	GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                             "gimp-item-data"));
 

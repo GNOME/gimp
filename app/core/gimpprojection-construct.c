@@ -731,7 +731,7 @@ project_channel (GimpImage   *gimage,
 	INITIAL_CHANNEL_MASK : INITIAL_CHANNEL_SELECTION;
 
       initial_region (src2, src, NULL, col, opacity,
-		      NORMAL_MODE, NULL, type);
+		      GIMP_NORMAL_MODE, NULL, type);
     }
   else
     {
@@ -739,6 +739,6 @@ project_channel (GimpImage   *gimage,
 	COMBINE_INTEN_A_CHANNEL_MASK : COMBINE_INTEN_A_CHANNEL_SELECTION;
 
       combine_regions (src, src2, src, NULL, col, opacity,
-		       NORMAL_MODE, NULL, type);
+		       GIMP_NORMAL_MODE, NULL, type);
     }
 }

@@ -1656,16 +1656,16 @@ gimp_image_free_shadow (GimpImage *gimage)
 /*  combine functions  */
 
 void
-gimp_image_apply_image (GimpImage	 *gimage,
-			GimpDrawable	 *drawable,
-			PixelRegion	 *src2PR,
-			gboolean          undo,
-			gint              opacity,
-			LayerModeEffects  mode,
+gimp_image_apply_image (GimpImage	     *gimage,
+			GimpDrawable	     *drawable,
+			PixelRegion	     *src2PR,
+			gboolean              undo,
+			gint                  opacity,
+			GimpLayerModeEffects  mode,
 			/*  alternative to using drawable tiles as src1: */
-			TileManager	 *src1_tiles,
-			gint              x,
-			gint              y)
+			TileManager	     *src1_tiles,
+			gint                  x,
+			gint                  y)
 {
   GimpChannel *mask;
   gint         x1, y1, x2, y2;
@@ -1677,7 +1677,8 @@ gimp_image_apply_image (GimpImage	 *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   /*  get the selection mask if one exists  */
-  mask = (gimp_image_mask_is_empty (gimage)) ? NULL : gimp_image_get_mask (gimage);
+  mask = (gimp_image_mask_is_empty (gimage) ? 
+          NULL : gimp_image_get_mask (gimage));
 
   /*  configure the active channel array  */
   gimp_image_get_active_components (gimage, drawable, active);

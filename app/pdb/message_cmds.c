@@ -103,7 +103,7 @@ static ProcArg message_get_handler_outargs[] =
   {
     GIMP_PDB_INT32,
     "handler",
-    "The current handler type: { MESSAGE_BOX (0), CONSOLE (1), ERROR_CONSOLE (2) }"
+    "The current handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }"
   }
 };
 
@@ -145,7 +145,7 @@ static ProcArg message_set_handler_inargs[] =
   {
     GIMP_PDB_INT32,
     "handler",
-    "The new handler type: { MESSAGE_BOX (0), CONSOLE (1), ERROR_CONSOLE (2) }"
+    "The new handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }"
   }
 };
 

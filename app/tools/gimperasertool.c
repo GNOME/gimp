@@ -311,7 +311,7 @@ gimp_eraser_tool_motion (GimpPaintTool        *paint_tool,
   gimp_paint_tool_paste_canvas (paint_tool, drawable, 
 				MIN (opacity, 255),
 				gimp_context_get_opacity (context) * 255,
-				anti_erase ? ANTI_ERASE_MODE : ERASE_MODE,
+				anti_erase ? GIMP_ANTI_ERASE_MODE : GIMP_ERASE_MODE,
 				hard ? HARD : (pressure_options->pressure ? PRESSURE : SOFT),
 				scale,
 				incremental ? INCREMENTAL : CONSTANT);

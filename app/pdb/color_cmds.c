@@ -195,7 +195,7 @@ levels_invoker (Gimp     *gimp,
     success = FALSE;
 
   channel = args[1].value.pdb_int;
-  if (channel < VALUE_LUT || channel > ALPHA_LUT)
+  if (channel < GIMP_VALUE_LUT || channel > GIMP_ALPHA_LUT)
     success = FALSE;
 
   low_inputv = args[2].value.pdb_int;
@@ -221,9 +221,9 @@ levels_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_drawable_is_indexed (drawable) ||
-	  (!gimp_drawable_has_alpha (drawable) && channel == ALPHA_LUT) ||
-	  (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT
-					    && channel != ALPHA_LUT))
+	  (!gimp_drawable_has_alpha (drawable) && channel == GIMP_ALPHA_LUT) ||
+	  (gimp_drawable_is_gray (drawable) && channel != GIMP_GRAY_LUT
+					    && channel != GIMP_ALPHA_LUT))
 	success = FALSE;
       else
 	{
@@ -277,7 +277,7 @@ static ProcArg levels_inargs[] =
   {
     GIMP_PDB_INT32,
     "channel",
-    "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3), ALPHA_LUT (4) }"
+    "The channel to modify: { GIMP_VALUE_LUT (0), GIMP_RED_LUT (1), GIMP_GREEN_LUT (2), GIMP_BLUE_LUT (3), GIMP_ALPHA_LUT (4) }"
   },
   {
     GIMP_PDB_INT32,
@@ -570,7 +570,7 @@ curves_spline_invoker (Gimp     *gimp,
     success = FALSE;
 
   channel = args[1].value.pdb_int;
-  if (channel < VALUE_LUT || channel > ALPHA_LUT)
+  if (channel < GIMP_VALUE_LUT || channel > GIMP_ALPHA_LUT)
     success = FALSE;
 
   num_points = args[2].value.pdb_int;
@@ -582,7 +582,7 @@ curves_spline_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
-	  (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
+	  (gimp_drawable_is_gray (drawable) && channel != GIMP_GRAY_LUT))
 	success = FALSE;
       else
 	{
@@ -643,7 +643,7 @@ static ProcArg curves_spline_inargs[] =
   {
     GIMP_PDB_INT32,
     "channel",
-    "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3), ALPHA_LUT (4) }"
+    "The channel to modify: { GIMP_VALUE_LUT (0), GIMP_RED_LUT (1), GIMP_GREEN_LUT (2), GIMP_BLUE_LUT (3), GIMP_ALPHA_LUT (4) }"
   },
   {
     GIMP_PDB_INT32,
@@ -692,7 +692,7 @@ curves_explicit_invoker (Gimp     *gimp,
     success = FALSE;
 
   channel = args[1].value.pdb_int;
-  if (channel < VALUE_LUT || channel > ALPHA_LUT)
+  if (channel < GIMP_VALUE_LUT || channel > GIMP_ALPHA_LUT)
     success = FALSE;
 
   num_bytes = args[2].value.pdb_int;
@@ -704,7 +704,7 @@ curves_explicit_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
-	  (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
+	  (gimp_drawable_is_gray (drawable) && channel != GIMP_GRAY_LUT))
 	success = FALSE;
       else 
 	{
@@ -752,7 +752,7 @@ static ProcArg curves_explicit_inargs[] =
   {
     GIMP_PDB_INT32,
     "channel",
-    "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3), ALPHA_LUT (4) }"
+    "The channel to modify: { GIMP_VALUE_LUT (0), GIMP_RED_LUT (1), GIMP_GREEN_LUT (2), GIMP_BLUE_LUT (3), GIMP_ALPHA_LUT (4) }"
   },
   {
     GIMP_PDB_INT32,
@@ -939,7 +939,7 @@ histogram_invoker (Gimp     *gimp,
     success = FALSE;
 
   channel = args[1].value.pdb_int;
-  if (channel < VALUE_LUT || channel > ALPHA_LUT)
+  if (channel < GIMP_VALUE_LUT || channel > GIMP_ALPHA_LUT)
     success = FALSE;
 
   start_range = args[2].value.pdb_int;
@@ -953,7 +953,7 @@ histogram_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_drawable_is_indexed (drawable) ||
-	  (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
+	  (gimp_drawable_is_gray (drawable) && channel != GIMP_GRAY_LUT))
 	success = FALSE;
       else
 	{
@@ -1018,7 +1018,7 @@ static ProcArg histogram_inargs[] =
   {
     GIMP_PDB_INT32,
     "channel",
-    "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3), ALPHA_LUT (4) }"
+    "The channel to modify: { GIMP_VALUE_LUT (0), GIMP_RED_LUT (1), GIMP_GREEN_LUT (2), GIMP_BLUE_LUT (3), GIMP_ALPHA_LUT (4) }"
   },
   {
     GIMP_PDB_INT32,

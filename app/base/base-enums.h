@@ -19,6 +19,9 @@
 #ifndef __BASE_ENUMS_H__
 #define __BASE_ENUMS_H__
 
+/* These enums that are registered with the type system. */
+
+
 #define GIMP_TYPE_INTERPOLATION_TYPE (gimp_interpolation_type_get_type ())
 
 GType gimp_interpolation_type_get_type (void) G_GNUC_CONST;
@@ -31,4 +34,36 @@ typedef enum
 } GimpInterpolationType;
 
 
-#endif /* __BASE_TYPES_H__ */
+#define GIMP_TYPE_LAYER_MODE_EFFECTS (gimp_layer_mode_effects_get_type ())
+
+GType gimp_layer_mode_effects_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_NORMAL_MODE,
+  GIMP_DISSOLVE_MODE,
+  GIMP_BEHIND_MODE,
+  GIMP_MULTIPLY_MODE,
+  GIMP_SCREEN_MODE,
+  GIMP_OVERLAY_MODE,
+  GIMP_DIFFERENCE_MODE,
+  GIMP_ADDITION_MODE,
+  GIMP_SUBTRACT_MODE,
+  GIMP_DARKEN_ONLY_MODE,
+  GIMP_LIGHTEN_ONLY_MODE,
+  GIMP_HUE_MODE,
+  GIMP_SATURATION_MODE,
+  GIMP_COLOR_MODE,
+  GIMP_VALUE_MODE,
+  GIMP_DIVIDE_MODE,
+  GIMP_DODGE_MODE,
+  GIMP_BURN_MODE,
+  GIMP_HARDLIGHT_MODE,
+  GIMP_COLOR_ERASE_MODE,
+  GIMP_ERASE_MODE,         /*< skip >*/
+  GIMP_REPLACE_MODE,       /*< skip >*/
+  GIMP_ANTI_ERASE_MODE     /*< skip >*/
+} GimpLayerModeEffects;
+
+
+#endif /* __BASE_ENUMS_H__ */

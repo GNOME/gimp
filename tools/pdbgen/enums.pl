@@ -30,13 +30,7 @@ package Gimp::CodeGen::enums;
 		       GIMP_UNIT_MM => '2',
 		       GIMP_UNIT_POINT => '3',
 		       GIMP_UNIT_PICA => '4',
-		       GIMP_UNIT_END => '5' },
-	  nicks   => { GIMP_UNIT_PIXEL => 'UNIT_PIXEL',
-		       GIMP_UNIT_INCH => 'UNIT_INCH',
-		       GIMP_UNIT_MM => 'UNIT_MM',
-		       GIMP_UNIT_POINT => 'UNIT_POINT',
-		       GIMP_UNIT_PICA => 'UNIT_PICA',
-		       GIMP_UNIT_END => 'UNIT_END' }
+		       GIMP_UNIT_END => '5' }
 	},
     GimpPDBArgType =>
 	{ contig => 1,
@@ -72,30 +66,7 @@ package Gimp::CodeGen::enums;
 		       GIMP_PDB_PATH => '19',
 		       GIMP_PDB_PARASITE => '20',
 		       GIMP_PDB_STATUS => '21',
-		       GIMP_PDB_END => '22' },
-	  nicks   => { GIMP_PDB_INT32 => 'PDB_INT32',
-		       GIMP_PDB_INT16 => 'PDB_INT16',
-		       GIMP_PDB_INT8 => 'PDB_INT8',
-		       GIMP_PDB_FLOAT => 'PDB_FLOAT',
-		       GIMP_PDB_STRING => 'PDB_STRING',
-		       GIMP_PDB_INT32ARRAY => 'PDB_INT32ARRAY',
-		       GIMP_PDB_INT16ARRAY => 'PDB_INT16ARRAY',
-		       GIMP_PDB_INT8ARRAY => 'PDB_INT8ARRAY',
-		       GIMP_PDB_FLOATARRAY => 'PDB_FLOATARRAY',
-		       GIMP_PDB_STRINGARRAY => 'PDB_STRINGARRAY',
-		       GIMP_PDB_COLOR => 'PDB_COLOR',
-		       GIMP_PDB_REGION => 'PDB_REGION',
-		       GIMP_PDB_DISPLAY => 'PDB_DISPLAY',
-		       GIMP_PDB_IMAGE => 'PDB_IMAGE',
-		       GIMP_PDB_LAYER => 'PDB_LAYER',
-		       GIMP_PDB_CHANNEL => 'PDB_CHANNEL',
-		       GIMP_PDB_DRAWABLE => 'PDB_DRAWABLE',
-		       GIMP_PDB_SELECTION => 'PDB_SELECTION',
-		       GIMP_PDB_BOUNDARY => 'PDB_BOUNDARY',
-		       GIMP_PDB_PATH => 'PDB_PATH',
-		       GIMP_PDB_PARASITE => 'PDB_PARASITE',
-		       GIMP_PDB_STATUS => 'PDB_STATUS',
-		       GIMP_PDB_END => 'PDB_END' }
+		       GIMP_PDB_END => '22' }
 	},
     GimpPDBProcType =>
 	{ contig => 1,
@@ -105,11 +76,7 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_INTERNAL => '0',
 		       GIMP_PLUGIN => '1',
 		       GIMP_EXTENSION => '2',
-		       GIMP_TEMPORARY => '3' },
-	  nicks   => { GIMP_INTERNAL => 'INTERNAL',
-		       GIMP_PLUGIN => 'PLUGIN',
-		       GIMP_EXTENSION => 'EXTENSION',
-		       GIMP_TEMPORARY => 'TEMPORARY' }
+		       GIMP_TEMPORARY => '3' }
 	},
     GimpPDBStatusType =>
 	{ contig => 1,
@@ -121,12 +88,7 @@ package Gimp::CodeGen::enums;
 		       GIMP_PDB_CALLING_ERROR => '1',
 		       GIMP_PDB_PASS_THROUGH => '2',
 		       GIMP_PDB_SUCCESS => '3',
-		       GIMP_PDB_CANCEL => '4' },
-	  nicks   => { GIMP_PDB_EXECUTION_ERROR => 'PDB_EXECUTION_ERROR',
-		       GIMP_PDB_CALLING_ERROR => 'PDB_CALLING_ERROR',
-		       GIMP_PDB_PASS_THROUGH => 'PDB_PASS_THROUGH',
-		       GIMP_PDB_SUCCESS => 'PDB_SUCCESS',
-		       GIMP_PDB_CANCEL => 'PDB_CANCEL' }
+		       GIMP_PDB_CANCEL => '4' }
 	},
     GimpMessageHandlerType =>
 	{ contig => 1,
@@ -134,10 +96,7 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_MESSAGE_BOX GIMP_CONSOLE GIMP_ERROR_CONSOLE) ],
 	  mapping => { GIMP_MESSAGE_BOX => '0',
 		       GIMP_CONSOLE => '1',
-		       GIMP_ERROR_CONSOLE => '2' },
-	  nicks   => { GIMP_MESSAGE_BOX => 'MESSAGE_BOX',
-		       GIMP_CONSOLE => 'CONSOLE',
-		       GIMP_ERROR_CONSOLE => 'ERROR_CONSOLE' }
+		       GIMP_ERROR_CONSOLE => '2' }
 	},
     GimpStackTraceMode =>
 	{ contig => 1,
@@ -146,10 +105,7 @@ package Gimp::CodeGen::enums;
 			  GIMP_STACK_TRACE_ALWAYS) ],
 	  mapping => { GIMP_STACK_TRACE_NEVER => '0',
 		       GIMP_STACK_TRACE_QUERY => '1',
-		       GIMP_STACK_TRACE_ALWAYS => '2' },
-	  nicks   => { GIMP_STACK_TRACE_NEVER => 'STACK_TRACE_NEVER',
-		       GIMP_STACK_TRACE_QUERY => 'STACK_TRACE_QUERY',
-		       GIMP_STACK_TRACE_ALWAYS => 'STACK_TRACE_ALWAYS' }
+		       GIMP_STACK_TRACE_ALWAYS => '2' }
 	},
     GimpInterpolationType =>
 	{ contig => 1,
@@ -160,54 +116,59 @@ package Gimp::CodeGen::enums;
 		       GIMP_CUBIC_INTERPOLATION => '1',
 		       GIMP_NEAREST_NEIGHBOR_INTERPOLATION => '2' }
 	},
-    LayerModeEffects =>
+    GimpLayerModeEffects =>
 	{ contig => 1,
-	  header => 'base/base-types.h',
-	  symbols => [ qw(NORMAL_MODE DISSOLVE_MODE BEHIND_MODE
-			  MULTIPLY_MODE SCREEN_MODE OVERLAY_MODE
-			  DIFFERENCE_MODE ADDITION_MODE SUBTRACT_MODE
-			  DARKEN_ONLY_MODE LIGHTEN_ONLY_MODE HUE_MODE
-			  SATURATION_MODE COLOR_MODE VALUE_MODE DIVIDE_MODE
-			  DODGE_MODE BURN_MODE HARDLIGHT_MODE
-			  COLOR_ERASE_MODE) ],
-	  mapping => { NORMAL_MODE => '0',
-		       DISSOLVE_MODE => '1',
-		       BEHIND_MODE => '2',
-		       MULTIPLY_MODE => '3',
-		       SCREEN_MODE => '4',
-		       OVERLAY_MODE => '5',
-		       DIFFERENCE_MODE => '6',
-		       ADDITION_MODE => '7',
-		       SUBTRACT_MODE => '8',
-		       DARKEN_ONLY_MODE => '9',
-		       LIGHTEN_ONLY_MODE => '10',
-		       HUE_MODE => '11',
-		       SATURATION_MODE => '12',
-		       COLOR_MODE => '13',
-		       VALUE_MODE => '14',
-		       DIVIDE_MODE => '15',
-		       DODGE_MODE => '16',
-		       BURN_MODE => '17',
-		       HARDLIGHT_MODE => '18',
-		       COLOR_ERASE_MODE => '19' }
+	  header => 'base/base-enums.h',
+	  symbols => [ qw(GIMP_NORMAL_MODE GIMP_DISSOLVE_MODE
+			  GIMP_BEHIND_MODE GIMP_MULTIPLY_MODE
+			  GIMP_SCREEN_MODE GIMP_OVERLAY_MODE
+			  GIMP_DIFFERENCE_MODE GIMP_ADDITION_MODE
+			  GIMP_SUBTRACT_MODE GIMP_DARKEN_ONLY_MODE
+			  GIMP_LIGHTEN_ONLY_MODE GIMP_HUE_MODE
+			  GIMP_SATURATION_MODE GIMP_COLOR_MODE
+			  GIMP_VALUE_MODE GIMP_DIVIDE_MODE GIMP_DODGE_MODE
+			  GIMP_BURN_MODE GIMP_HARDLIGHT_MODE
+			  GIMP_COLOR_ERASE_MODE) ],
+	  mapping => { GIMP_NORMAL_MODE => '0',
+		       GIMP_DISSOLVE_MODE => '1',
+		       GIMP_BEHIND_MODE => '2',
+		       GIMP_MULTIPLY_MODE => '3',
+		       GIMP_SCREEN_MODE => '4',
+		       GIMP_OVERLAY_MODE => '5',
+		       GIMP_DIFFERENCE_MODE => '6',
+		       GIMP_ADDITION_MODE => '7',
+		       GIMP_SUBTRACT_MODE => '8',
+		       GIMP_DARKEN_ONLY_MODE => '9',
+		       GIMP_LIGHTEN_ONLY_MODE => '10',
+		       GIMP_HUE_MODE => '11',
+		       GIMP_SATURATION_MODE => '12',
+		       GIMP_COLOR_MODE => '13',
+		       GIMP_VALUE_MODE => '14',
+		       GIMP_DIVIDE_MODE => '15',
+		       GIMP_DODGE_MODE => '16',
+		       GIMP_BURN_MODE => '17',
+		       GIMP_HARDLIGHT_MODE => '18',
+		       GIMP_COLOR_ERASE_MODE => '19' }
 	},
-    ConvolutionType =>
+    GimpConvolutionType =>
 	{ contig => 1,
 	  header => 'base/base-types.h',
-	  symbols => [ qw(NORMAL_CONVOL ABSOLUTE_CONVOL NEGATIVE_CONVOL) ],
-	  mapping => { NORMAL_CONVOL => '0',
-		       ABSOLUTE_CONVOL => '1',
-		       NEGATIVE_CONVOL => '2' }
+	  symbols => [ qw(GIMP_NORMAL_CONVOL GIMP_ABSOLUTE_CONVOL
+			  GIMP_NEGATIVE_CONVOL) ],
+	  mapping => { GIMP_NORMAL_CONVOL => '0',
+		       GIMP_ABSOLUTE_CONVOL => '1',
+		       GIMP_NEGATIVE_CONVOL => '2' }
 	},
-    ChannelLutType =>
+    GimpChannelLutType =>
 	{ contig => 1,
 	  header => 'base/base-types.h',
-	  symbols => [ qw(VALUE_LUT RED_LUT GREEN_LUT BLUE_LUT ALPHA_LUT) ],
-	  mapping => { VALUE_LUT => '0',
-		       RED_LUT => '1',
-		       GREEN_LUT => '2',
-		       BLUE_LUT => '3',
-		       ALPHA_LUT => '4' }
+	  symbols => [ qw(GIMP_VALUE_LUT GIMP_RED_LUT GIMP_GREEN_LUT
+			  GIMP_BLUE_LUT GIMP_ALPHA_LUT) ],
+	  mapping => { GIMP_VALUE_LUT => '0',
+		       GIMP_RED_LUT => '1',
+		       GIMP_GREEN_LUT => '2',
+		       GIMP_BLUE_LUT => '3',
+		       GIMP_ALPHA_LUT => '4' }
 	},
     GimpImageBaseType =>
 	{ contig => 1,

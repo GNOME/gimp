@@ -173,13 +173,13 @@ gimp_edit_paste (GimpImage    *gimage,
 				       gimp_drawable_type_with_alpha (drawable),
 				       paste, 
 				       _("Pasted Layer"),
-				       OPAQUE_OPACITY, NORMAL_MODE);
+				       OPAQUE_OPACITY, GIMP_NORMAL_MODE);
   else
     layer = gimp_layer_new_from_tiles (gimage,
 				       gimp_image_base_type_with_alpha (gimage),
 				       paste, 
 				       _("Pasted Layer"),
-				       OPAQUE_OPACITY, NORMAL_MODE);
+				       OPAQUE_OPACITY, GIMP_NORMAL_MODE);
 
   if (! layer)
     return NULL;
@@ -255,7 +255,7 @@ gimp_edit_paste_as_new (Gimp        *gimp,
 				     gimp_image_base_type_with_alpha (gimage),
 				     paste, 
 				     _("Pasted Layer"),
-				     OPAQUE_OPACITY, NORMAL_MODE);
+				     OPAQUE_OPACITY, GIMP_NORMAL_MODE);
 
   if (layer)
     {
@@ -303,7 +303,7 @@ gimp_edit_clear (GimpImage    *gimage,
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
   gimp_image_apply_image (gimage, drawable, &bufPR, TRUE, OPAQUE_OPACITY,
-			  ERASE_MODE, NULL, x1, y1);
+			  GIMP_ERASE_MODE, NULL, x1, y1);
 
   /*  update the image  */
   gimp_drawable_update (drawable,
@@ -377,7 +377,7 @@ gimp_edit_fill (GimpImage    *gimage,
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
   gimp_image_apply_image (gimage, drawable, &bufPR, TRUE, OPAQUE_OPACITY,
-			  NORMAL_MODE, NULL, x1, y1);
+			  GIMP_NORMAL_MODE, NULL, x1, y1);
 
   /*  update the image  */
   gimp_drawable_update (drawable,

@@ -202,24 +202,24 @@ gimp_image_merge_layers (GimpImage *gimage,
 			 GSList    *merge_list, 
 			 MergeType  merge_type)
 {
-  GList            *list;
-  GSList           *reverse_list = NULL;
-  PixelRegion       src1PR, src2PR, maskPR;
-  PixelRegion      *mask;
-  GimpLayer        *merge_layer;
-  GimpLayer        *layer;
-  GimpLayer        *bottom_layer;
-  LayerModeEffects  bottom_mode;
-  guchar            bg[4] = {0, 0, 0, 0};
-  GimpImageType     type;
-  gint              count;
-  gint              x1, y1, x2, y2;
-  gint              x3, y3, x4, y4;
-  gint              operation;
-  gint              position;
-  gint              active[MAX_CHANNELS] = {1, 1, 1, 1};
-  gint              off_x, off_y;
-  gchar            *name;
+  GList                *list;
+  GSList               *reverse_list = NULL;
+  PixelRegion          src1PR, src2PR, maskPR;
+  PixelRegion          *mask;
+  GimpLayer            *merge_layer;
+  GimpLayer            *layer;
+  GimpLayer            *bottom_layer;
+  GimpLayerModeEffects  bottom_mode;
+  guchar                bg[4] = {0, 0, 0, 0};
+  GimpImageType         type;
+  gint                  count;
+  gint                  x1, y1, x2, y2;
+  gint                  x3, y3, x4, y4;
+  gint                  operation;
+  gint                  position;
+  gint                  active[MAX_CHANNELS] = {1, 1, 1, 1};
+  gint                  off_x, off_y;
+  gchar                *name;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -228,7 +228,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   x1 = y1      = 0;
   x2 = y2      = 0;
   bottom_layer = NULL;
-  bottom_mode  = NORMAL_MODE;
+  bottom_mode  = GIMP_NORMAL_MODE;
 
   /*  Get the layer extents  */
   count = 0;
@@ -315,7 +315,7 @@ gimp_image_merge_layers (GimpImage *gimage,
       merge_layer = gimp_layer_new (gimage, (x2 - x1), (y2 - y1),
 				    type,
 				    gimp_object_get_name (GIMP_OBJECT (layer)),
-				    OPAQUE_OPACITY, NORMAL_MODE);
+				    OPAQUE_OPACITY, GIMP_NORMAL_MODE);
       if (!merge_layer)
 	{
 	  g_warning ("%s: could not allocate merge layer.",
@@ -353,7 +353,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 	gimp_layer_new (gimage, (x2 - x1), (y2 - y1),
 			gimp_drawable_type_with_alpha (GIMP_DRAWABLE (layer)),
 			"merged layer",
-			OPAQUE_OPACITY, NORMAL_MODE);
+			OPAQUE_OPACITY, GIMP_NORMAL_MODE);
 
       if (!merge_layer)
 	{
@@ -395,8 +395,8 @@ gimp_image_merge_layers (GimpImage *gimage,
        *  work on the projection with the lower layer, but only locally on
        *  the layers alpha channel. 
        */
-      if (bottom_layer->mode != DISSOLVE_MODE)
-	gimp_layer_set_mode (bottom_layer, NORMAL_MODE);
+      if (bottom_layer->mode != GIMP_DISSOLVE_MODE)
+	gimp_layer_set_mode (bottom_layer, GIMP_NORMAL_MODE);
     }
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */

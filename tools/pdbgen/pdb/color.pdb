@@ -25,7 +25,7 @@ sub drawable_arg () {{
 
 sub channel_arg () {{
     name => 'channel',
-    type => 'enum ChannelLutType',
+    type => 'enum GimpChannelLutType',
     desc => 'The channel to modify: { %%desc%% }'
 }}
 
@@ -124,9 +124,9 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) ||
-      (!gimp_drawable_has_alpha (drawable) && channel == ALPHA_LUT) ||
-      (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT
-                                        && channel != ALPHA_LUT))
+      (!gimp_drawable_has_alpha (drawable) && channel == GIMP_ALPHA_LUT) ||
+      (gimp_drawable_is_gray (drawable) && channel != GIMP_GRAY_LUT
+                                        && channel != GIMP_ALPHA_LUT))
     success = FALSE;
   else
     {
@@ -342,7 +342,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
-      (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
+      (gimp_drawable_is_gray (drawable) && channel != GIMP_GRAY_LUT))
     success = FALSE;
   else
     {
@@ -424,7 +424,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
-      (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
+      (gimp_drawable_is_gray (drawable) && channel != GIMP_GRAY_LUT))
     success = FALSE;
   else 
     {
@@ -594,7 +594,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) ||
-      (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
+      (gimp_drawable_is_gray (drawable) && channel != GIMP_GRAY_LUT))
     success = FALSE;
   else
     {

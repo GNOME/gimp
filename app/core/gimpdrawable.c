@@ -502,7 +502,7 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
   pixel_region_init (&shadowPR, gimage->shadow, x1, y1,
 		     (x2 - x1), (y2 - y1), FALSE);
   gimp_image_apply_image (gimage, drawable, &shadowPR, undo, OPAQUE_OPACITY,
-			  REPLACE_MODE, NULL, x1, y1);
+			  GIMP_REPLACE_MODE, NULL, x1, y1);
 }
 
 void

@@ -529,7 +529,7 @@ toolbox_drop_drawable (GtkWidget    *widget,
 	gimp_layer_new_from_tiles (new_gimage, 
 				   gimp_image_base_type_with_alpha (new_gimage), 
 				   tiles,
-				   "", OPAQUE_OPACITY, NORMAL_MODE);
+				   "", OPAQUE_OPACITY, GIMP_NORMAL_MODE);
 
       tile_manager_destroy (tiles);
     }

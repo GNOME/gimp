@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,30 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_WIDGETS_CONSTRUCTORS_H__
-#define __GIMP_WIDGETS_CONSTRUCTORS_H__
+#ifndef __CORE_ENUMS_H__
+#define __CORE_ENUMS_H__
+
+/* These enums that are registered with the type system. */
 
 
-GtkWidget * gimp_paint_mode_menu_new (GtkSignalFunc         callback,
-				      gpointer              data,
-				      gboolean              with_behind_mode,
-				      GimpLayerModeEffects  initial);
+#define GIMP_TYPE_PREVIEW_SIZE (gimp_preview_size_get_type ())
+
+GType gimp_preview_size_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_WIDGETS_CONSTRUCTORS_H__  */
+typedef enum
+{
+  GIMP_PREVIEW_SIZE_NONE        = 0,
+  GIMP_PREVIEW_SIZE_TINY        = 16,
+  GIMP_PREVIEW_SIZE_EXTRA_SMALL = 24,
+  GIMP_PREVIEW_SIZE_SMALL       = 32,
+  GIMP_PREVIEW_SIZE_MEDIUM      = 48,
+  GIMP_PREVIEW_SIZE_LARGE       = 64,
+  GIMP_PREVIEW_SIZE_EXTRA_LARGE = 96,
+  GIMP_PREVIEW_SIZE_HUGE        = 128,
+  GIMP_PREVIEW_SIZE_ENORMOUS    = 192,
+  GIMP_PREVIEW_SIZE_GIGANTIC    = 256
+} GimpPreviewSize;
+
+
+#endif /* __CORE_TYPES_H__ */

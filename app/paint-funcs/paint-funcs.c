@@ -63,32 +63,32 @@ struct _LayerMode
 static const LayerMode layer_modes[] =	
                                /* This must obviously be in the same
 			        * order as the corresponding values
-		         	* in the LayerModeEffects enumeration.
+		         	* in the GimpLayerModeEffects enumeration.
 				*/
 {
-  { TRUE,  TRUE,  FALSE, },  /*  NORMAL_MODE        */
-  { TRUE,  TRUE,  FALSE, },  /*  DISSOLVE_MODE      */
-  { TRUE,  TRUE,  FALSE, },  /*  BEHIND_MODE        */
-  { FALSE, FALSE, FALSE, },  /*  MULTIPLY_MODE      */
-  { FALSE, FALSE, FALSE, },  /*  SCREEN_MODE        */
-  { FALSE, FALSE, FALSE, },  /*  OVERLAY_MODE       */
-  { FALSE, FALSE, FALSE, },  /*  DIFFERENCE_MODE    */
-  { FALSE, FALSE, FALSE, },  /*  ADDITION_MODE      */
-  { FALSE, FALSE, FALSE, },  /*  SUBTRACT_MODE      */
-  { FALSE, FALSE, FALSE, },  /*  DARKEN_ONLY_MODE   */
-  { FALSE, FALSE, FALSE, },  /*  LIGHTEN_ONLY_MODE  */
-  { FALSE, FALSE, FALSE, },  /*  HUE_MODE           */
-  { FALSE, FALSE, FALSE, },  /*  SATURATION_MODE    */
-  { FALSE, FALSE, FALSE, },  /*  COLOR_MODE         */
-  { FALSE, FALSE, FALSE, },  /*  VALUE_MODE         */
-  { FALSE, FALSE, FALSE, },  /*  DIVIDE_MODE        */
-  { FALSE, FALSE, FALSE, },  /*  DODGE_MODE         */
-  { FALSE, FALSE, FALSE, },  /*  BURN_MODE          */
-  { FALSE, FALSE, FALSE, },  /*  HARDLIGHT_MODE     */
-  { TRUE,  FALSE, TRUE,  },  /*  COLOR_ERASE_MODE   */
-  { TRUE,  FALSE, TRUE,  },  /*  ERASE_MODE         */
-  { TRUE,  TRUE,  TRUE,  },  /*  REPLACE_MODE       */
-  { TRUE,  TRUE,  FALSE, }   /*  ANTI_ERASE_MODE    */
+  { TRUE,  TRUE,  FALSE, },  /*  GIMP_NORMAL_MODE        */
+  { TRUE,  TRUE,  FALSE, },  /*  GIMP_DISSOLVE_MODE      */
+  { TRUE,  TRUE,  FALSE, },  /*  GIMP_BEHIND_MODE        */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_MULTIPLY_MODE      */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_SCREEN_MODE        */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_OVERLAY_MODE       */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_DIFFERENCE_MODE    */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_ADDITION_MODE      */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_SUBTRACT_MODE      */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_DARKEN_ONLY_MODE   */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_LIGHTEN_ONLY_MODE  */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_HUE_MODE           */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_SATURATION_MODE    */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_COLOR_MODE         */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_VALUE_MODE         */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_DIVIDE_MODE        */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_DODGE_MODE         */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_BURN_MODE          */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_HARDLIGHT_MODE     */
+  { TRUE,  FALSE, TRUE,  },  /*  GIMP_COLOR_ERASE_MODE   */
+  { TRUE,  FALSE, TRUE,  },  /*  GIMP_ERASE_MODE         */
+  { TRUE,  TRUE,  TRUE,  },  /*  GIMP_REPLACE_MODE       */
+  { TRUE,  TRUE,  FALSE, }   /*  GIMP_ANTI_ERASE_MODE    */
 };
 
 typedef void (* LayerModeFunc) (struct apply_layer_mode_struct *);
@@ -444,14 +444,14 @@ paint_funcs_setup (void)
 #ifdef HAVE_ASM_MMX
   if (use_mmx)
   {
-    layer_mode_funcs[DIFFERENCE_MODE] = layer_difference_mode_mmx;
-    layer_mode_funcs[ADDITION_MODE] = layer_addition_mode_mmx;
-    layer_mode_funcs[SUBTRACT_MODE] = layer_subtract_mode_mmx;
-    layer_mode_funcs[OVERLAY_MODE] = layer_overlay_mode_mmx;
-    layer_mode_funcs[SCREEN_MODE] = layer_screen_mode_mmx;
-    layer_mode_funcs[MULTIPLY_MODE] = layer_multiply_mode_mmx;
-    layer_mode_funcs[DARKEN_ONLY_MODE] = layer_darken_only_mode_mmx;
-    layer_mode_funcs[LIGHTEN_ONLY_MODE] = layer_lighten_only_mode_mmx;
+    layer_mode_funcs[GIMP_DIFFERENCE_MODE] = layer_difference_mode_mmx;
+    layer_mode_funcs[GIMP_ADDITION_MODE] = layer_addition_mode_mmx;
+    layer_mode_funcs[GIMP_SUBTRACT_MODE] = layer_subtract_mode_mmx;
+    layer_mode_funcs[GIMP_OVERLAY_MODE] = layer_overlay_mode_mmx;
+    layer_mode_funcs[GIMP_SCREEN_MODE] = layer_screen_mode_mmx;
+    layer_mode_funcs[GIMP_MULTIPLY_MODE] = layer_multiply_mode_mmx;
+    layer_mode_funcs[GIMP_DARKEN_ONLY_MODE] = layer_darken_only_mode_mmx;
+    layer_mode_funcs[GIMP_LIGHTEN_ONLY_MODE] = layer_lighten_only_mode_mmx;
   }
 #endif /* HAVE_ASM_MMX */
 }
@@ -2302,12 +2302,12 @@ extract_from_region (PixelRegion *src,
 
 
 void
-convolve_region (PixelRegion	*srcR,
-		 PixelRegion	*destR,
-		 gint		*matrix,
-		 gint		 size,
-		 gint		 divisor,
-		 ConvolutionType mode)
+convolve_region (PixelRegion	     *srcR,
+		 PixelRegion	     *destR,
+		 gint		     *matrix,
+		 gint		      size,
+		 gint		     divisor,
+		 GimpConvolutionType mode)
 {
   /*  Convolve the src image using the convolution matrix, writing to dest  */
   /*  Convolve is not tile-enabled--use accordingly  */
@@ -2324,10 +2324,10 @@ convolve_region (PixelRegion	*srcR,
   gint    offset;
 
   /*  If the mode is NEGATIVE_CONVOL, the offset should be 128  */
-  if (mode == NEGATIVE_CONVOL)
+  if (mode == GIMP_NEGATIVE_CONVOL)
     {
       offset = 128;
-      mode = NORMAL_CONVOL;
+      mode = GIMP_NORMAL_CONVOL;
     }
   else
     offset = 0;
@@ -2393,7 +2393,7 @@ convolve_region (PixelRegion	*srcR,
 	    {
 	      total [b] = total [b] / divisor + offset;
 
-	      if (total [b] < 0 && mode != NORMAL_CONVOL)
+	      if (total [b] < 0 && mode != GIMP_NORMAL_CONVOL)
 		total [b] = - total [b];
 
 	      if (total [b] < 0)
@@ -4152,11 +4152,11 @@ copy_gray_to_region (PixelRegion *src,
 
 struct initial_regions_struct
 {
-  guint             opacity;
-  LayerModeEffects  mode;
-  gboolean         *affect;
-  InitialMode	    type;
-  guchar           *data;
+  guint                 opacity;
+  GimpLayerModeEffects  mode;
+  gboolean             *affect;
+  InitialMode	        type;
+  guchar               *data;
 };
 
 void
@@ -4165,14 +4165,14 @@ initial_sub_region (struct initial_regions_struct *st,
 		    PixelRegion                   *dest,
 		    PixelRegion                   *mask)
 {
-  gint              h;
-  guchar           *s, *d, *m;
-  guchar            buf[512];
-  guchar           *data;
-  guint             opacity;
-  LayerModeEffects  mode;
-  gboolean         *affect;
-  InitialMode       type;
+  gint                  h;
+  guchar               *s, *d, *m;
+  guchar                buf[512];
+  guchar               *data;
+  guint                 opacity;
+  GimpLayerModeEffects  mode;
+  gboolean             *affect;
+  InitialMode           type;
 
   data    = st->data;
   opacity = st->opacity;
@@ -4206,7 +4206,7 @@ initial_sub_region (struct initial_regions_struct *st,
        break;
 
      case INITIAL_INTENSITY:
-       if (mode == DISSOLVE_MODE)
+       if (mode == GIMP_DISSOLVE_MODE)
        {
 	 dissolve_pixels (s, buf, src->x, src->y + h, opacity, src->w, src->bytes,
 			  src->bytes + 1, 0);
@@ -4218,7 +4218,7 @@ initial_sub_region (struct initial_regions_struct *st,
        break;
 
      case INITIAL_INTENSITY_ALPHA:
-       if (mode == DISSOLVE_MODE)
+       if (mode == GIMP_DISSOLVE_MODE)
        {
 	 dissolve_pixels (s, buf, src->x, src->y + h, opacity, src->w, src->bytes,
 			  src->bytes, 1);
@@ -4238,14 +4238,14 @@ initial_sub_region (struct initial_regions_struct *st,
 }
 
 void
-initial_region (PixelRegion	 *src,
-		PixelRegion	 *dest,
-		PixelRegion	 *mask,
-		guchar	         *data,
-		gint		  opacity,
-		LayerModeEffects  mode,
-		gboolean	 *affect,
-		InitialMode	  type)
+initial_region (PixelRegion	     *src,
+		PixelRegion	     *dest,
+		PixelRegion	     *mask,
+		guchar	             *data,
+		gint		      opacity,
+		GimpLayerModeEffects  mode,
+		gboolean	     *affect,
+		InitialMode	      type)
 {
   struct initial_regions_struct st;
 
@@ -4261,31 +4261,31 @@ initial_region (PixelRegion	 *src,
 
 struct combine_regions_struct
 {
-  guint             opacity;
-  LayerModeEffects  mode;
-  gboolean         *affect;
-  CombinationMode   type;
-  guchar           *data;
-  gboolean          opacity_quickskip_possible;
-  gboolean          transparency_quickskip_possible;
+  guint                 opacity;
+  GimpLayerModeEffects  mode;
+  gboolean             *affect;
+  CombinationMode       type;
+  guchar               *data;
+  gboolean              opacity_quickskip_possible;
+  gboolean              transparency_quickskip_possible;
 };
 
 static inline CombinationMode
-apply_indexed_layer_mode (guchar            *src1,
-			  guchar            *src2,
-			  guchar           **dest,
-			  LayerModeEffects   mode,
-			  CombinationMode    cmode)
+apply_indexed_layer_mode (guchar                *src1,
+			  guchar                *src2,
+			  guchar               **dest,
+			  GimpLayerModeEffects   mode,
+			  CombinationMode        cmode)
 {
   /*  assumes we're applying src2 TO src1  */
   switch (mode)
     {
-    case REPLACE_MODE:
+    case GIMP_REPLACE_MODE:
       *dest = src2;
       cmode = REPLACE_INDEXED;
       break;
 
-    case BEHIND_MODE:
+    case GIMP_BEHIND_MODE:
       *dest = src2;
       if (cmode == COMBINE_INDEXED_A_INDEXED_A)
 	cmode = BEHIND_INDEXED;
@@ -4293,7 +4293,7 @@ apply_indexed_layer_mode (guchar            *src1,
 	cmode = NO_COMBINATION;
       break;
 
-    case ERASE_MODE:
+    case GIMP_ERASE_MODE:
       *dest = src2;
       /*  If both sources have alpha channels, call erase function.
        *  Otherwise, just combine in the normal manner
@@ -4316,20 +4316,20 @@ combine_sub_region (struct combine_regions_struct *st,
 		    PixelRegion                   *dest,
 		    PixelRegion                   *mask)
 {
-  guchar           *data;
-  guint             opacity;
-  LayerModeEffects  mode;
-  gboolean         *affect;
-  guint             h;
-  CombinationMode   combine = NO_COMBINATION;
-  CombinationMode   type;
-  guint             mode_affect = 0;
-  guchar           *s, *s1, *s2;
-  guchar           *d, *m;
-  guchar            buf[512];
-  gboolean          opacity_quickskip_possible;
-  gboolean          transparency_quickskip_possible;
-  TileRowHint       hint;
+  guchar               *data;
+  guint                 opacity;
+  GimpLayerModeEffects  mode;
+  gboolean             *affect;
+  guint                 h;
+  CombinationMode       combine = NO_COMBINATION;
+  CombinationMode       type;
+  guint                 mode_affect = 0;
+  guchar               *s, *s1, *s2;
+  guchar               *d, *m;
+  guchar                buf[512];
+  gboolean              opacity_quickskip_possible;
+  gboolean              transparency_quickskip_possible;
+  TileRowHint           hint;
 
   opacity    = st->opacity;
   mode       = st->mode;
@@ -4583,15 +4583,15 @@ combine_sub_region (struct combine_regions_struct *st,
 
 
 void
-combine_regions (PixelRegion	  *src1,
-		 PixelRegion	  *src2,
-		 PixelRegion   	  *dest,
-		 PixelRegion  	  *mask,
-		 guchar	          *data,
-		 guint		   opacity,
-		 LayerModeEffects  mode,
-		 gboolean         *affect,
-		 CombinationMode   type)
+combine_regions (PixelRegion	      *src1,
+		 PixelRegion	      *src2,
+		 PixelRegion   	      *dest,
+		 PixelRegion  	      *mask,
+		 guchar	              *data,
+		 guint		       opacity,
+		 GimpLayerModeEffects  mode,
+		 gboolean             *affect,
+		 CombinationMode       type)
 {
   gboolean has_alpha1, has_alpha2;
   guint i;

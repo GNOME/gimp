@@ -92,9 +92,9 @@ render_setup (GimpCheckType check_type,
 {
   gint i, j;
 
-  if (check_type < LIGHT_CHECKS || check_type > BLACK_ONLY)
+  if (check_type < GIMP_LIGHT_CHECKS || check_type > GIMP_BLACK_ONLY)
     g_error ("invalid check_type argument to render_setup: %d", check_type);
-  if (check_size < SMALL_CHECKS || check_size > LARGE_CHECKS)
+  if (check_size < GIMP_SMALL_CHECKS || check_size > GIMP_LARGE_CHECKS)
     g_error ("invalid check_size argument to render_setup: %d", check_size);
 
   /*  based on the tile size, determine the tile shift amount
@@ -124,15 +124,15 @@ render_setup (GimpCheckType check_type,
 
   switch (check_size)
     {
-    case SMALL_CHECKS:
+    case GIMP_SMALL_CHECKS:
       check_mod   = 0x3;
       check_shift = 2;
       break;
-    case MEDIUM_CHECKS:
+    case GIMP_MEDIUM_CHECKS:
       check_mod   = 0x7;
       check_shift = 3;
       break;
-    case LARGE_CHECKS:
+    case GIMP_LARGE_CHECKS:
       check_mod   = 0xf;
       check_shift = 4;
       break;

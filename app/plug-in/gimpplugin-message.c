@@ -528,65 +528,6 @@ plug_in_kill (void)
     }
 }
 
-void
-plug_in_add (gchar *prog,
-	     gchar *menu_path,
-	     gchar *accelerator)
-{
-  PlugInProcDef *proc_def;
-  GSList        *tmp;
-
-  g_return_if_fail (prog != NULL);
-
-  if (strncmp ("plug_in_", prog, 8) != 0)
-    {
-      gchar *t = g_strdup_printf ("plug_in_%s", prog);
-      g_free (prog);
-      prog = t;
-    }
-
-  tmp = gimprc_proc_defs;
-  while (tmp)
-    {
-      proc_def = tmp->data;
-      tmp = tmp->next;
-
-      if (strcmp (proc_def->db_info.name, prog) == 0)
-	{
-	  if (proc_def->db_info.name)
-	    g_free (proc_def->db_info.name);
-	  if (proc_def->menu_path)
-	    g_free (proc_def->menu_path);
-	  if (proc_def->accelerator)
-	    g_free (proc_def->accelerator);
-	  if (proc_def->extensions)
-	    g_free (proc_def->extensions);
-	  if (proc_def->prefixes)
-	    g_free (proc_def->prefixes);
-	  if (proc_def->magics)
-	    g_free (proc_def->magics);
-	  if (proc_def->image_types)
-	    g_free (proc_def->image_types);
-
-	  proc_def->db_info.name = prog;
-	  proc_def->menu_path    = menu_path;
-	  proc_def->accelerator  = accelerator;
-	  proc_def->prefixes     = NULL;
-	  proc_def->extensions   = NULL;
-	  proc_def->magics       = NULL;
-	  proc_def->image_types  = NULL;
-	  return;
-	}
-    }
-
-  proc_def = g_new0 (PlugInProcDef, 1);
-  proc_def->db_info.name = prog;
-  proc_def->menu_path    = menu_path;
-  proc_def->accelerator  = accelerator;
-
-  gimprc_proc_defs = g_slist_prepend (gimprc_proc_defs, proc_def);
-}
-
 gchar *
 plug_in_image_types (gchar *name)
 {

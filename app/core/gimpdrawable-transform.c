@@ -741,7 +741,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
 				   gimp_drawable_type_with_alpha (drawable),
 				   tiles,
 				   _("Transformation"),
-				   OPAQUE_OPACITY, NORMAL_MODE);
+				   OPAQUE_OPACITY, GIMP_NORMAL_MODE);
       if (! layer)
         {
           g_warning ("%s: gimp_layer_new_frome_tiles() failed",

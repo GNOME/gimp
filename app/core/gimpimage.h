@@ -295,7 +295,7 @@ void            gimp_image_apply_image           (GimpImage          *gimage,
                                                   PixelRegion        *src2PR,
                                                   gboolean            undo,
                                                   gint                opacity,
-                                                  LayerModeEffects    mode,
+                                                  GimpLayerModeEffects  mode,
                                                   TileManager        *src1_tiles,
                                                   gint                x,
                                                   gint                y);

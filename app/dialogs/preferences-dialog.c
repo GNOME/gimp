@@ -1883,12 +1883,12 @@ preferences_dialog_create (Gimp *gimp)
      &gimprc.transparency_type,
      GINT_TO_POINTER (gimprc.transparency_type),
 
-     _("Light Checks"),    GINT_TO_POINTER (LIGHT_CHECKS), NULL,
-     _("Mid-Tone Checks"), GINT_TO_POINTER (GRAY_CHECKS),  NULL,
-     _("Dark Checks"),     GINT_TO_POINTER (DARK_CHECKS),  NULL,
-     _("White Only"),      GINT_TO_POINTER (WHITE_ONLY),   NULL,
-     _("Gray Only"),       GINT_TO_POINTER (GRAY_ONLY),    NULL,
-     _("Black Only"),      GINT_TO_POINTER (BLACK_ONLY),   NULL,
+     _("Light Checks"),    GINT_TO_POINTER (GIMP_LIGHT_CHECKS), NULL,
+     _("Mid-Tone Checks"), GINT_TO_POINTER (GIMP_GRAY_CHECKS),  NULL,
+     _("Dark Checks"),     GINT_TO_POINTER (GIMP_DARK_CHECKS),  NULL,
+     _("White Only"),      GINT_TO_POINTER (GIMP_WHITE_ONLY),   NULL,
+     _("Gray Only"),       GINT_TO_POINTER (GIMP_GRAY_ONLY),    NULL,
+     _("Black Only"),      GINT_TO_POINTER (GIMP_BLACK_ONLY),   NULL,
 
      NULL);
 
@@ -1902,9 +1902,12 @@ preferences_dialog_create (Gimp *gimp)
 			   &gimprc.transparency_size,
 			   GINT_TO_POINTER (gimprc.transparency_size),
 
-			   _("Small"),  GINT_TO_POINTER (SMALL_CHECKS),  NULL,
-			   _("Medium"), GINT_TO_POINTER (MEDIUM_CHECKS), NULL,
-			   _("Large"),  GINT_TO_POINTER (LARGE_CHECKS),  NULL,
+			   _("Small"),  
+                           GINT_TO_POINTER (GIMP_SMALL_CHECKS),  NULL,
+			   _("Medium"), 
+                           GINT_TO_POINTER (GIMP_MEDIUM_CHECKS), NULL,
+			   _("Large"),  
+                           GINT_TO_POINTER (GIMP_LARGE_CHECKS),  NULL,
 
 			   NULL);
 

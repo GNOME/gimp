@@ -135,7 +135,7 @@ static void      gimp_paint_tool_paste                (GimpPaintTool	       *gim
 						       GimpDrawable	       *drawable,
 						       gint		        brush_opacity,
 						       gint		        image_opacity,
-						       LayerModeEffects      paint_mode,
+						       GimpLayerModeEffects     paint_mode,
 						       PaintApplicationMode  mode);
 static void      gimp_paint_tool_replace              (GimpPaintTool            *gimp_paint_tool,
 						       MaskBuf              *brush_mask,
@@ -1238,7 +1238,7 @@ gimp_paint_tool_paste_canvas (GimpPaintTool	   *paint_tool,
 			      GimpDrawable	   *drawable,
 			      gint		    brush_opacity,
 			      gint		    image_opacity,
-			      LayerModeEffects      paint_mode,
+			      GimpLayerModeEffects  paint_mode,
 			      BrushApplicationMode  brush_hardness,
 			      gdouble               brush_scale,
 			      PaintApplicationMode  mode)
@@ -1661,7 +1661,7 @@ gimp_paint_tool_paste (GimpPaintTool        *paint_tool,
 		       GimpDrawable         *drawable,
 		       gint                  brush_opacity,
 		       gint                  image_opacity,
-		       LayerModeEffects      paint_mode,
+		       GimpLayerModeEffects  paint_mode,
 		       PaintApplicationMode  mode)
 {
   GimpImage   *gimage;
@@ -1757,7 +1757,7 @@ gimp_paint_tool_replace (GimpPaintTool        *paint_tool,
   if (! gimp_drawable_has_alpha (drawable))
     {
       gimp_paint_tool_paste (paint_tool, brush_mask, drawable,
-			     brush_opacity, image_opacity, NORMAL_MODE,
+			     brush_opacity, image_opacity, GIMP_NORMAL_MODE,
 			     mode);
       return;
     }

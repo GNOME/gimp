@@ -1,5 +1,72 @@
 2001-12-08  Sven Neumann  <sven@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/core-enums.h: new file that holds enums that are registered
+	with the type system and is used to generate core-enums.c.
+	
+	* app/core/core-types.h: include core-enums.h
+
+	* app/base/base-types.h: namespace cleanup. Prefix all enumeration
+	types with Gimp and their values with GIMP. Moved GimpLayerModeEffects
+	enum ...
+
+	* app/base/base-enums.h: ... here.
+
+	* app/image_map.c
+	* app/base/temp-buf.c
+	* app/core/gimpcontext.[ch]
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpimage-projection.c
+	* app/core/gimpimage.[ch]
+	* app/core/gimplayer.[ch]
+	* app/display/gimpdisplayshell-dnd.c
+	* app/display/gimpdisplayshell-render.c
+	* app/gui/brush-select.c
+	* app/gui/layers-commands.c
+	* app/gui/preferences-dialog.c
+	* app/gui/toolbox.c
+	* app/paint-funcs/paint-funcs.[ch]
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimppainttool.[ch]
+	* app/tools/gimptexttool.c
+	* app/tools/paint_options.c
+	* app/widgets/gimplayerlistview.c
+	* app/widgets/gimpwidgets-constructors.[ch]
+	* app/xcf/xcf-load.c
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/tools.pdb: changed accordingly.
+	
+	* libgimpbase/gimpbasetypes.h: no need to chop GIMP prefix off the 
+	enums any longer.
+	
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/color_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/message_cmds.c
+	* app/pdb/procedural_db_cmds.c
+	* app/pdb/tools_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/gimprc.c: removed code to parse for "plug_in" keyword which was 
+	left over from some very early gimp days.
+	
+	* app/plug-in/plug-in.[ch]: removed now unused function plug_in_add().
+
+2001-12-08  Sven Neumann  <sven@gimp.org>
+
 	* app/core/Makefile.am: fixed build rules for gimpmarshal.[ch].
 	
 2001-12-08  Sven Neumann  <sven@gimp.org>

@@ -41,68 +41,40 @@
 
 /*  enums  */
 
-/* Layer modes  */
-typedef enum 
-{
-  NORMAL_MODE,
-  DISSOLVE_MODE,
-  BEHIND_MODE,
-  MULTIPLY_MODE,
-  SCREEN_MODE,
-  OVERLAY_MODE,
-  DIFFERENCE_MODE,
-  ADDITION_MODE,
-  SUBTRACT_MODE,
-  DARKEN_ONLY_MODE,
-  LIGHTEN_ONLY_MODE,
-  HUE_MODE,
-  SATURATION_MODE,
-  COLOR_MODE,
-  VALUE_MODE,
-  DIVIDE_MODE,
-  DODGE_MODE,
-  BURN_MODE,
-  HARDLIGHT_MODE,
-  COLOR_ERASE_MODE,
-  ERASE_MODE,         /*< skip >*/
-  REPLACE_MODE,       /*< skip >*/
-  ANTI_ERASE_MODE     /*< skip >*/
-} LayerModeEffects;
-
 /* Types of convolutions  */
 typedef enum 
 {
-  NORMAL_CONVOL,		/*  Negative numbers truncated  */
-  ABSOLUTE_CONVOL,		/*  Absolute value              */
-  NEGATIVE_CONVOL		/*  add 127 to values           */
-} ConvolutionType;
+  GIMP_NORMAL_CONVOL,      /*  Negative numbers truncated  */
+  GIMP_ABSOLUTE_CONVOL,    /*  Absolute value              */
+  GIMP_NEGATIVE_CONVOL     /*  add 127 to values           */
+} GimpConvolutionType;
 
 typedef enum
 {
-  VALUE_LUT,
-  RED_LUT,
-  GREEN_LUT,
-  BLUE_LUT,
-  ALPHA_LUT,
-  GRAY_LUT = 0  /*< skip >*/
-} ChannelLutType;
+  GIMP_VALUE_LUT,
+  GIMP_RED_LUT,
+  GIMP_GREEN_LUT,
+  GIMP_BLUE_LUT,
+  GIMP_ALPHA_LUT,
+  GIMP_GRAY_LUT = 0  /*< skip >*/
+} GimpChannelLutType;
 
 /*  Transparency representation  */
 typedef enum /*< skip >*/
 {
-  LIGHT_CHECKS = 0,
-  GRAY_CHECKS  = 1,
-  DARK_CHECKS  = 2,
-  WHITE_ONLY   = 3,
-  GRAY_ONLY    = 4,
-  BLACK_ONLY   = 5
+  GIMP_LIGHT_CHECKS = 0,
+  GIMP_GRAY_CHECKS  = 1,
+  GIMP_DARK_CHECKS  = 2,
+  GIMP_WHITE_ONLY   = 3,
+  GIMP_GRAY_ONLY    = 4,
+  GIMP_BLACK_ONLY   = 5
 } GimpCheckType;
 
 typedef enum /*< skip >*/
 {
-  SMALL_CHECKS  = 0,
-  MEDIUM_CHECKS = 1,
-  LARGE_CHECKS  = 2
+  GIMP_SMALL_CHECKS  = 0,
+  GIMP_MEDIUM_CHECKS = 1,
+  GIMP_LARGE_CHECKS  = 2
 } GimpCheckSize;
 
 typedef enum /*< skip >*/

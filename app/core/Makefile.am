@@ -16,6 +16,7 @@ INCLUDES = @STRIP_BEGIN@ \
 noinst_LIBRARIES = libappcore.a
 
 libappcore_a_sources = @STRIP_BEGIN@ \
+	core-enums.h			\
 	core-types.h			\
 	gimp.c				\
 	gimp.h				\
@@ -147,6 +148,7 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 @STRIP_END@
 
 libappcore_a_built_sources = @STRIP_BEGIN@ \
+	core-enums.c			\
 	gimpmarshal.c			\
 	gimpmarshal.h			\
 @STRIP_END@
@@ -165,7 +167,7 @@ EXTRA_DIST = \
 # rules to generate built sources
 #
 # setup autogeneration dependancies
-gen_sources = xgen-gmh xgen-gmc
+gen_sources = xgen-gmh xgen-gmc xgen-cec
 CLEANFILES = $(gen_sources)
 
 $(srcdir)/gimpmarshal.h: $(srcdir)/gimpmarshal.list
@@ -179,3 +181,14 @@ $(srcdir)/gimpmarshal.c: $(srcdir)/gimpmarshal.h
 	&& glib-genmarshal --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --body >> xgen-gmc \
 	&& cp xgen-gmc $(srcdir)/gimpmarshal.c \
 	&& rm -f xgen-gmc xgen-gmc~
+
+$(srcdir)/core-enums.c: $(srcdir)/core-enums.h
+	glib-mkenums \
+		--fhead "#include <glib-object.h>\n#include \"core-enums.h\"" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{\n" \
+		--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+		--vtail "  { 0, NULL, NULL }\n};\n\nGType\n@enum_name@_get_type (void)\n{\n  static GType enum_type = 0;\n\n  if (!enum_type)\n    enum_type = g_enum_register_static (\"@EnumName@\", @enum_name@_enum_values);\n\n  return enum_type;\n}\n" \
+		$(srcdir)/core-enums.h > xgen-cec \
+	&& cp xgen-cec $(@F) \
+	&& rm -f xgen-cec

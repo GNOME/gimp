@@ -53,28 +53,28 @@
 
 
 /*  local function prototypes  */
-static void     brush_select_change_callbacks       (BrushSelect      *bsp,
-						     gboolean          closing);
+static void     brush_select_change_callbacks   (BrushSelect          *bsp,
+                                                 gboolean              closing);
 
-static void     brush_select_brush_changed          (GimpContext      *context,
-						     GimpBrush        *brush,
-						     BrushSelect      *bsp);
-static void     brush_select_opacity_changed        (GimpContext      *context,
-						     gdouble           opacity,
-						     BrushSelect      *bsp);
-static void     brush_select_paint_mode_changed     (GimpContext      *context,
-						     LayerModeEffects  paint_mode,
-						     BrushSelect      *bsp);
+static void     brush_select_brush_changed      (GimpContext          *context,
+                                                 GimpBrush            *brush,
+                                                 BrushSelect          *bsp);
+static void     brush_select_opacity_changed    (GimpContext          *context,
+                                                 gdouble               opacity,
+                                                 BrushSelect          *bsp);
+static void     brush_select_paint_mode_changed (GimpContext          *context,
+                                                 GimpLayerModeEffects  paint_mode,
+                                                 BrushSelect          *bsp);
 
-static void     opacity_scale_update                (GtkAdjustment    *adj,
-						     gpointer          data);
-static void     paint_mode_menu_callback            (GtkWidget        *widget,
-						     gpointer          data);
-static void     spacing_scale_update                (GtkAdjustment    *adj,
-						     gpointer          data);
+static void     opacity_scale_update            (GtkAdjustment        *adj,
+                                                 gpointer              data);
+static void     paint_mode_menu_callback        (GtkWidget            *widget,
+                                                 gpointer              data);
+static void     spacing_scale_update            (GtkAdjustment        *adj,
+                                                 gpointer              data);
 
-static void     brush_select_close_callback         (GtkWidget       *widget,
-						     gpointer         data);
+static void     brush_select_close_callback     (GtkWidget            *widget,
+                                                 gpointer              data);
 
 
 /*  list of active dialogs  */
@@ -484,9 +484,9 @@ brush_select_opacity_changed (GimpContext *context,
 }
 
 static void
-brush_select_paint_mode_changed (GimpContext      *context,
-				 LayerModeEffects  paint_mode,
-				 BrushSelect      *bsp)
+brush_select_paint_mode_changed (GimpContext          *context,
+				 GimpLayerModeEffects  paint_mode,
+				 BrushSelect          *bsp)
 {
   gimp_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu),
 				GINT_TO_POINTER (paint_mode));
@@ -518,12 +518,12 @@ static void
 paint_mode_menu_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  BrushSelect      *bsp;
-  LayerModeEffects  paint_mode;
+  BrushSelect          *bsp;
+  GimpLayerModeEffects  paint_mode;
 
   bsp = (BrushSelect *) data;
 
-  paint_mode = (LayerModeEffects)
+  paint_mode = (GimpLayerModeEffects)
     GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "gimp-item-data"));
 
   gimp_context_set_paint_mode (bsp->context, paint_mode);

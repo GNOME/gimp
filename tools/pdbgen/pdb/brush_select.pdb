@@ -30,7 +30,7 @@ sub brush_args {(
       type => '0 <= int32 <= 1000',
       desc => 'The initial spacing of the brush (if < 0 then use brush default
 	       spacing)' },
-    { name => 'paint_mode', type => 'enum LayerModeEffects',
+    { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
       desc => 'The initial paint mode: { %%desc%% }'  }
 )}
 

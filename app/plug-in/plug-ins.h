@@ -92,13 +92,6 @@ void            plug_in_init                 (Gimp               *gimp,
 /* Kill all running plug-ins */
 void            plug_in_kill                 (void);
 
-/*  Add a plug-in to the list of valid plug-ins and query the plug-in
- *  for information if necessary.
- */
-void            plug_in_add                  (gchar         *name,
-					      gchar         *menu_path,
-					      gchar         *accelerator);
-
 /* Get the "image_types" the plug-in works on. */
 gchar         * plug_in_image_types          (gchar         *name);
 

@@ -136,31 +136,31 @@ void    gimp_paint_tool_get_color_from_gradient (GimpPaintTool     *tool,
 						 GradientPaintMode  mode);
 
 /*  paint tool painting functions  */
-TempBuf * gimp_paint_tool_get_paint_area  (GimpPaintTool     *tool,
-					  GimpDrawable         *drawable,
-					  gdouble               scale);
-TempBuf * gimp_paint_tool_get_orig_image  (GimpPaintTool     *tool,
-					  GimpDrawable         *drawable,
-					  gint                  x1,
-					  gint                  y1,
-					  gint                  x2,
-					  gint                  y2);
-void  gimp_paint_tool_paste_canvas    (GimpPaintTool     *tool,
+TempBuf * gimp_paint_tool_get_paint_area  (GimpPaintTool    *tool,
+                                           GimpDrawable     *drawable,
+                                           gdouble           scale);
+TempBuf * gimp_paint_tool_get_orig_image  (GimpPaintTool    *tool,
+                                           GimpDrawable     *drawable,
+                                           gint              x1,
+                                           gint              y1,
+                                           gint              x2,
+                                           gint              y2);
+void  gimp_paint_tool_paste_canvas    (GimpPaintTool        *tool,
 				       GimpDrawable         *drawable,
 				       gint                  brush_opacity,
 				       gint                  image_opacity,
-				       LayerModeEffects      paint_mode,
+				       GimpLayerModeEffects  paint_mode,
 				       BrushApplicationMode  brush_hardness,
 				       gdouble               brush_scale,
 				       PaintApplicationMode  mode);
-void  gimp_paint_tool_replace_canvas  (GimpPaintTool     *tool,
+void  gimp_paint_tool_replace_canvas  (GimpPaintTool        *tool,
 				       GimpDrawable         *drawable,
 				       gint                  brush_opacity,
 				       gint                  image_opacity,
 				       BrushApplicationMode  brush_hardness,
 				       gdouble               brush_scale,
 				       PaintApplicationMode  mode);
-void gimp_paint_tool_color_area_with_pixmap (GimpPaintTool     *tool,
+void gimp_paint_tool_color_area_with_pixmap (GimpPaintTool        *tool,
 					     GimpImage            *dest, 
 					     GimpDrawable         *drawable,
 					     TempBuf              *area, 

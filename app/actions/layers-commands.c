@@ -538,7 +538,7 @@ new_layer_query_ok_callback (GtkWidget *widget,
 
       layer = gimp_layer_new (gimage, options->xsize, options->ysize,
 			      gimp_image_base_type_with_alpha (gimage),
-			      layer_name, OPAQUE_OPACITY, NORMAL_MODE);
+			      layer_name, OPAQUE_OPACITY, GIMP_NORMAL_MODE);
       if (layer) 
 	{
 	  gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),

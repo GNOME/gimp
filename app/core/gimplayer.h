@@ -35,15 +35,15 @@ typedef struct _GimpLayerClass GimpLayerClass;
 
 struct _GimpLayer
 {
-  GimpDrawable      parent_instance;
+  GimpDrawable          parent_instance;
 
-  gint              opacity;          /*  layer opacity                  */
-  LayerModeEffects  mode;             /*  layer combination mode         */
-  gboolean          preserve_trans;   /*  preserve transparency          */
+  gint                  opacity;          /*  layer opacity              */
+  GimpLayerModeEffects  mode;             /*  layer combination mode     */
+  gboolean              preserve_trans;   /*  preserve transparency      */
 
-  gboolean          linked;           /*  control linkage                */
+  gboolean              linked;           /*  control linkage            */
 
-  GimpLayerMask    *mask;             /*  possible layer mask            */
+  GimpLayerMask        *mask;             /*  possible layer mask        */
 
   /*  Floating selections  */
   struct
@@ -88,79 +88,80 @@ struct _FStoLayerUndo
 
 /*  function declarations  */
 
-GType           gimp_layer_get_type            (void) G_GNUC_CONST;
+GType           gimp_layer_get_type        (void) G_GNUC_CONST;
 
-GimpLayer     * gimp_layer_new                 (GimpImage        *gimage,
-						gint              width,
-						gint              height,
-						GimpImageType     type,
-						const gchar      *name,
-						gint              opacity,
-						LayerModeEffects  mode);
-GimpLayer     * gimp_layer_copy                (GimpLayer        *layer,
-						gboolean          add_alpha);
+GimpLayer     * gimp_layer_new             (GimpImage            *gimage,
+                                            gint                  width,
+                                            gint                  height,
+                                            GimpImageType         type,
+                                            const gchar          *name,
+                                            gint                  opacity,
+                                            GimpLayerModeEffects  mode);
+GimpLayer     * gimp_layer_copy            (GimpLayer            *layer,
+                                            gboolean              add_alpha);
 
-GimpLayer     * gimp_layer_new_from_tiles      (GimpImage        *gimage,
-						GimpImageType     layer_type,
-						TileManager      *tiles,
-						gchar            *name,
-						gint              opacity,
-						LayerModeEffects  mode);
-gboolean        gimp_layer_check_scaling       (GimpLayer        *layer,
-						gint              new_width,
-						gint              new_height);
-GimpLayerMask * gimp_layer_create_mask         (GimpLayer        *layer,
-						AddMaskType       add_mask_type);
-GimpLayerMask * gimp_layer_add_mask            (GimpLayer        *layer,
-						GimpLayerMask    *mask,
-                                                gboolean          push_undo);
-void            gimp_layer_apply_mask          (GimpLayer        *layer,
-						MaskApplyMode     mode,
-                                                gboolean          push_undo);
-void            gimp_layer_translate           (GimpLayer        *layer,
-						gint              off_x,
-						gint              off_y);
-void            gimp_layer_add_alpha           (GimpLayer        *layer);
-gboolean        gimp_layer_scale_by_factors    (GimpLayer        *layer, 
-						gdouble           w_factor, 
-						gdouble           h_factor);
-void            gimp_layer_scale               (GimpLayer        *layer, 
-						gint              new_width,
-						gint              new_height,
-						gboolean          local_origin);
-void            gimp_layer_resize              (GimpLayer        *layer,
-						gint              new_width,
-						gint              new_height,
-						gint              offx,
-						gint              offy);
-void            gimp_layer_resize_to_image     (GimpLayer        *layer);
-BoundSeg      * gimp_layer_boundary            (GimpLayer        *layer, 
-						gint             *num_segs);
-void            gimp_layer_invalidate_boundary (GimpLayer        *layer);
-gint            gimp_layer_pick_correlate      (GimpLayer        *layer, 
-						gint              x, 
-						gint              y);
+GimpLayer     * gimp_layer_new_from_tiles  (GimpImage            *gimage,
+                                            GimpImageType         layer_type,
+                                            TileManager          *tiles,
+                                            gchar                *name,
+                                            gint                  opacity,
+                                            GimpLayerModeEffects  mode);
 
-GimpLayerMask * gimp_layer_get_mask            (GimpLayer        *layer);
+gboolean        gimp_layer_check_scaling   (GimpLayer          *layer,
+                                            gint                new_width,
+                                            gint                new_height);
+GimpLayerMask * gimp_layer_create_mask     (GimpLayer          *layer,
+                                            AddMaskType         add_mask_type);
+GimpLayerMask * gimp_layer_add_mask        (GimpLayer          *layer,
+                                            GimpLayerMask      *mask,
+                                            gboolean            push_undo);
+void            gimp_layer_apply_mask      (GimpLayer          *layer,
+                                            MaskApplyMode       mode,
+                                            gboolean            push_undo);
+void            gimp_layer_translate        (GimpLayer         *layer,
+                                             gint               off_x,
+                                             gint               off_y);
+void            gimp_layer_add_alpha        (GimpLayer         *layer);
+gboolean        gimp_layer_scale_by_factors (GimpLayer         *layer, 
+                                             gdouble            w_factor, 
+                                             gdouble            h_factor);
+void            gimp_layer_scale            (GimpLayer         *layer, 
+                                             gint               new_width,
+                                             gint               new_height,
+                                             gboolean           local_origin);
+void            gimp_layer_resize           (GimpLayer         *layer,
+                                             gint               new_width,
+                                             gint               new_height,
+                                             gint               offx,
+                                             gint               offy);
+void            gimp_layer_resize_to_image  (GimpLayer         *layer);
+BoundSeg      * gimp_layer_boundary         (GimpLayer         *layer, 
+                                             gint              *num_segs);
+void            gimp_layer_invalidate_boundary (GimpLayer      *layer);
+gint            gimp_layer_pick_correlate   (GimpLayer         *layer, 
+                                             gint               x, 
+                                             gint               y);
 
-gboolean        gimp_layer_has_alpha           (GimpLayer        *layer);
-gboolean        gimp_layer_is_floating_sel     (GimpLayer        *layer);
+GimpLayerMask * gimp_layer_get_mask         (GimpLayer         *layer);
 
-void            gimp_layer_set_opacity         (GimpLayer        *layer,
-                                                gdouble           opacity);
-gdouble         gimp_layer_get_opacity         (GimpLayer        *layer);
+gboolean        gimp_layer_has_alpha        (GimpLayer         *layer);
+gboolean        gimp_layer_is_floating_sel  (GimpLayer         *layer);
 
-void            gimp_layer_set_mode            (GimpLayer        *layer,
-                                                LayerModeEffects  mode);
-LayerModeEffects gimp_layer_get_mode           (GimpLayer        *layer);
+void            gimp_layer_set_opacity      (GimpLayer         *layer,
+                                             gdouble            opacity);
+gdouble         gimp_layer_get_opacity      (GimpLayer         *layer);
 
-void            gimp_layer_set_preserve_trans  (GimpLayer        *layer,
-                                                gboolean          preserve);
-gboolean        gimp_layer_get_preserve_trans  (GimpLayer        *layer);
+void                 gimp_layer_set_mode (GimpLayer            *layer,
+                                          GimpLayerModeEffects  mode);
+GimpLayerModeEffects gimp_layer_get_mode (GimpLayer            *layer);
 
-void            gimp_layer_set_linked          (GimpLayer        *layer,
-                                                gboolean          linked);
-gboolean        gimp_layer_get_linked          (GimpLayer        *layer);
+void            gimp_layer_set_preserve_trans  (GimpLayer      *layer,
+                                                gboolean        preserve);
+gboolean        gimp_layer_get_preserve_trans  (GimpLayer      *layer);
+
+void            gimp_layer_set_linked          (GimpLayer      *layer,
+                                                gboolean        linked);
+gboolean        gimp_layer_get_linked          (GimpLayer      *layer);
 
 
 #endif /* __GIMP_LAYER_H__ */

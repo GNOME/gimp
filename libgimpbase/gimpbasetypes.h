@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 typedef struct _GimpParasite    GimpParasite;
 
 
-typedef enum /*< chop=GIMP_ >*/
+typedef enum
 {
   GIMP_UNIT_PIXEL   = 0,
 
@@ -46,7 +46,7 @@ typedef enum /*< chop=GIMP_ >*/
   GIMP_UNIT_PERCENT = 65536 /*< skip >*/
 } GimpUnit;
 
-typedef enum /*< chop=GIMP_ >*/
+typedef enum
 {
   GIMP_PDB_INT32,
   GIMP_PDB_INT16,
@@ -73,7 +73,7 @@ typedef enum /*< chop=GIMP_ >*/
   GIMP_PDB_END
 } GimpPDBArgType;
 
-typedef enum /*< chop=GIMP_ >*/
+typedef enum
 {
   GIMP_INTERNAL,
   GIMP_PLUGIN,
@@ -81,7 +81,7 @@ typedef enum /*< chop=GIMP_ >*/
   GIMP_TEMPORARY
 } GimpPDBProcType;
 
-typedef enum /*< chop=GIMP_ >*/
+typedef enum
 {
   GIMP_PDB_EXECUTION_ERROR,
   GIMP_PDB_CALLING_ERROR,
@@ -90,14 +90,14 @@ typedef enum /*< chop=GIMP_ >*/
   GIMP_PDB_CANCEL
 } GimpPDBStatusType;
 
-typedef enum /*< chop=GIMP_ >*/
+typedef enum
 {
   GIMP_MESSAGE_BOX,
   GIMP_CONSOLE,
   GIMP_ERROR_CONSOLE
 } GimpMessageHandlerType;
 
-typedef enum /*< chop=GIMP_ >*/
+typedef enum
 {
   GIMP_STACK_TRACE_NEVER,
   GIMP_STACK_TRACE_QUERY,

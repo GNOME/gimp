@@ -180,7 +180,7 @@ gimp_layer_init (GimpLayer *layer)
   layer->mask           = NULL;
 
   layer->opacity        = 100;
-  layer->mode           = NORMAL_MODE;
+  layer->mode           = GIMP_NORMAL_MODE;
 
   /*  floating selection  */
   layer->fs.backing_store  = NULL;
@@ -279,13 +279,13 @@ gimp_layer_transform_color (GimpImage         *gimage,
 /**************************/
 
 GimpLayer *
-gimp_layer_new (GimpImage        *gimage,
-		gint              width,
-		gint              height,
-		GimpImageType     type,
-		const gchar      *name,
-		gint              opacity,
-		LayerModeEffects  mode)
+gimp_layer_new (GimpImage            *gimage,
+		gint                  width,
+		gint                  height,
+		GimpImageType         type,
+		const gchar          *name,
+		gint                  opacity,
+		GimpLayerModeEffects  mode)
 {
   GimpLayer *layer;
 
@@ -432,12 +432,12 @@ gimp_layer_copy (GimpLayer *layer,
 }
 
 GimpLayer *
-gimp_layer_new_from_tiles (GimpImage        *gimage,
-			   GimpImageType     layer_type,
-			   TileManager      *tiles,
-			   gchar            *name,
-			   gint              opacity,
-			   LayerModeEffects  mode)
+gimp_layer_new_from_tiles (GimpImage            *gimage,
+			   GimpImageType         layer_type,
+			   TileManager          *tiles,
+			   gchar                *name,
+			   gint                  opacity,
+			   GimpLayerModeEffects  mode)
 {
   GimpLayer   *new_layer;
   PixelRegion  layerPR;
@@ -1430,8 +1430,8 @@ gimp_layer_get_opacity (GimpLayer *layer)
 }
 
 void
-gimp_layer_set_mode (GimpLayer        *layer,
-                     LayerModeEffects  mode)
+gimp_layer_set_mode (GimpLayer            *layer,
+                     GimpLayerModeEffects  mode)
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
@@ -1448,10 +1448,10 @@ gimp_layer_set_mode (GimpLayer        *layer,
     }
 }
 
-LayerModeEffects
+GimpLayerModeEffects
 gimp_layer_get_mode (GimpLayer *layer)
 {
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), NORMAL_MODE);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_NORMAL_MODE);
 
   return layer->mode;
 }

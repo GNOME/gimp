@@ -90,7 +90,6 @@ typedef enum
   TT_INTERP,
   TT_XPREVSIZE,
   TT_XUNIT,
-  TT_XPLUGIN,
   TT_XPLUGINDEF,
   TT_XMENUPATH,
   TT_XDEVICE,
@@ -142,7 +141,6 @@ static gint           parse_interpolation_type  (gpointer val1p, gpointer val2p)
 static gint           parse_preview_size        (gpointer val1p, gpointer val2p);
 static gint           parse_nav_preview_size    (gpointer val1p, gpointer val2p);
 static gint           parse_units               (gpointer val1p, gpointer val2p);
-static gint           parse_plug_in             (gpointer val1p, gpointer val2p);
 static gint           parse_plug_in_def         (gpointer val1p, gpointer val2p);
 static gint           parse_device              (gpointer val1p, gpointer val2p);
 static gint           parse_menu_path           (gpointer val1p, gpointer val2p);
@@ -304,7 +302,6 @@ static ParseFunc funcs[] =
   { "theme",                         TT_STRING,        &gimprc.theme, NULL                     },
 
   { "parasite",                      TT_XPARASITE,     NULL, NULL },
-  { "plug-in",                       TT_XPLUGIN,       NULL, NULL },
   { "plug-in-def",                   TT_XPLUGINDEF,    NULL, NULL },
   { "menu-path",                     TT_XMENUPATH,     NULL, NULL },
   { "device",                        TT_XDEVICE,       NULL, NULL },
@@ -918,8 +915,6 @@ parse_statement (void)
 	  return parse_nav_preview_size (func->val1p, func->val2p);
 	case TT_XUNIT:
 	  return parse_units (func->val1p, func->val2p);
-	case TT_XPLUGIN:
-	  return parse_plug_in (func->val1p, func->val2p);
 	case TT_XPLUGINDEF:
 	  return parse_plug_in_def (func->val1p, func->val2p);
 	case TT_XMENUPATH:
@@ -1400,52 +1395,6 @@ parse_units (gpointer val1p,
   if (!token || (token != TOKEN_RIGHT_PAREN))
     return ERROR;
   token = get_next_token ();
-
-  return OK;
-}
-
-static gint
-parse_plug_in (gpointer val1p,
-	       gpointer val2p)
-{
-  gchar *name        = NULL;
-  gchar *menu_path   = NULL;
-  gchar *accelerator = NULL;
-  gint   token;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    return ERROR;
-  token = get_next_token ();
-
-  name = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (token == TOKEN_STRING)
-    {
-      menu_path = g_strdup (token_str);
-      token = get_next_token ();
-    }
-
-  token = peek_next_token ();
-  if (token == TOKEN_STRING)
-    {
-      accelerator = g_strdup (token_str);
-      token = get_next_token ();
-    }
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_RIGHT_PAREN))
-    {
-      g_free (name);
-      g_free (menu_path);
-      g_free (accelerator);
-      return ERROR;
-    }
-  token = get_next_token ();
-
-  if (name && menu_path)
-    plug_in_add (name, menu_path, accelerator);
 
   return OK;
 }
@@ -2881,7 +2830,6 @@ gimprc_value_to_str (const gchar *name)
 	  return cursor_mode_to_str (func->val1p, func->val2p);
 	case TT_XCOMMENT:
 	  return comment_to_str (func->val1p, func->val2p);
-	case TT_XPLUGIN:
 	case TT_XPLUGINDEF:
 	case TT_XMENUPATH:
 	case TT_XDEVICE:

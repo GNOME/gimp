@@ -304,7 +304,7 @@ void  extract_from_region                 (PixelRegion *, PixelRegion *,
 void  convolve_region                     (PixelRegion *,
 					   PixelRegion *,
 					   int *, int, int,
-					   ConvolutionType);
+					   GimpConvolutionType);
 
 void  multiply_alpha_region               (PixelRegion *);
 
@@ -344,13 +344,13 @@ void  copy_gray_to_region                 (PixelRegion *, PixelRegion *);
 
 void  initial_region                      (PixelRegion *, PixelRegion *,
 					   PixelRegion *, guchar *,
-					   int, LayerModeEffects, int *, 
+					   int, GimpLayerModeEffects, int *, 
 					   CombinationMode);
 
 void  combine_regions                     (PixelRegion *, PixelRegion *,
 					   PixelRegion *, PixelRegion *,
 					   guchar *, guint,
-					   LayerModeEffects,
+					   GimpLayerModeEffects,
 					   int *, CombinationMode);
 
 void  combine_regions_replace             (PixelRegion *, PixelRegion *,

@@ -121,7 +121,8 @@ static void gimp_context_copy_opacity        (GimpContext      *src,
 
 /*  paint mode  */
 static void gimp_context_real_set_paint_mode (GimpContext      *context,
-					      LayerModeEffects  paint_mode);
+					      GimpLayerModeEffects  
+                                                               paint_mode);
 static void gimp_context_copy_paint_mode     (GimpContext      *src,
 					      GimpContext      *dest);
 
@@ -578,13 +579,14 @@ gimp_context_class_init (GimpContextClass *klass)
 							1.0,
 							G_PARAM_READWRITE));
 
+  /* FIXME: convert to enum property */
   g_object_class_install_property (object_class,
 				   PROP_PAINT_MODE,
 				   g_param_spec_int (gimp_context_prop_names[PAINT_MODE_CHANGED],
 						     NULL, NULL,
-						     NORMAL_MODE,
-						     ANTI_ERASE_MODE,
-						     NORMAL_MODE,
+						     GIMP_NORMAL_MODE,
+						     GIMP_ANTI_ERASE_MODE,
+						     GIMP_NORMAL_MODE,
 						     G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
@@ -649,7 +651,7 @@ gimp_context_init (GimpContext *context)
   gimp_rgba_set (&context->background, 1.0, 1.0, 1.0, 1.0);
 
   context->opacity       = 1.0;
-  context->paint_mode    = NORMAL_MODE;
+  context->paint_mode    = GIMP_NORMAL_MODE;
 
   context->brush         = NULL;
   context->brush_name    = NULL;
@@ -1754,17 +1756,17 @@ gimp_context_copy_opacity (GimpContext *src,
 /*****************************************************************************/
 /*  paint mode  **************************************************************/
 
-LayerModeEffects
+GimpLayerModeEffects
 gimp_context_get_paint_mode (GimpContext *context)
 {
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NORMAL_MODE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_NORMAL_MODE);
 
   return context->paint_mode;
 }
 
 void
-gimp_context_set_paint_mode (GimpContext     *context,
-			     LayerModeEffects paint_mode)
+gimp_context_set_paint_mode (GimpContext          *context,
+			     GimpLayerModeEffects  paint_mode)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   context_find_defined (context, GIMP_CONTEXT_PAINT_MODE_MASK);
@@ -1783,8 +1785,8 @@ gimp_context_paint_mode_changed (GimpContext *context)
 }
 
 static void
-gimp_context_real_set_paint_mode (GimpContext     *context,
-				  LayerModeEffects paint_mode)
+gimp_context_real_set_paint_mode (GimpContext          *context,
+				  GimpLayerModeEffects  paint_mode)
 {
   if (context->paint_mode == paint_mode)
     return;

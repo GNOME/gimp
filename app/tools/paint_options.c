@@ -81,7 +81,7 @@ static void   paint_options_opacity_changed           (GimpContext   *context,
 static void   paint_options_paint_mode_update         (GtkWidget     *widget,
 						       gpointer       data);
 static void   paint_options_paint_mode_changed        (GimpContext   *context,
-						       LayerModeEffects  paint_mode,
+						       GimpLayerModeEffects  paint_mode,
 						       gpointer       data);
 
 static void   paint_gradient_options_gradient_toggle_callback (GtkWidget    *widget,
@@ -778,11 +778,11 @@ static void
 paint_options_paint_mode_update (GtkWidget *widget,
 				 gpointer   data)
 {
-  LayerModeEffects  paint_mode;
-  PaintOptions     *options;
+  GimpLayerModeEffects  paint_mode;
+  PaintOptions         *options;
 
-  paint_mode = 
-    (LayerModeEffects) g_object_get_data (G_OBJECT (widget), "gimp-item-data");
+  paint_mode = (GimpLayerModeEffects) g_object_get_data (G_OBJECT (widget), 
+                                                         "gimp-item-data");
 
   options = (PaintOptions *) data;
 
@@ -798,9 +798,9 @@ paint_options_paint_mode_update (GtkWidget *widget,
 }
 
 static void
-paint_options_paint_mode_changed (GimpContext      *context,
-				  LayerModeEffects  paint_mode,
-				  gpointer          data)
+paint_options_paint_mode_changed (GimpContext          *context,
+				  GimpLayerModeEffects  paint_mode,
+				  gpointer              data)
 {
   gimp_option_menu_set_history (GTK_OPTION_MENU (data), (gpointer) paint_mode);
 }
