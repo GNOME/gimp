@@ -1,5 +1,11 @@
 2004-10-03  DindinX  <dindinx@gimp.org>
 
+	* libgimp/gimpaspectpreview.c: limit the size of the preview to 512
+	pixels.  This prevents plug-ins using gimp_drawable_get_thumbnail_data
+	to crash.
+
+2004-10-03  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/emboss.c: ported to GimpAspectPreview and made some
 	cleanups so this plug-in now use the same naming scheme as other
 	plug-ins do.

@@ -166,6 +166,7 @@ gimp_aspect_preview_new (GimpDrawable *drawable,
 {
   GimpAspectPreview *preview;
   gint               width, height;
+  gint               max_width, max_height;
 
   preview = g_object_new (GIMP_TYPE_ASPECT_PREVIEW, NULL);
 
@@ -173,7 +174,18 @@ gimp_aspect_preview_new (GimpDrawable *drawable,
   width  = gimp_drawable_width  (drawable->drawable_id);
   height = gimp_drawable_height (drawable->drawable_id);
 
-  gimp_preview_set_bounds (GIMP_PREVIEW (preview), 0, 0, width, height);
+  if (width > height)
+    {
+      max_width  = MIN (width, 512);
+      max_height = (height * max_width) / width;
+    }
+  else
+    {
+      max_height = MIN (height, 512);
+      max_width  = (width * max_height) / height;
+    }
+  gimp_preview_set_bounds (GIMP_PREVIEW (preview),
+                           0, 0, max_width, max_height);
 
   g_object_set (GIMP_PREVIEW (preview)->frame,
                 "ratio", (gdouble) width / (gdouble) height,
