@@ -1,12 +1,12 @@
-# Polish gimp-perl translation table
+# SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Artur Polaczyñski <artie@kmfms.com>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-perl 1.1.27\n"
-"POT-Creation-Date: Mon Oct 16 11:48:38 2000\n"
-"PO-Revision-Date: 2000-10-06 20:12+02:00\n"
+"Project-Id-Version: gimp-perl 1.1.15\n"
+"POT-Creation-Date: Mon Oct 16 22:20:13 2000\n"
+"PO-Revision-Date: 1999-11-06 19:21+0200\n"
 "Last-Translator: Artur Polaczyñski <artie@kmfms.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 
 #: examples/PDB:0
 msgid " (press Tab to complete)"
-msgstr "(naci¶nij Tab aby dokoñczyæ)"
+msgstr " (naci¶nij Tab aby dokoñczyæ)"
 
 #: Gimp/Lib.xs:0
 msgid " = [argument error]\n"
@@ -1028,7 +1028,7 @@ msgstr ""
 
 #: Gimp/Fu.pm:0
 msgid "no additional information available, use --help\n"
-msgstr ""
+msgstr "dodatkowe informacje nie dostêpne, u¿yj --help\n"
 
 #: Gimp/Util.pm:0
 msgid "no font specified, using default"
@@ -1036,7 +1036,7 @@ msgstr "nie wyszczególniono czcionki, u¿ywam domy¶lnej"
 
 #: Gimp/Lib.xs:0
 msgid "not enough"
-msgstr ""
+msgstr "nie wystarczaj±cy(a)"
 
 #: Gimp/Lib.xs:0
 msgid "only blessed scalars accepted here"
@@ -1065,7 +1065,7 @@ msgstr ""
 
 #: Gimp/Lib.xs:0
 msgid "plug-in returned %d more values than expected"
-msgstr "plug-in zwróci³ %d warto¶ci wiecej ni¿ spodziewane"
+msgstr "plug-in zwróci³ %d warto¶ci(æ) wiecej ni¿ spodziewane"
 
 #: Perl-Server:0
 msgid "received QUIT request"
@@ -1073,7 +1073,7 @@ msgstr ""
 
 #: Gimp/Fu.pm:0
 msgid "register called with too many or wrong arguments\n"
-msgstr ""
+msgstr "wywo³anie registry z nie w³a¶ciwymi lub z za du¿± ilo¶ci± argumentów\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'net' not found\n"
@@ -1112,12 +1112,16 @@ msgid ""
 "the gtk perl module is required to open a dialog\n"
 "window, running with default values"
 msgstr ""
+"Modu³ gtk perl jest potrzebny do otworzenia okna\n"
+"dialogu. Uruchamiam z parametrami domy¶lnymi"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
 msgstr ""
+"Modu³ gtk perl jest potrzebny do uruchomienia\n"
+"tej wtyczki w trybie interaktywnym\n"
 
 #: examples/PDB:0
 msgid "too many arguments"
@@ -1129,7 +1133,7 @@ msgstr "za du¿o"
 
 #: Net/Net.pm:0
 msgid "trying to start gimp with options \"$opt\"\n"
-msgstr ""
+msgstr "Próbuje wystartowaæ GIMPa z opcjami \"$opt\"\n"
 
 #: Perl-Server:0
 msgid "unable to accept tcp connection: $!\n"
@@ -1148,18 +1152,16 @@ msgid "unable to create '$fn': $!"
 msgstr "nie mogê stworzyæ '$fn': $!"
 
 #: Perl-Server:0
-#, fuzzy
 msgid "unable to create listening tcp socket: $!\n"
-msgstr "nie mogê stworzyæ '$fn': $!"
+msgstr "nie mogê utworzyæ s³uchaj±cego gniazda tcp: $!\n"
 
 #: Perl-Server:0
-#, fuzzy
 msgid "unable to create listening unix socket: $!\n"
-msgstr "nie mogê stworzyæ '$fn': $!"
+msgstr "nie mogê utworzyæ s³uchaj±cego gniazda unix: $!\n"
 
 #: Net/Net.pm:0
 msgid "unable to create socketpair for gimp communications: $!"
-msgstr ""
+msgstr "nie mogê stwo¿yæ pary gniazd dla komunikacji z GIPMem: $!"
 
 #: Net/Net.pm:0
 msgid "unable to fork: $!"
