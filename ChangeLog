@@ -1,3 +1,10 @@
+2005-02-08  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/sphere.py
+	* plug-ins/pygimp/plug-ins/gimpcons.py
+	* plug-ins/pygimp/plug-ins/pdbbrowse.py: Just leave imagetypes empty,
+	since we don't operate on existing images here. Fixes bug #166650.
+
 2005-02-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/gui.c (gui_display_changed): if display became NULL

@@ -76,7 +76,7 @@ register(
     "James Henstridge",
     "1997-1999",
     "<Toolbox>/Xtns/Python-Fu/Test/_Sphere",
-    "RGB*, GRAY*, INDEXED*",
+    "",
     [
         (PF_INT, "radius", "Radius for sphere", 100),
         (PF_SLIDER, "light", "light angle", 45, (0,360,1)),
