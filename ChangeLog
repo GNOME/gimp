@@ -1,3 +1,7 @@
+Mon Sep  6 03:19:27 CEST 1999 Olof S Kylander <olof@frozenriver.com>
+	
+	* app/blob.c Fixed a cut&paste error
+
 1999-09-06  Tomas Ogren  <stric@ing.umu.se>
 
 	* app/disp_callbacks.c app/gdisplay_color.c app/image_new.c
