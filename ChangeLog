@@ -1,3 +1,8 @@
+2001-07-22  Stanislav Brabec  <utx@penguin.cz>
+
+	* plugins/common/despeckle.c: Reflect my fix from 2001-03-01
+	(range limits) in script-fu comments.
+
 2001-07-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/jpeg.c: removed "Baseline JPEG" toggle button from
@@ -337,7 +342,7 @@ Sat Apr 21 17:04:34 PDT 2001 Manish Singh <yosh@gimp.org>
 
 	On request of Martin Weber <martweb@gmx.net>:
 	* plug-ins/bmp/bmpread.c:
-	GIMP couldn't read bmp files with a ba chunk. This kind of files 
+	GIMP couldn't read bmp files with a bad chunk. This kind of files 
 	can be found in OS/2 1.x.
 
 2001-04-10  Sven Neumann  <sven@gimp.org>
