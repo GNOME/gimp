@@ -31,10 +31,10 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimp.h"
+#include "gimp-edit.h"
 #include "gimpbuffer.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
-#include "gimpedit.h"
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-undo.h"

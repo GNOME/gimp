@@ -24,12 +24,18 @@ libappcore_a_sources = \
 	gimp.h				\
 	gimp-documents.c		\
 	gimp-documents.h		\
+	gimp-edit.c			\
+	gimp-edit.h			\
 	gimp-gradients.c		\
 	gimp-gradients.h		\
+	gimp-modules.c			\
+	gimp-modules.h			\
 	gimp-parasites.c		\
 	gimp-parasites.h		\
 	gimp-templates.c		\
 	gimp-templates.h		\
+	gimp-units.c			\
+	gimp-units.h			\
 	gimp-utils.c			\
 	gimp-utils.h			\
 	gimpbrush.c			\
@@ -81,8 +87,6 @@ libappcore_a_sources = \
 	gimpdrawable-transform.h	\
 	gimpdrawable-transform-utils.c	\
 	gimpdrawable-transform-utils.h	\
-	gimpedit.c			\
-	gimpedit.h			\
 	gimpenvirontable.h		\
 	gimpenvirontable.c		\
 	gimpgradient.c			\
@@ -157,8 +161,6 @@ libappcore_a_sources = \
 	gimplayermask.h			\
 	gimplist.c			\
 	gimplist.h			\
-	gimpmodules.c			\
-	gimpmodules.h			\
 	gimpobject.c			\
 	gimpobject.h			\
 	gimppaintinfo.c			\
@@ -186,8 +188,6 @@ libappcore_a_sources = \
 	gimptooloptions.h		\
 	gimpunit.c			\
 	gimpunit.h			\
-	gimpunits.c			\
-	gimpunits.h			\
 	gimpundo.c			\
 	gimpundo.h			\
 	gimpundostack.c			\

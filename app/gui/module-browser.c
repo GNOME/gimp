@@ -30,7 +30,7 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpmodules.h"
+#include "core/gimp-modules.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"

@@ -31,7 +31,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer-filter.h"
 #include "core/gimpcontainer.h"
-#include "text/gimpfonts.h"
+#include "text/gimp-fonts.h"
 
 static ProcRecord fonts_refresh_proc;
 static ProcRecord fonts_get_list_proc;

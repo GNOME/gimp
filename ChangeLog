@@ -1,3 +1,41 @@
+2003-09-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpedit.[ch]
+	* app/core/gimpmodules.[ch]
+	* app/core/gimpunits.[ch]
+	* app/text/gimpfonts.[ch]: removed...
+
+	* app/core/gimp-edit.[ch]
+	* app/core/gimp-modules.[ch]
+	* app/core/gimp-units.[ch]
+	* app/text/gimp-fonts.[ch]: ...and added with new names because
+	these files operate on members of a Gimp instance and are
+	therefore methods of the Gimp object.
+
+	* app/core/Makefile.am
+	* app/text/Makefile.am
+	* app/display/gimpdisplayshell-dnd.c
+	* app/gui/edit-commands.c
+	* app/gui/module-browser.c
+	* app/gui/preferences-dialog.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimptoolbox-dnd.c
+	* app/app_procs.c
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/fonts.pdb: changed accordingly.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/fonts_cmds.c: regenerated.
+
+	* app/core/gimp.c (gimp_init): don't create gimp->fonts.
+	(gimp_initialize): call gimp_fonts_init().
+	(gimp_restore): call gimp_fonts_load() instead of _init().
+
+	* app/text/gimp-fonts.c (gimp_fonts_init): don't call
+	gimp_fonts_load(), just create gimp->fonts and connect to
+	"notify::font-path" of gimp->config.
+
 2003-09-15  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpxmlparser.c: fixed inline documentation.

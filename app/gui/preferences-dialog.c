@@ -35,7 +35,7 @@
 
 #include "core/gimp.h"
 
-#include "text/gimpfonts.h"
+#include "text/gimp-fonts.h"
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpdeviceinfo.h"

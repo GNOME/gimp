@@ -28,8 +28,8 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimp-units.h"
 #include "gimpunit.h"
-#include "gimpunits.h"
 
 #include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
@@ -37,7 +37,7 @@
 #include "gimp-intl.h"
 
 
-/*  
+/*
  *  All deserialize functions return G_TOKEN_LEFT_PAREN on success,
  *  or the GTokenType they would have expected but didn't get.
  */

@@ -37,7 +37,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpedit.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
 

@@ -42,7 +42,7 @@
 #include "config/gimpscanner.h"
 
 #include "gimp.h"
-#include "gimpmodules.h"
+#include "gimp-modules.h"
 
 #include "gimp-intl.h"
 

@@ -25,9 +25,9 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpedit.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
 #include "core/gimplayer.h"

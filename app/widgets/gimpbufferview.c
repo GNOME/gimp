@@ -27,10 +27,10 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpedit.h"
 #include "core/gimpimage.h"
 
 #include "gimpcontainerview.h"

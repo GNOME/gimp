@@ -27,12 +27,12 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-bucket-fill.h"
-#include "core/gimpedit.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimptoolinfo.h"

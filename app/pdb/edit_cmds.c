@@ -28,10 +28,10 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
+#include "core/gimp-edit.h"
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpedit.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"

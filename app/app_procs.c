@@ -41,7 +41,7 @@
 #include "config/gimprc.h"
 
 #include "core/gimp.h"
-#include "core/gimpunits.h"
+#include "core/gimp-units.h"
 
 #include "plug-in/plug-ins.h"
 

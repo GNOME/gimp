@@ -36,8 +36,8 @@
 
 #include "core/gimp.h"
 
+#include "gimp-fonts.h"
 #include "gimpfontlist.h"
-#include "gimpfonts.h"
 
 
 #define CONF_FNAME "fonts.conf"
@@ -52,7 +52,10 @@ static void     gimp_fonts_add_directories (FcConfig    *config,
 void
 gimp_fonts_init (Gimp *gimp)
 {
-  gimp_fonts_load (gimp);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gimp->fonts = gimp_font_list_new (72.0, 72.0);
+  gimp_object_set_name (GIMP_OBJECT (gimp->fonts), "fonts");
 
   g_signal_connect_swapped (gimp->config, "notify::font-path",
                             G_CALLBACK (gimp_fonts_load), gimp);
@@ -65,7 +68,6 @@ gimp_fonts_load (Gimp *gimp)
   gchar    *fonts_conf;
   gchar    *path;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_FONT_LIST (gimp->fonts));
 
   gimp_set_busy (gimp);
@@ -80,7 +82,7 @@ gimp_fonts_load (Gimp *gimp)
   fonts_conf = gimp_personal_rc_file (CONF_FNAME);
   if (! gimp_fonts_load_fonts_conf (config, fonts_conf))
     return;
-  
+
   fonts_conf = g_build_filename (gimp_sysconf_directory (), CONF_FNAME, NULL);
   if (! gimp_fonts_load_fonts_conf (config, fonts_conf))
     return;

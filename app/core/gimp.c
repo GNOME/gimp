@@ -36,16 +36,17 @@
 
 #include "paint/paint.h"
 
-#include "text/gimpfontlist.h"
-#include "text/gimpfonts.h"
+#include "text/gimp-fonts.h"
 
 #include "xcf/xcf.h"
 
 #include "gimp.h"
 #include "gimp-documents.h"
 #include "gimp-gradients.h"
+#include "gimp-modules.h"
 #include "gimp-parasites.h"
 #include "gimp-templates.h"
+#include "gimp-units.h"
 #include "gimpbrush.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
@@ -59,13 +60,11 @@
 #include "gimpimagefile.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
-#include "gimpmodules.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
 #include "gimpparasitelist.h"
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
-#include "gimpunits.h"
 
 #include "gimp-intl.h"
 
@@ -237,9 +236,7 @@ gimp_init (Gimp *gimp)
 					     GIMP_CONTAINER_POLICY_STRONG);
   gimp_object_set_name (GIMP_OBJECT (gimp->named_buffers), "named buffers");
 
-  gimp->fonts               = gimp_font_list_new (72.0, 72.0);
-  gimp_object_set_name (GIMP_OBJECT (gimp->fonts), "fonts");
-
+  gimp->fonts               = NULL;
   gimp->brush_factory       = NULL;
   gimp->pattern_factory     = NULL;
   gimp->gradient_factory    = NULL;
@@ -696,6 +693,8 @@ gimp_initialize (Gimp               *gimp,
   g_return_if_fail (status_callback != NULL);
   g_return_if_fail (GIMP_IS_CORE_CONFIG (gimp->config));
 
+  gimp_fonts_init (gimp);
+
   gimp->brush_factory =
     gimp_data_factory_new (gimp,
                            GIMP_TYPE_BRUSH,
@@ -806,7 +805,7 @@ gimp_restore (Gimp               *gimp,
 
   /*  initialize the list of gimp fonts  */
   (* status_callback) (NULL, _("Fonts"), 0.70);
-  gimp_fonts_init (gimp);
+  gimp_fonts_load (gimp);
 
   /*  initialize the document history  */
   (* status_callback) (NULL, _("Documents"), 0.80);
