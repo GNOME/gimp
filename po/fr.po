@@ -3573,11 +3573,11 @@ msgstr "/Vue"
 
 #: app/menus.c:292
 msgid "/View/Zoom In"
-msgstr "/Vue/Zoom Avant"
+msgstr "/Vue/Zoom +"
 
 #: app/menus.c:294
 msgid "/View/Zoom Out"
-msgstr "/Vue/Zoom Arrière"
+msgstr "/Vue/Zoom -"
 
 #. <Image>/View/Zoom
 #: app/menus.c:299
