@@ -257,8 +257,7 @@ gimp_init (Gimp *gimp)
 
   gimp->plug_in_debug       = NULL;
 
-  gimp->images              = gimp_list_new (GIMP_TYPE_IMAGE,
-					     GIMP_CONTAINER_POLICY_WEAK);
+  gimp->images              = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
   gimp_object_set_name (GIMP_OBJECT (gimp->images), "images");
 
   gimp->next_image_ID       = 1;
@@ -268,15 +267,13 @@ gimp_init (Gimp *gimp)
   gimp->next_item_ID        = 1;
   gimp->item_table          = g_hash_table_new (g_direct_hash, NULL);
 
-  gimp->displays            = gimp_list_new (GIMP_TYPE_OBJECT,
-                                             GIMP_CONTAINER_POLICY_WEAK);
+  gimp->displays            = gimp_list_new_weak (GIMP_TYPE_OBJECT, FALSE);
   gimp_object_set_name (GIMP_OBJECT (gimp->displays), "displays");
 
   gimp->next_display_ID     = 1;
 
   gimp->global_buffer       = NULL;
-  gimp->named_buffers       = gimp_list_new (GIMP_TYPE_BUFFER,
-					     GIMP_CONTAINER_POLICY_STRONG);
+  gimp->named_buffers       = gimp_list_new (GIMP_TYPE_BUFFER, TRUE);
   gimp_object_set_name (GIMP_OBJECT (gimp->named_buffers), "named buffers");
 
   gimp->fonts               = NULL;
@@ -292,16 +289,15 @@ gimp_init (Gimp *gimp)
 
   xcf_init (gimp);
 
-  gimp->tool_info_list      = gimp_list_new (GIMP_TYPE_TOOL_INFO,
-					     GIMP_CONTAINER_POLICY_STRONG);
+  gimp->tool_info_list      = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
   gimp_object_set_name (GIMP_OBJECT (gimp->tool_info_list), "tool infos");
 
   gimp->standard_tool_info  = NULL;
 
   gimp->documents           = gimp_document_list_new (gimp);
 
-  gimp->templates           = gimp_list_new (GIMP_TYPE_TEMPLATE,
-                                             GIMP_CONTAINER_POLICY_STRONG);
+  gimp->templates           = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
+
   gimp->image_new_last_template = NULL;
   gimp->have_current_cut_buffer = FALSE;
 

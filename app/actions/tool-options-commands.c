@@ -241,8 +241,6 @@ tool_options_save_callback (GtkWidget   *widget,
   copy = gimp_config_duplicate (GIMP_CONFIG (tool_info->tool_options));
 
   gimp_object_set_name (GIMP_OBJECT (copy), name);
-  gimp_list_uniquefy_name (GIMP_LIST (tool_info->options_presets),
-                           GIMP_OBJECT (copy), TRUE);
 
   gimp_container_insert (tool_info->options_presets, GIMP_OBJECT (copy), -1);
   g_object_unref (copy);
@@ -259,6 +257,4 @@ tool_options_rename_callback (GtkWidget   *widget,
     name = _("Saved Options");
 
   gimp_object_set_name (GIMP_OBJECT (options), name);
-  gimp_list_uniquefy_name (GIMP_LIST (options->tool_info->options_presets),
-                           GIMP_OBJECT (options), TRUE);
 }

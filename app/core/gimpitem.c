@@ -29,20 +29,17 @@
 
 #include "gimp.h"
 #include "gimp-parasites.h"
-#include "gimpchannel.h"
+#include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitem.h"
 #include "gimpitem-preview.h"
-#include "gimplayer.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimppaintinfo.h"
 #include "gimpparasitelist.h"
 #include "gimpstrokeoptions.h"
-
-#include "vectors/gimpvectors.h"
 
 #include "gimp-intl.h"
 
@@ -63,7 +60,6 @@ static void       gimp_item_init           (GimpItem      *item);
 
 static void       gimp_item_finalize       (GObject       *object);
 
-static void       gimp_item_name_changed   (GimpObject    *object);
 static gint64     gimp_item_get_memsize    (GimpObject    *object,
                                             gint64        *gui_size);
 
@@ -174,7 +170,6 @@ gimp_item_class_init (GimpItemClass *klass)
 
   object_class->finalize           = gimp_item_finalize;
 
-  gimp_object_class->name_changed  = gimp_item_name_changed;
   gimp_object_class->get_memsize   = gimp_item_get_memsize;
 
   viewable_class->get_preview_size = gimp_item_get_preview_size;
@@ -242,27 +237,6 @@ gimp_item_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_item_name_changed (GimpObject *object)
-{
-  GimpItem *item = GIMP_ITEM (object);
-  GimpList *list = NULL;
-
-  /*  if no other items to check name against  */
-  if (item->gimage == NULL)
-    return;
-
-  if (GIMP_IS_LAYER (item))
-    list = GIMP_LIST (item->gimage->layers);
-  else if (GIMP_IS_CHANNEL (item))
-    list = GIMP_LIST (item->gimage->channels);
-  else if (GIMP_IS_VECTORS (item))
-    list = GIMP_LIST (item->gimage->vectors);
-
-  if (list)
-    gimp_list_uniquefy_name (list, object, FALSE);
 }
 
 static gint64
@@ -505,12 +479,7 @@ gimp_item_convert (GimpItem  *item,
                                                    new_type, add_alpha);
 
   if (dest_image != item->gimage)
-    {
-      gimp_item_set_image (new_item, dest_image);
-
-      /*  force a unique name  */
-      gimp_object_name_changed (GIMP_OBJECT (new_item));
-    }
+    gimp_item_set_image (new_item, dest_image);
 
   return new_item;
 }

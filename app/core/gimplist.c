@@ -31,8 +31,25 @@
 #include "gimplist.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_UNIQUE_NAMES,
+  PROP_SORT_FUNC
+};
+
+
 static void         gimp_list_class_init         (GimpListClass       *klass);
 static void         gimp_list_init               (GimpList            *list);
+
+static void         gimp_list_set_property       (GObject             *object,
+                                                  guint                property_id,
+                                                  const GValue        *value,
+                                                  GParamSpec          *pspec);
+static void         gimp_list_get_property       (GObject             *object,
+                                                  guint                property_id,
+                                                  GValue              *value,
+                                                  GParamSpec          *pspec);
 
 static gint64       gimp_list_get_memsize        (GimpObject          *object,
                                                   gint64              *gui_size);
@@ -56,6 +73,11 @@ static GimpObject * gimp_list_get_child_by_index (const GimpContainer *container
                                                   gint                 index);
 static gint         gimp_list_get_child_index    (const GimpContainer *container,
                                                   const GimpObject    *object);
+
+static void         gimp_list_uniquefy_name      (GimpList            *gimp_list,
+                                                  GimpObject          *object);
+static void         gimp_list_object_renamed     (GimpObject          *object,
+                                                  GimpList            *list);
 
 
 static GimpContainerClass *parent_class = NULL;
@@ -92,10 +114,14 @@ gimp_list_get_type (void)
 static void
 gimp_list_class_init (GimpListClass *klass)
 {
+  GObjectClass       *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass    *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpContainerClass *container_class   = GIMP_CONTAINER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property          = gimp_list_set_property;
+  object_class->get_property          = gimp_list_get_property;
 
   gimp_object_class->get_memsize      = gimp_list_get_memsize;
 
@@ -108,12 +134,71 @@ gimp_list_class_init (GimpListClass *klass)
   container_class->get_child_by_name  = gimp_list_get_child_by_name;
   container_class->get_child_by_index = gimp_list_get_child_by_index;
   container_class->get_child_index    = gimp_list_get_child_index;
+
+  g_object_class_install_property (object_class, PROP_UNIQUE_NAMES,
+				   g_param_spec_boolean ("unique-names",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_SORT_FUNC,
+				   g_param_spec_pointer ("sort-func",
+                                                         NULL, NULL,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
 gimp_list_init (GimpList *list)
 {
-  list->list = NULL;
+  list->list         = NULL;
+  list->unique_names = FALSE;
+  list->sort_func    = NULL;
+}
+
+static void
+gimp_list_set_property (GObject      *object,
+                        guint         property_id,
+                        const GValue *value,
+                        GParamSpec   *pspec)
+{
+  GimpList *list = GIMP_LIST (object);
+
+  switch (property_id)
+    {
+    case PROP_UNIQUE_NAMES:
+      list->unique_names = g_value_get_boolean (value);
+      break;
+    case PROP_SORT_FUNC:
+      gimp_list_set_sort_func (list, g_value_get_pointer (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_list_get_property (GObject    *object,
+                        guint       property_id,
+                        GValue     *value,
+                        GParamSpec *pspec)
+{
+  GimpList *list = GIMP_LIST (object);
+
+  switch (property_id)
+    {
+    case PROP_UNIQUE_NAMES:
+      g_value_set_boolean (value, list->unique_names);
+      break;
+    case PROP_SORT_FUNC:
+      g_value_set_pointer (value, list->sort_func);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static gint64
@@ -145,7 +230,18 @@ gimp_list_add (GimpContainer *container,
 {
   GimpList *list = GIMP_LIST (container);
 
-  list->list = g_list_prepend (list->list, object);
+  if (list->unique_names)
+    gimp_list_uniquefy_name (list, object);
+
+  if (list->unique_names || list->sort_func)
+    g_signal_connect (object, "name-changed",
+                      G_CALLBACK (gimp_list_object_renamed),
+                      list);
+
+  if (list->sort_func)
+    list->list = g_list_insert_sorted (list->list, object, list->sort_func);
+  else
+    list->list = g_list_prepend (list->list, object);
 }
 
 static void
@@ -153,6 +249,11 @@ gimp_list_remove (GimpContainer *container,
 		  GimpObject    *object)
 {
   GimpList *list = GIMP_LIST (container);
+
+  if (list->unique_names || list->sort_func)
+    g_signal_handlers_disconnect_by_func (object,
+                                          gimp_list_object_renamed,
+                                          list);
 
   list->list = g_list_remove (list->list, object);
 }
@@ -245,27 +346,60 @@ gimp_list_get_child_index (const GimpContainer *container,
 /**
  * gimp_list_new:
  * @children_type: the #GType of objects the list is going to hold
- * @policy: the #GimpContainerPolicy for the new list
+ * @unique_names:  if the list should ensure that all its children
+ *                 have unique names.
  *
  * Creates a new #GimpList object. Since #GimpList is a #GimpContainer
  * implementation, it holds GimpObjects. Thus @children_type must be
  * GIMP_TYPE_OBJECT or a type derived from it.
  *
+ * The returned list has the #GIMP_CONTAINER_POLICY_STRONG.
+ *
  * Return value: a new #GimpList object
  **/
 GimpContainer *
-gimp_list_new (GType                children_type,
-	       GimpContainerPolicy  policy)
+gimp_list_new (GType    children_type,
+               gboolean unique_names)
 {
   GimpList *list;
 
   g_return_val_if_fail (g_type_is_a (children_type, GIMP_TYPE_OBJECT), NULL);
-  g_return_val_if_fail (policy == GIMP_CONTAINER_POLICY_STRONG ||
-                        policy == GIMP_CONTAINER_POLICY_WEAK, NULL);
 
   list = g_object_new (GIMP_TYPE_LIST,
                        "children_type", children_type,
-                       "policy",        policy,
+                       "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                       "unique-names",  unique_names ? TRUE : FALSE,
+                       NULL);
+
+  return GIMP_CONTAINER (list);
+}
+
+/**
+ * gimp_list_new_weak:
+ * @children_type: the #GType of objects the list is going to hold
+ * @unique_names:  if the list should ensure that all its children
+ *                 have unique names.
+ *
+ * Creates a new #GimpList object. Since #GimpList is a #GimpContainer
+ * implementation, it holds GimpObjects. Thus @children_type must be
+ * GIMP_TYPE_OBJECT or a type derived from it.
+ *
+ * The returned list has the #GIMP_CONTAINER_POLICY_WEAK.
+ *
+ * Return value: a new #GimpList object
+ **/
+GimpContainer *
+gimp_list_new_weak (GType    children_type,
+                    gboolean unique_names)
+{
+  GimpList *list;
+
+  g_return_val_if_fail (g_type_is_a (children_type, GIMP_TYPE_OBJECT), NULL);
+
+  list = g_object_new (GIMP_TYPE_LIST,
+                       "children_type", children_type,
+                       "policy",        GIMP_CONTAINER_POLICY_WEAK,
+                       "unique-names",  unique_names ? TRUE : FALSE,
                        NULL);
 
   return GIMP_CONTAINER (list);
@@ -291,24 +425,49 @@ gimp_list_reverse (GimpList *list)
 }
 
 /**
+ * gimp_list_set_sort_func:
+ * @list:      a #GimpList
+ * @sort_func: a #GCompareFunc
+ *
+ * Sorts the elements of @list using gimp_list_sort() and remembers the
+ * passed @sort_func in order to keep the list ordered across inserting
+ * or renaming children.
+ **/
+void
+gimp_list_set_sort_func (GimpList     *list,
+                         GCompareFunc  sort_func)
+{
+  g_return_if_fail (GIMP_IS_LIST (list));
+
+  if (sort_func != list->sort_func)
+    {
+      if (sort_func)
+        gimp_list_sort (list, sort_func);
+
+      list->sort_func = sort_func;
+      g_object_notify (G_OBJECT (list), "sort-func");
+    }
+}
+
+/**
  * gimp_list_sort:
  * @list: a #GimpList
- * @compare_func: a #GCompareFunc
+ * @sort_func: a #GCompareFunc
  *
- * Sorts the elements of a #GimpList according to the given @compare_func.
+ * Sorts the elements of a #GimpList according to the given @sort_func.
  * See g_list_sort() for a detailed description of this function.
  **/
 void
 gimp_list_sort (GimpList     *list,
-                GCompareFunc  compare_func)
+                GCompareFunc  sort_func)
 {
   g_return_if_fail (GIMP_IS_LIST (list));
-  g_return_if_fail (compare_func != NULL);
+  g_return_if_fail (sort_func != NULL);
 
   if (GIMP_CONTAINER (list)->num_children > 1)
     {
       gimp_container_freeze (GIMP_CONTAINER (list));
-      list->list = g_list_sort (list->list, compare_func);
+      list->list = g_list_sort (list->list, sort_func);
       gimp_container_thaw (GIMP_CONTAINER (list));
     }
 }
@@ -327,23 +486,12 @@ gimp_list_sort_by_name (GimpList *list)
   gimp_list_sort (list, (GCompareFunc) gimp_object_name_collate);
 }
 
-/**
- * gimp_list_uniquefy_name:
- * @gimp_list: a #GimpList
- * @object:    a #GimpObject
- * @notify:    whether to notify listeners about the name change
- *
- * This function ensures that @object has a name that isn't already
- * used by another object in @gimp_list. If the name of @object needs
- * to be changed, the value of @notify decides if the "name_changed"
- * signal should be emitted or if the name should be changed silently.
- * The latter might be useful under certain circumstances in order to
- * avoid recursion.
- **/
-void
+
+/*  private functions  */
+
+static void
 gimp_list_uniquefy_name (GimpList   *gimp_list,
-                         GimpObject *object,
-                         gboolean    notify)
+                         GimpObject *object)
 {
   GList *list;
   GList *list2;
@@ -410,18 +558,52 @@ gimp_list_uniquefy_name (GimpList   *gimp_list,
             }
           while (list2);
 
-          if (notify)
-            {
-              gimp_object_set_name (object, new_name);
-              g_free (new_name);
-            }
-          else
-            {
-              gimp_object_name_free (object);
-              object->name = new_name;
-            }
-
+          gimp_object_set_name (object, new_name);
+          g_free (new_name);
 	  break;
 	}
+    }
+}
+
+static void
+gimp_list_object_renamed (GimpObject *object,
+                          GimpList   *list)
+{
+  if (list->unique_names)
+    {
+      g_signal_handlers_block_by_func (object,
+                                       gimp_list_object_renamed,
+                                       list);
+
+      gimp_list_uniquefy_name (list, object);
+
+      g_signal_handlers_unblock_by_func (object,
+                                         gimp_list_object_renamed,
+                                         list);
+    }
+
+  if (list->sort_func)
+    {
+      GList *glist;
+      gint   old_index;
+      gint   new_index = 0;
+
+      old_index = g_list_index (list->list, object);
+
+      for (glist = list->list; glist; glist = g_list_next (glist))
+        {
+          GimpObject *object2 = GIMP_OBJECT (glist->data);
+
+          if (object == object2)
+            continue;
+
+          if (list->sort_func (object, object2) > 0)
+            new_index++;
+          else
+            break;
+        }
+
+      if (new_index != old_index)
+        gimp_container_reorder (GIMP_CONTAINER (list), object, new_index);
     }
 }

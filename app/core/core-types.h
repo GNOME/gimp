@@ -58,7 +58,6 @@ typedef struct _GimpParasiteList    GimpParasiteList;
 
 typedef struct _GimpContainer       GimpContainer;
 typedef struct _GimpList            GimpList;
-typedef struct _GimpDataList        GimpDataList;
 
 typedef struct _GimpDataFactory     GimpDataFactory;
 

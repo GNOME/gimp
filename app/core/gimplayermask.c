@@ -47,8 +47,6 @@ enum
 static void       gimp_layer_mask_class_init  (GimpLayerMaskClass *klass);
 static void       gimp_layer_mask_init        (GimpLayerMask      *layer_mask);
 
-static void       gimp_layer_mask_name_changed (GimpObject        *object);
-
 static gboolean   gimp_layer_mask_is_attached  (GimpItem          *item);
 static GimpItem * gimp_layer_mask_duplicate    (GimpItem          *item,
                                                 GType              new_type,
@@ -94,9 +92,8 @@ gimp_layer_mask_get_type (void)
 static void
 gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 {
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  GimpItemClass     *item_class     = GIMP_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -127,8 +124,6 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  gimp_object_class->name_changed = gimp_layer_mask_name_changed;
-
   viewable_class->default_stock_id = "gimp-layer-mask";
 
   item_class->is_attached    = gimp_layer_mask_is_attached;
@@ -144,12 +139,6 @@ gimp_layer_mask_init (GimpLayerMask *layer_mask)
   layer_mask->apply_mask = TRUE;
   layer_mask->edit_mask  = TRUE;
   layer_mask->show_mask  = FALSE;
-}
-
-static void
-gimp_layer_mask_name_changed (GimpObject *object)
-{
-  /*  skip unique name logic by not chaining up  */
 }
 
 static gboolean

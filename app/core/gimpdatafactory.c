@@ -37,7 +37,7 @@
 #include "gimpcontext.h"
 #include "gimpdata.h"
 #include "gimpdatafactory.h"
-#include "gimpdatalist.h"
+#include "gimplist.h"
 
 #include "gimp-intl.h"
 
@@ -92,11 +92,8 @@ gimp_data_factory_get_type (void)
 static void
 gimp_data_factory_class_init (GimpDataFactoryClass *klass)
 {
-  GObjectClass    *object_class;
-  GimpObjectClass *gimp_object_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -121,9 +118,7 @@ gimp_data_factory_init (GimpDataFactory *factory)
 static void
 gimp_data_factory_finalize (GObject *object)
 {
-  GimpDataFactory *factory;
-
-  factory = GIMP_DATA_FACTORY (object);
+  GimpDataFactory *factory = GIMP_DATA_FACTORY (object);
 
   if (factory->container)
     {
@@ -150,10 +145,8 @@ static gint64
 gimp_data_factory_get_memsize (GimpObject *object,
                                gint64     *gui_size)
 {
-  GimpDataFactory *factory;
+  GimpDataFactory *factory = GIMP_DATA_FACTORY (object);
   gint64           memsize = 0;
-
-  factory = GIMP_DATA_FACTORY (object);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (factory->container),
                                       gui_size);
@@ -184,7 +177,9 @@ gimp_data_factory_new (Gimp                             *gimp,
   factory = g_object_new (GIMP_TYPE_DATA_FACTORY, NULL);
 
   factory->gimp                   = gimp;
-  factory->container              = gimp_data_list_new (data_type);
+  factory->container              = gimp_list_new (data_type, TRUE);
+  gimp_list_set_sort_func (GIMP_LIST (factory->container),
+                           (GCompareFunc) gimp_data_name_compare);
 
   factory->path_property_name     = g_strdup (path_property_name);
   factory->writable_property_name = g_strdup (writable_property_name);

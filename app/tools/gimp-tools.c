@@ -215,7 +215,8 @@ gimp_tools_restore (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp_list = gimp_list_new (GIMP_TYPE_TOOL_INFO, GIMP_CONTAINER_POLICY_STRONG);
+  gimp_list = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
+
   filename = gimp_personal_rc_file ("toolrc");
 
   if (gimp_config_deserialize_file (GIMP_CONFIG (gimp_list), filename,

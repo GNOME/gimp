@@ -492,12 +492,9 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->grid                  = NULL;
 
-  gimage->layers                = gimp_list_new (GIMP_TYPE_LAYER,
-						 GIMP_CONTAINER_POLICY_STRONG);
-  gimage->channels              = gimp_list_new (GIMP_TYPE_CHANNEL,
-						 GIMP_CONTAINER_POLICY_STRONG);
-  gimage->vectors               = gimp_list_new (GIMP_TYPE_VECTORS,
-                                                 GIMP_CONTAINER_POLICY_STRONG);
+  gimage->layers                = gimp_list_new (GIMP_TYPE_LAYER,   TRUE);
+  gimage->channels              = gimp_list_new (GIMP_TYPE_CHANNEL, TRUE);
+  gimage->vectors               = gimp_list_new (GIMP_TYPE_VECTORS, TRUE);
   gimage->layer_stack           = NULL;
 
   gimage->layer_update_handler =

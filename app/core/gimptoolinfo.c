@@ -306,7 +306,7 @@ gimp_tool_info_new (Gimp                *gimp,
   if (tool_info->tool_options_type != GIMP_TYPE_TOOL_OPTIONS)
     {
       tool_info->options_presets = gimp_list_new (tool_info->tool_options_type,
-                                                  GIMP_CONTAINER_POLICY_STRONG);
+                                                  TRUE);
     }
 
   return tool_info;

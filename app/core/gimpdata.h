@@ -68,7 +68,7 @@ struct _GimpDataClass
                                 GError   **error);
   gchar    * (* get_extension) (GimpData  *data);
   GimpData * (* duplicate)     (GimpData  *data,
-                                gboolean  stingy_memory_use);
+                                gboolean   stingy_memory_use);
 };
 
 
@@ -95,6 +95,8 @@ GimpData    * gimp_data_duplicate        (GimpData     *data,
 
 void          gimp_data_make_internal    (GimpData     *data);
 
+gint          gimp_data_name_compare     (GimpData     *data1,
+                                          GimpData     *data2);
 
 #define GIMP_DATA_ERROR (gimp_data_error_quark ())
 

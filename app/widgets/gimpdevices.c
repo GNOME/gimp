@@ -79,8 +79,7 @@ gimp_devices_init (Gimp                   *gimp,
 
   display = gdk_display_get_default ();
 
-  manager->device_info_list = gimp_list_new (GIMP_TYPE_DEVICE_INFO,
-                                             GIMP_CONTAINER_POLICY_STRONG);
+  manager->device_info_list = gimp_list_new (GIMP_TYPE_DEVICE_INFO, FALSE);
   manager->current_device   = gdk_display_get_core_pointer (display);
   manager->change_notify    = change_notify;
 

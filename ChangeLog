@@ -1,3 +1,52 @@
+2004-05-24  Michael Natterer  <mitch@gimp.org>
+
+	Long overdue core container cleanup:
+
+	* app/core/gimplist.[ch]: added "unique-names" and "sort-func"
+	properties and merged the resp. code from GimpDataList into
+	GimpList. Removed "policy" parameters from gimp_list_new() and
+	added "unique_names". Added new constructor gimp_list_new_weak().
+	Made public function gimp_list_uniquefy_name() private.
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpdatalist.[ch]: removed. Its functionality is
+	entirely in GimpList now.
+
+	* app/core/gimpdata.[ch]: added gimp_data_name_compare() which
+	used to live in GimpDataList.
+
+	* app/core/gimp.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpimage.c
+	* app/core/gimptoolinfo.c
+	* app/core/gimpundostack.c
+	* app/paint/gimp-paint.c
+	* app/tools/gimp-tools.c
+	* app/widgets/gimpdevices.c
+	* app/widgets/gimptemplateeditor.c
+	* app/widgets/gimpundoeditor.c: changed list creation accordingly.
+
+	Made gimp->templates, gimp->named_buffers, tool_info->presets and
+	the image's lists of layers, channels and vectors automatically
+	ensure unique names.
+
+	* app/widgets/gimptemplateview.c
+	* app/actions/file-commands.c
+	* app/actions/templates-commands.c
+	* app/actions/tool-options-commands.c: removed calls to
+	gimp_list_uniquefy_name().
+
+	* app/core/gimpitem.c: removed major insanity where the items
+	themselves where ensuring their unique names. Bah!
+
+	* app/core/gimplayer.c (gimp_layer_name_changed): chain up
+	conditionally.
+
+	* app/core/gimplayermask.c (gimp_layer_mask_name_changed): removed
+	because there is no need any more to keep the parent
+	implementation from being invoked.
+
 2004-05-23  Sven Neumann  <sven@gimp.org>
 
 	More fixes for bug #142996:

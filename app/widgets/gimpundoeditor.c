@@ -248,10 +248,8 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
   gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   /*  create a container as model for the undo history list  */
-  editor->container = gimp_list_new (GIMP_TYPE_UNDO,
-                                     GIMP_CONTAINER_POLICY_STRONG);
-  editor->base_item = gimp_undo_new (gimage,
-                                     GIMP_UNDO_GROUP_NONE,
+  editor->container = gimp_list_new (GIMP_TYPE_UNDO, FALSE);
+  editor->base_item = gimp_undo_new (gimage, GIMP_UNDO_GROUP_NONE,
                                      _("[ Base Image ]"),
                                      NULL, 0, FALSE, NULL, NULL);
 

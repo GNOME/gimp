@@ -384,6 +384,18 @@ gimp_data_make_internal (GimpData *data)
   data->deletable = FALSE;
 }
 
+gint
+gimp_data_name_compare (GimpData *data1,
+                        GimpData *data2)
+{
+  /*  move the internal objects (like the FG -> BG) gradient) to the top  */
+  if (data1->internal != data2->internal)
+    return data1->internal ? -1 : 1;
+
+  return gimp_object_name_collate ((GimpObject *) data1,
+                                   (GimpObject *) data2);
+}
+
 GQuark
 gimp_data_error_quark (void)
 {

@@ -331,7 +331,8 @@ gimp_layer_name_changed (GimpObject *object)
 {
   GimpLayer *layer = GIMP_LAYER (object);
 
-  GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
+  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
+    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
 
   if (layer->mask)
     {

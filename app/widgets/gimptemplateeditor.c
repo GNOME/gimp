@@ -490,8 +490,7 @@ gimp_template_editor_new (GimpTemplate *template,
 
       stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (editor->template));
 
-      editor->stock_id_container = gimp_list_new (GIMP_TYPE_TEMPLATE,
-                                                  GIMP_CONTAINER_POLICY_STRONG);
+      editor->stock_id_container = gimp_list_new (GIMP_TYPE_TEMPLATE, FALSE);
       editor->stock_id_context = gimp_context_new (gimp, "foo", NULL);
 
       g_signal_connect (editor->stock_id_context, "template_changed",

@@ -29,8 +29,8 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimplist.h"
 #include "core/gimptemplate.h"
 
 #include "widgets/gimpcontainerview.h"
@@ -111,8 +111,6 @@ templates_duplicate_template_cmd_callback (GtkAction *action,
 
       new_template = gimp_config_duplicate (GIMP_CONFIG (template));
 
-      gimp_list_uniquefy_name (GIMP_LIST (container),
-                               GIMP_OBJECT (new_template), TRUE);
       gimp_container_add (container, GIMP_OBJECT (new_template));
 
       gimp_context_set_by_type (context, container->children_type,
@@ -306,9 +304,6 @@ templates_edit_template_response (GtkWidget *widget,
 
       gimp_config_sync (GIMP_CONFIG (editor->template),
                         GIMP_CONFIG (template), 0);
-
-      gimp_list_uniquefy_name (GIMP_LIST (gimp->templates),
-                               GIMP_OBJECT (template), TRUE);
     }
 
   gtk_widget_destroy (dialog);

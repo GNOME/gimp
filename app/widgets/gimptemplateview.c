@@ -34,7 +34,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimplist.h"
 #include "core/gimpimage.h"
 #include "core/gimptemplate.h"
 
@@ -245,7 +244,6 @@ gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
       object = GIMP_OBJECT (renderer->viewable);
 
       gimp_object_set_name (object, new_name);
-      gimp_list_uniquefy_name (GIMP_LIST (container), object, TRUE);
 
       g_object_unref (renderer);
     }

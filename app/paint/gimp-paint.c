@@ -66,8 +66,7 @@ gimp_paint_init (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->paint_info_list = gimp_list_new (GIMP_TYPE_PAINT_INFO,
-                                         GIMP_CONTAINER_POLICY_STRONG);
+  gimp->paint_info_list = gimp_list_new (GIMP_TYPE_PAINT_INFO, FALSE);
   gimp_object_set_name (GIMP_OBJECT (gimp->paint_info_list), "paint infos");
 
   for (i = 0; i < G_N_ELEMENTS (register_funcs); i++)
