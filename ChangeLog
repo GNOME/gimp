@@ -1,5 +1,9 @@
 2001-08-30  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in.c: set the message encoding for the plug-in textdomain.
+	
+2001-08-30  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: check for bind_textdomain_codeset, use standard 
 	HAVE_FOO semantic for difftime.
 

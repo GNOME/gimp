@@ -2581,6 +2581,7 @@ plug_in_make_menu (void)
 
 #ifdef ENABLE_NLS
   bindtextdomain (std_plugins_domain, LOCALEDIR);
+  bind_textdomain_codeset (std_plugins_domain, "UTF-8");
   domains = g_slist_append (domains, std_plugins_domain);
 #endif
 
@@ -2622,6 +2623,7 @@ plug_in_make_menu (void)
 		  bindtextdomain (domain, plug_in_def->locale_path);
 		else
 		  bindtextdomain (domain, LOCALEDIR);
+                bind_textdomain_codeset (domain, "UTF-8");
 	      }
 	  }
       }
