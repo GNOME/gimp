@@ -79,7 +79,6 @@
 #define PROG_UPDATE_TIME ((row % 10) == 0)
 
 #define PLUG_IN_NAME "plug_in_blur"
-#define BLUR_VERSION "Blur 2.0"
 
 #define SEED_DEFAULT 10
 #define SEED_USER 11
@@ -588,7 +587,7 @@ blur_dialog (void)
 
   gimp_ui_init ("blur", FALSE);
 
-  dlg = gimp_dialog_new (BLUR_VERSION, "blur",
+  dlg = gimp_dialog_new (_("Blur"), "blur",
 			 gimp_standard_help_func, "filters/blur.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,

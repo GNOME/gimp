@@ -2168,7 +2168,7 @@ fileselect (gint action)
 			G_CALLBACK (handlers[action]), windows[action]);
       g_signal_connect_swapped (GTK_FILE_SELECTION (windows[action])->
 				cancel_button, "clicked",
-				G_CALLBACK (gtk_widget_destroy),
+				G_CALLBACK (gtk_widget_hide),
 				windows[action]);
 
       gimp_help_connect (windows[action], gimp_standard_help_func,

@@ -1,3 +1,11 @@
+2003-08-16  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/blur.c
+	* plug-ins/common/sharpen.c: replaced const strings (with version
+	number) for window title with translatable strings.
+
+	* plug-ins/common/spheredesigner.c: fix for #119936
+
 2003-08-15  Sven Neumann  <sven@gimp.org>
 
 	* app/text/Makefile.am

@@ -19,27 +19,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * Contents:
- *
- *   main()                    - Main entry - just call gimp_main()...
- *   query()                   - Respond to a plug-in query...
- *   run()                     - Run the filter...
- *   sharpen()                 - Sharpen an image using a median filter.
- *   sharpen_dialog()          - Popup a dialog window for the filter box size...
- *   preview_init()            - Initialize the preview window...
- *   preview_scroll_callback() - Update the preview when a scrollbar is moved.
- *   preview_update()          - Update the preview window.
- *   preview_exit()            - Free all memory used by the preview window...
- *   dialog_iscale_update()    - Update the value field using the scale.
- *   dialog_ok_callback()      - Start the filter...
- *   gray_filter()             - Sharpen grayscale pixels.
- *   graya_filter()            - Sharpen grayscale+alpha pixels.
- *   rgb_filter()              - Sharpen RGB pixels.
- *   rgba_filter()             - Sharpen RGBA pixels.
- *
- * Revision History:
- *
- *   See ChangeLog
  */
 
 #include "config.h"
@@ -516,13 +495,10 @@ sharpen_dialog (void)
   GtkWidget *frame;
   GtkWidget *scrollbar;
   GtkObject *adj;
-  gchar *title;
 
   gimp_ui_init ("sharpen", TRUE);
 
-  title = g_strdup_printf (_("Sharpen - %s"), PLUG_IN_VERSION);
-
-  dialog = gimp_dialog_new (title, "sharpen",
+  dialog = gimp_dialog_new (_("Sharpen"), "Sharpen",
 			    gimp_standard_help_func, "filters/sharpen.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
@@ -533,8 +509,6 @@ sharpen_dialog (void)
 			    NULL, NULL, NULL, TRUE, FALSE,
 
 			    NULL);
-
-  g_free (title);
 
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
