@@ -320,12 +320,30 @@ shoot (void)
 
   if (image_ID != -1)
     {
+      GimpParasite *parasite;
+      gchar *comment;
+      
       /*  figure out the monitor resolution and set the image to it  */
       gimp_get_monitor_resolution (&xres, &yres);      
       gimp_image_set_resolution (image_ID, xres, yres);
 
       /*  unset the image filename  */
       gimp_image_set_filename (image_ID, "");
+
+      
+      /* Set the default comment parasite */
+      comment = gimp_get_default_comment ();
+      
+      if (comment != NULL)
+        {
+          parasite = gimp_parasite_new ("gimp-comment", 
+                                        GIMP_PARASITE_PERSISTENT,
+                                        g_utf8_strlen (comment, -1) + 1,
+                                        comment);
+
+          gimp_image_parasite_attach (image_ID, parasite);
+          gimp_parasite_free(parasite);
+        }
     }
   
   return;
