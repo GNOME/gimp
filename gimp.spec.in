@@ -229,9 +229,6 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 
 %{prefix}/share/aclocal/gimp-2.0.m4
 
-%{prefix}/lib/*.a
-%{prefix}/lib/gimp/%{subver}/modules/*.a
-
 %{prefix}/include/gimp-%{subver}/libgimp
 
 %files docs
@@ -244,6 +241,9 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 %{prefix}/share/gtk-doc/html/libgimpwidgets
 
 %changelog
+* Sun Mar  7 2004 Sven Neumann <sven@gimp.org>
+- Removed references to static libraries
+
 * Sat Jan 10 2004 Ville Pätsi <drc@gimp.org>
 - Changed epoch to 2
 

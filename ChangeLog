@@ -1,5 +1,10 @@
 2004-03-07  Sven Neumann  <sven@gimp.org>
 
+	* gimp.spec.in: removed references to static libraries. These
+	are not any longer built by default.
+
+2004-03-07  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpfontmenu.c (gimp_font_select_widget_new): use
 	GIMP_STOCK_FONT instead of GTK_STOCK_SELECT_FONT.
 
