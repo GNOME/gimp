@@ -1,3 +1,7 @@
+2002-12-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-ins.c (plug_ins_proc_def_add): fixed a comment.
+
 2002-12-14  Manish Singh  <yosh@gimp.org>
 
 	* app/config/gimpconfig-params.c (gimp_param_memsize_get_type):

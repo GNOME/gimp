@@ -778,7 +778,7 @@ plug_ins_proc_def_add (PlugInProcDef *proc_def,
   /*  Register the procedural database entry  */
   procedural_db_register (gimp, &proc_def->db_info);
 
-  /*  Remove the defintion from the global list  */
+  /*  Add the defintion to the global list  */
   proc_defs = g_slist_append (proc_defs, proc_def);
 }
 
