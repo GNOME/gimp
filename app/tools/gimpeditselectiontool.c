@@ -584,8 +584,8 @@ selection_transform_segs (GimpEditSelectionTool *edit_select,
                                        &x, &y,
                                        FALSE);
 
-      dest_segs[i].x1 = x;
-      dest_segs[i].y1 = y;
+      dest_segs[i].x1 = CLAMP (x, -1, shell->disp_width);
+      dest_segs[i].y1 = CLAMP (y, -1, shell->disp_height);
 
       gimp_display_shell_transform_xy (shell,
                                        src_segs[i].x2 + edit_select->cumlx, 
@@ -593,8 +593,8 @@ selection_transform_segs (GimpEditSelectionTool *edit_select,
                                        &x, &y,
                                        FALSE);
 
-      dest_segs[i].x2 = x;
-      dest_segs[i].y2 = y;
+      dest_segs[i].x2 = CLAMP (x, -1, shell->disp_width);
+      dest_segs[i].y2 = CLAMP (y, -1, shell->disp_height);
     }
 }
 

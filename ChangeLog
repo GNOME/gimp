@@ -1,5 +1,11 @@
 2003-04-07  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpeditselectiontool.c (selection_transform_segs):
+	another patch from Pedro Gimeno that addresses problems displaying
+	the selection border (bug #110014).
+
+2003-04-07  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpeditselectiontool.c
 	(gimp_edit_selection_tool_button_release): applied a patch from
 	Pedro Gimeno that removes the confusing misfeature of anchoring
