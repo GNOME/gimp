@@ -6,8 +6,8 @@
 	has entries for all the symbols that are either provided by libgimp
 	or gimp itself depending on who is using the library.
 
-	* libgimpwidgets/libgimp-glue.c: removed this file that uses to
-	provide a Win32 only hack that is now not needed any longer.
+	* libgimpwidgets/libgimp-glue.c: removed this file that used to
+	provide a Win32 only hack that is now not any longer needed.
 
 	* libgimpwidgets/gimpcolorbutton.c
 	* libgimpwidgets/gimphelpui.c
