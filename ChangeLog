@@ -1,3 +1,15 @@
+2000-10-12  Kevin Turner  <acapnotic@users.sourceforge.net>
+
+	(applying patch from maru)
+	
+	* plug-ins/common/blur.c: use double callback for double data.
+	Why repeat count is a double, we'll never know.
+	
+	* plug-ins/perl/examples/xachshadow
+	* plug-ins/perl/examples/xachlego: set non-zero limits on some 
+	parameters.	
+	
+
 2000-10-09  Michael Natterer  <mitch@gimp.org>
 
 	* gimp_splash.ppm: A nicer one (this time without
