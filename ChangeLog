@@ -1,3 +1,9 @@
+2004-07-20  Sven Neumann  <sven@gimp.org>
+
+	* configure.in (ALL_LINGUAS): added back "pa" for Punjabi now that
+	the missing po files have been added (tips/pa.po is still missing
+	though).
+
 2004-07-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpactionfactory.[ch]
