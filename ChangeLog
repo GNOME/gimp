@@ -1,5 +1,11 @@
 2003-12-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpitemtreeview.c: reset container_view->dnd_widget
+	in gimp_item_tree_view_constructor() instead of
+	gimp_item_tree_view_new().
+
+2003-12-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainerview.c: this was starting to bit-rot on
 	my disk: added "container" and "context" properties.
 

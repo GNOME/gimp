@@ -502,6 +502,9 @@ gimp_item_tree_view_constructor (GType                  type,
                     G_CALLBACK (gimp_item_tree_view_chain_clicked),
                     item_view);
 
+  /*  disable the default GimpContainerView drop handler  */
+  GIMP_CONTAINER_VIEW (tree_view)->dnd_widget = NULL;
+
   gimp_dnd_drag_dest_set_by_type (GTK_WIDGET (tree_view->view),
                                   GTK_DEST_DEFAULT_ALL,
                                   item_view->item_type,
@@ -649,8 +652,6 @@ gimp_item_tree_view_new (gint                  preview_size,
   gimp_container_view_construct (GIMP_CONTAINER_VIEW (item_view),
                                  NULL, NULL,
                                  preview_size, preview_border_width, TRUE);
-
-  view->dnd_widget = NULL;
 
   item_view->edit_item_func     = edit_item_func;
   item_view->new_item_func      = new_item_func;
