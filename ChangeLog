@@ -1,3 +1,9 @@
+Thu Aug 12 19:16:58 1999 Adrian Likins <alikins@redhat.com>
+
+	* app/pixmapbrush.c: added a fix from Xach "I dont code."
+	Beane <xach@gimp.org> to fix the behaviour when painting
+	at the top of images.
+
 Thu Aug 12 23:15:53 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/commands.c

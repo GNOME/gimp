@@ -269,6 +269,12 @@ pixmapbrush_motion (PaintCore *paint_core,
   else
     offset_x = 0;
 
+  if (area->y == 0)
+    offset_y = brush->pixmap_mask->height - destPR.h;
+  else
+    offset_y = 0;
+
+
   /* FIXME handle the top of the image properly */
   
   for (; pr != NULL; pr = pixel_regions_process (pr))
@@ -335,7 +341,7 @@ paint_line_pixmap_mask (GImage        *dest,
   /* point to the approriate scanline */
   /* use "pat" here because i'm c&p from pattern clone */
   pat = temp_buf_data (brush->pixmap_mask) +
-    (y * brush->pixmap_mask->width * brush->pixmap_mask->bytes);
+    (( y + offset_y ) * brush->pixmap_mask->width * brush->pixmap_mask->bytes);
 
     
   /*   dest = d +  (y * brush->pixmap_mask->width * brush->pixmap_mask->bytes); */
