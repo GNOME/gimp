@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 03:25+0100\n"
-"PO-Revision-Date: 2003-11-24 03:28+0100\n"
+"POT-Creation-Date: 2003-12-11 19:38+0100\n"
+"PO-Revision-Date: 2003-12-11 19:38+0100\n"
 "Last-Translator: Дејан Матијевић <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -198,11 +198,7 @@ msgstr "Селекција нагиба"
 msgid "None"
 msgstr "Ниједан"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr "Изглед"
-
-#: libgimp/gimpmiscui.c:536
+#: libgimp/gimpmiscui.c:66
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -214,10 +210,6 @@ msgstr ""
 "Треба да додате унос као\n"
 "(%s \"%s\")\n"
 "у башу %s датотеку."
-
-#: libgimp/gimpmiscui.c:556
-msgid "Parameter Settings"
-msgstr "Подешавања параметра"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -314,6 +306,11 @@ msgstr "Неуспелo учитавање"
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
 msgstr "Није учитано"
+
+#: libgimpthumb/gimpthumb-utils.c:143
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "Неуспешно прављење директоријума са сличицама „%s“."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
@@ -416,15 +413,15 @@ msgstr "Одаберите директоријум"
 msgid "Select File"
 msgstr "Одабери датотеку"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "килобајта"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "мегабајта"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "гигабајта"
 
@@ -681,6 +678,12 @@ msgstr "Водена боја"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Притисак"
+
+#~ msgid "Preview"
+#~ msgstr "Изглед"
+
+#~ msgid "Parameter Settings"
+#~ msgstr "Подешавања параметра"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "Ништа (нормалан преглед)"

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 03:25+0100\n"
-"PO-Revision-Date: 2003-11-24 03:28+0100\n"
+"POT-Creation-Date: 2003-12-11 19:38+0100\n"
+"PO-Revision-Date: 2003-12-11 19:38+0100\n"
 "Last-Translator: Dejan Matijević <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -198,11 +198,7 @@ msgstr "Selekcija nagiba"
 msgid "None"
 msgstr "Nijedan"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr "Izgled"
-
-#: libgimp/gimpmiscui.c:536
+#: libgimp/gimpmiscui.c:66
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -214,10 +210,6 @@ msgstr ""
 "Treba da dodate unos kao\n"
 "(%s \"%s\")\n"
 "u bašu %s datoteku."
-
-#: libgimp/gimpmiscui.c:556
-msgid "Parameter Settings"
-msgstr "Podešavanja parametra"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -314,6 +306,11 @@ msgstr "Neuspelo učitavanje"
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
 msgstr "Nije učitano"
+
+#: libgimpthumb/gimpthumb-utils.c:143
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "Neuspešno pravljenje direktorijuma sa sličicama „%s“."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
@@ -416,15 +413,15 @@ msgstr "Odaberite direktorijum"
 msgid "Select File"
 msgstr "Odaberi datoteku"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "kilobajta"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "megabajta"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "gigabajta"
 
@@ -681,6 +678,12 @@ msgstr "Vodena boja"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pritisak"
+
+#~ msgid "Preview"
+#~ msgstr "Izgled"
+
+#~ msgid "Parameter Settings"
+#~ msgstr "Podešavanja parametra"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "Ništa (normalan pregled)"
