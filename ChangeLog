@@ -1,5 +1,13 @@
 2005-02-05  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): switched meaning of Ctrl
+	and Shift modifiers used with the mouse scroll wheel. The HIG
+	suggests to use Ctrl for zooming and it makes GIMP more consistent
+	with other apps (for example Inkscape).
+
+2005-02-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpconfig-params.h: renamed GIMP_PARAM_ #defines
 	to GIMP_CONFIG_PARAM_.
 

@@ -858,7 +858,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         direction = sevent->direction;
 
-        if (state & GDK_SHIFT_MASK)
+        if (state & GDK_CONTROL_MASK)
           {
             switch (direction)
               {
@@ -879,7 +879,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             GtkAdjustment *adj = NULL;
             gdouble        value;
 
-            if (state & GDK_CONTROL_MASK)
+            if (state & GDK_SHIFT_MASK)
               switch (direction)
                 {
                 case GDK_SCROLL_UP:    direction = GDK_SCROLL_LEFT;  break;
