@@ -133,7 +133,7 @@ qmask_channel_query (GimpDisplayShell *shell)
   options = g_new0 (EditQmaskOptions, 1);
 
   options->gimage      = shell->gdisp->gimage;
-  options->color_panel = gimp_color_panel_new (_("Edit Qmask Color"),
+  options->color_panel = gimp_color_panel_new (_("Edit QuickMask Color"),
 					       &options->gimage->qmask_color,
 					       GIMP_COLOR_AREA_LARGE_CHECKS,
 					       48, 64);
@@ -143,7 +143,7 @@ qmask_channel_query (GimpDisplayShell *shell)
   /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->gdisp->gimage),
-                              _("Qmask Attributes"), "gimp-qmask-edit",
+                              _("QuickMask Attributes"), "gimp-qmask-edit",
                               GIMP_STOCK_QMASK_ON,
                               _("Edit QuickMask Attributes"),
                               GTK_WIDGET (shell),

@@ -1,5 +1,28 @@
 2004-05-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/file-actions.c
+	* app/actions/file-commands.[ch]: remove "file-close" action and
+	callback...
+
+	* app/actions/view-actions.c
+	* app/actions/view-commands.[ch]: ...and added it here as
+	"view-close" because that's what it does.
+
+	* app/actions/qmask-actions.c
+	* app/actions/qmask-commands.c: s/QMask/QuickMask/g
+
+	* app/gui/menus.c: add the "channels" action group to the <Image>
+	and <Dock> UI managers, renamed UI manager <Dialogs> to
+	<Dockable>.
+
+	* app/widgets/gimpdockbook.c: s/<Dialogs>/<Dockable>/.
+
+	* menus/image-menu.xml.in: s/file-close/view-close/, added
+	separators at the end of most menus, moved the bottom group of the
+	"View" menu after the zoom group.
+
+2004-05-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/select-actions.c: removed action "select-by-color".
 
 	* app/tools/gimpbycolorselecttool.c: add the shortcut here.

@@ -23,7 +23,7 @@
 	<separator />
       </placeholder>
       <separator />
-      <menuitem action="file-close" />
+      <menuitem action="view-close" />
       <menuitem action="file-quit" />
     </menu>
 
@@ -75,6 +75,7 @@
       <menuitem action="qmask-toggle" />
       <menuitem action="select-save" />
       <menuitem action="select-to-vectors" />
+      <separator />
     </menu>
 
     <menu action="view-menu" name="View">
@@ -98,6 +99,10 @@
         <menuitem action="view-zoom-other" />
       </menu>
       <separator />
+      <menuitem action="view-shrink-wrap" />
+      <menuitem action="view-fullscreen" />
+      <menuitem action="view-move-to-screen" />
+      <separator />
       <menuitem action="view-info-window" />
       <menuitem action="view-navigation-window" />
       <menuitem action="view-display-filters" />
@@ -114,9 +119,6 @@
       <menuitem action="view-show-scrollbars" />
       <menuitem action="view-show-statusbar" />
       <separator />
-      <menuitem action="view-shrink-wrap" />
-      <menuitem action="view-fullscreen" />
-      <menuitem action="view-move-to-screen" />
     </menu>
 
     <menu action="image-menu" name="Image">
@@ -124,6 +126,7 @@
         <menuitem action="image-convert-rgb" />
         <menuitem action="image-convert-grayscale" />
         <menuitem action="image-convert-indexed" />
+	<separator />
       </menu>
       <menu action="image-transform-menu" name="Transform">
         <menuitem action="image-flip-horizontal" />
@@ -144,6 +147,7 @@
       <menuitem action="image-flatten" />
       <separator />
       <menuitem action="image-configure-grid" />
+      <separator />
     </menu>
 
     <menu action="layers-menu" name="Layer">
@@ -164,6 +168,7 @@
         <menuitem action="layers-lower" />
         <menuitem action="layers-raise-to-top" />
         <menuitem action="layers-lower-to-bottom" />
+        <separator />
       </menu>
       <menu action="layers-colors-menu" name="Colors">
         <menuitem action="tools-color-balance" />
@@ -192,6 +197,7 @@
         <menuitem action="layers-mask-selection-add" />
         <menuitem action="layers-mask-selection-subtract" />
         <menuitem action="layers-mask-selection-intersect" />
+        <separator />
       </menu>
       <menu action="layers-transparency-menu" name="Transparency">
         <menuitem action="layers-alpha-add" />

@@ -44,7 +44,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gui/dialogs.h"
 #include "gui/file-new-dialog.h"
@@ -306,16 +305,6 @@ file_revert_cmd_callback (GtkAction *action,
 
       gtk_widget_show (query_box);
     }
-}
-
-void
-file_close_cmd_callback (GtkAction *action,
-			 gpointer   data)
-{
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
-
-  gimp_display_shell_close (GIMP_DISPLAY_SHELL (gdisp->shell), FALSE);
 }
 
 void

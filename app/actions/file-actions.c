@@ -95,11 +95,6 @@ static GimpActionEntry file_actions[] =
     G_CALLBACK (file_revert_cmd_callback),
     GIMP_HELP_FILE_REVERT },
 
-  { "file-close", GTK_STOCK_CLOSE,
-    N_( "_Close"), "<control>W", NULL,
-    G_CALLBACK (file_close_cmd_callback),
-    GIMP_HELP_FILE_CLOSE },
-
   { "file-quit", GTK_STOCK_QUIT,
     N_("_Quit"), "<control>Q", NULL,
     G_CALLBACK (file_quit_cmd_callback),
@@ -187,7 +182,6 @@ file_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("file-save-a-copy",      gimage && drawable);
   SET_SENSITIVE ("file-save-as-template", gimage);
   SET_SENSITIVE ("file-revert",           gimage && GIMP_OBJECT (gimage)->name);
-  SET_SENSITIVE ("file-close",            gimage);
 
 #undef SET_SENSITIVE
 }

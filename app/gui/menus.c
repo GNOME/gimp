@@ -94,6 +94,7 @@ menus_init (Gimp *gimp)
                                       "image",
                                       "drawable",
                                       "layers",
+                                      "channels",
                                       "vectors",
                                       "tools",
                                       "dialogs",
@@ -117,6 +118,7 @@ menus_init (Gimp *gimp)
                                       "image",
                                       "drawable",
                                       "layers",
+                                      "channels",
                                       "vectors",
                                       "tools",
                                       "dialogs",
@@ -162,7 +164,7 @@ menus_init (Gimp *gimp)
                                       "vectors-menu.xml", NULL,
                                       NULL);
 
-  gimp_menu_factory_manager_register (global_menu_factory, "<Dialogs>",
+  gimp_menu_factory_manager_register (global_menu_factory, "<Dockable>",
                                       "dockable",
                                       NULL,
                                       "/dockable-popup",

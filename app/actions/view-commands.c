@@ -63,6 +63,27 @@
 /*  public functions  */
 
 void
+view_new_view_cmd_callback (GtkAction *action,
+			    gpointer   data)
+{
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
+
+  gimp_create_display (gdisp->gimage->gimp, gdisp->gimage,
+                       GIMP_DISPLAY_SHELL (gdisp->shell)->scale);
+}
+
+void
+view_close_view_cmd_callback (GtkAction *action,
+                              gpointer   data)
+{
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
+
+  gimp_display_shell_close (GIMP_DISPLAY_SHELL (gdisp->shell), FALSE);
+}
+
+void
 view_zoom_out_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
@@ -373,17 +394,6 @@ view_snap_to_grid_cmd_callback (GtkAction *action,
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
   gimp_display_shell_set_snap_to_grid (shell, active);
-}
-
-void
-view_new_view_cmd_callback (GtkAction *action,
-			    gpointer   data)
-{
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
-
-  gimp_create_display (gdisp->gimage->gimp, gdisp->gimage,
-                       GIMP_DISPLAY_SHELL (gdisp->shell)->scale);
 }
 
 void

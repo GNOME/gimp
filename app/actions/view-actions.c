@@ -61,6 +61,11 @@ static GimpActionEntry view_actions[] =
     G_CALLBACK (view_new_view_cmd_callback),
     GIMP_HELP_VIEW_NEW },
 
+  { "view-close", GTK_STOCK_CLOSE,
+    N_( "_Close"), "<control>W", NULL,
+    G_CALLBACK (view_close_view_cmd_callback),
+    GIMP_HELP_FILE_CLOSE },
+
   { "view-zoom-out", GTK_STOCK_ZOOM_OUT,
     N_("Zoom _Out"), "minus", NULL,
     G_CALLBACK (view_zoom_out_cmd_callback),
@@ -292,7 +297,8 @@ view_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("view-new", gdisp);
+  SET_SENSITIVE ("view-new",   gdisp);
+  SET_SENSITIVE ("view-close", gdisp);
 
   SET_SENSITIVE ("view-dot-for-dot", gdisp);
   SET_ACTIVE    ("view-dot-for-dot", gdisp && shell->dot_for_dot);

@@ -315,7 +315,7 @@ gimp_dockbook_new (GimpMenuFactory *menu_factory)
   dockbook = g_object_new (GIMP_TYPE_DOCKBOOK, NULL);
 
   dockbook->ui_manager = gimp_menu_factory_manager_new (menu_factory,
-                                                        "<Dialogs>",
+                                                        "<Dockable>",
                                                         dockbook,
                                                         FALSE);
 

@@ -20,6 +20,11 @@
 #define __VIEW_COMMANDS_H__
 
 
+void   view_new_view_cmd_callback              (GtkAction *action,
+                                                gpointer   data);
+void   view_close_view_cmd_callback            (GtkAction *action,
+                                                gpointer   data);
+
 void   view_zoom_out_cmd_callback              (GtkAction *action,
                                                 gpointer   data);
 void   view_zoom_in_cmd_callback               (GtkAction *action,
@@ -56,8 +61,6 @@ void   view_snap_to_guides_cmd_callback        (GtkAction *action,
 void   view_toggle_grid_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
 void   view_snap_to_grid_cmd_callback          (GtkAction *action,
-                                                gpointer   data);
-void   view_new_view_cmd_callback              (GtkAction *action,
                                                 gpointer   data);
 
 void   view_shrink_wrap_cmd_callback           (GtkAction *action,
