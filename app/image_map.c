@@ -151,23 +151,6 @@ image_map_apply (ImageMap           image_map,
       _image_map->undo_tiles->width != (x2 - x1) ||
       _image_map->undo_tiles->height != (y2 - y1))
     {
-      /*  If undo tiles exist, copy them to the drawable*/
-      if (_image_map->undo_tiles)
-	{
-	  /*  Copy from the drawable to the tiles  */
-	  pixel_region_init (&_image_map->srcPR, _image_map->undo_tiles, 0, 0,
-			     _image_map->undo_tiles->width,
-			     _image_map->undo_tiles->height,
-			     FALSE);
-	  pixel_region_init (&_image_map->destPR, drawable_data ( (_image_map->drawable)),
-			     _image_map->undo_tiles->x, _image_map->undo_tiles->y,
-			     _image_map->undo_tiles->width,
-			     _image_map->undo_tiles->height,
-			     TRUE);
-
-	  copy_region (&_image_map->srcPR, &_image_map->destPR);
-	}
-
       /*  If either the extents changed or the tiles don't exist, allocate new  */
       if (!_image_map->undo_tiles ||
 	  _image_map->undo_tiles->width != (x2 - x1) ||
@@ -176,7 +159,7 @@ image_map_apply (ImageMap           image_map,
 	  /*  Destroy old tiles--If they exist  */
 	  if (_image_map->undo_tiles != NULL)
 	    tile_manager_destroy (_image_map->undo_tiles);
-
+	  
 	  /*  Allocate new tiles  */
 	  _image_map->undo_tiles = tile_manager_new ((x2 - x1), (y2 - y1),
 						     drawable_bytes ( (_image_map->drawable)));
@@ -193,6 +176,22 @@ image_map_apply (ImageMap           image_map,
       /*  Set the offsets  */
       _image_map->undo_tiles->x = x1;
       _image_map->undo_tiles->y = y1;
+    }
+  else /* _image_map->undo_tiles exist AND drawable dimensions have not changed... */
+    {
+      /* Reset to initial drawable conditions.            */
+      /* Copy from the backup undo tiles to the drawable  */
+      pixel_region_init (&_image_map->srcPR, _image_map->undo_tiles, 0, 0,
+			 _image_map->undo_tiles->width,
+			 _image_map->undo_tiles->height,
+			 FALSE);
+      pixel_region_init (&_image_map->destPR, drawable_data ( (_image_map->drawable)),
+			 _image_map->undo_tiles->x, _image_map->undo_tiles->y,
+			 _image_map->undo_tiles->width,
+			 _image_map->undo_tiles->height,
+			 TRUE);
+
+      copy_region (&_image_map->srcPR, &_image_map->destPR);
     }
 
   /*  Configure the src from the drawable data  */

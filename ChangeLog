@@ -1,3 +1,12 @@
+2000-08-23 Garry R. Osgood <gosgood@idt.net>
+	* app/image_map.c 
+	A bit of refresh drawable code was misplaced 
+	these many years ago, leading to the persistence 
+	of color tool effects, as reported in Mihail 
+	Milushev's nicely composed bug report. Closes #7626
+	See http://bugs.gnome.org/db/76/7626.html for
+	the gory details.
+
 Wed Aug 23 17:31:35 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* configure.in: perl support for COMPAT_CRUFT
