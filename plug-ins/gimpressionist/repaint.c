@@ -896,12 +896,9 @@ void repaint(ppm_t *p, ppm_t *a)
     ppm_kill(&tmp);
   }
 
-  /* TODO : Replace these conditionals simply with ppm_kill().
-   * (if ppm_kill() cannot handle NULL col's properly - replace it.
-   * */
-  if(paper_ppm.col) ppm_kill(&paper_ppm);
-  if(dirmap.col) ppm_kill(&dirmap);
-  if(sizmap.col) ppm_kill(&sizmap);
+  ppm_kill (&paper_ppm);
+  ppm_kill (&dirmap);
+  ppm_kill (&sizmap);
   if(runningvals.run) {
     gimp_progress_update(0.8);
   } else {

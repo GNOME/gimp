@@ -1,5 +1,10 @@
 2004-07-17  Shlomi Fish  <shlomif@iglu.org.il>
 
+	* plug-ins/gimpressionist/repaint.c: replaced a few if's+destructors
+	pairs for ppm_ with just the destructors.
+
+2004-07-17  Shlomi Fish  <shlomif@iglu.org.il>
+
 	* plug-ins/gimpressionist/repaint.c: normalized some identifiers of 
 	repaint.c, and corrected some indentation there.
 
