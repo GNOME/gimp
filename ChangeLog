@@ -1,3 +1,47 @@
+2003-11-11  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolorbutton.[ch]: added new API
+	gimp_color_button_[get|set]_update() which configures the button
+	to emit "color_changed" continuously while the color in the color
+	selection dialog is being changed. Fixes bug #90091.
+
+	Renamed GimpColorButton struct member
+	"GtkItemFactory *item_factory" to a /*< private >*/ member named
+	"gpointer popup_menu". This is ugly but fixes bug #125115,
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.c
+	* app/widgets/gimpcolorpanel.c: changed accordingly.
+
+	* libgimpwidgets/gimpcolorbutton.c: use a GimpColorSelection
+	with a handmade GimpDialog instead of GtkColorSelectionDialog.
+
+	Enabled module loading for plug-ins so the color selection
+	can show the color selectors which are implemented in modules:
+
+	* libgimpwidgets/gimpwidgets-private.[ch]: added
+	GimpEnsureModlesFunc which can be called by modules users.
+
+	* app/gui/gui.c (gui_libs_init): pass NULL as
+	GimpEnsureModulesFunc since the core loads the modules itself.
+
+	* libgimp/gimpui.c (gimp_ui_init): pass new private function
+	gimp_ensure_modules() which will load the modules upon first
+	invocation.
+
+	* libgimp/Makefile.am: link libgimpui against libgimpmodule.
+
+	* libgimpwidgets/gimpcolorselection.c: call
+	_gimp_ensure_modules_func() if it is non-NULL so color selector
+	modules are available for plug-ins.
+
+	* tools/pdbgen/pdb/gimprc.pdb: added new PDB wrapper
+	gimp_get_module_load_inhibit().
+
+	* app/pdb/gimprc_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpgimprc_pdb.[ch]: regenerated.
+
 2003-11-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpstock.[ch]

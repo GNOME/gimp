@@ -819,9 +819,13 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
         GIMP_STOCK_RESET }
     };
 
-    gtk_item_factory_create_items (GIMP_COLOR_BUTTON (shell->padding_button)->item_factory,
-                                   G_N_ELEMENTS (menu_items),
-                                   menu_items,
+    GtkItemFactory *item_factory;
+
+    item_factory =
+      GTK_ITEM_FACTORY (GIMP_COLOR_BUTTON (shell->padding_button)->popup_menu);
+
+    gtk_item_factory_create_items (item_factory,
+                                   G_N_ELEMENTS (menu_items), menu_items,
                                    shell);
   }
 

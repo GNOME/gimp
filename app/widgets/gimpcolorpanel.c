@@ -153,18 +153,20 @@ gimp_color_panel_button_press (GtkWidget      *widget,
     {
       GimpColorButton *color_button;
       GimpColorPanel  *color_panel;
+      GtkItemFactory  *item_factory;
       GimpRGB          black, white;
 
       color_button = GIMP_COLOR_BUTTON (widget);
       color_panel  = GIMP_COLOR_PANEL (widget);
+      item_factory = GTK_ITEM_FACTORY (color_button->popup_menu);
 
-      gimp_item_factory_set_visible (color_button->item_factory,
+      gimp_item_factory_set_visible (item_factory,
                                      "/Foreground Color",
                                      color_panel->context != NULL);
-      gimp_item_factory_set_visible (color_button->item_factory,
+      gimp_item_factory_set_visible (item_factory,
                                      "/Background Color",
                                      color_panel->context != NULL);
-      gimp_item_factory_set_visible (color_button->item_factory,
+      gimp_item_factory_set_visible (item_factory,
                                      "/fg-bg-separator",
                                      color_panel->context != NULL);
 
@@ -175,18 +177,18 @@ gimp_color_panel_button_press (GtkWidget      *widget,
           gimp_context_get_foreground (color_panel->context, &fg);
           gimp_context_get_background (color_panel->context, &bg);
 
-          gimp_item_factory_set_color (color_button->item_factory,
+          gimp_item_factory_set_color (item_factory,
                                        "/Foreground Color", &fg, FALSE);
-          gimp_item_factory_set_color (color_button->item_factory,
+          gimp_item_factory_set_color (item_factory,
                                        "/Background Color", &bg, FALSE);
         }
 
       gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
       gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
 
-      gimp_item_factory_set_color (color_button->item_factory,
+      gimp_item_factory_set_color (item_factory,
                                    "/Black", &black, FALSE);
-      gimp_item_factory_set_color (color_button->item_factory,
+      gimp_item_factory_set_color (item_factory,
                                    "/White", &white, FALSE);
     }
 

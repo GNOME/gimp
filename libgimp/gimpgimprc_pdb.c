@@ -196,3 +196,31 @@ gimp_get_theme_dir (void)
 
   return theme_dir;
 }
+
+/**
+ * gimp_get_module_load_inhibit:
+ *
+ * Get the list of modules which should not be loaded.
+ *
+ * Returns a copy of the list of modules which should not be loaded.
+ *
+ * Returns: The list of modules.
+ */
+gchar *
+gimp_get_module_load_inhibit (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *load_inhibit = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_get_module_load_inhibit",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    load_inhibit = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return load_inhibit;
+}

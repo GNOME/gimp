@@ -2,6 +2,7 @@
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la
+libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la
 libgimp = ./libgimp-$(LT_RELEASE).la
 
@@ -254,7 +255,7 @@ libgimpui_1_3_la_LDFLAGS = \
 	$(libgimpui_export_symbols)
 
 libgimpui_1_3_la_LIBADD = $(libgimp) $(libgimpwidgets) $(libgimpcolor) \
-	 $(libgimpbase) $(GTK_LIBS)
+	 $(libgimpbase) $(libgimpmodule) $(GTK_LIBS)
 
 libgimpui_1_3_la_DEPENDENCIES = $(gimpui_def) $(libgimp)
 

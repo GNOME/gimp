@@ -21,6 +21,10 @@
 
 #include <stdlib.h>
 
+#include <gtk/gtk.h>
+
+#include "libgimpmodule/gimpmodule.h"
+
 #include "gimp.h"
 #include "gimpui.h"
 
@@ -30,8 +34,9 @@
 
 /*  local function prototypes  */
 
-static void  gimp_ui_help_func (const gchar *help_id,
-                                gpointer     help_data);
+static void  gimp_ui_help_func   (const gchar *help_id,
+                                  gpointer     help_data);
+static void  gimp_ensure_modules (void);
 
 
 /*  public functions  */
@@ -143,7 +148,8 @@ gimp_ui_init (const gchar *prog_name,
   gimp_widgets_init (&vtable,
                      gimp_ui_help_func,
                      gimp_palette_get_foreground,
-                     gimp_palette_get_background);
+                     gimp_palette_get_background,
+                     gimp_ensure_modules);
 
   if (! gimp_show_tool_tips ())
     gimp_help_disable_tooltips ();
@@ -159,4 +165,26 @@ gimp_ui_help_func (const gchar *help_id,
                    gpointer     help_data)
 {
   gimp_help (gimp_get_progname (), help_id);
+}
+
+static void
+gimp_ensure_modules (void)
+{
+  static GimpModuleDB *module_db = NULL;
+
+  if (! module_db)
+    {
+      gchar *load_inhibit;
+      gchar *module_path;
+
+      load_inhibit = gimp_get_module_load_inhibit ();
+      module_path  = gimp_gimprc_query ("module-path");
+
+      module_db = gimp_module_db_new (FALSE);
+      gimp_module_db_set_load_inhibit (module_db, load_inhibit);
+      gimp_module_db_load (module_db, module_path);
+
+      g_free (load_inhibit);
+      g_free (module_path);
+    }
 }

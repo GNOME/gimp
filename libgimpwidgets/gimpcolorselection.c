@@ -30,10 +30,13 @@
 #include "gimpcolorarea.h"
 #include "gimpcolornotebook.h"
 #include "gimpcolorscales.h"
+#include "gimpcolorselect.h"
 #include "gimpcolorselection.h"
 #include "gimphelpui.h"
 #include "gimpstock.h"
 #include "gimpwidgets.h"
+#include "gimpwidgets-private.h"
+
 #include "gimpwidgetsmarshal.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -155,10 +158,20 @@ gimp_color_selection_init (GimpColorSelection *selection)
                       TRUE, TRUE, 0);
   gtk_widget_show (selection->left_vbox);
 
+  if (_gimp_ensure_modules_func)
+    {
+      g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
+      _gimp_ensure_modules_func ();
+    }
+
   selection->notebook = gimp_color_selector_new (GIMP_TYPE_COLOR_NOTEBOOK,
                                                  &selection->rgb,
                                                  &selection->hsv,
                                                  selection->channel);
+
+  if (_gimp_ensure_modules_func)
+    g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
+
   gimp_color_selector_set_toggles_visible
     (GIMP_COLOR_SELECTOR (selection->notebook), FALSE);
   gtk_box_pack_start (GTK_BOX (selection->left_vbox), selection->notebook,

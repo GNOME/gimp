@@ -35,11 +35,14 @@
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
 
+#include "libgimpmodule/gimpmodule.h"
+
 static ProcRecord gimprc_query_proc;
 static ProcRecord gimprc_set_proc;
 static ProcRecord get_default_comment_proc;
 static ProcRecord get_monitor_resolution_proc;
 static ProcRecord get_theme_dir_proc;
+static ProcRecord get_module_load_inhibit_proc;
 
 void
 register_gimprc_procs (Gimp *gimp)
@@ -49,6 +52,7 @@ register_gimprc_procs (Gimp *gimp)
   procedural_db_register (gimp, &get_default_comment_proc);
   procedural_db_register (gimp, &get_monitor_resolution_proc);
   procedural_db_register (gimp, &get_theme_dir_proc);
+  procedural_db_register (gimp, &get_module_load_inhibit_proc);
 }
 
 static Argument *
@@ -313,4 +317,48 @@ static ProcRecord get_theme_dir_proc =
   1,
   get_theme_dir_outargs,
   { { get_theme_dir_invoker } }
+};
+
+static Argument *
+get_module_load_inhibit_invoker (Gimp     *gimp,
+                                 Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *load_inhibit;
+
+  load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
+  success = TRUE;
+
+  return_args = procedural_db_return_args (&get_module_load_inhibit_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_pointer = load_inhibit;
+
+  return return_args;
+}
+
+static ProcArg get_module_load_inhibit_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "load_inhibit",
+    "The list of modules"
+  }
+};
+
+static ProcRecord get_module_load_inhibit_proc =
+{
+  "gimp_get_module_load_inhibit",
+  "Get the list of modules which should not be loaded.",
+  "Returns a copy of the list of modules which should not be loaded.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  1,
+  get_module_load_inhibit_outargs,
+  { { get_module_load_inhibit_invoker } }
 };

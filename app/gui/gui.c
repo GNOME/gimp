@@ -143,7 +143,8 @@ gui_libs_init (gint    *argc,
   gimp_widgets_init (&vtable,
                      gui_help_func,
                      gui_get_foreground_func,
-                     gui_get_background_func);
+                     gui_get_background_func,
+                     NULL);
 
   g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
 

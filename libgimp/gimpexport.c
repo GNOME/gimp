@@ -369,7 +369,7 @@ confirm_save_dialog (const gchar *message,
 
   gtk_widget_show (dialog);
 
-  switch (gtk_dialog_run (GTK_DIALOG (dialog)))
+  switch (gimp_dialog_run (GTK_DIALOG (dialog)))
     {
     case GTK_RESPONSE_OK:
       retval = GIMP_EXPORT_EXPORT;
@@ -523,7 +523,7 @@ export_dialog (GSList      *actions,
 
   gtk_widget_show (dialog);
 
-  switch (gtk_dialog_run (GTK_DIALOG (dialog)))
+  switch (gimp_dialog_run (GTK_DIALOG (dialog)))
     {
     case GTK_RESPONSE_OK:
       retval = GIMP_EXPORT_EXPORT;

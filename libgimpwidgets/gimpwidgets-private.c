@@ -35,17 +35,19 @@
 #include "themes/Default/images/gimp-wilber-pixbufs.h"
 
 
-GimpWidgetsVTable _gimp_eek                 = { NULL, };
-GimpHelpFunc      _gimp_standard_help_func  = NULL;
-GimpGetColorFunc  _gimp_get_foreground_func = NULL;
-GimpGetColorFunc  _gimp_get_background_func = NULL;
+GimpWidgetsVTable     _gimp_eek                 = { NULL, };
+GimpHelpFunc          _gimp_standard_help_func  = NULL;
+GimpGetColorFunc      _gimp_get_foreground_func = NULL;
+GimpGetColorFunc      _gimp_get_background_func = NULL;
+GimpEnsureModulesFunc _gimp_ensure_modules_func = NULL;
 
 
 void
-gimp_widgets_init (GimpWidgetsVTable *vtable,
-                   GimpHelpFunc       standard_help_func,
-                   GimpGetColorFunc   get_foreground_func,
-                   GimpGetColorFunc   get_background_func)
+gimp_widgets_init (GimpWidgetsVTable    *vtable,
+                   GimpHelpFunc          standard_help_func,
+                   GimpGetColorFunc      get_foreground_func,
+                   GimpGetColorFunc      get_background_func,
+                   GimpEnsureModulesFunc ensure_modules_func)
 {
   static gboolean  gimp_widgets_initialized = FALSE;
 
@@ -71,6 +73,7 @@ gimp_widgets_init (GimpWidgetsVTable *vtable,
   _gimp_standard_help_func  = standard_help_func;
   _gimp_get_foreground_func = get_foreground_func;
   _gimp_get_background_func = get_background_func;
+  _gimp_ensure_modules_func = ensure_modules_func;
 
   gimp_stock_init ();
 

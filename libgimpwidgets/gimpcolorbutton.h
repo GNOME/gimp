@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcolorbutton.h
@@ -8,10 +8,10 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -49,10 +49,13 @@ struct _GimpColorButton
   GimpButton      parent_instance;
 
   gchar          *title;
+  gboolean        continuous_update;
 
   GtkWidget      *color_area;
   GtkWidget      *dialog;
-  GtkItemFactory *item_factory;
+
+  /*< private >*/
+  gpointer        popup_menu;
 };
 
 struct _GimpColorButtonClass
@@ -75,9 +78,14 @@ void        gimp_color_button_set_color  (GimpColorButton   *button,
 					  const GimpRGB     *color);
 void        gimp_color_button_get_color  (GimpColorButton   *button,
 					  GimpRGB           *color);
+
 gboolean    gimp_color_button_has_alpha  (GimpColorButton   *button);
 void        gimp_color_button_set_type   (GimpColorButton   *button,
 					  GimpColorAreaType  type);
+
+gboolean    gimp_color_button_get_update (GimpColorButton   *button);
+void        gimp_color_button_set_update (GimpColorButton   *button,
+                                          gboolean           continuous);
 
 
 G_END_DECLS

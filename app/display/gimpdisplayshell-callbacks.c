@@ -1373,17 +1373,19 @@ gimp_display_shell_color_button_press (GtkWidget        *widget,
   if (bevent->button == 3)
     {
       GimpColorButton *color_button;
+      GtkItemFactory  *item_factory;
       guchar           r, g, b;
       GimpRGB          color;
 
       color_button = GIMP_COLOR_BUTTON (widget);
+      item_factory = GTK_ITEM_FACTORY (color_button->popup_menu);
 
       r = shell->canvas->style->bg[GTK_STATE_NORMAL].red   >> 8;
       g = shell->canvas->style->bg[GTK_STATE_NORMAL].green >> 8;
       b = shell->canvas->style->bg[GTK_STATE_NORMAL].blue  >> 8;
 
       gimp_rgba_set_uchar (&color, r, g, b, 255);
-      gimp_item_factory_set_color (color_button->item_factory,
+      gimp_item_factory_set_color (item_factory,
                                    "/From Theme", &color, FALSE);
 
       gimp_rgba_set_uchar (&color,
@@ -1391,7 +1393,7 @@ gimp_display_shell_color_button_press (GtkWidget        *widget,
                            render_blend_light_check[1],
                            render_blend_light_check[2],
                            255);
-      gimp_item_factory_set_color (color_button->item_factory,
+      gimp_item_factory_set_color (item_factory,
                                    "/Light Check Color", &color, FALSE);
 
       gimp_rgba_set_uchar (&color,
@@ -1399,7 +1401,7 @@ gimp_display_shell_color_button_press (GtkWidget        *widget,
                            render_blend_dark_check[1],
                            render_blend_dark_check[2],
                            255);
-      gimp_item_factory_set_color (color_button->item_factory,
+      gimp_item_factory_set_color (item_factory,
                                    "/Dark Check Color", &color, FALSE);
     }
 

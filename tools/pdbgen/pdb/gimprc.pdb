@@ -182,10 +182,36 @@ CODE
     );
 }
 
+sub get_module_load_inhibit {
+    $blurb = 'Get the list of modules which should not be loaded.';
+
+    $help = 'Returns a copy of the list of modules which should not be loaded.';
+
+    &std_pdb_misc;
+
+    @inargs = ( );
+
+    @outargs = (
+	{  name => 'load_inhibit', type => 'string',
+	   desc => 'The list of modules' }
+    );
+
+    %invoke = (
+	headers => [ qw("libgimpmodule/gimpmodule.h") ],
+	code => <<'CODE'
+{
+  load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
+  success = TRUE;
+}
+CODE
+    );
+}
+
 @headers = qw("core/gimp.h");
 
 @procs = qw(gimprc_query gimprc_set 
-	    get_default_comment get_monitor_resolution get_theme_dir);
+	    get_default_comment get_monitor_resolution get_theme_dir
+            get_module_load_inhibit);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gimprc procedures';
