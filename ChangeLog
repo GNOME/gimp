@@ -1,3 +1,7 @@
+Sat Apr 11 00:03:33 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Made 0.99.25 release
+
 Fri Apr 10 21:59:18 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/app_procs.c: fixed up idle handler for file open
