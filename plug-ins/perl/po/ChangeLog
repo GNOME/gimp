@@ -1,3 +1,7 @@
+2002-08-28  Christophe Merlet  <christophe@merlet.net>
+
+	* fr.po: Updated French translation.
+
 2002-05-27  Abel Cheung  <maddog@linux.org.hk>
 
 	* update.sh: Allow updating pot file without creating makefile
@@ -15,7 +19,7 @@
 
 	* pt.po: Updated Portuguese translation
 
-2002-02-27  Christophe Merlet  <redfox@eikonex.org>
+2002-02-27  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation from work of
 	Raymond Ostertag <r.ostertag@caramail.com>.
@@ -54,7 +58,7 @@
 	* zh_TW.po: Merged traditional Chinese translation from
 	<object@mis.mgt.ncu.edu.tw> with my own.
 
-2001-10-24  Christophe Merlet  <redfox@eikonex.org>
+2001-10-24  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation.
 
@@ -146,7 +150,7 @@
 
 	* tr.po: Added Turkish gimp-perl translation.
 
-2001-02-09  Christophe Merlet  <redfox@eikonex.org>
+2001-02-09  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Minors Updates of the French translation.
 
@@ -158,7 +162,7 @@
 
 	* pl.po: Updated Polish translation
 
-2001-01-02  Christophe Merlet  <redfox@eikonex.org>
+2001-01-02  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation.
 	

@@ -1,3 +1,7 @@
+2002-08-28  Christophe Merlet  <christophe@merlet.net>
+
+	* fr.po: Updated French translation.
+
 2002-08-24  Sven Neumann  <sven@gimp.org>
 
 	* de.po: Updated german translation.
@@ -76,7 +80,7 @@
 
 	* no.po: Updated Norwegian (bokmål) translation.
 	
-2002-01-31  Christophe Merlet  <redfox@eikonex.org>
+2002-01-31  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation.
 
@@ -143,7 +147,7 @@
 
 	* da.po: Updated Danish translation.
 
-2001-11-17  Christophe Merlet  <redfox@eikonex.org>
+2001-11-17  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation.
 
@@ -155,7 +159,7 @@
 
 	* da.po: Updated Danish translation.
 
-2001-11-10  Christophe Merlet  <redfox@eikonex.org>
+2001-11-10  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation.
 
@@ -168,7 +172,7 @@
 
 	* de.po: updated german translation.
 
-2001-11-08  Christophe Merlet  <redfox@eikonex.org>
+2001-11-08  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation.
 
@@ -218,7 +222,7 @@
 	* pl.po: Updated Polish translation by
 	GNOME PL Team <translators@gnome.pl>.
 
-2001-10-24  Christophe Merlet  <redfox@eikonex.org>
+2001-10-24  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation.
 
@@ -247,7 +251,7 @@
 	* nl.po: Updated Dutch translation from
 	Branko Collin <collin@xs4all.nl>
 
-2001-09-22  Christophe Merlet  <redfox@eikonex.org>
+2001-09-22  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation.
 
@@ -298,7 +302,7 @@
 
 	* ru.po: updated russian translation.
 
-2001-06-26  Christophe Merlet  <redfox@eikonex.org>
+2001-06-26  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation.
 
@@ -340,11 +344,11 @@
 	* no.po: Updated Norwegian (bokmål) translation.
 	* nn.po: Updated Norwegian (nynorsk) translation.
 	
-2001-04-27  Christophe Merlet  <redfox@eikonex.org>
+2001-04-27  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: updated French translation.
 
-2001-04-26  Christophe Merlet  <redfox@eikonex.org>
+2001-04-26  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: updated French translation.
 
@@ -381,7 +385,7 @@
 	* es.po: Fixed wrong phrase. Mentioned by Manuel Ignacio 
 	Monge GarcÃa in bug #34595.
 
-2001-02-03  Christophe Merlet  <redfox@eikonex.org>
+2001-02-03  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: updated French translation.
 
@@ -412,15 +416,15 @@
 	  Emese Kovacs <emese@gnome.hu>
 	* ChangLog: Incremented some timestamps from 2000 to 2001 :-)
 
-2001-01-09  Christophe Merlet  <redfox@eikonex.org>
+2001-01-09  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: updated French translation.
 
-2001-01-04  Christophe Merlet  <redfox@eikonex.org>
+2001-01-04  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: updated French translation.
 
-2001-01-02  Christophe Merlet  <redfox@eikonex.org>
+2001-01-02  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: updated French translation.
 
@@ -436,7 +440,7 @@
 
 	* cs.po: Updated translation.
 
-2000-12-28  Christophe Merlet  <redfox@eikonex.org>
+2000-12-28  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: updated French translation.
 
@@ -512,7 +516,7 @@
 
 	* de.po: updated german translation
 
-2000-11-24  Christophe Merlet  <redfox@eikonex.org>
+2000-11-24  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: updated French translation.
 

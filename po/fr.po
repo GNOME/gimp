@@ -1,16 +1,16 @@
-# gimp fr.po
+# French translation of the Gimp.
 # Copyright (C) 1998-2002 Free Software Foundation, Inc.
 # Vincent Renardias <vincent@ldsol.com>, 1998-2000.
 # David Monniaux <monniaux@brick.ens.fr>, 1999-2000.
 # Daniel Egger <Daniel.Egger@rz.fh-muenchen.de>, 1999.
-# maintainer: Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000-2002.
+# maintainer: Christophe Merlet (RedFox) <christophe@merlet.net>, 2000-2002.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.2.3\n"
-"POT-Creation-Date: 2002-02-03 20:05-0800\n"
-"PO-Revision-Date: 2002-01-31 13:55+0100\n"
-"Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
+"Project-Id-Version: gimp 1.2.4\n"
+"POT-Creation-Date: 2002-08-28 14:17+0200\n"
+"PO-Revision-Date: 2002-08-28 14:14+0200\n"
+"Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -36,11 +36,11 @@ msgstr "Visitez http://www.gimp.org/ pour plus d'informations"
 
 #: app/airbrush.c:145 app/convolve.c:170 app/smudge.c:121
 msgid "Rate:"
-msgstr "Taux :"
+msgstr "Taux :"
 
 #: app/airbrush.c:158 modules/colorsel_water.c:691
 msgid "Pressure:"
-msgstr "Pression :"
+msgstr "Pression :"
 
 #. this is a font, provide only one single font definition
 #: app/app_procs.c:272
@@ -60,45 +60,45 @@ msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-iso8859-1,*"
 msgid "brought to you by"
 msgstr "présenté par"
 
-#: app/app_procs.c:378
+#: app/app_procs.c:379
 msgid "GIMP Startup"
 msgstr "Lancement de GIMP"
 
-#: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:456
+#: app/app_procs.c:500 app/app_procs.c:508 app/gimprc.c:456
 #, c-format
 msgid "parsing \"%s\"\n"
-msgstr "analyse de « %s »\n"
+msgstr "analyse de « %s »\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:569
+#: app/app_procs.c:584
 msgid "Looking for data files"
 msgstr "Recherche des fichiers de données"
 
-#: app/app_procs.c:569
+#: app/app_procs.c:584
 msgid "Parasites"
 msgstr "Parasites"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:571 app/internal_procs.c:71 app/preferences_dialog.c:2535
+#: app/app_procs.c:586 app/internal_procs.c:71 app/preferences_dialog.c:2535
 msgid "Brushes"
 msgstr "Pinceaux"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:573 app/internal_procs.c:140 app/preferences_dialog.c:2543
+#: app/app_procs.c:588 app/internal_procs.c:140 app/preferences_dialog.c:2543
 msgid "Patterns"
 msgstr "Motifs"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:575 app/preferences_dialog.c:2547
+#: app/app_procs.c:590 app/preferences_dialog.c:2547
 msgid "Palettes"
 msgstr "Palettes"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:577 app/internal_procs.c:104 app/preferences_dialog.c:2551
+#: app/app_procs.c:592 app/internal_procs.c:104 app/preferences_dialog.c:2551
 msgid "Gradients"
 msgstr "Dégradés"
 
-#: app/app_procs.c:655
+#: app/app_procs.c:671
 #, c-format
 msgid ""
 "Unable to open a test swap file.  Please check the\n"
@@ -107,13 +107,13 @@ msgid ""
 msgstr ""
 "Impossible d'ouvrir un ficher de test swap. Veuillez vérifier\n"
 "l'emplacement et les permissions du répertoire de swap défini\n"
-"dans vos Préférences (actuellement « %s »)."
+"dans vos Préférences (actuellement « %s »)."
 
-#: app/app_procs.c:775
+#: app/app_procs.c:791
 msgid "Really Quit?"
-msgstr "Vraiment quitter ?"
+msgstr "Vraiment quitter ?"
 
-#: app/app_procs.c:779
+#: app/app_procs.c:795
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -121,14 +121,14 @@ msgid ""
 msgstr ""
 "Certains fichiers n'ont pas été enregistrés.\n"
 "\n"
-"Quitter GIMP ?"
+"Quitter GIMP ?"
 
-#: app/app_procs.c:780
+#: app/app_procs.c:796
 msgid "Quit"
 msgstr "Quitter"
 
 #. the cancel button
-#: app/app_procs.c:780 app/brightness_contrast.c:230 app/channel_ops.c:99
+#: app/app_procs.c:796 app/brightness_contrast.c:230 app/channel_ops.c:99
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
@@ -138,7 +138,7 @@ msgstr "Quitter"
 #: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
 #: app/layers_dialog.c:4103 app/levels.c:350 app/palette.c:1825
 #: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
-#: app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116
+#: app/resize.c:225 app/resize.c:1400 app/resolution_calibrate.c:116
 #: app/threshold.c:285 app/user_install.c:597
 msgid "Cancel"
 msgstr "Annuler"
@@ -153,15 +153,15 @@ msgstr "Courbe endommagée"
 
 #: app/bezier_select.c:3000
 msgid "Curve not closed!"
-msgstr "Courbe non fermée !"
+msgstr "Courbe non fermée !"
 
-#: app/bezier_select.c:3287 app/gimage_mask.c:625
+#: app/bezier_select.c:3294 app/gimage_mask.c:625
 msgid "Paintbrush operation failed."
 msgstr "Échec de l'opération pinceau."
 
 #: app/blend.c:299
 msgid "Offset:"
-msgstr "Décalage :"
+msgstr "Décalage :"
 
 #: app/blend.c:310
 msgid "FG to BG (RGB)"
@@ -181,7 +181,7 @@ msgstr "Personnaliser le dégradé"
 
 #: app/blend.c:317
 msgid "Blend:"
-msgstr "Mélange :"
+msgstr "Mélange :"
 
 #: app/blend.c:325 app/gradient.c:643 app/preferences_dialog.c:2253
 msgid "Linear"
@@ -229,7 +229,7 @@ msgstr "Spiral (sens inverse des aiguilles d'une montre)"
 
 #: app/blend.c:339
 msgid "Gradient:"
-msgstr "Dégradé :"
+msgstr "Dégradé :"
 
 #: app/blend.c:347 app/by_color_select.c:850 app/preferences_dialog.c:1840
 msgid "None"
@@ -245,7 +245,7 @@ msgstr "Onde triangulaire"
 
 #: app/blend.c:353
 msgid "Repeat:"
-msgstr "Répétition :"
+msgstr "Répétition :"
 
 #: app/blend.c:372
 msgid "Adaptive Supersampling"
@@ -253,19 +253,19 @@ msgstr "Super-échantillonnage adaptatif"
 
 #: app/blend.c:400
 msgid "Max Depth:"
-msgstr "Profondeur max :"
+msgstr "Profondeur max :"
 
 #: app/blend.c:413 app/bucket_fill.c:139 app/tool_options.c:290
 msgid "Threshold:"
-msgstr "Seuil :"
+msgstr "Seuil :"
 
 #: app/blend.c:440
 msgid "Blend: Invalid for indexed images."
-msgstr "Mélange : Non valide pour les images indexées."
+msgstr "Mélange : Non valide pour les images indexées."
 
 #: app/blend.c:466
 msgid "Blend: 0, 0"
-msgstr "Mélange : 0, 0"
+msgstr "Mélange : 0, 0"
 
 #: app/blend.c:529
 msgid "Blend operation failed."
@@ -277,7 +277,7 @@ msgstr "Mélange en cours..."
 
 #: app/blend.c:614 app/blend.c:624
 msgid "Blend: "
-msgstr "Mélange : "
+msgstr "Mélange : "
 
 #: app/brightness_contrast.c:132 app/brightness_contrast.c:221
 #: app/tools.c:1054
@@ -296,7 +296,7 @@ msgstr "Luminosité-Contraste ne peut opérer sur des images indexées."
 #: app/layers_dialog.c:3745 app/layers_dialog.c:3840 app/layers_dialog.c:4101
 #: app/levels.c:346 app/module_db.c:315 app/posterize.c:208
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
-#: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
+#: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
 msgstr "Valider"
 
@@ -311,16 +311,16 @@ msgstr "R. à z."
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:246
 msgid "Brightness:"
-msgstr "Luminosité :"
+msgstr "Luminosité :"
 
 #. Create the contrast scale widget
 #: app/brightness_contrast.c:277
 msgid "Contrast:"
-msgstr "Contraste :"
+msgstr "Contraste :"
 
 #. The preview toggle
 #: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:693
-#: app/fileops.c:421 app/hue_saturation.c:571 app/levels.c:579
+#: app/fileops.c:420 app/hue_saturation.c:571 app/levels.c:579
 #: app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
 msgid "Preview"
 msgstr "Aperçu"
@@ -332,12 +332,12 @@ msgstr "Éditeur de pinceau"
 #. The close button
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:729
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
-#: app/crop.c:1073 app/devices.c:760 app/docindex.c:721 app/errorconsole.c:284
+#: app/crop.c:1074 app/devices.c:760 app/docindex.c:721 app/errorconsole.c:284
 #: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
 #: app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:333 app/nav_window.c:1426 app/palette.c:2058
 #: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:72
-#: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
+#: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:171
 #: app/tools.c:1549 app/undo_history.c:759
 msgid "Close"
 msgstr "Fermer"
@@ -345,19 +345,19 @@ msgstr "Fermer"
 #. the feather radius scale
 #: app/brush_edit.c:291 app/color_picker.c:187 app/tool_options.c:206
 msgid "Radius:"
-msgstr "Rayon :"
+msgstr "Rayon :"
 
 #: app/brush_edit.c:304
 msgid "Hardness:"
-msgstr "Dureté :"
+msgstr "Dureté :"
 
 #: app/brush_edit.c:317
 msgid "Aspect Ratio:"
-msgstr "Rapport hauteur/largeur :"
+msgstr "Rapport hauteur/largeur :"
 
 #: app/brush_edit.c:330 app/ink.c:326 app/measure.c:329 app/rotate_tool.c:93
 msgid "Angle:"
-msgstr "Angle :"
+msgstr "Angle :"
 
 #. The shell
 #: app/brush_select.c:278
@@ -375,11 +375,11 @@ msgstr "Aucun pinceau disponible."
 
 #: app/brush_select.c:454 app/layers_dialog.c:422 app/tool_options.c:531
 msgid "Opacity:"
-msgstr "Opacité :"
+msgstr "Opacité :"
 
 #: app/brush_select.c:462 app/layers_dialog.c:373 app/tool_options.c:555
 msgid "Mode:"
-msgstr "Mode :"
+msgstr "Mode :"
 
 #: app/brush_select.c:473 app/palette.c:1171 app/palette.c:2226
 #: modules/colorsel_water.c:629
@@ -399,7 +399,7 @@ msgstr "Supprimer"
 
 #: app/brush_select.c:516
 msgid "Spacing:"
-msgstr "Espacement :"
+msgstr "Espacement :"
 
 #. this should never happen
 #: app/brush_select.c:1860
@@ -499,20 +499,20 @@ msgstr "Copie de %s"
 msgid "Selection Mask"
 msgstr "Masque de sélection"
 
-#: app/channel_ops.c:91 app/resize.c:436
+#: app/channel_ops.c:91 app/resize.c:438
 msgid "Offset"
 msgstr "Décalage"
 
 #. The offset labels
 #: app/channel_ops.c:115
 msgid "Offset X:"
-msgstr "Décalage X :"
+msgstr "Décalage X :"
 
-#: app/channel_ops.c:121 app/crop.c:1082 app/file_new_dialog.c:535
-#: app/resize.c:374 app/resize.c:466 app/resize.c:604 app/rotate_tool.c:111
+#: app/channel_ops.c:121 app/crop.c:1083 app/file_new_dialog.c:535
+#: app/resize.c:374 app/resize.c:468 app/resize.c:606 app/rotate_tool.c:111
 #: app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1443
 msgid "Y:"
-msgstr "Y :"
+msgstr "Y :"
 
 #. The wrap around option
 #: app/channel_ops.c:170
@@ -595,12 +595,12 @@ msgstr "Options du nouveau canal"
 #. The name entry hbox, label and entry
 #: app/channels_dialog.c:2566 app/channels_dialog.c:2729
 msgid "Channel name:"
-msgstr "Nom du canal :"
+msgstr "Nom du canal :"
 
 #. The opacity scale
 #: app/channels_dialog.c:2581 app/channels_dialog.c:2744
 msgid "Fill Opacity:"
-msgstr "Opacité du remplissage :"
+msgstr "Opacité du remplissage :"
 
 #: app/channels_dialog.c:2696
 msgid "Edit Channel Attributes"
@@ -661,7 +661,7 @@ msgstr "Tons vifs"
 
 #: app/color_balance.c:299
 msgid "Color Levels:"
-msgstr "Niveaux de couleurs :"
+msgstr "Niveaux de couleurs :"
 
 #. Create the cyan-red scale widget
 #: app/color_balance.c:339
@@ -705,28 +705,28 @@ msgstr "Mettre à jour la couleur active"
 
 #: app/color_picker.c:261 app/color_picker.c:270
 msgid "Red:"
-msgstr "Rouge :"
+msgstr "Rouge :"
 
 #: app/color_picker.c:262 app/color_picker.c:271
 msgid "Green:"
-msgstr "Vert :"
+msgstr "Vert :"
 
 #: app/color_picker.c:263 app/color_picker.c:272
 msgid "Blue:"
-msgstr "Bleu :"
+msgstr "Bleu :"
 
 #: app/color_picker.c:264 app/color_picker.c:273 app/color_picker.c:279
 msgid "Alpha:"
-msgstr "Alpha :"
+msgstr "Alpha :"
 
 #: app/color_picker.c:265 app/color_picker.c:280 app/color_select.c:445
 #: app/colormap_dialog.i.c:278
 msgid "Hex Triplet:"
-msgstr "Triplet héxa :"
+msgstr "Triplet héxa :"
 
 #: app/color_picker.c:269 app/colormap_dialog.i.c:267
 msgid "Index:"
-msgstr "Index :"
+msgstr "Index :"
 
 #: app/color_picker.c:274
 msgid "Hex Triplet"
@@ -734,7 +734,7 @@ msgstr "Triplet héxa"
 
 #: app/color_picker.c:278 app/histogram_tool.c:278
 msgid "Intensity:"
-msgstr "Intensité :"
+msgstr "Intensité :"
 
 #: app/color_picker.c:639 app/color_picker.c:640 app/color_picker.c:641
 #: app/color_picker.c:642 app/color_picker.c:643 app/color_picker.c:644
@@ -793,7 +793,7 @@ msgstr "Palette des couleurs indexées"
 #. The GIMP image option menu
 #: app/colormap_dialog.i.c:206 app/lc_dialog.c:149
 msgid "Image:"
-msgstr "Image :"
+msgstr "Image :"
 
 #: app/colormap_dialog.i.c:979 app/lc_dialog.c:658
 msgid "none"
@@ -805,7 +805,7 @@ msgstr "Adoucir"
 
 #: app/commands.c:343
 msgid "Feather Selection by:"
-msgstr "Largeur de la zone adoucie :"
+msgstr "Largeur de la zone adoucie :"
 
 #: app/commands.c:376
 msgid "Shrink Selection"
@@ -813,7 +813,7 @@ msgstr "Réduire"
 
 #: app/commands.c:379
 msgid "Shrink Selection by:"
-msgstr "Réduire la sélection de :"
+msgstr "Réduire la sélection de :"
 
 #: app/commands.c:388
 msgid "Shrink from image border"
@@ -825,7 +825,7 @@ msgstr "Agrandir"
 
 #: app/commands.c:413
 msgid "Grow Selection by:"
-msgstr "Agrandir la sélection de :"
+msgstr "Agrandir la sélection de :"
 
 #: app/commands.c:433
 msgid "Border Selection"
@@ -833,12 +833,12 @@ msgstr "Sélection du bord"
 
 #: app/commands.c:436
 msgid "Border Selection by:"
-msgstr "Épaisseur du bord à sélectionner :"
+msgstr "Épaisseur du bord à sélectionner :"
 
 #: app/commands.c:1335
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
-"Erreur de redimensionnement : les hauteur et largeur doivent être "
+"Erreur de redimensionnement : les hauteur et largeur doivent être "
 "supérieures à zéro."
 
 #: app/convert.c:509
@@ -851,11 +851,11 @@ msgstr "Options générales de la palette"
 
 #: app/convert.c:541
 msgid "Generate Optimal Palette:"
-msgstr "Générer une palette optimale :"
+msgstr "Générer une palette optimale :"
 
 #: app/convert.c:574
 msgid "# of Colors:"
-msgstr "nb de couleurs :"
+msgstr "nb de couleurs :"
 
 #. create the custom_frame here, it'll be added later
 #: app/convert.c:590
@@ -868,7 +868,7 @@ msgstr "Enlever les couleurs non utilisées de la palette finale"
 
 #: app/convert.c:608
 msgid "Use Custom Palette:"
-msgstr "Utiliser une palette personnalisée :"
+msgstr "Utiliser une palette personnalisée :"
 
 #: app/convert.c:642
 msgid "Use WWW-Optimized Palette"
@@ -952,49 +952,49 @@ msgstr "Permettre d'élargir"
 msgid "Tool Toggle"
 msgstr "Fonctionnement de l'outil"
 
-#: app/crop.c:221 app/crop.c:1069
+#: app/crop.c:221 app/crop.c:1070
 msgid "Crop"
 msgstr "Rogner"
 
-#: app/crop.c:223 app/crop.c:1071
+#: app/crop.c:223 app/crop.c:1072
 msgid "Resize"
 msgstr "Redimensionner"
 
 #: app/crop.c:522 app/crop.c:530
 msgid "Crop: "
-msgstr "Rogner : "
+msgstr "Rogner : "
 
-#: app/crop.c:1042
+#: app/crop.c:1043
 msgid "Crop: 0 x 0"
-msgstr "Rogner : 0 x 0"
+msgstr "Rogner : 0 x 0"
 
 #. create the info dialog
-#: app/crop.c:1063
+#: app/crop.c:1064
 msgid "Crop & Resize Information"
 msgstr "Rognage & Redimensionnement, information"
 
 #. add the information fields
-#: app/crop.c:1079
+#: app/crop.c:1080
 msgid "Origin X:"
-msgstr "Origine X :"
+msgstr "Origine X :"
 
 #. the pixel size labels
-#: app/crop.c:1095 app/file_new_dialog.c:394 app/file_new_dialog.c:412
+#: app/crop.c:1096 app/file_new_dialog.c:394 app/file_new_dialog.c:412
 #: app/tool_options.c:353
 msgid "Width:"
-msgstr "Largeur :"
+msgstr "Largeur :"
 
-#: app/crop.c:1098 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3605 app/resize.c:284 app/resize.c:309 app/resize.c:541
+#: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
+#: app/layers_dialog.c:3605 app/resize.c:284 app/resize.c:309 app/resize.c:543
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
-msgstr "Hauteur :"
+msgstr "Hauteur :"
 
-#: app/crop.c:1120
+#: app/crop.c:1121
 msgid "From Selection"
 msgstr "D'après la sélection"
 
-#: app/crop.c:1126
+#: app/crop.c:1127
 msgid "Auto Shrink"
 msgstr "Réduction automatique"
 
@@ -1009,7 +1009,7 @@ msgstr "Les courbes des images indexées ne peuvent pas être ajustées."
 
 #: app/curves.c:586
 msgid "Modify Curves for Channel:"
-msgstr "Modifier les courbes pour le canal :"
+msgstr "Modifier les courbes pour le canal :"
 
 #: app/curves.c:597 app/levels.c:382
 msgid "Alpha"
@@ -1018,7 +1018,7 @@ msgstr "Alpha"
 #. The option menu for selecting the drawing method
 #: app/curves.c:676
 msgid "Curve Type:"
-msgstr "Type de courbe :"
+msgstr "Type de courbe :"
 
 #: app/curves.c:683
 msgid "Smooth"
@@ -1050,7 +1050,7 @@ msgid "Load/Save Curves"
 msgstr "Charger/Enregistrer les courbes"
 
 #: app/curves.c:1668 app/curves.c:1686 app/levels.c:1477 app/levels.c:1495
-#: app/paths_dialog.c:1908
+#: app/paths_dialog.c:1918
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Impossible d'ouvrir le fichier %s"
@@ -1104,7 +1104,7 @@ msgstr "Index des documents"
 
 #: app/dodgeburn.c:142
 msgid "Exposure:"
-msgstr "Exposition :"
+msgstr "Exposition :"
 
 #. the type (dodge or burn)
 #: app/dodgeburn.c:162 app/ink.c:390
@@ -1125,11 +1125,11 @@ msgstr "Mode"
 
 #: app/edit_selection.c:201
 msgid "Move: 0, 0"
-msgstr "Déplacer : 0, 0"
+msgstr "Déplacer : 0, 0"
 
 #: app/edit_selection.c:451 app/edit_selection.c:461
 msgid "Move: "
-msgstr "Déplacement :"
+msgstr "Déplacement :"
 
 #: app/equalize.c:42
 msgid "Equalize does not operate on indexed drawables."
@@ -1148,11 +1148,11 @@ msgstr "Anti-effacement"
 #: app/errorconsole.c:173
 #, c-format
 msgid "Error opening file %s: %s"
-msgstr "Erreur lors de l'ouverture du fichier %s : %s"
+msgstr "Erreur lors de l'ouverture du fichier %s : %s"
 
 #: app/errorconsole.c:190
 msgid "Can't save, nothing selected!"
-msgstr "Rien de sélectionné ; impossible d'enregistrer !"
+msgstr "Rien de sélectionné ; impossible d'enregistrer !"
 
 #: app/errorconsole.c:194
 msgid "Save error log to file..."
@@ -1192,14 +1192,14 @@ msgstr ""
 "Vous essayez de créer une image dont la\n"
 "taille initiale serait %s.\n"
 "\n"
-"Sélectionnez « Valider » pour la créer tout\n"
-"de même. Sélectionnez « Annuler » si vous\n"
+"Sélectionnez « Valider » pour la créer tout\n"
+"de même. Sélectionnez « Annuler » si vous\n"
 "n'aviez pas vraiment voulu créer une si\n"
 "grosse image.\n"
 "\n"
 "Pour empêcher cet avertissement d'apparaître,\n"
-"veuillez augmenter le réglage « Taille maximale\n"
-"d'image » (actuellement %s) dans les\n"
+"veuillez augmenter le réglage « Taille maximale\n"
+"d'image » (actuellement %s) dans les\n"
 "préférences."
 
 #: app/file_new_dialog.c:207
@@ -1209,7 +1209,7 @@ msgstr "Confirmer la taille de l'image"
 #: app/file_new_dialog.c:294
 #, c-format
 msgid "Image Size: %s"
-msgstr "Taille d'image : %s"
+msgstr "Taille d'image : %s"
 
 #: app/file_new_dialog.c:352
 msgid "New Image"
@@ -1221,11 +1221,12 @@ msgid "Pixels"
 msgstr "Pixels"
 
 #. the resolution labels
-#: app/file_new_dialog.c:529 app/resize.c:598
+#: app/file_new_dialog.c:529 app/resize.c:600
 msgid "Resolution X:"
-msgstr "Résolution X :"
+msgstr "Résolution X :"
 
-#: app/file_new_dialog.c:550 app/resize.c:619
+#: app/file_new_dialog.c:550 app/resize.c:621
+#, c-format
 msgid "pixels/%a"
 msgstr "pixels/%a"
 
@@ -1234,16 +1235,16 @@ msgstr "pixels/%a"
 msgid "Image Type"
 msgstr "Type d'image"
 
-#: app/fileops.c:269 app/fileops.c:315
+#: app/fileops.c:269 app/fileops.c:314
 msgid "Load Image"
 msgstr "Sélectionnez une image"
 
 #. format-chooser frame
-#: app/fileops.c:330
+#: app/fileops.c:329
 msgid "Determine File Type"
 msgstr "Déterminer le type du fichier"
 
-#: app/fileops.c:403
+#: app/fileops.c:402
 msgid ""
 "Generate\n"
 "Preview"
@@ -1251,11 +1252,11 @@ msgstr ""
 "générer\n"
 "l'aperçu"
 
-#: app/fileops.c:422
+#: app/fileops.c:421
 msgid "No Selection."
 msgstr "Pas de sélection."
 
-#: app/fileops.c:470 app/fileops.c:1757
+#: app/fileops.c:469 app/fileops.c:1755
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1264,19 +1265,19 @@ msgstr ""
 "Échec de l'enregistrement.\n"
 "%s"
 
-#: app/fileops.c:495 app/fileops.c:527
+#: app/fileops.c:494 app/fileops.c:525
 msgid "Save Image"
 msgstr "Enregistrer l'image"
 
-#: app/fileops.c:544
+#: app/fileops.c:542
 msgid "Save Options"
 msgstr "Options d'enregistrement"
 
-#: app/fileops.c:553
+#: app/fileops.c:551
 msgid "Determine File Type:"
-msgstr "Déterminer le type du fichier :"
+msgstr "Déterminer le type du fichier :"
 
-#: app/fileops.c:616
+#: app/fileops.c:614
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -1284,7 +1285,7 @@ msgstr ""
 "Annulation impossible.\n"
 "Pas de fichier associé à cette image."
 
-#: app/fileops.c:627
+#: app/fileops.c:625
 #, c-format
 msgid ""
 "Reverting %s to\n"
@@ -1299,28 +1300,28 @@ msgstr ""
 "(Vous perdrez tous vos changements,\n"
 "y compris toutes les informations d'annulations)"
 
-#: app/fileops.c:634
+#: app/fileops.c:632
 msgid "Revert Image?"
-msgstr "Annuler l'image ?"
+msgstr "Annuler l'image ?"
 
-#: app/fileops.c:639 app/fileops.c:1899
+#: app/fileops.c:637 app/fileops.c:1897
 msgid "Yes"
 msgstr "Oui"
 
-#: app/fileops.c:639 app/fileops.c:1899
+#: app/fileops.c:637 app/fileops.c:1897
 msgid "No"
 msgstr "Non"
 
-#: app/fileops.c:742
+#: app/fileops.c:740
 #, c-format
 msgid ""
 "%s failed.\n"
 "%s: Unknown file type."
 msgstr ""
 "Échec %s.\n"
-"%s : type de fichier inconnu."
+"%s : type de fichier inconnu."
 
-#: app/fileops.c:759
+#: app/fileops.c:757
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1329,29 +1330,29 @@ msgstr ""
 "Échec %s.\n"
 "%s n'est pas un fichier ordinaire."
 
-#: app/fileops.c:780
+#: app/fileops.c:778
 #, c-format
 msgid ""
 "%s failed.\n"
 "%s: Permission denied."
 msgstr ""
 "Échec %s.\n"
-"%s : permission refusée."
+"%s : permission refusée."
 
-#: app/fileops.c:836 app/fileops.c:1547
+#: app/fileops.c:834 app/fileops.c:1546
 msgid "Open"
 msgstr "Ouvrir"
 
-#: app/fileops.c:1154
+#: app/fileops.c:1153
 #, c-format
 msgid ""
 "Save failed.\n"
 "%s: Unknown file type."
 msgstr ""
 "Échec de l'enregistrement.\n"
-"%s : type de fichier inconnu."
+"%s : type de fichier inconnu."
 
-#: app/fileops.c:1169
+#: app/fileops.c:1168
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1360,44 +1361,44 @@ msgstr ""
 "Échec de l'enregistrement.\n"
 "%s n'est pas un fichier ordinaire."
 
-#: app/fileops.c:1188
+#: app/fileops.c:1187
 #, c-format
 msgid ""
 "Save failed.\n"
 "%s: Permission denied."
 msgstr ""
 "Échec de l'enregistrement.\n"
-"%s : permission refusée."
+"%s : permission refusée."
 
-#: app/fileops.c:1435
+#: app/fileops.c:1434
 msgid "(This thumbnail may be out of date)"
 msgstr "(cette vignette peut ne pas être à jour)"
 
-#: app/fileops.c:1436
+#: app/fileops.c:1435
 msgid "(No Information)"
 msgstr "(aucune information)"
 
-#: app/fileops.c:1446
+#: app/fileops.c:1445
 msgid "(Thumbnail saving is disabled)"
 msgstr "(enregistrement des vignettes désactivé)"
 
-#: app/fileops.c:1450
+#: app/fileops.c:1449
 msgid "(Could not write thumbnail file)"
 msgstr "(impossible d'écrire le fichier de vignette)"
 
-#: app/fileops.c:1454
+#: app/fileops.c:1453
 msgid "(Thumbnail file not written)"
 msgstr "(fichier de vignette non écrit)"
 
-#: app/fileops.c:1472
+#: app/fileops.c:1471
 msgid "No preview available"
 msgstr "aucun aperçu disponible"
 
-#: app/fileops.c:1572
+#: app/fileops.c:1571
 msgid "(could not make preview)"
 msgstr "(impossible de créer un aperçu)"
 
-#: app/fileops.c:1643 app/fileops.c:1684
+#: app/fileops.c:1641 app/fileops.c:1682
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1406,20 +1407,20 @@ msgstr ""
 "Échec de l'ouverture.\n"
 "%s"
 
-#: app/fileops.c:1892
+#: app/fileops.c:1890
 #, c-format
 msgid "%s exists, overwrite?"
-msgstr "%s existe, écraser ?"
+msgstr "%s existe, écraser ?"
 
-#: app/fileops.c:1894
+#: app/fileops.c:1892
 msgid "File Exists!"
-msgstr "Le fichier existe !"
+msgstr "Le fichier existe !"
 
-#: app/fileops.c:1956
+#: app/fileops.c:1954
 msgid "Revert"
 msgstr "Revenir"
 
-#: app/fileops.c:1969
+#: app/fileops.c:1967
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1491,7 +1492,7 @@ msgid ""
 "Close anyway?"
 msgstr ""
 "Changements effectués sur %s.\n"
-" Fermer quand même ?"
+" Fermer quand même ?"
 
 #: app/gimage_mask.c:213
 msgid ""
@@ -1501,7 +1502,7 @@ msgstr "Impossible de copier/coller car la région sélectionnée est vide."
 
 #: app/gimage_mask.c:351
 msgid "Float Selection: No selection to float."
-msgstr "Faire flotter la sélection : pas de sélection."
+msgstr "Faire flotter la sélection : pas de sélection."
 
 #: app/gimage_mask.c:363
 msgid "Floated Layer"
@@ -1525,7 +1526,7 @@ msgstr ""
 
 #: app/gimage_mask.c:570
 msgid "No selection to stroke!"
-msgstr "Aucune sélection à entourer d'un coup de pinceau !"
+msgstr "Aucune sélection à entourer d'un coup de pinceau !"
 
 #: app/gimpbrush.c:301
 #, c-format
@@ -1535,7 +1536,7 @@ msgstr "Format de pinceau inconnu #%d dans \"%s\"."
 #: app/gimpbrush.c:321
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Erreur dans le fichier de pinceaux de GIMP « %s »."
+msgstr "Erreur dans le fichier de pinceaux de GIMP « %s »."
 
 #: app/gimpbrush.c:328 app/patterns.c:236
 msgid "Unnamed"
@@ -1544,12 +1545,12 @@ msgstr "SansNom"
 #: app/gimpbrush.c:341 app/gimpbrush.c:386
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr "Le fichier de pinceaux GIMP semble avoir été tronqué : « %s »."
+msgstr "Le fichier de pinceaux GIMP semble avoir été tronqué : « %s »."
 
 #: app/gimpbrush.c:366
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr "Le fichier de pinceaux GIMP semble avoir été corrompu : « %s »."
+msgstr "Le fichier de pinceaux GIMP semble avoir été corrompu : « %s »."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1557,8 +1558,8 @@ msgid ""
 "Warning: Failed to load brush\n"
 "\"%s\""
 msgstr ""
-"Avertissement : échec du chargement du pinceau\n"
-"« %s »"
+"Avertissement : échec du chargement du pinceau\n"
+"« %s »"
 
 #: app/gimpbrushlist.c:218
 #, c-format
@@ -1566,8 +1567,8 @@ msgid ""
 "Warning: Failed to load brush pipe\n"
 "\"%s\""
 msgstr ""
-"Avertissement : échec du chargement du pinceau animé\n"
-"« %s »"
+"Avertissement : échec du chargement du pinceau animé\n"
+"« %s »"
 
 #: app/gimpbrushpipe.c:296
 #, c-format
@@ -1575,8 +1576,8 @@ msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
 msgstr ""
-"Les pinceaux animés doivent contenir au moins un pinceau :\n"
-"« %s »"
+"Les pinceaux animés doivent contenir au moins un pinceau :\n"
+"« %s »"
 
 #: app/gimpbrushpipe.c:387
 #, c-format
@@ -1585,7 +1586,7 @@ msgid ""
 "\"%s\""
 msgstr ""
 "Impossible de charger un des pinceaux formant le pinceau animé\n"
-"« %s »"
+"« %s »"
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
@@ -1612,7 +1613,7 @@ msgstr "Type de calque %d non supporté."
 msgid "Could not find GIMP Help Browser"
 msgstr "Impossible de trouver le navigateur d'aide de GIMP"
 
-# Est-ce exact ?
+# Est-ce exact ?
 # Je me demande si on ne devrait pas rendre le
 # réglage "navigateur externe" automatique.
 #: app/gimphelp.c:197
@@ -1723,7 +1724,7 @@ msgstr "Veuillez patienter..."
 #: app/gimprc.c:475
 #, c-format
 msgid "error parsing: \"%s\"\n"
-msgstr "erreur de lecture : « %s »\n"
+msgstr "erreur de lecture : « %s »\n"
 
 #: app/gimprc.c:476
 #, c-format
@@ -1733,7 +1734,7 @@ msgstr " à la ligne %d, colonne %d\n"
 #: app/gimprc.c:477
 #, c-format
 msgid "  unexpected token: %s\n"
-msgstr "  mot inattendu : %s\n"
+msgstr "  mot inattendu : %s\n"
 
 #: app/gimprc.c:1452
 msgid "error parsing pluginrc"
@@ -1742,12 +1743,12 @@ msgstr "erreur d'analyse dans pluginrc"
 #: app/gimprc.c:2927
 #, c-format
 msgid "Can't open %s; %s"
-msgstr "Je ne puis ouvrir %s ; %s"
+msgstr "Je ne puis ouvrir %s ; %s"
 
 #: app/gimprc.c:2946
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
-msgstr "Je ne puis renommer %s en %s.old ; %s"
+msgstr "Je ne puis renommer %s en %s.old ; %s"
 
 #: app/gimprc.c:2952
 #, c-format
@@ -1757,7 +1758,7 @@ msgstr "Je ne peux réouvrir %s\n"
 #: app/gimprc.c:2964
 #, c-format
 msgid "Can't write to %s; %s"
-msgstr "Je ne puis écrire dans %s ; %s"
+msgstr "Je ne puis écrire dans %s ; %s"
 
 #: app/gimpui.c:88
 #, c-format
@@ -1774,7 +1775,7 @@ msgid ""
 "Too many open message dialogs.\n"
 "Messages are redirected to stderr."
 msgstr ""
-"AVERTISSEMENT :\n"
+"AVERTISSEMENT :\n"
 "Trop de boîtes de messages à l'écran.\n"
 "Messages redirigés vers la sortie d'erreur texte."
 
@@ -1847,17 +1848,21 @@ msgstr "Coller un tampon nommé"
 
 #: app/global_edit.c:802
 msgid "Select a buffer to paste:"
-msgstr "Sélectionnez un tampon à coller :"
+msgstr "Sélectionnez un tampon à coller :"
 
-#: app/global_edit.c:883
+#: app/global_edit.c:856
+msgid "(Unnamed Buffer)"
+msgstr "(tampon non nommé)"
+
+#: app/global_edit.c:886
 msgid "Cut Named"
 msgstr "Couper (nommé)"
 
-#: app/global_edit.c:886 app/global_edit.c:918
+#: app/global_edit.c:889 app/global_edit.c:921
 msgid "Enter a name for this buffer"
 msgstr "Saisissez un nom pour ce tampon"
 
-#: app/global_edit.c:915
+#: app/global_edit.c:918
 msgid "Copy Named"
 msgstr "Copier (nommé)"
 
@@ -1883,11 +1888,11 @@ msgstr "RVB ordinaire"
 
 #: app/gradient.c:653
 msgid "HSV (counter-clockwise hue)"
-msgstr "TSL (teintes : sens trigonométrique)"
+msgstr "TSL (teintes : sens trigonométrique)"
 
 #: app/gradient.c:654
 msgid "HSV (clockwise hue)"
-msgstr "TSL (teintes : sens des aiguilles d'une montre)"
+msgstr "TSL (teintes : sens des aiguilles d'une montre)"
 
 #: app/gradient.c:910
 msgid "Gradient Editor"
@@ -1977,7 +1982,7 @@ msgid ""
 "\"%s\" from the list and from disk?"
 msgstr ""
 "Voulez-vous vraiment effacer\n"
-"« %s » de la liste et du disque ?"
+"« %s » de la liste et du disque ?"
 
 #: app/gradient.c:2102
 #, c-format
@@ -1990,8 +1995,8 @@ msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Opacity: %0.3f"
 msgstr ""
-"Position : %0.6f    RVB (%0.3f, %0.3f, %0.3f)    TSV (%0.3f, %0.3f, %"
-"0.3f)    Opacité : %0.3f"
+"Position : %0.6f    RVB (%0.3f, %0.3f, %0.3f)    TSV (%0.3f, %0.3f, %"
+"0.3f)    Opacité : %0.3f"
 
 #: app/gradient.c:2383
 #, c-format
@@ -2005,34 +2010,34 @@ msgstr "Couleur d'arrière-plan à RVB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:2698
 msgid "Drag: move    Shift+drag: move & compress"
-msgstr "Tirer : déplacer    Shift+déplacer : déplacer & compresser"
+msgstr "Tirer : déplacer    Shift+déplacer : déplacer & compresser"
 
 #: app/gradient.c:2700 app/gradient.c:2704
 msgid "Click: select    Shift+click: extend selection"
-msgstr "Clic : sélectionner   Shift+Clic : étendre la sélection"
+msgstr "Clic : sélectionner   Shift+Clic : étendre la sélection"
 
 #: app/gradient.c:2710
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr ""
-"Clic : sélectionner  Shift+Clic : étendre la sélection  Tirer : déplacer"
+"Clic : sélectionner  Shift+Clic : étendre la sélection  Tirer : déplacer"
 
 #: app/gradient.c:2722
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
 msgstr ""
-"Clic : sélectionner  Shift+Clic : étendre la sélection  Tirer : déplacer  "
-"Shift+Tirer : déplacer & compresser"
+"Clic : sélectionner  Shift+Clic : étendre la sélection  Tirer : déplacer  "
+"Shift+Tirer : déplacer & compresser"
 
 #: app/gradient.c:2971 app/gradient.c:2980
 #, c-format
 msgid "Handle position: %0.6f"
-msgstr "Position du taquet : %0.6f"
+msgstr "Position du taquet : %0.6f"
 
 #: app/gradient.c:2998
 #, c-format
 msgid "Distance: %0.6f"
-msgstr "Distance : %0.6f"
+msgstr "Distance : %0.6f"
 
 #: app/gradient.c:3490 app/gradient.c:4553
 msgid "Left endpoint's color"
@@ -2213,31 +2218,31 @@ msgstr "L'histogramme n'opère pas sur les images indexées."
 
 #: app/histogram_tool.c:274
 msgid "Mean:"
-msgstr "Moyenne :"
+msgstr "Moyenne :"
 
 #: app/histogram_tool.c:275
 msgid "Std Dev:"
-msgstr "Dev Std :"
+msgstr "Dev Std :"
 
 #: app/histogram_tool.c:276
 msgid "Median:"
-msgstr "Médiane :"
+msgstr "Médiane :"
 
 #: app/histogram_tool.c:277
 msgid "Pixels:"
-msgstr "Pixels :"
+msgstr "Pixels :"
 
 #: app/histogram_tool.c:279
 msgid "Count:"
-msgstr "Compte :"
+msgstr "Compte :"
 
 #: app/histogram_tool.c:280
 msgid "Percentile:"
-msgstr "%-ile :"
+msgstr "%-ile :"
 
 #: app/histogram_tool.c:313
 msgid "Information on Channel:"
-msgstr "Informations sur le canal :"
+msgstr "Informations sur le canal :"
 
 #. The shell and main vbox
 #: app/hue_saturation.c:248 app/hue_saturation.c:374 app/tools.c:1082
@@ -2271,17 +2276,17 @@ msgstr "Ajustements de la Teinte / Luminosité / Saturation"
 #. Create the hue scale widget
 #: app/hue_saturation.c:463
 msgid "Hue:"
-msgstr "Teinte :"
+msgstr "Teinte :"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:497
 msgid "Lightness:"
-msgstr "Luminosité :"
+msgstr "Luminosité :"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:531
 msgid "Saturation:"
-msgstr "Saturation :"
+msgstr "Saturation :"
 
 #: app/image_cmds.c:3459
 msgid ""
@@ -2377,7 +2382,7 @@ msgstr "Pseudo Couleur"
 
 #: app/info_window.c:74
 msgid "True Color"
-msgstr "« True Color »"
+msgstr "« True Color »"
 
 #: app/info_window.c:75
 msgid "Direct Color"
@@ -2385,19 +2390,19 @@ msgstr "Couleur Directe"
 
 #: app/info_window.c:167
 msgid "R:"
-msgstr "R :"
+msgstr "R :"
 
 #: app/info_window.c:173
 msgid "G:"
-msgstr "V :"
+msgstr "V :"
 
 #: app/info_window.c:179
 msgid "B:"
-msgstr "B :"
+msgstr "B :"
 
 #: app/info_window.c:185
 msgid "A:"
-msgstr "A :"
+msgstr "A :"
 
 #: app/info_window.c:217
 msgid "Extended"
@@ -2406,33 +2411,33 @@ msgstr "Étendu"
 #. add the information fields
 #: app/info_window.c:280
 msgid "Dimensions (w x h):"
-msgstr "Dimensions (l x h) :"
+msgstr "Dimensions (l x h) :"
 
 #: app/info_window.c:284
 msgid "Resolution:"
-msgstr "Résolution :"
+msgstr "Résolution :"
 
 #: app/info_window.c:286
 msgid "Scale Ratio:"
-msgstr "Facteur d'échelle :"
+msgstr "Facteur d'échelle :"
 
 #: app/info_window.c:288
 msgid "Display Type:"
-msgstr "Type d'affichage :"
+msgstr "Type d'affichage :"
 
 #: app/info_window.c:290
 msgid "Visual Class:"
-msgstr "Classe du visuel :"
+msgstr "Classe du visuel :"
 
 #: app/info_window.c:292
 msgid "Visual Depth:"
-msgstr "Bits du visuel :"
+msgstr "Bits du visuel :"
 
 #. create the info dialog
 #: app/info_window.c:320
 #, c-format
 msgid "Info: %s-%d.%d"
-msgstr "Info : %s-%d.%d"
+msgstr "Info : %s-%d.%d"
 
 #: app/info_window.c:514
 #, c-format
@@ -2464,7 +2469,7 @@ msgstr "Ajustement"
 
 #: app/ink.c:313 app/ink.c:351
 msgid "Size:"
-msgstr "Taille :"
+msgstr "Taille :"
 
 #. sens sliders
 #: app/ink.c:334
@@ -2473,11 +2478,11 @@ msgstr "Sensibilité"
 
 #: app/ink.c:364
 msgid "Tilt:"
-msgstr "Inclinaison :"
+msgstr "Inclinaison :"
 
 #: app/ink.c:377
 msgid "Speed:"
-msgstr "Vitesse :"
+msgstr "Vitesse :"
 
 #. Brush shape widget
 #: app/ink.c:459
@@ -2734,12 +2739,12 @@ msgstr "Options du nouveau calque"
 #. The name label and entry
 #: app/layers_dialog.c:3584
 msgid "Layer Name:"
-msgstr "Nom du calque :"
+msgstr "Nom du calque :"
 
 #. The size labels
 #: app/layers_dialog.c:3599
 msgid "Layer Width:"
-msgstr "Largeur du calque :"
+msgstr "Largeur du calque :"
 
 #: app/layers_dialog.c:3660
 msgid "Layer Fill Type"
@@ -2751,7 +2756,7 @@ msgstr "Éditer les attributs du calque"
 
 #: app/layers_dialog.c:3766
 msgid "Layer name:"
-msgstr "Nom du calque :"
+msgstr "Nom du calque :"
 
 #: app/layers_dialog.c:3834
 msgid "Add Mask Options"
@@ -2760,7 +2765,7 @@ msgstr "Options d'ajout de masque"
 #. The radio frame and box
 #: app/layers_dialog.c:3852
 msgid "Initialize Layer Mask to:"
-msgstr "Initialiser le masque de calque à :"
+msgstr "Initialiser le masque de calque à :"
 
 #: app/layers_dialog.c:3857
 msgid "White (Full Opacity)"
@@ -2788,11 +2793,11 @@ msgstr "Options de fusion du calque"
 
 #: app/layers_dialog.c:4120
 msgid "Final, Merged Layer should be:"
-msgstr "Le calque final, fusionné, devra être :"
+msgstr "Le calque final, fusionné, devra être :"
 
 #: app/layers_dialog.c:4121
 msgid "Final, Anchored Layer should be:"
-msgstr "Le calque final, ancré, devra être :"
+msgstr "Le calque final, ancré, devra être :"
 
 #: app/layers_dialog.c:4126
 msgid "Expanded as necessary"
@@ -2834,15 +2839,15 @@ msgstr "Les niveaux d'un dessin indexé ne peuvent être ajustés."
 
 #: app/levels.c:370
 msgid "Modify Levels for Channel:"
-msgstr "Modifier les niveaux pour le canal : "
+msgstr "Modifier les niveaux pour le canal : "
 
 #: app/levels.c:394
 msgid "Input Levels:"
-msgstr "Niveaux d'entrée :"
+msgstr "Niveaux d'entrée :"
 
 #: app/levels.c:503
 msgid "Output Levels:"
-msgstr "Niveaux de sortie :"
+msgstr "Niveaux de sortie :"
 
 #: app/levels.c:1088
 msgid "Load Levels"
@@ -2892,12 +2897,12 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Usage : %s [option ...] [fichier ...]\n"
+"Usage : %s [option ...] [fichier ...]\n"
 "\n"
 
 #: app/main.c:310
 msgid "Options:\n"
-msgstr "Options :\n"
+msgstr "Options :\n"
 
 #: app/main.c:311
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
@@ -3005,7 +3010,7 @@ msgstr "Utiliser la fenêtre d'informations"
 
 #: app/measure.c:328
 msgid "Distance:"
-msgstr "Distance :"
+msgstr "Distance :"
 
 #: app/measure.c:520 app/measure.c:525 app/measure.c:533 app/measure.c:561
 msgid "degrees"
@@ -3758,7 +3763,7 @@ msgstr "/Éditer les attributs du chemin"
 #: app/menus.c:1314
 #, c-format
 msgid "Error opening file: %s\n"
-msgstr "Erreur lors de l'ouverture du fichier : %s\n"
+msgstr "Erreur lors de l'ouverture du fichier : %s\n"
 
 #: app/module_db.c:66
 msgid "Module error"
@@ -3787,17 +3792,17 @@ msgstr "Module BDD"
 #: app/module_db.c:602
 #, c-format
 msgid "load module: \"%s\"\n"
-msgstr "charger le module : « %s »\n"
+msgstr "charger le module : « %s »\n"
 
 #: app/module_db.c:609
 #, c-format
 msgid "skipping module: \"%s\"\n"
-msgstr "module ignoré : « %s »\n"
+msgstr "module ignoré : « %s »\n"
 
 #: app/module_db.c:635
 #, c-format
 msgid "module load error: %s: %s"
-msgstr "erreur de chargement du module : %s: %s"
+msgstr "erreur de chargement du module : %s: %s"
 
 #: app/module_db.c:822
 msgid "<No modules>"
@@ -3813,7 +3818,7 @@ msgstr "seulement en mémoire"
 
 #: app/module_db.c:844
 msgid "nowhere (click 'refresh')"
-msgstr "nulle part (cliquer « rafraîchir »)"
+msgstr "nulle part (cliquer « rafraîchir »)"
 
 #: app/module_db.c:879 app/module_db.c:884
 msgid "Unload"
@@ -3821,31 +3826,31 @@ msgstr "Décharger"
 
 #: app/module_db.c:900
 msgid "Purpose:"
-msgstr "But :"
+msgstr "But :"
 
 #: app/module_db.c:901
 msgid "Author:"
-msgstr "Auteur :"
+msgstr "Auteur :"
 
 #: app/module_db.c:902
 msgid "Version:"
-msgstr "Version :"
+msgstr "Version :"
 
 #: app/module_db.c:903
 msgid "Copyright:"
-msgstr "Copyright :"
+msgstr "Copyright :"
 
 #: app/module_db.c:904
 msgid "Date:"
-msgstr "Date :"
+msgstr "Date :"
 
 #: app/module_db.c:905
 msgid "Location:"
-msgstr "Emplacement :"
+msgstr "Emplacement :"
 
 #: app/module_db.c:906
 msgid "State:"
-msgstr "État :"
+msgstr "État :"
 
 #: app/module_db.c:925
 msgid "Autoload during startup"
@@ -3859,11 +3864,11 @@ msgstr "Outil déplacement"
 #: app/nav_window.c:1308
 #, c-format
 msgid "Navigation: %s-%d.%d"
-msgstr "Navigation  : %s-%d.%d"
+msgstr "Navigation  : %s-%d.%d"
 
 #: app/nav_window.c:1613
 msgid "Navigation: No Image"
-msgstr "Navigation : pas d'image"
+msgstr "Navigation : pas d'image"
 
 #: app/paint_core.c:806
 msgid "No brushes available for use with this tool."
@@ -3888,7 +3893,7 @@ msgstr "Estompement"
 #. the gradient type
 #: app/paintbrush.c:303
 msgid "Type:"
-msgstr "Type :"
+msgstr "Type :"
 
 #: app/paintbrush.c:317
 msgid "Once Forward"
@@ -3914,9 +3919,9 @@ msgid ""
 "missing magic header\n"
 "Does this file need converting from DOS?"
 msgstr ""
-"Chargement de la palette %s :\n"
-"Palette endommagée : en-tête magique manquant.\n"
-"Ce fichier doit-il être converti depuis DOS ?"
+"Chargement de la palette %s :\n"
+"Palette endommagée : en-tête magique manquant.\n"
+"Ce fichier doit-il être converti depuis DOS ?"
 
 #: app/palette.c:413
 #, c-format
@@ -3924,8 +3929,8 @@ msgid ""
 "Loading palette %s:\n"
 "Corrupt palette: missing magic header"
 msgstr ""
-"Chargement de la palette %s :\n"
-"palette endommagée : en-tête magique manquant."
+"Chargement de la palette %s :\n"
+"palette endommagée : en-tête magique manquant."
 
 #: app/palette.c:426
 #, c-format
@@ -3933,7 +3938,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Read error"
 msgstr ""
-"Chargement de la palette %s (ligne %d) :\n"
+"Chargement de la palette %s (ligne %d) :\n"
 "erreur de lecture"
 
 #. maybe we should just abort?
@@ -3943,7 +3948,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing RED component"
 msgstr ""
-"Chargement de la palette %s (ligne %d) :\n"
+"Chargement de la palette %s (ligne %d) :\n"
 "composante ROUGE manquante"
 
 #: app/palette.c:449
@@ -3952,7 +3957,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing GREEN component"
 msgstr ""
-"Chargement de la palette %s (ligne %d) :\n"
+"Chargement de la palette %s (ligne %d) :\n"
 "composante VERTE manquante"
 
 #: app/palette.c:456
@@ -3961,7 +3966,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing BLUE component"
 msgstr ""
-"Chargement de la palette %s (ligne %d) :\n"
+"Chargement de la palette %s (ligne %d) :\n"
 "composante BLEUE manquante"
 
 #: app/palette.c:465
@@ -3976,7 +3981,7 @@ msgstr ""
 #: app/palette.c:514
 #, c-format
 msgid "Can't save palette \"%s\"\n"
-msgstr "Impossible d'enregistrer la palette « %s »\n"
+msgstr "Impossible d'enregistrer la palette « %s »\n"
 
 #: app/palette.c:1157
 msgid "Black"
@@ -4042,7 +4047,7 @@ msgstr "Importer une palette"
 #. The source's name
 #: app/palette.c:3139
 msgid "Name:"
-msgstr "Nom :"
+msgstr "Nom :"
 
 #: app/palette.c:3152
 msgid "new_import"
@@ -4051,7 +4056,7 @@ msgstr "new_import"
 #. The source type
 #: app/palette.c:3157
 msgid "Source:"
-msgstr "Source :"
+msgstr "Source :"
 
 #: app/palette.c:3185
 msgid "Indexed Palette"
@@ -4060,12 +4065,12 @@ msgstr "Palette des couleurs indexées"
 #. The sample size
 #: app/palette.c:3198
 msgid "Sample Size:"
-msgstr "Taille d'échantillonage :"
+msgstr "Taille d'échantillonage :"
 
 #. The interval
 #: app/palette.c:3211
 msgid "Interval:"
-msgstr "Intervalle :"
+msgstr "Intervalle :"
 
 #. The shell and main vbox
 #: app/palette_select.c:63
@@ -4125,40 +4130,40 @@ msgstr "Édition des attributs du chemin"
 msgid "Enter a new name for the path"
 msgstr "Saisissez un nouveau nom pour le chemin"
 
-#: app/paths_dialog.c:1923
+#: app/paths_dialog.c:1933
 #, c-format
 msgid "Failed to read from %s"
 msgstr "Échec de la lecture à partir de %s"
 
-#: app/paths_dialog.c:1938
+#: app/paths_dialog.c:1948
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "Échec de la lecture du chemin à partir de %s"
 
-#: app/paths_dialog.c:1945
+#: app/paths_dialog.c:1955
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "Aucun point spécifié dans le fichier de chemin %s"
 
-#: app/paths_dialog.c:1956
+#: app/paths_dialog.c:1966
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "Échec de la lecture des points à partir de %s"
 
-#: app/paths_dialog.c:2029 app/xcf.c:438
+#: app/paths_dialog.c:2039 app/xcf.c:438
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "échec de l'ouverture de %s: %s\n"
 
-#: app/paths_dialog.c:2051
+#: app/paths_dialog.c:2061
 msgid "Load/Store Bezier Curves"
 msgstr "Charger/Stocker des courbes de Bézier"
 
-#: app/paths_dialog.c:2091
+#: app/paths_dialog.c:2101
 msgid "Load Path"
 msgstr "Charger chemin"
 
-#: app/paths_dialog.c:2113
+#: app/paths_dialog.c:2123
 msgid "Store Path"
 msgstr "Stocker chemin"
 
@@ -4174,17 +4179,17 @@ msgstr "Pas de motif disponible"
 #: app/patterns.c:210
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr "Format de motif inconnu #%d dans « %s »."
+msgstr "Format de motif inconnu #%d dans « %s »."
 
 #: app/patterns.c:229
 #, c-format
 msgid "Error in GIMP pattern file \"%s\"."
-msgstr "Erreur dans le fichier de motif GIMP « %s »."
+msgstr "Erreur dans le fichier de motif GIMP « %s »."
 
 #: app/patterns.c:245
 #, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
-msgstr "Le fichier de motif GIMP semble être tronqué : « %s »."
+msgstr "Le fichier de motif GIMP semble être tronqué : « %s »."
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
@@ -4192,44 +4197,44 @@ msgstr "Information de Transformation Perspective"
 
 #: app/perspective_tool.c:68
 msgid "Matrix:"
-msgstr "Matrice :"
+msgstr "Matrice :"
 
 #: app/perspective_tool.c:308
 msgid "Perspective..."
 msgstr "Perspective..."
 
-#: app/plug_in.c:332
+#: app/plug_in.c:334
 msgid "Resource configuration"
 msgstr "Configuration des ressources"
 
-#: app/plug_in.c:339
+#: app/plug_in.c:341
 msgid "Plug-ins"
 msgstr "Greffons"
 
-#: app/plug_in.c:352
+#: app/plug_in.c:354
 #, c-format
 msgid "query plug-in: \"%s\"\n"
-msgstr "interrogation du greffon : « %s »\n"
+msgstr "interrogation du greffon : « %s »\n"
 
-#: app/plug_in.c:390
+#: app/plug_in.c:392
 #, c-format
 msgid "writing \"%s\"\n"
-msgstr "écriture de « %s »\n"
-
-#: app/plug_in.c:405
-msgid "Starting extensions: "
-msgstr "Lancement des extensions : "
+msgstr "écriture de « %s »\n"
 
 #: app/plug_in.c:407
+msgid "Starting extensions: "
+msgstr "Lancement des extensions : "
+
+#: app/plug_in.c:409
 msgid "Extensions"
 msgstr "Extensions"
 
-#: app/plug_in.c:850
+#: app/plug_in.c:852
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
-msgstr "Impossible de trouver le greffon : « %s »"
+msgstr "Impossible de trouver le greffon : « %s »"
 
-#: app/plug_in.c:1477
+#: app/plug_in.c:1479
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -4239,7 +4244,7 @@ msgid ""
 "You may want to save your images and restart GIMP\n"
 "to be on the safe side."
 msgstr ""
-"Le greffon a planté :  « %s »\n"
+"Le greffon a planté :  « %s »\n"
 "(%s)\n"
 "\n"
 "Le greffon a peut être corrompu l'état interne de GIMP.\n"
@@ -4256,51 +4261,51 @@ msgstr "La postérisation n'opère pas sur les images indexées."
 
 #: app/posterize.c:225
 msgid "Posterize Levels:"
-msgstr "Niveaux de postérisation :"
+msgstr "Niveaux de postérisation :"
 
 #: app/preferences_dialog.c:267
 msgid "Error: Levels of undo must be zero or greater."
-msgstr "Erreur : le nombre de niveaux d'annulation doit être positif ou nul."
+msgstr "Erreur : le nombre de niveaux d'annulation doit être positif ou nul."
 
 #: app/preferences_dialog.c:273
 msgid "Error: Marching speed must be 50 or greater."
-msgstr "Erreur : La vitesse des « marchings ants » doit être de 50 au minimum."
+msgstr "Erreur : La vitesse des « marchings ants » doit être de 50 au minimum."
 
 #: app/preferences_dialog.c:279
 msgid "Error: Default width must be one or greater."
-msgstr "Erreur : La largeur par défaut doit être au moins un."
+msgstr "Erreur : La largeur par défaut doit être au moins un."
 
 #: app/preferences_dialog.c:285
 msgid "Error: Default height must be one or greater."
-msgstr "Erreur : La hauteur par défaut doit être au moins un."
+msgstr "Erreur : La hauteur par défaut doit être au moins un."
 
 #: app/preferences_dialog.c:292
 msgid "Error: Default unit must be within unit range."
-msgstr "Erreur : L'unité par défaut doit être au moins un."
+msgstr "Erreur : L'unité par défaut doit être au moins un."
 
 #: app/preferences_dialog.c:299
 msgid "Error: Default resolution must not be zero."
-msgstr "Erreur : la résolution par défaut ne peut pas être zéro."
+msgstr "Erreur : la résolution par défaut ne peut pas être zéro."
 
 #: app/preferences_dialog.c:307
 msgid "Error: Default resolution unit must be within unit range."
-msgstr "Erreur : L'unité de résolution par défaut doit être au moins un."
+msgstr "Erreur : L'unité de résolution par défaut doit être au moins un."
 
 #: app/preferences_dialog.c:314
 msgid "Error: Monitor resolution must not be zero."
-msgstr "Erreur : la résolution du moniteur ne peut pas être zéro."
+msgstr "Erreur : la résolution du moniteur ne peut pas être zéro."
 
 #: app/preferences_dialog.c:321
 msgid "Error: Image title format must not be NULL."
-msgstr "Erreur : le format du titre d'image ne peut pas être NULL."
+msgstr "Erreur : le format du titre d'image ne peut pas être NULL."
 
 #: app/preferences_dialog.c:328
 msgid "Error: Number of processors must be between 1 and 30."
-msgstr "Erreur : le nombre de processeurs doit être entre 1 et 30."
+msgstr "Erreur : le nombre de processeurs doit être entre 1 et 30."
 
 #: app/preferences_dialog.c:378
 msgid "Save Preferences ?"
-msgstr "Enregistrer les préférences ?"
+msgstr "Enregistrer les préférences ?"
 
 #: app/preferences_dialog.c:399
 msgid ""
@@ -4315,10 +4320,10 @@ msgstr ""
 "Au moins un des changements que vous avez effectué\n"
 "ne prendra effet que si vous relancez GIMP.\n"
 "\n"
-"Vous pouvez choisir « Enregistrer » maintenant\n"
+"Vous pouvez choisir « Enregistrer » maintenant\n"
 "pour rendre vos changements permanents (ils prendront\n"
 "effet au prochain lancement de GIMP) ou choisir\n"
-"« Fermer » et les parties critiques de vos changements\n"
+"« Fermer » et les parties critiques de vos changements\n"
 "ne seront pas appliquées."
 
 #: app/preferences_dialog.c:492
@@ -4365,11 +4370,11 @@ msgstr "pts par pouce"
 
 #: app/preferences_dialog.c:1658
 msgid "Default Image Type:"
-msgstr "Type d'image par défaut :"
+msgstr "Type d'image par défaut :"
 
 #: app/preferences_dialog.c:1670
 msgid "Maximum Image Size:"
-msgstr "Taille maximal de l'image :"
+msgstr "Taille maximal de l'image :"
 
 #: app/preferences_dialog.c:1675 app/preferences_dialog.c:1677
 msgid "Default Comment"
@@ -4413,7 +4418,7 @@ msgstr "Noir Seulement"
 
 #: app/preferences_dialog.c:1743
 msgid "Transparency Type:"
-msgstr "Type de Transparence :"
+msgstr "Type de Transparence :"
 
 #: app/preferences_dialog.c:1750 app/preferences_dialog.c:1842
 #: app/preferences_dialog.c:1856
@@ -4432,7 +4437,7 @@ msgstr "Large"
 
 #: app/preferences_dialog.c:1756
 msgid "Check Size:"
-msgstr "Taille des Cases :"
+msgstr "Taille des Cases :"
 
 #: app/preferences_dialog.c:1759
 msgid "8-Bit Displays"
@@ -4440,7 +4445,7 @@ msgstr "Affichages 8-bits"
 
 #: app/preferences_dialog.c:1780
 msgid "Minimum Number of Colors:"
-msgstr "Nombre minimal de couleurs :"
+msgstr "Nombre minimal de couleurs :"
 
 #: app/preferences_dialog.c:1783
 msgid "Install Colormap"
@@ -4460,15 +4465,15 @@ msgstr "Énorme"
 
 #: app/preferences_dialog.c:1849
 msgid "Preview Size:"
-msgstr "Taille de l'aperçu :"
+msgstr "Taille de l'aperçu :"
 
 #: app/preferences_dialog.c:1862
 msgid "Nav Preview Size:"
-msgstr "Taille de l'aperçu de navigation :"
+msgstr "Taille de l'aperçu de navigation :"
 
 #: app/preferences_dialog.c:1872
 msgid "Recent Documents List Size:"
-msgstr "Taille de la liste des documents récents :"
+msgstr "Taille de la liste des documents récents :"
 
 #. Indicators
 #: app/preferences_dialog.c:1876
@@ -4502,7 +4507,7 @@ msgstr "Afficher les bulles d'aide"
 
 #: app/preferences_dialog.c:1932
 msgid "Context Sensitive Help with \"F1\""
-msgstr "Aide contextuelle avec « F1 »"
+msgstr "Aide contextuelle avec « F1 »"
 
 #: app/preferences_dialog.c:1941
 msgid "Help Browser"
@@ -4518,7 +4523,7 @@ msgstr "Netscape"
 
 #: app/preferences_dialog.c:1958
 msgid "Help Browser to Use:"
-msgstr "Navigateur d'aide à utiliser :"
+msgstr "Navigateur d'aide à utiliser :"
 
 #: app/preferences_dialog.c:1963 app/preferences_dialog.c:1965
 msgid "Image Windows"
@@ -4530,7 +4535,7 @@ msgstr "Apparence"
 
 #: app/preferences_dialog.c:1975
 msgid "Use \"Dot for Dot\" by default"
-msgstr "Utiliser « Point pour point » par défaut"
+msgstr "Utiliser « Point pour point » par défaut"
 
 #: app/preferences_dialog.c:1984
 msgid "Resize Window on Zoom"
@@ -4546,7 +4551,7 @@ msgstr "Afficher la barre d'état"
 
 #: app/preferences_dialog.c:2026
 msgid "Marching Ants Speed:"
-msgstr "Vitesse des « marching ants » :"
+msgstr "Vitesse des « marching ants » :"
 
 #. Set the currently used string as "Custom"
 #: app/preferences_dialog.c:2034
@@ -4572,7 +4577,7 @@ msgstr "Afficher le facteur inverse de zoom"
 
 #: app/preferences_dialog.c:2066
 msgid "Image Title Format:"
-msgstr "Format de titre d'image :"
+msgstr "Format de titre d'image :"
 
 #. End of the title format string
 #: app/preferences_dialog.c:2070
@@ -4601,7 +4606,7 @@ msgstr "Seulement une croix"
 
 #: app/preferences_dialog.c:2110
 msgid "Cursor Mode:"
-msgstr "Mode du curseur :"
+msgstr "Mode du curseur :"
 
 #: app/preferences_dialog.c:2116 app/preferences_dialog.c:2118
 #: app/tools.c:1541
@@ -4622,7 +4627,7 @@ msgstr "Recherche de régions contiguës"
 
 #: app/preferences_dialog.c:2157
 msgid "Default Threshold:"
-msgstr "Seuil par défaut :"
+msgstr "Seuil par défaut :"
 
 #: app/preferences_dialog.c:2166 app/preferences_dialog.c:2168
 msgid "Environment"
@@ -4638,15 +4643,15 @@ msgstr "Utilisation parcimonieuse de la mémoire"
 
 #: app/preferences_dialog.c:2206
 msgid "Levels of Undo:"
-msgstr "Niveaux d'annulation :"
+msgstr "Niveaux d'annulation :"
 
 #: app/preferences_dialog.c:2218 app/user_install.c:1343
 msgid "Tile Cache Size:"
-msgstr "Taille du cache d'image :"
+msgstr "Taille du cache d'image :"
 
 #: app/preferences_dialog.c:2229
 msgid "Number of Processors to Use:"
-msgstr "Nombre de processeurs à utiliser :"
+msgstr "Nombre de processeurs à utiliser :"
 
 #: app/preferences_dialog.c:2233 app/transform_tool.c:220
 msgid "Scaling"
@@ -4662,7 +4667,7 @@ msgstr "Cubique (Lente)"
 
 #: app/preferences_dialog.c:2260
 msgid "Interpolation Type:"
-msgstr "Type d'interpolation :"
+msgstr "Type d'interpolation :"
 
 #: app/preferences_dialog.c:2263
 msgid "File Saving"
@@ -4678,7 +4683,7 @@ msgstr "Jamais"
 
 #: app/preferences_dialog.c:2285
 msgid "Try to Write a Thumbnail File:"
-msgstr "Tenter d'écrire une vignette :"
+msgstr "Tenter d'écrire une vignette :"
 
 #: app/preferences_dialog.c:2292
 msgid "Only when Modified"
@@ -4686,7 +4691,7 @@ msgstr "Seulement quand modifié"
 
 #: app/preferences_dialog.c:2297
 msgid "\"File > Save\" Saves the Image:"
-msgstr "« Fichier > Enregistrer » enregistre l'image :"
+msgstr "« Fichier > Enregistrer » enregistre l'image :"
 
 #: app/preferences_dialog.c:2303
 msgid "Session Management"
@@ -4743,7 +4748,7 @@ msgstr "Depuis le système de fenêtrage"
 
 #: app/preferences_dialog.c:2463
 msgid "Manually:"
-msgstr "Manuellement :"
+msgstr "Manuellement :"
 
 #: app/preferences_dialog.c:2479 app/preferences_dialog.c:2481
 msgid "Directories"
@@ -4751,7 +4756,7 @@ msgstr "Répertoires"
 
 #: app/preferences_dialog.c:2498
 msgid "Temp Dir:"
-msgstr "Répertoire temporaire :"
+msgstr "Répertoire temporaire :"
 
 #: app/preferences_dialog.c:2498
 msgid "Select Temp Dir"
@@ -4759,7 +4764,7 @@ msgstr "Sélectionnez un répertoire temporaire"
 
 #: app/preferences_dialog.c:2499
 msgid "Swap Dir:"
-msgstr "Répertoire d'échange :"
+msgstr "Répertoire d'échange :"
 
 #: app/preferences_dialog.c:2499 app/user_install.c:1363
 msgid "Select Swap Dir"
@@ -4854,7 +4859,7 @@ msgid ""
 "Argument %d to '%s' should be a %s, but got passed a %s"
 msgstr ""
 "Des arguments incorrects ont été passés à procedural_db_run_proc:\n"
-"l'argument %d de « %s » devrait être un %s, mais on a passé un %s."
+"l'argument %d de « %s » devrait être un %s, mais on a passé un %s."
 
 #: app/procedural_db_cmds.c:64
 msgid "Internal GIMP procedure"
@@ -4879,27 +4884,27 @@ msgstr "Éditer les attributs du masque rapide"
 #. The opacity scale
 #: app/qmask.c:302
 msgid "Mask Opacity:"
-msgstr "Opacité du masque :"
+msgstr "Opacité du masque :"
 
 #: app/rect_select.c:204
 msgid "Selection: ADD"
-msgstr "Sélection : AJOUTER"
+msgstr "Sélection : AJOUTER"
 
 #: app/rect_select.c:207
 msgid "Selection: SUBTRACT"
-msgstr "Sélection : SOUSTRAIRE"
+msgstr "Sélection : SOUSTRAIRE"
 
 #: app/rect_select.c:210
 msgid "Selection: INTERSECT"
-msgstr "Sélection : INTERSECTER"
+msgstr "Sélection : INTERSECTER"
 
 #: app/rect_select.c:213
 msgid "Selection: REPLACE"
-msgstr "Sélection : REMPLACER"
+msgstr "Sélection : REMPLACER"
 
 #: app/rect_select.c:450 app/rect_select.c:457
 msgid "Selection: "
-msgstr "Sélection : "
+msgstr "Sélection : "
 
 #: app/resize.c:182
 msgid "Scale Layer"
@@ -4928,37 +4933,37 @@ msgstr "Changer la taille du canevas"
 #. the original width & height labels
 #: app/resize.c:278 app/scale_tool.c:85
 msgid "Original Width:"
-msgstr "Largeur d'origine :"
+msgstr "Largeur d'origine :"
 
 #. the new size labels
-#: app/resize.c:303 app/resize.c:535
+#: app/resize.c:303 app/resize.c:537
 msgid "New Width:"
-msgstr "Nouvelle largeur :"
+msgstr "Nouvelle largeur :"
 
 #. the scale ratio labels
 #: app/resize.c:368
 msgid "Ratio X:"
-msgstr "Facteur d'échelle X :"
+msgstr "Facteur d'échelle X :"
 
-#: app/resize.c:464
+#: app/resize.c:466
 msgid "X:"
-msgstr "X :"
+msgstr "X :"
 
-#: app/resize.c:521
+#: app/resize.c:523
 msgid "Print Size & Display Unit"
 msgstr "Afficher la taille & afficher l'unité"
 
-#: app/resize.c:1310
+#: app/resize.c:1312
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
-"Erreur de redimensionnement : Les hauteur et largeur doivent être "
+"Erreur de redimensionnement : Les hauteur et largeur doivent être "
 "supérieures à zéro."
 
-#: app/resize.c:1391
+#: app/resize.c:1393
 msgid "Layer Too Small"
 msgstr "Calque trop petit"
 
-#: app/resize.c:1395
+#: app/resize.c:1397
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -4966,7 +4971,7 @@ msgid ""
 msgstr ""
 "La taille d'image choisie va\n"
 "éliminer certains calques.\n"
-"Est-ce cela que vous voulez ?"
+"Est-ce cela que vous voulez ?"
 
 #: app/resolution_calibrate.c:108
 msgid "Calibrate Monitor Resolution"
@@ -4978,11 +4983,11 @@ msgstr "Mesurez la règle et entrez sa longueur ci-dessous."
 
 #: app/resolution_calibrate.c:241
 msgid "Horizontal:"
-msgstr "Horizontale :"
+msgstr "Horizontale :"
 
 #: app/resolution_calibrate.c:246
 msgid "Vertical:"
-msgstr "Verticale :"
+msgstr "Verticale :"
 
 #: app/rotate_tool.c:88
 msgid "Rotation Information"
@@ -4990,7 +4995,7 @@ msgstr "Informations de Rotation"
 
 #: app/rotate_tool.c:108
 msgid "Center X:"
-msgstr "Centre X :"
+msgstr "Centre X :"
 
 #: app/rotate_tool.c:395
 msgid "Rotating..."
@@ -5002,11 +5007,11 @@ msgstr "Informations de mise à l'échelle"
 
 #: app/scale_tool.c:91
 msgid "Current Width:"
-msgstr "Largeur actuelle :"
+msgstr "Largeur actuelle :"
 
 #: app/scale_tool.c:106
 msgid "Scale Ratio X:"
-msgstr "Facteur d'échelle X :"
+msgstr "Facteur d'échelle X :"
 
 #: app/scale_tool.c:509
 msgid "Scaling..."
@@ -5018,7 +5023,7 @@ msgstr "Informations de cisaillement"
 
 #: app/shear_tool.c:84
 msgid "Shear Magnitude X:"
-msgstr "Ampleur de cisaillement X :"
+msgstr "Ampleur de cisaillement X :"
 
 #: app/shear_tool.c:352
 msgid "Shearing..."
@@ -5035,23 +5040,18 @@ msgstr "Lissage"
 
 #: app/text_tool.c:181
 msgid "Border:"
-msgstr "Bordure :"
+msgstr "Bordure :"
 
 #: app/text_tool.c:207
 msgid "Use Dynamic Text"
 msgstr "Texte dynamique"
 
-#: app/text_tool.c:613
-#, c-format
-msgid "Font '%s' not found."
-msgstr "Police « %s » non trouvée."
-
-#: app/text_tool.c:635
+#: app/text_tool.c:615 app/text_tool.c:644
 #, c-format
 msgid "Font '%s' not found.%s"
-msgstr "Police « %s » non trouvée. %s"
+msgstr "Police « %s » non trouvée. %s"
 
-#: app/text_tool.c:638
+#: app/text_tool.c:618 app/text_tool.c:647
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5061,7 +5061,7 @@ msgstr ""
 "Si vous n'avez pas de polices vectorielles, essayez de couper le lissage "
 "dans les options de l'outil."
 
-#: app/text_tool.c:751
+#: app/text_tool.c:760
 msgid "Text Layer"
 msgstr "Calque texte"
 
@@ -5075,7 +5075,7 @@ msgstr "Le seuil ne fonctionne pas sur les images indexées."
 
 #: app/threshold.c:298
 msgid "Threshold Range:"
-msgstr "Intervalle de seuil :"
+msgstr "Intervalle de seuil :"
 
 #: app/tile_swap.c:417
 msgid ""
@@ -5092,36 +5092,41 @@ msgstr ""
 "Gimp et vérifiez l'emplacement de votre répertoire de swap\n"
 "dans vos Préférences"
 
-#: app/tips_dialog.c:75
+#. The string "gimp_tips.txt" needs special handling by
+#. translators. It is used to identify the tips file to
+#. be used for the current locale. Please translate it
+#. accordingly. For example for the german locale that
+#. would be "gimp_tips.de.txt".
+#: app/tips_dialog.c:80
 msgid "gimp_tips.txt"
 msgstr "gimp_conseils.fr.txt"
 
-#: app/tips_dialog.c:87
+#: app/tips_dialog.c:95
 msgid "GIMP Tip of the Day"
 msgstr "Conseil du jour GIMP"
 
-#: app/tips_dialog.c:148
+#: app/tips_dialog.c:156
 msgid "Show tip next time GIMP starts"
 msgstr "Afficher un conseil la prochaine fois"
 
-#: app/tips_dialog.c:178
+#: app/tips_dialog.c:186
 msgid "Previous Tip"
 msgstr "Conseil précédent"
 
-#: app/tips_dialog.c:187
+#: app/tips_dialog.c:195
 msgid "Next Tip"
 msgstr "Conseil suivant"
 
-#: app/tips_dialog.c:290
+#: app/tips_dialog.c:298
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in\n"
 "the tips subdirectory of the GIMP data directory.\n"
 "Please check your installation."
 msgstr ""
-"Votre fichier de conseils GIMP manque !\n"
+"Votre fichier de conseils GIMP manque !\n"
 "Il devrait y avoir un fichier nommé gimp_conseils.fr.txt\n"
-"dans le sous-répertoire « tips » du répertoire de données\n"
+"dans le sous-répertoire « tips » du répertoire de données\n"
 "de GIMP.\n"
 "Vérifiez votre installation."
 
@@ -5167,7 +5172,7 @@ msgstr "Taille / Proportion fixe"
 
 #: app/tool_options.c:382
 msgid "Unit:"
-msgstr "Unité :"
+msgstr "Unité :"
 
 #: app/tool_options.c:474 app/tools.c:601
 msgid "Bucket Fill"
@@ -5630,7 +5635,7 @@ msgstr "Afficher la grille"
 
 #: app/transform_tool.c:273
 msgid "Density:"
-msgstr "Densité :"
+msgstr "Densité :"
 
 #. the smoothing toggle button
 #: app/transform_tool.c:300
@@ -5838,7 +5843,7 @@ msgstr "divers"
 #: app/undo_history.c:427 app/undo_history.c:751
 #, c-format
 msgid "Undo History: %s"
-msgstr "%s : historique d'annulation"
+msgstr "%s : historique d'annulation"
 
 #: app/undo_history.c:483
 msgid "[ base image ]"
@@ -5857,14 +5862,14 @@ msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
 msgstr ""
-"Installation personnelle non effectuée car le paramètre « --nointerface » a "
+"Installation personnelle non effectuée car le paramètre « --nointerface » a "
 "été détecté\n"
 
 #: app/user_install.c:108
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
-"Pour effectuer l'installation, lancer GIMP avec le paramètre « --nointerface "
+"Pour effectuer l'installation, lancer GIMP avec le paramètre « --nointerface "
 "»\n"
 
 #: app/user_install.c:167
@@ -6189,7 +6194,7 @@ msgstr ""
 
 #: app/user_install.c:735
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Cliquez « Continuer » pour entrer dans l'installation de GIMP."
+msgstr "Cliquez « Continuer » pour entrer dans l'installation de GIMP."
 
 #: app/user_install.c:739
 msgid ""
@@ -6208,9 +6213,9 @@ msgid ""
 "the Free Software Foundation; either version 2 of the License, or\n"
 "(at your option) any later version."
 msgstr ""
-"Ce logiciel est un logiciel libre ; vous pouvez le diffuser et/ou le\n"
+"Ce logiciel est un logiciel libre ; vous pouvez le diffuser et/ou le\n"
 "modifier suivant les termes de la Licence Publique Générale GNU telle\n"
-"que publiée par la Free Software Foundation ; soit la version 2 de cette\n"
+"que publiée par la Free Software Foundation ; soit la version 2 de cette\n"
 "licence, soit (à votre convenance) une version ultérieure."
 
 #: app/user_install.c:753
@@ -6221,7 +6226,7 @@ msgid ""
 "See the GNU General Public License for more details."
 msgstr ""
 "Ce programme est diffusé dans l'espoir qu'il sera utile, mais\n"
-"SANS AUCUNE GARANTIE ; sans même une garantie implicite de\n"
+"SANS AUCUNE GARANTIE ; sans même une garantie implicite de\n"
 "COMMERCIALISABILITÉ ou d'ADÉQUATION À UN USAGE PARTICULIER.\n"
 "Voyez la Licence Publique Générale GNU pour plus de détails."
 
@@ -6233,7 +6238,7 @@ msgid ""
 "MA 02111-1307, USA."
 msgstr ""
 "Vous devriez avoir reçu une copie de la Licence Publique Générale GNU\n"
-"avec ce programme ; sinon, veuillez écrire à la Free Software\n"
+"avec ce programme ; sinon, veuillez écrire à la Free Software\n"
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, États-Unis."
 
@@ -6244,7 +6249,7 @@ msgstr "Répertoire GIMP personnel"
 #: app/user_install.c:785
 msgid "Click \"Continue\" to create your personal GIMP directory."
 msgstr ""
-"Cliquez sur « Continuer » pour créer votre répertoire\n"
+"Cliquez sur « Continuer » pour créer votre répertoire\n"
 "GIMP personnel."
 
 #: app/user_install.c:804
@@ -6278,7 +6283,7 @@ msgstr "Affinage des performances de GIMP"
 #: app/user_install.c:904
 msgid "Click \"Continue\" to accept the settings above."
 msgstr ""
-"Cliquez sur « Continuer » pour accepter les\n"
+"Cliquez sur « Continuer » pour accepter les\n"
 "paramètres ci-dessus."
 
 #: app/user_install.c:907
@@ -6293,7 +6298,7 @@ msgstr "Résolution du moniteur"
 
 #: app/user_install.c:917
 msgid "Click \"Continue\" to start The GIMP."
-msgstr "Cliquez sur « Continuer » pour lancer GIMP."
+msgstr "Cliquez sur « Continuer » pour lancer GIMP."
 
 #: app/user_install.c:920
 msgid ""
@@ -6366,13 +6371,13 @@ msgid ""
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
-"Avez vous remarqué des messages d'erreur dans les lignes ci-dessus ?\n"
-"S'il n'y en a pas, c'est que l'installation a réussi !\n"
+"Avez vous remarqué des messages d'erreur dans les lignes ci-dessus ?\n"
+"S'il n'y en a pas, c'est que l'installation a réussi !\n"
 "Sinon, quittez et recherchez les causes du problème..."
 
 #: app/user_install.c:1180
 msgid "Click \"Continue\" to complete GIMP installation."
-msgstr "Cliquez sur « Continuer » pour compléter l'installation de GIMP."
+msgstr "Cliquez sur « Continuer » pour compléter l'installation de GIMP."
 
 #: app/user_install.c:1185 app/user_install.c:1306
 msgid "Installation failed.  Contact system administrator."
@@ -6414,7 +6419,7 @@ msgid ""
 "the amount of memory used by other running processes."
 msgstr ""
 "GIMP utilise une quantité de mémoire limitée pour stocker les données\n"
-"d'une image ; cette zone est nommée « Cache d'images ». Vous devrez\n"
+"d'une image ; cette zone est nommée « Cache d'images ». Vous devrez\n"
 "ajuster cette taille pour correspondre avec votre quantité de mémoire.\n"
 "Considérez la quantité de mémoire utilisée par les autres processus\n"
 "en cours."
@@ -6431,11 +6436,11 @@ msgstr ""
 "Ce fichier doit être situé sur un système de fichier local avec\n"
 "suffisament d'espace libre (quelques centaine de Mo). Sur un système\n"
 "UNIX, vous pourrez par exemple utiliser le répertoire temporaire\n"
-"commun (« /tmp » ou « /var/tmp »)."
+"commun (« /tmp » ou « /var/tmp »)."
 
 #: app/user_install.c:1368
 msgid "Swap Directory:"
-msgstr "Répertoire d'échange :"
+msgstr "Répertoire d'échange :"
 
 #: app/user_install.c:1403
 msgid ""
@@ -6461,21 +6466,21 @@ msgstr ""
 
 #: app/user_install.c:1437
 msgid "Monitor Resolution X:"
-msgstr "Résolution du moniteur X :"
+msgstr "Résolution du moniteur X :"
 
 #: app/user_install.c:1474
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
 msgstr ""
-"Vous pouvez aussi cliquez le bouton « Calibrer » pour ouvrir\n"
+"Vous pouvez aussi cliquez le bouton « Calibrer » pour ouvrir\n"
 "une fenêtre qui vous laissera déterminer la résolution de votre\n"
 "moniteur interactivement."
 
 #: app/xcf.c:384
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "Erreur XCF : Version %d non supportée du format XCF rencontrée"
+msgstr "Erreur XCF : Version %d non supportée du format XCF rencontrée"
 
 #: app/xcf.c:1817
 msgid ""
@@ -6483,7 +6488,7 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
-"Avertissement XCF : la version 0 du format de\n"
+"Avertissement XCF : la version 0 du format de\n"
 "fichier XCF n'enregistrait pas correctement\n"
 "les palettes des images indexées."
 
@@ -6493,7 +6498,7 @@ msgstr "Sélecteur de couleur GTK (module)"
 
 #: modules/colorsel_triangle.c:79
 msgid "Painter-style color selector as a pluggable color selector"
-msgstr "Sélecteur de couleur style « peintre » (module)"
+msgstr "Sélecteur de couleur style « peintre » (module)"
 
 #: modules/colorsel_triangle.c:148 modules/colorsel_triangle.c:150
 msgid "Triangle"
@@ -6501,7 +6506,7 @@ msgstr "Triangle"
 
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
-msgstr "Sélecteur de couleur style « aquarelle » (module)"
+msgstr "Sélecteur de couleur style « aquarelle » (module)"
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
 msgid "Watercolor"
@@ -6511,14 +6516,17 @@ msgstr "Aquarelle"
 msgid "Color History"
 msgstr "Historique des couleurs"
 
+#~ msgid "Font '%s' not found."
+#~ msgstr "Police « %s » non trouvée."
+
 #~ msgid ""
 #~ "Did you notice any error messages in the console window?\n"
 #~ "If not, installation was successful!\n"
 #~ "Otherwise, quit and investigate the possible reason..."
 #~ msgstr ""
 #~ "Avez vous remarqué des messages d'erreur dans\n"
-#~ "la fenêtre de console ?  S'il n'y en a pas, c'est\n"
-#~ "que l'installation a réussi !  Sinon, quittez\n"
+#~ "la fenêtre de console ?  S'il n'y en a pas, c'est\n"
+#~ "que l'installation a réussi !  Sinon, quittez\n"
 #~ "et recherchez les causes du problème..."
 
 #~ msgid "Remove"
@@ -6549,7 +6557,7 @@ msgstr "Historique des couleurs"
 #~ msgstr "Gamma"
 
 #~ msgid "Gamma:"
-#~ msgstr "Gamma :"
+#~ msgstr "Gamma :"
 
 #~ msgid "High Contrast color display filter"
 #~ msgstr "Filtres de correction de contraste élevé"
@@ -6558,7 +6566,7 @@ msgstr "Historique des couleurs"
 #~ msgstr "Contraste élevé"
 
 #~ msgid "Contrast Cycles:"
-#~ msgstr "Cycles de contraste :"
+#~ msgstr "Cycles de contraste :"
 
 #~ msgid "Error in GIMP brush file...aborting."
 #~ msgstr "Erreur dans le fichier de brosses GIMP...Arrêt."
@@ -6673,7 +6681,7 @@ msgstr "Historique des couleurs"
 #~ "Installation successful!\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Installation terminée avec succès !\n"
+#~ "Installation terminée avec succès !\n"
 
 #~ msgid "/File"
 #~ msgstr "/Fichier"
@@ -6772,7 +6780,7 @@ msgstr "Historique des couleurs"
 #~ msgstr "Jeter"
 
 #~ msgid "Apply layer mask?"
-#~ msgstr "Appliquer le masque de calque ?"
+#~ msgstr "Appliquer le masque de calque ?"
 
 #~ msgid "/Xtns/Animation"
 #~ msgstr "/Xtns/Animation"
@@ -6877,37 +6885,37 @@ msgstr "Historique des couleurs"
 #~ msgstr "Manipuler chemins"
 
 #~ msgid "Flow Relation:"
-#~ msgstr "Relation du débit :"
+#~ msgstr "Relation du débit :"
 
 #~ msgid "Flow Sensitivity:"
-#~ msgstr "Sensibilité du débit :"
+#~ msgstr "Sensibilité du débit :"
 
 #~ msgid "Base Tilt:"
-#~ msgstr "Inclinaison de la base :"
+#~ msgstr "Inclinaison de la base :"
 
 #~ msgid "Tilt Sensitivity:"
-#~ msgstr "Sensibilité de la base :"
+#~ msgstr "Sensibilité de la base :"
 
 #~ msgid "Speed Sensitivity:"
-#~ msgstr "Sensibilité de la vitesse :"
+#~ msgstr "Sensibilité de la vitesse :"
 
 #~ msgid "Min Height:"
-#~ msgstr "Hauteur min :"
+#~ msgstr "Hauteur min :"
 
 #~ msgid "Max Height:"
-#~ msgstr "Hauteur max :"
+#~ msgstr "Hauteur max :"
 
 #~ msgid "Delete gradient"
 #~ msgstr "Effacer dégradé"
 
 #~ msgid "Shades of Color:"
-#~ msgstr "Teintes :"
+#~ msgstr "Teintes :"
 
 #~ msgid "Shades:"
-#~ msgstr "Ombres :"
+#~ msgstr "Ombres :"
 
 #~ msgid "Shades of Gray:"
-#~ msgstr "Tons de gris :"
+#~ msgstr "Tons de gris :"
 
 #~ msgid "%%d x %%d pixels (%%.%df x %%.%df %s)"
 #~ msgstr "%%d × %%d pixels (%%.%df × %%.%df %s)"
@@ -7083,7 +7091,7 @@ msgstr "Historique des couleurs"
 #~ msgstr "Options d'ouverture"
 
 #~ msgid "transform_path(): gimprc token referenced but not defined: %s"
-#~ msgstr "transform_path() : lexème de gimprc référencé mais non défini : %s"
+#~ msgstr "transform_path() : lexème de gimprc référencé mais non défini : %s"
 
 #~ msgid ""
 #~ "# GIMP unitrc\n"
@@ -7236,7 +7244,7 @@ msgstr "Historique des couleurs"
 #~ "# sessions d'utilisation afin de pouvoir reprendre le travail\n"
 #~ "# en cours. Vous n'êtes pas censé l'éditer à la main, mais le\n"
 #~ "# pouvez bien entendu si vous y tenez. Ce fichier est écrasé\n"
-#~ "# à chaque fois que vous quittez GIMP ; s'il est absent, des\n"
+#~ "# à chaque fois que vous quittez GIMP ; s'il est absent, des\n"
 #~ "# valeurs par défaut sont utilisées.\n"
 #~ "\n"
 
@@ -7254,11 +7262,11 @@ msgstr "Historique des couleurs"
 #~ msgid "Error in temp buf caching: information swapped to disk was lost!"
 #~ msgstr ""
 #~ "Erreur dans le cache de tempon temporaire: des données sauvées sur disque "
-#~ "ont été perdues !"
+#~ "ont été perdues !"
 
 #~ msgid "text_call_gdyntext: gDynText procedure lookup failed"
 #~ msgstr ""
-#~ "text_call_gdyntext : la procédure d'affichage de texte dynamique n'est "
+#~ "text_call_gdyntext : la procédure d'affichage de texte dynamique n'est "
 #~ "pas installée"
 
 #~ msgid "text_render: could not allocate image"
@@ -7274,11 +7282,11 @@ msgstr "Historique des couleurs"
 
 #~ msgid "unable to read tile data from disk: %d/%d ( %d ) bytes read"
 #~ msgstr ""
-#~ "lecture de données d'un fichier impossible : %d/%d ( %d ) octets lus"
+#~ "lecture de données d'un fichier impossible : %d/%d ( %d ) octets lus"
 
 #~ msgid "unable to write tile data to disk: %d ( %d ) bytes written"
 #~ msgstr ""
-#~ "écriture de données d'un fichier impossible : %d/%d ( %d ) octets lus"
+#~ "écriture de données d'un fichier impossible : %d/%d ( %d ) octets lus"
 
 #~ msgid "xcf: zlib compression unimplemented"
 #~ msgstr "xcf: compression zlib non-implementée"
@@ -7318,7 +7326,7 @@ msgstr "Historique des couleurs"
 
 #~ msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 #~ msgstr ""
-#~ "Lecture de données d'un fichier XCF impossible : %d (%d) octets lus."
+#~ "Lecture de données d'un fichier XCF impossible : %d (%d) octets lus."
 
 #~ msgid "Anti erase"
 #~ msgstr "Anti effacement"
@@ -7327,10 +7335,10 @@ msgstr "Historique des couleurs"
 #~ msgstr "%s: Fenêtre d'Information"
 
 #~ msgid "No image: Window Navigation"
-#~ msgstr "Pas d'image : Navigation parmis les fenêtres"
+#~ msgstr "Pas d'image : Navigation parmis les fenêtres"
 
 #~ msgid "starting tile preswapper\n"
 #~ msgstr "démarrage du prééchangeur de carreaux d'images\n"
 
 #~ msgid "Grid density:"
-#~ msgstr "Densité de la grille :"
+#~ msgstr "Densité de la grille :"
