@@ -33,9 +33,9 @@
 #include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
+#include "gimppattern.h"
 #include "gimprc.h"
 #include "paint_funcs.h"
-#include "patterns.h"
 #include "pixel_region.h"
 #include "selection.h"
 #include "temp_buf.h"
@@ -376,7 +376,7 @@ bucket_fill (GimpImage      *gimage,
   gint         x1, y1, x2, y2;
   guchar       col [MAX_CHANNELS];
   guchar      *d1, *d2;
-  GPattern    *pattern;
+  GimpPattern *pattern;
   TempBuf     *pat_buf;
   gboolean     new_buf = FALSE;
 

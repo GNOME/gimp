@@ -310,7 +310,8 @@ brush_select_new (gchar   *title,
 
   if (title && init_name && strlen (init_name))
     {
-      active = (GimpBrush *) gimp_list_get_child_by_name (brush_list, init_name);
+      active = (GimpBrush *) gimp_list_get_child_by_name (global_brush_list,
+							  init_name);
     }
   else
     {
@@ -526,20 +527,20 @@ brush_select_new (gchar   *title,
   /*  add callbacks to keep the display area current  */
   bsp->name_changed_handler_id =
     gimp_container_add_handler
-    (GIMP_CONTAINER (brush_list), "name_changed",
+    (GIMP_CONTAINER (global_brush_list), "name_changed",
      GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
      bsp);
 
   bsp->dirty_handler_id =
     gimp_container_add_handler
-    (GIMP_CONTAINER (brush_list), "dirty",
+    (GIMP_CONTAINER (global_brush_list), "dirty",
      GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
      bsp);
 
-  gtk_signal_connect (GTK_OBJECT (brush_list), "add",
+  gtk_signal_connect (GTK_OBJECT (global_brush_list), "add",
 		      GTK_SIGNAL_FUNC (brush_added_callback),
 		      bsp);
-  gtk_signal_connect (GTK_OBJECT (brush_list), "remove",
+  gtk_signal_connect (GTK_OBJECT (global_brush_list), "remove",
 		      GTK_SIGNAL_FUNC (brush_removed_callback),
 		      bsp);
 
@@ -599,12 +600,12 @@ brush_select_free (BrushSelect *bsp)
       gtk_object_unref (GTK_OBJECT (bsp->context));
     }
 
-  gimp_container_remove_handler (GIMP_CONTAINER (brush_list),
+  gimp_container_remove_handler (GIMP_CONTAINER (global_brush_list),
 				 bsp->name_changed_handler_id);
-  gimp_container_remove_handler (GIMP_CONTAINER (brush_list),
+  gimp_container_remove_handler (GIMP_CONTAINER (global_brush_list),
 				 bsp->dirty_handler_id);
 
-  gtk_signal_disconnect_by_data (GTK_OBJECT (brush_list), bsp);
+  gtk_signal_disconnect_by_data (GTK_OBJECT (global_brush_list), bsp);
 
   g_free (bsp);
 }
@@ -613,7 +614,7 @@ void
 brush_select_freeze_all (void)
 {
   BrushSelect *bsp;
-  GSList *list;
+  GSList      *list;
 
   for (list = brush_active_dialogs; list; list = g_slist_next (list))
     {
@@ -627,7 +628,7 @@ void
 brush_select_thaw_all (void)
 {
   BrushSelect *bsp;
-  GSList *list;
+  GSList      *list;
 
   for (list = brush_active_dialogs; list; list = g_slist_next (list))
     {
@@ -835,7 +836,7 @@ brush_select_select (BrushSelect *bsp,
   gint row, col;
   gint scroll_offset = 0;
 
-  index = gimp_list_get_child_index (brush_list, GIMP_OBJECT (brush)); 
+  index = gimp_list_get_child_index (global_brush_list, GIMP_OBJECT (brush)); 
 
   if (index < 0)
     return;
@@ -885,7 +886,7 @@ brush_select_brush_dirty_callback (GimpBrush   *brush,
   if (!bsp || bsp->freeze)
     return;
 
-  index  = gimp_list_get_child_index (brush_list, GIMP_OBJECT (brush));
+  index  = gimp_list_get_child_index (global_brush_list, GIMP_OBJECT (brush));
   redraw = (brush != gimp_context_get_brush (bsp->context));
 
   clear_brush (bsp, brush,
@@ -1351,8 +1352,8 @@ do_display_brush (GimpBrush   *brush,
 static void
 display_brushes (BrushSelect *bsp)
 {
-  if (brush_list == NULL ||
-      gimp_container_num_children (GIMP_CONTAINER (brush_list)) == 0)
+  if (global_brush_list == NULL ||
+      gimp_container_num_children (GIMP_CONTAINER (global_brush_list)) == 0)
     {
       gtk_widget_set_sensitive (bsp->options_box, FALSE);
       return;
@@ -1366,7 +1367,7 @@ display_brushes (BrushSelect *bsp)
   display_setup (bsp);
 
   brush_counter = 0;
-  gimp_container_foreach (GIMP_CONTAINER (brush_list),
+  gimp_container_foreach (GIMP_CONTAINER (global_brush_list),
 			  (GFunc) do_display_brush,
 			  bsp);
 }
@@ -1492,7 +1493,7 @@ preview_calc_scrollbar (BrushSelect *bsp)
   gint max;
 
   bsp->scroll_offset = 0;
-  num_rows = ((gimp_container_num_children (GIMP_CONTAINER (brush_list)) +
+  num_rows = ((gimp_container_num_children (GIMP_CONTAINER (global_brush_list)) +
 	       (bsp->NUM_BRUSH_COLUMNS) - 1)
 	      / (bsp->NUM_BRUSH_COLUMNS));
   max = num_rows * bsp->cell_width;
@@ -1533,7 +1534,7 @@ brush_select_resize (GtkWidget   *widget,
    bsp->NUM_BRUSH_COLUMNS =
      (gint) (wid / cell_size);
    bsp->NUM_BRUSH_ROWS =
-     (gint) ((gimp_container_num_children (GIMP_CONTAINER (brush_list)) +
+     (gint) ((gimp_container_num_children (GIMP_CONTAINER (global_brush_list)) +
 	      bsp->NUM_BRUSH_COLUMNS - 1) /
 	     bsp->NUM_BRUSH_COLUMNS);
 
@@ -1567,7 +1568,8 @@ brush_select_events (GtkWidget   *widget,
       index = row * bsp->NUM_BRUSH_COLUMNS + col;
       
       /*  Get the brush and check if it is editable  */
-      brush = GIMP_BRUSH (gimp_list_get_child_by_index (brush_list, index));
+      brush = GIMP_BRUSH (gimp_list_get_child_by_index (global_brush_list,
+							index));
       if (GIMP_IS_BRUSH_GENERATED (brush))
 	brush_select_edit_brush_callback (NULL, bsp);
       break;
@@ -1579,7 +1581,8 @@ brush_select_events (GtkWidget   *widget,
       row = (bevent->y + bsp->scroll_offset) / bsp->cell_height;
       index = row * bsp->NUM_BRUSH_COLUMNS + col;
 
-      brush = (GimpBrush *) gimp_list_get_child_by_index (brush_list, index);
+      brush = (GimpBrush *) gimp_list_get_child_by_index (global_brush_list,
+							  index);
 
       if (brush)
 	bsp->dnd_brush = brush;
@@ -1706,7 +1709,8 @@ brush_select_scroll_update (GtkAdjustment *adjustment,
 
       if (active)
 	{
-	  index = gimp_list_get_child_index (brush_list, GIMP_OBJECT (active));
+	  index = gimp_list_get_child_index (global_brush_list,
+					     GIMP_OBJECT (active));
 	  if (index < 0)
 	    return;
 	  row = index / bsp->NUM_BRUSH_COLUMNS;
@@ -1810,7 +1814,7 @@ brush_select_new_brush_callback (GtkWidget *widget,
   brush = gimp_brush_generated_new (10, .5, 0.0, 1.0);
   if (brush)
     {
-      gimp_container_add (GIMP_CONTAINER (brush_list),
+      gimp_container_add (GIMP_CONTAINER (global_brush_list),
 			  GIMP_OBJECT (brush));
 
       gimp_context_set_brush (bsp->context, brush);
@@ -1870,7 +1874,7 @@ brush_select_delete_brush_callback (GtkWidget *widget,
 
       brush_select_freeze_all ();
 
-      gimp_container_remove (GIMP_CONTAINER (brush_list),
+      gimp_container_remove (GIMP_CONTAINER (global_brush_list),
 			     GIMP_OBJECT (brush));
       gimp_context_refresh_brushes ();
 

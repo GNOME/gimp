@@ -20,11 +20,12 @@
 #define __BRUSHES_H__
 
 
-extern GimpList *brush_list;
+extern GimpList *global_brush_list;
 
 
 void        brushes_init               (gboolean  no_data);
 void        brushes_free               (void);
+
 GimpBrush * brushes_get_standard_brush (void);
 
 

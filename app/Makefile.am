@@ -142,6 +142,8 @@ gimp_SOURCES = \
 	gimpmarshal.h		\
 	gimpobject.c		\
 	gimpobject.h		\
+	gimppattern.c		\
+	gimppattern.h		\
 	gimppalette.c		\
 	gimppalette.h		\
 	gimpparasite.c		\

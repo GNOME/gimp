@@ -124,11 +124,11 @@ void  gimp_dnd_brush_dest_set      (GtkWidget            *widget,
 
 /*  pattern dnd functions  */
 
-typedef void       (* GimpDndDropPatternFunc) (GtkWidget *widget,
-					       GPattern  *pattern,
-					       gpointer   data);
-typedef GPattern * (* GimpDndDragPatternFunc) (GtkWidget *widget,
-					       gpointer   data);
+typedef void          (* GimpDndDropPatternFunc) (GtkWidget   *widget,
+						  GimpPattern *pattern,
+						  gpointer     data);
+typedef GimpPattern * (* GimpDndDragPatternFunc) (GtkWidget   *widget,
+						  gpointer     data);
 
 void  gimp_dnd_pattern_source_set  (GtkWidget              *widget,
 				    GimpDndDragPatternFunc  get_pattern_func,

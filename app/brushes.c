@@ -18,21 +18,12 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
 #include <sys/types.h>
-#include <sys/stat.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <gtk/gtk.h>
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "brushes.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
@@ -51,7 +42,7 @@
 
 
 /*  global variables  */
-GimpList *brush_list = NULL;
+GimpList *global_brush_list = NULL;
 
 
 /*  local function prototypes  */
@@ -62,10 +53,10 @@ static void   brushes_brush_load (const gchar   *filename);
 void
 brushes_init (gboolean no_data)
 {
-  if (brush_list)
+  if (global_brush_list)
     brushes_free ();
   else
-    brush_list = GIMP_LIST (gimp_data_list_new (GIMP_TYPE_BRUSH));
+    global_brush_list = GIMP_LIST (gimp_data_list_new (GIMP_TYPE_BRUSH));
 
   if (brush_path != NULL && !no_data)
     {
@@ -130,7 +121,7 @@ brushes_brush_load (const gchar *filename)
     }
 
   if (brush != NULL)
-    gimp_container_add (GIMP_CONTAINER (brush_list),
+    gimp_container_add (GIMP_CONTAINER (global_brush_list),
 			GIMP_OBJECT (brush));
 }
 
@@ -140,7 +131,7 @@ brushes_free (void)
   GList *vbr_path;
   gchar *vbr_dir;
 
-  if (!brush_list)
+  if (! global_brush_list)
     return;
 
   vbr_path = gimp_path_parse (brush_vbr_path, 16, TRUE, NULL);
@@ -149,66 +140,14 @@ brushes_free (void)
 
   brush_select_freeze_all ();
 
-  while (GIMP_LIST (brush_list)->list)
+  while (GIMP_LIST (global_brush_list)->list)
     {
-      GimpBrush *brush = GIMP_BRUSH (GIMP_LIST (brush_list)->list->data);
+      GimpBrush *brush = GIMP_BRUSH (GIMP_LIST (global_brush_list)->list->data);
 
       if (GIMP_IS_BRUSH_GENERATED (brush) && vbr_dir)
-	{
-	  gchar *filename = NULL;
-	  if (!brush->filename)
-	    {
-	      FILE *tmp_fp;
-	      gint  unum = 0;
+	gimp_brush_generated_save (GIMP_BRUSH_GENERATED (brush), vbr_dir);
 
-	      if (vbr_dir)
-	        {
-		  gchar *safe_name;
-		  gint   i;
-
-		  /* make sure we don't create a naughty filename */
-		  safe_name = g_strdup (GIMP_OBJECT (brush)->name);
-		  if (safe_name[0] == '.')
-		    safe_name[0] = '_';
-		  for (i = 0; safe_name[i]; i++)
-		    if (safe_name[i] == G_DIR_SEPARATOR || isspace(safe_name[i]))
-		      safe_name[i] = '_';
-
-		  filename = g_strdup_printf ("%s%s.vbr",
-					      vbr_dir,
-					      safe_name);
-		  while ((tmp_fp = fopen (filename, "r")))
-		    { /* make sure we don't overite an existing brush */
-		      fclose (tmp_fp);
-		      g_free (filename);
-		      filename = g_strdup_printf ("%s%s_%d.vbr", 
-						  vbr_dir, safe_name, unum);
-		      unum++;
-		    }
-		  g_free (safe_name);
-		}
-	    }
-	  else
-	    {
-	      filename = g_strdup (brush->filename);
-	      if (strlen(filename) < 4 || strcmp (&filename[strlen (filename) - 4],
-						  ".vbr"))
-	        { /* we only want to save .vbr files, so set filename to null
-		     if this isn't a .vbr file */
-		  g_free (filename);
-		  filename = NULL;
-		}
-	    }
-	  /*  we are (finaly) ready to try to save the generated brush file  */
-	  if (filename)
-	    {
-	      gimp_brush_generated_save (GIMP_BRUSH_GENERATED (brush),
-					 filename);
-	      g_free (filename);
-	    }
-	}
-
-      gimp_container_remove (GIMP_CONTAINER (brush_list),
+      gimp_container_remove (GIMP_CONTAINER (global_brush_list),
 			     GIMP_OBJECT (brush));
     }
 

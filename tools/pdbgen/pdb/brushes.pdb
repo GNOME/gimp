@@ -135,7 +135,7 @@ HELP
 	vars => [ 'GimpObject *object' ],
 	code => <<'CODE'
 {
-  object = gimp_list_get_child_by_name (brush_list, name);
+  object = gimp_list_get_child_by_name (global_brush_list, name);
 
   if (object)
     gimp_context_set_brush (NULL, GIMP_BRUSH (object));
@@ -262,16 +262,16 @@ HELP
 	  alias => 'brushes',
 	  array => { name => 'num_brushes',
 		     desc => 'The number of brushes in the brush list',
-		     alias => 'GIMP_CONTAINER (brush_list)->num_children', no_declare => 1 } }
+		     alias => 'GIMP_CONTAINER (global_brush_list)->num_children', no_declare => 1 } }
     );
 
     %invoke = (
 	vars => [ 'GList *list = NULL', 'int i = 0' ],
 	code => <<'CODE'
 {
-  brushes = g_new (char *, GIMP_CONTAINER (brush_list)->num_children);
+  brushes = g_new (char *, GIMP_CONTAINER (global_brush_list)->num_children);
 
-  success = (list = GIMP_LIST (brush_list)->list) != NULL;
+  success = (list = GIMP_LIST (global_brush_list)->list) != NULL;
 
   while (list)
     {
@@ -329,7 +329,7 @@ HELP
 
       success = FALSE;
 
-      for (list = GIMP_LIST (brush_list)->list; list; list = g_list_next (list))
+      for (list = GIMP_LIST (global_brush_list)->list; list; list = g_list_next (list))
 	{
 	  brush = (GimpBrush *) list->data;
 

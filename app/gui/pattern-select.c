@@ -30,6 +30,8 @@
 #include "dialog_handler.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
+#include "gimplist.h"
+#include "gimppattern.h"
 #include "patterns.h"
 #include "pattern_select.h"
 #include "session.h"
@@ -63,40 +65,61 @@
 static void     pattern_change_callbacks        (PatternSelect *psp,
 						 gboolean       closing);
 
-static GPattern * pattern_select_drag_pattern   (GtkWidget     *widget,
+static GimpPattern * pattern_select_drag_pattern(GtkWidget     *widget,
 						 gpointer       data);
 static void     pattern_select_drop_pattern     (GtkWidget     *widget,
-						 GPattern      *pattern,
+						 GimpPattern   *pattern,
 						 gpointer       data);
 static void     pattern_select_pattern_changed  (GimpContext   *context,
-						 GPattern      *pattern,
+						 GimpPattern   *pattern,
 						 PatternSelect *psp);
 static void     pattern_select_select           (PatternSelect *psp,
-						 GPattern      *pattern);
+						 GimpPattern   *pattern);
+
+static void     pattern_select_pattern_dirty_callback (GimpPattern   *brush,
+						       PatternSelect *psp);
+static void     pattern_added_callback          (GimpContainer *container,
+						 GimpPattern   *pattern,
+						 PatternSelect *psp);
+static void     pattern_removed_callback        (GimpContainer *container,
+						 GimpPattern   *pattern,
+						 PatternSelect *psp);
 
 static gboolean pattern_popup_timeout           (gpointer       data);
 static void     pattern_popup_open              (PatternSelect *psp,
-						 gint, gint, GPattern *);
-static void     pattern_popup_close             (PatternSelect *);
+						 gint           ,
+						 gint           ,
+						 GimpPattern   *pattern);
+static void     pattern_popup_close             (PatternSelect *psp);
 
-static void     display_setup                   (PatternSelect *);
-static void     display_pattern                 (PatternSelect *, GPattern *,
-						 gint, gint);
-static void     display_patterns                (PatternSelect *);
+static void     display_setup                   (PatternSelect *psp);
+static void     display_pattern                 (PatternSelect *psp,
+						 GimpPattern   *pattern,
+						 gint           ,
+						 gint           );
+static void     display_patterns                (PatternSelect *psp);
 
-static void     pattern_select_show_selected    (PatternSelect *, gint, gint);
-static void     update_active_pattern_field     (PatternSelect *);
-static void     preview_calc_scrollbar          (PatternSelect *);
+static void     pattern_select_show_selected    (PatternSelect *psp,
+						 gint           ,
+						 gint           );
+static void     update_active_pattern_field     (PatternSelect *psp);
+static void     preview_calc_scrollbar          (PatternSelect *psp);
 
-static gint     pattern_select_resize           (GtkWidget *, GdkEvent *,
-						 PatternSelect *);
-static gint     pattern_select_events           (GtkWidget *, GdkEvent *,
-						 PatternSelect *);
+static gint     pattern_select_resize           (GtkWidget     *widget,
+						 GdkEvent      *event,
+						 PatternSelect *psp);
+static gint     pattern_select_events           (GtkWidget     *widget,
+						 GdkEvent      *event,
+						 PatternSelect *psp);
 
-static void     pattern_select_scroll_update    (GtkAdjustment *, gpointer);
+static void     pattern_select_scroll_update    (GtkAdjustment *adjustment,
+						 gpointer       data);
 
-static void     pattern_select_close_callback   (GtkWidget *, gpointer);
-static void     pattern_select_refresh_callback (GtkWidget *, gpointer);
+static void     pattern_select_close_callback   (GtkWidget     *widget,
+						 gpointer       data);
+static void     pattern_select_refresh_callback (GtkWidget     *widget,
+						 gpointer       data);
+
 
 /*  dnd stuff  */
 static GtkTargetEntry preview_target_table[] =
@@ -131,7 +154,7 @@ pattern_dialog_create (void)
 }
 
 void
-pattern_dialog_free ()
+pattern_dialog_free (void)
 {
   if (pattern_select_dialog)
     {
@@ -155,7 +178,7 @@ pattern_select_new (gchar *title,
   GtkWidget *sbar;
   GtkWidget *label_box;
 
-  GPattern *active = NULL;
+  GimpPattern *active = NULL;
 
   static gboolean first_call = TRUE;
 
@@ -169,6 +192,8 @@ pattern_select_new (gchar *title,
   psp->old_row             = 0;
   psp->NUM_PATTERN_COLUMNS = STD_PATTERN_COLUMNS;
   psp->NUM_PATTERN_ROWS    = STD_PATTERN_COLUMNS;
+  psp->redraw              = TRUE;
+  psp->freeze              = FALSE;
 
   /*  The shell  */
   psp->shell = 	gimp_dialog_new (title ? title : _("Pattern Selection"),
@@ -205,7 +230,8 @@ pattern_select_new (gchar *title,
 
   if (title && initial_pattern && strlen (initial_pattern))
     {
-      active = pattern_list_get_pattern (pattern_list, initial_pattern);
+      active = (GimpPattern *) gimp_list_get_child_by_name (global_pattern_list,
+							    initial_pattern);
     }
   else
     {
@@ -302,6 +328,21 @@ pattern_select_new (gchar *title,
 
   gtk_widget_show (psp->options_box);
   gtk_widget_show (vbox);
+
+  /*  add callbacks to keep the display area current  */
+  psp->name_changed_handler_id =
+    gimp_container_add_handler
+    (GIMP_CONTAINER (global_pattern_list), "name_changed",
+     GTK_SIGNAL_FUNC (pattern_select_pattern_dirty_callback),
+     psp);
+
+  gtk_signal_connect (GTK_OBJECT (global_pattern_list), "add",
+		      GTK_SIGNAL_FUNC (pattern_added_callback),
+		      psp);
+  gtk_signal_connect (GTK_OBJECT (global_pattern_list), "remove",
+		      GTK_SIGNAL_FUNC (pattern_removed_callback),
+		      psp);
+
   gtk_widget_show (psp->shell);
 
   preview_calc_scrollbar (psp);
@@ -342,7 +383,42 @@ pattern_select_free (PatternSelect *psp)
       gtk_object_unref (GTK_OBJECT (psp->context));
     }
 
+  gimp_container_remove_handler (GIMP_CONTAINER (global_pattern_list),
+				 psp->name_changed_handler_id);
+
+  gtk_signal_disconnect_by_data (GTK_OBJECT (global_pattern_list), psp);
+
   g_free (psp);
+}
+
+void
+pattern_select_freeze_all (void)
+{
+  PatternSelect *psp;
+  GSList        *list;
+
+  for (list = pattern_active_dialogs; list; list = g_slist_next (list))
+    {
+      psp = (PatternSelect *) list->data;
+
+      psp->freeze = TRUE;
+    }
+}
+
+void
+pattern_select_thaw_all (void)
+{
+  PatternSelect *psp;
+  GSList        *list;
+
+  for (list = pattern_active_dialogs; list; list = g_slist_next (list))
+    {
+      psp = (PatternSelect *) list->data;
+
+      psp->freeze = FALSE;
+
+      preview_calc_scrollbar (psp);
+    }
 }
 
 /*  Call this dialog's PDB callback  */
@@ -351,10 +427,11 @@ static void
 pattern_change_callbacks (PatternSelect *psp,
 			  gboolean      closing)
 {
-  gchar *name;
-  ProcRecord *prec = NULL;
-  GPattern *pattern;
-  gint nreturn_vals;
+  gchar       *name;
+  ProcRecord  *prec = NULL;
+  GimpPattern *pattern;
+  gint         nreturn_vals;
+
   static gboolean busy = FALSE;
 
   /* Any procs registered to callback? */
@@ -375,7 +452,7 @@ pattern_change_callbacks (PatternSelect *psp,
       return_vals =
 	procedural_db_run_proc (name,
 				&nreturn_vals,
-				PDB_STRING,    pattern->name,
+				PDB_STRING,    GIMP_OBJECT (pattern)->name,
 				PDB_INT32,     pattern->mask->width,
 				PDB_INT32,     pattern->mask->height,
 				PDB_INT32,     pattern->mask->bytes,
@@ -398,9 +475,9 @@ void
 patterns_check_dialogs (void)
 {
   PatternSelect *psp;
-  GSList *list;
-  gchar *name;
-  ProcRecord *prec = NULL;
+  GSList        *list;
+  gchar         *name;
+  ProcRecord    *prec = NULL;
 
   list = pattern_active_dialogs;
 
@@ -428,7 +505,7 @@ patterns_check_dialogs (void)
  *  Local functions
  */
 
-static GPattern *
+static GimpPattern *
 pattern_select_drag_pattern (GtkWidget *widget,
 			     gpointer   data)
 {
@@ -440,9 +517,9 @@ pattern_select_drag_pattern (GtkWidget *widget,
 }
 
 static void
-pattern_select_drop_pattern (GtkWidget *widget,
-			     GPattern  *pattern,
-			     gpointer   data)
+pattern_select_drop_pattern (GtkWidget   *widget,
+			     GimpPattern *pattern,
+			     gpointer     data)
 {
   PatternSelect *psp;
 
@@ -453,7 +530,7 @@ pattern_select_drop_pattern (GtkWidget *widget,
 
 static void
 pattern_select_pattern_changed (GimpContext   *context,
-				GPattern      *pattern,
+				GimpPattern   *pattern,
 				PatternSelect *psp)
 {
   if (pattern)
@@ -467,13 +544,13 @@ pattern_select_pattern_changed (GimpContext   *context,
 
 static void
 pattern_select_select (PatternSelect *psp,
-		       GPattern      *pattern)
+		       GimpPattern   *pattern)
 {
   gint index;
   gint row, col;
   gint scroll_offset = 0;
 
-  index = pattern->index;
+  index = gimp_list_get_child_index (global_pattern_list, GIMP_OBJECT (pattern));
 
   if (index < 0)
     return;
@@ -502,25 +579,66 @@ pattern_select_select (PatternSelect *psp,
   gtk_adjustment_set_value (psp->sbar_data, psp->scroll_offset + scroll_offset);
 }
 
+static void
+pattern_select_pattern_dirty_callback (GimpPattern   *pattern,
+				       PatternSelect *psp)
+{
+  gint     index;
+  gboolean redraw;
+
+  if (!psp || psp->freeze)
+    return;
+
+  index  = gimp_list_get_child_index (global_pattern_list,
+				      GIMP_OBJECT (pattern));
+  redraw = (pattern != gimp_context_get_pattern (psp->context));
+
+  display_pattern (psp, pattern,
+		   index % (psp->NUM_PATTERN_COLUMNS),
+		   index / (psp->NUM_PATTERN_COLUMNS));
+}
+
+static void
+pattern_added_callback (GimpContainer *container,
+			GimpPattern   *pattern,
+			PatternSelect *psp)
+{
+  if (psp->freeze)
+    return;
+
+  preview_calc_scrollbar (psp);
+}
+
+static void
+pattern_removed_callback (GimpContainer *container,
+			  GimpPattern   *pattern,
+			  PatternSelect *psp)
+{
+  if (psp->freeze)
+    return;
+
+  preview_calc_scrollbar (psp);
+}
+
 typedef struct
 {
   PatternSelect *psp;
   int            x;
   int            y;
-  GPattern      *pattern;
+  GimpPattern   *pattern;
 } popup_timeout_args_t;
 
 
 static gboolean
 pattern_popup_timeout (gpointer data)
 {
-  popup_timeout_args_t *args = data;
-  PatternSelect *psp = args->psp;
-  GPattern *pattern = args->pattern;
-  gint x, y;
-  gint x_org, y_org;
-  gint scr_w, scr_h;
-  gchar *src, *buf;
+  popup_timeout_args_t *args    = data;
+  PatternSelect        *psp     = args->psp;
+  GimpPattern          *pattern = args->pattern;
+  gint                  x, y;
+  gint                  x_org, y_org;
+  gint                  scr_w, scr_h;
+  gchar                *src, *buf;
 
   /* timeout has gone off so our tag is now invalid  */
   psp->popup_timeout_tag = 0;
@@ -529,6 +647,7 @@ pattern_popup_timeout (gpointer data)
   if (psp->pattern_popup == NULL)
     {
       GtkWidget *frame;
+
       psp->pattern_popup = gtk_window_new (GTK_WINDOW_POPUP);
       gtk_window_set_policy (GTK_WINDOW (psp->pattern_popup),
 			     FALSE, FALSE, TRUE);
@@ -593,20 +712,20 @@ static void
 pattern_popup_open (PatternSelect *psp,
 		    gint           x,
 		    gint           y,
-		    GPattern      *pattern)
+		    GimpPattern   *pattern)
 {
   static popup_timeout_args_t popup_timeout_args;
 
   /* if we've already got a timeout scheduled, then we complain */
   g_return_if_fail (psp->popup_timeout_tag == 0);
 
-  popup_timeout_args.psp = psp;
-  popup_timeout_args.x = x;
-  popup_timeout_args.y = y;
+  popup_timeout_args.psp     = psp;
+  popup_timeout_args.x       = x;
+  popup_timeout_args.y       = y;
   popup_timeout_args.pattern = pattern;
-  psp->popup_timeout_tag = gtk_timeout_add (POPUP_DELAY_MS,
-					    pattern_popup_timeout,
-					    &popup_timeout_args);
+  psp->popup_timeout_tag     = gtk_timeout_add (POPUP_DELAY_MS,
+						pattern_popup_timeout,
+						&popup_timeout_args);
 }
 
 static void
@@ -641,20 +760,20 @@ display_setup (PatternSelect *psp)
 
 static void
 display_pattern (PatternSelect *psp,
-		 GPattern      *pattern,
+		 GimpPattern   *pattern,
 		 gint           col,
 		 gint           row)
 {
-  TempBuf * pattern_buf;
-  guchar * src, *s;
-  guchar * buf, *b;
-  gint cell_width, cell_height;
-  gint width, height;
-  gint rowstride;
-  gint offset_x, offset_y;
-  gint yend;
-  gint ystart;
-  gint i, j;
+  TempBuf *pattern_buf;
+  guchar  *src, *s;
+  guchar  *buf, *b;
+  gint     cell_width, cell_height;
+  gint     width, height;
+  gint     rowstride;
+  gint     offset_x, offset_y;
+  gint     yend;
+  gint     ystart;
+  gint     i, j;
 
   buf = g_new (guchar, psp->cell_width * 3);
 
@@ -710,9 +829,9 @@ display_pattern (PatternSelect *psp,
 static void
 display_patterns (PatternSelect *psp)
 {
-  GSList *list = pattern_list;    /*  the global pattern list  */
-  gint row, col;
-  GPattern *pattern;
+  GList       *list = global_pattern_list->list;
+  gint         row, col;
+  GimpPattern *pattern;
 
   if (list == NULL)
     {
@@ -728,9 +847,9 @@ display_patterns (PatternSelect *psp)
   display_setup (psp);
 
   row = col = 0;
-  for (; list; list = g_slist_next (list))
+  for (; list; list = g_list_next (list))
     {
-      pattern = (GPattern *) list->data;
+      pattern = (GimpPattern *) list->data;
 
       /*  Display the pattern  */
       display_pattern (psp, pattern, col, row);
@@ -830,8 +949,8 @@ pattern_select_show_selected (PatternSelect *psp,
 static void
 update_active_pattern_field (PatternSelect *psp)
 {
-  GPattern *pattern;
-  gchar buf[32];
+  GimpPattern *pattern;
+  gchar        buf[32];
 
   pattern = gimp_context_get_pattern (psp->context);
 
@@ -839,7 +958,8 @@ update_active_pattern_field (PatternSelect *psp)
     return;
 
   /*  Set pattern name  */
-  gtk_label_set_text (GTK_LABEL (psp->pattern_name), pattern->name);
+  gtk_label_set_text (GTK_LABEL (psp->pattern_name),
+		      GIMP_OBJECT (pattern)->name);
 
   /*  Set pattern size  */
   g_snprintf (buf, sizeof (buf), "(%d X %d)",
@@ -855,7 +975,8 @@ preview_calc_scrollbar (PatternSelect *psp)
   gint max;
 
   psp->scroll_offset = 0;
-  num_rows = ((num_patterns + psp->NUM_PATTERN_COLUMNS - 1) /
+  num_rows = ((GIMP_CONTAINER (global_pattern_list)->num_children +
+	       psp->NUM_PATTERN_COLUMNS - 1) /
 	      psp->NUM_PATTERN_COLUMNS);
   max = num_rows * psp->cell_width;
   if (!num_rows)
@@ -895,7 +1016,8 @@ pattern_select_resize (GtkWidget     *widget,
   psp->NUM_PATTERN_COLUMNS =
     (gint) (wid / cell_size);
   psp->NUM_PATTERN_ROWS =
-    (gint) ((num_patterns + psp->NUM_PATTERN_COLUMNS - 1) /
+    (gint) ((GIMP_CONTAINER (global_pattern_list)->num_children +
+	     psp->NUM_PATTERN_COLUMNS - 1) /
 	    psp->NUM_PATTERN_COLUMNS);
 
   psp->cell_width  = cell_size;
@@ -913,8 +1035,8 @@ pattern_select_events (GtkWidget     *widget,
 		       PatternSelect *psp)
 {
   GdkEventButton *bevent;
-  GPattern *pattern;
-  int row, col, index;
+  GimpPattern    *pattern;
+  gint            row, col, index;
 
   switch (event->type)
     {
@@ -925,7 +1047,9 @@ pattern_select_events (GtkWidget     *widget,
       row = (bevent->y + psp->scroll_offset) / psp->cell_height;
       index = row * psp->NUM_PATTERN_COLUMNS + col;
 
-      pattern = pattern_list_get_pattern_by_index (pattern_list, index);
+      pattern =
+	(GimpPattern *) gimp_list_get_child_by_index (global_pattern_list,
+						      index);
 
       if (pattern)
 	psp->dnd_pattern = pattern;
@@ -1000,8 +1124,8 @@ pattern_select_scroll_update (GtkAdjustment *adjustment,
 			      gpointer       data)
 {
   PatternSelect *psp;
-  GPattern *active;
-  gint row, col, index;
+  GimpPattern   *active;
+  gint           row, col, index;
 
   psp = (PatternSelect *) data;
 
@@ -1015,9 +1139,12 @@ pattern_select_scroll_update (GtkAdjustment *adjustment,
 
       if (active)
 	{
-	  index = active->index;
+	  index = gimp_list_get_child_index (global_pattern_list,
+					     GIMP_OBJECT (active));
+
 	  if (index < 0)
 	    return;
+
 	  row = index / psp->NUM_PATTERN_COLUMNS;
 	  col = index - row * psp->NUM_PATTERN_COLUMNS;
 
@@ -1054,7 +1181,7 @@ pattern_select_refresh_callback (GtkWidget *widget,
 				 gpointer   data)
 {
   PatternSelect *psp;
-  GSList *list;
+  GSList        *list;
 
   /*  re-init the pattern list  */
   patterns_init (FALSE);

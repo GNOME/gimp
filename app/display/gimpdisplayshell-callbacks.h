@@ -59,7 +59,7 @@ void       gdisplay_drop_color          (GtkWidget      *widget,
 					 const GimpRGB  *color,
 					 gpointer        data);
 void       gdisplay_drop_pattern        (GtkWidget      *widget,
-					 GPattern       *pattern,
+					 GimpPattern    *pattern,
 					 gpointer        data);
 
 

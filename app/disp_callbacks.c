@@ -37,11 +37,11 @@
 #include "gimpimage.h"
 #include "gimpcontext.h"
 #include "gimplayer.h"
+#include "gimppattern.h"
 #include "gimprc.h"
 #include "info_window.h"
 #include "layer_select.h"
 #include "paint_funcs.h"
-#include "patterns.h"
 #include "pixel_region.h"
 #include "scale.h"
 #include "scroll.h"
@@ -1015,9 +1015,9 @@ gdisplay_drop_color (GtkWidget     *widget,
 }
 
 void
-gdisplay_drop_pattern (GtkWidget *widget,
-		       GPattern  *pattern,
-		       gpointer   data)
+gdisplay_drop_pattern (GtkWidget   *widget,
+		       GimpPattern *pattern,
+		       gpointer     data)
 {
   gdisplay_bucket_fill (widget, PATTERN_BUCKET_FILL, NULL, pattern->mask, data);
 }

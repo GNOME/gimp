@@ -47,8 +47,6 @@
 #include "brush_header.h"
 #include "gimpbrush.h"
 #include "gimprc.h"
-#include "patterns.h"
-#include "pattern_header.h"
 #include "temp_buf.h"
 
 /*  this needs to go away  */
@@ -135,7 +133,7 @@ gimp_brush_get_type (void)
 {
   static GtkType type = 0;
 
-  if (!type)
+  if (! type)
     {
       static const GtkTypeInfo info =
       {
@@ -149,7 +147,7 @@ gimp_brush_get_type (void)
         (GtkClassInitFunc) NULL
       };
 
-    type = gtk_type_unique (gimp_object_get_type (), &info);
+    type = gtk_type_unique (GIMP_TYPE_OBJECT, &info);
   }
   return type;
 }
@@ -237,7 +235,6 @@ gimp_brush_load_brush (gint         fd,
 		       const gchar *filename)
 {
   GimpBrush   *brush;
-  GPattern    *pattern;
   gint         bn_size;
   BrushHeader  header;
   gchar       *name;
@@ -310,32 +307,6 @@ gimp_brush_load_brush (gint         fd,
 	  gtk_object_unref (GTK_OBJECT (brush));
 	  return NULL;
 	}
-
-      /*  For backwards-compatibility, check if a pattern follows.
-	  The obsolete .gpb format did it this way.  */
-      pattern = pattern_load (fd, filename);
-      
-      if (pattern)
-	{
-	  if (pattern->mask && pattern->mask->bytes == 3)
-	    {
-	      brush->pixmap = pattern->mask;
-	      pattern->mask = NULL;
-	    }
-	  pattern_free (pattern);
-	}
-      else
-	{
-	  /*  rewind to make brush pipe loader happy  */
-	  if (lseek (fd, - ((off_t) sizeof (PatternHeader)), SEEK_CUR) < 0)
-	    {
-	      g_message (_("GIMP brush file appears to be corrupted: \"%s\"."),
-			 filename);
-	      g_free (name);
-	      gtk_object_unref (GTK_OBJECT (brush));
-	      return NULL;
-	    }
-	}
       break;
 
     case 4:
@@ -359,7 +330,9 @@ gimp_brush_load_brush (gint         fd,
       break;
       
     default:
-      g_message ("Unsupported brush depth: %d\n in file \"%s\"\nGIMP Brushes must be GRAY or RGBA\n",
+      g_message ("Unsupported brush depth: %d\n"
+		 "in file \"%s\"\n"
+		 "GIMP Brushes must be GRAY or RGBA",
 		 header.bytes, filename);
       g_free (name);
       return NULL;

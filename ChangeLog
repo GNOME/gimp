@@ -1,5 +1,41 @@
 2001-02-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/gimppattern.[ch]: new object.
+
+	* app/apptypes.h: added GimpPattern, removed GPattern.
+
+	* app/patterns.[ch]: contains only the "patterns_()" functions for
+	the global pattern list, s/pattern_list/global_pattern_list/g
+
+	* app/brushes.[ch]: s/brush_list/global_brush_list/g
+
+	* app/pattern_select.[ch]
+	* app/gimpcontext.[ch]: connect to the Patterns' and the pattern
+	list's signals.
+
+	* app/brush_select.[ch]
+	* app/devices.c
+	* app/disp_callbacks.[ch]
+	* app/gimpbrush.c
+	* app/gimpbrushgenerated.[ch]
+	* app/gimpcontextpreview.[ch]
+	* app/gimpdnd.[ch]
+	* app/indicator_area.c
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/pattern_select_cmds.c
+	* app/pdb/patterns_cmds.c
+	* app/tools/bucket_fill.c
+	* app/tools/clone.c
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* tools/pdbgen/pdb/patterns.pdb
+	* po/POTFILES.in: changed accordingly.
+
+2001-02-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpcontainer.[ch]: renamed gimp_container_lookup() back
 	to gimp_container_have(). Virtualized the "add", "remove",
 	"have" and "foreach" methods and removed the "children" list.
@@ -13,7 +49,7 @@
 	* app/gimpbrushlist.[ch]: removed. It's job is done by the
 	GimpDataList now.
 
-	* app/brushes.[ch]: new files. Contain the "brushes_()" functions
+	* app/brushes.[ch]: new files. Contains the "brushes_()" functions
 	for the global brush list.
 
 	* app/app_procs.c

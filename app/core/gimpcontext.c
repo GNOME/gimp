@@ -33,6 +33,7 @@
 #include "gimpcontext.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
+#include "gimppattern.h"
 #include "gimprc.h"
 #include "gradient_header.h"
 #include "gradient.h"
@@ -102,14 +103,24 @@ static void gimp_context_copy_paint_mode     (GimpContext      *src,
 					      GimpContext      *dest);
 
 /*  brush  */
+static void gimp_context_brush_dirty         (GimpBrush        *brush,
+					      GimpContext      *context);
+static void gimp_context_brush_removed       (GimpContainer    *brush_list,
+					      GimpBrush        *brush,
+					      GimpContext      *context);
 static void gimp_context_real_set_brush      (GimpContext      *context,
 					      GimpBrush        *brush);
 static void gimp_context_copy_brush          (GimpContext      *src,
 					      GimpContext      *dest);
 
 /*  pattern  */
+static void gimp_context_pattern_dirty       (GimpPattern      *pattern,
+					      GimpContext      *context);
+static void gimp_context_pattern_removed     (GimpContainer    *brush_list,
+					      GimpPattern      *pattern,
+					      GimpContext      *context);
 static void gimp_context_real_set_pattern    (GimpContext      *context,
-					      GPattern         *pattern);
+					      GimpPattern      *pattern);
 static void gimp_context_copy_pattern        (GimpContext      *src,
 					      GimpContext      *dest);
 
@@ -343,14 +354,30 @@ gimp_context_destroy (GtkObject *object)
 
   if (context->brush)
     {
-      gtk_signal_disconnect_by_data (GTK_OBJECT (context->brush), context);
-      gtk_signal_disconnect_by_data (GTK_OBJECT (brush_list), context);
+      gtk_signal_disconnect_by_func (GTK_OBJECT (context->brush),
+				     gimp_context_brush_dirty,
+				     context);
+      gtk_signal_disconnect_by_func (GTK_OBJECT (global_brush_list),
+				     gimp_context_brush_removed,
+				     context);
+      gtk_object_unref (GTK_OBJECT (context->brush));
     }
 
   if (context->brush_name)
     {
       g_free (context->brush_name);
       context->brush_name = NULL;
+    }
+
+  if (context->pattern)
+    {
+      gtk_signal_disconnect_by_func (GTK_OBJECT (context->pattern),
+				     gimp_context_pattern_dirty,
+				     context);
+      gtk_signal_disconnect_by_func (GTK_OBJECT (global_pattern_list),
+				     gimp_context_pattern_removed,
+				     context);
+      gtk_object_unref (GTK_OBJECT (context->pattern));
     }
 
   if (context->pattern_name)
@@ -1355,8 +1382,12 @@ gimp_context_brush_removed (GimpContainer *brush_list,
     {
       context->brush = NULL;
 
-      gtk_signal_disconnect_by_data (GTK_OBJECT (brush), context);
-      gtk_signal_disconnect_by_data (GTK_OBJECT (brush_list), context);
+      gtk_signal_disconnect_by_func (GTK_OBJECT (brush),
+				     gimp_context_brush_dirty,
+				     context);
+      gtk_signal_disconnect_by_func (GTK_OBJECT (brush_list),
+				     gimp_context_brush_removed,
+				     context);
       gtk_object_unref (GTK_OBJECT (brush));
     }
 }
@@ -1388,20 +1419,24 @@ gimp_context_real_set_brush (GimpContext *context,
   /*  disconnect from the old brush's signals  */
   if (context->brush)
     {
-      gtk_signal_disconnect_by_data (GTK_OBJECT (context->brush), context);
+      gtk_signal_disconnect_by_func (GTK_OBJECT (context->brush),
+				     gimp_context_brush_dirty,
+				     context);
       gtk_object_unref (GTK_OBJECT (context->brush));
 
       /*  if we don't get a new brush, also disconnect from the brush list  */
       if (! brush)
 	{
-	  gtk_signal_disconnect_by_data (GTK_OBJECT (brush_list), context);
+	  gtk_signal_disconnect_by_func (GTK_OBJECT (global_brush_list),
+					 gimp_context_brush_removed,
+					 context);
 	}
     }
   /*  if we get a new brush but didn't have one before...  */
   else if (brush)
     {
       /*  ...connect to the brush list  */
-      gtk_signal_connect (GTK_OBJECT (brush_list), "remove",
+      gtk_signal_connect (GTK_OBJECT (global_brush_list), "remove",
 			  GTK_SIGNAL_FUNC (gimp_context_brush_removed),
 			  context);
     }
@@ -1455,16 +1490,17 @@ gimp_context_refresh_brush (GimpContext *context,
   if (! context->brush_name)
     context->brush_name = g_strdup (default_brush);
 
-  if ((brush = (GimpBrush *) gimp_list_get_child_by_name (brush_list,
+  if ((brush = (GimpBrush *) gimp_list_get_child_by_name (global_brush_list,
 							  context->brush_name)))
     {
       gimp_context_real_set_brush (context, brush);
       return;
     }
 
-  if (gimp_container_num_children (GIMP_CONTAINER (brush_list)))
+  if (gimp_container_num_children (GIMP_CONTAINER (global_brush_list)))
     gimp_context_real_set_brush 
-      (context, GIMP_BRUSH (gimp_list_get_child_by_index (brush_list, 0)));
+      (context, GIMP_BRUSH (gimp_list_get_child_by_index (global_brush_list,
+							  0)));
   else
     gimp_context_real_set_brush (context, brushes_get_standard_brush ());
 }
@@ -1472,15 +1508,17 @@ gimp_context_refresh_brush (GimpContext *context,
 void
 gimp_context_refresh_brushes (void)
 {
-  g_slist_foreach (context_list, (GFunc) gimp_context_refresh_brush, NULL);
+  g_slist_foreach (context_list,
+		   (GFunc) gimp_context_refresh_brush,
+		   NULL);
 }
 
 /*****************************************************************************/
 /*  pattern  *****************************************************************/
 
-static GPattern *standard_pattern = NULL;
+static GimpPattern *standard_pattern = NULL;
 
-GPattern *
+GimpPattern *
 gimp_context_get_pattern (GimpContext *context)
 {
   context_check_current (context);
@@ -1491,7 +1529,7 @@ gimp_context_get_pattern (GimpContext *context)
 
 void
 gimp_context_set_pattern (GimpContext *context,
-			  GPattern    *pattern)
+			  GimpPattern *pattern)
 {
   context_check_current (context);
   context_return_if_fail (context);
@@ -1511,9 +1549,40 @@ gimp_context_pattern_changed (GimpContext *context)
 		   context->pattern);
 }
 
+/*  the active pattern was modified  */
+static void
+gimp_context_pattern_dirty (GimpPattern *pattern,
+			    GimpContext *context)
+{
+  g_free (context->pattern_name);
+  context->pattern_name = g_strdup (GIMP_OBJECT (pattern)->name);
+
+  gimp_context_pattern_changed (context);
+}
+
+/*  the active pattern disappeared  */
+static void
+gimp_context_pattern_removed (GimpContainer *pattern_list,
+			      GimpPattern   *pattern,
+			      GimpContext   *context)
+{
+  if (pattern == context->pattern)
+    {
+      context->pattern = NULL;
+
+      gtk_signal_disconnect_by_func (GTK_OBJECT (pattern),
+				     gimp_context_pattern_dirty,
+				     context);
+      gtk_signal_disconnect_by_func (GTK_OBJECT (pattern_list),
+				     gimp_context_pattern_removed,
+				     context);
+      gtk_object_unref (GTK_OBJECT (pattern));
+    }
+}
+
 static void
 gimp_context_real_set_pattern (GimpContext *context,
-			       GPattern    *pattern)
+			       GimpPattern *pattern)
 {
   if (! standard_pattern)
     standard_pattern = patterns_get_standard_pattern ();
@@ -1527,10 +1596,59 @@ gimp_context_real_set_pattern (GimpContext *context,
       context->pattern_name = NULL;
     }
 
+  /*  make sure the active pattern is swapped before we get a new one...  */
+  if (stingy_memory_use &&
+      context->pattern && context->pattern->mask &&
+      GTK_OBJECT (context->pattern)->ref_count == 2)
+    {
+      temp_buf_swap (pattern->mask);
+    }
+
+  /*  disconnect from the old pattern's signals  */
+  if (context->pattern)
+    {
+      gtk_signal_disconnect_by_func (GTK_OBJECT (context->pattern),
+				     gimp_context_pattern_dirty,
+				     context);
+      gtk_object_unref (GTK_OBJECT (context->pattern));
+
+      /*  if we don't get a new pattern, also disconnect from the pattern list */
+      if (! pattern)
+	{
+	  gtk_signal_disconnect_by_func (GTK_OBJECT (global_pattern_list),
+					 gimp_context_pattern_removed,
+					 context);
+	}
+    }
+  /*  if we get a new pattern but didn't have one before...  */
+  else if (pattern)
+    {
+      /*  ...connect to the pattern list  */
+      gtk_signal_connect (GTK_OBJECT (global_pattern_list), "remove",
+			  GTK_SIGNAL_FUNC (gimp_context_pattern_removed),
+			  context);
+    }
+
   context->pattern = pattern;
 
-  if (pattern && pattern != standard_pattern)
-    context->pattern_name = g_strdup (pattern->name);
+  if (pattern)
+    {
+      gtk_object_ref (GTK_OBJECT (pattern));
+      gtk_signal_connect (GTK_OBJECT (pattern), "name_changed",
+			  GTK_SIGNAL_FUNC (gimp_context_pattern_dirty),
+			  context);
+
+      /*  Make sure the active pattern is unswapped... */
+      if (stingy_memory_use &&
+	  pattern->mask &&
+	  GTK_OBJECT (pattern)->ref_count < 2)
+	{
+	  temp_buf_unswap (pattern->mask);
+	}
+
+      if (pattern != standard_pattern)
+	context->pattern_name = g_strdup (GIMP_OBJECT (pattern)->name);
+    }
 
   gimp_context_pattern_changed (context);
 }
@@ -1552,20 +1670,23 @@ static void
 gimp_context_refresh_pattern (GimpContext *context,
 			      gpointer     data)
 {
-  GPattern *pattern;
+  GimpPattern *pattern;
 
   if (! context->pattern_name)
     context->pattern_name = g_strdup (default_pattern);
 
-  if ((pattern = pattern_list_get_pattern (pattern_list,
-					   context->pattern_name)))
+  if ((pattern =
+       (GimpPattern *) gimp_list_get_child_by_name (global_pattern_list,
+						    context->pattern_name)))
     {
       gimp_context_real_set_pattern (context, pattern);
       return;
     }
 
-  if ((pattern = pattern_list_get_pattern_by_index (pattern_list, 0)))
-    gimp_context_real_set_pattern (context, pattern);
+  if (gimp_container_num_children (GIMP_CONTAINER (global_pattern_list)))
+    gimp_context_real_set_pattern
+      (context, GIMP_PATTERN (gimp_list_get_child_by_index (global_pattern_list,
+							    0)));
   else
     gimp_context_real_set_pattern (context, patterns_get_standard_pattern ());
 }
@@ -1573,28 +1694,9 @@ gimp_context_refresh_pattern (GimpContext *context,
 void
 gimp_context_refresh_patterns (void)
 {
-  g_slist_foreach (context_list, (GFunc) gimp_context_refresh_pattern, NULL);
-}
-
-static void
-gimp_context_update_pattern (GimpContext *context,
-			     GPattern    *pattern)
-{
-  if (context->pattern == pattern)
-    {
-      if (context->pattern_name)
-	g_free (context->pattern_name);
-
-      context->pattern_name = g_strdup (pattern->name);
-
-      gimp_context_pattern_changed (context);
-    }
-}
-
-void
-gimp_context_update_patterns (GPattern *pattern)
-{
-  g_slist_foreach (context_list, (GFunc) gimp_context_update_pattern, pattern);
+  g_slist_foreach (context_list,
+		   (GFunc) gimp_context_refresh_pattern,
+		   NULL);
 }
 
 /*****************************************************************************/

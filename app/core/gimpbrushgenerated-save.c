@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -201,14 +202,66 @@ gimp_brush_generated_load (const gchar *file_name)
 }
 
 void
-gimp_brush_generated_save (GimpBrushGenerated *brush, 
-			   const gchar        *file_name)
+gimp_brush_generated_save (GimpBrushGenerated *brush,
+			   const gchar        *directory)
 {
-  FILE *fp;
+  FILE  *fp;
+  gchar *filename = NULL;
 
-  if ((fp = fopen (file_name, "wb")) == NULL)
+  g_return_if_fail (brush != NULL);
+  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
+  g_return_if_fail (directory != NULL);
+
+  if (! GIMP_BRUSH (brush)->filename)
     {
-      g_warning ("Unable to save file %s", file_name);
+      gchar *safe_name;
+      gint   i;
+      gint   unum = 1;
+
+      /* make sure we don't create a naughty filename */
+      safe_name = g_strdup (GIMP_OBJECT (brush)->name);
+      if (safe_name[0] == '.')
+	safe_name[0] = '_';
+      for (i = 0; safe_name[i]; i++)
+	if (safe_name[i] == G_DIR_SEPARATOR || isspace (safe_name[i]))
+	  safe_name[i] = '_';
+
+      filename = g_strdup_printf ("%s%s.vbr",
+				  directory, safe_name);
+
+      while ((fp = fopen (filename, "r")))
+	{
+	  /* make sure we don't overite an existing brush */
+	  fclose (fp);
+	  g_free (filename);
+	  filename = g_strdup_printf ("%s%s_%d.vbr", 
+				      directory, safe_name, unum);
+	  unum++;
+	}
+      g_free (safe_name);
+    }
+  else
+    {
+      filename = g_strdup (GIMP_BRUSH (brush)->filename);
+
+      if (strlen(filename) < 4 || strcmp (&filename[strlen (filename) - 4],
+					  ".vbr"))
+	{
+	  /* we only want to save .vbr files, so set filename to null
+	   * if this isn't a .vbr file
+	   */
+	  g_free (filename);
+	  filename = NULL;
+	}
+    }
+
+  if (! filename)
+    return;
+
+  /*  we are (finaly) ready to try to save the generated brush file  */
+  if ((fp = fopen (filename, "wb")) == NULL)
+    {
+      g_warning ("Unable to save file %s", filename);
       return;
     }
 

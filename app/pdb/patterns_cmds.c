@@ -28,6 +28,8 @@
 #include "procedural_db.h"
 
 #include "gimpcontext.h"
+#include "gimplist.h"
+#include "gimppattern.h"
 #include "patterns.h"
 #include "temp_buf.h"
 
@@ -50,7 +52,7 @@ patterns_get_pattern_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GPattern *pattern;
+  GimpPattern *pattern;
 
   success = (pattern = gimp_context_get_pattern (NULL)) != NULL;
 
@@ -58,7 +60,7 @@ patterns_get_pattern_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (pattern->name);
+      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (pattern)->name);
       return_args[2].value.pdb_int = pattern->mask->width;
       return_args[3].value.pdb_int = pattern->mask->height;
     }
@@ -106,8 +108,8 @@ patterns_set_pattern_invoker (Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
-  GPattern *pattern;
-  GSList *list;
+  GimpPattern *pattern;
+  GList *list;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -117,11 +119,11 @@ patterns_set_pattern_invoker (Argument *args)
     {
       success = FALSE;
     
-      for (list = pattern_list; list; list = g_slist_next (list))
+      for (list = global_pattern_list->list; list; list = g_list_next (list))
 	{
-	  pattern = (GPattern *) list->data;
+	  pattern = (GimpPattern *) list->data;
     
-	  if (!strcmp (pattern->name, name))
+	  if (! strcmp (GIMP_OBJECT (pattern)->name, name))
 	    {
 	      gimp_context_set_pattern (NULL, pattern);
 	      success = TRUE;
@@ -164,16 +166,16 @@ patterns_list_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
   gchar **patterns;
-  GSList *list = NULL;
-  int i = 0;
+  GList *list = NULL;
+  gint i = 0;
 
-  patterns = g_new (char *, num_patterns);
+  patterns = g_new (gchar *, GIMP_CONTAINER (global_pattern_list)->num_children);
 
-  success = (list = pattern_list) != NULL;
+  success = ((list = global_pattern_list->list) != NULL);
 
   while (list)
     {
-      patterns[i++] = g_strdup (((GPattern *) list->data)->name);
+      patterns[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
       list = list->next;
     }
 
@@ -181,7 +183,7 @@ patterns_list_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_patterns;
+      return_args[1].value.pdb_int = GIMP_CONTAINER (global_pattern_list)->num_children;
       return_args[2].value.pdb_pointer = patterns;
     }
 
@@ -226,7 +228,7 @@ patterns_get_pattern_data_invoker (Argument *args)
   gchar *name;
   gint32 length = 0;
   guint8 *mask_data = NULL;
-  GPattern *pattern = NULL;
+  GimpPattern *pattern = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -236,15 +238,15 @@ patterns_get_pattern_data_invoker (Argument *args)
     {
       if (strlen (name))
 	{
-	  GSList *list;
+	  GList *list;
     
 	  success = FALSE;
     
-	  for (list = pattern_list; list; list = g_slist_next (list))
+	  for (list = global_pattern_list->list; list; list = g_list_next (list))
 	    {
-	      pattern = (GPattern *) list->data;
+	      pattern = (GimpPattern *) list->data;
     
-	      if (!strcmp (pattern->name, name))
+	      if (!strcmp (GIMP_OBJECT (pattern)->name, name))
 		{
 		  success = TRUE;
 		  break;
@@ -267,7 +269,7 @@ patterns_get_pattern_data_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (pattern->name);
+      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (pattern)->name);
       return_args[2].value.pdb_int = pattern->mask->width;
       return_args[3].value.pdb_int = pattern->mask->height;
       return_args[4].value.pdb_int = pattern->mask->bytes;

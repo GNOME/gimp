@@ -36,6 +36,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawablepreview.h"
 #include "gimplist.h"
+#include "gimppattern.h"
 #include "gimprc.h"
 #include "gradient.h"
 #include "gradient_header.h"
@@ -661,7 +662,7 @@ gimp_dnd_set_brush_data (GtkWidget     *widget,
   if (strcmp (name, "Standard") == 0)
     brush = brushes_get_standard_brush ();
   else
-    brush = (GimpBrush *) gimp_list_get_child_by_name (brush_list, name);
+    brush = (GimpBrush *) gimp_list_get_child_by_name (global_brush_list, name);
 
   if (brush)
     (* (GimpDndDropBrushFunc) set_brush_func) (widget, brush, set_brush_data);
@@ -696,8 +697,8 @@ gimp_dnd_get_pattern_icon (GtkWidget     *widget,
 			   GtkSignalFunc  get_pattern_func,
 			   gpointer       get_pattern_data)
 {
-  GtkWidget *preview;
-  GPattern  *pattern;
+  GtkWidget   *preview;
+  GimpPattern *pattern;
 
   pattern = (* (GimpDndDragPatternFunc) get_pattern_func) (widget,
 							   get_pattern_data);
@@ -722,8 +723,8 @@ gimp_dnd_get_pattern_data (GtkWidget     *widget,
 			   gint          *format,
 			   gint          *length)
 {
-  GPattern *pattern;
-  gchar    *name;
+  GimpPattern *pattern;
+  gchar       *name;
 
   pattern = (* (GimpDndDragPatternFunc) get_pattern_func) (widget,
 							   get_pattern_data);
@@ -731,7 +732,7 @@ gimp_dnd_get_pattern_data (GtkWidget     *widget,
   if (! pattern)
     return NULL;
 
-  name = g_strdup (pattern->name);
+  name = g_strdup (GIMP_OBJECT (pattern)->name);
 
   *format = 8;
   *length = strlen (name) + 1;
@@ -747,8 +748,8 @@ gimp_dnd_set_pattern_data (GtkWidget     *widget,
 			   gint           format,
 			   gint           length)
 {
-  GPattern *pattern;
-  gchar    *name;
+  GimpPattern *pattern;
+  gchar       *name;
 
   if ((format != 8) || (length < 1))
     {
@@ -761,7 +762,8 @@ gimp_dnd_set_pattern_data (GtkWidget     *widget,
   if (strcmp (name, "Standard") == 0)
     pattern = patterns_get_standard_pattern ();
   else
-    pattern = pattern_list_get_pattern (pattern_list, name);
+    pattern = (GimpPattern *) gimp_list_get_child_by_name (global_pattern_list,
+							   name);
 
   if (pattern)
     (* (GimpDndDropPatternFunc) set_pattern_func) (widget, pattern,

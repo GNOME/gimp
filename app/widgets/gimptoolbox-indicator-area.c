@@ -75,7 +75,7 @@ brush_preview_drop_brush (GtkWidget *widget,
 
 static void
 pattern_area_update (GimpContext *context,
-		     GPattern    *pattern,
+		     GimpPattern *pattern,
 		     gpointer     data)
 {
   if (pattern) 
@@ -91,9 +91,9 @@ pattern_preview_clicked (GtkWidget *widget,
 }
 
 static void
-pattern_preview_drop_pattern (GtkWidget *widget,
-			      GPattern  *pattern,
-			      gpointer   data)
+pattern_preview_drop_pattern (GtkWidget   *widget,
+			      GimpPattern *pattern,
+			      gpointer     data)
 {
   if (pattern)
     gimp_context_set_pattern (gimp_context_get_user (), pattern);

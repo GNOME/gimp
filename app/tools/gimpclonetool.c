@@ -34,8 +34,8 @@
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
+#include "gimppattern.h"
 #include "paint_funcs.h"
-#include "patterns.h"
 #include "pixel_region.h"
 #include "selection.h"
 #include "temp_buf.h"
@@ -105,7 +105,7 @@ static void       clone_line_image   (GImage               *dest,
 				      gint                  width);
 static void       clone_line_pattern (GImage               *dest,
 				      GimpDrawable         *drawable,
-				      GPattern             *pattern,
+				      GimpPattern          *pattern,
 				      guchar               *d,
 				      gint                  x,
 				      gint                  y,
@@ -450,20 +450,20 @@ clone_motion (PaintCore            *paint_core,
 	      int                   offset_x,
 	      int                   offset_y)
 {
-  GImage *gimage;
-  GImage *src_gimage = NULL;
-  unsigned char * s;
-  unsigned char * d;
-  TempBuf * orig;
-  TempBuf * area;
-  void * pr;
-  int y;
-  int x1, y1, x2, y2;
-  int has_alpha = -1;
-  PixelRegion srcPR, destPR;
-  GPattern *pattern;
-  gint opacity;
-  gdouble scale;
+  GimpImage   *gimage;
+  GimpImage   *src_gimage = NULL;
+  guchar      *s;
+  guchar      *d;
+  TempBuf     *orig;
+  TempBuf     *area;
+  gpointer     pr;
+  gint         y;
+  gint         x1, y1, x2, y2;
+  gint         has_alpha = -1;
+  PixelRegion  srcPR, destPR;
+  GimpPattern *pattern;
+  gint         opacity;
+  gdouble      scale;
 
   pr      = NULL;
   pattern = NULL;
@@ -648,7 +648,7 @@ clone_line_image (GImage        *dest,
 static void
 clone_line_pattern (GImage        *dest,
 		    GimpDrawable  *drawable,
-		    GPattern      *pattern,
+		    GimpPattern   *pattern,
 		    unsigned char *d,
 		    int            x,
 		    int            y,

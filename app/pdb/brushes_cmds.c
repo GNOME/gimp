@@ -168,7 +168,7 @@ brushes_set_brush_invoker (Argument *args)
 
   if (success)
     {
-      object = gimp_list_get_child_by_name (brush_list, name);
+      object = gimp_list_get_child_by_name (global_brush_list, name);
     
       if (object)
 	gimp_context_set_brush (NULL, GIMP_BRUSH (object));
@@ -444,9 +444,9 @@ brushes_list_invoker (Argument *args)
   GList *list = NULL;
   int i = 0;
 
-  brushes = g_new (char *, GIMP_CONTAINER (brush_list)->num_children);
+  brushes = g_new (char *, GIMP_CONTAINER (global_brush_list)->num_children);
 
-  success = (list = GIMP_LIST (brush_list)->list) != NULL;
+  success = (list = GIMP_LIST (global_brush_list)->list) != NULL;
 
   while (list)
     {
@@ -458,7 +458,7 @@ brushes_list_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_int = GIMP_CONTAINER (brush_list)->num_children;
+      return_args[1].value.pdb_int = GIMP_CONTAINER (global_brush_list)->num_children;
       return_args[2].value.pdb_pointer = brushes;
     }
 
@@ -517,7 +517,7 @@ brushes_get_brush_data_invoker (Argument *args)
     
 	  success = FALSE;
     
-	  for (list = GIMP_LIST (brush_list)->list; list; list = g_list_next (list))
+	  for (list = GIMP_LIST (global_brush_list)->list; list; list = g_list_next (list))
 	    {
 	      brush = (GimpBrush *) list->data;
     

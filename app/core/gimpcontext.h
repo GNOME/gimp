@@ -97,7 +97,7 @@ struct _GimpContext
   GimpBrush        *brush;
   gchar            *brush_name;
 
-  GPattern         *pattern;
+  GimpPattern      *pattern;
   gchar            *pattern_name;
 
   gradient_t       *gradient;
@@ -127,7 +127,7 @@ struct _GimpContextClass
   void (* brush_changed)      (GimpContext      *context,
 			       GimpBrush        *brush);
   void (* pattern_changed)    (GimpContext      *context,
-			       GPattern         *pattern);
+			       GimpPattern      *pattern);
   void (* gradient_changed)   (GimpContext      *context,
 			       gradient_t       *gradient);
 };
@@ -253,12 +253,11 @@ void               gimp_context_brush_changed      (GimpContext     *context);
 void               gimp_context_refresh_brushes    (void);
 
 /*  pattern  */
-GPattern         * gimp_context_get_pattern        (GimpContext     *context);
+GimpPattern      * gimp_context_get_pattern        (GimpContext     *context);
 void               gimp_context_set_pattern        (GimpContext     *context,
-						    GPattern        *pattern);
+						    GimpPattern     *pattern);
 void               gimp_context_pattern_changed    (GimpContext     *context);
 void               gimp_context_refresh_patterns   (void);
-void               gimp_context_update_patterns    (GPattern        *pattern);
 
 /*  gradient  */
 gradient_t       * gimp_context_get_gradient       (GimpContext     *context);

@@ -84,6 +84,7 @@ extern GSList *brush_active_dialogs;
 /*  the main brush dialog */
 extern BrushSelect *brush_select_dialog;
 
+
 BrushSelect * brush_select_new        (gchar       *title,
 				       /*  These are the required initial vals
 					*  If init_name == NULL then use

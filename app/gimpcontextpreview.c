@@ -34,6 +34,7 @@
 #include "gimpbrushpipe.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
+#include "gimppattern.h"
 #include "gradient.h"
 #include "gradient_header.h"
 #include "patterns.h"
@@ -372,8 +373,8 @@ gimp_context_preview_update (GimpContextPreview *gcp,
 	  break;
 	case GCP_PATTERN:
 	  {
-	    GPattern *pattern = (GPattern *) (gcp->data);
-	    name = pattern->name;
+	    GimpPattern *pattern = GIMP_PATTERN (gcp->data);
+	    name = GIMP_OBJECT (pattern)->name;
 	  }
 	  break;
 	case GCP_GRADIENT:
@@ -495,7 +496,8 @@ gimp_context_preview_popup_timeout (gpointer data)
       break;
     case GCP_PATTERN:
       {
-	GPattern *pattern = (GPattern*)gcp->data;
+	GimpPattern *pattern = GIMP_PATTERN (gcp->data);
+
 	gcp->popup_width  = pattern->mask->width;
 	gcp->popup_height = pattern->mask->height;
 	if (gcp->popup_width <= gcp->width && gcp->popup_height <= gcp->height)
@@ -827,10 +829,10 @@ brush_rename_callback (GimpBrush          *brush,
 /*  pattern draw functions */
 
 void
-draw_pattern (GtkPreview *preview,
-	      GPattern   *pattern,
-	      gint        width,
-	      gint        height)
+draw_pattern (GtkPreview  *preview,
+	      GimpPattern *pattern,
+	      gint         width,
+	      gint         height)
 {
   gint pattern_width, pattern_height;
   guchar *mask, *src, *buf, *b;
@@ -875,11 +877,12 @@ draw_pattern (GtkPreview *preview,
 static void
 gimp_context_preview_draw_pattern_popup (GimpContextPreview *gcp)
 {
-  GPattern *pattern;
+  GimpPattern *pattern;
 
   g_return_if_fail (gcp != NULL && gcp->data != NULL);
 
-  pattern = (GPattern*)(gcp->data);
+  pattern = GIMP_PATTERN (gcp->data);
+
   draw_pattern (GTK_PREVIEW (gcp_popup_preview), pattern, 
 		gcp->popup_width, gcp->popup_height);
 }
@@ -887,11 +890,12 @@ gimp_context_preview_draw_pattern_popup (GimpContextPreview *gcp)
 static void
 gimp_context_preview_draw_pattern (GimpContextPreview *gcp)
 {
-  GPattern *pattern;
+  GimpPattern *pattern;
 
   g_return_if_fail (gcp != NULL && gcp->data != NULL);
  
-  pattern = (GPattern*)(gcp->data);
+  pattern = GIMP_PATTERN (gcp->data);
+
   draw_pattern (GTK_PREVIEW (gcp), pattern, gcp->width, gcp->height);
 }
 

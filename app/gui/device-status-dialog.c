@@ -33,9 +33,10 @@
 #include "devices.h"
 #include "dialog_handler.h"
 #include "gimpbrush.h"
+#include "gimpcontext.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
-#include "gimpcontext.h"
+#include "gimppattern.h"
 #include "gimplist.h"
 #include "gimprc.h"
 #include "gradient.h"
@@ -132,7 +133,7 @@ static void     device_status_drop_brush       (GtkWidget   *widget,
 						GimpBrush   *brush,
 						gpointer     data);
 static void     device_status_drop_pattern     (GtkWidget   *widget,
-						GPattern    *pattern,
+						GimpPattern *pattern,
 						gpointer     data);
 static void     device_status_drop_gradient    (GtkWidget   *widget,
 						gradient_t  *gradient,
@@ -467,7 +468,8 @@ devices_rc_update (gchar        *name,
     {
       GimpBrush *brush;
 
-      brush = (GimpBrush *) gimp_list_get_child_by_name (brush_list, brush_name);
+      brush = (GimpBrush *) gimp_list_get_child_by_name (global_brush_list,
+							 brush_name);
 
       if (brush)
 	{
@@ -482,9 +484,10 @@ devices_rc_update (gchar        *name,
 
   if (values & DEVICE_PATTERN)
     {
-      GPattern *pattern;
+      GimpPattern *pattern;
 
-      pattern = pattern_list_get_pattern (pattern_list, pattern_name);
+      pattern = (GimpPattern *) gimp_list_get_child_by_name (global_pattern_list,
+							     pattern_name);
 
       if (pattern)
 	{
@@ -703,7 +706,7 @@ devices_write_rc_device (DeviceInfo *device_info,
   if (gimp_context_get_pattern (device_info->context))
     {
       fprintf (fp, "\n    (pattern \"%s\")",
-	       gimp_context_get_pattern (device_info->context)->name);
+	       GIMP_OBJECT (gimp_context_get_pattern (device_info->context))->name);
     }
 
   if (gimp_context_get_gradient (device_info->context))
@@ -1185,9 +1188,9 @@ device_status_drop_brush (GtkWidget *widget,
 }
 
 static void
-device_status_drop_pattern (GtkWidget *widget,
-			    GPattern  *pattern,
-			    gpointer   data)
+device_status_drop_pattern (GtkWidget   *widget,
+			    GimpPattern *pattern,
+			    gpointer     data)
 {
   DeviceInfo *device_info;
   

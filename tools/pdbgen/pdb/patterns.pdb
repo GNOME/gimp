@@ -33,7 +33,12 @@ sub dim_args () {
 
 sub pattern_outargs {
     foreach (@outargs) {
-        my $alias = "pattern->$_->{name}";
+	my $alias;
+	if ($_->{type} eq 'string') {
+	    $alias = "GIMP_OBJECT (pattern)->$_->{name}";
+	} else {
+	    $alias = "pattern->$_->{name}";
+	}
         $alias = "g_strdup ($alias)" if $_->{type} eq 'string';
         $alias =~ s/pattern/pattern->mask/ if $_->{name} =~ /width|height/;
         $_->{alias} = $alias;
@@ -63,7 +68,7 @@ HELP
     &pattern_outargs;
 
     %invoke = (
-	vars => [ 'GPattern *pattern' ],
+	vars => [ 'GimpPattern *pattern' ],
 	code => 'success = (pattern = gimp_context_get_pattern (NULL)) != NULL;'
     );
 }
@@ -84,16 +89,16 @@ HELP
     @inargs = ( &pattern_arg );
 
     %invoke = (
-	vars => [ 'GPattern *pattern', 'GSList *list' ],
+	vars => [ 'GimpPattern *pattern', 'GList *list' ],
 	code => <<'CODE'
 {
   success = FALSE;
 
-  for (list = pattern_list; list; list = g_slist_next (list))
+  for (list = global_pattern_list->list; list; list = g_list_next (list))
     {
-      pattern = (GPattern *) list->data;
+      pattern = (GimpPattern *) list->data;
 
-      if (!strcmp (pattern->name, name))
+      if (! strcmp (GIMP_OBJECT (pattern)->name, name))
 	{
 	  gimp_context_set_pattern (NULL, pattern);
 	  success = TRUE;
@@ -121,20 +126,20 @@ HELP
 	  alias => 'patterns',
 	  array => { name => 'num_patterns',
 		     desc => 'The number of patterns in the pattern list',
-		     alias => 'num_patterns', no_declare => 1 } }
+		     alias => 'GIMP_CONTAINER (global_pattern_list)->num_children', no_declare => 1 } }
     );
 
     %invoke = (
-	vars => [ 'GSList *list = NULL', 'int i = 0' ],
+	vars => [ 'GList *list = NULL', 'gint i = 0' ],
 	code => <<'CODE'
 {
-  patterns = g_new (char *, num_patterns);
+  patterns = g_new (gchar *, GIMP_CONTAINER (global_pattern_list)->num_children);
 
-  success = (list = pattern_list) != NULL;
+  success = ((list = global_pattern_list->list) != NULL);
 
   while (list)
     {
-      patterns[i++] = g_strdup (((GPattern *) list->data)->name);
+      patterns[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
       list = list->next;
     }
 }
@@ -176,20 +181,20 @@ HELP
     
     %invoke = (
 	headers => [ qw(<string.h>) ],
-	vars => [ 'GPattern *pattern = NULL' ],
+	vars => [ 'GimpPattern *pattern = NULL' ],
 	code => <<'CODE'
 {
   if (strlen (name))
     {
-      GSList *list;
+      GList *list;
 
       success = FALSE;
 
-      for (list = pattern_list; list; list = g_slist_next (list))
+      for (list = global_pattern_list->list; list; list = g_list_next (list))
 	{
-	  pattern = (GPattern *) list->data;
+	  pattern = (GimpPattern *) list->data;
 
-	  if (!strcmp (pattern->name, name))
+	  if (!strcmp (GIMP_OBJECT (pattern)->name, name))
 	    {
 	      success = TRUE;
 	      break;
@@ -211,7 +216,8 @@ CODE
     );
 }
 
-@headers = qw("gimpcontext.h" "patterns.h" "temp_buf.h");
+@headers = qw("gimpcontext.h" "patterns.h" "gimplist.h" "gimppattern.h"
+              "temp_buf.h");
 
 @procs = qw(patterns_get_pattern patterns_set_pattern patterns_list
 	    patterns_get_pattern_data);

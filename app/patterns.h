@@ -20,31 +20,13 @@
 #define __PATTERNS_H__
 
 
-struct _GPattern
-{
-  gchar   *filename;     /*  actual filename--pattern's location on disk   */
-  gchar   *name;         /*  pattern's name--for pattern selection dialog  */
-  gint     index;        /*  pattern's index...                            */
-  TempBuf *mask;         /*  the actual mask...                            */
-};
+extern GimpList *global_pattern_list;
 
-/*  global variables  */
-extern GSList *pattern_list;
-extern gint    num_patterns;
 
-void       patterns_init                     (gboolean     no_data);
-void       patterns_free                     (void);
-GPattern * patterns_get_standard_pattern     (void);
+void          patterns_init                 (gboolean  no_data);
+void          patterns_free                 (void);
 
-GPattern * pattern_list_get_pattern_by_index (GSList      *list,
-					      gint         index);
-GPattern * pattern_list_get_pattern          (GSList      *list,
-					      const gchar *name);
-
-/*  this is useful for pixmap brushes etc.  */
-GPattern * pattern_load                      (gint         fd,
-					      const gchar *filename);
-void       pattern_free                      (GPattern    *pattern);
+GimpPattern * patterns_get_standard_pattern (void);
 
 
 #endif  /*  __PATTERNS_H__  */

@@ -28,6 +28,8 @@
 #include "procedural_db.h"
 
 #include "gimpcontext.h"
+#include "gimplist.h"
+#include "gimppattern.h"
 #include "pattern_select.h"
 #include "patterns.h"
 
@@ -215,7 +217,9 @@ patterns_set_popup_invoker (Argument *args)
       if ((prec = procedural_db_lookup (name)) &&
 	  (psp = pattern_get_patternselect (name)))
 	{
-	  GPattern *active = pattern_list_get_pattern (pattern_list, pattern_name);
+	  GimpPattern *active =
+	    (GimpPattern *) gimp_list_get_child_by_name (global_pattern_list,
+							 pattern_name);
     
 	  if (active)
 	    {
