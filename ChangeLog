@@ -1,3 +1,8 @@
+2004-08-30  Michael Schumacher <schumaml@cvs.gnome.org>
+
+	* libgimp/gimp.def: added gimp_progress_install &
+	gimp_progress_uninstall	 
+
 2004-08-30  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpregioniterator.c: document the fact that "run_mode"

@@ -349,6 +349,8 @@ EXPORTS
 	gimp_procedural_db_set_data
 	gimp_procedural_db_temp_name
 	gimp_progress_init
+	gimp_progress_install
+	gimp_progress_uninstall
 	gimp_progress_update
 	gimp_quit
 	gimp_read_expect_msg
