@@ -167,13 +167,15 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
 
   tool = GIMP_TOOL (move_tool);
 
-  move_tool->layer      = NULL;
-  move_tool->guide      = NULL;
-  move_tool->guide_disp = NULL;
+  move_tool->layer             = NULL;
+  move_tool->guide             = NULL;
+  move_tool->guide_disp        = NULL;
 
   move_tool->moving_guide      = FALSE;
   move_tool->guide_position    = -1;
   move_tool->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
+
+  move_tool->saved_type        = GIMP_TRANSFORM_TYPE_LAYER;
 
   gimp_tool_control_set_snap_to             (tool->control, FALSE);
   gimp_tool_control_set_handles_empty_image (tool->control, TRUE);
@@ -240,16 +242,45 @@ gimp_move_tool_button_press (GimpTool        *tool,
   move->guide_disp   = NULL;
   move->moving_guide = FALSE;
 
-  if (options->move_mask &&
-      ! gimp_channel_is_empty (gimp_image_get_mask (gdisp->gimage)))
+  if (options->move_type == GIMP_TRANSFORM_TYPE_PATH)
     {
-      init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
-      gimp_tool_control_activate (tool->control);
+      if (options->move_current)
+        {
+          if (gimp_image_get_active_vectors (gdisp->gimage))
+            {
+              init_edit_selection (tool, gdisp, coords, EDIT_VECTORS_TRANSLATE);
+              gimp_tool_control_activate (tool->control);
+            }
+        }
+      else
+        {
+          GimpVectors *vectors;
+
+          if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), gdisp,
+                                         coords, 7, 7,
+                                         NULL, NULL, NULL, NULL, &vectors))
+            {
+              gimp_image_set_active_vectors (gdisp->gimage, vectors);
+              init_edit_selection (tool, gdisp, coords, EDIT_VECTORS_TRANSLATE);
+              gimp_tool_control_activate (tool->control);
+            }
+        }
+    }
+  else if (options->move_type == GIMP_TRANSFORM_TYPE_SELECTION)
+    {
+      if (! gimp_channel_is_empty (gimp_image_get_mask (gdisp->gimage)))
+        {
+          init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
+          gimp_tool_control_activate (tool->control);
+        }
     }
   else if (options->move_current)
     {
-      init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
-      gimp_tool_control_activate (tool->control);
+      if (gimp_image_get_active_layer (gdisp->gimage))
+        {
+          init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
+          gimp_tool_control_activate (tool->control);
+        }
     }
   else
     {
@@ -275,17 +306,18 @@ gimp_move_tool_button_press (GimpTool        *tool,
                                                          coords->x,
                                                          coords->y)))
 	{
-	  /*  If there is a floating selection, and this aint it,
-	   *  use the move tool
-	   */
 	  if (gimp_image_floating_sel (gdisp->gimage) &&
 	      ! gimp_layer_is_floating_sel (layer))
 	    {
+              /*  If there is a floating selection, and this aint it,
+               *  use the move tool to anchor it.
+               */
 	      move->layer = gimp_image_floating_sel (gdisp->gimage);
 	    }
-	  /*  Otherwise, init the edit selection  */
 	  else
 	    {
+              /*  Otherwise, init the edit selection  */
+
 	      gimp_image_set_active_layer (gdisp->gimage, layer);
 
 #ifdef __GNUC__
@@ -482,21 +514,54 @@ gimp_move_tool_modifier_key (GimpTool        *tool,
 			     GdkModifierType  state,
 			     GimpDisplay     *gdisp)
 {
+  GimpMoveTool    *move_tool;
   GimpMoveOptions *options;
 
-  options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
+  move_tool = GIMP_MOVE_TOOL (tool);
+  options   = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
 
-  if (key == GDK_CONTROL_MASK)
+  if (key == GDK_SHIFT_MASK)
     {
-      g_object_set (options,
-                    "move-current", ! options->move_current,
-                    NULL);
+      g_object_set (options, "move-current", ! options->move_current, NULL);
     }
-  else if (key == GDK_MOD1_MASK)
+  else if (key == GDK_MOD1_MASK || key == GDK_CONTROL_MASK)
     {
-      g_object_set (options,
-                    "move-mask", ! options->move_mask,
-                    NULL);
+      GimpTransformType button_type;
+
+      button_type = options->move_type;
+
+      if (press)
+        {
+          if (key == (state & (GDK_MOD1_MASK | GDK_CONTROL_MASK)))
+            {
+              /*  first modifier pressed  */
+
+              move_tool->saved_type = options->move_type;
+            }
+        }
+      else
+        {
+          if (! (state & (GDK_MOD1_MASK | GDK_CONTROL_MASK)))
+            {
+              /*  last modifier released  */
+
+              button_type = move_tool->saved_type;
+            }
+        }
+
+      if (state & GDK_MOD1_MASK)
+        {
+          button_type = GIMP_TRANSFORM_TYPE_SELECTION;
+        }
+      else if (state & GDK_CONTROL_MASK)
+        {
+          button_type = GIMP_TRANSFORM_TYPE_PATH;
+        }
+
+      if (button_type != options->move_type)
+        {
+          g_object_set (options, "move-type", button_type, NULL);
+        }
     }
 }
 
@@ -516,20 +581,78 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
   move    = GIMP_MOVE_TOOL (tool);
   options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
 
-  if (options->move_mask &&
-      ! gimp_channel_is_empty (gimp_image_get_mask (gdisp->gimage)))
+  if (options->move_type == GIMP_TRANSFORM_TYPE_PATH)
     {
-      gimp_tool_set_cursor (tool, gdisp,
-                            GIMP_MOUSE_CURSOR,
-                            GIMP_RECT_SELECT_TOOL_CURSOR,
-                            GIMP_CURSOR_MODIFIER_MOVE);
+      if (options->move_current)
+        {
+          if (gimp_image_get_active_vectors (gdisp->gimage))
+            {
+              gimp_tool_set_cursor (tool, gdisp,
+                                    GIMP_MOUSE_CURSOR,
+                                    GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                    GIMP_CURSOR_MODIFIER_MOVE);
+            }
+          else
+            {
+              gimp_tool_set_cursor (tool, gdisp,
+                                    GIMP_BAD_CURSOR,
+                                    GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                    GIMP_CURSOR_MODIFIER_MOVE);
+            }
+        }
+      else
+        {
+          if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), gdisp,
+                                         coords, 7, 7,
+                                         NULL, NULL, NULL, NULL, NULL))
+            {
+              gimp_tool_set_cursor (tool, gdisp,
+                                    GIMP_MOUSE_CURSOR,
+                                    GIMP_TOOL_CURSOR_NONE,
+                                    GIMP_CURSOR_MODIFIER_HAND);
+            }
+          else
+            {
+              gimp_tool_set_cursor (tool, gdisp,
+                                    GIMP_BAD_CURSOR,
+                                    GIMP_BEZIER_SELECT_TOOL_CURSOR,
+                                    GIMP_CURSOR_MODIFIER_MOVE);
+            }
+        }
+    }
+  else if (options->move_type == GIMP_TRANSFORM_TYPE_SELECTION)
+    {
+      if (! gimp_channel_is_empty (gimp_image_get_mask (gdisp->gimage)))
+        {
+          gimp_tool_set_cursor (tool, gdisp,
+                                GIMP_MOUSE_CURSOR,
+                                GIMP_RECT_SELECT_TOOL_CURSOR,
+                                GIMP_CURSOR_MODIFIER_MOVE);
+        }
+      else
+        {
+          gimp_tool_set_cursor (tool, gdisp,
+                                GIMP_BAD_CURSOR,
+                                GIMP_RECT_SELECT_TOOL_CURSOR,
+                                GIMP_CURSOR_MODIFIER_MOVE);
+        }
     }
   else if (options->move_current)
     {
-      gimp_tool_set_cursor (tool, gdisp,
-                            GIMP_MOUSE_CURSOR,
-                            GIMP_MOVE_TOOL_CURSOR,
-                            GIMP_CURSOR_MODIFIER_NONE);
+      if (gimp_image_get_active_layer (gdisp->gimage))
+        {
+          gimp_tool_set_cursor (tool, gdisp,
+                                GIMP_MOUSE_CURSOR,
+                                GIMP_MOVE_TOOL_CURSOR,
+                                GIMP_CURSOR_MODIFIER_NONE);
+        }
+      else
+        {
+          gimp_tool_set_cursor (tool, gdisp,
+                                GIMP_BAD_CURSOR,
+                                GIMP_MOVE_TOOL_CURSOR,
+                                GIMP_CURSOR_MODIFIER_NONE);
+        }
     }
   else
     {

@@ -40,8 +40,8 @@
 enum
 {
   PROP_0,
-  PROP_MOVE_CURRENT,
-  PROP_MOVE_MASK
+  PROP_MOVE_TYPE,
+  PROP_MOVE_CURRENT
 };
 
 
@@ -89,7 +89,7 @@ gimp_move_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_move_options_class_init (GimpMoveOptionsClass *klass)
 {
   GObjectClass *object_class;
@@ -101,12 +101,13 @@ gimp_move_options_class_init (GimpMoveOptionsClass *klass)
   object_class->set_property = gimp_move_options_set_property;
   object_class->get_property = gimp_move_options_get_property;
 
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MOVE_TYPE,
+                                 "move-type", NULL,
+                                 GIMP_TYPE_TRANSFORM_TYPE,
+                                 GIMP_TRANSFORM_TYPE_LAYER,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MOVE_CURRENT,
                                     "move-current", NULL,
-                                    FALSE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MOVE_MASK,
-                                    "move-mask", NULL,
                                     FALSE,
                                     0);
 }
@@ -128,11 +129,11 @@ gimp_move_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_MOVE_TYPE:
+      options->move_type = g_value_get_enum (value);
+      break;
     case PROP_MOVE_CURRENT:
       options->move_current = g_value_get_boolean (value);
-      break;
-    case PROP_MOVE_MASK:
-      options->move_mask = g_value_get_boolean (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -152,11 +153,11 @@ gimp_move_options_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_MOVE_TYPE:
+      g_value_set_enum (value, options->move_type);
+      break;
     case PROP_MOVE_CURRENT:
       g_value_set_boolean (value, options->move_current);
-      break;
-    case PROP_MOVE_MASK:
-      g_value_set_boolean (value, options->move_mask);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -169,6 +170,8 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config;
   GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *label;
   GtkWidget *frame;
   gchar     *str;
 
@@ -176,25 +179,22 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
 
   vbox = gimp_tool_options_gui (tool_options);
 
+  hbox = gimp_prop_enum_stock_box_new (config, "move-type", "gimp", 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Affect:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
+  gtk_widget_show (label);
+
   /*  tool toggle  */
-  str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_control ());
+  str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_shift ());
 
   frame = gimp_prop_boolean_radio_frame_new (config, "move-current",
                                              str,
-                                             _("Move Current Layer"),
-                                             _("Pick a Layer to Move"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  g_free (str);
-
-  /*  move mask  */
-  str = g_strdup_printf (_("Move Mode  %s"), gimp_get_mod_name_alt ());
-
-  frame = gimp_prop_boolean_radio_frame_new (config, "move-mask",
-                                             str,
-                                             _("Move Selection Outline"),
-                                             _("Move Pixels"));
+                                             _("Move Current Layer / Path"),
+                                             _("Pick a Layer / Path to Move"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

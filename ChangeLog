@@ -1,3 +1,30 @@
+2003-09-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpmoveoptions.[ch]: changed "gboolean move_mask" to
+	"GimpTransformType move_type" and added an "Affect:" stock radio
+	box so it offers the same LAYER,SELECTION,PATH choice as the other
+	transform tools.
+
+	* app/tools/gimpmovetool.[ch]: honor the new tool option, made
+	cursor_update() show more different cursors which describe the
+	state of the tool more closely, fixed some cases where the
+	GimpeditSelectionTool was invoked with meaningless values
+	(like requesting a selection transform when there is no
+	selection).
+
+	Changed modifiers:
+
+	- Made <Shift> toggle "move current layer".
+	- Made <Control> switch to path moving.
+	- <Alt> switched to selection moving as before.
+
+	* app/tools/gimpeditselectiontool.[ch]: added EDIT_VECTORS_TRANSLATE
+	operation mode and honor it all over the place. Unified the code
+	which transforms layers and vectors since it's essentially the same.
+
+	(gimp_edit_selection_tool_cursor_key): simplified selection moving
+	code and added support for moving paths (using <Control>).
+
 2003-09-16  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-sse2.c: Removed code that caused

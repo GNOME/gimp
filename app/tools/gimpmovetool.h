@@ -46,6 +46,8 @@ struct _GimpMoveTool
   gboolean             moving_guide;
   gint                 guide_position;
   GimpOrientationType  guide_orientation;
+
+  GimpTransformType    saved_type;
 };
 
 struct _GimpMoveToolClass
