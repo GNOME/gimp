@@ -1,3 +1,7 @@
+2004-09-23  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: dialogs/color-dialog.c -> widgets/gimpcolordialog.c
+
 2004-09-23  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in

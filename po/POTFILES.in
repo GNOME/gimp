@@ -123,7 +123,6 @@ app/core/gimptemplate.c
 app/core/gimpunit.c
 
 app/dialogs/about-dialog.c
-app/dialogs/color-dialog.c
 app/dialogs/convert-dialog.c
 app/dialogs/dialogs-constructors.c
 app/dialogs/file-open-dialog.c
@@ -285,6 +284,7 @@ app/widgets/gimpbufferview.c
 app/widgets/gimpcellrendereraccel.c
 app/widgets/gimpchanneltreeview.c
 app/widgets/gimpclipboard.c
+app/widgets/gimpcolordialog.c
 app/widgets/gimpcolordisplayeditor.c
 app/widgets/gimpcoloreditor.c
 app/widgets/gimpcolorframe.c
