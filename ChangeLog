@@ -1,3 +1,10 @@
+1999-08-02  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/winprint: New (Win32) print plug-in.
+
+	* plug-ins/makefile.{cygwin,msc}: Built winprint, not the Unixish
+	print plug-in.
+
 Sun Aug  1 16:27:27 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/paint_core.c: Fixed a bug in the line-preview. 

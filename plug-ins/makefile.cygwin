@@ -29,7 +29,7 @@ COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify 
 COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spread sunras tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch wind wmf xbm xwd zealouscrop
 
 # These have own subdirectories each
-SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp borderaverage dbbrowser faxg3 fits flame fp gfig gfli ifscompose maze mosaic pagecurl print rcm sel2path sgi sinus struc unsharp winsnap
+SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp borderaverage dbbrowser faxg3 fits flame fp gfig gfli ifscompose maze mosaic pagecurl rcm sel2path sgi sinus struc unsharp winprint winsnap
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
@@ -102,9 +102,11 @@ separate-plugins-clean :
 
 
 
-sub-separate-plugins :
+sub-separate-plugins : sub-script-fu
 	for d in $(SEPARATE); do $(MAKE) -f makefile.cygwin sub-one-separate DIR=$$d TARGET=$(TARGET); done
+
 # We must handle script-fu separately because of the dash, sigh
+sub-script-fu :
 	cd script-fu; $(MAKE) -f ../makefile.cygwin TOP=../.. PLUGIN=script-fu EXTRA_script_fu=1 $(TARGET)
 
 sub-one-separate :
