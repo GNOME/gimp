@@ -777,7 +777,7 @@ channel_list_events (GtkWidget *widget,
 	      return TRUE;
 	    }
 	  /* Grumble - we have to handle double clicks ourselves because channels_dialog_flush is broken */
-	  if (channel_widget->type == Auxillary)
+	  if (channel_widget->type == Auxillary) {
 	    if ((event->button.time < (button_click_time + 250)) && (channel_widget->ID == button_last_id)) {
 	      channels_dialog_edit_channel_query (channel_widget);
 	      return TRUE;
@@ -785,6 +785,7 @@ channel_list_events (GtkWidget *widget,
 	      button_click_time = event->button.time;
 	      button_last_id = channel_widget->ID;
 	    }
+	  }
 	  break;
 
 	case GDK_2BUTTON_PRESS:

@@ -5,6 +5,8 @@ Sun Sep  6 12:48:32 PDT 1998 Manish Singh <yosh@gimp.org>
 	* app/gimage.c: fix for layer merge opacity, originally from Zach.
 	Sets opacity to 100%, and makes the mode normal.
 
+	* app/channels_dialog.c: added clarifying {}'s around if block
+
 Sun Aug 30 16:33:30 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/*/Makefile.am: removed -lc from all Makefiles, since it
