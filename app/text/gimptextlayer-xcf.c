@@ -23,7 +23,7 @@
 
 #include <glib-object.h>
 
-#include "text/text-types.h"
+#include "text-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"

@@ -44,7 +44,6 @@
 #include "core/gimppattern.h"
 
 #include "vectors/gimpvectors.h"
-#include "vectors/gimpstroke.h"
 
 #include "widgets/gimpdnd.h"
 #include "widgets/gimphelp-ids.h"

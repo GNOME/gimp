@@ -30,7 +30,7 @@
 #include FT_GLYPH_H
 #include FT_OUTLINE_H
 
-#include "text/text-types.h"
+#include "text-types.h"
 
 #include "core/gimpimage.h"
 

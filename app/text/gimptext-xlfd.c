@@ -31,7 +31,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "text/text-types.h"
+#include "text-types.h"
 
 #include "gimptext.h"
 #include "gimptext-xlfd.h"

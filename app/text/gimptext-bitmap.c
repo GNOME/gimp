@@ -26,7 +26,7 @@
 #define PANGO_ENABLE_ENGINE
 #include <pango/pangoft2.h>
 
-#include "text/text-types.h"
+#include "text-types.h"
 
 #include "gimptext-bitmap.h"
 

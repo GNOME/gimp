@@ -42,6 +42,24 @@
 #include "gimp-intl.h"
 
 
+typedef struct _GimpDataDeleteData GimpDataDeleteData;
+
+struct _GimpDataDeleteData
+{
+  GimpDataFactory *factory;
+  GimpData        *data;
+};
+
+
+/*  local function prototypes  */
+
+static void   data_delete_callback (GtkWidget *widget,
+                                    gboolean   delete,
+                                    gpointer   data);
+
+
+/*  public functions  */
+
 void
 data_new_data_cmd_callback (GtkAction *action,
 			    gpointer   user_data)
@@ -98,35 +116,6 @@ data_duplicate_data_cmd_callback (GtkAction *action,
 
 	  gtk_button_clicked (GTK_BUTTON (view->edit_button));
 	}
-    }
-}
-
-typedef struct _GimpDataDeleteData GimpDataDeleteData;
-
-struct _GimpDataDeleteData
-{
-  GimpDataFactory *factory;
-  GimpData        *data;
-};
-
-static void
-data_delete_callback (GtkWidget *widget,
-                      gboolean   delete,
-                      gpointer   data)
-{
-  GimpDataDeleteData *delete_data = data;
-
-  if (delete)
-    {
-      GError *error = NULL;
-
-      if (! gimp_data_factory_data_delete (delete_data->factory,
-                                           delete_data->data,
-                                           TRUE, &error))
-        {
-          g_message (error->message);
-          g_clear_error (&error);
-        }
     }
 }
 
@@ -215,5 +204,29 @@ data_edit_data_cmd_callback (GtkAction   *action,
 
       gimp_data_editor_set_data (GIMP_DATA_EDITOR (GTK_BIN (dockable)->child),
                                  data);
+    }
+}
+
+
+/*  private functions  */
+
+static void
+data_delete_callback (GtkWidget *widget,
+                      gboolean   delete,
+                      gpointer   data)
+{
+  GimpDataDeleteData *delete_data = data;
+
+  if (delete)
+    {
+      GError *error = NULL;
+
+      if (! gimp_data_factory_data_delete (delete_data->factory,
+                                           delete_data->data,
+                                           TRUE, &error))
+        {
+          g_message (error->message);
+          g_clear_error (&error);
+        }
     }
 }

@@ -46,13 +46,11 @@
 #include "vectors/gimpvectors-export.h"
 #include "vectors/gimpvectors-import.h"
 
-#include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
 
-#include "tools/gimppainttool.h"
 #include "tools/gimpvectortool.h"
 #include "tools/tool_manager.h"
 

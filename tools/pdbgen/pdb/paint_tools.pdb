@@ -728,7 +728,7 @@ sub ink {
     );
 }
 
-@headers = qw("libgimpmath/gimpmath.h" "paint/paint-types.h"
+@headers = qw("libgimpmath/gimpmath.h"
               "paint/gimppaintcore-stroke.h" "paint/gimppaintoptions.h"
               "core/gimp.h" "core/gimpcontainer.h" "core/gimppaintinfo.h");
 

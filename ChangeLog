@@ -1,5 +1,26 @@
 2004-09-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/data-commands.c: cleanup.
+
+	* app/actions/vectors-commands.c
+	* app/display/gimpdisplayshell.c
+	* tools/pdbgen/pdb/paint_tools.pdb: removed unused #includes.
+
+	* app/text/gimptext-bitmap.c
+	* app/text/gimptext-parasite.c
+	* app/text/gimptext-vectors.c
+	* app/text/gimptext-xlfd.c
+	* app/text/gimptext.c
+	* app/text/gimptextlayer-xcf.c: include "text-types.h" instead
+	of "text/text-types.h".
+
+	* app/widgets/gimppatternselect.c: create a GimpPatternFactoryView
+	instead of GimpDataFactoryView.
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
+2004-09-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/brushes-actions.c
 	* app/actions/gradients-actions.c
 	* app/actions/palettes-actions.c

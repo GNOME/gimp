@@ -36,7 +36,7 @@
 #include "pdb/procedural_db.h"
 
 #include "gimpcontainerbox.h"
-#include "gimpdatafactoryview.h"
+#include "gimppatternfactoryview.h"
 #include "gimppatternselect.h"
 
 
@@ -109,13 +109,11 @@ gimp_pattern_select_constructor (GType                  type,
   dialog = GIMP_PDB_DIALOG (object);
 
   dialog->view =
-    gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-                                dialog->context->gimp->pattern_factory,
-                                dialog->context,
-                                GIMP_VIEW_SIZE_MEDIUM, 1,
-                                dialog->menu_factory, "<Patterns>",
-                                "/patterns-popup",
-                                "patterns");
+    gimp_pattern_factory_view_new (GIMP_VIEW_TYPE_GRID,
+                                   dialog->context->gimp->pattern_factory,
+                                   dialog->context,
+                                   GIMP_VIEW_SIZE_MEDIUM, 1,
+                                   dialog->menu_factory);
 
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (GIMP_CONTAINER_EDITOR (dialog->view)->view),
                                        6 * (GIMP_VIEW_SIZE_MEDIUM + 2),

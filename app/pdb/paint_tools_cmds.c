@@ -34,7 +34,6 @@
 #include "core/gimppaintinfo.h"
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintoptions.h"
-#include "paint/paint-types.h"
 
 static ProcRecord airbrush_proc;
 static ProcRecord airbrush_default_proc;
