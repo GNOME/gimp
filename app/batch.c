@@ -40,6 +40,7 @@
 static gboolean  batch_exit_after_callback (Gimp        *gimp,
                                             gboolean     kill_it);
 static void      batch_run_cmd             (Gimp        *gimp,
+                                            ProcRecord  *proc,
                                             const gchar *cmd);
 static void      batch_perl_server         (Gimp        *gimp,
                                             GimpRunMode  run_mode,
@@ -47,13 +48,12 @@ static void      batch_perl_server         (Gimp        *gimp,
                                             gint         extra);
 
 
-static ProcRecord *eval_proc = NULL;
-
-
 void
 batch_run (Gimp         *gimp,
            const gchar **batch_cmds)
 {
+  static ProcRecord *eval_proc = NULL;
+
   gboolean perl_server_already_running = FALSE;
   gulong   exit_id;
   gint     i;
@@ -99,7 +99,7 @@ batch_run (Gimp         *gimp,
           return;
         }
 
-      batch_run_cmd (gimp, batch_cmds[i]);
+      batch_run_cmd (gimp, eval_proc, batch_cmds[i]);
     }
 
   g_signal_handler_disconnect (gimp, exit_id);
@@ -119,21 +119,16 @@ batch_exit_after_callback (Gimp      *gimp,
 
 static void
 batch_run_cmd (Gimp        *gimp,
+               ProcRecord  *proc,
 	       const gchar *cmd)
 {
   Argument *args;
   Argument *vals;
   gint      i;
 
-  if (g_ascii_strcasecmp (cmd, "(gimp-quit 0)") == 0)
-    {
-      gimp_exit (gimp, TRUE);
-      return;
-    }
-
-  args = g_new0 (Argument, eval_proc->num_args);
-  for (i = 0; i < eval_proc->num_args; i++)
-    args[i].arg_type = eval_proc->args[i].arg_type;
+  args = g_new0 (Argument, proc->num_args);
+  for (i = 0; i < proc->num_args; i++)
+    args[i].arg_type = proc->args[i].arg_type;
 
   args[0].value.pdb_int     = GIMP_RUN_NONINTERACTIVE;
   args[1].value.pdb_pointer = (gpointer) cmd;
@@ -155,7 +150,7 @@ batch_run_cmd (Gimp        *gimp,
       break;
     }
 
-  procedural_db_destroy_args (vals, eval_proc->num_values);
+  procedural_db_destroy_args (vals, proc->num_values);
   g_free (args);
 
   return;

@@ -84,9 +84,9 @@ static void       gui_restore_after_callback    (Gimp               *gimp,
                                                  GimpInitStatusFunc  callback);
 
 static gboolean   gui_exit_callback             (Gimp               *gimp,
-                                                 gboolean            kill_it);
+                                                 gboolean            force);
 static gboolean   gui_exit_after_callback       (Gimp               *gimp,
-                                                 gboolean            kill_it);
+                                                 gboolean            force);
 static void       gui_really_quit_callback      (GtkWidget          *button,
                                                  gboolean            quit,
                                                  gpointer            data);
@@ -392,14 +392,14 @@ gui_restore_after_callback (Gimp               *gimp,
 
 static gboolean
 gui_exit_callback (Gimp     *gimp,
-                   gboolean  kill_it)
+                   gboolean  force)
 {
   GimpGuiConfig  *gui_config = GIMP_GUI_CONFIG (gimp->config);
 
   if (gimp->be_verbose)
     g_print ("EXIT: gui_exit_callback\n");
 
-  if (! kill_it && gimp_displays_dirty (gimp))
+  if (! force && gimp_displays_dirty (gimp))
     {
       GtkWidget *dialog;
 
@@ -446,7 +446,7 @@ gui_exit_callback (Gimp     *gimp,
 
 static gboolean
 gui_exit_after_callback (Gimp     *gimp,
-                         gboolean  kill_it)
+                         gboolean  force)
 {
   if (gimp->be_verbose)
     g_print ("EXIT: gui_exit_after_callback\n");

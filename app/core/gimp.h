@@ -202,7 +202,7 @@ struct _GimpClass
   void     (* restore)    (Gimp               *gimp,
                            GimpInitStatusFunc  status_callback);
   gboolean (* exit)       (Gimp               *gimp,
-                           gboolean            kill_it);
+                           gboolean            force);
 };
 
 
@@ -227,7 +227,7 @@ void          gimp_restore              (Gimp               *gimp,
                                          GimpInitStatusFunc  status_callback);
 
 void          gimp_exit                 (Gimp               *gimp,
-                                         gboolean            kill_it);
+                                         gboolean            force);
 
 void          gimp_threads_enter        (Gimp               *gimp);
 void          gimp_threads_leave        (Gimp               *gimp);

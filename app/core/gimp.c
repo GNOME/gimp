@@ -95,7 +95,7 @@ static void       gimp_real_initialize      (Gimp              *gimp,
 static void       gimp_real_restore         (Gimp              *gimp,
                                              GimpInitStatusFunc status_callback);
 static gboolean   gimp_real_exit            (Gimp              *gimp,
-                                             gboolean           kill_it);
+                                             gboolean           force);
 
 static void       gimp_global_config_notify (GObject           *global_config,
                                              GParamSpec        *param_spec,
@@ -684,7 +684,7 @@ gimp_real_restore (Gimp               *gimp,
 
 static gboolean
 gimp_real_exit (Gimp     *gimp,
-                gboolean  kill_it)
+                gboolean  force)
 {
   if (gimp->be_verbose)
     g_print ("EXIT: gimp_real_exit\n");
@@ -912,9 +912,17 @@ gimp_restore (Gimp               *gimp,
   g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);
 }
 
+/**
+ * gimp_exit:
+ * @gimp: a #Gimp object
+ * @force: whether to force the application to quit
+ *
+ * Exit this GIMP session. Unless @force is %TRUE, the user is queried
+ * whether unsaved images should be saved and can cancel the operation.
+ **/
 void
 gimp_exit (Gimp     *gimp,
-           gboolean  kill_it)
+           gboolean  force)
 {
   gboolean handled;
 
@@ -924,7 +932,7 @@ gimp_exit (Gimp     *gimp,
     g_print ("EXIT: gimp_exit\n");
 
   g_signal_emit (gimp, gimp_signals[EXIT], 0,
-                 kill_it ? TRUE : FALSE,
+                 force ? TRUE : FALSE,
                  &handled);
 }
 

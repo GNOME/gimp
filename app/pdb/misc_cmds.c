@@ -83,11 +83,11 @@ static Argument *
 quit_invoker (Gimp     *gimp,
               Argument *args)
 {
-  gboolean kill_it;
+  gboolean force;
 
-  kill_it = args[0].value.pdb_int ? TRUE : FALSE;
+  force = args[0].value.pdb_int ? TRUE : FALSE;
 
-  gimp_exit (gimp, kill_it);
+  gimp_exit (gimp, force);
 
   return procedural_db_return_args (&quit_proc, TRUE);
 }
@@ -96,8 +96,8 @@ static ProcArg quit_inargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "kill",
-    "Flag specifying whether to kill the gimp process or exit normally"
+    "force",
+    "Flag specifying whether to force the gimp to or exit normally"
   }
 };
 
@@ -105,7 +105,7 @@ static ProcRecord quit_proc =
 {
   "gimp_quit",
   "Causes the gimp to exit gracefully.",
-  "The internal procedure which can either be used to make the gimp quit normally, or to have the gimp clean up its resources and exit immediately. The normaly shutdown process allows for querying the user to save any dirty images.",
+  "The internal procedure which can either be used to make the gimp quit. If there are unsaved images in an interactive GIMP session, the user will be asked for confirmation. If force is TRUE, the application is quit without querying the user to save any dirty images.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

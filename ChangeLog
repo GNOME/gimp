@@ -1,5 +1,20 @@
 2003-11-30  Sven Neumann  <sven@gimp.org>
 
+	* app/batch.c: removed the hack that used to call gimp_exit() when
+	the batch command matches "(gimp-quit 0)". It shouldn't be needed.
+
+	* tools/pdbgen/pdb/misc.pdb
+	* app/core/gimp.[ch]
+	* app/gui/gui.c: renamed "kill_it" parameter to "force". We don't
+	kill the application any longer; this option is just about whether
+	to ask the user for confirmation or not.
+
+	* app/pdb/misc_cmds.c: regenerated.
+
+	* app/app_procs.c: cosmetics.
+
+2003-11-30  Sven Neumann  <sven@gimp.org>
+
 	* app/batch.[ch]: renamed batch_init() to batch_run(). Install an
 	Gimp::exit handler while batch commands are executed. This handler
 	simply calls exit(). Fixes bug #128199.

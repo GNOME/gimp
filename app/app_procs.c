@@ -68,8 +68,6 @@ static gboolean   app_exit_after_callback (Gimp        *gimp,
                                            GMainLoop   *loop);
 
 
-/*  private variables  */
-
 /*  public functions  */
 
 gboolean

@@ -42,22 +42,23 @@ sub quit {
     $blurb = 'Causes the gimp to exit gracefully.';
 
     $help = <<'HELP';
-The internal procedure which can either be used to make the gimp quit normally,
-or to have the gimp clean up its resources and exit immediately. The normaly
-shutdown process allows for querying the user to save any dirty images.
+The internal procedure which can either be used to make the gimp
+quit. If there are unsaved images in an interactive GIMP session, the
+user will be asked for confirmation. If force is TRUE, the application
+is quit without querying the user to save any dirty images.
 HELP
 
     &std_pdb_misc;
 
     @inargs = (
-	{ name => 'kill', type => 'boolean', alias => 'kill_it',
-	  desc => 'Flag specifying whether to kill the gimp process or exit
+	{ name => 'force', type => 'boolean',
+	  desc => 'Flag specifying whether to force the gimp to  or exit
 		   normally' }
     );
 
     %invoke = (
 	headers => [ qw("core/gimp.h") ],
-	code => 'gimp_exit (gimp, kill_it);'
+	code => 'gimp_exit (gimp, force);'
     );
 }
 
