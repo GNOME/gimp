@@ -1,6 +1,4 @@
 /*
- * "$Id$"
- *
  *   Despeckle (adaptive median) filter for The GIMP -- an image manipulation
  *   program
  *
@@ -52,7 +50,7 @@
 #define update_toggle    (despeckle_vals[4])    /* Update the preview? */
 
 #define VALUE_SWAP(a,b)   { register  gdouble t = (a); (a) = (b); (b) = t; }
-#define POINTER_SWAP(a,b) { register  guchar* t = (a); (a) = (b); (b) = t; }
+#define POINTER_SWAP(a,b) { register  guchar *t = (a); (a) = (b); (b) = t; }
 
 
 
@@ -615,7 +613,8 @@ despeckle_median (guchar   *src,
   guchar  **buf;
   guchar   *ibuf;
   guchar   *pixel;
-  gdouble   prog, maxprog;
+  guint     progress;
+  guint     max_progress;
 
   if (!preview)
     {
@@ -623,8 +622,8 @@ despeckle_median (guchar   *src,
       gimp_progress_update (0.0);
     }
 
-  maxprog  = width * height;
-  prog     = 0;
+  progress     = 0;
+  max_progress = width * height;
 
   diameter = (2 * radius) + 1;
   box      = SQR (diameter);
@@ -637,17 +636,19 @@ despeckle_median (guchar   *src,
         {
           hist0   = 0;
           hist255 = 0;
-          if (x >= radius && y >= radius &&
-              x + radius < width && y + radius < height)
+
+          if (x >= radius && x + radius < width  &&
+              y >= radius && y + radius < height)
             {
               /* Make sure Svm is ininialized to a sufficient large value */
               med = -1;
 
               for (jh = x - radius; jh <= x + radius; jh++)
                 {
-                  for (jv = y-radius, pos1 = 0; jv <= y+radius; jv++)
+                  for (jv = y - radius, pos1 = 0; jv <= y + radius; jv++)
                     {
                       pos2 = (jh + (jv * width)) * bpp;
+
                       if (src[pos2] > black_level && src[pos2] < white_level)
                         {
                           med++;
@@ -705,10 +706,10 @@ despeckle_median (guchar   *src,
             }
         }
 
-      prog += height;
+      progress += height;
 
-      if (!preview && x % 5 == 0)
-        gimp_progress_update (prog / maxprog);
+      if (!preview && x % 20 == 0)
+        gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
     }
 
   if (!preview)

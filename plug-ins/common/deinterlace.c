@@ -274,7 +274,7 @@ deinterlace (GimpDrawable *drawable,
         {
           gimp_pixel_rgn_set_row (&destPR, dest, x1, row, width);
 
-          if ((row % 5) == 0)
+          if ((row % 20) == 0)
             gimp_progress_update ((double) row / (double) (height));
         }
     }

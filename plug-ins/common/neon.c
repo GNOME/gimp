@@ -381,7 +381,8 @@ neon (GimpDrawable *drawable,
           gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
 
           progress += height * radius;
-          if ((col % 5) == 0)
+
+          if ((col % 20) == 0)
             gimp_progress_update ((double) progress / (double) max_progress);
         }
     }
@@ -470,7 +471,7 @@ neon (GimpDrawable *drawable,
           gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
 
           progress += width * radius;
-          if ((row % 5) == 0)
+          if ((row % 20) == 0)
             gimp_progress_update ((double) progress / (double) max_progress);
         }
     }

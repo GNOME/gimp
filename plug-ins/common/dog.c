@@ -682,7 +682,7 @@ gauss_rle (GimpDrawable *drawable,
                        TRUE, TRUE);
 
   progress = 0.0;
-  max_progress  = 2 * width * height * radius;
+  max_progress  = 2 * width * height;
 
   /*  First the vertical pass  */
   radius = fabs (radius) + 1.0;
@@ -757,10 +757,10 @@ gauss_rle (GimpDrawable *drawable,
 
       if (show_progress)
         {
-          progress += height * radius;
+          progress += height;
 
-          if ((col % 5) == 0)
-            gimp_progress_update (0.5 * (pass + progress / max_progress));
+          if ((col % 20) == 0)
+            gimp_progress_update (0.5 * (pass + (progress / max_progress)));
         }
     }
 
@@ -826,10 +826,10 @@ gauss_rle (GimpDrawable *drawable,
 
       if (show_progress)
         {
-          progress += width * radius;
+          progress += width;
 
-          if ((row % 5) == 0)
-            gimp_progress_update (0.5 * (pass + progress / max_progress));
+          if ((row % 20) == 0)
+            gimp_progress_update (0.5 * (pass + (progress / max_progress)));
         }
     }
 

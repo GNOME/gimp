@@ -282,7 +282,7 @@ laplace (GimpDrawable *drawable)
       cr = nr;
       nr = tmp;
 
-      if ((row % 5) == 0)
+      if ((row % 20) == 0)
 	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
     }
 
@@ -347,7 +347,7 @@ laplace (GimpDrawable *drawable)
       cr = nr;
       nr = tmp;
 
-      if ((row % 5) == 0)
+      if ((row % 20) == 0)
 	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
     }
 
