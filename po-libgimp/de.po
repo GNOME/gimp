@@ -2,13 +2,13 @@
 # Copyright (C) 1999,2000 Free Software Foundation, Inc.
 #
 # Daniel Egger <Daniel.Egger@suse.de>, 2000.
-# Sven Neumann <sven@gimp.org>, 2000.
+# Sven Neumann <sven@gimp.org>, 2000 - 2002.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.3.6\n"
-"POT-Creation-Date: 2002-05-29 12:29+0200\n"
-"PO-Revision-Date: 2002-05-13 15:15+0200\n"
+"Project-Id-Version: GIMP 1.3.7\n"
+"POT-Creation-Date: 2002-05-30 15:35+0200\n"
+"PO-Revision-Date: 2002-05-30 15:36+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -260,9 +260,8 @@ msgstr ""
 "wiederholen"
 
 #: libgimpwidgets/gimpwidgets.c:850
-#, fuzzy
 msgid "_Time"
-msgstr "Zeit"
+msgstr "_Zeit"
 
 #: libgimpwidgets/gimpwidgets.c:859
 msgid ""
@@ -285,6 +284,5 @@ msgid "MegaBytes"
 msgstr "MegaByte"
 
 #: libgimpwidgets/gimpwidgets.c:1178
-#, fuzzy
 msgid "GigaBytes"
-msgstr "MegaByte"
+msgstr "GigaByte"
