@@ -1,3 +1,12 @@
+2001-03-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/Makefile.am
+	* app/tools/gimpselectiontool.[ch]: new files ported by
+	Dave Neary <dneary@eircom.net>. Changed them a bit to inherit
+	from GimpDrawTool and added implementations of "modifier_key"
+	and "oper_update" because they are shared by 4 of the old
+	selection tools.
+
 2001-03-01  Daniel Egger  <egger@suse.de>
 
 	* app/fileops.c: Applied patch from Dave Neary to fix
