@@ -513,11 +513,14 @@ gimp_template_editor_new (GimpTemplate *template,
 
   if (edit_template)
     {
-      GtkWidget *table;
-      GtkWidget *entry;
-      GtkWidget *button;
-      GSList    *stock_list;
-      GSList    *list;
+      GtkWidget   *table;
+      GtkWidget   *entry;
+      GtkWidget   *button;
+      GSList      *stock_list;
+      GSList      *list;
+      const gchar *stock_id;
+
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (editor->template));
 
       editor->stock_id_container = gimp_list_new (GIMP_TYPE_TEMPLATE,
                                                   GIMP_CONTAINER_POLICY_STRONG);
@@ -538,6 +541,9 @@ gimp_template_editor_new (GimpTemplate *template,
 
           gimp_container_add (editor->stock_id_container, object);
           g_object_unref (object);
+
+          if (strcmp (list->data, stock_id) == 0)
+            gimp_context_set_template (editor->stock_id_context, object);
         }
 
       g_slist_foreach (stock_list, (GFunc) g_free, NULL);
