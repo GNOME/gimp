@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-12 20:28+0200\n"
-"PO-Revision-Date: 2003-07-13 04:02+0200\n"
-"Last-Translator: Francisco Javier F. Serrador <serrador@arrakis.es>\n"
+"POT-Creation-Date: 2003-07-20 12:00+0200\n"
+"PO-Revision-Date: 2003-07-22 15:23-0300\n"
+"Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.0.1\n"
+"X-Generator: KBabel 1.0\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:295
 #: plug-ins/FractalExplorer/Dialogs.c:1401 plug-ins/gfig/gfig.c:3216
@@ -398,7 +398,7 @@ msgstr "Fractales"
 #: plug-ins/common/pcx.c:579 plug-ins/common/pix.c:514
 #: plug-ins/common/png.c:936 plug-ins/common/ps.c:995
 #: plug-ins/common/psd_save.c:1527 plug-ins/common/sunras.c:520
-#: plug-ins/common/tiff.c:1389 plug-ins/common/xbm.c:1002
+#: plug-ins/common/tiff.c:1516 plug-ins/common/xbm.c:1002
 #: plug-ins/common/xwd.c:529 plug-ins/fits/fits.c:461
 #: plug-ins/flame/flame.c:460 plug-ins/gfli/gfli.c:712
 #, c-format
@@ -460,7 +460,7 @@ msgstr "Pulse aquí para cancelar procedimiento de guardar"
 #: plug-ins/common/pnm.c:407 plug-ins/common/ps.c:875
 #: plug-ins/common/psd.c:1660 plug-ins/common/psp.c:1490
 #: plug-ins/common/sunras.c:393 plug-ins/common/tga.c:425
-#: plug-ins/common/tiff.c:437 plug-ins/common/xbm.c:730
+#: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:730
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:218
 #: plug-ins/fits/fits.c:349 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:460
 #, c-format
@@ -1186,7 +1186,7 @@ msgstr "Mapa de colores malo"
 #: plug-ins/common/png.c:493 plug-ins/common/pnm.c:411
 #: plug-ins/common/ps.c:881 plug-ins/common/psd.c:1664
 #: plug-ins/common/sunras.c:444 plug-ins/common/tga.c:429
-#: plug-ins/common/tiff.c:441 plug-ins/common/xbm.c:734
+#: plug-ins/common/tiff.c:447 plug-ins/common/xbm.c:734
 #: plug-ins/common/xpm.c:334 plug-ins/common/xwd.c:432
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:464 plug-ins/sgi/sgi.c:322
 #: plug-ins/xjt/xjt.c:3355
@@ -1224,7 +1224,7 @@ msgstr ""
 #: plug-ins/common/pix.c:373 plug-ins/common/png.c:617
 #: plug-ins/common/pnm.c:490 plug-ins/common/psd.c:2005
 #: plug-ins/common/smooth_palette.c:253 plug-ins/common/sunras.c:931
-#: plug-ins/common/tga.c:925 plug-ins/common/tiff.c:658
+#: plug-ins/common/tga.c:925 plug-ins/common/tiff.c:675
 #: plug-ins/common/tile.c:278 plug-ins/common/winclipboard.c:556
 #: plug-ins/common/wmf.c:2141 plug-ins/common/xbm.c:873
 #: plug-ins/faxg3/faxg3.c:462 plug-ins/fits/fits.c:517
@@ -1246,7 +1246,7 @@ msgstr "No se puede operar en tipos de imagen desconocidos o con imágenes alfa"
 #: plug-ins/common/png.c:943 plug-ins/common/pnm.c:787
 #: plug-ins/common/ps.c:1000 plug-ins/common/psd_save.c:1532
 #: plug-ins/common/sunras.c:525 plug-ins/common/tga.c:1031
-#: plug-ins/common/tiff.c:1394 plug-ins/common/xbm.c:1007
+#: plug-ins/common/tiff.c:1521 plug-ins/common/xbm.c:1007
 #: plug-ins/common/xpm.c:595 plug-ins/common/xwd.c:534
 #: plug-ins/gfli/gfli.c:680 plug-ins/sgi/sgi.c:535 plug-ins/xjt/xjt.c:1725
 #, c-format
@@ -1267,8 +1267,8 @@ msgid "_RLE encoded"
 msgstr "Codificado _RLE"
 
 #: plug-ins/common/AlienMap.c:941
-msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr "<Image>/Filtros/Colores/Mapa/Mapa alienigena..."
+msgid "<Image>/Filters/Colors/Map/_Alien Map..."
+msgstr "<Image>/Filtros/Colores/Mapa/Mapa _alienigena..."
 
 #: plug-ins/common/AlienMap.c:1084
 msgid "AlienMap: Transforming..."
@@ -1323,7 +1323,7 @@ msgid "Cos_ine"
 msgstr "Co_seno"
 
 #: plug-ins/common/AlienMap.c:1235 plug-ins/common/AlienMap.c:1258
-#: plug-ins/common/AlienMap.c:1281 plug-ins/common/tiff.c:1657
+#: plug-ins/common/AlienMap.c:1281 plug-ins/common/tiff.c:1805
 msgid "_None"
 msgstr "_Ninguno"
 
@@ -1370,8 +1370,8 @@ msgid "About AlienMap"
 msgstr "Acerca del mapa alienigena"
 
 #: plug-ins/common/AlienMap2.c:949
-msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr "<Image>/Filtros/Colores/Mapa/Mapa alienigena 2..."
+msgid "<Image>/Filters/Colors/Map/Alien Map _2..."
+msgstr "<Image>/Filtros/Colores/Mapa/Mapa alienigena _2..."
 
 #: plug-ins/common/AlienMap2.c:1074
 msgid "AlienMap2: Transforming..."
@@ -2088,8 +2088,8 @@ msgid "_Grid Size:"
 msgstr "Tamaño de re_jilla:"
 
 #: plug-ins/common/animationplay.c:241
-msgid "<Image>/Filters/Animation/Animation Playback..."
-msgstr "<Image>/Filtros/Animación/Reproducir animación..."
+msgid "<Image>/Filters/Animation/Animation _Playback..."
+msgstr "<Image>/Filtros/Animación/Re_producir animación..."
 
 #: plug-ins/common/animationplay.c:544
 msgid "Animation Playback: "
@@ -2118,20 +2118,20 @@ msgid "Frame %d of %d"
 msgstr "Cuadro %d de %d"
 
 #: plug-ins/common/animoptimize.c:176
-msgid "<Image>/Filters/Animation/Animation Optimize"
-msgstr "<Image>/Filtros/Animación/Optimizar la animación"
+msgid "<Image>/Filters/Animation/Animation _Optimize"
+msgstr "<Image>/Filtros/Animación/_Optimizar la animación"
 
 #: plug-ins/common/animoptimize.c:193
-msgid "<Image>/Filters/Animation/Animation UnOptimize"
-msgstr "<Image>/Filtros/Animación/Desoptimizar la animación"
+msgid "<Image>/Filters/Animation/Animation _UnOptimize"
+msgstr "<Image>/Filtros/Animación/Des_optimizar la animación"
 
 #: plug-ins/common/animoptimize.c:208
-msgid "<Image>/Filters/Animation/Animation: Remove Backdrop"
-msgstr "<Image>/Filtros/Animación/Animación: quitar telón de fondo"
+msgid "<Image>/Filters/Animation/Animation: _Remove Backdrop"
+msgstr "<Image>/Filtros/Animación/Animación: quita_r telón de fondo"
 
 #: plug-ins/common/animoptimize.c:224
-msgid "<Image>/Filters/Animation/Animation: Find Backdrop"
-msgstr "<Image>/Filtros/Animación/Animación: buscar telón de fondo"
+msgid "<Image>/Filters/Animation/Animation: _Find Backdrop"
+msgstr "<Image>/Filtros/Animación/Animación: buscar telón de _fondo"
 
 #: plug-ins/common/animoptimize.c:423
 msgid "UnOptimizing Animation..."
@@ -2154,8 +2154,8 @@ msgid "Not enough memory to allocate buffers for optimization.\n"
 msgstr "No hay memoria suficiente para alojar búferes para optimización.\n"
 
 #: plug-ins/common/apply_lens.c:131
-msgid "<Image>/Filters/Glass Effects/Apply Lens..."
-msgstr "<Image>/Filtros/Efectos de cristal/Aplicar el lente..."
+msgid "<Image>/Filters/Glass Effects/Apply _Lens..."
+msgstr "<Image>/Filtros/Efectos de cristal/Aplicar los _lentes..."
 
 #: plug-ins/common/apply_lens.c:195
 msgid "Applying lens..."
@@ -2186,24 +2186,24 @@ msgid "_Lens Refraction Index:"
 msgstr "Índice de refracción de los _lentes:"
 
 #: plug-ins/common/autocrop.c:75
-msgid "<Image>/Image/Transform/Autocrop"
-msgstr "<Image>/Imagen/Transformaciones/Recorte automático"
+msgid "<Image>/Image/Transform/_Autocrop"
+msgstr "<Image>/Imagen/Transformaciones/Recorte _automático"
 
 #: plug-ins/common/autocrop.c:120
 msgid "Cropping..."
 msgstr "Recortando..."
 
 #: plug-ins/common/autostretch_hsv.c:92
-msgid "<Image>/Layer/Colors/Auto/Stretch HSV"
-msgstr "<Image>/Capa/Colores/Auto/Estirar HSV"
+msgid "<Image>/Layer/Colors/Auto/Stretch _HSV"
+msgstr "<Image>/Capa/Colores/Auto/Estirar _HSV"
 
 #: plug-ins/common/autostretch_hsv.c:124
 msgid "Auto-Stretching HSV..."
 msgstr "Auto-estirando HSV..."
 
 #: plug-ins/common/blinds.c:185
-msgid "<Image>/Filters/Distorts/Blinds..."
-msgstr "<Image>/Filtros/Distorsión/Persiana..."
+msgid "<Image>/Filters/Distorts/_Blinds..."
+msgstr "<Image>/Filtros/Distorsión/_Persiana..."
 
 #: plug-ins/common/blinds.c:274
 msgid "Adding Blinds..."
@@ -2243,8 +2243,8 @@ msgid "_Num Segments:"
 msgstr "_Nro. de segmentos:"
 
 #: plug-ins/common/blur.c:196
-msgid "<Image>/Filters/Blur/Blur..."
-msgstr "<Image>/Filtros/Desenfoque/Desenfoque..."
+msgid "<Image>/Filters/Blur/_Blur..."
+msgstr "<Image>/Filtros/Desenfoque/_Desenfoque..."
 
 #.
 #. *  JUST DO IT!
@@ -2275,8 +2275,8 @@ msgid "Number of times to apply filter"
 msgstr "Número de veces a aplicar filtro"
 
 #: plug-ins/common/borderaverage.c:99
-msgid "<Image>/Filters/Colors/Border Average..."
-msgstr "<Image>/Filtros/Colores/Promedio del borde..."
+msgid "<Image>/Filters/Colors/_Border Average..."
+msgstr "<Image>/Filtros/Colores/Promedio del _borde..."
 
 #: plug-ins/common/borderaverage.c:162
 msgid "Border Average..."
@@ -2308,8 +2308,8 @@ msgid "256 (nonsense?)"
 msgstr "256 (¿una tontería?)"
 
 #: plug-ins/common/bumpmap.c:376
-msgid "<Image>/Filters/Map/Bump Map..."
-msgstr "<Image>/Filtros/Mapa/Mapa de relieve..."
+msgid "<Image>/Filters/Map/_Bump Map..."
+msgstr "<Image>/Filtros/Mapa/Mapa de _relieve..."
 
 #: plug-ins/common/bumpmap.c:528
 msgid "Bump-mapping..."
@@ -2383,16 +2383,16 @@ msgid "Can't open bzip2ed file without a sensible extension"
 msgstr "No se puede abrir un archivo comprimido con bzip2 sin una extensión clara"
 
 #: plug-ins/common/c_astretch.c:88
-msgid "<Image>/Layer/Colors/Auto/Stretch Contrast"
-msgstr "<Image>/Capa/Colores/Auto/Estirar contraste"
+msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
+msgstr "<Image>/Capa/Colores/Auto/E_stirar contraste"
 
 #: plug-ins/common/c_astretch.c:120
 msgid "Auto-Stretching Contrast..."
 msgstr "Auto-estirando contraste..."
 
 #: plug-ins/common/checkerboard.c:104
-msgid "<Image>/Filters/Render/Pattern/Checkerboard..."
-msgstr "<Image>/Filtros/Renderizado/Patrón/Tablero de ajedrez..."
+msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
+msgstr "<Image>/Filtros/Renderizado/Patrón/Tablero de a_jedrez..."
 
 #: plug-ins/common/checkerboard.c:169
 msgid "Adding Checkerboard..."
@@ -2413,16 +2413,16 @@ msgid "_Size:"
 msgstr "T_amaño:"
 
 #: plug-ins/common/color_enhance.c:92
-msgid "<Image>/Layer/Colors/Auto/Color Enhance"
-msgstr "<Image>/Capa/Colores/Auto/Realce de color"
+msgid "<Image>/Layer/Colors/Auto/_Color Enhance"
+msgstr "<Image>/Capa/Colores/Auto/Realce de _color"
 
 #: plug-ins/common/color_enhance.c:124
 msgid "Color Enhance..."
 msgstr "Realzando colores..."
 
 #: plug-ins/common/colorify.c:132
-msgid "<Image>/Filters/Colors/Colorify..."
-msgstr "<Image>/Filtros/Colores/Colorear..."
+msgid "<Image>/Filters/Colors/_Colorify..."
+msgstr "<Image>/Filtros/Colores/_Colorear..."
 
 #: plug-ins/common/colorify.c:190
 msgid "Colorifying..."
@@ -2448,8 +2448,8 @@ msgid "Colorify Custom Color"
 msgstr "Colorear con color personalizado"
 
 #: plug-ins/common/colortoalpha.c:108
-msgid "<Image>/Filters/Colors/Color to Alpha..."
-msgstr "<Image>/Filtros/Colores/Color a alfa..."
+msgid "<Image>/Filters/Colors/Color to _Alpha..."
+msgstr "<Image>/Filtros/Colores/Color a _alfa..."
 
 #: plug-ins/common/colortoalpha.c:181
 msgid "Removing color..."
@@ -2659,8 +2659,8 @@ msgid "Cro_p"
 msgstr "Recorta_r"
 
 #: plug-ins/common/convmatrix.c:193
-msgid "<Image>/Filters/Generic/Convolution Matrix..."
-msgstr "<Image>/Filtros/Genérico/Matriz de convolución..."
+msgid "<Image>/Filters/Generic/_Convolution Matrix..."
+msgstr "<Image>/Filtros/Genérico/Matriz de _convolución..."
 
 #: plug-ins/common/convmatrix.c:227
 msgid ""
@@ -2753,8 +2753,8 @@ msgid "Op_acity:"
 msgstr "Op_acidad:"
 
 #: plug-ins/common/cubism.c:157
-msgid "<Image>/Filters/Artistic/Cubism..."
-msgstr "<Image>/Filtros/Artístico/Cubismo..."
+msgid "<Image>/Filters/Artistic/_Cubism..."
+msgstr "<Image>/Filtros/Artístico/_Cubismo..."
 
 #: plug-ins/common/cubism.c:264
 msgid "Cubism"
@@ -2793,8 +2793,8 @@ msgid "Free"
 msgstr "Libre"
 
 #: plug-ins/common/curve_bend.c:682
-msgid "<Image>/Filters/Distorts/CurveBend..."
-msgstr "<Image>/Filtros/Distorsión/Doblar según curva..."
+msgid "<Image>/Filters/Distorts/_CurveBend..."
+msgstr "<Image>/Filtros/Distorsión/Doblar según _curva..."
 
 #: plug-ins/common/curve_bend.c:811
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
@@ -3046,8 +3046,8 @@ msgid "redness_cr709f"
 msgstr "redness_cr709f"
 
 #: plug-ins/common/decompose.c:229
-msgid "<Image>/Filters/Colors/Decompose..."
-msgstr "<Image>/Filtros/Colores/Descomponer..."
+msgid "<Image>/Filters/Colors/_Decompose..."
+msgstr "<Image>/Filtros/Colores/_Descomponer..."
 
 #: plug-ins/common/decompose.c:310
 msgid "Decomposing..."
@@ -3063,8 +3063,8 @@ msgid "Extract Channels:"
 msgstr "Extraer canales:"
 
 #: plug-ins/common/deinterlace.c:91
-msgid "<Image>/Filters/Enhance/Deinterlace..."
-msgstr "<Image>/Filtros/Realce/Desentrelazar..."
+msgid "<Image>/Filters/Enhance/_Deinterlace..."
+msgstr "<Image>/Filtros/Realce/_Desentrelazar..."
 
 #: plug-ins/common/deinterlace.c:146
 msgid "Deinterlace..."
@@ -3083,8 +3083,8 @@ msgid "Keep _Even Fields"
 msgstr "Mant_ener los campos pares"
 
 #: plug-ins/common/depthmerge.c:202
-msgid "<Image>/Filters/Combine/Depth Merge..."
-msgstr "<Image>/Filtros/Combinar/Mezcla con profundidad..."
+msgid "<Image>/Filters/Combine/_Depth Merge..."
+msgstr "<Image>/Filtros/Combinar/Mezcla con profun_didad..."
 
 #: plug-ins/common/depthmerge.c:392
 msgid "Depth-merging..."
@@ -3124,8 +3124,8 @@ msgid "Scale 2:"
 msgstr "Escala 2:"
 
 #: plug-ins/common/despeckle.c:186
-msgid "<Image>/Filters/Enhance/Despeckle..."
-msgstr "<Image>/Filtros/Realce/Desparasitar..."
+msgid "<Image>/Filters/Enhance/Des_peckle..."
+msgstr "<Image>/Filtros/Realce/Des_parasitar..."
 
 #. Source image region
 #. Destination image region
@@ -3192,8 +3192,8 @@ msgid "_White Level:"
 msgstr "Ni_vel de blanco:"
 
 #: plug-ins/common/destripe.c:149
-msgid "<Image>/Filters/Enhance/Destripe..."
-msgstr "<Image>/Filtros/Realce/Anti-bandas..."
+msgid "<Image>/Filters/Enhance/Des_tripe..."
+msgstr "<Image>/Filtros/Realce/Anti-_bandas..."
 
 #: plug-ins/common/destripe.c:348
 msgid "Destriping..."
@@ -3216,8 +3216,8 @@ msgid "_Width:"
 msgstr "A_nchura:"
 
 #: plug-ins/common/diffraction.c:189
-msgid "<Image>/Filters/Render/Pattern/Diffraction Patterns..."
-msgstr "<Image>/Filtros/Renderizado/Patrón/Patrones de difracción..."
+msgid "<Image>/Filters/Render/Pattern/_Diffraction Patterns..."
+msgstr "<Image>/Filtros/Renderizado/Patrón/Patrones de _difracción..."
 
 #: plug-ins/common/diffraction.c:331
 msgid "Creating diffraction pattern..."
@@ -3256,8 +3256,8 @@ msgid "O_ther options"
 msgstr "O_tras opciones"
 
 #: plug-ins/common/displace.c:163
-msgid "<Image>/Filters/Map/Displace..."
-msgstr "<Image>/Filtros/Mapa/Desplazar..."
+msgid "<Image>/Filters/Map/_Displace..."
+msgstr "<Image>/Filtros/Mapa/_Desplazar..."
 
 #: plug-ins/common/displace.c:235
 msgid "Displacing..."
@@ -3300,8 +3300,8 @@ msgid "_Black"
 msgstr "_Negro"
 
 #: plug-ins/common/edge.c:134
-msgid "<Image>/Filters/Edge-Detect/Edge..."
-msgstr "<Image>/Filtros/Detectar bordes/Borde..."
+msgid "<Image>/Filters/Edge-Detect/_Edge..."
+msgstr "<Image>/Filtros/Detectar bordes/Bord_e..."
 
 #: plug-ins/common/edge.c:201
 msgid "Edge Detection..."
@@ -3316,8 +3316,8 @@ msgid "_Amount:"
 msgstr "C_antidad:"
 
 #: plug-ins/common/emboss.c:154
-msgid "<Image>/Filters/Distorts/Emboss..."
-msgstr "<Image>/Filtros/Distorsión/Repujado..."
+msgid "<Image>/Filters/Distorts/_Emboss..."
+msgstr "<Image>/Filtros/Distorsión/R_epujado..."
 
 #: plug-ins/common/emboss.c:397 plug-ins/common/emboss.c:500
 msgid "Emboss"
@@ -3344,8 +3344,8 @@ msgid "Do _Preview"
 msgstr "_Previsualizar"
 
 #: plug-ins/common/engrave.c:118
-msgid "<Image>/Filters/Distorts/Engrave..."
-msgstr "<Image>/Filtros/Distorsión/Grabado..."
+msgid "<Image>/Filters/Distorts/En_grave..."
+msgstr "<Image>/Filtros/Distorsión/_Grabado..."
 
 #: plug-ins/common/engrave.c:189
 msgid "Engraving..."
@@ -3369,8 +3369,8 @@ msgstr "A_ltura:"
 
 # //R ¿Intercambio o cambio a secas?
 #: plug-ins/common/exchange.c:140
-msgid "<Image>/Filters/Colors/Map/Color Exchange..."
-msgstr "<Image>/Filtros/Colores/Mapa/Intercambio de color..."
+msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
+msgstr "<Image>/Filtros/Colores/Mapa/Intercambio de _color..."
 
 #: plug-ins/common/exchange.c:242
 msgid "Color Exchange..."
@@ -3418,8 +3418,8 @@ msgid "Lock Thresholds"
 msgstr "Fijar umbrales"
 
 #: plug-ins/common/film.c:252
-msgid "<Image>/Filters/Combine/Film..."
-msgstr "<Image>/Filtros/Combinar/Película..."
+msgid "<Image>/Filters/Combine/_Film..."
+msgstr "<Image>/Filtros/Combinar/_Película..."
 
 #: plug-ins/common/film.c:338
 msgid "Composing Images..."
@@ -3536,8 +3536,8 @@ msgstr "Altura del _número:"
 #. don't translate '<Image>' entry,
 #. * it is keyword for the gtk toolkit
 #: plug-ins/common/flarefx.c:202
-msgid "<Image>/Filters/Light Effects/FlareFX..."
-msgstr "<Image>/Filtros/Efectos de luz/Destello FX..."
+msgid "<Image>/Filters/Light Effects/_FlareFX..."
+msgstr "<Image>/Filtros/Efectos de luz/Destello _FX..."
 
 #: plug-ins/common/flarefx.c:274
 msgid "Render Flare..."
@@ -3558,8 +3558,8 @@ msgid "_Show Cursor"
 msgstr "Mo_strar el cursor"
 
 #: plug-ins/common/fractaltrace.c:130
-msgid "<Image>/Filters/Map/Fractal Trace..."
-msgstr "<Image>/Filtros/Mapa/Huella fractal..."
+msgid "<Image>/Filters/Map/_Fractal Trace..."
+msgstr "<Image>/Filtros/Mapa/Huella _fractal..."
 
 #: plug-ins/common/fractaltrace.c:468 plug-ins/common/fractaltrace.c:750
 msgid "Fractal Trace"
@@ -3599,8 +3599,8 @@ msgid "Y_2:"
 msgstr "Y_2:"
 
 #: plug-ins/common/gauss_iir.c:177
-msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
-msgstr "<Image>/Filtros/Desenfoque/Desenfoque gaussiano (IIR)..."
+msgid "<Image>/Filters/Blur/Gaussian Blur (_IIR)..."
+msgstr "<Image>/Filtros/Desenfoque/Desenfoque gaussiano (_IIR)..."
 
 #: plug-ins/common/gauss_iir.c:249
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
@@ -3641,8 +3641,8 @@ msgid "_Vertical:"
 msgstr "_Vertical:"
 
 #: plug-ins/common/gauss_rle.c:171
-msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
-msgstr "<Image>/Filtros/Desenfoque/Desenfoque gaussiano (RLE)..."
+msgid "<Image>/Filters/Blur/Gaussian Blur (_RLE)..."
+msgstr "<Image>/Filtros/Desenfoque/Desenfoque gaussiano (_RLE)..."
 
 #: plug-ins/common/gauss_rle.c:242
 msgid "You must specify either horizontal or vertical (or both)"
@@ -3691,8 +3691,8 @@ msgid "Description:"
 msgstr "Descripción:"
 
 #: plug-ins/common/gee.c:103
-msgid "<Image>/Filters/Toys/Gee-Slime"
-msgstr "<Image>/Filtros/Juguetes/¡Oh! Viscoso"
+msgid "<Image>/Filters/Toys/Gee-_Slime"
+msgstr "<Image>/Filtros/Juguetes/¡Oh! Vi_scoso"
 
 #: plug-ins/common/gee.c:174
 msgid "GEE-SLIME"
@@ -3712,8 +3712,8 @@ msgstr ""
 "org & 1998-2000"
 
 #: plug-ins/common/gee_zoom.c:139
-msgid "<Image>/Filters/Toys/Gee-Zoom"
-msgstr "<Image>/Filtros/Juguetes/Gee-Zoom"
+msgid "<Image>/Filters/Toys/Gee-_Zoom"
+msgstr "<Image>/Filtros/Juguetes/Gee-_Zoom"
 
 #: plug-ins/common/gee_zoom.c:205
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
@@ -3940,8 +3940,8 @@ msgid "Frame %d (%dms)"
 msgstr "Cuadro %d (%dms)"
 
 #: plug-ins/common/glasstile.c:123
-msgid "<Image>/Filters/Glass Effects/Glass Tile..."
-msgstr "<Image>/Filtros/Efectos de cristal/Mosaico de cristal..."
+msgid "<Image>/Filters/Glass Effects/_Glass Tile..."
+msgstr "<Image>/Filtros/Efectos de cristal/_Mosaico de cristal..."
 
 #: plug-ins/common/glasstile.c:199
 msgid "Glass Tile..."
@@ -3960,8 +3960,8 @@ msgid "Tile _Height:"
 msgstr "A_ltura del mosaico:"
 
 #: plug-ins/common/gqbist.c:438
-msgid "<Image>/Filters/Render/Pattern/Qbist..."
-msgstr "<Image>/Filtros/Renderizado/Patrón/Qbista..."
+msgid "<Image>/Filters/Render/Pattern/_Qbist..."
+msgstr "<Image>/Filtros/Renderizado/Patrón/_Qbista..."
 
 #: plug-ins/common/gqbist.c:535
 msgid "Qbist ..."
@@ -3980,16 +3980,16 @@ msgid "G-Qbist 1.12"
 msgstr "G-Qbist 1.12"
 
 #: plug-ins/common/gradmap.c:121
-msgid "<Image>/Filters/Colors/Map/Gradient Map"
-msgstr "<Image>/Filtros/Colores/Mapa/Aplicar gradiente"
+msgid "<Image>/Filters/Colors/Map/_Gradient Map"
+msgstr "<Image>/Filtros/Colores/Mapa/Aplicar _gradiente"
 
 #: plug-ins/common/gradmap.c:156
 msgid "Gradient Map..."
 msgstr "Mapa de gradiente..."
 
 #: plug-ins/common/grid.c:152
-msgid "<Image>/Filters/Render/Pattern/Grid..."
-msgstr "<Image>/Filtros/Renderizado/Patrón/Rejilla..."
+msgid "<Image>/Filters/Render/Pattern/_Grid..."
+msgstr "<Image>/Filtros/Renderizado/Patrón/Re_jilla..."
 
 #: plug-ins/common/grid.c:239
 msgid "Drawing Grid..."
@@ -4169,8 +4169,8 @@ msgid "The amount of cellspacing."
 msgstr "La cantidad de espaciado de celdas."
 
 #: plug-ins/common/guillotine.c:79
-msgid "<Image>/Image/Transform/Guillotine"
-msgstr "<Image>/Imagen/Transformación/Guillotina"
+msgid "<Image>/Image/Transform/_Guillotine"
+msgstr "<Image>/Imagen/Transformación/_Guillotina"
 
 #: plug-ins/common/guillotine.c:110
 msgid "Guillotine..."
@@ -4185,8 +4185,8 @@ msgid "No sensible extension, attempting to load with file magic"
 msgstr "No hay una extensión razonable, intentando cargar con detección mágica"
 
 #: plug-ins/common/hot.c:217
-msgid "<Image>/Filters/Colors/Hot..."
-msgstr "<Image>/Filtros/Colores/Caliente..."
+msgid "<Image>/Filters/Colors/_Hot..."
+msgstr "<Image>/Filtros/Colores/Ca_liente..."
 
 #: plug-ins/common/hot.c:377
 msgid "Hot..."
@@ -4230,8 +4230,8 @@ msgid "Image must be RGB or GRAY"
 msgstr "La imagen debe ser RGB o GRIS"
 
 #: plug-ins/common/illusion.c:103
-msgid "<Image>/Filters/Map/Illusion..."
-msgstr "<Image>/Filtros/Mapa/Espejismo..."
+msgid "<Image>/Filters/Map/_Illusion..."
+msgstr "<Image>/Filtros/Mapa/Espej_ismo..."
 
 #: plug-ins/common/illusion.c:175
 msgid "Illusion..."
@@ -4254,8 +4254,8 @@ msgid "Mode _2"
 msgstr "Modo _2"
 
 #: plug-ins/common/iwarp.c:259
-msgid "<Image>/Filters/Distorts/IWarp..."
-msgstr "<Image>/Filtros/Distorsión/Deformación interactiva..."
+msgid "<Image>/Filters/Distorts/_IWarp..."
+msgstr "<Image>/Filtros/Distorsión/Deformación _interactiva..."
 
 #: plug-ins/common/iwarp.c:679
 msgid "Warping..."
@@ -4352,8 +4352,8 @@ msgid "IWarp"
 msgstr "Deformación Interactiva"
 
 #: plug-ins/common/jigsaw.c:409
-msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
-msgstr "<Image>/Filtros/Renderizado/Patrón/Recorte..."
+msgid "<Image>/Filters/Render/Pattern/_Jigsaw..."
+msgstr "<Image>/Filtros/Renderizado/Patrón/_Recorte..."
 
 #: plug-ins/common/jigsaw.c:464
 msgid "Assembling Jigsaw..."
@@ -4500,8 +4500,8 @@ msgid "Image comments"
 msgstr "Comentarios de de la imagen"
 
 #: plug-ins/common/laplace.c:95
-msgid "<Image>/Filters/Edge-Detect/Laplace"
-msgstr "<Image>/Filtros/Detectar bordes/Laplace"
+msgid "<Image>/Filters/Edge-Detect/_Laplace"
+msgstr "<Image>/Filtros/Detectar bordes/_Laplace"
 
 #: plug-ins/common/laplace.c:225
 msgid "Laplace..."
@@ -4580,12 +4580,12 @@ msgid "M_aximum Value:"
 msgstr "Valor m_áximo:"
 
 #: plug-ins/common/lic.c:896
-msgid "<Image>/Filters/Map/Van Gogh (LIC)..."
-msgstr "<Image>/Filtros/Mapa/Van Gogh (LIC)..."
+msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
+msgstr "<Image>/Filtros/Mapa/_Van Gogh (LIC)..."
 
 #: plug-ins/common/mail.c:220
-msgid "<Image>/File/Mail Image..."
-msgstr "<Image>/Archivo/Enviar imagen..."
+msgid "<Image>/File/_Mail Image..."
+msgstr "<Image>/Archivo/En_viar imagen..."
 
 #: plug-ins/common/mail.c:463
 msgid "Send to Mail"
@@ -4603,7 +4603,7 @@ msgstr "Remitente:"
 msgid "Subject:"
 msgstr "Tema:"
 
-#: plug-ins/common/mail.c:530 plug-ins/common/tiff.c:1682
+#: plug-ins/common/mail.c:530 plug-ins/common/tiff.c:1830
 #: plug-ins/common/xbm.c:1214
 msgid "Comment:"
 msgstr "Comentario:"
@@ -4647,8 +4647,8 @@ msgid "Second Destination Color"
 msgstr "Segundo color destino"
 
 #: plug-ins/common/mapcolor.c:354
-msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
-msgstr "<Image>/Filtros/Colores/Mapa/Ajustar frente-fondo"
+msgid "<Image>/Filters/Colors/Map/Adjust _FG-BG"
+msgstr "<Image>/Filtros/Colores/Mapa/Ajustar _frente-fondo"
 
 #: plug-ins/common/mapcolor.c:369
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
@@ -4688,8 +4688,8 @@ msgid "To:"
 msgstr "A:"
 
 #: plug-ins/common/max_rgb.c:121
-msgid "<Image>/Filters/Colors/Max RGB..."
-msgstr "<Image>/Filtros/Colores/RGB Máx..."
+msgid "<Image>/Filters/Colors/_Max RGB..."
+msgstr "<Image>/Filtros/Colores/RGB _Máx..."
 
 #: plug-ins/common/max_rgb.c:157
 msgid "Can only operate on RGB drawables."
@@ -4712,8 +4712,8 @@ msgid "Ho_ld the Minimal Channels"
 msgstr "Fi_jar los canales mínimos"
 
 #: plug-ins/common/mblur.c:153
-msgid "<Image>/Filters/Blur/Motion Blur..."
-msgstr "<Image>/Filtros/Desenfoque/Desenfoque de movimiento..."
+msgid "<Image>/Filters/Blur/_Motion Blur..."
+msgstr "<Image>/Filtros/Desenfoque/Desenfoque de _movimiento..."
 
 #: plug-ins/common/mblur.c:670
 msgid "Motion Blurring..."
@@ -4864,8 +4864,8 @@ msgid "Intensity"
 msgstr "Intensidad"
 
 #: plug-ins/common/newsprint.c:564
-msgid "<Image>/Filters/Distorts/Newsprint..."
-msgstr "<Image>/Filtros/Distorsión/Papel de periódico..."
+msgid "<Image>/Filters/Distorts/Newsprin_t..."
+msgstr "<Image>/Filtros/Distorsión/Papel de pe_riódico..."
 
 #: plug-ins/common/newsprint.c:663
 msgid "Newsprint..."
@@ -4939,8 +4939,8 @@ msgid "O_versample:"
 msgstr "So_bremuestreo:"
 
 #: plug-ins/common/nlfilt.c:126
-msgid "<Image>/Filters/Enhance/NL Filter..."
-msgstr "<Image>/Filtros/Realce/Filtro NL..."
+msgid "<Image>/Filters/Enhance/_NL Filter..."
+msgstr "<Image>/Filtros/Realce/Filtro _NL..."
 
 #: plug-ins/common/nlfilt.c:244
 msgid "NL Filter..."
@@ -4976,8 +4976,8 @@ msgid "_Do Preview"
 msgstr "P_revisualizar"
 
 #: plug-ins/common/noisify.c:132
-msgid "<Image>/Filters/Noise/Noisify..."
-msgstr "<Image>/Filtros/Ruido/Añadir ruido..."
+msgid "<Image>/Filters/Noise/_Noisify..."
+msgstr "<Image>/Filtros/Ruido/Aña_dir ruido..."
 
 #: plug-ins/common/noisify.c:206
 msgid "Adding Noise..."
@@ -5005,8 +5005,8 @@ msgid "Channel #%d:"
 msgstr "Canal nº %d:"
 
 #: plug-ins/common/normalize.c:90
-msgid "<Image>/Layer/Colors/Auto/Normalize"
-msgstr "<Image>/Capa/Colores/Auto/Normalizar"
+msgid "<Image>/Layer/Colors/Auto/_Normalize"
+msgstr "<Image>/Capa/Colores/Auto/_Normalizar"
 
 #: plug-ins/common/normalize.c:122
 msgid "Normalizing..."
@@ -5014,8 +5014,8 @@ msgstr "Normalizando..."
 
 #. don't translate '<Image>'
 #: plug-ins/common/nova.c:209
-msgid "<Image>/Filters/Light Effects/SuperNova..."
-msgstr "<Image>/Filtros/Efectos de luz/Supernova..."
+msgid "<Image>/Filters/Light Effects/Su_perNova..."
+msgstr "<Image>/Filtros/Efectos de luz/Su_pernova..."
 
 #: plug-ins/common/nova.c:290
 msgid "Rendering SuperNova..."
@@ -5047,8 +5047,8 @@ msgid "S_how Cursor"
 msgstr "Mo_strar el cursor"
 
 #: plug-ins/common/oilify.c:118
-msgid "<Image>/Filters/Artistic/Oilify..."
-msgstr "<Image>/Filtros/Artísticos/Óleo..."
+msgid "<Image>/Filters/Artistic/Oili_fy..."
+msgstr "<Image>/Filtros/Artísticos/Ó_leo..."
 
 #: plug-ins/common/oilify.c:193
 msgid "Oil Painting..."
@@ -5143,8 +5143,8 @@ msgid "September 31, 1999"
 msgstr "31 de Septiembre de 1999"
 
 #: plug-ins/common/papertile.c:838
-msgid "<Image>/Filters/Map/Paper Tile..."
-msgstr "<Image>/Filtros/Mapa/Mosaico de papel..."
+msgid "<Image>/Filters/Map/_Paper Tile..."
+msgstr "<Image>/Filtros/Mapa/Mosaico de _papel..."
 
 #: plug-ins/common/pat.c:451
 msgid "Save as Pattern"
@@ -5181,8 +5181,8 @@ msgstr ""
 "Aplanando su imagen."
 
 #: plug-ins/common/pixelize.c:184
-msgid "<Image>/Filters/Blur/Pixelize..."
-msgstr "<Image>/Filtros/Desenfoque/Pixelizar..."
+msgid "<Image>/Filters/Blur/_Pixelize..."
+msgstr "<Image>/Filtros/Desenfoque/_Pixelizar..."
 
 #: plug-ins/common/pixelize.c:282
 msgid "Pixelizing..."
@@ -5201,8 +5201,8 @@ msgid "Pixel _Height:"
 msgstr "A_ltura del pixel:"
 
 #: plug-ins/common/plasma.c:192
-msgid "<Image>/Filters/Render/Clouds/Plasma..."
-msgstr "<Image>/Filtros/Renderizado/Nubes/Plasma..."
+msgid "<Image>/Filters/Render/Clouds/_Plasma..."
+msgstr "<Image>/Filtros/Renderizado/Nubes/_Plasma..."
 
 #: plug-ins/common/plasma.c:271
 msgid "Plasma..."
@@ -5237,8 +5237,8 @@ msgid "Temporary Procedure"
 msgstr "Procedimiento temporal"
 
 #: plug-ins/common/plugindetails.c:145
-msgid "<Toolbox>/Xtns/Plugin Details..."
-msgstr "<Toolbox>/Exts/Detalles de la extensiones..."
+msgid "<Toolbox>/Xtns/_Plugin Details..."
+msgstr "<Toolbox>/Exts/Detalles de la ex_tensiones..."
 
 #: plug-ins/common/plugindetails.c:221
 msgid "Details <<"
@@ -5450,8 +5450,8 @@ msgid "Ascii"
 msgstr "Ascii"
 
 #: plug-ins/common/polar.c:202
-msgid "<Image>/Filters/Distorts/Polar Coords..."
-msgstr "<Image>/Filtros/Distorsión/Coordenadas polares..."
+msgid "<Image>/Filters/Distorts/P_olar Coords..."
+msgstr "<Image>/Filtros/Distorsión/Coordenadas p_olares..."
 
 #: plug-ins/common/polar.c:385
 msgid "Polarizing..."
@@ -5671,24 +5671,24 @@ msgid "Random Slur 1.7"
 msgstr "Derretir al azar 1.7"
 
 #: plug-ins/common/randomize.c:237
-msgid "<Image>/Filters/Noise/Hurl..."
-msgstr "<Image>/Filtros/Ruido/Arrojar..."
+msgid "<Image>/Filters/Noise/_Hurl..."
+msgstr "<Image>/Filtros/Ruido/A_rrojar..."
 
 #: plug-ins/common/randomize.c:249
-msgid "<Image>/Filters/Noise/Pick..."
-msgstr "<Image>/Filtros/Ruido/Intercambio..."
+msgid "<Image>/Filters/Noise/_Pick..."
+msgstr "<Image>/Filtros/Ruido/_Selección..."
 
 #: plug-ins/common/randomize.c:261
-msgid "<Image>/Filters/Noise/Slur..."
-msgstr "<Image>/Filtros/Ruido/Derretir..."
+msgid "<Image>/Filters/Noise/_Slur..."
+msgstr "<Image>/Filtros/Ruido/Derre_tir..."
 
 #: plug-ins/common/randomize.c:746
 msgid "R_andomization (%):"
 msgstr "_Aleatorización (%):"
 
 #: plug-ins/common/ripple.c:147
-msgid "<Image>/Filters/Distorts/Ripple..."
-msgstr "<Image>/Filtros/Distorsión/Ondular..."
+msgid "<Image>/Filters/Distorts/_Ripple..."
+msgstr "<Image>/Filtros/Distorsión/Ondula_r..."
 
 #: plug-ins/common/ripple.c:226
 msgid "Rippling..."
@@ -5745,8 +5745,8 @@ msgid "Rotating..."
 msgstr "Rotando..."
 
 #: plug-ins/common/sample_colorize.c:307
-msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
-msgstr "<Image>/Filtros/Colores/Mapa/Coloreo de muestra..."
+msgid "<Image>/Filters/Colors/Map/_Sample Colorize..."
+msgstr "<Image>/Filtros/Colores/Mapa/Coloreo de m_uestra..."
 
 #: plug-ins/common/sample_colorize.c:1358
 msgid "Sample Colorize"
@@ -5829,8 +5829,8 @@ msgid "Remap Colorized..."
 msgstr "Volver a mapear el colorizado..."
 
 #: plug-ins/common/scatter_hsv.c:149
-msgid "<Image>/Filters/Noise/Scatter HSV..."
-msgstr "<Image>/Filtros/Ruido/Esparcir por HSV..."
+msgid "<Image>/Filters/Noise/S_catter HSV..."
+msgstr "<Image>/Filtros/Ruido/Espar_cir por HSV..."
 
 #: plug-ins/common/scatter_hsv.c:244
 msgid "Scattering HSV..."
@@ -5860,9 +5860,9 @@ msgstr "_Saturación:"
 msgid "_Value:"
 msgstr "_Valor:"
 
-#: plug-ins/common/screenshot.c:135 plug-ins/winsnap/winsnap.c:1077
-msgid "<Toolbox>/File/Acquire/Screen Shot..."
-msgstr "<Toolbox>/Archivo/Adquirir/Captura de pantalla..."
+#: plug-ins/common/screenshot.c:135
+msgid "<Toolbox>/File/Acquire/_Screen Shot..."
+msgstr "<Toolbox>/Archivo/Adquirir/Ca_ptura de pantalla..."
 
 #. main dialog
 #: plug-ins/common/screenshot.c:383
@@ -5895,8 +5895,8 @@ msgid "Seconds Delay"
 msgstr "segundos de espera"
 
 #: plug-ins/common/sel_gauss.c:124
-msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
-msgstr "<Image>/Filtros/Desenfoque/Desenfoque gaussiano selectivo..."
+msgid "<Image>/Filters/Blur/_Selective Gaussian Blur..."
+msgstr "<Image>/Filtros/Desenfoque/Desenfoque gaussiano _selectivo..."
 
 #: plug-ins/common/sel_gauss.c:201
 msgid "Selective Gaussian Blur..."
@@ -5919,16 +5919,16 @@ msgid "_Max. Delta:"
 msgstr "Delta _máx.:"
 
 #: plug-ins/common/semiflatten.c:79
-msgid "<Image>/Filters/Colors/Semi-Flatten"
-msgstr "<Image>/Filtros/Colores/Semi-Aplanar"
+msgid "<Image>/Filters/Colors/_Semi-Flatten"
+msgstr "<Image>/Filtros/Colores/_Semi-Aplanar"
 
 #: plug-ins/common/semiflatten.c:118
 msgid "Semi-Flattening..."
 msgstr "Semi-Aplanar..."
 
 #: plug-ins/common/sharpen.c:171
-msgid "<Image>/Filters/Enhance/Sharpen..."
-msgstr "<Image>/Filtros/Realce/Enfoque..."
+msgid "<Image>/Filters/Enhance/_Sharpen..."
+msgstr "<Image>/Filtros/Realce/En_foque..."
 
 #.
 #. * Let the user know what we're doing...
@@ -5947,8 +5947,8 @@ msgid "_Sharpness:"
 msgstr "Agude_za:"
 
 #: plug-ins/common/shift.c:116
-msgid "<Image>/Filters/Distorts/Shift..."
-msgstr "<Image>/Filtros/Distorsión/Desplazar..."
+msgid "<Image>/Filters/Distorts/_Shift..."
+msgstr "<Image>/Filtros/Distorsión/_Desplazar..."
 
 #: plug-ins/common/shift.c:192
 msgid "Shifting..."
@@ -5971,8 +5971,8 @@ msgid "Shift _Amount:"
 msgstr "C_antidad de desplazamiento:"
 
 #: plug-ins/common/sinus.c:1162
-msgid "<Image>/Filters/Render/Sinus..."
-msgstr "<Image>/Filtros/Renderizado/Seno..."
+msgid "<Image>/Filters/Render/_Sinus..."
+msgstr "<Image>/Filtros/Renderizado/_Seno..."
 
 #: plug-ins/common/sinus.c:1247
 msgid "Sinus: rendering..."
@@ -6090,8 +6090,8 @@ msgid "_Blend"
 msgstr "Me_zclar"
 
 #: plug-ins/common/smooth_palette.c:89
-msgid "<Image>/Filters/Colors/Smooth Palette..."
-msgstr "<Image>/Filtros/Colores/Paleta suave..."
+msgid "<Image>/Filters/Colors/Smoo_th Palette..."
+msgstr "<Image>/Filtros/Colores/Pale_ta suave..."
 
 #: plug-ins/common/smooth_palette.c:178
 msgid "Deriving Smooth Palette..."
@@ -6106,8 +6106,8 @@ msgid "_Search Depth:"
 msgstr "Profundidad de la bú_squeda:"
 
 #: plug-ins/common/snoise.c:183
-msgid "<Image>/Filters/Render/Clouds/Solid Noise..."
-msgstr "<Image>/Filtros/Renderizado/Nubes/Ruido sólido..."
+msgid "<Image>/Filters/Render/Clouds/_Solid Noise..."
+msgstr "<Image>/Filtros/Renderizado/Nubes/Ruido _sólido..."
 
 #: plug-ins/common/snoise.c:309
 msgid "Solid Noise..."
@@ -6142,8 +6142,8 @@ msgstr "Tamaño _Y:"
 
 # //R ¿Es un nombre propio?
 #: plug-ins/common/sobel.c:141
-msgid "<Image>/Filters/Edge-Detect/Sobel..."
-msgstr "<Image>/Filtros/Detectar bordes/Sobel..."
+msgid "<Image>/Filters/Edge-Detect/_Sobel..."
+msgstr "<Image>/Filtros/Detectar bordes/_Sobel..."
 
 #: plug-ins/common/sobel.c:244
 msgid "Sobel Edge Detection"
@@ -6170,8 +6170,8 @@ msgstr "Sobel: Detectando bordes..."
 #. don't translate '<Image>', it's a special
 #. * keyword for the gtk toolkit
 #: plug-ins/common/sparkle.c:193
-msgid "<Image>/Filters/Light Effects/Sparkle..."
-msgstr "<Image>/Filtros/Efectos de luz/Chispas..."
+msgid "<Image>/Filters/Light Effects/_Sparkle..."
+msgstr "<Image>/Filtros/Efectos de luz/Chi_spas..."
 
 #: plug-ins/common/sparkle.c:296
 msgid "Sparkling..."
@@ -6442,12 +6442,12 @@ msgid "Rendering Sphere..."
 msgstr "Renderizando supernova..."
 
 #: plug-ins/common/spheredesigner.c:3097
-msgid "<Image>/Filters/Render/Sphere Designer..."
-msgstr "<Image>/Filtros/Renderizado/Diseñador de esferas..."
+msgid "<Image>/Filters/Render/Sphere _Designer..."
+msgstr "<Image>/Filtros/Renderizado/_Diseñador de esferas..."
 
 #: plug-ins/common/spread.c:118
-msgid "<Image>/Filters/Noise/Spread..."
-msgstr "<Image>/Filtros/Ruido/Esparcir..."
+msgid "<Image>/Filters/Noise/Sp_read..."
+msgstr "<Image>/Filtros/Ruido/Esparci_r..."
 
 #: plug-ins/common/spread.c:196
 msgid "Spreading..."
@@ -6463,8 +6463,8 @@ msgid "Spread Amount"
 msgstr "Cantidad de esparcimiento"
 
 #: plug-ins/common/struc.c:1153
-msgid "<Image>/Filters/Artistic/Apply Canvas..."
-msgstr "<Image>/Filtros/Artístico/Aplicar lienzo..."
+msgid "<Image>/Filters/Artistic/_Apply Canvas..."
+msgstr "<Image>/Filtros/Artístico/_Aplicar lienzo..."
 
 #: plug-ins/common/struc.c:1232
 msgid "Applying Canvas..."
@@ -6584,8 +6584,8 @@ msgid "Or_igin at bottom left"
 msgstr "Or_igen en abajo a la izquierda"
 
 #: plug-ins/common/threshold_alpha.c:107
-msgid "<Image>/Layer/Transparency/Threshold Alpha..."
-msgstr "<Image>/Capa/Transparencia/Umbral de alfa..."
+msgid "<Image>/Layer/Transparency/_Threshold Alpha..."
+msgstr "<Image>/Capa/Transparencia/U_mbral de alfa..."
 
 #: plug-ins/common/threshold_alpha.c:142
 msgid "The layer preserves transparency."
@@ -6607,11 +6607,11 @@ msgstr "Umbral alfa"
 msgid "Threshold:"
 msgstr "Umbral:"
 
-#: plug-ins/common/tiff.c:667
+#: plug-ins/common/tiff.c:686
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: plug-ins/common/tiff.c:675
+#: plug-ins/common/tiff.c:694
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -6623,38 +6623,42 @@ msgstr ""
 "manejar 8 bits, por lo cual será convertida para usted. Debido a esta "
 "conversión se perderá información."
 
-#: plug-ins/common/tiff.c:1631
+#: plug-ins/common/tiff.c:1650
+msgid ""
+"The TIFF format only supports comments in\n"
+"7bit ASCII encoding. No comment is saved."
+msgstr ""
+"El formato TIFF sólo soporta comentarios en \n"
+"codificación ASCII de 7 bits. No se guardará ningún comentario."
+
+#: plug-ins/common/tiff.c:1779
 msgid "Save as TIFF"
 msgstr "Guardar como TIFF"
 
 #. compression
-#: plug-ins/common/tiff.c:1652
+#: plug-ins/common/tiff.c:1800
 msgid "Compression"
 msgstr "Compresión"
 
-#: plug-ins/common/tiff.c:1660
+#: plug-ins/common/tiff.c:1808
 msgid "_LZW"
 msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:1663
+#: plug-ins/common/tiff.c:1811
 msgid "_Pack Bits"
 msgstr "_Paquetes de bits"
 
-#: plug-ins/common/tiff.c:1666
+#: plug-ins/common/tiff.c:1814
 msgid "_Deflate"
 msgstr "_Desinflar"
 
-#: plug-ins/common/tiff.c:1669
+#: plug-ins/common/tiff.c:1817
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: plug-ins/common/tiff.c:1727
-msgid "Your comment string is too long."
-msgstr "El texto del comentario es demasiado largo."
-
 #: plug-ins/common/tile.c:127
-msgid "<Image>/Filters/Map/Tile..."
-msgstr "<Image>/Filtros/Mapa/Mosaico..."
+msgid "<Image>/Filters/Map/_Tile..."
+msgstr "<Image>/Filtros/Mapa/_Mosaico..."
 
 #: plug-ins/common/tile.c:205 plug-ins/common/tileit.c:329
 msgid "Tiling..."
@@ -6674,8 +6678,8 @@ msgid "C_reate New Image"
 msgstr "C_rear una nueva imagen"
 
 #: plug-ins/common/tileit.c:234
-msgid "<Image>/Filters/Map/Small Tiles..."
-msgstr "<Image>/Filtros/Mapa/Mosaicos pequeños..."
+msgid "<Image>/Filters/Map/_Small Tiles..."
+msgstr "<Image>/Filtros/Mapa/Mosaicos _pequeños..."
 
 #. Get the preview image
 #. Start buildng the dialog up
@@ -6723,8 +6727,8 @@ msgstr "Configuración de segmentación"
 
 # //R :-??
 #: plug-ins/common/tiler.c:65
-msgid "<Image>/Filters/Map/Make Seamless"
-msgstr "<Image>/Filtros/Mapa/Hacer enlosable"
+msgid "<Image>/Filters/Map/_Make Seamless"
+msgstr "<Image>/Filtros/Mapa/Hacer _enlosable"
 
 #: plug-ins/common/tiler.c:319
 msgid "Tiler..."
@@ -6812,8 +6816,8 @@ msgid "The unit's plural form."
 msgstr "La forma plural de la unidad."
 
 #: plug-ins/common/uniteditor.c:115
-msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr "<Toolbox>/Exts/Editor de unidades..."
+msgid "<Toolbox>/Xtns/_Unit Editor..."
+msgstr "<Toolbox>/Exts/Editor de _unidades..."
 
 #: plug-ins/common/uniteditor.c:179
 msgid "New Unit"
@@ -6870,8 +6874,8 @@ msgstr ""
 "seleccionada."
 
 #: plug-ins/common/unsharp.c:153
-msgid "<Image>/Filters/Enhance/Unsharp Mask..."
-msgstr "<Image>/Filtros/Realce/Máscara de desenfoque..."
+msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
+msgstr "<Image>/Filtros/Realce/_Máscara de desenfoque..."
 
 #: plug-ins/common/unsharp.c:365
 msgid "Merging..."
@@ -6919,8 +6923,8 @@ msgid "_Dots"
 msgstr "P_untos"
 
 #: plug-ins/common/video.c:1840
-msgid "<Image>/Filters/Distorts/Video..."
-msgstr "<Image>/Filtros/Distorsión/Vídeo..."
+msgid "<Image>/Filters/Distorts/Vi_deo..."
+msgstr "<Image>/Filtros/Distorsión/_Vídeo..."
 
 #: plug-ins/common/video.c:1910
 msgid "Video/RGB..."
@@ -6944,8 +6948,8 @@ msgid "_Rotated"
 msgstr "_Rotado"
 
 #: plug-ins/common/vinvert.c:85
-msgid "<Image>/Filters/Colors/Value Invert"
-msgstr "<Image>/Filtros/Colores/Invertir valor"
+msgid "<Image>/Filters/Colors/_Value Invert"
+msgstr "<Image>/Filtros/Colores/_Invertir valor"
 
 #: plug-ins/common/vinvert.c:124
 msgid "Value Invert..."
@@ -6984,16 +6988,16 @@ msgid "More T_ransparent"
 msgstr "Más t_ransparente"
 
 #: plug-ins/common/vpropagate.c:249
-msgid "<Image>/Filters/Distorts/Value Propagate..."
-msgstr "<Image>/Filtros/Distorsión/Propagar valor..."
+msgid "<Image>/Filters/Distorts/_Value Propagate..."
+msgstr "<Image>/Filtros/Distorsión/P_ropagar valor..."
 
 #: plug-ins/common/vpropagate.c:261
-msgid "<Image>/Filters/Generic/Erode"
-msgstr "<Image>/Filtros/Genérico/Erosión"
+msgid "<Image>/Filters/Generic/E_rode"
+msgstr "<Image>/Filtros/Genérico/Er_osión"
 
 #: plug-ins/common/vpropagate.c:273
-msgid "<Image>/Filters/Generic/Dilate"
-msgstr "<Image>/Filtros/Genérico/Distención"
+msgid "<Image>/Filters/Generic/_Dilate"
+msgstr "<Image>/Filtros/Genérico/_Distención"
 
 #: plug-ins/common/vpropagate.c:461
 msgid "Value Propagating..."
@@ -7045,8 +7049,8 @@ msgid "Propagating Value Channel"
 msgstr "Propagando canal de valor"
 
 #: plug-ins/common/warp.c:266
-msgid "<Image>/Filters/Map/Warp..."
-msgstr "<Image>/Filtros/Mapa/Deformar..."
+msgid "<Image>/Filters/Map/_Warp..."
+msgstr "<Image>/Filtros/Mapa/Defor_mar..."
 
 #: plug-ins/common/warp.c:413
 msgid "Warp"
@@ -7165,8 +7169,8 @@ msgid "Flow Step %d..."
 msgstr "Paso %d..."
 
 #: plug-ins/common/waves.c:124
-msgid "<Image>/Filters/Distorts/Waves..."
-msgstr "<Image>/Filtros/Distorsión/Ondas de agua..."
+msgid "<Image>/Filters/Distorts/_Waves..."
+msgstr "<Image>/Filtros/Distorsión/Ondas de a_gua..."
 
 #: plug-ins/common/waves.c:303
 msgid "Waves"
@@ -7193,8 +7197,8 @@ msgid "Waving..."
 msgstr "Creando ondas de agua..."
 
 #: plug-ins/common/whirlpinch.c:189
-msgid "<Image>/Filters/Distorts/Whirl and Pinch..."
-msgstr "<Image>/Filtros/Distorsión/Remolino y aspiración..."
+msgid "<Image>/Filters/Distorts/W_hirl and Pinch..."
+msgstr "<Image>/Filtros/Distorsión/Remo_lino y aspiración..."
 
 #: plug-ins/common/whirlpinch.c:379
 msgid "Whirling and Pinching..."
@@ -7247,8 +7251,8 @@ msgid "Pasting..."
 msgstr "Pegando..."
 
 #: plug-ins/common/wind.c:195
-msgid "<Image>/Filters/Distorts/Wind..."
-msgstr "<Image>/Filtros/Distorsión/Viento..."
+msgid "<Image>/Filters/Distorts/Wi_nd..."
+msgstr "<Image>/Filtros/Distorsión/Vien_to..."
 
 #: plug-ins/common/wind.c:328
 msgid "Rendering Blast..."
@@ -7317,8 +7321,8 @@ msgid "Higher values increase the magnitude of the effect"
 msgstr "Valores mayores incrementan la magnitud del efecto"
 
 #: plug-ins/common/winprint.c:186
-msgid "<Image>/File/Print"
-msgstr "<Image>/Archivo/Imprimir"
+msgid "<Image>/File/_Print"
+msgstr "<Image>/Archivo/_Imprimir"
 
 #: plug-ins/common/winprint.c:198
 msgid "<Image>/File/Page Setup"
@@ -7547,8 +7551,8 @@ msgid "Error during writing rgb image"
 msgstr "Error al escribir imagen rgb"
 
 #: plug-ins/common/zealouscrop.c:69
-msgid "<Image>/Layer/Transform/Zealous Crop"
-msgstr "<Image>/Capa/Transformaciones/Recorte celoso"
+msgid "<Image>/Layer/Transform/_Zealous Crop"
+msgstr "<Image>/Capa/Transformaciones/Recorte _celoso"
 
 #: plug-ins/common/zealouscrop.c:115
 msgid "ZealousCropping(tm)..."
@@ -11431,6 +11435,10 @@ msgstr "Capturar la pantalla entera"
 msgid "after"
 msgstr "despues de"
 
+#: plug-ins/winsnap/winsnap.c:1077
+msgid "<Toolbox>/File/Acquire/Screen Shot..."
+msgstr "<Toolbox>/Archivo/Adquirir/Captura de pantalla..."
+
 #: plug-ins/winsnap/winsnap.c:1225
 msgid "No data captured"
 msgstr "No se capturó nada"
@@ -11511,6 +11519,9 @@ msgstr "Error: No se puede leer el archivo de propiedades XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Error: El archivo de propiedades XJT %s está vacío"
+
+#~ msgid "Your comment string is too long."
+#~ msgstr "El texto del comentario es demasiado largo."
 
 #~ msgid "Save _background color"
 #~ msgstr "G_uardar el color de fondo"
