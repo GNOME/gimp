@@ -1,5 +1,7 @@
 Tue Apr 13 00:01:24 PDT 1999 Manish Singh <yosh@gimp.org>
 
+	* configure.in: bumped up to 1.1.5
+
 	* libgimp/gimpfeatures.h.in: added GIMP_CHECK_VERSION macro and
 	a features #define for 1.1.5
 
