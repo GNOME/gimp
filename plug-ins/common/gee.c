@@ -26,7 +26,7 @@
 
 /* Is the plug-in hidden?  Hey, if you can read this, you may
    as well comment-out the next line...! */
-//#define HIDDEN
+#define HIDDEN
 
 
 /* Declare local functions. */
