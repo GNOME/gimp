@@ -1236,7 +1236,7 @@ color_notebook_hex_entry_events (GtkWidget *widget,
       g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x", r, g, b);
 
       if ((strlen (hex_color) == 7) &&
-          (g_strcasecmp (buffer, hex_color) != 0))
+          (g_ascii_strcasecmp (buffer, hex_color) != 0))
         {
           if ((sscanf (hex_color, "#%x", &hex_rgb) == 1) &&
               (hex_rgb < (1 << 24)))

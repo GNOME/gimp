@@ -3532,24 +3532,24 @@ last_c_errmsg (int num)
 {
   int xerrno = (num < 0) ? errno : num;
   static char serrmsg[100];
-  char *errmsg;
+  const char *errmsg;
   errmsg = g_strerror (xerrno);
   if (!errmsg)
     {
       sprintf (serrmsg, "errno %d", xerrno);
-      errmsg = serrmsg;
+      errmsg = (const char *) serrmsg;
     }
-  return (errmsg);
+  return ((char *) errmsg);
 }
 
 LISP
 llast_c_errmsg (int num)
 {
   int xerrno = (num < 0) ? errno : num;
-  char *errmsg = g_strerror (xerrno);
+  const char *errmsg = g_strerror (xerrno);
   if (!errmsg)
     return (flocons (xerrno));
-  return (cintern (errmsg));
+  return (cintern ((char *) errmsg));
 }
 
 LISP

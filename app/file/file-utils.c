@@ -548,7 +548,7 @@ file_save_thumbnail (GimpImage   *gimage,
       return FALSE;
     }
 
-  pathname = g_dirname (full_source_filename);
+  pathname = g_path_get_dirname (full_source_filename);
   filename = g_path_get_basename (full_source_filename);
 
   xvpathname = g_strconcat (pathname, G_DIR_SEPARATOR_S, ".xvpics",

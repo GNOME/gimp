@@ -385,6 +385,7 @@ save_image (Config *config,
   guint c;
   gchar *macro_name;
   guint8 *img_buffer, *img_buffer_end;
+  gchar *basename;
 
   fp = fopen (config->file_name, "w");
   if (!fp)
@@ -475,13 +476,17 @@ save_image (Config *config,
       s_char =    "char";
       s_null =    "(char*) 0";
     }
-  macro_name = g_strdup (config->prefixed_name);
-  g_strup (macro_name);
-  
+
+  macro_name = g_ascii_strup (config->prefixed_name);
+
+  basename = g_path_get_basename (config->file_name);
+
   fprintf (fp, "/* GIMP %s C-Source image dump %s(%s) */\n\n",
 	   config->alpha ? "RGBA" : "RGB",
 	   config->use_rle ? "1-byte-run-length-encoded " : "",
-	   g_basename (config->file_name));
+	   basename);
+
+  g_free (basename);
 
   if (config->use_rle && !config->use_macros)
     save_rle_decoder (fp,

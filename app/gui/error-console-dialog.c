@@ -109,7 +109,8 @@ error_console_create (void)
 
   g_object_set_data (G_OBJECT (error_console), "text-buffer", text_buffer);
 
-  g_object_weak_ref (G_OBJECT (error_console), error_console_destroy_callback,
+  g_object_weak_ref (G_OBJECT (error_console),
+		     (GWeakNotify) error_console_destroy_callback,
 		     NULL);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);

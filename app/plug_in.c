@@ -773,7 +773,7 @@ plug_in_def_add (PlugInDef *plug_in_def)
 
       if (strcmp (basename1, basename2) == 0)
 	{
-	  if ((g_strcasecmp (plug_in_def->prog, tplug_in_def->prog) == 0) &&
+	  if ((g_ascii_strcasecmp (plug_in_def->prog, tplug_in_def->prog) == 0) &&
 	      (plug_in_def->mtime == tplug_in_def->mtime))
 	    {
 	      /* Use cached plug-in entry */
@@ -1001,7 +1001,8 @@ plug_in_open (PlugIn *plug_in)
       if ((pipe (my_read) == -1) || (pipe (my_write) == -1))
 	{
 	  g_message ("pipe() failed: Unable to start Plug-In \"%s\"\n(%s)",
-		     g_basename (plug_in->args[0]), plug_in->args[0]);
+		     g_path_get_basename (plug_in->args[0]),
+		     plug_in->args[0]);
 	  return FALSE;
 	}
 
@@ -1017,6 +1018,16 @@ plug_in_open (PlugIn *plug_in)
       plug_in->my_write  = g_io_channel_unix_new (my_write[1]);
       plug_in->his_read  = g_io_channel_unix_new (my_write[0]);
       plug_in->his_write = g_io_channel_unix_new (my_read[1]);
+
+      g_io_channel_set_encoding (plug_in->my_read, NULL, NULL);
+      g_io_channel_set_encoding (plug_in->my_write, NULL, NULL);
+      g_io_channel_set_encoding (plug_in->his_read, NULL, NULL);
+      g_io_channel_set_encoding (plug_in->his_write, NULL, NULL);
+
+      g_io_channel_set_close_on_unref (plug_in->my_read, TRUE);
+      g_io_channel_set_close_on_unref (plug_in->my_write, TRUE);
+      g_io_channel_set_close_on_unref (plug_in->his_read, TRUE);
+      g_io_channel_set_close_on_unref (plug_in->his_write, TRUE);
 
       /* Remember the file descriptors for the pipes.
        */
@@ -1054,10 +1065,9 @@ plug_in_open (PlugIn *plug_in)
 
       if (plug_in->pid == 0)
 	{
-	  g_io_channel_close (plug_in->my_read);
 	  g_io_channel_unref (plug_in->my_read);
 	  plug_in->my_read  = NULL;
-	  g_io_channel_close (plug_in->my_write);
+
 	  g_io_channel_unref (plug_in->my_write);
 	  plug_in->my_write  = NULL;
 
@@ -1072,15 +1082,15 @@ plug_in_open (PlugIn *plug_in)
 #endif
 	{
           g_message ("fork() failed: Unable to run Plug-In: \"%s\"\n(%s)",
-		     g_basename (plug_in->args[0]), plug_in->args[0]);
+		     g_path_get_basename (plug_in->args[0]),
+		     plug_in->args[0]);
           plug_in_destroy (plug_in);
           return FALSE;
 	}
 
-      g_io_channel_close (plug_in->his_read);
       g_io_channel_unref (plug_in->his_read);
       plug_in->his_read  = NULL;
-      g_io_channel_close (plug_in->his_write);
+
       g_io_channel_unref (plug_in->his_write);
       plug_in->his_write = NULL;
 
@@ -1174,25 +1184,21 @@ plug_in_close (PlugIn   *plug_in,
       /* Close the pipes. */
       if (plug_in->my_read != NULL)
 	{
-	  g_io_channel_close (plug_in->my_read);
 	  g_io_channel_unref (plug_in->my_read);
 	  plug_in->my_read = NULL;
 	}
       if (plug_in->my_write != NULL)
 	{
-	  g_io_channel_close (plug_in->my_write);
 	  g_io_channel_unref (plug_in->my_write);
 	  plug_in->my_write = NULL;
 	}
       if (plug_in->his_read != NULL)
 	{
-	  g_io_channel_close (plug_in->his_read);
 	  g_io_channel_unref (plug_in->his_read);
 	  plug_in->his_read = NULL;
 	}
       if (plug_in->his_write != NULL)
 	{
-	  g_io_channel_close (plug_in->his_write);
 	  g_io_channel_unref (plug_in->his_write);
 	  plug_in->his_write = NULL;
 	}
@@ -1498,7 +1504,7 @@ plug_in_recv_message (GIOChannel   *channel,
 		 "The dying Plug-In may have messed up GIMP's internal state.\n"
 		 "You may want to save your images and restart GIMP\n"
 		 "to be on the safe side."),
-	       g_basename (current_plug_in->args[0]),
+	       g_path_get_basename (current_plug_in->args[0]),
 	       current_plug_in->args[0]);
 
   if (!current_plug_in->open)
@@ -1838,7 +1844,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
-			 g_basename (current_plug_in->args[0]),
+			 g_path_get_basename (current_plug_in->args[0]),
 			 current_plug_in->args[0],
 			 proc_install->name);
 	      return;
@@ -1854,7 +1860,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
-			 g_basename (current_plug_in->args[0]),
+			 g_path_get_basename (current_plug_in->args[0]),
 			 current_plug_in->args[0],
 			 proc_install->name);
 	      return;
@@ -1870,7 +1876,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
-			 g_basename (current_plug_in->args[0]),
+			 g_path_get_basename (current_plug_in->args[0]),
 			 current_plug_in->args[0],
 			 proc_install->name);
 	      return;
@@ -1888,7 +1894,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
-			 g_basename (current_plug_in->args[0]),
+			 g_path_get_basename (current_plug_in->args[0]),
 			 current_plug_in->args[0],
 			 proc_install->name);
 	      return;
@@ -1901,7 +1907,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 		     "in an invalid menu location.\n"
 		     "Use either \"<Toolbox>\", \"<Image>\", "
 		     "\"<Load>\", or \"<Save>\".",
-		     g_basename (current_plug_in->args[0]),
+		     g_path_get_basename (current_plug_in->args[0]),
 		     current_plug_in->args[0],
 		     proc_install->name);
 	  return;
@@ -1922,7 +1928,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 		     "attempted to install procedure \"%s\"\n"
 		     "which fails to comply with the array parameter\n"
 		     "passing standard.  Argument %d is noncompliant.", 
-		     g_basename (current_plug_in->args[0]),
+		     g_path_get_basename (current_plug_in->args[0]),
 		     current_plug_in->args[0],
 		     proc_install->name, i);
 	  return;
@@ -2121,23 +2127,41 @@ plug_in_write (GIOChannel *channel,
 static gboolean
 plug_in_flush (GIOChannel *channel)
 {
-  GIOError error;
-  gint     count;
-  guint    bytes;
+  GIOStatus  status;
+  GError    *error;
+  gint       count;
+  guint      bytes;
 
   if (current_write_buffer_index > 0)
     {
       count = 0;
       while (count != current_write_buffer_index)
         {
-	  do {
-	    bytes = 0;
-	    error = g_io_channel_write (channel, &current_write_buffer[count],
-					(current_write_buffer_index - count),
-					&bytes);
-	  } while (error == G_IO_ERROR_AGAIN);
+	  do
+	    {
+	      bytes = 0;
 
-	  if (error != G_IO_ERROR_NONE)
+#ifdef __GNUC__
+#warning FIXME: g_io_channel_write_chars()
+#endif
+#if 0
+	      status = g_io_channel_write_chars (channel,
+						 &current_write_buffer[count],
+						 (current_write_buffer_index - count),
+						 &bytes,
+						 &error);
+#endif
+
+	      status = channel->funcs->io_write (channel,
+						 &current_write_buffer[count],
+						 (current_write_buffer_index - count),
+						 &bytes,
+						 &error);
+
+	    }
+	  while (status == G_IO_STATUS_AGAIN);
+
+	  if (status != G_IO_STATUS_NORMAL)
 	    return FALSE;
 
           count += bytes;
@@ -2360,10 +2384,10 @@ plug_in_init_file (const gchar *filename,
 {
   GSList      *tmp;
   PlugInDef   *plug_in_def;
-  const gchar *plug_in_name;
-  const gchar *name;
+  gchar       *plug_in_name;
+  gchar       *basename;
 
-  name = g_basename (filename);
+  basename = g_path_get_basename (filename);
 
   plug_in_def = NULL;
   tmp = plug_in_defs;
@@ -2373,16 +2397,20 @@ plug_in_init_file (const gchar *filename,
       plug_in_def = tmp->data;
       tmp = tmp->next;
 
-      plug_in_name = g_basename (plug_in_def->prog);
+      plug_in_name = g_path_get_basename (plug_in_def->prog);
 
-      if (g_strcasecmp (name, plug_in_name) == 0)
+      if (g_ascii_strcasecmp (basename, plug_in_name) == 0)
 	{
 	  g_print ("duplicate plug-in: \"%s\" (skipping)\n", filename);
 	  return;
 	}
 
+      g_free (plug_in_name);
+
       plug_in_def = NULL;
     }
+
+  g_free (basename);
 
   plug_in_def        = plug_in_def_new (filename);
   plug_in_def->mtime = gimp_datafile_mtime ();
@@ -2496,32 +2524,40 @@ plug_in_make_menu_entry (gpointer         foo,
 {
   GimpItemFactoryEntry  entry;
   gchar                *help_page;
-  
+  gchar                *basename;
+  gchar                *lowercase_page;
+
+  basename = g_path_get_basename (menu_entry->proc_def->prog);
+
   if (menu_entry->help_path)
     {
       help_page = g_strconcat (menu_entry->help_path,
 			       "@",   /* HACK: locale subdir */
-			       g_basename (menu_entry->proc_def->prog),
+			       basename,
 			       ".html",
 			       NULL);
     }
   else
     {
       help_page = g_strconcat ("filters/",  /* _not_ G_DIR_SEPARATOR_S */
-			       g_basename (menu_entry->proc_def->prog),
+			       basename,
 			       ".html",
 			       NULL);
     }
 
-  g_strdown (help_page);
-  
+  g_free (basename);
+
+  lowercase_page = g_ascii_strdown (help_page);
+
+  g_free (help_page);
+
   entry.entry.path            = menu_entry->proc_def->menu_path;
   entry.entry.accelerator     = menu_entry->proc_def->accelerator;
   entry.entry.callback        = plug_in_callback;
   entry.entry.callback_action = 0;
   entry.entry.item_type       = NULL;
   entry.quark_string          = NULL;
-  entry.help_page             = help_page;
+  entry.help_page             = lowercase_page;
   entry.description           = NULL;
 
   menus_create_item_from_full_path (&entry, 

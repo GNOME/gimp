@@ -261,7 +261,7 @@ nav_dialog_create (GDisplay *gdisp)
   gtk_widget_hide (GTK_DIALOG (nav_dialog->shell)->action_area);
 
   g_object_weak_ref (G_OBJECT (nav_dialog->shell),
-                     g_free,
+                     (GWeakNotify) g_free,
                      nav_dialog);
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
@@ -528,7 +528,7 @@ nav_popup_click_handler (GtkWidget      *widget,
       gtk_widget_set_events (nav_dialog->shell, PREVIEW_MASK);
 
       g_object_weak_ref (G_OBJECT (nav_dialog->shell),
-                         g_free,
+                         (GWeakNotify) g_free,
                          nav_dialog);
 
       frame = gtk_frame_new (NULL);
@@ -644,15 +644,17 @@ nav_dialog_new (GDisplay   *gdisp,
 static gchar *
 nav_dialog_title (GDisplay *gdisp)
 {
-  const gchar *basename;
+  gchar *basename;
   gchar *title;
 
-  basename = g_basename (gimp_image_filename (gdisp->gimage));
+  basename = g_path_get_basename (gimp_image_filename (gdisp->gimage));
 
   title = g_strdup_printf (_("Navigation: %s-%d.%d"), 
 			   basename,
 			   gimp_image_get_ID (gdisp->gimage),
 			   gdisp->instance);
+
+  g_free (basename);
 
   return title;
 }

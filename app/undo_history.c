@@ -452,11 +452,17 @@ undo_history_gimage_rename_callback (GimpImage *gimage,
 				     gpointer   data)
 {
   undo_history_st *st = data;
-  gchar *title;
+  gchar           *basename;
+  gchar           *title;
 
-  title = g_strdup_printf (_("Undo History: %s"),
-			   g_basename (gimp_image_filename (gimage)));
+  basename = g_path_get_basename (gimp_image_filename (gimage));
+
+  title = g_strdup_printf (_("Undo History: %s"), basename);
+
+  g_free (basename);
+
   gtk_window_set_title (GTK_WINDOW (st->shell), title);
+
   g_free (title);
 }
 
@@ -797,8 +803,15 @@ undo_history_new (GimpImage *gimage)
 
   /*  The shell and main vbox  */
   {
-    gchar *title = g_strdup_printf (_("Undo History: %s"),
-				    g_basename (gimp_image_filename (gimage)));
+    gchar *basename;
+    gchar *title;
+
+    basename = g_path_get_basename (gimp_image_filename (gimage));
+
+    title = g_strdup_printf (_("Undo History: %s"), basename);
+
+    g_free (basename);
+
     st->shell = gimp_dialog_new (title, "undo_history",
 				 gimp_standard_help_func,
 				 "dialogs/undo_history.html",

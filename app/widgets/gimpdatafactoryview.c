@@ -428,7 +428,7 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
 				       gimp_data_factory_view_delete_callback,
 				       delete_data);
 
-      g_object_weak_ref (G_OBJECT (dialog), g_free, delete_data);
+      g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, delete_data);
 
       g_free (str);
 

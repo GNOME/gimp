@@ -52,13 +52,13 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'gchar *value = NULL' ],
+	vars => [ 'const gchar *value = NULL' ],
 	code => <<'CODE'
 {
   success = (value = gimprc_find_token (token)) != NULL;
 
   if (!success) /* custom ones failed, try the standard ones */
-    success = (value = gimprc_value_to_str(token)) != NULL;
+    success = (value = gimprc_value_to_str (token)) != NULL;
 }
 CODE
     );

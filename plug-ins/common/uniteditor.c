@@ -279,7 +279,7 @@ new_unit (GimpUnit template)
 
   gtk_widget_show (dialog);
 
-  while (1)
+  while (TRUE)
     {
       gtk_main ();
 
@@ -293,19 +293,19 @@ new_unit (GimpUnit template)
 	  gchar   *singular;
 	  gchar   *plural;
 
-	  identifier   = gtk_entry_get_text (GTK_ENTRY (identifier_entry));
+	  identifier   = (gchar *) gtk_entry_get_text (GTK_ENTRY (identifier_entry));
 	  factor       = GTK_ADJUSTMENT (factor_adj)->value;
 	  digits       = ROUND (GTK_ADJUSTMENT (digits_adj)->value);
-	  symbol       = gtk_entry_get_text (GTK_ENTRY (symbol_entry));
-	  abbreviation = gtk_entry_get_text (GTK_ENTRY (abbreviation_entry));
-	  singular     = gtk_entry_get_text (GTK_ENTRY (singular_entry));
-	  plural       = gtk_entry_get_text (GTK_ENTRY (plural_entry));
+	  symbol       = (gchar *) gtk_entry_get_text (GTK_ENTRY (symbol_entry));
+	  abbreviation = (gchar *) gtk_entry_get_text (GTK_ENTRY (abbreviation_entry));
+	  singular     = (gchar *) gtk_entry_get_text (GTK_ENTRY (singular_entry));
+	  plural       = (gchar *) gtk_entry_get_text (GTK_ENTRY (plural_entry));
 
-	  identifier   = g_strstrip (g_strdup (identifier));
-	  symbol       = g_strstrip (g_strdup (symbol));
-	  abbreviation = g_strstrip (g_strdup (abbreviation));
-	  singular     = g_strstrip (g_strdup (singular));
-	  plural       = g_strstrip (g_strdup (plural));
+	  identifier   = g_strstrip (identifier);
+	  symbol       = g_strstrip (symbol);
+	  abbreviation = g_strstrip (abbreviation);
+	  singular     = g_strstrip (singular);
+	  plural       = g_strstrip (plural);
 
 	  if (factor < GIMP_MIN_RESOLUTION)
 	    {

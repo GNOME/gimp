@@ -335,7 +335,7 @@ decompose (gint32  image_ID,
   extract_idx = -1;   /* Search extract type */
   for (j = 0; j < NUM_EXTRACT_TYPES; j++)
     {
-      if (g_strcasecmp (extract_type, extract[j].type) == 0)
+      if (g_ascii_strcasecmp (extract_type, extract[j].type) == 0)
 	{
 	  extract_idx = j;
 	  break;
@@ -901,7 +901,7 @@ decompose_dialog (void)
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
       decoint.extract_flag[j] =
-	(g_strcasecmp (decovals.extract_type, extract[j].type) == 0);
+	(g_ascii_strcasecmp (decovals.extract_type, extract[j].type) == 0);
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &(decoint.extract_flag[j]));

@@ -330,7 +330,7 @@ script_fu_find_scripts (void)
 		{
 		  filename = g_strdup_printf ("%s%s", path, dir_ent->d_name);
 		  
-		  if (g_strcasecmp (filename + strlen (filename) - 4, ".scm") == 0)
+		  if (g_ascii_strcasecmp (filename + strlen (filename) - 4, ".scm") == 0)
 		    {
 		      /* Check the file and see that it is not a sub-directory */
 		      my_err = stat (filename, &filestat);
@@ -1692,7 +1692,6 @@ script_fu_font_preview (GtkWidget *preview,
 
       strtok (fontname, "-");
       family = strtok (NULL, "-");
-      g_strup (family);
 
       gtk_label_set_text (GTK_LABEL (preview), family);
     }

@@ -111,7 +111,7 @@ batch_run_cmd (Gimp  *gimp,
   Argument *vals;
   gint      i;
 
-  if (g_strcasecmp (cmd, "(gimp-quit 0)") == 0)
+  if (g_ascii_strcasecmp (cmd, "(gimp-quit 0)") == 0)
     {
       app_exit (FALSE);
       exit (0);

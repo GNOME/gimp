@@ -463,11 +463,11 @@ find_extension (gchar* filename)
 	{
 	  return NULL;
 	}
-      if (0 == g_strcasecmp (ext, ".xcfbz2"))
+      if (0 == g_ascii_strcasecmp (ext, ".xcfbz2"))
 	{
 	  return ".xcf";  /* we've found it */
 	}
-      if (0 != g_strcasecmp (ext, ".bz2"))
+      if (0 != g_ascii_strcasecmp (ext, ".bz2"))
 	{
 	  return ext;
 	}

@@ -1,3 +1,67 @@
+2001-08-29  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: added -DG_DISABLE_DEPRECATED and
+	-DGDK_DISABLE_COMPAT_H.
+
+	* app/batch.c
+	* app/file-utils.c
+	* app/gdisplay.c
+	* app/gdisplay_ops.c
+	* app/gimprc.[ch]
+	* app/module_db.c
+	* app/nav_window.c
+	* app/undo_history.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimagefile.c
+	* app/core/gimppalette.c
+	* app/gui/color-notebook.c
+	* app/gui/convert-dialog.c
+	* app/gui/error-console-dialog.c
+	* app/gui/file-commands.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/info-window.c
+	* app/gui/menus.c
+	* app/gui/palette-import-dialog.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/widgets/gimpcontainerview-utils.c
+	* app/widgets/gimpdatafactoryview.c
+	* libgimp/gimpmenu.c
+	* plug-ins/common/bz2.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/csource.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/gz.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/common/wmf.c
+	* plug-ins/common/xbm.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/script-fu/interp_slib.c
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/gimprc.pdb
+	* app/pdb/fileops_cmds.c
+	* app/pdb/gimprc_cmds.c: removed deprecated stuff like
+	g_basename(), g_dirname(), g_strup() and friends. Added some
+	"const gchar *" declarations while I was on it. Added some
+	G_N_ELEMENTS() macros instead of declaring a useless variable
+	for the number of items.
+
+	* app/widgets/gtkhwrapbox.[ch]
+	* app/widgets/gtkvwrapbox.[ch]
+	* app/widgets/gtkwrapbox.[ch]: replaced with the latest versions
+	from GLE, ported by the master himself.
+
+	* app/gui/toolbox.c: changed accordingly.
+
+	* app/plug_in.c
+	* libgimp/gimp.c
+	* libgimpbase/gimpwire.[ch]: use evil hacks to get binary mode
+	from the new GIOChannel implementation (upstream bugreport already
+	posted).
+
 2001-08-28  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: removed the authorgen hack. It broke the build with

@@ -1901,7 +1901,8 @@ load_image (char *filename)
 	     * they will be mapped back to typical Windows
 	     * fonts, sigh...
 	     */
-	    g_strdown (name);
+	    name = g_ascii_strdown (name);
+
 	    if (strcmp (name, "system") == 0
 		|| strcmp (name, "fixedsys") == 0)
 	      name2 = "courier";

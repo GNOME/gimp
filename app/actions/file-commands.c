@@ -152,16 +152,18 @@ file_save_cmd_callback (GtkWidget *widget,
 	}
       else
 	{
-	  const gchar *raw_filename;
-	  gint         status;
+	  gchar *basename;
+	  gint   status;
 
-	  raw_filename = g_basename (filename);
+	  basename = g_path_get_basename (filename);
 	  
 	  status = file_save (gdisp->gimage,
 			      filename,
-			      raw_filename,
+			      basename,
 			      RUN_WITH_LAST_VALS,
 			      TRUE);
+
+	  g_free (basename);
 
 	  if (status != GIMP_PDB_SUCCESS &&
 	      status != GIMP_PDB_CANCEL)
@@ -219,14 +221,18 @@ file_revert_cmd_callback (GtkWidget *widget,
     }
   else
     {
+      gchar *basename;
       gchar *text;
+
+      basename = g_path_get_basename (filename);
 
       text = g_strdup_printf (_("Reverting %s to\n"
 				"%s\n\n"
 				"(You will lose all your changes\n"
 				"including all undo information)"),
-			      g_basename (filename),
-			      filename);
+			      basename, filename);
+
+      g_free (basename);
 
       query_box = gimp_query_boolean_box (_("Revert Image?"),
 					  gimp_standard_help_func,

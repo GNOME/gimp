@@ -137,7 +137,7 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
                                 gint          height)
 {
   GimpImagefile *imagefile;
-  const gchar   *basename;
+  gchar         *basename;
   gchar         *dirname;
   gchar         *thumbname;
   struct stat    file_stat;
@@ -157,14 +157,15 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
 
   g_return_val_if_fail (GIMP_OBJECT (imagefile)->name != NULL, NULL);
  
-  dirname  = g_dirname (GIMP_OBJECT (imagefile)->name);
-  basename = g_basename (GIMP_OBJECT (imagefile)->name);
+  dirname  = g_path_get_dirname (GIMP_OBJECT (imagefile)->name);
+  basename = g_path_get_basename (GIMP_OBJECT (imagefile)->name);
 
   thumbname = g_strconcat (dirname, G_DIR_SEPARATOR_S,
                            ".xvpics", G_DIR_SEPARATOR_S,
                            basename, NULL);
 
   g_free (dirname);
+  g_free (basename);
 
   /*  If the file is newer than its thumbnail, the thumbnail may
    *  be out of date.

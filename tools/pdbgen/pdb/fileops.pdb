@@ -191,7 +191,7 @@ HELP
 		  'guchar *raw_thumb', 'gchar *imginfo = NULL', 'gint i' ],
 	code => <<'CODE'
 {
-  pname = g_dirname (filename);
+  pname = g_path_get_dirname (filename);
   fname = g_path_get_basename (filename);
   tname = g_strconcat (pname, G_DIR_SEPARATOR_S, ".xvpics", G_DIR_SEPARATOR_S,
 		       fname,

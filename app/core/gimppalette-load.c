@@ -348,9 +348,15 @@ gimp_palette_load (const gchar *filename)
     }
   else /* old palette format */
     {
+      gchar *basename;
+
       g_warning ("old palette format %s", filename);
 
-      gimp_object_set_name (GIMP_OBJECT (palette), g_basename (filename));
+      basename = g_path_get_basename (filename);
+
+      gimp_object_set_name (GIMP_OBJECT (palette), basename);
+
+      g_free (basename);
     }
 
   while (! feof (fp))

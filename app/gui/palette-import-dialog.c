@@ -249,14 +249,19 @@ palette_import_image_sel_callback (GtkWidget *widget,
 				   gpointer   data)
 {
   GimpImage *gimage;
+  gchar     *basename;
   gchar     *lab;
 
   gimage = GIMP_IMAGE (data);
   palette_import_update_image_preview (gimage);
 
+  basename = g_path_get_basename (gimp_image_filename (import_dialog->gimage));
+
   lab = g_strdup_printf ("%s-%d",
-			 g_basename (gimp_image_filename (import_dialog->gimage)),
+			 basename,
 			 gimp_image_get_ID (import_dialog->gimage));
+
+  g_free (basename);
 
   gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
 
@@ -267,11 +272,16 @@ static void
 palette_import_image_menu_add (GimpImage *gimage)
 {
   GtkWidget *menuitem;
+  gchar     *basename;
   gchar     *lab;
 
+  basename = g_path_get_basename (gimp_image_filename (gimage));
+
   lab = g_strdup_printf ("%s-%d",
-			 g_basename (gimp_image_filename (gimage)),
+			 basename,
 			 gimp_image_get_ID (gimage));
+
+  g_free (basename);
 
   menuitem = gtk_menu_item_new_with_label (lab);
 
@@ -297,6 +307,7 @@ palette_import_image_menu_activate (gint        redo,
   GimpImage *first_img = NULL;
   gint       act_num   = -1;
   gint       count     = 0;
+  gchar     *basename;
   gchar     *lab;
 
   if (! import_dialog)
@@ -373,23 +384,33 @@ palette_import_image_menu_activate (gint        redo,
       /* reset to last one */
       if (redo && act_num >= 0)
         {
-           gchar *lab;
+	  gchar *basename;
+	  gchar *lab;
 
-	   lab = g_strdup_printf ("%s-%d",
-				  g_basename (gimp_image_filename (import_dialog->gimage)),
-				  gimp_image_get_ID (import_dialog->gimage));
+	  basename =
+	    g_path_get_basename (gimp_image_filename (import_dialog->gimage));
 
-           gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu1), act_num);
-           gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
+	  lab = g_strdup_printf ("%s-%d",
+				 basename,
+				 gimp_image_get_ID (import_dialog->gimage));
 
-	   g_free (lab);
+	  g_free (basename);
+
+	  gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu1), act_num);
+	  gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
+
+	  g_free (lab);
 	}
     }
   g_slist_free (list);
 
+  basename = g_path_get_basename (gimp_image_filename (import_dialog->gimage));
+
   lab = g_strdup_printf ("%s-%d",
-			 g_basename (gimp_image_filename (import_dialog->gimage)),
+			 basename,
 			 gimp_image_get_ID (import_dialog->gimage));
+
+  g_free (basename);
 
   gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
 

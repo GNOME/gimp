@@ -586,11 +586,11 @@ find_extension (gchar *filename)
 	{
 	  return NULL;
 	}
-      if (0 == g_strcasecmp (ext, ".xcfgz"))
+      if (0 == g_ascii_strcasecmp (ext, ".xcfgz"))
 	{
 	  return ".xcf";  /* we've found it */
 	}
-      if (0 != g_strcasecmp (ext,".gz"))
+      if (0 != g_ascii_strcasecmp (ext,".gz"))
 	{
 	  return ext;
 	}

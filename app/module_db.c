@@ -535,31 +535,38 @@ module_db_browser_new (void)
 static gboolean
 valid_module_name (const gchar *filename)
 {
-  const gchar *basename;
-  gint         len;
+  gchar *basename;
+  gint   len;
 
-  basename = g_basename (filename);
+  basename = g_path_get_basename (filename);
 
   len = strlen (basename);
 
 #if !defined(G_OS_WIN32) && !defined(G_WITH_CYGWIN) && !defined(__EMX__)
   if (len < 3 + 1 + 3)
-    return FALSE;
+    goto no_module;
 
   if (strncmp (basename, "lib", 3))
-    return FALSE;
+    goto no_module;
 
   if (strcmp (basename + len - 3, ".so"))
-    return FALSE;
+    goto no_module;
 #else
   if (len < 1 + 4)
-      return FALSE;
+    goto no_module;
 
   if (g_strcasecmp (basename + len - 4, ".dll"))
-    return FALSE;
+    goto no_module;
 #endif
 
+  g_free (basename);
+
   return TRUE;
+
+ no_module:
+  g_free (basename);
+
+  return FALSE;
 }
 
 

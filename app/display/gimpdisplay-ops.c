@@ -129,8 +129,13 @@ gdisplay_close_window (GDisplay *gdisp,
       gdisp->gimage->dirty &&
       gimprc.confirm_on_close)
     {
-      gdisplay_close_warning_dialog
-	(g_basename (gimp_image_filename (gdisp->gimage)), gdisp);
+      gchar *basename;
+
+      basename = g_path_get_basename (gimp_image_filename (gdisp->gimage));
+
+      gdisplay_close_warning_dialog (basename, gdisp);
+
+      g_free (basename);
     }
   else
     {

@@ -58,10 +58,10 @@ void      wire_set_flusher  (WireFlushFunc    flush_func);
 
 gboolean  wire_read         (GIOChannel	     *channel,
 			     guint8          *buf,
-			     gulong           count);
+			     gsize            count);
 gboolean  wire_write        (GIOChannel      *channel,
 			     guint8          *buf,
-			     gulong           count);
+			     gsize            count);
 gboolean  wire_flush        (GIOChannel	     *channel);
 
 gboolean  wire_error        (void);

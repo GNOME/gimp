@@ -217,8 +217,8 @@ create_color_area (GtkWidget *parent)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_wrap_box_pack (GTK_WRAP_BOX (parent), frame, TRUE, TRUE, TRUE, TRUE);
-  gtk_wrap_box_set_child_forced_break (GTK_WRAP_BOX (parent), frame, TRUE);
+  gtk_wrap_box_pack_wrapped (GTK_WRAP_BOX (parent), frame,
+			     TRUE, TRUE, TRUE, TRUE, TRUE);
 
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_container_set_border_width (GTK_CONTAINER (alignment), 3);

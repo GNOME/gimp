@@ -110,15 +110,24 @@ file_open_dialog_menu_init (void)
 
   for (list = load_procs; list; list = g_slist_next (list))
     {
+      gchar *basename;
+      gchar *lowercase_basename;
       gchar *help_page;
 
       file_proc = (PlugInProcDef *) list->data;
 
+      basename = g_path_get_basename (file_proc->prog);
+
+      lowercase_basename = g_ascii_strdown (basename);
+
+      g_free (basename);
+
       help_page = g_strconcat ("filters/",
-			       g_basename (file_proc->prog),
+			       lowercase_basename,
 			       ".html",
 			       NULL);
-      g_strdown (help_page);
+
+      g_free (lowercase_basename);
 
       entry.entry.path            = file_proc->menu_path;
       entry.entry.accelerator     = NULL;
@@ -449,8 +458,8 @@ set_preview (const gchar *fullfname,
   guchar      *thumb_rgb;
   guchar      *raw_thumb;
   gint         tnw,tnh, i;
-  gchar       *pname;
-  const gchar *fname;
+  gchar       *dirname;
+  gchar       *basename;
   gchar       *tname;
   gchar       *imginfo = NULL;
   struct stat  file_stat;
@@ -458,13 +467,12 @@ set_preview (const gchar *fullfname,
   gboolean     thumb_may_be_outdated = FALSE;
   gboolean     show_generate_label   = TRUE;
 
-  pname = g_dirname (fullfname);
-  fname = g_basename (fullfname); /* Don't free this! */
-  tname = g_strconcat (pname, G_DIR_SEPARATOR_S,
-		       ".xvpics", G_DIR_SEPARATOR_S,
-		       fname, NULL);
+  dirname = g_path_get_dirname (fullfname);
+  basename = g_path_get_basename (fullfname);
 
-  g_free (pname);
+  tname = g_strconcat (dirname, G_DIR_SEPARATOR_S,
+		       ".xvpics", G_DIR_SEPARATOR_S,
+		       basename, NULL);
 
   /*  If the file is newer than its thumbnail, the thumbnail may
    *  be out of date.
@@ -482,7 +490,10 @@ set_preview (const gchar *fullfname,
 
   g_free (tname);
 
-  gtk_frame_set_label (GTK_FRAME (open_options_frame), fname);
+  gtk_frame_set_label (GTK_FRAME (open_options_frame), basename);
+
+  g_free (dirname);
+  g_free (basename);
 
   g_free (preview_fullname);
   preview_fullname = g_strdup (fullfname);

@@ -348,8 +348,15 @@ gdisplay_format_title (GDisplay *gdisp,
 	      break;
 
 	    case 'f': /* pruned filename */
-	      i += print (title, title_len, i,
-			  "%s", g_basename (gimp_image_filename (gimage)));
+	      {
+		gchar *basename;
+
+		basename = g_path_get_basename (gimp_image_filename (gimage));
+
+		i += print (title, title_len, i, "%s", basename);
+
+		g_free (basename);
+	      }
 	      break;
 
 	    case 'F': /* full filename */

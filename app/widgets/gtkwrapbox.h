@@ -34,11 +34,11 @@ extern "C" {
 
 /* --- type macros --- */
 #define GTK_TYPE_WRAP_BOX	     (gtk_wrap_box_get_type ())
-#define GTK_WRAP_BOX(obj)	     (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_WRAP_BOX, GtkWrapBox))
-#define GTK_WRAP_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GTK_TYPE_WRAP_BOX, GtkWrapBoxClass))
-#define GTK_IS_WRAP_BOX(obj)	     (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GTK_TYPE_WRAP_BOX))
-#define GTK_IS_WRAP_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GTK_TYPE_WRAP_BOX))
-#define GTK_WRAP_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_WRAP_BOX, GtkWrapBoxClass))
+#define GTK_WRAP_BOX(obj)	     (GTK_CHECK_CAST ((obj), GTK_TYPE_WRAP_BOX, GtkWrapBox))
+#define GTK_WRAP_BOX_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_WRAP_BOX, GtkWrapBoxClass))
+#define GTK_IS_WRAP_BOX(obj)	     (GTK_CHECK_TYPE ((obj), GTK_TYPE_WRAP_BOX))
+#define GTK_IS_WRAP_BOX_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_WRAP_BOX))
+#define GTK_WRAP_BOX_GET_CLASS(obj)  (GTK_CHECK_GET_CLASS ((obj), GTK_TYPE_WRAP_BOX, GtkWrapBoxClass))
 
 
 /* --- typedefs --- */
@@ -78,7 +78,7 @@ struct _GtkWrapBoxChild
   guint      hfill : 1;
   guint      vexpand : 1;
   guint      vfill : 1;
-  guint      forced_break : 1;
+  guint      wrapped : 1;
   
   GtkWrapBoxChild *next;
 };
@@ -106,6 +106,13 @@ void	   gtk_wrap_box_pack	            (GtkWrapBox      *wbox,
 					     gboolean         hfill,
 					     gboolean         vexpand,
 					     gboolean         vfill);
+void	   gtk_wrap_box_pack_wrapped        (GtkWrapBox      *wbox,
+					     GtkWidget       *child,
+					     gboolean         hexpand,
+					     gboolean         hfill,
+					     gboolean         vexpand,
+					     gboolean         vfill,
+					     gboolean         wrapped);
 void       gtk_wrap_box_reorder_child       (GtkWrapBox      *wbox,
 					     GtkWidget       *child,
 					     gint             position);
@@ -114,19 +121,15 @@ void       gtk_wrap_box_query_child_packing (GtkWrapBox      *wbox,
 					     gboolean        *hexpand,
 					     gboolean        *hfill,
 					     gboolean        *vexpand,
-					     gboolean        *vfill);
-void       gtk_wrap_box_query_child_forced_break (GtkWrapBox *wbox,
-						  GtkWidget  *child,
-						  gboolean   *forced_break);
+					     gboolean        *vfill,
+					     gboolean        *wrapped);
 void       gtk_wrap_box_set_child_packing   (GtkWrapBox      *wbox,
 					     GtkWidget       *child,
 					     gboolean         hexpand,
 					     gboolean         hfill,
 					     gboolean         vexpand,
-					     gboolean         vfill);
-void       gtk_wrap_box_set_child_forced_break (GtkWrapBox   *wbox,
-						GtkWidget    *child,
-						gboolean      forced_break);
+					     gboolean         vfill,
+					     gboolean         wrapped);
 guint*	   gtk_wrap_box_query_line_lengths  (GtkWrapBox	     *wbox,
 					     guint           *n_lines);
 

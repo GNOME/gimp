@@ -114,11 +114,12 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
-  gchar *filename;
-  gchar *label;
-  gint32 *images;
-  gint nimages;
-  gint i, k;
+  gchar     *filename;
+  gchar     *basename;
+  gchar     *label;
+  gint32    *images;
+  gint       nimages;
+  gint       i, k;
 
   menu = gtk_menu_new ();
   g_object_set_data (G_OBJECT (menu), "gimp_callback", (gpointer) callback);
@@ -129,8 +130,12 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
     if (!constraint || (* constraint) (images[i], -1, data))
       {
 	filename = gimp_image_get_filename (images[i]);
-	label = g_strdup_printf ("%s-%d", g_basename (filename), images[i]);
+	basename = g_path_get_basename (filename);
 	g_free (filename);
+
+	label = g_strdup_printf ("%s-%d", basename, images[i]);
+
+	g_free (basename);
 
 	menuitem = gtk_menu_item_new_with_label (label);
 	g_signal_connect (G_OBJECT (menuitem), "activate",
@@ -174,15 +179,16 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
-  gchar *name;
-  gchar *image_label;
-  gchar *label;
-  gint32 *images;
-  gint32 *layers;
-  gint32 layer;
-  gint nimages;
-  gint nlayers;
-  gint i, j, k;
+  gchar     *name;
+  gchar     *basename;
+  gchar     *image_label;
+  gchar     *label;
+  gint32    *images;
+  gint32    *layers;
+  gint32     layer;
+  gint       nimages;
+  gint       nlayers;
+  gint       i, j, k;
 
   menu = gtk_menu_new ();
   g_object_set_data (G_OBJECT (menu), "gimp_callback", callback);
@@ -195,8 +201,12 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
     if (!constraint || (* constraint) (images[i], -1, data))
       {
 	name = gimp_image_get_filename (images[i]);
-	image_label = g_strdup_printf ("%s-%d", g_basename (name), images[i]);
+	basename = g_path_get_basename (name);
 	g_free (name);
+
+	image_label = g_strdup_printf ("%s-%d", basename, images[i]);
+
+	g_free (basename);
 
 	layers = gimp_image_get_layers (images[i], &nlayers);
 	for (j = 0; j < nlayers; j++)
@@ -286,15 +296,16 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
-  gchar *name;
-  gchar *image_label;
-  gchar *label;
-  gint32 *images;
-  gint32 *channels;
-  gint32 channel;
-  gint nimages;
-  gint nchannels;
-  gint i, j, k;
+  gchar     *name;
+  gchar     *basename;
+  gchar     *image_label;
+  gchar     *label;
+  gint32    *images;
+  gint32    *channels;
+  gint32     channel;
+  gint       nimages;
+  gint       nchannels;
+  gint       i, j, k;
 
   menu = gtk_menu_new ();
   g_object_set_data (G_OBJECT (menu), "gimp_callback", callback);
@@ -307,8 +318,12 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
     if (!constraint || (* constraint) (images[i], -1, data))
       {
 	name = gimp_image_get_filename (images[i]);
-	image_label = g_strdup_printf ("%s-%d", g_basename (name), images[i]);
+	basename = g_path_get_basename (name);
 	g_free (name);
+
+	image_label = g_strdup_printf ("%s-%d", basename, images[i]);
+
+	g_free (basename);
 
 	channels = gimp_image_get_channels (images[i], &nchannels);
 	for (j = 0; j < nchannels; j++)
@@ -399,17 +414,18 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
-  gchar  *name;
-  gchar  *image_label;
-  gchar  *label;
-  gint32 *images;
-  gint32 *layers;
-  gint32 *channels;
-  gint32  drawable;
-  gint    nimages;
-  gint    nlayers;
-  gint    nchannels;
-  gint    i, j, k;
+  gchar     *name;
+  gchar     *basename;
+  gchar     *image_label;
+  gchar     *label;
+  gint32    *images;
+  gint32    *layers;
+  gint32    *channels;
+  gint32     drawable;
+  gint       nimages;
+  gint       nlayers;
+  gint       nchannels;
+  gint       i, j, k;
 
   menu = gtk_menu_new ();
   g_object_set_data (G_OBJECT (menu), "gimp_callback", callback);
@@ -423,8 +439,12 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
     if (!constraint || (* constraint) (images[i], -1, data))
       {
 	name = gimp_image_get_filename (images[i]);
-	image_label = g_strdup_printf ("%s-%d", g_basename (name), images[i]);
+	basename = g_path_get_basename (name);
 	g_free (name);
+
+	image_label = g_strdup_printf ("%s-%d", basename, images[i]);
+
+	g_free (basename);
 
 	layers = gimp_image_get_layers (images[i], &nlayers);
 

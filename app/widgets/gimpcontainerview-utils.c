@@ -155,9 +155,20 @@ gimp_container_view_image_name_func (GtkWidget *widget)
       gimage = GIMP_IMAGE (preview->viewable);
 
       if (gimage)
-	return g_strdup_printf ("%s-%d",
-				g_basename (gimp_image_filename (gimage)),
-				gimp_image_get_ID (gimage));
+	{
+	  gchar *basename;
+	  gchar *retval;
+
+	  basename = g_path_get_basename (gimp_image_filename (gimage));
+
+	  retval = g_strdup_printf ("%s-%d",
+				    basename,
+				    gimp_image_get_ID (gimage));
+
+	  g_free (basename);
+
+	  return retval;
+	}
     }
 
   return g_strdup ("EEK");

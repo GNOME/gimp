@@ -389,14 +389,23 @@ script_fu_siod_read (GIOChannel  *channel,
 		     GIOCondition cond,
 		     gpointer     data)
 {
-  gint        count;
-  GIOError    error;
-  GtkTextIter cursor;
+  gint         count;
+  GIOStatus    status;
+  GError      *error;
+  GtkTextIter  cursor;
 
   count = 0;
-  error = g_io_channel_read (channel, read_buffer, BUFSIZE - 1, &count);
 
-  if (error == G_IO_ERROR_NONE)
+  do
+    {
+      status = g_io_channel_read_chars (channel, read_buffer,
+					BUFSIZE - 1,
+					&count,
+					&error);
+    }
+  while (status == G_IO_STATUS_AGAIN);
+
+  if (status == G_IO_STATUS_NORMAL)
     {
       read_buffer[count] = '\0';
 

@@ -165,9 +165,6 @@ static gint           parse_proc_arg            (ProcArg        *arg);
 static gint           parse_color               (GimpRGB        *color);
 static gint           parse_unknown             (gchar          *token_sym);
 
-       gchar        * gimprc_value_to_str       (gchar          *name);
-static gchar        * value_to_str              (gchar          *name);
-
 static inline gchar * string_to_str             (gpointer val1p, gpointer val2p);
 static inline gchar * path_to_str               (gpointer val1p, gpointer val2p);
 static inline gchar * double_to_str             (gpointer val1p, gpointer val2p);
@@ -187,7 +184,7 @@ static inline gchar * comment_to_str            (gpointer val1p, gpointer val2p)
 
 static gchar        * transform_path            (gchar        *path, 
 						 gboolean      destroy);
-static void           gimprc_set_token          (gchar        *token,
+static void           gimprc_set_token          (const gchar  *token,
 						 gchar        *value);
 static void           add_gimp_directory_token  (const gchar  *gimp_dir);
 #ifdef __EMX__
@@ -480,7 +477,7 @@ gimprc_parse (Gimp *gimp)
   else 
     filename = gimp_personal_rc_file ("gimprc");
 
-  if (g_strcasecmp (filename, libfilename) != 0)
+  if (strcmp (filename, libfilename))
     gimprc_parse_file (filename);
 
   g_free (filename);
@@ -492,8 +489,8 @@ gimprc_parse (Gimp *gimp)
     gimp->config->default_comment = g_strdup (DEFAULT_COMMENT);
 }
 
-gboolean
-parse_absolute_gimprc_file (char *filename)
+static gboolean
+parse_absolute_gimprc_file (const gchar *filename)
 {
   gint status;
 
@@ -530,7 +527,7 @@ parse_absolute_gimprc_file (char *filename)
 }
 
 gboolean
-gimprc_parse_file (gchar *filename)
+gimprc_parse_file (const gchar *filename)
 {
   gchar    *rfilename;
   gboolean  parsed;
@@ -559,12 +556,12 @@ gimprc_parse_file (gchar *filename)
 }
 
 static GList *
-g_list_findstr (GList *list,
-		gchar *str)
+g_list_findstr (GList       *list,
+		const gchar *str)
 {
   for (; list; list = g_list_next (list))
     {
-      if (! strcmp ((char *) list->data, str))
+      if (! strcmp ((gchar *) list->data, str))
         break;
     }
 
@@ -572,8 +569,8 @@ g_list_findstr (GList *list,
 }
 
 void
-save_gimprc_strings (gchar *token,
-		     gchar *value)
+save_gimprc_strings (const gchar *token,
+		     const gchar *value)
 {
   gchar     timestamp[40];  /* variables for parsing and updating gimprc */
   gchar    *name;
@@ -640,7 +637,7 @@ save_gimprc_strings (gchar *token,
       if (find_token (cur_line, tokname, 50))
 	{
 	  /* check if that entry should be updated */
-	  if (! g_strcasecmp (token, tokname)) /* if they match */
+	  if (! g_ascii_strcasecmp (token, tokname)) /* if they match */
 	    {
 	      if (prev_line == NULL)
 		{
@@ -796,7 +793,7 @@ gimprc_save (GList **updated_options,
 		  fprintf (fp_new, "#- Next line modified %s\n",
 			   timestamp);
 		}
-	      str = value_to_str (tokname);
+	      str = gimprc_value_to_str (tokname);
 	      fprintf (fp_new, "(%s %s)\n", tokname, str);
 	      g_free (str);
 
@@ -844,7 +841,7 @@ gimprc_save (GList **updated_options,
     {
       fprintf (fp_new, "#- Next line added %s\n",
 	       timestamp);
-      str = value_to_str ((char *) option->data);
+      str = gimprc_value_to_str ((const gchar *) option->data);
       fprintf (fp_new, "(%s %s)\n\n", (char *) option->data, str);
       g_free (str);
       option = option->next;
@@ -1981,11 +1978,11 @@ transform_path (gchar    *path,
 
 	  *tmp = '\0';
 
-	  tmp2 = gimprc_find_token (token);
+	  tmp2 = (gchar *) gimprc_find_token (token);
 	  if (tmp2 == NULL) 
 	    {
 	      /* maybe token is an environment variable */
-	      tmp2 = g_getenv (token);
+	      tmp2 = (gchar *) g_getenv (token);
 #ifdef G_OS_WIN32
 	      /* The default user gimprc on Windows references
 	       * ${TEMP}, but not all Windows installations have that
@@ -1993,8 +1990,8 @@ transform_path (gchar    *path,
 	       * standard. So special-case it.
 	       */
 	      if (tmp2 == NULL &&
-		  (g_strcasecmp (token, "temp") == 0 ||
-		   g_strcasecmp (token, "tmp") == 0))
+		  (g_ascii_strcasecmp (token, "temp") == 0 ||
+		   g_ascii_strcasecmp (token, "tmp") == 0))
 		{
 		  tmp2 = g_get_tmp_dir ();
 		}
@@ -2008,7 +2005,7 @@ transform_path (gchar    *path,
 		  gimp_terminate ("transform_path(): gimprc token referenced but not defined: %s", token);
 		}
 	    }
-	  tmp2 = transform_path (tmp2, FALSE);
+	  tmp2 = transform_path ((gchar *) tmp2, FALSE);
 	  if (is_env)
 	    {
 	      /* then add to list of unknown tokens */
@@ -2080,7 +2077,7 @@ transform_path (gchar    *path,
 	    }
 
 	  *tmp = '\0';
-	  token = gimprc_find_token (token);
+	  token = (gchar *) gimprc_find_token (token);
 	  *tmp = '}';
 
 	  *tmp2 = '\0';
@@ -2853,14 +2850,8 @@ parse_unknown (gchar *token_sym)
   return OK;
 }
 
-gchar * 
-gimprc_value_to_str (gchar *name)
-{
-  return value_to_str (name); /* had a namespace collision */
-}
-
-static gchar *
-value_to_str (gchar *name)
+gchar *
+gimprc_value_to_str (const gchar *name)
 {
   ParseFunc *func;
 
@@ -3252,8 +3243,8 @@ open_backup_file (gchar  *filename,
   return NULL;
 }
 
-gchar *
-gimprc_find_token (gchar *token)
+const gchar *
+gimprc_find_token (const gchar *token)
 {
   GList        *list;
   UnknownToken *ut;
@@ -3270,8 +3261,8 @@ gimprc_find_token (gchar *token)
 }
 
 static void
-gimprc_set_token (gchar *token,
-		  gchar *value)
+gimprc_set_token (const gchar *token,
+		  gchar       *value)
 {
   GList        *list;
   UnknownToken *ut;
@@ -3286,6 +3277,7 @@ gimprc_set_token (gchar *token,
 	    {
 	      if (ut->value)
 		g_free (ut->value);
+
 	      ut->value = value;
 	    }
 	  break;

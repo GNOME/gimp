@@ -232,7 +232,7 @@ file_load_thumbnail_invoker (Gimp     *gimp,
 
   if (success)
     {
-      pname = g_dirname (filename);
+      pname = g_path_get_dirname (filename);
       fname = g_path_get_basename (filename);
       tname = g_strconcat (pname, G_DIR_SEPARATOR_S, ".xvpics", G_DIR_SEPARATOR_S,
 			   fname,

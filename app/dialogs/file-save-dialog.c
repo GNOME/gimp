@@ -98,15 +98,23 @@ file_save_dialog_menu_init (void)
 
   for (list = save_procs; list; list = g_slist_next (list))
     {
-      gchar *help_page;
+      gchar *basename;
+      gchar *page;
+      gchar *lowercase_page;
 
       file_proc = (PlugInProcDef *) list->data;
 
-      help_page = g_strconcat ("filters/",
-			       g_basename (file_proc->prog),
-			       ".html",
-			       NULL);
-      g_strdown (help_page);
+      basename = g_path_get_basename (file_proc->prog);
+
+      page = g_strconcat ("filters", G_DIR_SEPARATOR_S,
+			  basename, ".html",
+			  NULL);
+
+      g_free (basename);
+
+      lowercase_page = g_ascii_strdown (page);
+
+      g_free (page);
 
       entry.entry.path            = file_proc->menu_path;
       entry.entry.accelerator     = NULL;
@@ -114,7 +122,7 @@ file_save_dialog_menu_init (void)
       entry.entry.callback_action = 0;
       entry.entry.item_type       = NULL;
       entry.quark_string          = NULL;
-      entry.help_page             = help_page;
+      entry.help_page             = lowercase_page;
       entry.description           = NULL;
 
       menus_create_item_from_full_path (&entry, NULL, file_proc);

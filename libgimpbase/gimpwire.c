@@ -109,7 +109,7 @@ wire_set_flusher (WireFlushFunc flush_func)
 gboolean
 wire_read (GIOChannel *channel,
 	   guint8     *buf,
-	   gulong      count)
+	   gsize       count)
 {
   if (wire_read_func)
     {
@@ -122,29 +122,42 @@ wire_read (GIOChannel *channel,
     }
   else
     {
-      GIOError error;
-      guint    bytes;
+      GIOStatus  status;
+      GError    *error = NULL;
+      gsize      bytes;
 
       while (count > 0)
 	{
 	  do
 	    {
 	      bytes = 0;
-	      error = g_io_channel_read (channel, (gchar *) buf, count, &bytes);
+#ifdef __GNUC__
+#warning FIXME: g_io_channel_read_chars()
+#endif
+#if 0
+	      status = g_io_channel_read_chars (channel,
+						(gchar *) buf, count,
+						&bytes,
+						&error);
+#endif
+	      status = channel->funcs->io_read (channel,
+						(gchar *) buf, count,
+						&bytes,
+						&error);
 	    }
-	  while ((error == G_IO_ERROR_AGAIN) ||
-		 (error == G_IO_ERROR_UNKNOWN && errno == EINTR));
+	  while (status == G_IO_STATUS_AGAIN);
 
-	  if (error != G_IO_ERROR_NONE)
+	  if (status != G_IO_STATUS_NORMAL)
 	    {
-	      g_warning ("%s: wire_read: error", g_get_prgname ());
+	      g_warning ("%s: wire_read(): error: %s",
+			 g_get_prgname (), error->message);
 	      wire_error_val = TRUE;
 	      return FALSE;
 	    }
 
 	  if (bytes == 0)
 	    {
-	      g_warning ("%s: wire_read: unexpected EOF", g_get_prgname ());
+	      g_warning ("%s: wire_read(): unexpected EOF", g_get_prgname ());
 	      wire_error_val = TRUE;
 	      return FALSE;
 	    }
@@ -160,7 +173,7 @@ wire_read (GIOChannel *channel,
 gboolean
 wire_write (GIOChannel *channel,
 	    guint8     *buf,
-	    gulong      count)
+	    gsize       count)
 {
   if (wire_write_func)
     {
@@ -173,22 +186,35 @@ wire_write (GIOChannel *channel,
     }
   else
     {
-      GIOError error;
-      guint    bytes;
+      GIOStatus  status;
+      GError    *error = NULL;
+      gsize      bytes;
 
       while (count > 0)
 	{
 	  do
 	    {
 	      bytes = 0;
-	      error = g_io_channel_write (channel, (gchar *) buf, count, &bytes);
+#ifdef __GNUC__
+#warning FIXME: g_io_channel_write_chars()
+#endif
+#if 0
+	      status = g_io_channel_write_chars (channel,
+						 (gchar *) buf, count,
+						 &bytes,
+						 &error);
+#endif
+	      status = channel->funcs->io_write (channel,
+						 (gchar *) buf, count,
+						 &bytes,
+						 &error);
 	    }
-	  while ((error == G_IO_ERROR_AGAIN) ||
-		 (error == G_IO_ERROR_UNKNOWN && errno == EINTR));
+	  while (status == G_IO_STATUS_AGAIN);
 
-	  if (error != G_IO_ERROR_NONE)
+	  if (status != G_IO_STATUS_NORMAL)
 	    {
-	      g_warning ("%s: wire_write: error", g_get_prgname ());
+	      g_warning ("%s: wire_write(): error: %s",
+			 g_get_prgname (), error->message);
 	      wire_error_val = TRUE;
 	      return FALSE;
 	    }

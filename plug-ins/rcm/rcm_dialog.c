@@ -662,21 +662,21 @@ rcm_create_misc (void)
   menu = gtk_menu_new ();
 
   item = gtk_radio_menu_item_new_with_label (preview_group, _("Entire Image"));
-  preview_group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (item));
+  preview_group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   gtk_widget_show (item);
   gtk_signal_connect (GTK_OBJECT (item), "activate",
 		      (GtkSignalFunc) rcm_entire_image, NULL);
     
   item = gtk_radio_menu_item_new_with_label (preview_group, _("Selection"));
-  preview_group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (item));
+  preview_group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   gtk_widget_show (item);
   gtk_signal_connect (GTK_OBJECT (item), "activate",
 		      (GtkSignalFunc) rcm_selection, NULL);
 
   item = gtk_radio_menu_item_new_with_label (preview_group, _("Context"));
-  preview_group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (item));
+  preview_group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
   gtk_widget_show (item);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   gtk_signal_connect (GTK_OBJECT (item), "activate",

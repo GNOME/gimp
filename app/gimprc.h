@@ -72,18 +72,18 @@ extern GimpRc gimprc;
 
 /* this has to be called before any file is parsed
  */
-gboolean    gimprc_init         (Gimp   *gimp);
+gboolean      gimprc_init         (Gimp         *gimp);
 
-void        gimprc_parse        (Gimp   *gimp);
-void        gimprc_save         (GList **updated_options,
-				 GList **conflicting_options);
+void          gimprc_parse        (Gimp         *gimp);
+void          gimprc_save         (GList       **updated_options,
+				   GList       **conflicting_options);
 
-gboolean    gimprc_parse_file   (gchar  *filename);
+gboolean      gimprc_parse_file   (const gchar  *filename);
 
-gchar     * gimprc_find_token   (gchar  *token);
-gchar     * gimprc_value_to_str (gchar  *name);
-void        save_gimprc_strings (gchar  *token,
-				 gchar  *value);
+const gchar * gimprc_find_token   (const gchar  *token);
+gchar       * gimprc_value_to_str (const gchar  *name);
+void          save_gimprc_strings (const gchar  *token,
+				   const gchar  *value);
 
 
 #endif  /*  __GIMPRC_H__  */

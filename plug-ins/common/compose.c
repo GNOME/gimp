@@ -391,7 +391,7 @@ compose (gchar  *compose_type,
   compose_idx = -1;
   for (j = 0; j < MAX_COMPOSE_TYPES; j++)
     {
-      if (g_strcasecmp (compose_type, compose_dsc[j].compose_type) == 0)
+      if (g_ascii_strcasecmp (compose_type, compose_dsc[j].compose_type) == 0)
 	compose_idx = j;
     }
   if (compose_idx < 0)
@@ -757,7 +757,7 @@ compose_dialog (gchar  *compose_type,
   compose_idx = -1;
   for (j = 0; j < MAX_COMPOSE_TYPES; j++)
     {
-      if (g_strcasecmp (compose_type, compose_dsc[j].compose_type) == 0)
+      if (g_ascii_strcasecmp (compose_type, compose_dsc[j].compose_type) == 0)
 	compose_idx = j;
     }
   if (compose_idx < 0) compose_idx = 0;

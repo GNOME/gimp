@@ -422,7 +422,7 @@ run (gchar      *name,
 
 	  temp = mask_filename;
 
-	  if ((dirname = g_dirname (param[3].data.d_string)) != NULL)
+	  if ((dirname = g_path_get_dirname (param[3].data.d_string)) != NULL)
 	    {
 	      mask_filename = g_strdup_printf ("%s/%s%s.xbm",
 					       dirname, temp, xsvals.mask_ext);

@@ -327,7 +327,13 @@ gimp_gradient_load (const gchar *filename)
     }
   else /* old gradient format */
     {
-      gimp_object_set_name (GIMP_OBJECT (gradient), g_basename (filename));
+      gchar *basename;
+
+      basename = g_path_get_basename (filename);
+
+      gimp_object_set_name (GIMP_OBJECT (gradient), basename);
+
+      g_free (basename);
     }
 
   num_segments = atoi (line);

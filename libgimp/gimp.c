@@ -171,11 +171,11 @@ int
 gimp_main (int   argc,
 	   char *argv[])
 {
-#ifdef G_OS_WIN32
-  gint i, j, k;
-#endif
+  gchar *basename;
 
 #ifdef G_OS_WIN32
+  gint i, j, k;
+
   g_assert (PLUG_IN_INFO_PTR != NULL);
 
   /* Check for exe file name with spaces in the path having been split up
@@ -219,7 +219,11 @@ gimp_main (int   argc,
 
   progname = argv[0];
 
-  g_set_prgname (g_basename (progname));
+  basename = g_path_get_basename (progname);
+
+  g_set_prgname (basename);
+
+  g_free (basename);
 
   stack_trace_mode = (GimpStackTraceMode) CLAMP (atoi (argv[5]),
 						 GIMP_STACK_TRACE_NEVER,
@@ -252,6 +256,9 @@ gimp_main (int   argc,
   setmode (g_io_channel_unix_get_fd (_readchannel), O_BINARY);
   setmode (g_io_channel_unix_get_fd (_writechannel), O_BINARY);
 #endif
+
+  g_io_channel_set_encoding (_readchannel, NULL, NULL);
+  g_io_channel_set_encoding (_writechannel, NULL, NULL);
 
   gp_init ();
   wire_set_writer (gimp_write);
@@ -958,9 +965,10 @@ gimp_write (GIOChannel *channel,
 static gboolean
 gimp_flush (GIOChannel *channel)
 {
-  GIOError error;
-  guint count;
-  guint bytes;
+  GIOStatus  status;
+  GError    *error;
+  gsize      count;
+  gsize      bytes;
 
   if (write_buffer_index > 0)
     {
@@ -970,14 +978,30 @@ gimp_flush (GIOChannel *channel)
 	  do
 	    {
 	      bytes = 0;
-	      error = g_io_channel_write (channel, &write_buffer[count],
-					  (write_buffer_index - count),
-					  &bytes);
+#ifdef __GNUC__
+#warning FIXME: g_io_channel_write_chars()
+#endif
+#if 0
+	      status = g_io_channel_write_chars (channel,
+						 &write_buffer[count],
+						 (write_buffer_index - count),
+						 &bytes,
+						 &error);
+#endif
+	      status = channel->funcs->io_write (channel,
+						 &write_buffer[count],
+						 (write_buffer_index - count),
+						 &bytes,
+						 &error);
 	    }
-	  while (error == G_IO_ERROR_AGAIN);
+	  while (status == G_IO_STATUS_AGAIN);
 
-	  if (error != G_IO_ERROR_NONE)
-	    return FALSE;
+	  if (status != G_IO_STATUS_NORMAL)
+	    {
+	      g_warning ("%s: gimp_flush(): error: %s",
+			 g_get_prgname (), error->message);
+	      return FALSE;
+	    }
 
           count += bytes;
         }
@@ -1047,7 +1071,7 @@ gimp_config (GPConfig *config)
       g_message ("Could not execute plug-in \"%s\"\n(%s)"
 		 "because the GIMP is using an older version of the "
 		 "plug-in protocol.",
-		 g_basename (progname), progname);
+		 g_get_prgname (), progname);
       gimp_quit ();
     }
   else if (config->version > GP_VERSION)
@@ -1055,7 +1079,7 @@ gimp_config (GPConfig *config)
       g_message ("Could not execute plug-in \"%s\"\n(%s)"
 		 "because it uses an obsolete version of the " 
 		 "plug-in protocol.",
-		 g_basename (progname), progname);
+		 g_get_prgname (), progname);
       gimp_quit ();
     }
 

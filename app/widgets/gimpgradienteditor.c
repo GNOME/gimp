@@ -3467,8 +3467,7 @@ cpopup_create_blending_menu (GradientEditor *gradient_editor)
   GtkWidget *menu;
   GtkWidget *menuitem;
   GSList    *group;
-  gint i;
-  gint num_items;
+  gint       i;
 
   static const gchar *blending_types[] =
   {
@@ -3482,19 +3481,20 @@ cpopup_create_blending_menu (GradientEditor *gradient_editor)
   menu  = gtk_menu_new ();
   group = NULL;
 
-  num_items = (sizeof (gradient_editor->control_blending_items) /
-	       sizeof (gradient_editor->control_blending_items[0]));
-
-  for (i = 0; i < num_items; i++)
+  for (i = 0; i < G_N_ELEMENTS (gradient_editor->control_blending_items); i++)
     {
-      if (i == (num_items - 1))
-	menuitem = gtk_radio_menu_item_new_with_label (group, _("(Varies)"));
+      if (i == (G_N_ELEMENTS (gradient_editor->control_blending_items) - 1))
+	{
+	  menuitem = gtk_radio_menu_item_new_with_label (group, _("(Varies)"));
+	}
       else
-	menuitem =
-	  gtk_radio_menu_item_new_with_label (group,
-					      gettext (blending_types[i]));
+	{
+	  menuitem =
+	    gtk_radio_menu_item_new_with_label (group,
+						gettext (blending_types[i]));
+	}
 
-      group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+      group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (menuitem));
 
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
@@ -3508,7 +3508,7 @@ cpopup_create_blending_menu (GradientEditor *gradient_editor)
     }
 
   /* "Varies" is always disabled */
-  gtk_widget_set_sensitive (gradient_editor->control_blending_items[num_items - 1], FALSE);
+  gtk_widget_set_sensitive (gradient_editor->control_blending_items[G_N_ELEMENTS (gradient_editor->control_blending_items) - 1], FALSE);
 
   return menu;
 }
@@ -3554,7 +3554,6 @@ cpopup_create_coloring_menu (GradientEditor *gradient_editor)
   GtkWidget *menuitem;
   GSList    *group;
   gint       i;
-  gint       num_items;
 
   static const gchar *coloring_types[] =
   {
@@ -3566,17 +3565,20 @@ cpopup_create_coloring_menu (GradientEditor *gradient_editor)
   menu  = gtk_menu_new ();
   group = NULL;
 
-  num_items = (sizeof (gradient_editor->control_coloring_items) /
-	       sizeof (gradient_editor->control_coloring_items[0]));
-
-  for (i = 0; i < num_items; i++)
+  for (i = 0; i < G_N_ELEMENTS (gradient_editor->control_coloring_items); i++)
     {
-      if (i == (num_items - 1))
-	menuitem = gtk_radio_menu_item_new_with_label(group, _("(Varies)"));
+      if (i == (G_N_ELEMENTS (gradient_editor->control_coloring_items) - 1))
+	{
+	  menuitem = gtk_radio_menu_item_new_with_label(group, _("(Varies)"));
+	}
       else
-	menuitem = gtk_radio_menu_item_new_with_label (group, gettext (coloring_types[i]));
+	{
+	  menuitem =
+	    gtk_radio_menu_item_new_with_label (group,
+						gettext (coloring_types[i]));
+	}
 
-      group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+      group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (menuitem));
 
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
@@ -3590,7 +3592,7 @@ cpopup_create_coloring_menu (GradientEditor *gradient_editor)
     }
 
   /* "Varies" is always disabled */
-  gtk_widget_set_sensitive (gradient_editor->control_coloring_items[num_items - 1], FALSE);
+  gtk_widget_set_sensitive (gradient_editor->control_coloring_items[G_N_ELEMENTS (gradient_editor->control_coloring_items) - 1], FALSE);
 
   return menu;
 }

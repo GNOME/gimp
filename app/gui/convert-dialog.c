@@ -447,7 +447,7 @@ build_palette_button (void)
       
       /* Preferentially, the initial default is 'Web' if available */
       if (theWebPalette == NULL &&
-	  g_strcasecmp (GIMP_OBJECT (palette)->name, "Web") == 0)
+	  g_ascii_strcasecmp (GIMP_OBJECT (palette)->name, "Web") == 0)
 	{
 	  theWebPalette = palette;
 	  UserHasWebPal = TRUE;

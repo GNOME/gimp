@@ -377,15 +377,17 @@ static InfoDialog *info_window_auto = NULL;
 static gchar *
 info_window_title (GDisplay *gdisp)
 {
-  const gchar *basename;
-  gchar       *title;
+  gchar *basename;
+  gchar *title;
 
-  basename = g_basename (gimp_image_filename (gdisp->gimage));
+  basename = g_path_get_basename (gimp_image_filename (gdisp->gimage));
   
   title = g_strdup_printf (_("Info: %s-%d.%d"), 
 			   basename,
 			   gimp_image_get_ID (gdisp->gimage),
 			   gdisp->instance);
+
+  g_free (basename);
 
   return title;
 }
