@@ -308,9 +308,12 @@ gimp_module_query_module (GimpModule *module)
 
   info = module->query_module (G_TYPE_MODULE (module));
 
-  if (! info)
+  if (! info || info->abi_version != GIMP_MODULE_ABI_VERSION)
     {
-      gimp_module_set_last_error (module, "gimp_module_query() returned NULL");
+      gimp_module_set_last_error (module,
+                                  info ?
+                                  "module ABI version does not match" :
+                                  "gimp_module_query() returned NULL");
 
       if (module->verbose)
 	g_message (_("Module '%s' load error:\n%s"),
@@ -418,21 +421,23 @@ gimp_module_set_last_error (GimpModule  *module,
 /*  GimpModuleInfo functions  */
 
 GimpModuleInfo *
-gimp_module_info_new (const gchar    *purpose,
-                      const gchar    *author,
-                      const gchar    *version,
-                      const gchar    *copyright,
-                      const gchar    *date)
+gimp_module_info_new (guint32      abi_version,
+                      const gchar *purpose,
+                      const gchar *author,
+                      const gchar *version,
+                      const gchar *copyright,
+                      const gchar *date)
 {
   GimpModuleInfo *info;
 
   info = g_new0 (GimpModuleInfo, 1);
 
-  info->purpose   = g_strdup (purpose);
-  info->author    = g_strdup (author);
-  info->version   = g_strdup (version);
-  info->copyright = g_strdup (copyright);
-  info->date      = g_strdup (date);
+  info->abi_version = abi_version;
+  info->purpose     = g_strdup (purpose);
+  info->author      = g_strdup (author);
+  info->version     = g_strdup (version);
+  info->copyright   = g_strdup (copyright);
+  info->date        = g_strdup (date);
 
   return info;
 }
@@ -442,7 +447,8 @@ gimp_module_info_copy (const GimpModuleInfo *info)
 {
   g_return_val_if_fail (info != NULL, NULL);
 
-  return gimp_module_info_new (info->purpose,
+  return gimp_module_info_new (info->abi_version,
+                               info->purpose,
                                info->author,
                                info->version,
                                info->copyright,

@@ -104,6 +104,7 @@ static gboolean   colorsel_triangle_event           (GtkWidget        *widget,
 
 static const GimpModuleInfo colorsel_triangle_info =
 {
+  GIMP_MODULE_ABI_VERSION,
   N_("Painter-style triangle color selector"),
   "Simon Budig <Simon.Budig@unix-ag.org>",
   "v0.03",

@@ -31,6 +31,15 @@
 G_BEGIN_DECLS
 
 
+/*  increment the ABI version each time one of the following changes:
+ *
+ *  - the libgimpmodule implementation (if the change affects modules).
+ *  - one of the classes implemented by modules (currently GimpColorDisplay
+ *    and GimpColorSelector).
+ */
+#define GIMP_MODULE_ABI_VERSION 0x0001
+
+
 typedef enum
 {
   GIMP_MODULE_STATE_ERROR,       /* missing gimp_module_register function
@@ -49,11 +58,12 @@ typedef enum
 
 struct _GimpModuleInfo
 {
-  gchar *purpose;
-  gchar *author;
-  gchar *version;
-  gchar *copyright;
-  gchar *date;
+  guint32  abi_version;
+  gchar   *purpose;
+  gchar   *author;
+  gchar   *version;
+  gchar   *copyright;
+  gchar   *date;
 };
 
 
@@ -115,7 +125,8 @@ const gchar * gimp_module_state_name       (GimpModuleState  state);
 
 /*  GimpModuleInfo functions  */
 
-GimpModuleInfo * gimp_module_info_new  (const gchar          *purpose,
+GimpModuleInfo * gimp_module_info_new  (guint32               abi_version,
+                                        const gchar          *purpose,
                                         const gchar          *author,
                                         const gchar          *version,
                                         const gchar          *copyright,

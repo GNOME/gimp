@@ -86,6 +86,7 @@ static void    gamma_configure_adj_callback     (GtkAdjustment    *adj,
 
 static const GimpModuleInfo cdisplay_gamma_info = 
 {
+  GIMP_MODULE_ABI_VERSION,
   N_("Gamma color display filter"),
   "Manish Singh <yosh@gimp.org>",
   "v0.2",

@@ -86,6 +86,7 @@ static void    contrast_configure_adj_callback     (GtkAdjustment    *adj,
 
 static const GimpModuleInfo cdisplay_contrast_info = 
 {
+  GIMP_MODULE_ABI_VERSION,
   N_("High Contrast color display filter"),
   "Jay Cox <jaycox@earthlink.net>",
   "v0.2",

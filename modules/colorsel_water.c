@@ -100,6 +100,7 @@ static void       pressure_adjust_update    (GtkAdjustment     *adj,
 
 static const GimpModuleInfo colorsel_water_info =
 {
+  GIMP_MODULE_ABI_VERSION,
   N_("Watercolor style color selector"),
   "Raph Levien <raph@acm.org>, Sven Neumann <sven@gimp.org>",
   "v0.3",

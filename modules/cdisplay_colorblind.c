@@ -97,6 +97,7 @@ static void    colorblind_deficiency_callback        (GtkWidget          *widget
 
 static const GimpModuleInfo cdisplay_colorblind_info = 
 {
+  GIMP_MODULE_ABI_VERSION,
   N_("Colorblind display filter"),
   "Michael Natterer <mitch@gimp.org>",
   "v0.1",
