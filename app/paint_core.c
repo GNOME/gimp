@@ -342,7 +342,7 @@ paint_core_cursor_update (Tool           *tool,
   gdisplay_untransform_coords (gdisp, (double) mevent->x, (double) mevent->y,
 			       &x, &y, TRUE, FALSE);
  
-  if (layer = gimage_get_active_layer (gdisp->gimage))
+  if ((layer = gimage_get_active_layer (gdisp->gimage)))
     {
       /* If Ctrl or Mod1 is pressed, pick colors */ 
       if (paint_core->pick_colors

@@ -285,7 +285,9 @@ CODE
 	# Our function prototype for the headers
 	(my $hrettype = $rettype) =~ s/ //g;
 
-        push @{$out->{proto}}, "$hrettype gimp_$name ($arglist);\n";
+	my $proto = "$hrettype gimp_$name ($arglist);\n";
+	$proto =~ s/ +/ /g;
+        push @{$out->{proto}}, $proto;
 
 	my $clist = $arglist;
 	$clist =~ s/\t/' ' x (length("gimp_$name") + 2)/eg;
@@ -343,25 +345,29 @@ LGPL
 	    $extra = $main::grp{$group}->{extra}->{lib}
 	}
 
-	my ($longest1, $longest2, $longest3) = (0, 0, 0); my @arglist = ();
+	push @{$out->{proto}}, $extra->{protos} if exists $extra->{protos};
+
+	my @longest = (0, 0, 0); my @arglist = (); my $seen = 0;
 	foreach (@{$out->{proto}}) {
 	    my $len; my $arglist = [ split(' ', $_, 3) ];
 
-	    $len = length($arglist->[0]);
-	    $longest1 = $len if $longest1 < $len;
+	    for (0..1) {
+		$len = length($arglist->[$_]);
+		$longest[$_] = $len if $longest[$_] < $len;
+	    }
 
-	    $len = length($arglist->[1]);
-	    $longest2 = $len if $longest2 < $len;
-
-	    my @arg = split(' ', $arglist->[2]);
-	    if ($#arg) {
-		$len = index($arglist->[2], $arg[1]);
-		$len -= scalar($arg[1] =~ /\*/g);
-		$longest3 = $len if $longest3 < $len;
+	    my @arg = split(/,/, $arglist->[2]);
+	    foreach (@arg) {
+		/(\w+) \S+/;
+		$len = length($1) + 1;
+		$seen++ if /\*/;
+		$longest[2] = $len if $longest[2] < $len;
 	    }
 
 	    push @arglist, $arglist;
 	}
+
+	$longest[2]++ if $seen;
 
 	@{$out->{proto}} = ();
 	foreach (@arglist) {
@@ -369,17 +375,17 @@ LGPL
 
 	    my @args = split(/,/, $arglist); $arglist = "";
 	    foreach (@args) {
-		my $len = $longest3 - scalar(/ /g);
-		$len -= scalar(/\*/g);
-		s/(\s*\w+)\s+/$1 . ' ' x $len/e;
+		my $len = $longest[2] - index($_, ' ') + 1;
+		$len-- if /\*/;
+		s/ /' ' x $len/e if $len > 1;
 		$arglist .= $_;
 		$arglist .= "," if !/;\n$/;
 	    }
 	    my $arg = $type;
-	    $arg .= ' ' x ($longest1 - length($type) + 1) . $func;
-	    $arg .= ' ' x ($longest2 - length($func) + 1) . $arglist;
-	    $arg =~ s/\t/' ' x ($longest1 + $longest2 + 3)/eg;
-	    $arg =~ s/ {8}/\t/g;
+	    $arg .= ' ' x ($longest[0] - length($type) + 1) . $func;
+	    $arg .= ' ' x ($longest[1] - length($func) + 1) . $arglist;
+	    $arg =~ s/\t/' ' x ($longest[0] + $longest[1] + 3)/eg;
+	    while ($arg =~ /^\t* {8}/m) { $arg =~ s/^(\t*) {8}/$1\t/mg }
 	    push @{$out->{proto}}, $arg;
 	}
 

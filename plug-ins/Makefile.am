@@ -135,6 +135,7 @@ SUBDIRS = 			\
 	tile			\
 	tileit			\
 	tiler			\
+	unsharp			\
 	url			\
 	video			\
 	vinvert			\

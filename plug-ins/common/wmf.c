@@ -1331,7 +1331,7 @@ load_image (char *filename)
       return -1;
     }
 
-  memmove (&apm_head.Key, buffer, 4);
+  g_memmove (&apm_head.Key, buffer, 4);
   
   if (GUINT32_FROM_LE (apm_head.Key) == 0x9ac6cdd7)
     {
@@ -1341,11 +1341,11 @@ load_image (char *filename)
 	  g_message ("WMF: Failed to read placeable metafile header");
 	  return -1;
 	}
-      memmove (&apm_head.Left, buffer + 6, 2);
-      memmove (&apm_head.Top, buffer + 8, 2);
-      memmove (&apm_head.Right, buffer + 10, 2);
-      memmove (&apm_head.Bottom, buffer + 12, 2);
-      memmove (&apm_head.Inch, buffer + 14, 2);
+      g_memmove (&apm_head.Left, buffer + 6, 2);
+      g_memmove (&apm_head.Top, buffer + 8, 2);
+      g_memmove (&apm_head.Right, buffer + 10, 2);
+      g_memmove (&apm_head.Bottom, buffer + 12, 2);
+      g_memmove (&apm_head.Inch, buffer + 14, 2);
       bbox.x = GINT16_FROM_LE (apm_head.Left);
       bbox.y = GINT16_FROM_LE (apm_head.Top);
       bbox.width = GUINT16_FROM_LE (apm_head.Right) - bbox.x;
@@ -1374,9 +1374,9 @@ load_image (char *filename)
   pixs_per_in = 72;
 #endif
 
-  memmove (&wmf_head.Version, buffer + 4, 2);
-  memmove (&wmf_head.FileSize, buffer + 6, 4);
-  memmove (&wmf_head.NumOfObjects, buffer + 10, 2);
+  g_memmove (&wmf_head.Version, buffer + 4, 2);
+  g_memmove (&wmf_head.FileSize, buffer + 6, 4);
+  g_memmove (&wmf_head.NumOfObjects, buffer + 10, 2);
 
   if (GUINT16_FROM_LE (wmf_head.Version) != 0x0300)
     {
@@ -1397,8 +1397,8 @@ load_image (char *filename)
 	  g_message ("WMF: Failed to read metafile record");
 	  return -1;
 	}
-      memmove (&record.Size, buffer, 4);
-      memmove (&record.Function, buffer + 4, 2);
+      g_memmove (&record.Size, buffer, 4);
+      g_memmove (&record.Function, buffer + 4, 2);
       record_counter++;
 #if 0
       g_print ("%#x %d\n", GUINT16_FROM_LE (record.Function), GUINT32_FROM_LE (record.Size));

@@ -118,8 +118,8 @@ main (int argc, char **argv)
   /* Initialize Gtk toolkit */
   gtk_set_locale ();
   setlocale(LC_NUMERIC, "C");  /* must use dot, not comma, as decimal separator */
-  /* Initialize i18n support */
 
+  /* Initialize i18n support */
 #ifdef HAVE_LC_MESSAGES
   setlocale(LC_MESSAGES, "");
 #endif
@@ -127,10 +127,6 @@ main (int argc, char **argv)
   textdomain("gimp");
 
   gtk_init (&argc, &argv);
-
-#ifdef HAVE_LIBGLE
-  gle_init (&argc, &argv);
-#endif /* !HAVE_LIBGLE */
 
 #ifdef HAVE_PUTENV
   display_name = gdk_get_display ();
@@ -145,18 +141,20 @@ main (int argc, char **argv)
   no_data = FALSE;
   no_splash = FALSE;
   no_splash_image = FALSE;
+
 #if defined (HAVE_SHM_H) || defined (NATIVE_WIN32)
   use_shm = TRUE;
 #else
   use_shm = FALSE;
 #endif
+
   use_debug_handler = FALSE;
   restore_session = FALSE;
   console_messages = FALSE;
 
   message_handler = CONSOLE;
 
-  batch_cmds = g_new (char*, argc);
+  batch_cmds = g_new (char *, argc);
   batch_cmds[0] = NULL;
   
   alternate_gimprc = NULL;
@@ -165,7 +163,7 @@ main (int argc, char **argv)
   show_version = FALSE;
   show_help = FALSE;
 
-  test_gserialize();
+  test_gserialize ();
 
   for (i = 1; i < argc; i++)
     {
@@ -341,10 +339,8 @@ main (int argc, char **argv)
   signal (SIGCHLD, on_sig_child);
 #endif
 
-  g_log_set_handler(NULL,
-		    G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-		    on_error,
-		    NULL);
+  g_log_set_handler (NULL, G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
+		     on_error, NULL);
   
   /* Keep the command line arguments--for use in gimp_init */
   gimp_argc = argc - 1;
@@ -379,7 +375,7 @@ WinMain (int hInstance, int hPrevInstance, char *lpszCmdLine, int nCmdShow)
 #endif
 
 static void
-init ()
+init (void)
 {
   /*  Continue initializing  */
   gimp_init (gimp_argc, gimp_argv);
@@ -387,13 +383,13 @@ init ()
 
 
 static void
-on_error (const gchar* domain,
-	  GLogLevelFlags flags,
-	  const gchar* msg,
-	  gpointer user_data){
-	fprintf(stderr, "%s: fatal error: %s\n",
-		prog_name, msg);
-	g_on_error_query(prog_name);
+on_error (const gchar    *domain,
+	  GLogLevelFlags  flags,
+	  const gchar    *msg,
+	  gpointer        user_data)
+{
+  fprintf(stderr, "%s: fatal error: %s\n", prog_name, msg);
+  g_on_error_query(prog_name);
 }
 
 static int caught_fatal_sig = 0;
@@ -487,13 +483,14 @@ typedef struct
   guint16 *test_array;
 } test_struct;
 
-static void test_gserialize()
+static void
+test_gserialize (void)
 {
   GSerialDescription *test_struct_descript;
   test_struct *ts, *to;
   char ser_1[] = {3, 1, 2, 3, 4, 4, 64, 83, 51, 51, 101, 0, 0, 0, 4, 102, 111, 111, 0, 103, 0, 0, 0, 2, 5, 6, 7, 8 };
-  ts = g_malloc(sizeof(test_struct));
-  to = g_malloc(sizeof(test_struct));
+  ts = g_new (test_struct, 1);
+  to = g_new (test_struct, 1);
   test_struct_descript 
     = g_new_serial_description("test_struct",
 			       g_serial_item(GSERIAL_INT32,
@@ -516,11 +513,11 @@ static void test_gserialize()
   ts->test_float = 3.3f;
   ts->test_string = "foo";
   ts->test_length = 2;
-  ts->test_array  = g_malloc(sizeof(short) *2);
+  ts->test_array  = g_new (guint16, 2);
   ts->test_array[0] = 0x0506;
   ts->test_array[1] = 0x0708;
 
-  g_deserialize(test_struct_descript,  (char *)(void*)to, ser_1);
+  g_deserialize (test_struct_descript, (char *)(void*)to, ser_1);
 
 #define EPSILON .0001
 

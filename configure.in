@@ -4,7 +4,7 @@ AC_INIT(gimprc.in)
 dnl Initialize automake stuff
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=1
-GIMP_MICRO_VERSION=5
+GIMP_MICRO_VERSION=6
 GIMP_INTERFACE_AGE=0
 GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
@@ -794,6 +794,7 @@ plug-ins/threshold_alpha/Makefile
 plug-ins/tile/Makefile
 plug-ins/tileit/Makefile
 plug-ins/tiler/Makefile
+plug-ins/unsharp/Makefile
 plug-ins/url/Makefile
 plug-ins/video/Makefile
 plug-ins/vinvert/Makefile

@@ -404,7 +404,7 @@ menus_destroy (char *path)
 }
 
 void
-menus_quit ()
+menus_quit (void)
 {
   gchar *filename;
 
@@ -437,7 +437,7 @@ menus_last_opened_cmd_callback (GtkWidget           *widget,
 }
 
 void
-menus_last_opened_update_labels ()
+menus_last_opened_update_labels (void)
 {
   GSList	*filename_slist;
   GString	*entry_filename, *path;
@@ -560,7 +560,7 @@ menus_init_mru (void)
 }
 
 void
-menus_init_toolbox ()
+menus_init_toolbox (void)
 {
   GtkItemFactoryEntry *translated_entries;
 

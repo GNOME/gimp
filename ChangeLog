@@ -1,3 +1,18 @@
+Fri Jun  4 19:00:12 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* configure.in: version number bump to 1.1.6
+
+	* added unsharp plug-in
+
+	* app/indicator_area.c
+	* app/main.c
+	* app/menus.c
+	* app/paint_core.c: minor cleanups
+
+	* plug-ins/wmf/wmf.c: s/memmove/g_memmove/
+
+	* tools/pdbgen/lib.pl: formatting changes, still unfinished
+
 Sat Jun  5 02:17:02 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/screenshot/screenshot.c: I still don't know why this guy

@@ -270,7 +270,7 @@ pattern_area_update()
             *b++ = *s++;
             *b++ = *s++;
           }
-      gtk_preview_draw_row (pattern_preview,
+      gtk_preview_draw_row (GTK_PREVIEW (pattern_preview),
                             buffer,
                             offset_x, i, width);
 
