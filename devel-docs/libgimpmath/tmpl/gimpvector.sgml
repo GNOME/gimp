@@ -169,16 +169,6 @@ Utilities to set up and manipulate vectors.
 @y: 
 
 
-<!-- ##### FUNCTION gimp_vector2_new_val ##### -->
-<para>
-
-</para>
-
-@x: 
-@y: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_vector2_add ##### -->
 <para>
 

@@ -40,12 +40,12 @@ struct _GimpMD5Context
 
 
 static void  gimp_md5_init      (GimpMD5Context *ctx);
-static void  gimp_md5_transform (guint32         buf[4], 
+static void  gimp_md5_transform (guint32         buf[4],
                                  const guint32   in[16]);
-static void  gimp_md5_update    (GimpMD5Context *ctx, 
-                                 const guchar   *buf, 
+static void  gimp_md5_update    (GimpMD5Context *ctx,
+                                 const guchar   *buf,
                                  guint32         len);
-static void  gimp_md5_final     (GimpMD5Context *ctx, 
+static void  gimp_md5_final     (GimpMD5Context *ctx,
                                  guchar          digest[16]);
 
 
@@ -54,7 +54,7 @@ static void  gimp_md5_final     (GimpMD5Context *ctx,
  * @buffer: byte buffer
  * @buffer_size: buffer size (in bytes) or -1 if @buffer is nul-terminated.
  * @digest: 16 bytes buffer receiving the hash code.
- * 
+ *
  * Get the md5 hash of a buffer. The result is put in the 16 bytes
  * buffer @digest.
  *
@@ -74,7 +74,7 @@ gimp_md5_get_digest (const gchar *buffer,
 
   g_return_if_fail (buffer != NULL);
   g_return_if_fail (digest != NULL);
-  
+
   if (buffer_size < 0)
     buffer_size = strlen (buffer);
 
@@ -84,11 +84,11 @@ gimp_md5_get_digest (const gchar *buffer,
 }
 
 static inline void
-byte_reverse (guint32 *buf, 
+byte_reverse (guint32 *buf,
               guint32  longs)
 {
 #if G_BYTE_ORDER != G_LITTLE_ENDIAN
-  do 
+  do
     {
       *buf = GINT32_TO_LE (*buf);
       buf++;
@@ -104,31 +104,31 @@ gimp_md5_init (GimpMD5Context *ctx)
   ctx->buf[1] = 0xefcdab89;
   ctx->buf[2] = 0x98badcfe;
   ctx->buf[3] = 0x10325476;
-	
+
   ctx->bits[0] = 0;
   ctx->bits[1] = 0;
 }
 
-static void 
-gimp_md5_update (GimpMD5Context *ctx, 
-                 const guchar   *buf, 
+static void
+gimp_md5_update (GimpMD5Context *ctx,
+                 const guchar   *buf,
                  guint32         len)
 {
   guint32 t;
-	
+
   /* Update bitcount */
   t = ctx->bits[0];
   if ((ctx->bits[0] = t + ((guint32) len << 3)) < t)
-    ctx->bits[1]++;		/* Carry from low to high */
+    ctx->bits[1]++;             /* Carry from low to high */
   ctx->bits[1] += len >> 29;
-	
+
   t = (t >> 3) & 0x3f;
-	
+
   /* Handle any leading odd-sized chunks */
-  if (t) 
+  if (t)
     {
       guchar *p = (guchar *) ctx->in + t;
-    
+
       t = 64 - t;
       if (len < t)
         {
@@ -142,10 +142,10 @@ gimp_md5_update (GimpMD5Context *ctx,
       gimp_md5_transform (ctx->buf, (guint32 *) ctx->in);
       buf += t;
       len -= t;
-    }	
+    }
 
   /* Process data in 64-byte chunks */
-  while (len >= 64) 
+  while (len >= 64)
     {
       memcpy (ctx->in, buf, 64);
       byte_reverse ((guint32 *) ctx->in, 16);
@@ -153,52 +153,52 @@ gimp_md5_update (GimpMD5Context *ctx,
       buf += 64;
       len -= 64;
     }
-	
+
   /* Handle any remaining bytes of data. */
   memcpy (ctx->in, buf, len);
 }
 
 static void
-gimp_md5_final (GimpMD5Context *ctx, 
+gimp_md5_final (GimpMD5Context *ctx,
                 guchar          digest[16])
 {
   guint32 count;
   guchar *p;
-	
+
   /* Compute number of bytes mod 64 */
   count = (ctx->bits[0] >> 3) & 0x3F;
-	
+
   /* Set the first char of padding to 0x80.  This is safe since there is
      always at least one byte free */
   p = ctx->in + count;
   *p++ = 0x80;
-	
+
   /* Bytes of padding needed to make 64 bytes */
   count = 64 - 1 - count;
-	
+
   /* Pad out to 56 mod 64 */
-  if (count < 8) 
+  if (count < 8)
     {
       /* Two lots of padding:  Pad the first block to 64 bytes */
       memset (p, 0, count);
       byte_reverse ((guint32 *) ctx->in, 16);
       gimp_md5_transform (ctx->buf, (guint32 *) ctx->in);
-		
+
       /* Now fill the next block with 56 bytes */
       memset (ctx->in, 0, 56);
-    } 
-  else 
+    }
+  else
     {
       /* Pad block to 56 bytes */
       memset (p, 0, count - 8);
     }
-  
+
   byte_reverse ((guint32 *) ctx->in, 14);
-	
+
   /* Append length in bits and transform */
   ((guint32 *) ctx->in)[14] = ctx->bits[0];
   ((guint32 *) ctx->in)[15] = ctx->bits[1];
-	
+
   gimp_md5_transform (ctx->buf, (guint32 *) ctx->in);
   byte_reverse (ctx->buf, 4);
   memcpy (digest, ctx->buf, 16);
@@ -215,24 +215,24 @@ gimp_md5_final (GimpMD5Context *ctx,
 
 /* This is the central step in the MD5 algorithm. */
 #define MD5STEP(f, w, x, y, z, data, s) \
-	( w += f(x, y, z) + data,  w = w<<s | w>>(32-s),  w += x )
+        ( w += f(x, y, z) + data,  w = w<<s | w>>(32-s),  w += x )
 
 /*
  * The core of the MD5 algorithm, this alters an existing MD5 hash to
  * reflect the addition of 16 longwords of new data.  md5_Update blocks
  * the data and converts bytes into longwords for this routine.
  */
-static void 
-gimp_md5_transform (guint32       buf[4], 
+static void
+gimp_md5_transform (guint32       buf[4],
                     const guint32 in[16])
 {
   register guint32 a, b, c, d;
-	
+
   a = buf[0];
   b = buf[1];
   c = buf[2];
   d = buf[3];
-	
+
   MD5STEP (F1, a, b, c, d, in[0] + 0xd76aa478, 7);
   MD5STEP (F1, d, a, b, c, in[1] + 0xe8c7b756, 12);
   MD5STEP (F1, c, d, a, b, in[2] + 0x242070db, 17);
@@ -249,7 +249,7 @@ gimp_md5_transform (guint32       buf[4],
   MD5STEP (F1, d, a, b, c, in[13] + 0xfd987193, 12);
   MD5STEP (F1, c, d, a, b, in[14] + 0xa679438e, 17);
   MD5STEP (F1, b, c, d, a, in[15] + 0x49b40821, 22);
-  
+
   MD5STEP (F2, a, b, c, d, in[1] + 0xf61e2562, 5);
   MD5STEP (F2, d, a, b, c, in[6] + 0xc040b340, 9);
   MD5STEP (F2, c, d, a, b, in[11] + 0x265e5a51, 14);
@@ -266,7 +266,7 @@ gimp_md5_transform (guint32       buf[4],
   MD5STEP (F2, d, a, b, c, in[2] + 0xfcefa3f8, 9);
   MD5STEP (F2, c, d, a, b, in[7] + 0x676f02d9, 14);
   MD5STEP (F2, b, c, d, a, in[12] + 0x8d2a4c8a, 20);
-  
+
   MD5STEP (F3, a, b, c, d, in[5] + 0xfffa3942, 4);
   MD5STEP (F3, d, a, b, c, in[8] + 0x8771f681, 11);
   MD5STEP (F3, c, d, a, b, in[11] + 0x6d9d6122, 16);
@@ -283,7 +283,7 @@ gimp_md5_transform (guint32       buf[4],
   MD5STEP (F3, d, a, b, c, in[12] + 0xe6db99e5, 11);
   MD5STEP (F3, c, d, a, b, in[15] + 0x1fa27cf8, 16);
   MD5STEP (F3, b, c, d, a, in[2] + 0xc4ac5665, 23);
-  
+
   MD5STEP (F4, a, b, c, d, in[0] + 0xf4292244, 6);
   MD5STEP (F4, d, a, b, c, in[7] + 0x432aff97, 10);
   MD5STEP (F4, c, d, a, b, in[14] + 0xab9423a7, 15);
@@ -300,7 +300,7 @@ gimp_md5_transform (guint32       buf[4],
   MD5STEP (F4, d, a, b, c, in[11] + 0xbd3af235, 10);
   MD5STEP (F4, c, d, a, b, in[2] + 0x2ad7d2bb, 15);
   MD5STEP (F4, b, c, d, a, in[9] + 0xeb86d391, 21);
-  
+
   buf[0] += a;
   buf[1] += b;
   buf[2] += c;

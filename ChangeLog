@@ -1,3 +1,10 @@
+2003-09-28  DindinX <david@dindinx.net>
+
+	* libgimpmath/gimpmatrix.[ch]:
+	* libgimpmath/gimpmd5.[ch]:
+	* libgimpmath/gimpvector.[ch]:
+	* libgimpmath/test-md5.c: Removed tabs and trailing whitespaces.
+
 2003-09-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.c (gimp_image_transform_temp_buf): use a much

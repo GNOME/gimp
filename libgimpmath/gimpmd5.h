@@ -20,7 +20,7 @@
  * Modified June 1993 by Colin Plumb for altered md5.c.
  * Modified October 1995 by Erik Troan for RPM
  */
- 
+
 #ifndef __GIMP_MD5_H__
 #define __GIMP_MD5_H__
 
@@ -28,8 +28,8 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-void gimp_md5_get_digest (const gchar *buffer, 
-                          gint         buffer_size, 
+void gimp_md5_get_digest (const gchar *buffer,
+                          gint         buffer_size,
                           guchar       digest[16]);
 
 

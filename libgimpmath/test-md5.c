@@ -9,7 +9,7 @@
 
 #include "gimpmd5.h"
 
-static const gchar * test[7][2] = 
+static const gchar * test[7][2] =
 {
   { "", "d41d8cd98f00b204e9800998ecf8427e" },
   { "a", "0cc175b9c0f1b6a831c399e269772661" },
@@ -38,7 +38,7 @@ main (void)
       for (j = 0; j < 16; j++)
         {
           guchar buf[4];
-          
+
           g_snprintf (buf, 3, "%02x", digest[j]);
           g_print (buf);
           if (strncmp (buf, test[i][1] + j*2, 2))
@@ -48,12 +48,12 @@ main (void)
 
       if (!correct)
         {
-          g_print 
+          g_print
             ("\nWRONG digest!! Please report to http://bugzilla.gnome.org/\n");
           return 1;
         }
     }
-  
+
   g_print ("\nLooks good.\n\n");
   return 0;
 }

@@ -63,7 +63,7 @@ static const GimpVector3 gimp_vector3_unit_z = { 0.0, 0.0, 1.0 };
  **/
 gdouble
 gimp_vector2_inner_product (const GimpVector2 *vector1,
-			    const GimpVector2 *vector2)
+                            const GimpVector2 *vector2)
 {
   return (vector1->x * vector2->x + vector1->y * vector2->y);
 }
@@ -80,7 +80,7 @@ gimp_vector2_inner_product (const GimpVector2 *vector1,
  **/
 gdouble
 gimp_vector2_inner_product_val (GimpVector2 vector1,
-			        GimpVector2 vector2)
+                                GimpVector2 vector2)
 {
   return (vector1.x * vector2.x + vector1.y * vector2.y);
 }
@@ -98,12 +98,12 @@ gimp_vector2_inner_product_val (GimpVector2 vector1,
  * Note that in 2D, this function is mostly useful to test if two
  * vectors are parallel or not, or to compute the area spawned by two
  * vectors.
- * 
+ *
  * Returns: The cross product.
  **/
 GimpVector2
 gimp_vector2_cross_product (const GimpVector2 *vector1,
-			    const GimpVector2 *vector2)
+                            const GimpVector2 *vector2)
 {
   GimpVector2 normal;
 
@@ -126,7 +126,7 @@ gimp_vector2_cross_product (const GimpVector2 *vector1,
  **/
 GimpVector2
 gimp_vector2_cross_product_val (GimpVector2 vector1,
-			        GimpVector2 vector2)
+                                GimpVector2 vector2)
 {
   GimpVector2 normal;
 
@@ -179,7 +179,7 @@ gimp_vector2_normalize (GimpVector2 *vector)
 
   len = gimp_vector2_length (vector);
 
-  if (len != 0.0) 
+  if (len != 0.0)
     {
       len = 1.0 / len;
       vector->x *= len;
@@ -195,7 +195,7 @@ gimp_vector2_normalize (GimpVector2 *vector)
  * gimp_vector2_normalize_val:
  *
  * @vector: a #GimpVector2 (by value)
- * 
+ *
  * Computes and returns the normalized vector corresponding with the one
  * passed in argument.
  *
@@ -210,7 +210,7 @@ gimp_vector2_normalize_val (GimpVector2 vector)
 
   len = gimp_vector2_length_val (vector);
 
-  if (len != 0.0) 
+  if (len != 0.0)
     {
       len = 1.0 / len;
       normalized.x = vector.x * len;
@@ -233,7 +233,7 @@ gimp_vector2_normalize_val (GimpVector2 vector)
  **/
 void
 gimp_vector2_mul (GimpVector2 *vector,
-		  gdouble      factor)
+                  gdouble      factor)
 {
   vector->x *= factor;
   vector->y *= factor;
@@ -251,10 +251,10 @@ gimp_vector2_mul (GimpVector2 *vector,
  **/
 GimpVector2
 gimp_vector2_mul_val (GimpVector2 vector,
-		      gdouble     factor)
+                      gdouble     factor)
 {
   GimpVector2 result;
-  
+
   result.x = vector.x * factor;
   result.y = vector.y * factor;
 
@@ -272,8 +272,8 @@ gimp_vector2_mul_val (GimpVector2 vector,
  **/
 void
 gimp_vector2_add (GimpVector2       *result,
-		  const GimpVector2 *vector1,
-		  const GimpVector2 *vector2)
+                  const GimpVector2 *vector1,
+                  const GimpVector2 *vector2)
 {
   result->x = vector1->x + vector2->x;
   result->y = vector1->y + vector2->y;
@@ -290,13 +290,13 @@ gimp_vector2_add (GimpVector2       *result,
  **/
 GimpVector2
 gimp_vector2_add_val (GimpVector2 vector1,
-		      GimpVector2 vector2)
+                      GimpVector2 vector2)
 {
   GimpVector2 result;
 
   result.x = vector1.x + vector2.x;
   result.y = vector1.y + vector2.y;
-  
+
   return result;
 }
 
@@ -311,8 +311,8 @@ gimp_vector2_add_val (GimpVector2 vector1,
  **/
 void
 gimp_vector2_sub (GimpVector2       *result,
-		  const GimpVector2 *vector1,
-		  const GimpVector2 *vector2)
+                  const GimpVector2 *vector1,
+                  const GimpVector2 *vector2)
 {
   result->x = vector1->x - vector2->x;
   result->y = vector1->y - vector2->y;
@@ -330,13 +330,13 @@ gimp_vector2_sub (GimpVector2       *result,
  **/
 GimpVector2
 gimp_vector2_sub_val (GimpVector2 vector1,
-		      GimpVector2 vector2)
+                      GimpVector2 vector2)
 {
   GimpVector2 result;
-  
+
   result.x = vector1.x - vector2.x;
   result.y = vector1.y - vector2.y;
- 
+
   return result;
 }
 
@@ -350,8 +350,8 @@ gimp_vector2_sub_val (GimpVector2 vector1,
  **/
 void
 gimp_vector2_set (GimpVector2 *vector,
-		  gdouble      x,
-		  gdouble      y)
+                  gdouble      x,
+                  gdouble      y)
 {
   vector->x = x;
   vector->y = y;
@@ -368,7 +368,7 @@ gimp_vector2_set (GimpVector2 *vector,
  **/
 GimpVector2
 gimp_vector2_new (gdouble x,
-		  gdouble y)
+                  gdouble y)
 {
   GimpVector2 vector;
 
@@ -382,7 +382,7 @@ gimp_vector2_new (gdouble x,
  * gimp_vector2_neg:
  * @vector: a #GimpVector2 (by address)
  *
- * Negates the @vector (i.e. negate all its coordinates). 
+ * Negates the @vector (i.e. negate all its coordinates).
  **/
 void
 gimp_vector2_neg (GimpVector2 *vector)
@@ -399,11 +399,11 @@ gimp_vector2_neg (GimpVector2 *vector)
  *
  * Returns: the negated vector.
  **/
-GimpVector2 
+GimpVector2
 gimp_vector2_neg_val (GimpVector2 vector)
 {
   GimpVector2 result;
-  
+
   result.x = vector.x * -1.0;
   result.y = vector.y * -1.0;
 
@@ -419,7 +419,7 @@ gimp_vector2_neg_val (GimpVector2 vector)
  **/
 void
 gimp_vector2_rotate (GimpVector2 *vector,
-		     gdouble      alpha)
+                     gdouble      alpha)
 {
   GimpVector2 result;
 
@@ -436,12 +436,12 @@ gimp_vector2_rotate (GimpVector2 *vector,
  *
  * Computes and returns the rotation of the @vector by @alpha radians,
  * counterclockwize.
- * 
+ *
  * Returns: the @vector rotated by @alpha radians.
  **/
 GimpVector2
 gimp_vector2_rotate_val (GimpVector2 vector,
-		         gdouble     alpha)
+                         gdouble     alpha)
 {
   GimpVector2 result;
 
@@ -467,11 +467,11 @@ gimp_vector2_rotate_val (GimpVector2 vector,
  **/
 gdouble
 gimp_vector3_inner_product (const GimpVector3 *vector1,
-			    const GimpVector3 *vector2)
+                            const GimpVector3 *vector2)
 {
   return (vector1->x * vector2->x +
-	  vector1->y * vector2->y +
-	  vector1->z * vector2->z);
+          vector1->y * vector2->y +
+          vector1->z * vector2->z);
 }
 
 /**
@@ -486,11 +486,11 @@ gimp_vector3_inner_product (const GimpVector3 *vector1,
  **/
 gdouble
 gimp_vector3_inner_product_val (GimpVector3 vector1,
-			        GimpVector3 vector2)
+                                GimpVector3 vector2)
 {
   return (vector1.x * vector2.x +
-	  vector1.y * vector2.y +
-	  vector1.z * vector2.z);
+          vector1.y * vector2.y +
+          vector1.z * vector2.z);
 }
 
 /**
@@ -505,12 +505,12 @@ gimp_vector3_inner_product_val (GimpVector3 vector1,
  *
  * This function can be used to compute the normal of the plan defined by
  * @vector1 and @vector2.
- * 
+ *
  * Returns: The cross product.
  **/
 GimpVector3
 gimp_vector3_cross_product (const GimpVector3 *vector1,
-			    const GimpVector3 *vector2)
+                            const GimpVector3 *vector2)
 {
   GimpVector3 normal;
 
@@ -534,7 +534,7 @@ gimp_vector3_cross_product (const GimpVector3 *vector1,
  **/
 GimpVector3
 gimp_vector3_cross_product_val (GimpVector3 vector1,
-			        GimpVector3 vector2)
+                                GimpVector3 vector2)
 {
   GimpVector3 normal;
 
@@ -557,8 +557,8 @@ gdouble
 gimp_vector3_length (const GimpVector3 *vector)
 {
   return (sqrt (vector->x * vector->x +
-		vector->y * vector->y +
-		vector->z * vector->z));
+                vector->y * vector->y +
+                vector->z * vector->z));
 }
 
 /**
@@ -573,8 +573,8 @@ gdouble
 gimp_vector3_length_val (GimpVector3 vector)
 {
   return (sqrt (vector.x * vector.x +
-		vector.y * vector.y +
-		vector.z * vector.z));
+                vector.y * vector.y +
+                vector.z * vector.z));
 }
 
 /**
@@ -608,7 +608,7 @@ gimp_vector3_normalize (GimpVector3 *vector)
  * gimp_vector3_normalize_val:
  *
  * @vector: a #GimpVector3 (by value)
- * 
+ *
  * Computes and returns the normalized vector corresponding with the one
  * passed in argument.
  *
@@ -643,12 +643,12 @@ gimp_vector3_normalize_val (GimpVector3 vector)
  * @factor: a scalar
  *
  * Multiplies each component of the @vector by @factor.
- * Note that this is equivalent to multiplied the length of @vector 
+ * Note that this is equivalent to multiplied the length of @vector
  * by @factor.
  **/
 void
 gimp_vector3_mul (GimpVector3 *vector,
-		  gdouble      factor)
+                  gdouble      factor)
 {
   vector->x *= factor;
   vector->y *= factor;
@@ -665,12 +665,12 @@ gimp_vector3_mul (GimpVector3 *vector,
  *
  * Returns: the resulting #GimpVector3.
  **/
-GimpVector3 
+GimpVector3
 gimp_vector3_mul_val (GimpVector3 vector,
-		      gdouble     factor)
+                      gdouble     factor)
 {
   GimpVector3 result;
-  
+
   result.x = vector.x * factor;
   result.y = vector.y * factor;
   result.z = vector.z * factor;
@@ -689,8 +689,8 @@ gimp_vector3_mul_val (GimpVector3 vector,
  **/
 void
 gimp_vector3_sub (GimpVector3       *result,
-		  const GimpVector3 *vector1,
-		  const GimpVector3 *vector2)
+                  const GimpVector3 *vector1,
+                  const GimpVector3 *vector2)
 {
   result->x = vector1->x - vector2->x;
   result->y = vector1->y - vector2->y;
@@ -707,9 +707,9 @@ gimp_vector3_sub (GimpVector3       *result,
  *
  * Returns: the resulting #GimpVector3.
  **/
-GimpVector3 
+GimpVector3
 gimp_vector3_sub_val (GimpVector3 vector1,
-		     GimpVector3 vector2)
+                     GimpVector3 vector2)
 {
   GimpVector3 result;
 
@@ -731,9 +731,9 @@ gimp_vector3_sub_val (GimpVector3 vector1,
  **/
 void
 gimp_vector3_set (GimpVector3 *vector,
-		  gdouble      x,
-		  gdouble      y,
-		  gdouble      z)
+                  gdouble      x,
+                  gdouble      y,
+                  gdouble      z)
 {
   vector->x = x;
   vector->y = y;
@@ -750,10 +750,10 @@ gimp_vector3_set (GimpVector3 *vector,
  *
  * Returns: the resulting GimpVector3.
  **/
-GimpVector3 
+GimpVector3
 gimp_vector3_new (gdouble  x,
-		  gdouble  y,
-		  gdouble  z)
+                  gdouble  y,
+                  gdouble  z)
 {
   GimpVector3 vector;
 
@@ -775,8 +775,8 @@ gimp_vector3_new (gdouble  x,
  **/
 void
 gimp_vector3_add (GimpVector3       *result,
-		  const GimpVector3 *vector1,
-		  const GimpVector3 *vector2)
+                  const GimpVector3 *vector1,
+                  const GimpVector3 *vector2)
 {
   result->x = vector1->x + vector2->x;
   result->y = vector1->y + vector2->y;
@@ -793,16 +793,16 @@ gimp_vector3_add (GimpVector3       *result,
  *
  * Returns: the resulting #GimpVector3.
  **/
-GimpVector3 
+GimpVector3
 gimp_vector3_add_val (GimpVector3 vector1,
-		      GimpVector3 vector2)
+                      GimpVector3 vector2)
 {
   GimpVector3 result;
 
   result.x = vector1.x + vector2.x;
   result.y = vector1.y + vector2.y;
   result.z = vector1.z + vector2.z;
-  
+
   return result;
 }
 
@@ -810,7 +810,7 @@ gimp_vector3_add_val (GimpVector3 vector1,
  * gimp_vector3_neg:
  * @vector: a #GimpVector3 (by address)
  *
- * Negates the @vector (i.e. negate all its coordinates). 
+ * Negates the @vector (i.e. negate all its coordinates).
  **/
 void
 gimp_vector3_neg (GimpVector3 *vector)
@@ -828,7 +828,7 @@ gimp_vector3_neg (GimpVector3 *vector)
  *
  * Returns: the negated vector.
  **/
-GimpVector3 
+GimpVector3
 gimp_vector3_neg_val (GimpVector3 vector)
 {
   GimpVector3 result;
@@ -836,7 +836,7 @@ gimp_vector3_neg_val (GimpVector3 vector)
   result.x = vector.x * -1.0;
   result.y = vector.y * -1.0;
   result.z = vector.z * -1.0;
-  
+
   return result;
 }
 
@@ -857,9 +857,9 @@ gimp_vector3_neg_val (GimpVector3 vector)
  **/
 void
 gimp_vector3_rotate (GimpVector3 *vector,
-		     gdouble      alpha,
-		     gdouble      beta,
-		     gdouble      gamma)
+                     gdouble      alpha,
+                     gdouble      beta,
+                     gdouble      gamma)
 {
   GimpVector3 s, t;
 
@@ -902,11 +902,11 @@ gimp_vector3_rotate (GimpVector3 *vector,
  *
  * Returns: the rotated vector.
  **/
-GimpVector3 
+GimpVector3
 gimp_vector3_rotate_val (GimpVector3 vector,
-		         gdouble     alpha,
-		         gdouble     beta,
-		         gdouble     gamma)
+                         gdouble     alpha,
+                         gdouble     beta,
+                         gdouble     gamma)
 {
   GimpVector3 s, t, result;
 
@@ -943,25 +943,25 @@ gimp_vector3_rotate_val (GimpVector3 vector,
  * @y: the ordinate of the point in the screen rectangle to map.
  * @vp: position of the observer (by address).
  * @p: the resulting point (by address).
- * 
+ *
  * \"Compute screen (sx,sy)-(sx+w,sy+h) to 3D unit square mapping.
  * The plane to map to is given in the z field of p. The observer
  * is located at position vp (vp->z!=0.0).\"
  *
  * In other words, this computes the projection of the point (@x ,@y) to
  * the plane z = @p->z (parallel to XY), from the @vp point of view through
- * the screen (@sx, @sy)->(@sx+@w, @sy+@h) 
+ * the screen (@sx, @sy)->(@sx+@w, @sy+@h)
  **/
 
 void
 gimp_vector_2d_to_3d (gint               sx,
-		      gint               sy,
-		      gint               w,
-		      gint               h,
-		      gint               x,
-		      gint               y,
-		      const GimpVector3 *vp,
-		      GimpVector3       *p)
+                      gint               sy,
+                      gint               w,
+                      gint               h,
+                      gint               x,
+                      gint               y,
+                      const GimpVector3 *vp,
+                      GimpVector3       *p)
 {
   gdouble t = 0.0;
 
@@ -976,7 +976,7 @@ gimp_vector_2d_to_3d (gint               sx,
   else
     {
       p->x = (gdouble) (x - sx) / (gdouble) w;
-      p->y = (gdouble) (y - sy) / (gdouble) h;     
+      p->y = (gdouble) (y - sy) / (gdouble) h;
     }
 }
 
@@ -997,17 +997,17 @@ gimp_vector_2d_to_3d (gint               sx,
  *
  * Returns: the computed #GimpVector3 point.
  **/
-GimpVector3 
+GimpVector3
 gimp_vector_2d_to_3d_val (gint        sx,
-			  gint        sy,
-			  gint        w,
-			  gint        h,
-			  gint        x,
-			  gint        y,
-			  GimpVector3 vp,
-			  GimpVector3 p)
+                          gint        sy,
+                          gint        w,
+                          gint        h,
+                          gint        x,
+                          gint        y,
+                          GimpVector3 vp,
+                          GimpVector3 p)
 {
-  GimpVector3 result; 
+  GimpVector3 result;
   gdouble     t = 0.0;
 
   if (vp.x != 0.0)
@@ -1021,9 +1021,9 @@ gimp_vector_2d_to_3d_val (gint        sx,
   else
     {
       result.x = (gdouble) (x - sx) / (gdouble) w;
-      result.y = (gdouble) (y - sy) / (gdouble) h;     
+      result.y = (gdouble) (y - sy) / (gdouble) h;
     }
- 
+
   return result;
 }
 
@@ -1047,13 +1047,13 @@ gimp_vector_2d_to_3d_val (gint        sx,
  **/
 void
 gimp_vector_3d_to_2d (gint               sx,
-		      gint               sy,
-		      gint               w,
-		      gint               h,
-		      gdouble           *x,
-		      gdouble           *y,
-		      const GimpVector3 *vp,
-		      const GimpVector3 *p)
+                      gint               sy,
+                      gint               w,
+                      gint               h,
+                      gdouble           *x,
+                      gdouble           *y,
+                      const GimpVector3 *vp,
+                      const GimpVector3 *p)
 {
   gdouble     t;
   GimpVector3 dir;

@@ -54,7 +54,7 @@ gimp_matrix2_identity (GimpMatrix2 *matrix)
  */
 void
 gimp_matrix2_mult (const GimpMatrix2 *matrix1,
-		   GimpMatrix2       *matrix2)
+                   GimpMatrix2       *matrix2)
 {
   GimpMatrix2  tmp;
 
@@ -98,10 +98,10 @@ gimp_matrix3_identity (GimpMatrix3 *matrix)
  */
 void
 gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
-			      gdouble            x,
-			      gdouble            y,
-			      gdouble           *newx,
-			      gdouble           *newy)
+                              gdouble            x,
+                              gdouble            y,
+                              gdouble           *newx,
+                              gdouble           *newy)
 {
   gdouble  w;
 
@@ -129,7 +129,7 @@ gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
  */
 void
 gimp_matrix3_mult (const GimpMatrix3 *matrix1,
-		   GimpMatrix3       *matrix2)
+                   GimpMatrix3       *matrix2)
 {
   gint         i, j;
   GimpMatrix3  tmp;
@@ -142,11 +142,11 @@ gimp_matrix3_mult (const GimpMatrix3 *matrix1,
       t3 = matrix1->coeff[i][2];
 
       for (j = 0; j < 3; j++)
-	{
-	  tmp.coeff[i][j]  = t1 * matrix2->coeff[0][j];
-	  tmp.coeff[i][j] += t2 * matrix2->coeff[1][j];
-	  tmp.coeff[i][j] += t3 * matrix2->coeff[2][j];
-	}
+        {
+          tmp.coeff[i][j]  = t1 * matrix2->coeff[0][j];
+          tmp.coeff[i][j] += t2 * matrix2->coeff[1][j];
+          tmp.coeff[i][j] += t3 * matrix2->coeff[2][j];
+        }
     }
 
   *matrix2 = tmp;
@@ -162,8 +162,8 @@ gimp_matrix3_mult (const GimpMatrix3 *matrix1,
  */
 void
 gimp_matrix3_translate (GimpMatrix3 *matrix,
-			gdouble      x,
-			gdouble      y)
+                        gdouble      x,
+                        gdouble      y)
 {
   gdouble g, h, i;
 
@@ -189,8 +189,8 @@ gimp_matrix3_translate (GimpMatrix3 *matrix,
  */
 void
 gimp_matrix3_scale (GimpMatrix3 *matrix,
-		    gdouble      x,
-		    gdouble      y)
+                    gdouble      x,
+                    gdouble      y)
 {
   matrix->coeff[0][0] *= x;
   matrix->coeff[0][1] *= x;
@@ -210,7 +210,7 @@ gimp_matrix3_scale (GimpMatrix3 *matrix,
  */
 void
 gimp_matrix3_rotate (GimpMatrix3 *matrix,
-		     gdouble      theta)
+                     gdouble      theta)
 {
   gdouble t1, t2;
   gdouble cost, sint;
@@ -243,7 +243,7 @@ gimp_matrix3_rotate (GimpMatrix3 *matrix,
  */
 void
 gimp_matrix3_xshear (GimpMatrix3 *matrix,
-		     gdouble      amount)
+                     gdouble      amount)
 {
   matrix->coeff[0][0] += amount * matrix->coeff[1][0];
   matrix->coeff[0][1] += amount * matrix->coeff[1][1];
@@ -259,7 +259,7 @@ gimp_matrix3_xshear (GimpMatrix3 *matrix,
  */
 void
 gimp_matrix3_yshear (GimpMatrix3 *matrix,
-		     gdouble      amount)
+                     gdouble      amount)
 {
   matrix->coeff[1][0] += amount * matrix->coeff[0][0];
   matrix->coeff[1][1] += amount * matrix->coeff[0][1];
@@ -407,10 +407,10 @@ gimp_matrix3_is_diagonal (const GimpMatrix3 *matrix)
   for (i = 0; i < 3; i++)
     {
       for (j = 0; j < 3; j++)
-	{
-	  if (i != j && fabs (matrix->coeff[i][j]) > EPSILON)
-	    return FALSE;
-	}
+        {
+          if (i != j && fabs (matrix->coeff[i][j]) > EPSILON)
+            return FALSE;
+        }
     }
 
   return TRUE;
@@ -432,18 +432,18 @@ gimp_matrix3_is_identity (const GimpMatrix3 *matrix)
   for (i = 0; i < 3; i++)
     {
       for (j = 0; j < 3; j++)
-	{
-	  if (i == j)
-	    {
-	      if (fabs (matrix->coeff[i][j] - 1.0) > EPSILON)
-		return FALSE;
-	    }
-	  else
-	    {
-	      if (fabs (matrix->coeff[i][j]) > EPSILON)
-		return FALSE;
-	    }
-	}
+        {
+          if (i == j)
+            {
+              if (fabs (matrix->coeff[i][j] - 1.0) > EPSILON)
+                return FALSE;
+            }
+          else
+            {
+              if (fabs (matrix->coeff[i][j]) > EPSILON)
+                return FALSE;
+            }
+        }
     }
 
   return TRUE;
@@ -474,11 +474,11 @@ gimp_matrix3_is_simple (const GimpMatrix3 *matrix)
   for (i = 0; i < 2; i++)
     {
       for (j = 0; j < 2; j++)
-	{
-	  absm = fabs (matrix->coeff[i][j]);
-	  if (absm > EPSILON && fabs (absm - 1.0) > EPSILON)
-	    return FALSE;
-	}
+        {
+          absm = fabs (matrix->coeff[i][j]);
+          if (absm > EPSILON && fabs (absm - 1.0) > EPSILON)
+            return FALSE;
+        }
     }
 
   return TRUE;
@@ -486,9 +486,9 @@ gimp_matrix3_is_simple (const GimpMatrix3 *matrix)
 
 void
 gimp_matrix4_to_deg (const GimpMatrix4 *matrix,
-		     gdouble           *a,
-		     gdouble           *b,
-		     gdouble           *c)
+                     gdouble           *a,
+                     gdouble           *b,
+                     gdouble           *c)
 {
   *a = 180 * (asin (matrix->coeff[1][0]) / G_PI_2);
   *b = 180 * (asin (matrix->coeff[2][0]) / G_PI_2);
