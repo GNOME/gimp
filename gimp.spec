@@ -1,4 +1,4 @@
-%define ver      0.99.28
+%define ver      0.99.29
 %define rel      SNAP
 
 Summary: The GNU Image Manipulation Program
@@ -11,7 +11,7 @@ URL: http://www.gimp.org/
 Source: ftp://ftp.gimp.org/pub/gimp/v0.99/v%{PACKAGE_VERSION}/gimp-%{PACKAGE_VERSION}.tar.gz
 BuildRoot: /tmp/gimp-root
 Obsoletes: gimp-data-min
-Requires: gtk+ >= 0.99.10 
+Requires: gtk+ >= 1.0.1
 
 
 %changelog

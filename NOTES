@@ -1,4 +1,4 @@
-Some notes on GIMP-0.99.28:
+Some notes on GIMP-0.99.29:
 
 Please remove everything from your old plugins dir before upgrading to
 0.99.28. Some plugins are no longer in the dist and will not be updated.

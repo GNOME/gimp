@@ -1,3 +1,7 @@
+Mon May  4 21:24:03 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Made 0.99.29 release
+
 Mon May  4 19:32:54 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/plug_in.c: make repeat last and re-show plugin menu
