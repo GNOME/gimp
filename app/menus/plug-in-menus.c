@@ -74,7 +74,9 @@ plug_in_menus_init (Gimp        *gimp,
   domains = g_slist_append (domains, (gpointer) std_plugins_domain);
 
   bindtextdomain (std_plugins_domain, gimp_locale_directory ());
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
   bind_textdomain_codeset (std_plugins_domain, "UTF-8");
+#endif
 
   for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
@@ -101,7 +103,9 @@ plug_in_menus_init (Gimp        *gimp,
           domains = g_slist_append (domains, (gpointer) locale_domain);
 
           bindtextdomain (locale_domain, locale_path);
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
           bind_textdomain_codeset (locale_domain, "UTF-8");
+#endif
         }
     }
 
