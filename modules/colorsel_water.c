@@ -53,7 +53,7 @@ static GimpModuleInfo info = {
     "Raph Levien <raph@acm.org>, Sven Neumann <sven@gimp.org>",
     "v0.3",
     "(c) 1998-1999, released under the GPL",
-    "May, 09 1999"
+    "May, 10 1999"
 };
 
 
@@ -152,9 +152,9 @@ draw_bucket (gint i)
 #ifdef VERBOSE
   g_print ("draw_bucket %d\n", i);  
 #endif
-  
-  width   = GTK_WIDGET(color_preview[i])->allocation.width;
-  height  = GTK_WIDGET(color_preview[i])->allocation.height;
+
+  width  = (i == 0 ? PREVIEW_SIZE : BUCKET_SIZE);
+  height = width; 
   buf     = g_new (guchar, 3*width);
   
   r = bucket_to_byte (bucket[i][0]);

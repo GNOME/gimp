@@ -1,3 +1,7 @@
+Mon May 10 18:59:58 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* modules/colorsel_water.c: finally fixed my prob all by myself :)
+
 Sun May  9 23:45:08 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* modules/colorsel_water.c: Added a pressure slider. Still don't 
