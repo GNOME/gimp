@@ -685,14 +685,14 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
    * if z1 and z2 have the same sign as well as z3 and z4
    * the polygon is convex.
    */
-  z1 = (tr_tool->tx2-tr_tool->tx1 * tr_tool->ty4-tr_tool->ty1 -
-        tr_tool->tx4-tr_tool->tx1 * tr_tool->ty2-tr_tool->ty1);
-  z2 = (tr_tool->tx4-tr_tool->tx1 * tr_tool->ty3-tr_tool->ty1 -
-        tr_tool->tx3-tr_tool->tx1 * tr_tool->ty4-tr_tool->ty1);
-  z3 = (tr_tool->tx4-tr_tool->tx2 * tr_tool->ty3-tr_tool->ty2 -
-        tr_tool->tx3-tr_tool->tx2 * tr_tool->ty4-tr_tool->ty2);
-  z4 = (tr_tool->tx3-tr_tool->tx2 * tr_tool->ty1-tr_tool->ty2 -
-        tr_tool->tx1-tr_tool->tx2 * tr_tool->ty3-tr_tool->ty2);
+  z1 = ((tr_tool->tx2 - tr_tool->tx1) * (tr_tool->ty4 - tr_tool->ty1) -
+        (tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty2 - tr_tool->ty1));
+  z2 = ((tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty3 - tr_tool->ty1) -
+        (tr_tool->tx3 - tr_tool->tx1) * (tr_tool->ty4 - tr_tool->ty1));
+  z3 = ((tr_tool->tx4 - tr_tool->tx2) * (tr_tool->ty3 - tr_tool->ty2) -
+        (tr_tool->tx3 - tr_tool->tx2) * (tr_tool->ty4 - tr_tool->ty2));
+  z4 = ((tr_tool->tx3 - tr_tool->tx2) * (tr_tool->ty1 - tr_tool->ty2) -
+        (tr_tool->tx1 - tr_tool->tx2) * (tr_tool->ty3 - tr_tool->ty2));
 
   /*  Draw the grid (not for path transform since it looks ugly)  */
 
