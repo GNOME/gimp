@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-04 01:58+0100\n"
-"PO-Revision-Date: 2004-02-22 20:40+0900\n"
+"PO-Revision-Date: 2004-03-19 20:47+0100\n"
 "Last-Translator: Ryoichi INAGAKI <ryo1@bc.wakwak.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -296,7 +296,7 @@ msgid "invalid value '%s' for token %s"
 msgstr "トークン %s において無効な値 '%s'"
 
 #: app/config/gimpconfig-deserialize.c:542
-#, c-format
+#, c-format, fuzzy
 msgid "invalid value '%ld' for token %s"
 msgstr "トークン %s において無効な値 '%ld'"
 
@@ -1476,7 +1476,7 @@ msgid "GIMP"
 msgstr "GIMP"
 
 #: app/core/gimpbrush.c:534
-#, c-format
+#, c-format, fuzzy
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "'%s' から %d バイト読み込めませんでした: %s"
 
@@ -1760,7 +1760,7 @@ msgid "Fatal parse error in gradient file '%s': File is corrupt."
 msgstr "グラデーション '%s' で致命的な解析エラー: ファイルが壊れています."
 
 #: app/core/gimpgradient.c:461
-#, c-format
+#, c-format, fuzzy
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "グラデーション '%s' の端点 %d が壊れてます."
 
@@ -6739,7 +6739,7 @@ msgid "Cannot create folder '%s': %s"
 msgstr "ディレクトリ '%s' を作成できませんでした; %s"
 
 #: app/gui/user-install-dialog.c:1115
-#, c-format
+#, c-format, fuzzy
 msgid "Copying file '%s' from '%s'..."
 msgstr "'%$2s' から '%$1s' へファイルをコピー中..."
 
@@ -8992,7 +8992,7 @@ msgstr "入力機器の設定"
 #: app/widgets/gimpdevicestatus.c:404
 #, c-format
 msgid "Foreground: %d, %d, %d"
-msgstr "描画色: %d, &d, %d"
+msgstr "描画色: %d, %d, %d"
 
 #: app/widgets/gimpdevicestatus.c:409
 #, c-format
