@@ -314,13 +314,9 @@ init_constants (void)
           if (! strncmp ("GIMP_", value->value_name, 5))
             {
               gchar *scheme_name;
-              gchar *s;
 
               scheme_name = g_strdup (value->value_name + 5);
-
-              for (s = scheme_name; *s; s++)
-                if (*s == '_')
-                  *s = '-';
+              convert_string (scheme_name);
 
               setvar (rintern (scheme_name), flocons (value->value), NIL);
 

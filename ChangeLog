@@ -1,3 +1,8 @@
+2004-10-29  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/siod-wrapper.c (init_constants): Updated to
+	use convert_string() to change name of constant to Scheme format.
+
 2004-10-30  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL
