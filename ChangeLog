@@ -1,3 +1,7 @@
+2001-09-28  Wang Jian  <lark@linux.net.cn>
+
+	* configure.in(ALL_LINGUAS): Added zh_CN
+
 2001-09-27  Sven Neumann  <sven@gimp.org>
 
 	* HACKING
