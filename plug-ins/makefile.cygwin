@@ -35,17 +35,17 @@ COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens au
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
 COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gpb gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
 COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd psp randomize ripple rotate
-COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spheredesigner spread sunras tga threshold_alpha tiff tile tileit tiler unsharp video vinvert vpropagate waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
+COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spheredesigner spread sunras tga threshold_alpha tiff tile tileit tiler unsharp video vinvert vpropagate warp waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
 
 # These have own subdirectories each
-SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gdyntext gfig gflare gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi sinus struc twain webbrowser winsnap
+SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi sinus struc twain webbrowser winsnap
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
 # ../unofficial-plug-ins directory, go there, and do "make -f
 # makefile.cygwin unofficial".
 
-UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace ccanalyze gimp_ace guash kaleidoscope logconv sel_gauss magiceye mathmap psd_save user_filter
+UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace ccanalyze fixer gdyntext gimp_ace guash kaleidoscope logconv sel_gauss magiceye mathmap psd_save resynthesizer user_filter
 
 # The main target
 
@@ -212,6 +212,15 @@ OBJECTS = \
 	fitsrw.o
 endif
 
+ifdef EXTRA_fixer
+CXX = c++ -mno-cygwin -mpentium -fnative-struct
+OBJECTS = \
+	fixer.o
+EXTRALIBS = -lstdc++
+.cc.o:
+	$(CXX) $(CFLAGS) -c $< -o $@
+endif
+
 ifdef EXTRA_flame
 OBJECTS = \
 	cmap.o	\
@@ -268,6 +277,7 @@ OBJECTS = \
 	charmap_window.o \
 	font_selection.o \
 	gdyntext.o \
+	gdyntextcompat.o \
 	gdyntext_ui.o \
 	message_window.o
 endif
@@ -412,6 +422,15 @@ OBJECTS = \
 OPTIMIZE = 
 endif
 
+ifdef EXTRA_resynthesizer
+CXX = c++ -mno-cygwin -mpentium -fnative-struct
+OBJECTS = \
+	resynth.o
+EXTRALIBS = -lstdc++
+.cc.o:
+	$(CXX) $(CFLAGS) -c $< -o $@
+endif
+
 ifdef EXTRA_script_fu
 OBJECTS = \
 	interp_md5.o \
@@ -458,12 +477,13 @@ EXTRALIBS = $(TIFF_LIBS)
 endif
 
 ifdef EXTRA_gimp_ace
-EXTRACFLAGS = -DGLACE_GIMP -DVERSION=\"0.5.1\"
+EXTRACFLAGS = -DGLACE_GIMP -DPLUGIN_NAME=\"gimp_ace\" -DDATA
 OBJECTS = \
-	dialog.o \
-	gimp_ace.o \
-	glace.o \
-	glaceG.o
+	src/dialog.o \
+	src/gimp_ace.o \
+	src/glace.o \
+	src/glaceG.o \
+	src/preview.o
 endif
 
 ifdef EXTRA_gimpressionist
@@ -598,7 +618,7 @@ RESOURCE = ../../app/gimpres.o
 endif
 
 $(PLUGIN).exe : $(OBJECTS) $(RESOURCE)
-	$(CC) $(CFLAGS) -mwindows -s -o $(PLUGIN).exe $(OBJECTS) $(RESOURCE) -L $(PLUGINDIR)/libgck/gck -lgck -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) $(EXTRALIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -mwindows -o $(PLUGIN).exe $(OBJECTS) $(RESOURCE) -L $(PLUGINDIR)/libgck/gck -lgck -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) $(EXTRALIBS) $(LDFLAGS)
 
 # Kludge to get the path to the win32 headers
 WIN32APIHEADERS=$(shell echo "\#include <winver.h>" | $(CC) -M -E - | tail -1 | sed -e 's![\\/]winver.h!!' | tr -d '\015')

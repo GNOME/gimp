@@ -993,6 +993,15 @@ gimp_flush (GIOChannel *channel)
 	  do
 	    {
 	      bytes = 0;
+#ifdef G_OS_WIN32
+	      /* Horrible hack that seems to prevent script-fu from
+	       * hanging upon startup on NT4. The real solution would
+	       * be to fix (rewrite) the GLib main loop and IO channel code
+	       * for Win32.
+	       */
+	      if ((write_buffer_index - count) > 100)
+		Sleep (0);
+#endif
 	      error = g_io_channel_write (channel, &write_buffer[count],
 					  (write_buffer_index - count),
 					  &bytes);

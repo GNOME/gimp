@@ -1,3 +1,18 @@
+2000-07-18  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimp.c (gimp_flush): Add horrible hack that seems to
+	help script-fu startup on NT 4.0, by avoiding some bug in GLib.
+	Yes, it would be better to fix GLib's main loop and GIOChannel
+	code for Win32. Unfortunately, it's kinda hairy...
+
+	* libgimp/gimp.h: Add extern "C" to the Win32 part for compiling
+	C++ plug-ins.
+
+	* plug-ins/makefile.cygwin: Add a couple of new unofficial
+	plug-ins. Use macros from build/win32/make.mingw.
+
+	* plug-ins/common/warp.c: Use G_PI.
+
 2000-07-16  Michael Natterer  <mitch@gimp.org>
 	    Sven Neumann      <sven@gimp.org>
 

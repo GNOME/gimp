@@ -990,8 +990,8 @@ diff (GDrawable *drawable,
   diff_prepare_row (&srcPR, cr, x1, y1+1, (x2 - x1));
 
  /* fixed-vector (x,y) component scale factors */
-  scale_vec_x = dvals.vector_scale*cos((90-dvals.vector_angle)*M_PI/180.0)*256.0/10;
-  scale_vec_y = dvals.vector_scale*sin((90-dvals.vector_angle)*M_PI/180.0)*256.0/10;
+  scale_vec_x = dvals.vector_scale*cos((90-dvals.vector_angle)*G_PI/180.0)*256.0/10;
+  scale_vec_y = dvals.vector_scale*sin((90-dvals.vector_angle)*G_PI/180.0)*256.0/10;
 
   if (do_vecmap) {
     /*    fprintf(stderr,"%f %f  x,y vector components.\n",scale_vec_x,scale_vec_y); */
@@ -1020,7 +1020,7 @@ diff (GDrawable *drawable,
     diff_prepare_row (&magPR, crm, x1, y1, (x2 - x1));
   }
 
-  dtheta = dvals.angle * M_PI / 180.0;
+  dtheta = dvals.angle * G_PI / 180.0;
   rscalefac = 256.0 / (3*src_bytes);         /* note that '3' is rather arbitrary here. */
   gscalefac = dvals.grad_scale* 256.0 / (3*gbytes);            /* scale factor for gradient map components */
 

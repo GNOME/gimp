@@ -166,7 +166,17 @@ struct _GimpParam
 };
 
 
+
 #ifdef G_OS_WIN32
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
+#ifdef __cplusplus
+}
+#endif
+
 /* Define WinMain() because plug-ins are built as GUI applications. Also
  * define a main() in case some plug-in still is built as a console
  * application.
@@ -181,7 +191,6 @@ struct _GimpParam
    static int				\
    win32_gimp_main (int argc, char **argv)	\
    {					\
-     extern void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);	\
      set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);	\
      return gimp_main (argc, argv);	\
    }					\
