@@ -1,3 +1,12 @@
+2003-11-07  Sven Neumann  <sven@gimp.org>
+
+	* app/app-docs.sgml
+	* libgimp/libgimp-docs.sgml
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpcolor/libgimpcolor-docs.sgml
+	* libgimpmath/libgimpmath-docs.sgml
+	* libgimpwidgets/libgimpwidgets-docs.sgml: specify encoding.
+
 2003-11-07  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt
