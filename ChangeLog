@@ -1,3 +1,15 @@
+2004-10-06  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/gui/file-commands.c (file_revert_confirm_callback):
+	removed the code which sets the new image on all contexts where
+	the old image was set...
+
+	* app/display/gimpdisplay-foreach.c (gimp_displays_reconnect):
+	...and added it here so it happens for all calls of this function,
+	also from the PDB. Fixes bug #154638.
+
 2004-09-27  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.0.6, interface_age 6,

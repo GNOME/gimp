@@ -23,6 +23,7 @@
 #include "display-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 
@@ -94,10 +95,20 @@ gimp_displays_reconnect (Gimp      *gimp,
 {
   GList       *list;
   GimpDisplay *gdisp;
+  GList       *contexts = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_IMAGE (old));
   g_return_if_fail (GIMP_IS_IMAGE (new));
+
+  /*  remember which contexts refer to old_gimage  */
+  for (list = gimp->context_list; list; list = g_list_next (list))
+    {
+      GimpContext *context = list->data;
+
+      if (gimp_context_get_image (context) == old)
+        contexts = g_list_prepend (contexts, list->data);
+    }
 
   for (list = GIMP_LIST (gimp->displays)->list;
        list;
@@ -108,6 +119,13 @@ gimp_displays_reconnect (Gimp      *gimp,
       if (gdisp->gimage == old)
 	gimp_display_reconnect (gdisp, new);
     }
+
+  /*  set the new_gimage on the remembered contexts (in reverse
+   *  order, since older contexts are usually the parents of
+   *  newer ones)
+   */
+  g_list_foreach (contexts, (GFunc) gimp_context_set_image, new);
+  g_list_free (contexts);
 }
 
 void
