@@ -20,6 +20,10 @@ int
 gimp_composite_mmx_test (int iterations, int n_pixels)
 {
 #if (__GNUC__ >= 3) && defined(USE_MMX)     && defined(ARCH_X86)
+  if (gimp_composite_mmx_init () == 0) {
+    printf("gimp_composite_mmx: Instruction set is not available.\n");
+    return (0);
+  }
   GimpCompositeContext generic_ctx;
   GimpCompositeContext special_ctx;
   double ft0;

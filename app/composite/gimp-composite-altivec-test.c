@@ -20,6 +20,10 @@ int
 gimp_composite_altivec_test (int iterations, int n_pixels)
 {
 #if (__GNUC__ >= 3) && defined(USE_ALTIVEC) && defined(ARCH_PPC)
+  if (gimp_composite_altivec_init () == 0) {
+    printf("gimp_composite_altivec: Instruction set is not available.\n");
+    return (0);
+  }
   GimpCompositeContext generic_ctx;
   GimpCompositeContext special_ctx;
   double ft0;

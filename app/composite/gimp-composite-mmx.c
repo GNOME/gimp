@@ -40,6 +40,7 @@
 #include <glib-object.h>
 
 #include "base/base-types.h"
+#include "base/cpu-accel.h"
 
 #include "gimp-composite.h"
 #include "gimp-composite-mmx.h"
@@ -2214,8 +2215,16 @@ xxxgimp_composite_valueonly_va8_va8_va8_mmx (GimpCompositeContext *_op)
 #endif /* ARCH_X86 */
 #endif  /* USE_MMX */
 
-void
+int
 gimp_composite_mmx_init (void)
 {
+#if defined(USE_MMX) && defined(ARCH_X86)
+  guint32 cpu = cpu_accel ();
 
+  if (cpu & CPU_ACCEL_X86_MMX)
+    {
+      return (1);
+    }
+#endif
+  return (0);
 }

@@ -1,7 +1,7 @@
 #ifndef gimp_composite_sse_h
 #define gimp_composite_sse_h
 
-extern void gimp_composite_sse_init (void);
+extern int gimp_composite_sse_init (void);
 
 #ifdef USE_MMX
 #ifdef ARCH_X86

@@ -20,6 +20,10 @@ int
 gimp_composite_3dnow_test (int iterations, int n_pixels)
 {
 #if (__GNUC__ >= 3) && defined(USE_3DNOW)   && defined(ARCH_X86)
+  if (gimp_composite_3dnow_init () == 0) {
+    printf("gimp_composite_3dnow: Instruction set is not available.\n");
+    return (0);
+  }
   GimpCompositeContext generic_ctx;
   GimpCompositeContext special_ctx;
   double ft0;

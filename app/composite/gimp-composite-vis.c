@@ -41,8 +41,12 @@
 #endif /* defined(ARCH_SPARC) */
 #endif /* defined(USE_VIS) */
 
-void
+int
 gimp_composite_vis_init (void)
 {
-
+#ifdef ARCH_SPARC
+		return (1);
+#else
+		return (0);
+#endif
 }

@@ -277,6 +277,11 @@ def gimp_composite_regression(fpout, function_tables, options):
     print >>fpout, '#if %s' % (r)
     pass
 
+  print >>fpout, '  if (%s_init () == 0) {' % (functionnameify(options.file))
+  print >>fpout, '    printf("%s: Instruction set is not available.\\n");' % (functionnameify(options.file))
+  print >>fpout, '    return (0);'
+  print >>fpout, '  }'
+  
   print >>fpout, '  GimpCompositeContext generic_ctx;'
   print >>fpout, '  GimpCompositeContext special_ctx;'
   print >>fpout, '  double ft0;'
@@ -319,7 +324,7 @@ def gimp_composite_regression(fpout, function_tables, options):
   generic_table = function_tables
 
   composite_modes.sort();
-  
+
   for mode in composite_modes:
     for A in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
       for B in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
