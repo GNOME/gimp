@@ -43,7 +43,9 @@
 #include <string.h>
 #include <math.h>
 #include <unistd.h>
+#ifndef __EMX__
 #include <sys/mman.h>
+#endif
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
@@ -292,12 +294,26 @@ load_image (char *filename)
       fprintf(stderr, "hrz filter: file is not HRZ type\n");
       return -1;
     }
+#ifndef __EMX__
   mapped = mmap(NULL, 256*240*3, PROT_READ, MAP_PRIVATE, filedes, 0);
   if(mapped == (void *)(-1))
     {
       fprintf(stderr, "hrz filter: could not map file\n");
       return -1;
     }
+#else
+  mapped = g_malloc(256*240*3);
+  if(mapped == NULL)
+    {
+      fprintf(stderr, "hrz filter: could not allocate memory\n");
+      return -1;
+    }
+  if (read(filedes, mapped, 256*240*3) != 256*240*3)
+    {
+      fprintf(stderr, "hrz filter: file read error\n");
+      return -1;
+    }
+#endif
   close (filedes);  /* not needed anymore, data is memory mapped */
 
   /* Create new image of proper size; associate filename */
@@ -317,7 +333,11 @@ load_image (char *filename)
 
   /* close the file */
 #ifndef NeXT /* @#%@! NeXTStep */
+#ifndef __EMX__
   munmap(mapped, 256*240*3);
+#else
+  g_free(mapped);
+#endif
 #endif
 
   /* Tell the GIMP to display the image.
