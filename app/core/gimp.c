@@ -306,7 +306,6 @@ gimp_init (Gimp *gimp)
   gimp->have_current_cut_buffer = FALSE;
 
   gimp->context_list        = NULL;
-  gimp->standard_context    = NULL;
   gimp->default_context     = NULL;
   gimp->user_context        = NULL;
   gimp->current_context     = NULL;
@@ -346,12 +345,6 @@ gimp_finalize (GObject *object)
   gimp_set_current_context (gimp, NULL);
   gimp_set_user_context (gimp, NULL);
   gimp_set_default_context (gimp, NULL);
-
-  if (gimp->standard_context)
-    {
-      g_object_unref (gimp->standard_context);
-      gimp->standard_context = NULL;
-    }
 
   if (gimp->image_new_last_template)
     {
@@ -554,9 +547,7 @@ gimp_get_memsize (GimpObject *object,
 
   memsize += gimp_g_list_get_memsize (gimp->context_list, 0);
 
-  memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->standard_context),
-                                       gui_size) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->default_context),
+  memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->default_context),
                                        gui_size) +
               gimp_object_get_memsize (GIMP_OBJECT (gimp->user_context),
                                        gui_size));
@@ -649,8 +640,6 @@ gimp_real_initialize (Gimp               *gimp,
     gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
 
   gimp->have_current_cut_buffer = FALSE;
-
-  gimp->standard_context = gimp_context_new (gimp, "Standard", NULL);
 
   /*  the default context contains the user's saved preferences
    *
@@ -1265,14 +1254,6 @@ gimp_create_display (Gimp      *gimp,
     }
 
   return display;
-}
-
-GimpContext *
-gimp_get_standard_context (Gimp *gimp)
-{
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  return gimp->standard_context;
 }
 
 void

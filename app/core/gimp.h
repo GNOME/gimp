@@ -182,9 +182,6 @@ struct _Gimp
   /*  the list of all contexts  */
   GList                  *context_list;
 
-  /*  the hardcoded standard context  */
-  GimpContext            *standard_context;
-
   /*  the default context which is initialized from gimprc  */
   GimpContext            *default_context;
 
@@ -287,8 +284,6 @@ GimpImage   * gimp_create_image         (Gimp               *gimp,
 GimpObject  * gimp_create_display       (Gimp               *gimp,
                                          GimpImage          *gimage,
                                          gdouble             scale);
-
-GimpContext * gimp_get_standard_context (Gimp               *gimp);
 
 void          gimp_set_default_context  (Gimp               *gimp,
 					 GimpContext        *context);

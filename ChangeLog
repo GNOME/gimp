@@ -1,3 +1,8 @@
+2004-02-23  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimp.[ch]: removed unused member "standard_context"
+	from the Gimp struct.
+
 2004-02-22  Sven Neumann  <sven@gimp.org>
 
 	Let all GimpImageMap tools remember the state of the preview toggle
