@@ -91,7 +91,7 @@ gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-free-select-tool",
                 _("Free Select"),
                 _("Select hand-drawn regions"),
-                _("/Tools/Selection Tools/Free Select"), "F",
+                N_("/Tools/Selection Tools/Free Select"), "F",
                 NULL, "tools/free_select.html",
                 GIMP_STOCK_TOOL_FREE_SELECT,
                 data);

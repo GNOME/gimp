@@ -1,3 +1,13 @@
+2003-01-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimprectselecttool.c: must use N_() instead of _()
+	when registering tool menu entries.
+
 2003-01-14  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/image-menu.c

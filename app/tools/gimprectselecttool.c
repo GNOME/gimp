@@ -91,7 +91,7 @@ gimp_rect_select_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-rect-select-tool",
                 _("Rect Select"),
                 _("Select rectangular regions"),
-                _("/Tools/Selection Tools/Rect Select"), "R",
+                N_("/Tools/Selection Tools/Rect Select"), "R",
                 NULL, "tools/rect_select.html",
                 GIMP_STOCK_TOOL_RECT_SELECT,
                 data);

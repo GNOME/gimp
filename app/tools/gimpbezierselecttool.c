@@ -282,7 +282,7 @@ gimp_bezier_select_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-bezier-select-tool",
                 _("Bezier Select"),
                 _("Select regions using Bezier curves"),
-                _("/Tools/Selection Tools/Bezier Select"), "B",
+                N_("/Tools/Selection Tools/Bezier Select"), "B",
                 NULL, "tools/bezier_select.html",
                 GIMP_STOCK_TOOL_BEZIER_SELECT,
                 data);

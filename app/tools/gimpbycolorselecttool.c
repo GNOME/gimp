@@ -77,7 +77,7 @@ gimp_by_color_select_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-by-color-select-tool",
                 _("Select By Color"),
                 _("Select regions by color"),
-                _("/Tools/Selection Tools/By Color Select"), "C",
+                N_("/Tools/Selection Tools/By Color Select"), "C",
                 NULL, "tools/by_color_select.html",
                 GIMP_STOCK_TOOL_BY_COLOR_SELECT,
                 data);
