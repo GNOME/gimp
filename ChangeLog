@@ -1,3 +1,7 @@
+2004-09-05  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/cartoon.c: Added a preview.
+
 2004-09-05  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/autocrop.c: fix handling of layers with an

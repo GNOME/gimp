@@ -39,9 +39,10 @@
 
 typedef struct
 {
-  gdouble mask_radius;
-  gdouble threshold;
-  gdouble pct_black;
+  gdouble  mask_radius;
+  gdouble  threshold;
+  gdouble  pct_black;
+  gboolean update_preview;
 } CartoonVals;
 
 
@@ -56,13 +57,15 @@ static void      run    (const gchar       *name,
                          gint              *nreturn_vals,
                          GimpParam        **return_vals);
 
-static void      cartoon        (GimpDrawable *drawable);
-static gboolean  cartoon_dialog (GimpDrawable *drawable);
+static void      cartoon        (GimpDrawable        *drawable,
+                                 GimpDrawablePreview *preview);
+static gboolean  cartoon_dialog (GimpDrawable        *drawable);
+static void      preview_update (GtkWidget           *widget);
 
-static gdouble   compute_ramp   (guchar       *dest1,
-                                 guchar       *dest2,
-                                 gint          length,
-                                 gdouble       pct_black);
+static gdouble   compute_ramp   (guchar              *dest1,
+                                 guchar              *dest2,
+                                 gint                 length,
+                                 gdouble              pct_black);
 
 /*
  * Gaussian blur helper functions
@@ -97,6 +100,7 @@ static CartoonVals cvals =
   7.0,  /* mask_radius */
   1.0,  /* threshold */
   0.2,  /* pct_black */
+  TRUE  /* update_preview */
 };
 
 
@@ -211,7 +215,7 @@ run (const gchar      *name,
           /*  set the tile cache size  */
           gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-          cartoon (drawable);
+          cartoon (drawable, NULL);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
@@ -248,7 +252,8 @@ run (const gchar      *name,
  *   pixel intensity *= intensity mult
  */
 static void
-cartoon (GimpDrawable *drawable)
+cartoon (GimpDrawable        *drawable,
+         GimpDrawablePreview *preview)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   GimpPixelRgn *pr;
@@ -281,11 +286,21 @@ cartoon (GimpDrawable *drawable)
   gdouble       std_dev1;
   gdouble       std_dev2;
   gdouble       ramp;
+  gchar        *preview_buffer = NULL;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (preview)
+    {
+      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  width     = (x2 - x1);
-  height    = (y2 - y1);
+      width     = (x2 - x1);
+      height    = (y2 - y1);
+    }
+
   bytes     = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
@@ -325,7 +340,7 @@ cartoon (GimpDrawable *drawable)
       memset (val_m1, 0, height * bytes * sizeof (gdouble));
       memset (val_m2, 0, height * bytes * sizeof (gdouble));
 
-      gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
+      gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, height);
 
       src1  = src;
       sp_p1 = src1;
@@ -388,9 +403,12 @@ cartoon (GimpDrawable *drawable)
       transfer_pixels (val_p1, val_m1, dest1 + col, width, bytes, height);
       transfer_pixels (val_p2, val_m2, dest2 + col, width, bytes, height);
 
-      progress += height;
-      if ((col % 5) == 0)
-        gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+      if (!preview)
+        {
+          progress += height;
+          if ((col % 5) == 0)
+            gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+        }
     }
 
   for (row = 0; row < height; row++)
@@ -459,9 +477,12 @@ cartoon (GimpDrawable *drawable)
       transfer_pixels (val_p1, val_m1, dest1 + row * width, 1, 1, width);
       transfer_pixels (val_p2, val_m2, dest2 + row * width, 1, 1, width);
 
-      progress += width;
-      if ((row % 5) == 0)
-        gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+      if (!preview)
+        {
+          progress += width;
+          if ((row % 5) == 0)
+            gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+        }
     }
 
   /* Compute the ramp value which sets 'pct_black' % of the darkened pixels black */
@@ -469,19 +490,34 @@ cartoon (GimpDrawable *drawable)
 
   /* Initialize the pixel regions. */
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, width, height, TRUE, TRUE);
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
+  if (preview)
+    {
+      pr = gimp_pixel_rgns_register (1, &src_rgn);
+      preview_buffer = g_new (guchar, width * height * bytes);
+    }
+  else
+    {
+      gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, width, height, TRUE, TRUE);
+      pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+    }
+
+  while (pr)
     {
       guchar  *src_ptr  = src_rgn.data;
-      guchar  *dest_ptr = dest_rgn.data;
+      guchar  *dest_ptr;
       guchar  *blur_ptr = dest1 + (src_rgn.y - y1) * width + (src_rgn.x - x1);
       guchar  *avg_ptr  = dest2 + (src_rgn.y - y1) * width + (src_rgn.x - x1);
       gdouble  diff;
       gdouble  mult     = 0.0;
       gdouble  lightness;
+
+      if (preview)
+        dest_ptr =
+          preview_buffer +
+          ((src_rgn.y - y1) * width + (src_rgn.x - x1)) * bytes;
+      else
+        dest_ptr = dest_rgn.data;
 
       for (row = 0; row < src_rgn.h; row++)
         {
@@ -505,9 +541,9 @@ cartoon (GimpDrawable *drawable)
 
               if (bytes < 3)
                 {
-                  dest_ptr[col * dest_rgn.bpp] = (guchar) lightness;
+                  dest_ptr[col * bytes] = (guchar) lightness;
                   if (has_alpha)
-                    dest_ptr[col * dest_rgn.bpp + 1] = src_ptr[col * src_rgn.bpp + 1];
+                    dest_ptr[col * bytes + 1] = src_ptr[col * src_rgn.bpp + 1];
                 }
               else
                 {
@@ -522,29 +558,45 @@ cartoon (GimpDrawable *drawable)
                   b = lightness;
                   gimp_hsl_to_rgb_int (&r, &g, &b);
 
-                  dest_ptr[col * dest_rgn.bpp + 0] = r;
-                  dest_ptr[col * dest_rgn.bpp + 1] = g;
-                  dest_ptr[col * dest_rgn.bpp + 2] = b;
+                  dest_ptr[col * bytes + 0] = r;
+                  dest_ptr[col * bytes + 1] = g;
+                  dest_ptr[col * bytes + 2] = b;
 
                   if (has_alpha)
-                    dest_ptr[col * dest_rgn.bpp + 3] = src_ptr[col * src_rgn.bpp + 3];
+                    dest_ptr[col * bytes + 3] = src_ptr[col * src_rgn.bpp + 3];
                 }
             }
 
           src_ptr  += src_rgn.rowstride;
-          dest_ptr += dest_rgn.rowstride;
+          if (preview)
+            dest_ptr += width * bytes;
+          else
+            dest_ptr += dest_rgn.rowstride;
           blur_ptr += width;
           avg_ptr  += width;
         }
 
-      progress += src_rgn.w * src_rgn.h;
-      gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+      if (!preview)
+        {
+          progress += src_rgn.w * src_rgn.h;
+          gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+        }
+
+      pr = gimp_pixel_rgns_process (pr);
     }
 
-  /*  merge the shadow, update the drawable  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  if (preview)
+    {
+      gimp_drawable_preview_draw (preview, preview_buffer);
+      g_free (preview_buffer);
+    }
+  else
+    {
+      /*  merge the shadow, update the drawable  */
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+    }
 
   /*  free up buffers  */
   g_free (val_p1);
@@ -745,6 +797,9 @@ static gboolean
 cartoon_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *preview;
   GtkWidget *table;
   GtkObject *scale_data;
   gboolean   run;
@@ -760,12 +815,25 @@ cartoon_dialog (GimpDrawable *drawable)
 
                          NULL);
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), vbox);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  preview = gimp_drawable_preview_new (drawable, &cvals.update_preview);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (cartoon), drawable);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), table);
+  gtk_container_add (GTK_CONTAINER (vbox), table);
   gtk_widget_show (table);
 
   /*  Label, scale, entry for cvals.amount  */
@@ -778,6 +846,8 @@ cartoon_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &cvals.mask_radius);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (preview_update), preview);
 
   /*  Label, scale, entry for cvals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -789,6 +859,8 @@ cartoon_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &cvals.pct_black);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (preview_update), preview);
 
   gtk_widget_show (dlg);
 
@@ -797,4 +869,12 @@ cartoon_dialog (GimpDrawable *drawable)
   gtk_widget_destroy (dlg);
 
   return run;
+}
+
+static void
+preview_update (GtkWidget *widget)
+{
+  GimpDrawablePreview *preview = GIMP_DRAWABLE_PREVIEW (widget);
+
+  cartoon (preview->drawable, preview);
 }
