@@ -802,8 +802,6 @@ size).
 <!-- ##### MACRO GIMP_STOCK_WILBER ##### -->
 <para>
 <inlinegraphic fileref="stock-wilber-64.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-wilber-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-wilber-32.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-wilber-16.png" format="png"></inlinegraphic>
 </para>
 
