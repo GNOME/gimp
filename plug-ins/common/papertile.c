@@ -547,6 +547,14 @@ filter (void)
 
   gimp_progress_init (_("Paper Tile..."));
 
+  gimp_drawable_mask_bounds (p.drawable->id,
+			     &p.selection.x0, &p.selection.y0,
+			     &p.selection.x1, &p.selection.y1);
+  p.selection.width  = p.selection.x1 - p.selection.x0;
+  p.selection.height = p.selection.y1 - p.selection.y0;
+
+  gimp_tile_cache_ntiles (2 * (p.selection.width / gimp_tile_width () + 1));
+
   /* TILES */
   srand (0);
   division_x = p.params.division_x;
@@ -844,10 +852,10 @@ plugin_query (void)
 }
 
 static void
-plugin_run (gchar   *name,
-	    gint     numof_params,
+plugin_run (gchar      *name,
+	    gint        numof_params,
 	    GimpParam  *params,
-	    gint    *numof_return_vals,
+	    gint       *numof_return_vals,
 	    GimpParam **return_vals)
 {
   GimpPDBStatusType status;
@@ -860,14 +868,6 @@ plugin_run (gchar   *name,
   p.image    = params[1].data.d_image;
   p.drawable = gimp_drawable_get (params[2].data.d_drawable);
   p.drawable_has_alpha = gimp_drawable_has_alpha (p.drawable->id);
-
-  gimp_drawable_mask_bounds (p.drawable->id,
-			     &p.selection.x0, &p.selection.y0,
-			     &p.selection.x1, &p.selection.y1);
-  p.selection.width  = p.selection.x1 - p.selection.x0;
-  p.selection.height = p.selection.y1 - p.selection.y0;
-
-  gimp_tile_cache_ntiles (2 * (p.selection.width / gimp_tile_width () + 1));
 
   if (gimp_drawable_is_rgb (p.drawable->id))
     {
