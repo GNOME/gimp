@@ -169,12 +169,32 @@ get_prefix (gchar slash)
 }
 
 static gchar *
+get_exec_prefix (gchar slash)
+{
+#ifdef G_OS_WIN32
+  if (exec_prefix != NULL)
+    return exec_prefix;
+
+  /* On Win32, exec_prefix is always same as prefix. Or is it? Maybe not,
+   * but at least in tml's prebuilt stuff it is. If somebody else does
+   * it another way, feel free to hack this.
+   */
+  return (exec_prefix = get_prefix (slash));
+#else
+  return "@exec_prefix@";
+#endif
+}
+
+static gchar *
 expand_and_munge (gchar *value)
 {
   if (starts_with_dir (value, "${prefix}"))
     value = g_strconcat ("@prefix@", value + strlen ("${prefix}"), NULL);
   else if (starts_with_dir (value, "${exec_prefix}"))
     value = g_strconcat ("@exec_prefix@", value + strlen ("${exec_prefix}"), NULL);
+  if (starts_with_dir (value, "@exec_prefix@"))
+    value = g_strconcat (get_exec_prefix ('/'), value + strlen ("@exec_prefix@"), NULL);
+
   if (starts_with_dir (value, "@prefix@"))
     value = g_strconcat (get_prefix ('/'), value + strlen ("@prefix@"), NULL);
 
