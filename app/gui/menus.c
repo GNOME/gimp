@@ -74,7 +74,7 @@ static GtkItemFactoryEntry image_entries[] =
   { "/Edit/Paste", "<control>V", edit_paste_cmd_callback, 0 },
   { "/Edit/Paste Into", NULL, edit_paste_into_cmd_callback, 0 },
   { "/Edit/Clear", "<control>K", edit_clear_cmd_callback, 0 },
-  { "/Edit/Fill", "<control>.", edit_fill_cmd_callback, 0 },
+  { "/Edit/Fill", "<control>period", edit_fill_cmd_callback, 0 },
   { "/Edit/Stroke", NULL, edit_stroke_cmd_callback, 0 },
   { "/Edit/Undo", "<control>Z", edit_undo_cmd_callback, 0 },
   { "/Edit/Redo", "<control>R", edit_redo_cmd_callback, 0 },

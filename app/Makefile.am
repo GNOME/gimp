@@ -299,8 +299,7 @@ EXTRA_DIST = \
 CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
-	-DGIMPDIR=\""$(gimpdir)"\"	\
-	$(THREAD_CPPFLAGS)
+	-DGIMPDIR=\""$(gimpdir)"\"
 
 INCLUDES = \
 	-I$(top_srcdir)			\

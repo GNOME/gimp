@@ -52,7 +52,8 @@ typedef enum
   HUE_MODE          = 11,
   SATURATION_MODE   = 12,
   COLOR_MODE        = 13,
-  VALUE_MODE        = 14
+  VALUE_MODE        = 14,
+  DIVIDE_MODE       = 15
 } GLayerMode;
 
 typedef enum

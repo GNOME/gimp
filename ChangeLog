@@ -1,3 +1,13 @@
+Tue Jun 23 22:26:09 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: compile everything with -D_REENTRANT
+
+	* app/menus.c: fix for default accel (wrong X char)
+
+	* libgimp/gimpenums.h: make DIVIDE_MODE visible
+
+	* plug-ins/gif/gif.c: make it less verbose again
+
 Wed Jun 24 00:45:01 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* gimprc.in

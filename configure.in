@@ -305,14 +305,13 @@ AC_CHECK_FUNC(difftime, , AC_DEFINE(NO_DIFFTIME))
 
 dnl Threads
 AC_ARG_WITH(threads, [  --with-threads=[posix] support threading ])
-THREAD_CPPFLAGS= THREAD_LIBS=
+THREAD_LIBS=
 if test "x$with_threads" = "xposix" || test "x$with_threads" = "xyes"; then
   AC_CHECK_LIB(pthread, pthread_attr_init,
     AC_DEFINE(USE_PTHREADS)
-    THREAD_CPPFLAGS="-D_REENTRANT"
+    CFLAGS="$CFLAGS -D_REENTRANT"
     THREAD_LIBS="-lpthread")
 fi
-AC_SUBST(THREAD_CPPFLAGS)
 AC_SUBST(THREAD_LIBS)
 
 CPPFLAGS="$gimp_save_CPPFLAGS"
