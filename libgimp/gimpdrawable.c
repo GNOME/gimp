@@ -90,9 +90,6 @@ gimp_drawable_detach (GimpDrawable *drawable)
 
   gimp_drawable_flush (drawable);
 
-  /*  nuke all references to this drawable from the cache  */
-  _gimp_tile_cache_flush_drawable (drawable);
-
   if (drawable->tiles)
     g_free (drawable->tiles);
   if (drawable->shadow_tiles)
@@ -140,6 +137,9 @@ gimp_drawable_flush (GimpDrawable *drawable)
         if ((tiles[i].ref_count > 0) && tiles[i].dirty)
           gimp_tile_flush (&tiles[i]);
     }
+
+  /*  nuke all references to this drawable from the cache  */
+  _gimp_tile_cache_flush_drawable (drawable);
 }
 
 GimpTile *

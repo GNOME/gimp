@@ -1,3 +1,10 @@
+2004-06-30  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimp/gimpdrawable.c: moved call to
+	_gimp_tile_cache_flush_drawable() from gimp_drawable_detach() to
+	gimp_drawable_flush(), to resolve problem described in bug
+	#145051.
+	
 2004-06-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-ins.[ch] (plug_ins_init): added a GimpContext
