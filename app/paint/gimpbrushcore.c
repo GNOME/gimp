@@ -969,7 +969,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
 
   /* Allocate and initialize the accum buffer */
   for (i = 0; i < KERNEL_HEIGHT ; i++)
-    accum[i] = g_new0 (gulong, dest->width);
+    accum[i] = g_new0 (gulong, dest->width + 1);
 
   /* Investigate modifiying kernelgen to make the sum the same
    *  for all kernels. That way kernal_sum becomes a constant
@@ -992,7 +992,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
             {
               offs = j + dest_offset_x;
               s = KERNEL_WIDTH;
-              while (s-- > dest_offset_x)
+              while (s--)
                 {
                   accum[r][offs++] += *m * *k++;
                 }
