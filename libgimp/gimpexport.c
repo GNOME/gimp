@@ -55,21 +55,31 @@ export_merge (gint32  image_ID,
   gint32  nvisible = 0;
   gint32  i;
   gint32 *layers;
-  gint32  visible = *drawable_ID;
   gint32  merged;
+  gint32  transp;
 
   layers = gimp_image_get_layers (image_ID, &nlayers);
   for (i = 0; i < nlayers; i++)
     {
       if (gimp_drawable_visible (layers[i]))
-	{
-	  nvisible++;
-	  visible = layers[i];
-	}
+	nvisible++;
     }
 
-  if (nvisible == 1 && *drawable_ID != visible)
-    *drawable_ID = visible;    
+  if (nvisible <= 1)
+    {
+      /* if there is only one (or zero) visible layer, add a new transparent
+	 layer that has the same size as the canvas.  The merge that follows
+	 will ensure that the offset, opacity and size are correct */
+      transp = gimp_layer_new (image_ID, "-",
+			       gimp_image_width (image_ID),
+			       gimp_image_height (image_ID),
+			       gimp_drawable_type (*drawable_ID) | 1,
+			       100.0, GIMP_NORMAL_MODE);
+      gimp_image_add_layer (image_ID, transp, 1);
+      gimp_selection_none (image_ID);
+      gimp_edit_clear (transp);
+      nvisible++;
+    }
 
   if (nvisible > 1)
     {
@@ -158,6 +168,15 @@ static ExportAction export_action_merge =
   export_merge,
   NULL,
   N_("can't handle layers"),
+  { N_("Merge Visible Layers"), NULL },
+  0
+};
+
+static ExportAction export_action_merge_single =
+{
+  export_merge,
+  NULL,
+  N_("can't handle layer offsets, size or opacity"),
   { N_("Merge Visible Layers"), NULL },
   0
 };
@@ -280,6 +299,14 @@ export_export_callback (GtkWidget *widget,
 }
 
 static void
+export_confirm_callback (GtkWidget *widget,
+			 gpointer   data)
+{
+  gtk_widget_destroy (dialog);
+  dialog_return = GIMP_EXPORT_EXPORT;
+}
+
+static void
 export_skip_callback (GtkWidget *widget,
 		      gpointer   data)
 {
@@ -309,8 +336,61 @@ export_toggle_callback (GtkWidget *widget,
 }
 
 static gint
+confirm_save_dialog (const gchar *saving_what,
+		     const gchar *format_name)
+{
+  GtkWidget    *vbox;
+  GtkWidget    *label;
+  gchar        *text;
+
+  dialog_return = GIMP_EXPORT_CANCEL;
+  g_return_val_if_fail (saving_what != NULL && format_name != NULL, dialog_return);
+
+  /*
+   *  Plug-ins must have called gtk_init () before calling gimp_export ().
+   *  Otherwise bad things will happen now!!
+   */
+
+  /* the dialog */
+
+  dialog = gimp_dialog_new (_("Confirm Save"), "confirm_save",
+			    gimp_standard_help_func, "dialogs/confirm_save.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, FALSE, FALSE,
+			    _("Confirm"), export_confirm_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), gtk_widget_destroy,
+			    NULL, 1, NULL, FALSE, TRUE,
+
+			    NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+		      GTK_SIGNAL_FUNC (export_cancel_callback),
+		      NULL);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_widget_show (vbox);
+
+  text = g_strdup_printf (_("You are about to save %s as %s.\n"
+			    "This will not save the visible layers."),
+			  saving_what, format_name);
+  label = gtk_label_new (text);
+  g_free (text);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  gtk_widget_show (dialog);
+  gtk_main ();
+
+  return dialog_return;
+}
+
+static gint
 export_dialog (GSList      *actions,
-	       const gchar *format)
+	       const gchar *format_name)
 {
   GtkWidget    *frame;
   GtkWidget    *vbox;
@@ -322,14 +402,15 @@ export_dialog (GSList      *actions,
   ExportAction *action;
 
   dialog_return = GIMP_EXPORT_CANCEL;
-  g_return_val_if_fail (actions != NULL && format != NULL, dialog_return);
+  g_return_val_if_fail (actions != NULL && format_name != NULL, dialog_return);
 
   /*
-   *  Plug-ins have called gtk_init () before calling gimp_export ().
+   *  Plug-ins must have called gtk_init () before calling gimp_export ().
    *  Otherwise bad things will happen now!!
    */
 
   /* the dialog */
+
   dialog = gimp_dialog_new (_("Export File"), "export_file",
 			    gimp_standard_help_func, "dialogs/export_file.html",
 			    GTK_WIN_POS_MOUSE,
@@ -365,7 +446,7 @@ export_dialog (GSList      *actions,
     {
       action = (ExportAction *) (list->data);
 
-      text = g_strdup_printf ("%s %s", format, gettext (action->reason));
+      text = g_strdup_printf ("%s %s", format_name, gettext (action->reason));
       frame = gtk_frame_new (text);
       g_free (text);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -468,6 +549,8 @@ gimp_export_image (gint32                 *image_ID,
   gint32  i;
   gint32  nlayers;
   gint32* layers;
+  gint    offset_x;
+  gint    offset_y;
   gboolean added_flatten = FALSE;
   gboolean background_has_alpha = TRUE;
   ExportAction *action;
@@ -479,6 +562,23 @@ gimp_export_image (gint32                 *image_ID,
     capabilities |= GIMP_EXPORT_CAN_HANDLE_ALPHA ;
   if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+
+  /* ask for confirmation if the user is not saving a layer (see bug #51114) */
+  if (!gimp_drawable_is_layer (*drawable_ID)
+      && !(capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
+    {
+      if (gimp_drawable_is_layer_mask (*drawable_ID))
+	dialog_return = confirm_save_dialog (_("a layer mask"),	format_name);
+      else if (gimp_drawable_is_channel (*drawable_ID))
+	dialog_return = confirm_save_dialog (_("a channel (saved selection)"),
+					     format_name);
+      else
+	; /* this should not happen */
+
+      /* cancel - the user can then select an appropriate layer to save */
+      if (dialog_return == GIMP_EXPORT_CANCEL)
+	return GIMP_EXPORT_CANCEL;
+    }
 
   /* check alpha */
   layers = gimp_image_get_layers (*image_ID, &nlayers);
@@ -498,7 +598,7 @@ gimp_export_image (gint32                 *image_ID,
 	{
           /* If this is the last layer, it's visible and has no alpha
              channel, then the image has a "flat" background */
-      	  if (i == nlayers - 1 && gimp_layer_get_visible(layers[i])) 
+      	  if (i == nlayers - 1 && gimp_layer_get_visible (layers[i])) 
 	    background_has_alpha = FALSE;
 
 	  if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
@@ -510,8 +610,29 @@ gimp_export_image (gint32                 *image_ID,
     }
   g_free (layers);
 
+  /* check if layer size != canvas size, opacity != 100%, or offsets != 0 */
+  if (!added_flatten && nlayers == 1 && gimp_drawable_is_layer (*drawable_ID)
+      && !(capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
+    {
+      gimp_drawable_offsets (*drawable_ID, &offset_x, &offset_y);
+      if ((gimp_layer_get_opacity (*drawable_ID) < 100.0)
+	  || (gimp_image_width (*image_ID)
+	      != gimp_drawable_width (*drawable_ID))
+	  || (gimp_image_height (*image_ID)
+	      != gimp_drawable_height (*drawable_ID))
+	  || offset_x || offset_y)
+	{
+	  if (capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA)
+	    actions = g_slist_prepend (actions, &export_action_merge_single);
+	  else
+	    {
+	      actions = g_slist_prepend (actions, &export_action_flatten);
+	      added_flatten = TRUE;
+	    }
+	}
+    }
   /* check multiple layers */
-  if (!added_flatten && nlayers > 1)
+  else if (!added_flatten && nlayers > 1)
     {
       if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
 	{

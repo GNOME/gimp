@@ -71,9 +71,11 @@ static void        doit            (gint32        image_ID,
 				    gboolean      preview_mode);
 static gint        dialog          (gint32        image_ID, 
 				    GimpDrawable *drawable);
-static GtkWidget * preview_widget  (GimpDrawable *drawable);
+static GtkWidget * preview_widget  (gint32        image_ID,
+                                    GimpDrawable *drawable);
 static void        fill_preview    (GtkWidget    *preview_widget, 
-				    GimpDrawable *drawable);
+				    gint32        image_ID,
+                                    GimpDrawable *drawable);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -690,7 +692,7 @@ dialog (gint32        image_ID,
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
-  preview = preview_widget (drawable); /* we are here */
+  preview = preview_widget (image_ID, drawable); /* we are here */
   gtk_container_add (GTK_CONTAINER (frame), preview);
   doit (image_ID, drawable, TRUE); /* render preview */
   gtk_widget_show (preview);
@@ -978,14 +980,16 @@ dialog (gint32        image_ID,
 }
 
 static GtkWidget *
-preview_widget (GimpDrawable *drawable)
+preview_widget (gint32        image_ID,
+                GimpDrawable *drawable)
 {
   gint       size;
   GtkWidget *preview;
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  fill_preview (preview, drawable);
-  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
+  fill_preview (preview, image_ID, drawable);
+  size = 
+    GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
   
@@ -993,7 +997,8 @@ preview_widget (GimpDrawable *drawable)
 }
 
 static void
-fill_preview (GtkWidget    *widget, 
+fill_preview (GtkWidget    *widget,
+              gint32        image_ID,
 	      GimpDrawable *drawable)
 {
   GimpPixelRgn  srcPR;
@@ -1007,6 +1012,8 @@ fill_preview (GtkWidget    *widget,
   gdouble       c0, c1;
   guchar       *p0, *p1;
   guchar       *even, *odd;
+  guchar       *cmap;
+  gint          ncolors;
   
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -1030,6 +1037,11 @@ fill_preview (GtkWidget    *widget,
   even = g_malloc (width * 3);
   odd  = g_malloc (width * 3);
   src  = g_malloc (width * bpp);
+
+  if (gimp_drawable_is_indexed (drawable->drawable_id))
+    cmap = gimp_image_get_cmap (image_ID, &ncolors);
+  else
+    cmap = NULL;
 
   for (y = 0; y < height; y++)
     {
@@ -1055,8 +1067,20 @@ fill_preview (GtkWidget    *widget,
 	    }
 	  else
 	    {
-	      r = ((gdouble)src[x*bpp+0]) / 255.0;
-	      g = b = r;
+              if (cmap)
+                {
+                  gint index = MIN (src[x*bpp], ncolors - 1);
+
+                  r = ((gdouble)cmap[index * 3 + 0]) / 255.0;
+                  g = ((gdouble)cmap[index * 3 + 1]) / 255.0;
+                  b = ((gdouble)cmap[index * 3 + 2]) / 255.0;
+                }
+              else
+                {
+                  r = ((gdouble)src[x*bpp+0]) / 255.0;
+                  g = b = r;
+                }
+
 	      if (bpp == 2)
 		a = ((gdouble)src[x*bpp+1]) / 255.0;
 	      else
@@ -1093,4 +1117,7 @@ fill_preview (GtkWidget    *widget,
   g_free (even);
   g_free (odd);
   g_free (src);
+
+  if (cmap)
+    g_free (cmap);
 }

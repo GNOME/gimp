@@ -1,3 +1,9 @@
+2001-10-24  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added missing file (you probably already have 
+        translations for the new messages in the po-plug-ins domain).
+        Fixes bug #62920.
+
 2001-10-10  Christian Rose  <menthos@menthos.com>
 
 	* sv.po: Updated Swedish translation.

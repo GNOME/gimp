@@ -1,3 +1,11 @@
+2001-10-24  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpexport.c: merged Raphaels patch for bug #51114 from the 
+	stable branch.
+	
+	* plug-ins/common/grid.c: merged the fix for indexed images from the
+	stable branch.
+
 2001-10-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/file-open.c
