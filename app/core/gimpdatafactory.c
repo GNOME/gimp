@@ -588,17 +588,17 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
  insert:
   {
     GimpBaseConfig *base_config;
-    GimpData       *data;
+    GList          *data_list;
     GError         *error = NULL;
 
     base_config = GIMP_BASE_CONFIG (factory->gimp->config);
 
-    data = (GimpData *)
+    data_list =
       (* factory->loader_entries[i].load_func) (file_data->filename,
                                                 base_config->stingy_memory_use,
                                                 &error);
 
-    if (! data)
+    if (! data_list)
       {
 	g_message (_("Warning: Failed to load data:\n\n%s"),
                    error->message);
@@ -607,19 +607,29 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
     else
       {
         GList    *writable_list;
+        GList    *list;
         gboolean  writable = FALSE;
 
         writable_list = g_object_get_data (G_OBJECT (factory),
                                            WRITABLE_PATH_KEY);
 
-        writable = (g_list_find_custom (writable_list, file_data->dirname,
+        writable = (factory->loader_entries[i].writable &&
+                    g_list_length (data_list) == 1      &&
+                    g_list_find_custom (writable_list, file_data->dirname,
                                         (GCompareFunc) strcmp) != NULL);
 
-        gimp_data_set_filename (data, file_data->filename, writable);
-        data->dirty = FALSE;
+        for (list = data_list; list; list = g_list_next (list))
+          {
+            GimpData *data = list->data;
 
-	gimp_container_add (factory->container, GIMP_OBJECT (data));
-	g_object_unref (data);
+            gimp_data_set_filename (data, file_data->filename, writable);
+            data->dirty = FALSE;
+
+            gimp_container_add (factory->container, GIMP_OBJECT (data));
+            g_object_unref (data);
+          }
+
+        g_list_free (data_list);
       }
   }
 }

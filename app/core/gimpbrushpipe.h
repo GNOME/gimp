@@ -73,11 +73,11 @@ struct _GimpBrushPipeClass
 };
 
 
-GType      gimp_brush_pipe_get_type   (void) G_GNUC_CONST;
+GType    gimp_brush_pipe_get_type (void) G_GNUC_CONST;
 
-GimpData * gimp_brush_pipe_load       (const gchar  *filename,
-                                       gboolean      stingy_memory_use,
-                                       GError      **error);
+GList  * gimp_brush_pipe_load     (const gchar  *filename,
+                                   gboolean      stingy_memory_use,
+                                   GError      **error);
 
 
 #endif  /* __GIMP_BRUSH_PIPE_H__ */

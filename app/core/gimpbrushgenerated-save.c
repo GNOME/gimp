@@ -450,7 +450,7 @@ gimp_brush_generated_new (const gchar *name,
   return GIMP_DATA (brush);
 }
 
-GimpData *
+GList *
 gimp_brush_generated_load (const gchar  *filename,
                            gboolean      stingy_memory_use,
                            GError      **error)
@@ -567,7 +567,7 @@ gimp_brush_generated_load (const gchar  *filename,
   if (stingy_memory_use)
     temp_buf_swap (GIMP_BRUSH (brush)->mask);
 
-  return GIMP_DATA (brush);
+  return g_list_prepend (NULL, brush);
 
  failed:
 

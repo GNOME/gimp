@@ -372,7 +372,7 @@ gimp_brush_get_standard (void)
   return standard_brush;
 }
 
-GimpData *
+GList *
 gimp_brush_load (const gchar  *filename,
                  gboolean      stingy_memory_use,
                  GError      **error)
@@ -409,7 +409,7 @@ gimp_brush_load (const gchar  *filename,
         temp_buf_swap (brush->pixmap);
     }
 
-  return GIMP_DATA (brush);
+  return g_list_prepend (NULL, brush);
 }
 
 GimpBrush *

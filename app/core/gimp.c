@@ -529,29 +529,29 @@ gimp_real_initialize (Gimp               *gimp,
 
   static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
   {
-    { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION           },
-    { gimp_brush_load,           GIMP_BRUSH_PIXMAP_FILE_EXTENSION    },
-    { gimp_brush_generated_load, GIMP_BRUSH_GENERATED_FILE_EXTENSION },
-    { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION      }
+    { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION,           FALSE },
+    { gimp_brush_load,           GIMP_BRUSH_PIXMAP_FILE_EXTENSION,    FALSE },
+    { gimp_brush_generated_load, GIMP_BRUSH_GENERATED_FILE_EXTENSION, TRUE  },
+    { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION,      FALSE }
   };
 
   static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
   {
-    { gimp_pattern_load,         GIMP_PATTERN_FILE_EXTENSION         },
-    { gimp_pattern_load_pixbuf,  NULL                                }
+    { gimp_pattern_load,         GIMP_PATTERN_FILE_EXTENSION,         FALSE },
+    { gimp_pattern_load_pixbuf,  NULL,                                FALSE }
   };
 
   static const GimpDataFactoryLoaderEntry gradient_loader_entries[] =
   {
-    { gimp_gradient_load,        GIMP_GRADIENT_FILE_EXTENSION        },
-    { gimp_gradient_load_svg,    GIMP_GRADIENT_SVG_FILE_EXTENSION    },
-    { gimp_gradient_load,        NULL /* legacy loader */            }
+    { gimp_gradient_load,        GIMP_GRADIENT_FILE_EXTENSION,        TRUE  },
+    { gimp_gradient_load_svg,    GIMP_GRADIENT_SVG_FILE_EXTENSION,    FALSE },
+    { gimp_gradient_load,        NULL /* legacy loader */,            TRUE  }
   };
 
   static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
   {
-    { gimp_palette_load,         GIMP_PALETTE_FILE_EXTENSION         },
-    { gimp_palette_load,          NULL /* legacy loader */           }
+    { gimp_palette_load,         GIMP_PALETTE_FILE_EXTENSION,         TRUE  },
+    { gimp_palette_load,         NULL /* legacy loader */,            TRUE  }
   };
 
   if (gimp->be_verbose)

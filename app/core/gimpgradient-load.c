@@ -38,7 +38,7 @@
 #include "gimp-intl.h"
 
 
-GimpData *
+GList *
 gimp_gradient_load (const gchar  *filename,
                     gboolean      stingy_memory_use,
                     GError      **error)
@@ -178,7 +178,7 @@ gimp_gradient_load (const gchar  *filename,
 
   fclose (file);
 
-  return GIMP_DATA (gradient);
+  return g_list_prepend (NULL, gradient);
 }
 
 
@@ -236,7 +236,7 @@ static const GMarkupParser markup_parser =
 };
 
 
-GimpData *
+GList *
 gimp_gradient_load_svg (const gchar  *filename,
                         gboolean      stingy_memory_use,
                         GError      **error)
@@ -292,7 +292,7 @@ gimp_gradient_load_svg (const gchar  *filename,
   g_list_foreach (parser.stops, (GFunc) g_free, NULL);
   g_list_free (parser.stops);
 
-  return data;
+  return g_list_prepend (NULL, data);
 }
 
 static void

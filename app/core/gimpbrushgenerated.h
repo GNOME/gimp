@@ -62,7 +62,7 @@ GimpData  * gimp_brush_generated_new          (const gchar *name,
 					       gfloat       aspect_ratio,
 					       gfloat       angle,
                                                gboolean     stingy_memory_use);
-GimpData  * gimp_brush_generated_load         (const gchar *file_name,
+GList     * gimp_brush_generated_load         (const gchar *file_name,
                                                gboolean     stingy_memory_use,
                                                GError     **error);
 

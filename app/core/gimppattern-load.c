@@ -306,7 +306,7 @@ gimp_pattern_get_standard (void)
   return standard_pattern;
 }
 
-GimpData *
+GList *
 gimp_pattern_load (const gchar  *filename,
                    gboolean      stingy_memory_use,
                    GError      **error)
@@ -426,7 +426,7 @@ gimp_pattern_load (const gchar  *filename,
   if (stingy_memory_use)
     temp_buf_swap (pattern->mask);
 
-  return GIMP_DATA (pattern);
+  return g_list_prepend (NULL, pattern);
 
  error:
   if (pattern)
@@ -437,7 +437,7 @@ gimp_pattern_load (const gchar  *filename,
   return NULL;
 }
 
-GimpData *
+GList *
 gimp_pattern_load_pixbuf (const gchar  *filename,
                           gboolean      stingy_memory_use,
                           GError      **error)
@@ -503,7 +503,7 @@ gimp_pattern_load_pixbuf (const gchar  *filename,
   if (stingy_memory_use)
     temp_buf_swap (pattern->mask);
 
-  return GIMP_DATA (pattern);
+  return g_list_prepend (NULL, pattern);
 }
 
 TempBuf *

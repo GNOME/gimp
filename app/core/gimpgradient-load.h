@@ -20,12 +20,12 @@
 #define __GIMP_GRADIENT_LOAD_H__
 
 
-GimpData * gimp_gradient_load     (const gchar  *filename,
-                                   gboolean      stingy_memory_use,
-                                   GError      **error);
-GimpData * gimp_gradient_load_svg (const gchar  *filename,
-                                   gboolean      stingy_memory_use,
-                                   GError      **error);
+GList * gimp_gradient_load     (const gchar  *filename,
+                                gboolean      stingy_memory_use,
+                                GError      **error);
+GList  * gimp_gradient_load_svg (const gchar  *filename,
+                                 gboolean      stingy_memory_use,
+                                 GError      **error);
 
 
 #endif /* __GIMP_GRADIENT_LOAD_H__ */

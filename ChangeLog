@@ -1,3 +1,28 @@
+2004-07-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdatafactory.h: added "gboolean writable" to the
+	GimpDataFactoryLoaderEntry struct. Return a GList* instead of
+	GimpData* from GimpDataLoadFunc so it's possible to load more than
+	one data object from one file.
+
+	* app/core/gimpdatafactory.c (gimp_data_factory_load_data):
+	changed accordingly: add all items of the returned lists to the
+	data factory. Make the data object writable only if it's in the
+	writable path *and* its loader entry says it's a writable format
+	*and* the returned list contains exactly one element.
+
+	* app/core/gimp.c (gimp_real_initialize): declare all loader
+	entries as writable where we have code to read and write exactly
+	one object per file; all others are not writable.
+
+	* app/core/gimpbrush.[ch]
+	* app/core/gimpbrushgenerated.[ch]
+	* app/core/gimpbrushpipe.[ch]
+	* app/core/gimpgradient-load.[ch]
+	* app/core/gimppalette.[ch]
+	* app/core/gimppattern.[ch] (all load functions): return a list
+	containing the loaded object instead of the object itself.
+
 2004-07-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/Makefile.am

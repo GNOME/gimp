@@ -337,7 +337,7 @@ gimp_palette_get_standard (void)
   return standard_palette;
 }
 
-GimpData *
+GList *
 gimp_palette_load (const gchar  *filename,
                    gboolean      stingy_memory_use,
                    GError      **error)
@@ -552,7 +552,7 @@ gimp_palette_load (const gchar  *filename,
 
   palette->colors = g_list_reverse (palette->colors);
 
-  return GIMP_DATA (palette);
+  return g_list_prepend (NULL, palette);
 }
 
 static gboolean

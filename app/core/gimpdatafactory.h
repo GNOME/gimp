@@ -28,7 +28,7 @@
 
 typedef GimpData * (* GimpDataNewFunc)         (const gchar  *name,
                                                 gboolean      stingy_memory_use);
-typedef GimpData * (* GimpDataLoadFunc)        (const gchar  *filename,
+typedef GList    * (* GimpDataLoadFunc)        (const gchar  *filename,
                                                 gboolean      stingy_memory_use,
                                                 GError      **error);
 typedef GimpData * (* GimpDataGetStandardFunc) (void);
@@ -40,6 +40,7 @@ struct _GimpDataFactoryLoaderEntry
 {
   GimpDataLoadFunc  load_func;
   const gchar      *extension;
+  gboolean          writable;
 };
 
 

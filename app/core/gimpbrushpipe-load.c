@@ -317,7 +317,7 @@ gimp_brush_pipe_want_null_motion (GimpBrush  *brush,
   return TRUE;
 }
 
-GimpData *
+GList *
 gimp_brush_pipe_load (const gchar  *filename,
                       gboolean      stingy_memory_use,
                       GError      **error)
@@ -505,5 +505,5 @@ gimp_brush_pipe_load (const gchar  *filename,
   GIMP_BRUSH (pipe)->mask     = pipe->current->mask;
   GIMP_BRUSH (pipe)->pixmap   = pipe->current->pixmap;
 
-  return GIMP_DATA (pipe);
+  return g_list_prepend (NULL, pipe);
 }

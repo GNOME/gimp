@@ -67,7 +67,7 @@ GType              gimp_palette_get_type       (void) G_GNUC_CONST;
 GimpData         * gimp_palette_new            (const gchar      *name,
                                                 gboolean          stingy_memory_use);
 GimpData         * gimp_palette_get_standard   (void);
-GimpData         * gimp_palette_load           (const gchar      *filename,
+GList            * gimp_palette_load           (const gchar      *filename,
                                                 gboolean          stingy_memory_use,
                                                 GError          **error);
 
