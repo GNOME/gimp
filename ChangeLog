@@ -1,3 +1,8 @@
+2001-11-14  Abel Cheung  <maddog@linux.org.hk>
+
+	* configure.in (ALL_LINGUAS): Rename zh_TW.Big5 -> zh_TW to
+	  prevent future encoding naming problem.
+
 2001-11-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdnd.h: a cut'n'paste bug prevented tools and
