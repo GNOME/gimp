@@ -572,9 +572,9 @@ user_install_tv_fix_size_request (GtkWidget     *widget,
 }
 
 void
-user_install_dialog_create (const gchar *alternate_system_gimprc,
-                            const gchar *alternate_gimprc,
-                            gboolean     verbose)
+user_install_dialog_run (const gchar *alternate_system_gimprc,
+                         const gchar *alternate_gimprc,
+                         gboolean     verbose)
 {
   GimpRc    *gimprc;
   GtkWidget *dialog;
@@ -972,6 +972,8 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
   gtk_widget_grab_default (continue_button);
 
   gtk_widget_show (dialog);
+
+  gtk_main ();
 }
 
 

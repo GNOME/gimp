@@ -1,5 +1,37 @@
 2003-10-02  Michael Natterer  <mitch@gimp.org>
 
+	Cleaned up the app init and exit stuff even more. Also reduces the
+	number of missing symbols for gimp-console. Added init and exit
+	debugging output (only for --verbose).
+
+	* app/core/gimpmarshal.list
+	* app/core/gimp.[ch]: added new signals "initialize" and
+	"restore".  Moved plug_ins_init() to Gimp::restore()'s default
+	implementation and plug_ins_exit() to Gimp::exit()'s default
+	implementation. Renamed gimp_set_config() to gimp_load_config()
+	and load GimpRC here. Moved base_init() and base_exit() to this
+	file, too.
+
+	* app/gui/Makefile.am
+	* app/gui/gui-vtable.[ch]: new files split out of gui.c. It was
+	simply too large.
+
+	* app/gui/gui.[ch]: renamed gui_themes_init() to gui_init(),
+	connect to Gimp's "initialize" and "restore" signals and create
+	the GUI stuff in the callbacks. Removed most other public
+	functions since they don't need to be called explicitly any more.
+	Moved the whole tool initialization/shutdown code to this file.
+
+	* app/gui/user-install-dialog.[ch]: changed
+	user_install_dialog_create() to user_install_dialog_run() and
+	added a gtk_main() at the end, so the install dialog's gtk_main()
+	and gtk_main_quit() live in the same file.
+
+	* app/app_procs.c: removed lots of stuff. app_init() is much
+	simpler now.
+
+2003-10-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/tool-options-commands.c
 	(tool_options_save_to_cmd_callback): remember the name of the
 	saved options and set it again after gimp_config_copy_properties().

@@ -170,6 +170,8 @@ libappgui_a_SOURCES = \
 	color-history.h			\
 	gui.c				\
 	gui.h				\
+	gui-vtable.c			\
+	gui-vtable.h			\
 	gui-types.h			\
 	session.c			\
 	session.h			\

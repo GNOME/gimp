@@ -34,16 +34,11 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "tools/tools-types.h"
-
-#include "base/base.h"
+#include "core/core-types.h"
 
 #include "config/gimprc.h"
 
 #include "core/gimp.h"
-#include "core/gimp-units.h"
-
-#include "plug-in/plug-ins.h"
 
 #include "file/file-open.h"
 #include "file/file-utils.h"
@@ -51,7 +46,6 @@
 #include "tools/gimp-tools.h"
 
 #include "gui/gui.h"
-#include "gui/splash.h"
 #include "gui/user-install-dialog.h"
 
 #include "app_procs.h"
@@ -63,16 +57,11 @@
 
 /*  local prototypes  */
 
-static void       app_init_update_splash   (const gchar *text1,
-                                            const gchar *text2,
-                                            gdouble      percentage);
-static void       app_init_update_none     (const gchar *text1,
-                                            const gchar *text2,
-                                            gdouble      percentage);
-static gboolean   app_exit_callback        (Gimp        *gimp,
-                                            gboolean     kill_it);
-static gboolean   app_exit_finish_callback (Gimp        *gimp,
-                                            gboolean     kill_it);
+static void       app_init_update_none    (const gchar *text1,
+                                           const gchar *text2,
+                                           gdouble      percentage);
+static gboolean   app_exit_after_callback (Gimp        *gimp,
+                                           gboolean     kill_it);
 
 
 /*  global variables  */
@@ -107,26 +96,18 @@ app_init (const gchar         *full_prog_name,
           GimpStackTraceMode   stack_trace_mode,
           gboolean             restore_session)
 {
-  GimpInitStatusFunc  update_status_func;
-  const gchar        *gimp_dir;
-  GimpRc             *gimprc;
-
-  if (no_interface || no_splash)
-    update_status_func = app_init_update_none;
-  else
-    update_status_func = app_init_update_splash;
+  GimpInitStatusFunc update_status_func = app_init_update_none;
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
    */
-  the_gimp = gimp_new (be_verbose,
+  the_gimp = gimp_new (full_prog_name,
+                       be_verbose,
                        no_data,
                        no_interface,
                        use_shm,
                        console_messages,
                        stack_trace_mode);
-
-  gimp_object_set_name (GIMP_OBJECT (the_gimp), full_prog_name);
 
   g_log_set_handler ("Gimp",
 		     G_LOG_LEVEL_MESSAGE,
@@ -184,9 +165,7 @@ app_init (const gchar         *full_prog_name,
 
   /*  Check if the user's gimp_directory exists
    */
-  gimp_dir = gimp_directory ();
-
-  if (! g_file_test (gimp_dir, G_FILE_TEST_IS_DIR))
+  if (! g_file_test (gimp_directory (), G_FILE_TEST_IS_DIR))
     {
       /*  not properly installed  */
 
@@ -202,88 +181,37 @@ app_init (const gchar         *full_prog_name,
 	}
       else
 	{
-          user_install_dialog_create (alternate_system_gimprc,
-                                      alternate_gimprc,
-                                      be_verbose);
-
-	  gtk_main ();
+          user_install_dialog_run (alternate_system_gimprc,
+                                   alternate_gimprc,
+                                   be_verbose);
 	}
     }
 
-  /*  this needs to be done before gimprc loading because gimprc can
-   *  use user defined units
-   */
-  gimp_unitrc_load (the_gimp);
-
-  gimprc = gimp_rc_new (alternate_system_gimprc,
-                        alternate_gimprc,
-                        be_verbose);
-
-#if 0
-  /* solely for debugging */
-  g_signal_connect (gimprc, "notify",
-                    G_CALLBACK (gimprc_notify_callback),
-                    NULL);
-#endif
-
-  /*  initialize lowlevel stuff  */
-  base_init (GIMP_BASE_CONFIG (gimprc), use_mmx);
-
-  gimp_set_config (the_gimp, GIMP_CORE_CONFIG (gimprc));
-
-  g_object_unref (gimprc);
-  gimprc = NULL;
+  gimp_load_config (the_gimp,
+                    alternate_system_gimprc,
+                    alternate_gimprc,
+                    use_mmx);
 
   if (! no_interface)
-    {
-      gui_themes_init (the_gimp);
+    update_status_func = gui_init (the_gimp, no_splash, no_splash_image);
 
-      if (! no_splash)
-	splash_create (! no_splash_image);
-    }
+  g_assert (update_status_func != NULL);
+
+  /*  connect our "exit" callbacks after gui_init() so they are
+   *  invoked after the GUI's "exit" callbacks
+   */
+  g_signal_connect_after (the_gimp, "exit",
+                          G_CALLBACK (app_exit_after_callback),
+                          NULL);
 
   /*  Create all members of the global Gimp instance which need an already
    *  parsed gimprc, e.g. the data factories
    */
   gimp_initialize (the_gimp, update_status_func);
 
-  if (! no_interface)
-    {
-      gui_environ_init (the_gimp);
-      gimp_tools_init (the_gimp);
-    }
-
   /*  Load all data files
    */
-  gimp_restore (the_gimp, update_status_func, no_data);
-
-  if (! no_interface)
-    {
-      gui_init (the_gimp);
-      gimp_tools_restore (the_gimp);
-    }
-
-  /*  Initialize the plug-in structures
-   */
-  plug_ins_init (the_gimp, update_status_func);
-
-  if (! no_interface)
-    {
-      if (! no_splash)
-	splash_destroy ();
-
-      gui_restore (the_gimp, restore_session);
-    }
-
-  /*  connect our "exit" callbacks after gui_restore() so they are
-   *  invoked after the GUI's "exit" callbacks
-   */
-  g_signal_connect (the_gimp, "exit",
-                    G_CALLBACK (app_exit_callback),
-                    NULL);
-  g_signal_connect_after (the_gimp, "exit",
-                          G_CALLBACK (app_exit_finish_callback),
-                          NULL);
+  gimp_restore (the_gimp, update_status_func, restore_session);
 
   /*  enable autosave late so we don't autosave when the
    *  monitor resolution is set in gui_init()
@@ -352,11 +280,6 @@ app_init (const gchar         *full_prog_name,
 
   batch_init (the_gimp, batch_cmds);
 
-  if (! no_interface)
-    {
-      gui_post_init (the_gimp);
-    }
-
   if (no_interface)
     {
       GMainLoop *loop;
@@ -371,20 +294,14 @@ app_init (const gchar         *full_prog_name,
     }
   else
     {
+      gui_post_init (the_gimp);
+
       gtk_main ();
     }
 }
 
 
 /*  private functions  */
-
-static void
-app_init_update_splash (const gchar *text1,
-		        const gchar *text2,
-		        gdouble      percentage)
-{
-  splash_update (text1, text2, percentage);
-}
 
 static void
 app_init_update_none (const gchar *text1,
@@ -394,73 +311,21 @@ app_init_update_none (const gchar *text1,
 }
 
 static gboolean
-app_exit_callback (Gimp     *gimp,
-                   gboolean  kill_it)
+app_exit_after_callback (Gimp     *gimp,
+                         gboolean  kill_it)
 {
-  plug_ins_exit (gimp);
+  if (gimp->be_verbose)
+    g_print ("EXIT: app_exit_after_callback\n");
 
-  if (! gimp->no_interface)
-    {
-      gimp_tools_save (gimp);
-      gimp_tools_exit (gimp);
-    }
-
-  return FALSE; /* continue exiting */
-}
-
-static gboolean
-app_exit_finish_callback (Gimp     *gimp,
-                          gboolean  kill_it)
-{
   g_object_unref (gimp);
   the_gimp = NULL;
 
-  base_exit ();
-
+#if 0
   /*  There used to be foo_main_quit() here, but there's a chance
    *  that foo_main() was never called before we reach this point. --Sven
    */
   exit (0);
+#endif
 
   return FALSE;
 }
-
-
-#if 0
-
-/****************************************
- * gimprc debugging code, to be removed *
- ****************************************/
-
-#include "config/gimpconfig-serialize.h"
-
-static void
-gimprc_notify_callback (GObject    *object,
-			GParamSpec *pspec)
-{
-  GString *str;
-  GValue   value = { 0, };
-
-  g_return_if_fail (G_IS_OBJECT (object));
-  g_return_if_fail (G_IS_PARAM_SPEC (pspec));
-
-  g_value_init (&value, pspec->value_type);
-  g_object_get_property (object, pspec->name, &value);
-
-  str = g_string_new (NULL);
-
-  if (gimp_config_serialize_value (&value, str, TRUE))
-    {
-      g_print ("  %s -> %s\n", pspec->name, str->str);
-    }
-  else
-    {
-      g_print ("  %s changed but we failed to serialize its value!\n",
-               pspec->name);
-    }
-
-  g_string_free (str, TRUE);
-  g_value_unset (&value);
-}
-
-#endif

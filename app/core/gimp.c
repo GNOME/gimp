@@ -31,8 +31,12 @@
 #include "config/gimpconfig-path.h"
 #include "config/gimprc.h"
 
+#include "base/base.h"
+
 #include "pdb/procedural_db.h"
 #include "pdb/internal_procs.h"
+
+#include "plug-in/plug-ins.h"
 
 #include "paint/gimp-paint.h"
 
@@ -71,29 +75,36 @@
 
 enum
 {
+  INITIALIZE,
+  RESTORE,
   EXIT,
   LAST_SIGNAL
 };
 
 
-static void       gimp_class_init           (GimpClass  *klass);
-static void       gimp_init                 (Gimp       *gimp);
+static void       gimp_class_init           (GimpClass         *klass);
+static void       gimp_init                 (Gimp              *gimp);
 
-static void       gimp_dispose              (GObject    *object);
-static void       gimp_finalize             (GObject    *object);
+static void       gimp_dispose              (GObject           *object);
+static void       gimp_finalize             (GObject           *object);
 
-static gsize      gimp_get_memsize          (GimpObject *object,
-                                             gsize      *gui_size);
+static gsize      gimp_get_memsize          (GimpObject        *object,
+                                             gsize             *gui_size);
 
-static gboolean   gimp_real_exit            (Gimp       *gimp,
-                                             gboolean    kill_it);
+static void       gimp_real_initialize      (Gimp              *gimp,
+                                             GimpInitStatusFunc status_callback);
+static void       gimp_real_restore         (Gimp              *gimp,
+                                             GimpInitStatusFunc status_callback,
+                                             gboolean           restore_session);
+static gboolean   gimp_real_exit            (Gimp              *gimp,
+                                             gboolean           kill_it);
 
-static void       gimp_global_config_notify (GObject    *global_config,
-                                             GParamSpec *param_spec,
-                                             GObject    *edit_config);
-static void       gimp_edit_config_notify   (GObject    *edit_config,
-                                             GParamSpec *param_spec,
-                                             GObject    *global_config);
+static void       gimp_global_config_notify (GObject           *global_config,
+                                             GParamSpec        *param_spec,
+                                             GObject           *edit_config);
+static void       gimp_edit_config_notify   (GObject           *edit_config,
+                                             GParamSpec        *param_spec,
+                                             GObject           *global_config);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -156,6 +167,27 @@ gimp_class_init (GimpClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  gimp_signals[INITIALIZE] =
+    g_signal_new ("initialize",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpClass, initialize),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_POINTER);
+
+  gimp_signals[RESTORE] =
+    g_signal_new ("restore",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpClass, restore),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER_BOOLEAN,
+                  G_TYPE_NONE, 2,
+                  G_TYPE_POINTER,
+                  G_TYPE_BOOLEAN);
+
   gimp_signals[EXIT] =
     g_signal_new ("exit",
                   G_TYPE_FROM_CLASS (klass),
@@ -171,6 +203,8 @@ gimp_class_init (GimpClass *klass)
 
   gimp_object_class->get_memsize = gimp_get_memsize;
 
+  klass->initialize              = gimp_real_initialize;
+  klass->restore                 = gimp_real_restore;
   klass->exit                    = gimp_real_exit;
 }
 
@@ -442,6 +476,8 @@ gimp_finalize (GObject *object)
   if (gimp->user_units)
     gimp_units_exit (gimp);
 
+  base_exit ();
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -518,10 +554,142 @@ gimp_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
+static void
+gimp_real_initialize (Gimp               *gimp,
+                      GimpInitStatusFunc  status_callback)
+{
+  GimpContext *context;
+  gchar       *path;
+
+  static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
+  {
+    { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION           },
+    { gimp_brush_load,           GIMP_BRUSH_PIXMAP_FILE_EXTENSION    },
+    { gimp_brush_generated_load, GIMP_BRUSH_GENERATED_FILE_EXTENSION },
+    { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION      }
+  };
+
+  static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
+  {
+    { gimp_pattern_load, GIMP_PATTERN_FILE_EXTENSION }
+  };
+
+  static const GimpDataFactoryLoaderEntry gradient_loader_entries[] =
+  {
+    { gimp_gradient_load, GIMP_GRADIENT_FILE_EXTENSION },
+    { gimp_gradient_load, NULL /* legacy loader */     }
+  };
+
+  static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
+  {
+    { gimp_palette_load, GIMP_PALETTE_FILE_EXTENSION },
+    { gimp_palette_load, NULL /* legacy loader */    }
+  };
+
+  if (gimp->be_verbose)
+    g_print ("INIT: gimp_real_initialize\n");
+
+  gimp_fonts_init (gimp);
+
+  gimp->brush_factory =
+    gimp_data_factory_new (gimp,
+                           GIMP_TYPE_BRUSH,
+			   "brush_path",
+			   brush_loader_entries,
+			   G_N_ELEMENTS (brush_loader_entries),
+			   gimp_brush_new,
+			   gimp_brush_get_standard);
+  gimp_object_set_name (GIMP_OBJECT (gimp->brush_factory), "brush factory");
+
+  gimp->pattern_factory =
+    gimp_data_factory_new (gimp,
+                           GIMP_TYPE_PATTERN,
+			   "pattern_path",
+			   pattern_loader_entries,
+			   G_N_ELEMENTS (pattern_loader_entries),
+			   gimp_pattern_new,
+			   gimp_pattern_get_standard);
+  gimp_object_set_name (GIMP_OBJECT (gimp->pattern_factory), "pattern factory");
+
+  gimp->gradient_factory =
+    gimp_data_factory_new (gimp,
+                           GIMP_TYPE_GRADIENT,
+			   "gradient_path",
+			   gradient_loader_entries,
+			   G_N_ELEMENTS (gradient_loader_entries),
+			   gimp_gradient_new,
+			   gimp_gradient_get_standard);
+  gimp_object_set_name (GIMP_OBJECT (gimp->gradient_factory), "gradient factory");
+
+  gimp->palette_factory =
+    gimp_data_factory_new (gimp,
+                           GIMP_TYPE_PALETTE,
+			   "palette_path",
+			   palette_loader_entries,
+			   G_N_ELEMENTS (palette_loader_entries),
+			   gimp_palette_new,
+			   gimp_palette_get_standard);
+  gimp_object_set_name (GIMP_OBJECT (gimp->palette_factory), "palette factory");
+
+  gimp_paint_init (gimp);
+
+  /* Set the last values used to default values. */
+
+  gimp->image_new_last_template = gimp_template_new ("last values");
+  gimp_template_set_from_config (gimp->image_new_last_template, gimp->config);
+  gimp->have_current_cut_buffer = FALSE;
+
+  gimp->standard_context = gimp_context_new (gimp, "Standard", NULL);
+
+  /*  the default context contains the user's saved preferences
+   *
+   *  TODO: load from disk
+   */
+  context = gimp_context_new (gimp, "Default", NULL);
+  gimp_set_default_context (gimp, context);
+  g_object_unref (context);
+
+  /*  the initial user_context is a straight copy of the default context
+   */
+  context = gimp_context_new (gimp, "User", context);
+  gimp_set_user_context (gimp, context);
+  g_object_unref (context);
+
+  gimp_set_current_context (gimp, context);
+
+  /*  add the builtin FG -> BG etc. gradients  */
+  gimp_gradients_init (gimp);
+
+  /*  register all internal procedures  */
+  (* status_callback) (_("Procedural Database"), NULL, -1);
+  internal_procs_init (gimp, status_callback);
+
+  (* status_callback) (_("Plug-In Environment"), "", -1);
+
+  path = gimp_config_path_expand (gimp->config->environ_path, TRUE, NULL);
+  gimp_environ_table_load (gimp->environ_table, path);
+  g_free (path);
+}
+
+static void
+gimp_real_restore (Gimp               *gimp,
+                   GimpInitStatusFunc  status_callback,
+                   gboolean            restore_session)
+{
+  if (gimp->be_verbose)
+    g_print ("INIT: gimp_real_restore\n");
+
+  plug_ins_init (gimp, status_callback);
+}
+
 static gboolean
 gimp_real_exit (Gimp     *gimp,
                 gboolean  kill_it)
 {
+  if (gimp->be_verbose)
+    g_print ("EXIT: gimp_real_exit\n");
+
+  plug_ins_exit (gimp);
   gimp_modules_unload (gimp);
   gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_save (gimp->pattern_factory);
@@ -537,7 +705,8 @@ gimp_real_exit (Gimp     *gimp,
 }
 
 Gimp *
-gimp_new (gboolean           be_verbose,
+gimp_new (const gchar       *name,
+          gboolean           be_verbose,
           gboolean           no_data,
           gboolean           no_interface,
           gboolean           use_shm,
@@ -546,7 +715,9 @@ gimp_new (gboolean           be_verbose,
 {
   Gimp *gimp;
 
-  gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  gimp = g_object_new (GIMP_TYPE_GIMP, "name", name, NULL);
 
   gimp->be_verbose       = be_verbose       ? TRUE : FALSE;
   gimp->no_data          = no_data          ? TRUE : FALSE;
@@ -636,15 +807,33 @@ gimp_edit_config_notify (GObject    *edit_config,
 }
 
 void
-gimp_set_config (Gimp           *gimp,
-                 GimpCoreConfig *core_config)
+gimp_load_config (Gimp        *gimp,
+                  const gchar *alternate_system_gimprc,
+                  const gchar *alternate_gimprc,
+                  gboolean     use_cpu_accel)
 {
+  GimpRc *gimprc;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_CORE_CONFIG (core_config));
   g_return_if_fail (gimp->config == NULL);
   g_return_if_fail (gimp->edit_config == NULL);
 
-  gimp->config = g_object_ref (core_config);
+  if (gimp->be_verbose)
+    g_print ("INIT: gimp_load_config\n");
+
+  /*  this needs to be done before gimprc loading because gimprc can
+   *  use user defined units
+   */
+  gimp_unitrc_load (gimp);
+
+  gimprc = gimp_rc_new (alternate_system_gimprc,
+                        alternate_gimprc,
+                        gimp->be_verbose);
+
+  /*  initialize lowlevel stuff  */
+  base_init (GIMP_BASE_CONFIG (gimprc), use_cpu_accel);
+
+  gimp->config = GIMP_CORE_CONFIG (gimprc);
 
   gimp->edit_config =
     GIMP_CORE_CONFIG (gimp_config_duplicate (G_OBJECT (gimp->config)));
@@ -661,163 +850,65 @@ void
 gimp_initialize (Gimp               *gimp,
                  GimpInitStatusFunc  status_callback)
 {
-  GimpContext *context;
-  gchar       *path;
-
-  static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
-  {
-    { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION           },
-    { gimp_brush_load,           GIMP_BRUSH_PIXMAP_FILE_EXTENSION    },
-    { gimp_brush_generated_load, GIMP_BRUSH_GENERATED_FILE_EXTENSION },
-    { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION      }
-  };
-
-  static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
-  {
-    { gimp_pattern_load, GIMP_PATTERN_FILE_EXTENSION }
-  };
-
-  static const GimpDataFactoryLoaderEntry gradient_loader_entries[] =
-  {
-    { gimp_gradient_load, GIMP_GRADIENT_FILE_EXTENSION },
-    { gimp_gradient_load, NULL /* legacy loader */     }
-  };
-
-  static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
-  {
-    { gimp_palette_load, GIMP_PALETTE_FILE_EXTENSION },
-    { gimp_palette_load, NULL /* legacy loader */    }
-  };
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
   g_return_if_fail (GIMP_IS_CORE_CONFIG (gimp->config));
 
-  gimp_fonts_init (gimp);
+  if (gimp->be_verbose)
+    g_print ("INIT: gimp_initialize\n");
 
-  gimp->brush_factory =
-    gimp_data_factory_new (gimp,
-                           GIMP_TYPE_BRUSH,
-			   "brush_path",
-			   brush_loader_entries,
-			   G_N_ELEMENTS (brush_loader_entries),
-			   gimp_brush_new,
-			   gimp_brush_get_standard);
-  gimp_object_set_name (GIMP_OBJECT (gimp->brush_factory), "brush factory");
-
-  gimp->pattern_factory =
-    gimp_data_factory_new (gimp,
-                           GIMP_TYPE_PATTERN,
-			   "pattern_path",
-			   pattern_loader_entries,
-			   G_N_ELEMENTS (pattern_loader_entries),
-			   gimp_pattern_new,
-			   gimp_pattern_get_standard);
-  gimp_object_set_name (GIMP_OBJECT (gimp->pattern_factory), "pattern factory");
-
-  gimp->gradient_factory =
-    gimp_data_factory_new (gimp,
-                           GIMP_TYPE_GRADIENT,
-			   "gradient_path",
-			   gradient_loader_entries,
-			   G_N_ELEMENTS (gradient_loader_entries),
-			   gimp_gradient_new,
-			   gimp_gradient_get_standard);
-  gimp_object_set_name (GIMP_OBJECT (gimp->gradient_factory), "gradient factory");
-
-  gimp->palette_factory =
-    gimp_data_factory_new (gimp,
-                           GIMP_TYPE_PALETTE,
-			   "palette_path",
-			   palette_loader_entries,
-			   G_N_ELEMENTS (palette_loader_entries),
-			   gimp_palette_new,
-			   gimp_palette_get_standard);
-  gimp_object_set_name (GIMP_OBJECT (gimp->palette_factory), "palette factory");
-
-  gimp_paint_init (gimp);
-
-  /* Set the last values used to default values. */
-
-  gimp->image_new_last_template = gimp_template_new ("last values");
-  gimp_template_set_from_config (gimp->image_new_last_template, gimp->config);
-  gimp->have_current_cut_buffer = FALSE;
-
-  gimp->standard_context = gimp_context_new (gimp, "Standard", NULL);
-
-  /*  the default context contains the user's saved preferences
-   *
-   *  TODO: load from disk
-   */
-  context = gimp_context_new (gimp, "Default", NULL);
-  gimp_set_default_context (gimp, context);
-  g_object_unref (context);
-
-  /*  the initial user_context is a straight copy of the default context
-   */
-  context = gimp_context_new (gimp, "User", context);
-  gimp_set_user_context (gimp, context);
-  g_object_unref (context);
-
-  gimp_set_current_context (gimp, context);
-
-  /*  add the builtin FG -> BG etc. gradients  */
-  gimp_gradients_init (gimp);
-
-  /*  register all internal procedures  */
-  (* status_callback) (_("Procedural Database"), NULL, -1);
-  internal_procs_init (gimp, status_callback);
-
-  (* status_callback) (_("Plug-In Environment"), "", -1);
-
-  path = gimp_config_path_expand (gimp->config->environ_path, TRUE, NULL);
-  gimp_environ_table_load (gimp->environ_table, path);
-  g_free (path);
+  g_signal_emit (gimp, gimp_signals[INITIALIZE], 0, status_callback);
 }
 
 void
 gimp_restore (Gimp               *gimp,
               GimpInitStatusFunc  status_callback,
-	      gboolean            no_data)
+              gboolean            restore_session)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
 
+  if (gimp->be_verbose)
+    g_print ("INIT: gimp_restore\n");
+
   /*  initialize  the global parasite table  */
-  (* status_callback) (_("Looking for data files"), _("Parasites"), 0.00);
+  (* status_callback) (_("Looking for data files"), _("Parasites"), 0.0);
   gimp_parasiterc_load (gimp);
 
   /*  initialize the list of gimp brushes    */
-  (* status_callback) (NULL, _("Brushes"), 0.15);
-  gimp_data_factory_data_init (gimp->brush_factory, no_data);
+  (* status_callback) (NULL, _("Brushes"), 0.1);
+  gimp_data_factory_data_init (gimp->brush_factory, gimp->no_data);
 
   /*  initialize the list of gimp patterns   */
-  (* status_callback) (NULL, _("Patterns"), 0.30);
-  gimp_data_factory_data_init (gimp->pattern_factory, no_data);
+  (* status_callback) (NULL, _("Patterns"), 0.2);
+  gimp_data_factory_data_init (gimp->pattern_factory, gimp->no_data);
 
   /*  initialize the list of gimp palettes   */
-  (* status_callback) (NULL, _("Palettes"), 0.45);
-  gimp_data_factory_data_init (gimp->palette_factory, no_data);
+  (* status_callback) (NULL, _("Palettes"), 0.3);
+  gimp_data_factory_data_init (gimp->palette_factory, gimp->no_data);
 
   /*  initialize the list of gimp gradients  */
-  (* status_callback) (NULL, _("Gradients"), 0.60);
-  gimp_data_factory_data_init (gimp->gradient_factory, no_data);
+  (* status_callback) (NULL, _("Gradients"), 0.4);
+  gimp_data_factory_data_init (gimp->gradient_factory, gimp->no_data);
 
   /*  initialize the list of gimp fonts  */
-  (* status_callback) (NULL, _("Fonts"), 0.70);
+  (* status_callback) (NULL, _("Fonts"), 0.5);
   gimp_fonts_load (gimp);
 
   /*  initialize the document history  */
-  (* status_callback) (NULL, _("Documents"), 0.80);
+  (* status_callback) (NULL, _("Documents"), 0.6);
   gimp_documents_load (gimp);
 
   /*  initialize the template list  */
-  (* status_callback) (NULL, _("Templates"), 0.90);
+  (* status_callback) (NULL, _("Templates"), 0.7);
   gimp_templates_load (gimp);
 
-  (* status_callback) (NULL, NULL, 1.00);
-
+  /*  initialize the module list  */
+  (* status_callback) (NULL, _("Modules"), 0.8);
   gimp_modules_load (gimp);
+
+  g_signal_emit (gimp, gimp_signals[RESTORE], 0,
+                 status_callback, restore_session);
 }
 
 void
@@ -827,6 +918,9 @@ gimp_exit (Gimp     *gimp,
   gboolean handled;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->be_verbose)
+    g_print ("EXIT: gimp_exit\n");
 
   g_signal_emit (gimp, gimp_signals[EXIT], 0,
                  kill_it ? TRUE : FALSE,

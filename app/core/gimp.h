@@ -187,27 +187,35 @@ struct _GimpClass
 {
   GimpObjectClass  parent_class;
 
-  gboolean (* exit) (Gimp     *gimp,
-                     gboolean  kill_it);
+  void     (* initialize) (Gimp               *gimp,
+                           GimpInitStatusFunc  status_callback);
+  void     (* restore)    (Gimp               *gimp,
+                           GimpInitStatusFunc  status_callback,
+                           gboolean            restore_session);
+  gboolean (* exit)       (Gimp               *gimp,
+                           gboolean            kill_it);
 };
 
 
 GType         gimp_get_type             (void) G_GNUC_CONST;
 
-Gimp        * gimp_new                  (gboolean            be_verbose,
+Gimp        * gimp_new                  (const gchar        *name,
+                                         gboolean            be_verbose,
                                          gboolean            no_data,
                                          gboolean            no_interface,
                                          gboolean            use_shm,
                                          gboolean            console_messages,
                                          GimpStackTraceMode  stack_trace_mode);
 
-void          gimp_set_config           (Gimp               *gimp,
-                                         GimpCoreConfig     *core_config);
+void          gimp_load_config          (Gimp               *gimp,
+                                         const gchar        *alternate_system_gimprc,
+                                         const gchar        *alternate_gimprc,
+                                         gboolean            use_cpu_accel);
 void          gimp_initialize           (Gimp               *gimp,
                                          GimpInitStatusFunc  status_callback);
 void          gimp_restore              (Gimp               *gimp,
                                          GimpInitStatusFunc  status_callback,
-					 gboolean            no_data);
+                                         gboolean            restore_session);
 
 void          gimp_exit                 (Gimp               *gimp,
                                          gboolean            kill_it);

@@ -16,17 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GUI_H__
-#define __GUI_H__
+#ifndef __GUI_VTABLE_H__
+#define __GUI_VTABLE_H__
 
 
-gboolean           gui_libs_init (gint       *argc,
-                                  gchar    ***argv);
-
-GimpInitStatusFunc gui_init      (Gimp       *gimp,
-                                  gboolean    no_spash,
-                                  gboolean    no_splash_image);
-void               gui_post_init (Gimp       *gimp);
+void   gui_vtable_init (Gimp *gimp);
 
 
-#endif /* __GUI_H__ */
+#endif /* __GUI_VTABLE_H__ */
