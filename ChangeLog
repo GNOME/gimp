@@ -1,5 +1,11 @@
 2001-01-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/bezier_select.c
+	* app/bezier_selectP.h: removed the obscure unused "extend" variable
+	from the Bezier Tool structure.
+
+2001-01-07  Michael Natterer  <mitch@gimp.org>
+
 	* TODO.xml: added an item to optionally change the image window's
 	background.
 

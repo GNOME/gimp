@@ -484,8 +484,6 @@ bezier_select_reset (BezierSelect *bezier_sel)
   bezier_sel->num_points  = 0;                /* intially there are no points */
   bezier_sel->mask        = NULL;             /* empty mask */
   bezier_sel->scanlines   = NULL;
-
-  bezier_sel->extend      = 0;                /* ??? */
 }
 
 void
@@ -981,18 +979,11 @@ bezier_select_button_press (Tool           *tool,
   bezier_sel = tool->private;
   grab_pointer = FALSE;
 
-  if (bezier_sel->extend)
+  /*  If the tool was being used in another image...reset it  */
+  if (tool->state == ACTIVE && gdisp != tool->gdisp)
     {
-      tool->gdisp = gdisp;
-    }
-  else
-    {
-      /*  If the tool was being used in another image...reset it  */
-      if (tool->state == ACTIVE && gdisp != tool->gdisp)
-	{
-	  draw_core_stop (bezier_sel->core, tool);
-	  bezier_select_reset (bezier_sel);
-	}
+      draw_core_stop (bezier_sel->core, tool);
+      bezier_select_reset (bezier_sel);
     }
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
@@ -2876,23 +2867,12 @@ bezier_to_sel_internal (BezierSelect  *bezier_sel,
 			gint           op, 
 			gint           replace)
 {
-  /*  If we're antialiased, then recompute the
-   *  mask...
+  /*  If we're antialiased, then recompute the mask...
    */
   if (bezier_options->antialias)
     bezier_convert (bezier_sel, tool->gdisp, SUBDIVIDE, TRUE);
-  
-/*   if (!bezier_sel->extend) */
-/*     { */
-/*       tool->state = INACTIVE; */
-/*       bezier_sel->draw = BEZIER_DRAW_CURVE; */
-/*       draw_core_resume (bezier_sel->core, tool); */
-      
-/*       bezier_sel->draw = 0; */
-/*       draw_core_stop (bezier_sel->core, tool); */
-/*     } */
 
-   if (replace)
+  if (replace)
     gimage_mask_clear (gdisp->gimage);
   else
     gimage_mask_undo (gdisp->gimage);
@@ -2933,9 +2913,10 @@ test_add_point_on_segment (BezierSelect *bezier_sel,
   gint          i;
   gdouble       ratio;
 
-  /* construct the geometry matrix from the segment */
-  /* assumes that a valid segment containing 4 points is passed in */
-  /* ALT ignore invalid segments since we might be working on an open curve */
+  /* construct the geometry matrix from the segment assumes that a
+   * valid segment containing 4 points is passed in ALT ignore invalid
+   * segments since we might be working on an open curve
+   */
 
   points = pt;
 
@@ -2971,14 +2952,17 @@ test_add_point_on_segment (BezierSelect *bezier_sel,
       points = points->next;
     }
 
-  /* subdivide the curve n times */
-  /* n can be adjusted to give a finer or coarser curve */
+  /* subdivide the curve n times n can be adjusted to give a finer or
+   * coarser curve
+   */
 
   d = 1.0 / subdivisions;
   d2 = d * d;
   d3 = d * d * d;
 
-  /* construct a temporary matrix for determining the forward diffencing deltas */
+  /* construct a temporary matrix for determining the forward
+   * diffencing deltas
+   */
 
   tmp2[0][0] = 0;     tmp2[0][1] = 0;     tmp2[0][2] = 0;    tmp2[0][3] = 1;
   tmp2[1][0] = d3;    tmp2[1][1] = d2;    tmp2[1][2] = d;    tmp2[1][3] = 0;
@@ -3042,12 +3026,10 @@ test_add_point_on_segment (BezierSelect *bezier_sel,
 
 	      if ((xpos==newx) && (ypos==newy)) break;
 
-	      /* to Implement :
-
-		 keep each time the nearest point of the curve from where we've clicked
-		 in the case where we haven't click exactely on the curve.
-	      */
-
+	      /* To Implement: keep each time the nearest point of the
+	       * curve from where we've clicked in the case where we
+	       * haven't click exactely on the curve.
+	       */
 	    }
 	}
       lastx = newx;
@@ -3265,15 +3247,15 @@ stroke_interpolatable (gint     offx,
 }
 
 static void
-bezier_stack_points_aux (GdkPoint *points,
-			 int      start,
-			 int	  end,
-			 gdouble  error,
+bezier_stack_points_aux (GdkPoint         *points,
+			 gint              start,
+			 gint              end,
+			 gdouble           error,
 			 BezierRenderPnts *rpnts)
 {
-  const gint	expand_size = 32;
-  gint		med;
-  gint		offx, offy, l_offx, l_offy;
+  const gint expand_size = 32;
+  gint       med;
+  gint       offx, offy, l_offx, l_offy;
 
   if (rpnts->stroke_points == NULL)
     return;
@@ -3595,7 +3577,7 @@ bezier_draw_segment_for_distance (BezierSelect     *bezier_sel,
        * curve.
        */
 
-      if(!bdist->firstpnt)
+      if (!bdist->firstpnt)
 	{
 	  gdouble rx = x;
 	  gdouble ry = y;
@@ -3687,7 +3669,7 @@ bezier_distance_along (BezierSelect *bezier_sel,
   bezier_draw_curve_for_distance (bezier_sel, bdist);
   ret = bdist->found;
 
-  g_free(bdist);
+  g_free (bdist);
 
   return ret;
 }
