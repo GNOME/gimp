@@ -45,15 +45,6 @@ Utilities of general interest
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_memsize_to_string ##### -->
-<para>
-
-</para>
-
-@memsize: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_escape_uline ##### -->
 <para>
 

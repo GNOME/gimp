@@ -31,7 +31,6 @@
 #include "widgets-types.h"
 
 #include "config/gimpconfig-params.h"
-#include "config/gimpconfig-types.h"
 
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"

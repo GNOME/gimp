@@ -29,24 +29,10 @@
 GType   gimp_matrix2_get_type           (void) G_GNUC_CONST;
 
 
-#define GIMP_TYPE_MEMSIZE               (gimp_memsize_get_type ())
-#define GIMP_VALUE_HOLDS_MEMSIZE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MEMSIZE))
-
-GType    gimp_memsize_get_type          (void) G_GNUC_CONST;
-gboolean gimp_memsize_set_from_string   (GValue      *value,
-                                         const gchar *string);
-
-
 #define GIMP_TYPE_PATH                  (gimp_path_get_type ())
 #define GIMP_VALUE_HOLDS_PATH(value)    (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_PATH))
 
 GType   gimp_path_get_type              (void) G_GNUC_CONST;
-
-
-#define GIMP_TYPE_UNIT                  (gimp_unit_get_type ())
-#define GIMP_VALUE_HOLDS_UNIT(value)    (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_UNIT))
-
-GType   gimp_unit_get_type              (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_CONFIG_TYPES_H__ */

@@ -1,0 +1,52 @@
+<!-- ##### SECTION Title ##### -->
+gimpmemsize
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_memsize_serialize ##### -->
+<para>
+
+</para>
+
+@memsize: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_memsize_deserialize ##### -->
+<para>
+
+</para>
+
+@string: 
+@memsize: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_memsize_to_string ##### -->
+<para>
+
+</para>
+
+@memsize: 
+@Returns: 
+
+
+<!-- ##### MACRO GIMP_VALUE_HOLDS_MEMSIZE ##### -->
+<para>
+
+</para>
+
+@value: 
+
+

@@ -519,18 +519,18 @@ unit_editor_dialog (void)
   gimp_ui_init ("uniteditor", FALSE);
 
   list_store = gtk_list_store_new (NUM_COLUMNS,
-                                   G_TYPE_BOOLEAN,
-                                   G_TYPE_STRING,
-                                   G_TYPE_DOUBLE,
-                                   G_TYPE_INT,
-                                   G_TYPE_STRING,
-                                   G_TYPE_STRING,
-                                   G_TYPE_STRING,
-                                   G_TYPE_STRING,
-                                   G_TYPE_INT,
-                                   G_TYPE_BOOLEAN,
-                                   GDK_TYPE_COLOR,
-                                   GDK_TYPE_COLOR);
+                                   G_TYPE_BOOLEAN,   /*  SAVE          */
+                                   G_TYPE_STRING,    /*  IDENTIFIER    */
+                                   G_TYPE_DOUBLE,    /*  FACTOR        */
+                                   G_TYPE_INT,       /*  DIGITS        */
+                                   G_TYPE_STRING,    /*  SYMBOL        */
+                                   G_TYPE_STRING,    /*  ABBREVIATION  */
+                                   G_TYPE_STRING,    /*  SINGULAR      */
+                                   G_TYPE_STRING,    /*  PLURAL        */
+                                   GIMP_TYPE_UNIT,   /*  UNIT          */
+                                   G_TYPE_BOOLEAN,   /*  USER_UNIT     */
+                                   GDK_TYPE_COLOR);  /*  BG_COLOR      */
+
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
   g_object_unref (list_store);
 
@@ -607,11 +607,12 @@ unit_editor_dialog (void)
       if (i == SAVE)
         continue;
 
-      col = gtk_tree_view_column_new_with_attributes (gettext (columns[i].title),
-                                                      gtk_cell_renderer_text_new (),
-                                                      "text",                i,
-                                                      "cell-background-gdk", BG_COLOR,
-                                                      NULL);
+      col =
+        gtk_tree_view_column_new_with_attributes (gettext (columns[i].title),
+                                                  gtk_cell_renderer_text_new (),
+                                                  "text",                i,
+                                                  "cell-background-gdk", BG_COLOR,
+                                                  NULL);
 
       gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 

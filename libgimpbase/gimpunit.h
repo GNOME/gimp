@@ -27,6 +27,11 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+#define GIMP_TYPE_UNIT               (gimp_unit_get_type ())
+#define GIMP_VALUE_HOLDS_UNIT(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_UNIT))
+
+GType         gimp_unit_get_type                     (void) G_GNUC_CONST;
+
 
 gint          gimp_unit_get_number_of_units          (void);
 gint          gimp_unit_get_number_of_built_in_units (void) G_GNUC_CONST;

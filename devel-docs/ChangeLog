@@ -1,3 +1,12 @@
+2004-07-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpmemsize.sgml
+	* libgimpbase/tmpl/gimpunit.sgml
+	* libgimpbase/tmpl/gimputils.sgml: added docs for new unit and
+	memsize functions.
+
 2004-07-27  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/tmpl/gimppalettemenu.sgml

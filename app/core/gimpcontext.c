@@ -34,7 +34,6 @@
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-params.h"
 #include "config/gimpconfig-serialize.h"
-#include "config/gimpconfig-types.h"
 #include "config/gimpconfigwriter.h"
 #include "config/gimpcoreconfig.h"
 #include "config/gimpscanner.h"

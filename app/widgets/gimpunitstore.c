@@ -28,8 +28,6 @@
 
 #include "widgets-types.h"
 
-#include "config/gimpconfig-types.h"
-
 #include "gimpunitstore.h"
 
 

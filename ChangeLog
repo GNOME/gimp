@@ -1,4 +1,40 @@
-2004-07-27  Michael Natterer  <mitch@gimp.org>
+2004-07-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpbase.h
+	* libgimpbase/gimpbase.def
+	* libgimpbase/gimpmemsize.[ch]: added new files with memsize
+	related functions (moved here from gimputil.c) and
+	GIMP_TYPE_MEMSIZE (moved here from app/config/gimpconfig-types.[ch]).
+
+	* libgimpbase/gimputils.[ch]: removed gimp_memsize_to_string() here.
+
+	* libgimpbase/gimpunit.[ch]: added GIMP_TYPE_UNIT (moved here from
+	app/config/gimpconfig-types.[ch]).
+
+	* libgimpbase/gimpbase-private.c
+	* libgimp/gimptile.c
+	* libgimp/gimpunitcache.c
+	* plug-ins/help/domain.c
+	* app/xcf/xcf-read.c: need to include glib-object.h.
+
+	* plug-ins/common/uniteditor.c: use GIMP_TYPE_UNIT.
+
+	* app/config/gimpconfig-types.[ch]: removed code that lives in
+	libgimpbase now.
+
+	* app/config/gimpconfig-deserialize.c: changed accordingly.
+
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpdisplayconfig.c
+	* app/core/gimpcontext.c
+	* app/gui/grid-dialog.c
+	* app/tools/gimpcolortool.c
+	* app/widgets/gimpaction.c
+	* app/widgets/gimpunitstore.c: no need to include gimpconfig-types.h
+	any longer.
+
+004-07-27  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/Makefile.am
 	* libgimp/gimp.h

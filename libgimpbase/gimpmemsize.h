@@ -17,20 +17,20 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_UTILS_H__
-#define __GIMP_UTILS_H__
+#ifndef __GIMP_MEMSIZE_H__
+#define __GIMP_MEMSIZE_H__
 
 
-gchar       * gimp_utf8_strtrim      (const gchar *str,
-                                      gint         max_chars);
-gchar       * gimp_any_to_utf8       (const gchar *str,
-                                      gssize       len,
-                                      const gchar *warning_format,
-                                      ...) G_GNUC_PRINTF (3, 4);
-const gchar * gimp_filename_to_utf8  (const gchar *filename);
+#define GIMP_TYPE_MEMSIZE               (gimp_memsize_get_type ())
+#define GIMP_VALUE_HOLDS_MEMSIZE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MEMSIZE))
 
-gchar       * gimp_strip_uline       (const gchar *str);
-gchar       * gimp_escape_uline      (const gchar *str);
+GType      gimp_memsize_get_type         (void) G_GNUC_CONST;
+
+gchar    * gimp_memsize_serialize        (guint64      memsize);
+gboolean   gimp_memsize_deserialize      (const gchar *string,
+                                          guint64     *memsize);
+
+gchar    * gimp_memsize_to_string        (guint64      memsize);
 
 
-#endif  /* __GIMP_UTILS_H__ */
+#endif  /* __GIMP_MEMSIZE_H__ */

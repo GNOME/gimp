@@ -25,8 +25,6 @@
 
 #include "tools-types.h"
 
-#include "config/gimpconfig-types.h"
-
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpitem.h"

@@ -37,6 +37,17 @@ GIMP_CHECK_LIGHT
 </SECTION>
 
 <SECTION>
+<FILE>gimpmemsize</FILE>
+gimp_memsize_serialize
+gimp_memsize_deserialize
+gimp_memsize_to_string
+GIMP_VALUE_HOLDS_MEMSIZE
+<SUBSECTION Standard>
+GIMP_TYPE_MEMSIZE
+gimp_memsize_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gimpparasite</FILE>
 GimpParasite
 gimp_parasite_new
@@ -119,6 +130,10 @@ gimp_unit_get_symbol
 gimp_unit_get_abbreviation
 gimp_unit_get_singular
 gimp_unit_get_plural
+GIMP_VALUE_HOLDS_UNIT
+<SUBSECTION Standard>
+GIMP_TYPE_UNIT
+gimp_unit_get_type
 </SECTION>
 
 <SECTION>
@@ -126,7 +141,6 @@ gimp_unit_get_plural
 gimp_any_to_utf8
 gimp_filename_to_utf8
 gimp_utf8_strtrim
-gimp_memsize_to_string
 gimp_escape_uline
 gimp_strip_uline
 </SECTION>

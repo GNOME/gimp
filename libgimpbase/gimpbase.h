@@ -26,6 +26,7 @@
 #include <libgimpbase/gimpdatafiles.h>
 #include <libgimpbase/gimpenv.h>
 #include <libgimpbase/gimplimits.h>
+#include <libgimpbase/gimpmemsize.h>
 #include <libgimpbase/gimpparasite.h>
 #include <libgimpbase/gimpunit.h>
 #include <libgimpbase/gimputils.h>

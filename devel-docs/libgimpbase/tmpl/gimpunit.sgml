@@ -145,3 +145,11 @@ user-defined units.
 @Returns: 
 
 
+<!-- ##### MACRO GIMP_VALUE_HOLDS_UNIT ##### -->
+<para>
+
+</para>
+
+@value: 
+
+

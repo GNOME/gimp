@@ -77,6 +77,8 @@ libgimpbase_2_0_la_SOURCES = \
 	gimpdatafiles.h		\
 	gimpenv.c		\
 	gimpenv.h		\
+	gimpmemsize.c		\
+	gimpmemsize.h		\
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimpparasiteio.c	\
@@ -101,6 +103,7 @@ libgimpbaseinclude_HEADERS = \
 	\
 	gimpdatafiles.h		\
 	gimpenv.h		\
+	gimpmemsize.h		\
 	gimpparasite.h		\
 	gimpparasiteio.h	\
 	gimpsignal.h		\

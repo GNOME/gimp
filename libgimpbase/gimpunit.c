@@ -22,12 +22,84 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <string.h>
+
+#include <glib-object.h>
 
 #include "gimpbasetypes.h"
 
 #include "gimpbase-private.h"
 #include "gimpunit.h"
+
+
+static void   unit_to_string (const GValue *src_value,
+                              GValue       *dest_value);
+static void   string_to_unit (const GValue *src_value,
+                              GValue       *dest_value);
+
+GType
+gimp_unit_get_type (void)
+{
+  static GType unit_type = 0;
+
+  if (!unit_type)
+    {
+      static const GTypeInfo type_info = { 0, };
+
+      unit_type = g_type_register_static (G_TYPE_INT, "GimpUnit",
+                                          &type_info, 0);
+
+      g_value_register_transform_func (unit_type, G_TYPE_STRING,
+                                       unit_to_string);
+      g_value_register_transform_func (G_TYPE_STRING, unit_type,
+                                       string_to_unit);
+    }
+
+  return unit_type;
+}
+
+static void
+unit_to_string (const GValue *src_value,
+                GValue       *dest_value)
+{
+  GimpUnit unit = (GimpUnit) g_value_get_int (src_value);
+
+  g_value_set_string (dest_value, gimp_unit_get_identifier (unit));
+}
+
+static void
+string_to_unit (const GValue *src_value,
+                GValue       *dest_value)
+{
+  const gchar *str;
+  gint         num_units;
+  gint         i;
+
+  str = g_value_get_string (src_value);
+
+  if (!str || !*str)
+    goto error;
+
+  num_units = gimp_unit_get_number_of_units ();
+
+  for (i = GIMP_UNIT_PIXEL; i < num_units; i++)
+    if (strcmp (str, gimp_unit_get_identifier (i)) == 0)
+      break;
+
+  if (i == num_units)
+    {
+      if (strcmp (str, gimp_unit_get_identifier (GIMP_UNIT_PERCENT)) == 0)
+        i = GIMP_UNIT_PERCENT;
+      else
+        goto error;
+    }
+
+  g_value_set_int (dest_value, i);
+  return;
+
+ error:
+  g_warning ("Can't convert string to GimpUnit.");
+}
 
 
 /**
