@@ -85,10 +85,10 @@ void    gimp_hsv_to_rgb_double	(gdouble *hue         /* returns red        */,
 				 gdouble *saturation, /* returns green      */
 				 gdouble *value       /* returns blue       */);
 
-void    gimp_rgb_to_hsv4        (guchar  *hsv,
-				 gdouble *red,
-				 gdouble *green,
-				 gdouble *blue);
+void    gimp_rgb_to_hsv4        (guchar  *rgb, 
+                                 gdouble *hue, 
+                                 gdouble *saturation, 
+                                 gdouble *value);
 void    gimp_hsv_to_rgb4        (guchar  *rgb,
 				 gdouble  hue,
 				 gdouble  saturation,

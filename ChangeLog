@@ -1,3 +1,9 @@
+2002-11-01  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpcolor/gimpcolorspace.h (gimp_rgb_to_hsv4): "rgb" and
+	"hsv" parameters were swapped in the header. All users however
+	used the function as implemented, not as documented.
+
 2002-11-01  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version number to 1.3.10.
