@@ -61,7 +61,7 @@ static Argument * gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
                                                      gint          *n_return_vals);
 
 
-static GimpDataSelectClass *parent_class = NULL;
+static GimpPdbDialogClass *parent_class = NULL;
 
 
 GType
@@ -84,7 +84,7 @@ gimp_gradient_select_get_type (void)
         NULL            /* instance_init  */
       };
 
-      dialog_type = g_type_register_static (GIMP_TYPE_DATA_SELECT,
+      dialog_type = g_type_register_static (GIMP_TYPE_PDB_DIALOG,
                                             "GimpGradientSelect",
                                             &dialog_info, 0);
     }
@@ -127,7 +127,6 @@ gimp_gradient_select_constructor (GType                  type,
   dialog->view =
     gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
                                 dialog->context->gimp->gradient_factory,
-                                GIMP_DATA_SELECT (dialog)->edit_func,
                                 dialog->context,
                                 GIMP_VIEW_SIZE_MEDIUM, 1,
                                 dialog->menu_factory, "<Gradients>",

@@ -229,7 +229,8 @@ gimp_container_editor_select_item (GtkWidget           *widget,
     klass->select_item (editor, viewable);
 
   if (GIMP_EDITOR (editor->view)->ui_manager)
-    gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
+    gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager,
+                            GIMP_EDITOR (editor->view)->popup_data);
 
   return TRUE;
 }

@@ -286,7 +286,6 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
 {
   return gimp_brush_factory_view_new (GIMP_VIEW_TYPE_LIST,
 				      context->gimp->brush_factory,
-				      dialogs_edit_brush_func,
 				      context,
 				      TRUE,
 				      preview_size, 1,
@@ -300,7 +299,6 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
 {
   return gimp_pattern_factory_view_new (GIMP_VIEW_TYPE_LIST,
                                         context->gimp->pattern_factory,
-                                        NULL,
                                         context,
                                         preview_size, 1,
                                         factory->menu_factory);
@@ -313,7 +311,6 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
 {
   return gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
                                      context->gimp->gradient_factory,
-                                     dialogs_edit_gradient_func,
                                      context,
                                      preview_size, 1,
                                      factory->menu_factory, "<Gradients>",
@@ -328,7 +325,6 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
 {
   return gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
                                      context->gimp->palette_factory,
-                                     dialogs_edit_palette_func,
                                      context,
                                      preview_size, 1,
                                      factory->menu_factory, "<Palettes>",
@@ -418,7 +414,6 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
 {
   return gimp_brush_factory_view_new (GIMP_VIEW_TYPE_GRID,
 				      context->gimp->brush_factory,
-				      dialogs_edit_brush_func,
 				      context,
 				      TRUE,
 				      preview_size, 1,
@@ -432,7 +427,6 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
 {
   return gimp_pattern_factory_view_new (GIMP_VIEW_TYPE_GRID,
                                         context->gimp->pattern_factory,
-                                        NULL,
                                         context,
                                         preview_size, 1,
                                         factory->menu_factory);
@@ -445,7 +439,6 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
 {
   return gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
                                      context->gimp->gradient_factory,
-                                     dialogs_edit_gradient_func,
                                      context,
                                      preview_size, 1,
                                      factory->menu_factory, "<Gradients>",
@@ -460,7 +453,6 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
 {
   return gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
                                      context->gimp->palette_factory,
-                                     dialogs_edit_palette_func,
                                      context,
                                      preview_size, 1,
                                      factory->menu_factory, "<Palettes>",
@@ -659,8 +651,6 @@ dialogs_color_editor_new (GimpDialogFactory *factory,
 /*****  editors  *****/
 /*********************/
 
-/*  the brush editor  */
-
 GtkWidget *
 dialogs_brush_editor_get (GimpDialogFactory *factory,
 			  GimpContext       *context,
@@ -668,24 +658,6 @@ dialogs_brush_editor_get (GimpDialogFactory *factory,
 {
   return gimp_brush_editor_new (context->gimp);
 }
-
-void
-dialogs_edit_brush_func (GimpData  *data,
-                         GtkWidget *parent)
-{
-  GtkWidget *dockable;
-
-  dockable = gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                               gtk_widget_get_screen (parent),
-                                               "gimp-brush-editor",
-                                               -1);
-
-  gimp_data_editor_set_data (GIMP_DATA_EDITOR (GTK_BIN (dockable)->child),
-                             data);
-}
-
-
-/*  the gradient editor  */
 
 GtkWidget *
 dialogs_gradient_editor_get (GimpDialogFactory *factory,
@@ -696,24 +668,6 @@ dialogs_gradient_editor_get (GimpDialogFactory *factory,
                                    factory->menu_factory);
 }
 
-void
-dialogs_edit_gradient_func (GimpData  *data,
-                            GtkWidget *parent)
-{
-  GtkWidget *dockable;
-
-  dockable = gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                               gtk_widget_get_screen (parent),
-                                               "gimp-gradient-editor",
-                                               -1);
-
-  gimp_data_editor_set_data (GIMP_DATA_EDITOR (GTK_BIN (dockable)->child),
-                             data);
-}
-
-
-/*  the palette editor  */
-
 GtkWidget *
 dialogs_palette_editor_get (GimpDialogFactory *factory,
 			    GimpContext       *context,
@@ -721,21 +675,6 @@ dialogs_palette_editor_get (GimpDialogFactory *factory,
 {
   return gimp_palette_editor_new (context->gimp,
                                   factory->menu_factory);
-}
-
-void
-dialogs_edit_palette_func (GimpData  *data,
-                           GtkWidget *parent)
-{
-  GtkWidget *dockable;
-
-  dockable = gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                               gtk_widget_get_screen (parent),
-                                               "gimp-palette-editor",
-                                               -1);
-
-  gimp_data_editor_set_data (GIMP_DATA_EDITOR (GTK_BIN (dockable)->child),
-                             data);
 }
 
 

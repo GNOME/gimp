@@ -48,13 +48,12 @@ struct _GimpPatternFactoryViewClass
 
 GType       gimp_pattern_factory_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_pattern_factory_view_new      (GimpViewType      view_type,
-					        GimpDataFactory  *factory,
-					        GimpDataEditFunc  edit_func,
-					        GimpContext      *context,
-					        gint              preview_size,
-                                                gint              preview_border_width,
-					        GimpMenuFactory  *menu_factory);
+GtkWidget * gimp_pattern_factory_view_new      (GimpViewType     view_type,
+					        GimpDataFactory *factory,
+					        GimpContext     *context,
+					        gint             preview_size,
+                                                gint             preview_border_width,
+					        GimpMenuFactory *menu_factory);
 
 
 #endif  /*  __GIMP_PATTERN_FACTORY_VIEW_H__  */

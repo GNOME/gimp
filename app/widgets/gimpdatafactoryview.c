@@ -113,7 +113,6 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
 GtkWidget *
 gimp_data_factory_view_new (GimpViewType      view_type,
                             GimpDataFactory  *factory,
-                            GimpDataEditFunc  edit_func,
                             GimpContext      *context,
                             gint              preview_size,
                             gint              preview_border_width,
@@ -129,7 +128,6 @@ gimp_data_factory_view_new (GimpViewType      view_type,
   if (! gimp_data_factory_view_construct (factory_view,
                                           view_type,
                                           factory,
-                                          edit_func,
                                           context,
                                           preview_size,
                                           preview_border_width,
@@ -149,7 +147,6 @@ gboolean
 gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                   GimpViewType         view_type,
                                   GimpDataFactory     *factory,
-                                  GimpDataEditFunc     edit_func,
                                   GimpContext         *context,
                                   gint                 preview_size,
                                   gint                 preview_border_width,
@@ -169,8 +166,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                         preview_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         FALSE);
 
-  factory_view->factory        = factory;
-  factory_view->data_edit_func = edit_func;
+  factory_view->factory = factory;
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
                                          view_type,
@@ -201,57 +197,42 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                         factory_view);
     }
 
-  if (edit_func)
-    {
-      str = g_strdup_printf ("%s-edit", action_group);
-
-      factory_view->edit_button =
-        gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
-                                       str, NULL);
-
-      g_free (str);
-    }
+  str = g_strdup_printf ("%s-edit", action_group);
+  factory_view->edit_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
+                                   str, NULL);
+  g_free (str);
 
   if (factory_view->factory->data_new_func)
     {
       str = g_strdup_printf ("%s-new", action_group);
-
       factory_view->new_button =
         gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
                                        str, NULL);
-
       g_free (str);
     }
 
   str = g_strdup_printf ("%s-duplicate", action_group);
-
   factory_view->duplicate_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
                                    str, NULL);
-
   g_free (str);
 
   str = g_strdup_printf ("%s-delete", action_group);
-
   factory_view->delete_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
                                    str, NULL);
-
   g_free (str);
 
   str = g_strdup_printf ("%s-refresh", action_group);
-
   factory_view->refresh_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
                                    str, NULL);
-
   g_free (str);
 
-  if (factory_view->edit_button)
-    gimp_container_view_enable_dnd (editor->view,
-                                    GTK_BUTTON (factory_view->edit_button),
-                                    factory->container->children_type);
-
+  gimp_container_view_enable_dnd (editor->view,
+                                  GTK_BUTTON (factory_view->edit_button),
+                                  factory->container->children_type);
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->duplicate_button),
                                   factory->container->children_type);

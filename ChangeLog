@@ -1,5 +1,43 @@
 2004-09-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/brushes-actions.c
+	* app/actions/gradients-actions.c
+	* app/actions/palettes-actions.c
+	* app/actions/patterns-actions.c: made the "foo-edit" actions
+	GimpStringActions and pass the identifier of the editor dialog
+	to the callback.
+
+	* app/actions/data-commands.[ch] (data_edit_data_cmd_callback):
+	show the editor dialog here instead of calling view->edit_func().
+
+	* app/dialogs/dialogs-constructors.[ch]: removed the brush,
+	gradient and palette edit_funcs.
+
+	* app/widgets/widgets-types.h: removed typedef GimpDataEditFunc.
+
+	* app/widgets/gimpdatafactoryview.[ch]: removed the edit_func
+	member and parameters and create the edit button unconditionally.
+
+	* app/widgets/gimpbrushfactoryview.[ch]
+	* app/widgets/gimppatternfactoryview.[ch]: changed accordingly.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpdataselect.[ch]: removed this class, it's not
+	needed any longer.
+
+	* app/widgets/gimpbrushselect.[ch]
+	* app/widgets/gimpgradientselect.[ch]
+	* app/widgets/gimppaletteselect.[ch]
+	* app/widgets/gimppatternselect.[ch]: derive them from GimpPdbDialog
+	and follow the edit_func removal.
+
+	* app/gui/gui-vtable.c (gui_pdb_dialog_new): removed edit_func
+	stuff.
+
+	* app/widgets/gimpcontainereditor.c: minor unrelated cleanup.
+
+2004-09-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/dialogs-constrcutors.[ch]: renamed some constructors
 	for consistency and added a (useless) template grid.
 

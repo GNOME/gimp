@@ -134,7 +134,6 @@ typedef struct _GimpViewableDialog           GimpViewableDialog;
 /*  GimpPdbDialog widgets  */
 
 typedef struct _GimpPdbDialog                GimpPdbDialog;
-typedef struct _GimpDataSelect               GimpDataSelect;
 typedef struct _GimpBrushSelect              GimpBrushSelect;
 typedef struct _GimpGradientSelect           GimpGradientSelect;
 typedef struct _GimpPaletteSelect            GimpPaletteSelect;
@@ -213,9 +212,6 @@ typedef struct _GimpSessionInfoAux           GimpSessionInfoAux;
 
 
 /*  function types  */
-
-typedef void (* GimpDataEditFunc)          (GimpData        *data,
-                                            GtkWidget       *parent);
 
 typedef void (* GimpActionGroupSetupFunc)  (GimpActionGroup *group);
 typedef void (* GimpActionGroupUpdateFunc) (GimpActionGroup *group,

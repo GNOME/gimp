@@ -44,12 +44,6 @@ static GimpActionEntry gradients_actions[] =
     NULL, NULL, NULL,
     GIMP_HELP_GRADIENT_DIALOG },
 
-  { "gradients-edit", GIMP_STOCK_EDIT,
-    N_("_Edit Gradient..."), NULL,
-    N_("Edit gradient"),
-    G_CALLBACK (data_edit_data_cmd_callback),
-    GIMP_HELP_GRADIENT_EDIT },
-
   { "gradients-new", GTK_STOCK_NEW,
     N_("_New Gradient"), "",
     N_("New gradient"),
@@ -81,6 +75,15 @@ static GimpActionEntry gradients_actions[] =
     GIMP_HELP_GRADIENT_REFRESH }
 };
 
+static GimpStringActionEntry gradients_edit_actions[] =
+{
+  { "gradients-edit", GIMP_STOCK_EDIT,
+    N_("_Edit Gradient..."), NULL,
+    N_("Edit gradient"),
+    "gimp-gradient-editor",
+    GIMP_HELP_GRADIENT_EDIT }
+};
+
 
 void
 gradients_actions_setup (GimpActionGroup *group)
@@ -88,6 +91,11 @@ gradients_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  gradients_actions,
                                  G_N_ELEMENTS (gradients_actions));
+
+  gimp_action_group_add_string_actions (group,
+                                        gradients_edit_actions,
+                                        G_N_ELEMENTS (gradients_edit_actions),
+                                        G_CALLBACK (data_edit_data_cmd_callback));
 }
 
 void

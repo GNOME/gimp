@@ -42,12 +42,6 @@ static GimpActionEntry patterns_actions[] =
   { "patterns-popup", GIMP_STOCK_PATTERN, N_("Patterns Menu"), NULL, NULL, NULL,
     GIMP_HELP_PATTERN_DIALOG },
 
-  { "patterns-edit", GIMP_STOCK_EDIT,
-    N_("_Edit Pattern..."), NULL,
-    N_("Edit pattern"),
-    G_CALLBACK (data_edit_data_cmd_callback),
-    GIMP_HELP_PATTERN_EDIT },
-
   { "patterns-new", GTK_STOCK_NEW,
     N_("_New Pattern"), "",
     N_("New pattern"),
@@ -73,6 +67,15 @@ static GimpActionEntry patterns_actions[] =
     GIMP_HELP_PATTERN_REFRESH }
 };
 
+static GimpStringActionEntry patterns_edit_actions[] =
+{
+  { "patterns-edit", GIMP_STOCK_EDIT,
+    N_("_Edit Pattern..."), NULL,
+    N_("Edit pattern"),
+    "gimp-pattern-editor",
+    GIMP_HELP_PATTERN_EDIT }
+};
+
 
 void
 patterns_actions_setup (GimpActionGroup *group)
@@ -80,6 +83,11 @@ patterns_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  patterns_actions,
                                  G_N_ELEMENTS (patterns_actions));
+
+  gimp_action_group_add_string_actions (group,
+                                        patterns_edit_actions,
+                                        G_N_ELEMENTS (patterns_edit_actions),
+                                        G_CALLBACK (data_edit_data_cmd_callback));
 }
 
 void

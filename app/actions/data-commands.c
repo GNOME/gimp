@@ -30,35 +30,17 @@
 #include "core/gimpdatafactory.h"
 
 #include "widgets/gimpcontainerview.h"
+#include "widgets/gimpdataeditor.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimpdialogfactory.h"
+
+#include "dialogs/dialogs.h"
 
 #include "actions.h"
 #include "data-commands.h"
 
 #include "gimp-intl.h"
 
-
-void
-data_edit_data_cmd_callback (GtkAction *action,
-			     gpointer   user_data)
-{
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
-  GimpContext         *context;
-  GimpData            *data;
-
-  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
-
-  data = (GimpData *)
-    gimp_context_get_by_type (context,
-			      view->factory->container->children_type);
-
-  if (view->data_edit_func && data &&
-      gimp_container_have (view->factory->container,
-			   GIMP_OBJECT (data)))
-    {
-      view->data_edit_func (data, GTK_WIDGET (view));
-    }
-}
 
 void
 data_new_data_cmd_callback (GtkAction *action,
@@ -205,4 +187,33 @@ data_refresh_data_cmd_callback (GtkAction *action,
 
   gimp_data_factory_data_save (view->factory);
   gimp_data_factory_data_init (view->factory, FALSE);
+}
+
+void
+data_edit_data_cmd_callback (GtkAction   *action,
+                             const gchar *value,
+			     gpointer     user_data)
+{
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
+  GimpContext         *context;
+  GimpData            *data;
+
+  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+
+  data = (GimpData *)
+    gimp_context_get_by_type (context,
+			      view->factory->container->children_type);
+
+  if (data && gimp_container_have (view->factory->container,
+                                   GIMP_OBJECT (data)))
+    {
+      GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (view));
+      GtkWidget *dockable;
+
+      dockable = gimp_dialog_factory_dialog_raise (global_dock_factory, screen,
+                                                   value, -1);
+
+      gimp_data_editor_set_data (GIMP_DATA_EDITOR (GTK_BIN (dockable)->child),
+                                 data);
+    }
 }

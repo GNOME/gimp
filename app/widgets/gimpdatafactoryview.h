@@ -41,7 +41,6 @@ struct _GimpDataFactoryView
   GimpContainerEditor  parent_instance;
 
   GimpDataFactory     *factory;
-  GimpDataEditFunc     data_edit_func;
 
   GtkWidget           *edit_button;
   GtkWidget           *new_button;
@@ -60,7 +59,6 @@ GType       gimp_data_factory_view_get_type  (void) G_GNUC_CONST;
 
 GtkWidget * gimp_data_factory_view_new       (GimpViewType      view_type,
 					      GimpDataFactory  *factory,
-					      GimpDataEditFunc  edit_func,
 					      GimpContext      *context,
 					      gint              preview_size,
                                               gint              preview_border_width,
@@ -75,7 +73,6 @@ GtkWidget * gimp_data_factory_view_new       (GimpViewType      view_type,
 gboolean    gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 					      GimpViewType         view_type,
 					      GimpDataFactory     *factory,
-					      GimpDataEditFunc     edit_func,
 					      GimpContext         *context,
 					      gint                 preview_size,
                                               gint                 preview_border_width,

@@ -69,7 +69,6 @@
 #include "menus/plug-in-menus.h"
 
 #include "dialogs/dialogs.h"
-#include "dialogs/dialogs-constructors.h"
 
 #include "themes.h"
 
@@ -462,17 +461,15 @@ gui_pdb_dialog_new (Gimp          *gimp,
                     const gchar   *object_name,
                     va_list        args)
 {
-  GType             dialog_type = G_TYPE_NONE;
-  const gchar      *dialog_role = NULL;
-  const gchar      *help_id     = NULL;
-  GimpDataEditFunc  edit_func   = NULL;
+  GType        dialog_type = G_TYPE_NONE;
+  const gchar *dialog_role = NULL;
+  const gchar *help_id     = NULL;
 
   if (container->children_type == GIMP_TYPE_BRUSH)
     {
       dialog_type = GIMP_TYPE_BRUSH_SELECT;
       dialog_role = "gimp-brush-selection";
       help_id     = GIMP_HELP_BRUSH_DIALOG;
-      edit_func   = dialogs_edit_brush_func;
     }
   else if (container->children_type == GIMP_TYPE_FONT)
     {
@@ -485,14 +482,12 @@ gui_pdb_dialog_new (Gimp          *gimp,
       dialog_type = GIMP_TYPE_GRADIENT_SELECT;
       dialog_role = "gimp-gradient-selection";
       help_id     = GIMP_HELP_GRADIENT_DIALOG;
-      edit_func   = dialogs_edit_gradient_func;
     }
   else if (container->children_type == GIMP_TYPE_PALETTE)
     {
       dialog_type = GIMP_TYPE_PALETTE_SELECT;
       dialog_role = "gimp-palette-selection";
       help_id     = GIMP_HELP_PALETTE_DIALOG;
-      edit_func   = dialogs_edit_palette_func;
     }
   else if (container->children_type == GIMP_TYPE_PATTERN)
     {
@@ -543,11 +538,6 @@ gui_pdb_dialog_new (Gimp          *gimp,
                                            "callback-name",  callback_name,
                                            "menu-factory",   global_menu_factory,
                                            NULL);
-
-          if (edit_func)
-            params = gimp_parameters_append (dialog_type, params, &n_params,
-                                             "edit-func", edit_func,
-                                             NULL);
 
           params = gimp_parameters_append_valist (dialog_type,
                                                   params, &n_params,

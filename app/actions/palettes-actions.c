@@ -43,12 +43,6 @@ static GimpActionEntry palettes_actions[] =
   { "palettes-popup", GIMP_STOCK_PALETTE, N_("Palettes Menu"), NULL, NULL, NULL,
     GIMP_HELP_PALETTE_DIALOG },
 
-  { "palettes-edit", GIMP_STOCK_EDIT,
-    N_("_Edit Palette..."), NULL,
-    N_("Edit palette"),
-    G_CALLBACK (data_edit_data_cmd_callback),
-    GIMP_HELP_PALETTE_EDIT },
-
   { "palettes-new", GTK_STOCK_NEW,
     N_("_New Palette"), "",
     N_("New palette"),
@@ -86,6 +80,15 @@ static GimpActionEntry palettes_actions[] =
     GIMP_HELP_PALETTE_REFRESH }
 };
 
+static GimpStringActionEntry palettes_edit_actions[] =
+{
+  { "palettes-edit", GIMP_STOCK_EDIT,
+    N_("_Edit Palette..."), NULL,
+    N_("Edit palette"),
+    "gimp-palette-editor",
+    GIMP_HELP_PALETTE_EDIT }
+};
+
 
 void
 palettes_actions_setup (GimpActionGroup *group)
@@ -93,6 +96,11 @@ palettes_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  palettes_actions,
                                  G_N_ELEMENTS (palettes_actions));
+
+  gimp_action_group_add_string_actions (group,
+                                        palettes_edit_actions,
+                                        G_N_ELEMENTS (palettes_edit_actions),
+                                        G_CALLBACK (data_edit_data_cmd_callback));
 }
 
 void

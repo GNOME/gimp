@@ -22,7 +22,7 @@
 #ifndef __GIMP_PATTERN_SELECT_H__
 #define __GIMP_PATTERN_SELECT_H__
 
-#include "gimpdataselect.h"
+#include "gimppdbdialog.h"
 
 G_BEGIN_DECLS
 
@@ -39,12 +39,12 @@ typedef struct _GimpPatternSelectClass  GimpPatternSelectClass;
 
 struct _GimpPatternSelect
 {
-  GimpDataSelect  parent_instance;
+  GimpPdbDialog  parent_instance;
 };
 
 struct _GimpPatternSelectClass
 {
-  GimpDataSelectClass  parent_class;
+  GimpPdbDialogClass  parent_class;
 };
 
 

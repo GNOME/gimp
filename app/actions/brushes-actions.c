@@ -43,12 +43,6 @@ static GimpActionEntry brushes_actions[] =
   { "brushes-popup", GIMP_STOCK_BRUSH, N_("Brushes Menu"), NULL, NULL, NULL,
     GIMP_HELP_BRUSH_DIALOG },
 
-  { "brushes-edit", GIMP_STOCK_EDIT,
-    N_("_Edit Brush..."), NULL,
-    N_("Edit brush"),
-    G_CALLBACK (data_edit_data_cmd_callback),
-    GIMP_HELP_BRUSH_EDIT },
-
   { "brushes-new", GTK_STOCK_NEW,
     N_("New Brush"), "",
     N_("New brush"),
@@ -74,6 +68,15 @@ static GimpActionEntry brushes_actions[] =
     GIMP_HELP_BRUSH_REFRESH }
 };
 
+static GimpStringActionEntry brushes_edit_actions[] =
+{
+  { "brushes-edit", GIMP_STOCK_EDIT,
+    N_("_Edit Brush..."), NULL,
+    N_("Edit brush"),
+    "gimp-brush-editor",
+    GIMP_HELP_BRUSH_EDIT }
+};
+
 
 void
 brushes_actions_setup (GimpActionGroup *group)
@@ -81,6 +84,11 @@ brushes_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  brushes_actions,
                                  G_N_ELEMENTS (brushes_actions));
+
+  gimp_action_group_add_string_actions (group,
+                                        brushes_edit_actions,
+                                        G_N_ELEMENTS (brushes_edit_actions),
+                                        G_CALLBACK (data_edit_data_cmd_callback));
 }
 
 void

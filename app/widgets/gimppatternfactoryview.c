@@ -67,7 +67,6 @@ gimp_pattern_factory_view_get_type (void)
 GtkWidget *
 gimp_pattern_factory_view_new (GimpViewType      view_type,
                                GimpDataFactory  *factory,
-                               GimpDataEditFunc  edit_func,
                                GimpContext      *context,
                                gint              preview_size,
                                gint              preview_border_width,
@@ -87,7 +86,6 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
   if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
                                           view_type,
                                           factory,
-                                          edit_func,
                                           context,
                                           preview_size, preview_border_width,
                                           menu_factory, "<Patterns>",
@@ -98,6 +96,7 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
       return NULL;
     }
 
+  gtk_widget_hide (GIMP_DATA_FACTORY_VIEW (factory_view)->edit_button);
   gtk_widget_hide (GIMP_DATA_FACTORY_VIEW (factory_view)->duplicate_button);
 
   return GTK_WIDGET (factory_view);

@@ -22,7 +22,7 @@
 #ifndef __GIMP_BRUSH_SELECT_H__
 #define __GIMP_BRUSH_SELECT_H__
 
-#include "gimpdataselect.h"
+#include "gimppdbdialog.h"
 
 G_BEGIN_DECLS
 
@@ -39,7 +39,7 @@ typedef struct _GimpBrushSelectClass  GimpBrushSelectClass;
 
 struct _GimpBrushSelect
 {
-  GimpDataSelect        parent_instance;
+  GimpPdbDialog         parent_instance;
 
   gdouble               initial_opacity;
   GimpLayerModeEffects  initial_mode;
@@ -51,7 +51,7 @@ struct _GimpBrushSelect
 
 struct _GimpBrushSelectClass
 {
-  GimpDataSelectClass  parent_class;
+  GimpPdbDialogClass  parent_class;
 };
 
 
