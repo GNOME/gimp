@@ -8,6 +8,8 @@ eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
 # etc.)
 #
 # Written by Aaron Sherman, (c) 1998
+#   04-22-2001, peter@kirchgessner.net: fix problems with functions
+#               that changed number of arguments
 
 use Gimp qw(:auto __ N_);
 use Gimp::Fu;
@@ -95,8 +97,8 @@ sub insert_eye {
 	gimp_image_scale($eye,$width,$height);
 	gimp_selection_all($eye);
 	my $eyedraw = gimp_image_active_drawable($eye);
-	gimp_edit_copy($eye,$eyedraw);
-	my $float = gimp_edit_paste($img,$draw,1);
+	gimp_edit_copy($eyedraw);
+	my $float = gimp_edit_paste($draw,1);
 	gimp_floating_sel_anchor($float);
 	gimp_image_delete($eye);
     } else {
@@ -116,7 +118,7 @@ register("yinyang", "Render a stand-alone Yin/Yang image",
 		[PF_TOGGLE, "insert_eyes", "", 1],
 		[PF_TOGGLE, "eyes_are_images", "", 0],
 		[PF_STRING, "top_eye_filename", "eye 1", ""],
-		[PF_STRING, "aobttom_eye_filename", "eye 2", ""],
+		[PF_STRING, "bottom_eye_filename", "eye 2", ""],
 		[PF_TOGGLE, "anti_aliasing", "", 1]
 	],
         [PF_IMAGE],

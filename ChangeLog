@@ -1,3 +1,17 @@
+2001-04-23  Sven Neumann  <sven@gimp.org>
+
+	Merged changes from stable branch:
+	
+        * plug-ins/perl/examples/terral_text: fixed typo.
+
+        * plug-ins/perl/examples/image_tile
+        * plug-ins/perl/examples/yinyang: 
+        applied gimp-kirchgessner-010422-0.patch which fixes problems with 
+        invalid number of parameters passed to some functions.
+
+        * plug-ins/script-fu/interp_sliba.c: fixed problems with strbreakup 
+        reported by Mike Kelly <mike@csuchico.edu> (bugs #52383 and #52385)
+
 2001-04-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am: cleanup.

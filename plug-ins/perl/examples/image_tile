@@ -20,6 +20,11 @@ eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
 #	o Better color matching algorithms
 #	o Test (fix?) non-interactive use...
 #	o Allow tile aspect selection independant of base image
+#
+# DONE:
+#       o 04-22-2001, peter@kirchgessner.net: fix problems with functions
+#         that changed number of arguments
+#
 
 use Gimp qw(:auto __ N_);
 use Gimp::Fu;
@@ -132,8 +137,7 @@ sub perl_fu_image_tile {
 	  $file = "$dir/$file";
 	  # Open the sub-image, record info about it and close it.
 	  eval {
-	    # 1 == NON_INTERACTIVE, but symbol does not work.... ?
-	    $img = gimp_file_load(1,$file,$file);
+	    $img = gimp_file_load($file,$file);
 	  };
 	  next if $@ || !defined($img) || !$img;
 	  my $subtype = gimp_image_base_type($img);
@@ -171,7 +175,7 @@ sub perl_fu_image_tile {
   my $dup = gimp_image_new($imgwidth,$imgheight,RGB_IMAGE);
   gimp_edit_copy($drawable); # gimp 1.1 -deleted $image
   my $back =
-    gimp_layer_new($dup,$imgwidth,$imgheight,RGB_IMAGE,"Target",100,NORMAL);
+    gimp_layer_new($dup,$imgwidth,$imgheight,RGB_IMAGE,"Target",100,NORMAL_MODE);
   gimp_image_add_layer($dup,$back,0);
   my $sel = gimp_edit_paste($back,0); # gimp 1.1 -deleted $dup
   gimp_floating_sel_anchor($sel);
@@ -322,7 +326,7 @@ sub get_image_cells {
     for(my $y=0;$y<$ycells;$y++) {
       # Why is this setting FG? PDB docs seem to indicate that I can shut
       # that off...
-      my $color = gimp_color_picker($draw,$x,$y,0,1); # Gimp 1.1 -deleted $img
+      my $color = gimp_color_picker($draw,$x,$y,0,1,1.0,0); # Gimp 1.1 -deleted $img
       my @c;
       if ($DO_HSV) {
 	@c = rgb2hsv(@$color);
@@ -367,8 +371,7 @@ sub overlay_image {
     my $y = shift;
     my $width = shift;
     my $height = shift;
-    # 1 == NON_INTERACTIVE, but symbol does not seem to work....  ?
-    my $img = gimp_file_load(1,$file,$file);
+    my $img = gimp_file_load($file,$file);
     my $subwidth = gimp_image_width($img);
     my $subheight = gimp_image_height($img);
     match_aspect($img,$width/$height,$subwidth,$subheight);
