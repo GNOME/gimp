@@ -79,19 +79,6 @@ TESTS = \
 	gimp-composite-sse2-test	\
 	gimp-composite-vis-test
 
-test_composite_SOURCES = \
-	gimp-composite-regression.c	\
-	gimp-composite-regression.h	\
-	test-composite.c
-
-test_composite_DEPENDENCIES = $(gimpcomposite_dependencies)
-
-test_composite_LDADD = \
-	libappcomposite.a						\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/app/base/libappbase.a				\
-	$(GLIB_LIBS)
-
 gimp_composite_test_SOURCES = \
 	gimp-composite-regression.c	\
 	gimp-composite-regression.h	\

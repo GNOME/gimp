@@ -1,7 +1,7 @@
-/* The GIMP -- an image manipulation program
+/* -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
+ * The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
  *
  * Gimp image compositing
  * Copyright (C) 2003  Helvetix Victorinox, a pseudonym, <helvetix@gimp.org>
@@ -305,8 +305,6 @@ gimp_composite_pixelformat_astext (GimpPixelFormat f)
 }
 
 
-extern void gimp_composite_generic_init (void);
-
 void
 gimp_composite_init (void)
 {
@@ -323,55 +321,54 @@ gimp_composite_init (void)
 
   gimp_composite_generic_install ();
 
+  /*
+   * Here is where you "glue" in the initialisation of your
+   * optimisations.
+   *
+   * Declare the install() function external, and then call it.  A
+   * return value of TRUE from the install function means the
+   * installer was successful in instantiating itself.  For example,
+   * it succeeded in hooking in the functions with the special
+   * optimisation instructions, or hardware, or whatever.
+   */
   if (! (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_INITIALISED))
     {
-      guint32 cpu = cpu_accel ();
+      extern gboolean gimp_composite_mmx_install ();
+      extern gboolean gimp_composite_sse_install ();
+      extern gboolean gimp_composite_sse2_install ();
+      extern gboolean gimp_composite_3dnow_install ();
+      extern gboolean gimp_composite_altivec_install ();
+      extern gboolean gimp_composite_vis_install ();
 
-#ifdef ARCH_X86
-      if (cpu & CPU_ACCEL_X86_MMX)
-        {
-          extern void gimp_composite_mmx_install (void);
-          g_printerr (" +mmx");
-          gimp_composite_mmx_install ();
-        }
-#if 1
-      if (cpu & CPU_ACCEL_X86_SSE || cpu & CPU_ACCEL_X86_MMXEXT)
-        {
-          extern void gimp_composite_sse_install (void);
-          g_printerr (" +sse");
-          gimp_composite_sse_install ();
-        }
+      if (gimp_composite_mmx_install ())
+        g_printerr (" +mmx");
+      else
+        g_printerr (" -mmx");
 
-      if (cpu & CPU_ACCEL_X86_SSE2)
-        {
-          extern void gimp_composite_sse2_install (void);
-          g_printerr (" +sse2");
-          gimp_composite_sse2_install ();
-        }
+      if (gimp_composite_sse_install ())
+        g_printerr (" +sse");
+      else
+        g_printerr (" -sse");
 
-      if (cpu & CPU_ACCEL_X86_3DNOW)
-        {
-          extern void gimp_composite_3dnow_install (void);
-          g_printerr (" +3dnow");
-          gimp_composite_3dnow_install ();
-        }
-#endif
-#endif
+      if (gimp_composite_sse2_install ())
+        g_printerr (" +sse2");
+      else
+        g_printerr (" -sse2");
 
-#ifdef ARCH_PPC
-      if (cpu & CPU_ACCEL_PPC_ALTIVEC)
-        {
-          g_printerr (" altivec");
-          gimp_composite_altivec_install ();
-        }
-#endif
+      if (gimp_composite_3dnow_install ())
+        g_printerr (" +3dnow");
+      else
+        g_printerr (" -3dnow");
 
-#ifdef ARCH_SPARC
-#if 0
-      g_printerr (" vis");
-      gimp_composite_vis_install ();
-#endif
-#endif
+      if (gimp_composite_altivec_install ())
+        g_printerr (" +altivec");
+      else
+        g_printerr (" -altivec");
+
+      if (gimp_composite_vis_install ())
+        g_printerr (" +vis");
+      else
+        g_printerr (" -vis");
 
       gimp_composite_options.bits |= GIMP_COMPOSITE_OPTION_INITIALISED;
     }

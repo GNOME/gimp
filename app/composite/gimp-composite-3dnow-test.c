@@ -20,11 +20,6 @@ int
 gimp_composite_3dnow_test (int iterations, int n_pixels)
 {
 #if (__GNUC__ >= 3) && defined(USE_3DNOW)   && defined(ARCH_X86)
-  printf("\nRunning gimp_composite_3dnow tests...\n");
-  if (gimp_composite_3dnow_init () == 0) {
-    printf("gimp_composite_3dnow: Instruction set is not available.\n");
-    return (0);
-  }
   GimpCompositeContext generic_ctx;
   GimpCompositeContext special_ctx;
   double ft0;
@@ -41,6 +36,13 @@ gimp_composite_3dnow_test (int iterations, int n_pixels)
   gimp_va8_t *va8D2;
   int i;
 
+  printf("\nRunning gimp_composite_3dnow tests...\n");
+  if (gimp_composite_3dnow_init () == 0)
+    {
+      printf("gimp_composite_3dnow: Instruction set is not available.\n");
+      return (0);
+    }
+
   rgba8A =  gimp_composite_regression_fixed_rgba8(n_pixels+1);
   rgba8B =  gimp_composite_regression_fixed_rgba8(n_pixels+1);
   rgba8M =  gimp_composite_regression_fixed_rgba8(n_pixels+1);
@@ -52,14 +54,15 @@ gimp_composite_3dnow_test (int iterations, int n_pixels)
   va8D1 =   (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);
   va8D2 =   (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);
 
-  for (i = 0; i < n_pixels; i++) {
-    va8A[i].v = i;
-    va8A[i].a = 255-i;
-    va8B[i].v = i;
-    va8B[i].a = i;
-    va8M[i].v = i;
-    va8M[i].a = i;
-  }
+  for (i = 0; i < n_pixels; i++)
+    {
+      va8A[i].v = i;
+      va8A[i].a = 255-i;
+      va8B[i].v = i;
+      va8B[i].a = i;
+      va8M[i].v = i;
+      va8M[i].a = i;
+    }
 
 #endif
   return (0);
@@ -79,18 +82,24 @@ main (int argc, char *argv[])
   n_pixels = 1048593;
 
   argv++, argc--;
-  while (argc >= 2) {
-    if (argc > 1 && (strcmp (argv[0], "--iterations") == 0 || strcmp (argv[0], "-i") == 0)) {
-      iterations = atoi(argv[1]);
-      argc -= 2, argv++; argv++;
-    } else if (argc > 1 && (strcmp (argv[0], "--n-pixels") == 0 || strcmp (argv[0], "-n") == 0)) {
-      n_pixels = atoi (argv[1]);
-      argc -= 2, argv++; argv++;
-    } else {
-      printf("Usage: gimp-composites-*-test [-i|--iterations n] [-n|--n-pixels n]");
-      argc--, argv++;
+  while (argc >= 2)
+    {
+      if (argc > 1 && (strcmp (argv[0], "--iterations") == 0 || strcmp (argv[0], "-i") == 0))
+        {
+          iterations = atoi(argv[1]);
+          argc -= 2, argv++; argv++;
+        }
+      else if (argc > 1 && (strcmp (argv[0], "--n-pixels") == 0 || strcmp (argv[0], "-n") == 0))
+        {
+          n_pixels = atoi (argv[1]);
+          argc -= 2, argv++; argv++;
+        }
+      else
+        {
+          printf("Usage: gimp-composites-*-test [-i|--iterations n] [-n|--n-pixels n]");
+          argc--, argv++;
+        }
     }
-  }
 
   gimp_composite_generic_install ();
 

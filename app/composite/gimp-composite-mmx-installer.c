@@ -35,14 +35,19 @@ static struct install_table {
  { 0, 0, 0, 0, NULL }
 };
 
-void
+gboolean
 gimp_composite_mmx_install (void)
 {
   static struct install_table *t = _gimp_composite_mmx;
 
-  for (t = &_gimp_composite_mmx[0]; t->function != NULL; t++) {
-    gimp_composite_function[t->mode][t->A][t->B][t->D] = t->function;
-  }
+  if (gimp_composite_mmx_init ())
+    {
+      for (t = &_gimp_composite_mmx[0]; t->function != NULL; t++)
+        {
+          gimp_composite_function[t->mode][t->A][t->B][t->D] = t->function;
+        }
+      return (TRUE);
+    }
 
-  gimp_composite_mmx_init ();
+  return (FALSE);
 }

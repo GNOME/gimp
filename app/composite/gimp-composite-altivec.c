@@ -36,17 +36,15 @@
 #endif /* __GNUC__ > 3 */
 #endif  /* ARCH_PPC */
 
-int
+gboolean
 gimp_composite_altivec_init (void)
 {
 #ifdef ARCH_PPC
-  guint32 cpu = cpu_accel ();
-
-  if (cpu & CPU_ACCEL_PPC_ALTIVEC)
+  if (cpu_accel () & CPU_ACCEL_PPC_ALTIVEC)
     {
-      return (1);
+      return (TRUE);
     }
 #endif
 
-  return (0);
+  return (FALSE);
 }

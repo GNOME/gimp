@@ -41,16 +41,14 @@
 #endif /* ARCH_X86 */
 #endif  /* USE_MMX */
 
-int
+gboolean
 gimp_composite_3dnow_init (void)
 {
 #if defined(USE_MMX) && defined(ARCH_X86)
-  guint32 cpu = cpu_accel ();
-
-  if (cpu & CPU_ACCEL_X86_3DNOW)
+  if (cpu_accel () & CPU_ACCEL_X86_3DNOW)
     {
-      return (1);
+      return (FALSE);
     }
 #endif
-  return (0);
+  return (TRUE);
 }

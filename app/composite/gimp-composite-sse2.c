@@ -806,8 +806,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 #endif /* defined(ARCH_X86) */
 #endif /* defined(USE_SSE) */
 
-
-int
+gboolean
 gimp_composite_sse2_init (void)
 {
 #if defined(USE_SSE) && defined(ARCH_X86)
@@ -815,8 +814,8 @@ gimp_composite_sse2_init (void)
 
   if (cpu & CPU_ACCEL_X86_SSE || cpu & CPU_ACCEL_X86_MMXEXT)
     {
-      return (1);
+      return (TRUE);
     }
 #endif
-  return (0);
+  return (FALSE);
 }

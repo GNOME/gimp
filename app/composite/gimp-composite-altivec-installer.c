@@ -10,10 +10,10 @@
 #include "gimp-composite-altivec.h"
 
 
-void
+gboolean
 gimp_composite_altivec_install (void)
 {
   /* nothing to do */
 
-  gimp_composite_altivec_init ();
+  return (FALSE);
 }

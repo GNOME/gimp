@@ -1142,7 +1142,7 @@ gimp_composite_scale_any_any_any_generic (GimpCompositeContext * ctx)
     }
 }
 
-void
+gboolean
 gimp_composite_generic_init (void)
 {
   GRand *gr;
@@ -1163,4 +1163,6 @@ gimp_composite_generic_init (void)
 
   for (i = 256; i <= 510; i++)
     add_lut[i] = 255;
+
+		return (TRUE);
 }

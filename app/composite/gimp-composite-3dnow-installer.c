@@ -10,10 +10,10 @@
 #include "gimp-composite-3dnow.h"
 
 
-void
+gboolean
 gimp_composite_3dnow_install (void)
 {
   /* nothing to do */
 
-  gimp_composite_3dnow_init ();
+  return (FALSE);
 }

@@ -1,4 +1,5 @@
-/* The GIMP -- an image manipulation program
+/* -*- mode: c; tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
+	* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Gimp Image Compositing

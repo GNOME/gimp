@@ -276,13 +276,6 @@ def gimp_composite_regression(fpout, function_tables, options):
   for r in options.requires:
     print >>fpout, '#if %s' % (r)
     pass
-
-  print >>fpout, '  printf("\\nRunning %s tests...\\n");' % (functionnameify(options.file))
-
-  print >>fpout, '  if (%s_init () == 0) {' % (functionnameify(options.file))
-  print >>fpout, '    printf("%s: Instruction set is not available.\\n");' % (functionnameify(options.file))
-  print >>fpout, '    return (0);'
-  print >>fpout, '  }'
   
   print >>fpout, '  GimpCompositeContext generic_ctx;'
   print >>fpout, '  GimpCompositeContext special_ctx;'
@@ -300,6 +293,16 @@ def gimp_composite_regression(fpout, function_tables, options):
   print >>fpout, '  gimp_va8_t *va8D2;'
   print >>fpout, '  int i;'
   print >>fpout, ''
+
+  print >>fpout, '  printf("\\nRunning %s tests...\\n");' % (functionnameify(options.file))
+  print >>fpout, '  if (%s_init () == 0)' % (functionnameify(options.file))
+  print >>fpout, '    {'
+  print >>fpout, '      printf("%s: Instruction set is not available.\\n");' % (functionnameify(options.file))
+  print >>fpout, '      return (0);'
+  print >>fpout, '    }'
+
+
+  print >>fpout, ''
   print >>fpout, '  rgba8A =  gimp_composite_regression_fixed_rgba8(n_pixels+1);'
   print >>fpout, '  rgba8B =  gimp_composite_regression_fixed_rgba8(n_pixels+1);'
   print >>fpout, '  rgba8M =  gimp_composite_regression_fixed_rgba8(n_pixels+1);'
@@ -311,14 +314,15 @@ def gimp_composite_regression(fpout, function_tables, options):
   print >>fpout, '  va8D1 =   (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);'
   print >>fpout, '  va8D2 =   (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);'
   print >>fpout, ''
-  print >>fpout, '  for (i = 0; i < n_pixels; i++) {'
-  print >>fpout, '    va8A[i].v = i;'
-  print >>fpout, '    va8A[i].a = 255-i;'
-  print >>fpout, '    va8B[i].v = i;'
-  print >>fpout, '    va8B[i].a = i;'
-  print >>fpout, '    va8M[i].v = i;'
-  print >>fpout, '    va8M[i].a = i;'
-  print >>fpout, '  }'
+  print >>fpout, '  for (i = 0; i < n_pixels; i++)'
+  print >>fpout, '    {'
+  print >>fpout, '      va8A[i].v = i;'
+  print >>fpout, '      va8A[i].a = 255-i;'
+  print >>fpout, '      va8B[i].v = i;'
+  print >>fpout, '      va8B[i].a = i;'
+  print >>fpout, '      va8M[i].v = i;'
+  print >>fpout, '      va8M[i].a = i;'
+  print >>fpout, '    }'
   print >>fpout, ''
 
   #pp.pprint(function_tables)
@@ -335,52 +339,20 @@ def gimp_composite_regression(fpout, function_tables, options):
           if function_tables.has_key(key):
             #print key
             print >>fpout, ''
-            if 0:
-              print >>fpout, '  /* %s */' % (key)
-              print >>fpout, '  memset ((void *) &special_ctx, 0, sizeof(special_ctx));'
-              print >>fpout, '  special_ctx.op = %s;' % (mode)
-              print >>fpout, '  special_ctx.n_pixels = n_pixels;'
-              print >>fpout, '  special_ctx.scale.scale = 2;'
-              print >>fpout, '  special_ctx.pixelformat_A = %s;' % (A)
-              print >>fpout, '  special_ctx.pixelformat_B = %s;' % (B)
-              print >>fpout, '  special_ctx.pixelformat_D = %s;' % (D)
-              print >>fpout, '  special_ctx.pixelformat_M = %s;' % (D)
-              print >>fpout, '  special_ctx.A = (unsigned char *) %sA;' % (pixel_depth_name(A))
-              print >>fpout, '  special_ctx.B = (unsigned char *) %sB;' % (pixel_depth_name(B))
-              print >>fpout, '  special_ctx.M = (unsigned char *) %sB;' % (pixel_depth_name(D))
-              print >>fpout, '  special_ctx.D = (unsigned char *) %sD1;' % (pixel_depth_name(D))
-              print >>fpout, '  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);'
-            else:
-              print >>fpout, '  gimp_composite_context_init (&special_ctx, %s, %s, %s, %s, %s, n_pixels, (unsigned char *) %sA, (unsigned char *) %sB, (unsigned char *) %sB, (unsigned char *) %sD2);' % (
-                mode, A, B, D, D, pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D), pixel_depth_name(D))
-              pass
+            print >>fpout, '  gimp_composite_context_init (&special_ctx, %s, %s, %s, %s, %s, n_pixels, (unsigned char *) %sA, (unsigned char *) %sB, (unsigned char *) %sB, (unsigned char *) %sD2);' % (
+              mode, A, B, D, D, pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D), pixel_depth_name(D))
 
-            if 0:
-              print >>fpout, '  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));'
-              print >>fpout, '  generic_ctx.op = %s;' % (mode)
-              print >>fpout, '  generic_ctx.n_pixels = n_pixels;'
-              print >>fpout, '  generic_ctx.scale.scale = 2;'
-              print >>fpout, '  generic_ctx.pixelformat_A = %s;' % (A)
-              print >>fpout, '  generic_ctx.pixelformat_B = %s;' % (B)
-              print >>fpout, '  generic_ctx.pixelformat_D = %s;' % (D)
-              print >>fpout, '  generic_ctx.pixelformat_M = %s;' % (D)
-              print >>fpout, '  generic_ctx.A = (unsigned char *) %sA;' % (pixel_depth_name(A))
-              print >>fpout, '  generic_ctx.B = (unsigned char *) %sB;' % (pixel_depth_name(B))
-              print >>fpout, '  generic_ctx.M = (unsigned char *) %sB;' % (pixel_depth_name(D))
-              print >>fpout, '  generic_ctx.D = (unsigned char *) %sD2;' % (pixel_depth_name(D))
-              print >>fpout, '  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);'
-            else:
-              print >>fpout, '  gimp_composite_context_init (&generic_ctx, %s, %s, %s, %s, %s, n_pixels, (unsigned char *) %sA, (unsigned char *) %sB, (unsigned char *) %sB, (unsigned char *) %sD1);' % (
-                mode, A, B, D, D, pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D), pixel_depth_name(D))
-              pass
+            print >>fpout, '  gimp_composite_context_init (&generic_ctx, %s, %s, %s, %s, %s, n_pixels, (unsigned char *) %sA, (unsigned char *) %sB, (unsigned char *) %sB, (unsigned char *) %sD1);' % (
+              mode, A, B, D, D, pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D), pixel_depth_name(D))
               
             print >>fpout, '  ft0 = gimp_composite_regression_time_function (iterations, %s, &generic_ctx);' % ("gimp_composite_dispatch")
             print >>fpout, '  ft1 = gimp_composite_regression_time_function (iterations, %s, &special_ctx);' % (generic_table[key][0])
-            print >>fpout, '  if (gimp_composite_regression_compare_contexts ("%s", &generic_ctx, &special_ctx)) {' % (mode_name(mode))
+            print >>fpout, '  if (gimp_composite_regression_compare_contexts ("%s", &generic_ctx, &special_ctx))' % (mode_name(mode))
             
-            print >>fpout, '    printf("%s failed\\n");' % (mode_name(mode))
-            print >>fpout, '    return (1);'
-            print >>fpout, '  }'
+            print >>fpout, '    {'
+            print >>fpout, '      printf("%s failed\\n");' % (mode_name(mode))
+            print >>fpout, '      return (1);'
+            print >>fpout, '    }'
             print >>fpout, '  gimp_composite_regression_timer_report ("%s", ft0, ft1);' % (mode_name(mode))
             pass
           pass
@@ -410,18 +382,24 @@ def gimp_composite_regression(fpout, function_tables, options):
   print >>fpout, '  n_pixels = %d;' % options.n_pixels
   print >>fpout, ''
   print >>fpout, '  argv++, argc--;'
-  print >>fpout, '  while (argc >= 2) {'
-  print >>fpout, '    if (argc > 1 && (strcmp (argv[0], "--iterations") == 0 || strcmp (argv[0], "-i") == 0)) {'
-  print >>fpout, '      iterations = atoi(argv[1]);'
-  print >>fpout, '      argc -= 2, argv++; argv++;'
-  print >>fpout, '    } else if (argc > 1 && (strcmp (argv[0], "--n-pixels") == 0 || strcmp (argv[0], "-n") == 0)) {'
-  print >>fpout, '      n_pixels = atoi (argv[1]);'
-  print >>fpout, '      argc -= 2, argv++; argv++;'
-  print >>fpout, '    } else {'
-  print >>fpout, '      printf("Usage: gimp-composites-*-test [-i|--iterations n] [-n|--n-pixels n]");'
-  print >>fpout, '      argc--, argv++;'
+  print >>fpout, '  while (argc >= 2)'
+  print >>fpout, '    {'
+  print >>fpout, '      if (argc > 1 && (strcmp (argv[0], "--iterations") == 0 || strcmp (argv[0], "-i") == 0))'
+  print >>fpout, '        {'
+  print >>fpout, '          iterations = atoi(argv[1]);'
+  print >>fpout, '          argc -= 2, argv++; argv++;'
+  print >>fpout, '        }'
+  print >>fpout, '      else if (argc > 1 && (strcmp (argv[0], "--n-pixels") == 0 || strcmp (argv[0], "-n") == 0))'
+  print >>fpout, '        {'
+  print >>fpout, '          n_pixels = atoi (argv[1]);'
+  print >>fpout, '          argc -= 2, argv++; argv++;'
+  print >>fpout, '        }'
+  print >>fpout, '      else'
+  print >>fpout, '        {'
+  print >>fpout, '          printf("Usage: gimp-composites-*-test [-i|--iterations n] [-n|--n-pixels n]");'
+  print >>fpout, '          argc--, argv++;'
+  print >>fpout, '        }'
   print >>fpout, '    }'
-  print >>fpout, '  }'
   print >>fpout, ''
   print >>fpout, '  gimp_composite_generic_install ();'
   print >>fpout, ''
@@ -431,63 +409,29 @@ def gimp_composite_regression(fpout, function_tables, options):
   return
 
 
-def gimp_composite_installer_install(fpout, name, function_table, requirements=[]):
-  print >>fpout, ''
-  print >>fpout, 'void'
-  print >>fpout, '%s_install (void)' % (functionnameify(name))
-  print >>fpout, '{'
-
-  for r in requirements:
-    print >>fpout, '#if %s' % (r)
-    pass
-
-  if len(function_table) > 1:
-    print >>fpout, '  int mode, a, b, d;'
-    print >>fpout, ''
-    print >>fpout, '  for (mode = 0; mode < GIMP_COMPOSITE_N; mode++) {' # Assumes no "holes" in the enumeration
-    print >>fpout, '    for (a = 0; a < GIMP_PIXELFORMAT_N; a++) {'
-    print >>fpout, '      for (b = 0; b < GIMP_PIXELFORMAT_N; b++) {'
-    print >>fpout, '        for (d = 0; d < GIMP_PIXELFORMAT_N; d++) {'
-    print >>fpout, '          if (%s[mode][a][b][d]) {' % (functionnameify(name))
-    print >>fpout, '            gimp_composite_function[mode][a][b][d] = %s[mode][a][b][d];' % (functionnameify(name))
-    print >>fpout, '            if (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE) {'
-    print >>fpout, '              printf ("gimp_composite_install: %s %s %s %s: %p\\n", gimp_composite_mode_astext(mode), gimp_composite_pixelformat_astext(a),  gimp_composite_pixelformat_astext(b), gimp_composite_pixelformat_astext(d), gimp_composite_function[mode][a][b][d]);'
-    print >>fpout, '            }'
-    print >>fpout, '          }'
-    print >>fpout, '        }'
-    print >>fpout, '      }'
-    print >>fpout, '    }'
-    print >>fpout, '  }'
-  else:
-    print >>fpout, '  /* nothing to do */'
-    pass
-  
-  print >>fpout, ''
-  print >>fpout, '  %s_init();' % functionnameify(name)
-  for r in requirements:
-    print >>fpout, '#endif'
-    pass
-  print >>fpout, '}'
-  pass
-
 def gimp_composite_installer_install2(fpout, name, function_table, requirements=[]):
   print >>fpout, ''
-  print >>fpout, 'void'
+  print >>fpout, 'gboolean'
   print >>fpout, '%s_install (void)' % (functionnameify(name))
   print >>fpout, '{'
 
   if len(function_table) > 1:
     print >>fpout, '  static struct install_table *t = _%s;' % (functionnameify(name))
     print >>fpout, ''
-    print >>fpout, '  for (t = &_%s[0]; t->function != NULL; t++) {' % (functionnameify(name))
-    print >>fpout, '    gimp_composite_function[t->mode][t->A][t->B][t->D] = t->function;'
-    print >>fpout, '  }'
+    print >>fpout, '  if (%s_init ())' % functionnameify(name)
+    print >>fpout, '    {'
+    print >>fpout, '      for (t = &_%s[0]; t->function != NULL; t++)' % (functionnameify(name))
+    print >>fpout, '        {'
+    print >>fpout, '          gimp_composite_function[t->mode][t->A][t->B][t->D] = t->function;'
+    print >>fpout, '        }'
+    print >>fpout, '      return (TRUE);'
+    print >>fpout, '    }'
   else:
     print >>fpout, '  /* nothing to do */'
     pass
   
   print >>fpout, ''
-  print >>fpout, '  %s_init ();' % functionnameify(name)
+  print >>fpout, '  return (FALSE);'
   print >>fpout, '}'
   pass
 

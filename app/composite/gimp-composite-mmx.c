@@ -1,6 +1,6 @@
 /* -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
-	*
-	* The GIMP -- an image manipulation program
+ *
+ * The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  *
@@ -2215,16 +2215,14 @@ xxxgimp_composite_valueonly_va8_va8_va8_mmx (GimpCompositeContext *_op)
 #endif /* ARCH_X86 */
 #endif  /* USE_MMX */
 
-int
+gboolean
 gimp_composite_mmx_init (void)
 {
 #if defined(USE_MMX) && defined(ARCH_X86)
-  guint32 cpu = cpu_accel ();
-
-  if (cpu & CPU_ACCEL_X86_MMX)
+  if (cpu_accel () & CPU_ACCEL_X86_MMX)
     {
-      return (1);
+      return (TRUE);
     }
 #endif
-  return (0);
+  return (FALSE);
 }
