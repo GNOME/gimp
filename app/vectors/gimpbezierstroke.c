@@ -279,28 +279,24 @@ gimp_bezier_stroke_open (GimpStroke *stroke,
 
   list = g_list_next (list);  /* protect the handle... */
 
-  if (stroke->closed)
+  list2 = list->next;
+  list->next = NULL;
+
+  if (list2 != NULL)
     {
-      list2 = list->next;
-      list->next = NULL;
       list2->prev = NULL;
 
-      stroke->anchors = g_list_concat (list2, stroke->anchors);
-      stroke->closed = FALSE;
-    }
-  else
-    {
-      list2 = list->next;
-      list->next = NULL;
-      stroke->closed = FALSE;
-      
-      if (list2 != NULL)
+      if (stroke->closed)
         {
-          list2->prev = NULL;
+          stroke->anchors = g_list_concat (list2, stroke->anchors);
+        }
+      else
+        {
           new_stroke = gimp_bezier_stroke_new ();
           new_stroke->anchors = list2;
         }
     }
+  stroke->closed = FALSE;
   return new_stroke;
 }
 
