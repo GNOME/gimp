@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-01-19 11:12+0100\n"
-"PO-Revision-Date: 2000-01-19 12:36+01:00\n"
+"POT-Creation-Date: 2000-01-20 19:54+0100\n"
+"PO-Revision-Date: 2000-01-21 11:15+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -83,14 +83,14 @@ msgstr "Konec"
 #: app/app_procs.c:748 app/brightness_contrast.c:217 app/channel_ops.c:90
 #: app/channels_dialog.c:2431 app/channels_dialog.c:2605
 #: app/color_balance.c:274 app/color_notebook.c:115 app/convert.c:500
-#: app/curves.c:564 app/file_new_dialog.c:198 app/file_new_dialog.c:369
-#: app/gdisplay_color_ui.c:128 app/gdisplay_ops.c:356 app/gimpprogress.c:114
+#: app/curves.c:583 app/file_new_dialog.c:198 app/file_new_dialog.c:369
+#: app/gdisplay_color_ui.c:128 app/gdisplay_ops.c:360 app/gimpprogress.c:114
 #: app/gimpui.c:79 app/global_edit.c:738 app/gradient.c:1789
 #: app/gradient.c:4876 app/gradient.c:5437 app/hue_saturation.c:376
 #: app/interface.c:967 app/layers_dialog.c:3325 app/layers_dialog.c:3516
 #: app/layers_dialog.c:3616 app/layers_dialog.c:3718 app/layers_dialog.c:3981
 #: app/levels.c:354 app/palette.c:1852 app/posterize.c:200
-#: app/preferences_dialog.c:1357 app/qmask.c:257 app/resize.c:193
+#: app/preferences_dialog.c:1357 app/qmask.c:281 app/resize.c:193
 #: app/threshold.c:274 modules/cdisplay_gamma.c:358
 msgid "Cancel"
 msgstr "Zru¹it"
@@ -256,20 +256,20 @@ msgstr "Jas-kontrast"
 #: app/brightness_contrast.c:213 app/channel_ops.c:88
 #: app/channels_dialog.c:2429 app/channels_dialog.c:2603
 #: app/color_balance.c:270 app/color_notebook.c:112 app/convert.c:498
-#: app/curves.c:560 app/file_new_dialog.c:196 app/file_new_dialog.c:365
+#: app/curves.c:579 app/file_new_dialog.c:196 app/file_new_dialog.c:365
 #: app/gdisplay_color_ui.c:126 app/gimpui.c:77 app/gimpui.c:457
 #: app/hue_saturation.c:372 app/layers_dialog.c:3323 app/layers_dialog.c:3514
 #: app/layers_dialog.c:3614 app/layers_dialog.c:3979 app/levels.c:350
 #: app/module_db.c:281 app/posterize.c:196 app/preferences_dialog.c:1353
-#: app/qmask.c:255 app/resize.c:191 app/threshold.c:270
+#: app/qmask.c:279 app/resize.c:191 app/threshold.c:270
 #: modules/cdisplay_gamma.c:351
 msgid "OK"
 msgstr "OK"
 
 #: app/brightness_contrast.c:215 app/by_color_select.c:589
-#: app/color_balance.c:272 app/curves.c:562 app/file_new_dialog.c:367
+#: app/color_balance.c:272 app/curves.c:581 app/file_new_dialog.c:367
 #: app/hue_saturation.c:374 app/levels.c:352 app/posterize.c:198
-#: app/threshold.c:272 app/tools.c:984 app/transform_core.c:413
+#: app/threshold.c:272 app/tools.c:991 app/transform_core.c:413
 #: modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Obnovit"
@@ -285,7 +285,7 @@ msgid "Contrast"
 msgstr "Kontrast"
 
 #. The preview toggle
-#: app/brightness_contrast.c:299 app/color_balance.c:440 app/curves.c:671
+#: app/brightness_contrast.c:299 app/color_balance.c:440 app/curves.c:690
 #: app/fileops.c:416 app/hue_saturation.c:564 app/levels.c:575
 #: app/palette.c:3297 app/posterize.c:237 app/threshold.c:347
 msgid "Preview"
@@ -299,12 +299,12 @@ msgstr "Editor ¹tìtcù"
 #: app/brush_edit.c:215 app/brush_select.c:279 app/by_color_select.c:591
 #: app/color_notebook.c:112 app/color_picker.c:296 app/colormap_dialog.i.c:151
 #: app/colormap_dialog.i.c:161 app/crop.c:1045 app/devices.c:755
-#: app/docindexif.c:104 app/errorconsole.c:281 app/gdisplay_ops.c:354
+#: app/docindexif.c:104 app/errorconsole.c:281 app/gdisplay_ops.c:358
 #: app/gradient.c:800 app/gradient_select.c:152 app/histogram_tool.c:292
 #: app/info_window.c:308 app/lc_dialog.c:196 app/measure.c:273
 #: app/nav_window.c:1366 app/palette.c:2117 app/palette.c:2133
 #: app/palette.c:3179 app/palette_select.c:62 app/pattern_select.c:171
-#: app/preferences_dialog.c:363 app/tips_dialog.c:171 app/tools.c:986
+#: app/preferences_dialog.c:363 app/tips_dialog.c:171 app/tools.c:993
 #: app/undo_history.c:761
 msgid "Close"
 msgstr "Zavøít"
@@ -453,7 +453,7 @@ msgstr "kopie"
 msgid "%s copy"
 msgstr "%s kopie"
 
-#: app/channel.c:591
+#: app/channel.c:607
 msgid "Selection Mask"
 msgstr "Maska výbìru"
 
@@ -527,17 +527,17 @@ msgstr "Smazat kanál"
 msgid "Empty Channel Copy"
 msgstr "Kopie prázdného kanálu"
 
-#: app/channels_dialog.c:1386 app/color_balance.c:342 app/curves.c:414
+#: app/channels_dialog.c:1386 app/color_balance.c:342 app/curves.c:429
 #: app/histogram_tool.c:272 app/levels.c:229
 msgid "Red"
 msgstr "Èervená"
 
-#: app/channels_dialog.c:1390 app/color_balance.c:367 app/curves.c:415
+#: app/channels_dialog.c:1390 app/color_balance.c:367 app/curves.c:430
 #: app/histogram_tool.c:273 app/levels.c:230
 msgid "Green"
 msgstr "Zelená"
 
-#: app/channels_dialog.c:1394 app/color_balance.c:392 app/curves.c:416
+#: app/channels_dialog.c:1394 app/color_balance.c:392 app/curves.c:431
 #: app/histogram_tool.c:274 app/levels.c:231
 msgid "Blue"
 msgstr "Modrá"
@@ -928,44 +928,71 @@ msgstr "Z výbìru"
 msgid "Auto Shrink"
 msgstr "Automaticky zmen¹it"
 
-#: app/curves.c:377
+#: app/curves.c:392
 msgid "Curves Options"
 msgstr "Volby køivek"
 
-#: app/curves.c:413 app/histogram_tool.c:271 app/layers_dialog.c:242
+#: app/curves.c:428 app/histogram_tool.c:271 app/layers_dialog.c:242
 #: app/levels.c:228 app/paint_funcs.c:97 app/tool_options.c:886
 msgid "Value"
 msgstr "Jas"
 
-#: app/curves.c:417 app/levels.c:232
+#: app/curves.c:432 app/levels.c:232
 msgid "Alpha"
 msgstr "Alfa"
 
-#: app/curves.c:428
+#: app/curves.c:443
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Køivky nemohou být nastaveny v indexovaných obrazovkách."
 
-#: app/curves.c:528
+#: app/curves.c:544
 msgid "Smooth"
 msgstr "Plynulá"
 
-#: app/curves.c:529
+#: app/curves.c:545
 msgid "Free"
 msgstr "Volná"
 
 #. The shell and main vbox
-#: app/curves.c:555 app/tools.c:663
+#: app/curves.c:574 app/tools.c:663
 msgid "Curves"
 msgstr "Køivky"
 
-#: app/curves.c:577
+#: app/curves.c:596
 msgid "Modify Curves for Channel:"
 msgstr "Upravit køivky pro kanál:"
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:658
+#: app/curves.c:677
 msgid "Curve Type:"
 msgstr "Typ køivky:"
+
+#: app/curves.c:707 app/levels.c:603 app/module_db.c:829
+msgid "Load"
+msgstr "Naèíst"
+
+#: app/curves.c:717 app/devices.c:753 app/levels.c:613 app/palette.c:2113
+#: app/preferences_dialog.c:361 app/preferences_dialog.c:1355
+msgid "Save"
+msgstr "Zapsat"
+
+#: app/curves.c:1358
+msgid "Load Curves"
+msgstr "Naèíst køivky"
+
+#: app/curves.c:1373
+msgid "Save Curves"
+msgstr "Zapsat køivky"
+
+#: app/curves.c:1654
+msgid "Load/Save Curves"
+msgstr "Naèíst/Zapsat køivky"
+
+#: app/curves.c:1692 app/curves.c:1710 app/levels.c:1494 app/levels.c:1512
+#: app/paths_dialog.c:2217
+#, c-format
+msgid "Unable to open file %s"
+msgstr "Nepodaøilo se otevøít soubor %s"
 
 #: app/desaturate.c:35
 msgid "Desaturate operates only on RGB color drawables."
@@ -974,11 +1001,6 @@ msgstr "Odbarvení pracuje pouze s obrazovkami v RGB barvách."
 #: app/devices.c:747
 msgid "Device Status"
 msgstr "Stav zaøízení"
-
-#: app/devices.c:753 app/levels.c:613 app/palette.c:2113
-#: app/preferences_dialog.c:361 app/preferences_dialog.c:1355
-msgid "Save"
-msgstr "Zapsat"
 
 #: app/docindex.c:574
 msgid "This file cannot be moved up."
@@ -1344,7 +1366,7 @@ msgstr "Dostupné filtry"
 msgid "Active Filters"
 msgstr "Aktivní filtry"
 
-#: app/gdisplay_ops.c:373
+#: app/gdisplay_ops.c:377
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1507,7 +1529,7 @@ msgstr "Kanál nemù¾e být je¹tì vý¹"
 msgid "Channel cannot be lowered any further"
 msgstr "Kanál nemù¾e být je¹tì ní¾"
 
-#: app/gimpimage.c:3181 app/palette.c:379 app/palette.c:956 app/palette.c:1092
+#: app/gimpimage.c:3184 app/palette.c:379 app/palette.c:956 app/palette.c:1092
 #: app/palette.c:2063 app/palette.c:2810 app/palette.c:2942
 msgid "Untitled"
 msgstr "Bez názvu"
@@ -3081,10 +3103,6 @@ msgstr "Vstupní úrovnì:"
 msgid "Output Levels:"
 msgstr "Výstupní úrovnì:"
 
-#: app/levels.c:603 app/module_db.c:829
-msgid "Load"
-msgstr "Naèíst"
-
 #: app/levels.c:1124
 msgid "Load Levels"
 msgstr "Naèíst úrovnì"
@@ -3096,11 +3114,6 @@ msgstr "Zapsat úrovnì"
 #: app/levels.c:1456
 msgid "Load/Save Levels"
 msgstr "Naèíst/Zapsat úrovnì"
-
-#: app/levels.c:1494 app/levels.c:1512 app/paths_dialog.c:2217
-#, c-format
-msgid "Unable to open file %s"
-msgstr "Nepodaøilo se otevøít soubor %s"
 
 #: app/magnify.c:98
 msgid "Magnify Options"
@@ -4969,7 +4982,7 @@ msgstr "Zakázat aktualizaci kurzoru"
 msgid "Tool Options Settings"
 msgstr "Nastavení voleb nástrojù"
 
-#: app/preferences_dialog.c:1945 app/tools.c:978
+#: app/preferences_dialog.c:1945 app/tools.c:985
 msgid "Tool Options"
 msgstr "Volby nástrojù"
 
@@ -5237,12 +5250,12 @@ msgstr "Roz¹íøení programu GIMP"
 msgid "Temporary Procedure"
 msgstr "Pomocná procedura"
 
-#: app/qmask.c:249
+#: app/qmask.c:273
 msgid "Edit Qmask Attributes"
 msgstr "Úpravy vlastností Qmask"
 
 #. The opacity scale
-#: app/qmask.c:277
+#: app/qmask.c:301
 msgid "Mask Opacity:"
 msgstr "Krytí masky:"
 
@@ -5354,33 +5367,33 @@ msgstr "Zvìt¹ení X naklonìní:"
 msgid "Shearing..."
 msgstr "Naklání se..."
 
-#: app/text_tool.c:147
+#: app/text_tool.c:150
 msgid "Text Tool Options"
 msgstr "Volby textového nástroje"
 
-#: app/text_tool.c:158 app/tool_options.c:205
+#: app/text_tool.c:161 app/tool_options.c:205
 msgid "Antialiasing"
 msgstr "Vyhlazování"
 
-#: app/text_tool.c:172
+#: app/text_tool.c:175
 msgid "Border:"
 msgstr "Obvod:"
 
-#: app/text_tool.c:198
+#: app/text_tool.c:201
 msgid "Use Dynamic Text"
 msgstr "Pou¾ít dynamického textu"
 
 #. Create the shell
-#: app/text_tool.c:389
+#: app/text_tool.c:392
 msgid "Text Tool"
 msgstr "Textový nástroj"
 
-#: app/text_tool.c:604
+#: app/text_tool.c:616
 #, c-format
 msgid "Font '%s' not found.%s"
 msgstr "Znaková sada '%s' nebyla nalezena.%s"
 
-#: app/text_tool.c:607
+#: app/text_tool.c:619
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5389,7 +5402,7 @@ msgstr ""
 "\n"
 "Nemáte-li vektorová písma, zkuste vypnout vyhlazování ve volbách nástroje."
 
-#: app/text_tool.c:718
+#: app/text_tool.c:730
 msgid "Text Layer"
 msgstr "Textová vrstva"
 
@@ -5525,7 +5538,7 @@ msgstr "Volby rozmazávání"
 
 #: app/tool_options.c:443
 msgid "Xinput Airbrush Options"
-msgstr "Americké retu¹ Xinput"
+msgstr "Americké retu¹ X-vstupem"
 
 #: app/tool_options.c:555
 msgid "Incremental"
@@ -5831,11 +5844,11 @@ msgstr "/Nástroje/Rozmazávání"
 
 #: app/tools.c:517
 msgid "Xinput Airbrush"
-msgstr "Americké retu¹ Xinput"
+msgstr "Americké retu¹ X-vstupem"
 
 #: app/tools.c:518
 msgid "/Tools/XinputAirbrush"
-msgstr "/Nástroje/Americká retu¹ Xinput"
+msgstr "/Nástroje/Americká retu¹ X-vstupem"
 
 #: app/tools.c:521
 msgid "Natural Airbrush"

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.15\n"
-"POT-Creation-Date: 2000-01-19 16:12+0100\n"
-"PO-Revision-Date: 2000-01-19 16:37+01:00\n"
+"POT-Creation-Date: 2000-01-22 00:39+0100\n"
+"PO-Revision-Date: 2000-01-22 00:44+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr "Cizí mapování"
 #: plug-ins/FractalExplorer/Dialogs.c:794
 #: plug-ins/FractalExplorer/Dialogs.c:1346 plug-ins/gfig/gfig.c:6003
 #: plug-ins/imagemap/imap_about.c:33
-#: plug-ins/script-fu/script-fu-scripts.c:1365
+#: plug-ins/script-fu/script-fu-scripts.c:1454
 #: plug-ins/webbrowser/webbrowser.c:273
 msgid "About"
 msgstr "O programu"
@@ -110,8 +110,8 @@ msgstr "O programu"
 #: plug-ins/gap/gap_mov_dialog.c:460 plug-ins/gap/gap_mpege.c:191
 #: plug-ins/gap/gap_resi_dialog.c:149 plug-ins/gfig/gfig.c:5054
 #: plug-ins/gfig/gfig.c:5465 plug-ins/gfig/gfig.c:5633
-#: plug-ins/gfig/gfig.c:6006 plug-ins/gflare/gflare.c:2551
-#: plug-ins/gflare/gflare.c:3589 plug-ins/gflare/gflare.c:5600
+#: plug-ins/gfig/gfig.c:6006 plug-ins/gflare/gflare.c:2412
+#: plug-ins/gflare/gflare.c:3450 plug-ins/gflare/gflare.c:5461
 #: plug-ins/gimpressionist/gimpressionist.c:368
 #: plug-ins/gimpressionist/gimpressionist.c:490
 #: plug-ins/gimpressionist/orientmap.c:626
@@ -120,7 +120,7 @@ msgstr "O programu"
 #: plug-ins/imagemap/imap_default_dialog.c:101 plug-ins/maze/maze_face.c:203
 #: plug-ins/mosaic/mosaic.c:572 plug-ins/pagecurl/pagecurl.c:587
 #: plug-ins/print/print.c:1489 plug-ins/rcm/rcm_dialog.c:747
-#: plug-ins/script-fu/script-fu-scripts.c:1379
+#: plug-ins/script-fu/script-fu-scripts.c:1468
 #: plug-ins/script-fu/script-fu-server.c:559 plug-ins/sel2path/sel2path.c:347
 #: plug-ins/sgi/sgi.c:889 plug-ins/sinus/sinus.c:743
 #: plug-ins/struc/struc.c:257 plug-ins/webbrowser/webbrowser.c:286
@@ -192,8 +192,8 @@ msgstr "OK"
 #: plug-ins/gap/gap_mpege.c:189 plug-ins/gap/gap_mpege.c:241
 #: plug-ins/gap/gap_resi_dialog.c:158 plug-ins/gfig/gfig.c:4913
 #: plug-ins/gfig/gfig.c:5064 plug-ins/gfig/gfig.c:5474
-#: plug-ins/gfig/gfig.c:5667 plug-ins/gflare/gflare.c:3480
-#: plug-ins/gflare/gflare.c:3599 plug-ins/gflare/gflare.c:5609
+#: plug-ins/gfig/gfig.c:5667 plug-ins/gflare/gflare.c:3341
+#: plug-ins/gflare/gflare.c:3460 plug-ins/gflare/gflare.c:5470
 #: plug-ins/gimpressionist/gimpressionist.c:499
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
@@ -201,7 +201,7 @@ msgstr "OK"
 #: plug-ins/imagemap/imap_default_dialog.c:116 plug-ins/maze/maze_face.c:207
 #: plug-ins/mosaic/mosaic.c:581 plug-ins/pagecurl/pagecurl.c:589
 #: plug-ins/print/print.c:1387 plug-ins/print/print.c:1497
-#: plug-ins/rcm/rcm_dialog.c:749 plug-ins/script-fu/script-fu-scripts.c:1388
+#: plug-ins/rcm/rcm_dialog.c:749 plug-ins/script-fu/script-fu-scripts.c:1477
 #: plug-ins/script-fu/script-fu-server.c:568 plug-ins/sel2path/sel2path.c:356
 #: plug-ins/sgi/sgi.c:891 plug-ins/sinus/sinus.c:745
 #: plug-ins/struc/struc.c:259 plug-ins/webbrowser/webbrowser.c:295
@@ -810,7 +810,7 @@ msgstr "\"%s\" ze seznamu a z disku?"
 #. Buttons
 #: plug-ins/FractalExplorer/FractalExplorer.c:617
 #: plug-ins/FractalExplorer/FractalExplorer.c:1897 plug-ins/gfig/gfig.c:6261
-#: plug-ins/gflare/gflare.c:3470 plug-ins/gimpressionist/presets.c:648
+#: plug-ins/gflare/gflare.c:3331 plug-ins/gimpressionist/presets.c:648
 #: plug-ins/ifscompose/ifscompose.c:806 plug-ins/imagemap/imap_cmd_delete.c:53
 msgid "Delete"
 msgstr "Smazat"
@@ -1025,7 +1025,7 @@ msgstr "Hloubka:"
 
 #: plug-ins/Lighting/lighting_ui.c:633 plug-ins/common/threshold_alpha.c:359
 #: plug-ins/common/unsharp.c:840 plug-ins/common/wind.c:796
-#: plug-ins/gflare/gflare.c:3058
+#: plug-ins/gflare/gflare.c:2919
 msgid "Threshold:"
 msgstr "Práh:"
 
@@ -1689,7 +1689,7 @@ msgstr "Badatel párované mapy møí¾e"
 #: plug-ins/common/curve_bend.c:1468 plug-ins/common/exchange.c:317
 #: plug-ins/common/ps.c:2506 plug-ins/common/spheredesigner.c:2259
 #: plug-ins/common/tileit.c:403 plug-ins/flame/flame.c:1060
-#: plug-ins/gflare/gflare.c:2581 plug-ins/gflare/gflare.c:3638
+#: plug-ins/gflare/gflare.c:2442 plug-ins/gflare/gflare.c:3499
 #: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:917
@@ -1771,6 +1771,10 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
+"Tlaèísko \"Upravit hnízdo\" je pøezdívka.\n"
+"Stejné hnízdo vytváøí stejný obrázek, pokud (1) ¹íøky obrázkù jsou stejné "
+"(to je dùvod, proè jsou obrázky v obrazovce odli¹né od náhledu) a (2) "
+"v¹echny míry mutace se rovnají nule."
 
 #: plug-ins/common/CML_explorer.c:1392
 msgid "Others"
@@ -1866,7 +1870,7 @@ msgstr "Zm. citlivosti"
 
 #: plug-ins/common/CML_explorer.c:1639
 msgid "Mutation rate"
-msgstr "Pøebìh mutace"
+msgstr "Míra mutace"
 
 #: plug-ins/common/CML_explorer.c:1646
 msgid "Mutation dist."
@@ -2099,7 +2103,7 @@ msgstr "Pøehrátí animace: "
 #: plug-ins/helpbrowser/helpbrowser.c:827
 #: plug-ins/ifscompose/ifscompose.c:1254 plug-ins/imagemap/imap_menu.c:226
 #: plug-ins/script-fu/script-fu-console.c:205
-#: plug-ins/script-fu/script-fu-scripts.c:1873
+#: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Close"
 msgstr "Zavøít"
 
@@ -2218,6 +2222,8 @@ msgid ""
 "Automatically stretch the contrast of the specified drawable to cover all "
 "possible ranges."
 msgstr ""
+"Automaticky roztahuje kontrast v urèené obrazovce tak, aby pokryl v¹echny "
+"mo¾né rozsahy."
 
 #: plug-ins/common/autostretch_hsv.c:81
 msgid ""
@@ -2228,6 +2234,12 @@ msgid ""
 "This version differs from Contrast Autostretch in that it works in HSV "
 "space, and preserves hue."
 msgstr ""
+"Tento jednoduchý modul provádí automatické rozta¾ení kontrastu. Pro ka¾dý "
+"kanál obrázku najde nejmen¹í a nejvy¹¹í hodnotu... a pou¾ije tyto hodnoty "
+"k rozta¾ení jednotlivých histogramù na plný rozsah. Pro nìkteré obrázky je "
+"výsledek pøesnì takový, jaký oèekáváme, jiné zcela rozhodí :). Tato verze se "
+"li¹í od Automatického rozta¾ení kontrastu tím, ¾e pracuje v prostoru HSV a "
+"zachovává odstín."
 
 #: plug-ins/common/autostretch_hsv.c:85
 msgid "<Image>/Image/Colors/Auto/Stretch HSV"
@@ -2242,6 +2254,8 @@ msgid ""
 "Adds a blinds effect to the image. Rather like putting the image on a set of "
 "window blinds and the closing or opening the blinds"
 msgstr ""
+"Pøidává do obrázku pruhy. Podobné pokládání sady pruhù na okno a zakrývání a "
+"odkrývání pruhù"
 
 #: plug-ins/common/blinds.c:180 plug-ins/common/flarefx.c:203
 #: plug-ins/common/glasstile.c:112 plug-ins/gfig/gfig.c:639
@@ -2303,6 +2317,9 @@ msgid ""
 "control the percentage of the pixels that are blurred and the number of "
 "times blurring is applied.  Indexed images are not supported."
 msgstr ""
+"Tento modul náhodnì rozostøuje urèenou obrazovku s pou¾itím rozostøení 3×3. "
+"Je mo¾né øídit procento rozostøených pixelù a poèet opakování rozostøování. "
+"Indexované obrázky nejsou podporovány."
 
 #: plug-ins/common/blur.c:208
 msgid "<Image>/Filters/Blur/Blur..."
@@ -2327,6 +2344,7 @@ msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
+"Hnízdo náhodného generátoru z aktuálního èasu - záruka pøimìøené náhodnosti"
 
 #.
 #. *  User button
@@ -2340,6 +2358,8 @@ msgid ""
 "Enable user-entered value for random number generator seed - this allows you "
 "to repeat a given \"random\" operation"
 msgstr ""
+"Mo¾nost zadat hodnotu pro hnízdo náhodného generátoru - umo¾òuje opakovat "
+"zadanou \"náhodnou\" operaci"
 
 #: plug-ins/common/blur.c:723 plug-ins/common/randomize.c:821
 msgid "Value for seeding the random number generator"
@@ -2447,6 +2467,10 @@ msgid ""
 "to stretch the individual histograms to the full contrast range.  For some "
 "images it may do just what you want; for others it may be total crap :)"
 msgstr ""
+"Tento jednoduchý modul provádí automatické rozta¾ení kontrastu. Pro ka¾dý "
+"kanál obrázku najde nejmen¹í a nejvy¹¹í hodnotu... a pou¾ije tyto hodnoty "
+"k rozta¾ení jednotlivých histogramù na plný rozsah. Pro nìkteré obrázky je "
+"výsledek pøesnì takový, jaký oèekáváme, jiné zcela rozhodí :)"
 
 #: plug-ins/common/c_astretch.c:83
 msgid "<Image>/Image/Colors/Auto/Stretch Contrast"
@@ -2485,6 +2509,8 @@ msgid ""
 "Automatically stretch the saturation of the specified drawable to cover all "
 "possible ranges."
 msgstr ""
+"Automaticky roztahuje sytost v urèené obrazovce tak, aby pokryla v¹echny "
+"mo¾né rozsahy."
 
 #: plug-ins/common/color_enhance.c:81
 msgid ""
@@ -3215,7 +3241,7 @@ msgstr "Rekurzivní"
 
 #: plug-ins/common/despeckle.c:1051 plug-ins/common/nlfilt.c:405
 #: plug-ins/common/nova.c:406 plug-ins/common/unsharp.c:824
-#: plug-ins/common/whirlpinch.c:889 plug-ins/gflare/gflare.c:2997
+#: plug-ins/common/whirlpinch.c:889 plug-ins/gflare/gflare.c:2858
 #: plug-ins/imagemap/imap_circle.c:272
 msgid "Radius:"
 msgstr "Prùmìr:"
@@ -3475,7 +3501,7 @@ msgstr "Zámìna barev"
 msgid ""
 "Exchange one color with another, optionally setting a threshold to convert "
 "from one shade to another"
-msgstr ""
+msgstr "Zamìní jednu barvu s jinou, volitelnì s nastavením prahu pøevodu mezi odstíny."
 
 #: plug-ins/common/exchange.c:137
 msgid "<Image>/Filters/Colors/Map/Color Exchange..."
@@ -3686,7 +3712,14 @@ msgid ""
 "which are not computer-generated.  Values for radii less than 1.0 would "
 "generate spurious results. Therefore they are interpreted as 0.0, which "
 "means that the computation for this orientation is skipped."
-msgstr "Provádí v obrazovce Gaussovo rozostøení s urèeným prùmìrem vlivu. Ke zmìnì pixelù je pou¾ito standardní odchylky normální distribuce vypoètené na základì zadaného prùmìru. Vodorovné a svislé rozostøení mù¾e být voleno nezávisle. Rozostøení IIR pracuje nejlépe s vysokými hodnotami prùmìru a s obrázky, které nejsou strojovì generované. Hodnoty prùmìru men¹í ne¾ 1,0 jsou neplatné a mohou vytváøet ru¹ivé efekty. Proto jsou interpretovány jako 0,0, co¾ znamená, ¾e výpoèet v této orientaci je pøeskoèen."
+msgstr ""
+"Provádí v obrazovce Gaussovo rozostøení s urèeným prùmìrem vlivu. Ke zmìnì "
+"pixelù je pou¾ito standardní odchylky normální distribuce vypoètené na "
+"základì zadaného prùmìru. Vodorovné a svislé rozostøení mù¾e být voleno "
+"nezávisle. Rozostøení IIR pracuje nejlépe s vysokými hodnotami prùmìru a "
+"s obrázky, které nejsou strojovì generované. Hodnoty prùmìru men¹í ne¾ 1,0 "
+"jsou neplatné a mohou vytváøet ru¹ivé efekty. Proto jsou interpretovány jako "
+"0,0, co¾ znamená, ¾e výpoèet v této orientaci je pøeskoèen."
 
 #: plug-ins/common/gauss_iir.c:166
 msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
@@ -3738,7 +3771,13 @@ msgid ""
 "RLE gaussian blurring performs most efficiently on computer-generated images "
 "or images with large areas of constant intensity.  Values for radii less "
 "than 1.0 are invalid as they would generate spurious results."
-msgstr "Provádí v obrazovce Gaussovo rozostøení s urèeným prùmìrem vlivu. Ke zmìnì pixelù je pou¾ito standardní odchylky normální distribuce vypoètené na základì zadaného prùmìru. Vodorovné a svislé rozostøení mù¾e být voleno nezávisle. Rozostøení RLE pracuje nejlépe se strojovì generovanými obrázky s rozsáhlými plochami stejné intenzity. Hodnoty prùmìru men¹í ne¾ 1,0 jsou neplatné a mohou vytváøet ru¹ivé efekty."
+msgstr ""
+"Provádí v obrazovce Gaussovo rozostøení s urèeným prùmìrem vlivu. Ke zmìnì "
+"pixelù je pou¾ito standardní odchylky normální distribuce vypoètené na "
+"základì zadaného prùmìru. Vodorovné a svislé rozostøení mù¾e být voleno "
+"nezávisle. Rozostøení RLE pracuje nejlépe se strojovì generovanými obrázky "
+"s rozsáhlými plochami stejné intenzity. Hodnoty prùmìru men¹í ne¾ 1,0 jsou "
+"neplatné a mohou vytváøet ru¹ivé efekty."
 
 #: plug-ins/common/gauss_rle.c:158
 msgid ""
@@ -3750,7 +3789,14 @@ msgid ""
 "or images with large areas of constant intensity.  Values for radii less "
 "than 1.0 would generate spurious results. Therefore they are interpreted as "
 "0.0, which means that the computation for this orientation is skipped."
-msgstr "Provádí v obrazovce Gaussovo rozostøení s urèeným prùmìrem vlivu. Ke zmìnì pixelù je pou¾ito standardní odchylky normální distribuce vypoètené na základì zadaného prùmìru. Vodorovné a svislé rozostøení mù¾e být voleno nezávisle. Rozostøení RLE pracuje nejlépe se strojovì generovanými obrázky s rozsáhlými plochami stejné intenzity. Hodnoty prùmìru men¹í ne¾ 1,0 jsou neplatné a mohou vytváøet ru¹ivé efekty. Proto jsou interpretovány jako 0,0, co¾ znamená, ¾e výpoèet v této orientaci je pøeskoèen."
+msgstr ""
+"Provádí v obrazovce Gaussovo rozostøení s urèeným prùmìrem vlivu. Ke zmìnì "
+"pixelù je pou¾ito standardní odchylky normální distribuce vypoètené na "
+"základì zadaného prùmìru. Vodorovné a svislé rozostøení mù¾e být voleno "
+"nezávisle. Rozostøení RLE pracuje nejlépe se strojovì generovanými obrázky "
+"s rozsáhlými plochami stejné intenzity. Hodnoty prùmìru men¹í ne¾ 1,0 jsou "
+"neplatné a mohou vytváøet ru¹ivé efekty. Proto jsou interpretovány jako 0,0, "
+"co¾ znamená, ¾e výpoèet v této orientaci je pøeskoèen."
 
 #: plug-ins/common/gauss_rle.c:162
 msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
@@ -3869,6 +3915,8 @@ msgid ""
 "Transparent colour *might* be incorrect on viewers which don't support "
 "transparency."
 msgstr ""
+"Prùhledné barvy *mohou* být nesprávné v prohlí¾eèích, které nepodporují "
+"prùhlednost."
 
 #: plug-ins/common/gif.c:1169
 msgid "GIF Warning"
@@ -3884,6 +3932,12 @@ msgid ""
 "You may choose whether to crop all of the layers to\n"
 "the image borders, or cancel this save."
 msgstr ""
+"Obrázek, který se pokou¹íte zapsat jako GIF\n"
+"obsahuje vrstvy, které pøesahují pøes aktuální hranice\n"
+"obrázku. Lze se obávat, ¾e to není ve formátu GIF povolené.\n"
+"\n"
+"Lze si zvolit oøez v¹ech vrstev obrázku nebo\n"
+"zru¹it zápis."
 
 #: plug-ins/common/gif.c:1243
 msgid "Save as GIF"
@@ -4235,7 +4289,7 @@ msgstr "Titulek"
 
 #: plug-ins/common/gtm.c:442
 msgid "Check if you would like to have the table captioned."
-msgstr ""
+msgstr "Volí, zda má mit tabulka titulek."
 
 #: plug-ins/common/gtm.c:454
 msgid "The text for the table caption."
@@ -4501,7 +4555,7 @@ msgstr "Práh"
 #. parameter settings
 #: plug-ins/common/iwarp.c:1040 plug-ins/common/sample_colorize.c:1310
 #: plug-ins/gap/gap_mod_layer.c:219 plug-ins/gfig/gfig.c:4943
-#: plug-ins/gflare/gflare.c:3093 plug-ins/sinus/sinus.c:885
+#: plug-ins/gflare/gflare.c:2954 plug-ins/sinus/sinus.c:885
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -5045,7 +5099,7 @@ msgstr "Velikost buòky "
 
 #. screen settings
 #: plug-ins/common/newsprint.c:1300 plug-ins/gap/gap_mov_dialog.c:251
-#: plug-ins/gflare/gflare.c:554
+#: plug-ins/gflare/gflare.c:555
 msgid "Screen"
 msgstr "Obrazovka"
 
@@ -5146,6 +5200,8 @@ msgid ""
 "Normalize the contrast of the specified drawable to cover all possible "
 "ranges."
 msgstr ""
+"Normalizuje kontrast v urèené obrazovce tak, aby pokryla v¹echny mo¾né "
+"rozsahy."
 
 #: plug-ins/common/normalize.c:79
 msgid ""
@@ -7299,7 +7355,7 @@ msgstr "Vektor zvìt¹ení:"
 
 #: plug-ins/common/warp.c:819
 msgid "Fixed-direction-vector map selection menu"
-msgstr ""
+msgstr "Menu mapy pevného smìrového vektoru"
 
 #.
 #. if (display_diff_map) {
@@ -7309,25 +7365,25 @@ msgstr ""
 #. make sure layer is visible
 #: plug-ins/common/warp.c:1294
 msgid "Smoothing X gradient..."
-msgstr ""
+msgstr "Vyhlazuje se X pøechod..."
 
 #: plug-ins/common/warp.c:1296
 msgid "Smoothing Y gradient..."
-msgstr ""
+msgstr "Vyhlazuje se Y pøechod..."
 
 #. calculate new X,Y Displacement image maps
 #: plug-ins/common/warp.c:1351
 msgid "Finding XY gradient..."
-msgstr ""
+msgstr "Hledá se XY pøechod..."
 
 #: plug-ins/common/warp.c:1375
 #, c-format
 msgid "Flow Step %d..."
-msgstr ""
+msgstr "Krok toku %d..."
 
 #: plug-ins/common/waves.c:135
 msgid "Distort the image with waves"
-msgstr ""
+msgstr "Zkresluje obrázek vlnami"
 
 #: plug-ins/common/waves.c:140
 msgid "<Image>/Filters/Distorts/Waves..."
@@ -8057,7 +8113,7 @@ msgstr "Pùvodní:"
 
 #: plug-ins/fp/fp_gtk.c:177
 msgid "Hue Variations"
-msgstr "Zmìna sytosti"
+msgstr "Zmìny odstínu"
 
 #: plug-ins/fp/fp_gtk.c:192
 msgid "Roughness"
@@ -8109,7 +8165,7 @@ msgstr "Zmìny sytosti"
 
 #: plug-ins/fp/fp_gtk.c:386
 msgid "Select Pixels by"
-msgstr "Volba pixel dle"
+msgstr "Kritérium volba pixelù"
 
 #: plug-ins/fp/fp_gtk.c:416
 msgid "Show"
@@ -8925,7 +8981,7 @@ msgstr ""
 msgid "No selected Layer in start frame\n"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:248 plug-ins/gflare/gflare.c:551
+#: plug-ins/gap/gap_mov_dialog.c:248 plug-ins/gflare/gflare.c:552
 #: plug-ins/gimpressionist/orientmap.c:590
 msgid "Normal"
 msgstr "Normální"
@@ -8938,7 +8994,7 @@ msgstr "Rozpou¹tìní"
 msgid "Multiply"
 msgstr "Násobení"
 
-#: plug-ins/gap/gap_mov_dialog.c:252 plug-ins/gflare/gflare.c:553
+#: plug-ins/gap/gap_mov_dialog.c:252 plug-ins/gflare/gflare.c:554
 #: plug-ins/gimpressionist/paper.c:152
 msgid "Overlay"
 msgstr "Pøekrytí"
@@ -8947,7 +9003,7 @@ msgstr "Pøekrytí"
 msgid "Difference"
 msgstr "Diference"
 
-#: plug-ins/gap/gap_mov_dialog.c:254 plug-ins/gflare/gflare.c:552
+#: plug-ins/gap/gap_mov_dialog.c:254 plug-ins/gflare/gflare.c:553
 msgid "Addition"
 msgstr "Souèet"
 
@@ -9490,6 +9546,8 @@ msgid ""
 "\n"
 "WARNING: mpeg_encode does not support Fileformat "
 msgstr ""
+"\n"
+"VAROVÁNÍ: mpeg_kódování nepodporuje formát souboru "
 
 #: plug-ins/gap/gap_mpege.c:980
 msgid ""
@@ -9508,6 +9566,8 @@ msgid ""
 "\n"
 "WARNING: mpeg2encode does not support Fileformat "
 msgstr ""
+"\n"
+"VAROVÁNÍ: mpeg2kódování nepodporuje formát souboru "
 
 #: plug-ins/gap/gap_mpege.c:992
 msgid ""
@@ -9526,6 +9586,8 @@ msgid ""
 "Smart Update .xvpics\n"
 "<Shift> forced upd"
 msgstr ""
+"Chytrá aktualizace .xvpics\n"
+"<Pøeøaïovaè> ji vnutí"
 
 #: plug-ins/gap/gap_navigator_dialog.c:363
 msgid "Duplicate selected Frames"
@@ -10014,7 +10076,7 @@ msgstr "Vlo¾it"
 msgid "Insert the selected char at the cursor position"
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext.c:148 plug-ins/gdyntext/gdyntext.c:428
+#: plug-ins/gdyntext/gdyntext.c:148 plug-ins/gdyntext/gdyntext.c:427
 msgid "GIMP Dynamic Text"
 msgstr "GIMP dynamický text"
 
@@ -10022,17 +10084,17 @@ msgstr "GIMP dynamický text"
 msgid "<Image>/Filters/Render/Dynamic Text..."
 msgstr "<Image>/Filtry/Vyobrazení/Dynamický text..."
 
-#: plug-ins/gdyntext/gdyntext.c:304
+#: plug-ins/gdyntext/gdyntext.c:303
 msgid ""
 "Current layer isn't a GDynText layer or it has no alpha channel.\n"
 "  Forcing new layer creation.\n"
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext.c:351
+#: plug-ins/gdyntext/gdyntext.c:350
 msgid "Upgrading old GDynText layer to "
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext.c:354
+#: plug-ins/gdyntext/gdyntext.c:353
 msgid ""
 "WARNING: GDynText is too old!\n"
 "  You may loose some data by changing this text.\n"
@@ -10041,7 +10103,7 @@ msgid ""
 msgstr ""
 
 #. remove old layer name
-#: plug-ins/gdyntext/gdyntext.c:393 plug-ins/gdyntext/gdyntext.c:530
+#: plug-ins/gdyntext/gdyntext.c:392 plug-ins/gdyntext/gdyntext.c:529
 msgid "GDynText Layer "
 msgstr "Vrstva GDynText "
 
@@ -10245,7 +10307,7 @@ msgstr "Chyba pøi ètení souboru"
 msgid "Hey where has the object gone ?"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:731
+#: plug-ins/gflare/gflare.c:730
 msgid ""
 " This plug-in produces a lense flare effect using custom gradients. In "
 "interactive call, the user can edit his/her own favorite lense flare "
@@ -10255,32 +10317,32 @@ msgid ""
 "gflare-path already."
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:741
+#: plug-ins/gflare/gflare.c:740
 msgid "Produce lense flare effect using custom gradients"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:743
+#: plug-ins/gflare/gflare.c:742
 msgid "Eiichi Takamori"
 msgstr "Ejèi Takamori"
 
-#: plug-ins/gflare/gflare.c:744
+#: plug-ins/gflare/gflare.c:743
 msgid "Eiichi Takamori, and a lot of GIMP people"
 msgstr "Ejèi Takamori a mnoho lidí od GIMPu"
 
-#: plug-ins/gflare/gflare.c:746
+#: plug-ins/gflare/gflare.c:745
 msgid "<Image>/Filters/Light Effects/GFlare..."
 msgstr "<Image>/Filtry/Efekty se svìtlem/P-záøe..."
 
-#: plug-ins/gflare/gflare.c:857
+#: plug-ins/gflare/gflare.c:856
 msgid "Gradient Flare..."
 msgstr "Záøe z pøechodu..."
 
-#: plug-ins/gflare/gflare.c:1304
+#: plug-ins/gflare/gflare.c:1303
 #, c-format
 msgid "not valid GFlare file: %s"
 msgstr "neplatný soubor P-záøe: %s"
 
-#: plug-ins/gflare/gflare.c:1354
+#: plug-ins/gflare/gflare.c:1353
 #, c-format
 msgid ""
 "invalid formatted GFlare file: %s\n"
@@ -10289,7 +10351,7 @@ msgstr ""
 "neplatnì formátovaný soubor P-záøe: %s\n"
 ")"
 
-#: plug-ins/gflare/gflare.c:1456
+#: plug-ins/gflare/gflare.c:1455
 #, c-format
 msgid ""
 "GFlare `%s' is not saved.\tIf you add a new entry in gimprc, like:\n"
@@ -10303,51 +10365,51 @@ msgstr ""
 "a vytvoøte adresáø ~/.gimp-1.1/gflare, a zapi¹tì svou vlastní P-záøi\n"
 "do tohoto adresáøe."
 
-#: plug-ins/gflare/gflare.c:1482
+#: plug-ins/gflare/gflare.c:1481
 #, c-format
 msgid "could not open \"%s\""
 msgstr "nelze otevøít \"%s\""
 
-#: plug-ins/gflare/gflare.c:1671
+#: plug-ins/gflare/gflare.c:1670
 #, c-format
 msgid "error reading GFlare directory \"%s\""
 msgstr "chyba pøi ètení adresáøe P-záøí \"%s\""
 
-#: plug-ins/gflare/gflare.c:2541
+#: plug-ins/gflare/gflare.c:2402
 msgid "GFlare"
 msgstr "Záøe z pøechodu"
 
-#: plug-ins/gflare/gflare.c:2668
+#: plug-ins/gflare/gflare.c:2529
 msgid "`Default' is created."
 msgstr "Byl vytvoøen ,Implicitní'."
 
-#: plug-ins/gflare/gflare.c:2669
+#: plug-ins/gflare/gflare.c:2530
 msgid "Default"
 msgstr "Implicitní"
 
-#: plug-ins/gflare/gflare.c:2963
+#: plug-ins/gflare/gflare.c:2824
 msgid "Center X:"
 msgstr "Støed X:"
 
-#: plug-ins/gflare/gflare.c:2980
+#: plug-ins/gflare/gflare.c:2841
 msgid "Center Y:"
 msgstr "Støed Y:"
 
-#: plug-ins/gflare/gflare.c:3001 plug-ins/gflare/gflare.c:3815
-#: plug-ins/gflare/gflare.c:3889 plug-ins/gflare/gflare.c:3981
+#: plug-ins/gflare/gflare.c:2862 plug-ins/gflare/gflare.c:3676
+#: plug-ins/gflare/gflare.c:3750 plug-ins/gflare/gflare.c:3842
 msgid "Rotation:"
 msgstr "Rotace:"
 
-#: plug-ins/gflare/gflare.c:3005 plug-ins/gflare/gflare.c:3820
-#: plug-ins/gflare/gflare.c:3893 plug-ins/gflare/gflare.c:3985
+#: plug-ins/gflare/gflare.c:2866 plug-ins/gflare/gflare.c:3681
+#: plug-ins/gflare/gflare.c:3754 plug-ins/gflare/gflare.c:3846
 msgid "Hue Rotation:"
 msgstr "Rotace odstínu:"
 
-#: plug-ins/gflare/gflare.c:3009
+#: plug-ins/gflare/gflare.c:2870
 msgid "Vector Angle:"
 msgstr "Úhel vektoru:"
 
-#: plug-ins/gflare/gflare.c:3013
+#: plug-ins/gflare/gflare.c:2874
 msgid "Vector Length:"
 msgstr "Délka vektoru:"
 
@@ -10355,194 +10417,194 @@ msgstr "Délka vektoru:"
 #. ***	Asupsample settings
 #. ***	This code is stolen from gimp-0.99.x/app/blend.c
 #. *
-#: plug-ins/gflare/gflare.c:3022
+#: plug-ins/gflare/gflare.c:2883
 msgid "Adaptive Supersampling"
 msgstr "Adaptivní pøevzorkování"
 
-#: plug-ins/gflare/gflare.c:3040
+#: plug-ins/gflare/gflare.c:2901
 msgid "Max depth:"
 msgstr "Nejvy¹¹í hloubka:"
 
-#: plug-ins/gflare/gflare.c:3081
+#: plug-ins/gflare/gflare.c:2942
 msgid "Auto update preview"
 msgstr "Automatická aktualizace náhledu"
 
 #.
 #. *	Create Page
 #.
-#: plug-ins/gflare/gflare.c:3239
+#: plug-ins/gflare/gflare.c:3100
 msgid "Selector"
 msgstr "Selektor"
 
-#: plug-ins/gflare/gflare.c:3327
+#: plug-ins/gflare/gflare.c:3188
 msgid "New GFlare"
 msgstr "Nová P-záøe"
 
-#: plug-ins/gflare/gflare.c:3328
+#: plug-ins/gflare/gflare.c:3189
 msgid "Enter a name for the new GFlare"
 msgstr "Zadejte jméno pro novou P-záøi"
 
-#: plug-ins/gflare/gflare.c:3329
+#: plug-ins/gflare/gflare.c:3190
 msgid "untitled"
 msgstr "bez názvu"
 
 #. message_box ();
-#: plug-ins/gflare/gflare.c:3345 plug-ins/gflare/gflare.c:3413
+#: plug-ins/gflare/gflare.c:3206 plug-ins/gflare/gflare.c:3274
 #, c-format
 msgid "The name `%s' is used already!"
 msgstr "Jméno ,%s' je ji¾ pou¾ito!"
 
-#: plug-ins/gflare/gflare.c:3394
+#: plug-ins/gflare/gflare.c:3255
 msgid "Copy GFlare"
 msgstr "Kopírovat P-záøi"
 
-#: plug-ins/gflare/gflare.c:3395
+#: plug-ins/gflare/gflare.c:3256
 msgid "Enter a name for the copied GFlare"
 msgstr "Zadejte jméno pro kopírovanou P-záøi"
 
 #. message_box ()
-#: plug-ins/gflare/gflare.c:3443
+#: plug-ins/gflare/gflare.c:3304
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Nelze smazat. Musí zde být alespoò jedna P-záøe."
 
-#: plug-ins/gflare/gflare.c:3448
+#: plug-ins/gflare/gflare.c:3309
 msgid "Delete GFlare"
 msgstr "Smazat P-záøi"
 
 #. Question
-#: plug-ins/gflare/gflare.c:3460
+#: plug-ins/gflare/gflare.c:3321
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Opravdu chcete smazat \"%s\" ze seznamu a z disku?"
 
-#: plug-ins/gflare/gflare.c:3532
+#: plug-ins/gflare/gflare.c:3393
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "%s nebylo nalezeno v seznam_p_záøí"
 
-#: plug-ins/gflare/gflare.c:3579
+#: plug-ins/gflare/gflare.c:3440
 msgid "GFlare Editor"
 msgstr "Editor P-záøí"
 
-#: plug-ins/gflare/gflare.c:3608
+#: plug-ins/gflare/gflare.c:3469
 msgid "Rescan Gradients"
 msgstr "Zaktualizovat pøechody"
 
-#: plug-ins/gflare/gflare.c:3727
+#: plug-ins/gflare/gflare.c:3588
 msgid "Glow Opacity (%):"
 msgstr "Krytí záøe (%):"
 
-#: plug-ins/gflare/gflare.c:3733
+#: plug-ins/gflare/gflare.c:3594
 msgid "Glow Mode:"
 msgstr "Re¾im záøe:"
 
-#: plug-ins/gflare/gflare.c:3735
+#: plug-ins/gflare/gflare.c:3596
 msgid "Rays Opacity (%):"
 msgstr "Krytí paprskù (%d):"
 
-#: plug-ins/gflare/gflare.c:3741
+#: plug-ins/gflare/gflare.c:3602
 msgid "Rays Mode:"
 msgstr "Re¾im paprskù:"
 
-#: plug-ins/gflare/gflare.c:3743
+#: plug-ins/gflare/gflare.c:3604
 msgid "Second Flares Opacity (%):"
 msgstr "Druhé krytí záøe (%d):"
 
-#: plug-ins/gflare/gflare.c:3749
+#: plug-ins/gflare/gflare.c:3610
 msgid "Second Flares Mode:"
 msgstr "Druhé krytí záøe:"
 
 #.
 #. *	Create Page
 #.
-#: plug-ins/gflare/gflare.c:3757 plug-ins/gimpressionist/general.c:134
+#: plug-ins/gflare/gflare.c:3618 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
 msgid "General"
 msgstr "V¹eobecné"
 
-#: plug-ins/gflare/gflare.c:3789 plug-ins/gflare/gflare.c:3863
-#: plug-ins/gflare/gflare.c:3955
+#: plug-ins/gflare/gflare.c:3650 plug-ins/gflare/gflare.c:3724
+#: plug-ins/gflare/gflare.c:3816
 msgid "Radial Gradient:"
 msgstr "Paprskovitý pøechod:"
 
-#: plug-ins/gflare/gflare.c:3793 plug-ins/gflare/gflare.c:3867
+#: plug-ins/gflare/gflare.c:3654 plug-ins/gflare/gflare.c:3728
 msgid "Angular Gradient:"
 msgstr "Úhlový pøechod:"
 
-#: plug-ins/gflare/gflare.c:3797 plug-ins/gflare/gflare.c:3871
+#: plug-ins/gflare/gflare.c:3658 plug-ins/gflare/gflare.c:3732
 msgid "Angular Size Gradient:"
 msgstr "Pøechod úhlové velikosti:"
 
-#: plug-ins/gflare/gflare.c:3810 plug-ins/gflare/gflare.c:3885
-#: plug-ins/gflare/gflare.c:3977
+#: plug-ins/gflare/gflare.c:3671 plug-ins/gflare/gflare.c:3746
+#: plug-ins/gflare/gflare.c:3838
 msgid "Size (%):"
 msgstr "Velikost (%):"
 
 #.
 #. *	Create Page
 #.
-#: plug-ins/gflare/gflare.c:3831
+#: plug-ins/gflare/gflare.c:3692
 msgid "Glow"
 msgstr "Záøe"
 
-#: plug-ins/gflare/gflare.c:3897
+#: plug-ins/gflare/gflare.c:3758
 msgid "# of Spikes:"
 msgstr "Poèet hrotù:"
 
-#: plug-ins/gflare/gflare.c:3901
+#: plug-ins/gflare/gflare.c:3762
 msgid "Spike Thickness:"
 msgstr "Tlou¹»ka hrotù:"
 
 #.
 #. *	Create Pages
 #.
-#: plug-ins/gflare/gflare.c:3913
+#: plug-ins/gflare/gflare.c:3774
 msgid "Rays"
 msgstr "Paprsky"
 
-#: plug-ins/gflare/gflare.c:3959
+#: plug-ins/gflare/gflare.c:3820
 msgid "Size Factor Gradient:"
 msgstr "Pøechod faktoru velikosti:"
 
-#: plug-ins/gflare/gflare.c:3963
+#: plug-ins/gflare/gflare.c:3824
 msgid "Probability Gradient:"
 msgstr "Pøechod pravdìpodobnosti:"
 
-#: plug-ins/gflare/gflare.c:3998 plug-ins/imagemap/imap_circle.c:59
+#: plug-ins/gflare/gflare.c:3859 plug-ins/imagemap/imap_circle.c:59
 #: plug-ins/imagemap/imap_menu.c:386 plug-ins/imagemap/imap_popup.c:134
 msgid "Circle"
 msgstr "Kruh"
 
-#: plug-ins/gflare/gflare.c:4009 plug-ins/imagemap/imap_menu.c:388
+#: plug-ins/gflare/gflare.c:3870 plug-ins/imagemap/imap_menu.c:388
 #: plug-ins/imagemap/imap_polygon.c:68 plug-ins/imagemap/imap_popup.c:137
 msgid "Polygon"
 msgstr "Polygon"
 
-#: plug-ins/gflare/gflare.c:4035
+#: plug-ins/gflare/gflare.c:3896
 msgid "Shape of Second Flares"
 msgstr "Tvar druhé záøe"
 
-#: plug-ins/gflare/gflare.c:4046
+#: plug-ins/gflare/gflare.c:3907
 msgid "Random Seed (-1 means current time):"
 msgstr "Náhodné hnízdo (-1 znamená aktuální èas):"
 
 #.
 #. *	Create Pages
 #.
-#: plug-ins/gflare/gflare.c:4066
+#: plug-ins/gflare/gflare.c:3927
 msgid "Second Flares"
 msgstr "Druhá záøe"
 
-#: plug-ins/gflare/gflare.c:4703
+#: plug-ins/gflare/gflare.c:4564
 msgid "none"
 msgstr "nic"
 
-#: plug-ins/gflare/gflare.c:4716
+#: plug-ins/gflare/gflare.c:4577
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr "\"%s\" nebylo nalezeno: namísto nìj pou¾ito \"%s\""
 
-#: libgimp/gimpunitmenu.c:215 plug-ins/gflare/gflare.c:4786
+#: libgimp/gimpunitmenu.c:215 plug-ins/gflare/gflare.c:4647
 msgid "More..."
 msgstr "Více..."
 
@@ -12403,8 +12465,8 @@ msgstr "Rotace barevné mapy jako v xv"
 
 #: plug-ins/rcm/rcm.c:112
 msgid ""
-"Exchanges two color ranges.Based on code from Pavel Grinfeld "
-"(pavel@ml.com).This version written by Sven Anders "
+"Exchanges two color ranges. Based on code from Pavel Grinfeld "
+"(pavel@ml.com). This version written by Sven Anders "
 "(anderss@fmi.uni-passau.de)."
 msgstr ""
 "Prohodí dva barevné rozsahy. Zalo¾eno na kódu Pavla Grinfelda "
@@ -12535,65 +12597,65 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1145
+#: plug-ins/script-fu/script-fu-scripts.c:1234
 msgid "Script Arguments"
 msgstr "Argumenty skriptu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1208
+#: plug-ins/script-fu/script-fu-scripts.c:1297
 msgid "Script-Fu Color Selection"
 msgstr "Skript-fu výbìr barvy"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1215
+#: plug-ins/script-fu/script-fu-scripts.c:1304
 msgid "Script Toggle"
 msgstr "Pøepínaè skriptu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1268
+#: plug-ins/script-fu/script-fu-scripts.c:1357
 msgid "Script-Fu File Selection"
 msgstr "Skript-fu výbìr souboru"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1297
+#: plug-ins/script-fu/script-fu-scripts.c:1386
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-fu výbìr vzorku"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1303
+#: plug-ins/script-fu/script-fu-scripts.c:1392
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-fu výbìr pøechodu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1311
+#: plug-ins/script-fu/script-fu-scripts.c:1400
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-fu výbìr ¹tìtce"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1346
+#: plug-ins/script-fu/script-fu-scripts.c:1435
 msgid " Reset to Defaults "
 msgstr " Nastavit na implicitní hodnody "
 
-#: plug-ins/script-fu/script-fu-scripts.c:1489
+#: plug-ins/script-fu/script-fu-scripts.c:1578
 msgid "NOT SET"
 msgstr "NENÍ URÈENO"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1560
+#: plug-ins/script-fu/script-fu-scripts.c:1649
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1825
+#: plug-ins/script-fu/script-fu-scripts.c:1914
 msgid "Author: "
 msgstr "Autor: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:1835
+#: plug-ins/script-fu/script-fu-scripts.c:1924
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:1845
+#: plug-ins/script-fu/script-fu-scripts.c:1934
 msgid "Date: "
 msgstr "Datum: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:1857
+#: plug-ins/script-fu/script-fu-scripts.c:1946
 msgid "Image types: "
 msgstr "Typy obrázku: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:2014
+#: plug-ins/script-fu/script-fu-scripts.c:2103
 msgid "Script-Fu Font Selection"
 msgstr "Výbìr písma Skript-fu"
 
@@ -13065,3 +13127,5 @@ msgstr "Výbìr jednotek"
 #: libgimp/gimpunitmenu.c:494
 msgid "Factor"
 msgstr "Faktor"
+
+#, fuzzy
