@@ -16,8 +16,9 @@
 # Tipsy powsta³y dziêki: Zachary Beane, Mo Oishi,
 # Raphael Quinet, Sven Neumann i wielu ludzi z listy dyskusyjnej GIMPa.
 #
-# T³umaczy³: Artur Polaczyñski <psi2494@orca.mila.edu.pl> ( <- wszystkie uwagi tutaj)
+# T³umaczy³: Artur Polaczyñski <artie@kmfms.com> ( <- wszystkie uwagi tutaj)
 #            Kris              <psi0873@orca.mila.edu.pl>
+# Je¶li co¶ zmienisz to wysli przynajmniej info do ar't 
 # --------------------------------------------------------------------
 
 # Pierwszy tips powinien byæ powitaniem, poniewa¿ to pierwsza rzecz 
@@ -34,16 +35,16 @@ wiêkszo¶æ pomy³ek mo¿esz cofn±æ (Ctrl-Z).
 #
 
 Warstwy w GIMPie pomagaj± zorganizowaæ twój obrazek.
-Pomy¶l o nich jako o slajdach i filtrach,
+Pomy¶l o nich jak o slajdach i filtrach,
 przez które widzisz ca³o¶æ kompozycji.
 
 Mo¿esz wykonaæ wiele operacji na warstwach klikaj±c 
 prawym klawiszem myszy na nazwê warstwy w oknie 
-"Warstwy i Kana³y" (dialogi->Warstwy i Kana³y).
+"Warstwy i Kana³y" (Dialogi->Warstwy i Kana³y).
 
 Kiedy próbujesz zapisaæ pliki GIF, XPM, lub inne z 
 kolorem indeksowym, musisz przekonwertowaæ obrazek 
-do indeksowego u¿ywaj±c menu Obraz/indeksowy. 
+do indeksowego u¿ywaj±c menu Obraz//Indeksowy. 
 
 Je¶li chcesz widzieæ wiêcej ustawieñ dla danego 
 narzêdzia kliknij na jego przycisku dwukrotnie.
@@ -54,7 +55,7 @@ na jej nazwie w oknie "Warstwy i Kana³y".
 Warstwa "t³o" (Background) jest specjalna, nie mo¿e
 mieæ maski, dopóki nie bêdzie mia³a kana³u alfa. Kliknij 
 prawym klawiszem myszy w oknie "Warstwy i Kana³y" na tej 
-warstwie i wybierz "Dodaj kana³ alfa"(Add Alpcha Channel).
+warstwie i wybierz "Dodaj kana³ alfa" (Add Alpcha Channel).
 
 U¿ywaj±c narzêdzi malowania (pêdzle, pióro, aerograf), 
 klikniêcie z shiftem spowoduje namalowanie prostej linii od 
@@ -69,8 +70,8 @@ wtedy zapisywana jest jedna, aktywna warstwa. U¿yj formatu
 (GIMPa) XCF do zapisania warstw, kana³ów, linii i zaznaczeñ.
 
 Nie wszystkie efekty mog± byæ wykorzystane do wszystkich rodzajów
-obrazków. S± zaznaczone szarym kolorem napisu w menu. Wtedy potrzebujesz
-zmieniæ obraz do RGB, dodaæ kana³ alfa lub sp³aszczyæ go.
+obrazków. S± zaznaczone szarym kolorem napisu w menu. Potrzebujesz
+wtedy zmieniæ obraz do RGB, dodaæ kana³ alfa lub sp³aszczyæ go.
 
 # Tipsy dla ¶rednio zaawansowanych
 #
@@ -106,7 +107,7 @@ wycentrowanie zaznaczenia do pocz±tku zaznaczenia.
 
 # Tipsy dla zaawansowanych
 #
-
+#???????????????????????????????????????????????????
 #You can adjust the selection range for fuzzy select 
 #by clicking and dragging left and right.
 
@@ -114,7 +115,7 @@ Klikniêcie z Shift-em na ikonkê oka w oknie
 "Warstwy i Kana³y" chowa wszystkie warstwy poza t± jedn±.
 
 Klikniêcie z Ctrl na podgl±dzie maski w oknie Warstwy i Kana³y
-w³±cza\wy³±cza efekt maski.
+w³±cza/wy³±cza efekt maski.
 
 Klikniêcie z Alt na podgl±dzie maski w oknie Warstwy i Kana³y
 w³±cza/wy³±cza wy¶wietlanie maski w oknie obrazka.
@@ -139,10 +140,10 @@ Pobierz je i zainstaluj.
 #        problems of stale pluginrc files and plug-in directories.
 #        All other files in ~/.gimp can be kept after an upgrade.
 #        In particular, we should try to preserve gimprc.  --Raphael
-# czy to przypadkiem jest nie aktualne !!!
-
-Kiedy instalujesz now± wersje, 
-skasuj swój katalog ~/.gimp .
+# czy to przypadkiem nie aktualne !!!
+#
+#Kiedy instalujesz now± wersje, 
+#skasuj swój katalog ~/.gimp .
 
 "Edycja -> Stroke" pomaga narysowaæ prostok±ty lub 
 owale po krawêdzi zaznaczenia, aktualnym pêdzlem.

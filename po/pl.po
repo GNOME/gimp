@@ -131,7 +131,6 @@ msgid "FG to Transparent"
 msgstr ""
 
 #: app/blend.c:263
-#, fuzzy
 msgid "Custom from Editor"
 msgstr "W³asny z edytora"
 
@@ -184,12 +183,10 @@ msgid "None"
 msgstr "Brak"
 
 #: app/blend.c:297
-#, fuzzy
 msgid "Sawtooth Wave"
 msgstr "Fala pi³okszta³tna"
 
 #: app/blend.c:299
-#, fuzzy
 msgid "Triangular Wave"
 msgstr "Fala trójk±tna"
 
@@ -210,12 +207,10 @@ msgid "Repeat:"
 msgstr "Powtórz:"
 
 #: app/blend.c:379
-#, fuzzy
 msgid "Adaptive Supersampling"
 msgstr "Nadpróbkowanie adaptywne"
 
 #: app/blend.c:407
-#, fuzzy
 msgid "Max Depth:"
 msgstr "Maksymalna g³êbia:"
 
@@ -875,7 +870,6 @@ msgid "Crop & Resize Options"
 msgstr "Kadrowanie i zmiana rozmiaru"
 
 #: app/crop.c:188
-#, fuzzy
 msgid "Current Layer Only"
 msgstr "Tylko bie¿±ca warstwa"
 
@@ -959,15 +953,13 @@ msgid "Curves"
 msgstr "Krzywe"
 
 #: app/curves.c:577
-#, fuzzy
 msgid "Modify Curves for Channel:"
-msgstr "Modyfikuj krzywe kana³u: "
+msgstr "Modyfikuj krzywe kana³u:"
 
 #. The option menu for selecting the drawing method
 #: app/curves.c:658
-#, fuzzy
 msgid "Curve Type:"
-msgstr "Typ krzywej: "
+msgstr "Typ krzywej:"
 
 #: app/desaturate.c:35
 msgid "Desaturate operates only on RGB color drawables."
@@ -1173,9 +1165,8 @@ msgstr "Odczyt obrazu"
 
 #. format-chooser frame
 #: app/fileops.c:288
-#, fuzzy
 msgid "Determine file type"
-msgstr "Ustalenie typu pliku:"
+msgstr "Ustalenie typu pliku"
 
 #: app/fileops.c:382
 msgid ""
@@ -1614,7 +1605,6 @@ msgid "Paste Into"
 msgstr "Wklej do"
 
 #: app/global_edit.c:706
-#, fuzzy
 msgid "Paste as New"
 msgstr "Wklej jako nowy"
 
@@ -2185,7 +2175,7 @@ msgstr "B:"
 #: app/info_window.c:235
 #, fuzzy
 msgid "G:"
-msgstr "G:"
+msgstr "Zielony:"
 
 #: app/info_window.c:240
 #, fuzzy
@@ -3354,33 +3344,29 @@ msgid "/Xtns"
 msgstr "/Edycja/---"
 
 #: app/menus.c:203
-#, fuzzy
 msgid "/Xtns/Module Browser..."
-msgstr "/Rozszerzenia/Przegl±darka modu³ów"
+msgstr "/Rozszerzenia/Przegl±darka modu³ów..."
 
 #. <Toolbox>/Help
 #: app/menus.c:211
 msgid "/Help"
-msgstr ""
+msgstr "/Pomoc"
 
 #: app/menus.c:213
-#, fuzzy
 msgid "/Help/Help..."
-msgstr "/Plik/Pomoc..."
+msgstr "/Pomoc/Pomoc..."
 
 #: app/menus.c:215
 msgid "/Help/Context Help..."
 msgstr ""
 
 #: app/menus.c:217
-#, fuzzy
 msgid "/Help/Tip of the Day..."
-msgstr "/Plik/Porada dnia"
+msgstr "/Pomoc/Porada dnia"
 
 #: app/menus.c:219
-#, fuzzy
 msgid "/Help/About..."
-msgstr "/Plik/Informacje o..."
+msgstr "/Pomoc/Informacje o..."
 
 #: app/menus.c:221
 msgid "/Help/Dump Items (Debug)"
@@ -3391,9 +3377,8 @@ msgid "/File/Save"
 msgstr "/Plik/Zapisz"
 
 #: app/menus.c:245
-#, fuzzy
 msgid "/File/Save As..."
-msgstr "/Plik/Zapisz jako"
+msgstr "/Plik/Zapisz jako..."
 
 #: app/menus.c:247
 msgid "/File/Revert"
@@ -3433,7 +3418,6 @@ msgid "/Edit/Paste Into"
 msgstr "/Edycja/Wklej do"
 
 #: app/menus.c:279
-#, fuzzy
 msgid "/Edit/Paste as New"
 msgstr "/Edycja/Wklej jako nowy"
 
@@ -3492,31 +3476,26 @@ msgid "/Select/Float"
 msgstr ""
 
 #: app/menus.c:320
-#, fuzzy
 msgid "/Select/Feather..."
-msgstr "Zaznacz/Wyg³ad¼"
+msgstr "/Zaznacz/Wyg³ad¼..."
 
 #: app/menus.c:322
 msgid "/Select/Sharpen"
 msgstr "/Zaznacz/Wyostrz"
 
 #: app/menus.c:324
-#, fuzzy
 msgid "/Select/Shrink..."
-msgstr "/Zaznacz/Zmniejsz"
+msgstr "/Zaznacz/Zmniejsz..."
 
 #: app/menus.c:326
-#, fuzzy
 msgid "/Select/Grow..."
-msgstr "/Zaznacz/Powiêksz"
+msgstr "/Zaznacz/Powiêksz..."
 
 #: app/menus.c:328
-#, fuzzy
 msgid "/Select/Border..."
-msgstr "/Zaznacz/Brzeg"
+msgstr "/Zaznacz/Brzeg..."
 
 #: app/menus.c:333
-#, fuzzy
 msgid "/Select/Save to Channel"
 msgstr "/Zaznacz/Zapisz do kana³u"
 
@@ -3588,9 +3567,8 @@ msgid "/View/Nav. Window..."
 msgstr "/Widok/Nawigacja oknem..."
 
 #: app/menus.c:377
-#, fuzzy
 msgid "/View/Undo History..."
-msgstr "/Edycja/Historia cofniêæ..."
+msgstr "/Widok/Historia cofniêæ..."
 
 #: app/menus.c:382
 msgid "/View/Toggle Selection"
@@ -3628,24 +3606,20 @@ msgstr "/Obraz"
 
 #. <Image>/Image/Mode
 #: app/menus.c:410
-#, fuzzy
 msgid "/Image/Mode"
-msgstr "/Obraz/RGB"
+msgstr "/Obraz/Tryb"
 
 #: app/menus.c:412
-#, fuzzy
 msgid "/Image/Mode/RGB"
-msgstr "/Obraz/RGB"
+msgstr "/Obraz/Tryb/RGB"
 
 #: app/menus.c:414
-#, fuzzy
 msgid "/Image/Mode/Grayscale"
-msgstr "/Obraz/Odcienie szaro¶ci"
+msgstr "/Obraz/Tryb/Odcienie szaro¶ci"
 
 #: app/menus.c:416
-#, fuzzy
 msgid "/Image/Mode/Indexed..."
-msgstr "/Obraz/Indeksowany"
+msgstr "/Obraz/Tryb/Indeksowany..."
 
 #. <Image>/Image/Colors
 #: app/menus.c:424
@@ -4643,7 +4617,6 @@ msgid "Error: Default unit must be within unit range."
 msgstr ""
 
 #: app/preferences_dialog.c:267
-#, fuzzy
 msgid "Error: Default resolution must not be zero."
 msgstr "B³±d: Domy¶lna rozdzielczo¶æ nie mo¿e wynosiæ zero."
 
@@ -5404,7 +5377,6 @@ msgid "gimp_tips.txt"
 msgstr "gimp_tips.pl.txt"
 
 #: app/tips_dialog.c:90
-#, fuzzy
 msgid "GIMP Tip of the Day"
 msgstr "Porada dnia GIMP-a"
 
@@ -5875,18 +5847,16 @@ msgid "Adjust color balance"
 msgstr "Ustaw balans kolorów"
 
 #: app/tools.c:600
-#, fuzzy
 msgid "/Image/Colors/Brightness-Contrast..."
-msgstr "/Obraz/Kolory/Jasno¶æ i kontrast"
+msgstr "/Obraz/Kolory/Jasno¶æ i kontrast..."
 
 #: app/tools.c:603
 msgid "Adjust brightness and contrast"
 msgstr "Ustaw jasno¶æ i kontrast"
 
 #: app/tools.c:616
-#, fuzzy
 msgid "/Image/Colors/Hue-Saturation..."
-msgstr "/Obraz/Kolory/Odcieñ i nasycenie"
+msgstr "/Obraz/Kolory/Odcieñ i nasycenie..."
 
 #: app/tools.c:619
 msgid "Adjust hue and saturation"
@@ -5911,18 +5881,16 @@ msgid "Reduce image to two colors using a threshold"
 msgstr ""
 
 #: app/tools.c:664
-#, fuzzy
 msgid "/Image/Colors/Curves..."
-msgstr "/Obraz/Kolory/Krzywe"
+msgstr "/Obraz/Kolory/Krzywe..."
 
 #: app/tools.c:667
 msgid "Adjust color curves"
 msgstr ""
 
 #: app/tools.c:680
-#, fuzzy
 msgid "/Image/Colors/Levels..."
-msgstr "/Obraz/Kolory/Poziomy"
+msgstr "/Obraz/Kolory/Poziomy..."
 
 #: app/tools.c:683
 #, fuzzy
@@ -5930,9 +5898,8 @@ msgid "Adjust color levels"
 msgstr "Sk³adowe barwy: "
 
 #: app/tools.c:696
-#, fuzzy
 msgid "/Image/Histogram..."
-msgstr "/Obraz/Histogram"
+msgstr "/Obraz/Histogram..."
 
 #: app/tools.c:699
 #, fuzzy
@@ -6034,7 +6001,7 @@ msgstr "Przywruæ"
 #: app/undo.c:2829
 #, fuzzy, c-format
 msgid "Can't undo %s"
-msgstr "Nie mo¿na otworzyæ %s: %s"
+msgstr "Nie mo¿na odworzyæ %s"
 
 #: app/undo.c:2857
 msgid "<<invalid>>"

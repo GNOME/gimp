@@ -209,7 +209,7 @@ query (void)
   
   gimp_install_procedure (PLUG_IN_NAME,
 			  _("Align visible layers"),
-			  _("align visible layers"),
+			  _("Align visible layers"),
 			  "Shuji Narazaki <narazaki@InetQ.or.jp>",
 			  "Shuji Narazaki",
 			  "1997",
