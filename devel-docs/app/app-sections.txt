@@ -1222,6 +1222,7 @@ GimpToolOptions
 gimp_tool_options_reset
 gimp_tool_options_serialize
 gimp_tool_options_deserialize
+gimp_tool_options_build_filename
 <SUBSECTION Standard>
 GimpToolOptionsClass
 GIMP_TOOL_OPTIONS
@@ -4317,6 +4318,22 @@ gimp_text_editor_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gimptooloptionseditor</FILE>
+<TITLE>GimpToolOptionsEditor</TITLE>
+GimpToolOptionsEditor
+gimp_tool_options_editor_new
+<SUBSECTION Standard>
+GimpToolOptionsEditorClass
+GIMP_TOOL_OPTIONS_EDITOR
+GIMP_IS_TOOL_OPTIONS_EDITOR
+GIMP_TYPE_TOOL_OPTIONS_EDITOR
+gimp_tool_options_editor_get_type
+GIMP_TOOL_OPTIONS_EDITOR_CLASS
+GIMP_IS_TOOL_OPTIONS_EDITOR_CLASS
+GIMP_TOOL_OPTIONS_EDITOR_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimptoolbox</FILE>
 <TITLE>GimpToolbox</TITLE>
 GimpToolbox
@@ -5213,8 +5230,6 @@ gimp_drawable_offset
 <SECTION>
 <FILE>gimpdrawable-preview</FILE>
 <TITLE>GimpDrawable-preview</TITLE>
-gimp_drawable_get_preview_size
-gimp_drawable_get_popup_size
 gimp_drawable_get_preview
 </SECTION>
 
@@ -5479,6 +5494,12 @@ gimp_item_linked_translate
 gimp_item_linked_flip
 gimp_item_linked_rotate
 gimp_item_linked_transform
+</SECTION>
+
+<SECTION>
+<FILE>gimpitem-preview</FILE>
+gimp_item_get_preview_size
+gimp_item_get_popup_size
 </SECTION>
 
 <SECTION>
@@ -6297,8 +6318,20 @@ gimp_tips_free
 </SECTION>
 
 <SECTION>
-<FILE>tool-options-dialog</FILE>
-tool_options_dialog_create
+<FILE>tool-options-menu</FILE>
+tool_options_menu_setup
+tool_options_menu_update
+n_tool_options_menu_entries
+</SECTION>
+
+<SECTION>
+<FILE>tool-options-commands</FILE>
+tool_options_save_to_cmd_callback
+tool_options_save_new_cmd_callback
+tool_options_restore_from_cmd_callback
+tool_options_delete_saved_cmd_callback
+tool_options_reset_cmd_callback
+tool_options_reset_all_cmd_callback
 </SECTION>
 
 <SECTION>

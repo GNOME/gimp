@@ -132,6 +132,7 @@
       <xi:include href="xml/gimpdata.xml"/>
       <xi:include href="xml/gimpitem.xml"/>
       <xi:include href="xml/gimpitem-linked.xml"/>
+      <xi:include href="xml/gimpitem-preview.xml"/>
     </chapter>
 
     <chapter id="app-core-containers">
@@ -587,6 +588,7 @@
       <xi:include href="xml/gimperrorconsole.xml"/>
       <xi:include href="xml/gimpstrokeeditor.xml"/>
       <xi:include href="xml/gimptemplateeditor.xml"/>
+      <xi:include href="xml/gimptooloptionseditor.xml"/>
     </chapter>
 
     <chapter id="app-widgets-data-editors">
@@ -741,11 +743,10 @@
       <xi:include href="xml/preferences-dialog.xml"/>
       <xi:include href="xml/resize-dialog.xml"/>
       <xi:include href="xml/resolution-calibrate-dialog.xml"/>
+      <xi:include href="xml/splash.xml"/>
       <xi:include href="xml/stroke-dialog.xml"/>
       <xi:include href="xml/tips-dialog.xml"/>
       <xi:include href="xml/tips-parser.xml"/>
-      <xi:include href="xml/tool-options-dialog.xml"/>
-      <xi:include href="xml/splash.xml"/>
       <xi:include href="xml/user-install-dialog.xml"/>
     </chapter>
 
@@ -838,6 +839,8 @@
       <xi:include href="xml/qmask-commands.xml"/>
       <xi:include href="xml/templates-menu.xml"/>
       <xi:include href="xml/templates-commands.xml"/>
+      <xi:include href="xml/tool-options-menus.xml"/>
+      <xi:include href="xml/tool-options-commands.xml"/>
     </chapter>
   </part>
 
