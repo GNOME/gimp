@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-03-06 03:52+0100\n"
-"PO-Revision-Date: 2002-03-06 03:53+0100\n"
+"POT-Creation-Date: 2002-03-07 03:27+0100\n"
+"PO-Revision-Date: 2002-03-07 03:27+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -539,7 +539,7 @@ msgstr ""
 "Ödesdigert tolkningsfel:\n"
 "Penselfilen \"%s\" verkar vara avklippt."
 
-#: app/core/gimpbrush.c:539
+#: app/core/gimpbrush.c:539 app/core/gimpbrushpipe.c:329
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ogiltig UTF-8-sträng i penselfilen \"%s\"."
@@ -554,11 +554,6 @@ msgstr "Namnlös"
 #, c-format
 msgid "Could not open file '%s'"
 msgstr "Kunde inte öppna \"%s\""
-
-#: app/core/gimpbrushpipe.c:329
-#, c-format
-msgid "Invalid UTF-8 string in GIMP brush file '%s'."
-msgstr "Ogiltig UTF-8-sträng i GIMP-penselfilen \"%s\"."
 
 #: app/core/gimpbrushpipe.c:338 app/core/gimpbrushpipe.c:356
 #: app/core/gimpbrushpipe.c:444
@@ -878,128 +873,131 @@ msgstr ""
 "eller kanal."
 
 #: app/core/gimpmoduleinfo.c:286 app/core/gimpmoduleinfo.c:307
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Module '%s' load error:\n"
 "%s"
-msgstr "fel vid inläsning av modul: %s: %s"
+msgstr ""
+"Fel vid inläsning av modul \"%s\":\n"
+"%s"
 
 #: app/core/gimpmoduleinfo.c:304
 msgid "Missing module_init() symbol"
-msgstr ""
+msgstr "Symbolen module_init() saknas"
 
 #: app/core/gimpmodules.c:277
-#, fuzzy, c-format
+#, c-format
 msgid "loading module: '%s'\n"
 msgstr "läser in modul: \"%s\"\n"
 
 #: app/core/gimpmodules.c:284
-#, fuzzy, c-format
+#, c-format
 msgid "skipping module: '%s'\n"
 msgstr "hoppar över modul: \"%s\"\n"
 
 #: app/core/gimppalette.c:291
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open palette file '%s': %s"
-msgstr "Kunde inte öppna filen %s"
+msgstr "Misslyckades med att öppna filen \"%s\": %s"
 
 #: app/core/gimppalette.c:305
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Corrupt palette: missing magic header\n"
 "Does this file need converting from DOS?"
 msgstr ""
-"Läser in paletten %s:\n"
-"Trasig palett:\n"
-"saknade huvud\n"
+"Läser in paletten \"%s\":\n"
+"Trasig palett: magiskt huvud saknas\n"
 "Behöver denna fil konverteras från DOS?"
 
 #: app/core/gimppalette.c:309
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Corrupt palette: missing magic header"
 msgstr ""
-"Läser in paletten %s:\n"
-"Trasig palett: saknade huvud"
+"Läser in paletten \"%s\":\n"
+"Trasig palett: magiskt huvud saknas"
 
 #: app/core/gimppalette.c:323 app/core/gimppalette.c:348
 #: app/core/gimppalette.c:377 app/core/gimppalette.c:448
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Read error in line %d."
 msgstr ""
-"Läser in paletten %s (rad %d):\n"
-"Läsfel"
+"Läser in paletten \"%s\":\n"
+"Läsfel på rad %d."
 
 #: app/core/gimppalette.c:342
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr ""
+msgstr "Ogiltig UTF-8-sträng i palettfilen \"%s\""
 
 #: app/core/gimppalette.c:366
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
-"Invalid number or columns in line %d."
+"Invalid number of columns in line %d."
 msgstr ""
-"Läser in paletten %s (rad %d):\n"
-"Ogiltigt nummer eller kolumner"
+"Läser in paletten \"%s\":\n"
+"Ogiltigt antal kolumner på rad %d."
 
 #. maybe we should just abort?
 #: app/core/gimppalette.c:408
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Missing RED component in line %d."
 msgstr ""
-"Läser in paletten %s (rad %d):\n"
-"Saknar RÖD komponent"
+"Läser in paletten \"%s\":\n"
+"Saknar RÖD komponent på rad %d."
 
 #: app/core/gimppalette.c:415
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Missing GREEN component in line %d."
 msgstr ""
-"Läser in paletten %s (rad %d):\n"
-"Saknar GRÖN komponent"
+"Läser in paletten \"%s\":\n"
+"Saknar GRÖN komponent på rad %d."
 
 #: app/core/gimppalette.c:422
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Missing BLUE component in line %d."
 msgstr ""
-"Läser in paletten %s (rad %d):\n"
-"Saknar BLÅ komponent"
+"Läser in paletten \"%s\":\n"
+"Saknar BLÅ komponent på rad %d."
 
 #: app/core/gimppalette.c:431
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "RGB value out of range in line %d."
 msgstr ""
-"Läser in paletten %s (rad %d):\n"
-"RGB-värdet utanför giltigt område"
+"Läser in paletten \"%s\":\n"
+"RGB-värdet utanför giltigt område på rad %d."
 
 #: app/core/gimppalette.c:486
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot save palette '%s':\n"
 "%s"
-msgstr "Kan inte spara paletten \"%s\"\n"
+msgstr ""
+"Kan inte spara paletten \"%s\":\n"
+"%s"
 
 #: app/core/gimppalette.c:582
 msgid "Black"
 msgstr "Svart"
 
 #: app/core/gimppattern.c:310
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown pattern format version %d in '%s'."
-msgstr "Okänt mönsterformat version #%d i \"%s\"."
+msgstr "Okänt mönsterformatsversion %d i \"%s\"."
 
 #: app/core/gimppattern.c:318
 #, c-format
@@ -1008,21 +1006,24 @@ msgid ""
 "in file '%s'.\n"
 "GIMP Patterns must be GRAY or RGB.\n"
 msgstr ""
+"Mönsterdjupet %d i filen \"%s\"\n"
+"stöds inte.\n"
+"GIMP-mönster måste vara GRÅ eller RGB.\n"
 
 #: app/core/gimppattern.c:332
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file '%s'."
 msgstr "Fel i GIMP-mönsterfilen \"%s\"."
 
 #: app/core/gimppattern.c:338
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Fel i GIMP-mönsterfilen \"%s\"."
+msgstr "Ogiltig UTF_8-sträng i mönsterfilen \"%s\"."
 
 #: app/core/gimppattern.c:356
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
-msgstr "GIMP-mönsterfilen verkar vara trunkerad: \"%s\"."
+msgstr "Ödesdigert tolkningsfel: Mönsterfilen \"%s\" verkar vara trunkerad."
 
 #. pseudo unit
 #: app/core/gimpunit.c:60
@@ -1076,30 +1077,29 @@ msgstr "procent:"
 #: app/display/gimpdisplayshell.c:602
 #, fuzzy
 msgid "Set Canvas Padding Color"
-msgstr "Sätt storlek på kanvas"
+msgstr "Sätt storlek på canvas"
 
 #: app/display/gimpdisplayshell.c:609
 msgid "Set canvas padding color"
 msgstr ""
 
 #: app/display/gimpdisplayshell.c:622
-#, fuzzy
 msgid "/Default Color"
-msgstr "/Verktyg/Standardfärger"
+msgstr "/Standardfärg"
 
 #: app/display/gimpdisplayshell.c:657
 msgid "Toggle QuickMask"
-msgstr ""
+msgstr "Visa snabbmask"
 
 #: app/display/gimpdisplayshell.c:921
-#, fuzzy, c-format
+#, c-format
 msgid "Undo %s"
-msgstr "Ångra"
+msgstr "Ångra %s"
 
 #: app/display/gimpdisplayshell.c:924
-#, fuzzy, c-format
+#, c-format
 msgid "Redo %s"
-msgstr "Gör om"
+msgstr "Gör om %s"
 
 #: app/display/gimpdisplayshell.c:2080
 msgid "RGB-empty"
@@ -1122,9 +1122,9 @@ msgid "indexed"
 msgstr "indexerad"
 
 #: app/display/gimpdisplayshell.c:2286
-#, fuzzy, c-format
+#, c-format
 msgid "Close %s?"
-msgstr "Stäng"
+msgstr "Stänga %s?"
 
 #: app/display/gimpdisplayshell.c:2288
 #, c-format
@@ -1203,13 +1203,13 @@ msgstr ""
 "%s är inte en vanlig fil."
 
 #: app/file/file-open.c:117
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s: %s."
 msgstr ""
-"Öppning misslyckades.\n"
-"%s"
+"%s misslyckades.\n"
+"%s: %s."
 
 #: app/file/file-save.c:102
 #, c-format
@@ -1217,7 +1217,7 @@ msgid ""
 "Save failed.\n"
 "%s: Unknown file type."
 msgstr ""
-"Spara misslyckades.\n"
+"Sparande misslyckades.\n"
 "%s: Okänd bildtyp."
 
 #: app/file/file-save.c:115
@@ -1226,20 +1226,19 @@ msgid ""
 "Save failed.\n"
 "%s is not a regular file."
 msgstr ""
-"Spara misslyckades.\n"
+"Sparande misslyckades.\n"
 "%s är inte en vanlig fil."
 
 #: app/file/file-save.c:124
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s: %s."
 msgstr ""
-"Sparning misslyckades.\n"
-"%s"
+"Sparande misslyckades.\n"
+"%s: %s."
 
 #: app/gui/about-dialog.c:132
-#, fuzzy
 msgid "About The GIMP"
 msgstr "Om GIMP"
 
@@ -1249,9 +1248,8 @@ msgid "Version %s brought to you by"
 msgstr "Version %s presenteras av"
 
 #: app/gui/about-dialog.c:247
-#, fuzzy
 msgid "Visit http://www.gimp.org/ for more information"
-msgstr "Besök gärna http://www.gimp.org/ för mer information"
+msgstr "Besök http://www.gimp.org/ för mer information"
 
 #: app/gui/brush-editor.c:100
 msgid "Brush Editor"
@@ -1297,11 +1295,12 @@ msgid ""
 "Unable to run brush callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
+"Kan inte köra pensel-callback.\n"
+"Den motsvarande insticksmodulen kan ha kraschat."
 
 #: app/gui/channels-commands.c:273
-#, fuzzy
 msgid "Empty Channel Copy"
-msgstr "Tom lagerkopia"
+msgstr "Tom kanalkopia"
 
 #: app/gui/channels-commands.c:291
 msgid "New Channel Color"
@@ -1430,9 +1429,8 @@ msgid "Hex Triplet:"
 msgstr "Hex-triplett:"
 
 #: app/gui/colormap-dialog.c:266
-#, fuzzy
 msgid "Color Index:"
-msgstr "Index:"
+msgstr "Färgindex:"
 
 #: app/gui/colormap-dialog.c:391 app/gui/palette-editor.c:436
 #: app/widgets/gimpdatafactoryview.c:211 app/widgets/gimpitemlistview.c:226
@@ -1452,14 +1450,12 @@ msgid "General Palette Options"
 msgstr "Standardpalettinställningar"
 
 #: app/gui/convert-dialog.c:181
-#, fuzzy
 msgid "Generate Optimum Palette:"
 msgstr "Generera optimal palett:"
 
 #: app/gui/convert-dialog.c:209
-#, fuzzy
 msgid "Number of Colors:"
-msgstr "Minsta antal färger:"
+msgstr "Antal färger:"
 
 #. create the custom_frame here, it'll be added later
 #: app/gui/convert-dialog.c:225
@@ -1479,14 +1475,12 @@ msgid "Use WWW-Optimized Palette"
 msgstr "Använd WWW-optimerad palett"
 
 #: app/gui/convert-dialog.c:297
-#, fuzzy
 msgid "Use Black and White (1-Bit) Palette"
-msgstr "Använd svart/vit (1-bit) palett"
+msgstr "Använd svartvit (1-bit) palett"
 
 #: app/gui/convert-dialog.c:308
-#, fuzzy
 msgid "Dithering Options"
-msgstr "Ditheralternativ"
+msgstr "Ditheringalternativ"
 
 #: app/gui/convert-dialog.c:321
 msgid "No Color Dithering"
@@ -1513,15 +1507,14 @@ msgid "[ Warning ]"
 msgstr "[ Varning ]"
 
 #: app/gui/convert-dialog.c:409
-#, fuzzy
 msgid ""
 "You are attempting to convert an image with an alpha channel or layers from "
 "RGB or GRAY to INDEXED.\n"
 "Do not generate a palette of more than 255 colors if you intend to create a "
 "transparent or animated GIF file from this image."
 msgstr ""
-"Du försöker konvertera en bild med alfakanal/lager från RGB/GRÅ till "
-"INDEXERAD.\n"
+"Du försöker konvertera en bild med alfakanal eller lager från RGB eller GRÅ "
+"till INDEXERAD.\n"
 "Du bör inte generera en palett på mer än 255 färger om du vill skapa en "
 "transparent eller animerad GIF-fil från denna bild."
 
@@ -1544,9 +1537,8 @@ msgid "Background: %d, %d, %d"
 msgstr "Bakgrund: %d, %d, %d"
 
 #: app/gui/dialogs-constructors.c:330
-#, fuzzy
 msgid "This brush cannot be edited."
-msgstr "Tyvärr, den här penseln kan inte redigeras."
+msgstr "Denna pensel kan inte redigeras."
 
 #: app/gui/drawable-commands.c:74
 msgid "Desaturate operates only on RGB color drawables."
@@ -1573,14 +1565,12 @@ msgid "Copy Named"
 msgstr "Kopiera namngiven"
 
 #: app/gui/edit-commands.c:299 app/gui/edit-commands.c:328
-#, fuzzy
 msgid "(Unnamed Buffer)"
-msgstr "Klistra in namngiven buffer"
+msgstr "(Namnlös buffert)"
 
 #: app/gui/error-console-dialog.c:129
-#, fuzzy
 msgid "Clear Console"
-msgstr "Lutningsverktyg"
+msgstr "Töm konsoll"
 
 #: app/gui/error-console-dialog.c:142
 msgid "Write all errors to file..."
@@ -1591,48 +1581,46 @@ msgid "Write selection to file..."
 msgstr "Spara markering till fil..."
 
 #: app/gui/error-console-dialog.c:280
-#, fuzzy
 msgid "Cannot save. Nothing is selected."
-msgstr "Kan inte spara, inget markerat!"
+msgstr "Kan inte spara. Inget är markerat."
 
 #: app/gui/error-console-dialog.c:285
 msgid "Save error log to file..."
 msgstr "Spara fellogg till fil..."
 
 #: app/gui/error-console-dialog.c:339
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error opening file '%s':\n"
 "%s"
-msgstr "Kunde inte öppna fil %s: %s"
+msgstr ""
+"Fel vid öppnande av filen \"%s\":\n"
+"%s"
 
 #. This string needs to be fixed. Mitch is supposed to do it.  Needs a :
 #. added at the end followed by the error.  Also something about the GIMP_OBJECT
 #. needs to be changed. --bex
 #: app/gui/file-commands.c:132
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening file '%s'"
-msgstr "Kunde inte öppna fil: %s\n"
+msgstr "Fel vid öppnande av filen \"%s\""
 
 #. Error message should be added. --bex
 #: app/gui/file-commands.c:186 app/gui/file-save-dialog.c:465
-#, fuzzy, c-format
+#, c-format
 msgid "Saving '%s' failed."
-msgstr ""
-"Sparning misslyckades.\n"
-"%s"
+msgstr "Sparande av filen \"%s\" misslyckades."
 
 #: app/gui/file-commands.c:230
-#, fuzzy
 msgid ""
 "Revert failed.\n"
 "No file name associated with this image."
 msgstr ""
-"Kan inte återgå till gammal fil.\n"
+"Återgång misslyckades.\n"
 "Inget filnamn är associerat med den här bilden."
 
 #: app/gui/file-commands.c:244
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Revert '%s' to\n"
 "'%s'?\n"
@@ -1640,16 +1628,15 @@ msgid ""
 "(You will lose all your changes,\n"
 "including all undo information)"
 msgstr ""
-"Låter %s återgå till\n"
-"%s\n"
+"Återgå från \"%s\" till\n"
+"\"%s\"?\n"
 "\n"
 "(Du kommer att förlora alla dina\n"
-"ändringar, inklusive din ångrainformation)"
+"ändringar, inklusive all ångrainformation)"
 
 #: app/gui/file-commands.c:252
-#, fuzzy
 msgid "Revert Image"
-msgstr "Återgå till gammal bild?"
+msgstr "Återgå till gammal bild"
 
 #: app/gui/file-commands.c:314
 msgid "Revert"
@@ -1657,11 +1644,9 @@ msgstr "Återgå"
 
 #. Needs error information. --bex
 #: app/gui/file-commands.c:332
-#, fuzzy, c-format
+#, c-format
 msgid "Reverting '%s' failed."
-msgstr ""
-"Återgång till tidigare bild misslyckades.\n"
-"%s"
+msgstr "Återgång för \"%s\" misslyckades."
 
 #: app/gui/file-new-dialog.c:114 app/gui/preferences-dialog.c:1862
 #: app/gui/preferences-dialog.c:1865
@@ -1742,9 +1727,8 @@ msgid "Confirm Image Size"
 msgstr "Bekräfta bildstorlek"
 
 #: app/gui/file-open-dialog.c:167 app/gui/file-open-dialog.c:182
-#, fuzzy
 msgid "Open Image"
-msgstr "Ny bild"
+msgstr "Öppna bild"
 
 #. format-chooser frame
 #: app/gui/file-open-dialog.c:231
@@ -1879,27 +1863,23 @@ msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Bakgrundsfärg satt till RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gui/gradient-editor.c:1244
-#, fuzzy
 msgid "Drag: move    <Shift>+Drag: move & compress"
-msgstr "Dra: flytta    Shift+dra: flytta och komprimera"
+msgstr "Dra: flytta   <Skift>+dra: flytta och komprimera"
 
 #: app/gui/gradient-editor.c:1248 app/gui/gradient-editor.c:1254
-#, fuzzy
 msgid "Click: select    <Shift>+Click: extend selection"
-msgstr "Klicka: markera    Shift+klicka: utöka markering"
+msgstr "Klicka: markera  <Skift>+klicka: utöka markering"
 
 #: app/gui/gradient-editor.c:1262
-#, fuzzy
 msgid "Click: select    <Shift>+Click: extend selection    Drag: move"
-msgstr "Klicka: markera    Shift+klicka: utöka markering    Dra: flytta"
+msgstr "Klicka: markera  <Skift>+klicka: utöka markering    Dra: flytta"
 
 #: app/gui/gradient-editor.c:1277
-#, fuzzy
 msgid ""
 "Click: select    <Shift>+Click: extend selection    Drag: move    <Shift>"
 "+Drag: move & compress"
 msgstr ""
-"Klicka: markera    Shift+klicka: utöka markering    Dra: flytta    Shift"
+"Klicka: markera   <Skift>+klicka: utöka markering    Dra: flytta   <Skift>"
 "+dra: flytta och komprimera"
 
 #: app/gui/gradient-editor.c:1535 app/gui/gradient-editor.c:1544
@@ -1913,12 +1893,10 @@ msgid "Distance: %0.6f"
 msgstr "Distans: %0.6f"
 
 #: app/gui/gradient-editor-commands.c:85
-#, fuzzy
 msgid "Left Endpoint Color"
 msgstr "Vänstra ändpunktens färg"
 
 #: app/gui/gradient-editor-commands.c:202
-#, fuzzy
 msgid "Right Endpoint Color"
 msgstr "Högra ändpunktens färg"
 
@@ -1936,29 +1914,24 @@ msgstr "Replikera"
 
 #. Instructions
 #: app/gui/gradient-editor-commands.c:550
-#, fuzzy
 msgid "Select the number of times"
 msgstr "Välj antalet gånger"
 
 #: app/gui/gradient-editor-commands.c:555
-#, fuzzy
 msgid "to replicate the selected segment"
-msgstr "du vill replikera det markerade segmentet"
+msgstr "det markerade segmentet ska replikeras"
 
 #: app/gui/gradient-editor-commands.c:556
-#, fuzzy
 msgid "to replicate the selection"
-msgstr "du vill replikera markeringen"
+msgstr "markeringen ska replikeras"
 
 #: app/gui/gradient-editor-commands.c:631
 #: app/gui/gradient-editor-commands.c:1051
-#, fuzzy
 msgid "Split Segment Uniformly"
 msgstr "Dela segment uniformt"
 
 #: app/gui/gradient-editor-commands.c:632
 #: app/gui/gradient-editor-commands.c:1063
-#, fuzzy
 msgid "Split Segments Uniformly"
 msgstr "Dela segmenten uniformt"
 
@@ -2735,7 +2708,7 @@ msgstr "/Bild/Transformeringar/Rotera"
 
 #: app/gui/menus.c:643
 msgid "/Image/Canvas Size..."
-msgstr "/Bild/Kanvasstorlek..."
+msgstr "/Bild/Canvasstorlek..."
 
 #: app/gui/menus.c:647
 msgid "/Image/Scale Image..."
@@ -4675,7 +4648,7 @@ msgstr "Sätt lagerstorlek"
 
 #: app/gui/resize-dialog.c:200
 msgid "Set Canvas Size"
-msgstr "Sätt storlek på kanvas"
+msgstr "Sätt storlek på canvas"
 
 #. the original width & height labels
 #: app/gui/resize-dialog.c:271 app/tools/gimpscaletool.c:179
@@ -7033,7 +7006,7 @@ msgid ""
 "<Shift><Ctrl> Intersect"
 msgstr ""
 "Kanal till markering \n"
-"<Shift> Lägg till    <Ctrl> Ta bort       <Shift><Ctrl> Snitt"
+"<Skift> Lägg till    <Ctrl> Ta bort       <Skift><Ctrl> Snitt"
 
 #: app/widgets/gimpcomponentlistitem.c:361
 msgid "Gray"
@@ -7077,7 +7050,7 @@ msgid ""
 "<Ctrl> Open image dialog"
 msgstr ""
 "Öppna den valda posten\n"
-"<Shift> Höj fönstret om redan öppen\n"
+"<Skift> Höj fönstret om redan öppen\n"
 "<Ctrl> Visa dialog Läs in bild"
 
 #: app/widgets/gimpdocumentview.c:167
@@ -7120,7 +7093,7 @@ msgid ""
 "<Shift> To Top"
 msgstr ""
 "Höj            \n"
-"<Shift> Till toppen"
+"<Skift> Till toppen"
 
 #: app/widgets/gimpitemlistview.c:209
 #, fuzzy
@@ -7129,7 +7102,7 @@ msgid ""
 "<Shift> To Bottom"
 msgstr ""
 "Sänk              \n"
-"<Shift> Till botten"
+"<Skift> Till botten"
 
 #: app/widgets/gimplayerlistview.c:169
 msgid "Keep Trans."
@@ -7152,7 +7125,7 @@ msgid ""
 "<Shift><Ctrl> Intersect"
 msgstr ""
 "Kanal till markering \n"
-"<Shift> Lägg till    <Ctrl> Ta bort       <Shift><Ctrl> Snitt"
+"<Skift> Lägg till    <Ctrl> Ta bort       <Skift><Ctrl> Snitt"
 
 #: app/widgets/gimpwidgets-constructors.c:45
 #: app/widgets/gimpwidgets-constructors.c:77
@@ -7293,6 +7266,9 @@ msgstr ""
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr ""
+
+#~ msgid "Invalid UTF-8 string in GIMP brush file '%s'."
+#~ msgstr "Ogiltig UTF-8-sträng i GIMP-penselfilen \"%s\"."
 
 #~ msgid "image"
 #~ msgstr "bild"
@@ -7658,14 +7634,14 @@ msgstr ""
 #~ "<Shift> To top"
 #~ msgstr ""
 #~ "Flytta den valda posten uppåt i listan\n"
-#~ "<Shift> Till toppen"
+#~ "<Skift> Till toppen"
 
 #~ msgid ""
 #~ "Move the selected entry down in the index\n"
 #~ "<Shift> To bottom"
 #~ msgstr ""
 #~ "Flytta den valda posten nedåt i listan\n"
-#~ "Shift> Till botten"
+#~ "Skift> Till botten"
 
 #~ msgid "GIMP Error Console"
 #~ msgstr "GIMP felkonsoll"
