@@ -613,7 +613,7 @@ static void ok_callback(GtkWidget * widget, gpointer data)
     while (sel != NULL && n < max_inputs) {
     
       config.input_image_ids[n] =
-	((GckListBoxItem *) sel->data)->user_data;
+	(gint32)((GckListBoxItem *) sel->data)->user_data;
       sel = sel->next;
       n++;
     }
