@@ -41,9 +41,14 @@ EXTRA_DIST = gimppath2svg.py
 
 if DEFAULT_BINARY
 install-exec-hook:
-	cd $(DESTDIR)$(bindir) \
-	&& rm -f gimp-remote \
-	&& $(LN_S) gimp-remote-1.2 gimp-remote
+	@if test -f "$(DESTDIR)$(bindir)/gimp-remote-1.2"; then \
+	  echo "cd $(DESTDIR)$(bindir)"; \
+	  cd $(DESTDIR)$(bindir); \
+	  echo "rm -f gimp-remote"; \
+	  rm -f gimp-remote; \
+	  echo "$(LN_S) gimp-remote-1.2 gimp-remote"; \
+	  $(LN_S) gimp-remote-1.2 gimp-remote; \
+	fi
 
 uninstall-local:
 	rm -f $(DESTDIR)$(bindir)/gimp-remote

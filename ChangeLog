@@ -1,3 +1,8 @@
+Sat Feb  2 22:07:27 PST 2002 Manish Singh <yosh@gimp.org>
+
+	* tools/Makefile.am: gimp-remote is optional, so make the link only
+	conditionally.
+
 Sat Feb  2 19:23:14 PST 2002 Manish Singh <yosh@gimp.org>
 
 	* acinclude.m4: sync with glib CVS (gar)
