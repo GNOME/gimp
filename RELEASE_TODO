@@ -1,0 +1,5 @@
+Things not to forget when making the final 2.0 release:
+
+- Remove RELEASE_TODO
+- Increase GIMP_PROTOCOL_VERSION
+- Increase GIMP_MODULE_ABI_VERSION
