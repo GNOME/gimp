@@ -65,7 +65,7 @@ struct _InfoWinData
   gchar        visual_depth_str[MAX_BUF];
   gchar        resolution_str[MAX_BUF];
 
-  gchar       *unit_str;
+  const gchar *unit_str;
   GtkWidget   *pos_labels[4];
   GtkWidget   *unit_labels[2];
   GtkWidget   *color_labels[4];

@@ -132,35 +132,35 @@ gimp_unit_get_digits (GimpUnit unit)
 }
 
 
-gchar * 
+const gchar * 
 gimp_unit_get_identifier (GimpUnit unit)
 {
   return _gimp_unit_get_identifier (the_gimp, unit);
 }
 
 
-gchar *
+const gchar *
 gimp_unit_get_symbol (GimpUnit unit)
 {
   return _gimp_unit_get_symbol (the_gimp, unit);
 }
 
 
-gchar *
+const gchar *
 gimp_unit_get_abbreviation (GimpUnit unit)
 {
   return _gimp_unit_get_abbreviation (the_gimp, unit);
 }
 
 
-gchar *
+const gchar *
 gimp_unit_get_singular (GimpUnit unit)
 {
   return _gimp_unit_get_singular (the_gimp, unit);
 }
 
 
-gchar *
+const gchar *
 gimp_unit_get_plural (GimpUnit unit)
 {
   return _gimp_unit_get_plural (the_gimp, unit);
