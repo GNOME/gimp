@@ -26,6 +26,7 @@
 
 #include "config.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -489,6 +490,8 @@ gimp_recent_list_lock_file (gint fd)
    * changes.
    */
 
+  lseek (fd, 0, SEEK_SET);
+
   for (i = 0; i < 5; i++)
     {
       gint rand_interval;
@@ -507,6 +510,8 @@ gimp_recent_list_lock_file (gint fd)
 static gboolean
 gimp_recent_list_unlock_file (gint fd)
 {
+  lseek (fd, 0, SEEK_SET);
+
   return (lockf (fd, F_ULOCK, 0) == 0) ? TRUE : FALSE;
 }
 
