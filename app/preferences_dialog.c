@@ -111,7 +111,8 @@ static   int          edit_install_cmap;
 static   int          edit_cycled_marching_ants;
 
 static   GtkWidget   *tile_cache_size_spinbutton = NULL;
-static   int          mem_size_unit = 1;
+static   int          divided_tile_cache_size;
+static   int          mem_size_unit;
 
 /* Some information regarding preferences, compiled by Raph Levien 11/3/97.
 
@@ -191,6 +192,7 @@ static void
 file_prefs_ok_callback (GtkWidget *widget,
 			GtkWidget *dlg)
 {
+  edit_tile_cache_size = mem_size_unit * divided_tile_cache_size;
 
   if (levels_of_undo < 0) 
     {
@@ -304,10 +306,10 @@ file_prefs_save_callback (GtkWidget *widget,
       stingy_memory_use = edit_stingy_memory_use;
       restart_notification = TRUE;
     }
-  if ((edit_tile_cache_size * mem_size_unit) != tile_cache_size)
+  if (edit_tile_cache_size != tile_cache_size)
     {
       update = g_list_append (update, "tile-cache-size");
-      tile_cache_size = edit_tile_cache_size * mem_size_unit;
+      tile_cache_size = edit_tile_cache_size;
       restart_notification = TRUE;
     }
   if (edit_install_cmap != old_install_cmap)
@@ -501,17 +503,15 @@ file_prefs_mem_size_unit_callback (GtkWidget *widget,
 				    gpointer   data)
 {
   int new_unit;
-  int new_size;
 
   new_unit = (int*)data;
 
   if (new_unit != mem_size_unit)
     {
-      new_size = edit_tile_cache_size * mem_size_unit / new_unit;
-      edit_tile_cache_size = new_size;
+      divided_tile_cache_size = divided_tile_cache_size * mem_size_unit / new_unit;
       mem_size_unit = new_unit;
 
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON (tile_cache_size_spinbutton), (float)edit_tile_cache_size);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON (tile_cache_size_spinbutton), (float)divided_tile_cache_size);
     }
 }
 
@@ -520,7 +520,7 @@ file_prefs_text_callback (GtkWidget *widget,
 			  gpointer   data)
 {
   int *val;
-
+  
   val = data;
   *val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
 }
@@ -566,7 +566,6 @@ file_pref_cmd_callback (GtkWidget *widget,
   GtkWidget *table;
   GtkAdjustment *adj;
   GSList *group;
-  char buffer[32];
   char *transparencies[] =
   {
     "Light Checks",
@@ -650,8 +649,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 	  edit_plug_in_path = file_prefs_strdup (plug_in_path);
 	  edit_gradient_path = file_prefs_strdup (gradient_path);
 	  edit_stingy_memory_use = stingy_memory_use;
-	  edit_tile_cache_size = tile_cache_size;     /* take care! edit_tile_cache_size
-							 will be divided by mem_size_unit */
+	  edit_tile_cache_size = tile_cache_size;
 	  edit_install_cmap = install_cmap;
 	  edit_cycled_marching_ants = cycled_marching_ants;
 	}
@@ -687,7 +685,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 	  if (edit_tile_cache_size % mem_size_units[i].unit == 0)
 	    mem_size_unit = mem_size_units[i].unit;
 	}
-      edit_tile_cache_size = edit_tile_cache_size / mem_size_unit;
+      divided_tile_cache_size = edit_tile_cache_size / mem_size_unit;
 
       prefs_dlg = gtk_dialog_new ();
       gtk_window_set_wmclass (GTK_WINDOW (prefs_dlg), "preferences", "Gimp");
@@ -1059,7 +1057,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      adj = (GtkAdjustment *) gtk_adjustment_new (edit_tile_cache_size, 0.0,
+      adj = (GtkAdjustment *) gtk_adjustment_new (divided_tile_cache_size, 0.0,
                                                   (4069.0 * 1024 * 1024), 1.0,
                                                   16.0, 0.0);
       tile_cache_size_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
@@ -1071,7 +1069,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (hbox), tile_cache_size_spinbutton, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (tile_cache_size_spinbutton), "changed",
                           (GtkSignalFunc) file_prefs_spinbutton_callback,
-                          &edit_tile_cache_size);
+                          &divided_tile_cache_size);
       gtk_widget_show (tile_cache_size_spinbutton);
       
       menu = gtk_menu_new ();

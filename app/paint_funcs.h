@@ -333,8 +333,7 @@ void  separate_alpha_region               (PixelRegion *);
 
 void  gaussian_blur_region                (PixelRegion *, double);
 
-void  border_region                       (PixelRegion *, void *,
-					   int, int);
+void  border_region                       (PixelRegion *, gint16);
 
 void  scale_region                        (PixelRegion *, PixelRegion *);
 
@@ -345,11 +344,9 @@ void  subsample_region                    (PixelRegion *, PixelRegion *,
 
 float shapeburst_region                   (PixelRegion *, PixelRegion *);
 
-/*  The types of thinning  */
-#define SHRINK_REGION 0
-#define GROW_REGION   1
+void thin_region                           (PixelRegion *, gint16);
 
-int   thin_region                         (PixelRegion *, int);
+void fatten_region                         (PixelRegion *, gint16);
 
 void  swap_region                         (PixelRegion *, PixelRegion *);
 

@@ -1,3 +1,16 @@
+Wed Jun 17 17:47:30 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/preferences_dialog.c: fixed a bug I introduced with the 
+	new mem_size_unit for the tile_cache_size 
+
+Wed Jun 17 16:38:40 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/channel.c
+	* app/paint_funcs.c
+	* app/paint_funcs.h: applied a patch from Jay Cox. 
+	Reimplements selection_grow, selection_shrink, and selection_border 
+	using new algorithms.
+
 Wed Jun 17 12:07:44 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/gimprc.c: default "save_window_positions_on_exit" to FALSE

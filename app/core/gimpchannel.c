@@ -1224,47 +1224,100 @@ channel_border (Channel *mask, int radius)
 {
   PixelRegion bPR;
   int x1, y1, x2, y2;
-  BoundSeg * bs;
-  unsigned char bg = 0;
-  int num_segs;
 
+  if (radius < 0)
+    return;
   if (! channel_bounds (mask, &x1, &y1, &x2, &y2))
     return;
+  if (x1 - radius < 0)
+    x1 = 0;
+  else
+    x1 -= radius;
+  if (x2 + radius > GIMP_DRAWABLE(mask)->width)
+    x2 = GIMP_DRAWABLE(mask)->width;
+  else
+    x2 += radius;
 
+  if (y1 - radius < 0)
+    y1 = 0;
+  else
+    y1 -= radius;
+  if (y2 + radius > GIMP_DRAWABLE(mask)->height)
+    y2 = GIMP_DRAWABLE(mask)->height;
+  else
+    y2 += radius;
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
 
-  pixel_region_init (&bPR, GIMP_DRAWABLE(mask)->tiles, x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  bs =  find_mask_boundary (&bPR, &num_segs, WithinBounds, x1, y1, x2, y2);
+  pixel_region_init (&bPR, GIMP_DRAWABLE(mask)->tiles, x1, y1,
+		     (x2-x1), (y2-y1), TRUE);
 
-  /*  clear the channel  */
-  if (mask->bounds_known && !mask->empty)
-    {
-      pixel_region_init (&bPR, GIMP_DRAWABLE(mask)->tiles, mask->x1, mask->y1,
-			 (mask->x2 - mask->x1), (mask->y2 - mask->y1), TRUE);
-      color_region (&bPR, &bg);
-    }
-  else
-    {
-      /*  clear the mask  */
-      pixel_region_init (&bPR, GIMP_DRAWABLE(mask)->tiles, 0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
-      color_region (&bPR, &bg);
-    }
-
-  /*  calculate a border of specified radius based on the boundary segments  */
-  pixel_region_init (&bPR, GIMP_DRAWABLE(mask)->tiles, 0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
-  border_region (&bPR, bs, num_segs, radius);
-
-  g_free (bs);
+  border_region(&bPR, radius);
 
   mask->bounds_known = FALSE;
 }
 
 
 void
-channel_grow (Channel *mask, int steps)
+channel_grow (Channel *mask, int radius)
 {
   PixelRegion bPR;
+  int x1, y1, x2, y2;
+
+  if (radius < 0)
+  {
+    channel_shrink(mask, -radius);
+    return;
+  }
+
+  if (! channel_bounds (mask, &x1, &y1, &x2, &y2))
+    return;
+
+  if (channel_is_empty (mask))
+    return;
+
+  if (x1 - radius > 0)
+    x1 = x1 - radius;
+  else
+    x1 = 0;
+  if (y1 - radius > 0)
+    y1 = y1 - radius;
+  else
+    y1 = 0;
+  if (x2 + radius< GIMP_DRAWABLE(mask)->width)
+    x2 = x2 + radius;
+  else
+    x2 = GIMP_DRAWABLE(mask)->width;
+  if (y2 + radius< GIMP_DRAWABLE(mask)->height)
+    y2 = y2 + radius;
+  else
+    y2 = GIMP_DRAWABLE(mask)->height;
+
+  /*  push the current channel onto the undo stack  */
+  channel_push_undo (mask);
+
+  /*  need full extents for grow, not! */
+  pixel_region_init (&bPR, GIMP_DRAWABLE(mask)->tiles, x1, y1, (x2 - x1),
+		     (y2 - y1), TRUE);
+
+  fatten_region(&bPR, radius);
+  mask->bounds_known = FALSE;
+}
+
+
+void
+channel_shrink (Channel *mask, int radius)
+{
+  PixelRegion bPR;
+  int x1, y1, x2, y2;
+
+  if (radius < 0)
+  {
+    channel_shrink(mask, -radius);
+    return;
+  }
+  if (! channel_bounds (mask, &x1, &y1, &x2, &y2))
+    return;
 
   if (channel_is_empty (mask))
     return;
@@ -1272,32 +1325,19 @@ channel_grow (Channel *mask, int steps)
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
 
-  /*  need full extents for grow  */
-  pixel_region_init (&bPR, GIMP_DRAWABLE(mask)->tiles, 0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
+  if (x1 > 0)
+    x1--;
+  if (y1 > 0)
+    y1--;
+  if (x2 < GIMP_DRAWABLE(mask)->width)
+    x2++;
+  if (y2 < GIMP_DRAWABLE(mask)->height)
+    y2++;
+  
+  pixel_region_init (&bPR, GIMP_DRAWABLE(mask)->tiles, x1, y1, (x2 - x1),
+		     (y2 - y1), TRUE);
 
-  while (steps--)
-    thin_region (&bPR, GROW_REGION);
-
-  mask->bounds_known = FALSE;
-}
-
-
-void
-channel_shrink (Channel *mask, int steps)
-{
-  PixelRegion bPR;
-  int x1, y1, x2, y2;
-
-  if (! channel_bounds (mask, &x1, &y1, &x2, &y2))
-    return;
-
-  /*  push the current channel onto the undo stack  */
-  channel_push_undo (mask);
-
-  pixel_region_init (&bPR, GIMP_DRAWABLE(mask)->tiles, x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-  while (steps--)
-    thin_region (&bPR, SHRINK_REGION);
+  thin_region (&bPR, radius);
 
   mask->bounds_known = FALSE;
 }
