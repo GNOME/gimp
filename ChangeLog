@@ -1,3 +1,11 @@
+2003-08-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-mask-select.c
+	(gimp_image_mask_select_channel): fixed GIMP_CHANNEL_OP_INTERSECT
+	for channels which are smaller than the selection (create a temp
+	channel like rect and ellipse select do). Also, don't modify the
+	input channel when feathering.
+
 2003-08-20  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/preferences-dialog.c

@@ -283,14 +283,28 @@ gimp_image_mask_select_channel (GimpImage      *gimage,
   else
     gimp_image_mask_push_undo (gimage, undo_desc);
 
-  if (feather)
-    gimp_channel_feather (channel,
-                          feather_radius_x,
-                          feather_radius_y,
-                          FALSE /* no undo */);
+  if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
+    {
+      GimpChannel *mask;
 
-  gimp_channel_combine_mask (gimp_image_get_mask (gimage), channel,
-                             op, offset_x, offset_y);
+      mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
+      gimp_channel_combine_mask (mask, channel, GIMP_CHANNEL_OP_ADD,
+                                 offset_x, offset_y);
+
+      if (feather)
+        gimp_channel_feather (mask,
+                              feather_radius_x,
+                              feather_radius_y,
+                              FALSE /* no undo */);
+
+      gimp_channel_combine_mask (gimp_image_get_mask (gimage), mask, op, 0, 0);
+      g_object_unref (mask);
+    }
+  else
+    {
+      gimp_channel_combine_mask (gimp_image_get_mask (gimage), channel,
+                                 op, offset_x, offset_y);
+    }
 
   gimp_image_mask_changed (gimage);
 }
