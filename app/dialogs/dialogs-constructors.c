@@ -29,7 +29,10 @@
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpcontainergridview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimpdockable.h"
+#include "widgets/gimpdockbook.h"
 #include "widgets/gimppreview.h"
 
 #include "context_manager.h"
@@ -44,12 +47,16 @@
 
 
 static GtkWidget    * dialogs_brush_tab_func    (GimpDockable *dockable,
+						 GimpDockbook *dockbook,
 						 gint          size);
 static GtkWidget    * dialogs_pattern_tab_func  (GimpDockable *dockable,
+						 GimpDockbook *dockbook,
 						 gint          size);
 static GtkWidget    * dialogs_gradient_tab_func (GimpDockable *dockable,
+						 GimpDockbook *dockbook,
 						 gint          size);
 static GtkWidget    * dialogs_palette_tab_func  (GimpDockable *dockable,
+						 GimpDockbook *dockbook,
 						 gint          size);
 
 static GimpDockable * dialogs_dockable_new (GtkWidget              *widget,
@@ -61,12 +68,12 @@ static GimpDockable * dialogs_dockable_new (GtkWidget              *widget,
 /*  public functions  */
 
 GimpDockable *
-dialogs_image_list_view_new (void)
+dialogs_image_list_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
 
   view = gimp_container_list_view_new (image_context,
-				       gimp_context_get_user (),
+				       factory->context,
 				       32,
 				       5, 3);
 
@@ -76,14 +83,14 @@ dialogs_image_list_view_new (void)
 }
 
 GimpDockable *
-dialogs_brush_list_view_new (void)
+dialogs_brush_list_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 				     global_brush_factory,
 				     NULL,
-				     gimp_context_get_user (),
+				     factory->context,
 				     32,
 				     5, 3);
 
@@ -93,14 +100,14 @@ dialogs_brush_list_view_new (void)
 }
 
 GimpDockable *
-dialogs_pattern_list_view_new (void)
+dialogs_pattern_list_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 				     global_pattern_factory,
 				     NULL,
-				     gimp_context_get_user (),
+				     factory->context,
 				     32,
 				     5, 3);
 
@@ -110,14 +117,14 @@ dialogs_pattern_list_view_new (void)
 }
 
 GimpDockable *
-dialogs_gradient_list_view_new (void)
+dialogs_gradient_list_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 				     global_gradient_factory,
 				     NULL,
-				     gimp_context_get_user (),
+				     factory->context,
 				     32,
 				     5, 3);
 
@@ -127,14 +134,14 @@ dialogs_gradient_list_view_new (void)
 }
 
 GimpDockable *
-dialogs_palette_list_view_new (void)
+dialogs_palette_list_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 				     global_palette_factory,
 				     NULL,
-				     gimp_context_get_user (),
+				     factory->context,
 				     32,
 				     5, 3);
 
@@ -144,12 +151,12 @@ dialogs_palette_list_view_new (void)
 }
 
 GimpDockable *
-dialogs_tool_list_view_new (void)
+dialogs_tool_list_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
 
   view = gimp_container_list_view_new (global_tool_info_list,
-				       gimp_context_get_user (),
+				       factory->context,
 				       22,
 				       5, 3);
 
@@ -159,13 +166,15 @@ dialogs_tool_list_view_new (void)
 }
 
 
+/*  grid views  */
+
 GimpDockable *
-dialogs_image_grid_view_new (void)
+dialogs_image_grid_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
 
   view = gimp_container_grid_view_new (image_context,
-				       gimp_context_get_user (),
+				       factory->context,
 				       32,
 				       5, 3);
 
@@ -175,14 +184,14 @@ dialogs_image_grid_view_new (void)
 }
 
 GimpDockable *
-dialogs_brush_grid_view_new (void)
+dialogs_brush_grid_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 				     global_brush_factory,
 				     NULL,
-				     gimp_context_get_user (),
+				     factory->context,
 				     32,
 				     5, 3);
 
@@ -192,14 +201,14 @@ dialogs_brush_grid_view_new (void)
 }
 
 GimpDockable *
-dialogs_pattern_grid_view_new (void)
+dialogs_pattern_grid_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 				     global_pattern_factory,
 				     NULL,
-				     gimp_context_get_user (),
+				     factory->context,
 				     32,
 				     5, 3);
 
@@ -209,14 +218,14 @@ dialogs_pattern_grid_view_new (void)
 }
 
 GimpDockable *
-dialogs_gradient_grid_view_new (void)
+dialogs_gradient_grid_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 				     global_gradient_factory,
 				     NULL,
-				     gimp_context_get_user (),
+				     factory->context,
 				     32,
 				     5, 3);
 
@@ -226,14 +235,14 @@ dialogs_gradient_grid_view_new (void)
 }
 
 GimpDockable *
-dialogs_palette_grid_view_new (void)
+dialogs_palette_grid_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 				     global_palette_factory,
 				     NULL,
-				     gimp_context_get_user (),
+				     factory->context,
 				     32,
 				     5, 3);
 
@@ -243,12 +252,12 @@ dialogs_palette_grid_view_new (void)
 }
 
 GimpDockable *
-dialogs_tool_grid_view_new (void)
+dialogs_tool_grid_view_new (GimpDialogFactory *factory)
 {
   GtkWidget *view;
 
   view = gimp_container_grid_view_new (global_tool_info_list,
-				       gimp_context_get_user (),
+				       factory->context,
 				       22,
 				       5, 3);
 
@@ -262,12 +271,13 @@ dialogs_tool_grid_view_new (void)
 
 static GtkWidget *
 dialogs_brush_tab_func (GimpDockable *dockable,
+			GimpDockbook *dockbook,
 			gint          size)
 {
   GimpContext *context;
   GtkWidget   *preview;
 
-  context = gimp_context_get_user ();
+  context = dockbook->dock->factory->context;
 
   preview =
     gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_brush (context)),
@@ -285,12 +295,13 @@ dialogs_brush_tab_func (GimpDockable *dockable,
 
 static GtkWidget *
 dialogs_pattern_tab_func (GimpDockable *dockable,
+			  GimpDockbook *dockbook,
 			  gint          size)
 {
   GimpContext *context;
   GtkWidget   *preview;
 
-  context = gimp_context_get_user ();
+  context = dockbook->dock->factory->context;
 
   preview =
     gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (context)),
@@ -308,12 +319,13 @@ dialogs_pattern_tab_func (GimpDockable *dockable,
 
 static GtkWidget *
 dialogs_gradient_tab_func (GimpDockable *dockable,
+			   GimpDockbook *dockbook,
 			   gint          size)
 {
   GimpContext *context;
   GtkWidget   *preview;
 
-  context = gimp_context_get_user ();
+  context = dockbook->dock->factory->context;
 
   preview =
     gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_gradient (context)),
@@ -331,12 +343,13 @@ dialogs_gradient_tab_func (GimpDockable *dockable,
 
 static GtkWidget *
 dialogs_palette_tab_func (GimpDockable *dockable,
+			  GimpDockbook *dockbook,
 			  gint          size)
 {
   GimpContext *context;
   GtkWidget   *preview;
 
-  context = gimp_context_get_user ();
+  context = dockbook->dock->factory->context;
 
   preview =
     gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_palette (context)),

@@ -20,19 +20,19 @@
 #define __DIALOGS_CONSTRUCTORS_H__
 
 
-GimpDockable * dialogs_image_list_view_new    (void);
-GimpDockable * dialogs_brush_list_view_new    (void);
-GimpDockable * dialogs_pattern_list_view_new  (void);
-GimpDockable * dialogs_gradient_list_view_new (void);
-GimpDockable * dialogs_palette_list_view_new  (void);
-GimpDockable * dialogs_tool_list_view_new     (void);
+GimpDockable * dialogs_image_list_view_new    (GimpDialogFactory *factory);
+GimpDockable * dialogs_brush_list_view_new    (GimpDialogFactory *factory);
+GimpDockable * dialogs_pattern_list_view_new  (GimpDialogFactory *factory);
+GimpDockable * dialogs_gradient_list_view_new (GimpDialogFactory *factory);
+GimpDockable * dialogs_palette_list_view_new  (GimpDialogFactory *factory);
+GimpDockable * dialogs_tool_list_view_new     (GimpDialogFactory *factory);
 
-GimpDockable * dialogs_image_grid_view_new    (void);
-GimpDockable * dialogs_brush_grid_view_new    (void);
-GimpDockable * dialogs_pattern_grid_view_new  (void);
-GimpDockable * dialogs_gradient_grid_view_new (void);
-GimpDockable * dialogs_palette_grid_view_new  (void);
-GimpDockable * dialogs_tool_grid_view_new     (void);
+GimpDockable * dialogs_image_grid_view_new    (GimpDialogFactory *factory);
+GimpDockable * dialogs_brush_grid_view_new    (GimpDialogFactory *factory);
+GimpDockable * dialogs_pattern_grid_view_new  (GimpDialogFactory *factory);
+GimpDockable * dialogs_gradient_grid_view_new (GimpDialogFactory *factory);
+GimpDockable * dialogs_palette_grid_view_new  (GimpDialogFactory *factory);
+GimpDockable * dialogs_tool_grid_view_new     (GimpDialogFactory *factory);
 
 
 #endif /* __DIALOGS_CONSTRUCTORS_H__ */

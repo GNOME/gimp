@@ -27,6 +27,7 @@
 
 
 typedef GtkWidget * (* GimpDockableGetTabFunc) (GimpDockable *dockable,
+						GimpDockbook *dockbook,
 						gint          size);
 
 
@@ -37,7 +38,7 @@ typedef GtkWidget * (* GimpDockableGetTabFunc) (GimpDockable *dockable,
 #define GIMP_IS_DOCKABLE_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCKABLE))
 
 
-typedef struct _GimpDockableClass   GimpDockableClass;
+typedef struct _GimpDockableClass GimpDockableClass;
 
 
 struct _GimpDockable
@@ -64,6 +65,7 @@ GtkWidget * gimp_dockable_new            (const gchar            *name,
 					  GimpDockableGetTabFunc  get_tab_func);
 
 GtkWidget * gimp_dockable_get_tab_widget (GimpDockable           *dockable,
+					  GimpDockbook           *dockbook,
 					  gint                    size);
 
 

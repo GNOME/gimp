@@ -1,3 +1,22 @@
+2001-04-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am: grouped the files together which will go to gui/.
+
+	* app/widgets/gimpdialogfactory.[ch]: maintain a list of open
+	GimpDocks for session management.
+
+	* app/widgets/gimpdock.c: register open docks with the dialog
+	factory.
+
+	* app/widgets/gimpdockable.[ch]
+	* app/widgets/gimpdockbook.c: pass a pointer to the GimpDockbook
+	to the GimpDockable's "get_tab" function because the function is
+	called before the dockable is added to the dockbook.
+
+	* app/test_commands.c
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c: changed accordingly.
+
 2001-04-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/menus.c: added some more dialog types.

@@ -26,7 +26,7 @@
 #include "gimpobject.h"
 
 
-typedef GimpDockable * (* GimpDialogNewFunc) (void);
+typedef GimpDockable * (* GimpDialogNewFunc) (GimpDialogFactory *factory);
 
 
 #define GIMP_TYPE_DIALOG_FACTORY            (gimp_dialog_factory_get_type ())
@@ -42,9 +42,13 @@ struct _GimpDialogFactory
 {
   GimpObject      parent_instance;
 
+  GimpContext    *context;
   GtkItemFactory *item_factory;
 
+  /*< private >*/
   GList          *registered_dialogs;
+
+  GList          *open_docks;
 };
 
 struct _GimpDialogFactoryClass
@@ -53,15 +57,20 @@ struct _GimpDialogFactoryClass
 };
 
 
-GtkType             gimp_dialog_factory_get_type   (void);
-GimpDialogFactory * gimp_dialog_factory_new        (GtkItemFactory    *item_factory);
+GtkType             gimp_dialog_factory_get_type (void);
+GimpDialogFactory * gimp_dialog_factory_new      (GimpContext       *context,
+						  GtkItemFactory    *item_factory);
 
-void                gimp_dialog_factory_register   (GimpDialogFactory *factory,
-						    const gchar       *identifier,
-						    GimpDialogNewFunc  new_func);
+void           gimp_dialog_factory_register      (GimpDialogFactory *factory,
+						  const gchar       *identifier,
+						  GimpDialogNewFunc  new_func);
+GimpDockable * gimp_dialog_factory_dialog_new    (GimpDialogFactory *factory,
+						  const gchar       *identifier);
 
-GimpDockable      * gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
-						    const gchar       *identifier);
+void           gimp_dialog_factory_add_dock      (GimpDialogFactory *factory,
+						  GimpDock          *dock);
+void           gimp_dialog_factory_remove_dock   (GimpDialogFactory *factory,
+						  GimpDock          *dock);
 
 
 #endif  /*  __GIMP_DIALOG_FACTORY_H__  */

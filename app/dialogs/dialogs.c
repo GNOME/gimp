@@ -28,6 +28,8 @@
 #include "dialogs-constructors.h"
 #include "menus.h"
 
+#include "gimpcontext.h"
+
 
 GimpDialogFactory *global_dialog_factory = NULL;
 
@@ -39,7 +41,8 @@ dialogs_register (void)
 
   item_factory = menus_get_dialogs_factory ();
 
-  global_dialog_factory = gimp_dialog_factory_new (item_factory);
+  global_dialog_factory = gimp_dialog_factory_new (gimp_context_get_user (),
+						   item_factory);
 
   gimp_dialog_factory_register (global_dialog_factory,
 				"gimp:image_list",

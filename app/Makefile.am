@@ -24,6 +24,85 @@ bin_PROGRAMS = gimp
 gimp_SOURCES = \
 	about_dialog.c		\
 	about_dialog.h		\
+	brush_edit.c		\
+	brush_edit.h		\
+	brush_select.c		\
+	brush_select.h		\
+	channels_dialog.c	\
+	channels_dialog.h	\
+	color_area.c		\
+	color_area.h		\
+	color_notebook.c	\
+	color_notebook.h	\
+	color_select.c		\
+	color_select.h		\
+	colormap_dialog.c	\
+	colormap_dialog.h	\
+	commands.c		\
+	commands.h		\
+	cursorutil.c		\
+	cursorutil.h		\
+	devices.c		\
+	devices.h		\
+	dialog_handler.c	\
+	dialog_handler.h	\
+	errorconsole.c		\
+	errorconsole.h		\
+	file_new_dialog.c	\
+	file_new_dialog.h	\
+	gimpdnd.c		\
+	gimpdnd.h		\
+	gimpui.c		\
+	gimpui.h		\
+	gradient_editor.c	\
+	gradient_editor.h	\
+	gradient_select.h	\
+	gradient_select.c	\
+	indicator_area.c	\
+	indicator_area.h	\
+	info_dialog.c		\
+	info_dialog.h		\
+	info_window.c		\
+	info_window.h		\
+	interface.c		\
+	interface.h		\
+	layer_select.c		\
+	layer_select.h		\
+	layers_dialog.c		\
+	layers_dialog.h		\
+	layers_dialogP.h	\
+	lc_dialog.c		\
+	lc_dialog.h		\
+	lc_dialogP.h		\
+	menus.c			\
+	menus.h			\
+	nav_window.c		\
+	nav_window.h		\
+	ops_buttons.c		\
+	ops_buttons.h		\
+	palette.c		\
+	palette.h		\
+	palette_import.c	\
+	palette_import.h	\
+	palette_select.c	\
+	palette_select.h	\
+	paletteP.h		\
+	paths_dialog.c		\
+	paths_dialog.h		\
+	paths_dialogP.h		\
+	preferences_dialog.c	\
+	preferences_dialog.h	\
+	resolution_calibrate.c	\
+	resolution_calibrate.h	\
+	session.c		\
+	session.h		\
+	test_commands.c		\
+	test_commands.h		\
+	tips_dialog.c		\
+	tips_dialog.h		\
+	toolbox.c		\
+	toolbox.h		\
+	\
 	app_procs.c		\
 	app_procs.h		\
 	appenums.h		\
@@ -36,53 +115,29 @@ gimp_SOURCES = \
 	batch.h			\
 	boundary.c		\
 	boundary.h		\
-	brush_edit.c		\
-	brush_edit.h		\
 	brush_header.h		\
 	brush_scale.c		\
 	brush_scale.h		\
-	brush_select.c		\
-	brush_select.h		\
-	channels_dialog.c	\
-	channels_dialog.h	\
 	channel_ops.c		\
 	channel_ops.h		\
-	color_area.c		\
-	color_area.h		\
-	color_notebook.c	\
-	color_notebook.h	\
-	color_select.c		\
-	color_select.h		\
 	color_transfer.c	\
 	color_transfer.h	\
 	colormaps.c		\
 	colormaps.h		\
-	colormap_dialog.c	\
-	colormap_dialog.h	\
-	commands.c		\
-	commands.h		\
 	context_manager.c	\
 	context_manager.h	\
 	convert.c		\
 	convert.h		\
-	cursorutil.c		\
-	cursorutil.h		\
 	datafiles.c		\
 	datafiles.h		\
 	desaturate.c		\
 	desaturate.h		\
-	devices.c		\
-	devices.h		\
-	dialog_handler.c	\
-	dialog_handler.h	\
 	disp_callbacks.c	\
 	disp_callbacks.h	\
 	docindex.c		\
 	docindex.h		\
 	drawable.c		\
 	drawable.h		\
-	errorconsole.c		\
-	errorconsole.h		\
 	errors.c		\
 	errors.h		\
 	equalize.c		\
@@ -95,8 +150,6 @@ gimp_SOURCES = \
 	file-utils.c		\
 	floating_sel.c		\
 	floating_sel.h		\
-	file_new_dialog.c	\
-	file_new_dialog.h	\
 	fsdither.h		\
 	gdisplay.c		\
 	gdisplay.h		\
@@ -126,8 +179,6 @@ gimp_SOURCES = \
 	gimpdatafactory.h	\
 	gimpdatalist.c		\
 	gimpdatalist.h		\
-	gimpdnd.c		\
-	gimpdnd.h		\
 	gimpdrawable.c		\
 	gimpdrawable.h		\
 	gimpdrawable-preview.c	\
@@ -168,8 +219,6 @@ gimp_SOURCES = \
 	gimpprogress.h		\
 	gimprc.c		\
 	gimprc.h		\
-	gimpui.c		\
-	gimpui.h		\
 	gimpundo.c		\
 	gimpundo.h		\
 	gimpundostack.c		\
@@ -179,10 +228,6 @@ gimp_SOURCES = \
 	gimpviewable.h		\
 	global_edit.c		\
 	global_edit.h		\
-	gradient_editor.c	\
-	gradient_editor.h	\
-	gradient_select.h	\
-	gradient_select.c	\
 	gximage.c		\
 	gximage.h		\
 	image_map.c		\
@@ -191,53 +236,21 @@ gimp_SOURCES = \
 	image_new.h		\
 	image_render.c		\
 	image_render.h		\
-	indicator_area.c	\
-	indicator_area.h	\
-	info_dialog.c		\
-	info_dialog.h		\
-	info_window.c		\
-	info_window.h		\
-	interface.c		\
-	interface.h		\
 	invert.c		\
 	invert.h		\
-	layer_select.c		\
-	layer_select.h		\
-	layers_dialog.c		\
-	layers_dialog.h		\
-	layers_dialogP.h	\
-	lc_dialog.c		\
-	lc_dialog.h		\
-	lc_dialogP.h		\
 	libgimp_glue.c		\
 	libgimp_glue.h		\
 	lut_funcs.c		\
 	lut_funcs.h		\
 	main.c			\
-	menus.c			\
-	menus.h			\
 	module_db.c		\
 	module_db.h		\
-	nav_window.c		\
-	nav_window.h		\
-	ops_buttons.c		\
-	ops_buttons.h		\
-	palette.c		\
-	palette.h		\
-	palette_import.c	\
-	palette_import.h	\
-	palette_select.c	\
-	palette_select.h	\
-	paletteP.h		\
 	parasitelist.c		\
 	parasitelist.h		\
 	path.c			\
 	path.h			\
 	pathP.h			\
 	path_transform.h	\
-	paths_dialog.c		\
-	paths_dialog.h		\
-	paths_dialogP.h		\
 	path_curves.h		\
 	path_curves.c		\
 	path_bezier.h		\
@@ -245,14 +258,16 @@ gimp_SOURCES = \
 	pattern_header.h	\
 	pattern_select.c	\
 	pattern_select.h	\
+	pixel_processor.c	\
+	pixel_processor.h	\
+	pixel_region.c		\
+	pixel_region.h		\
+	pixel_surround.c	\
+	pixel_surround.h	\
 	plug_in.c		\
 	plug_in.h		\
-	preferences_dialog.c	\
-	preferences_dialog.h	\
 	qmask.c			\
 	qmask.h			\
-	resolution_calibrate.c	\
-	resolution_calibrate.h	\
 	resize.c		\
 	resize.h		\
 	scale.c			\
@@ -263,33 +278,6 @@ gimp_SOURCES = \
 	scroll.h		\
 	selection.c		\
 	selection.h		\
-	session.h		\
-	session.c		\
-	test_commands.c		\
-	test_commands.h		\
-	tips_dialog.c		\
-	tips_dialog.h		\
-	toolbox.c		\
-	toolbox.h		\
-	undo.c			\
-	undo.h			\
-	undo_history.c		\
-	undo_history.h		\
-	undo_types.h		\
-	unitrc.h		\
-	user_install.c		\
-	user_install.h		\
-	xcf.c			\
-	xcf.h			\
-	$(regex_sources)	\
-	\
-	$(mmx_sources)		\
-	pixel_processor.c	\
-	pixel_processor.h	\
-	pixel_region.c		\
-	pixel_region.h		\
-	pixel_surround.c	\
-	pixel_surround.h	\
 	temp_buf.c		\
 	temp_buf.h		\
 	tile.c			\
@@ -302,8 +290,20 @@ gimp_SOURCES = \
 	tile_manager_pvt.h	\
 	tile_swap.c		\
 	tile_swap.h		\
+	undo.c			\
+	undo.h			\
+	undo_history.c		\
+	undo_history.h		\
+	undo_types.h		\
+	unitrc.h		\
+	user_install.c		\
+	user_install.h		\
+	xcf.c			\
+	xcf.h			\
+	$(regex_sources)	\
+	$(mmx_sources)		\
 	\
-	marching_ants.h			\
+	marching_ants.h		\
 	pixmaps2.h
 
 EXTRA_DIST = \

@@ -599,6 +599,7 @@ test_channel_list_cmd_callback (GtkWidget *widget,
 
 static GtkWidget *
 test_brush_tab_func (GimpDockable *dockable,
+		     GimpDockbook *dockbook,
 		     gint          size)
 {
   GimpContext *context;
@@ -622,6 +623,7 @@ test_brush_tab_func (GimpDockable *dockable,
 
 static GtkWidget *
 test_pattern_tab_func (GimpDockable *dockable,
+		       GimpDockbook *dockbook,
 		       gint          size)
 {
   GimpContext *context;
@@ -645,6 +647,7 @@ test_pattern_tab_func (GimpDockable *dockable,
 
 static GtkWidget *
 test_gradient_tab_func (GimpDockable *dockable,
+			GimpDockbook *dockbook,
 			gint          size)
 {
   GimpContext *context;
@@ -668,6 +671,7 @@ test_gradient_tab_func (GimpDockable *dockable,
 
 static GtkWidget *
 test_palette_tab_func (GimpDockable *dockable,
+		       GimpDockbook *dockbook,
 		       gint          size)
 {
   GimpContext *context;

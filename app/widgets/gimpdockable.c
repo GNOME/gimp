@@ -26,6 +26,7 @@
 #include "apptypes.h"
 
 #include "gimpdockable.h"
+#include "gimpdockbook.h"
 
 
 static void   gimp_dockable_class_init (GimpDockableClass *klass);
@@ -119,16 +120,20 @@ gimp_dockable_new (const gchar            *name,
 
 GtkWidget *
 gimp_dockable_get_tab_widget (GimpDockable *dockable,
+			      GimpDockbook *dockbook,
 			      gint          size)
 {
   g_return_val_if_fail (dockable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
 
+  g_return_val_if_fail (dockbook != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
+
   g_return_val_if_fail (size >= -1 && size < 64, NULL);
 
   if (dockable->get_tab_func)
     {
-      return dockable->get_tab_func (dockable, size);
+      return dockable->get_tab_func (dockable, dockbook, size);
     }
 
   return gtk_label_new (dockable->short_name);

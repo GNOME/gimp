@@ -202,7 +202,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   g_return_if_fail (dockable->dockbook == NULL);
 
-  tab_widget = gimp_dockable_get_tab_widget (dockable, 24);
+  tab_widget = gimp_dockable_get_tab_widget (dockable, dockbook, 24);
 
   if (GTK_IS_LABEL (tab_widget))
     {
@@ -223,7 +223,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 		      GTK_SIGNAL_FUNC (gimp_dockbook_tab_button_press),
 		      dockable);
 
-  menu_widget = gimp_dockable_get_tab_widget (dockable, 16);
+  menu_widget = gimp_dockable_get_tab_widget (dockable, dockbook, 16);
 
   if (! GTK_IS_LABEL (menu_widget))
     {
@@ -477,7 +477,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
   gtk_container_add (GTK_CONTAINER (window), frame);
   gtk_widget_show (frame);
 
-  preview = gimp_dockable_get_tab_widget (dockable, 24);
+  preview = gimp_dockable_get_tab_widget (dockable, dockable->dockbook, 24);
 
   if (! GTK_IS_LABEL (preview))
     {

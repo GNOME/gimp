@@ -25,6 +25,9 @@
 #include "apptypes.h"
 
 #include "gimpdialogfactory.h"
+#include "gimpdock.h"
+
+#include "gimpcontext.h"
 
 
 typedef struct _GimpDialogFactoryEntry GimpDialogFactoryEntry;
@@ -87,6 +90,7 @@ gimp_dialog_factory_init (GimpDialogFactory *factory)
 {
   factory->item_factory       = NULL;
   factory->registered_dialogs = NULL;
+  factory->open_docks         = NULL;
 }
 
 static void
@@ -108,21 +112,27 @@ gimp_dialog_factory_destroy (GtkObject *object)
     }
 
   g_list_free (factory->registered_dialogs);
+  g_list_free (factory->open_docks);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GimpDialogFactory *
-gimp_dialog_factory_new (GtkItemFactory *item_factory)
+gimp_dialog_factory_new (GimpContext    *context,
+			 GtkItemFactory *item_factory)
 {
   GimpDialogFactory *factory;
+
+  g_return_val_if_fail (context != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   g_return_val_if_fail (item_factory != NULL, NULL);
   g_return_val_if_fail (GTK_IS_ITEM_FACTORY (item_factory), NULL);
 
   factory = gtk_type_new (GIMP_TYPE_DIALOG_FACTORY);
 
+  factory->context      = context;
   factory->item_factory = item_factory;
 
   return factory;
@@ -167,9 +177,45 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
 
       if (! strcmp (identifier, entry->identifier))
 	{
-	  return entry->new_func ();
+	  return entry->new_func (factory);
 	}
     }
 
   return NULL;
+}
+
+void
+gimp_dialog_factory_add_dock (GimpDialogFactory *factory,
+			      GimpDock          *dock)
+{
+  g_return_if_fail (factory != NULL);
+  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
+  g_return_if_fail (dock != NULL);
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  if (g_list_find (factory->open_docks, dock))
+    {
+      g_warning ("%s(): dock already registered", G_GNUC_FUNCTION);
+      return;
+    }
+
+  factory->open_docks = g_list_prepend (factory->open_docks, dock);
+}
+
+void
+gimp_dialog_factory_remove_dock (GimpDialogFactory *factory,
+				 GimpDock          *dock)
+{
+  g_return_if_fail (factory != NULL);
+  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
+  g_return_if_fail (dock != NULL);
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  if (! g_list_find (factory->open_docks, dock))
+    {
+      g_warning ("%s(): dock not registered", G_GNUC_FUNCTION);
+      return;
+    }
+
+  factory->open_docks = g_list_remove (factory->open_docks, dock);
 }
