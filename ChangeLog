@@ -1,3 +1,8 @@
+2003-11-21  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/preferences/window-manager.png: use
+	  gnome2 icon for WM
+
 2003-11-21  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_colorblind.c: 
