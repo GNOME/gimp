@@ -1,5 +1,11 @@
 2004-03-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcolormapeditor.c (gimp_colormap_editor_class_init):
+	GDK_TYPE_MODIFIER_TYPE are flags, not enum values, use the
+	right marshaller for the "selected" signal.
+
+2004-03-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppreviewrendererimagefile.[ch]: moved the
 	(disabled) ENABLE_FILE_SYSTEM_ICONS from the .c to the .h file and
 	#ifdef the "gpointer file_system" member with it.

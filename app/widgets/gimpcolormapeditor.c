@@ -192,7 +192,7 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpColormapEditorClass, selected),
 		  NULL, NULL,
-		  gimp_marshal_VOID__ENUM,
+		  gimp_marshal_VOID__FLAGS,
 		  G_TYPE_NONE, 1,
                   GDK_TYPE_MODIFIER_TYPE);
 
