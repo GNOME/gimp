@@ -62,6 +62,7 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
   gdouble               width;
   GimpJoinStyle         join;
   GimpCapStyle          cap;
+  gdouble               miter;
   gboolean              antialias;
   GArray               *dash_array = NULL;
 
@@ -87,6 +88,7 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
                 "width",      &width,
                 "join-style", &join,
                 "cap-style",  &cap,
+                "miter",      &miter,
                 "antialias",  &antialias,
                 NULL);
 
@@ -151,7 +153,7 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
       return;
     }
 
-  gimp_scan_convert_stroke (scan_convert, width, join, cap, 10.0,
+  gimp_scan_convert_stroke (scan_convert, width, join, cap, miter,
                             0.0, dash_array);
 
   /* fill a 1-bpp Tilemanager with black, this will describe the shape

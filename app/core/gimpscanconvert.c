@@ -289,14 +289,12 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
       gdouble      *dashes;
       gint          i;
 
-      width = MAX (width, 1.0);
-
-      dash.offset = dash_offset * width;
+      dash.offset = dash_offset * MAX (width, 1.0);
 
       dashes = g_new (gdouble, dash_info->len);
 
       for (i=0; i < dash_info->len ; i++)
-        dashes[i] = width * g_array_index (dash_info, gdouble, i);
+        dashes[i] = MAX (width, 1.0) * g_array_index (dash_info, gdouble, i);
 
       dash.n_dash = dash_info->len;
       dash.dash = dashes;

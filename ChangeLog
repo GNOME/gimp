@@ -1,3 +1,11 @@
+2003-09-29  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpscanconvert.c: Fixed glitch to enable dashed
+	strokes with width < 1.0.
+
+	* app/core/gimpdrawable-stroke.c: Actually pass the miter
+	limit to gimp_scan_convert_stroke ().
+
 2003-09-28  Ville Pätsi <drc@gimp.org>
 
 	* gimp/themes/Default/images/stock-join-bevel-16.png: Corrected the
