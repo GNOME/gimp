@@ -268,12 +268,12 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                                      _("Open the font selection dialog"));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Font:"), 1.0, 0.5,
+                             _("_Font:"), 1.0, 0.5,
                              button, 2, TRUE);
 
   font_selection = gimp_prop_font_selection_new (config, "font");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("_Font:"), 1.0, 0.5,
+                             _("Font:"), 1.0, 0.5,
                              font_selection, 2, FALSE);
 
   digits = gimp_unit_get_digits (options->text->font_size_unit);

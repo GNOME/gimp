@@ -1,5 +1,11 @@
 2003-08-29  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptextoptions.c (gimp_text_options_gui): move the
+	mnemonic from the old font selection widget to the new one. The
+	old one will die soon. Fixes bug #120963.
+
+2003-08-29  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: removed be (Belarusian) from ALL_LINGUAS until all
 	be.po files are provided.
 
