@@ -1,5 +1,6 @@
 2004-11-15  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpfileprocview.c (gimp_file_proc_view_get_proc)
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_proc_changed):
 	better fix for bug #158369.
 

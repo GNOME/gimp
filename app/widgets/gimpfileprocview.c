@@ -259,7 +259,7 @@ gimp_file_proc_view_get_proc (GimpFileProcView  *view,
     }
 
   if (label)
-    label = NULL;
+    *label = NULL;
 
   return NULL;
 }
