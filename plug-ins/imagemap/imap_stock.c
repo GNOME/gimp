@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,18 +27,20 @@
 
 #include "imap_stock.h"
 
+#include "arrow.xpm"
+#include "circle.xpm"
+#include "coord.xpm"
+#include "dimension.xpm"
 #include "grid.xpm"
+#include "map_info.xpm"
+#include "polygon.xpm"
+#include "rectangle.xpm"
 #include "to_back.xpm"
 #include "to_front.xpm"
-#include "map_info.xpm"
-#include "arrow.xpm"
-#include "rectangle.xpm"
-#include "circle.xpm"
-#include "polygon.xpm"
 
 #include "libgimp/stdplugins-intl.h"
 
-static GtkStockItem		imap_stock_items[] = {
+static GtkStockItem imap_stock_items[] = {
    {IMAP_STOCK_MAP_INFO, N_("Edit Map Info..."), 0, 0, "imap"},
    {IMAP_STOCK_GRID, N_("Grid"), 0, 0, "imap"},
 };
@@ -47,8 +49,8 @@ static void
 add_stock_icon(GtkIconFactory *factory, const gchar *stock_id, 
 	       const char **xpm_data)
 {
-   GtkIconSet		*icon_set;
-   GdkPixbuf 		*pixbuf;
+   GtkIconSet *icon_set;
+   GdkPixbuf  *pixbuf;
 
    pixbuf = gdk_pixbuf_new_from_xpm_data(xpm_data);
    icon_set = gtk_icon_set_new_from_pixbuf(pixbuf);
@@ -60,17 +62,19 @@ add_stock_icon(GtkIconFactory *factory, const gchar *stock_id,
 void
 init_stock_icons(void)
 {
-   GtkIconFactory	*factory = gtk_icon_factory_new();
+   GtkIconFactory *factory = gtk_icon_factory_new();
 
+   add_stock_icon(factory, IMAP_STOCK_ARROW, (const char**) arrow_xpm);
+   add_stock_icon(factory, IMAP_STOCK_CIRCLE, (const char**) circle_xpm);
+   add_stock_icon(factory, IMAP_STOCK_COORD, (const char**) coord_xpm);
+   add_stock_icon(factory, IMAP_STOCK_DIMENSION, (const char**) dimension_xpm);
+   add_stock_icon(factory, IMAP_STOCK_GRID, (const char**) grid_xpm);
+   add_stock_icon(factory, IMAP_STOCK_MAP_INFO, (const char**) map_info_xpm);
+   add_stock_icon(factory, IMAP_STOCK_POLYGON, (const char**) polygon_xpm);  
+   add_stock_icon(factory, IMAP_STOCK_RECTANGLE, (const char**) rectangle_xpm);
    add_stock_icon(factory, IMAP_STOCK_TO_BACK, (const char**) to_back_xpm);
    add_stock_icon(factory, IMAP_STOCK_TO_FRONT, (const char**) to_front_xpm);
-   add_stock_icon(factory, IMAP_STOCK_MAP_INFO, (const char**) map_info_xpm);
-   add_stock_icon(factory, IMAP_STOCK_ARROW, (const char**) arrow_xpm);
-   add_stock_icon(factory, IMAP_STOCK_RECTANGLE, (const char**) rectangle_xpm);
-   add_stock_icon(factory, IMAP_STOCK_CIRCLE, (const char**) circle_xpm);
-   add_stock_icon(factory, IMAP_STOCK_POLYGON, (const char**) polygon_xpm);
-   add_stock_icon(factory, IMAP_STOCK_GRID, (const char**) grid_xpm);
-  
+
    gtk_icon_factory_add_default(factory);
 
    gtk_stock_add_static(imap_stock_items, G_N_ELEMENTS(imap_stock_items));

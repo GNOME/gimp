@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,6 +64,7 @@
 #include "imap_grid.h"
 #include "imap_main.h"
 #include "imap_menu.h"
+#include "imap_misc.h"
 #include "imap_object.h"
 #include "imap_polygon.h"
 #include "imap_popup.h"
@@ -469,7 +470,7 @@ fuzzy_select_on_button_press(GtkWidget *widget, GdkEventButton *event,
 	    
 	    add_shape(object);
 	    x0 = gimp_path_get_point_at_dist(image_ID, 0.0, &y0, &grad0);
-	    polygon->points = g_list_append(NULL, new_point(x0, y0));
+	    polygon_append_point(polygon, x0, y0);
 	    
 	    for (distance = 1.0;; distance += 1.0) {
 	       gint x1, y1 = -1;
@@ -490,8 +491,7 @@ fuzzy_select_on_button_press(GtkWidget *widget, GdkEventButton *event,
 		     diff = grad1;
 		  
 		  if (fabs(diff) > 0.1) {
-		     polygon->points = g_list_append(polygon->points,
-						     new_point(x1, y1));
+		     polygon_append_point(polygon, x1, y1);
 		     grad0 = grad1;
 		  }
 		  x0 = x1;
@@ -748,18 +748,15 @@ clear_map_info(void)
 static void
 do_data_changed_dialog(void (*continue_cb)(gpointer), gpointer param)
 {
-   static DefaultDialog_t *dialog;
+   static Alert_t *alert;
 
-   if (!dialog) {
-      dialog = make_default_dialog(_("Data changed"));
-      default_dialog_hide_apply_button(dialog);
-      default_dialog_set_label(
-	 dialog,
-	 _("Some data has been changed.\n"
-	   "Do you really want to discard your changes?"));
+   if (!alert) {
+     alert = create_confirm_alert(GTK_STOCK_DIALOG_WARNING);
+     alert_set_text(alert, _("Some data has been changed!"),
+		    _("Do you really want to discard your changes?"));
    }
-   default_dialog_set_ok_cb(dialog, continue_cb, param);
-   default_dialog_show(dialog);
+   default_dialog_set_ok_cb(alert->dialog, continue_cb, param);
+   default_dialog_show(alert->dialog);
 }
 
 static void
@@ -990,21 +987,16 @@ resize_image_cancel_cb(gpointer data)
 static void
 do_image_size_changed_dialog(void)
 {
-   static DefaultDialog_t *dialog;
+   static Alert_t *alert;
 
-   if (!dialog) {
-      dialog = make_default_dialog( _("Image size changed"));
-      default_dialog_hide_apply_button(dialog);
-      default_dialog_set_label(
-	 dialog,
-	 _("Image size has changed.\n"
-	   "Resize Area's?"));
-
-      default_dialog_set_ok_cb(dialog, resize_image_ok_cb, NULL);
-      default_dialog_set_cancel_cb(dialog, resize_image_cancel_cb, NULL);
+   if (!alert) {
+     alert = create_confirm_alert(GTK_STOCK_DIALOG_WARNING);
+     alert_set_text(alert, _("Image size has changed."),
+		    _("Resize area's?"));
    }
-   default_dialog_show(dialog);
-
+   default_dialog_set_ok_cb(alert->dialog, resize_image_ok_cb, NULL);
+   default_dialog_set_cancel_cb(alert->dialog, resize_image_cancel_cb, NULL);
+   default_dialog_show(alert->dialog);
 }
 
 static void
@@ -1056,10 +1048,11 @@ toggle_area_list(void)
    selection_toggle_visibility(_selection);
 }
 
-static void
+static gboolean
 close_callback(GtkWidget *widget, gpointer data)
 {
-   gtk_main_quit();
+   do_quit();
+   return TRUE;
 }
 
 static gboolean
@@ -1442,7 +1435,7 @@ dialog(GimpDrawable *drawable)
    gimp_help_connect (dlg, gimp_standard_help_func, "filters/imagemap.html");
 
    gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-   g_signal_connect(G_OBJECT(dlg), "destroy", 
+   g_signal_connect(G_OBJECT(dlg), "delete_event", 
 		    G_CALLBACK(close_callback), NULL);
    g_signal_connect(G_OBJECT(dlg), "key_press_event", 
 		    G_CALLBACK(key_press_cb), NULL);

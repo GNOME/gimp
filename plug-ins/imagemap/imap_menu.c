@@ -183,6 +183,7 @@ make_file_menu(GtkWidget *menu_bar)
    _menu.file_menu = file_menu;
    make_item_with_image(file_menu, GTK_STOCK_OPEN, menu_command,
 			&_menu.cmd_open);
+   _menu.open_recent = make_sub_menu(file_menu, _("Open Recent"));
    make_item_with_image(file_menu, GTK_STOCK_SAVE, menu_command, 
 			&_menu.cmd_save);
    item = make_item_with_image(file_menu, GTK_STOCK_SAVE_AS, menu_command,
@@ -424,11 +425,13 @@ void
 menu_build_mru_items(MRU_t *mru)
 {
    GList *p;
-   gint position = 7;		/* Position of 'Close' entry */
+   gint position = 0;
    int i;
 
    if (_menu.nr_off_mru_items) {
-      GList *children = gtk_container_get_children(GTK_CONTAINER(_menu.file_menu));
+      GList *children;
+
+      children = gtk_container_get_children(GTK_CONTAINER(_menu.open_recent));
       
       p = g_list_nth(children, position);
       for (i = 0; i < _menu.nr_off_mru_items; i++, p = p->next) {
@@ -439,7 +442,7 @@ menu_build_mru_items(MRU_t *mru)
 
    i = 0;
    for (p = mru->list; p; p = p->next, i++) {
-      GtkWidget *item = insert_item_with_label(_menu.file_menu, position++,
+      GtkWidget *item = insert_item_with_label(_menu.open_recent, position++,
 					       (gchar*) p->data,
 					       menu_mru, p->data);
       if (i < 9) {
@@ -447,7 +450,6 @@ menu_build_mru_items(MRU_t *mru)
 	 add_accelerator(item, accelerator_key, GDK_CONTROL_MASK);
       }
    }
-   insert_separator(_menu.file_menu, position);
    _menu.nr_off_mru_items = i + 1;
 }
 

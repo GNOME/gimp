@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,9 @@ typedef struct {
 
 Object_t *create_polygon(GList *points);
 ObjectFactory_t *get_polygon_factory(guint state);
+
 void polygon_remove_last_point(Polygon_t *polygon);
+void polygon_append_point(Polygon_t *polygon, gint x, gint y);
 GdkPoint *new_point(gint x, gint y);
 
 #endif /* _IMAP_POLYGON_H */

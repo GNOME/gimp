@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,10 +26,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
 
 #include <gtk/gtk.h>
 
@@ -42,7 +38,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static gint callback_lock;
+static gboolean callback_lock;
 
 
 static gchar*
@@ -105,8 +101,9 @@ set_url(GtkWidget *widget, AreaInfoDialog_t *param, const gchar *prefix)
 	       p = url;
 	    }
 	 }
-	 gtk_entry_set_text(GTK_ENTRY(param->url), prefix);
-	 gtk_entry_append_text(GTK_ENTRY(param->url), p);
+	 p = g_strconcat(prefix, p, NULL);
+	 gtk_entry_set_text(GTK_ENTRY(param->url), p);
+	 g_free(p);
 	 g_free(url);
       }
    }

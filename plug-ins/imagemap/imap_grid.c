@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -364,6 +364,7 @@ draw_grid(GtkWidget *preview)
       
       if (!grid_gc) {
 	 grid_gc = gdk_gc_new(preview->window);
+
 	 gdk_gc_set_line_attributes(grid_gc, 1, GDK_LINE_ON_OFF_DASH,
 				    GDK_CAP_BUTT, GDK_JOIN_BEVEL);
       }

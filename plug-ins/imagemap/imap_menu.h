@@ -28,60 +28,61 @@
 #include "imap_mru.h"
 
 typedef struct {
-   GtkWidget *file_menu;
-   GtkWidget *edit_menu;
-   GtkWidget *undo;
-   GtkWidget *redo;
-   GtkWidget *cut;
-   GtkWidget *copy;
-   GtkWidget *clear;
-   GtkWidget *edit;
-   GtkWidget *deselect_all;
-   GtkWidget *arrow;
-   GtkWidget *fuzzy_select;
-   GtkWidget *rectangle;
-   GtkWidget *circle;
-   GtkWidget *polygon;
-   GtkWidget *grid;
-   GtkWidget *gray;
-   GtkWidget *color;
-   GtkWidget *zoom[8];
-   GtkWidget *zoom_in;
-   GtkWidget *zoom_out;
+  GtkWidget *file_menu;
+  GtkWidget *edit_menu;
+  GtkWidget *open_recent;
+  GtkWidget *undo;
+  GtkWidget *redo;
+  GtkWidget *cut;
+  GtkWidget *copy;
+  GtkWidget *clear;
+  GtkWidget *edit;
+  GtkWidget *deselect_all;
+  GtkWidget *arrow;
+  GtkWidget *fuzzy_select;
+  GtkWidget *rectangle;
+  GtkWidget *circle;
+  GtkWidget *polygon;
+  GtkWidget *grid;
+  GtkWidget *gray;
+  GtkWidget *color;
+  GtkWidget *zoom[8];
+  GtkWidget *zoom_in;
+  GtkWidget *zoom_out;
+  
+  gint	      nr_off_mru_items;
 
-   gint	      nr_off_mru_items;
-
-   CommandFactory_t cmd_open;
-   CommandFactory_t cmd_save;
-   CommandFactory_t cmd_save_as;
-   CommandFactory_t cmd_preferences;
-   CommandFactory_t cmd_close;
-   CommandFactory_t cmd_quit;
-
-   CommandFactory_t cmd_undo;
-   CommandFactory_t cmd_redo;
-   CommandFactory_t cmd_cut;
-   CommandFactory_t cmd_copy;
-   CommandFactory_t cmd_paste;
-   CommandFactory_t cmd_select_all;
-   CommandFactory_t cmd_deselect_all;
-   CommandFactory_t cmd_clear;
-   CommandFactory_t cmd_edit_area_info;
-
-   CommandFactory_t cmd_area_list;
-   CommandFactory_t cmd_source;
-   CommandFactory_t cmd_color;
-   CommandFactory_t cmd_gray;
-   CommandFactory_t cmd_zoom_in;
-   CommandFactory_t cmd_zoom_out;
-
-   CommandFactory_t cmd_edit_map_info;
-
-   CommandFactory_t cmd_grid_settings;
-   CommandFactory_t cmd_create_guides;
-   CommandFactory_t cmd_use_gimp_guides;
-
-   CommandFactory_t cmd_about;
+  CommandFactory_t cmd_open;
+  CommandFactory_t cmd_save;
+  CommandFactory_t cmd_save_as;
+  CommandFactory_t cmd_preferences;
+  CommandFactory_t cmd_close;
+  CommandFactory_t cmd_quit;
+  
+  CommandFactory_t cmd_undo;
+  CommandFactory_t cmd_redo;
+  CommandFactory_t cmd_cut;
+  CommandFactory_t cmd_copy;
+  CommandFactory_t cmd_paste;
+  CommandFactory_t cmd_select_all;
+  CommandFactory_t cmd_deselect_all;
+  CommandFactory_t cmd_clear;
+  CommandFactory_t cmd_edit_area_info;
+  
+  CommandFactory_t cmd_area_list;
+  CommandFactory_t cmd_source;
+  CommandFactory_t cmd_color;
+  CommandFactory_t cmd_gray;
+  CommandFactory_t cmd_zoom_in;
+  CommandFactory_t cmd_zoom_out;
+  
+  CommandFactory_t cmd_edit_map_info;
+  
+  CommandFactory_t cmd_grid_settings;
+  CommandFactory_t cmd_create_guides;
+  CommandFactory_t cmd_use_gimp_guides;
+  
+  CommandFactory_t cmd_about;
 } Menu_t;
 
 #define menu_set_open_command(menu, command) \

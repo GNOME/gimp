@@ -300,9 +300,9 @@ preview_expose(GtkWidget *widget, GdkEventExpose *event)
 {
    Preview_t *data = preview_user_data(widget);
 
-   gtk_signal_handler_block(GTK_OBJECT(widget), data->exp_id);
+   g_signal_handler_block(G_OBJECT(widget), data->exp_id);
    gtk_widget_draw(widget, (event) ? &event->area : NULL);
-   gtk_signal_handler_unblock(GTK_OBJECT(widget), data->exp_id );
+   g_signal_handler_unblock(G_OBJECT(widget), data->exp_id );
 
    draw_grid(widget);
    draw_shapes(widget);
@@ -349,7 +349,6 @@ preview_zoom(Preview_t *preview, gint zoom_factor)
 {
    gint pwidth = preview->width * zoom_factor;
    gint pheight = preview->height * zoom_factor;
-
    gtk_preview_size(GTK_PREVIEW(preview->preview), pwidth, pheight);
    gtk_widget_queue_resize(preview->window);
    render_preview(preview->preview, &preview->src_rgn);

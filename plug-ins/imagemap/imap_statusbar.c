@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,26 +26,16 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "imap_statusbar.h"
-
-#include "coord.xpm"
-#include "dimension.xpm"
+#include "imap_stock.h"
 
 StatusBar_t*
 make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
 {
    StatusBar_t 	*statusbar = g_new(StatusBar_t, 1);
    GtkWidget 	*hbox, *iconw;
-   GdkPixmap 	*icon;
-   GdkBitmap 	*mask;
-   GtkStyle  	*style;
 
    hbox = gtk_hbox_new(FALSE, 1);
    gtk_box_pack_start(GTK_BOX(main_vbox), hbox, FALSE, FALSE, 0);
@@ -58,38 +48,35 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    gtk_widget_show(statusbar->status);
 
    /* (x, y) coordinate */
-   style = gtk_widget_get_style(window);
-   icon = gdk_pixmap_create_from_xpm_d(window->window, &mask,
-				       &style->bg[GTK_STATE_NORMAL], 
-				       coord_xpm);
-   iconw = gtk_pixmap_new(icon, mask);
+   iconw = gtk_image_new_from_stock(IMAP_STOCK_COORD, 
+				    GTK_ICON_SIZE_SMALL_TOOLBAR);
+
    gtk_box_pack_start(GTK_BOX(hbox), iconw, FALSE, FALSE, 10);
    gtk_widget_show(iconw);
 
    statusbar->xy = gtk_entry_new();
-   gtk_widget_set_usize(statusbar->xy, 64, -1);
-   gtk_entry_set_editable(GTK_ENTRY(statusbar->xy), FALSE);
+   gtk_widget_set_size_request(statusbar->xy, 96, -1);
+   gtk_editable_set_editable(GTK_EDITABLE(statusbar->xy), FALSE);
    GTK_WIDGET_UNSET_FLAGS(statusbar->xy, GTK_CAN_FOCUS);
    gtk_box_pack_start(GTK_BOX(hbox), statusbar->xy, FALSE, FALSE, 0);
    gtk_widget_show(statusbar->xy);
 
    /* Dimension info */
-   icon = gdk_pixmap_create_from_xpm_d(window->window, &mask,
-				       &style->bg[GTK_STATE_NORMAL], 
-				       dimension_xpm);
-   iconw = gtk_pixmap_new(icon, mask); 
+   iconw = gtk_image_new_from_stock(IMAP_STOCK_DIMENSION, 
+				    GTK_ICON_SIZE_SMALL_TOOLBAR);
    gtk_box_pack_start(GTK_BOX(hbox), iconw, FALSE, FALSE, 10);
    gtk_widget_show(iconw);
 
    statusbar->dimension = gtk_entry_new();
-   gtk_widget_set_usize(statusbar->dimension, 64, -1);
-   gtk_entry_set_editable(GTK_ENTRY(statusbar->dimension), FALSE);
+   gtk_widget_set_size_request(statusbar->dimension, 96, -1);
+   gtk_editable_set_editable(GTK_EDITABLE(statusbar->dimension), FALSE);
    GTK_WIDGET_UNSET_FLAGS(statusbar->dimension, GTK_CAN_FOCUS);
    gtk_box_pack_start(GTK_BOX(hbox), statusbar->dimension, FALSE, FALSE, 0);
    gtk_widget_show(statusbar->dimension);
 
    /* Zoom info */
    statusbar->zoom = gtk_statusbar_new();
+   gtk_widget_set_size_request(statusbar->zoom, 48, -1);
    statusbar->zoom_id = gtk_statusbar_get_context_id(
       GTK_STATUSBAR(statusbar->zoom), "zoom_status");
    gtk_box_pack_start(GTK_BOX(hbox), statusbar->zoom, FALSE, FALSE, 5);

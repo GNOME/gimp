@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 #include "imap_default_dialog.h"
 #include "imap_file.h"
 #include "imap_main.h"
+#include "imap_misc.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -117,55 +118,6 @@ do_file_save_as_dialog(void)
 		       G_CALLBACK(gtk_widget_hide), NULL);
    }
    gtk_widget_show(dialog);
-}
-
-typedef struct {
-   DefaultDialog_t *dialog;
-   GtkWidget *label;
-} Alert_t;
-
-Alert_t*
-create_alert(const gchar *stock_id)
-{
-   Alert_t *alert = g_new(Alert_t, 1);
-   DefaultDialog_t *dialog;
-   GtkWidget *hbox;
-   GtkWidget *image;
-
-   alert->dialog = dialog = make_default_dialog("");
-   default_dialog_hide_apply_button(dialog);
-   default_dialog_hide_cancel_button(dialog);
-
-   hbox = gtk_hbox_new(FALSE, 12);
-   gtk_container_set_border_width(GTK_CONTAINER(hbox), 6);
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), hbox, 
-		      TRUE, TRUE, 10);
-   gtk_widget_show(hbox);
-
-   image = gtk_image_new_from_stock(stock_id, GTK_ICON_SIZE_DIALOG);
-   gtk_container_add(GTK_CONTAINER(hbox), image);
-   gtk_widget_show(image);
-
-   alert->label = gtk_label_new("");
-   gtk_misc_set_alignment(GTK_MISC(alert->label), 0.0, 0.0);
-   gtk_container_add(GTK_CONTAINER(hbox), alert->label);
-   gtk_widget_show(alert->label);
-
-   return alert;
-}
-
-void
-alert_set_text(Alert_t *alert, const char *primary_text, 
-	       const char *secondary_text)
-{
-   gchar *text;
-
-   text = 
-      g_strdup_printf("<span weight=\"bold\" size=\"larger\">%s</span>\n\n%s",
-		      primary_text, secondary_text);
-   gtk_label_set_markup(GTK_LABEL(alert->label), text);
-
-   g_free(text);
 }
 
 void
