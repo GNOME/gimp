@@ -1,5 +1,10 @@
 2004-10-02  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/mapcolor.c: use a GimpAspectPreview and made the
+	code much simpler.
+
+2004-10-02  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/illusion.c: use a GimpAspectPreview so the preview
 	is now resizable.
 
