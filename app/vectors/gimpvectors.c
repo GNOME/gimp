@@ -59,6 +59,11 @@ static void       gimp_vectors_scale       (GimpItem         *item,
                                             gint              new_offset_x,
                                             gint              new_offset_y,
                                             GimpInterpolationType  interp_type);
+static void       gimp_vectors_resize      (GimpItem         *item,
+                                            gint              new_width,
+                                            gint              new_height,
+                                            gint              offset_x,
+                                            gint              offset_y);
 
 
 /*  private variables  */
@@ -129,6 +134,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
 
   item_class->duplicate           = gimp_vectors_duplicate;
   item_class->scale               = gimp_vectors_scale;
+  item_class->resize              = gimp_vectors_resize;
   item_class->default_name        = _("Path");
   item_class->rename_desc         = _("Rename Path");
 
@@ -216,6 +222,15 @@ gimp_vectors_scale (GimpItem              *item,
                     gint                   new_offset_x,
                     gint                   new_offset_y,
                     GimpInterpolationType  interp_type)
+{
+}
+
+static void
+gimp_vectors_resize (GimpItem *item,
+                     gint      new_width,
+                     gint      new_height,
+                     gint      offset_x,
+                     gint      offset_y)
 {
 }
 

@@ -1,5 +1,9 @@
 2003-05-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/vectors/gimpvectors.c: forgot to commit this one.
+
+2003-05-07  Michael Natterer  <mitch@gimp.org>
+
 	More transform stuff virtualization:
 
 	* app/core/gimpitem.[ch]: added new virtual function
