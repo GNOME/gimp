@@ -39,6 +39,15 @@
 #define CONSTANT        0  /* pencil, paintbrush, airbrush, clone */
 #define INCREMENTAL     1  /* convolve, smudge */
 
+/* gradient paint modes */
+#define ONCE_FORWARD 0     /* paint through once, then stop */
+#define ONCE_BACKWARDS 1   /* paint once, then stop, but run the gradient the other way */
+#define ONCE_END_COLOR 2   /* paint once, but keep painting with the end color */
+#define LOOP_SAWTOOTH 3    /* keep painting, looping through the grad start->end,start->end /|/|/| */
+#define LOOP_TRIANGLE 4    /* keep paiting, looping though the grad start->end,end->start /\/\/\/  */
+
+
+
 typedef struct _paint_core PaintCore;
 typedef void * (* PaintFunc)   (PaintCore *, GimpDrawable *, int);
 struct _paint_core
@@ -104,6 +113,7 @@ Tool *        paint_core_new          (int);
 void          paint_core_free         (Tool *);
 int           paint_core_init         (PaintCore *, GimpDrawable *, double, double);
 void          paint_core_interpolate  (PaintCore *, GimpDrawable *);
+void          paint_core_get_color_from_gradient (PaintCore *, double, double*, double*, double*,double *,int);
 void          paint_core_finish       (PaintCore *, GimpDrawable *, int);
 void          paint_core_cleanup      (void);
 

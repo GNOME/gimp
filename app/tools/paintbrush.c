@@ -38,7 +38,6 @@ static void         paintbrush_motion      (PaintCore *, GimpDrawable *, double,
 static Argument *   paintbrush_invoker     (Argument *);
 static Argument *   paintbrush_extended_invoker     (Argument *);
 static Argument *   paintbrush_extended_gradient_invoker     (Argument *);
-
 static double non_gui_fade_out,non_gui_gradient_length, non_gui_incremental;
 
 
@@ -73,9 +72,11 @@ paintbrush_toggle_update (GtkWidget *w,
 
 static void
 paintbrush_scale_update (GtkAdjustment *adjustment,
-			 double        *scale_val)
+			 PaintOptions   *options)
 {
-  *scale_val = adjustment->value;
+ options->gradient_length = adjustment->value;
+ if(options->gradient_length > 0.0)
+   options->incremental = INCREMENTAL;
 }
 
 static PaintOptions *
@@ -90,6 +91,7 @@ create_paint_options (void)
   GtkWidget *gradient_length_scale;
   GtkObject *gradient_length_scale_data;
   GtkWidget *incremental_toggle;
+
 
   /*  the new options structure  */
   options = (PaintOptions *) g_malloc (sizeof (PaintOptions));
@@ -129,21 +131,24 @@ create_paint_options (void)
   /* in a frame later with a checkbutton for "use gradients" */
   /* and default the gradient length to 10 or something */
 
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  //  hbox = gtk_hbox_new (FALSE, 1);
+  //gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  //gtk_widget_show(hbox);
+
+  
 
   label = gtk_label_new (_("Gradient Length"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   gradient_length_scale_data = gtk_adjustment_new (0.0, 0.0, 1000.0, 1.0, 1.0, 0.0);
   gradient_length_scale = gtk_hscale_new (GTK_ADJUSTMENT (gradient_length_scale_data));
-  gtk_box_pack_start (GTK_BOX (hbox), gradient_length_scale, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), gradient_length_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (gradient_length_scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (gradient_length_scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (gradient_length_scale_data), "value_changed",
 		      (GtkSignalFunc) paintbrush_scale_update,
-		      &options->gradient_length);
+		      options);
   gtk_widget_show (gradient_length_scale);
   gtk_widget_show (hbox);
 
@@ -161,6 +166,7 @@ create_paint_options (void)
 
   return options;
 }
+
 
 #define USE_SPEEDSHOP_CALIPERS 0
 #define TIMED_BRUSH 0
@@ -250,12 +256,12 @@ paintbrush_motion (PaintCore *paint_core,
   GImage *gimage;
   TempBuf * area;
   double x, paint_left;
-  double y, position;
-  unsigned char blend = OPAQUE_OPACITY;
+  double position;
+  unsigned char local_blend = OPAQUE_OPACITY;
   unsigned char temp_blend = OPAQUE_OPACITY;
   unsigned char col[MAX_CHANNELS];
   double r,g,b,a;
-  double distance;
+  int mode;
 
   position = 0.0;
   if (! (gimage = drawable_gimage (drawable)))
@@ -263,7 +269,7 @@ paintbrush_motion (PaintCore *paint_core,
 
   gimage_get_foreground (gimage, drawable, col);
 
-  /*  Get a region which can be used to paint to  */
+  /*  Get a region which can be used to p\\aint to  */
   if (! (area = paint_core_get_paint_area (paint_core, drawable)))
     return;
 
@@ -274,49 +280,36 @@ paintbrush_motion (PaintCore *paint_core,
       x = ((double) paint_core->distance / fade_out);
       paint_left = exp (- x * x * 0.5);
 
-      blend = (int) (255 * paint_left);
+      local_blend = (int) (255 * paint_left);
     }
 
-  if (gradient_length)
-    {
-      distance = paint_core->distance;
-      y = ((double) distance / gradient_length);
-      /* not sure if this makes sense for grads, but it seems to work */
-      /* if anyone has a good suggest on how to make the grad repeat */
-      /* let me know  */
-      position = exp (- y * y * 0.5);
-    
-    }
-
-  if (blend)
+  if (local_blend)
     {
       /*  set the alpha channel  */
       col[area->bytes - 1] = OPAQUE_OPACITY;
+      temp_blend = local_blend;
       
-      temp_blend = blend;
-      /* keep going unless we hit the end, or the end is near 0 */
-      if (gradient_length)
+      /* hard core to mode LOOP_TRIANGLE */
+      /* need to maek a gui to handle this */
+      mode = LOOP_TRIANGLE;
+
+      if(gradient_length)
 	{
-	  
-	  grad_get_color_at(position,&r,&g,&b,&a); 
+	  paint_core_get_color_from_gradient (paint_core, gradient_length, &r,&g,&b,&a,mode);
 	  r = r * 255.0;
 	  g = g * 255.0;
 	  b = b * 255.0;
 	  a = a * 255.0;
-
+	  temp_blend =  (gint)((a * local_blend)/255);
 	  col[0] = (gint)r;
 	  col[1] = (gint)g;
 	  col[2] = (gint)b;
-	  temp_blend =  (gint)((a * blend)/255);
-	  /* if you remove this, it will keep painting with the end color */
-	  /* perhaps something to make optional later */
-	  if(position < 0.001)
-	    temp_blend = (int) 0 ;
-	    
+	  /* always use incremental mode with gradients */
+	  /* make the gui cool later */
+	  incremental = INCREMENTAL;
 	}
-
-      /* just leave this because I know as soon as i delete it i'll find a bug */
-      /*     printf("position: %f  y: %f  temp_blend: %u grad_len: %f distance: %f \n", position, y, temp_blend, gradient_length, distance); */
+  /* just leave this because I know as soon as i delete it i'll find a bug */
+      /*          printf("temp_blend: %u grad_len: %f distance: %f \n",temp_blend, gradient_length, distance); */ 
 	
       /*  color the pixels  */
       color_pixels (temp_buf_data (area), col,

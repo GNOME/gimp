@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+#include <stdio.h>     /* temporary for debuggin */
 #include <string.h>
 #include <math.h>
 #include "appenv.h"
@@ -26,6 +27,7 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
+#include "gradient.h"  /* for grad_get_color_at() */
 #include "layers_dialog.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
@@ -461,6 +463,79 @@ paint_core_init (paint_core, drawable, x, y)
 
   return TRUE;
 }
+
+void
+paint_core_get_color_from_gradient (PaintCore *paint_core, double gradient_length, double *r, double *g, double *b,double *a, int mode)
+{
+  double y;
+  double distance;    /* distance in current brush stroke */
+  double position;    /* position in the gradient to ge the color from */
+  double temp_opacity;  /* so i can blank out stuff */
+
+  distance = paint_core->distance;
+  y = ((double) distance / gradient_length);
+  temp_opacity = 1.0; 
+ 
+
+  /* if were past the first chunk... */
+  if((y/gradient_length) > 1.0)
+    {
+      /* if this is an "odd" chunk..." */
+      if((int)(y/gradient_length) & 1)
+	{
+	  /* draw it "normally" */
+	  y = y - (gradient_length*(int)(y/gradient_length));
+	}
+      /* if this is an "even" chunk... */
+      else 
+	{
+	  /* draw it "backwards"  */
+	  switch (mode)
+	    {
+	    case LOOP_SAWTOOTH:
+	      y = y - (gradient_length*(int)(y/gradient_length));
+	      break;
+	    case LOOP_TRIANGLE:
+	      y = gradient_length - fmod(y,gradient_length);
+	      break;
+	    }
+	}
+      if(mode == ONCE_FORWARD || mode == ONCE_BACKWARDS)
+	{
+	  printf("got here \n");
+	  /* for the once modes, set alpha to 0.0 */
+	  temp_opacity = 0.0;
+	}
+
+    }
+  /* if this is the first chunk... */
+  else
+    {
+      /* draw it backwards */
+      switch (mode)
+	{
+	case ONCE_FORWARD:
+	case ONCE_END_COLOR:
+	case LOOP_TRIANGLE:
+  	  y = gradient_length - y;
+	  break;
+	default:
+	  /* all the other modes go here ;-> */
+	  break;
+	}
+      /* if it doesnt need to be reveresed, let y be y ;-> */
+    }
+  /* stolen from the fade effect in paintbrush */
+
+  /* model this on a gaussian curve */
+  // position = exp (- y * y * 0.5);
+  position = y/gradient_length;
+  grad_get_color_at(position,r,g,b,a);
+  /* set opacity to zero if this isnt a repeater call */
+  *a = (temp_opacity * *a);
+
+}
+  
 
 void
 paint_core_interpolate (paint_core, drawable)

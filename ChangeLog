@@ -1,3 +1,15 @@
+Thu Mar 18 19:35:48 EST 1999  Adrian Likins <adrian@gimp.org>
+
+	* app/paintbrush.c
+	* app/paint_core.c
+	* app/paint_core.h: moved all the code for figuring out the
+	paint_core->distance to color stuff to paint_core.[ch]. Updated
+	paintbrush.c to use the new function. Also now can either loop
+	thorugh the gradient (sawtooth, start->end, start->end or 
+	triangle start->end,end->start). Also mode for going
+	thought the gradient once, forwards or backwards. None of these
+	options are available from the gui or the PDB yet though.
+
 Thu Mar 18 02:12:26 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* configure.in
