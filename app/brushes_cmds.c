@@ -22,11 +22,11 @@
 
 #include <string.h>
 
+#include "apptypes.h"
 #include "gimpbrush.h"
 #include "gimpbrushlistP.h"
 #include "gimpcontext.h"
 #include "gimplist.h"
-#include "paint_funcs.h"
 
 static ProcRecord brushes_refresh_proc;
 static ProcRecord brushes_get_brush_proc;

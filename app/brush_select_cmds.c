@@ -22,9 +22,9 @@
 
 #include <string.h>
 
+#include "apptypes.h"
 #include "brush_select.h"
 #include "gimpbrushlist.h"
-#include "paint_funcs.h"
 
 static ProcRecord brushes_popup_proc;
 static ProcRecord brushes_close_popup_proc;

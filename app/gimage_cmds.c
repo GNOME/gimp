@@ -22,6 +22,7 @@
 
 #include <string.h>
 
+#include "apptypes.h"
 #include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"

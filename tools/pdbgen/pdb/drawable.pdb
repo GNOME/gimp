@@ -469,7 +469,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<string.h>) ],
+	headers => [ qw(<string.h> "channel.h" "layer.h") ],
 	code => <<'CODE'
 {
   TempBuf * buf;

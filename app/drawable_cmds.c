@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include "apptypes.h"
+#include "channel.h"
 #include "drawable.h"
 #include "layer.h"
 

@@ -20,14 +20,12 @@
 
 #include "procedural_db.h"
 
+#include "apptypes.h"
 #include "channel.h"
 #include "drawable.h"
 #include "floating_sel.h"
-#include "gimpimage.h"
 #include "layer.h"
-#include "layerF.h"
 #include "layer_pvt.h"
-#include "paint_funcs.h"
 #include "undo.h"
 
 static ProcRecord layer_new_proc;
@@ -142,8 +140,7 @@ layer_new_invoker (Argument *args)
   if (success)
     {
       opacity = (int) ((opacity_arg * 255) / 100);
-      layer = layer_new (gimage, width, height, (GimpImageType) type,
-			 name, opacity, (LayerModeEffects) mode);
+      layer = layer_new (gimage, width, height, (GimpImageType) type, name, opacity, (LayerModeEffects) mode);
       success = layer != NULL;
     }
 

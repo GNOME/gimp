@@ -28,6 +28,126 @@ package Gimp::CodeGen::enums;
 		       CONSOLE => '1',
 		       ERROR_CONSOLE => '2' }
 	},
+    GimpImageBaseType =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(RGB GRAY INDEXED) ],
+	  mapping => { RGB => '0',
+		       GRAY => '1',
+		       INDEXED => '2' }
+	},
+    GimpImageType =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(RGB_GIMAGE RGBA_GIMAGE GRAY_GIMAGE GRAYA_GIMAGE
+			  INDEXED_GIMAGE INDEXEDA_GIMAGE) ],
+	  mapping => { RGB_GIMAGE => '0',
+		       RGBA_GIMAGE => '1',
+		       GRAY_GIMAGE => '2',
+		       GRAYA_GIMAGE => '3',
+		       INDEXED_GIMAGE => '4',
+		       INDEXEDA_GIMAGE => '5' },
+	  nicks   => { RGB_GIMAGE => 'RGB_IMAGE',
+		       RGBA_GIMAGE => 'RGBA_IMAGE',
+		       GRAY_GIMAGE => 'GRAY_IMAGE',
+		       GRAYA_GIMAGE => 'GRAYA_IMAGE',
+		       INDEXED_GIMAGE => 'INDEXED_IMAGE',
+		       INDEXEDA_GIMAGE => 'INDEXEDA_IMAGE' }
+	},
+    GimpFillType =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(FOREGROUND_FILL BACKGROUND_FILL WHITE_FILL
+			  TRANSPARENT_FILL NO_FILL) ],
+	  mapping => { FOREGROUND_FILL => '0',
+		       BACKGROUND_FILL => '1',
+		       WHITE_FILL => '2',
+		       TRANSPARENT_FILL => '3',
+		       NO_FILL => '4' },
+	  nicks   => { FOREGROUND_FILL => 'FG_IMAGE_FILL',
+		       BACKGROUND_FILL => 'BG_IMAGE_FILL',
+		       WHITE_FILL => 'WHITE_IMAGE_FILL',
+		       TRANSPARENT_FILL => 'TRANS_IMAGE_FILL',
+		       NO_FILL => 'NO_IMAGE_FILL' }
+	},
+    LayerModeEffects =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(NORMAL_MODE DISSOLVE_MODE BEHIND_MODE
+			  MULTIPLY_MODE SCREEN_MODE OVERLAY_MODE
+			  DIFFERENCE_MODE ADDITION_MODE SUBTRACT_MODE
+			  DARKEN_ONLY_MODE LIGHTEN_ONLY_MODE HUE_MODE
+			  SATURATION_MODE COLOR_MODE VALUE_MODE DIVIDE_MODE) ],
+	  mapping => { NORMAL_MODE => '0',
+		       DISSOLVE_MODE => '1',
+		       BEHIND_MODE => '2',
+		       MULTIPLY_MODE => '3',
+		       SCREEN_MODE => '4',
+		       OVERLAY_MODE => '5',
+		       DIFFERENCE_MODE => '6',
+		       ADDITION_MODE => '7',
+		       SUBTRACT_MODE => '8',
+		       DARKEN_ONLY_MODE => '9',
+		       LIGHTEN_ONLY_MODE => '10',
+		       HUE_MODE => '11',
+		       SATURATION_MODE => '12',
+		       COLOR_MODE => '13',
+		       VALUE_MODE => '14',
+		       DIVIDE_MODE => '15' }
+	},
+    ConvolutionType =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(NORMAL_CONVOL ABSOLUTE_CONVOL NEGATIVE_CONVOL) ],
+	  mapping => { NORMAL_CONVOL => '0',
+		       ABSOLUTE_CONVOL => '1',
+		       NEGATIVE_CONVOL => '2' }
+	},
+    BrushApplicationMode =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(HARD SOFT PRESSURE) ],
+	  mapping => { HARD => '0',
+		       SOFT => '1',
+		       PRESSURE => '2' }
+	},
+    PaintApplicationMode =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(CONSTANT INCREMENTAL) ],
+	  mapping => { CONSTANT => '0',
+		       INCREMENTAL => '1' },
+	  nicks   => { CONSTANT => 'CONTINUOUS' }
+	},
+    MaskApplyMode =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(APPLY DISCARD) ],
+	  mapping => { APPLY => '0',
+		       DISCARD => '1' }
+	},
+    AddMaskType =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(ADD_WHITE_MASK ADD_BLACK_MASK ADD_ALPHA_MASK) ],
+	  mapping => { ADD_WHITE_MASK => '0',
+		       ADD_BLACK_MASK => '1',
+		       ADD_ALPHA_MASK => '2' },
+	  nicks   => { ADD_WHITE_MASK => 'WHITE_MASK',
+		       ADD_BLACK_MASK => 'BLACK_MASK',
+		       ADD_ALPHA_MASK => 'ALPHA_MASK' }
+	},
+    GradientPaintMode =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(ONCE_FORWARD ONCE_BACKWARDS LOOP_SAWTOOTH
+			  LOOP_TRIANGLE ONCE_END_COLOR) ],
+	  mapping => { ONCE_FORWARD => '0',
+		       ONCE_BACKWARDS => '1',
+		       LOOP_SAWTOOTH => '2',
+		       LOOP_TRIANGLE => '3',
+		       ONCE_END_COLOR => '4' }
+	},
     GradientType =>
 	{ contig => 1,
 	  header => 'blend.h',
@@ -143,48 +263,6 @@ package Gimp::CodeGen::enums;
 		       DODGEBURN_MIDTONES => '1',
 		       DODGEBURN_SHADOWS => '2' }
 	},
-    GimpFillType =>
-	{ contig => 1,
-	  header => 'gimpdrawable.h',
-	  symbols => [ qw(FOREGROUND_FILL BACKGROUND_FILL WHITE_FILL
-			  TRANSPARENT_FILL NO_FILL) ],
-	  mapping => { FOREGROUND_FILL => '0',
-		       BACKGROUND_FILL => '1',
-		       WHITE_FILL => '2',
-		       TRANSPARENT_FILL => '3',
-		       NO_FILL => '4' },
-	  nicks   => { FOREGROUND_FILL => 'FG_IMAGE_FILL',
-		       BACKGROUND_FILL => 'BG_IMAGE_FILL',
-		       WHITE_FILL => 'WHITE_IMAGE_FILL',
-		       TRANSPARENT_FILL => 'TRANS_IMAGE_FILL',
-		       NO_FILL => 'NO_IMAGE_FILL' }
-	},
-    GimpImageType =>
-	{ contig => 1,
-	  header => 'gimpimage.h',
-	  symbols => [ qw(RGB_GIMAGE RGBA_GIMAGE GRAY_GIMAGE GRAYA_GIMAGE
-			  INDEXED_GIMAGE INDEXEDA_GIMAGE) ],
-	  mapping => { RGB_GIMAGE => '0',
-		       RGBA_GIMAGE => '1',
-		       GRAY_GIMAGE => '2',
-		       GRAYA_GIMAGE => '3',
-		       INDEXED_GIMAGE => '4',
-		       INDEXEDA_GIMAGE => '5' },
-	  nicks   => { RGB_GIMAGE => 'RGB_IMAGE',
-		       RGBA_GIMAGE => 'RGBA_IMAGE',
-		       GRAY_GIMAGE => 'GRAY_IMAGE',
-		       GRAYA_GIMAGE => 'GRAYA_IMAGE',
-		       INDEXED_GIMAGE => 'INDEXED_IMAGE',
-		       INDEXEDA_GIMAGE => 'INDEXEDA_IMAGE' }
-	},
-    GimpImageBaseType =>
-	{ contig => 1,
-	  header => 'gimpimage.h',
-	  symbols => [ qw(RGB GRAY INDEXED) ],
-	  mapping => { RGB => '0',
-		       GRAY => '1',
-		       INDEXED => '2' }
-	},
     InternalOrientationType =>
 	{ contig => 1,
 	  header => 'gimpimage.h',
@@ -237,24 +315,6 @@ package Gimp::CodeGen::enums;
 		       BLUE_HUES => '5',
 		       MAGENTA_HUES => '6' }
 	},
-    MaskApplyMode =>
-	{ contig => 1,
-	  header => 'layer.h',
-	  symbols => [ qw(APPLY DISCARD) ],
-	  mapping => { APPLY => '0',
-		       DISCARD => '1' }
-	},
-    AddMaskType =>
-	{ contig => 1,
-	  header => 'layerF.h',
-	  symbols => [ qw(ADD_WHITE_MASK ADD_BLACK_MASK ADD_ALPHA_MASK) ],
-	  mapping => { ADD_WHITE_MASK => '0',
-		       ADD_BLACK_MASK => '1',
-		       ADD_ALPHA_MASK => '2' },
-	  nicks   => { ADD_WHITE_MASK => 'WHITE_MASK',
-		       ADD_BLACK_MASK => 'BLACK_MASK',
-		       ADD_ALPHA_MASK => 'ALPHA_MASK' }
-	},
     ChannelLutType =>
 	{ contig => 1,
 	  header => 'lut_funcs.h',
@@ -264,58 +324,6 @@ package Gimp::CodeGen::enums;
 		       GREEN_LUT => '2',
 		       BLUE_LUT => '3',
 		       ALPHA_LUT => '4' }
-	},
-    BrushApplicationMode =>
-	{ contig => 1,
-	  header => 'paint_core.h',
-	  symbols => [ qw(HARD SOFT PRESSURE) ],
-	  mapping => { HARD => '0',
-		       SOFT => '1',
-		       PRESSURE => '2' }
-	},
-    PaintApplicationMode =>
-	{ contig => 1,
-	  header => 'paint_core.h',
-	  symbols => [ qw(CONSTANT INCREMENTAL) ],
-	  mapping => { CONSTANT => '0',
-		       INCREMENTAL => '1' },
-	  nicks   => { CONSTANT => 'CONTINUOUS' }
-	},
-    GradientPaintMode =>
-	{ contig => 1,
-	  header => 'paint_core.h',
-	  symbols => [ qw(ONCE_FORWARD ONCE_BACKWARDS LOOP_SAWTOOTH
-			  LOOP_TRIANGLE ONCE_END_COLOR) ],
-	  mapping => { ONCE_FORWARD => '0',
-		       ONCE_BACKWARDS => '1',
-		       LOOP_SAWTOOTH => '2',
-		       LOOP_TRIANGLE => '3',
-		       ONCE_END_COLOR => '4' }
-	},
-    LayerModeEffects =>
-	{ contig => 1,
-	  header => 'paint_funcs.h',
-	  symbols => [ qw(NORMAL_MODE DISSOLVE_MODE BEHIND_MODE
-			  MULTIPLY_MODE SCREEN_MODE OVERLAY_MODE
-			  DIFFERENCE_MODE ADDITION_MODE SUBTRACT_MODE
-			  DARKEN_ONLY_MODE LIGHTEN_ONLY_MODE HUE_MODE
-			  SATURATION_MODE COLOR_MODE VALUE_MODE DIVIDE_MODE) ],
-	  mapping => { NORMAL_MODE => '0',
-		       DISSOLVE_MODE => '1',
-		       BEHIND_MODE => '2',
-		       MULTIPLY_MODE => '3',
-		       SCREEN_MODE => '4',
-		       OVERLAY_MODE => '5',
-		       DIFFERENCE_MODE => '6',
-		       ADDITION_MODE => '7',
-		       SUBTRACT_MODE => '8',
-		       DARKEN_ONLY_MODE => '9',
-		       LIGHTEN_ONLY_MODE => '10',
-		       HUE_MODE => '11',
-		       SATURATION_MODE => '12',
-		       COLOR_MODE => '13',
-		       VALUE_MODE => '14',
-		       DIVIDE_MODE => '15' }
 	},
     RunModeType =>
 	{ contig => 1,

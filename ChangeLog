@@ -1,3 +1,8 @@
+Wed Aug 18 23:44:15 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/drawable.pdb: #include "channel.h" and "layer.h"
+	for GIMP_CHANNEL, GIMP_IS_LAYER, and GIMP_LAYER #defines
+
 Thu Aug 19 00:18:32 1999 Adrian Likins <alikins@redhat.com>
 	
 	* data/brushes/vine.gih

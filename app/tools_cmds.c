@@ -21,6 +21,7 @@
 #include "procedural_db.h"
 
 #include "airbrush.h"
+#include "apptypes.h"
 #include "blend.h"
 #include "bucket_fill.h"
 #include "by_color_select.h"
@@ -37,8 +38,6 @@
 #include "free_select.h"
 #include "fuzzy_select.h"
 #include "gimpimage.h"
-#include "paint_core.h"
-#include "paint_funcs.h"
 #include "paintbrush.h"
 #include "pencil.h"
 #include "perspective_tool.h"
