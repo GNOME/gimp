@@ -67,6 +67,8 @@ static void	  gdisplay_draw_cursor	    (GDisplay *);
 static void       gdisplay_display_area     (GDisplay *, int, int, int, int);
 static guint      gdisplay_hash             (GDisplay *);
 
+static void       gdisplay_flush_displays_only (GDisplay *gdisp);
+
 static GHashTable *display_ht = NULL;
 
 
@@ -115,6 +117,11 @@ gdisplay_new (GimpImage       *gimage,
   gdisp->have_cursor = FALSE;
 
   gdisp->progressid = FALSE;
+
+  gdisp->idle_render.idleid = -1;
+  gdisp->idle_render.handlerid = -1;
+  gdisp->idle_render.update_areas = NULL;
+  gdisp->idle_render.active = FALSE;
 
   /*  add the new display to the list so that it isn't lost  */
   display_list = g_slist_append (display_list, (void *) gdisp);
@@ -195,6 +202,17 @@ gdisplay_delete (GDisplay *gdisp)
 
   /*  free the selection structure  */
   selection_free (gdisp->select);
+
+  /* If this gdisplay was idlerendering at the time when it was deleted,
+     deactivate the idlerendering thread before deletion! */
+  if (gdisp->idle_render.active)
+    {
+      printf("Deleted idlerendering gdisp %p...\n", gdisp); fflush(stdout);
+      printf("\tIdlerender stops now!\n"); fflush(stdout);
+      gtk_idle_remove (gdisp->idle_render.idleid);
+      gdisp->idle_render.active = FALSE;
+      printf("\tDeletion finished.\n"); fflush(stdout);
+    }
   
   if (gdisp->scroll_gc)
     gdk_gc_destroy (gdisp->scroll_gc);
@@ -202,6 +220,8 @@ gdisplay_delete (GDisplay *gdisp)
   /*  free the area lists  */
   gdisplay_free_area_list (gdisp->update_areas);
   gdisplay_free_area_list (gdisp->display_areas);
+
+  gdisplay_free_area_list (gdisp->idle_render.update_areas);
 
   /*  free the gimage  */
   gimage_delete (gdisp->gimage);
@@ -288,48 +308,152 @@ gdisplay_process_area_list (GSList *list,
 }
 
 
-void
-gdisplay_flush (GDisplay *gdisp)
+static int
+idle_render_next_area (GDisplay *gdisp)
 {
   GArea  *ga;
   GSList *list;
+  
+  list = gdisp->idle_render.update_areas;
 
-  printf(" FLUSH! ");fflush(stdout);
+  if (list == NULL)
+    {
+      return (-1);
+    }
 
-  /*  Flush the items in the displays and updates lists -
-   *  but only if gdisplay has been mapped and exposed
-   */
-  if (!gdisp->select)
-    return;
+  ga = (GArea*) list->data;
 
-  /*  First the updates...  */
+  gdisp->idle_render.update_areas =
+    g_slist_remove (gdisp->idle_render.update_areas, ga);
+
+  gdisp->idle_render.x = gdisp->idle_render.basex = ga->x1;
+  gdisp->idle_render.y = gdisp->idle_render.basey = ga->y1;
+  gdisp->idle_render.width = ga->x2 - ga->x1;
+  gdisp->idle_render.height = ga->y2 - ga->y1;
+
+  g_free (ga);
+
+  return (0);
+}
+
+
+static int
+idlerender_callback (gpointer data)
+{
+  const int CHUNK_WIDTH = 256;
+  const int CHUNK_HEIGHT = 128;
+  int workx, worky, workw, workh;
+  GDisplay* gdisp = data;
+
+  workw = CHUNK_WIDTH;
+  workh = CHUNK_HEIGHT;
+  workx = gdisp->idle_render.x;
+  worky = gdisp->idle_render.y;
+
+  if (workx+workw > gdisp->idle_render.basex+gdisp->idle_render.width)
+    {
+      workw = gdisp->idle_render.basex+gdisp->idle_render.width-workx;
+    }
+
+  if (worky+workh > gdisp->idle_render.basey+gdisp->idle_render.height)
+    {
+      workh = gdisp->idle_render.basey+gdisp->idle_render.height-worky;
+    }  
+
+  gdisplay_paint_area (gdisp, workx, worky,
+		       workw, workh);
+  gdisplay_flush_displays_only (gdisp);
+
+  gdisp->idle_render.x += CHUNK_WIDTH;
+  if (gdisp->idle_render.x >= gdisp->idle_render.basex+gdisp->idle_render.width)
+    {
+      gdisp->idle_render.x = gdisp->idle_render.basex;
+      gdisp->idle_render.y += CHUNK_HEIGHT;
+      if (gdisp->idle_render.y >=
+	  gdisp->idle_render.basey + gdisp->idle_render.height)
+	{
+	  if (idle_render_next_area(gdisp) != 0)
+	    {
+	      /* FINISHED */
+	      gdisp->idle_render.active = FALSE;
+	      return 0;
+	    }
+	}
+    }
+
+  /* Still work to do. */
+  return 1;
+}
+
+
+static void
+gdisplay_idlerender_init (GDisplay *gdisp)
+{
+  GSList *list;
+  GArea  *ga, *new_ga;
+
+  /* We need to merge the IdleRender's and the GDisplay's update_areas list
+     to keep track of which of the updates have been flushed and hence need
+     to be drawn.   */
   list = gdisp->update_areas;
   while (list)
     {
-      /*  Paint the area specified by the GArea  */
       ga = (GArea *) list->data;
+      new_ga = g_malloc (sizeof(GArea));
+      memcpy (new_ga, ga, sizeof(GArea));
 
-      if ((ga->x1 != ga->x2) && (ga->y1 != ga->y2))
-	{
-	  gdisplay_paint_area (gdisp, ga->x1, ga->y1,
-			       (ga->x2 - ga->x1), (ga->y2 - ga->y1));
-	  /*gdisplay_paint_area (gdisp, ga->x1+random()%(ga->x2 - ga->x1),
-			       ga->y1+random()%(ga->y2 - ga->y1),
-			       100,100);
-	  gdisplay_paint_area (gdisp, ga->x1+random()%(ga->x2 - ga->x1),
-			       ga->y1+random()%(ga->y2 - ga->y1),
-			       100,100);
-	  gdisplay_paint_area (gdisp, ga->x1+random()%(ga->x2 - ga->x1),
-			       ga->y1+random()%(ga->y2 - ga->y1),
-			       100,100);*/
-	}
+      gdisp->idle_render.update_areas =
+	gdisplay_process_area_list (gdisp->idle_render.update_areas, new_ga);
 
       list = g_slist_next (list);
     }
-  /*  Free the update lists  */
-  gdisp->update_areas = gdisplay_free_area_list (gdisp->update_areas);
 
-  /*  Next the displays...  */
+  /* If an idlerender was already running, merge the remainder of its
+     unrendered area with the update_areas list, and make it start work
+     on the next unrendered area in the list. */
+  if (gdisp->idle_render.active)
+    {
+      new_ga = g_malloc (sizeof(GArea));
+      new_ga->x1 = gdisp->idle_render.basex;
+      new_ga->y1 = gdisp->idle_render.y;
+      new_ga->x2 = gdisp->idle_render.basex + gdisp->idle_render.width;
+      new_ga->y2 = gdisp->idle_render.y +
+	(gdisp->idle_render.height -
+	 (gdisp->idle_render.y - gdisp->idle_render.basey)
+	 );
+      
+      gdisp->idle_render.update_areas =
+	gdisplay_process_area_list (gdisp->idle_render.update_areas, new_ga);
+
+      idle_render_next_area(gdisp);
+    }
+  else
+    {
+      if (gdisp->idle_render.update_areas == NULL)
+	{
+	  g_warning ("Wanted to start idlerender thread with no update_areas. (+memleak)");
+	  return;
+	}
+      
+      idle_render_next_area(gdisp);
+      
+      gdisp->idle_render.active = TRUE;
+      
+      gdisp->idle_render.idleid =
+	gtk_idle_add_priority (GTK_PRIORITY_LOW,
+			       idlerender_callback, gdisp);
+    }
+
+  /* Caller frees gdisp->update_areas */
+}
+
+
+static void
+gdisplay_flush_displays_only (GDisplay *gdisp)
+{
+  GSList *list;
+  GArea  *ga;
+
   list = gdisp->display_areas;
 
   if (list)
@@ -361,12 +485,69 @@ gdisplay_flush (GDisplay *gdisp)
 
       /* start the currently active tool */
       active_tool_control (RESUME, (void *) gdisp);
+    }  
+}
+
+
+static void
+gdisplay_flush_whenever (GDisplay *gdisp, gboolean now)
+{
+  GSList *list;
+  GArea  *ga;
+
+  /*  Flush the items in the displays and updates lists -
+   *  but only if gdisplay has been mapped and exposed
+   */
+  if (!gdisp->select)
+    return;
+
+  /*  First the updates...  */
+  if (now)
+    { /* Synchronous */
+      list = gdisp->update_areas;
+      while (list)
+	{
+	  /*  Paint the area specified by the GArea  */
+	  ga = (GArea *) list->data;
+	  
+	  if ((ga->x1 != ga->x2) && (ga->y1 != ga->y2))
+	    {
+	      gdisplay_paint_area (gdisp, ga->x1, ga->y1,
+				   (ga->x2 - ga->x1), (ga->y2 - ga->y1));
+	    }
+	  
+	  list = g_slist_next (list);
+	}
     }
+  else
+    { /* Asynchronous */
+      if (gdisp->update_areas)
+	gdisplay_idlerender_init (gdisp);
+    }
+  /*  Free the update lists  */
+  gdisp->update_areas = gdisplay_free_area_list (gdisp->update_areas);
+
+  /*  Next the displays...  */
+  gdisplay_flush_displays_only (gdisp);
 
   /*  update the gdisplay's info dialog  */
   if (gdisp->window_info_dialog)
     info_window_update (gdisp->window_info_dialog,
 			(void *) gdisp);
+}
+
+void
+gdisplay_flush (GDisplay *gdisp)
+{
+  /* Redraw on idle time */
+  gdisplay_flush_whenever (gdisp, FALSE);
+}
+
+void
+gdisplay_flush_now (GDisplay *gdisp)
+{
+  /* Redraw NOW */
+  gdisplay_flush_whenever (gdisp, TRUE);
 }
 
 void
@@ -1531,8 +1712,8 @@ gdisplays_delete ()
 }
 
 
-void
-gdisplays_flush ()
+static void
+gdisplays_flush_whenever (gboolean now)
 {
   static int flushing = FALSE;
   GSList *list = display_list;
@@ -1553,7 +1734,7 @@ gdisplays_flush ()
   /*  traverse the linked list of displays  */
   while (list)
     {
-      gdisplay_flush ((GDisplay *) list->data);
+      gdisplay_flush_whenever ((GDisplay *) list->data, now);
       list = g_slist_next (list);
     }
 
@@ -1565,207 +1746,21 @@ gdisplays_flush ()
   flushing = FALSE;
 }
 
+void
+gdisplays_flush (void)
+{
+  gdisplays_flush_whenever (FALSE);
+}
+
+void
+gdisplays_flush_now (void)
+{
+  gdisplays_flush_whenever (TRUE);
+}
+
 static guint
 gdisplay_hash (GDisplay *display)
 {
   return (gulong) display;
 }
 
-
-#if 0
-static void
-idlerender_gimage_destroy_handler (GimpImage *gimage)
-{
-  printf("Destroyed gimage at %p which idlerender was interested in...\n",
-	 gimage); fflush(stdout);
-  if (idle_active)
-    {
-      printf("Idlerender stops now!\n"); fflush(stdout);
-      gtk_idle_remove (idlerender_idleid);
-    }
-  printf("Destroy handler finished.\n"); fflush(stdout);
-}
-
-
-static void
-idlerender_abort (GimpImage *gimage)
-{
-  
-}
-
-
-static int
-idlerender_callback (void* unused)
-{
-  const int CHUNK_WIDTH = 256;
-  const int CHUNK_HEIGHT = 128;
-  int workx, worky, workw, workh;
-
-  workw = CHUNK_WIDTH;
-  workh = CHUNK_HEIGHT;
-  workx = idlerender_x;
-  worky = idlerender_y;
-
-  if (workx+workw > idlerender_basex+idlerender_width)
-    {
-      workw = idlerender_basex+idlerender_width-workx;
-    }
-
-  if (worky+workh > idlerender_basey+idlerender_height)
-    {
-      workh = idlerender_basey+idlerender_height-worky;
-    }
-  
-  gdisplays_update_area (idlerender_gimage,
-    workx, worky, workw, workh);
-  gdisplays_flush ();
-
-  idlerender_x += CHUNK_WIDTH;
-  if (idlerender_x >= idlerender_basex+idlerender_width)
-    {
-      idlerender_x = idlerender_basex;
-      idlerender_y += CHUNK_HEIGHT;
-      if (idlerender_y >= idlerender_basey+idlerender_height)
-	{
-	  idle_active = 0;
-
-	  /* Disconnect signal handler which cared about whether
-	     a gimage was destroyed in mid-render */
-	  gtk_signal_disconnect (GTK_OBJECT (idlerender_gimage),
-				 idlerender_handlerid);
-
-	  return (0); /* FINISHED! */
-	}
-    }
-
-  return (1);
-}
-
-
-/* Force any outstanding unrendered area in the gimage to be
-   rendered before we return... this is necessary e.g. if we
-   are restarting the idlerender thread for a different gimage. */
-static void
-idlerender_force_completion (void)
-{
-  gtk_idle_remove (idlerender_idleid);
-
-  while (idle_active)
-    idlerender_callback (NULL);
-}
-
-
-/* Unify the desired and current (if any) bounding rectangles
-   of areas being idle-redrawn, and restart the idle thread if needed. */
-static void
-unify_and_start_idlerender (GimpImage* gimage, int basex, int basey,
-			    int width, int height)
-{
-
-  /* If another gimage is already employing the idlerender thread,
-     force it to finish before starting with this one... */
-  if (idle_active && (idlerender_gimage != gimage) )
-    {
-      printf ("Okay, switched gimage... poke Adam if this does anything "
-	      "funny.\n");
-      fflush(stdout);
-      
-      idlerender_force_completion();
-    }
-
-  idlerender_gimage = gimage;
-
-  if (idle_active)
-    {
-      int left, right, top, bottom;
-
-      /*printf("(%d,%d) @ Region (%d,%d %dx%d) | (%d,%d %dx%d)\n",
-	     idlerender_x, idlerender_y,
-	     idlerender_basex, idlerender_basey,
-	     idlerender_width, idlerender_height,
-
-	     basex, basey,
-	     width, height);*/
-
-      top = (basey < idlerender_y) ? basey : idlerender_y;
-      left = (basex < idlerender_basex) ? basex : idlerender_basex;
-      bottom = (basey+height > idlerender_basey+idlerender_height) ?
-	basey+height : idlerender_basey+idlerender_height;
-      right = (basex+width > idlerender_basex+idlerender_width) ?
-	basex+width : idlerender_basex+idlerender_width;
-
-      idlerender_x = idlerender_basex = left;
-      idlerender_y = idlerender_basey = top;
-      idlerender_width = right-left;
-      idlerender_height = bottom-top;
-
-      /*printf(" --> (%d,%d) @ (%d,%d %dx%d)\n",
-	     idlerender_x, idlerender_y,
-	     idlerender_basex, idlerender_basey,
-	     idlerender_width, idlerender_height);*/
-    }
-  else
-    {
-      idlerender_x = idlerender_basex = basex;
-      idlerender_y = idlerender_basey = basey;
-      idlerender_width = width;
-      idlerender_height = height;
-
-      idle_active = 1;
-      /* Catch a signal to stop the idlerender thread if the corresponding
-	 gimage is destroyed in mid-render */
-      idlerender_handlerid =
-	gtk_signal_connect (GTK_OBJECT (gimage), "destroy",
-			    GTK_SIGNAL_FUNC(idlerender_gimage_destroy_handler),
-			    NULL);
-      idlerender_idleid =
-	gtk_idle_add_priority (GTK_PRIORITY_LOW, idlerender_callback, NULL);
-    }
-}
-
-
-void
-reinit_layer_idlerender (GimpImage* gimage, Layer* layer)
-{
-  int ibasex, ibasey;
-
-  if (! layer)
-    return;
-
-  if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE(layer))))
-    return;
-
-  gimp_drawable_offsets (GIMP_DRAWABLE(layer),
-			 &ibasex, &ibasey);
-  unify_and_start_idlerender (gimage, ibasex, ibasey,
-			      GIMP_DRAWABLE(layer)->width,
-			      GIMP_DRAWABLE(layer)->height);
-}
-
-
-void
-reinit_drawable_idlerender (GimpImage* gimage, GimpDrawable *drawable)
-{
-  int ibasex, ibasey;
-
-  if (! drawable)
-    return;
-
-  if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE(drawable))))
-    return;
-
-  gimp_drawable_offsets (GIMP_DRAWABLE(drawable),
-			 &ibasex, &ibasey);
-  unify_and_start_idlerender (gimage, ibasex, ibasey,
-			      GIMP_DRAWABLE(drawable)->width,
-			      GIMP_DRAWABLE(drawable)->height);
-}
-
-
-void
-reinit_gimage_idlerender (GimpImage* gimage)
-{
-  unify_and_start_idlerender (gimage, 0, 0, gimage->width, gimage->height);
-}
-
-#endif

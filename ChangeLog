@@ -1,3 +1,15 @@
+Thu Oct  1 17:10:32 BST 1998 Adam D. Moss <adam@gimp.org>
+
+	* app/gdisplay.c app/gdisplay.h: Okay, that didn't
+	take quite as long as expected.  This is the first cut at
+	a gimp-wide IdleRender in place of the previously synchronous
+	displays_update().  A synchronous displays_update_now() is
+	implemented for stuff like brushes, but it isn't used right
+	now.  (Seems to go pretty well without.)
+
+	I need feedback and (previously nonexistant!) bug reports...
+	please. =)
+
 Thu Oct  1 12:44:19 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* app/floating_sel.c app/gdisplay.c app/gdisplay.h

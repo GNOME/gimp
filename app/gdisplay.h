@@ -42,7 +42,6 @@
 
 typedef struct _IdleRenderStruct
 {
-  GimpImage* gimage;
   int width;
   int height;
   int x;
@@ -52,6 +51,7 @@ typedef struct _IdleRenderStruct
   guint idleid;
   guint handlerid;
   gboolean active;
+  GSList *update_areas;           /*  flushed update areas */
 
 } IdleRenderStruct;
 
@@ -157,12 +157,7 @@ void       gdisplays_selection_visibility  (GimpImage*, SelectionControl);
 int        gdisplays_dirty                 (void);
 void       gdisplays_delete                (void);
 void       gdisplays_flush                 (void);
-
-
-/* Idle rerendering of altered areas. */
-void       reinit_layer_idlerender         (GimpImage *, Layer *);
-void       reinit_drawable_idlerender      (GimpImage *, GimpDrawable *);
-void       reinit_gimage_idlerender        (GimpImage *);
+void       gdisplays_flush_now             (void);
 
 
 #endif /*  __GDISPLAY_H__  */
