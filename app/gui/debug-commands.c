@@ -35,7 +35,7 @@
 #include "menus.h"
 
 
-#ifdef ENABLE_DEBUG_ENTRIES
+#ifdef ENABLE_DEBUG_MENU
 
 /*  local function prototypes  */
 
@@ -145,4 +145,4 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
     }
 }
 
-#endif  /*  ENABLE_DEBUG_ENTRIES  */
+#endif /* ENABLE_DEBUG_MENU */

@@ -225,7 +225,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
     "gimp-error-console",
     GIMP_HELP_ERRORS_DIALOG, NULL },
 
-#ifdef ENABLE_DEBUG_ENTRIES
+#ifdef ENABLE_DEBUG_MENU
   MENU_BRANCH (N_("/File/D_ebug")),
 
   { { "/File/Debug/_Mem Profile", NULL,
@@ -234,7 +234,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
   { { "/File/Debug/_Dump Items", NULL,
       debug_dump_menus_cmd_callback, 0 },
     NULL, NULL, NULL },
-#endif
+#endif /* ENABLE_DEBUG_MENU */
 
   MENU_SEPARATOR ("/File/---"),
 

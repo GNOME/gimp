@@ -20,17 +20,17 @@
 #define __DEBUG_COMMANDS_H__
 
 
-#define ENABLE_DEBUG_ENTRIES 1
+#define ENABLE_DEBUG_MENU GIMP_UNSTABLE
 
 
-#ifdef ENABLE_DEBUG_ENTRIES
+#ifdef ENABLE_DEBUG_MENU
 void   debug_dump_menus_cmd_callback  (GtkWidget       *widget,
                                        gpointer         data,
                                        guint            action);
 void   debug_mem_profile_cmd_callback (GtkWidget       *widget,
                                        gpointer         data,
                                        guint            action);
-#endif /*  ENABLE_DEBUG_ENTRIES  */
+#endif /* ENABLE_DEBUG_MENU */
 
 
 #endif /* __DEBUG_COMMANDS_H__ */

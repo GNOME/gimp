@@ -63,9 +63,9 @@ static AutoCropType gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,
                                                    gint          bytes,
                                                    gboolean      has_alpha,
                                                    guchar       *color,
-                                                   gint          x1, 
-                                                   gint          x2, 
-                                                   gint          y1, 
+                                                   gint          x1,
+                                                   gint          x2,
+                                                   gint          y1,
                                                    gint          y2);
 static gint         gimp_image_crop_colors_equal  (guchar       *col1,
                                                    guchar       *col2,
@@ -287,7 +287,7 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
   gint             bytes;
   gint             x, y, abort;
   gboolean         retval = FALSE;
-  
+
   g_return_val_if_fail (gimage != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (shrunk_x1 != NULL, FALSE);
@@ -296,10 +296,10 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
   g_return_val_if_fail (shrunk_y2 != NULL, FALSE);
 
   gimp_set_busy (gimage->gimp);
- 
+
   /* You should always keep in mind that crop->tx2 and crop->ty2 are the NOT the
-     coordinates of the bottomright corner of the area to be cropped. They point 
-     at the pixel located one to the right and one to the bottom.  
+     coordinates of the bottomright corner of the area to be cropped. They point
+     at the pixel located one to the right and one to the bottom.
    */
 
   if (active_drawable_only)
@@ -316,7 +316,7 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
     }
   else
     {
-      has_alpha      = TRUE; 
+      has_alpha      = TRUE;
       bytes          = gimp_image_projection_bytes (gimage);
       get_color_obj  = G_OBJECT (gimage);
       get_color_func = (GetColorFunc) gimp_image_projection_get_color_at;
@@ -341,10 +341,10 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
   height = y2 - y1;
 
   if (active_drawable_only)
-    pixel_region_init (&PR, gimp_drawable_data (active_drawable), 
+    pixel_region_init (&PR, gimp_drawable_data (active_drawable),
 		       x1, y1, width, height, FALSE);
   else
-    pixel_region_init (&PR, gimp_image_projection (gimage), 
+    pixel_region_init (&PR, gimp_image_projection (gimage),
 		       x1, y1, width, height, FALSE);
 
   /* The following could be optimized further by processing
@@ -387,7 +387,7 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
 	abort = !(colors_equal_func) (bgcolor, buffer + y * bytes, bytes);
     }
   x1 = x - 1;
- 
+
   /* Check how many of the right lines are uniform/transparent. */
   abort = FALSE;
   for (x = x2; x > x1 && !abort; x--)
@@ -421,10 +421,10 @@ gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,
 			       gint          bytes,
 			       gboolean      has_alpha,
 			       guchar       *color,
-			       gint          x1, 
-			       gint          x2, 
-			       gint          y1, 
-			       gint          y2) 
+			       gint          x1,
+			       gint          x2,
+			       gint          y1,
+			       gint          y2)
 {
   guchar *tl = NULL;
   guchar *tr = NULL;
@@ -433,19 +433,19 @@ gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,
   gint    i, alpha;
 
   for (i = 0; i < bytes; i++)
-    color[i] = 0; 
+    color[i] = 0;
 
-  /* First check if there's transparency to crop. If not, guess the 
+  /* First check if there's transparency to crop. If not, guess the
    * background-color to see if at least 2 corners are equal.
    */
 
-  if (!(tl = (*get_color_func) (get_color_obj, x1, y1))) 
+  if (!(tl = (*get_color_func) (get_color_obj, x1, y1)))
     goto ERROR;
-  if (!(tr = (*get_color_func) (get_color_obj, x1, y2))) 
+  if (!(tr = (*get_color_func) (get_color_obj, x1, y2)))
     goto ERROR;
-  if (!(bl = (*get_color_func) (get_color_obj, x2, y1))) 
-    goto ERROR;  
-  if (!(br = (*get_color_func) (get_color_obj, x2, y2))) 
+  if (!(bl = (*get_color_func) (get_color_obj, x2, y1)))
+    goto ERROR;
+  if (!(br = (*get_color_func) (get_color_obj, x2, y2)))
     goto ERROR;
 
   if (has_alpha)
@@ -463,7 +463,7 @@ gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,
 	  return AUTO_CROP_ALPHA;
 	}
     }
-  
+
   if (gimp_image_crop_colors_equal (tl, tr, bytes) ||
       gimp_image_crop_colors_equal (tl, bl, bytes))
     {
@@ -479,28 +479,28 @@ gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,
       goto ERROR;
     }
 
-  g_free (tl); 
-  g_free (tr); 
-  g_free (bl); 
+  g_free (tl);
+  g_free (tr);
+  g_free (bl);
   g_free (br);
   return AUTO_CROP_COLOR;
 
  ERROR:
-  g_free (tl); 
-  g_free (tr); 
-  g_free (bl); 
+  g_free (tl);
+  g_free (tr);
+  g_free (bl);
   g_free (br);
   return AUTO_CROP_NOTHING;
 }
 
-static int 
-gimp_image_crop_colors_equal (guchar *col1, 
-			      guchar *col2, 
-			      gint    bytes) 
+static int
+gimp_image_crop_colors_equal (guchar *col1,
+			      guchar *col2,
+			      gint    bytes)
 {
   gboolean equal = TRUE;
   gint     b;
-  
+
   for (b = 0; b < bytes; b++)
     {
       if (col1[b] != col2[b])
@@ -514,9 +514,9 @@ gimp_image_crop_colors_equal (guchar *col1,
 }
 
 static gboolean
-gimp_image_crop_colors_alpha (guchar *dummy, 
-			      guchar *col, 
-			      gint    bytes) 
+gimp_image_crop_colors_alpha (guchar *dummy,
+			      guchar *col,
+			      gint    bytes)
 {
   if (col[bytes-1] == 0)
     return TRUE;

@@ -1,5 +1,13 @@
 2004-02-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-crop.c: removed trailing whitespace.
+
+	* app/gui/debug-commands.[ch]
+	* app/gui/toolbox-menu.c: renamed ENABLE_DEBUG_ENTRIES to
+	ENABLE_DEBUG_MENU and #define it to be equal to GIMP_UNSTABLE.
+
+2004-02-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimprectselecttool.c
 	(gimp_rect_select_tool_rect_select): don't try to CLAMP() the
 	passed in rectangle to valid image/drawable coordinates manually
