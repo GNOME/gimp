@@ -83,7 +83,7 @@ path_list_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpImage *gimage;
   gint32 num_paths;
-  gchar **path_list;
+  gchar **path_list = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))

@@ -1,5 +1,11 @@
 2003-09-04  Manish Singh  <yosh@gimp.org>
 
+	* tools/pdbgen/pdb/paths.pdb: init path_list to quell gcc warning.
+
+	* app/pdb/paths_cmds.c: regenerated.
+
+2003-09-04  Manish Singh  <yosh@gimp.org>
+
 	* app/text/gimptextlayer-transform.c: use
 	gimp_drawable_invalidate_boundary now.
 
