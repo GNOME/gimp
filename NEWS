@@ -53,6 +53,8 @@ Bugs fixed in GIMP 2.0pre4
 - 122049: Validate numerical input in pygimp plug-ins, and fix the Sphere 
           plug-in (Dave Neary, Florian Traverse)
 - 130568: Mostly fix Van Gogh (LIC) plug-in (Simon)
+- 70673:  Let Curves and Levels widgets scale with the dialog (Sven)
+- 135059: Remember the preview setting for all ImageMap tools (Sven)
  
 Other contributions: 
   Manish Singh, Michael Naterrer, Sven Neumann, Henrik Brix Andersen, Pedro 
