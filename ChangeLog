@@ -1,5 +1,9 @@
 2003-07-21  Sven Neumann  <sven@gimp.org>
 
+	* data/images/gimp_splash.png: use a simpler URL for the camp.
+
+2003-07-21  Sven Neumann  <sven@gimp.org>
+
 	* autogen.sh: fix for Solaris /bin/sh (bug #118002).
 
 	* app/paint-funcs/paint-funcs-generic.h
