@@ -5,8 +5,8 @@
 	cleanup and simplification.
 
 	* app/widgets/gimpviewrendererdrawable.c
-	(gimp_view_renderer_drawable_render): don't request a sub-preview
-	of an area outside the drawable and don't reuqest previews of zero
+	(gimp_view_renderer_drawable_render): don't request sub-previews
+	of area outside the drawable and don't reuqest previews of zero
 	width or height. Fixes crashes with the new preview code.
 
 2004-12-12  Sven Neumann  <sven@gimp.org>
