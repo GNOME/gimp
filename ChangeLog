@@ -1,3 +1,8 @@
+2004-02-27  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagefile.c (gimp_imagefile_save_thumb): peek the
+	image to make sure that mtime and filesize are written correctly.
+
 2004-02-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/file-open-dialog.c: removed the thumbnail box.

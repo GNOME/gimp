@@ -3,7 +3,7 @@
  *
  * gimpfileimage.c
  *
- * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2004  Sven Neumann <sven@gimp.org>
  *                          Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -629,6 +629,7 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
                            gint            size,
                            GError        **error)
 {
+  GimpThumbnail *thumbnail = imagefile->thumbnail;
   GdkPixbuf     *pixbuf;
   GEnumClass    *enum_class;
   GimpImageType  type;
@@ -668,6 +669,9 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   if (! pixbuf)
     return TRUE;
 
+  /*  peek the thumbnail to make sure that mtime and filesize are set  */
+  gimp_thumbnail_peek_image (thumbnail);
+
   type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (gimage));
 
   if (gimp_image_has_alpha (gimage))
@@ -678,14 +682,14 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
 
   num_layers = gimp_container_num_children (gimage->layers);
 
-  g_object_set (imagefile->thumbnail,
+  g_object_set (thumbnail,
                 "image-width",      gimage->width,
                 "image-height",     gimage->height,
                 "image-type",       type_str,
                 "image-num-layers", num_layers,
                 NULL);
 
-  success = gimp_thumbnail_save_thumb (imagefile->thumbnail,
+  success = gimp_thumbnail_save_thumb (thumbnail,
                                        pixbuf,
                                        "The GIMP " GIMP_VERSION,
                                        error);
