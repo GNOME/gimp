@@ -35,6 +35,15 @@ gimpbaseenums
 @GIMP_INDEXED_IMAGE: 
 @GIMP_INDEXEDA_IMAGE: 
 
+<!-- ##### ENUM GimpMessageHandlerType ##### -->
+<para>
+
+</para>
+
+@GIMP_MESSAGE_BOX: 
+@GIMP_CONSOLE: 
+@GIMP_ERROR_CONSOLE: 
+
 <!-- ##### ENUM GimpPDBArgType ##### -->
 <para>
 
@@ -85,14 +94,15 @@ gimpbaseenums
 @GIMP_PDB_SUCCESS: 
 @GIMP_PDB_CANCEL: 
 
-<!-- ##### ENUM GimpMessageHandlerType ##### -->
+<!-- ##### ENUM GimpProgressCommand ##### -->
 <para>
 
 </para>
 
-@GIMP_MESSAGE_BOX: 
-@GIMP_CONSOLE: 
-@GIMP_ERROR_CONSOLE: 
+@GIMP_PROGRESS_COMMAND_START: 
+@GIMP_PROGRESS_COMMAND_END: 
+@GIMP_PROGRESS_COMMAND_SET_TEXT: 
+@GIMP_PROGRESS_COMMAND_SET_VALUE: 
 
 <!-- ##### ENUM GimpStackTraceMode ##### -->
 <para>

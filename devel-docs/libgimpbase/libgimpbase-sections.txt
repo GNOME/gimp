@@ -8,10 +8,11 @@ gimp_type_get_translation_domain
 <FILE>gimpbaseenums</FILE>
 GimpImageBaseType
 GimpImageType
+GimpMessageHandlerType
 GimpPDBArgType
 GimpPDBProcType
 GimpPDBStatusType
-GimpMessageHandlerType
+GimpProgressCommand
 GimpStackTraceMode
 <SUBSECTION Standard>
 GIMP_TYPE_IMAGE_BASE_TYPE

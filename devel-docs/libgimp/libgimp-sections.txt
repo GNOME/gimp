@@ -583,6 +583,17 @@ gimp_procedural_db_get_data_size
 </SECTION>
 
 <SECTION>
+<FILE>gimpprogress</FILE>
+GimpProgressStartCallback
+GimpProgressEndCallback
+GimpProgressTextCallback
+GimpProgressValueCallback
+gimp_progress_install
+gimp_progress_uninstall
+gimp_progress_cancel
+</SECTION>
+
+<SECTION>
 <FILE>gimpselection</FILE>
 gimp_selection_bounds
 gimp_selection_all

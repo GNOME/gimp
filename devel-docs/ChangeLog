@@ -1,3 +1,11 @@
+2004-08-30  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpprogress.sgml
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpbaseenums.sgml: updated for new progress API.
+
 2004-08-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
