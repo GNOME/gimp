@@ -54,18 +54,18 @@ typedef enum
 
 typedef enum
 {
-  HUE = 0,
-  SATURATION,
-  VALUE,
-  RED,
-  GREEN,
-  BLUE,
-  HUE_SATURATION,
-  HUE_VALUE,
-  SATURATION_VALUE,
-  RED_GREEN,
-  RED_BLUE,
-  GREEN_BLUE
+  COLOR_SELECT_HUE = 0,
+  COLOR_SELECT_SATURATION,
+  COLOR_SELECT_VALUE,
+  COLOR_SELECT_RED,
+  COLOR_SELECT_GREEN,
+  COLOR_SELECT_BLUE,
+  COLOR_SELECT_HUE_SATURATION,
+  COLOR_SELECT_HUE_VALUE,
+  COLOR_SELECT_SATURATION_VALUE,
+  COLOR_SELECT_RED_GREEN,
+  COLOR_SELECT_RED_BLUE,
+  COLOR_SELECT_GREEN_BLUE
 } ColorSelectFillType;
 
 typedef enum
@@ -452,9 +452,9 @@ color_select_drag_new_color (GtkWidget *widget,
 
   csp = (ColorSelect *) data;
 
-  *r = (guchar) csp->values[RED];
-  *g = (guchar) csp->values[GREEN];
-  *b = (guchar) csp->values[BLUE];
+  *r = (guchar) csp->values[COLOR_SELECT_RED];
+  *g = (guchar) csp->values[COLOR_SELECT_GREEN];
+  *b = (guchar) csp->values[COLOR_SELECT_BLUE];
 }
 
 static void
@@ -468,9 +468,9 @@ color_select_drop_new_color (GtkWidget *widget,
 
   csp = (ColorSelect *) data;
 
-  csp->values[RED]   = (gint) r;
-  csp->values[GREEN] = (gint) g;
-  csp->values[BLUE]  = (gint) b;
+  csp->values[COLOR_SELECT_RED]   = (gint) r;
+  csp->values[COLOR_SELECT_GREEN] = (gint) g;
+  csp->values[COLOR_SELECT_BLUE]  = (gint) b;
 
   color_select_update_hsv_values (csp);
   color_select_update_pos (csp);
@@ -515,9 +515,9 @@ color_select_set_color (ColorSelect *csp,
 
       if (set_current)
 	{
-	  csp->values[RED] = r;
-	  csp->values[GREEN] = g;
-	  csp->values[BLUE] = b;
+	  csp->values[COLOR_SELECT_RED] = r;
+	  csp->values[COLOR_SELECT_GREEN] = g;
+	  csp->values[COLOR_SELECT_BLUE] = b;
 
 	  color_select_update_hsv_values (csp);
 	  color_select_update_pos (csp);
@@ -578,9 +578,9 @@ color_select_update_caller (ColorSelect *csp)
 {
   if (csp && csp->wants_updates && csp->callback)
     {
-      (* csp->callback) (csp->values[RED],
-			 csp->values[GREEN],
-			 csp->values[BLUE],
+      (* csp->callback) (csp->values[COLOR_SELECT_RED],
+			 csp->values[COLOR_SELECT_GREEN],
+			 csp->values[COLOR_SELECT_BLUE],
 			 COLOR_SELECT_UPDATE,
 			 csp->client_data);
     }
@@ -593,48 +593,48 @@ color_select_update_values (ColorSelect *csp)
     {
       switch (csp->z_color_fill)
 	{
-	case RED:
-	  csp->values[BLUE] = csp->pos[0];
-	  csp->values[GREEN] = csp->pos[1];
-	  csp->values[RED] = csp->pos[2];
+	case COLOR_SELECT_RED:
+	  csp->values[COLOR_SELECT_BLUE] = csp->pos[0];
+	  csp->values[COLOR_SELECT_GREEN] = csp->pos[1];
+	  csp->values[COLOR_SELECT_RED] = csp->pos[2];
 	  break;
-	case GREEN:
-	  csp->values[BLUE] = csp->pos[0];
-	  csp->values[RED] = csp->pos[1];
-	  csp->values[GREEN] = csp->pos[2];
+	case COLOR_SELECT_GREEN:
+	  csp->values[COLOR_SELECT_BLUE] = csp->pos[0];
+	  csp->values[COLOR_SELECT_RED] = csp->pos[1];
+	  csp->values[COLOR_SELECT_GREEN] = csp->pos[2];
 	  break;
-	case BLUE:
-	  csp->values[GREEN] = csp->pos[0];
-	  csp->values[RED] = csp->pos[1];
-	  csp->values[BLUE] = csp->pos[2];
+	case COLOR_SELECT_BLUE:
+	  csp->values[COLOR_SELECT_GREEN] = csp->pos[0];
+	  csp->values[COLOR_SELECT_RED] = csp->pos[1];
+	  csp->values[COLOR_SELECT_BLUE] = csp->pos[2];
 	  break;
-	case HUE:
-	  csp->values[VALUE] = csp->pos[0] * 100 / 255;
-	  csp->values[SATURATION] = csp->pos[1] * 100 / 255;
-	  csp->values[HUE] = csp->pos[2] * 360 / 255;
+	case COLOR_SELECT_HUE:
+	  csp->values[COLOR_SELECT_VALUE] = csp->pos[0] * 100 / 255;
+	  csp->values[COLOR_SELECT_SATURATION] = csp->pos[1] * 100 / 255;
+	  csp->values[COLOR_SELECT_HUE] = csp->pos[2] * 360 / 255;
 	  break;
-	case SATURATION:
-	  csp->values[VALUE] = csp->pos[0] * 100 / 255;
-	  csp->values[HUE] = csp->pos[1] * 360 / 255;
-	  csp->values[SATURATION] = csp->pos[2] * 100 / 255;
+	case COLOR_SELECT_SATURATION:
+	  csp->values[COLOR_SELECT_VALUE] = csp->pos[0] * 100 / 255;
+	  csp->values[COLOR_SELECT_HUE] = csp->pos[1] * 360 / 255;
+	  csp->values[COLOR_SELECT_SATURATION] = csp->pos[2] * 100 / 255;
 	  break;
-	case VALUE:
-	  csp->values[SATURATION] = csp->pos[0] * 100 / 255;
-	  csp->values[HUE] = csp->pos[1] * 360 / 255;
-	  csp->values[VALUE] = csp->pos[2] * 100 / 255;
+	case COLOR_SELECT_VALUE:
+	  csp->values[COLOR_SELECT_SATURATION] = csp->pos[0] * 100 / 255;
+	  csp->values[COLOR_SELECT_HUE] = csp->pos[1] * 360 / 255;
+	  csp->values[COLOR_SELECT_VALUE] = csp->pos[2] * 100 / 255;
 	  break;
 	}
 
       switch (csp->z_color_fill)
 	{
-	case RED:
-	case GREEN:
-	case BLUE:
+	case COLOR_SELECT_RED:
+	case COLOR_SELECT_GREEN:
+	case COLOR_SELECT_BLUE:
 	  color_select_update_hsv_values (csp);
 	  break;
-	case HUE:
-	case SATURATION:
-	case VALUE:
+	case COLOR_SELECT_HUE:
+	case COLOR_SELECT_SATURATION:
+	case COLOR_SELECT_VALUE:
 	  color_select_update_rgb_values (csp);
 	  break;
 	}
@@ -649,15 +649,15 @@ color_select_update_rgb_values (ColorSelect *csp)
 
   if (csp)
     {
-      h = csp->values[HUE];
-      s = csp->values[SATURATION] / 100.0;
-      v = csp->values[VALUE] / 100.0;
+      h = csp->values[COLOR_SELECT_HUE];
+      s = csp->values[COLOR_SELECT_SATURATION] / 100.0;
+      v = csp->values[COLOR_SELECT_VALUE] / 100.0;
 
       if (s == 0)
 	{
-	  csp->values[RED] = v * 255;
-	  csp->values[GREEN] = v * 255;
-	  csp->values[BLUE] = v * 255;
+	  csp->values[COLOR_SELECT_RED] = v * 255;
+	  csp->values[COLOR_SELECT_GREEN] = v * 255;
+	  csp->values[COLOR_SELECT_BLUE] = v * 255;
 	}
       else
 	{
@@ -673,34 +673,34 @@ color_select_update_rgb_values (ColorSelect *csp)
 	  switch ((int) h)
 	    {
 	    case 0:
-	      csp->values[RED] = v * 255;
-	      csp->values[GREEN] = t * 255;
-	      csp->values[BLUE] = p * 255;
+	      csp->values[COLOR_SELECT_RED] = v * 255;
+	      csp->values[COLOR_SELECT_GREEN] = t * 255;
+	      csp->values[COLOR_SELECT_BLUE] = p * 255;
 	      break;
 	    case 1:
-	      csp->values[RED] = q * 255;
-	      csp->values[GREEN] = v * 255;
-	      csp->values[BLUE] = p * 255;
+	      csp->values[COLOR_SELECT_RED] = q * 255;
+	      csp->values[COLOR_SELECT_GREEN] = v * 255;
+	      csp->values[COLOR_SELECT_BLUE] = p * 255;
 	      break;
 	    case 2:
-	      csp->values[RED] = p * 255;
-	      csp->values[GREEN] = v * 255;
-	      csp->values[BLUE] = t * 255;
+	      csp->values[COLOR_SELECT_RED] = p * 255;
+	      csp->values[COLOR_SELECT_GREEN] = v * 255;
+	      csp->values[COLOR_SELECT_BLUE] = t * 255;
 	      break;
 	    case 3:
-	      csp->values[RED] = p * 255;
-	      csp->values[GREEN] = q * 255;
-	      csp->values[BLUE] = v * 255;
+	      csp->values[COLOR_SELECT_RED] = p * 255;
+	      csp->values[COLOR_SELECT_GREEN] = q * 255;
+	      csp->values[COLOR_SELECT_BLUE] = v * 255;
 	      break;
 	    case 4:
-	      csp->values[RED] = t * 255;
-	      csp->values[GREEN] = p * 255;
-	      csp->values[BLUE] = v * 255;
+	      csp->values[COLOR_SELECT_RED] = t * 255;
+	      csp->values[COLOR_SELECT_GREEN] = p * 255;
+	      csp->values[COLOR_SELECT_BLUE] = v * 255;
 	      break;
 	    case 5:
-	      csp->values[RED] = v * 255;
-	      csp->values[GREEN] = p * 255;
-	      csp->values[BLUE] = q * 255;
+	      csp->values[COLOR_SELECT_RED] = v * 255;
+	      csp->values[COLOR_SELECT_GREEN] = p * 255;
+	      csp->values[COLOR_SELECT_BLUE] = q * 255;
 	      break;
 	    }
 	}
@@ -717,9 +717,9 @@ color_select_update_hsv_values (ColorSelect *csp)
 
   if (csp)
     {
-      r = csp->values[RED];
-      g = csp->values[GREEN];
-      b = csp->values[BLUE];
+      r = csp->values[COLOR_SELECT_RED];
+      g = csp->values[COLOR_SELECT_GREEN];
+      b = csp->values[COLOR_SELECT_BLUE];
 
       if (r > g)
 	{
@@ -771,9 +771,9 @@ color_select_update_hsv_values (ColorSelect *csp)
 	    h += 360;
 	}
 
-      csp->values[HUE] = h;
-      csp->values[SATURATION] = s * 100;
-      csp->values[VALUE] = v * 100 / 255;
+      csp->values[COLOR_SELECT_HUE] = h;
+      csp->values[COLOR_SELECT_SATURATION] = s * 100;
+      csp->values[COLOR_SELECT_VALUE] = v * 100 / 255;
     }
 }
 
@@ -784,35 +784,35 @@ color_select_update_pos (ColorSelect *csp)
     {
       switch (csp->z_color_fill)
 	{
-	case RED:
-	  csp->pos[0] = csp->values[BLUE];
-	  csp->pos[1] = csp->values[GREEN];
-	  csp->pos[2] = csp->values[RED];
+	case COLOR_SELECT_RED:
+	  csp->pos[0] = csp->values[COLOR_SELECT_BLUE];
+	  csp->pos[1] = csp->values[COLOR_SELECT_GREEN];
+	  csp->pos[2] = csp->values[COLOR_SELECT_RED];
 	  break;
-	case GREEN:
-	  csp->pos[0] = csp->values[BLUE];
-	  csp->pos[1] = csp->values[RED];
-	  csp->pos[2] = csp->values[GREEN];
+	case COLOR_SELECT_GREEN:
+	  csp->pos[0] = csp->values[COLOR_SELECT_BLUE];
+	  csp->pos[1] = csp->values[COLOR_SELECT_RED];
+	  csp->pos[2] = csp->values[COLOR_SELECT_GREEN];
 	  break;
-	case BLUE:
-	  csp->pos[0] = csp->values[GREEN];
-	  csp->pos[1] = csp->values[RED];
-	  csp->pos[2] = csp->values[BLUE];
+	case COLOR_SELECT_BLUE:
+	  csp->pos[0] = csp->values[COLOR_SELECT_GREEN];
+	  csp->pos[1] = csp->values[COLOR_SELECT_RED];
+	  csp->pos[2] = csp->values[COLOR_SELECT_BLUE];
 	  break;
-	case HUE:
-	  csp->pos[0] = csp->values[VALUE] * 255 / 100;
-	  csp->pos[1] = csp->values[SATURATION] * 255 / 100;
-	  csp->pos[2] = csp->values[HUE] * 255 / 360;
+	case COLOR_SELECT_HUE:
+	  csp->pos[0] = csp->values[COLOR_SELECT_VALUE] * 255 / 100;
+	  csp->pos[1] = csp->values[COLOR_SELECT_SATURATION] * 255 / 100;
+	  csp->pos[2] = csp->values[COLOR_SELECT_HUE] * 255 / 360;
 	  break;
-	case SATURATION:
-	  csp->pos[0] = csp->values[VALUE] * 255 / 100;
-	  csp->pos[1] = csp->values[HUE] * 255 / 360;
-	  csp->pos[2] = csp->values[SATURATION] * 255 / 100;
+	case COLOR_SELECT_SATURATION:
+	  csp->pos[0] = csp->values[COLOR_SELECT_VALUE] * 255 / 100;
+	  csp->pos[1] = csp->values[COLOR_SELECT_HUE] * 255 / 360;
+	  csp->pos[2] = csp->values[COLOR_SELECT_SATURATION] * 255 / 100;
 	  break;
-	case VALUE:
-	  csp->pos[0] = csp->values[SATURATION] * 255 / 100;
-	  csp->pos[1] = csp->values[HUE] * 255 / 360;
-	  csp->pos[2] = csp->values[VALUE] * 255 / 100;
+	case COLOR_SELECT_VALUE:
+	  csp->pos[0] = csp->values[COLOR_SELECT_SATURATION] * 255 / 100;
+	  csp->pos[1] = csp->values[COLOR_SELECT_HUE] * 255 / 360;
+	  csp->pos[2] = csp->values[COLOR_SELECT_VALUE] * 255 / 100;
 	  break;
 	}
     }
@@ -858,9 +858,9 @@ color_select_update_entries (ColorSelect *csp,
 	  }
 
       g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x",
-		  csp->values[RED],
-		  csp->values[GREEN],
-		  csp->values[BLUE]);
+		  csp->values[COLOR_SELECT_RED],
+		  csp->values[COLOR_SELECT_GREEN],
+		  csp->values[COLOR_SELECT_BLUE]);
       gtk_entry_set_text (GTK_ENTRY (csp->hex_entry), buffer);
     }
 }
@@ -888,9 +888,9 @@ color_select_update_colors (ColorSelect *csp,
 	{
 	  window = csp->new_color->window;
 	  color.pixel = new_color_pixel;
-	  red   = csp->values[RED];
-	  green = csp->values[GREEN];
-	  blue  = csp->values[BLUE];
+	  red   = csp->values[COLOR_SELECT_RED];
+	  green = csp->values[COLOR_SELECT_GREEN];
+	  blue  = csp->values[COLOR_SELECT_BLUE];
 	}
 
       /* if we haven't yet been realised, there's no need to redraw
@@ -1165,9 +1165,9 @@ color_select_slider_update (GtkAdjustment *adjustment,
 
       csp->values[i] = (int) adjustment->value;
 
-      if ((i >= HUE) && (i <= VALUE))
+      if ((i >= COLOR_SELECT_HUE) && (i <= COLOR_SELECT_VALUE))
 	color_select_update_rgb_values (csp);
-      else if ((i >= RED) && (i <= BLUE))
+      else if ((i >= COLOR_SELECT_RED) && (i <= COLOR_SELECT_BLUE))
 	color_select_update_hsv_values (csp);
       color_select_update_sliders (csp, i);
       color_select_update_entries (csp, -1);
@@ -1238,9 +1238,9 @@ color_select_entry_update (GtkWidget *widget,
       if (csp->values[i] == old_values[i])
 	return;
 
-      if ((i >= HUE) && (i <= VALUE))
+      if ((i >= COLOR_SELECT_HUE) && (i <= COLOR_SELECT_VALUE))
 	color_select_update_rgb_values (csp);
-      else if ((i >= RED) && (i <= BLUE))
+      else if ((i >= COLOR_SELECT_RED) && (i <= COLOR_SELECT_BLUE))
 	color_select_update_hsv_values (csp);
       color_select_update_entries (csp, i);
       color_select_update_sliders (csp, -1);
@@ -1291,7 +1291,7 @@ color_select_toggle_update (GtkWidget *widget,
 			    gpointer   data)
 {
   ColorSelect *csp;
-  ColorSelectFillType type = HUE;
+  ColorSelectFillType type = COLOR_SELECT_HUE;
   gint i;
 
   if (!GTK_TOGGLE_BUTTON (widget)->active)
@@ -1307,29 +1307,29 @@ color_select_toggle_update (GtkWidget *widget,
 
       switch (type)
 	{
-	case HUE:
-	  csp->z_color_fill = HUE;
-	  csp->xy_color_fill = SATURATION_VALUE;
+	case COLOR_SELECT_HUE:
+	  csp->z_color_fill = COLOR_SELECT_HUE;
+	  csp->xy_color_fill = COLOR_SELECT_SATURATION_VALUE;
 	  break;
-	case SATURATION:
-	  csp->z_color_fill = SATURATION;
-	  csp->xy_color_fill = HUE_VALUE;
+	case COLOR_SELECT_SATURATION:
+	  csp->z_color_fill = COLOR_SELECT_SATURATION;
+	  csp->xy_color_fill = COLOR_SELECT_HUE_VALUE;
 	  break;
-	case VALUE:
-	  csp->z_color_fill = VALUE;
-	  csp->xy_color_fill = HUE_SATURATION;
+	case COLOR_SELECT_VALUE:
+	  csp->z_color_fill = COLOR_SELECT_VALUE;
+	  csp->xy_color_fill = COLOR_SELECT_HUE_SATURATION;
 	  break;
-	case RED:
-	  csp->z_color_fill = RED;
-	  csp->xy_color_fill = GREEN_BLUE;
+	case COLOR_SELECT_RED:
+	  csp->z_color_fill = COLOR_SELECT_RED;
+	  csp->xy_color_fill = COLOR_SELECT_GREEN_BLUE;
 	  break;
-	case GREEN:
-	  csp->z_color_fill = GREEN;
-	  csp->xy_color_fill = RED_BLUE;
+	case COLOR_SELECT_GREEN:
+	  csp->z_color_fill = COLOR_SELECT_GREEN;
+	  csp->xy_color_fill = COLOR_SELECT_RED_BLUE;
 	  break;
-	case BLUE:
-	  csp->z_color_fill = BLUE;
-	  csp->xy_color_fill = RED_GREEN;
+	case COLOR_SELECT_BLUE:
+	  csp->z_color_fill = COLOR_SELECT_BLUE;
+	  csp->xy_color_fill = COLOR_SELECT_RED_GREEN;
 	  break;
 	default:
 	  break;
@@ -1357,9 +1357,9 @@ color_select_hex_entry_leave (GtkWidget *widget,
       hex_color = g_strdup (gtk_entry_get_text (GTK_ENTRY (csp->hex_entry)));
 
       g_snprintf(buffer, sizeof (buffer), "#%.2x%.2x%.2x",
-		 csp->values[RED],
-		 csp->values[GREEN],
-		 csp->values[BLUE]);
+		 csp->values[COLOR_SELECT_RED],
+		 csp->values[COLOR_SELECT_GREEN],
+		 csp->values[COLOR_SELECT_BLUE]);
 
       if ((strlen (hex_color) == 7) &&
 	  (g_strcasecmp (buffer, hex_color) != 0))
@@ -1688,7 +1688,7 @@ color_select_update_red_green (ColorSelectFill *csf)
   p = csf->buffer;
 
   csf->y += 1;
-  b = csf->values[BLUE];
+  b = csf->values[COLOR_SELECT_BLUE];
   r = (csf->height - csf->y + 1) * 255 / csf->height;
 
   if (r < 0)
@@ -1719,7 +1719,7 @@ color_select_update_red_blue (ColorSelectFill *csf)
   p = csf->buffer;
 
   csf->y += 1;
-  g = csf->values[GREEN];
+  g = csf->values[COLOR_SELECT_GREEN];
   r = (csf->height - csf->y + 1) * 255 / csf->height;
 
   if (r < 0)
@@ -1750,7 +1750,7 @@ color_select_update_green_blue (ColorSelectFill *csf)
   p = csf->buffer;
 
   csf->y += 1;
-  r = csf->values[RED];
+  r = csf->values[COLOR_SELECT_RED];
   g = (csf->height - csf->y + 1) * 255 / csf->height;
 
   if (g < 0)
@@ -1795,7 +1795,7 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
   s = 0;
   ds = 1.0 / csf->width;
 
-  v = csf->values[VALUE] / 100.0;
+  v = csf->values[COLOR_SELECT_VALUE] / 100.0;
 
   switch ((int) h)
     {
@@ -1886,7 +1886,7 @@ color_select_update_hue_value (ColorSelectFill *csf)
   v = 0;
   dv = 1.0 / csf->width;
 
-  s = csf->values[SATURATION] / 100.0;
+  s = csf->values[COLOR_SELECT_SATURATION] / 100.0;
 
   switch ((int) h)
     {
@@ -1973,7 +1973,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
 
   s = 1 - s;
 
-  h = (float) csf->values[HUE];
+  h = (float) csf->values[COLOR_SELECT_HUE];
   if (h >= 360)
     h -= 360;
   h /= 60;
@@ -2081,14 +2081,14 @@ color_select_notebook_new (gint                         r,
 
   csp->callback      = color_select_notebook_update_callback;
   csp->client_data   = glue;
-  csp->z_color_fill  = HUE;
-  csp->xy_color_fill = SATURATION_VALUE;
+  csp->z_color_fill  = COLOR_SELECT_HUE;
+  csp->xy_color_fill = COLOR_SELECT_SATURATION_VALUE;
   csp->gc            = NULL;
   csp->wants_updates = TRUE;
 
-  csp->values[RED]   = csp->orig_values[0] = r;
-  csp->values[GREEN] = csp->orig_values[1] = g;
-  csp->values[BLUE]  = csp->orig_values[2] = b;
+  csp->values[COLOR_SELECT_RED]   = csp->orig_values[0] = r;
+  csp->values[COLOR_SELECT_GREEN] = csp->orig_values[1] = g;
+  csp->values[COLOR_SELECT_BLUE]  = csp->orig_values[2] = b;
   color_select_update_hsv_values (csp);
   color_select_update_pos (csp);
 

@@ -15,32 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __PALETTE_ENTRIES_H__
-#define __PALETTE_ENTRIES_H__
+#ifndef __GRADIENT_P_H__
+#define __GRADIENT_P_H__
 
-#include <gtk/gtk.h>
+void      gradient_editor_create       (void);
+void      gradient_editor_free         (void);
 
-typedef struct _PaletteEntries PaletteEntries;
+gboolean  gradient_editor_set_gradient (gradient_t *gradient);
 
-struct _PaletteEntries
-{
-  gchar     *name;
-  gchar     *filename;
-  GSList    *colors;
-  gint       n_colors;
-  gboolean   changed;
-  GdkPixmap *pixmap;
-};
+gint      gradient_clist_init          (GtkWidget  *shell,
+					GdkGC      *gc,
+					GtkWidget  *clist,
+					gradient_t *active);
+void      gradient_clist_insert        (GtkWidget  *shell,
+					GdkGC      *gc,
+					GtkWidget  *clist,
+					gradient_t *gradient,
+					gint        pos,
+					gboolean    select);
 
-typedef struct _PaletteEntry PaletteEntry;
-
-struct _PaletteEntry
-{
-  guchar  color[3];
-  gchar  *name;
-  gint    position;
-};
-
-extern GSList * palette_entries_list;
-
-#endif /* __PALETTE_ENTRIES_H__ */
+#endif  /* __GRADIENT_P_H__ */

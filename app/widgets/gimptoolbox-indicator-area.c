@@ -22,46 +22,22 @@
 #include "brush_select.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
-#include "gradient.h"
-#include "gradient_header.h"
+#include "gradient_select.h"
 #include "indicator_area.h"
 #include "interface.h"       /*  for tool_tips  */
 #include "pattern_select.h"
 
 #include "libgimp/gimpintl.h"
 
-#define CELL_SIZE 23         /*  The size of the previews  */
-#define GRAD_CELL_WIDTH 48   /*  The width of the gradient preview  */
+#define CELL_SIZE        23  /*  The size of the previews  */
+#define GRAD_CELL_WIDTH  48  /*  The width of the gradient preview  */
 #define GRAD_CELL_HEIGHT 12  /*  The height of the gradient preview  */
-#define CELL_PADDING 2       /*  How much between brush and pattern cells  */
+#define CELL_PADDING      2  /*  How much between brush and pattern cells  */
 
 /*  Static variables  */
 static GtkWidget *brush_preview;
 static GtkWidget *pattern_preview;
 static GtkWidget *gradient_preview;
-
-/*  dnd stuff  */
-static GtkTargetEntry brush_area_target_table[] =
-{
-  GIMP_TARGET_BRUSH
-};
-static guint n_brush_area_targets = (sizeof (brush_area_target_table) /
-				     sizeof (brush_area_target_table[0]));
-
-static GtkTargetEntry pattern_area_target_table[] =
-{
-  GIMP_TARGET_PATTERN
-};
-static guint n_pattern_area_targets = (sizeof (pattern_area_target_table) /
-				       sizeof (pattern_area_target_table[0]));
-
-static GtkTargetEntry gradient_area_target_table[] =
-{
-  GIMP_TARGET_GRADIENT
-};
-static guint n_gradient_area_targets = (sizeof (gradient_area_target_table) /
-					sizeof (gradient_area_target_table[0]));
-
 
 static void
 brush_area_update (GimpContext *context,
@@ -80,24 +56,12 @@ brush_preview_clicked (GtkWidget *widget,
 }
 
 static void
-brush_preview_drag_drop (GtkWidget      *widget,
-			 GdkDragContext *context,
-			 gint            x,
-			 gint            y,
-			 guint           time,
-			 gpointer        data)
+brush_preview_drop_brush (GtkWidget *widget,
+			  GimpBrush *brush,
+			  gpointer   data)
 {
-  GtkWidget *src;
-  GimpBrush *brush;
- 
-  if ((src = gtk_drag_get_source_widget (context)))
-    {
-      brush = (GimpBrush *) gtk_object_get_data (GTK_OBJECT (src),
-						 "gimp_brush");
-
-      if (brush)
-	gimp_context_set_brush (gimp_context_get_user (), brush);
-    }
+  if (brush)
+    gimp_context_set_brush (gimp_context_get_user (), brush);
 }
 
 static void
@@ -118,24 +82,12 @@ pattern_preview_clicked (GtkWidget *widget,
 }
 
 static void
-pattern_preview_drag_drop (GtkWidget      *widget,
-			   GdkDragContext *context,
-			   gint            x,
-			   gint            y,
-			   guint           time,
-			   gpointer        data)
+pattern_preview_drop_pattern (GtkWidget *widget,
+			      GPattern  *pattern,
+			      gpointer   data)
 {
-  GtkWidget *src;
-  GPattern  *pattern;
- 
-  if ((src = gtk_drag_get_source_widget (context)))
-    {
-      pattern = (GPattern *) gtk_object_get_data (GTK_OBJECT (src),
-						  "gimp_pattern");
-
-      if (pattern)
-	gimp_context_set_pattern (gimp_context_get_user (), pattern);
-    }
+  if (pattern)
+    gimp_context_set_pattern (gimp_context_get_user (), pattern);
 }
 
 static void
@@ -152,7 +104,16 @@ static void
 gradient_preview_clicked (GtkWidget *widget, 
 			  gpointer   data)
 {
-  grad_create_gradient_editor ();
+  gradient_dialog_create ();
+}
+
+static void
+gradient_preview_drop_gradient (GtkWidget  *widget,
+				gradient_t *gradient,
+				gpointer   data)
+{
+  if (gradient)
+    gimp_context_set_gradient (gimp_context_get_user (), gradient);
 }
 
 GtkWidget *
@@ -166,24 +127,18 @@ indicator_area_create ()
   indicator_table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacing (GTK_TABLE (indicator_table), 0, CELL_PADDING);
   gtk_table_set_col_spacing (GTK_TABLE (indicator_table), 0, CELL_PADDING);
-  
-  brush_preview = gimp_context_preview_new (GCP_BRUSH, 
-					    CELL_SIZE, CELL_SIZE, 
-					    TRUE, FALSE, FALSE);
+
+  brush_preview =
+    gimp_context_preview_new (GCP_BRUSH, 
+			      CELL_SIZE, CELL_SIZE, 
+			      TRUE, FALSE, FALSE,
+			      (GimpDndDropBrushFunc) brush_preview_drop_brush,
+			      NULL);
   gtk_tooltips_set_tip (tool_tips, brush_preview, 
-			_("The active brush.\nClick to open the Brushes Dialog."), 
-			NULL);
+			_("The active brush.\n"
+			  "Click to open the Brushes Dialog."), NULL);
   gtk_signal_connect (GTK_OBJECT (brush_preview), "clicked",
 		      GTK_SIGNAL_FUNC (brush_preview_clicked),
-		      NULL);
-  gtk_drag_dest_set (brush_preview,
-		     GTK_DEST_DEFAULT_HIGHLIGHT |
-		     GTK_DEST_DEFAULT_MOTION |
-		     GTK_DEST_DEFAULT_DROP,
-		     brush_area_target_table, n_brush_area_targets,
-		     GDK_ACTION_COPY);
-  gtk_signal_connect (GTK_OBJECT (brush_preview), "drag_drop",
-		      GTK_SIGNAL_FUNC (brush_preview_drag_drop),
 		      NULL);
   gtk_signal_connect (GTK_OBJECT (context), "brush_changed",
 		      GTK_SIGNAL_FUNC (brush_area_update),
@@ -191,23 +146,17 @@ indicator_area_create ()
   gtk_table_attach_defaults (GTK_TABLE (indicator_table), brush_preview,
 			     0, 1, 0, 1);
                             
-  pattern_preview = gimp_context_preview_new (GCP_PATTERN, 
-					      CELL_SIZE, CELL_SIZE, 
-					      TRUE, FALSE, FALSE);
+  pattern_preview =
+    gimp_context_preview_new (GCP_PATTERN, 
+			      CELL_SIZE, CELL_SIZE, 
+			      TRUE, FALSE, FALSE,
+			      (GimpDndDropPatternFunc) pattern_preview_drop_pattern,
+			      NULL);
   gtk_tooltips_set_tip (tool_tips, pattern_preview, 
 			_("The active pattern.\n"
 			  "Click to open the Patterns Dialog."), NULL);
   gtk_signal_connect (GTK_OBJECT (pattern_preview), "clicked",
 		      GTK_SIGNAL_FUNC (pattern_preview_clicked),
-		      NULL);
-  gtk_drag_dest_set (pattern_preview,
-		     GTK_DEST_DEFAULT_HIGHLIGHT |
-		     GTK_DEST_DEFAULT_MOTION |
-		     GTK_DEST_DEFAULT_DROP,
-		     pattern_area_target_table, n_pattern_area_targets,
-		     GDK_ACTION_COPY);
-  gtk_signal_connect (GTK_OBJECT (pattern_preview), "drag_drop",
-		      GTK_SIGNAL_FUNC (pattern_preview_drag_drop),
 		      NULL);
   gtk_signal_connect (GTK_OBJECT (context), "pattern_changed",
 		      GTK_SIGNAL_FUNC (pattern_area_update),
@@ -215,10 +164,13 @@ indicator_area_create ()
   gtk_table_attach_defaults (GTK_TABLE (indicator_table), pattern_preview,
 			     1, 2, 0, 1);
 
-  gradient_preview = gimp_context_preview_new (GCP_GRADIENT, 
-					       GRAD_CELL_WIDTH,
-					       GRAD_CELL_HEIGHT, 
-					       TRUE, FALSE, FALSE);
+  gradient_preview =
+    gimp_context_preview_new (GCP_GRADIENT, 
+			      GRAD_CELL_WIDTH,
+			      GRAD_CELL_HEIGHT, 
+			      TRUE, FALSE, FALSE,
+			      (GimpDndDropGradientFunc) gradient_preview_drop_gradient,
+			      NULL);
   gtk_tooltips_set_tip (tool_tips, gradient_preview, 
 			_("The active gradient.\n"
 			  "Click to open the Gradients Dialog."), 

@@ -158,7 +158,8 @@ convert_indexed_invoker (Argument *args)
     {
       if ((success = (gimage_base_type (gimage) != INDEXED)))
 	{
-	  PaletteEntriesP entries, the_palette = NULL;
+	  PaletteEntries *entries;
+	  PaletteEntries *the_palette = NULL;
 	  GSList *list;
     
 	  switch (dither_type)
@@ -191,7 +192,7 @@ convert_indexed_invoker (Argument *args)
     
 	      for (list = palette_entries_list; list; list = list->next)
 		{
-		  entries = (PaletteEntriesP) list->data;
+		  entries = (PaletteEntries *) list->data;
 		  if (!strcmp (palette_name, entries->name))
 		    {
 		      the_palette = entries;

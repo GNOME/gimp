@@ -27,7 +27,7 @@ sub sample_size_arg {{
     type => '0 < int32 <= 10000',
     desc => 'Size of the sample to return when the gradient is changed
 	    (%%desc%%)',
-    on_fail => 'sample_size = G_SAMPLE;',
+    on_fail => 'sample_size = GRADIENT_SAMPLE_SIZE;',
     no_success => 1
 }}
 
@@ -51,21 +51,18 @@ sub gradients_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'GradSelectP newdialog' ],
+	vars => [ 'ProcRecord *prec', 'GradientSelect *newdialog' ],
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (name)))
     {
       if (initial_gradient && strlen (initial_gradient))
-	newdialog = gsel_new_selection (title, initial_gradient);
+	newdialog = gradient_select_new (title, initial_gradient);
       else
-	newdialog = gsel_new_selection (title, NULL);
+	newdialog = gradient_select_new (title, NULL);
 
       newdialog->callback_name = g_strdup (name);
-      newdialog->sample_size = sample_size;
-
-      /* Add to active gradient dialogs list */
-      grad_active_dialogs = g_slist_append (grad_active_dialogs, newdialog);
+      newdialog->sample_size   = sample_size;
     }
   else
     success = FALSE;
@@ -87,14 +84,12 @@ sub gradients_close_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'GradSelectP gsp' ],
+	vars => [ 'ProcRecord *prec', 'GradientSelect *gsp' ],
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (name)) &&
       (gsp = gradients_get_gradientselect (name)))
     {
-      grad_active_dialogs = g_slist_remove (grad_active_dialogs, gsp);
-
       if (GTK_WIDGET_VISIBLE (gsp->shell))
 	gtk_widget_hide (gsp->shell);
 
@@ -103,7 +98,7 @@ sub gradients_close_popup {
 	{
 	  /* Send data back */
 	  gtk_widget_destroy (gsp->shell);
-	  grad_select_free (gsp);
+	  gradient_select_free (gsp);
 	}
     }
   else
@@ -128,33 +123,26 @@ sub gradients_set_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'GradSelectP gsp' ],
+	vars => [ 'ProcRecord *prec', 'GradientSelect *gsp' ],
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (pdbname)) &&
       (gsp = gradients_get_gradientselect (pdbname)))
     {
-      GSList *tmp;
+      GSList *list;
       gradient_t *active = NULL;
-      int pos = 0;
 
-      tmp = gradients_list;
-
-      while (tmp)
+      for (list = gradients_list; list; list = g_slist_next (list))
  	{
-	  active = tmp->data;
+	  active = (gradient_t *) list->data;
 
 	  if (!strcmp (gradient_name, active->name))
 	    break; /* We found the one we want */
-
-	  pos++;
-	  tmp = tmp->next;
 	}
 
       if (active)
         {
-	  gtk_clist_select_row (GTK_CLIST (gsp->clist), pos, -1);
-	  gtk_clist_moveto (GTK_CLIST (gsp->clist), pos, 0, 0.0, 0.0);
+	  gimp_context_set_gradient (gsp->context, active);
 	}
       else
 	success = FALSE;
@@ -187,7 +175,7 @@ HELP
     @outargs = (
 	{ name => 'name', type => 'string',
 	  desc => 'The gradient name',
-	  alias => 'g_strdup (grad->name)', no_declare => 1 },
+	  alias => 'g_strdup (gradient->name)', no_declare => 1 },
 	{ name => 'grad_data', type => 'floatarray', alias => 'values',
 	  desc => 'The gradient sample data', init => 1,
 	  array => { name => 'width',
@@ -196,30 +184,28 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'gradient_t *grad = NULL' ],
+	vars => [ 'gradient_t *gradient = NULL' ],
 	code => <<'CODE'
 {
   if (strlen (name))
     {
-      GSList *list = gradients_list;
+      GSList *list;
 
       success = FALSE;
 
-      while (list)
+      for (list = gradients_list; list; list = g_slist_next (list))
 	{
-	  grad = list->data;
+	  gradient = (gradient_t *) list->data;
 
-	  if (!strcmp (grad->name, name))
+	  if (!strcmp (gradient->name, name))
 	    {
 	      success = TRUE;
 	      break;      /* We found it! */
 	    }
-
-	  list = list->next;
 	}
     }
   else
-    success = (grad = gimp_context_get_gradient (NULL)) != NULL;
+    success = (gradient = gimp_context_get_gradient (NULL)) != NULL;
 
   if (success)
     {
@@ -235,7 +221,7 @@ HELP
 
       while (i--)
 	{
-	  gradient_get_color_at (grad, pos, &r, &g, &b, &a);
+	  gradient_get_color_at (gradient, pos, &r, &g, &b, &a);
 
 	  *pv++ = r;
 	  *pv++ = g;
@@ -250,23 +236,21 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "gimpcontext.h" "gradient_header.h" "gradient.h");
+@headers = qw(<string.h> "gimpcontext.h" "gradient_header.h" "gradient_select.h");
 
 $extra{app}->{code} = <<'CODE';
-static GradSelectP
-gradients_get_gradientselect(gchar *name)
+static GradientSelect *
+gradients_get_gradientselect (gchar *name)
 {
-  GSList *list = grad_active_dialogs;
-  GradSelectP gsp;
+  GSList *list;
+  GradientSelect *gsp;
 
-  while (list)
+  for (list = gradient_active_dialogs; list; list = g_slist_next (list))
     {
-      gsp = (GradSelectP) list->data;
+      gsp = (GradientSelect *) list->data;
       
       if (!strcmp (name, gsp->callback_name))
 	return gsp;
-
-      list = list->next;
     }
 
   return NULL;

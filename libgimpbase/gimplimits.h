@@ -32,4 +32,14 @@
 #define GIMP_MIN_RESOLUTION  (1.0 / 65536.0)
 #define GIMP_MAX_RESOLUTION  65536.0
 
+/*  the size of the checks which indicate transparency...
+ */
+#define GIMP_CHECK_SIZE    8
+#define GIMP_CHECK_SIZE_SM 4
+
+/*  ...and their colors
+ */
+#define GIMP_CHECK_DARK  (1.0 / 3.0)
+#define GIMP_CHECK_LIGHT (2.0 / 3.0)
+
 #endif /* __GIMP_LIMITS_H__ */

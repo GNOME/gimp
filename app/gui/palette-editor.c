@@ -38,8 +38,8 @@
 #include "gimpdnd.h"
 #include "gimprc.h"
 #include "gimpui.h"
-#include "gradient.h"
 #include "gradient_header.h"
+#include "gradient_select.h"
 #include "palette.h"
 #include "paletteP.h"
 #include "palette_entries.h"
@@ -179,12 +179,12 @@ palette_init_palettes (gint no_data)
 void
 palettes_free (void)
 {
+  PaletteEntries *entries;
   GSList *list;
-  PaletteEntriesP entries;
 
   for (list = palette_entries_list; list; list = g_slist_next (list))
     {
-      entries = (PaletteEntriesP) list->data;
+      entries = (PaletteEntries *) list->data;
 
       /*  If the palette has been changed, save it, if possible  */
       if (entries->changed)
@@ -1125,7 +1125,7 @@ static void
 palette_dialog_delete_entry_callback (GtkWidget *widget,
 				      gpointer   data)
 {
-  PaletteEntryP entry;
+  PaletteEntry *entry;
   PaletteDialog *palette;
   GSList *tmp_link;
   gint pos = 0;
@@ -1471,7 +1471,7 @@ palette_dialog_draw_entries (PaletteDialog *palette,
 			     gint           row_start,
 			     gint           column_highlight)
 {
-  PaletteEntryP entry;
+  PaletteEntry *entry;
   guchar *buffer;
   guchar **colors;
   GSList *tmp_link;
@@ -1802,13 +1802,13 @@ palette_dialog_merge_entries_callback (GtkWidget *widget,
 
       row = GPOINTER_TO_INT (sel_list->data);
       p_entries = 
-	(PaletteEntriesP) gtk_clist_get_row_data (GTK_CLIST (palette->clist), row);
+	(PaletteEntries *) gtk_clist_get_row_data (GTK_CLIST (palette->clist), row);
 
       /* Go through each palette and merge the colors */
       cols = p_entries->colors;
       while (cols)
 	{
-	  PaletteEntryP entry = cols->data;
+	  PaletteEntry *entry = cols->data;
 	  palette_entries_add_entry (new_entries,
 				     entry->name,
 				     entry->color[0],
@@ -2239,7 +2239,7 @@ palette_import_select_grad_callback (GtkWidget *widget,
 				     gpointer   data)
 {
   /*  Popup grad edit box ....  */
-  grad_create_gradient_editor ();
+  gradient_dialog_create ();
 }
 
 static void
@@ -2837,8 +2837,8 @@ static void
 palette_import_image_make_palette (GHashTable *h_array,
 				   guchar     *name)
 {
-  GSList * sorted_list = NULL;
-  PaletteEntriesP entries;
+  PaletteEntries *entries;
+  GSList *sorted_list = NULL;
 
   g_hash_table_foreach (h_array, palette_import_create_sorted_list,
 			&sorted_list);
@@ -2946,8 +2946,8 @@ static void
 palette_import_create_from_indexed (GImage *gimage,
 				    guchar *pname)
 {
+  PaletteEntries *entries;
   gint samples, count;
-  PaletteEntriesP entries;
 
   samples = (gint) import_dialog->sample->value;  
 

@@ -44,19 +44,19 @@ typedef enum
 struct _Tool
 {
   /*  Data  */
-  ToolType    type;          /*  Tool type                                   */
-  gint        ID;            /*  unique tool ID                              */
+  ToolType   type;          /*  Tool type                                   */
+  gint       ID;            /*  unique tool ID                              */
 
-  ToolState   state;         /*  state of tool activity                      */
-  gint        paused_count;  /*  paused control count                        */
-  gboolean    scroll_lock;   /*  allow scrolling or not                      */
-  gboolean    auto_snap_to;  /*  snap to guides automatically                */
+  ToolState  state;         /*  state of tool activity                      */
+  gint       paused_count;  /*  paused control count                        */
+  gboolean   scroll_lock;   /*  allow scrolling or not                      */
+  gboolean   auto_snap_to;  /*  snap to guides automatically                */
 
-  gboolean    preserve;      /*  Preserve this tool across drawable changes  */
-  void      * gdisp_ptr;     /*  pointer to currently active gdisp           */
-  void      * drawable;      /*  pointer to the tool's current drawable      */
+  gboolean   preserve;      /*  Preserve this tool across drawable changes  */
+  void      *gdisp_ptr;     /*  pointer to currently active gdisp           */
+  void      *drawable;      /*  pointer to the tool's current drawable      */
 
-  void      * private;       /*  Tool-specific information                   */
+  void      *private;       /*  Tool-specific information                   */
 
   /*  Action functions  */
   ButtonPressFunc    button_press_func;
@@ -72,19 +72,19 @@ struct _ToolInfo
 {
   ToolOptions *tool_options;
 
-  char  *tool_name;
+  gchar    *tool_name;
 
-  int    toolbar_position;  
+  gint      toolbar_position;  
 
-  char  *menu_path;  
-  char  *menu_accel; 
+  gchar    *menu_path;  
+  gchar    *menu_accel; 
 
-  char **icon_data;
+  gchar   **icon_data;
 
-  char  *tool_desc;
-  char  *private_tip;
+  gchar    *tool_desc;
+  gchar    *private_tip;
 
-  gint   tool_id;
+  ToolType  tool_id;
 
   ToolInfoNewFunc  new_func;
   ToolInfoFreeFunc free_func;
@@ -101,24 +101,24 @@ extern ToolInfo   tool_info[];
 extern gint       num_tools;
 
 /*  Function declarations  */
-Tool * tools_new_tool             (ToolType     tool_type);
+Tool   * tools_new_tool             (ToolType     tool_type);
 
-void   tools_select               (ToolType     tool_type);
-void   tools_initialize           (ToolType     tool_type,
-				   GDisplay    *gdisplay);
+void     tools_select               (ToolType     tool_type);
+void     tools_initialize           (ToolType     tool_type,
+				     GDisplay    *gdisplay);
 
-void   tools_options_dialog_new   (void);
-void   tools_options_dialog_show  (void);
-void   tools_options_dialog_free  (void);
+void     tools_options_dialog_new   (void);
+void     tools_options_dialog_show  (void);
+void     tools_options_dialog_free  (void);
 
-void   tools_help_func            (gpointer);
+void     tools_help_func            (gpointer);
 
-void   tools_register             (ToolType     tool_type,
-				   ToolOptions *tool_options);
+void     tools_register             (ToolType     tool_type,
+				     ToolOptions *tool_options);
 
-void   active_tool_control        (ToolAction   action,
-				   void        *gdisp_ptr);
+void     active_tool_control        (ToolAction   action,
+				     void        *gdisp_ptr);
 
-guchar *tool_active_PDB_string    (void);
+guchar * tool_active_PDB_string     (void);
 
 #endif  /*  __TOOLS_H__  */

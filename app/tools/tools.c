@@ -69,10 +69,10 @@
 Tool * active_tool = NULL;
 
 /*  Local  Data  */
-static GtkWidget *options_shell = NULL;
-static GtkWidget *options_vbox = NULL;
-static GtkWidget *options_label = NULL;
-static GtkWidget *options_reset_button = NULL;
+static GtkWidget * options_shell        = NULL;
+static GtkWidget * options_vbox         = NULL;
+static GtkWidget * options_label        = NULL;
+static GtkWidget * options_reset_button = NULL;
 
 static gint global_tool_ID = 0;
 
@@ -86,7 +86,7 @@ ToolInfo tool_info[] =
     "R",
     (char **) rect_bits,
     N_("Select rectangular regions"),
-    "rect_select",
+    "tools/rect_select.html",
     RECT_SELECT,
     tools_new_rect_select,
     tools_free_rect_select, 
@@ -101,7 +101,7 @@ ToolInfo tool_info[] =
     "E",
     (char **) circ_bits,
     N_("Select elliptical regions"),
-    "ellipse_select",
+    "tools/ellipse_select.html",
     ELLIPSE_SELECT,
     tools_new_ellipse_select,
     tools_free_ellipse_select,
@@ -116,7 +116,7 @@ ToolInfo tool_info[] =
     "F",
     (char **) free_bits,
     N_("Select hand-drawn regions"),
-    "free_select",
+    "tools/free_select.html",
     FREE_SELECT,
     tools_new_free_select,
     tools_free_free_select, 
@@ -131,7 +131,7 @@ ToolInfo tool_info[] =
     "Z",
     (char **) fuzzy_bits,
     N_("Select contiguous regions"),
-    "fuzzy_select",
+    "tools/fuzzy_select.html",
     FUZZY_SELECT,
     tools_new_fuzzy_select,
     tools_free_fuzzy_select, 
@@ -146,7 +146,7 @@ ToolInfo tool_info[] =
     "B",
     (char **) bezier_bits,
     N_("Select regions using Bezier curves"),
-    "bezier_select",
+    "tools/bezier_select.html",
     BEZIER_SELECT,
     tools_new_bezier_select,
     tools_free_bezier_select,
@@ -161,7 +161,7 @@ ToolInfo tool_info[] =
     "I",
     (char **) iscissors_bits,
     N_("Select shapes from image"),
-    "intelligent_scissors",
+    "tools/intelligent_scissors.html",
     ISCISSORS,
     tools_new_iscissors,
     tools_free_iscissors, 
@@ -176,7 +176,7 @@ ToolInfo tool_info[] =
     "M",
     (char **) move_bits,
     N_("Move layers & selections"),
-    "move",
+    "tools/move.html",
     MOVE,
     tools_new_move_tool,
     tools_free_move_tool, 
@@ -191,7 +191,7 @@ ToolInfo tool_info[] =
     "<shift>M",
     (char **) magnify_bits,
     N_("Zoom in & out"),
-    "magnify",
+    "tools/magnify.html",
     MAGNIFY,
     tools_new_magnify,
     tools_free_magnify, 
@@ -206,7 +206,7 @@ ToolInfo tool_info[] =
     "<shift>C",
     (char **) crop_bits,
     N_("Crop or resize the image"),
-    "crop",
+    "tools/crop.html",
     CROP,
     tools_new_crop,
     tools_free_crop,
@@ -221,7 +221,7 @@ ToolInfo tool_info[] =
     "<shift>T",
     (char **) scale_bits,
     N_("Transform the layer or selection"),
-    "transform",
+    "tools/transform.html",
     ROTATE,
     tools_new_transform_tool,
     tools_free_transform_tool,
@@ -235,8 +235,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     NULL,
-    NULL,
-    "transform",
+    N_("Transform the layer or selection"),
+    "tools/transform.html",
     SCALE,
     tools_new_transform_tool,
     tools_free_transform_tool, 
@@ -250,8 +250,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     NULL,
-    NULL,
-    "transform",
+    N_("Transform the layer or selection"),
+    "tools/transform.html",
     SHEAR,
     tools_new_transform_tool,
     tools_free_transform_tool,
@@ -265,8 +265,8 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     NULL,
-    NULL,
-    "transform",
+    N_("Transform the layer or selection"),
+    "tools/transform.html",
     PERSPECTIVE,
     tools_new_transform_tool,
     tools_free_transform_tool,
@@ -281,7 +281,7 @@ ToolInfo tool_info[] =
     "<shift>F",
     (char **) flip_bits,
     N_("Flip the layer or selection"),
-    "flip",
+    "tools/flip.html",
     FLIP,
     tools_new_flip,
     tools_free_flip_tool,
@@ -296,7 +296,7 @@ ToolInfo tool_info[] =
     "T",
     (char **) text_bits,
     N_("Add text to the image"),
-    "text",
+    "tools/text.html",
     TEXT,
     tools_new_text,
     tools_free_text,
@@ -311,7 +311,7 @@ ToolInfo tool_info[] =
     "O",
     (char **) colorpicker_bits,
     N_("Pick colors from the image"),
-    "color_picker",
+    "tools/color_picker.html",
     COLOR_PICKER,
     tools_new_color_picker,
     tools_free_color_picker,
@@ -326,7 +326,7 @@ ToolInfo tool_info[] =
     "<shift>B",
     (char **) fill_bits,
     N_("Fill with a color or pattern"),
-    "bucket_fill",
+    "tools/bucket_fill.html",
     BUCKET_FILL,
     tools_new_bucket_fill,
     tools_free_bucket_fill,
@@ -341,7 +341,7 @@ ToolInfo tool_info[] =
     "L",
     (char **) gradient_bits,
     N_("Fill with a color gradient"),
-    "blend",
+    "tools/blend.html",
     BLEND,
     tools_new_blend,
     tools_free_blend,
@@ -356,7 +356,7 @@ ToolInfo tool_info[] =
     "<shift>P",
     (char **) pencil_bits,
     N_("Draw sharp pencil strokes"),
-    "pencil",
+    "tools/pencil.html",
     PENCIL,
     tools_new_pencil,
     tools_free_pencil,
@@ -371,7 +371,7 @@ ToolInfo tool_info[] =
     "P",
     (char **) paint_bits,
     N_("Paint fuzzy brush strokes"),
-    "paintbrush",
+    "tools/paintbrush.html",
     PAINTBRUSH,
     tools_new_paintbrush,
     tools_free_paintbrush, 
@@ -386,7 +386,7 @@ ToolInfo tool_info[] =
     "<shift>E",
     (char **) erase_bits,
     N_("Erase to background or transparency"),
-    "eraser",
+    "tools/eraser.html",
     ERASER,
     tools_new_eraser,
     tools_free_eraser,
@@ -401,7 +401,7 @@ ToolInfo tool_info[] =
     "A",
     (char **) airbrush_bits,
     N_("Airbrush with variable pressure"),
-    "airbrush",
+    "tools/airbrush.html",
     AIRBRUSH,
     tools_new_airbrush,
     tools_free_airbrush,
@@ -416,7 +416,7 @@ ToolInfo tool_info[] =
     "C",
     (char **) clone_bits,
     N_("Paint using patterns or image regions"),
-    "clone",
+    "tools/clone.html",
     CLONE,
     tools_new_clone,
     tools_free_clone,
@@ -431,7 +431,7 @@ ToolInfo tool_info[] =
     "V",
     (char **) blur_bits,
     N_("Blur or sharpen"),
-    "convolve",
+    "tools/convolve.html",
     CONVOLVE,
     tools_new_convolve,
     tools_free_convolve,
@@ -446,7 +446,7 @@ ToolInfo tool_info[] =
     "K",
     (char **) ink_bits,
     N_("Draw in ink"),
-    "ink",
+    "tools/ink.html",
     INK,
     tools_new_ink,
     tools_free_ink,
@@ -461,7 +461,7 @@ ToolInfo tool_info[] =
     "<shift>D",
     (char **) dodge_bits,
     N_("Dodge or Burn"),
-    "dodgeburn",
+    "tools/dodgeburn.html",
     DODGEBURN,
     tools_new_dodgeburn,
     tools_free_dodgeburn,
@@ -476,7 +476,7 @@ ToolInfo tool_info[] =
     "<shift>S",
     (char **) smudge_bits,
     N_("Smudge"),
-    "smudge",
+    "tools/smudge.html",
     SMUDGE,
     tools_new_smudge,
     tools_free_smudge,
@@ -491,7 +491,7 @@ ToolInfo tool_info[] =
     "",
      (char **) measure_bits,
     N_("Measure distances and angles"),
-    "measure",
+    "tools/measure.html",
     MEASURE,
     tools_new_measure_tool,
     tools_free_measure_tool, 
@@ -506,7 +506,7 @@ ToolInfo tool_info[] =
     "<shift>A",
     (char **) xinput_airbrush_bits,
     N_("Natural Airbrush"),
-    "xinput_airbrush",
+    "tools/xinput_airbrush.html",
     XINPUT_AIRBRUSH,
     tools_new_xinput_airbrush,
     tools_free_xinput_airbrush,
@@ -521,7 +521,7 @@ ToolInfo tool_info[] =
     "",
     (char **) path_tool_bits,
     N_("Manipulate paths"),
-    "path",
+    "tools/path.html",
     PATH_TOOL,
     tools_new_path_tool,
     tools_free_path_tool, 
@@ -537,8 +537,8 @@ ToolInfo tool_info[] =
     N_("/Select/By Color..."),
     NULL,
     NULL,
-    NULL,
-    "by_color_select",
+    N_("Select regions by color"),
+    "tools/by_color_select.html",
     BY_COLOR_SELECT,
     tools_new_by_color_select,
     tools_free_by_color_select,
@@ -552,8 +552,8 @@ ToolInfo tool_info[] =
     N_("/Image/Colors/Color Balance"),
     NULL,
     NULL,
-    NULL,
-    "color_balance",
+    N_("Adjust color balance"),
+    "tools/color_balance.html",
     COLOR_BALANCE,
     tools_new_color_balance,
     tools_free_color_balance,
@@ -567,8 +567,8 @@ ToolInfo tool_info[] =
     N_("/Image/Colors/Brightness-Contrast"),
     NULL,
     NULL,
-    NULL,
-    "brightness_contrast",
+    N_("Adjust brightness and contrast"),
+    "tools/brightness_contrast.html",
     BRIGHTNESS_CONTRAST,
     tools_new_brightness_contrast,
     tools_free_brightness_contrast,
@@ -582,8 +582,8 @@ ToolInfo tool_info[] =
     N_("/Image/Colors/Hue-Saturation"),
     NULL,
     NULL,
-    NULL,
-    "hue_saturation",
+    N_("Adjust hue and saturation"),
+    "tools/hue_saturation.html",
     HUE_SATURATION,
     tools_new_hue_saturation,
     tools_free_hue_saturation, 
@@ -597,8 +597,8 @@ ToolInfo tool_info[] =
     N_("/Image/Colors/Posterize"),
     NULL,
     NULL,
-    NULL,
-    "posterize",
+    N_("Reduce image to a fixed numer of colors"),
+    "tools/posterize.html",
     POSTERIZE,
     tools_new_posterize,
     tools_free_posterize,
@@ -612,8 +612,8 @@ ToolInfo tool_info[] =
     N_("/Image/Colors/Threshold"),
     NULL,
     NULL,
-    NULL,
-    "threshold",
+    N_("Reduce image to two colors using a threshold"),
+    "tools/threshold.html",
     THRESHOLD,
     tools_new_threshold,
     tools_free_threshold,
@@ -627,8 +627,8 @@ ToolInfo tool_info[] =
     N_("/Image/Colors/Curves"),
     NULL,
     NULL,
-    NULL,
-    "curves",
+    N_("Adjust color curves"),
+    "tools/curves.html",
     CURVES,
     tools_new_curves, 
     tools_free_curves,
@@ -642,8 +642,8 @@ ToolInfo tool_info[] =
     N_("/Image/Colors/Levels"),
     NULL,
     NULL,
-    NULL,
-    "levels",
+    N_("Adjust color levels"),
+    "tools/levels.html",
     LEVELS,
     tools_new_levels, 
     tools_free_levels,
@@ -657,8 +657,8 @@ ToolInfo tool_info[] =
     N_("/Image/Histogram"),
     NULL,
     NULL,
-    NULL,
-    "histogram",
+    N_("View image historgam"),
+    "tools/histogram.html",
     HISTOGRAM,
     tools_new_histogram_tool,
     tools_free_histogram_tool,
@@ -686,7 +686,7 @@ active_tool_free (void)
 
   tools_options_hide (active_tool->type);
 
-  (* tool_info[(int) active_tool->type].free_func) (active_tool);
+  (* tool_info[(gint) active_tool->type].free_func) (active_tool);
 
   g_free (active_tool);
   active_tool = NULL;
@@ -698,7 +698,7 @@ tools_select (ToolType tool_type)
   if (active_tool)
     active_tool_free ();
 
-  active_tool = (* tool_info[(int) tool_type].new_func) ();
+  active_tool = (* tool_info[(gint) tool_type].new_func) ();
 
   tools_options_show (active_tool->type);
 }
@@ -710,14 +710,14 @@ tools_initialize (ToolType  tool_type,
   /*  Tools which have an init function have dialogs and
    *  cannot be initialized without a display
    */
-  if (tool_info[(int) tool_type].init_func && !gdisp)
+  if (tool_info[(gint) tool_type].init_func && !gdisp)
     tool_type = RECT_SELECT;
 
   gimp_context_set_tool (gimp_context_get_user (), tool_type);
 
-  if (tool_info[(int) tool_type].init_func)
+  if (tool_info[(gint) tool_type].init_func)
     {
-      (* tool_info[(int) tool_type].init_func) (gdisp);
+      (* tool_info[(gint) tool_type].init_func) (gdisp);
 
       active_tool->drawable = gimage_active_drawable (gdisp->gimage);
     }
@@ -726,7 +726,7 @@ tools_initialize (ToolType  tool_type,
 }
 
 void
-tools_options_dialog_show ()
+tools_options_dialog_show (void)
 {
   if (!GTK_WIDGET_VISIBLE (options_shell)) 
     {
@@ -894,7 +894,7 @@ tools_new_tool (ToolType tool_type)
 /*  Tool options function  */
 
 void
-tools_options_dialog_new ()
+tools_options_dialog_new (void)
 {
   GtkWidget *frame;
   GtkWidget *vbox;
@@ -951,7 +951,7 @@ tools_options_dialog_new ()
 }
 
 void
-tools_options_dialog_free ()
+tools_options_dialog_free (void)
 {
   session_get_window_info (options_shell, &tool_options_session_info);
   gtk_widget_destroy (options_shell);
@@ -960,13 +960,7 @@ tools_options_dialog_free ()
 void
 tools_help_func (gpointer help_data)
 {
-  gchar *help_page;
-
-  help_page = g_strdup_printf ("tools/%s.html",
-			       tool_info[(int) active_tool->type].private_tip);
-  gimp_help (help_page);
-
-  g_free (help_page);
+  gimp_help (tool_info[(gint) active_tool->type].private_tip);
 }
 
 void
@@ -1033,7 +1027,7 @@ tools_options_reset_callback (GtkWidget *widget,
 
   shell = (GtkWidget *) data;
 
-  if (! active_tool)
+  if (!active_tool)
     return;
 
   if (tool_info[(int) active_tool->type].tool_options->reset_func)
@@ -1041,16 +1035,18 @@ tools_options_reset_callback (GtkWidget *widget,
 }
 
 guchar *
-tool_active_PDB_string()
+tool_active_PDB_string (void)
 {
   guchar *toolStr = "gimp_paintbrush_default";
-  /* Return the correct PDB function for the active tool */
-  /* The default is paintbrush if the tool is not recognised */
 
-  if(!active_tool)
+  /*  Return the correct PDB function for the active tool
+   *  The default is paintbrush if the tool is not recognised
+   */
+
+  if (!active_tool)
     return toolStr;
 
-  switch(active_tool->type)
+  switch (gimp_context_get_tool (gimp_context_get_user ()))
     {
     case PENCIL:
       toolStr = "gimp_pencil";
@@ -1079,5 +1075,6 @@ tool_active_PDB_string()
     default:
       toolStr = "gimp_paintbrush_default";
     }
+
   return toolStr;
 }

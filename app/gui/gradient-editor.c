@@ -123,16 +123,10 @@
  *
  * - Add Save Dirty Gradients function.
  *
- * - Add Reload function.
- *
- * - See that the default-gradient really gets selected on startup.
- *
  * - Provide a way of renaming a gradient (instead of having to do
  *   copy/delete).
  *
  * - Fix the flicker in the hint bar.
- *
- * - Maybe add a little preview of each gradient to the listbox?
  *
  * - Better handling of bogus gradient files and inconsistent
  *   segments.  Do not loop indefinitely in seg_get_segment_at() if
@@ -157,13 +151,17 @@
 #include "errors.h"
 #include "general.h"
 #include "gimpcontext.h"
+#include "gimpdnd.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "gradient.h"
-#include "session.h"
+#include "gradientP.h"
 #include "gradient_header.h"
+#include "gradient_select.h"
+#include "session.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimplimits.h"
 #include "libgimp/gimpmath.h"
 
 #include "pixmaps/zoom_in.xpm"
@@ -173,10 +171,161 @@
 
 #define EPSILON 1e-10
 
+#define GRAD_LIST_WIDTH  300
+#define GRAD_LIST_HEIGHT 80
+
+#define GRAD_SCROLLBAR_STEP_SIZE 0.05
+#define GRAD_SCROLLBAR_PAGE_SIZE 0.75
+
+#define GRAD_CLOSE_BUTTON_WIDTH 45
+#define GRAD_PREVIEW_WIDTH      600
+#define GRAD_PREVIEW_HEIGHT     64
+#define GRAD_CONTROL_HEIGHT     10
+
+#define GRAD_COLOR_BOX_WIDTH  24
+#define GRAD_COLOR_BOX_HEIGHT 16
+
+#define GRAD_NUM_COLORS 10
+
+#define GRAD_MOVE_TIME 150 /* ms between mouse click and detection of movement in gradient control */
+
+#define GRAD_PREVIEW_EVENT_MASK (GDK_EXPOSURE_MASK | GDK_LEAVE_NOTIFY_MASK | \
+				 GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | \
+				 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK)
+
+#define GRAD_CONTROL_EVENT_MASK (GDK_EXPOSURE_MASK |		\
+				 GDK_LEAVE_NOTIFY_MASK |	\
+				 GDK_POINTER_MOTION_MASK |	\
+				 GDK_POINTER_MOTION_HINT_MASK |	\
+				 GDK_BUTTON_PRESS_MASK |	\
+				 GDK_BUTTON_RELEASE_MASK |	\
+				 GDK_BUTTON1_MOTION_MASK)
+
+#define GRAD_UPDATE_PREVIEW   0x0001
+#define GRAD_UPDATE_CONTROL   0x0002
+#define GRAD_RESET_CONTROL    0X0004
+
+
+/* Gradient editor type */
+
+typedef enum
+{
+  GRAD_DRAG_NONE = 0,
+  GRAD_DRAG_LEFT,
+  GRAD_DRAG_MIDDLE,
+  GRAD_DRAG_ALL
+} control_drag_mode_t;
+
+typedef struct
+{
+  GtkWidget *shell;
+  GdkGC     *gc;
+  GtkWidget *hint_label;
+  GtkWidget *clist;
+  GtkWidget *scrollbar;
+  GtkWidget *preview;
+  GtkWidget *control;
+
+  /*  Zoom and scrollbar  */
+  guint      zoom_factor;
+  GtkObject *scroll_data;
+
+  /*  Instant update  */
+  gboolean  instant_update;
+
+  /*  Gradient preview  */
+
+  guchar   *preview_rows[2]; /* For caching redraw info */
+  gint      preview_last_x;
+  gboolean  preview_button_down;
+
+  /*  Gradient control  */
+
+  GdkPixmap           *control_pixmap;
+  grad_segment_t      *control_drag_segment; /* Segment which is being dragged */
+  grad_segment_t      *control_sel_l;        /* Left segment of selection */
+  grad_segment_t      *control_sel_r;        /* Right segment of selection */
+  control_drag_mode_t  control_drag_mode;    /* What is being dragged? */
+  guint32              control_click_time;   /* Time when mouse was pressed */
+  gboolean             control_compress;     /* Compressing/expanding handles */
+  gint                 control_last_x;       /* Last mouse position when dragging */
+  gdouble              control_last_gx;      /* Last position (wrt gradient) when dragging */
+  gdouble              control_orig_pos;     /* Original click position when dragging */
+
+  GtkWidget *control_main_popup;              /* Popup menu */
+  GtkWidget *control_blending_label;          /* Blending function label */
+  GtkWidget *control_coloring_label;          /* Coloring type label */
+  GtkWidget *control_splitm_label;            /* Split at midpoint label */
+  GtkWidget *control_splitu_label;            /* Split uniformly label */
+  GtkWidget *control_delete_menu_item;        /* Delete menu item */
+  GtkWidget *control_delete_label;            /* Delete label */
+  GtkWidget *control_recenter_label;          /* Re-center label */
+  GtkWidget *control_redistribute_label;      /* Re-distribute label */
+  GtkWidget *control_flip_label;              /* Flip label */
+  GtkWidget *control_replicate_label;         /* Replicate label */
+  GtkWidget *control_blend_colors_menu_item;  /* Blend colors menu item */
+  GtkWidget *control_blend_opacity_menu_item; /* Blend opacity menu item */
+  GtkWidget *control_left_load_popup;         /* Left endpoint load menu */
+  GtkWidget *control_left_save_popup;         /* Left endpoint save menu */
+  GtkWidget *control_right_load_popup;        /* Right endpoint load menu */
+  GtkWidget *control_right_save_popup;        /* Right endpoint save menu */
+  GtkWidget *control_blending_popup;          /* Blending function menu */
+  GtkWidget *control_coloring_popup;          /* Coloring type menu */
+  GtkWidget *control_sel_ops_popup;           /* Selection ops menu */
+
+  GtkAccelGroup *accel_group;
+
+  /*  Blending and coloring menus  */
+
+  GtkWidget *control_blending_items[5 + 1]; /* Add 1 for the "Varies" item */
+  GtkWidget *control_coloring_items[3 + 1];
+
+  /*  Split uniformly dialog  */
+
+  gint split_parts;
+
+  /*  Replicate dialog  */
+
+  gint replicate_times;
+
+  /*  Saved colors  */
+
+  struct
+  {
+    gdouble r, g, b, a;
+  } saved_colors[GRAD_NUM_COLORS];
+
+  GtkWidget *left_load_color_boxes[GRAD_NUM_COLORS + 3];
+  GtkWidget *left_load_labels[GRAD_NUM_COLORS + 3];
+
+  GtkWidget *left_save_color_boxes[GRAD_NUM_COLORS];
+  GtkWidget *left_save_labels[GRAD_NUM_COLORS];
+
+  GtkWidget *right_load_color_boxes[GRAD_NUM_COLORS + 3];
+  GtkWidget *right_load_labels[GRAD_NUM_COLORS + 3];
+
+  GtkWidget *right_save_color_boxes[GRAD_NUM_COLORS];
+  GtkWidget *right_save_labels[GRAD_NUM_COLORS];
+
+  /*  Color dialogs  */
+
+  GtkWidget      *left_color_preview;
+  grad_segment_t *left_saved_segments;
+  gboolean        left_saved_dirty;
+
+  GtkWidget      *right_color_preview;
+  grad_segment_t *right_saved_segments;
+  gboolean        right_saved_dirty;
+} GradientEditor;
 
 /***** Local functions *****/
 
+static void  gradient_editor_drop_gradient (GtkWidget  *widget,
+					    gradient_t *gradient,
+					    gpointer    data);
+
 /* Gradient editor functions */
+
 static GtkWidget *ed_create_button (gchar *label,
 				    double xalign, double yalign,
 				    GtkSignalFunc signal_func,
@@ -447,14 +596,16 @@ static void   calc_hsv_to_rgb               (double *h, double *s, double *v);
 
 static gchar *build_user_filename (char *name, char *path_str);
 
+/***** Global variables *****/
+
+GSList * gradients_list = NULL; /* The list of gradients */
+gint     num_gradients  = 0;
+
 /***** Local variables *****/
 
-GdkColor            black;
-gint                num_gradients           = 0;
-gradient_t        * curr_gradient           = NULL; /* The active gradient */
-GSList            * gradients_list          = NULL; /* The list of gradients */
-gradient_t        * grad_default_gradient   = NULL;
-gradient_editor_t * g_editor                = NULL; /* The gradient editor */
+static GdkColor         black;
+static gradient_t     * curr_gradient = NULL;
+static GradientEditor * g_editor      = NULL;
 
 static gradient_t * standard_gradient = NULL;
 
@@ -474,17 +625,23 @@ static const gchar *coloring_types[] =
   N_("HSV (clockwise hue)")
 };
 
+/*  dnd stuff  */
+static GtkTargetEntry gradient_target_table[] =
+{
+  GIMP_TARGET_GRADIENT
+};
+static guint n_gradient_targets = (sizeof (gradient_target_table) /
+				   sizeof (gradient_target_table[0]));
+
 /***** Public functions *****/
 
 void
 gradients_init (int no_data)
 {
-  if (!no_data)
+  if (! no_data)
     datafiles_read_directories (gradient_path, grad_load_gradient, 0);
 
-  if (grad_default_gradient != NULL)
-    curr_gradient = grad_default_gradient;
-  else if (gradients_list != NULL)
+  if (gradients_list != NULL)
     curr_gradient = (gradient_t *) gradients_list->data;
   else
     {
@@ -518,6 +675,41 @@ gradients_get_standard_gradient (void)
     }
 
   return standard_gradient;
+}
+
+gradient_t *
+gradient_list_get_gradient (GSList *list,
+			    gchar  *name)
+{
+  gradient_t *gradient;
+
+  for (; list; list = g_slist_next (list))
+    {
+      gradient = (gradient_t *) list->data;
+
+      if (strcmp (gradient->name, name) == 0)
+	return gradient;
+    }
+
+  return NULL;
+}
+
+gint
+gradient_list_get_gradient_index (GSList     *list,
+				  gradient_t *gradient)
+{
+  gradient_t *cmp_gradient;
+  gint index;
+
+  for (index = 0; list; list = g_slist_next (list), index++)
+    {
+      cmp_gradient = (gradient_t *) list->data;
+
+      if (cmp_gradient == gradient)
+	return index;
+    }
+
+  return -1;
 }
 
 /*****/
@@ -660,7 +852,7 @@ gradient_get_color_at (gradient_t *gradient,
 /***** The main gradient editor dialog *****/
 
 void 
-grad_create_gradient_editor_init (gint need_show)
+gradient_editor_create (void)
 {
   GtkWidget *vbox;
   GtkWidget *hbox;
@@ -680,23 +872,14 @@ grad_create_gradient_editor_init (gint need_show)
   if (g_editor)
     {
       if (!GTK_WIDGET_VISIBLE (g_editor->shell))
-	{
-	  gtk_widget_show (g_editor->shell);
-	  /* Do this because os a proble with scrolling
-	   * clists when not visible on screen.
-	   */
-	  grad_set_grad_to_name (curr_gradient->name);
-	}
+	gtk_widget_show (g_editor->shell);
       else
 	gdk_window_raise (g_editor->shell->window);
 
       return;
     }
 
-  /* Create editor */
-  if (no_data)
-    gradients_init (FALSE);
-  g_editor = g_new (gradient_editor_t, 1);
+  g_editor = g_new (GradientEditor, 1);
 
   /* Shell and main vbox */
   g_editor->shell =
@@ -743,6 +926,16 @@ grad_create_gradient_editor_init (gint need_show)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
+
+  gtk_drag_dest_set (g_editor->clist,
+		     GTK_DEST_DEFAULT_HIGHLIGHT |
+		     GTK_DEST_DEFAULT_MOTION |
+		     GTK_DEST_DEFAULT_DROP,
+		     gradient_target_table, n_gradient_targets,
+		     GDK_ACTION_COPY); 
+  gimp_dnd_gradient_dest_set (g_editor->clist,
+			      gradient_editor_drop_gradient,
+			      NULL);
 
   gtk_widget_show (scrolled_win);
   gtk_widget_show (g_editor->clist);
@@ -867,7 +1060,7 @@ grad_create_gradient_editor_init (gint need_show)
   gtk_widget_show (g_editor->scrollbar);
 
   /* Instant update toggle */
-  g_editor->instant_update = 1;
+  g_editor->instant_update = TRUE;
 
   button = gtk_check_button_new_with_label (_("Instant update"));
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -891,7 +1084,7 @@ grad_create_gradient_editor_init (gint need_show)
   g_editor->preview_rows[0]     = NULL;
   g_editor->preview_rows[1]     = NULL;
   g_editor->preview_last_x      = 0;
-  g_editor->preview_button_down = 0;
+  g_editor->preview_button_down = FALSE;
 
   g_editor->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_set_dither (GTK_PREVIEW (g_editor->preview), GDK_RGB_DITHER_MAX);
@@ -907,6 +1100,17 @@ grad_create_gradient_editor_init (gint need_show)
   gtk_signal_connect (GTK_OBJECT(g_editor->preview), "event",
 		      (GdkEventFunc) prev_events,
 		      g_editor);
+
+  gtk_drag_dest_set (g_editor->preview,
+		     GTK_DEST_DEFAULT_HIGHLIGHT |
+		     GTK_DEST_DEFAULT_MOTION |
+		     GTK_DEST_DEFAULT_DROP,
+		     gradient_target_table, n_gradient_targets,
+		     GDK_ACTION_COPY); 
+  gimp_dnd_gradient_dest_set (g_editor->preview,
+			      gradient_editor_drop_gradient,
+			      NULL);
+
   gtk_box_pack_start (GTK_BOX (gvbox), g_editor->preview, TRUE, TRUE, 0);
   gtk_widget_show (g_editor->preview);
 
@@ -917,7 +1121,7 @@ grad_create_gradient_editor_init (gint need_show)
   g_editor->control_sel_r                   = NULL;
   g_editor->control_drag_mode               = GRAD_DRAG_NONE;
   g_editor->control_click_time              = 0;
-  g_editor->control_compress                = 0;
+  g_editor->control_compress                = FALSE;
   g_editor->control_last_x                  = 0;
   g_editor->control_last_gx                 = 0.0;
   g_editor->control_orig_pos                = 0.0;
@@ -973,31 +1177,68 @@ grad_create_gradient_editor_init (gint need_show)
   gtk_widget_show (g_editor->hint_label);
 
   /* Initialize other data */
-  g_editor->left_color_preview            = NULL;
-  g_editor->left_saved_segments           = NULL;
-  g_editor->left_saved_dirty              = 0;
+  g_editor->left_color_preview  = NULL;
+  g_editor->left_saved_segments = NULL;
+  g_editor->left_saved_dirty    = FALSE;
 
-  g_editor->right_color_preview           = NULL;
-  g_editor->right_saved_segments          = NULL;
-  g_editor->right_saved_dirty             = 0;
+  g_editor->right_color_preview  = NULL;
+  g_editor->right_saved_segments = NULL;
+  g_editor->right_saved_dirty    = FALSE;
 
   ed_initialize_saved_colors ();
   cpopup_create_main_menu ();
 
   /* Show everything */
   g_editor->gc = gdk_gc_new (g_editor->shell->window);
-  select_pos = ed_set_list_of_gradients (g_editor->gc,
-					 g_editor->clist,
-					 curr_gradient);
+  select_pos = gradient_clist_init (g_editor->shell, g_editor->gc,
+				    g_editor->clist,
+				    curr_gradient);
 
-  if (need_show)
-    gtk_widget_show (g_editor->shell);
+  gtk_widget_show (g_editor->shell);
 
   if (select_pos != -1)
     gtk_clist_moveto (GTK_CLIST (g_editor->clist), select_pos, 0, 0.0, 0.0);
 }
 
+void
+gradient_editor_free (void)
+{
+}
+
+gboolean
+gradient_editor_set_gradient (gradient_t *gradient)
+{
+  gint n;
+
+  n = gradient_list_get_gradient_index (gradients_list, gradient);
+
+  if (n == -1)
+    return FALSE;
+
+  if (g_editor)
+    {
+      gtk_clist_select_row (GTK_CLIST (g_editor->clist), n, -1);
+      gtk_clist_moveto (GTK_CLIST (g_editor->clist), n, 0, 0.5, 0.0);
+    }
+  else
+    {
+      curr_gradient = gradient;
+    }
+
+  return TRUE;
+}
+
 /***** Gradient editor functions *****/
+
+static void
+gradient_editor_drop_gradient (GtkWidget  *widget,
+			       gradient_t *gradient,
+			       gpointer    data)
+{
+  gradient_editor_set_gradient (gradient);
+}
+
+/*****/
 
 static void
 ed_fetch_foreground (double *fg_r,
@@ -1069,62 +1310,19 @@ ed_set_hint (gchar *str)
 
 /*****/
 
-gint
-ed_set_list_of_gradients (GdkGC      *gc,
-			  GtkWidget  *clist,
-			  gradient_t *sel_gradient)
-{
-  GSList     *list;
-  gradient_t *grad;
-  gint n;
-  gint select_pos = -1;
-
-  list = gradients_list;
-  n    = 0;
-
-  if (sel_gradient == NULL)
-    sel_gradient = curr_gradient;
-
-  gtk_clist_freeze (GTK_CLIST (clist));
-
-  while (list)
-    {
-      grad = list->data;
-
-      if (grad == sel_gradient)
-	{
-	  ed_insert_in_gradients_listbox (gc, clist, grad, n, 1);
-	  select_pos = n;
-	}
-      else
-	{
-	  ed_insert_in_gradients_listbox (gc, clist, grad, n, 0);
-	}
-
-      list = g_slist_next (list);
-      n++;
-    }
-
-  gtk_clist_thaw (GTK_CLIST (clist));
-
-  return select_pos;
-}
-
-/*****/
-
 static void
-fill_clist_prev (gradient_t *grad,
-		 guchar     *buf,
-		 gint        width,
-		 gint        height,
-		 double      left,
-		 double      right)
+gradient_clist_fill_preview (gradient_t *gradient,
+			     guchar     *buf,
+			     gint        width,
+			     gint        height,
+			     gdouble     left,
+			     gdouble     right)
 {
   guchar *p0, *p1,*even,*odd;
-  int     x, y;
-  double  dx, cur_x;
-  double  r, g, b, a;
-  double  c0, c1;
+  gint     x, y;
+  gdouble  dx, cur_x;
+  gdouble  r, g, b, a;
+  gdouble  c0, c1;
 
   dx    = (right - left) / (width - 1);
   cur_x = left;
@@ -1135,17 +1333,17 @@ fill_clist_prev (gradient_t *grad,
 
   for (x = 0; x < width; x++)
     {
-      gradient_get_color_at (grad, cur_x, &r, &g, &b, &a);
+      gradient_get_color_at (gradient, cur_x, &r, &g, &b, &a);
 
-      if ((x / GRAD_CHECK_SIZE_SM) & 1)
+      if ((x / GIMP_CHECK_SIZE_SM) & 1)
 	{
-	  c0 = GRAD_CHECK_LIGHT;
-	  c1 = GRAD_CHECK_DARK;
+	  c0 = GIMP_CHECK_LIGHT;
+	  c1 = GIMP_CHECK_DARK;
 	}
       else
 	{
-	  c0 = GRAD_CHECK_DARK;
-	  c1 = GRAD_CHECK_LIGHT;
+	  c0 = GIMP_CHECK_DARK;
+	  c1 = GIMP_CHECK_LIGHT;
 	}
 
       *p0++ = (c0 + (r - c0) * a) * 255.0;
@@ -1161,13 +1359,13 @@ fill_clist_prev (gradient_t *grad,
 
   for (y = 0; y < height; y++)
     {
-      if ((y / GRAD_CHECK_SIZE_SM) & 1)
+      if ((y / GIMP_CHECK_SIZE_SM) & 1)
 	{
-	  memcpy (buf+(width*y*3),odd,width*3); 
+	  memcpy (buf + (width * y * 3), odd, width * 3); 
 	}
       else
 	{
-	  memcpy (buf+(width*y*3),even,width*3); 
+	  memcpy (buf + (width * y * 3), even, width * 3); 
 	}
     }
 
@@ -1175,57 +1373,89 @@ fill_clist_prev (gradient_t *grad,
   g_free (odd);
 }
 
-/*****/
-
 static void 
-draw_small_preview (GdkGC      *gc,
-		    GtkWidget  *clist,
-		    gradient_t *grad,
-		    int         pos)
+gradient_clist_draw_small_preview (GdkGC      *gc,
+				   GtkWidget  *clist,
+				   gradient_t *gradient,
+				   gint        pos)
 {
-  char rgb_buf[48*16*3];
+  gchar rgb_buf[48 * 16 * 3];
 
-  fill_clist_prev (grad, rgb_buf, 48, 16, 0.0, 1.0);
+  gradient_clist_fill_preview (gradient, rgb_buf, 48, 16, 0.0, 1.0);
 
-  gdk_draw_rgb_image (grad->pixmap,
-		      gc,
-		      0,
-		      0,
-		      48,
-		      16,
+  gdk_draw_rgb_image (gradient->pixmap, gc,
+		      0, 0,
+		      48, 16,
 		      GDK_RGB_DITHER_NORMAL,
 		      rgb_buf,
-		      48*3);
+		      48 * 3);
 
   gdk_gc_set_foreground (gc, &black);
-  gdk_draw_rectangle (grad->pixmap, gc, FALSE, 0, 0, 47, 15);
-  gtk_clist_set_text (GTK_CLIST (clist), pos, 1, grad->name);  
+  gdk_draw_rectangle (gradient->pixmap, gc, FALSE, 0, 0, 47, 15);
+  gtk_clist_set_text (GTK_CLIST (clist), pos, 1, gradient->name);  
 }
 
-/*****/
+gint
+gradient_clist_init (GtkWidget  *shell,
+		     GdkGC      *gc,
+		     GtkWidget  *clist,
+		     gradient_t *sel_gradient)
+{
+  GSList     *list;
+  gradient_t *gradient;
+  gint n;
+  gint select_pos = -1;
+
+  if (sel_gradient == NULL)
+    sel_gradient = curr_gradient;
+
+  gtk_clist_freeze (GTK_CLIST (clist));
+
+  for (list = gradients_list, n = 0; list; list = g_slist_next (list), n++)
+    {
+      gradient = (gradient_t *) list->data;
+
+      if (gradient == sel_gradient)
+	{
+	  gradient_clist_insert (shell, gc, clist, gradient, n, TRUE);
+	  select_pos = n;
+	}
+      else
+	{
+	  gradient_clist_insert (shell, gc, clist, gradient, n, FALSE);
+	}
+    }
+
+  gtk_clist_thaw (GTK_CLIST (clist));
+
+  return select_pos;
+}
 
 void
-ed_insert_in_gradients_listbox (GdkGC      *gc,
-				GtkWidget  *clist,
-				gradient_t *grad, 
-				int         pos, 
-				int         select)
+gradient_clist_insert (GtkWidget  *shell,
+		       GdkGC      *gc,
+		       GtkWidget  *clist,
+		       gradient_t *gradient,
+		       gint        pos,
+		       gboolean    select)
 {
-  char *string[2];
+  gchar *string[2];
 
   string[0] = NULL;
-  string[1] = grad->name;
+  string[1] = gradient->name;
 
-  gtk_clist_insert (GTK_CLIST (clist), pos,string);
+  gtk_clist_insert (GTK_CLIST (clist), pos, string);
 
-  if(grad->pixmap == NULL)
-    grad->pixmap =
-      gdk_pixmap_new (g_editor->shell->window,
-		      48, 16, gtk_widget_get_visual (g_editor->shell)->depth);
-	
-  draw_small_preview (gc, clist, grad, pos);
+  if (gradient->pixmap == NULL)
+    {
+      gradient->pixmap =
+	gdk_pixmap_new (shell->window, 48, 16,
+			gtk_widget_get_visual (shell)->depth);
+    }
 
-  gtk_clist_set_pixmap (GTK_CLIST (clist), pos, 0, grad->pixmap, NULL);
+  gradient_clist_draw_small_preview (gc, clist, gradient, pos);
+
+  gtk_clist_set_pixmap (GTK_CLIST (clist), pos, 0, gradient->pixmap, NULL);
 
   if (select)
     {
@@ -1368,14 +1598,15 @@ ed_do_new_gradient_callback (GtkWidget *widget,
   grad = grad_create_default_gradient ();
 
   grad->name     = gradient_name; /* We don't need to copy since this memory is ours */
-  grad->dirty    = 1;
+  grad->dirty    = TRUE;
   grad->filename = build_user_filename (grad->name, gradient_path);
 
   /* Put new gradient in list */
 
   pos = grad_insert_in_gradients_list (grad);
   gtk_clist_freeze (GTK_CLIST (g_editor->clist));
-  ed_insert_in_gradients_listbox (g_editor->gc,g_editor->clist,grad, pos, 1);
+  gradient_clist_insert (g_editor->shell, g_editor->gc, g_editor->clist,
+			 grad, pos, TRUE);
   gtk_clist_thaw (GTK_CLIST (g_editor->clist));
   gtk_clist_moveto (GTK_CLIST (g_editor->clist), pos, 0, 0.5, 0.0);
 
@@ -1383,7 +1614,7 @@ ed_do_new_gradient_callback (GtkWidget *widget,
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
 
-  grad_sel_new_all (pos, grad);
+  gradient_select_insert_all (pos, grad);
 }
 
 /***** The "copy gradient" dialog functions *****/
@@ -1432,10 +1663,10 @@ ed_do_copy_gradient_callback (GtkWidget *widget,
     }
 
   /* Copy current gradient */
-  grad = grad_new_gradient();
+  grad = grad_new_gradient ();
 
   grad->name     = gradient_name; /* We don't need to copy since this memory is ours */
-  grad->dirty    = 1;
+  grad->dirty    = TRUE;
   grad->filename = build_user_filename (grad->name, gradient_path);
 
   prev = NULL;
@@ -1465,14 +1696,15 @@ ed_do_copy_gradient_callback (GtkWidget *widget,
   /* Put new gradient in list */
   pos = grad_insert_in_gradients_list (grad);
   gtk_clist_freeze (GTK_CLIST (g_editor->clist));
-  ed_insert_in_gradients_listbox (g_editor->gc, g_editor->clist, grad, pos, 1);
+  gradient_clist_insert (g_editor->shell, g_editor->gc, g_editor->clist,
+			 grad, pos, TRUE);
   gtk_clist_thaw (GTK_CLIST (g_editor->clist));
 
   curr_gradient = grad;
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
 
-  grad_sel_copy_all (pos, grad);
+  gradient_select_insert_all (pos, grad);
 }
 
 /***** The "rename gradient" dialog functions *****/
@@ -1517,18 +1749,12 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
       return;
     }
 
-  n   = 0;
-  tmp = gradients_list;
-
-  while (tmp)
+  for (n = 0, tmp = gradients_list; tmp; tmp = g_slist_next (tmp), n++)
     {
       grad_list = tmp->data;
 
-      if(grad_list == grad)
+      if (grad_list == grad)
 	break;
-
-      n++;
-      tmp = g_slist_next(tmp);
     }
 
   if (!grad || !grad_list)
@@ -1540,7 +1766,7 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
 
   /* leak? */
   grad->name  = gradient_name; /* We don't need to copy since this memory is ours */
-  grad->dirty = 1;
+  grad->dirty = TRUE;
 
   /* Delete file and free gradient */
   unlink (grad->filename);
@@ -1551,7 +1777,7 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
 	
-  grad_sel_rename_all (n, grad);
+  gradient_select_rename_all (n, grad);
 }
 
 /***** The "delete gradient" dialog functions *****/
@@ -1615,10 +1841,9 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
 
   /* See which gradient we will have to select once the current one is deleted */
 
-  real_pos = n = 0;
-  tmp = gradients_list;
+  real_pos = 0;
 
-  while (tmp)
+  for (n = 0, tmp = gradients_list; tmp; tmp = g_slist_next (tmp), n++)
     {
       gradient = tmp->data;
 
@@ -1630,9 +1855,6 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
 
 	  break;  /* We found the one we want */
 	}
-
-      n++;  /* Next gradient */
-      tmp = g_slist_next (tmp);
     }
 
   if (tmp == NULL)
@@ -1657,7 +1879,7 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
   /* Update! */
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
 
-  grad_sel_delete_all (real_pos);
+  gradient_select_delete_all (real_pos);
 
   gimp_context_refresh_gradients ();
 }
@@ -1791,22 +2013,21 @@ ed_refresh_grads_callback (GtkWidget *widget,
   gtk_clist_clear (GTK_CLIST (g_editor->clist));
   gtk_clist_thaw (GTK_CLIST (g_editor->clist));
 	
-  grad_sel_free_all ();
+  gradient_select_free_all ();
 
-  grad_free_gradients ();
-
+  gradients_free ();
   gradients_init (FALSE);
 
-  select_pos = ed_set_list_of_gradients (g_editor->gc,
-					 g_editor->clist,
-					 curr_gradient);
+  select_pos = gradient_clist_init (g_editor->shell, g_editor->gc,
+				    g_editor->clist,
+				    curr_gradient);
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL); 
 
   if(select_pos != -1)
     gtk_clist_moveto (GTK_CLIST (g_editor->clist), select_pos, 0, 0.5, 0.0);
 
-  grad_sel_refill_all ();
+  gradient_select_refill_all ();
 }
 
 static void
@@ -1918,13 +2139,13 @@ ed_instant_update_update (GtkWidget *widget,
 {
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      g_editor->instant_update = 1;
+      g_editor->instant_update = TRUE;
       gtk_range_set_update_policy (GTK_RANGE (g_editor->scrollbar),
 				   GTK_UPDATE_CONTINUOUS);
     }
   else
     {
-      g_editor->instant_update = 0;
+      g_editor->instant_update = FALSE;
       gtk_range_set_update_policy (GTK_RANGE (g_editor->scrollbar),
 				   GTK_UPDATE_DELAYED);
     }
@@ -1985,7 +2206,7 @@ prev_events (GtkWidget *widget,
 	{
 	case 1:
 	  g_editor->preview_last_x = x;
-	  g_editor->preview_button_down = 1;
+	  g_editor->preview_button_down = TRUE;
 	  if (bevent->state & GDK_CONTROL_MASK)
 	    prev_set_background (x);
 	  else
@@ -2031,7 +2252,7 @@ prev_events (GtkWidget *widget,
 	  bevent = (GdkEventButton *) event;
 
 	  g_editor->preview_last_x = x;
-	  g_editor->preview_button_down = 0;
+	  g_editor->preview_button_down = FALSE;
 	  if (bevent->state & GDK_CONTROL_MASK)
 	    prev_set_background (x);
 	  else
@@ -2210,10 +2431,14 @@ prev_update (gboolean recalculate)
       last_row = n;
     }
 
-  draw_small_preview (g_editor->gc, g_editor->clist, curr_gradient, last_row);
+  gradient_clist_draw_small_preview (g_editor->gc, g_editor->clist,
+				     curr_gradient, last_row);
 
-  /* Update any others that are on screen */
-  sel_update_dialogs (last_row, curr_gradient);
+  /*  Update all selectors that are on screen  */
+  gradient_select_update_all (last_row, curr_gradient);
+
+  /*  Update all contexts  */
+  gimp_context_update_gradients (curr_gradient);
 }
 
 /*****/
@@ -2240,15 +2465,15 @@ prev_fill_image (int    width,
     {
       gradient_get_color_at (curr_gradient, cur_x, &r, &g, &b, &a);
 
-      if ((x / GRAD_CHECK_SIZE) & 1)
+      if ((x / GIMP_CHECK_SIZE) & 1)
 	{
-	  c0 = GRAD_CHECK_LIGHT;
-	  c1 = GRAD_CHECK_DARK;
+	  c0 = GIMP_CHECK_LIGHT;
+	  c1 = GIMP_CHECK_DARK;
 	}
       else
 	{
-	  c0 = GRAD_CHECK_DARK;
-	  c1 = GRAD_CHECK_LIGHT;
+	  c0 = GIMP_CHECK_DARK;
+	  c1 = GIMP_CHECK_LIGHT;
 	}
 
       *p0++ = (c0 + (r - c0) * a) * 255.0;
@@ -2264,7 +2489,7 @@ prev_fill_image (int    width,
 
   /* Fill image */
   for (y = 0; y < height; y++)
-    if ((y / GRAD_CHECK_SIZE) & 1)
+    if ((y / GIMP_CHECK_SIZE) & 1)
       gtk_preview_draw_row (GTK_PREVIEW (g_editor->preview),
 			    g_editor->preview_rows[1], 0, y, width);
     else
@@ -2348,7 +2573,7 @@ control_events (GtkWidget *widget,
 	      }
 
 	  g_editor->control_drag_mode = GRAD_DRAG_NONE;
-	  g_editor->control_compress  = 0;
+	  g_editor->control_compress  = FALSE;
 
 	  control_do_hint (x, y);
 	}
@@ -2509,7 +2734,7 @@ control_button_press (gint  x,
 		    {
 		      g_editor->control_drag_mode    = GRAD_DRAG_LEFT;
 		      g_editor->control_drag_segment = seg;
-		      g_editor->control_compress     = 1;
+		      g_editor->control_compress     = TRUE;
 		    }
 		  else
 		    {
@@ -2581,7 +2806,7 @@ control_button_press (gint  x,
       g_editor->control_orig_pos     = xpos;
 
       if (state & GDK_SHIFT_MASK)
-	g_editor->control_compress = 1;
+	g_editor->control_compress = TRUE;
 
       return;
     }
@@ -2716,7 +2941,7 @@ control_motion (gint x)
       break;
     }
 
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
 
   if (g_editor->instant_update)
     ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_UPDATE_CONTROL);
@@ -3715,14 +3940,14 @@ cpopup_render_color_box (GtkPreview *preview,
 
   /* Fill rows */
 
-  r0 = (GRAD_CHECK_DARK + (r - GRAD_CHECK_DARK) * a) * 255.0;
-  r1 = (GRAD_CHECK_LIGHT + (r - GRAD_CHECK_LIGHT) * a) * 255.0;
+  r0 = (GIMP_CHECK_DARK + (r - GIMP_CHECK_DARK) * a) * 255.0;
+  r1 = (GIMP_CHECK_LIGHT + (r - GIMP_CHECK_LIGHT) * a) * 255.0;
 
-  g0 = (GRAD_CHECK_DARK + (g - GRAD_CHECK_DARK) * a) * 255.0;
-  g1 = (GRAD_CHECK_LIGHT + (g - GRAD_CHECK_LIGHT) * a) * 255.0;
+  g0 = (GIMP_CHECK_DARK + (g - GIMP_CHECK_DARK) * a) * 255.0;
+  g1 = (GIMP_CHECK_LIGHT + (g - GIMP_CHECK_LIGHT) * a) * 255.0;
 
-  b0 = (GRAD_CHECK_DARK + (b - GRAD_CHECK_DARK) * a) * 255.0;
-  b1 = (GRAD_CHECK_LIGHT + (b - GRAD_CHECK_LIGHT) * a) * 255.0;
+  b0 = (GIMP_CHECK_DARK + (b - GIMP_CHECK_DARK) * a) * 255.0;
+  b1 = (GIMP_CHECK_LIGHT + (b - GIMP_CHECK_LIGHT) * a) * 255.0;
 
   p0 = rows[0];
   p1 = rows[1];
@@ -3741,7 +3966,7 @@ cpopup_render_color_box (GtkPreview *preview,
 	  *p1++ = 0;
 	}
       else
-	if ((x / GRAD_CHECK_SIZE) & 1)
+	if ((x / GIMP_CHECK_SIZE) & 1)
 	  {
 	    *p0++ = r1;
 	    *p0++ = g1;
@@ -3772,7 +3997,7 @@ cpopup_render_color_box (GtkPreview *preview,
   gtk_preview_draw_row (preview, rows[2], 0, 0, GRAD_COLOR_BOX_WIDTH);
 
   for (y = 1; y < (GRAD_COLOR_BOX_HEIGHT - 1); y++)
-    if ((y / GRAD_CHECK_SIZE) & 1)
+    if ((y / GIMP_CHECK_SIZE) & 1)
       gtk_preview_draw_row (preview, rows[1], 0, y, GRAD_COLOR_BOX_WIDTH);
     else
       gtk_preview_draw_row (preview, rows[0], 0, y, GRAD_COLOR_BOX_WIDTH);
@@ -3976,7 +4201,7 @@ cpopup_load_left_callback (GtkWidget *widget,
       break;
     }
 
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
   ed_update_editor (GRAD_UPDATE_PREVIEW);
 }
 
@@ -4052,7 +4277,7 @@ cpopup_load_right_callback (GtkWidget *widget,
       break;
     }
 
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
   ed_update_editor (GRAD_UPDATE_PREVIEW);
 }
 
@@ -4285,7 +4510,7 @@ cpopup_left_color_dialog_ok (GtkWidget *widget,
 {
   cpopup_left_color_changed (widget, data);
 
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
   cpopup_free_selection(g_editor->left_saved_segments);
 
   gtk_widget_destroy (GTK_WIDGET (data));
@@ -4363,7 +4588,7 @@ cpopup_right_color_dialog_ok (GtkWidget *widget,
 {
   cpopup_right_color_changed (widget, data);
 
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
   cpopup_free_selection (g_editor->right_saved_segments);
 
   gtk_widget_destroy (GTK_WIDGET (data));
@@ -4458,7 +4683,7 @@ cpopup_blending_callback (GtkWidget *widget,
     }
   while (aseg != g_editor->control_sel_r);
 
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
   ed_update_editor (GRAD_UPDATE_PREVIEW);
 }
 
@@ -4526,7 +4751,7 @@ cpopup_coloring_callback (GtkWidget *widget,
     }
   while (aseg != g_editor->control_sel_r);
 
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
   ed_update_editor (GRAD_UPDATE_PREVIEW);
 }
 
@@ -4550,7 +4775,7 @@ cpopup_split_midpoint_callback (GtkWidget *widget,
   g_editor->control_sel_r = rseg;
 
   curr_gradient->last_visited = NULL; /* Force re-search */
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_UPDATE_CONTROL);
 }
 
@@ -4714,7 +4939,7 @@ cpopup_split_uniform_split_callback (GtkWidget *widget,
   g_editor->control_sel_r = rseg;
 
   curr_gradient->last_visited = NULL; /* Force re-search */
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_UPDATE_CONTROL);
 }
 
@@ -4888,7 +5113,7 @@ cpopup_delete_callback (GtkWidget *widget,
   /* Done */
 
   curr_gradient->last_visited = NULL; /* Force re-search */
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_UPDATE_CONTROL);
 }
@@ -4912,7 +5137,7 @@ cpopup_recenter_callback (GtkWidget *wiodget,
     }
   while (aseg != g_editor->control_sel_r);
 
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_UPDATE_CONTROL);
 }
 
@@ -4966,7 +5191,7 @@ cpopup_redistribute_callback (GtkWidget *widget,
 
   /* Done */
 
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_UPDATE_CONTROL);
 }
 
@@ -5167,7 +5392,7 @@ cpopup_flip_callback (GtkWidget *widget,
   /* Done */
 
   curr_gradient->last_visited = NULL; /* Force re-search */
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_UPDATE_CONTROL);
 }
@@ -5361,7 +5586,7 @@ cpopup_do_replicate_callback (GtkWidget *widget,
   /* Done */
 
   curr_gradient->last_visited = NULL; /* Force re-search */
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_UPDATE_CONTROL);
 }
@@ -5390,7 +5615,7 @@ cpopup_blend_colors (GtkWidget *widget,
 			  g_editor->control_sel_r->a1,
 			  TRUE, FALSE);
 
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
   ed_update_editor (GRAD_UPDATE_PREVIEW);
 }
 
@@ -5408,7 +5633,7 @@ cpopup_blend_opacity (GtkWidget *widget,
 			  g_editor->control_sel_r->a1,
 			  FALSE, TRUE);
 
-  curr_gradient->dirty = 1;
+  curr_gradient->dirty = TRUE;
   ed_update_editor (GRAD_UPDATE_PREVIEW);
 }
 
@@ -5469,10 +5694,10 @@ grad_new_gradient (void)
   grad = g_new (gradient_t, 1);
 
   grad->name   	     = NULL;
+  grad->filename     = NULL;
   grad->segments     = NULL;
   grad->last_visited = NULL;
-  grad->dirty        = 0;
-  grad->filename     = NULL;
+  grad->dirty        = FALSE;
   grad->pixmap       = NULL;
 
   return grad;
@@ -5611,10 +5836,6 @@ grad_load_gradient (char *filename)
   fclose (file);
 
   grad_insert_in_gradients_list (grad);
-
-  /* Check if this gradient is the default one */
-  if (strcmp (default_gradient, grad->name) == 0)
-    grad_default_gradient = grad;
 }
 
 /*****/
@@ -5676,7 +5897,7 @@ grad_save_gradient (gradient_t *grad,
 
   fclose(file);
 
-  grad->dirty = 0;
+  grad->dirty = FALSE;
 }
 
 /*****/
@@ -5737,9 +5958,7 @@ grad_dump_gradient (gradient_t *grad,
   fprintf (file, "Dirty: %d\n", grad->dirty);
   fprintf (file, "Filename: \"%s\"\n", grad->filename);
 
-  seg = grad->segments;
-
-  while (seg)
+  for (seg = grad->segments; seg; seg = seg->next)
     {
       fprintf (file, "%c%p | %f %f %f | %f %f %f %f | %f %f %f %f | %d %d | %p %p\n",
 	       (seg == grad->last_visited) ? '>' : ' ',
@@ -5750,8 +5969,6 @@ grad_dump_gradient (gradient_t *grad,
 	       (int) seg->type,
 	       (int) seg->color,
 	       seg->prev, seg->next);
-
-      seg = seg->next;
     }
 }
 
@@ -6172,46 +6389,4 @@ build_user_filename (gchar *name,
   g_free (local_path);
 
   return filename;
-}
-
-gint
-grad_set_grad_to_name (gchar *name)
-{
-  GSList *list;
-  gradient_t *grad;
-
-  gint n = 0;
-
-  list = gradients_list;
-  
-  while (list)
-    {
-      grad = list->data;
-    
-      if (strcmp (grad->name, name) == 0)
-	{
-	  /* We found it! */
-      
-	  /* Select that gradient in the listbox */
-	  /* Only if gradient editor has been created */
-	  if (g_editor)
-	    {
-	      gtk_clist_select_row (GTK_CLIST (g_editor->clist), n, -1);
-	      gtk_clist_moveto (GTK_CLIST (g_editor->clist), n, 0, 0.5, 0.0);
-	    }
-	  else
-	    {
-	      /* force internal structs to use selected gradient */
-	      GSList* tmp = g_slist_nth (gradients_list,n);
-	      if(tmp)
-		curr_gradient = (gradient_t *) (tmp->data);
-	    }
-	  return TRUE;
-	}
-    
-      n++;
-      list = g_slist_next (list);
-    }
-
-  return FALSE;
 }

@@ -1680,23 +1680,18 @@ gimp_context_refresh_gradient (GimpContext *context,
 			       gpointer     data)
 {
   gradient_t *gradient;
-  GSList *list;
 
   if (! context->gradient_name)
     context->gradient_name = g_strdup (default_gradient);
 
-  for (list = gradients_list; list; list = g_slist_next (list))
+  if ((gradient = gradient_list_get_gradient (gradients_list,
+					      context->gradient_name)))
     {
-      gradient = (gradient_t *) list->data;
-
-      if (strcmp (gradient->name, context->gradient_name) == 0)
-	{
-	  context->gradient = gradient;
-	  gtk_signal_emit (GTK_OBJECT (context),
-			   gimp_context_signals[GRADIENT_CHANGED],
-			   gradient);
-	  return;
-	}
+      context->gradient = gradient;
+      gtk_signal_emit (GTK_OBJECT (context),
+		       gimp_context_signals[GRADIENT_CHANGED],
+		       gradient);
+      return;
     }
 
   g_free (context->gradient_name);

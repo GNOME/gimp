@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 /* Session-managment stuff   Copyright (C) 1998 Sven Neumann <sven@gimp.org>
 
    I include a short description here on what is done and what problems 
@@ -57,8 +56,8 @@
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
 
-static void sessionrc_write_info (SessionInfo *, FILE *);
-static void session_open_dialog (SessionInfo *);
+static void sessionrc_write_info     (SessionInfo *, FILE *);
+static void session_open_dialog      (SessionInfo *);
 static void session_reset_open_state (SessionInfo *);
 
 GList *session_info_updates = NULL;
@@ -79,7 +78,7 @@ SessionInfo brush_select_session_info =
 SessionInfo pattern_select_session_info = 
   { "pattern-select", (GtkItemFactoryCallback)dialogs_patterns_cmd_callback, 160, 180, 0, 0, FALSE };
 SessionInfo gradient_select_session_info = 
-  { "gradient-editor", (GtkItemFactoryCallback)dialogs_gradient_editor_cmd_callback, 170, 180, 0, 0, FALSE };
+  { "gradient-editor", (GtkItemFactoryCallback)dialogs_gradient_cmd_callback, 170, 180, 0, 0, FALSE };
 SessionInfo device_status_session_info = 
   { "device-status", (GtkItemFactoryCallback)dialogs_device_status_cmd_callback, 0, 600, 0, 0, FALSE };
 SessionInfo error_console_session_info = 

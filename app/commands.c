@@ -39,7 +39,7 @@
 #include "gimprc.h"
 #include "gimpui.h"
 #include "global_edit.h"
-#include "gradient.h"
+#include "gradient_select.h"
 #include "image_render.h"
 #include "info_window.h"
 #include "nav_window.h"
@@ -1103,10 +1103,10 @@ dialogs_palette_cmd_callback (GtkWidget *widget,
 }
 
 void
-dialogs_gradient_editor_cmd_callback (GtkWidget *widget,
-				      gpointer   client_data)
+dialogs_gradient_cmd_callback (GtkWidget *widget,
+			       gpointer   client_data)
 {
-  grad_create_gradient_editor ();
+  gradient_dialog_create ();
 }
 
 void

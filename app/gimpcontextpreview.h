@@ -24,6 +24,10 @@
 
 #include <gtk/gtk.h>
 
+#include "gimpbrush.h"
+#include "gradient.h"
+#include "patterns.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -67,15 +71,39 @@ struct _GimpContextPreviewClass
   void (* clicked)  (GimpContextPreview *gbp);
 };
 
-GtkType     gimp_context_preview_get_type  (void);
-GtkWidget*  gimp_context_preview_new       (GimpContextPreviewType type,
-					    gint       width,
-					    gint       height,
-					    gboolean   show_popup,
-					    gboolean   show_tooltips,
-					    gboolean   drag_source);
-void        gimp_context_preview_update    (GimpContextPreview *gcp,
-					    gpointer   data);
+GtkType     gimp_context_preview_get_type (void);
+GtkWidget*  gimp_context_preview_new      (GimpContextPreviewType type,
+					   gint           width,
+					   gint           height,
+					   gboolean       show_popup,
+					   gboolean       show_tooltips,
+					   gboolean       drag_source,
+					   GtkSignalFunc  drop_data_callback,
+					   gpointer       drop_data_data);
+
+void        gimp_context_preview_update   (GimpContextPreview *gcp,
+					   gpointer            data);
+
+/*  TODO: move to another file (gimpdatapreview.[ch] ??)
+ *
+ *        finally, the contextpreview and dnd stuff should live in libgimp
+ *        and link to different data drawing functions when used from the
+ *        app and plugins.
+ */
+
+void        draw_brush    (GtkPreview *preview,
+			   GimpBrush  *brush,
+			   gint        width,
+			   gint        height,
+			   gboolean    is_popup);
+void        draw_pattern  (GtkPreview *preview,
+			   GPattern   *pattern,
+			   gint        width,
+			   gint        height);
+void        draw_gradient (GtkPreview *preview,
+			   gradient_t *gradient,
+			   gint        width,
+			   gint        height);
 
 #ifdef __cplusplus
 }

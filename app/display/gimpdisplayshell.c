@@ -90,6 +90,9 @@ static gboolean toolbox_drag_drop          (GtkWidget *,
 					    gint,
 					    gint,
 					    guint);
+static void     toolbox_drop_tool          (GtkWidget *,
+					    ToolType,
+					    gpointer);
 static void     gimp_dnd_open_files        (gchar *);
 
 static int pixmap_colors[8][3] =
@@ -122,7 +125,8 @@ static GtkTargetEntry toolbox_target_table[] =
   GIMP_TARGET_NETSCAPE_URL,
   GIMP_TARGET_LAYER,
   GIMP_TARGET_CHANNEL,
-  GIMP_TARGET_LAYER_MASK
+  GIMP_TARGET_LAYER_MASK,
+  GIMP_TARGET_TOOL
 };
 static guint toolbox_n_targets = (sizeof (toolbox_target_table) /
 				  sizeof (toolbox_target_table[0]));
@@ -709,7 +713,8 @@ create_display_shell (GDisplay* gdisp,
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "drag_drop",
 		      GTK_SIGNAL_FUNC (gdisplay_drag_drop),
 		      gdisp);
-  gimp_dnd_color_dest_set (gdisp->shell, gdisplay_set_color, gdisp);
+  gimp_dnd_color_dest_set (gdisp->shell, gdisplay_drop_color, gdisp);
+  gimp_dnd_pattern_dest_set (gdisp->shell, gdisplay_drop_pattern, gdisp);
 
   /*  the vbox, table containing all widgets  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -997,6 +1002,8 @@ toolbox_set_drag_dest (GtkWidget *object)
   gtk_signal_connect (GTK_OBJECT (object), "drag_drop",
 		      GTK_SIGNAL_FUNC (toolbox_drag_drop),
 		      NULL);
+
+  gimp_dnd_tool_dest_set (object, toolbox_drop_tool, NULL);
 }
 
 static void
@@ -1169,6 +1176,14 @@ toolbox_drag_drop (GtkWidget      *widget,
   gtk_drag_finish (context, return_val, FALSE, time);
 
   return return_val;
+}
+
+static void
+toolbox_drop_tool (GtkWidget *widget,
+		   ToolType   tool,
+		   gpointer   data)
+{
+  gimp_context_set_tool (gimp_context_get_user (), tool);
 }
 
 static void

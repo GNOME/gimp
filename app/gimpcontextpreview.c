@@ -29,11 +29,12 @@
 #include "gimpbrushpipeP.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
-#include "gradient.h"
 #include "gradient_header.h"
 #include "interface.h"  /* for tool_tips */
 #include "patterns.h"
 #include "temp_buf.h"
+
+#include "libgimp/gimplimits.h"
 
 /*  the pixmaps for the [scale|pipe]_indicators  */
 #define indicator_width 7
@@ -96,9 +97,6 @@ static guint gcp_pipe_timer = 0;
 static guint gcp_pipe_index = 0;
 
 /*  dnd stuff  */
-static GtkWidget *gcp_drag_window = NULL;
-static GtkWidget *gcp_drag_preview = NULL;
-
 static GtkTargetEntry context_preview_target_table[3][1] =
 {
   { GIMP_TARGET_BRUSH },
@@ -107,22 +105,9 @@ static GtkTargetEntry context_preview_target_table[3][1] =
 };
 static guint n_targets = 1;
 
-static gchar* context_preview_drag_window_name[3] =
-{
-  "gimp-brush-drag-window",
-  "gimp-pattern-drag-window",
-  "gimp-gradient-drag-window"
-};
-
-static gchar* context_preview_drag_type[3] =
-{
-  "gimp_brush",
-  "gimp_pattern",
-  "gimp_gradient"
-};
-
 /*  signals  */
-enum {
+enum
+{
   CLICKED,
   LAST_SIGNAL
 };
@@ -130,34 +115,27 @@ enum {
 static guint gimp_context_preview_signals[LAST_SIGNAL] = { 0 };
 static GtkPreviewClass *parent_class = NULL;
 
+static gpointer gimp_context_preview_get_data             (GimpContextPreview *,
+							   gpointer);
 static gint     gimp_context_preview_button_press_event   (GtkWidget *, 
 							   GdkEventButton *);
 static gint     gimp_context_preview_button_release_event (GtkWidget *, 
 							   GdkEventButton *);
 static void     gimp_context_preview_popup_open           (GimpContextPreview *, 
 							   gint, gint);
-static void     gimp_context_preview_popup_close          ();
+static void     gimp_context_preview_popup_close          (void);
 static gboolean gimp_context_preview_data_matches_type    (GimpContextPreview *,
 							   gpointer);
-static void     gimp_context_preview_drag_begin           (GtkWidget *,  
-							   GdkDragContext *);
 static void     gimp_context_preview_draw_brush           (GimpContextPreview *);
 static void     gimp_context_preview_draw_brush_popup     (GimpContextPreview *);
-static void     gimp_context_preview_draw_brush_drag      (GimpContextPreview *);
 static gint     gimp_context_preview_animate_pipe         (GimpContextPreview *);
 static void     gimp_context_preview_draw_pattern         (GimpContextPreview *);
 static void     gimp_context_preview_draw_pattern_popup   (GimpContextPreview *);
-static void     gimp_context_preview_draw_pattern_drag    (GimpContextPreview *);
 static void     gimp_context_preview_draw_gradient        (GimpContextPreview *);
 static void     gimp_context_preview_draw_gradient_popup  (GimpContextPreview *);
-static void     gimp_context_preview_draw_gradient_drag   (GimpContextPreview *);
 
 static gint brush_dirty_callback  (GimpBrush *, GimpContextPreview *);
 static gint brush_rename_callback (GimpBrush *, GimpContextPreview *);
-static void draw_brush            (GtkPreview *, GimpBrush*, int, int, gboolean);
-static void draw_pattern          (GtkPreview *, GPattern*, int, int);
-static void draw_gradient         (GtkPreview *, gradient_t*, int, int);
-
 
 static void
 gimp_context_preview_destroy (GtkObject *object)
@@ -192,7 +170,6 @@ gimp_context_preview_class_init (GimpContextPreviewClass *class)
 
   widget_class->button_press_event = gimp_context_preview_button_press_event;
   widget_class->button_release_event = gimp_context_preview_button_release_event;
-  widget_class->drag_begin = gimp_context_preview_drag_begin;
 
   object_class->destroy = gimp_context_preview_destroy;
 }
@@ -200,24 +177,25 @@ gimp_context_preview_class_init (GimpContextPreviewClass *class)
 static void
 gimp_context_preview_init (GimpContextPreview *gcp)
 {
-  gcp->data = NULL;
-  gcp->type = GCP_LAST;
-  gcp->width = 0;
-  gcp->height = 0;
-  gcp->popup_width = 0;
-  gcp->popup_height = 0;
-  gcp->show_popup = FALSE;
+  gcp->data          = NULL;
+  gcp->type          = GCP_LAST;
+  gcp->width         = 0;
+  gcp->height        = 0;
+  gcp->popup_width   = 0;
+  gcp->popup_height  = 0;
+  gcp->show_popup    = FALSE;
   gcp->show_tooltips = FALSE;
-  gcp->drag_source = FALSE;
-  GTK_PREVIEW (gcp)->type = GTK_PREVIEW_COLOR;
-  GTK_PREVIEW (gcp)->bpp = 3;
+  gcp->drag_source   = FALSE;
+
+  GTK_PREVIEW (gcp)->type   = GTK_PREVIEW_COLOR;
+  GTK_PREVIEW (gcp)->bpp    = 3;
   GTK_PREVIEW (gcp)->dither = GDK_RGB_DITHER_NORMAL;
 
   gtk_widget_set_events (GTK_WIDGET (gcp), CONTEXT_PREVIEW_EVENT_MASK);
 }
 
 GtkType
-gimp_context_preview_get_type ()
+gimp_context_preview_get_type (void)
 {
   static GtkType gcp_type = 0;
 
@@ -241,13 +219,15 @@ gimp_context_preview_get_type ()
   return gcp_type;
 }
 
-GtkWidget*
-gimp_context_preview_new (GimpContextPreviewType type,
-			  gint                   width,
-			  gint                   height,
-			  gboolean               show_popup,
-			  gboolean               show_tooltips,
-			  gboolean               drag_source)
+GtkWidget *
+gimp_context_preview_new (GimpContextPreviewType  type,
+			  gint                    width,
+			  gint                    height,
+			  gboolean                show_popup,
+			  gboolean                show_tooltips,
+			  gboolean                drag_source,
+			  GtkSignalFunc           drop_data_callback,
+			  gpointer                drop_data_data)
 {
   GimpContextPreview *gcp;
 
@@ -265,6 +245,35 @@ gimp_context_preview_new (GimpContextPreviewType type,
 
   gtk_preview_size (GTK_PREVIEW (gcp), width, height);
 
+  /*  drag dest  */
+  gtk_drag_dest_set (GTK_WIDGET (gcp),
+		     GTK_DEST_DEFAULT_HIGHLIGHT |
+		     GTK_DEST_DEFAULT_MOTION |
+		     GTK_DEST_DEFAULT_DROP,
+ 		     context_preview_target_table[type], n_targets,
+		     GDK_ACTION_COPY); 
+
+  switch (type)
+    {
+    case GCP_BRUSH:
+      gimp_dnd_brush_dest_set (GTK_WIDGET (gcp),
+			       (GimpDndDropBrushFunc) drop_data_callback,
+			       drop_data_data);
+      break;
+    case GCP_PATTERN:
+      gimp_dnd_pattern_dest_set (GTK_WIDGET (gcp),
+				 (GimpDndDropPatternFunc) drop_data_callback,
+				 drop_data_data);
+      break;
+    case GCP_GRADIENT:
+      gimp_dnd_gradient_dest_set (GTK_WIDGET (gcp),
+				  (GimpDndDropGradientFunc) drop_data_callback,
+				  drop_data_data);
+      break;
+    default: 
+      break;
+    }
+
   return GTK_WIDGET (gcp);
 }
 
@@ -281,9 +290,31 @@ gimp_context_preview_update (GimpContextPreview *gcp,
 			   GDK_BUTTON1_MASK,
 			   context_preview_target_table[gcp->type], n_targets,
 			   GDK_ACTION_COPY);
+
+      switch (gcp->type)
+	{
+	case GCP_BRUSH:
+	  gimp_dnd_brush_source_set
+	    (GTK_WIDGET (gcp),
+	     (GimpDndDragBrushFunc) gimp_context_preview_get_data,
+	     NULL);
+	  break;
+	case GCP_PATTERN:
+	  gimp_dnd_pattern_source_set
+	    (GTK_WIDGET (gcp),
+	     (GimpDndDragPatternFunc) gimp_context_preview_get_data,
+	     NULL);
+	  break;
+	case GCP_GRADIENT:
+	  gimp_dnd_gradient_source_set
+	    (GTK_WIDGET (gcp),
+	     (GimpDndDragGradientFunc) gimp_context_preview_get_data,
+	     NULL);
+	  break;
+	default: 
+	  break;
+	}
     }
-  gtk_object_set_data (GTK_OBJECT (gcp),
-		       context_preview_drag_type[gcp->type], data);
 
   if (gcp->data && gcp->type == GCP_BRUSH)
     gtk_signal_disconnect_by_data (GTK_OBJECT (gcp->data), gcp);
@@ -293,54 +324,63 @@ gimp_context_preview_update (GimpContextPreview *gcp,
     gtk_signal_connect (GTK_OBJECT (gcp->data), "destroy",
 			gtk_widget_destroyed, &gcp->data);
   switch (gcp->type)
-  {
-  case GCP_BRUSH:
-    gimp_context_preview_draw_brush (gcp);
-    gtk_signal_connect (GTK_OBJECT (gcp->data), "dirty",
-			GTK_SIGNAL_FUNC (brush_dirty_callback), gcp);
-    gtk_signal_connect (GTK_OBJECT (gcp->data), "rename",
-			GTK_SIGNAL_FUNC (brush_rename_callback), gcp);
-    break;
-  case GCP_PATTERN:
-    gimp_context_preview_draw_pattern (gcp);
-    break;
-  case GCP_GRADIENT:
-    gimp_context_preview_draw_gradient (gcp);
-    break;
-  default: 
-    break;
-  }
+    {
+    case GCP_BRUSH:
+      gimp_context_preview_draw_brush (gcp);
+      gtk_signal_connect (GTK_OBJECT (gcp->data), "dirty",
+			  GTK_SIGNAL_FUNC (brush_dirty_callback), gcp);
+      gtk_signal_connect (GTK_OBJECT (gcp->data), "rename",
+			  GTK_SIGNAL_FUNC (brush_rename_callback), gcp);
+      break;
+    case GCP_PATTERN:
+      gimp_context_preview_draw_pattern (gcp);
+      break;
+    case GCP_GRADIENT:
+      gimp_context_preview_draw_gradient (gcp);
+      break;
+    default: 
+      break;
+    }
   gtk_widget_queue_draw (GTK_WIDGET (gcp));
 
   if (gcp->show_tooltips)
-  {
-    gchar *name = NULL;
-
-    switch (gcp->type)
     {
-    case GCP_BRUSH:
-      {
-	GimpBrush *brush = GIMP_BRUSH (gcp->data);
-	name = brush->name;
-      }
-      break;
-    case GCP_PATTERN:
-      {
-	GPattern *pattern = (GPattern *)(gcp->data);
-	name = pattern->name;
-      }
-      break;
-    case GCP_GRADIENT:
-      {
-	gradient_t *gradient = (gradient_t *)(gcp->data);
-	name = gradient->name;
-      }
-      break;
-    default:
-      break;
+      gchar *name = NULL;
+
+      switch (gcp->type)
+	{
+	case GCP_BRUSH:
+	  {
+	    GimpBrush *brush = GIMP_BRUSH (gcp->data);
+	    name = brush->name;
+	  }
+	  break;
+	case GCP_PATTERN:
+	  {
+	    GPattern *pattern = (GPattern *) (gcp->data);
+	    name = pattern->name;
+	  }
+	  break;
+	case GCP_GRADIENT:
+	  {
+	    gradient_t *gradient = (gradient_t *) (gcp->data);
+	    name = gradient->name;
+	  }
+	  break;
+	default:
+	  break;
+	}
+      gtk_tooltips_set_tip (tool_tips, GTK_WIDGET (gcp), name, NULL);
     }
-   gtk_tooltips_set_tip (tool_tips, GTK_WIDGET (gcp), name, NULL);
-  }
+}
+
+static gpointer
+gimp_context_preview_get_data (GimpContextPreview *gcp,
+			       gpointer            data)
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT_PREVIEW (gcp), NULL);
+
+  return gcp->data;
 }
 
 static gint
@@ -521,57 +561,14 @@ gimp_context_preview_data_matches_type (GimpContextPreview *gcp,
   return (match);
 }
 
-static void
-gimp_context_preview_drag_begin (GtkWidget      *widget,
-				 GdkDragContext *context)
-{
-  GimpContextPreview *gcp;
-
-  gcp = GIMP_CONTEXT_PREVIEW (widget);
-  
-  if (!gcp_drag_window)
-    {
-      gcp_drag_window = gtk_window_new (GTK_WINDOW_POPUP);
-      gtk_widget_set_app_paintable (GTK_WIDGET (gcp_drag_window), TRUE);
-      gtk_window_set_policy (GTK_WINDOW (gcp_drag_window), FALSE, FALSE, TRUE);
-      gtk_widget_realize (gcp_drag_window);
-      gtk_object_set_data_full (GTK_OBJECT (gcp_drag_window),
-				context_preview_drag_window_name[gcp->type],
-				gcp_drag_window,
-				(GtkDestroyNotify) gtk_widget_destroy);
-      gcp_drag_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-      gtk_signal_connect (GTK_OBJECT (gcp_drag_preview), "destroy", 
-			  gtk_widget_destroyed, &gcp_drag_preview);
-      gtk_container_add (GTK_CONTAINER (gcp_drag_window), gcp_drag_preview);
-      gtk_widget_show (gcp_drag_preview);
-    }
-
-  switch (gcp->type)
-    {
-    case GCP_BRUSH:
-      gimp_context_preview_draw_brush_drag (gcp);
-      break;
-    case GCP_PATTERN:
-      gimp_context_preview_draw_pattern_drag (gcp);
-      break;
-    case GCP_GRADIENT:
-      gimp_context_preview_draw_gradient_drag (gcp);
-      break;
-    default:
-      break;
-    }  
-  gtk_widget_queue_draw (gcp_drag_preview);
-  gtk_drag_set_icon_widget (context, gcp_drag_window, -2, -2);
-}
-
-
 /*  brush draw functions */
 
-static void draw_brush (GtkPreview *preview,
-			GimpBrush  *brush,
-			gint        width,
-			gint        height,
-			gboolean    is_popup)
+void
+draw_brush (GtkPreview *preview,
+	    GimpBrush  *brush,
+	    gint        width,
+	    gint        height,
+	    gboolean    is_popup)
 {
   gboolean scale = FALSE;
   gint brush_width, brush_height;
@@ -694,20 +691,6 @@ gimp_context_preview_draw_brush_popup (GimpContextPreview *gcp)
 }
 
 static void
-gimp_context_preview_draw_brush_drag (GimpContextPreview *gcp)
-{
-  GimpBrush *brush;
-
-  g_return_if_fail (gcp != NULL && GIMP_IS_BRUSH (gcp->data));
-
-  brush = GIMP_BRUSH (gcp->data);
-  gtk_preview_size (GTK_PREVIEW (gcp_drag_preview), 
-		    DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);      
-  draw_brush (GTK_PREVIEW (gcp_drag_preview), brush, 
-	      DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE, FALSE);
-}
-
-static void
 gimp_context_preview_draw_brush (GimpContextPreview *gcp)
 {
   GimpBrush *brush;
@@ -767,7 +750,7 @@ brush_rename_callback (GimpBrush          *brush,
 
 /*  pattern draw functions */
 
-static void
+void
 draw_pattern (GtkPreview *preview,
 	      GPattern   *pattern,
 	      gint        width,
@@ -826,20 +809,6 @@ gimp_context_preview_draw_pattern_popup (GimpContextPreview *gcp)
 }
 
 static void
-gimp_context_preview_draw_pattern_drag (GimpContextPreview *gcp)
-{
-  GPattern *pattern;
-
-  g_return_if_fail (gcp != NULL && gcp->data != NULL);
- 
-  pattern = (GPattern*)(gcp->data);
-  gtk_preview_size (GTK_PREVIEW (gcp_drag_preview), 
-		    DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);      
-  draw_pattern (GTK_PREVIEW (gcp_drag_preview), pattern, 
-		DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
-}
-
-static void
 gimp_context_preview_draw_pattern (GimpContextPreview *gcp)
 {
   GPattern *pattern;
@@ -853,7 +822,7 @@ gimp_context_preview_draw_pattern (GimpContextPreview *gcp)
 
 /*  gradient draw functions  */
 
-static void
+void
 draw_gradient (GtkPreview *preview, 
 	       gradient_t *gradient,
 	       gint        width,
@@ -874,15 +843,15 @@ draw_gradient (GtkPreview *preview,
     {
       gradient_get_color_at (gradient, cur_x, &r, &g, &b, &a);
     
-      if ((x / GRAD_CHECK_SIZE_SM) & 1) 
+      if ((x / GIMP_CHECK_SIZE_SM) & 1) 
 	{
-	  c0 = GRAD_CHECK_LIGHT;
-	  c1 = GRAD_CHECK_DARK;
+	  c0 = GIMP_CHECK_LIGHT;
+	  c1 = GIMP_CHECK_DARK;
 	} 
       else 
 	{
-	  c0 = GRAD_CHECK_DARK;
-	  c1 = GRAD_CHECK_LIGHT;
+	  c0 = GIMP_CHECK_DARK;
+	  c1 = GIMP_CHECK_LIGHT;
 	}
 
       *p0++ = (c0 + (r - c0) * a) * 255.0;
@@ -898,7 +867,7 @@ draw_gradient (GtkPreview *preview,
 
   for (y = 0; y < height; y++)
     {
-      if ((y / GRAD_CHECK_SIZE_SM) & 1)
+      if ((y / GIMP_CHECK_SIZE_SM) & 1)
 	gtk_preview_draw_row (preview, odd, 0, y, width);
       else
 	gtk_preview_draw_row (preview, even, 0, y, width);
@@ -921,20 +890,6 @@ gimp_context_preview_draw_gradient_popup (GimpContextPreview *gcp)
 }
 
 static void
-gimp_context_preview_draw_gradient_drag (GimpContextPreview *gcp)
-{
-  gradient_t *gradient;
-
-  g_return_if_fail (gcp != NULL && gcp->data != NULL);
-  
-  gradient = (gradient_t*)(gcp->data);
-  gtk_preview_size (GTK_PREVIEW (gcp_drag_preview), 
-		    DRAG_PREVIEW_SIZE * 2, DRAG_PREVIEW_SIZE / 2);      
-  draw_gradient (GTK_PREVIEW (gcp_drag_preview), gradient, 
-		 DRAG_PREVIEW_SIZE * 2, DRAG_PREVIEW_SIZE / 2);
-}
-
-static void
 gimp_context_preview_draw_gradient (GimpContextPreview *gcp)
 {
   gradient_t *gradient;
@@ -944,5 +899,3 @@ gimp_context_preview_draw_gradient (GimpContextPreview *gcp)
   gradient = (gradient_t*)(gcp->data);
   draw_gradient (GTK_PREVIEW (gcp), gradient, gcp->width, gcp->height);
 }
-
-

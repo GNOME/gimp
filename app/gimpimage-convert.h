@@ -24,7 +24,8 @@
 #include "palette_entries.h"
 
 /* adam's extra palette stuff */
-typedef enum {
+typedef enum
+{
   MAKE_PALETTE   = 0,
   REUSE_PALETTE  = 1,
   WEB_PALETTE    = 2,
@@ -33,7 +34,8 @@ typedef enum {
 } ConvertPaletteType;
 
 /* adam's extra dither stuff */
-typedef enum {
+typedef enum
+{
   NO_DITHER         = 0,
   FS_DITHER         = 1,
   FSLOWBLEED_DITHER = 2,
@@ -51,12 +53,12 @@ void convert_to_indexed    (GimpImage *);
 
 void convert_image        (GimpImage *,
 			   GimpImageBaseType,
-			   int num_cols,
+			   gint num_cols,
 			   ConvertDitherType,
-			   int alpha_dither,
-			   int remdups,
+			   gint alpha_dither,
+			   gint remdups,
 			   ConvertPaletteType);
 
-extern PaletteEntriesP theCustomPalette;
+extern PaletteEntries *theCustomPalette;
 
 #endif  /*  __CONVERT_H__  */

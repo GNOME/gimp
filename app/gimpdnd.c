@@ -16,8 +16,223 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "gimage.h"
+#include "gimpcontextpreview.h"
 #include "gimpdnd.h"
+#include "gimpbrushlist.h"
 #include "gimprc.h"
+#include "gradient_header.h"
+#include "interface.h"
+#include "tools.h"
+
+#define DRAG_PREVIEW_SIZE 32
+
+#define DRAG_ICON_OFFSET  -8
+
+typedef enum
+{
+  GIMP_DND_DATA_COLOR = 1,
+  GIMP_DND_DATA_BRUSH,
+  GIMP_DND_DATA_PATTERN,
+  GIMP_DND_DATA_GRADIENT,
+  GIMP_DND_DATA_PALETTE,
+  GIMP_DND_DATA_TOOL,
+  GIMP_DND_DATA_LAST = GIMP_DND_DATA_TOOL
+} GimpDndDataType;
+
+typedef GtkWidget * (* GimpDndGetIconFunc)  (GtkWidget     *widget,
+					     GtkSignalFunc  get_data_func,
+					     gpointer       get_data_data);
+typedef guchar    * (* GimpDndDragDataFunc) (GtkWidget     *widget,
+					     GtkSignalFunc  get_data_func,
+					     gpointer       get_data_data,
+					     gint          *format,
+					     gint          *length);
+typedef void        (* GimpDndDropDataFunc) (GtkWidget     *widget,
+					     GtkSignalFunc  set_data_func,
+					     gpointer       set_data_data,
+					     guchar        *vals,
+					     gint           format,
+					     gint           length);
+
+typedef struct _GimpDndDataDef GimpDndDataDef;
+
+struct _GimpDndDataDef
+{
+  GtkTargetEntry       target_entry;
+
+  gchar               *set_data_func_name;
+  gchar               *set_data_data_name;
+
+  GimpDndGetIconFunc   get_icon_func;
+  GimpDndDragDataFunc  get_data_func;
+  GimpDndDropDataFunc  set_data_func;
+};
+
+static GtkWidget * gimp_dnd_get_color_icon    (GtkWidget     *widget,
+					       GtkSignalFunc  get_color_func,
+					       gpointer       get_color_data);
+static GtkWidget * gimp_dnd_get_brush_icon    (GtkWidget     *widget,
+					       GtkSignalFunc  get_brush_func,
+					       gpointer       get_brush_data);
+static GtkWidget * gimp_dnd_get_pattern_icon  (GtkWidget     *widget,
+					       GtkSignalFunc  get_pattern_func,
+					       gpointer       get_pattern_data);
+static GtkWidget * gimp_dnd_get_gradient_icon (GtkWidget     *widget,
+					       GtkSignalFunc  get_gradient_func,
+					       gpointer       get_gradient_data);
+static GtkWidget * gimp_dnd_get_palette_icon  (GtkWidget     *widget,
+					       GtkSignalFunc  get_gradient_func,
+					       gpointer       get_gradient_data);
+static GtkWidget * gimp_dnd_get_tool_icon     (GtkWidget     *widget,
+					       GtkSignalFunc  get_tool_func,
+					       gpointer       get_tool_data);
+
+static guchar    * gimp_dnd_get_color_data    (GtkWidget     *widget,
+					       GtkSignalFunc  get_color_func,
+					       gpointer       get_color_data,
+					       gint          *format,
+					       gint          *length);
+static guchar    * gimp_dnd_get_brush_data    (GtkWidget     *widget,
+					       GtkSignalFunc  get_brush_func,
+					       gpointer       get_brush_data,
+					       gint          *format,
+					       gint          *length);
+static guchar    * gimp_dnd_get_pattern_data  (GtkWidget     *widget,
+					       GtkSignalFunc  get_pattern_func,
+					       gpointer       get_pattern_data,
+					       gint          *format,
+					       gint          *length);
+static guchar    * gimp_dnd_get_gradient_data (GtkWidget     *widget,
+					       GtkSignalFunc  get_gradient_func,
+					       gpointer       get_gradient_data,
+					       gint          *format,
+					       gint          *length);
+static guchar    * gimp_dnd_get_palette_data  (GtkWidget     *widget,
+					       GtkSignalFunc  get_gradient_func,
+					       gpointer       get_gradient_data,
+					       gint          *format,
+					       gint          *length);
+static guchar    * gimp_dnd_get_tool_data     (GtkWidget     *widget,
+					       GtkSignalFunc  get_tool_func,
+					       gpointer       get_tool_data,
+					       gint          *format,
+					       gint          *length);
+
+static void        gimp_dnd_set_color_data    (GtkWidget     *widget,
+					       GtkSignalFunc  set_color_func,
+					       gpointer       set_color_data,
+					       guchar        *vals,
+					       gint           format,
+					       gint           length);
+static void        gimp_dnd_set_brush_data    (GtkWidget     *widget,
+					       GtkSignalFunc  set_brush_func,
+					       gpointer       set_brush_data,
+					       guchar        *vals,
+					       gint           format,
+					       gint           length);
+static void        gimp_dnd_set_pattern_data  (GtkWidget     *widget,
+					       GtkSignalFunc  set_pattern_func,
+					       gpointer       set_pattern_data,
+					       guchar        *vals,
+					       gint           format,
+					       gint           length);
+static void        gimp_dnd_set_gradient_data (GtkWidget     *widget,
+					       GtkSignalFunc  set_gradient_func,
+					       gpointer       set_gradient_data,
+					       guchar        *vals,
+					       gint           format,
+					       gint           length);
+static void        gimp_dnd_set_palette_data  (GtkWidget     *widget,
+					       GtkSignalFunc  set_gradient_func,
+					       gpointer       set_gradient_data,
+					       guchar        *vals,
+					       gint           format,
+					       gint           length);
+static void        gimp_dnd_set_tool_data     (GtkWidget     *widget,
+					       GtkSignalFunc  set_tool_func,
+					       gpointer       set_tool_data,
+					       guchar        *vals,
+					       gint           format,
+					       gint           length);
+
+static GimpDndDataDef dnd_data_defs[] =
+{
+  {
+    { NULL, 0, -1 },
+
+    NULL,
+    NULL,
+
+    NULL,
+    NULL,
+  },
+
+  {
+    GIMP_TARGET_COLOR,
+
+    "gimp_dnd_set_color_func",
+    "gimp_dnd_set_color_data",
+
+    gimp_dnd_get_color_icon,
+    gimp_dnd_get_color_data,
+    gimp_dnd_set_color_data
+  },
+
+  {
+    GIMP_TARGET_BRUSH,
+
+    "gimp_dnd_set_brush_func",
+    "gimp_dnd_set_brush_data",
+
+    gimp_dnd_get_brush_icon,
+    gimp_dnd_get_brush_data,
+    gimp_dnd_set_brush_data
+  },
+
+  {
+    GIMP_TARGET_PATTERN,
+
+    "gimp_dnd_set_pattern_func",
+    "gimp_dnd_set_pattern_data",
+
+    gimp_dnd_get_pattern_icon,
+    gimp_dnd_get_pattern_data,
+    gimp_dnd_set_pattern_data
+  },
+
+  {
+    GIMP_TARGET_GRADIENT,
+
+    "gimp_dnd_set_gradient_func",
+    "gimp_dnd_set_gradient_data",
+
+    gimp_dnd_get_gradient_icon,
+    gimp_dnd_get_gradient_data,
+    gimp_dnd_set_gradient_data
+  },
+
+  {
+    GIMP_TARGET_PALETTE,
+
+    "gimp_dnd_set_palette_func",
+    "gimp_dnd_set_palette_data",
+
+    gimp_dnd_get_palette_icon,
+    gimp_dnd_get_palette_data,
+    gimp_dnd_set_palette_data
+  },
+
+  {
+    GIMP_TARGET_TOOL,
+
+    "gimp_dnd_set_tool_func",
+    "gimp_dnd_set_tool_data",
+
+    gimp_dnd_get_tool_icon,
+    gimp_dnd_get_tool_data,
+    gimp_dnd_set_tool_data
+  }
+};
 
 /****************************/
 /*  drawable dnd functions  */
@@ -214,130 +429,302 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 			    gtk_widget_get_colormap (widget),
 			    drag_pixmap,
 			    NULL,
-			    -8, -8);
+			    DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
 
   gdk_pixmap_unref (drag_pixmap);
+}
+
+/********************************/
+/*  general data dnd functions  */
+/********************************/
+
+static void
+gimp_dnd_data_drag_begin (GtkWidget      *widget,
+			  GdkDragContext *context,
+			  gpointer        data)
+{
+  GimpDndDataType data_type;
+  GtkSignalFunc   get_data_func;
+  gpointer        get_data_data;
+  GtkWidget      *icon_widget;
+
+  data_type =
+    (GimpDndDataType) gtk_object_get_data (GTK_OBJECT (widget),
+					   "gimp_dnd_get_data_type");
+
+  if (! data_type)
+    return;
+
+  get_data_func =
+    (GtkSignalFunc) gtk_object_get_data (GTK_OBJECT (widget),
+					 "gimp_dnd_get_data_func");
+  get_data_data =
+    (gpointer) gtk_object_get_data (GTK_OBJECT (widget),
+				    "gimp_dnd_get_data_data");
+
+  if (! get_data_func)
+    return;
+
+  icon_widget = (* dnd_data_defs[data_type].get_icon_func) (widget,
+							    get_data_func,
+							    get_data_data);
+
+  if (icon_widget)
+    {
+      gtk_object_set_data_full (GTK_OBJECT (widget),
+				"gimp-dnd-data-widget",
+				icon_widget,
+				(GtkDestroyNotify) gtk_widget_destroy);
+
+      gtk_drag_set_icon_widget (context, icon_widget,
+				DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
+    }
+}
+
+static void
+gimp_dnd_data_drag_end (GtkWidget      *widget,
+			GdkDragContext *context)
+{
+  gtk_object_set_data (GTK_OBJECT (widget),
+		       "gimp-dnd-data-widget", NULL);
+}
+
+static void
+gimp_dnd_data_drag_handle (GtkWidget        *widget, 
+			   GdkDragContext   *context,
+			   GtkSelectionData *selection_data,
+			   guint             info,
+			   guint             time,
+			   gpointer          data)
+{
+  GimpDndDataType data_type;
+  GtkSignalFunc   get_data_func;
+  gpointer        get_data_data;
+  gint    format;
+  guchar *vals;
+  gint    length;
+
+  data_type =
+    (GimpDndDataType) gtk_object_get_data (GTK_OBJECT (widget),
+					   "gimp_dnd_get_data_type");
+
+  if (! data_type)
+    return;
+
+  get_data_func =
+    (GtkSignalFunc) gtk_object_get_data (GTK_OBJECT (widget),
+					 "gimp_dnd_get_data_func");
+  get_data_data =
+    (gpointer) gtk_object_get_data (GTK_OBJECT (widget),
+				    "gimp_dnd_get_data_data");
+
+  if (! get_data_func)
+    return;
+
+  vals = (* dnd_data_defs[data_type].get_data_func) (widget,
+						     get_data_func,
+						     get_data_data,
+						     &format,
+						     &length);
+
+  if (vals)
+    {
+      gtk_selection_data_set
+	(selection_data,
+	 gdk_atom_intern (dnd_data_defs[data_type].target_entry.target, FALSE),
+	 format, vals, length);
+
+      g_free (vals);
+    }
+}
+
+static void
+gimp_dnd_data_drop_handle (GtkWidget        *widget, 
+			   GdkDragContext   *context,
+			   gint              x,
+			   gint              y,
+			   GtkSelectionData *selection_data,
+			   guint             info,
+			   guint             time,
+			   gpointer          data)
+{
+  GtkSignalFunc   set_data_func;
+  gpointer        set_data_data;
+  GimpDndDataType data_type;
+
+  if (selection_data->length < 0)
+    return;
+
+  for (data_type = GIMP_DND_DATA_COLOR;
+       data_type <= GIMP_DND_DATA_LAST;
+       data_type++)
+    {
+      if (dnd_data_defs[data_type].target_entry.info == info)
+	{
+	  set_data_func = (GtkSignalFunc)
+	    gtk_object_get_data (GTK_OBJECT (widget),
+				 dnd_data_defs[data_type].set_data_func_name);
+	  set_data_data = (gpointer)
+	    gtk_object_get_data (GTK_OBJECT (widget),
+				 dnd_data_defs[data_type].set_data_data_name);
+
+	  if (! set_data_func)
+	    return;
+
+	  (* dnd_data_defs[data_type].set_data_func) (widget,
+						      set_data_func,
+						      set_data_data,
+						      selection_data->data,
+						      selection_data->format,
+						      selection_data->length);
+
+	  return;
+	}
+    }
+}
+
+static void
+gimp_dnd_data_source_set (GimpDndDataType  data_type,
+			  GtkWidget       *widget,
+			  GtkSignalFunc    get_data_func,
+			  gpointer         get_data_data)
+{
+  gboolean drag_connected;
+
+  drag_connected =
+    (gboolean) gtk_object_get_data (GTK_OBJECT (widget),
+				    "gimp_dnd_drag_connected");
+
+  if (! drag_connected)
+    {
+      gtk_signal_connect (GTK_OBJECT (widget), "drag_begin",
+			  GTK_SIGNAL_FUNC (gimp_dnd_data_drag_begin),
+			  NULL);
+      gtk_signal_connect (GTK_OBJECT (widget), "drag_end",
+			  GTK_SIGNAL_FUNC (gimp_dnd_data_drag_end),
+			  NULL);
+      gtk_signal_connect (GTK_OBJECT (widget), "drag_data_get",
+			  GTK_SIGNAL_FUNC (gimp_dnd_data_drag_handle),
+			  NULL);
+    }
+
+  gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_get_data_type",
+		       (gpointer) data_type);
+  gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_get_data_func",
+		       get_data_func);
+  gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_get_data_data",
+		       get_data_data);
+}
+
+static void
+gimp_dnd_data_dest_set (GimpDndDataType  data_type,
+			GtkWidget       *widget,
+			gpointer         set_data_func,
+			gpointer         set_data_data)
+{
+  gboolean drop_connected;
+
+  drop_connected =
+    (gboolean) gtk_object_get_data (GTK_OBJECT (widget),
+				    "gimp_dnd_drop_connected");
+
+  if (! drop_connected)
+    {
+      gtk_signal_connect (GTK_OBJECT (widget), "drag_data_received",
+			  GTK_SIGNAL_FUNC (gimp_dnd_data_drop_handle),
+			  NULL);
+    }
+
+  gtk_object_set_data (GTK_OBJECT (widget),
+		       dnd_data_defs[data_type].set_data_func_name,
+		       set_data_func);
+  gtk_object_set_data (GTK_OBJECT (widget),
+		       dnd_data_defs[data_type].set_data_data_name,
+		       set_data_data);
 }
 
 /*************************/
 /*  color dnd functions  */
 /*************************/
 
-static void
-gimp_dnd_color_drag_begin (GtkWidget      *widget,
-			   GdkDragContext *context,
-			   gpointer        data)
+static GtkWidget *
+gimp_dnd_get_color_icon (GtkWidget     *widget,
+			 GtkSignalFunc  get_color_func,
+			 gpointer       get_color_data)
 {
-  GtkWidget *window;
+  GtkWidget *icon_widget;
   GdkColor bg;
   guchar r, g, b;
-  GimpDndDragColorFunc get_color_func;
 
-  get_color_func =
-    (GimpDndDragColorFunc) gtk_object_get_data (GTK_OBJECT (widget),
-						"gimp_dnd_get_color_func");
+  icon_widget = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_widget_set_app_paintable (GTK_WIDGET (icon_widget), TRUE);
+  gtk_widget_set_usize (icon_widget, 32, 32);
+  gtk_widget_realize (icon_widget);
 
-  if (! get_color_func)
-    return;
-
-  window = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_widget_set_app_paintable (GTK_WIDGET (window), TRUE);
-  gtk_widget_set_usize (window, 32, 32);
-  gtk_widget_realize (window);
-  gtk_object_set_data_full (GTK_OBJECT (widget),
-                            "gimp-color-drag-window",
-                            window,
-                            (GtkDestroyNotify) gtk_widget_destroy);
-
-  (* get_color_func) (widget, &r, &g, &b, data);
+  (* (GimpDndDragColorFunc) get_color_func) (widget, &r, &g, &b,
+					     get_color_data);
 
   bg.red   = 0xff * r;
   bg.green = 0xff * g;
   bg.blue  = 0xff * b;
 
-  gdk_color_alloc (gtk_widget_get_colormap (window), &bg);
-  gdk_window_set_background (window->window, &bg);
+  gdk_color_alloc (gtk_widget_get_colormap (icon_widget), &bg);
+  gdk_window_set_background (icon_widget->window, &bg);
 
-  gtk_drag_set_icon_widget (context, window, -2, -2);
+  return icon_widget;
 }
 
-static void
-gimp_dnd_color_drag_end (GtkWidget      *widget,
-			 GdkDragContext *context)
+static guchar *
+gimp_dnd_get_color_data (GtkWidget     *widget,
+			 GtkSignalFunc  get_color_func,
+			 gpointer       get_color_data,
+			 gint          *format,
+			 gint          *length)
 {
-  gtk_object_set_data (GTK_OBJECT (widget),
-		       "gimp-color-drag-window", NULL);
-}
-
-static void
-gimp_dnd_color_drag_handle (GtkWidget        *widget, 
-			    GdkDragContext   *context,
-			    GtkSelectionData *selection_data,
-			    guint             info,
-			    guint             time,
-			    gpointer          data)
-{
-  guint16 vals[4];
+  guint16 *vals;
   guchar r, g, b;
-  GimpDndDragColorFunc get_color_func;
 
-  get_color_func =
-    (GimpDndDragColorFunc) gtk_object_get_data (GTK_OBJECT (widget),
-						"gimp_dnd_get_color_func");
+  (* (GimpDndDragColorFunc) get_color_func) (widget, &r, &g, &b,
+					     get_color_data);
 
-  if (! get_color_func)
-    return;
-
-  (* get_color_func) (widget, &r, &g, &b, data);
+  vals = g_new (guint16, 4);
 
   vals[0] = r * 0xff;
   vals[1] = g * 0xff;
   vals[2] = b * 0xff;
   vals[3] = 0xffff;
 
-  gtk_selection_data_set (selection_data,
-                          gdk_atom_intern ("application/x-color", FALSE),
-                          16, (guchar *) vals, 8);
+  *format = 16;
+  *length = 8;
+
+  return (guchar *) vals;
 }
 
 static void
-gimp_dnd_color_drop_handle (GtkWidget        *widget, 
-			    GdkDragContext   *context,
-			    gint              x,
-			    gint              y,
-			    GtkSelectionData *selection_data,
-			    guint             info,
-			    guint             time,
-			    gpointer          data)
+gimp_dnd_set_color_data (GtkWidget     *widget,
+			 GtkSignalFunc  set_color_func,
+			 gpointer       set_color_data,
+			 guchar        *vals,
+			 gint           format,
+			 gint           length)
 {
-  guint16 *vals;
+  guint16 *color_vals;
   guchar r, g, b;
-  GimpDndDropColorFunc set_color_func;
 
-  set_color_func =
-    (GimpDndDropColorFunc) gtk_object_get_data (GTK_OBJECT (widget),
-						"gimp_dnd_set_color_func");
-
-  if (! set_color_func)
-    return;
-
-  if (selection_data->length < 0)
-    return;
-
-  if ((selection_data->format != 16) || 
-      (selection_data->length != 8))
+  if ((format != 16) || (length != 8))
     {
       g_warning ("Received invalid color data\n");
       return;
     }
-  
-  vals = (guint16 *) selection_data->data;
 
-  r = vals[0] / 0xff;
-  g = vals[1] / 0xff;
-  b = vals[2] / 0xff;
+  color_vals = (guint16 *) vals;
 
-  (* set_color_func) (widget, r, g, b, data);
+  r = color_vals[0] / 0xff;
+  g = color_vals[1] / 0xff;
+  b = color_vals[2] / 0xff;
+
+  (* (GimpDndDropColorFunc) set_color_func) (widget, r, g, b,
+					     set_color_data);
 }
 
 void
@@ -345,18 +732,9 @@ gimp_dnd_color_source_set (GtkWidget            *widget,
 			   GimpDndDragColorFunc  get_color_func,
 			   gpointer              data)
 {
-  gtk_signal_connect (GTK_OBJECT (widget), "drag_begin",
-                      GTK_SIGNAL_FUNC (gimp_dnd_color_drag_begin),
-                      data);
-  gtk_signal_connect (GTK_OBJECT (widget), "drag_end",
-                      GTK_SIGNAL_FUNC (gimp_dnd_color_drag_end),
-                      data);
-  gtk_signal_connect (GTK_OBJECT (widget), "drag_data_get",
-                      GTK_SIGNAL_FUNC (gimp_dnd_color_drag_handle),
-                      data);
-
-  gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_get_color_func",
-		       (gpointer) get_color_func);
+  gimp_dnd_data_source_set (GIMP_DND_DATA_COLOR, widget,
+			    GTK_SIGNAL_FUNC (get_color_func),
+			    data);
 }
 
 void
@@ -364,10 +742,476 @@ gimp_dnd_color_dest_set (GtkWidget            *widget,
 			 GimpDndDropColorFunc  set_color_func,
 			 gpointer              data)
 {
-  gtk_signal_connect (GTK_OBJECT (widget), "drag_data_received",
-                      GTK_SIGNAL_FUNC (gimp_dnd_color_drop_handle),
-                      data);
+  gimp_dnd_data_dest_set (GIMP_DND_DATA_COLOR, widget,
+			  GTK_SIGNAL_FUNC (set_color_func),
+			  data);
+}
 
-  gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_set_color_func",
-		       (gpointer) set_color_func);
+/*************************/
+/*  brush dnd functions  */
+/*************************/
+
+static GtkWidget *
+gimp_dnd_get_brush_icon (GtkWidget     *widget,
+			 GtkSignalFunc  get_brush_func,
+			 gpointer       get_brush_data)
+{
+  GtkWidget *icon_widget;
+  GtkWidget *preview;
+  GimpBrush *brush;
+
+  brush = (* (GimpDndDragBrushFunc) get_brush_func) (widget, get_brush_data);
+
+  if (! brush)
+    return NULL;
+
+  icon_widget = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_widget_set_app_paintable (GTK_WIDGET (icon_widget), TRUE);
+  gtk_widget_realize (icon_widget);
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), 
+                    DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);      
+  gtk_container_add (GTK_CONTAINER (icon_widget), preview);
+  gtk_widget_show (preview);
+
+  draw_brush (GTK_PREVIEW (preview), brush, 
+	      DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE, FALSE);
+
+  return icon_widget;
+}
+
+static guchar *
+gimp_dnd_get_brush_data (GtkWidget     *widget,
+			 GtkSignalFunc  get_brush_func,
+			 gpointer       get_brush_data,
+			 gint          *format,
+			 gint          *length)
+{
+  GimpBrush *brush;
+  gchar *name;
+
+  brush = (* (GimpDndDragBrushFunc) get_brush_func) (widget, get_brush_data);
+
+  if (! brush)
+    return NULL;
+
+  name = g_strdup (gimp_brush_get_name (brush));
+
+  if (! name)
+    return NULL;
+
+  *format = 8;
+  *length = strlen (name) + 1;
+
+  return (guchar *) name;
+}
+
+static void
+gimp_dnd_set_brush_data (GtkWidget     *widget,
+			 GtkSignalFunc  set_brush_func,
+			 gpointer       set_brush_data,
+			 guchar        *vals,
+			 gint           format,
+			 gint           length)
+{
+  GimpBrush *brush;
+  gchar *name;
+
+  if ((format != 8) || (length < 1))
+    {
+      g_warning ("Received invalid brush data\n");
+      return;
+    }
+
+  name = (gchar *) vals;
+
+  brush = gimp_brush_list_get_brush (brush_list, name);
+
+  if (brush)
+    (* (GimpDndDropBrushFunc) set_brush_func) (widget, brush, set_brush_data);
+}
+
+void
+gimp_dnd_brush_source_set (GtkWidget            *widget,
+			   GimpDndDragBrushFunc  get_brush_func,
+			   gpointer              data)
+{
+  gimp_dnd_data_source_set (GIMP_DND_DATA_BRUSH, widget,
+			    GTK_SIGNAL_FUNC (get_brush_func),
+			    data);
+}
+
+void
+gimp_dnd_brush_dest_set (GtkWidget            *widget,
+			 GimpDndDropBrushFunc  set_brush_func,
+			 gpointer              data)
+{
+  gimp_dnd_data_dest_set (GIMP_DND_DATA_BRUSH, widget,
+			  GTK_SIGNAL_FUNC (set_brush_func),
+			  data);
+}
+
+/***************************/
+/*  pattern dnd functions  */
+/***************************/
+
+static GtkWidget *
+gimp_dnd_get_pattern_icon (GtkWidget     *widget,
+			   GtkSignalFunc  get_pattern_func,
+			   gpointer       get_pattern_data)
+{
+  GtkWidget *icon_widget;
+  GtkWidget *preview;
+  GPattern  *pattern;
+
+  pattern = (* (GimpDndDragPatternFunc) get_pattern_func) (widget,
+							   get_pattern_data);
+
+  if (! pattern)
+    return NULL;
+
+  icon_widget = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_widget_set_app_paintable (GTK_WIDGET (icon_widget), TRUE);
+  gtk_widget_realize (icon_widget);
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), 
+                    DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);      
+  gtk_container_add (GTK_CONTAINER (icon_widget), preview);
+  gtk_widget_show (preview);
+
+  draw_pattern (GTK_PREVIEW (preview), pattern,
+		DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
+
+  return icon_widget;
+}
+
+static guchar *
+gimp_dnd_get_pattern_data (GtkWidget     *widget,
+			   GtkSignalFunc  get_pattern_func,
+			   gpointer       get_pattern_data,
+			   gint          *format,
+			   gint          *length)
+{
+  GPattern *pattern;
+  gchar *name;
+
+  pattern = (* (GimpDndDragPatternFunc) get_pattern_func) (widget,
+							   get_pattern_data);
+
+  if (! pattern)
+    return NULL;
+
+  name = g_strdup (pattern->name);
+
+  *format = 8;
+  *length = strlen (name) + 1;
+
+  return (guchar *) name;
+}
+
+static void
+gimp_dnd_set_pattern_data (GtkWidget     *widget,
+			   GtkSignalFunc  set_pattern_func,
+			   gpointer       set_pattern_data,
+			   guchar        *vals,
+			   gint           format,
+			   gint           length)
+{
+  GPattern *pattern;
+  gchar *name;
+
+  if ((format != 8) || (length < 1))
+    {
+      g_warning ("Received invalid pattern data\n");
+      return;
+    }
+
+  name = (gchar *) vals;
+
+  pattern = pattern_list_get_pattern (pattern_list, name);
+
+  if (pattern)
+    (* (GimpDndDropPatternFunc) set_pattern_func) (widget, pattern,
+						   set_pattern_data);
+}
+
+void
+gimp_dnd_pattern_source_set (GtkWidget              *widget,
+			     GimpDndDragPatternFunc  get_pattern_func,
+			     gpointer                data)
+{
+  gimp_dnd_data_source_set (GIMP_DND_DATA_PATTERN, widget,
+			    GTK_SIGNAL_FUNC (get_pattern_func),
+			    data);
+}
+
+void
+gimp_dnd_pattern_dest_set (GtkWidget              *widget,
+			   GimpDndDropPatternFunc  set_pattern_func,
+			   gpointer                data)
+{
+  gimp_dnd_data_dest_set (GIMP_DND_DATA_PATTERN, widget,
+			  GTK_SIGNAL_FUNC (set_pattern_func),
+			  data);
+}
+
+/****************************/
+/*  gradient dnd functions  */
+/****************************/
+
+static GtkWidget *
+gimp_dnd_get_gradient_icon (GtkWidget     *widget,
+			    GtkSignalFunc  get_gradient_func,
+			    gpointer       get_gradient_data)
+{
+  GtkWidget  *icon_widget;
+  GtkWidget  *preview;
+  gradient_t *gradient;
+
+  gradient =
+    (* (GimpDndDragGradientFunc) get_gradient_func) (widget, get_gradient_data);
+
+  if (! gradient)
+    return NULL;
+
+  icon_widget = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_widget_set_app_paintable (GTK_WIDGET (icon_widget), TRUE);
+  gtk_widget_realize (icon_widget);
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), 
+                    DRAG_PREVIEW_SIZE * 2, DRAG_PREVIEW_SIZE / 2);      
+  gtk_container_add (GTK_CONTAINER (icon_widget), preview);
+  gtk_widget_show (preview);
+
+  draw_gradient (GTK_PREVIEW (preview), gradient,
+		 DRAG_PREVIEW_SIZE * 2, DRAG_PREVIEW_SIZE / 2);
+
+  return icon_widget;
+}
+
+static guchar *
+gimp_dnd_get_gradient_data (GtkWidget     *widget,
+			    GtkSignalFunc  get_gradient_func,
+			    gpointer       get_gradient_data,
+			    gint          *format,
+			    gint          *length)
+{
+  gradient_t *gradient;
+  gchar *name;
+
+  gradient =
+    (* (GimpDndDragGradientFunc) get_gradient_func) (widget, get_gradient_data);
+
+  if (! gradient)
+    return NULL;
+
+  name = g_strdup (gradient->name);
+
+  *format = 8;
+  *length = strlen (name) + 1;
+
+  return (guchar *) name;
+}
+
+static void
+gimp_dnd_set_gradient_data (GtkWidget     *widget,
+			    GtkSignalFunc  set_gradient_func,
+			    gpointer       set_gradient_data,
+			    guchar        *vals,
+			    gint           format,
+			    gint           length)
+{
+  gradient_t *gradient;
+  GSList *list;
+  gchar *name;
+
+  if ((format != 8) || (length < 1))
+    {
+      g_warning ("Received invalid gradient data\n");
+      return;
+    }
+
+  name = (gchar *) vals;
+
+  if ((gradient = gradient_list_get_gradient (gradients_list, name)))
+    (* (GimpDndDropGradientFunc) set_gradient_func) (widget, gradient,
+						     set_gradient_data);
+}
+
+void
+gimp_dnd_gradient_source_set (GtkWidget               *widget,
+			      GimpDndDragGradientFunc  get_gradient_func,
+			      gpointer                 data)
+{
+  gimp_dnd_data_source_set (GIMP_DND_DATA_GRADIENT, widget,
+			    GTK_SIGNAL_FUNC (get_gradient_func),
+			    data);
+}
+
+void
+gimp_dnd_gradient_dest_set (GtkWidget               *widget,
+			    GimpDndDropGradientFunc  set_gradient_func,
+			    gpointer                 data)
+{
+  gimp_dnd_data_dest_set (GIMP_DND_DATA_GRADIENT, widget,
+			  GTK_SIGNAL_FUNC (set_gradient_func),
+			  data);
+}
+
+/***************************/
+/*  palette dnd functions  */
+/***************************/
+
+static GtkWidget *
+gimp_dnd_get_palette_icon (GtkWidget     *widget,
+			   GtkSignalFunc  get_gradient_func,
+			   gpointer       get_gradient_data)
+{
+  return NULL;
+}
+
+static guchar *
+gimp_dnd_get_palette_data (GtkWidget     *widget,
+			   GtkSignalFunc  get_gradient_func,
+			   gpointer       get_gradient_data,
+			   gint          *format,
+			   gint          *length)
+{
+  return NULL;
+}
+
+static void
+gimp_dnd_set_palette_data (GtkWidget     *widget,
+			   GtkSignalFunc  set_gradient_func,
+			   gpointer       set_gradient_data,
+			   guchar        *vals,
+			   gint           format,
+			   gint           length)
+{
+}
+
+void
+gimp_dnd_palette_source_set (GtkWidget              *widget,
+			     GimpDndDragPaletteFunc  get_palette_func,
+			     gpointer                data)
+{
+  gimp_dnd_data_source_set (GIMP_DND_DATA_PALETTE, widget,
+			    GTK_SIGNAL_FUNC (get_palette_func),
+			    data);
+}
+
+void
+gimp_dnd_palette_dest_set (GtkWidget              *widget,
+			   GimpDndDropPaletteFunc  set_palette_func,
+			   gpointer                data)
+{
+  gimp_dnd_data_dest_set (GIMP_DND_DATA_PALETTE, widget,
+			  GTK_SIGNAL_FUNC (set_palette_func),
+			  data);
+}
+
+/************************/
+/*  tool dnd functions  */
+/************************/
+
+static GtkWidget *
+gimp_dnd_get_tool_icon (GtkWidget     *widget,
+			GtkSignalFunc  get_tool_func,
+			gpointer       get_tool_data)
+{
+  GtkWidget *icon_widget;
+  GtkWidget *tool_icon;
+  ToolType   tool_type;
+
+  tool_type =
+    (* (GimpDndDragToolFunc) get_tool_func) (widget, get_tool_data);
+
+  if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
+    return NULL;
+
+  icon_widget = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_widget_set_app_paintable (GTK_WIDGET (icon_widget), TRUE);
+  gtk_widget_realize (icon_widget);
+
+  tool_icon = gtk_pixmap_new (create_tool_pixmap (widget, tool_type), NULL);
+  gtk_container_add (GTK_CONTAINER (icon_widget), tool_icon);
+  gtk_widget_show (tool_icon);
+
+  return icon_widget;
+}
+
+static guchar *
+gimp_dnd_get_tool_data (GtkWidget     *widget,
+			GtkSignalFunc  get_tool_func,
+			gpointer       get_tool_data,
+			gint          *format,
+			gint          *length)
+{
+  ToolType  tool_type;
+  guint16  *val;
+
+  tool_type =
+    (* (GimpDndDragToolFunc) get_tool_func) (widget, get_tool_data);
+
+  if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
+    return NULL;
+
+  val = g_new (guint16, 1);
+
+  val[0] = (guint16) tool_type;
+
+  *format = 16;
+  *length = 2;
+
+  return (guchar *) val;
+}
+
+static void
+gimp_dnd_set_tool_data (GtkWidget     *widget,
+			GtkSignalFunc  set_tool_func,
+			gpointer       set_tool_data,
+			guchar        *vals,
+			gint           format,
+			gint           length)
+{
+  ToolType tool_type;
+  guint16 val;
+
+  if ((format != 16) || (length != 2))
+    {
+      g_warning ("Received invalid tool data\n");
+      return;
+    }
+
+  val = *((guint16 *) vals);
+
+  tool_type = (ToolType) val;
+
+  if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
+    return;
+
+  (* (GimpDndDropToolFunc) set_tool_func) (widget, tool_type, set_tool_data);
+}
+
+void
+gimp_dnd_tool_source_set (GtkWidget           *widget,
+			  GimpDndDragToolFunc  get_tool_func,
+			  gpointer             data)
+{
+  gimp_dnd_data_source_set (GIMP_DND_DATA_TOOL, widget,
+			    GTK_SIGNAL_FUNC (get_tool_func),
+			    data);
+}
+
+void
+gimp_dnd_tool_dest_set (GtkWidget           *widget,
+			GimpDndDropToolFunc  set_tool_func,
+			gpointer             data)
+{
+  gimp_dnd_data_dest_set (GIMP_DND_DATA_TOOL, widget,
+			  GTK_SIGNAL_FUNC (set_tool_func),
+			  data);
 }

@@ -23,20 +23,25 @@
 
 typedef struct _gradient_t gradient_t;
 
-void gradients_init                          (gint        no_data);
-void gradients_free                          (void);
+/*  global variables  */
+extern GSList * gradients_list;
+extern gint     num_gradients;
 
-gradient_t * gradients_get_standard_gradient (void);
+void         gradients_init                   (gint        no_data);
+void         gradients_free                   (void);
 
-void gradient_get_color_at                   (gradient_t *gradient,
-					      gdouble     pos,
-					      gdouble    *r,
-					      gdouble    *g,
-					      gdouble    *b,
-					      gdouble    *a);
+gradient_t * gradients_get_standard_gradient  (void);
 
-void grad_create_gradient_editor (void);
-void grad_free_gradient_editor   (void);
-void gradients_check_dialogs     (void);
+gradient_t * gradient_list_get_gradient       (GSList     *list,
+					       gchar      *name);
+gint         gradient_list_get_gradient_index (GSList     *list,
+					       gradient_t *gradient);
+
+void         gradient_get_color_at            (gradient_t *gradient,
+					       gdouble     pos,
+					       gdouble    *r,
+					       gdouble    *g,
+					       gdouble    *b,
+					       gdouble    *a);
 
 #endif  /* __GRADIENT_H__ */

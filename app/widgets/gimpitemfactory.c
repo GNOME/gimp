@@ -99,7 +99,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "file/dialogs/palette_selection.html", NULL },
   { { N_("/File/Dialogs/Indexed Palette..."), NULL, dialogs_indexed_palette_cmd_callback, 0 },
     "file/dialogs/indexed_palette.html", NULL },
-  { { N_("/File/Dialogs/Gradients..."), "<control>G", dialogs_gradient_editor_cmd_callback, 0 },
+  { { N_("/File/Dialogs/Gradients..."), "<control>G", dialogs_gradient_cmd_callback, 0 },
     "file/dialogs/gradient_selection.html", NULL },
   { { N_("/File/Dialogs/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
     "file/dialogs/layers_and_channels.html", NULL },
@@ -395,7 +395,7 @@ static GimpItemFactoryEntry image_entries[] =
     "dialogs/palette_selection.html", NULL },
   { { N_("/Dialogs/Indexed Palette..."), NULL, dialogs_indexed_palette_cmd_callback, 0 },
     "dialogs/indexed_palette.html", NULL },
-  { { N_("/Dialogs/Gradients..."), "<control>G", dialogs_gradient_editor_cmd_callback, 0 },
+  { { N_("/Dialogs/Gradients..."), "<control>G", dialogs_gradient_cmd_callback, 0 },
     "dialogs/gradient_selection.html", NULL },
   { { N_("/Dialogs/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
     "dialogs/layers_and_channels.html", NULL },
@@ -729,16 +729,13 @@ menus_tools_create (ToolInfo *tool_info)
 {
   GimpItemFactoryEntry entry;
 
-  entry.entry.path = tool_info->menu_path;
-  entry.entry.accelerator = tool_info->menu_accel;
-  entry.entry.callback = tools_select_cmd_callback;
+  entry.entry.path            = tool_info->menu_path;
+  entry.entry.accelerator     = tool_info->menu_accel;
+  entry.entry.callback        = tools_select_cmd_callback;
   entry.entry.callback_action = tool_info->tool_id;
-  entry.entry.item_type = NULL;
-  entry.help_page = g_strconcat ("tools/",
-				 tool_info->private_tip,
-				 ".html",
-				 NULL);
-  entry.description = NULL;
+  entry.entry.item_type       = NULL;
+  entry.help_page             = tool_info->private_tip;
+  entry.description           = NULL;
 
   menus_create_item (image_factory,
 		     &entry,

@@ -99,7 +99,7 @@ void filters_repeat_cmd_callback (GtkWidget *widget,
 void dialogs_brushes_cmd_callback         (GtkWidget *, gpointer);
 void dialogs_patterns_cmd_callback        (GtkWidget *, gpointer);
 void dialogs_palette_cmd_callback         (GtkWidget *, gpointer);
-void dialogs_gradient_editor_cmd_callback (GtkWidget *, gpointer);
+void dialogs_gradient_cmd_callback        (GtkWidget *, gpointer);
 void dialogs_lc_cmd_callback              (GtkWidget *, gpointer);
 void dialogs_indexed_palette_cmd_callback (GtkWidget *, gpointer);
 void dialogs_tools_options_cmd_callback   (GtkWidget *, gpointer);

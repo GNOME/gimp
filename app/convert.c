@@ -424,7 +424,7 @@ static GtkWidget *build_palette_menu(int *default_palette);
 static void palette_entries_callback(GtkWidget *w, gpointer client_data);
 static gboolean UserHasWebPal = FALSE;
 
-PaletteEntriesP theCustomPalette = NULL;
+PaletteEntries *theCustomPalette = NULL;
 
 
 /* Defaults */
@@ -802,7 +802,7 @@ build_palette_menu (int *default_palette)
   GtkWidget *menu;
   GtkWidget *menu_item;
   GSList *list;
-  PaletteEntriesP entries;
+  PaletteEntries *entries;
   int i, item;
 
   UserHasWebPal = FALSE;
@@ -823,7 +823,7 @@ build_palette_menu (int *default_palette)
        list;
        i++, list = g_slist_next (list))
     {
-      entries = (PaletteEntriesP) list->data;
+      entries = (PaletteEntries *) list->data;
 
       /* Preferentially, the initial default is 'Web' if available */
       if (*default_palette==-1 &&
@@ -853,7 +853,7 @@ build_palette_menu (int *default_palette)
    /* default to first one (only used if 'web' palette not avail.) */
    if (*default_palette==-1)
      {
-       theCustomPalette = (PaletteEntriesP) palette_entries_list->data;
+       theCustomPalette = (PaletteEntries *) palette_entries_list->data;
        *default_palette = 0;
      }
    return menu;
@@ -863,7 +863,7 @@ static void
 palette_entries_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  theCustomPalette = (PaletteEntriesP) data;
+  theCustomPalette = (PaletteEntries *) data;
 }
 
 static void
@@ -2958,7 +2958,7 @@ custompal_pass1 (QuantizeObj *quantobj)
 {
   int i;
   GSList *list;
-  PaletteEntryP entry;
+  PaletteEntry *entry;
 
   /*  fprintf(stderr, "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
 			 theCustomPalette->name, theCustomPalette->filename);*/
@@ -2967,7 +2967,7 @@ custompal_pass1 (QuantizeObj *quantobj)
        list;
        i++,list=g_slist_next(list))
     {
-      entry=(PaletteEntryP)list->data;
+      entry = (PaletteEntry *) list->data;
       quantobj->cmap[i].red = entry->color[0];
       quantobj->cmap[i].green = entry->color[1];
       quantobj->cmap[i].blue = entry->color[2];

@@ -94,7 +94,7 @@
 #include "general.h"
 #include "gimage.h"
 #include "gimprc.h"
-#include "gradient.h"
+#include "gradient_select.h"
 #include "interface.h"
 #include "menus.h"
 #include "pattern_select.h"   /* Needed for closing pattern dialogs */

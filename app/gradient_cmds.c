@@ -21,7 +21,6 @@
 #include "procedural_db.h"
 
 #include "gimpcontext.h"
-#include "gradient.h"
 #include "gradient_header.h"
 
 static ProcRecord gradients_get_list_proc;
@@ -148,13 +147,24 @@ gradients_set_active_invoker (Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
+  gradient_t *gradient;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
     success = FALSE;
 
   if (success)
-    success = grad_set_grad_to_name (name);
+    {
+      gradient = gradient_list_get_gradient (gradients_list, name);
+    
+      success = FALSE;
+    
+      if (gradient)
+	{
+	  gimp_context_set_gradient (NULL, gradient);
+	  success = TRUE;
+	}
+    }
 
   return procedural_db_return_args (&gradients_set_active_proc, success);
 }

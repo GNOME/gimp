@@ -20,6 +20,7 @@
 #include "appenv.h"
 #include "dialog_handler.h"
 #include "gimpcontext.h"
+#include "gimpdnd.h"
 #include "gimpui.h"
 #include "patterns.h"
 #include "pattern_select.h"
@@ -47,6 +48,12 @@
 			   GDK_ENTER_NOTIFY_MASK
 
 /*  local function prototypes  */
+static void     pattern_change_callbacks        (PatternSelect *psp,
+						 gboolean       closing);
+
+static void     pattern_select_drop_pattern     (GtkWidget     *widget,
+						 GPattern      *pattern,
+						 gpointer       data);
 static void     pattern_select_pattern_changed  (GimpContext   *context,
 						 GPattern      *pattern,
 						 PatternSelect *psp);
@@ -77,6 +84,14 @@ static void     pattern_select_scroll_update    (GtkAdjustment *, gpointer);
 static void     pattern_select_close_callback   (GtkWidget *, gpointer);
 static void     pattern_select_refresh_callback (GtkWidget *, gpointer);
 
+/*  dnd stuff  */
+static GtkTargetEntry preview_target_table[] =
+{
+  GIMP_TARGET_PATTERN
+};
+static guint preview_n_targets = (sizeof (preview_target_table) /
+                                  sizeof (preview_target_table[0]));
+
 /*  The main pattern selection dialog  */
 PatternSelect   *pattern_select_dialog = NULL;
 
@@ -90,15 +105,10 @@ pattern_dialog_create (void)
 {
   if (! pattern_select_dialog)
     {
-      /*  Create the dialog...  */
       pattern_select_dialog = pattern_select_new (NULL, NULL);
-
-      /* register this one only */
-      dialog_register (pattern_select_dialog->shell);
     }
   else
     {
-      /*  Popup the dialog  */
       if (!GTK_WIDGET_VISIBLE (pattern_select_dialog->shell))
 	gtk_widget_show (pattern_select_dialog->shell);
       else
@@ -111,6 +121,9 @@ pattern_dialog_free ()
 {
   if (pattern_select_dialog)
     {
+      session_get_window_info (pattern_select_dialog->shell,
+			       &pattern_select_session_info);
+
       pattern_select_free (pattern_select_dialog);
       pattern_select_dialog = NULL;
     }
@@ -129,6 +142,8 @@ pattern_select_new (gchar *title,
   GtkWidget *label_box;
 
   GPattern *active = NULL;
+
+  static gboolean first_call = TRUE;
 
   psp = g_new (PatternSelect, 1);
   psp->preview             = NULL;
@@ -161,14 +176,17 @@ pattern_select_new (gchar *title,
     }
   else
     {
+      psp->context = gimp_context_get_user ();
 
       session_set_window_geometry (psp->shell, &pattern_select_session_info,
 				   TRUE);
-      psp->context = gimp_context_get_user ();
+      dialog_register (psp->shell);
     }
 
-  if (no_data)
+  if (no_data && first_call)
     patterns_init (FALSE);
+
+  first_call = FALSE;
 
   if (title && initial_pattern && strlen (initial_pattern))
     {
@@ -247,6 +265,13 @@ pattern_select_new (gchar *title,
 		      GTK_SIGNAL_FUNC (pattern_select_resize),
 		      psp);
 
+  /*  dnd stuff  */
+  gtk_drag_dest_set (psp->preview,
+                     GTK_DEST_DEFAULT_ALL,
+                     preview_target_table, preview_n_targets,
+                     GDK_ACTION_COPY);
+  gimp_dnd_pattern_dest_set (psp->preview, pattern_select_drop_pattern, psp);
+
   gtk_container_add (GTK_CONTAINER (frame), psp->preview);
   gtk_widget_show (psp->preview);
 
@@ -282,12 +307,6 @@ pattern_select_free (PatternSelect *psp)
   /* remove from active list */
   pattern_active_dialogs = g_slist_remove (pattern_active_dialogs, psp);
 
-  /* Only main one is saved */
-  if (psp == pattern_select_dialog)
-    {
-      session_get_window_info (psp->shell, &pattern_select_session_info);
-    }
-
   gtk_signal_disconnect_by_data (GTK_OBJECT (psp->context), psp);
 
   if (psp->pattern_popup != NULL)
@@ -307,9 +326,9 @@ pattern_select_free (PatternSelect *psp)
 
 /*  Call this dialog's PDB callback  */
 
-void
+static void
 pattern_change_callbacks (PatternSelect *psp,
-			  gint           closing)
+			  gboolean      closing)
 {
   gchar *name;
   ProcRecord *prec = NULL;
@@ -335,13 +354,13 @@ pattern_change_callbacks (PatternSelect *psp,
       return_vals =
 	procedural_db_run_proc (name,
 				&nreturn_vals,
-				PDB_STRING, pattern->name,
-				PDB_INT32, pattern->mask->width,
-				PDB_INT32, pattern->mask->height,
-				PDB_INT32, pattern->mask->bytes,
-				PDB_INT32, pattern->mask->bytes*pattern->mask->height*pattern->mask->width,
+				PDB_STRING,    pattern->name,
+				PDB_INT32,     pattern->mask->width,
+				PDB_INT32,     pattern->mask->height,
+				PDB_INT32,     pattern->mask->bytes,
+				PDB_INT32,     pattern->mask->bytes*pattern->mask->height*pattern->mask->width,
 				PDB_INT8ARRAY, temp_buf_data (pattern->mask),
-				PDB_INT32, closing,
+				PDB_INT32,     (gint) closing,
 				PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
@@ -367,7 +386,7 @@ patterns_check_dialogs (void)
   while (list)
     {
       psp = (PatternSelect *) list->data;
-      list = list->next;
+      list = g_slist_next (list);
 
       name = psp->callback_name;
 
@@ -389,6 +408,18 @@ patterns_check_dialogs (void)
  */
 
 static void
+pattern_select_drop_pattern (GtkWidget *widget,
+			     GPattern  *pattern,
+			     gpointer   data)
+{
+  PatternSelect *psp;
+
+  psp = (PatternSelect *) data;
+
+  gimp_context_set_pattern (psp->context, pattern);
+}
+
+static void
 pattern_select_pattern_changed (GimpContext   *context,
 				GPattern      *pattern,
 				PatternSelect *psp)
@@ -402,13 +433,30 @@ pattern_select_select (PatternSelect *psp,
 		       gint           index)
 {
   gint row, col;
+  gint scroll_offset = 0;
 
   update_active_pattern_field (psp);
 
   row = index / psp->NUM_PATTERN_COLUMNS;
   col = index - row * psp->NUM_PATTERN_COLUMNS;
 
-  pattern_select_show_selected (psp, row, col);
+  /*  check if the new active pattern is already in the preview  */
+  if (((row + 1) * psp->cell_height) >
+      (psp->preview->allocation.height + psp->scroll_offset))
+    {
+      scroll_offset = (((row + 1) * psp->cell_height) -
+                       (psp->scroll_offset + psp->preview->allocation.height));
+    }
+  else if ((row * psp->cell_height) < psp->scroll_offset)
+    {
+      scroll_offset = (row * psp->cell_height) - psp->scroll_offset;
+    }
+  else
+    {
+      pattern_select_show_selected (psp, row, col);
+    }
+
+  gtk_adjustment_set_value (psp->sbar_data, psp->scroll_offset + scroll_offset);
 }
 
 typedef struct
@@ -777,6 +825,7 @@ preview_calc_scrollbar (PatternSelect *psp)
   psp->sbar_data->page_increment = (page_size >> 1);
   psp->sbar_data->step_increment = psp->cell_width;
 
+  gtk_signal_emit_by_name (GTK_OBJECT (psp->sbar_data), "changed");
   gtk_signal_emit_by_name (GTK_OBJECT (psp->sbar_data), "value_changed");
 }
 
@@ -889,7 +938,7 @@ pattern_select_events (GtkWidget     *widget,
 	  pattern_popup_close (psp);
 
 	  /* Call any callbacks registered */
-	  pattern_change_callbacks (psp, 0);
+	  pattern_change_callbacks (psp, FALSE);
 	}
       break;
 
@@ -946,7 +995,7 @@ pattern_select_close_callback (GtkWidget *widget,
   if (psp != pattern_select_dialog)
     {
       /* Send data back */
-      pattern_change_callbacks (psp, 1);
+      pattern_change_callbacks (psp, TRUE);
       gtk_widget_destroy (psp->shell); 
       pattern_select_free (psp); 
     }

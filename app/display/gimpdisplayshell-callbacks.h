@@ -19,6 +19,7 @@
 #define __DISP_CALLBACKS_H__
 
 #include "gdisplay.h"
+#include "patterns.h"
 
 #define CANVAS_EVENT_MASK  GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | \
                            GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | \
@@ -34,16 +35,19 @@ gint gdisplay_hruler_button_press (GtkWidget *, GdkEventButton *, gpointer);
 gint gdisplay_vruler_button_press (GtkWidget *, GdkEventButton *, gpointer);
 gint gdisplay_origin_button_press (GtkWidget *, GdkEventButton *, gpointer);
 
-gboolean gdisplay_drag_drop (GtkWidget      *widget,
-			     GdkDragContext *context,
-			     gint            x,
-			     gint            y,
-			     guint           time,
-			     gpointer        data);
-void     gdisplay_set_color (GtkWidget      *widget,
-			     guchar          r,
-			     guchar          g,
-			     guchar          b,
-			     gpointer        data);
+gboolean gdisplay_drag_drop    (GtkWidget      *widget,
+				GdkDragContext *context,
+				gint            x,
+				gint            y,
+				guint           time,
+				gpointer        data);
+void     gdisplay_drop_color   (GtkWidget      *widget,
+				guchar          r,
+				guchar          g,
+				guchar          b,
+				gpointer        data);
+void     gdisplay_drop_pattern (GtkWidget      *widget,
+				GPattern       *pattern,
+				gpointer        data);
 
 #endif /* __DISP_CALLBACKS_H__ */

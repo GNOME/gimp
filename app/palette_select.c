@@ -41,7 +41,7 @@ palette_new_selection (gchar *title,
   GtkWidget  *vbox;
   GtkWidget  *hbox;
   GtkWidget  *scrolled_win;
-  PaletteEntriesP p_entries = NULL;
+  PaletteEntries *p_entries = NULL;
   gint select_pos;
 
   palette_select_palette_init ();
@@ -105,7 +105,7 @@ palette_new_selection (gchar *title,
     {
       for (list = palette_entries_list; list; list = g_slist_next (list))
 	{
-	  p_entries = (PaletteEntriesP) list->data;
+	  p_entries = (PaletteEntries *) list->data;
 	  
 	  if (strcmp (p_entries->name, initial_palette) > 0)
 	    break;
@@ -137,16 +137,16 @@ palette_new_selection (gchar *title,
 }
 
 void
-palette_select_clist_insert_all (PaletteEntriesP p_entries)
+palette_select_clist_insert_all (PaletteEntries *p_entries)
 {
-  PaletteEntriesP chk_entries;
+  PaletteEntries *chk_entries;
   PaletteSelect *psp; 
   GSList *list;
   gint pos = 0;
 
   for (list = palette_entries_list; list; list = g_slist_next (list))
     {
-      chk_entries = (PaletteEntriesP) list->data;
+      chk_entries = (PaletteEntries *) list->data;
       
       /*  to make sure we get something!  */
       if (chk_entries == NULL)
@@ -169,9 +169,9 @@ palette_select_clist_insert_all (PaletteEntriesP p_entries)
 }
 
 void
-palette_select_set_text_all (PaletteEntriesP entries)
+palette_select_set_text_all (PaletteEntries *entries)
 {
-  PaletteEntriesP p_entries = NULL;
+  PaletteEntries *p_entries = NULL;
   PaletteSelect *psp; 
   GSList *list;
   gchar *num_buf;
@@ -179,7 +179,7 @@ palette_select_set_text_all (PaletteEntriesP entries)
 
   for (list = palette_entries_list; list;  list = g_slist_next (list))
     {
-      p_entries = (PaletteEntriesP) list->data;
+      p_entries = (PaletteEntries *) list->data;
       
       if (p_entries == entries)
 	break;
@@ -225,7 +225,7 @@ static void
 palette_select_edit_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  PaletteEntriesP p_entries = NULL;
+  PaletteEntries *p_entries = NULL;
   PaletteSelect *psp = (PaletteSelect *) data;
   GList *sel_list;
 
@@ -238,7 +238,7 @@ palette_select_edit_callback (GtkWidget *widget,
       row = GPOINTER_TO_INT (sel_list->data);
 
       p_entries = 
-	(PaletteEntriesP) gtk_clist_get_row_data (GTK_CLIST (psp->clist), row);
+	(PaletteEntries *) gtk_clist_get_row_data (GTK_CLIST (psp->clist), row);
 
       palette_create_edit (p_entries);
 

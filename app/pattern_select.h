@@ -69,8 +69,6 @@ PatternSelect * pattern_select_new       (gchar         *title,
 
 void            pattern_select_free      (PatternSelect *psp);
 
-void            pattern_change_callbacks (PatternSelect *psp,
-					  gint           closing);
 void            patterns_check_dialogs   (void);
 
 /*  the main pattern selection  */

@@ -228,7 +228,9 @@ gimp_SOURCES = \
 	global_edit.c		\
 	global_edit.h		\
 	gradient.c		\
+	gradientP.h		\
 	gradient_header.h	\
+	gradient_select.h	\
 	gradient_select.c	\
 	gradient_select_cmds.c	\
 	gradient.h		\

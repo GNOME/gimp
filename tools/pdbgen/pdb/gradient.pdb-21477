@@ -97,7 +97,22 @@ HELP
 	  desc => 'The name of the gradient to set' }
     );
 
-    %invoke = ( code => 'success = grad_set_grad_to_name (name);' );
+    %invoke = (
+        vars => [ 'gradient_t *gradient' ],
+        code => <<'CODE'
+{
+  gradient = gradient_list_get_gradient (gradients_list, name);
+
+  success = FALSE;
+
+  if (gradient)
+    {
+      gimp_context_set_gradient (NULL, gradient);
+      success = TRUE;
+    }
+}
+CODE
+    );
 }
 
 sub sample_num_arg {
@@ -213,7 +228,7 @@ CODE
     );
 }
 
-@headers = qw("gimpcontext.h" "gradient_header.h" "gradient.h");
+@headers = qw("gimpcontext.h" "gradient_header.h");
 
 @procs = qw(gradients_get_list gradients_get_active gradients_set_active
 	    gradients_sample_uniform gradients_sample_custom);

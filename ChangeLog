@@ -1,3 +1,68 @@
+1999-10-28  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/Makefile.am
+	* app/gradient_select.h
+	* app/gradientP.h: new files. Put the function prototypes from
+	gradient_header.h there and renamed them to match the naming
+	scheme used elsewhere.
+
+	* app/gradient.[ch]
+	* app/gradient_cmds.c
+	* app/gradient_header.h
+	* app/gradient_select.c
+	* app/gradient_select_cmds.c
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb: separated the gradient
+	editor and the selections (no more common variables used).
+	Allocate own contexts for each gradient selection. Tweaked the
+	code and function names to match the brush and pattern selection.
+	Enabled dropping gradients to the editor and the selections.
+	Renamed all public functions of the gradient editor (see above).
+
+	* app/app_procs.c
+	* app/commands.[ch]
+	* app/menus.c
+	* app/plug_in.c
+	* app/session.c: changed according to the new gradient function
+	names and includes.
+
+	* app/brush_select.[ch]
+	* app/pattern_select.[ch]: scroll to active brush/pattern if it's
+	outside the preview area. Minor fixes/cleanups. Allow dropping a
+	brush/pattern.
+
+	* app/color_select.c: prefixed all enum constants with
+	COLOR_SELECT_* due to a name clash with the new gradient header
+	structure (HUE_SATURATION was defined in both places).
+
+	* app/convert.[ch]
+	* app/convert_cmds.c
+	* tools/pdbgen/pdb/convert.pdb
+	* app/palette.c
+	* app/palette_entries.h
+	* app/palette_select.[ch]: removed the special
+	Palette[Entries|Entry]P poiner type.
+
+	* app/devices.c: added gradients to the device status dialog.
+
+	* app/disp_callbacks.[ch]
+	* app/gimpcontext.c
+	* app/gimpcontextpreview.[ch]
+	* app/gimpdnd.[ch]
+	* app/indicator_area.c
+	* app/interface.c: moved the whole tool/brush/pattern/gradient dnd
+	stuff to gimpdnd.[ch] and provide simple functions to connect dnd
+	callbacks. All those types are passed as real (cross-application)
+	GtkSelections now, so the app-side of gimp<->plugin dnd is done.
+	Added dnd for tools.
+
+	* app/tools.[ch]: added a tooltip for all non-toolbox tools
+	because the device status dialog displays tooltips for all tools.
+	Use the ToolType enum instead of int in the ToolInfo structure.
+
+	* libgimp/gimplimits.h: put the size and color of the transparency
+	checks here (rename the file to gimpconstants.h ??)
+
 Thu Oct 28 11:45:29 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/datafiles.h: include <time.h>  for time_t.

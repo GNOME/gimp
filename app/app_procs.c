@@ -61,6 +61,7 @@
 #include "gimpset.h"
 #include "gimpui.h"
 #include "global_edit.h"
+#include "gradient_select.h"
 #include "gradient.h"
 #include "gximage.h"
 #include "hue_saturation.h"
@@ -665,7 +666,7 @@ app_exit_finish (void)
   patterns_free ();
   palette_dialog_free ();
   palettes_free ();
-  grad_free_gradient_editor ();
+  gradient_dialog_free ();
   gradients_free ();
   context_manager_free ();
   hue_saturation_free ();

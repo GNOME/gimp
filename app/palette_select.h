@@ -21,7 +21,7 @@
 #define SM_PREVIEW_WIDTH  (96 + 2)
 #define SM_PREVIEW_HEIGHT (33 + 2)
 
-typedef struct _PaletteSelect PaletteSelect, *PaletteSelectP;
+typedef struct _PaletteSelect PaletteSelect;
 
 struct _PaletteSelect
 {
@@ -34,8 +34,8 @@ struct _PaletteSelect
 PaletteSelect * palette_new_selection (gchar *title,
 				       gchar *initial_palette);
 
-void   palette_select_clist_insert_all (PaletteEntriesP  p_entries);
-void   palette_select_set_text_all     (PaletteEntriesP  entries);
+void   palette_select_clist_insert_all (PaletteEntries *p_entries);
+void   palette_select_set_text_all     (PaletteEntries *entries);
 void   palette_select_refresh_all      (void);
 
 #endif  /* __PALETTE_SELECT_H__ */

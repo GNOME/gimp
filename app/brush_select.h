@@ -96,8 +96,6 @@ void          brush_select_free       (BrushSelect *bsp);
 void          brush_select_freeze_all (void);
 void          brush_select_thaw_all   (void);
 
-void          brush_change_callbacks  (BrushSelect *bsp,
-				       gint         closing);
 void          brushes_check_dialogs   (void);
 
 /*  show/hide paint options (main brush dialog if bsp == NULL)  */

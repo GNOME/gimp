@@ -23,8 +23,8 @@
 #include <string.h>
 
 #include "gimpcontext.h"
-#include "gradient.h"
 #include "gradient_header.h"
+#include "gradient_select.h"
 
 static ProcRecord gradients_popup_proc;
 static ProcRecord gradients_close_popup_proc;
@@ -40,20 +40,18 @@ register_gradient_select_procs (void)
   procedural_db_register (&gradients_get_gradient_data_proc);
 }
 
-static GradSelectP
-gradients_get_gradientselect(gchar *name)
+static GradientSelect *
+gradients_get_gradientselect (gchar *name)
 {
-  GSList *list = grad_active_dialogs;
-  GradSelectP gsp;
+  GSList *list;
+  GradientSelect *gsp;
 
-  while (list)
+  for (list = gradient_active_dialogs; list; list = g_slist_next (list))
     {
-      gsp = (GradSelectP) list->data;
+      gsp = (GradientSelect *) list->data;
       
       if (!strcmp (name, gsp->callback_name))
 	return gsp;
-
-      list = list->next;
     }
 
   return NULL;
@@ -68,7 +66,7 @@ gradients_popup_invoker (Argument *args)
   gchar *initial_gradient;
   gint32 sample_size;
   ProcRecord *prec;
-  GradSelectP newdialog;
+  GradientSelect *newdialog;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -82,22 +80,19 @@ gradients_popup_invoker (Argument *args)
 
   sample_size = args[3].value.pdb_int;
   if (sample_size <= 0 || sample_size > 10000)
-    sample_size = G_SAMPLE;
+    sample_size = GRADIENT_SAMPLE_SIZE;
 
   if (success)
     {
       if ((prec = procedural_db_lookup (name)))
 	{
 	  if (initial_gradient && strlen (initial_gradient))
-	    newdialog = gsel_new_selection (title, initial_gradient);
+	    newdialog = gradient_select_new (title, initial_gradient);
 	  else
-	    newdialog = gsel_new_selection (title, NULL);
+	    newdialog = gradient_select_new (title, NULL);
     
 	  newdialog->callback_name = g_strdup (name);
-	  newdialog->sample_size = sample_size;
-    
-	  /* Add to active gradient dialogs list */
-	  grad_active_dialogs = g_slist_append (grad_active_dialogs, newdialog);
+	  newdialog->sample_size   = sample_size;
 	}
       else
 	success = FALSE;
@@ -152,7 +147,7 @@ gradients_close_popup_invoker (Argument *args)
   gboolean success = TRUE;
   gchar *name;
   ProcRecord *prec;
-  GradSelectP gsp;
+  GradientSelect *gsp;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -163,8 +158,6 @@ gradients_close_popup_invoker (Argument *args)
       if ((prec = procedural_db_lookup (name)) &&
 	  (gsp = gradients_get_gradientselect (name)))
 	{
-	  grad_active_dialogs = g_slist_remove (grad_active_dialogs, gsp);
-    
 	  if (GTK_WIDGET_VISIBLE (gsp->shell))
 	    gtk_widget_hide (gsp->shell);
     
@@ -173,7 +166,7 @@ gradients_close_popup_invoker (Argument *args)
 	    {
 	      /* Send data back */
 	      gtk_widget_destroy (gsp->shell);
-	      grad_select_free (gsp);
+	      gradient_select_free (gsp);
 	    }
 	}
       else
@@ -215,7 +208,7 @@ gradients_set_popup_invoker (Argument *args)
   gchar *pdbname;
   gchar *gradient_name;
   ProcRecord *prec;
-  GradSelectP gsp;
+  GradientSelect *gsp;
 
   pdbname = (gchar *) args[0].value.pdb_pointer;
   if (pdbname == NULL)
@@ -230,27 +223,20 @@ gradients_set_popup_invoker (Argument *args)
       if ((prec = procedural_db_lookup (pdbname)) &&
 	  (gsp = gradients_get_gradientselect (pdbname)))
 	{
-	  GSList *tmp;
+	  GSList *list;
 	  gradient_t *active = NULL;
-	  int pos = 0;
     
-	  tmp = gradients_list;
-    
-	  while (tmp)
+	  for (list = gradients_list; list; list = g_slist_next (list))
 	     {
-	      active = tmp->data;
+	      active = (gradient_t *) list->data;
     
 	      if (!strcmp (gradient_name, active->name))
 		break; /* We found the one we want */
-    
-	      pos++;
-	      tmp = tmp->next;
 	    }
     
 	  if (active)
 	    {
-	      gtk_clist_select_row (GTK_CLIST (gsp->clist), pos, -1);
-	      gtk_clist_moveto (GTK_CLIST (gsp->clist), pos, 0, 0.0, 0.0);
+	      gimp_context_set_gradient (gsp->context, active);
 	    }
 	  else
 	    success = FALSE;
@@ -300,7 +286,7 @@ gradients_get_gradient_data_invoker (Argument *args)
   gchar *name;
   gint32 sample_size;
   gdouble *values = NULL;
-  gradient_t *grad = NULL;
+  gradient_t *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -308,31 +294,29 @@ gradients_get_gradient_data_invoker (Argument *args)
 
   sample_size = args[1].value.pdb_int;
   if (sample_size <= 0 || sample_size > 10000)
-    sample_size = G_SAMPLE;
+    sample_size = GRADIENT_SAMPLE_SIZE;
 
   if (success)
     {
       if (strlen (name))
 	{
-	  GSList *list = gradients_list;
+	  GSList *list;
     
 	  success = FALSE;
     
-	  while (list)
+	  for (list = gradients_list; list; list = g_slist_next (list))
 	    {
-	      grad = list->data;
+	      gradient = (gradient_t *) list->data;
     
-	      if (!strcmp (grad->name, name))
+	      if (!strcmp (gradient->name, name))
 		{
 		  success = TRUE;
 		  break;      /* We found it! */
 		}
-    
-	      list = list->next;
 	    }
 	}
       else
-	success = (grad = gimp_context_get_gradient (NULL)) != NULL;
+	success = (gradient = gimp_context_get_gradient (NULL)) != NULL;
     
       if (success)
 	{
@@ -348,7 +332,7 @@ gradients_get_gradient_data_invoker (Argument *args)
     
 	  while (i--)
 	    {
-	      gradient_get_color_at (grad, pos, &r, &g, &b, &a);
+	      gradient_get_color_at (gradient, pos, &r, &g, &b, &a);
     
 	      *pv++ = r;
 	      *pv++ = g;
@@ -364,7 +348,7 @@ gradients_get_gradient_data_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (grad->name);
+      return_args[1].value.pdb_pointer = g_strdup (gradient->name);
       return_args[2].value.pdb_int = sample_size * 4;
       return_args[3].value.pdb_pointer = values;
     }

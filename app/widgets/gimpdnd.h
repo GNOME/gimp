@@ -20,7 +20,12 @@
 
 #include <gtk/gtk.h>
 
+#include "gimpbrush.h"
 #include "gimpdrawable.h"
+#include "palette_entries.h"
+#include "patterns.h"
+#include "gradient.h"
+#include "toolsF.h"
 
 enum
 {
@@ -36,7 +41,9 @@ enum
   GIMP_DND_TYPE_COLOR,
   GIMP_DND_TYPE_BRUSH,
   GIMP_DND_TYPE_PATTERN,
-  GIMP_DND_TYPE_GRADIENT
+  GIMP_DND_TYPE_GRADIENT,
+  GIMP_DND_TYPE_PALETTE,
+  GIMP_DND_TYPE_TOOL
 };
 
 #define GIMP_TARGET_URI_LIST \
@@ -78,6 +85,12 @@ enum
 #define GIMP_TARGET_GRADIENT \
         { "GIMP_GRADIENT", 0, GIMP_DND_TYPE_GRADIENT }
 
+#define GIMP_TARGET_PALETTE \
+        { "GIMP_PALETTE", 0, GIMP_DND_TYPE_PALETTE }
+
+#define GIMP_TARGET_TOOL \
+        { "GIMP_TOOL", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TOOL }
+
 typedef enum
 {
   GIMP_DROP_NONE,
@@ -94,17 +107,81 @@ void  gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 
 /*  color dnd functions  */
 
-typedef void (*GimpDndDropColorFunc) (GtkWidget *,
-				      guchar, guchar, guchar, gpointer); 
-typedef void (*GimpDndDragColorFunc) (GtkWidget *,
-				      guchar *, guchar *, guchar *, gpointer); 
+typedef void (* GimpDndDropColorFunc) (GtkWidget *, guchar, guchar, guchar,
+				       gpointer); 
+typedef void (* GimpDndDragColorFunc) (GtkWidget *, guchar *, guchar *, guchar *,
+				       gpointer); 
 
-void  gimp_dnd_color_source_set (GtkWidget            *widget,
-				 GimpDndDragColorFunc  get_color_func,
-				 gpointer              data);
+void  gimp_dnd_color_source_set    (GtkWidget               *widget,
+				    GimpDndDragColorFunc     get_color_func,
+				    gpointer                 data);
+void  gimp_dnd_color_dest_set      (GtkWidget               *widget,
+				    GimpDndDropColorFunc     set_color_func,
+				    gpointer                 data);
 
-void  gimp_dnd_color_dest_set   (GtkWidget            *widget,
-				 GimpDndDropColorFunc  set_color_func,
-				 gpointer              data);
+/*  brush dnd functions  */
+
+typedef void        (* GimpDndDropBrushFunc) (GtkWidget *, GimpBrush *,
+					      gpointer); 
+typedef GimpBrush * (* GimpDndDragBrushFunc) (GtkWidget *, gpointer); 
+
+void  gimp_dnd_brush_source_set    (GtkWidget               *widget,
+				    GimpDndDragBrushFunc     get_brush_func,
+				    gpointer                 data);
+void  gimp_dnd_brush_dest_set      (GtkWidget               *widget,
+				    GimpDndDropBrushFunc     set_brush_func,
+				    gpointer                 data);
+
+/*  pattern dnd functions  */
+
+typedef void       (* GimpDndDropPatternFunc) (GtkWidget *, GPattern *,
+					       gpointer); 
+typedef GPattern * (* GimpDndDragPatternFunc) (GtkWidget *, gpointer); 
+
+void  gimp_dnd_pattern_source_set  (GtkWidget               *widget,
+				    GimpDndDragPatternFunc   get_pattern_func,
+				    gpointer                 data);
+void  gimp_dnd_pattern_dest_set    (GtkWidget               *widget,
+				    GimpDndDropPatternFunc   set_pattern_func,
+				    gpointer                 data);
+
+/*  gradient dnd functions  */
+
+typedef void         (* GimpDndDropGradientFunc) (GtkWidget *, gradient_t *,
+						  gpointer); 
+typedef gradient_t * (* GimpDndDragGradientFunc) (GtkWidget *, gpointer); 
+
+void  gimp_dnd_gradient_source_set (GtkWidget               *widget,
+				    GimpDndDragGradientFunc  get_gradient_func,
+				    gpointer                 data);
+void  gimp_dnd_gradient_dest_set   (GtkWidget               *widget,
+				    GimpDndDropGradientFunc  set_gradient_func,
+				    gpointer                 data);
+
+/*  palette dnd functions  */
+
+typedef void             (* GimpDndDropPaletteFunc) (GtkWidget *,
+						     PaletteEntries *,
+						     gpointer); 
+typedef PaletteEntries * (* GimpDndDragPaletteFunc) (GtkWidget *, gpointer); 
+
+void  gimp_dnd_palette_source_set  (GtkWidget               *widget,
+				    GimpDndDragPaletteFunc   get_palette_func,
+				    gpointer                 data);
+void  gimp_dnd_palette_dest_set    (GtkWidget               *widget,
+				    GimpDndDropPaletteFunc   set_palette_func,
+				    gpointer                 data);
+
+/*  tool dnd functions  */
+
+typedef void     (* GimpDndDropToolFunc) (GtkWidget *, ToolType, gpointer); 
+typedef ToolType (* GimpDndDragToolFunc) (GtkWidget *, gpointer); 
+
+void  gimp_dnd_tool_source_set     (GtkWidget               *widget,
+				    GimpDndDragToolFunc      get_tool_func,
+				    gpointer                 data);
+void  gimp_dnd_tool_dest_set       (GtkWidget               *widget,
+				    GimpDndDropToolFunc   set_tool_func,
+				    gpointer                 data);
 
 #endif /* __GIMP_DND_H__ */
