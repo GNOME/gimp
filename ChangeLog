@@ -1,6 +1,6 @@
 2002-03-19  Michael Natterer  <mitch@gimp.org>
 
-	* app/gui/menus.c: Oops, GimpContainer's "removed" signal has more
+	* app/gui/menus.c: Oops, GimpContainer's "reorder" signal has more
 	parameters than "add" and "remove", which is quite relevant now
 	that we use the data pointer passed to the callback :)
 	Pointed out by Dave Neary on #gimp.
