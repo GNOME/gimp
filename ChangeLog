@@ -1,3 +1,8 @@
+Wed Aug 26 16:30:36 1998  Raph Levien  <raph@gimp.org>
+
+	* app/gradient.c (grad_create_gradient_editor,
+	cpopup_create_color_item): Turned on dithering in the previews.
+
 Tue Aug 25 14:55:25 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* gimptool.in: use LDFLAGS and LIBS for building too

@@ -974,6 +974,8 @@ grad_create_gradient_editor(void)
 	g_editor->preview_button_down = 0;
 
 	g_editor->preview = gtk_preview_new(GTK_PREVIEW_COLOR);
+	gtk_preview_set_dither (GTK_PREVIEW (g_editor->preview),
+				GDK_RGB_DITHER_MAX);
 	gtk_preview_size(GTK_PREVIEW(g_editor->preview),
 			 GRAD_PREVIEW_WIDTH, GRAD_PREVIEW_HEIGHT);
 	gtk_widget_set_events(g_editor->preview, GRAD_PREVIEW_EVENT_MASK);
@@ -3112,6 +3114,7 @@ cpopup_create_color_item(GtkWidget **color_box, GtkWidget **label)
 	gtk_widget_show(vbox);
 
 	wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
+	gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
 	gtk_preview_size(GTK_PREVIEW(wcolor_box), GRAD_COLOR_BOX_WIDTH, GRAD_COLOR_BOX_HEIGHT);
 	gtk_box_pack_start(GTK_BOX(vbox), wcolor_box, FALSE, FALSE, 2);
 	gtk_widget_show(wcolor_box);
