@@ -1,0 +1,578 @@
+The GNU Image Manipulation Program Version 2.2
+----------------------------------------------
+
+This is version 2.2 of The GIMP. Version 2.2 is an update on GIMP 2.0.
+GIMP 2.2 is fully backward compatible to GIMP 2.0. Plug-ins and
+scripts written for GIMP 2.0 will continue to work and don't need to
+be changed nor recompiled to be used with GIMP 2.2.  We do however
+hope that plug-in authors will update their plug-ins for GIMP 2.2 and
+adapt the GUI changes we did with this version.
+
+Please follow the installation instructions in INSTALL.
+
+
+Overview of Changes in GIMP 2.2.0 (since 2.2-pre2 was released)
+=================================
+
+- More work on GFig plug-in.
+
+- Build fixes for Win32 and IRIX.
+
+- Added --no-splash command-line option for gimp-remote.
+
+- More tweaks to the migration of user settings.
+
+- Improved input controller modules, added ALSA support to the MIDI module.
+
+- Allow to transform layers with masks.
+
+- Let the histogram respect the selection.
+
+- Added gimp_edit_copy_visible as a replacement for the "Copy Visible" script.
+
+- Improved color dithering routines.
+
+- Lots of bug fixes and some optimizations.
+
+
+Contributors: 
+
+   Michael Natterer, Sven Neumann, David Odin, Manish Singh, Kevin Cozens,
+   Joao S. O. Bueno, Karine Proot, Tim Mooney, Wolfgang Hofer, Simon Budig,
+   Bill Skaggs, Øyvind Kolås, Adam D. Moss, Brion Vibber, Maurits Rijk,
+   Bill Luhtala, Philip Lafleur
+
+
+
+Overview of Changes in GIMP 2.2-pre2
+====================================
+
+- More work on GFig (still more to come here).
+
+- Improvements and fixes to the migration of user settings.
+
+- Final touches to the new PDB APIs.
+
+- Ported some more item factories to GtkUIManager.
+
+- Added new PDB function gimp_layer_from_mask().
+
+- User interface cleanup in IFS Fractal plug-in (former IfsCompose).
+
+- Allow file plug-ins to provide a way to access an image thumbnail if
+  the file format provides one or can be rendered at small sizes.
+
+- Load and save EXIF thumbnails in JPEG files.
+
+- Render in small resolution when creating a thumbnail for a
+  Postscript or PDF document or from an SVG or WMF image file.
+
+- Allow to import Photoshop (.act) palette files.
+
+- Added a Print Size dialog to bring back missing functionality from 2.0.
+
+- Several improvements to the GIMP Python bindins.
+
+- Guard the core better against misbehaving scripts and plug-ins.
+
+- Changed the way that Script-Fu scripts register their menus (in a
+  backward compatible way).
+
+- Added ALSA support for the MIDI controller module.
+
+- Resurrected the glob plug-in.
+
+- Lots of bug fixes and some optimizations.
+
+
+Contributors: 
+
+   Michael Natterer, Sven Neumann, David Odin, Manish Singh, Kevin Cozens,
+   Joao S. O. Bueno, Geert Jordaens, David Gowers, Øyvind Kolås, Cai Qian,
+   Simon Budig, Jakub Steiner, Philip Lafleur, Nickolay V. Shmyrev,
+   Karine Proot, S. Mukund, Dave Neary, Keith Goatman
+
+
+
+Overview of Changes in GIMP 2.2-pre1
+====================================
+
+- Added more plug-in previews (Displace, Color To Alpha, Newsprint)
+  and ported existing previews to the new widgets (Glass Tiles).
+
+- Added preview to WMF loader plug-in.
+
+- Added Retinex plug-in for color normalization.
+
+- Added plug-in to load and save raw image data (_not_ the raw format
+  used by some digital cameras)
+
+- Added a GUI to configure controller modules.
+
+- Let lots of core dialogs remember their last values and add
+  shortcuts to run with the last values w/o opening the dialog.
+
+- Added new PDB API for drawable tranformations.
+
+- Register all libgimp enums to allow language bindings such as
+  Script-Fu to access them using GType introspection.
+
+- Improved how we attach user-visible strings to enums registered with
+  the type system. Added API to access these strings to libgimpbase.
+
+- Cleanups to the new GFig GUI (still work in progress).
+
+- HIGification of the ImageMap plug-in.
+
+- Cleaned up dialogs code.
+
+- Added Auto Whitebalance menu item.
+
+- Redid Scale and Resize dialogs.
+
+- Added code to migrate user settings from ~/.gimp-2.0.
+
+- lots of bug fixes.
+
+
+Contributors: 
+
+   Michael Natterer, Sven Neumann, David Odin, Manish Singh, Kevin Cozens,
+   Joao S. O. Bueno, Geert Jordaens, Yeti, Karine Proot, Øyvind Kolås,
+   Simon Budig 
+
+
+
+Overview of Changes in GIMP 2.1.7
+=================================
+
+- Added even more plug-in previews (Value Propagate, Cubism, Colorify)
+  and ported existing previews to the new widgets (AlienMap2, FlareFX,
+  Jigsaw, NL Filter, Waves, Scatter HSV).
+
+- More PDB API cleanups.
+
+- Allow to specify the batch interpreter on the command-line.
+
+- Improved selection-round script and moved it to the Select menu.
+
+- Don't switch the active layer when using the Move tool.
+
+- Updated libgimpthumb to support local thumbnails as introduced by
+  version 0.7 of the thumbnail spec.
+
+- Automatically create thumbnails from the Open dialog.
+
+- Added entries next to most viewable buttons.
+
+- Added a bunch of scripts to manipulate guides.
+
+- Improved confirmation and warning dialogs.
+
+- Lots of bug fixes.
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, David Odin, Manish Singh, Kevin Cozens,
+   Alan Horkan, Jakub Steiner
+
+
+
+Overview of Changes in GIMP 2.1.6
+=================================
+
+- Added more drawable previews (Color Exchange, DOG, Deinterlace,
+  Engrave, Oilify, Ripple, Shift).
+
+- Added new preview widget that shows a scaled view of the full
+  drawable. Use it for Apply Lens, Blinds, Channel Mixer, Destripe,
+  Emboss, Illusion, Map Color, Max RGB, Plasma, Polar, Solid Noise,
+  Supernova, Whirl and Pinch.
+
+- Added "Open as Layer" functionality to the menus.
+
+- Implemented the recent-file-spec for shared storage of a list of
+  recently used files (really URIs).
+
+- Cleaned up plug-in procedure handling. Added the possibility to let
+  plug-ins and scripts run using a private GimpContext.
+
+- Added multi-line text entries for Script-Fu and Gimp-Python.
+
+- Cleaned up PDB API for brushes, gradients, palettes and patterns.
+  Deprecated lots of functions and added saner replacements. Added
+  gimp-context-* PDB namespace with replacements for some of the 
+  deprecated stuff.
+
+- Let GimpView handle pixbuf previews. Added a (themable) drop shadow
+  to image-file previews.
+
+- Cleaned up the dbbrowser and plugindetails code and GUI and factored
+  out common code. Renamed both executables and menu entries.
+
+- Made tools cancelable with <Escape>.
+
+- Dim the outer (to be cropped) area when using the Crop tool.
+
+- Let GimpDialog add a help button to give easier access to the help pages.
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, David Odin, Maurits Rijk, Dave Neary,
+   Manish Singh, Robert Oegren, Kevin Cozens, Kevin Turner, Dov Grobgeld,
+   Joao S. O. Bueno,  Michael Schumacher, Jonathan Levi, Daniel Egger
+
+
+
+Overview of Changes in GIMP 2.1.5
+=================================
+
+- Ask the user to save the image when closing the last display.
+
+- Restored compatibility of the wire protocol that was accidentally
+  broken in 2.1.4.
+
+- Added layer and mask actions to allow to create keybindings for them.
+
+- Preview widget improvements:
+   * let the preview expand with the plug-in dialog
+   * added a navigation popup similar to the one in the image window
+   * respect the selection and show how it will affect the filter
+   * added API to draw to a GimpDrawablePreview from a GimpPixelRgn
+
+- Added preview to more plug-ins: Cartoon, Apply Canvas, Photocopy,
+  Motion Blur,
+
+- Ported the Bumpmap plug-in preview to GimpDrawablePreview.
+
+- Removed -u linker hacks from all Makefiles.
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, David Odin, Manish Singh, Simon
+   Budig, Nathan Summers, Alan Horkan, David Gowers, Bill Skaggs,
+   Joao S. O. Bueno, Peter Kirchgessner
+
+
+
+Overview of Changes in GIMP 2.1.4
+=================================
+
+- Rewritten internal handling of progress indicators. Embed progress
+  bars to the File Open dialog to reduce annoying dialogs popping up.
+
+- Added an API for plug-ins to embed a progress bar. Let the Script-Fu
+  dialog swallow the progress bars created by running the script.
+
+- Ported remaining plug-ins and modules to GimpPreviewArea and removed
+  GimpOldPreview.
+
+- Show progress while converting from RGB to Indexed Colors.
+
+- Added new plug-ins Cartoon, Neon, Photocopy and Softglow.
+
+- Let color selectors adapt to the given size.
+
+- Import basic SVG shapes as paths.
+
+- Improved GIH and guillotine plug-ins.
+
+- Added GimpMessageBox widget. Collect error messages in a single
+  dialog to reduce popups.
+
+- Renamed the core GimpPreview widget to GimpView.
+
+- Added a GimpPreview widget to libgimpwidgets. This is an abstract
+  class that combines a GimpPreviewArea with scrollbars and a "Preview"
+  toggle button.
+
+- Added GimpDrawablePreview derived from GimpPreview.
+
+- Improved previews in Unsharp Mask, Scatter RGB, Sharpen, Spread and
+  Grid plug-ins.
+
+- Added previews to Edge, Gaussian Blur, Neon, Soft Glow, Sobel and
+  Selective Gaussian Blur.
+
+- Added a logarithmic mode for the slider in a GimpScaleEntry.
+
+- Script-Fu code cleanups.
+
+- Fixed composite assembly code.
+
+- Pass user settings for the checkerboard to plug-ins.
+
+- Image comment, if any, is now shown within the info window.
+
+- New function "Fit Canvas to Layers" (gimp_image_resize_to_layers)
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, David Odin, Shlomi Fish, Bill Skaggs,
+   Simon Budig, Ari Pollak, Spencer Kimball, Michael Schumacher, Joao
+   S. O. Bueno, Manish Singh, Helvetix Victorinox, Kevin Cozens
+
+
+
+Overview of Changes in GIMP 2.1.3
+=================================
+
+- Cleanups to the MMX code and the composite subsystem in general
+
+- Cleanups and fixes to Gimpressionst plug-in (bug #148088)
+
+- Redone light settings GUI for Lighting plug-in.
+
+- Added keyboard shortcut editor to preferences dialog (bug #142922)
+
+- Implemented the callbacks for the various "Clear saved foobar now"
+  buttons in the preferences dialog.
+
+- Added support for loading gradients from SVG files. This allows to
+  share gradient definitions with Inkscape and Sodipodi (bug #148127)
+
+- Added parsers for the various ways to define a color in SVG to
+  libgimpcolor.
+
+- Added GimpColorHexEntry widget to libgimpwidgets. It displays colors
+  in hexadecimal represention and takes hex and SVG color names as input.
+
+- Added GimpCellRendererColor and GimpCellRendererToggle to libgimpwidgets.
+
+- Renamed GimpColor boxed type to GimpRGB and moved it to libgimpcolor.
+
+- Moved GIMP_TYPE_UNIT and GIMP_TYPE_MEMSIZE to libgimpbase.
+
+- Fixes to the BMP loader plug-in (bug #143682).
+
+- Fixes to the Decompose plug-in (bug #147603).
+
+- Added palette selector widgets to libgimpui.
+
+- Allow to disable mnemonics in menus (bug #120034).
+
+- Ported TWAIN plug-in to Mac OS X (bug #147962).
+
+- Support motion event history as provided by some input device drivers.
+
+- Let the undo system know more specifically what an undo step
+  does. Use that info to keep tools active across modifications to
+  the image that don't affect the tool (bug #109561).
+
+- Changed default config for keyboard controller to allow scrolling
+  the display using the cursor keys (#53988).
+
+- Added GimpPreviewArea widget as replacement for the deprecated
+  GtkPreview widget. Ported most plug-ins to the new widget.
+
+- Added shapes for generated brushes and allow for softer brushes.
+
+- Allow to specify the aspect ratio in the scale tool.
+
+- Lots of bug fixes and other goodies. Check the ChangeLog for details.
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, Helvetix Victorinox, Shlomi Fish, 
+   Bill Skaggs, Brion Vibber, Raphael Quinet, Simon Budig, David Odin,
+   Manish Singh, Hans Breuer, Michael Schumacher, Dave Neary
+
+
+
+Overview of Changes in GIMP 2.1.2
+=================================
+
+- Further improvements to the new input controllers; added a keyboard
+  controller.
+
+- Show image preview in GFig plug-in, started a complete overhaul.
+
+- Added Difference of Gaussians edge detection plug-in.
+
+- Added more possibilities for drag'n'drop:
+   * layers dialog accepts URI, color and pattern drops
+   * path dialog takes and offers DND of SVG data
+
+- Implemented PDB function gimp-path-get-point-at-dist.
+
+- Allow to use the color picker to edit palettes (as in gimp-1.2).
+
+- Improvements and code cleanup in gimpressionist plug-in.
+
+- Allow to cut'n'paste image data between GIMP and other applications
+  (for example Abiword) using the system clipboard.
+
+- List unsaved images in Quit dialog.
+
+- Completed core/gui separation. Optionally build a gimp-console
+  application that behaves like 'gimp --no-interface' and doesn't link
+  to GTK+ at all.
+
+- Deprecated GimpPixmap and ported almost all users to GtkImage.
+
+- Moved display projection code into a GimpProjection object. This means
+  there's finally only a single projection per image.
+
+- Introduced GimpPickable interface and implemented it for all core
+  objects that you can pick colors from.
+
+- Write smaller indexed MNG files.
+
+- Fixed issues with the internal statusbar API.
+
+- Allow for multiple light sources in the Lighting plug-in.
+
+- Redone file type selection in file load/save dialogs.
+
+- Removed HRZ plug-in.
+
+- Improved developers documentation.
+
+- Improved quality of antialiasing in the ellipse select tool.
+
+- Lots of bug fixes and other goodies. Check the ChangeLog for details.
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, Philip Lafleur, William Skaggs,
+   Geert Jordaens, Simon Budig, Roman Joost, Michael Schumacher,
+   Shlomi Fish, Hans Breuer, Brion Vibber, Robert Oegren, Kevin
+   Cozens, Helvetix Victorinox
+
+
+
+Overview of Changes in GIMP 2.1.1
+=================================
+
+- Added support for loading patterns in formats supported by GdkPixbuf
+  (most notably PNG and JPEG).
+
+- Use ARGB cursors when supported by the windowing system. Added nice
+  new tool cursors.
+
+- Added previews to Solid Noise and Unsharp Mask plug-ins.
+
+- Improvements for painting with pressure-sensitive devices.
+
+- Added preview for transform tools.
+
+- Merged the Gaussian Blur plug-ins.
+
+- Simplified the Blur plug-in.
+
+- Reorganized the Preferences dialog.
+
+- Dispatch Enter, Return, Backspace and Delete key events to the tools
+  and use them where it makes sense.
+
+- Some optimizations to the tile system, the gradient rendering and to 
+  the cubic interpolation routine.
+
+- Show the brush outline while painting.
+
+- Added an interface that allows to add controller modules. Such a module
+  can dispatch events to The GIMP which are mapped to actions by a
+  user-configurable mapping table.  Added controller modules for mouse
+  wheel, midi and linux_input devices.
+
+- Applied HIG capitalization style to all(?) dialogs.
+
+- Lots of bug fixes and other goodies. Check the ChangeLog for details.
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, Manish Singh, Philip Lafleur,
+   William Skaggs, Geert Jordaens, Yeti, Dave Neary, Jakub Steiner,
+   David Gowers, Henrik Brix Andersen, Simon Budig, Pedro Gimeno,
+   lots of translators and the contributors that I accidentally missed...
+
+
+
+Overview of Changes in GIMP 2.1.0
+=================================
+
+GIMP 2.1.0 includes the following enhancements over GIMP 2.0:
+
+ - Major user interface improvements.
+
+   * Large parts of the GIMP user interface have been changed to 
+     comply better with the GNOME Human Interface Guidelines. This is
+     an ongoing effort and the interface may still be inconsistent in
+     a few places.
+
+   * Users are now allowed to clear the undo history.
+
+   * The unit to be used for the rulers and the coordinates display is now
+     a display property and can be changed in the statusbar of the image
+     window.
+
+   * New widgets and frameworks provided by GTK+ 2.4 are used; this means
+
+     + uses the new GtkFileChooser dialog, vastly improving the file
+       dialogs.
+     + includes port of menus to GtkUIManager, which creates all core
+       menus from XML files at runtime. This means that menu items can
+       be rearranged by users simply by editing these files.
+     + uses a global accelerator table in all docks and image windows.
+       This means that a hotkey will do the same thing regardless of
+       which dock or image window you are using.
+     + adds replacement widgets based on GtkComboBox for most uses of
+       GtkOptionMenu (GimpUnitMenu remains to be ported)
+     + adds GimpContainerEntry, a GtkEntry with completion based on
+       the contents of a GimpContainer.
+     + makes the order and visibility of tools in the toolbox configurable
+     + allows keeping toolbox and dock windows above other windows (if
+       the WM supports this hint)
+
+   * The toolbox now has an optional preview of the active image.
+
+   * The image window now accepts file/uri drops.
+
+ - More internal cleanup and refactoring of the core object model.
+
+ - The brush rendering code has been separated from the generic paint
+   tool code. The ink tool is now a paint tool (it can do straight
+   lines) and the new infrastructure allows to implement new kinds of
+   paint methods like vector based painting.
+
+ - Gradients can now be created, deleted, renamed and edited through
+   the PDB.
+
+ - Some changes to plug-ins.
+
+   * Plug-ins can now register the same procedures in multiple places (the
+     API to register menu entries has been changed in a backward-compatible 
+     fashion).
+
+   * Plug-ins can now optionally register a menu icon.
+
+   * File plug-ins can now register a mime-type.
+
+   * All plug-in dialogs have been reviewed and changed to make them
+     comply better with the GNOME Human Interface Guidelines.
+
+   * All plug-ins that need to access files use the new GtkFileChooser
+     dialog.
+
+   * The obsolete AlienMap and GIcon plug-ins were removed.  AlienMap2
+     does everything than AlienMap did, and the GIMP-specific GIcon format
+     has not been used by anything for quite some time now.
+
+   * A plug-in to load and save windows icon files has been added.
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, Maurits Rijk, Manish Singh,
+   Henrik Brix Andersen, Philip Lafleur, Raphael Quinet, Simon Budig,
+   William Skaggs, Shlomi Fish, Kevin Cozens, Jakub Steiner, Dave Neary,
+   Daniel Kobras, Jordi Gay, Yeti, Marco Munari, David Necas, Nils
+   Philippsen, Soeren Wedel Nielsen, Joao S. O. Bueno, lots of translators
+   and the contributors that I accidentally missed...

@@ -56,6 +56,7 @@ EXTRA_DIST = \
 	LICENSE			\
 	NEWS			\
 	NEWS.pre-2-0		\
+	NEWS.pre-2-2		\
 	README			\
 	README.i18n		\
 	README.win32		\
