@@ -339,7 +339,8 @@ gimp_colormap_editor_new (GimpImage       *gimage,
   editor = g_object_new (GIMP_TYPE_COLORMAP_EDITOR, NULL);
 
   gimp_editor_create_menu (GIMP_EDITOR (editor),
-                           menu_factory, "<ColormapEditor>", editor);
+                           menu_factory, "<ColormapEditor>",
+                           "/colormap-editor-popup", editor);
 
   /*  The palette frame  */
   frame = gtk_frame_new (NULL);

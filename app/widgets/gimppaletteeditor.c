@@ -522,7 +522,8 @@ gimp_palette_editor_new (Gimp            *gimp,
 
   if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (palette_editor),
                                     gimp->palette_factory,
-                                    menu_factory, "<PaletteEditor>"))
+                                    menu_factory, "<PaletteEditor>",
+                                    "/palette-editor-popup"))
     {
       g_object_unref (palette_editor);
       return NULL;

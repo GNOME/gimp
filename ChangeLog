@@ -1,5 +1,58 @@
 2004-04-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpuimanager.[ch]: new GtkUIManager subclass. Adds
+	API to update all action groups and knows which UIs it can create
+	from which XML files.
+
+	* app/widgets/gimpmenufactory.[ch]: register the XML file
+	basenames along with path of their toplevel menus. Create
+	GimpUIManagers instead of GtkUIManagers and register the
+	XML files and menu paths with them.
+
+	* app/gui/menus.c: register all XML files and their toplevel
+	menu paths.
+
+	* app/widgets/gimpeditor.[ch]: also create a GimpUIManager when
+	creating the GtkItemFactory. Added "const gchar *ui_identifier"
+	parameter to gimp_editor_create_menu().
+
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpdataeditor.[ch]
+	* app/widgets/gimpdatafactoryview.[ch]
+	* app/widgets/gimpitemtreeview.[ch]: added "ui_identifier"
+	parameters to all constructors.
+
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimperrorconsole.c
+	* app/widgets/gimpfontview.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpimageview.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimppatternfactoryview.c
+	* app/widgets/gimptemplateview.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/gradient-select.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c: pass UI identifiers to the changed
+	functions above.
+
+	* app/display/gimpdisplayshell.[ch]: added a GimpUIManager for
+	the menubar (menubar creating code still commented out).
+
+	* app/display/gimpdisplay.c
+	* app/gui/gui-vtable.c: update the ui manager.
+
+2004-04-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/actions.c: forgot to register the "patterns" actions.
 
 	* app/actions/*-actions.c: added actions representing the toplevel

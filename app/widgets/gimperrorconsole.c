@@ -234,7 +234,8 @@ gimp_error_console_new (Gimp            *gimp,
   console->gimp = gimp;
 
   gimp_editor_create_menu (GIMP_EDITOR (console),
-                           menu_factory, "<ErrorConsole>", console);
+                           menu_factory, "<ErrorConsole>",
+                           "/error-console-popup", console);
 
   console->gimp->message_handler = GIMP_ERROR_CONSOLE;
 

@@ -485,7 +485,7 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
                                    popup->preview_size,
                                    popup->preview_border_width,
                                    FALSE, /* reorderable */
-                                   NULL, NULL);
+                                   NULL, NULL, NULL);
 
   gimp_container_view_set_size_request (GIMP_CONTAINER_VIEW (GIMP_CONTAINER_EDITOR (popup->editor)->view),
                                         6  * (popup->default_preview_size +

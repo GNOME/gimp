@@ -286,8 +286,8 @@ gimp_tool_options_editor_new (Gimp            *gimp,
 
   gtk_widget_set_size_request (GTK_WIDGET (editor), -1, 200);
 
-  gimp_editor_create_menu (GIMP_EDITOR (editor),
-                           menu_factory, "<ToolOptions>",
+  gimp_editor_create_menu (GIMP_EDITOR (editor), menu_factory,
+                           "<ToolOptions>", "/tool-options-popup",
                            editor);
 
   g_signal_connect_object (user_context, "tool_changed",

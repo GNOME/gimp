@@ -142,7 +142,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
                                  gint                 preview_border_width,
                                  gboolean             reorderable,
 				 GimpMenuFactory     *menu_factory,
-                                 const gchar         *menu_identifier)
+                                 const gchar         *menu_identifier,
+                                 const gchar         *ui_identifier)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
@@ -180,9 +181,10 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
       return FALSE;
     }
 
-  if (menu_factory && menu_identifier)
+  if (menu_factory && menu_identifier && ui_identifier)
     gimp_editor_create_menu (GIMP_EDITOR (editor->view),
-                             menu_factory, menu_identifier, editor);
+                             menu_factory, menu_identifier, ui_identifier,
+                             editor);
 
   gtk_container_add (GTK_CONTAINER (editor), GTK_WIDGET (editor->view));
   gtk_widget_show (GTK_WIDGET (editor->view));

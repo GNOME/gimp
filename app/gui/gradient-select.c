@@ -137,7 +137,8 @@ gradient_select_new (Gimp        *gimp,
                                           dialogs_edit_gradient_func,
                                           gsp->context,
                                           GIMP_PREVIEW_SIZE_MEDIUM, 1,
-                                          global_menu_factory, "<Gradients>");
+                                          global_menu_factory, "<Gradients>",
+                                          "/gradients-popup");
 
   gimp_container_view_set_size_request (GIMP_CONTAINER_VIEW (GIMP_CONTAINER_EDITOR (gsp->view)->view),
                                         6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),

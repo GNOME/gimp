@@ -139,7 +139,8 @@ GtkWidget * gimp_item_tree_view_new      (gint                  preview_size,
                                           GimpNewItemFunc       new_item_func,
                                           GimpActivateItemFunc  activate_item_func,
                                           GimpMenuFactory      *menu_facotry,
-                                          const gchar          *menu_identifier);
+                                          const gchar          *menu_identifier,
+                                          const gchar          *ui_identifier);
 
 void       gimp_item_tree_view_set_image (GimpItemTreeView     *view,
                                           GimpImage            *gimage);

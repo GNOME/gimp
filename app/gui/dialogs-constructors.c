@@ -314,7 +314,8 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
 				     dialogs_edit_gradient_func,
 				     context,
 				     preview_size, 1,
-                                     factory->menu_factory, "<Gradients>");
+                                     factory->menu_factory, "<Gradients>",
+                                     "/gradients-popup");
 
   return dialogs_dockable_new (view,
 			       _("Gradients"), NULL,
@@ -334,7 +335,8 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
 				     dialogs_edit_palette_func,
 				     context,
 				     preview_size, 1,
-                                     factory->menu_factory, "<Palettes>");
+                                     factory->menu_factory, "<Palettes>",
+                                     "/palettes-popup");
 
   return dialogs_dockable_new (view,
 			       _("Palettes"), NULL,
@@ -521,7 +523,8 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
 				     dialogs_edit_gradient_func,
 				     context,
 				     preview_size, 1,
-                                     factory->menu_factory, "<Gradients>");
+                                     factory->menu_factory, "<Gradients>",
+                                     "/gradients-popup");
 
   return dialogs_dockable_new (view,
 			       _("Gradients"), NULL,
@@ -541,7 +544,8 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
 				     dialogs_edit_palette_func,
 				     context,
 				     preview_size, 1,
-                                     factory->menu_factory, "<Palettes>");
+                                     factory->menu_factory, "<Palettes>",
+                                     "/palettes-popup");
 
   return dialogs_dockable_new (view,
 			       _("Palettes"), NULL,
@@ -647,7 +651,8 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
                              (GimpEditItemFunc)     layers_edit_layer_query,
                              (GimpNewItemFunc)      layers_new_layer_query,
                              (GimpActivateItemFunc) layers_text_tool,
-                             factory->menu_factory, "<Layers>");
+                             factory->menu_factory, "<Layers>",
+                             "/layers-popup");
 
   dockable = dialogs_dockable_new (view,
 				   _("Layers"), NULL,
@@ -678,7 +683,8 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
                              (GimpEditItemFunc)     channels_edit_channel_query,
                              (GimpNewItemFunc)      channels_new_channel_query,
                              (GimpActivateItemFunc) channels_edit_channel_query,
-                             factory->menu_factory, "<Channels>");
+                             factory->menu_factory, "<Channels>",
+                             "/channels-popup");
 
   dockable = dialogs_dockable_new (view,
 				   _("Channels"), NULL,
@@ -710,7 +716,8 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
                              (GimpEditItemFunc)     vectors_edit_vectors_query,
                              (GimpNewItemFunc)      vectors_new_vectors_query,
                              (GimpActivateItemFunc) vectors_vectors_tool,
-                             factory->menu_factory, "<Vectors>");
+                             factory->menu_factory, "<Vectors>",
+                             "/vectors-popup");
 
   vectors_view = GIMP_VECTORS_TREE_VIEW (view);
 

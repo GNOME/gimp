@@ -71,6 +71,8 @@ struct _GimpDisplayShell
   GimpDisplay      *gdisp;
 
   GimpItemFactory  *menubar_factory;
+  GimpUIManager    *menubar_manager;
+
   GimpItemFactory  *popup_factory;
   GimpItemFactory  *qmask_factory;
 

@@ -133,7 +133,8 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 			    gint              preview_size,
                             gint              preview_border_width,
 			    GimpMenuFactory  *menu_factory,
-                            const gchar      *menu_identifier)
+                            const gchar      *menu_identifier,
+                            const gchar      *ui_identifier)
 {
   GimpDataFactoryView *factory_view;
 
@@ -147,7 +148,8 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 					  preview_size,
                                           preview_border_width,
 					  menu_factory,
-                                          menu_identifier))
+                                          menu_identifier,
+                                          ui_identifier))
     {
       g_object_unref (factory_view);
       return NULL;
@@ -165,7 +167,8 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 				  gint                 preview_size,
                                   gint                 preview_border_width,
 				  GimpMenuFactory     *menu_factory,
-                                  const gchar         *menu_identifier)
+                                  const gchar         *menu_identifier,
+                                  const gchar         *ui_identifier)
 {
   GimpContainerEditor *editor;
 
@@ -185,7 +188,8 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 					 factory->container, context,
 					 preview_size, preview_border_width,
                                          FALSE, /* reorderable */
-					 menu_factory, menu_identifier))
+					 menu_factory, menu_identifier,
+                                         ui_identifier))
     {
       return FALSE;
     }

@@ -226,7 +226,7 @@ gimp_brush_editor_new (Gimp *gimp)
 
   if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (brush_editor),
                                     gimp->brush_factory,
-                                    NULL, NULL))
+                                    NULL, NULL, NULL))
     {
       g_object_unref (brush_editor);
       return NULL;

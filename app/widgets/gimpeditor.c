@@ -137,6 +137,7 @@ gimp_editor_init (GimpEditor *editor)
 {
   editor->menu_factory      = NULL;
   editor->item_factory      = NULL;
+  editor->ui_manager        = NULL;
   editor->item_factory_data = NULL;
   editor->button_box        = NULL;
 }
@@ -150,14 +151,18 @@ gimp_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 static void
 gimp_editor_destroy (GtkObject *object)
 {
-  GimpEditor *editor;
-
-  editor = GIMP_EDITOR (object);
+  GimpEditor *editor = GIMP_EDITOR (object);
 
   if (editor->item_factory)
     {
       g_object_unref (editor->item_factory);
       editor->item_factory = NULL;
+    }
+
+  if (editor->ui_manager)
+    {
+      g_object_unref (editor->ui_manager);
+      editor->ui_manager = NULL;
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -206,11 +211,13 @@ void
 gimp_editor_create_menu (GimpEditor      *editor,
                          GimpMenuFactory *menu_factory,
                          const gchar     *menu_identifier,
+                         const gchar     *ui_identifier,
                          gpointer         callback_data)
 {
   g_return_if_fail (GIMP_IS_EDITOR (editor));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
   g_return_if_fail (menu_identifier != NULL);
+  g_return_if_fail (ui_identifier != NULL);
 
   if (editor->item_factory)
     g_object_unref (editor->item_factory);
@@ -222,6 +229,14 @@ gimp_editor_create_menu (GimpEditor      *editor,
                                                      callback_data,
                                                      FALSE);
   editor->item_factory_data = callback_data;
+
+  if (editor->ui_manager)
+    g_object_unref (editor->ui_manager);
+
+  editor->ui_manager = gimp_menu_factory_manager_new (menu_factory,
+                                                      menu_identifier,
+                                                      callback_data,
+                                                      FALSE);
 }
 
 GtkWidget *

@@ -69,7 +69,8 @@ gboolean  gimp_container_editor_construct (GimpContainerEditor *editor,
                                            gint                 preview_border_width,
                                            gboolean             reorderable,
                                            GimpMenuFactory     *menu_factory,
-                                           const gchar         *menu_identifier);
+                                           const gchar         *menu_identifier,
+                                           const gchar         *ui_identifier);
 
 
 #endif  /*  __GIMP_CONTAINER_EDITOR_H__  */

@@ -472,7 +472,8 @@ gimp_gradient_editor_new (Gimp            *gimp,
 
   if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (editor),
                                     gimp->gradient_factory,
-                                    menu_factory, "<GradientEditor>"))
+                                    menu_factory, "<GradientEditor>",
+                                    "/gradient-editor-popup"))
     {
       g_object_unref (editor);
       return NULL;

@@ -32,6 +32,7 @@
 #include "core/gimplist.h"
 
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpuimanager.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
@@ -511,6 +512,7 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
       GimpContext *user_context;
 
       gimp_item_factory_update (shell->menubar_factory, shell);
+      gimp_ui_manager_update (shell->menubar_manager, shell);
 
       user_context = gimp_get_user_context (gdisp->gimage->gimp);
 

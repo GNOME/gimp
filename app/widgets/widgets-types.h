@@ -37,6 +37,7 @@ typedef struct _GimpActionFactory            GimpActionFactory;
 typedef struct _GimpActionGroup              GimpActionGroup;
 typedef struct _GimpEnumAction               GimpEnumAction;
 typedef struct _GimpStringAction             GimpStringAction;
+typedef struct _GimpUIManager                GimpUIManager;
 
 typedef struct _GimpEnumStore                GimpEnumStore;
 

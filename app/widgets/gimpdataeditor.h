@@ -66,7 +66,8 @@ GType       gimp_data_editor_get_type   (void) G_GNUC_CONST;
 gboolean    gimp_data_editor_construct  (GimpDataEditor  *editor,
                                          GimpDataFactory *data_factory,
                                          GimpMenuFactory *menu_factory,
-                                         const gchar     *menu_identifier);
+                                         const gchar     *menu_identifier,
+                                         const gchar     *ui_identifier);
 
 void        gimp_data_editor_set_data   (GimpDataEditor  *editor,
                                          GimpData        *data);

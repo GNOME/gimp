@@ -104,9 +104,7 @@ gimp_buffer_view_get_type (void)
 static void
 gimp_buffer_view_class_init (GimpBufferViewClass *klass)
 {
-  GimpContainerEditorClass *editor_class;
-
-  editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
+  GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -141,7 +139,8 @@ gimp_buffer_view_new (GimpViewType     view_type,
                                          container,context,
                                          preview_size, preview_border_width,
                                          TRUE, /* reorderable */
-                                         menu_factory, "<Buffers>"))
+                                         menu_factory, "<Buffers>",
+                                         "/buffers-popup"))
     {
       g_object_unref (buffer_view);
       return NULL;

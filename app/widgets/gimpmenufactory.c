@@ -34,6 +34,7 @@
 #include "gimpactionfactory.h"
 #include "gimpmenufactory.h"
 #include "gimpitemfactory.h"
+#include "gimpuimanager.h"
 
 
 static void   gimp_menu_factory_class_init (GimpMenuFactoryClass *klass);
@@ -231,6 +232,8 @@ gimp_menu_factory_manager_register (GimpMenuFactory *factory,
       if (! strcmp (entry->identifier, identifier))
         {
           const gchar *group;
+          const gchar *ui_identifier;
+          const gchar *ui_basename;
           va_list      args;
 
           g_return_if_fail (entry->action_groups == NULL);
@@ -245,9 +248,30 @@ gimp_menu_factory_manager_register (GimpMenuFactory *factory,
                                                      g_strdup (group));
             }
 
-          va_end (args);
-
           entry->action_groups = g_list_reverse (entry->action_groups);
+
+          ui_identifier = va_arg (args, const gchar *);
+
+          while (ui_identifier)
+            {
+              GimpUIManagerUIEntry *ui_entry;
+
+              ui_basename = va_arg (args, const gchar *);
+
+              ui_entry = g_new0 (GimpUIManagerUIEntry, 1);
+
+              ui_entry->identifier = g_strdup (ui_identifier);
+              ui_entry->basename   = g_strdup (ui_basename);
+
+              entry->managed_uis = g_list_prepend (entry->managed_uis,
+                                                   ui_entry);
+
+              ui_identifier = va_arg (args, const gchar *);
+            }
+
+          entry->managed_uis = g_list_reverse (entry->managed_uis);
+
+          va_end (args);
 
           return;
         }
@@ -257,7 +281,7 @@ gimp_menu_factory_manager_register (GimpMenuFactory *factory,
              G_STRFUNC, identifier);
 }
 
-GtkUIManager *
+GimpUIManager *
 gimp_menu_factory_manager_new (GimpMenuFactory *factory,
                                const gchar     *identifier,
                                gpointer         callback_data,
@@ -274,11 +298,12 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
 
       if (! strcmp (entry->identifier, identifier))
         {
-          GtkUIManager *manager;
-          GList        *list;
+          GimpUIManager *manager;
+          GList         *list;
 
-          manager = gtk_ui_manager_new ();
-          gtk_ui_manager_set_add_tearoffs (manager, create_tearoff);
+          manager = gimp_ui_manager_new (factory->gimp);
+          gtk_ui_manager_set_add_tearoffs (GTK_UI_MANAGER (manager),
+                                           create_tearoff);
 
           for (list = entry->action_groups; list; list = g_list_next (list))
             {
@@ -287,10 +312,19 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
               group = gimp_action_factory_group_new (factory->action_factory,
                                                      (const gchar *) list->data,
                                                      callback_data);
-              gtk_ui_manager_insert_action_group (manager,
+              gtk_ui_manager_insert_action_group (GTK_UI_MANAGER (manager),
                                                   GTK_ACTION_GROUP (group),
                                                   -1);
               g_object_unref (group);
+            }
+
+          for (list = entry->managed_uis; list; list = g_list_next (list))
+            {
+              GimpUIManagerUIEntry *ui_entry = list->data;
+
+              gimp_ui_manager_ui_register (manager,
+                                           ui_entry->identifier,
+                                           ui_entry->basename);
             }
 
           return manager;

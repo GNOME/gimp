@@ -272,7 +272,8 @@ gboolean
 gimp_data_editor_construct (GimpDataEditor  *editor,
                             GimpDataFactory *data_factory,
                             GimpMenuFactory *menu_factory,
-                            const gchar     *menu_identifier)
+                            const gchar     *menu_identifier,
+                            const gchar     *ui_identifier)
 {
   GimpData *data;
 
@@ -285,9 +286,10 @@ gimp_data_editor_construct (GimpDataEditor  *editor,
 
   editor->data_factory = data_factory;
 
-  if (menu_factory && menu_identifier)
+  if (menu_factory && menu_identifier && ui_identifier)
     gimp_editor_create_menu (GIMP_EDITOR (editor),
-                             menu_factory, menu_identifier, editor);
+                             menu_factory, menu_identifier, ui_identifier,
+                             editor);
 
   data = (GimpData *)
     gimp_context_get_by_type (gimp_get_user_context (data_factory->gimp),

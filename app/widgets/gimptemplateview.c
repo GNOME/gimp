@@ -148,7 +148,8 @@ gimp_template_view_new (GimpViewType     view_type,
                                          container, context,
                                          preview_size, preview_border_width,
                                          TRUE, /* reorderable */
-                                         menu_factory, "<Templates>"))
+                                         menu_factory, "<Templates>",
+                                         "/templates-popup"))
     {
       g_object_unref (template_view);
       return NULL;

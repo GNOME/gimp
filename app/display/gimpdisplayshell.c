@@ -59,6 +59,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gui/info-window.h"
@@ -207,6 +208,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 {
   shell->gdisp                 = NULL;
   shell->menubar_factory       = NULL;
+  shell->menubar_manager       = NULL;
   shell->popup_factory         = NULL;
   shell->qmask_factory         = NULL;
 
@@ -374,6 +376,12 @@ gimp_display_shell_destroy (GtkObject *object)
       shell->menubar_factory = NULL;
     }
 
+  if (shell->menubar_manager)
+    {
+      g_object_unref (shell->menubar_manager);
+      shell->menubar_manager = NULL;
+    }
+
   shell->popup_factory = NULL;
 
   if (shell->qmask_factory)
@@ -478,6 +486,7 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 
   /* update the <Image>/View/Zoom menu */
   gimp_item_factory_update (shell->menubar_factory, shell);
+  gimp_ui_manager_update (shell->menubar_manager, shell);
 
   user_context = gimp_get_user_context (shell->gdisp->gimage->gimp);
 
@@ -594,6 +603,10 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
                                                        GTK_TYPE_MENU_BAR,
                                                        gdisp,
                                                        FALSE);
+  shell->menubar_manager = gimp_menu_factory_manager_new (menu_factory,
+                                                          "<Image>",
+                                                          gdisp,
+                                                          FALSE);
 
   shell->popup_factory = popup_factory;
 
@@ -602,6 +615,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
                                                      GTK_TYPE_MENU,
                                                      shell,
                                                      FALSE);
+
 
   /*  The accelerator table for images  */
   gtk_window_add_accel_group (GTK_WINDOW (shell),
@@ -657,6 +671,13 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   if (shell->options->show_menubar)
     gtk_widget_show (menubar);
+
+#if 0
+  menubar = gimp_ui_manager_ui_create (shell->menubar_manager,
+                                       "/image-menubar");
+  gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, FALSE, 0);
+  gtk_widget_show (menubar);
+#endif
 
   /*  make sure we can activate accels even if the menubar is invisible
    *  (see http://bugzilla.gnome.org/show_bug.cgi?id=137151)

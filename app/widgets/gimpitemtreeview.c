@@ -613,7 +613,8 @@ gimp_item_tree_view_new (gint                  preview_size,
                          GimpNewItemFunc       new_item_func,
                          GimpActivateItemFunc  activate_item_func,
                          GimpMenuFactory      *menu_factory,
-                         const gchar          *menu_identifier)
+                         const gchar          *menu_identifier,
+                         const gchar          *ui_identifier)
 {
   GimpItemTreeView      *item_view;
   GimpContainerView     *view;
@@ -632,6 +633,7 @@ gimp_item_tree_view_new (gint                  preview_size,
   g_return_val_if_fail (activate_item_func != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (menu_identifier != NULL, NULL);
+  g_return_val_if_fail (ui_identifier != NULL, NULL);
 
   if (item_type == GIMP_TYPE_LAYER)
     {
@@ -669,7 +671,8 @@ gimp_item_tree_view_new (gint                  preview_size,
   item_view->activate_item_func = activate_item_func;
 
   gimp_editor_create_menu (GIMP_EDITOR (item_view),
-                           menu_factory, menu_identifier, item_view);
+                           menu_factory, menu_identifier, ui_identifier,
+                           item_view);
 
   gimp_item_tree_view_set_image (item_view, gimage);
 

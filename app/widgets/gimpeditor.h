@@ -42,6 +42,7 @@ struct _GimpEditor
 
   GimpMenuFactory *menu_factory;
   GimpItemFactory *item_factory;
+  GimpUIManager   *ui_manager;
   gpointer         item_factory_data;
 
   GtkWidget       *button_box;
@@ -60,6 +61,7 @@ GtkWidget * gimp_editor_new           (void);
 void        gimp_editor_create_menu   (GimpEditor      *editor,
                                        GimpMenuFactory *menu_factory,
                                        const gchar     *menu_identifier,
+                                       const gchar     *ui_identifier,
                                        gpointer         callback_data);
 
 GtkWidget * gimp_editor_add_button    (GimpEditor      *editor,

@@ -40,6 +40,7 @@ struct _GimpMenuFactoryEntry
   GimpItemFactoryEntry      *entries;
 
   GList                     *action_groups;
+  GList                     *managed_uis;
 };
 
 
@@ -95,7 +96,7 @@ void           gimp_menu_factory_manager_register (GimpMenuFactory *factory,
                                                    const gchar     *first_group,
                                                    ...);
 
-GtkUIManager * gimp_menu_factory_manager_new      (GimpMenuFactory *factory,
+GimpUIManager * gimp_menu_factory_manager_new     (GimpMenuFactory *factory,
                                                    const gchar     *identifier,
                                                    gpointer         callback_data,
                                                    gboolean         create_tearoff);

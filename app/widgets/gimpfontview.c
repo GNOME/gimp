@@ -120,7 +120,8 @@ gimp_font_view_new (GimpViewType     view_type,
                                          container,context,
                                          preview_size, preview_border_width,
                                          FALSE, /* reorderable */
-                                         menu_factory, "<Fonts>"))
+                                         menu_factory, "<Fonts>",
+                                         "/fonts-popup"))
     {
       g_object_unref (font_view);
       return NULL;

@@ -284,7 +284,8 @@ gimp_component_editor_new (gint             preview_size,
   gimp_component_editor_set_preview_size (editor, preview_size);
 
   gimp_editor_create_menu (GIMP_EDITOR (editor),
-                           menu_factory, "<Channels>", editor);
+                           menu_factory, "<Channels>",
+                           "/channels-popup", editor);
 
   return GTK_WIDGET (editor);
 }
