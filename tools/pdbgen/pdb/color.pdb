@@ -56,7 +56,7 @@ HELP
     success = FALSE;
   else
     {
-      gimage = gimp_drawable_gimage (drawable);
+      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
       lut = brightness_contrast_lut_new (brightness / 255.0,
 					 contrast / 127.0,
@@ -201,7 +201,7 @@ HELP
     success = FALSE;
   else
     {
-      gimage = gimp_drawable_gimage (drawable);
+      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
       lut = posterize_lut_new (levels, gimp_drawable_bytes (drawable)); 
 
@@ -607,7 +607,7 @@ HELP
 			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
 
       /*  Configure the mask from the gimage's selection mask */
-      mask = gimp_image_get_mask (gimp_drawable_gimage (drawable));
+      mask = gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)));
       pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
 			 x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
 

@@ -91,7 +91,7 @@ gimp_drawable_bucket_fill (GimpDrawable   *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  gimage = gimp_drawable_gimage (drawable);
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -163,7 +163,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable   *drawable,
   g_return_if_fail ((fill_mode != FG_BUCKET_FILL &&
                      fill_mode != BG_BUCKET_FILL) || color != NULL);
 
-  gimage = gimp_drawable_gimage (drawable);
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 

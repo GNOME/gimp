@@ -156,6 +156,7 @@ typedef struct _GimpContainerView       GimpContainerView;
 typedef struct _GimpContainerListView   GimpContainerListView;
 typedef struct _GimpContainerGridView   GimpContainerGridView;
 
+typedef struct _GimpItemListView        GimpItemListView;
 typedef struct _GimpDrawableListView    GimpDrawableListView;
 typedef struct _GimpLayerListView       GimpLayerListView;
 typedef struct _GimpChannelListView     GimpChannelListView;

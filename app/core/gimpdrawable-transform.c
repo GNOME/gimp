@@ -116,7 +116,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (float_tiles != NULL, NULL);
 
-  gimage = gimp_drawable_gimage (drawable);
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -607,7 +607,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  gimage = gimp_drawable_gimage (drawable);
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
@@ -654,7 +654,7 @@ gimp_drawable_transform_flip (GimpDrawable            *drawable,
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  gimage = gimp_drawable_gimage (drawable);
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
@@ -696,7 +696,7 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (new_layer != NULL, NULL);
 
-  gimage = gimp_drawable_gimage (drawable);
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -738,15 +738,15 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (tiles != NULL, FALSE);
 
-  gimage = gimp_drawable_gimage (drawable);
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   if (new_layer)
     {
       layer =
-	gimp_layer_new_from_tiles (gimage,
-				   tiles,
+	gimp_layer_new_from_tiles (tiles,
+                                   gimage,
 				   _("Transformation"),
 				   OPAQUE_OPACITY, GIMP_NORMAL_MODE);
       if (! layer)

@@ -66,7 +66,7 @@ by_color_select_invoker (Gimp     *gimp,
   gboolean sample_merged;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -90,7 +90,7 @@ by_color_select_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
     
       gimp_image_mask_select_by_color (gimage, drawable,
 				       sample_merged,
@@ -405,7 +405,7 @@ fuzzy_select_invoker (Gimp     *gimp,
   gboolean sample_merged;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -431,7 +431,7 @@ fuzzy_select_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
     
       gimp_image_mask_select_fuzzy (gimage,
 				    drawable,

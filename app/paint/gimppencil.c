@@ -141,8 +141,7 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
   gdouble               scale;
   PaintApplicationMode  paint_appl_mode;
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   context = gimp_get_current_context (gimage->gimp);
 

@@ -37,7 +37,7 @@
 /*  private variables  */
 
 
-static GimpViewableClass *parent_class = NULL;
+static GimpItemClass *parent_class = NULL;
 
 
 static void     gimp_vectors_class_init (GimpVectorsClass *klass);
@@ -66,7 +66,7 @@ gimp_vectors_get_type (void)
         (GInstanceInitFunc) gimp_vectors_init,
       };
 
-      vectors_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
+      vectors_type = g_type_register_static (GIMP_TYPE_ITEM,
                                              "GimpVectors",
                                              &vectors_info, 0);
     }
@@ -89,12 +89,11 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
 
   object_class->finalize             = gimp_vectors_finalize;
 
-  /* gimp_object_class->name_changed    = gimp_vectors_name_changed; */
+  /* gimp_object_class->get_memsize  = gimp_vectors_get_memsize; */
 
   viewable_class->get_new_preview    = gimp_vectors_get_new_preview;
 
   klass->changed                     = NULL;
-  klass->removed                     = NULL;
 
   klass->stroke_add                  = NULL;
   klass->stroke_get		     = NULL;
@@ -113,7 +112,6 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
 static void
 gimp_vectors_init (GimpVectors *vectors)
 {
-  vectors->gimage  = NULL;
   vectors->strokes = NULL;
 };
 
@@ -123,23 +121,6 @@ gimp_vectors_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-void
-gimp_vectors_set_image (GimpVectors *vectors,
-                        GimpImage   *gimage)
-{
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-  g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
-
-  vectors->gimage = gimage;
-}
-
-GimpImage *
-gimp_vectors_get_image (const GimpVectors *vectors)
-{
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
-
-  return vectors->gimage;
-}
 
 /* Calling the virtual functions */
 

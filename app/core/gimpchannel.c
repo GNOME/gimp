@@ -316,7 +316,7 @@ gimp_channel_scale (GimpChannel           *channel,
   scale_region (&srcPR, &destPR, interpolation_type);
 
   /*  Push the channel on the undo stack  */
-  undo_push_channel_mod (GIMP_DRAWABLE (channel)->gimage, channel);
+  undo_push_channel_mod (gimp_item_get_image (GIMP_ITEM (channel)), channel);
 
   /*  Configure the new channel  */
   GIMP_DRAWABLE (channel)->tiles  = new_tiles;
@@ -419,7 +419,7 @@ gimp_channel_resize (GimpChannel *channel,
     copy_region (&srcPR, &destPR);
 
   /*  Push the channel on the undo stack  */
-  undo_push_channel_mod (GIMP_DRAWABLE (channel)->gimage, channel);
+  undo_push_channel_mod (gimp_item_get_image (GIMP_ITEM (channel)), channel);
 
   /*  Configure the new channel  */
   GIMP_DRAWABLE (channel)->tiles  = new_tiles;
@@ -1180,7 +1180,7 @@ gimp_channel_feather (GimpChannel *mask,
   PixelRegion srcPR;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
-  g_return_if_fail (push_undo && gimp_drawable_gimage (GIMP_DRAWABLE (mask)));
+  g_return_if_fail (push_undo && gimp_item_get_image (GIMP_ITEM (mask)));
 
   if (push_undo)
     gimp_channel_push_undo (mask);
@@ -1214,7 +1214,7 @@ gimp_channel_push_undo (GimpChannel *mask)
   else
     undo_tiles = NULL;
 
-  gimage = GIMP_DRAWABLE (mask)->gimage;
+  gimage = gimp_item_get_image (GIMP_ITEM (mask));
 
   undo_push_image_mask (gimage, undo_tiles, x1, y1);
 
@@ -1518,7 +1518,7 @@ gimp_channel_translate (GimpChannel *mask,
       /*  copy the portion of the mask we will keep to a
        *  temporary buffer
        */
-      tmp_mask = gimp_channel_new_mask (GIMP_DRAWABLE (mask)->gimage,
+      tmp_mask = gimp_channel_new_mask (gimp_item_get_image (GIMP_ITEM (mask)),
 					width, height);
 
       pixel_region_init (&srcPR, GIMP_DRAWABLE (mask)->tiles,

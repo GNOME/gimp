@@ -110,7 +110,7 @@ airbrush_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpAirbrushOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -192,7 +192,7 @@ airbrush_default_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpAirbrushOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -267,11 +267,11 @@ clone_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpCloneOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
-  src_drawable = gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  src_drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (src_drawable == NULL)
     success = FALSE;
 
@@ -380,7 +380,7 @@ clone_default_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpCloneOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -453,7 +453,7 @@ convolve_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpConvolveOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -545,7 +545,7 @@ convolve_default_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpConvolveOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -619,7 +619,7 @@ dodgeburn_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpDodgeBurnOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -721,7 +721,7 @@ dodgeburn_default_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpDodgeBurnOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -794,7 +794,7 @@ eraser_invoker (Gimp     *gimp,
   gint32 method;
   GimpEraserOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -887,7 +887,7 @@ eraser_default_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpEraserOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -961,7 +961,7 @@ paintbrush_invoker (Gimp     *gimp,
   gdouble gradient_length;
   GimpPaintOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1064,7 +1064,7 @@ paintbrush_default_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpPaintOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1135,7 +1135,7 @@ pencil_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpPaintOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1207,7 +1207,7 @@ smudge_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpSmudgeOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1289,7 +1289,7 @@ smudge_default_invoker (Gimp     *gimp,
   gdouble *strokes;
   GimpSmudgeOptions *options;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 

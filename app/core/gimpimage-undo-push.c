@@ -1723,9 +1723,9 @@ undo_pop_layer_mod (GimpImage *gimage,
     }
 
   if (GIMP_DRAWABLE (layer)->has_alpha != old_has_alpha &&
-      GIMP_DRAWABLE (layer)->gimage->layers->num_children == 1)
+      GIMP_ITEM (layer)->gimage->layers->num_children == 1)
     {
-      gimp_image_alpha_changed (GIMP_DRAWABLE (layer)->gimage);
+      gimp_image_alpha_changed (GIMP_ITEM (layer)->gimage);
     }
 
   /*  Set the new tile manager  */
@@ -2038,7 +2038,7 @@ undo_push_layer_displace (GimpImage *gimage,
       new->pop_func  = undo_pop_layer_displace;
       new->free_func = undo_free_layer_displace;
 
-      ldu->info[0]   = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
+      ldu->info[0]   = gimp_item_get_ID (GIMP_ITEM (layer));
       ldu->info[1]   = GIMP_DRAWABLE (layer)->offset_x;
       ldu->info[2]   = GIMP_DRAWABLE (layer)->offset_y;
       ldu->path_undo = path_transform_start_undo (gimage);
@@ -2061,7 +2061,7 @@ undo_pop_layer_displace (GimpImage *gimage,
   LayerDisplaceUndo *ldu;
 
   ldu = (LayerDisplaceUndo *) info_ptr;
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimage->gimp, ldu->info[0]);
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimage->gimp, ldu->info[0]);
   if (layer)
     {
       old_offsets[0] = GIMP_DRAWABLE (layer)->offset_x;
@@ -2222,8 +2222,11 @@ undo_pop_channel (GimpImage *gimage,
       /*  remove the channel  */
       gimp_container_remove (gimage->channels, GIMP_OBJECT (cu->channel));
 
-      /*  set the previous channel  */
-      gimp_image_set_active_channel (gimage, cu->prev_channel);
+      if (cu->prev_channel)
+        {
+          /*  set the previous channel  */
+          gimp_image_set_active_channel (gimage, cu->prev_channel);
+        }
 
       /*  update the area  */
       gimp_drawable_update (GIMP_DRAWABLE (cu->channel),
@@ -2241,8 +2244,11 @@ undo_pop_channel (GimpImage *gimage,
       gimp_container_insert (gimage->channels, 
 			     GIMP_OBJECT (cu->channel),	cu->prev_position);
  
-      /*  set the new channel  */
-      gimp_image_set_active_channel (gimage, cu->channel);
+      if (cu->channel)
+        {
+          /*  set the new channel  */
+          gimp_image_set_active_channel (gimage, cu->channel);
+        }
 
       /*  update the area  */
       gimp_drawable_update (GIMP_DRAWABLE (cu->channel),
@@ -2545,8 +2551,11 @@ undo_pop_vectors (GimpImage *gimage,
       /*  remove the vectors  */
       gimp_container_remove (gimage->vectors, GIMP_OBJECT (vu->vectors));
 
-      /*  set the previous vectors  */
-      gimp_image_set_active_vectors (gimage, vu->prev_vectors);
+      if (vu->prev_vectors)
+        {
+          /*  set the previous vectors  */
+          gimp_image_set_active_vectors (gimage, vu->prev_vectors);
+        }
     }
   else
     {
@@ -2559,8 +2568,11 @@ undo_pop_vectors (GimpImage *gimage,
       gimp_container_insert (gimage->vectors, 
 			     GIMP_OBJECT (vu->vectors),	vu->prev_position);
  
-      /*  set the new vectors  */
-      gimp_image_set_active_vectors (gimage, vu->vectors);
+      if (vu->vectors)
+        {
+          /*  set the new vectors  */
+          gimp_image_set_active_vectors (gimage, vu->vectors);
+        }
     }
 
   return TRUE;
@@ -2899,7 +2911,7 @@ undo_pop_fs_rigor (GimpImage *gimage,
 
   layer_ID = *((gint32 *) layer_ptr);
 
-  if ((floating_layer = (GimpLayer *) gimp_drawable_get_by_ID (gimage->gimp, layer_ID)) == NULL)
+  if ((floating_layer = (GimpLayer *) gimp_item_get_by_ID (gimage->gimp, layer_ID)) == NULL)
     return FALSE;
 
   if (! gimp_layer_is_floating_sel (floating_layer))
@@ -2982,7 +2994,7 @@ undo_pop_fs_relax (GimpImage *gimage,
 
   layer_ID = *((gint32 *) layer_ptr);
 
-  if ((floating_layer = (GimpLayer *) gimp_drawable_get_by_ID (gimage->gimp, layer_ID)) == NULL)
+  if ((floating_layer = (GimpLayer *) gimp_item_get_by_ID (gimage->gimp, layer_ID)) == NULL)
     return FALSE;
 
   if (! gimp_layer_is_floating_sel (floating_layer))
@@ -3250,7 +3262,7 @@ typedef struct _ParasiteUndo ParasiteUndo;
 struct _ParasiteUndo
 {
   GimpImage    *gimage;
-  GimpDrawable *drawable;
+  GimpItem     *item;
   GimpParasite *parasite;
   gchar        *name;
 };
@@ -3277,7 +3289,7 @@ undo_push_image_parasite (GimpImage *gimage,
       new->free_func = undo_free_parasite;
 
       pu->gimage   = gimage;
-      pu->drawable = NULL;
+      pu->item     = NULL;
       pu->name     = g_strdup (gimp_parasite_name (parasite));
       pu->parasite = gimp_parasite_copy (gimp_image_parasite_find (gimage,
                                                                    pu->name));
@@ -3306,7 +3318,7 @@ undo_push_image_parasite_remove (GimpImage   *gimage,
       new->free_func = undo_free_parasite;
 
       pu->gimage   = gimage;
-      pu->drawable = NULL;
+      pu->item     = NULL;
       pu->name     = g_strdup (name);
       pu->parasite = gimp_parasite_copy (gimp_image_parasite_find (gimage,
                                                                    pu->name));
@@ -3318,9 +3330,9 @@ undo_push_image_parasite_remove (GimpImage   *gimage,
 }
 
 gboolean
-undo_push_drawable_parasite (GimpImage    *gimage,
-			     GimpDrawable *drawable,
-			     gpointer      parasite)
+undo_push_item_parasite (GimpImage *gimage,
+                         GimpItem  *item,
+                         gpointer   parasite)
 {
   Undo *new;
 
@@ -3336,10 +3348,10 @@ undo_push_drawable_parasite (GimpImage    *gimage,
       new->free_func = undo_free_parasite;
 
       pu->gimage   = NULL;
-      pu->drawable = drawable;
+      pu->item     = item;
       pu->name     = g_strdup (gimp_parasite_name (parasite));
-      pu->parasite = gimp_parasite_copy (gimp_drawable_parasite_find (drawable,
-                                                                      pu->name));
+      pu->parasite = gimp_parasite_copy (gimp_item_parasite_find (item,
+                                                                  pu->name));
       return TRUE;
     }
 
@@ -3347,9 +3359,9 @@ undo_push_drawable_parasite (GimpImage    *gimage,
 }
 
 gboolean
-undo_push_drawable_parasite_remove (GimpImage    *gimage,
-				    GimpDrawable *drawable,
-				    const gchar  *name)
+undo_push_item_parasite_remove (GimpImage   *gimage,
+                                GimpItem    *item,
+                                const gchar *name)
 {
   Undo *new;
 
@@ -3365,10 +3377,10 @@ undo_push_drawable_parasite_remove (GimpImage    *gimage,
       new->free_func = undo_free_parasite;
 
       pu->gimage   = NULL;
-      pu->drawable = drawable;
+      pu->item     = item;
       pu->name     = g_strdup (name);
-      pu->parasite = gimp_parasite_copy (gimp_drawable_parasite_find (drawable,
-                                                                      pu->name));
+      pu->parasite = gimp_parasite_copy (gimp_item_parasite_find (item,
+                                                                  pu->name));
       return TRUE;
     }
 
@@ -3399,15 +3411,15 @@ undo_pop_parasite (GimpImage *gimage,
       else
 	gimp_parasite_list_remove (data->gimage->parasites, data->name);
     }
-  else if (data->drawable)
+  else if (data->item)
     {
       data->parasite =
-	gimp_parasite_copy (gimp_drawable_parasite_find (data->drawable,
-							 data->name));
+	gimp_parasite_copy (gimp_item_parasite_find (data->item,
+                                                     data->name));
       if (tmp)
-	gimp_parasite_list_add (data->drawable->parasites, tmp);
+	gimp_parasite_list_add (data->item->parasites, tmp);
       else
-	gimp_parasite_list_remove (data->drawable->parasites, data->name);
+	gimp_parasite_list_remove (data->item->parasites, data->name);
     }
   else
     {

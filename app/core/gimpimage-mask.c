@@ -391,8 +391,8 @@ gimp_image_mask_float (GimpImage    *gimage,
   tiles = gimp_image_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
 
   /*  Create a new layer from the buffer  */
-  layer = gimp_layer_new_from_tiles (gimage,
-				     tiles, 
+  layer = gimp_layer_new_from_tiles (tiles,
+                                     gimage,
 				     _("Floating Selection"),
 				     OPAQUE_OPACITY, GIMP_NORMAL_MODE);
 
@@ -532,7 +532,7 @@ void
 gimp_image_mask_layer_mask (GimpImage *gimage,
                             GimpLayer *layer)
 {
-  /*  extract the layer's alpha channel  */
+  /*  get the layer's mask  */
   if (gimp_layer_get_mask (layer))
     {
       /*  load the mask with the given layer's alpha channel  */
@@ -649,7 +649,7 @@ gimp_image_mask_stroke (GimpImage    *gimage,
 	procedural_db_run_proc (gimage->gimp,
 				pdb_string,
 				&nreturn_vals,
-				GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
+				GIMP_PDB_DRAWABLE, gimp_item_get_ID (GIMP_ITEM (drawable)),
 				GIMP_PDB_INT32, (gint32) cpnt,
 				GIMP_PDB_FLOATARRAY, stroke_points,
 				GIMP_PDB_END);

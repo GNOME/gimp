@@ -227,7 +227,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 	  Gimp    *gimp;
 	  GimpRGB  color;
 
-	  gimp = gimp_drawable_gimage (drawable)->gimp;
+	  gimp = gimp_item_get_image (GIMP_ITEM (drawable))->gimp;
 
 	  gimp_context_get_background (gimp_get_current_context (gimp), &color);
 

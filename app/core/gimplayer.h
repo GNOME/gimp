@@ -85,13 +85,13 @@ GimpLayer     * gimp_layer_copy                (const GimpLayer      *layer,
                                                 GType                 new_type,
                                                 gboolean              add_alpha);
 
-GimpLayer     * gimp_layer_new_from_tiles      (GimpImage            *gimage,
-                                                TileManager          *tiles,
+GimpLayer     * gimp_layer_new_from_tiles      (TileManager          *tiles,
+                                                GimpImage            *dest_gimage,
                                                 const gchar          *name,
                                                 gint                  opacity,
                                                 GimpLayerModeEffects  mode);
-GimpLayer     * gimp_layer_new_from_drawable   (GimpImage            *dest_image,
-                                                GimpDrawable         *drawable);
+GimpLayer     * gimp_layer_new_from_drawable   (GimpDrawable         *drawable,
+                                                GimpImage            *dest_image);
 
 gboolean        gimp_layer_check_scaling       (const GimpLayer      *layer,
                                                 gint                  new_width,

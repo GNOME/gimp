@@ -126,10 +126,7 @@ gimp_paintbrush_paint (GimpPaintCore      *paint_core,
   gdouble              gradient_length;
   gdouble              unit_factor;
 
-  gimage = gimp_drawable_gimage (drawable);
-
-  if (! gimage)
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   pressure_options = paint_options->pressure_options;
   gradient_options = paint_options->gradient_options;
@@ -215,8 +212,7 @@ gimp_paintbrush_motion (GimpPaintCore       *paint_core,
   gdouble               scale;
   PaintApplicationMode  paint_appl_mode = incremental ? INCREMENTAL : CONSTANT;
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   context = gimp_get_current_context (gimage->gimp);
 

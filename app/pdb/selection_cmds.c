@@ -359,7 +359,7 @@ selection_float_invoker (Gimp     *gimp,
   GimpLayer *layer = NULL;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -369,7 +369,7 @@ selection_float_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimage = gimp_drawable_gimage (drawable);
+      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
       layer = gimp_image_mask_float (gimage, drawable, offx, offy);
       success = layer != NULL;
     }
@@ -377,7 +377,7 @@ selection_float_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&selection_float_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
 
   return return_args;
 }
@@ -852,13 +852,13 @@ selection_layer_alpha_invoker (Gimp     *gimp,
   GimpLayer *layer;
   GimpImage *gimage;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
   if (success)
     {
-      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
+      gimage = gimp_item_get_image (GIMP_ITEM (layer));
       gimp_image_mask_layer_alpha (gimage, layer);
     }
 
@@ -898,13 +898,13 @@ selection_load_invoker (Gimp     *gimp,
   GimpChannel *channel;
   GimpImage *gimage;
 
-  channel = (GimpChannel *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (channel == NULL)
     success = FALSE;
 
   if (success)
     {
-      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (channel));
+      gimage = gimp_item_get_image (GIMP_ITEM (channel));
        
       if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
 	  gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
@@ -960,7 +960,7 @@ selection_save_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&selection_save_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (channel));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (channel));
 
   return return_args;
 }
@@ -1009,7 +1009,7 @@ selection_combine_invoker (Gimp     *gimp,
   GimpImage *gimage;
   GimpChannel *new_channel;
 
-  channel = (GimpChannel *) gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (channel == NULL)
     success = FALSE;
 
@@ -1019,7 +1019,7 @@ selection_combine_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (channel));
+      gimage = gimp_item_get_image (GIMP_ITEM (channel));
        
       if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
 	  gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)

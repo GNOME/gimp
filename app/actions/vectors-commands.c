@@ -1,0 +1,636 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "gui-types.h"
+
+#include "core/gimp.h"
+#include "core/gimpchannel.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimplist.h"
+
+#include "vectors/gimpvectors.h"
+
+#include "display/gimpdisplay-foreach.h"
+
+#include "widgets/gimpitemfactory.h"
+#include "widgets/gimpwidgets-utils.h"
+
+#include "vectors-commands.h"
+
+#include "undo.h"
+
+#include "libgimp/gimpintl.h"
+
+
+/*  public functions  */
+
+void
+vectors_new_vectors_cmd_callback (GtkWidget *widget,
+                                  gpointer   data)
+{
+  GimpImage *gimage;
+
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
+
+  if (! gimage)
+    return;
+
+  vectors_new_vectors_query (gimage, NULL);
+}
+
+void
+vectors_raise_vectors_cmd_callback (GtkWidget *widget,
+                                    gpointer   data)
+{
+  GimpImage *gimage;
+
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
+
+  if (! gimage)
+    return;
+
+  if (gimp_image_get_active_vectors (gimage))
+    {
+      gimp_image_raise_vectors (gimage, gimp_image_get_active_vectors (gimage));
+      gdisplays_flush ();
+    }
+}
+
+void
+vectors_lower_vectors_cmd_callback (GtkWidget *widget,
+                                    gpointer   data)
+{
+  GimpImage *gimage;
+
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
+
+  if (! gimage)
+    return;
+
+  if (gimp_image_get_active_vectors (gimage))
+    {
+      gimp_image_lower_vectors (gimage, gimp_image_get_active_vectors (gimage));
+      gdisplays_flush ();
+    }
+}
+
+void
+vectors_duplicate_vectors_cmd_callback (GtkWidget *widget,
+                                        gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+  GimpVectors *new_vectors;
+
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
+
+  if (! gimage)
+    return;
+
+  active_vectors = gimp_image_get_active_vectors (gimage);
+
+  if (active_vectors)
+    {
+      new_vectors = NULL; /*gimp_vectors_copy (active_vectors,
+                            G_TYPE_FROM_INSTANCE (active_vectors),
+                            TRUE);*/
+      gimp_image_add_vectors (gimage, new_vectors, -1);
+      gdisplays_flush ();
+    }
+}
+
+void
+vectors_delete_vectors_cmd_callback (GtkWidget *widget,
+                                     gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
+
+  if (! gimage)
+    return;
+
+  active_vectors = gimp_image_get_active_vectors (gimage);
+
+  if (active_vectors)
+    {
+      gimp_image_remove_vectors (gimage, active_vectors);
+      gdisplays_flush ();
+    }
+}
+
+void
+vectors_vectors_to_sel_cmd_callback (GtkWidget *widget,
+                                     gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
+
+  if (! gimage)
+    return;
+
+  active_vectors = gimp_image_get_active_vectors (gimage);
+
+  if (active_vectors)
+    {
+      GimpChannel *vectors_mask;
+
+      vectors_mask = NULL; /*gimp_vectors_to_channel (active_vectors);*/
+
+      gimp_image_mask_load (gimage, vectors_mask);
+
+      g_object_unref (G_OBJECT (vectors_mask));
+
+      gdisplays_flush ();
+    }
+}
+
+void
+vectors_add_vectors_to_sel_cmd_callback (GtkWidget *widget,
+                                         gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
+
+  if (! gimage)
+    return;
+
+  active_vectors = gimp_image_get_active_vectors (gimage);
+
+  if (active_vectors)
+    {
+      GimpChannel *vectors_mask;
+      GimpChannel *new_mask;
+
+      vectors_mask = NULL; /*gimp_vectors_to_channel (active_vectors);*/
+
+      new_mask = gimp_channel_copy (gimp_image_get_mask (gimage),
+                                    G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+                                    TRUE);
+
+      gimp_channel_combine_mask (new_mask,
+				 vectors_mask,
+				 CHANNEL_OP_ADD, 
+				 0, 0);  /* off x/y */
+
+      gimp_image_mask_load (gimage, new_mask);
+
+      g_object_unref (G_OBJECT (new_mask));
+
+      gdisplays_flush ();
+    }
+}
+
+void
+vectors_sub_vectors_from_sel_cmd_callback (GtkWidget *widget,
+                                           gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
+
+  if (! gimage)
+    return;
+
+  active_vectors = gimp_image_get_active_vectors (gimage);
+
+  if (active_vectors)
+    {
+      GimpChannel *vectors_mask;
+      GimpChannel *new_mask;
+
+      vectors_mask = NULL; /*gimp_vectors_to_channel (active_vectors);*/
+
+      new_mask = gimp_channel_copy (gimp_image_get_mask (gimage),
+                                    G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+                                    TRUE);
+
+      gimp_channel_combine_mask (new_mask,
+				 vectors_mask,
+				 CHANNEL_OP_SUB,
+				 0, 0);  /* off x/y */
+
+      gimp_image_mask_load (gimage, new_mask);
+
+      g_object_unref (G_OBJECT (new_mask));
+
+      gdisplays_flush ();
+    }
+}
+
+void
+vectors_intersect_vectors_with_sel_cmd_callback (GtkWidget *widget,
+                                                 gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
+
+  if (! gimage)
+    return;
+
+  active_vectors = gimp_image_get_active_vectors (gimage);
+
+  if (active_vectors)
+    {
+      GimpChannel *vectors_mask;
+      GimpChannel *new_mask;
+
+      vectors_mask = NULL; /*gimp_vectors_to_channel (active_vectors);*/
+
+      new_mask = gimp_channel_copy (gimp_image_get_mask (gimage),
+                                    G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+                                    TRUE);
+
+      gimp_channel_combine_mask (new_mask,
+				 vectors_mask,
+				 CHANNEL_OP_INTERSECT,
+				 0, 0);  /* off x/y */
+
+      gimp_image_mask_load (gimage, new_mask);
+
+      g_object_unref (G_OBJECT (new_mask));
+
+      gdisplays_flush ();
+    }
+}
+
+void
+vectors_sel_to_vectors_cmd_callback (GtkWidget *widget,
+                                     gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
+
+  if (! gimage)
+    return;
+
+  active_vectors = gimp_image_get_active_vectors (gimage);
+
+  if (active_vectors)
+    {
+    }
+}
+
+void
+vectors_stroke_vectors_cmd_callback (GtkWidget *widget,
+                                     gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
+
+  if (! gimage)
+    return;
+
+  active_vectors = gimp_image_get_active_vectors (gimage);
+
+  if (active_vectors)
+    {
+    }
+}
+
+void
+vectors_edit_vectors_attributes_cmd_callback (GtkWidget *widget,
+                                              gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
+
+  if (! gimage)
+    return;
+
+  active_vectors = gimp_image_get_active_vectors (gimage);
+
+  if (active_vectors)
+    {
+      vectors_edit_vectors_query (active_vectors);
+    }
+}
+
+
+/**********************************/
+/*  The new vectors query dialog  */
+/**********************************/
+
+typedef struct _NewVectorsOptions NewVectorsOptions;
+
+struct _NewVectorsOptions
+{
+  GtkWidget  *query_box;
+  GtkWidget  *name_entry;
+
+  GimpImage  *gimage;
+};
+
+static gchar *vectors_name = NULL;
+
+
+static void
+new_vectors_query_ok_callback (GtkWidget *widget,
+			       gpointer   data)
+{
+  NewVectorsOptions *options;
+  GimpVectors       *new_vectors;
+  GimpImage         *gimage;
+
+  options = (NewVectorsOptions *) data;
+
+  if (vectors_name)
+    g_free (vectors_name);
+  vectors_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+
+  if ((gimage = options->gimage))
+    {
+      new_vectors = g_object_new (GIMP_TYPE_VECTORS, NULL);
+
+      gimp_image_add_vectors (gimage, new_vectors, -1);
+
+      gimp_object_set_name (GIMP_OBJECT (new_vectors), vectors_name);
+
+      gdisplays_flush ();
+    }
+
+  gtk_widget_destroy (options->query_box);
+}
+
+void
+vectors_new_vectors_query (GimpImage   *gimage,
+                           GimpVectors *template)
+{
+  NewVectorsOptions *options;
+  GtkWidget         *hbox;
+  GtkWidget         *vbox;
+  GtkWidget         *table;
+  GtkWidget         *label;
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (! template || GIMP_IS_VECTORS (template));
+
+  if (template)
+    {
+      GimpVectors *new_vectors;
+
+      /* undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP); */
+
+      new_vectors = NULL; /*gimp_vectors_new (gimage, _("Empty Vectors Copy"));*/
+
+      gimp_image_add_vectors (gimage, new_vectors, -1);
+
+      /* undo_push_group_end (gimage); */
+
+      gdisplays_flush ();
+      return;
+    }
+
+  /*  the new options structure  */
+  options = g_new (NewVectorsOptions, 1);
+  options->gimage      = gimage;
+  
+  /*  The dialog  */
+  options->query_box =
+    gimp_dialog_new (_("New Vectors Options"), "new_vectors_options",
+		     gimp_standard_help_func,
+		     "dialogs/vectors/new_vectors.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
+
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
+		     NULL, 1, NULL, FALSE, TRUE,
+
+		     GTK_STOCK_OK, new_vectors_query_ok_callback,
+		     options, NULL, NULL, TRUE, FALSE,
+
+		     NULL);
+
+  g_object_weak_ref (G_OBJECT (options->query_box),
+		     (GWeakNotify) g_free,
+		     options);
+
+  /*  The main hbox  */
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
+		     hbox);
+
+  /*  The vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+
+  /*  The table  */
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+
+  /*  The name entry hbox, label and entry  */
+  label = gtk_label_new (_("Vectors name:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  options->name_entry = gtk_entry_new ();
+  gtk_widget_set_size_request (options->name_entry, 150, -1);
+  gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry,
+			     1, 2, 0, 1);
+  gtk_entry_set_text (GTK_ENTRY (options->name_entry),
+		      (vectors_name ? vectors_name : _("New Vectors")));
+  gtk_widget_show (options->name_entry);
+
+  gtk_widget_show (table);
+  gtk_widget_show (vbox);
+  gtk_widget_show (hbox);
+  gtk_widget_show (options->query_box);
+}
+
+/****************************************/
+/*  The edit vectors attributes dialog  */
+/****************************************/
+
+typedef struct _EditVectorsOptions EditVectorsOptions;
+
+struct _EditVectorsOptions
+{
+  GtkWidget     *query_box;
+  GtkWidget     *name_entry;
+
+  GimpVectors   *vectors;
+  GimpImage     *gimage;
+};
+
+static void
+edit_vectors_query_ok_callback (GtkWidget *widget,
+				gpointer   data)
+{
+  EditVectorsOptions *options;
+  GimpVectors        *vectors;
+
+  options = (EditVectorsOptions *) data;
+  vectors = options->vectors;
+
+  if (options->gimage)
+    {
+      /*  Set the new vectors name  */
+      gimp_object_set_name (GIMP_OBJECT (vectors),
+			    gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+    }
+
+  gtk_widget_destroy (options->query_box);
+}
+
+void
+vectors_edit_vectors_query (GimpVectors *vectors)
+{
+  EditVectorsOptions *options;
+  GtkWidget          *hbox;
+  GtkWidget          *vbox;
+  GtkWidget          *table;
+  GtkWidget          *label;
+
+  options = g_new0 (EditVectorsOptions, 1);
+
+  options->vectors = vectors;
+  options->gimage  = gimp_item_get_image (GIMP_ITEM (vectors));
+
+  /*  The dialog  */
+  options->query_box =
+    gimp_dialog_new (_("Edit Vectors Attributes"), "edit_vectors_attributes",
+		     gimp_standard_help_func,
+		     "dialogs/vectors/edit_vectors_attributes.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
+
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
+		     NULL, 1, NULL, FALSE, TRUE,
+
+		     GTK_STOCK_OK, edit_vectors_query_ok_callback,
+		     options, NULL, NULL, TRUE, FALSE,
+
+		     NULL);
+
+  g_object_weak_ref (G_OBJECT (options->query_box),
+		     (GWeakNotify) g_free,
+		     options);
+
+  g_signal_connect_object (G_OBJECT (vectors), "removed",
+			   G_CALLBACK (gtk_widget_destroy),
+			   G_OBJECT (options->query_box),
+			   G_CONNECT_SWAPPED);
+
+  /*  The main hbox  */
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
+		     hbox);
+
+  /*  The vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+
+  /*  The table  */
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+
+  /*  The name entry  */
+  label = gtk_label_new (_("Vectors name:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  options->name_entry = gtk_entry_new ();
+  gtk_widget_set_size_request (options->name_entry, 150, -1);
+  gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry,
+			     1, 2, 0, 1);
+  gtk_entry_set_text (GTK_ENTRY (options->name_entry),
+		      gimp_object_get_name (GIMP_OBJECT (vectors)));
+  gtk_widget_show (options->name_entry);
+
+  gtk_widget_show (table);
+  gtk_widget_show (vbox);
+  gtk_widget_show (hbox);
+  gtk_widget_show (options->query_box);
+}
+
+void
+vectors_menu_update (GtkItemFactory *factory,
+                      gpointer        data)
+{
+  GimpImage   *gimage;
+  GimpVectors *vectors;
+  gboolean     fs;
+  GList       *list;
+  GList       *next = NULL;
+  GList       *prev = NULL;
+
+  gimage = GIMP_IMAGE (data);
+
+  vectors = gimp_image_get_active_vectors (gimage);
+
+  fs = (gimp_image_floating_sel (gimage) != NULL);
+
+  for (list = GIMP_LIST (gimage->vectors)->list;
+       list;
+       list = g_list_next (list))
+    {
+      if (vectors == (GimpVectors *) list->data)
+	{
+	  prev = g_list_previous (list);
+	  next = g_list_next (list);
+	  break;
+	}
+    }
+
+#define SET_SENSITIVE(menu,condition) \
+        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
+
+  SET_SENSITIVE ("/New Vectors...",             !fs);
+  SET_SENSITIVE ("/Raise Vectors",              !fs && vectors && prev);
+  SET_SENSITIVE ("/Lower Vectors",              !fs && vectors && next);
+  SET_SENSITIVE ("/Duplicate Vectors",          !fs && vectors);
+  SET_SENSITIVE ("/Vectors to Selection",       !fs && vectors);
+  SET_SENSITIVE ("/Add to Selection",           !fs && vectors);
+  SET_SENSITIVE ("/Subtract from Selection",    !fs && vectors);
+  SET_SENSITIVE ("/Intersect with Selection",   !fs && vectors);
+  SET_SENSITIVE ("/Delete Vectors",             !fs && vectors);
+  SET_SENSITIVE ("/Edit Vectors Attributes...", !fs && vectors);
+
+#undef SET_OPS_SENSITIVE
+}

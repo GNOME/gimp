@@ -79,8 +79,8 @@ struct _Gimp
   guint32                next_guide_ID;
   GHashTable            *image_table;
 
-  gint                   next_drawable_ID;
-  GHashTable            *drawable_table;
+  gint                   next_item_ID;
+  GHashTable            *item_table;
 
   GimpBuffer            *global_buffer;
   GimpContainer         *named_buffers;

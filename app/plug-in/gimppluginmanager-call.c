@@ -1386,7 +1386,7 @@ plug_in_repeat (gboolean with_interface)
       args[0].value.pdb_int = (with_interface ? 
                                GIMP_RUN_INTERACTIVE : GIMP_RUN_WITH_LAST_VALS);
       args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
-      args[2].value.pdb_int = gimp_drawable_get_ID (gimp_image_active_drawable (gdisplay->gimage));
+      args[2].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (gdisplay->gimage)));
 
       /* run the plug-in procedure */
       plug_in_run (last_plug_in, args, 3, FALSE, TRUE, gdisplay->ID);
@@ -1676,9 +1676,9 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile_info = msg.data;
 
       if (tile_info->shadow)
-	tm = gimp_drawable_shadow (gimp_drawable_get_by_ID (the_gimp, tile_info->drawable_ID));
+	tm = gimp_drawable_shadow ((GimpDrawable *) gimp_item_get_by_ID (the_gimp, tile_info->drawable_ID));
       else
-	tm = gimp_drawable_data (gimp_drawable_get_by_ID (the_gimp, tile_info->drawable_ID));
+	tm = gimp_drawable_data ((GimpDrawable *) gimp_item_get_by_ID (the_gimp, tile_info->drawable_ID));
 
       if (!tm)
 	{
@@ -1713,9 +1713,9 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
   else
     {
       if (tile_req->shadow)
-	tm = gimp_drawable_shadow (gimp_drawable_get_by_ID (the_gimp, tile_req->drawable_ID));
+	tm = gimp_drawable_shadow ((GimpDrawable *) gimp_item_get_by_ID (the_gimp, tile_req->drawable_ID));
       else
-	tm = gimp_drawable_data (gimp_drawable_get_by_ID (the_gimp, tile_req->drawable_ID));
+	tm = gimp_drawable_data ((GimpDrawable *) gimp_item_get_by_ID (the_gimp, tile_req->drawable_ID));
 
       if (!tm)
 	{
@@ -2696,7 +2696,7 @@ plug_in_callback (GtkWidget *widget,
 	  /* initialize the first 3 plug-in arguments  */
 	  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
 	  args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
-	  args[2].value.pdb_int = gimp_drawable_get_ID (gimp_image_active_drawable (gdisplay->gimage));
+	  args[2].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (gdisplay->gimage)));
 	  argc = 3;
 	}
       else
@@ -2719,7 +2719,7 @@ plug_in_callback (GtkWidget *widget,
 	      gdisp_ID = gdisplay->ID;
 
 	      args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
-	      args[2].value.pdb_int = gimp_drawable_get_ID (gimp_image_active_drawable (gdisplay->gimage));
+	      args[2].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (gdisplay->gimage)));
 	      argc = 3;
 	    }
 	  else

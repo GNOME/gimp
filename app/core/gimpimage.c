@@ -1753,7 +1753,7 @@ void
 gimp_image_apply_image (GimpImage	     *gimage,
 			GimpDrawable	     *drawable,
 			PixelRegion	     *src2PR,
-			gboolean              undo,
+			gboolean              push_undo,
 			gint                  opacity,
 			GimpLayerModeEffects  mode,
 			/*  alternative to using drawable tiles as src1: */
@@ -1810,8 +1810,10 @@ gimp_image_apply_image (GimpImage	     *gimage,
     }
 
   /*  If the calling procedure specified an undo step...  */
-  if (undo)
-    undo_push_image (gimp_drawable_gimage (drawable), drawable, x1, y1, x2, y2);
+  if (push_undo)
+    undo_push_image (gimp_item_get_image (GIMP_ITEM (drawable)),
+                     drawable,
+                     x1, y1, x2, y2);
 
   /* configure the pixel regions
    *  If an alternative to using the drawable's data as src1 was provided...
@@ -1864,7 +1866,7 @@ void
 gimp_image_replace_image (GimpImage    *gimage, 
 			  GimpDrawable *drawable, 
 			  PixelRegion  *src2PR,
-			  gboolean      undo, 
+			  gboolean      push_undo, 
 			  gint          opacity,
 			  PixelRegion  *maskPR,
 			  gint          x, 
@@ -1920,7 +1922,7 @@ gimp_image_replace_image (GimpImage    *gimage,
     }
 
   /*  If the calling procedure specified an undo step...  */
-  if (undo)
+  if (push_undo)
     gimp_drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
 
   /* configure the pixel regions
@@ -2104,8 +2106,6 @@ gimp_image_set_tattoo_state (GimpImage  *gimage,
   gboolean     retval = TRUE;
   GimpChannel *channel;
   GimpTattoo   maxval = 0;
-  Path        *pptr   = NULL;
-  PathList    *plist;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
@@ -2115,16 +2115,16 @@ gimp_image_set_tattoo_state (GimpImage  *gimage,
     {
       GimpTattoo ltattoo;
       
-      ltattoo = gimp_drawable_get_tattoo (GIMP_DRAWABLE (list->data));
+      ltattoo = gimp_item_get_tattoo (GIMP_ITEM (list->data));
       if (ltattoo > maxval)
 	maxval = ltattoo;
+
       if (gimp_image_get_channel_by_tattoo (gimage, ltattoo) != NULL)
 	{
 	  retval = FALSE; /* Oopps duplicated tattoo in channel */
 	}
 
-      /* Now check path an't got this tattoo */
-      if (path_get_path_by_tattoo (gimage, ltattoo) != NULL)
+      if (gimp_image_get_vectors_by_tattoo (gimage, ltattoo) != NULL)
 	{
 	  retval = FALSE; /* Oopps duplicated tattoo in layer */
 	}
@@ -2139,33 +2139,26 @@ gimp_image_set_tattoo_state (GimpImage  *gimage,
 
       channel = (GimpChannel *) list->data;
       
-      ctattoo = gimp_drawable_get_tattoo (GIMP_DRAWABLE (channel));
+      ctattoo = gimp_item_get_tattoo (GIMP_ITEM (channel));
       if (ctattoo > maxval)
 	maxval = ctattoo;
-      /* Now check path an't got this tattoo */
-      if (path_get_path_by_tattoo (gimage, ctattoo) != NULL)
+
+      if (gimp_image_get_vectors_by_tattoo (gimage, ctattoo) != NULL)
 	{
 	  retval = FALSE; /* Oopps duplicated tattoo in layer */
 	}
     }
 
-  /* Find the max tatto value in the paths */
-  plist = gimage->paths;
-      
-  if (plist && plist->bz_paths)
+  /* Find the max tatto value in the vectors */
+  for (list = GIMP_LIST (gimage->channels)->list; 
+       list; 
+       list = g_list_next (list))
     {
-      GimpTattoo  ptattoo;
-      GSList     *pl;
+      GimpTattoo vtattoo;
 
-      for (pl = plist->bz_paths; pl; pl = g_slist_next (pl))
-	{
-	  pptr = pl->data;
-
-	  ptattoo = path_get_tattoo (pptr);
-	  
-	  if (ptattoo > maxval)
-	    maxval = ptattoo;
-	}
+      vtattoo = gimp_item_get_tattoo (GIMP_ITEM (list->data));
+      if (vtattoo > maxval)
+	maxval = vtattoo;
     }
 
   if (val < maxval)
@@ -2454,7 +2447,7 @@ gimp_image_get_layer_by_tattoo (const GimpImage *gimage,
     {
       layer = (GimpLayer *) list->data;
 
-      if (gimp_drawable_get_tattoo (GIMP_DRAWABLE (layer)) == tattoo)
+      if (gimp_item_get_tattoo (GIMP_ITEM (layer)) == tattoo)
 	return layer;
     }
 
@@ -2476,7 +2469,7 @@ gimp_image_get_channel_by_tattoo (const GimpImage *gimage,
     {
       channel = (GimpChannel *) list->data;
 
-      if (gimp_drawable_get_tattoo (GIMP_DRAWABLE (channel)) == tattoo)
+      if (gimp_item_get_tattoo (GIMP_ITEM (channel)) == tattoo)
 	return channel;
     }
 
@@ -2498,10 +2491,8 @@ gimp_image_get_vectors_by_tattoo (const GimpImage *gimage,
     {
       vectors = (GimpVectors *) list->data;
 
-#if 0
-      if (gimp_vectors_get_tattoo (GIMP_VECTORS (vectors)) == tattoo)
+      if (gimp_item_get_tattoo (GIMP_ITEM (vectors)) == tattoo)
 	return vectors;
-#endif
     }
 
   return NULL;
@@ -2581,8 +2572,8 @@ gimp_image_add_layer (GimpImage *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  if (GIMP_DRAWABLE (layer)->gimage != NULL && 
-      GIMP_DRAWABLE (layer)->gimage != gimage) 
+  if (GIMP_ITEM (layer)->gimage != NULL && 
+      GIMP_ITEM (layer)->gimage != gimage) 
     {
       g_warning ("%s: attempting to add layer to wrong image.",
 		 G_GNUC_PRETTY_FUNCTION);
@@ -2606,12 +2597,12 @@ gimp_image_add_layer (GimpImage *gimage,
     gimage->floating_sel = layer;
 
   /*  let the layer know about the gimage  */
-  gimp_drawable_set_gimage (GIMP_DRAWABLE (layer), gimage);
-  
+  gimp_item_set_image (GIMP_ITEM (layer), gimage);
+
   /*  If the layer has a mask, set the mask's gimage  */
   if (layer->mask)
     {
-      gimp_drawable_set_gimage (GIMP_DRAWABLE (layer->mask), gimage);
+      gimp_item_set_image (GIMP_ITEM (layer->mask), gimage);
     }
 
   /*  add the layer to the list at the specified position  */
@@ -2704,7 +2695,7 @@ gimp_image_remove_layer (GimpImage *gimage,
     }
 
   /* Send out REMOVED signal from layer */
-  gimp_drawable_removed (GIMP_DRAWABLE (layer));
+  gimp_item_removed (GIMP_ITEM (layer));
 
   gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x, &y);
   w = gimp_drawable_width (GIMP_DRAWABLE (layer));
@@ -2885,8 +2876,8 @@ gimp_image_add_channel (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
-  if (GIMP_DRAWABLE (channel)->gimage != NULL &&
-      GIMP_DRAWABLE (channel)->gimage != gimage)
+  if (GIMP_ITEM (channel)->gimage != NULL &&
+      GIMP_ITEM (channel)->gimage != gimage)
     {
       g_warning ("%s: attempting to add channel to wrong image.",
 		 G_GNUC_PRETTY_FUNCTION);
@@ -2905,8 +2896,25 @@ gimp_image_add_channel (GimpImage   *gimage,
                          0,
                          gimp_image_get_active_channel (gimage));
 
-  /*  add the channel to the list  */
-  gimp_container_add (gimage->channels, GIMP_OBJECT (channel));
+  /*  add the layer to the list at the specified position  */
+  if (position == -1)
+    {
+      GimpChannel *active_channel;
+
+      active_channel = gimp_image_get_active_channel (gimage);
+
+      if (active_channel)
+	{
+	  position = gimp_container_get_child_index (gimage->channels,
+						     GIMP_OBJECT (active_channel));
+	}
+      else
+	{
+	  position = 0;
+	}
+    }
+
+  gimp_container_insert (gimage->channels, GIMP_OBJECT (channel), position);
   g_object_unref (G_OBJECT (channel));
 
   /*  notify this gimage of the currently active channel  */
@@ -2943,7 +2951,7 @@ gimp_image_remove_channel (GimpImage   *gimage,
   gimp_container_remove (gimage->channels, GIMP_OBJECT (channel));
 
   /* Send out REMOVED signal from channel */
-  gimp_drawable_removed (GIMP_DRAWABLE (channel));
+  gimp_item_removed (GIMP_ITEM (channel));
 
   if (channel == gimp_image_get_active_channel (gimage))
     {
@@ -3053,15 +3061,13 @@ gimp_image_add_vectors (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
-#if 0
-  if (GIMP_VECTORS (vectors)->gimage != NULL &&
-      GIMP_VECTORS (vectors)->gimage != gimage)
+  if (GIMP_ITEM (vectors)->gimage != NULL &&
+      GIMP_ITEM (vectors)->gimage != gimage)
     {
       g_warning ("%s: attempting to add vectors to wrong image.",
 		 G_GNUC_PRETTY_FUNCTION);
       return FALSE;
     }
-#endif
 
   if (gimp_container_have (gimage->vectors, GIMP_OBJECT (vectors)))
     {
@@ -3075,8 +3081,27 @@ gimp_image_add_vectors (GimpImage   *gimage,
                          0,
                          gimp_image_get_active_vectors (gimage));
 
-  /*  add the vectors to the list  */
-  gimp_container_add (gimage->vectors, GIMP_OBJECT (vectors));
+  gimp_item_set_image (GIMP_ITEM (vectors), gimage);
+
+  /*  add the layer to the list at the specified position  */
+  if (position == -1)
+    {
+      GimpVectors *active_vectors;
+
+      active_vectors = gimp_image_get_active_vectors (gimage);
+
+      if (active_vectors)
+	{
+	  position = gimp_container_get_child_index (gimage->vectors,
+						     GIMP_OBJECT (active_vectors));
+	}
+      else
+	{
+	  position = 0;
+	}
+    }
+
+  gimp_container_insert (gimage->vectors, GIMP_OBJECT (vectors), position);
   g_object_unref (G_OBJECT (vectors));
 
   /*  notify this gimage of the currently active vectors  */
@@ -3105,10 +3130,10 @@ gimp_image_remove_vectors (GimpImage   *gimage,
 
   gimp_container_remove (gimage->vectors, GIMP_OBJECT (vectors));
 
-#if 0
+  gimp_item_set_image (GIMP_ITEM (vectors), NULL);
+
   /* Send out REMOVED signal from vectors */
-  gimp_vectors_removed (GIMP_VECTORS (vectors));
-#endif
+  gimp_item_removed (GIMP_ITEM (vectors));
 
   if (vectors == gimp_image_get_active_vectors (gimage))
     {
@@ -3119,6 +3144,13 @@ gimp_image_remove_vectors (GimpImage   *gimage,
 	     GIMP_VECTORS (gimp_container_get_child_by_index (gimage->vectors,
 							      0)));
 	}
+      else
+        {
+          gimage->active_vectors = NULL;
+
+          g_signal_emit (G_OBJECT (gimage),
+                         gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
+        }
     }
 
   g_object_unref (G_OBJECT (vectors));

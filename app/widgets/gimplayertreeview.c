@@ -293,14 +293,14 @@ gimp_layer_list_view_select_item (GimpContainerView *view,
 				  GimpViewable      *item,
 				  gpointer           insert_data)
 {
-  GimpDrawableListView *drawable_view;
-  GimpLayerListView    *list_view;
-  gboolean              options_sensitive   = FALSE;
-  gboolean              anchor_sensitive    = FALSE;
-  gboolean              raise_sensitive     = FALSE;
+  GimpItemListView  *item_view;
+  GimpLayerListView *layer_view;
+  gboolean           options_sensitive   = FALSE;
+  gboolean           anchor_sensitive    = FALSE;
+  gboolean           raise_sensitive     = FALSE;
 
-  list_view     = GIMP_LAYER_LIST_VIEW (view);
-  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
+  item_view  = GIMP_ITEM_LIST_VIEW (view);
+  layer_view = GIMP_LAYER_LIST_VIEW (view);
 
   if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view,
@@ -309,7 +309,7 @@ gimp_layer_list_view_select_item (GimpContainerView *view,
 
   if (item)
     {
-      gimp_layer_list_view_update_options (list_view, GIMP_LAYER (item));
+      gimp_layer_list_view_update_options (layer_view, GIMP_LAYER (item));
 
       options_sensitive = TRUE;
 
@@ -317,9 +317,9 @@ gimp_layer_list_view_select_item (GimpContainerView *view,
 	{
 	  anchor_sensitive = TRUE;
 
-	  gtk_widget_set_sensitive (drawable_view->lower_button,     FALSE);
-	  gtk_widget_set_sensitive (drawable_view->duplicate_button, FALSE);
-	  gtk_widget_set_sensitive (drawable_view->edit_button,      FALSE);
+	  gtk_widget_set_sensitive (item_view->lower_button,     FALSE);
+	  gtk_widget_set_sensitive (item_view->duplicate_button, FALSE);
+	  gtk_widget_set_sensitive (item_view->edit_button,      FALSE);
 	}
       else
 	{
@@ -332,9 +332,9 @@ gimp_layer_list_view_select_item (GimpContainerView *view,
 	}
     }
 
-  gtk_widget_set_sensitive (list_view->options_box,      options_sensitive);
-  gtk_widget_set_sensitive (drawable_view->raise_button, raise_sensitive);
-  gtk_widget_set_sensitive (list_view->anchor_button,    anchor_sensitive);
+  gtk_widget_set_sensitive (layer_view->options_box,   options_sensitive);
+  gtk_widget_set_sensitive (item_view->raise_button,   raise_sensitive);
+  gtk_widget_set_sensitive (layer_view->anchor_button, anchor_sensitive);
 }
 
 
@@ -344,15 +344,17 @@ static void
 gimp_layer_list_view_anchor_clicked (GtkWidget         *widget,
 				     GimpLayerListView *view)
 {
-  GimpDrawableListView *drawable_view;
-  GimpDrawable         *drawable;
+  GimpItemListView *item_view;
+  GimpLayer        *layer;
 
-  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
+  item_view = GIMP_ITEM_LIST_VIEW (view);
 
-  drawable = drawable_view->get_drawable_func (drawable_view->gimage);
+  layer = (GimpLayer *) item_view->get_item_func (item_view->gimage);
 
-  if (drawable)
-    g_print ("anchor \"%s\"\n", GIMP_OBJECT (drawable)->name);
+  if (GIMP_IS_LAYER (layer))
+    {
+      g_print ("anchor \"%s\"\n", GIMP_OBJECT (layer)->name);
+    }
 }
 
 
@@ -371,14 +373,14 @@ static void
 gimp_layer_list_view_paint_mode_menu_callback (GtkWidget         *widget,
 					       GimpLayerListView *view)
 {
-  GimpDrawableListView *drawable_view;
-  GimpLayer            *layer;
+  GimpItemListView *item_view;
+  GimpLayer        *layer;
 
-  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
+  item_view = GIMP_ITEM_LIST_VIEW (view);
 
-  layer = (GimpLayer *) drawable_view->get_drawable_func (drawable_view->gimage);
+  layer = (GimpLayer *) item_view->get_item_func (item_view->gimage);
 
-  if (layer)
+  if (GIMP_IS_LAYER (layer))
     {
       GimpLayerModeEffects mode;
 
@@ -401,14 +403,14 @@ static void
 gimp_layer_list_view_preserve_button_toggled (GtkWidget         *widget,
 					      GimpLayerListView *view)
 {
-  GimpDrawableListView *drawable_view;
-  GimpLayer            *layer;
+  GimpItemListView *item_view;
+  GimpLayer        *layer;
 
-  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
+  item_view = GIMP_ITEM_LIST_VIEW (view);
 
-  layer = (GimpLayer *) drawable_view->get_drawable_func (drawable_view->gimage);
+  layer = (GimpLayer *) item_view->get_item_func (item_view->gimage);
 
-  if (layer)
+  if (GIMP_IS_LAYER (layer))
     {
       gboolean preserve_trans;
 
@@ -427,14 +429,14 @@ static void
 gimp_layer_list_view_opacity_scale_changed (GtkAdjustment     *adjustment,
 					    GimpLayerListView *view)
 {
-  GimpDrawableListView *drawable_view;
-  GimpLayer            *layer;
+  GimpItemListView *item_view;
+  GimpLayer        *layer;
 
-  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
+  item_view = GIMP_ITEM_LIST_VIEW (view);
 
-  layer = (GimpLayer *) drawable_view->get_drawable_func (drawable_view->gimage);
+  layer = (GimpLayer *) item_view->get_item_func (item_view->gimage);
 
-  if (layer)
+  if (GIMP_IS_LAYER (layer))
     {
       gdouble opacity;
 
@@ -459,12 +461,11 @@ static void
 gimp_layer_list_view_layer_signal_handler (GimpLayer         *layer,
 					   GimpLayerListView *view)
 {
-  GimpDrawableListView *drawable_view;
+  GimpItemListView *item_view;
 
-  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
+  item_view = GIMP_ITEM_LIST_VIEW (view);
 
-  if (drawable_view->get_drawable_func (drawable_view->gimage) ==
-      (GimpDrawable *) layer)
+  if (item_view->get_item_func (item_view->gimage) == (GimpViewable *) layer)
     {
       gimp_layer_list_view_update_options (view, layer);
     }

@@ -132,6 +132,9 @@ GtkWidget * dialogs_layer_list_view_new    (GimpDialogFactory *factory,
 GtkWidget * dialogs_channel_list_view_new  (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
+GtkWidget * dialogs_vectors_list_view_new  (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
 GtkWidget * dialogs_path_list_view_new     (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);

@@ -680,7 +680,7 @@ gimp_paint_tool_sample_color (GimpDrawable *drawable,
   GimpImage                  *gimage;
   GimpRGB                     color;
 
-  gimage = gimp_drawable_gimage (drawable);
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   picker_info = tool_manager_get_info_by_type (gimage->gimp,
                                                GIMP_TYPE_COLOR_PICKER_TOOL);

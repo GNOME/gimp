@@ -57,7 +57,8 @@ gimp_image_pick_color (GimpImage     *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (sample_merged || GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (! drawable || gimp_drawable_gimage (drawable) == gimage,
+  g_return_val_if_fail (! drawable ||
+                        gimp_item_get_image (GIMP_ITEM (drawable)) == gimage,
                         FALSE);
 
   if (! sample_merged)

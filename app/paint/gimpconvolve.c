@@ -201,7 +201,7 @@ gimp_convolve_motion (GimpPaintCore       *paint_core,
   gint              marginy    = 0;
   GimpContext      *context;
 
-  if (! gimp_drawable_gimage (drawable))
+  if (! gimp_item_get_image (GIMP_ITEM (drawable)))
     return;
 
   /*  If the image type is indexed, don't convolve  */
@@ -403,7 +403,8 @@ gimp_convolve_motion (GimpPaintCore       *paint_core,
       g_free(fillcolor);
     }
 
-  context = gimp_get_current_context (gimp_drawable_gimage (drawable)->gimp);
+  context =
+    gimp_get_current_context (gimp_item_get_image (GIMP_ITEM (drawable))->gimp);
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_core_replace_canvas (paint_core, drawable,

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdrawablelistview.h
+ * gimpitemlistview.h
  * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,107 +19,107 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DRAWABLE_LIST_VIEW_H__
-#define __GIMP_DRAWABLE_LIST_VIEW_H__
+#ifndef __GIMP_ITEM_LIST_VIEW_H__
+#define __GIMP_ITEM_LIST_VIEW_H__
 
 
 #include "gimpcontainerlistview.h"
 
 
-typedef GimpContainer * (* GimpGetContainerFunc)    (const GimpImage *gimage);
-typedef GimpDrawable  * (* GimpGetDrawableFunc)     (const GimpImage *gimage);
-typedef void            (* GimpSetDrawableFunc)     (GimpImage       *gimage,
-						     GimpDrawable    *drawable);
-typedef void            (* GimpReorderDrawableFunc) (GimpImage       *gimage,
-						     GimpDrawable    *drawable,
-						     gint             new_index,
-						     gboolean         push_undo);
-typedef void            (* GimpAddDrawableFunc)     (GimpImage       *gimage,
-						     GimpDrawable    *drawable,
-						     gint             index);
-typedef void            (* GimpRemoveDrawableFunc)  (GimpImage       *gimage,
-						     GimpDrawable    *drawable);
-typedef GimpDrawable  * (* GimpCopyDrawableFunc)    (GimpDrawable    *drawable,
-                                                     GType            new_type,
-						     gboolean         add_alpha);
-typedef GimpDrawable  * (* GimpConvertDrawableFunc) (GimpImage       *dest_gimage,
-						     GimpDrawable    *drawable);
+typedef GimpContainer * (* GimpGetContainerFunc) (const GimpImage    *gimage);
+typedef GimpViewable  * (* GimpGetItemFunc)      (const GimpImage    *gimage);
+typedef void            (* GimpSetItemFunc)      (GimpImage          *gimage,
+                                                  GimpViewable       *viewable);
+typedef void            (* GimpReorderItemFunc)  (GimpImage          *gimage,
+                                                  GimpViewable       *viewable,
+                                                  gint                new_index,
+                                                  gboolean            push_undo);
+typedef void            (* GimpAddItemFunc)      (GimpImage          *gimage,
+                                                  GimpViewable       *viewable,
+                                                  gint                index);
+typedef void            (* GimpRemoveItemFunc)   (GimpImage          *gimage,
+                                                  GimpViewable       *viewable);
+typedef GimpViewable  * (* GimpCopyItemFunc)     (GimpViewable       *viewable,
+                                                  GType               new_type,
+                                                  gboolean            add_alpha);
+typedef GimpViewable  * (* GimpConvertItemFunc)  (GimpViewable       *viewable,
+                                                  GimpImage          *dest_gimage);
 
-typedef void            (* GimpNewDrawableFunc)     (GimpImage       *gimage,
-                                                     GimpDrawable    *template);
-typedef void            (* GimpEditDrawableFunc)    (GimpDrawable    *drawable);
-
-
-#define GIMP_TYPE_DRAWABLE_LIST_VIEW            (gimp_drawable_list_view_get_type ())
-#define GIMP_DRAWABLE_LIST_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAWABLE_LIST_VIEW, GimpDrawableListView))
-#define GIMP_DRAWABLE_LIST_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE_LIST_VIEW, GimpDrawableListViewClass))
-#define GIMP_IS_DRAWABLE_LIST_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAWABLE_LIST_VIEW))
-#define GIMP_IS_DRAWABLE_LIST_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE_LIST_VIEW))
-#define GIMP_DRAWABLE_LIST_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE_LIST_VIEW, GimpDrawableListViewClass))
+typedef void            (* GimpNewItemFunc)      (GimpImage          *gimage,
+                                                  GimpViewable       *template);
+typedef void            (* GimpEditItemFunc)     (GimpViewable       *viewable);
 
 
-typedef struct _GimpDrawableListViewClass  GimpDrawableListViewClass;
+#define GIMP_TYPE_ITEM_LIST_VIEW            (gimp_item_list_view_get_type ())
+#define GIMP_ITEM_LIST_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_LIST_VIEW, GimpItemListView))
+#define GIMP_ITEM_LIST_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM_LIST_VIEW, GimpItemListViewClass))
+#define GIMP_IS_ITEM_LIST_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM_LIST_VIEW))
+#define GIMP_IS_ITEM_LIST_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ITEM_LIST_VIEW))
+#define GIMP_ITEM_LIST_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ITEM_LIST_VIEW, GimpItemListViewClass))
 
-struct _GimpDrawableListView
+
+typedef struct _GimpItemListViewClass  GimpItemListViewClass;
+
+struct _GimpItemListView
 {
-  GimpContainerListView    parent_instance;
+  GimpContainerListView  parent_instance;
 
-  GimpImage               *gimage;
+  GimpImage             *gimage;
 
-  GType                    drawable_type;
-  gchar                   *signal_name;
+  GType                  item_type;
+  gchar                 *signal_name;
 
-  GimpGetContainerFunc     get_container_func;
-  GimpGetDrawableFunc      get_drawable_func;
-  GimpSetDrawableFunc      set_drawable_func;
-  GimpReorderDrawableFunc  reorder_drawable_func;
-  GimpAddDrawableFunc      add_drawable_func;
-  GimpRemoveDrawableFunc   remove_drawable_func;
-  GimpCopyDrawableFunc     copy_drawable_func;
-  GimpConvertDrawableFunc  convert_drawable_func;
+  GimpGetContainerFunc   get_container_func;
+  GimpGetItemFunc        get_item_func;
+  GimpSetItemFunc        set_item_func;
+  GimpReorderItemFunc    reorder_item_func;
+  GimpAddItemFunc        add_item_func;
+  GimpRemoveItemFunc     remove_item_func;
+  GimpCopyItemFunc       copy_item_func;
+  GimpConvertItemFunc    convert_item_func;
 
-  GimpNewDrawableFunc      new_drawable_func;
-  GimpEditDrawableFunc     edit_drawable_func;
+  GimpNewItemFunc        new_item_func;
+  GimpEditItemFunc       edit_item_func;
 
-  GimpItemFactory         *item_factory;
+  GimpItemFactory       *item_factory;
 
-  GtkWidget               *new_button;
-  GtkWidget               *raise_button;
-  GtkWidget               *lower_button;
-  GtkWidget               *duplicate_button;
-  GtkWidget               *edit_button;
-  GtkWidget               *delete_button;
+  GtkWidget             *new_button;
+  GtkWidget             *raise_button;
+  GtkWidget             *lower_button;
+  GtkWidget             *duplicate_button;
+  GtkWidget             *edit_button;
+  GtkWidget             *delete_button;
 };
 
-struct _GimpDrawableListViewClass
+struct _GimpItemListViewClass
 {
   GimpContainerListViewClass  parent_class;
 
-  void (* set_image) (GimpDrawableListView *view,
-		      GimpImage            *gimage);
+  void (* set_image) (GimpItemListView *view,
+		      GimpImage        *gimage);
 };
 
 
-GType       gimp_drawable_list_view_get_type (void) G_GNUC_CONST;
+GType       gimp_item_list_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_drawable_list_view_new      (gint                     preview_size,
-					      GimpImage               *gimage,
-					      GType                    drawable_type,
-					      const gchar             *signal_name,
-					      GimpGetContainerFunc     get_container_func,
-					      GimpGetDrawableFunc      get_drawable_func,
-					      GimpSetDrawableFunc      set_drawable_func,
-					      GimpReorderDrawableFunc  reorder_drawable_func,
-					      GimpAddDrawableFunc      add_drawable_func,
-					      GimpRemoveDrawableFunc   remove_drawable_func,
-					      GimpCopyDrawableFunc     copy_drawable_func,
-                                              GimpConvertDrawableFunc  convert_drawable_func,
-					      GimpNewDrawableFunc      new_drawable_func,
-					      GimpEditDrawableFunc     edit_drawable_func,
-					      GimpItemFactory         *item_facotry);
+GtkWidget * gimp_item_list_view_new      (gint                  preview_size,
+                                          GimpImage            *gimage,
+                                          GType                 item_type,
+                                          const gchar          *signal_name,
+                                          GimpGetContainerFunc  get_container_func,
+                                          GimpGetItemFunc       get_item_func,
+                                          GimpSetItemFunc       set_item_func,
+                                          GimpReorderItemFunc   reorder_item_func,
+                                          GimpAddItemFunc       add_item_func,
+                                          GimpRemoveItemFunc    remove_item_func,
+                                          GimpCopyItemFunc      copy_item_func,
+                                          GimpConvertItemFunc   convert_item_func,
+                                          GimpNewItemFunc       new_item_func,
+                                          GimpEditItemFunc      edit_item_func,
+                                          GimpItemFactory      *item_facotry);
 
-void       gimp_drawable_list_view_set_image (GimpDrawableListView *view,
-					      GimpImage            *gimage);
+void       gimp_item_list_view_set_image (GimpItemListView     *view,
+                                          GimpImage            *gimage);
 
 
-#endif  /*  __GIMP_DRAWABLE_LIST_VIEW_H__  */
+#endif  /*  __GIMP_ITEM_LIST_VIEW_H__  */

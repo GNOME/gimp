@@ -220,7 +220,7 @@ gimp_dodgeburn_motion (GimpPaintCore    *paint_core,
   gint                  opacity;
   gdouble               scale;
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
   /*  If the image type is indexed, don't dodgeburn  */

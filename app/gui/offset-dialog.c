@@ -85,7 +85,7 @@ offset_dialog_create (GimpDrawable *drawable)
 
   off_d->wrap_around = TRUE;
   off_d->fill_type   = gimp_drawable_has_alpha (drawable);
-  off_d->gimage      = gimp_drawable_gimage (drawable);
+  off_d->gimage      = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (GIMP_IS_LAYER (drawable))
     title = _("Offset Layer");

@@ -68,6 +68,7 @@
 #include "select-commands.h"
 #include "test-commands.h"
 #include "tools-commands.h"
+#include "vectors-commands.h"
 #include "view-commands.h"
 
 #include "gimphelp.h"
@@ -1166,6 +1167,77 @@ static GimpItemFactoryEntry channels_entries[] =
 };
 
 
+/*****  <Vectors>  *****/
+
+static GimpItemFactoryEntry vectors_entries[] =
+{
+  { { N_("/New Path"), "<control>N",
+      vectors_new_vectors_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_NEW },
+    NULL,
+    "new_path.html", NULL },
+  { { N_("/Raise Path"), "<control>F",
+      vectors_raise_vectors_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_GO_UP },
+    NULL,
+    "raise_path.html", NULL },
+  { { N_("/Lower Path"), "<control>B",
+      vectors_lower_vectors_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_GO_DOWN },
+    NULL,
+    "lower_path.html", NULL },
+  { { N_("/Duplicate Path"), "<control>U",
+      vectors_duplicate_vectors_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_DUPLICATE },
+    NULL,
+    "duplicate_path.html", NULL },
+  { { N_("/Path to Selection"), "<control>S",
+      vectors_vectors_to_sel_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TO_SELECTION },
+    NULL,
+    "path_to_selection.html", NULL },
+  { { N_("/Add to Selection"), NULL,
+      vectors_add_vectors_to_sel_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TO_SELECTION },
+    NULL,
+    "path_to_selection.html#add", NULL },
+  { { N_("/Subtract from Selection"), NULL,
+      vectors_sub_vectors_from_sel_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TO_SELECTION },
+    NULL,
+    "path_to_selection.html#subtract", NULL },
+  { { N_("/Intersect with Selection"), NULL,
+      vectors_intersect_vectors_with_sel_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TO_SELECTION },
+    NULL,
+    "path_to_selection.html#intersect", NULL },
+
+  { { N_("/Selection to Path"), "<control>P",
+      vectors_sel_to_vectors_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TO_PATH },
+    NULL,
+    "filters/sel2path.html", NULL },
+  { { N_("/Stroke Path"), "<control>T",
+      vectors_stroke_vectors_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_STROKE },
+    NULL,
+    "stroke_path.html", NULL },
+  { { N_("/Delete Path"), "<control>X",
+      vectors_delete_vectors_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_DELETE },
+    NULL,
+    "delete_path.html", NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/Edit Path Attributes..."), NULL,
+      vectors_edit_vectors_attributes_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_EDIT },
+    NULL,
+    "dialogs/edit_path_attributes.html", NULL }
+};
+
+
 /*****  <Paths>  *****/
 
 static GimpItemFactoryEntry paths_entries[] =
@@ -1252,7 +1324,8 @@ static GimpItemFactoryEntry dialogs_entries[] =
 
   ADD_TAB (N_("/Add Tab/Layers..."),           "gimp:layer-list", NULL, NULL),
   ADD_TAB (N_("/Add Tab/Channels..."),         "gimp:channel-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Paths..."),            "gimp:path-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Paths..."),            "gimp:vectors-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Old Paths..."),        "gimp:path-list", NULL, NULL),
   ADD_TAB (N_("/Add Tab/Document History..."), "gimp:document-history", NULL, NULL),
   ADD_TAB (N_("/Add Tab/Error Console..."),    "gimp:error-console", NULL, NULL),
 
@@ -1792,6 +1865,7 @@ static GimpItemFactory *load_factory            = NULL;
 static GimpItemFactory *save_factory            = NULL;
 static GimpItemFactory *layers_factory          = NULL;
 static GimpItemFactory *channels_factory        = NULL;
+static GimpItemFactory *vectors_factory         = NULL;
 static GimpItemFactory *paths_factory           = NULL;
 static GimpItemFactory *dialogs_factory         = NULL;
 static GimpItemFactory *brushes_factory         = NULL;
@@ -1918,6 +1992,14 @@ menus_init (Gimp *gimp)
                                             channels_entries,
                                             gimp,
                                             FALSE);
+
+  vectors_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                           "<Vectors>", "vectors",
+                                           NULL,
+                                           G_N_ELEMENTS (vectors_entries),
+                                           vectors_entries,
+                                           gimp,
+                                           FALSE);
 
   paths_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                          "<Paths>", "paths",

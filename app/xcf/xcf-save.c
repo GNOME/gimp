@@ -318,11 +318,11 @@ xcf_save_layer_props (XcfInfo   *info,
 		 GIMP_DRAWABLE (layer)->offset_x,
 		 GIMP_DRAWABLE (layer)->offset_y);
   xcf_save_prop (info, gimage, PROP_MODE, layer->mode);
-  xcf_save_prop (info, gimage, PROP_TATTOO, GIMP_DRAWABLE (layer)->tattoo);
+  xcf_save_prop (info, gimage, PROP_TATTOO, GIMP_ITEM (layer)->tattoo);
 
-  if (gimp_parasite_list_length (GIMP_DRAWABLE (layer)->parasites) > 0)
+  if (gimp_parasite_list_length (GIMP_ITEM (layer)->parasites) > 0)
     xcf_save_prop (info, gimage, PROP_PARASITES,
-		   GIMP_DRAWABLE (layer)->parasites);
+		   GIMP_ITEM (layer)->parasites);
 
   xcf_save_prop (info, gimage, PROP_END);
 }
@@ -349,11 +349,11 @@ xcf_save_channel_props (XcfInfo     *info,
   gimp_rgb_get_uchar (&channel->color, &col[0], &col[1], &col[2]);
   xcf_save_prop (info, gimage, PROP_COLOR, col);
 
-  xcf_save_prop (info, gimage, PROP_TATTOO, GIMP_DRAWABLE (channel)->tattoo);
+  xcf_save_prop (info, gimage, PROP_TATTOO, GIMP_ITEM (channel)->tattoo);
 
-  if (gimp_parasite_list_length (GIMP_DRAWABLE (channel)->parasites) > 0)
+  if (gimp_parasite_list_length (GIMP_ITEM (channel)->parasites) > 0)
     xcf_save_prop (info, gimage, PROP_PARASITES,
-		   GIMP_DRAWABLE (channel)->parasites);
+		   GIMP_ITEM (channel)->parasites);
 
   xcf_save_prop (info, gimage, PROP_END);
 }

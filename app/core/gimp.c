@@ -150,8 +150,8 @@ gimp_init (Gimp *gimp)
   gimp->next_guide_ID       = 1;
   gimp->image_table         = g_hash_table_new (g_direct_hash, NULL);
 
-  gimp->next_drawable_ID    = 1;
-  gimp->drawable_table      = g_hash_table_new (g_direct_hash, NULL);
+  gimp->next_item_ID        = 1;
+  gimp->item_table          = g_hash_table_new (g_direct_hash, NULL);
 
   gimp->global_buffer       = NULL;
   gimp->named_buffers       = gimp_list_new (GIMP_TYPE_BUFFER,
@@ -299,10 +299,10 @@ gimp_finalize (GObject *object)
       gimp->global_buffer = NULL;
     }
 
-  if (gimp->drawable_table)
+  if (gimp->item_table)
     {
-      g_hash_table_destroy (gimp->drawable_table);
-      gimp->drawable_table = NULL;
+      g_hash_table_destroy (gimp->item_table);
+      gimp->item_table = NULL;
     }
 
   if (gimp->image_table)
@@ -344,7 +344,7 @@ gimp_get_memsize (GimpObject *object)
 
   memsize += (g_hash_table_size (gimp->image_table) *
               3 * sizeof (gpointer)); /* FIXME */
-  memsize += (g_hash_table_size (gimp->drawable_table) *
+  memsize += (g_hash_table_size (gimp->item_table) *
               3 * sizeof (gpointer)); /* FIXME */
 
   if (gimp->global_buffer)

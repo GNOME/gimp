@@ -125,6 +125,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	tools-commands.h		\
 	user-install-dialog.c		\
 	user-install-dialog.h		\
+	vectors-commands.c		\
+	vectors-commands.h		\
 	view-commands.c			\
 	view-commands.h			\
 @STRIP_END@

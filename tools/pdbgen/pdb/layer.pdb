@@ -45,7 +45,7 @@ sub layer_change_invoke {
 	vars => [ 'GimpImage *gimage', 'GimpLayer *floating_layer' ],
 	code => <<CODE
 {
-  if ((gimage = GIMP_DRAWABLE(layer)->gimage))
+  if ((gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     {
       floating_layer = gimp_image_floating_sel (gimage);
 
@@ -359,7 +359,7 @@ HELP
 
     %invoke = ( code => <<'CODE' );
 {
-  if (! gimp_drawable_gimage (GIMP_DRAWABLE (layer)))
+  if (! gimp_item_get_image (GIMP_ITEM (layer)))
     {
       g_object_unref (G_OBJECT (layer));
       success = TRUE;

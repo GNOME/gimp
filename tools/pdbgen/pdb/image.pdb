@@ -67,7 +67,7 @@ HELP
     {
       ${type}_ids = g_new (gint32, num_${type}s);
       for (i = 0; i < num_${type}s; i++, list = g_list_next (list))
-	${type}_ids[i] = gimp_drawable_get_ID (GIMP_DRAWABLE (list->data));
+	${type}_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
     }
 }
 CODE
@@ -227,8 +227,8 @@ HELP
 
     for ($invoke{code}) {
 	s/list = .*$/gimp_container_foreach (gimp->images, gimlist_cb, &list);/m;
-	s/DRAWABLE/IMAGE/;
-	s/gimp_drawable_get_ID/gimp_image_get_ID/;
+	s/ITEM/IMAGE/;
+	s/gimp_item_get_ID/gimp_image_get_ID/;
     }
 }
 

@@ -45,6 +45,8 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
+#include "vectors/gimpvectors.h"
+
 #include "file/file-open.h"
 
 #include "app_procs.h"
@@ -126,14 +128,14 @@ static void        gimp_dnd_set_image_data     (GtkWidget *widget,
 					        gint       format,
 					        gint       length);
 
-static guchar    * gimp_dnd_get_drawable_data  (GtkWidget *widget,
-					        GCallback  get_drawable_func,
-					        gpointer   get_drawable_data,
+static guchar    * gimp_dnd_get_item_data      (GtkWidget *widget,
+					        GCallback  get_item_func,
+					        gpointer   get_item_data,
 					        gint      *format,
 					        gint      *length);
-static void        gimp_dnd_set_drawable_data  (GtkWidget *widget,
-					        GCallback  set_drawable_func,
-					        gpointer   set_drawable_data,
+static void        gimp_dnd_set_item_data      (GtkWidget *widget,
+					        GCallback  set_item_func,
+					        gpointer   set_item_data,
 					        guchar    *vals,
 					        gint       format,
 					        gint       length);
@@ -263,8 +265,8 @@ static GimpDndDataDef dnd_data_defs[] =
     "gimp_dnd_set_layer_data",
 
     gimp_dnd_get_viewable_icon,
-    gimp_dnd_get_drawable_data,
-    gimp_dnd_set_drawable_data,
+    gimp_dnd_get_item_data,
+    gimp_dnd_set_item_data,
   },
 
   {
@@ -274,8 +276,8 @@ static GimpDndDataDef dnd_data_defs[] =
     "gimp_dnd_set_channel_data",
 
     gimp_dnd_get_viewable_icon,
-    gimp_dnd_get_drawable_data,
-    gimp_dnd_set_drawable_data,
+    gimp_dnd_get_item_data,
+    gimp_dnd_set_item_data,
   },
 
   {
@@ -285,8 +287,8 @@ static GimpDndDataDef dnd_data_defs[] =
     "gimp_dnd_set_layer_mask_data",
 
     gimp_dnd_get_viewable_icon,
-    gimp_dnd_get_drawable_data,
-    gimp_dnd_set_drawable_data,
+    gimp_dnd_get_item_data,
+    gimp_dnd_set_item_data,
   },
 
   {
@@ -301,14 +303,14 @@ static GimpDndDataDef dnd_data_defs[] =
   },
 
   {
-    GIMP_TARGET_PATH,
+    GIMP_TARGET_VECTORS,
 
-    NULL,
-    NULL,
+    "gimp_dnd_set_vectors_func",
+    "gimp_dnd_set_vectors_data",
 
-    NULL,
-    NULL,
-    NULL,
+    gimp_dnd_get_viewable_icon,
+    gimp_dnd_get_item_data,
+    gimp_dnd_set_item_data,
   },
 
   {
@@ -925,6 +927,10 @@ gimp_dnd_data_type_get_by_g_type (GType type)
     {
       dnd_type = GIMP_DND_TYPE_CHANNEL;
     }
+  else if (g_type_is_a (type, GIMP_TYPE_VECTORS))
+    {
+      dnd_type = GIMP_DND_TYPE_VECTORS;
+    }
   else if (g_type_is_a (type, GIMP_TYPE_BRUSH))
     {
       dnd_type = GIMP_DND_TYPE_BRUSH;
@@ -1171,27 +1177,27 @@ gimp_dnd_set_image_data (GtkWidget *widget,
 }
 
 
-/****************************/
-/*  drawable dnd functions  */
-/****************************/
+/************************/
+/*  item dnd functions  */
+/************************/
 
 static guchar *
-gimp_dnd_get_drawable_data (GtkWidget *widget,
-			    GCallback  get_drawable_func,
-			    gpointer   get_drawable_data,
-			    gint      *format,
-			    gint      *length)
+gimp_dnd_get_item_data (GtkWidget *widget,
+                        GCallback  get_item_func,
+                        gpointer   get_item_data,
+                        gint      *format,
+                        gint      *length)
 {
-  GimpDrawable *drawable;
-  gchar        *id;
+  GimpItem *item;
+  gchar    *id;
 
-  drawable = (GimpDrawable *)
-    (* (GimpDndDragViewableFunc) get_drawable_func) (widget, get_drawable_data);
+  item = (GimpItem *)
+    (* (GimpDndDragViewableFunc) get_item_func) (widget, get_item_data);
 
-  if (! drawable)
+  if (! item)
     return NULL;
 
-  id = g_strdup_printf ("%d", gimp_drawable_get_ID (drawable));
+  id = g_strdup_printf ("%d", gimp_item_get_ID (item));
 
   *format = 8;
   *length = strlen (id) + 1;
@@ -1200,20 +1206,20 @@ gimp_dnd_get_drawable_data (GtkWidget *widget,
 }
 
 static void
-gimp_dnd_set_drawable_data (GtkWidget *widget,
-			    GCallback  set_drawable_func,
-			    gpointer   set_drawable_data,
-			    guchar    *vals,
-			    gint       format,
-			    gint       length)
+gimp_dnd_set_item_data (GtkWidget *widget,
+                        GCallback  set_item_func,
+                        gpointer   set_item_data,
+                        guchar    *vals,
+                        gint       format,
+                        gint       length)
 {
-  GimpDrawable *drawable;
-  gchar        *id;
-  gint          ID;
+  GimpItem *item;
+  gchar    *id;
+  gint      ID;
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid drawable ID data");
+      g_warning ("Received invalid item ID data");
       return;
     }
 
@@ -1224,12 +1230,12 @@ gimp_dnd_set_drawable_data (GtkWidget *widget,
   if (! ID)
     return;
 
-  drawable = gimp_drawable_get_by_ID (the_gimp, ID);
+  item = gimp_item_get_by_ID (the_gimp, ID);
 
-  if (drawable)
-    (* (GimpDndDropViewableFunc) set_drawable_func) (widget,
-						     GIMP_VIEWABLE (drawable),
-						     set_drawable_data);
+  if (item)
+    (* (GimpDndDropViewableFunc) set_item_func) (widget,
+                                                 GIMP_VIEWABLE (item),
+                                                 set_item_data);
 }
 
 

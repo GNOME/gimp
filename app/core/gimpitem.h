@@ -1,0 +1,82 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#ifndef __GIMP_ITEM_H__
+#define __GIMP_ITEM_H__
+
+
+#include "gimpviewable.h"
+
+
+#define GIMP_TYPE_ITEM            (gimp_item_get_type ())
+#define GIMP_ITEM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM, GimpItem))
+#define GIMP_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM, GimpItemClass))
+#define GIMP_IS_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM))
+#define GIMP_IS_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ITEM))
+#define GIMP_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ITEM, GimpItemClass))
+
+
+typedef struct _GimpItemClass GimpItemClass;
+
+struct _GimpItem
+{
+  GimpViewable      parent_instance;
+
+  gint              ID;        /*  provides a unique ID     */
+  guint32           tattoo;    /*  provides a perminant ID  */
+
+  GimpImage        *gimage;    /*  gimage owner             */
+
+  GimpParasiteList *parasites; /*  Plug-in parasite data    */
+};
+
+struct _GimpItemClass
+{
+  GimpViewableClass  parent_class;
+
+  void (* removed) (GimpItem *item);
+};
+
+
+GType           gimp_item_get_type        (void) G_GNUC_CONST;
+
+void            gimp_item_removed         (GimpItem       *item);
+
+gint            gimp_item_get_ID          (GimpItem       *item);
+GimpItem      * gimp_item_get_by_ID       (Gimp           *gimp,
+                                           gint            id);
+
+GimpTattoo      gimp_item_get_tattoo      (const GimpItem *item);
+void            gimp_item_set_tattoo      (GimpItem       *item,
+                                           GimpTattoo      tattoo);
+
+GimpImage     * gimp_item_get_image       (const GimpItem *item);
+void            gimp_item_set_image       (GimpItem       *item,
+                                           GimpImage      *gimage);
+
+void            gimp_item_parasite_attach (GimpItem       *item,
+                                           GimpParasite   *parasite);
+void            gimp_item_parasite_detach (GimpItem       *item,
+                                           const gchar    *parasite);
+GimpParasite  * gimp_item_parasite_find   (const GimpItem *item,
+                                           const gchar    *name);
+gchar        ** gimp_item_parasite_list   (const GimpItem *item,
+                                           gint           *count);
+
+
+#endif /* __GIMP_ITEM_H__ */

@@ -141,7 +141,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   guchar               col[MAX_CHANNELS];
   gdouble              scale;
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
   options = (GimpEraserOptions *) paint_options;

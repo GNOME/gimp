@@ -1,3 +1,120 @@
+2002-02-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpitem.[ch]: new base class for something which is a
+	child of an image, has a PDB ID, a tattoo, parasites and emits
+	a "removed" signal.
+
+	* app/core/gimpdrawable.[ch]
+	* app/vectors/gimpvectors.[ch]: derive from GimpItem. Removed
+	lots of stuff from GimpDrawable.
+
+	* app/core/gimp.[ch]: changed gimp->drawable_table and
+	gimp->next_drawable_ID to gimp->item_table and gimp->next_item_id.
+
+	* app/undo.[ch]: s/undo_push_drawable_parasite/undo_push_item_parasite/,
+	minor cleanups.
+
+	* app/core/gimplayer.[ch]: changed gimp_layer_new_from_tiles() and
+	gimp_layer_new_from_drawable() to take the "dest_gimage" as
+	second, not first parameter.
+
+	* app/image_map.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-histogram.c
+	* app/core/gimpdrawable-offset.c
+	* app/core/gimpdrawable-preview.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-pick-color.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer-floating-sel.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/file/file-save.c
+	* app/gui/channels-commands.c
+	* app/gui/file-save-dialog.c
+	* app/gui/layers-commands.c
+	* app/gui/offset-dialog.c
+	* app/gui/paths-dialog.c
+	* app/gui/toolbox.c
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppaintcore.c
+	* app/paint/gimppencil.c
+	* app/paint/gimpsmudge.c
+	* app/plug-in/plug-in.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimppainttool.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* app/widgets/gimpdrawablepreview.c: changed accordingly.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpitemlistview.[ch]: new widget implementing most
+	of the stuff formerly done by GimpDrawableListView.
+
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpdrawablelistitem.c
+	* app/widgets/gimpdrawablelistview.[ch]
+	* app/widgets/gimplayerlistview.c: changed accordingly.
+
+	* app/widgets/gimpdnd.[ch]: added a vectors DND type.
+
+	* app/gui/menus.c
+	* app/gui/dialogs.c
+	* app/gui/dialogs-constructors.[ch]: added a vectors dialog and
+	a vectors item_factory.
+
+	* app/gui/Makefile.am
+	* app/gui/vectors-commands.[ch]: new files implementing the
+	callbacks for the new vectors dialog and item_factory.
+
+	* app/pdb/pdb_glue.h: some more ugly hacks to keep intermediate
+	perl code working...
+
+	* tools/pdbgen/pdb.pl: added a vectors type, use GimpItem for all
+	ID lookups.
+
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/misc_tools.pdb
+	* tools/pdbgen/pdb/parasite.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/selection_tools.pdb: misc changes according to
+	stuff above.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/color_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/floating_sel_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/misc_tools_cmds.c
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/parasite_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/selection_tools_cmds.c
+	* app/pdb/text_tool_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
 2002-02-25  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c

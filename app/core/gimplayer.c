@@ -367,8 +367,8 @@ gimp_layer_copy (const GimpLayer *layer,
 }
 
 GimpLayer *
-gimp_layer_new_from_tiles (GimpImage            *gimage,
-			   TileManager          *tiles,
+gimp_layer_new_from_tiles (TileManager          *tiles,
+                           GimpImage            *dest_gimage,
 			   const gchar          *name,
 			   gint                  opacity,
 			   GimpLayerModeEffects  mode)
@@ -382,14 +382,14 @@ gimp_layer_new_from_tiles (GimpImage            *gimage,
    *  the contents to meet the requirements of the target image type
    */
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (tiles != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (dest_gimage), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  new_layer = gimp_layer_new (gimage,
+  new_layer = gimp_layer_new (dest_gimage,
 			      tile_manager_width (tiles),
 			      tile_manager_height (tiles),
-			      gimp_image_base_type_with_alpha (gimage),
+			      gimp_image_base_type_with_alpha (dest_gimage),
 			      name,
 			      opacity,
 			      mode);
@@ -423,7 +423,7 @@ gimp_layer_new_from_tiles (GimpImage            *gimage,
   else
     {
       /*  Transform the contents of the buf to the new_layer  */
-      gimp_layer_transform_color (gimage,
+      gimp_layer_transform_color (dest_gimage,
                                   &layerPR, &bufPR,
                                   GIMP_DRAWABLE (new_layer),
                                   ((tile_manager_bpp (tiles) == 4) ? 
@@ -434,18 +434,18 @@ gimp_layer_new_from_tiles (GimpImage            *gimage,
 }
 
 GimpLayer *
-gimp_layer_new_from_drawable (GimpImage    *dest_image,
-                              GimpDrawable *drawable)
+gimp_layer_new_from_drawable (GimpDrawable *drawable,
+                              GimpImage    *dest_image)
 {
   GimpImage         *src_image;
   GimpImageBaseType  old_base_type;
   GimpDrawable      *new_drawable;
   GimpImageBaseType  new_base_type;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (GIMP_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
 
-  src_image = gimp_drawable_gimage (drawable);
+  src_image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   old_base_type = gimp_image_base_type (src_image);
   new_base_type = gimp_image_base_type (dest_image);
@@ -523,7 +523,7 @@ gimp_layer_new_from_drawable (GimpImage    *dest_image,
       new_drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (new_type);
     }
 
-  gimp_drawable_set_gimage (new_drawable, dest_image);
+  gimp_item_set_image (GIMP_ITEM (new_drawable), dest_image);
 
   return GIMP_LAYER (new_drawable);
 }
@@ -538,7 +538,7 @@ gimp_layer_add_mask (GimpLayer     *layer,
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (mask), NULL);
 
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
+  gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   if (! gimage)
     {
@@ -606,12 +606,12 @@ gimp_layer_create_mask (const GimpLayer *layer,
   gchar         *mask_name;
   GimpRGB        black = { 0.0, 0.0, 0.0, 1.0 };
 
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
+  gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   mask_name = g_strdup_printf (_("%s mask"),
 			       gimp_object_get_name (GIMP_OBJECT (layer)));
 
-  mask = gimp_layer_mask_new (GIMP_DRAWABLE (layer)->gimage,
+  mask = gimp_layer_mask_new (gimp_item_get_image (GIMP_ITEM (layer)),
 			      GIMP_DRAWABLE (layer)->width,
 			      GIMP_DRAWABLE (layer)->height,
 			      mask_name, &black);
@@ -752,7 +752,7 @@ gimp_layer_apply_mask (GimpLayer     *layer,
   if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     return;
 
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
+  gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   if (! gimage)
     return;
@@ -829,7 +829,7 @@ gimp_layer_translate (GimpLayer *layer,
 		      gint       off_y)
 {
   /*  the undo call goes here  */
-  undo_push_layer_displace (GIMP_DRAWABLE (layer)->gimage, layer);
+  undo_push_layer_displace (gimp_item_get_image (GIMP_ITEM (layer)), layer);
 
   /*  update the affected region  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),
@@ -894,7 +894,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
   add_alpha_region (&srcPR, &destPR);
 
   /*  Push the layer on the undo stack  */
-  undo_push_layer_mod (GIMP_DRAWABLE (layer)->gimage, layer);
+  undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (layer)), layer);
 
   /*  Configure the new layer  */
   GIMP_DRAWABLE (layer)->tiles         = new_tiles;
@@ -903,7 +903,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
   GIMP_DRAWABLE (layer)->has_alpha     = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
   GIMP_DRAWABLE (layer)->preview_valid = FALSE;
 
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
+  gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   if (gimage->layers->num_children == 1)
     {
@@ -958,7 +958,7 @@ gimp_layer_scale_lowlevel (GimpLayer             *layer,
     }
 
   /*  Push the layer on the undo stack  */
-  undo_push_layer_mod (GIMP_DRAWABLE (layer)->gimage, layer);
+  undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (layer)), layer);
 
   /*  Configure the new layer  */
 
@@ -1010,7 +1010,7 @@ gimp_layer_check_scaling (const GimpLayer *layer,
   gint       new_layer_width;
   gint       new_layer_height;
 
-  gimage           = GIMP_DRAWABLE (layer)->gimage;
+  gimage           = gimp_item_get_image (GIMP_ITEM (layer));
   img_scale_w      = (gdouble) new_width  / (gdouble) gimage->width;
   img_scale_h      = (gdouble) new_height / (gdouble) gimage->height;
   new_layer_width  = ROUND (img_scale_w *
@@ -1224,7 +1224,7 @@ gimp_layer_resize (GimpLayer *layer,
     {
       guchar bg[3];
 
-      gimp_image_get_background (GIMP_DRAWABLE (layer)->gimage, 
+      gimp_image_get_background (gimp_item_get_image (GIMP_ITEM (layer)),
 				 GIMP_DRAWABLE (layer), bg);
       color_region (&destPR, bg);
     }
@@ -1239,7 +1239,7 @@ gimp_layer_resize (GimpLayer *layer,
     copy_region (&srcPR, &destPR);
 
   /*  Push the layer on the undo stack  */
-  undo_push_layer_mod (GIMP_DRAWABLE(layer)->gimage, layer);
+  undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (layer)), layer);
 
   /*  Configure the new layer  */
   GIMP_DRAWABLE (layer)->tiles = new_tiles;
@@ -1274,7 +1274,7 @@ gimp_layer_resize_to_image (GimpLayer *layer)
   gint       offset_x;
   gint       offset_y;
 
-  if (!(gimage = GIMP_DRAWABLE (layer)->gimage))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
 
   undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
@@ -1355,7 +1355,7 @@ gimp_layer_invalidate_boundary (GimpLayer *layer)
   GimpImage   *gimage;
   GimpChannel *mask;
 
-  if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
 
   /*  Turn the current selection off  */

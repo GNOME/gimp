@@ -72,7 +72,7 @@ blend_invoker (Gimp     *gimp,
   gdouble x2;
   gdouble y2;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -120,7 +120,7 @@ blend_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (! gimp_drawable_gimage (drawable))
+      if (! gimp_item_get_image (GIMP_ITEM (drawable)))
 	{
 	  success = FALSE;
 	}
@@ -246,7 +246,7 @@ bucket_fill_invoker (Gimp     *gimp,
   gdouble x;
   gdouble y;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -274,7 +274,7 @@ bucket_fill_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (! gimp_drawable_gimage (GIMP_DRAWABLE (drawable)))
+      if (! gimp_item_get_image (GIMP_ITEM (drawable)))
 	{
 	  success = FALSE;
 	}
@@ -369,7 +369,7 @@ color_picker_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
 
   x = args[2].value.pdb_float;
 
@@ -386,7 +386,7 @@ color_picker_invoker (Gimp     *gimp,
   if (success)
     {
       if (!sample_merged)
-	if (!drawable || (gimp_drawable_gimage (drawable) != gimage))
+	if (!drawable || (gimp_item_get_image (GIMP_ITEM (drawable)) != gimage))
 	  success = FALSE;
     
       if (success)

@@ -169,7 +169,7 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 
   options = (GimpCloneOptions *) paint_options;
 
-  context = gimp_get_current_context (drawable->gimage->gimp);
+  context = gimp_get_current_context (GIMP_ITEM (drawable)->gimage->gimp);
 
   switch (paint_state)
     {
@@ -295,14 +295,16 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
     {
       if (!src_drawable)
 	return;
-      if (! (src_gimage = gimp_drawable_gimage (src_drawable)))
+
+      if (! (src_gimage = gimp_item_get_image (GIMP_ITEM (src_drawable))))
 	return;
+
       /*  Determine whether the source image has an alpha channel  */
       has_alpha = gimp_drawable_has_alpha (src_drawable);
     }
 
   /*  We always need a destination image */
-  if (! (gimage = gimp_drawable_gimage (drawable)))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
   context = gimp_get_current_context (gimage->gimp);

@@ -77,7 +77,8 @@ static const GimpDialogFactoryEntry dock_entries[] =
   { "gimp:buffer-grid",      dialogs_buffer_grid_view_new,   32, FALSE, FALSE, FALSE, TRUE },
 
   { "gimp:layer-list",       dialogs_layer_list_view_new,    32, FALSE, FALSE, FALSE, TRUE },
-  { "gimp:channel-list",     dialogs_channel_list_view_new,  32,FALSE, FALSE, FALSE, TRUE },
+  { "gimp:channel-list",     dialogs_channel_list_view_new,  32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:vectors-list",     dialogs_vectors_list_view_new,  32, FALSE, FALSE, FALSE, TRUE },
   { "gimp:path-list",        dialogs_path_list_view_new,     32, TRUE,  FALSE, FALSE, TRUE },
   { "gimp:indexed-palette",  dialogs_indexed_palette_new,    32, FALSE, FALSE, FALSE, TRUE },
 

@@ -181,6 +181,7 @@ typedef struct _GimpDataFactory     GimpDataFactory;
 typedef struct _GimpContext         GimpContext;
 
 typedef struct _GimpViewable        GimpViewable;
+typedef struct _GimpItem            GimpItem;
 
 typedef struct _GimpBuffer          GimpBuffer;
 

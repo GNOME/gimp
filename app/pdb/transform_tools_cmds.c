@@ -64,7 +64,7 @@ flip_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
   gint32 flip_type;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -84,7 +84,7 @@ flip_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&flip_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
 
   return return_args;
 }
@@ -141,7 +141,7 @@ perspective_invoker (Gimp     *gimp,
   GimpMatrix3 matrix;
   GimpInterpolationType interpolation_type;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -195,7 +195,7 @@ perspective_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&perspective_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
 
   return return_args;
 }
@@ -293,7 +293,7 @@ rotate_invoker (Gimp     *gimp,
   GimpMatrix3 matrix;
   GimpInterpolationType interpolation_type;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -326,7 +326,7 @@ rotate_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&rotate_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
 
   return return_args;
 }
@@ -388,7 +388,7 @@ scale_invoker (Gimp     *gimp,
   GimpMatrix3 matrix;
   GimpInterpolationType interpolation_type;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -438,7 +438,7 @@ scale_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&scale_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
 
   return return_args;
 }
@@ -516,7 +516,7 @@ shear_invoker (Gimp     *gimp,
   GimpMatrix3 matrix;
   GimpInterpolationType interpolation_type;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -558,7 +558,7 @@ shear_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&shear_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
 
   return return_args;
 }
@@ -630,7 +630,7 @@ transform_2d_invoker (Gimp     *gimp,
   GimpMatrix3 matrix;
   GimpInterpolationType interpolation_type;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -675,7 +675,7 @@ transform_2d_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&transform_2d_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
 
   return return_args;
 }

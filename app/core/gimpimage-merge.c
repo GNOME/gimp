@@ -395,10 +395,10 @@ gimp_image_merge_layers (GimpImage *gimage,
     }
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
-  gimp_drawable_set_tattoo (GIMP_DRAWABLE (merge_layer),
-			    gimp_drawable_get_tattoo (GIMP_DRAWABLE (layer)));
-  GIMP_DRAWABLE (merge_layer)->parasites =
-    gimp_parasite_list_copy (GIMP_DRAWABLE (layer)->parasites);
+  gimp_item_set_tattoo (GIMP_ITEM (merge_layer),
+                        gimp_item_get_tattoo (GIMP_ITEM (layer)));
+  GIMP_ITEM (merge_layer)->parasites =
+    gimp_parasite_list_copy (GIMP_ITEM (layer)->parasites);
 
   while (reverse_list)
     {

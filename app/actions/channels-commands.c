@@ -531,7 +531,7 @@ channels_edit_channel_query (GimpChannel *channel)
   options = g_new0 (EditChannelOptions, 1);
 
   options->channel = channel;
-  options->gimage  = gimp_drawable_gimage (GIMP_DRAWABLE (channel));
+  options->gimage  = gimp_item_get_image (GIMP_ITEM (channel));
 
   channel_color = channel->color;
 

@@ -346,7 +346,7 @@ file_save_ok_callback (GtkWidget *widget,
 	  args[1].arg_type      = GIMP_PDB_IMAGE;
 	  args[1].value.pdb_int = gimp_image_get_ID (the_gimage);
 	  args[2].arg_type      = GIMP_PDB_DRAWABLE;
-	  args[2].value.pdb_int = gimp_drawable_get_ID (the_drawable);
+	  args[2].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (the_drawable));
 
 	  plug_in_run (proc_rec, args, 3, FALSE, TRUE, 0);
 

@@ -211,7 +211,7 @@ sub drawable_image {
     $outargs[0]->{init} = 1;
 
     %invoke = (
-	code => 'success = (gimage = gimp_drawable_gimage (drawable)) != NULL;'
+	code => 'success = (gimage = gimp_item_get_image (GIMP_ITEM (drawable))) != NULL;'
     );
 }
 
@@ -419,7 +419,7 @@ HELP
 	&std_image_arg
     );
 
-    %invoke = ( code => 'gimp_drawable_set_gimage (drawable, gimage);' );
+    %invoke = ( code => 'gimp_item_set_image (GIMP_ITEM (drawable), gimage);' );
 }
 
 

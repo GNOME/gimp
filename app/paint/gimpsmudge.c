@@ -171,8 +171,7 @@ gimp_smudge_start (GimpPaintCore *paint_core,
   gint         was_clipped;
   guchar      *do_fill = NULL;
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return FALSE;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  If the image type is indexed, don't smudge  */
   if (gimp_drawable_is_indexed (drawable))
@@ -255,8 +254,7 @@ gimp_smudge_motion (GimpPaintCore       *paint_core,
   gint         opacity;
   gint         x, y, w, h;
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   context = gimp_get_current_context (gimage->gimp);
 

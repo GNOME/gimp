@@ -1246,7 +1246,7 @@ ink_paste (GimpInkTool  *ink_tool,
   gint         offx, offy;
   gchar        col[MAX_CHANNELS];
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
   context = gimp_get_current_context (gimage->gimp);

@@ -89,7 +89,7 @@ brightness_contrast_invoker (Gimp     *gimp,
   PixelRegion srcPR, destPR;
   int x1, y1, x2, y2;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -107,7 +107,7 @@ brightness_contrast_invoker (Gimp     *gimp,
 	success = FALSE;
       else
 	{
-	  gimage = gimp_drawable_gimage (drawable);
+	  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
     
 	  lut = brightness_contrast_lut_new (brightness / 255.0,
 					     contrast / 127.0,
@@ -190,7 +190,7 @@ levels_invoker (Gimp     *gimp,
   int low_output[5];
   int high_output[5];
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -334,7 +334,7 @@ posterize_invoker (Gimp     *gimp,
   PixelRegion srcPR, destPR;
   int x1, y1, x2, y2;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -348,7 +348,7 @@ posterize_invoker (Gimp     *gimp,
 	success = FALSE;
       else
 	{
-	  gimage = gimp_drawable_gimage (drawable);
+	  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
     
 	  lut = posterize_lut_new (levels, gimp_drawable_bytes (drawable)); 
     
@@ -409,7 +409,7 @@ desaturate_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -457,7 +457,7 @@ equalize_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
   gboolean mask_only;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -511,7 +511,7 @@ invert_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -565,7 +565,7 @@ curves_spline_invoker (Gimp     *gimp,
   int i, j;
   PixelRegion srcPR, destPR;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -687,7 +687,7 @@ curves_explicit_invoker (Gimp     *gimp,
   int i, j;
   PixelRegion srcPR, destPR;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -799,7 +799,7 @@ color_balance_invoker (Gimp     *gimp,
   PixelRegion srcPR, destPR;
   int x1, y1, x2, y2;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -934,7 +934,7 @@ histogram_invoker (Gimp     *gimp,
   gboolean no_mask;
   GimpChannel *mask;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -966,7 +966,7 @@ histogram_invoker (Gimp     *gimp,
 			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
     
 	  /*  Configure the mask from the gimage's selection mask */
-	  mask = gimp_image_get_mask (gimp_drawable_gimage (drawable));
+	  mask = gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)));
 	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
 			     x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
     
@@ -1098,7 +1098,7 @@ hue_saturation_invoker (Gimp     *gimp,
   PixelRegion srcPR, destPR;
   int x1, y1, x2, y2;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1215,7 +1215,7 @@ threshold_invoker (Gimp     *gimp,
   int x1, y1, x2, y2;
   PixelRegion srcPR, destPR;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 

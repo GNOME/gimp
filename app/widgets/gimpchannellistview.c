@@ -52,7 +52,7 @@
 static void   gimp_channel_list_view_class_init (GimpChannelListViewClass *klass);
 static void   gimp_channel_list_view_init       (GimpChannelListView      *view);
 
-static void   gimp_channel_list_view_set_image      (GimpDrawableListView *view,
+static void   gimp_channel_list_view_set_image      (GimpItemListView     *item_view,
 						     GimpImage            *gimage);
 
 static void   gimp_channel_list_view_select_item    (GimpContainerView   *view,
@@ -121,18 +121,18 @@ gimp_channel_list_view_get_type (void)
 static void
 gimp_channel_list_view_class_init (GimpChannelListViewClass *klass)
 {
-  GimpContainerViewClass    *container_view_class;
-  GimpDrawableListViewClass *drawable_view_class;
+  GimpContainerViewClass *container_view_class;
+  GimpItemListViewClass  *item_view_class;
 
   container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
-  drawable_view_class  = GIMP_DRAWABLE_LIST_VIEW_CLASS (klass);
+  item_view_class      = GIMP_ITEM_LIST_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   container_view_class->select_item      = gimp_channel_list_view_select_item;
   container_view_class->set_preview_size = gimp_channel_list_view_set_preview_size;
 
-  drawable_view_class->set_image         = gimp_channel_list_view_set_image;
+  item_view_class->set_image             = gimp_channel_list_view_set_image;
 }
 
 static void
@@ -190,42 +190,42 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 /*  GimpChannelListView methods  */
 
 static void
-gimp_channel_list_view_set_image (GimpDrawableListView *view,
-				  GimpImage            *gimage)
+gimp_channel_list_view_set_image (GimpItemListView *item_view,
+				  GimpImage        *gimage)
 {
   GimpChannelListView *channel_view;
 
-  channel_view = GIMP_CHANNEL_LIST_VIEW (view);
+  channel_view = GIMP_CHANNEL_LIST_VIEW (item_view);
 
-  if (view->gimage)
+  if (item_view->gimage)
     {
       if (! gimage)
 	gtk_widget_hide (channel_view->component_frame);
 
       gimp_channel_list_view_clear_components (channel_view);
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (view->gimage),
+      g_signal_handlers_disconnect_by_func (G_OBJECT (item_view->gimage),
 					    gimp_channel_list_view_mode_changed,
 					    channel_view);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (view->gimage),
+      g_signal_handlers_disconnect_by_func (G_OBJECT (item_view->gimage),
 					    gimp_channel_list_view_alpha_changed,
 					    channel_view);
     }
 
-  if (GIMP_DRAWABLE_LIST_VIEW_CLASS (parent_class)->set_image)
-    GIMP_DRAWABLE_LIST_VIEW_CLASS (parent_class)->set_image (view, gimage);
+  if (GIMP_ITEM_LIST_VIEW_CLASS (parent_class)->set_image)
+    GIMP_ITEM_LIST_VIEW_CLASS (parent_class)->set_image (item_view, gimage);
 
-  if (view->gimage)
+  if (item_view->gimage)
     {
       if (! GTK_WIDGET_VISIBLE (channel_view->component_frame))
 	gtk_widget_show (channel_view->component_frame);
 
       gimp_channel_list_view_create_components (channel_view);
 
-      g_signal_connect (G_OBJECT (view->gimage), "mode_changed",
+      g_signal_connect (G_OBJECT (item_view->gimage), "mode_changed",
 			G_CALLBACK (gimp_channel_list_view_mode_changed),
 			channel_view);
-      g_signal_connect (G_OBJECT (view->gimage), "alpha_changed",
+      g_signal_connect (G_OBJECT (item_view->gimage), "alpha_changed",
 			G_CALLBACK (gimp_channel_list_view_alpha_changed),
 			channel_view);
     }
@@ -239,22 +239,22 @@ gimp_channel_list_view_select_item (GimpContainerView *view,
 				    GimpViewable      *item,
 				    gpointer           insert_data)
 {
-  GimpDrawableListView *drawable_view;
-  GimpChannelListView  *list_view;
+  GimpItemListView    *item_view;
+  GimpChannelListView *list_view;
 
-  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
-  list_view     = GIMP_CHANNEL_LIST_VIEW (view);
+  item_view = GIMP_ITEM_LIST_VIEW (view);
+  list_view = GIMP_CHANNEL_LIST_VIEW (view);
 
   if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view,
 							   item,
 							   insert_data);
 
-  if (drawable_view->gimage)
+  if (item_view->gimage)
     {
       gboolean floating_sel;
 
-      floating_sel = (gimp_image_floating_sel (drawable_view->gimage) != NULL);
+      floating_sel = (gimp_image_floating_sel (item_view->gimage) != NULL);
 
       gtk_widget_set_sensitive (view->button_box, !floating_sel);
     }
@@ -297,7 +297,7 @@ gimp_channel_list_view_to_selection (GimpChannelListView *view,
       GimpImage   *gimage;
       GimpChannel *new_channel;
 
-      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (channel));
+      gimage = gimp_item_get_image (GIMP_ITEM (channel));
 
       if (operation == CHANNEL_OP_REPLACE)
 	{
@@ -329,15 +329,15 @@ static void
 gimp_channel_list_view_toselection_clicked (GtkWidget           *widget,
 					    GimpChannelListView *view)
 {
-  GimpDrawableListView *drawable_view;
-  GimpDrawable         *drawable;
+  GimpItemListView *item_view;
+  GimpViewable     *viewable;
 
-  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
+  item_view = GIMP_ITEM_LIST_VIEW (view);
 
-  drawable = drawable_view->get_drawable_func (drawable_view->gimage);
+  viewable = item_view->get_item_func (item_view->gimage);
 
-  if (drawable)
-    gimp_channel_list_view_to_selection (view, GIMP_CHANNEL (drawable),
+  if (viewable)
+    gimp_channel_list_view_to_selection (view, GIMP_CHANNEL (viewable),
 					 CHANNEL_OP_REPLACE);
 }
 
@@ -346,14 +346,14 @@ gimp_channel_list_view_toselection_extended_clicked (GtkWidget           *widget
 						     guint                state,
 						     GimpChannelListView *view)
 {
-  GimpDrawableListView *drawable_view;
-  GimpDrawable         *drawable;
+  GimpItemListView *item_view;
+  GimpViewable     *viewable;
 
-  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
+  item_view = GIMP_ITEM_LIST_VIEW (view);
 
-  drawable = drawable_view->get_drawable_func (drawable_view->gimage);
+  viewable = item_view->get_item_func (item_view->gimage);
 
-  if (drawable)
+  if (viewable)
     {
       ChannelOps operation = CHANNEL_OP_REPLACE;
 
@@ -369,7 +369,7 @@ gimp_channel_list_view_toselection_extended_clicked (GtkWidget           *widget
 	  operation = CHANNEL_OP_SUB;
 	}
 
-      gimp_channel_list_view_to_selection (view, GIMP_CHANNEL (drawable),
+      gimp_channel_list_view_to_selection (view, GIMP_CHANNEL (viewable),
 					   operation);
     }
 }
@@ -384,7 +384,7 @@ gimp_channel_list_view_create_components (GimpChannelListView *view)
   GList           *list = NULL;
   gint             i;
 
-  gimage = GIMP_DRAWABLE_LIST_VIEW (view)->gimage;
+  gimage = GIMP_ITEM_LIST_VIEW (view)->gimage;
 
   switch (gimp_image_base_type (gimage))
     {
@@ -471,7 +471,7 @@ gimp_channel_list_view_component_toggle (GtkList             *list,
 				   gimp_channel_list_view_component_toggle,
 				   view);
 
-  gimp_image_set_component_active (GIMP_DRAWABLE_LIST_VIEW (view)->gimage,
+  gimp_image_set_component_active (GIMP_ITEM_LIST_VIEW (view)->gimage,
 				   component_item->channel,
 				   child->state == GTK_STATE_SELECTED);
 

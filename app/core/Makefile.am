@@ -114,6 +114,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpimage-undo.h		\
 	gimpimagefile.c			\
 	gimpimagefile.h			\
+	gimpitem.c			\
+	gimpitem.h			\
 	gimplayer.c			\
 	gimplayer.h			\
 	gimplayer-floating-sel.c	\

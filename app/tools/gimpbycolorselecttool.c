@@ -758,7 +758,7 @@ by_color_select_invert_callback (GtkWidget *widget,
     return;
 
   /*  check if the image associated to the mask still exists  */
-  if (! gimp_drawable_gimage (GIMP_DRAWABLE (gimp_image_get_mask (bcd->gimage))))
+  if (! gimp_item_get_image (GIMP_ITEM (gimp_image_get_mask (bcd->gimage))))
     return;
 
   /*  invert the mask  */
@@ -784,7 +784,7 @@ by_color_select_select_all_callback (GtkWidget *widget,
     return;
 
   /*  check if the image associated to the mask still exists  */
-  if (! gimp_drawable_gimage (GIMP_DRAWABLE (gimp_image_get_mask (bcd->gimage))))
+  if (! gimp_item_get_image (GIMP_ITEM (gimp_image_get_mask (bcd->gimage))))
     return;
 
   /*  fill the mask  */
@@ -810,7 +810,7 @@ by_color_select_select_none_callback (GtkWidget *widget,
     return;
 
   /*  check if the image associated to the mask still exists  */
-  if (! gimp_drawable_gimage (GIMP_DRAWABLE (gimp_image_get_mask (bcd->gimage))))
+  if (! gimp_item_get_image (GIMP_ITEM (gimp_image_get_mask (bcd->gimage))))
     return;
 
   /*  reset the mask  */
@@ -868,7 +868,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   drawable = gimp_image_active_drawable (bcd->gimage);
 
   /*  check if the gimage associated to the drawable still exists  */
-  if (! gimp_drawable_gimage (drawable))
+  if (! gimp_item_get_image (GIMP_ITEM (drawable)))
     return;
 
   /*  Defaults  */

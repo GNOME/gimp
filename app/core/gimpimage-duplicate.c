@@ -102,7 +102,7 @@ gimp_image_duplicate (GimpImage *gimage)
 
       new_layer = gimp_layer_copy (layer, G_TYPE_FROM_INSTANCE (layer), FALSE);
 
-      gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), new_gimage);
+      gimp_item_set_image (GIMP_ITEM (new_layer), new_gimage);
 
       /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_layer),
@@ -139,7 +139,7 @@ gimp_image_duplicate (GimpImage *gimage)
       new_channel = gimp_channel_copy (channel, G_TYPE_FROM_INSTANCE (channel),
                                        TRUE);
 
-      gimp_drawable_set_gimage (GIMP_DRAWABLE (new_channel), new_gimage);
+      gimp_item_set_image (GIMP_ITEM (new_channel), new_gimage);
 
       /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_channel),

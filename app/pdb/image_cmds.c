@@ -735,7 +735,7 @@ image_get_layers_invoker (Gimp     *gimp,
 	{
 	  layer_ids = g_new (gint32, num_layers);
 	  for (i = 0; i < num_layers; i++, list = g_list_next (list))
-	    layer_ids[i] = gimp_drawable_get_ID (GIMP_DRAWABLE (list->data));
+	    layer_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
 	}
     }
 
@@ -814,7 +814,7 @@ image_get_channels_invoker (Gimp     *gimp,
 	{
 	  channel_ids = g_new (gint32, num_channels);
 	  for (i = 0; i < num_channels; i++, list = g_list_next (list))
-	    channel_ids[i] = gimp_drawable_get_ID (GIMP_DRAWABLE (list->data));
+	    channel_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
 	}
     }
 
@@ -887,7 +887,7 @@ image_active_drawable_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_active_drawable_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
 
   return return_args;
 }
@@ -993,7 +993,7 @@ image_pick_correlate_layer_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_pick_correlate_layer_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
 
   return return_args;
 }
@@ -1054,7 +1054,7 @@ image_raise_layer_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1106,7 +1106,7 @@ image_lower_layer_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1158,7 +1158,7 @@ image_raise_layer_to_top_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1210,7 +1210,7 @@ image_lower_layer_to_bottom_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1277,7 +1277,7 @@ image_merge_visible_layers_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_merge_visible_layers_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
 
   return return_args;
 }
@@ -1336,7 +1336,7 @@ image_merge_down_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  merge_layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  merge_layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (merge_layer == NULL)
     success = FALSE;
 
@@ -1353,7 +1353,7 @@ image_merge_down_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_merge_down_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
 
   return return_args;
 }
@@ -1421,7 +1421,7 @@ image_flatten_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_flatten_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
 
   return return_args;
 }
@@ -1473,7 +1473,7 @@ image_add_layer_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1542,7 +1542,7 @@ image_remove_layer_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1595,11 +1595,11 @@ image_add_layer_mask_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
-  mask = (GimpLayerMask *) gimp_drawable_get_by_ID (gimp, args[2].value.pdb_int);
+  mask = (GimpLayerMask *) gimp_item_get_by_ID (gimp, args[2].value.pdb_int);
   if (mask == NULL)
     success = FALSE;
 
@@ -1657,7 +1657,7 @@ image_remove_layer_mask_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1718,7 +1718,7 @@ image_raise_channel_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  channel = (GimpChannel *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (channel == NULL)
     success = FALSE;
 
@@ -1770,7 +1770,7 @@ image_lower_channel_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1823,7 +1823,7 @@ image_add_channel_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  channel = (GimpChannel *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (channel == NULL)
     success = FALSE;
 
@@ -1882,7 +1882,7 @@ image_remove_channel_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  channel = (GimpChannel *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (channel == NULL)
     success = FALSE;
 
@@ -2410,7 +2410,7 @@ image_floating_selection_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_floating_selection_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = floating_sel ? gimp_drawable_get_ID (GIMP_DRAWABLE (floating_sel)) : -1;
+    return_args[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
 
   return return_args;
 }
@@ -2476,7 +2476,7 @@ image_floating_sel_attached_to_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_floating_sel_attached_to_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable ? gimp_drawable_get_ID (GIMP_DRAWABLE (drawable)) : -1;
+    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
   return return_args;
 }
@@ -2946,7 +2946,7 @@ image_get_active_layer_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_get_active_layer_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = active_layer ? gimp_drawable_get_ID (GIMP_DRAWABLE (active_layer)) : -1;
+    return_args[1].value.pdb_int = active_layer ? gimp_item_get_ID (GIMP_ITEM (active_layer)) : -1;
 
   return return_args;
 }
@@ -2997,7 +2997,7 @@ image_set_active_layer_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  active_layer = (GimpLayer *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  active_layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (active_layer == NULL)
     success = FALSE;
 
@@ -3056,7 +3056,7 @@ image_get_active_channel_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_get_active_channel_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = active_channel ? gimp_drawable_get_ID (GIMP_DRAWABLE (active_channel)) : -1;
+    return_args[1].value.pdb_int = active_channel ? gimp_item_get_ID (GIMP_ITEM (active_channel)) : -1;
 
   return return_args;
 }
@@ -3107,7 +3107,7 @@ image_set_active_channel_invoker (Gimp     *gimp,
   if (gimage == NULL)
     success = FALSE;
 
-  active_channel = (GimpChannel *) gimp_drawable_get_by_ID (gimp, args[1].value.pdb_int);
+  active_channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
   if (active_channel == NULL)
     success = FALSE;
 
@@ -3166,7 +3166,7 @@ image_get_selection_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_get_selection_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (selection));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (selection));
 
   return return_args;
 }
@@ -3867,7 +3867,7 @@ image_get_layer_by_tattoo_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_get_layer_by_tattoo_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
 
   return return_args;
 }
@@ -3938,7 +3938,7 @@ image_get_channel_by_tattoo_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_get_channel_by_tattoo_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (channel));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (channel));
 
   return return_args;
 }

@@ -212,7 +212,7 @@ HELP
 
     %invoke = ( code => <<'CODE' );
 {
-  if (! gimp_drawable_gimage (GIMP_DRAWABLE (channel)))
+  if (! gimp_item_get_image (GIMP_ITEM (channel)))
     {
       g_object_unref (G_OBJECT (channel));
       success = TRUE;

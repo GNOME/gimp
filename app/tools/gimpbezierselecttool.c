@@ -3446,7 +3446,7 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
 	    procedural_db_run_proc (gdisp->gimage->gimp,
 				    pdb_string,
 				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
+				    GIMP_PDB_DRAWABLE, (GimpDrawable *) gimp_item_get_ID (GIMP_ITEM (drawable)),
 				    GIMP_PDB_INT32, (gint32) rpnts->num_stroke_points * 2,
 				    GIMP_PDB_FLOATARRAY, rpnts->stroke_points,
 				    GIMP_PDB_END);

@@ -526,7 +526,7 @@ toolbox_drop_drawable (GtkWidget    *widget,
 
   drawable = GIMP_DRAWABLE (viewable);
 
-  gimage = gimp_drawable_gimage (drawable);
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
   width  = gimp_drawable_width  (drawable);
   height = gimp_drawable_height (drawable);
   bytes  = gimp_drawable_bytes  (drawable);
@@ -562,7 +562,7 @@ toolbox_drop_drawable (GtkWidget    *widget,
                                                   TRUE));
     }
 
-  gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), new_gimage);
+  gimp_item_set_image (GIMP_ITEM (new_layer), new_gimage);
 
   gimp_object_set_name (GIMP_OBJECT (new_layer),
 			gimp_object_get_name (GIMP_OBJECT (drawable)));

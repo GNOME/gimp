@@ -126,7 +126,7 @@ image_map_apply (ImageMap          *image_map,
     }
 
   /*  Make sure the drawable is still valid  */
-  if (! gimp_drawable_gimage (image_map->drawable))
+  if (! gimp_item_get_image (GIMP_ITEM (image_map->drawable)))
     return;
 
   /*  The application should occur only within selection bounds  */
@@ -227,7 +227,7 @@ image_map_commit (ImageMap *image_map)
     }
 
   /*  Make sure the drawable is still valid  */
-  if (! gimp_drawable_gimage (image_map->drawable))
+  if (! gimp_item_get_image (GIMP_ITEM (image_map->drawable)))
     return;
 
   /* Interactive phase ends: we can commit an undo frame now */
@@ -268,7 +268,7 @@ image_map_clear (ImageMap *image_map)
   image_map->state = IMAGE_MAP_WAITING;
 
   /*  Make sure the drawable is still valid  */
-  if (! gimp_drawable_gimage (image_map->drawable))
+  if (! gimp_item_get_image (GIMP_ITEM (image_map->drawable)))
     return;
 
   /*  restore the original image  */
@@ -344,7 +344,7 @@ image_map_get_color_at (ImageMap *image_map,
 	return (gimp_drawable_get_color_at (image_map->drawable, x, y));
 
       if (! image_map ||
-	  (! gimp_drawable_gimage (image_map->drawable) && 
+	  (! gimp_item_get_image (GIMP_ITEM (image_map->drawable)) && 
 	   gimp_drawable_is_indexed (image_map->drawable)) ||
 	  x < 0 || y < 0                                   ||
 	  x >= tile_manager_width (image_map->undo_tiles)  ||
@@ -357,7 +357,7 @@ image_map_get_color_at (ImageMap *image_map,
       
       read_pixel_data_1 (image_map->undo_tiles, x, y, src);
 
-      gimp_image_get_color (gimp_drawable_gimage (image_map->drawable),
+      gimp_image_get_color (gimp_item_get_image  (GIMP_ITEM (image_map->drawable)),
 			    gimp_drawable_type (image_map->drawable),
 			    dest, src);
 
@@ -392,7 +392,7 @@ image_map_do (gpointer data)
 
   image_map = (ImageMap *) data;
 
-  if (! (gimage = gimp_drawable_gimage (image_map->drawable)))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (image_map->drawable))))
     {
       image_map->state = IMAGE_MAP_WAITING;
 

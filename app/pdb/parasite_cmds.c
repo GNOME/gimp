@@ -31,6 +31,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpparasite.h"
+#include "pdb_glue.h"
 
 #include "libgimpbase/gimpparasite.h"
 
@@ -267,7 +268,7 @@ drawable_parasite_find_invoker (Gimp     *gimp,
   gchar *name;
   GimpParasite *parasite = NULL;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -336,7 +337,7 @@ drawable_parasite_attach_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
   GimpParasite *parasite;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -388,7 +389,7 @@ drawable_parasite_detach_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
   gchar *name;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -442,7 +443,7 @@ drawable_parasite_list_invoker (Gimp     *gimp,
   gint32 num_parasites;
   gchar **parasites = NULL;
 
-  drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 

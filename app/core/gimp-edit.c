@@ -173,13 +173,13 @@ gimp_edit_paste (GimpImage    *gimage,
    */
 
   if (drawable != NULL)
-    layer = gimp_layer_new_from_tiles (gimage,
-				       paste->tiles, 
+    layer = gimp_layer_new_from_tiles (paste->tiles,
+                                       gimage,
 				       _("Pasted Layer"),
 				       OPAQUE_OPACITY, GIMP_NORMAL_MODE);
   else
-    layer = gimp_layer_new_from_tiles (gimage,
-				       paste->tiles,
+    layer = gimp_layer_new_from_tiles (paste->tiles,
+                                       gimage,
 				       _("Pasted Layer"),
 				       OPAQUE_OPACITY, GIMP_NORMAL_MODE);
 
@@ -220,7 +220,7 @@ gimp_edit_paste (GimpImage    *gimage,
     }
   else
     {
-      gimp_drawable_set_gimage (GIMP_DRAWABLE (layer), gimage);
+      gimp_item_set_image (GIMP_ITEM (layer), gimage);
       gimp_image_add_layer (gimage, layer, 0);
     }
 
@@ -253,15 +253,14 @@ gimp_edit_paste_as_new (Gimp       *gimp,
       gimp_image_set_unit (gimage, invoke->unit);
     }
 
-  layer = gimp_layer_new_from_tiles (gimage,
-				     paste->tiles,
+  layer = gimp_layer_new_from_tiles (paste->tiles,
+                                     gimage,
 				     _("Pasted Layer"),
 				     OPAQUE_OPACITY, GIMP_NORMAL_MODE);
 
   if (layer)
     {
-      /*  add the new layer to the image  */
-      gimp_drawable_set_gimage (GIMP_DRAWABLE (layer), gimage);
+      gimp_item_set_image (GIMP_ITEM (layer), gimage);
       gimp_image_add_layer (gimage, layer, 0);
 
       gimp_image_undo_enable (gimage);

@@ -35,6 +35,8 @@
 #include "core/gimppalette.h"
 #include "core/gimptoolinfo.h"
 
+#include "vectors/gimpvectors.h"
+
 #include "widgets/gimpbrushfactoryview.h"
 #include "widgets/gimpbufferview.h"
 #include "widgets/gimpcontainerlistview.h"
@@ -43,10 +45,10 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpitemlistview.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdocumentview.h"
-#include "widgets/gimpdrawablelistview.h"
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppreview.h"
 
@@ -80,6 +82,7 @@
 #include "tips-dialog.h"
 #include "tool-options-dialog.h"
 #include "toolbox.h"
+#include "vectors-commands.h"
 
 #include "gimprc.h"
 #include "undo_history.h"
@@ -93,33 +96,33 @@
 
 /*  local function prototypes  */
 
-static void dialogs_indexed_palette_selected     (GimpColormapDialog *dialog,
-						  GimpDockable       *dockable);
+static void dialogs_indexed_palette_selected      (GimpColormapDialog *dialog,
+                                                   GimpDockable       *dockable);
 
-static GtkWidget * dialogs_brush_tab_func        (GimpDockable       *dockable,
-						  GimpDockbook       *dockbook,
-						  gint                size);
-static GtkWidget * dialogs_pattern_tab_func      (GimpDockable       *dockable,
-						  GimpDockbook       *dockbook,
-						  gint                size);
-static GtkWidget * dialogs_gradient_tab_func     (GimpDockable       *dockable,
-						  GimpDockbook       *dockbook,
-						  gint                size);
-static GtkWidget * dialogs_palette_tab_func      (GimpDockable       *dockable,
-						  GimpDockbook       *dockbook,
-						  gint                size);
-static GtkWidget * dialogs_tool_tab_func         (GimpDockable       *dockable,
-						  GimpDockbook       *dockbook,
-						  gint                size);
+static GtkWidget * dialogs_brush_tab_func         (GimpDockable       *dockable,
+                                                   GimpDockbook       *dockbook,
+                                                   gint                size);
+static GtkWidget * dialogs_pattern_tab_func       (GimpDockable       *dockable,
+                                                   GimpDockbook       *dockbook,
+                                                   gint                size);
+static GtkWidget * dialogs_gradient_tab_func      (GimpDockable       *dockable,
+                                                   GimpDockbook       *dockbook,
+                                                   gint                size);
+static GtkWidget * dialogs_palette_tab_func       (GimpDockable       *dockable,
+                                                   GimpDockbook       *dockbook,
+                                                   gint                size);
+static GtkWidget * dialogs_tool_tab_func          (GimpDockable       *dockable,
+                                                   GimpDockbook       *dockbook,
+                                                   gint                size);
 
-static void   dialogs_set_view_context_func      (GimpDockable       *dockable,
-						  GimpContext        *context);
-static void   dialogs_set_editor_context_func    (GimpDockable       *dockable,
-						  GimpContext        *context);
-static void   dialogs_set_drawable_context_func  (GimpDockable       *dockable,
-						  GimpContext        *context);
-static void   dialogs_set_path_context_func      (GimpDockable       *dockable,
-						  GimpContext        *context);
+static void   dialogs_set_view_context_func       (GimpDockable       *dockable,
+                                                   GimpContext        *context);
+static void   dialogs_set_editor_context_func     (GimpDockable       *dockable,
+                                                   GimpContext        *context);
+static void   dialogs_set_image_item_context_func (GimpDockable       *dockable,
+                                                   GimpContext        *context);
+static void   dialogs_set_path_context_func       (GimpDockable       *dockable,
+                                                   GimpContext        *context);
 static void   dialogs_set_indexed_palette_context_func (GimpDockable *dockable,
 							GimpContext  *context);
 
@@ -129,12 +132,12 @@ static GtkWidget * dialogs_dockable_new (GtkWidget                  *widget,
 					 GimpDockableGetTabFunc      get_tab_func,
 					 GimpDockableSetContextFunc  set_context_func);
 
-static void dialogs_drawable_view_image_changed (GimpContext          *context,
-						 GimpImage            *gimage,
-						 GimpDrawableListView *view);
-static void dialogs_path_view_image_changed     (GimpContext          *context,
-						 GimpImage            *gimage,
-						 GtkWidget            *view);
+static void dialogs_image_item_view_image_changed (GimpContext        *context,
+                                                   GimpImage          *gimage,
+                                                   GimpItemListView   *view);
+static void dialogs_path_view_image_changed       (GimpContext        *context,
+                                                   GimpImage          *gimage,
+                                                   GtkWidget          *view);
 static void dialogs_indexed_palette_image_changed (GimpContext        *context,
 						   GimpImage          *gimage,
 						   GimpColormapDialog *ipal);
@@ -717,27 +720,27 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
 
   gimage = gimp_context_get_image (context);
 
-  view = gimp_drawable_list_view_new
-    (preview_size,
-     gimage,
-     GIMP_TYPE_LAYER,
-     "active_layer_changed",
-     (GimpGetContainerFunc)    gimp_image_get_layers,
-     (GimpGetDrawableFunc)     gimp_image_get_active_layer,
-     (GimpSetDrawableFunc)     gimp_image_set_active_layer,
-     (GimpReorderDrawableFunc) gimp_image_position_layer,
-     (GimpAddDrawableFunc)     gimp_image_add_layer,
-     (GimpRemoveDrawableFunc)  gimp_image_remove_layer,
-     (GimpCopyDrawableFunc)    gimp_layer_copy,
-     (GimpConvertDrawableFunc) gimp_layer_new_from_drawable,
-     (GimpNewDrawableFunc)     layers_new_layer_query,
-     (GimpEditDrawableFunc)    layers_edit_layer_query,
-     gimp_item_factory_from_path ("<Layers>"));
+  view =
+    gimp_item_list_view_new (preview_size,
+                             gimage,
+                             GIMP_TYPE_LAYER,
+                             "active_layer_changed",
+                             (GimpGetContainerFunc) gimp_image_get_layers,
+                             (GimpGetItemFunc)      gimp_image_get_active_layer,
+                             (GimpSetItemFunc)      gimp_image_set_active_layer,
+                             (GimpReorderItemFunc)  gimp_image_position_layer,
+                             (GimpAddItemFunc)      gimp_image_add_layer,
+                             (GimpRemoveItemFunc)   gimp_image_remove_layer,
+                             (GimpCopyItemFunc)     gimp_layer_copy,
+                             (GimpConvertItemFunc)  gimp_layer_new_from_drawable,
+                             (GimpNewItemFunc)      layers_new_layer_query,
+                             (GimpEditItemFunc)     layers_edit_layer_query,
+                             gimp_item_factory_from_path ("<Layers>"));
 
   dockable = dialogs_dockable_new (view,
 				   "Layer List", "Layers",
 				   NULL,
-				   dialogs_set_drawable_context_func);
+				   dialogs_set_image_item_context_func);
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
 
@@ -755,27 +758,76 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
 
   gimage = gimp_context_get_image (context);
 
-  view = gimp_drawable_list_view_new
-    (preview_size,
-     gimage,
-     GIMP_TYPE_CHANNEL,
-     "active_channel_changed",
-     (GimpGetContainerFunc)    gimp_image_get_channels,
-     (GimpGetDrawableFunc)     gimp_image_get_active_channel,
-     (GimpSetDrawableFunc)     gimp_image_set_active_channel,
-     (GimpReorderDrawableFunc) gimp_image_position_channel,
-     (GimpAddDrawableFunc)     gimp_image_add_channel,
-     (GimpRemoveDrawableFunc)  gimp_image_remove_channel,
-     (GimpCopyDrawableFunc)    gimp_channel_copy,
-     (GimpConvertDrawableFunc) NULL,
-     (GimpNewDrawableFunc)     channels_new_channel_query,
-     (GimpEditDrawableFunc)    channels_edit_channel_query,
-     gimp_item_factory_from_path ("<Channels>"));
+  view =
+    gimp_item_list_view_new (preview_size,
+                             gimage,
+                             GIMP_TYPE_CHANNEL,
+                             "active_channel_changed",
+                             (GimpGetContainerFunc) gimp_image_get_channels,
+                             (GimpGetItemFunc)      gimp_image_get_active_channel,
+                             (GimpSetItemFunc)      gimp_image_set_active_channel,
+                             (GimpReorderItemFunc)  gimp_image_position_channel,
+                             (GimpAddItemFunc)      gimp_image_add_channel,
+                             (GimpRemoveItemFunc)   gimp_image_remove_channel,
+                             (GimpCopyItemFunc)     gimp_channel_copy,
+                             (GimpConvertItemFunc)  NULL,
+                             (GimpNewItemFunc)      channels_new_channel_query,
+                             (GimpEditItemFunc)     channels_edit_channel_query,
+                             gimp_item_factory_from_path ("<Channels>"));
 
   dockable = dialogs_dockable_new (view,
 				   "Channel List", "Channels",
 				   NULL,
-				   dialogs_set_drawable_context_func);
+				   dialogs_set_image_item_context_func);
+
+  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
+
+  return dockable;
+}
+
+static GimpVectors *
+gimp_vectors_copy (const GimpVectors *vectors,
+                   GType              new_type,
+                   gboolean           add_alpha /* unused */)
+{
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_VECTORS), NULL);
+
+  return NULL;
+}
+
+GtkWidget *
+dialogs_vectors_list_view_new (GimpDialogFactory *factory,
+			       GimpContext       *context,
+                               gint               preview_size)
+{
+  GimpImage *gimage;
+  GtkWidget *view;
+  GtkWidget *dockable;
+
+  gimage = gimp_context_get_image (context);
+
+  view =
+    gimp_item_list_view_new (preview_size,
+                             gimage,
+                             GIMP_TYPE_VECTORS,
+                             "active_vectors_changed",
+                             (GimpGetContainerFunc) gimp_image_get_vectors,
+                             (GimpGetItemFunc)      gimp_image_get_active_vectors,
+                             (GimpSetItemFunc)      gimp_image_set_active_vectors,
+                             (GimpReorderItemFunc)  gimp_image_position_vectors,
+                             (GimpAddItemFunc)      gimp_image_add_vectors,
+                             (GimpRemoveItemFunc)   gimp_image_remove_vectors,
+                             (GimpCopyItemFunc)     gimp_vectors_copy,
+                             (GimpConvertItemFunc)  NULL,
+                             (GimpNewItemFunc)      vectors_new_vectors_query,
+                             (GimpEditItemFunc)     vectors_edit_vectors_query,
+                             gimp_item_factory_from_path ("<Vectors>"));
+
+  dockable = dialogs_dockable_new (view,
+				   "Paths List", "Paths",
+				   NULL,
+				   dialogs_set_image_item_context_func);
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
 
@@ -799,7 +851,7 @@ dialogs_path_list_view_new (GimpDialogFactory *factory,
   g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
 
   dockable = dialogs_dockable_new (view,
-				   "Path List", "Paths",
+				   "Old Path List", "Old Paths",
 				   NULL,
 				   dialogs_set_path_context_func);
 
@@ -1058,36 +1110,36 @@ dialogs_set_editor_context_func (GimpDockable *dockable,
 }
 
 static void
-dialogs_set_drawable_context_func (GimpDockable *dockable,
-				   GimpContext  *context)
+dialogs_set_image_item_context_func (GimpDockable *dockable,
+                                     GimpContext  *context)
 {
-  GimpDrawableListView *view;
+  GimpItemListView *view;
 
-  view = (GimpDrawableListView *) g_object_get_data (G_OBJECT (dockable),
-						     "gimp-dialogs-view");
+  view = (GimpItemListView *) g_object_get_data (G_OBJECT (dockable),
+                                                 "gimp-dialogs-view");
 
   if (view)
     {
       if (dockable->context)
 	{
 	  g_signal_handlers_disconnect_by_func (G_OBJECT (dockable->context),
-						dialogs_drawable_view_image_changed,
+						dialogs_image_item_view_image_changed,
 						view);
 	}
 
       if (context)
 	{
 	  g_signal_connect (G_OBJECT (context), "image_changed",
-			    G_CALLBACK (dialogs_drawable_view_image_changed),
+			    G_CALLBACK (dialogs_image_item_view_image_changed),
 			    view);
 
-	  dialogs_drawable_view_image_changed (context,
-					       gimp_context_get_image (context),
-					       view);
+	  dialogs_image_item_view_image_changed (context,
+                                                 gimp_context_get_image (context),
+                                                 view);
 	}
       else
 	{
-	  dialogs_drawable_view_image_changed (NULL, NULL, view);
+	  dialogs_image_item_view_image_changed (NULL, NULL, view);
 	}
     }
 }
@@ -1184,11 +1236,11 @@ dialogs_dockable_new (GtkWidget                  *widget,
 }
 
 static void
-dialogs_drawable_view_image_changed (GimpContext          *context,
-				     GimpImage            *gimage,
-				     GimpDrawableListView *view)
+dialogs_image_item_view_image_changed (GimpContext      *context,
+                                       GimpImage        *gimage,
+                                       GimpItemListView *view)
 {
-  gimp_drawable_list_view_set_image (view, gimage);
+  gimp_item_list_view_set_image (view, gimage);
 }
 
 static void

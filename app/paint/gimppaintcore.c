@@ -341,12 +341,17 @@ gimp_paint_core_start (GimpPaintCore *core,
                        GimpCoords    *coords)
 {
   GimpContext *context;
+  GimpImage   *gimage;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
 
-  context = gimp_get_current_context (gimp_drawable_gimage (drawable)->gimp);
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+
+  context = gimp_get_current_context (gimage->gimp);
 
   core->cur_coords = *coords;
 
@@ -414,8 +419,9 @@ gimp_paint_core_finish (GimpPaintCore *core,
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   /*  Determine if any part of the image has been altered--
    *  if nothing has, then just return...
@@ -1242,8 +1248,7 @@ gimp_paint_core_paste (GimpPaintCore        *core,
   gint         offx;
   gint         offy;
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  set undo blocks  */
   set_undo_tiles (core,
@@ -1340,8 +1345,7 @@ gimp_paint_core_replace (GimpPaintCore        *core,
       return;
     }
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  set undo blocks  */
   set_undo_tiles (core,

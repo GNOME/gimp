@@ -107,7 +107,7 @@ gimp_drawable_preview_get_size (GimpPreview *preview,
   gboolean      scaling_up;
 
   drawable = GIMP_DRAWABLE (preview->viewable);
-  gimage   = gimp_drawable_gimage (drawable);
+  gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimage && ! preview->is_popup)
     {
@@ -150,7 +150,7 @@ gimp_drawable_preview_render (GimpPreview *preview)
   TempBuf      *render_buf;
 
   drawable = GIMP_DRAWABLE (preview->viewable);
-  gimage   = gimp_drawable_gimage (drawable);
+  gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
 
   width  = preview->width;
   height = preview->height;
@@ -271,7 +271,7 @@ gimp_drawable_preview_create_popup (GimpPreview *preview)
   gboolean      scaling_up;
 
   drawable = GIMP_DRAWABLE (preview->viewable);
-  gimage   = gimp_drawable_gimage (drawable);
+  gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
 
   gimp_preview_calc_size (preview,
 			  drawable->width,

@@ -283,7 +283,7 @@ layers_invert_cmd_callback (GtkWidget *widget,
     procedural_db_run_proc (gimage->gimp,
 			    "gimp_invert",
 			    &nreturn_vals,
-			    GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
+			    GIMP_PDB_DRAWABLE, gimp_item_get_ID (GIMP_ITEM (drawable)),
 			    GIMP_PDB_END);
 
   if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
@@ -775,10 +775,10 @@ layers_edit_layer_query (GimpLayer *layer)
   GtkWidget        *hbox;
   GtkWidget        *label;
 
-  /*  The new options structure  */
-  options = g_new (EditLayerOptions, 1);
+  options = g_new0 (EditLayerOptions, 1);
+
   options->layer  = layer;
-  options->gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
+  options->gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   /*  The dialog  */
   options->query_box =
@@ -861,8 +861,7 @@ add_mask_query_ok_callback (GtkWidget *widget,
 
   options = (AddMaskOptions *) data;
 
-  if ((layer = (options->layer)) &&
-      (gimage = GIMP_DRAWABLE (layer)->gimage))
+  if ((layer = (options->layer)) && (gimage = GIMP_ITEM (layer)->gimage))
     {
       mask = gimp_layer_create_mask (layer, options->add_mask_type);
       gimp_layer_add_mask (layer, mask, TRUE);
@@ -884,7 +883,7 @@ layers_add_mask_query (GimpLayer *layer)
   options->layer         = layer;
   options->add_mask_type = ADD_WHITE_MASK;
 
-  gimage = GIMP_DRAWABLE (layer)->gimage;
+  gimage = gimp_item_get_image (GIMP_ITEM (layer));
   
   /*  The dialog  */
   options->query_box =
@@ -990,7 +989,6 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   ScaleLayerOptions *options;
-  GimpImage         *gimage;
   GimpLayer         *layer;
 
   options = (ScaleLayerOptions *) data;
@@ -998,9 +996,13 @@ scale_layer_query_ok_callback (GtkWidget *widget,
   if (options->resize->width > 0 && options->resize->height > 0 &&
       (layer =  (options->layer)))
     {
+      GimpImage *gimage;
+
       gtk_widget_set_sensitive (options->resize->resize_shell, FALSE);
 
-      if ((gimage = GIMP_DRAWABLE (layer)->gimage) != NULL)
+      gimage = gimp_item_get_image (GIMP_ITEM (layer));
+
+      if (gimage)
 	{
 	  undo_push_group_start (gimage, LAYER_SCALE_UNDO_GROUP);
 
@@ -1079,7 +1081,6 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 				gpointer   data)
 {
   ResizeLayerOptions *options;
-  GimpImage          *gimage;
   GimpLayer          *layer;
 
   options = (ResizeLayerOptions *) data;
@@ -1087,9 +1088,13 @@ resize_layer_query_ok_callback (GtkWidget *widget,
   if (options->resize->width > 0 && options->resize->height > 0 &&
       (layer = (options->layer)))
     {
+      GimpImage *gimage;
+
       gtk_widget_set_sensitive (options->resize->resize_shell, FALSE);
 
-      if ((gimage = GIMP_DRAWABLE (layer)->gimage) != NULL)
+      gimage = gimp_item_get_image (GIMP_ITEM (layer));
+
+      if (gimage)
 	{
 	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
 

@@ -48,7 +48,7 @@ floating_sel_attach (GimpLayer    *layer,
   GimpImage *gimage;
   GimpLayer *floating_sel;
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
   /*  If there is already a floating selection, anchor it  */
@@ -93,7 +93,7 @@ floating_sel_remove (GimpLayer *layer)
 {
   GimpImage *gimage;
 
-  if (! (gimage = gimp_drawable_gimage (layer->fs.drawable)))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer->fs.drawable))))
     return;
 
   /*  store the affected area from the drawable in the backing store  */
@@ -116,7 +116,7 @@ floating_sel_anchor (GimpLayer *layer)
 {
   GimpImage *gimage;
 
-  if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
 
   if (! gimp_layer_is_floating_sel (layer))
@@ -161,7 +161,7 @@ floating_sel_reset (GimpLayer *layer)
 {
   GimpImage *gimage;
 
-  if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
 
   /*  set the underlying drawable to active  */
@@ -189,7 +189,7 @@ floating_sel_to_layer (GimpLayer *layer)
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
-  if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
 
   /*  Check if the floating layer belongs to a channel...  */
@@ -340,7 +340,7 @@ void
 floating_sel_rigor (GimpLayer *layer,
 		    gboolean   undo)
 {
-  GimpImage *gimage = GIMP_DRAWABLE (layer)->gimage;
+  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_store (layer,
@@ -351,14 +351,14 @@ floating_sel_rigor (GimpLayer *layer,
   layer->fs.initial = TRUE;
 
   if (undo)
-    undo_push_fs_rigor (gimage, GIMP_DRAWABLE (layer)->ID);
+    undo_push_fs_rigor (gimage, GIMP_ITEM (layer)->ID);
 }
 
 void
 floating_sel_relax (GimpLayer *layer,
 		    gboolean   undo)
 {
-  GimpImage *gimage = GIMP_DRAWABLE (layer)->gimage;
+  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   /*  restore the contents of drawable the floating layer is attached to  */
   if (layer->fs.initial == FALSE)
@@ -370,7 +370,7 @@ floating_sel_relax (GimpLayer *layer,
   layer->fs.initial = TRUE;
 
   if (undo)
-    undo_push_fs_relax (gimage, GIMP_DRAWABLE (layer)->ID);
+    undo_push_fs_relax (gimage, GIMP_ITEM (layer)->ID);
 }
 
 void
@@ -392,7 +392,7 @@ floating_sel_composite (GimpLayer *layer,
 
   d_layer = NULL;
 
-  if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
 
   /*  What this function does is composite the specified area of the

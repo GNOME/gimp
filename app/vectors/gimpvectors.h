@@ -22,7 +22,7 @@
 #ifndef __GIMP_VECTORS_H__
 #define __GIMP_VECTORS_H__
 
-#include "core/gimpviewable.h"
+#include "core/gimpitem.h"
 
 
 #define GIMP_TYPE_VECTORS            (gimp_vectors_get_type ())
@@ -35,9 +35,7 @@
 
 struct _GimpVectors
 {
-  GimpViewable      parent_instance;
-
-  GimpImage       * gimage;
+  GimpItem          parent_instance;
 
   gboolean          visible;            /* controls visibility            */
   gboolean          locked;             /* transformation locking         */
@@ -50,12 +48,9 @@ struct _GimpVectors
 
 struct _GimpVectorsClass
 {
-  GimpViewableClass  parent_class;
+  GimpItemClass  parent_class;
 
   void          (* changed)              (GimpVectors       *vectors);
-              
-  void          (* removed)              (GimpVectors       *vectors);
-              
 
   void          (* stroke_add)           (GimpVectors       *vectors,
                                           const GimpStroke  *stroke);
@@ -96,10 +91,6 @@ struct _GimpVectorsClass
 /*  vectors utility functions  */
 
 GType           gimp_vectors_get_type           (void) G_GNUC_CONST;
-
-void            gimp_vectors_set_image          (GimpVectors        *vectors,
-                                                 GimpImage          *gimage);
-GimpImage     * gimp_vectors_get_image          (const GimpVectors  *vectors);
 
 
 /* accessing / modifying the anchors */

@@ -60,16 +60,19 @@ gimp_drawable_get_preview (GimpViewable *viewable,
 			   gint          height)
 {
   GimpDrawable *drawable;
+  GimpImage    *gimage;
 
   drawable = GIMP_DRAWABLE (viewable);
 
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
   /* Ok prime the cache with a large preview if the cache is invalid */
-  if (! drawable->preview_valid                            &&
-      width  <= PREVIEW_CACHE_PRIME_WIDTH                  &&
-      height <= PREVIEW_CACHE_PRIME_HEIGHT                 &&
-      drawable->gimage                                     &&
-      drawable->gimage->width  > PREVIEW_CACHE_PRIME_WIDTH &&
-      drawable->gimage->height > PREVIEW_CACHE_PRIME_HEIGHT)
+  if (! drawable->preview_valid                  &&
+      width  <= PREVIEW_CACHE_PRIME_WIDTH        &&
+      height <= PREVIEW_CACHE_PRIME_HEIGHT       &&
+      gimage                                     &&
+      gimage->width  > PREVIEW_CACHE_PRIME_WIDTH &&
+      gimage->height > PREVIEW_CACHE_PRIME_HEIGHT)
     {
       TempBuf *tb = gimp_drawable_preview_private (drawable,
 						   PREVIEW_CACHE_PRIME_WIDTH,
@@ -159,7 +162,7 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
 	{
 	  GimpImage *gimage;
 
-	  gimage = drawable->gimage;
+	  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
 	  gimp_drawable_preview_scale (type, gimage->cmap,
 				       &srcPR, &destPR,

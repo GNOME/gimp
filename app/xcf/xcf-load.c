@@ -685,22 +685,23 @@ xcf_load_layer_props (XcfInfo   *info,
 	  break;
 	case PROP_TATTOO:
 	  info->cp += xcf_read_int32 (info->fp,
-				      (guint32*) &GIMP_DRAWABLE(layer)->tattoo,
+				      (guint32*) &GIMP_ITEM (layer)->tattoo,
 				      1);
 	  break;
 	 case PROP_PARASITES:
-	 {
-	   long base = info->cp;
-	   GimpParasite *p;
-	   while (info->cp - base < prop_size)
-	   {
-	     p = xcf_load_parasite(info);
-	     gimp_drawable_parasite_attach(GIMP_DRAWABLE(layer), p);
-	     gimp_parasite_free(p);
-	   }
-	   if (info->cp - base != prop_size)
-	     g_message ("Error detected while loading a layer's parasites");
-	 }
+           {
+             glong         base = info->cp;
+             GimpParasite *p;
+
+             while (info->cp - base < prop_size)
+               {
+                 p = xcf_load_parasite(info);
+                 gimp_item_parasite_attach (GIMP_ITEM (layer), p);
+                 gimp_parasite_free (p);
+               }
+             if (info->cp - base != prop_size)
+               g_message ("Error detected while loading a layer's parasites");
+           }
 	 break;
 	default:
 	  g_message ("unexpected/unknown layer property: %d (skipping)", 
@@ -708,7 +709,7 @@ xcf_load_layer_props (XcfInfo   *info,
 
 	  {
 	    guint8 buf[16];
-	    guint amount;
+	    guint  amount;
 
 	    while (prop_size > 0)
 	      {
@@ -783,22 +784,23 @@ xcf_load_channel_props (XcfInfo     *info,
 	  break;
 	case PROP_TATTOO:
 	  info->cp += 
-            xcf_read_int32 (info->fp, &GIMP_DRAWABLE(channel)->tattoo, 1);
+            xcf_read_int32 (info->fp, &GIMP_ITEM (channel)->tattoo, 1);
 	  break;
 	 case PROP_PARASITES:
-	 {
-	   long base = info->cp;
-	   GimpParasite *p;
-	   while ((info->cp - base) < prop_size)
-	     {
-	       p = xcf_load_parasite(info);
-	       gimp_drawable_parasite_attach(GIMP_DRAWABLE(channel), p);
-	       gimp_parasite_free(p);
-	     }
-	   if (info->cp - base != prop_size)
-	     g_message("Error detected while loading a channel's parasites");
-	 }
-	 break;
+           {
+             glong         base = info->cp;
+             GimpParasite *p;
+
+             while ((info->cp - base) < prop_size)
+               {
+                 p = xcf_load_parasite (info);
+                 gimp_item_parasite_attach (GIMP_ITEM (channel), p);
+                 gimp_parasite_free (p);
+               }
+             if (info->cp - base != prop_size)
+               g_message("Error detected while loading a channel's parasites");
+           }
+           break;
 	default:
 	  g_message ("unexpected/unknown channel property: %d (skipping)", 
                      prop_type);

@@ -102,7 +102,7 @@ HELP
         headers => [ qw("core/gimpdrawable-blend.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_drawable_gimage (drawable))
+  if (! gimp_item_get_image (GIMP_ITEM (drawable)))
     {
       success = FALSE;
     }
@@ -173,7 +173,7 @@ HELP
         headers => [ qw ("core/gimpdrawable-bucket-fill.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_drawable_gimage (GIMP_DRAWABLE (drawable)))
+  if (! gimp_item_get_image (GIMP_ITEM (drawable)))
     {
       success = FALSE;
     }
@@ -237,7 +237,7 @@ HELP
 	code => <<'CODE'
 {
   if (!sample_merged)
-    if (!drawable || (gimp_drawable_gimage (drawable) != gimage))
+    if (!drawable || (gimp_item_get_image (GIMP_ITEM (drawable)) != gimage))
       success = FALSE;
 
   if (success)

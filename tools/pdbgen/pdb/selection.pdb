@@ -185,7 +185,7 @@ HELP
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = gimp_drawable_gimage (drawable);
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
   layer = gimp_image_mask_float (gimage, drawable, offx, offy);
   success = layer != NULL;
 }
@@ -306,7 +306,7 @@ HELP
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
+  gimage = gimp_item_get_image (GIMP_ITEM (layer));
   gimp_image_mask_layer_alpha (gimage, layer);
 }
 CODE
@@ -331,7 +331,7 @@ HELP
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (channel));
+  gimage = gimp_item_get_image (GIMP_ITEM (channel));
    
   if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
       gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
@@ -361,7 +361,7 @@ HELP
 	vars => [ 'GimpImage *gimage', 'GimpChannel *new_channel' ],
 	code => <<'CODE'
 {
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (channel));
+  gimage = gimp_item_get_image (GIMP_ITEM (channel));
    
   if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
       gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)

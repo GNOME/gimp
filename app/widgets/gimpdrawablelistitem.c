@@ -212,33 +212,30 @@ gimp_drawable_list_item_drag_drop (GtkWidget      *widget,
           widget->parent->parent && /* EEEEK */
           widget->parent->parent->parent && /* EEEEEEK */
           widget->parent->parent->parent->parent && /* EEEEEEEEK */
-	  GIMP_IS_DRAWABLE_LIST_VIEW (widget->parent->parent->parent->parent))
+	  GIMP_IS_ITEM_LIST_VIEW (widget->parent->parent->parent->parent))
         {
-          GimpDrawableListView *list_view;
-          GimpDrawable         *src_drawable;
+          GimpItemListView *item_view;
 
-          list_view =
-	    GIMP_DRAWABLE_LIST_VIEW (widget->parent->parent->parent->parent);
+          item_view =
+	    GIMP_ITEM_LIST_VIEW (widget->parent->parent->parent->parent);
 
-          src_drawable = GIMP_DRAWABLE (src_viewable);
-
-          if (list_view->gimage == gimp_drawable_gimage (src_drawable))
+          if (item_view->gimage == gimp_item_get_image (GIMP_ITEM (src_viewable)))
             {
-              list_view->reorder_drawable_func (list_view->gimage,
-                                                src_drawable,
-                                                dest_index,
-                                                TRUE);
+              item_view->reorder_item_func (item_view->gimage,
+                                            src_viewable,
+                                            dest_index,
+                                            TRUE);
             }
-          else if (list_view->convert_drawable_func)
+          else if (item_view->convert_item_func)
             {
-              GimpDrawable *new_drawable;
+              GimpViewable *new_viewable;
 
-              new_drawable = list_view->convert_drawable_func (list_view->gimage,
-                                                               src_drawable);
+              new_viewable = item_view->convert_item_func (src_viewable,
+                                                           item_view->gimage);
 
-              list_view->add_drawable_func (list_view->gimage,
-                                            new_drawable,
-                                            dest_index);
+              item_view->add_item_func (item_view->gimage,
+                                        new_viewable,
+                                        dest_index);
             }
 
           gdisplays_flush ();
@@ -246,7 +243,7 @@ gimp_drawable_list_item_drag_drop (GtkWidget      *widget,
       else
         {
           g_warning ("%s(): GimpDrawableListItem is not "
-                     "part of a GimpDrawableListView", G_GNUC_FUNCTION);
+                     "part of a GimpItemListView", G_GNUC_FUNCTION);
         }
     }
 

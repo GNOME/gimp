@@ -56,7 +56,7 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
       GimpChannel *sel_mask;
       GimpImage   *gimage;
 
-      gimage = gimp_drawable_gimage (drawable);
+      gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
       sel_mask = gimp_image_get_mask (gimage);
 
       gimp_drawable_offsets (drawable, &off_x, &off_y);
