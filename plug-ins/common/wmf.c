@@ -18,7 +18,7 @@
  * See http://www.iki.fi/tml/gimp/wmf/
  */
 
-#define VERSION "1999-09-30"
+#define VERSION "1999-10-22"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -127,6 +127,7 @@ typedef struct _StandardMetaRecord
 } WMFRECORD;
 
 #define SIZE_WMFRECORD 6
+#define WORDSIZE_WMFRECORD 3
 
 #define EndOfFile		0x0000
 
@@ -1272,14 +1273,18 @@ load_image (char *filename)
   gboolean have_bbox = FALSE;
   OrgAndExt window, viewport;
 
-#define XMAPPAR(param) (((double) (GINT16_FROM_LE (param) - window.org_x) * viewport.ext_x / window.ext_x) + viewport.org_x)
-#define YMAPPAR(param) (((double) (GINT16_FROM_LE (param) - window.org_y) * viewport.ext_y / window.ext_y) + viewport.org_y)
+#define XSCALE(value) ((value) * (double) viewport.ext_x / window.ext_x)
+#define YSCALE(value) ((value) * (double) viewport.ext_y / window.ext_y)
+
+#define XMAPPAR(param) (XSCALE (GINT16_FROM_LE (param) - window.org_x) + viewport.org_x)
+#define YMAPPAR(param) (YSCALE (GINT16_FROM_LE (param) - window.org_y) + viewport.org_y)
+#define XMAPPARPLUS1(param) (XSCALE ((GINT16_FROM_LE (param) + 1) - window.org_x) + viewport.org_x)
+#define YMAPPARPLUS1(param) (YSCALE ((GINT16_FROM_LE (param) + 1) - window.org_y) + viewport.org_y)
 
 #define XIMAPPAR(param) ((gint) XMAPPAR (param))
 #define YIMAPPAR(param) ((gint) YMAPPAR (param))
-
-#define XSCALE(value) ((value) * (double) viewport.ext_x / window.ext_x)
-#define YSCALE(value) ((value) * (double) viewport.ext_y / window.ext_y)
+#define XIMAPPARPLUS1(param) ((gint) XMAPPARPLUS1 (param))
+#define YIMAPPARPLUS1(param) ((gint) YMAPPARPLUS1 (param))
 
   Canvas *canvas = NULL;
   GdkGCValues gc_values;
@@ -1291,6 +1296,7 @@ load_image (char *filename)
   guint npolys;
   guint *nppoints;
   GdkImage *image;
+  guint options;
 
   GPixelRgn pixel_rgn;
   gint32 image_ID = -1;
@@ -1790,7 +1796,11 @@ load_image (char *filename)
 	      }
 	    weight = GUINT16_FROM_LE (params[4]);
 	    italic = (GUINT16_FROM_LE (params[5]) & 0xFF);
+#if 0
 	    pitch_family = ((GUINT16_FROM_LE (params[8]) >> 8) & 0xFF);
+#else
+	    pitch_family = (GUINT16_FROM_LE (params[8]) & 0xFF);
+#endif
 	    if ((pitch_family & 0x03) == 1)
 	      pitch = "m";
 	    else if ((pitch_family & 0x03) == 2)
@@ -1808,7 +1818,7 @@ load_image (char *filename)
 	    else
 	      slant = "r";
 
-	    k = GUINT32_FROM_LE (record.Size) - 9 - SIZE_WMFRECORD/2;
+	    k = GUINT32_FROM_LE (record.Size) - 9 - WORDSIZE_WMFRECORD;
 	    name = g_malloc (k*2 + 1);
 	    for (i = 0; i < k*2; i++)
 	      {
@@ -2042,8 +2052,8 @@ load_image (char *filename)
 	      gdk_draw_rectangle (canvas->pixmap, canvas->dc.gc, TRUE,
 				  XIMAPPAR (params[3]),
 				  YIMAPPAR (params[2]),
-				  XIMAPPAR (params[1]) - XIMAPPAR (params[3]),
-				  YIMAPPAR (params[2]) - YIMAPPAR (params[2]));
+				  XIMAPPARPLUS1 (params[1]) - XIMAPPAR (params[3]),
+				  YIMAPPARPLUS1 (params[0]) - YIMAPPAR (params[2]));
 	    }
 	  if (!canvas->dc.pen->invisible)
 	    {
@@ -2051,8 +2061,8 @@ load_image (char *filename)
 	      gdk_draw_rectangle (canvas->pixmap, canvas->dc.gc, FALSE,
 				  XIMAPPAR (params[3]),
 				  YIMAPPAR (params[2]),
-				  XIMAPPAR (params[1]) - XIMAPPAR (params[3]),
-				  YIMAPPAR (params[2]) - YIMAPPAR (params[2]));
+				  XIMAPPARPLUS1 (params[1]) - XIMAPPAR (params[3]),
+				  YIMAPPARPLUS1 (params[0]) - YIMAPPAR (params[2]));
 	    }
 	  sync_record (record.Size, 4, fp);
 	  break;
@@ -2068,8 +2078,8 @@ load_image (char *filename)
 	      gdk_draw_arc (canvas->pixmap, canvas->dc.gc, TRUE,
 			    XIMAPPAR (params[3]),
 			    YIMAPPAR (params[2]),
-			    XIMAPPAR (params[1]) - XIMAPPAR (params[3]),
-			    YIMAPPAR (params[0]) - YIMAPPAR (params[2]),
+			    XIMAPPARPLUS1 (params[1]) - XIMAPPAR (params[3]),
+			    YIMAPPARPLUS1 (params[0]) - YIMAPPAR (params[2]),
 			    0, 360 * 64);
 	    }
 	  if (!canvas->dc.pen->invisible)
@@ -2078,8 +2088,8 @@ load_image (char *filename)
 	      gdk_draw_arc (canvas->pixmap, canvas->dc.gc, FALSE,
 			    XIMAPPAR (params[3]),
 			    YIMAPPAR (params[2]),
-			    XIMAPPAR (params[1]) - XIMAPPAR (params[3]),
-			    YIMAPPAR (params[0]) - YIMAPPAR (params[2]),
+			    XIMAPPARPLUS1 (params[1]) - XIMAPPAR (params[3]),
+			    YIMAPPARPLUS1 (params[0]) - YIMAPPAR (params[2]),
 			    0, 360 * 64);
 	    }
 	  sync_record (record.Size, 4, fp);
@@ -2183,13 +2193,27 @@ load_image (char *filename)
 	case ExtTextOut:
 	  if (!readparams (record.Size, 4, fp, params))
 	    return -1;
-	  /* Count words read */
-	  j = SIZE_WMFRECORD/2 + 4;
+	  /* Count extra words read */
+	  j = 4;
 	  x = XMAPPAR (params[1]);
 	  y = YMAPPAR (params[0]);
-	  /* String length ? */
+	  /* String length */
 	  k = GUINT16_FROM_LE (params[2]);
-	  /* What is the fourth parameter? */
+	  options = GUINT16_FROM_LE (params[3]);
+	  /* Clipping or opaquing? */
+	  if ((options & 0x04) || (options & 0x02))
+	    {
+	      GdkRectangle r;
+	      if (!readparams (0, 4, fp, params))
+		return -1;
+	      j += 4;
+	      r.x = XIMAPPARPLUS1 (params[0]);
+	      r.y = YIMAPPARPLUS1 (params[1]);
+	      r.width = XIMAPPAR (params[2]) - r.x;
+	      r.height = YIMAPPARPLUS1 (params[3]) - r.y;
+	      if (options & 0x04)
+		gdk_gc_set_clip_rectangle (canvas->dc.gc, &r);
+	    }
 	  string = g_malloc (k);
 	  for (i = 0; i < k; i++)
 	    {
@@ -2204,8 +2228,9 @@ load_image (char *filename)
 		string[i] = ((params[0] >> 8) & 0xFF);
 	    }
 	  gdk_gc_set_foreground (canvas->dc.gc, &canvas->dc.textColor);
-	  /* ExtTextOut records can have an optional list of distances
-	   * between characters.
+#if 0	  /* ExtTextOut records can have an optional list of distances
+	   * between characters. But as we don't have the exact same font
+	   * metrics anyway, we ignore it.
 	   */
 	  if (j < GUINT16_FROM_LE (record.Size))
 	    for (i = 0; i < k; i++)
@@ -2214,14 +2239,21 @@ load_image (char *filename)
 			       canvas->dc.gc, (gint) x, (gint) y,
 			       string + i, 1);
 		if (j < GUINT16_FROM_LE (record.Size))
-		  if (!readparams (0, 1, fp, params))
-		    return -1;
-		x += (int) XSCALE (GINT16_FROM_LE (params[0]));
+		  {
+		    if (!readparams (0, 1, fp, params))
+		      return -1;
+		    j++;
+		  }
+		x += XSCALE (GINT16_FROM_LE (params[0]));
 	      }
 	  else
+#endif
 	    gdk_draw_text (canvas->pixmap, canvas->dc.font->font,
-			   canvas->dc.gc, (gint) x, (gint) y, string, k);
+			   canvas->dc.gc, (gint) x, (gint) y + canvas->dc.font->font->ascent, string, k);
 	  g_free (string);
+	  if (options & 0x04)
+	    gdk_gc_set_clip_rectangle (canvas->dc.gc, NULL);
+	  sync_record (record.Size, j, fp);
 	  break;
 	      
 	case EndOfFile:
@@ -2435,7 +2467,7 @@ readparams (DWORD size,
 
   if (size != 0)
     {
-      nwords = GUINT32_FROM_LE (size) - SIZE_WMFRECORD/2;
+      nwords = GUINT32_FROM_LE (size) - WORDSIZE_WMFRECORD;
       
       if (nwords < nparams)
 	{
@@ -2469,7 +2501,7 @@ sync_record (DWORD size,
 {
   gulong nwords;
 
-  nwords = GUINT32_FROM_LE (size) - SIZE_WMFRECORD/2;
+  nwords = GUINT32_FROM_LE (size) - WORDSIZE_WMFRECORD;
   if (nwords > nparams)
     fseek (fp, (nwords - nparams) * 2, SEEK_CUR);
 }

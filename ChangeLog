@@ -1,3 +1,11 @@
+1999-10-23  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/wmf.c: Fix handling of ExtTextOut. We didn't
+	handle the optional clipping rectangle, and got out of sync if
+	there was a such. Ignore the inter-character spacing data as we
+	don't have exactly same font metrics anyway. Some mostly cosmetic
+	other changes.
+
 Fri Oct 22 20:39:13 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/text_tool.c
