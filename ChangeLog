@@ -1,3 +1,10 @@
+2002-06-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontainer.c (gimp_container_get_child_by_index):
+	don't warn if an out-of-bounds index is passed in but simply
+	return NULL (removes the need to check if the container has 0
+	children before asking the container for it's first child).
+
 2002-06-06  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: added FreeType2 URL and suggest to use GNU make.

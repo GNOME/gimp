@@ -863,7 +863,9 @@ gimp_container_get_child_by_index (const GimpContainer *container,
 				   gint                 index)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
-  g_return_val_if_fail (index >= 0 && index < container->num_children, NULL);
+
+  if (index < 0 || index >= container->num_children)
+    return NULL;
 
   return GIMP_CONTAINER_GET_CLASS (container)->get_child_by_index (container,
 								   index);
