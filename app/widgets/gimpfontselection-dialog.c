@@ -78,6 +78,9 @@ struct _GimpFontSelectionDialog
 };
 
 
+static void  gimp_font_selection_dialog_font_changed (GimpFontSelection       *fontsel,
+                                                      GimpFontSelectionDialog *dialog);
+
 static void  gimp_font_selection_dialog_ok            (GtkWidget      *widget,
                                                        gpointer        data);
 static void  gimp_font_selection_dialog_apply         (GtkWidget      *widget,
@@ -117,6 +120,7 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
   GtkWidget               *table;
   GtkWidget               *label;
   GtkWidget               *frame;
+  GClosure                *closure;
 
   g_return_val_if_fail (GIMP_IS_FONT_SELECTION (fontsel), NULL);
 
@@ -275,6 +279,11 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
 
   gimp_font_selection_dialog_set_font_desc (dialog, fontsel->font_desc);
 
+  closure = g_cclosure_new (G_CALLBACK (gimp_font_selection_dialog_font_changed),
+                            dialog, NULL);
+  g_object_watch_closure (G_OBJECT (dialog->dialog), closure);
+  g_signal_connect_closure (fontsel, "font_changed", closure, FALSE);
+
   return dialog;
 }
 
@@ -295,6 +304,14 @@ gimp_font_selection_dialog_show (GimpFontSelectionDialog *dialog)
   g_return_if_fail (dialog != NULL);
   
   gtk_window_present (GTK_WINDOW (dialog->dialog));
+}
+
+static void
+gimp_font_selection_dialog_font_changed (GimpFontSelection       *fontsel,
+                                         GimpFontSelectionDialog *dialog)
+{
+  gimp_font_selection_dialog_set_font_desc (dialog,
+                                            gimp_font_selection_get_font_desc (fontsel));
 }
 
 static void
@@ -414,7 +431,16 @@ gimp_font_selection_dialog_apply (GtkWidget *widget,
     {
       font_desc = pango_font_face_describe (dialog->face);
 
+      g_signal_handlers_block_by_func (dialog->fontsel,
+                                       G_CALLBACK (gimp_font_selection_dialog_font_changed),
+                                       dialog);
+
       gimp_font_selection_set_font_desc (dialog->fontsel, font_desc);
+
+      g_signal_handlers_unblock_by_func (dialog->fontsel,
+                                         G_CALLBACK (gimp_font_selection_dialog_font_changed),
+                                         dialog);
+
       pango_font_description_free (font_desc);
     }
 }

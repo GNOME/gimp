@@ -1,5 +1,12 @@
 2003-02-20  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpfontselection-dialog.c
+	* app/widgets/gimpfontselection.c: connect the dialog to the font
+	selection widget and block the signal handler when the font is
+	changed from the dialog. Fixes weird behaviour noted by Jimmac.
+
+2003-02-20  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptexttool.c: always start with an empty text.
 
 2003-02-20  Sven Neumann  <sven@gimp.org>

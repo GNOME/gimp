@@ -247,10 +247,6 @@ gimp_font_selection_real_font_changed (GimpFontSelection *fontsel)
 
       g_free (name);
     }
-  
-  if (fontsel->dialog)
-    gimp_font_selection_dialog_set_font_desc (fontsel->dialog, 
-                                              fontsel->font_desc);
 }
 
 /**
