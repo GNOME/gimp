@@ -210,19 +210,19 @@ gimp_display_options_fs_class_init (GimpDisplayOptionsClass *klass)
   object_class->get_property = gimp_display_options_get_property;
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
-                                    "show-menubar", FS_SHOW_MENUBAR_BLURB,
+                                    "show-menubar", SHOW_MENUBAR_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
-                                    "show-rulers", FS_SHOW_RULERS_BLURB,
+                                    "show-rulers", SHOW_RULERS_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
-                                    "show-scrollbars", FS_SHOW_SCROLLBARS_BLURB,
+                                    "show-scrollbars", SHOW_SCROLLBARS_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
-                                    "show-statusbar", FS_SHOW_STATUSBAR_BLURB,
+                                    "show-statusbar", SHOW_STATUSBAR_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
@@ -242,12 +242,12 @@ gimp_display_options_fs_class_init (GimpDisplayOptionsClass *klass)
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PADDING_MODE,
-                                 "padding-mode", FS_CANVAS_PADDING_MODE_BLURB,
+                                 "padding-mode", CANVAS_PADDING_MODE_BLURB,
                                  GIMP_TYPE_CANVAS_PADDING_MODE,
                                  GIMP_CANVAS_PADDING_MODE_CUSTOM,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_PADDING_COLOR,
-                                  "padding-color", FS_CANVAS_PADDING_COLOR_BLURB,
+                                  "padding-color", CANVAS_PADDING_COLOR_BLURB,
                                   &black,
                                   0);
 }

@@ -1,5 +1,12 @@
 2003-10-22  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc-blurbs.h
+	* app/display/gimpdisplayoptions.h: don't set separate blurbs for
+	the fullscreen options. It only means extra work for the translators
+	without much (if any) value.
+
+2003-10-22  Sven Neumann  <sven@gimp.org>
+
 	* app/display/Makefile.am
 	* app/display/gimpdisplayoptions.[ch]: new files that implement
 	a GimpConfig object with GimpDisplayShell and GimpCanvas options.
