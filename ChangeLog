@@ -1,3 +1,8 @@
+1999-07-05  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* gimp1_1_splash.ppm: This is the Eeek!-one again, due to public
+	demand :)
+
 1999-07-04  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimpenv.c (gimp_directory): Don't warn about missing
