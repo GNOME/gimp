@@ -152,6 +152,8 @@ gap_filter_SOURCES = \
 	gap_pdb_calls.h		\
 	gap_filter.h
 
+AM_CPPFLAGS = \
+        -DLOCALEDIR=\""$(localedir)"\"
 
 INCLUDES = \
 	-I$(top_srcdir)			\

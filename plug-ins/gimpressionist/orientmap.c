@@ -5,6 +5,9 @@
 #include <gtk/gtk.h>
 #include "gimpressionist.h"
 #include "ppmtool.h"
+#include "config.h"
+#include <libgimp/stdplugins-intl.h>
+
 
 #define MAPFILE "data.out"
 
@@ -455,7 +458,7 @@ void create_orientmap_dialog(void)
                       GTK_SIGNAL_FUNC(gtk_widget_hide_on_delete),
                       &omwindow);
 
-  gtk_window_set_title(GTK_WINDOW(omwindow), "Orientation Map Editor");
+  gtk_window_set_title(GTK_WINDOW(omwindow), _("Orientation Map Editor"));
 
   gtk_container_border_width (GTK_CONTAINER(omwindow), 5);
 
@@ -463,7 +466,7 @@ void create_orientmap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_container_add(GTK_CONTAINER(omwindow), tmpw);
 
-  tmpw2 = tmpw = gtk_frame_new("Vectors");
+  tmpw2 = tmpw = gtk_frame_new( _("Vectors"));
   gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_table_attach(GTK_TABLE(table1), tmpw, 0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
   gtk_widget_show(tmpw);
@@ -473,7 +476,7 @@ void create_orientmap_dialog(void)
   gtk_widget_show(tmpw);
 
   tmpw = gtk_event_box_new();
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "The vector-field. Left-click to move selected vector, Right-click to point it towards mouse, Middle-click to add a new vector.", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The vector-field. Left-click to move selected vector, Right-click to point it towards mouse, Middle-click to add a new vector."), NULL);
   gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, FALSE, 0);
   tmpw2 = tmpw;
 
@@ -494,9 +497,9 @@ void create_orientmap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(vectprevbrightadjust), "value_changed",
                      (GtkSignalFunc)updatevectorprev, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Adjust the preview's brightness", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Adjust the preview's brightness"), NULL);
 
-  tmpw2 = tmpw = gtk_frame_new("Preview");
+  tmpw2 = tmpw = gtk_frame_new( _("Preview"));
   gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_table_attach(GTK_TABLE(table1), tmpw, 1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
   gtk_widget_show(tmpw);
@@ -516,28 +519,28 @@ void create_orientmap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(prevclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Select previous vector", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Select previous vector"), NULL);
 
   tmpw = gtk_button_new_with_label(">>");
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(nextclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Select next vector", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Select next vector"), NULL);
 
-  tmpw = gtk_button_new_with_label("Add");
+  tmpw = gtk_button_new_with_label( _("Add"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(addclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Add new vector", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Add new vector"), NULL);
 
-  tmpw = gtk_button_new_with_label("Kill");
+  tmpw = gtk_button_new_with_label( _("Kill"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(deleteclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Delete selected vector", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Delete selected vector"), NULL);
 
 
   tmpw = table2 = gtk_table_new(2,2,FALSE);
@@ -545,7 +548,7 @@ void create_orientmap_dialog(void)
   gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 0,1,2,3);
   gtk_widget_show(tmpw);
 
-  tmpw = gtk_label_new("Angle:");
+  tmpw = gtk_label_new( _("Angle:"));
   gtk_widget_show(tmpw);
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,0,1);
 
@@ -557,9 +560,9 @@ void create_orientmap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(angadjust), "value_changed",
 		     (GtkSignalFunc)angadjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Change the angle of the selected vector", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Change the angle of the selected vector"), NULL);
 
-  tmpw = gtk_label_new("Strength:");
+  tmpw = gtk_label_new( _("Strength:"));
   gtk_widget_show(tmpw);
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,1,2);
 
@@ -571,10 +574,10 @@ void create_orientmap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(stradjust), "value_changed",
 		     (GtkSignalFunc)stradjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Change the strength of the selected vector", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Change the strength of the selected vector"), NULL);
 
 
-  tmpw = gtk_label_new("Type:");
+  tmpw = gtk_label_new( _("Type:"));
   gtk_widget_show(tmpw);
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,2,3);
 
@@ -584,13 +587,13 @@ void create_orientmap_dialog(void)
   gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_widget_show(tmpw);
 
-  vectypes[0] = tmpw = gtk_radio_button_new_with_label(NULL, "Normal");
+  vectypes[0] = tmpw = gtk_radio_button_new_with_label(NULL, _("Normal"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(vectypeclick), NULL);
   gtk_widget_show(tmpw);
  
-  vectypes[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(vectypes[0])), "Vortex");
+  vectypes[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(vectypes[0])), _("Vortex"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(vectypeclick), NULL);
@@ -602,13 +605,13 @@ void create_orientmap_dialog(void)
   gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_widget_show(tmpw);
  
-  vectypes[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(vectypes[0])), "Vortex2");
+  vectypes[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(vectypes[0])), _("Vortex2"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(vectypeclick), NULL);
   gtk_widget_show(tmpw);
  
-  vectypes[3] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(vectypes[0])), "Vortex3");
+  vectypes[3] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(vectypes[0])), _("Vortex3"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(vectypeclick), NULL);
@@ -620,26 +623,26 @@ void create_orientmap_dialog(void)
   gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_widget_show(tmpw);
 
-  tmpw = gtk_button_new_with_label("OK");
+  tmpw = gtk_button_new_with_label( _("OK"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(omokclick), omwindow);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Apply and exit the editor", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Apply and exit the editor"), NULL);
 
-  tmpw = gtk_button_new_with_label("Apply");
+  tmpw = gtk_button_new_with_label( _("Apply"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(omokclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Apply, but stay inside the editor", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Apply, but stay inside the editor"), NULL);
 
-  tmpw = gtk_button_new_with_label("Cancel");
+  tmpw = gtk_button_new_with_label( _("Cancel"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(omcancelclick), omwindow);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Cancel all changes and exit", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Cancel all changes and exit"), NULL);
 
 
   tmpw = table2 = gtk_table_new(2,2,FALSE);
@@ -647,7 +650,7 @@ void create_orientmap_dialog(void)
   gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 1,2,2,3);
   gtk_widget_show(tmpw);
 
-  tmpw = gtk_label_new("Strength exp.:");
+  tmpw = gtk_label_new( _("Strength exp.:"));
   gtk_widget_show(tmpw);
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,0,1);
 
@@ -659,9 +662,9 @@ void create_orientmap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(strexpadjust), "value_changed",
 		     (GtkSignalFunc)strexpadjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Change the exponent of the strength", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Change the exponent of the strength"), NULL);
 
-  tmpw = gtk_label_new("Angle offset:");
+  tmpw = gtk_label_new( _("Angle offset:"));
   gtk_widget_show(tmpw);
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,1,2);
 
@@ -673,9 +676,9 @@ void create_orientmap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(angoffadjust), "value_changed",
 		     (GtkSignalFunc)angoffadjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Offset all vectors with a given angle", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Offset all vectors with a given angle"), NULL);
 
-  orientvoronoi = tmpw = gtk_check_button_new_with_label("Voronoi");
+  orientvoronoi = tmpw = gtk_check_button_new_with_label( _("Voronoi"));
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,2,3);
   gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
@@ -683,7 +686,7 @@ void create_orientmap_dialog(void)
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), TRUE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)angoffadjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Voronoi-mode makes only the vector closest to the given point have any influence", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Voronoi-mode makes only the vector closest to the given point have any influence"), NULL);
   
   gtk_widget_show(omwindow);
 

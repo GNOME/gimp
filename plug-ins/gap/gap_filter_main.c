@@ -39,6 +39,8 @@
 
 /* GIMP includes */
 #include "gtk/gtk.h"
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 #include "libgimp/gimp.h"
 
 /* GAP includes */
@@ -92,13 +94,15 @@ query ()
   static GParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure("plug_in_gap_layers_run_animfilter",
-			 "This plugin calls another plugin for each layer of an image, varying its settings (to produce animated effects). The called plugin must work on a single drawable and must be able to RUN_WITH_LAST_VALS",
+			 _("This plugin calls another plugin for each layer of an image, varying its settings (to produce animated effects). The called plugin must work on a single drawable and must be able to RUN_WITH_LAST_VALS"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_filter_version,
-			 "<Image>/Filters/Animation/Filter all Layers",
+			 _("<Image>/Filters/Animation/Filter all Layers"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_foreach, nreturn_vals,
@@ -162,11 +166,14 @@ run (char    *name,
           strncpy(l_plugin_name, param[3].data.d_string, MAX_PLUGIN_NAME_LEN -1);
           l_plugin_name[MAX_PLUGIN_NAME_LEN -1] = '\0';
         }
+        INIT_I18N();
       }
       else if(run_mode == RUN_WITH_LAST_VALS)
       {
         /* probably get last values (name of last plugin) */
         gimp_get_data("plug_in_gap_layers_run_animfilter", l_plugin_name);
+      } else {
+        INIT_I18N_UI();
       }
 
       if (status == STATUS_SUCCESS)

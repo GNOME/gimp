@@ -51,7 +51,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include "config.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 
 
@@ -122,30 +124,32 @@ static void query()
   static int nargs = sizeof(args) / sizeof(args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure("plug_in_animationoptimize",
-			 "This plugin applies various optimizations to"
-			 " a GIMP layer-based animation.",
+           _("This plugin applies various optimizations to"
+			 " a GIMP layer-based animation."),
 			 "",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "1997-98",
-			 "<Image>/Filters/Animation/Animation Optimize",
+			 _("<Image>/Filters/Animation/Animation Optimize"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
 			 args, return_vals);
 
   gimp_install_procedure("plug_in_animationunoptimize",
-			 "This plugin 'simplifies' a GIMP layer-based"
+			 _("This plugin 'simplifies' a GIMP layer-based"
 			 " animation that has been AnimationOptimized.  This"
 			 " makes the animation much easier to work with if,"
 			 " for example, the optimized version is all you"
-			 " have.",
+			 " have."),
 			 "",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "1997-98",
-			 "<Image>/Filters/Animation/Animation UnOptimize",
+			 _("<Image>/Filters/Animation/Animation UnOptimize"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
@@ -171,7 +175,8 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 	  status = STATUS_CALLING_ERROR;
 	}
     }
-  
+    INIT_I18N();
+
   /* Check the procedure name we were called with, to decide
      what needs to be done. */
   if (strcmp(name,"plug_in_animationoptimize")==0)
@@ -288,9 +293,9 @@ do_optimizations(void)
   gint32 rbox_top, rbox_bottom, rbox_left, rbox_right;
 
   if (optimize)
-    gimp_progress_init ("Optimizing Animation...");
+    gimp_progress_init (_("Optimizing Animation..."));
   else
-    gimp_progress_init ("UnOptimizing Animation...");
+    gimp_progress_init (_("UnOptimizing Animation..."));
 
   width     = gimp_image_width(image_id);
   height    = gimp_image_height(image_id);
@@ -319,7 +324,7 @@ do_optimizations(void)
     }
 
   if ( (this_frame == NULL) || (last_frame == NULL) || (opti_frame == NULL) )
-    g_error("Not enough memory to allocate buffers for optimization.\n");
+    g_error(_("Not enough memory to allocate buffers for optimization.\n"));
 
   for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
     {

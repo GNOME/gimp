@@ -13,6 +13,7 @@
 #include <math.h>
 #include "ppmtool.h"
 #include "gimpressionist.h"
+#include <libgimp/stdplugins-intl.h>
 
 int readline(FILE *f, char *buffer, int len)
 {
@@ -37,8 +38,8 @@ void *safemalloc(int len)
 {
   void *p = g_malloc(len);
   if(!p) {
-    fprintf(stderr, "(When allocating %u bytes.)\n", len);
-    fatal("Out of memory!\n");
+    fprintf(stderr, _("(When allocating %u bytes.)\n"), len);
+    fatal( _("Out of memory!\n"));
   }
   return p;
 }
@@ -211,7 +212,7 @@ void loadgbr(char *fn, struct ppm *p)
   if(p->col) killppm(p);
 
   if(!f) {
-    fprintf(stderr, "loadgbr: Unable to open file \"%s\"!\n", fn);
+    fprintf(stderr, _("loadgbr: Unable to open file \"%s\"!\n"), fn);
     newppm(p, 10,10);
     return;
   }
@@ -253,7 +254,7 @@ void loadppm(char *fn, struct ppm *p)
   if(p->col) killppm(p);
 
   if(!f) {
-    fprintf(stderr, "loadppm: Unable to open file \"%s\"!\n", fn);
+    fprintf(stderr, _("loadppm: Unable to open file \"%s\"!\n"), fn);
     newppm(p, 10,10);
     return;
     /* fatal("Aborting!"); */
@@ -263,7 +264,7 @@ void loadppm(char *fn, struct ppm *p)
   if(strcmp(line, "P6")) {
     if(strcmp(line, "P5")) {
       fclose(f);
-      printf("loadppm: File \"%s\" not PPM/PGM? (line=\"%s\")%c\n", fn, line, 7);
+      printf( _("loadppm: File \"%s\" not PPM/PGM? (line=\"%s\")%c\n"), fn, line, 7);
       newppm(p, 10,10);
       return;
       /* fatal("Aborting!"); */
@@ -275,7 +276,7 @@ void loadppm(char *fn, struct ppm *p)
   p->height = atoi(strchr(line, ' ')+1);
   readline(f, line, 200);
   if(strcmp(line, "255")) {
-    printf("loadppm: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n", fn, line, 7);
+    printf( _("loadppm: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n"), fn, line, 7);
     newppm(p, 10,10);
     return;
     /* fatal("Aborting!"); */

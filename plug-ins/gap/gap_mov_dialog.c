@@ -54,6 +54,8 @@
 
 /* GIMP includes */
 #include "gtk/gtk.h"
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
@@ -238,31 +240,31 @@ static void mov_clip_to_img_callback    (GtkWidget *, gpointer);
 /*  the option menu items -- the paint modes  */
 static MenuItem option_paint_items[] =
 {
-  { "Normal", 0, 0, mov_paintmode_menu_callback, (gpointer) NORMAL_MODE, NULL, NULL },
-  { "Dissolve", 0, 0, mov_paintmode_menu_callback, (gpointer) DISSOLVE_MODE, NULL, NULL },
-  { "Multiply", 0, 0, mov_paintmode_menu_callback, (gpointer) MULTIPLY_MODE, NULL, NULL },
-  { "Screen", 0, 0, mov_paintmode_menu_callback, (gpointer) SCREEN_MODE, NULL, NULL },
-  { "Overlay", 0, 0, mov_paintmode_menu_callback, (gpointer) OVERLAY_MODE, NULL, NULL },
-  { "Difference", 0, 0, mov_paintmode_menu_callback, (gpointer) DIFFERENCE_MODE, NULL, NULL },
-  { "Addition", 0, 0, mov_paintmode_menu_callback, (gpointer) ADDITION_MODE, NULL, NULL },
-  { "Subtract", 0, 0, mov_paintmode_menu_callback, (gpointer) SUBTRACT_MODE, NULL, NULL },
-  { "Darken Only", 0, 0, mov_paintmode_menu_callback, (gpointer) DARKEN_ONLY_MODE, NULL, NULL },
-  { "Lighten Only", 0, 0, mov_paintmode_menu_callback, (gpointer) LIGHTEN_ONLY_MODE, NULL, NULL },
-  { "Hue", 0, 0, mov_paintmode_menu_callback, (gpointer) HUE_MODE, NULL, NULL },
-  { "Saturation", 0, 0, mov_paintmode_menu_callback, (gpointer) SATURATION_MODE, NULL, NULL },
-  { "Color", 0, 0, mov_paintmode_menu_callback, (gpointer) COLOR_MODE, NULL, NULL },
-  { "Value", 0, 0, mov_paintmode_menu_callback, (gpointer) VALUE_MODE, NULL, NULL },
+  { N_("Normal"), 0, 0, mov_paintmode_menu_callback, (gpointer) NORMAL_MODE, NULL, NULL },
+  { N_("Dissolve"), 0, 0, mov_paintmode_menu_callback, (gpointer) DISSOLVE_MODE, NULL, NULL },
+  { N_("Multiply"), 0, 0, mov_paintmode_menu_callback, (gpointer) MULTIPLY_MODE, NULL, NULL },
+  { N_("Screen"), 0, 0, mov_paintmode_menu_callback, (gpointer) SCREEN_MODE, NULL, NULL },
+  { N_("Overlay"), 0, 0, mov_paintmode_menu_callback, (gpointer) OVERLAY_MODE, NULL, NULL },
+  { N_("Difference"), 0, 0, mov_paintmode_menu_callback, (gpointer) DIFFERENCE_MODE, NULL, NULL },
+  { N_("Addition"), 0, 0, mov_paintmode_menu_callback, (gpointer) ADDITION_MODE, NULL, NULL },
+  { N_("Subtract"), 0, 0, mov_paintmode_menu_callback, (gpointer) SUBTRACT_MODE, NULL, NULL },
+  { N_("Darken Only"), 0, 0, mov_paintmode_menu_callback, (gpointer) DARKEN_ONLY_MODE, NULL, NULL },
+  { N_("Lighten Only"), 0, 0, mov_paintmode_menu_callback, (gpointer) LIGHTEN_ONLY_MODE, NULL, NULL },
+  { N_("Hue"), 0, 0, mov_paintmode_menu_callback, (gpointer) HUE_MODE, NULL, NULL },
+  { N_("Saturation"), 0, 0, mov_paintmode_menu_callback, (gpointer) SATURATION_MODE, NULL, NULL },
+  { N_("Color"), 0, 0, mov_paintmode_menu_callback, (gpointer) COLOR_MODE, NULL, NULL },
+  { N_("Value"), 0, 0, mov_paintmode_menu_callback, (gpointer) VALUE_MODE, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
 /*  the option menu items -- the handle modes  */
 static MenuItem option_handle_items[] =
 {
-  { "Left  Top",    0, 0, mov_handmode_menu_callback, (gpointer) GAP_HANDLE_LEFT_TOP, NULL, NULL },
-  { "Left  Bottom", 0, 0, mov_handmode_menu_callback, (gpointer) GAP_HANDLE_LEFT_BOT, NULL, NULL },
-  { "Right Top",    0, 0, mov_handmode_menu_callback, (gpointer) GAP_HANDLE_RIGHT_TOP, NULL, NULL },
-  { "Right Bottom", 0, 0, mov_handmode_menu_callback, (gpointer) GAP_HANDLE_RIGHT_BOT, NULL, NULL },
-  { "Center",       0, 0, mov_handmode_menu_callback, (gpointer) GAP_HANDLE_CENTER, NULL, NULL },
+  { N_("Left  Top"),    0, 0, mov_handmode_menu_callback, (gpointer) GAP_HANDLE_LEFT_TOP, NULL, NULL },
+  { N_("Left  Bottom"), 0, 0, mov_handmode_menu_callback, (gpointer) GAP_HANDLE_LEFT_BOT, NULL, NULL },
+  { N_("Right Top"),    0, 0, mov_handmode_menu_callback, (gpointer) GAP_HANDLE_RIGHT_TOP, NULL, NULL },
+  { N_("Right Bottom"), 0, 0, mov_handmode_menu_callback, (gpointer) GAP_HANDLE_RIGHT_BOT, NULL, NULL },
+  { N_("Center"),       0, 0, mov_handmode_menu_callback, (gpointer) GAP_HANDLE_CENTER, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
@@ -270,12 +272,12 @@ static MenuItem option_handle_items[] =
 /*  the option menu items -- the loop step modes  */
 static MenuItem option_step_items[] =
 {
-  { "Loop",         0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_LOOP, NULL, NULL },
-  { "Loop Reverse", 0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_LOOP_REV, NULL, NULL },
-  { "Once",         0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_ONCE, NULL, NULL },
-  { "OnceReverse",  0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_ONCE_REV, NULL, NULL },
-  { "PingPong",     0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_PING_PONG, NULL, NULL },
-  { "None",         0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_NONE, NULL, NULL },
+  { N_("Loop"),         0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_LOOP, NULL, NULL },
+  { N_("Loop Reverse"), 0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_LOOP_REV, NULL, NULL },
+  { N_("Once"),         0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_ONCE, NULL, NULL },
+  { N_("OnceReverse"),  0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_ONCE_REV, NULL, NULL },
+  { N_("PingPong"),     0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_PING_PONG, NULL, NULL },
+  { N_("None"),         0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_NONE, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
@@ -435,7 +437,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   dlg = gtk_dialog_new ();
   ok_data.dlg = dlg;
   ok_data.path_ptr = path_ptr;
-  gtk_window_set_title (GTK_WINDOW (dlg), "Move Path");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Move Path"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) mov_close_callback,
@@ -456,7 +458,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_tooltips_set_colors(g_tooltips, &tips_bg, &tips_fg);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) mov_ok_callback,
@@ -465,7 +467,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -473,20 +475,20 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("UpdPreview");
+  button = gtk_button_new_with_label ( _("UpdPreview"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) mov_upvw_callback,
 		      path_ptr);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_tooltips_set_tip(g_tooltips, button,
-                       "Show PreviewFame with Selected       \nSrcLayer at current Controlpoint"
+                       _("Show PreviewFame with Selected       \nSrcLayer at current Controlpoint")
                        , NULL);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Copy moving source-layer(s) into frames");
+  frame = gtk_frame_new ( _("Copy moving source-layer(s) into frames"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -509,7 +511,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   button_table = gtk_table_new (1, 6, FALSE);
 
   /* Point Buttons */  
-  button = gtk_button_new_with_label ("Load Points");
+  button = gtk_button_new_with_label ( _("Load Points"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) mov_pload_callback,
@@ -517,11 +519,11 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, 0, 1,
 		    0, 0, 0, 0 );
   gtk_tooltips_set_tip(g_tooltips, button,
-                       "Load Controlpoints from file"
+                       _("Load Controlpoints from file")
                        , NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Save Points");
+  button = gtk_button_new_with_label ( _("Save Points"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) mov_psave_callback,
@@ -529,11 +531,11 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_table_attach( GTK_TABLE(button_table), button, 1, 2, 0, 1,
 		    0, 0, 0, 0 );
   gtk_tooltips_set_tip(g_tooltips, button,
-                       "Save Controlpoints to file"
+                       _("Save Controlpoints to file")
                        , NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Reset Points");
+  button = gtk_button_new_with_label ( _("Reset Points"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) mov_pres_callback,
@@ -541,11 +543,11 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_table_attach( GTK_TABLE(button_table), button, 2, 3, 0, 1,
 		    0, 0, 0, 0 );
   gtk_tooltips_set_tip(g_tooltips, button,
-                       "Reset Controlpoints  \nto one Defaultpoint"
+                       _("Reset Controlpoints  \nto one Defaultpoint")
                        , NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Add Point");
+  button = gtk_button_new_with_label ( _("Add Point"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) mov_padd_callback,
@@ -553,11 +555,11 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_table_attach( GTK_TABLE(button_table), button, 3, 4, 0, 1,
 		    0, 0, 0, 0 );
   gtk_tooltips_set_tip(g_tooltips, button,
-                       "Add Controlpoint at end        \n(the last Point is duplicated)"
+                       _("Add Controlpoint at end        \n(the last Point is duplicated)")
                        , NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Prev Point");
+  button = gtk_button_new_with_label ( _("Prev Point"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) mov_pprev_callback,
@@ -565,11 +567,11 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_table_attach( GTK_TABLE(button_table), button, 4, 5, 0, 1,
 		    0, 0, 0, 0 );
   gtk_tooltips_set_tip(g_tooltips, button,
-                       "Show Previous Controlpoint"
+                       _("Show Previous Controlpoint")
                        , NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Next Point");
+  button = gtk_button_new_with_label ( _("Next Point"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) mov_pnext_callback,
@@ -577,7 +579,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_table_attach( GTK_TABLE(button_table), button, 5, 6, 0, 1,
 		    0, 0, 0, 0 );
   gtk_tooltips_set_tip(g_tooltips, button,
-                       "Show Next Controlpoint"
+                       _("Show Next Controlpoint")
                        , NULL);
   gtk_widget_show (button);
 
@@ -587,31 +589,31 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
 		    0, 0, 0, 0 );
 
   mov_int_entryscale_new( GTK_TABLE (table), 0, 3,
-			  "Start Frame:", &pvals->dst_range_start,
+			  _("Start Frame:"), &pvals->dst_range_start,
 			  first_nr, last_nr, TRUE, NULL, NULL,
-			  "first handled frame" );
+			  _("first handled frame") );
   mov_int_entryscale_new( GTK_TABLE (table), 0, 4,
-			  "End Frame:", &pvals->dst_range_end,
+			  _("End Frame:"), &pvals->dst_range_end,
 			  first_nr, last_nr, TRUE, NULL, NULL,
-			  "last handled frame" );
+			  _("last handled frame") );
   mov_int_entryscale_new( GTK_TABLE (table), 0, 5,
-			  "Preview Frame:", &path_ptr->preview_frame_nr,
+			  _("Preview Frame:"), &path_ptr->preview_frame_nr,
 			  first_nr, last_nr, TRUE, NULL, NULL,
-			  "frame to show when UpdPreview\nbutton is pressed"  );
+			  _("frame to show when UpdPreview\nbutton is pressed")  );
   mov_int_entryscale_new( GTK_TABLE (table), 0, 6,
-			  "Layerstack:", &pvals->dst_layerstack,
+			  _("Layerstack:"), &pvals->dst_layerstack,
 			  0, 99, FALSE, NULL, NULL,
-			  "How to insert SrcLayer into the\nDst.Frame's Layerstack\n0 means on top i.e in front"  );
+			  _("How to insert SrcLayer into the\nDst.Frame's Layerstack\n0 means on top i.e in front")  );
 
   /* toggle clip_to_image */
-  check_button = gtk_check_button_new_with_label ("Clip To Frame");
+  check_button = gtk_check_button_new_with_label ( _("Clip To Frame"));
   gtk_table_attach ( GTK_TABLE (table), check_button, 0, 2, 7, 7+1, GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) mov_clip_to_img_callback,
                        path_ptr);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button), pvals->clip_to_img);
   gtk_tooltips_set_tip(g_tooltips, check_button,
-                       "Clip all copied Src-Layers\nat Frame Boundaries"
+                       _("Clip all copied Src-Layers\nat Frame Boundaries")
                        , NULL);
   gtk_widget_show (check_button);
   
@@ -655,7 +657,7 @@ mov_ok_callback (GtkWidget *widget,
     {
 
        p_msg_win(RUN_INTERACTIVE,
-                 "No Source Image was selected\n(Please open a 2nd Image of the same type before opening Move Path)\n");
+                 _("No Source Image was selected\n(Please open a 2nd Image of the same type before opening Move Path)\n"));
        return;
     }
   }
@@ -819,7 +821,7 @@ mov_pload_callback (GtkWidget *widget,
 
   if(path_ptr->filesel != NULL) return;  /* filesel is already open */
   
-  filesel = gtk_file_selection_new ("Load Path Points from file");
+  filesel = gtk_file_selection_new ( _("Load Path Points from file"));
   path_ptr->filesel = filesel;
 
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
@@ -855,7 +857,7 @@ mov_psave_callback (GtkWidget *widget,
 
   if(path_ptr->filesel != NULL) return;  /* filesel is already open */
   
-  filesel = gtk_file_selection_new ("Save Path Points to file");
+  filesel = gtk_file_selection_new ( _("Save Path Points to file"));
   path_ptr->filesel = filesel;
 
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
@@ -1066,12 +1068,12 @@ p_points_to_tab(t_mov_path_preview *path_ptr)
 
 void p_update_point_labels(t_mov_path_preview *path_ptr)
 {
-  sprintf(&path_ptr->X_Label[0], "X [%d]: ", pvals->point_idx + 1);
-  sprintf(&path_ptr->Y_Label[0], "Y [%d]: ", pvals->point_idx + 1);
-  sprintf(&path_ptr->Opacity_Label[0], "Opacity [%d]: ", pvals->point_idx + 1);
-  sprintf(&path_ptr->Wresize_Label[0], "Width [%d]: ", pvals->point_idx + 1);
-  sprintf(&path_ptr->Hresize_Label[0], "Height [%d]: ", pvals->point_idx + 1);
-  sprintf(&path_ptr->Rotation_Label[0], "Rotate deg[%d]: ", pvals->point_idx + 1);
+  sprintf(&path_ptr->X_Label[0], _("X [%d]: "), pvals->point_idx + 1);
+  sprintf(&path_ptr->Y_Label[0], _("Y [%d]: "), pvals->point_idx + 1);
+  sprintf(&path_ptr->Opacity_Label[0], _("Opacity [%d]: "), pvals->point_idx + 1);
+  sprintf(&path_ptr->Wresize_Label[0], _("Width [%d]: "), pvals->point_idx + 1);
+  sprintf(&path_ptr->Hresize_Label[0], _("Height [%d]: "), pvals->point_idx + 1);
+  sprintf(&path_ptr->Rotation_Label[0], _("Rotate deg[%d]: "), pvals->point_idx + 1);
 
 
   if(NULL != path_ptr->X_LabelPtr)
@@ -1247,9 +1249,10 @@ mov_src_sel_create()
   GtkWidget  *option_menu;
   GtkWidget  *menu;
   GtkWidget  *label;
+  int gettextize_loop;
 
 
-  frame = gtk_frame_new ( "Source Select" );
+  frame = gtk_frame_new ( _("Source Select") );
 /*
   gtk_signal_connect( GTK_OBJECT( frame ), "destroy",
 		      (GtkSignalFunc) mov_src_sel_destroy,
@@ -1266,7 +1269,7 @@ mov_src_sel_create()
   gtk_table_set_col_spacings (GTK_TABLE (table), 10);
 
   /* Source Layer menu */
-  label = gtk_label_new("SourceImage/Layer:");
+  label = gtk_label_new( _("SourceImage/Layer:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show(label);
@@ -1276,7 +1279,7 @@ mov_src_sel_create()
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_tooltips_set_tip(g_tooltips, option_menu,
-                       "Source Object to insert into Framerange"
+                       _("Source Object to insert into Framerange")
                        , NULL);
 
   gtk_widget_show(option_menu);
@@ -1291,7 +1294,7 @@ mov_src_sel_create()
 
   /* Paintmode menu */
 
-  label = gtk_label_new("Mode:");
+  label = gtk_label_new( _("Mode:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1, GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show(label);
@@ -1300,9 +1303,14 @@ mov_src_sel_create()
   gtk_table_attach(GTK_TABLE(table), option_menu, 3, 4, 0, 1,
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_tooltips_set_tip(g_tooltips, option_menu,
-                       "Paintmode"
+                       _("Paintmode")
                        , NULL);
   gtk_widget_show(option_menu);
+
+  for (gettextize_loop = 0; option_paint_items[gettextize_loop].label != NULL;
+       gettextize_loop++)
+    option_paint_items[gettextize_loop].label =
+      gettext(option_paint_items[gettextize_loop].label);
 
   menu = p_buildmenu (option_paint_items);
   gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
@@ -1310,7 +1318,7 @@ mov_src_sel_create()
 
   /* Loop Stepmode menu */
 
-  label = gtk_label_new("Stepmode:");
+  label = gtk_label_new( _("Stepmode:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show(label);
@@ -1320,16 +1328,21 @@ mov_src_sel_create()
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show(option_menu);
 
+  for (gettextize_loop = 0; option_step_items[gettextize_loop].label != NULL;
+       gettextize_loop++)
+    option_step_items[gettextize_loop].label =
+      gettext(option_step_items[gettextize_loop].label);
+
   menu = p_buildmenu (option_step_items);
   gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
   gtk_tooltips_set_tip(g_tooltips, option_menu,
-                       "How to fetch te next SrcLayer   \nat the next handled frame"
+                       _("How to fetch te next SrcLayer   \nat the next handled frame")
                        , NULL);
   gtk_widget_show(option_menu);
 
   /* Source Image Handle menu */
 
-  label = gtk_label_new("Handle:");
+  label = gtk_label_new( _("Handle:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2, GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show(label);
@@ -1339,10 +1352,15 @@ mov_src_sel_create()
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show(option_menu);
 
+  for (gettextize_loop = 0; option_handle_items[gettextize_loop].label != NULL;
+       gettextize_loop++)
+    option_handle_items[gettextize_loop].label =
+      gettext(option_handle_items[gettextize_loop].label);
+
   menu = p_buildmenu (option_handle_items);
   gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
   gtk_tooltips_set_tip(g_tooltips, option_menu,
-                       "How to place the SrcLayer at   \nControlpoint Koordinates"
+                       _("How to place the SrcLayer at   \nControlpoint Koordinates")
                        , NULL);
   gtk_widget_show(option_menu);
 
@@ -1388,7 +1406,7 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   path_ptr->oldy = 0;
   path_ptr->in_call = TRUE;  /* to avoid side effects while initialization */
 
-  frame = gtk_frame_new ( "Move Path Preview" );
+  frame = gtk_frame_new ( _("Move Path Preview") );
   gtk_signal_connect( GTK_OBJECT( frame ), "destroy",
 		      (GtkSignalFunc) mov_path_prevw_destroy,
 		      path_ptr );
@@ -1438,19 +1456,19 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   mov_int_entryscale_new( GTK_TABLE (table), 0, 1,
 			  &path_ptr->Wresize_Label[0], &path_ptr->w_resize,
 			  5, 200, FALSE, &path_ptr->wres_ent, &path_ptr->wres_adj,
-			  "Scale SrcLayer's Width\nin percent");
+			  _("Scale SrcLayer's Width\nin percent"));
 
   path_ptr->Hresize_LabelPtr =
   mov_int_entryscale_new( GTK_TABLE (table), 2, 1,
 			  &path_ptr->Hresize_Label[0], &path_ptr->h_resize,
 			  5, 200, FALSE, &path_ptr->hres_ent, &path_ptr->hres_adj,
-			  "Scale SrcLayer's Height\nin percent" );
+			  _("Scale SrcLayer's Height\nin percent") );
 
   path_ptr->Opacity_LabelPtr =
   mov_int_entryscale_new( GTK_TABLE (table), 0, 2,
 			  &path_ptr->Opacity_Label[0], &path_ptr->opacity,
 			  0, 100, TRUE, &path_ptr->opacity_ent, &path_ptr->opacity_adj,
-			  "SrcLayer's Opacity\nin percent");
+			  _("SrcLayer's Opacity\nin percent"));
 
 
  /* Rotation */
@@ -1459,7 +1477,7 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
  mov_int_entryscale_new( GTK_TABLE (table), 2, 2,
                       &path_ptr->Rotation_Label[0], &path_ptr->rotation,
                       -360, 360, FALSE, &path_ptr->rotation_ent, &path_ptr->rotation_adj,
-                      "Rotate SrcLayer (in degree)");
+                      _("Rotate SrcLayer (in degree)"));
  
 
 

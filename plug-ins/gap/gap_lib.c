@@ -66,6 +66,8 @@
 
 /* GIMP includes */
 #include "gtk/gtk.h"
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 #include "libgimp/gimp.h"
 
 /* GAP includes */
@@ -837,8 +839,8 @@ char * p_gzip (char *orig_name, char *new_name, char *zip)
  */
 int p_decide_save_as(gint32 image_id, char *sav_name)
 {
-  static char *l_msg = 
-   "You are using a fileformat != xcf\nSave Operations may result\nin loss of layerinformation";
+  static char *l_msg;
+
 
   static char l_save_as_name[80];
   
@@ -847,6 +849,7 @@ int p_decide_save_as(gint32 image_id, char *sav_name)
   int               l_save_as_mode;
   GRunModeType      l_run_mode;  
 
+  l_msg = _("You are using a fileformat != xcf\nSave Operations may result\nin loss of layerinformation");
   /* check if there are SAVE_AS_MODE settings (from privious calls within one gimp session) */
   l_save_as_mode = -1;
   /* sprintf(l_save_as_name, "plug_in_gap_plugins_SAVE_AS_MODE_%d", (int)image_id);*/
@@ -858,15 +861,15 @@ int p_decide_save_as(gint32 image_id, char *sav_name)
     /* no defined value found (this is the 1.st call for this image_id)
      * ask what to do with a 3 Button dialog
      */
-    l_argv[0].but_txt  = "CANCEL";
+    l_argv[0].but_txt  = _("CANCEL");
     l_argv[0].but_val  = -1;
-    l_argv[1].but_txt  = "SAVE Flattened";
+    l_argv[1].but_txt  = _("SAVE Flattened");
     l_argv[1].but_val  = 1;
-    l_argv[2].but_txt  = "SAVE As Is";
+    l_argv[2].but_txt  = _("SAVE As Is");
     l_argv[2].but_val  = 0;
     l_argc             = 3;
 
-    l_save_as_mode =  p_buttons_dialog  ("GAP Question", l_msg, l_argc, l_argv, -1);
+    l_save_as_mode =  p_buttons_dialog  (_("GAP Question"), l_msg, l_argc, l_argv, -1);
     
     if(gap_debug) fprintf(stderr, "DEBUG: decide SAVE_AS_MODE %d\n", (int)l_save_as_mode);
     
@@ -1433,7 +1436,7 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    l_percentage = 0.0;  
    if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
    { 
-     gimp_progress_init("Duplicating frames ..");
+     gimp_progress_init( _("Duplicating frames .."));
    }
 
    /* rename (renumber) all frames with number greater than current
@@ -1601,7 +1604,7 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    l_percentage = 0.0;  
    if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
    { 
-     gimp_progress_init("Renumber Framesequence ..");
+     gimp_progress_init( _("Renumber Framesequence .."));
    }
 
    /* rename (renumber) all frames (using high numbers)
@@ -1785,14 +1788,14 @@ int gap_goto(GRunModeType run_mode, gint32 image_id, int nr)
 
       if(run_mode == RUN_INTERACTIVE)
       {
-        sprintf(l_title, "Goto Frame (%ld/%ld)"
+        sprintf(l_title, _("Goto Frame (%ld/%ld)")
                 , ainfo_ptr->curr_frame_nr
                 , ainfo_ptr->frame_cnt);
-        sprintf(l_hline, "Destination Frame Number (%ld  - %ld)"
+        sprintf(l_hline, _("Destination Frame Number (%ld  - %ld)")
                 , ainfo_ptr->first_frame_nr
                 , ainfo_ptr->last_frame_nr);
 
-        l_dest = p_slider_dialog(l_title, l_hline, "Number :", NULL
+        l_dest = p_slider_dialog(l_title, l_hline, _("Number :"), NULL
                 , ainfo_ptr->first_frame_nr
                 , ainfo_ptr->last_frame_nr
                 , ainfo_ptr->curr_frame_nr
@@ -1850,10 +1853,10 @@ int gap_del(GRunModeType run_mode, gint32 image_id, int nr)
       
       if(run_mode == RUN_INTERACTIVE)
       {
-        sprintf(l_title, "Delete Frames (%ld/%ld)"
+        sprintf(l_title, _("Delete Frames (%ld/%ld)")
                 , ainfo_ptr->curr_frame_nr
                 , ainfo_ptr->frame_cnt);
-        sprintf(l_hline, "Delete Frames from %ld to (Number)"
+        sprintf(l_hline, _("Delete Frames from %ld to (Number)")
                 , ainfo_ptr->curr_frame_nr);
 
         l_max = ainfo_ptr->last_frame_nr;
@@ -1866,7 +1869,7 @@ int gap_del(GRunModeType run_mode, gint32 image_id, int nr)
           l_max++;
         }
         
-        l_cnt = p_slider_dialog(l_title, l_hline, "Number :", NULL
+        l_cnt = p_slider_dialog(l_title, l_hline, _("Number :"), NULL
               , ainfo_ptr->curr_frame_nr
               , l_max
               , ainfo_ptr->curr_frame_nr
@@ -1913,35 +1916,35 @@ int p_dup_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
   static t_arr_arg  argv[3];
   char           l_title[50];
 
-  sprintf(l_title, "Duplicate Frames (%ld/%ld)"
+  sprintf(l_title, _("Duplicate Frames (%ld/%ld)")
           , ainfo_ptr->curr_frame_nr
           , ainfo_ptr->frame_cnt);
 
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
-  argv[0].label_txt = "From :";
+  argv[0].label_txt = _("From :");
   argv[0].constraint = TRUE;
   argv[0].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[0].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[0].int_ret   = (gint)ainfo_ptr->curr_frame_nr;
-  argv[0].help_txt  = "Source Range starts at this framenumber";
+  argv[0].help_txt  = _("Source Range starts at this framenumber");
 
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
-  argv[1].label_txt = "To :";
+  argv[1].label_txt = _("To :");
   argv[1].constraint = TRUE;
   argv[1].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[1].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[1].int_ret   = (gint)ainfo_ptr->curr_frame_nr;
-  argv[1].help_txt  = "Source Range ends at this framenumber";
+  argv[1].help_txt  = _("Source Range ends at this framenumber");
     
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
-  argv[2].label_txt = "N-Times :";
+  argv[2].label_txt = _("N-Times :");
   argv[2].constraint = FALSE;
   argv[2].int_min   = 0;
   argv[2].int_max   = 99;
   argv[2].int_ret   = 1;
-  argv[2].help_txt  = "Copy selected Range n-times  \n(you may type in Values > 99)";
+  argv[2].help_txt  = _("Copy selected Range n-times  \n(you may type in Values > 99)");
   
-  if(TRUE == p_array_dialog(l_title, "Duplicate Framerange",  3, argv))
+  if(TRUE == p_array_dialog(l_title, _("Duplicate Framerange"),  3, argv))
   {   *range_from = (long)(argv[0].int_ret);
       *range_to   = (long)(argv[1].int_ret);
        return (int)(argv[2].int_ret);
@@ -2042,11 +2045,11 @@ int gap_exchg(GRunModeType run_mode, gint32 image_id, int nr)
          {
            l_initial = ainfo_ptr->last_frame_nr; 
          }
-         sprintf(l_title, "Exchange current Frame (%ld)"
+         sprintf(l_title, _("Exchange current Frame (%ld)")
                  , ainfo_ptr->curr_frame_nr);
-         sprintf(l_hline, "With Frame (Number)");
+         sprintf(l_hline, _("With Frame (Number)"));
 
-         l_dest = p_slider_dialog(l_title, l_hline, "Number :", NULL
+         l_dest = p_slider_dialog(l_title, l_hline, _("Number :"), NULL
               , ainfo_ptr->first_frame_nr 
               , ainfo_ptr->last_frame_nr
               , l_initial
@@ -2086,35 +2089,35 @@ int p_shift_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
   static t_arr_arg  argv[3];
   char           l_title[50];
 
-  sprintf(l_title, "Framesequence Shift (%ld/%ld)"
+  sprintf(l_title, _("Framesequence Shift (%ld/%ld)")
           , ainfo_ptr->curr_frame_nr
           , ainfo_ptr->frame_cnt);
 
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
-  argv[0].label_txt = "From :";
+  argv[0].label_txt = _("From :");
   argv[0].constraint = TRUE;
   argv[0].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[0].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[0].int_ret   = (gint)ainfo_ptr->curr_frame_nr;
-  argv[0].help_txt  = "Affected Range starts at this framenumber";
+  argv[0].help_txt  = _("Affected Range starts at this framenumber");
 
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
-  argv[1].label_txt = "To :";
+  argv[1].label_txt = _("To :");
   argv[1].constraint = TRUE;
   argv[1].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[1].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[1].int_ret   = (gint)ainfo_ptr->last_frame_nr;
-  argv[1].help_txt  = "Affected Range ends at this framenumber";
+  argv[1].help_txt  = _("Affected Range ends at this framenumber");
     
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
-  argv[2].label_txt = "N-Shift :";
+  argv[2].label_txt = _("N-Shift :");
   argv[2].constraint = FALSE;
   argv[2].int_min   = -1 * (gint)ainfo_ptr->last_frame_nr;
   argv[2].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[2].int_ret   = 1;
-  argv[2].help_txt  = "Renumber the affected framesequence     \n(numbers are shifted in circle by N)";
+  argv[2].help_txt  = _("Renumber the affected framesequence     \n(numbers are shifted in circle by N)");
   
-  if(TRUE == p_array_dialog(l_title, "Framesequence shift",  3, argv))
+  if(TRUE == p_array_dialog(l_title, _("Framesequence shift"),  3, argv))
   {   *range_from = (long)(argv[0].int_ret);
       *range_to   = (long)(argv[1].int_ret);
        return (int)(argv[2].int_ret);

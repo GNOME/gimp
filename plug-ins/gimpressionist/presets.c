@@ -14,6 +14,7 @@
 #include <ctype.h>
 #include "gimpressionist.h"
 #include "ppmtool.h"
+#include <libgimp/stdplugins-intl.h>
 
 GtkWidget *presetnameentry = NULL;
 GtkWidget *presetsavebutton = NULL;
@@ -49,7 +50,7 @@ int loadoldpreset(char *fname)
 
   f = fopen(fname, "rb");
   if(!f) {
-    fprintf(stderr, "Error opening file \"%s\" for reading!%c\n", fname, 7);
+    fprintf(stderr, _("Error opening file \"%s\" for reading!%c\n"), fname, 7);
     return -1;
   }
   len = fread(&pcvals, 1, sizeof(pcvals), f);
@@ -259,7 +260,7 @@ int loadpreset(char *fn)
 
   f = fopen(fn, "rt");
   if(!f) {
-    fprintf(stderr, "Error opening file \"%s\" for reading!\n", fn);
+    fprintf(stderr, _("Error opening file \"%s\" for reading!\n"), fn);
     return -1;
   }
   fgets(line,10,f);
@@ -369,7 +370,7 @@ void create_savepreset(void)
 
   box = gtk_vbox_new(FALSE,5);
 
-  label = gtk_label_new("Description:");
+  label = gtk_label_new( _("Description:"));
   gtk_box_pack_start(GTK_BOX(box),label,FALSE,FALSE,0);
   gtk_widget_show (label);
 
@@ -388,7 +389,7 @@ void create_savepreset(void)
 		      (GtkSignalFunc) presetdesccallback,
 		      NULL);
 
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     GTK_SIGNAL_FUNC (oksavepreset),
 			     GTK_OBJECT(window));
@@ -396,7 +397,7 @@ void create_savepreset(void)
   gtk_widget_show (button);
 
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
 			     GTK_OBJECT(window));
@@ -424,7 +425,7 @@ void savepreset(GtkWidget *wg, GtkWidget *p)
   storevals();
 
   if(!thispath) {
-    fprintf(stderr, "Internal error: (savepreset) thispath == NULL");
+    fprintf(stderr, _("Internal error: (savepreset) thispath == NULL"));
     return;
   }
 
@@ -432,7 +433,7 @@ void savepreset(GtkWidget *wg, GtkWidget *p)
 
   f = fopen(fname, "wt");
   if(!f) {
-    fprintf(stderr, "Error opening file \"%s\" for writing!%c\n", fname, 7);
+    fprintf(stderr, _("Error opening file \"%s\" for writing!%c\n"), fname, 7);
     return;
   }
   fprintf(f, "%s\n", PRESETMAGIC);
@@ -568,7 +569,7 @@ void create_presetpage(GtkNotebook *notebook)
   GtkWidget *tmpw;
   char title[100];
 
-  sprintf(title, "Presets");
+  sprintf(title, _("Presets"));
 
   labelbox = gtk_hbox_new (FALSE, 0);
   tmpw = gtk_label_new(title);
@@ -596,13 +597,13 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_widget_set_usize(tmpw, 150, -1);
   gtk_widget_show(tmpw);
 
-  presetsavebutton = tmpw = gtk_button_new_with_label(" Save current ");
+  presetsavebutton = tmpw = gtk_button_new_with_label( _(" Save current "));
   gtk_box_pack_start(GTK_BOX(box1), tmpw,FALSE,FALSE,5);
   gtk_widget_show (tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(create_savepreset),
 		      NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Save the current settings to the specified file", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Save the current settings to the specified file"), NULL);
 
   box1 = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start(GTK_BOX(thispage), box1, TRUE, TRUE, 0);
@@ -640,39 +641,39 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_widget_show (box2);
   /* gtk_container_border_width (GTK_CONTAINER (box2), 5); */
 
-  tmpw = gtk_button_new_with_label(" Apply ");
+  tmpw = gtk_button_new_with_label( _(" Apply "));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(applypreset),
 		      NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Reads the selected Preset into memory", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Reads the selected Preset into memory"), NULL);
 
-  tmpw = gtk_button_new_with_label(" Delete ");
+  tmpw = gtk_button_new_with_label( _(" Delete "));
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(deletepreset),
 		      NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Deletes the selected Preset", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Deletes the selected Preset"), NULL);
 
-  tmpw = gtk_button_new_with_label(" Refresh ");
+  tmpw = gtk_button_new_with_label( _(" Refresh "));
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(presetsrefresh),
 		      NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Reread the directory of Presets", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Reread the directory of Presets"), NULL);
 
-  presetdesclabel = tmpw = gtk_label_new("(Desc)");
+  presetdesclabel = tmpw = gtk_label_new( _("(Desc)"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show(tmpw);
 
 
-  tmpw = gtk_label_new("\nIf you come up with some nice Presets,\n\
+  tmpw = gtk_label_new( _("\nIf you come up with some nice Presets,\n\
 (or Brushes and Papers for that matter)\n\
 feel free to send them to me <vidar@prosalg.no>\n\
-for inclusion into the next release!\n");
+for inclusion into the next release!\n"));
   gtk_box_pack_start(GTK_BOX(thispage), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
 

@@ -27,6 +27,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gtk/gtk.h"
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 #include "libgimp/gimp.h"
 
 /*  The mosaic logo  */
@@ -318,13 +320,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_mosaic",
-			  "Convert the input drawable into a collection of tiles",
-			  "Help not yet written for this plug-in",
+			  _("Convert the input drawable into a collection of tiles"),
+			  _("Help not yet written for this plug-in"),
 			  "Spencer Kimball",
 			  "Spencer Kimball & Peter Mattis",
 			  "1996",
-			  "<Image>/Filters/Artistic/Mosaic",
+			  _("<Image>/Filters/Artistic/Mosaic"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -354,6 +358,7 @@ run (char    *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_mosaic", &mvals);
 
@@ -363,6 +368,7 @@ run (char    *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 14)
 	status = STATUS_CALLING_ERROR;
@@ -443,7 +449,7 @@ mosaic (GDrawable *drawable)
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
   /*  progress bar for gradient finding  */
-  gimp_progress_init ("Finding Edges...");
+  gimp_progress_init ( _("Finding Edges..."));
 
   /*  Find the gradients  */
   find_gradients (drawable, std_dev);
@@ -493,7 +499,7 @@ mosaic (GDrawable *drawable)
     0.5 : 1.0 - mvals.tile_spacing / mvals.tile_size;
 
   /*  Progress bar for rendering tiles  */
-  gimp_progress_init ("Rendering Tiles...");
+  gimp_progress_init ( _("Rendering Tiles..."));
 
   /*  Render the tiles  */
   grid_render (drawable);
@@ -548,14 +554,14 @@ mosaic_dialog ()
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Mosaic");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Mosaic"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) mosaic_close_callback,
 		      NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) mosaic_ok_callback,
@@ -564,7 +570,7 @@ mosaic_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -613,7 +619,7 @@ mosaic_dialog ()
   gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-  toggle = gtk_check_button_new_with_label ("Antialiasing");
+  toggle = gtk_check_button_new_with_label ( _("Antialiasing"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) mosaic_toggle_update,
@@ -621,7 +627,7 @@ mosaic_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mvals.antialiasing);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ("Color Averaging");
+  toggle = gtk_check_button_new_with_label ( _("Color Averaging"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) mosaic_toggle_update,
@@ -629,7 +635,7 @@ mosaic_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mvals.color_averaging);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ("Pitted Surfaces");
+  toggle = gtk_check_button_new_with_label ( _("Pitted Surfaces"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) mosaic_toggle_update,
@@ -637,7 +643,7 @@ mosaic_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (mvals.tile_surface == ROUGH));
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ("FG/BG Lighting");
+  toggle = gtk_check_button_new_with_label ( _("FG/BG Lighting"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) mosaic_toggle_update,
@@ -650,14 +656,14 @@ mosaic_dialog ()
   gtk_widget_show (hbox);
 
   /*  tiling primitive  */
-  frame = gtk_frame_new ("Tiling Primitives");
+  frame = gtk_frame_new ( _("Tiling Primitives"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
   toggle_vbox = gtk_vbox_new (FALSE, 5);
   gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-  toggle = gtk_radio_button_new_with_label (group, "Squares");
+  toggle = gtk_radio_button_new_with_label (group, _("Squares"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -666,7 +672,7 @@ mosaic_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_squares);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "Hexagons");
+  toggle = gtk_radio_button_new_with_label (group, _("Hexagons"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -675,7 +681,7 @@ mosaic_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_hexagons);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "Octagons & Squares");
+  toggle = gtk_radio_button_new_with_label (group, _("Octagons & Squares"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -689,14 +695,14 @@ mosaic_dialog ()
   gtk_widget_show (vbox);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
   table = gtk_table_new (6, 2, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 5);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new ("Tile Size");
+  label = gtk_label_new ( _("Tile Size"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
   scale_data = gtk_adjustment_new (mvals.tile_size, 5.0, 100.0, 1.0, 1.0, 0.0);
@@ -711,7 +717,7 @@ mosaic_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  label = gtk_label_new ("Tile Height");
+  label = gtk_label_new ( _("Tile Height"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
   scale_data = gtk_adjustment_new (mvals.tile_height, 1.0, 50.0, 1.0, 1.0, 0.0);
@@ -726,7 +732,7 @@ mosaic_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  label = gtk_label_new ("Tile Spacing");
+  label = gtk_label_new ( _("Tile Spacing"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL, 0, 5, 0);
   scale_data = gtk_adjustment_new (mvals.tile_spacing, 1.0, 50.0, 1.0, 1.0, 0.0);
@@ -741,7 +747,7 @@ mosaic_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  label = gtk_label_new ("Tile Neatness");
+  label = gtk_label_new ( _("Tile Neatness"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4, GTK_FILL, 0, 5, 0);
   scale_data = gtk_adjustment_new (mvals.tile_neatness, 0.0, 1.0, 0.01, 0.01, 0.0);
@@ -757,7 +763,7 @@ mosaic_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  label = gtk_label_new ("Light Direction");
+  label = gtk_label_new ( _("Light Direction"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5, GTK_FILL, 0, 5, 0);
   scale_data = gtk_adjustment_new (mvals.light_dir, 0.0, 360.0, 5.0, 5.0, 0.0);
@@ -772,7 +778,7 @@ mosaic_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  label = gtk_label_new ("Color Variation");
+  label = gtk_label_new ( _("Color Variation"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6, GTK_FILL, 0, 5, 0);
   scale_data = gtk_adjustment_new (mvals.color_variation, 0.0, 1.0, 0.01, 0.01, 0.0);
@@ -2548,7 +2554,7 @@ polygon_add_point (Polygon *poly,
       poly->npts++;
     }
   else
-    g_print ("Unable to add additional point.\n");
+    g_print ( _("Unable to add additional point.\n"));
 }
 
 

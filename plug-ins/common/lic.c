@@ -40,8 +40,11 @@
 #include <signal.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
 
 /************/
 /* Typedefs */
@@ -842,7 +845,7 @@ void compute_image(void)
       /* Create a "normal" layer */
       /* ======================= */
 
-       new_layer_id=gimp_layer_new(new_image_id,"Background",
+       new_layer_id=gimp_layer_new(new_image_id, _("Background"),
          width,height,RGB_IMAGE,100.0,NORMAL_MODE);
 
       gimp_image_add_layer(new_image_id,new_layer_id,0);
@@ -851,7 +854,7 @@ void compute_image(void)
 
   gimp_pixel_rgn_init (&dest_region, output_drawable, 0,0, width,height, TRUE,TRUE);
 
-  gimp_progress_init("Van Gogh (LIC)");
+  gimp_progress_init( _("Van Gogh (LIC)"));
 
   if (licvals.effect_convolve==0)
     generatevectors();
@@ -879,7 +882,7 @@ void compute_image(void)
 
   if (scalarfield==NULL)
     {
-      printf("LIC: Couldn't allocate temporary buffer - out of memory!\n");
+      printf( _("LIC: Couldn't allocate temporary buffer - out of memory!\n"));
       return;
     }
 
@@ -982,7 +985,7 @@ void create_main_dialog(void)
   /* Dialog */
     
   dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dialog), "Van Gogh (LIC)");
+  gtk_window_set_title(GTK_WINDOW(dialog), _("Van Gogh (LIC)"));
   gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(dialog), 0);
   gtk_signal_connect(GTK_OBJECT(dialog), "delete_event",
@@ -995,14 +998,14 @@ void create_main_dialog(void)
   vbox=gtk_vbox_new(FALSE,0);
   gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 5);
 
-  frame = gtk_frame_new("Options");
+  frame = gtk_frame_new( _("Options"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_ETCHED_IN);
   gtk_container_add(GTK_CONTAINER(vbox),frame);
 
   hbox2=gtk_hbox_new(FALSE,5);
   gtk_container_add(GTK_CONTAINER(frame),hbox2);
   
-  button = gtk_check_button_new_with_label("Create new image");
+  button = gtk_check_button_new_with_label( _("Create new image"));
   if (licvals.create_new_image==TRUE)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),TRUE);
   gtk_container_add(GTK_CONTAINER(hbox2),button);
@@ -1011,14 +1014,14 @@ void create_main_dialog(void)
   gtk_widget_show(hbox2);
   gtk_widget_show(frame);
   
-  frame = gtk_frame_new("Effect channel");
+  frame = gtk_frame_new( _("Effect channel"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_ETCHED_IN);
   gtk_container_add(GTK_CONTAINER(vbox),frame);
 
   vbox2=gtk_vbox_new(FALSE,0);
   gtk_container_add(GTK_CONTAINER(frame),vbox2);
 
-  button = gtk_radio_button_new_with_label(NULL,"Hue");
+  button = gtk_radio_button_new_with_label(NULL, _("Hue"));
   group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
   if (licvals.effect_channel==0)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
@@ -1030,7 +1033,7 @@ void create_main_dialog(void)
   gtk_box_pack_start(GTK_BOX(vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show(button);
 
-  button = gtk_radio_button_new_with_label(group,"Saturation");
+  button = gtk_radio_button_new_with_label(group, _("Saturation"));
   if (licvals.effect_channel==1)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
@@ -1041,7 +1044,7 @@ void create_main_dialog(void)
   gtk_box_pack_start(GTK_BOX(vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show(button);
 
-  button = gtk_radio_button_new_with_label(group,"Brightness");
+  button = gtk_radio_button_new_with_label(group, _("Brightness"));
   if (licvals.effect_channel==2)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
@@ -1055,14 +1058,14 @@ void create_main_dialog(void)
   gtk_widget_show(vbox2);
   gtk_widget_show(frame);
   
-  frame = gtk_frame_new("Effect operator");
+  frame = gtk_frame_new( _("Effect operator"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_ETCHED_IN);
   gtk_container_add(GTK_CONTAINER(vbox),frame);
   
   vbox2=gtk_vbox_new(FALSE,0);
   gtk_container_add(GTK_CONTAINER(frame),vbox2);
 
-  button = gtk_radio_button_new_with_label(NULL,"Derivative");
+  button = gtk_radio_button_new_with_label(NULL, _("Derivative"));
   group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
   if (licvals.effect_operator==0)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
@@ -1074,7 +1077,7 @@ void create_main_dialog(void)
   gtk_box_pack_start(GTK_BOX(vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show(button);
 
-  button = gtk_radio_button_new_with_label(group,"Gradient");
+  button = gtk_radio_button_new_with_label(group, _("Gradient"));
   if (licvals.effect_operator==1)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
@@ -1088,14 +1091,14 @@ void create_main_dialog(void)
   gtk_widget_show(vbox2);
   gtk_widget_show(frame);
 
-  frame = gtk_frame_new("Convolve");
+  frame = gtk_frame_new( _("Convolve"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_ETCHED_IN);
   gtk_container_add(GTK_CONTAINER(vbox),frame);
 
   vbox2=gtk_vbox_new(FALSE,0);
   gtk_container_add(GTK_CONTAINER(frame),vbox2);
 
-  button = gtk_radio_button_new_with_label(NULL,"With white noise");
+  button = gtk_radio_button_new_with_label(NULL, _("With white noise"));
   group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
   if (licvals.effect_convolve==0)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
@@ -1107,7 +1110,7 @@ void create_main_dialog(void)
   gtk_box_pack_start(GTK_BOX(vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show(button);
 
-  button = gtk_radio_button_new_with_label(group,"With source image");
+  button = gtk_radio_button_new_with_label(group, _("With source image"));
   if (licvals.effect_convolve==1)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
@@ -1126,7 +1129,7 @@ void create_main_dialog(void)
   vbox=gtk_vbox_new(FALSE,0);
   gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 5);
 
-  frame = gtk_frame_new("Parameters");
+  frame = gtk_frame_new( _("Parameters"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_ETCHED_IN);
   gtk_container_add(GTK_CONTAINER(vbox),frame);
 
@@ -1138,7 +1141,7 @@ void create_main_dialog(void)
   hbox2=gtk_hbox_new(FALSE,0);
   gtk_container_add(GTK_CONTAINER(vbox2),hbox2);
 
-  label = gtk_label_new("Effect image:");
+  label = gtk_label_new( _("Effect image:"));
   gtk_container_add(GTK_CONTAINER(hbox2),label);
   gtk_widget_show(label);
 
@@ -1156,7 +1159,7 @@ void create_main_dialog(void)
     
   gtk_widget_show(hbox2);
 
-  label = gtk_label_new("Filter length:");
+  label = gtk_label_new( _("Filter length:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.5, 1.0);
   gtk_container_add(GTK_CONTAINER(vbox2),label);
   gtk_widget_show(label);
@@ -1170,7 +1173,7 @@ void create_main_dialog(void)
   gtk_container_add(GTK_CONTAINER(vbox2),scale);
   gtk_widget_show(scale);
 
-  label = gtk_label_new("Noise magnitude:");
+  label = gtk_label_new( _("Noise magnitude:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.5, 1.0);
   gtk_container_add(GTK_CONTAINER(vbox2),label);
   gtk_widget_show(label);
@@ -1185,7 +1188,7 @@ void create_main_dialog(void)
   gtk_container_add(GTK_CONTAINER(vbox2),scale);
   gtk_widget_show(scale);
 
-  label = gtk_label_new("Integration steps:");
+  label = gtk_label_new( _("Integration steps:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.5, 1.0);
   gtk_container_add(GTK_CONTAINER(vbox2),label);
   gtk_widget_show(label);
@@ -1200,7 +1203,7 @@ void create_main_dialog(void)
   gtk_container_add(GTK_CONTAINER(vbox2),scale);
   gtk_widget_show(scale);
 
-  label = gtk_label_new("Minimum value:");
+  label = gtk_label_new( _("Minimum value:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.5, 1.0);
   gtk_container_add(GTK_CONTAINER(vbox2),label);
   gtk_widget_show(label);
@@ -1215,7 +1218,7 @@ void create_main_dialog(void)
   gtk_container_add(GTK_CONTAINER(vbox2),scale);
   gtk_widget_show(scale);
 
-  label = gtk_label_new("Maximum value:");
+  label = gtk_label_new( _("Maximum value:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.5, 1.0);
   gtk_container_add(GTK_CONTAINER(vbox2),label);
   gtk_widget_show(label);
@@ -1240,7 +1243,7 @@ void create_main_dialog(void)
     
   gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
     
-  button = gtk_button_new_with_label("OK");
+  button = gtk_button_new_with_label( _("OK"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
     (GtkSignalFunc)ok_button_clicked,(gpointer)dialog);
@@ -1249,7 +1252,7 @@ void create_main_dialog(void)
   gtk_widget_grab_default(button);
   gtk_widget_show(button);
     
-  button = gtk_button_new_with_label("Cancel");
+  button = gtk_button_new_with_label( _("Cancel"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
     (GtkSignalFunc)cancel_button_clicked,(gpointer)dialog);
@@ -1300,13 +1303,15 @@ static void query(void)
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_lic",
-			  "Creates a Van Gogh effect (Line Integral Convolution)",
+			  _("Creates a Van Gogh effect (Line Integral Convolution)"),
 			  "No help yet",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Version 0.14, September 24 1997",
-			  "<Image>/Filters/Artistic/Van Gogh (LIC)",
+			  _("<Image>/Filters/Artistic/Van Gogh (LIC)"),
 			  "RGB",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -1325,6 +1330,12 @@ static void run(gchar   *name,
   GStatusType status = STATUS_SUCCESS;
 
   run_mode = param[0].data.d_int32;
+
+  if (run_mode == RUN_INTERACTIVE) {
+    INIT_I18N_UI();
+  } else {
+    INIT_I18N();
+  }
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -1422,7 +1433,7 @@ void lic_interactive(GDrawable *drawable)
 
 void lic_noninteractive(GDrawable *drawable)
 {
-  printf("Noninteractive not yet implemented! Sorry.\n");
+  printf( _("Noninteractive not yet implemented! Sorry.\n"));
 }
 
 MAIN()

@@ -30,7 +30,9 @@ gimpressionist_SOURCES = \
 	color.c
 
 AM_CPPFLAGS = \
-	-DDEFAULTPATH=\""~/$(gimpdir)/gimpressionist:$(gimpdatadir)/gimpressionist"\"
+	-DDEFAULTPATH=\""~/$(gimpdir)/gimpressionist:$(gimpdatadir)/gimpressionist"\" \
+        -DLOCALEDIR=\""$(localedir)"\"
+
 
 INCLUDES = \
 	-I$(top_srcdir)			\

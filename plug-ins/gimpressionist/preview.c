@@ -11,6 +11,7 @@
 #endif
 #include "gimpressionist.h"
 #include "ppmtool.h"
+#include <libgimp/stdplugins-intl.h>
 
 GtkWidget *previewprev = NULL;
 GtkWidget *previewbutton = NULL;
@@ -102,7 +103,7 @@ GtkWidget* create_preview()
   box1 = gtk_vbox_new(FALSE, 0);
   gtk_container_border_width (GTK_CONTAINER (box1), 5);
 
-  tmpw = gtk_label_new("Preview");
+  tmpw = gtk_label_new( _("Preview"));
   gtk_box_pack_start(GTK_BOX(box1), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
 
@@ -113,19 +114,19 @@ GtkWidget* create_preview()
 
   box2 = gtk_hbox_new(TRUE, 0);
 
-  previewbutton = tmpw = gtk_button_new_with_label(" Update ");
+  previewbutton = tmpw = gtk_button_new_with_label( _(" Update "));
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
                      (GtkSignalFunc)updatepreviewprev, (void *)1);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Refresh the Preview window", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Refresh the Preview window"), NULL);
 
-  resetpreviewbutton = tmpw = gtk_button_new_with_label(" Reset ");
+  resetpreviewbutton = tmpw = gtk_button_new_with_label( _(" Reset "));
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
                      (GtkSignalFunc)updatepreviewprev, (void *)2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Revert to the original image", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Revert to the original image"), NULL);
 
   gtk_box_pack_start (GTK_BOX (box1), box2, FALSE, FALSE, 0);
   gtk_widget_show(box2);

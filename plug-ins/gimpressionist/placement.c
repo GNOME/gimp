@@ -14,6 +14,7 @@
 #endif
 #include "gimpressionist.h"
 #include "ppmtool.h"
+#include <libgimp/stdplugins-intl.h>
 
 
 #define NUMPLACERADIO 2
@@ -48,7 +49,7 @@ void create_placementpage(GtkNotebook *notebook)
   char title[100];
   int i;
 
-  sprintf(title, "Placement");
+  sprintf(title, _("Placement"));
 
   labelbox = gtk_hbox_new (FALSE, 0);
   tmpw = gtk_label_new(title);
@@ -76,7 +77,7 @@ void create_placementpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,0);
   gtk_widget_show (box2);
 
-  tmpw = gtk_label_new("Placement:");
+  tmpw = gtk_label_new( _("Placement:"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
@@ -86,23 +87,23 @@ void create_placementpage(GtkNotebook *notebook)
 
   i = pcvals.placetype;
 
-  placeradio[0] = tmpw = gtk_radio_button_new_with_label(NULL, "Randomly");
+  placeradio[0] = tmpw = gtk_radio_button_new_with_label(NULL, _("Randomly"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)placechange, (void *)0);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Place strokes randomly around the image", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Place strokes randomly around the image"), NULL);
   if(i == 0)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
-  placeradio[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), "Evenly distributed");
+  placeradio[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Evenly distributed"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)placechange, (void *)1);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "The strokes are evenly distributed across the image", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The strokes are evenly distributed across the image"), NULL);
   if(i == 1)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
@@ -111,7 +112,7 @@ void create_placementpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box0), box1,FALSE,FALSE,0);
   gtk_widget_show (box1);
 
-  tmpw = gtk_label_new("Stroke density:");
+  tmpw = gtk_label_new( _("Stroke density:"));
   gtk_box_pack_start(GTK_BOX(box1), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
@@ -122,13 +123,13 @@ void create_placementpage(GtkNotebook *notebook)
   gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
   gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 10);
   gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "The relative density of the brush strokes", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The relative density of the brush strokes"), NULL);
 
-  placecenter = tmpw = gtk_check_button_new_with_label("Centerize");
+  placecenter = tmpw = gtk_check_button_new_with_label( _("Centerize"));
   gtk_box_pack_start(GTK_BOX(box0), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Focus the brush strokes around the center of the image", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Focus the brush strokes around the center of the image"), NULL);
   if(pcvals.placecenter)
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), TRUE);
 

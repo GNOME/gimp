@@ -5,6 +5,8 @@
 #include <gtk/gtk.h>
 #include "gimpressionist.h"
 #include "ppmtool.h"
+#include "config.h"
+#include <libgimp/stdplugins-intl.h>
 
 #define MAPFILE "data.out"
 
@@ -356,7 +358,7 @@ void create_sizemap_dialog(void)
                       GTK_SIGNAL_FUNC(gtk_widget_hide_on_delete),
                       &smwindow);
 
-  gtk_window_set_title(GTK_WINDOW(smwindow), "Size Map Editor");
+  gtk_window_set_title(GTK_WINDOW(smwindow), _("Size Map Editor"));
 
   gtk_container_border_width (GTK_CONTAINER(smwindow), 5);
 
@@ -364,7 +366,7 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_container_add(GTK_CONTAINER(smwindow), tmpw);
 
-  tmpw2 = tmpw = gtk_frame_new("Smvectors");
+  tmpw2 = tmpw = gtk_frame_new( _("Smvectors"));
   gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_table_attach(GTK_TABLE(table1), tmpw, 0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
   gtk_widget_show(tmpw);
@@ -374,7 +376,7 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
 
   tmpw = gtk_event_box_new();
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector.", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."), NULL);
   gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, FALSE, 0);
   tmpw2 = tmpw;
 
@@ -395,9 +397,9 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(smvectprevbrightadjust), "value_changed",
                      (GtkSignalFunc)updatesmvectorprev, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Adjust the preview's brightness", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Adjust the preview's brightness"), NULL);
 
-  tmpw2 = tmpw = gtk_frame_new("Preview");
+  tmpw2 = tmpw = gtk_frame_new( _("Preview"));
   gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_table_attach(GTK_TABLE(table1), tmpw, 1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
   gtk_widget_show(tmpw);
@@ -417,28 +419,28 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(smprevclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Select previous smvector", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Select previous smvector"), NULL);
 
   tmpw = gtk_button_new_with_label(">>");
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(smnextclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Select next smvector", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Select next smvector"), NULL);
 
-  tmpw = gtk_button_new_with_label("Add");
+  tmpw = gtk_button_new_with_label( _("Add"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(smaddclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Add new smvector", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Add new smvector"), NULL);
 
-  tmpw = gtk_button_new_with_label("Kill");
+  tmpw = gtk_button_new_with_label( _("Kill"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(smdeleteclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Delete selected smvector", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Delete selected smvector"), NULL);
 
 
   tmpw = table2 = gtk_table_new(2,2,FALSE);
@@ -446,7 +448,7 @@ void create_sizemap_dialog(void)
   gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 0,1,2,3);
   gtk_widget_show(tmpw);
 
-  tmpw = gtk_label_new("Size:");
+  tmpw = gtk_label_new( _("Size:"));
   gtk_widget_show(tmpw);
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,0,1);
 
@@ -458,9 +460,9 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(sizadjust), "value_changed",
 		     (GtkSignalFunc)angsmadjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Change the angle of the selected smvector", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Change the angle of the selected smvector"), NULL);
 
-  tmpw = gtk_label_new("Strength:");
+  tmpw = gtk_label_new( _("Strength:"));
   gtk_widget_show(tmpw);
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,1,2);
 
@@ -472,7 +474,7 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(smstradjust), "value_changed",
 		     (GtkSignalFunc)strsmadjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Change the strength of the selected smvector", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Change the strength of the selected smvector"), NULL);
 
 
   tmpw = hbox = gtk_hbox_new(TRUE,0);
@@ -480,26 +482,26 @@ void create_sizemap_dialog(void)
   gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_widget_show(tmpw);
 
-  tmpw = gtk_button_new_with_label("OK");
+  tmpw = gtk_button_new_with_label( _("OK"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(smokclick), smwindow);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Apply and exit the editor", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Apply and exit the editor"), NULL);
 
-  tmpw = gtk_button_new_with_label("Apply");
+  tmpw = gtk_button_new_with_label( _("Apply"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(smokclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Apply, but stay inside the editor", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Apply, but stay inside the editor"), NULL);
 
-  tmpw = gtk_button_new_with_label("Cancel");
+  tmpw = gtk_button_new_with_label( _("Cancel"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(smcancelclick), smwindow);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Cancel all changes and exit", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Cancel all changes and exit"), NULL);
 
 
   tmpw = table2 = gtk_table_new(2,2,FALSE);
@@ -507,7 +509,7 @@ void create_sizemap_dialog(void)
   gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 1,2,2,3);
   gtk_widget_show(tmpw);
 
-  tmpw = gtk_label_new("Strength exp.:");
+  tmpw = gtk_label_new( _("Strength exp.:"));
   gtk_widget_show(tmpw);
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,0,1);
 
@@ -519,10 +521,10 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(smstrexpadjust), "value_changed",
 		     (GtkSignalFunc)smstrexpsmadjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Change the exponent of the strength", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Change the exponent of the strength"), NULL);
 
 
-  sizevoronoi = tmpw = gtk_check_button_new_with_label("Voronoi");
+  sizevoronoi = tmpw = gtk_check_button_new_with_label( _("Voronoi"));
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,2,3);
   gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
@@ -530,7 +532,7 @@ void create_sizemap_dialog(void)
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tmpw), TRUE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)smstrexpsmadjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Voronoi-mode makes only the smvector closest to the given point have any influence", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Voronoi-mode makes only the smvector closest to the given point have any influence"), NULL);
   
   gtk_widget_show(smwindow);
 

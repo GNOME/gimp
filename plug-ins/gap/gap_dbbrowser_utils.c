@@ -34,6 +34,8 @@
    0.08  26th sept 97  by Thomas NOEL <thomas@minet.net> )
 */
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 #include "gap_dbbrowser_utils.h"
 
 extern int gap_debug;
@@ -60,7 +62,7 @@ gap_db_browser_dialog(char *title_txt,
   
   l_argsc = 1;
   l_argsv = g_new (gchar *, 1);
-  l_argsv[0] = g_strdup ("GAP Animated Filter apply");
+  l_argsv[0] = g_strdup ( _("GAP Animated Filter apply"));
 
   if (init_gtk_flag)
   {
@@ -81,7 +83,7 @@ gap_db_browser_dialog(char *title_txt,
   
   dbbrowser->dlg = gtk_dialog_new ();
   
-  gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), "Animated Filter apply (init)");
+  gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), _("Animated Filter apply (init)"));
   gtk_window_position (GTK_WINDOW (dbbrowser->dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dbbrowser->dlg), "destroy",
                       (GtkSignalFunc) dialog_close_callback,
@@ -132,7 +134,7 @@ gap_db_browser_dialog(char *title_txt,
 		      searchhbox, FALSE, TRUE, 0);
   gtk_widget_show(searchhbox);
 
-  label = gtk_label_new("Search :");
+  label = gtk_label_new( _("Search :"));
   gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (searchhbox), 
 		      label, TRUE, TRUE, 0);
@@ -161,7 +163,7 @@ gap_db_browser_dialog(char *title_txt,
 
 
   if (gap_debug) {
-    button = gtk_button_new_with_label ("Gen Code by name");
+    button = gtk_button_new_with_label ( _("Gen Code by name"));
     GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
     gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			(GtkSignalFunc) dialog_button_3_callback, dbbrowser );
@@ -170,7 +172,7 @@ gap_db_browser_dialog(char *title_txt,
     gtk_widget_show (button);
   }
 
-  dbbrowser->name_button = gtk_button_new_with_label ("Search by name");
+  dbbrowser->name_button = gtk_button_new_with_label ( _("Search by name"));
   GTK_WIDGET_SET_FLAGS (dbbrowser->name_button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (dbbrowser->name_button), "clicked",
                       (GtkSignalFunc) dialog_search_callback, dbbrowser);
@@ -178,7 +180,7 @@ gap_db_browser_dialog(char *title_txt,
 		    dbbrowser->name_button , TRUE, TRUE, 0);
   gtk_widget_show(dbbrowser->name_button);
 
-  dbbrowser->blurb_button = gtk_button_new_with_label ("Search by blurb");
+  dbbrowser->blurb_button = gtk_button_new_with_label ( _("Search by blurb"));
   GTK_WIDGET_SET_FLAGS (dbbrowser->blurb_button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (dbbrowser->blurb_button), "clicked",
                       (GtkSignalFunc) dialog_search_callback, dbbrowser);
@@ -206,7 +208,7 @@ gap_db_browser_dialog(char *title_txt,
     gtk_widget_show (dbbrowser->app_vary_button);
   } else dbbrowser->app_vary_button = NULL;
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) dialog_close_callback, dbbrowser);
@@ -320,7 +322,7 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   /* show the name */
 
-  label = gtk_label_new("Name :");
+  label = gtk_label_new( _("Name :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, GTK_FILL, GTK_FILL, 3, 6);
@@ -337,7 +339,7 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   /* show the description */
 
-  label = gtk_label_new("Blurb :");
+  label = gtk_label_new( _("Blurb :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, GTK_FILL, GTK_FILL, 3, 0);
@@ -359,7 +361,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   /* in parameters */
   if (dbbrowser->selected_nparams) 
     {
-      label = gtk_label_new("In :");
+      label = gtk_label_new( _("In :"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
       gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 	   0, 1, row, row+(dbbrowser->selected_nparams), 
@@ -405,7 +407,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   /* out parameters */
   if (dbbrowser->selected_nreturn_vals)
     {
-      label = gtk_label_new("Out :");
+      label = gtk_label_new( _("Out :"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
       gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 			0, 1, row, row+(dbbrowser->selected_nreturn_vals), 
@@ -454,7 +456,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   /* show the help */
   if ((dbbrowser->selected_proc_help) && (strlen(dbbrowser->selected_proc_help) > 1))
     {
-      label = gtk_label_new("Help :");
+      label = gtk_label_new( _("Help :"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
       gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 			0, 1, row, row+1, 
@@ -492,7 +494,7 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   /* show the author & the copyright */
 
-  label = gtk_label_new("Author :");
+  label = gtk_label_new( _("Author :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, 
@@ -507,7 +509,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   gtk_widget_show(label);
   row++;
   
-  label = gtk_label_new("Date :");
+  label = gtk_label_new( _("Date :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, 
@@ -522,7 +524,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   gtk_widget_show(label);
   row++;
 
-  label = gtk_label_new("Copyright :");
+  label = gtk_label_new( _("Copyright :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, 
@@ -661,7 +663,7 @@ dialog_search_callback (GtkWidget *widget,
   if ( widget == (dbbrowser->name_button) ) 
     {
       gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
-			    "Animated Filter apply (by name - please wait)");
+			    _("Animated Filter apply (by name - please wait)"));
 
       query = g_string_new ("");
       query_text = gtk_entry_get_text(GTK_ENTRY(dbbrowser->search_entry));
@@ -685,7 +687,7 @@ dialog_search_callback (GtkWidget *widget,
   else if ( widget == (dbbrowser->blurb_button) )
     {
       gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
-			    "Animated Filter apply (by blurb - please wait)");
+			    _("Animated Filter apply (by blurb - please wait)"));
       gimp_query_database (".*", 
 			   gtk_entry_get_text( GTK_ENTRY(dbbrowser->search_entry) ),
 			   ".*", ".*", ".*", ".*", ".*",
@@ -693,7 +695,7 @@ dialog_search_callback (GtkWidget *widget,
     }
   else {
       gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
-			    "Animated Filter apply (please wait)");
+			    _("Animated Filter apply (please wait)"));
       gimp_query_database (".*", ".*", ".*", ".*", ".*", ".*", ".*", 
 			   &num_procs, &proc_list);
   }
@@ -740,7 +742,7 @@ dialog_search_callback (GtkWidget *widget,
   g_free( proc_list );
 
   gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
-			"Animated Filter apply");
+			_("Animated Filter apply"));
 
   gtk_clist_thaw(GTK_CLIST(dbbrowser->clist));
 

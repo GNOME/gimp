@@ -71,6 +71,8 @@ static char *gap_main_version =  "1.1.8a; 1999/08/31";
 
 /* GIMP includes */
 #include "gtk/gtk.h"
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 #include "libgimp/gimp.h"
 
 /* GAP includes */
@@ -315,217 +317,219 @@ query ()
   };
   static int nargs_modify = sizeof(args_modify) / sizeof(args_modify[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure("plug_in_gap_next",
-			 "This plugin exchanges current image with (next nubered) image from disk.",
+			 _("This plugin exchanges current image with (next nubered) image from disk."),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Goto Next",
+			 _("<Image>/AnimFrames/Goto Next"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_std, nreturn_vals,
 			 args_std, return_vals);
 
   gimp_install_procedure("plug_in_gap_prev",
-			 "This plugin exchanges current image with (previous nubered) image from disk.",
+			 _("This plugin exchanges current image with (previous nubered) image from disk."),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Goto Prev",
+			 _("<Image>/AnimFrames/Goto Prev"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_std, nreturn_vals,
 			 args_std, return_vals);
 
   gimp_install_procedure("plug_in_gap_first",
-			 "This plugin exchanges current image with (lowest nubered) image from disk.",
+			 _("This plugin exchanges current image with (lowest nubered) image from disk."),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Goto First",
+			 _("<Image>/AnimFrames/Goto First"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_std, nreturn_vals,
 			 args_std, return_vals);
 
   gimp_install_procedure("plug_in_gap_last",
-			 "This plugin exchanges current image with (highest nubered) image from disk.",
+			 _("This plugin exchanges current image with (highest nubered) image from disk."),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Goto Last",
+			 _("<Image>/AnimFrames/Goto Last"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_std, nreturn_vals,
 			 args_std, return_vals);
 
   gimp_install_procedure("plug_in_gap_goto",
-			 "This plugin exchanges current image with requested image (nr) from disk.",
+			 _("This plugin exchanges current image with requested image (nr) from disk."),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Goto Any",
+			 _("<Image>/AnimFrames/Goto Any"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_goto, nreturn_vals,
 			 args_goto, return_vals);
 
   gimp_install_procedure("plug_in_gap_del",
-			 "This plugin deletes the given number of frames from disk including the current frame.",
+			 _("This plugin deletes the given number of frames from disk including the current frame."),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Delete Frames",
+			 _("<Image>/AnimFrames/Delete Frames"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_del, nreturn_vals,
 			 args_del, return_vals);
 
   gimp_install_procedure("plug_in_gap_dup",
-			 "This plugin duplicates the current frames on disk n-times.",
+			 _("This plugin duplicates the current frames on disk n-times."),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Duplicate Frames",
+			 _("<Image>/AnimFrames/Duplicate Frames"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_dup, nreturn_vals,
 			 args_dup, return_vals);
 
   gimp_install_procedure("plug_in_gap_exchg",
-			 "This plugin exchanges content of the current with destination frame.",
+			 _("This plugin exchanges content of the current with destination frame."),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Exchange Frame",
+			 _("<Image>/AnimFrames/Exchange Frame"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_exchg, nreturn_vals,
 			 args_exchg, return_vals);
 
   gimp_install_procedure("plug_in_gap_move",
-			 "This plugin copies layer(s) from one sourceimage to multiple frames on disk, varying position, size and opacity.",
+			 _("This plugin copies layer(s) from one sourceimage to multiple frames on disk, varying position, size and opacity."),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Move Path",
+			 _("<Image>/AnimFrames/Move Path"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_mov, nreturn_vals,
 			 args_mov, return_vals);
 
   gimp_install_procedure("plug_in_gap_range_to_multilayer",
-			 "This plugin creates a new image from the given range of frame-images. Each frame is converted to one layer in the new image, according to flatten_mode. (the frames on disk are not changed).",
+			 _("This plugin creates a new image from the given range of frame-images. Each frame is converted to one layer in the new image, according to flatten_mode. (the frames on disk are not changed)."),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Frames to Image",
+			 _("<Image>/AnimFrames/Frames to Image"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_f2multi, nreturn_f2multi,
 			 args_f2multi, return_f2multi);
 
   gimp_install_procedure("plug_in_gap_range_flatten",
-			 "This plugin flattens the given range of frame-images (on disk)",
+			 _("This plugin flattens the given range of frame-images (on disk)"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Frames Flatten",
+			 _("<Image>/AnimFrames/Frames Flatten"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_rflatt, nreturn_vals,
 			 args_rflatt, return_vals);
 
   gimp_install_procedure("plug_in_gap_range_layer_del",
-			 "This plugin deletes one layer in the given range of frame-images (on disk). exception: the last remaining layer of a frame is not deleted",
+			 _("This plugin deletes one layer in the given range of frame-images (on disk). exception: the last remaining layer of a frame is not deleted"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Frames LayerDel",
+			 _("<Image>/AnimFrames/Frames LayerDel"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_rlayerdel, nreturn_vals,
 			 args_rlayerdel, return_vals);
 
   gimp_install_procedure("plug_in_gap_range_convert",
-			 "This plugin converts the given range of frame-images to other fileformats (on disk) depending on extension",
+			 _("This plugin converts the given range of frame-images to other fileformats (on disk) depending on extension"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Frames Convert",
+			 _("<Image>/AnimFrames/Frames Convert"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_rconv, nreturn_vals,
 			 args_rconv, return_vals);
 
   gimp_install_procedure("plug_in_gap_anim_resize",
-			 "This plugin resizes all anim_frames (images on disk) to the given new_width/new_height",
+			 _("This plugin resizes all anim_frames (images on disk) to the given new_width/new_height"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Frames Resize",
+             _("<Image>/AnimFrames/Frames Resize"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_resize, nreturn_vals,
 			 args_resize, return_vals);
 
   gimp_install_procedure("plug_in_gap_anim_crop",
-			 "This plugin crops all anim_frames (images on disk) to the given new_width/new_height",
+			 _("This plugin crops all anim_frames (images on disk) to the given new_width/new_height"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Frames Crop",
+			 _("<Image>/AnimFrames/Frames Crop"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_resize, nreturn_vals,
 			 args_resize, return_vals);
 
   gimp_install_procedure("plug_in_gap_anim_scale",
-			 "This plugin scales all anim_frames (images on disk) to the given new_width/new_height",
+			 _("This plugin scales all anim_frames (images on disk) to the given new_width/new_height"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Frames Scale",
+			 _("<Image>/AnimFrames/Frames Scale"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_scale, nreturn_vals,
 			 args_scale, return_vals);
 
   gimp_install_procedure("plug_in_gap_split",
-			 "This plugin splits the current image to anim frames (images on disk). Each layer is saved as one frame",
+			 _("This plugin splits the current image to anim frames (images on disk). Each layer is saved as one frame"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Split Img to Frames",
+			 _("<Image>/AnimFrames/Split Img to Frames"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_split, nreturn_split,
 			 args_split, return_split);
 
   gimp_install_procedure("plug_in_gap_mpeg_encode",
-			 "This plugin calls mpeg_encode to convert anim frames to MPEG1, or just generates a param file for mpeg_encode. (mpeg_encode must be installed on your system)",
+			 _("This plugin calls mpeg_encode to convert anim frames to MPEG1, or just generates a param file for mpeg_encode. (mpeg_encode must be installed on your system)"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Frames MPEG1 encode",
+			 _("<Image>/AnimFrames/Frames MPEG1 encode"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_mpege, nreturn_vals,
@@ -533,12 +537,12 @@ query ()
 
 
   gimp_install_procedure("plug_in_gap_mpeg2encode",
-			 "This plugin calls mpeg2encode to convert anim frames to MPEG1 or MPEG2, or just generates a param file for mpeg2encode. (mpeg2encode must be installed on your system)",
+			 _("This plugin calls mpeg2encode to convert anim frames to MPEG1 or MPEG2, or just generates a param file for mpeg2encode. (mpeg2encode must be installed on your system)"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Frames MPEG2 encode",
+			 _("<Image>/AnimFrames/Frames MPEG2 encode"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_mpege, nreturn_vals,
@@ -546,24 +550,24 @@ query ()
 
 
   gimp_install_procedure("plug_in_gap_shift",
-			 "This plugin exchanges frame numbers in the given range. (discfile frame_0001.xcf is renamed to frame_0002.xcf, 2->3, 3->4 ... n->1)",
+			 _("This plugin exchanges frame numbers in the given range. (discfile frame_0001.xcf is renamed to frame_0002.xcf, 2->3, 3->4 ... n->1)"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Framesequence Shift",
+			 _("<Image>/AnimFrames/Framesequence Shift"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_shift, nreturn_vals,
 			 args_shift, return_vals);
 
   gimp_install_procedure("plug_in_gap_modify",
-			 "This plugin performs a modifying action on each selected layer in each selected framerange",
+			 _("This plugin performs a modifying action on each selected layer in each selected framerange"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 "<Image>/AnimFrames/Frames Modify",
+			 _("<Image>/AnimFrames/Frames Modify"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_modify, nreturn_vals,
@@ -657,6 +661,11 @@ run (char    *name,
   l_lock.image_id = image_id;
   gimp_set_data (l_lockname, &l_lock, sizeof(l_lock));
    
+  if (run_mode == RUN_NONINTERACTIVE) {
+    INIT_I18N();
+  } else {
+    INIT_I18N_UI();
+  }
 
   if (strcmp (name, "plug_in_gap_next") == 0)
   {

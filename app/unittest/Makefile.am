@@ -59,11 +59,11 @@ OFILES=../about_dialog.o          ../disp_callbacks.o        ../gimpunit.o \
 ../indicator_area.o ../gdisplay_color.o ../gimpcontextpreview.o \
 ../qmask.o ../context_manager.o ../lc_dialog.o ../gimpcontext.o
 
-testplugin_SOURCES = \
-	testplugin.c \
-	init.c		
-plugshow_SOURCES = \
-	plugshow.c
+#testplugin_SOURCES = \
+#	testplugin.c \
+#	init.c		
+#plugshow_SOURCES = \
+#	plugshow.c
 plugdir_SOURCES = \
 	plugdir.c
 gimppath_SOURCES = \
@@ -89,12 +89,12 @@ LDADD = $(OFILES) \
 	$(GIMP_THREAD_LIBS)			\
 	$(INTLLIBS)
 
-plugshow_LDADD = $(OFILES) \
-	../libgimpim.a \
-	$(top_builddir)/libgimp/libgimpi.a	\
-	$(GTK_LIBS)				\
-	$(GIMP_THREAD_LIBS)			\
-	$(INTLLIBS)
+#plugshow_LDADD = $(OFILES) \
+#	../libgimpim.a \
+#	$(top_builddir)/libgimp/libgimpi.a	\
+#	$(GTK_LIBS)				\
+#	$(GIMP_THREAD_LIBS)			\
+#	$(INTLLIBS)
 plugdir_LDADD = $(OFILES) \
 	../libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\

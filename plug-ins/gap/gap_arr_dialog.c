@@ -55,6 +55,8 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
+#include "libgimp/gimp.h"
 
 /* private includes */
 #include "gap_arr_dialog.h"
@@ -273,7 +275,7 @@ filesel_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
   arr_ptr->text_filesel = NULL;
     
   /* Button  to invoke filebrowser */  
-  button = gtk_button_new_with_label ("File-Browser");
+  button = gtk_button_new_with_label ( _("File-Browser"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) filesel_open_cb,
 		      arr_ptr);
@@ -661,7 +663,7 @@ pair_flt_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
        if((*arr_ptr->flt_format != '%') 
        || (arr_ptr->flt_format[strlen(arr_ptr->flt_format) -1] != 'f'))
        {
-          printf("pair_flt_create_value: Bad FloatFormat ignored %s\n", arr_ptr->flt_format);
+          printf( _("pair_flt_create_value: Bad FloatFormat ignored %s\n"), arr_ptr->flt_format);
           arr_ptr->flt_format = "%0.2f";
        }
     }
@@ -805,7 +807,7 @@ pair_int_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
        if((*arr_ptr->int_format != '%') 
        || (arr_ptr->int_format[strlen(arr_ptr->int_format) -1] != 'd'))
        {
-          printf("pair_int_create_value: Bad IntFormat ignored %s\n", arr_ptr->int_format);
+          printf( _("pair_int_create_value: Bad IntFormat ignored %s\n"), arr_ptr->int_format);
           arr_ptr->int_format = "%d";
        }
     }
@@ -942,7 +944,7 @@ gint p_array_std_dialog(char *title_txt,
   for(l_idx = 0; l_idx < b_argc; l_idx++)
   {
 
-     if(b_argv[l_idx].but_txt == NULL)  button = gtk_button_new_with_label ("OK");
+     if(b_argv[l_idx].but_txt == NULL)  button = gtk_button_new_with_label ( _("OK"));
      else                               button = gtk_button_new_with_label (b_argv[l_idx].but_txt);
      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
      gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -957,7 +959,7 @@ gint p_array_std_dialog(char *title_txt,
   if(b_argc < 1)
   {
      /* if no buttons are specified use one CLOSE button per default */
-     button = gtk_button_new_with_label ("CLOSE");
+     button = gtk_button_new_with_label ( _("CLOSE"));
      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
      gtk_signal_connect (GTK_OBJECT (button), "clicked",
                          (GtkSignalFunc) but_array_callback,
@@ -968,7 +970,7 @@ gint p_array_std_dialog(char *title_txt,
   }
 
   /*  parameter settings  */
-  if (frame_txt == NULL)   frame = gtk_frame_new ("Enter Values");
+  if (frame_txt == NULL)   frame = gtk_frame_new ( _("Enter Values"));
   else                     frame = gtk_frame_new (frame_txt);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
@@ -985,7 +987,7 @@ gint p_array_std_dialog(char *title_txt,
     {
        arr_ptr = &argv[l_idx];
 
-       if(arr_ptr->label_txt == NULL)  l_label_txt = "Value: ";
+       if(arr_ptr->label_txt == NULL)  l_label_txt = _("Value: ");
        else                            l_label_txt = arr_ptr->label_txt;
 
        switch(arr_ptr->widget_type)
@@ -1021,10 +1023,10 @@ gint p_array_std_dialog(char *title_txt,
             label_create_value(l_label_txt, GTK_TABLE(table), (l_idx + 1),  arr_ptr);
             break;
          case WGT_ACT_BUTTON:
-            printf("WGT_ACT_BUTTON not implemented yet, widget type ignored\n");
+            printf( _("WGT_ACT_BUTTON not implemented yet, widget type ignored\n"));
             break;
          default:     /* undefined widget type */
-            printf("Unknown widget type %d ignored\n", arr_ptr->widget_type);
+            printf( _("Unknown widget type %d ignored\n"), arr_ptr->widget_type);
             break;
 
        }   /* end switch */
@@ -1045,7 +1047,7 @@ gint p_array_std_dialog(char *title_txt,
      {
         arr_ptr = &argv[l_idx];
 
-        if(arr_ptr->label_txt == NULL)  l_label_txt = "Value: ";
+        if(arr_ptr->label_txt == NULL)  l_label_txt = _("Value: ");
         else                            l_label_txt = arr_ptr->label_txt;
         arr_ptr = &argv[l_idx];
         
@@ -1166,9 +1168,9 @@ gint p_array_dialog(char *title_txt,
 {
     static t_but_arg  b_argv[2];
 
-    b_argv[0].but_txt  = "OK";
+    b_argv[0].but_txt  = _("OK");
     b_argv[0].but_val  = TRUE;
-    b_argv[1].but_txt  = "Cancel";
+    b_argv[1].but_txt  = _("Cancel");
     b_argv[1].but_val  = FALSE;
   
     return( p_array_std_dialog(title_txt,
@@ -1197,8 +1199,8 @@ gint p_buttons_dialog(char *title_txt,
   static t_arr_arg  argv[1];
   char   *frame_txt;
 
-  if(b_argc == 1) frame_txt = "Press Button";
-  else            frame_txt = "Select";
+  if(b_argc == 1) frame_txt = _("Press Button");
+  else            frame_txt = _("Select");
   
   p_init_arr_arg(&argv[0], WGT_LABEL);
   argv[0].label_txt = msg_txt;

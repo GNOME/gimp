@@ -1,5 +1,5 @@
-#ifndef __STDPLUGINS-INTL_H__
-#define __STDPLUGINS-INTL_H__
+#ifndef __STDPLUGINS_INTL_H__
+#define __STDPLUGINS_INTL_H__
 
 #include <locale.h>
 
@@ -21,4 +21,4 @@
   setlocale (LC_NUMERIC, "C"); \
   INIT_I18N();
 
-#endif /* __STDPLUGINS-INTL_H__ */
+#endif /* __STDPLUGINS_INTL_H__ */

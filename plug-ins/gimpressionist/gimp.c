@@ -7,6 +7,8 @@
 #include "gimpressionist.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 
 static void query(void);
 static void gimpressionist_main(void);
@@ -92,13 +94,15 @@ query(void)
   static int        nargs = sizeof(args) / sizeof(args[0]);
   static int        nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure(PLUG_IN_NAME,
-			 "Performs various artistic operations on an image",
-			 "Performs various artistic operations on an image",
+			 _("Performs various artistic operations on an image"),
+			 _("Performs various artistic operations on an image"),
 			 "Vidar Madsen <vidar@prosalg.no>",
 			 "Vidar Madsen",
 			 PLUG_IN_VERSION,
-			 "<Image>/Filters/Artistic/GIMPressionist",
+			 _("<Image>/Filters/Artistic/GIMPressionist"),
 			 "RGB*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs,
@@ -145,15 +149,18 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **return_v
 
   switch (run_mode) {
   case RUN_INTERACTIVE:
+    INIT_I18N_UI();
     gimpressionist_get_data(PLUG_IN_NAME, &pcvals);
     if(!create_gimpressionist())
       return;
     break;
   case RUN_NONINTERACTIVE:
+    INIT_I18N();
     g_message("GIMPressionist: RUN_NONINTERACTIVE not implemented yet!\n");
     status = STATUS_EXECUTION_ERROR;
     break;
   case RUN_WITH_LAST_VALS:
+    INIT_I18N_UI();
     gimpressionist_get_data(PLUG_IN_NAME, &pcvals);
     break;
   default:
@@ -284,7 +291,7 @@ void gimpressionist_main(void)
 
   dest_row = (guchar *)safemalloc((x2 - x1) * bpp);
 
-  gimp_progress_init("Painting...");
+  gimp_progress_init( _("Painting..."));
 
   if(!infile.col) {
     grabarea();

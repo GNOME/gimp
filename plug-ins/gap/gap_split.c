@@ -48,6 +48,8 @@
 
 /* GIMP includes */
 #include "gtk/gtk.h"
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 #include "libgimp/gimp.h"
 
 /* GAP includes */
@@ -92,7 +94,7 @@ p_split_image(t_anim_info *ainfo_ptr,
   l_run_mode  = ainfo_ptr->run_mode;
   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
   { 
-    gimp_progress_init("Splitting into Frames ..");
+    gimp_progress_init( _("Splitting into Frames .."));
   }
  
   l_new_image_id = -1;
@@ -167,7 +169,7 @@ p_split_image(t_anim_info *ainfo_ptr,
           l_rc = p_save_named_image(l_new_image_id, l_sav_name, l_run_mode);
           if(l_rc < 0)
           {
-            p_msg_win(ainfo_ptr->run_mode, "Split Frames: SAVE operation FAILED\n- desired save plugin cant handle type\n- or desired save plugin not available\n");
+            p_msg_win(ainfo_ptr->run_mode, _("Split Frames: SAVE operation FAILED\n- desired save plugin cant handle type\n- or desired save plugin not available\n"));
             break;
           }
 
@@ -215,32 +217,32 @@ p_split_dialog(t_anim_info *ainfo_ptr, gint *inverse_order, gint *no_alpha, char
   static t_arr_arg  argv[4];
   char   buf[128];
   
-  sprintf(buf, "%s\n%s\n(%s_0001.%s)\n",
-          "Make a frame (diskfile) from each Layer",
-          "frames are named: base_nr.extension",
+  sprintf(buf, _("%s\n%s\n(%s_0001.%s)\n"),
+          _("Make a frame (diskfile) from each Layer"),
+          _("frames are named: base_nr.extension"),
            ainfo_ptr->basename, extension);
  
   p_init_arr_arg(&argv[0], WGT_LABEL);
   argv[0].label_txt = &buf[0];
 
   p_init_arr_arg(&argv[1], WGT_TEXT);
-  argv[1].label_txt ="Extension:";
-  argv[1].help_txt  ="extension of resulting frames       \n(is also used to define Fileformat)";
+  argv[1].label_txt = _("Extension:");
+  argv[1].help_txt  = _("extension of resulting frames       \n(is also used to define Fileformat)");
   argv[1].text_buf_len = len_ext;
   argv[1].text_buf_ret = extension;
 
   p_init_arr_arg(&argv[2], WGT_TOGGLE);
-  argv[2].label_txt = "Inverse Order :";
-  argv[2].help_txt  = "Start frame 0001 at Top Layer";
+  argv[2].label_txt = _("Inverse Order :");
+  argv[2].help_txt  = _("Start frame 0001 at Top Layer");
   argv[2].int_ret   = 0;
 
   p_init_arr_arg(&argv[3], WGT_TOGGLE);
-  argv[3].label_txt = "Flatten :";
-  argv[3].help_txt  = "Remove Alpha Channel in resulting Frames,    \ntransparent parts are filled with BG color";
+  argv[3].label_txt = _("Flatten :");
+  argv[3].help_txt  = _("Remove Alpha Channel in resulting Frames,    \ntransparent parts are filled with BG color");
   argv[3].int_ret   = 0;
 
-  if(TRUE == p_array_dialog("Split Image into Frames",
-                                 "Split Settings :", 
+  if(TRUE == p_array_dialog( _("Split Image into Frames"),
+                                 _("Split Settings :"), 
                                   4, argv))
   {
        *inverse_order = argv[2].int_ret;
@@ -285,7 +287,7 @@ int gap_split_image(GRunModeType run_mode,
       if(ainfo_ptr->frame_cnt != 0)
       {
          p_msg_win(run_mode,
-           "OPERATION CANCELLED\nThis image is already an AnimFrame\nTry again on a Duplicate\n(image/channel ops/duplicate)");
+           _("OPERATION CANCELLED\nThis image is already an AnimFrame\nTry again on a Duplicate\n(image/channel ops/duplicate)"));
          return -1;
       }
       else

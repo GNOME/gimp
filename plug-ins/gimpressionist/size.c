@@ -14,7 +14,7 @@
 #endif
 #include "gimpressionist.h"
 #include "ppmtool.h"
-
+#include <libgimp/stdplugins-intl.h>
 
 GtkObject *sizenumadjust = NULL;
 GtkObject *sizefirstadjust = NULL;
@@ -48,7 +48,7 @@ void create_sizepage(GtkNotebook *notebook)
   char title[100];
   int i;
 
-  sprintf(title, "Size");
+  sprintf(title, _("Size"));
 
   labelbox = gtk_hbox_new (FALSE, 0);
   tmpw = gtk_label_new(title);
@@ -72,15 +72,15 @@ void create_sizepage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,0);
   gtk_widget_show (box2);
 
-  tmpw = gtk_label_new("Sizes:");
+  tmpw = gtk_label_new( _("Sizes:"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
-  tmpw = gtk_label_new("Min size:");
+  tmpw = gtk_label_new( _("Min size:"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
-  tmpw = gtk_label_new("Max size:");
+  tmpw = gtk_label_new( _("Max size:"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
@@ -95,7 +95,7 @@ void create_sizepage(GtkNotebook *notebook)
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
   gtk_scale_set_digits(GTK_SCALE (tmpw), 0);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "The number of directions (i.e. brushes) to use", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The number of directions (i.e. brushes) to use"), NULL);
   gtk_widget_show (tmpw);
 
   sizefirstadjust = gtk_adjustment_new(pcvals.sizefirst, 0.0, 361.0, 1.0, 1.0, 1.0);
@@ -104,7 +104,7 @@ void create_sizepage(GtkNotebook *notebook)
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
   gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "The smallest brush to create", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The smallest brush to create"), NULL);
   gtk_widget_show (tmpw);
 
   sizelastadjust = gtk_adjustment_new(pcvals.sizelast, 0.0, 361.0, 1.0, 1.0, 1.0);
@@ -113,14 +113,14 @@ void create_sizepage(GtkNotebook *notebook)
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
   gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "The largest brush to create", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The largest brush to create"), NULL);
   gtk_widget_show (tmpw);
 
   box2 = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start(GTK_BOX(thispage), box2,FALSE,FALSE,0);
   gtk_widget_show (box2);
 
-  tmpw = gtk_label_new("Size:");
+  tmpw = gtk_label_new( _("Size:"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
@@ -130,43 +130,43 @@ void create_sizepage(GtkNotebook *notebook)
 
   i = pcvals.sizetype;
 
-  sizeradio[0] = tmpw = gtk_radio_button_new_with_label(NULL, "Value");
+  sizeradio[0] = tmpw = gtk_radio_button_new_with_label(NULL, _("Value"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)sizechange, (void *)0);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Let the value (brightness) of the region determine the size of the stroke", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Let the value (brightness) of the region determine the size of the stroke"), NULL);
   if(i == 0)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
-  sizeradio[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), "Radius");
+  sizeradio[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Radius"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)sizechange, (void *)1);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "The distance from the center of the image determines the size of the stroke", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The distance from the center of the image determines the size of the stroke"), NULL);
   if(i == 1)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
     
-  sizeradio[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), "Random");
+  sizeradio[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Random"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)sizechange, (void *)2);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Selects a random size for each stroke", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Selects a random size for each stroke"), NULL);
   if(i == 2)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
-  sizeradio[3] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), "Radial");
+  sizeradio[3] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Radial"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)sizechange, (void *)3);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Let the direction from the center determine the size of the stroke", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Let the direction from the center determine the size of the stroke"), NULL);
   if(i == 3)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
@@ -175,34 +175,34 @@ void create_sizepage(GtkNotebook *notebook)
   gtk_widget_show(box3);
 
 
-  sizeradio[4] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), "Flowing");
+  sizeradio[4] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Flowing"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)sizechange, (void *)4);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "The strokes follow a \"flowing\" pattern", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The strokes follow a \"flowing\" pattern"), NULL);
   if(i == 4)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
 
-  sizeradio[5] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), "Hue");
+  sizeradio[5] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Hue"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)sizechange, (void *)5);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "The hue of the region determines the size of the stroke", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The hue of the region determines the size of the stroke"), NULL);
   if(i == 5)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
-  sizeradio[6] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), "Adaptive");
+  sizeradio[6] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Adaptive"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)sizechange, (void *)6);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "The brush-size that matches the original image the closest is selected", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The brush-size that matches the original image the closest is selected"), NULL);
   if(i == 6)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
@@ -210,22 +210,22 @@ void create_sizepage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box3), box4, FALSE, FALSE, 0);
   gtk_widget_show(box4);
 
-  sizeradio[7] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), "Manual");
+  sizeradio[7] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Manual"));
   gtk_box_pack_start(GTK_BOX(box4), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)sizechange, (void *)7);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Manually specify the stroke size", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Manually specify the stroke size"), NULL);
   if(i == 7)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
-  tmpw = gtk_button_new_with_label("Edit...");
+  tmpw = gtk_button_new_with_label( _("Edit..."));
   gtk_box_pack_start(GTK_BOX(box4), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)create_sizemap_dialog, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Opens up the Size Map Editor", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Opens up the Size Map Editor"), NULL);
 
   gtk_notebook_append_page_menu (notebook, thispage, labelbox, menubox);
 }

@@ -48,6 +48,8 @@
 
 /* GIMP includes */
 #include "gtk/gtk.h"
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 #include "libgimp/gimp.h"
 
 /* GAP includes */
@@ -114,15 +116,15 @@ static gint p_pitstop(GRunModeType run_mode, char *plugin_name, gint text_flag,
     
 
     p_init_arr_arg(&l_argv[0], WGT_FILESEL);
-    l_argv[0].label_txt ="backup to file";
+    l_argv[0].label_txt = _("backup to file");
     l_argv[0].entry_width = 140;	/* pixel */
-    l_argv[0].help_txt  = "Make backup of the image after each step";
+    l_argv[0].help_txt  = _("Make backup of the image after each step");
     l_argv[0].text_buf_len = len_step_backup_file;
     l_argv[0].text_buf_ret = step_backup_file;
 
-    l_but_argv[0].but_txt  = "Continue";
+    l_but_argv[0].but_txt  = _("Continue");
     l_but_argv[0].but_val  = 0;
-    l_but_argv[1].but_txt  = "Cancel";
+    l_but_argv[1].but_txt  = _("Cancel");
     l_but_argv[1].but_val  = -1;
     sprintf(l_skip_txt, "Skip %d", (int)layer_idx);
     l_but_argv[2].but_txt  = l_skip_txt;
@@ -143,15 +145,15 @@ static gint p_pitstop(GRunModeType run_mode, char *plugin_name, gint text_flag,
       }
       if(text_flag == 0)
       {
-         sprintf(l_msg, "2.nd call of %s\n(define end-settings)", plugin_name);
+         sprintf(l_msg, _("2.nd call of %s\n(define end-settings)"), plugin_name);
       }
       else
       {
-         sprintf(l_msg, "Non-Interactive call of %s\n(for all layers inbetween)", plugin_name);
+         sprintf(l_msg, _("Non-Interactive call of %s\n(for all layers inbetween)"), plugin_name);
          l_but_argc = 3;
          l_argc = 1;
       }
-      l_continue = p_array_std_dialog ("Animated Filter apply", l_msg,
+      l_continue = p_array_std_dialog (_("Animated Filter apply"), l_msg,
                                        l_argc,     l_argv, 
                                        l_but_argc, l_but_argv, 0);
       if(l_continue < 0) return -1;
@@ -181,7 +183,7 @@ static void p_visibilty_restore(gint32 image_id, gint nlayers, int *visible_tab,
       }
       else
       {
-        printf("Error: Plugin %s has changed Nr. of layers from %d to %d\ncould not restore Layer visibilty.\n",
+        printf( _("Error: Plugin %s has changed Nr. of layers from %d to %d\ncould not restore Layer visibilty.\n"),
                 plugin_name, (int)nlayers, (int)l_nlayers2);
       }
 
@@ -197,12 +199,12 @@ static gint32 p_get_indexed_layerid(gint32 image_id, gint *nlayers, gint32 idx, 
   l_layers_list = gimp_image_get_layers(image_id, &l_nlayers2);
   if(l_layers_list == NULL)
   {
-      printf("Warning: cant get layers (maybe the image was closed)\n");
+      printf( _("Warning: cant get layers (maybe the image was closed)\n"));
       return -1;
   }
   if((l_nlayers2 != *nlayers) && (*nlayers > 0))
   {
-     printf("Error: Plugin %s has changed Nr. of layers from %d to %d\nAnim Filter apply stopped.\n", 
+     printf( _("Error: Plugin %s has changed Nr. of layers from %d to %d\nAnim Filter apply stopped.\n"), 
             plugin_name, (int)*nlayers, (int)l_nlayers2);
       return -1;
   }
@@ -253,7 +255,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
   l_rc = p_procedure_available(plugin_name, PTYP_CAN_OPERATE_ON_DRAWABLE);
   if(l_rc < 0)
   {
-     fprintf(stderr, "ERROR: Plugin not available or wrong type %s\n", plugin_name);
+     fprintf(stderr, _("ERROR: Plugin not available or wrong type %s\n"), plugin_name);
      return -1;
   }
 
@@ -264,7 +266,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
   l_percentage = 0.0;  
   if(run_mode == RUN_INTERACTIVE)
   { 
-    gimp_progress_init("Applying Filter to all Layers ..");
+    gimp_progress_init( _("Applying Filter to all Layers .."));
   }
 
   l_layer_id = p_get_indexed_layerid(image_id, &l_nlayers, 0,  plugin_name);
@@ -272,7 +274,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
   {
     if(l_nlayers < 1)
     {
-       fprintf(stderr, "ERROR: need at 1 Layers to apply plugin !\n");
+       fprintf(stderr, _("ERROR: need at 1 Layers to apply plugin !\n"));
     }
     else
     {
@@ -302,7 +304,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
         l_child_pid = 0; /* fork(); */
         if(l_child_pid < 0)
         {
-           fprintf(stderr, "ERROR: fork failed !\n");
+           fprintf(stderr, _("ERROR: fork failed !\n"));
            return -1;
         }
 
@@ -490,7 +492,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
              /* check if to save each step to backup file */	  
 	     if((l_step_backup_file[0] != '\0') && (l_step_backup_file[0] != ' '))
 	     {
-	       printf("Saving image to backupfile:%s step = %d\n",
+	       printf( _("Saving image to backupfile:%s step = %d\n"),
 	               l_step_backup_file, (int)l_idx);
 	       p_save_xcf(image_id, l_step_backup_file);
 	     }
@@ -538,9 +540,9 @@ gint gap_proc_anim_apply(GRunModeType run_mode, gint32 image_id, char *plugin_na
   if(run_mode == RUN_INTERACTIVE)
   {
 
-    if(gap_db_browser_dialog("Select Filter for Animated apply",
-                                 "Apply Constant",
-                                 "Apply Varying",
+    if(gap_db_browser_dialog( _("Select Filter for Animated apply"),
+                                 _("Apply Constant"),
+                                 _("Apply Varying"),
                                  p_constraint_proc,
                                  p_constraint_proc_sel1,
                                  p_constraint_proc_sel2,

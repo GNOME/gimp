@@ -20,6 +20,7 @@
 #include "gimpressionist.h"
 #include "ppmtool.h"
 #include <libgimp/gimp.h>
+#include <libgimp/stdplugins-intl.h>
 /* #include <libgimp/gimpenv.h> */
 
 #ifndef GIMP_CHECK_VERSION
@@ -72,14 +73,14 @@ GList *parsepath(void)
 	  || !S_ISDIR(st.st_mode)) {
 	/* No gimpressionist-path parameter, and the default doesn't exist */
 #if GIMP_CHECK_VERSION(1, 1, 0)
-	g_message("*** Warning ***\n"
-		  "It is highly recommended to add\n"
+        g_message( "*** Warning ***\n"
+                   "It is highly recommended to add\n"
 		  " (gimpressionist-path \"${gimp_dir}" G_DIR_SEPARATOR_S "gimpressionist"
 		    G_SEARCHPATH_SEPARATOR_S
 		    "${gimp_data_dir}" G_DIR_SEPARATOR_S "gimpressionist\")\n"
 		  "(or similar) to your gimprc file.\n");
 #else
-	g_message("*** Warning ***\nIt is highly recommended to add\n  (gimpressionist-path \"%s\")\n(or similar) to your gimprc file.\n", defaultpath);
+	g_message( _("*** Warning ***\nIt is highly recommended to add\n  (gimpressionist-path \"%s\")\n(or similar) to your gimprc file.\n"), defaultpath);
 #endif
       }
       tmps = g_strdup(defaultpath);
@@ -96,7 +97,7 @@ GList *parsepath(void)
       char *tmps2, *home;
       home = g_get_home_dir ();
       if(!home) {
-	g_message("*** Warning ***\nNo home directory!\n");
+	g_message( _("*** Warning ***\nNo home directory!\n"));
 	home = "";
       }
       tmps2 = g_strconcat(home, tmps + 1, NULL);
@@ -347,7 +348,7 @@ void showabout(void)
     return;
   }
   window = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(window), "The GIMPressionist!");
+  gtk_window_set_title(GTK_WINDOW(window), _("The GIMPressionist!"));
   gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(window), "destroy",
 		     GTK_SIGNAL_FUNC (gtk_widget_destroyed),
@@ -357,7 +358,7 @@ void showabout(void)
 		     GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
 		     &window);
       
-  tmpw = gtk_button_new_with_label("OK");
+  tmpw = gtk_button_new_with_label( _("OK"));
   GTK_WIDGET_SET_FLAGS(tmpw, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT(tmpw), "clicked",
 			     GTK_SIGNAL_FUNC (gtk_widget_hide),
@@ -444,7 +445,7 @@ int create_dialog(void)
 		      (GtkSignalFunc)dialog_close_callback,
 		      NULL);
 
-  gtk_window_set_title (GTK_WINDOW (window), "The GIMPressionist!");
+  gtk_window_set_title (GTK_WINDOW (window), _("The GIMPressionist!"));
   gtk_container_border_width (GTK_CONTAINER (window), 5);
 
   box1 = gtk_hbox_new (FALSE, 0);
@@ -479,28 +480,28 @@ int create_dialog(void)
   gtk_box_pack_end (GTK_BOX (box2), box3, FALSE, FALSE, 0);
   gtk_widget_show (box3);
   
-  tmpw = gtk_button_new_with_label(" OK ");
+  tmpw = gtk_button_new_with_label( _(" OK "));
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)dialog_ok_callback, window);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
   GTK_WIDGET_SET_FLAGS (tmpw, GTK_CAN_DEFAULT);
   gtk_widget_grab_default (tmpw);
   gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Run with the selected settings", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Run with the selected settings"), NULL);
 
-  tmpw = gtk_button_new_with_label(" Cancel ");
+  tmpw = gtk_button_new_with_label( _(" Cancel "));
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)dialog_cancel_callback, window);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Quit the program", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Quit the program"), NULL);
 
-  tmpw = gtk_button_new_with_label(" About... ");
+  tmpw = gtk_button_new_with_label( _(" About... "));
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)showabout, window);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Show some information about program", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Show some information about program"), NULL);
 
   gtk_widget_show(window);
 

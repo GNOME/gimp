@@ -36,7 +36,9 @@
 #include <stdio.h>
 #include "struc.h"
 #include "gtk/gtk.h"
+#include "config.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* --- Typedefs --- */
 typedef struct {
@@ -99,13 +101,15 @@ static void query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0; 
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_apply_canvas",
-			  "Adds a canvas texture map to the picture",
-			  "This function applies a canvas texture map to the drawable.",
+			  _("Adds a canvas texture map to the picture"),
+			  _("This function applies a canvas texture map to the drawable."),
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "1997",
-			  "<Image>/Filters/Artistic/Apply Canvas",
+			  _("<Image>/Filters/Artistic/Apply Canvas"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -131,6 +135,12 @@ static void run (gchar   *name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
   
+  if (run_mode == RUN_INTERACTIVE) {
+    INIT_I18N_UI();
+  } else {
+    INIT_I18N();
+  }
+
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   
@@ -219,14 +229,14 @@ static gint struc_dialog(void)
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Struc");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Struc"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_container_border_width (GTK_CONTAINER (dlg), 0);
   gtk_signal_connect (GTK_OBJECT(dlg), "destroy",
 		     (GtkSignalFunc) struc_close_callback,
 		     NULL);
   /* Action area */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc) struc_ok_callback,
@@ -235,7 +245,7 @@ static gint struc_dialog(void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -249,7 +259,7 @@ static gint struc_dialog(void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
 		      abox, FALSE, FALSE, 0);
 
-  oframe = gtk_frame_new ("Filter options");
+  oframe = gtk_frame_new ( _("Filter options"));
   gtk_frame_set_shadow_type (GTK_FRAME (oframe), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (abox),
 		     oframe, TRUE, TRUE, 0);
@@ -259,7 +269,7 @@ static gint struc_dialog(void)
   gtk_container_add (GTK_CONTAINER (oframe), bbox);
 
   /* Radio buttons */
-  iframe = gtk_frame_new ("Direction");
+  iframe = gtk_frame_new ( _("Direction"));
   gtk_frame_set_shadow_type (GTK_FRAME (iframe), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (bbox),
 		     iframe, FALSE, FALSE, 0);
@@ -270,14 +280,14 @@ static gint struc_dialog(void)
   
   {
     int   i;
-    char * name[4]= {"Top-right", "Top-left", "Bottom-left", "Bottom-right"};
+    char * name[4]= { N_("Top-right"), N_("Top-left"), N_("Bottom-left"), N_("Bottom-right")};
 
     button = NULL;
     for (i=0; i < 4; i++)
       {
 	button = gtk_radio_button_new_with_label (
            (button==NULL) ? NULL :
-	      gtk_radio_button_group (GTK_RADIO_BUTTON (button)), name[i]);
+	      gtk_radio_button_group (GTK_RADIO_BUTTON (button)), gettext(name[i]));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
 				    (svals.direction==i));
 
@@ -294,7 +304,7 @@ static gint struc_dialog(void)
   gtk_widget_show(iframe);
 
   /* Horizontal scale */
-  label=gtk_label_new ("Depth");
+  label=gtk_label_new ( _("Depth"));
   gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX(bbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);

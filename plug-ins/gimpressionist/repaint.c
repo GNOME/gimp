@@ -16,6 +16,7 @@
 #include "ppmtool.h"
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
+#include <libgimp/stdplugins-intl.h>
 
 gimpressionist_vals_t runningvals;
 
@@ -138,7 +139,7 @@ int bestbrush(struct ppm *p, struct ppm *a, int tx, int ty,
   }
 
   if(!brlist) {
-    fprintf(stderr, "What!? No brushes?!\n");
+    fprintf(stderr, _("What!? No brushes?!\n"));
     return 0;
   }
 
@@ -278,7 +279,7 @@ void repaint(struct ppm *p, struct ppm *a)
   /* Shouldn't be necessary, but... */
   if(img_has_alpha)
     if((p->width != a->width) || (p->height != a->height)) {
-      fprintf(stderr, "Huh? Image size != alpha size?\n");
+      fprintf(stderr, _("Huh? Image size != alpha size?\n"));
       return;
     }
 
@@ -663,7 +664,7 @@ void repaint(struct ppm *p, struct ppm *a)
     case 6: /* Adaptive */
       break; /* Handled below */
     default:
-      fprintf(stderr, "Internal error; Unknown orientationtype\n");
+      fprintf(stderr, _("Internal error; Unknown orientationtype\n"));
       on = 0;
       break;
     }
@@ -683,7 +684,7 @@ void repaint(struct ppm *p, struct ppm *a)
     case 6: /* Adaptive */
       break; /* Handled below */
     default:
-      fprintf(stderr, "Internal error; Unknown sizetype\n");
+      fprintf(stderr, _("Internal error; Unknown sizetype\n"));
       sn = 0;
       break;
     }
@@ -859,9 +860,9 @@ void repaint(struct ppm *p, struct ppm *a)
     }
   } else {
 #if GTK_MINOR_VERSION == 0
-    gtk_label_set(GTK_LABEL(GTK_BUTTON(previewbutton)->child), " Update ");
+    gtk_label_set(GTK_LABEL(GTK_BUTTON(previewbutton)->child), _(" Update "));
 #else
-    gtk_label_set_text(GTK_LABEL(GTK_BUTTON(previewbutton)->child), " Update ");
+    gtk_label_set_text(GTK_LABEL(GTK_BUTTON(previewbutton)->child), _(" Update "));
 #endif
   }
   running = 0;

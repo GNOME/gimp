@@ -13,6 +13,7 @@
 #endif
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimp/stdplugins-intl.h>
 #include <math.h>
 #include "gimpressionist.h"
 #include "ppmtool.h"
@@ -179,13 +180,13 @@ void savebrush(GtkWidget *wg, gpointer data)
   char path[200];
 
   if(!brushppm.col) {
-    g_message("GIMPressionist: Can only save drawables!\n");
+    g_message( _("GIMPressionist: Can only save drawables!\n"));
     return;
   }
 
   sprintf(path, "%s/Brushes/", (char *)thispath->data);
 
-  window = gtk_file_selection_new("Save brush");
+  window = gtk_file_selection_new( _("Save brush"));
   gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
   gtk_file_selection_set_filename(GTK_FILE_SELECTION(window), path);
@@ -391,7 +392,7 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_widget_show (box2);
   gtk_container_border_width (GTK_CONTAINER (box2), 5);
 
-  tmpw = gtk_label_new("Brush Preview:");
+  tmpw = gtk_label_new( _("Brush Preview:"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
@@ -400,7 +401,7 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX (box2), tmpw, FALSE, FALSE, 5);
   gtk_widget_show(tmpw);
 
-  tmpw = gtk_label_new("Gamma:");
+  tmpw = gtk_label_new( _("Gamma:"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
@@ -413,7 +414,7 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   gtk_signal_connect(GTK_OBJECT(brushgammaadjust), "value_changed",
 		     (GtkSignalFunc)selectbrush, list);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Changes the gamma (brightness) of the selected brush", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Changes the gamma (brightness) of the selected brush"), NULL);
 
   box1 = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start(GTK_BOX(thispage), box1,FALSE,FALSE,5);
@@ -425,16 +426,16 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_widget_show (box2);
 
   if(!standalone) {
-    tmpw = gtk_label_new("Select:");
+    tmpw = gtk_label_new( _("Select:"));
     gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
     gtk_widget_show (tmpw);
   }
 
-  tmpw = gtk_label_new("Aspect ratio:");
+  tmpw = gtk_label_new( _("Aspect ratio:"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
-  tmpw = gtk_label_new("Relief:");
+  tmpw = gtk_label_new( _("Relief:"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
@@ -449,7 +450,7 @@ void create_brushpage(GtkNotebook *notebook)
     gtk_box_pack_start(GTK_BOX(box2),box3, FALSE, FALSE, 0);
     gtk_widget_show(box3);
 
-    brushemptyitem = emptyitem = gtk_menu_item_new_with_label("(None)");
+    brushemptyitem = emptyitem = gtk_menu_item_new_with_label( _("(None)"));
     gtk_signal_connect (GTK_OBJECT(emptyitem), "activate",
 			(GtkSignalFunc)dummybrushdmenuselect, NULL);
     gtk_widget_show(emptyitem);
@@ -462,7 +463,7 @@ void create_brushpage(GtkNotebook *notebook)
     gtk_menu_prepend(GTK_MENU(dmenu), emptyitem);
     gtk_option_menu_set_menu(GTK_OPTION_MENU(tmpw), dmenu);
 
-    tmpw = gtk_button_new_with_label("Save...");
+    tmpw = gtk_button_new_with_label( _("Save..."));
     gtk_box_pack_start(GTK_BOX(box3),tmpw, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 			GTK_SIGNAL_FUNC(savebrush), NULL);
@@ -476,7 +477,7 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Specifies the aspect ratio of the brush", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Specifies the aspect ratio of the brush"), NULL);
   gtk_signal_connect(GTK_OBJECT(brushaspectadjust), "value_changed",
 		     (GtkSignalFunc)selectbrush, list);
 
@@ -487,7 +488,7 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Specifies the amount of embossing to apply to each brush stroke", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Specifies the amount of embossing to apply to each brush stroke"), NULL);
 
   gtk_signal_connect (GTK_OBJECT(list), "selection_changed",
 		      GTK_SIGNAL_FUNC(selectbrushfile),

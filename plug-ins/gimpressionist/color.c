@@ -12,6 +12,7 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#include <libgimp/stdplugins-intl.h>
 #include "gimpressionist.h"
 #include "ppmtool.h"
 
@@ -47,7 +48,7 @@ void create_colorpage(GtkNotebook *notebook)
   char title[100];
   int i;
 
-  sprintf(title, "Color");
+  sprintf(title, _("Color"));
 
   labelbox = gtk_hbox_new (FALSE, 0);
   tmpw = gtk_label_new(title);
@@ -75,7 +76,7 @@ void create_colorpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,0);
   gtk_widget_show (box2);
 
-  tmpw = gtk_label_new("Color:");
+  tmpw = gtk_label_new( _("Color:"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
@@ -85,23 +86,23 @@ void create_colorpage(GtkNotebook *notebook)
 
   i = pcvals.colortype;
 
-  colorradio[0] = tmpw = gtk_radio_button_new_with_label(NULL, "Average under brush");
+  colorradio[0] = tmpw = gtk_radio_button_new_with_label(NULL, _("Average under brush"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)colorchange, (void *)0);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Color is computed from the average of all pixels under the brush", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Color is computed from the average of all pixels under the brush"), NULL);
   if(i == 0)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
-  colorradio[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), "Center of brush");
+  colorradio[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(tmpw)), _("Center of brush"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), FALSE);
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
 		     (GtkSignalFunc)colorchange, (void *)1);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Samples the color from the pixel in the center of the brush", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Samples the color from the pixel in the center of the brush"), NULL);
   if(i == 1)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tmpw), TRUE);
 
@@ -110,7 +111,7 @@ void create_colorpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box0), box1,FALSE,FALSE,0);
   gtk_widget_show (box1);
 
-  tmpw = gtk_label_new("Color noise:");
+  tmpw = gtk_label_new( _("Color noise:"));
   gtk_box_pack_start(GTK_BOX(box1), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
@@ -121,7 +122,7 @@ void create_colorpage(GtkNotebook *notebook)
   gtk_scale_set_digits(GTK_SCALE (tmpw), 1);
   gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 10);
   gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Adds random noise to the color", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Adds random noise to the color"), NULL);
     
   gtk_notebook_append_page_menu (notebook, thispage, labelbox, menubox);
 }

@@ -71,9 +71,10 @@
 #include <signal.h>
 #include <time.h>                  /* time(NULL) for random # seed */
 #include "gtk/gtk.h"
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
-
 
 /* Some useful macros */
 
@@ -294,13 +295,15 @@ query ()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_warp",
-			  "Twist or smear an image. (only first six arguments are required)",
-			  "Smears an image along vector paths calculated as the gradient of a separate control matrix. The effect can look like brushstrokes of acrylic or watercolor paint, in some cases.",
+			  _("Twist or smear an image. (only first six arguments are required)"),
+			  _("Smears an image along vector paths calculated as the gradient of a separate control matrix. The effect can look like brushstrokes of acrylic or watercolor paint, in some cases."),
 			  "John P. Beale",
 			  "John P. Beale",
 			  "1997",
-			  "<Image>/Filters/Artistic/Warp",
+			  _("<Image>/Filters/Artistic/Warp"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -345,6 +348,7 @@ run (gchar  *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_warp", &dvals);
 
@@ -354,6 +358,7 @@ run (gchar  *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure minimum args (mode, image, draw, amount, warp_map, iter) are there  */
       if (nparams < MIN_ARGS)
 	status = STATUS_CALLING_ERROR;
@@ -468,7 +473,7 @@ warp_dialog (GDrawable *drawable)
   gtk_init (&argc, &argv);
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Warp");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Warp"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) warp_close_callback,
@@ -500,7 +505,7 @@ warp_dialog (GDrawable *drawable)
 
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) warp_ok_callback,
@@ -509,7 +514,7 @@ warp_dialog (GDrawable *drawable)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -518,7 +523,7 @@ warp_dialog (GDrawable *drawable)
   gtk_widget_show (button);
 
   /*  The main table  */
-  frame = gtk_frame_new ("Main Options");
+  frame = gtk_frame_new ( _("Main Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -532,11 +537,11 @@ warp_dialog (GDrawable *drawable)
   gtk_table_set_col_spacings (GTK_TABLE (table), 1);
 
   /*  on_x, on_y  */
-  label = gtk_label_new ("Step Size");
+  label = gtk_label_new ( _("Step Size"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  label = gtk_label_new ("Iterations");
+  label = gtk_label_new ( _("Iterations"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -564,7 +569,7 @@ warp_dialog (GDrawable *drawable)
 
 
   /*  Displacement map menu  */
-  label = gtk_label_new ("Displacement Map:");
+  label = gtk_label_new ( _("Displacement Map:"));
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -584,11 +589,11 @@ warp_dialog (GDrawable *drawable)
   gtk_container_border_width (GTK_CONTAINER (toggle_hbox), 1);
   gtk_table_attach (GTK_TABLE (table), toggle_hbox, 0, 3, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
 
-  label = gtk_label_new ("On Edges: ");
+  label = gtk_label_new ( _("On Edges: "));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  toggle = gtk_radio_button_new_with_label (group, "Wrap");
+  toggle = gtk_radio_button_new_with_label (group, _("Wrap"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -597,7 +602,7 @@ warp_dialog (GDrawable *drawable)
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_wrap);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "Smear");
+  toggle = gtk_radio_button_new_with_label (group, _("Smear"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -606,7 +611,7 @@ warp_dialog (GDrawable *drawable)
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_smear);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "Black");
+  toggle = gtk_radio_button_new_with_label (group, _("Black"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -615,7 +620,7 @@ warp_dialog (GDrawable *drawable)
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_black);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "FG Color");
+  toggle = gtk_radio_button_new_with_label (group, _("FG Color"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -632,7 +637,7 @@ warp_dialog (GDrawable *drawable)
   /* -------------------------------------------------------------------- */
   /* ---------    The secondary table         --------------------------  */
 
-  frame = gtk_frame_new ("Secondary Options");
+  frame = gtk_frame_new ( _("Secondary Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -645,7 +650,7 @@ warp_dialog (GDrawable *drawable)
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
   gtk_table_set_col_spacings (GTK_TABLE (table), 1);
 
-  label = gtk_label_new ("Dither Size");
+  label = gtk_label_new ( _("Dither Size"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -659,7 +664,7 @@ warp_dialog (GDrawable *drawable)
 		      &dvals.dither);
   gtk_widget_show (entry);
 
-  label = gtk_label_new ("Substeps");
+  label = gtk_label_new ( _("Substeps"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -674,7 +679,7 @@ warp_dialog (GDrawable *drawable)
   gtk_widget_show (entry);
 
   /* -------------------------------------------------------- */
-  label = gtk_label_new ("Rotation Angle");
+  label = gtk_label_new ( _("Rotation Angle"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -691,7 +696,7 @@ warp_dialog (GDrawable *drawable)
 
 
   /*  Magnitude map menu  */
-  label = gtk_label_new ("Magnitude Map:");
+  label = gtk_label_new ( _("Magnitude Map:"));
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -710,11 +715,11 @@ warp_dialog (GDrawable *drawable)
   gtk_container_border_width (GTK_CONTAINER (toggle_hbox), 1);
   gtk_table_attach (GTK_TABLE (table), toggle_hbox, 2, 3, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
 
-  label = gtk_label_new ("Use Mag Map: ");
+  label = gtk_label_new ( _("Use Mag Map: "));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  toggle = gtk_radio_button_new_with_label (groupmag, "Yes");
+  toggle = gtk_radio_button_new_with_label (groupmag, _("Yes"));
   groupmag = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -723,7 +728,7 @@ warp_dialog (GDrawable *drawable)
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), mag_use_yes);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (groupmag, "No");
+  toggle = gtk_radio_button_new_with_label (groupmag, _("No"));
   groupmag = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -740,7 +745,7 @@ warp_dialog (GDrawable *drawable)
   /* -------------------------------------------------------------------- */
   /* ---------    The "other" table         --------------------------  */
 
-  frame = gtk_frame_new ("Other Options");
+  frame = gtk_frame_new ( _("Other Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -753,7 +758,7 @@ warp_dialog (GDrawable *drawable)
   gtk_table_set_row_spacings (GTK_TABLE (otable), 1);
   gtk_table_set_col_spacings (GTK_TABLE (otable), 1);
 
-  label = gtk_label_new ("Gradient Scale");
+  label = gtk_label_new ( _("Gradient Scale"));
   gtk_table_attach (GTK_TABLE (otable), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -775,7 +780,7 @@ warp_dialog (GDrawable *drawable)
   gradmenu = gimp_drawable_menu_new (warp_map_constrain, warp_map_grad_callback,
 				 drawable, dvals.grad_map);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu_grad), gradmenu);
-  gtk_tooltips_set_tip (tooltips, option_menu_grad, "Gradient map selection menu", NULL);
+  gtk_tooltips_set_tip (tooltips, option_menu_grad, _("Gradient map selection menu"), NULL);
 
   gtk_widget_show (option_menu_grad);
 
@@ -784,7 +789,7 @@ warp_dialog (GDrawable *drawable)
   /* ---------------------------------------------- */
 
 
-  label = gtk_label_new ("Vector Mag");
+  label = gtk_label_new ( _("Vector Mag"));
   gtk_table_attach (GTK_TABLE (otable), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -799,7 +804,7 @@ warp_dialog (GDrawable *drawable)
   gtk_widget_show (entry);
 
   /* -------------------------------------------------------- */
-  label = gtk_label_new ("Angle");
+  label = gtk_label_new ( _("Angle"));
   gtk_table_attach (GTK_TABLE (otable), label, 0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
@@ -820,7 +825,7 @@ warp_dialog (GDrawable *drawable)
   vectormenu = gimp_drawable_menu_new (warp_map_constrain, warp_map_vector_callback,
 				 drawable, dvals.vector_map);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu_vector), vectormenu);
-  gtk_tooltips_set_tip (tooltips, option_menu_vector, "Fixed-direction-vector map selection menu", NULL);
+  gtk_tooltips_set_tip (tooltips, option_menu_vector, _("Fixed-direction-vector map selection menu"), NULL);
 
   gtk_widget_show (option_menu_vector);
 
@@ -1110,7 +1115,7 @@ diff (GDrawable *drawable,
   if ((desty==NULL) || (destx==NULL) || (cur_row_m==NULL) || (cur_row_v==NULL)
     || (next_row_g==NULL) || (cur_row_g==NULL) || (prev_row_g==NULL)
     || (next_row==NULL) || (cur_row==NULL) || (prev_row==NULL)) {
-   fprintf(stderr,"Warp diff: error allocating memory.\n");
+   fprintf(stderr, _("Warp diff: error allocating memory.\n"));
    exit(1);
   }
 
@@ -1297,9 +1302,9 @@ diff (GDrawable *drawable,
 
   gimp_displays_flush();  /* make sure layer is visible */
 
-  gimp_progress_init ("Smoothing X gradient...");
+  gimp_progress_init ( _("Smoothing X gradient..."));
   blur16(draw_xd); 
-  gimp_progress_init ("Smoothing Y gradient...");
+  gimp_progress_init ( _("Smoothing Y gradient..."));
   blur16(draw_yd);
 
   free (prev_row);  /* row buffers allocated at top of fn. */
@@ -1354,7 +1359,7 @@ warp        (GDrawable *orig_draw,
 
   /* calculate new X,Y Displacement image maps */
 
-  gimp_progress_init ("Finding XY gradient...");
+  gimp_progress_init ( _("Finding XY gradient..."));
 
   diff(disp_map, &xdlayer, &ydlayer);              /* generate x,y differential images (arrays) */
  
@@ -1378,7 +1383,7 @@ warp        (GDrawable *orig_draw,
    for (warp_iter = 0; warp_iter < dvals.iter; warp_iter++)
    {
      if (run_mode != RUN_NONINTERACTIVE) {
-       sprintf(string,"Flow Step %d...",warp_iter+1);
+       sprintf(string, _("Flow Step %d..."),warp_iter+1);
        gimp_progress_init (string);
        progress     = 0;
        gimp_progress_update (0);

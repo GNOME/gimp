@@ -42,6 +42,8 @@
 
 /* GIMP includes */
 #include "gtk/gtk.h"
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 #include "libgimp/gimp.h"
 
 /* GAP includes */
@@ -79,37 +81,37 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
   static char   l_buf[MAX_LAYERNAME];
 
   /* Layer select modes */
-  static char *sel_args[7]    = {"Pattern is equal to LayerName",
-                                  "Pattern is Start of LayerName",
-                                  "Pattern is End of Layername",
-                                  "Pattern is a Part of LayerName",
-                                  "Pattern is LayerstackNumber List",
-                                  "Pattern is REVERSE-stack List",
-                                  "All Visible (ignore Pattern)"
+  static char *sel_args[7]    = { N_("Pattern is equal to LayerName"),
+                                  N_("Pattern is Start of LayerName"),
+                                  N_("Pattern is End of Layername"),
+                                  N_("Pattern is a Part of LayerName"),
+                                  N_("Pattern is LayerstackNumber List"),
+                                  N_("Pattern is REVERSE-stack List"),
+                                  N_("All Visible (ignore Pattern)")
                                   };
-  static char *sel_help[7]    = {"select all Layers where Layername is equal to Pattern",
-                                  "select all Layers where Layername starts with Pattern",
-                                  "select all Layers where Layername ends up with Pattern",
-                                  "select all Layers where Layername contains Pattern",
-                                  "select Layerstack positions.\n0, 4-5, 8\nwhere 0 == Top-layer",
-                                  "select Layerstack positions.\n0, 4-5, 8\nwhere 0 == BG-layer",
-                                  "select all visible Layers"
+  static char *sel_help[7]    = { N_("select all Layers where Layername is equal to Pattern"),
+                                  N_("select all Layers where Layername starts with Pattern"),
+                                  N_("select all Layers where Layername ends up with Pattern"),
+                                  N_("select all Layers where Layername contains Pattern"),
+                                  N_("select Layerstack positions.\n0, 4-5, 8\nwhere 0 == Top-layer"),
+                                  N_("select Layerstack positions.\n0, 4-5, 8\nwhere 0 == BG-layer"),
+                                  N_("select all visible Layers")
                                   };
 
   /* action items what to do with the selected layer(s) */
-  static char *action_args[13]  = {"set Layer(s) visible",
-                                  "set Layer(s) invisible",
-                                  "set Layer(s) linked",
-                                  "set Layer(s) unlinked",
-                                  "raise Layer(s)",
-                                  "lower Layer(s)",
-                                  "merge Layer(s) expand as necessary",
-                                  "merge Layer(s) clipped to image",
-                                  "merge Layer(s) clipped to bg-layer",
-                                  "apply filter on Layer(s)",
-                                  "duplicate Layer(s)",
-                                  "delete Layer(s)",
-                                  "rename Layer(s)"
+  static char *action_args[13]  = { N_("set Layer(s) visible"),
+                                    N_("set Layer(s) invisible"),
+                                  N_("set Layer(s) linked"),
+                                  N_("set Layer(s) unlinked"),
+                                  N_("raise Layer(s)"),
+                                  N_("lower Layer(s)"),
+                                  N_("merge Layer(s) expand as necessary"),
+                                  N_("merge Layer(s) clipped to image"),
+                                  N_("merge Layer(s) clipped to bg-layer"),
+                                  N_("apply filter on Layer(s)"),
+                                  N_("duplicate Layer(s)"),
+                                  N_("delete Layer(s)"),
+                                  N_("rename Layer(s)")
                                   };
                                   
 
@@ -130,14 +132,23 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
                                   };
 */
 
+  int get_textize_loop;
+
+  for (get_textize_loop = 0; get_textize_loop < 7; get_textize_loop++) {
+    sel_args[get_textize_loop] = gettext(sel_args[get_textize_loop]);
+    sel_help[get_textize_loop] = gettext(sel_help[get_textize_loop]);
+  }
+  for (get_textize_loop = 0; get_textize_loop < 13; get_textize_loop++)
+    action_args[get_textize_loop] = gettext(action_args[get_textize_loop]);
+
   l_rc = -1;
   
-  sprintf(l_buf, "Perform function on one or more Layer(s)\nin all frames of the selected framerange\n");
+  sprintf(l_buf, _("Perform function on one or more Layer(s)\nin all frames of the selected framerange\n"));
   
   /* the 3 Action Buttons */
-    b_argv[0].but_txt  = "OK";
+    b_argv[0].but_txt  = _("OK");
     b_argv[0].but_val  = 0;
-    b_argv[1].but_txt  = "Cancel";
+    b_argv[1].but_txt  = _("Cancel");
     b_argv[1].but_val  = -1;
   
   p_init_arr_arg(&argv[0], WGT_LABEL);
@@ -145,16 +156,16 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
 
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
   argv[1].constraint = TRUE;
-  argv[1].label_txt = "From Frame:";
-  argv[1].help_txt  = "first handled frame";
+  argv[1].label_txt = _("From Frame:");
+  argv[1].help_txt  = _("first handled frame");
   argv[1].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[1].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[1].int_ret   = (gint)ainfo_ptr->curr_frame_nr;
 
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
   argv[2].constraint = TRUE;
-  argv[2].label_txt = "To   Frame:";
-  argv[2].help_txt  = "last handled frame";
+  argv[2].label_txt = _("To   Frame:");
+  argv[2].help_txt  = _("last handled frame");
   argv[2].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[2].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[2].int_ret   = (gint)ainfo_ptr->last_frame_nr;
@@ -162,7 +173,7 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
 
   /* Layer select mode RADIO buttons */
   p_init_arr_arg(&argv[3], WGT_RADIO);
-  argv[3].label_txt = "Select Layer(s):";
+  argv[3].label_txt = _("Select Layer(s):");
   argv[3].radio_argc = 7;
   argv[3].radio_argv = sel_args;
   argv[3].radio_help_argv = sel_help;
@@ -171,45 +182,45 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
   /* Layer select pattern string */
   sprintf (sel_pattern, "0");
   p_init_arr_arg(&argv[4], WGT_TEXT);
-  argv[4].label_txt ="Select Pattern:";
+  argv[4].label_txt = _("Select Pattern:");
   argv[4].entry_width = 140;       /* pixel */
-  argv[4].help_txt  ="String to identify layer names    \nor layerstack position numbers\n0,3-5";
+  argv[4].help_txt  = _("String to identify layer names    \nor layerstack position numbers\n0,3-5");
   argv[4].text_buf_len = MAX_LAYERNAME;
   argv[4].text_buf_ret = sel_pattern;
 
   /* case sensitive checkbutton */
   p_init_arr_arg(&argv[5], WGT_TOGGLE);
-  argv[5].label_txt = "Case sensitive";
-  argv[5].help_txt  = "Lowercase and UPPERCASE letters are considered as different";
+  argv[5].label_txt = _("Case sensitive");
+  argv[5].help_txt  = _("Lowercase and UPPERCASE letters are considered as different");
   argv[5].int_ret   = 1;
 
   /* invert selection checkbutton */
   p_init_arr_arg(&argv[6], WGT_TOGGLE);
-  argv[6].label_txt = "Invert Selection";
-  argv[6].help_txt  = "Perform actions on all unselected Layers";
+  argv[6].label_txt = _("Invert Selection");
+  argv[6].help_txt  = _("Perform actions on all unselected Layers");
   argv[6].int_ret   = 0;
 
   /* desired action to perform OPTIONMENU  */
   p_init_arr_arg(&argv[7], WGT_OPTIONMENU);
-  argv[7].label_txt = "Function :";
+  argv[7].label_txt = _("Function :");
   argv[7].radio_argc = 13;
   argv[7].radio_argv = action_args;
   /* argv[7].radio_help_argv = action_help */
-  argv[7].help_txt = "Function to be performed on all selected layers";
+  argv[7].help_txt = _("Function to be performed on all selected layers");
   argv[7].radio_ret  = 0;
 
   /* a new name for the handled Layer(s) */
   *new_layername = '\0';
   p_init_arr_arg(&argv[8], WGT_TEXT);
-  argv[8].label_txt ="New Layername:";
+  argv[8].label_txt = _("New Layername:");
   argv[8].entry_width = 140;       /* pixel */
-  argv[8].help_txt  ="New Layername for all handled layers \n[####] is replaced by frame number\n(is used on function rename only)";
+  argv[8].help_txt  = _("New Layername for all handled layers \n[####] is replaced by frame number\n(is used on function rename only)");
   argv[8].text_buf_len = MAX_LAYERNAME;
   argv[8].text_buf_ret = new_layername;
 
 
-  l_rc =  p_array_std_dialog("Frames Modify",
-                                "Settings",
+  l_rc =  p_array_std_dialog( _("Frames Modify"),
+                                _("Settings"),
                                  9,   argv,      /* widget array */
                                  2,   b_argv,    /* button array */
                                  0);
@@ -249,9 +260,9 @@ p_pitstop_dialog(gint text_flag, char *filter_procname)
     
 
 
-  l_but_argv[0].but_txt  = "Continue";
+  l_but_argv[0].but_txt  = _("Continue");
   l_but_argv[0].but_val  = 0;
-  l_but_argv[1].but_txt  = "Cancel";
+  l_but_argv[1].but_txt  = _("Cancel");
   l_but_argv[1].but_val  = -1;
 
   l_but_argc = 2;
@@ -268,13 +279,13 @@ p_pitstop_dialog(gint text_flag, char *filter_procname)
   }
   if(text_flag == 0)
   {
-     sprintf(l_msg, "2.nd call of %s\n(define end-settings)", filter_procname);
+     sprintf(l_msg, _("2.nd call of %s\n(define end-settings)"), filter_procname);
   }
   else
   {
-     sprintf(l_msg, "Non-Interactive call of %s\n(for all selected layers)", filter_procname);
+     sprintf(l_msg, _("Non-Interactive call of %s\n(for all selected layers)"), filter_procname);
   }
-  l_continue = p_array_std_dialog ("Animated Filter apply", l_msg,
+  l_continue = p_array_std_dialog ( _("Animated Filter apply"), l_msg,
   				   l_argc,     l_argv, 
   				   l_but_argc, l_but_argv, 0);
 
@@ -649,9 +660,9 @@ p_do_filter_dialogs(t_anim_info *ainfo_ptr,
 
   /* GAP-PDB-Browser Dialog */
   /* ---------------------- */
-  if(gap_db_browser_dialog("Select Filter for Animated frames-apply",
-                                 "Apply Constant",
-                                 "Apply Varying",
+  if(gap_db_browser_dialog( _("Select Filter for Animated frames-apply"),
+                                 _("Apply Constant"),
+                                 _("Apply Varying"),
                                  p_constraint_proc,
                                  p_constraint_proc_sel1,
                                  p_constraint_proc_sel2,
@@ -791,7 +802,7 @@ p_do_2nd_filter_dialogs(char *filter_procname,
   l_idx = p_get_1st_selected(l_layli_ptr, l_nlayers);
   if(l_idx < 0)
   {
-     p_msg_win (RUN_INTERACTIVE, "GAP Modify: No layer selected in last handled frame\n");
+     p_msg_win (RUN_INTERACTIVE, _("GAP Modify: No layer selected in last handled frame\n"));
      goto cleanup;
   }
   l_layer_id = l_layli_ptr[l_idx].layer_id;
@@ -877,7 +888,7 @@ p_frames_modify(t_anim_info *ainfo_ptr,
   l_percentage = 0.0;
   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
   { 
-    gimp_progress_init("Modifying Frames/Layer(s) ..");
+    gimp_progress_init( _("Modifying Frames/Layer(s) .."));
   }
  
 
@@ -958,7 +969,7 @@ p_frames_modify(t_anim_info *ainfo_ptr,
 
       if(l_sel_cnt < 1)
       {
-         p_msg_win(RUN_INTERACTIVE, "No selected Layer in start frame\n");
+         p_msg_win(RUN_INTERACTIVE, _("No selected Layer in start frame\n"));
          goto error;
       }
       

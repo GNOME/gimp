@@ -100,7 +100,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include "config.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 #define WinMain WinMain_foo	/* Kludge */
 #include "gdk/gdkx.h"
 #undef WinMain
@@ -236,13 +238,15 @@ static void query()
   static int nargs = sizeof(args) / sizeof(args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure("plug_in_animationplay",
-			 "This plugin allows you to preview a GIMP layer-based animation.",
+			 _("This plugin allows you to preview a GIMP layer-based animation."),
 			 "",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "1997, 1998...",
-			 "<Image>/Filters/Animation/Animation Playback",
+			 _("<Image>/Filters/Animation/Animation Playback"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
@@ -265,6 +269,9 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
     if (n_params != 3) {
       status = STATUS_CALLING_ERROR;
     }
+    INIT_I18N();
+  } else {
+    INIT_I18N_UI();
   }
 
   if (status == STATUS_SUCCESS) {
@@ -650,8 +657,8 @@ build_dialog(GImageType basetype,
 
 
   dlg = gtk_dialog_new ();
-  windowname = g_malloc(strlen("Animation Playback: ")+strlen(imagename)+1);
-  strcpy(windowname,"Animation Playback: ");
+  windowname = g_malloc(strlen( _("Animation Playback: "))+strlen(imagename)+1);
+  strcpy(windowname, _("Animation Playback: "));
   strcat(windowname,imagename);
   gtk_window_set_title (GTK_WINDOW (dlg), windowname);
   g_free(windowname);
@@ -663,7 +670,7 @@ build_dialog(GImageType basetype,
   
   /* Action area - 'close' button only. */
 
-  button = gtk_button_new_with_label ("Close");
+  button = gtk_button_new_with_label ( _("Close"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) window_close_callback,
@@ -677,10 +684,10 @@ build_dialog(GImageType basetype,
   {
     /* The 'playback' half of the dialog */
     
-    windowname = g_malloc(strlen("Playback: ")+strlen(imagename)+1);
+    windowname = g_malloc(strlen( _("Playback: "))+strlen(imagename)+1);
     if (total_frames > 1)
       {
-	strcpy(windowname,"Playback: ");
+	strcpy(windowname, _("Playback: "));
 	strcat(windowname,imagename);
       }
     else
@@ -710,19 +717,19 @@ build_dialog(GImageType basetype,
 	  gtk_box_pack_start (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
 	  
 	  {
-	    psbutton = gtk_toggle_button_new_with_label ("Play/Stop");
+	    psbutton = gtk_toggle_button_new_with_label ( _("Play/Stop"));
 	    gtk_signal_connect (GTK_OBJECT (psbutton), "toggled",
 				(GtkSignalFunc) playstop_callback, NULL);
 	    gtk_box_pack_start (GTK_BOX (hbox2), psbutton, TRUE, TRUE, 0);
 	    gtk_widget_show (psbutton);
 	    
-	    button = gtk_button_new_with_label ("Rewind");
+	    button = gtk_button_new_with_label ( _("Rewind"));
 	    gtk_signal_connect (GTK_OBJECT (button), "clicked",
 				(GtkSignalFunc) rewind_callback, NULL);
 	    gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
 	    gtk_widget_show (button);
 	    
-	    button = gtk_button_new_with_label ("Step");
+	    button = gtk_button_new_with_label ( _("Step"));
 	    gtk_signal_connect (GTK_OBJECT (button), "clicked",
 				(GtkSignalFunc) step_callback, NULL);
 	    gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
@@ -780,7 +787,7 @@ build_dialog(GImageType basetype,
 				       (adj));
 	  {
 	    gtk_progress_set_format_string (GTK_PROGRESS (progress),
-					    "Frame %v of %u");
+					    _("Frame %v of %u"));
 	    gtk_progress_set_show_text (GTK_PROGRESS (progress), TRUE);
 	    /*	  gtk_widget_set_usize (GTK_WIDGET (progress), 150, 15);*/
 	    gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (progress),
@@ -958,7 +965,7 @@ render_frame(gint32 whichframe)
 
   if (whichframe >= total_frames)
     {
-      printf("playback: Asked for frame number %d in a %d-frame animation!\n",
+      printf( _("playback: Asked for frame number %d in a %d-frame animation!\n"),
 	     (int) (whichframe+1), (int) total_frames);
       exit(-1);
     }

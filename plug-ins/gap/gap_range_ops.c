@@ -61,6 +61,8 @@
 
 /* GIMP includes */
 #include "gtk/gtk.h"
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 #include "libgimp/gimp.h"
 
 /* GAP includes */
@@ -103,28 +105,28 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
   l_height = gimp_image_height(ainfo_ptr->image_id);
  
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
-  argv[0].label_txt = "New Width :";
+  argv[0].label_txt = _("New Width :");
   argv[0].constraint = FALSE;
   argv[0].int_min   = 1;
   argv[0].int_max   = 1024;
   argv[0].int_ret   = l_width;
   
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
-  argv[1].label_txt = "New Height :";
+  argv[1].label_txt = _("New Height :");
   argv[1].constraint = FALSE;
   argv[1].int_min    = 1;
   argv[1].int_max    = 1024;
   argv[1].int_ret   = l_height;
   
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
-  argv[2].label_txt = "Offest X :";
+  argv[2].label_txt = _("Offest X :");
   argv[2].constraint = FALSE;
   argv[2].int_min    = 0;
   argv[2].int_max    = l_width;
   argv[2].int_ret   = 0;
   
   p_init_arr_arg(&argv[3], WGT_INT_PAIR);
-  argv[3].label_txt = "Offest Y :";
+  argv[3].label_txt = _("Offest Y :");
   argv[3].constraint = FALSE;
   argv[3].int_min    = 0;
   argv[3].int_max    = l_height;
@@ -133,8 +135,8 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
   switch(asiz_mode)
   {
     case ASIZ_CROP:
-      title = "Crop AnimFrames (all)";
-      sprintf(hline, "Crop (original %dx%d)", l_width, l_height);
+      title = _("Crop AnimFrames (all)");
+      sprintf(hline, _("Crop (original %dx%d)"), l_width, l_height);
       argv[0].int_max   = l_width;
       argv[0].constraint = TRUE;
       argv[1].int_max   = l_height;
@@ -144,15 +146,15 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
       cnt = 4;
       break;
     case ASIZ_RESIZE:
-      title = "Resize AnimFrames (all)";
-      sprintf(hline, "Resize (original %dx%d)", l_width, l_height);
+      title = _("Resize AnimFrames (all)");
+      sprintf(hline, _("Resize (original %dx%d)"), l_width, l_height);
       argv[2].int_min    = -l_width;
       argv[3].int_min    = -l_height;
      cnt = 4;
       break;
     default:
-      title = "Scale AnimFrames (all)";
-      sprintf(hline, "Scale (original %dx%d)", l_width, l_height);
+      title = _("Scale AnimFrames (all)");
+      sprintf(hline, _("Scale (original %dx%d)"), l_width, l_height);
       cnt = 2;
       break;
   }
@@ -227,21 +229,21 @@ p_range_dialog(t_anim_info *ainfo_ptr,
   if(cnt != 3)  cnt = 2;
 
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
-  argv[0].label_txt = "From :";
+  argv[0].label_txt = _("From :");
   argv[0].constraint = TRUE;
   argv[0].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[0].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[0].int_ret   = (gint)ainfo_ptr->curr_frame_nr;
   
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
-  argv[1].label_txt = "To :";
+  argv[1].label_txt = _("To :");
   argv[1].constraint = TRUE;
   argv[1].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[1].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[1].int_ret   = (gint)ainfo_ptr->last_frame_nr;
   
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
-  argv[2].label_txt = "Layerstack :";
+  argv[2].label_txt = _("Layerstack :");
   argv[2].constraint = FALSE;
   argv[2].int_min   = 0;
   argv[2].int_max   = 99;
@@ -280,69 +282,73 @@ p_convert_dialog(t_anim_info *ainfo_ptr,
                       char *extension, gint len_ext)
 {
   static t_arr_arg  argv[9];
-  static char *radio_args[4]  = {"KEEP_TYPE", "Conv to RGB", "Conv to GRAY", "Conv to INDEXED" };
+  static char *radio_args[4]  = { N_("KEEP_TYPE"), N_("Conv to RGB"), N_("Conv to GRAY"), N_("Conv to INDEXED") };
+  static int gettextize_loop = 0;
+
+  for (;gettextize_loop < 4; gettextize_loop++)
+    radio_args[gettextize_loop] = gettext(radio_args[gettextize_loop]);
   
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
   argv[0].constraint = TRUE;
-  argv[0].label_txt = "From Frame:";
-  argv[0].help_txt  = "first handled frame";
+  argv[0].label_txt = _("From Frame:");
+  argv[0].help_txt  = _("first handled frame");
   argv[0].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[0].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[0].int_ret   = (gint)ainfo_ptr->curr_frame_nr;
   
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
   argv[1].constraint = TRUE;
-  argv[1].label_txt = "To   Frame:";
-  argv[1].help_txt  = "last handled frame";
+  argv[1].label_txt = _("To   Frame:");
+  argv[1].help_txt  = _("last handled frame");
   argv[1].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[1].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[1].int_ret   = (gint)ainfo_ptr->last_frame_nr;
 
   p_init_arr_arg(&argv[2], WGT_LABEL);
-  argv[2].label_txt ="\nSelect destination fileformat by extension\noptionally convert imagetype\n";
+  argv[2].label_txt = _("\nSelect destination fileformat by extension\noptionally convert imagetype\n");
 
   p_init_arr_arg(&argv[3], WGT_FILESEL);
-  argv[3].label_txt ="Basename:";
-  argv[3].help_txt  ="basename of the resulting frames       \n(0001.ext is added)";
+  argv[3].label_txt = _("Basename:");
+  argv[3].help_txt  = _("basename of the resulting frames       \n(0001.ext is added)");
   argv[3].text_buf_len = len_base;
   argv[3].text_buf_ret = basename;
 
   p_init_arr_arg(&argv[4], WGT_TEXT);
-  argv[4].label_txt ="Extension:";
-  argv[4].help_txt  ="extension of resulting frames       \n(is also used to define Fileformat)";
+  argv[4].label_txt = _("Extension:");
+  argv[4].help_txt  = _("extension of resulting frames       \n(is also used to define Fileformat)");
   argv[4].text_buf_len = len_ext;
   argv[4].text_buf_ret = extension;
   
 
   p_init_arr_arg(&argv[5], WGT_OPTIONMENU);
-  argv[5].label_txt ="Imagetype :";
-  argv[5].help_txt  ="Convert to, or keep imagetype           \n(most fileformats cant handle all types)";
+  argv[5].label_txt = _("Imagetype :");
+  argv[5].help_txt  = _("Convert to, or keep imagetype           \n(most fileformats cant handle all types)");
   argv[5].radio_argc  = 4;
   argv[5].radio_argv = radio_args;
   argv[5].radio_ret  = 0;
 
   p_init_arr_arg(&argv[6], WGT_TOGGLE);
-  argv[6].label_txt = "Flatten  :";
-  argv[6].help_txt  ="Flatten all resulting frames               \n(most fileformats need flattened frames)";
+  argv[6].label_txt = _("Flatten  :");
+  argv[6].help_txt  = _("Flatten all resulting frames               \n(most fileformats need flattened frames)");
   argv[6].int_ret   = 1;
 
   p_init_arr_arg(&argv[7], WGT_INT_PAIR);
   argv[7].constraint = TRUE;
-  argv[7].label_txt = "Colors  :";
-  argv[7].help_txt  = "Number of resulting Colors               \n(ignored if not converted to indexed)";
+  argv[7].label_txt = _("Colors  :");
+  argv[7].help_txt  = _("Number of resulting Colors               \n(ignored if not converted to indexed)");
   argv[7].int_min   = 2;
   argv[7].int_max   = 256;
   argv[7].int_ret   = 255;
 
   p_init_arr_arg(&argv[8], WGT_TOGGLE);
-  argv[8].label_txt = "Dither  :";
-  argv[8].help_txt  = "Enable Floyd-Steinberg dithering      \n(ignored if not converted to indexed)";
+  argv[8].label_txt = _("Dither  :");
+  argv[8].help_txt  = _("Enable Floyd-Steinberg dithering      \n(ignored if not converted to indexed)");
   argv[8].int_ret   = 1;
 
   if(0 != p_chk_framerange(ainfo_ptr))   return -1;
 
-  if(TRUE == p_array_dialog("Convert Frames to other Formats",
-                                 "Convert Settings :", 
+  if(TRUE == p_array_dialog( _("Convert Frames to other Formats"),
+                                 _("Convert Settings :"), 
                                   9, argv))
   {
       *range_from  = (long)(argv[0].int_ret);
@@ -399,52 +405,60 @@ p_range_to_multilayer_dialog(t_anim_info *ainfo_ptr,
 {
   static t_arr_arg  argv[10];
   
-  static char *radio_args[4]  = {"Expand as necessary", 
-                                 "Clipped to image",
-                                 "Clipped to bottom layer", 
-                                 "Flattened image" };
-  static char *radio_help[4]  = {"Resulting Layer Size is made of the outline-rectangle \nof all visible layers (may differ from frame to frame)", 
-                                 "Resulting Layer Size is the frame size",
-                                 "Resulting Layer Size is the size of the bottom layer\n(may differ from frame to frame)", 
-                                 "Resulting Layer Size is the frame size     \ntransparent parts are filled with BG color" };
+  static char *radio_args[4]  = { N_("Expand as necessary"), 
+                                 N_("Clipped to image"),
+                                 N_("Clipped to bottom layer"), 
+                                 N_("Flattened image") };
+  static char *radio_help[4]  = { N_("Resulting Layer Size is made of the outline-rectangle \nof all visible layers (may differ from frame to frame)"), 
+                                 N_("Resulting Layer Size is the frame size"),
+                                 N_("Resulting Layer Size is the size of the bottom layer\n(may differ from frame to frame)"), 
+                                 N_("Resulting Layer Size is the frame size     \ntransparent parts are filled with BG color") };
   /* Layer select modes */
-  static char *sel_args[7]    = {"Pattern is equal to LayerName",
-                                  "Pattern is Start of LayerName",
-                                  "Pattern is End of Layername",
-                                  "Pattern is a Part of LayerName",
-                                  "Pattern is LayerstackNumber List",
-                                  "Pattern is REVERSE-stack List",
-                                  "All Visible (ignore Pattern)"
+  static char *sel_args[7]    = { N_("Pattern is equal to LayerName"),
+                                  N_("Pattern is Start of LayerName"),
+                                  N_("Pattern is End of Layername"),
+                                  N_("Pattern is a Part of LayerName"),
+                                  N_("Pattern is LayerstackNumber List"),
+                                  N_("Pattern is REVERSE-stack List"),
+                                  N_("All Visible (ignore Pattern)")
                                   };
-  static char *sel_help[7]    = {"select all Layers where Layername is equal to Pattern",
-                                  "select all Layers where Layername starts with Pattern",
-                                  "select all Layers where Layername ends up with Pattern",
-                                  "select all Layers where Layername contains Pattern",
-                                  "select Layerstack positions.\n0, 4-5, 8\nwhere 0 == Top-layer",
-                                  "select Layerstack positions.\n0, 4-5, 8\nwhere 0 == BG-layer",
-                                  "select all visible Layers"
+  static char *sel_help[7]    = { N_("select all Layers where Layername is equal to Pattern"),
+                                  N_("select all Layers where Layername starts with Pattern"),
+                                  N_("select all Layers where Layername ends up with Pattern"),
+                                  N_("select all Layers where Layername contains Pattern"),
+                                  N_("select Layerstack positions.\n0, 4-5, 8\nwhere 0 == Top-layer"),
+                                  N_("select Layerstack positions.\n0, 4-5, 8\nwhere 0 == BG-layer"),
+                                  N_("select all visible Layers")
                                   };
-
+  static int gettextize_radio = 0, gettextize_sel = 0;
+  for (;gettextize_radio < 4; gettextize_radio++) {
+    radio_args[gettextize_radio] = gettext(radio_args[gettextize_radio]);
+    radio_help[gettextize_radio] = gettext(radio_help[gettextize_radio]);
+  }
+  for (;gettextize_sel < 4; gettextize_sel++) {
+    sel_args[gettextize_sel] = gettext(sel_args[gettextize_sel]);
+    sel_help[gettextize_sel] = gettext(sel_help[gettextize_sel]);
+  }
 
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
   argv[0].constraint = TRUE;
-  argv[0].label_txt = "From :";
-  argv[0].help_txt  = "first handled frame";
+  argv[0].label_txt = _("From :");
+  argv[0].help_txt  = _("first handled frame");
   argv[0].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[0].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[0].int_ret   = (gint)ainfo_ptr->curr_frame_nr;
   
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
   argv[1].constraint = TRUE;
-  argv[1].label_txt = "To :";
-  argv[1].help_txt  = "last handled frame";
+  argv[1].label_txt = _("To :");
+  argv[1].help_txt  = _("last handled frame");
   argv[1].int_min   = (gint)ainfo_ptr->first_frame_nr;
   argv[1].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[1].int_ret   = (gint)ainfo_ptr->last_frame_nr;
 
   p_init_arr_arg(&argv[2], WGT_TEXT);
-  argv[2].label_txt ="Layer Basename:";
-  argv[2].help_txt  ="Basename for all Layers    \n[####] is replaced by frame number";
+  argv[2].label_txt = _("Layer Basename:");
+  argv[2].help_txt  = _("Basename for all Layers    \n[####] is replaced by frame number");
   argv[2].text_buf_len = len_frame_basename;
   argv[2].text_buf_ret = frame_basename;
 
@@ -462,21 +476,21 @@ p_range_to_multilayer_dialog(t_anim_info *ainfo_ptr,
   argv[3].label_txt = " ";
   
   p_init_arr_arg(&argv[4], WGT_RADIO);
-  argv[4].label_txt = "Layer Mergemode :";
+  argv[4].label_txt = _("Layer Mergemode :");
   argv[4].radio_argc = 4;
   argv[4].radio_argv = radio_args;
   argv[4].radio_help_argv = radio_help;
   argv[4].radio_ret  = 1;
   
   p_init_arr_arg(&argv[5], WGT_TOGGLE);
-  argv[5].label_txt = "Exclude BG-Layer";
-  argv[5].help_txt  = "Exclude the BG-Layers    \nin all handled frames\nregardless to selection";
+  argv[5].label_txt = _("Exclude BG-Layer");
+  argv[5].help_txt  = _("Exclude the BG-Layers    \nin all handled frames\nregardless to selection");
   argv[5].int_ret   = 0;   /* 1: exclude BG Layer from all selections */
 
 
   /* Layer select mode RADIO buttons */
   p_init_arr_arg(&argv[6], WGT_RADIO);
-  argv[6].label_txt = "Select Layer(s):";
+  argv[6].label_txt = _("Select Layer(s):");
   argv[6].radio_argc = 7;
   argv[6].radio_argv = sel_args;
   argv[6].radio_help_argv = sel_help;
@@ -485,22 +499,22 @@ p_range_to_multilayer_dialog(t_anim_info *ainfo_ptr,
   /* Layer select pattern string */
   sprintf (sel_pattern, "0");
   p_init_arr_arg(&argv[7], WGT_TEXT);
-  argv[7].label_txt ="Select Pattern:";
+  argv[7].label_txt = _("Select Pattern:");
   argv[7].entry_width = 140;       /* pixel */
-  argv[7].help_txt  ="String to identify layer names    \nor layerstack position numbers\n0,3-5";
+  argv[7].help_txt  = _("String to identify layer names    \nor layerstack position numbers\n0,3-5");
   argv[7].text_buf_len = MAX_LAYERNAME;
   argv[7].text_buf_ret = sel_pattern;
 
   /* case sensitive checkbutton */
   p_init_arr_arg(&argv[8], WGT_TOGGLE);
-  argv[8].label_txt = "Case sensitive";
-  argv[8].help_txt  = "Lowercase and UPPERCASE letters are considered as different";
+  argv[8].label_txt = _("Case sensitive");
+  argv[8].help_txt  = _("Lowercase and UPPERCASE letters are considered as different");
   argv[8].int_ret   = 1;
 
   /* invert selection checkbutton */
   p_init_arr_arg(&argv[9], WGT_TOGGLE);
-  argv[9].label_txt = "Invert Selection";
-  argv[9].help_txt  = "Use all unselected Layers";
+  argv[9].label_txt = _("Invert Selection");
+  argv[9].help_txt  = _("Use all unselected Layers");
   argv[9].int_ret   = 0;
 
 
@@ -574,7 +588,7 @@ p_frames_to_multilayer(t_anim_info *ainfo_ptr,
   l_nlayers_result = 0;
   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
   { 
-    gimp_progress_init("Creating Layer-Animated Image ..");
+    gimp_progress_init( _("Creating Layer-Animated Image .."));
   }
  
   l_tmp_layer_id = -1;
@@ -788,8 +802,8 @@ gint32 gap_range_to_multilayer(GRunModeType run_mode, gint32 image_id,
          l_rc = p_range_to_multilayer_dialog (ainfo_ptr, &l_from, &l_to,
                                 &flatten_mode, &bg_visible,
                                 &framerate, frame_basename, frame_basename_len, 
-                                "Frames to Image",
-                                "Create Multilayer-Image from Frames",
+                                _("Frames to Image"),
+                                _("Create Multilayer-Image from Frames"),
 				&l_sel_mode, &sel_case,
 				&sel_invert, &l_sel_pattern[0]
 				);
@@ -918,8 +932,8 @@ p_frames_convert(t_anim_info *ainfo_ptr,
   l_run_mode  = ainfo_ptr->run_mode;
   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
   { 
-    if(save_proc_name == NULL) gimp_progress_init("Flattening Frames ..");
-    else                       gimp_progress_init("Converting Frames ..");
+    if(save_proc_name == NULL) gimp_progress_init( _("Flattening Frames .."));
+    else                       gimp_progress_init( _("Converting Frames .."));
   }
  
 
@@ -1008,14 +1022,14 @@ p_frames_convert(t_anim_info *ainfo_ptr,
           {
             if (l_overwrite_mode < 1)
             {
-               l_argv[0].but_txt  = "OVERWRITE frame";
+               l_argv[0].but_txt  = _("OVERWRITE frame");
                l_argv[0].but_val  = 0;
-               l_argv[1].but_txt  = "OVERWRITE all";
+               l_argv[1].but_txt  = _("OVERWRITE all");
                l_argv[1].but_val  = 1;
-               l_argv[2].but_txt  = "CANCEL";
+               l_argv[2].but_txt  = _("CANCEL");
                l_argv[2].but_val  = -1;
 
-               l_overwrite_mode =  p_buttons_dialog  ("GAP Question", l_sav_name, 3, l_argv, -1);
+               l_overwrite_mode =  p_buttons_dialog  ( _("GAP Question"), l_sav_name, 3, l_argv, -1);
             }
           
           }
@@ -1029,7 +1043,7 @@ p_frames_convert(t_anim_info *ainfo_ptr,
              l_rc = p_save_named_image(l_tmp_image_id, l_sav_name, l_run_mode);
              if(l_rc < 0)
              {
-               p_msg_win(ainfo_ptr->run_mode, "Convert Frames: SAVE operation FAILED\n- desired save plugin cant handle type\n- or desired save plugin not available\n");
+               p_msg_win(ainfo_ptr->run_mode, _("Convert Frames: SAVE operation FAILED\n- desired save plugin cant handle type\n- or desired save plugin not available\n"));
              }
           }
           if(l_run_mode == RUN_INTERACTIVE)
@@ -1135,13 +1149,13 @@ gint32 p_anim_sizechange(t_anim_info *ainfo_ptr,
     switch(asiz_mode)
     {
       case ASIZ_CROP:
-        gimp_progress_init("Cropping all Animation Frames ..");
+        gimp_progress_init( _("Cropping all Animation Frames .."));
         break;
       case ASIZ_RESIZE:
-        gimp_progress_init("Resizing all Animation Frames ..");
+        gimp_progress_init( _("Resizing all Animation Frames .."));
         break;
       default:
-        gimp_progress_init("Scaling all Animation Frames ..");
+        gimp_progress_init( _("Scaling all Animation Frames .."));
         break;
     }
   }
@@ -1227,8 +1241,8 @@ int    gap_range_flatten(GRunModeType run_mode, gint32 image_id,
       if(run_mode == RUN_INTERACTIVE)
       {
          l_rc = p_range_dialog (ainfo_ptr, &l_from, &l_to,
-                                "Flatten Frames",
-                                "Select Frame Range", 2);
+                                _("Flatten Frames"),
+                                _("Select Frame Range"), 2);
 
       }
       else
@@ -1283,7 +1297,7 @@ p_frames_layer_del(t_anim_info *ainfo_ptr,
   l_percentage = 0.0;  
   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
   {
-    sprintf(l_buff, "Removing Layer (pos:%ld) from Frames ..", position); 
+    sprintf(l_buff, _("Removing Layer (pos:%ld) from Frames .."), position); 
     gimp_progress_init(l_buff);
   }
  
@@ -1406,8 +1420,8 @@ int gap_range_layer_del(GRunModeType run_mode, gint32 image_id,
       if(run_mode == RUN_INTERACTIVE)
       {
          l_rc = p_range_dialog (ainfo_ptr, &l_from, &l_to,
-                                "Delete Layers in Frames",
-                                "Select Frame Range & Position", 3);
+                                _("Delete Layers in Frames"),
+                                _("Select Frame Range & Position"), 3);
          l_position = l_rc;
 
       }
