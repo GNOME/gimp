@@ -18,6 +18,7 @@ borderaverage
 bumpmap
 bz2
 c_astretch
+cartoon
 ccanalyze
 channel_mixer
 checkerboard
@@ -74,6 +75,7 @@ max_rgb
 mblur
 mng
 mosaic
+neon
 newsprint
 nlfilt
 noisify
@@ -83,6 +85,7 @@ oilify
 papertile
 pat
 pcx
+photocopy
 pix
 pixelize
 plasma
@@ -108,6 +111,7 @@ sinus
 smooth_palette
 snoise
 sobel
+softglow
 sparkle
 spheredesigner
 spread

@@ -59,11 +59,11 @@ EXTRA_DIST = \\
 	plugin-defs.pl$extra
 
 INCLUDES = \\
-	-I\$(top_srcdir)					\\
-	\$(GTK_CFLAGS)					\\
-	\$(EXIF_CFLAGS)					\\
-	\$(SVG_CFLAGS)					\\
-	\$(WMF_CFLAGS)					\\
+	-I\$(top_srcdir)	\\
+	\$(GTK_CFLAGS)	\\
+	\$(EXIF_CFLAGS)	\\
+	\$(SVG_CFLAGS)	\\
+	\$(WMF_CFLAGS)	\\
 	-I\$(includedir)
 
 libexec_PROGRAMS = \\
@@ -97,34 +97,27 @@ foreach (sort keys %plugins) {
 
     if (exists $plugins{$_}->{ui}) {
         $libgimp .= "\$(libgimpui)";
-        $libgimp .= "\t\t\t\t\t\t\t\\\n\t\$(libgimpwidgets)";
-	$libgimp .= "\t\t\t\t\t\t\\\n\t\$(libgimp)";
-        $libgimp .= "\t\t\t\t\t\t\t\\\n\t\$(libgimpcolor)";
-        $libgimp .= "\t\t\t\t\t\t\t\\\n\t\$(libgimpbase)";
+        $libgimp .= "\t\t\\\n\t\$(libgimpwidgets)";
+	$libgimp .= "\t\\\n\t\$(libgimp)";
+        $libgimp .= "\t\t\\\n\t\$(libgimpcolor)";
+        $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
     } else {
         $libgimp .= "\$(libgimp)";
-        $libgimp .= "\t\t\t\t\t\t\t\\\n\t\$(libgimpcolor)";
-        $libgimp .= "\t\t\t\t\t\t\t\\\n\t\$(libgimpbase)";
+        $libgimp .= "\t\t\\\n\t\$(libgimpcolor)";
+        $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
     }
 
     my $optlib = "";
     if (exists $plugins{$_}->{optional}) {
 	my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
-	$optlib = "\n\t\$(LIB\U$name\E)\t\t\t\t\t\t\t\\";
+	$optlib = "\n\t\$(LIB\U$name\E)\t\t\\";
     }
 
-    my $deplib = "\$(RT_LIBS)\t\t\t\t\t\t\t\\\n\t\$(INTLLIBS)";
+    my $deplib = "\$(RT_LIBS)\t\t\\\n\t\$(INTLLIBS)";
     if (exists $plugins{$_}->{libdep}) {
 	my @lib = split(/:/, $plugins{$_}->{libdep});
 	foreach $lib (@lib) {
-	    $deplib = "\$(\U$lib\E_LIBS)\t\t\t\t\t\t\t\\\n\t$deplib";
-	}
-    }
-
-    if (exists $plugins{$_}->{libsupp}) {
-	my @lib = split(/:/, $plugins{$_}->{libsupp});
-	foreach $lib (@lib) {
-	    $libgimp = "\$(top_builddir)/plug-ins/lib$lib/lib$lib.a\t\\\n\t$libgimp";
+	    $deplib = "\$(\U$lib\E_LIBS)\t\t\\\n\t$deplib";
 	}
     }
 
@@ -134,7 +127,7 @@ ${_}_SOURCES = \\
 	$_.c
 
 ${_}_LDADD = \\
-	$libgimp							\\$optlib
+	$libgimp		\\$optlib
 	$deplib
 EOT
 

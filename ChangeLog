@@ -1,3 +1,19 @@
+2004-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/cartoon.c
+	* plug-ins/common/neon.c
+	* plug-ins/common/photocopy.c
+	* plug-ins/common/softglow.c: added four new plug-ins contributed
+	by Spencer Kimball. Ported them from 1.2 to 2.1 APIs.
+
+	* plug-ins/common/plugin-defs.pl: added them here.
+
+	* plug-ins/common/mkgen.pl: removed tab insanity now that
+	libgimpoldpreview is gimp.
+
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am: regenerated.
+
 2004-08-11  DindinX  <david@dindinx.org>
 
 	Bad DindinX! Don't break the build!
